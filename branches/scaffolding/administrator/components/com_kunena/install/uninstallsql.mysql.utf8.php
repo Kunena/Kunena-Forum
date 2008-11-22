@@ -1,0 +1,14 @@
+-- <?php /* $Id: uninstallsql.mysql.utf8.php 30 2008-11-11 02:50:35Z eddieajau $ */ defined('_JEXEC') or die('Invalid Request.') ?>;
+
+DROP TABLE IF EXISTS `#__kunena_announcements`;
+DROP TABLE IF EXISTS `#__kunena_attachments`;
+DROP TABLE IF EXISTS `#__kunena_categories`;
+DROP TABLE IF EXISTS `#__kunena_favorite_threads`;
+DROP TABLE IF EXISTS `#__kunena_members`;
+DROP TABLE IF EXISTS `#__kunena_member_ranks`;
+DROP TABLE IF EXISTS `#__kunena_moderators`;
+DROP TABLE IF EXISTS `#__kunena_monitor`;
+DROP TABLE IF EXISTS `#__kunena_posts`;
+DROP TABLE IF EXISTS `#__kunena_smileys`;
+DROP TABLE IF EXISTS `#__kunena_subscriptions`;
+DROP TABLE IF EXISTS `#__kunena_threads`;

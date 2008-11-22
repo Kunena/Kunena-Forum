@@ -1,4 +1,4 @@
--- <?php /* $Id: installsql.mysql.utf8.php 33 2008-11-11 16:35:02Z louis $ */ defined('_JEXEC') or die('Invalid Request.') ?>;
+-- <?php /* $Id$ */ defined('_JEXEC') or die('Invalid Request.') ?>;
 
 --
 -- Table structure for table `#__kunena_announcements`

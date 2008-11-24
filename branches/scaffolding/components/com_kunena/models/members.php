@@ -11,7 +11,7 @@
 defined('_JEXEC') or die('Invalid Request.');
 
 jimport('joomla.application.component.model');
-jximport('jxtended.database.query');
+require_once(JPATH_SITE.'/components/com_kunena/libraries/query.php');
 
 /**
  * Members model for the Kunena package.

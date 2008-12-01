@@ -67,7 +67,7 @@ class KunenaControllerRule extends JController
 
 		// Syncronize the ACL assets.
 		require_once(JPATH_ADMINISTRATOR.'/components/com_kunena/helpers/access.php');
-		$sync = KunenaHelperAccess::synchronize();
+//		$sync = KunenaHelperAccess::synchronize();
 
 		// Redirect to the rule edit screen.
 		$this->setRedirect('index.php?option=com_kunena&view=rule&layout=edit&hidemainmenu=1');
@@ -97,7 +97,7 @@ class KunenaControllerRule extends JController
 
 		// Syncronize the ACL assets.
 		require_once(JPATH_ADMINISTRATOR.'/components/com_kunena/helpers/access.php');
-		$sync = GalleryHelperAccess::synchronize();
+//		$sync = GalleryHelperAccess::synchronize();
 
 		// Redirect to the rule edit screen.
 		$this->setRedirect('index.php?option=com_kunena&view=rule&layout=edit&hidemainmenu=1');

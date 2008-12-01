@@ -28,7 +28,7 @@ class KunenaModelRules extends JXModelList
 	 * @access	protected
 	 * @var		string
 	 */
-	 var $_context		= 'kunena.rules';
+	 var $_context = 'kunena.rules';
 
 	/**
 	 * Gets a list of whether the three ACL types are available for a given section
@@ -194,7 +194,7 @@ class KunenaModelRules extends JXModelList
 		// Add the list ordering clause.
 		$query->order($this->_db->getEscaped($this->getState('list.ordering', 'a.name')).' '.$this->_db->getEscaped($this->getState('list.direction', 'ASC')));
 
-		//echo nl2br($query->toString());
+		//echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
 		return $query;
 	}
 

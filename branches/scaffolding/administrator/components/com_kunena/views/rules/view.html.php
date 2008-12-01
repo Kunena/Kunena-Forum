@@ -54,7 +54,7 @@ class KunenaViewRules extends JView
 	 */
 	function buildDefaultToolBar()
 	{
-		JToolBarHelper::title(JText::_('Kunena: Access Controls'), 'mediamanager');
+		JToolBarHelper::title('Kunena: '.JText::_('Access Controls'), 'logo');
 
 		JToolBarHelper::custom('rule.edit', 'edit.png', 'edit_f2.png', 'Edit', true);
 		JToolBarHelper::custom('rule.add', 'new.png', 'new_f2.png', 'Add', false);

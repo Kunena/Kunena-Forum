@@ -10,7 +10,7 @@
 
 defined('_JEXEC') or die('Invalid Request.');
 
-jimport( 'joomla.application.component.controller' );
+jimport('joomla.application.component.controller');
 
 /**
  * The Kunena category controller
@@ -19,7 +19,7 @@ jimport( 'joomla.application.component.controller' );
  * @subpackage	com_kunena
  * @version	1.0
  */
-class KunenaControllerCategory extends KunenaController
+class KunenaControllerCategory extends JController
 {
 	/**
 	 * Constructor

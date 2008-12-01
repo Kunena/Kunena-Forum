@@ -68,7 +68,7 @@ class KunenaViewCategory extends JView
 			$isNew			= true;
 		}
 
-		JToolBarHelper::title(JText::_('Kunena: '.($isCheckedOut ? 'View Item' : ($isNew ? 'Add Category' : 'Edit Category'))), 'logo');
+		JToolBarHelper::title('Kunena: '.JText::_(($isCheckedOut ? 'View Item' : ($isNew ? 'Add Category' : 'Edit Category'))), 'logo');
 		if (!$isNew) {
 			JToolBarHelper::custom('category.save2copy', 'copy.png', 'copy_f2.png', 'FB Toolbar Save To Copy', false);
 		}

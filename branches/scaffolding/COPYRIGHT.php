@@ -17,5 +17,5 @@ licensed under the GNU General Public License or other free or open
 source software licenses.  Please see the CREDITS.php for a non-exhaustive
 list of contributors and copyright holders.  A full text version of the
 GNU GPL version 2 can be found in the LICENSE.php file.  A full text
-version of the other licenses that Joomla! is derivative of or includes
+version of the other licenses that Kunena is derivative of or includes
 can be found in LICENSES.php.

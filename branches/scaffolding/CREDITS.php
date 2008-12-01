@@ -17,7 +17,7 @@ Code contributers:
 ------------------
 Andrew Eddie (masterchief)
 Oliver Ratzesberger (fxstein)
-Louis Landry (louis.landry)
+Louis Landry (louis)
 
 
 Documentation Contributers:

@@ -1,16 +1,17 @@
 -- <?php /* $Id$ */ defined('_JEXEC') or die('Invalid Request.') ?>;
 
 --
--- Table structure for table `#__kunena_announcements`
+-- Table structure for table `#__kunena`
 --
 
 CREATE TABLE IF NOT EXISTS `#__kunena` (
-  `id` int(10) NOT NULL auto_increment,
+  `id` int(11) NOT NULL auto_increment,
   `version` varchar(16) NOT NULL COMMENT 'Version number',
-  `installed_date` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP COMMENT 'Date-time modified or installed',
+  `installed_date` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP COMMENT 'Date-time installed',
   `log` mediumtext,
-  PRIMARY KEY  USING BTREE (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Extension version history';
+  PRIMARY KEY  (`id`),
+  KEY `idx_version` (`version`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Version history';
 
 -- --------------------------------------------------------
 

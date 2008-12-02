@@ -132,7 +132,7 @@ class KunenaModelCategory extends JModel
 		}
 
 		// Check the session for previously entered form data.
-		$data = $app->getUserState('kunena.category.form.data', array());
+		$data = $app->getUserState('com_kunena.edit.category.data', array());
 
 		// Bind the form data if present.
 		if (!empty($data)) {

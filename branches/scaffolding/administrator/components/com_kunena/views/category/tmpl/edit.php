@@ -24,11 +24,7 @@ JHTML::stylesheet('default.css', 'administrator/components/com_kunena/media/css/
 $this->buildDefaultToolBar();
 
 // Get the form fields.
-$fields	= $this->form->getFields('jxform');
-
-// Create a tab pane object.
-jimport('joomla.html.pane');
-$pane =& JPane::getInstance('tabs');
+$fields	= $this->form->getFields();
 ?>
 
 <script type="text/javascript">
@@ -41,8 +37,8 @@ function submitbutton(task)
 }
 </script>
 
- <form action="<?php echo JRoute::_('index.php?option=com_kunena&view=categories');?>" method="post" name="adminForm">
- 	<fieldset>
+<form action="<?php echo JRoute::_('index.php?option=com_kunena&view=categories');?>" method="post" name="adminForm">
+	<fieldset>
 		<?php if (is_object($this->item) && $this->item->id > 0) : ?>
 		<legend><?php echo JText::sprintf('Record #', $this->item->id); ?></legend>
 		<?php endif; ?>
@@ -77,9 +73,6 @@ function submitbutton(task)
 		</table>
 	</fieldset>
 
-<?php echo $pane->startPane('edit-pane'); ?>
-
-	<?php echo $pane->startPanel(JText :: _('FB Tab Content'), 'content-page'); ?>
 		<table width="100%">
 			<tbody>
 				<tr valign="top">
@@ -146,9 +139,8 @@ function submitbutton(task)
 				</tr>
 			</tbody>
 		</table>
-	<?php echo $pane->endPanel(); ?>
 
-	<?php echo $pane->startPanel(JText :: _('FB Tab Metadata'), 'metadata-page'); ?>
+
 		<table>
 			<tbody>
 				<tr valign="top">
@@ -199,9 +191,6 @@ function submitbutton(task)
 				</tr>
 			</tbody>
 		</table>
-	<?php echo $pane->endPanel(); ?>
-
-<?php echo $pane->endPane(); ?>
 
 	<?php echo $fields['id']->field; ?>
 	<input type="hidden" name="task" value="" />

@@ -123,7 +123,7 @@ class KunenaControllerCategory extends JController
 	/**
 	 * Method to cancel an edit
 	 *
-	 * Checks the item in, sets item ID in the session to null, and then redirects to the list page.
+	 * Checks the item in, sets item id in the session to null, and then redirects to the list screen.
 	 *
 	 * @access	public
 	 * @return	void

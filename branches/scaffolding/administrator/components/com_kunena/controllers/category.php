@@ -28,60 +28,96 @@ class KunenaControllerCategory extends JController
 	{
 		parent::__construct();
 
-		$this->registerTask('save2copy',	'save');
-		$this->registerTask('save2new',	'save');
+		// Map the save tasks.
+		$this->registerTask('save2new',		'save');
 		$this->registerTask('apply',		'save');
+
+		// Map the publishing state tasks.
 		$this->registerTask('unpublish',	'publish');
 		$this->registerTask('trash',		'publish');
+
+		// Map the ordering tasks.
 		$this->registerTask('orderup',		'ordering');
 		$this->registerTask('orderdown',	'ordering');
 
+		// Map the set property tasks.
 		$this->registerTask('reviewon',		'toggle');
 		$this->registerTask('reviewoff',	'toggle');
-		$this->registerTask('moderatedon',		'toggle');
+		$this->registerTask('moderatedon',	'toggle');
 		$this->registerTask('moderatedoff',	'toggle');
 		$this->registerTask('lockedon',		'toggle');
 		$this->registerTask('lockedoff',	'toggle');
 	}
 
 	/**
-	 * Display the view
-	 */
-	function display()
-	{
-	}
-
-	/**
-	 * Proxy for getModel
-	 */
-	function &getModel()
-	{
-		return parent::getModel('Category', '', array('ignore_request' => true));
-	}
-
-	/**
-	 * Method to edit a object
-	 *
-	 * Sets object ID in the session from the request, checks the item out, and then redirects to the edit page.
+	 * Dummy method to redirect back to standard controller
 	 *
 	 * @access	public
 	 * @return	void
+	 * @since	1.0
+	 */
+	function display()
+	{
+		$this->setRedirect(JRoute::_('index.php?option=com_kunena', false));
+	}
+
+	/**
+	 * Method to add a new category.
+	 *
+	 * @access	public
+	 * @return	void
+	 * @since	1.0
+	 */
+	function add()
+	{
+		// Initialize variables.
+		$app = &JFactory::getApplication();
+
+		// Clear the category id from the session.
+		$app->setUserState('com_kunena.edit.category.id', null);
+
+		// Redirect to the edit screen.
+		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=category&layout=edit&hidemainmenu=1', false));
+	}
+
+	/**
+	 * Method to check out a category for editing and redirect to the edit form.
+	 *
+	 * If a different category was previously checked-out, the previous category will be checked
+	 * in first.
+	 *
+	 * @access	public
+	 * @return	void
+	 * @since	1.0
 	 */
 	function edit()
 	{
-		$cid = JRequest::getVar('cid', array(), '', 'array');
-		$id  = JRequest::getInt('id', @$cid[0]);
+		// Initialize variables.
+		$app	= &JFactory::getApplication();
+		$cid	= JRequest::getVar('cid', array(), '', 'array');
 
-		$session = &JFactory::getSession();
-		$session->set('kunena.category.id', $id);
+		// Get the previous category id (if any) and the current category id.
+		$previousId = (int) $app->getUserState('com_kunena.edit.category.id');
+		$catId		= (int) (count($cid) ? $cid[0] : JRequest::getInt('cat_id'));
 
-		// Checkout item
-		$model = $this->getModel();
+		// Set the category id for the category to edit in the session.
+		$app->setUserState('com_kunena.edit.category.id', $catId);
 
-		if ($id) {
-			$model->checkout($id);
+		// Get the model.
+		$model = &$this->getModel('Category', 'KunenaModel');
+
+		// Check out the category.
+		if ($catId) {
+			$model->checkout($catId);
 		}
-		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=category&layout=edit', false));
+
+		// Check in the previous category.
+		if ($previousId) {
+			$model->checkin($previousId);
+		}
+
+		// Redirect to the edit screen.
+		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=category&layout=edit&hidemainmenu=1', false));
 	}
 
 	/**
@@ -91,110 +127,172 @@ class KunenaControllerCategory extends JController
 	 *
 	 * @access	public
 	 * @return	void
+	 * @since	1.0
 	 */
 	function cancel()
 	{
-		// Checkin item if checked out
-		$session = &JFactory::getSession();
-		if ($id = (int) $session->get('kunena.category.id')) {
-			$model = $this->getModel();
-			$model->checkin($id);
+		// Initialize variables.
+		$app = &JFactory::getApplication();
+
+		// Get the previous category id.
+		$previousId = (int) $app->getUserState('com_kunena.edit.category.id');
+
+		// Get the model.
+		$model = &$this->getModel('Category', 'KunenaModel');
+
+		// Check in the previous category.
+		if ($previousId) {
+			$model->checkin($previousId);
 		}
 
-		// Clear the session of the item
-		$session->set('kunena.category.id', null);
+		// Clear the category id from the session.
+		$app->setUserState('com_kunena.edit.category.id', null);
 
+		// Redirect to the list screen.
 		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=categories', false));
 	}
 
 	/**
-	 * Save the record
+	 * Method to save a category.
+	 *
+	 * @access	public
+	 * @return	void
+	 * @since	1.0
 	 */
 	function save()
 	{
 		// Check for request forgeries.
-		JRequest::checkToken();
+		JRequest::checkToken() or jexit(JText::_('KUNENA_INVALID_TOKEN'));
 
-		// Get posted form variables.
-		$values		= JRequest::getVar('jxform', array(), 'post', 'array');
+		// Initialize variables.
+		$app = &JFactory::getApplication();
 
-		// Get the id of the item out of the session.
-		$session	= &JFactory::getSession();
-		$id			= (int) $session->get('kunena.category.id');
-		$values['id'] = $id;
+		// Get the posted values from the request.
+		$data = JRequest::getVar('jxform', array(), 'post', 'array');
 
-		// Get the extensions model and set the post request in its state.
-		$model	= &$this->getModel();
-		$post = JRequest::get('post');
-		$model->setState('request', $post);
+		// Populate the row id from the session.
+		$data['id'] = (int) $app->getUserState('com_kunena.edit.category.id');
 
-		// Get the form model object and validate it.
-		$form	= &$model->getForm('model');
-		$form->filter($values);
-		$result	= $form->validate($values);
+		// Get the model and attempt to validate the posted data.
+		$model = &$this->getModel('Category', 'KunenaModel');
+		$return	= $model->validate($data);
 
-		if (JError::isError($result)) {
-			JError::raiseError(500, $result->message);
+		// Check for validation errors.
+		if ($return === false)
+		{
+			// Get the validation messages.
+			$errors	= $model->getErrors();
+
+			// Push up to three validation messages out to the user.
+			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++)
+			{
+				if (JError::isError($errors[$i])) {
+					$app->enqueueMessage($errors[$i]->getMessage(), 'notice');
+				} else {
+					$app->enqueueMessage($errors[$i], 'notice');
+				}
+			}
+
+			// Save the data in the session.
+			$app->setUserState('com_kunena.edit.category.data', $data);
+
+			// Redirect back to the edit screen.
+			$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=category&layout=edit&hidemainmenu=1', false));
+			return false;
 		}
 
-		if ($model->save($values)) {
-			$msg = JText::_('FB Message Saved');
-		}
-		else {
-			$msg = $model->getError();
+		// Attempt to save the data.
+		$return	= $model->save($data);
+
+		// Check for errors.
+		if ($return === false)
+		{
+			// Save the data in the session.
+			$app->setUserState('com_kunena.edit.category.data', $data);
+
+			// Redirect back to the edit screen.
+			$this->setMessage(JText::sprintf('KUNENA_CATEGORY_SAVE_FAILED', $model->getError()), 'notice');
+			$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=category&layout=edit&hidemainmenu=1', false));
+			return false;
 		}
 
-		if ($this->_task == 'apply') {
-			$session->set('Kunena.category.id', $model->getState('id'));
-			$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=category&layout=edit', false), $msg);
-		}
-		else if ($this->_task == 'save2new') {
-			$session->set('Kunena.category.id', null);
-			$model->checkin($id);
+		// Redirect the user and adjust session state based on the chosen task.
+		switch ($this->_task)
+		{
+			case 'apply':
+				// Redirect back to the edit screen.
+				$this->setMessage(JText::_('KUNENA_CATEGORY_SAVE_SUCCESS'));
+				$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=category&layout=edit&hidemainmenu=1', false));
+				break;
 
-			$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=category&layout=edit', false), $msg);
-		}
-		else {
-			$session->set('Kunena.category.id', null);
-			$model->checkin($id);
+			case 'save2new':
+				// Check in the category.
+				$catId = (int) $app->getUserState('com_kunena.edit.category.id');
+				if ($catId) {
+					$model->checkin($catId);
+				}
 
-			$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=categories', false), $msg);
+				// Clear the category id from the session.
+				$app->setUserState('com_kunena.edit.category.id', null);
+
+				// Redirect back to the edit screen.
+				$this->setMessage(JText::_('KUNENA_CATEGORY_SAVE_SUCCESS'));
+				$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=category&layout=edit&hidemainmenu=1', false));
+				break;
+
+			default:
+				// Check in the category.
+				$catId = (int) $app->getUserState('com_kunena.edit.category.id');
+				if ($catId) {
+					$model->checkin($catId);
+				}
+
+				// Clear the category id from the session.
+				$app->setUserState('com_kunena.edit.category.id', null);
+
+				// Redirect to the list screen.
+				$this->setMessage(JText::_('KUNENA_CATEGORY_SAVE_SUCCESS'));
+				$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=categories', false));
+				break;
 		}
+
+		// Flush the data from the session.
+		$app->setUserState('com_kunena.edit.category.data', null);
 	}
 
 	/**
-	 * Removes an item
+	 * Method to delete categories.
+	 *
+	 * @access	public
+	 * @return	void
+	 * @since	1.0
 	 */
 	function delete()
 	{
-		// Check for request forgeries
-		JRequest::checkToken() or die('Invalid Token');
+		// Check for request forgeries.
+		JRequest::checkToken() or jexit(JText::_('KUNENA_INVALID_TOKEN'));
 
-		// Get items to remove from the request.
-		$cid	= JRequest::getVar('cid', array(), '', 'array');
+		// Get and sanitize the items to delete.
+		$cid = JRequest::getVar('cid', null, 'post', 'array');
+		JArrayHelper::toInteger($cid);
 
-		if (!is_array($cid) || count($cid) < 1) {
-			JError::raiseWarning(500, JText::_('Select an item to delete'));
+		// Get the model.
+		$model = &$this->getModel('Category', 'KunenaModel');
+
+		// Attempt to delete the item(s).
+		if (!$model->delete($cid)) {
+			$this->setMessage(JText::sprintf('KUNENA_CATEGORIES_DELETE_FAILED', $model->getError()), 'notice');
 		}
 		else {
-			// Get the model.
-			$model = $this->getModel();
-
-			// Make sure the item ids are integers
-			jimport('joomla.utilities.arrayhelper');
-			JArrayHelper::toInteger($cid);
-
-			// Remove the items.
-			if (!$model->delete($cid)) {
-				JError::raiseWarning(500, $model->getError());
-			}
+			$this->setMessage(JText::sprintf('KUNENA_CATEGORIES_DELETE_SUCCESS', count($cid)));
 		}
 
-		$this->setRedirect('index.php?option=com_kunena&view=categories');
+		// Redirect to the list screen.
+		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=categories', false));
 	}
 
 	/**
-	 * Method to publish a list of taxa
+	 * Method to set the published state of categories.
 	 *
 	 * @access	public
 	 * @return	void
@@ -202,51 +300,92 @@ class KunenaControllerCategory extends JController
 	 */
 	function publish()
 	{
-		// Check for request forgeries
-		JRequest::checkToken() or die('Invalid Token');
+		// Check for request forgeries.
+		JRequest::checkToken() or jexit(JText::_('KUNENA_INVALID_TOKEN'));
 
-		// Get items to publish from the request.
-		$cid	= JRequest::getVar('cid', array(), '', 'array');
-		$values	= array('publish' => 1, 'unpublish' => 0, 'trash' => -2);
-		$task	= $this->getTask();
-		$value	= JArrayHelper::getValue($values, $task, 0, 'int');
+		// Get and sanitize the items to delete.
+		$cid = JRequest::getVar('cid', null, 'post', 'array');
+		JArrayHelper::toInteger($cid);
 
-		if (!is_array($cid) || count($cid) < 1) {
-			JError::raiseWarning(500, JText::_('FB Error No items selected'));
+		// Get the model.
+		$model = &$this->getModel('Category', 'KunenaModel');
+
+		// Attempt to set the publishing state for the categories.
+		switch ($this->_task)
+		{
+			case 'publish':
+				$result = $model->publish($cid);
+				break;
+
+			case 'unpublish':
+				$result = $model->unpublish($cid);
+				break;
+
+			case 'trash':
+				$result = $model->trash($cid);
+				break;
 		}
-		else {
-			// Get the model.
-			$model	= $this->getModel();
 
-			// Make sure the item ids are integers
-			JArrayHelper::toInteger($cid);
-
-			// Publish the items.
-			if (!$model->publish($cid, $value)) {
-				JError::raiseWarning(500, $model->getError());
-			}
+		// If there is a problem, set the error message.
+		if (!$result) {
+			$this->setMessage($model->getError());
 		}
 
-		$this->setRedirect('index.php?option=com_kunena&view=categories');
+		// Redirect to the list screen.
+		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=categories', false));
 	}
 
 	/**
-	 * Changes the order of an item
+	 * Method to adjust the ordering of a category in the tree.
+	 *
+	 * @access	public
+	 * @return	void
+	 * @since	1.0
 	 */
 	function ordering()
 	{
-		// Check for request forgeries
-		JRequest::checkToken() or die('Invalid Token');
+		// Check for request forgeries.
+		JRequest::checkToken() or jexit(JText::_('KUNENA_INVALID_TOKEN'));
 
-		$cid	= JRequest::getVar('cid', null, 'post', 'array');
-		$inc	= $this->getTask() == 'orderup' ? -1 : +1;
+		// Get the category id from the request.
+		$cid	= JRequest::getVar('cid', array(), '', 'array');
+		$catId	= (int) (count($cid) ? $cid[0] : JRequest::getInt('cat_id'));
 
-		$model = & $this->getModel();
-		$model->ordering($cid, $inc);
+		// Get the model.
+		$model = &$this->getModel('Category', 'KunenaModel');
 
-		$this->setRedirect('index.php?option=com_kunena&view=categories');
+		// Attempt to adjust the ordering for the categort.
+		switch ($this->_task)
+		{
+			case 'orderup':
+				// Adjust the ordering up one.
+				$result = $model->ordering($catId, -1);
+				break;
+
+			case 'orderdown':
+				// Adjust the ordering down one.
+				$result = $model->ordering($catId, 1);
+				break;
+
+			default:
+				// Get the ordering adjustment from the request.
+				$adjustment = JRequest::getInt('adjustment', 0);
+
+				// Adjust the ordering based on the adjustment value.
+				$result = $model->ordering($catId, $adjustment);
+				break;
+		}
+
+		// If there is a problem, set the error message.
+		if (!$result) {
+			$this->setMessage($model->getError());
+		}
+
+		// Redirect to the list view.
+		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=categories', false));
 	}
 
+///////////////////////////////////////////
 	/**
 	 * Change or increment the access
 	 */
@@ -258,7 +397,7 @@ class KunenaControllerCategory extends JController
 		$cid	= JRequest::getVar('cid',		null, 'post', 'array');
 		$level	= JRequest::getVar('level',	null, 'post');
 
-		$model	= & $this->getModel();
+		$model = &$this->getModel('Category');
 		$result	= $model->access($cid, $level);
 		if (JError::isError($result)) {
 			$this->setMessage($result->getMessage());
@@ -267,7 +406,8 @@ class KunenaControllerCategory extends JController
 			$this->setMessage(JText::sprintf('Items updated', $result));
 		}
 
-		$this->setRedirect('index.php?option=com_kunena&view=categories');
+		// Redirect to the list screen.
+		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=categories', false));
 	}
 
 	//
@@ -286,14 +426,16 @@ class KunenaControllerCategory extends JController
 		$cid	= JRequest::getVar('cid', null, 'post', 'array');
 		$result	= true;
 
-		$model = & $this->getModel();
+		$model = &$this->getModel('Category');
 		$model->setState('vars',	$vars);
 		$model->setState('ids',	$cid);
 		$result = $model->quick();
 		if (JError::isError($result)) {
 			JError::raiseNotice(500, $result->getMessage());
 		}
-		$this->setRedirect('index.php?option=com_kunena&view=categories');
+
+		// Redirect to the list screen.
+		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=categories', false));
 	}
 
 	/**
@@ -309,10 +451,11 @@ class KunenaControllerCategory extends JController
 		$vars	= JRequest::getVar('batch', array(), 'post', 'array');
 		$cid	= JRequest::getVar('cid', null, 'post', 'array');
 
-		$model	= &$this->getModel();
+		$model = &$this->getModel('Category');
 		$model->batch($vars, $cid);
 
-		$this->setRedirect('index.php?option=com_kunena&view=categories');
+		// Redirect to the list view.
+		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=categories', false));
 	}
 
 	/**
@@ -331,13 +474,13 @@ class KunenaControllerCategory extends JController
 		$cid	= JRequest::getVar('cid', array(), '', 'array');
 
 		// Get the model.
-		$model	= $this->getModel();
+		$model = &$this->getModel('Category');
 		// Publish the items.
 		if (!$model->toggle($cid, $this->getTask())) {
 			JError::raiseWarning(500, $model->getError());
 		}
 
-		$this->setRedirect('index.php?option=com_kunena&view=categories');
+		// Redirect to the list view.
+		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=categories', false));
 	}
-
 }

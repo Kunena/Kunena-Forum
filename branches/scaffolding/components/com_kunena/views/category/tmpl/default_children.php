@@ -11,15 +11,6 @@
 defined('_JEXEC') or die('Invalid Request.');
 ?>
 
-<style>
-ul.forum_categories {
-
-}
-ul.forum_categories li {
-	list-style: none;
-	background: none;
-}
-</style>
 <ul class="forum_categories">
 <?php
 $i = 0;

@@ -93,24 +93,24 @@ $this->buildDefaultToolBar();
 				</td>
 				<td style="padding-left:<?php echo intval($item->level*15)+4; ?>px">
 					<?php if ($item->checked_out) : ?>
-						<?php echo JHTML::_('jxgrid.checkedout', $item->editor, $item->checked_out_time); ?>
+						<?php echo JHTML::_('KGrid.checkedout', $item->editor, $item->checked_out_time); ?>
 					<?php endif; ?>
 					<a href="<?php echo JRoute::_('index.php?option=com_kunena&task=category.edit&cid[]='.$item->id);?>">
 						<?php echo $item->title; ?></a>
-					<?php echo JHTML::_('kunenagrid.orderUpIcon', $item->id, $item->ordering, $this->pagination, 'category.orderup', 'Move Up', ($item->ordering != 0)); ?>
-					<?php echo JHTML::_('kunenagrid.orderdownIcon', $item->id, $item->ordering, $this->pagination, 'category.orderdown', 'Move Down', (!empty($this->items[$i]) && ($item->level == $this->items[$i]->level))); ?>
+					<?php echo JHTML::_('KGrid.orderUpIcon', $item->id, $item->ordering, $this->pagination, 'category.orderup', 'Move Up', ($item->ordering != 0)); ?>
+					<?php echo JHTML::_('KGrid.orderdownIcon', $item->id, $item->ordering, $this->pagination, 'category.orderdown', 'Move Down', (!empty($this->items[$i]) && ($item->level == $this->items[$i]->level))); ?>
 				</td>
 				<td align="center">
-					<?php echo JHTML::_('kunenagrid.boolean', $item->id, $item->review, 'category.reviewed', 'category.unreviewed'); ?>
+					<?php echo JHTML::_('KGrid.boolean', $item->id, $item->review, 'category.reviewed', 'category.unreviewed'); ?>
 				</td>
 				<td align="center">
-					<?php echo JHTML::_('kunenagrid.boolean', $item->id, $item->moderated, 'category.moderated', 'category.unmoderated'); ?>
+					<?php echo JHTML::_('KGrid.boolean', $item->id, $item->moderated, 'category.moderated', 'category.unmoderated'); ?>
 				</td>
 				<td align="center">
-					<?php echo JHTML::_('kunenagrid.boolean', $item->id, $item->locked, 'category.lock', 'category.unlock'); ?>
+					<?php echo JHTML::_('KGrid.boolean', $item->id, $item->locked, 'category.lock', 'category.unlock'); ?>
 				</td>
 				<td align="center">
-					<?php echo JHTML::_('kunenagrid.published', $item->id, $item->published, 'category.'); ?>
+					<?php echo JHTML::_('KGrid.published', $item->id, $item->published, 'category.'); ?>
 				</td>
 				<td align="center">
 					<?php

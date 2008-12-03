@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Id:article.xml 2549 2007-11-10 06:22:58Z masterchief $ -->
+<form>
+	<fields>
+		<field name="id"
+			type="hidden"
+			id="id"
+			class="inputbox readonly"
+			label="KUNENA_CATEGORY_ID"
+			size="6"
+			default="0"
+			required="true"
+			readonly="true" />
+
+		<field name="parent_id"
+			type="list_category"
+			id="parent_id"
+			class="inputbox"
+			label="KUNENA_CATEGORY_PARENT"
+			description="KUNENA_CATEGORY_PARENT_DESC"
+			default="0" />
+
+		<field name="title"
+			type="text"
+			id="title"
+			class="inputbox validate required"
+			label="KUNENA_CATEGORY_TITLE"
+			size="50"
+			default=""
+			description="KUNENA_CATEGORY_TITLE_DESC"
+			required="true" />
+
+		<field name="alias"
+			type="text"
+			id="alias"
+			class="inputbox"
+			label="KUNENA_CATEGORY_ALIAS"
+			size="50"
+			default=""
+			description="KUNENA_CATEGORY_ALIAS_DESC" />
+
+		<field name="path"
+			type="text"
+			id="path"
+			class="readonly"
+			label="KUNENA_CATEGORY_PATH"
+			description="KUNENA_CATEGORY_PATH_DESC"
+			size="30"
+			readonly="true" />
+
+		<field name="icon"
+			type="text"
+			id="icon"
+			class="inputbox"
+			label="KUNENA_CATEGORY_ICON"
+			description="KUNENA_CATEGORY_ICON_DESC"
+			size="30"
+			default="" />
+
+		<field name="summary"
+			type="textarea"
+			rows="3"
+			cols="30"
+			id="summary"
+			class="inputbox"
+			label="KUNENA_CATEGORY_SUMMARY"
+			description="KUNENA_CATEGORY_SUMMARY_DESC"
+			size="30"
+			default="" />
+
+		<field name="description"
+			type="textarea_editor"
+			id="body"
+			class="inputbox"
+			label="KUNENA_CATEGORY_DESCRIPTION"
+			height="400"
+			rows="10"
+			cols="50"
+			default=""
+			buttons="readmore,pagebreak"
+			filter="safehtml" />
+
+		<field name="published"
+			type="radio"
+			id="published"
+			class="inputbox"
+			label="KUNENA_CATEGORY_PUBLISHED"
+			description="KUNENA_CATEGORY_PUBLISHED_DESC"
+			default="1"
+			required="true">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+			<option value="-2">Trash</option>
+		</field>
+
+		<field name="ordering"
+			type="text"
+			id="ordering"
+			class="inputbox"
+			label="KUNENA_CATEGORY_ORDERING"
+			description="KUNENA_CATEGORY_ORDERING_DESC"
+			size="6"
+			default="0" />
+
+		<field name="access"
+			type="list_access"
+			id="access"
+			class="inputbox"
+			label="KUNENA_CATEGORY_ACCESS"
+			description="KUNENA_CATEGORY_ACCESS_DESC"
+			default="0"/>
+
+		<field name="class_sfx"
+			type="text"
+			id="class_sfx"
+			class="inputbox"
+			label="KUNENA_CATEGORY_CSS_CLASS"
+			description="KUNENA_CATEGORY_CSS_CLASS_DESC"
+			size="30"
+			default="" />
+
+		<field name="locked"
+			type="radio"
+			id="locked"
+			label="KUNENA_CATEGORY_LOCKED"
+			description="KUNENA_CATEGORY_LOCKED_DESC"
+			size="30"
+			default="0">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+
+		<field name="moderated"
+			type="radio"
+			id="moderated"
+			label="KUNENA_CATEGORY_MODERATED"
+			description="KUNENA_CATEGORY_MODERATED_DESC"
+			default="0">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+
+		<field name="alert_admin"
+			type="radio"
+			id="alert_admin"
+			label="KUNENA_CATEGORY_ALERT_ADMIN"
+			description="KUNENA_CATEGORY_ALERT_ADMIN_DESC"
+			default="0">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+
+		<field name="admin_access"
+			type="list_access"
+			id="admin_access"
+			class="inputbox"
+			label="KUNENA_CATEGORY_ADMIN_ACCESS"
+			description="KUNENA_CATEGORY_ADMIN_ACCESS_DESC"
+			default="0" />
+
+		<field name="review"
+			type="radio"
+			id="review"
+			label="KUNENA_CATEGORY_REVIEW"
+			description="KUNENA_CATEGORY_REVIEW_DESC"
+			default="0">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+
+		<field name="hits"
+			type="text"
+			class="readonly"
+			label="KUNENA_CATEGORY_HITS"
+			readonly="true"
+			default="0" />
+
+		<field name="last_post_id"
+			type="text"
+			class="readonly"
+			label="KUNENA_CATEGORY_LAST_POST_ID"
+			readonly="true" />
+
+		<field name="last_post_time"
+			type="text"
+			class="readonly"
+			label="KUNENA_CATEGORY_LAST_POST_TIME"
+			readonly="true" />
+
+		<field name="total_threads"
+			type="text"
+			class="readonly"
+			label="KUNENA_CATEGORY_TOTAL_THREADS"
+			readonly="true"
+			default="0" />
+
+		<field name="total_posts"
+			type="text"
+			class="readonly"
+			label="KUNENA_CATEGORY_TOTAL_POSTS"
+			readonly="true"
+			default="0" />
+
+		<field name="left_id"
+			type="hidden"
+			label="KUNENA_CATEGORY_LEFT_ID" />
+
+		<field name="right_id"
+			type="hidden"
+			label="KUNENA_CATEGORY_RIGHT_ID" />
+
+	</fields>
+</form>

@@ -260,7 +260,8 @@ class KunenaModelCategories extends JModel
 		// Select all fields from the articles table.
 		$query->select('a.*');
 		$query->from('`#__kunena_categories` AS a');
-		$query->join('INNER', '`#__Kunena_categories` AS parent ON a.left_id BETWEEN parent.left_id AND parent.right_id');
+		$query->select('COUNT(DISTINCT parent.id) AS level');
+		$query->join('LEFT OUTER', '`#__kunena_categories` AS parent ON a.left_id > parent.left_id AND a.right_id < parent.right_id');
 		$query->group('a.id');
 
 		// Resolve foriegn keys with the messages_text table.

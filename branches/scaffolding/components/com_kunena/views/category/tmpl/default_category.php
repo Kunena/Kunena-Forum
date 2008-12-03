@@ -10,6 +10,6 @@
 
 defined('_JEXEC') or die('Invalid Request.');
 ?>
-<h2><a href="<?php echo JRoute::_('index.php?option=com_kunena&view=category&cat_id='.$this->category->id.':'.$this->category->path); ?>"><?php echo $this->category->title; ?></a></h2>
-<p><?php echo $this->category->summary; ?></p>
-<div><?php echo $this->category->description; ?></div>
+<h3><a href="<?php echo JRoute::_('index.php?option=com_kunena&view=category&cat_id='.$this->child->id.':'.$this->child->path); ?>"><?php echo $this->child->title; ?></a></h3>
+<p><?php echo $this->child->summary; ?></p>
+<div><?php echo $this->child->description; ?></div>

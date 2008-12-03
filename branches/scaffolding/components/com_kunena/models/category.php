@@ -141,6 +141,8 @@ class KunenaModelCategory extends JModel
 			return $false;
 		}
 
+		$category->children = $this->_getChildrenByCategory($category->id);
+
 		return $category;
 	}
 

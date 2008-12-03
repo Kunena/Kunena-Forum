@@ -12,7 +12,7 @@ defined('_JEXEC') or die('Invalid Request.');
 
 jimport('joomla.application.component.controller');
 jimport('joomla.application.component.helper');
-
+//var_dump($_REQUEST);die;
 /**
  * Base controller class for Kunena.
  *

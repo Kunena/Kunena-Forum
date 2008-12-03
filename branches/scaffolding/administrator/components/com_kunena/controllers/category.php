@@ -41,12 +41,12 @@ class KunenaControllerCategory extends JController
 		$this->registerTask('orderdown',	'ordering');
 
 		// Map the set property tasks.
-		$this->registerTask('reviewon',		'toggle');
-		$this->registerTask('reviewoff',	'toggle');
-		$this->registerTask('moderatedon',	'toggle');
-		$this->registerTask('moderatedoff',	'toggle');
-		$this->registerTask('lockedon',		'toggle');
-		$this->registerTask('lockedoff',	'toggle');
+		$this->registerTask('reviewed',		'define');
+		$this->registerTask('unreviewed',	'define');
+		$this->registerTask('moderated',	'define');
+		$this->registerTask('unmoderated',	'define');
+		$this->registerTask('lock',			'define');
+		$this->registerTask('unlock',		'define');
 	}
 
 	/**
@@ -198,7 +198,7 @@ class KunenaControllerCategory extends JController
 
 			// Redirect back to the edit screen.
 			$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=category&layout=edit&hidemainmenu=1', false));
-			return false;
+//			return false;
 		}
 
 		// Attempt to save the data.
@@ -385,6 +385,66 @@ class KunenaControllerCategory extends JController
 		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=categories', false));
 	}
 
+	/**
+	 * Method to set a property for categories.
+	 *
+	 * @access	public
+	 * @return	void
+	 * @since	1.0
+	 */
+	function define()
+	{
+		// Check for request forgeries.
+		JRequest::checkToken() or jexit(JText::_('KUNENA_INVALID_TOKEN'));
+
+		// Get and sanitize the category id(s).
+		$cid = JRequest::getVar('cid', null, 'post', 'array');
+		JArrayHelper::toInteger($cid);
+
+		// Get the model.
+		$model = &$this->getModel('Category', 'KunenaModel');
+
+		// Attempt to set the property for the categories.
+		switch ($this->_task)
+		{
+			case 'reviewed':
+				$result = $model->setProperty($cid, 'review', 1);
+				break;
+
+			case 'unreviewed':
+				$result = $model->setProperty($cid, 'review', 0);
+				break;
+
+			case 'moderated':
+				$result = $model->setProperty($cid, 'moderated', 1);
+				break;
+
+			case 'unmoderated':
+				$result = $model->setProperty($cid, 'moderated', 0);
+				break;
+
+			case 'lock':
+				$result = $model->setProperty($cid, 'locked', 1);
+				break;
+
+			case 'unlock':
+				$result = $model->setProperty($cid, 'locked', 0);
+				break;
+
+			default:
+				$result = true;
+				break;
+		}
+
+		// If there is a problem, set the error message.
+		if (!$result) {
+			$this->setMessage($model->getError());
+		}
+
+		// Redirect to the list screen.
+		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=categories', false));
+	}
+
 ///////////////////////////////////////////
 	/**
 	 * Change or increment the access
@@ -453,32 +513,6 @@ class KunenaControllerCategory extends JController
 
 		$model = &$this->getModel('Category');
 		$model->batch($vars, $cid);
-
-		// Redirect to the list view.
-		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=categories', false));
-	}
-
-	/**
-	 * Method to publish a list of taxa
-	 *
-	 * @access	public
-	 * @return	void
-	 * @since	1.0
-	 */
-	function toggle()
-	{
-		// Check for request forgeries
-		JRequest::checkToken() or die('Invalid Token');
-
-		// Get items to publish from the request.
-		$cid	= JRequest::getVar('cid', array(), '', 'array');
-
-		// Get the model.
-		$model = &$this->getModel('Category');
-		// Publish the items.
-		if (!$model->toggle($cid, $this->getTask())) {
-			JError::raiseWarning(500, $model->getError());
-		}
 
 		// Redirect to the list view.
 		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=categories', false));

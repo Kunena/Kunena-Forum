@@ -341,7 +341,7 @@ class KunenaModelCategory extends JModel
 		// Set the property for relevant rows.
 		$this->_db->setQuery(
 			'UPDATE `#__kunena_categories`' .
-			' SET '.$$this->_db->nameQuote($property).' = '.$$this->_db->Quote($value) .
+			' SET '.$this->_db->nameQuote($property).' = '.$this->_db->Quote($value) .
 			' WHERE `id` IN ('.implode(',', $catIds).')'
 		);
 		$this->_db->query();

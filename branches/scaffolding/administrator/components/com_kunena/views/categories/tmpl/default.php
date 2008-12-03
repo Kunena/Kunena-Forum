@@ -69,10 +69,7 @@ $this->buildDefaultToolBar();
 				<th width="5%">
 					<?php echo JHTML::_('grid.sort', 'FB Col Access', 'a.access', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 				</th>
-				<th width="5%">
-					<?php echo JHTML::_('grid.sort', 'FB Col Order', 'a.left_id', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
-				</th>
-				<th width="5%">
+				<th width="10%">
 					<?php echo JHTML::_('grid.sort', 'FB Col Threads', 'a.total_threads', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 					/ <?php echo JHTML::_('grid.sort', 'FB Col Posts', 'a.total_posts', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 				</th>
@@ -86,9 +83,10 @@ $this->buildDefaultToolBar();
 			</tr>
 		</tfoot>
 		<tbody>
-		<?php
-			$i = 0;
-			foreach ($this->items as $item) : ?>
+<?php
+	$i = 0;
+	foreach ($this->items as $item) :
+?>
 			<tr class="row<?php echo $i++ % 2; ?>">
 				<td style="text-align:center">
 					<?php echo JHTML::_('grid.id', $item->id, $item->id); ?>
@@ -99,33 +97,34 @@ $this->buildDefaultToolBar();
 					<?php endif; ?>
 					<a href="<?php echo JRoute::_('index.php?option=com_kunena&task=category.edit&cid[]='.$item->id);?>">
 						<?php echo $item->title; ?></a>
+					<?php echo JHTML::_('kunenagrid.orderUpIcon', $item->id, $item->ordering, $this->pagination, 'category.orderup', 'Move Up', ($item->ordering != 0)); ?>
+					<?php echo JHTML::_('kunenagrid.orderdownIcon', $item->id, $item->ordering, $this->pagination, 'category.orderdown', 'Move Down', (!empty($this->items[$i]) && ($item->level == $this->items[$i]->level))); ?>
 				</td>
 				<td align="center">
-					<?php echo JHTML::_('kunenagrid.boolean', $item->id, $item->review, 'category.reviewOn', 'category.reviewOff'); ?>
+					<?php echo JHTML::_('kunenagrid.boolean', $item->id, $item->review, 'category.reviewed', 'category.unreviewed'); ?>
 				</td>
 				<td align="center">
-					<?php echo JHTML::_('kunenagrid.boolean', $item->id, $item->moderated, 'category.moderatedOn', 'category.moderatedOff'); ?>
+					<?php echo JHTML::_('kunenagrid.boolean', $item->id, $item->moderated, 'category.moderated', 'category.unmoderated'); ?>
 				</td>
 				<td align="center">
-					<?php echo JHTML::_('kunenagrid.boolean', $item->id, $item->locked, 'category.lockedOn', 'category.lockedOff'); ?>
+					<?php echo JHTML::_('kunenagrid.boolean', $item->id, $item->locked, 'category.lock', 'category.unlock'); ?>
 				</td>
 				<td align="center">
 					<?php echo JHTML::_('kunenagrid.published', $item->id, $item->published, 'category.'); ?>
 				</td>
 				<td align="center">
-					<?php echo JHTML::_('kunenagrid.access', $item->id, $item->access, $item->access_name, 'category.'); ?>
-				</td>
-				<td align="center">
-					<?php echo $this->pagination->orderUpIcon($item->id, $item->ordering, 'category.orderup'); ?>
-					<?php echo $item->ordering; ?>
-					<?php echo $this->pagination->orderDownIcon($item->id, $item->ordering, 'category.orderdown'); ?>
+					<?php
+						//echo JHTML::_('kunenagrid.access', $item->id, $item->access, $item->access_name, 'category.');
+					?>
 				</td>
 				<td align="center">
 					<?php echo $item->total_threads; ?>
 					/ <?php echo $item->total_posts; ?>
 				</td>
 			</tr>
-		<?php endforeach; ?>
+<?php
+	endforeach;
+?>
 		</tbody>
 	</table>
 

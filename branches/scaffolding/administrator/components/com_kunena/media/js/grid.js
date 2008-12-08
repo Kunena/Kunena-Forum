@@ -9,7 +9,6 @@ window.addEvent('domready', function(){
 	actions.each(function(a){
 		a.addEvent('click', function(){
 			args = Json.evaluate(this.rel);
-			console.log(args);
 			listItemTask(args.id, args.task);
 		});
 	});

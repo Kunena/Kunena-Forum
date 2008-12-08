@@ -102,7 +102,7 @@ class KunenaController extends JController
 		JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_USERS'),			'index.php?option=com_kunena&view=users',		$vName == 'users');
 		JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_FILES'),			'index.php?option=com_kunena&view=files',		$vName == 'files');
 		JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_MAINTENANCE'),	'index.php?option=com_kunena&view=maintenance',	$vName == 'maintenance');
-		JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_RULES'),			'index.php?option=com_kunena&view=rules',		$vName == 'rules');
+		//JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_RULES'),			'index.php?option=com_kunena&view=rules',		$vName == 'rules');
 	}
 
 	/**

@@ -17,7 +17,7 @@ JHTML::addIncludePath(JPATH_ROOT.'/plugins/system/jxtended/html/html');
 JHTML::_('behavior.tooltip');
 JHTML::_('behavior.formvalidation');
 
-// Load the gallery default stylesheet.
+// Load the default stylesheet.
 JHTML::stylesheet('default.css', 'administrator/components/com_kunena/media/css/');
 
 // Build the toolbar.

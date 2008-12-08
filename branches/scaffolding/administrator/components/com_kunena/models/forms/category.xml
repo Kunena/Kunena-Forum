@@ -13,12 +13,13 @@
 			readonly="true" />
 
 		<field name="parent_id"
-			type="list_category"
+			type="kunenacategories"
 			id="parent_id"
 			class="inputbox"
 			label="KUNENA_CATEGORY_PARENT"
 			description="KUNENA_CATEGORY_PARENT_DESC"
-			default="0" />
+			default="1"
+			allow_none="1" />
 
 		<field name="title"
 			type="text"
@@ -69,7 +70,7 @@
 			default="" />
 
 		<field name="description"
-			type="textarea_editor"
+			type="editor"
 			id="body"
 			class="inputbox"
 			label="KUNENA_CATEGORY_DESCRIPTION"
@@ -94,13 +95,15 @@
 		</field>
 
 		<field name="ordering"
-			type="text"
+			type="categoryordering"
 			id="ordering"
 			class="inputbox"
 			label="KUNENA_CATEGORY_ORDERING"
 			description="KUNENA_CATEGORY_ORDERING_DESC"
 			size="6"
-			default="0" />
+			default="0"
+			allow_first="1"
+			allow_last="1" />
 
 		<field name="access"
 			type="list_access"

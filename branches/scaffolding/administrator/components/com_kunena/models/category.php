@@ -123,6 +123,7 @@ class KunenaModelCategory extends JModel
 		// Get the form.
 		jximport('jxtended.form.form');
 		JXForm::addFormPath(JPATH_COMPONENT.'/models/forms');
+		JXForm::addFieldPath(JPATH_COMPONENT.'/models/fields');
 		$form = &JXForm::getInstance('category');
 
 		// Check for an error.

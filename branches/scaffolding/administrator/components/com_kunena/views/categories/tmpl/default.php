@@ -17,7 +17,7 @@ JHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 JHTML::_('behavior.tooltip');
 JHTML::script('checkall.js', 'administrator/components/com_kunena/media/js/');
 
-// Load the gallery default stylesheet.
+// Load the default stylesheet.
 JHTML::stylesheet('default.css', 'administrator/components/com_kunena/media/css/');
 
 // Build the toolbar.
@@ -27,15 +27,15 @@ $this->buildDefaultToolBar();
 	<fieldset class="filter clearfix">
 		<div class="left">
 			<label for="search"><?php echo JText::_('Search'); ?>:</label>
-			<input type="text" name="filter_search" id="search" value="<?php echo $this->state->get('filter.search'); ?>" size="60" title="<?php echo JText::_('Search in title'); ?>" />
+			<input type="text" name="filter_search" id="search" value="<?php echo $this->state->get('filter.search'); ?>" size="60" title="<?php echo JText::_('KUNENA_CATEGORY_SEARCH_IN_TITLE'); ?>" />
 			<button type="submit"><?php echo JText::_('Go'); ?></button>
 			<button type="button" onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_('Clear'); ?></button>
 		</div>
 		<div class="right">
 			<ol>
 				<li>
-					<label for="group_type">
-						<?php echo JText::_('Show categories that are:'); ?>
+					<label for="published">
+						<?php echo JText::_('KUNENA_SHOW_CATEGORIES_THAT_ARE'); ?>:
 					</label>
 					<select name="filter_state" id="published" class="inputbox" onchange="this.form.submit()">
 					<?php echo JHTML::_('select.options', $this->filter_state, 'value', 'text', $this->state->get('filter.state'));

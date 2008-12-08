@@ -17,7 +17,7 @@ JHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 JHTML::_('behavior.tooltip');
 JHTML::_('behavior.formvalidation');
 
-// Load the gallery default stylesheet.
+// Load the default stylesheet.
 JHTML::stylesheet('default.css', 'administrator/components/com_kunena/media/css/');
 
 // Build the toolbar.
@@ -39,10 +39,6 @@ function submitbutton(task)
 
 <form action="<?php echo JRoute::_('index.php?option=com_kunena&view=categories');?>" method="post" name="adminForm">
 	<fieldset>
-		<?php if (is_object($this->item) && $this->item->id > 0) : ?>
-		<legend><?php echo JText::sprintf('Record #', $this->item->id); ?></legend>
-		<?php endif; ?>
-
 		<table class="adminform">
 			<tbody>
 				<tr>
@@ -77,17 +73,16 @@ function submitbutton(task)
 			<tbody>
 				<tr valign="top">
 					<td width="70%">
+						<?php echo $fields['summary']->label; ?><br />
+						<?php echo $fields['summary']->field; ?><br /><br />
+
 						<label><?php echo $fields['description']->label; ?></label>
 						<?php echo $fields['description']->field; ?>
 					</td>
 					<td width="30%">
 						<fieldset>
-							<legend><?php echo JText::_('FB Fieldset Publishing');?></legend>
+							<legend><?php echo JText::_('KUNENA_FIELDSET_PUBLISHING');?></legend>
 							<ol>
-								<li>
-									<?php echo $fields['summary']->label; ?><br />
-									<?php echo $fields['summary']->field; ?>
-								</li>
 								<li>
 									<?php echo $fields['published']->label; ?><br />
 									<?php echo $fields['published']->field; ?>
@@ -96,6 +91,11 @@ function submitbutton(task)
 									<?php echo $fields['ordering']->label; ?><br />
 									<?php echo $fields['ordering']->field; ?>
 								</li>
+							</ol>
+						</fieldset>
+						<fieldset>
+							<legend><?php echo JText::_('KUNENA_FIELDSET_PERMISSIONS');?></legend>
+							<ol>
 								<li>
 									<?php echo $fields['access']->label; ?><br />
 									<?php echo $fields['access']->field; ?>
@@ -123,7 +123,7 @@ function submitbutton(task)
 							</ol>
 						</fieldset>
 						<fieldset>
-							<legend><?php echo JText::_('FB Fieldset Formatting');?></legend>
+							<legend><?php echo JText::_('KUNENA_FIELDSET_FORMATTING');?></legend>
 							<ol>
 								<li>
 									<?php echo $fields['icon']->label; ?><br />
@@ -135,64 +135,32 @@ function submitbutton(task)
 								</li>
 							</ol>
 						</fieldset>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-
-
-		<table>
-			<tbody>
-				<tr valign="top">
-					<td>
-						<table class="adminform">
-							<tr>
-								<th>
-									<?php echo $fields['hits']->label; ?>
-								</th>
-								<td>
+						<fieldset>
+							<legend><?php echo JText::_('KUNENA_FIELDSET_STATISTICS');?></legend>
+							<ol>
+								<li>
+									<?php echo $fields['hits']->label; ?><br />
 									<?php echo $fields['hits']->field; ?>
-								</td>
-							</tr>
-							<tr>
-								<th>
-									<?php echo $fields['last_post_id']->label; ?>
-								</th>
-								<td>
-									<?php echo $fields['last_post_id']->field; ?>
-								</td>
-							</tr>
-							<tr>
-								<th>
-									<?php echo $fields['last_post_time']->label; ?>
-								</th>
-								<td>
-									<?php echo $fields['last_post_time']->field; ?>
-								</td>
-							</tr>
-							<tr>
-								<th>
-									<?php echo $fields['total_threads']->label; ?>
-								</th>
-								<td>
+								</li>
+								<li>
+									<?php echo $fields['last_post_time']->label; ?><br />
+									<?php echo JHtml::date($fields['last_post_time']->value, '%c'); ?>
+								</li>
+								<li>
+									<?php echo $fields['total_threads']->label; ?><br />
 									<?php echo $fields['total_threads']->field; ?>
-								</td>
-							</tr>
-							<tr>
-								<th>
-									<?php echo $fields['total_posts']->label; ?>
-								</th>
-								<td>
+								</li>
+								<li>
+									<?php echo $fields['total_posts']->label; ?><br />
 									<?php echo $fields['total_posts']->field; ?>
-								</td>
-							</tr>
-						</table>
+								</li>
+							</ol>
+						</fieldset>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 
-	<?php echo $fields['id']->field; ?>
 	<input type="hidden" name="task" value="" />
 	<?php echo JHTML::_('form.token'); ?>
 </form>
@@ -200,10 +168,10 @@ function submitbutton(task)
 
 <script type="text/javascript">
 // Attach the onblur event to auto-create the alias
-e = document.getElementById('jxform_title');
+e = $('jxform_title');
 e.onblur = function(){
-	title = document.getElementById('jxform_title');
-	alias = document.getElementById('jxform_alias');
+	title = $('jxform_title');
+	alias = $('jxform_alias');
 	if (alias.value=='') {
 		alias.value = title.value.replace(/[\s\-]+/g,'-').replace(/&/g,'and').replace(/[^A-Z0-9\~\.\-\_]/ig,'').toLowerCase();
 	}

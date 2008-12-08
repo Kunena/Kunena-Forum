@@ -271,13 +271,13 @@ class KunenaTableCategory extends JTable
 			$this->load($oid);
 		}
 		if ($this->id == 0) {
-			return new JException(JText::_('FB Error Category not found'));
+			return new JException(JText::_('Category not found'));
 		}
 		if ($this->parent_id == 0) {
-			return new JException(JText::_('FB Error Root categories cannot be deleted'));
+			return new JException(JText::_('Root categories cannot be deleted'));
 		}
 		if ($this->left_id == 0 or $this->right_id == 0) {
-			return new JException(JText::_('FB Error Left-Right data inconsistency. Cannot delete category.'));
+			return new JException(JText::_('Left-Right data inconsistency. Cannot delete category.'));
 		}
 
 		$db = &$this->getDBO();
@@ -285,7 +285,7 @@ class KunenaTableCategory extends JTable
 		// Select the category ID and it's children
 		$db->setQuery(
 			'SELECT c.id' .
-			' FROM #__kunena_categories AS c' .
+			' FROM `'.$this->_tbl.'` AS c' .
 			' WHERE c.left_id >= '.(int) $this->left_id.' AND c.right_id <= '.$this->right_id
 		);
 		$ids = $db->loadResultArray();
@@ -299,7 +299,7 @@ class KunenaTableCategory extends JTable
 
 		// Delete the category and it's children
 		$db->setQuery(
-			'DELETE FROM #__kunena_categories' .
+			'DELETE FROM `'.$this->_tbl.'`' .
 			' WHERE id IN ('.$ids.')'
 		);
 		if (!$db->query()) {
@@ -333,7 +333,7 @@ class KunenaTableCategory extends JTable
 				$cid = array($this->$k);
 			}
 			else {
-				$this->setError('FB Error No items selected.');
+				$this->setError('No items selected.');
 				return false;
 			}
 		}
@@ -348,12 +348,12 @@ class KunenaTableCategory extends JTable
 			// ensure that subcats are not checked out
 			$db->setQuery(
 				'SELECT COUNT(c.id)' .
-				' FROM #__kunena_categories AS c' .
+				' FROM `'.$this->_tbl.'` AS c' .
 				' WHERE ((c.left_id > '.(int) $this->left_id.' AND c.right_id <= '.$this->right_id .') OR id = '.$id.')'.
 				' AND (checked_out <> 0 AND checked_out <> '.(int) $userId.')'
 			);
 			if ($db->loadResult()) {
-				$this->setError('FB Error Cannot unpublish or trash because parts of tree are checked out.');
+				$this->setError('Cannot unpublish or trash because parts of tree are checked out.');
 				return false;
 			}
 
@@ -361,7 +361,7 @@ class KunenaTableCategory extends JTable
 			if ($this->parent_id) {
 				$temp2->load($this->parent_id);
 				if ($temp2->published < $publish) {
-					$this->setError('FB Error Cannot published or unpublish because part of the tree higher up are unpublished or trashed.');
+					$this->setError('Cannot published or unpublish because part of the tree higher up are unpublished or trashed.');
 					return false;
 				}
 			}
@@ -370,7 +370,7 @@ class KunenaTableCategory extends JTable
 			{
 				// we are clear to execute
 				$db->setQuery(
-					'UPDATE #__kunena_categories AS c' .
+					'UPDATE `'.$this->_tbl.'` AS c' .
 					' SET published = ' . $publish .
 					' WHERE (c.left_id > '.(int) $this->left_id.' AND c.right_id < '.$this->right_id.') OR c.id = '.$id
 				);
@@ -418,7 +418,7 @@ class KunenaTableCategory extends JTable
 		// Get the parent id for the item.
 		$this->_db->setQuery(
 			'SELECT `parent_id`' .
-			' FROM `#__kunena_categories`' .
+			' FROM `'.$this->_tbl.'`' .
 			' WHERE `id` = '.(int)$id
 		);
 		$parent_id = (int) $this->_db->loadResult();
@@ -432,7 +432,7 @@ class KunenaTableCategory extends JTable
 		// Get the ordering values for the group.
 		$this->_db->setQuery(
 			'SELECT `id`' .
-			' FROM `#__kunena_categories`' .
+			' FROM `'.$this->_tbl.'`' .
 			' WHERE `parent_id` = '.(int)$parent_id .
 			' ORDER BY `ordering`, `title`'
 		);
@@ -467,7 +467,7 @@ class KunenaTableCategory extends JTable
 			{
 				// Set the ordering for the category.
 				$this->_db->setQuery(
-					'UPDATE `#__kunena_categories`' .
+					'UPDATE `'.$this->_tbl.'`' .
 					' SET `ordering` = '.(int)$k .
 					' WHERE `id` = '.(int)$v
 				);

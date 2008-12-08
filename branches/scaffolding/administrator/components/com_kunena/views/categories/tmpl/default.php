@@ -52,26 +52,26 @@ $this->buildDefaultToolBar();
 					<input type="checkbox" name="toggle" value="" onclick="checkAll(this)" />
 				</th>
 				<th class="left">
-					<?php echo JHTML::_('grid.sort', 'FB Col Title', 'a.title', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+					<?php echo JHTML::_('grid.sort', 'Title', 'a.title', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 				</th>
 				<th width="5%">
-					<?php echo JHTML::_('grid.sort', 'FB Col Review', 'a.review', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+					<?php echo JHTML::_('grid.sort', 'Review', 'a.review', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 				</th>
 				<th width="5%">
-					<?php echo JHTML::_('grid.sort', 'FB Col Moderated', 'a.moderated', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+					<?php echo JHTML::_('grid.sort', 'Moderated', 'a.moderated', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 				</th>
 				<th width="5%">
-					<?php echo JHTML::_('grid.sort', 'FB Col Locked', 'a.locked', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+					<?php echo JHTML::_('grid.sort', 'Locked', 'a.locked', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 				</th>
 				<th width="5%">
-					<?php echo JHTML::_('grid.sort', 'FB Col Published', 'a.published', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+					<?php echo JHTML::_('grid.sort', 'Published', 'a.published', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 				</th>
 				<th width="5%">
-					<?php echo JHTML::_('grid.sort', 'FB Col Access', 'a.access', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+					<?php echo JHTML::_('grid.sort', 'Access', 'a.access', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 				</th>
 				<th width="10%">
-					<?php echo JHTML::_('grid.sort', 'FB Col Threads', 'a.total_threads', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
-					/ <?php echo JHTML::_('grid.sort', 'FB Col Posts', 'a.total_posts', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+					<?php echo JHTML::_('grid.sort', 'Threads', 'a.total_threads', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+					/ <?php echo JHTML::_('grid.sort', 'Posts', 'a.total_posts', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 				</th>
 			</tr>
 		</thead>

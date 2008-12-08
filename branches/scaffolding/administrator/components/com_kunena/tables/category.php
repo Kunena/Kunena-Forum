@@ -222,6 +222,89 @@ class KunenaTableCategory extends JTable
 		return $right + 1;
 	}
 
+	/**
+	 * Inserts a new row if id is zero or updates an existing row in the database table
+	 *
+	 * @access	public
+	 * @param	boolean		If false, null object variables are not updated
+	 * @return	boolean 	True successful, false otherwise and an internal error message is set`
+	 */
+	function store($updateNulls = false)
+	{
+		if ($result = parent::store($updateNulls))
+		{
+			// Get the ordering values for the group.
+			$this->_db->setQuery(
+				'SELECT `id`' .
+				' FROM `'.$this->_tbl.'`' .
+				' WHERE `parent_id` = '.(int)$this->parent_id .
+				' ORDER BY `ordering`, `title`'
+			);
+			$ordering = $this->_db->loadResultArray();
+
+			// Check for a database error.
+			if ($this->_db->getErrorNum()) {
+				$this->setError($this->_db->getErrorMsg());
+				return false;
+			}
+
+			// If the ordering has not changed, return true.
+			$offset = array_search($this->id, $ordering);
+			if ($offset === (int)$this->ordering) {
+				return true;
+			}
+
+			// The category is set to be ordered first.
+			if ($this->ordering == -1)
+			{
+				// Remove the current item from the ordering array.
+				if ($offset !== false) {
+					unset($ordering[$offset]);
+					$ordering = array_values($ordering);
+				}
+				array_unshift($ordering, $this->id);
+			}
+			// The category is set to be ordered last.
+			elseif ($this->ordering == -2)
+			{
+				// Remove the current item from the ordering array.
+				if ($offset !== false) {
+					unset($ordering[$offset]);
+					$ordering = array_values($ordering);
+				}
+				array_push($ordering, $this->id);
+			}
+			// Use the ordering value given for the particular item.
+			else {
+				// Setup the ordering array.
+				$ordering = array_merge(array_slice($ordering, 0, $offset), array_slice($ordering, $offset+1, 1), (array)$this->id, array_slice($ordering, $offset+2));
+			}
+
+			// Iterate through the categories and set th ordering.
+			foreach ($ordering as $k => $v)
+			{
+				// Set the ordering for the category.
+				$this->_db->setQuery(
+					'UPDATE `'.$this->_tbl.'`' .
+					' SET `ordering` = '.(int)$k .
+					' WHERE `id` = '.(int)$v
+				);
+				$this->_db->query();
+
+				// Check for a database error.
+				if ($this->_db->getErrorNum()) {
+					$this->setError($this->_db->getErrorMsg());
+					return false;
+				}
+			}
+
+			// Rebuild the nested set tree.
+			$this->rebuild();
+		}
+
+		return $result;
+	}
+
 	function buildPath($nodeId=null)
 	{
 		// get the node id
@@ -409,11 +492,6 @@ class KunenaTableCategory extends JTable
 		// Sanitize arguments.
 		$id = (int) (empty($id)) ? $this->id : $id;
 		$move = (int) $move;
-
-		// If we are not moving the item, just return true.
-		if (empty($move)) {
-			return true;
-		}
 
 		// Get the parent id for the item.
 		$this->_db->setQuery(

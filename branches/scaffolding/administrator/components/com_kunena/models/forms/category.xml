@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Id:article.xml 2549 2007-11-10 06:22:58Z masterchief $ -->
+<!-- $Id$ -->
 <form>
 	<fields>
 		<field name="id"

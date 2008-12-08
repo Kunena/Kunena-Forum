@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Id$ -->
+<form>
+	<fields>
+		<field name="id"
+			type="hidden"
+			id="id"
+			class="inputbox readonly"
+			label="KUNENA_SMILEY_ID"
+			size="6"
+			default="0"
+			required="true"
+			readonly="true" />
+
+		<field name="code"
+			type="text"
+			id="code"
+			class="inputbox validate required"
+			label="KUNENA_SMILEY_CODE"
+			size="15"
+			default=""
+			description="KUNENA_SMILEY_CODE_DESC"
+			required="true" />
+
+		<field name="file_path"
+			type="text"
+			id="file_path"
+			class="inputbox"
+			label="KUNENA_SMILEY_FILE_PATH"
+			size="50"
+			default=""
+			description="KUNENA_SMILEY_FILE_PATH_DESC" />
+
+		<field name="file_path_grey"
+			type="text"
+			id="file_path_grey"
+			class="inputbox"
+			label="KUNENA_SMILEY_FILE_PATH_GREY"
+			size="50"
+			default=""
+			description="KUNENA_SMILEY_FILE_PATH_GREY_DESC" />
+
+		<field name="palette"
+			type="radio"
+			id="palette"
+			class="inputbox"
+			label="KUNENA_SMILEY_PALETTE"
+			description="KUNENA_SMILEY_PALETTE_DESC"
+			default="1"
+			required="true">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+	</fields>
+</form>

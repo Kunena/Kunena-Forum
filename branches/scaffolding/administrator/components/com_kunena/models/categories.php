@@ -81,7 +81,7 @@ class KunenaModelCategories extends JXModelList
 
 		// Access level.
 		$query->select('g.name AS access_name');
-		$query->join('LEFT', '`#__core_acl_axo_groups` AS g ON g.value=CAST(a.access AS CHAR)');
+		$query->join('LEFT', '`#__core_acl_axo_groups` AS g ON g.value=a.access');
 
 		//echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
 		return $query;

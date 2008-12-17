@@ -114,6 +114,7 @@ $this->buildDefaultToolBar();
 				</td>
 				<td align="center">
 					<?php
+						echo $item->access_name;
 						//echo JHTML::_('kunenagrid.access', $item->id, $item->access, $item->access_name, 'category.');
 					?>
 				</td>

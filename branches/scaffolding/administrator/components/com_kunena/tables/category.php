@@ -10,6 +10,8 @@
 
 defined('_JEXEC') or die('Invalid Request.');
 
+jximport('jxtended.database.table.asset');
+
 /**
  * Category Table for the Kunena Package
  *
@@ -17,7 +19,7 @@ defined('_JEXEC') or die('Invalid Request.');
  * @subpackage	com_kunena
  * @version		1.0
  */
-class KunenaTableCategory extends JTable
+class KunenaTableCategory extends JTableAsset
 {
 	/**
 	 * @var int unsigned
@@ -135,6 +137,22 @@ class KunenaTableCategory extends JTable
 	function __construct(&$db)
 	{
 		parent::__construct('#__kunena_categories', 'id', $db);
+	}
+
+	/**
+	 * @return	string
+	 */
+	function getAssetSection()
+	{
+		return 'com_kunena';
+	}
+
+	/**
+	 * @return	string
+	 */
+	function getAssetTitle()
+	{
+		return $this->title;
 	}
 
 	/**

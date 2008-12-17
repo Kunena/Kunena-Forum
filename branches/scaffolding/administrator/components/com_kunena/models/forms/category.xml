@@ -106,7 +106,8 @@
 			allow_last="1" />
 
 		<field name="access"
-			type="list_access"
+			type="list_assetgroups"
+			sections="com_kunena"
 			id="access"
 			class="inputbox"
 			label="KUNENA_CATEGORY_ACCESS"

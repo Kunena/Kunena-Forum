@@ -65,8 +65,8 @@ class KunenaModelThread extends JModel
 			// Load the parameters.
 			$this->setState('params', $params);
 
-			$this->setState('thread.id', JRequest::getInt('t_id'));
-			$this->setState('category.id', JRequest::getInt('c_id'));
+			$this->setState('thread.id', JRequest::getInt('thread_id'));
+			$this->setState('category.id', JRequest::getInt('cat_id'));
 
 			$this->__state_set = true;
 		}
@@ -76,22 +76,8 @@ class KunenaModelThread extends JModel
 
 	function &getThread($t_id=null)
 	{
-		$t_id = (empty($t_id)) ? $this->getState('thread.id') : $t_id;
-
-		if (empty($this->_threads[$t_id])) {
-			$db = &$this->getDBO();
-			$db->setQuery(
-				'SELECT *' .
-				' FROM `#__fb_messages` AS a' .
-				' LEFT JOIN `#__fb_messages_text` AS b ON a.id=b.mesid' .
-				' WHERE a.id = '.(int) $t_id .
-				' AND a.hold = 0'
-			);
-			$this->_threads[$t_id] = $db->loadObject();
-			$this->_threads[$t_id]->messages = $this->_getThreadMessages($t_id);
-		}
-
-		return $this->_threads[$t_id];
+		$thread = new JObject;
+		return $thread;
 	}
 
 	function getPosts()
@@ -116,8 +102,8 @@ class KunenaModelThread extends JModel
 		if ($id = (int) $this->getState('category.id'))
 		{
 			$model	= &JModel::getInstance('Category', 'KunenaModel');
-			$model->setState('category_id', $id);
-			$result	= $model->getItem();
+			$model->setState('filter.category_id', $id);
+			$result	= $model->getCategory();
 		}
 		return $result;
 	}

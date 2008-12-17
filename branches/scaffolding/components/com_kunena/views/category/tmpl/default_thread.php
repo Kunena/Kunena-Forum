@@ -19,7 +19,7 @@ defined('_JEXEC') or die('Invalid Request.');
 		<?php echo $this->thread->name; ?>
 	</td>
 	<td>
-		<?php echo $this->thread->replies; ?>
+		<?php echo $this->thread->total_posts-1; ?>
 	</td>
 	<td>
 		<?php echo $this->thread->hits; ?>

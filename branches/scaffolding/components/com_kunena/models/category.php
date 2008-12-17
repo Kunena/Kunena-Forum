@@ -173,7 +173,6 @@ class KunenaModelCategory extends JModel
 			return $null;
 		}
 
-
 		$threads = $this->_models['threads']->getItems();
 		return $threads;
 	}

@@ -308,12 +308,6 @@ class KunenaModelThreads extends JModel
 			$query->where('a.category_id = '.(int)$category_id);
 		}
 
-		// Filter the threads over the category path if set.
-		$category_path = $this->getState('filter.category_path');
-		if (!empty($category_path)) {
-			$query->where('c.path = '.$this->_db->Quote($category_path));
-		}
-
 		// Add the list ordering clause.
 		$query->order($this->_db->getEscaped($this->getState('list.ordering')));
 

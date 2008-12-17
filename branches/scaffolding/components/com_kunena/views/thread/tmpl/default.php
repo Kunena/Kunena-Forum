@@ -10,39 +10,16 @@
 
 defined('_JEXEC') or die('Invalid Request.');
 ?>
-<table class="" id="" cellpadding="2" cellspacing="0" border="1" width="100%">
-	<thead>
-		<tr>
-			<th align="left">
-				<div class="">
-					<strong><?php echo JText::_('KUNENA_KUNENA_TOPIC'); ?></strong>
-					<?php echo $this->thread->subject; ?>
-				</div>
-				<!-- FORUM TOOLS -->
-				<!-- /FORUM TOOLS -->
-			</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>
+
+<h1><?php echo $this->thread->subject; ?></h1>
+
+
 <?php
-if (!empty($this->thread->messages)) {
-	foreach ($this->thread->messages as $message)
+if (!empty($this->posts)) {
+	foreach ($this->posts as $post)
 	{
-		var_dump($message);
-//		echo $this->loadTemplate('message');
+		$this->post = $post;
+		echo $this->loadTemplate('post');
 	}
 }
 ?>
-			</td>
-		</tr>
-<?php if ($this->_layout == 'threaded') : ?>
-		<tr>
-			<td>
-				<?php echo $this->loadTemplate('threaded'); ?>
-			</td>
-		</tr>
-<?php endif; ?>
-	</tbody>
-</table>

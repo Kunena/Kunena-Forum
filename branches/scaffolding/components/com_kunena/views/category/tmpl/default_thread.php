@@ -13,7 +13,7 @@ defined('_JEXEC') or die('Invalid Request.');
 
 <tr>
 	<td>
-		<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=thread&cat_id='.$this->category->id.':'.$this->category->path.'&t_id='.$this->thread->id); ?>"><?php echo $this->thread->subject; ?></a>
+		<a href="<?php echo JRoute::_('index.php?option=com_kunena&view=thread&cat_id='.$this->category->id.':'.$this->category->path.'&thread_id='.$this->thread->id); ?>"><?php echo $this->thread->subject; ?></a>
 	</td>
 	<td>
 		<?php echo $this->thread->name; ?>

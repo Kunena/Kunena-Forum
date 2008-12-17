@@ -564,4 +564,59 @@ class KunenaTableCategory extends JTable
 
 		return true;
 	}
+
+	function updateAggregates($catId = null)
+	{
+		// Initialize variables.
+		$catId = is_null($catId) ? $this->id : $catId;
+
+		// Get the database connection object.
+		$db = & $this->_db;
+
+		// If we have no load criteria, return false.
+		if ($catId === null) {
+			return false;
+		}
+
+		// Attempt to load the thread.
+		if (!$this->load($catId)) {
+			$this->setError(JText::_('KUNENA_INVALID_CATEGORY'));
+			return false;
+		}
+
+		// Build and set the load query.
+		$db->setQuery(
+			'SELECT a.id, a.created_time, a.icon, a.subject, a.name, a.email, a.user_id, COUNT(b.id) as total_posts' .
+			' FROM `#__kunena_posts` AS a' .
+			' LEFT JOIN `#__kunena_posts` AS b ON a.category_id = b.category_id' .
+			' WHERE a.category_id = '.(int)$catId .
+			' AND a.published = 1' .
+			' GROUP BY a.id' .
+			' ORDER BY a.created_time DESC'
+		);
+		$aggregate = $db->loadObject();
+
+		// Check for a database error.
+		if ($this->_db->getErrorNum()) {
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+
+		// Set the new aggregate data to the table object.
+		$this->last_post_id			= $aggregate->id;
+		$this->last_post_time		= $aggregate->created_time;
+		$this->total_posts			= $aggregate->total_posts;
+
+		// Check the thread data.
+		if (!$this->check()) {
+			return false;
+		}
+
+		// Attempt to store the thread.
+		if (!$this->store()) {
+			return false;
+		}
+
+		return true;
+	}
 }

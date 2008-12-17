@@ -31,6 +31,12 @@ class KunenaTableThread extends JTable
 	var $created_time = null;
 	/** @var int */
 	var $icon = null;
+	/** @var varchar */
+	var $subject = null;
+	/** @var varchar */
+	var $name = null;
+	/** @var varchar */
+	var $email = null;
 	/** @var int */
 	var $published = null;
 	/** @var int */
@@ -192,5 +198,65 @@ class KunenaTableThread extends JTable
 
 		// Execute the parent bind method.
 		return parent::bind($from, $ignore);
+	}
+
+	function updateAggregates($threadId = null)
+	{
+		// Initialize variables.
+		$threadId = is_null($threadId) ? $this->id : $threadId;
+
+		// Get the database connection object.
+		$db = & $this->_db;
+
+		// If we have no load criteria, return false.
+		if ($threadId === null) {
+			return false;
+		}
+
+		// Attempt to load the thread.
+		if (!$this->load($threadId)) {
+			$this->setError(JText::_('KUNENA_INVALID_THREAD'));
+			return false;
+		}
+
+		// Build and set the load query.
+		$db->setQuery(
+			'SELECT a.id, a.created_time, a.icon, a.subject, a.name, a.email, a.user_id, COUNT(b.id) as total_posts' .
+			' FROM `#__kunena_posts` AS a' .
+			' LEFT JOIN `#__kunena_posts` AS b ON a.thread_id = b.thread_id' .
+			' WHERE a.thread_id = '.(int)$threadId .
+			' AND a.published = 1' .
+			' GROUP BY a.id' .
+			' ORDER BY a.created_time DESC'
+		);
+		$aggregate = $db->loadObject();
+
+		// Check for a database error.
+		if ($this->_db->getErrorNum()) {
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+
+		// Set the new aggregate data to the table object.
+		$this->last_post_id			= $aggregate->id;
+		$this->last_post_time		= $aggregate->created_time;
+		$this->last_post_icon		= $aggregate->icon;
+		$this->last_post_subject	= $aggregate->subject;
+		$this->last_post_name		= $aggregate->name;
+		$this->last_post_email		= $aggregate->email;
+		$this->last_post_user_id	= $aggregate->user_id;
+		$this->total_posts			= $aggregate->total_posts;
+
+		// Check the thread data.
+		if (!$this->check()) {
+			return false;
+		}
+
+		// Attempt to store the thread.
+		if (!$this->store()) {
+			return false;
+		}
+
+		return true;
 	}
 }

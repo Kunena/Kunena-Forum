@@ -207,6 +207,9 @@ class KunenaTablePost extends JTable
 			$thread->created_time	= $this->created_time;
 			$thread->published		= $this->published;
 			$thread->icon			= $this->icon;
+			$thread->subject		= $this->subject;
+			$thread->name			= $this->name;
+			$thread->email			= $this->email;
 
 			// Check the post data.
 			if (!$thread->check()) {
@@ -225,7 +228,27 @@ class KunenaTablePost extends JTable
 		}
 
 		// Execute the parent store method.
-		return parent::store($updateNulls);
+		if (parent::store($updateNulls))
+		{
+			// Update the thread aggregate values.
+			$thread = JTable::getInstance('Thread', 'KunenaTable');
+			if (!$thread->updateAggregates($this->thread_id)) {
+				$this->setError($this->_db->getErrorMsg());
+				return false;
+			}
+
+			// Update the category aggregate values.
+			$category = JTable::getInstance('Category', 'KunenaTable');
+			if (!$category->updateAggregates($this->category_id)) {
+				$this->setError($this->_db->getErrorMsg());
+				return false;
+			}
+
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	/**

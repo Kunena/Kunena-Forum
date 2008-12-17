@@ -28,15 +28,19 @@ class KunenaViewDashboard extends JView
 	 */
 	function display($tpl = null)
 	{
-		$state	= $this->get('State');
+		$versions	= $this->get('Versions');
+		$upgrades	= $this->get('Upgrades');
+		$initAcl	= $this->get('AclInitialised');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-			JError::raiseError(500, implode("\n", $errors));
-			return false;
+			JError::raiseWarning(500, implode("\n", $errors));
+			//return false;
 		}
 
-		$this->assignRef('state',	$state);
+		$this->assignRef('versions',	$versions);
+		$this->assignRef('upgrades',	$upgrades);
+		$this->assign('init_acl',		$initAcl);
 
 		parent::display($tpl);
 	}
@@ -51,5 +55,12 @@ class KunenaViewDashboard extends JView
 	function buildDefaultToolBar()
 	{
 		JToolBarHelper::title('Kunena: '.JText::_('Dashboard'), 'logo');
+
+		// We can't use the toolbar helper here because there is no generic popup button.
+		$bar = &JToolBar::getInstance('toolbar');
+		$bar->appendButton('Popup', 'export', 'FB Toolbar Import Configuration', 'index.php?option=com_kunena&view=config&layout=import&tmpl=component', 570, 500);
+		$bar->appendButton('Standard', 'config', 'FB Toolbar Configuration', 'config.display', false);
+
+		JToolBarHelper::help('index', true);
 	}
 }

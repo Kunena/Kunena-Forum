@@ -103,21 +103,8 @@ class KunenaController extends JController
 		{
 			switch ($vName)
 			{
-				case 'profile':
-					$model = &$this->getModel('profile');
-					break;
-
-				case 'thread':
-					$model = &$this->getModel('thread');
-					break;
-
-				case 'category':
-					$model = &$this->getModel('category');
-					break;
-
-				case 'categories':
 				default:
-					$model = &$this->getModel('categories');
+					$model = &$this->getModel($vName);
 					break;
 			}
 

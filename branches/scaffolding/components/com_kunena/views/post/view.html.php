@@ -25,9 +25,29 @@ class KunenaViewPost extends KunenaView
 	 * Display the view
 	 *
 	 * @access	public
+	 * @return	void
+	 * @since	1.0
 	 */
 	function display($tpl = null)
 	{
+		$state	= $this->get('State');
+		$cart	= $this->get('Cart');
+		$form	= $this->get('Form');
+
+		// Check for errors.
+		if (count($errors = $this->get('Errors'))) {
+			JError::raiseError(500, implode("\n", $errors));
+			return false;
+		}
+
+		// Set the form name and action.
+		$form->setName('post_form');
+		$form->setAction(JRoute::_('index.php?option=com_kunena&task=post.save'));
+
+		$this->assignRef('state',	$state);
+		$this->assignRef('cart',	$cart);
+		$this->assignRef('form',	$form);
+
 		parent::display($tpl);
 	}
 }

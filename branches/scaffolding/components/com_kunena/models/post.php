@@ -38,7 +38,7 @@ class KunenaModelPost extends JModel
 	 * @return	object	The property where specified, the state object where omitted.
 	 * @since	1.0
 	 */
-	function getState($property = null)
+	function getState($property = null, $default = null)
 	{
 		// If the model state is uninitialized lets set some values we will need from the request.
 		if (!$this->__state_set)
@@ -48,6 +48,15 @@ class KunenaModelPost extends JModel
 			$params		= $app->getParams('com_kunena');
 			$context	= 'com_kunena.post.';
 
+			// Attempt to auto-load the post id.
+			if (!$postId = (int)$app->getUserState('com_kunena.edit.post.id')) {
+				$postId = (int)JRequest::getInt('post_id');
+			}
+
+			// Only set the post id if there is a value.
+			if ($postId) {
+				$this->setState('post.id', $postId);
+			}
 
 			// Load the user parameters.
 			$this->setState('user',	$user);
@@ -60,7 +69,85 @@ class KunenaModelPost extends JModel
 			$this->__state_set = true;
 		}
 
-		return parent::getState($property);
+		$value = parent::getState($property);
+		return (is_null($value) ? $default : $value);
+	}
+
+	/**
+	 * Method to get a Kunena post item.
+	 *
+	 * @access	public
+	 * @param	integer	The id of the post to get.
+	 * @return	mixed	Post data object on success, false on failure.
+	 * @since	1.0
+	 */
+	function &getItem($postId = null)
+	{
+		// Initialize variables.
+		$postId = (!empty($postId)) ? $postId : (int)$this->getState('post.id');
+		$false	= false;
+
+		// Get a subscription row instance.
+		$table = &$this->getTable('Post', 'KunenaTable');
+
+		// Attempt to load the row.
+		$return = $table->load($postId);
+
+		// Check for a table object error.
+		if ($return === false && $table->getError()) {
+			$this->serError($table->getError());
+			return $false;
+		}
+
+		// Check for a database error.
+		if ($this->_db->getErrorNum()) {
+			$this->setError($this->_db->getErrorMsg());
+			return $false;
+		}
+
+		$value = JArrayHelper::toObject($table->getProperties(1), 'JObject');
+		return $value;
+	}
+
+	/**
+	 * Method to get the post form.
+	 *
+	 * @access	public
+	 * @return	mixed	JXForm object on success, false on failure.
+	 * @since	1.0
+	 */
+	function &getForm()
+	{
+		// Initialize variables.
+		$app	= &JFactory::getApplication();
+		$false	= false;
+
+		// Get the form.
+		jximport('jxtended.form.form');
+		JXForm::addFormPath(JPATH_COMPONENT.'/models/forms');
+		JXForm::addFieldPath(JPATH_COMPONENT.'/models/fields');
+		JXForm::addFieldPath(JPATH_ADMINISTRATOR.'/components/com_members/models/fields');
+		$form = &JXForm::getInstance('post');
+
+		// Set the rule path.
+		jximport('jxtended.form.validator');
+		JXFormValidator::addRulePath(JPATH_COMPONENT.'/models/rules');
+
+		// Check for an error.
+		if (JError::isError($form)) {
+			$this->setError($form->getMessage());
+			return $false;
+		}
+
+		// Check the session for previously entered form data.
+		$data = $app->getUserState('com_kunena.edit.post.data', array());
+
+		// Bind the form data if present.
+		if (!empty($data)) {
+			$form->bind($data);
+		}
+
+		return $form;
 	}
 
 	function preview()
@@ -68,9 +155,98 @@ class KunenaModelPost extends JModel
 
 	}
 
-	function save()
+	/**
+	 * Method to validate the form data.
+	 *
+	 * @access	public
+	 * @param	array	The form data.
+	 * @return	mixed	Array of filtered data if valid, false otherwise.
+	 * @since	1.0
+	 */
+	function validate($data)
 	{
+		// Get the form.
+		$form = &$this->getForm();
 
+		// Check for an error.
+		if ($form === false) {
+			return false;
+		}
+
+		// Filter and validate the form data.
+		$data	= $form->filter($data);
+		$return	= $form->validate($data);
+
+		// Check for an error.
+		if (JError::isError($return)) {
+			$this->setError($return->getMessage());
+			return false;
+		}
+
+		// Check the validation results.
+		if ($return === false)
+		{
+			// Get the validation messages from the form.
+			foreach ($form->getErrors() as $message) {
+				$this->setError($message);
+			}
+
+			return false;
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Method to save the form data.
+	 *
+	 * @access	public
+	 * @param	array	The form data.
+	 * @return	boolean	True on success.
+	 * @since	1.0
+	 */
+	function save($data)
+	{
+		$postId = (!empty($data['id'])) ? $data['id'] : (int)$this->getState('post.id');
+		$isNew	= true;
+
+		// Get a post row instance.
+		$table = &$this->getTable('Post', 'KunenaTable');
+
+		// Load the row if saving an existing item.
+		if ($postId > 0) {
+			if ($table->load($postId)) {
+				$isNew = false;
+			}
+		}
+
+		// Bind the data.
+		if (!$table->bind($data)) {
+			$this->setError(JText::sprintf('KUNENA_POST_BIND_FAILED', $table->getError()));
+			return false;
+		}
+
+		// Check for valid user data.
+		if (empty($table->name) && empty($table->email) && empty($table->user_id)) {
+			$user = &JFactory::getUser();
+			$table->user_id = $user->get('id');
+			$table->name	= $user->get('username');
+			$table->email	= $user->get('email');
+		}
+
+		// Check the data.
+		if (!$table->check()) {
+			$this->setError($table->getError());
+			return false;
+		}
+
+		// Store the data.
+		if (!$table->store()) {
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+
+		return $table->id;
 	}
 
 	function delete($postIds, $removeAttachments = true)

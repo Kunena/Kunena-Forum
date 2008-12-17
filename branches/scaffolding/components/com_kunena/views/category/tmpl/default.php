@@ -38,6 +38,10 @@ ul.forum_categories li {
 
 <!-- Begin Threads Table -->
 <h2><?php echo JText::_('Threads'); ?></h2>
+<p>
+	<a href="<?php echo JRoute::_('index.php?option=com_kunena&task=post.add&cat_id='.$this->category->id); ?>" >
+		Post a new Thread</a>
+</p>
 <table width="100%">
 	<thead>
 		<tr>

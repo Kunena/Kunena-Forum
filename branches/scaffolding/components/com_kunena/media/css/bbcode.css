@@ -1,0 +1,88 @@
+/**
+* @version		$Id: bbcode.css 423 2008-11-13 05:21:21Z louis $
+* @package		JXtended
+* @subpackage	CSS
+* @copyright	Copyright (C) 2008 Webimagery, LLC. All rights reserved.
+* @license		GNU/GPL
+*/
+
+/* BBCode Editor Container DIV */
+div#bbcode-editor {
+	
+}
+
+/* BBCode Editor Help Paragraph */
+div#bbcode-editor span.help {
+}
+
+/* BBCode Editor */
+div#bbcode-editor textarea.editor {
+	
+}
+
+br.clear {
+	clear: both;	
+}
+
+/* BBCode Editor Toolbar List */
+div#bbcode-editor ul.toolbar {
+	background: none;
+	list-style: none;
+	margin: .3em 0;
+	padding: 0;
+}
+
+/* BBCode Editor Toolbar Buttons */
+div#bbcode-editor ul.toolbar li {
+	background: none;
+	float: left;
+	list-style: none;
+	margin: .2em .1em;
+	padding: 0pt;
+}
+div#bbcode-editor ul.toolbar li a {
+	color: #333333;
+	text-decoration: none;
+	padding: .1em .3em;
+	background: #EFEFEF;
+	border: 1px outset #CCCCCC;
+}
+div#bbcode-editor ul.toolbar li a:active {
+	outline: none;
+	border: 1px inset #CCCCCC;
+}
+/* BBCode Editor Toolbar Bold Button */
+div#bbcode-editor ul.toolbar li a#bold_button {
+	font-weight: bold;
+}
+
+/* BBCode Editor Toolbar Italic Button */
+div#bbcode-editor ul.toolbar li a#italic_button {
+	font-style: italic;
+}
+
+/* BBCode Editor Toolbar Underline Button */
+div#bbcode-editor ul.toolbar li a#underline_button {
+	text-decoration: underline
+}
+
+/* BBCode Editor Toolbar Strikethrough Button */
+div#bbcode-editor ul.toolbar li a#strikethrough_button {
+	text-decoration: line-through;
+}
+
+/* BBCode Editor Toolbar Quote Button */
+div#bbcode-editor ul.toolbar li a#quote_button {
+}
+
+/* BBCode Editor Toolbar Image Button */
+div#bbcode-editor ul.toolbar li a#image_button {
+}
+
+/* BBCode Editor Toolbar Link Button */
+div#bbcode-editor ul.toolbar li a#link_button {
+}
+
+/* BBCode Editor Toolbar Code Button */
+div#bbcode-editor ul.toolbar li a#code_button {
+}

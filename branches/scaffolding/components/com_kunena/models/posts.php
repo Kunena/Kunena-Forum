@@ -82,7 +82,7 @@ class KunenaModelPosts extends JModel
 			switch ($params->get('posts-order'))
 			{
 				default:
-					$this->setState('list.ordering', 'a.time ASC');
+					$this->setState('list.ordering', 'a.created_time ASC');
 					break;
 			}
 
@@ -293,13 +293,13 @@ class KunenaModelPosts extends JModel
 			else
 			{
 				// Check access using base ACL.
-				$query->where('c.access <= ' . (int)$this->getState('user.aid', 0));
+				//$query->where('c.access <= ' . (int)$this->getState('user.aid', 0));
 			}
 		}
 
 		// If the model is set to check publication state, add to the query.
 		if ($this->getState('check.state', true)) {
-			$query->where('a.pending = 0');
+			$query->where('a.published = 1');
 		}
 
 		// Filter the posts over the category if set.
@@ -311,7 +311,7 @@ class KunenaModelPosts extends JModel
 		// Filter the posts over the thread if set.
 		$thread_id = $this->getState('filter.thread_id');
 		if ($thread_id !== null) {
-			$query->where('(a.thread_id='.(int)$thread_id.')');
+			$query->where('a.thread_id = '.(int)$thread_id);
 		}
 
 		// Add the list ordering clause.

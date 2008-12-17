@@ -74,9 +74,21 @@ class KunenaModelThread extends JModel
 		return parent::getState($property);
 	}
 
-	function &getThread($t_id=null)
+	function &getThread($threadId=null)
 	{
-		$thread = new JObject;
+		$threadId = (!empty($threadId)) ? $threadId : (int)$this->getState('thread.id');
+
+		// Get a thread row instance.
+		$table = &$this->getTable('Thread', 'KunenaTable');
+
+		// Load the row if saving an existing item.
+		if ($threadId > 0) {
+			if ($table->load($threadId)) {
+
+			}
+		}
+
+		$thread = JArrayHelper::toObject($table->getProperties(1), 'JObject');
 		return $thread;
 	}
 

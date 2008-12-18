@@ -12,30 +12,30 @@ defined('_JEXEC') or die('Invalid Request.');
 ?>
 
 
-		<table width="100%">
-			<tbody>
-				<tr valign="top">
-					<td valign="top" width="25%">
-						<fieldset>
-							<legend><?php echo JText::_('Apply User Groups');?></legend>
-							<?php echo JHTML::_('acl.usergroups', $this->usergroups, $this->item->references->getAroGroups()); ?>
-						</fieldset>
-					</td>
-					<td valign="top" width="25%">
-						<fieldset>
-							<legend class="hasTip" title="Permissions::Select the permissions that this group will be allowed, or not allowed to do.">
-							<?php echo JText::_('Apply Permissions') ?>
-							</legend>
-							<?php echo JHTML::_('acl.actions', $this->actions, $this->item->references->getAcos()); ?>
-						</fieldset>
-					</td>
-					<td valign="top">
-						<fieldset>
-							<legend class="hasTip" title="Items::These are the items that are associated with the permission">
-							<?php echo JText::_('Apply to Items') ?>
-							</legend>
-							<?php echo JHTML::_('acl.assets', $this->assets, $this->item->references->getAxos()); ?>
-						</fieldset>
-					</td>
-			</tbody>
-		</table>
+<table width="100%">
+	<tbody>
+		<tr valign="top">
+			<td valign="top" width="25%">
+				<fieldset>
+					<legend><?php echo JText::_('Apply User Groups');?></legend>
+					<?php echo JHTML::_('acl.usergroups', $this->usergroups, $this->item->references->getAroGroups()); ?>
+				</fieldset>
+			</td>
+			<td valign="top" width="25%">
+				<fieldset>
+					<legend class="hasTip" title="Permissions::Select the permissions that this group will be allowed, or not allowed to do.">
+					<?php echo JText::_('Apply Permissions') ?>
+					</legend>
+					<?php echo JHTML::_('acl.actions', $this->actions, $this->item->references->getAcos()); ?>
+				</fieldset>
+			</td>
+			<td valign="top">
+				<fieldset>
+					<legend class="hasTip" title="Items::These are the items that are associated with the permission">
+					<?php echo JText::_('Apply to Items') ?>
+					</legend>
+					<?php echo JHTML::_('acl.assets', $this->assets, $this->item->references->getAxos()); ?>
+				</fieldset>
+			</td>
+	</tbody>
+</table>

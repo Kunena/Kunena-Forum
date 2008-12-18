@@ -102,4 +102,18 @@ class KunenaControllerSetup extends JController
 		// Set the redirect.
 		$this->setRedirect('index.php?option=com_kunena');
 	}
+
+	/**
+	 * Just for testing
+	 */
+	function initacl()
+	{
+		// Get the setup model.
+		$model = &$this->getModel('Setup', 'KunenaModel');
+
+		if (!$model->initializeAccessControls()) {
+			JError::raiseNotice(500, JText::_('KUNENA_ACCESS_INITIALIZATION_FAILED'));
+			JError::raiseWarning(500, $model->getError());
+		}
+	}
 }

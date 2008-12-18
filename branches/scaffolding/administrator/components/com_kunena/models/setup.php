@@ -131,13 +131,16 @@ class KunenaModelSetup extends JModel
 		// Register Actions
 
 		// Type 1 - A user in a group can do "this"
-		JxAclAdmin::registerAction(1, 'com_kunena',	'Manage Permissions', 'manage.permissions');
+		JxAclAdmin::registerAction(1, 'com_kunena',	'Manage Permissions',	'manage.permissions');
 
 		// Type 2 - A user in a group can do "this" to an asset
 		JxAclAdmin::registerAction(2, 'com_kunena',	'Create Categories',	'create.category');
 		JxAclAdmin::registerAction(2, 'com_kunena',	'Edit Categories',		'edit.category');
 		JxAclAdmin::registerAction(2, 'com_kunena',	'Publish Categories',	'publish.category');
 		JxAclAdmin::registerAction(2, 'com_kunena',	'Trash Categories',		'trash.category');
+
+		// Type 3 - A user in a group can do "this" to an asset group
+		JxAclAdmin::registerAction(3, 'com_kunena',	'View Categories',		'view.category');
 
 		//
 		// Now we are ready to add some rules
@@ -165,6 +168,31 @@ class KunenaModelSetup extends JModel
 		// Check for an error.
 		if (JError::isError($result)) {
 			$this->setError(JText::sprintf('KUNENA_ACCESS_INITIALIZATION_FAILED', $result->message));
+			return false;
+		}
+
+		$result = JxAclAdmin::registerRule(
+			// The rule type
+			3,
+			// The rule section
+			'com_kunena',
+			// The rule name
+			'com_kunena.view.level-0',
+			// The title of the rule
+			'View Public Kunena Categories',
+			// Applies to User Groups
+			array('Public Frontend', 'Registered', 'Manager', 'Administrator', 'Super Administrator'),
+			// The Actions attached to the rule
+			array('com_kunena' => array('view.category')),
+			// Applies to Assets
+			array(),
+			// Applies to Asset Groups
+			array(0)
+		);
+
+		// Check for an error.
+		if (JError::isError($result)) {
+			$this->setError($result->getMessage());
 			return false;
 		}
 

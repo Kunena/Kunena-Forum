@@ -71,7 +71,7 @@ class KunenaController extends JController
 		$document = &JFactory::getDocument();
 
 		// Set the default view name and format from the Request.
-		$vName		= JRequest::getWord('view', 'dashboard');
+		$vName		= JRequest::getWord('view', 'categories');
 		$vFormat	= $document->getType();
 		$lName		= JRequest::getWord('layout', 'default');
 
@@ -95,7 +95,6 @@ class KunenaController extends JController
 		}
 
 		// Build the submenu.
-		JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_DASHBOARD'),		'index.php?option=com_kunena&view=dashboard',	$vName == 'dashboard');
 		JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_CATEGORIES'),		'index.php?option=com_kunena&view=categories',	$vName == 'categories');
 		JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_SMILIES'),		'index.php?option=com_kunena&view=smilies',		$vName == 'smilies');
 		JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_RANKS'),			'index.php?option=com_kunena&view=ranks',		$vName == 'ranks');

@@ -52,6 +52,8 @@ class KunenaViewRule extends JView
 		$this->assignRef('assetgroups',	$assetGroups);
 
 		parent::display($tpl);
+
+		JRequest::setVar('hidemainmenu', 1);
 	}
 
 	/**

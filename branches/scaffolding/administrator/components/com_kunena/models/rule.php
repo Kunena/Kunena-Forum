@@ -38,7 +38,7 @@ class KunenaModelRule extends JXModelRule
 			$app = &JFactory::getApplication();
 
 			$this->setState('section.value', 'com_kunena');
-			$this->setState('acl.type', 2);
+			$this->setState('acl.type', 1);
 
 			$this->__state_set = true;
 		}

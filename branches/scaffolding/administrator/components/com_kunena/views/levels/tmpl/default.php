@@ -16,7 +16,7 @@ JHTML::script('checkall.js', 'administrator/components/com_members/media/js/');
 JHTML::_('behavior.tooltip');
 $type = $this->state->get('list.group_type');
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_members&view=groups');?>" method="post" name="adminForm">
+<form action="<?php echo JRoute::_('index.php?option=com_kunena&view=levels');?>" method="post" name="adminForm">
 	<fieldset class="filter clearfix">
 		<div class="left">
 			<label for="search"><?php echo JText::_('JX Search'); ?>:</label>

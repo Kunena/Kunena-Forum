@@ -33,9 +33,9 @@ class KunenaControllerRule extends JController
 		parent::__construct();
 
 		// Register alternate tasks.
-		$this->registerTask('apply', 'save');
-		$this->registerTask('deny', 'allow');
-		$this->registerTask('disable', 'enable');
+		$this->registerTask('apply',	'save');
+		$this->registerTask('deny',		'allow');
+		$this->registerTask('disable',	'enable');
 	}
 
 	/**
@@ -85,22 +85,42 @@ class KunenaControllerRule extends JController
 	function edit()
 	{
 		// Initialize variables.
-		$app	= &JFactory::getApplication();
-		$cid	= JRequest::getVar('cid', array(), '', 'array');
+		$app		= &JFactory::getApplication();
+		$cid		= JRequest::getVar('cid', array(), '', 'array');
+		$ruleId		= JRequest::getInt('rule_id', (int) array_shift($cid));
 
-		// Get the previous rule id (if any) and the current rule id.
-		$previous_id	= (int) $app->getUserState('acl.edit.rule.id');
-		$rule_id		= (int) (count($cid) ? $cid[0] : JRequest::getInt('rule_id'));
+		if (empty($ruleId))
+		{
+			// If the Id is not provided, see if the name is provided
+			$name		= JRequest::getVar('name');
+			$section	= JRequest::getVar('section', 'com_kunena');
+
+			if (empty($name)) {
+				return $this->add();
+			}
+			else {
+				// Set up required dependancies
+				jximport('jxtended.acl.acladmin');
+
+				// Find the ID of the ACL
+				$table = JTable::getInstance('Acl', 'JxTable');
+				$table->loadByName($name, $section);
+				$ruleId = $table->id;
+				if (empty($ruleId)) {
+					return $this->add();
+				}
+			}
+		}
 
 		// Set the rule id for the rule to edit in the session.
-		$app->setUserState('acl.edit.rule.id', $rule_id);
+		$app->setUserState('acl.edit.rule.id', $ruleId);
 
 		// Syncronize the ACL assets.
 		require_once(JPATH_ADMINISTRATOR.'/components/com_kunena/helpers/access.php');
 //		$sync = GalleryHelperAccess::synchronize();
 
 		// Redirect to the rule edit screen.
-		$this->setRedirect('index.php?option=com_kunena&view=rule&layout=edit&hidemainmenu=1');
+		$this->setRedirect('index.php?option=com_kunena&view=rule&layout=edit');
 	}
 
 	/**
@@ -143,7 +163,7 @@ class KunenaControllerRule extends JController
 		// Populate the known values.
 		$values['id'] = (int) $app->getUserState('acl.edit.rule.id');
 		$values['section_value'] = 'com_kunena';
-		$values['acl_type'] = 2;
+		//$values['acl_type'] = 2;
 
 		// Attempt to save the rule.
 		if (!$model->save($values)) {
@@ -158,13 +178,14 @@ class KunenaControllerRule extends JController
 		{
 			// Redirect back to the rule edit screen.
 			$this->setRedirect('index.php?option=com_kunena&view=rule&layout=edit&hidemainmenu=1');
-		} else
+		}
+		else
 		{
 			// Clear the rule id from the session.
 			$app->setUserState('acl.edit.rule.id', null);
 
 			// Redirect to the list view.
-			$this->setRedirect('index.php?option=com_kunena&view=rules');
+			$this->setRedirect('index.php?option=com_kunena&view=levels');
 		}
 	}
 

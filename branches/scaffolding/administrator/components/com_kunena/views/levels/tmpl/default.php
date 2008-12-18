@@ -61,7 +61,7 @@ $type = $this->state->get('list.group_type');
 				<td style="text-align:center">
 					<?php echo JHTML::_('grid.id', $item->id, $item->id); ?>
 				</td>
-				<td style="padding-left:<?php echo intval(($item->level-2)*15)+4; ?>px">
+				<td>
 					<a href="<?php echo JRoute::_('index.php?option=com_kunena&task=rule.edit&name='.$item->rule_name);?>">
 						<?php echo $item->name; ?></a>
 				</td>

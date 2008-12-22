@@ -55,9 +55,6 @@ $this->buildDefaultToolBar();
 					<?php echo JHTML::_('grid.sort', 'Title', 'a.title', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 				</th>
 				<th width="5%">
-					<?php echo JHTML::_('grid.sort', 'Review', 'a.review', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
-				</th>
-				<th width="5%">
 					<?php echo JHTML::_('grid.sort', 'Moderated', 'a.moderated', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 				</th>
 				<th width="5%">
@@ -66,7 +63,7 @@ $this->buildDefaultToolBar();
 				<th width="5%">
 					<?php echo JHTML::_('grid.sort', 'Published', 'a.published', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 				</th>
-				<th width="5%">
+				<th width="15%">
 					<?php echo JHTML::_('grid.sort', 'Access', 'a.access', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 				</th>
 				<th width="10%">
@@ -99,9 +96,6 @@ $this->buildDefaultToolBar();
 						<?php echo $item->title; ?></a>
 					<?php echo JHTML::_('KGrid.orderUpIcon', $item->id, $item->ordering, $this->pagination, 'category.orderup', 'Move Up', ($item->ordering != 0)); ?>
 					<?php echo JHTML::_('KGrid.orderdownIcon', $item->id, $item->ordering, $this->pagination, 'category.orderdown', 'Move Down', (!empty($this->items[$i]) && ($item->level == $this->items[$i]->level))); ?>
-				</td>
-				<td align="center">
-					<?php echo JHTML::_('KGrid.boolean', $item->id, $item->review, 'category.reviewed', 'category.unreviewed'); ?>
 				</td>
 				<td align="center">
 					<?php echo JHTML::_('KGrid.boolean', $item->id, $item->moderated, 'category.moderated', 'category.unmoderated'); ?>

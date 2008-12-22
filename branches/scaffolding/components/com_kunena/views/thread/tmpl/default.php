@@ -13,7 +13,10 @@ defined('_JEXEC') or die('Invalid Request.');
 
 <h1><?php echo $this->thread->subject; ?></h1>
 
-
+<p>
+	<a href="<?php echo JRoute::_('index.php?option=com_kunena&task=post.add&cat_id='.$this->thread->category_id.'&thread_id='.$this->thread->id); ?>" >
+		Post a reply</a>
+</p>
 <?php
 if (!empty($this->posts)) {
 	foreach ($this->posts as $post)

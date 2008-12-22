@@ -263,7 +263,7 @@ class KunenaModelPosts extends JModel
 		$query->from('`#__kunena_posts` AS a');
 
 		// Resolve foriegn keys with the messages_text table.
-		$query->select('b.*');
+		$query->select('b.published AS thread_published');
 		$query->join('LEFT', '`#__kunena_threads` AS b ON a.thread_id = a.id');
 
 		// Resolve foriegn keys with the categories table.

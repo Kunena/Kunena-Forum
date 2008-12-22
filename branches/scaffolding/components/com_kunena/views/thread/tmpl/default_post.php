@@ -23,10 +23,10 @@ defined('_JEXEC') or die('Invalid Request.');
 		<div class="postcontent">
 			<h3><?php echo $this->post->subject; ?></h3>
 
-			<div class="message">
+			<div class="post">
 				<?php echo $this->post->message; ?>
 
-				<p class="edit"><em>Last edited by {NAME} ({DATE})</em></p>
+				<!-- <p class="edit"><em>Last edited by {NAME} ({DATE})</em></p> -->
 			</div>
 		</div>
 	</div>

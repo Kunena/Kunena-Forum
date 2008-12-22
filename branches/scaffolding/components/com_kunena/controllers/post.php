@@ -230,6 +230,9 @@ class KunenaControllerPost extends KunenaController
 			return false;
 		}
 
+		$threadId = $data['thread_id'];
+		$catId = $data['category_id'];
+
 		// Redirect the user and adjust session state based on the chosen task.
 		switch ($this->_task)
 		{
@@ -251,7 +254,7 @@ class KunenaControllerPost extends KunenaController
 
 				// Redirect to the list screen.
 				$this->setMessage(JText::_('KUNENA_POST_SAVE_SUCCESS'));
-				$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=thread', false));
+				$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=thread&cat_id='.$data['category_id'].'&thread_id='.$data['thread_id'], false));
 				break;
 		}
 

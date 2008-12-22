@@ -620,10 +620,26 @@ class KunenaTableCategory extends JTableAsset
 			return false;
 		}
 
+		// Build and set the load query.
+		$db->setQuery(
+			'SELECT COUNT(a.id) AS total_threads' .
+			' FROM `#__kunena_threads` AS a' .
+			' WHERE a.category_id = '.(int)$catId .
+			' AND a.published = 1'
+		);
+		$aggregate->total_threads = $db->loadResult();
+
+		// Check for a database error.
+		if ($this->_db->getErrorNum()) {
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+
 		// Set the new aggregate data to the table object.
 		$this->last_post_id			= $aggregate->id;
 		$this->last_post_time		= $aggregate->created_time;
 		$this->total_posts			= $aggregate->total_posts;
+		$this->total_threads		= $aggregate->total_threads;
 
 		// Check the thread data.
 		if (!$this->check()) {

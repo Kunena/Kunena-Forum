@@ -9,6 +9,9 @@
  */
 
 defined('_JEXEC') or die('Invalid Request.');
+
+// Load the default stylesheet.
+JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 ?>
 
 <h1><?php echo $this->thread->subject; ?></h1>
@@ -17,6 +20,8 @@ defined('_JEXEC') or die('Invalid Request.');
 	<a href="<?php echo JRoute::_('index.php?option=com_kunena&task=post.add&cat_id='.$this->thread->category_id.'&thread_id='.$this->thread->id); ?>" >
 		Post a reply</a>
 </p>
+
+<div class="forum-thread">
 <?php
 if (!empty($this->posts)) {
 	foreach ($this->posts as $post)
@@ -26,3 +31,4 @@ if (!empty($this->posts)) {
 	}
 }
 ?>
+</div>

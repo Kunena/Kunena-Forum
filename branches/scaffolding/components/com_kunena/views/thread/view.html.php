@@ -38,6 +38,16 @@ class KunenaViewThread extends KunenaView
 		$this->assignRef('totalPosts', $this->get('PostsTotal'));
 		$this->assignRef('thread', $this->get('Thread'));
 
+		// import library dependencies
+		jximport('jxtended.html.bbcode');
+
+		// instantiate bbcode parser object
+		$parser = &JXBBCode::getInstance(array(
+			'smiley_path' => JPATH_ROOT.'/media/jxtended/img/smilies/default',
+			'smiley_url' => JURI::base().'media/jxtended/img/smilies/default'
+		));
+		$this->assignRef('parser', $parser);
+
 		parent::display($tpl);
 	}
 }

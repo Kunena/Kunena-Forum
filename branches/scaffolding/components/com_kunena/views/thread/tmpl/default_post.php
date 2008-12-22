@@ -10,8 +10,8 @@
 
 defined('_JEXEC') or die('Invalid Request.');
 ?>
-<div id="<?php echo 'post-'.$this->post->id; ?>" class="">
-	<h2><?php echo JHtml::date($this->post->created_time); ?></h2>
+<div id="<?php echo 'post-'.$this->post->id; ?>" class="post">
+	<h2><a href="#<?php echo 'post-'.$this->post->id; ?>"><?php echo JHtml::date($this->post->created_time); ?></a></h2>
 	<div class="postcontainer">
 		<div class="membersummary">
 			<dl>
@@ -23,8 +23,8 @@ defined('_JEXEC') or die('Invalid Request.');
 		<div class="postcontent">
 			<h3><?php echo $this->post->subject; ?></h3>
 
-			<div class="post">
-				<?php echo $this->post->message; ?>
+			<div class="postmessage">
+				<?php echo $this->parser->parse($this->post->message); ?>
 
 				<!-- <p class="edit"><em>Last edited by {NAME} ({DATE})</em></p> -->
 			</div>

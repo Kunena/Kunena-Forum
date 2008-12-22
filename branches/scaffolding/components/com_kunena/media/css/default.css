@@ -1,0 +1,43 @@
+div.post {
+	clear: both;
+	padding: 5px 0;
+}
+
+div.post h2 {
+	font-size: 1.2em;
+	background: #EEEEEE;
+	border-bottom: 1px solid #CCCCCC;
+	padding: 2px;
+	margin: 3px 0;
+}
+
+div.post h3 {
+	font-size: 1.1em;
+}
+
+div.postcontainer {
+    float: left;
+    width: 100%;
+	border-bottom: 1px solid #999999;
+}
+
+div.postcontainer div.membersummary {
+    float: left;
+    width: 200px;
+}
+
+div.postcontainer div.membersummary dl {
+    padding: 0;
+    margin: 0;
+}
+
+div.postcontainer div.postcontent {
+    float: left;
+    border-left: 1px solid #CCCCCC;
+    padding-left: 5px;
+    margin: 5px;
+}
+
+div.postcontainer div.postmessage {
+    padding: 10px;
+}

@@ -10,7 +10,7 @@
 
 defined('_JEXEC') or die('Invalid Request.');
 
-jximport('jxtended.acl.helper');
+jximport('jxtended.acl.acl');
 jximport('jxtended.database.query');
 
 /**
@@ -55,7 +55,7 @@ class KunenaHelperAccess
 		}
 
 		// Synchronize the assets with the access control system.
-		$result = JXAclHelper::synchronizeAssets($items, 'com_kunena');
+		$result = JxAcl::synchronizeAssets($items, 'com_kunena');
 
 		// Check for errors.
 		if (JError::isError($result)) {

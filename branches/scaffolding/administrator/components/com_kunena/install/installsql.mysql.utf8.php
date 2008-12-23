@@ -1,10 +1,10 @@
 -- <?php /* $Id$ */ defined('_JEXEC') or die('Invalid Request.') ?>;
 
 --
--- Table structure for table `#__kunena`
+-- Table structure for table `jos_kunena`
 --
 
-CREATE TABLE IF NOT EXISTS `#__kunena` (
+CREATE TABLE IF NOT EXISTS `jos_kunena` (
   `id` int(11) NOT NULL auto_increment,
   `version` varchar(16) NOT NULL COMMENT 'Version number',
   `installed_date` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP COMMENT 'Date-time installed',
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `#__kunena` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `#__kunena_announcements`
+-- Table structure for table `jos_kunena_announcements`
 --
 
 CREATE TABLE IF NOT EXISTS `jos_kunena_announcements` (
@@ -34,11 +34,11 @@ CREATE TABLE IF NOT EXISTS `jos_kunena_announcements` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `#__kunena_attachments`
+-- Table structure for table `jos_kunena_attachments`
 --
 
 CREATE TABLE IF NOT EXISTS `jos_kunena_attachments` (
-  `post_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to #__kunena_posts.id',
+  `post_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to jos_kunena_posts.id',
   `file_path` VARCHAR(255) NOT NULL default '',
   KEY `idx_post_id` (`post_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `jos_kunena_attachments` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `#__kunena_categories`
+-- Table structure for table `jos_kunena_categories`
 --
 
 CREATE TABLE IF NOT EXISTS `jos_kunena_categories` (
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `jos_kunena_categories` (
   `access` INT(11) default '0',
   `post_access` INT(11) default '1',
 
-  `checked_out` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to #__users.id',
+  `checked_out` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to jos_users.id',
   `checked_out_time` DATETIME NOT NULL default '0000-00-00 00:00:00',
 
   `hits` INT(10) unsigned default '0',
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `jos_kunena_categories` (
   `last_post_subject` VARCHAR(100) default NULL,
   `last_post_name` VARCHAR(100) default NULL,
   `last_post_email` VARCHAR(100) default NULL,
-  `last_post_user_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to #__users.id',
+  `last_post_user_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to jos_users.id',
 
   `left_id` INT(10) unsigned NOT NULL COMMENT 'Nested Set Reference Id',
   `right_id` INT(10) unsigned NOT NULL COMMENT 'Nested Set Reference Id',
@@ -102,23 +102,23 @@ INSERT IGNORE INTO `jos_kunena_categories` (`id`, `parent_id`, `title`, `alias`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `#__kunena_favorite_threads`
+-- Table structure for table `jos_kunena_favorite_threads`
 --
 
 CREATE TABLE IF NOT EXISTS `jos_kunena_favorite_threads` (
-  `thread_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to #__kunena_threads.id',
-  `user_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to #__users.id',
+  `thread_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to jos_kunena_threads.id',
+  `user_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to jos_users.id',
   KEY `idx_favorite_user_thread` (`user_id`,`thread_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `#__kunena_members`
+-- Table structure for table `jos_kunena_members`
 --
 
 CREATE TABLE IF NOT EXISTS `jos_kunena_members` (
-  `user_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to #__users.id',
+  `user_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to jos_users.id',
   `personal_text` VARCHAR (50) default NULL,
   `avatar` VARCHAR(50) default NULL,
   `signature` TEXT default NULL,
@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `jos_kunena_members` (
   `karma_time` DATETIME NOT NULL default '0000-00-00 00:00:00',
   `total_posts` INT(10) unsigned default '0',
   `hits` INT(10) unsigned default '0',
-  `rank_id` INT(10) NOT NULL default '0' COMMENT 'Foreign Key to #__kunena_member_ranks.id',
+  `rank_id` INT(10) NOT NULL default '0' COMMENT 'Foreign Key to jos_kunena_member_ranks.id',
   `global_moderator` INT(1) NOT NULL default '0',
   `show_email` INT(1) NOT NULL default '0',
   `show_online` INT(1) NOT NULL default '1',
@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `jos_kunena_members` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `#__kunena_member_ranks`
+-- Table structure for table `jos_kunena_member_ranks`
 --
 
 CREATE TABLE IF NOT EXISTS `jos_kunena_member_ranks` (
@@ -167,23 +167,23 @@ CREATE TABLE IF NOT EXISTS `jos_kunena_member_ranks` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `#__kunena_moderators`
+-- Table structure for table `jos_kunena_moderators`
 --
 
 CREATE TABLE IF NOT EXISTS `jos_kunena_moderators` (
-  `user_id` INT(10) unsigned NOT NULL COMMENT 'Foreign Key to #__users.id',
-  `category_id` INT(10) unsigned NOT NULL COMMENT 'Foreign Key to #__kunena_categories.id',
+  `user_id` INT(10) unsigned NOT NULL COMMENT 'Foreign Key to jos_users.id',
+  `category_id` INT(10) unsigned NOT NULL COMMENT 'Foreign Key to jos_kunena_categories.id',
   KEY `idx_moderator_user_category` (`user_id`,`category_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `#__kunena_monitor`
+-- Table structure for table `jos_kunena_monitor`
 --
 
 CREATE TABLE IF NOT EXISTS `jos_kunena_monitor` (
-  `user_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to #__users.id',
+  `user_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to jos_users.id',
   `user_ip` INT(20) unsigned default NULL,
   `time` DATETIME NOT NULL default '0000-00-00 00:00:00',
   `link` VARCHAR(255) default NULL COMMENT 'Link to currently viewed page',
@@ -196,15 +196,15 @@ CREATE TABLE IF NOT EXISTS `jos_kunena_monitor` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `#__kunena_posts`
+-- Table structure for table `jos_kunena_posts`
 --
 
 CREATE TABLE IF NOT EXISTS `jos_kunena_posts` (
   `id` INT(10) unsigned NOT NULL auto_increment COMMENT 'Primary Key',
   `parent_id` INT(10) unsigned default '0',
-  `category_id` INT (10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to #__kunena_categories.id',
-  `thread_id` INT(10) unsigned default '0' COMMENT 'Foreign Key to #__kunena_threads.id',
-  `user_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to #__users.id',
+  `category_id` INT (10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to jos_kunena_categories.id',
+  `thread_id` INT(10) unsigned default '0' COMMENT 'Foreign Key to jos_kunena_threads.id',
+  `user_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to jos_users.id',
   `icon` INT(11) NOT NULL default '0',
   `subject` VARCHAR(100) default NULL,
   `message` TEXT NOT NULL,
@@ -215,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `jos_kunena_posts` (
   `email` VARCHAR(100) default NULL,
   `published` INT(1) NOT NULL default '0',
   `moved` INT(4) default '0',
-  `modified_user_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to #__users.id',
+  `modified_user_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to jos_users.id',
   `modified_time` DATETIME NOT NULL default '0000-00-00 00:00:00',
   `modified_reason` VARCHAR(100) default NULL,
   `left_id` INT(10) unsigned default '0' COMMENT 'Nested Set Reference Id',
@@ -229,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `jos_kunena_posts` (
 
 -- --------------------------------------------------------
 --
--- Table structure for table `#__kunena_smileys`
+-- Table structure for table `jos_kunena_smileys`
 --
 
 CREATE TABLE IF NOT EXISTS `jos_kunena_smileys` (
@@ -244,13 +244,13 @@ CREATE TABLE IF NOT EXISTS `jos_kunena_smileys` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `#__kunena_subscriptions`
+-- Table structure for table `jos_kunena_subscriptions`
 --
 
 CREATE TABLE IF NOT EXISTS `jos_kunena_subscriptions` (
-  `thread_id` INT(10) unsigned default '0' COMMENT 'Foreign Key to #__kunena_threads.id',
-  `user_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to #__users.id',
-  `category_id` INT(10) unsigned default '0' COMMENT 'Foreign Key to #__kunena_categories.id',
+  `thread_id` INT(10) unsigned default '0' COMMENT 'Foreign Key to jos_kunena_threads.id',
+  `user_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to jos_users.id',
+  `category_id` INT(10) unsigned default '0' COMMENT 'Foreign Key to jos_kunena_categories.id',
   KEY `idx_user_category` (`user_id`,`category_id`),
   KEY `idx_user_thread` (`user_id`,`thread_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -258,13 +258,13 @@ CREATE TABLE IF NOT EXISTS `jos_kunena_subscriptions` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `#__kunena_threads`
+-- Table structure for table `jos_kunena_threads`
 --
 
 CREATE TABLE IF NOT EXISTS `jos_kunena_threads` (
   `id` INT(10) unsigned NOT NULL auto_increment COMMENT 'Primary Key',
-  `category_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to #__kunena_categories.id',
-  `user_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to #__users.id',
+  `category_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to jos_kunena_categories.id',
+  `user_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to jos_users.id',
   `user_ip` INT(20) unsigned default NULL,
   `created_time` DATETIME NOT NULL default '0000-00-00 00:00:00',
   `icon` INT(11) NOT NULL default '0',
@@ -283,7 +283,7 @@ CREATE TABLE IF NOT EXISTS `jos_kunena_threads` (
   `last_post_subject` VARCHAR(100) default NULL,
   `last_post_name` VARCHAR(100) default NULL,
   `last_post_email` VARCHAR(100) default NULL,
-  `last_post_user_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to #__users.id',
+  `last_post_user_id` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to jos_users.id',
   PRIMARY KEY  (`id`),
   KEY `idx_thread_category_published_created` (`category_id`,`published`,`created_time`),
   KEY `idx_thread_ip` (`user_ip`),

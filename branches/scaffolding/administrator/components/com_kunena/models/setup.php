@@ -171,23 +171,79 @@ class KunenaModelSetup extends JModel
 			return false;
 		}
 
+		// The following can go in the final release as it's in the com_members install
+
+		//
+		// Type 3 Rules
+		//
+
 		$result = JxAclAdmin::registerRule(
 			// The rule type
 			3,
 			// The rule section
-			'com_kunena',
+			'core',
 			// The rule name
-			'com_kunena.view.level-0',
+			'global.public.view',
 			// The title of the rule
-			'View Public Kunena Categories',
+			'View Public Content and Infrastructure',
 			// Applies to User Groups
-			array('Public Frontend', 'Registered', 'Manager', 'Administrator', 'Super Administrator'),
+			array('Public Frontend', 'Registered', 'Author', 'Editor', 'Publisher', 'Manager', 'Administrator', 'Super Administrator'),
 			// The Actions attached to the rule
-			array('com_kunena' => array('view.category')),
-			// Applies to Assets
+			array('core' => array(
+				'global.view',
+			)),
+			// Applies to Assets (Type 2 only)
 			array(),
-			// Applies to Asset Groups
-			array(0)
+			// Applies to Asset Groups (Type 3 only)
+			array(
+				0,
+			)
+		);
+
+		$result = JxAclAdmin::registerRule(
+			// The rule type
+			3,
+			// The rule section
+			'core',
+			// The rule name
+			'global.registered.view',
+			// The title of the rule
+			'View Registered Content and Infrastructure',
+			// Applies to User Groups
+			array('Registered', 'Author', 'Editor', 'Publisher', 'Manager', 'Administrator', 'Super Administrator'),
+			// The Actions attached to the rule
+			array('core' => array(
+				'global.view',
+			)),
+			// Applies to Assets (Type 2 only)
+			array(),
+			// Applies to Asset Groups (Type 3 only)
+			array(
+				1,
+			)
+		);
+
+		$result = JxAclAdmin::registerRule(
+			// The rule type
+			3,
+			// The rule section
+			'core',
+			// The rule name
+			'global.special.view',
+			// The title of the rule
+			'View Special Content and Infrastructure',
+			// Applies to User Groups
+			array('Manager', 'Administrator', 'Super Administrator'),
+			// The Actions attached to the rule
+			array('core' => array(
+				'global.view',
+			)),
+			// Applies to Assets (Type 2 only)
+			array(),
+			// Applies to Asset Groups (Type 3 only)
+			array(
+				2,
+			)
 		);
 
 		// Check for an error.

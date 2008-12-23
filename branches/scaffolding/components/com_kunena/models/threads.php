@@ -281,8 +281,8 @@ class KunenaModelThreads extends JModel
 			if ($this->getState('access') === true)
 			{
 				// Check access using extended ACL.
-				jximport('jxtended.acl.helper');
-				$levels = JXAclHelper::getAllowedAssetGroups('com_kunena', 'view.category', $this->getState('user.id'));
+				jximport('jxtended.acl.acl');
+				$levels = JXAcl::getAllowedAssetGroups('com_kunena', 'view.category', $this->getState('user.id'));
 
 				if (JError::isError($levels)) {
 					// TODO: we should throw an error

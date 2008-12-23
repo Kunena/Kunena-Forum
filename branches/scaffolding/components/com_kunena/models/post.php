@@ -687,10 +687,10 @@ class KunenaModelPost extends JModel
 		}
 
 		// Import the ACL helper library.
-		jximport('jxtended.acl.helper');
+		jximport('jxtended.acl.acl');
 
 		// Get the allowed access levels for the user.
-		$levels = JXAclHelper::getAllowedAssetGroups('com_kunena', 'view.category', $this->getState('user.id'), true);
+		$levels = JXAcl::getAllowedAssetGroups('core', 'global.view', $this->getState('user.id'), false);
 
 		if (!is_array($levels)) {
 			$levels = explode(',', $levels);
@@ -741,10 +741,10 @@ class KunenaModelPost extends JModel
 		}
 
 		// Import the ACL helper library.
-		jximport('jxtended.acl.helper');
+		jximport('jxtended.acl.acl');
 
 		// Get the allowed access levels for the user.
-		$levels = JXAclHelper::getAllowedAssetGroups('com_kunena', 'view.category', $this->getState('user.id'), true);
+		$levels = JXAcl::getAllowedAssetGroups('com_kunena', 'view.category', $this->getState('user.id'), true);
 
 		if (!is_array($levels)) {
 			$levels = explode(',', $levels);

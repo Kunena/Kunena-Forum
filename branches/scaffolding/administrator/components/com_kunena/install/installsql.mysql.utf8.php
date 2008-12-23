@@ -96,8 +96,8 @@ CREATE TABLE IF NOT EXISTS `jos_kunena_categories` (
   KEY `idx_category_posts` (`total_posts`,`access`,`published`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT IGNORE INTO `jos_kunena_categories` (`id`, `parent_id`, `title`, `alias`, `path`, `icon`, `summary`, `description`, `ordering`, `published`, `class_sfx`, `locked`, `moderated`, `alert_admin`, `access`, `admin_access`, `checked_out`, `checked_out_time`, `review`, `hits`, `last_post_id`, `last_post_time`, `total_threads`, `total_posts`, `left_id`, `right_id`) VALUES
-(1, 0, 'None', NULL, 'root', 0, '', '', 0, 0, NULL, 0, 1, 0, 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 1);
+INSERT IGNORE INTO `jos_kunena_categories` (`id`, `parent_id`, `title`, `alias`, `path`, `icon`, `summary`, `description`, `ordering`, `published`, `class_sfx`, `locked`, `moderated`, `alert_admin`, `access`, `post_access`, `checked_out`, `checked_out_time`, `hits`, `last_post_id`, `last_post_time`, `total_threads`, `total_posts`, `left_id`, `right_id`) VALUES
+(1, 0, 'None', NULL, 'root', 0, '', '', 0, 0, NULL, 0, 1, 0, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 

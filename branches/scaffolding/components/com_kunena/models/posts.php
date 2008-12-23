@@ -278,7 +278,9 @@ class KunenaModelPosts extends JModel
 			if ($this->getState('access') === true)
 			{
 				// Check access using extended ACL.
-				$levels = KunenaHelperAccess::getAccessLevelsString($this->getState('user.id'));
+				jximport('jxtended.acl.acl');
+				$levels = JxAcl::getAllowedAssetGroups('core', 'global.view', $this->getState('user.id'));
+
 				if (JError::isError($levels)) {
 					// TODO: we should throw an error
 					$levels = false;

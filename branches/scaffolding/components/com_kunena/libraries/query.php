@@ -12,10 +12,10 @@ defined('JPATH_BASE') or die;
 /**
  * Query Element Class
  *
- * @package		JXtended.Libraries
+ * @package		Ktended.Libraries
  * @subpackage	Database
  */
-class JXQueryElement
+class KQueryElement
 {
 	/** @var string The name of the element */
 	var $_name = null;
@@ -30,7 +30,7 @@ class JXQueryElement
 	 * @param	mixed	String or array
 	 * @param	string	The glue for elements
 	 */
-	function JXQueryElement($name, $elements, $glue=',')
+	function KQueryElement($name, $elements, $glue=',')
 	{
 		$this->_elements	= array();
 		$this->_name		= $name;
@@ -64,10 +64,10 @@ class JXQueryElement
 /**
  * Query Building Class
  *
- * @package		JXtended.Libraries
+ * @package		Ktended.Libraries
  * @subpackage	Database
  */
-class JXQuery
+class KQuery
 {
 	/** @var string The query type */
 	var $_type = '';
@@ -89,7 +89,7 @@ class JXQuery
 	/**
 	 * Constructor
 	 */
-	function JXQuery()
+	function KQuery()
 	{
 	}
 
@@ -100,7 +100,7 @@ class JXQuery
 	{
 		$this->_type = 'select';
 		if (is_null($this->_select)) {
-			$this->_select = new JXQueryElement('SELECT', $columns);
+			$this->_select = new KQueryElement('SELECT', $columns);
 		} else {
 			$this->_select->append($columns);
 		}
@@ -112,7 +112,7 @@ class JXQuery
 	function from($tables)
 	{
 		if (is_null($this->_from)) {
-			$this->_from = new JXQueryElement('FROM', $tables);
+			$this->_from = new KQueryElement('FROM', $tables);
 		} else {
 			$this->_from->append($tables);
 		}
@@ -127,7 +127,7 @@ class JXQuery
 		if (is_null($this->_join)) {
 			$this->_join = array();
 		}
-		$this->_join[] = new JXQueryElement(strtoupper($type) . ' JOIN', $conditions);
+		$this->_join[] = new KQueryElement(strtoupper($type) . ' JOIN', $conditions);
 	}
 
 	/**
@@ -170,7 +170,7 @@ class JXQuery
 	{
 		if (is_null($this->_where)) {
 			$glue = strtoupper($glue);
-			$this->_where = new JXQueryElement( 'WHERE', $conditions, "\n\t$glue ");
+			$this->_where = new KQueryElement( 'WHERE', $conditions, "\n\t$glue ");
 		} else {
 			$this->_where->append($conditions);
 		}
@@ -182,7 +182,7 @@ class JXQuery
 	function group($columns)
 	{
 		if (is_null($this->_group)) {
-			$this->_group = new JXQueryElement('GROUP BY', $columns);
+			$this->_group = new KQueryElement('GROUP BY', $columns);
 		} else {
 			$this->_group->append($columns);
 		}
@@ -194,7 +194,7 @@ class JXQuery
 	function having($columns)
 	{
 		if (is_null($this->_having)) {
-			$this->_having = new JXQueryElement('HAVING', $columns);
+			$this->_having = new KQueryElement('HAVING', $columns);
 		} else {
 			$this->_having->append($columns);
 		}
@@ -206,7 +206,7 @@ class JXQuery
 	function order($columns)
 	{
 		if (is_null($this->_order)) {
-			$this->_order = new JXQueryElement('ORDER BY', $columns);
+			$this->_order = new KQueryElement('ORDER BY', $columns);
 		} else {
 			$this->_order->append($columns);
 		}

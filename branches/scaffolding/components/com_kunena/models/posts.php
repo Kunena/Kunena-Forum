@@ -267,7 +267,7 @@ class KunenaModelPosts extends JModel
 		$query->join('LEFT', '`#__kunena_threads` AS b ON a.thread_id = a.id');
 
 		// Resolve foriegn keys with the categories table.
-		$query->select('c.access, c.admin_access');
+		$query->select('c.access, c.post_access');
 		$query->join('LEFT', '`#__kunena_categories` AS c ON a.category_id = a.id');
 		$query->group('a.id');
 

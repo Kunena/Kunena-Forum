@@ -97,6 +97,9 @@ class KunenaModelCategories extends JModel
 			// Load the parameters.
 			$this->setState('params', $params);
 
+			// Set the access type state.
+			$this->setState('access', true);
+
 			$this->__state_set = true;
 		}
 
@@ -255,7 +258,7 @@ class KunenaModelCategories extends JModel
 	 */
 	function _getListQuery()
 	{
-		$query = new JXQuery();
+		$query = new KQuery();
 
 		// Select all fields from the articles table.
 		$query->select('a.*');

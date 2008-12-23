@@ -98,6 +98,9 @@ class KunenaModelThreads extends JModel
 			// Load the parameters.
 			$this->setState('params', $params);
 
+			// Set the access type state.
+			$this->setState('access', true);
+
 			$this->__state_set = true;
 		}
 
@@ -256,7 +259,7 @@ class KunenaModelThreads extends JModel
 	 */
 	function _getListQuery()
 	{
-		$query = new JXQuery();
+		$query = new KQuery();
 
 		// Select all fields from the articles table.
 		$query->select('a.*');
@@ -267,7 +270,7 @@ class KunenaModelThreads extends JModel
 		$query->join('LEFT', '#__kunena_posts AS b ON b.thread_id = a.id');
 
 		// Resolve foriegn keys with the categories table.
-		$query->select('c.access, c.admin_access');
+		$query->select('c.access, c.post_access');
 		$query->join('LEFT', '#__kunena_categories AS c ON c.id = a.category_id');
 		$query->group('a.id');
 
@@ -278,7 +281,9 @@ class KunenaModelThreads extends JModel
 			if ($this->getState('access') === true)
 			{
 				// Check access using extended ACL.
-				$levels = KunenaHelperAccess::getAccessLevelsString($this->getState('user.id'));
+				jximport('jxtended.acl.helper');
+				$levels = JXAclHelper::getAllowedAssetGroups('com_kunena', 'view.category', $this->getState('user.id'));
+
 				if (JError::isError($levels)) {
 					// TODO: we should throw an error
 					$levels = false;

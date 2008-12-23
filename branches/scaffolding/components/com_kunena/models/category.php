@@ -112,7 +112,7 @@ class KunenaModelCategory extends JModel
 	{
 		$false		= false;
 
-		$query = new JXQuery();
+		$query = new KQuery();
 
 		// Select all fields from the articles table.
 		$query->select('a.*');

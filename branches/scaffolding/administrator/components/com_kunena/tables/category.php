@@ -84,7 +84,7 @@ class KunenaTableCategory extends JTableAsset
 	/**
 	 * @var int
 	 */
-	var $admin_access = null;
+	var $post_access = null;
 	/**
 	 * @var int unsigned
 	 */

@@ -67,13 +67,12 @@ CREATE TABLE IF NOT EXISTS `jos_kunena_categories` (
   `moderated` INT(1) NOT NULL default '1',
   `alert_admin` INT(1) NOT NULL default '0',
 
-  `access` INT(11) default '1',
-  `admin_access` INT(11) default '0',
+  `access` INT(11) default '0',
+  `post_access` INT(11) default '1',
 
   `checked_out` INT(10) unsigned NOT NULL default '0' COMMENT 'Foreign Key to #__users.id',
   `checked_out_time` DATETIME NOT NULL default '0000-00-00 00:00:00',
 
-  `review` INT(4) NOT NULL default '0',
   `hits` INT(10) unsigned default '0',
 
   `total_threads` INT(10) unsigned NOT NULL default '0',

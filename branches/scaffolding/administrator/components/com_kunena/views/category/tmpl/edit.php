@@ -101,8 +101,8 @@ function submitbutton(task)
 									<?php echo $fields['access']->field; ?>
 								</li>
 								<li>
-									<?php echo $fields['admin_access']->label; ?><br />
-									<?php echo $fields['admin_access']->field; ?>
+									<?php echo $fields['post_access']->label; ?><br />
+									<?php echo $fields['post_access']->field; ?>
 								</li>
 								<li>
 									<?php echo $fields['locked']->label; ?><br />

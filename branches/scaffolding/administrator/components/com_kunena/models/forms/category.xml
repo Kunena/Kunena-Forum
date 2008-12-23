@@ -114,6 +114,15 @@
 			description="KUNENA_CATEGORY_ACCESS_DESC"
 			default="0"/>
 
+		<field name="post_access"
+			type="list_assetgroups"
+			sections="com_kunena"
+			id="post_access"
+			class="inputbox"
+			label="KUNENA_CATEGORY_POST_ACCESS"
+			description="KUNENA_CATEGORY_POST_ACCESS_DESC"
+			default="1"/>
+
 		<field name="class_sfx"
 			type="text"
 			id="class_sfx"
@@ -153,14 +162,6 @@
 			<option value="0">No</option>
 			<option value="1">Yes</option>
 		</field>
-
-		<field name="admin_access"
-			type="list_access"
-			id="admin_access"
-			class="inputbox"
-			label="KUNENA_CATEGORY_ADMIN_ACCESS"
-			description="KUNENA_CATEGORY_ADMIN_ACCESS_DESC"
-			default="0" />
 
 		<field name="review"
 			type="radio"

@@ -669,4 +669,112 @@ class KunenaModelPost extends JModel
 
 		return true;
 	}
+
+	function canAdd($catId, $threadId = null, $userId = null)
+	{
+		if ($catId < 2) {
+			$this->setError(JText::_('KUNENA INVALID CATEGORY'));
+			return false;
+		}
+
+		// Get a category row instance.
+		$category = & $this->getTable('Category', 'KunenaTable');
+
+		// Load the row if saving an existing item.
+		if (!$category->load($catId)) {
+			$this->setError(JText::_('KUNENA INVALID CATEGORY'));
+			return false;
+		}
+
+		// Import the ACL helper library.
+		jximport('jxtended.acl.helper');
+
+		// Get the allowed access levels for the user.
+		$levels = JXAclHelper::getAllowedAssetGroups('com_kunena', 'view.category', $this->getState('user.id'), true);
+
+		if (!is_array($levels)) {
+			$levels = explode(',', $levels);
+		}
+
+		// Ensure the user is assigned to an access level that can post in the category.
+		if (!in_array($category->post_access, $levels)) {
+			$this->setError(JText::_('KUNENA NOT AUTHORIZED'));
+			return false;
+		}
+
+		// Check to make sure the thread is not locked.
+		if ($threadId)
+		{
+			// Get a thread row instance.
+			$thread = & $this->getTable('Thread', 'KunenaTable');
+
+			// Load the row to verify locked state.
+			if (!$thread->load($threadId)) {
+				$this->setError(JText::_('KUNENA INVALID THREAD'));
+				return false;
+			}
+
+			// Ensure the thread is not locked.
+			if ($thread->locked) {
+				$this->setError(JText::_('KUNENA THREAD LOCKED'));
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	function canEdit($catId, $threadId = null, $userId = null)
+	{
+		if ($catId < 2) {
+			$this->setError(JText::_('KUNENA INVALID CATEGORY'));
+			return false;
+		}
+
+		// Get a category row instance.
+		$category = & $this->getTable('Category', 'KunenaTable');
+
+		// Load the row if saving an existing item.
+		if (!$category->load($catId)) {
+			$this->setError(JText::_('KUNENA INVALID CATEGORY'));
+			return false;
+		}
+
+		// Import the ACL helper library.
+		jximport('jxtended.acl.helper');
+
+		// Get the allowed access levels for the user.
+		$levels = JXAclHelper::getAllowedAssetGroups('com_kunena', 'view.category', $this->getState('user.id'), true);
+
+		if (!is_array($levels)) {
+			$levels = explode(',', $levels);
+		}
+
+		// Ensure the user is assigned to an access level that can post in the category.
+		if (!in_array($category->post_access, $levels)) {
+			$this->setError(JText::_('KUNENA NOT AUTHORIZED'));
+			return false;
+		}
+
+		// Check to make sure the thread is not locked.
+		if ($threadId)
+		{
+			// Get a thread row instance.
+			$thread = & $this->getTable('Thread', 'KunenaTable');
+
+			// Load the row to verify locked state.
+			if (!$thread->load($threadId)) {
+				$this->setError(JText::_('KUNENA INVALID THREAD'));
+				return false;
+			}
+
+			// Ensure the thread is not locked.
+			if ($thread->locked) {
+				$this->setError(JText::_('KUNENA THREAD LOCKED'));
+				return false;
+			}
+		}
+
+		return true;
+	}
 }

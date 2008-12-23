@@ -73,7 +73,7 @@ class KunenaHelperAccess
 	 * @return	string		Comma separated list of access level ID's
 	 * @since	1.0
 	 */
-	function getAccessLevelsString($uid, $action='view')
+	function getAccessLevelsString($uid, $action='view.category')
 	{
 		static $results;
 
@@ -123,7 +123,7 @@ class KunenaHelperAccess
 	 * @return	array		Array list of access level ID's
 	 * @since	1.0
 	 */
-	function getAccessLevelsArray($uid, $action='view')
+	function getAccessLevelsArray($uid, $action='view.category')
 	{
 		static $results;
 

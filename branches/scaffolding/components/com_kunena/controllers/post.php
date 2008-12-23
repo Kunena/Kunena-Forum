@@ -74,6 +74,14 @@ class KunenaControllerPost extends KunenaController
 			$this->setRedirect(JRoute::_('index.php?option=com_kunena', false));
 		}
 
+		$model = & $this->getModel('Post');
+		$authorized = $model->canAdd($catId, $threadId);
+
+		if (!$authorized) {
+			JError::raiseError(403, $model->getError());
+		}
+die;
+
 		// Set the category, thread and parent ids for the post to edit in the session.
 		$app->setUserState('com_kunena.edit.post.catId', $catId);
 		$app->setUserState('com_kunena.edit.post.threadId', $threadId);

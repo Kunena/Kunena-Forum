@@ -63,8 +63,11 @@ $this->buildDefaultToolBar();
 				<th width="5%">
 					<?php echo JHTML::_('grid.sort', 'Published', 'a.published', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 				</th>
-				<th width="15%">
-					<?php echo JHTML::_('grid.sort', 'Access', 'a.access', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+				<th width="10%">
+					<?php echo JHTML::_('grid.sort', 'View Access Level', 'a.access', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+				</th>
+				<th width="10%">
+					<?php echo JHTML::_('grid.sort', 'Post Access Level', 'a.post_access', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 				</th>
 				<th width="10%">
 					<?php echo JHTML::_('grid.sort', 'Threads', 'a.total_threads', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
@@ -107,10 +110,10 @@ $this->buildDefaultToolBar();
 					<?php echo JHTML::_('KGrid.published', $item->id, $item->published, 'category.'); ?>
 				</td>
 				<td align="center">
-					<?php
-						echo $item->access_name;
-						//echo JHTML::_('kunenagrid.access', $item->id, $item->access, $item->access_name, 'category.');
-					?>
+					<?php echo $item->access_name; ?>
+				</td>
+				<td align="center">
+					<?php echo $item->post_access_name; ?>
 				</td>
 				<td align="center">
 					<?php echo $item->total_threads; ?>

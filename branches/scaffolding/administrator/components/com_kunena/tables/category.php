@@ -94,10 +94,6 @@ class KunenaTableCategory extends JTableAsset
 	 */
 	var $checked_out_time = null;
 	/**
-	 * @var int
-	 */
-	var $review = null;
-	/**
 	 * @var int unsigned
 	 */
 	var $hits = null;

@@ -40,11 +40,6 @@ $this->buildDefaultToolBar();
 		<legend><?php echo JText::sprintf('Rule #%d', $this->item->id); ?></legend>
 		<?php endif; ?>
 
-		<input type="hidden" name="jxform[name]" value="<?php echo $this->escape($this->item->name); ?>" />
-		<input type="hidden" name="jxform[note]" value="<?php echo $this->escape($this->item->note); ?>" />
-		<input type="hidden" name="jxform[allow]" value="<?php echo (int) $this->item->allow; ?>"  />
-		<input type="hidden" name="jxform[return_value]" value="<?php echo $this->escape($this->item->return_value); ?>" />
-		<input type="hidden" name="jxform[enabled]" value="<?php echo (int) $this->item->enabled; ?>" />
 
 <?php
 	// Now split out on the Rule Type
@@ -56,12 +51,15 @@ $this->buildDefaultToolBar();
 	echo $this->loadTemplate('type'.$ruleType);
 ?>
 		<div class="clr"></div>
-		<div style="display:none;">
-			<?php echo $fields['id']->field; ?>
-			<?php echo $fields['acl_type']->field; ?>
-		</div>
-
-		<input type="hidden" name="task" value="" />
 	</fieldset>
+
+	<input type="hidden" name="jxform[id]" value="<?php echo (int) $this->item->id; ?>" />
+	<input type="hidden" name="jxform[acl_type]" value="<?php echo (int) $this->item->acl_type; ?>" />
+	<input type="hidden" name="jxform[name]" value="<?php echo $this->escape($this->item->name); ?>" />
+	<input type="hidden" name="jxform[note]" value="<?php echo $this->escape($this->item->note); ?>" />
+	<input type="hidden" name="jxform[allow]" value="<?php echo (int) $this->item->allow; ?>"  />
+	<input type="hidden" name="jxform[return_value]" value="<?php echo $this->escape($this->item->return_value); ?>" />
+	<input type="hidden" name="jxform[enabled]" value="<?php echo (int) $this->item->enabled; ?>" />
+	<input type="hidden" name="task" value="" />
 	<?php echo JHTML::_('form.token'); ?>
 </form>

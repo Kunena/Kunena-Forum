@@ -74,6 +74,28 @@ class KunenaControllerRule extends JController
 	}
 
 	/**
+	 * Method to add a new rule to the access control system.
+	 *
+	 * @access	public
+	 * @return	void
+	 * @since	1.0
+	 */
+	function addlevel($name = '')
+	{
+		// Initialize variables.
+		$app = &JFactory::getApplication();
+
+		// Clear the rule id from the session.
+		$app->setUserState('acl.edit.rule.id', null);
+		$ruleType		= 3;
+		$ruleSection	= 'com_kunena';
+
+		// Redirect to the rule edit screen.
+		$this->setRedirect('index.php?option=com_kunena&view=rule&layout=edit&type='.$ruleType.'&section='.$ruleSection.($name ? '&name='.$name : ''));
+	}
+
+
+	/**
 	 * Method to checkout a group for editing.  If a different group
 	 * was previously checked-out, the previous group will be checked
 	 * in first.
@@ -115,9 +137,53 @@ class KunenaControllerRule extends JController
 		// Set the rule id for the rule to edit in the session.
 		$app->setUserState('acl.edit.rule.id', $ruleId);
 
-		// Syncronize the ACL assets.
-		require_once(JPATH_ADMINISTRATOR.'/components/com_kunena/helpers/access.php');
-//		$sync = GalleryHelperAccess::synchronize();
+		// Redirect to the rule edit screen.
+		$this->setRedirect('index.php?option=com_kunena&view=rule&layout=edit');
+	}
+
+	/**
+	 * Method to checkout a group for editing.  If a different group
+	 * was previously checked-out, the previous group will be checked
+	 * in first.
+	 *
+	 * @access	public
+	 * @return	void
+	 * @since	1.0
+	 */
+	function editLevel()
+	{
+		// Initialize variables.
+		$app		= &JFactory::getApplication();
+		$cid		= JRequest::getVar('cid', array(), '', 'array');
+		$ruleId		= JRequest::getInt('rule_id', (int) array_shift($cid));
+
+		// Set up required dependancies
+		jximport('jxtended.acl.acladmin');
+
+		// If the Rule Id is not passed, check for the name
+		if (empty($ruleId))
+		{
+			// If the Id is not provided, see if the name is provided
+			$name		= JRequest::getVar('name');
+			$section	= JRequest::getVar('section', 'com_kunena');
+
+			if (empty($name)) {
+				return $this->add();
+			}
+			else {
+
+				// Find the ID of the ACL
+				$table = JTable::getInstance('Acl', 'JxTable');
+				$table->loadByName($name, $section);
+				$ruleId = $table->id;
+				if (empty($ruleId)) {
+					return $this->addLevel($name);
+				}
+			}
+		}
+
+		// Set the rule id for the rule to edit in the session.
+		$app->setUserState('acl.edit.rule.id', $ruleId);
 
 		// Redirect to the rule edit screen.
 		$this->setRedirect('index.php?option=com_kunena&view=rule&layout=edit');

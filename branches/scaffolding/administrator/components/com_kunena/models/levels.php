@@ -116,13 +116,14 @@ class KunenaModelLevels extends MembersModelLevels
 		// Find only global and local levels
 		$query->select('s.name AS section_name, s.value AS section_value');
 		$query->join('LEFT', '#__core_acl_axo_sections AS s ON s.id = a.section_id');
-		$query->where('(s.value = '.$this->_db->quote('core').' OR a.section_id IN ('.$this->_db->quote('com_kunena').'))');
+		$query->where('(s.value IN ('.$this->_db->quote('core').','.$this->_db->quote('com_kunena').'))');
 
 		// Get rid of ROOT node
 		$query->where('a.parent_id <> 0');
 
 		// Add the list ordering clause.
-		$query->order($this->_db->getEscaped($state->get('list.ordering', 'a.lft')).' '.$this->_db->getEscaped($state->get('list.direction', 'ASC')));
+		//$query->order($this->_db->getEscaped($state->get('list.ordering', 'a.lft')).' '.$this->_db->getEscaped($state->get('list.direction', 'ASC')));
+		$query->order('s.order_value, a.name');
 
 		//echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
 		return $query;

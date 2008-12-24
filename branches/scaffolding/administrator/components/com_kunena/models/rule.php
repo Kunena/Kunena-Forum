@@ -37,13 +37,33 @@ class KunenaModelRule extends JXModelRule
 		{
 			$app = &JFactory::getApplication();
 
-			$this->setState('section.value', 'com_kunena');
-			$this->setState('acl.type', 1);
+			$this->setState('section.value',	JRequest::getVar('section', 'com_kunena'));
+			$this->setState('acl.type',			JRequest::getVar('type', 1));
+			$this->setState('default.name',		JRequest::getVar('name'));
 
 			$this->__state_set = true;
 		}
 
 		return parent::getState($property, $default);
+	}
+
+	/**
+	 * Method to get an access control rule object.
+	 *
+	 * @access	public
+	 * @param	integer	$id	The rule ID.
+	 * @return	object	The access control rule object.
+	 * @since	1.0
+	 */
+	function &getItem($id = null)
+	{
+		$item = &parent::getItem($id);
+
+		if (empty($item->id)) {
+			$item->name = $this->getState('default.name');
+		}
+
+		return $item;
 	}
 
 	/**

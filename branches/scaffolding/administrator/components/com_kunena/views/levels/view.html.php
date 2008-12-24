@@ -53,7 +53,7 @@ class KunenaViewLevels extends JView
 		$state = $this->get('State');
 		JToolBarHelper::title(JText::_('JX Members: Levels'), 'logo');
 		JToolBarHelper::deleteList('', 'level.delete');
-		JToolBarHelper::custom('level.edit', 'edit.png', 'edit_f2.png', 'Edit', true);
-		JToolBarHelper::custom('level.edit', 'new.png', 'new_f2.png', 'New', false);
+		JToolBarHelper::custom('rule.editlevel', 'edit.png', 'edit_f2.png', 'Edit', true);
+		JToolBarHelper::custom('rule.addlevel', 'new.png', 'new_f2.png', 'New', false);
 	}
 }

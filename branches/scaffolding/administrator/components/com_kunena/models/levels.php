@@ -61,8 +61,9 @@ class KunenaModelLevels extends MembersModelLevels
 		{
 			for ($i = 0, $n = count($this->_lists[$key]); $i < $n; $i++)
 			{
-				$ruleName	= 'com_kunena.view.level-'.$this->_lists[$key][$i]->value;
-				$rule		= JxAclAdmin::getRule($ruleName, 'com_kunena');
+				$section	= $this->_lists[$key][$i]->section_value;
+				$ruleName	= $section.'-global.view-'.$this->_lists[$key][$i]->value;
+				$rule		= JxAclAdmin::getRule($ruleName, $section);
 
 				$this->_lists[$key][$i]->rule_name = $ruleName;
 
@@ -100,7 +101,7 @@ class KunenaModelLevels extends MembersModelLevels
 	function _getListQuery()
 	{
 		$state = &$this->getState();
-		$query = new JXQuery();
+		$query = new JXQuery;
 
 		// Select all fields from the table.
 		$query->select('a.*');
@@ -113,7 +114,9 @@ class KunenaModelLevels extends MembersModelLevels
 		}
 
 		// Find only global and local levels
-		$query->where('(a.section_id = 0 OR a.section_id IN ('.$this->_db->quote('com_kunena').'))');
+		$query->select('s.name AS section_name, s.value AS section_value');
+		$query->join('LEFT', '#__core_acl_axo_sections AS s ON s.id = a.section_id');
+		$query->where('(s.value = '.$this->_db->quote('core').' OR a.section_id IN ('.$this->_db->quote('com_kunena').'))');
 
 		// Get rid of ROOT node
 		$query->where('a.parent_id <> 0');

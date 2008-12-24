@@ -19,10 +19,10 @@ $type = $this->state->get('list.group_type');
 <form action="<?php echo JRoute::_('index.php?option=com_kunena&view=levels');?>" method="post" name="adminForm">
 	<fieldset class="filter clearfix">
 		<div class="left">
-			<label for="search"><?php echo JText::_('JX Search'); ?>:</label>
-			<input type="text" name="filter_search" id="search" value="<?php echo $this->state->get('filter.search'); ?>" size="60" title="<?php echo JText::_('JX Search in title'); ?>" />
-			<button type="submit"><?php echo JText::_('JX Search Go'); ?></button>
-			<button type="button" onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_('JX Search Clear'); ?></button>
+			<label for="search"><?php echo JText::_('KUNENA SEARCH'); ?>:</label>
+			<input type="text" name="filter_search" id="search" value="<?php echo $this->state->get('filter.search'); ?>" size="60" title="<?php echo JText::_('KUNENA SEARCH IN TITLE'); ?>" />
+			<button type="submit"><?php echo JText::_('KUNENA SEARCH GO'); ?></button>
+			<button type="button" onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_('KUNENA SEARCH CLEAR'); ?></button>
 		</div>
 		<input type="hidden" name="group_type" value="<?php echo $type;?>" />
 	</fieldset>
@@ -33,13 +33,13 @@ $type = $this->state->get('list.group_type');
 					<input type="checkbox" name="toggle" value="" onclick="checkAll(this)" />
 				</th>
 				<th class="left">
-					<?php echo JText::_('JX Col Asset Group Name'); ?>
+					<?php echo JText::_('KUNENA LEVELS ASSET GROUP NAME'); ?>
 				</th>
 				<th width="10%">
-					<?php echo JText::_('JX Col Asset Section'); ?>
+					<?php echo JText::_('KUNENA LEVELS ASSET SECTION'); ?>
 				</th>
 				<th width="20%">
-					<?php echo JText::_('JX Col View User Groups'); ?>
+					<?php echo JText::_('KUNENA LEVELS VIEW USER GROUPS'); ?>
 				</th>
 				<th width="50%">
 					&nbsp;
@@ -66,7 +66,7 @@ $type = $this->state->get('list.group_type');
 						<?php echo $item->name; ?></a>
 				</td>
 				<td align="center">
-					<?php echo $item->section_id ? $item->section_name : JText::_('Global'); ?>
+					<?php echo $item->section_name; ?>
 				</td>
 				<td>
 					<?php if ($userGroups = $item->references->getAroGroups()) : ?>

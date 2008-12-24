@@ -135,7 +135,7 @@ class KunenaControllerRule extends JController
 		// Check for request forgeries.
 		JRequest::checkToken() or jexit(JText::_('KUNENA_INVALID_TOKEN'));
 
-		$this->setRedirect('index.php?option=com_kunena&view=rules');
+		$this->setRedirect('index.php?option=com_kunena&view=levels');
 	}
 
 	/**

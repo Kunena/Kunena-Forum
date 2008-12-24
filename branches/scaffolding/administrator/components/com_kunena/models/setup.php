@@ -99,28 +99,6 @@ class KunenaModelSetup extends JModel
 		// Require the Acl API class
 		jximport('jxtended.acl.acladmin');
 
-		// We must check for, and possibly create, the zero-user (Public, ARO value = 0)
-		// otherwise Public access won't work properly
-		if (!JxAclAdmin::getUser(0))
-		{
-			// Create the User
-			$userId = JxAclAdmin::registerUser('Public User', 0);
-			if (JError::isError($userId)) {
-				//return JError::raiseWarning(500, $result->getMessage());
-			}
-
-			// Now we need to map that user to the Public Group
-			if ($group = JxAclAdmin::getGroupForUsers('Public Frontend')) {
-				$result = JxAclAdmin::registerUserInGroups($userId, $group->id);
-				if (JError::isError($result)) {
-					return JError::raiseWarning(500, $result->getError());
-				}
-			}
-			else {
-				return JError::raiseWarning(500, JText::_('Cannot find the public users group'));
-			}
-		}
-
 		// Register the sections
 		// @todo Think about not throwing an error if the section exists??
 
@@ -168,87 +146,6 @@ class KunenaModelSetup extends JModel
 		// Check for an error.
 		if (JError::isError($result)) {
 			$this->setError(JText::sprintf('KUNENA_ACCESS_INITIALIZATION_FAILED', $result->message));
-			return false;
-		}
-
-		// The following can go in the final release as it's in the com_members install
-
-		//
-		// Type 3 Rules
-		//
-
-		$result = JxAclAdmin::registerRule(
-			// The rule type
-			3,
-			// The rule section
-			'core',
-			// The rule name
-			'global.public.view',
-			// The title of the rule
-			'View Public Content and Infrastructure',
-			// Applies to User Groups
-			array('Public Frontend', 'Registered', 'Author', 'Editor', 'Publisher', 'Manager', 'Administrator', 'Super Administrator'),
-			// The Actions attached to the rule
-			array('core' => array(
-				'global.view',
-			)),
-			// Applies to Assets (Type 2 only)
-			array(),
-			// Applies to Asset Groups (Type 3 only)
-			array(
-				0,
-			)
-		);
-
-		$result = JxAclAdmin::registerRule(
-			// The rule type
-			3,
-			// The rule section
-			'core',
-			// The rule name
-			'global.registered.view',
-			// The title of the rule
-			'View Registered Content and Infrastructure',
-			// Applies to User Groups
-			array('Registered', 'Author', 'Editor', 'Publisher', 'Manager', 'Administrator', 'Super Administrator'),
-			// The Actions attached to the rule
-			array('core' => array(
-				'global.view',
-			)),
-			// Applies to Assets (Type 2 only)
-			array(),
-			// Applies to Asset Groups (Type 3 only)
-			array(
-				1,
-			)
-		);
-
-		$result = JxAclAdmin::registerRule(
-			// The rule type
-			3,
-			// The rule section
-			'core',
-			// The rule name
-			'global.special.view',
-			// The title of the rule
-			'View Special Content and Infrastructure',
-			// Applies to User Groups
-			array('Manager', 'Administrator', 'Super Administrator'),
-			// The Actions attached to the rule
-			array('core' => array(
-				'global.view',
-			)),
-			// Applies to Assets (Type 2 only)
-			array(),
-			// Applies to Asset Groups (Type 3 only)
-			array(
-				2,
-			)
-		);
-
-		// Check for an error.
-		if (JError::isError($result)) {
-			$this->setError($result->getMessage());
 			return false;
 		}
 

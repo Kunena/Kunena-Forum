@@ -92,19 +92,47 @@ class KunenaController extends JController
 	function display()
 	{
 		// Get the document object.
-		$document = &JFactory::getDocument();
+		$document = & JFactory::getDocument();
 
 		// Set the default view name and format from the Request.
-		$vName		= JRequest::getWord('view', 'categories');
-		$vFormat	= $document->getType();
-		$lName		= JRequest::getWord('layout', 'default');
+		$vName	 = JRequest::getWord('view', 'categories');
+		$mName	 = $vName;
+		$vFormat = $document->getType();
+		$lName	 = JRequest::getWord('layout', 'default');
 
-		if ($view = &$this->getView($vName, $vFormat))
+		if ($view = & $this->getView($vName, $vFormat))
 		{
+			// Get the appropriate model for the view.
+			$model = & $this->getModel($mName);
+
+			// Do any specific processing for the view.
 			switch ($vName)
 			{
-				default:
-					$model = &$this->getModel($vName);
+				// Ensure the user has access to post in the current category.
+				case 'post':
+
+					break;
+
+				// Ensure the user has access to view the current category.
+				case 'category':
+				case 'thread':
+
+					// Import the ACL helper library.
+					jximport('jxtended.acl.acl');
+
+					// Get the allowed access levels for the user.
+					$user	= & JFactory::getUser();
+					$levels = JXAcl::getAllowedAssetGroups('core', 'global.view', $user->get('id'), false);
+
+					// Get the category data object from the model.
+					$category = $model->getCategory();
+
+					// Ensure the user is assigned to an access level that can post in the category.
+					if (!in_array($category->access, $levels)) {
+						$this->setMessage(JText::_('KUNENA NOT AUTHORIZED'), 'warning');
+						$this->setRedirect(JRoute::_('index.php?option=com_kunena', false));
+						return false;
+					}
 					break;
 			}
 

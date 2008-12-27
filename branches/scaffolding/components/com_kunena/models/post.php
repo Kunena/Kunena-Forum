@@ -692,10 +692,6 @@ class KunenaModelPost extends JModel
 		// Get the allowed access levels for the user.
 		$levels = JXAcl::getAllowedAssetGroups('core', 'global.view', $this->getState('user.id'), false);
 
-		if (!is_array($levels)) {
-			$levels = explode(',', $levels);
-		}
-
 		// Ensure the user is assigned to an access level that can post in the category.
 		if (!in_array($category->post_access, $levels)) {
 			$this->setError(JText::_('KUNENA NOT AUTHORIZED'));

@@ -80,7 +80,6 @@ class KunenaControllerPost extends KunenaController
 		if (!$authorized) {
 			JError::raiseError(403, $model->getError());
 		}
-die;
 
 		// Set the category, thread and parent ids for the post to edit in the session.
 		$app->setUserState('com_kunena.edit.post.catId', $catId);

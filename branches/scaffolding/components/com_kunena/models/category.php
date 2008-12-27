@@ -29,7 +29,7 @@ class KunenaModelCategory extends JModel
 	 * @access	protected
 	 * @var		boolean
 	 */
-	var $__state_set		= null;
+	var $__state_set = null;
 
 	/**
 	 * Internal array to hold thread data.

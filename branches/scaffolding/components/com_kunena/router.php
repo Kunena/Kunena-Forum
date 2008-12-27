@@ -22,23 +22,50 @@ function KunenaBuildRoute(&$query)
 	// Initialize variables.
 	$segments = array();
 	static $items;
-	static $hashes;
+	static $categories;
 
 	// Get the relevant menu items if not loaded.
 	if (empty($items))
 	{
-		$menu	= &JSite::getMenu();
+		// Get all Kunena menu items.
+		$menu	= & JSite::getMenu();
 		$items	= $menu->getItems('component', 'com_kunena');
-		$count	= count($items);
 
 		// Build an array of serialized query strings to menu item id mappings.
-		for ($i = 0; $i < $count; $i++)
+		for ($i = 0, $n = count($items); $i < $n; $i++)
 		{
 			// Sort the query string so they are uniform.
 			ksort($items[$i]->query);
 
-			// Serialize the query string and store for lookup.
-			$hashes[serialize($items[$i]->query)] = (int)$items[$i]->id;
+			// Setup the categories quick lookup array.
+			if (!empty($items[$i]->query['cat_id'])) {
+				$categories[$items[$i]->query['cat_id']] = $i;
+			}
+		}
+	}
+
+	if (!empty($query['view']))
+	{
+		switch ($query['view'])
+		{
+			case 'category':
+				unset ($query['view']);
+
+				$segments[] = $query['cat_id'];
+				unset ($query['cat_id']);
+
+				break;
+
+			case 'thread':
+				unset ($query['view']);
+
+				$segments[] = $query['cat_id'];
+				unset ($query['cat_id']);
+
+				$segments[] = $query['thread_id'];
+				unset ($query['thread_id']);
+
+				break;
 		}
 	}
 
@@ -56,6 +83,38 @@ function KunenaParseRoute($segments)
 {
 	// Initialize variables.
 	$vars = array();
+
+	// Handle the forum thread id if present.
+	$end = end($segments);
+	if (is_numeric($end))
+	{
+		// Set the thread id from the end of the route segments.
+		$vars['thread_id'] = intval($end);
+		$vars['view'] = 'thread';
+
+		// Remove the thread id from the route segments.
+		array_pop($segments);
+	}
+
+	// Clean up the numeric path id if it exists.
+	$segments[0] = preg_replace('/^[0-9]+(\:|-)/', '', $segments[0]);
+
+	// Get the category id from the categories table by path.
+	$db = & JFactory::getDBO();
+	$db->setQuery(
+		'SELECT `id`' .
+		' FROM `#__kunena_categories`' .
+		' WHERE `path` = '.$db->Quote(implode('/', $segments))
+	);
+	$categoryId = $db->loadResult();
+
+	// Set the category id if present.
+	if ($categoryId) {
+		$vars['cat_id'] = intval($categoryId);
+		if (empty($vars['view'])) {
+			$vars['view'] = 'category';
+		}
+	}
 
 	return $vars;
 }

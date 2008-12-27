@@ -24,7 +24,7 @@ JHTML::stylesheet('default.css', 'components/com_kunena/media/css/');
 $fields	= $this->form->getFields();
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_kunena&view=thread');?>" method="post" name="adminForm" id="post-form">
+<form action="<?php echo JRoute::_('index.php?option=com_kunena');?>" method="post" name="adminForm" id="post-form">
 
 <ol class="fields">
 <?php if (!$this->state->get('user.id')) : ?>

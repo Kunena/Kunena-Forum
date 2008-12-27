@@ -51,7 +51,8 @@ function KunenaBuildRoute(&$query)
 			case 'category':
 				unset ($query['view']);
 
-				$segments[] = $query['cat_id'];
+				// Clean up the numeric path id if it exists.
+				$segments[] = preg_replace('/^[0-9]+(\:|-)/', '', $query['cat_id']);
 				unset ($query['cat_id']);
 
 				break;
@@ -59,12 +60,19 @@ function KunenaBuildRoute(&$query)
 			case 'thread':
 				unset ($query['view']);
 
-				$segments[] = $query['cat_id'];
+				// Clean up the numeric path id if it exists.
+				$segments[] = preg_replace('/^[0-9]+(\:|-)/', '', $query['cat_id']);
 				unset ($query['cat_id']);
 
 				$segments[] = $query['thread_id'];
 				unset ($query['thread_id']);
 
+				break;
+
+			case 'post':
+				unset ($query['view']);
+				unset ($query['layout']);
+				$segments[] = 'post';
 				break;
 		}
 	}
@@ -84,6 +92,17 @@ function KunenaParseRoute($segments)
 	// Initialize variables.
 	$vars = array();
 
+
+	if (count($segments) < 1) {
+		return;
+	}
+
+	if ($segments[0] == 'post') {
+		$vars['view'] = 'post';
+		$vars['layout'] = 'edit';
+		return $vars;
+	}
+
 	// Handle the forum thread id if present.
 	$end = end($segments);
 	if (is_numeric($end))
@@ -98,6 +117,10 @@ function KunenaParseRoute($segments)
 
 	// Clean up the numeric path id if it exists.
 	$segments[0] = preg_replace('/^[0-9]+(\:|-)/', '', $segments[0]);
+	for($i = 0, $n = count($segments); $i < $n; $i++)
+	{
+		$segments[$i] = str_replace(':', '-', $segments[$i]);
+	}
 
 	// Get the category id from the categories table by path.
 	$db = & JFactory::getDBO();

@@ -71,6 +71,14 @@ function KunenaBuildRoute(&$query)
 
 			case 'post':
 				unset ($query['view']);
+
+				// Clean up the numeric path id if it exists.
+				$segments[] = preg_replace('/^[0-9]+(\:|-)/', '', $query['cat_id']);
+				unset ($query['cat_id']);
+
+				$segments[] = $query['thread_id'];
+				unset ($query['thread_id']);
+
 				unset ($query['layout']);
 				$segments[] = 'post';
 				break;
@@ -92,27 +100,46 @@ function KunenaParseRoute($segments)
 	// Initialize variables.
 	$vars = array();
 
-
+	// Only run routine if there are segments to parse.
 	if (count($segments) < 1) {
 		return;
 	}
 
-	if ($segments[0] == 'post') {
+	// Handle the post view which is indicated by a final segment == post.
+	$last = end($segments);
+	if ($last == 'post')
+	{
 		$vars['view'] = 'post';
 		$vars['layout'] = 'edit';
+
+		// Remove the last segment from the route.
+		array_pop($segments);
+	}
+
+	// If we have no more segments to parse, return.
+	if (!count($segments)) {
 		return $vars;
 	}
 
-	// Handle the forum thread id if present.
-	$end = end($segments);
-	if (is_numeric($end))
+	// Handle a thread id which is indicated by a final segment being numeric.
+	$last = end($segments);
+	if (is_numeric($last) && count($segments) > 1)
 	{
 		// Set the thread id from the end of the route segments.
-		$vars['thread_id'] = intval($end);
-		$vars['view'] = 'thread';
+		$vars['thread_id'] = intval($last);
+
+		// Set the view to thread if not already set.
+		if (empty($vars['view'])) {
+			$vars['view'] = 'thread';
+		}
 
 		// Remove the thread id from the route segments.
 		array_pop($segments);
+	}
+
+	// If we have no more segments to parse, return.
+	if (!count($segments)) {
+		return $vars;
 	}
 
 	// Clean up the numeric path id if it exists.
@@ -132,8 +159,12 @@ function KunenaParseRoute($segments)
 	$categoryId = $db->loadResult();
 
 	// Set the category id if present.
-	if ($categoryId) {
+	if ($categoryId)
+	{
+		// Set the category id for the remaining route segments.
 		$vars['cat_id'] = intval($categoryId);
+
+		// Set the view to category if not already set.
 		if (empty($vars['view'])) {
 			$vars['view'] = 'category';
 		}

@@ -86,8 +86,19 @@ class KunenaControllerPost extends KunenaController
 		$app->setUserState('com_kunena.edit.post.threadId', $threadId);
 		$app->setUserState('com_kunena.edit.post.parentId', $parentId);
 
+		// Build the category slug for the redirect.
+		$categoryModel = & $this->getModel('Category');
+		$category = $categoryModel->getCategory();
+		$categorySlug = '&cat_id='.$category->id.':'.$category->path;
+
+		if ($threadId) {
+			$threadSlug = '&thread_id='.$threadId;
+		} else {
+			$threadSlug = '';
+		}
+
 		// Redirect to the edit screen.
-		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=post&layout=edit', false));
+		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=post&layout=edit'.$categorySlug.$threadSlug, false));
 	}
 
 	/**

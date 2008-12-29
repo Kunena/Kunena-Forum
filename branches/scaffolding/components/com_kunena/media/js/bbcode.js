@@ -41,11 +41,9 @@ var JXBBCodeEditor = new Class({
         if (this.options.initialize) this.options.initialize.call(this);
 
 		var els = $$('div#bbcode-editor');
-		console.log(els);
 		els.each(function(el){
 			// create editor
 			nawte = new nawte($(el).getElement('textarea.editor'), $(el).getElement('ul.toolbar'));
-console.log(nawte);
 			// buttons
 			nawte.addFunction('B', function() {
 				selection = this.getSelection();

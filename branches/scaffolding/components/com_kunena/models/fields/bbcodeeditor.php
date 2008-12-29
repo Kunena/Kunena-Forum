@@ -76,11 +76,11 @@ class JXFieldTypeBBCodeEditor extends JXFieldType
 		$app->set('jx.jslang', $lang);
 
 		// Get the category options.
-//		$options = $this->_getOptions($node);
-//		if (!$options) {
+		$options = $this->_getOptions($node);
+		if (!$options) {
 			// TODO: handle the error somehow?
 			$options = array();
-//		}
+		}
 
 		$html[] = '';
 		$html[] = '<div id="bbcode-editor">';
@@ -95,7 +95,7 @@ class JXFieldTypeBBCodeEditor extends JXFieldType
 			foreach ($options as $emoticon)
 			{
 				$html[] = '		<li>';
-				$html[] = '			<img class="emoticon-palette" src="'.$emoticon->path.'" alt="'.$emoticon->code.'" title="'.$emoticon->name.'" />';
+				$html[] = '			<img class="emoticon-palette" src="'.$emoticon->path.'" alt="'.$emoticon->code.'" title="'.$emoticon->code.'" />';
 				$html[] = '		</li>';
 			}
 			$html[] = '	</ul>';
@@ -124,9 +124,9 @@ class JXFieldTypeBBCodeEditor extends JXFieldType
 
 		// Get the package options.
 		$db->setQuery(
-			'SELECT `id` AS value, `title` AS text' .
-			' FROM `#__jxpackages_packages`' .
-			' ORDER BY `ordering`, `title`'
+			'SELECT `code`, `file_path` AS path' .
+			' FROM `#__kunena_smileys`' .
+			' ORDER BY `ordering`, `file_path`'
 		);
 		$options = $db->loadObjectList();
 

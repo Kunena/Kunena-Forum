@@ -59,11 +59,12 @@
 		/>
 		<field
 			name="icon"
-			type="postemoticon"
+			type="emoticon"
 			id="icon"
 			class="inputbox"
-			label="Icon"
-			default=""
+			label="Post Icon"
+			default="0"
+			allow_none="true"
 		/>
 		<field
 			name="subject"

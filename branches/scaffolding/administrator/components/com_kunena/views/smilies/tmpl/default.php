@@ -85,7 +85,7 @@ $this->buildDefaultToolBar();
 					<a href="<?php echo JRoute::_('index.php?option=com_kunena&task=smiley.edit&cid[]='.$item->id);?>">
 						<?php echo $item->code; ?></a>
 					<?php echo JHTML::_('KGrid.orderUpIcon', $item->id, $item->ordering, $this->pagination, 'smiley.orderup', 'Move Up', ($item->ordering != 0)); ?>
-					<?php echo JHTML::_('KGrid.orderdownIcon', $item->id, $item->ordering, $this->pagination, 'smiley.orderdown', 'Move Down', (!empty($this->items[$i]) && ($item->level == $this->items[$i]->level))); ?>
+					<?php echo JHTML::_('KGrid.orderdownIcon', $item->id, $item->ordering, $this->pagination, 'smiley.orderdown', 'Move Down', (false)); ?>
 				</td>
 				<td align="center">
 					<?php echo JHTML::_('image', $item->file_path, $item->code); ?>

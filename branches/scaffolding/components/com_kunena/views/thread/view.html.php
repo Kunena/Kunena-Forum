@@ -48,6 +48,21 @@ class KunenaViewThread extends KunenaView
 		));
 		$this->assignRef('parser', $parser);
 
+		// Get the category paths for the system pathway object.
+		$app = & JFactory::getApplication();
+		$pathway = & $app->getPathWay();
+
+		$paths = $this->get('CategoryPathsToRoot');
+		if ($paths)
+		{
+			foreach ($paths as $path)
+			{
+				$pathway->addItem($path->title, JRoute::_('index.php?option=com_kunena&view=category&cat_id='.$path->id.':'.$path->path));
+			}
+		}
+		$pathway->addItem($this->category->title, JRoute::_('index.php?option=com_kunena&view=category&cat_id='.$this->category->id.':'.$this->category->path));
+		$pathway->addItem($this->thread->subject, JRoute::_('index.php?option=com_kunena&view=category&cat_id='.$this->category->id.':'.$this->category->path.'&thread_id='.$this->thread->id));
+
 		parent::display($tpl);
 	}
 }

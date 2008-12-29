@@ -191,19 +191,38 @@ class KunenaControllerPost extends KunenaController
 		// Get the posted values from the request.
 		$data = JRequest::getVar('jxform', array(), 'post', 'array');
 
-		// Ensure there is a valid user or valid user information.
-		if (empty($data['name']) || empty($data['email'])) {
-			$user = &JFactory::getUser();
-			if ($user->get('guest')) {
-				$app->redirect(JRoute::_('index.php?option=com_kunena&view=post&layout=edit', false), JText::_('KUNENA_POST_INVALID_USER'), 'notice');
-			}
-		}
-
 		// Populate the row ids from the session.
 		$data['id'] = (int) $app->getUserState('com_kunena.edit.post.id');
 		$data['category_id'] = (int) $app->getUserState('com_kunena.edit.post.catId');
 		$data['thread_id'] = (int) $app->getUserState('com_kunena.edit.post.threadId');
 		$data['parent_id'] = (int) $app->getUserState('com_kunena.edit.post.parentId');
+
+		// Build the category slug for the redirect.
+		$categoryModel = & $this->getModel('Category');
+		$categoryModel->getState();
+		$categoryModel->setState('filter.category_id', $data['category_id']);
+
+		$category = $categoryModel->getCategory();
+		$categorySlug = '&cat_id='.$category->id.':'.$category->path;
+
+		if ($data['thread_id']) {
+			$threadSlug = '&thread_id='.$data['thread_id'];
+		} else {
+			$threadSlug = '';
+		}
+
+		// Build the redirect urls.
+		$postRedirect		= JRoute::_('index.php?option=com_kunena&view=post&layout=edit'.$categorySlug.$threadSlug, false);
+		$categoryRedirect	= JRoute::_('index.php?option=com_kunena&view=category'.$categorySlug, false);
+		$threadRedirect		= JRoute::_('index.php?option=com_kunena&view=thread'.$categorySlug.$threadSlug, false);
+
+		// Ensure there is a valid user or valid user information.
+		if (empty($data['name']) || empty($data['email'])) {
+			$user = &JFactory::getUser();
+			if ($user->get('guest')) {
+				$app->redirect($postRedirect, JText::_('KUNENA_POST_INVALID_USER'), 'notice');
+			}
+		}
 
 		// Get the model and attempt to validate the posted data.
 		$model = &$this->getModel('Post');
@@ -229,7 +248,7 @@ class KunenaControllerPost extends KunenaController
 			$app->setUserState('com_kunena.edit.post.data', $data);
 
 			// Redirect back to the edit screen.
-			$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=post&layout=edit', false));
+			$this->setRedirect($postRedirect);
 			return false;
 		}
 
@@ -244,7 +263,7 @@ class KunenaControllerPost extends KunenaController
 
 			// Redirect back to the edit screen.
 			$this->setMessage(JText::sprintf('KUNENA_POST_SAVE_FAILED', $model->getError()), 'notice');
-			$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=post&layout=edit', false));
+			$this->setRedirect($postRedirect);
 			return false;
 		}
 
@@ -257,7 +276,7 @@ class KunenaControllerPost extends KunenaController
 			case 'apply':
 				// Redirect back to the edit screen.
 				$this->setMessage(JText::_('KUNENA_POST_SAVE_SUCCESS'));
-				$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=post&layout=edit', false));
+				$this->setRedirect($postRedirect);
 				break;
 
 			default:
@@ -272,7 +291,7 @@ class KunenaControllerPost extends KunenaController
 
 				// Redirect to the list screen.
 				$this->setMessage(JText::_('KUNENA_POST_SAVE_SUCCESS'));
-				$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=thread&cat_id='.$data['category_id'].'&thread_id='.$data['thread_id'], false));
+				$this->setRedirect($threadRedirect);
 				break;
 		}
 

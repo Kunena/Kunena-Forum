@@ -146,6 +146,48 @@ class KunenaModelCategory extends JModel
 		return $category;
 	}
 
+	function getCategoryPathsToRoot()
+	{
+		$false = false;
+
+		// Get a query object.
+		$query = new KQuery();
+
+		// Select all fields from the articles table.
+		$query->select('b.*');
+		$query->from('`#__kunena_categories` AS a');
+		$query->select('COUNT(DISTINCT b.id) AS level');
+		$query->join('LEFT OUTER', '`#__kunena_categories` AS b ON a.left_id > b.left_id AND a.right_id < b.right_id');
+		$query->group('b.id');
+		$query->order('b.left_id');
+		$query->where('b.id > 1');
+
+		// Filter the categories over the parent if set.
+		$category_id = $this->getState('filter.category_id');
+		if ($category_id !== null) {
+			$query->where('a.id = '.(int)$category_id);
+		}
+
+		// Filter the categories over the parent if set.
+		$category_path = $this->getState('filter.category_path');
+		if (!empty($category_path)) {
+			$query->where('a.path = '.$this->_db->Quote($category_path));
+		}
+
+		// Get the row from the database.
+		//echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
+		$this->_db->setQuery($query->toString());
+		$paths = $this->_db->loadObjectList();
+
+		// Check for a database error.
+		if ($this->_db->getErrorNum()) {
+			$this->setError($this->_db->getErrorMsg());
+			return $false;
+		}
+
+		return $paths;
+	}
+
 	function getLastReplies()
 	{
 		if (empty($this->_models['posts'])) {

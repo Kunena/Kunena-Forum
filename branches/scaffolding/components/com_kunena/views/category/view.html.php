@@ -38,6 +38,20 @@ class KunenaViewCategory extends KunenaView
 		$this->assignRef('totalThreads', $this->get('ThreadsTotal'));
 		$this->assignRef('lastReplies', $this->get('LastReplies'));
 
+		// Get the category paths for the system pathway object.
+		$app = & JFactory::getApplication();
+		$pathway = & $app->getPathWay();
+
+		$paths = $this->get('CategoryPathsToRoot');
+		if ($paths)
+		{
+			foreach ($paths as $path)
+			{
+				$pathway->addItem($path->title, JRoute::_('index.php?option=com_kunena&view=category&cat_id='.$path->id.':'.$path->path));
+			}
+		}
+		$pathway->addItem($this->category->title, JRoute::_('index.php?option=com_kunena&view=category&cat_id='.$this->category->id.':'.$this->category->path));
+
 		parent::display($tpl);
 	}
 }

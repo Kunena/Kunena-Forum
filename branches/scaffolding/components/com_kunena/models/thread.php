@@ -120,6 +120,18 @@ class KunenaModelThread extends JModel
 		return $result;
 	}
 
+	function getCategoryPathsToRoot()
+	{
+		$result = null;
+		if ($id = (int) $this->getState('category.id'))
+		{
+			$model	= &JModel::getInstance('Category', 'KunenaModel');
+			$model->setState('filter.category_id', $id);
+			$result	= $model->getCategoryPathsToRoot();
+		}
+		return $result;
+	}
+
 	/**
 	 * Subscribe to the post
 	 */

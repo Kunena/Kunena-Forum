@@ -61,7 +61,7 @@ class KunenaViewSmilies extends JView
 	 */
 	function buildDefaultToolBar()
 	{
-		JToolBarHelper::title('Kunena: '.JText::_('Smilies'), 'logo');
+		JToolBarHelper::title('Kunena: '.JText::_('Smilies'), 'k');
 
 		$state = $this->get('State');
 		JToolBarHelper::custom('smiley.publish', 'publish.png', 'publish_f2.png', 'Publish', true);

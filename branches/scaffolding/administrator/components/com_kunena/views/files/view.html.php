@@ -61,7 +61,7 @@ class KunenaViewFiles extends JView
 	 */
 	function buildDefaultToolBar()
 	{
-		JToolBarHelper::title('Kunena: '.JText::_('Files'), 'logo');
+		JToolBarHelper::title('Kunena: '.JText::_('Files'), 'k');
 
 		$state = $this->get('State');
 		JToolBarHelper::custom('file.publish', 'publish.png', 'publish_f2.png', 'Publish', true);

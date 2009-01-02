@@ -184,7 +184,7 @@ class KunenaModelSetup extends JModel
 		// Attempt to add the necessary rows to the components table.
 		$db->setQuery(
 			'INSERT INTO `#__components` VALUES' .
-			' (0, "Kunena", "option=com_kunena", 0, 0, "option=com_kunena", "Kunena", "com_kunena", 0, "components/com_kunena/media/img/icon-16-jx.png", 0, "", 1)'
+			' (0, "Kunena", "option=com_kunena", 0, 0, "option=com_kunena", "Kunena", "com_kunena", 0, "components/com_kunena/media/img/icon-16-k.png", 0, "", 1)'
 		);
 		$db->query();
 

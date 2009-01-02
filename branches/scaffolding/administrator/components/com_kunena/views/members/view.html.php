@@ -61,7 +61,7 @@ class KunenaViewMembers extends JView
 	 */
 	function buildDefaultToolBar()
 	{
-		JToolBarHelper::title('Kunena: '.JText::_('Members'), 'logo');
+		JToolBarHelper::title('Kunena: '.JText::_('Members'), 'k');
 
 		$state = $this->get('State');
 		JToolBarHelper::custom('member.publish', 'publish.png', 'publish_f2.png', 'Publish', true);

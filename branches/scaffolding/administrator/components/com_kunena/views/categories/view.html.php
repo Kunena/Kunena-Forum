@@ -62,7 +62,7 @@ class KunenaViewCategories extends JView
 	 */
 	function buildDefaultToolBar()
 	{
-		JToolBarHelper::title('Kunena: '.JText::_('Categories'), 'logo');
+		JToolBarHelper::title('Kunena: '.JText::_('Categories'), 'k');
 
 		$state = $this->get('State');
 		JToolBarHelper::custom('category.publish', 'publish.png', 'publish_f2.png', 'Publish', true);

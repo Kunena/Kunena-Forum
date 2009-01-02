@@ -51,7 +51,7 @@ class KunenaViewLevels extends JView
 	function _setToolBar()
 	{
 		$state = $this->get('State');
-		JToolBarHelper::title(JText::_('JX Members: Levels'), 'logo');
+		JToolBarHelper::title(JText::_('JX Members: Levels'), 'k');
 		JToolBarHelper::deleteList('', 'level.delete');
 		JToolBarHelper::custom('rule.editlevel', 'edit.png', 'edit_f2.png', 'Edit', true);
 		JToolBarHelper::custom('rule.addlevel', 'new.png', 'new_f2.png', 'New', false);

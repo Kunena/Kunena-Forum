@@ -65,7 +65,7 @@ class KunenaViewRule extends JView
 	 */
 	function buildDefaultToolBar()
 	{
-		JToolBarHelper::title('Kunena: '.JText::_(($this->item->id) ? 'Edit Access Rule' : 'Add Access Rule'), 'logo');
+		JToolBarHelper::title('Kunena: '.JText::_(($this->item->id) ? 'Edit Access Rule' : 'Add Access Rule'), 'k');
 
 		JToolBarHelper::save('rule.save');
 		JToolBarHelper::apply('rule.apply');

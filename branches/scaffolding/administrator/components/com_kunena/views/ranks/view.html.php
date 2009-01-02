@@ -61,7 +61,7 @@ class KunenaViewRanks extends JView
 	 */
 	function buildDefaultToolBar()
 	{
-		JToolBarHelper::title('Kunena: '.JText::_('Ranks'), 'logo');
+		JToolBarHelper::title('Kunena: '.JText::_('Ranks'), 'k');
 
 		$state = $this->get('State');
 		JToolBarHelper::custom('rank.publish', 'publish.png', 'publish_f2.png', 'Publish', true);

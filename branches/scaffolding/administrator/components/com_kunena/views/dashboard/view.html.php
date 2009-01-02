@@ -54,7 +54,7 @@ class KunenaViewDashboard extends JView
 	 */
 	function buildDefaultToolBar()
 	{
-		JToolBarHelper::title('Kunena: '.JText::_('Dashboard'), 'logo');
+		JToolBarHelper::title('Kunena: '.JText::_('Dashboard'), 'k');
 
 		// We can't use the toolbar helper here because there is no generic popup button.
 		$bar = &JToolBar::getInstance('toolbar');

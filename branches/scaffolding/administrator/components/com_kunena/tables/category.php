@@ -146,6 +146,14 @@ class KunenaTableCategory extends JTableAsset
 	/**
 	 * @return	string
 	 */
+	function getAssetNamePrefix()
+	{
+		return 'category';
+	}
+
+	/**
+	 * @return	string
+	 */
 	function getAssetTitle()
 	{
 		return $this->title;

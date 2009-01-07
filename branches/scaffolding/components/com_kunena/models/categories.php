@@ -284,18 +284,20 @@ class KunenaModelCategories extends JModel
 				// Check access using extended ACL.
 				//$levels = KunenaHelperAccess::getAccessLevelsString($this->getState('user.id'));
 
-				jximport('jxtended.acl.acl');
-				$levels = JxAcl::getAllowedAssetGroups('core', 'global.view', $this->getState('user.id'));
+				jximport('jxtended.access.access');
+				$access = new JXAccess();
+				$levels = $access->getAuthorizedAccessLevels($this->getState('user.id'));
 
 				if (JError::isError($levels)) {
 					// TODO: we should throw an error
 					$levels = false;
 				}
 				if ($levels) {
+					$levels = implode(',', $levels);
 					$query->where('a.access IN ('.$levels.')');
 				}
 				else {
-					$query->where('a.access = 0');
+					$query->where('a.access = 1');
 				}
 			}
 			else

@@ -117,18 +117,15 @@ class KunenaController extends JController
 				case 'category':
 				case 'thread':
 
-					// Import the ACL helper library.
-					jximport('jxtended.acl.acl');
-
-					// Get the allowed access levels for the user.
-					$user	= & JFactory::getUser();
-					$levels = JXAcl::getAllowedAssetGroups('core', 'global.view', $user->get('id'), false);
+					jximport('jxtended.access.access');
+					$access = new JXAccess();
+					$levels = $access->getAuthorizedAccessLevels($model->getState('user.id'));
 
 					// Get the category data object from the model.
 					$category = $model->getCategory();
 
 					// Ensure the user is assigned to an access level that can post in the category.
-					if (!in_array($category->access, $levels)) {
+					if (!in_array($category->access, $levels) && ($category->access != 1)) {
 						$this->setMessage(JText::_('KUNENA NOT AUTHORIZED'), 'warning');
 						$this->setRedirect(JRoute::_('index.php?option=com_kunena', false));
 						return false;

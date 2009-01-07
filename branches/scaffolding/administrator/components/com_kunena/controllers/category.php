@@ -177,6 +177,9 @@ class KunenaControllerCategory extends JController
 		$model = &$this->getModel('Category', 'KunenaModel');
 		$return	= $model->validate($data);
 
+		// Permissions.
+		$data['permissions'] = JRequest::getVar('permissions', array(), 'post', 'array');
+
 		// Check for validation errors.
 		if ($return === false)
 		{
@@ -198,7 +201,7 @@ class KunenaControllerCategory extends JController
 
 			// Redirect back to the edit screen.
 			$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=category&layout=edit&hidemainmenu=1', false));
-//			return false;
+			return false;
 		}
 
 		// Attempt to save the data.

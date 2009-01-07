@@ -145,6 +145,25 @@ class KunenaModelCategory extends JModel
 		return $form;
 	}
 
+	function getPermissions($catId = null)
+	{
+		// Initialize variables.
+		$catId = (!empty($catId)) ? $catId : (int)$this->getState('category.id');
+		$perms = array();
+
+		jximport('jxtended.access.permission.simplerule');
+
+		$rule = new JSimpleRule();
+		$rule->load('com_kunena.category.post', 'category.'.$catId);
+		$perms['post'] = $rule->getUserGroups();
+
+		$rule = new JSimpleRule();
+		$rule->load('com_kunena.category.manage', 'category.'.$catId);
+		$perms['manage'] = $rule->getUserGroups();
+
+		return $perms;
+	}
+
 	/**
 	 * Method to publish categories.
 	 *
@@ -503,6 +522,10 @@ class KunenaModelCategory extends JModel
 		$catId = (!empty($data['id'])) ? $data['id'] : (int)$this->getState('category.id');
 		$isNew	= true;
 
+		// Extract the permissions data from the data array.
+		$permissions = $data['permissions'];
+		unset($data['permissions']);
+
 		// Get a category row instance.
 		$table = &$this->getTable('Category', 'KunenaTable');
 
@@ -554,6 +577,19 @@ class KunenaModelCategory extends JModel
 		// Build the category path.
 		if (!$table->buildPath($table->id)) {
 			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+
+		jximport('jxtended.access.helper');
+		$return = JXAccessHelper::registerSimpleRule('com_kunena.category.post', 'category.'.$table->id, $permissions['post']);
+		if (JError::isError($return)) {
+			$this->setError($return->getMessage());
+			return false;
+		}
+
+		$return = JXAccessHelper::registerSimpleRule('com_kunena.category.manage', 'category.'.$table->id, $permissions['manage']);
+		if (JError::isError($return)) {
+			$this->setError($return->getMessage());
 			return false;
 		}
 

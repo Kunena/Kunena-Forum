@@ -12,6 +12,7 @@ defined('_JEXEC') or die('Invalid Request.');
 
 // Include the component HTML helpers.
 JHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+JHtml::addIncludePath(JPATH_PLUGINS.'/system/jxtended/html/html');
 
 // Load the tooltip behavior.
 JHTML::_('behavior.tooltip');
@@ -101,10 +102,6 @@ function submitbutton(task)
 									<?php echo $fields['access']->field; ?>
 								</li>
 								<li>
-									<?php echo $fields['post_access']->label; ?><br />
-									<?php echo $fields['post_access']->field; ?>
-								</li>
-								<li>
 									<?php echo $fields['locked']->label; ?><br />
 									<?php echo $fields['locked']->field; ?>
 								</li>
@@ -121,6 +118,15 @@ function submitbutton(task)
 									<?php echo $fields['review']->field; ?>
 								</li>
 							</ol>
+
+							<fieldset>
+								<legend><?php echo JText::_('KUNENA POST ACCESS');?></legend>
+								<?php echo JHtml::_('access.usergroups', 'permissions[post]', $this->perms['post']); ?>
+							</fieldset>
+							<fieldset>
+								<legend><?php echo JText::_('KUNENA MANAGE ACCESS');?></legend>
+								<?php echo JHtml::_('access.usergroups', 'permissions[manage]', $this->perms['manage']); ?>
+							</fieldset>
 						</fieldset>
 						<fieldset>
 							<legend><?php echo JText::_('KUNENA_FIELDSET_FORMATTING');?></legend>

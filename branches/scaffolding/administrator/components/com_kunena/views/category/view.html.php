@@ -31,6 +31,7 @@ class KunenaViewCategory extends JView
 		$state	= $this->get('State');
 		$item	= $this->get('Item');
 		$form	= $this->get('Form');
+		$perms	= $this->get('Permissions');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
@@ -50,6 +51,7 @@ class KunenaViewCategory extends JView
 		$this->assignRef('state',	$state);
 		$this->assignRef('item',	$item);
 		$this->assignRef('form',	$form);
+		$this->assignRef('perms',	$perms);
 
 		parent::display($tpl);
 	}

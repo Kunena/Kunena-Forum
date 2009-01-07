@@ -37,11 +37,7 @@ class JXFieldTypeAccessLevel extends JXFieldTypeList
 		$query->group('a.id');
 
 		$db->setQuery($query->toString());
-		$options	= $db->loadObjectList();
-var_dump($db);
-		foreach ($options as $i => $option) {
-			$options[$i]->text = str_pad($options[$i]->text, strlen($options[$i]->text) + $options[$i]->level * 2, '- ', STR_PAD_LEFT);
-		}
+		$options = $db->loadObjectList();
 
 		return $options;
 	}

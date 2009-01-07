@@ -96,58 +96,18 @@ class KunenaModelSetup extends JModel
 			return false;
 		}
 
-		// Require the Acl API class
-		jximport('jxtended.acl.acladmin');
+		// Require the access helper library.
+		jximport('jxtended.access.helper');
 
 		// Register the sections
-		// @todo Think about not throwing an error if the section exists??
+		JXAccessHelper::registerSection('Kunena', 'com_kunena');
 
-		JxAclAdmin::registerSectionForRules('Kunena',	'com_kunena');
-		JxAclAdmin::registerSectionForActions('Kunena',	'com_kunena');
-		JxAclAdmin::registerSectionForAssets('Kunena',	'com_kunena');
+		// Register Actions.
+		JXAccessHelper::registerAction(JPERMISSION_ACTION, 'com_kunena', 'KUNENA ACCESS MANAGE', 'KUNENA ACCESS MANAGE DESC', 'manage');
 
-		// Register Actions
-
-		// Type 1 - A user in a group can do "this"
-		JxAclAdmin::registerAction(1, 'com_kunena',	'Manage Permissions',	'manage.permissions');
-
-		// Type 2 - A user in a group can do "this" to an asset
-		JxAclAdmin::registerAction(2, 'com_kunena',	'Create Categories',	'create.category');
-		JxAclAdmin::registerAction(2, 'com_kunena',	'Edit Categories',		'edit.category');
-		JxAclAdmin::registerAction(2, 'com_kunena',	'Publish Categories',	'publish.category');
-		JxAclAdmin::registerAction(2, 'com_kunena',	'Trash Categories',		'trash.category');
-
-		// Type 3 - A user in a group can do "this" to an asset group
-		JxAclAdmin::registerAction(3, 'com_kunena',	'View Categories',		'view.category');
-
-		//
-		// Now we are ready to add some rules
-		//
-
-		$result = JxAclAdmin::registerRule(
-			// The rule type
-			1,
-			// The rule section
-			'com_kunena',
-			// The rule name
-			'manage.permissions',
-			// The title of the rule
-			'Manage Kunena Access Controls',
-			// Applies to User Groups
-			array('Administrator', 'Super Administrator'),
-			// The Actions attached to the rule
-			array('com_kunena' => array('manage.permissions')),
-			// Applies to Assets
-			array(),
-			// Applies to Asset Groups
-			array()
-		);
-
-		// Check for an error.
-		if (JError::isError($result)) {
-			$this->setError(JText::sprintf('KUNENA_ACCESS_INITIALIZATION_FAILED', $result->message));
-			return false;
-		}
+		// Register Asset Actions.
+		JXAccessHelper::registerAction(JPERMISSION_ASSET, 'com_kunena', 'KUNENA ACCESS CATEGORY POST', 'KUNENA ACCESS CATEGORY POST DESC', 'category.post');
+		JXAccessHelper::registerAction(JPERMISSION_ASSET, 'com_kunena', 'KUNENA ACCESS CATEGORY MANAGE', 'KUNENA ACCESS CATEGORY MANAGE DESC', 'category.manage');
 
 		return true;
 	}

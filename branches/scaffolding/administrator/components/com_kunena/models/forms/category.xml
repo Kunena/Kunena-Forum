@@ -106,7 +106,7 @@
 			allow_last="1" />
 
 		<field name="access"
-			type="list_assetgroups"
+			type="accesslevel"
 			sections="com_kunena"
 			id="access"
 			class="inputbox"
@@ -115,7 +115,7 @@
 			default="0"/>
 
 		<field name="post_access"
-			type="list_assetgroups"
+			type="accesslevel"
 			sections="com_kunena"
 			id="post_access"
 			class="inputbox"

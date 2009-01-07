@@ -15,23 +15,30 @@ jimport('joomla.html.html');
  *
  * @package 	Zine
  */
-class JXFieldTypeList_Access extends JXFieldTypeList
+class JXFieldTypeAccessLevel extends JXFieldTypeList
 {
+   /**
+	* Field type
+	*
+	* @access	protected
+	* @var		string
+	*/
+	var	$_type = 'AccessLevel';
+
 	function _getOptions(&$node)
 	{
-		$config	= &JComponentHelper::getParams('com_zine');
 		$db		= &JFactory::getDBO();
 		$query	= new JXQuery;
 
-		$query->select('a.value, a.name AS text');
+		$query->select('a.id AS value, a.title AS text');
 		$query->select('COUNT(DISTINCT g2.id) AS level');
-		$query->from('#__core_acl_axo_groups AS a');
-		$query->join('LEFT OUTER', '#__core_acl_axo_groups AS g2 ON a.lft > g2.lft AND a.rgt < g2.rgt');
+		$query->from('#__access_assetgroups AS a');
+		$query->join('LEFT OUTER', '#__access_assetgroups AS g2 ON a.left_id > g2.left_id AND a.right_id < g2.right_id');
 		$query->group('a.id');
 
 		$db->setQuery($query->toString());
 		$options	= $db->loadObjectList();
-
+var_dump($db);
 		foreach ($options as $i => $option) {
 			$options[$i]->text = str_pad($options[$i]->text, strlen($options[$i]->text) + $options[$i]->level * 2, '- ', STR_PAD_LEFT);
 		}

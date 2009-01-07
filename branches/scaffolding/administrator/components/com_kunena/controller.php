@@ -49,9 +49,9 @@ class KunenaController extends JController
 		// Check for ACL initialization.
 		$db	= &JFactory::getDBO();
 		$db->setQuery(
-			'SELECT COUNT(*)' .
-			' FROM #__core_acl_acl_sections' .
-			' WHERE `value`='.$db->Quote('com_kunena')
+			'SELECT `id`' .
+			' FROM #__access_sections' .
+			' WHERE `name`='.$db->Quote('com_kunena')
 		);
 		if (!$db->loadResult())
 		{
@@ -100,9 +100,8 @@ class KunenaController extends JController
 		JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_RANKS'),			'index.php?option=com_kunena&view=ranks',		$vName == 'ranks');
 		JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_MEMBERS'),		'index.php?option=com_kunena&view=members',		$vName == 'members');
 		JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_FILES'),			'index.php?option=com_kunena&view=files',		$vName == 'files');
-		//JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_MAINTENANCE'),	'index.php?option=com_kunena&view=maintenance',	$vName == 'maintenance');
 		JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_LEVELS'),			'index.php?option=com_kunena&view=levels',		$vName == 'levels');
-		//JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_RULES'),			'index.php?option=com_kunena&view=rules',		$vName == 'rules');
+		//JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_MAINTENANCE'),	'index.php?option=com_kunena&view=maintenance',	$vName == 'maintenance');
 	}
 
 	/**

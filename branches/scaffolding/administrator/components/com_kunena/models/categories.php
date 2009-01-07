@@ -80,12 +80,12 @@ class KunenaModelCategories extends JXModelList
 		$query->join('LEFT', '`#__users` AS co ON co.id = a.checked_out');
 
 		// Access level.
-		$query->select('g.name AS access_name');
-		$query->join('LEFT', '`#__core_acl_axo_groups` AS g ON (g.value=a.access AND g.parent_id > 0)');
+//		$query->select('g.name AS access_name');
+//		$query->join('LEFT', '`#__core_acl_axo_groups` AS g ON (g.value=a.access AND g.parent_id > 0)');
 
 		// Posting access level.
-		$query->select('pg.name AS post_access_name');
-		$query->join('LEFT', '`#__core_acl_axo_groups` AS pg ON (pg.value=a.post_access AND pg.parent_id > 0)');
+//		$query->select('pg.name AS post_access_name');
+//		$query->join('LEFT', '`#__core_acl_axo_groups` AS pg ON (pg.value=a.post_access AND pg.parent_id > 0)');
 
 		//echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
 		return $query;

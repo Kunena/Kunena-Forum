@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: moderate_messages.php 1029 2008-08-25 15:40:07Z racoon $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

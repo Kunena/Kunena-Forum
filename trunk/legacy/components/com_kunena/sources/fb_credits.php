@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: fb_credits.php 1026 2008-08-25 02:48:14Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

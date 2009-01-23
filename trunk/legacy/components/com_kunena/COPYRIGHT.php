@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: COPYRIGHT.php 529 2007-12-23 14:45:45Z danialt $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: fb_install.php 569 2008-01-22 01:20:41Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

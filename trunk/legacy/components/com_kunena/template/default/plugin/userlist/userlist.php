@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: userlist.php 1025 2008-08-23 09:17:43Z racoon $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

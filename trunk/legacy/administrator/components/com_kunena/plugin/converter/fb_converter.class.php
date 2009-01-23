@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: fb_converter.class.php 577 2008-01-22 06:22:16Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2008 Best Of Joomla All rights reserved

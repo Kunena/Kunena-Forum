@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: recentposts.php 947 2008-08-11 01:56:01Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

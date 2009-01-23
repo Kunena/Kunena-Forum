@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: function.tabber.php 462 2007-12-10 00:05:53Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

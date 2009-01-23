@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: fb_debug.php 966 2008-08-12 05:00:34Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2008 Best Of Joomla All rights reserved

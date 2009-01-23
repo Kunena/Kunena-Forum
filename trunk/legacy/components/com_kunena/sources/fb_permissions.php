@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: fb_permissions.php 688 2008-06-17 03:10:29Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

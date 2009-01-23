@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: fb_category_list_bottom.php 855 2008-07-16 15:35:10Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

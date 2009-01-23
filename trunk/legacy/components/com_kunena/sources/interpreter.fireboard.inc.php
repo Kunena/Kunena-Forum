@@ -1,6 +1,6 @@
 <?PHP
 /**
-* @version $Id: interpreter.Kunena.inc.php 1076 2008-10-18 14:12:52Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

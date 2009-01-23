@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: install.Kunena.php 900 2008-08-03 21:24:14Z fxstein $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

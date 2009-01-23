@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: fb_rss.php 1078 2008-10-27 04:22:21Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

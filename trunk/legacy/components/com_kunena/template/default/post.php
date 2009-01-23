@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: post.php 1065 2008-10-06 02:35:37Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

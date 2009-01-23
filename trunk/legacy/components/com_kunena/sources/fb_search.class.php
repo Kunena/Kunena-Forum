@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: fb_search.class.php 946 2008-08-11 01:55:08Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

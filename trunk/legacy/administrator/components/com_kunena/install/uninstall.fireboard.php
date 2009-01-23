@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: uninstall.Kunena.php 911 2008-08-06 10:24:58Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

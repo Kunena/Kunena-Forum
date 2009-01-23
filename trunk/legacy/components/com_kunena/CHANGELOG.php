@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: CHANGELOG.php 536 2007-12-27 22:08:36Z miro_dietiker $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

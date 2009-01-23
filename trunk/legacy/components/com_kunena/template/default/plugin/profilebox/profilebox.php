@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: profilebox.php 901 2008-08-03 21:39:37Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

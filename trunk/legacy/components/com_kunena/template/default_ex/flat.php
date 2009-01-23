@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: flat.php 992 2008-08-13 22:51:35Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

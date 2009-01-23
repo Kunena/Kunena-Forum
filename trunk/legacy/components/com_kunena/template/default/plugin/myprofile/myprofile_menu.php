@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: myprofile_menu.php 807 2008-07-13 04:31:27Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

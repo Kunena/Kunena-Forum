@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: myprofile.php 1016 2008-08-16 15:09:55Z racoon $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

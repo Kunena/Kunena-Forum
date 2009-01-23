@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: advsearchresult.php 480 2007-12-12 21:37:17Z miro_dietiker $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

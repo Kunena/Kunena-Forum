@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: myprofile_set.php 479 2007-12-12 18:52:34Z sisko1990 $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

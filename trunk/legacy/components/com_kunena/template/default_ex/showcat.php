@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: showcat.php 979 2008-08-13 05:47:29Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

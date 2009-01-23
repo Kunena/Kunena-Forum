@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: joomlaboard.php 567 2008-01-21 21:01:25Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

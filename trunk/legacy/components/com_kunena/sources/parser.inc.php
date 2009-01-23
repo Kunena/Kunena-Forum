@@ -1,6 +1,6 @@
 <?PHP
 /**
-* @version $Id: parser.inc.php 944 2008-08-10 20:11:08Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

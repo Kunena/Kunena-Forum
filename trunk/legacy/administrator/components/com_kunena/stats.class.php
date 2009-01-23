@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: stats.class.php 945 2008-08-11 01:54:23Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

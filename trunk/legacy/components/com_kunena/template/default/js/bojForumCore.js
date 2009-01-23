@@ -1,6 +1,6 @@
 /*<![CDATA[*/
 /**
-* @version $Id: bojForumCore.js 1061 2008-10-05 20:37:53Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

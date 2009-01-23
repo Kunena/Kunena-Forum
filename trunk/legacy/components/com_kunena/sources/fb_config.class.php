@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: fb_config.class.php 1070 2008-10-06 08:11:18Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

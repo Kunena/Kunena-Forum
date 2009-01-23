@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: icons.php 920 2008-08-07 07:59:19Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

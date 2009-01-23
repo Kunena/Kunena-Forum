@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: class.Kunena.php 1079 2008-10-27 05:50:14Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

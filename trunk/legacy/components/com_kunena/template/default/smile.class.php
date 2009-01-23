@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: smile.class.php 1013 2008-08-15 06:46:43Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: view.php 1073 2008-10-09 20:10:29Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

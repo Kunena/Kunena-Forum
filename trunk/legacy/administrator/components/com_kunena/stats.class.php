@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: stats.class.php 945 2008-08-11 01:54:23Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -17,13 +17,13 @@
 defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
 
 /**
-* fireboard stats support class
-* @package com_fireboard
+* Kunena stats support class
+* @package com_Kunena
 */
 class jbStats {
 
 	/**
-	 * Total messages in fireboard
+	 * Total messages in Kunena
 	 * @param  string date start
 	 * @param string date end
 	 * @return int
@@ -43,7 +43,7 @@ class jbStats {
 	}
 
 	/**
-	 * Total topics in fireboard
+	 * Total topics in Kunena
 	 * @param  string date start
 	 * @param string date end
 	 * @return int
@@ -77,7 +77,7 @@ class jbStats {
 	}
 
 	/**
-	 * Total categories in fireboard
+	 * Total categories in Kunena
 	 * @return int
 	 */
 	function get_total_categories() {
@@ -109,7 +109,7 @@ class jbStats {
 		return $results;
 	}
 	/**
-	 * Total sections in fireboard
+	 * Total sections in Kunena
 	 * @return int
 	 */
 	function get_total_sections() {

@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: userlist.php 1025 2008-08-23 09:17:43Z racoon $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -17,7 +17,7 @@
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $base_url;
-$base_url = "index.php?option=com_fireboard&amp;func=userlist" . FB_FB_ITEMID_SUFFIX; // Base URL string
+$base_url = "index.php?option=com_Kunena&amp;func=userlist" . FB_FB_ITEMID_SUFFIX; // Base URL string
 
 list_users();
 

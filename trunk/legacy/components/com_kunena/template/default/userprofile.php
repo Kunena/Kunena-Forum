@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: userprofile.php 947 2008-08-11 01:56:01Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -290,7 +290,7 @@ if ($my->id)
                                         {
                                 ?>
 
-                                            <img src = "components/com_fireboard/avatars/<?php echo $avatar;?>" alt="" />
+                                            <img src = "components/com_Kunena/avatars/<?php echo $avatar;?>" alt="" />
 
                                             <br/>
 
@@ -633,7 +633,7 @@ if ($my->id)
 <?php
         }
         else {
-            echo _USER_RETURN_A . " <a href=\"index.php?option=com_fireboard&amp;Itemid=$Itemid&amp;func=userprofile&amp;do=show\">" . _USER_RETURN_B . "</a><br /><br />";
+            echo _USER_RETURN_A . " <a href=\"index.php?option=com_Kunena&amp;Itemid=$Itemid&amp;func=userprofile&amp;do=show\">" . _USER_RETURN_B . "</a><br /><br />";
 ?>
 
         <script language = "javascript">

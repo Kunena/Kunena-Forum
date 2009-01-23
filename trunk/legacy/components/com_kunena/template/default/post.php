@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: post.php 1065 2008-10-06 02:35:37Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -386,7 +386,7 @@ $catName = $objCatInfo->name;
                                                     $msg .= "\n\n";
                                                     $msg .= "$_COM_A_NOTIFICATION3\n";
                                                     $msg .= "\n\n\n\n\n";
-                                                    $msg .= "** Powered by FireBoard **\n";
+                                                    $msg .= "** Powered by Kunena **\n";
                                                     $msg .= "** Best of Joomla! - http://www.bestofjoomla.com **";
 
                                                     if ($ip != "127.0.0.1" && $my->id != $subs->id) { //don't mail yourself
@@ -446,7 +446,7 @@ $catName = $objCatInfo->name;
                                                     $msg .= "\n\n";
                                                     $msg .= "$_COM_A_NOTIFICATION3\n";
                                                     $msg .= "\n\n\n\n\n";
-                                                    $msg .= "** Powered by FireBoard **\n";
+                                                    $msg .= "** Powered by Kunena **\n";
                                                     $msg .= "** Best of Joomla! - http://www.bestofjoomla.com **";
 
                                                     if ($ip != "127.0.0.1" && $my->id != $mods->id) { //don't mail yourself

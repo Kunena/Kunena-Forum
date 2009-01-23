@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: myprofile_profile_info.php 923 2008-08-07 19:23:34Z racoon $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com

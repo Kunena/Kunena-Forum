@@ -1,8 +1,8 @@
 <?php
 /**
-* @version $Id: uninstall.fireboard.php 911 2008-08-06 10:24:58Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* @version $Id: uninstall.Kunena.php 911 2008-08-06 10:24:58Z fxstein $
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -18,11 +18,11 @@ defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.'
 
 global $mainframe;
 //Get right Language file
-if (file_exists($mainframe->getCfg('absolute_path') . '/administrator/components/com_fireboard/language/' . $mainframe->getCfg('lang') . '.php')) {
-    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_fireboard/language/' . $mainframe->getCfg('lang') . '.php');
+if (file_exists($mainframe->getCfg('absolute_path') . '/administrator/components/com_Kunena/language/' . $mainframe->getCfg('lang') . '.php')) {
+    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_Kunena/language/' . $mainframe->getCfg('lang') . '.php');
 }
 else {
-    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_fireboard/language/english.php');
+    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_Kunena/language/english.php');
 }
 
 function com_uninstall()
@@ -33,6 +33,6 @@ function com_uninstall()
     // forward. Uninstall old version and install new version. All settings, setup and
     // posts will be maintained. Nothing to be removed from the database.
     // If somebody wants to truly remove that data phpAdmin is required to drop all
-    // FireBoard tables manually.
+    // Kunena tables manually.
 }
 ?>

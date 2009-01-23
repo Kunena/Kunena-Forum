@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: report.php 947 2008-08-11 01:56:01Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -63,7 +63,7 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
         $subject = _FB_REPORT_MSG . ":" . $row->subject;
         }
 
-    $msglink = "index.php?option=com_fireboard&amp;func=view&amp;catid=" . $row->catid . "&amp;id=" . $row->id . FB_FB_ITEMID_SUFFIX;
+    $msglink = "index.php?option=com_Kunena&amp;func=view&amp;catid=" . $row->catid . "&amp;id=" . $row->id . FB_FB_ITEMID_SUFFIX;
     $msglink = sefRelToAbs($msglink . '#' . $row->id);
 
     $message = $sender . "" . _FB_REPORT_INTRO . "" . $reason . " ";
@@ -187,7 +187,7 @@ function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
 function ReportForm($msg_id, $catid) {
     global $my, $fbConfig;
 
-    $redirect = 'index.php?option=com_fireboard&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id . '&amp;Itemid=' . FB_FB_ITEMID . '#' . $msg_id;
+    $redirect = 'index.php?option=com_Kunena&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id . '&amp;Itemid=' . FB_FB_ITEMID . '#' . $msg_id;
 
     //$redirect = sefRelToAbs($redirect);
     if (!$my->id) {
@@ -244,7 +244,7 @@ function ReportForm($msg_id, $catid) {
                                             </tr>
                                         </table>
 
-                                        <input type = "hidden" name = "option" value = "com_fireboard"/>
+                                        <input type = "hidden" name = "option" value = "com_Kunena"/>
                                         <input type = "hidden" name = "func" value = "report"/>
                                         <input type = "hidden" name = "do" value = "report"/>
                                         <input type = "hidden" name = "msg_id" value = "<?php echo $msg_id;?>"/>

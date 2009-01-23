@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: boj_upgrade.class.php 900 2008-08-03 21:24:14Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2008 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -16,7 +16,7 @@
 // ensure this file is being included by a parent file
 defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
 
-include_once ($mainframe->getCfg("absolute_path") . "/components/com_fireboard/sources/fb_debug.php");
+include_once ($mainframe->getCfg("absolute_path") . "/components/com_Kunena/sources/fb_debug.php");
 
 class boj_Upgrade {
 	var $component=null;

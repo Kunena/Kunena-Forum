@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fb_link.class.php 1082 2008-10-27 06:44:15Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -34,7 +34,7 @@ class fb_link
 
     function GetCreditsLink()
     {
-        return fb_link::GetSefHrefLink('http://www.bestofjoomla.com', 'FireBoard', 'FireBoard', 'follow');
+        return fb_link::GetSefHrefLink('http://www.bestofjoomla.com', 'Kunena', 'Kunena', 'follow');
     }
 
     function GetTeamCreditsLink($catid, $name='')
@@ -42,7 +42,7 @@ class fb_link
         return fb_link::GetSefHrefLink(JB_LIVEURLREL.'&amp;func=credits&amp;catid='.$catid, $name, '', 'follow');
     }
 
-    function GetFireBoardLink($name , $rel='follow')
+    function GetKunenaLink($name , $rel='follow')
     {
         return fb_link::GetSefHrefLink(JB_LIVEURLREL, $name, '', $rel);
     }

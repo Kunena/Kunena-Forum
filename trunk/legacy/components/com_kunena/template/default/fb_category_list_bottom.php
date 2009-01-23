@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fb_category_list_bottom.php 855 2008-07-16 15:35:10Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -35,7 +35,7 @@ global $fbConfig;
                     <form action = "<?php echo $mainframe->getCfg("live_site")."/index2.php";?>" name = "markAllForumsRead" method = "post">
                         <input type = "hidden" name = "markaction" value = "allread"/>
                         <input type = "hidden" name = "Itemid" value = "<?php echo FB_FB_ITEMID?>"/>
-                        <input type = "hidden" name = "option" value = "com_fireboard"/>
+                        <input type = "hidden" name = "option" value = "com_Kunena"/>
                         <input type = "hidden" name = "no_html" value = "1"/>
 
                         <input type = "submit" class = "button<?php echo $boardclass ;?> fbs" value = "<?php echo _GEN_MARK_ALL_FORUMS_READ ;?>"/>

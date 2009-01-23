@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: advsearchresult.php 480 2007-12-12 21:37:17Z miro_dietiker $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -30,7 +30,7 @@ $catid = mosGetParam($_REQUEST, 'catid');
 
 // searchword must contain a minimum of 3 characters
 if ($searchword && strlen($searchword) < 3 || strlen($searchword) == '0') {
-    mosRedirect('index.php?option=com_fireboard&amp;func=advsearch&amp;Itemid=' . FB_FB_ITEMID);
+    mosRedirect('index.php?option=com_Kunena&amp;func=advsearch&amp;Itemid=' . FB_FB_ITEMID);
 }
 
 $searchword = strval($searchword);

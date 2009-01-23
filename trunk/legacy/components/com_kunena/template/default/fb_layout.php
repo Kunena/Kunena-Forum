@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fb_layout.php 947 2008-08-11 01:56:01Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -49,7 +49,7 @@ function jb_get_pathway(&$database, $obj_fb_cat, $bool_set_title, $obj_post = 0)
     // show folder icon
     $return = '<img src="' . JB_URLIMAGESPATH . 'folder.gif" border="0" alt="' . _GEN_FORUMLIST . '" style="vertical-align: middle;" />&nbsp;';
     // link to List of Forum Categories
-    $return .= '&nbsp;' . fb_Link::GetFireBoardLink(_GEN_FORUMLIST) . '<br />';
+    $return .= '&nbsp;' . fb_Link::GetKunenaLink(_GEN_FORUMLIST) . '<br />';
 
     // List of    Categories
     if ($objCatParentInfo)
@@ -160,7 +160,7 @@ function jb_get_pathway(&$database, $obj_fb_cat, $bool_set_title, $obj_post = 0)
 function jb_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = "", $catid = 0, $id = 0, $thread = 0, $is_moderator = false, $numPending = 0)
 {
     $header = '<div id="fb_topmenu" >';
-    $header .= fb_link::GetFireBoardLink( $fbIcons['home'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['home'] . '" border="0" alt="' . _HOME . '"  title="' . _HOME . '" />' : _HOME);
+    $header .= fb_link::GetKunenaLink( $fbIcons['home'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['home'] . '" border="0" alt="' . _HOME . '"  title="' . _HOME . '" />' : _HOME);
 
     if ($my_id != 0)
     {

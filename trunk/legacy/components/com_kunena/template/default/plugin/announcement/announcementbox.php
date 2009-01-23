@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: announcementbox.php 947 2008-08-11 01:56:01Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -28,11 +28,11 @@ else {
     }
 
 $is_user = (strtolower($my->usertype) <> '');
-$showlink = 'index.php?option=com_fireboard&amp;func=announcement&amp;do=show';
-$addlink = 'index.php?option=com_fireboard&amp;func=announcement&amp;do=add';
-$readlink = 'index.php?option=com_fireboard&amp;func=announcement&amp;do=read&amp;id=';
-$editlink = 'index.php?option=com_fireboard&amp;func=announcement&amp;do=edit&amp;id=';
-$deletelink = 'index.php?option=com_fireboard&amp;func=announcement&amp;do=delete&amp;id=';
+$showlink = 'index.php?option=com_Kunena&amp;func=announcement&amp;do=show';
+$addlink = 'index.php?option=com_Kunena&amp;func=announcement&amp;do=add';
+$readlink = 'index.php?option=com_Kunena&amp;func=announcement&amp;do=read&amp;id=';
+$editlink = 'index.php?option=com_Kunena&amp;func=announcement&amp;do=edit&amp;id=';
+$deletelink = 'index.php?option=com_Kunena&amp;func=announcement&amp;do=delete&amp;id=';
 ?>
 
 <?php

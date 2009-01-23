@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fb_pathway.php 1064 2008-10-05 23:29:35Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -38,7 +38,7 @@ if ($func != "")
         $parent_ids = 1000;
         $jr_it = 1;
         $jr_path_menu = array ();
-        $shome = '<div class="forum-pathway-1">' . fb_link::GetFireBoardLink( $fbConfig->board_title );
+        $shome = '<div class="forum-pathway-1">' . fb_link::GetKunenaLink( $fbConfig->board_title );
 
         while ($parent_ids)
         {

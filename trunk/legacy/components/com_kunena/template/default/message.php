@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: message.php 1081 2008-10-27 06:24:13Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -255,7 +255,7 @@ $database->loadObject($user);
 								if ($fbConfig->captcha == 1 && $my->id < 1) { ?>
 								<?php echo _FB_CAPDESC.'&nbsp;'?>
 								<input name="txtNumber" type="text" id="txtNumber" value="" style="vertical-align:middle" size="10">&nbsp;
-								<img src="index2.php?option=com_fireboard&func=showcaptcha" alt="" /><br />
+								<img src="index2.php?option=com_Kunena&func=showcaptcha" alt="" /><br />
 								<?php
 								}
 								// Finish captcha

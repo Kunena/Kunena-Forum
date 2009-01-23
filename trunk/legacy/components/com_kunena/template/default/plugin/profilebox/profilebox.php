@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: profilebox.php 901 2008-08-03 21:39:37Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -141,7 +141,7 @@ else {
 }
 
 if ($is_editor) {
-$annlink = 'index.php?option=com_fireboard&amp;func=announcement&amp;do=show'.FB_FB_ITEMID_SUFFIX;
+$annlink = 'index.php?option=com_Kunena&amp;func=announcement&amp;do=show'.FB_FB_ITEMID_SUFFIX;
 
 ?>
 | <a href = "<?php echo $annlink;?>"><?php echo _ANN_ANNOUNCEMENTS; ?> </a>

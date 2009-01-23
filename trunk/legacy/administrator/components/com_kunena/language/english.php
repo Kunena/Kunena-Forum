@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: english.php 1075 2008-10-18 13:50:46Z fxstein $
-* FireBoard Component
-* @package FireBoard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -18,7 +18,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // 1.0.5RC2
 DEFINE('_COM_A_HIGHLIGHTCODE', 'Enable Code Highlighting');
-DEFINE('_COM_A_HIGHLIGHTCODE_DESC', 'Enables the FireBoard code tag highlighting java script. If your members post php and similar code fragments within code tags, turning this on will colorize the code. If your forum does not make use of such programing language posts, you might want to turn it off to avoid code tags from getting malformed.');
+DEFINE('_COM_A_HIGHLIGHTCODE_DESC', 'Enables the Kunena code tag highlighting java script. If your members post php and similar code fragments within code tags, turning this on will colorize the code. If your forum does not make use of such programing language posts, you might want to turn it off to avoid code tags from getting malformed.');
 DEFINE('_COM_A_RSS_TYPE', 'Default RSS type');
 DEFINE('_COM_A_RSS_TYPE_DESC', 'Choose between RSS feeds by thread or post. By thread means that only one entry per thread will be listed in the RSS feed, independet of how many posts have been made within that thread. By thread creates a shorter more compact RSS feed but will not list every reply made.');
 DEFINE('_COM_A_RSS_BY_THREAD', 'By Thread');
@@ -28,8 +28,8 @@ DEFINE('_COM_A_RSS_HISTORY_DESC', 'Select how much history should be included in
 DEFINE('_COM_A_RSS_HISTORY_WEEK', '1 Week');
 DEFINE('_COM_A_RSS_HISTORY_MONTH', '1 Month');
 DEFINE('_COM_A_RSS_HISTORY_YEAR', '1 Year');
-DEFINE('_COM_A_FBDEFAULT_PAGE', 'Default FireBoard Page');
-DEFINE('_COM_A_FBDEFAULT_PAGE_DESC', 'Select the default FireBoard page that gets displayed when a forum link is clicked or the forum is entered initially. Default is Recent Discussions. Should be set to Categories for templates other than default_ex. If My Discussions is selected, guests will default to Recent Discussions.');
+DEFINE('_COM_A_FBDEFAULT_PAGE', 'Default Kunena Page');
+DEFINE('_COM_A_FBDEFAULT_PAGE_DESC', 'Select the default Kunena page that gets displayed when a forum link is clicked or the forum is entered initially. Default is Recent Discussions. Should be set to Categories for templates other than default_ex. If My Discussions is selected, guests will default to Recent Discussions.');
 DEFINE('_COM_A_FBDEFAULT_PAGE_RECENT', 'Recent Discussions');
 DEFINE('_COM_A_FBDEFAULT_PAGE_MY', 'My Discussions');
 DEFINE('_COM_A_FBDEFAULT_PAGE_CATEGORIES', 'Categories');
@@ -135,8 +135,8 @@ DEFINE('_FB_POST_DEL_ERR_MSG', 'Could not delete the post(s) - nothing else dele
 DEFINE('_FB_POST_DEL_ERR_TXT', 'Could not delete the texts of the post(s). Update the database manually (mesid=%id%).');
 DEFINE('_FB_POST_DEL_ERR_USR', 'Everything deleted, but failed to update user post stats!');
 DEFINE('_FB_POST_MOV_ERR_DB', "Severe database error. Update your database manually so the replies to the topic are matched to the new forum as well");
-DEFINE('_FB_UNIST_SUCCESS', "FireBoard component was successfully uninstalled!");
-DEFINE('_FB_PDF_VERSION', 'FireBoard Forum Component version: %version%');
+DEFINE('_FB_UNIST_SUCCESS', "Kunena component was successfully uninstalled!");
+DEFINE('_FB_PDF_VERSION', 'Kunena Forum Component version: %version%');
 DEFINE('_FB_PDF_DATE', 'Generated: %date%');
 DEFINE('_FB_SEARCH_NOFORUM', 'No forums to search in.');
 
@@ -146,7 +146,7 @@ DEFINE('_FB_USERSSYNCADD', ', add:');
 DEFINE('_FB_SYNCUSERPROFILES', 'user profiles.');
 DEFINE('_FB_NOPROFILESFORSYNC', 'No profiles found eligible for syncronizing.');
 DEFINE('_FB_SYNC_USERS', 'Syncronize Users');
-DEFINE('_FB_SYNC_USERS_DESC', 'Sync FireBoard user table with Joomla! user table');
+DEFINE('_FB_SYNC_USERS_DESC', 'Sync Kunena user table with Joomla! user table');
 DEFINE('_FB_A_MAIL_ADMIN', 'Email Administrators');
 DEFINE('_FB_A_MAIL_ADMIN_DESC',
     'Set to &quot;Yes&quot; if you want email notifications on each new post sent to the enabled system administrator(s).');
@@ -223,20 +223,20 @@ DEFINE('_COM_A_USER_EDIT_TIMEGRACE_DESC', 'Default 600 [seconds], allows
 storing a modification up to 600 seconds after edit link disappears');
 DEFINE('_FB_HELPPAGE','Enable Help Page');
 DEFINE('_FB_HELPPAGE_DESC','If set to &quot;Yes&quot; a link in the header menu will be shown to your Help page.');
-DEFINE('_FB_HELPPAGE_IN_FB','Show help in fireboard');
-DEFINE('_FB_HELPPAGE_IN_FB_DESC','If set to &quot;Yes&quot; help content text will be include in fireboard and Help external page link will not work. <b>Note:</b> You should add "Help Content ID" .');
+DEFINE('_FB_HELPPAGE_IN_FB','Show help in Kunena');
+DEFINE('_FB_HELPPAGE_IN_FB_DESC','If set to &quot;Yes&quot; help content text will be include in Kunena and Help external page link will not work. <b>Note:</b> You should add "Help Content ID" .');
 DEFINE('_FB_HELPPAGE_CID','Help Content ID');
-DEFINE('_FB_HELPPAGE_CID_DESC','You should set <b>"YES"</b> "Show help in fireboard" setting.');
+DEFINE('_FB_HELPPAGE_CID_DESC','You should set <b>"YES"</b> "Show help in Kunena" setting.');
 DEFINE('_FB_HELPPAGE_LINK',' Help external page link');
-DEFINE('_FB_HELPPAGE_LINK_DESC','If you show help external link, please set <b>"NO"</b> "Show help in fireboard" setting.');
+DEFINE('_FB_HELPPAGE_LINK_DESC','If you show help external link, please set <b>"NO"</b> "Show help in Kunena" setting.');
 DEFINE('_FB_RULESPAGE','Enable Rules Page');
 DEFINE('_FB_RULESPAGE_DESC','If set to &quot;Yes&quot; a link in the header menu will be shown to your Rules page.');
-DEFINE('_FB_RULESPAGE_IN_FB','Show rules in fireboard');
-DEFINE('_FB_RULESPAGE_IN_FB_DESC','If set to &quot;Yes&quot; rules content text will be include in fireboard and Rules external page link will not work. <b>Note:</b> You should add "Rules Content ID" .');
+DEFINE('_FB_RULESPAGE_IN_FB','Show rules in Kunena');
+DEFINE('_FB_RULESPAGE_IN_FB_DESC','If set to &quot;Yes&quot; rules content text will be include in Kunena and Rules external page link will not work. <b>Note:</b> You should add "Rules Content ID" .');
 DEFINE('_FB_RULESPAGE_CID','Rules Content ID');
-DEFINE('_FB_RULESPAGE_CID_DESC','You should set <b>"YES"</b> "Show rules in fireboard" setting.');
+DEFINE('_FB_RULESPAGE_CID_DESC','You should set <b>"YES"</b> "Show rules in Kunena" setting.');
 DEFINE('_FB_RULESPAGE_LINK',' Rules external page link');
-DEFINE('_FB_RULESPAGE_LINK_DESC','If you show rules external link, please set <b>"NO"</b> "Show rules in fireboard" setting.');
+DEFINE('_FB_RULESPAGE_LINK_DESC','If you show rules external link, please set <b>"NO"</b> "Show rules in Kunena" setting.');
 DEFINE('_FB_AVATAR_GDIMAGE_NOT','GD Library not found');
 DEFINE('_FB_AVATAR_GD2IMAGE_NOT','GD2 Library not found');
 DEFINE('_FB_GD_INSTALLED','GD is avabile version ');
@@ -249,8 +249,8 @@ DEFINE('_FB_AVATAR_MEDIUM_WIDTH','Medium Image Width :');
 DEFINE('_FB_AVATAR_LARGE_HEIGHT','Large Image Height :');
 DEFINE('_FB_AVATAR_LARGE_WIDTH','Large Image Width :');
 DEFINE('_FB_AVATAR_QUALITY','Avatar Quality');
-DEFINE('_FB_WELCOME','Welcome to FireBoard');
-DEFINE('_FB_WELCOME_DESC','Thank you for choosing FireBoard as your board solution. This screen will give you a quick overview of all the various statistics of your board. The links on the left hand side of this screen allow you to control every aspect of your board experience. Each page will have instructions on how to use the tools.');
+DEFINE('_FB_WELCOME','Welcome to Kunena');
+DEFINE('_FB_WELCOME_DESC','Thank you for choosing Kunena as your board solution. This screen will give you a quick overview of all the various statistics of your board. The links on the left hand side of this screen allow you to control every aspect of your board experience. Each page will have instructions on how to use the tools.');
 DEFINE('_FB_STATISTIC','Statistic');
 DEFINE('_FB_VALUE','Value');
 DEFINE('_GEN_CATEGORY','Category');
@@ -479,7 +479,7 @@ DEFINE('_FB_ERRORSUBS', 'Something went wrong deleting the messages and subscrip
 DEFINE('_FB_WARNING', 'Warning...');
 DEFINE('_FB_CHMOD1', 'You need to chmod this to 766 in order for the file to be updated.');
 DEFINE('_FB_YOURCONFIGFILEIS', 'Your config file is');
-DEFINE('_FB_FIREBOARD', 'FireBoard');
+DEFINE('_FB_Kunena', 'Kunena');
 DEFINE('_FB_CLEXUS', 'Clexus PM');
 DEFINE('_FB_CB', 'Community Builder');
 DEFINE('_FB_MYPMS', 'myPMS II Open Source');
@@ -490,7 +490,7 @@ DEFINE('_FB_SELECTTEMPLATE', 'Select Template');
 DEFINE('_FB_CONFIGSAVED', 'Configuration saved.');
 DEFINE('_FB_CONFIGNOTSAVED', 'FATAL ERROR: Configuration could not be saved.');
 DEFINE('_FB_TFINW', 'The file is not writable.');
-DEFINE('_FB_FBCFS', 'FireBoard CSS file saved.');
+DEFINE('_FB_FBCFS', 'Kunena CSS file saved.');
 DEFINE('_FB_SELECTMODTO', 'Select an moderator to');
 DEFINE('_FB_CHOOSEFORUMTOPRUNE', 'You must choose a forum to prune!');
 DEFINE('_FB_DELMSGERROR', 'Deleting messages failed:');
@@ -504,9 +504,9 @@ DEFINE('_FB_ERRORPRUNEUSERS', 'Error pruning users:');
 DEFINE('_FB_USERSPRUNEDDELETED', 'Users pruned; Deleted:'); // <=FB 1.0.3
 DEFINE('_FB_PRUNEUSERPROFILES', 'user profiles'); // <=FB 1.0.3
 DEFINE('_FB_NOPROFILESFORPRUNNING', 'No profiles found eligible for pruning.'); // <=FB 1.0.3
-DEFINE('_FB_TABLESUPGRADED', 'FireBoard Tables are upgraded to version');
+DEFINE('_FB_TABLESUPGRADED', 'Kunena Tables are upgraded to version');
 DEFINE('_FB_FORUMCATEGORY', 'Forum Category');
-DEFINE('_FB_SAMPLWARN1', '-- Make absolutely sure that you load the sample data on completely empty fireboard tables. If anything is in them, it will not work!');
+DEFINE('_FB_SAMPLWARN1', '-- Make absolutely sure that you load the sample data on completely empty Kunena tables. If anything is in them, it will not work!');
 DEFINE('_FB_FORUM1', 'Forum 1');
 DEFINE('_FB_SAMPLEPOST1', 'Sample Post 1');
 DEFINE('_FB_SAMPLEFORUM11', 'Sample Forum 1\r\n');
@@ -519,12 +519,12 @@ DEFINE('_FB_FILEDELETED', 'File deleted');
 DEFINE('_FB_NOPARENT', 'No Parent');
 DEFINE('_FB_DIRCOPERR', 'Error: File');
 DEFINE('_FB_DIRCOPERR1', 'could not be copied!\n');
-DEFINE('_FB_INSTALL1', '<strong>FireBoard Forum</strong> Component <em>for Joomla! CMS</em> <br />&copy; 2006 - 2008 by Best Of Joomla<br />All rights reserved.');
+DEFINE('_FB_INSTALL1', '<strong>Kunena Forum</strong> Component <em>for Joomla! CMS</em> <br />&copy; 2006 - 2008 by Best Of Joomla<br />All rights reserved.');
 DEFINE('_FB_INSTALL2', 'Transfer/Installation :</code></strong><br /><br /><font color="red"><b>succesfull');
 // added by aliyar
 DEFINE('_FB_FORUMPRF_TITLE', 'Profile Settings');
 DEFINE('_FB_FORUMPRF', 'Profile');
-DEFINE('_FB_FORUMPRRDESC', 'If you have Clexus PM or Community Builder component installed, you can configure fireboard to use the user profile page.');
+DEFINE('_FB_FORUMPRRDESC', 'If you have Clexus PM or Community Builder component installed, you can configure Kunena to use the user profile page.');
 DEFINE('_FB_USERPROFILE_PROFILE', 'Profile');
 DEFINE('_FB_USERPROFILE_PROFILEHITS', '<b>Profile View</b>');
 DEFINE('_FB_USERPROFILE_MESSAGES', 'All Forum Messages');
@@ -541,7 +541,7 @@ DEFINE('_FB_SUBSCRIPTIONSCHECKED', 'Post-subscription checked by default?');
 DEFINE('_FB_SUBSCRIPTIONSCHECKED_DESC', 'Set to "Yes" If you want to post subscription box always checked');
 // Errors (Re-integration from Joomlaboard 1.2)
 DEFINE('_FB_ERROR1', 'Category / Forum must have a name');
-// Forum Configuration (New in FireBoard)
+// Forum Configuration (New in Kunena)
 DEFINE('_FB_SHOWSTATS', 'Show Stats');
 DEFINE('_FB_SHOWSTATSDESC', 'If you want to show Stats, select Yes');
 DEFINE('_FB_SHOWWHOIS', 'Show Whois Online');
@@ -555,14 +555,14 @@ DEFINE('_FB_USERPOPULAR', 'Show Popular Subject Stats');
 DEFINE('_FB_USERPOPULARDESC', 'If you want to show Popular Subject, select Yes');
 DEFINE('_FB_NUMPOP', 'Number of Popular Subject');
 DEFINE('_FB_INFORMATION',
-    'Best of Joomla team is proud to announce the release of FireBoard 1.0.0. It is a powerful and stylish forum component for a well deserved content management system, Joomla!. It is initially based on the hard work of Joomlaboard team and most of our praises goes to their team.Some of the main features of FireBoard can be listed as below (in addition to JB&#39;s current features):<br /><br /><ul><li>A much more designer friendly forum system. It is close to SMF templating system having a simpler structue. With very few steps you can modify the total look of the forum. Thanks goes to the great designers in our team.</li><li>Unlimited subcategory system with better administration backend.</li><li>Faster system and better coding experience for 3rd parties.</li><li>The same<br /></li><li>Profilebox at the top of the forum</li><li>Support for popular PM systems, such as ClexusPM and Uddeim</li><li>Basic plugin system (practical rather than perfec)</li><li>Language-defined icon system.<br /></li><li>Sharing image system of other templates. So, choice between templates and image series is possible</li><li>You can add joomla modules inside the forum template itself. Wanted to have banner inside your forum?</li><li>Favourite threads selection and management</li><li>Forum spotlights and highlights</li><li>Forum announcements and its panel</li><li>Latest messages (Tabbed)</li><li>Statistics at bottom</li><li>Who&#39;s online, on what page?</li><li>Category specific image system</li><li>Enhanced pathway</li><li><strong>Joomlaboard import, SMF in plan to be releaed pretty soon</strong></li><li>RSS, PDF output</li><li>Advanced search (under developement)</li><li>Community builder and Clexus PM profile options</li><li>Avatar management : CB and Clexus PM options<br /></li></ul><br />Please keep in mind that this release is not meant to be used on production sites, even though we have tested it through. We are planning to continue to work on this project, as it is used on our several projects, and we would be pleased if you could join us to bring a bridge-free solution to Joomla! forums.<br /><br />This is a collaborative work of several developers and designers that have kindly participated and made this release come true. Here we thank all of them and wish that you enjoy this release!<br /><br />Best of Joomla! team<br /></td></tr></table>');
+    'Best of Joomla team is proud to announce the release of Kunena 1.0.0. It is a powerful and stylish forum component for a well deserved content management system, Joomla!. It is initially based on the hard work of Joomlaboard team and most of our praises goes to their team.Some of the main features of Kunena can be listed as below (in addition to JB&#39;s current features):<br /><br /><ul><li>A much more designer friendly forum system. It is close to SMF templating system having a simpler structue. With very few steps you can modify the total look of the forum. Thanks goes to the great designers in our team.</li><li>Unlimited subcategory system with better administration backend.</li><li>Faster system and better coding experience for 3rd parties.</li><li>The same<br /></li><li>Profilebox at the top of the forum</li><li>Support for popular PM systems, such as ClexusPM and Uddeim</li><li>Basic plugin system (practical rather than perfec)</li><li>Language-defined icon system.<br /></li><li>Sharing image system of other templates. So, choice between templates and image series is possible</li><li>You can add joomla modules inside the forum template itself. Wanted to have banner inside your forum?</li><li>Favourite threads selection and management</li><li>Forum spotlights and highlights</li><li>Forum announcements and its panel</li><li>Latest messages (Tabbed)</li><li>Statistics at bottom</li><li>Who&#39;s online, on what page?</li><li>Category specific image system</li><li>Enhanced pathway</li><li><strong>Joomlaboard import, SMF in plan to be releaed pretty soon</strong></li><li>RSS, PDF output</li><li>Advanced search (under developement)</li><li>Community builder and Clexus PM profile options</li><li>Avatar management : CB and Clexus PM options<br /></li></ul><br />Please keep in mind that this release is not meant to be used on production sites, even though we have tested it through. We are planning to continue to work on this project, as it is used on our several projects, and we would be pleased if you could join us to bring a bridge-free solution to Joomla! forums.<br /><br />This is a collaborative work of several developers and designers that have kindly participated and made this release come true. Here we thank all of them and wish that you enjoy this release!<br /><br />Best of Joomla! team<br /></td></tr></table>');
 DEFINE('_FB_INSTRUCTIONS', 'Instructions');
-DEFINE('_FB_FINFO', 'FireBoard Forum Information');
-DEFINE('_FB_CSSEDITOR', 'FireBoard Template CSS Editor');
+DEFINE('_FB_FINFO', 'Kunena Forum Information');
+DEFINE('_FB_CSSEDITOR', 'Kunena Template CSS Editor');
 DEFINE('_FB_PATH', 'Path:');
 DEFINE('_FB_CSSERROR', 'Please Note:CSS Template file must be Writable to Save Changes.');
 // User Management
-DEFINE('_FB_FUM', 'FireBoard User Profile Manager');
+DEFINE('_FB_FUM', 'Kunena User Profile Manager');
 DEFINE('_FB_SORTID', 'sort by userid');
 DEFINE('_FB_SORTMOD', 'sort by moderators');
 DEFINE('_FB_SORTNAME', 'sort by names');
@@ -571,7 +571,7 @@ DEFINE('_FB_NOUSERSFOUND', 'No userprofiles found.');
 DEFINE('_FB_ADDMOD', 'Add Moderator to');
 DEFINE('_FB_NOMODSAV', 'There are no possible moderators found. Read the \'note\' below.');
 DEFINE('_FB_NOTEUS',
-    'NOTE: Only users which have the moderator flag set in their fireboard Profile are shown here. In order to be able to add a moderator give a user a moderator flag, go to <a href="index2.php?option=com_fireboard&task=profiles">User Administration</a> and search for the user you want to make a moderator. Then select his or her profile and update it. The moderator flag can only be set by an site administrator. ');
+    'NOTE: Only users which have the moderator flag set in their Kunena Profile are shown here. In order to be able to add a moderator give a user a moderator flag, go to <a href="index2.php?option=com_Kunena&task=profiles">User Administration</a> and search for the user you want to make a moderator. Then select his or her profile and update it. The moderator flag can only be set by an site administrator. ');
 DEFINE('_FB_PROFFOR', 'Profile for');
 DEFINE('_FB_GENPROF', 'General Profile Options');
 DEFINE('_FB_PREFVIEW', 'Prefered Viewtype:');
@@ -620,13 +620,13 @@ DEFINE('_FB_MODDESC',
 DEFINE('_FB_MODHEADER', 'Moderation settings for this forum');
 DEFINE('_FB_MODSASSIGNED', 'Moderators assigned to this forum:');
 DEFINE('_FB_NOMODS', 'There are no Moderators assigned to this forum');
-// Some General Strings (Improvement in FireBoard)
+// Some General Strings (Improvement in Kunena)
 DEFINE('_FB_EDIT', 'Edit');
 DEFINE('_FB_ADD', 'Add');
 // Reorder (Re-integration from Joomlaboard 1.2)
 DEFINE('_FB_MOVEUP', 'Move Up');
 DEFINE('_FB_MOVEDOWN', 'Move Down');
-// Groups - Integration in FireBoard
+// Groups - Integration in Kunena
 DEFINE('_FB_ALLREGISTERED', 'All Registered');
 DEFINE('_FB_EVERYBODY', 'Everybody');
 // Removal of hardcoded strings in admin panel (Re-integration from Joomlaboard 1.2)
@@ -639,8 +639,8 @@ DEFINE('_FB_REVIEW', 'Review');
 DEFINE('_FB_MODERATED', 'Moderated');
 DEFINE('_FB_LOCKED', 'Locked');
 DEFINE('_FB_CATFOR', 'Category / Forum');
-DEFINE('_FB_ADMIN', 'FireBoard Administration');
-DEFINE('_FB_CP', 'FireBoard Control Panel');
+DEFINE('_FB_ADMIN', 'Kunena Administration');
+DEFINE('_FB_CP', 'Kunena Control Panel');
 // Configuration page - Headings (Re-integrated from Joomlaboard 1.2)
 DEFINE('_COM_A_AVATAR_INTEGRATION', 'Avatar Integration');
 DEFINE('_COM_A_RANKS_SETTINGS', 'Ranks');
@@ -648,7 +648,7 @@ DEFINE('_COM_A_RANKING_SETTINGS', 'Ranking Settings');
 DEFINE('_COM_A_AVATAR_SETTINGS', 'Avatar Settings');
 DEFINE('_COM_A_SECURITY_SETTINGS', 'Security Settings');
 DEFINE('_COM_A_BASIC_SETTINGS', 'Basic Settings');
-// FIREBOARD 1.0.0
+// Kunena 1.0.0
 //
 DEFINE('_COM_A_FAVORITES', 'Allow Favorites');
 DEFINE('_COM_A_FAVORITES_DESC', 'Set to &quot;Yes&quot; if you want to allow registered users to favorite to a topic ');
@@ -859,7 +859,7 @@ DEFINE('_FORUM_SEARCHRESULTS', 'displaying %s out of %s results.');
 DEFINE('_COM_FORUM_HELP', 'FAQ');
 // rules.php
 DEFINE('_COM_FORUM_RULES', 'Rules');
-DEFINE('_COM_FORUM_RULES_DESC', '<ul><li>Edit this file to insert your rules joomlaroot/administrator/components/com_fireboard/language/english.php</li><li>Rule 2</li><li>Rule 3</li><li>Rule 4</li><li>...</li></ul>');
+DEFINE('_COM_FORUM_RULES_DESC', '<ul><li>Edit this file to insert your rules joomlaroot/administrator/components/com_Kunena/language/english.php</li><li>Rule 2</li><li>Rule 3</li><li>Rule 4</li><li>...</li></ul>');
 //smile.class.php
 DEFINE('_COM_BOARDCODE', 'Boardcode');
 // moderate_messages.php
@@ -879,7 +879,7 @@ DEFINE('_COM_A_FORUM_JUMP_DESC', 'If set to &quot;Yes&quot; a selector will be s
 DEFINE('_GEN_RULES', 'Rules');
 DEFINE('_COM_A_RULESPAGE', 'Enable Rules Page');
 DEFINE('_COM_A_RULESPAGE_DESC',
-    'If set to &quot;Yes&quot; a link in the header menu will be shown to your Rules page. This page can be used for things like your forum rules etcetera. You can alter the contents of this file to your liking by opening the rules.php in /joomla_root/components/com_fireboard. <em>Make sure you always have a backup of this file as it will be overwritten when upgrading!</em>');
+    'If set to &quot;Yes&quot; a link in the header menu will be shown to your Rules page. This page can be used for things like your forum rules etcetera. You can alter the contents of this file to your liking by opening the rules.php in /joomla_root/components/com_Kunena. <em>Make sure you always have a backup of this file as it will be overwritten when upgrading!</em>');
 DEFINE('_MOVED_TOPIC', 'MOVED:');
 DEFINE('_COM_A_PDF', 'Enable PDF creation');
 DEFINE('_COM_A_PDF_DESC',
@@ -905,16 +905,16 @@ DEFINE('_COM_A_COMBUILDER_PROFILE_DESC',
 DEFINE('_COM_A_COMBUILDER_PROFILE_CLICK', '> Click here <');
 DEFINE('_COM_A_COMBUILDER', 'Community Builder user profiles');
 DEFINE('_COM_A_COMBUILDER_DESC',
-    'Setting to &quot;Yes&quot; will activate the integration with Community Builder component (www.joomlapolis.com). All FireBoard user profile functions will be handled by the Community Builder and the profile link in the forums will take you to the Community Builder user profile. This setting will override the Clexus PM profile setting if both are set to &quot;Yes&quot;. Also, make sure you apply the required changes in the Community Builder database by using the option below.');
+    'Setting to &quot;Yes&quot; will activate the integration with Community Builder component (www.joomlapolis.com). All Kunena user profile functions will be handled by the Community Builder and the profile link in the forums will take you to the Community Builder user profile. This setting will override the Clexus PM profile setting if both are set to &quot;Yes&quot;. Also, make sure you apply the required changes in the Community Builder database by using the option below.');
 DEFINE('_COM_A_AVATAR_SRC', 'Use avatar picture from');
 DEFINE('_COM_A_AVATAR_SRC_DESC',
-    'If you have Clexus PM or Community Builder component installed, you can configure FireBoard to use the user avatar picture from Clexus PM or Community Builder user profile. NOTE: For Community Builder you need to have thumbnail option turned on because forum uses thumbnail user pictures, not the originals.');
+    'If you have Clexus PM or Community Builder component installed, you can configure Kunena to use the user avatar picture from Clexus PM or Community Builder user profile. NOTE: For Community Builder you need to have thumbnail option turned on because forum uses thumbnail user pictures, not the originals.');
 DEFINE('_COM_A_KARMA', 'Show Karma indicator');
 DEFINE('_COM_A_KARMA_DESC', 'Set to &quot;Yes&quot; to show user Karma and related buttons (increase / decrease) if the User Stats are activated.');
 DEFINE('_COM_A_DISEMOTICONS', 'Disable emoticons');
 DEFINE('_COM_A_DISEMOTICONS_DESC', 'Set to &quot;Yes&quot; to completely disable graphic emoticons (smileys).');
-DEFINE('_COM_C_FBCONFIG', 'FireBoard Configuration');
-DEFINE('_COM_C_FBCONFIGDESC', 'Configure all FireBoard\'s functionality');
+DEFINE('_COM_C_FBCONFIG', 'Kunena Configuration');
+DEFINE('_COM_C_FBCONFIGDESC', 'Configure all Kunena\'s functionality');
 DEFINE('_COM_C_FORUM', 'Forum Administration');
 DEFINE('_COM_C_FORUMDESC', 'Add categories/forums and configure them');
 DEFINE('_COM_C_USER', 'User Administration');
@@ -924,21 +924,21 @@ DEFINE('_COM_C_FILESDESC', 'Browse and administer uploaded files');
 DEFINE('_COM_C_IMAGES', 'Uploaded Images Browser');
 DEFINE('_COM_C_IMAGESDESC', 'Browse and administer uploaded images');
 DEFINE('_COM_C_CSS', 'Edit CSS File');
-DEFINE('_COM_C_CSSDESC', 'Tweak FireBoard\'s look and feel');
+DEFINE('_COM_C_CSSDESC', 'Tweak Kunena\'s look and feel');
 DEFINE('_COM_C_SUPPORT', 'Support WebSite');
 DEFINE('_COM_C_SUPPORTDESC', 'Connect to the Best of Joomla website (new window)');
 DEFINE('_COM_C_PRUNETAB', 'Prune Forums');
 DEFINE('_COM_C_PRUNETABDESC', 'Remove old threads (configurable)');
 DEFINE('_COM_C_PRUNEUSERS', 'Prune Users'); // <=FB 1.0.3
-DEFINE('_COM_C_PRUNEUSERSDESC', 'Sync FireBoard user table with Joomla! user table'); // <=FB 1.0.3
+DEFINE('_COM_C_PRUNEUSERSDESC', 'Sync Kunena user table with Joomla! user table'); // <=FB 1.0.3
 DEFINE('_COM_C_LOADSAMPLE', 'Load Sample Data');
-DEFINE('_COM_C_LOADSAMPLEDESC', 'For an easy start: load the Sample Data on an empty FireBoard database');
+DEFINE('_COM_C_LOADSAMPLEDESC', 'For an easy start: load the Sample Data on an empty Kunena database');
 DEFINE('_COM_C_REMOVESAMPLE', 'Remove Sample Data');
 DEFINE('_COM_C_REMOVESAMPLEDESC', 'Remove Sample Data from your database');
 DEFINE('_COM_C_LOADMODPOS', 'Load Module Positions');
-DEFINE('_COM_C_LOADMODPOSDESC', 'Load Module Positions for FireBoard Template');
+DEFINE('_COM_C_LOADMODPOSDESC', 'Load Module Positions for Kunena Template');
 DEFINE('_COM_C_UPGRADEDESC', 'Get your database up to the latest version after an upgrade');
-DEFINE('_COM_C_BACK', 'Back to FireBoard Control Panel');
+DEFINE('_COM_C_BACK', 'Back to Kunena Control Panel');
 DEFINE('_SHOW_LAST_SINCE', 'Active topics since last visit on:');
 DEFINE('_POST_SUCCESS_REQUEST2', 'Your request has been processed');
 DEFINE('_POST_NO_PUBACCESS3', 'Click here to register.');
@@ -974,7 +974,7 @@ DEFINE('_COM_A_POSTSTATSBAR_DESC', 'Set to &quot;Yes&quot; if you want the numbe
 DEFINE('_COM_A_POSTSTATSCOLOR', 'Color number for Stats Bar');
 DEFINE('_COM_A_POSTSTATSCOLOR_DESC', 'Give the number of the color you want to use for the Post Stats Bar');
 DEFINE('_LATEST_REDIRECT',
-    'FireBoard needs to (re)establish your access privileges before it can create a list of the latest posts for you.\nDo not worry, this is quite normal after more than 30 minutes of inactivity or after logging back in.\nPlease submit your search request again.');
+    'Kunena needs to (re)establish your access privileges before it can create a list of the latest posts for you.\nDo not worry, this is quite normal after more than 30 minutes of inactivity or after logging back in.\nPlease submit your search request again.');
 DEFINE('_SMILE_COLOUR', 'Color');
 DEFINE('_SMILE_SIZE', 'Size');
 DEFINE('_COLOUR_DEFAULT', 'Standard');
@@ -1014,7 +1014,7 @@ DEFINE('_COM_A_SUBJECTLENGTH_DESC',
 DEFINE('_LATEST_THREADFORUM', 'Topic/Forum');
 DEFINE('_LATEST_NUMBER', 'New posts');
 DEFINE('_COM_A_SHOWNEW', 'Show New posts');
-DEFINE('_COM_A_SHOWNEW_DESC', 'If set to &quot;Yes&quot; FireBoard will show the user an indicator for forums that contain new posts and which posts are new since his/her last visit.');
+DEFINE('_COM_A_SHOWNEW_DESC', 'If set to &quot;Yes&quot; Kunena will show the user an indicator for forums that contain new posts and which posts are new since his/her last visit.');
 DEFINE('_COM_A_NEWCHAR', '&quot;New&quot; indicator');
 DEFINE('_COM_A_NEWCHAR_DESC', 'Define here what should be used to indicate new posts (like an &quot;!&quot; or &quot;New!&quot;)');
 DEFINE('_LATEST_AUTHOR', 'Latest post author');
@@ -1091,10 +1091,10 @@ DEFINE('_POST_DISCUSS', 'This thread discusses the Content article');
 DEFINE('_COM_A_RSS', 'Enable RSS feed');
 DEFINE('_COM_A_RSS_DESC', 'The RSS feed enables users to download the latest posts to their desktop/RSS Reader aplication (see <a href="http://www.rssreader.com" target="_blank">rssreader.com</a> for an example.');
 DEFINE('_LISTCAT_RSS', 'get the latest posts directly to your desktop');
-DEFINE('_SEARCH_REDIRECT', 'FireBoard needs to (re)establish your access privileges before it can perform your search request.\nDo not worry, this is quite normal after more than 30 minutes of inactivity.\nPlease submit your search request again.');
+DEFINE('_SEARCH_REDIRECT', 'Kunena needs to (re)establish your access privileges before it can perform your search request.\nDo not worry, this is quite normal after more than 30 minutes of inactivity.\nPlease submit your search request again.');
 //====================
 //admin.forum.html.php
-DEFINE('_COM_A_CONFIG', 'FireBoard Configuration');
+DEFINE('_COM_A_CONFIG', 'Kunena Configuration');
 DEFINE('_COM_A_DISPLAY', 'Display #');
 DEFINE('_COM_A_CURRENT_SETTINGS', 'Current Setting');
 DEFINE('_COM_A_EXPLANATION', 'Explanation');
@@ -1135,11 +1135,11 @@ DEFINE('_COM_A_USERSTATS_DESC', 'Set to &quot;Yes&quot; to show User Statistics 
 DEFINE('_COM_A_AVATARUPLOAD', 'Allow Avatar Upload');
 DEFINE('_COM_A_AVATARUPLOAD_DESC', 'Set to &quot;Yes&quot; if you want registered users to be able to upload an avatar.');
 DEFINE('_COM_A_AVATARGALLERY', 'Use Avatars Gallery');
-DEFINE('_COM_A_AVATARGALLERY_DESC', 'Set to &quot;Yes&quot; if you want registered users to be able to choose an avatar from a Gallery you provide (components/com_fireboard/avatars/gallery).');
+DEFINE('_COM_A_AVATARGALLERY_DESC', 'Set to &quot;Yes&quot; if you want registered users to be able to choose an avatar from a Gallery you provide (components/com_Kunena/avatars/gallery).');
 DEFINE('_COM_A_RANKING_DESC', 'Set to &quot;Yes&quot; if you want to show the rank registered users have based on the number of posts they made.<br/><strong>Note that you must enable User Stats in the Advanced tab too to show it.</strong>');
 DEFINE('_COM_A_RANKINGIMAGES', 'Use Rank Images');
 DEFINE('_COM_A_RANKINGIMAGES_DESC',
-    'Set to &quot;Yes&quot; if you want to show the rank registered users have with an image (from components/com_fireboard/ranks). Turning this of will show the text for that rank. Check the documentation on www.bestofjoomla.com for more information on ranking images');
+    'Set to &quot;Yes&quot; if you want to show the rank registered users have with an image (from components/com_Kunena/ranks). Turning this of will show the text for that rank. Check the documentation on www.bestofjoomla.com for more information on ranking images');
 
 //email and stuff
 $_COM_A_NOTIFICATION = "New post notification from ";
@@ -1171,7 +1171,7 @@ DEFINE('_COM_A_PRUNE_NOPOSTS', 'Prune threads with no posts for the past ');
 DEFINE('_COM_A_PRUNE_DAYS', 'days');
 DEFINE('_COM_A_PRUNE_USERS', 'Prune Users'); // <=FB 1.0.3
 DEFINE('_COM_A_PRUNE_USERS_DESC',
-    'This function allows you to prune your FireBoard user list against the Joomla! Site user list. It will delete all profiles for FireBoard Users that have been deleted from your Joomla! Framework.<br/>When you are sure you want to continue, click &quot;Start Pruning&quot; in the menu bar above.'); // <=FB 1.0.3
+    'This function allows you to prune your Kunena user list against the Joomla! Site user list. It will delete all profiles for Kunena Users that have been deleted from your Joomla! Framework.<br/>When you are sure you want to continue, click &quot;Start Pruning&quot; in the menu bar above.'); // <=FB 1.0.3
 //general
 DEFINE('_GEN_ACTION', 'Action');
 DEFINE('_GEN_AUTHOR', 'Author');
@@ -1385,12 +1385,12 @@ DEFINE('_COM_A_EMAIL', 'Board Email Address');
 DEFINE('_COM_A_EMAIL_DESC', 'This is the Boards email address. Make this a valid email address');
 DEFINE('_COM_A_WRAP', 'Wrap Words Longer Than');
 DEFINE('_COM_A_WRAP_DESC',
-    'Enter the maximum number of characters a single word may have. This feature allows you to tune the output of FireBoard Posts to your template.<br/> 70 characters is probably the maximum for fixed width templates but you might need to experiment a bit.<br/>URLs, no matter how long, are not affected by the wordwrap');
+    'Enter the maximum number of characters a single word may have. This feature allows you to tune the output of Kunena Posts to your template.<br/> 70 characters is probably the maximum for fixed width templates but you might need to experiment a bit.<br/>URLs, no matter how long, are not affected by the wordwrap');
 DEFINE('_COM_A_SIGNATURE', 'Max. Signature Length');
 DEFINE('_COM_A_SIGNATURE_DESC', 'Maximum number of characters allowed for the user signature.');
 DEFINE('_SHOWCAT_NOPENDING', 'No pending message(s)');
 DEFINE('_COM_A_BOARD_OFSET', 'Board Time Offset');
-DEFINE('_COM_A_BOARD_OFSET_DESC', 'Some boards are located on servers in a different timezone than the users are. Set the Time Offset FireBoard must use in the post time in hours. Positive and negative numbers can be used');
+DEFINE('_COM_A_BOARD_OFSET_DESC', 'Some boards are located on servers in a different timezone than the users are. Set the Time Offset Kunena must use in the post time in hours. Positive and negative numbers can be used');
 //New in RC2
 DEFINE('_COM_A_BASICS', 'Basics');
 DEFINE('_COM_A_FRONTEND', 'Frontend');
@@ -1399,7 +1399,7 @@ DEFINE('_COM_A_AVATARS', 'Avatars');
 DEFINE('_COM_A_INTEGRATION', 'Integration');
 DEFINE('_COM_A_PMS', 'Enable private messaging');
 DEFINE('_COM_A_PMS_DESC',
-    'Select the appropriate private messaging component if you have installed any. Selecting Clexus PM will also enable ClexusPM user profile related options (like ICQ, AIM, Yahoo, MSN and profile links if supported by the FireBoard template used');
+    'Select the appropriate private messaging component if you have installed any. Selecting Clexus PM will also enable ClexusPM user profile related options (like ICQ, AIM, Yahoo, MSN and profile links if supported by the Kunena template used');
 DEFINE('_VIEW_PMS', 'Click here to send a Private Message to this user');
 //new in RC3
 DEFINE('_POST_RE', 'Re:');

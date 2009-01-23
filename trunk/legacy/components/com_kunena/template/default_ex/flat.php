@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: flat.php 992 2008-08-13 22:51:35Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -505,7 +505,7 @@ if (count($messages[0]) > 0)
         </table>
 
         <input type = "hidden" name = "Itemid" value = "<?php echo FB_FB_ITEMID;?>"/>
-        <input type = "hidden" name = "option" value = "com_fireboard"/>
+        <input type = "hidden" name = "option" value = "com_Kunena"/>
         <input type = "hidden" name = "func" value = "bulkactions" />
         <input type = "hidden" name = "return" value = "<?php echo sefRelToAbs( $Breturn ); ?>" />
     </form>

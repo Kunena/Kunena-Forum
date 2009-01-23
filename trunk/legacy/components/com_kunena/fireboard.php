@@ -1,8 +1,8 @@
 <?php
 /**
-* @version $Id: fireboard.php 1070 2008-10-06 08:11:18Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* @version $Id: Kunena.php 1070 2008-10-06 08:11:18Z fxstein $
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -62,21 +62,21 @@ $userid 		= intval(mosGetParam($_REQUEST, 'userid', 0));
 $view 			= mosGetParam($_REQUEST, 'view', '');
 $msgpreview 	= mosGetParam($_REQUEST, 'msgpreview', '');
 
-include_once ($mainframe->getCfg("absolute_path") . "/components/com_fireboard/sources/fb_debug.php");
+include_once ($mainframe->getCfg("absolute_path") . "/components/com_Kunena/sources/fb_debug.php");
 
-// get fireboards configuration params in
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_fireboard/sources/fb_config.class.php");
+// get Kunenas configuration params in
+require_once ($mainframe->getCfg("absolute_path") . "/components/com_Kunena/sources/fb_config.class.php");
 global $fbConfig;
 $fbConfig = new fb_config();
 $fbConfig->load();
 
-//include_once ($mainframe->getCfg("absolute_path") . '/administrator/components/com_fireboard/fireboard_config.php');
+//include_once ($mainframe->getCfg("absolute_path") . '/administrator/components/com_Kunena/Kunena_config.php');
 
 // Central Location for all internal links
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_fireboard/sources/fb_link.class.php");
+require_once ($mainframe->getCfg("absolute_path") . "/components/com_Kunena/sources/fb_link.class.php");
 
 // Class structure should be used after this and all the common task should be moved to this class
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_fireboard/class.fireboard.php");
+require_once ($mainframe->getCfg("absolute_path") . "/components/com_Kunena/class.Kunena.php");
 
 // get right Language file
 if (file_exists(JB_ABSADMPATH . '/language/' . JB_LANG . '.php')) {
@@ -271,7 +271,7 @@ if ($fbConfig->cb_profile)
     include_once ($UElanguagePath . '/' . $UElanguage . '/' . $UElanguage . '.php');
 }
 
-// fireboard Current Template Icons Pack
+// Kunena Current Template Icons Pack
 // See if there's an icon pack installed
 $useIcons = 0; //init
 $fbIcons = 0;
@@ -304,7 +304,7 @@ else
 {
 //
 // This is the main session handling section. We rely both on cookie as well as our own
-// fireboard session table inside the database. We are leveraging the cookie to keep track
+// Kunena session table inside the database. We are leveraging the cookie to keep track
 // of an individual session and its various refreshes. As we will never know what the last
 // pageview of a session will be (as defined by a commonly used 30min break/pause) we
 // keep updateing the cookie until we detect a 30+min break. That break tells us to reset
@@ -385,7 +385,7 @@ else
 			check_dberror('Unable load default view type for user.');
 
 		// If the prefferred view comes back empty this must be a new user
-		// who does not yet have a FireBoard profile -> lets create one
+		// who does not yet have a Kunena profile -> lets create one
 		if ($prefview == "")
 		{
 			//assume there's no profile; set userid and the default view type as preferred view type.
@@ -865,7 +865,7 @@ else
                     }
 
                 // check that template exists in case it was deleted
-                if (file_exists($mosConfig_absolute_path . '/components/com_fireboard/template/' . $fb_change_template . '/forum.css'))
+                if (file_exists($mosConfig_absolute_path . '/components/com_Kunena/template/' . $fb_change_template . '/forum.css'))
                 {
                     $lifetime = 60 * 10;
                     $fb_current_template = $fb_change_template;
@@ -886,7 +886,7 @@ else
                     }
 
                 // check that template exists in case it was deleted
-                if (file_exists($mosConfig_absolute_path . '/components/com_fireboard/template/' . $fb_change_img_template . '/forum.css'))
+                if (file_exists($mosConfig_absolute_path . '/components/com_Kunena/template/' . $fb_change_img_template . '/forum.css'))
                 {
                     $lifetime = 60 * 10;
                     $fb_current_img_template = $fb_change_img_template;

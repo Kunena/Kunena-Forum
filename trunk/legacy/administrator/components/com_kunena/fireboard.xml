@@ -1,30 +1,30 @@
 <?xml version="1.0" ?>
 <mosinstall type="component">
- <name>fireboard</name>
+ <name>Kunena</name>
     <version>1.0.5</version>
     <versionname>Redwood</versionname>
     <creationDate>@fbversiondate@</creationDate>
 	<build>@fbbuild@</build>
     <author>Best Of Joomla!</author>
-    <authorEmail>fireboard@bestofjoomla.com</authorEmail>
+    <authorEmail>Kunena@bestofjoomla.com</authorEmail>
     <authorUrl>http://www.bestofjoomla.com</authorUrl>
     <copyright>www.bestofjoomla.com</copyright>
     <license>GNU/GPL</license>
-    <description>FireBoard Forum</description>
+    <description>Kunena Forum</description>
     <files>
     
 @fbfrontendlist@    
     
     </files>
-    <installfile>install/install.fireboard.php</installfile>
-    <uninstallfile>install/uninstall.fireboard.php</uninstallfile>
+    <installfile>install/install.Kunena.php</installfile>
+    <uninstallfile>install/uninstall.Kunena.php</uninstallfile>
     <administration>
         <files>
 
 @fbbackendlist@    
 
         </files>
-        <menu link="">FireBoard Forum</menu>
+        <menu link="">Kunena Forum</menu>
     </administration>
     <params />
 </mosinstall>

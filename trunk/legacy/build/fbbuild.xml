@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Fireboard ant build file
+  Kunena ant build file
 
   @version      $Id: fbbuild.xml 1058 2008-09-25 14:45:45Z fxstein $
   @copyright    Copyright (c) 2008 www.bestofjoomla.com 
@@ -29,14 +29,14 @@
   custom file obsolete or incompatible.
   Custom build only supports front end modifications at this point in time.
 -->
-<project name="FireBoard" default="dist" basedir=".">
-	<description>Ant Build File for FireBoard</description>
+<project name="Kunena" default="dist" basedir=".">
+	<description>Ant Build File for Kunena</description>
 	<property file="config.ini" />
-	<property name="fb.frontend" value="${project_dir}/components/com_fireboard/" />
+	<property name="fb.frontend" value="${project_dir}/components/com_Kunena/" />
 	<property name="fb.frontend.list" value="" />
-	<property name="fb.backend" value="${project_dir}/administrator/components/com_fireboard/" />
+	<property name="fb.backend" value="${project_dir}/administrator/components/com_Kunena/" />
 	<property name="fb.backend.list" value="" />
-	<property name="fb.customfrontend" value="${custom_dir}/components/com_fireboard/" />
+	<property name="fb.customfrontend" value="${custom_dir}/components/com_Kunena/" />
 
 	<target name="dist" depends="mkdir,archive,copy,init,package,zip,gzip,bz2,customcopy,custompackage,customzip,customgzip,custombz2,info,cleanup" />
 
@@ -164,10 +164,10 @@
 		</script>
 		<filter token="fbfrontendlist" value="${fb.frontend.list}" />		
 		<filter token="fbbackendlist" value="${fb.backend.list}" />		
-		<copy file="${project_dir}/administrator/components/com_fireboard/fireboard.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/administrator/components/com_fireboard/install/fb_install_upgrade.xml" todir="${tmp_dir}/install" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/components/com_fireboard/sources/fb_config.class.php" todir="${tmp_dir}/sources" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/components/com_fireboard/sources/fb_rss.php" todir="${tmp_dir}/sources" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/administrator/components/com_Kunena/Kunena.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/administrator/components/com_Kunena/install/fb_install_upgrade.xml" todir="${tmp_dir}/install" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/components/com_Kunena/sources/fb_config.class.php" todir="${tmp_dir}/sources" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/components/com_Kunena/sources/fb_rss.php" todir="${tmp_dir}/sources" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/README.txt" todir="${tmp_dir}" overwrite="true" filtering="true" />
 	</target>
 
@@ -188,7 +188,7 @@
 
 	<target name="customcopy" depends="mkdir" if="do.custom_build">
 		<copy todir="${tmp_dir}" overwrite="true">
-			<fileset dir="${custom_dir}/components/com_fireboard/" />
+			<fileset dir="${custom_dir}/components/com_Kunena/" />
 		</copy>
 	</target>
 
@@ -264,9 +264,9 @@
 		</script>
 		<filter token="fbfrontendlist" value="${fb.frontend.list}" />		
 		<filter token="fbbackendlist" value="${fb.backend.list}" />		
-		<copy file="${project_dir}/administrator/components/com_fireboard/fireboard.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/administrator/components/com_fireboard/install/fb_install_upgrade.xml" todir="${tmp_dir}/install" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/components/com_fireboard/sources/fb_config.class.php" todir="${tmp_dir}/sources" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/administrator/components/com_Kunena/Kunena.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/administrator/components/com_Kunena/install/fb_install_upgrade.xml" todir="${tmp_dir}/install" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/components/com_Kunena/sources/fb_config.class.php" todir="${tmp_dir}/sources" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/README.txt" todir="${tmp_dir}" overwrite="true" filtering="true" />
 	</target>
 

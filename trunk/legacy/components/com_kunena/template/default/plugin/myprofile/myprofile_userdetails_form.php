@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: myprofile_userdetails_form.php 807 2008-07-13 04:31:27Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -127,7 +127,7 @@ $validate = josSpoofValue();
     </tbody>
   </table>
   <input type = "hidden" name = "id" value = "<?php echo $row->id;?>"/>
-  <input type = "hidden" name = "option" value = "com_fireboard"/>
+  <input type = "hidden" name = "option" value = "com_Kunena"/>
   <input type = "hidden" name = "func" value = "myprofile"/>
   <input type = "hidden" name = "do" value = "usersave"/>
   <input type = "hidden" name = "task" value = ""/>

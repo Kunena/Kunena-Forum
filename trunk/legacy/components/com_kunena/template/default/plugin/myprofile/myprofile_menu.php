@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: myprofile_menu.php 807 2008-07-13 04:31:27Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com

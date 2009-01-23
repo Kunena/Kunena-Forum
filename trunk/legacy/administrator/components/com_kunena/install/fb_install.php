@@ -1,14 +1,14 @@
 <?php
 /**
 * @version $Id: fb_install.php 569 2008-01-22 01:20:41Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
 * 
-* FireBoard Install file
-* component: com_fireboard
+* Kunena Install file
+* component: com_Kunena
 **/
 
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');

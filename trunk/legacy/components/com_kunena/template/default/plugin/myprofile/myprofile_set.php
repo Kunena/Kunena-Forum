@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: myprofile_set.php 479 2007-12-12 18:52:34Z sisko1990 $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com

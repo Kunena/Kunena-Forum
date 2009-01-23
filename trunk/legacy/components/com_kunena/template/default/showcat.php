@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: showcat.php 1064 2008-10-05 23:29:35Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -423,7 +423,7 @@ else
                 <div style = "width: 100%" align = "right">
                     <input type = "hidden" name = "Itemid" value = "<?php echo FB_FB_ITEMID;?>"/>
 
-                    <input type = "hidden" name = "option" value = "com_fireboard"/>
+                    <input type = "hidden" name = "option" value = "com_Kunena"/>
 
                     <input type = "hidden" name = "func" value = "showcat"/>
 

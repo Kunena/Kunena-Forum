@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fbprofile.php 947 2008-08-11 01:56:01Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -420,7 +420,7 @@ function showprf($userid, $page)
     <table class="fb_profile_cover" width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
         <tr>
             <td class = "<?php echo $boardclass; ?>profile-left" align="center" valign="top" width="25%">
-            <!-- Fireboard Profile -->
+            <!-- Kunena Profile -->
                 <?php
                 if (file_exists(JB_ABSTMPLTPATH . '/plugin/fbprofile/userinfos.php')) {
                     include(JB_ABSTMPLTPATH . '/plugin/fbprofile/userinfos.php');
@@ -430,7 +430,7 @@ function showprf($userid, $page)
                 }
                 ?>
 
-            <!-- /Fireboard Profile -->
+            <!-- /Kunena Profile -->
             </td>
 
             <td class = "<?php echo $boardclass; ?>profile-right" valign="top" width="74%">

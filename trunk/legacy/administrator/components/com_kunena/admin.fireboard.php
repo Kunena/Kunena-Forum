@@ -1,8 +1,8 @@
 <?php
 /**
-* @version $Id: admin.fireboard.php 1070 2008-10-06 08:11:18Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* @version $Id: admin.Kunena.php 1070 2008-10-06 08:11:18Z fxstein $
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -18,24 +18,24 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 // Kill notices (we have many..)
 error_reporting (E_ALL ^ E_NOTICE);
 
-include_once ($mainframe->getCfg("absolute_path") . "/components/com_fireboard/sources/fb_debug.php");
+include_once ($mainframe->getCfg("absolute_path") . "/components/com_Kunena/sources/fb_debug.php");
 
-// get fireboards configuration params in
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_fireboard/sources/fb_config.class.php");
+// get Kunenas configuration params in
+require_once ($mainframe->getCfg("absolute_path") . "/components/com_Kunena/sources/fb_config.class.php");
 global $fbConfig;
 $fbConfig = new fb_config();
 $fbConfig->load();
 
 // Class structure should be used after this and all the common task should be moved to this class
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_fireboard/class.fireboard.php");
+require_once ($mainframe->getCfg("absolute_path") . "/components/com_Kunena/class.Kunena.php");
 require_once ($mainframe->getPath('admin_html'));
 
 //Get right Language file
-if (file_exists($mainframe->getCfg('absolute_path') . '/administrator/components/com_fireboard/language/' . $mainframe->getCfg('lang') . '.php')) {
-    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_fireboard/language/' . $mainframe->getCfg('lang') . '.php');
+if (file_exists($mainframe->getCfg('absolute_path') . '/administrator/components/com_Kunena/language/' . $mainframe->getCfg('lang') . '.php')) {
+    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_Kunena/language/' . $mainframe->getCfg('lang') . '.php');
 }
 else {
-    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_fireboard/language/english.php');
+    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_Kunena/language/english.php');
 }
 
 $cid = mosGetParam($_REQUEST, 'cid', array ( 0 ));
@@ -70,7 +70,7 @@ switch ($task)
     case "installfb":
         $mode = mosGetParam($_REQUEST, "mode", 1);
 
-        com_install_fireboard ($mode);
+        com_install_Kunena ($mode);
         break;
 
     case "new":
@@ -261,7 +261,7 @@ switch ($task)
        FBTools::reCountBoards();
        // Also reset the name info stored with messages
        FBTools::updateNameInfo();
-       mosRedirect("index2.php?option=com_fireboard", _FB_RECOUNTFORUMS_DONE);
+       mosRedirect("index2.php?option=com_Kunena", _FB_RECOUNTFORUMS_DONE);
         break;
 
 	case "showsmilies":
@@ -589,7 +589,7 @@ function showConfig($option)
 
     $lists = array ();
 
-    // the default page when entering FireBoard
+    // the default page when entering Kunena
     $defpagelist = array ();
 
     $defpagelist[] = mosHTML::makeOption('recent', _COM_A_FBDEFAULT_PAGE_RECENT);
@@ -623,7 +623,7 @@ function showConfig($option)
 
     // source of avatar picture
     $avlist = array ();
-    $avlist[] = mosHTML::makeOption('fb', _FB_FIREBOARD);
+    $avlist[] = mosHTML::makeOption('fb', _FB_Kunena);
     $avlist[] = mosHTML::makeOption('clexuspm', _FB_CLEXUS);
     $avlist[] = mosHTML::makeOption('cb', _FB_CB);
     // build the html select list
@@ -640,7 +640,7 @@ function showConfig($option)
 //redundant    $lists['pm_component'] = mosHTML::selectList($pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pm_component);
     // Profile select
     $prflist = array ();
-    $prflist[] = mosHTML::makeOption('fb', _FB_FIREBOARD);
+    $prflist[] = mosHTML::makeOption('fb', _FB_Kunena);
     $prflist[] = mosHTML::makeOption('clexuspm', _FB_CLEXUS);
     $prflist[] = mosHTML::makeOption('cb', _FB_CB);
     $lists['fb_profile'] = mosHTML::selectList($prflist, 'cfg_fb_profile', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->fb_profile);
@@ -655,13 +655,13 @@ function showConfig($option)
     //function get_dirs($directory, $select_name, $selected = "") {
     $listitems[] = mosHTML::makeOption('0', _FB_SELECTTEMPLATE);
 
-    if ($dir = @opendir($mainframe->getCfg('absolute_path') . "/components/com_fireboard/template"))
+    if ($dir = @opendir($mainframe->getCfg('absolute_path') . "/components/com_Kunena/template"))
     {
         while (($file = readdir($dir)) !== false)
         {
             if ($file != ".." && $file != ".")
             {
-                if (is_dir($mainframe->getCfg('absolute_path') . "/components/com_fireboard/template" . "/" . $file))
+                if (is_dir($mainframe->getCfg('absolute_path') . "/components/com_Kunena/template" . "/" . $file))
                 {
                     if (!($file[0] == '.')) {
                         $filelist[] = $file;
@@ -821,7 +821,7 @@ function saveConfig($option)
     // To enable legacy 3rd party modules to 'see' our config
     // we also write an old style config file
 	global $mainframe;
-    $configfile = $mainframe->getCfg('absolute_path') . "/administrator/components/com_fireboard/fireboard_config.php";
+    $configfile = $mainframe->getCfg('absolute_path') . "/administrator/components/com_Kunena/Kunena_config.php";
     @chmod($configfile, 0766);
 
 	$ref = array();
@@ -879,14 +879,14 @@ function showInstructions($database, $option, $mosConfig_lang) {
 function showCss($option)
 {
     global $fbConfig;
-    $file = "../components/com_fireboard/template/" . $fbConfig->template . "/forum.css";
+    $file = "../components/com_Kunena/template/" . $fbConfig->template . "/forum.css";
     @chmod($file, 0766);
     $permission = is_writable($file);
 
     if (!$permission)
     {
         echo "<center><h1><font color=red>" . _FB_WARNING . "</FONT></h1><BR>";
-        echo "<B>Your css file is <#__root>/components/com_fireboard/template/" . $fbConfig->template . "/forum.css</b><BR>";
+        echo "<B>Your css file is <#__root>/components/com_Kunena/template/" . $fbConfig->template . "/forum.css</b><BR>";
         echo "<B>" . _FB_CHMOD1 . "</B></center><BR><BR>";
     }
 
@@ -902,11 +902,11 @@ function saveCss($file, $csscontent, $option)
     if (is_writable($file) == false)
     {
         echo "<script>alert('" . _FB_TFINW . "')</script>";
-        echo "<script>document.location.href='index2.php?option=com_fireboard&task=showCss'</script>\n";
+        echo "<script>document.location.href='index2.php?option=com_Kunena&task=showCss'</script>\n";
     }
 
     echo "<script>alert('" . _FB_FBCFS . "')</script>";
-    echo "<script>document.location.href='index2.php?option=com_fireboard&task=showCss'</script>\n";
+    echo "<script>document.location.href='index2.php?option=com_Kunena&task=showCss'</script>\n";
 
     if ($fp = fopen($file, "w"))
     {
@@ -1179,7 +1179,7 @@ function saveUserProfile($option)
     	}
     }
 
-    mosRedirect ("index2.php?option=com_fireboard&task=showprofiles");
+    mosRedirect ("index2.php?option=com_Kunena&task=showprofiles");
 }
 
 //===============================
@@ -1283,7 +1283,7 @@ function douserssync($database, $option)
 	$database->setQuery("UPDATE #__fb_sessions SET allowed='na'");
 	$database->query() or trigger_dberror("Unable to update sessions.");
 
-    //get userlist to remove from Fireboard users list
+    //get userlist to remove from Kunena users list
     $database->setQuery("SELECT a.userid from #__fb_users as a left join #__users as b on a.userid=b.id where b.username is null");
     $idlistR = $database->loadObjectList();
             check_dberror("Unable to load users.");
@@ -1300,7 +1300,7 @@ function douserssync($database, $option)
         $idsR = implode(',', $allIDsR);
     }
 
-    //get userlist to add into Fireboard users list
+    //get userlist to add into Kunena users list
     $database->setQuery("SELECT a.id from #__users as a left join #__fb_users as b on b.userid=a.id where b.userid is null");
     $idlistA = $database->loadObjectList();
             check_dberror("Unable to load users.");
@@ -1369,7 +1369,7 @@ function loadSample($database, $option)
 
 	// Load Sample Messages Text
 	$query = "INSERT INTO `#__fb_messages_text` "
-				. "\n VALUES (1, 'Fireboard is fully integrated forum solution for joomla, no bridges, no hacking core files: It can be installed just like any other component with only a few clicks.\r\n\r\nThe administration backend is fully integrated, native ACL implemented, and it has all the capabilities one would have come to expect from a mature, full-fledged forum solution!')";
+				. "\n VALUES (1, 'Kunena is fully integrated forum solution for joomla, no bridges, no hacking core files: It can be installed just like any other component with only a few clicks.\r\n\r\nThe administration backend is fully integrated, native ACL implemented, and it has all the capabilities one would have come to expect from a mature, full-fledged forum solution!')";
 	$database->query() or trigger_dbwarning("Unable to insert sample messages texts.");
 
     mosRedirect("index2.php?option=$option", _FB_SAMPLESUCCESS);
@@ -1846,13 +1846,13 @@ function smileypath()
     global $mainframe, $mosConfig_lang;
 	global $fbConfig;
 
-    if (is_dir($mainframe->getCfg('absolute_path') . '/components/com_fireboard/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/emoticons')) {
-        $smiley_live_path = $mainframe->getCfg('live_site') . '/components/com_fireboard/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/emoticons';
-        $smiley_abs_path = $mainframe->getCfg('absolute_path') . '/components/com_fireboard/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/emoticons';
+    if (is_dir($mainframe->getCfg('absolute_path') . '/components/com_Kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/emoticons')) {
+        $smiley_live_path = $mainframe->getCfg('live_site') . '/components/com_Kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/emoticons';
+        $smiley_abs_path = $mainframe->getCfg('absolute_path') . '/components/com_Kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/emoticons';
     }
     else {
-        $smiley_live_path = $mainframe->getCfg('live_site') . '/components/com_fireboard/template/default/images/'.$mosConfig_lang.'/emoticons';
-        $smiley_abs_path = $mainframe->getCfg('absolute_path') . '/components/com_fireboard/template/default/images/'.$mosConfig_lang.'/emoticons';
+        $smiley_live_path = $mainframe->getCfg('live_site') . '/components/com_Kunena/template/default/images/'.$mosConfig_lang.'/emoticons';
+        $smiley_abs_path = $mainframe->getCfg('absolute_path') . '/components/com_Kunena/template/default/images/'.$mosConfig_lang.'/emoticons';
     }
 
     $smileypath['live'] = $smiley_live_path;
@@ -1926,13 +1926,13 @@ function rankpath()
     global $mainframe, $mosConfig_lang;
 	global $fbConfig;
 
-    if (is_dir($mainframe->getCfg('absolute_path') . '/components/com_fireboard/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/ranks')) {
-        $rank_live_path = $mainframe->getCfg('live_site') . '/components/com_fireboard/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/ranks';
-        $rank_abs_path = $mainframe->getCfg('absolute_path') . '/components/com_fireboard/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/ranks';
+    if (is_dir($mainframe->getCfg('absolute_path') . '/components/com_Kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/ranks')) {
+        $rank_live_path = $mainframe->getCfg('live_site') . '/components/com_Kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/ranks';
+        $rank_abs_path = $mainframe->getCfg('absolute_path') . '/components/com_Kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/ranks';
     }
     else {
-        $rank_live_path = $mainframe->getCfg('live_site') . '/components/com_fireboard/template/default/images/'.$mosConfig_lang.'/ranks';
-        $rank_abs_path = $mainframe->getCfg('absolute_path') . '/components/com_fireboard/template/default/images/'.$mosConfig_lang.'/ranks';
+        $rank_live_path = $mainframe->getCfg('live_site') . '/components/com_Kunena/template/default/images/'.$mosConfig_lang.'/ranks';
+        $rank_abs_path = $mainframe->getCfg('absolute_path') . '/components/com_Kunena/template/default/images/'.$mosConfig_lang.'/ranks';
     }
 
     $rankpath['live'] = $rank_live_path;

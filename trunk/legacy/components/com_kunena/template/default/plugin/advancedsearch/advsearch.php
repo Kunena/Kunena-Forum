@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: advsearch.php 947 2008-08-11 01:56:01Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -80,7 +80,7 @@ $lists['parent'] = JJ_categoryParentList($catid, "", $options);
 ?>
 
 <form action = "index.php" method = "get" id = "searchform" name = "adminForm">
-    <input type = "hidden" name = "option" value = "com_fireboard"/>
+    <input type = "hidden" name = "option" value = "com_Kunena"/>
 
     <input type = "hidden" name = "func" value = "advsearchresult"/>
 
@@ -320,7 +320,7 @@ $lists['parent'] = JJ_categoryParentList($catid, "", $options);
     <div style = "margin-top:6px">
         <input type = "submit" class = "button" value = "Send"/>
 
-        <input type = "reset" class = "button" value = "Cancel" onclick = "window.location='index.php?option=com_fireboard&amp;Itemid=<?php echo $Itemid;?>';"/>
+        <input type = "reset" class = "button" value = "Cancel" onclick = "window.location='index.php?option=com_Kunena&amp;Itemid=<?php echo $Itemid;?>';"/>
     </div>
 
     </td>

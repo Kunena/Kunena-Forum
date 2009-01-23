@@ -1,8 +1,8 @@
 <?PHP
 /**
 * @version $Id: parser.inc.php 944 2008-08-10 20:11:08Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -16,7 +16,7 @@
 # CONTACT: m.dietiker@md-systems.ch        © 2007 Miro Dietiker 13.11.2007 #
 ############################################################################
 # This parser is based on an earlier CMS parser implementation.
-# It has been completely rewritten and generalized for FireBoard and
+# It has been completely rewritten and generalized for Kunena and
 # was also heavily tested.
 # However it should be: extensible, fast, ungreedy regarding resources
 # stateful, enforcing strict output rules as defined

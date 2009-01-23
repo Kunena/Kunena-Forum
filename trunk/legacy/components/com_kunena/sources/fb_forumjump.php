@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fb_forumjump.php 462 2007-12-10 00:05:53Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -27,7 +27,7 @@ $lists['parent'] = JJ_categoryParentList($catid, "", $options);
     <div align = "right" style = "width: 100%;">
         <input type = "hidden" name = "Itemid" value = "<?php echo FB_FB_ITEMID;?>"/>
 
-        <input type = "hidden" name = "option" value = "com_fireboard"/>
+        <input type = "hidden" name = "option" value = "com_Kunena"/>
 
         <input type = "hidden" name = "func" value = "showcat"/>
 

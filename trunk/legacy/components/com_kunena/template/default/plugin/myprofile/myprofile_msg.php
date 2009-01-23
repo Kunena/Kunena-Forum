@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: myprofile_msg.php 947 2008-08-11 01:56:01Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -126,9 +126,9 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 					$item->created = "";
 				}
 
-				$fbURL    = sefRelToAbs("index.php?option=com_fireboard&amp;func=view" . FB_FB_ITEMID_SUFFIX . "&amp;catid=" . $item->catid . "&amp;id=" . $item->id . "#" . $item->id);
+				$fbURL    = sefRelToAbs("index.php?option=com_Kunena&amp;func=view" . FB_FB_ITEMID_SUFFIX . "&amp;catid=" . $item->catid . "&amp;id=" . $item->id . "#" . $item->id);
 
-				$fbCatURL = sefRelToAbs("index.php?option=com_fireboard" . FB_FB_ITEMID_SUFFIX . "&amp;func=showcat&amp;catid=" . $item->catid);
+				$fbCatURL = sefRelToAbs("index.php?option=com_Kunena" . FB_FB_ITEMID_SUFFIX . "&amp;func=showcat&amp;catid=" . $item->catid);
 		?>
 
 			<tr class = "<?php echo ''.$boardclass.''. $tabclass[$k] . ''; ?>">
@@ -190,12 +190,12 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 <?php echo _FB_USRL_DISPLAY_NR; ?>
 
 <?php
-echo $pageNav->writeLimitBox("index.php?option=com_fireboard&amp;func=myprofile&amp;do=showmsg" . FB_FB_ITEMID_SUFFIX . "");
+echo $pageNav->writeLimitBox("index.php?option=com_Kunena&amp;func=myprofile&amp;do=showmsg" . FB_FB_ITEMID_SUFFIX . "");
 ?>
 
 <?php
 // TODO: fxstein - Need to perform SEO cleanup
-echo $pageNav->writePagesLinks("index.php?option=com_fireboard&amp;func=myprofile&amp;do=showmsg" . FB_FB_ITEMID_SUFFIX);
+echo $pageNav->writePagesLinks("index.php?option=com_Kunena&amp;func=myprofile&amp;do=showmsg" . FB_FB_ITEMID_SUFFIX);
 ?>
 
 <br/>

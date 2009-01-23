@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: view.php 1073 2008-10-09 20:10:29Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -867,7 +867,7 @@ if ($letPass || $is_Moderator)
                                 }
                                 else if ($userinfo->gid > 0)
                                 {
-                                    //FireBoard Profile link.
+                                    //Kunena Profile link.
                                     $msg_prflink = sefRelToAbs(JB_LIVEURLREL.'&amp;func=fbprofile&amp;task=showprf&amp;userid=' . $fmessage->userid);
                                     $msg_profile = "<a href=\"" . sefRelToAbs(JB_LIVEURLREL.'&amp;func=fbprofile&amp;task=showprf&amp;userid=' . $fmessage->userid) . "\"> <img src=\"";
 
@@ -1245,7 +1245,7 @@ if ($letPass || $is_Moderator)
 
                                     <?php
                                     // TODO: fxstein - Need to perform SEO cleanup
-                                    echo $pageNav->writePagesLinks("index.php?option=com_fireboard&amp;Itemid=$Itemid&amp;func=view&amp;id=$id&amp;catid=$catid");
+                                    echo $pageNav->writePagesLinks("index.php?option=com_Kunena&amp;Itemid=$Itemid&amp;func=view&amp;id=$id&amp;catid=$catid");
                                     ?>
 
                                     </li>

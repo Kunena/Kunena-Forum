@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: function.tabber.php 462 2007-12-10 00:05:53Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -29,13 +29,13 @@ class my_tabs
         if (!$useCookies) {
             echo("
         <script type='text/javascript'
-        src='$mosConfig_live_site/components/com_fireboard/template/default/plugin/recentposts/tabber.js' >
+        src='$mosConfig_live_site/components/com_Kunena/template/default/plugin/recentposts/tabber.js' >
         </script>");
         }
 
         if ($xhtml) {
             $mainframe->addCustomHeadTag("
-        <link rel='stylesheet' href='$mosConfig_live_site/components/com_fireboard/template/default/plugin/recentposts/tabber.css' type='text/css' />
+        <link rel='stylesheet' href='$mosConfig_live_site/components/com_Kunena/template/default/plugin/recentposts/tabber.css' type='text/css' />
 
         <script type='text/javascript'>
         /* Optional: Temporarily hide the 'tabber' class so it does not 'flash'
@@ -46,7 +46,7 @@ class my_tabs
         }
         else {
             echo("
-        <link rel='stylesheet' href='$mosConfig_live_site/components/com_fireboard/template/default/plugin/recentposts/tabber.css' type='text/css' >
+        <link rel='stylesheet' href='$mosConfig_live_site/components/com_Kunena/template/default/plugin/recentposts/tabber.css' type='text/css' >
 
         <script type='text/javascript'>
         /* Optional: Temporarily hide the 'tabber' class so it does not 'flash'
@@ -134,7 +134,7 @@ class my_tabs
             if ($useCookies) {
                 echo("
         <script type='text/javascript'
-        src='$mosConfig_live_site/components/com_fireboard/template/default/plugin/recentposts/tabber.js' >
+        src='$mosConfig_live_site/components/com_Kunena/template/default/plugin/recentposts/tabber.js' >
         </script>
         ");
             }

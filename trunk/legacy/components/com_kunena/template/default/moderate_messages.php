@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: moderate_messages.php 1029 2008-08-25 15:40:07Z racoon $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com

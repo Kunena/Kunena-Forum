@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fb_converter.class.php 577 2008-01-22 06:22:16Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2008 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -68,7 +68,7 @@ class fb_Converter {
 		}
 		
 		$componentBaseDir	= ;
-		$this->_converterDir = mosPathName( $mosConfig_absolute_path . '/administrator/components/fireboard' ) . '/' . $this->subdir;
+		$this->_converterDir = mosPathName( $mosConfig_absolute_path . '/administrator/components/Kunena' ) . '/' . $this->subdir;
 	
 		//initiate XML doc
 		$xmlDoc = new DOMIT_Lite_Document();

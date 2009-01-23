@@ -1,6 +1,6 @@
 /**
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -8,71 +8,71 @@
 
 /* ======= */
 
-#fireboard td, #fireboard table, #fireboard th, #fireboard div, #fireboard p, #fireboard span {
+#Kunena td, #Kunena table, #Kunena th, #Kunena div, #Kunena p, #Kunena span {
 	font-family:Arial, Helvetica, sans-serif;
 }
-#fireboard .fb_header {
+#Kunena .fb_header {
 	background: #3B3B3B url(images/cat_title_bg.gif) repeat-x top left;
 	height: 30px;
 }
-#fireboard table.fb_blocktable thead tr th {
+#Kunena table.fb_blocktable thead tr th {
 	background: #3B3B3B url(images/cat_title_bg.gif) repeat-x top left;
 	padding: 2px;
 	color:#ffffff;
 	font-weight:normal;
 }
-#fireboard tr.fb_sth { 
+#Kunena tr.fb_sth { 
 	background: #8CABC8 url(images/cat_title_head_bg.gif) repeat-x top left;
 	font-size:11px;
 	font-family:Arial, Helvetica, sans-serif;
 }
-#fireboard th.fb_sectiontableheader {
+#Kunena th.fb_sectiontableheader {
 	padding:3px 5px;
 	color:#FFFFFF;
 	font-weight:normal;
 	font-size:11px;
 	font-family:Arial, Helvetica, sans-serif;
 }
-#fireboard tr.fb_sectiontableentry1 td {
+#Kunena tr.fb_sectiontableentry1 td {
 	background: #F2F1EE;
 	padding:5px;
 	border-bottom:1px solid #BFC3C6;
 	border-left:1px solid #FFFFFF;
 	border-right:1px solid #BFC3C6;
 }
-#fireboard tr.fb_sectiontableentry2 td {
+#Kunena tr.fb_sectiontableentry2 td {
 	padding:5px;
 	border-bottom:1px solid #BFC3C6;
 	border-left:1px solid #FFFFFF;
 	border-right:1px solid #BFC3C6;
 }
-#fireboard tr.fb_sectiontableentry1 td.td-1, #fireboard tr.fb_sectiontableentry2 td.td-1 {
+#Kunena tr.fb_sectiontableentry1 td.td-1, #Kunena tr.fb_sectiontableentry2 td.td-1 {
 	background: #EEEEEE;
 }
-#fireboard tr.fb_sectiontableentry1 td.fb_cc-sectiontableentry1, #fireboard tr.fb_sectiontableentry2 td.fb_cc-sectiontableentry1 {
+#Kunena tr.fb_sectiontableentry1 td.fb_cc-sectiontableentry1, #Kunena tr.fb_sectiontableentry2 td.fb_cc-sectiontableentry1 {
 	background:none;
 }
-#fireboard tr.fb_sectiontableentry1 td.td-0, #fireboard tr.fb_sectiontableentry2 td.td-0 {
+#Kunena tr.fb_sectiontableentry1 td.td-0, #Kunena tr.fb_sectiontableentry2 td.td-0 {
 	border-left:1px solid #BFC3C6;
 	background: #EEEEEE;
 	text-align:center;
 	color:#999999;
 }
-#fireboard td.td-0 strong {
+#Kunena td.td-0 strong {
 	display:block;
 	font-size:26px;
 	font-weight:normal;
 	line-height:21px;
 	margin:5px 0;
 }
-#fireboard .topic_latest_post, #fireboard .topic_date {
+#Kunena .topic_latest_post, #Kunena .topic_date {
 	font-size:10px;
 }
-#fireboard a.fb-topic-title {
+#Kunena a.fb-topic-title {
 	font-weight:bold;
 	font-size:14px;
 }
-#fireboard .topic_latest_post_avatar {
+#Kunena .topic_latest_post_avatar {
 	display:block;
 	height:auto;
 	width:40px;
@@ -81,7 +81,7 @@
 	border:1px solid #CCCCCC;
 	float:left;
 }
-#fireboard img.fb_list_avatar {
+#Kunena img.fb_list_avatar {
 	height:auto;
 	width:40px;
 	border:0px
@@ -89,7 +89,7 @@
 tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg td.td-0 {
 	border-left: 1px solid #BFC3C6;
 }
-#fireboard .topic_sticky {
+#Kunena .topic_sticky {
 	position:absolute;
 	top:-5px;
 	right:0px;
@@ -98,7 +98,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	font-size:10px
 }
 /* MEnu */
-#fireboard #fireboard_top td {
+#Kunena #Kunena_top td {
 	height:35px;
 	background: #FFFFFF;
 	margin:0;
@@ -109,28 +109,28 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	border-bottom-width:3px;
 	border-left-width:0;
 }
-#fireboard #fireboard_top td img.hideshow {
+#Kunena #Kunena_top td img.hideshow {
 	background:#5182A4;
 }
-#fireboard #fb_topmenu {
+#Kunena #fb_topmenu {
 }
-#fireboard #fireboard_tab {
+#Kunena #Kunena_tab {
 	margin:0;
 	top:0;
 }
-#fireboard #fireboard_tab ul {
+#Kunena #Kunena_tab ul {
 	margin:0;
 	padding:0;
 	list-style:none;
 	float:left;
 }
-#fireboard #fireboard_tab li {
+#Kunena #Kunena_tab li {
 	display:inline;
 	float:left;
 	margin:0 1px 0 0;
 	padding:0;
 }
-#fireboard #fireboard_tab a {
+#Kunena #Kunena_tab a {
 	background: url("images/tabmenuright.gif") no-repeat right top;
 	margin:0;
 	padding:0;
@@ -139,7 +139,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	display:block;
 	float:left;
 }
-#fireboard #fireboard_tab a span {
+#Kunena #Kunena_tab a span {
 	display:block;
 	background:url("images/tabmenuleft.gif") no-repeat left top;
 	padding:0 10px 0 10px;
@@ -149,10 +149,10 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	font-weight:bold;
 	line-height:35px;
 }
-#fireboard #fireboard_tab a:hover, #fireboard #fireboard_tab li.fireboard_item_active a {
+#Kunena #Kunena_tab a:hover, #Kunena #Kunena_tab li.Kunena_item_active a {
 	background-position:right bottom;
 }
-#fireboard #fireboard_tab a:hover span, #fireboard #fireboard_tab li.fireboard_item_active a span {
+#Kunena #Kunena_tab a:hover span, #Kunena #Kunena_tab li.Kunena_item_active a span {
 	background-position:left bottom;
 	color:#FFFFFF;
 	font-weight:bold;
@@ -166,14 +166,14 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 
 
 /* B: all disc top */
-#fireboard .fb_list_actions {
+#Kunena .fb_list_actions {
 	border:1px solid #D1D1D1;
 	clear:both;
 	display:table;
 	margin-top:-1px;
 	width:100%;
 }
-#fireboard .fb_list_actions_info {
+#Kunena .fb_list_actions_info {
 	float:left;
 	font-weight:bold;
 	height:28px;
@@ -181,11 +181,11 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	padding-left:15px;
 	padding-right:10px;
 }
-#fireboard .fb_list_actions_info a {
+#Kunena .fb_list_actions_info a {
 	color:#009933;
 	text-decoration:underline;
 }
-#fireboard .fb_list_pages {
+#Kunena .fb_list_pages {
 	border-left:1px solid #D1D1D1;
 	color:#666666;
 	float:right;
@@ -197,7 +197,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	padding-left:10px;
 	padding-right:5px;
 }
-#fireboard .fb_list_times {
+#Kunena .fb_list_times {
 	border-left:1px solid #D1D1D1;
 	color:#666666;
 	height:28px;
@@ -205,20 +205,20 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	padding-left:5px;
 	padding-right:10px;
 }
-#fireboard a.fb_list_pages_link:link, a.fb_list_pages_link:visited {
+#Kunena a.fb_list_pages_link:link, a.fb_list_pages_link:visited {
 	text-decoration:underline;
 }
-#fireboard .fb_list_pages_link {
+#Kunena .fb_list_pages_link {
 	padding:0pt 5px;
 }
-#fireboard .fb_list_actions_info_all {
+#Kunena .fb_list_actions_info_all {
 	font-weight:bold;
 	height:28px;
 	line-height:28px;
 	padding-left:15px;
 	padding-right:10px;
 }
-#fireboard .fb_list_pages_all {
+#Kunena .fb_list_pages_all {
 	border-left:1px solid #D1D1D1;
 	color:#666666;
 	font-family:Arial, Helvetica, sans-serif;
@@ -229,7 +229,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	padding-left:5px;
 	padding-right:30px;
 }
-#fireboard .fb_list_times_all {
+#Kunena .fb_list_times_all {
 	border-left:1px solid #D1D1D1;
 	color:#666666;
 	height:28px;
@@ -237,7 +237,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	padding-left:5px;
 	padding-right:5px;
 }
-#fireboard .fb_list_jump_all {
+#Kunena .fb_list_jump_all {
 	border-left:1px solid #D1D1D1;
 	color:#666666;
 	height:28px;
@@ -245,27 +245,27 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	padding-left:5px;
 	padding-right:10px;
 }
-#fireboard .fb_list_jump_all form {
+#Kunena .fb_list_jump_all form {
 	display:table;
 }
-#fireboard .fb_list_times_all .inputboxusl {
+#Kunena .fb_list_times_all .inputboxusl {
 	font-size:10px;
 	margin:0pt;
 	padding:0pt;
 	width:50px;
 }
-#fireboard .fb_list_jump_all form .inputbox {
+#Kunena .fb_list_jump_all form .inputbox {
 	font-size:10px;
 	margin:0pt;
 	padding:0pt;
 	width:150px;
 }
-#fireboard .fb_list_pages_all table tr td {
+#Kunena .fb_list_pages_all table tr td {
 	height:28px;
 	line-height:28px;
 	white-space:nowrap;
 }
-#fireboard td.fb_list_jump_all input.fbjumpgo {
+#Kunena td.fb_list_jump_all input.fbjumpgo {
 	display:none;
 }
 /* F: all disc top */
@@ -273,39 +273,39 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 /* ======= */
 
 
-#fireboard a {
+#Kunena a {
 	text-decoration:none;
 	font-weight:normal;
 }
-#fireboard a:link, #fireboard a:visited {
+#Kunena a:link, #Kunena a:visited {
 	color:#006699;
 }
-#fireboard a:hover {
+#Kunena a:hover {
 	color: #FF0000;
 }
-#fireboard .fbxs {
+#Kunena .fbxs {
 	font-size: 8px;
 }
-#fireboard .fbs {
+#Kunena .fbs {
 	font-size: 10px;
 }
-#fireboard .fbm {
+#Kunena .fbm {
 	font-size: 11px;
 }
-#fireboard .fbl {
+#Kunena .fbl {
 	font-size: 14px;
 }
-#fireboard .fbxl {
+#Kunena .fbxl {
 	font-size: 18px;
 }
-#fireboard .fbxxl {
+#Kunena .fbxxl {
 	font-size: 28px;
 }
 /* HEADER
 ----------------------------------------------------------------------------------------------- */
-/* #fireboard .fb_header {background: #555555;height: 30px; }
+/* #Kunena .fb_header {background: #555555;height: 30px; }
 */
-#fireboard .fb_header_th_1 {
+#Kunena .fb_header_th_1 {
 	padding:5px;
 }
 td.fb_profileboxcnt {
@@ -313,9 +313,9 @@ td.fb_profileboxcnt {
 }
 /* TOPMENU
 ----------------------------------------------------------------------------------------------- */
-#fireboard .fb_header div#fb_topmenu {
+#Kunena .fb_header div#fb_topmenu {
 } /* topmenu div */
-#fireboard .fb_header div#fb_topmenu a {
+#Kunena .fb_header div#fb_topmenu a {
 	color: #FFFFFF;
 	padding: 0 8px;
 	display: block;
@@ -323,7 +323,7 @@ td.fb_profileboxcnt {
 	font-weight: bold;
 	float: left;
 } /* topmenu link items */
-#fireboard .fb_header div#fb_topmenu a:hover {
+#Kunena .fb_header div#fb_topmenu a:hover {
 	color: #BFC3C6;
 }
 /* SEARCHBOX
@@ -353,7 +353,7 @@ td.fb_profileboxcnt {
 }
 /* CATEGORY LIST
 ----------------------------------------------------------------------------------------------- */
-#fireboard table.fb_blocktable {
+#Kunena table.fb_blocktable {
 	width:  100%;
 	margin: 5px 0;
 	border-style:solid;
@@ -361,9 +361,9 @@ td.fb_profileboxcnt {
 	border-width:0px 0px 4px 0px;
 	text-align:left;
 }
-/* #fireboard table.fb_blocktable thead tr th { background: #555555; padding: 2px; color:#ffffff; font-weight:normal; }
+/* #Kunena table.fb_blocktable thead tr th { background: #555555; padding: 2px; color:#ffffff; font-weight:normal; }
 */
-#fireboard div.fb_title_cover {
+#Kunena div.fb_title_cover {
 	float:left;
 	text-align:left;
 	color:#FFFFFF;
@@ -371,14 +371,14 @@ td.fb_profileboxcnt {
 	line-height:normal;
 	padding:2px;
 }
-#fireboard a.fb_title, #fireboard .fb_title {
+#Kunena a.fb_title, #Kunena .fb_title {
 	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-weight:bold;
 	display:block;
 	color:#FFFFFF;
 	text-decoration: none;
 }
-#fireboard img.hideshow {
+#Kunena img.hideshow {
 	float:right;
 	margin:0;
 	padding:0;
@@ -387,35 +387,35 @@ td.fb_profileboxcnt {
 	z-index: 1;
 }
 /*
-#fireboard tr.fb_sth {background: #BFC3C6;font-weight: bold;font-family: Tahoma, Arial, Helvetica, sans-serif;}
+#Kunena tr.fb_sth {background: #BFC3C6;font-weight: bold;font-family: Tahoma, Arial, Helvetica, sans-serif;}
 */
 th.fb_sectiontableheader {
 }
 /*
-#fireboard tr.fb_sectiontableentry1 td {background: #EEEEEE; padding:5px; border-bottom:1px solid #BFC3C6;border-left:1px solid #FFFFFF;border-right:1px solid #BFC3C6;}
+#Kunena tr.fb_sectiontableentry1 td {background: #EEEEEE; padding:5px; border-bottom:1px solid #BFC3C6;border-left:1px solid #FFFFFF;border-right:1px solid #BFC3C6;}
 */
-#fireboard tr.fb_sectiontableentry1 td.td-1 {
+#Kunena tr.fb_sectiontableentry1 td.td-1 {
 	border-left:1px solid #BFC3C6;
 }
 /*
-#fireboard tr.fb_sectiontableentry2 td {background: #F7F7F7; padding:5px; border-bottom:1px solid #BFC3C6;border-left:1px solid #FFFFFF;border-right:1px solid #BFC3C6;}
+#Kunena tr.fb_sectiontableentry2 td {background: #F7F7F7; padding:5px; border-bottom:1px solid #BFC3C6;border-left:1px solid #FFFFFF;border-right:1px solid #BFC3C6;}
 */
-#fireboard tr.fb_sectiontableentry2 td.td-1 {
+#Kunena tr.fb_sectiontableentry2 td.td-1 {
 	border-left:1px solid #BFC3C6;
 }
-#fireboard div.fb_thead-title a {
+#Kunena div.fb_thead-title a {
 	font-weight:     bold;
 }
 div.fb_thead-desc {
 }
-#fireboard div.fb_thead-child {
+#Kunena div.fb_thead-child {
 	border-top: 1px dotted #D4C9AD;
 	margin-top: 4px;
 }
-#fireboard table.fb_cc-table tr td {
+#Kunena table.fb_cc-table tr td {
 	border: 0px solid #FFFFFF;
 }
-#fireboard div.fb_cc-childcat-title {
+#Kunena div.fb_cc-childcat-title {
 	width: 90px;
 	float:left;
 }
@@ -427,7 +427,7 @@ tr.fb_cc-sectiontableentry2 {
 }
 span.fb_childcount {
 }
-#fireboard div.fb_latest-subject a {
+#Kunena div.fb_latest-subject a {
 	font-weight:     bold;
 }
 div.fb_latest-subject-by {
@@ -441,14 +441,14 @@ span.newchar {
 /* SHOW CATEGORY 
 ----------------------------------------------------------------------------------------------- */
 /*
-#fireboard  a.fb-topic-title { font-weight:bold;}
+#Kunena  a.fb-topic-title { font-weight:bold;}
 */
-#fireboard img.stickyicon, #fireboard img.attachicon {
+#Kunena img.stickyicon, #Kunena img.attachicon {
 	float:  right;
 	border: 0;
 	margin: 2px;
 }
-#fireboard img.catavatar {
+#Kunena img.catavatar {
 	width:  20px;
 	height: 20px;
 	margin-left: 4px;
@@ -674,7 +674,7 @@ span.fb_quote {
 	font-style: italic;
 	background: #F7F7F7;
 }
-#fireboard div.fbhide {
+#Kunena div.fbhide {
 	background:#FFF8F2 url(images/bullet-tips.gif) no-repeat scroll 5px center;
 	border:1px dotted #F2CAB7;
 	font-size:12px;
@@ -1027,12 +1027,12 @@ MY PROFILE
 }
 /* RECENT POSTS
 ----------------------------------------------------------------------------------------------- */
-#fireboard a.fbrecent {
+#Kunena a.fbrecent {
 	font-weight:bold;
 }
 /* WHOIS ONLINE 
 ----------------------------------------------------------------------------------------------- */
-#fireboard .fbgrouplist {
+#Kunena .fbgrouplist {
 	padding:5px;
 }
 /* FOOTER

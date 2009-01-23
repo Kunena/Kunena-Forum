@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fb_permissions.php 688 2008-06-17 03:10:29Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com

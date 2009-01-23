@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: smile.class.php 1013 2008-08-15 06:46:43Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -19,7 +19,7 @@ defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 // ################################################################
 
 include_once(JB_ABSSOURCESPATH."parser.inc.php");
-include_once(JB_ABSSOURCESPATH."interpreter.fireboard.inc.php");
+include_once(JB_ABSSOURCESPATH."interpreter.Kunena.inc.php");
 
 class smile
 {
@@ -56,7 +56,7 @@ class smile
 
         //implement the new parser
         $parser = new TagParser();
-        $interpreter = new FireBoardBBCodeInterpreter($parser);
+        $interpreter = new KunenaBBCodeInterpreter($parser);
         $task = $interpreter->NewTask();
         $task->SetText($fb_message_txt);
         $task->dry = FALSE;
@@ -222,7 +222,7 @@ class smile
      */
     function fbWriteTextarea($areaname, $html, $width, $height, $useRte, $emoticons)
     {
-        // well $html is the $message to edit, generally it means in PLAINTEXT @FireBoard!
+        // well $html is the $message to edit, generally it means in PLAINTEXT @Kunena!
         global $editmode;
         // ERROR: mixed global $editmode
         global $fbConfig;

@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fb_cpanel.php 526 2007-12-20 00:35:37Z miro_dietiker $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -106,46 +106,46 @@ table.fbstat .col2 {
     <tr class = "thisform">
       <td width = "100%" valign = "top" class = "thisform"><div id = "cpanel">
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_fireboard&amp;task=showconfig" style = "text-decoration:none;" title = "<?php echo _COM_C_FBCONFIGDESC;?>"> <img src = "components/com_fireboard/images/fbconfig.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_FBCONFIG; ?> </span></a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_Kunena&amp;task=showconfig" style = "text-decoration:none;" title = "<?php echo _COM_C_FBCONFIGDESC;?>"> <img src = "components/com_Kunena/images/fbconfig.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_FBCONFIG; ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_fireboard&amp;task=showAdministration" style = "text-decoration:none;" title = "<?php echo _COM_C_FORUMDESC;?>"> <img src = "components/com_fireboard/images/fbforumadm.png" align = "middle" border = "0"/> <span> <?php echo _COM_C_FORUM; ?> </span></a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_Kunena&amp;task=showAdministration" style = "text-decoration:none;" title = "<?php echo _COM_C_FORUMDESC;?>"> <img src = "components/com_Kunena/images/fbforumadm.png" align = "middle" border = "0"/> <span> <?php echo _COM_C_FORUM; ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_fireboard&amp;task=showprofiles" style = "text-decoration:none;" title = "<?php echo _COM_C_USERDESC;?>"> <img src = "components/com_fireboard/images/fbuser.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_USER; ?> </span> </a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_Kunena&amp;task=showprofiles" style = "text-decoration:none;" title = "<?php echo _COM_C_USERDESC;?>"> <img src = "components/com_Kunena/images/fbuser.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_USER; ?> </span> </a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_fireboard&amp;task=browseFiles" style = "text-decoration:none;" title = "<?php echo _COM_C_FILESDESC;?>"> <img src = "components/com_fireboard/images/fbfiles.png" align = "middle" border = "0"/> <span> <?php echo _COM_C_FILES; ?> </span></a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_Kunena&amp;task=browseFiles" style = "text-decoration:none;" title = "<?php echo _COM_C_FILESDESC;?>"> <img src = "components/com_Kunena/images/fbfiles.png" align = "middle" border = "0"/> <span> <?php echo _COM_C_FILES; ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_fireboard&amp;task=browseImages" style = "text-decoration:none;" title = "<?php echo _COM_C_IMAGESDESC;?>"> <img src = "components/com_fireboard/images/fbimages.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_IMAGES; ?> </span></a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_Kunena&amp;task=browseImages" style = "text-decoration:none;" title = "<?php echo _COM_C_IMAGESDESC;?>"> <img src = "components/com_Kunena/images/fbimages.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_IMAGES; ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_fireboard&amp;task=showCss" style = "text-decoration:none;" title = "<?php echo _COM_C_CSSDESC;?>"> <img src = "components/com_fireboard/images/fbcss.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_CSS; ?> </span></a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_Kunena&amp;task=showCss" style = "text-decoration:none;" title = "<?php echo _COM_C_CSSDESC;?>"> <img src = "components/com_Kunena/images/fbcss.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_CSS; ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_fireboard&amp;task=pruneforum" style = "text-decoration:none;" title = "<?php echo _COM_C_PRUNETABDESC;?>"> <img src = "components/com_fireboard/images/fbtable.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_PRUNETAB; ?> </a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_Kunena&amp;task=pruneforum" style = "text-decoration:none;" title = "<?php echo _COM_C_PRUNETABDESC;?>"> <img src = "components/com_Kunena/images/fbtable.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_PRUNETAB; ?> </a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_fireboard&amp;task=syncusers" style = "text-decoration:none;" title = "<?php echo _COM_C_SYNCEUSERSDESC;?>"> <img src = "components/com_fireboard/images/fbusers.png"  align = "middle" border = "0"/> <span> <?php echo _FB_SYNC_USERS; ?> </a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_Kunena&amp;task=syncusers" style = "text-decoration:none;" title = "<?php echo _COM_C_SYNCEUSERSDESC;?>"> <img src = "components/com_Kunena/images/fbusers.png"  align = "middle" border = "0"/> <span> <?php echo _FB_SYNC_USERS; ?> </a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "http://www.bestofjoomla.com" target = "_blank" style = "text-decoration:none;" title = "<?php echo _COM_C_SUPPORTDESC;?>"> <img src = "components/com_fireboard/images/fbtechsupport.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_SUPPORT; ?> </span></a> </div>
+            <div class = "icon"> <a href = "http://www.bestofjoomla.com" target = "_blank" style = "text-decoration:none;" title = "<?php echo _COM_C_SUPPORTDESC;?>"> <img src = "components/com_Kunena/images/fbtechsupport.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_SUPPORT; ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_fireboard&amp;task=loadSample" style = "text-decoration:none;" title = "<?php echo _COM_C_LOADSAMPLEDESC;?>"> <img src = "components/com_fireboard/images/fbloadsample.png" align = "middle" border = "0"/> <span> <?php echo _COM_C_LOADSAMPLE; ?> </a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_Kunena&amp;task=loadSample" style = "text-decoration:none;" title = "<?php echo _COM_C_LOADSAMPLEDESC;?>"> <img src = "components/com_Kunena/images/fbloadsample.png" align = "middle" border = "0"/> <span> <?php echo _COM_C_LOADSAMPLE; ?> </a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_fireboard&amp;task=removeSample" style = "text-decoration:none;" title = "<?php echo _COM_C_REMOVESAMPLEDESC;?>"> <img src = "components/com_fireboard/images/fbremovesample.png" align = "middle" border = "0"/  onclick="return confirm('<?php echo _FB_CONFIRM_REMOVESAMPLEDATA?>');"> <span> <?php echo _COM_C_REMOVESAMPLE; ?> </a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_Kunena&amp;task=removeSample" style = "text-decoration:none;" title = "<?php echo _COM_C_REMOVESAMPLEDESC;?>"> <img src = "components/com_Kunena/images/fbremovesample.png" align = "middle" border = "0"/  onclick="return confirm('<?php echo _FB_CONFIRM_REMOVESAMPLEDATA?>');"> <span> <?php echo _COM_C_REMOVESAMPLE; ?> </a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_fireboard&amp;task=showsmilies" style = "text-decoration:none;" title = "<?php echo _FB_EMOTICONS_EDIT_SMILIES;?>"> <img src = "components/com_fireboard/images/fbsmiley.png"  align = "middle" border = "0"/> <span> <?php echo _FB_EMOTICONS_EDIT_SMILIES;?> </a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_Kunena&amp;task=showsmilies" style = "text-decoration:none;" title = "<?php echo _FB_EMOTICONS_EDIT_SMILIES;?>"> <img src = "components/com_Kunena/images/fbsmiley.png"  align = "middle" border = "0"/> <span> <?php echo _FB_EMOTICONS_EDIT_SMILIES;?> </a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index3.php?option=com_fireboard&amp;task=recount&no_html=1" style = "text-decoration:none;" title = "<?php echo _FB_RECOUNTFORUMS;?>"> <img src = "components/com_fireboard/images/fbupgrade.png" align = "middle" border = "0"/> <span> <?php echo _FB_RECOUNTFORUMS; ?> </a> </div>
+            <div class = "icon"> <a href = "index3.php?option=com_Kunena&amp;task=recount&no_html=1" style = "text-decoration:none;" title = "<?php echo _FB_RECOUNTFORUMS;?>"> <img src = "components/com_Kunena/images/fbupgrade.png" align = "middle" border = "0"/> <span> <?php echo _FB_RECOUNTFORUMS; ?> </a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_fireboard&amp;task=ranks" style = "text-decoration:none;" title = "<?php echo _FB_RANKS_MANAGE;?>"> <img src = "components/com_fireboard/images/fbranks.png"  align = "middle" border = "0"/> <span> <?php echo _FB_RANKS_MANAGE; ?> </a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_Kunena&amp;task=ranks" style = "text-decoration:none;" title = "<?php echo _FB_RANKS_MANAGE;?>"> <img src = "components/com_Kunena/images/fbranks.png"  align = "middle" border = "0"/> <span> <?php echo _FB_RANKS_MANAGE; ?> </a> </div>
           </div>
         </div></td>
     </tr>
@@ -155,7 +155,7 @@ table.fbstat .col2 {
 <div class="fbstatscover">
   <?php 
    
-   include_once ($mainframe->getCfg("absolute_path") .'/administrator/components/com_fireboard/stats.class.php');
+   include_once ($mainframe->getCfg("absolute_path") .'/administrator/components/com_Kunena/stats.class.php');
     ?>
   <table cellspacing="1"  border="0" width="100%" class="fbstat">
     <caption>

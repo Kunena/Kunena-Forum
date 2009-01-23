@@ -1,8 +1,8 @@
 <?php
 /**
-* @version $Id: class.fireboard.php 1079 2008-10-27 05:50:14Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* @version $Id: class.Kunena.php 1079 2008-10-27 05:50:14Z fxstein $
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -15,14 +15,14 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 *@desc Getting the correct Itemids, for components required
 */
 
-//Fireboard
+//Kunena
 $Itemid = intval(mosGetParam($_REQUEST, 'Itemid'));
 
 //check if we have all the itemid sets. if so, then no need for DB call
 
 global $fbConfig;
 if (!defined("FB_FB_ITEMID")) {
-        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_fireboard' AND published = 1");
+        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_Kunena' AND published = 1");
         $Itemid = $database->loadResult();
 
         if ($Itemid < 1) {
@@ -76,8 +76,8 @@ if (!defined("FB_FB_ITEMID")) {
         define("FB_PROFILE_LINK_SUFFIX", "index.php?option=com_mypms&amp;task=showprofile&amp;Itemid=" . FB_CPM_ITEMID . "&amp;user=");
         }
     else {
-        $profilelink = 'index.php?option=com_fireboard&amp;func=fbprofile&amp;task=showprf&amp;userid=';
-        define("FB_PROFILE_LINK_SUFFIX", "index.php?option=com_fireboard&amp;func=fbprofile&amp;task=showprf&amp;Itemid=" . FB_FB_ITEMID . "&amp;userid=");
+        $profilelink = 'index.php?option=com_Kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=';
+        define("FB_PROFILE_LINK_SUFFIX", "index.php?option=com_Kunena&amp;func=fbprofile&amp;task=showprf&amp;Itemid=" . FB_FB_ITEMID . "&amp;userid=");
         }
     }
 
@@ -95,24 +95,24 @@ define('JB_JABSPATH', $mainframe->getCfg('absolute_path'));
 // Joomla absolute path
 define('JB_JLIVEURL', $mainframe->getCfg('live_site'));
 
-// fireboard live url
-define('JB_LIVEURL', JB_JLIVEURL . '/index.php?option=com_fireboard' . FB_FB_ITEMID_SUFFIX);
-define('JB_CLEANLIVEURL', JB_JLIVEURL . '/index2.php?option=com_fireboard&amp;no_html=1' . FB_FB_ITEMID_SUFFIX);
-define('JB_LIVEURLREL', 'index.php?option=com_fireboard' . FB_FB_ITEMID_SUFFIX);
-define('JB_ABSPATH', JB_JABSPATH . '/components/com_fireboard');
+// Kunena live url
+define('JB_LIVEURL', JB_JLIVEURL . '/index.php?option=com_Kunena' . FB_FB_ITEMID_SUFFIX);
+define('JB_CLEANLIVEURL', JB_JLIVEURL . '/index2.php?option=com_Kunena&amp;no_html=1' . FB_FB_ITEMID_SUFFIX);
+define('JB_LIVEURLREL', 'index.php?option=com_Kunena' . FB_FB_ITEMID_SUFFIX);
+define('JB_ABSPATH', JB_JABSPATH . '/components/com_Kunena');
 
-// fireboard absolute path
+// Kunena absolute path
 define('JB_ABSSOURCESPATH', JB_ABSPATH . '/sources/');
 
-// fireboard souces absolute path
-define('JB_DIRECTURL', JB_JLIVEURL . '/components/com_fireboard');
+// Kunena souces absolute path
+define('JB_DIRECTURL', JB_JLIVEURL . '/components/com_Kunena');
 
-// fireboard direct url
+// Kunena direct url
 define('JB_URLSOURCESPATH', JB_DIRECTURL . '/sources/');
 
-// fireboard sources url
+// Kunena sources url
 define('JB_LANG', $mainframe->getCfg('lang'));
-define('JB_ABSADMPATH', JB_JABSPATH . '/administrator/components/com_fireboard');
+define('JB_ABSADMPATH', JB_JABSPATH . '/administrator/components/com_Kunena');
 
 if (!defined("JB_JCSSURL")) {
     $database->setQuery("SELECT template FROM #__templates_menu where client_id ='0'");
@@ -120,7 +120,7 @@ if (!defined("JB_JCSSURL")) {
     define('JB_JCSSURL', JB_JLIVEURL . '/templates/' . $current_stylesheet . '/css/template_css.css');
     }
 
-// fireboard uploaded files directory
+// Kunena uploaded files directory
 define('FB_ABSUPLOADEDPATH', JB_JABSPATH . '/images/fbfiles');
 define('FB_LIVEUPLOADEDPATH', JB_JLIVEURL . '/images/fbfiles');
 
@@ -165,7 +165,7 @@ define('JB_ABSGRAPHPATH', JB_ABSIMAGESPATH . 'graph/');
 define('JB_ABSRANKSPATH', JB_ABSIMAGESPATH . 'ranks/');
 
 // absolute ranks path
-define('JB_ABSCATIMAGESPATH', FB_ABSUPLOADEDPATH . '/' . $fbConfig->catimagepath); // fireboard category images absolute path
+define('JB_ABSCATIMAGESPATH', FB_ABSUPLOADEDPATH . '/' . $fbConfig->catimagepath); // Kunena category images absolute path
 
 define('JB_TMPLTURL', JB_DIRECTURL . '/template/' . $fb_cur_template);
 define('JB_TMPLTMAINIMGURL', JB_DIRECTURL . '/template/' . $fb_cur_img_template);
@@ -193,7 +193,7 @@ define('JB_URLGRAPHPATH', JB_URLIMAGESPATH . 'graph/');
 define('JB_URLRANKSPATH', JB_URLIMAGESPATH . 'ranks/');
 
 // url ranks path
-define('JB_URLCATIMAGES', FB_LIVEUPLOADEDPATH . '/' . $fbConfig->catimagepath); // fireboard category images direct url
+define('JB_URLCATIMAGES', FB_LIVEUPLOADEDPATH . '/' . $fbConfig->catimagepath); // Kunena category images direct url
 
 if (file_exists(JB_ABSTMPLTPATH . '/js/jquery-latest.pack.js')) {
     define('JB_JQURL', JB_DIRECTURL . '/template/' . $fb_cur_template . '/js/jquery-latest.pack.js');

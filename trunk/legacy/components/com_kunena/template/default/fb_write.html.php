@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fb_write.html.php 1029 2008-08-25 15:40:07Z racoon $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -273,7 +273,7 @@ include_once(JB_ABSSOURCESPATH . 'fb_bb.js.php');
         <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
             <td class = "fb_leftcolumn">&nbsp;<strong><?php echo _FB_CAPDESC; ?></strong>&nbsp;</td>
             <td align="left" valign="middle" height="35px">&nbsp;<input name="txtNumber" type="text" id="txtNumber" value="" class="button" style="vertical-align:top" size="15">
-			<img src="index2.php?option=com_fireboard&func=showcaptcha" alt="" />
+			<img src="index2.php?option=com_Kunena&func=showcaptcha" alt="" />
 		 </td>
          </tr>
         <?php

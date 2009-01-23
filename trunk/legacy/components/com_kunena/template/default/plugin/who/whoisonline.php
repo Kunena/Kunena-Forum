@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: whoisonline.php 1064 2008-10-05 23:29:35Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -23,7 +23,7 @@ if ($fbConfig->showwhoisonline > 0)
 ?>
 <!-- WHOIS ONLINE -->
 <?php
-    $whoislink = sefRelToAbs('index.php?option=com_fireboard&amp;func=who');
+    $whoislink = sefRelToAbs('index.php?option=com_Kunena&amp;func=who');
     $fb_queryName = $fbConfig->username ? "username" : "name";
     $query
         = "SELECT w.userip, w.time, w.what, u.$fb_queryName AS username, u.id, k.moderator, k.showOnline "

@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: stats.php 895 2008-08-03 06:15:11Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -17,7 +17,7 @@
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
-$forumurl = 'index.php?option=com_fireboard';
+$forumurl = 'index.php?option=com_Kunena';
 $userlist = 'index.php?option=com_comprofiler&amp;task=usersList';
 
 
@@ -28,7 +28,7 @@ else if ($fbConfig->fb_profile == "clexuspm") {
 $profilelink = 'index.php?option=com_mypms&amp;task=showprofile&amp;user=';
 }
 else {
-$profilelink = 'index.php?option=com_fireboard&amp;func=fbprofile&amp;task=showprf&amp;userid=';
+$profilelink = 'index.php?option=com_Kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=';
 }
 
 

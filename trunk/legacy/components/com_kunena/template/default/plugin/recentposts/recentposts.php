@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: recentposts.php 947 2008-08-11 01:56:01Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -18,27 +18,27 @@ defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 global $mosConfig_absolute_path, $mosConfig_lang, $mosConfig_live_site, $mainframe;
 global $fbConfig;
 
-$fireboard_adm_path = "$mosConfig_absolute_path/administrator/components/com_fireboard";
+$Kunena_adm_path = "$mosConfig_absolute_path/administrator/components/com_Kunena";
 //Get right Language file
-$fireboard_language_file = "$fireboard_adm_path/language/$mosConfig_lang.php";
+$Kunena_language_file = "$Kunena_adm_path/language/$mosConfig_lang.php";
 
-if (file_exists($fireboard_language_file)) {
-    require_once($fireboard_language_file);
+if (file_exists($Kunena_language_file)) {
+    require_once($Kunena_language_file);
     }
 else {
-    $fireboard_language_file = "$fireboard_adm_path/language/english.php";
+    $Kunena_language_file = "$Kunena_adm_path/language/english.php";
 
-    if (file_exists($fireboard_language_file)) {
-        require_once($fireboard_language_file);
+    if (file_exists($Kunena_language_file)) {
+        require_once($Kunena_language_file);
         }
     }
 
 //Tabber check
 //
-$source_file = "$mosConfig_absolute_path/components/com_fireboard/template/default/plugin/recentposts/tabber.css";
-$source_file = "$mosConfig_absolute_path/components/com_fireboard/template/default/plugin/recentposts/tabber.js";
-$source_file = "$mosConfig_absolute_path/components/com_fireboard/template/default/plugin/recentposts/tabber-minimized.js";
-$source_file = "$mosConfig_absolute_path/components/com_fireboard/template/default/plugin/recentposts/function.tabber.php";
+$source_file = "$mosConfig_absolute_path/components/com_Kunena/template/default/plugin/recentposts/tabber.css";
+$source_file = "$mosConfig_absolute_path/components/com_Kunena/template/default/plugin/recentposts/tabber.js";
+$source_file = "$mosConfig_absolute_path/components/com_Kunena/template/default/plugin/recentposts/tabber-minimized.js";
+$source_file = "$mosConfig_absolute_path/components/com_Kunena/template/default/plugin/recentposts/function.tabber.php";
 //
 $category = trim($fbConfig->latestcategory); // 2,3,4
 $count = $fbConfig->latestcount;
@@ -114,7 +114,7 @@ $topic_emoticons[7] = JB_URLEMOTIONSPATH . 'smile.gif';
                 $numitems = count($rows);
 
                 if ($numitems > $count_per_page) {
-                    include_once("$mosConfig_absolute_path/components/com_fireboard/template/default/plugin/recentposts/function.tabber.php");
+                    include_once("$mosConfig_absolute_path/components/com_Kunena/template/default/plugin/recentposts/function.tabber.php");
                     $tabs = new my_tabs(1, 1);
                     $tabs->my_pane_start('mod_fb_last_subjects-pane');
                     $tabs->my_tab_start(1, 1);

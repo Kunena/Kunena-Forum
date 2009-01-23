@@ -1,8 +1,8 @@
 /*<![CDATA[*/
 /**
 * @version $Id: bojForumCore.js 1061 2008-10-05 20:37:53Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -92,7 +92,7 @@ function fbGetPreview(content, sitemid) {
     var content = encodeURIComponent(content);
     
     jQuery.ajax({url:"index2.php",
-    data : { msgpreview : content, Itemid : sitemid , option: "com_fireboard" , func: "getpreview" , no_html: 1},
+    data : { msgpreview : content, Itemid : sitemid , option: "com_Kunena" , func: "getpreview" , no_html: 1},
     type: "POST",
     beforeSend : function (req){
         jQuery('#previewContainer').show();

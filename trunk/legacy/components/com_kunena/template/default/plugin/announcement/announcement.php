@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: announcement.php 947 2008-08-11 01:56:01Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -30,11 +30,11 @@ else {
 
 $is_user = (strtolower($my->usertype) <> '');
 
-$showlink = sefRelToAbs('index.php?option=com_fireboard&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=show');
-$addlink = sefRelToAbs('index.php?option=com_fireboard&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=add');
-$readlink = 'index.php?option=com_fireboard&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=read&amp;id=';
-$editlink = 'index.php?option=com_fireboard&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=edit&amp;id=';
-$deletelink = 'index.php?option=com_fireboard&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=delete&amp;id=';
+$showlink = sefRelToAbs('index.php?option=com_Kunena&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=show');
+$addlink = sefRelToAbs('index.php?option=com_Kunena&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=add');
+$readlink = 'index.php?option=com_Kunena&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=read&amp;id=';
+$editlink = 'index.php?option=com_Kunena&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=edit&amp;id=';
+$deletelink = 'index.php?option=com_Kunena&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=delete&amp;id=';
 
 // BEGIN: READ ANN
 if ($do == "read") {
@@ -115,8 +115,8 @@ if ($is_editor) {
         <?php
     // BEGIN: SHOW ANN
     if ($do == "show") {
-        $deletelink = 'index.php?option=com_fireboard&amp;func=announcement&amp;do=delete&amp;id=';
-        $editlink = 'index.php?option=com_fireboard&amp;func=announcement&amp;do=edit&amp;id=';
+        $deletelink = 'index.php?option=com_Kunena&amp;func=announcement&amp;do=delete&amp;id=';
+        $editlink = 'index.php?option=com_Kunena&amp;func=announcement&amp;do=edit&amp;id=';
         ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">

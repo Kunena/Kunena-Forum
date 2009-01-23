@@ -202,7 +202,7 @@ Kunena 1.0.3
  + Adding Missus Support
  + Adding JIM Support
  ^ Polished some GUI classes in the administration
- + Added new definitions in english.php
+ + Added new definitions in kunena.english.php
  + Added language variables to admin.Kunena.html.php
  - Removal of all hardcoded strings from admin.Kunena.html.php
 

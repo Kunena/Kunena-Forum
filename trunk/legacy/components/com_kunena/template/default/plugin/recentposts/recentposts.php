@@ -20,13 +20,13 @@ global $fbConfig;
 
 $Kunena_adm_path = "$mosConfig_absolute_path/administrator/components/com_kunena";
 //Get right Language file
-$Kunena_language_file = "$Kunena_adm_path/language/$mosConfig_lang.php";
+$Kunena_language_file = "$Kunena_adm_path/language/kunena.$mosConfig_lang.php";
 
 if (file_exists($Kunena_language_file)) {
     require_once($Kunena_language_file);
     }
 else {
-    $Kunena_language_file = "$Kunena_adm_path/language/english.php";
+    $Kunena_language_file = "$Kunena_adm_path/language/kunena.english.php";
 
     if (file_exists($Kunena_language_file)) {
         require_once($Kunena_language_file);

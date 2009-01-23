@@ -859,7 +859,7 @@ DEFINE('_FORUM_SEARCHRESULTS', 'displaying %s out of %s results.');
 DEFINE('_COM_FORUM_HELP', 'FAQ');
 // rules.php
 DEFINE('_COM_FORUM_RULES', 'Rules');
-DEFINE('_COM_FORUM_RULES_DESC', '<ul><li>Edit this file to insert your rules joomlaroot/administrator/components/com_kunena/language/english.php</li><li>Rule 2</li><li>Rule 3</li><li>Rule 4</li><li>...</li></ul>');
+DEFINE('_COM_FORUM_RULES_DESC', '<ul><li>Edit this file to insert your rules joomlaroot/administrator/components/com_kunena/language/kunena.english.php</li><li>Rule 2</li><li>Rule 3</li><li>Rule 4</li><li>...</li></ul>');
 //smile.class.php
 DEFINE('_COM_BOARDCODE', 'Boardcode');
 // moderate_messages.php

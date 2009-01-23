@@ -79,11 +79,11 @@ require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/sour
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/class.Kunena.php");
 
 // get right Language file
-if (file_exists(JB_ABSADMPATH . '/language/' . JB_LANG . '.php')) {
-    include_once (JB_ABSADMPATH . '/language/' . JB_LANG . '.php');
+if (file_exists(JB_ABSADMPATH . '/language/kunena.' . JB_LANG . '.php')) {
+    include_once (JB_ABSADMPATH . '/language/kunena.' . JB_LANG . '.php');
     }
 else {
-    include_once (JB_ABSADMPATH . '/language/english.php');
+    include_once (JB_ABSADMPATH . '/language/kunena.english.php');
     }
 
 // Include Clexus PM class file

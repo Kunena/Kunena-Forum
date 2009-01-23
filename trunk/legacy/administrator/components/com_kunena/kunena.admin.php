@@ -31,11 +31,11 @@ require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/clas
 require_once ($mainframe->getPath('admin_html'));
 
 //Get right Language file
-if (file_exists($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/' . $mainframe->getCfg('lang') . '.php')) {
-    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/' . $mainframe->getCfg('lang') . '.php');
+if (file_exists($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena' . $mainframe->getCfg('lang') . '.php')) {
+    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena' . $mainframe->getCfg('lang') . '.php');
 }
 else {
-    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/english.php');
+    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.english.php');
 }
 
 $cid = mosGetParam($_REQUEST, 'cid', array ( 0 ));
@@ -62,7 +62,7 @@ $pt_stop = "0";
 
 if (!$no_html)
 {
-	HTML_SIMPLEBOARD::showFbHeader();
+	html_Kunena::showFbHeader();
 }
 
 switch ($task)
@@ -316,11 +316,11 @@ switch ($task)
 
     case 'cpanel':
     default:
-        HTML_Simpleboard::controlPanel();
+        html_Kunena::controlPanel();
         break;
 }
 
-HTML_SIMPLEBOARD::showFbFooter();
+html_Kunena::showFbFooter();
 //function showAdministration( $option,$joomla1_5 ) {
 function showAdministration($option)
 {
@@ -369,7 +369,7 @@ function showAdministration($option)
     *@end
     */
 
-    HTML_SIMPLEBOARD::showAdministration($list, $pageNav, $option);
+    html_Kunena::showAdministration($list, $pageNav, $option);
 }
 
 
@@ -458,7 +458,7 @@ function editForum($uid, $option)
         	check_dberror("Unable to load moderator list.");
     }
 
-    HTML_SIMPLEBOARD::editForum($row, $categoryList, $moderatorList, $lists, $accessLists, $option);
+    html_Kunena::editForum($row, $categoryList, $moderatorList, $lists, $accessLists, $option);
 }
 
 function saveForum($option)
@@ -772,7 +772,7 @@ function showConfig($option)
 	$lists['autoembedebay'] = mosHTML::selectList($yesno, 'cfg_autoembedebay', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->autoembedebay);
 	$lists['highlightcode'] = mosHTML::selectList($yesno, 'cfg_highlightcode', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->highlightcode);
 
-    HTML_SIMPLEBOARD::showConfig($fbConfig, $lists, $option);
+    html_Kunena::showConfig($fbConfig, $lists, $option);
 }
 
 function saveConfig($option)
@@ -870,7 +870,7 @@ function saveConfig($option)
 }
 
 function showInstructions($database, $option, $mosConfig_lang) {
-    HTML_SIMPLEBOARD::showInstructions($database, $option, $mosConfig_lang);
+    html_Kunena::showInstructions($database, $option, $mosConfig_lang);
 }
 
 //===============================
@@ -890,7 +890,7 @@ function showCss($option)
         echo "<B>" . _FB_CHMOD1 . "</B></center><BR><BR>";
     }
 
-    HTML_SIMPLEBOARD::showCss($file, $option);
+    html_Kunena::showCss($file, $option);
 }
 
 function saveCss($file, $csscontent, $option)
@@ -972,7 +972,7 @@ function newModerator($option, $id = null)
         $moderators = 0;
     }
 
-    HTML_SIMPLEBOARD::newModerator($option, $id, $moderators, $modIDs, $forumName, $userList, $countUL, $pageNav);
+    html_Kunena::newModerator($option, $id, $moderators, $modIDs, $forumName, $userList, $countUL, $pageNav);
 }
 
 function addModerator($option, $id, $cid = null, $publish = 1)
@@ -1064,7 +1064,7 @@ function showProfiles($database, $option, $mosConfig_lang, $order)
 
     require_once ("includes/pageNavigation.php");
     $pageNavSP = new mosPageNav($total, $limitstart, $limit);
-    HTML_SIMPLEBOARD::showProfiles($option, $mosConfig_lang, $profileList, $countPL, $pageNavSP, $order, $search);
+    html_Kunena::showProfiles($option, $mosConfig_lang, $profileList, $countPL, $pageNavSP, $order, $search);
 }
 
 function editUserProfile($uid)
@@ -1134,7 +1134,7 @@ function editUserProfile($uid)
 
     $modCats = FB_GetAvailableModCats($__modCats);
 
-    HTML_SIMPLEBOARD::editUserProfile($user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid[0], $modCats);
+    html_Kunena::editUserProfile($user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid[0], $modCats);
 }
 
 function saveUserProfile($option)
@@ -1194,7 +1194,7 @@ function pruneforum($database, $option)
     $forums_list = $database->loadObjectList();
     	check_dberror("Unable to load unlocked forums.");
     $forumList['forum'] = mosHTML::selectList($forums_list, 'prune_forum', 'class="inputbox" size="4"', 'value', 'text', '');
-    HTML_SIMPLEBOARD::pruneforum($option, $forumList);
+    html_Kunena::pruneforum($option, $forumList);
 }
 
 function doprune($database, $option)
@@ -1274,7 +1274,7 @@ function doprune($database, $option)
 // Sync users
 //===============================
 function syncusers($database, $option) {
-    HTML_SIMPLEBOARD::syncusers($option);
+    html_Kunena::syncusers($option);
 }
 
 function douserssync($database, $option)
@@ -1489,7 +1489,7 @@ function browseUploaded($database, $option, $type)
     @closedir ($dir);
     @ksort ($uploaded);
     @reset ($uploaded);
-    HTML_SIMPLEBOARD::browseUploaded($option, $uploaded, $uploaded_path, $type);
+    html_Kunena::browseUploaded($option, $uploaded, $uploaded_path, $type);
 }
 
 function replaceImage($database, $option, $imageName, $OxP)
@@ -1734,7 +1734,7 @@ function showsmilies($option)
 
     require_once ("includes/pageNavigation.php");
     $pageNavSP = new mosPageNav($total, $limitstart, $limit);
-    HTML_SIMPLEBOARD::showsmilies($option, $mosConfig_lang, $smileytmp, $pageNavSP, $smileypath);
+    html_Kunena::showsmilies($option, $mosConfig_lang, $smileytmp, $pageNavSP, $smileypath);
 
 }
 
@@ -1766,7 +1766,7 @@ function editsmiley($option, $id)
 
 		$filename_list .= '<option value="' . $smiley_images[$i] . '"' . $smiley_selected . '>' . $smiley_images[$i] . '</option>'."\n";
     }
-    HTML_SIMPLEBOARD::editsmiley($option, $mosConfig_lang, $smiley_edit_img, $filename_list, $smileypath, $smileycfg);
+    html_Kunena::editsmiley($option, $mosConfig_lang, $smiley_edit_img, $filename_list, $smileypath, $smileycfg);
 }
 
 function newsmiley($option)
@@ -1783,7 +1783,7 @@ function newsmiley($option)
 		$filename_list .= '<option value="' . $smiley_images[$i] . '">' . $smiley_images[$i] . '</option>'."\n";
     }
 
-    HTML_SIMPLEBOARD::newsmiley($option, $filename_list, $smileypath);
+    html_Kunena::newsmiley($option, $filename_list, $smileypath);
 }
 
 function savesmiley($option, $id = NULL)
@@ -1917,7 +1917,7 @@ function showRanks($option)
 
 	require_once( "includes/pageNavigation.php" );
 	$pageNavSP = new mosPageNav( $total,$limitstart,$limit );
-	HTML_SIMPLEBOARD::showRanks( $option,$mosConfig_lang,$ranks,$pageNavSP,$order,$rankpath );
+	html_Kunena::showRanks( $option,$mosConfig_lang,$ranks,$pageNavSP,$order,$rankpath );
 
 }
 
@@ -1980,7 +1980,7 @@ function newRank($option)
 		$filename_list .= '<option value="' . $rank_images[$id] . '">' . $rank_images[$id] . '</option>'."\n";
 	}
 
-    HTML_SIMPLEBOARD::newRank($option, $filename_list, $rankpath);
+    html_Kunena::newRank($option, $filename_list, $rankpath);
 }
 
 function deleteRank($option, $cid = null)
@@ -2080,7 +2080,7 @@ function editRank($option, $id)
 		}
 	}
 
-    HTML_SIMPLEBOARD::editRank($option, $mosConfig_lang, $edit_img, $filename_list, $path, $row);
+    html_Kunena::editRank($option, $mosConfig_lang, $edit_img, $filename_list, $path, $row);
 }
 
 //===============================

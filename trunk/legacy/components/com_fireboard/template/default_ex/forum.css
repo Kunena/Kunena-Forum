@@ -1,0 +1,1153 @@
+/**
+* Fireboard Component
+* @package Fireboard
+* @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.bestofjoomla.com
+**/
+
+/* ======= */
+
+#fireboard td, #fireboard table, #fireboard th, #fireboard div, #fireboard p, #fireboard span {
+	font-family:Arial, Helvetica, sans-serif;
+}
+#fireboard .fb_header {
+	background: #3B3B3B url(images/cat_title_bg.gif) repeat-x top left;
+	height: 30px;
+}
+#fireboard table.fb_blocktable thead tr th {
+	background: #3B3B3B url(images/cat_title_bg.gif) repeat-x top left;
+	padding: 2px;
+	color:#ffffff;
+	font-weight:normal;
+}
+#fireboard tr.fb_sth { 
+	background: #8CABC8 url(images/cat_title_head_bg.gif) repeat-x top left;
+	font-size:11px;
+	font-family:Arial, Helvetica, sans-serif;
+}
+#fireboard th.fb_sectiontableheader {
+	padding:3px 5px;
+	color:#FFFFFF;
+	font-weight:normal;
+	font-size:11px;
+	font-family:Arial, Helvetica, sans-serif;
+}
+#fireboard tr.fb_sectiontableentry1 td {
+	background: #F2F1EE;
+	padding:5px;
+	border-bottom:1px solid #BFC3C6;
+	border-left:1px solid #FFFFFF;
+	border-right:1px solid #BFC3C6;
+}
+#fireboard tr.fb_sectiontableentry2 td {
+	padding:5px;
+	border-bottom:1px solid #BFC3C6;
+	border-left:1px solid #FFFFFF;
+	border-right:1px solid #BFC3C6;
+}
+#fireboard tr.fb_sectiontableentry1 td.td-1, #fireboard tr.fb_sectiontableentry2 td.td-1 {
+	background: #EEEEEE;
+}
+#fireboard tr.fb_sectiontableentry1 td.fb_cc-sectiontableentry1, #fireboard tr.fb_sectiontableentry2 td.fb_cc-sectiontableentry1 {
+	background:none;
+}
+#fireboard tr.fb_sectiontableentry1 td.td-0, #fireboard tr.fb_sectiontableentry2 td.td-0 {
+	border-left:1px solid #BFC3C6;
+	background: #EEEEEE;
+	text-align:center;
+	color:#999999;
+}
+#fireboard td.td-0 strong {
+	display:block;
+	font-size:26px;
+	font-weight:normal;
+	line-height:21px;
+	margin:5px 0;
+}
+#fireboard .topic_latest_post, #fireboard .topic_date {
+	font-size:10px;
+}
+#fireboard a.fb-topic-title {
+	font-weight:bold;
+	font-size:14px;
+}
+#fireboard .topic_latest_post_avatar {
+	display:block;
+	height:auto;
+	width:40px;
+	padding: 1px;
+	margin-right:5px;
+	border:1px solid #CCCCCC;
+	float:left;
+}
+#fireboard img.fb_list_avatar {
+	height:auto;
+	width:40px;
+	border:0px
+}
+tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg td.td-0 {
+	border-left: 1px solid #BFC3C6;
+}
+#fireboard .topic_sticky {
+	position:absolute;
+	top:-5px;
+	right:0px;
+}
+.fb_credits, .fb_footer {
+	font-size:10px
+}
+/* MEnu */
+#fireboard #fireboard_top td {
+	height:35px;
+	background: #FFFFFF;
+	margin:0;
+	border-style:solid;
+	border-color:#5182A4;
+	border-top-width:0;
+	border-right-width:0;
+	border-bottom-width:3px;
+	border-left-width:0;
+}
+#fireboard #fireboard_top td img.hideshow {
+	background:#5182A4;
+}
+#fireboard #fb_topmenu {
+}
+#fireboard #fireboard_tab {
+	margin:0;
+	top:0;
+}
+#fireboard #fireboard_tab ul {
+	margin:0;
+	padding:0;
+	list-style:none;
+	float:left;
+}
+#fireboard #fireboard_tab li {
+	display:inline;
+	float:left;
+	margin:0 1px 0 0;
+	padding:0;
+}
+#fireboard #fireboard_tab a {
+	background: url("images/tabmenuright.gif") no-repeat right top;
+	margin:0;
+	padding:0;
+	text-decoration:none;
+	border:0;
+	display:block;
+	float:left;
+}
+#fireboard #fireboard_tab a span {
+	display:block;
+	background:url("images/tabmenuleft.gif") no-repeat left top;
+	padding:0 10px 0 10px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#FFFFFF;
+	font-weight:bold;
+	line-height:35px;
+}
+#fireboard #fireboard_tab a:hover, #fireboard #fireboard_tab li.fireboard_item_active a {
+	background-position:right bottom;
+}
+#fireboard #fireboard_tab a:hover span, #fireboard #fireboard_tab li.fireboard_item_active a span {
+	background-position:left bottom;
+	color:#FFFFFF;
+	font-weight:bold;
+	font-style:normal;
+	text-decoration:none;
+}
+/* Menu */
+
+
+
+
+
+/* B: all disc top */
+#fireboard .fb_list_actions {
+	border:1px solid #D1D1D1;
+	clear:both;
+	display:table;
+	margin-top:-1px;
+	width:100%;
+}
+#fireboard .fb_list_actions_info {
+	float:left;
+	font-weight:bold;
+	height:28px;
+	line-height:28px;
+	padding-left:15px;
+	padding-right:10px;
+}
+#fireboard .fb_list_actions_info a {
+	color:#009933;
+	text-decoration:underline;
+}
+#fireboard .fb_list_pages {
+	border-left:1px solid #D1D1D1;
+	color:#666666;
+	float:right;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:15px;
+	font-weight:bold;
+	height:28px;
+	line-height:28px;
+	padding-left:10px;
+	padding-right:5px;
+}
+#fireboard .fb_list_times {
+	border-left:1px solid #D1D1D1;
+	color:#666666;
+	height:28px;
+	line-height:28px;
+	padding-left:5px;
+	padding-right:10px;
+}
+#fireboard a.fb_list_pages_link:link, a.fb_list_pages_link:visited {
+	text-decoration:underline;
+}
+#fireboard .fb_list_pages_link {
+	padding:0pt 5px;
+}
+#fireboard .fb_list_actions_info_all {
+	font-weight:bold;
+	height:28px;
+	line-height:28px;
+	padding-left:15px;
+	padding-right:10px;
+}
+#fireboard .fb_list_pages_all {
+	border-left:1px solid #D1D1D1;
+	color:#666666;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:15px;
+	font-weight:bold;
+	height:28px;
+	line-height:28px;
+	padding-left:5px;
+	padding-right:30px;
+}
+#fireboard .fb_list_times_all {
+	border-left:1px solid #D1D1D1;
+	color:#666666;
+	height:28px;
+	line-height:28px;
+	padding-left:5px;
+	padding-right:5px;
+}
+#fireboard .fb_list_jump_all {
+	border-left:1px solid #D1D1D1;
+	color:#666666;
+	height:28px;
+	line-height:28px;
+	padding-left:5px;
+	padding-right:10px;
+}
+#fireboard .fb_list_jump_all form {
+	display:table;
+}
+#fireboard .fb_list_times_all .inputboxusl {
+	font-size:10px;
+	margin:0pt;
+	padding:0pt;
+	width:50px;
+}
+#fireboard .fb_list_jump_all form .inputbox {
+	font-size:10px;
+	margin:0pt;
+	padding:0pt;
+	width:150px;
+}
+#fireboard .fb_list_pages_all table tr td {
+	height:28px;
+	line-height:28px;
+	white-space:nowrap;
+}
+#fireboard td.fb_list_jump_all input.fbjumpgo {
+	display:none;
+}
+/* F: all disc top */
+
+/* ======= */
+
+
+#fireboard a {
+	text-decoration:none;
+	font-weight:normal;
+}
+#fireboard a:link, #fireboard a:visited {
+	color:#006699;
+}
+#fireboard a:hover {
+	color: #FF0000;
+}
+#fireboard .fbxs {
+	font-size: 8px;
+}
+#fireboard .fbs {
+	font-size: 10px;
+}
+#fireboard .fbm {
+	font-size: 11px;
+}
+#fireboard .fbl {
+	font-size: 14px;
+}
+#fireboard .fbxl {
+	font-size: 18px;
+}
+#fireboard .fbxxl {
+	font-size: 28px;
+}
+/* HEADER
+----------------------------------------------------------------------------------------------- */
+/* #fireboard .fb_header {background: #555555;height: 30px; }
+*/
+#fireboard .fb_header_th_1 {
+	padding:5px;
+}
+td.fb_profileboxcnt {
+	width:95%;
+}
+/* TOPMENU
+----------------------------------------------------------------------------------------------- */
+#fireboard .fb_header div#fb_topmenu {
+} /* topmenu div */
+#fireboard .fb_header div#fb_topmenu a {
+	color: #FFFFFF;
+	padding: 0 8px;
+	display: block;
+	text-decoration: none;
+	font-weight: bold;
+	float: left;
+} /* topmenu link items */
+#fireboard .fb_header div#fb_topmenu a:hover {
+	color: #BFC3C6;
+}
+/* SEARCHBOX
+----------------------------------------------------------------------------------------------- */
+#fb_searchbox {
+	width:auto;
+	white-space: nowrap;
+} /* searchbox div */
+#fb_searchbox form {
+	margin:  0;
+	padding: 0;
+} /* searchbox form */
+#fb_searchbox .fb_search_inputbox {
+	width: auto;
+	margin: 0 0 0 5px;
+	border: 1px solid #666666;
+	background: #FFFFFF url(images/search_icon.gif) no-repeat 5px center;
+	font-weight: normal;
+	padding: 2px 5px 2px 20px;
+}
+#fb_searchbox .fb_search_button {
+	margin:0 5px 0 0;
+}
+.fb_search-results {
+	color:#FF0000;
+	font-weight:bold;
+}
+/* CATEGORY LIST
+----------------------------------------------------------------------------------------------- */
+#fireboard table.fb_blocktable {
+	width:  100%;
+	margin: 5px 0;
+	border-style:solid;
+	border-color:#BFC3C6;
+	border-width:0px 0px 4px 0px;
+	text-align:left;
+}
+/* #fireboard table.fb_blocktable thead tr th { background: #555555; padding: 2px; color:#ffffff; font-weight:normal; }
+*/
+#fireboard div.fb_title_cover {
+	float:left;
+	text-align:left;
+	color:#FFFFFF;
+	font-weight:normal;
+	line-height:normal;
+	padding:2px;
+}
+#fireboard a.fb_title, #fireboard .fb_title {
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	display:block;
+	color:#FFFFFF;
+	text-decoration: none;
+}
+#fireboard img.hideshow {
+	float:right;
+	margin:0;
+	padding:0;
+	cursor:pointer;
+	position: relative;
+	z-index: 1;
+}
+/*
+#fireboard tr.fb_sth {background: #BFC3C6;font-weight: bold;font-family: Tahoma, Arial, Helvetica, sans-serif;}
+*/
+th.fb_sectiontableheader {
+}
+/*
+#fireboard tr.fb_sectiontableentry1 td {background: #EEEEEE; padding:5px; border-bottom:1px solid #BFC3C6;border-left:1px solid #FFFFFF;border-right:1px solid #BFC3C6;}
+*/
+#fireboard tr.fb_sectiontableentry1 td.td-1 {
+	border-left:1px solid #BFC3C6;
+}
+/*
+#fireboard tr.fb_sectiontableentry2 td {background: #F7F7F7; padding:5px; border-bottom:1px solid #BFC3C6;border-left:1px solid #FFFFFF;border-right:1px solid #BFC3C6;}
+*/
+#fireboard tr.fb_sectiontableentry2 td.td-1 {
+	border-left:1px solid #BFC3C6;
+}
+#fireboard div.fb_thead-title a {
+	font-weight:     bold;
+}
+div.fb_thead-desc {
+}
+#fireboard div.fb_thead-child {
+	border-top: 1px dotted #D4C9AD;
+	margin-top: 4px;
+}
+#fireboard table.fb_cc-table tr td {
+	border: 0px solid #FFFFFF;
+}
+#fireboard div.fb_cc-childcat-title {
+	width: 90px;
+	float:left;
+}
+table.fb_cc-table {
+}
+tr.fb_cc-sectiontableentry1 {
+}
+tr.fb_cc-sectiontableentry2 {
+}
+span.fb_childcount {
+}
+#fireboard div.fb_latest-subject a {
+	font-weight:     bold;
+}
+div.fb_latest-subject-by {
+}
+span.newchar {
+	color: #009900;
+	font-weight: bold;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8px;
+}
+/* SHOW CATEGORY 
+----------------------------------------------------------------------------------------------- */
+/*
+#fireboard  a.fb-topic-title { font-weight:bold;}
+*/
+#fireboard img.stickyicon, #fireboard img.attachicon {
+	float:  right;
+	border: 0;
+	margin: 2px;
+}
+#fireboard img.catavatar {
+	width:  20px;
+	height: 20px;
+	margin-left: 4px;
+	border: 1px solid #BFC3C6;
+}
+.fb_contentheading {
+	background:  #ECE9D8;
+	font-weight: bold;
+	color:       #990000;
+	border-bottom: 3px solid #DDD5BF;
+	border-left: 1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
+	border-top:  1px solid #FFFFFF;
+}
+.fb_contentheading span {
+	background:   url(images/spoticon.gif) no-repeat left center;
+	padding-left: 16px;
+}
+.fb_sectiontableentry1_stickymsg {
+	background: #FEFECC;
+}
+.fb_sectiontableentry2_stickymsg {
+	background: #FEFECC;
+}
+tr.fb_sectiontableentry1_stickymsg td, tr.fb_sectiontableentry2_stickymsg td {
+	border-bottom:1px solid #BFC3C6;
+	border-left:1px solid #FFFFFF;
+	border-right:1px solid #BFC3C6;
+	padding:2px;
+}
+/*
+tr.fb_sectiontableentry1_stickymsg td.td-1, 
+tr.fb_sectiontableentry2_stickymsg td.td-1{border-left: 1px solid #BFC3C6;}
+*/
+
+/*
+VIEW PAGE
+-------------------------------------------------------------------- */
+#fb_views {
+}
+th.view-th {
+	text-align:right;
+	padding-right: 10px;
+}
+th.fb_sectiontableheader {
+}
+td.fb-msgview-left {
+	background:#EFF0F4;
+	vertical-align: top;
+	width:170px;
+	border-bottom:  0px solid #BFC3C6;
+	border-right:1px solid #BFC3C6;
+}
+td.fb-msgview-right {
+	border-right:1px solid #BFC3C6;
+	padding:5px 10px 5px 30px;
+	vertical-align: top;
+	border-left:1px solid #BFC3C6;
+}
+div.fb-msgview-l-cover {
+	overflow:auto;
+	text-align: center;
+	padding:5px;
+}
+span.view-username {
+}
+span.view-username a:link, span.view-username a:visited {
+	font-weight:bold;
+	text-decoration: none;
+	color:#357994;
+}
+span.view-username a:hover {
+	color:#000000;
+	text-decoration: none;
+}
+span.msgusertype {
+	font-weight:normal;
+	text-decoration: none;
+	text-decoration: none;
+	font-style:italic;
+}
+span.fb_avatar {
+}
+span.fb_avatar img {
+	border:1px solid #BFC3C6;
+	padding: 1px;
+	margin:5px;
+}
+div.viewcover {
+	border:1px solid #BFC3C6;
+	background: #DDDDDD;
+	color:#333333;
+	text-align: center;
+	margin:2px 5px;
+}
+span.msgtitle {
+	font-weight:bold;
+	text-decoration: none;
+	background: url(images/msgtitleicon.gif) no-repeat left center;
+	padding-left:25px;
+	line-height:26px;
+	color:#000000;
+	font-size:14px;
+}
+span.msgdate {
+	font-weight:     normal;
+	text-decoration: none;
+	padding-left:10px;
+	font-size:10px;
+	font-family:Arial, Helvetica, sans-serif;
+}
+span.msgkarma {
+	font-weight: bold;
+	color: #333333;
+	text-decoration: none;
+	padding-right: 10px;
+}
+div.msgtext {
+	overflow:hidden;
+	border-top:1px solid #ddd;
+	padding-top:10px;
+	margin-top:5px;
+}
+div.fbcode {
+	overflow:auto; 
+}
+div.msgtext pre, div.msgtext .code {
+	border-left: 5px solid #F4A94F;
+	border-right: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+	font-family: "Courier News", monospace;
+	font-size-adjust: none;
+	font-stretch: normal;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	line-height: 1.5;
+	margin: 5px 0pt 15px;
+	padding: 10px 15px;
+	width: 100%;
+	overflow:auto;
+}
+div.fb_file_attachment {
+	background:#BFC3C6;
+	border: 1px dotted #555555;
+	padding:10px;
+	margin-bottom:10px;
+}
+span.contentheading {
+}
+div.switchcontent {
+}
+input.fb_qm_btn {
+}
+input.fb_qm_cncl_btn {
+}
+td.fb-msgview-left-c {
+	background:#EFF0F4;
+	vertical-align: top;
+	border-right:  1px solid #BFC3C6;
+}
+td.fb-msgview-right-c {
+	border-right:  1px solid #BFC3C6;
+	padding:1px 5px 1px 5px;
+	vertical-align: top;
+	border-left:1px solid #D4C9AD;
+}
+div.fb_smalltext {
+	font-size:10px;
+	font-family:Arial, Helvetica, sans-serif;
+}
+td.fb-msgview-right-c div.fb_smalltext {
+	padding:5px;
+	text-align:right;
+}
+div.fb_message_editMarkUp_cover {
+	padding-top:5px;
+	text-align:right;
+}
+span.fb_message_editMarkUp {
+	background:#f7f7f7 url(images/edit.gif) no-repeat left center;
+	border-left:1px dotted #999;
+	border-right:1px dotted #999;
+	border-top:1px dotted #999;
+	padding:2px 5px 2px 20px;
+	font-size:9px;
+	color:#666666;
+}
+div.msgsignature {
+	border-top: dotted 1px #ccc;
+	text-align: left;
+	color:#999;
+	padding-top: 10px;
+	font-size:10px;
+	font-family:Arial, Helvetica, sans-serif
+}
+td.fb-msgview-left-b {
+	background:#EFF0F4;
+	vertical-align: top;
+	width:170px;
+	border-bottom:1px solid #BFC3C6;
+	border-right:  1px solid #BFC3C6;
+}
+td.fb-msgview-right-b {
+	border-bottom: 1px solid #BFC3C6;
+	padding:1px 5px 1px 5px;
+	vertical-align: top;
+	border-left:1px solid #D4C9AD;
+	border-right:  1px solid #BFC3C6;
+}
+span.fb_qr_fire {
+}
+.switchcontent {
+	display:none;
+}
+span.fb_quote {
+	display: block;
+	border: 1px dotted #CCC;
+	margin: 5px 0pt;
+	padding: 5px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-style: italic;
+	background: #F7F7F7;
+}
+#fireboard div.fbhide {
+	background:#FFF8F2 url(images/bullet-tips.gif) no-repeat scroll 5px center;
+	border:1px dotted #F2CAB7;
+	font-size:12px;
+	padding:10px 10px 10px 25px;
+}
+/*
+THREAD VIEW
+-------------------------------------------------------------------- */
+#fb_threadview {
+	border:1px solid #BFC3C6;
+}
+div#fb_threadview table.fb_blocktable {
+	margin:0;
+}
+.fb_threadview_row td {
+	border-top:1px dotted #BFC3C6;
+	padding:2px 0;
+}
+.fb_threadview_row td table tr td {
+	border-top:0px solid #BFC3C6;
+}
+/*
+POST PAGE
+-------------------------------------------------------------------- */
+#fb_postmessage {
+	border-left:  1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
+}
+table#fb_postmessage .fb_button {
+	border: 1px solid #999;
+	color: #000;
+	padding: 1px;
+}
+table#fb_postmessage .fb_slcbox {
+	border: 1px solid #999;
+	color: #000;
+}
+#fb_post_message .postinput {
+	width:  94%;
+	border: 1px solid #ccc;
+	padding: 3px 5px;
+}
+#fb_postmessage tr.fb_sectiontableentry2 td.fb-topicicons td {
+	border-bottom: 0px solid #BFC3C6;
+}
+#fb_postmessage tr.fb_sectiontableentry1 .fb-postbuttonset td.fb_posthint {
+	background: #FFFFCC;
+	border: 1px solid #CFC1A9;
+	padding: 2px 5px;
+}
+table#fb_postmessage .fb_posthint .fb_inputbox {
+	background: #FFFFCC;
+	border: 0px solid #FFFFCC;
+	width:  100%;
+}
+.fb-postbuttonset {
+	width: 95%;
+}
+.fb-postbuttons {
+}
+table#fb_postmessage .fb_txtarea {
+	width:95%;
+	overflow: auto;
+	height:300px;
+	border:1px solid #ccc;
+}
+.fb_txtarea {
+	height: 300px;
+	width: 95%;
+}
+#fb_postmessage tr.fb_sectiontableentry1 .fb-postbuttonset td, #fb_postmessage tr.fb_sectiontableentry2 .fb-postbuttonset td {
+	border-bottom: 0px solid #BFC3C6;
+}
+table#fb_postmessage .button {
+	border: 1px solid #999;
+	color: #333;
+	font-weight: bold;
+	padding: 3px 10px;
+	margin: 3px;
+}
+.fb_leftcolumn {
+	width:160px;
+	text-align: right;
+}
+/*
+POST HISTORY
+-------------------------------------------------------------------- */
+.fb_review_table {
+	text-align:left;
+	border-spacing: 1px;
+	background:#BFC3C6;
+}
+.fb_review_header {
+	color: #ffffff;
+}
+.fb_review_body0 {
+	color:#404040;
+	background-color: #FFFFCC;
+	line-height:100%;
+	padding:3px 10px;
+}
+.fb_review_body1 {
+	color:#404040;
+	background-color: #FFFFFF;
+	padding:3px 10px;
+	line-height:140%;
+}
+.fb_review_quote {
+	padding: 5px;
+	border: dotted 1px #ccc;
+	background-color: #FFF;
+	color:  #999;
+	display: block;
+}
+/* PATHWAY 
+----------------------------------------------------------------------------------------------- */
+.fb_forum-pathway {
+	padding: 3px;
+	margin: 5px 0 5px 0;
+	border: 1px solid #BFC3C6;
+	background:#F7F7F7;
+}
+.forum-pathway-1 {
+	font-weight: normal;
+	height: 18px;
+	line-height: 18px;
+	padding-left: 22px;
+	background: url(images/pathway_start.gif) no-repeat left center;
+	padding-top: 2px !important;
+	padding-top: 4px;
+}
+.forum-pathway-2 {
+	height: 18px;
+	line-height: 18px;
+	background:  url(images/pathway_finallink.gif) no-repeat left center;
+	padding-left: 30px;
+}
+.forum-pathway-1 a:link, .forum-pathway-1 a:visited {
+	font-weight:normal;
+	text-decoration: none;
+	background:none;
+}
+.forum-pathway-2, .forum-pathway-2 a:link {
+	font-weight:bold;
+	text-decoration: none;
+	text-indent:5px;
+}
+/*
+PAGENAV
+-------------------------------------------------------------------- */
+table.jr-topnav {
+	width: 100%;
+}
+table.jr-bottomnav {
+	width: 100%;
+}
+td.jr-topnav-left {
+	text-align: left;
+	width: 50%;
+	vertical-align: middle;
+}
+td.jr-topnav-right {
+	text-align: right;
+	width: 50%;
+	vertical-align: middle;
+}
+div.jr-pagenav {
+}
+div.jr-pagenav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	float:  right;
+}
+div.jr-pagenav ul li {
+	list-style: none;
+	margin: 0;
+	padding: 0 4px;
+	display: block;
+	float:  left;
+	background: none;
+}
+div.jr-pagenav ul li.jr-pagenav-text {
+	font-weight: normal;
+	list-style:  none;
+	margin: 0;
+	padding: 0 4px;
+	display:block;
+	float:left;
+}
+a.jr-pagenav-nb:link, a.jr-pagenav-nb:visited {
+	font-weight:bold;
+	text-decoration: none;
+}
+a.jr-pagenav-nb:hover {
+	text-decoration: underline;
+}
+li.jr-pagenav-nb span.pagenav, li.jr-pagenav-nb a.pagenav:link, li.jr-pagenav-nb a.pagenav:visited {
+	font-weight: normal;
+	text-decoration: none;
+	background:none;
+	border:0px;
+	line-height:normal;
+	margin:0;
+	padding:0;
+}
+/* Bottom patway */
+.fb_bottom_pathway {
+	display: none;
+}
+/*
+
+/*
+FORUM TOOLS
+-------------------------------------------------------------------- */
+#fb_ft-cover {
+	position: relative;
+	float: right;
+	text-align: right;
+}
+table.jr-ft {
+	width: 100%;
+}
+td.ft-td1 {
+	width: 100%;
+}
+td.ft-td2 {
+	width: 150px;
+}
+#forumtools_control {
+	width: 150px;
+}
+.forumtools_contentBox {
+	border:  1px solid #BFC3C6;
+	display: none;
+	position: absolute;
+	right:   0px;
+	background:  #555555;
+	overflow: hidden;
+	width:150px;
+}
+.forumtools_content {
+	position: relative;
+	width: 100%;
+	text-align: left;
+	padding: 1px;
+}
+#subBox1 ul {
+	margin:  0;
+	padding: 0;
+	list-style: none;
+}
+#subBox1 ul li {
+	margin:  0;
+	padding: 0;
+	list-style: none;
+	padding: 3px 5px;
+	color:#FFFFFF;
+	background: none;
+}
+#subBox1 ul li a:link, #subBox1 ul li a:visited {
+	color:#FFFFFF;
+	text-decoration: none;
+	font-weight:normal;
+	list-style:none;
+}
+#subBox1 ul li a:hover {
+	text-decoration: underline;
+}
+a.forumtools:link, a.forumtools:visited {
+	background: url(images/menu_open.gif) no-repeat right center;
+	padding-right: 20px;
+	color:#FFFFFF;
+	font-size-adjust: none;
+	font-style:    normal;
+	font-variant:  normal;
+	font-weight:   bold;
+	line-height:   normal;
+	text-align:    center;
+	text-decoration: none;
+}
+a.forumtools:hover {
+	text-decoration: underline;
+}
+/*
+FAQ , RULES , UPLOAD AVATAR, ANNOUNCEMENT
+-------------------------------------------------------------------- */
+td.fb_faqdesc, td.fb_rulesdesc, td.fb_uadesc, td.fb_anndesc, td.fb_creditsdesc {
+	vertical-align: top;
+	padding: 5px;
+	border:  1px solid #ccc;
+	background: #FFFFFF;
+}
+.fb_credits_intro {padding:10px 0 10px 0;}
+.fb_team { margin:0; padding:0; border-top:1px solid #dddddd; }
+.fb_teammember { padding:7px 10px 7px 10px; border-bottom:1px solid #dddddd; list-style: inside;margin:0;}
+.fb_credits_more{padding:10px 0 10px 20px;}
+
+/*
+USER PROFILE
+-------------------------------------------------------------------- */
+.fb_profile-left {
+	padding-right: 5px;
+}
+.fb_profile-right {
+}
+.fb_profileinfo {
+	background: #ffffff;
+	border-left: 1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
+}
+.fb-usrprofile-misc {
+	text-align: center;
+	margin: 0 auto;
+}
+#fb_userprfmsg td.td-6 {
+	border-right: 1px solid #BFC3C6;
+}
+.fb_profile-bottomnav {
+	background: #ffffff;
+	border-left: 1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
+}
+/*
+MY PROFILE
+-------------------------------------------------------------------- */
+.fb_myprofile_menu td {
+	border-left: 1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
+}
+.fb_myprofile_menu a {
+	display:block;
+	padding:2px 5px 3px 10px;
+	text-decoration:none;
+}
+.fb_myprofile_menu a:hover {
+	text-decoration:underline;
+}
+.fb_myprofile_menu_title {
+	font-weight:bold;
+}
+.fb_myprofile_menu_staff {
+	padding: 5px 10px;
+	border-bottom: 4px solid #BFC3C6;
+}
+.fb_myprofile_general td {
+	padding: 3px 5px;
+	border-left: 1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
+}
+/* RECENT POSTS
+----------------------------------------------------------------------------------------------- */
+#fireboard a.fbrecent {
+	font-weight:bold;
+}
+/* WHOIS ONLINE 
+----------------------------------------------------------------------------------------------- */
+#fireboard .fbgrouplist {
+	padding:5px;
+}
+/* FOOTER
+----------------------------------------------------------------------------------------------- */
+.fb_credits {
+	position:relative;
+	text-align:center;
+}
+.fb_footer {
+	text-align:center;
+}
+img.rsslink {
+	position:absolute;
+	right:3px;
+	top:0px;
+}
+/* BOJ */
+/* User Group Style
+-----------------------------------------------*/
+span.view-group_1 {
+}
+span.fb_group_1 {
+}
+span.view-group_2 {
+	display:block;
+	background:url(images/group_2.gif) no-repeat left top;
+	width:135px;
+	height:37px;
+	text-indent:-1000px;
+	margin:0 auto 5px auto;
+	overflow:hidden;
+	color:#FF0000;
+}
+span.fb_group_2, a.fb_group_2:link, a.fb_group_2:visited {
+	color:#FF0000;
+}
+span.view-group_3 {
+	display:block;
+	background:url(images/group_3.gif) no-repeat left top;
+	width:135px;
+	height:37px;
+	text-indent:-1000px;
+	margin:0 auto 5px auto;
+	overflow:hidden;
+	color:#FF9900;
+}
+span.fb_group_3, a.fb_group_3:link, a.fb_group_3:visited {
+	color:#FF9900;
+}
+span.view-group_4 {
+	display:block;
+	background:url(images/group_4.gif) no-repeat left top;
+	width:135px;
+	height:37px;
+	text-indent:-1000px;
+	margin:0 auto 5px auto;
+	overflow:hidden;
+	color:#FFCC00;
+}
+span.fb_group_4, a.fb_group_4:link, a.fb_group_4:visited {
+	color:#FFCC00;
+}
+span.view-group_5 {
+	display:block;
+	background:url(images/group_5.gif) no-repeat left top;
+	width:135px;
+	height:37px;
+	text-indent:-1000px;
+	margin:0 auto 5px auto;
+	overflow:hidden;
+	color:#990099;
+}
+span.fb_group_5, a.fb_group_5:link, a.fb_group_5:visited {
+	color:#990099;
+}
+span.view-group_6 {
+	display:block;
+	background:url(images/group_6.gif) no-repeat left top;
+	width:135px;
+	height:37px;
+	text-indent:-1000px;
+	margin:0 auto 5px auto;
+	overflow:hidden;
+	color:#669900;
+}
+span.fb_group_6, a.fb_group_6:link, a.fb_group_6:visited {
+	color:#669900;
+}
+span.view-group_7 {
+	display:block;
+	background:url(images/group_7.gif) no-repeat left top;
+	width:135px;
+	height:37px;
+	text-indent:-1000px;
+	margin:0 auto 5px auto;
+	overflow:hidden;
+	color:#0066CC;
+}
+span.fb_group_7, a.fb_group_7:link, a.fb_group_7:visited {
+	color:#0066CC;
+}
+span.view-group_8 {
+	display:block;
+	background:url(images/bojteam.gif) no-repeat left top;
+	width:135px;
+	height:37px;
+	text-indent:-1000px;
+	margin:0 auto 5px auto;
+	overflow:hidden;
+	color:#000000;
+}
+span.fb_group_8, a.fb_group_8:link, a.fb_group_8:visited {
+	color:#000000;
+}
+.msgtext {
+	overflow:auto;
+	width:95%;
+}

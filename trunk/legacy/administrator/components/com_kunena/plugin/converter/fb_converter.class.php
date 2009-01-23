@@ -23,13 +23,13 @@ class fb_Converter {
 	var $_error=null;
 	var $_return=true;
 	var $_converterDir=null;
-	
+
 	function fb_Converter( $xmlFileName = "joomlaboard.xml", $subdir = "plugin/converter", $silent = false ) {
 	    $this->xmlFileName = $xmlFileName;
 	    $this->subdir = $subdir;
 		$this->silent = $silent;
 	}
-	
+
 	/**
 	 * Main conversion/import function. Processes XML file
 	 */
@@ -37,13 +37,13 @@ class fb_Converter {
 		global $database, $mosConfig_absolute_path, $mosConfig_live_site;
 		require_once( $mosConfig_absolute_path . '/includes/domit/xml_domit_lite_include.php' );
 		if(!$this->silent) {
-			?>
+?>
 			<script language=JavaScript>
 			function showDetail(srcElement) {
 				var targetID, srcElement, targetElement, imgElementID, imgElement;
 				targetID = srcElement.id + "_details";
 				imgElementID = srcElement.id + "_img";
-				
+
 				targetElement = document.getElementById(targetID);
 				imgElement = document.getElementById(imgElementID);
 				if (targetElement.style.display == "none") {
@@ -64,36 +64,36 @@ class fb_Converter {
 				margin-left: 20px;
 				margin-top: 5px;
 			</style>
-			<?php
+<?php
 		}
-		
-		$componentBaseDir	= ;
+
+		$componentBaseDir = '';
 		$this->_converterDir = mosPathName( $mosConfig_absolute_path . '/administrator/components/Kunena' ) . '/' . $this->subdir;
-	
+
 		//initiate XML doc
 		$xmlDoc = new DOMIT_Lite_Document();
 		$xmlDoc->loadXML( $this->converterDir . '/'. $this->xmlFileName, false, true );
-		
+
 		//load root element and check XML version (for future use)
 		$root = &$xmlDoc->documentElement;
 		$comUpgradeVersion = $root->getAttribute( "version" );
-		
+
         $importElement =& $root->firstChild;
         $versionNumber = $importElement->getAttribute( "version" );
         $versionDate = $importElement->getAttribute( "date" );
-			
+
         //import mode, run import queries
         $importElement = $root->getElementsByPath('import', 1);
         if (!is_null($importElement)) {
             $this->processNode($importElement,1);
         }
         if(!$this->silent) {
-            ?>
+?>
             </table>
-            <?php
+<?php
         }
-    }	
-	
+    }
+
 	/**
 	 * Processes "phpfile", "query" and "phpcode" child-nodes of the node provided
 	 */
@@ -101,7 +101,7 @@ class fb_Converter {
 		global $database;
 		$numChildren =& $startNode->childCount;
 		$childNodes =& $startNode->childNodes;
-		
+
 		for($i = 0; $i < $numChildren; $i++) {
 			$currentNode =& $childNodes[$i];
 			$nodeName =& $currentNode->nodeName;
@@ -173,7 +173,7 @@ class fb_Converter {
 						$img = "tick.png";
 						$this->_error = "";
 					}
-					
+
 					if(!$this->silent) {
 						?>
 						<td>

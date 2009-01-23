@@ -18,11 +18,11 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $mainframe;
 //Get right Language file
-if (file_exists($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/' . $mainframe->getCfg('lang') . '.php')) {
-    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/' . $mainframe->getCfg('lang') . '.php');
+if (file_exists($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.' . $mainframe->getCfg('lang') . '.php')) {
+    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.' . $mainframe->getCfg('lang') . '.php');
 }
 else {
-    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/english.php');
+    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.english.php');
 }
 
 include_once($mainframe->getCfg("absolute_path")."/administrator/components/com_kunena/sources/boj_upgrade.class.php");

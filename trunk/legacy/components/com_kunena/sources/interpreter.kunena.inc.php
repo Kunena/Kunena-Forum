@@ -28,7 +28,7 @@
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // full path does not work for some reason
-// require_once ($mainframe->getCfg("absolute_path")Ê.Ê"/components/com_Kunena/sources/interpreter.bbcode.inc.php");
+// require_once ($mainframe->getCfg("absolute_path")Ê.Ê"/components/com_kunena/sources/interpreter.bbcode.inc.php");
 include_once("interpreter.bbcode.inc.php");
 
 class KunenaBBCodeInterpreter extends BBCodeInterpreter {
@@ -630,10 +630,10 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 										'imgElement = document.getElementById(imgElementID);'.
 										'if (targetElement.style.display == "none") {'.
 											'targetElement.style.display = "";'.
-											'imgElement.src = "/components/com_Kunena/template/default/images/english/emoticons/w00t.png";'.
+											'imgElement.src = "/components/com_kunena/template/default/images/english/emoticons/w00t.png";'.
 										'} else {'.
 											'targetElement.style.display = "none";'.
-											'imgElement.src = "/components/com_Kunena/template/default/images/english/emoticons/pinch.png";'.
+											'imgElement.src = "/components/com_kunena/template/default/images/english/emoticons/pinch.png";'.
 										'}}	</script>';
                     }
                     else
@@ -646,7 +646,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                     $randomid = rand();
 
                     $tag_new .= '<div id="'.$randomid.'" onClick="javascript:fb_showDetail(this);" style="cursor:pointer;"><img id="'.$randomid.'_img"'.
-                    			'src="/components/com_Kunena/template/default/images/english/emoticons/pinch.png" border="0"> <strong>'.
+                    			'src="/components/com_kunena/template/default/images/english/emoticons/pinch.png" border="0"> <strong>'.
                     			(isset($tag->options["title"]) ? ($tag->options["title"]) : (_FB_BBCODE_SPOILER))
                     			. '</strong></div><div id="'. $randomid . '_details" style="display:None;"><span class="fb_quote">' . $between . '</span></div>';
 

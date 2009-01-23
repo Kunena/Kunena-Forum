@@ -138,11 +138,11 @@ Kunena 1.0.3
 
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 18-May-2007 Danial Taherzadeh (danialt)
- # [#440] Warning: Invalid argument supplied for foreach() in /components/com_Kunena/template/default/view.php on line 636
+ # [#440] Warning: Invalid argument supplied for foreach() in /components/com_kunena/template/default/view.php on line 636
  # wrong variable name for live path of Kunena
  # itemid bugs, pagination error
  + added missed images on userlist and pm . And uhits field. userprofile fix, userlist fix.
- # missing com_ for com_Kunena option text
+ # missing com_ for com_kunena option text
  # SEF problem on menu links .. a new variable JB_LIVEURLREL is introduced for SEF calls
  # forum top - forum bottom links now working
  + v1.0.1 release db changes added to installation and upgraded the sql files

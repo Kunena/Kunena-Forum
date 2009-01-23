@@ -18,7 +18,7 @@ defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 global $mosConfig_absolute_path, $mosConfig_lang, $mosConfig_live_site, $mainframe;
 global $fbConfig;
 
-$Kunena_adm_path = "$mosConfig_absolute_path/administrator/components/com_Kunena";
+$Kunena_adm_path = "$mosConfig_absolute_path/administrator/components/com_kunena";
 //Get right Language file
 $Kunena_language_file = "$Kunena_adm_path/language/$mosConfig_lang.php";
 
@@ -35,10 +35,10 @@ else {
 
 //Tabber check
 //
-$source_file = "$mosConfig_absolute_path/components/com_Kunena/template/default/plugin/recentposts/tabber.css";
-$source_file = "$mosConfig_absolute_path/components/com_Kunena/template/default/plugin/recentposts/tabber.js";
-$source_file = "$mosConfig_absolute_path/components/com_Kunena/template/default/plugin/recentposts/tabber-minimized.js";
-$source_file = "$mosConfig_absolute_path/components/com_Kunena/template/default/plugin/recentposts/function.tabber.php";
+$source_file = "$mosConfig_absolute_path/components/com_kunena/template/default/plugin/recentposts/tabber.css";
+$source_file = "$mosConfig_absolute_path/components/com_kunena/template/default/plugin/recentposts/tabber.js";
+$source_file = "$mosConfig_absolute_path/components/com_kunena/template/default/plugin/recentposts/tabber-minimized.js";
+$source_file = "$mosConfig_absolute_path/components/com_kunena/template/default/plugin/recentposts/function.tabber.php";
 //
 $category = trim($fbConfig->latestcategory); // 2,3,4
 $count = $fbConfig->latestcount;
@@ -114,7 +114,7 @@ $topic_emoticons[7] = JB_URLEMOTIONSPATH . 'smile.gif';
                 $numitems = count($rows);
 
                 if ($numitems > $count_per_page) {
-                    include_once("$mosConfig_absolute_path/components/com_Kunena/template/default/plugin/recentposts/function.tabber.php");
+                    include_once("$mosConfig_absolute_path/components/com_kunena/template/default/plugin/recentposts/function.tabber.php");
                     $tabs = new my_tabs(1, 1);
                     $tabs->my_pane_start('mod_fb_last_subjects-pane');
                     $tabs->my_tab_start(1, 1);

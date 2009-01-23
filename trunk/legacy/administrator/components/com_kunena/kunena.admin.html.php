@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id$
+* @version $Id:kunena.admin.html.php 96 2009-01-23 21:55:09Z fxstein $
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
@@ -115,15 +115,15 @@ color:#666;
     <td width="170" valign="top">
     <!-- Begin: AdminLeft -->
         <div id="fbheader">
-        <a href = "index2.php?option=com_Kunena"><img src = "components/com_Kunena/images/logo.png"  border="0" alt = "<?php echo _COM_C_BACK; ?>"/></a>
+        <a href = "index2.php?option=com_kunena"><img src = "components/com_kunena/images/logo.png"  border="0" alt = "<?php echo _COM_C_BACK; ?>"/></a>
         </div>
         <!-- Begin : Kunena Left Menu -->
         <div id="fbmenu">
 
         <?php $stask=mosGetParam($_REQUEST, "task", null);	?>
-        <a class="fbmainmenu" href = "index2.php?option=com_Kunena"><?php echo _FB_CP; ?></a>
+        <a class="fbmainmenu" href = "index2.php?option=com_kunena"><?php echo _FB_CP; ?></a>
 
-           <a class="fbmainmenu" href = "index2.php?option=com_Kunena&task=showconfig"><?php echo _COM_C_FBCONFIG; ?></a>
+           <a class="fbmainmenu" href = "index2.php?option=com_kunena&task=showconfig"><?php echo _COM_C_FBCONFIG; ?></a>
            <?php if ( $stask == 'showconfig' ) { ; ?>
            		<a class="fbsubmenu" href = "#basics"><?php echo _COM_A_BASICS; ?></a>
                 <a class="fbsubmenu" href = "#frontend"><?php echo _COM_A_FRONTEND; ?></a>
@@ -135,18 +135,18 @@ color:#666;
                 <a class="fbsubmenu" href = "#integration"><?php echo _COM_A_INTEGRATION; ?></a>
                 <a class="fbsubmenu" href = "#plugins"><?php echo _FB_ADMIN_CONFIG_PLUGINS; ?></a>
             <?php } ?>
-           <a class="fbmainmenu"  href = "index2.php?option=com_Kunena&task=showAdministration"><?php echo _COM_C_FORUM; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_Kunena&task=showprofiles"><?php echo _COM_C_USER; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_Kunena&task=showsmilies"><?php echo _FB_EMOTICONS_EDIT_SMILIES;?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_Kunena&task=ranks"><?php echo _FB_RANKS_MANAGE; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_Kunena&task=browseFiles"><?php echo _COM_C_FILES; ?> </a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_Kunena&task=browseImages"><?php echo _COM_C_IMAGES; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_Kunena&task=showCss"><?php echo _COM_C_CSS; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_Kunena&task=pruneforum"><?php echo _COM_C_PRUNETAB; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_Kunena&task=syncusers"><?php echo _FB_SYNC_USERS; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_Kunena&task=loadSample"><?php echo _COM_C_LOADSAMPLE; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_Kunena&task=removeSample" onclick="return confirm('<?php echo _FB_CONFIRM_REMOVESAMPLEDATA?>');"><?php echo _COM_C_REMOVESAMPLE; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_Kunena&task=recount"><?php echo _FB_RECOUNTFORUMS; ?></a>
+           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=showAdministration"><?php echo _COM_C_FORUM; ?></a>
+           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=showprofiles"><?php echo _COM_C_USER; ?></a>
+           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=showsmilies"><?php echo _FB_EMOTICONS_EDIT_SMILIES;?></a>
+           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=ranks"><?php echo _FB_RANKS_MANAGE; ?></a>
+           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=browseFiles"><?php echo _COM_C_FILES; ?> </a>
+           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=browseImages"><?php echo _COM_C_IMAGES; ?></a>
+           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=showCss"><?php echo _COM_C_CSS; ?></a>
+           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=pruneforum"><?php echo _COM_C_PRUNETAB; ?></a>
+           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=syncusers"><?php echo _FB_SYNC_USERS; ?></a>
+           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=loadSample"><?php echo _COM_C_LOADSAMPLE; ?></a>
+           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=removeSample" onclick="return confirm('<?php echo _FB_CONFIRM_REMOVESAMPLEDATA?>');"><?php echo _COM_C_REMOVESAMPLE; ?></a>
+           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=recount"><?php echo _FB_RECOUNTFORUMS; ?></a>
            <a class="fbmainmenu"  href = "http://www.bestofjoomla.com" target = "_blank" ><?php echo _COM_C_SUPPORT; ?></a>
 
 
@@ -168,7 +168,7 @@ function showFbFooter () {
 global $mainframe;
 global $fbConfig;
 
-include ($mainframe->getCfg('absolute_path') . '/components/com_Kunena/sources/fb_version.php');
+include ($mainframe->getCfg('absolute_path') . '/components/com_kunena/sources/fb_version.php');
 // << $fbversion
 ?>
 
@@ -200,7 +200,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 
 
         <?php
-        $path = $mainframe->getCfg('absolute_path') . "/administrator/components/com_Kunena/fb_cpanel.php";
+        $path = $mainframe->getCfg('absolute_path') . "/administrator/components/com_kunena/fb_cpanel.php";
 
         if (file_exists($path)) {
             require $path;
@@ -1281,43 +1281,43 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                         <table size = 100%>
                             <tr>
                               <td>
-                                1: <img src = "<?php echo $mosConfig_live_site;?>/components/com_Kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col1m.png" width = "15" height = "4">
+                                1: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col1m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                2: <img src = "<?php echo $mosConfig_live_site;?>/components/com_Kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col2m.png" width = "15" height = "4">
+                                2: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col2m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                3: <img src = "<?php echo $mosConfig_live_site;?>/components/com_Kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col3m.png" width = "15" height = "4">
+                                3: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col3m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                4: <img src = "<?php echo $mosConfig_live_site;?>/components/com_Kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col4m.png" width = "15" height = "4">
+                                4: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col4m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                5: <img src = "<?php echo $mosConfig_live_site;?>/components/com_Kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col5m.png" width = "15" height = "4">
+                                5: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col5m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                6: <img src = "<?php echo $mosConfig_live_site;?>/components/com_Kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col6m.png" width = "15" height = "4">
+                                6: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col6m.png" width = "15" height = "4">
                               </td>
                             </tr>
 
                             <tr>
                               <td>
-                                7: <img src = "<?php echo $mosConfig_live_site;?>/components/com_Kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col7m.png" width = "15" height = "4">
+                                7: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col7m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                8: <img src = "<?php echo $mosConfig_live_site;?>/components/com_Kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col8m.png" width = "15" height = "4">
+                                8: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col8m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                9: <img src = "<?php echo $mosConfig_live_site;?>/components/com_Kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col9m.png" width = "15" height = "4">
+                                9: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col9m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                10: <img src = "<?php echo $mosConfig_live_site;?>/components/com_Kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col10m.png" width = "15" height = "4">
+                                10: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col10m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                11: <img src = "<?php echo $mosConfig_live_site;?>/components/com_Kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col11m.png" width = "15" height = "4">
+                                11: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col11m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                12: <img src = "<?php echo $mosConfig_live_site;?>/components/com_Kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col12m.png" width = "15" height = "4">
+                                12: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col12m.png" width = "15" height = "4">
                               </td>
                             </tr>
                         </table>
@@ -2008,7 +2008,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
 
                     <td align = "left" valign = "top">
-                        <a href = "index2.php?option=com_Kunena&amp;task=loadCBprofile" style = "text-decoration:none;" title = "<?php echo _COM_A_COMBUILDER_PROFILE_DESC;?>"><?php echo _COM_A_COMBUILDER_PROFILE_CLICK ?></a>
+                        <a href = "index2.php?option=com_kunena&amp;task=loadCBprofile" style = "text-decoration:none;" title = "<?php echo _COM_A_COMBUILDER_PROFILE_DESC;?>"><?php echo _COM_A_COMBUILDER_PROFILE_CLICK ?></a>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_COMBUILDER_PROFILE_DESC ?>
@@ -2060,7 +2060,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                         //-->
             </script>
 
-            <input type = "button" class = "button" value = "<?php echo _COM_A_BOT_REFERENCE;?>" onClick = "openWin('components/com_Kunena/Kunena_mosbot_help.php')">
+            <input type = "button" class = "button" value = "<?php echo _COM_A_BOT_REFERENCE;?>" onClick = "openWin('components/com_kunena/Kunena_mosbot_help.php')">
                     <!-- End Arno code test -->
                     </td>
                 </tr>
@@ -2551,8 +2551,8 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 
 
                     <td colspan = "4" nowrap>
-                        :: <a href = "index2.php?option=com_Kunena&task=profiles&order=0"><?php
-    echo _FB_SORTID; ?></a> :: <a href = "index2.php?option=com_Kunena&task=profiles&order=1"><?php echo _FB_MOD; ?></a> :: <a href = "index2.php?option=com_Kunena&task=profiles&order=2"><?php echo _FB_SORTNAME; ?></a>
+                        :: <a href = "index2.php?option=com_kunena&task=profiles&order=0"><?php
+    echo _FB_SORTID; ?></a> :: <a href = "index2.php?option=com_kunena&task=profiles&order=1"><?php echo _FB_MOD; ?></a> :: <a href = "index2.php?option=com_kunena&task=profiles&order=2"><?php echo _FB_SORTNAME; ?></a>
                     </td>
                 </tr>
             </table>
@@ -2740,7 +2740,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                                 </td>
 
                                 <td width = "20">
-                                    <a href = "index2.php?option=com_Kunena&task=userprofile&do=show&user_id=<?php echo $pl->id;?>"><?php echo $pl->id; ?>&nbsp;
+                                    <a href = "index2.php?option=com_kunena&task=userprofile&do=show&user_id=<?php echo $pl->id;?>"><?php echo $pl->id; ?>&nbsp;
                                 </td>
 
                                 <td>
@@ -2810,7 +2810,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
     //   function showUserProfile ($database,$mosLang,$user_id,$do,$deleteSig,$signature,$newview,$user_id,$thread,$moderator)
     //   {
     //
-    //      include ('components/com_Kunena/moderate_user.php');
+    //      include ('components/com_kunena/moderate_user.php');
     //   }
     function editUserProfile($user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid , $modCats)
     {
@@ -2823,7 +2823,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
         //that's what we got now; later the 'future_use' columns can be used..
 
         $csubslist = count($subslist);
-        include_once ('components/com_Kunena/bb_adm.js');
+        include_once ('components/com_kunena/bb_adm.js');
 ?>
 
         <form action = "index2.php?option=<?php echo $option;?>" method = "POST" name = "adminForm">
@@ -3048,7 +3048,7 @@ else
 
             <input type = "hidden" name = "task" value = ""/>
 
-            <input type = "hidden" name = "option" value = "com_Kunena"/>
+            <input type = "hidden" name = "option" value = "com_kunena"/>
         </form>
 
         <table border = 0 cellspacing = 0 width = "100%" align = "center" class = "adminform">
@@ -3213,7 +3213,7 @@ else
                 echo '<table style="border: 1px solid #ccc;"><tr><td height="90" width="130" style="text-align: center">';
                 echo $type ? '<a href="' . FB_LIVEUPLOADEDPATH . '/images/' . $uploaded[$i] . '" target="_blank" title="' . _COM_A_IMGB_ENLARGE . '" alt="' . _COM_A_IMGB_ENLARGE . '"><img src="' . FB_LIVEUPLOADEDPATH . '/images/' . $uploaded[$i]
                          . '" width="80" heigth="80" border="0"></a>' : '<a href="'
-                         . FB_LIVEUPLOADEDPATH . '/files/' . $uploaded[$i] . '" title="' . _COM_A_IMGB_DOWNLOAD . '" alt="' . _COM_A_IMGB_DOWNLOAD . '"><img src="../administrator/components/com_Kunena/images/fbfile.png"   border="0"></a>';
+                         . FB_LIVEUPLOADEDPATH . '/files/' . $uploaded[$i] . '" title="' . _COM_A_IMGB_DOWNLOAD . '" alt="' . _COM_A_IMGB_DOWNLOAD . '"><img src="../administrator/components/com_kunena/images/fbfile.png"   border="0"></a>';
                 echo '</td></tr><tr><td style="text-align: center">';
                 //echo '<input type="radio" name="newAvatar" value="gallery/'.$uploaded[$i].'">';
                 echo '<br /><small>';

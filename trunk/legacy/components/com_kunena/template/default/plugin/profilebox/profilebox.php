@@ -141,7 +141,7 @@ else {
 }
 
 if ($is_editor) {
-$annlink = 'index.php?option=com_Kunena&amp;func=announcement&amp;do=show'.FB_FB_ITEMID_SUFFIX;
+$annlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show'.FB_FB_ITEMID_SUFFIX;
 
 ?>
 | <a href = "<?php echo $annlink;?>"><?php echo _ANN_ANNOUNCEMENTS; ?> </a>

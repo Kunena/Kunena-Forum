@@ -63,7 +63,7 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
         $subject = _FB_REPORT_MSG . ":" . $row->subject;
         }
 
-    $msglink = "index.php?option=com_Kunena&amp;func=view&amp;catid=" . $row->catid . "&amp;id=" . $row->id . FB_FB_ITEMID_SUFFIX;
+    $msglink = "index.php?option=com_kunena&amp;func=view&amp;catid=" . $row->catid . "&amp;id=" . $row->id . FB_FB_ITEMID_SUFFIX;
     $msglink = sefRelToAbs($msglink . '#' . $row->id);
 
     $message = $sender . "" . _FB_REPORT_INTRO . "" . $reason . " ";
@@ -187,7 +187,7 @@ function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
 function ReportForm($msg_id, $catid) {
     global $my, $fbConfig;
 
-    $redirect = 'index.php?option=com_Kunena&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id . '&amp;Itemid=' . FB_FB_ITEMID . '#' . $msg_id;
+    $redirect = 'index.php?option=com_kunena&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id . '&amp;Itemid=' . FB_FB_ITEMID . '#' . $msg_id;
 
     //$redirect = sefRelToAbs($redirect);
     if (!$my->id) {
@@ -244,7 +244,7 @@ function ReportForm($msg_id, $catid) {
                                             </tr>
                                         </table>
 
-                                        <input type = "hidden" name = "option" value = "com_Kunena"/>
+                                        <input type = "hidden" name = "option" value = "com_kunena"/>
                                         <input type = "hidden" name = "func" value = "report"/>
                                         <input type = "hidden" name = "do" value = "report"/>
                                         <input type = "hidden" name = "msg_id" value = "<?php echo $msg_id;?>"/>

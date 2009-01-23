@@ -30,11 +30,11 @@ else {
 
 $is_user = (strtolower($my->usertype) <> '');
 
-$showlink = sefRelToAbs('index.php?option=com_Kunena&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=show');
-$addlink = sefRelToAbs('index.php?option=com_Kunena&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=add');
-$readlink = 'index.php?option=com_Kunena&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=read&amp;id=';
-$editlink = 'index.php?option=com_Kunena&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=edit&amp;id=';
-$deletelink = 'index.php?option=com_Kunena&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=delete&amp;id=';
+$showlink = sefRelToAbs('index.php?option=com_kunena&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=show');
+$addlink = sefRelToAbs('index.php?option=com_kunena&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=add');
+$readlink = 'index.php?option=com_kunena&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=read&amp;id=';
+$editlink = 'index.php?option=com_kunena&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=edit&amp;id=';
+$deletelink = 'index.php?option=com_kunena&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=delete&amp;id=';
 
 // BEGIN: READ ANN
 if ($do == "read") {
@@ -115,8 +115,8 @@ if ($is_editor) {
         <?php
     // BEGIN: SHOW ANN
     if ($do == "show") {
-        $deletelink = 'index.php?option=com_Kunena&amp;func=announcement&amp;do=delete&amp;id=';
-        $editlink = 'index.php?option=com_Kunena&amp;func=announcement&amp;do=edit&amp;id=';
+        $deletelink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=delete&amp;id=';
+        $editlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=edit&amp;id=';
         ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">

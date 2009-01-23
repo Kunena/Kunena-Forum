@@ -23,7 +23,7 @@ if ($my->id != "" && $my->id != 0)
 
 /* if ($my->id < 1)
 {
-   mosRedirect("index.php?option=com_Kunena" . FB_FB_ITEMID_SUFFIX, "Please login first");
+   mosRedirect("index.php?option=com_kunena" . FB_FB_ITEMID_SUFFIX, "Please login first");
 }
 
 */
@@ -607,7 +607,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
 				<?php
 						}
 						else {
-							echo _USER_RETURN_A . " <a href=\"index.php?option=com_Kunena&amp;Itemid=$Itemid&amp;func=myprofile&amp;do=show\">" . _USER_RETURN_B . "</a><br /><br />";
+							echo _USER_RETURN_A . " <a href=\"index.php?option=com_kunena&amp;Itemid=$Itemid&amp;func=myprofile&amp;do=show\">" . _USER_RETURN_B . "</a><br /><br />";
 				?>
 					<a href="javascript:history.go(-1)"><?php echo _BACK ;?></a>
 
@@ -772,7 +772,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                         $database->query();
                     }
 
-                    mosRedirect('index.php?option=com_Kunena&amp;func=myprofile' . FB_FB_ITEMID_SUFFIX, _FB_USER_DETAILS_SAVE);
+                    mosRedirect('index.php?option=com_kunena&amp;func=myprofile' . FB_FB_ITEMID_SUFFIX, _FB_USER_DETAILS_SAVE);
                     break;
             }
             ?>

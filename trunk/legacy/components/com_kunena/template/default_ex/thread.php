@@ -166,7 +166,7 @@ $tree = thread_flat($tree, $messages);
                 </td>
 
                     <?php
-                     $newURL = "index.php?option=com_Kunena".FB_FB_ITEMID_SUFFIX."&amp;func=view&amp;catid=". $catid."&amp;id=";
+                     $newURL = "index.php?option=com_kunena".FB_FB_ITEMID_SUFFIX."&amp;func=view&amp;catid=". $catid."&amp;id=";
 
                     if ($leaf->moved)
                     {

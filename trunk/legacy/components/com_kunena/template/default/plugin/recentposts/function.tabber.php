@@ -29,13 +29,13 @@ class my_tabs
         if (!$useCookies) {
             echo("
         <script type='text/javascript'
-        src='$mosConfig_live_site/components/com_Kunena/template/default/plugin/recentposts/tabber.js' >
+        src='$mosConfig_live_site/components/com_kunena/template/default/plugin/recentposts/tabber.js' >
         </script>");
         }
 
         if ($xhtml) {
             $mainframe->addCustomHeadTag("
-        <link rel='stylesheet' href='$mosConfig_live_site/components/com_Kunena/template/default/plugin/recentposts/tabber.css' type='text/css' />
+        <link rel='stylesheet' href='$mosConfig_live_site/components/com_kunena/template/default/plugin/recentposts/tabber.css' type='text/css' />
 
         <script type='text/javascript'>
         /* Optional: Temporarily hide the 'tabber' class so it does not 'flash'
@@ -46,7 +46,7 @@ class my_tabs
         }
         else {
             echo("
-        <link rel='stylesheet' href='$mosConfig_live_site/components/com_Kunena/template/default/plugin/recentposts/tabber.css' type='text/css' >
+        <link rel='stylesheet' href='$mosConfig_live_site/components/com_kunena/template/default/plugin/recentposts/tabber.css' type='text/css' >
 
         <script type='text/javascript'>
         /* Optional: Temporarily hide the 'tabber' class so it does not 'flash'
@@ -134,7 +134,7 @@ class my_tabs
             if ($useCookies) {
                 echo("
         <script type='text/javascript'
-        src='$mosConfig_live_site/components/com_Kunena/template/default/plugin/recentposts/tabber.js' >
+        src='$mosConfig_live_site/components/com_kunena/template/default/plugin/recentposts/tabber.js' >
         </script>
         ");
             }

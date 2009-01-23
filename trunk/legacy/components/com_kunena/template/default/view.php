@@ -1245,7 +1245,7 @@ if ($letPass || $is_Moderator)
 
                                     <?php
                                     // TODO: fxstein - Need to perform SEO cleanup
-                                    echo $pageNav->writePagesLinks("index.php?option=com_Kunena&amp;Itemid=$Itemid&amp;func=view&amp;id=$id&amp;catid=$catid");
+                                    echo $pageNav->writePagesLinks("index.php?option=com_kunena&amp;Itemid=$Itemid&amp;func=view&amp;id=$id&amp;catid=$catid");
                                     ?>
 
                                     </li>

@@ -90,7 +90,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 <?php echo _FB_USRL_DISPLAY_NR; ?>
 
 <?php
-echo $pageNav->writeLimitBox("index.php?option=com_Kunena&amp;func=myprofile&amp;do=showfav" . FB_FB_ITEMID_SUFFIX . "");
+echo $pageNav->writeLimitBox("index.php?option=com_kunena&amp;func=myprofile&amp;do=showfav" . FB_FB_ITEMID_SUFFIX . "");
 ?>
 
 			<input type = "submit" class = "button" value = "<?php echo _GEN_DELETE;?>"/>
@@ -108,7 +108,7 @@ echo $pageNav->writeLimitBox("index.php?option=com_Kunena&amp;func=myprofile&amp
 			<tr><td colspan = "3" class = "fb_profile-bottomnav">
 					<?php
 					// TODO: fxstein - Need to perform SEO cleanup
-					echo $pageNav->writePagesLinks("index.php?option=com_Kunena&amp;func=myprofile&amp;do=showfav" . FB_FB_ITEMID_SUFFIX);
+					echo $pageNav->writePagesLinks("index.php?option=com_kunena&amp;func=myprofile&amp;do=showfav" . FB_FB_ITEMID_SUFFIX);
 					?>
 
 					<br/>

@@ -22,7 +22,7 @@ $Itemid = intval(mosGetParam($_REQUEST, 'Itemid'));
 
 global $fbConfig;
 if (!defined("FB_FB_ITEMID")) {
-        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_Kunena' AND published = 1");
+        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_kunena' AND published = 1");
         $Itemid = $database->loadResult();
 
         if ($Itemid < 1) {
@@ -76,8 +76,8 @@ if (!defined("FB_FB_ITEMID")) {
         define("FB_PROFILE_LINK_SUFFIX", "index.php?option=com_mypms&amp;task=showprofile&amp;Itemid=" . FB_CPM_ITEMID . "&amp;user=");
         }
     else {
-        $profilelink = 'index.php?option=com_Kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=';
-        define("FB_PROFILE_LINK_SUFFIX", "index.php?option=com_Kunena&amp;func=fbprofile&amp;task=showprf&amp;Itemid=" . FB_FB_ITEMID . "&amp;userid=");
+        $profilelink = 'index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=';
+        define("FB_PROFILE_LINK_SUFFIX", "index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;Itemid=" . FB_FB_ITEMID . "&amp;userid=");
         }
     }
 
@@ -96,23 +96,23 @@ define('JB_JABSPATH', $mainframe->getCfg('absolute_path'));
 define('JB_JLIVEURL', $mainframe->getCfg('live_site'));
 
 // Kunena live url
-define('JB_LIVEURL', JB_JLIVEURL . '/index.php?option=com_Kunena' . FB_FB_ITEMID_SUFFIX);
-define('JB_CLEANLIVEURL', JB_JLIVEURL . '/index2.php?option=com_Kunena&amp;no_html=1' . FB_FB_ITEMID_SUFFIX);
-define('JB_LIVEURLREL', 'index.php?option=com_Kunena' . FB_FB_ITEMID_SUFFIX);
-define('JB_ABSPATH', JB_JABSPATH . '/components/com_Kunena');
+define('JB_LIVEURL', JB_JLIVEURL . '/index.php?option=com_kunena' . FB_FB_ITEMID_SUFFIX);
+define('JB_CLEANLIVEURL', JB_JLIVEURL . '/index2.php?option=com_kunena&amp;no_html=1' . FB_FB_ITEMID_SUFFIX);
+define('JB_LIVEURLREL', 'index.php?option=com_kunena' . FB_FB_ITEMID_SUFFIX);
+define('JB_ABSPATH', JB_JABSPATH . '/components/com_kunena');
 
 // Kunena absolute path
 define('JB_ABSSOURCESPATH', JB_ABSPATH . '/sources/');
 
 // Kunena souces absolute path
-define('JB_DIRECTURL', JB_JLIVEURL . '/components/com_Kunena');
+define('JB_DIRECTURL', JB_JLIVEURL . '/components/com_kunena');
 
 // Kunena direct url
 define('JB_URLSOURCESPATH', JB_DIRECTURL . '/sources/');
 
 // Kunena sources url
 define('JB_LANG', $mainframe->getCfg('lang'));
-define('JB_ABSADMPATH', JB_JABSPATH . '/administrator/components/com_Kunena');
+define('JB_ABSADMPATH', JB_JABSPATH . '/administrator/components/com_kunena');
 
 if (!defined("JB_JCSSURL")) {
     $database->setQuery("SELECT template FROM #__templates_menu where client_id ='0'");

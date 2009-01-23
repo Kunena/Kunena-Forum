@@ -18,29 +18,29 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $mainframe;
 //Get right Language file
-if (file_exists($mainframe->getCfg('absolute_path') . '/administrator/components/com_Kunena/language/' . $mainframe->getCfg('lang') . '.php')) {
-    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_Kunena/language/' . $mainframe->getCfg('lang') . '.php');
+if (file_exists($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/' . $mainframe->getCfg('lang') . '.php')) {
+    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/' . $mainframe->getCfg('lang') . '.php');
 }
 else {
-    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_Kunena/language/english.php');
+    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/english.php');
 }
 
-include_once($mainframe->getCfg("absolute_path")."/administrator/components/com_Kunena/sources/boj_upgrade.class.php");
+include_once($mainframe->getCfg("absolute_path")."/administrator/components/com_kunena/sources/boj_upgrade.class.php");
 
 function com_install() {
 	global $database, $mainframe, $mosConfig_absolute_path;
 
 	//change fb menu icon
-	$database->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_Kunena'");
+	$database->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena'");
 	$id = $database->loadResult();
 
 	//add new admin menu images
-	$database->setQuery("UPDATE #__components SET admin_menu_img  = '../administrator/components/com_Kunena/images/fbmenu.png'" . ",   admin_menu_link = 'option=com_Kunena' " . "WHERE id='".$id."'");
+	$database->setQuery("UPDATE #__components SET admin_menu_img  = '../administrator/components/com_kunena/images/fbmenu.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
 	$database->query() or trigger_dbwarning("Unable to set admin menu image.");
 
 
 	//install & upgrade class
-	$fbupgrade = new boj_Upgrade("com_Kunena", "fb_install_upgrade.xml", "fb_", "install", false);
+	$fbupgrade = new boj_Upgrade("com_kunena", "fb_install_upgrade.xml", "fb_", "install", false);
 
 	// Legacy enabler
 	// Versions prior to 1.0.5 did not came with a version table inside the database
@@ -105,8 +105,8 @@ function com_install() {
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td width="20%" valign="top" style="padding: 10px;"><a
-			href="index2.php?option=com_Kunena"><img
-			src="components/com_Kunena/images/logo.png" alt="Kunena"
+			href="index2.php?option=com_kunena"><img
+			src="components/com_kunena/images/logo.png" alt="Kunena"
 			border="0"></a></td>
 
 		<td width="80%" valign="top" style="padding: 10px;">
@@ -121,7 +121,7 @@ function com_install() {
 		{
 
 			//ok now it is installed, just copy the fbfiles directory, and apply 0777
-			dircopy($mainframe->getCfg("absolute_path") . "/components/com_Kunena/_fbfiles_dist", $mainframe->getCfg("absolute_path") . "/images/fbfiles", true);
+			dircopy($mainframe->getCfg("absolute_path") . "/components/com_kunena/_fbfiles_dist", $mainframe->getCfg("absolute_path") . "/images/fbfiles", true);
 		}
 		else {
 
@@ -139,7 +139,7 @@ function com_install() {
 			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/files
 			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/images
 </pre> a) You can copy the contents of __fbfiles_dist under
-			components/com_Kunena to your Joomla root, under images/ folder,
+			components/com_kunena to your Joomla root, under images/ folder,
 			rename it to "fbfiles" and then chmod it to 777 (making it writable)
 
 			<br />

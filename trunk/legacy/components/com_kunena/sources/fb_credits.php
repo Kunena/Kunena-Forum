@@ -42,7 +42,7 @@ global $is_Moderator;
                           <li class="fb_teammember"><a href="http://www.starVmax.com" target='_blank' rel='follow'>fxstein</a> Kunena developer and admin of <a href="http://www.starVmax.com/Forum/" target='_blank' rel='follow'>www.starVmax.com/Forum/</a></li>
                           <li class="fb_teammember"><a href="http://www.greatpixels.com" target='_blank' rel='follow'>greatpixels</a> Kunena developer, designer and admin of <a href="http://www.bestofjoomla.com" target='_blank' rel='follow'>www.BestofJoomla.com</a></li>
                           <li class="fb_teammember"><a href="http://www.racoonpages.de/" target='_blank' rel='follow'>racoon</a> Kunena developer</li>
-                          <li class="fb_teammember"><a href="http://www.bestofjoomla.com/component/option,com_Kunena/Itemid,38/func,fbprofile/task,showprf/userid,2333/" target='_blank' rel='follow'>sisko1990</a> Kunena translation coordinator and moderator of <a href="http://www.bestofjoomla.com/component/option,com_Kunena/Itemid,38/" target='_blank' rel='follow'>www.BestofJoomla.com/Forum</a></li>
+                          <li class="fb_teammember"><a href="http://www.bestofjoomla.com/component/option,com_kunena/Itemid,38/func,fbprofile/task,showprf/userid,2333/" target='_blank' rel='follow'>sisko1990</a> Kunena translation coordinator and moderator of <a href="http://www.bestofjoomla.com/component/option,com_kunena/Itemid,38/" target='_blank' rel='follow'>www.BestofJoomla.com/Forum</a></li>
                         </ul></td>
                     </tr>
                     <tr valign="top">

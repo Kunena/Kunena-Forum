@@ -23,7 +23,7 @@ if ($fbConfig->showwhoisonline > 0)
 ?>
 <!-- WHOIS ONLINE -->
 <?php
-    $whoislink = sefRelToAbs('index.php?option=com_Kunena&amp;func=who');
+    $whoislink = sefRelToAbs('index.php?option=com_kunena&amp;func=who');
     $fb_queryName = $fbConfig->username ? "username" : "name";
     $query
         = "SELECT w.userip, w.time, w.what, u.$fb_queryName AS username, u.id, k.moderator, k.showOnline "

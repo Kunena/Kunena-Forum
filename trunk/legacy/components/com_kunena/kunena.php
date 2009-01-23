@@ -62,21 +62,21 @@ $userid 		= intval(mosGetParam($_REQUEST, 'userid', 0));
 $view 			= mosGetParam($_REQUEST, 'view', '');
 $msgpreview 	= mosGetParam($_REQUEST, 'msgpreview', '');
 
-include_once ($mainframe->getCfg("absolute_path") . "/components/com_Kunena/sources/fb_debug.php");
+include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/sources/fb_debug.php");
 
 // get Kunenas configuration params in
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_Kunena/sources/fb_config.class.php");
+require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/sources/fb_config.class.php");
 global $fbConfig;
 $fbConfig = new fb_config();
 $fbConfig->load();
 
-//include_once ($mainframe->getCfg("absolute_path") . '/administrator/components/com_Kunena/Kunena_config.php');
+//include_once ($mainframe->getCfg("absolute_path") . '/administrator/components/com_kunena/Kunena_config.php');
 
 // Central Location for all internal links
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_Kunena/sources/fb_link.class.php");
+require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/sources/fb_link.class.php");
 
 // Class structure should be used after this and all the common task should be moved to this class
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_Kunena/class.Kunena.php");
+require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/class.Kunena.php");
 
 // get right Language file
 if (file_exists(JB_ABSADMPATH . '/language/' . JB_LANG . '.php')) {
@@ -865,7 +865,7 @@ else
                     }
 
                 // check that template exists in case it was deleted
-                if (file_exists($mosConfig_absolute_path . '/components/com_Kunena/template/' . $fb_change_template . '/forum.css'))
+                if (file_exists($mosConfig_absolute_path . '/components/com_kunena/template/' . $fb_change_template . '/forum.css'))
                 {
                     $lifetime = 60 * 10;
                     $fb_current_template = $fb_change_template;
@@ -886,7 +886,7 @@ else
                     }
 
                 // check that template exists in case it was deleted
-                if (file_exists($mosConfig_absolute_path . '/components/com_Kunena/template/' . $fb_change_img_template . '/forum.css'))
+                if (file_exists($mosConfig_absolute_path . '/components/com_kunena/template/' . $fb_change_img_template . '/forum.css'))
                 {
                     $lifetime = 60 * 10;
                     $fb_current_img_template = $fb_change_img_template;

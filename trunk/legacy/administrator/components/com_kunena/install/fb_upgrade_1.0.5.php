@@ -8,7 +8,7 @@
 * @link http://www.bestofjoomla.com
 *
 * Kunena Upgrade file for 1.0.5
-* component: com_Kunena
+* component: com_kunena
 **/
 
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
@@ -26,7 +26,7 @@ $is_101_version = $database->loadResult();
 
 if ($is_101_version) {
     // now do the upgrade
-    $database->setQuery("update #__fb_attachments set filelocation = replace(filelocation,'" . $mainframe->getCfg("absolute_path") . "/components/com_Kunena/uploaded','/images/fbfiles');");
+    $database->setQuery("update #__fb_attachments set filelocation = replace(filelocation,'" . $mainframe->getCfg("absolute_path") . "/components/com_kunena/uploaded','/images/fbfiles');");
     if ($database->query()) print '<li class="fbscslist">Attachment table successfully upgraded to 1.0.2+ version schema!</li>';
     else
     {
@@ -34,7 +34,7 @@ if ($is_101_version) {
     	trigger_dbwarning("Unable to upgrade attachement table.");
     }
 
-    $database->setQuery("update #__fb_messages_text set message = replace(message,'/components/com_Kunena/uploaded','/images/fbfiles');");
+    $database->setQuery("update #__fb_messages_text set message = replace(message,'/components/com_kunena/uploaded','/images/fbfiles');");
     if ($database->query()) print '<li class="fbscslist">Attachments in messages table successfully upgraded to 1.0.2+ version schema!</li>';
     else
     {

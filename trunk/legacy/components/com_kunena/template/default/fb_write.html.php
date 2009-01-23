@@ -273,7 +273,7 @@ include_once(JB_ABSSOURCESPATH . 'fb_bb.js.php');
         <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
             <td class = "fb_leftcolumn">&nbsp;<strong><?php echo _FB_CAPDESC; ?></strong>&nbsp;</td>
             <td align="left" valign="middle" height="35px">&nbsp;<input name="txtNumber" type="text" id="txtNumber" value="" class="button" style="vertical-align:top" size="15">
-			<img src="index2.php?option=com_Kunena&func=showcaptcha" alt="" />
+			<img src="index2.php?option=com_kunena&func=showcaptcha" alt="" />
 		 </td>
          </tr>
         <?php

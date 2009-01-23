@@ -92,7 +92,7 @@ function fbGetPreview(content, sitemid) {
     var content = encodeURIComponent(content);
     
     jQuery.ajax({url:"index2.php",
-    data : { msgpreview : content, Itemid : sitemid , option: "com_Kunena" , func: "getpreview" , no_html: 1},
+    data : { msgpreview : content, Itemid : sitemid , option: "com_kunena" , func: "getpreview" , no_html: 1},
     type: "POST",
     beforeSend : function (req){
         jQuery('#previewContainer').show();

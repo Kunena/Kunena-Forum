@@ -11,7 +11,7 @@
 // no direct access
 defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
-include_once($mainframe->getCfg("absolute_path")."/administrator/components/com_Kunena/sources/boj_upgrade.class.php");
+include_once($mainframe->getCfg("absolute_path")."/administrator/components/com_kunena/sources/boj_upgrade.class.php");
 
 $VersionInfo = boj_Upgrade::getLatestVersion('#__fb_version');
 $fbversion = $VersionInfo->version.' | '.$VersionInfo->versiondate.' | '.$VersionInfo->build.' [ '.$VersionInfo->versionname.' ]';

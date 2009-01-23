@@ -30,7 +30,7 @@ $catid = mosGetParam($_REQUEST, 'catid');
 
 // searchword must contain a minimum of 3 characters
 if ($searchword && strlen($searchword) < 3 || strlen($searchword) == '0') {
-    mosRedirect('index.php?option=com_Kunena&amp;func=advsearch&amp;Itemid=' . FB_FB_ITEMID);
+    mosRedirect('index.php?option=com_kunena&amp;func=advsearch&amp;Itemid=' . FB_FB_ITEMID);
 }
 
 $searchword = strval($searchword);

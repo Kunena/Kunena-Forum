@@ -51,7 +51,7 @@ eliminate the upload and decompress time from the install so it will easily run 
 than 30 sec.
 Should you hit this timeout, you first must uninstall the partial Kunena setup.
 Depending on where the timeout occurred, you might be required to delete the 
-components/com_Kunena and administartor/components/com_Kunena directories 
+components/com_kunena and administartor/components/com_kunena directories 
 by hand through either ftp or ssh access of your hosting environment.
 
 INSTALLATION
@@ -68,7 +68,7 @@ Please make sure you have the latest build release of Kunena. You can find the l
 packages on JoomlaCode.org: http://joomlacode.org/gf/project/Kunena/frs/
 
 We have started to use a new file naming standard:
-For EXAMPLE: com_Kunena_v1.0.5RC1_b639_2008-08-30.zip
+For EXAMPLE: com_kunena_v1.0.5RC1_b639_2008-08-30.zip
 (You actual package might be newer and contain different numbers and dates)
 
 The file name now contains, version number (1.0.5), version suffix (in this case RC1), 

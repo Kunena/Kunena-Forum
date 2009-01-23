@@ -571,7 +571,7 @@ DEFINE('_FB_NOUSERSFOUND', 'No userprofiles found.');
 DEFINE('_FB_ADDMOD', 'Add Moderator to');
 DEFINE('_FB_NOMODSAV', 'There are no possible moderators found. Read the \'note\' below.');
 DEFINE('_FB_NOTEUS',
-    'NOTE: Only users which have the moderator flag set in their Kunena Profile are shown here. In order to be able to add a moderator give a user a moderator flag, go to <a href="index2.php?option=com_Kunena&task=profiles">User Administration</a> and search for the user you want to make a moderator. Then select his or her profile and update it. The moderator flag can only be set by an site administrator. ');
+    'NOTE: Only users which have the moderator flag set in their Kunena Profile are shown here. In order to be able to add a moderator give a user a moderator flag, go to <a href="index2.php?option=com_kunena&task=profiles">User Administration</a> and search for the user you want to make a moderator. Then select his or her profile and update it. The moderator flag can only be set by an site administrator. ');
 DEFINE('_FB_PROFFOR', 'Profile for');
 DEFINE('_FB_GENPROF', 'General Profile Options');
 DEFINE('_FB_PREFVIEW', 'Prefered Viewtype:');
@@ -859,7 +859,7 @@ DEFINE('_FORUM_SEARCHRESULTS', 'displaying %s out of %s results.');
 DEFINE('_COM_FORUM_HELP', 'FAQ');
 // rules.php
 DEFINE('_COM_FORUM_RULES', 'Rules');
-DEFINE('_COM_FORUM_RULES_DESC', '<ul><li>Edit this file to insert your rules joomlaroot/administrator/components/com_Kunena/language/english.php</li><li>Rule 2</li><li>Rule 3</li><li>Rule 4</li><li>...</li></ul>');
+DEFINE('_COM_FORUM_RULES_DESC', '<ul><li>Edit this file to insert your rules joomlaroot/administrator/components/com_kunena/language/english.php</li><li>Rule 2</li><li>Rule 3</li><li>Rule 4</li><li>...</li></ul>');
 //smile.class.php
 DEFINE('_COM_BOARDCODE', 'Boardcode');
 // moderate_messages.php
@@ -879,7 +879,7 @@ DEFINE('_COM_A_FORUM_JUMP_DESC', 'If set to &quot;Yes&quot; a selector will be s
 DEFINE('_GEN_RULES', 'Rules');
 DEFINE('_COM_A_RULESPAGE', 'Enable Rules Page');
 DEFINE('_COM_A_RULESPAGE_DESC',
-    'If set to &quot;Yes&quot; a link in the header menu will be shown to your Rules page. This page can be used for things like your forum rules etcetera. You can alter the contents of this file to your liking by opening the rules.php in /joomla_root/components/com_Kunena. <em>Make sure you always have a backup of this file as it will be overwritten when upgrading!</em>');
+    'If set to &quot;Yes&quot; a link in the header menu will be shown to your Rules page. This page can be used for things like your forum rules etcetera. You can alter the contents of this file to your liking by opening the rules.php in /joomla_root/components/com_kunena. <em>Make sure you always have a backup of this file as it will be overwritten when upgrading!</em>');
 DEFINE('_MOVED_TOPIC', 'MOVED:');
 DEFINE('_COM_A_PDF', 'Enable PDF creation');
 DEFINE('_COM_A_PDF_DESC',
@@ -1135,11 +1135,11 @@ DEFINE('_COM_A_USERSTATS_DESC', 'Set to &quot;Yes&quot; to show User Statistics 
 DEFINE('_COM_A_AVATARUPLOAD', 'Allow Avatar Upload');
 DEFINE('_COM_A_AVATARUPLOAD_DESC', 'Set to &quot;Yes&quot; if you want registered users to be able to upload an avatar.');
 DEFINE('_COM_A_AVATARGALLERY', 'Use Avatars Gallery');
-DEFINE('_COM_A_AVATARGALLERY_DESC', 'Set to &quot;Yes&quot; if you want registered users to be able to choose an avatar from a Gallery you provide (components/com_Kunena/avatars/gallery).');
+DEFINE('_COM_A_AVATARGALLERY_DESC', 'Set to &quot;Yes&quot; if you want registered users to be able to choose an avatar from a Gallery you provide (components/com_kunena/avatars/gallery).');
 DEFINE('_COM_A_RANKING_DESC', 'Set to &quot;Yes&quot; if you want to show the rank registered users have based on the number of posts they made.<br/><strong>Note that you must enable User Stats in the Advanced tab too to show it.</strong>');
 DEFINE('_COM_A_RANKINGIMAGES', 'Use Rank Images');
 DEFINE('_COM_A_RANKINGIMAGES_DESC',
-    'Set to &quot;Yes&quot; if you want to show the rank registered users have with an image (from components/com_Kunena/ranks). Turning this of will show the text for that rank. Check the documentation on www.bestofjoomla.com for more information on ranking images');
+    'Set to &quot;Yes&quot; if you want to show the rank registered users have with an image (from components/com_kunena/ranks). Turning this of will show the text for that rank. Check the documentation on www.bestofjoomla.com for more information on ranking images');
 
 //email and stuff
 $_COM_A_NOTIFICATION = "New post notification from ";

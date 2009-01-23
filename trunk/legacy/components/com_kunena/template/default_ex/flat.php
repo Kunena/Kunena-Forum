@@ -505,7 +505,7 @@ if (count($messages[0]) > 0)
         </table>
 
         <input type = "hidden" name = "Itemid" value = "<?php echo FB_FB_ITEMID;?>"/>
-        <input type = "hidden" name = "option" value = "com_Kunena"/>
+        <input type = "hidden" name = "option" value = "com_kunena"/>
         <input type = "hidden" name = "func" value = "bulkactions" />
         <input type = "hidden" name = "return" value = "<?php echo sefRelToAbs( $Breturn ); ?>" />
     </form>

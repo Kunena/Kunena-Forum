@@ -17,7 +17,7 @@
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $base_url;
-$base_url = "index.php?option=com_Kunena&amp;func=userlist" . FB_FB_ITEMID_SUFFIX; // Base URL string
+$base_url = "index.php?option=com_kunena&amp;func=userlist" . FB_FB_ITEMID_SUFFIX; // Base URL string
 
 list_users();
 

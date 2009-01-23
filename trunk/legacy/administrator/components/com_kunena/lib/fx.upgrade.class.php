@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id$
+* @version $Id:fx.upgrade.class.php 97 2009-01-23 21:58:23Z fxstein $
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2008 Best Of Joomla All rights reserved
@@ -16,7 +16,7 @@
 // ensure this file is being included by a parent file
 defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
 
-include_once ($mainframe->getCfg("absolute_path") . "/components/com_Kunena/sources/fb_debug.php");
+include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/sources/fb_debug.php");
 
 class boj_Upgrade {
 	var $component=null;

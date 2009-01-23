@@ -18,7 +18,7 @@ defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.'
 
 /**
 * Kunena stats support class
-* @package com_Kunena
+* @package com_kunena
 */
 class jbStats {
 

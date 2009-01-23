@@ -28,11 +28,11 @@ else {
     }
 
 $is_user = (strtolower($my->usertype) <> '');
-$showlink = 'index.php?option=com_Kunena&amp;func=announcement&amp;do=show';
-$addlink = 'index.php?option=com_Kunena&amp;func=announcement&amp;do=add';
-$readlink = 'index.php?option=com_Kunena&amp;func=announcement&amp;do=read&amp;id=';
-$editlink = 'index.php?option=com_Kunena&amp;func=announcement&amp;do=edit&amp;id=';
-$deletelink = 'index.php?option=com_Kunena&amp;func=announcement&amp;do=delete&amp;id=';
+$showlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show';
+$addlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=add';
+$readlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=read&amp;id=';
+$editlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=edit&amp;id=';
+$deletelink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=delete&amp;id=';
 ?>
 
 <?php

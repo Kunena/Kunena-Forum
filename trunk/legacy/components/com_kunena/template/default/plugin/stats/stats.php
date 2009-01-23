@@ -17,7 +17,7 @@
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
-$forumurl = 'index.php?option=com_Kunena';
+$forumurl = 'index.php?option=com_kunena';
 $userlist = 'index.php?option=com_comprofiler&amp;task=usersList';
 
 
@@ -28,7 +28,7 @@ else if ($fbConfig->fb_profile == "clexuspm") {
 $profilelink = 'index.php?option=com_mypms&amp;task=showprofile&amp;user=';
 }
 else {
-$profilelink = 'index.php?option=com_Kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=';
+$profilelink = 'index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=';
 }
 
 

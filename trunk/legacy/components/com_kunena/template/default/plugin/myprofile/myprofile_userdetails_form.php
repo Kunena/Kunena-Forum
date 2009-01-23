@@ -127,7 +127,7 @@ $validate = josSpoofValue();
     </tbody>
   </table>
   <input type = "hidden" name = "id" value = "<?php echo $row->id;?>"/>
-  <input type = "hidden" name = "option" value = "com_Kunena"/>
+  <input type = "hidden" name = "option" value = "com_kunena"/>
   <input type = "hidden" name = "func" value = "myprofile"/>
   <input type = "hidden" name = "do" value = "usersave"/>
   <input type = "hidden" name = "task" value = ""/>

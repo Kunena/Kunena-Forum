@@ -13,12 +13,12 @@
   any of the build files.
    
   Required Parameters: (with example - adjust the directories in Eclispe to your individual setup)
-  	-Dproject_dir=${project_loc}/releases/1.0 
+  	-Dproject_dir=${project_loc}/trunk/legacy 
   	-Dpackage_dir=/Development/packages 
   	-Dtmp_dir=/Development/tmp 
   Optional Parameter: (with examples - support for an additional custom build package)
   	-Dcustom_build=true (true if you want to also create a custom build)
-  	-Dcustom_dir=/Development/workspace/starVmax (source directory for package overrides)
+  	-Dcustom_dir=/Development/workspace/www.starVmax.com (source directory for package overrides)
   	-Dcustom_postfix=starVmax (postfix used to identify the custom package files)
   
   If you elect to create a custom build, the build script will take all files from your custom 
@@ -31,7 +31,7 @@
 -->
 <project name="Kunena" default="dist" basedir=".">
 	<description>Ant Build File for Kunena</description>
-	<property file="config.ini" />
+	<property file="kunena.build.config.ini" />
 	<property name="fb.frontend" value="${project_dir}/components/com_kunena/" />
 	<property name="fb.frontend.list" value="" />
 	<property name="fb.backend" value="${project_dir}/administrator/components/com_kunena/" />
@@ -164,8 +164,8 @@
 		</script>
 		<filter token="fbfrontendlist" value="${fb.frontend.list}" />		
 		<filter token="fbbackendlist" value="${fb.backend.list}" />		
-		<copy file="${project_dir}/administrator/components/com_kunena/Kunena.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/administrator/components/com_kunena/install/fb_install_upgrade.xml" todir="${tmp_dir}/install" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/administrator/components/com_kunena/kunena.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/administrator/components/com_kunena/install/kunena.install.upgrade.xml" todir="${tmp_dir}/install" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/components/com_kunena/sources/fb_config.class.php" todir="${tmp_dir}/sources" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/components/com_kunena/sources/fb_rss.php" todir="${tmp_dir}/sources" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/README.txt" todir="${tmp_dir}" overwrite="true" filtering="true" />

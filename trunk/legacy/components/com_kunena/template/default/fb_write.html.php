@@ -18,7 +18,7 @@ defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 global $fbConfig;
 //Some initial thingies needed anyway:
 $htmlText = stripslashes($htmlText);
-include_once(KUNENA_ABSSOURCESPATH . 'fb_bb.js.php');
+include_once(KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">

@@ -288,7 +288,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
 
                     if (!$fbConfig->cb_profile)
                     {
-                        include (KUNENA_ABSSOURCESPATH . 'fb_bb.js.php');
+                        include (KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
 
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_profile_info.php'))
                         {

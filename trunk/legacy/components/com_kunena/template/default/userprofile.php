@@ -82,7 +82,7 @@ if ($my->id)
         }
 
         //here we go:
-        include(KUNENA_ABSSOURCESPATH . 'fb_bb.js.php');
+        include(KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
 
         if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
             require_once(KUNENA_ABSTMPLTPATH . '/fb_pathway.php');

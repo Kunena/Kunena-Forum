@@ -70,6 +70,5 @@ function moreForumSmileys()
 	smileyPopupWindow.document.write('</td></tr>\n\t\t\t<tr><td align="center" class="windowbg"><a href="javascript:window.close();\"><?php echo _KUNENA_EMOTICONS_CLOSE_WINDOW; ?></a></td></tr>\n\t\t</table>\n\t</body>\n</html>');
 	smileyPopupWindow.document.close();
 }
--->
 //]]>
 </script>

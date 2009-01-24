@@ -34,6 +34,7 @@ Kunena 1.0.5
 # Stats: visible even if they were disabled
 # Stats: wrong count in topics and messages
 ^ Stats: Optimized SQL queries for speed and saved 7-20 queries
+# Emoticons: Broken "more emoticons" pop up in IE7.
 
 24-January-2009 Matias
 # Fixed over 100 xhtml bugs

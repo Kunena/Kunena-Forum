@@ -46,7 +46,7 @@ global $is_Moderator;
                         </ul></td>
                     </tr>
                     <tr valign="top">
-                      <td colspan="2"><div  class="fb_credits_more">In addition many members of <a href="http://www.bestofjoomla.com" target='_blank' rel='follow'>www.BestOfJoomla.com</a> have contributed and helped make this a more stable and bugfree version.
+                      <td colspan="2"><div  class="fb_credits_more">In addition many members of <a href="http://www.kunena.com" target='_blank' rel='follow'>www.Kunena.com</a> have contributed and helped make this a more stable and bugfree version.
                           Our Thanks go out to all contributors of Kunena! Greetings from the global Kunena team! <br />
                           <br />
                           <?php

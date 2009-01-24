@@ -25,7 +25,7 @@ else {
     include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.english.php');
 }
 
-include_once($mainframe->getCfg("absolute_path")."/administrator/components/com_kunena/sources/boj_upgrade.class.php");
+include_once($mainframe->getCfg("absolute_path")."/administrator/components/com_kunena/lib/fx.upgrade.class.php");
 
 function com_install() {
 	global $database, $mainframe, $mosConfig_absolute_path;
@@ -40,7 +40,7 @@ function com_install() {
 
 
 	//install & upgrade class
-	$fbupgrade = new boj_Upgrade("com_kunena", "fb_install_upgrade.xml", "fb_", "install", false);
+	$fbupgrade = new fx_Upgrade("com_kunena", "kunena.install.upgrade.xml", "fb_", "install", false);
 
 	// Legacy enabler
 	// Versions prior to 1.0.5 did not came with a version table inside the database

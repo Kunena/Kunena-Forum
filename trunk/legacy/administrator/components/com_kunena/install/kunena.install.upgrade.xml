@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <comupgrade version="1.0">
 	<install version="@fbversion@" versiondate="@fbversiondate@" build="@fbbuild@" versionname="@fbversionname@">
-		<phpfile name="fb_install.php" />
+		<phpfile name="kunena.special.install.php" />
 		<query>CREATE TABLE `#__fb_announcement` (
                     `id` int(3) NOT NULL auto_increment,
                     `title` tinytext NOT NULL,
@@ -217,7 +217,7 @@
    	</install>
 	<upgrade>
 		<version version="@fbversion@" versiondate="@fbversiondate@" build="@fbbuild@" versionname="@fbversionname@">
-			<phpfile name="fb_upgrade_1.0.5.php" />
+			<phpfile name="kunena.special.upgrade.1.0.5.php" />
 			<query mode="silenterror">ALTER TABLE `#__fb_attachments` ADD KEY `mesid`(`mesid`), COMMENT=''</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_categories` ADD COLUMN `headerdesc` text NOT NULL AFTER `description`, COMMENT=''</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_categories` ADD COLUMN `class_sfx` varchar(20) NOT NULL AFTER `headerdesc`, COMMENT=''</query>

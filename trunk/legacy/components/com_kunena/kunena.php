@@ -94,7 +94,7 @@ if ($fbConfig->pm_component == "clexuspm")
 }
 
 //time format
-include_once (KUNENA_ABSSOURCESPATH . 'fb_timeformat.class.php');
+include_once (KUNENA_ABSSOURCESPATH . 'kunena.timeformat.class.php');
 
 // systime is current time with proper board offset
 define ('KUNENA_SECONDS_IN_HOUR', 3600);

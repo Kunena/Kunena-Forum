@@ -352,7 +352,7 @@ $catName = $objCatInfo->name;
 
                                             if (count($subsList) > 0)
                                             {                                                     //we got more than 0 subscriptions
-                                                require_once (KUNENA_ABSSOURCESPATH . 'fb_mail.php'); // include fbMail class for mailing
+                                                require_once (KUNENA_ABSSOURCESPATH . 'kunena.mail.php'); // include fbMail class for mailing
 
 												$_catobj = new jbCategory($database, $catid);
                                                 foreach ($subsList as $subs)
@@ -428,7 +428,7 @@ $catName = $objCatInfo->name;
 
                                             if (count($modsList) > 0)
                                             {                                                     //we got more than 0 moderators eligible for email
-                                                require_once (KUNENA_ABSSOURCESPATH . 'fb_mail.php'); // include fbMail class for mailing
+                                                require_once (KUNENA_ABSSOURCESPATH . 'kunena.mail.php'); // include fbMail class for mailing
 
                                                 foreach ($modsList as $mods)
                                                 {

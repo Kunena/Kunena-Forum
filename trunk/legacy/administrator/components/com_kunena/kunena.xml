@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <mosinstall type="component">
  <name>Kunena</name>
-    <version>1.0.5</version>
-    <versionname>Redwood</versionname>
+    <version>1.0.6RC2</version>
+    <versionname>Communicate</versionname>
     <creationDate>@fbversiondate@</creationDate>
 	<build>@fbbuild@</build>
     <author>www.Kunena.com</author>

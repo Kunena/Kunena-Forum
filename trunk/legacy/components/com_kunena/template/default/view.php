@@ -44,7 +44,7 @@ $smileyList = smile::getEmoticons(0);
 //ob_start();
 $showedEdit = 0;
 require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
-require_once (KUNENA_ABSSOURCESPATH . 'fb_statsbar.php');
+require_once (KUNENA_ABSSOURCESPATH . 'kunena.statsbar.php');
 
 if (!$is_Moderator)
 {

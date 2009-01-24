@@ -14,7 +14,7 @@ global $fbConfig;
 if ($my->id) //registered only
 {
     require_once(KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
-    require_once(KUNENA_ABSSOURCESPATH . 'fb_statsbar.php');
+    require_once(KUNENA_ABSSOURCESPATH . 'kunena.statsbar.php');
 
     $task = mosGetParam($_GET, 'task', "");
 

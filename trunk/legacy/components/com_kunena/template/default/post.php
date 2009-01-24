@@ -188,7 +188,7 @@ $catName = $objCatInfo->name;
                                 {
                                     $noFileUpload = 0;
                                     $GLOBALS['KUNENA_rc'] = 1;
-                                    include (KUNENA_ABSSOURCESPATH . 'fb_file_upload.php');
+                                    include (KUNENA_ABSSOURCESPATH . 'kunena.file.upload.php');
 
                                     if ($GLOBALS['KUNENA_rc'] == 0) {
                                         $noFileUpload = 1;
@@ -813,7 +813,7 @@ $catName = $objCatInfo->name;
                     if ($allowEdit == 1)
                     {
                         if ($attachfile != '') {
-                            include KUNENA_ABSSOURCESPATH . 'fb_file_upload.php';
+                            include KUNENA_ABSSOURCESPATH . 'kunena.file.upload.php';
                         }
 
                         if ($attachimage != '') {

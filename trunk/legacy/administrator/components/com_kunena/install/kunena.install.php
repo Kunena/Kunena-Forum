@@ -121,7 +121,7 @@ function com_install() {
 		{
 
 			//ok now it is installed, just copy the fbfiles directory, and apply 0777
-			dircopy($mainframe->getCfg("absolute_path") . "/components/com_kunena/_fbfiles_dist", $mainframe->getCfg("absolute_path") . "/images/fbfiles", true);
+			dircopy($mainframe->getCfg("absolute_path") . "/components/com_kunena/kunena.files.distribution", $mainframe->getCfg("absolute_path") . "/images/fbfiles", true);
 		}
 		else {
 
@@ -138,7 +138,7 @@ function com_install() {
 			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/category_images
 			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/files
 			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/images
-</pre> a) You can copy the contents of __fbfiles_dist under
+</pre> a) You can copy the contents of _kunena.files.distribution under
 			components/com_kunena to your Joomla root, under images/ folder,
 			rename it to "fbfiles" and then chmod it to 777 (making it writable)
 

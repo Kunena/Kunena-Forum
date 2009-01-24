@@ -357,7 +357,7 @@ class FBTools {
 
     function reCountBoards() {
         global $database;
-        include_once (KUNENA_ABSSOURCESPATH . 'fb_db_iterator.class.php');
+        include_once (KUNENA_ABSSOURCESPATH . 'kunena.db.iterator.class.php');
 
         //reset all stats to 0
         $database->setQuery("UPDATE `#__fb_categories` SET `id_last_msg`='0',`time_last_msg`='0',`numTopics`='0',`numPosts`='0'");

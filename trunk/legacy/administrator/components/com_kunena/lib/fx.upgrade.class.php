@@ -18,7 +18,7 @@ defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.'
 
 include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/sources/fb_debug.php");
 
-class boj_Upgrade {
+class fx_Upgrade {
 	var $component=null;
 	var $xmlFileName=null;
 	var $subdir=null;
@@ -30,7 +30,7 @@ class boj_Upgrade {
 	var $_upgradeDir=null;
 
 	// helper function to create version table
-	function boj_Upgrade( $component, $xmlFileName = "boj_upgrade.xml", $versionTablePrefix = "boj_", $subdir = "", $silent = false ) {
+	function fx_Upgrade( $component, $xmlFileName = "fx_upgrade.xml", $versionTablePrefix = "fx_", $subdir = "", $silent = false ) {
 		$this->component = $component;
 	    $this->xmlFileName = $xmlFileName;
 	    $this->subdir = $subdir;

@@ -46,7 +46,6 @@ global $fbConfig;
                                 <td><input name="personalText" size="50" maxlength="50" value="<?php echo $userinfo->personalText?>" type="text"/></td>
                             </tr>
                             <tr>
-                            <tr>
                                 <td width="40%">
                                     <b><?php echo _KUNENA_MYPROFILE_BIRTHDATE; ?></b>
 
@@ -68,7 +67,7 @@ global $fbConfig;
                                     <?php echo $ulists["gender"];?>
                                 </td>
                             </tr><tr>
-                                <td colspan="2"><hr class="hrcolor" size="1" width="100%"></td>
+                                <td colspan="2"><hr class="" size="1" width="100%" /></td>
                             </tr>
                             <tr>
 
@@ -104,7 +103,7 @@ global $fbConfig;
                                 <td><input name="websiteurl" maxlength="32" size="24" value="<?php echo $userinfo->websiteurl;?>" type="text"/></td>
                             </tr>
                             <tr>
-                                <td colspan="2"><hr class="hrcolor" size="1" width="100%"></td>
+                                <td colspan="2"><hr class="hrcolor" size="1" width="100%" /></td>
                             </tr>
 
 
@@ -119,31 +118,31 @@ global $fbConfig;
 
 					<br/>
 
-					<input readonly type = text name = "counter" size = "3" maxlength = 3 value = ""/>
+					<input readonly="readonly" type = "text" name = "counter" size = "3" maxlength = "3" value = ""/>
 					<br/>
 <?php echo _HTML_YES; ?>
 				</td>
 
-				<td ><textarea style = "width: <?php echo $fbConfig->rtewidth?>px; height: 60px;" class = "inputbox"
-							onMouseOver = "textCounter(this.form.message,this.form.counter,<?php echo $fbConfig->maxsig;?>);" onClick = "textCounter(this.form.message,this.form.counter,<?php echo $fbConfig->maxsig;?>);"
-							onKeyDown = "textCounter(this.form.message,this.form.counter,<?php echo $fbConfig->maxsig;?>);" onKeyUp = "textCounter(this.form.message,this.form.counter,<?php echo $fbConfig->maxsig;?>);"
-							type = "text" name = "message"><?php echo htmlspecialchars(stripslashes($userinfo->signature), ENT_QUOTES); ?></textarea>
+				<td ><textarea style = "width: <?php echo $fbConfig->rtewidth-150?>px; height: 60px;" class = "inputbox"
+							onmouseover = "textCounter(this.form.message,this.form.counter,<?php echo $fbConfig->maxsig;?>);" onclick = "textCounter(this.form.message,this.form.counter,<?php echo $fbConfig->maxsig;?>);"
+							onkeydown = "textCounter(this.form.message,this.form.counter,<?php echo $fbConfig->maxsig;?>);" onkeyup = "textCounter(this.form.message,this.form.counter,<?php echo $fbConfig->maxsig;?>);"
+							rows="6" cols="60" name = "message"><?php echo htmlspecialchars(stripslashes($userinfo->signature), ENT_QUOTES); ?></textarea>
 
 					<br/>
 
-					<input type = "button" class = "button" accesskey = "b" name = "addbbcode0" value = " B " style = "font-weight:bold; width: 30px" onClick = "bbstyle(0)" onMouseOver = "helpline('b')"/>
+					<input type = "button" class = "button" accesskey = "b" name = "addbbcode0" value = " B " style = "font-weight:bold; width: 30px" onclick = "bbstyle(0)" onmouseover = "helpline('b')"/>
 
-					<input type = "button" class = "button" accesskey = "i" name = "addbbcode2" value = " i " style = "font-style:italic; width: 30px" onClick = "bbstyle(2)" onMouseOver = "helpline('i')"/>
+					<input type = "button" class = "button" accesskey = "i" name = "addbbcode2" value = " i " style = "font-style:italic; width: 30px" onclick = "bbstyle(2)" onmouseover = "helpline('i')"/>
 
-					<input type = "button" class = "button" accesskey = "u" name = "addbbcode4" value = " u " style = "text-decoration: underline; width: 30px" onClick = "bbstyle(4)" onMouseOver = "helpline('u')"/>
+					<input type = "button" class = "button" accesskey = "u" name = "addbbcode4" value = " u " style = "text-decoration: underline; width: 30px" onclick = "bbstyle(4)" onmouseover = "helpline('u')"/>
 
-					<input type = "button" class = "button" accesskey = "p" name = "addbbcode14" value = "Img" style = "width: 40px" onClick = "bbstyle(14)" onMouseOver = "helpline('p')"/>
+					<input type = "button" class = "button" accesskey = "p" name = "addbbcode14" value = "Img" style = "width: 40px" onclick = "bbstyle(14)" onmouseover = "helpline('p')"/>
 
-					<input type = "button" class = "button" accesskey = "w" name = "addbbcode16" value = "URL" style = "text-decoration: underline; width: 40px" onClick = "bbstyle(16)" onMouseOver = "helpline('w')"/>
+					<input type = "button" class = "button" accesskey = "w" name = "addbbcode16" value = "URL" style = "text-decoration: underline; width: 40px" onclick = "bbstyle(16)" onmouseover = "helpline('w')"/>
 
 					<br/> <?php echo _SMILE_COLOUR; ?>:
 
-					<select name = "addbbcode20" onChange = "bbfontstyle('[color=' + this.form.addbbcode20.options[this.form.addbbcode20.selectedIndex].value + ']', '[/color]');this.selectedIndex=0;" onMouseOver = "helpline('s')">
+					<select name = "addbbcode20" onchange = "bbfontstyle('[color=' + this.form.addbbcode20.options[this.form.addbbcode20.selectedIndex].value + ']', '[/color]');this.selectedIndex=0;" onmouseover = "helpline('s')">
 						<option style = "color:black;  background-color: #FAFAFA" value = ""><?php echo _COLOUR_DEFAULT; ?></option>
 
 						<option style = "color:red;    background-color: #FAFAFA" value = "#FF0000"><?php echo _COLOUR_RED; ?></option>
@@ -158,7 +157,7 @@ global $fbConfig;
 					</select>
 <?php echo _SMILE_SIZE; ?>:
 
-					<select name = "addbbcode22" onChange = "bbfontstyle('[size=' + this.form.addbbcode22.options[this.form.addbbcode22.selectedIndex].value + ']', '[/size]')" onMouseOver = "helpline('f')">
+					<select name = "addbbcode22" onchange = "bbfontstyle('[size=' + this.form.addbbcode22.options[this.form.addbbcode22.selectedIndex].value + ']', '[/size]')" onmouseover = "helpline('f')">
 						<option value = "1"><?php echo _SIZE_VSMALL; ?></option>
 
 						<option value = "2"><?php echo _SIZE_SMALL; ?></option>
@@ -172,13 +171,11 @@ global $fbConfig;
 
 					<br/>
 
-					<input type = "text" name = "helpbox" size = "45" maxlength = "100" style = "width: <?php echo $fbConfig->rtewidth?>px; font-size:9px" class = "helpline" value = "<?php echo _BBCODE_HINT;?>"/>
+					<input type = "text" name = "helpbox" size = "45" maxlength = "100" style = "width: <?php echo $fbConfig->rtewidth-150?>px; font-size:9px" class = "helpline" value = "<?php echo _BBCODE_HINT;?>"/>
 
 					<br/>
 
-					<a href = "javascript: bbstyle(-1)"onMouseOver = "helpline('a')"><small><?php echo _BBCODE_CLOSA; ?></small></a>
-
-					</span>
+					<a href = "javascript: bbstyle(-1)" onmouseover = "helpline('a')"><small><?php echo _BBCODE_CLOSA; ?></small></a>
 
 					<br/>
 

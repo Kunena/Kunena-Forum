@@ -89,7 +89,7 @@ if ($do == 'init')
 
                             <img src = "<?php echo MyPMSTools::getAvatarLinkWithID($my->id)?>" alt="" />
 
-                            <br/> <a href = "<?php echo sefRelToAbs('index.php?option=com_mypms&amp;task=upload&amp;Itemid='._CLEXUSPM_ITEMID);?>"><?php echo _SET_NEW_AVATAR; ?></a>
+                            <br /> <a href = "<?php echo sefRelToAbs('index.php?option=com_mypms&amp;task=upload&amp;Itemid='._CLEXUSPM_ITEMID);?>"><?php echo _SET_NEW_AVATAR; ?></a>
 
                     <?php
                         }
@@ -101,7 +101,7 @@ if ($do == 'init')
 
                                 <img src = "components/com_comprofiler/images/<?php echo $avatar;?>" alt="" />
 
-                                <br/> <a href = "<?php echo sefRelToAbs('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar');?>"><?php echo _SET_NEW_AVATAR; ?></a>
+                                <br /> <a href = "<?php echo sefRelToAbs('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar');?>"><?php echo _SET_NEW_AVATAR; ?></a>
 
                     <?php
                             }
@@ -110,7 +110,7 @@ if ($do == 'init')
                                 echo _NON_SELECTED;
                     ?>
 
-                            <a href = "<?php echo sefRelToAbs('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar');?>"><?php echo _SET_NEW_AVATAR; ?></a>
+                            <br /> <a href = "<?php echo sefRelToAbs('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar');?>"><?php echo _SET_NEW_AVATAR; ?></a>
 
                     <?php
                             }
@@ -123,11 +123,11 @@ if ($do == 'init')
 
                                 <img src = "<?php echo KUNENA_LIVEUPLOADEDPATH ;?>/avatars/<?php echo $avatar;?>" alt="" />
 
-                                <br/>
+                                <br />
 
                                 <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=uploadavatar');?>"> <?php echo _SET_NEW_AVATAR; ?></a>
 
-                                <br/>
+                                <br />
 
                                 <input type = "checkbox" value = "1" name = "deleteAvatar"/><i> <?php echo _USER_DELETEAV; ?></i>
 
@@ -138,7 +138,7 @@ if ($do == 'init')
                                 echo _NON_SELECTED;
                     ?>
 
-                            <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=uploadavatar');?>"> <?php echo _SET_NEW_AVATAR; ?></a>
+                            <br /> <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=uploadavatar');?>"> <?php echo _SET_NEW_AVATAR; ?></a>
 
                     <?php
                             }
@@ -259,7 +259,7 @@ if ($do == 'init')
 <?php
         echo "<p align=\"center\">";
         get_dirs(KUNENA_ABSUPLOADEDPATH . '/avatars/gallery', "categoryid", $gallery);
-        echo "<input type=\"button\" value=". _KUNENA_GO ." class=\"button\" onclick=\"switch_avatar_category(this.options[this.selectedIndex].value)\" />\n";
+        echo '<input type="button" value="'. _KUNENA_GO .'" class="button" onclick="switch_avatar_category(this.options[this.selectedIndex].value)" />'."\n";
         echo "</p>";
         echo "<br />\n";
         echo '<form action="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=uploadavatar&amp;do=fromgallery') . '" method="post" name="adminForm">';
@@ -518,7 +518,7 @@ else if ($do == 'validate')
     $newFileName = FBTools::fbRemoveXSS($newFileName);
     $database->setQuery("UPDATE #__fb_users SET avatar='{$newFileName}' WHERE userid={$my->id}");
     $database->query() or trigger_dberror("Unable to update avatar.");
-    echo " <strong>" . _UPLOAD_UPLOADED . "</strong>...<br/><br/>";
+    echo " <strong>" . _UPLOAD_UPLOADED . "</strong>...<br /><br />";
     echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '">' . _GEN_CONTINUE . ".</a>";
     ?>
                 <script language = "javascript">

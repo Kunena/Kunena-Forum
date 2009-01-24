@@ -128,15 +128,15 @@ class smile
 
             <input type = "radio" name = "topic_emoticon" value = "1"<?php echo $selected==1?" checked=\"checked\" ":"";?>/>
 
-            <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>exclam.gif" alt = "" border = "0"/>
+            <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>exclam.gif" alt = "" border = "0" />
 
             <input type = "radio" name = "topic_emoticon" value = "2"<?php echo $selected==2?" checked=\"checked\" ":"";?>/>
 
-            <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>question.gif" alt = "" border = "0"/>
+            <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>question.gif" alt = "" border = "0" />
 
             <input type = "radio" name = "topic_emoticon" value = "3"<?php echo $selected==3?" checked=\"checked\" ":"";?>/>
 
-            <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>arrow.gif" alt = "" border = "0"/>
+            <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>arrow.gif" alt = "" border = "0" />
 
             <?php
             if ($tawidth <= 320) {
@@ -146,19 +146,19 @@ class smile
 
                 <input type = "radio" name = "topic_emoticon" value = "4"<?php echo $selected==4?" checked=\"checked\" ":"";?>/>
 
-                <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>love.gif" alt = "" border = "0"/>
+                <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>love.gif" alt = "" border = "0" />
 
                 <input type = "radio" name = "topic_emoticon" value = "5"<?php echo $selected==5?" checked=\"checked\" ":"";?>/>
 
-                <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>grin.gif" alt = "" border = "0"/>
+                <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>grin.gif" alt = "" border = "0" />
 
                 <input type = "radio" name = "topic_emoticon" value = "6"<?php echo $selected==6?" checked=\"checked\" ":"";?>/>
 
-                <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>shock.gif" alt = "" border = "0"/>
+                <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>shock.gif" alt = "" border = "0" />
 
                 <input type = "radio" name = "topic_emoticon" value = "7"<?php echo $selected==7?" checked=\"checked\" ":"";?>/>
 
-                <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>smile.gif" alt = "" border = "0"/>
+                <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>smile.gif" alt = "" border = "0" />
                 </td>
             </tr>
         </table>
@@ -242,27 +242,27 @@ class smile
                 <table border = "0" cellspacing = "0" cellpadding = "0" class = "fb-postbuttonset">
                     <tr>
                         <td class = "fb-postbuttons">
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "b" name = "addbbcode0" value = " B " style = "font-weight:bold; " onclick = "bbstyle(0)" onmouseover = "helpline('b')"/>
+                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "b" name = "addbbcode0" value = " B " style = "font-weight:bold; " onclick = "bbstyle(0)" onmouseover = "helpline('b')" />
 
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "i" name = "addbbcode2" value = " i " style = "font-style:italic; " onclick = "bbstyle(2)" onmouseover = "helpline('i')"/>
+                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "i" name = "addbbcode2" value = " i " style = "font-style:italic; " onclick = "bbstyle(2)" onmouseover = "helpline('i')" />
 
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "u" name = "addbbcode4" value = " u " style = "text-decoration: underline;" onclick = "bbstyle(4)" onmouseover = "helpline('u')"/>
+                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "u" name = "addbbcode4" value = " u " style = "text-decoration: underline;" onclick = "bbstyle(4)" onmouseover = "helpline('u')" />
 
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "q" name = "addbbcode6" value = "Quote" onclick = "bbstyle(6)" onmouseover = "helpline('q')"/>
+                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "q" name = "addbbcode6" value = "Quote" onclick = "bbstyle(6)" onmouseover = "helpline('q')" />
 
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "c" name = "addbbcode8" value = "Code" onclick = "bbstyle(8)" onmouseover = "helpline('c')"/>
+                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "c" name = "addbbcode8" value = "Code" onclick = "bbstyle(8)" onmouseover = "helpline('c')" />
 
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "k" name = "addbbcode10" value = "ul" onclick = "bbstyle(10)" onmouseover = "helpline('k')"/>
+                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "k" name = "addbbcode10" value = "ul" onclick = "bbstyle(10)" onmouseover = "helpline('k')" />
 
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "o" name = "addbbcode12" value = "ol" onclick = "bbstyle(12)" onmouseover = "helpline('o')"/>
+                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "o" name = "addbbcode12" value = "ol" onclick = "bbstyle(12)" onmouseover = "helpline('o')" />
 
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "l" name = "addbbcode18" value = "li" onclick = "bbstyle(18)" onmouseover = "helpline('l')"/>
+                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "l" name = "addbbcode18" value = "li" onclick = "bbstyle(18)" onmouseover = "helpline('l')" />
 
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "p" name = "addbbcode14" value = "Img" onclick = "bbstyle(14)" onmouseover = "helpline('p')"/>
+                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "p" name = "addbbcode14" value = "Img" onclick = "bbstyle(14)" onmouseover = "helpline('p')" />
 
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "w" name = "addbbcode16" value = "URL" style = "text-decoration: underline; " onclick = "bbstyle(16)" onmouseover = "helpline('w')"/>
+                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "w" name = "addbbcode16" value = "URL" style = "text-decoration: underline; " onclick = "bbstyle(16)" onmouseover = "helpline('w')" />
 
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "h" name = "addbbcode24" value = "Hide" onclick = "bbstyle(20)" onmouseover = "helpline('h')"/>
+                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "h" name = "addbbcode24" value = "Hide" onclick = "bbstyle(20)" onmouseover = "helpline('h')" />
 
                             &nbsp;<?php echo _SMILE_COLOUR; ?>:
 
@@ -309,14 +309,14 @@ class smile
                     <script type="text/javascript">
 						function fb_spoiler_help() {document.postform.helpbox.value = 'Spoiler: [spoiler] ... [/spoiler]';}
 					</script>
-                    <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "s" name = "addbbcode40" value = "Spoiler" onclick = "bbfontstyle('[spoiler]', '[/spoiler]')" onmouseover = "fb_spoiler_help()"/>
+                    <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "s" name = "addbbcode40" value = "Spoiler" onclick = "bbfontstyle('[spoiler]', '[/spoiler]')" onmouseover = "fb_spoiler_help()" />
 					<?php } ?>
 
 					<?php if ($fbConfig->showebaytag) {?>
                     <script type="text/javascript">
 						function fb_ebay_help() {document.postform.helpbox.value = 'eBay: [ebay]ItemId[/ebay]';}
 					</script>
-                    <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "e" name = "addbbcode30" value = "eBay" onclick = "bbfontstyle('[ebay]', '[/ebay]')" onmouseover = "fb_ebay_help()"/>
+                    <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "e" name = "addbbcode30" value = "eBay" onclick = "bbfontstyle('[ebay]', '[/ebay]')" onmouseover = "fb_ebay_help()" />
 					<?php } ?>
 
 					<?php if ($fbConfig->showvideotag) {?>
@@ -342,13 +342,13 @@ class smile
 					</select></span>
 					<?php } ?>
 
-                    &nbsp;&nbsp;<a href = "javascript: bbstyle(-1)"onmouseover = "helpline('a')"><small><?php echo _BBCODE_CLOSA; ?></small></a>
+                    &nbsp;&nbsp;<a href = "javascript: bbstyle(-1)" onmouseover = "helpline('a')"><small><?php echo _BBCODE_CLOSA; ?></small></a>
                         </td>
                     </tr>
 
                     <tr>
                         <td class = "<?php echo $boardclass;?>posthint">
-                            <input type = "text" name = "helpbox" size = "45" class = "<?php echo $boardclass;?>inputbox" maxlength = "100" value = "<?php echo _BBCODE_HINT;?>"/>
+                            <input type = "text" name = "helpbox" size = "45" class = "<?php echo $boardclass;?>inputbox" maxlength = "100" value = "<?php echo _BBCODE_HINT;?>" />
                         </td>
                     </tr>
                 </table>
@@ -376,11 +376,9 @@ class smile
                                 </td>
                             </tr>
 
-                            <tr>
-                                <?php
-                                generate_smilies(); //the new function Smiley mod
-                                ?>
-                            </tr>
+                            <?php
+                            generate_smilies(); //the new function Smiley mod
+                            ?>
                         </table>
                     </div>
 
@@ -390,7 +388,7 @@ class smile
             </td>
 
             <td valign = "top">
-                <textarea class = "<?php echo $boardclass;?>txtarea" name = "<?php echo $areaname;?>" id = "<?php echo $areaname;?>"><?php echo htmlspecialchars($html, ENT_QUOTES); ?></textarea>
+                <textarea cols="60" rows="6" class = "<?php echo $boardclass;?>txtarea" name = "<?php echo $areaname;?>" id = "<?php echo $areaname;?>"><?php echo htmlspecialchars($html, ENT_QUOTES); ?></textarea>
 <?php
 if ($editmode) {
     // Moderator edit area

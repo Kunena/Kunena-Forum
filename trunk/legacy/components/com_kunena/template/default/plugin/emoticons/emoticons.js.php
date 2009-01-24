@@ -1,5 +1,5 @@
 <script language = "JavaScript" type = "text/javascript">
-
+//<![CDATA[
 
 // Replaces the currently selected text with the passed text.
 function replaceText(text, textarea)
@@ -71,4 +71,5 @@ function moreForumSmileys()
 	smileyPopupWindow.document.close();
 }
 -->
+//]]>
 </script>

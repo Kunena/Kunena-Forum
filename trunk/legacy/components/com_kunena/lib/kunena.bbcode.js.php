@@ -39,7 +39,7 @@ var is_win = ((clientPC.indexOf("win")!=-1) || (clientPC.indexOf("16bit") != -1)
 var is_mac = (clientPC.indexOf("mac")!=-1);
 // Define the bbCode tags
 bbcode = new Array();
-bbtags = new Array('[b]','[/b]','[i]','[/i]','[u]','[/u]','[quote]','[/quote]','[code]','[/code]','[ul]','[/ul]','[ol]','[/ol]','[img size=150]','[/img]','[url]','[/url]','[li]','[/li]','[hide]','[/hide]');
+bbtags = new Array('[b]','[/b]','[i]','[/i]','[u]','[/u]','[quote]','[/quote]','[code]','[/code]','[ul]','[/ul]','[ol]','[/ol]','[img]','[/img]','[url]','[/url]','[li]','[/li]','[hide]','[/hide]');
 imageTag = false;
 // Shows the help messages in the helpline window
 function helpline(help) {

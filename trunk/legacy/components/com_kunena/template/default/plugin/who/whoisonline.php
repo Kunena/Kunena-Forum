@@ -35,7 +35,7 @@ if ($fbConfig->showwhoisonline > 0)
 	. "\n  ON s.guest=0 AND s.userid=w.userid "
         . "\n WHERE w.userid!=0 "
         . "\n GROUP BY u.id "
-        . "\n  ORDER BY w.time DESC";
+        . "\n  ORDER BY username ASC";
     $database->setQuery($query);
     $users = $database->loadObjectList();
     $totaluser = count($users);
@@ -61,7 +61,7 @@ if ($fbConfig->showwhoisonline > 0)
 						<?php if($totaluser==1) { echo _WHO_ONLINE_MEMBER; } else { echo _WHO_ONLINE_MEMBERS; } ?>
 						<?php echo _WHO_AND; ?>
                         <b><?php echo $totalguests; ?></b>
-						<?php if($totaluser==1) { echo _WHO_ONLINE_GUEST; } else { echo _WHO_ONLINE_GUESTS; } ?>
+						<?php if($totalguests==1) { echo _WHO_ONLINE_GUEST; } else { echo _WHO_ONLINE_GUESTS; } ?>
                         </a>
                     </div>
                     <img id = "BoxSwitch_whoisonline__whoisonline_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>

@@ -107,7 +107,7 @@ $database->loadObject($user);
 
                                 <input type = "hidden" name = "subject" size = "35" class = "inputbox" maxlength = "<?php echo $fbConfig->maxsubject;?>" value = "<?php echo $resubject;?>"/>
 
-                                <textarea class = "inputbox" name = "message" id = "message" style = "height: 100px; width: 100%; overflow:auto;"></textarea>
+                                <textarea class = "inputbox" name = "message" rows = "6" cols = "60" style = "height: 100px; width: 100%; overflow:auto;"></textarea>
 
                                  <?php
 								// Begin captcha . Thanks Adeptus

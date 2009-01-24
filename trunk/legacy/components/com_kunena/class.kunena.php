@@ -1083,7 +1083,9 @@ function generate_smilies() {
             reset ($rowset);
 
             if (file_exists(KUNENA_ABSPATH . '/template/default/plugin/emoticons/emoticons.js.php')) {
+                echo '<tr><td style="display:none;">';
                 include (KUNENA_ABSPATH . '/template/default/plugin/emoticons/emoticons.js.php');
+                echo '</td></tr>';
                 reset ($rowset);
                 }
             else {

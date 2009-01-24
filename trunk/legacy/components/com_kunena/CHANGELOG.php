@@ -29,6 +29,13 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.0.5
-24-January-2007 fxstein
+
+24-January-2009 Matias
+# Fixed over 100 xhtml bugs
+^ No default size for [img]
+^ Category parent list: jump to Board Categories with "Go" button
+^ Forum stats show users in alphabetical order
+
+24-January-2009 fxstein
 + Initial fork from FireBoard 1.0.5RC3
 

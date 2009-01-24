@@ -209,9 +209,8 @@ function showprf($userid, $page)
             if (!$fbConfig->poststats)
             {
                 $msg_posts = '<div class="viewcover">' .
-                             "<table  border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\"><tr>" .
                              "<strong>" . _POSTS . " $numPosts" . "</strong>" .
-                             "</td></tr>" . "</table></div>";
+                             "</div>";
                 $useGraph = 0;
             }
             else

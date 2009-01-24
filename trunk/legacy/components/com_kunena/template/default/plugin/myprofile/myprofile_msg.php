@@ -27,7 +27,8 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 					<span class = "fb_title"><?php echo _KUNENA_USERPROFILE_MESSAGES; ?></span>
 				</div>
 
-				<img id = "BoxSwitch_fbuserprofile__<?php echo $boardclass ;?>fbuserprofile_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+				<img id = "BoxSwitch_fbuserprofile__<?php echo $boardclass ;?>fbuserprofile_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = "" />
+                        </th>
 		</tr>
 	</thead>
 
@@ -137,7 +138,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 				<td class = "td-2">
 					<div class = "jr-topic-title">
-						<a href = "<?php echo $fbURL; ?>"> <?php echo stripslashes($item->subject); ?> </a> <span class = "fb-topic-by">
+						<a href = "<?php echo $fbURL; ?>"> <?php echo stripslashes($item->subject); ?> </a>
 					</div>
 				</td>
 

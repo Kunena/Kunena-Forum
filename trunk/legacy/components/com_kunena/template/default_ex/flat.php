@@ -462,6 +462,7 @@ if (count($messages[0]) > 0)
 
 
                     <tr class = "<?php echo $boardclass ?>sectiontableentry1">
+                        <td colspan = "7" align = "right" class = "td-1 fbs">
                         <script type = "text/javascript">
                             jQuery(document).ready(function()
                             {
@@ -481,7 +482,6 @@ if (count($messages[0]) > 0)
                             });
                         </script>
 
-                        <td colspan = "7" align = "right" class = "td-1 fbs">
                             <select name = "do" id = "fbBulkActions" class = "inputbox fbs">
                                 <option value = "">&nbsp;</option>
                                 <option value = "bulkDel"><?php echo _KUNENA_DELETE_SELECTED ; ?></option>
@@ -495,7 +495,7 @@ if (count($messages[0]) > 0)
             <input type = "submit" name = "fbBulkActionsGo" class = "fbs" value = "<?php echo _KUNENA_GO ; ?>"/>
                         </td>
 
-                        <tr>
+                        </tr>
 
 
             <?php

@@ -865,6 +865,9 @@ div.jr-pagenav ul li.jr-pagenav-text {
 	display:block;
 	float:left;
 }
+div.jr-pagenav-nb, div.jr-pagenav-nb-act {
+	display: inline;
+}
 a.jr-pagenav-nb:link, a.jr-pagenav-nb:visited {
 	font-weight:bold;
 	text-decoration: none;

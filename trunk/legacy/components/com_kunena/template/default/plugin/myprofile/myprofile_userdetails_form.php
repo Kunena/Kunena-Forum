@@ -21,6 +21,7 @@ require_once ($mosConfig_absolute_path . '/includes/HTML_toolbar.php');
 $validate = josSpoofValue();
 ?>
 <script language = "javascript" type = "text/javascript">
+// <![CDATA[
     function submitbuttons(pressbutton)
     {
         var form = document.mosUserForm;
@@ -56,8 +57,9 @@ $validate = josSpoofValue();
             form.submit();
         }
     }
+// ]]>
 </script>
- <div class="<?php echo $boardclass; ?>_bt_cvr1">
+<div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
@@ -86,6 +88,14 @@ $validate = josSpoofValue();
           </center></th>
       </tr>
       <tr>
+        <td><?php echo _KUNENA_UNAME; ?> </td>
+        <?php if ($fbConfig->usernamechange) { ?>
+        <td><input class = "inputbox" type = "text" name = "username" value = "<?php echo $row->username;?>" size = "40"/></td>
+      <?php } else { ?>
+      <td><input class = "inputbox" type = "hidden" name = "username" value = "<?php echo $row->username;?>" size = "40"/><?php echo $row->username;?></td>
+      <?php } ?>
+      </tr>
+      <tr>
         <td><?php echo _KUNENA_YOUR_NAME; ?> </td>
         <td><input class = "inputbox" type = "text" name = "name" value = "<?php echo $row->name;?>" size = "40"/></td>
       </tr>
@@ -93,14 +103,6 @@ $validate = josSpoofValue();
         <td><?php echo _KUNENA_EMAIL; ?> </td>
         <td><input class = "inputbox" type = "text" name = "email" value = "<?php echo $row->email;?>" size = "40"/></td>
       </tr>
-       <?php if ($fbConfig->usernamechange) { ?>
-      <tr>
-        <td><?php echo _KUNENA_UNAME; ?> </td>
-        <td><input class = "inputbox" type = "text" name = "username" value = "<?php echo $row->username;?>" size = "40"/></td>
-      </tr>
-      <?php } else { ?>
-      <input class = "inputbox" type = "hidden" name = "username" value = "<?php echo $row->username;?>" size = "40"/>
-      <?php } ?>
       <tr>
         <td><?php echo _KUNENA_PASS; ?> </td>
         <td><input class = "inputbox" type = "password" name = "password" value = "" size = "40"/></td>

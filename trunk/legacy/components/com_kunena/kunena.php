@@ -936,7 +936,7 @@ else
     echo '<div class="fb_credits"> ' . fb_link::GetTeamCreditsLink($catid, _KUNENA_POWEREDBY) . ' ' . fb_link::GetCreditsLink();
     if ($fbConfig->enablerss)
     {
-    	$mainframe->addCustomHeadTag('<link rel="alternate" type="application/rss+xml" title="'._LISTCAT_RSS.'" href="'.sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=fb_rss&amp;no_html=1').'")/>');
+    	$mainframe->addCustomHeadTag('<link rel="alternate" type="application/rss+xml" title="'._LISTCAT_RSS.'" href="'.sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=fb_rss&amp;no_html=1').'" />');
         echo fb_link::GetRSSLink('<img class="rsslink" src="' . KUNENA_URLEMOTIONSPATH . 'rss.gif" border="0" alt="' . _LISTCAT_RSS . '" title="' . _LISTCAT_RSS . '" />');
     }
     echo '</div>';

@@ -20,7 +20,6 @@ global $fbConfig;
 <!-- Cat List Bottom -->
 
 <table  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
-  <thead>
     <tr>
       <td style="padding-left:20px;" align="left" >
                 <?php
@@ -49,8 +48,6 @@ global $fbConfig;
                 ?>
             </td>
         </tr>
-
-
 </table>
 
 <!-- /Cat List Bottom -->

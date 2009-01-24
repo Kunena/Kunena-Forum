@@ -220,7 +220,7 @@ if ($letPass || $is_Moderator)
                     for ($i = ($page - 2) <= 0 ? 1 : ($page - 2); $i <= $page + 2 && $i <= ceil($total / $threads_per_page); $i++)
                     {
                         if ($page == $i) {
-                            echo "<class=\"jr-pagenav-nb-act\"> $i</class>";
+                            echo "<div class=\"jr-pagenav-nb-act\"> $i</div>";
                         }
                         else {
                         echo ' '.fb_link::GetCategoryPageLink('showcat', $catid, $i, $i, $rel='follow', $class='jr-pagenav-nb');
@@ -229,7 +229,7 @@ if ($letPass || $is_Moderator)
 
                     if ($page + 2 < ceil($total / $threads_per_page))
                     {
-                        echo "<class=\"jr-pagenav-nb\"> ...&nbsp;</class>";
+                        echo "<div class=\"jr-pagenav-nb\"> ...&nbsp;</div>";
 
                         echo ' '.fb_link::GetCategoryPageLink('showcat', $catid, ceil($total / $threads_per_page), ceil($total / $threads_per_page), $rel='follow', $class='jr-pagenav-nb');
                     }
@@ -311,7 +311,7 @@ if ($letPass || $is_Moderator)
                     for ($i = ($page - 2) <= 0 ? 1 : ($page - 2); $i <= $page + 2 && $i <= ceil($total / $threads_per_page); $i++)
                     {
                         if ($page == $i) {
-                            echo "<class=\"jr-pagenav-nb-act\"> $i</class>";
+                            echo "<div class=\"jr-pagenav-nb-act\"> $i</div>";
                         }
                         else {
                         echo ' '.fb_link::GetCategoryPageLink('showcat', $catid, $i, $i, $rel='follow', $class='jr-pagenav-nb');
@@ -320,7 +320,7 @@ if ($letPass || $is_Moderator)
 
                     if ($page + 2 < ceil($total / $threads_per_page))
                     {
-                        echo "<class=\"jr-pagenav-nb\"> ...&nbsp;</class>";
+                        echo "<div class=\"jr-pagenav-nb\"> ...&nbsp;</div>";
 
                         echo ' '.fb_link::GetCategoryPageLink('showcat', $catid, ceil($total / $threads_per_page), ceil($total / $threads_per_page), $rel='follow', $class='jr-pagenav-nb');
                     }
@@ -338,7 +338,6 @@ if ($letPass || $is_Moderator)
 <!-- Category List Bottom -->
 
 <table  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
-  <thead>
     <tr>
       <td style="padding-left:20px;" align="left" > <?php
                     if ($my->id != 0)
@@ -380,7 +379,6 @@ if ($letPass || $is_Moderator)
                     ?>
       </td>
     </tr>
-  </thead>
 </table>
 
 <!-- / Category List Bottom -->

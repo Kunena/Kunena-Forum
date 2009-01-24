@@ -17,7 +17,7 @@
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
-require_once(KUNENA_ABSSOURCESPATH . 'fb_helpers.php');
+require_once(KUNENA_ABSSOURCESPATH . 'kunena.helpers.php');
 
 function imageUploadError($msg)
 {

@@ -528,7 +528,7 @@ else if ($do == 'validate')
 }
 else if ($do == 'fromgallery')
 {
-    require_once(KUNENA_ABSSOURCESPATH . 'fb_helpers.php');
+    require_once(KUNENA_ABSSOURCESPATH . 'kunena.helpers.php');
     $newAvatar = mosGetParam($_POST, 'newAvatar', '');
 
     $newAvatar = FBTools::fbRemoveXSS($newAvatar);

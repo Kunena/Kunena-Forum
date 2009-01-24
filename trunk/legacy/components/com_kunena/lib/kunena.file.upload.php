@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id$
+* @version $Id:kunena.file.upload.php 142 2009-01-24 10:31:49Z fxstein $
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
@@ -16,7 +16,7 @@
 // Dont allow direct linking
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-require_once(KUNENA_ABSSOURCESPATH . 'fb_helpers.php');
+require_once(KUNENA_ABSSOURCESPATH . 'kunena.helpers.php');
 
 function fileUploadError($msg)
 {

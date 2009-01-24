@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id$
+* @version $Id:kunena.authentication.php 132 2009-01-24 09:14:33Z fxstein $
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
@@ -16,7 +16,7 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-class fb_auth
+class kunena_authentication
 {
     function validate_user(&$forum, &$allow_forum, $groupid, &$acl)
     {

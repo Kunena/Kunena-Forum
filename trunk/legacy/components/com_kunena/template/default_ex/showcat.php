@@ -43,7 +43,7 @@ if (!$is_Moderator)
     	check_dberror("Unable to load category detail.");
     //Do user identification based upon the ACL
     $letPass = 0;
-    $letPass = fb_auth::validate_user($row[0], $allow_forum, $aro_group->group_id, $acl);
+    $letPass = kunena_authentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $acl);
 }
 
 if ($letPass || $is_Moderator)

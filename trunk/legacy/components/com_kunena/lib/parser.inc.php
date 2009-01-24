@@ -10,7 +10,7 @@
 ############################################################################
 # CATEGORY: Parser.TagParser                 DEVELOPMENT DATUM: 13.11.2007 #
 # VERSION:  00.08.00                         LAST EDIT   DATUM: 12.12.2007 #
-# FILENAME: parser.inc.php                                                 #
+# FILENAME: kunena.parser.base.php                                                 #
 # AUTOR:    Miro Dietiker, MD Systems, All rights reserved                 #
 # LICENSE:  http://www.gnu.org/copyleft/gpl.html GNU/GPL                   #
 # CONTACT: m.dietiker@md-systems.ch        © 2007 Miro Dietiker 13.11.2007 #

@@ -194,7 +194,7 @@ else {
     }
 
 require_once (KUNENA_ABSSOURCESPATH . 'fb_permissions.php');
-require_once (KUNENA_ABSSOURCESPATH . 'fb_category.class.php');
+require_once (KUNENA_ABSSOURCESPATH . 'kunena.category.class.php');
 
 if ($catid != '') {
     $thisCat = new jbCategory($database, $catid);

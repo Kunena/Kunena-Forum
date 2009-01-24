@@ -1,6 +1,6 @@
 <?PHP
 /**
-* @version $Id:interpreter.kunena.inc.php 126 2009-01-24 08:36:37Z fxstein $
+* @version $Id:kunena.parser.php 126 2009-01-24 08:36:37Z fxstein $
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

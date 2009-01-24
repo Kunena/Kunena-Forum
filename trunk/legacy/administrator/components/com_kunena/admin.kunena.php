@@ -21,7 +21,7 @@ error_reporting (E_ALL ^ E_NOTICE);
 include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/fb_debug.php");
 
 // get Kunenas configuration params in
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/fb_config.class.php");
+require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.config.class.php");
 global $fbConfig;
 $fbConfig = new fb_config();
 $fbConfig->load();

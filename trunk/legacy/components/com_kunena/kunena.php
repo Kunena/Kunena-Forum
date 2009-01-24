@@ -902,7 +902,7 @@ else
 
         #########################################################################################
         case 'credits':
-            include (KUNENA_ABSSOURCESPATH . 'fb_credits.php');
+            include (KUNENA_ABSSOURCESPATH . 'kunena.credits.php');
 
             break;
 

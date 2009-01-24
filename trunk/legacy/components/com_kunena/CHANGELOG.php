@@ -31,9 +31,12 @@ Legend:
 Kunena 1.0.5
 
 25-January-2009 Matias
-# Stats: visible even if they were disabled
-# Stats: wrong count in topics and messages
-^ Stats: Optimized SQL queries for speed and saved 7-20 queries
+# Stats: Visible even if they were disabled
+# Stats: Wrong count in topics and messages
+# Stats: Today/yesterday stats didn't include messages between 23:59
+  and 00:01.
+^ Stats: Optimized SQL queries for speed and saved 11-20 queries
+! DATABASE UPDATED: new keys added to fb_messages and fb_users
 # Emoticons: Broken "more emoticons" pop up in IE7.
 
 24-January-2009 Matias

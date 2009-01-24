@@ -85,7 +85,8 @@
                 KEY `userid` (`userid`),
                 KEY `time` (`time`),
                 KEY `locked` (`locked`),
-                KEY `hold_time` (`hold`,`time`) )</query>
+                KEY `hold_time` (`hold`,`time`),
+                KEY `parent_hits` (`parent`,`hits`) )</query>
 		<query>CREATE TABLE `#__fb_messages_text` (
                     `mesid` int(11) NOT NULL default '0',
                     `message` text NOT NULL,
@@ -181,7 +182,9 @@
                     `hideEmail` tinyint(1) NOT NULL default '1',
                     `showOnline` tinyint(1) NOT NULL default '1',
                 PRIMARY KEY  (`userid`),
-                KEY `group_id` (`group_id`) )</query>
+                KEY `group_id` (`group_id`),
+                KEY `posts` (`posts`),
+                KEY `uhits` (`uhits`) )</query>
 		<query>CREATE TABLE `#__fb_whoisonline` (
                     `id` int(6) NOT NULL auto_increment,
                     `userid` int(7) NOT NULL default '0',
@@ -242,6 +245,7 @@
 			<query mode="silenterror">ALTER TABLE `#__fb_messages` DROP KEY `id`, COMMENT=''</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_messages` ADD KEY `locked`(`locked`), COMMENT=''</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_messages` ADD KEY `time`(`time`), COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__fb_messages` ADD KEY `parent_hits`(`parent`,`hits`)</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_messages_text` DROP KEY `mesid`, COMMENT=''</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_messages_text` ADD PRIMARY KEY(`mesid`), COMMENT=''</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_moderation` DROP KEY `catid`, COMMENT=''</query>			
@@ -270,6 +274,8 @@
 			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `websitename` varchar(50) NULL AFTER `GTALK`, COMMENT=''</query>			
 			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `websiteurl` varchar(50) NULL AFTER `websitename`, COMMENT=''</query>			
 			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD KEY `group_id`(`group_id`), COMMENT=''</query>			
+			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD KEY `posts` ( `posts` )</query>
+			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD KEY `uhits` ( `uhits` )</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_whoisonline` ADD KEY `userid`(`userid`), COMMENT=''</query>
 			<query mode="silenterror">INSERT INTO `#__fb_groups` VALUES ('1', 'Registered User')</query>
 			<query mode="silenterror">INSERT INTO `#__fb_ranks` (`rank_id`, `rank_title`, `rank_min`, `rank_special`, `rank_image`) VALUES

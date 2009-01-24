@@ -30,38 +30,34 @@ $totaltitles = $totaltmp->titles;
 $totalmsgs = $totaltmp->msgs + $totaltitles;
 unset($totaltmp);
 
-$database->setQuery("SELECT COUNT(*) FROM #__fb_categories WHERE parent=0");
-$totalcats = $database->loadResult();
+$database->setQuery("SELECT SUM(parent=0) AS totalcats, SUM(parent>0) AS totalsections
+FROM #__fb_categories");
+$database->loadObject($totaltmp);
+$totalsections = $totaltmp->totalsections;
+$totalcats = $totaltmp->totalcats;
+unset($totaltmp);
 
-$database->setQuery("SELECT COUNT(*) FROM #__fb_categories");
-$totalsections = $database->loadResult() - $totalcats;
-
-unset($_lastestmember);
 $fb_queryName = $fbConfig->username ? "username" : "name";
 $database->setQuery("SELECT id, $fb_queryName as username FROM #__users WHERE block=0 AND activation='' ORDER BY id DESC LIMIT 0,1");
 $database->loadObject($_lastestmember);
 $lastestmember = $_lastestmember->username;
 $lastestmemberid =$_lastestmember->id;
+unset($_lastestmember);
 
-$today = date('Y-m-d');
-$yesterday = time() - (1 * 24 * 60 * 60);
-$yesterday = date('Y-m-d', $yesterday);
-$todaystart = strtotime(date("Y-m-d 00:00:01"));
-$todayend = strtotime(date("Y-m-d 23:59:59"));
-$yesterdaystart = strtotime(date("$yesterday 00:00:01")); #NOTE: 00:00:00 is daystart
-$yesterdayend = strtotime(date("$yesterday 23:59:59"));
+$todaystart = strtotime(date('Y-m-d'));
+$yesterdaystart = $todaystart - (1 * 24 * 60 * 60);
+$database->setQuery("SELECT SUM(time >= $todaystart AND parent=0) AS todaytotal, "
+                   ."SUM(time >= $yesterdaystart AND time < $todaystart AND parent=0) AS yesterdaytotal, "
+                   ."SUM(time >= $todaystart AND parent>0) AS todaystitle, "
+                   ."SUM(time >= $yesterdaystart AND time < $todaystart AND parent>0) AS yesterdaystitle "
+                   ."FROM #__fb_messages WHERE time >= $yesterdaystart AND hold=0");
 
-$database->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE time > $todaystart AND time < $todayend AND parent>0");
-$todaytotal = $database->loadResult();
-
-$database->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE time > $yesterdaystart AND time < $yesterdayend AND parent>0");
-$yesterdaytotal = $database->loadResult();
-
-$database->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE time > $todaystart AND time < $todayend AND parent=0");
-$todaystitle = $database->loadResult();
-
-$database->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE time > $yesterdaystart AND time < $yesterdayend AND parent=0");
-$yesterdaystitle = $database->loadResult();
+$database->loadObject($totaltmp);
+$todaytotal = $totaltmp->todaytotal?$newtotal->todaytotal:0;
+$yesterdaytotal = $totaltmp->yesterdaytotal?$newtotal->yesterdaytotal:0;
+$todaystitle = $totaltmp->todaytitle?$newtotal->todaytitle:0;
+$yesterdaystitle = $totaltmp->yesterdaystitle?$newtotal->yesterdaystitle:0;
+unset($totaltmp);
 
 } // ENDIF: showgenstats
 

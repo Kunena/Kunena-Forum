@@ -199,7 +199,7 @@ $catName = $objCatInfo->name;
                                 {
                                     $noImgUpload = 0;
                                     $GLOBALS['KUNENA_rc'] = 1;
-                                    include (KUNENA_ABSSOURCESPATH . 'fb_image_upload.php');
+                                    include (KUNENA_ABSSOURCESPATH . 'kunena.image.upload.php');
 
                                     if ($GLOBALS['KUNENA_rc'] == 0) {
                                         $noImgUpload = 1;
@@ -817,7 +817,7 @@ $catName = $objCatInfo->name;
                         }
 
                         if ($attachimage != '') {
-                            include KUNENA_ABSSOURCESPATH . 'fb_image_upload.php';
+                            include KUNENA_ABSSOURCESPATH . 'kunena.image.upload.php';
                         }
 
                         //$message = trim(htmlspecialchars(addslashes($message)));

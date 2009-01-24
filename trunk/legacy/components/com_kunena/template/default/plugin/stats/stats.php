@@ -17,6 +17,9 @@
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
+
+if($fbConfig->showstats):
+
 $forumurl = 'index.php?option=com_kunena';
 $userlist = 'index.php?option=com_comprofiler&amp;task=usersList';
 
@@ -35,6 +38,7 @@ $profilelink = 'index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&
 ?>
 
         <!-- BEGIN: GENERAL STATS -->
+<?php if($fbConfig->showgenstats): ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
@@ -79,6 +83,7 @@ $profilelink = 'index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&
 </div>
 </div>
 </div>
+<?php endif; ?>
 <!-- FINISH: GENERAL STATS -->
 
 <?php
@@ -97,6 +102,7 @@ $k = 0;
 
 
 <!-- B: Pop Subject -->
+<?php if($fbConfig->showpopsubjectstats): ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
@@ -148,6 +154,7 @@ $k = 0;
 </div>
 </div>
 </div>
+<?php endif; ?>
 <!-- F: Pop Subject -->
 
 
@@ -156,6 +163,7 @@ $k = 0;
 
 
 <!-- B: User Messages -->
+<?php if($fbConfig->showpopuserstats): ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
@@ -212,6 +220,7 @@ $k = 0;
 </div>
 </div>
 </div>
+<?php endif; ?>
 <!-- F: User Messages -->
 
 
@@ -221,6 +230,7 @@ $k = 0;
 
 
 <!-- B: Pop User  -->
+<?php if($fbConfig->showpopuserstats): ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
@@ -273,6 +283,7 @@ $barwidth = round(($topprofile->hits * 100) / $topprofil);
 </div>
 </div>
 </div>
+<?php endif; ?>
 <!-- F: User User -->
 
 
@@ -292,5 +303,7 @@ else {
 }
 
 //(FB) FINISH: WHOISONLINE
+
+endif;
 
 ?>

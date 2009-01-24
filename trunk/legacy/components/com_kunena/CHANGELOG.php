@@ -30,6 +30,11 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.0.5
 
+25-January-2009 Matias
+# Stats: visible even if they were disabled
+# Stats: wrong count in topics and messages
+^ Stats: Optimized SQL queries for speed and saved 7-20 queries
+
 24-January-2009 Matias
 # Fixed over 100 xhtml bugs
 ^ No default size for [img]

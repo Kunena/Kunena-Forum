@@ -18,7 +18,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
 
-if ($fbConfig->showwhoisonline > 0)
+if ($fbConfig->showstats && $fbConfig->showwhoisonline)
 {
 ?>
 <!-- WHOIS ONLINE -->

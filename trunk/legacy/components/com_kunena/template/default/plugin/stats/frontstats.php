@@ -32,19 +32,7 @@ if ($fbConfig->showstats > 0)
 ?>
 
 <?php
-    $database->setQuery(
-        "SELECT COUNT(*) FROM #__fb_messages AS m" . "\n LEFT JOIN #__fb_categories AS c ON c.id = m.catid" . "\n LEFT JOIN #__users AS u ON u.gid >= c.pub_access" . "\n WHERE m.moved='0' AND u.id = $my->id AND c.published = 1 AND m.hold = 0");
-    $totalmsg = $database->loadResult();
-    	check_dberror("Unable to load message count 1.");
-    $database->setQuery("SELECT COUNT(*) FROM #__fb_messages AS m"
-                            . "\n LEFT JOIN #__fb_categories AS c ON c.id = m.catid" . "\n LEFT JOIN #__users AS u ON u.gid >= c.pub_access" . "\n WHERE m.moved='0' AND u.id = $my->id AND c.published = 1 AND m.hold = 0 AND m.parent= 0");
-    $totaltitle = $database->loadResult();
-    	check_dberror("Unable to load message count 2.");
-    $database->setQuery(
-        "SELECT m.*, m.time AS sendtime FROM #__fb_messages AS m"
-            . "\n LEFT JOIN #__fb_categories AS c ON c.id = m.catid" . "\n LEFT JOIN #__users AS u ON u.gid >= c.pub_access" . "\n WHERE m.moved='0' AND u.id = $my->id AND c.published = 1 AND m.hold = 0" . "\n ORDER BY m.id DESC LIMIT 0,1");
-    $msgs = $database->loadObjectList();
-    	check_dberror("Unable to load messages.");
+
     $statslink = sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=stats');
     if ($fbConfig->cb_profile /*&& $my->id != 0*/) {
         $userlist = sefReltoAbs('index.php?option=com_comprofiler&amp;task=usersList');
@@ -92,7 +80,7 @@ if ($fbConfig->showstats > 0)
 
                 <br/>
 
-                &raquo; <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL .'&amp;func=latest');?>"><?php echo _STAT_VIEW_RECENT_POSTS_ON_FORUM; ?></a> &raquo; <a href = "<?php echo $statslink;?>"><?php echo _STAT_MORE_ABOUT_STATS; ?></a> &raquo; <a href="<?php echo $userlist;?>"><?php echo _STAT_USERLIST; ?></a>
+                &raquo; <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL .'&amp;func=latest');?>"><?php echo _STAT_VIEW_RECENT_POSTS_ON_FORUM; ?></a> <?php if ($fbConfig->showpopuserstats || $fbConfig->showpopsubjectstats) echo '&raquo; <a href = "'.$statslink.'">'. _STAT_MORE_ABOUT_STATS.'</a>'; ?>  &raquo; <a href="<?php echo $userlist;?>"><?php echo _STAT_USERLIST; ?></a>
                     </td>
                 </tr>
             </tbody>

@@ -249,7 +249,7 @@ DEFINE('_FB_AVATAR_MEDIUM_WIDTH','Medium Image Width :');
 DEFINE('_FB_AVATAR_LARGE_HEIGHT','Large Image Height :');
 DEFINE('_FB_AVATAR_LARGE_WIDTH','Large Image Width :');
 DEFINE('_FB_AVATAR_QUALITY','Avatar Quality');
-DEFINE('_FB_WELCOME','Welcome to Kunena');
+DEFINE('_FB_WELCOME','Welcome to Kunena!');
 DEFINE('_FB_WELCOME_DESC','Thank you for choosing Kunena as your board solution. This screen will give you a quick overview of all the various statistics of your board. The links on the left hand side of this screen allow you to control every aspect of your board experience. Each page will have instructions on how to use the tools.');
 DEFINE('_FB_STATISTIC','Statistic');
 DEFINE('_FB_VALUE','Value');

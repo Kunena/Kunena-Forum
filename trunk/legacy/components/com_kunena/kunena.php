@@ -62,7 +62,7 @@ $userid 		= intval(mosGetParam($_REQUEST, 'userid', 0));
 $view 			= mosGetParam($_REQUEST, 'view', '');
 $msgpreview 	= mosGetParam($_REQUEST, 'msgpreview', '');
 
-include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/fb_debug.php");
+include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.debug.php");
 
 // get Kunenas configuration params in
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/fb_config.class.php");

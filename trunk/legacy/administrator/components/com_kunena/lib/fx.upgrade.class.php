@@ -16,7 +16,7 @@
 // ensure this file is being included by a parent file
 defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
 
-include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/fb_debug.php");
+include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.debug.php");
 
 class fx_Upgrade {
 	var $component=null;

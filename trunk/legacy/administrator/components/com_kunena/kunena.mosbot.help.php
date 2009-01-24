@@ -62,7 +62,7 @@
         <?php
         define("_VALID_MOS", 1);
 
-        include_once ("../../../components/com_kunena/lib/fb_debug.php");
+        include_once ("../../../components/com_kunena/lib/kunena.debug.php");
         require_once ("../../../configuration.php");
         require_once ("../../../includes/mambo.php");
 

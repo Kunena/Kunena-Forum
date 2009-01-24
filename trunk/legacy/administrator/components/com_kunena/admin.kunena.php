@@ -18,7 +18,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 // Kill notices (we have many..)
 error_reporting (E_ALL ^ E_NOTICE);
 
-include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/fb_debug.php");
+include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.debug.php");
 
 // get Kunenas configuration params in
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.config.class.php");

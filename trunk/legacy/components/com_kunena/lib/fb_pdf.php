@@ -54,7 +54,7 @@ function dofreePDF($database)
 {
     global $mosConfig_sitename, $my, $aro_group, $acl;
     global $fbConfig, $fbSession, $catid;
-    require_once (KUNENA_ABSSOURCESPATH . 'fb_auth.php');
+    require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
     $is_Mod = 0;
 
     if (!$is_admin)

@@ -19,7 +19,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 global $fbConfig;
 //Start with determining which forums the user can see
 
-require_once (KUNENA_ABSSOURCESPATH . 'fb_auth.php');
+require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
 //resetting some things:
 $lockedForum = 0;
 $lockedTopic = 0;

@@ -17,7 +17,7 @@ defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 global $fbConfig;
 global $is_Moderator;
 
-require_once(KUNENA_ABSSOURCESPATH . 'fb_auth.php');
+require_once(KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
 
 //Security basics begin
 //Securing passed form elements:

@@ -13,7 +13,7 @@ defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 global $fbConfig;
 if ($my->id) //registered only
 {
-    require_once(KUNENA_ABSSOURCESPATH . 'fb_auth.php');
+    require_once(KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
     require_once(KUNENA_ABSSOURCESPATH . 'fb_statsbar.php');
 
     $task = mosGetParam($_GET, 'task', "");

@@ -106,7 +106,7 @@ function com_install() {
 	<tr>
 		<td width="20%" valign="top" style="padding: 10px;"><a
 			href="index2.php?option=com_kunena"><img
-			src="components/com_kunena/images/logo.png" alt="Kunena"
+			src="components/com_kunena/images/kunena.logo.png" alt="Kunena"
 			border="0"></a></td>
 
 		<td width="80%" valign="top" style="padding: 10px;">

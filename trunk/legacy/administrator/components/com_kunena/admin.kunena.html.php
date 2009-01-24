@@ -115,7 +115,7 @@ color:#666;
     <td width="170" valign="top">
     <!-- Begin: AdminLeft -->
         <div id="fbheader">
-        <a href = "index2.php?option=com_kunena"><img src = "components/com_kunena/images/logo.png"  border="0" alt = "<?php echo _COM_C_BACK; ?>"/></a>
+        <a href = "index2.php?option=com_kunena"><img src = "components/com_kunena/images/kunena.logo.png"  border="0" alt = "<?php echo _COM_C_BACK; ?>"/></a>
         </div>
         <!-- Begin : Kunena Left Menu -->
         <div id="fbmenu">

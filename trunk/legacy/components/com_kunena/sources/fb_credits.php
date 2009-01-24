@@ -32,7 +32,7 @@ global $is_Moderator;
               <tr>
                 <td class = "<?php echo $boardclass; ?>creditsdesc"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr valign="top">
-                      <td width="170"><img src="<?php echo JB_DIRECTURL . '/template/default/images/logo.png';?>" alt="Kunena"  align="left" hspace="5" vspace="5"/></td>
+                      <td width="170"><img src="<?php echo JB_DIRECTURL . '/template/default/images/kunena.logo.png';?>" alt="Kunena"  align="left" hspace="5" vspace="5"/></td>
                       <td><div  class="fb_credits_intro"> An open source project like Kunena requires the dedication and investment of personal time from various contributors.
                           This version of Kunena has been made possible by the following contributors (in alphabetical ordering):</div></td>
                     </tr>

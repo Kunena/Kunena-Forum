@@ -264,8 +264,8 @@
 		</script>
 		<filter token="fbfrontendlist" value="${fb.frontend.list}" />		
 		<filter token="fbbackendlist" value="${fb.backend.list}" />		
-		<copy file="${project_dir}/administrator/components/com_kunena/Kunena.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/administrator/components/com_kunena/install/fb_install_upgrade.xml" todir="${tmp_dir}/install" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/administrator/components/com_kunena/kunena.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/administrator/components/com_kunena/install/kunena.install.upgrade.xml" todir="${tmp_dir}/install" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/components/com_kunena/sources/fb_config.class.php" todir="${tmp_dir}/sources" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/README.txt" todir="${tmp_dir}" overwrite="true" filtering="true" />
 	</target>

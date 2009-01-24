@@ -180,7 +180,7 @@ include ($mainframe->getCfg('absolute_path') . '/components/com_kunena/sources/f
  <!-- Footer -->
 <div class="fbfooter">
 Installed version:  <?php echo $fbversion; ?> |
-&copy; Copyright: <a href = "http://www.bestofjoomla.com" target = "_blank">Best of Joomla</a>  |
+&copy; Copyright: <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>  |
 License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a>
 </div>
 <!-- /Footer -->

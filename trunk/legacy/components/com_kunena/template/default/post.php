@@ -387,7 +387,7 @@ $catName = $objCatInfo->name;
                                                     $msg .= "$_COM_A_NOTIFICATION3\n";
                                                     $msg .= "\n\n\n\n\n";
                                                     $msg .= "** Powered by Kunena **\n";
-                                                    $msg .= "** Best of Joomla! - http://www.bestofjoomla.com **";
+                                                    $msg .= "** Kunena! - http://www.Kunena.com **";
 
                                                     if ($ip != "127.0.0.1" && $my->id != $subs->id) { //don't mail yourself
                                                         mosmail($fbConfig->email, _FB_FORUM_AT." " . $_SERVER['SERVER_NAME'], $subs->email, $mailsubject, $msg);
@@ -447,7 +447,7 @@ $catName = $objCatInfo->name;
                                                     $msg .= "$_COM_A_NOTIFICATION3\n";
                                                     $msg .= "\n\n\n\n\n";
                                                     $msg .= "** Powered by Kunena **\n";
-                                                    $msg .= "** Best of Joomla! - http://www.bestofjoomla.com **";
+                                                    $msg .= "** Kunena! - http://www.Kunena.com **";
 
                                                     if ($ip != "127.0.0.1" && $my->id != $mods->id) { //don't mail yourself
                                                         //Send away

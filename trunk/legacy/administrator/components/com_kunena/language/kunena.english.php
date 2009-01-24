@@ -391,9 +391,9 @@ DEFINE('_FB_MYPROFILE_GTALK', 'GTALK');
 DEFINE('_FB_MYPROFILE_GTALK_DESC', 'This is your Gtalk nickname.');
 DEFINE('_FB_MYPROFILE_WEBSITE', 'Website');
 DEFINE('_FB_MYPROFILE_WEBSITE_NAME', 'Website Name');
-DEFINE('_FB_MYPROFILE_WEBSITE_NAME_DESC', 'Example: Best of Joomla!');
+DEFINE('_FB_MYPROFILE_WEBSITE_NAME_DESC', 'Example: Kunena!');
 DEFINE('_FB_MYPROFILE_WEBSITE_URL', 'Website URL');
-DEFINE('_FB_MYPROFILE_WEBSITE_URL_DESC', 'Example: www.bestofjoomla.com');
+DEFINE('_FB_MYPROFILE_WEBSITE_URL_DESC', 'Example: www.Kunena.com');
 DEFINE('_FB_MYPROFILE_MSN', 'MSN');
 DEFINE('_FB_MYPROFILE_MSN_DESC', 'Your MSN messenger email address.');
 DEFINE('_FB_MYPROFILE_SIGNATURE', 'Signature');
@@ -510,7 +510,7 @@ DEFINE('_FB_SAMPLWARN1', '-- Make absolutely sure that you load the sample data 
 DEFINE('_FB_FORUM1', 'Forum 1');
 DEFINE('_FB_SAMPLEPOST1', 'Sample Post 1');
 DEFINE('_FB_SAMPLEFORUM11', 'Sample Forum 1\r\n');
-DEFINE('_FB_SAMPLEPOST11', '[b][size=4][color=#FF6600]Sample Post[/color][/size][/b]\nCongratulations with your new Forum!\n\n[url=http://bestofjoomla.com]- Best of Joomla[/url]');
+DEFINE('_FB_SAMPLEPOST11', '[b][size=4][color=#FF6600]Sample Post[/color][/size][/b]\nCongratulations with your new Forum!\n\n[url=http://Kunena.com]- Kunena[/url]');
 DEFINE('_FB_SAMPLESUCCESS', 'Sample data loaded');
 DEFINE('_FB_SAMPLEREMOVED', 'Sample data removed');
 DEFINE('_FB_CBADDED', 'Community Builder profile added');
@@ -519,7 +519,7 @@ DEFINE('_FB_FILEDELETED', 'File deleted');
 DEFINE('_FB_NOPARENT', 'No Parent');
 DEFINE('_FB_DIRCOPERR', 'Error: File');
 DEFINE('_FB_DIRCOPERR1', 'could not be copied!\n');
-DEFINE('_FB_INSTALL1', '<strong>Kunena Forum</strong> Component <em>for Joomla! CMS</em> <br />&copy; 2006 - 2008 by Best Of Joomla<br />All rights reserved.');
+DEFINE('_FB_INSTALL1', '<strong>Kunena Forum</strong> Component <em>for Joomla! </em> <br />&copy; 2008 - 2009 by www.Kunena.com<br />All rights reserved.');
 DEFINE('_FB_INSTALL2', 'Transfer/Installation :</code></strong><br /><br /><font color="red"><b>succesfull');
 // added by aliyar
 DEFINE('_FB_FORUMPRF_TITLE', 'Profile Settings');
@@ -555,7 +555,7 @@ DEFINE('_FB_USERPOPULAR', 'Show Popular Subject Stats');
 DEFINE('_FB_USERPOPULARDESC', 'If you want to show Popular Subject, select Yes');
 DEFINE('_FB_NUMPOP', 'Number of Popular Subject');
 DEFINE('_FB_INFORMATION',
-    'Best of Joomla team is proud to announce the release of Kunena 1.0.0. It is a powerful and stylish forum component for a well deserved content management system, Joomla!. It is initially based on the hard work of Joomlaboard team and most of our praises goes to their team.Some of the main features of Kunena can be listed as below (in addition to JB&#39;s current features):<br /><br /><ul><li>A much more designer friendly forum system. It is close to SMF templating system having a simpler structue. With very few steps you can modify the total look of the forum. Thanks goes to the great designers in our team.</li><li>Unlimited subcategory system with better administration backend.</li><li>Faster system and better coding experience for 3rd parties.</li><li>The same<br /></li><li>Profilebox at the top of the forum</li><li>Support for popular PM systems, such as ClexusPM and Uddeim</li><li>Basic plugin system (practical rather than perfec)</li><li>Language-defined icon system.<br /></li><li>Sharing image system of other templates. So, choice between templates and image series is possible</li><li>You can add joomla modules inside the forum template itself. Wanted to have banner inside your forum?</li><li>Favourite threads selection and management</li><li>Forum spotlights and highlights</li><li>Forum announcements and its panel</li><li>Latest messages (Tabbed)</li><li>Statistics at bottom</li><li>Who&#39;s online, on what page?</li><li>Category specific image system</li><li>Enhanced pathway</li><li><strong>Joomlaboard import, SMF in plan to be releaed pretty soon</strong></li><li>RSS, PDF output</li><li>Advanced search (under developement)</li><li>Community builder and Clexus PM profile options</li><li>Avatar management : CB and Clexus PM options<br /></li></ul><br />Please keep in mind that this release is not meant to be used on production sites, even though we have tested it through. We are planning to continue to work on this project, as it is used on our several projects, and we would be pleased if you could join us to bring a bridge-free solution to Joomla! forums.<br /><br />This is a collaborative work of several developers and designers that have kindly participated and made this release come true. Here we thank all of them and wish that you enjoy this release!<br /><br />Best of Joomla! team<br /></td></tr></table>');
+    'The Kunena team is proud to announce the release of Kunena 1.0.5. It is a powerful and stylish forum component for a well deserved content management system, Joomla!. It is initially based on the hard work of Joomlaboard and Fireboard and most of our praises goes to their team. Some of the main features of Kunena can be listed as below (in addition to JB&#39;s current features):<br /><br /><ul><li>A much more designer friendly forum system. It is close to SMF templating system having a simpler structue. With very few steps you can modify the total look of the forum. Thanks goes to the great designers in our team.</li><li>Unlimited subcategory system with better administration backend.</li><li>Faster system and better coding experience for 3rd parties.</li><li>The same<br /></li><li>Profilebox at the top of the forum</li><li>Support for popular PM systems, such as ClexusPM and Uddeim</li><li>Basic plugin system (practical rather than perfec)</li><li>Language-defined icon system.<br /></li><li>Sharing image system of other templates. So, choice between templates and image series is possible</li><li>You can add joomla modules inside the forum template itself. Wanted to have banner inside your forum?</li><li>Favourite threads selection and management</li><li>Forum spotlights and highlights</li><li>Forum announcements and its panel</li><li>Latest messages (Tabbed)</li><li>Statistics at bottom</li><li>Who&#39;s online, on what page?</li><li>Category specific image system</li><li>Enhanced pathway</li><li><strong>Joomlaboard import, SMF in plan to be releaed pretty soon</strong></li><li>RSS, PDF output</li><li>Advanced search (under developement)</li><li>Community builder and Clexus PM profile options</li><li>Avatar management : CB and Clexus PM options<br /></li></ul><br />Please keep in mind that this release is not meant to be used on production sites, even though we have tested it through. We are planning to continue to work on this project, as it is used on our several projects, and we would be pleased if you could join us to bring a bridge-free solution to Joomla! forums.<br /><br />This is a collaborative work of several developers and designers that have kindly participated and made this release come true. Here we thank all of them and wish that you enjoy this release!<br /><br />Kunena! team<br /></td></tr></table>');
 DEFINE('_FB_INSTRUCTIONS', 'Instructions');
 DEFINE('_FB_FINFO', 'Kunena Forum Information');
 DEFINE('_FB_CSSEDITOR', 'Kunena Template CSS Editor');
@@ -847,7 +847,7 @@ DEFINE('_PREVIEW', 'preview');
 DEFINE('_COM_A_MOSBOT_TITLE', 'Discussbot');
 DEFINE('_COM_A_MOSBOT_DESC', 'The Discuss Bot enables your users to discuss content items in the forums. The Content Title is used as the topic subject.'
            . '<br />If a topic does not exist yet a new one is created. If the topic already exists, the user is shown the thread and (s)he can reply.' . '<br /><strong>You will need to download and install the Bot separately.</strong>'
-           . '<br />check the <a href="http://www.bestofjoomla.com">Best of Joomla Site</a> for more information.' . '<br />When Installed you will need to add the following bot lines to your Content:' . '<br />{mos_fb_discuss:<em>catid</em>}'
+           . '<br />check the <a href="http://www.Kunena.com">Kunena Site</a> for more information.' . '<br />When Installed you will need to add the following bot lines to your Content:' . '<br />{mos_fb_discuss:<em>catid</em>}'
            . '<br />The <em>catid</em> is the category in which the Content Item can be discussed. To find the proper catid, just look into the forums ' . 'and check the category id from the URLs from your browsers status bar.'
            . '<br />Example: if you want the article discussed in Forum with catid 26, the Bot should look like: {mos_fb_discuss:26}'
            . '<br />This seems a bit difficult, but it does allow you to have each Content Item to be discussed in a matching forum.');
@@ -926,7 +926,7 @@ DEFINE('_COM_C_IMAGESDESC', 'Browse and administer uploaded images');
 DEFINE('_COM_C_CSS', 'Edit CSS File');
 DEFINE('_COM_C_CSSDESC', 'Tweak Kunena\'s look and feel');
 DEFINE('_COM_C_SUPPORT', 'Support WebSite');
-DEFINE('_COM_C_SUPPORTDESC', 'Connect to the Best of Joomla website (new window)');
+DEFINE('_COM_C_SUPPORTDESC', 'Connect to the Kunena website (new window)');
 DEFINE('_COM_C_PRUNETAB', 'Prune Forums');
 DEFINE('_COM_C_PRUNETABDESC', 'Remove old threads (configurable)');
 DEFINE('_COM_C_PRUNEUSERS', 'Prune Users'); // <=FB 1.0.3

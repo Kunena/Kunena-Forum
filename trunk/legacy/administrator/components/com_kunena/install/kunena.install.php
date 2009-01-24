@@ -163,8 +163,8 @@ function com_install() {
 			style="border: 1px solid #99CCFF; background: #D9D9FF; padding: 20px; margin: 20px; clear: both;">
 		<strong>Thank you for using Kunena!</strong> <br />
 
-		Kunena Forum Component <em>for Joomla! CMS</em> &copy; by <a
-			href="http://www.bestofjoomla.com" target="_blank">Best Of Joomla</a>.
+		Kunena Forum Component <em>for Joomla! </em> &copy; by <a
+			href="http://www.Kunena.com" target="_blank">www.Kunena.com</a>.
 		All rights reserved.</div>
 		</td>
 	</tr>

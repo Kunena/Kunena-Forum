@@ -235,7 +235,7 @@ if ($func == 'fb_rss')
 
 if ($func == 'fb_pdf')
 {
-    include (KUNENA_ABSSOURCESPATH . 'fb_pdf.php');
+    include (KUNENA_ABSSOURCESPATH . 'kunena.pdf.php');
     die();
 }
 

@@ -62,10 +62,10 @@ $userid 		= intval(mosGetParam($_REQUEST, 'userid', 0));
 $view 			= mosGetParam($_REQUEST, 'view', '');
 $msgpreview 	= mosGetParam($_REQUEST, 'msgpreview', '');
 
-include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/sources/fb_debug.php");
+include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/fb_debug.php");
 
 // get Kunenas configuration params in
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/sources/fb_config.class.php");
+require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/fb_config.class.php");
 global $fbConfig;
 $fbConfig = new fb_config();
 $fbConfig->load();
@@ -73,7 +73,7 @@ $fbConfig->load();
 //include_once ($mainframe->getCfg("absolute_path") . '/administrator/components/com_kunena/Kunena_config.php');
 
 // Central Location for all internal links
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/sources/fb_link.class.php");
+require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/fb_link.class.php");
 
 // Class structure should be used after this and all the common task should be moved to this class
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/class.Kunena.php");

@@ -108,7 +108,7 @@ define('KUNENA_ABSSOURCESPATH', KUNENA_ABSPATH . '/lib/');
 define('KUNENA_DIRECTURL', KUNENA_JLIVEURL . '/components/com_kunena');
 
 // Kunena direct url
-define('KUNENA_URLSOURCESPATH', KUNENA_DIRECTURL . '/sources/');
+define('KUNENA_URLSOURCESPATH', KUNENA_DIRECTURL . '/lib/');
 
 // Kunena sources url
 define('KUNENA_LANG', $mainframe->getCfg('lang'));

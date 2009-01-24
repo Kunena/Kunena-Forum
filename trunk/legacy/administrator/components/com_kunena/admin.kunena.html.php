@@ -168,7 +168,7 @@ function showFbFooter () {
 global $mainframe;
 global $fbConfig;
 
-include ($mainframe->getCfg('absolute_path') . '/components/com_kunena/sources/fb_version.php');
+include ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/fb_version.php');
 // << $fbversion
 ?>
 

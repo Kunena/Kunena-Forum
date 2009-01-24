@@ -27,7 +27,7 @@
 
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-include_once("interpreter.bbcode.inc.php");
+include_once("kunena.parser.bbcode.php");
 
 class KunenaBBCodeInterpreter extends BBCodeInterpreter {
     # these are samples... we used the parser to refer to files!

@@ -17,7 +17,7 @@
     
     </files>
     <installfile>install/kunena.install.php</installfile>
-    <uninstallfile>install/kunena.uninstall..php</uninstallfile>
+    <uninstallfile>install/kunena.uninstall.php</uninstallfile>
     <administration>
         <files>
 

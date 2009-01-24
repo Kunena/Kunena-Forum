@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id$
+* @version $Id:kunena.credits.php 139 2009-01-24 10:27:17Z fxstein $
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
@@ -78,7 +78,7 @@ global $is_Moderator;
                 <th class = "th-right"> <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump)
-                    require_once (KUNENA_ABSSOURCESPATH . 'fb_forumjump.php');
+                    require_once (KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
                 ?>
                 </th>
               </tr>

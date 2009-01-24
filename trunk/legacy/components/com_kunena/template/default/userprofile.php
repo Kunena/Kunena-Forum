@@ -671,7 +671,7 @@ else
                 <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump)
-                    require_once(KUNENA_ABSSOURCESPATH . 'fb_forumjump.php');
+                    require_once(KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
                 ?>
             </th>
         </tr>

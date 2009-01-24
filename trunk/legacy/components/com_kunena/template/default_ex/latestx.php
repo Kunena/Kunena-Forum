@@ -234,7 +234,7 @@ if (count($threadids) > 0)
                                     <td class="fb_list_jump_all">
 
                                     <?php if ($fbConfig->enableforumjump)
- 									 require_once (KUNENA_ABSSOURCESPATH . 'fb_forumjump.php');
+ 									 require_once (KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
  									 ?>
 
                                    </td>

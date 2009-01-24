@@ -193,7 +193,7 @@ else {
     require_once (KUNENA_ABSPATH . '/template/default/fb_layout.php');
     }
 
-require_once (KUNENA_ABSSOURCESPATH . 'fb_permissions.php');
+require_once (KUNENA_ABSSOURCESPATH . 'kunena.permissions.php');
 require_once (KUNENA_ABSSOURCESPATH . 'kunena.category.class.php');
 
 if ($catid != '') {

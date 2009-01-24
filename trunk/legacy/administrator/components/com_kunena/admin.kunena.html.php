@@ -147,7 +147,7 @@ color:#666;
            <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=loadSample"><?php echo _COM_C_LOADSAMPLE; ?></a>
            <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=removeSample" onclick="return confirm('<?php echo _FB_CONFIRM_REMOVESAMPLEDATA?>');"><?php echo _COM_C_REMOVESAMPLE; ?></a>
            <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=recount"><?php echo _FB_RECOUNTFORUMS; ?></a>
-           <a class="fbmainmenu"  href = "http://www.bestofjoomla.com" target = "_blank" ><?php echo _COM_C_SUPPORT; ?></a>
+           <a class="fbmainmenu"  href = "http://www.Kunena.com" target = "_blank" ><?php echo _COM_C_SUPPORT; ?></a>
 
 
         </div>
@@ -200,7 +200,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 
 
         <?php
-        $path = $mainframe->getCfg('absolute_path') . "/administrator/components/com_kunena/fb_cpanel.php";
+        $path = $mainframe->getCfg('absolute_path') . "/administrator/components/com_kunena/kunena.cpanel.php";
 
         if (file_exists($path)) {
             require $path;

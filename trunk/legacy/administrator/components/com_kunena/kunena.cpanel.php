@@ -153,9 +153,9 @@ table.fbstat .col2 {
 </div>
 <!-- BEGIN: STATS -->
 <div class="fbstatscover">
-  <?php 
-   
-   include_once ($mainframe->getCfg("absolute_path") .'/administrator/components/com_kunena/stats.class.php');
+  <?php
+
+   include_once ($mainframe->getCfg("absolute_path") .'/administrator/components/com_kunena/lib/kunena.stats.class.php');
     ?>
   <table cellspacing="1"  border="0" width="100%" class="fbstat">
     <caption>
@@ -173,7 +173,7 @@ table.fbstat .col2 {
         <th><?php echo _FB_VALUE;?></th>
       </tr>
     </thead>
-    <?php 
+    <?php
 	$yesterday = mktime(0, 0, 0, date("m")  , date("d")-1, date("Y"));
 	?>
     <tbody>
@@ -206,7 +206,7 @@ table.fbstat .col2 {
         <td><strong><?php echo jbStats::get_total_messages(date("Y-m-d 00:00:01"),date("Y-m-d 23:59:59")) ;?></strong></td>
         <td><?php echo _STATS_YESTERDAY_REPLIES; ?></td>
         <td><strong>
-          <?php 
+          <?php
 	echo jbStats::get_total_messages(date("Y-m-d 00:00:01",$yesterday),date("Y-m-d 23:59:59",$yesterday)) ;
 	?>
           </strong></td>
@@ -271,7 +271,7 @@ table.fbstat .col2 {
             </tr>
           </thead>
           <tbody>
-            <?php 
+            <?php
 		$fb_top_profiles=jbStats::get_top_profiles();
 		foreach ($fb_top_profiles as $fb_profile) {
 			if ($fb_profile->uhits == $fb_top_profiles[0]->uhits)
@@ -284,7 +284,7 @@ table.fbstat .col2 {
               <td ><img style="margin-bottom:1px" src="<?php echo JB_DIRECTURL.'/template/default/images/bar.gif'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
               <td ><?php echo $fb_profile->uhits;?></td>
             </tr>
-            <?php		
+            <?php
 		}
 	?>
           </tbody>
@@ -310,7 +310,7 @@ table.fbstat .col2 {
       </tr>
     </thead>
     <tbody>
-      <?php 
+      <?php
 	$jb_top_posts=jbStats::get_top_topics();
 	foreach ($jb_top_posts as $jb_post) {
 		if ($jb_post->hits == $jb_top_posts[0]->hits) {

@@ -145,8 +145,8 @@ class TOOLBAR_simpleBoard
         mosMenuBar::spacer();
         mosMenuBar::endTable();
     }
-		
-				function _SHOWSMILEY_MENU()
+
+	function _SHOWSMILEY_MENU()
     {
         mosMenuBar::startTable();
         mosMenuBar::spacer();
@@ -179,8 +179,8 @@ class TOOLBAR_simpleBoard
         mosMenuBar::cancel('showsmilies');
         mosMenuBar::endTable();
     }
-				
-				function _SHOWRANKS_MENU()
+
+	function _SHOWRANKS_MENU()
     {
         mosMenuBar::startTable();
         mosMenuBar::spacer();
@@ -193,8 +193,8 @@ class TOOLBAR_simpleBoard
         mosMenuBar::back();
         mosMenuBar::endTable();
     }
-				
-				function _EDITRANK_MENU()
+
+	function _EDITRANK_MENU()
     {
         mosMenuBar::startTable();
         mosMenuBar::spacer();

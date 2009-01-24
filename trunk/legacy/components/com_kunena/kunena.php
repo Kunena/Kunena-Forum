@@ -765,7 +765,7 @@ else
 
         #########################################################################################
         case 'search':
-            require_once (KUNENA_ABSSOURCESPATH . 'fb_search.class.php');
+            require_once (KUNENA_ABSSOURCESPATH . 'kunena.search.class.php');
 
             $searchword = mosGetParam($_REQUEST, 'searchword', '');
 

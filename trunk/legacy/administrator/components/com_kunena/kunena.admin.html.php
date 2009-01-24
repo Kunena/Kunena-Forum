@@ -2823,7 +2823,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
         //that's what we got now; later the 'future_use' columns can be used..
 
         $csubslist = count($subslist);
-        include_once ('components/com_kunena/bb_adm.js');
+        include_once ('components/com_kunena/js/kunena.bbcode.ctrl.js');
 ?>
 
         <form action = "index2.php?option=<?php echo $option;?>" method = "POST" name = "adminForm">

@@ -5,10 +5,10 @@
     <versionname>Redwood</versionname>
     <creationDate>@fbversiondate@</creationDate>
 	<build>@fbbuild@</build>
-    <author>Best Of Joomla!</author>
-    <authorEmail>Kunena@bestofjoomla.com</authorEmail>
-    <authorUrl>http://www.bestofjoomla.com</authorUrl>
-    <copyright>www.bestofjoomla.com</copyright>
+    <author>www.Kunena.com</author>
+    <authorEmail>Kunena@Kunena.com</authorEmail>
+    <authorUrl>http://www.Kunena.com</authorUrl>
+    <copyright>www.Kunena.com</copyright>
     <license>GNU/GPL</license>
     <description>Kunena Forum</description>
     <files>
@@ -16,8 +16,8 @@
 @fbfrontendlist@    
     
     </files>
-    <installfile>install/install.Kunena.php</installfile>
-    <uninstallfile>install/uninstall.Kunena.php</uninstallfile>
+    <installfile>install/kunena.install.php</installfile>
+    <uninstallfile>install/kunena.uninstall..php</uninstallfile>
     <administration>
         <files>
 

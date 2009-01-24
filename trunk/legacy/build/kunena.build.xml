@@ -167,7 +167,7 @@
 		<copy file="${project_dir}/administrator/components/com_kunena/kunena.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/administrator/components/com_kunena/install/kunena.install.upgrade.xml" todir="${tmp_dir}/install" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/components/com_kunena/lib/fb_config.class.php" todir="${tmp_dir}/lib" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/components/com_kunena/lib/fb_rss.php" todir="${tmp_dir}/lib" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/components/com_kunena/lib/kunena.rss.php" todir="${tmp_dir}/lib" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/README.txt" todir="${tmp_dir}" overwrite="true" filtering="true" />
 	</target>
 

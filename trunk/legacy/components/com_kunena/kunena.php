@@ -229,7 +229,7 @@ $is_Moderator = fb_has_moderator_permission($database, $thisCat, $my->id, $is_ad
 //intercept the RSS request; we should stop afterwards
 if ($func == 'fb_rss')
 {
-    include (KUNENA_ABSSOURCESPATH . 'fb_rss.php');
+    include (KUNENA_ABSSOURCESPATH . 'kunena.rss.php');
     die();
 }
 

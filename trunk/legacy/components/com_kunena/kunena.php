@@ -688,7 +688,7 @@ else
 
         #########################################################################################
         case 'rules':
-            include (KUNENA_ABSSOURCESPATH . 'fb_rules.php');
+            include (KUNENA_ABSSOURCESPATH . 'kunena.rules.php');
 
             break;
 

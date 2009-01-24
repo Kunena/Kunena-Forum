@@ -825,7 +825,7 @@ else
 
         #########################################################################################
         case 'karma':
-            include (KUNENA_ABSSOURCESPATH . 'fb_karma.php');
+            include (KUNENA_ABSSOURCESPATH . 'kunena.karma.php');
 
             break;
 

@@ -27,8 +27,6 @@
 
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-// full path does not work for some reason
-// require_once ($mainframe->getCfg("absolute_path")Ê.Ê"/components/com_kunena/sources/interpreter.bbcode.inc.php");
 include_once("interpreter.bbcode.inc.php");
 
 class KunenaBBCodeInterpreter extends BBCodeInterpreter {

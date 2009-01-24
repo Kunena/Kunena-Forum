@@ -102,7 +102,7 @@ define('JB_LIVEURLREL', 'index.php?option=com_kunena' . FB_FB_ITEMID_SUFFIX);
 define('JB_ABSPATH', JB_JABSPATH . '/components/com_kunena');
 
 // Kunena absolute path
-define('JB_ABSSOURCESPATH', JB_ABSPATH . '/sources/');
+define('JB_ABSSOURCESPATH', JB_ABSPATH . '/lib/');
 
 // Kunena souces absolute path
 define('JB_DIRECTURL', JB_JLIVEURL . '/components/com_kunena');

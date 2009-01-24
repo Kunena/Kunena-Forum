@@ -73,7 +73,7 @@ $fbConfig->load();
 //include_once ($mainframe->getCfg("absolute_path") . '/administrator/components/com_kunena/Kunena_config.php');
 
 // Central Location for all internal links
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/fb_link.class.php");
+require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.link.class.php");
 
 // Class structure should be used after this and all the common task should be moved to this class
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/class.Kunena.php");

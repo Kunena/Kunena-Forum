@@ -42,14 +42,14 @@ else
 // topic emoticons
 $topic_emoticons = array ();
 
-$topic_emoticons[0] = JB_URLEMOTIONSPATH . 'default.gif';
-$topic_emoticons[1] = JB_URLEMOTIONSPATH . 'exclam.gif';
-$topic_emoticons[2] = JB_URLEMOTIONSPATH . 'question.gif';
-$topic_emoticons[3] = JB_URLEMOTIONSPATH . 'arrow.gif';
-$topic_emoticons[4] = JB_URLEMOTIONSPATH . 'love.gif';
-$topic_emoticons[5] = JB_URLEMOTIONSPATH . 'grin.gif';
-$topic_emoticons[6] = JB_URLEMOTIONSPATH . 'shock.gif';
-$topic_emoticons[7] = JB_URLEMOTIONSPATH . 'smile.gif';
+$topic_emoticons[0] = KUNENA_URLEMOTIONSPATH . 'default.gif';
+$topic_emoticons[1] = KUNENA_URLEMOTIONSPATH . 'exclam.gif';
+$topic_emoticons[2] = KUNENA_URLEMOTIONSPATH . 'question.gif';
+$topic_emoticons[3] = KUNENA_URLEMOTIONSPATH . 'arrow.gif';
+$topic_emoticons[4] = KUNENA_URLEMOTIONSPATH . 'love.gif';
+$topic_emoticons[5] = KUNENA_URLEMOTIONSPATH . 'grin.gif';
+$topic_emoticons[6] = KUNENA_URLEMOTIONSPATH . 'shock.gif';
+$topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 
 // url of current page that user will be returned to after login
 if ($query_string = mosGetParam($_SERVER, 'QUERY_STRING', '')) {
@@ -98,17 +98,17 @@ if (count($messages[0]) > 0)
                 <tr>
                     <th colspan = "<?php echo ($is_Moderator?"5":"4");?>">
                         <div class = "fb_title_cover fbm">
-                            <span class = "fb_title fbl"><b><?php echo _FB_THREADS_IN_FORUM; ?>:</b> <?php echo '' . $objCatInfo->name . ''; ?></span>
+                            <span class = "fb_title fbl"><b><?php echo _KUNENA_THREADS_IN_FORUM; ?>:</b> <?php echo '' . $objCatInfo->name . ''; ?></span>
                         </div>
                         <!-- FORUM TOOLS -->
 
                         <?php
                         //(JJ) BEGIN: RECENT POSTS
-                        if (file_exists(JB_ABSTMPLTPATH . '/plugin/forumtools/forumtools.php')) {
-                            include (JB_ABSTMPLTPATH . '/plugin/forumtools/forumtools.php');
+                        if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/forumtools/forumtools.php')) {
+                            include (KUNENA_ABSTMPLTPATH . '/plugin/forumtools/forumtools.php');
                             }
                         else {
-                            include (JB_ABSPATH . '/template/default/plugin/forumtools/forumtools.php');
+                            include (KUNENA_ABSPATH . '/template/default/plugin/forumtools/forumtools.php');
                             }
                         //(JJ) FINISH: RECENT POSTS
                         ?>
@@ -176,7 +176,7 @@ if (count($messages[0]) > 0)
 
                         <tr>
                             <td class = "<?php echo $boardclass ?>contentheading fbm" id = "fb_spot" colspan = "<?php echo ($is_Moderator?"5":"4");?>" align="left">
-                                <span><?php if(!$funcmylatest) {echo _FB_SPOTS;} else {echo _USER_FAVORITES;} ?></span>
+                                <span><?php if(!$funcmylatest) {echo _KUNENA_SPOTS;} else {echo _USER_FAVORITES;} ?></span>
                             </td>
                         </tr>
 
@@ -191,7 +191,7 @@ if (count($messages[0]) > 0)
 
                     <tr>
                         <td class = "<?php echo $boardclass ?>contentheading fbm" id = "fb_fspot" colspan = "<?php echo ($is_Moderator?"5":"4");?>" align="left">
-                            <span><?php if(!$funcmylatest) {echo _FB_FORUM;} else {echo _FB_MY_DISCUSSIONS_DETAIL;} ?></span>
+                            <span><?php if(!$funcmylatest) {echo _KUNENA_FORUM;} else {echo _KUNENA_MY_DISCUSSIONS_DETAIL;} ?></span>
                         </td>
                     </tr>
 
@@ -222,7 +222,7 @@ if (count($messages[0]) > 0)
 
                                 <td class = "td-2"  align="center">
                                     <?php echo fb_link::GetSimpleLink($id);
-                                    	echo $leaf->topic_emoticon == 0 ? '<img src="' . JB_URLEMOTIONSPATH . 'default.gif" border="0"  alt="" />' : "<img src=\"" . $topic_emoticons[$leaf->topic_emoticon] . "\" alt=\"emo\" border=\"0\" />"; ?>
+                                    	echo $leaf->topic_emoticon == 0 ? '<img src="' . KUNENA_URLEMOTIONSPATH . 'default.gif" border="0"  alt="" />' : "<img src=\"" . $topic_emoticons[$leaf->topic_emoticon] . "\" alt=\"emo\" border=\"0\" />"; ?>
                                 </td>
 
                                 <?php
@@ -239,8 +239,8 @@ if (count($messages[0]) > 0)
                                 <?php
                                 //(JJ) ATTACHMENTS ICON
                                 if ($leaf->attachmesid > 0) {
-                                    echo $fbIcons['topicattach'] ? '<img  class="attachicon" src="' . JB_URLICONSPATH . ''
-                                             . $fbIcons['topicattach'] . '" border="0" alt="' . _FB_ATTACH . '" />' : '<img class="attachicon" src="' . JB_URLEMOTIONSPATH . 'attachment.gif"  alt="' . _FB_ATTACH . '" title="' . _FB_ATTACH . '" />';
+                                    echo $fbIcons['topicattach'] ? '<img  class="attachicon" src="' . KUNENA_URLICONSPATH . ''
+                                             . $fbIcons['topicattach'] . '" border="0" alt="' . _KUNENA_ATTACH . '" />' : '<img class="attachicon" src="' . KUNENA_URLEMOTIONSPATH . 'attachment.gif"  alt="' . _KUNENA_ATTACH . '" title="' . _KUNENA_ATTACH . '" />';
                                     }
                                 ?>
 
@@ -251,8 +251,8 @@ if (count($messages[0]) > 0)
                                     <?php
                                     if ($fbConfig->allowfavorites & $leaf->favthread)
                                     {
-                                    	echo $fbIcons['favoritestar'] ? '<img  class="favoritestar" src="' . JB_URLICONSPATH . '' . $fbIcons['favoritestar']
-                                    		. '" border="0" alt="' . _FB_FAVORITE . '" />' : '<img class="favoritestar" src="' . JB_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _FB_FAVORITE . '" title="' . _FB_FAVORITE . '" />';
+                                    	echo $fbIcons['favoritestar'] ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . '' . $fbIcons['favoritestar']
+                                    		. '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
                                     }
                                     ?>
                                     <!--            /Favorite       -->
@@ -326,7 +326,7 @@ if (count($messages[0]) > 0)
                             <td class = "td-2">
                                 <?php echo fb_link::GetSimpleLink($id);?>
 
-                                <img src = "<?php echo JB_URLEMOTIONSPATH ;?>arrow.gif" alt = "emo"/>
+                                <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>arrow.gif" alt = "emo"/>
                             </td>
 
                             <td class = "td-3">
@@ -344,7 +344,7 @@ if (count($messages[0]) > 0)
                         <div class="fbs">
                         <!-- By -->
 
-        <span class="topic_posted_time"><?php echo _FB_POSTED_AT ?> <?php echo time_since($leaf->time , time() + ($fbConfig->board_ofset * 3600)); ?> <?php echo _FB_AGO ?>
+        <span class="topic_posted_time"><?php echo _KUNENA_POSTED_AT ?> <?php echo time_since($leaf->time , time() + ($fbConfig->board_ofset * 3600)); ?> <?php echo _KUNENA_AGO ?>
         </span>
         <span class="topic_by">
         <?php echo _GEN_BY.' '.fb_link::GetProfileLink($leaf->userid, $leaf->name); ?>
@@ -354,7 +354,7 @@ if (count($messages[0]) > 0)
          <?php if (strtolower($func) != 'showcat' ){ ?>
         <!-- Category -->
         <span class="topic_category">
-        <?php echo _FB_CATEGORY.' '.fb_link::GetCategoryLink('showcat', $leaf->catid, $leaf->catname); ?>
+        <?php echo _KUNENA_CATEGORY.' '.fb_link::GetCategoryLink('showcat', $leaf->catid, $leaf->catname); ?>
         </span>
         <!-- /Category -->
         <?php } ?>
@@ -369,7 +369,7 @@ if (count($messages[0]) > 0)
         <?php if ($leaf->locked != 0) {?>
         <!-- Locked -->
         <span class="topic_locked">
-        <?php echo $fbIcons['topiclocked'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['topiclocked'] . '" border="0" alt="' . _GEN_LOCKED_TOPIC . '" />'  : '<img src="' . JB_URLEMOTIONSPATH . 'lock.gif"  alt="' . _GEN_LOCKED_TOPIC . '" title="' . _GEN_LOCKED_TOPIC . '" />';
+        <?php echo $fbIcons['topiclocked'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['topiclocked'] . '" border="0" alt="' . _GEN_LOCKED_TOPIC . '" />'  : '<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  alt="' . _GEN_LOCKED_TOPIC . '" title="' . _GEN_LOCKED_TOPIC . '" />';
         $topicLocked = 1; ?>
         </span>
         <!-- /Locked -->
@@ -391,7 +391,7 @@ if (count($messages[0]) > 0)
                               <!--  Sticky   -->
         <?php if ($leaf->ordering != 0 &&  $funclatest == 0 && $funcmylatest == 0) { ?>
         <span class="topic_sticky">
-        <?php echo $fbIcons['topicsticky'] ? '<img  src="' . JB_URLICONSPATH . '' . $fbIcons['topicsticky'] . '" border="0" alt="' . _GEN_ISSTICKY . '" />': '<img class="stickyicon" src="' . JB_URLEMOTIONSPATH . 'pushpin.gif"  alt="' . _GEN_ISSTICKY . '" title="' . _GEN_ISSTICKY . '" />';
+        <?php echo $fbIcons['topicsticky'] ? '<img  src="' . KUNENA_URLICONSPATH . '' . $fbIcons['topicsticky'] . '" border="0" alt="' . _GEN_ISSTICKY . '" />': '<img class="stickyicon" src="' . KUNENA_URLEMOTIONSPATH . 'pushpin.gif"  alt="' . _GEN_ISSTICKY . '" title="' . _GEN_ISSTICKY . '" />';
         $topicSticky = 1; ?>
         </span>
         <?php }?>
@@ -409,10 +409,10 @@ if (count($messages[0]) > 0)
 		   if ($fbConfig->avatar_src == "cb") {
 	   		    echo fb_link::GetProfileLink($last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="images/comprofiler/'.$javatar.'" alt="" />');
             }  else {
-	   		    echo fb_link::GetProfileLink($last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.(!file_exists(FB_ABSUPLOADEDPATH . '/avatars/s_' . $javatar)?FB_LIVEUPLOADEDPATH.'/avatars/'.$javatar:FB_LIVEUPLOADEDPATH.'/avatars/s_'.$javatar) .'" alt="" />');
+	   		    echo fb_link::GetProfileLink($last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.(!file_exists(KUNENA_ABSUPLOADEDPATH . '/avatars/s_' . $javatar)?KUNENA_LIVEUPLOADEDPATH.'/avatars/'.$javatar:KUNENA_LIVEUPLOADEDPATH.'/avatars/s_'.$javatar) .'" alt="" />');
 			}
 		} else {
-		    echo fb_link::GetProfileLink($last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.FB_LIVEUPLOADEDPATH.'/avatars/s_nophoto.jpg" alt="" />');
+		    echo fb_link::GetProfileLink($last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_nophoto.jpg" alt="" />');
         } ?>
   </span>
     <?php } ?>
@@ -427,7 +427,7 @@ if (count($messages[0]) > 0)
         <br />
                                 <!-- Latest Post Date -->
         <span class="topic_date">
-        <?php echo time_since($last_reply[$leaf->id]->time , time() + ($fbConfig->board_ofset * 3600)); ?> <?php echo _FB_AGO ?>
+        <?php echo time_since($last_reply[$leaf->id]->time , time() + ($fbConfig->board_ofset * 3600)); ?> <?php echo _KUNENA_AGO ?>
         </span>
         <!-- /Latest Post Date -->
         </div>
@@ -471,11 +471,11 @@ if (count($messages[0]) > 0)
 
                                     if (jQuery(myList).val() == "bulkMove")
                                     {
-                                        jQuery("#FB_AvailableForums").removeAttr('disabled');
+                                        jQuery("#KUNENA_AvailableForums").removeAttr('disabled');
                                     }
                                     else
                                     {
-                                        jQuery("#FB_AvailableForums").attr('disabled', 'disabled');
+                                        jQuery("#KUNENA_AvailableForums").attr('disabled', 'disabled');
                                     }
                                 });
                             });
@@ -484,15 +484,15 @@ if (count($messages[0]) > 0)
                         <td colspan = "7" align = "right" class = "td-1 fbs">
                             <select name = "do" id = "fbBulkActions" class = "inputbox fbs">
                                 <option value = "">&nbsp;</option>
-                                <option value = "bulkDel"><?php echo _FB_DELETE_SELECTED ; ?></option>
-                                <option value = "bulkMove"><?php echo _FB_MOVE_SELECTED ; ?></option>
+                                <option value = "bulkDel"><?php echo _KUNENA_DELETE_SELECTED ; ?></option>
+                                <option value = "bulkMove"><?php echo _KUNENA_MOVE_SELECTED ; ?></option>
                             </select>
 
                             <?php
                             FBTools::showBulkActionCats();
                             ?>
 
-            <input type = "submit" name = "fbBulkActionsGo" class = "fbs" value = "<?php echo _FB_GO ; ?>"/>
+            <input type = "submit" name = "fbBulkActionsGo" class = "fbs" value = "<?php echo _KUNENA_GO ; ?>"/>
                         </td>
 
                         <tr>
@@ -504,7 +504,7 @@ if (count($messages[0]) > 0)
             </tbody>
         </table>
 
-        <input type = "hidden" name = "Itemid" value = "<?php echo FB_FB_ITEMID;?>"/>
+        <input type = "hidden" name = "Itemid" value = "<?php echo KUNENA_COMPONENT_ITEMID;?>"/>
         <input type = "hidden" name = "option" value = "com_kunena"/>
         <input type = "hidden" name = "func" value = "bulkactions" />
         <input type = "hidden" name = "return" value = "<?php echo sefRelToAbs( $Breturn ); ?>" />

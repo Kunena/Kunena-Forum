@@ -261,7 +261,7 @@ switch ($task)
        FBTools::reCountBoards();
        // Also reset the name info stored with messages
        FBTools::updateNameInfo();
-       mosRedirect("index2.php?option=com_kunena", _FB_RECOUNTFORUMS_DONE);
+       mosRedirect("index2.php?option=com_kunena", _KUNENA_RECOUNTFORUMS_DONE);
         break;
 
 	case "showsmilies":
@@ -393,7 +393,7 @@ function editForum($uid, $option)
     else
     {
         // initialise new record
-        $categories[] = mosHTML::makeOption(0, _FB_TOPLEVEL);
+        $categories[] = mosHTML::makeOption(0, _KUNENA_TOPLEVEL);
         $row->parent = 0;
         $row->published = 0;
         $row->ordering = 9999;
@@ -407,7 +407,7 @@ function editForum($uid, $option)
     if ($row->parent == 0)
     {
         //make sure the Top Level Category is available in edit mode as well:
-        $database->setQuery("SELECT distinct '0' AS value, '"._FB_TOPLEVEL."' AS text FROM #__fb_categories AS a WHERE parent='0' AND id<>'$row->id' ORDER BY ordering");
+        $database->setQuery("SELECT distinct '0' AS value, '"._KUNENA_TOPLEVEL."' AS text FROM #__fb_categories AS a WHERE parent='0' AND id<>'$row->id' ORDER BY ordering");
         $categories = array_merge($categories, (array)$database->loadObjectList());
         	check_dberror("Unable to load categories.");
 
@@ -434,12 +434,12 @@ function editForum($uid, $option)
     $accessLists = array ();
     //create custom group levels to include into the public group selectList
     $pub_groups = array ();
-    $pub_groups[] = mosHTML::makeOption(0, _FB_EVERYBODY);
-    $pub_groups[] = mosHTML::makeOption(-1, _FB_ALLREGISTERED);
-    $pub_groups = array_merge($pub_groups, $acl->get_group_children_tree(null, _FB_REGISTERED, true));
+    $pub_groups[] = mosHTML::makeOption(0, _KUNENA_EVERYBODY);
+    $pub_groups[] = mosHTML::makeOption(-1, _KUNENA_ALLREGISTERED);
+    $pub_groups = array_merge($pub_groups, $acl->get_group_children_tree(null, _KUNENA_REGISTERED, true));
     //create admin groups array for use in selectList:
     $adm_groups = array ();
-    $adm_groups = array_merge($adm_groups, $acl->get_group_children_tree(null, _FB_PUBLICBACKEND, true));
+    $adm_groups = array_merge($adm_groups, $acl->get_group_children_tree(null, _KUNENA_PUBLICBACKEND, true));
     //create the access control list
     $accessLists['pub_access'] = mosHTML::selectList($pub_groups, 'pub_access', 'class="inputbox" size="4"', 'value', 'text', $row->pub_access);
     $accessLists['admin_access'] = mosHTML::selectList($adm_groups, 'admin_access', 'class="inputbox" size="4"', 'value', 'text', $row->admin_access);
@@ -496,7 +496,7 @@ function publishForum($cid = null, $publish = 1, $option)
     if (!is_array($cid) || count($cid) < 1)
     {
         $action = $publish ? 'publish' : 'unpublish';
-        echo "<script> alert('" . _FB_SELECTANITEMTO . " $action'); window.history.go(-1);</script>\n";
+        echo "<script> alert('" . _KUNENA_SELECTANITEMTO . " $action'); window.history.go(-1);</script>\n";
         exit;
     }
 
@@ -524,7 +524,7 @@ function deleteForum($cid = null, $option)
     if (!is_array($cid) || count($cid) < 1)
     {
         $action = 'delete';
-        echo "<script> alert('" . _FB_SELECTANITEMTO . " $action'); window.history.go(-1);</script>\n";
+        echo "<script> alert('" . _KUNENA_SELECTANITEMTO . " $action'); window.history.go(-1);</script>\n";
         exit;
     }
 
@@ -623,26 +623,26 @@ function showConfig($option)
 
     // source of avatar picture
     $avlist = array ();
-    $avlist[] = mosHTML::makeOption('fb', _FB_Kunena);
-    $avlist[] = mosHTML::makeOption('clexuspm', _FB_CLEXUS);
-    $avlist[] = mosHTML::makeOption('cb', _FB_CB);
+    $avlist[] = mosHTML::makeOption('fb', _KUNENA_Kunena);
+    $avlist[] = mosHTML::makeOption('clexuspm', _KUNENA_CLEXUS);
+    $avlist[] = mosHTML::makeOption('cb', _KUNENA_CB);
     // build the html select list
     $lists['avatar_src'] = mosHTML::selectList($avlist, 'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->avatar_src);
     // private messaging system to use
     $pmlist = array ();
     $pmlist[] = mosHTML::makeOption('no', _COM_A_NO);
-    $pmlist[] = mosHTML::makeOption('pms', _FB_MYPMS);
-    $pmlist[] = mosHTML::makeOption('clexuspm', _FB_CLEXUS);
-    $pmlist[] = mosHTML::makeOption('uddeim', _FB_UDDEIM);
-    $pmlist[] = mosHTML::makeOption('jim', _FB_JIM);
-    $pmlist[] = mosHTML::makeOption('missus', _FB_MISSUS);
+    $pmlist[] = mosHTML::makeOption('pms', _KUNENA_MYPMS);
+    $pmlist[] = mosHTML::makeOption('clexuspm', _KUNENA_CLEXUS);
+    $pmlist[] = mosHTML::makeOption('uddeim', _KUNENA_UDDEIM);
+    $pmlist[] = mosHTML::makeOption('jim', _KUNENA_JIM);
+    $pmlist[] = mosHTML::makeOption('missus', _KUNENA_MISSUS);
     $lists['pm_component'] = mosHTML::selectList($pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pm_component);
 //redundant    $lists['pm_component'] = mosHTML::selectList($pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pm_component);
     // Profile select
     $prflist = array ();
-    $prflist[] = mosHTML::makeOption('fb', _FB_Kunena);
-    $prflist[] = mosHTML::makeOption('clexuspm', _FB_CLEXUS);
-    $prflist[] = mosHTML::makeOption('cb', _FB_CB);
+    $prflist[] = mosHTML::makeOption('fb', _KUNENA_Kunena);
+    $prflist[] = mosHTML::makeOption('clexuspm', _KUNENA_CLEXUS);
+    $prflist[] = mosHTML::makeOption('cb', _KUNENA_CB);
     $lists['fb_profile'] = mosHTML::selectList($prflist, 'cfg_fb_profile', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->fb_profile);
     // build the html select list
     // make a standard yes/no list
@@ -653,7 +653,7 @@ function showConfig($option)
     // This function was modified from the one posted to PHP.net by rockinmusicgv
     // It is available under the readdir() entry in the PHP online manual
     //function get_dirs($directory, $select_name, $selected = "") {
-    $listitems[] = mosHTML::makeOption('0', _FB_SELECTTEMPLATE);
+    $listitems[] = mosHTML::makeOption('0', _KUNENA_SELECTTEMPLATE);
 
     if ($dir = @opendir($mainframe->getCfg('absolute_path') . "/components/com_kunena/template"))
     {
@@ -723,7 +723,7 @@ function showConfig($option)
 
     $ip_opt[] = mosHTML::makeOption( 'gd2', 'GD2' );
     $ip_opt[] = mosHTML::makeOption( 'gd1', 'GD1' );
-    $ip_opt[] = mosHTML::makeOption( 'none', _FB_IMAGE_PROCESSOR_NONE );
+    $ip_opt[] = mosHTML::makeOption( 'none', _KUNENA_IMAGE_PROCESSOR_NONE );
 
     $lists['imageprocessor'] = mosHTML::selectList( $ip_opt, 'cfg_imageprocessor', 'class="inputbox"', 'value', 'text', $fbConfig->imageprocessor );
     $lists['showstats'] = mosHTML::selectList($yesno, 'cfg_showstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showstats);
@@ -866,7 +866,7 @@ function saveConfig($option)
     }
     // end legacy support
 
-    mosRedirect("index2.php?option=$option&task=showconfig", _FB_CONFIGSAVED);
+    mosRedirect("index2.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED);
 }
 
 function showInstructions($database, $option, $mosConfig_lang) {
@@ -885,9 +885,9 @@ function showCss($option)
 
     if (!$permission)
     {
-        echo "<center><h1><font color=red>" . _FB_WARNING . "</FONT></h1><BR>";
+        echo "<center><h1><font color=red>" . _KUNENA_WARNING . "</FONT></h1><BR>";
         echo "<B>Your css file is <#__root>/components/com_kunena/template/" . $fbConfig->template . "/forum.css</b><BR>";
-        echo "<B>" . _FB_CHMOD1 . "</B></center><BR><BR>";
+        echo "<B>" . _KUNENA_CHMOD1 . "</B></center><BR><BR>";
     }
 
     html_Kunena::showCss($file, $option);
@@ -895,27 +895,27 @@ function showCss($option)
 
 function saveCss($file, $csscontent, $option)
 {
-    $tmpstr = _FB_CSS_SAVE;
+    $tmpstr = _KUNENA_CSS_SAVE;
     $tmpstr = str_replace("%file%", $file, $tmpstr);
     echo $tmpstr;
 
     if (is_writable($file) == false)
     {
-        echo "<script>alert('" . _FB_TFINW . "')</script>";
+        echo "<script>alert('" . _KUNENA_TFINW . "')</script>";
         echo "<script>document.location.href='index2.php?option=com_kunena&task=showCss'</script>\n";
     }
 
-    echo "<script>alert('" . _FB_FBCFS . "')</script>";
+    echo "<script>alert('" . _KUNENA_FBCFS . "')</script>";
     echo "<script>document.location.href='index2.php?option=com_kunena&task=showCss'</script>\n";
 
     if ($fp = fopen($file, "w"))
     {
         fputs($fp, stripslashes($csscontent));
         fclose ($fp);
-        mosRedirect("index2.php?option=$option&task=showCss", _FB_CFS);
+        mosRedirect("index2.php?option=$option&task=showCss", _KUNENA_CFS);
     }
     else {
-        mosRedirect("index2.php?option=$option", _FB_CFCNBO);
+        mosRedirect("index2.php?option=$option", _KUNENA_CFCNBO);
     }
 }
 
@@ -991,7 +991,7 @@ function addModerator($option, $id, $cid = null, $publish = 1)
 
     if (!is_array($cid) || count($cid) < 1)
     {
-        echo "<script> alert('" . _FB_SELECTMODTO . " $action'); window.history.go(-1);</script>\n";
+        echo "<script> alert('" . _KUNENA_SELECTMODTO . " $action'); window.history.go(-1);</script>\n";
         exit;
     }
 
@@ -1132,7 +1132,7 @@ function editUserProfile($uid)
         $__modCats[] = mosHTML::makeOption( $_v );
     }
 
-    $modCats = FB_GetAvailableModCats($__modCats);
+    $modCats = KUNENA_GetAvailableModCats($__modCats);
 
     html_Kunena::editUserProfile($user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid[0], $modCats);
 }
@@ -1204,7 +1204,7 @@ function doprune($database, $option)
 
     if ($catid == -1)
     {
-        echo "<script> alert('" . _FB_CHOOSEFORUMTOPRUNE . "'); window.history.go(-1); </script>\n";
+        echo "<script> alert('" . _KUNENA_CHOOSEFORUMTOPRUNE . "'); window.history.go(-1); </script>\n";
         exit();
     }
 
@@ -1267,7 +1267,7 @@ function doprune($database, $option)
         }
     }
 
-    mosRedirect("index2.php?option=$option&task=pruneforum", "" . _FB_FORUMPRUNEDFOR . " " . $prune_days . " " . _FB_PRUNEDAYS . "; " . _FB_PRUNEDELETED . "" . $deleted . " " . _FB_PRUNETHREADS . "");
+    mosRedirect("index2.php?option=$option&task=pruneforum", "" . _KUNENA_FORUMPRUNEDFOR . " " . $prune_days . " " . _KUNENA_PRUNEDAYS . "; " . _KUNENA_PRUNEDELETED . "" . $deleted . " " . _KUNENA_PRUNETHREADS . "");
 }
 
 //===============================
@@ -1332,12 +1332,12 @@ function douserssync($database, $option)
 				$database->query() or trigger_dberror("Unable to add new users.");
 			}
 		}
-        mosRedirect("index2.php?option=$option&task=pruneusers", "" . _FB_USERSSYNCDELETED . "" . $cids . " " . _FB_SYNCUSERPROFILES . "");
+        mosRedirect("index2.php?option=$option&task=pruneusers", "" . _KUNENA_USERSSYNCDELETED . "" . $cids . " " . _KUNENA_SYNCUSERPROFILES . "");
     }
     else
     {
         $cids = 0;
-        mosRedirect("index2.php?option=$option&task=pruneusers", _FB_NOPROFILESFORSYNC);
+        mosRedirect("index2.php?option=$option&task=pruneusers", _KUNENA_NOPROFILESFORSYNC);
     }
 }
 
@@ -1372,7 +1372,7 @@ function loadSample($database, $option)
 				. "\n VALUES (1, 'Kunena is fully integrated forum solution for joomla, no bridges, no hacking core files: It can be installed just like any other component with only a few clicks.\r\n\r\nThe administration backend is fully integrated, native ACL implemented, and it has all the capabilities one would have come to expect from a mature, full-fledged forum solution!')";
 	$database->query() or trigger_dbwarning("Unable to insert sample messages texts.");
 
-    mosRedirect("index2.php?option=$option", _FB_SAMPLESUCCESS);
+    mosRedirect("index2.php?option=$option", _KUNENA_SAMPLESUCCESS);
 }
 
 //===============================
@@ -1393,7 +1393,7 @@ function removeSample($database, $option)
 	$database->query();
 		check_dberror("Unable to remove sample messages texts.");
 
-	mosRedirect("index2.php?option=$option", _FB_SAMPLEREMOVED);
+	mosRedirect("index2.php?option=$option", _KUNENA_SAMPLEREMOVED);
 }
 
 //===============================
@@ -1408,20 +1408,20 @@ function loadCBprofile($database, $option)
     $database->query() or trigger_dbwarning("Unable to drop comprofiler columns.");
 
     $database->setQuery("DELETE FROM #__comprofiler_field_values WHERE fieldtitle IN ".
-    	"('_UE_FB_VIEWTYPE_FLAT','_UE_FB_VIEWTYPE_THREADED','_UE_FB_ORDERING_OLDEST','_UE_FB_ORDERING_LATEST')");
+    	"('_UE_KUNENA_VIEWTYPE_FLAT','_UE_KUNENA_VIEWTYPE_THREADED','_UE_KUNENA_ORDERING_OLDEST','_UE_KUNENA_ORDERING_LATEST')");
     $database->query() or trigger_dberror("Unable to delete comprofiler field values.");
 
     $database->setQuery("DELETE FROM #__comprofiler_fields WHERE name IN ('fbviewtype','fbordering','fbsignature')");
     $database->query() or trigger_dberror("Unable to delete comprofiler fields.");
 
-    $database->setQuery("DELETE FROM #__comprofiler_tabs WHERE title = '_UE_FB_TABTITLE'");
+    $database->setQuery("DELETE FROM #__comprofiler_tabs WHERE title = '_UE_KUNENA_TABTITLE'");
     $database->query() or trigger_dberror("Unable to delete comprofiler field.");
 
     // Now let's create the requires entries
-    $database->setQuery("INSERT INTO #__comprofiler_tabs SET title='_UE_FB_TABTITLE', description='_UE_FB_TABDESC'");
+    $database->setQuery("INSERT INTO #__comprofiler_tabs SET title='_UE_KUNENA_TABTITLE', description='_UE_KUNENA_TABDESC'");
     $database->query() or trigger_dberror("Unable to insert comprofiler tab.");
 
-    $database->setQuery("SELECT tabid FROM #__comprofiler_tabs WHERE title='_UE_FB_TABTITLE'");
+    $database->setQuery("SELECT tabid FROM #__comprofiler_tabs WHERE title='_UE_KUNENA_TABTITLE'");
     $database->query() or trigger_dberror("Unable to load comprofiler tab.");
     $tabid = $database->loadResult();
 
@@ -1429,9 +1429,9 @@ function loadCBprofile($database, $option)
     $isCB12 = isset($cols['#__comprofiler_fields']['tablecolumns']);
 
     $database->setQuery("INSERT INTO #__comprofiler_fields (name,".($isCB12?"tablecolumns,":"")."title,type,maxlength,cols,rows,ordering,published,profile,calculated,sys,tabid) VALUES ".
-    	"('fbviewtype',".($isCB12?"'fbviewtype',":"")."'_UE_FB_VIEWTYPE_TITLE','select',0,0,0,1,1,0,0,0,$tabid),".
-    	"('fbordering',".($isCB12?"'fbordering',":"")."'_UE_FB_ORDERING_TITLE','select',0,0,0,2,1,0,0,0,$tabid),".
-    	"('fbsignature',".($isCB12?"'fbsignature',":"")."'_UE_FB_SIGNATURE','textarea',300,60,5,3,1,0,0,0,$tabid)");
+    	"('fbviewtype',".($isCB12?"'fbviewtype',":"")."'_UE_KUNENA_VIEWTYPE_TITLE','select',0,0,0,1,1,0,0,0,$tabid),".
+    	"('fbordering',".($isCB12?"'fbordering',":"")."'_UE_KUNENA_ORDERING_TITLE','select',0,0,0,2,1,0,0,0,$tabid),".
+    	"('fbsignature',".($isCB12?"'fbsignature',":"")."'_UE_KUNENA_SIGNATURE','textarea',300,60,5,3,1,0,0,0,$tabid)");
     $database->query() or trigger_dberror("Unable to insert comprofiler fields.");
 
     $database->setQuery("SELECT name,fieldid FROM #__comprofiler_fields WHERE name IN ('fbviewtype','fbordering')");
@@ -1439,19 +1439,19 @@ function loadCBprofile($database, $option)
     $fieldid = $database->loadObjectList('name');
 
     $database->setQuery("INSERT INTO #__comprofiler_field_values (fieldid,fieldtitle,ordering) VALUES ".
-    	"(".$fieldid['fbviewtype']->fieldid.",'_UE_FB_VIEWTYPE_FLAT',1),".
-    	"(".$fieldid['fbviewtype']->fieldid.",'_UE_FB_VIEWTYPE_THREADED',2),".
-    	"(".$fieldid['fbordering']->fieldid.",'_UE_FB_ORDERING_OLDEST',1),".
-    	"(".$fieldid['fbordering']->fieldid.",'_UE_FB_ORDERING_LATEST',2)");
+    	"(".$fieldid['fbviewtype']->fieldid.",'_UE_KUNENA_VIEWTYPE_FLAT',1),".
+    	"(".$fieldid['fbviewtype']->fieldid.",'_UE_KUNENA_VIEWTYPE_THREADED',2),".
+    	"(".$fieldid['fbordering']->fieldid.",'_UE_KUNENA_ORDERING_OLDEST',1),".
+    	"(".$fieldid['fbordering']->fieldid.",'_UE_KUNENA_ORDERING_LATEST',2)");
     $database->query() or trigger_dberror("Unable to insert comprofiler field values.");
 
     $database->setQuery("ALTER TABLE #__comprofiler ".
-    	"ADD fbviewtype varchar(255) DEFAULT '_UE_FB_VIEWTYPE_FLAT' NOT NULL, ".
-		"ADD fbordering varchar(255) DEFAULT '_UE_FB_ORDERING_OLDEST' NOT NULL, ".
+    	"ADD fbviewtype varchar(255) DEFAULT '_UE_KUNENA_VIEWTYPE_FLAT' NOT NULL, ".
+		"ADD fbordering varchar(255) DEFAULT '_UE_KUNENA_ORDERING_OLDEST' NOT NULL, ".
 		"ADD fbsignature mediumtext");
     $database->query() or trigger_dberror("Unable to add signature column.");
 
-    mosRedirect("index2.php?option=$option", _FB_CBADDED);
+    mosRedirect("index2.php?option=$option", _KUNENA_CBADDED);
 }
 
 //===============================
@@ -1461,13 +1461,13 @@ function browseUploaded($database, $option, $type)
 {
     if ($type)
     { //we're doing images
-        $dir = @opendir(FB_ABSUPLOADEDPATH. '/images');
-        $uploaded_path = FB_ABSUPLOADEDPATH. '/images';
+        $dir = @opendir(KUNENA_ABSUPLOADEDPATH. '/images');
+        $uploaded_path = KUNENA_ABSUPLOADEDPATH. '/images';
     }
     else
     { //we're doing regular files
-        $dir = @opendir(FB_ABSUPLOADEDPATH.'/files');
-        $uploaded_path = FB_ABSUPLOADEDPATH.'/files';
+        $dir = @opendir(KUNENA_ABSUPLOADEDPATH.'/files');
+        $uploaded_path = KUNENA_ABSUPLOADEDPATH.'/files';
     }
 
     $uploaded = array ();
@@ -1502,7 +1502,7 @@ function replaceImage($database, $option, $imageName, $OxP)
 
     // This function will replace the selected image with a dummy (OxP=1) or delete it
     // step 1: Remove image that must be replaced:
-    unlink (FB_ABSUPLOADEDPATH.'/images/' . $imageName);
+    unlink (KUNENA_ABSUPLOADEDPATH.'/images/' . $imageName);
 
     if ($OxP == "1")
     {
@@ -1511,16 +1511,16 @@ function replaceImage($database, $option, $imageName, $OxP)
         $fileName = $filename[0];
         $fileExt = $filename[1];
         // step 3: copy the dummy and give it the old file name:
-        copy(FB_ABSUPLOADEDPATH.'/dummy.' . $fileExt, FB_ABSUPLOADEDPATH.'/images/' . $imageName);
+        copy(KUNENA_ABSUPLOADEDPATH.'/dummy.' . $fileExt, KUNENA_ABSUPLOADEDPATH.'/images/' . $imageName);
     }
     else
     {
         //remove the database link as well
-        $database->setQuery("DELETE FROM #__fb_attachments where filelocation='" . FB_ABSUPLOADEDPATH . "/images/" . $imageName . "'");
+        $database->setQuery("DELETE FROM #__fb_attachments where filelocation='" . KUNENA_ABSUPLOADEDPATH . "/images/" . $imageName . "'");
         $database->query() or trigger_dberror("Unable to delete attachment.");
     }
 
-    mosRedirect("index2.php?option=$option&task=browseImages", _FB_IMGDELETED);
+    mosRedirect("index2.php?option=$option&task=browseImages", _KUNENA_IMGDELETED);
 }
 
 function deleteFile($database, $option, $fileName)
@@ -1533,11 +1533,11 @@ function deleteFile($database, $option, $fileName)
     }
 
     // step 1: Remove file
-    unlink (FB_ABSUPLOADEDPATH.'/files/' . $fileName);
+    unlink (KUNENA_ABSUPLOADEDPATH.'/files/' . $fileName);
     //step 2: remove the database link to the file
-    $database->setQuery("DELETE FROM #__fb_attachments where filelocation='" . FB_ABSUPLOADEDPATH . "/files/" . $fileName . "'");
+    $database->setQuery("DELETE FROM #__fb_attachments where filelocation='" . KUNENA_ABSUPLOADEDPATH . "/files/" . $fileName . "'");
     $database->query() or trigger_dberror("Unable to delete attachment.");
-    mosRedirect("index2.php?option=$option&task=browseFiles", _FB_FILEDELETED);
+    mosRedirect("index2.php?option=$option&task=browseFiles", _KUNENA_FILEDELETED);
 }
 
 //===============================
@@ -1590,7 +1590,7 @@ function showCategories($cat, $cname, $extras = "", $levellimit = "4")
     $list = catTreeRecurse(0, '', array (), $children);
     // assemble menu items to the array
     $mitems = array ();
-    $mitems[] = mosHTML::makeOption('0', _FB_NOPARENT);
+    $mitems[] = mosHTML::makeOption('0', _KUNENA_NOPARENT);
     $this_treename = '';
 
     foreach ($list as $item)
@@ -1680,7 +1680,7 @@ function dircopy($srcdir, $dstdir, $verbose = false) {
 
                     if ($ow > 0) {
                         if ($verbose) {
-                            $tmpstr = _FB_COPY_FILE;
+                            $tmpstr = _KUNENA_COPY_FILE;
                             $tmpstr = str_replace('%src%', $srcfile, $tmpstr);
                             $tmpstr = str_replace('%dst%', $dstfile, $tmpstr);
                             echo $tmpstr;
@@ -1691,11 +1691,11 @@ function dircopy($srcdir, $dstdir, $verbose = false) {
                             $num++;
 
                             if ($verbose) {
-                                echo _FB_COPY_OK;
+                                echo _KUNENA_COPY_OK;
                             }
                         }
                         else {
-                            echo "" . _FB_DIRCOPERR . " '$srcfile' " . _FB_DIRCOPERR1 . "";
+                            echo "" . _KUNENA_DIRCOPERR . " '$srcfile' " . _KUNENA_DIRCOPERR1 . "";
                         }
                     }
                 }
@@ -1797,7 +1797,7 @@ function savesmiley($option, $id = NULL)
     if (empty($smiley_code) || empty($smiley_location))
     {
     	$task = ($id == NULL) ? 'newsmiley' : 'editsmiley&id='.$id;
-        mosRedirect ("index2.php?option=$option&task=".$task, _FB_MISSING_PARAMETER);
+        mosRedirect ("index2.php?option=$option&task=".$task, _KUNENA_MISSING_PARAMETER);
         exit();
     }
 
@@ -1809,7 +1809,7 @@ function savesmiley($option, $id = NULL)
     	if (in_array($smiley_code, $value) && !($value['id'] == $id))
     	{
             $task = ($id == NULL) ? 'newsmiley' : 'editsmiley&id='.$id;
-        	mosRedirect ("index2.php?option=$option&task=".$task, _FB_CODE_ALLREADY_EXITS);
+        	mosRedirect ("index2.php?option=$option&task=".$task, _KUNENA_CODE_ALLREADY_EXITS);
         	exit();
     	}
 
@@ -1826,7 +1826,7 @@ function savesmiley($option, $id = NULL)
 
     $database->query() or trigger_dberror("Unable to save smiley.");
 
-    mosRedirect ("index2.php?option=$option&task=showsmilies", _FB_SMILEY_SAVED);
+    mosRedirect ("index2.php?option=$option&task=showsmilies", _KUNENA_SMILEY_SAVED);
 }
 
 function deletesmiley($option, $cid)
@@ -1838,7 +1838,7 @@ function deletesmiley($option, $cid)
 		$database->query() or trigger_dberror("Unable to delete smiley.");
 	}
 
-    mosRedirect ("index2.php?option=$option&task=showsmilies", _FB_SMILEY_DELETED);
+    mosRedirect ("index2.php?option=$option&task=showsmilies", _KUNENA_SMILEY_DELETED);
 }
 
 function smileypath()
@@ -1992,7 +1992,7 @@ function deleteRank($option, $cid = null)
 		$database->query() or trigger_dberror("Unable to delete rank.");
 	}
 
-    mosRedirect ("index2.php?option=$option&task=ranks", _FB_RANK_DELETED);
+    mosRedirect ("index2.php?option=$option&task=ranks", _KUNENA_RANK_DELETED);
 }
 
 function saveRank($option, $id = NULL)
@@ -2007,7 +2007,7 @@ function saveRank($option, $id = NULL)
     if (empty($rank_title) || empty($rank_image))
     {
     	$task = ($id == NULL) ? 'newRank' : 'editRank&id='.$id;
-        mosRedirect ("index2.php?option=$option&task=".$task, _FB_MISSING_PARAMETER);
+        mosRedirect ("index2.php?option=$option&task=".$task, _KUNENA_MISSING_PARAMETER);
         exit();
     }
 
@@ -2020,7 +2020,7 @@ function saveRank($option, $id = NULL)
     	if (in_array($rank_title, $value) && !($value['rank_id'] == $id))
     	{
             $task = ($id == NULL) ? 'newRank' : 'editRank&id='.$id;
-        	mosRedirect ("index2.php?option=$option&task=".$task, _FB_RANK_ALLREADY_EXITS);
+        	mosRedirect ("index2.php?option=$option&task=".$task, _KUNENA_RANK_ALLREADY_EXITS);
         	exit();
     	}
     }
@@ -2035,7 +2035,7 @@ function saveRank($option, $id = NULL)
     }
     $database->query() or trigger_dberror("Unable to save ranks.");
 
-    mosRedirect ("index2.php?option=$option&task=ranks", _FB_RANK_SAVED);
+    mosRedirect ("index2.php?option=$option&task=ranks", _KUNENA_RANK_SAVED);
 }
 
 function editRank($option, $id)
@@ -2088,7 +2088,7 @@ function editRank($option, $id)
 //===============================
 // Dan Syme/IGD - Ranks Management
 
-function FB_GetAvailableModCats($catids) {
+function KUNENA_GetAvailableModCats($catids) {
     global $database;
     $list = JJ_categoryArray(1);
     $this_treename = '';
@@ -2109,13 +2109,13 @@ function FB_GetAvailableModCats($catids) {
                 }
             }
         }
-    $parent = mosHTML::selectList($options, 'catid[]', 'class="inputbox fbs"  multiple="multiple"   id="FB_AvailableForums" ', 'value', 'text', $catids);
+    $parent = mosHTML::selectList($options, 'catid[]', 'class="inputbox fbs"  multiple="multiple"   id="KUNENA_AvailableForums" ', 'value', 'text', $catids);
     return $parent;
 }
 
 // Grabs gd version
 
- function FB_gdVersion() {
+ function KUNENA_gdVersion() {
   // Simplified GD Version check
   if (!extension_loaded('gd')) {
     return;

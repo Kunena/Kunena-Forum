@@ -198,7 +198,7 @@ function dircopy($srcdir, $dstdir, $verbose = true) {
 
 					if ($ow > 0) {
 						if ($verbose) {
-							$tmpstr = _FB_COPY_FILE;
+							$tmpstr = _KUNENA_COPY_FILE;
 							$tmpstr = str_replace('%src%', $srcfile, $tmpstr);
 							$tmpstr = str_replace('%dst%', $dstfile, $tmpstr);
 							echo "<li class=\"fbscslist\">".$tmpstr;
@@ -209,11 +209,11 @@ function dircopy($srcdir, $dstdir, $verbose = true) {
 							$num++;
 
 							if ($verbose) {
-								echo _FB_COPY_OK." </li>";
+								echo _KUNENA_COPY_OK." </li>";
 							}
 						}
 						else {
-							echo "<li class=\"fbscslisterror\">"._FB_DIRCOPERR . " '$srcfile' " . _FB_DIRCOPERR1."</li>";
+							echo "<li class=\"fbscslisterror\">"._KUNENA_DIRCOPERR . " '$srcfile' " . _KUNENA_DIRCOPERR1."</li>";
 						}
 					}
 				}

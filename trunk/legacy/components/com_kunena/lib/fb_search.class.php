@@ -16,24 +16,24 @@
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // Need purify function for search result display
-if (file_exists(JB_ABSTMPLTPATH."/smile.class.php")) {
-  include_once(JB_ABSTMPLTPATH."/smile.class.php");
+if (file_exists(KUNENA_ABSTMPLTPATH."/smile.class.php")) {
+  include_once(KUNENA_ABSTMPLTPATH."/smile.class.php");
 }
 else {
-  include(JB_ABSPATH . '/template/default/smile.class.php');
+  include(KUNENA_ABSPATH . '/template/default/smile.class.php');
 }
 
 
 class jbSearch
 {
     /** search results **/
-    var $arr_FB_results;
+    var $arr_KUNENA_results;
     /** search strings **/
-    var $arr_FB_searchstrings;
+    var $arr_KUNENA_searchstrings;
     /** error number **/
-    var $int_FB_errornr;
+    var $int_KUNENA_errornr;
     /** error msg **/
-    var $str_FB_errormsg;
+    var $str_KUNENA_errormsg;
     /** limit **/
     var $limit;
     /** limitstart **/
@@ -54,9 +54,9 @@ class jbSearch
         /* return error if empty search string */
         if (count($arr_searchwords) == 0)
         {
-            $this->int_FB_errornr = 2;
-            $this->str_FB_errormsg = _NOKEYWORD;
-            $this->arr_FB_results = array ();
+            $this->int_KUNENA_errornr = 2;
+            $this->str_KUNENA_errormsg = _NOKEYWORD;
+            $this->arr_KUNENA_results = array ();
             return array ();
         }
 
@@ -95,7 +95,7 @@ class jbSearch
             }
         }
 
-        $this->arr_FB_searchstrings = $arr_searchwords;
+        $this->arr_KUNENA_searchstrings = $arr_searchwords;
         /* get allowed forums */
         $allowed_forums = '';
 
@@ -114,8 +114,8 @@ class jbSearch
         /* if there are no forums to search in, set error and return */
         if (empty($allowed_forums))
         {
-            $this->int_FB_errornr = 1;
-            $this->str_FB_errormsg = _FB_SEARCH_NOFORUM;
+            $this->int_KUNENA_errornr = 1;
+            $this->str_KUNENA_errormsg = _KUNENA_SEARCH_NOFORUM;
             return 0;
         }
         /* build query */
@@ -145,18 +145,18 @@ class jbSearch
         $rows = $database->loadObjectList();
                 check_dberror("Unable to load messages.");
 
-        $this->str_FB_errormsg = $sql . '<br />' . $database->getErrorMsg();
+        $this->str_KUNENA_errormsg = $sql . '<br />' . $database->getErrorMsg();
 
         if (count($rows) > 0)
-            $this->arr_FB_results = $rows;
+            $this->arr_KUNENA_results = $rows;
         else
-            $this->arr_FB_results = array ();
+            $this->arr_KUNENA_results = array ();
 
-        return $this->arr_FB_results;
+        return $this->arr_KUNENA_results;
     }
     /** get searchstrings (array) **/
     function get_searchstrings() {
-        return $this->arr_FB_searchstrings;
+        return $this->arr_KUNENA_searchstrings;
     }
     /** get limit (int) **/
     function get_limit() {
@@ -168,7 +168,7 @@ class jbSearch
     }
     /** get results (array) **/
     function get_results() {
-        return $this->arr_FB_results;
+        return $this->arr_KUNENA_results;
     }
     /**
      * Display results
@@ -179,16 +179,16 @@ class jbSearch
         $searchword = implode(' ', $this->get_searchstrings());
         $results = $this->get_results();
         $totalRows = $this->total;
-        $actionstring = $this->str_FB_actionstring;
+        $actionstring = $this->str_KUNENA_actionstring;
 
         if ($this->get_limit() < $totalRows)
         {
-            require_once(JB_JABSPATH . '/includes/pageNavigation.php');
+            require_once(KUNENA_JABSPATH . '/includes/pageNavigation.php');
             $pageNav = new mosPageNav($totalRows, $this->get_limitstart(), $this->get_limit());
         }
 
-        if (defined('JB_DEBUG'))
-            echo '<p style="background-color:#FFFFCC;border:1px solid red;">' . $this->str_FB_errormsg . '</p>';
+        if (defined('KUNENA_DEBUG'))
+            echo '<p style="background-color:#FFFFCC;border:1px solid red;">' . $this->str_KUNENA_errormsg . '</p>';
 ?>
 
 <?php
@@ -235,8 +235,8 @@ class jbSearch
 
                 $k = 0;
 
-                if ($totalRows == 0 && $this->int_FB_errornr) {
-                    echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" ><td colspan="3"  style="text-align:center;font-weight:bold">Error ' . $this->int_FB_errornr . ': ' . $this->str_FB_errormsg . '</td></tr>';
+                if ($totalRows == 0 && $this->int_KUNENA_errornr) {
+                    echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" ><td colspan="3"  style="text-align:center;font-weight:bold">Error ' . $this->int_KUNENA_errornr . ': ' . $this->str_KUNENA_errormsg . '</td></tr>';
                 }
 
 								// Cleanup incoming searchword; international chars can cause garbage at the end
@@ -260,7 +260,7 @@ class jbSearch
                     $searchResultList = str_replace("}}", '</span>', $searchResultList);
                     echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '">';
                     echo '<td  class = "td-1" ><a href="'
-                             . sefRelToAbs(JB_LIVEURLREL . '&amp;func=view&amp;id=' . $result->id . '&amp;catid=' . $result->catid . '#' . $result->id) . '" >' . $ressubject . '</a><br />' . $searchResultList . '<br /><br /></td>';
+                             . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $result->id . '&amp;catid=' . $result->catid . '#' . $result->id) . '" >' . $ressubject . '</a><br />' . $searchResultList . '<br /><br /></td>';
                     echo '<td class = "td-2" >' . $result->name . '</td>';
                     echo '<td class = "td-3" >' . date(_DATETIME, $result->time) . '</td></tr>';
                     echo "\n";
@@ -276,7 +276,7 @@ class jbSearch
                         <th colspan = "3" style = "text-align:center" class = "th-1 <?php echo $boardclass; ?>sectiontableheader">
                             <?php
                             // TODO: fxstein - Need to perform SEO cleanup
-                            echo $pageNav->writePagesLinks(JB_LIVEURL . '&amp;func=search&amp;searchword=' . $searchword);
+                            echo $pageNav->writePagesLinks(KUNENA_LIVEURL . '&amp;func=search&amp;searchword=' . $searchword);
                             ?>
                         </th>
                     </tr>

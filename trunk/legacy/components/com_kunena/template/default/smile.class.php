@@ -18,8 +18,8 @@ defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // ################################################################
 
-include_once(JB_ABSSOURCESPATH."parser.inc.php");
-include_once(JB_ABSSOURCESPATH."interpreter.Kunena.inc.php");
+include_once(KUNENA_ABSSOURCESPATH."parser.inc.php");
+include_once(KUNENA_ABSSOURCESPATH."interpreter.Kunena.inc.php");
 
 class smile
 {
@@ -99,7 +99,7 @@ class smile
 
         $smileyArray = array();
         foreach ($smilies as $smiley) {                                                    // We load all smileys in array, so we can sort them
-            $smileyArray[$smiley->code] = '' . JB_URLEMOTIONSPATH . '' . $smiley->$column; // This makes sure that for example :pinch: gets translated before :p
+            $smileyArray[$smiley->code] = '' . KUNENA_URLEMOTIONSPATH . '' . $smiley->$column; // This makes sure that for example :pinch: gets translated before :p
         }
 
         if ($emoticonbar == 0)
@@ -128,15 +128,15 @@ class smile
 
             <input type = "radio" name = "topic_emoticon" value = "1"<?php echo $selected==1?" checked=\"checked\" ":"";?>/>
 
-            <img src = "<?php echo JB_URLEMOTIONSPATH ;?>exclam.gif" alt = "" border = "0"/>
+            <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>exclam.gif" alt = "" border = "0"/>
 
             <input type = "radio" name = "topic_emoticon" value = "2"<?php echo $selected==2?" checked=\"checked\" ":"";?>/>
 
-            <img src = "<?php echo JB_URLEMOTIONSPATH ;?>question.gif" alt = "" border = "0"/>
+            <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>question.gif" alt = "" border = "0"/>
 
             <input type = "radio" name = "topic_emoticon" value = "3"<?php echo $selected==3?" checked=\"checked\" ":"";?>/>
 
-            <img src = "<?php echo JB_URLEMOTIONSPATH ;?>arrow.gif" alt = "" border = "0"/>
+            <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>arrow.gif" alt = "" border = "0"/>
 
             <?php
             if ($tawidth <= 320) {
@@ -146,19 +146,19 @@ class smile
 
                 <input type = "radio" name = "topic_emoticon" value = "4"<?php echo $selected==4?" checked=\"checked\" ":"";?>/>
 
-                <img src = "<?php echo JB_URLEMOTIONSPATH ;?>love.gif" alt = "" border = "0"/>
+                <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>love.gif" alt = "" border = "0"/>
 
                 <input type = "radio" name = "topic_emoticon" value = "5"<?php echo $selected==5?" checked=\"checked\" ":"";?>/>
 
-                <img src = "<?php echo JB_URLEMOTIONSPATH ;?>grin.gif" alt = "" border = "0"/>
+                <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>grin.gif" alt = "" border = "0"/>
 
                 <input type = "radio" name = "topic_emoticon" value = "6"<?php echo $selected==6?" checked=\"checked\" ":"";?>/>
 
-                <img src = "<?php echo JB_URLEMOTIONSPATH ;?>shock.gif" alt = "" border = "0"/>
+                <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>shock.gif" alt = "" border = "0"/>
 
                 <input type = "radio" name = "topic_emoticon" value = "7"<?php echo $selected==7?" checked=\"checked\" ":"";?>/>
 
-                <img src = "<?php echo JB_URLEMOTIONSPATH ;?>smile.gif" alt = "" border = "0"/>
+                <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>smile.gif" alt = "" border = "0"/>
                 </td>
             </tr>
         </table>
@@ -235,7 +235,7 @@ class smile
 
         <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
             <td class = "fb_leftcolumn" valign = "top">
-                <strong><a href = "<?php echo sefRelToAbs(JB_LIVEURLREL.'&amp;func=faq').'#boardcode';?>"><?php echo _COM_BOARDCODE; ?></a></strong>:
+                <strong><a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=faq').'#boardcode';?>"><?php echo _COM_BOARDCODE; ?></a></strong>:
             </td>
 
             <td>
@@ -396,7 +396,7 @@ if ($editmode) {
     // Moderator edit area
      ?>
      <fieldset>
-     <legend><?php echo _FB_EDITING_REASON?></legend>
+     <legend><?php echo _KUNENA_EDITING_REASON?></legend>
         <input name="modified_reason" size="40" maxlength="200"  type="text"><br />
 
      </fieldset>

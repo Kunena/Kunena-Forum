@@ -47,7 +47,7 @@ $profilelink = 'index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&
                         <div class = "fb_title_cover fbm">
                             <a class="fb_title fbl" href = "<?php echo $statslink;?>"><?php echo $fbConfig->board_title; ?> <?php echo _STAT_FORUMSTATS; ?></a>
                         </div>
-                        <img id = "BoxSwitch__morestat_tbody" class = "hideshow" src = "<?php echo JB_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+                        <img id = "BoxSwitch__morestat_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
                     </th>
                 </tr>
             </thead>
@@ -107,7 +107,7 @@ $k = 0;
     <tr>
       <th colspan="3">
       <div class = "fb_title_cover fbm"> <span class="fb_title fbl"> <?php echo _STAT_POPULAR; ?> <b><?php echo $fbConfig->popsubjectcount; ?></b> <?php echo _STAT_POPULAR_USER_KGSG; ?></span> </div>
-      <img id = "BoxSwitch__<?php echo $boardclass ;?>popsubstats_tbody" class = "hideshow" src = "<?php echo JB_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+      <img id = "BoxSwitch__<?php echo $boardclass ;?>popsubstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
       </th>
     </tr>
   </thead>
@@ -115,7 +115,7 @@ $k = 0;
    <tr  class = "fb_sth" >
       <th class = "th-1 <?php echo $boardclass; ?>sectiontableheader" align="left" width="50%"> <?php echo _GEN_SUBJECT ;?></th>
       <th class = "th-2 <?php echo $boardclass; ?>sectiontableheader" width="40%">&nbsp;  </th>
-      <th class = "th-3 <?php echo $boardclass; ?>sectiontableheader" align="center" width="10%"> <?php echo _FB_USRL_HITS ;?> </th>
+      <th class = "th-3 <?php echo $boardclass; ?>sectiontableheader" align="center" width="10%"> <?php echo _KUNENA_USRL_HITS ;?> </th>
     </tr>
  <?php foreach ($toptitles as $toptitle)
        {
@@ -126,7 +126,7 @@ $k = 0;
 		   else {
 		   $barwidth = round(($toptitle->hits * 100) / $toptitlehits);
 		   }
-	  $link = sefReltoAbs(JB_LIVEURLREL . '&amp;func=view&amp;id=' . $toptitle->id . '&amp;catid=' . $toptitle->catid);
+	  $link = sefReltoAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $toptitle->id . '&amp;catid=' . $toptitle->catid);
 ?>
 
     <tr class = "<?php echo ''.$boardclass.''. $tabclass[$k] . ''; ?>">
@@ -134,7 +134,7 @@ $k = 0;
        <a href = "<?php echo $link;?>"><?php echo $toptitle->subject; ?></a>
       </td>
       <td  class="td-2">
-       <img class = "jr-forum-stat-bar" src = "<?php echo JB_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
+       <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
       </td>
       <td  class="td-3">
 	  <?php echo $toptitle->hits; ?>
@@ -166,15 +166,15 @@ $k = 0;
     <tr>
       <th colspan="3">
       <div class = "fb_title_cover fbm"> <span class="fb_title fbl"> <?php echo _STAT_POPULAR; ?> <b><?php echo $fbConfig->popusercount; ?></b> <?php echo _STAT_POPULAR_USER_TMSG; ?></span> </div>
-      <img id = "BoxSwitch__<?php echo $boardclass ;?>popusermsgstats_tbody" class = "hideshow" src = "<?php echo JB_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+      <img id = "BoxSwitch__<?php echo $boardclass ;?>popusermsgstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
       </th>
     </tr>
   </thead>
   <tbody id = "<?php echo $boardclass ;?>popusermsgstats_tbody">
    <tr  class = "fb_sth" >
-      <th class = "th-1 <?php echo $boardclass; ?>sectiontableheader" align="left" width="50%"><?php echo _FB_USRL_USERNAME ;?></th>
+      <th class = "th-1 <?php echo $boardclass; ?>sectiontableheader" align="left" width="50%"><?php echo _KUNENA_USRL_USERNAME ;?></th>
       <th class = "th-2 <?php echo $boardclass; ?>sectiontableheader" width="40%">&nbsp;  </th>
-      <th class = "th-3 <?php echo $boardclass; ?>sectiontableheader" align="center" width="10%"> <?php echo _FB_USRL_POSTS ;?></th>
+      <th class = "th-3 <?php echo $boardclass; ?>sectiontableheader" align="center" width="10%"> <?php echo _KUNENA_USRL_POSTS ;?></th>
     </tr>
 <?php
 
@@ -198,7 +198,7 @@ $k = 0;
 
 </td>
       <td  class="td-2">
-         <img class = "jr-forum-stat-bar" src = "<?php echo JB_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
+         <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
                                     </td>
       <td  class="td-3">
 	  <?php echo $poster->posts; ?>
@@ -231,15 +231,15 @@ $k = 0;
     <tr>
       <th colspan="3">
       <div class = "fb_title_cover"> <span class="fb_title"> <?php echo _STAT_POPULAR; ?> <b><?php echo $fbConfig->popusercount; ?></b> <?php echo _STAT_POPULAR_USER_GSG; ?></span> </div>
-      <img id = "BoxSwitch__<?php echo $boardclass ;?>popuserhitstats_tbody" class = "hideshow" src = "<?php echo JB_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+      <img id = "BoxSwitch__<?php echo $boardclass ;?>popuserhitstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
       </th>
     </tr>
   </thead>
   <tbody id = "<?php echo $boardclass ;?>popuserhitstats_tbody">
    <tr  class = "fb_sth fbs" >
-      <th class = "th-1 <?php echo $boardclass; ?>sectiontableheader"  align="left" width="50%"> <?php echo _FB_USRL_USERNAME ;?></th>
+      <th class = "th-1 <?php echo $boardclass; ?>sectiontableheader"  align="left" width="50%"> <?php echo _KUNENA_USRL_USERNAME ;?></th>
       <th class = "th-2 <?php echo $boardclass; ?>sectiontableheader" width="40%">&nbsp;  </th>
-      <th class = "th-3 <?php echo $boardclass; ?>sectiontableheader" align="center" width="10%"><?php echo _FB_USRL_HITS ;?></th>
+      <th class = "th-3 <?php echo $boardclass; ?>sectiontableheader" align="center" width="10%"><?php echo _KUNENA_USRL_HITS ;?></th>
     </tr>
 
 <?php
@@ -259,7 +259,7 @@ $barwidth = round(($topprofile->hits * 100) / $topprofil);
  <a href = "<?php echo $profilelink;?><?php echo $topprofile->user_id;?>" title = "<?php echo _STAT_USER_INFO; ?> <?php echo $topprofile->user;?>"> <?php echo $topprofile->user; ?> </a>
 </td>
       <td  class="td-2">
-         <img class = "jr-forum-stat-bar" src = "<?php echo JB_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
+         <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
                                     </td>
       <td  class="td-3">
 	  <?php echo $topprofile->hits; ?>
@@ -284,11 +284,11 @@ $barwidth = round(($topprofile->hits * 100) / $topprofil);
 
 <?php
 //(FB) BEGIN: WHOISONLINE
-if (file_exists(JB_ABSTMPLTPATH . '/plugin/who/whoisonline.php')) {
-    include(JB_ABSTMPLTPATH . '/plugin/who/whoisonline.php');
+if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php')) {
+    include(KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php');
 }
 else {
-    include(JB_ABSPATH . '/template/default/plugin/who/whoisonline.php');
+    include(KUNENA_ABSPATH . '/template/default/plugin/who/whoisonline.php');
 }
 
 //(FB) FINISH: WHOISONLINE

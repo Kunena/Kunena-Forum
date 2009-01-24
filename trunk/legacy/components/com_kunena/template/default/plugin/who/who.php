@@ -68,7 +68,7 @@ if ($fbConfig->showwhoisonline > 0)
                 $k = 1 - $k;
 
                 if ($user->userid == 0) {
-                    $user->username = _FB_GUEST;
+                    $user->username = _KUNENA_GUEST;
                 }
 
                 $time = date("H:i:s", $user->time);
@@ -89,7 +89,7 @@ if ($fbConfig->showwhoisonline > 0)
                         {
                         ?>
 
-                       <a href = "<?php echo sefRelToAbs(FB_PROFILE_LINK_SUFFIX.''.$user->userid)?>"><?php echo $user->username; ?></a>
+                       <a href = "<?php echo sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX.''.$user->userid)?>"><?php echo $user->username; ?></a>
 
                         <?php
                         }

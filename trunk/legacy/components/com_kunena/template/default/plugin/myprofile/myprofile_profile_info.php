@@ -22,7 +22,7 @@ global $fbConfig;
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<form action = "<?php echo sefRelToAbs(JB_LIVEURLREL.'&amp;func=myprofile&amp;do=saveprofileinfo'); ?>" method = "post" name = "postform">
+<form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=saveprofileinfo'); ?>" method = "post" name = "postform">
 	<input type = "hidden" name = "do" value = "saveprofileinfo"/>
 	<table class = "fb_blocktable" id = "fb_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
 		<thead>
@@ -41,16 +41,16 @@ global $fbConfig;
                                 <td colspan="2">&nbsp;</td>
                             </tr>
                             <tr>
-                                <td width="40%"><b><?php echo _FB_MYPROFILE_PERSONALTEXT; ?> </b></td>
+                                <td width="40%"><b><?php echo _KUNENA_MYPROFILE_PERSONALTEXT; ?> </b></td>
 
                                 <td><input name="personalText" size="50" maxlength="50" value="<?php echo $userinfo->personalText?>" type="text"/></td>
                             </tr>
                             <tr>
                             <tr>
                                 <td width="40%">
-                                    <b><?php echo _FB_MYPROFILE_BIRTHDATE; ?></b>
+                                    <b><?php echo _KUNENA_MYPROFILE_BIRTHDATE; ?></b>
 
-                                    <div class="smalltext"><?php echo _FB_MYPROFILE_BIRTHDATE_DESC; ?></div>
+                                    <div class="smalltext"><?php echo _KUNENA_MYPROFILE_BIRTHDATE_DESC; ?></div>
                                 </td>
                                 <td class="smalltext">
                                     <input name="bday1" size="4" maxlength="4" value="<?php echo $ulists["year"];?>" type="text"/> -
@@ -59,11 +59,11 @@ global $fbConfig;
                                 </td>
                             </tr><tr>
 
-                                <td width="40%"><b><?php echo _FB_MYPROFILE_LOCATION; ?> </b></td>
+                                <td width="40%"><b><?php echo _KUNENA_MYPROFILE_LOCATION; ?> </b></td>
                                 <td><input name="location" size="50" value="<?php echo $userinfo->location;?>" type="text"/></td>
                             </tr>
                             <tr>
-                                <td width="40%"><b><?php echo _FB_MYPROFILE_GENDER; ?></b></td>
+                                <td width="40%"><b><?php echo _KUNENA_MYPROFILE_GENDER; ?></b></td>
                                 <td>
                                     <?php echo $ulists["gender"];?>
                                 </td>
@@ -72,35 +72,35 @@ global $fbConfig;
                             </tr>
                             <tr>
 
-                                <td width="40%"><b><?php echo _FB_MYPROFILE_ICQ; ?> </b><div class="smalltext"><?php echo _FB_MYPROFILE_ICQ_DESC; ?></div></td>
+                                <td width="40%"><b><?php echo _KUNENA_MYPROFILE_ICQ; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_ICQ_DESC; ?></div></td>
                                 <td><input name="ICQ" size="24" value="<?php echo $userinfo->ICQ;?>" type="text"/></td>
                             </tr><tr>
-                                <td width="40%"><b><?php echo _FB_MYPROFILE_AIM; ?> </b><div class="smalltext"><?php echo _FB_MYPROFILE_AIM_DESC; ?></div></td>
+                                <td width="40%"><b><?php echo _KUNENA_MYPROFILE_AIM; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_AIM_DESC; ?></div></td>
                                 <td><input name="AIM" maxlength="16" size="24" value="<?php echo $userinfo->AIM;?>" type="text"/></td>
                             </tr>
                             <tr>
-                                <td width="40%"><b><?php echo _FB_MYPROFILE_MSN; ?> </b><div class="smalltext"><?php echo _FB_MYPROFILE_MSN_DESC; ?></div></td>
+                                <td width="40%"><b><?php echo _KUNENA_MYPROFILE_MSN; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_MSN_DESC; ?></div></td>
 
                                 <td><input name="MSN" size="24" value="<?php echo $userinfo->MSN;?>" type="text"/></td>
                             </tr>
                             <tr>
-                                <td width="40%"><b><?php echo _FB_MYPROFILE_YIM; ?> </b><div class="smalltext"><?php echo _FB_MYPROFILE_YIM_DESC; ?></div></td>
+                                <td width="40%"><b><?php echo _KUNENA_MYPROFILE_YIM; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_YIM_DESC; ?></div></td>
                                 <td><input name="YIM" maxlength="32" size="24" value="<?php echo $userinfo->YIM;?>" type="text"/></td>
                             </tr>
                             <tr>
-                                <td width="40%"><b><?php echo _FB_MYPROFILE_SKYPE; ?> </b><div class="smalltext"><?php echo _FB_MYPROFILE_SKYPE_DESC; ?></div></td>
+                                <td width="40%"><b><?php echo _KUNENA_MYPROFILE_SKYPE; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_SKYPE_DESC; ?></div></td>
                                 <td><input name="SKYPE" maxlength="32" size="24" value="<?php echo $userinfo->SKYPE;?>" type="text"/></td>
                             </tr>
                             <tr>
-                                <td width="40%"><b><?php echo _FB_MYPROFILE_GTALK; ?> </b><div class="smalltext"><?php echo _FB_MYPROFILE_GTALK_DESC; ?></div></td>
+                                <td width="40%"><b><?php echo _KUNENA_MYPROFILE_GTALK; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_GTALK_DESC; ?></div></td>
                                 <td><input name="GTALK" maxlength="32" size="24" value="<?php echo $userinfo->GTALK;?>" type="text"/></td>
                             </tr>
                             <tr>
-                                <td width="40%"><b><?php echo _FB_MYPROFILE_WEBSITE_NAME; ?> </b><div class="smalltext"><?php echo _FB_MYPROFILE_WEBSITE_NAME_DESC; ?></div></td>
+                                <td width="40%"><b><?php echo _KUNENA_MYPROFILE_WEBSITE_NAME; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_WEBSITE_NAME_DESC; ?></div></td>
                                 <td><input name="websitename" maxlength="32" size="24" value="<?php echo $userinfo->websitename;?>" type="text"/></td>
                             </tr>
                             <tr>
-                                <td width="40%"><b><?php echo _FB_MYPROFILE_WEBSITE_URL; ?> </b><div class="smalltext"><?php echo _FB_MYPROFILE_WEBSITE_URL_DESC; ?></div></td>
+                                <td width="40%"><b><?php echo _KUNENA_MYPROFILE_WEBSITE_URL; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_WEBSITE_URL_DESC; ?></div></td>
                                 <td><input name="websiteurl" maxlength="32" size="24" value="<?php echo $userinfo->websiteurl;?>" type="text"/></td>
                             </tr>
                             <tr>

@@ -30,7 +30,7 @@ global $fbConfig;
 
 <div id = "fb_ft-cover">
     <div id = "forumtools_control">
-        <a href = "#" id = "jrftsw" class = "forumtools"><?php echo _FB_FORUMTOOLS;?></a>
+        <a href = "#" id = "jrftsw" class = "forumtools"><?php echo _KUNENA_FORUMTOOLS;?></a>
     </div>
 
     <div class = "forumtools_contentBox" id = "box1">
@@ -38,7 +38,7 @@ global $fbConfig;
             <ul>
                 <li>
                 <?php
-                echo '<a href="' . sefRelToAbs(JB_LIVEURLREL . '&amp;func=post&amp;do=reply&amp;catid=' . $catid) . '">' . _GEN_POST_NEW_TOPIC . '</a>';
+                echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=post&amp;do=reply&amp;catid=' . $catid) . '">' . _GEN_POST_NEW_TOPIC . '</a>';
                 ?>
 
                 </li>
@@ -52,7 +52,7 @@ global $fbConfig;
 
                         <li>
                         <?php
-                        echo '<a href="' . sefRelToAbs(JB_LIVEURLREL . '&amp;id=' . $id . '&amp;catid=' . $catid . '&amp;func=fb_pdf') . '">' . _GEN_PDF . '</a>';
+                        echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;id=' . $id . '&amp;catid=' . $catid . '&amp;func=fb_pdf') . '">' . _GEN_PDF . '</a>';
                         ?>
 
                         </li>
@@ -65,7 +65,7 @@ global $fbConfig;
                 <li>
                 <?php
                 if ($my->id != 0) {
-                    echo '<a href="' . sefRelToAbs(JB_LIVEURLREL . '&amp;func=markThisRead&amp;catid=' . $catid) . '">' . _GEN_MARK_THIS_FORUM_READ . '</a>';
+                    echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=markThisRead&amp;catid=' . $catid) . '">' . _GEN_MARK_THIS_FORUM_READ . '</a>';
                 }
                 ?>
 
@@ -78,13 +78,13 @@ global $fbConfig;
 
                     if ($view == "flat")
                     {
-                        echo '<a href="' . sefRelToAbs(JB_LIVEURLREL . '&amp;func=showcat&amp;view=threaded&amp;id=' . $id . '&amp;catid=' . $catid) . '" >';
+                        echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;view=threaded&amp;id=' . $id . '&amp;catid=' . $catid) . '" >';
                         echo _GEN_THREADED_VIEW;
                         echo '</a>';
                     }
                     else
                     {
-                        echo '<a href="' . sefRelToAbs(JB_LIVEURLREL . '&amp;func=showcat&amp;id=' . $id . '&amp;view=flat&amp;catid=' . $catid) . '" >';
+                        echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;id=' . $id . '&amp;view=flat&amp;catid=' . $catid) . '" >';
                         echo _GEN_FLAT_VIEW;
                         echo "</a>";
                     }
@@ -95,7 +95,7 @@ global $fbConfig;
 
                 <li>
                 <?php
-                echo ' <a href="' . sefRelToAbs(JB_LIVEURLREL . '&amp;func=latest') . '" >' . _GEN_LATEST_POSTS . '</a>';
+                echo ' <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=latest') . '" >' . _GEN_LATEST_POSTS . '</a>';
                 ?>
 
                 </li>
@@ -105,7 +105,7 @@ global $fbConfig;
                 {
 				 if ($fbConfig->rules_infb) {
                     echo '<li>';
-                    echo '<a href="' . sefRelToAbs(JB_LIVEURLREL . '&amp;func=rules') . '" >';
+                    echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=rules') . '" >';
                     echo _GEN_RULES;
                     echo '</a></li>';
 					} else {
@@ -119,7 +119,7 @@ global $fbConfig;
                 {
 				 if ($fbConfig->help_infb) {
 					echo '<li>';
-					echo '<a href="' . sefRelToAbs(JB_LIVEURLREL . '&amp;func=faq') . '" >';
+					echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=faq') . '" >';
 					echo _GEN_HELP;
 					echo '</a></li>';
 					} else {

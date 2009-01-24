@@ -76,37 +76,37 @@ $validate = josSpoofValue();
   <table class = "fb_blocktable" id = "fb_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
       <tr>
-        <th colspan = "2"> <div class = "fb_title_cover"> <span class = "fb_title"><?php echo _FB_EDIT_TITLE; ?></span> </div></th>
+        <th colspan = "2"> <div class = "fb_title_cover"> <span class = "fb_title"><?php echo _KUNENA_EDIT_TITLE; ?></span> </div></th>
       </tr>
     </thead>
     <tbody  class = "fb_myprofile_general">
       <tr class="fb_sth">
         <th colspan="2" > <center>
-            <?php echo _FB_MYPROFILE_PERSONAL_INFO; ?>
+            <?php echo _KUNENA_MYPROFILE_PERSONAL_INFO; ?>
           </center></th>
       </tr>
       <tr>
-        <td><?php echo _FB_YOUR_NAME; ?> </td>
+        <td><?php echo _KUNENA_YOUR_NAME; ?> </td>
         <td><input class = "inputbox" type = "text" name = "name" value = "<?php echo $row->name;?>" size = "40"/></td>
       </tr>
       <tr>
-        <td><?php echo _FB_EMAIL; ?> </td>
+        <td><?php echo _KUNENA_EMAIL; ?> </td>
         <td><input class = "inputbox" type = "text" name = "email" value = "<?php echo $row->email;?>" size = "40"/></td>
       </tr>
        <?php if ($fbConfig->usernamechange) { ?>
       <tr>
-        <td><?php echo _FB_UNAME; ?> </td>
+        <td><?php echo _KUNENA_UNAME; ?> </td>
         <td><input class = "inputbox" type = "text" name = "username" value = "<?php echo $row->username;?>" size = "40"/></td>
       </tr>
       <?php } else { ?>
       <input class = "inputbox" type = "hidden" name = "username" value = "<?php echo $row->username;?>" size = "40"/>
       <?php } ?>
       <tr>
-        <td><?php echo _FB_PASS; ?> </td>
+        <td><?php echo _KUNENA_PASS; ?> </td>
         <td><input class = "inputbox" type = "password" name = "password" value = "" size = "40"/></td>
       </tr>
       <tr>
-        <td><?php echo _FB_VPASS; ?> </td>
+        <td><?php echo _KUNENA_VPASS; ?> </td>
         <td><input class = "inputbox" type = "password" name = "verifyPass" size = "40"/></td>
       </tr>
       <?php
@@ -120,8 +120,8 @@ $validate = josSpoofValue();
         }
         ?>
       <tr>
-        <td colspan = "2" align="center"><input type="button" name="save" value="<?php echo _FB_SAVE;?>" onclick="submitbuttons('');"/>
-          <input type="reset" value="<?php echo _FB_RESET;?>"/>
+        <td colspan = "2" align="center"><input type="button" name="save" value="<?php echo _KUNENA_SAVE;?>" onclick="submitbuttons('');"/>
+          <input type="reset" value="<?php echo _KUNENA_RESET;?>"/>
         </td>
       </tr>
     </tbody>

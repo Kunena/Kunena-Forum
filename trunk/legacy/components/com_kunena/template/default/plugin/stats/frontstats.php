@@ -17,12 +17,12 @@
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
-$forumurl = sefReltoAbs(JB_LIVEURLREL);
+$forumurl = sefReltoAbs(KUNENA_LIVEURLREL);
 if ($fbConfig->cb_profile /*&& $my->id != 0*/) {
     $userlist = sefReltoAbs('index.php?option=com_comprofiler&amp;task=usersList');
 }
 else {
-    $userlist = sefReltoAbs(JB_LIVEURLREL . '&amp;func=userlist&amp');
+    $userlist = sefReltoAbs(KUNENA_LIVEURLREL . '&amp;func=userlist&amp');
 }
 ?>
 
@@ -45,12 +45,12 @@ if ($fbConfig->showstats > 0)
             . "\n LEFT JOIN #__fb_categories AS c ON c.id = m.catid" . "\n LEFT JOIN #__users AS u ON u.gid >= c.pub_access" . "\n WHERE m.moved='0' AND u.id = $my->id AND c.published = 1 AND m.hold = 0" . "\n ORDER BY m.id DESC LIMIT 0,1");
     $msgs = $database->loadObjectList();
     	check_dberror("Unable to load messages.");
-    $statslink = sefRelToAbs(JB_LIVEURLREL.'&amp;func=stats');
+    $statslink = sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=stats');
     if ($fbConfig->cb_profile /*&& $my->id != 0*/) {
         $userlist = sefReltoAbs('index.php?option=com_comprofiler&amp;task=usersList');
     }
     else {
-        $userlist = sefReltoAbs(JB_LIVEURLREL .'&amp;func=userlist');
+        $userlist = sefReltoAbs(KUNENA_LIVEURLREL .'&amp;func=userlist');
     }
 
 
@@ -73,7 +73,7 @@ if ($fbConfig->showstats > 0)
                         <div class = "fb_title_cover fbm">
                             <a class="fb_title fbl" href = "<?php echo $statslink;?>"><?php echo $fbConfig->board_title; ?> <?php echo _STAT_FORUMSTATS; ?></a>
                         </div>
-                        <img id = "BoxSwitch_frontstats__frontstats_tbody" class = "hideshow" src = "<?php echo JB_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+                        <img id = "BoxSwitch_frontstats__frontstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
                     </th>
                 </tr>
             </thead>
@@ -82,7 +82,7 @@ if ($fbConfig->showstats > 0)
                 <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
                     <td class = "td-1  fbm" align="left">
 <?php echo _STAT_TOTAL_USERS; ?>:<b> <a href = "<?php echo $userlist;?>"><?php echo $totalmembers; ?></a> </b>
-                    &nbsp; <?php echo _STAT_LATEST_MEMBERS; ?>:<b> <a href = "<?php echo sefRelToAbs(FB_PROFILE_LINK_SUFFIX.''.$lastestmemberid)?>" title = "<?php echo _STAT_PROFILE_INFO; ?> <?php echo $lastestmember;?>"><?php echo $lastestmember; ?></a> </b>
+                    &nbsp; <?php echo _STAT_LATEST_MEMBERS; ?>:<b> <a href = "<?php echo sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX.''.$lastestmemberid)?>" title = "<?php echo _STAT_PROFILE_INFO; ?> <?php echo $lastestmember;?>"><?php echo $lastestmember; ?></a> </b>
 
                 <br/> <?php echo _STAT_TOTAL_MESSAGES; ?>: <b> <?php echo $totalmsgs; ?></b> &nbsp;
     <?php echo _STAT_TOTAL_SUBJECTS; ?>: <b> <?php echo $totaltitles; ?></b> &nbsp; <?php echo _STAT_TOTAL_SECTIONS; ?>: <b> <?php echo $totalcats; ?></b> &nbsp; <?php echo _STAT_TOTAL_CATEGORIES; ?>: <b> <?php echo $totalsections; ?></b>
@@ -92,7 +92,7 @@ if ($fbConfig->showstats > 0)
 
                 <br/>
 
-                &raquo; <a href = "<?php echo sefRelToAbs(JB_LIVEURLREL .'&amp;func=latest');?>"><?php echo _STAT_VIEW_RECENT_POSTS_ON_FORUM; ?></a> &raquo; <a href = "<?php echo $statslink;?>"><?php echo _STAT_MORE_ABOUT_STATS; ?></a> &raquo; <a href="<?php echo $userlist;?>"><?php echo _STAT_USERLIST; ?></a>
+                &raquo; <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL .'&amp;func=latest');?>"><?php echo _STAT_VIEW_RECENT_POSTS_ON_FORUM; ?></a> &raquo; <a href = "<?php echo $statslink;?>"><?php echo _STAT_MORE_ABOUT_STATS; ?></a> &raquo; <a href="<?php echo $userlist;?>"><?php echo _STAT_USERLIST; ?></a>
                     </td>
                 </tr>
             </tbody>

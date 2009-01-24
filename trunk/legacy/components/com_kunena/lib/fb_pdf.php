@@ -54,7 +54,7 @@ function dofreePDF($database)
 {
     global $mosConfig_sitename, $my, $aro_group, $acl;
     global $fbConfig, $fbSession, $catid;
-    require_once (JB_ABSSOURCESPATH . 'fb_auth.php');
+    require_once (KUNENA_ABSSOURCESPATH . 'fb_auth.php');
     $is_Mod = 0;
 
     if (!$is_admin)
@@ -100,8 +100,8 @@ function dofreePDF($database)
         $mes_text = $row[0]->message;
         filterHTML($mes_text);
 
-		if (file_exists(JB_JABSPATH . '/includes/class.ezpdf.php')) {
-			include (JB_JABSPATH . '/includes/class.ezpdf.php');
+		if (file_exists(KUNENA_JABSPATH . '/includes/class.ezpdf.php')) {
+			include (KUNENA_JABSPATH . '/includes/class.ezpdf.php');
 			$pdf = &new Cezpdf('a4', 'P'); //A4 Portrait
 		} elseif (class_exists('JDocument')) {
         	$pdf = &new fbpdfwrapper();
@@ -121,10 +121,10 @@ function dofreePDF($database)
         $pdf->line(10, 822, 578, 822);
         $pdf->addText(30, 34, 6, $fbConfig->board_title . ' - ' . $mosConfig_sitename);
 
-        $strtmp = _FB_PDF_VERSION;
+        $strtmp = _KUNENA_PDF_VERSION;
         $strtmp = str_replace('%version%', "NEW VERSION GOES HERE" /*$fbConfig->version*/, $strtmp); // TODO: fxstein - Need to change version handling
         $pdf->addText(250, 34, 6, $strtmp);
-        $strtmp = _FB_PDF_DATE;
+        $strtmp = _KUNENA_PDF_DATE;
         $strtmp = str_replace('%date%', date('j F, Y, H:i', FBTools::fbGetShowTime()), $strtmp);
         $pdf->addText(450, 34, 6, $strtmp);
 

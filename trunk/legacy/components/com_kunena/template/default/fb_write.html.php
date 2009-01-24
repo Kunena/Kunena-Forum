@@ -18,7 +18,7 @@ defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 global $fbConfig;
 //Some initial thingies needed anyway:
 $htmlText = stripslashes($htmlText);
-include_once(JB_ABSSOURCESPATH . 'fb_bb.js.php');
+include_once(KUNENA_ABSSOURCESPATH . 'fb_bb.js.php');
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
@@ -271,7 +271,7 @@ include_once(JB_ABSSOURCESPATH . 'fb_bb.js.php');
 		// Begin captcha . Thanks Adeptus
 		if ($fbConfig->captcha == 1 && $my->id < 1) { ?>
         <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
-            <td class = "fb_leftcolumn">&nbsp;<strong><?php echo _FB_CAPDESC; ?></strong>&nbsp;</td>
+            <td class = "fb_leftcolumn">&nbsp;<strong><?php echo _KUNENA_CAPDESC; ?></strong>&nbsp;</td>
             <td align="left" valign="middle" height="35px">&nbsp;<input name="txtNumber" type="text" id="txtNumber" value="" class="button" style="vertical-align:top" size="15">
 			<img src="index2.php?option=com_kunena&func=showcaptcha" alt="" />
 		 </td>
@@ -284,7 +284,7 @@ include_once(JB_ABSSOURCESPATH . 'fb_bb.js.php');
             <td colspan = "2" style = "text-align: center;">
                 <input type = "submit" class = "button" name = "submit" value = "<?php echo _GEN_CONTINUE;?>" onclick = "return submitForm()" onmouseover = "helpline('submit')"/>
 
-                 <input name="preview" type="button" class="button"  onClick="fbGetPreview(document.postform.message.value,<?php echo FB_FB_ITEMID?>);" value="<?php echo _PREVIEW?>"  onmouseover = "helpline('preview');">
+                 <input name="preview" type="button" class="button"  onClick="fbGetPreview(document.postform.message.value,<?php echo KUNENA_COMPONENT_ITEMID?>);" value="<?php echo _PREVIEW?>"  onmouseover = "helpline('preview');">
                 <input type = "button" class = "button" value = "<?php echo _GEN_CANCEL;?>" onclick = "javascript:window.history.back();" onmouseover = "helpline('cancel')"/>
             </td>
         </tr>
@@ -295,7 +295,7 @@ include_once(JB_ABSSOURCESPATH . 'fb_bb.js.php');
 </div>
 </div>
 </div>
-<input type="hidden" value="<?php echo JB_DIRECTURL . '/template/default';?>" name="templatePath"/>
+<input type="hidden" value="<?php echo KUNENA_DIRECTURL . '/template/default';?>" name="templatePath"/>
 </form>
 
 </td>

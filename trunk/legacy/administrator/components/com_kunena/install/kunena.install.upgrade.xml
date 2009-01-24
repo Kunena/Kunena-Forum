@@ -56,7 +56,7 @@
                     `id` int(4) NOT NULL auto_increment,
                     `title` varchar(255) default NULL,
                 PRIMARY KEY  (`id`) )</query>
-       <query>INSERT INTO `#__fb_groups`(`id`,`title`) values (1,'"._FB_REGISTERED."')</query>
+       <query>INSERT INTO `#__fb_groups`(`id`,`title`) values (1,'"._KUNENA_REGISTERED."')</query>
        <query>CREATE TABLE `#__fb_messages` (
                     `id` int(11) NOT NULL auto_increment,
                     `parent` int(11) default '0',

@@ -133,7 +133,7 @@ echo "<?xml version=\"1.0\" encoding=\"" . $encoding[1] . "\"?>\n";
         <lastBuildDate><?php echo date("r");?></lastBuildDate>
         <generator>Kunena @fbversion@</generator>
         <image>
-	        <url><?php echo JB_URLEMOTIONSPATH; ?>rss.gif</url>
+	        <url><?php echo KUNENA_URLEMOTIONSPATH; ?>rss.gif</url>
 	        <title>Powered by Kunena</title>
 	        <link><?php echo $mosConfig_live_site; ?></link>
 	        <description>Kunena Site Syndication</description>

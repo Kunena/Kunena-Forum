@@ -39,50 +39,50 @@ else if ($fbConfig->avatar_src == "cb")
     $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id=".$my->id);
     $avatar = $database->loadResult();
     if ($avatar != "") {
-        $imgpath = JB_JLIVEURL . '/images/comprofiler/';
+        $imgpath = KUNENA_JLIVEURL . '/images/comprofiler/';
 
         if (eregi("gallery/", $avatar) == false)
             $imgpath .= "tn" . $avatar;
         else
             $imgpath .= $avatar;
     } else {
-        $imgpath = JB_JLIVEURL."/components/com_comprofiler/plugin/language/default_language/images/tnnophoto.jpg";
+        $imgpath = KUNENA_JLIVEURL."/components/com_comprofiler/plugin/language/default_language/images/tnnophoto.jpg";
     }
     $jr_avatar = '<img src="' . $imgpath . '" alt=" " />';
 }
 else
 {
     if ($fbavatar != "") {
-		if(!file_exists(FB_ABSUPLOADEDPATH . '/avatars/s_' . $fbavatar)) {
-            $jr_avatar = '<img src="'.FB_LIVEUPLOADEDPATH.'/avatars/' . $fbavatar . '" alt=" " />';
+		if(!file_exists(KUNENA_ABSUPLOADEDPATH . '/avatars/s_' . $fbavatar)) {
+            $jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/' . $fbavatar . '" alt=" " />';
 		} else {
-		  $jr_avatar = '<img src="'.FB_LIVEUPLOADEDPATH.'/avatars/s_' . $fbavatar . '" alt=" " />';
+		  $jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_' . $fbavatar . '" alt=" " />';
 		}
     }
     else {
- 		$jr_avatar = '<img src="'.FB_LIVEUPLOADEDPATH.'/avatars/s_nophoto.jpg" alt=" " />';
-        $jr_profilelink = '<a href="' . sefRelToAbs(JB_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
+ 		$jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_nophoto.jpg" alt=" " />';
+        $jr_profilelink = '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
     }
 
 }
 
 if ($fbConfig->fb_profile == "clexuspm") {
-    $jr_profilelink = '<a href="' . sefRelToAbs(JB_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
+    $jr_profilelink = '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
 }
 else if ($fbConfig->fb_profile == "cb")
 {
-    $jr_profilelink = '<a href="' . sefRelToAbs(JB_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
+    $jr_profilelink = '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
     if($fbConfig->cb_profile) {
-        $jr_profilelink = '<a href="' . sefRelToAbs('index.php?option=com_comprofiler&amp;task=userDetails'.FB_CB_ITEMID_SUFFIX) . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
+        $jr_profilelink = '<a href="' . sefRelToAbs('index.php?option=com_comprofiler&amp;task=userDetails'.KUNENA_CB_ITEMID_SUFFIX) . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
     }
 }
 else
 {
-    $jr_profilelink = '<a href="' . sefRelToAbs(JB_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
+    $jr_profilelink = '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
 }
 
-$jr_myposts = '<a href="' . sefRelToAbs(JB_LIVEURLREL .  '&amp;func=showauthor&amp;task=showmsg&amp;auth=' . $my->id . '') . '" >' . _PROFILEBOX_SHOW_MYPOSTS . '</a>';
-$jr_latestpost = sefRelToAbs(JB_LIVEURLREL . '&amp;func=latest');
+$jr_myposts = '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL .  '&amp;func=showauthor&amp;task=showmsg&amp;auth=' . $my->id . '') . '" >' . _PROFILEBOX_SHOW_MYPOSTS . '</a>';
+$jr_latestpost = sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=latest');
 ?>
 
 <?php // AFTER LOGIN AREA
@@ -91,8 +91,8 @@ if ($fbConfig->cb_profile)
 {
     $loginlink = sefRelToAbs('index.php');
     $logoutlink = sefRelToAbs('index.php?option=logout');
-    $registerlink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=registers');//.FB_CB_ITEMID_SUFFIX);
-    $lostpasslink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=lostPassword');//.FB_CB_ITEMID_SUFFIX);
+    $registerlink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=registers');//.KUNENA_CB_ITEMID_SUFFIX);
+    $lostpasslink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=lostPassword');//.KUNENA_CB_ITEMID_SUFFIX);
     if($j15) {
       $loginlink = sefRelToAbs('index.php?option=com_user&amp;view=login');
       $logoutlink = sefRelToAbs('index.php?option=com_user&amp;view=login');
@@ -141,7 +141,7 @@ else {
 }
 
 if ($is_editor) {
-$annlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show'.FB_FB_ITEMID_SUFFIX;
+$annlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show'.KUNENA_COMPONENT_ITEMID_SUFFIX;
 
 ?>
 | <a href = "<?php echo $annlink;?>"><?php echo _ANN_ANNOUNCEMENTS; ?> </a>

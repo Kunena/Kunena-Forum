@@ -19,7 +19,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 global $fbConfig;
 //Start with determining which forums the user can see
 
-require_once (JB_ABSSOURCESPATH . 'fb_auth.php');
+require_once (KUNENA_ABSSOURCESPATH . 'fb_auth.php');
 //resetting some things:
 $lockedForum = 0;
 $lockedTopic = 0;
@@ -194,7 +194,7 @@ if ($sel == "0")
                 }
 
                 $tmpicon = $fbIcons['latestpost'] ? '<img src="'
-                     .JB_URLICONSPATH.''.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" />':'  <img src="'.JB_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />';
+                     .KUNENA_URLICONSPATH.''.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" />':'  <img src="'.KUNENA_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />';
                 echo fb_link::GetThreadPageLink('view', $latestPostCatid, $rs->thread, $threadPages, $fbConfig->messages_per_page, $tmpicon, $latestPostId);
 
                 echo '<br />' . _GEN_FORUM . ' : ' . $catname . '</td>';
@@ -227,7 +227,7 @@ if ($sel == "0")
 
                         //(JJ) FINISH: CAT LIST BOTTOM
                         if ($fbConfig->enableforumjump)
-                            require_once (JB_ABSSOURCESPATH . 'fb_forumjump.php');
+                            require_once (KUNENA_ABSSOURCESPATH . 'fb_forumjump.php');
                         ?>
                     </th>
                 </tr>

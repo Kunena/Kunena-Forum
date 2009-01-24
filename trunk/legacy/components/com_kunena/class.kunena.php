@@ -21,7 +21,7 @@ $Itemid = intval(mosGetParam($_REQUEST, 'Itemid'));
 //check if we have all the itemid sets. if so, then no need for DB call
 
 global $fbConfig;
-if (!defined("FB_FB_ITEMID")) {
+if (!defined("KUNENA_COMPONENT_ITEMID")) {
         $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_kunena' AND published = 1");
         $Itemid = $database->loadResult();
 
@@ -29,16 +29,16 @@ if (!defined("FB_FB_ITEMID")) {
             $Itemid = 0;
             }
 
-    define("FB_FB_ITEMID", (int)$Itemid);
-    define("FB_FB_ITEMID_SUFFIX", "&amp;Itemid=" . FB_FB_ITEMID);
+    define("KUNENA_COMPONENT_ITEMID", (int)$Itemid);
+    define("KUNENA_COMPONENT_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_COMPONENT_ITEMID);
 
     //Community Builder
     if ($fbConfig->cb_profile || $fbConfig->fb_profile == "cb") {
         $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_comprofiler' AND published=1");
         $CB_Itemid = $database->loadResult();
 
-        define("FB_CB_ITEMID", (int)$CB_Itemid);
-        define("FB_CB_ITEMID_SUFFIX", "&amp;Itemid=" . FB_CB_ITEMID);
+        define("KUNENA_CB_ITEMID", (int)$CB_Itemid);
+        define("KUNENA_CB_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_CB_ITEMID);
         }
 
     //Clexus PM
@@ -46,38 +46,38 @@ if (!defined("FB_FB_ITEMID")) {
         $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_mypms' AND published=1");
         $CPM_Itemid = $database->loadResult();
 
-        define("FB_CPM_ITEMID", (int)$CPM_Itemid);
-        define("FB_CPM_ITEMID_SUFFIX", "&amp;Itemid=" . FB_CPM_ITEMID);
+        define("KUNENA_CPM_ITEMID", (int)$CPM_Itemid);
+        define("KUNENA_CPM_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_CPM_ITEMID);
         }
 
     // UddeIM
     if ($fbConfig->pm_component == 'uddeim') {
         $database->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_uddeim'");
         $UIM_itemid = $database->loadResult();
-        define("FB_UIM_ITEMID", (int)$UIM_itemid);
-        define("FB_UIM_ITEMID_SUFFIX", "&amp;Itemid=" . FB_UIM_ITEMID);
+        define("KUNENA_UIM_ITEMID", (int)$UIM_itemid);
+        define("KUNENA_UIM_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_UIM_ITEMID);
         }
 
     // MISSUS
     if ($fbConfig->pm_component == 'missus') {
         $database->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_missus'");
         $MISSUS_itemid = $database->loadResult();
-        define("FB_MISSUS_ITEMID", (int)$MISSUS_itemid);
-        define("FB_MISSUS_ITEMID_SUFFIX", "&amp;Itemid=" . FB_MISSUS_ITEMID);
+        define("KUNENA_MISSUS_ITEMID", (int)$MISSUS_itemid);
+        define("KUNENA_MISSUS_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_MISSUS_ITEMID);
         }
 
     // PROFILE LINK
     if ($fbConfig->fb_profile == "cb") {
         $profilelink = 'index.php?option=com_comprofiler&amp;task=userProfile&amp;user=';
-        define("FB_PROFILE_LINK_SUFFIX", "index.php?option=com_comprofiler&amp;task=userProfile&amp;Itemid=" . FB_CB_ITEMID . "&amp;user=");
+        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_comprofiler&amp;task=userProfile&amp;Itemid=" . KUNENA_CB_ITEMID . "&amp;user=");
         }
     else if ($fbConfig->fb_profile == "clexuspm") {
         $profilelink = 'index.php?option=com_mypms&amp;task=showprofile&amp;user=';
-        define("FB_PROFILE_LINK_SUFFIX", "index.php?option=com_mypms&amp;task=showprofile&amp;Itemid=" . FB_CPM_ITEMID . "&amp;user=");
+        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_mypms&amp;task=showprofile&amp;Itemid=" . KUNENA_CPM_ITEMID . "&amp;user=");
         }
     else {
         $profilelink = 'index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=';
-        define("FB_PROFILE_LINK_SUFFIX", "index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;Itemid=" . FB_FB_ITEMID . "&amp;userid=");
+        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;Itemid=" . KUNENA_COMPONENT_ITEMID . "&amp;userid=");
         }
     }
 
@@ -90,39 +90,39 @@ if (!defined("FB_FB_ITEMID")) {
 
 // Shortcuts to all the path we have:
 
-define('JB_JABSPATH', $mainframe->getCfg('absolute_path'));
+define('KUNENA_JABSPATH', $mainframe->getCfg('absolute_path'));
 
 // Joomla absolute path
-define('JB_JLIVEURL', $mainframe->getCfg('live_site'));
+define('KUNENA_JLIVEURL', $mainframe->getCfg('live_site'));
 
 // Kunena live url
-define('JB_LIVEURL', JB_JLIVEURL . '/index.php?option=com_kunena' . FB_FB_ITEMID_SUFFIX);
-define('JB_CLEANLIVEURL', JB_JLIVEURL . '/index2.php?option=com_kunena&amp;no_html=1' . FB_FB_ITEMID_SUFFIX);
-define('JB_LIVEURLREL', 'index.php?option=com_kunena' . FB_FB_ITEMID_SUFFIX);
-define('JB_ABSPATH', JB_JABSPATH . '/components/com_kunena');
+define('KUNENA_LIVEURL', KUNENA_JLIVEURL . '/index.php?option=com_kunena' . KUNENA_COMPONENT_ITEMID_SUFFIX);
+define('KUNENA_CLEANLIVEURL', KUNENA_JLIVEURL . '/index2.php?option=com_kunena&amp;no_html=1' . KUNENA_COMPONENT_ITEMID_SUFFIX);
+define('KUNENA_LIVEURLREL', 'index.php?option=com_kunena' . KUNENA_COMPONENT_ITEMID_SUFFIX);
+define('KUNENA_ABSPATH', KUNENA_JABSPATH . '/components/com_kunena');
 
 // Kunena absolute path
-define('JB_ABSSOURCESPATH', JB_ABSPATH . '/lib/');
+define('KUNENA_ABSSOURCESPATH', KUNENA_ABSPATH . '/lib/');
 
 // Kunena souces absolute path
-define('JB_DIRECTURL', JB_JLIVEURL . '/components/com_kunena');
+define('KUNENA_DIRECTURL', KUNENA_JLIVEURL . '/components/com_kunena');
 
 // Kunena direct url
-define('JB_URLSOURCESPATH', JB_DIRECTURL . '/sources/');
+define('KUNENA_URLSOURCESPATH', KUNENA_DIRECTURL . '/sources/');
 
 // Kunena sources url
-define('JB_LANG', $mainframe->getCfg('lang'));
-define('JB_ABSADMPATH', JB_JABSPATH . '/administrator/components/com_kunena');
+define('KUNENA_LANG', $mainframe->getCfg('lang'));
+define('KUNENA_ABSADMPATH', KUNENA_JABSPATH . '/administrator/components/com_kunena');
 
-if (!defined("JB_JCSSURL")) {
+if (!defined("KUNENA_JCSSURL")) {
     $database->setQuery("SELECT template FROM #__templates_menu where client_id ='0'");
     $current_stylesheet = $database->loadResult();
-    define('JB_JCSSURL', JB_JLIVEURL . '/templates/' . $current_stylesheet . '/css/template_css.css');
+    define('KUNENA_JCSSURL', KUNENA_JLIVEURL . '/templates/' . $current_stylesheet . '/css/template_css.css');
     }
 
 // Kunena uploaded files directory
-define('FB_ABSUPLOADEDPATH', JB_JABSPATH . '/images/fbfiles');
-define('FB_LIVEUPLOADEDPATH', JB_JLIVEURL . '/images/fbfiles');
+define('KUNENA_ABSUPLOADEDPATH', KUNENA_JABSPATH . '/images/fbfiles');
+define('KUNENA_LIVEUPLOADEDPATH', KUNENA_JLIVEURL . '/images/fbfiles');
 
 
 // now continue with other paths
@@ -146,67 +146,67 @@ else {
 
 // only for preview module - maybe used later by users to change template
 
-define('JB_ABSTMPLTPATH', JB_ABSPATH . '/template/' . $fb_cur_template);
-define('JB_ABSTMPLTMAINIMGPATH', JB_ABSPATH . '/template/' . $fbConfig->templateimagepath);
+define('KUNENA_ABSTMPLTPATH', KUNENA_ABSPATH . '/template/' . $fb_cur_template);
+define('KUNENA_ABSTMPLTMAINIMGPATH', KUNENA_ABSPATH . '/template/' . $fbConfig->templateimagepath);
 
 // IMAGES ABSOLUTE PATH
-define('JB_ABSIMAGESPATH', JB_ABSTMPLTMAINIMGPATH . '/images/' . JB_LANG . '/');
+define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANG . '/');
 
 // absolute images path
-define('JB_ABSICONSPATH', JB_ABSIMAGESPATH . 'icons/');
+define('KUNENA_ABSICONSPATH', KUNENA_ABSIMAGESPATH . 'icons/');
 
 // absolute icons path
-define('JB_ABSEMOTIONSPATH', JB_ABSIMAGESPATH . 'emoticons/');
+define('KUNENA_ABSEMOTIONSPATH', KUNENA_ABSIMAGESPATH . 'emoticons/');
 
 // absolute emoticons path
-define('JB_ABSGRAPHPATH', JB_ABSIMAGESPATH . 'graph/');
+define('KUNENA_ABSGRAPHPATH', KUNENA_ABSIMAGESPATH . 'graph/');
 
 // absolute graph path
-define('JB_ABSRANKSPATH', JB_ABSIMAGESPATH . 'ranks/');
+define('KUNENA_ABSRANKSPATH', KUNENA_ABSIMAGESPATH . 'ranks/');
 
 // absolute ranks path
-define('JB_ABSCATIMAGESPATH', FB_ABSUPLOADEDPATH . '/' . $fbConfig->catimagepath); // Kunena category images absolute path
+define('KUNENA_ABSCATIMAGESPATH', KUNENA_ABSUPLOADEDPATH . '/' . $fbConfig->catimagepath); // Kunena category images absolute path
 
-define('JB_TMPLTURL', JB_DIRECTURL . '/template/' . $fb_cur_template);
-define('JB_TMPLTMAINIMGURL', JB_DIRECTURL . '/template/' . $fb_cur_img_template);
+define('KUNENA_TMPLTURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_template);
+define('KUNENA_TMPLTMAINIMGURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_img_template);
 
 // IMAGES URL PATH
-define('JB_TMPLTCSSURL', JB_TMPLTURL . '/forum.css');
+define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . '/forum.css');
 
-if (is_dir(JB_ABSTMPLTMAINIMGPATH . '/images/' . JB_LANG . '')) {
-    define('JB_URLIMAGESPATH', JB_TMPLTMAINIMGURL . '/images/' . JB_LANG . '/');
+if (is_dir(KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANG . '')) {
+    define('KUNENA_URLIMAGESPATH', KUNENA_TMPLTMAINIMGURL . '/images/' . KUNENA_LANG . '/');
     }
 else {
-    define('JB_URLIMAGESPATH', JB_TMPLTMAINIMGURL . '/images/english/');
+    define('KUNENA_URLIMAGESPATH', KUNENA_TMPLTMAINIMGURL . '/images/english/');
     }
 
 // url images path
-define('JB_URLICONSPATH', JB_URLIMAGESPATH . 'icons/');
+define('KUNENA_URLICONSPATH', KUNENA_URLIMAGESPATH . 'icons/');
 
 // url icons path
-define('JB_URLEMOTIONSPATH', JB_URLIMAGESPATH . 'emoticons/');
+define('KUNENA_URLEMOTIONSPATH', KUNENA_URLIMAGESPATH . 'emoticons/');
 
 // url emoticons path
-define('JB_URLGRAPHPATH', JB_URLIMAGESPATH . 'graph/');
+define('KUNENA_URLGRAPHPATH', KUNENA_URLIMAGESPATH . 'graph/');
 
 // url graph path
-define('JB_URLRANKSPATH', JB_URLIMAGESPATH . 'ranks/');
+define('KUNENA_URLRANKSPATH', KUNENA_URLIMAGESPATH . 'ranks/');
 
 // url ranks path
-define('JB_URLCATIMAGES', FB_LIVEUPLOADEDPATH . '/' . $fbConfig->catimagepath); // Kunena category images direct url
+define('KUNENA_URLCATIMAGES', KUNENA_LIVEUPLOADEDPATH . '/' . $fbConfig->catimagepath); // Kunena category images direct url
 
-if (file_exists(JB_ABSTMPLTPATH . '/js/jquery-latest.pack.js')) {
-    define('JB_JQURL', JB_DIRECTURL . '/template/' . $fb_cur_template . '/js/jquery-latest.pack.js');
+if (file_exists(KUNENA_ABSTMPLTPATH . '/js/jquery-latest.pack.js')) {
+    define('KUNENA_JQURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_template . '/js/jquery-latest.pack.js');
     }
 else {
-    define('JB_JQURL', JB_DIRECTURL . '/template/default/js/jquery-latest.pack.js');
+    define('KUNENA_JQURL', KUNENA_DIRECTURL . '/template/default/js/jquery-latest.pack.js');
     }
 
-if (file_exists(JB_ABSTMPLTPATH . '/js/bojForumCore.js')) {
-    define('JB_COREJSURL', JB_DIRECTURL . '/template/' . $fb_cur_template . '/js/bojForumCore.js');
+if (file_exists(KUNENA_ABSTMPLTPATH . '/js/bojForumCore.js')) {
+    define('KUNENA_COREJSURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_template . '/js/bojForumCore.js');
     }
 else {
-    define('JB_COREJSURL', JB_DIRECTURL . '/template/default/js/bojForumCore.js');
+    define('KUNENA_COREJSURL', KUNENA_DIRECTURL . '/template/default/js/bojForumCore.js');
     }
 
 /**
@@ -214,9 +214,9 @@ else {
  */
 // ERROR: REMOVE
 function JBgetCBprofileItemid($htmlspecialchars = false) {
-    global $JB_CB__Cache_ProfileItemid, $database;
+    global $KUNENA_CB__Cache_ProfileItemid, $database;
 
-    if (!$JB_CB__Cache_ProfileItemid) {
+    if (!$KUNENA_CB__Cache_ProfileItemid) {
         $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_comprofiler' AND published=1");
         $Itemid = (int)$database->loadResult();
 
@@ -227,24 +227,24 @@ function JBgetCBprofileItemid($htmlspecialchars = false) {
             $Itemid = (int)$database->loadResult();
             }
 
-        $JB_CB__Cache_ProfileItemid = $Itemid;
+        $KUNENA_CB__Cache_ProfileItemid = $Itemid;
         }
 
-    if ($JB_CB__Cache_ProfileItemid) {
-        return $JB_CB__Cache_ProfileItemid;
+    if ($KUNENA_CB__Cache_ProfileItemid) {
+        return $KUNENA_CB__Cache_ProfileItemid;
         }
     else {
         return null;
         }
     }
 
-function FB_fmodReplace($x, $y) { //function provided for older PHP versions which do not have an fmod function yet
+function KUNENA_fmodReplace($x, $y) { //function provided for older PHP versions which do not have an fmod function yet
     $i = floor($x / $y);
     // r = x - i * y
     return $x - $i * $y;
     }
 
-function FB_check_image_type(&$type) {
+function KUNENA_check_image_type(&$type) {
     switch ($type)
     {
         case 'jpeg':
@@ -357,7 +357,7 @@ class FBTools {
 
     function reCountBoards() {
         global $database;
-        include_once (JB_ABSSOURCESPATH . 'fb_db_iterator.class.php');
+        include_once (KUNENA_ABSSOURCESPATH . 'fb_db_iterator.class.php');
 
         //reset all stats to 0
         $database->setQuery("UPDATE `#__fb_categories` SET `id_last_msg`='0',`time_last_msg`='0',`numTopics`='0',`numPosts`='0'");
@@ -523,7 +523,7 @@ class FBTools {
 
         $options = array ();
         $options[] = mosHTML::makeOption('0', "&nbsp;");
-        $lists['parent'] = FB_GetAvailableForums(0, "", $options, $disabled);
+        $lists['parent'] = KUNENA_GetAvailableForums(0, "", $options, $disabled);
 
         echo $lists['parent'];
         }
@@ -633,7 +633,7 @@ class FBTools {
             } //end foreach
             FBTools::reCountBoards();
 
-            mosRedirect($return, _FB_BULKMSG_DELETED);
+            mosRedirect($return, _KUNENA_BULKMSG_DELETED);
         }
 
     function isModOrAdmin($id = 0) {
@@ -859,9 +859,9 @@ class fbForum
 		$this->_error = '';
 		if ($this->parent) {
 			if ($this->id == $this->parent):
-				$this->setError(_FB_FORUM_SAME_ERR);
+				$this->setError(_KUNENA_FORUM_SAME_ERR);
 			elseif ($this->isChild($this->parent)):
-				$this->setError(_FB_FORUM_OWNCHILD_ERR);
+				$this->setError(_KUNENA_FORUM_OWNCHILD_ERR);
 			endif;
 		}
 		return ($this->getError() == '');
@@ -877,12 +877,12 @@ class fbForum
 			$recurse = array();
 			while ($id) {
 				if (in_array($id, $recurse)) {
-					$this->setError(_FB_RECURSION);
+					$this->setError(_KUNENA_RECURSION);
 					return 0;
 				}
 				$recurse[] = $id;
 				if (!isset($list[$id])) {
-					$this->setError(_FB_FORUM_UNKNOWN_ERR);
+					$this->setError(_KUNENA_FORUM_UNKNOWN_ERR);
 					return 0;
 				}
 				$id = $list[$id]->parent;
@@ -999,7 +999,7 @@ function JJ_categoryParentList($catid, $action, $options = array ()) {
     return $parent;
     }
 
-function FB_GetAvailableForums($catid, $action, $options = array (), $disabled, $multiple = 0) {
+function KUNENA_GetAvailableForums($catid, $action, $options = array (), $disabled, $multiple = 0) {
     global $database;
     $list = JJ_categoryArray();
     $this_treename = '';
@@ -1022,10 +1022,10 @@ function FB_GetAvailableForums($catid, $action, $options = array (), $disabled, 
 
 	$tag_attribs = 'class="inputbox fbs" '.($multiple?' size="5" MULTIPLE ':' size="1" ') . ($disabled ? " disabled " : "");
 	if (FBTools::isJoomla15()) {
-    	$parent = JHTML::_('select.genericlist', $options, 'catid', $tag_attribs , 'value', 'text', $catid, 'FB_AvailableForums');
+    	$parent = JHTML::_('select.genericlist', $options, 'catid', $tag_attribs , 'value', 'text', $catid, 'KUNENA_AvailableForums');
 		}
     else {
-		$parent = mosHTML::selectList($options, 'catid', $tag_attribs . ' ID="FB_AvailableForums"' , 'value', 'text', $catid);
+		$parent = mosHTML::selectList($options, 'catid', $tag_attribs . ' ID="KUNENA_AvailableForums"' , 'value', 'text', $catid);
 		}
     return $parent;
     }
@@ -1082,12 +1082,12 @@ function generate_smilies() {
             $col = 0;
             reset ($rowset);
 
-            if (file_exists(JB_ABSPATH . '/template/default/plugin/emoticons/emoticons.js.php')) {
-                include (JB_ABSPATH . '/template/default/plugin/emoticons/emoticons.js.php');
+            if (file_exists(KUNENA_ABSPATH . '/template/default/plugin/emoticons/emoticons.js.php')) {
+                include (KUNENA_ABSPATH . '/template/default/plugin/emoticons/emoticons.js.php');
                 reset ($rowset);
                 }
             else {
-                die ("file is missing: " . JB_ABSPATH . '/template/default/plugin/emoticons/emoticons.js.php');
+                die ("file is missing: " . KUNENA_ABSPATH . '/template/default/plugin/emoticons/emoticons.js.php');
                 }
 
             $cur = 0;
@@ -1102,7 +1102,7 @@ function generate_smilies() {
                             }
 
                         echo '<td onclick="javascript:emo(\''
-                                 . $data['code'] . ' \')" style="cursor:pointer"><img class="btnImage" src="' . JB_URLEMOTIONSPATH . $data['location'] . '" border="0" alt="' . $data['code'] . ' " title="' . $data['code'] . ' " /></td>' . "\n";
+                                 . $data['code'] . ' \')" style="cursor:pointer"><img class="btnImage" src="' . KUNENA_URLEMOTIONSPATH . $data['location'] . '" border="0" alt="' . $data['code'] . ' " title="' . $data['code'] . ' " /></td>' . "\n";
 
                         $s_colspan = max($s_colspan, $col + 1);
 
@@ -1122,7 +1122,7 @@ function generate_smilies() {
                 }
 
             if ($num_smilies > $inline_rows * $inline_columns) {
-                echo "<tr><td class=\"moresmilies\" colspan=\"" . $inline_columns . "\" onclick=\"javascript:moreForumSmileys();\" style=\"cursor:pointer\"><b>" . _FB_EMOTICONS_MORE_SMILIES . "</b></td></tr>";
+                echo "<tr><td class=\"moresmilies\" colspan=\"" . $inline_columns . "\" onclick=\"javascript:moreForumSmileys();\" style=\"cursor:pointer\"><b>" . _KUNENA_EMOTICONS_MORE_SMILIES . "</b></td></tr>";
                 }
             }
         }
@@ -1149,12 +1149,12 @@ function fbGetArrayInts($name, $type = NULL) {
     // ToDo: return code plus string to decide concatenation.
     // array of time period chunks
     $chunks = array(
-    array(60 * 60 * 24 * 365 , _FB_DATE_YEAR, _FB_DATE_YEARS),
-    array(60 * 60 * 24 * 30 , _FB_DATE_MONTH, _FB_DATE_MONTHS),
-    array(60 * 60 * 24 * 7, _FB_DATE_WEEK, _FB_DATE_WEEKS),
-    array(60 * 60 * 24 , _FB_DATE_DAY, _FB_DATE_DAYS),
-    array(60 * 60 , _FB_DATE_HOUR, _FB_DATE_HOURS),
-    array(60 , _FB_DATE_MINUTE, _FB_DATE_MINUTES),
+    array(60 * 60 * 24 * 365 , _KUNENA_DATE_YEAR, _KUNENA_DATE_YEARS),
+    array(60 * 60 * 24 * 30 , _KUNENA_DATE_MONTH, _KUNENA_DATE_MONTHS),
+    array(60 * 60 * 24 * 7, _KUNENA_DATE_WEEK, _KUNENA_DATE_WEEKS),
+    array(60 * 60 * 24 , _KUNENA_DATE_DAY, _KUNENA_DATE_DAYS),
+    array(60 * 60 , _KUNENA_DATE_HOUR, _KUNENA_DATE_HOURS),
+    array(60 , _KUNENA_DATE_MINUTE, _KUNENA_DATE_MINUTES),
     );
 
     // $newer_date will equal false if we want to know the time elapsed between a date and the current time

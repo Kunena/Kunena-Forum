@@ -24,10 +24,10 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
         <tr>
             <th colspan = "6" align="left">
                 <div class = "fb_title_cover  fbm">
-                    <span class="fb_title fbl"><?php echo _FB_USERPROFILE_MESSAGES; ?></span>
+                    <span class="fb_title fbl"><?php echo _KUNENA_USERPROFILE_MESSAGES; ?></span>
                 </div>
 
-                <img id = "BoxSwitch_fbuserprofile__<?php echo $boardclass ;?>fbuserprofile_tbody" class = "hideshow" src = "<?php echo JB_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+                <img id = "BoxSwitch_fbuserprofile__<?php echo $boardclass ;?>fbuserprofile_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
         </tr>
     </thead>
 
@@ -37,16 +37,16 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
             </th>
 
-            <th class = "th-2 <?php echo $boardclass ;?>sectiontableheader"  align="left" width="44%"><?php echo _FB_USERPROFILE_TOPICS; ?>
+            <th class = "th-2 <?php echo $boardclass ;?>sectiontableheader"  align="left" width="44%"><?php echo _KUNENA_USERPROFILE_TOPICS; ?>
             </th>
 
-            <th class = "th-3 <?php echo $boardclass ;?>sectiontableheader" align="left" width="30%"><?php echo _FB_USERPROFILE_CATEGORIES; ?>
+            <th class = "th-3 <?php echo $boardclass ;?>sectiontableheader" align="left" width="30%"><?php echo _KUNENA_USERPROFILE_CATEGORIES; ?>
             </th>
 
-            <th class = "th-4 <?php echo $boardclass ;?>sectiontableheader" align="center" width="5%"><?php echo _FB_USERPROFILE_HITS; ?>
+            <th class = "th-4 <?php echo $boardclass ;?>sectiontableheader" align="center" width="5%"><?php echo _KUNENA_USERPROFILE_HITS; ?>
             </th>
 
-            <th class = "th-5 <?php echo $boardclass ;?>sectiontableheader"  align="left" width="20%"><?php echo _FB_USERPROFILE_DATE; ?>
+            <th class = "th-5 <?php echo $boardclass ;?>sectiontableheader"  align="left" width="20%"><?php echo _KUNENA_USERPROFILE_DATE; ?>
             </th>
 
             <th class = "th-6 <?php echo $boardclass ;?>sectiontableheader" align="center" width="1%">&nbsp;
@@ -57,14 +57,14 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
         <?php
         // Emotions
         $topic_emoticons = array ();
-        $topic_emoticons[0] = JB_URLEMOTIONSPATH . 'default.gif';
-        $topic_emoticons[1] = JB_URLEMOTIONSPATH . 'exclam.gif';
-        $topic_emoticons[2] = JB_URLEMOTIONSPATH . 'question.gif';
-        $topic_emoticons[3] = JB_URLEMOTIONSPATH . 'arrow.gif';
-        $topic_emoticons[4] = JB_URLEMOTIONSPATH . 'love.gif';
-        $topic_emoticons[5] = JB_URLEMOTIONSPATH . 'grin.gif';
-        $topic_emoticons[6] = JB_URLEMOTIONSPATH . 'shock.gif';
-        $topic_emoticons[7] = JB_URLEMOTIONSPATH . 'smile.gif';
+        $topic_emoticons[0] = KUNENA_URLEMOTIONSPATH . 'default.gif';
+        $topic_emoticons[1] = KUNENA_URLEMOTIONSPATH . 'exclam.gif';
+        $topic_emoticons[2] = KUNENA_URLEMOTIONSPATH . 'question.gif';
+        $topic_emoticons[3] = KUNENA_URLEMOTIONSPATH . 'arrow.gif';
+        $topic_emoticons[4] = KUNENA_URLEMOTIONSPATH . 'love.gif';
+        $topic_emoticons[5] = KUNENA_URLEMOTIONSPATH . 'grin.gif';
+        $topic_emoticons[6] = KUNENA_URLEMOTIONSPATH . 'shock.gif';
+        $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 
         //determine visitors allowable threads based on session
         //find group id
@@ -124,9 +124,9 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
                 if (!ISSET($item->created))
                     $item->created = "";
 
-                $fbURL = sefRelToAbs("index.php?option=com_kunena&amp;func=view".FB_FB_ITEMID_SUFFIX."&amp;catid=" . $item->catid . "&amp;id=" . $item->id . "#" . $item->id);
+                $fbURL = sefRelToAbs("index.php?option=com_kunena&amp;func=view".KUNENA_COMPONENT_ITEMID_SUFFIX."&amp;catid=" . $item->catid . "&amp;id=" . $item->id . "#" . $item->id);
 
-                $fbCatURL = sefRelToAbs("index.php?option=com_kunena".FB_FB_ITEMID_SUFFIX."&amp;func=showcat&amp;catid=" . $item->catid);
+                $fbCatURL = sefRelToAbs("index.php?option=com_kunena".KUNENA_COMPONENT_ITEMID_SUFFIX."&amp;func=showcat&amp;catid=" . $item->catid);
         ?>
 
             <tr class = "<?php echo ''.$boardclass.''. $tabclass[$k] . ''; ?> ">
@@ -157,7 +157,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
                 <td class = "td-6  fbm" align="center">
                     <a href = "<?php echo $fbURL; ?>"> <?php
     echo $fbIcons['latestpost'] ? '<img src="'
-             . JB_URLICONSPATH . '' . $fbIcons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />' : '  <img src="' . JB_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'; ?> </a>
+             . KUNENA_URLICONSPATH . '' . $fbIcons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'; ?> </a>
                 </td>
             </tr>
 
@@ -172,7 +172,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
                 <td colspan = "6" class = "<?php echo $boardclass ;?>profile-bottomnav" align="center">
                     <br/>
 
-                    <b><?php echo _FB_USERPROFILE_NOFORUMPOSTS; ?></b>
+                    <b><?php echo _KUNENA_USERPROFILE_NOFORUMPOSTS; ?></b>
 
                     <br/>
 
@@ -189,10 +189,10 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
                 <?php
                 // TODO: fxstein - Need to perform SEO cleanup
-                echo $pageNav->writePagesLinks("index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=$userid".FB_FB_ITEMID_SUFFIX);
+                echo $pageNav->writePagesLinks("index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=$userid".KUNENA_COMPONENT_ITEMID_SUFFIX);
                 ?>
 <?php
-echo $pageNav->writeLimitBox("index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=$userid" . FB_FB_ITEMID_SUFFIX . "");
+echo $pageNav->writeLimitBox("index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=$userid" . KUNENA_COMPONENT_ITEMID_SUFFIX . "");
 ?>
                 <br/>
 <?php echo $pageNav->writePagesCounter(); ?>

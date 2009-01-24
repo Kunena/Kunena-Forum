@@ -66,7 +66,7 @@ if ($annID > 0) {
                         <span class = "fb_title fbl"><?php echo $anntitle; ?></span>
                     </div>
 
-                    <img id = "BoxSwitch_announcements__announcements_tbody" class = "hideshow" src = "<?php echo JB_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+                    <img id = "BoxSwitch_announcements__announcements_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
                 </th>
             </tr>
         </thead>

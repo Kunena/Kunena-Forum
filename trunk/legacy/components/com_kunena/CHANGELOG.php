@@ -143,7 +143,7 @@ Kunena 1.0.3
  # itemid bugs, pagination error
  + added missed images on userlist and pm . And uhits field. userprofile fix, userlist fix.
  # missing com_ for com_kunena option text
- # SEF problem on menu links .. a new variable JB_LIVEURLREL is introduced for SEF calls
+ # SEF problem on menu links .. a new variable KUNENA_LIVEURLREL is introduced for SEF calls
  # forum top - forum bottom links now working
  + v1.0.1 release db changes added to installation and upgraded the sql files
 
@@ -151,7 +151,7 @@ Kunena 1.0.3
 14-May-2007 Aliyar FIRAT (greatpixels)
  ^ Change all css file and bof- to fb_ , Better css coding. All tempaltes should be updated!
  # Fix IE "No post" table show problem
- # mark all read FB_ITEMID_SUFFIX Fix
+ # mark all read KUNENA_ITEMID_SUFFIX Fix
  + Added linkable category images.
  # Announcement css and fix userprofile.php
 
@@ -159,7 +159,7 @@ Kunena 1.0.3
 10-May-2007 Danial Taherzadeh (danialt)
  ^ FB is moved to a class structure, Itemids and general path are defined there. Hence to avoid any extra DB calls and code, please use the constants defined in that file
  ^ All the unncessary mosGetParams where removed.
- ^ _JB_ renamed to _FB_
+ ^ _KUNENA_ renamed to _KUNENA_
  ^ Moved common functions to the class.Kunena.hp
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

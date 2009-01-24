@@ -57,37 +57,37 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
     $sender = $database->loadResult();
 
     if ($reason) {
-        $subject = _FB_REPORT_MSG . ":" . $reason;
+        $subject = _KUNENA_REPORT_MSG . ":" . $reason;
         }
     else {
-        $subject = _FB_REPORT_MSG . ":" . $row->subject;
+        $subject = _KUNENA_REPORT_MSG . ":" . $row->subject;
         }
 
-    $msglink = "index.php?option=com_kunena&amp;func=view&amp;catid=" . $row->catid . "&amp;id=" . $row->id . FB_FB_ITEMID_SUFFIX;
+    $msglink = "index.php?option=com_kunena&amp;func=view&amp;catid=" . $row->catid . "&amp;id=" . $row->id . KUNENA_COMPONENT_ITEMID_SUFFIX;
     $msglink = sefRelToAbs($msglink . '#' . $row->id);
 
-    $message = $sender . "" . _FB_REPORT_INTRO . "" . $reason . " ";
+    $message = $sender . "" . _KUNENA_REPORT_INTRO . "" . $reason . " ";
     $message .= "\n";
     $message .= "\n";
     $message .= "\n";
-    $message .= "" . _FB_REPORT_RSENDER . "" . $sender;
+    $message .= "" . _KUNENA_REPORT_RSENDER . "" . $sender;
     $message .= "\n";
-    $message .= "" . _FB_REPORT_RREASON . "" . $reason;
+    $message .= "" . _KUNENA_REPORT_RREASON . "" . $reason;
     $message .= "\n";
-    $message .= "" . _FB_REPORT_RMESSAGE . "" . $text;
-    $message .= "\n";
-    $message .= "\n";
-    $message .= "\n";
-    $message .= "\n";
-    $message .= "" . _FB_REPORT_POST_POSTER . "" . $baduser;
-    $message .= "\n";
-    $message .= "" . _FB_REPORT_POST_SUBJECT . "" . $row->subject;
-    $message .= "\n";
-    $message .= "" . _FB_REPORT_POST_MESSAGE . "" . $row->msg_text;
+    $message .= "" . _KUNENA_REPORT_RMESSAGE . "" . $text;
     $message .= "\n";
     $message .= "\n";
     $message .= "\n";
-    $message .= "" . _FB_REPORT_POST_LINK . "" . $msglink;
+    $message .= "\n";
+    $message .= "" . _KUNENA_REPORT_POST_POSTER . "" . $baduser;
+    $message .= "\n";
+    $message .= "" . _KUNENA_REPORT_POST_SUBJECT . "" . $row->subject;
+    $message .= "\n";
+    $message .= "" . _KUNENA_REPORT_POST_MESSAGE . "" . $row->msg_text;
+    $message .= "\n";
+    $message .= "\n";
+    $message .= "\n";
+    $message .= "" . _KUNENA_REPORT_POST_LINK . "" . $msglink;
 
     //get category moderators
     $database->setQuery("SELECT userid FROM #__fb_moderation WHERE catid={$row->catid}");
@@ -113,13 +113,13 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
             break;
     }
 
-    echo '<div align="center">' . _FB_REPORT_SUCCESS . '<br /><br />';
-    echo '<a href="' . sefRelToAbs(JB_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id) . '#' . $msg_id . '">' . _POST_SUCCESS_VIEW . '</a><br />';
-    echo '<a href="' . sefRelToAbs(JB_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $catid) . '">' . _POST_SUCCESS_FORUM . '</a><br />';
+    echo '<div align="center">' . _KUNENA_REPORT_SUCCESS . '<br /><br />';
+    echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id) . '#' . $msg_id . '">' . _POST_SUCCESS_VIEW . '</a><br />';
+    echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $catid) . '">' . _POST_SUCCESS_FORUM . '</a><br />';
     echo '</div>';
 ?>
      <script language = "javascript">
-     setTimeout("location='<?php echo sefRelToAbs(JB_LIVEURLREL.'&func=view&catid='.$catid.'&id='.$msg_id).'#'.$msg_id;?>'", 3500);
+     setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&func=view&catid='.$catid.'&id='.$msg_id).'#'.$msg_id;?>'", 3500);
      </script>
 <?php
 }
@@ -187,7 +187,7 @@ function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
 function ReportForm($msg_id, $catid) {
     global $my, $fbConfig;
 
-    $redirect = 'index.php?option=com_kunena&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id . '&amp;Itemid=' . FB_FB_ITEMID . '#' . $msg_id;
+    $redirect = 'index.php?option=com_kunena&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id . '&amp;Itemid=' . KUNENA_COMPONENT_ITEMID . '#' . $msg_id;
 
     //$redirect = sefRelToAbs($redirect);
     if (!$my->id) {
@@ -211,7 +211,7 @@ function ReportForm($msg_id, $catid) {
                             <tr>
                                 <th>
                                     <div class = "fb_title_cover">
-                                        <span class = "fb_title"><?php echo _FB_COM_A_REPORT ?></span>
+                                        <span class = "fb_title"><?php echo _KUNENA_COM_A_REPORT ?></span>
                                     </div>
                             </tr>
                         </thead>
@@ -223,7 +223,7 @@ function ReportForm($msg_id, $catid) {
                                         <table width = "100%" border = "0">
                                             <tr>
                                                 <td width = "10%">
-<?php echo _FB_REPORT_REASON ?>:
+<?php echo _KUNENA_REPORT_REASON ?>:
                                                 </td>
 
                                                 <td>
@@ -233,7 +233,7 @@ function ReportForm($msg_id, $catid) {
 
                                             <tr>
                                                 <td colspan = "2">
-<?php echo _FB_REPORT_MESSAGE ?>:
+<?php echo _KUNENA_REPORT_MESSAGE ?>:
                                                 </td>
                                             </tr>
 
@@ -250,7 +250,7 @@ function ReportForm($msg_id, $catid) {
                                         <input type = "hidden" name = "msg_id" value = "<?php echo $msg_id;?>"/>
                                         <input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
                                         <input type = "hidden" name = "reporter" value = "<?php echo $my->id;?>"/>
-                                        <input type = "submit" name = "Submit" value = "<?php echo _FB_REPORT_SEND ?>"/>
+                                        <input type = "submit" name = "Submit" value = "<?php echo _KUNENA_REPORT_SEND ?>"/>
                                     </form>
                                 </td>
                             </tr>
@@ -281,6 +281,6 @@ function SendClexusPM($reporter, $subject, $message, $msglink, $mods, $admins) {
         $database->query();
         }
 
-    mosErrorAlert('' . _FB_REPORT_SUCCESS . '', 'window.history.go(-2);');
+    mosErrorAlert('' . _KUNENA_REPORT_SUCCESS . '', 'window.history.go(-2);');
     }
 ?>

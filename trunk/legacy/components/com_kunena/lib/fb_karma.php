@@ -58,11 +58,11 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
 							    $database->query() or trigger_dberror("Unable to update karma.");
 							    $database->setQuery('UPDATE #__fb_users SET karma=karma+1 WHERE userid=' . $userid . '');
 							    $database->query() or trigger_dberror("Unable to update karma.");
-							    echo _KARMA_INCREASED . '<br /> <a href="' . sefRelToAbs(JB_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
+							    echo _KARMA_INCREASED . '<br /> <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
                 ?>
 
                             <script language = "javascript">
-                                setTimeout("location='<?php echo sefRelToAbs(JB_LIVEURLREL.'&func=view&catid='.$catid.'&id='.$pid); ?>'", 3500);
+                                setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&func=view&catid='.$catid.'&id='.$pid); ?>'", 3500);
                             </script>
 
                 <?php
@@ -73,11 +73,11 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                                 $database->query() or trigger_dberror("Unable to update karma.");
                                 $database->setQuery('UPDATE #__fb_users SET karma=karma-1 WHERE userid=' . $userid . '');
                                 $database->query() or trigger_dberror("Unable to update karma.");
-                                echo _KARMA_DECREASED . '<br /> <a href="' . sefRelToAbs(JB_LIVEURLREL. '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
+                                echo _KARMA_DECREASED . '<br /> <a href="' . sefRelToAbs(KUNENA_LIVEURLREL. '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
                 ?>
 
                             <script language = "javascript">
-                                setTimeout("location='<?php echo sefRelToAbs(JB_LIVEURLREL.'&func=view&catid='.$catid.'&id='.$pid); ?>'", 3500);
+                                setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&func=view&catid='.$catid.'&id='.$pid); ?>'", 3500);
                             </script>
 
                 <?php
@@ -90,7 +90,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                             }
                         }
                         else
-                            echo _KARMA_WAIT . '<br /> ' . _KARMA_BACK . ' <a href="' . sefRelToAbs(JB_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
+                            echo _KARMA_WAIT . '<br /> ' . _KARMA_BACK . ' <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
                     }
                     else if ($my->id == $userid) // In case the user tries modifing his own karma by changing the userid from the URL...
                     {
@@ -98,14 +98,14 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                         {
                             $database->setQuery('UPDATE #__fb_users SET karma=karma-10, karma_time=' . $time . ' WHERE userid=' . $my->id . '');
                             $database->query() or trigger_dberror("Unable to update karma.");
-							echo _KARMA_SELF_INCREASE . '<br />' . _KARMA_BACK . ' <a href="' . sefRelToAbs(JB_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
+							echo _KARMA_SELF_INCREASE . '<br />' . _KARMA_BACK . ' <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
                         }
 
                         if ($do == "decrease") // Stop him from decreasing his karma but still update karma_time
                         {
                             $database->setQuery('UPDATE #__fb_users SET karma_time=' . $time . ' WHERE userid=' . $my->id . '');
                             $database->query() or trigger_dberror("Unable to update karma.");
-                            echo _KARMA_SELF_DECREASE . '<br /> ' . _KARMA_BACK . ' <a href="' . sefRelToAbs(JB_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
+                            echo _KARMA_SELF_DECREASE . '<br /> ' . _KARMA_BACK . ' <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
                         }
                     }
                 }

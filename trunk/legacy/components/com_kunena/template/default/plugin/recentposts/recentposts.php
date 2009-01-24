@@ -53,14 +53,14 @@ $tooltips_enable = "1";
 $show_hits = $fbConfig->latestshowhits;
 
 $topic_emoticons = array ();
-$topic_emoticons[0] = JB_URLEMOTIONSPATH . 'default.gif';
-$topic_emoticons[1] = JB_URLEMOTIONSPATH . 'exclam.gif';
-$topic_emoticons[2] = JB_URLEMOTIONSPATH . 'question.gif';
-$topic_emoticons[3] = JB_URLEMOTIONSPATH . 'arrow.gif';
-$topic_emoticons[4] = JB_URLEMOTIONSPATH . 'love.gif';
-$topic_emoticons[5] = JB_URLEMOTIONSPATH . 'grin.gif';
-$topic_emoticons[6] = JB_URLEMOTIONSPATH . 'shock.gif';
-$topic_emoticons[7] = JB_URLEMOTIONSPATH . 'smile.gif';
+$topic_emoticons[0] = KUNENA_URLEMOTIONSPATH . 'default.gif';
+$topic_emoticons[1] = KUNENA_URLEMOTIONSPATH . 'exclam.gif';
+$topic_emoticons[2] = KUNENA_URLEMOTIONSPATH . 'question.gif';
+$topic_emoticons[3] = KUNENA_URLEMOTIONSPATH . 'arrow.gif';
+$topic_emoticons[4] = KUNENA_URLEMOTIONSPATH . 'love.gif';
+$topic_emoticons[5] = KUNENA_URLEMOTIONSPATH . 'grin.gif';
+$topic_emoticons[6] = KUNENA_URLEMOTIONSPATH . 'shock.gif';
+$topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
@@ -75,7 +75,7 @@ $topic_emoticons[7] = JB_URLEMOTIONSPATH . 'smile.gif';
                     <span class = "fb_title fbl"><?php echo _RECENT_RECENT_POSTS; ?></span>
                 </div>
 
-                <img id = "BoxSwitch_recentposts__recentposts_tbody" class = "hideshow" src = "<?php echo JB_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+                <img id = "BoxSwitch_recentposts__recentposts_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
             </th>
         </tr>
     </thead>
@@ -96,7 +96,7 @@ $topic_emoticons[7] = JB_URLEMOTIONSPATH . 'smile.gif';
 					$sq2 = "SELECT msg2.* FROM #__fb_messages msg2"
 						. " WHERE msg2.hold = 0 AND moved=0 AND msg2.catid IN ($fbSession->allowed) $sq1";
 				}
-				$query = " SELECT u.id, IFNULL(u.username, '"._FB_GUEST."') AS username, IFNULL(u.name,'"._FB_GUEST."') AS name,"
+				$query = " SELECT u.id, IFNULL(u.username, '"._KUNENA_GUEST."') AS username, IFNULL(u.name,'"._KUNENA_GUEST."') AS name,"
 					. " msg.subject, msg.id AS fbid, msg.catid, from_unixtime(msg.time) AS date,"
 					. " thread.hits AS hits, msg.locked, msg.topic_emoticon, msg.parent, cat.name AS catname"
 					. " FROM ($sq2) msg"
@@ -172,7 +172,7 @@ $topic_emoticons[7] = JB_URLEMOTIONSPATH . 'smile.gif';
 
                     $overlib .= "<tr><td valign=top>" . ucfirst(_GEN_LOCK) . "</td><td>$row_lock</td></tr>";
                     $overlib .= "</table>";
-                    $link = sefRelToAbs(JB_LIVEURLREL . "&amp;func=view&amp;id=$row->fbid" . "&amp;catid=$row->catid#$row->fbid");
+                    $link = sefRelToAbs(KUNENA_LIVEURLREL . "&amp;func=view&amp;id=$row->fbid" . "&amp;catid=$row->catid#$row->fbid");
 
                     $tooltips = '';
 
@@ -187,7 +187,7 @@ $topic_emoticons[7] = JB_URLEMOTIONSPATH . 'smile.gif';
                     <tr class = "<?php echo $boardclass ;?>sectiontableentry<?php echo "$k"; ?>">
                 <?php
                         echo "<td class=\"td-1\"  align=\"center\" >";
-                        //echo '<img src="' . JB_URLEMOTIONSPATH  . 'resultset_next.gif"  border="0"   alt=" " />';
+                        //echo '<img src="' . KUNENA_URLEMOTIONSPATH  . 'resultset_next.gif"  border="0"   alt=" " />';
                         echo "<img src=\"" . $topic_emoticons[$row->topic_emoticon] . "\" alt=\"emo\" />";
                         echo "</td>";
                         echo "<td class=\"td-2 fbm\"  align=\"left\" >";
@@ -203,7 +203,7 @@ $topic_emoticons[7] = JB_URLEMOTIONSPATH . 'smile.gif';
                             case '1':
                                 echo "<td  class=\"td-3 fbm\"  align=\"center\"  ><a href=\"";
 
-                                echo sefRelToAbs(FB_PROFILE_LINK_SUFFIX . "" . $row->id);
+                                echo sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX . "" . $row->id);
                                 echo "\">";
                                 echo stripslashes($row->username);
                                 echo "</a></td>";
@@ -212,7 +212,7 @@ $topic_emoticons[7] = JB_URLEMOTIONSPATH . 'smile.gif';
                             case '2':
                                 echo "<td  class=\"td-3 fbm\"  align=\"center\"  ><a href=\"";
 
-                                echo sefRelToAbs(FB_PROFILE_LINK_SUFFIX . "" . $row->id);
+                                echo sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX . "" . $row->id);
                                 echo "\">";
                                 echo stripslashes($row->name);
                                 echo "</a></td>";

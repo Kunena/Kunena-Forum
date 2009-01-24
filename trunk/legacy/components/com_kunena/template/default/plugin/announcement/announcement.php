@@ -30,11 +30,11 @@ else {
 
 $is_user = (strtolower($my->usertype) <> '');
 
-$showlink = sefRelToAbs('index.php?option=com_kunena&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=show');
-$addlink = sefRelToAbs('index.php?option=com_kunena&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=add');
-$readlink = 'index.php?option=com_kunena&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=read&amp;id=';
-$editlink = 'index.php?option=com_kunena&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=edit&amp;id=';
-$deletelink = 'index.php?option=com_kunena&amp;func=announcement' . FB_FB_ITEMID_SUFFIX . '&amp;do=delete&amp;id=';
+$showlink = sefRelToAbs('index.php?option=com_kunena&amp;func=announcement' . KUNENA_COMPONENT_ITEMID_SUFFIX . '&amp;do=show');
+$addlink = sefRelToAbs('index.php?option=com_kunena&amp;func=announcement' . KUNENA_COMPONENT_ITEMID_SUFFIX . '&amp;do=add');
+$readlink = 'index.php?option=com_kunena&amp;func=announcement' . KUNENA_COMPONENT_ITEMID_SUFFIX . '&amp;do=read&amp;id=';
+$editlink = 'index.php?option=com_kunena&amp;func=announcement' . KUNENA_COMPONENT_ITEMID_SUFFIX . '&amp;do=edit&amp;id=';
+$deletelink = 'index.php?option=com_kunena&amp;func=announcement' . KUNENA_COMPONENT_ITEMID_SUFFIX . '&amp;do=delete&amp;id=';
 
 // BEGIN: READ ANN
 if ($do == "read") {
@@ -265,7 +265,7 @@ if ($is_editor) {
     <tbody id = "announcement_tbody">
         <tr>
             <td class = "fb_anndesc" valign="top">
-                <form action = "<?php echo sefRelToAbs(JB_LIVEURLREL.'&amp;func=announcement&amp;do=doadd'); ?>" method = "post" name = "addform">
+                <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=announcement&amp;do=doadd'); ?>" method = "post" name = "addform">
                     <strong><?php echo _ANN_TITLE; ?>:</strong>
 
                     <br/>
@@ -420,7 +420,7 @@ if ($is_editor) {
     <tbody id = "announcement_tbody">
         <tr>
             <td class = "fb_anndesc" valign="top">
-                <form action = "<?php echo sefRelToAbs(JB_LIVEURLREL.'&amp;func=announcement&amp;do=doedit'); ?>" method = "post" name = "editform" onSubmit = "return validate_form ( );">
+                <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=announcement&amp;do=doedit'); ?>" method = "post" name = "editform" onSubmit = "return validate_form ( );">
                     <strong>#<?php echo $annID; ?> : <?php echo $anntitle; ?></strong>
 
                     <br/>

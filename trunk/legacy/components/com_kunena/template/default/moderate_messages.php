@@ -34,18 +34,18 @@ switch ($action)
         switch (jbDeletePosts($database, $cid))
         {
             case -1:
-                mosRedirect(JB_LIVEURL . 'func=review&amp;catid=' . $catid, "ERROR: The post has been deleted but the text could not be deleted\n Check the #__fb_messages_text table for mesid IN " . explode(',', $cid));
+                mosRedirect(KUNENA_LIVEURL . 'func=review&amp;catid=' . $catid, "ERROR: The post has been deleted but the text could not be deleted\n Check the #__fb_messages_text table for mesid IN " . explode(',', $cid));
 
                 break;
 
             case 0:
-                mosRedirect(JB_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_DELETE_ERROR);
+                mosRedirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_DELETE_ERROR);
 
                 break;
 
             case 1:
             default:
-                mosRedirect(JB_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_DELETE_SUCCESS);
+                mosRedirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_DELETE_SUCCESS);
 
                 break;
         }
@@ -56,13 +56,13 @@ switch ($action)
         switch (jbApprovePosts($database, $cid))
         {
             case 0:
-                mosRedirect(JB_LIVEURL . 'amp;func=review&amp;catid=' . $catid, _MODERATION_APPROVE_ERROR);
+                mosRedirect(KUNENA_LIVEURL . 'amp;func=review&amp;catid=' . $catid, _MODERATION_APPROVE_ERROR);
 
                 break;
 
             default:
             case 1:
-                mosRedirect(JB_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_APPROVE_SUCCESS);
+                mosRedirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_APPROVE_SUCCESS);
 
                 break;
         }
@@ -96,7 +96,7 @@ switch ($action)
 function jbListMessages($allMes, $catid)
 {
     global $fbConfig;
-    echo '<form action="' . sefRelToAbs(JB_LIVEURLREL . '&amp;func=review') . '" name="moderation" method="post">';
+    echo '<form action="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=review') . '" name="moderation" method="post">';
 ?>
 
     <script>

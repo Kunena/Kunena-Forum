@@ -23,19 +23,19 @@ if ($my->id != "" && $my->id != 0)
 
 /* if ($my->id < 1)
 {
-   mosRedirect("index.php?option=com_kunena" . FB_FB_ITEMID_SUFFIX, "Please login first");
+   mosRedirect("index.php?option=com_kunena" . KUNENA_COMPONENT_ITEMID_SUFFIX, "Please login first");
 }
 
 */
 
 //we got a valid and logged on user so we can go on
-if (file_exists(JB_ABSTMPLTPATH . '/fb_pathway.php'))
+if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php'))
 {
-    require_once (JB_ABSTMPLTPATH . '/fb_pathway.php');
+    require_once (KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
 }
 else
 {
-    require_once (JB_ABSPATH . '/template/default/fb_pathway.php');
+    require_once (KUNENA_ABSPATH . '/template/default/fb_pathway.php');
 }
 
 if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
@@ -118,13 +118,13 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
         <td class = "fb_myprofile_left" valign = "top"  width="20%">
         <!-- B:My Profile Left -->
             <?php
-            if (file_exists(JB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_menu.php'))
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_menu.php'))
             {
-                include (JB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_menu.php');
+                include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_menu.php');
             }
             else
             {
-                include (JB_ABSPATH . '/template/default/plugin/myprofile/myprofile_menu.php');
+                include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_menu.php');
             }
             ?>
 
@@ -145,13 +145,13 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                 default:
                     // B: Summary
 
-                    if (file_exists(JB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_summary.php'))
+                    if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_summary.php'))
                     {
-                        include (JB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_summary.php');
+                        include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_summary.php');
                     }
                     else
                     {
-                        include (JB_ABSPATH . '/template/default/plugin/myprofile/myprofile_summary.php');
+                        include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_summary.php');
                     }
 
                     // F: Summary
@@ -161,13 +161,13 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
 
                     // B: Show Posts
 
-                    if (file_exists(JB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_msg.php'))
+                    if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_msg.php'))
                     {
-                        include (JB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_msg.php');
+                        include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_msg.php');
                     }
                     else
                     {
-                        include (JB_ABSPATH . '/template/default/plugin/myprofile/myprofile_msg.php');
+                        include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_msg.php');
                     }
 
                     // F: Show Posts
@@ -178,13 +178,13 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                     // B: Settings
                     if (!$fbConfig->cb_profile)
                     {
-                        if (file_exists(JB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar.php'))
+                        if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar.php'))
                         {
-                            include (JB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar.php');
+                            include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar.php');
                         }
                         else
                         {
-                            include (JB_ABSPATH . '/template/default/plugin/myprofile/myprofile_avatar.php');
+                            include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_avatar.php');
                         }
                     }
 
@@ -213,11 +213,11 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                         echo _USER_PROFILE_UPDATED . "<br /><br />";
                     }
 
-                    echo _USER_RETURN_A . ' <a href="' . sefRelToAbs(JB_LIVEURLREL . "&amp;func=uploadavatar") . '">' . _USER_RETURN_B . "</a><br /><br />";
+                    echo _USER_RETURN_A . ' <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . "&amp;func=uploadavatar") . '">' . _USER_RETURN_B . "</a><br /><br />";
             ?>
 
                 <script language = "javascript">
-                    setTimeout("location='<?php echo sefRelToAbs(JB_LIVEURLREL . '&func=uploadavatar');?>'", 3500);
+                    setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&func=uploadavatar');?>'", 3500);
                 </script>
 
                 <?php
@@ -227,13 +227,13 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                     // B: Settings
                     if (!$fbConfig->cb_profile)
                     {
-                        if (file_exists(JB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_set.php'))
+                        if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_set.php'))
                         {
-                            include (JB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_set.php');
+                            include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_set.php');
                         }
                         else
                         {
-                            include (JB_ABSPATH . '/template/default/plugin/myprofile/myprofile_set.php');
+                            include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_set.php');
                         }
                     }
 
@@ -260,11 +260,11 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                         echo _USER_PROFILE_UPDATED . "<br /><br />";
                     }
 
-                    echo _USER_RETURN_A . ' <a href="' . sefRelToAbs(JB_LIVEURLREL . "&amp;func=myprofile&amp;do=showset") . '">' . _USER_RETURN_B . "</a><br /><br />";
+                    echo _USER_RETURN_A . ' <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . "&amp;func=myprofile&amp;do=showset") . '">' . _USER_RETURN_B . "</a><br /><br />";
                 ?>
 
                 <script language = "javascript">
-                    setTimeout("location='<?php echo sefRelToAbs(JB_LIVEURLREL . '&func=myprofile&do=showset');?>'", 3500);
+                    setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&func=myprofile&do=showset');?>'", 3500);
                 </script>
 
                 <?php
@@ -280,23 +280,23 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                     $ulists["day"] = $bd[2];
 
                     $genders[] = mosHTML::makeOption("", "");
-                    $genders[] = mosHTML::makeOption("1", _FB_MYPROFILE_MALE);
-                    $genders[] = mosHTML::makeOption("2", _FB_MYPROFILE_FEMALE);
+                    $genders[] = mosHTML::makeOption("1", _KUNENA_MYPROFILE_MALE);
+                    $genders[] = mosHTML::makeOption("2", _KUNENA_MYPROFILE_FEMALE);
 
                     $ulists["gender"] = mosHTML::selectList( $genders, 'gender', 'class="inputbox"', 'value', 'text', $userinfo->gender );
 
 
                     if (!$fbConfig->cb_profile)
                     {
-                        include (JB_ABSSOURCESPATH . 'fb_bb.js.php');
+                        include (KUNENA_ABSSOURCESPATH . 'fb_bb.js.php');
 
-                        if (file_exists(JB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_profile_info.php'))
+                        if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_profile_info.php'))
                         {
-                            include (JB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_profile_info.php');
+                            include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_profile_info.php');
                         }
                         else
                         {
-                            include (JB_ABSPATH . '/template/default/plugin/myprofile/myprofile_profile_info.php');
+                            include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_profile_info.php');
                         }
                     }
 
@@ -355,13 +355,13 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
         exit();
     }
 
-                        echo _USER_RETURN_A . ' <a href="' . sefRelToAbs(JB_LIVEURLREL . "&amp;func=myprofile&amp;do=showsig") . '">' . _USER_RETURN_B . "</a><br /><br />";
+                        echo _USER_RETURN_A . ' <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . "&amp;func=myprofile&amp;do=showsig") . '">' . _USER_RETURN_B . "</a><br /><br />";
                 ?>
 
 
 
                 <script language = "javascript">
-                    setTimeout("location='<?php echo sefRelToAbs(JB_LIVEURLREL . '&func=myprofile&do=profileinfo');?>'", 3500);
+                    setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&func=myprofile&do=profileinfo');?>'", 3500);
                 </script>
 <?php
 
@@ -390,13 +390,13 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                     	check_dberror("Unable to load subscriptions.");
                     $csubslist = count($subslist);
 
-                    if (file_exists(JB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_subs.php'))
+                    if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_subs.php'))
                     {
-                        include (JB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_subs.php');
+                        include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_subs.php');
                     }
                     else
                     {
-                        include (JB_ABSPATH . '/template/default/plugin/myprofile/myprofile_subs.php');
+                        include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_subs.php');
                     }
 
                     break;
@@ -424,13 +424,13 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                     	check_dberror("Unable to load favorites.");
                     $cfavslist = count($favslist);
 
-                    if (file_exists(JB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_fav.php'))
+                    if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_fav.php'))
                     {
-                        include (JB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_fav.php');
+                        include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_fav.php');
                     }
                     else
                     {
-                        include (JB_ABSPATH . '/template/default/plugin/myprofile/myprofile_fav.php');
+                        include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_fav.php');
                     }
 
                     break;
@@ -446,13 +446,13 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                         $cmodslist = count($modslist);
                     }
 
-                    if (file_exists(JB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_mod.php'))
+                    if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_mod.php'))
                     {
-                        include (JB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_mod.php');
+                        include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_mod.php');
                     }
                     else
                     {
-                        include (JB_ABSPATH . '/template/default/plugin/myprofile/myprofile_mod.php');
+                        include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_mod.php');
                     }
 
                     break;
@@ -476,22 +476,22 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
 
                     if ($fbConfig->cb_profile)
                     {
-                        echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='" . FB_CB_ITEMID . "'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
+                        echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='" . KUNENA_CB_ITEMID . "'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
                 ?>
 
                 <script language = "javascript">
-                    setTimeout("location='index.php?option=com_comprofiler<?php echo FB_CB_ITEMID_SUFFIX; ?>&tab=getForumTab'", 3500);
+                    setTimeout("location='index.php?option=com_comprofiler<?php echo KUNENA_CB_ITEMID_SUFFIX; ?>&tab=getForumTab'", 3500);
                 </script>
 
             <?php
                     }
                     else
                     {
-                        echo _USER_RETURN_A . " <a href=\"" . sefRelToAbs(JB_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub') . "\">" . _USER_RETURN_B . "</a><br /><br />";
+                        echo _USER_RETURN_A . " <a href=\"" . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub') . "\">" . _USER_RETURN_B . "</a><br /><br />";
             ?>
 
                     <script language = "javascript">
-                        setTimeout("location='<?php echo sefRelToAbs(JB_LIVEURLREL . '&func=myprofile&do=showsub');?>'", 3500);
+                        setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&func=myprofile&do=showsub');?>'", 3500);
                     </script>
 
             <?php
@@ -512,22 +512,22 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
 						}
 
 						if ($fbConfig->cb_profile) {
-							echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='".FB_CB_ITEMID."'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
+							echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='".KUNENA_CB_ITEMID."'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
 					?>
 
 						<script language = "javascript">
-							setTimeout("location='index.php?option=com_comprofiler<?php echo FB_CB_ITEMID_SUFFIX; ?>&tab=getForumTab'", 3500);
+							setTimeout("location='index.php?option=com_comprofiler<?php echo KUNENA_CB_ITEMID_SUFFIX; ?>&tab=getForumTab'", 3500);
 						</script>
                         <a href="javascript:history.go(-1)"><?php echo _BACK ;?></a>
 
 				<?php
 						}
 						else {
-							echo _USER_RETURN_A . " <a href=\"". sefRelToAbs(JB_LIVEURLREL . '&amp;func=myprofile&amp;do=show')."\">" . _USER_RETURN_B . "</a><br /><br />";
+							echo _USER_RETURN_A . " <a href=\"". sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show')."\">" . _USER_RETURN_B . "</a><br /><br />";
 				?>
 
 						<script language = "javascript">
-						setTimeout("location='<?php echo sefRelToAbs(JB_LIVEURLREL . '&func=myprofile&do=show');?>'", 3500);
+						setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&func=myprofile&do=show');?>'", 3500);
 						</script>
                         <a href="javascript:history.go(-1)"><?php echo _BACK ;?></a>
 
@@ -559,22 +559,22 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
 
                     if ($fbConfig->cb_profile)
                     {
-                        echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler" . FB_CB_ITEMID_SUFFIX . "&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
+                        echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler" . KUNENA_CB_ITEMID_SUFFIX . "&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
             ?>
 
                 <script language = "javascript">
-                    setTimeout("location='index.php?option=com_comprofiler".FB_CB_ITEMID_SUFFIX."&tab=getForumTab'", 3500);
+                    setTimeout("location='index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&tab=getForumTab'", 3500);
                 </script>
 
             <?php
                     }
                     else
                     {
-                        echo _USER_RETURN_A . " <a href=\"" . sefRelToAbs(JB_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav') . "\">" . _USER_RETURN_B . "</a><br /><br />";
+                        echo _USER_RETURN_A . " <a href=\"" . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav') . "\">" . _USER_RETURN_B . "</a><br /><br />";
             ?>
 
                     <script language = "javascript">
-                        setTimeout("location='<?php echo sefRelToAbs(JB_LIVEURLREL . '&func=myprofile&do=showfav');?>'", 3500);
+                        setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&func=myprofile&do=showfav');?>'", 3500);
                     </script>
 
                         <?php // B: unfavoriteall
@@ -596,11 +596,11 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
 						}
 
 						if ($fbConfig->cb_profile) {
-							echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler".FB_CB_ITEMID_SUFFIX."&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
+							echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
 				?>
 
 						<script language = "javascript">
-							setTimeout("location='index.php?option=com_comprofiler".FB_CB_ITEMID_SUFFIX."&tab=getForumTab'", 3500);
+							setTimeout("location='index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&tab=getForumTab'", 3500);
 						</script>
                         <a href="javascript:history.go(-1)"><?php echo _BACK ;?></a>
 
@@ -612,7 +612,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
 					<a href="javascript:history.go(-1)"><?php echo _BACK ;?></a>
 
 						<script language = "javascript">
-							   setTimeout("location='<?php echo sefRelToAbs(JB_LIVEURLREL . '&func=myprofile&do=show');?>'", 3500);
+							   setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&func=myprofile&do=show');?>'", 3500);
 						</script>
 
                    <?php
@@ -653,13 +653,13 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                     $file = $mainframe->getPath('com_xml', 'com_users');
                     $params = &new mosUserParameters($row->params, $file, 'component');
 
-                    if (file_exists(JB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_userdetails_form.php'))
+                    if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_userdetails_form.php'))
                     {
-                        include (JB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_userdetails_form.php');
+                        include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_userdetails_form.php');
                     }
                     else
                     {
-                        include (JB_ABSPATH . '/template/default/plugin/myprofile/myprofile_userdetails_form.php');
+                        include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_userdetails_form.php');
                     }
 
                     break;
@@ -772,7 +772,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                         $database->query();
                     }
 
-                    mosRedirect('index.php?option=com_kunena&amp;func=myprofile' . FB_FB_ITEMID_SUFFIX, _FB_USER_DETAILS_SAVE);
+                    mosRedirect('index.php?option=com_kunena&amp;func=myprofile' . KUNENA_COMPONENT_ITEMID_SUFFIX, _KUNENA_USER_DETAILS_SAVE);
                     break;
             }
             ?>
@@ -805,7 +805,7 @@ else
                 //(JJ) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump)
                 {
-                    require_once (JB_ABSSOURCESPATH . 'fb_forumjump.php');
+                    require_once (KUNENA_ABSSOURCESPATH . 'fb_forumjump.php');
                 }
                 ?>
             </th>

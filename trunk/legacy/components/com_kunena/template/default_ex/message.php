@@ -44,7 +44,7 @@ $database->loadObject($user);
                     <tr>
                         <td align = "left">
                             <?php
-                            $msg_time_since = _FB_TIME_SINCE;
+                            $msg_time_since = _KUNENA_TIME_SINCE;
                             $msg_time_since = str_replace('%time%', time_since($fmessage->time , FBTools::fbGetInternalTime()), $msg_time_since);
                             ?>
                             <span class = "msgtitle"><?php echo $msg_subject; ?> </span> <span class = "msgdate" title="<?php echo $msg_date; ?>"><?php echo $msg_time_since; ?></span>
@@ -92,7 +92,7 @@ $database->loadObject($user);
                                     $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? stripslashes($resubject) : _POST_RE . stripslashes($resubject);
                                     ?>
 
-                            <form action = "<?php echo sefRelToAbs(JB_LIVEURLREL. '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
+                            <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL. '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
                                 <input type = "hidden" name = "parentid" value = "<?php echo $msg_id;?>"/>
 
                                 <input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
@@ -112,7 +112,7 @@ $database->loadObject($user);
                                  <?php
 								// Begin captcha . Thanks Adeptus
 								if ($fbConfig->captcha && $my->id < 1) { ?>
-								<?php echo _FB_CAPDESC.'&nbsp;'?>
+								<?php echo _KUNENA_CAPDESC.'&nbsp;'?>
 								<input name="txtNumber" type="text" id="txtNumber" value="" style="vertical-align:middle" size="10">&nbsp;
 								<img src="index2.php?option=com_kunena&func=showcaptcha" alt="" /><br />
 								<?php
@@ -122,9 +122,9 @@ $database->loadObject($user);
 
                                 <input type = "submit" class = "fb_qm_btn" name = "submit" value = "<?php echo _GEN_CONTINUE;?>"/>
 
-                                <input type = "button" class = "fb_qm_btn fb_qm_cncl_btn" id = "cancel__<?php echo $msg_id; ?>" name = "cancel" value = "<?php echo _FB_CANCEL;?>"/>
+                                <input type = "button" class = "fb_qm_btn fb_qm_cncl_btn" id = "cancel__<?php echo $msg_id; ?>" name = "cancel" value = "<?php echo _KUNENA_CANCEL;?>"/>
 
-                                <small><em><?php echo _FB_QMESSAGE_NOTE?></em></small>
+                                <small><em><?php echo _KUNENA_QMESSAGE_NOTE?></em></small>
                             </form>
                                 </div>
 
@@ -290,11 +290,11 @@ $database->loadObject($user);
                    <?php
                             if ($fbConfig->reportmsg && $my->id > 1)
                             {
-                                echo fb_link::GetReportMessageLink($catid, $msg_id, _FB_REPORT);
+                                echo fb_link::GetReportMessageLink($catid, $msg_id, _KUNENA_REPORT);
                             } ?>
 
-                            <?php echo $fbIcons['msgip'] ? '<img src="'.JB_URLICONSPATH.$fbIcons['msgip'] .'" border="0" alt="'._FB_REPORT_LOGGED.'" />' : ' <img src="'.JB_URLEMOTIONSPATH.'ip.gif" border="0" alt="'. _FB_REPORT_LOGGED.'" />';
-                            ?> <span class="fb_smalltext"> <?php echo _FB_REPORT_LOGGED;?></span>
+                            <?php echo $fbIcons['msgip'] ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['msgip'] .'" border="0" alt="'._KUNENA_REPORT_LOGGED.'" />' : ' <img src="'.KUNENA_URLEMOTIONSPATH.'ip.gif" border="0" alt="'. _KUNENA_REPORT_LOGGED.'" />';
+                            ?> <span class="fb_smalltext"> <?php echo _KUNENA_REPORT_LOGGED;?></span>
                             <?php
                             echo fb_link::GetMessageIPLink($msg_ip);
                             ?>
@@ -309,10 +309,10 @@ if ($fmessage->modified_by) {
   ?>
         <tr><td class = "fb-msgview-right-c" >
                     <div class="fb_message_editMarkUp_cover">
-                    <span class="fb_message_editMarkUp" ><?php echo _FB_EDITING_LASTEDIT;?>: <?php echo date(_DATETIME, $fmessage->modified_time);?> <?php echo _FB_BY; ?> <?php echo FBTools::whoisID($fmessage->modified_by)?>.
+                    <span class="fb_message_editMarkUp" ><?php echo _KUNENA_EDITING_LASTEDIT;?>: <?php echo date(_DATETIME, $fmessage->modified_time);?> <?php echo _KUNENA_BY; ?> <?php echo FBTools::whoisID($fmessage->modified_by)?>.
                     <?php
                     if ($fmessage->modified_reason) {
-                    echo _FB_REASON.": ".$fmessage->modified_reason;
+                    echo _KUNENA_REASON.": ".$fmessage->modified_reason;
                     }
                         ?></span>
                     </div>
@@ -354,7 +354,7 @@ if ($msg_signature) {
 
                 <?php echo
                     $fbIcons['quickmsg']
-                        ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['quickmsg'] . '" border="0" alt="' . _FB_QUICKMSG . '" />' . '' : '  <img src="' . JB_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _FB_QUICKMSG . '" />'; ?>
+                        ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['quickmsg'] . '" border="0" alt="' . _KUNENA_QUICKMSG . '" />' . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _KUNENA_QUICKMSG . '" />'; ?>
                 <?php
                 }
                 ?>

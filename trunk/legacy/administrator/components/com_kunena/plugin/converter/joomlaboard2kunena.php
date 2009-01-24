@@ -22,11 +22,11 @@ $database->query();
 
 $database->setQuery("update #__fb_attachments set filelocation = replace(filelocation,'".$mainframe->getCfg("absolute_path")."/components/com_kunena/uploaded','/images/fbfiles');");
 if ($database->query()) {
-//    echo "<img src='images/tick.png' align='absmiddle'>"._FB_UP_ATT_10."<br />";
+//    echo "<img src='images/tick.png' align='absmiddle'>"._KUNENA_UP_ATT_10."<br />";
 }
 $database->setQuery("update #__fb_messages_text set message = replace(message,'/components/com_kunena/uploaded','/images/fbfiles');");
 if ($database->query()) {
-//    echo "<img src='images/tick.png' align='absmiddle'>"._FB_UP_ATT_10_MSG."<br />";
+//    echo "<img src='images/tick.png' align='absmiddle'>"._KUNENA_UP_ATT_10_MSG."<br />";
 }
 
 // As a last step we recount all forum stats

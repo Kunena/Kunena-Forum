@@ -121,7 +121,7 @@ color:#666;
         <div id="fbmenu">
 
         <?php $stask=mosGetParam($_REQUEST, "task", null);	?>
-        <a class="fbmainmenu" href = "index2.php?option=com_kunena"><?php echo _FB_CP; ?></a>
+        <a class="fbmainmenu" href = "index2.php?option=com_kunena"><?php echo _KUNENA_CP; ?></a>
 
            <a class="fbmainmenu" href = "index2.php?option=com_kunena&task=showconfig"><?php echo _COM_C_FBCONFIG; ?></a>
            <?php if ( $stask == 'showconfig' ) { ; ?>
@@ -133,20 +133,20 @@ color:#666;
                 <a class="fbsubmenu" href = "#ranking"><?php echo _COM_A_RANKING; ?></a>
                 <a class="fbsubmenu" href = "#bbcode"><?php echo _COM_A_BBCODE; ?></a>
                 <a class="fbsubmenu" href = "#integration"><?php echo _COM_A_INTEGRATION; ?></a>
-                <a class="fbsubmenu" href = "#plugins"><?php echo _FB_ADMIN_CONFIG_PLUGINS; ?></a>
+                <a class="fbsubmenu" href = "#plugins"><?php echo _KUNENA_ADMIN_CONFIG_PLUGINS; ?></a>
             <?php } ?>
            <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=showAdministration"><?php echo _COM_C_FORUM; ?></a>
            <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=showprofiles"><?php echo _COM_C_USER; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=showsmilies"><?php echo _FB_EMOTICONS_EDIT_SMILIES;?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=ranks"><?php echo _FB_RANKS_MANAGE; ?></a>
+           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=showsmilies"><?php echo _KUNENA_EMOTICONS_EDIT_SMILIES;?></a>
+           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=ranks"><?php echo _KUNENA_RANKS_MANAGE; ?></a>
            <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=browseFiles"><?php echo _COM_C_FILES; ?> </a>
            <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=browseImages"><?php echo _COM_C_IMAGES; ?></a>
            <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=showCss"><?php echo _COM_C_CSS; ?></a>
            <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=pruneforum"><?php echo _COM_C_PRUNETAB; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=syncusers"><?php echo _FB_SYNC_USERS; ?></a>
+           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=syncusers"><?php echo _KUNENA_SYNC_USERS; ?></a>
            <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=loadSample"><?php echo _COM_C_LOADSAMPLE; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=removeSample" onclick="return confirm('<?php echo _FB_CONFIRM_REMOVESAMPLEDATA?>');"><?php echo _COM_C_REMOVESAMPLE; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=recount"><?php echo _FB_RECOUNTFORUMS; ?></a>
+           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=removeSample" onclick="return confirm('<?php echo _KUNENA_CONFIRM_REMOVESAMPLEDATA?>');"><?php echo _COM_C_REMOVESAMPLE; ?></a>
+           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=recount"><?php echo _KUNENA_RECOUNTFORUMS; ?></a>
            <a class="fbmainmenu"  href = "http://www.Kunena.com" target = "_blank" ><?php echo _COM_C_SUPPORT; ?></a>
 
 
@@ -196,7 +196,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
         global $mainframe;
 ?>
 
-        <div class="fbfunctitle"><?php echo _FB_CP; ?></div>
+        <div class="fbfunctitle"><?php echo _KUNENA_CP; ?></div>
 
 
         <?php
@@ -215,7 +215,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
     function showAdministration($rows, $pageNav, $option)
     {
         ?>
-<div class="fbfunctitle"><?php echo _FB_ADMIN; ?></div>
+<div class="fbfunctitle"><?php echo _KUNENA_ADMIN; ?></div>
         <form action = "index2.php" method = "post" name = "adminForm">
             <table  cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
                 <tr>
@@ -236,39 +236,39 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </th>
 
                     <th class = "title">
-                      <?php echo _FB_CATFOR; ?>
+                      <?php echo _KUNENA_CATFOR; ?>
                     </th>
 
                     <th>
-                      <small><?php echo _FB_LOCKED; ?></small>
+                      <small><?php echo _KUNENA_LOCKED; ?></small>
                     </th>
 
                     <th>
-                      <small><?php echo _FB_MODERATED; ?></small>
+                      <small><?php echo _KUNENA_MODERATED; ?></small>
                     </th>
 
                     <th>
-                      <small><?php echo _FB_REVIEW; ?></small>
+                      <small><?php echo _KUNENA_REVIEW; ?></small>
                     </th>
 
                     <th>
-                      <small><?php echo _FB_PUBLISHED; ?></small>
+                      <small><?php echo _KUNENA_PUBLISHED; ?></small>
                     </th>
 
                     <th>
-                      <small><?php echo _FB_PUBLICACCESS; ?></small>
+                      <small><?php echo _KUNENA_PUBLICACCESS; ?></small>
                     </th>
 
                     <th>
-                      <small><?php echo _FB_ADMINACCESS; ?></small>
+                      <small><?php echo _KUNENA_ADMINACCESS; ?></small>
                     </th>
 
                     <th>
-                      <small><?php echo _FB_CHECKEDOUT; ?></small>
+                      <small><?php echo _KUNENA_CHECKEDOUT; ?></small>
                     </th>
 
                     <th colspan = "2">
-                      <small><?php echo _FB_REORDER; ?></small>
+                      <small><?php echo _KUNENA_REORDER; ?></small>
                     </th>
                 </tr>
 
@@ -334,10 +334,10 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                         $img = $row->published ? 'publish_g.png' : 'publish_x.png';
 
                         if ($row->pub_access == 0) {
-                            $groupname = _FB_EVERYBODY;
+                            $groupname = _KUNENA_EVERYBODY;
                         }
                         else if ($row->pub_access == -1) {
-                            $groupname = _FB_ALLREGISTERED;
+                            $groupname = _KUNENA_ALLREGISTERED;
                         }
                         else {
                             $groupname = $row->groupname == "" ? "&nbsp;" : $row->groupname;
@@ -368,7 +368,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                             {
                             ?>
 
-                                <a href = "#reorder" onClick = "return listItemTask('cb<?php echo $i;?>','orderup')"> <img src = "images/uparrow.png" width = "12" height = "12" border = "0" alt = "<?php echo _FB_MOVEUP; ?>"> </a>
+                                <a href = "#reorder" onClick = "return listItemTask('cb<?php echo $i;?>','orderup')"> <img src = "images/uparrow.png" width = "12" height = "12" border = "0" alt = "<?php echo _KUNENA_MOVEUP; ?>"> </a>
 
                             <?php
                             }
@@ -381,7 +381,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                             {
                             ?>
 
-                                <a href = "#reorder" onClick = "return listItemTask('cb<?php echo $i;?>','orderdown')"> <img src = "images/downarrow.png" width = "12" height = "12" border = "0" alt = "<?php echo _FB_MOVEDOWN; ?>"> </a>
+                                <a href = "#reorder" onClick = "return listItemTask('cb<?php echo $i;?>','orderdown')"> <img src = "images/downarrow.png" width = "12" height = "12" border = "0" alt = "<?php echo _KUNENA_MOVEDOWN; ?>"> </a>
 
                             <?php
                             }
@@ -449,7 +449,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 
                 if (form.name.value == "")
                 {
-                    alert("<?php echo _FB_ERROR1; ?>");
+                    alert("<?php echo _KUNENA_ERROR1; ?>");
                 }
                 else
                 {
@@ -458,28 +458,28 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
             }
         </script>
 
-        <div class="fbfunctitle"><?php echo $row->id ? _FB_EDIT : _FB_ADD; ?> <?php echo _FB_CATFOR; ?></div>
+        <div class="fbfunctitle"><?php echo $row->id ? _KUNENA_EDIT : _KUNENA_ADD; ?> <?php echo _KUNENA_CATFOR; ?></div>
 
         <form action = "index2.php" method = "POST" name = "adminForm">
-           <div class="fbfuncsubtitle"><?php echo _FB_BASICSFORUM; ?></div>
+           <div class="fbfuncsubtitle"><?php echo _KUNENA_BASICSFORUM; ?></div>
            <fieldset>
-           <legend> <?php echo _FB_BASICSFORUMINFO; ?></legend>
+           <legend> <?php echo _KUNENA_BASICSFORUMINFO; ?></legend>
             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" >
 
 
                     <tr>
-                        <td width = "200" valign = "top"><?php echo _FB_PARENT; ?>
+                        <td width = "200" valign = "top"><?php echo _KUNENA_PARENT; ?>
                         </td>
 
                         <td>
 <?php echo $categoryList; ?><br/>
 
-                <br/><?php echo _FB_PARENTDESC; ?>
+                <br/><?php echo _KUNENA_PARENTDESC; ?>
                         </td>
                     </tr>
 
                     <tr>
-                        <td width = "200"><?php echo _FB_NAMEADD; ?>
+                        <td width = "200"><?php echo _KUNENA_NAMEADD; ?>
                         </td>
 
                         <td>
@@ -488,7 +488,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </tr>
 
                     <tr>
-                        <td valign = "top"><?php echo _FB_DESCRIPTIONADD; ?>
+                        <td valign = "top"><?php echo _KUNENA_DESCRIPTIONADD; ?>
                         </td>
 
                         <td>
@@ -497,7 +497,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </tr>
 
                     <tr>
-                        <td valign = "top"><?php echo _FB_HEADERADD; ?>
+                        <td valign = "top"><?php echo _KUNENA_HEADERADD; ?>
                         </td>
 
                         <td>
@@ -506,88 +506,88 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </tr>
             </table>
 </fieldset>
-           <div class="fbfuncsubtitle"><?php echo _FB_ADVANCEDDESC; ?></div>
+           <div class="fbfuncsubtitle"><?php echo _KUNENA_ADVANCEDDESC; ?></div>
            <fieldset>
-           <legend> <?php echo _FB_ADVANCEDDESCINFO; ?></legend>
+           <legend> <?php echo _KUNENA_ADVANCEDDESCINFO; ?></legend>
 
             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
 
                 <tr>
-                    <td><?php echo _FB_LOCKED1; ?>
+                    <td><?php echo _KUNENA_LOCKED1; ?>
                     </td>
 
                     <td> <?php echo $lists['forumLocked']; ?>
                     </td>
 
                     <td>
-<?php echo _FB_LOCKEDDESC; ?>
+<?php echo _KUNENA_LOCKEDDESC; ?>
                     </td>
                 </tr>
 
                 <tr>
-                    <td nowrap = "nowrap" valign = "top"><?php echo _FB_PUBACC; ?>
+                    <td nowrap = "nowrap" valign = "top"><?php echo _KUNENA_PUBACC; ?>
                     </td>
 
                     <td valign = "top"> <?php echo $accessLists['pub_access']; ?>
                     </td>
 
-                    <td><?php echo _FB_PUBACCDESC; ?>
+                    <td><?php echo _KUNENA_PUBACCDESC; ?>
                     </td>
                 </tr>
 
                 <tr>
-                    <td nowrap = "nowrap" valign = "top"><?php echo _FB_CGROUPS; ?>
+                    <td nowrap = "nowrap" valign = "top"><?php echo _KUNENA_CGROUPS; ?>
                     </td>
 
                     <td valign = "top"> <?php echo $lists['pub_recurse']; ?>
                     </td>
 
-                    <td valign = "top"><?php echo _FB_CGROUPSDESC; ?>
+                    <td valign = "top"><?php echo _KUNENA_CGROUPSDESC; ?>
                     </td>
                 </tr>
 
                 <tr>
-                    <td valign = "top"><?php echo _FB_ADMINLEVEL; ?>
+                    <td valign = "top"><?php echo _KUNENA_ADMINLEVEL; ?>
                     </td>
 
                     <td valign = "top"> <?php echo $accessLists['admin_access']; ?>
                     </td>
 
-                    <td valign = "top"><?php echo _FB_ADMINLEVELDESC; ?>
+                    <td valign = "top"><?php echo _KUNENA_ADMINLEVELDESC; ?>
                     </td>
                 </tr>
 
                 <tr>
-                    <td nowrap = "nowrap" valign = "top"><?php echo _FB_CGROUPS1; ?>
+                    <td nowrap = "nowrap" valign = "top"><?php echo _KUNENA_CGROUPS1; ?>
                     </td>
 
                     <td valign = "top"> <?php echo $lists['admin_recurse']; ?>
                     </td>
 
-                    <td valign = "top"><?php echo _FB_CGROUPS1DESC; ?>
+                    <td valign = "top"><?php echo _KUNENA_CGROUPS1DESC; ?>
                     </td>
                 </tr>
 
                 <tr>
-                    <td nowrap = "nowrap" valign = "top"><?php echo _FB_REV; ?>
+                    <td nowrap = "nowrap" valign = "top"><?php echo _KUNENA_REV; ?>
                     </td>
 
                     <td valign = "top"> <?php echo $lists['forumReview']; ?>
                     </td>
 
-                    <td valign = "top"><?php echo _FB_REVDESC; ?>
+                    <td valign = "top"><?php echo _KUNENA_REVDESC; ?>
                     </td>
                 </tr>
             </table>
 
            </fieldset>
            <fieldset>
-           <legend> <?php echo _FB_ADVANCEDDISPINFO; ?></legend>
+           <legend> <?php echo _KUNENA_ADVANCEDDISPINFO; ?></legend>
 
             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
 
                 <tr>
-                    <td><?php echo _FB_CLASS_SFX; ?>
+                    <td><?php echo _KUNENA_CLASS_SFX; ?>
                     </td>
 
                     <td>
@@ -595,27 +595,27 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
 
                     <td>
-<?php echo _FB_CLASS_SFXDESC; ?>
+<?php echo _KUNENA_CLASS_SFXDESC; ?>
                     </td>
                 </tr>
             </table>
            </fieldset>
 
-           <div class="fbfuncsubtitle"><?php echo _FB_MODNEWDESC; ?></div>
+           <div class="fbfuncsubtitle"><?php echo _KUNENA_MODNEWDESC; ?></div>
            <fieldset>
-           <legend> <?php echo _FB_MODHEADER; ?></legend>
+           <legend> <?php echo _KUNENA_MODHEADER; ?></legend>
 
             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" >
 
 
                 <tr>
-                    <td nowrap = "nowrap" valign = "top"><?php echo _FB_MOD; ?>
+                    <td nowrap = "nowrap" valign = "top"><?php echo _KUNENA_MOD; ?>
                     </td>
 
                     <td valign = "top"> <?php echo $lists['forumModerated']; ?>
                     </td>
 
-                    <td valign = "top"><?php echo _FB_MODDESC; ?>
+                    <td valign = "top"><?php echo _KUNENA_MODDESC; ?>
                     </td>
                 </tr>
             </table>
@@ -626,7 +626,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
             ?>
 
 
-<div class="fbfuncsubtitle"><?php echo _FB_MODSASSIGNED; ?></div>
+<div class="fbfuncsubtitle"><?php echo _KUNENA_MODSASSIGNED; ?></div>
 
                 <table class = "adminlist" border = "0" cellspacing = "0" cellpadding = "3" width = "100%">
                     <tr>
@@ -647,13 +647,13 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                         <th align = "left"><?php echo _USRL_EMAIL; ?>
                         </th>
 
-                        <th align = "centercase "edit":"><?php echo _FB_PUBLISHED; ?>
+                        <th align = "centercase "edit":"><?php echo _KUNENA_PUBLISHED; ?>
                         </th>
                     </tr>
 
                     <?php
                     if (count($moderatorList) == 0) {
-                        echo "<tr><td colspan=\"5\">" . _FB_NOMODS . "</td></tr>";
+                        echo "<tr><td colspan=\"5\">" . _KUNENA_NOMODS . "</td></tr>";
                     }
                     else
                     {
@@ -777,14 +777,14 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"  ><?php echo _COM_A_FB_SESSION_TIMEOUT ?>
+                    <td align = "left" valign = "top"  ><?php echo _COM_A_KUNENA_SESSION_TIMEOUT ?>
                     </td>
 
                     <td align = "left" valign = "top">
                         <input type = "text" name = "cfg_fbsessiontimeout" value = "<?php echo $fbConfig->fbsessiontimeout; ?>"/>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _COM_A_FB_SESSION_TIMEOUT_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _COM_A_KUNENA_SESSION_TIMEOUT_DESC ?>
                     </td>
                 </tr>
 
@@ -945,13 +945,13 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                 </tr>
 
 				<tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_MAMBOT_SUPPORT ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_MAMBOT_SUPPORT ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['jmambot']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_MAMBOT_SUPPORT_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_MAMBOT_SUPPORT_DESC ?>
                     </td>
                 </tr>
 
@@ -1000,77 +1000,77 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_USE_JOOMLA_STYLE ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_USE_JOOMLA_STYLE ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['joomlastyle']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_USE_JOOMLA_STYLE_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_USE_JOOMLA_STYLE_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_SHOW_ANNOUNCEMENT ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_ANNOUNCEMENT ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['showannouncement']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_SHOW_ANNOUNCEMENT_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_ANNOUNCEMENT_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_SHOW_AVATAR_ON_CAT ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_AVATAR_ON_CAT ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['avataroncat']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_SHOW_AVATAR_ON_CAT_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_AVATAR_ON_CAT_DESC ?>
                     </td>
                 </tr>
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_CATIMAGEPATH ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CATIMAGEPATH ?>
                     </td>
 
                     <td align = "left" valign = "top">
                         <input type = "text" name = "cfg_catimagepath" value = "<?php echo $fbConfig->catimagepath;?>"/>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_CATIMAGEPATH_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CATIMAGEPATH_DESC ?>
                     </td>
                 </tr>
 				<tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_SHOW_CHILD_CATEGORY_COLON ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_CHILD_CATEGORY_COLON ?>
                     </td>
 					 <td align = "left" valign = "top">
                     <input type = "text" name = "cfg_numchildcolumn" value = "<?php echo $fbConfig->numchildcolumn;?>"/>
                     </td>
-                    <td align = "left" valign = "top"><?php echo _FB_SHOW_CHILD_CATEGORY_COLONDESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_CHILD_CATEGORY_COLONDESC ?>
                     </td>
                 </tr>
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_SHOW_CHILD_CATEGORY_ON_LIST ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_CHILD_CATEGORY_ON_LIST ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['showchildcaticon']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_SHOW_CHILD_CATEGORY_ON_LIST_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_CHILD_CATEGORY_ON_LIST_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_ANN_MODID ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ANN_MODID ?>
                     </td>
 
                     <td align = "left" valign = "top">
                         <input type = "text" name = "cfg_annmodid" value = "<?php echo $fbConfig->annmodid;?>"/>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_ANN_MODID_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ANN_MODID_DESC ?>
                     </td>
                 </tr>
 
@@ -1099,83 +1099,83 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                 </tr>
 
                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_RULESPAGE ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['enablerulespage']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_RULESPAGE_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE_DESC ?>
                     </td>
                 </tr>
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_RULESPAGE_IN_FB ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE_IN_FB ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['rules_infb']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_RULESPAGE_IN_FB_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE_IN_KUNENA_DESC ?>
                     </td>
                 </tr>
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_RULESPAGE_CID ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE_CID ?>
                     </td>
 
                     <td align = "left" valign = "top"><input type = "text" name = "cfg_rules_cid" value = "<?php echo $fbConfig->rules_cid;?>"/>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_RULESPAGE_CID_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE_CID_DESC ?>
                     </td>
                 </tr>
                  <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_RULESPAGE_LINK ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE_LINK ?>
                     </td>
 
                     <td align = "left" valign = "top"><input type = "text" name = "cfg_rules_link" value = "<?php echo $fbConfig->rules_link;?>"/>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_RULESPAGE_LINK_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE_LINK_DESC ?>
                     </td>
                 </tr>
      			<tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_HELPPAGE ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['enablehelppage']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_HELPPAGE_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE_DESC ?>
                     </td>
                 </tr>
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_HELPPAGE_IN_FB ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE_IN_FB ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['help_infb']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_HELPPAGE_IN_FB_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE_IN_KUNENA_DESC ?>
                     </td>
                 </tr>
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_HELPPAGE_CID ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE_CID ?>
                     </td>
 
                     <td align = "left" valign = "top"><input type = "text" name = "cfg_help_cid" value = "<?php echo $fbConfig->help_cid;?>"/>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_HELPPAGE_CID_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE_CID_DESC ?>
                     </td>
                 </tr>
                  <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_HELPPAGE_LINK ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE_LINK ?>
                     </td>
 
                     <td align = "left" valign = "top"><input type = "text" name = "cfg_help_link" value = "<?php echo $fbConfig->help_link;?>"/>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_HELPPAGE_LINK_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE_LINK_DESC ?>
                     </td>
                 </tr>
                 <tr align = "center" valign = "middle">
@@ -1189,13 +1189,13 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
                 </tr>
  				<tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_COM_A_REPORT ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_COM_A_REPORT ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['reportmsg']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_COM_A_REPORT_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_COM_A_REPORT_DESC ?>
                     </td>
                 </tr>
             </table>
@@ -1393,13 +1393,13 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
                 </tr>
 				<tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_SUBSCRIPTIONSCHECKED ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SUBSCRIPTIONSCHECKED ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['subscriptionschecked']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_SUBSCRIPTIONSCHECKED_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SUBSCRIPTIONSCHECKED_DESC ?>
                     </td>
                 </tr>
                 <tr align = "center" valign = "middle">
@@ -1517,31 +1517,31 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
                 </tr>
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_A_MAIL_ADMIN ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_A_MAIL_ADMIN ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['mailadmin']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_A_MAIL_ADMIN_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_A_MAIL_ADMIN_DESC ?>
                     </td>
                 </tr>
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_CAPTCHA_ON ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CAPTCHA_ON ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['captcha']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_CAPTCHA_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CAPTCHA_DESC ?>
                     </td>
                 </tr>
                  <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_MAILFULL; ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_MAILFULL; ?>
                     </td>
                     <td align = "left" valign = "top"><?php echo $lists['mailfull']; ?>
                     </td>
-                    <td align = "left" valign = "top"><?php echo _FB_MAILFULL_DESC; ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_MAILFULL_DESC; ?>
                     </td>
                 </tr>
             </table>
@@ -1584,7 +1584,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
                 </tr>
 				<tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_IMAGE_PROCESSOR ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_IMAGE_PROCESSOR ?>
                     </td>
 
                     <td align = "left" valign = "top">
@@ -1593,13 +1593,13 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 
                     <td align = "left" valign = "top"><?php
 
-				$fb_gd = intval(FB_gdVersion());
+				$fb_gd = intval(KUNENA_gdVersion());
 				if ($fb_gd > 0) {
-				   $fbmsg = _FB_GD_INSTALLED .  $fb_gd ;
+				   $fbmsg = _KUNENA_GD_INSTALLED .  $fb_gd ;
   				} elseif ($gdver == -1) {
-  				   $fbmsg = _FB_GD_NO_VERSION;
+  				   $fbmsg = _KUNENA_GD_NO_VERSION;
   			    } else {
-   				   $fbmsg = _FB_GD_NOT_INSTALLED . '<a href="http://www.php.net/gd" target="_blank">http://www.php.net/gd</a>';
+   				   $fbmsg = _KUNENA_GD_NOT_INSTALLED . '<a href="http://www.php.net/gd" target="_blank">http://www.php.net/gd</a>';
  			    }
 
 				    echo $fbmsg;
@@ -1608,7 +1608,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
                 </tr>
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_AVATAR_SMALL_HEIGHT ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_AVATAR_SMALL_HEIGHT ?>
                     </td>
 
                     <td align = "left" valign = "top">
@@ -1617,7 +1617,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_AVATAR_SMALL_WIDTH ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_AVATAR_SMALL_WIDTH ?>
                     </td>
 
                     <td align = "left" valign = "top">
@@ -1625,7 +1625,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
                 </tr>
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_AVATAR_MEDIUM_HEIGHT ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_AVATAR_MEDIUM_HEIGHT ?>
                     </td>
 
                     <td align = "left" valign = "top">
@@ -1634,7 +1634,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_AVATAR_MEDIUM_WIDTH ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_AVATAR_MEDIUM_WIDTH ?>
                     </td>
 
                     <td align = "left" valign = "top">
@@ -1642,7 +1642,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
                 </tr>
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_AVATAR_LARGE_HEIGHT ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_AVATAR_LARGE_HEIGHT ?>
                     </td>
 
                     <td align = "left" valign = "top">
@@ -1651,7 +1651,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_AVATAR_LARGE_WIDTH ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_AVATAR_LARGE_WIDTH ?>
                     </td>
 
                     <td align = "left" valign = "top">
@@ -1668,7 +1668,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
                 </tr>
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_AVATAR_QUALITY ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_AVATAR_QUALITY ?>
                     </td>
 
                     <td align = "left" valign = "top">
@@ -1954,18 +1954,18 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 			</table>
 			</fieldset>
 			<fieldset>
-			<legend> <?php echo _FB_FORUMPRF_TITLE ?></legend>
+			<legend> <?php echo _KUNENA_FORUMPRF_TITLE ?></legend>
      		<table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _FB_FORUMPRF ?>
+                    <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_FORUMPRF ?>
                     </td>
 
                     <td align = "left" valign = "top" width="25%"><?php echo $lists['fb_profile']; ?>
                     </td>
 
 
-                    <td align = "left" valign = "top"><?php echo _FB_FORUMPRRDESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_FORUMPRRDESC ?>
                     </td>
                 </tr>
 			</table>
@@ -2068,377 +2068,377 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 </fieldset>
 
 
-            <div class="fbfuncsubtitle"><?php echo _FB_ADMIN_CONFIG_PLUGINS ?><a name="plugins" id="plugins"> </a></div>
+            <div class="fbfuncsubtitle"><?php echo _KUNENA_ADMIN_CONFIG_PLUGINS ?><a name="plugins" id="plugins"> </a></div>
 <fieldset>
-			<legend> <?php echo _FB_ADMIN_CONFIG_USERLIST ?></legend>
+			<legend> <?php echo _KUNENA_ADMIN_CONFIG_USERLIST ?></legend>
    <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
 
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _FB_ADMIN_CONFIG_USERLIST_ROWS ?>
+                    <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_ROWS ?>
                     </td>
 
                     <td align = "left" valign = "top" width="25%">
                         <input type = "text" name = "cfg_userlist_rows" value = "<?php echo $fbConfig->userlist_rows;?>"/>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_ROWS_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_ROWS_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_USERONLINE ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_USERONLINE ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['userlist_online']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_USERONLINE_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_USERONLINE_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_AVATAR ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_AVATAR ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['userlist_avatar']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_USERLIST_AVATAR_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_USERLIST_AVATAR_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_NAME ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_NAME ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['userlist_name']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_name_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_name_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_USERNAME ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_USERNAME ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['userlist_username']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_USERNAME_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_USERNAME_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_GROUP ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_GROUP ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['userlist_group']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_GROUP_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_GROUP_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_POSTS ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_POSTS ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['userlist_posts']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_POSTS_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_POSTS_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_KARMA ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_KARMA ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['userlist_karma']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_KARMA_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_KARMA_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_EMAIL ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_EMAIL ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['userlist_email']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_EMAIL_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_EMAIL_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_USERTYPE ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_USERTYPE ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['userlist_usertype']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_USERTYPE_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_USERTYPE_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_JOINDATE ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_JOINDATE ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['userlist_joindate']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_JOINDATE_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_JOINDATE_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_LASTVISITDATE ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_LASTVISITDATE ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['userlist_lastvisitdate']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_LASTVISITDATE_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_LASTVISITDATE_DESC ?>
                     </td>
                 </tr>
 
 				 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_HITS ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_HITS ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['userlist_userhits']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_ADMIN_CONFIG_USERLIST_HITS_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_HITS_DESC ?>
                     </td>
                 </tr>
 		</table>
         </fieldset>
         <fieldset>
-			<legend> <?php echo _FB_RECENT_POSTS ?></legend>
+			<legend> <?php echo _KUNENA_RECENT_POSTS ?></legend>
    <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _FB_SHOW_LATEST_MESSAGES ?>
+                    <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_SHOW_LATEST_MESSAGES ?>
                     </td>
 
                     <td align = "left" valign = "top" width="25%"><?php echo $lists['showlatest']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_SHOW_LATEST_MESSAGES_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_LATEST_MESSAGES_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_NUMBER_OF_LATEST_MESSAGES ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_NUMBER_OF_LATEST_MESSAGES ?>
                     </td>
 
                     <td align = "left" valign = "top">
                         <input type = "text" name = "cfg_latestcount" value = "<?php echo $fbConfig->latestcount; ?>"/>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_NUMBER_OF_LATEST_MESSAGES_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_NUMBER_OF_LATEST_MESSAGES_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_COUNT_PER_PAGE_LATEST_MESSAGES ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_COUNT_PER_PAGE_LATEST_MESSAGES ?>
                     </td>
 
                     <td align = "left" valign = "top">
                         <input type = "text" name = "cfg_latestcountperpage" value = "<?php echo $fbConfig->latestcountperpage; ?>"/>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_COUNT_PER_PAGE_LATEST_MESSAGES_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_COUNT_PER_PAGE_LATEST_MESSAGES_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_LATEST_CATEGORY ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_LATEST_CATEGORY ?>
                     </td>
 
                     <td align = "left" valign = "top">
                         <input type = "text" name = "cfg_latestcategory" value = "<?php echo $fbConfig->latestcategory; ?>"/>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_LATEST_CATEGORY_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_LATEST_CATEGORY_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_SHOW_LATEST_SINGLE_SUBJECT ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_LATEST_SINGLE_SUBJECT ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['latestsinglesubject']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_SHOW_LATEST_SINGLE_SUBJECT_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_LATEST_SINGLE_SUBJECT_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_SHOW_LATEST_REPLY_SUBJECT ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_LATEST_REPLY_SUBJECT ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['latestreplysubject']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_SHOW_LATEST_REPLY_SUBJECT_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_LATEST_REPLY_SUBJECT_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_LATEST_SUBJECT_LENGTH ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_LATEST_SUBJECT_LENGTH ?>
                     </td>
 
                     <td align = "left" valign = "top">
                         <input type = "text" name = "cfg_latestsubjectlength" value = "<?php echo $fbConfig->latestsubjectlength; ?>"/>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_LATEST_SUBJECT_LENGTH_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_LATEST_SUBJECT_LENGTH_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_SHOW_LATEST_DATE ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_LATEST_DATE ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['latestshowdate']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_SHOW_LATEST_DATE_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_LATEST_DATE_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_SHOW_LATEST_HITS ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_LATEST_HITS ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['latestshowhits']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_SHOW_LATEST_HITS_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_LATEST_HITS_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_SHOW_AUTHOR ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_AUTHOR ?>
                     </td>
 
                     <td align = "left" valign = "top">
                         <input type = "text" name = "cfg_latestshowauthor" value = "<?php echo $fbConfig->latestshowauthor; ?>" size = "1"/>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_SHOW_AUTHOR_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_AUTHOR_DESC ?>
                     </td>
                 </tr>
 			</table>
             </fieldset>
 
                <fieldset>
-			<legend> <?php echo _FB_STATS ?></legend>
+			<legend> <?php echo _KUNENA_STATS ?></legend>
    <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
 
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _FB_SHOWSTATS; ?>
+                    <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_SHOWSTATS; ?>
                     </td>
 
                     <td align = "left" valign = "top" width="25%"><?php echo $lists['showstats']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_SHOWSTATSDESC; ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOWSTATSDESC; ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_SHOWWHOIS; ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOWWHOIS; ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['showwhoisonline']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_SHOWWHOISDESC; ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOWWHOISDESC; ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_STATSGENERAL; ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_STATSGENERAL; ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['showgenstats']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_STATSGENERALDESC; ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_STATSGENERALDESC; ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_USERSTATS; ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_USERSTATS; ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['showpopuserstats']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_USERSTATSDESC; ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_USERSTATSDESC; ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_USERNUM; ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_USERNUM; ?>
                     </td>
 
                     <td align = "left" valign = "top">
                         <input type = "text" name = "cfg_popusercount" value = "<?php echo $fbConfig->popusercount; ?>"/>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_USERNUM; ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_USERNUM; ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_USERPOPULAR; ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_USERPOPULAR; ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['showpopsubjectstats']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_USERPOPULARDESC; ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_USERPOPULARDESC; ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _FB_NUMPOP; ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_NUMPOP; ?>
                     </td>
 
                     <td align = "left" valign = "top">
                         <input type = "text" name = "cfg_popsubjectcount" value = "<?php echo $fbConfig->popsubjectcount; ?>"/>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_NUMPOP; ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_NUMPOP; ?>
                     </td>
                 </tr>
                 </table>
                 </fieldset>
 
                <fieldset>
-			<legend> <?php echo _FB_MYPROFILE_PLUGIN_SETTINGS ?></legend>
+			<legend> <?php echo _KUNENA_MYPROFILE_PLUGIN_SETTINGS ?></legend>
    <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
 
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _FB_USERNAMECANCHANGE; ?>
+                    <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_USERNAMECANCHANGE; ?>
                     </td>
 
                     <td align = "left" valign = "top" width="25%"><?php echo $lists['usernamechange']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _FB_USERNAMECANCHANGE_DESC; ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_USERNAMECANCHANGE_DESC; ?>
                     </td>
                 </tr>
 
@@ -2463,20 +2463,20 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
     <table width = "100%" border = "0" cellpadding = "2" cellspacing = "2" class = "adminheading">
         <TR>
             <th class = "info">
-                &nbsp;<?php echo _FB_INSTRUCTIONS; ?>
+                &nbsp;<?php echo _KUNENA_INSTRUCTIONS; ?>
             </th>
         </tr>
     </table>
 
     <table width = "100%" border = "0" cellpadding = "2" cellspacing = "2" class = "adminform">
         <tr>
-            <th><?php echo _FB_FINFO; ?>
+            <th><?php echo _KUNENA_FINFO; ?>
             </th>
         </tr>
 
         <tr>
             <td>
-<?php echo _FB_INFORMATION; ?>
+<?php echo _KUNENA_INFORMATION; ?>
             </td>
         </tr>
     </table>
@@ -2491,14 +2491,14 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
         $content = fread($f, filesize($file));
         $content = htmlspecialchars($content);
 ?>
-<div class="fbfunctitle"><?php echo _FB_CSSEDITOR; ?></div>
+<div class="fbfunctitle"><?php echo _KUNENA_CSSEDITOR; ?></div>
     <form action = "index2.php?" method = "post" name = "adminForm" class = "adminForm" id = "adminForm">
 
 
         <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "adminform">
             <tr>
 	                <th colspan = "4">
-					<?php echo _FB_PATH; ?> <?php echo $file; ?>
+					<?php echo _KUNENA_PATH; ?> <?php echo $file; ?>
             </tr>
 
             <tr>
@@ -2508,7 +2508,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
             </tr>
 
             <tr>
-                <td class = "error"><?php echo _FB_CSSERROR; ?>
+                <td class = "error"><?php echo _KUNENA_CSSERROR; ?>
                 </td>
             </tr>
         </table>
@@ -2525,7 +2525,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
     function showProfiles($option, $mosConfig_lang, &$profileList, $countPL, $pageNavSP, $order, $search)
     {
 ?>
-<div class="fbfunctitle"><?php echo _FB_FUM; ?></div>
+<div class="fbfunctitle"><?php echo _KUNENA_FUM; ?></div>
         <form action = "index2.php" method = "POST" name = "adminForm">
             <table  cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
                 <tr>
@@ -2552,7 +2552,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 
                     <td colspan = "4" nowrap>
                         :: <a href = "index2.php?option=com_kunena&task=profiles&order=0"><?php
-    echo _FB_SORTID; ?></a> :: <a href = "index2.php?option=com_kunena&task=profiles&order=1"><?php echo _FB_MOD; ?></a> :: <a href = "index2.php?option=com_kunena&task=profiles&order=2"><?php echo _FB_SORTNAME; ?></a>
+    echo _KUNENA_SORTID; ?></a> :: <a href = "index2.php?option=com_kunena&task=profiles&order=1"><?php echo _KUNENA_MOD; ?></a> :: <a href = "index2.php?option=com_kunena&task=profiles&order=2"><?php echo _KUNENA_SORTNAME; ?></a>
                     </td>
                 </tr>
             </table>
@@ -2575,7 +2575,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     <th algin = "left" width = "15"><?php echo _VIEW_MODERATOR; ?>
                     </th>
 
-                    <th algin = "left" width = "10"><?php echo _FB_VIEW; ?>
+                    <th algin = "left" width = "10"><?php echo _KUNENA_VIEW; ?>
                     </th>
 
                     <th algin = "left" width = "*"><?php echo _GEN_SIGNATURE; ?>
@@ -2640,7 +2640,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     }
                 }
                 else {
-                    echo "<tr><td colspan=\"7\">" . _FB_NOUSERSFOUND . "</td></tr>";
+                    echo "<tr><td colspan=\"7\">" . _KUNENA_NOUSERSFOUND . "</td></tr>";
                 }
                 ?>
 
@@ -2672,7 +2672,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
         <form action = "index2.php" method = "post" name = "adminForm">
             <table cellpadding = "4" class = "adminheading" cellspacing = "0" border = "0" width = "100%">
                 <tr>
-                    <th width = "100%" class = "user"><?php echo _FB_ADDMOD; ?> <?php echo $forumName; ?>
+                    <th width = "100%" class = "user"><?php echo _KUNENA_ADDMOD; ?> <?php echo $forumName; ?>
                     </th>
 
                     <td nowrap><?php echo _COM_A_DISPLAY; ?>
@@ -2711,7 +2711,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     <th align = "left"><?php echo _GEN_EMAIL; ?>
                     </th>
 
-                    <th><?php echo _FB_PUBLISHED; ?>
+                    <th><?php echo _KUNENA_PUBLISHED; ?>
                     </th>
 
                     <th>&nbsp;
@@ -2777,7 +2777,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     }
                 }
                 else {
-                    echo "<tr><td align='left' colspan='7'>" . _FB_NOMODSAV . "</td></tr>";
+                    echo "<tr><td align='left' colspan='7'>" . _KUNENA_NOMODSAV . "</td></tr>";
                 }
                 ?>
 
@@ -2798,7 +2798,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
     </tr>
 
     <tr>
-        <td colspan = "7"><?php echo _FB_NOTEUS; ?>
+        <td colspan = "7"><?php echo _KUNENA_NOTEUS; ?>
         </td>
     </tr>
             </table>
@@ -2830,7 +2830,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
             <table border = 0 cellspacing = 0 width = "100%" align = "center" class = "adminheading">
                 <tr>
                     <th colspan = "3" class = "user">
-<?php echo _FB_PROFFOR; ?> <?php echo $username; ?>
+<?php echo _KUNENA_PROFFOR; ?> <?php echo $username; ?>
                     </th>
                 </tr>
             </table>
@@ -2838,12 +2838,12 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
             <table border = 0 cellspacing = 0 width = "100%" align = "center" class = "adminlist">
                 <tr>
                     <th colspan = "3" class = "title">
-<?php echo _FB_GENPROF; ?>
+<?php echo _KUNENA_GENPROF; ?>
 
                 </tr>
 
                 <tr>
-                    <td width = "150" class = "contentpane"><?php echo _FB_PREFVIEW; ?>
+                    <td width = "150" class = "contentpane"><?php echo _KUNENA_PREFVIEW; ?>
                     </td>
 
                     <td align = "left" valign = "top" class = "contentpane">
@@ -2856,7 +2856,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                 </tr>
 
                 <tr>
-                    <td width = "150" class = "contentpane"><?php echo _FB_PREFOR; ?>
+                    <td width = "150" class = "contentpane"><?php echo _KUNENA_PREFOR; ?>
                     </td>
 
                     <td align = "left" valign = "top" class = "contentpane">
@@ -2869,7 +2869,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                 </tr>
 
                          <tr>
-                    <td width = "150" class = "contentpane"><?php echo _FB_RANKS; ?>
+                    <td width = "150" class = "contentpane"><?php echo _KUNENA_RANKS; ?>
                     </td>
 
                     <td align = "left" valign = "top" class = "contentpane">
@@ -2912,7 +2912,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 
                                 <input type = "button" class = "button" accesskey = "w" name = "addbbcode16" value = "URL" style = "text-decoration: underline; width: 40px" onClick = "bbstyle(16)" onMouseOver = "helpline('w')"/>
 
-                                <br/><?php echo _FB_COLOR; ?>:
+                                <br/><?php echo _KUNENA_COLOR; ?>:
 
         <select name = "addbbcode20" onChange = "bbfontstyle('[color=' + this.form.addbbcode20.options[this.form.addbbcode20.selectedIndex].value + ']', '[/color]');this.selectedIndex=0;" onMouseOver = "helpline('s')">
             <option style = "color:black;  background-color: #FAFAFA" value = ""><?php echo _COLOUR_DEFAULT; ?></option>
@@ -2955,17 +2955,17 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                             ?>
 
                                 <td class = "contentpane" align = "center">
-<?php echo _FB_UAVATAR; ?><br/>
+<?php echo _KUNENA_UAVATAR; ?><br/>
 
 <?php
 if ($avatar != '')
 {
-   echo '<img src="' . FB_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" ><br />';
+   echo '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" ><br />';
    echo '<input type="hidden" value="' . $avatar . '" name="avatar">';
 }
 else
 {
-   echo "<em>" . _FB_NS . "</em><br />";
+   echo "<em>" . _KUNENA_NS . "</em><br />";
    echo '<input type="hidden" value="$avatar" name="avatar">';
 }
 ?>
@@ -2983,7 +2983,7 @@ else
 
                         <tr>
                             <td colspan = "2" class = "contentpane">
-                                <input type = "checkbox" value = "1" name = "deleteSig"><i><?php echo _FB_DELSIG; ?></i>
+                                <input type = "checkbox" value = "1" name = "deleteSig"><i><?php echo _KUNENA_DELSIG; ?></i>
                             </td>
 
                             <?php
@@ -2992,7 +2992,7 @@ else
                             ?>
 
                                 <td class = "contentpane">
-                                    <input type = "checkbox" value = "1" name = "deleteAvatar"><i><?php echo _FB_DELAV; ?></i>
+                                    <input type = "checkbox" value = "1" name = "deleteAvatar"><i><?php echo _KUNENA_DELAV; ?></i>
                                 </td>
 
                             <?php
@@ -3013,7 +3013,7 @@ else
         <table border = 0 cellspacing = 0 width = "100%" align = "center" class = "adminform">
             <tr>
                 <th colspan = "2" class = "title">
-<?php echo _FB_MOD_NEW; ?>
+<?php echo _KUNENA_MOD_NEW; ?>
 
             </td>
             </tr>
@@ -3023,13 +3023,13 @@ else
 
 
     <td width = "150" class = "contentpane">
-    <?php echo _FB_ISMOD; ?>
+    <?php echo _KUNENA_ISMOD; ?>
 
                     <?php
                     //admins are always moderators
                     if (FBTools::isModOrAdmin($uid))
                     {
-                    echo _FB_ISADM; ?> <input type = "hidden" name = "moderator" value = "1">
+                    echo _KUNENA_ISADM; ?> <input type = "hidden" name = "moderator" value = "1">
                     <?php
                     }
                     else
@@ -3054,7 +3054,7 @@ else
         <table border = 0 cellspacing = 0 width = "100%" align = "center" class = "adminform">
             <tr>
                 <th colspan = "2" class = "title">
-<?php echo _FB_SUBFOR; ?> <?php echo $username; ?>
+<?php echo _KUNENA_SUBFOR; ?> <?php echo $username; ?>
 
             </td>
             </tr>
@@ -3083,7 +3083,7 @@ else
                 }
             }
             else {
-                echo "<tr><td class=\"message\">" . _FB_NOSUBS . "</td></tr>";
+                echo "<tr><td class=\"message\">" . _KUNENA_NOSUBS . "</td></tr>";
             }
 
             echo "</table>";
@@ -3141,7 +3141,7 @@ else
     //**************************
     function syncusers($option) {
 ?>
-<div class="fbfunctitle"><?php echo _FB_SYNC_USERS; ?></div>
+<div class="fbfunctitle"><?php echo _KUNENA_SYNC_USERS; ?></div>
     <form action = "index2.php" method = "post" name = "adminForm">
 
 
@@ -3153,7 +3153,7 @@ else
             </tr>
 
             <tr>
-                <td colspan = "2"><?php echo _FB_SYNC_USERS_DESC ?>
+                <td colspan = "2"><?php echo _KUNENA_SYNC_USERS_DESC ?>
                 </td>
             </tr>
         </table>
@@ -3195,7 +3195,7 @@ else
             echo '<tr><td>';
             echo $type ? _COM_A_IMGB_ENLARGE : _COM_A_IMGB_DOWNLOAD;
             echo '</td></tr><tr><td>';
-            echo $type ? _COM_A_IMGB_DUMMY_DESC . '</td></tr><tr><td>' . _COM_A_IMGB_DUMMY . ':</td></tr><tr><td> <img src="'.FB_LIVEUPLOADEDPATH.'/dummy.gif">' : '';
+            echo $type ? _COM_A_IMGB_DUMMY_DESC . '</td></tr><tr><td>' . _COM_A_IMGB_DUMMY . ':</td></tr><tr><td> <img src="'.KUNENA_LIVEUPLOADEDPATH.'/dummy.gif">' : '';
             echo '</td></tr></table>';
             echo '<table class="adminform"><tr>';
 
@@ -3203,7 +3203,7 @@ else
             {
                 $j = $i + 1;
                 //get the corresponding posting
-                $query = "SELECT mesid FROM #__fb_attachments where filelocation='".FB_ABSUPLOADEDPATH."/".($type?'images':'files')."/$uploaded[$i]'";
+                $query = "SELECT mesid FROM #__fb_attachments where filelocation='".KUNENA_ABSUPLOADEDPATH."/".($type?'images':'files')."/$uploaded[$i]'";
                 $database->setQuery($query);
                 $mesid = $database->loadResult();
                 //get the catid for the posting
@@ -3211,9 +3211,9 @@ else
                 $catid = $database->loadResult();
                 echo $mesid == '' ? '<td>' : '<td>';
                 echo '<table style="border: 1px solid #ccc;"><tr><td height="90" width="130" style="text-align: center">';
-                echo $type ? '<a href="' . FB_LIVEUPLOADEDPATH . '/images/' . $uploaded[$i] . '" target="_blank" title="' . _COM_A_IMGB_ENLARGE . '" alt="' . _COM_A_IMGB_ENLARGE . '"><img src="' . FB_LIVEUPLOADEDPATH . '/images/' . $uploaded[$i]
+                echo $type ? '<a href="' . KUNENA_LIVEUPLOADEDPATH . '/images/' . $uploaded[$i] . '" target="_blank" title="' . _COM_A_IMGB_ENLARGE . '" alt="' . _COM_A_IMGB_ENLARGE . '"><img src="' . KUNENA_LIVEUPLOADEDPATH . '/images/' . $uploaded[$i]
                          . '" width="80" heigth="80" border="0"></a>' : '<a href="'
-                         . FB_LIVEUPLOADEDPATH . '/files/' . $uploaded[$i] . '" title="' . _COM_A_IMGB_DOWNLOAD . '" alt="' . _COM_A_IMGB_DOWNLOAD . '"><img src="../administrator/components/com_kunena/images/fbfile.png"   border="0"></a>';
+                         . KUNENA_LIVEUPLOADEDPATH . '/files/' . $uploaded[$i] . '" title="' . _COM_A_IMGB_DOWNLOAD . '" alt="' . _COM_A_IMGB_DOWNLOAD . '"><img src="../administrator/components/com_kunena/images/fbfile.png"   border="0"></a>';
                 echo '</td></tr><tr><td style="text-align: center">';
                 //echo '<input type="radio" name="newAvatar" value="gallery/'.$uploaded[$i].'">';
                 echo '<br /><small>';
@@ -3243,7 +3243,7 @@ else
                 }
                 else
                 {
-                    if (!FB_fmodReplace(($j), 5)) {
+                    if (!KUNENA_fmodReplace(($j), 5)) {
                         echo '</tr><tr align="center" valign="middle">';
                     }
                 }
@@ -3262,7 +3262,7 @@ else
 function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileypath)
         {
 ?>
-<div class="fbfunctitle"><?php echo _FB_EMOTICONS; ?></div>
+<div class="fbfunctitle"><?php echo _KUNENA_EMOTICONS; ?></div>
         <form action = "index2.php" method = "POST" name = "adminForm">
             <table class = "adminheading" cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
                 <tr>
@@ -3289,13 +3289,13 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
                     <th algin = "right" width = "10"><?php echo _ANN_ID; ?>
                     </th>
 
-                    <th algin = "center" width = "200"><?php echo _FB_EMOTICONS_SMILEY; ?>
+                    <th algin = "center" width = "200"><?php echo _KUNENA_EMOTICONS_SMILEY; ?>
                     </th>
 
-                    <th algin = "center" width = "100"><?php echo _FB_EMOTICONS_CODE; ?>
+                    <th algin = "center" width = "100"><?php echo _KUNENA_EMOTICONS_CODE; ?>
                     </th>
 
-                    <th algin = "right" width = "200"><?php echo _FB_EMOTICONS_URL; ?>
+                    <th algin = "right" width = "200"><?php echo _KUNENA_EMOTICONS_URL; ?>
                     </th>
                     <th width = "*">&nbsp;
                     </th>
@@ -3366,22 +3366,22 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
 		}
 		//-->
 		</script>
-        <div class="fbfunctitle"><?php echo _FB_EMOTICONS_EDIT_SMILEY; ?></div>
+        <div class="fbfunctitle"><?php echo _KUNENA_EMOTICONS_EDIT_SMILEY; ?></div>
         <form action = "index2.php" method = "POST" name = "adminForm">
             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "adminform">
 
 				<tr align="center">
-					<td width="100"><?php echo _FB_EMOTICONS_CODE; ?></td>
+					<td width="100"><?php echo _KUNENA_EMOTICONS_CODE; ?></td>
 					<td width="200"><input class="post" type="text" name="smiley_code" value="<?php echo $smileycfg['code'];?>" /></td>
                     <td rowspan="3" width="50"><img name="smiley_image" src="<?php echo $smiley_edit_img; ?>" border="0" alt="" /> &nbsp;</td>
                     <td rowspan="3">&nbsp;</td>
 				</tr>
 				<tr align="center">
-					<td width="100"><?php echo _FB_EMOTICONS_URL; ?></td>
+					<td width="100"><?php echo _KUNENA_EMOTICONS_URL; ?></td>
 					<td><select name="smiley_url" onchange="update_smiley(this.options[selectedIndex].value);"><?php echo $filename_list; ?></select> &nbsp; </td>
 				</tr>
                 <tr>
-					<td width="100"><?php echo _FB_EMOTICONS_EMOTICONBAR; ?></td>
+					<td width="100"><?php echo _KUNENA_EMOTICONS_EMOTICONBAR; ?></td>
                     <td><input type="checkbox" name="smiley_emoticonbar" value="1"<?php if($smileycfg['emoticonbar'] == 1) { echo 'checked="checked"';} ?> /></td>
 				<tr>
 				<!--<tr align="center">
@@ -3410,22 +3410,22 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
 		}
 		//-->
 		</script>
-         <div class="fbfunctitle"><?php echo _FB_EMOTICONS_NEW_SMILEY; ?></div>
+         <div class="fbfunctitle"><?php echo _KUNENA_EMOTICONS_NEW_SMILEY; ?></div>
         <form action = "index2.php" method = "POST" name = "adminForm">
             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "adminform">
 
 				<tr align="center">
-					<td width="100"><?php echo _FB_EMOTICONS_CODE; ?></td>
+					<td width="100"><?php echo _KUNENA_EMOTICONS_CODE; ?></td>
 					<td width="200"><input class="post" type="text" name="smiley_code" value="" /></td>
                     <td rowspan="3" width="50"><img name="smiley_image" src="" border="0" alt="" /> &nbsp;</td>
                     <td rowspan="3">&nbsp;</td>
 				</tr>
 				<tr align="center">
-					<td width="100"><?php echo _FB_EMOTICONS_URL; ?></td>
+					<td width="100"><?php echo _KUNENA_EMOTICONS_URL; ?></td>
 					<td><select name="smiley_url" onchange="update_smiley(this.options[selectedIndex].value);"><?php echo $filename_list; ?></select> &nbsp; </td>
 				</tr>
                 <tr>
-					<td width="100"><?php echo _FB_EMOTICONS_EMOTICONBAR; ?></td>
+					<td width="100"><?php echo _KUNENA_EMOTICONS_EMOTICONBAR; ?></td>
                     <td><input type="checkbox" name="smiley_emoticonbar" value="1" /></td>
 				<tr>
 					<td colspan="2" align="center"><input type = "hidden" name = "option" value = "<?php echo $option; ?>"> <input type = "hidden" name = "task" value = "showsmilies"> <input type = "hidden" name = "boxchecked" value = "0">
@@ -3443,7 +3443,7 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
 		 {
    global $database, $mainframe;
    ?>
-  <div class="fbfunctitle"><?php echo _FB_RANKS_MANAGE; ?></div>
+  <div class="fbfunctitle"><?php echo _KUNENA_RANKS_MANAGE; ?></div>
   <form action="index2.php" method="POST" name="adminForm">
   <table class="adminheading" cellpadding="4" cellspacing="0" border="0" width="100%">
     <tr>
@@ -3455,10 +3455,10 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
     <tr>
       <th width="20" align="center">#</th>
       <th align="left"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count($ranks); ?>);"/></th>
-      <th align="left" ><?php echo _FB_RANKSIMAGE;?></th>
-      <th align="left" nowrap="nowrap"><?php echo _FB_RANKS;?></th>
-      <th align="left" nowrap="nowrap"><?php echo _FB_RANKS_SPECIAL;?></th>
-      <th algin="center" nowrap="nowrap"><?php echo _FB_RANKSMIN;?></th>
+      <th align="left" ><?php echo _KUNENA_RANKSIMAGE;?></th>
+      <th align="left" nowrap="nowrap"><?php echo _KUNENA_RANKS;?></th>
+      <th align="left" nowrap="nowrap"><?php echo _KUNENA_RANKS_SPECIAL;?></th>
+      <th algin="center" nowrap="nowrap"><?php echo _KUNENA_RANKSMIN;?></th>
       <th width="100%">&nbsp;</th>
     </tr>
     <?php
@@ -3506,24 +3506,24 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
 		}
 		//-->
 		</script>
-        <div class="fbfunctitle"><?php echo _FB_NEW_RANK; ?></div>
+        <div class="fbfunctitle"><?php echo _KUNENA_NEW_RANK; ?></div>
   <form action="index2.php" method="POST" name="adminForm">
   <table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
 
 			<tr align="center">
-				<td width="100"><?php echo _FB_RANKS; ?></td>
+				<td width="100"><?php echo _KUNENA_RANKS; ?></td>
 				<td width="200"><input class="post" type="text" name="rank_title" value="" /></td>
 			</tr>
    <tr>
-				<td width="100"><?php echo _FB_RANKSIMAGE; ?></td>
+				<td width="100"><?php echo _KUNENA_RANKSIMAGE; ?></td>
     <td><select name="rank_image" onchange="update_rank(this.options[selectedIndex].value);"><?php echo $filename_list; ?></select> &nbsp; <img name="rank_image" src="" border="0" alt="" /></td>
 			<tr>
    <tr>
-				<td width="100"><?php echo _FB_RANKSMIN; ?></td>
+				<td width="100"><?php echo _KUNENA_RANKSMIN; ?></td>
     <td><input class="post" type="text" name="rank_min" value="1" /></td>
 			<tr>
 			<tr>
-				<td width="100"><?php echo _FB_RANKS_SPECIAL; ?></td>
+				<td width="100"><?php echo _KUNENA_RANKS_SPECIAL; ?></td>
 				<td><input type="checkbox" name="rank_special" value="1" /></td>
 			</tr>
 					<td colspan="2" align="center"><input type = "hidden" name = "option" value = "<?php echo $option; ?>"> <input type = "hidden" name = "task" value = "showRanks"> <input type = "hidden" name = "boxchecked" value = "0">
@@ -3545,24 +3545,24 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
 		}
 		//-->
 		</script>
-          <div class="fbfunctitle"><?php echo _FB_RANKS_EDIT; ?></div>
+          <div class="fbfunctitle"><?php echo _KUNENA_RANKS_EDIT; ?></div>
   <form action = "index2.php" method = "POST" name = "adminForm">
   <table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
 
 			<tr align="center">
-				<td width="100"><?php echo _FB_RANKS; ?></td>
+				<td width="100"><?php echo _KUNENA_RANKS; ?></td>
 				<td width="200"><input class="post" type="text" name="rank_title" value="<?php echo $row->rank_title;?>" /></td>
 			</tr>
 			<tr align="center">
-				<td width="100"><?php echo _FB_RANKSIMAGE; ?></td>
+				<td width="100"><?php echo _KUNENA_RANKSIMAGE; ?></td>
 				<td><select name="rank_image" onchange="update_rank(this.options[selectedIndex].value);"><?php echo $filename_list; ?></select> &nbsp; <img name="rank_image" src="<?php echo $edit_img; ?>" border="0" alt="" /></td>
 			</tr>
    <tr>
-				<td width="100"><?php echo _FB_RANKSMIN; ?></td>
+				<td width="100"><?php echo _KUNENA_RANKSMIN; ?></td>
     <td><input class="post" type="text" name="rank_min" value="<?php echo $row->rank_min;?>" /></td>
 			<tr>
 			<tr>
-				<td width="100"><?php echo _FB_RANKS_SPECIAL; ?></td>
+				<td width="100"><?php echo _KUNENA_RANKS_SPECIAL; ?></td>
 				<td><input type="checkbox" name="rank_special" value="1"<?php if($row->rank_special == 1) { echo 'checked="checked"';} ?> /></td>
 			</tr>
 			</tr>

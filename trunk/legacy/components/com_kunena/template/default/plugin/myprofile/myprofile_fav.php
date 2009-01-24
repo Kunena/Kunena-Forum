@@ -19,7 +19,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<form action = "<?php echo sefRelToAbs(JB_LIVEURLREL.'&amp;func=myprofile&amp;do=unfavorite'); ?>" method = "post" name = "postform">
+<form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=unfavorite'); ?>" method = "post" name = "postform">
 	<input type = "hidden" name = "do" value = "unfavorite"/>
 	<table class = "fb_blocktable" id = "fb_forumprofile_fav" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
 		<thead>
@@ -64,7 +64,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 					{
 						$k = 1 - $k;
 						echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" >';
-						echo '<td class="td-1" width="73%" align="left">' . $enum . ': <a href="' . sefRelToAbs(JB_LIVEURLREL . '&amp;func=view&amp;catid=' . $fav->catid . '&amp;id=' . $fav->id) . '">' . $fav->subject;
+						echo '<td class="td-1" width="73%" align="left">' . $enum . ': <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $fav->catid . '&amp;id=' . $fav->id) . '">' . $fav->subject;
 			?>
 
 						</a>
@@ -87,10 +87,10 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 				<tr>
 					<td colspan = "3" class = "fb_profile-bottomnav" style = "text-align:right">
-<?php echo _FB_USRL_DISPLAY_NR; ?>
+<?php echo _KUNENA_USRL_DISPLAY_NR; ?>
 
 <?php
-echo $pageNav->writeLimitBox("index.php?option=com_kunena&amp;func=myprofile&amp;do=showfav" . FB_FB_ITEMID_SUFFIX . "");
+echo $pageNav->writeLimitBox("index.php?option=com_kunena&amp;func=myprofile&amp;do=showfav" . KUNENA_COMPONENT_ITEMID_SUFFIX . "");
 ?>
 
 			<input type = "submit" class = "button" value = "<?php echo _GEN_DELETE;?>"/>
@@ -108,7 +108,7 @@ echo $pageNav->writeLimitBox("index.php?option=com_kunena&amp;func=myprofile&amp
 			<tr><td colspan = "3" class = "fb_profile-bottomnav">
 					<?php
 					// TODO: fxstein - Need to perform SEO cleanup
-					echo $pageNav->writePagesLinks("index.php?option=com_kunena&amp;func=myprofile&amp;do=showfav" . FB_FB_ITEMID_SUFFIX);
+					echo $pageNav->writePagesLinks("index.php?option=com_kunena&amp;func=myprofile&amp;do=showfav" . KUNENA_COMPONENT_ITEMID_SUFFIX);
 					?>
 
 					<br/>

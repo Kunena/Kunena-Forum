@@ -51,7 +51,7 @@ if ($task == 'listcat' || $func == 'showcat') {
     $what = $database->loadResult();
     }
 else if ($func == 'latest') {
-    $what = _FB_LATEST_POSTS;
+    $what = _KUNENA_LATEST_POSTS;
     }
 else if ($id) {
     $database->setQuery("SELECT subject FROM #__fb_messages WHERE id = {$id}");
@@ -70,10 +70,10 @@ else if ($func == 'post' && $do == 'edit') {
     $what = $database->loadResult();
     }
 else if ($func == 'who') {
-    $what = _FB_WHO_LATEST_POSTS;
+    $what = _KUNENA_WHO_LATEST_POSTS;
     }
 else {
-    $what = _FB_WHO_MAINPAGE;
+    $what = _KUNENA_WHO_MAINPAGE;
     }
 
 $link = $_SERVER['REQUEST_URI'];

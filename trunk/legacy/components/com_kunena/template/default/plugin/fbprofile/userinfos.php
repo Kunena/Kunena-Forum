@@ -20,7 +20,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
         <tr>
             <th>
                 <div class = "fb_title_cover fbm">
-                    <span class="fb_title fbl"> <?php echo $msg_username; ?>  <?php echo _FB_USERPROFILE_PROFILE; ?></span>
+                    <span class="fb_title fbl"> <?php echo $msg_username; ?>  <?php echo _KUNENA_USERPROFILE_PROFILE; ?></span>
                 </div>
         </tr>
     </thead>
@@ -60,7 +60,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
                         ?>
                         </div>
 						<div class="viewcover">
-						<?php echo _FB_USERPROFILE_PROFILEHITS; ?>:
+						<?php echo _KUNENA_USERPROFILE_PROFILEHITS; ?>:
 						<?php echo $msg_userhits; ?>
 						</div>
                     <?php

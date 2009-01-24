@@ -84,7 +84,7 @@ $lists['parent'] = JJ_categoryParentList($catid, "", $options);
 
     <input type = "hidden" name = "func" value = "advsearchresult"/>
 
-    <input type = "hidden" name = "Itemid" value = "<?php echo FB_FB_ITEMID;?>"/>
+    <input type = "hidden" name = "Itemid" value = "<?php echo KUNENA_COMPONENT_ITEMID;?>"/>
 
     <table class = "bof-forum-cat" border = "0" cellspacing = "0" cellpadding = "0">
         <thead>
@@ -194,7 +194,7 @@ $lists['parent'] = JJ_categoryParentList($catid, "", $options);
                             <h3>Arama Ayarlarý</h3>
                         </div>
 
-                        <img id = "BoxSwitch_announcements__announcements_tbody" class = "hideshow" src = "<?php echo JB_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+                        <img id = "BoxSwitch_announcements__announcements_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
                     </th>
                 </tr>
             </thead>

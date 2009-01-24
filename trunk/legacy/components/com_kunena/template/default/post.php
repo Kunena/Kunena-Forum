@@ -59,7 +59,7 @@ if ($fbConfig->captcha == 1 && $my->id < 1) {
 
     	if (md5($number) != $rand)
         {
-            $mess = _FB_CAPERR;
+            $mess = _KUNENA_CAPERR;
             echo "<script language='javascript' type='text/javascript'>alert('" . $mess . "')</script>";
             echo "<script language='javascript' type='text/javascript'>window.history.back()</script>";
             return;
@@ -126,11 +126,11 @@ $catName = $objCatInfo->name;
     <tr>
         <td>
             <?php
-            if (file_exists(JB_ABSTMPLTPATH . '/fb_pathway.php')) {
-                require_once (JB_ABSTMPLTPATH . '/fb_pathway.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
+                require_once (KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
             }
             else {
-                require_once (JB_ABSPATH . '/template/default/fb_pathway.php');
+                require_once (KUNENA_ABSPATH . '/template/default/fb_pathway.php');
             }
 
             if ($action == "post" && (hasPostPermission($database, $catid, $parentid, $my->id, $fbConfig->pubwrite, $is_Moderator)))
@@ -187,10 +187,10 @@ $catName = $objCatInfo->name;
                                 if ($attachfile != '')
                                 {
                                     $noFileUpload = 0;
-                                    $GLOBALS['FB_rc'] = 1;
-                                    include (JB_ABSSOURCESPATH . 'fb_file_upload.php');
+                                    $GLOBALS['KUNENA_rc'] = 1;
+                                    include (KUNENA_ABSSOURCESPATH . 'fb_file_upload.php');
 
-                                    if ($GLOBALS['FB_rc'] == 0) {
+                                    if ($GLOBALS['KUNENA_rc'] == 0) {
                                         $noFileUpload = 1;
                                     }
                                 }
@@ -198,10 +198,10 @@ $catName = $objCatInfo->name;
                                 if ($attachimage != '')
                                 {
                                     $noImgUpload = 0;
-                                    $GLOBALS['FB_rc'] = 1;
-                                    include (JB_ABSSOURCESPATH . 'fb_image_upload.php');
+                                    $GLOBALS['KUNENA_rc'] = 1;
+                                    include (KUNENA_ABSSOURCESPATH . 'fb_image_upload.php');
 
-                                    if ($GLOBALS['FB_rc'] == 0) {
+                                    if ($GLOBALS['KUNENA_rc'] == 0) {
                                         $noImgUpload = 1;
                                     }
                                 }
@@ -352,7 +352,7 @@ $catName = $objCatInfo->name;
 
                                             if (count($subsList) > 0)
                                             {                                                     //we got more than 0 subscriptions
-                                                require_once (JB_ABSSOURCESPATH . 'fb_mail.php'); // include fbMail class for mailing
+                                                require_once (KUNENA_ABSSOURCESPATH . 'fb_mail.php'); // include fbMail class for mailing
 
 												$_catobj = new jbCategory($database, $catid);
                                                 foreach ($subsList as $subs)
@@ -372,10 +372,10 @@ $catName = $objCatInfo->name;
 														}
 													}
 
-                                                    $mailsubject = "$_COM_A_NOTIFICATION "._GEN_SUBJECT.": '" . stripslashes($messagesubject) . "' "._FB_IN_FORUM." '" . stripslashes($catName) . "'";
+                                                    $mailsubject = "$_COM_A_NOTIFICATION "._GEN_SUBJECT.": '" . stripslashes($messagesubject) . "' "._KUNENA_IN_FORUM." '" . stripslashes($catName) . "'";
                                                     $msg = "$subs->name,\n\n";
-                                                    $msg .= "$_COM_A_NOTIFICATION1 $board_title "._FB_FORUM."\n\n";
-                                                    $msg .= _GEN_SUBJECT.": '" . stripslashes($messagesubject) . "' "._FB_IN_FORUM." '" . stripslashes($catName) . "'\n";
+                                                    $msg .= "$_COM_A_NOTIFICATION1 $board_title "._KUNENA_FORUM."\n\n";
+                                                    $msg .= _GEN_SUBJECT.": '" . stripslashes($messagesubject) . "' "._KUNENA_IN_FORUM." '" . stripslashes($catName) . "'\n";
                                                     $msg .= _VIEW_POSTED.": " . stripslashes($fb_authorname) . "\n\n";
                                                     $msg .= "$_COM_A_NOTIFICATION2\n";
                                                     $msg .= "URL: $LastPostUrl\n\n";
@@ -390,7 +390,7 @@ $catName = $objCatInfo->name;
                                                     $msg .= "** Kunena! - http://www.Kunena.com **";
 
                                                     if ($ip != "127.0.0.1" && $my->id != $subs->id) { //don't mail yourself
-                                                        mosmail($fbConfig->email, _FB_FORUM_AT." " . $_SERVER['SERVER_NAME'], $subs->email, $mailsubject, $msg);
+                                                        mosmail($fbConfig->email, _KUNENA_FORUM_AT." " . $_SERVER['SERVER_NAME'], $subs->email, $mailsubject, $msg);
                                                     }
                                                 }
                                                 unset($_catobj);
@@ -428,14 +428,14 @@ $catName = $objCatInfo->name;
 
                                             if (count($modsList) > 0)
                                             {                                                     //we got more than 0 moderators eligible for email
-                                                require_once (JB_ABSSOURCESPATH . 'fb_mail.php'); // include fbMail class for mailing
+                                                require_once (KUNENA_ABSSOURCESPATH . 'fb_mail.php'); // include fbMail class for mailing
 
                                                 foreach ($modsList as $mods)
                                                 {
-                                                    $mailsubject = "$_COM_A_NOTIFICATION "._GEN_SUBJECT.": '" . stripslashes($messagesubject) . "' "._FB_IN_FORUM." '" . stripslashes($catName) . "'";
+                                                    $mailsubject = "$_COM_A_NOTIFICATION "._GEN_SUBJECT.": '" . stripslashes($messagesubject) . "' "._KUNENA_IN_FORUM." '" . stripslashes($catName) . "'";
                                                     $msg = "$mods->name,\n\n";
-                                                    $msg .= "$_COM_A_NOT_MOD1 $board_title "._FB_FORUM."\n\n";
-                                                    $msg .= _GEN_SUBJECT.": '" . stripslashes($messagesubject) . "' "._FB_IN_FORUM." '" . stripslashes($catName) . "'\n";
+                                                    $msg .= "$_COM_A_NOT_MOD1 $board_title "._KUNENA_FORUM."\n\n";
+                                                    $msg .= _GEN_SUBJECT.": '" . stripslashes($messagesubject) . "' "._KUNENA_IN_FORUM." '" . stripslashes($catName) . "'\n";
                                                     $msg .= _VIEW_POSTED.": " . stripslashes($fb_authorname) . "\n\n";
                                                     $msg .= "$_COM_A_NOT_MOD2\n";
                                                     $msg .= "URL: $LastPostUrl\n\n";
@@ -550,7 +550,7 @@ $catName = $objCatInfo->name;
                     }
             ?>
 
-                    <form action = "<?php echo sefRelToAbs(JB_LIVEURLREL.'&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
+                    <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
                         <input type = "hidden" name = "parentid" value = "<?php echo $parentid;?>"/>
 
                         <input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
@@ -563,11 +563,11 @@ $catName = $objCatInfo->name;
                         //get the writing stuff in:
                         $no_upload = "0"; //only edit mode should disallow this
 
-                        if (file_exists(JB_ABSTMPLTPATH . '/fb_write.html.php')) {
-                            include (JB_ABSTMPLTPATH . '/fb_write.html.php');
+                        if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
+                            include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
                         else {
-                            include (JB_ABSPATH . '/template/default/fb_write.html.php');
+                            include (KUNENA_ABSPATH . '/template/default/fb_write.html.php');
                         }
                         //--
                         //echo "</form>";
@@ -600,7 +600,7 @@ $catName = $objCatInfo->name;
                     $authorName = $my_name;
                         ?>
 
-                    <form action = "<?php echo sefRelToAbs(JB_LIVEURLREL . '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
+                    <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
                         <input type = "hidden" name = "parentid" value = "<?php echo $parentid;?>"/>
 
                         <input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
@@ -613,11 +613,11 @@ $catName = $objCatInfo->name;
                         //get the writing stuff in:
                         $no_upload = "0"; //only edit mode should disallow this
 
-                        if (file_exists(JB_ABSTMPLTPATH . '/fb_write.html.php')) {
-                            include (JB_ABSTMPLTPATH . '/fb_write.html.php');
+                        if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
+                            include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
                         else {
-                            include (JB_ABSPATH . '/template/default/fb_write.html.php');
+                            include (KUNENA_ABSPATH . '/template/default/fb_write.html.php');
                         }
                         //--
                         //echo "</form>";
@@ -651,7 +651,7 @@ $catName = $objCatInfo->name;
                     $contentURL = _POST_DISCUSS . ': [url=' . $contentURL . ']' . $resubject . '[/url]';
                         ?>
 
-                    <form action = "<?php echo sefRelToAbs(JB_LIVEURLREL."&amp;func=post");?>" method = "post" name = "postform" enctype = "multipart/form-data">
+                    <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL."&amp;func=post");?>" method = "post" name = "postform" enctype = "multipart/form-data">
                         <input type = "hidden" name = "parentid" value = "<?php echo $parentid;?>"/>
 
                         <input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
@@ -664,11 +664,11 @@ $catName = $objCatInfo->name;
                         //get the writing stuff in:
                         $no_upload = "0"; //only edit mode should disallow this
 
-                        if (file_exists(JB_ABSTMPLTPATH . '/fb_write.html.php')) {
-                            include (JB_ABSTMPLTPATH . '/fb_write.html.php');
+                        if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
+                            include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
                         else {
-                            include (JB_ABSPATH . '/template/default/fb_write.html.php');
+                            include (KUNENA_ABSPATH . '/template/default/fb_write.html.php');
                         }
                         //--
                         //echo "</form>";
@@ -728,7 +728,7 @@ $catName = $objCatInfo->name;
                         $authorName = htmlspecialchars($mes->name);
                         ?>
 
-                        <form action = "<?php echo sefRelToAbs(JB_LIVEURLREL."&amp;catid=$catid&amp;func=post"); ?>" method = "post" name = "postform" enctype = "multipart/form-data"/>
+                        <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL."&amp;catid=$catid&amp;func=post"); ?>" method = "post" name = "postform" enctype = "multipart/form-data"/>
 
                         <input type = "hidden" name = "id" value = "<?php echo $mes->id;?>"/>
 
@@ -760,11 +760,11 @@ $catName = $objCatInfo->name;
                             $no_upload = "0";
                         }
 
-                        if (file_exists(JB_ABSTMPLTPATH . '/fb_write.html.php')) {
-                            include (JB_ABSTMPLTPATH . '/fb_write.html.php');
+                        if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
+                            include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
                         else {
-                            include (JB_ABSPATH . '/template/default/fb_write.html.php');
+                            include (KUNENA_ABSPATH . '/template/default/fb_write.html.php');
                         }
                         //echo "</form>";
                         //}
@@ -813,11 +813,11 @@ $catName = $objCatInfo->name;
                     if ($allowEdit == 1)
                     {
                         if ($attachfile != '') {
-                            include JB_ABSSOURCESPATH . 'fb_file_upload.php';
+                            include KUNENA_ABSSOURCESPATH . 'fb_file_upload.php';
                         }
 
                         if ($attachimage != '') {
-                            include JB_ABSSOURCESPATH . 'fb_image_upload.php';
+                            include KUNENA_ABSSOURCESPATH . 'fb_image_upload.php';
                         }
 
                         //$message = trim(htmlspecialchars(addslashes($message)));
@@ -901,7 +901,7 @@ $catName = $objCatInfo->name;
                     {
                         ?>
 
-                        <form action = "<?php echo sefRelToAbs(JB_LIVEURLREL."&amp;catid=$catid&amp;func=post"); ?>" method = "post" name = "myform">
+                        <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL."&amp;catid=$catid&amp;func=post"); ?>" method = "post" name = "myform">
                             <input type = "hidden" name = "do" value = "deletepostnow"/>
 
                             <input type = "hidden" name = "id" value = "<?php echo $mes->id;?>"/> <?php echo _POST_ABOUT_TO_DELETE; ?>: <strong><?php echo stripslashes(htmlspecialchars($mes->subject)); ?></strong>.
@@ -918,7 +918,7 @@ $catName = $objCatInfo->name;
 
     <br/>
 
-    <a href = "javascript:document.myform.submit();"><?php echo _GEN_CONTINUE; ?></a> | <a href = "<?php echo sefRelToAbs(JB_LIVEURLREL."&amp;func=view&amp;catid=$catid;&amp;id=$id");?>"><?php echo _GEN_CANCEL; ?></a>
+    <a href = "javascript:document.myform.submit();"><?php echo _GEN_CONTINUE; ?></a> | <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL."&amp;func=view&amp;catid=$catid;&amp;id=$id");?>"><?php echo _GEN_CANCEL; ?></a>
                         </form>
 
             <?php
@@ -941,19 +941,19 @@ $catName = $objCatInfo->name;
                         case -1:
                             echo _POST_ERROR_TOPIC . '<br />';
 
-                            echo _FB_POST_DEL_ERR_CHILD;
+                            echo _KUNENA_POST_DEL_ERR_CHILD;
                             break;
 
                         case -2:
                             echo _POST_ERROR_TOPIC . '<br />';
 
-                            echo _FB_POST_DEL_ERR_MSG;
+                            echo _KUNENA_POST_DEL_ERR_MSG;
                             break;
 
                         case -3:
                             echo _POST_ERROR_TOPIC . '<br />';
 
-                            $tmpstr = _FB_POST_DEL_ERR_TXT;
+                            $tmpstr = _KUNENA_POST_DEL_ERR_TXT;
                             $tmpstr = str_replace('%id%', $id, $tmpstr);
                             echo $tmpstr;
                             break;
@@ -961,7 +961,7 @@ $catName = $objCatInfo->name;
                         case -4:
                             echo _POST_ERROR_TOPIC . '<br />';
 
-                            echo _FB_POST_DEL_ERR_USR;
+                            echo _KUNENA_POST_DEL_ERR_USR;
                             break;
 
                         default:
@@ -991,7 +991,7 @@ $catName = $objCatInfo->name;
                     	check_dberror("Unable to load messages.");
             ?>
 
-                    <form action = "<?php echo sefRelToAbs(JB_LIVEURLREL."&amp;func=post"); ?>" method = "post" name = "myform">
+                    <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL."&amp;func=post"); ?>" method = "post" name = "myform">
                         <input type = "hidden" name = "do" value = "domovepost"/>
 
                         <input type = "hidden" name = "id" value = "<?php echo $id;?>"/>
@@ -1099,7 +1099,7 @@ $catName = $objCatInfo->name;
                     	check_dberror("Unable to load messages.");
             ?>
 
-                    <form action = "<?php echo sefRelToAbs(JB_LIVEURLREL."&func=post"); ?>" method = "post" name = "myform">
+                    <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL."&func=post"); ?>" method = "post" name = "myform">
                         <input type = "hidden" name = "do" value = "domergepost"/>
 
                         <input type = "hidden" name = "id" value = "<?php echo $id;?>"/>
@@ -1275,7 +1275,7 @@ $catName = $objCatInfo->name;
 
             ?>
 
-                    <form action = "<?php echo sefRelToAbs(JB_LIVEURLREL."&func=post"); ?>" method = "post" name = "myform">
+                    <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL."&func=post"); ?>" method = "post" name = "myform">
                         <input type = "hidden" name = "do" value = "dosplit"/>
 
                         <input type = "hidden" name = "id" value = "<?php echo $id;?>"/>
@@ -1385,7 +1385,7 @@ $catName = $objCatInfo->name;
         </table>
 
     <br/>
-    <input type = "submit" class = "button" value = "<?php echo _FB_GO;?>"/>
+    <input type = "submit" class = "button" value = "<?php echo _KUNENA_GO;?>"/>
 
                     </form>
 
@@ -2063,7 +2063,7 @@ function listThreadHistory($id, $fbConfig, $database)
                 <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump) {
-                    require_once (JB_ABSSOURCESPATH . 'fb_forumjump.php');
+                    require_once (KUNENA_ABSSOURCESPATH . 'fb_forumjump.php');
                 }
                 ?>
             </th>

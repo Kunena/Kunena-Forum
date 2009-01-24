@@ -98,8 +98,8 @@ table.fbstat .col2 {
 }
 </style>
 <div class="fbwelcome">
-  <h3><?php echo _FB_WELCOME;?></h3>
-  <p><?php echo _FB_WELCOME_DESC;?></p>
+  <h3><?php echo _KUNENA_WELCOME;?></h3>
+  <p><?php echo _KUNENA_WELCOME_DESC;?></p>
 </div>
 <div style="border:1px solid #ddd; background:#FBFBFB;">
   <table class = "thisform">
@@ -127,7 +127,7 @@ table.fbstat .col2 {
             <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=pruneforum" style = "text-decoration:none;" title = "<?php echo _COM_C_PRUNETABDESC;?>"> <img src = "components/com_kunena/images/fbtable.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_PRUNETAB; ?> </a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=syncusers" style = "text-decoration:none;" title = "<?php echo _COM_C_SYNCEUSERSDESC;?>"> <img src = "components/com_kunena/images/fbusers.png"  align = "middle" border = "0"/> <span> <?php echo _FB_SYNC_USERS; ?> </a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=syncusers" style = "text-decoration:none;" title = "<?php echo _COM_C_SYNCEUSERSDESC;?>"> <img src = "components/com_kunena/images/fbusers.png"  align = "middle" border = "0"/> <span> <?php echo _KUNENA_SYNC_USERS; ?> </a> </div>
           </div>
           <div style = "float:left;">
             <div class = "icon"> <a href = "http://www.bestofjoomla.com" target = "_blank" style = "text-decoration:none;" title = "<?php echo _COM_C_SUPPORTDESC;?>"> <img src = "components/com_kunena/images/fbtechsupport.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_SUPPORT; ?> </span></a> </div>
@@ -136,16 +136,16 @@ table.fbstat .col2 {
             <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=loadSample" style = "text-decoration:none;" title = "<?php echo _COM_C_LOADSAMPLEDESC;?>"> <img src = "components/com_kunena/images/fbloadsample.png" align = "middle" border = "0"/> <span> <?php echo _COM_C_LOADSAMPLE; ?> </a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=removeSample" style = "text-decoration:none;" title = "<?php echo _COM_C_REMOVESAMPLEDESC;?>"> <img src = "components/com_kunena/images/fbremovesample.png" align = "middle" border = "0"/  onclick="return confirm('<?php echo _FB_CONFIRM_REMOVESAMPLEDATA?>');"> <span> <?php echo _COM_C_REMOVESAMPLE; ?> </a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=removeSample" style = "text-decoration:none;" title = "<?php echo _COM_C_REMOVESAMPLEDESC;?>"> <img src = "components/com_kunena/images/fbremovesample.png" align = "middle" border = "0"/  onclick="return confirm('<?php echo _KUNENA_CONFIRM_REMOVESAMPLEDATA?>');"> <span> <?php echo _COM_C_REMOVESAMPLE; ?> </a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=showsmilies" style = "text-decoration:none;" title = "<?php echo _FB_EMOTICONS_EDIT_SMILIES;?>"> <img src = "components/com_kunena/images/fbsmiley.png"  align = "middle" border = "0"/> <span> <?php echo _FB_EMOTICONS_EDIT_SMILIES;?> </a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=showsmilies" style = "text-decoration:none;" title = "<?php echo _KUNENA_EMOTICONS_EDIT_SMILIES;?>"> <img src = "components/com_kunena/images/fbsmiley.png"  align = "middle" border = "0"/> <span> <?php echo _KUNENA_EMOTICONS_EDIT_SMILIES;?> </a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index3.php?option=com_kunena&amp;task=recount&no_html=1" style = "text-decoration:none;" title = "<?php echo _FB_RECOUNTFORUMS;?>"> <img src = "components/com_kunena/images/fbupgrade.png" align = "middle" border = "0"/> <span> <?php echo _FB_RECOUNTFORUMS; ?> </a> </div>
+            <div class = "icon"> <a href = "index3.php?option=com_kunena&amp;task=recount&no_html=1" style = "text-decoration:none;" title = "<?php echo _KUNENA_RECOUNTFORUMS;?>"> <img src = "components/com_kunena/images/fbupgrade.png" align = "middle" border = "0"/> <span> <?php echo _KUNENA_RECOUNTFORUMS; ?> </a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=ranks" style = "text-decoration:none;" title = "<?php echo _FB_RANKS_MANAGE;?>"> <img src = "components/com_kunena/images/fbranks.png"  align = "middle" border = "0"/> <span> <?php echo _FB_RANKS_MANAGE; ?> </a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=ranks" style = "text-decoration:none;" title = "<?php echo _KUNENA_RANKS_MANAGE;?>"> <img src = "components/com_kunena/images/fbranks.png"  align = "middle" border = "0"/> <span> <?php echo _KUNENA_RANKS_MANAGE; ?> </a> </div>
           </div>
         </div></td>
     </tr>
@@ -167,10 +167,10 @@ table.fbstat .col2 {
     <col class="col2">
     <thead>
       <tr>
-        <th><?php echo _FB_STATISTIC;?></th>
-        <th><?php echo _FB_VALUE;?></th>
-        <th><?php echo _FB_STATISTIC;?></th>
-        <th><?php echo _FB_VALUE;?></th>
+        <th><?php echo _KUNENA_STATISTIC;?></th>
+        <th><?php echo _KUNENA_VALUE;?></th>
+        <th><?php echo _KUNENA_STATISTIC;?></th>
+        <th><?php echo _KUNENA_VALUE;?></th>
       </tr>
     </thead>
     <?php
@@ -226,26 +226,26 @@ table.fbstat .col2 {
           <col class="col2">
           <thead>
             <tr>
-              <th><?php echo _FB_USRL_USERNAME;?></th>
+              <th><?php echo _KUNENA_USRL_USERNAME;?></th>
               <th></th>
-              <th><?php echo _FB_USRL_HITS;?></th>
+              <th><?php echo _KUNENA_USRL_HITS;?></th>
             </tr>
           </thead>
           <tbody>
             <?php
-	$jb_top_posters=jbStats::get_top_posters();
-	foreach ($jb_top_posters as $jb_poster) {
-		if ($jb_poster->posts == $jb_top_posters[0]->posts) {
+	$KUNENA_top_posters=jbStats::get_top_posters();
+	foreach ($KUNENA_top_posters as $KUNENA_poster) {
+		if ($KUNENA_poster->posts == $KUNENA_top_posters[0]->posts) {
 			$barwidth = 100;
 		}
 		else {
-			$barwidth = round(($jb_poster->posts * 100) / $jb_top_posters[0]->posts);
+			$barwidth = round(($KUNENA_poster->posts * 100) / $KUNENA_top_posters[0]->posts);
 		}
 	?>
             <tr>
-              <td><?php echo $jb_poster->username;?> </td>
-              <td ><img style="margin-bottom:1px" src="<?php echo JB_DIRECTURL.'/template/default/images/bar.gif'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
-              <td ><?php echo $jb_poster->posts;?></td>
+              <td><?php echo $KUNENA_poster->username;?> </td>
+              <td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'/template/default/images/bar.gif'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
+              <td ><?php echo $KUNENA_poster->posts;?></td>
             </tr>
             <?php
 	}
@@ -265,9 +265,9 @@ table.fbstat .col2 {
           <col class="col2">
           <thead>
             <tr>
-              <th><?php echo _FB_USRL_USERNAME;?></th>
+              <th><?php echo _KUNENA_USRL_USERNAME;?></th>
               <th></th>
-              <th><?php echo _FB_USRL_HITS;?></th>
+              <th><?php echo _KUNENA_USRL_HITS;?></th>
             </tr>
           </thead>
           <tbody>
@@ -281,7 +281,7 @@ table.fbstat .col2 {
 	?>
             <tr>
               <td><?php echo $fb_profile->username; ?></td>
-              <td ><img style="margin-bottom:1px" src="<?php echo JB_DIRECTURL.'/template/default/images/bar.gif'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
+              <td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'/template/default/images/bar.gif'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
               <td ><?php echo $fb_profile->uhits;?></td>
             </tr>
             <?php
@@ -304,27 +304,27 @@ table.fbstat .col2 {
     <col class="col2">
     <thead>
       <tr>
-        <th><?php echo _FB_USERPROFILE_TOPICS;?></th>
+        <th><?php echo _KUNENA_USERPROFILE_TOPICS;?></th>
         <th></th>
-        <th><?php echo _FB_USRL_HITS;?></th>
+        <th><?php echo _KUNENA_USRL_HITS;?></th>
       </tr>
     </thead>
     <tbody>
       <?php
-	$jb_top_posts=jbStats::get_top_topics();
-	foreach ($jb_top_posts as $jb_post) {
-		if ($jb_post->hits == $jb_top_posts[0]->hits) {
+	$KUNENA_top_posts=jbStats::get_top_topics();
+	foreach ($KUNENA_top_posts as $KUNENA_post) {
+		if ($KUNENA_post->hits == $KUNENA_top_posts[0]->hits) {
 			$barwidth = 100;
 		}
 		else {
-			$barwidth = round(($jb_post->hits * 100) / $jb_top_posts[0]->hits);
+			$barwidth = round(($KUNENA_post->hits * 100) / $KUNENA_top_posts[0]->hits);
 		}
-		$link = JB_LIVEURL.'&func=view&id='.$jb_post->id.'&catid='.$jb_post->catid;
+		$link = KUNENA_LIVEURL.'&func=view&id='.$KUNENA_post->id.'&catid='.$KUNENA_post->catid;
 	?>
       <tr>
-        <td ><a href="<?php echo $link;?>"><?php echo $jb_post->subject;?></a> </td>
-        <td ><img src="<?php echo JB_DIRECTURL.'/template/default/images/bar.gif'; ?>" alt="" style="margin-bottom:1px" height="15" width="<?php echo $barwidth;?>"> </td>
-        <td ><?php echo $jb_post->hits;?></td>
+        <td ><a href="<?php echo $link;?>"><?php echo $KUNENA_post->subject;?></a> </td>
+        <td ><img src="<?php echo KUNENA_DIRECTURL.'/template/default/images/bar.gif'; ?>" alt="" style="margin-bottom:1px" height="15" width="<?php echo $barwidth;?>"> </td>
+        <td ><?php echo $KUNENA_post->hits;?></td>
       </tr>
       <?php } ?>
     </tbody>

@@ -1,6 +1,6 @@
 <?PHP
 /**
-* @version $Id$
+* @version $Id:interpreter.kunena.inc.php 126 2009-01-24 08:36:37Z fxstein $
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
@@ -263,7 +263,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
                     $types = array ("php", "mysql", "html", "js", "javascript");
 
-                    $code_start_html = '<div class="fbcode"><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr><td><b>'._FB_MSG_CODE.'</b></td></tr><tr><td><hr />';
+                    $code_start_html = '<div class="fbcode"><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr><td><b>'._KUNENA_MSG_CODE.'</b></td></tr><tr><td><hr />';
                     if (in_array($tag->options["type"], $types)) {
                         $t_type = $tag->options["type"];
                     }
@@ -342,8 +342,8 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
             case 'file':
                 if($between) {
                     $task->autolink_disable--; # continue autolink conversion
-                    $tag_new = "<div class=\"fb_file_attachment\"><span class=\"contentheading\">"._FB_FILEATTACH."</span><br>"._FB_FILENAME
-                    ."<a href='".$between."' target=\"_blank\" rel=\"nofollow\">".(($tag->options["name"])?htmlspecialchars($tag->options["name"]):$between)."</a><br>"._FB_FILESIZE.htmlspecialchars($tag->options["size"], ENT_QUOTES)."</div>";
+                    $tag_new = "<div class=\"fb_file_attachment\"><span class=\"contentheading\">"._KUNENA_FILEATTACH."</span><br>"._KUNENA_FILENAME
+                    ."<a href='".$between."' target=\"_blank\" rel=\"nofollow\">".(($tag->options["name"])?htmlspecialchars($tag->options["name"]):$between)."</a><br>"._KUNENA_FILESIZE.htmlspecialchars($tag->options["size"], ENT_QUOTES)."</div>";
                     return TAGPARSER_RET_REPLACED;
                 }
                 return TAGPARSER_RET_NOTHING;
@@ -606,7 +606,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                     else
                     {
                     	// Display but highlight the fact that it is hidden from guests
-                    	$tag_new = '<b>' . _FB_BBCODE_HIDE . '</b>' . '<span class="fb_quote">'.$between.'</span>';
+                    	$tag_new = '<b>' . _KUNENA_BBCODE_HIDE . '</b>' . '<span class="fb_quote">'.$between.'</span>';
                     }
                     return TAGPARSER_RET_REPLACED;
                 }
@@ -645,7 +645,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
                     $tag_new .= '<div id="'.$randomid.'" onClick="javascript:fb_showDetail(this);" style="cursor:pointer;"><img id="'.$randomid.'_img"'.
                     			'src="/components/com_kunena/template/default/images/english/emoticons/pinch.png" border="0"> <strong>'.
-                    			(isset($tag->options["title"]) ? ($tag->options["title"]) : (_FB_BBCODE_SPOILER))
+                    			(isset($tag->options["title"]) ? ($tag->options["title"]) : (_KUNENA_BBCODE_SPOILER))
                     			. '</strong></div><div id="'. $randomid . '_details" style="display:None;"><span class="fb_quote">' . $between . '</span></div>';
 
                     return TAGPARSER_RET_REPLACED;

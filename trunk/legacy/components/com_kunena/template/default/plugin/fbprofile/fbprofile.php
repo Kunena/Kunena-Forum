@@ -13,8 +13,8 @@ defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 global $fbConfig;
 if ($my->id) //registered only
 {
-    require_once(JB_ABSSOURCESPATH . 'fb_auth.php');
-    require_once(JB_ABSSOURCESPATH . 'fb_statsbar.php');
+    require_once(KUNENA_ABSSOURCESPATH . 'fb_auth.php');
+    require_once(KUNENA_ABSSOURCESPATH . 'fb_statsbar.php');
 
     $task = mosGetParam($_GET, 'task', "");
 
@@ -88,7 +88,7 @@ function showprf($userid, $page)
             if ($avatar != '')
             {
                 //This now  has the right path to the upload directory and also handles the thumbnail and gallery photos.
-                $imgpath = JB_JLIVEURL . '/images/comprofiler/';
+                $imgpath = KUNENA_JLIVEURL . '/images/comprofiler/';
 
                 if (eregi("gallery/", $avatar) == false)
                     $imgpath .= "tn" . $avatar;
@@ -98,7 +98,7 @@ function showprf($userid, $page)
                 $msg_avatar = '<span class="fb_avatar"><img src="' . $imgpath . '"  alt="" /></span>';
             }
             else {
-                $imgpath = JB_JLIVEURL."/components/com_comprofiler/plugin/language/default_language/images/nophoto.jpg";
+                $imgpath = KUNENA_JLIVEURL."/components/com_comprofiler/plugin/language/default_language/images/nophoto.jpg";
                 $msg_avatar = '<span class="fb_avatar"><img src="' . $imgpath . '"  alt="" /></span>';
             }
         }
@@ -108,17 +108,17 @@ function showprf($userid, $page)
 
         	if ($avatar != '')
         	{
-        		if(!file_exists(FB_ABSUPLOADEDPATH . '/avatars/l_' . $avatar))
+        		if(!file_exists(KUNENA_ABSUPLOADEDPATH . '/avatars/l_' . $avatar))
         		{
-        			$msg_avatar = '<span class="fb_avatar"><img border="0" src="' . FB_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '"  alt="" /></span>';
+        			$msg_avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '"  alt="" /></span>';
 				}
 				else
 				{
-					$msg_avatar = '<span class="fb_avatar"><img border="0" src="' . FB_LIVEUPLOADEDPATH . '/avatars/l_' . $avatar . '"  alt="" /></span>';
+					$msg_avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/l_' . $avatar . '"  alt="" /></span>';
 				}
         	}
 
-        	else {$msg_avatar = '<span class="fb_avatar"><img  border="0" src="' . FB_LIVEUPLOADEDPATH . '/avatars/nophoto.jpg"  alt="" /></span>'; }
+        	else {$msg_avatar = '<span class="fb_avatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/nophoto.jpg"  alt="" /></span>'; }
         }
     }
 
@@ -173,7 +173,7 @@ function showprf($userid, $page)
 													check_dberror("Unable to load ranks.");
 												$rank=$getRank[0];
 												$rText = $rank->rank_title;
-												$rImg = JB_URLRANKSPATH . $rank->rank_image;
+												$rImg = KUNENA_URLRANKSPATH . $rank->rank_image;
 									}
 									if ($userinfo->rank == '0')
 									{
@@ -183,19 +183,19 @@ function showprf($userid, $page)
 													check_dberror("Unable to load ranks.");
 												$rank=$getRank[0];
 												$rText = $rank->rank_title;
-												$rImg = JB_URLRANKSPATH . $rank->rank_image;
+												$rImg = KUNENA_URLRANKSPATH . $rank->rank_image;
 									}
 
 									if ($uIsMod)
 									{
 													$rText = _RANK_MODERATOR;
-													$rImg = JB_URLRANKSPATH . 'rankmod.gif';
+													$rImg = KUNENA_URLRANKSPATH . 'rankmod.gif';
 									}
 
 									if ($uIsAdm)
 									{
 													$rText = _RANK_ADMINISTRATOR;
-													$rImg = JB_URLRANKSPATH . 'rankadmin.gif';
+													$rImg = KUNENA_URLRANKSPATH . 'rankadmin.gif';
 									}
 
 									if ($fbConfig->rankimages) {
@@ -220,8 +220,8 @@ function showprf($userid, $page)
                 //$myGraph->SetGraphTitle(_POSTS);
                 $myGraph->AddValue(_POSTS, $numPosts);
                 $myGraph->SetRowSortMode(0);
-                $myGraph->SetBarImg(JB_URLGRAPHPATH . "col" . $fbConfig->statscolor . "m.png");
-                $myGraph->SetBarImg2(JB_URLEMOTIONSPATH . "graph.gif");
+                $myGraph->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $fbConfig->statscolor . "m.png");
+                $myGraph->SetBarImg2(KUNENA_URLEMOTIONSPATH . "graph.gif");
                 $myGraph->SetMaxVal($maxPosts);
                 $myGraph->SetShowCountsMode(2);
                 $myGraph->SetBarWidth(4); //height of the bar
@@ -243,23 +243,23 @@ function showprf($userid, $page)
 
         if ($my->id != '0' && $my->id != $userid)
         {
-            $msg_karmaminus = "<a href=\"" . sefRelToAbs(JB_LIVEURLREL . '&amp;func=karma&amp;do=decrease&amp;userid=' . $userid . '&amp;pid=' . $fmessage->id . '&amp;catid=' . $catid . '') . "\"><img src=\"";
+            $msg_karmaminus = "<a href=\"" . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=decrease&amp;userid=' . $userid . '&amp;pid=' . $fmessage->id . '&amp;catid=' . $catid . '') . "\"><img src=\"";
 
             if ($fbIcons['karmaminus']) {
-                $msg_karmaminus .= JB_URLICONSPATH . "" . $fbIcons['karmaminus'];
+                $msg_karmaminus .= KUNENA_URLICONSPATH . "" . $fbIcons['karmaminus'];
             }
             else {
-                $msg_karmaminus .= JB_URLEMOTIONSPATH . "karmaminus.gif";
+                $msg_karmaminus .= KUNENA_URLEMOTIONSPATH . "karmaminus.gif";
             }
 
             $msg_karmaminus .= "\" alt=\"Karma-\" border=\"0\" title=\"" . _KARMA_SMITE . "\" align=\"middle\" /></a>";
-            $msg_karmaplus = "<a href=\"" . sefRelToAbs(JB_LIVEURLREL . '&amp;func=karma&amp;do=increase&amp;userid=' . $userid . '&amp;pid=' . $fmessage->id . '&amp;catid=' . $catid . '') . "\"><img src=\"";
+            $msg_karmaplus = "<a href=\"" . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=increase&amp;userid=' . $userid . '&amp;pid=' . $fmessage->id . '&amp;catid=' . $catid . '') . "\"><img src=\"";
 
             if ($fbIcons['karmaplus']) {
-                $msg_karmaplus .= JB_URLICONSPATH . "" . $fbIcons['karmaplus'];
+                $msg_karmaplus .= KUNENA_URLICONSPATH . "" . $fbIcons['karmaplus'];
             }
             else {
-                $msg_karmaplus .= JB_URLEMOTIONSPATH . "karmaplus.gif";
+                $msg_karmaplus .= KUNENA_URLEMOTIONSPATH . "karmaplus.gif";
             }
 
             $msg_karmaplus .= "\" alt=\"Karma+\" border=\"0\" title=\"" . _KARMA_APPLAUD . "\" align=\"middle\" /></a>";
@@ -277,10 +277,10 @@ function showprf($userid, $page)
         $msg_pms = "<a href=\"" . sefRelToAbs('index.php?option=com_uddeim&amp;task=new&recip=' . $userid) . "\"><img src=\"";
 
         if ($fbIcons['pms']) {
-            $msg_pms .= JB_URLICONSPATH . '' . $fbIcons['pms'];
+            $msg_pms .= KUNENA_URLICONSPATH . '' . $fbIcons['pms'];
         }
         else {
-            $msg_pms .= JB_URLEMOTIONSPATH . "sendpm.gif";
+            $msg_pms .= KUNENA_URLEMOTIONSPATH . "sendpm.gif";
         }
 
         $msg_pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
@@ -295,10 +295,10 @@ function showprf($userid, $page)
         $msg_pms = "<a href=\"" . sefRelToAbs('index.php?option=com_pms&amp;page=new&amp;id=' . $PMSName . '&title=' . $fmessage->subject) . "\"><img src=\"";
 
         if ($fbIcons['pms']) {
-            $msg_pms .= JB_URLICONSPATH . "" . $fbIcons['pms'];
+            $msg_pms .= KUNENA_URLICONSPATH . "" . $fbIcons['pms'];
         }
         else {
-            $msg_pms .= JB_URLEMOTIONSPATH . "sendpm.gif";
+            $msg_pms .= KUNENA_URLEMOTIONSPATH . "sendpm.gif";
         }
 
         $msg_pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
@@ -316,11 +316,11 @@ function showprf($userid, $page)
 
         if ($isonline && $userinfo->showOnline ==1 ) {
             $msg_online .= $fbIcons['onlineicon']
-                ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . JB_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';
+                ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';
         }
         else {
             $msg_online .= $fbIcons['offlineicon']
-                ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . JB_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
+                ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
         }
     }
 
@@ -337,10 +337,10 @@ function showprf($userid, $page)
         $msg_pms = "<a href=\"" . sefRelToAbs('index.php?option=com_mypms&amp;task=new&amp;to=' . $userid . '' . $fmessage->subject) . "\"><img src=\"";
 
         if ($fbIcons['pms']) {
-            $msg_pms .= JB_URLICONSPATH . "" . $fbIcons['pms'];
+            $msg_pms .= KUNENA_URLICONSPATH . "" . $fbIcons['pms'];
         }
         else {
-            $msg_pms .= JB_JLIVEURL . "/components/com_mypms/images/icons/message_12px.gif";
+            $msg_pms .= KUNENA_JLIVEURL . "/components/com_mypms/images/icons/message_12px.gif";
         }
 
         $msg_pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
@@ -348,10 +348,10 @@ function showprf($userid, $page)
         $msg_profile = "<a href=\"" . MyPMSTools::getProfileLink($userid) . "\"><img src=\"";
 
         if ($fbIcons['userprofile']) {
-            $msg_profile .= JB_URLICONSPATH . '' . $fbIcons['userprofile'];
+            $msg_profile .= KUNENA_URLICONSPATH . '' . $fbIcons['userprofile'];
         }
         else {
-            $msg_profile .= JB_JLIVEURL . "/components/com_mypms/images/managecontact_icon.gif";
+            $msg_profile .= KUNENA_JLIVEURL . "/components/com_mypms/images/managecontact_icon.gif";
         }
 
         $msg_profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
@@ -359,10 +359,10 @@ function showprf($userid, $page)
         $msg_buddy = "<a href=\"" . sefRelToAbs('index.php?option=com_mypms&amp;user=' . $PMSName . '&amp;task=addbuddy') . "\"><img src=\"";
 
         if ($fbIcons['pms2buddy']) {
-            $msg_buddy .= JB_URLICONSPATH . "" . $fbIcons['pms2buddy'];
+            $msg_buddy .= KUNENA_URLICONSPATH . "" . $fbIcons['pms2buddy'];
         }
         else {
-            $msg_buddy .= JB_JLIVEURL . "/components/com_mypms/images/messages/addbuddy.gif";
+            $msg_buddy .= KUNENA_JLIVEURL . "/components/com_mypms/images/messages/addbuddy.gif";
         }
 
         $msg_buddy .= "\" alt=\"" . _VIEW_ADDBUDDY . "\" border=\"0\" title=\"" . _VIEW_ADDBUDDY . "\" /></a>";
@@ -374,13 +374,13 @@ function showprf($userid, $page)
         foreach ($mostables as $mostables)
         {
             if ($mostables->aim)
-                $msg_aim = "<a href=\"aim:goim?screenname=" . str_replace(" ", "+", $mostables->aim) . "\"><img src=\"" . JB_URLEMOTIONSPATH . "aim.png\" border=0 alt=\"\" /></a>";
+                $msg_aim = "<a href=\"aim:goim?screenname=" . str_replace(" ", "+", $mostables->aim) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "aim.png\" border=0 alt=\"\" /></a>";
 
             if ($mostables->icq)
-                $msg_icq = "<a href=\"http://www.icq.com/whitepages/wwp.php?uin=" . $mostables->icq . "\"><img src=\"" . JB_URLEMOTIONSPATH . "icq.png\" border=0 alt=\"\" /></a>";
+                $msg_icq = "<a href=\"http://www.icq.com/whitepages/wwp.php?uin=" . $mostables->icq . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "icq.png\" border=0 alt=\"\" /></a>";
 
             if ($mostables->msn)
-                $msg_msn = "<a href=\"" . sefRelToAbs('index.php?option=com_mypms&amp;task=showprofile&amp;user=' . $PMSName) . "\"><img src=\"" . JB_URLEMOTIONSPATH . "msn.png\" border=0 alt=\"\" /></a>";
+                $msg_msn = "<a href=\"" . sefRelToAbs('index.php?option=com_mypms&amp;task=showprofile&amp;user=' . $PMSName) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "msn.png\" border=0 alt=\"\" /></a>";
 
             if ($mostables->ym)
                 $msg_yahoo = "<a href=\"http://edit.yahoo.com/config/send_webmesg?.target=" . $mostables->ym . "&.src=pg\"><img src=\"http://opi.yahoo.com/online?u=" . $mostables->ym . "&m=g&t=0\" border=0 alt=\"\" /></a>";
@@ -398,10 +398,10 @@ function showprf($userid, $page)
         $msg_profile = "<a href=\"" . sefRelToAbs('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $userid . '&amp;Itemid=1') . "\"><img src=\"";
 
         if ($fbIcons['userprofile']) {
-            $msg_profile .= JB_URLICONSPATH . "" . $fbIcons['userprofile'];
+            $msg_profile .= KUNENA_URLICONSPATH . "" . $fbIcons['userprofile'];
         }
         else {
-            $msg_profile .= JB_JLIVEURL . "/components/com_comprofiler/images/profiles.gif";
+            $msg_profile .= KUNENA_JLIVEURL . "/components/com_comprofiler/images/profiles.gif";
         }
 
         $msg_profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
@@ -422,11 +422,11 @@ function showprf($userid, $page)
             <td class = "<?php echo $boardclass; ?>profile-left" align="center" valign="top" width="25%">
             <!-- Kunena Profile -->
                 <?php
-                if (file_exists(JB_ABSTMPLTPATH . '/plugin/fbprofile/userinfos.php')) {
-                    include(JB_ABSTMPLTPATH . '/plugin/fbprofile/userinfos.php');
+                if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/userinfos.php')) {
+                    include(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/userinfos.php');
                 }
                 else {
-                    include(JB_ABSPATH . '/template/default/plugin/fbprofile/userinfos.php');
+                    include(KUNENA_ABSPATH . '/template/default/plugin/fbprofile/userinfos.php');
                 }
                 ?>
 
@@ -440,29 +440,29 @@ function showprf($userid, $page)
 
             <?php
 
-				 if (file_exists(JB_ABSTMPLTPATH . '/smile.class.php'))
+				 if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php'))
 				{
-					include (JB_ABSTMPLTPATH . '/smile.class.php');
+					include (KUNENA_ABSTMPLTPATH . '/smile.class.php');
 				}
 				else
 				{
-					include (JB_ABSPATH . '/template/default/smile.class.php');
+					include (KUNENA_ABSPATH . '/template/default/smile.class.php');
 				}
 
-                if (file_exists(JB_ABSTMPLTPATH . '/plugin/fbprofile/summary.php')) {
-                    include(JB_ABSTMPLTPATH . '/plugin/fbprofile/summary.php');
+                if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/summary.php')) {
+                    include(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/summary.php');
                 }
                 else {
-                    include(JB_ABSPATH . '/template/default/plugin/fbprofile/summary.php');
+                    include(KUNENA_ABSPATH . '/template/default/plugin/fbprofile/summary.php');
                 }
                 ?>
 
                 <?php
-                if (file_exists(JB_ABSTMPLTPATH . '/plugin/fbprofile/forummsg.php')) {
-                    include(JB_ABSTMPLTPATH . '/plugin/fbprofile/forummsg.php');
+                if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/forummsg.php')) {
+                    include(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/forummsg.php');
                 }
                 else {
-                    include(JB_ABSPATH . '/template/default/plugin/fbprofile/forummsg.php');
+                    include(KUNENA_ABSPATH . '/template/default/plugin/fbprofile/forummsg.php');
                 }
                 ?>
             </td>
@@ -488,7 +488,7 @@ function showprf($userid, $page)
                 <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump)
-                    require_once(JB_ABSSOURCESPATH . 'fb_forumjump.php');
+                    require_once(KUNENA_ABSSOURCESPATH . 'fb_forumjump.php');
                 ?>
             </th>
         </tr>

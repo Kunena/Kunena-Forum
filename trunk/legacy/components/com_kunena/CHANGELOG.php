@@ -47,6 +47,7 @@ Kunena 1.0.5
 + default_ex: Jump to first new message by clicking new message indicator.
 ! Current behaviour is "first message after logout or mark all forums read". 
 ^ showcat, latestx: Use faster query to find all messages in a thread.
+# Message posted notification page redirects after you click a link
 
 24-January-2009 Matias
 # Fixed over 100 xhtml bugs

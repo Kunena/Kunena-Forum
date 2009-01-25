@@ -19,7 +19,7 @@ defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 // ################################################################
 
 include_once(KUNENA_ABSSOURCESPATH."kunena.parser.base.php");
-include_once(KUNENA_ABSSOURCESPATH."interpreter.Kunena.inc.php");
+include_once(KUNENA_ABSSOURCESPATH."kunena.parser.php");
 
 class smile
 {

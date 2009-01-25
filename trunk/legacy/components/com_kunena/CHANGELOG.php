@@ -34,6 +34,8 @@ Kunena 1.0.6
 # Minor typo in include paths fixed
 ^ kunena.credits.php: Updated credits page
 ^ Various links updated
++ Kunena logos added to default and default_ex tamplates
+# smile.class.php: parser references fixed
 
 25-January-2009 Matias
 # Stats: Visible even if they were disabled

@@ -27,7 +27,7 @@ $fbConfig = new fb_config();
 $fbConfig->load();
 
 // Class structure should be used after this and all the common task should be moved to this class
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/class.Kunena.php");
+require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/class.kunena.php");
 require_once ($mainframe->getPath('admin_html'));
 
 //Get right Language file

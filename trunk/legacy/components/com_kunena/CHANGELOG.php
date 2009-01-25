@@ -39,6 +39,7 @@ Kunena 1.0.5
 ! DATABASE UPDATED: new keys added to fb_messages and fb_users
 # Emoticons: Broken "more emoticons" pop up in IE7.
 # Forum Tools: Fixed CSS rules in default_ex
+^ Anonymous user cannot be admin, saves many SQL queries
 
 24-January-2009 Matias
 # Fixed over 100 xhtml bugs

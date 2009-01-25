@@ -60,6 +60,8 @@ function fb_has_post_permission(&$database,$catid,$replyto,$userid,$pubwrite,$is
  */
 
 function fb_has_moderator_permission(&$database,&$obj_fb_cat,$int_fb_uid,$bool_fb_isadmin) {
+    if ($int_fb_uid == 0)
+	return 0; // Anonymous never has moderator permission
     if ($bool_fb_isadmin)
         return 1;
     if ($obj_fb_cat!='' && $obj_fb_cat->getModerated() && $int_fb_uid != 0) {

@@ -28,7 +28,12 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Kunena 1.0.5
+Kunena 1.0.6
+
+25-January-2009 fxstein
+# Minor typo in include paths fixed
+^ kunena.credits.php: Updated credits page
+^ Various links updated
 
 25-January-2009 Matias
 # Stats: Visible even if they were disabled
@@ -43,9 +48,9 @@ Kunena 1.0.5
 # Removing moved thread (or written by anonymous user) didn't
   work in showcat
 + view: Make new messages visible (green topic icon).
-+ defeult_ex: Show number of new messages (just like in category view).
++ default_ex: Show number of new messages (just like in category view).
 + default_ex: Jump to first new message by clicking new message indicator.
-! Current behaviour is "first message after logout or mark all forums read". 
+! Current behaviour is "first message after logout or mark all forums read".
 ^ showcat, latestx: Use faster query to find all messages in a thread.
 # Message posted notification page redirects after you click a link
 
@@ -55,6 +60,6 @@ Kunena 1.0.5
 ^ Category parent list: jump to Board Categories with "Go" button
 ^ Forum stats show users in alphabetical order
 
-24-January-2009 fxstein
+01-January-2009 fxstein
 + Initial fork from FireBoard 1.0.5RC3
 

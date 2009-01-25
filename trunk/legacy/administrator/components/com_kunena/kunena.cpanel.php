@@ -130,7 +130,7 @@ table.fbstat .col2 {
             <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=syncusers" style = "text-decoration:none;" title = "<?php echo _COM_C_SYNCEUSERSDESC;?>"> <img src = "components/com_kunena/images/fbusers.png"  align = "middle" border = "0"/> <span> <?php echo _KUNENA_SYNC_USERS; ?> </a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "http://www.bestofjoomla.com" target = "_blank" style = "text-decoration:none;" title = "<?php echo _COM_C_SUPPORTDESC;?>"> <img src = "components/com_kunena/images/fbtechsupport.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_SUPPORT; ?> </span></a> </div>
+            <div class = "icon"> <a href = "http://www.kunena.com" target = "_blank" style = "text-decoration:none;" title = "<?php echo _COM_C_SUPPORTDESC;?>"> <img src = "components/com_kunena/images/fbtechsupport.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_SUPPORT; ?> </span></a> </div>
           </div>
           <div style = "float:left;">
             <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=loadSample" style = "text-decoration:none;" title = "<?php echo _COM_C_LOADSAMPLEDESC;?>"> <img src = "components/com_kunena/images/fbloadsample.png" align = "middle" border = "0"/> <span> <?php echo _COM_C_LOADSAMPLE; ?> </a> </div>

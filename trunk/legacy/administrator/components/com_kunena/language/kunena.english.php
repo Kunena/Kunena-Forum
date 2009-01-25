@@ -1139,7 +1139,7 @@ DEFINE('_COM_A_AVATARGALLERY_DESC', 'Set to &quot;Yes&quot; if you want register
 DEFINE('_COM_A_RANKING_DESC', 'Set to &quot;Yes&quot; if you want to show the rank registered users have based on the number of posts they made.<br/><strong>Note that you must enable User Stats in the Advanced tab too to show it.</strong>');
 DEFINE('_COM_A_RANKINGIMAGES', 'Use Rank Images');
 DEFINE('_COM_A_RANKINGIMAGES_DESC',
-    'Set to &quot;Yes&quot; if you want to show the rank registered users have with an image (from components/com_kunena/ranks). Turning this of will show the text for that rank. Check the documentation on www.bestofjoomla.com for more information on ranking images');
+    'Set to &quot;Yes&quot; if you want to show the rank registered users have with an image (from components/com_kunena/ranks). Turning this of will show the text for that rank. Check the documentation on www.kunena.com for more information on ranking images');
 
 //email and stuff
 $_COM_A_NOTIFICATION = "New post notification from ";

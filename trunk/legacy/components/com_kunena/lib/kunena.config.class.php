@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id$
+* @version $Id:kunena.config.class.php 138 2009-01-24 10:25:06Z fxstein $
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
@@ -283,11 +283,11 @@ class fb_Config extends boj_Config
     var $usernamechange          = 0;
     var $rules_infb              = 1;
     var $rules_cid               = 1;
-    var $rules_link              = 'http://www.bestofjoomla.com/';
+    var $rules_link              = 'http://www.kunena.com/';
     var $enablehelppage          = 1;
     var $help_infb               = 1;
     var $help_cid                = 1;
-    var $help_link               = 'http://www.bestofjoomla.com/';
+    var $help_link               = 'http://www.kunena.com/';
     // New 1.0.5 config variables
     // bbcode options
     var $showspoilertag			 = 1;

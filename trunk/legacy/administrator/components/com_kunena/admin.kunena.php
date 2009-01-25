@@ -1362,7 +1362,7 @@ function loadSample($database, $option)
 
 	// Load Sample Messages
 	$query = "INSERT INTO `#__fb_messages` "
-				. "\n VALUES (1, 0, 1, 2, 'bestofjoomla', 0, 'anonymous@forum.here', 'Sample Post', 1178882702, '127.0.0.1', 0, 0, 0, 0, 1, 0, 0, 0, 0)";
+				. "\n VALUES (1, 0, 1, 2, 'Kunena', 0, 'anonymous@forum.here', 'Sample Post', 1178882702, '127.0.0.1', 0, 0, 0, 0, 1, 0, 0, 0, 0)";
 
 	$database->setQuery( $query );
 	$database->query() or trigger_dbwarning("Unable to insert sample messages.");

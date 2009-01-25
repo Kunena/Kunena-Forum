@@ -34,7 +34,7 @@ class fb_link
 
     function GetCreditsLink()
     {
-        return fb_link::GetSefHrefLink('http://www.bestofjoomla.com', 'Kunena', 'Kunena', 'follow');
+        return fb_link::GetSefHrefLink('http://www.kunena.com', 'Kunena', 'Kunena', 'follow');
     }
 
     function GetTeamCreditsLink($catid, $name='')

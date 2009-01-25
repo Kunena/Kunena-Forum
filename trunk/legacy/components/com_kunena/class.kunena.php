@@ -555,7 +555,7 @@ class FBTools {
                 $userids = array ();
                 $database->setQuery('SELECT userid,id, catid FROM #__fb_messages WHERE thread=' . $id . ' OR id=' . $id);
 
-                foreach ($database->loadObjectList()as $line) {
+                foreach ($database->loadObjectList() as $line) {
                     $children[] = $line->id;
 
                     if ($line->userid > 0) {
@@ -564,7 +564,6 @@ class FBTools {
                     }
 
                 $children = implode(',', $children);
-                $userids = implode(',', $userids);
                 }
             else {
                 //this is not the forum topic, so delete it and promote the direct children one level up in the hierarchy
@@ -597,6 +596,7 @@ class FBTools {
 
             //Update user post stats
             if (count($userids) > 0) {
+                $userids = implode(',', $userids);
                 $database->setQuery('UPDATE #__fb_users SET posts=posts-1 WHERE userid IN (' . $userids . ')');
 
                 if (!$database->query()) {

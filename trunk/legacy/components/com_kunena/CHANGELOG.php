@@ -40,6 +40,8 @@ Kunena 1.0.5
 # Emoticons: Broken "more emoticons" pop up in IE7.
 # Forum Tools: Fixed CSS rules in default_ex
 ^ Anonymous user cannot be admin, saves many SQL queries
+# Removing moved thread (or written by anonymous user) didn't
+  work in showcat
 
 24-January-2009 Matias
 # Fixed over 100 xhtml bugs

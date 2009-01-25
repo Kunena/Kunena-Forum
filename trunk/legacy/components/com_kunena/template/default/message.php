@@ -187,8 +187,14 @@ $database->loadObject($user);
                             <?php
                             $msg_time_since = _KUNENA_TIME_SINCE;
                             $msg_time_since = str_replace('%time%', time_since($fmessage->time , FBTools::fbGetInternalTime()), $msg_time_since);
+
+                            if ($prevCheck > $fmessage->time) {
+                                $msgtitle = 'msgtitle';
+                            } else {
+                                $msgtitle = 'msgtitle_new';
+                            }
                             ?>
-                            <span class = "msgtitle"><?php echo $msg_subject; ?> </span> <span class = "msgdate" title="<?php echo $msg_date; ?>"><?php echo $msg_time_since; ?></span>
+                            <span class = "<?php echo $msgtitle; ?>"><?php echo $msg_subject; ?> </span> <span class = "msgdate" title="<?php echo $msg_date; ?>"><?php echo $msg_time_since; ?></span>
                         </td>
 
                         <td align = "right">

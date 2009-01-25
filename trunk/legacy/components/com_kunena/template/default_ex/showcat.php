@@ -94,6 +94,8 @@ if ($letPass || $is_Moderator)
         $threadids[] = $message->id;
         $messages[$message->parent][] = $message;
         $last_reply[$message->id] = $message;
+	$last_read[$message->id]->lastread = $last_reply[$message->thread];
+	$last_read[$message->id]->unread = 0;
         $hits[$message->id] = $message->hits;
         $messagetext[$message->id] = substr(smile::purify($message->messagetext), 0, 500);
     }
@@ -119,6 +121,17 @@ if ($letPass || $is_Moderator)
             $messages[$message->parent][] = $message;
             $thread_counts[$message->thread]++;
             $last_reply[$message->thread] = ($last_reply[$message->thread]->time < $message->time) ? $message : $last_reply[$message->thread];
+            $last_read[$message->id]->lastread = $last_reply[$message->thread];
+        }
+
+        $database->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM jos_fb_messages "
+                           ."WHERE thread IN ('$idstr') AND time>'$prevCheck' GROUP BY thread");
+        $msgidlist = $database->loadObjectList();
+        check_dberror("Unable to get unread messages count and first id.");
+
+        foreach ($msgidlist as $msgid)
+        {
+            $last_read[$msgid->thread] = $msgid;
         }
     }
 

@@ -42,6 +42,11 @@ Kunena 1.0.5
 ^ Anonymous user cannot be admin, saves many SQL queries
 # Removing moved thread (or written by anonymous user) didn't
   work in showcat
++ view: Make new messages visible (green topic icon).
++ defeult_ex: Show number of new messages (just like in category view).
++ default_ex: Jump to first new message by clicking new message indicator.
+! Current behaviour is "first message after logout or mark all forums read". 
+^ showcat, latestx: Use faster query to find all messages in a thread.
 
 24-January-2009 Matias
 # Fixed over 100 xhtml bugs

@@ -167,8 +167,9 @@ if ($letPass || $is_Moderator)
 
         $ordering = $orderingNum ? 'DESC' : 'ASC';
         // Advanced moderator merge-split sort order for merged threads
-        $database->setQuery("SELECT * FROM #__fb_messages AS a "
-           ."\n LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE (a.thread='$thread' OR a.id='$thread') AND a.hold=0 AND a.catid='$catid' ORDER BY a.time $ordering");
+        $database->setQuery("(SELECT * FROM #__fb_messages AS a "
+           ."\n LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.id='$thread' AND a.hold=0 AND a.catid='$catid') UNION (SELECT * FROM #__fb_messages AS a "
+           ."\n LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.thread='$thread' AND a.hold=0 AND a.catid='$catid') ORDER BY time $ordering");
 
         if ($view != "flat")
         $flat_messages[] = $this_message;

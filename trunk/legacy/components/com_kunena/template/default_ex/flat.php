@@ -218,6 +218,11 @@ if (count($messages[0]) > 0)
                         <?php
                             if ($leaf->moved == 0)
                             {
+                                // Need to add +1 as we only have the replies in the buffer
+                                $totalMessages = $thread_counts[$leaf->id] + 1;
+                                $threadPages = ceil($totalMessages / $fbConfig->messages_per_page);
+                                $unreadPage = ceil(($totalMessages-$last_read[$leaf->id]->unread) / $fbConfig->messages_per_page);
+				if ($unreadPage == 0) $unreadPage++;
                         ?>
 
                                 <td class = "td-2"  align="center">
@@ -264,20 +269,16 @@ if (count($messages[0]) > 0)
                                     {
                                         if (($prevCheck < $last_reply[$leaf->id]->time) && !in_array($last_reply[$leaf->id]->thread, $read_topics)) {
                                             //new post(s) in topic
-                                            echo '<sup><span class="newchar">&nbsp;(' . $fbConfig->newchar . ")</span></sup>";
+                                            echo fb_link::GetThreadPageLink('view', $leaf->catid, $leaf->id, $unreadPage, $fbConfig->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $last_read[$leaf->id]->unread . ' ' . $fbConfig->newchar . ')</span></sup>', $last_read[$leaf->id]->lastread);
                                             }
                                     }
                                     ?>
 
 
                                     <?php
-                                    // Need to add +1 as we only have the replies in the buffer
-                                    $totalMessages = $thread_counts[$leaf->id] + 1;
-                                    $threadPages = 1;
 
                                     if ($totalMessages > $fbConfig->messages_per_page)
                                     {
-                                        $threadPages = ceil($totalMessages / $fbConfig->messages_per_page);
                                         echo ("<span class=\"jr-showcat-perpage\">[");
                                         echo _PAGE.' '.fb_link::GetThreadPageLink('view', $leaf->catid, $leaf->id, 1, $fbConfig->messages_per_page, 1);
 

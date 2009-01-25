@@ -544,7 +544,7 @@ div.viewcover {
 	text-align: center;
 	margin:2px 5px;
 }
-span.msgtitle {
+span.msgtitle, span.msgtitle_new {
 	font-weight:bold;
 	text-decoration: none;
 	background: url(images/msgtitleicon.gif) no-repeat left center;
@@ -552,6 +552,9 @@ span.msgtitle {
 	line-height:26px;
 	color:#000000;
 	font-size:14px;
+}
+span.msgtitle_new {
+	background: url(images/msgtitlenew.gif) no-repeat left center;
 }
 span.msgdate {
 	font-weight:     normal;

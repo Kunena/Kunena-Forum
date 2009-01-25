@@ -947,7 +947,7 @@ td.ft-td2 {
 #subBox1 ul li a:hover {
 	text-decoration: underline;
 }
-a.forumtools:link, a.forumtools:visited {
+#fireboard a.forumtools:link, #fireboard a.forumtools:visited {
 	background: url(images/menu_open.gif) no-repeat right center;
 	padding-right: 20px;
 	color:#FFFFFF;
@@ -959,7 +959,7 @@ a.forumtools:link, a.forumtools:visited {
 	text-align:    center;
 	text-decoration: none;
 }
-a.forumtools:hover {
+#fireboard a.forumtools:hover {
 	text-decoration: underline;
 }
 /*

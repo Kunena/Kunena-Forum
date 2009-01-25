@@ -38,6 +38,7 @@ Kunena 1.0.5
 ^ Stats: Optimized SQL queries for speed and saved 11-20 queries
 ! DATABASE UPDATED: new keys added to fb_messages and fb_users
 # Emoticons: Broken "more emoticons" pop up in IE7.
+# Forum Tools: Fixed CSS rules in default_ex
 
 24-January-2009 Matias
 # Fixed over 100 xhtml bugs

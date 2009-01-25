@@ -34,20 +34,19 @@ global $is_Moderator;
                     <tr valign="top">
                       <td width="170"><img src="<?php echo KUNENA_DIRECTURL . '/template/default/images/kunena.logo.png';?>" alt="Kunena"  align="left" hspace="5" vspace="5"/></td>
                       <td><div  class="fb_credits_intro"> An open source project like Kunena requires the dedication and investment of personal time from various contributors.
-                          This version of Kunena has been made possible by the following contributors (in alphabetical ordering):</div></td>
+                          This version of Kunena Forum has been made possible by the following contributors (in alphabetical ordering):</div></td>
                     </tr>
                     <tr valign="top">
                       <td colspan="2" style="padding-left:20px;padding-right:20px;"><ul  class="fb_team">
-                          <li class="fb_teammember"><a href="http://www.taher-zadeh.com" target='_blank' rel='follow'>danialt</a> Kunena developer and admin of <a href="http://www.bestofjoomla.com/" target='_blank' rel='follow'>www.BestofJoomla.com</a></li>
-                          <li class="fb_teammember"><a href="http://www.starVmax.com" target='_blank' rel='follow'>fxstein</a> Kunena developer and admin of <a href="http://www.starVmax.com/Forum/" target='_blank' rel='follow'>www.starVmax.com/Forum/</a></li>
-                          <li class="fb_teammember"><a href="http://www.greatpixels.com" target='_blank' rel='follow'>greatpixels</a> Kunena developer, designer and admin of <a href="http://www.bestofjoomla.com" target='_blank' rel='follow'>www.BestofJoomla.com</a></li>
+                          <li class="fb_teammember"><a href="http://www.starVmax.com" target='_blank' rel='follow'>fxstein</a> Kunena developer and admin of the world largest Yamagha Star VMax community at <a href="http://www.starVmax.com/Forum/" target='_blank' rel='follow'>www.starVmax.com/Forum/</a></li>
                           <li class="fb_teammember"><a href="http://www.racoonpages.de/" target='_blank' rel='follow'>racoon</a> Kunena developer</li>
-                          <li class="fb_teammember"><a href="http://www.bestofjoomla.com/component/option,com_kunena/Itemid,38/func,fbprofile/task,showprf/userid,2333/" target='_blank' rel='follow'>sisko1990</a> Kunena translation coordinator and moderator of <a href="http://www.bestofjoomla.com/component/option,com_kunena/Itemid,38/" target='_blank' rel='follow'>www.BestofJoomla.com/Forum</a></li>
+
+                          <li class="fb_teammember"><a href="http://www.bestofjoomla.com" target='_blank' rel='follow'>Best Of Joomla</a> The Home of FireBoard the basis of <a href="www.kunena.com" target='_blank' rel='follow'>Kunena</a>.</li>
                         </ul></td>
                     </tr>
                     <tr valign="top">
                       <td colspan="2"><div  class="fb_credits_more">In addition many members of <a href="http://www.kunena.com" target='_blank' rel='follow'>www.Kunena.com</a> have contributed and helped make this a more stable and bugfree version.
-                          Our Thanks go out to all contributors of Kunena! Greetings from the global Kunena team! <br />
+                          Our Thanks go out to all contributors of Kunena! Greetings from the global Kunena forum team! <br />
                           <br />
                           <?php
                 $catid = (int)$catid;

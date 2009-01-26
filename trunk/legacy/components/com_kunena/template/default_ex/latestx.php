@@ -20,7 +20,7 @@ global $fbConfig;
 
 $mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL . '/plugin/jtip/jquery.dimensions.js"></script>');
 $mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL . '/plugin/jtip/jquery.cluetip.js"></script>');
-$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL . '/plugin/jtip/demo.js"></script>');
+$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL . '/plugin/jtip/kunena.default_ex.js"></script>');
 $mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL . '/js/cube_common.js"></script>');
 require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
 

@@ -11,10 +11,10 @@ $(document).ready(function() {
     hoverClass: 'highlight',
     sticky: true,
     closePosition: 'bottom',
-    closeText: '<img src="components/com_kunena/template/numinu/plugin/jtip/cross.png" alt="close" width="16" height="16" />',
+    closeText: '<img src="components/com_kunena/template/deafult_ex/plugin/jtip/cross.png" alt="close" width="16" height="16" />',
     truncate: 60
   });
-  $('a.load-local').cluetip({mouseOutClose: true,local:true,sticky: true,closePosition: 'title', width: '200px', closeText: '<img src="components/com_kunena/template/numinu/plugin/jtip/cross.png" alt="close" />',dropShadow: true,cursor: 'pointer',positionBy: 'mouse'});
+  $('a.load-local').cluetip({mouseOutClose: true,local:true,sticky: true,closePosition: 'title', width: '200px', closeText: '<img src="components/com_kunena/template/deafult_ex/plugin/jtip/cross.png" alt="close" />',dropShadow: true,cursor: 'pointer',positionBy: 'mouse'});
   $('#clickme').cluetip({activation: 'click', width: 650});
 
 // jTip theme
@@ -22,7 +22,7 @@ $(document).ready(function() {
     sticky: true,
     mouseOutClose: true,
     closePosition: 'title',
-    closeText: '<img src="components/com_kunena/template/numinu/plugin/jtip/cross.png" alt="close" />'
+    closeText: '<img src="components/com_kunena/template/deafult_ex/plugin/jtip/cross.png" alt="close" />'
   });
   $('a.jt:eq(1)').cluetip({cluetipClass: 'jtip', local:true, arrows: true, dropShadow: false, hoverIntent: false});
   $('span[@title]').css({borderBottom: '1px solid #900'}).cluetip({splitTitle: '|', arrows: true, dropShadow: false, cluetipClass: 'jtip'});

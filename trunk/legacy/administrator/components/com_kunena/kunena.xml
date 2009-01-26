@@ -2,7 +2,7 @@
 <mosinstall type="component">
  <name>Kunena</name>
     <version>1.1.0b</version>
-    <versionname>Communicate</versionname>
+    <versionname>Talk 2 Each Other</versionname>
     <creationDate>@fbversiondate@</creationDate>
 	<build>@fbbuild@</build>
     <author>www.Kunena.com</author>

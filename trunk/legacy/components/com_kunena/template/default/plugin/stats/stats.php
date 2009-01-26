@@ -23,18 +23,6 @@ if($fbConfig->showstats):
 $forumurl = 'index.php?option=com_kunena';
 $userlist = 'index.php?option=com_comprofiler&amp;task=usersList';
 
-
-if ($fbConfig->fb_profile == "cb") {
-$profilelink = 'index.php?option=com_comprofiler&amp;task=userProfile&amp;user=';
-}
-else if ($fbConfig->fb_profile == "clexuspm") {
-$profilelink = 'index.php?option=com_mypms&amp;task=showprofile&amp;user=';
-}
-else {
-$profilelink = 'index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=';
-}
-
-
 ?>
 
         <!-- BEGIN: GENERAL STATS -->
@@ -65,7 +53,7 @@ $profilelink = 'index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&
                 <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
                     <td class = "td-1" align="left">
 <?php echo _STAT_TOTAL_USERS; ?>:<b> <a href = "<?php echo $userlist;?>"><?php echo $totalmembers; ?></a> </b>
-                    &nbsp; <?php echo _STAT_LATEST_MEMBERS; ?>:<b> <a href = "<?php echo $profilelink;?><?php echo $lastestmemberid;?>" title = "<?php echo _STAT_PROFILE_INFO; ?> <?php echo $lastestmember;?>"><?php echo $lastestmember; ?></a> </b>
+                    &nbsp; <?php echo _STAT_LATEST_MEMBERS; ?>:<b><?php echo CKunenaLink::GetProfileLink($lastestmemberid, $lastestmember); ?></b>
 
                 <br/> <?php echo _STAT_TOTAL_MESSAGES; ?>: <b> <?php echo $totalmsgs; ?></b> &nbsp;
     <?php echo _STAT_TOTAL_SUBJECTS; ?>: <b> <?php echo $totaltitles; ?></b> &nbsp; <?php echo _STAT_TOTAL_SECTIONS; ?>: <b> <?php echo $totalcats; ?></b> &nbsp; <?php echo _STAT_TOTAL_CATEGORIES; ?>: <b> <?php echo $totalsections; ?></b>
@@ -202,7 +190,7 @@ $k = 0;
     <tr class = "<?php echo ''.$boardclass.''. $tabclass[$k] . ''; ?>">
       <td  class="td-1"  align="left">
 
-<a href = "<?php echo $profilelink;?><?php echo $poster->userid;?>" title = "<?php echo _STAT_USER_INFO; ?> <?php echo $poster->username;?>"> <?php echo $poster->username; ?> </a>
+         <?php echo CKunenaLink::GetProfileLink($poster->userid, $poster->username); ?>
 
 </td>
       <td  class="td-2">
@@ -266,7 +254,7 @@ $barwidth = round(($topprofile->hits * 100) / $topprofil);
 
     <tr class = "<?php echo ''.$boardclass.''. $tabclass[$k] . ''; ?>">
       <td  class="td-1"  align="left">
- <a href = "<?php echo $profilelink;?><?php echo $topprofile->user_id;?>" title = "<?php echo _STAT_USER_INFO; ?> <?php echo $topprofile->user;?>"> <?php echo $topprofile->user; ?> </a>
+        <?php echo CKunenaLink::GetProfileLink($topprofile->user_id, $topprofile->user); ?>
 </td>
       <td  class="td-2">
          <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>

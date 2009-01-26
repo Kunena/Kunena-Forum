@@ -219,6 +219,9 @@
                     (9, 'Spammer', 0, 1, 'rankspammer.gif')</query>
    	</install>
 	<upgrade>
+		<version version="@fbversion@" versiondate="@fbversiondate@" build="@fbbuild@" versionname="@fbversionname@">
+
+		</version>
 		<version version="1.0.6" versiondate="2009-1-10" build="870" versionname="Communicate">
 			<query mode="silenterror">ALTER TABLE `#__fb_messages` ADD KEY `parent_hits`(`parent`,`hits`)</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD KEY `posts` ( `posts` )</query>

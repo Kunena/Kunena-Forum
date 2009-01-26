@@ -38,7 +38,7 @@ global $is_Moderator;
                     </tr>
                     <tr valign="top">
                       <td colspan="2" style="padding-left:20px;padding-right:20px;"><ul  class="fb_team">
-                          <li class="fb_teammember"><a href="http://www.starVmax.com" target='_blank' rel='follow'>fxstein</a> Kunena developer and admin of the world largest Yamagha Star VMax community at <a href="http://www.starVmax.com/Forum/" target='_blank' rel='follow'>www.starVmax.com/Forum/</a></li>
+                          <li class="fb_teammember"><a href="http://www.starVmax.com" target='_blank' rel='follow'>fxstein</a> Kunena developer and admin of the world largest Yamaha Star VMax community at <a href="http://www.starVmax.com/Forum/" target='_blank' rel='follow'>www.starVmax.com/Forum/</a></li>
                           <li class="fb_teammember"><a href="http://www.racoonpages.de/" target='_blank' rel='follow'>racoon</a> Kunena developer</li>
 
                           <li class="fb_teammember"><a href="http://www.bestofjoomla.com" target='_blank' rel='follow'>Best Of Joomla</a> The Home of FireBoard the basis of <a href="www.kunena.com" target='_blank' rel='follow'>Kunena</a>.</li>
@@ -52,7 +52,7 @@ global $is_Moderator;
                 $catid = (int)$catid;
 
                 // Add a link to go back to the latest category we where viewing...
-                echo '<div>To return to the forum ' . fb_link::GetCategoryLink('showcat', $catid, _USER_RETURN_B, $rel='nofollow') . '<div>';
+                echo '<div>To return to the forum ' . CKunenaLink::GetCategoryLink('showcat', $catid, _USER_RETURN_B, $rel='nofollow') . '<div>';
                 ?>
                         </div></td>
                     </tr>

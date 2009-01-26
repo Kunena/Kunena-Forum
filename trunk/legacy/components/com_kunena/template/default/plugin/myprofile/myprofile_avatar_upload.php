@@ -16,6 +16,9 @@
 // Dont allow direct linking
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+if ($my->id != "" && $my->id != 0)
+{
+
 global $my;
 global $fbConfig;
 $do = '';
@@ -643,6 +646,14 @@ function get_dirs($directory, $select_name, $selected = "")
 </table>
 <!-- F:My Profile -->
 
+<?php
+}
+else
+{
+ echo '<b>'. _COM_A_REGISTERED_ONLY.'</b><br />';
+   echo _FORUM_UNAUTHORIZIED2 ;
+}
+?>
 <!-- Begin: Forum Jump -->
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">

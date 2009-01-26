@@ -46,17 +46,17 @@ unset($_lastestmember);
 
 $todaystart = strtotime(date('Y-m-d'));
 $yesterdaystart = $todaystart - (1 * 24 * 60 * 60);
-$database->setQuery("SELECT SUM(time >= $todaystart AND parent=0) AS todaytotal, "
-                   ."SUM(time >= $yesterdaystart AND time < $todaystart AND parent=0) AS yesterdaytotal, "
-                   ."SUM(time >= $todaystart AND parent>0) AS todaystitle, "
-                   ."SUM(time >= $yesterdaystart AND time < $todaystart AND parent>0) AS yesterdaystitle "
+$database->setQuery("SELECT SUM(time >= $todaystart AND parent=0) AS todayopen, "
+                   ."SUM(time >= $yesterdaystart AND time < $todaystart AND parent=0) AS yesterdayopen, "
+                   ."SUM(time >= $todaystart AND parent>0) AS todayanswer, "
+                   ."SUM(time >= $yesterdaystart AND time < $todaystart AND parent>0) AS yesterdayanswer "
                    ."FROM #__fb_messages WHERE time >= $yesterdaystart AND hold=0");
 
 $database->loadObject($totaltmp);
-$todaytotal = $totaltmp->todaytotal?$newtotal->todaytotal:0;
-$yesterdaytotal = $totaltmp->yesterdaytotal?$newtotal->yesterdaytotal:0;
-$todaystitle = $totaltmp->todaytitle?$newtotal->todaytitle:0;
-$yesterdaystitle = $totaltmp->yesterdaystitle?$newtotal->yesterdaystitle:0;
+$todayopen = $totaltmp->todayopen?$totaltmp->todayopen:0;
+$yesterdayopen = $totaltmp->yesterdayopen?$totaltmp->yesterdayopen:0;
+$todayanswer = $totaltmp->todayanswer?$totaltmp->todayanswer:0;
+$yesterdayanswer = $totaltmp->yesterdayanswer?$totaltmp->yesterdayanswer:0;
 unset($totaltmp);
 
 } // ENDIF: showgenstats

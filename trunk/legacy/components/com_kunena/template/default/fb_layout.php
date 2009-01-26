@@ -160,11 +160,11 @@ function KUNENA_get_pathway(&$database, $obj_fb_cat, $bool_set_title, $obj_post 
 function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = "", $catid = 0, $id = 0, $thread = 0, $is_moderator = false, $numPending = 0)
 {
     $header = '<div id="fb_topmenu" >';
-    $header .= fb_link::GetKunenaLink( $fbIcons['home'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['home'] . '" border="0" alt="' . _HOME . '"  title="' . _HOME . '" />' : _HOME);
+    $header .= CKunenaLink::GetKunenaLink( $fbIcons['home'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['home'] . '" border="0" alt="' . _HOME . '"  title="' . _HOME . '" />' : _HOME);
 
     if ($my_id != 0)
     {
-        $header .= fb_link::GetMyProfileLink( $fbConfig, $cbitemid, $fbIcons['profile'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['profile'] . '" border="0" alt="' . _GEN_MYPROFILE . '" title="' . _GEN_MYPROFILE . '"/>' : _GEN_MYPROFILE);
+        $header .= CKunenaLink::GetMyProfileLink( $fbConfig, $cbitemid, $fbIcons['profile'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['profile'] . '" border="0" alt="' . _GEN_MYPROFILE . '" title="' . _GEN_MYPROFILE . '"/>' : _GEN_MYPROFILE);
     }
 
     switch ($type)
@@ -176,29 +176,29 @@ function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = 
             $header.= '</a>';
            */
             if ($view == "flat") {
-    			$header .= fb_link::GetViewLink('view', $id, $catid, 'threaded', ($fbIcons['threadedview'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['threadedview'] . '" border="0" alt="' . _GEN_THREADED_VIEW . '" title="' . _GEN_THREADED_VIEW . '"/>' : _GEN_THREADED_VIEW));
+    			$header .= CKunenaLink::GetViewLink('view', $id, $catid, 'threaded', ($fbIcons['threadedview'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['threadedview'] . '" border="0" alt="' . _GEN_THREADED_VIEW . '" title="' . _GEN_THREADED_VIEW . '"/>' : _GEN_THREADED_VIEW));
             }
             else
             {
-                $header .= fb_link::GetViewLink('view', $id, $catid, 'flat', ($fbIcons['flatview'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['flatview'] . '" border="0" alt="' . _GEN_FLAT_VIEW . '" title="' . _GEN_FLAT_VIEW . '"/>' : _GEN_FLAT_VIEW));
+                $header .= CKunenaLink::GetViewLink('view', $id, $catid, 'flat', ($fbIcons['flatview'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['flatview'] . '" border="0" alt="' . _GEN_FLAT_VIEW . '" title="' . _GEN_FLAT_VIEW . '"/>' : _GEN_FLAT_VIEW));
             }
             break;
 
         case 2:
             if ($view == "flat")
             {
-    			$header .= fb_link::GetViewLink('showcat', $id, $catid, 'threaded', ($fbIcons['threadedview'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['threadedview'] . '" border="0" alt="' . _GEN_THREADED_VIEW . '" title="' . _GEN_THREADED_VIEW . '"/>' : _GEN_THREADED_VIEW));
+    			$header .= CKunenaLink::GetViewLink('showcat', $id, $catid, 'threaded', ($fbIcons['threadedview'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['threadedview'] . '" border="0" alt="' . _GEN_THREADED_VIEW . '" title="' . _GEN_THREADED_VIEW . '"/>' : _GEN_THREADED_VIEW));
             }
 			else
 			{
-                $header .= fb_link::GetViewLink('showcat', $id, $catid, 'flat', ($fbIcons['flatview'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['flatview'] . '" border="0" alt="' . _GEN_FLAT_VIEW . '" title="' . _GEN_FLAT_VIEW . '"/>' : _GEN_FLAT_VIEW));
+                $header .= CKunenaLink::GetViewLink('showcat', $id, $catid, 'flat', ($fbIcons['flatview'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['flatview'] . '" border="0" alt="' . _GEN_FLAT_VIEW . '" title="' . _GEN_FLAT_VIEW . '"/>' : _GEN_FLAT_VIEW));
 			}
             if ($is_moderator)
             {
                 if ($numPending > 0)
                 {
                     $numcolor = '<font color="red">';
-                    $header .= fb_link::GetPendingMessagesLink( $catid, ($fbIcons['pendingmessages']
+                    $header .= CKunenaLink::GetPendingMessagesLink( $catid, ($fbIcons['pendingmessages']
                         ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['pendingmessages'] . '" border="0" alt="' . $numPending . ' ' . _SHOWCAT_PENDING . '" />' : $numcolor . '' . $numPending . '</font> ' . _SHOWCAT_PENDING));
                 }
             }
@@ -207,17 +207,17 @@ function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = 
 
         case 1:
         default:
-            $header .= fb_link::GetShowLatestLink( ($fbIcons['showlatest'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['showlatest'] . '" border="0" alt="' . _GEN_LATEST_POSTS . '" title="' . _GEN_LATEST_POSTS . '"/>' : _GEN_LATEST_POSTS));
+            $header .= CKunenaLink::GetShowLatestLink( ($fbIcons['showlatest'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['showlatest'] . '" border="0" alt="' . _GEN_LATEST_POSTS . '" title="' . _GEN_LATEST_POSTS . '"/>' : _GEN_LATEST_POSTS));
             break;
     }
 
     if ($fbConfig->enablerulespage)
     {
-        $header .= fb_link::GetRulesLink($fbConfig, ($fbIcons['rules'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['rules'] . '" border="0" alt="' . _GEN_RULES . '" title="' . _GEN_RULES . '"/>' : _GEN_RULES));
+        $header .= CKunenaLink::GetRulesLink($fbConfig, ($fbIcons['rules'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['rules'] . '" border="0" alt="' . _GEN_RULES . '" title="' . _GEN_RULES . '"/>' : _GEN_RULES));
     }
 	if ($fbConfig->enablehelppage)
     {
-        $header .= fb_link::GetHelpLink($fbConfig, ($fbIcons['help'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['help'] . '" border="0" alt="' . _GEN_HELP . '" title="' . _GEN_HELP . '"/>' : _GEN_HELP));
+        $header .= CKunenaLink::GetHelpLink($fbConfig, ($fbIcons['help'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['help'] . '" border="0" alt="' . _GEN_HELP . '" title="' . _GEN_HELP . '"/>' : _GEN_HELP));
 	}
     $header .= '</div>';
     return $header;

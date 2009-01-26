@@ -263,7 +263,7 @@ if (count($threadids) > 0)
 									echo _PAGE;
 									if (($page - 2) > 1)
 									{
-									    echo fb_link::GetLatestPageLink($func, 1, 'follow', 'fb_list_pages_link',$sel);
+									    echo CKunenaLink::GetLatestPageLink($func, 1, 'follow', 'fb_list_pages_link',$sel);
 										echo "...&nbsp;";
 									}
 									for ($i = ($page - 2) <= 0 ? 1 : ($page - 2); $i <= $page + 2 && $i <= ceil($total / $threads_per_page); $i++)
@@ -274,13 +274,13 @@ if (count($threadids) > 0)
 										}
 										else
 										{
-                                            echo fb_link::GetLatestPageLink($func, $i, 'follow', 'fb_list_pages_link',$sel);
+                                            echo CKunenaLink::GetLatestPageLink($func, $i, 'follow', 'fb_list_pages_link',$sel);
 										}
 									}
 									if ($page + 2 < ceil($total / $threads_per_page))
 									{
 										echo "...&nbsp;";
-									    echo fb_link::GetLatestPageLink($func, ceil($total / $threads_per_page), 'follow', 'fb_list_pages_link',$sel);
+									    echo CKunenaLink::GetLatestPageLink($func, ceil($total / $threads_per_page), 'follow', 'fb_list_pages_link',$sel);
 									}
 
 								}
@@ -330,7 +330,7 @@ if (count($threadids) > 0)
 									echo _PAGE;
 									if (($page - 2) > 1)
 									{
-									    echo fb_link::GetLatestPageLink($func, 1, 'follow', 'fb_list_pages_link',$sel);
+									    echo CKunenaLink::GetLatestPageLink($func, 1, 'follow', 'fb_list_pages_link',$sel);
 										echo "...&nbsp;";
 									}
 									for ($i = ($page - 2) <= 0 ? 1 : ($page - 2); $i <= $page + 2 && $i <= ceil($total / $threads_per_page); $i++)
@@ -341,13 +341,13 @@ if (count($threadids) > 0)
 										}
 										else
 										{
-                                            echo fb_link::GetLatestPageLink($func, $i, 'follow', 'fb_list_pages_link',$sel);
+                                            echo CKunenaLink::GetLatestPageLink($func, $i, 'follow', 'fb_list_pages_link',$sel);
 										}
 									}
 									if ($page + 2 < ceil($total / $threads_per_page))
 									{
 										echo "...&nbsp;";
-									    echo fb_link::GetLatestPageLink($func, ceil($total / $threads_per_page), 'follow', 'fb_list_pages_link',$sel);
+									    echo CKunenaLink::GetLatestPageLink($func, ceil($total / $threads_per_page), 'follow', 'fb_list_pages_link',$sel);
 									}
 									echo '</span>';
 								}

@@ -49,7 +49,7 @@ else
                     <div class = "fb_title_cover fbm" >
                         <?php
 //                        echo '<a class="fb_title fbl" href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $objCatInfo->id) . '">' . $objCatInfo->name . '</a>';
-                        echo fb_link::GetCategoryLink('showcat', $objCatInfo->id, $objCatInfo->name, $rel='follow', $class='fb_title fbl');
+                        echo CKunenaLink::GetCategoryLink('showcat', $objCatInfo->id, $objCatInfo->name, $rel='follow', $class='fb_title fbl');
                         ?>
 
                         <?php
@@ -237,10 +237,10 @@ else
                             $categoryicon .=  $fbIcons['notloginforum'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['notloginforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : $fbConfig->newchar;
                         }
                     }
-                    echo fb_link::GetCategoryLink('listcat', $singlerow->id, $categoryicon, 'follow');
+                    echo CKunenaLink::GetCategoryLink('listcat', $singlerow->id, $categoryicon, 'follow');
 					echo '</td>';
                     echo '<td class="td-2"  align="left"><div class="'
-                             . $boardclass . 'thead-title fbl">'.fb_link::GetCategoryLink('showcat', $singlerow->id, $singlerow->name, 'follow');
+                             . $boardclass . 'thead-title fbl">'.CKunenaLink::GetCategoryLink('showcat', $singlerow->id, $singlerow->name, 'follow');
 
                     //new posts available
                     if ($cxThereisNewInForum == 1 && $my->id > 0) {
@@ -354,7 +354,7 @@ else
             ?>
 
             <?php
-                            echo fb_link::GetCategoryLink('showcat', $forumparent->id, $forumparent->name, 'follow').' &nbsp;';
+                            echo CKunenaLink::GetCategoryLink('showcat', $forumparent->id, $forumparent->name, 'follow').' &nbsp;';
                         }
 
                         echo "</div>";
@@ -371,7 +371,7 @@ else
                         echo '<div class="' . $boardclass . 'thead-moderators  fbs">' . _GEN_MODERATORS . ": ";
 
                         foreach ($modslist as $mod) {
-                             echo '&nbsp;' .fb_link::GetProfileLink($mod->userid, $fbConfig->username ? $mod->username : $mod->name, 'nofollow').'&nbsp; ';
+                             echo '&nbsp;' .CKunenaLink::GetProfileLink($mod->userid, $fbConfig->username ? $mod->username : $mod->name, 'nofollow').'&nbsp; ';
                         }
 
                         echo '</div>';
@@ -382,7 +382,7 @@ else
                         if ($numPending > 0)
                         {
                             echo '<div class="fbs" ><font color="red">';
-                            echo ' ' . fb_link::GetCategoryReviewListLink($singlerow->id, $numcolor.' '.$numPending.' '. _SHOWCAT_PENDING, 'nofollow');
+                            echo ' ' . CKunenaLink::GetCategoryReviewListLink($singlerow->id, $numcolor.' '.$numPending.' '. _SHOWCAT_PENDING, 'nofollow');
                             echo '</font></div>';
                         }
                     }
@@ -397,15 +397,15 @@ else
 
                         <td class = "td-5" align="left">
                             <div class = "<?php echo $boardclass ?>latest-subject fbm">
-                                <?php echo fb_link::GetThreadLink('view', $latestcatid, $latestthread, htmlspecialchars(stripslashes($latestsubject)), htmlspecialchars(stripslashes($latestsubject)), $rel='nofollow');?>
+                                <?php echo CKunenaLink::GetThreadLink('view', $latestcatid, $latestthread, htmlspecialchars(stripslashes($latestsubject)), htmlspecialchars(stripslashes($latestsubject)), $rel='nofollow');?>
                             </div>
 
                             <div class = "<?php echo $boardclass ?>latest-subject-by  fbs">
 <?php echo _GEN_BY; ?>
 
-                                <?php echo fb_link::GetProfileLink($latestuserid, $latestname, $rel='nofollow');?>
+                                <?php echo CKunenaLink::GetProfileLink($latestuserid, $latestname, $rel='nofollow');?>
 
-                    | <?php echo $lastptime; ?> <?php echo fb_link::GetThreadPageLink('view', $latestcatid, $latestthread, $latestpage, $fbConfig->messages_per_page, ($fbIcons['latestpost'] ? '<img src="'
+                    | <?php echo $lastptime; ?> <?php echo CKunenaLink::GetThreadPageLink('view', $latestcatid, $latestthread, $latestpage, $fbConfig->messages_per_page, ($fbIcons['latestpost'] ? '<img src="'
              . KUNENA_URLICONSPATH . '' . $fbIcons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'), $latestid, $rel='nofollow');?>
                             </div>
                         </td>

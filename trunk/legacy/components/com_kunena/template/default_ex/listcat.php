@@ -159,7 +159,7 @@ if (count($categories[0]) > 0)
                         <th colspan = "5">
                             <div class = "fb_title_cover fbm" >
                                 <?php
-                                echo fb_link::GetCategoryLink('listcat', $cat->id, $cat->name, 'follow', $class='fb_title fbl');
+                                echo CKunenaLink::GetCategoryLink('listcat', $cat->id, $cat->name, 'follow', $class='fb_title fbl');
 
                                 if ($cat->description != "") {
                                     echo '' . $cat->description . '';
@@ -345,14 +345,14 @@ if (count($categories[0]) > 0)
                                                 $tmpIcon = $fbIcons['notloginforum'] ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['notloginforum'].'" border="0" alt="'._GEN_FORUM_NOTNEW.'" title="'._GEN_FORUM_NOTNEW.'" />' : $fbConfig->newchar;
                                             }
                                         }
-                                        echo fb_link::GetCategoryLink('showcat', $singlerow->id, $tmpIcon);
+                                        echo CKunenaLink::GetCategoryLink('showcat', $singlerow->id, $tmpIcon);
                                         ?>
                                     </td>
 
                                     <td class = "td-2" align="left">
                                         <div class = "<?php echo $boardclass ?>thead-title fbl">
                                             <?php //new posts available
-                                            echo fb_link::GetCategoryLink('showcat', $singlerow->id, $singlerow->name);
+                                            echo CKunenaLink::GetCategoryLink('showcat', $singlerow->id, $singlerow->name);
 
                                             if ($cxThereisNewInForum == 1 && $my->id > 0) {
                                                 echo '<sup><span class="newchar">&nbsp;(' . $newPostsAvailable . ' ' . $fbConfig->newchar . ")</span></sup>";
@@ -490,7 +490,7 @@ if (count($categories[0]) > 0)
                                                     ?>
 
                                                     <?php
-                                                                echo fb_link::GetCategoryLink('showcat', $forumparent->id, $forumparent->name);
+                                                                echo CKunenaLink::GetCategoryLink('showcat', $forumparent->id, $forumparent->name);
                                                                 echo '<span class="fb_childcount fbs">('.$forumparent->numTopics."/".$forumparent->numPosts.')</span>';
                                                             }
                                                             echo "</td>";
@@ -521,7 +521,7 @@ if (count($categories[0]) > 0)
 
                                                 <?php
                                                 foreach ($modslist as $mod) {
-                                                 echo '&nbsp;'.fb_link::GetProfileLink($mod->userid, $mod->username).'&nbsp; ';
+                                                 echo '&nbsp;'.CKunenaLink::GetProfileLink($mod->userid, $mod->username).'&nbsp; ';
 
                                                 }
                                                 ?>
@@ -535,7 +535,7 @@ if (count($categories[0]) > 0)
                                             if ($numPending > 0)
                                             {
                                                 echo '<div class="fbs"><font color="red"> ';
-                                                echo fb_link::GetPendingMessagesLink($singlerow->id, $numcolor.$numPending.' '._SHOWCAT_PENDING);
+                                                echo CKunenaLink::GetPendingMessagesLink($singlerow->id, $numcolor.$numPending.' '._SHOWCAT_PENDING);
                                                 echo '</font></div>';
                                             }
                                         }
@@ -556,16 +556,16 @@ if (count($categories[0]) > 0)
                                         <td class = "td-5" align="left">
                                             <div class = "<?php echo $boardclass ?>latest-subject fbm">
 <?php
-                                               echo fb_link::GetThreadPageLink('view', $singlerow->lastcat, $latestthread, $latestthreadpages, $fbConfig->messages_per_page, $latestsubject, $latestid);
+                                               echo CKunenaLink::GetThreadPageLink('view', $singlerow->lastcat, $latestthread, $latestthreadpages, $fbConfig->messages_per_page, $latestsubject, $latestid);
 ?>
                                             </div>
 
                                             <div class = "<?php echo $boardclass ?>latest-subject-by fbs">
 <?php
                                                 echo _GEN_BY.' ';
-                                                echo fb_link::GetProfileLink($latestuserid, $latestname);
+                                                echo CKunenaLink::GetProfileLink($latestuserid, $latestname);
                                                 echo ' | '.$lastptime.' ';
-                                                echo fb_link::GetThreadPageLink('view', $singlerow->lastcat, $latestthread, $latestthreadpages, $fbConfig->messages_per_page,
+                                                echo CKunenaLink::GetThreadPageLink('view', $singlerow->lastcat, $latestthread, $latestthreadpages, $fbConfig->messages_per_page,
                                                 $fbIcons['latestpost'] ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" title="'. _SHOW_LAST.'"/>' :
                                                                          '<img src="'.KUNENA_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'"/>', $latestid);
 ?>

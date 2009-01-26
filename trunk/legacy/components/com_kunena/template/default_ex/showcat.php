@@ -208,14 +208,14 @@ if ($letPass || $is_Moderator)
                 <?php
                 //go to bottom
                 echo '<a name="forumtop" /> ';
-                echo fb_link::GetSamePageAnkerLink('forumbottom', $fbIcons['bottomarrow'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM);
+                echo CKunenaLink::GetSamePageAnkerLink('forumbottom', $fbIcons['bottomarrow'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM);
                 ?>
 
                 <?php
                 if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
                 {
                     //this user is allowed to post a new topic:
-                    echo fb_link::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
+                    echo CKunenaLink::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
                 }
 
                 echo '</td><td class="jr-topnav-right">';
@@ -227,7 +227,7 @@ if ($letPass || $is_Moderator)
 
                     if (($page - 2) > 1)
                     {
-                        echo ' '.fb_link::GetCategoryPageLink('showcat', $catid, 1, 1, $rel='follow', $class='jr-pagenav-nb');
+                        echo ' '.CKunenaLink::GetCategoryPageLink('showcat', $catid, 1, 1, $rel='follow', $class='jr-pagenav-nb');
                     }
 
                     for ($i = ($page - 2) <= 0 ? 1 : ($page - 2); $i <= $page + 2 && $i <= ceil($total / $threads_per_page); $i++)
@@ -236,7 +236,7 @@ if ($letPass || $is_Moderator)
                             echo "<div class=\"jr-pagenav-nb-act\"> $i</div>";
                         }
                         else {
-                        echo ' '.fb_link::GetCategoryPageLink('showcat', $catid, $i, $i, $rel='follow', $class='jr-pagenav-nb');
+                        echo ' '.CKunenaLink::GetCategoryPageLink('showcat', $catid, $i, $i, $rel='follow', $class='jr-pagenav-nb');
                         }
                     }
 
@@ -244,7 +244,7 @@ if ($letPass || $is_Moderator)
                     {
                         echo "<div class=\"jr-pagenav-nb\"> ...&nbsp;</div>";
 
-                        echo ' '.fb_link::GetCategoryPageLink('showcat', $catid, ceil($total / $threads_per_page), ceil($total / $threads_per_page), $rel='follow', $class='jr-pagenav-nb');
+                        echo ' '.CKunenaLink::GetCategoryPageLink('showcat', $catid, ceil($total / $threads_per_page), ceil($total / $threads_per_page), $rel='follow', $class='jr-pagenav-nb');
                     }
 
                     echo '</div>';
@@ -299,14 +299,14 @@ if ($letPass || $is_Moderator)
                 <?php
                 //go to top
                 echo '<a name="forumbottom" />';
-                echo fb_link::GetSamePageAnkerLink('forumtop', $fbIcons['toparrow'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP);
+                echo CKunenaLink::GetSamePageAnkerLink('forumtop', $fbIcons['toparrow'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP);
                 ?>
 
                 <?php
                 if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
                 {
                     //this user is allowed to post a new topic:
-                    echo fb_link::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
+                    echo CKunenaLink::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
                 }
 
                 echo '</td><td class="jr-topnav-right">';
@@ -318,7 +318,7 @@ if ($letPass || $is_Moderator)
 
                     if (($page - 2) > 1)
                     {
-                        echo ' '.fb_link::GetCategoryPageLink('showcat', $catid, 1, 1, $rel='follow', $class='jr-pagenav-nb');
+                        echo ' '.CKunenaLink::GetCategoryPageLink('showcat', $catid, 1, 1, $rel='follow', $class='jr-pagenav-nb');
                     }
 
                     for ($i = ($page - 2) <= 0 ? 1 : ($page - 2); $i <= $page + 2 && $i <= ceil($total / $threads_per_page); $i++)
@@ -327,7 +327,7 @@ if ($letPass || $is_Moderator)
                             echo "<div class=\"jr-pagenav-nb-act\"> $i</div>";
                         }
                         else {
-                        echo ' '.fb_link::GetCategoryPageLink('showcat', $catid, $i, $i, $rel='follow', $class='jr-pagenav-nb');
+                        echo ' '.CKunenaLink::GetCategoryPageLink('showcat', $catid, $i, $i, $rel='follow', $class='jr-pagenav-nb');
                         }
                     }
 
@@ -335,7 +335,7 @@ if ($letPass || $is_Moderator)
                     {
                         echo "<div class=\"jr-pagenav-nb\"> ...&nbsp;</div>";
 
-                        echo ' '.fb_link::GetCategoryPageLink('showcat', $catid, ceil($total / $threads_per_page), ceil($total / $threads_per_page), $rel='follow', $class='jr-pagenav-nb');
+                        echo ' '.CKunenaLink::GetCategoryPageLink('showcat', $catid, ceil($total / $threads_per_page), ceil($total / $threads_per_page), $rel='follow', $class='jr-pagenav-nb');
                     }
 
                     echo '</div>';
@@ -355,7 +355,7 @@ if ($letPass || $is_Moderator)
       <td style="padding-left:20px;" align="left" > <?php
                     if ($my->id != 0)
                     {
-                        echo fb_link::GetCategoryLink('markThisRead', $catid, _GEN_MARK_THIS_FORUM_READ, $rel='nofollow');
+                        echo CKunenaLink::GetCategoryLink('markThisRead', $catid, _GEN_MARK_THIS_FORUM_READ, $rel='nofollow');
                     }
                     ?>
                     <!-- Mod List -->
@@ -376,7 +376,7 @@ if ($letPass || $is_Moderator)
                             echo '' . _GEN_MODERATORS . ": ";
 
                             foreach ($modslist as $mod) {
-                                echo '&nbsp;'.fb_link::GetProfileLink($mod->userid, $mod->username).'&nbsp; ';
+                                echo '&nbsp;'.CKunenaLink::GetProfileLink($mod->userid, $mod->username).'&nbsp; ';
                             } ?>
         </div>
         <?php  } ?>

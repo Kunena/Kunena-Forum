@@ -30,7 +30,13 @@ $fbavatar = $_user->avatar;
 $jr_username = $_user->name;
 
 $jr_avatar = '';
-if ($fbConfig->avatar_src == "clexuspm")
+if ($fbConfig->avatar_src == "jomsocial")
+{
+	// Get CUser object
+	$jsuser =& CFactory::getUser($my->id);
+    $jr_avatar = '<img src="' . $jsuser->getThumbAvatar() . '" alt=" " />';
+}
+else if ($fbConfig->avatar_src == "clexuspm")
 {
     $jr_avatar = '<img src="' . MyPMSTools::getAvatarLinkWithID($my->id) . '" alt=" " />';
 }
@@ -66,7 +72,11 @@ else
 
 }
 
-if ($fbConfig->fb_profile == "clexuspm") {
+if ($fbConfig->fb_profile == "jomsocial")
+{
+    $jr_profilelink = CKunenaLink::GetProfileLink($my->id, _PROFILEBOX_MYPROFILE);
+}
+else if ($fbConfig->fb_profile == "clexuspm") {
     $jr_profilelink = '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
 }
 else if ($fbConfig->fb_profile == "cb")
@@ -120,7 +130,7 @@ if ($my->id)
         <tbody id = "topprofilebox_tbody">
             <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
                 <td  class = "td-1  fbm" align="left" width="5%">
-<?php echo $jr_avatar; ?>
+<?php echo CKunenaLink::GetProfileLink($my->id, $jr_avatar);?>
                 </td>
 
                 <td valign = "top" class = "td-2  fbm fb_profileboxcnt" align="left">

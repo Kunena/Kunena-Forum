@@ -42,22 +42,22 @@ if ($my->id)
 
                 list($avWidth, $avHeight) = @getimagesize($avatar);
 
-            //use mypms pro avatar if configured
-            if ($fbConfig->avatar_src == "pmspro")
-            {
-                $database->setQuery("SELECT picture FROM #__mypms_profiles WHERE name='$username'");
-                $avatar = $database->loadResult();
-            }
-            elseif ($fbConfig->avatar_src == "cb")
-            {
-                $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$my->id'");
-                $avatar = $database->loadResult();
-                	check_dberror("Unable to load CB avatar.");
-            }
-            else {
-                $avatar = $fbavatar;
-            }
-        }
+                //use integration avatar if configured
+	            if ($fbConfig->avatar_src == "pmspro")
+	            {
+	                $database->setQuery("SELECT picture FROM #__mypms_profiles WHERE name='$username'");
+	                $avatar = $database->loadResult();
+	            }
+	            elseif ($fbConfig->avatar_src == "cb")
+	            {
+	                $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$my->id'");
+	                $avatar = $database->loadResult();
+	                	check_dberror("Unable to load CB avatar.");
+	            }
+	            else {
+	                $avatar = $fbavatar;
+	            }
+	        }
 
         //get all subscriptions for this user
         $database->setQuery("select thread from #__fb_subscriptions where userid=$my->id");

@@ -21,6 +21,7 @@ $Itemid = intval(mosGetParam($_REQUEST, 'Itemid'));
 //check if we have all the itemid sets. if so, then no need for DB call
 
 global $fbConfig;
+
 if (!defined("KUNENA_COMPONENT_ITEMID")) {
         $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_kunena' AND published = 1");
         $Itemid = $database->loadResult();
@@ -32,6 +33,20 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     define("KUNENA_COMPONENT_ITEMID", (int)$Itemid);
     define("KUNENA_COMPONENT_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_COMPONENT_ITEMID);
 
+    //JomSocial
+    if ($fbConfig->pm_component == 'jomsocial' || $fbConfig->fb_profile == 'jomsocial' || $fbConfig->avatar_src == 'jomsocial')
+    {
+        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_community' AND published=1");
+        $JOMSOCIAL_Itemid = $database->loadResult();
+
+        define("KUNENA_JOMSOCIAL_ITEMID", (int)$JOMSOCIAL_Itemid);
+        define("KUNENA_JOMSOCIAL_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_JOMSOCIAL_ITEMID);
+
+		require_once(JPATH_ROOT.DS.'components'.DS.'com_community'.DS.'libraries'.DS.'core.php');
+		require_once(JPATH_ROOT.DS.'components'.DS.'com_community'.DS.'libraries'.DS.'messaging.php');
+		//require_once(JPATH_ROOT.DS.'components'.DS.'com_community'.DS.'libraries'.DS.'carousel.php');
+    }
+
     //Community Builder
     if ($fbConfig->cb_profile || $fbConfig->fb_profile == "cb") {
         $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_comprofiler' AND published=1");
@@ -42,7 +57,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
         }
 
     //Clexus PM
-    if ($fbConfig->pm_component == 'clexuspm' || $fbConfig->fb_profile == "clexuspm") {
+    if ($fbConfig->pm_component == 'clexuspm' || $fbConfig->fb_profile == 'clexuspm') {
         $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_mypms' AND published=1");
         $CPM_Itemid = $database->loadResult();
 
@@ -67,7 +82,11 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
         }
 
     // PROFILE LINK
-    if ($fbConfig->fb_profile == "cb") {
+    if ($fbConfig->fb_profile == "jomsocial") {
+        $profilelink = 'index.php?option=com_community&amp;view=profile&amp;userid=';
+        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_community&amp;view=profile&amp;Itemid=" . KUNENA_JOMSOCIAL_ITEMID . "&amp;userid=");
+        }
+    else if ($fbConfig->fb_profile == "cb") {
         $profilelink = 'index.php?option=com_comprofiler&amp;task=userProfile&amp;user=';
         define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_comprofiler&amp;task=userProfile&amp;Itemid=" . KUNENA_CB_ITEMID . "&amp;user=");
         }
@@ -195,19 +214,23 @@ define('KUNENA_URLRANKSPATH', KUNENA_URLIMAGESPATH . 'ranks/');
 // url ranks path
 define('KUNENA_URLCATIMAGES', KUNENA_LIVEUPLOADEDPATH . '/' . $fbConfig->catimagepath); // Kunena category images direct url
 
-if (file_exists(KUNENA_ABSTMPLTPATH . '/js/jquery-latest.pack.js')) {
-    define('KUNENA_JQURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_template . '/js/jquery-latest.pack.js');
-    }
-else {
-    define('KUNENA_JQURL', KUNENA_DIRECTURL . '/template/default/js/jquery-latest.pack.js');
-    }
+if (file_exists(KUNENA_ABSTMPLTPATH . '/js/jquery-1.3.1.min.js'))
+{
+    define('KUNENA_JQURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_template . '/js/jquery-1.3.1.min.js');
+}
+else
+{
+    define('KUNENA_JQURL', KUNENA_DIRECTURL . '/template/default/js/jquery-1.3.1.min.js');
+}
 
-if (file_exists(KUNENA_ABSTMPLTPATH . '/js/bojForumCore.js')) {
-    define('KUNENA_COREJSURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_template . '/js/bojForumCore.js');
-    }
-else {
-    define('KUNENA_COREJSURL', KUNENA_DIRECTURL . '/template/default/js/bojForumCore.js');
-    }
+if (file_exists(KUNENA_ABSTMPLTPATH . '/js/kunenaforum.js'))
+{
+    define('KUNENA_COREJSURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_template . '/js/kunenaforum.js');
+}
+else
+{
+    define('KUNENA_COREJSURL', KUNENA_DIRECTURL . '/template/default/js/kunenaforum.js');
+}
 
 /**
  * gets Itemid of CB profile, or by default of homepage

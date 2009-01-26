@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id$
+* @version $Id:kunena.rss.php 152 2009-01-24 10:45:11Z fxstein $
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
@@ -144,7 +144,7 @@ echo "<?xml version=\"1.0\" encoding=\"" . $encoding[1] . "\"?>\n";
             echo "        <item>\n";
             echo "            <title>" . _GEN_SUBJECT . ": " . stripslashes(htmlspecialchars($row->subject)) . " - " . _GEN_BY . ": " . stripslashes(htmlspecialchars($row->lastpostname)) . "</title>" . "\n";
             echo "            <link>";
-            echo fb_link::GetThreadPageURL('view', $row->catid, $row->thread, ceil($row->numberposts / $fbConfig->messages_per_page), $fbConfig->messages_per_page, $row->lastpostid);
+            echo CKunenaLink::GetThreadPageURL('view', $row->catid, $row->thread, ceil($row->numberposts / $fbConfig->messages_per_page), $fbConfig->messages_per_page, $row->lastpostid);
             echo "</link>\n";
             $words = $row->lastpostmessage;
             $words = smile::purify($words);

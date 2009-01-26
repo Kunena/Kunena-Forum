@@ -31,6 +31,9 @@ Legend:
 Kunena 1.0.6
 
 25-January-2009 fxstein
++ Basic JomSocial Integration
+^ updated jquery to latest 1.3.1 minimized
+^ fb_link class changes to CKunenaLinks
 # Minor typo in include paths fixed
 ^ kunena.credits.php: Updated credits page
 ^ Various links updated

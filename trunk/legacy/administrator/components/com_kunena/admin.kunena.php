@@ -623,7 +623,8 @@ function showConfig($option)
 
     // source of avatar picture
     $avlist = array ();
-    $avlist[] = mosHTML::makeOption('fb', _KUNENA_Kunena);
+    $avlist[] = mosHTML::makeOption('fb', _KUNENA_KUNENA);
+    $avlist[] = mosHTML::makeOption('jomsocial', _KUNENA_JOMSOCIAL);
     $avlist[] = mosHTML::makeOption('clexuspm', _KUNENA_CLEXUS);
     $avlist[] = mosHTML::makeOption('cb', _KUNENA_CB);
     // build the html select list
@@ -631,6 +632,7 @@ function showConfig($option)
     // private messaging system to use
     $pmlist = array ();
     $pmlist[] = mosHTML::makeOption('no', _COM_A_NO);
+    $pmlist[] = mosHTML::makeOption('jomsocial', _KUNENA_JOMSOCIAL);
     $pmlist[] = mosHTML::makeOption('pms', _KUNENA_MYPMS);
     $pmlist[] = mosHTML::makeOption('clexuspm', _KUNENA_CLEXUS);
     $pmlist[] = mosHTML::makeOption('uddeim', _KUNENA_UDDEIM);
@@ -640,7 +642,8 @@ function showConfig($option)
 //redundant    $lists['pm_component'] = mosHTML::selectList($pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pm_component);
     // Profile select
     $prflist = array ();
-    $prflist[] = mosHTML::makeOption('fb', _KUNENA_Kunena);
+    $prflist[] = mosHTML::makeOption('fb', _KUNENA_KUNENA);
+    $prflist[] = mosHTML::makeOption('jomsocial', _KUNENA_JOMSOCIAL);
     $prflist[] = mosHTML::makeOption('clexuspm', _KUNENA_CLEXUS);
     $prflist[] = mosHTML::makeOption('cb', _KUNENA_CB);
     $lists['fb_profile'] = mosHTML::selectList($prflist, 'cfg_fb_profile', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->fb_profile);

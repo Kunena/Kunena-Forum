@@ -8,6 +8,8 @@
 * @link http://www.bestofjoomla.com
 **/
 
+jQuery.noConflict();
+
 jQuery.cookie = function(name, value, options)
 {
     if (typeof value != 'undefined')

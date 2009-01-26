@@ -77,10 +77,16 @@ function showprf($userid, $page)
     {
         $Avatarname = $userinfo->username;
 
-        if ($fbConfig->avatar_src == "clexuspm") {
+        if ($fbConfig->avatar_src == "jomsocial")
+		{
+			// Get CUser object
+			$user =& CFactory::getUser($leaf->userid);
+		    $msg_avatar = '<span class="fb_avatar"><img src="' . $user->getAvatar() . '" alt="" /></span>';
+		}
+        else if ($fbConfig->avatar_src == "clexuspm") {
             $msg_avatar = '<span class="fb_avatar"><img src="' . MyPMSTools::getAvatarLinkWithID($userid, "b") . '" alt="" /></span>';
         }
-        elseif ($fbConfig->avatar_src == "cb")
+        else if ($fbConfig->avatar_src == "cb")
         {
             $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id=$userid AND avatarapproved=1");
             $avatar = $database->loadResult();

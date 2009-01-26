@@ -110,7 +110,7 @@ if ($letPass || $is_Moderator)
         	$replyPage = $replyCount > $fbConfig->messages_per_page ? ceil($replyCount / $fbConfig->messages_per_page) : 1;
 
         	header("HTTP/1.1 301 Moved Permanently");
-        	header("Location: " . fb_link::GetThreadPageURL('view', $this_message->catid, $thread, $replyPage, $fbConfig->messages_per_page, $this_message->id) );
+        	header("Location: " . CKunenaLink::GetThreadPageURL('view', $this_message->catid, $thread, $replyPage, $fbConfig->messages_per_page, $this_message->id) );
 
         	die();
         }
@@ -287,44 +287,44 @@ if ($letPass || $is_Moderator)
                     <?php
                     //go to bottom
                     echo '<a name="forumtop" /> ';
-                    echo fb_link::GetSamePageAnkerLink('forumbottom', $fbIcons['bottomarrow'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM);
+                    echo CKunenaLink::GetSamePageAnkerLink('forumbottom', $fbIcons['bottomarrow'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM);
 
                     if (($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite)
                     {
                         //this user is allowed to post a new topic:
-                        echo fb_link::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
+                        echo CKunenaLink::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
                     }
 
                     if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
                     {
                         //this user is allowed to reply to this topic:
-                        echo fb_link::GetTopicPostReplyLink('reply', $catid, $thread, $fbIcons['topicreply'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['topicreply'] . '" alt="' . _GEN_POST_REPLY . '" title="' . _GEN_POST_REPLY . '" border="0" />' : _GEN_POST_REPLY);
+                        echo CKunenaLink::GetTopicPostReplyLink('reply', $catid, $thread, $fbIcons['topicreply'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['topicreply'] . '" alt="' . _GEN_POST_REPLY . '" title="' . _GEN_POST_REPLY . '" border="0" />' : _GEN_POST_REPLY);
                     }
 
                     if ($fb_cansubscribe == 1)
                     {
                         // this user is allowed to subscribe - check performed further up to eliminate duplicate checks
                         // for top and bottom navigation
-                        echo fb_link::GetTopicPostLink('subscribe', $catid, $id, $fbIcons['subscribe'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['subscribe'] . '" alt="' . _VIEW_SUBSCRIBETXT . '" title="' . _VIEW_SUBSCRIBETXT . '" border="0" />' : _VIEW_SUBSCRIBETXT);
+                        echo CKunenaLink::GetTopicPostLink('subscribe', $catid, $id, $fbIcons['subscribe'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['subscribe'] . '" alt="' . _VIEW_SUBSCRIBETXT . '" title="' . _VIEW_SUBSCRIBETXT . '" border="0" />' : _VIEW_SUBSCRIBETXT);
                     }
 
                     if ($my_id != 0 && $fbConfig->allowsubscriptions && $fb_cansubscribe == 0)
                     {
                         // this user is allowed to unsubscribe
-                        echo fb_link::GetTopicPostLink('unsubscribe', $catid, $id, $fbIcons['unsubscribe'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unsubscribe'] . '" alt="' . _VIEW_UNSUBSCRIBETXT . '" title="' . _VIEW_UNSUBSCRIBETXT . '" border="0" />' : _VIEW_UNSUBSCRIBETXT);
+                        echo CKunenaLink::GetTopicPostLink('unsubscribe', $catid, $id, $fbIcons['unsubscribe'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unsubscribe'] . '" alt="' . _VIEW_UNSUBSCRIBETXT . '" title="' . _VIEW_UNSUBSCRIBETXT . '" border="0" />' : _VIEW_UNSUBSCRIBETXT);
                     }
 
                     if ($fb_canfavorite == 1)
                     {
                         // this user is allowed to add a favorite - check performed further up to eliminate duplicate checks
                         // for top and bottom navigation
-                        echo fb_link::GetTopicPostLink('favorite', $catid, $id, $fbIcons['favorite'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['favorite'] . '" alt="' . _VIEW_FAVORITETXT . '" title="' . _VIEW_FAVORITETXT . '" border="0" />' : _VIEW_FAVORITETXT);
+                        echo CKunenaLink::GetTopicPostLink('favorite', $catid, $id, $fbIcons['favorite'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['favorite'] . '" alt="' . _VIEW_FAVORITETXT . '" title="' . _VIEW_FAVORITETXT . '" border="0" />' : _VIEW_FAVORITETXT);
                     }
 
                     if ($my_id != 0 && $fbConfig->allowfavorites && $fb_canfavorite == 0)
                     {
                         // this user is allowed to unfavorite
-                        echo fb_link::GetTopicPostLink('unfavorite', $catid, $id, $fbIcons['unfavorite'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unfavorite'] . '" alt="' . _VIEW_UNFAVORITETXT . '" title="' . _VIEW_UNFAVORITETXT . '" border="0" />' : _VIEW_UNFAVORITETXT);
+                        echo CKunenaLink::GetTopicPostLink('unfavorite', $catid, $id, $fbIcons['unfavorite'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unfavorite'] . '" alt="' . _VIEW_UNFAVORITETXT . '" title="' . _VIEW_UNFAVORITETXT . '" border="0" />' : _VIEW_UNFAVORITETXT);
                     }
                     // FINISH: FAVORITES
                     ?>
@@ -518,16 +518,22 @@ if ($letPass || $is_Moderator)
 
                                 $msg_id = $fmessage->id;
                                 $lists["userid"] = $fmessage->userid;
-                                $msg_username = $fmessage->email != "" && $my_id > 0 && $fbConfig->showemail ? fb_link::GetEmailLink($fmessage->email, $fb_username) : stripslashes($fb_username);
+                                $msg_username = $fmessage->email != "" && $my_id > 0 && $fbConfig->showemail ? CKunenaLink::GetEmailLink($fmessage->email, $fb_username) : stripslashes($fb_username);
 
                                 if ($fbConfig->allowavatar)
                                 {
                                     $Avatarname = $userinfo->username;
 
-                                    if ($fbConfig->avatar_src == "clexuspm") {
+                                    if ($fbConfig->avatar_src == "jomsocial")
+									{
+										// Get CUser object
+										$jsuser =& CFactory::getUser($fmessage->userid);
+									    $msg_avatar = '<span class="fb_avatar"><img src="' . $jsuser->getThumbAvatar() . '" alt=" " /></span>';
+									}
+                                    else if ($fbConfig->avatar_src == "clexuspm") {
                                         $msg_avatar = '<span class="fb_avatar"><img src="' . MyPMSTools::getAvatarLinkWithID($fmessage->userid) . '" /></span>';
                                     }
-                                    elseif ($fbConfig->avatar_src == "cb")
+                                    else if ($fbConfig->avatar_src == "cb")
                                     {
                                         $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$fmessage->userid' AND avatarapproved='1'");
                                         $avatar = $database->loadResult();
@@ -678,8 +684,8 @@ if ($letPass || $is_Moderator)
 
                                     if ($my->id != '0' && $my->id != $fmessage->userid)
                                     {
-                                        $msg_karmaminus = fb_link::GetKarmaLink('decrease', $catid, $fmessage->id, $fmessage->userid, '<img src="'.($fbIcons['karmaminus']?(KUNENA_URLICONSPATH . "" . $fbIcons['karmaminus']):(KUNENA_URLEMOTIONSPATH . "karmaminus.gif")).'" alt="Karma-" border="0" title="' . _KARMA_SMITE . '" align="middle" />' );
-                                        $msg_karmaplus  = fb_link::GetKarmaLink('increase', $catid, $fmessage->id, $fmessage->userid, '<img src="'.($fbIcons['karmaplus']?(KUNENA_URLICONSPATH . "" . $fbIcons['karmaplus']):(KUNENA_URLEMOTIONSPATH . "karmaplus.gif")).'" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" align="middle" />' );
+                                        $msg_karmaminus = CKunenaLink::GetKarmaLink('decrease', $catid, $fmessage->id, $fmessage->userid, '<img src="'.($fbIcons['karmaminus']?(KUNENA_URLICONSPATH . "" . $fbIcons['karmaminus']):(KUNENA_URLEMOTIONSPATH . "karmaminus.gif")).'" alt="Karma-" border="0" title="' . _KARMA_SMITE . '" align="middle" />' );
+                                        $msg_karmaplus  = CKunenaLink::GetKarmaLink('increase', $catid, $fmessage->id, $fmessage->userid, '<img src="'.($fbIcons['karmaplus']?(KUNENA_URLICONSPATH . "" . $fbIcons['karmaplus']):(KUNENA_URLEMOTIONSPATH . "karmaplus.gif")).'" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" align="middle" />' );
                                     }
                                 }
                                 /*let's see if we should use Missus integration */
@@ -769,8 +775,24 @@ if ($letPass || $is_Moderator)
                                         . KUNENA_URLICONSPATH . '' . $fbIcons['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
                                     }
                                 }
-                                /* ClexusPM integration */
-                                if ($fbConfig->pm_component == "clexuspm" && $fmessage->userid && $my->id)
+                                /* PM integration */
+                                if ($fbConfig->pm_component == "jomsocial" && $fmessage->userid && $my->id)
+                                {
+                                	$onclick = CMessaging::getPopup($fmessage->userid);
+                                	$msg_pms = '<a href="javascript:void(0)" onclick="'. $onclick . "\">";
+
+                                    if ($fbIcons['pms']) {
+                                        $msg_pms .= "<img src=\"".KUNENA_URLICONSPATH."".$fbIcons['pms']."\" alt=\""._VIEW_PMS."\" border=\"0\" title=\""._VIEW_PMS."\" />";
+                                    }
+                                    else
+                                    {
+                                    	$msg_pms .= _VIEW_PMS;
+                                    }
+
+                                    $msg_pms .= "</a>";
+                                	//$msg_pms = '<a href="javascript:void(0)" onclick="'. $onclick .'">Send message</a>';
+                                }
+                                else if ($fbConfig->pm_component == "clexuspm" && $fmessage->userid && $my->id)
                                 {
                                     //we should offer the user a PMS link
                                     //first get the username of the user to contact
@@ -832,7 +854,7 @@ if ($letPass || $is_Moderator)
                                     unset ($mostables);
                                 }
 
-                                //Check if the Community Builder settings are on, and set the variables accordingly.
+                                //Check if the Integration settings are on, and set the variables accordingly.
                                 if ($fbConfig->fb_profile == "cb")
                                 {
                                     if ($fbConfig->cb_profile && $fmessage->userid > 0)
@@ -869,21 +891,20 @@ if ($letPass || $is_Moderator)
                                 {
                                     //Kunena Profile link.
                                     $msg_prflink = sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=fbprofile&amp;task=showprf&amp;userid=' . $fmessage->userid);
-                                    $msg_profile = "<a href=\"" . sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=fbprofile&amp;task=showprf&amp;userid=' . $fmessage->userid) . "\"> <img src=\"";
+                                    $msg_profileicon = "<img src=\"";
 
                                     if ($fbIcons['userprofile']) {
-                                        $msg_profile .= KUNENA_URLICONSPATH . "" . $fbIcons['userprofile'];
+                                        $msg_profileicon .= KUNENA_URLICONSPATH . "" . $fbIcons['userprofile'];
                                     }
                                     else {
-                                        $msg_profile .= KUNENA_URLICONSPATH . "profile.gif";
+                                        $msg_profileicon .= KUNENA_URLICONSPATH . "profile.gif";
                                     }
 
-                                    $msg_profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
+                                    $msg_profileicon .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
+                                    $msg_profile = CKunenaLink::GetProfileLink($fmessage->userid, $msg_profileicon);
                                 }
 
-
                                 // Begin: Additional Info //
-
                                 if ($userinfo->gender != '') {
                                     $gender = _KUNENA_NOGENDER;
                                     if ($userinfo->gender ==1)  {
@@ -1010,8 +1031,8 @@ if ($letPass || $is_Moderator)
                                 if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite == 1) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
                                 {
                                     //user is allowed to reply/quote
-                                    $msg_reply = fb_link::GetTopicPostReplyLink('reply', $catid, $fmessage->id , $fbIcons['reply']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['reply'] . '" alt="Reply" border="0" title="' . _VIEW_REPLY . '" />':_GEN_REPLY);
-                                    $msg_quote = fb_link::GetTopicPostReplyLink('quote', $catid, $fmessage->id , $fbIcons['quote']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['quote'] . '" alt="Quote" border="0" title="' . _VIEW_QUOTE . '" />':_GEN_QUOTE);
+                                    $msg_reply = CKunenaLink::GetTopicPostReplyLink('reply', $catid, $fmessage->id , $fbIcons['reply']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['reply'] . '" alt="Reply" border="0" title="' . _VIEW_REPLY . '" />':_GEN_REPLY);
+                                    $msg_quote = CKunenaLink::GetTopicPostReplyLink('quote', $catid, $fmessage->id , $fbIcons['quote']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['quote'] . '" alt="Quote" border="0" title="' . _VIEW_QUOTE . '" />':_GEN_QUOTE);
                                 }
                                 else
                                 {
@@ -1028,9 +1049,9 @@ if ($letPass || $is_Moderator)
                                 //Offer an moderator the delete link
                                 if ($is_Moderator)
                                 {
-                                    $msg_delete = fb_link::GetTopicPostLink('delete', $catid, $fmessage->id , $fbIcons['delete']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />':_GEN_DELETE);
-                                    $msg_merge = fb_link::GetTopicPostLink('merge', $catid, $fmessage->id , $fbIcons['merge']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['merge'] . '" alt="Merge" border="0" title="' . _VIEW_MERGE . '" />':_GEN_MERGE);
-                                    $msg_split = fb_link::GetTopicPostLink('split', $catid, $fmessage->id , $fbIcons['split']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['split'] . '" alt="Split" border="0" title="' . _VIEW_SPLIT . '" />':_GEN_SPLIT);
+                                    $msg_delete = CKunenaLink::GetTopicPostLink('delete', $catid, $fmessage->id , $fbIcons['delete']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />':_GEN_DELETE);
+                                    $msg_merge = CKunenaLink::GetTopicPostLink('merge', $catid, $fmessage->id , $fbIcons['merge']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['merge'] . '" alt="Merge" border="0" title="' . _VIEW_MERGE . '" />':_GEN_MERGE);
+                                    $msg_split = CKunenaLink::GetTopicPostLink('split', $catid, $fmessage->id , $fbIcons['split']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['split'] . '" alt="Split" border="0" title="' . _VIEW_SPLIT . '" />':_GEN_SPLIT);
                                 }
 
                                 if ($fbConfig->useredit && $my_id != "")
@@ -1059,7 +1080,7 @@ if ($letPass || $is_Moderator)
                                     }
                                     if($allowEdit)
                                     {
-                                        $msg_edit = fb_link::GetTopicPostLink('edit', $catid, $fmessage->id , $fbIcons['edit']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />':_GEN_EDIT);
+                                        $msg_edit = CKunenaLink::GetTopicPostLink('edit', $catid, $fmessage->id , $fbIcons['edit']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />':_GEN_EDIT);
                                         $showedEdit = 1;
                                     }
                                 }
@@ -1067,7 +1088,7 @@ if ($letPass || $is_Moderator)
                                 if ($is_Moderator && $showedEdit != 1)
                                 {
                                     //Offer a moderator always the edit link except when it is already showing..
-                                    $msg_edit = fb_link::GetTopicPostLink('edit', $catid, $fmessage->id , $fbIcons['edit']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />':_GEN_EDIT);
+                                    $msg_edit = CKunenaLink::GetTopicPostLink('edit', $catid, $fmessage->id , $fbIcons['edit']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />':_GEN_EDIT);
                                 }
 
                                 if ($is_Moderator && $fmessage->parent == '0')
@@ -1076,24 +1097,24 @@ if ($letPass || $is_Moderator)
                                     // and the (un)sticky bit links
                                     // and the (un)lock links
                                     // but ONLY when it is a topic and not a reply
-                                    $msg_move = fb_link::GetTopicPostLink('move', $catid, $fmessage->id , $fbIcons['move']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['move'] . '" alt="Move" border="0" title="' . _VIEW_MOVE . '" />':_GEN_MOVE);
+                                    $msg_move = CKunenaLink::GetTopicPostLink('move', $catid, $fmessage->id , $fbIcons['move']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['move'] . '" alt="Move" border="0" title="' . _VIEW_MOVE . '" />':_GEN_MOVE);
 
                                     if ($fmessage->ordering == 0)
                                     {
-                                        $msg_sticky = fb_link::GetTopicPostLink('sticky', $catid, $fmessage->id , $fbIcons['sticky']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['sticky'] . '" alt="Sticky" border="0" title="' . _VIEW_STICKY . '" />':_GEN_STICKY);
+                                        $msg_sticky = CKunenaLink::GetTopicPostLink('sticky', $catid, $fmessage->id , $fbIcons['sticky']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['sticky'] . '" alt="Sticky" border="0" title="' . _VIEW_STICKY . '" />':_GEN_STICKY);
                                     }
                                     else
                                     {
-                                        $msg_sticky = fb_link::GetTopicPostLink('unsticky', $catid, $fmessage->id , $fbIcons['unsticky']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['unsticky'] . '" alt="Unsticky" border="0" title="' . _VIEW_UNSTICKY . '" />':_GEN_UNSTICKY);
+                                        $msg_sticky = CKunenaLink::GetTopicPostLink('unsticky', $catid, $fmessage->id , $fbIcons['unsticky']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['unsticky'] . '" alt="Unsticky" border="0" title="' . _VIEW_UNSTICKY . '" />':_GEN_UNSTICKY);
                                     }
 
                                     if ($fmessage->locked == 0)
                                     {
-                                        $msg_lock = fb_link::GetTopicPostLink('lock', $catid, $fmessage->id , $fbIcons['lock']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['lock'] . '" alt="Lock" border="0" title="' . _VIEW_LOCK . '" />':_GEN_LOCK);
+                                        $msg_lock = CKunenaLink::GetTopicPostLink('lock', $catid, $fmessage->id , $fbIcons['lock']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['lock'] . '" alt="Lock" border="0" title="' . _VIEW_LOCK . '" />':_GEN_LOCK);
                                     }
                                     else
                                     {
-                                        $msg_lock = fb_link::GetTopicPostLink('unlock', $catid, $fmessage->id , $fbIcons['unlock']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['unlock'] . '" alt="Unlock" border="0" title="' . _VIEW_UNLOCK . '" />':_GEN_UNLOCK);
+                                        $msg_lock = CKunenaLink::GetTopicPostLink('unlock', $catid, $fmessage->id , $fbIcons['unlock']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['unlock'] . '" alt="Unlock" border="0" title="' . _VIEW_UNLOCK . '" />':_GEN_UNLOCK);
                                     }
                                 }
 
@@ -1188,44 +1209,44 @@ if ($letPass || $is_Moderator)
                         <?php
                         //go to bottom
                         echo '<a name="forumbottom" /> ';
-                        echo fb_link::GetSamePageAnkerLink('forumtop', $fbIcons['toparrow'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP);
+                        echo CKunenaLink::GetSamePageAnkerLink('forumtop', $fbIcons['toparrow'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP);
 
                         if (($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite)
                         {
                             //this user is allowed to post a new topic:
-                            echo fb_link::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
+                            echo CKunenaLink::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
                         }
 
                         if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
                         {
                             //this user is allowed to reply to this topic:
-                            echo fb_link::GetTopicPostReplyLink('reply', $catid, $thread, $fbIcons['topicreply'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['topicreply'] . '" alt="' . _GEN_POST_REPLY . '" title="' . _GEN_POST_REPLY . '" border="0" />' : _GEN_POST_REPLY);
+                            echo CKunenaLink::GetTopicPostReplyLink('reply', $catid, $thread, $fbIcons['topicreply'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['topicreply'] . '" alt="' . _GEN_POST_REPLY . '" title="' . _GEN_POST_REPLY . '" border="0" />' : _GEN_POST_REPLY);
                         }
 
                         if ($fb_cansubscribe == 1)
                         {
                             // this user is allowed to subscribe - check performed further up to eliminate duplicate checks
                             // for top and bottom navigation
-                            echo fb_link::GetTopicPostLink('subscribe', $catid, $id, $fbIcons['subscribe'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['subscribe'] . '" alt="' . _VIEW_SUBSCRIBETXT . '" title="' . _VIEW_SUBSCRIBETXT . '" border="0" />' : _VIEW_SUBSCRIBETXT);
+                            echo CKunenaLink::GetTopicPostLink('subscribe', $catid, $id, $fbIcons['subscribe'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['subscribe'] . '" alt="' . _VIEW_SUBSCRIBETXT . '" title="' . _VIEW_SUBSCRIBETXT . '" border="0" />' : _VIEW_SUBSCRIBETXT);
                         }
 
                         if ($my_id != 0 && $fbConfig->allowsubscriptions && $fb_cansubscribe == 0)
                         {
                             // this user is allowed to unsubscribe
-                            echo fb_link::GetTopicPostLink('unsubscribe', $catid, $id, $fbIcons['unsubscribe'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unsubscribe'] . '" alt="' . _VIEW_UNSUBSCRIBETXT . '" title="' . _VIEW_UNSUBSCRIBETXT . '" border="0" />' : _VIEW_UNSUBSCRIBETXT);
+                            echo CKunenaLink::GetTopicPostLink('unsubscribe', $catid, $id, $fbIcons['unsubscribe'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unsubscribe'] . '" alt="' . _VIEW_UNSUBSCRIBETXT . '" title="' . _VIEW_UNSUBSCRIBETXT . '" border="0" />' : _VIEW_UNSUBSCRIBETXT);
                         }
 
                         if ($fb_canfavorite == 1)
                         {
                             // this user is allowed to add a favorite - check performed further up to eliminate duplicate checks
                             // for top and bottom navigation
-                            echo fb_link::GetTopicPostLink('favorite', $catid, $id, $fbIcons['favorite'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['favorite'] . '" alt="' . _VIEW_FAVORITETXT . '" title="' . _VIEW_FAVORITETXT . '" border="0" />' : _VIEW_FAVORITETXT);
+                            echo CKunenaLink::GetTopicPostLink('favorite', $catid, $id, $fbIcons['favorite'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['favorite'] . '" alt="' . _VIEW_FAVORITETXT . '" title="' . _VIEW_FAVORITETXT . '" border="0" />' : _VIEW_FAVORITETXT);
                         }
 
                         if ($my_id != 0 && $fbConfig->allowfavorites && $fb_canfavorite == 0)
                         {
                             // this user is allowed to unfavorite
-                            echo fb_link::GetTopicPostLink('unfavorite', $catid, $id, $fbIcons['unfavorite'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unfavorite'] . '" alt="' . _VIEW_UNFAVORITETXT . '" title="' . _VIEW_UNFAVORITETXT . '" border="0" />' : _VIEW_UNFAVORITETXT);
+                            echo CKunenaLink::GetTopicPostLink('unfavorite', $catid, $id, $fbIcons['unfavorite'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unfavorite'] . '" alt="' . _VIEW_UNFAVORITETXT . '" title="' . _VIEW_UNFAVORITETXT . '" border="0" />' : _VIEW_UNFAVORITETXT);
                         }
                         // FINISH: FAVORITES
                         ?>

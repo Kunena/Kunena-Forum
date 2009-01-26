@@ -32,7 +32,7 @@ $database->loadObject($user);
         <tr class = "fb_sth">
             <th colspan = "2" class = "view-th <?php echo $boardclass; ?>sectiontableheader">
 <?php
-                echo fb_link::GetSamePageAnkerLink($msg_id, '#'.$msg_id)
+                echo CKunenaLink::GetSamePageAnkerLink($msg_id, '#'.$msg_id)
 ?>
             </th>
         </tr>
@@ -152,7 +152,7 @@ $database->loadObject($user);
 <?php
                         if ($fmessage->userid > 0)
                         {
-                        	echo fb_link::GetProfileLink($fmessage->userid, $msg_username);
+                        	echo CKunenaLink::GetProfileLink($fmessage->userid, $msg_username);
                         }
                         else
                         {
@@ -164,7 +164,7 @@ $database->loadObject($user);
 <?php
                         if ($fmessage->userid > 0)
                         {
-                        	echo fb_link::GetProfileLink($fmessage->userid, $msg_avatar);
+                        	echo CKunenaLink::GetProfileLink($fmessage->userid, $msg_avatar);
                         }
                         else
                         {
@@ -296,13 +296,13 @@ $database->loadObject($user);
                    <?php
                             if ($fbConfig->reportmsg && $my->id > 1)
                             {
-                                echo fb_link::GetReportMessageLink($catid, $msg_id, _KUNENA_REPORT);
+                                echo CKunenaLink::GetReportMessageLink($catid, $msg_id, _KUNENA_REPORT);
                             } ?>
 
                             <?php echo $fbIcons['msgip'] ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['msgip'] .'" border="0" alt="'._KUNENA_REPORT_LOGGED.'" />' : ' <img src="'.KUNENA_URLEMOTIONSPATH.'ip.gif" border="0" alt="'. _KUNENA_REPORT_LOGGED.'" />';
                             ?> <span class="fb_smalltext"> <?php echo _KUNENA_REPORT_LOGGED;?></span>
                             <?php
-                            echo fb_link::GetMessageIPLink($msg_ip);
+                            echo CKunenaLink::GetMessageIPLink($msg_ip);
                             ?>
                             </div>
        </td>

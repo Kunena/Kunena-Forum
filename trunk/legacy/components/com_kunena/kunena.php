@@ -162,11 +162,19 @@ if ($func == "showcaptcha") {
 }
 
 // Add required header tags
-$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
+if (defined('KUNENA_JQURL'))
+{
+	$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
+}
+
+// inline jscript with image location
 $mainframe->addCustomHeadTag('<script type="text/javascript">
-//1: show, 0 : hide
 jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";</script>');
-$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_COREJSURL . '"></script>');
+
+if (defined('KUNENA_COREJSURL'))
+{
+	$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_COREJSURL . '"></script>');
+}
 
 if ($fbConfig->joomlastyle < 1) {
     $mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_TMPLTCSSURL . '" />');
@@ -931,11 +939,11 @@ else
     }
 
     // Credits
-    echo '<div class="fb_credits"> ' . fb_link::GetTeamCreditsLink($catid, _KUNENA_POWEREDBY) . ' ' . fb_link::GetCreditsLink();
+    echo '<div class="fb_credits"> ' . CKunenaLink::GetTeamCreditsLink($catid, _KUNENA_POWEREDBY) . ' ' . CKunenaLink::GetCreditsLink();
     if ($fbConfig->enablerss)
     {
     	$mainframe->addCustomHeadTag('<link rel="alternate" type="application/rss+xml" title="'._LISTCAT_RSS.'" href="'.sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=fb_rss&amp;no_html=1').'" />');
-        echo fb_link::GetRSSLink('<img class="rsslink" src="' . KUNENA_URLEMOTIONSPATH . 'rss.gif" border="0" alt="' . _LISTCAT_RSS . '" title="' . _LISTCAT_RSS . '" />');
+        echo CKunenaLink::GetRSSLink('<img class="rsslink" src="' . KUNENA_URLEMOTIONSPATH . 'rss.gif" border="0" alt="' . _LISTCAT_RSS . '" title="' . _LISTCAT_RSS . '" />');
     }
     echo '</div>';
 

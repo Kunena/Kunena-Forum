@@ -11,7 +11,7 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-class fb_link
+class CKunenaLink
 {
     //
     // Basic universal href link
@@ -34,32 +34,32 @@ class fb_link
 
     function GetCreditsLink()
     {
-        return fb_link::GetSefHrefLink('http://www.kunena.com', 'Kunena', 'Kunena', 'follow');
+        return CKunenaLink::GetSefHrefLink('http://www.kunena.com', 'Kunena', 'Kunena', 'follow');
     }
 
     function GetTeamCreditsLink($catid, $name='')
     {
-        return fb_link::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=credits&amp;catid='.$catid, $name, '', 'follow');
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=credits&amp;catid='.$catid, $name, '', 'follow');
     }
 
     function GetKunenaLink($name , $rel='follow')
     {
-        return fb_link::GetSefHrefLink(KUNENA_LIVEURLREL, $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL, $name, '', $rel);
     }
 
     function GetRSSLink($name , $rel='follow')
     {
-        return fb_link::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=fb_rss&amp;no_html=1', $name, '', $rel, '', '', 'target="_blank"');
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=fb_rss&amp;no_html=1', $name, '', $rel, '', '', 'target="_blank"');
     }
 
     function GetCategoryLink($func, $catid, $catname, $rel='follow', $class='')
     {
-        return fb_link::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;catid='.$catid, $catname, '', $rel, $class);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;catid='.$catid, $catname, '', $rel, $class);
     }
 
     function GetCategoryListLink($name, $rel='follow', $class='')
     {
-        return fb_link::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=listcat', $name, '', $rel, $class);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=listcat', $name, '', $rel, $class);
     }
 
     function GetCategoryPageLink($func, $catid, $page, $pagename, $rel='follow', $class='')
@@ -67,11 +67,11 @@ class fb_link
         if ($page == 1 || !is_numeric($page))
         {
             // page 1 is identical to a link to the regular category link
-            $pagelink  = fb_link::GetCategoryLink($func, $catid, $pagename, $rel, $class);
+            $pagelink  = CKunenaLink::GetCategoryLink($func, $catid, $pagename, $rel, $class);
         }
         else
         {
-            $pagelink  = fb_link::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;catid='.$catid.'&amp;page='.$page, $pagename, '', $rel, $class);
+            $pagelink  = CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;catid='.$catid.'&amp;page='.$page, $pagename, '', $rel, $class);
         }
 
         return $pagelink;
@@ -79,12 +79,12 @@ class fb_link
 
     function GetCategoryReviewListLink($catid, $catname, $rel='nofollow', $class='')
     {
-        return fb_link::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=review&amp;action=list&amp;catid='.$catid, $catname, '', $rel, $class);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=review&amp;action=list&amp;catid='.$catid, $catname, '', $rel, $class);
     }
 
     function GetThreadLink($func, $catid, $threadid, $threadname, $title, $rel='follow', $class='')
     {
-        return fb_link::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;catid='.$catid.'&amp;id='.$threadid, $threadname, $title, $rel, $class);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;catid='.$catid.'&amp;id='.$threadid, $threadname, $title, $rel, $class);
     }
 
     function GetThreadPageLink($func, $catid, $threadid, $page, $limit, $name, $anker='', $rel='follow', $class='')
@@ -92,12 +92,12 @@ class fb_link
         if ($page == 1 || !is_numeric($page) || !is_numeric($limit))
         {
             // page 1 is identical to a link to the top of the thread
-            $pagelink  = fb_link::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;catid='.$catid.'&amp;id='.$threadid,
+            $pagelink  = CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;catid='.$catid.'&amp;id='.$threadid,
             										$name, '', $rel, $class, $anker);
         }
         else
         {
-            $pagelink  = fb_link::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;catid='.$catid.'&amp;id='.$threadid
+            $pagelink  = CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;catid='.$catid.'&amp;id='.$threadid
                           .'&amp;limit='.$limit.'&amp;limitstart='.(($page-1)*$limit), $name, '', $rel, $class, $anker);
         }
 
@@ -124,12 +124,12 @@ class fb_link
 
     function GetSamePageAnkerLink($anker, $name, $rel='nofollow')
     {
-        return fb_link::GetSefHrefLink(htmlspecialchars(sefRelToAbs('index.php?'.$_SERVER['QUERY_STRING'])), $name, '', $rel, '', $anker);
+        return CKunenaLink::GetSefHrefLink(htmlspecialchars(sefRelToAbs('index.php?'.$_SERVER['QUERY_STRING'])), $name, '', $rel, '', $anker);
     }
 
     function GetReportMessageLink($catid, $msg_id, $name, $rel='nofollow')
     {
-        return fb_link::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=report&amp;catid='.$catid.'&amp;msg_id='.$msg_id, $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=report&amp;catid='.$catid.'&amp;msg_id='.$msg_id, $name, '', $rel);
     }
 
     function GetMessageIPLink($msg_ip, $rel='nofollow')
@@ -151,7 +151,7 @@ class fb_link
     {
         $profilelink = $fbConfig->cb_profile ? 'index.php?option=com_comprofiler&amp;Itemid='.$cbitemid.'&amp;task=userDetails'
                                             : KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=show';
-        return fb_link::GetSefHrefLink($profilelink, $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink($profilelink, $name, '', $rel);
     }
 
     function GetProfileLink($userid, $name, $rel='nofollow', $class='')
@@ -159,7 +159,7 @@ class fb_link
     	// Only create links for valid users
     	if ($userid > 0)
     	{
-    		return fb_link::GetSefHrefLink(KUNENA_PROFILE_LINK_SUFFIX.$userid, $name, '', $rel, $class);
+    		return CKunenaLink::GetSefHrefLink(KUNENA_PROFILE_LINK_SUFFIX.$userid, $name, '', $rel, $class);
     	}
     	else // supress links for guests
     	{
@@ -167,73 +167,74 @@ class fb_link
     	}
     }
 
+
     function GetViewLink($func, $id, $catid, $view, $name, $rel='nofollow')
     {
-        return fb_link::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;id='.$id.'&amp;view='.$view.'&amp;catid='.$catid, $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;id='.$id.'&amp;view='.$view.'&amp;catid='.$catid, $name, '', $rel);
     }
 
     function GetPendingMessagesLink($catid, $name, $rel='nofollow')
     {
-        return fb_link::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=review&action=list&amp;catid='.$catid, $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=review&action=list&amp;catid='.$catid, $name, '', $rel);
     }
 
     function GetShowLatestLink($name, $rel='follow')
     {
-        return fb_link::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=latest', $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=latest', $name, '', $rel);
     }
 
     function GetShowMyLatestLink($name, $rel='nofollow')
     {
-        return fb_link::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=mylatest', $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=mylatest', $name, '', $rel);
     }
 
     function GetShowLatestThreadsLink($period, $name, $rel='nofollow')
     {
-        return fb_link::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel='.$period, $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel='.$period, $name, '', $rel);
     }
 
     // Function required to support default_ex template
     function GetLatestPageLink($func, $page, $rel='follow', $class='', $sel='')
     {
     	// if ($func=='') $func = 'latest';
-        return fb_link::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;page='.$page.(($sel)?'&amp;sel='.$sel:''), $page, '', $rel, $class);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;page='.$page.(($sel)?'&amp;sel='.$sel:''), $page, '', $rel, $class);
     }
 
     function GetPostNewTopicLink($catid, $name, $rel='nofollow')
     {
-        return fb_link::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=post&amp;do=reply&amp;catid='.$catid, $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=post&amp;do=reply&amp;catid='.$catid, $name, '', $rel);
     }
 
     function GetTopicPostLink($do, $catid, $id, $name, $rel='nofollow')
     {
-        return fb_link::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=post&amp;do='.$do.'&amp;catid='.$catid.'&amp;id='.$id, $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=post&amp;do='.$do.'&amp;catid='.$catid.'&amp;id='.$id, $name, '', $rel);
     }
 
     function GetTopicPostReplyLink($do, $catid, $id, $name, $rel='nofollow')
     {
-        return fb_link::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=post&amp;do='.$do.'&amp;catid='.$catid.'&amp;replyto='.$id, $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=post&amp;do='.$do.'&amp;catid='.$catid.'&amp;replyto='.$id, $name, '', $rel);
     }
 
     function GetEmailLink($email, $name)
     {
-        return fb_link::GetSimpleLink('mailto:'.stripslashes($email), stripslashes($name));
+        return CKunenaLink::GetSimpleLink('mailto:'.stripslashes($email), stripslashes($name));
     }
 
     function GetKarmaLink($do, $catid, $pid, $userid, $name, $rel='nofollow')
     {
-        return fb_link::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=karma&amp;do='.$do.'&amp;userid='.$userid.'&amp;pid='.$pid.'&amp;catid='.$catid, $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=karma&amp;do='.$do.'&amp;userid='.$userid.'&amp;pid='.$pid.'&amp;catid='.$catid, $name, '', $rel);
     }
 
     function GetRulesLink($fbConfig, $name, $rel='nofollow')
     {
         $ruleslink = $fbConfig->rules_infb ? KUNENA_LIVEURLREL.'&amp;func=rules' : $fbConfig->rules_link;
-        return fb_link::GetSefHrefLink($ruleslink, $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink($ruleslink, $name, '', $rel);
     }
 
     function GetHelpLink($fbConfig, $name, $rel='nofollow')
     {
         $helplink = $fbConfig->help_infb ? KUNENA_LIVEURLREL.'&amp;func=faq' : $fbConfig->help_link;
-        return fb_link::GetSefHrefLink($helplink, $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink($helplink, $name, '', $rel);
     }
 
     //
@@ -263,11 +264,11 @@ class fb_link
         // Finally build output block
 
         $Output  = '<div align="center">';
-        $Output .= fb_link::GetThreadPageLink('view', $result->catid, $result->thread, $threadPages, $limit, _POST_SUCCESS_VIEW, $result->latest_id) .'<br />';
-        $Output .= fb_link::GetCategoryLink('showcat', $result->catid, _POST_SUCCESS_FORUM).'<br />';
+        $Output .= CKunenaLink::GetThreadPageLink('view', $result->catid, $result->thread, $threadPages, $limit, _POST_SUCCESS_VIEW, $result->latest_id) .'<br />';
+        $Output .= CKunenaLink::GetCategoryLink('showcat', $result->catid, _POST_SUCCESS_FORUM).'<br />';
         $Output .= '</div>';
         $Output .= '<script language = "javascript">';
-        $Output .= 'var redirect_timeout = setTimeout("location=\''. str_replace('&amp;', '&', fb_link::GetThreadPageURL('view', $result->catid, $result->thread, $threadPages, $limit, $result->latest_id) ) .'\'", 3500);';
+        $Output .= 'var redirect_timeout = setTimeout("location=\''. str_replace('&amp;', '&', CKunenaLink::GetThreadPageURL('view', $result->catid, $result->thread, $threadPages, $limit, $result->latest_id) ) .'\'", 3500);';
         $Output .= 'jQuery(document).ready(function ($) { $("body").bind("click", function(e) { clearTimeout(redirect_timeout); } ); });';
         $Output .= '</script>';
 
@@ -277,7 +278,7 @@ class fb_link
     function GetLatestCategoryAutoRedirectHTML($catid)
     {
         $Output  = '<div align="center">';
-        $Output .= fb_link::GetCategoryLink('showcat', $catid, _POST_SUCCESS_FORUM).'<br />';
+        $Output .= CKunenaLink::GetCategoryLink('showcat', $catid, _POST_SUCCESS_FORUM).'<br />';
         $Output .= '</div>';
         $Output .= '<script language = "javascript">';
         $Output .= 'var redirect_timeout = setTimeout("location=\''. sefRelToAbs(str_replace('&amp;', '&', KUNENA_LIVEURLREL) . '&func=showcat&catid=' . $catid) .'\'", 3500);';

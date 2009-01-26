@@ -16,7 +16,10 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-// 1.0.5RC2
+// 1.0.6
+DEFINE('_KUNENA_JOMSOCIAL', 'JomSocial');
+
+// 1.0.5
 DEFINE('_COM_A_HIGHLIGHTCODE', 'Enable Code Highlighting');
 DEFINE('_COM_A_HIGHLIGHTCODE_DESC', 'Enables the Kunena code tag highlighting java script. If your members post php and similar code fragments within code tags, turning this on will colorize the code. If your forum does not make use of such programing language posts, you might want to turn it off to avoid code tags from getting malformed.');
 DEFINE('_COM_A_RSS_TYPE', 'Default RSS type');
@@ -33,8 +36,6 @@ DEFINE('_COM_A_FBDEFAULT_PAGE_DESC', 'Select the default Kunena page that gets d
 DEFINE('_COM_A_FBDEFAULT_PAGE_RECENT', 'Recent Discussions');
 DEFINE('_COM_A_FBDEFAULT_PAGE_MY', 'My Discussions');
 DEFINE('_COM_A_FBDEFAULT_PAGE_CATEGORIES', 'Categories');
-
-// 1.0.5
 DEFINE('_KUNENA_BBCODE_HIDE', 'The following is hidden from non registered users:');
 DEFINE('_KUNENA_BBCODE_SPOILER', 'Warning Spoiler!');
 DEFINE('_KUNENA_FORUM_SAME_ERR', 'Parent Forum must not be the same.');
@@ -479,7 +480,7 @@ DEFINE('_KUNENA_ERRORSUBS', 'Something went wrong deleting the messages and subs
 DEFINE('_KUNENA_WARNING', 'Warning...');
 DEFINE('_KUNENA_CHMOD1', 'You need to chmod this to 766 in order for the file to be updated.');
 DEFINE('_KUNENA_YOURCONFIGFILEIS', 'Your config file is');
-DEFINE('_KUNENA_Kunena', 'Kunena');
+DEFINE('_KUNENA_KUNENA', 'Kunena');
 DEFINE('_KUNENA_CLEXUS', 'Clexus PM');
 DEFINE('_KUNENA_CB', 'Community Builder');
 DEFINE('_KUNENA_MYPMS', 'myPMS II Open Source');
@@ -668,7 +669,7 @@ DEFINE('_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST', 'Show Child Category Image');
 DEFINE('_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST_DESC', 'If you want to show child category small icon  on your forum list, set to YES. ');
 DEFINE('_KUNENA_SHOW_ANNOUNCEMENT', 'Show Announcement');
 DEFINE('_KUNENA_SHOW_ANNOUNCEMENT_DESC', 'Set to "Yes" , if you want to show announcement box on forum homepage.');
-DEFINE('_KUNENA_SHOW_AVATAR_ON_CAT', 'Show Avartar on Categories list?');
+DEFINE('_KUNENA_SHOW_AVATAR_ON_CAT', 'Show Avatar on Categories list?');
 DEFINE('_KUNENA_SHOW_AVATAR_ON_CAT_DESC', 'Set to "Yes" , if you want to show user avatar on your forum category list.');
 DEFINE('_KUNENA_RECENT_POSTS', 'Recent Post Settings');
 DEFINE('_KUNENA_SHOW_LATEST_MESSAGES', 'Show Recent Posts');
@@ -908,7 +909,7 @@ DEFINE('_COM_A_COMBUILDER_DESC',
     'Setting to &quot;Yes&quot; will activate the integration with Community Builder component (www.joomlapolis.com). All Kunena user profile functions will be handled by the Community Builder and the profile link in the forums will take you to the Community Builder user profile. This setting will override the Clexus PM profile setting if both are set to &quot;Yes&quot;. Also, make sure you apply the required changes in the Community Builder database by using the option below.');
 DEFINE('_COM_A_AVATAR_SRC', 'Use avatar picture from');
 DEFINE('_COM_A_AVATAR_SRC_DESC',
-    'If you have Clexus PM or Community Builder component installed, you can configure Kunena to use the user avatar picture from Clexus PM or Community Builder user profile. NOTE: For Community Builder you need to have thumbnail option turned on because forum uses thumbnail user pictures, not the originals.');
+    'If you have JomSocial, Clexus PM or Community Builder component installed, you can configure Kunena to use the user avatar picture from JomSocial, Clexus PM or Community Builder user profile. NOTE: For Community Builder you need to have thumbnail option turned on because forum uses thumbnail user pictures, not the originals.');
 DEFINE('_COM_A_KARMA', 'Show Karma indicator');
 DEFINE('_COM_A_KARMA_DESC', 'Set to &quot;Yes&quot; to show user Karma and related buttons (increase / decrease) if the User Stats are activated.');
 DEFINE('_COM_A_DISEMOTICONS', 'Disable emoticons');

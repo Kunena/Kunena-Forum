@@ -133,28 +133,37 @@ if (count($messages[0]) > 0)
                     //(JJ) AVATAR
                     if ($fbConfig->avataroncat)
                     {
-                        // ///////
-                        //first we gather some information about this person
-                        unset($CatUser);
-                            $database->setQuery("SELECT * FROM #__fb_users as su"
-                                                . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$leaf->userid}");
+                    	if ($fbConfig->avatar_src == "jomsocial")
+						{
+							// Get CUser object
+							$user =& CFactory::getUser($leaf->userid);
+						    $bof_avatar = '<img class="catavatar" src="' . $user->getThumbAvatar() . '" alt=" " />';
+						}
+						else
+						{
+	                        // ///////
+	                        //first we gather some information about this person
+	                        unset($CatUser);
+	                            $database->setQuery("SELECT * FROM #__fb_users as su"
+	                                                . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$leaf->userid}");
 
-                            $database->loadObject($CatUser);
-                            $javatar = $CatUser->avatar;
+	                            $database->loadObject($CatUser);
+	                            $javatar = $CatUser->avatar;
 
-                        if ($fbConfig->avatar_src == "cb")
-                        {
-                            $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id={$leaf->userid}");
-                            $javatar = $database->loadResult();
-                        }
+	                        if ($fbConfig->avatar_src == "cb")
+	                        {
+	                            $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id={$leaf->userid}");
+	                            $javatar = $database->loadResult();
+	                        }
 
-                        if ($fbConfig->avatar_src == "cb" and $javatar!=false) {
-                            $bof_avatar = '<img class="catavatar" src="images/comprofiler/' . $javatar . '" alt=" " />';
-                            }
-                        elseif ($javatar!=false) {
-                            $bof_avatar = '<img class="catavatar" src="images/fbfiles/avatars/' . $javatar . '" alt=" " />';
-                            }
-                    // //////////
+	                        if ($fbConfig->avatar_src == "cb" and $javatar!=false) {
+	                            $bof_avatar = '<img class="catavatar" src="images/comprofiler/' . $javatar . '" alt=" " />';
+	                            }
+	                        elseif ($javatar!=false) {
+	                            $bof_avatar = '<img class="catavatar" src="images/fbfiles/avatars/' . $javatar . '" alt=" " />';
+	                            }
+						 }
+	                    // //////////
                     }
                 ?>
 
@@ -232,7 +241,7 @@ if (count($messages[0]) > 0)
                         ?>
 
                                 <td class = "td-2"  align="center">
-                                    <?php echo fb_link::GetSimpleLink($id);
+                                    <?php echo CKunenaLink::GetSimpleLink($id);
     echo $leaf->topic_emoticon == 0 ? '<img src="' . KUNENA_URLEMOTIONSPATH . 'default.gif" border="0"  alt="" />' : "<img src=\"" . $topic_emoticons[$leaf->topic_emoticon] . "\" alt=\"emo\" border=\"0\" />"; ?>
                                 </td>
 
@@ -258,7 +267,7 @@ if (count($messages[0]) > 0)
                                 ?>
 
                                 <div class = "fb-topic-title-cover">
-                                    <?php echo fb_link::GetThreadLink('view', $leaf->catid, $leaf->id, htmlspecialchars(stripslashes($leaf->subject)), htmlspecialchars(stripslashes($messagetext[$leaf->id])), 'follow', 'fb-topic-title fbm');?>
+                                    <?php echo CKunenaLink::GetThreadLink('view', $leaf->catid, $leaf->id, htmlspecialchars(stripslashes($leaf->subject)), htmlspecialchars(stripslashes($messagetext[$leaf->id])), 'follow', 'fb-topic-title fbm');?>
                                     <!--            Favourite       -->
 
                                     <?php
@@ -274,7 +283,7 @@ if (count($messages[0]) > 0)
                                     ?>
                                     <!--            /Favourite       -->
 
-                                    <span class = "fb-topic-by fbs"> <?php echo _GEN_BY.' '.fb_link::GetProfileLink($leaf->userid, $leaf->name);?></span>
+                                    <span class = "fb-topic-by fbs"> <?php echo _GEN_BY.' '.CKunenaLink::GetProfileLink($leaf->userid, $leaf->name);?></span>
 
                                     <?php
                                     if ($fbConfig->shownew && $my->id != 0)
@@ -301,7 +310,7 @@ if (count($messages[0]) > 0)
                                     {
                                         $threadPages = ceil($totalMessages / $fbConfig->messages_per_page);
                                         echo ("<span class=\"jr-showcat-perpage\">[");
-                                        echo _PAGE.' '.fb_link::GetThreadPageLink('view', $leaf->catid, $leaf->id, 1, $fbConfig->messages_per_page, 1);
+                                        echo _PAGE.' '.CKunenaLink::GetThreadPageLink('view', $leaf->catid, $leaf->id, 1, $fbConfig->messages_per_page, 1);
 
                                         if ($threadPages > 3)
                                         {
@@ -325,7 +334,7 @@ if (count($messages[0]) > 0)
                                                 echo (",");
                                                 }
 
-                                            echo fb_link::GetThreadPageLink('view', $leaf->catid, $leaf->id, $hopPage, $fbConfig->messages_per_page, $hopPage);
+                                            echo CKunenaLink::GetThreadPageLink('view', $leaf->catid, $leaf->id, $hopPage, $fbConfig->messages_per_page, $hopPage);
                                         }
 
                                         echo ("]</span>");
@@ -346,14 +355,14 @@ if (count($messages[0]) > 0)
                                 ?>
 
                             <td class = "td-2">
-                                <?php echo fb_link::GetSimpleLink($id);?>
+                                <?php echo CKunenaLink::GetSimpleLink($id);?>
 
                                 <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>arrow.gif" alt = "emo"/>
                             </td>
 
                             <td class = "td-3">
                                 <div class = "fb-topic-title-cover">
-                                    <?php echo fb_link::GetThreadLink('view', $newURLParams['catid'], $newURLParams['id'], htmlspecialchars(stripslashes($leaf->subject)), htmlspecialchars(stripslashes($leaf->subject)), 'follow', 'fb-topic-title-cover');?>
+                                    <?php echo CKunenaLink::GetThreadLink('view', $newURLParams['catid'], $newURLParams['id'], htmlspecialchars(stripslashes($leaf->subject)), htmlspecialchars(stripslashes($leaf->subject)), 'follow', 'fb-topic-title-cover');?>
                                 </div>
 
                         <?php
@@ -380,7 +389,7 @@ if (count($messages[0]) > 0)
     {
 ?>
 
-<?php echo _GEN_BY; ?> <?php echo fb_link::GetProfileLink($last_reply[$leaf->id]->userid, $last_reply[$leaf->id]->name);?>
+<?php echo _GEN_BY; ?> <?php echo CKunenaLink::GetProfileLink($last_reply[$leaf->id]->userid, $last_reply[$leaf->id]->name);?>
 
 <?php
     }
@@ -393,7 +402,7 @@ if (count($messages[0]) > 0)
         $tmpicon = $fbIcons['latestpost'] ? '<img src="'
                  .KUNENA_URLICONSPATH.''.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" />':'  <img src="'.KUNENA_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />';
     }
-    echo fb_link::GetThreadPageLink('view', $leaf->catid, $leaf->id, $threadPages, $fbConfig->messages_per_page, $tmpicon, $last_reply[$leaf->id]->id);
+    echo CKunenaLink::GetThreadPageLink('view', $leaf->catid, $leaf->id, $threadPages, $fbConfig->messages_per_page, $tmpicon, $last_reply[$leaf->id]->id);
     ?>
                                 </div>
                             </td>

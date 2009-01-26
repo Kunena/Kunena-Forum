@@ -334,7 +334,7 @@ $catName = $objCatInfo->name;
                                         	check_dberror("Unable to load messages.");
                                         $threadPages = ceil($result->totalmessages / $fbConfig->messages_per_page);
                                         //construct a useable URL (for plaintext - so no &amp; encoding!)
-                                        $LastPostUrl = str_replace('&amp;', '&', fb_link::GetThreadPageURL('view', $catid, $querythread, $threadPages, $fbConfig->messages_per_page, $pid));
+                                        $LastPostUrl = str_replace('&amp;', '&', CKunenaLink::GetThreadPageURL('view', $catid, $querythread, $threadPages, $fbConfig->messages_per_page, $pid));
 
                                         //Now manage the subscriptions (only if subscriptions are allowed)
                                         if ($fbConfig->allowsubscriptions == 1)
@@ -480,12 +480,12 @@ $catName = $objCatInfo->name;
                                         if ($holdPost == 1)
                                         {
                                             echo '<br /><br /><div align="center">' . _POST_SUCCES_REVIEW . '<br /><br />';
-                                            echo fb_link::GetLatestPostAutoRedirectHTML($pid, $fbConfig->messages_per_page);
+                                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($pid, $fbConfig->messages_per_page);
                                         }
                                         else
                                         {
                                             echo '<br /><br /><div align="center">' . _POST_SUCCESS_POSTED . '<br /><br />';
-                                            echo fb_link::GetLatestPostAutoRedirectHTML($pid, $fbConfig->messages_per_page);
+                                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($pid, $fbConfig->messages_per_page);
                                         }
                                     }
                                     else {
@@ -497,7 +497,7 @@ $catName = $objCatInfo->name;
                                 // We did not do any further processing and just display the success message
                                 {
                                     echo '<br /><br /><div align="center">' . _POST_DUPLICATE_IGNORED . '<br /><br />';
-                                    echo fb_link::GetLatestPostAutoRedirectHTML($pid, $fbConfig->messages_per_page);
+                                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($pid, $fbConfig->messages_per_page);
                                 }
                             }
                             ?>
@@ -510,7 +510,7 @@ $catName = $objCatInfo->name;
             else if ($action == "cancel")
             {
                 echo '<br /><br /><div align="center">' . _SUBMIT_CANCEL . "</div><br />";
-                echo fb_link::GetLatestPostAutoRedirectHTML($pid, $fbConfig->messages_per_page);
+                echo CKunenaLink::GetLatestPostAutoRedirectHTML($pid, $fbConfig->messages_per_page);
             }
             else
             {
@@ -872,7 +872,7 @@ $catName = $objCatInfo->name;
                                 }
 
                                 echo '<br /><br /><div align="center">' . _POST_SUCCESS_EDIT . "</div><br />";
-                                echo fb_link::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
+                                echo CKunenaLink::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
                             }
                             else {
                                 echo _POST_ERROR_MESSAGE_OCCURED;
@@ -969,7 +969,7 @@ $catName = $objCatInfo->name;
 
                             break;
                     }
-                    echo fb_link::GetLatestCategoryAutoRedirectHTML($catid);
+                    echo CKunenaLink::GetLatestCategoryAutoRedirectHTML($catid);
 
                 } //fi $do==deletepostnow
                 else if ($do == "move")
@@ -1076,7 +1076,7 @@ $catName = $objCatInfo->name;
                     FBTools::reCountBoards();
 
                     echo '<br /><br /><div align="center">' . _POST_SUCCESS_MOVE . "</div><br />";
-                    echo fb_link::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
+                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
                 }
                 //begin merge function
                 else if ($do == "merge")
@@ -1235,7 +1235,7 @@ $catName = $objCatInfo->name;
                             FBTools::reCountBoards();
 
                             echo '<br /><br /><div align="center">' . _POST_SUCCESS_MERGE . "</div><br />";
-                            echo fb_link::GetLatestPostAutoRedirectHTML($targetid, $fbConfig->messages_per_page);
+                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($targetid, $fbConfig->messages_per_page);
                         }
                         else
                         {
@@ -1248,7 +1248,7 @@ $catName = $objCatInfo->name;
                     else
                     {
                         echo '<br /><br /><div align="center">' . _POST_TOPIC_NOT_MERGED . "</div><br />";
-                        echo fb_link::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
+                        echo CKunenaLink::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
                     }
 
 		        }
@@ -1463,14 +1463,14 @@ $catName = $objCatInfo->name;
                             $database->query();
 
                             echo '<br /><br /><div align="center">' . _POST_SUCCESS_SPLIT_TOPIC_CHANGED . "</div><br />";
-                            echo fb_link::GetLatestPostAutoRedirectHTML($new_topic, $fbConfig->messages_per_page);
+                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($new_topic, $fbConfig->messages_per_page);
 
                             return;
                         }
                         else
                         {
                             echo '<br /><br /><div align="center">' . _POST_SPLIT_TOPIC_NOT_CHANGED . "</div><br />";
-                            echo fb_link::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
+                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
 
                             echo '<div align="center"><br />Topic change failed.</br></div>';
                             return;
@@ -1554,7 +1554,7 @@ $catName = $objCatInfo->name;
                     FBTools::reCountBoards();
 
                     echo '<br /><br /><div align="center">' . _POST_SUCCESS_SPLIT . "</div><br />";
-                    echo fb_link::GetLatestPostAutoRedirectHTML($new_topic, $fbConfig->messages_per_page);
+                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($new_topic, $fbConfig->messages_per_page);
 		        }
 // end split function
                 else if ($do == "subscribe")
@@ -1596,7 +1596,7 @@ $catName = $objCatInfo->name;
                     }
 
                     echo '<br /><br /><div align="center">' . _POST_SUCCESS_SUBSCRIBE . "</div><br />";
-                    echo fb_link::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
+                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
                 }
                 else if ($do == "unsubscribe")
                 {
@@ -1623,7 +1623,7 @@ $catName = $objCatInfo->name;
                     }
 
                     echo '<br /><br /><div align="center">' . _POST_SUCCESS_UNSUBSCRIBE . "</div><br />";
-                    echo fb_link::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
+                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
                 }
                 else if ($do == "favorite")
                 {
@@ -1650,7 +1650,7 @@ $catName = $objCatInfo->name;
                     }
 
                     echo '<br /><br /><div align="center">' . _POST_SUCCESS_FAVORITE . "</div><br />";
-                    echo fb_link::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
+                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
                 }
                 else if ($do == "unfavorite")
                 {
@@ -1677,7 +1677,7 @@ $catName = $objCatInfo->name;
                     }
 
                     echo '<br /><br /><div align="center">' . _POST_SUCCESS_UNFAVORITE . "</div><br />";
-                    echo fb_link::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
+                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
                 }
                 else if ($do == "sticky")
                 {
@@ -1695,7 +1695,7 @@ $catName = $objCatInfo->name;
                     }
 
                     echo '<br /><br /><div align="center">' . _POST_SUCCESS_REQUEST2 . "</div><br />";
-                    echo fb_link::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
+                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
                 }
                 else if ($do == "unsticky")
                 {
@@ -1713,7 +1713,7 @@ $catName = $objCatInfo->name;
                     }
 
                     echo '<br /><br /><div align="center">' . _POST_SUCCESS_REQUEST2 . "</div><br />";
-                    echo fb_link::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
+                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
                 }
                 else if ($do == "lock")
                 {
@@ -1732,7 +1732,7 @@ $catName = $objCatInfo->name;
                     }
 
                     echo '<br /><br /><div align="center">' . _POST_SUCCESS_REQUEST2 . "</div><br />";
-                    echo fb_link::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
+                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
                 }
                 else if ($do == "unlock")
                 {
@@ -1750,7 +1750,7 @@ $catName = $objCatInfo->name;
                     }
 
                     echo '<br /><br /><div align="center">' . _POST_SUCCESS_REQUEST2 . "</div><br />";
-                    echo fb_link::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
+                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($id, $fbConfig->messages_per_page);
                 }
             }
             ?>

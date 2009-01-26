@@ -38,7 +38,7 @@ if ($func != "")
         $parent_ids = 1000;
         $jr_it = 1;
         $jr_path_menu = array ();
-        $shome = '<div class="forum-pathway-1">' . fb_link::GetKunenaLink( $fbConfig->board_title );
+        $shome = '<div class="forum-pathway-1">' . CKunenaLink::GetKunenaLink( $fbConfig->board_title );
 
         while ($parent_ids)
         {
@@ -48,7 +48,7 @@ if ($func != "")
 			$parent_ids = $results->parent;
 			$fr_name = trim($results->name);
             //$cids=@mysql_result( $results, 0, 'id' );
-            $sname = fb_link::GetCategoryLink( 'showcat', $catids, $fr_name);
+            $sname = CKunenaLink::GetCategoryLink( 'showcat', $catids, $fr_name);
 
             if ($jr_it == 1 && $sfunc != "view")
             {
@@ -143,7 +143,7 @@ if ($func != "")
 				if ($user->userid != 0)
 				{
 					if ( $user->showOnline > 0 ){
-					echo '<small>' . fb_link::GetProfileLink( $user->userid, $user->username) . ' ,</small> ';
+					echo '<small>' . CKunenaLink::GetProfileLink( $user->userid, $user->username) . ' ,</small> ';
 					}
 				}
 				else

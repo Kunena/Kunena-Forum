@@ -131,7 +131,7 @@ if ($letPass || $is_Moderator)
 
         foreach ($msgidlist as $msgid)
         {
-            $last_read[$msgid->thread] = $msgid;
+            if (!in_array($msgid->thread, $read_topics)) $last_read[$msgid->thread] = $msgid;
         }
     }
 

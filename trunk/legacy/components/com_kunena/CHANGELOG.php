@@ -30,6 +30,11 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Kunena 1.0.6
 
+26-January-2009 Matias
+# default_ex: Link to first unread message was sometimes broken
+^ view: Message is marked new only if thread hasn't been read
++ kunena.credits.php: Added myself
+
 25-January-2009 fxstein
 + Basic JomSocial Integration
 ^ updated jquery to latest 1.3.1 minimized

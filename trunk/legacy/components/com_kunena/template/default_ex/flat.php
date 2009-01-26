@@ -229,9 +229,9 @@ if (count($messages[0]) > 0)
                             {
                                 // Need to add +1 as we only have the replies in the buffer
                                 $totalMessages = $thread_counts[$leaf->id] + 1;
+				$curMessageNo = $totalMessages - ($last_read[$leaf->id]->unread ? $last_read[$leaf->id]->unread-1 : 0);
                                 $threadPages = ceil($totalMessages / $fbConfig->messages_per_page);
-                                $unreadPage = ceil(($totalMessages-$last_read[$leaf->id]->unread) / $fbConfig->messages_per_page);
-				if ($unreadPage == 0) $unreadPage++;
+                                $unreadPage = ceil($curMessageNo / $fbConfig->messages_per_page);
                         ?>
 
                                 <td class = "td-2"  align="center">

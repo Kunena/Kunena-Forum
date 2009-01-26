@@ -215,7 +215,7 @@ if (count($threadids) > 0)
 
     foreach ($msgidlist as $msgid)
     {
-        $last_read[$msgid->thread] = $msgid;
+        if (!in_array($msgid->thread, $read_topics)) $last_read[$msgid->thread] = $msgid;
     }
 }
 ?>

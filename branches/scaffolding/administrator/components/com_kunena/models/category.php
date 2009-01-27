@@ -10,7 +10,7 @@
 
 defined('_JEXEC') or die('Invalid Request.');
 
-jimport('joomla.application.component.model');
+jximport('jxtended.application.component.model.Item');
 jximport('jxtended.database.query');
 
 /**
@@ -20,57 +20,8 @@ jximport('jxtended.database.query');
  * @subpackage	com_kunena
  * @version		1.0
  */
-class KunenaModelCategory extends JModel
+class KunenaModelCategory extends JXModelItem
 {
-	/**
-	 * Flag to indicate model state initialization.
-	 *
-	 * @access	protected
-	 * @var		boolean
-	 */
-	var $__state_set	= false;
-
-	/**
-	 * Array of items for memory caching.
-	 *
-	 * @access	protected
-	 * @var		array
-	 */
-	var $_items			= array();
-
-	/**
-	 * Overridden method to get model state variables.
-	 *
-	 * @access	public
-	 * @param	string	$property	Optional parameter name.
-	 * @return	object	The property where specified, the state object where omitted.
-	 * @since	1.0
-	 */
-	function getState($property = null, $default = null)
-	{
-		if (!$this->__state_set)
-		{
-			// Get the application object.
-			$app = &JFactory::getApplication();
-
-			// Attempt to auto-load the category id.
-			if (!$catId = (int)$app->getUserState('com_kunena.edit.category.id')) {
-				$catId = (int)JRequest::getInt('cat_id');
-			}
-
-			// Only set the category id if there is a value.
-			if ($catId) {
-				$this->setState('category.id', $catId);
-			}
-
-			// Set the model state set flat to true.
-			$this->__state_set = true;
-		}
-
-		$value = parent::getState($property);
-		return (is_null($value) ? $default : $value);
-	}
-
 	/**
 	 * Method to get a category item.
 	 *
@@ -622,5 +573,51 @@ class KunenaModelCategory extends JModel
 		 */
 
 		return true;
+	}
+
+	/**
+	 * Method to get a store id based on model configuration state.
+	 *
+	 * This is necessary because the model is used by the component and
+	 * different modules that might need different sets of data or different
+	 * ordering requirements.
+	 *
+	 * @access	protected
+	 * @param	string		$context	A prefix for the store id.
+	 * @return	string		A store id.
+	 * @since	1.0
+	 */
+	function _getStoreId($id = '')
+	{
+		// Compile the store id.
+
+		return md5($id);
+	}
+
+	/**
+	 * Method to auto-populate the model state.
+	 *
+	 * This method should only be called once per instantiation and is designed
+	 * to be called on the first call to the getState() method unless the model
+	 * configuration flag to ignore the request is set.
+	 *
+	 * @access	protected
+	 * @return	void
+	 * @since	1.0
+	 */
+	function _populateState()
+	{
+		// Get the application object.
+		$app = &JFactory::getApplication();
+
+		// Attempt to auto-load the category id.
+		if (!$catId = (int)$app->getUserState('com_kunena.edit.category.id')) {
+			$catId = (int)JRequest::getInt('cat_id');
+		}
+
+		// Only set the category id if there is a value.
+		if ($catId) {
+			$this->setState('category.id', $catId);
+		}
 	}
 }

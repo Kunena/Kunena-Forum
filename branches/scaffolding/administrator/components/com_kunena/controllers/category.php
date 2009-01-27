@@ -174,11 +174,11 @@ class KunenaControllerCategory extends JController
 		$data['id'] = (int) $app->getUserState('com_kunena.edit.category.id');
 
 		// Get the model and attempt to validate the posted data.
-		$model = &$this->getModel('Category', 'KunenaModel');
-		$return	= $model->validate($data);
+		$model	= & $this->getModel('Category', 'KunenaModel');
+		$valid	= $model->validate($data);
 
 		// Check for validation errors.
-		if ($return === false)
+		if ($valid === false)
 		{
 			// Get the validation messages.
 			$errors	= $model->getErrors();
@@ -202,10 +202,10 @@ class KunenaControllerCategory extends JController
 		}
 
 		// Permissions.
-		$return['permissions'] = JRequest::getVar('permissions', array(), 'post', 'array');
+		$valid['permissions'] = JRequest::getVar('permissions', array(), 'post', 'array');
 
 		// Attempt to save the data.
-		$return	= $model->save($return);
+		$return	= $model->save($valid);
 
 		// Check for errors.
 		if ($return === false)
@@ -457,17 +457,17 @@ class KunenaControllerCategory extends JController
 		// Check for request forgeries
 		JRequest::checkToken() or die('Invalid Token');
 
-		$cid	= JRequest::getVar('cid',		null, 'post', 'array');
-		$level	= JRequest::getVar('level',	null, 'post');
-
-		$model = &$this->getModel('Category');
-		$result	= $model->access($cid, $level);
-		if (JError::isError($result)) {
-			$this->setMessage($result->getMessage());
-		}
-		else {
-			$this->setMessage(JText::sprintf('Items updated', $result));
-		}
+//		$cid	= JRequest::getVar('cid',		null, 'post', 'array');
+//		$level	= JRequest::getVar('level',	null, 'post');
+//
+//		$model = &$this->getModel('Category');
+//		$result	= $model->access($cid, $level);
+//		if (JError::isError($result)) {
+//			$this->setMessage($result->getMessage());
+//		}
+//		else {
+//			$this->setMessage(JText::sprintf('Items updated', $result));
+//		}
 
 		// Redirect to the list screen.
 		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=categories', false));
@@ -485,17 +485,17 @@ class KunenaControllerCategory extends JController
 		// Check for request forgeries
 		JRequest::checkToken() or die('Invalid Token');
 
-		$vars	= JRequest::getVar('quick', array(), 'post', 'array');
-		$cid	= JRequest::getVar('cid', null, 'post', 'array');
-		$result	= true;
-
-		$model = &$this->getModel('Category');
-		$model->setState('vars',	$vars);
-		$model->setState('ids',	$cid);
-		$result = $model->quick();
-		if (JError::isError($result)) {
-			JError::raiseNotice(500, $result->getMessage());
-		}
+//		$vars	= JRequest::getVar('quick', array(), 'post', 'array');
+//		$cid	= JRequest::getVar('cid', null, 'post', 'array');
+//		$result	= true;
+//
+//		$model = &$this->getModel('Category');
+//		$model->setState('vars',	$vars);
+//		$model->setState('ids',	$cid);
+//		$result = $model->quick();
+//		if (JError::isError($result)) {
+//			JError::raiseNotice(500, $result->getMessage());
+//		}
 
 		// Redirect to the list screen.
 		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=categories', false));
@@ -510,12 +510,12 @@ class KunenaControllerCategory extends JController
 	 */
 	function batch()
 	{
-		// Get variables from the request.
-		$vars	= JRequest::getVar('batch', array(), 'post', 'array');
-		$cid	= JRequest::getVar('cid', null, 'post', 'array');
-
-		$model = &$this->getModel('Category');
-		$model->batch($vars, $cid);
+//		// Get variables from the request.
+//		$vars	= JRequest::getVar('batch', array(), 'post', 'array');
+//		$cid	= JRequest::getVar('cid', null, 'post', 'array');
+//
+//		$model = &$this->getModel('Category');
+//		$model->batch($vars, $cid);
 
 		// Redirect to the list view.
 		$this->setRedirect(JRoute::_('index.php?option=com_kunena&view=categories', false));

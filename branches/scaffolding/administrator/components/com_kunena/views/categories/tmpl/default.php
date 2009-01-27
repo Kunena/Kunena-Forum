@@ -94,8 +94,8 @@ $this->buildDefaultToolBar();
 					<?php endif; ?>
 					<a href="<?php echo JRoute::_('index.php?option=com_kunena&task=category.edit&cid[]='.$item->id);?>">
 						<?php echo $item->title; ?></a>
-					<?php echo JHTML::_('KGrid.orderUpIcon', $item->id, $item->ordering, $this->pagination, 'category.orderup', 'Move Up', ($item->ordering != 0)); ?>
-					<?php echo JHTML::_('KGrid.orderdownIcon', $item->id, $item->ordering, $this->pagination, 'category.orderdown', 'Move Down', (!empty($this->items[$i]) && ($item->level == $this->items[$i]->level))); ?>
+					<?php echo JHTML::_('KGrid.orderUpIcon', $item->id, $item->ordering, $this->pagination, 'category.orderup', 'Move Up', ($item->ordering > 0)); ?>
+					<?php echo JHTML::_('KGrid.orderdownIcon', $item->id, $item->ordering, $this->pagination, 'category.orderdown', 'Move Down', ($item->ordering < $item->max_ordering)); ?>
 				</td>
 				<td align="center">
 					<?php echo JHTML::_('KGrid.boolean', $item->id, $item->moderated, 'category.moderated', 'category.unmoderated'); ?>

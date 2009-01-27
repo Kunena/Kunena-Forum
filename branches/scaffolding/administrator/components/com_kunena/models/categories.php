@@ -47,9 +47,12 @@ class KunenaModelCategories extends JXModelList
 		$query->from('`#__kunena_categories` AS a');
 
 		// Self-join to get level information and pre-order tree traversal results.
-		$query->select('COUNT(DISTINCT c2.id) AS level');
-		$query->join('LEFT OUTER', '`#__kunena_categories` AS c2 ON a.left_id > c2.left_id AND a.right_id < c2.right_id');
+		$query->select('COUNT(DISTINCT p.id) AS level');
+		$query->join('LEFT OUTER', '`#__kunena_categories` AS p ON a.left_id > p.left_id AND a.right_id < p.right_id');
 		$query->group('a.id');
+
+		$query->select('MAX(s.ordering) AS max_ordering');
+		$query->join('LEFT', '`#__kunena_categories` AS s ON a.parent_id = s.parent_id');
 
 		// Exclude the root category.
 		$query->where('a.id > 1');

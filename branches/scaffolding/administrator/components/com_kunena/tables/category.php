@@ -21,105 +21,53 @@ jximport('jxtended.database.table.asset');
  */
 class KunenaTableCategory extends JTableAsset
 {
-	/**
-	 * @var int unsigned
-	 */
+	/** @var int unsigned */
 	var $id = null;
-	/**
-	 * @var int unsigned
-	 */
+	/** @var int unsigned */
 	var $parent_id = null;
-	/**
-	 * @var varchar
-	 */
+	/** @var varchar */
 	var $title = null;
-	/**
-	 * @var varchar
-	 */
+	/** @var varchar */
 	var $alias = null;
-	/**
-	 * @var varchar
-	 */
+	/** @var varchar */
 	var $path = null;
-	/**
-	 * @var int unsigned
-	 */
+	/** @var int unsigned */
 	var $icon = null;
-	/**
-	 * @var text
-	 */
+	/** @var text */
 	var $summary = null;
-	/**
-	 * @var text
-	 */
+	/** @var text */
 	var $description = null;
-	/**
-	 * @var int
-	 */
+	/** @var int */
 	var $ordering = null;
-	/**
-	 * @var int
-	 */
+	/** @var int */
 	var $published = null;
-	/**
-	 * @var varchar
-	 */
+	/** @var varchar */
 	var $class_sfx = null;
-	/**
-	 * @var int
-	 */
+	/** @var int */
 	var $locked = null;
-	/**
-	 * @var int
-	 */
+	/** @var int */
 	var $moderated = null;
-	/**
-	 * @var int
-	 */
+	/** @var int */
 	var $alert_admin = null;
-	/**
-	 * @var int
-	 */
+	/** @var int */
 	var $access = null;
-	/**
-	 * @var int
-	 */
-	var $post_access = null;
-	/**
-	 * @var int unsigned
-	 */
+	/** @var int unsigned */
 	var $checked_out = null;
-	/**
-	 * @var datetime
-	 */
+	/** @var datetime */
 	var $checked_out_time = null;
-	/**
-	 * @var int unsigned
-	 */
+	/** @var int unsigned */
 	var $hits = null;
-	/**
-	 * @var int unsigned
-	 */
+	/** @var int unsigned */
 	var $last_post_id = null;
-	/**
-	 * @var datetime
-	 */
+	/** @var datetime */
 	var $last_post_time = null;
-	/**
-	 * @var int unsigned
-	 */
+	/** @var int unsigned */
 	var $total_threads = null;
-	/**
-	 * @var int unsigned
-	 */
+	/** @var int unsigned */
 	var $total_posts = null;
-	/**
-	 * @var int unsigned
-	 */
+	/** @var int unsigned */
 	var $left_id = null;
-	/**
-	 * @var int unsigned
-	 */
+	/** @var int unsigned */
 	var $right_id = null;
 
 	/**
@@ -302,7 +250,7 @@ class KunenaTableCategory extends JTableAsset
 				$ordering = array_merge(array_slice($ordering, 0, $offset), array_slice($ordering, $offset+1, 1), (array)$this->id, array_slice($ordering, $offset+2));
 			}
 
-			// Iterate through the categories and set th ordering.
+			// Iterate through the categories and set the ordering.
 			foreach ($ordering as $k => $v)
 			{
 				// Set the ordering for the category.
@@ -548,22 +496,28 @@ class KunenaTableCategory extends JTableAsset
 		if ($move != 0)
 		{
 			// Build a new array with the modified ordering values.
-			$tmp = array();
+			$new = array();
+			$idx = array_search($id, $ordering);
 			foreach ($ordering as $k => $v)
 			{
-				// Move items around our current item.
-				if (($v != $id)) {
-					$k -= $move;
+				if ($k == $idx) {
+					continue;
 				}
-				$tmp[$v] = $k;
+				else {
+					if ($move > 0) {
+						$new[] = $v;
+					}
+					if (($idx + $move) == $k) {
+						$new[] = $ordering[$idx];
+					}
+					if ($move < 0) {
+						$new[] = $v;
+					}
+				}
 			}
 
-			// Sort the array and set the keys as the ordering values.
-			asort($tmp);
-			$ordering = array_keys($tmp);
-
 			// Iterate through the categories and set th ordering.
-			foreach ($ordering as $k => $v)
+			foreach ($new as $k => $v)
 			{
 				// Set the ordering for the category.
 				$this->_db->setQuery(

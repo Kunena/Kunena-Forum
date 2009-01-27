@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id$
+* @version $Id:kunena.pdf.php 150 2009-01-24 10:42:53Z fxstein $
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
@@ -53,9 +53,11 @@ class fbpdfwrapper {
 function dofreePDF($database)
 {
     global $mosConfig_sitename, $my, $aro_group, $acl;
-    global $fbConfig, $fbSession, $catid;
+    global $fbConfig, $fbSession;
     require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
     $is_Mod = 0;
+
+    $catid = intval(mosGetParam($_REQUEST, 'catid', 2));
 
     if (!$is_admin)
     {
@@ -71,11 +73,10 @@ function dofreePDF($database)
 
     if (!$is_Mod)
     {
-
         //get all the info on this forum:
         $database->setQuery("SELECT id,pub_access,pub_recurse,admin_access,admin_recurse FROM #__fb_categories where id=$catid");
         $row = $database->loadObjectList();
-                check_dberror("Unable to load categorie detail.");
+                check_dberror("Unable to load category detail.");
 
 
         $allow_forum = explode(',', FBTools::getAllowedForums($my->id, $aro_group->group_id, $acl));

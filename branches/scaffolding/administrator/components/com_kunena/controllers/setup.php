@@ -115,5 +115,8 @@ class KunenaControllerSetup extends JController
 			JError::raiseNotice(500, JText::_('KUNENA_ACCESS_INITIALIZATION_FAILED'));
 			JError::raiseWarning(500, $model->getError());
 		}
+
+		// Set the redirect.
+		$this->setRedirect('index.php?option=com_kunena');
 	}
 }

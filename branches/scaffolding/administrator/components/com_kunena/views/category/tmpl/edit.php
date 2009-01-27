@@ -113,10 +113,6 @@ function submitbutton(task)
 									<?php echo $fields['alert_admin']->label; ?><br />
 									<?php echo $fields['alert_admin']->input; ?>
 								</li>
-								<li>
-									<?php echo $fields['review']->label; ?><br />
-									<?php echo $fields['review']->input; ?>
-								</li>
 							</ol>
 
 							<fieldset>

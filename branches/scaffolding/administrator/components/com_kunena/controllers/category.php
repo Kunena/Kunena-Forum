@@ -177,9 +177,6 @@ class KunenaControllerCategory extends JController
 		$model = &$this->getModel('Category', 'KunenaModel');
 		$return	= $model->validate($data);
 
-		// Permissions.
-		$data['permissions'] = JRequest::getVar('permissions', array(), 'post', 'array');
-
 		// Check for validation errors.
 		if ($return === false)
 		{
@@ -204,8 +201,11 @@ class KunenaControllerCategory extends JController
 			return false;
 		}
 
+		// Permissions.
+		$return['permissions'] = JRequest::getVar('permissions', array(), 'post', 'array');
+
 		// Attempt to save the data.
-		$return	= $model->save($data);
+		$return	= $model->save($return);
 
 		// Check for errors.
 		if ($return === false)

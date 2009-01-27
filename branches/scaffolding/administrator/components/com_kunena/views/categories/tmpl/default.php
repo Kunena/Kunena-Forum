@@ -26,10 +26,10 @@ $this->buildDefaultToolBar();
 <form action="<?php echo JRoute::_('index.php?option=com_kunena&view=categories');?>" method="post" name="adminForm">
 	<fieldset class="filter clearfix">
 		<div class="left">
-			<label for="search"><?php echo JText::_('KUNENA SEARCH'); ?>:</label>
-			<input type="text" name="filter_search" id="search" value="<?php echo $this->state->get('filter.search'); ?>" size="60" title="<?php echo JText::_('KUNENA CATEGORIES SEARCH IN TITLE'); ?>" />
-			<button type="submit"><?php echo JText::_('KUNENA SEARCH GO'); ?></button>
-			<button type="button" onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_('KUNENA SEARCH CLEAR'); ?></button>
+			<label for="search"><?php echo JText::_('KUNENA_SEARCH'); ?>:</label>
+			<input type="text" name="filter_search" id="search" value="<?php echo $this->state->get('filter.search'); ?>" size="60" title="<?php echo JText::_('KUNENA_CATEGORIES_SEARCH_IN_TITLE'); ?>" />
+			<button type="submit"><?php echo JText::_('KUNENA_SEARCH_GO'); ?></button>
+			<button type="button" onclick="$('search').value='';this.form.submit();"><?php echo JText::_('KUNENA_SEARCH_CLEAR'); ?></button>
 		</div>
 		<div class="right">
 			<ol>
@@ -65,9 +65,6 @@ $this->buildDefaultToolBar();
 				</th>
 				<th width="10%">
 					<?php echo JHTML::_('grid.sort', 'View Access Level', 'a.access', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
-				</th>
-				<th width="10%">
-					<?php echo JHTML::_('grid.sort', 'Post Access Level', 'a.post_access', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
 				</th>
 				<th width="10%">
 					<?php echo JHTML::_('grid.sort', 'Threads', 'a.total_threads', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
@@ -111,9 +108,6 @@ $this->buildDefaultToolBar();
 				</td>
 				<td align="center">
 					<?php echo $item->access_name; ?>
-				</td>
-				<td align="center">
-					<?php echo $item->post_access_name; ?>
 				</td>
 				<td align="center">
 					<?php echo $item->total_threads; ?>

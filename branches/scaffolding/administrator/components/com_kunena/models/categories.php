@@ -83,10 +83,6 @@ class KunenaModelCategories extends JXModelList
 		$query->select('g.title AS access_name');
 		$query->join('LEFT', '`#__access_assetgroups` AS g ON g.id=a.access');
 
-		// Access level.
-		$query->select('pg.title AS post_access_name');
-		$query->join('LEFT', '`#__access_assetgroups` AS pg ON pg.id=a.post_access');
-
 		//echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
 		return $query;
 	}

@@ -39,10 +39,6 @@ class KunenaViewCategory extends JView
 			return false;
 		}
 
-		// Set the form name and action.
-		$form->setName('adminForm');
-		$form->setAction(JRoute::_('index.php?option=com_kunena'));
-
 		// Bind the item data to the form object.
 		if ($item) {
 			$form->bind($item);

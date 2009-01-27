@@ -10,7 +10,7 @@
 
 defined('_JEXEC') or die('Invalid Request.');
 
-jximport('jxtended.application.component.modellist');
+jximport('jxtended.application.component.model.list');
 jximport('jxtended.database.query');
 
 /**

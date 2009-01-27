@@ -45,11 +45,11 @@ function submitbutton(task)
 				<tr>
 					<td>
 						<?php echo $fields['title']->label; ?><br />
-						<?php echo $fields['title']->field; ?>
+						<?php echo $fields['title']->input; ?>
 					</td>
 					<td>
 						<?php echo $fields['alias']->label; ?><br />
-						<?php echo $fields['alias']->field; ?>
+						<?php echo $fields['alias']->input; ?>
 					</td>
 					<td>
 					</td>
@@ -57,11 +57,11 @@ function submitbutton(task)
 				<tr>
 					<td>
 						<?php echo $fields['parent_id']->label; ?><br />
-						<?php echo $fields['parent_id']->field; ?>
+						<?php echo $fields['parent_id']->input; ?>
 					</td>
 					<td>
 						<?php echo $fields['path']->label; ?><br />
-						<?php echo $fields['path']->field; ?>
+						<?php echo $fields['path']->input; ?>
 					</td>
 					<td>
 					</td>
@@ -75,10 +75,10 @@ function submitbutton(task)
 				<tr valign="top">
 					<td width="70%">
 						<?php echo $fields['summary']->label; ?><br />
-						<?php echo $fields['summary']->field; ?><br /><br />
+						<?php echo $fields['summary']->input; ?><br /><br />
 
 						<label><?php echo $fields['description']->label; ?></label>
-						<?php echo $fields['description']->field; ?>
+						<?php echo $fields['description']->input; ?>
 					</td>
 					<td width="30%">
 						<fieldset>
@@ -86,11 +86,11 @@ function submitbutton(task)
 							<ol>
 								<li>
 									<?php echo $fields['published']->label; ?><br />
-									<?php echo $fields['published']->field; ?>
+									<?php echo $fields['published']->input; ?>
 								</li>
 								<li>
 									<?php echo $fields['ordering']->label; ?><br />
-									<?php echo $fields['ordering']->field; ?>
+									<?php echo $fields['ordering']->input; ?>
 								</li>
 							</ol>
 						</fieldset>
@@ -99,23 +99,23 @@ function submitbutton(task)
 							<ol>
 								<li>
 									<?php echo $fields['access']->label; ?><br />
-									<?php echo $fields['access']->field; ?>
+									<?php echo $fields['access']->input; ?>
 								</li>
 								<li>
 									<?php echo $fields['locked']->label; ?><br />
-									<?php echo $fields['locked']->field; ?>
+									<?php echo $fields['locked']->input; ?>
 								</li>
 								<li>
 									<?php echo $fields['moderated']->label; ?><br />
-									<?php echo $fields['moderated']->field; ?>
+									<?php echo $fields['moderated']->input; ?>
 								</li>
 								<li>
 									<?php echo $fields['alert_admin']->label; ?><br />
-									<?php echo $fields['alert_admin']->field; ?>
+									<?php echo $fields['alert_admin']->input; ?>
 								</li>
 								<li>
 									<?php echo $fields['review']->label; ?><br />
-									<?php echo $fields['review']->field; ?>
+									<?php echo $fields['review']->input; ?>
 								</li>
 							</ol>
 
@@ -133,11 +133,11 @@ function submitbutton(task)
 							<ol>
 								<li>
 									<?php echo $fields['icon']->label; ?><br />
-									<?php echo $fields['icon']->field; ?>
+									<?php echo $fields['icon']->input; ?>
 								</li>
 								<li>
 									<?php echo $fields['class_sfx']->label; ?><br />
-									<?php echo $fields['class_sfx']->field; ?>
+									<?php echo $fields['class_sfx']->input; ?>
 								</li>
 							</ol>
 						</fieldset>
@@ -146,7 +146,7 @@ function submitbutton(task)
 							<ol>
 								<li>
 									<?php echo $fields['hits']->label; ?><br />
-									<?php echo $fields['hits']->field; ?>
+									<?php echo $fields['hits']->input; ?>
 								</li>
 								<li>
 									<?php echo $fields['last_post_time']->label; ?><br />
@@ -154,11 +154,11 @@ function submitbutton(task)
 								</li>
 								<li>
 									<?php echo $fields['total_threads']->label; ?><br />
-									<?php echo $fields['total_threads']->field; ?>
+									<?php echo $fields['total_threads']->input; ?>
 								</li>
 								<li>
 									<?php echo $fields['total_posts']->label; ?><br />
-									<?php echo $fields['total_posts']->field; ?>
+									<?php echo $fields['total_posts']->input; ?>
 								</li>
 							</ol>
 						</fieldset>

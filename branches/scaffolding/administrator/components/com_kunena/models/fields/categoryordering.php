@@ -20,7 +20,7 @@ jximport('jxtended.form.field');
  * @subpackage	com_kunena
  * @version		1.0
  */
-class JXFieldTypeCategoryOrdering extends JXFieldType
+class JXFormFieldCategoryOrdering extends JXFormField
 {
    /**
 	* Field type
@@ -41,15 +41,14 @@ class JXFieldTypeCategoryOrdering extends JXFieldType
 	 * @return	string	Form field markup.
 	 * @since	1.0
 	 */
-	function fetchField($name, $value, &$node, $controlName)
+	function _getInput()
 	{
 		// Initialize standard field attributes.
-		$id		= str_replace(']', '', str_replace('[', '_', $controlName.'_'.$name));
-		$size	= $node->attributes('size');
-		$class	= ( $node->attributes('class') ? 'class="'.$node->attributes('class').'"' : 'class="inputbox"' );
+		$size	= $this->_element->attributes('size');
+		$class	= ( $this->_element->attributes('class') ? 'class="'.$this->_element->attributes('class').'"' : 'class="inputbox"' );
 
 		// Get the current parent id.
-		$parent_id = $this->_parent->getValue('parent_id', 1);
+		$parent_id = $this->_form->getValue('parent_id', 1);
 
 		// Get the database connection object.
 		$db = &JFactory::getDBO();
@@ -76,29 +75,29 @@ class JXFieldTypeCategoryOrdering extends JXFieldType
 		}
 
 		// If first is allowed, add it to the front of the list.
-		if ($node->attributes('allow_first') == 1) {
+		if ($this->_element->attributes('allow_first') == 1) {
 			array_unshift($options, JHTML::_('select.option', -1, '- '.JText::_('First').' -'));
 		}
 
 		// If last is allowed, add it to the end of the list.
-		if ($node->attributes('allow_last') == 1) {
+		if ($this->_element->attributes('allow_last') == 1) {
 			array_push($options, JHTML::_('select.option', -2, '- '.JText::_('Last').' -'));
 		}
 
 		// If the field is disabled, build it as such.
-		if ($node->attributes('disabled') == 'true')
+		if ($this->_element->attributes('disabled') == 'true')
 		{
-			$html = JHTML::_('select.genericlist', $options, $controlName.'['.$name.']', $class.' disabled="disabled"', 'value', 'text', $value, $id);
+			$html = JHTML::_('select.genericlist', $options, $this->inputName, $class.' disabled="disabled"', 'value', 'text', $this->value, $this->inputId);
 		}
 		// If the field is readonly, build it as such and add a hidden field so we get the value.
-		else if ($node->attributes('readonly') == 'true')
+		else if ($this->_element->attributes('readonly') == 'true')
 		{
-			$html = JHTML::_('select.genericlist', $options, '', $class.' disabled="disabled"', 'value', 'text', $value, $id) .
-					'<input type="hidden" name="'.$controlName.'['.$name.']'.'" value="'.$value.'" />';
+			$html = JHTML::_('select.genericlist', $options, '', $class.' disabled="disabled"', 'value', 'text', $this->value, $this->inputId) .
+					'<input type="hidden" name="'.$this->inputName.'" value="'.$this->value.'" />';
 		}
 		// The field is neither disabled or readonly, just build it.
 		else {
-			$html = JHTML::_('select.genericlist', $options, $controlName.'['.$name.']', $class, 'value', 'text', $value, $id);
+			$html = JHTML::_('select.genericlist', $options, $this->inputName, $class, 'value', 'text', $this->value, $this->inputId);
 		}
 
 		return $html;

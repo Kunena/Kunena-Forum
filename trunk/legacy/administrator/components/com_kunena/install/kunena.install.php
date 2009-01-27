@@ -35,9 +35,8 @@ function com_install() {
 	$id = $database->loadResult();
 
 	//add new admin menu images
-	$database->setQuery("UPDATE #__components SET admin_menu_img  = '../administrator/components/com_kunena/images/kunena.logo.16x16.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
+	$database->setQuery("UPDATE #__components SET admin_menu_img  = 'administrator/components/com_kunena/images/kunena.favicon.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
 	$database->query() or trigger_dbwarning("Unable to set admin menu image.");
-
 
 	//install & upgrade class
 	$fbupgrade = new fx_Upgrade("com_kunena", "kunena.install.upgrade.xml", "fb_", "install", false);

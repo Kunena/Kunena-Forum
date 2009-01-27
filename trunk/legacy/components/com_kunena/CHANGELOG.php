@@ -28,14 +28,20 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Kunena 1.0.6
+Kunena 1.0.7
+
+26-January-2009 fxstein
++ JomSocial userlist integration for Kunena userlist link in front stats
+- Remove old unused legacy code
+^ Fixed broken PDF display
+^ Corrected upgrade logic order
 
 26-January-2009 Matias
 # default_ex: Link to first unread message was sometimes broken
 ^ view: Message is marked new only if thread hasn't been read
 + kunena.credits.php: Added myself
 # Stats should work again (typos fixed)
-# My Profile: My Avatar didn't have security check for anonymous users
+* My Profile: My Avatar didn't have security check for anonymous users
 
 25-January-2009 fxstein
 + Basic JomSocial Integration

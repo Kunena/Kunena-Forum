@@ -219,14 +219,6 @@
                     (9, 'Spammer', 0, 1, 'rankspammer.gif')</query>
    	</install>
 	<upgrade>
-		<version version="@fbversion@" versiondate="@fbversiondate@" build="@fbbuild@" versionname="@fbversionname@">
-
-		</version>
-		<version version="1.0.6" versiondate="2009-1-10" build="870" versionname="Communicate">
-			<query mode="silenterror">ALTER TABLE `#__fb_messages` ADD KEY `parent_hits`(`parent`,`hits`)</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD KEY `posts` ( `posts` )</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD KEY `uhits` ( `uhits` )</query>
-		</version>
 		<version version="1.0.5" versiondate="2008-12-1" build="855" versionname="Redwood">
 			<phpfile name="kunena.special.upgrade.1.0.5.php" />
 			<query mode="silenterror">ALTER TABLE `#__fb_attachments` ADD KEY `mesid`(`mesid`), COMMENT=''</query>
@@ -328,6 +320,14 @@
             <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[/QUOTE]", "[/quote]")</query>
             <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[CODE", "[code")</query>
             <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[/CODE", "[/code")</query>
+		</version>
+		<version version="1.0.6" versiondate="2009-1-10" build="870" versionname="Communicate">
+			<query mode="silenterror">ALTER TABLE `#__fb_messages` ADD KEY `parent_hits`(`parent`,`hits`)</query>
+			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD KEY `posts` ( `posts` )</query>
+			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD KEY `uhits` ( `uhits` )</query>
+		</version>
+		<version version="@fbversion@" versiondate="@fbversiondate@" build="@fbbuild@" versionname="@fbversionname@">
+
 		</version>
 	</upgrade>
 </comupgrade>

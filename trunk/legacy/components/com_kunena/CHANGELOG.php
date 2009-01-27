@@ -28,6 +28,12 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Kunena 1.0.8
+
+27-January-2009 fxstein
+* BBCode security fix for legacy [code:1] support
+
 Kunena 1.0.7
 
 26-January-2009 fxstein

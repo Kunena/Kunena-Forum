@@ -72,7 +72,7 @@ class BBCodeInterpreter extends TagInterpreter {
         $task = new BBCodeParserTask($this);
         return $task;
     }
-    
+
 
     function ParseNext(&$task) {
         #  function ParseNext($text, &$pos_act) {
@@ -89,6 +89,11 @@ class BBCodeInterpreter extends TagInterpreter {
             // ERROR: code NOT caseinsensitive! Correct core logic!
             // throw this into interpreter part!
             $checkpos = fb_stripos($text, '[/code]', $pos_act);
+            if($checkpos!==FALSE) {
+                $pos_act = $checkpos;
+                return TAGPARSER_RET_OK;
+            }
+            $checkpos = fb_stripos($text, '[/code:1]', $pos_act);
             if($checkpos!==FALSE) {
                 $pos_act = $checkpos;
                 return TAGPARSER_RET_OK;

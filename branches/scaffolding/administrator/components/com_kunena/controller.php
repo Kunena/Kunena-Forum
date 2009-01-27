@@ -96,11 +96,10 @@ class KunenaController extends JController
 
 		// Build the submenu.
 		JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_CATEGORIES'),		'index.php?option=com_kunena&view=categories',	$vName == 'categories');
-		JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_SMILIES'),		'index.php?option=com_kunena&view=smilies',		$vName == 'smilies');
-		JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_RANKS'),			'index.php?option=com_kunena&view=ranks',		$vName == 'ranks');
 		JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_MEMBERS'),		'index.php?option=com_kunena&view=members',		$vName == 'members');
 		JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_FILES'),			'index.php?option=com_kunena&view=files',		$vName == 'files');
-		JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_LEVELS'),			'index.php?option=com_kunena&view=levels',		$vName == 'levels');
+		JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_SMILIES'),		'index.php?option=com_kunena&view=smilies',		$vName == 'smilies');
+		JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_RANKS'),			'index.php?option=com_kunena&view=ranks',		$vName == 'ranks');
 		//JSubMenuHelper::addEntry(JText::_('KUNENA_SUBMENU_MAINTENANCE'),	'index.php?option=com_kunena&view=maintenance',	$vName == 'maintenance');
 	}
 

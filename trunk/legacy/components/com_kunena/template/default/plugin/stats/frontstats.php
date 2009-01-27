@@ -18,33 +18,23 @@ defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
 $forumurl = sefReltoAbs(KUNENA_LIVEURLREL);
-if ($fbConfig->cb_profile /*&& $my->id != 0*/) {
+$statslink = sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=stats');
+
+if ($fbConfig->fb_profile == "jomsocial")
+{
+	$userlist = sefReltoAbs('index.php?option=com_community&amp;view=search&amp;task=browse');
+}
+else if ($fbConfig->cb_profile)
+{
     $userlist = sefReltoAbs('index.php?option=com_comprofiler&amp;task=usersList');
 }
-else {
-    $userlist = sefReltoAbs(KUNENA_LIVEURLREL . '&amp;func=userlist&amp');
+else
+{
+    $userlist = sefReltoAbs(KUNENA_LIVEURLREL . '&amp;func=userlist');
 }
-?>
 
-<?php
 if ($fbConfig->showstats > 0)
 {
-?>
-
-<?php
-
-    $statslink = sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=stats');
-    if ($fbConfig->cb_profile /*&& $my->id != 0*/) {
-        $userlist = sefReltoAbs('index.php?option=com_comprofiler&amp;task=usersList');
-    }
-    else {
-        $userlist = sefReltoAbs(KUNENA_LIVEURLREL .'&amp;func=userlist');
-    }
-
-
-?>
-
-<?php
     if ($fbConfig->showgenstats > 0)
     {
 ?>

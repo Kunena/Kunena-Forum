@@ -232,35 +232,6 @@ else
     define('KUNENA_COREJSURL', KUNENA_DIRECTURL . '/template/default/js/kunenaforum.js');
 }
 
-/**
- * gets Itemid of CB profile, or by default of homepage
- */
-// ERROR: REMOVE
-function JBgetCBprofileItemid($htmlspecialchars = false) {
-    global $KUNENA_CB__Cache_ProfileItemid, $database;
-
-    if (!$KUNENA_CB__Cache_ProfileItemid) {
-        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_comprofiler' AND published=1");
-        $Itemid = (int)$database->loadResult();
-
-        if (!$Itemid) {
-            /** Nope, just use the homepage then. */
-            $query = "SELECT id" . "\n FROM #__menu" . "\n WHERE menutype = 'mainmenu'" . "\n AND published = 1" . "\n ORDER BY parent, ordering" . "\n LIMIT 1";
-            $database->setQuery($query);
-            $Itemid = (int)$database->loadResult();
-            }
-
-        $KUNENA_CB__Cache_ProfileItemid = $Itemid;
-        }
-
-    if ($KUNENA_CB__Cache_ProfileItemid) {
-        return $KUNENA_CB__Cache_ProfileItemid;
-        }
-    else {
-        return null;
-        }
-    }
-
 function KUNENA_fmodReplace($x, $y) { //function provided for older PHP versions which do not have an fmod function yet
     $i = floor($x / $y);
     // r = x - i * y
@@ -304,28 +275,6 @@ function getFBGroupName($id) {
 
     if ($gr->id > 1) {
         return $gr;
-        }
-    }
-
-function escape_quotes($receive) {
-    if (!is_array($receive)) {
-        $thearray = array ( $receive );
-        }
-    else {
-        $thearray = $receive;
-        }
-
-    foreach (array_keys($thearray)as $string) {
-        $thearray[$string] = addslashes($thearray[$string]);
-        // Why changing escape to a forward slash?!
-        $thearray[$string] = preg_replace("/[\\/]+/", "/", $thearray[$string]);
-        }
-
-    if (!is_array($receive)) {
-        return $thearray[0];
-        }
-    else {
-        return $thearray;
         }
     }
 

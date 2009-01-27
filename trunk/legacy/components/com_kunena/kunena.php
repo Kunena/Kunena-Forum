@@ -265,7 +265,6 @@ $cbitemid = 0;
 
 if ($fbConfig->cb_profile)
 {
-    // $cbitemid = JBgetCBprofileItemid();
     // Include CB language files
     $UElanguagePath = $mainframe->getCfg('absolute_path') . '/components/com_comprofiler/plugin/language';
     $UElanguage = $mainframe->getCfg('lang');

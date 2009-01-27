@@ -584,11 +584,6 @@ function display_avatar_gallery($avatar_gallery_path)
     return $avatar_images;
 }
 
-//function KUNENA_fmodReplace($x,$y)
-//{ //function provided for older PHP versions which do not have an fmod function yet
-//   $i = floor($x/$y);
-// r = x - i * y
-//   return $x - $i*$y;}
 // This function was modified from the one posted to PHP.net by rockinmusicgv
 // It is available under the readdir() entry in the PHP online manual
 function get_dirs($directory, $select_name, $selected = "")

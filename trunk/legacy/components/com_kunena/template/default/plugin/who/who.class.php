@@ -77,8 +77,6 @@ else {
     }
 
 $link = $_SERVER['REQUEST_URI'];
-//$what = escape_quotes($what);
-//$link = escape_quotes($link);
 $what = addslashes($what);
 $link = addslashes($link);
 

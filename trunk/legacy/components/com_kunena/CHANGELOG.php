@@ -34,7 +34,8 @@ Kunena 1.0.8
 28-January-2009 Matias
 # Replace all occurences of jos_fb_ with #__fb_
 # Don't allow anonymous users to subscribe/favorite
-# Do not send email on post if thread is moderated
+# Do not send email on new post if the category is moderated
+# Fix broken tables fb_favorites and fb_subscriptions
 
 27-January-2009 fxstein
 # BBCode fix for legacy [code:1] support

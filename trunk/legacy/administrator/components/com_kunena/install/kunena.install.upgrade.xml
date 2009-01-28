@@ -50,7 +50,7 @@
        <query>CREATE TABLE `#__fb_favorites` (
                     `thread` int(11) NOT NULL default '0',
                     `userid` int(11) NOT NULL default '0',
-                KEY `thread` (`thread`),
+                UNIQUE KEY `thread` (`thread`,`userid`),
                 KEY `userid` (`userid`) )</query>
        <query>CREATE TABLE `#__fb_groups` (
                     `id` int(4) NOT NULL auto_increment,
@@ -152,7 +152,7 @@
                     `thread` int(11) NOT NULL default '0',
                     `userid` int(11) NOT NULL default '0',
                     `future1` int(11) default '0',
-                KEY `thread` (`thread`),
+                UNIQUE KEY `thread` (`thread`,`userid`),
                 KEY `userid` (`userid`) )</query>
 		<query>CREATE TABLE `#__fb_users` (
                     `userid` int(11) NOT NULL default '0',
@@ -327,7 +327,7 @@
 			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD KEY `uhits` ( `uhits` )</query>
 		</version>
 		<version version="@fbversion@" versiondate="@fbversiondate@" build="@fbbuild@" versionname="@fbversionname@">
-
+			<phpfile name="kunena.special.upgrade.1.0.7.php" />
 		</version>
 	</upgrade>
 </comupgrade>

@@ -1,15 +1,19 @@
 import os,sys,re
 
-dictionary = {# 'JB':'KUNENA', 
-              # 'FB':'KUNENA', 
-              'fb_link':'CKunenaLink', 
-              'jos_fb_':'#__fb_'}
+dictionary = {	# 'JB':'KUNENA', 
+		# 'FB':'KUNENA', 
+		'fb_link':'CKunenaLink', 
+		'jos_fb_':'#__fb_',
+		'\r\n':'\n',
+		'\r':'\n'}
+
+
 
 def string_replace(filename, text, dic):
     for i, j in dic.iteritems():
         (text, count) = re.subn(i, j, text)
 	if count:
-		print "%s: found %d %s" % (filename, count, i)
+		print "%s: replaced %dx '%s' with '%s'" % (filename, count, i.replace('\n','\\n').replace('\r','\\r'), j.replace('\n','\\n'.replace('\r','\\r')))
     return text
 
 def file_replace(filename, dic):

@@ -124,7 +124,7 @@ if ($letPass || $is_Moderator)
             $last_read[$message->id]->lastread = $last_reply[$message->thread];
         }
 
-        $database->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM jos_fb_messages "
+        $database->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages "
                            ."WHERE thread IN ('$idstr') AND time>'$prevCheck' GROUP BY thread");
         $msgidlist = $database->loadObjectList();
         check_dberror("Unable to get unread messages count and first id.");

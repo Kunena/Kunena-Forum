@@ -31,6 +31,9 @@ Legend:
 
 Kunena 1.0.8
 
+28-January-2009 Matias
+# Replace all occurences of jos_fb_ with #__fb_
+
 27-January-2009 fxstein
 * BBCode security fix for legacy [code:1] support
 

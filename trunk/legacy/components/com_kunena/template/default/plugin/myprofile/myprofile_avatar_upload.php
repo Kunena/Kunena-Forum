@@ -16,6 +16,94 @@
 // Dont allow direct linking
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+function check_filesize($file, $maxSize)
+{
+    $size = filesize($file);
+
+    if ($size <= $maxSize) {
+        return true;
+    }
+
+    return false;
+}
+
+function display_avatar_gallery($avatar_gallery_path)
+{
+    $dir = @opendir($avatar_gallery_path);
+    $avatar_images = array ();
+    $avatar_col_count = 0;
+
+    while ($file = @readdir($dir))
+    {
+        if ($file != '.' && $file != '..' && is_file($avatar_gallery_path . '/' . $file) && !is_link($avatar_gallery_path . '/' . $file))
+        {
+            if (preg_match('/(\.gif$|\.png$|\.jpg|\.jpeg)$/is', $file))
+            {
+                $avatar_images[$avatar_col_count] = $file;
+                $avatar_name[$avatar_col_count] = ucfirst(str_replace("_", " ", preg_replace('/^(.*)\..*$/', '\1', $file)));
+                $avatar_col_count++;
+            }
+        }
+    }
+
+    @closedir($dir);
+    @ksort($avatar_images);
+    @reset($avatar_images);
+    return $avatar_images;
+}
+
+// This function was modified from the one posted to PHP.net by rockinmusicgv
+// It is available under the readdir() entry in the PHP online manual
+function get_dirs($directory, $select_name, $selected = "")
+{
+	$filelist = array();
+	if ($dir = @opendir($directory))
+    {
+        while (($file = readdir($dir)) !== false)
+        {
+            if ($file != ".." && $file != ".")
+            {
+                if (is_dir($directory . "/" . $file))
+                {
+                    if (!($file[0] == '.')) {
+                        $filelist[] = $file;
+                    }
+                }
+            }
+        }
+
+        closedir($dir);
+    }
+
+    if ($selected)
+        $selected = str_replace("%20", " ", $selected);
+
+    echo "<select name=\"$select_name\" id=\"avatar_category_select\" onchange=\"switch_avatar_category(this.options[this.selectedIndex].value)\">\n";
+    echo "<option value=\"default\"";
+
+    if ($selected == "") {
+        echo " selected=\"selected\"";
+    }
+
+    echo ">"._KUNENA_DEFAULT_GALLERY."</option>\n";
+
+    asort($filelist);
+
+    while (list($key, $val) = each($filelist))
+    {
+        echo '<option value="'.$val.'"';
+
+        if ($selected == $val) {
+            echo " selected=\"selected\"";
+        }
+
+        echo ">$val</option>\n";
+    }
+
+    echo "</select>\n";
+}
+
+
 if ($my->id != "" && $my->id != 0)
 {
 
@@ -98,6 +186,9 @@ if ($do == 'init')
                         }
                         elseif ($fbConfig->avatar_src == "cb")
                         {
+                            $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$my->id'");
+                            $avatar = $database->loadResult();
+                            check_dberror("Unable to load CB Avatar.");
                             if ($avatar != "")
                             {
                     ?>
@@ -120,6 +211,10 @@ if ($do == 'init')
                         }
                         else
                         {
+                            $database->setQuery("SELECT su.avatar FROM #__fb_users as su "
+                                              . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$my->id}");
+                            $avatar = $database->loadResult();
+                            check_dberror("Unable to load Kunena Avatar.");
                             if ($avatar != "")
                             {
                     ?>
@@ -548,92 +643,6 @@ else if ($do == 'fromgallery')
     fbSetTimeout(KUNENA_LIVEURL . '&func=myprofile&do=show', 3500);
 }
 
-function check_filesize($file, $maxSize)
-{
-    $size = filesize($file);
-
-    if ($size <= $maxSize) {
-        return true;
-    }
-
-    return false;
-}
-
-function display_avatar_gallery($avatar_gallery_path)
-{
-    $dir = @opendir($avatar_gallery_path);
-    $avatar_images = array ();
-    $avatar_col_count = 0;
-
-    while ($file = @readdir($dir))
-    {
-        if ($file != '.' && $file != '..' && is_file($avatar_gallery_path . '/' . $file) && !is_link($avatar_gallery_path . '/' . $file))
-        {
-            if (preg_match('/(\.gif$|\.png$|\.jpg|\.jpeg)$/is', $file))
-            {
-                $avatar_images[$avatar_col_count] = $file;
-                $avatar_name[$avatar_col_count] = ucfirst(str_replace("_", " ", preg_replace('/^(.*)\..*$/', '\1', $file)));
-                $avatar_col_count++;
-            }
-        }
-    }
-
-    @closedir($dir);
-    @ksort($avatar_images);
-    @reset($avatar_images);
-    return $avatar_images;
-}
-
-// This function was modified from the one posted to PHP.net by rockinmusicgv
-// It is available under the readdir() entry in the PHP online manual
-function get_dirs($directory, $select_name, $selected = "")
-{
-	$filelist = array();
-	if ($dir = @opendir($directory))
-    {
-        while (($file = readdir($dir)) !== false)
-        {
-            if ($file != ".." && $file != ".")
-            {
-                if (is_dir($directory . "/" . $file))
-                {
-                    if (!($file[0] == '.')) {
-                        $filelist[] = $file;
-                    }
-                }
-            }
-        }
-
-        closedir($dir);
-    }
-
-    if ($selected)
-        $selected = str_replace("%20", " ", $selected);
-
-    echo "<select name=\"$select_name\" id=\"avatar_category_select\" onchange=\"switch_avatar_category(this.options[this.selectedIndex].value)\">\n";
-    echo "<option value=\"default\"";
-
-    if ($selected == "") {
-        echo " selected=\"selected\"";
-    }
-
-    echo ">"._KUNENA_DEFAULT_GALLERY."</option>\n";
-
-    asort($filelist);
-
-    while (list($key, $val) = each($filelist))
-    {
-        echo '<option value="'.$val.'"';
-
-        if ($selected == $val) {
-            echo " selected=\"selected\"";
-        }
-
-        echo ">$val</option>\n";
-    }
-
-    echo "</select>\n";
-}
 ?>
  <!-- F:My Profile Right -->
         </td>

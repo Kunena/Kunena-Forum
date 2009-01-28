@@ -36,11 +36,14 @@ Kunena 1.0.8
 # Don't allow anonymous users to subscribe/favorite
 # Do not send email on new post if the category is moderated
 # Fix broken tables fb_favorites and fb_subscriptions
+# Regression from Kunena 1.0.7b: avatar upload page internal error
+# Avatar upload was broken if you didn't use profile integration
+# default_ex: My Profile internal link was wrong
 
 27-January-2009 fxstein
 # BBCode fix for legacy [code:1] support
 
-Kunena 1.0.7
+Kunena 1.0.7 beta
 
 26-January-2009 fxstein
 + JomSocial userlist integration for Kunena userlist link in front stats

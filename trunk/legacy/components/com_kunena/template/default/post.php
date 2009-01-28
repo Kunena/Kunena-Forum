@@ -337,7 +337,7 @@ $catName = $objCatInfo->name;
                                         $LastPostUrl = str_replace('&amp;', '&', CKunenaLink::GetThreadPageURL('view', $catid, $querythread, $threadPages, $fbConfig->messages_per_page, $pid));
 
                                         //Now manage the subscriptions (only if subscriptions are allowed)
-                                        if ($fbConfig->allowsubscriptions == 1)
+                                        if ($fbConfig->allowsubscriptions == 1 && $holdPost == 0)
                                         { //they're allowed
                                             //get the proper user credentials for each subscription to this topic
 
@@ -354,7 +354,7 @@ $catName = $objCatInfo->name;
                                             {                                                     //we got more than 0 subscriptions
                                                 require_once (KUNENA_ABSSOURCESPATH . 'kunena.mail.php'); // include fbMail class for mailing
 
-												$_catobj = new jbCategory($database, $catid);
+						$_catobj = new jbCategory($database, $catid);
                                                 foreach ($subsList as $subs)
                                                 {
 													//check for permission
@@ -1562,7 +1562,7 @@ $catName = $objCatInfo->name;
                     $catid = (int)$catid;
                     $id = (int)$id;
                     $database->setQuery("SELECT thread,catid from #__fb_messages WHERE id=$id");
-                    if ($database->query())
+                    if ($my->id && $database->query())
                     {
 						$database->loadObject($row);
 
@@ -1603,7 +1603,7 @@ $catName = $objCatInfo->name;
                     $catid = (int)$catid;
                     $id = (int)$id;
                     $database->setQuery("SELECT max(thread) AS thread from #__fb_messages WHERE id=$id");
-                    if ($database->query())
+                    if ($my->id && $database->query())
                     {
                         $thread = $database->loadResult();
                         $database->setQuery("DELETE FROM #__fb_subscriptions WHERE thread=$thread AND userid=$my->id");
@@ -1630,7 +1630,7 @@ $catName = $objCatInfo->name;
                     $catid = (int)$catid;
                     $id = (int)$id;
                     $database->setQuery("SELECT max(thread) AS thread from #__fb_messages WHERE id=$id");
-                    if ($database->query())
+                    if ($my->id && $database->query())
                     {
                         $thread = $database->loadResult();
                         $database->setQuery("INSERT INTO #__fb_favorites (thread,userid) VALUES ('$thread','$my->id')");
@@ -1657,7 +1657,7 @@ $catName = $objCatInfo->name;
                     $catid = (int)$catid;
                     $id = (int)$id;
                     $database->setQuery("SELECT max(thread) AS thread from #__fb_messages WHERE id=$id");
-                    if ($database->query())
+                    if ($my->id && $database->query())
                     {
                         $thread = $database->loadResult();
                         $database->setQuery("DELETE FROM #__fb_favorites WHERE thread=$thread AND userid=$my->id");

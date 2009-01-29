@@ -31,6 +31,11 @@ Legend:
 
 Kunena 1.0.8
 
+28-January-2009 fxstein
+# Fixed broken display with wide code
+# Fixed jQuery conflicts caused by $() usage
++ PHP and MYSQL version checks during install
+
 28-January-2009 Matias
 # Replace all occurences of jos_fb_ with #__fb_
 # Don't allow anonymous users to subscribe/favorite

@@ -269,7 +269,7 @@ class CKunenaLink
         $Output .= '</div>';
         $Output .= '<script language = "javascript">';
         $Output .= 'var redirect_timeout = setTimeout("location=\''. str_replace('&amp;', '&', CKunenaLink::GetThreadPageURL('view', $result->catid, $result->thread, $threadPages, $limit, $result->latest_id) ) .'\'", 3500);';
-        $Output .= 'jQuery(document).ready(function ($) { $("body").bind("click", function(e) { clearTimeout(redirect_timeout); } ); });';
+        $Output .= 'jQuery(document).ready(function ($) { jQuery("body").bind("click", function(e) { clearTimeout(redirect_timeout); } ); });';
         $Output .= '</script>';
 
         return $Output;
@@ -282,7 +282,7 @@ class CKunenaLink
         $Output .= '</div>';
         $Output .= '<script language = "javascript">';
         $Output .= 'var redirect_timeout = setTimeout("location=\''. sefRelToAbs(str_replace('&amp;', '&', KUNENA_LIVEURLREL) . '&func=showcat&catid=' . $catid) .'\'", 3500);';
-        $Output .= 'jQuery(document).ready(function ($) { $("body").bind("click", function(e) { clearTimeout(redirect_timeout); } ); });';
+        $Output .= 'jQuery(document).ready(function ($) { jQuery("body").bind("click", function(e) { clearTimeout(redirect_timeout); } ); });';
         $Output .= '</script>';
 
         return $Output;

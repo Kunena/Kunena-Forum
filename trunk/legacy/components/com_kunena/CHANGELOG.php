@@ -31,6 +31,9 @@ Legend:
 
 Kunena 1.0.8
 
+29-January-2009 Matias
+# Regression: Backend won't be translated
+
 28-January-2009 fxstein
 # Fixed broken display with wide code
 # Fixed jQuery conflicts caused by $() usage

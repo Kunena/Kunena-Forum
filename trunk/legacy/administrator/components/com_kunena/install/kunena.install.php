@@ -16,6 +16,10 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+// Minimum version requirements
+DEFINE('KUNENA_MIN_PHP', '4.3.0');
+DEFINE('KUNENA_MIN_MYSQL', '5.0.0');
+
 global $mainframe;
 //Get right Language file
 if (file_exists($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.' . $mainframe->getCfg('lang') . '.php')) {
@@ -30,41 +34,50 @@ include_once($mainframe->getCfg("absolute_path")."/administrator/components/com_
 function com_install() {
 	global $database, $mainframe, $mosConfig_absolute_path;
 
-	//change fb menu icon
-	$database->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena'");
-	$id = $database->loadResult();
+	// Determine MySQL version from phpinfo
+	$database->setQuery("SELECT VERSION() as mysql_version");
+	$mysqlversion = $database->loadResult();
 
-	//add new admin menu images
-	$database->setQuery("UPDATE #__components SET admin_menu_img  = 'administrator/components/com_kunena/images/kunenafavicon.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
-	$database->query() or trigger_dbwarning("Unable to set admin menu image.");
+	//before we do anything else we want to check for minimum system requirements
+	if (version_compare(phpversion(), KUNENA_MIN_PHP, ">=") && version_compare($mysqlversion, KUNENA_MIN_MYSQL, ">="))
+	{
+		// we're on 4.3.0 or later
 
-	//install & upgrade class
-	$fbupgrade = new fx_Upgrade("com_kunena", "kunena.install.upgrade.xml", "fb_", "install", false);
+		//change fb menu icon
+		$database->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena'");
+		$id = $database->loadResult();
 
-	// Legacy enabler
-	// Versions prior to 1.0.5 did not came with a version table inside the database
-	// this would make the installer believe this is a fresh install. We need to perform
-	// a 'manual' check if this is going to be an upgrade and if so create that table
-	// and write a dummy version entry to force an upgrade.
+		//add new admin menu images
+		$database->setQuery("UPDATE #__components SET admin_menu_img  = 'administrator/components/com_kunena/images/kunenafavicon.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
+		$database->query() or trigger_dbwarning("Unable to set admin menu image.");
 
-	$database->setQuery( "SHOW TABLES LIKE '%fb_messages'" );
-	$database->query() or trigger_dbwarning("Unable to search for messages table.");
+		//install & upgrade class
+		$fbupgrade = new fx_Upgrade("com_kunena", "kunena.install.upgrade.xml", "fb_", "install", false);
 
-	if($database->getNumRows()) {
-		// fb tables exist, now lets see if we have a version table
-		$database->setQuery( "SHOW TABLES LIKE '%fb_version'" );
-		$database->query() or trigger_dbwarning("Unable to search for version table.");;
-		if(!$database->getNumRows()) {
-			//version table does not exist - this is a pre 1.0.5 install - lets create
-			$fbupgrade->createVersionTable();
-			// insert dummy version entry to force upgrade
-			$fbupgrade->insertDummyVersion();
+		// Legacy enabler
+		// Versions prior to 1.0.5 did not came with a version table inside the database
+		// this would make the installer believe this is a fresh install. We need to perform
+		// a 'manual' check if this is going to be an upgrade and if so create that table
+		// and write a dummy version entry to force an upgrade.
+
+		$database->setQuery( "SHOW TABLES LIKE '%fb_messages'" );
+		$database->query() or trigger_dbwarning("Unable to search for messages table.");
+
+		if($database->getNumRows()) {
+			// fb tables exist, now lets see if we have a version table
+			$database->setQuery( "SHOW TABLES LIKE '%fb_version'" );
+			$database->query() or trigger_dbwarning("Unable to search for version table.");;
+			if(!$database->getNumRows()) {
+				//version table does not exist - this is a pre 1.0.5 install - lets create
+				$fbupgrade->createVersionTable();
+				// insert dummy version entry to force upgrade
+				$fbupgrade->insertDummyVersion();
+			}
 		}
-	}
-	// Start Installation/Upgrade
-	$fbupgrade->doUpgrade();
+		// Start Installation/Upgrade
+		$fbupgrade->doUpgrade();
 
-	// THIS PROCEDURE IS UNTRANSLATED!
+		// THIS PROCEDURE IS UNTRANSLATED!
 	?>
 
 <style>
@@ -113,17 +126,15 @@ function com_install() {
 		<ul class="fbscs">
 		<?php
 
-		//
-		// We might want to make the file copy below part of the install as well
-		//
-		if (is_writable($mainframe->getCfg("absolute_path")."/images" ))
-		{
-
-			//ok now it is installed, just copy the fbfiles directory, and apply 0777
-			dircopy($mainframe->getCfg("absolute_path") . "/components/com_kunena/kunena.files.distribution", $mainframe->getCfg("absolute_path") . "/images/fbfiles", true);
-		}
-		else {
-
+			//
+			// We might want to make the file copy below part of the install as well
+			//
+			if (is_writable($mainframe->getCfg("absolute_path")."/images" ))
+			{
+				//ok now it is installed, just copy the fbfiles directory, and apply 0777
+				dircopy($mainframe->getCfg("absolute_path") . "/components/com_kunena/kunena.files.distribution", $mainframe->getCfg("absolute_path") . "/images/fbfiles", false);
+			}
+			else {
 			?>
 
 			<li class="fbscslisterror">
@@ -148,16 +159,85 @@ function com_install() {
 			</li>
 
 			<?php
-		}
+			}
 		?>
 		</ul>
 		</div>
 
 		<div
 			style="border: 1px solid #FFCC99; background: #FFFFCC; padding: 20px; margin: 20px; clear: both;">
-		<strong>I N S T A L L : <font color="red">Successful</font> </strong>
+		<strong>I N S T A L L : <font color="green">Successful</font> </strong>
+		<br />
+		<br />
+		<strong>php version: <font color="green"><? echo phpversion(); ?> Required >= <? echo KUNENA_MIN_PHP; ?> </font> </strong>
+		<br />
+		<strong>mysql version: <font color="green"><? echo $mysqlversion; ?> Required >= <? echo KUNENA_MIN_MYSQL; ?> </font> </strong>
 		</div>
 
+		<?php
+	}
+	else
+	{
+		// Minimum version requirements not satisfied
+		?>
+<style>
+.fbscs {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.fbscslist {
+	list-style: none;
+	padding: 5px 10px;
+	margin: 3px 0;
+	border: 1px solid #66CC66;
+	background: #D6FEB8;
+	display: block;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #333;
+}
+
+.fbscslisterror {
+	list-style: none;
+	padding: 5px 10px;
+	margin: 3px 0;
+	border: 1px solid #FF9999;
+	background: #FFCCCC;
+	display: block;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #333;
+}
+</style>
+
+<div
+	style="border: 1px solid #ccc; background: #FBFBFB; padding: 10px; text-align: left; margin: 10px 0;">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td width="20%" valign="top" style="padding: 10px;"><a
+			href="index2.php?option=com_kunena"><img
+			src="components/com_kunena/images/kunena.logo.png" alt="Kunena"
+			border="0"></a></td>
+
+		<td width="80%" valign="top" style="padding: 10px;">
+
+		<div
+			style="border: 1px solid #FFCC99; background: #FFFFCC; padding: 20px; margin: 20px; clear: both;">
+		<strong>I N S T A L L : <font color="red">F A I L E D - Minimum Version Requirements not satisfied</font> </strong>
+		<br />
+		<br />
+		<strong>php version: <font color="red"><? echo phpversion(); ?> Required >= <? echo KUNENA_MIN_PHP; ?> </font> </strong>
+		<br />
+		<strong>mysql version: <font color="red"><? echo $mysqlversion; ?> Required >= <? echo KUNENA_MIN_MYSQL; ?> </font> </strong>
+		</div>
+
+		<?php
+	}
+
+	// Rest of footer
+	?>
 		<div
 			style="border: 1px solid #99CCFF; background: #D9D9FF; padding: 20px; margin: 20px; clear: both;">
 		<strong>Thank you for using Kunena!</strong> <br />
@@ -169,8 +249,8 @@ function com_install() {
 	</tr>
 </table>
 </div>
+	<?php
 
-		<?php
 }
 
 function dircopy($srcdir, $dstdir, $verbose = true) {

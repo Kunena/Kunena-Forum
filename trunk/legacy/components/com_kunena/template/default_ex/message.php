@@ -74,7 +74,7 @@ $database->loadObject($user);
 
                     <tr>
                         <td colspan = "2" valign = "top">
-                            <div class = "msgtext"><?php echo $msg_text; ?></div>
+                            <div style = "width:<?php echo $fbConfig->rtewidth ?>px;" class = "msgtext"><?php echo $msg_text; ?></div>
 
                             <?php
                             if (!$msg_closed)

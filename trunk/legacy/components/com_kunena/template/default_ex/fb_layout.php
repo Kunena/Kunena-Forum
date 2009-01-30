@@ -203,33 +203,35 @@ function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = 
     switch ($type)
     {
         case 3:
-            if ($view == "flat") {
-    			$header .= '<li>';
-    			$header .= CKunenaLink::GetViewLink('view', $id, $catid, 'threaded', '<span>'. _GEN_THREADED_VIEW .'</span>');
-                $header .= '</li>';
-            }
-            else
-            {
-    			$header .= '<li>';
-                $header .= CKunenaLink::GetViewLink('view', $id, $catid, 'flat', '<span>'. _GEN_FLAT_VIEW .'</span>');
-                $header .= '</li>';
-            }
+//Threaded view option removed from Kunena
+//            if ($view == "flat") {
+//    			$header .= '<li>';
+//    			$header .= CKunenaLink::GetViewLink('view', $id, $catid, 'threaded', '<span>'. _GEN_THREADED_VIEW .'</span>');
+//                $header .= '</li>';
+//            }
+//            else
+//            {
+//    			$header .= '<li>';
+//                $header .= CKunenaLink::GetViewLink('view', $id, $catid, 'flat', '<span>'. _GEN_FLAT_VIEW .'</span>');
+//                $header .= '</li>';
+//            }
 
             break;
 
         case 2:
-            if ($view == "flat")
-            {
-    			$header .= '<li>';
-    			$header .= CKunenaLink::GetViewLink('showcat', $id, $catid, 'threaded', '<span>'. _GEN_THREADED_VIEW .'</span>');
-                $header .= '</li>';
-            }
-			else
-			{
-    			$header .= '<li>';
-                $header .= CKunenaLink::GetViewLink('showcat', $id, $catid, 'flat', '<span>'. _GEN_FLAT_VIEW .'</span>');
-                $header .= '</li>';
-			}
+//Threaded view option removed from Kunena
+//            if ($view == "flat")
+//            {
+//    			$header .= '<li>';
+//    			$header .= CKunenaLink::GetViewLink('showcat', $id, $catid, 'threaded', '<span>'. _GEN_THREADED_VIEW .'</span>');
+//                $header .= '</li>';
+//            }
+//			else
+//			{
+//    			$header .= '<li>';
+//                $header .= CKunenaLink::GetViewLink('showcat', $id, $catid, 'flat', '<span>'. _GEN_FLAT_VIEW .'</span>');
+//                $header .= '</li>';
+//			}
             if ($is_moderator)
             {
                 if ($numPending > 0)

@@ -403,7 +403,7 @@ else
 			// If Cummunity Builder is enabled, lets make sure we update the view preference
 			if ($fbConfig->cb_profile)
 			{
-		        $cbprefview = $prefview == "threaded" ? "_UE_KUNENA_VIEWTYPE_THREADED" : "_UE_KUNENA_VIEWTYPE_FLAT";
+		        $cbprefview = $prefview = "flat"; //= "threaded" ? "_UE_KUNENA_VIEWTYPE_THREADED" : "_UE_KUNENA_VIEWTYPE_FLAT";
 
 				$database->setQuery("update #__comprofiler set fbviewtype='$cbprefview' where user_id='$my_id'");
 				$database->query();
@@ -417,7 +417,7 @@ else
 			$fbviewtype = $database->loadResult();
 				check_dberror('Unable load default view type for user from Community Builder.');
 
-			$prefview = $fbviewtype == "_UE_KUNENA_VIEWTYPE_THREADED" ? "threaded" : "flat";
+			$prefview = $fbviewtype = "flat"; //= "_UE_KUNENA_VIEWTYPE_THREADED" ? "threaded" : "flat";
 		}
 		// Only reset the view if we have determined above that we need to
 		// Without that test the user would not be able to make intra session
@@ -446,20 +446,23 @@ else
 	// no access to categories?
 	if (!$fbSession->allowed) $fbSession->allowed = '0';
 
-    //Initial:: determining what kind of view to use... from profile, cookie or default settings.
-    //pseudo: if (no view is set and the cookie_view is not set)
-    if ($view == "" && $settings['current_view'] == "")
-    {
-        //pseudo: if there's no prefered type, use FB's default view otherwise use preferred view from profile
-        //and then set the cookie right
-        $view = $prefview == "" ? $fbConfig->default_view : $prefview;
-        setcookie("fboard_settings[current_view]", $view, time() + KUNENA_SECONDS_IN_YEAR, '/');
-    }
-    //pseudo: otherwise if (no view set but cookie isn't empty use view as set in cookie
-    else if ($view == "" && $settings['current_view'] != "")
-  	{
-        $view = $settings['current_view'];
-    }
+//Disabled threaded view option for Kunena
+//    //Initial:: determining what kind of view to use... from profile, cookie or default settings.
+//    //pseudo: if (no view is set and the cookie_view is not set)
+//    if ($view == "" && $settings['current_view'] == "")
+//    {
+//        //pseudo: if there's no prefered type, use FB's default view otherwise use preferred view from profile
+//        //and then set the cookie right
+//        $view = $prefview == "" ? $fbConfig->default_view : $prefview;
+//        setcookie("fboard_settings[current_view]", $view, time() + KUNENA_SECONDS_IN_YEAR, '/');
+//    }
+//    //pseudo: otherwise if (no view set but cookie isn't empty use view as set in cookie
+//    else if ($view == "" && $settings['current_view'] != "")
+//  	{
+//        $view = $settings['current_view'];
+//    }
+
+    $view = "flat";
 
     //Get the max# of posts for any one user
     $database->setQuery("SELECT max(posts) from #__fb_users");

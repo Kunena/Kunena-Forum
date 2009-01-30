@@ -175,24 +175,26 @@ function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = 
             $header.= $fbIcons['menureply'] ? '<img src="' . KUNENA_URLICONSPATH . ''.$fbIcons['menureply'].'" border="0" alt="'._GEN_POST_REPLY.'" title="'._GEN_POST_REPLY.'"/>' : _GEN_POST_REPLY;
             $header.= '</a>';
            */
-            if ($view == "flat") {
-    			$header .= CKunenaLink::GetViewLink('view', $id, $catid, 'threaded', ($fbIcons['threadedview'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['threadedview'] . '" border="0" alt="' . _GEN_THREADED_VIEW . '" title="' . _GEN_THREADED_VIEW . '"/>' : _GEN_THREADED_VIEW));
-            }
-            else
-            {
-                $header .= CKunenaLink::GetViewLink('view', $id, $catid, 'flat', ($fbIcons['flatview'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['flatview'] . '" border="0" alt="' . _GEN_FLAT_VIEW . '" title="' . _GEN_FLAT_VIEW . '"/>' : _GEN_FLAT_VIEW));
-            }
+//Disable threaded view option alltogether for Kunena
+//            if ($view == "flat") {
+//    			$header .= CKunenaLink::GetViewLink('view', $id, $catid, 'threaded', ($fbIcons['threadedview'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['threadedview'] . '" border="0" alt="' . _GEN_THREADED_VIEW . '" title="' . _GEN_THREADED_VIEW . '"/>' : _GEN_THREADED_VIEW));
+//            }
+//            else
+//            {
+//                $header .= CKunenaLink::GetViewLink('view', $id, $catid, 'flat', ($fbIcons['flatview'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['flatview'] . '" border="0" alt="' . _GEN_FLAT_VIEW . '" title="' . _GEN_FLAT_VIEW . '"/>' : _GEN_FLAT_VIEW));
+//            }
             break;
 
         case 2:
-            if ($view == "flat")
-            {
-    			$header .= CKunenaLink::GetViewLink('showcat', $id, $catid, 'threaded', ($fbIcons['threadedview'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['threadedview'] . '" border="0" alt="' . _GEN_THREADED_VIEW . '" title="' . _GEN_THREADED_VIEW . '"/>' : _GEN_THREADED_VIEW));
-            }
-			else
-			{
-                $header .= CKunenaLink::GetViewLink('showcat', $id, $catid, 'flat', ($fbIcons['flatview'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['flatview'] . '" border="0" alt="' . _GEN_FLAT_VIEW . '" title="' . _GEN_FLAT_VIEW . '"/>' : _GEN_FLAT_VIEW));
-			}
+//Disable threaded view option alltogether for Kunena
+//            if ($view == "flat")
+//            {
+//    			$header .= CKunenaLink::GetViewLink('showcat', $id, $catid, 'threaded', ($fbIcons['threadedview'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['threadedview'] . '" border="0" alt="' . _GEN_THREADED_VIEW . '" title="' . _GEN_THREADED_VIEW . '"/>' : _GEN_THREADED_VIEW));
+//            }
+//			else
+//			{
+//                $header .= CKunenaLink::GetViewLink('showcat', $id, $catid, 'flat', ($fbIcons['flatview'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['flatview'] . '" border="0" alt="' . _GEN_FLAT_VIEW . '" title="' . _GEN_FLAT_VIEW . '"/>' : _GEN_FLAT_VIEW));
+//			}
             if ($is_moderator)
             {
                 if ($numPending > 0)

@@ -797,17 +797,6 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
                 </tr>
 
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"  ><?php echo _COM_A_VIEW_TYPE ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['default_view']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_VIEW_TYPE_DESC ?>
-                    </td>
-                </tr>
-
                 <tr align = "center" valign = "middle" >
                     <td align = "left" valign = "top"  ><?php echo _COM_A_RSS ?>
                     </td>

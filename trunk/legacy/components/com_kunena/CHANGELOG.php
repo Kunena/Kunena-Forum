@@ -31,6 +31,9 @@ Legend:
 
 Kunena 1.0.8
 
+29-January-2009 fxstein
+- Removed unsusable threaded view option
+
 29-January-2009 Matias
 # Regression: Backend won't be translated
 

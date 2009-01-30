@@ -243,7 +243,8 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                 case "updateset":
                     $rowItemid = mosGetParam($_REQUEST, 'Itemid');
 
-                    $newview = mosGetParam($_POST, 'newview', 'flat');
+//                    $newview = mosGetParam($_POST, 'newview', 'flat');
+                    $newview = 'flat';
                     (int)$neworder = mosGetParam($_POST, 'neworder', 0);
 					(int)$newhideEmail = mosGetParam($_POST, 'newhideEmail', 1);
 					(int)$newshowOnline = mosGetParam($_POST, 'newshowOnline', 1);

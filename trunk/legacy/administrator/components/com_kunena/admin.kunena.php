@@ -599,12 +599,14 @@ function showConfig($option)
     // build the html select list
     $lists['fbdefaultpage'] = mosHTML::selectList($defpagelist, 'cfg_fbdefaultpage', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->fbdefaultpage);
 
-    // the default view
-    $list = array ();
-    $list[] = mosHTML::makeOption('flat', _COM_A_FLAT);
-    $list[] = mosHTML::makeOption('threaded', _COM_A_THREADED);
-    // build the html select list
-    $lists['default_view'] = mosHTML::selectList($list, 'cfg_default_view', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->default_view);
+//Threaded view option removed from Kunena
+//    // the default view
+//    $list = array ();
+//    $list[] = mosHTML::makeOption('flat', _COM_A_FLAT);
+//    $list[] = mosHTML::makeOption('threaded', _COM_A_THREADED);
+//    // build the html select list
+//    $lists['default_view'] = mosHTML::selectList($list, 'cfg_default_view', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->default_view);
+    $fbConfig->default_view = 'flat';
 
     $rsslist = array ();
 

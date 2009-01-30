@@ -40,12 +40,13 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 				<td >
 					<?php
-					// make the select list for the view type
-					$yesno[]  = mosHTML::makeOption('flat', _GEN_FLAT);
-					$yesno[]  = mosHTML::makeOption('threaded', _GEN_THREADED);
-					// build the html select list
-					$tosend   = mosHTML::selectList($yesno, 'newview', 'class="inputbox" size="2"', 'value', 'text', $prefview);
-					echo $tosend;
+//Threaded view option removed for Kunena
+//					// make the select list for the view type
+//					$yesno[]  = mosHTML::makeOption('flat', _GEN_FLAT);
+//					$yesno[]  = mosHTML::makeOption('threaded', _GEN_THREADED);
+//					// build the html select list
+//					$tosend   = mosHTML::selectList($yesno, 'newview', 'class="inputbox" size="2"', 'value', 'text', $prefview);
+//					echo $tosend;
 					?>
 				</td>
 			</tr>
@@ -80,11 +81,11 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 					// build the html select list
 					$tosend   = mosHTML::selectList($yesno3, 'newhideEmail', 'class="inputbox" size="2"', 'value', 'text', $hideEmail);
 					echo $tosend;
-					
-					?> 
+
+					?>
 				</td>
 			</tr>
-            
+
             <tr >
 				<td >
 					<strong><?php echo _USER_SHOWONLINE; ?>*</strong>:
@@ -98,11 +99,11 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 					// build the html select list
 					$tosend   = mosHTML::selectList($yesno4, 'newshowOnline', 'class="inputbox" size="2"', 'value', 'text', $showOnline);
 					echo $tosend;
-					
+
 					?>
 				</td>
 			</tr>
-          
+
 
 			<tr><td colspan = "2" align="center"><input type = "submit" class = "button" value = "<?php echo _GEN_SUBMIT;?>"></td>
 			</tr>

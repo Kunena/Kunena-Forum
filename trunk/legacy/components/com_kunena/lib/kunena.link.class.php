@@ -147,11 +147,16 @@ class CKunenaLink
         return $iplink;
     }
 
-    function GetMyProfileLink($fbConfig, $cbitemid, $name, $rel='nofollow')
+    function GetMyProfileLink($fbConfig, $userid, $name, $rel='nofollow')
     {
-        $profilelink = $fbConfig->cb_profile ? 'index.php?option=com_comprofiler&amp;Itemid='.$cbitemid.'&amp;task=userDetails'
-                                            : KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=show';
-        return CKunenaLink::GetSefHrefLink($profilelink, $name, '', $rel);
+    	if($fbConfig->fb_profile == 'jomsocial' || $fbConfig->fb_profile == 'cb')
+    	{
+    		return CKunenaLink::GetProfileLink($userid, $name, $rel);
+    	}
+    	else
+    	{
+    		return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=show', $name, '', $rel);
+    	}
     }
 
     function GetProfileLink($userid, $name, $rel='nofollow', $class='')

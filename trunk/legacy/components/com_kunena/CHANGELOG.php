@@ -32,6 +32,7 @@ Legend:
 Kunena 1.0.8
 
 29-January-2009 fxstein
+# Fixed incorrect MyProfile link logic with various integration options
 - Removed unsusable threaded view option
 
 29-January-2009 Matias

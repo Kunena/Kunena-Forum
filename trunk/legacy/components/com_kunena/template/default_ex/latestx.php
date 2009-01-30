@@ -111,7 +111,7 @@ $query = 			"SELECT
                         a.*,
                         t.message AS messagetext,
                         m.mesid AS attachmesid,
-                        f.thread AS favthread,
+                        (f.thread>0) AS myfavorite,
                         u.avatar,
                         c.name AS catname,
                         b.lastpost
@@ -161,6 +161,7 @@ $database->setQuery($query);
 $msglist = $database->loadObjectList();
 	check_dberror("Unable to load messages.");
 
+$favthread = array();
 if ($msglist) foreach ($msglist as $message)
 {
 	$threadids[]                  = $message->id;
@@ -175,7 +176,22 @@ if ($msglist) foreach ($msglist as $message)
 if (count($threadids) > 0)
 {
 	$idstr = @join("','", $threadids);
-	$query = "	SELECT
+
+        $database->setQuery("SELECT
+        					thread AS id,
+        					count(thread) AS favcount
+					FROM #__fb_favorites
+       					WHERE thread IN ('$idstr') GROUP BY thread");
+        $favlist = $database->loadObjectList();
+        check_dberror("Unable to load messages.");
+
+	foreach($favlist AS $fthread)
+	{
+		$favthread[$fthread->id] = $fthread->favcount;
+	}
+	unset($favlist, $fthread);
+
+ 	$query = "	SELECT
 					a.id,
 					a.parent,
 					a.thread,

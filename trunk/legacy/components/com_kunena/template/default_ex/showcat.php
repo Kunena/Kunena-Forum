@@ -69,7 +69,7 @@ if ($letPass || $is_Moderator)
     							a.*,
     							t.message AS messagetext,
     							m.mesid AS attachmesid,
-    							f.thread AS favthread,
+    							(f.thread>0) AS myfavorite,
     							u.avatar,
     							MAX(b.time) AS lastpost
     						FROM  #__fb_messages  AS a
@@ -89,6 +89,7 @@ if ($letPass || $is_Moderator)
     $messagelist = $database->loadObjectList();
     	check_dberror("Unable to load messages.");
 
+    $favthread = array();
     foreach ($messagelist as $message)
     {
         $threadids[] = $message->id;
@@ -103,6 +104,21 @@ if ($letPass || $is_Moderator)
     if (count($threadids) > 0)
     {
         $idstr = @join("','", $threadids);
+
+        $database->setQuery("SELECT
+        					thread AS id,
+        					count(thread) AS favcount
+					FROM #__fb_favorites
+       					WHERE thread IN ('$idstr') GROUP BY thread");
+        $favlist = $database->loadObjectList();
+        check_dberror("Unable to load messages.");
+
+	foreach($favlist AS $fthread)
+	{
+		$favthread[$fthread->id] = $fthread->favcount;
+	}
+	unset($favlist, $fthread);
+
         $database->setQuery("SELECT
         						a.*,
         						u.avatar

@@ -214,7 +214,7 @@ if (count($messages[0]) > 0)
                     { }
                     else
                     {echo '_stickymsg'; $topicSticky=1; }
-                    if ($leaf->favthread && $funcmylatest)
+                    if ($leaf->myfavorite && $funcmylatest)
                     {echo '_stickymsg'; $topicSticky=1; }
                     ?>">
                     <td class = "td-0 fbm" align="center">
@@ -263,10 +263,16 @@ if (count($messages[0]) > 0)
                                     <!--            Favourite       -->
 
                                     <?php
-                                    if ($fbConfig->allowfavorites & $leaf->favthread)
+                                    if ($fbConfig->allowfavorites && array_key_exists($leaf->id, $favthread))
                                     {
-                                    	echo $fbIcons['favoritestar'] ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . '' . $fbIcons['favoritestar']
+                                        if ($leaf->myfavorite) {
+                                    	    echo $fbIcons['favoritestar'] ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . '' . $fbIcons['favoritestar']
                                     		. '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
+					} else if (array_key_exists('favoritestar_grey', $fbIcons)) 
+					{
+                                    	    echo $fbIcons['favoritestar_grey'] ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . '' . $fbIcons['favoritestar_grey']
+                                    		. '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
+					}
                                     }
                                     ?>
                                     <!--            /Favorite       -->

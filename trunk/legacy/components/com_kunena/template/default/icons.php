@@ -42,6 +42,7 @@ $fbIcons['unsubscribe'] = 'unsubscribe.gif';
 $fbIcons['favorite'] = 'favorite.gif';
 $fbIcons['unfavorite'] = 'unfavorite.gif';
 $fbIcons['favoritestar'] = 'favoritestar.gif';
+$fbIcons['favoritestar_grey'] = 'kunena.favoritestar.grey.gif';
 $fbIcons['unlock'] = 'unlock.gif';
 $fbIcons['unsticky'] = 'unsticky.gif';
 $fbIcons['topicreply'] = 'reply.gif';

@@ -35,7 +35,8 @@ Kunena 1.0.8
 # Additional jQuery fixes
 - Removed outdated jquery.chili 1.9 libraries (different file structure)
 + Added new jquery.chili 2.2 libraries
-^ Moved jquery.chili jscripts to lod at the bottom of the page for faster pageloads
+^ Moved jquery.chili jscripts to load at the bottom of the page for faster pageloads
++ add jomSocial css in header when integration is on to enable floating PM window
 
 30-January-2009 Matias
 # Regression: favorite star didn't usually show up

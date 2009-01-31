@@ -15,6 +15,13 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 *@desc Getting the correct Itemids, for components required
 */
 
+
+// Shortcuts to all the path we have:
+define('KUNENA_JABSPATH', $mainframe->getCfg('absolute_path'));
+
+// Joomla absolute path
+define('KUNENA_JLIVEURL', $mainframe->getCfg('live_site'));
+
 //Kunena
 $Itemid = intval(mosGetParam($_REQUEST, 'Itemid'));
 
@@ -44,7 +51,8 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 
 		require_once(JPATH_ROOT.DS.'components'.DS.'com_community'.DS.'libraries'.DS.'core.php');
 		require_once(JPATH_ROOT.DS.'components'.DS.'com_community'.DS.'libraries'.DS.'messaging.php');
-		//require_once(JPATH_ROOT.DS.'components'.DS.'com_community'.DS.'libraries'.DS.'carousel.php');
+
+		$mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="'.KUNENA_JLIVEURL.DS.'components'.DS.'com_community'.DS.'assets'.DS.'window.css" />');
     }
 
     //Community Builder
@@ -106,13 +114,6 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
  | Now we have the components Itemids everywhere |
  | Please use these constants where ever needed  |
  +----------------------------------------------*/
-
-// Shortcuts to all the path we have:
-
-define('KUNENA_JABSPATH', $mainframe->getCfg('absolute_path'));
-
-// Joomla absolute path
-define('KUNENA_JLIVEURL', $mainframe->getCfg('live_site'));
 
 // Kunena live url
 define('KUNENA_LIVEURL', KUNENA_JLIVEURL . '/index.php?option=com_kunena' . KUNENA_COMPONENT_ITEMID_SUFFIX);

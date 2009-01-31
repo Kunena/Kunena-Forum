@@ -21,7 +21,7 @@ global $fbConfig;
 if ($fbConfig->highlightcode)
 {
 	$mainframe->addCustomHeadTag('
-	<script type="text/javascript" src="'.KUNENA_DIRECTURL . '/template/default/plugin/chili/jquery.chili.pack.js"></script>
+	<script type="text/javascript" src="'.KUNENA_DIRECTURL . '/template/default/plugin/chili/jquery.chili-2.2.js"></script>
 	<script id="setup" type="text/javascript">
 	ChiliBook.recipeFolder     = "'.KUNENA_DIRECTURL . '/template/default/plugin/chili/";
 	ChiliBook.stylesheetFolder     = "'.KUNENA_DIRECTURL . '/template/default/plugin/chili/";

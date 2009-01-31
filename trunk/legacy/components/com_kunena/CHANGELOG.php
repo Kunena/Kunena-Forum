@@ -33,6 +33,8 @@ Kunena 1.0.8
 
 30-January-2009 fxstein
 # Additional jQuery fixes
+- Removed outdated jquery.chili 1.9 libraries (different file structure)
++ Added new jquery.chili 2.2 libraries
 
 30-January-2009 Matias
 # Regression: favorite star didn't usually show up

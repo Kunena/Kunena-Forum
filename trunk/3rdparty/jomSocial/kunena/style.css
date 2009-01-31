@@ -1,0 +1,35 @@
+div#community-kunena-wrap {
+
+}
+div#community-kunena-wrap ul.list {
+	margin: 5px 0 0;
+	padding: 0;
+	list-style: none;
+}
+div#community-kunena-wrap ul.list li {
+	padding: 5px 0;
+	background: none;
+	border-bottom: solid 1px #ccc;
+}
+div#community-kunena-wrap div.icon {
+	float: left;
+	height: 22px;
+	padding: 4px 10px 0 5px;
+}
+div#community-kunena-wrap span.date {
+	text-align: right;
+
+}
+div#community-kunena-wrap div.content {
+	margin: 0 10px 0 31px;
+}
+div.content-nopost {
+	margin: 0 10px 0 31px;
+	height: 22px;
+	line-height: 27px;
+}
+div.icon-nopost {
+	float: left;
+	height: 22px;
+	padding: 4px 10px 0 5px;
+}

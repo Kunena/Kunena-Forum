@@ -102,10 +102,7 @@ class BBCodeInterpreter extends TagInterpreter {
                 return TAGPARSER_RET_OK;
             }
             // temporarily close code tag if not exists
-            $pos_act = strlen($text);
-            $text .= '[/code]';
-            return TAGPARSER_RET_OK;
-            //return TAGPARSER_RET_ERR;
+            return TAGPARSER_RET_ERR;
         }
         // in_noparse state
         if($task->in_noparse) {

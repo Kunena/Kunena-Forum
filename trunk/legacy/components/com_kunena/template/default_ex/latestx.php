@@ -18,10 +18,6 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
 
-$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL . '/js/jquery.dimensions.js"></script>');
-$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL . '/js/jquery.cluetip.js"></script>');
-$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL . '/js/kunena.default_ex.js"></script>');
-$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL . '/js/cube_common.js"></script>');
 require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
 
 if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php'))

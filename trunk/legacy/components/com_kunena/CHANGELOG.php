@@ -31,6 +31,9 @@ Legend:
 
 Kunena 1.0.8
 
+31-January-2009 fxstein
+^ default_ex jscript and image cleanup
+
 31-January-2009 Matias
 # Additional BBCode fixes
 

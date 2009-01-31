@@ -31,6 +31,9 @@ Legend:
 
 Kunena 1.0.8
 
+31-January-2009 Matias
+# Additional BBCode fixes
+
 30-January-2009 fxstein
 # Additional jQuery fixes
 - Removed outdated jquery.chili 1.9 libraries (different file structure)

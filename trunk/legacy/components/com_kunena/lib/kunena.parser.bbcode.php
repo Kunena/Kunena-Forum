@@ -83,6 +83,9 @@ class BBCodeInterpreter extends TagInterpreter {
         # RET: TAGPARSER_RET_OK found, TAGPARSER_RET_ERR end
         $text =& $task->text;
         $pos_act =& $task->pos_act;
+
+        if (strlen($text) < $pos_act) return TAGPARSER_RET_ERR;
+
         // in_code state
         if($task->in_code) {
             // seek [/code] only
@@ -168,8 +171,8 @@ class BBCodeInterpreter extends TagInterpreter {
         $mode = BBCODE_PARSE_START;
         // scan through string
         #echo 'POS:'.$pos."\n";
-        while(TRUE) {
-            $pos++; // start with second char
+        $textlen = strlen($text);
+        while(++$pos<$textlen) {
             $char = substr($text, $pos, 1);
             #echo 'CHAR:'.$mode.':'.$char."\n";
             // missing tag end, overflow prevention!

@@ -96,7 +96,8 @@ class TagParser {
         $st =& $task->st;
         $st = Array(); $sti = 0; // stackarr and TopPositionOfStack
         // scan for candidate of tag
-        while(TRUE) {
+        $textlen = strlen($text);
+        while($pos<$textlen) {
             microtime_float();
             // next tag candidate
             if($interpreter->ParseNext($task)!==TAGPARSER_RET_OK) {

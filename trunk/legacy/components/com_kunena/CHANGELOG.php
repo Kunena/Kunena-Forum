@@ -31,6 +31,9 @@ Legend:
 
 Kunena 1.0.8
 
+30-January-2009 fxstein
+# Additional jQuery fixes
+
 30-January-2009 Matias
 # Regression: favorite star didn't usually show up
 + default_ex: Added grey favorite icon for other peoples favorite threads

@@ -93,8 +93,7 @@ $database->loadObject($user);
                                     }
 
                                     //contruct the reply subject
-                                    $table = array_flip(get_html_translation_table(HTML_ENTITIES));
-                                    $resubject = htmlspecialchars(strtr($msg_subject, $table));
+                                    $resubject = htmlentities($msg_subject);
                                     $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? stripslashes($resubject) : _POST_RE . stripslashes($resubject);
                                     ?>
 

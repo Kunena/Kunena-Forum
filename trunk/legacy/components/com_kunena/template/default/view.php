@@ -462,8 +462,8 @@ if ($letPass || $is_Moderator)
                                 }
 
                                 //meta description and keywords
-								$metaKeys=($fmessage->subject. ', ' .$objCatParentInfo->name . ', ' . $fbConfig->board_title . ', ' . $GLOBALS['mosConfig_sitename']);
-								$metaDesc=($fmessage->subject . ' - ' .$objCatParentInfo->name . ' - ' . $objCatInfo->name .' - ' . $fbConfig->board_title);
+								$metaKeys=(htmlspecialchars($fmessage->subject). ', ' .htmlspecialchars($objCatParentInfo->name) . ', ' . htmlspecialchars($fbConfig->board_title) . ', ' . htmlspecialchars($GLOBALS['mosConfig_sitename']));
+								$metaDesc=(htmlspecialchars($fmessage->subject) . ' - ' .htmlspecialchars($objCatParentInfo->name) . ' - ' . htmlspecialchars($objCatInfo->name) .' - ' . htmlspecialchars($fbConfig->board_title));
 
 								if( FBTools::isJoomla15() )
 								{
@@ -889,7 +889,7 @@ if ($letPass || $is_Moderator)
                                         $msg_profileicon .= KUNENA_URLICONSPATH . "profile.gif";
                                     }
 
-                                    $msg_profileicon .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
+                                    $msg_profileicon .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" />";
                                     $msg_profile = CKunenaLink::GetProfileLink($fmessage->userid, $msg_profileicon);
                                 }
 
@@ -958,7 +958,7 @@ if ($letPass || $is_Moderator)
                                 $fb_subject_txt = smile::fbHtmlSafe($fb_subject_txt);
                                 $fb_subject_txt = stripslashes($fb_subject_txt);
 
-                                $msg_subject = stripslashes($fb_subject_txt);
+                                $msg_subject = htmlspecialchars(stripslashes($fb_subject_txt));
                                 $msg_date = date(_DATETIME, $fmessage->time);
                                 $fb_message_txt = stripslashes($fmessage->message);
 

@@ -22,6 +22,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
                 <div class = "fb_title_cover fbm">
                     <span class="fb_title fbl"> <?php echo $msg_username; ?>  <?php echo _KUNENA_USERPROFILE_PROFILE; ?></span>
                 </div>
+            </th>
         </tr>
     </thead>
 

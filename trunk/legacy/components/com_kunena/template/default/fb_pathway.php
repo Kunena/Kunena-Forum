@@ -38,7 +38,7 @@ if ($func != "")
         $parent_ids = 1000;
         $jr_it = 1;
         $jr_path_menu = array ();
-        $shome = '<div class="forum-pathway-1">' . CKunenaLink::GetKunenaLink( $fbConfig->board_title );
+        $shome = '<div class="forum-pathway-1">' . CKunenaLink::GetKunenaLink( htmlspecialchars($fbConfig->board_title) );
 
         while ($parent_ids)
         {
@@ -46,7 +46,7 @@ if ($func != "")
             $database->setQuery($query);
             $database->loadObject($results);
 			$parent_ids = $results->parent;
-			$fr_name = trim($results->name);
+			$fr_name = htmlspecialchars(trim($results->name));
             //$cids=@mysql_result( $results, 0, 'id' );
             $sname = CKunenaLink::GetCategoryLink( 'showcat', $catids, $fr_name);
 
@@ -82,7 +82,7 @@ if ($func != "")
         {
             $sql = "select subject from #__fb_messages where id = $id";
             $database->setQuery($sql);
-            $jr_topic_title = stripslashes($database->loadResult());
+            $jr_topic_title = stripslashes(htmlspecialchars($database->loadResult()));
             $jr_path_menu[] = $jr_topic_title;
         //     echo " " . $jr_arrow .$jr_arrow ." ". $jr_topic_title;
         }

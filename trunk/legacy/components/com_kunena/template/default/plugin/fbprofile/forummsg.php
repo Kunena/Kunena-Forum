@@ -28,6 +28,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
                 </div>
 
                 <img id = "BoxSwitch_fbuserprofile__<?php echo $boardclass ;?>fbuserprofile_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+            </th>
         </tr>
     </thead>
 
@@ -135,7 +136,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
                 <td class = "td-2  fbm"  align="left">
 
-                        <a  class="fb-topic-title fbm"  href = "<?php echo $fbURL; ?>"> <?php echo stripslashes ($item->subject); ?> </a>
+                        <a  class="fb-topic-title fbm"  href = "<?php echo $fbURL; ?>"> <?php echo htmlspecialchars(stripslashes ($item->subject)); ?> </a>
 
                 </td>
 

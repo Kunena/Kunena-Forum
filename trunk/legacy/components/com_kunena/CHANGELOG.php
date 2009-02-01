@@ -34,6 +34,7 @@ Kunena 1.0.8
 1-February-2009 Noel Hunter
 ^ Use default_ex if current template is missing
 + Add title tags to reply and other buttons in "default" template
+^ Work around ie bug which prevented jump to last message
 
 1-February-2009 Matias
 # xhtml fixes

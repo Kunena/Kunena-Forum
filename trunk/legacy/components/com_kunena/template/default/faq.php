@@ -26,10 +26,11 @@ global $fbConfig;
 <table class = "fb_blocktable" id ="fb_forumfaq" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
-                    <th >
+                    <th>
                         <div class = "fb_title_cover fbm">
                         <span class="fb_title fbl" ><?php echo _COM_FORUM_HELP; ?></span>
                         </div>
+                    </th>
                 </tr>
             </thead>
             <tbody>

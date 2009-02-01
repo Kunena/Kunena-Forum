@@ -1039,8 +1039,8 @@ if ($letPass || $is_Moderator)
                                 if ($is_Moderator)
                                 {
                                     $msg_delete = CKunenaLink::GetTopicPostLink('delete', $catid, $fmessage->id , $fbIcons['delete']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />':_GEN_DELETE);
-                                    $msg_merge = CKunenaLink::GetTopicPostLink('merge', $catid, $fmessage->id , $fbIcons['merge']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['merge'] . '" alt="Merge" border="0" title="' . _VIEW_MERGE . '" />':_GEN_MERGE);
-                                    $msg_split = CKunenaLink::GetTopicPostLink('split', $catid, $fmessage->id , $fbIcons['split']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['split'] . '" alt="Split" border="0" title="' . _VIEW_SPLIT . '" />':_GEN_SPLIT);
+                                    $msg_merge = CKunenaLink::GetTopicPostLink('merge', $catid, $fmessage->id , $fbIcons['merge']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['merge'] . '" alt="' . _GEN_MERGE . '" border="0" title="' . _GEN_MERGE . '" />':_GEN_MERGE);
+                                    $msg_split = CKunenaLink::GetTopicPostLink('split', $catid, $fmessage->id , $fbIcons['split']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['split'] . '" alt="' . _GEN_SPLIT . '" border="0" title="' . _GEN_SPLIT . '" />':_GEN_SPLIT);
                                 }
 
                                 if ($fbConfig->useredit && $my_id != "")

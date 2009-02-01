@@ -55,6 +55,12 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 		$mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="'.KUNENA_JLIVEURL.DS.'components'.DS.'com_community'.DS.'assets'.DS.'window.css" />');
     }
 
+// Check if fb_user_template is present, otherwise set to default_ex
+
+if (!file_exists(KUNENA_ABSPATH . '/template/' . $fb_cur_template)) {
+        $fb_cur_template='default_ex';
+}
+
     //Community Builder
     if ($fbConfig->cb_profile || $fbConfig->fb_profile == "cb") {
         $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_comprofiler' AND published=1");
@@ -163,6 +169,12 @@ if (strlen($fb_user_img_template) > 0) {
 else {
     $fb_cur_img_template = $fbConfig->templateimagepath;
     }
+
+// Check if fb_user_template is present, otherwise set to default_ex
+
+if (!file_exists($str_KUNENA_templ_path)) {
+        $str_KUNENA_templ_path=KUNENA_ABSPATH . '/template/default_ex';
+}
 
 // only for preview module - maybe used later by users to change template
 

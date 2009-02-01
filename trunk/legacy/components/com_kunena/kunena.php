@@ -113,6 +113,13 @@ $settings = $_COOKIE['fboard_settings'];
 
 // set configuration dependent params
 $str_KUNENA_templ_path = KUNENA_ABSPATH . '/template/' . ($fb_user_template?$fb_user_template:$fbConfig->template);
+
+// Check if fb_user_template is present, otherwise set to default_ex
+
+if (!file_exists($str_KUNENA_templ_path)) {
+        $str_KUNENA_templ_path=KUNENA_ABSPATH . '/template/default_ex';
+}
+
 $board_title = $fbConfig->board_title;
 $fromBot = 0;
 $prefview = $fbConfig->default_view;

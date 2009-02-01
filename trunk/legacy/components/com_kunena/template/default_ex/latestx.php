@@ -18,6 +18,13 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
 
+if (!$my->id && $func == "mylatest") 
+{
+        	header("HTTP/1.1 307 Temporary Redirect");
+        	header("Location: " . sefRelToAbs((KUNENA_LIVEURLREL.'&amp;func=latest')));
+        	die();
+}
+
 require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
 
 if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php'))

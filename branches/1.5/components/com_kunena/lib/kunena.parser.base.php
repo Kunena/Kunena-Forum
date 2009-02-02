@@ -1,8 +1,8 @@
 <?PHP
 /**
 * @version $Id: parser.inc.php 944 2008-08-10 20:11:08Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -10,13 +10,13 @@
 ############################################################################
 # CATEGORY: Parser.TagParser                 DEVELOPMENT DATUM: 13.11.2007 #
 # VERSION:  00.08.00                         LAST EDIT   DATUM: 12.12.2007 #
-# FILENAME: parser.inc.php                                                 #
+# FILENAME: kunena.parser.base.php                                                 #
 # AUTOR:    Miro Dietiker, MD Systems, All rights reserved                 #
 # LICENSE:  http://www.gnu.org/copyleft/gpl.html GNU/GPL                   #
 # CONTACT: m.dietiker@md-systems.ch        © 2007 Miro Dietiker 13.11.2007 #
 ############################################################################
 # This parser is based on an earlier CMS parser implementation.
-# It has been completely rewritten and generalized for FireBoard and
+# It has been completely rewritten and generalized for Kunena and
 # was also heavily tested.
 # However it should be: extensible, fast, ungreedy regarding resources
 # stateful, enforcing strict output rules as defined
@@ -96,7 +96,8 @@ class TagParser {
         $st =& $task->st;
         $st = Array(); $sti = 0; // stackarr and TopPositionOfStack
         // scan for candidate of tag
-        while(TRUE) {
+        $textlen = strlen($text);
+        while($pos<$textlen) {
             microtime_float();
             // next tag candidate
             if($interpreter->ParseNext($task)!==TAGPARSER_RET_OK) {

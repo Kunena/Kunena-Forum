@@ -1,8 +1,8 @@
 <?PHP
 /**
 * @version $Id: interpreter.fireboard.inc.php 1076 2008-10-18 14:12:52Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -10,13 +10,13 @@
 ############################################################################
 # CATEGORY: Parser.TagParser                 DEVELOPMENT DATUM: 13.11.2007 #
 # VERSION:  00.08.00                         LAST EDIT   DATUM: 12.12.2007 #
-# FILENAME: interpreter.fireboard.inc.php                                  #
+# FILENAME: interpreter.Kunena.inc.php                                  #
 # AUTOR:    Miro Dietiker, MD Systems, All rights reserved                 #
 # LICENSE:  http://www.gnu.org/copyleft/gpl.html GNU/GPL                   #
 # CONTACT: m.dietiker@md-systems.ch        © 2007 Miro Dietiker 13.11.2007 #
 ############################################################################
 # This parser is based on an earlier CMS parser implementation.
-# It has been completely rewritten and generalized for FireBoard and
+# It has been completely rewritten and generalized for Kunena and
 # was also heavily tested.
 # However it should be: extensible, fast, ungreedy regarding resources
 # stateful, enforcing strict output rules as defined
@@ -27,11 +27,9 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-// full path does not work for some reason
-// require_once ($mainframe->getCfg("absolute_path")Ê.Ê"/components/com_fireboard/sources/interpreter.bbcode.inc.php");
-include_once("interpreter.bbcode.inc.php");
+include_once("kunena.parser.bbcode.php");
 
-class FireBoardBBCodeInterpreter extends BBCodeInterpreter {
+class KunenaBBCodeInterpreter extends BBCodeInterpreter {
     # these are samples... we used the parser to refer to files!
     # did here a local caching, but using also database lookups - removed
     var $spoilerid = 0;
@@ -41,7 +39,7 @@ class FireBoardBBCodeInterpreter extends BBCodeInterpreter {
         # RET
         # object: the task object
         # TAGPARSER_RET_ERR
-        $task = new FireBoardBBCodeParserTask($this);
+        $task = new KunenaBBCodeParserTask($this);
         return $task;
     }
 
@@ -130,7 +128,7 @@ class FireBoardBBCodeInterpreter extends BBCodeInterpreter {
         if($context=='text'
          && ($task->autolink_disable==0)) {
           // Build links HTML2HTML
-          $text_new = FireBoardBBCodeInterpreter::hyperlink($text_new);
+          $text_new = KunenaBBCodeInterpreter::hyperlink($text_new);
           // Calculate smilies HTML2HTML
           $text_new = smile::smileParserCallback($text_new, $task->history, $task->emoticons, $task->iconList);
 	  }
@@ -265,7 +263,7 @@ class FireBoardBBCodeInterpreter extends BBCodeInterpreter {
 
                     $types = array ("php", "mysql", "html", "js", "javascript");
 
-                    $code_start_html = '<div class="fbcode"><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr><td><b>'._FB_MSG_CODE.'</b></td></tr><tr><td><hr />';
+                    $code_start_html = '<div class="fbcode"><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr><td><b>'._KUNENA_MSG_CODE.'</b></td></tr><tr><td><hr />';
                     if (in_array($tag->options["type"], $types)) {
                         $t_type = $tag->options["type"];
                     }
@@ -335,7 +333,7 @@ class FireBoardBBCodeInterpreter extends BBCodeInterpreter {
                     }
 
                     $tag_new = "";
-                    $tag_new .= "<img src='".$between.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' />";
+                    $tag_new .= "<img src='".$between.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' />";
 
                     return TAGPARSER_RET_REPLACED;
                 }
@@ -344,8 +342,8 @@ class FireBoardBBCodeInterpreter extends BBCodeInterpreter {
             case 'file':
                 if($between) {
                     $task->autolink_disable--; # continue autolink conversion
-                    $tag_new = "<div class=\"fb_file_attachment\"><span class=\"contentheading\">"._FB_FILEATTACH."</span><br>"._FB_FILENAME
-                    ."<a href='".$between."' target=\"_blank\" rel=\"nofollow\">".(($tag->options["name"])?htmlspecialchars($tag->options["name"]):$between)."</a><br>"._FB_FILESIZE.htmlspecialchars($tag->options["size"], ENT_QUOTES)."</div>";
+                    $tag_new = "<div class=\"fb_file_attachment\"><span class=\"contentheading\">"._KUNENA_FILEATTACH."</span><br>"._KUNENA_FILENAME
+                    ."<a href='".$between."' target=\"_blank\" rel=\"nofollow\">".(($tag->options["name"])?htmlspecialchars($tag->options["name"]):$between)."</a><br>"._KUNENA_FILESIZE.htmlspecialchars($tag->options["size"], ENT_QUOTES)."</div>";
                     return TAGPARSER_RET_REPLACED;
                 }
                 return TAGPARSER_RET_NOTHING;
@@ -608,7 +606,7 @@ class FireBoardBBCodeInterpreter extends BBCodeInterpreter {
                     else
                     {
                     	// Display but highlight the fact that it is hidden from guests
-                    	$tag_new = '<b>' . _FB_BBCODE_HIDE . '</b>' . '<span class="fb_quote">'.$between.'</span>';
+                    	$tag_new = '<b>' . _KUNENA_BBCODE_HIDE . '</b>' . '<span class="fb_quote">'.$between.'</span>';
                     }
                     return TAGPARSER_RET_REPLACED;
                 }
@@ -630,10 +628,10 @@ class FireBoardBBCodeInterpreter extends BBCodeInterpreter {
 										'imgElement = document.getElementById(imgElementID);'.
 										'if (targetElement.style.display == "none") {'.
 											'targetElement.style.display = "";'.
-											'imgElement.src = "/components/com_fireboard/template/default/images/english/emoticons/w00t.png";'.
+											'imgElement.src = "/components/com_kunena/template/default/images/english/emoticons/w00t.png";'.
 										'} else {'.
 											'targetElement.style.display = "none";'.
-											'imgElement.src = "/components/com_fireboard/template/default/images/english/emoticons/pinch.png";'.
+											'imgElement.src = "/components/com_kunena/template/default/images/english/emoticons/pinch.png";'.
 										'}}	</script>';
                     }
                     else
@@ -646,8 +644,8 @@ class FireBoardBBCodeInterpreter extends BBCodeInterpreter {
                     $randomid = rand();
 
                     $tag_new .= '<div id="'.$randomid.'" onClick="javascript:fb_showDetail(this);" style="cursor:pointer;"><img id="'.$randomid.'_img"'.
-                    			'src="/components/com_fireboard/template/default/images/english/emoticons/pinch.png" border="0"> <strong>'.
-                    			(isset($tag->options["title"]) ? ($tag->options["title"]) : (_FB_BBCODE_SPOILER))
+                    			'src="/components/com_kunena/template/default/images/english/emoticons/pinch.png" border="0"> <strong>'.
+                    			(isset($tag->options["title"]) ? ($tag->options["title"]) : (_KUNENA_BBCODE_SPOILER))
                     			. '</strong></div><div id="'. $randomid . '_details" style="display:None;"><span class="fb_quote">' . $between . '</span></div>';
 
                     return TAGPARSER_RET_REPLACED;
@@ -745,7 +743,7 @@ class FireBoardBBCodeInterpreter extends BBCodeInterpreter {
     }
 }
 
-class FireBoardBBCodeParserTask extends BBCodeParserTask {
+class KunenaBBCodeParserTask extends BBCodeParserTask {
     # stateful task for parser runs
     # inside link used for autolinkdetection outside
     var $autolink_disable = 0;
@@ -758,9 +756,9 @@ class FireBoardBBCodeParserTask extends BBCodeParserTask {
     var $iconList = array(); // smilies
 }
 
-class FireBoardBBCodeInterpreterPlain extends BBCodeInterpreter {
+class KunenaBBCodeInterpreterPlain extends BBCodeInterpreter {
     # This class uses standardinterpreter, but removes all formatting outputs!
-    # directly derivated from FireBoardBBCodeInterpreter after extensive testing
+    # directly derivated from KunenaBBCodeInterpreter after extensive testing
 
     function MyTagInterpreterSearch($references) {
         # Constructor

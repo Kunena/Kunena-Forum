@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fb_config.class.php 1070 2008-10-06 08:11:18Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -48,7 +48,7 @@ class boj_Config
     }
 
     //
-    // Create the config table for FireBoard and add initial default values
+    // Create the config table for Kunena and add initial default values
     //
     function create()
     {
@@ -164,7 +164,7 @@ class boj_Config
 class fb_Config extends boj_Config
 {
 	// All vars MUST BE LOWER CASE!
-    var $board_title             = 'FireBoard';
+    var $board_title             = 'Kunena';
     var $email                   = 'change@me.com';
     var $board_offline           = 0;
     var $board_ofset             = 0;
@@ -283,11 +283,11 @@ class fb_Config extends boj_Config
     var $usernamechange          = 0;
     var $rules_infb              = 1;
     var $rules_cid               = 1;
-    var $rules_link              = 'http://www.bestofjoomla.com/';
+    var $rules_link              = 'http://www.kunena.com/';
     var $enablehelppage          = 1;
     var $help_infb               = 1;
     var $help_cid                = 1;
-    var $help_link               = 'http://www.bestofjoomla.com/';
+    var $help_link               = 'http://www.kunena.com/';
     // New 1.0.5 config variables
     // bbcode options
     var $showspoilertag			 = 1;

@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fb_rss.php 1078 2008-10-27 04:22:21Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -13,10 +13,10 @@
 * @author TSMF & Jan de Graaff
 **/
 
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 global $database, $mainframe, $my, $mosConfig_absolute_path, $fbConfig;
-include ($mosConfig_absolute_path . "/components/com_fireboard/template/default/smile.class.php");
+include ($mosConfig_absolute_path . "/components/com_kunena/template/default/smile.class.php");
 
 $hours = 0;
 
@@ -124,19 +124,19 @@ header ('Content-type: application/xml');
 $encoding = split("=", _ISO);
 echo "<?xml version=\"1.0\" encoding=\"" . $encoding[1] . "\"?>\n";
 ?>
-<!-- generator="FireBoard @fbversion@"> -->
+<!-- generator="Kunena @fbversion@"> -->
 <rss version="0.91">
     <channel>
         <title><?php echo stripslashes(htmlspecialchars($mosConfig_sitename)); ?> - Forum</title>
-        <description>FireBoard Site Syndication</description>
+        <description>Kunena Site Syndication</description>
         <link><?php echo $mosConfig_live_site; ?></link>
         <lastBuildDate><?php echo date("r");?></lastBuildDate>
-        <generator>FireBoard @fbversion@</generator>
+        <generator>Kunena @fbversion@</generator>
         <image>
-	        <url><?php echo JB_URLEMOTIONSPATH; ?>rss.gif</url>
-	        <title>Powered by FireBoard</title>
+	        <url><?php echo KUNENA_URLEMOTIONSPATH; ?>rss.gif</url>
+	        <title>Powered by Kunena</title>
 	        <link><?php echo $mosConfig_live_site; ?></link>
-	        <description>FireBoard Site Syndication</description>
+	        <description>Kunena Site Syndication</description>
         </image>
 <?php
         foreach ($rows as $row)
@@ -144,7 +144,7 @@ echo "<?xml version=\"1.0\" encoding=\"" . $encoding[1] . "\"?>\n";
             echo "        <item>\n";
             echo "            <title>" . _GEN_SUBJECT . ": " . stripslashes(htmlspecialchars($row->subject)) . " - " . _GEN_BY . ": " . stripslashes(htmlspecialchars($row->lastpostname)) . "</title>" . "\n";
             echo "            <link>";
-            echo fb_link::GetThreadPageURL('view', $row->catid, $row->thread, ceil($row->numberposts / $fbConfig->messages_per_page), $fbConfig->messages_per_page, $row->lastpostid);
+            echo CKunenaLink::GetThreadPageURL('view', $row->catid, $row->thread, ceil($row->numberposts / $fbConfig->messages_per_page), $fbConfig->messages_per_page, $row->lastpostid);
             echo "</link>\n";
             $words = $row->lastpostmessage;
             $words = smile::purify($words);

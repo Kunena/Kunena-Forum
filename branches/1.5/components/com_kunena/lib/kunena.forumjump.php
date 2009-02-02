@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fb_forumjump.php 462 2007-12-10 00:05:53Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -19,22 +19,19 @@ defined( '_JEXEC' ) or die('Restricted access');
 $catid = intval(JRequest::getInt('catid', 0,'REQUEST'));
 
 $options = array ();
-
-
-
-//$options[] = &JHTML::makeOption(0, _FB_FORUM_TOP);
+$options[] = JHTML::makeOption(0, _FB_FORUM_TOP);
 $lists['parent'] = JJ_categoryParentList($catid, "", $options);
 ?>
 
-<form id = "jumpto" name = "jumpto" method = "get" target = "_self" action = "index.php" onsubmit = "if(document.jumpto.catid.value &lt; 2){return false;}">
+<form id = "jumpto" name = "jumpto" method = "get" target = "_self" action = "index.php">
     <div align = "right" style = "width: 100%;">
-        <input type = "hidden" name = "Itemid" value = "<?php echo FB_FB_ITEMID;?>"/>
+        <input type = "hidden" name = "Itemid" value = "<?php echo KUNENA_COMPONENT_ITEMID;?>"/>
 
-        <input type = "hidden" name = "option" value = "com_fireboard"/>
+        <input type = "hidden" name = "option" value = "com_kunena"/>
 
         <input type = "hidden" name = "func" value = "showcat"/>
 
-        <input type = "submit" name = "Go"  class="fbjumpgo fbs" value = "<?php echo _FB_GO; ?>"/>
+        <input type = "submit" name = "Go"  class="fbjumpgo fbs" value = "<?php echo _KUNENA_GO; ?>"/>
 <?php echo $lists['parent']; ?>
     </div>
 </form>

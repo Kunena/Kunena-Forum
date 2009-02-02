@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fb_db_iterator.class.php 804 2008-07-12 18:15:06Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com

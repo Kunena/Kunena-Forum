@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fb_rules.php 855 2008-07-16 15:35:10Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -66,7 +66,7 @@ global $fbConfig;
                 <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump)
-                    require_once (JB_ABSSOURCESPATH . 'fb_forumjump.php');
+                    require_once (KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
                 ?>
             </th>
         </tr>

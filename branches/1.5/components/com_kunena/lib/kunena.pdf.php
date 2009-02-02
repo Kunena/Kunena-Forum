@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fb_pdf.php 969 2008-08-12 09:23:54Z racoon $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -53,9 +53,11 @@ class fbpdfwrapper {
 function dofreePDF($database)
 {
     global $mosConfig_sitename, $my, $aro_group, $acl;
-    global $fbConfig, $fbSession, $catid;
-    require_once (JB_ABSSOURCESPATH . 'fb_auth.php');
+    global $fbConfig, $fbSession;
+    require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
     $is_Mod = 0;
+
+    $catid = JRequest::getInt('catid', 2));
 
     if (!$is_admin)
     {
@@ -71,18 +73,17 @@ function dofreePDF($database)
 
     if (!$is_Mod)
     {
-
         //get all the info on this forum:
         $database->setQuery("SELECT id,pub_access,pub_recurse,admin_access,admin_recurse FROM #__fb_categories where id=$catid");
         $row = $database->loadObjectList();
-                check_dberror("Unable to load categorie detail.");
+                check_dberror("Unable to load category detail.");
 
 
         $allow_forum = explode(',', FBTools::getAllowedForums($my->id, $aro_group->group_id, $acl));
 
         //Do user identification based upon the ACL
         $letPass = 0;
-        $letPass = fb_auth::validate_user($row[0], $allow_forum, $aro_group->group_id, $acl);
+        $letPass = kunena_authentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $acl);
     }
 
     if ($letPass || $is_Mod)
@@ -100,8 +101,8 @@ function dofreePDF($database)
         $mes_text = $row[0]->message;
         filterHTML($mes_text);
 
-		if (file_exists(JB_JABSPATH . '/includes/class.ezpdf.php')) {
-			include (JB_JABSPATH . '/includes/class.ezpdf.php');
+		if (file_exists(KUNENA_JABSPATH . '/includes/class.ezpdf.php')) {
+			include (KUNENA_JABSPATH . '/includes/class.ezpdf.php');
 			$pdf = &new Cezpdf('a4', 'P'); //A4 Portrait
 		} elseif (class_exists('JDocument')) {
         	$pdf = &new fbpdfwrapper();
@@ -121,10 +122,10 @@ function dofreePDF($database)
         $pdf->line(10, 822, 578, 822);
         $pdf->addText(30, 34, 6, $fbConfig->board_title . ' - ' . $mosConfig_sitename);
 
-        $strtmp = _FB_PDF_VERSION;
+        $strtmp = _KUNENA_PDF_VERSION;
         $strtmp = str_replace('%version%', "NEW VERSION GOES HERE" /*$fbConfig->version*/, $strtmp); // TODO: fxstein - Need to change version handling
         $pdf->addText(250, 34, 6, $strtmp);
-        $strtmp = _FB_PDF_DATE;
+        $strtmp = _KUNENA_PDF_DATE;
         $strtmp = str_replace('%date%', date('j F, Y, H:i', FBTools::fbGetShowTime()), $strtmp);
         $pdf->addText(450, 34, 6, $strtmp);
 

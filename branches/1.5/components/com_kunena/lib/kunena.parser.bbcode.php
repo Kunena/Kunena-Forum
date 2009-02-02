@@ -1,8 +1,8 @@
 <?PHP
 /**
 * @version $Id: interpreter.bbcode.inc.php 1077 2008-10-20 19:01:15Z racoon $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -10,13 +10,13 @@
 ############################################################################
 # CATEGORY: Parser.TagParser                 DEVELOPMENT DATUM: 13.11.2007 #
 # VERSION:  00.08.00                         LAST EDIT   DATUM: 12.12.2007 #
-# FILENAME: interpreter.bbcode.inc.php                                     #
+# FILENAME: kunena.parser.bbcode.php                                     #
 # AUTOR:    Miro Dietiker, MD Systems, All rights reserved                 #
 # LICENSE:  http://www.gnu.org/copyleft/gpl.html GNU/GPL                   #
 # CONTACT: m.dietiker@md-systems.ch        © 2007 Miro Dietiker 13.11.2007 #
 ############################################################################
 # This parser is based on an earlier CMS parser implementation.
-# It has been completely rewritten and generalized for FireBoard and
+# It has been completely rewritten and generalized for Kunena and
 # was also heavily tested.
 # However it should be: extensible, fast, ungreedy regarding resources
 # stateful, enforcing strict output rules as defined
@@ -72,7 +72,7 @@ class BBCodeInterpreter extends TagInterpreter {
         $task = new BBCodeParserTask($this);
         return $task;
     }
-    
+
 
     function ParseNext(&$task) {
         #  function ParseNext($text, &$pos_act) {
@@ -83,6 +83,9 @@ class BBCodeInterpreter extends TagInterpreter {
         # RET: TAGPARSER_RET_OK found, TAGPARSER_RET_ERR end
         $text =& $task->text;
         $pos_act =& $task->pos_act;
+
+        if (strlen($text) < $pos_act) return TAGPARSER_RET_ERR;
+
         // in_code state
         if($task->in_code) {
             // seek [/code] only
@@ -93,11 +96,13 @@ class BBCodeInterpreter extends TagInterpreter {
                 $pos_act = $checkpos;
                 return TAGPARSER_RET_OK;
             }
+            $checkpos = fb_stripos($text, '[/code:1]', $pos_act);
+            if($checkpos!==FALSE) {
+                $pos_act = $checkpos;
+                return TAGPARSER_RET_OK;
+            }
             // temporarily close code tag if not exists
-            $pos_act = strlen($text);
-            $text .= '[/code]';
-            return TAGPARSER_RET_OK;
-            //return TAGPARSER_RET_ERR;
+            return TAGPARSER_RET_ERR;
         }
         // in_noparse state
         if($task->in_noparse) {
@@ -163,8 +168,8 @@ class BBCodeInterpreter extends TagInterpreter {
         $mode = BBCODE_PARSE_START;
         // scan through string
         #echo 'POS:'.$pos."\n";
-        while(TRUE) {
-            $pos++; // start with second char
+        $textlen = strlen($text);
+        while(++$pos<$textlen) {
             $char = substr($text, $pos, 1);
             #echo 'CHAR:'.$mode.':'.$char."\n";
             // missing tag end, overflow prevention!

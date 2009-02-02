@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fb_auth.php 462 2007-12-10 00:05:53Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -16,7 +16,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-class fb_auth
+class kunena_authentication
 {
     function validate_user(&$forum, &$allow_forum, $groupid, &$acl)
     {

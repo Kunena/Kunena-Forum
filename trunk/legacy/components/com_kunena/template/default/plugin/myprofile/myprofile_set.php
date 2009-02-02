@@ -35,24 +35,6 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 		<tbody class = "fb_myprofile_general">
 			<tr >
 				<td >
-					<strong><?php echo _USER_PREFERED; ?>*</strong>:
-				</td>
-
-				<td >
-					<?php
-//Threaded view option removed for Kunena
-//					// make the select list for the view type
-//					$yesno[]  = mosHTML::makeOption('flat', _GEN_FLAT);
-//					$yesno[]  = mosHTML::makeOption('threaded', _GEN_THREADED);
-//					// build the html select list
-//					$tosend   = mosHTML::selectList($yesno, 'newview', 'class="inputbox" size="2"', 'value', 'text', $prefview);
-//					echo $tosend;
-					?>
-				</td>
-			</tr>
-
-			<tr >
-				<td >
 					<strong><?php echo _USER_ORDER; ?>*</strong>:
 				</td>
 

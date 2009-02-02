@@ -263,7 +263,8 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
                     $types = array ("php", "mysql", "html", "js", "javascript");
 
-                    $code_start_html = '<div class="fbcode"><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr><td><b>'._KUNENA_MSG_CODE.'</b></td></tr><tr><td><hr />';
+                    $code_start_html = '<div class="fbcode" style="width:'. $GLOBALS["fbConfig"]->rtewidth .'px;"><table cellspacing="1" cellpadding="3" border="0" align="center"><tr><td><b>'._KUNENA_MSG_CODE.'</b></td></tr><tr><td><hr />';
+
                     if (in_array($tag->options["type"], $types)) {
                         $t_type = $tag->options["type"];
                     }

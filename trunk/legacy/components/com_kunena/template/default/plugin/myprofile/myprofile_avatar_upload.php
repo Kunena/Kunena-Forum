@@ -223,10 +223,6 @@ if ($do == 'init')
 
                                 <br />
 
-                                <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=uploadavatar');?>"> <?php echo _SET_NEW_AVATAR; ?></a>
-
-                                <br />
-
                                 <input type = "checkbox" value = "1" name = "deleteAvatar"/><i> <?php echo _USER_DELETEAV; ?></i>
 
                     <?php

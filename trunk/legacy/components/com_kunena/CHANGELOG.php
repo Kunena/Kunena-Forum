@@ -33,6 +33,7 @@ Kunena 1.0.8
 
 2-February-2009 Matias
 ^ Move forced width from message text to [code] tag
+^ Remove confusing link from avatar upload
 
 2-February-2009 fxstein
 ^ Removed addition left over HTML tags and text for prior threaded view support in profile

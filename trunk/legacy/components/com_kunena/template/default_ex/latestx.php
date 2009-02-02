@@ -21,7 +21,7 @@ global $fbConfig;
 if (!$my->id && $func == "mylatest") 
 {
         	header("HTTP/1.1 307 Temporary Redirect");
-        	header("Location: " . sefRelToAbs((KUNENA_LIVEURLREL.'&amp;func=latest')));
+        	header("Location: " . htmlspecialchars_decode(CKunenaLink::GetShowLatestURL()));
         	die();
 }
 

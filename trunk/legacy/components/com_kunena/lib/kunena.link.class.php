@@ -188,6 +188,11 @@ class CKunenaLink
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=latest', $name, '', $rel);
     }
 
+    function GetShowLatestURL()
+    {
+        return sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest');
+    }
+
     function GetShowMyLatestLink($name, $rel='nofollow')
     {
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=mylatest', $name, '', $rel);

@@ -1,0 +1,165 @@
+/* HEADER
+----------------------------------------------------------------------------------------------- */
+#fb_header_msg { } /* offline message */
+
+.fb_header { /* header table */
+height:30px;
+} 
+
+td.fb_header_td_1 { /* header table hideshow switch img td */
+text-align:left;
+width:1%;
+padding-left:4px;
+}
+.fb_header .fb_header_td_2 { /* header table board title td */
+text-align:left;
+padding-left:5px;
+font-weight:bold;
+font-family: Tahoma,Verdana,Arial,Helvetica,sans-serif;
+font-size:13px;
+}
+td.fb_header_td_3 { /* header table menu td */
+text-align:center;
+}
+td.fb_header_td_4 { /* header table searchbox td */
+text-align:right;
+}
+img.hideshow { /* header table hideshow switch img */
+float:  right;
+margin: 0;
+padding: 0;
+cursor: pointer;
+}
+
+/* TOPMENU
+----------------------------------------------------------------------------------------------- */
+
+#fb_topmenu { /* topmenu div */
+}
+#fb_topmenu a{ /* topmenu link items */
+padding: 0 8px;
+display: block;
+text-decoration: none;
+font-weight: bold;
+float: left;
+font-family: Tahoma,Verdana,Arial,Helvetica,sans-serif;
+font-size:11px;
+}
+#fb_topmenu a:hover{
+
+}
+/* SEARCHBOX
+----------------------------------------------------------------------------------------------- */
+#fb_searchbox { /* searchbox div */ 
+}
+#fb_searchbox form { /* searchbox form */
+margin:0;
+padding:0;
+}
+
+/*
+PROFILE BOX
+----------------------------------------------------------------------------------------------- */
+.fb_profilebox { /* header profilebox table */
+
+}
+table.fb_profilebox .fb_profilebox_left {
+padding: 5px;
+width: 1%;
+}
+table.fb_profilebox .fb_profilebox_mid {
+padding: 5px;
+width: 49%;
+text-align: left;
+}
+table.fb_profilebox .fb_profilebox_right {
+padding: 5px;
+}
+table.fb_profilebox .fb_profilebox_modul .moduletable { /* header profilebox fb_1 module position */
+margin:  0;
+padding: 0;
+}
+/*
+
+/*
+LISTING CATEGORY
+----------------------------------------------------------------------------------------------- */
+.fb_blocktable {
+width:  100%;
+margin: 5px 0;
+}
+
+.fb_blocktable thead tr th {
+padding:3px 2px 2px 5px;
+}
+tr.fb_sth {  }
+th.fb_sectiontableheader {
+font-size-adjust:none;
+font-stretch:normal;
+font-style:normal;
+font-variant:normal;
+font-weight:bold;
+height:20px;
+line-height:normal;
+padding:0px 3px;
+vertical-align:middle;
+}
+#fb_title {
+float: left;
+text-align: left;
+font-weight: normal;
+line-height: normal;
+padding: 2px;
+}
+.fb_title,
+a.fb_title:link,
+a.fb_title:visited {
+font-family:Tahoma,Verdana,Arial,Helvetica,sans-serif;
+font-size:12px;
+font-weight:bold;
+display:block;
+text-decoration:none;
+}
+a.fb_title:hover {
+}
+/*
+GENERAL TD's and TH's
+----------------------------------------------------------------------------------------------- */
+th.th-1 {
+width: 1%;
+}
+th.th-2 { }
+th.th-3 {
+width: 5%;
+}
+th.th-4 {
+width: 5%;
+}
+th.th-5 {
+width: 25%;
+}
+
+td.td-1 {
+text-align: center;
+}
+td.td-2 {
+text-align: left;
+}
+td.td-3 {
+text-align: center;
+}
+td.td-4 {
+text-align: center;
+}
+td.td-5 {
+text-align: left;
+}
+	
+tbody tr.fb_sectiontableentry1 td,
+tbody tr.fb_sectiontableentry2 td {
+padding:3px;
+}
+tbody tr.fb_sectiontableentry1 td.td-1,
+tbody tr.fb_sectiontableentry2 td.td-1 {
+
+}

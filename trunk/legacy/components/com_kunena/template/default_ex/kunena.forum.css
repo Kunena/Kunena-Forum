@@ -108,7 +108,6 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	border-right-width:0;
 	border-bottom-width:3px;
 	border-left-width:0;
-	z-index:2;
 }
 #Kunena #Kunena_top td img.hideshow {
 	background:#5182A4;
@@ -892,7 +891,6 @@ li.jr-pagenav-nb span.pagenav, li.jr-pagenav-nb a.pagenav:link, li.jr-pagenav-nb
 .fb_bottom_pathway {
 	display: none;
 }
-/*
 
 /*
 FORUM TOOLS
@@ -915,6 +913,7 @@ td.ft-td2 {
 	width: 150px;
 }
 .forumtools_contentBox {
+	z-index:2;
 	border:  1px solid #BFC3C6;
 	display: none;
 	position: absolute;
@@ -951,7 +950,7 @@ td.ft-td2 {
 #subBox1 ul li a:hover {
 	text-decoration: underline;
 }
-#kunena a.forumtools:link, #kunena a.forumtools:visited {
+#Kunena a.forumtools:link, #Kunena a.forumtools:visited {
 	background: url(images/menu_open.gif) no-repeat right center;
 	padding-right: 20px;
 	color:#FFFFFF;
@@ -963,7 +962,7 @@ td.ft-td2 {
 	text-align:    center;
 	text-decoration: none;
 }
-#kunena a.forumtools:hover {
+#Kunena a.forumtools:hover {
 	text-decoration: underline;
 }
 /*

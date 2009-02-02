@@ -29,9 +29,12 @@ class CKunenaConfigBase
     	die();
     }
 
+    // This function allows for the overload of user specific settings.
+    // All settings can now be user specific. No further code changes
+    // are required inside of Kunena.
     function DoUserOverrides($userid)
     {
-    	echo '<div>Undefined GetUserOverrides() function in derived class!</div>';
+    	echo '<div>Undefined DoUserOverrides() function in derived class!</div>';
     	die();
     }
 

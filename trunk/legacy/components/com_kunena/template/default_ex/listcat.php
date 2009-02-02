@@ -556,7 +556,7 @@ if (count($categories[0]) > 0)
                                         <td class = "td-5" align="left">
                                             <div class = "<?php echo $boardclass ?>latest-subject fbm">
 <?php
-                                               echo CKunenaLink::GetThreadPageLink('view', $singlerow->lastcat, $latestthread, $latestthreadpages, $fbConfig->messages_per_page, $latestsubject, $latestid);
+                                               echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $singlerow->lastcat, $latestthread, $latestthreadpages, $fbConfig->messages_per_page, $latestsubject, $latestid);
 ?>
                                             </div>
 
@@ -565,7 +565,7 @@ if (count($categories[0]) > 0)
                                                 echo _GEN_BY.' ';
                                                 echo CKunenaLink::GetProfileLink($latestuserid, $latestname);
                                                 echo ' | '.$lastptime.' ';
-                                                echo CKunenaLink::GetThreadPageLink('view', $singlerow->lastcat, $latestthread, $latestthreadpages, $fbConfig->messages_per_page,
+                                                echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $singlerow->lastcat, $latestthread, $latestthreadpages, $fbConfig->messages_per_page,
                                                 $fbIcons['latestpost'] ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" title="'. _SHOW_LAST.'"/>' :
                                                                          '<img src="'.KUNENA_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'"/>', $latestid);
 ?>

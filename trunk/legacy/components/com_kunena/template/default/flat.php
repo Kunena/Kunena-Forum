@@ -310,7 +310,7 @@ if (count($messages[0]) > 0)
                                     {
                                         $threadPages = ceil($totalMessages / $fbConfig->messages_per_page);
                                         echo ("<span class=\"jr-showcat-perpage\">[");
-                                        echo _PAGE.' '.CKunenaLink::GetThreadPageLink('view', $leaf->catid, $leaf->id, 1, $fbConfig->messages_per_page, 1);
+                                        echo _PAGE.' '.CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->id, 1, $fbConfig->messages_per_page, 1);
 
                                         if ($threadPages > 3)
                                         {
@@ -334,7 +334,7 @@ if (count($messages[0]) > 0)
                                                 echo (",");
                                                 }
 
-                                            echo CKunenaLink::GetThreadPageLink('view', $leaf->catid, $leaf->id, $hopPage, $fbConfig->messages_per_page, $hopPage);
+                                            echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->id, $hopPage, $fbConfig->messages_per_page, $hopPage);
                                         }
 
                                         echo ("]</span>");
@@ -402,7 +402,7 @@ if (count($messages[0]) > 0)
         $tmpicon = $fbIcons['latestpost'] ? '<img src="'
                  .KUNENA_URLICONSPATH.''.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" />':'  <img src="'.KUNENA_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />';
     }
-    echo CKunenaLink::GetThreadPageLink('view', $leaf->catid, $leaf->id, $threadPages, $fbConfig->messages_per_page, $tmpicon, $last_reply[$leaf->id]->id);
+    echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->id, $threadPages, $fbConfig->messages_per_page, $tmpicon, $last_reply[$leaf->id]->id);
     ?>
                                 </div>
                             </td>

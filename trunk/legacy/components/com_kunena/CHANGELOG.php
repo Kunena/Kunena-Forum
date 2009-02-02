@@ -46,6 +46,10 @@ Kunena 1.0.8
 
 2-February-2009 fxstein
 ^ Removed addition left over HTML tags and text for prior threaded view support in profile
+# htmlspecialchars_decode on 301 redirects to remove &amps from getting into the browser URL
+^ fb_Config class changed to CKunenaConfig, boj_Config class changed to CKunenaConfigBase
++ new CKunenaConfig class functionality to support user specific settings
+^ kunena_authetication changed to CKunenaAuthentication
 
 1-February-2009 Noel Hunter
 ^ Use default_ex if current template is missing

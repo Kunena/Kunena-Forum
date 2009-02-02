@@ -11,7 +11,7 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-class boj_Config
+class CKunenaConfigBase
 {
     //
     // The following functions MUST be overridden in derived classes
@@ -26,6 +26,12 @@ class boj_Config
     function GetConfigTableName()
     {
     	echo '<div>Undefined GetConfigTableName() function in derived class!</div>';
+    	die();
+    }
+
+    function DoUserOverrides($userid)
+    {
+    	echo '<div>Undefined GetUserOverrides() function in derived class!</div>';
     	die();
     }
 
@@ -139,7 +145,7 @@ class boj_Config
     //
     // Load config settings from database table
     //
-    function load($silent=false)
+    function load($userid=0)
     {
         global $database;
 
@@ -148,7 +154,7 @@ class boj_Config
         // Special error handling!
         // This query might actually fail on new installs or upgrades when
         // no configuration table is present. That is ok. It only tells us to
-        // create the table and populate it with defualt setting.
+        // create the table and populate it with default settings.
         // DO NOT THROW an error
         $database->loadObject($this);
 
@@ -157,11 +163,21 @@ class boj_Config
         	// If no configuration is present, save default values
         	$this->create(); //create has its own error handling
         }
+
+        // Check for user specific overrides
+        if($userid != 0)
+        {
+            // overload the settings with user specific ones
+            $this->DoUserOverrides($userid);
+            // Now the variables of the class contain the global settings
+            // overloaded with the user specific ones
+            // No other code changes required to support user specific settings.
+        }
     }
 }
 
 
-class fb_Config extends boj_Config
+class CKunenaConfig extends CKunenaConfigBase
 {
 	// All vars MUST BE LOWER CASE!
     var $board_title             = 'Kunena';
@@ -312,12 +328,17 @@ class fb_Config extends boj_Config
 
     function GetClassVars()
     {
-        return get_class_vars('fb_Config');
+        return get_class_vars('CKunenaConfig');
     }
 
     function GetConfigTableName()
     {
         return "fb_config"; // w/o joomla prefix - is being added by based class
+    }
+
+    function DoUserOverrides($userid)
+    {
+        // TODO: Need to integrate with new CKunenaUser class for user specific settings
     }
 }
 

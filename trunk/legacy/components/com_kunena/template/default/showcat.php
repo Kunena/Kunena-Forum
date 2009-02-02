@@ -42,7 +42,7 @@ if (!$is_Moderator)
     	check_dberror("Unable to load categories.");
     //Do user identification based upon the ACL
     $letPass = 0;
-    $letPass = kunena_authentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $acl);
+    $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $acl);
 }
 
 if ($letPass || $is_Moderator)

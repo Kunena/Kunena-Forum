@@ -405,7 +405,7 @@ else
 
                                 <?php echo CKunenaLink::GetProfileLink($latestuserid, $latestname, $rel='nofollow');?>
 
-                    | <?php echo $lastptime; ?> <?php echo CKunenaLink::GetThreadPageLink('view', $latestcatid, $latestthread, $latestpage, $fbConfig->messages_per_page, ($fbIcons['latestpost'] ? '<img src="'
+                    | <?php echo $lastptime; ?> <?php echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $latestcatid, $latestthread, $latestpage, $fbConfig->messages_per_page, ($fbIcons['latestpost'] ? '<img src="'
              . KUNENA_URLICONSPATH . '' . $fbIcons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'), $latestid, $rel='nofollow');?>
                             </div>
                         </td>

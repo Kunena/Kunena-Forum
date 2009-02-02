@@ -56,7 +56,7 @@ if (!$is_Moderator)
 
     //Do user identification based upon the ACL
     $letPass = 0;
-    $letPass = kunena_authentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $acl);
+    $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $acl);
 }
 
 $topicLock = 0;
@@ -99,7 +99,7 @@ if ($letPass || $is_Moderator)
         	$replyPage = $replyCount > $fbConfig->messages_per_page ? ceil($replyCount / $fbConfig->messages_per_page) : 1;
 
         	header("HTTP/1.1 301 Moved Permanently");
-        	header("Location: " . CKunenaLink::GetThreadPageURL('view', $this_message->catid, $thread, $replyPage, $fbConfig->messages_per_page, $this_message->id) );
+        	header("Location: " . htmlspecialchars_decode(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $this_message->catid, $thread, $replyPage, $fbConfig->messages_per_page, $this_message->id)));
 
         	die();
         }

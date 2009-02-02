@@ -268,7 +268,7 @@ if (count($messages[0]) > 0)
                                         if ($leaf->myfavorite) {
                                     	    echo $fbIcons['favoritestar'] ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . '' . $fbIcons['favoritestar']
                                     		. '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
-					} else if (array_key_exists('favoritestar_grey', $fbIcons)) 
+					} else if (array_key_exists('favoritestar_grey', $fbIcons))
 					{
                                     	    echo $fbIcons['favoritestar_grey'] ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . '' . $fbIcons['favoritestar_grey']
                                     		. '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
@@ -284,7 +284,7 @@ if (count($messages[0]) > 0)
                                     {
                                         if (($prevCheck < $last_reply[$leaf->id]->time) && !in_array($last_reply[$leaf->id]->thread, $read_topics)) {
                                             //new post(s) in topic
-                                            echo CKunenaLink::GetThreadPageLink('view', $leaf->catid, $leaf->id, $unreadPage, $fbConfig->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $last_read[$leaf->id]->unread . ' ' . $fbConfig->newchar . ')</span></sup>', $last_read[$leaf->id]->lastread);
+                                            echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->id, $unreadPage, $fbConfig->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $last_read[$leaf->id]->unread . ' ' . $fbConfig->newchar . ')</span></sup>', $last_read[$leaf->id]->lastread);
                                             }
                                     }
                                     ?>
@@ -295,7 +295,7 @@ if (count($messages[0]) > 0)
                                     if ($totalMessages > $fbConfig->messages_per_page)
                                     {
                                         echo ("<span class=\"jr-showcat-perpage\">[");
-                                        echo _PAGE.' '.CKunenaLink::GetThreadPageLink('view', $leaf->catid, $leaf->id, 1, $fbConfig->messages_per_page, 1);
+                                        echo _PAGE.' '.CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->id, 1, $fbConfig->messages_per_page, 1);
 
                                         if ($threadPages > 3)
                                         {
@@ -319,7 +319,7 @@ if (count($messages[0]) > 0)
                                                 echo (",");
                                                 }
 
-                                            echo CKunenaLink::GetThreadPageLink('view', $leaf->catid, $leaf->thread, $hopPage, $fbConfig->messages_per_page, $hopPage);
+                                            echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->thread, $hopPage, $fbConfig->messages_per_page, $hopPage);
                                         }
 
                                         echo ("]</span>");
@@ -446,7 +446,7 @@ if (count($messages[0]) > 0)
 
                                                 <!-- Latest Post -->
         <span class="topic_latest_post">
-        <?php echo CKunenaLink::GetThreadPageLink('view', $leaf->catid, $leaf->thread, $threadPages, $fbConfig->messages_per_page, _GEN_LAST_POST, $last_reply[$leaf->id]->id); ?>
+        <?php echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->thread, $threadPages, $fbConfig->messages_per_page, _GEN_LAST_POST, $last_reply[$leaf->id]->id); ?>
         <?php echo ' '._GEN_BY. ' '.CKunenaLink::GetProfileLink($last_reply[$leaf->id]->userid, $last_reply[$leaf->id]->name, 'nofollow', 'topic_latest_post_user'); ?>
         </span>
         <!-- /Latest Post -->

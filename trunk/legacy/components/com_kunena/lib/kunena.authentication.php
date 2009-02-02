@@ -16,7 +16,7 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-class kunena_authentication
+class CKunenaAuthentication
 {
     function validate_user(&$forum, &$allow_forum, $groupid, &$acl)
     {

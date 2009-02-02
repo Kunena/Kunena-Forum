@@ -163,7 +163,7 @@ if ($sel == "0")
                 {
                     $threadPages = ceil($thisThread->totalmessages / $fbConfig->messages_per_page);
                     echo ("<span class=\"jr-showcat-perpage\">[");
-                    echo _PAGE.' '.CKunenaLink::GetThreadPageLink('view', $latestPostCatid, $rs->thread, 1, $fbConfig->messages_per_page, 1);
+                    echo _PAGE.' '.CKunenaLink::GetThreadPageLink($fbConfig, 'view', $latestPostCatid, $rs->thread, 1, $fbConfig->messages_per_page, 1);
 
                     if ($threadPages > 3)
                     {
@@ -187,7 +187,7 @@ if ($sel == "0")
                             echo (",");
                             }
 
-                        echo CKunenaLink::GetThreadPageLink('view', $latestPostCatid, $rs->thread, $hopPage, $fbConfig->messages_per_page, $hopPage);
+                        echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $latestPostCatid, $rs->thread, $hopPage, $fbConfig->messages_per_page, $hopPage);
                     }
 
                     echo ']</span> ';
@@ -195,7 +195,7 @@ if ($sel == "0")
 
                 $tmpicon = $fbIcons['latestpost'] ? '<img src="'
                      .KUNENA_URLICONSPATH.''.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />':'  <img src="'.KUNENA_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />';
-                echo CKunenaLink::GetThreadPageLink('view', $latestPostCatid, $rs->thread, $threadPages, $fbConfig->messages_per_page, $tmpicon, $latestPostId);
+                echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $latestPostCatid, $rs->thread, $threadPages, $fbConfig->messages_per_page, $tmpicon, $latestPostId);
 
                 echo '<br />' . _GEN_FORUM . ' : ' . $catname . '</td>';
                 echo '<td class="td-2" align="center">' . $numberOfPosts . '</td>';

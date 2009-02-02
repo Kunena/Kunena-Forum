@@ -87,8 +87,9 @@ class CKunenaLink
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;catid='.$catid.'&amp;id='.$threadid, $threadname, $title, $rel, $class);
     }
 
-    function GetThreadPageLink($func, $catid, $threadid, $page, $limit, $name, $anker='', $rel='follow', $class='')
+    function GetThreadPageLink($fbConfig, $func, $catid, $threadid, $page, $limit, $name, $anker='', $rel='follow', $class='')
     {
+//        if ($fbConfig->)
         if ($page == 1 || !is_numeric($page) || !is_numeric($limit))
         {
             // page 1 is identical to a link to the top of the thread
@@ -106,16 +107,16 @@ class CKunenaLink
 
     // GetThreadPageURL is basically identically to the prior function except that it returns a clear text
     // non-encoded URL. This functions is used by the email function to notify users about new posts.
-    function GetThreadPageURL($func, $catid, $threadid, $page, $limit, $anker='')
+    function GetThreadPageURL($fbConfig, $func, $catid, $threadid, $page, $limit, $anker='')
     {
         if ($page == 1 || !is_numeric($page) || !is_numeric($limit))
         {
             // page 1 is identical to a link to the top of the thread
-            $pageURL = str_replace('&amp;', '&', KUNENA_LIVEURLREL).'&func='.$func.'&catid='.$catid.'&id='.$threadid;
+            $pageURL = htmlspecialchars_decode(KUNENA_LIVEURLREL).'&func='.$func.'&catid='.$catid.'&id='.$threadid;
         }
         else
         {
-            $pageURL = str_replace('&amp;', '&', KUNENA_LIVEURLREL).'&func='.$func.'&catid='.$catid.'&id='.$threadid
+            $pageURL = htmlspecialchars_decode(KUNENA_LIVEURLREL).'&func='.$func.'&catid='.$catid.'&id='.$threadid
                           .'&limit='.$limit.'&limitstart='.(($page-1)*$limit);
         }
 
@@ -256,7 +257,7 @@ class CKunenaLink
     // It is used for various operations. Input parameter is any post id. It will determine the thread,
     // latest post of that thread and number of pages based on the supplied page limit.
     //
-    function GetLatestPostAutoRedirectHTML($pid, $limit)
+    function GetLatestPostAutoRedirectHTML($fbConfig, $pid, $limit)
     {
         global $database;
         // First determine the thread, latest post and number of posts for the post supplied
@@ -274,11 +275,11 @@ class CKunenaLink
         // Finally build output block
 
         $Output  = '<div align="center">';
-        $Output .= CKunenaLink::GetThreadPageLink('view', $result->catid, $result->thread, $threadPages, $limit, _POST_SUCCESS_VIEW, $result->latest_id) .'<br />';
+        $Output .= CKunenaLink::GetThreadPageLink($fbConfig, 'view', $result->catid, $result->thread, $threadPages, $limit, _POST_SUCCESS_VIEW, $result->latest_id) .'<br />';
         $Output .= CKunenaLink::GetCategoryLink('showcat', $result->catid, _POST_SUCCESS_FORUM).'<br />';
         $Output .= '</div>';
         $Output .= '<script language = "javascript">';
-        $Output .= 'var redirect_timeout = setTimeout("location=\''. str_replace('&amp;', '&', CKunenaLink::GetThreadPageURL('view', $result->catid, $result->thread, $threadPages, $limit, $result->latest_id) ) .'\'", 3500);';
+        $Output .= 'var redirect_timeout = setTimeout("location=\''. htmlspecialchars_decode(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $result->catid, $result->thread, $threadPages, $limit, $result->latest_id)) .'\'", 3500);';
         $Output .= 'jQuery(document).ready(function ($) { jQuery("body").bind("click", function(e) { clearTimeout(redirect_timeout); } ); });';
         $Output .= '</script>';
 
@@ -291,7 +292,7 @@ class CKunenaLink
         $Output .= CKunenaLink::GetCategoryLink('showcat', $catid, _POST_SUCCESS_FORUM).'<br />';
         $Output .= '</div>';
         $Output .= '<script language = "javascript">';
-        $Output .= 'var redirect_timeout = setTimeout("location=\''. sefRelToAbs(str_replace('&amp;', '&', KUNENA_LIVEURLREL) . '&func=showcat&catid=' . $catid) .'\'", 3500);';
+        $Output .= 'var redirect_timeout = setTimeout("location=\''. htmlspecialchars_decode(KUNENA_LIVEURLREL . '&func=showcat&catid=' . $catid) .'\'", 3500);';
         $Output .= 'jQuery(document).ready(function ($) { jQuery("body").bind("click", function(e) { clearTimeout(redirect_timeout); } ); });';
         $Output .= '</script>';
 

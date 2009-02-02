@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fireboard.php 1070 2008-10-06 08:11:18Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -12,11 +12,9 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @author TSMF & Jan de Graaff
 **/
-//error_reporting(E_ALL);
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
-
 
 // Just for debugging and performance analysis
 $mtime = explode(" ", microtime());
@@ -74,18 +72,18 @@ $msgpreview 	= JRequest::getVar( 'msgpreview', '');
 
 
 
-//include_once ($mainframe->getCfg("absolute_path") . '/administrator/components/com_fireboard/fireboard_config.php');
+//include_once ($mainframe->getCfg("absolute_path") . '/administrator/components/com_kunena/fireboard_config.php');
 
 // Central Location for all internal links
-$path = JPATH_BASE  . '/administrator/components/com_fireboard/sources/fb_link.class.php';
+$path = JPATH_BASE  . '/administrator/components/com_kunena/sources/fb_link.class.php';
 require_once ($path);
 
 // Class structure should be used after this and all the common task should be moved to this class
-require_once (JPATH_BASE  . '/components/com_fireboard/class.fireboard.php');
+require_once (JPATH_BASE  . '/components/com_kunena/class.fireboard.php');
 
 
 // get fireboards configuration params in
-require_once (FB_FABSPATH_ADMINSRCFC);
+require_once (KUNENA_FABSPATH_ADMINSRCFC);
 
 // ABove get fb config class bug with fetting urls so its fully defiend
 global $fbConfig;
@@ -93,18 +91,15 @@ global $fbConfig;
 $fbConfig = new fb_config();
 $fbConfig->load();
 
-include_once (FB_FABSPATH_ADMINSRC  . "/fb_debug.php");
+include_once (KUNENA_FABSPATH_ADMINSRC  . "/fb_debug.php");
 
 // get right Language file
-
-if (file_exists(FB_FABSPATH_ADMIN . '/language/' . JB_LANG . '.php')) {
-    include_once (FB_FABSPATH_ADMIN . '/language/' . JB_LANG . '.php');
+if (file_exists(KUNENA_ABSADMPATH . '/language/kunena.' . KUNENA_LANG . '.php')) {
+    include_once (KUNENA_ABSADMPATH . '/language/kunena.' . KUNENA_LANG . '.php');
     }
 else {
-    include_once (JPATH_COMPONENT_ADMINISTRATOR . '/language/english.php');
+    include_once (KUNENA_ABSADMPATH . '/language/kunena.english.php');
     }
-
-
 
 // Include Clexus PM class file
 if ($fbConfig->pm_component == "clexuspm")
@@ -114,31 +109,38 @@ if ($fbConfig->pm_component == "clexuspm")
 }
 
 //time format
-include_once (JPATH_COMPONENT_ADMINISTRATOR . '/sources/fb_timeformat.class.php');
+include_once (KUNENA_ABSSOURCESPATH . 'kunena.timeformat.class.php');
 
 // systime is current time with proper board offset
-define ('JB_SECONDS_IN_HOUR', 3600);
-define ('JB_SECONDS_IN_YEAR', 31536000);
-// define ('JB_OFFSET_USER', ($mainframe->getCfg('offset_user') * JB_SECONDS_IN_HOUR));
+define ('KUNENA_SECONDS_IN_HOUR', 3600);
+define ('KUNENA_SECONDS_IN_YEAR', 31536000);
+// define ('KUNENA_OFFSET_USER', ($mainframe->getCfg('offset_user') * KUNENA_SECONDS_IN_HOUR));
 // For now: we add the correct offset to systime
 // In the future the offset should be removed and only applied when
 // displaying items -> store data in UTC
-define ('JB_OFFSET_BOARD',($fbConfig->board_ofset * JB_SECONDS_IN_HOUR));
+define ('KUNENA_OFFSET_BOARD',($fbConfig->board_ofset * KUNENA_SECONDS_IN_HOUR));
 
-$systime = time() + JB_OFFSET_BOARD;
+$systime = time() + KUNENA_OFFSET_BOARD;
 
 // additional database defines
-define ('JB_DB_MISSING_COLUMN', 1054);
+define ('KUNENA_DB_MISSING_COLUMN', 1054);
 
 // Retrieve current cookie data for session handling
 $settings = $_COOKIE['fboard_settings'];
 
 // set configuration dependent params
-$str_FB_templ_path = JPATH_ROOT . '/components/com_fireboard/template/default/';
+$str_KUNENA_templ_path = KUNENA_ABSPATH . '/template/' . ($fb_user_template?$fb_user_template:$fbConfig->template);
+
+// Check if fb_user_template is present, otherwise set to default_ex
+
+if (!file_exists($str_KUNENA_templ_path)) {
+        $str_KUNENA_templ_path=KUNENA_ABSPATH . '/template/default_ex';
+}
+
 $board_title = $fbConfig->board_title;
 $fromBot = 0;
 $prefview = $fbConfig->default_view;
-echo $str_FB_templ_path;
+
 // JOOMLA STYLE CHECK
 if ($fbConfig->joomlastyle < 1) {
     $boardclass = "fb_";
@@ -158,11 +160,11 @@ if ($fbConfig->badwords and !class_exists('Badword')) {
 // Include preview here before inclusion of other files
 if ($func == "getpreview") {
 
-    if (file_exists(FB_ABSTMPLTPATH . '/smile.class.php')) {
-        include (FB_ABSTMPLTPATH . '/smile.class.php');
+    if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php')) {
+        include (KUNENA_ABSTMPLTPATH . '/smile.class.php');
     }
     else {
-        include (FB_COMP_F . '/template/default/smile.class.php');
+        include (KUNENA_ABSPATH . '/template/default/smile.class.php');
     }
 
     $message = utf8_urldecode(utf8_decode($msgpreview));
@@ -179,46 +181,53 @@ if ($func == "getpreview") {
 }
 
 if ($func == "showcaptcha") {
-   include (FB_COMP_F . '/template/default/plugin/captcha/randomImage.php');
+   include (KUNENA_ABSPATH . '/template/default/plugin/captcha/randomImage.php');
    die();
 }
 
+// Add required header tags
+if (defined('KUNENA_JQURL'))
+{
+	$document->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
+}
 
 // Add required header tags
 $document =& JFactory::getDocument();
-$document->addCustomTag('<script type="text/javascript" src="' . JB_JQURL . '"></script>');
+$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
 $document->addCustomTag('<script type="text/javascript">
 //1: show, 0 : hide
-jr_expandImg_url = "' . JB_URLIMAGESPATH . '";</script>');
-$document->addCustomTag('<script type="text/javascript" src="' . JB_COREJSURL . '"></script>');
+jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";</script>');
+
+if (defined('KUNENA_COREJSURL'))
+{
+	$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_COREJSURL . '"></script>');
+}
 
 if ($fbConfig->joomlastyle < 1) {
-    $document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . JB_TMPLTCSSURL . '" />');
+    $document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_TMPLTCSSURL . '" />');
     }
 else {
-    $document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . JB_DIRECTURL . '/template/default/joomla.css" />');
+    $document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_DIRECTURL . '/template/default/joomla.css" />');
     }
 
 // WHOIS ONLINE IN FORUM
-if (file_exists(FB_ABSTMPLTPATH . '/plugin/who/who.class.php')) {
-    include (FB_ABSTMPLTPATH . '/plugin/who/who.class.php');
-	
+if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/who/who.class.php')) {
+    include (KUNENA_ABSTMPLTPATH . '/plugin/who/who.class.php');
     }
 else {
-    include (FB_COMP_F . '/template/default/plugin/who/who.class.php');
-    
+    include (KUNENA_ABSPATH . '/template/default/plugin/who/who.class.php');
     }
 
 // include required libraries
-if (file_exists(FB_ABSTMPLTPATH . '/fb_layout.php')) {
-    require_once (FB_ABSTMPLTPATH . '/fb_layout.php');
+if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_layout.php')) {
+    require_once (KUNENA_ABSTMPLTPATH . '/fb_layout.php');
     }
 else {
-    require_once (FB_COMP_F . '/template/default/fb_layout.php');
+    require_once (KUNENA_ABSPATH . '/template/default/fb_layout.php');
     }
 
-require_once (FB_COMP_C_SRC . '/fb_permissions.php');
-require_once (FB_COMP_C_SRC . '/fb_category.class.php');
+require_once (KUNENA_ABSSOURCESPATH . 'kunena.permissions.php');
+require_once (KUNENA_ABSSOURCESPATH . 'kunena.category.class.php');
 
 if ($catid != '') {
     $thisCat = new jbCategory($database, $catid);
@@ -228,11 +237,11 @@ if (defined('JPATH_BASE')) {
     jimport ('pattemplate.patTemplate');
     }
 else {
-    require_once (JB_JABSPATH . '/includes/patTemplate/patTemplate.php');
+    require_once (KUNENA_JABSPATH . '/includes/patTemplate/patTemplate.php');
     }
 
-$obj_FB_tmpl = new patTemplate();
-$obj_FB_tmpl->setBasedir($str_FB_templ_path);
+$obj_KUNENA_tmpl = new patTemplate();
+$obj_KUNENA_tmpl->setBasedir($str_KUNENA_templ_path);
 
 // Permissions: Check for administrators and moderators
 if ($my->id != 0)
@@ -255,13 +264,13 @@ $is_Moderator = fb_has_moderator_permission($database, $thisCat, $my->id, $is_ad
 //intercept the RSS request; we should stop afterwards
 if ($func == 'fb_rss')
 {
-    include (FB_COMP_C_SRC . '/fb_rss.php');
+    include (KUNENA_ABSSOURCESPATH . 'kunena.rss.php');
     die();
 }
 
 if ($func == 'fb_pdf')
 {
-    include (FB_COMP_C_SRC . '/fb_pdf.php');
+    include (KUNENA_ABSSOURCESPATH . 'kunena.pdf.php');
     die();
 }
 
@@ -287,7 +296,7 @@ if ($fbConfig->cb_profile)
 {
     // $cbitemid = JBgetCBprofileItemid();
     // Include CB language files
-    $UElanguagePath = FB_JABSPATH . '/components/com_comprofiler/plugin/language';
+    $UElanguagePath = KUNENA_JABSPATH . '/components/com_comprofiler/plugin/language';
 
     
 	$language = JLanguage::getInstance($frontend_lang);
@@ -300,19 +309,19 @@ $UElanguage = $mosConfig_lang;
     include_once ($UElanguagePath . '/' . $UElanguage . '/' . $UElanguage . '.php');
 }
 
-// fireboard Current Template Icons Pack
+// Kunena Current Template Icons Pack
 // See if there's an icon pack installed
 $useIcons = 0; //init
 $fbIcons = 0;
 
-if (file_exists(FB_ABSTMPLTPATH . '/icons.php'))
+if (file_exists(KUNENA_ABSTMPLTPATH . '/icons.php'))
 {
-    include_once (FB_ABSTMPLTPATH . '/icons.php');
+    include_once (KUNENA_ABSTMPLTPATH . '/icons.php');
     $useIcons = 1;
 }
 else
 {
-    include_once (FB_COMP_F . '/template/default/icons.php');
+    include_once (KUNENA_ABSPATH . '/template/default/icons.php');
 }
 
 //Get the userid; sometimes the new var works whilst $my->id doesn't..?!?
@@ -334,7 +343,7 @@ else
 {
 //
 // This is the main session handling section. We rely both on cookie as well as our own
-// fireboard session table inside the database. We are leveraging the cookie to keep track
+// Kunena session table inside the database. We are leveraging the cookie to keep track
 // of an individual session and its various refreshes. As we will never know what the last
 // pageview of a session will be (as defined by a commonly used 30min break/pause) we
 // keep updateing the cookie until we detect a 30+min break. That break tells us to reset
@@ -350,7 +359,7 @@ else
 		// First we drop an updated cookie, good for 1 year
 		// We have consolidated multiple instances of cookie management into this single location
 		// NOT SURE IF WE STILL NEED THIS ONE after session management got dbtized
-		setcookie("fboard_settings[member_id]", $my_id, time() + JB_SECONDS_IN_YEAR, '/');
+		setcookie("fboard_settings[member_id]", $my_id, time() + KUNENA_SECONDS_IN_YEAR, '/');
 
 		// We assume that this is a new user and that we don't know about a previous visit
 		$new_fb_user = 0;
@@ -370,7 +379,7 @@ else
 			// Init new sessions for first time user
 			$fbSession->userid = $my_id;
 			$fbSession->allowed = '';
-			$fbSession->lasttime = $systime - JB_SECONDS_IN_YEAR;  // show threads up to 1 year back as new
+			$fbSession->lasttime = $systime - KUNENA_SECONDS_IN_YEAR;  // show threads up to 1 year back as new
 			$fbSession->readtopics = '';
 			$fbSession->currvisit = $systime;
 		}
@@ -382,7 +391,7 @@ else
 		if ($markaction == "allread") {
 			$fbSession->lasttime = $fbSessionUpd->lasttime = $systime;
 			$fbSession->readtopics = $fbSessionUpd->readtopics = '';
-			echo "<script> alert('" . _GEN_ALL_MARKED . "'); window.location='" . JRoute::_(JB_LIVEURLREL) . "';</script>\n";
+			echo "<script> alert('" . _GEN_ALL_MARKED . "'); window.location='" . JRoute::_(KUNENA_LIVEURLREL) . "';</script>\n";
 		} elseif ($fbSessionTimeOut) {
 			$fbSession->lasttime = $fbSessionUpd->lasttime = $fbSession->currvisit;
 			$fbSession->readtopics = $fbSessionUpd->readtopics = '';
@@ -415,7 +424,7 @@ else
 			check_dberror('Unable load default view type for user.');
 
 		// If the prefferred view comes back empty this must be a new user
-		// who does not yet have a FireBoard profile -> lets create one
+		// who does not yet have a Kunena profile -> lets create one
 		if ($prefview == "")
 		{
 			//assume there's no profile; set userid and the default view type as preferred view type.
@@ -428,7 +437,7 @@ else
 			// If Cummunity Builder is enabled, lets make sure we update the view preference
 			if ($fbConfig->cb_profile)
 			{
-		        $cbprefview = $prefview == "threaded" ? "_UE_FB_VIEWTYPE_THREADED" : "_UE_FB_VIEWTYPE_FLAT";
+		        $cbprefview = $prefview = "flat"; //= "threaded" ? "_UE_KUNENA_VIEWTYPE_THREADED" : "_UE_KUNENA_VIEWTYPE_FLAT";
 
 				$database->setQuery("update #__comprofiler set fbviewtype='$cbprefview' where user_id='$my_id'");
 				$database->query();
@@ -442,20 +451,20 @@ else
 			$fbviewtype = $database->loadResult();
 				check_dberror('Unable load default view type for user from Community Builder.');
 
-			$prefview = $fbviewtype == "_UE_FB_VIEWTYPE_THREADED" ? "threaded" : "flat";
+			$prefview = $fbviewtype = "flat"; //= "_UE_KUNENA_VIEWTYPE_THREADED" ? "threaded" : "flat";
 		}
 		// Only reset the view if we have determined above that we need to
 		// Without that test the user would not be able to make intra session
 		// view changes by clicking on the threaded vs flat view link
 		if ($resetView == 1)
 		{
-    		setcookie("fboard_settings[current_view]", $prefview, time() + JB_SECONDS_IN_YEAR, '/');
+    		setcookie("fboard_settings[current_view]", $prefview, time() + KUNENA_SECONDS_IN_YEAR, '/');
 	    	$view = $prefview;
 	    }
 
 	    // Assign previous visit without user offset to variable for templates to decide
 		// whether or not to use the NEW indicator on forums and posts
-		$prevCheck = $fbSession->lasttime; // - JB_OFFSET_USER; Don't use the user offset - it throws the NEW indicator off
+		$prevCheck = $fbSession->lasttime; // - KUNENA_OFFSET_USER; Don't use the user offset - it throws the NEW indicator off
 	}
 	else
 	{
@@ -471,20 +480,23 @@ else
 	// no access to categories?
 	if (!$fbSession->allowed) $fbSession->allowed = '0';
 
-    //Initial:: determining what kind of view to use... from profile, cookie or default settings.
-    //pseudo: if (no view is set and the cookie_view is not set)
-    if ($view == "" && $settings['current_view'] == "")
-    {
-        //pseudo: if there's no prefered type, use FB's default view otherwise use preferred view from profile
-        //and then set the cookie right
-        $view = $prefview == "" ? $fbConfig->default_view : $prefview;
-        setcookie("fboard_settings[current_view]", $view, time() + JB_SECONDS_IN_YEAR, '/');
-    }
-    //pseudo: otherwise if (no view set but cookie isn't empty use view as set in cookie
-    else if ($view == "" && $settings['current_view'] != "")
-  	{
-        $view = $settings['current_view'];
-    }
+//Disabled threaded view option for Kunena
+//    //Initial:: determining what kind of view to use... from profile, cookie or default settings.
+//    //pseudo: if (no view is set and the cookie_view is not set)
+//    if ($view == "" && $settings['current_view'] == "")
+//    {
+//        //pseudo: if there's no prefered type, use FB's default view otherwise use preferred view from profile
+//        //and then set the cookie right
+//        $view = $prefview == "" ? $fbConfig->default_view : $prefview;
+//        setcookie("fboard_settings[current_view]", $view, time() + KUNENA_SECONDS_IN_YEAR, '/');
+//    }
+//    //pseudo: otherwise if (no view set but cookie isn't empty use view as set in cookie
+//    else if ($view == "" && $settings['current_view'] != "")
+//  	{
+//        $view = $settings['current_view'];
+//    }
+
+    $view = "flat";
 
     //Get the max# of posts for any one user
     $database->setQuery("SELECT max(posts) from #__fb_users");
@@ -521,7 +533,7 @@ else
     switch ($func)
     {
         case 'view':
-            $fbMenu = jb_get_menu(FB_CB_ITEMID, $fbConfig, $fbIcons, $my_id, 3, $view, $catid, $id, $thread);
+            $fbMenu = KUNENA_get_menu(KUNENA_CB_ITEMID, $fbConfig, $fbIcons, $my_id, 3, $view, $catid, $id, $thread);
 
             break;
 
@@ -531,252 +543,252 @@ else
             $numPending = $database->loadResult();
             	check_dberror('Unable load pending messages.');
 
-            $fbMenu = jb_get_menu(FB_CB_ITEMID, $fbConfig, $fbIcons, $my_id, 2, $view, $catid, $id, $thread, $is_Moderator, $numPending);
+            $fbMenu = KUNENA_get_menu(KUNENA_CB_ITEMID, $fbConfig, $fbIcons, $my_id, 2, $view, $catid, $id, $thread, $is_Moderator, $numPending);
             break;
 
         default:
-            $fbMenu = jb_get_menu(FB_CB_ITEMID, $fbConfig, $fbIcons, $my_id, 1);
+            $fbMenu = KUNENA_get_menu(KUNENA_CB_ITEMID, $fbConfig, $fbIcons, $my_id, 1);
 
             break;
     }
 
     // display header
-    $obj_FB_tmpl->readTemplatesFromFile("header.html");
-    $obj_FB_tmpl->addVar('jb-header', 'menu', $fbMenu);
-    $obj_FB_tmpl->addVar('jb-header', 'board_title', $board_title);
-    $obj_FB_tmpl->addVar('jb-header', 'css_path', JB_DIRECTURL . '/template/' . $fbConfig->template . '/forum.css');
-    $obj_FB_tmpl->addVar('jb-header', 'offline_message', $fbConfig->board_offline ? '<span id="fbOffline">' . _FORUM_IS_OFFLINE . '</span>' : '');
-    $obj_FB_tmpl->addVar('jb-header', 'searchbox', getSearchBox());
-    $obj_FB_tmpl->addVar('jb-header', 'pb_imgswitchurl', JB_URLIMAGESPATH . "shrink.gif");
-    $obj_FB_tmpl->displayParsedTemplate('jb-header');
+    $obj_KUNENA_tmpl->readTemplatesFromFile("header.html");
+    $obj_KUNENA_tmpl->addVar('jb-header', 'menu', $fbMenu);
+    $obj_KUNENA_tmpl->addVar('jb-header', 'board_title', $board_title);
+    $obj_KUNENA_tmpl->addVar('jb-header', 'css_path', KUNENA_DIRECTURL . '/template/' . $fbConfig->template . '/forum.css');
+    $obj_KUNENA_tmpl->addVar('jb-header', 'offline_message', $fbConfig->board_offline ? '<span id="fbOffline">' . _FORUM_IS_OFFLINE . '</span>' : '');
+    $obj_KUNENA_tmpl->addVar('jb-header', 'searchbox', getSearchBox());
+    $obj_KUNENA_tmpl->addVar('jb-header', 'pb_imgswitchurl', KUNENA_URLIMAGESPATH . "shrink.gif");
+    $obj_KUNENA_tmpl->displayParsedTemplate('jb-header');
 
     //BEGIN: PROFILEBOX
-    if (file_exists(FB_COMP_F . '/plugin/profilebox/profilebox.php')) {
-        include (FB_COMP_F . '/plugin/profilebox/profilebox.php');
+    if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/profilebox/profilebox.php')) {
+        include (KUNENA_ABSTMPLTPATH . '/plugin/profilebox/profilebox.php');
         }
     else {
-        include (FB_COMP_F . '/template/default/plugin/profilebox/profilebox.php');
+        include (KUNENA_ABSPATH . '/template/default/plugin/profilebox/profilebox.php');
         }
     //FINISH: PROFILEBOX
 
     switch ($func)
     {
         case 'who':
-            if (file_exists(FB_ABSTMPLTPATH . '/plugin/who/who.php')) {
-                include (FB_ABSTMPLTPATH . '/plugin/who/who.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/who/who.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/who/who.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/plugin/who/who.php');
+                include (KUNENA_ABSPATH . '/template/default/plugin/who/who.php');
                 }
 
             break;
 
         #########################################################################################
         case 'announcement':
-            if (file_exists(FB_ABSTMPLTPATH . '/plugin/announcement/announcement.php')) {
-                include (FB_ABSTMPLTPATH . '/plugin/announcement/announcement.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcement.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcement.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/plugin/announcement/announcement.php');
+                include (KUNENA_ABSPATH . '/template/default/plugin/announcement/announcement.php');
                 }
 
             break;
 
         #########################################################################################
         case 'stats':
-            if (file_exists(FB_ABSTMPLTPATH . '/plugin/stats/stats.class.php')) {
-                include (FB_ABSTMPLTPATH . '/plugin/stats/stats.class.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/plugin/stats/stats.class.php');
+                include (KUNENA_ABSPATH . '/template/default/plugin/stats/stats.class.php');
                 }
 
-            if (file_exists(FB_ABSTMPLTPATH . '/plugin/stats/stats.php')) {
-                include (FB_ABSTMPLTPATH . '/plugin/stats/stats.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/plugin/stats/stats.php');
+                include (KUNENA_ABSPATH . '/template/default/plugin/stats/stats.php');
                 }
 
             break;
 
         #########################################################################################
         case 'fbprofile':
-            if (file_exists(FB_ABSTMPLTPATH . '/plugin/fbprofile/fbprofile.php')) {
-                include (FB_ABSTMPLTPATH . '/plugin/fbprofile/fbprofile.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/fbprofile.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/fbprofile.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/plugin/fbprofile/fbprofile.php');
+                include (KUNENA_ABSPATH . '/template/default/plugin/fbprofile/fbprofile.php');
                 }
 
             break;
 
         #########################################################################################
         case 'userlist':
-            if (file_exists(FB_ABSTMPLTPATH . '/plugin/userlist/userlist.php')) {
-                include (FB_ABSTMPLTPATH . '/plugin/userlist/userlist.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/userlist/userlist.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/userlist/userlist.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/plugin/userlist/userlist.php');
+                include (KUNENA_ABSPATH . '/template/default/plugin/userlist/userlist.php');
                 }
 
             break;
 
         #########################################################################################
         case 'post':
-            if (file_exists(FB_ABSTMPLTPATH . '/smile.class.php')) {
-                include (FB_ABSTMPLTPATH . '/smile.class.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/smile.class.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/smile.class.php');
+                include (KUNENA_ABSPATH . '/template/default/smile.class.php');
                 }
 
-            if (file_exists(FB_ABSTMPLTPATH . '/post.php')) {
-                include (FB_ABSTMPLTPATH . '/post.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/post.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/post.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/post.php');
+                include (KUNENA_ABSPATH . '/template/default/post.php');
                 }
 
             break;
 
         #########################################################################################
         case 'view':
-            if (file_exists(FB_ABSTMPLTPATH . '/smile.class.php')) {
-                include (FB_ABSTMPLTPATH . '/smile.class.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/smile.class.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/smile.class.php');
+                include (KUNENA_ABSPATH . '/template/default/smile.class.php');
                 }
 
-            if (file_exists(FB_ABSTMPLTPATH . '/view.php')) {
-                include (FB_ABSTMPLTPATH . '/view.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/view.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/view.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/view.php');
+                include (KUNENA_ABSPATH . '/template/default/view.php');
                 }
 
             break;
 
         #########################################################################################
         case 'faq':
-            if (file_exists(FB_ABSTMPLTPATH . '/faq.php')) {
-                include (FB_ABSTMPLTPATH . '/faq.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/faq.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/faq.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/faq.php');
+                include (KUNENA_ABSPATH . '/template/default/faq.php');
                 }
 
             break;
 
         #########################################################################################
         case 'showcat':
-            if (file_exists(FB_ABSTMPLTPATH . '/smile.class.php')) {
-                include (FB_ABSTMPLTPATH . '/smile.class.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/smile.class.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/smile.class.php');
+                include (KUNENA_ABSPATH . '/template/default/smile.class.php');
                 }
 
-            if (file_exists(FB_ABSTMPLTPATH . '/showcat.php')) {
-                include (FB_ABSTMPLTPATH . '/showcat.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/showcat.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/showcat.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/showcat.php');
+                include (KUNENA_ABSPATH . '/template/default/showcat.php');
                 }
 
             break;
 
         #########################################################################################
         case 'listcat':
-            if (file_exists(FB_ABSTMPLTPATH . '/listcat.php')) {
-                include (FB_ABSTMPLTPATH . '/listcat.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/listcat.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/listcat.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/listcat.php');
+                include (KUNENA_ABSPATH . '/template/default/listcat.php');
                 }
 
             break;
 
         #########################################################################################
         case 'review':
-            if (file_exists(FB_ABSTMPLTPATH . '/smile.class.php')) {
-                include (FB_ABSTMPLTPATH . '/smile.class.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/smile.class.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/smile.class.php');
+                include (KUNENA_ABSPATH . '/template/default/smile.class.php');
                 }
 
-            if (file_exists(FB_ABSTMPLTPATH . '/moderate_messages.php')) {
-                include (FB_ABSTMPLTPATH . '/moderate_messages.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/moderate_messages.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/moderate_messages.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/moderate_messages.php');
+                include (KUNENA_ABSPATH . '/template/default/moderate_messages.php');
                 }
 
             break;
 
         #########################################################################################
         case 'rules':
-            include (FB_COMP_C_SRC . '/fb_rules.php');
+            include (KUNENA_ABSSOURCESPATH . 'kunena.rules.php');
 
             break;
 
         #########################################################################################
 
         case 'userprofile':
-            if (file_exists(FB_ABSTMPLTPATH . '/smile.class.php')) {
-                include (FB_ABSTMPLTPATH . '/smile.class.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/smile.class.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/smile.class.php');
+                include (KUNENA_ABSPATH . '/template/default/smile.class.php');
                 }
 
-            if (file_exists(FB_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php')) {
-                include (FB_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/plugin/myprofile/myprofile.php');
+                include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile.php');
                 }
 
             break;
 
         #########################################################################################
         case 'myprofile':
-            if (file_exists(FB_ABSTMPLTPATH . '/smile.class.php')) {
-                include (FB_ABSTMPLTPATH . '/smile.class.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/smile.class.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/smile.class.php');
+                include (KUNENA_ABSPATH . '/template/default/smile.class.php');
                 }
 
-            if (file_exists(FB_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php')) {
-                include (FB_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/plugin/myprofile/myprofile.php');
+                include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile.php');
                 }
 
             break;
 
         #########################################################################################
         case 'report':
-            if (file_exists(FB_ABSTMPLTPATH . '/plugin/report/report.php')) {
-                include (FB_ABSTMPLTPATH . '/plugin/report/report.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/report/report.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/report/report.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/plugin/report/report.php');
+                include (KUNENA_ABSPATH . '/template/default/plugin/report/report.php');
                 }
 
             break;
 
         #########################################################################################
         case 'uploadavatar':
-            if (file_exists(FB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar_upload.php')) {
-                include (FB_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar_upload.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar_upload.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar_upload.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/plugin/myprofile/myprofile_avatar_upload.php');
+                include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_avatar_upload.php');
                 }
 
             break;
@@ -784,42 +796,42 @@ else
         #########################################################################################
         case 'latest':
         case 'mylatest':
-            if (file_exists(FB_ABSTMPLTPATH . '/latestx.php')) {
-                include (FB_ABSTMPLTPATH . '/latestx.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/latestx.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/latestx.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/latestx.php');
+                include (KUNENA_ABSPATH . '/template/default/latestx.php');
                 }
 
             break;
 
         #########################################################################################
         case 'search':
-            require_once (FB_COMP_C_SRC . '/fb_search.class.php');
+            require_once (KUNENA_ABSSOURCESPATH . 'kunena.search.class.php');
 
             $searchword = JRequest::getVar( 'searchword', '');
 
-            $obj_FB_search = &new jbSearch($database, $searchword, $my_id, $limitstart, $fbConfig->messages_per_page_search);
-            $obj_FB_search->show();
+            $obj_KUNENA_search = &new jbSearch($database, $searchword, $my_id, $limitstart, $fbConfig->messages_per_page_search);
+            $obj_KUNENA_search->show();
             break;
 
         //needs work ... still in progress
         case 'advsearch':
-            if (file_exists(FB_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php')) {
-                include (FB_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/plugin/advancedsearch/advsearch.php');
+                include (KUNENA_ABSPATH . '/template/default/plugin/advancedsearch/advsearch.php');
                 }
 
             break;
 
         case 'advsearchresult':
-            if (file_exists(FB_ABSTMPLTPATH . '/plugin/advancedsearch/advsearchresult.php')) {
-                include (FB_ABSTMPLTPATH . '/plugin/advancedsearch/advsearchresult.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearchresult.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearchresult.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/plugin/advancedsearch/advsearchresult.php');
+                include (KUNENA_ABSPATH . '/template/default/plugin/advancedsearch/advsearchresult.php');
                 }
 
             break;
@@ -855,7 +867,7 @@ else
 
         #########################################################################################
         case 'karma':
-            include (FB_COMP_C_SRC . '\fb_karma.php');
+            include (KUNENA_ABSSOURCESPATH . 'kunena.karma.php');
 
             break;
 
@@ -895,7 +907,7 @@ else
                     }
 
                 // check that template exists in case it was deleted
-                if (file_exists($mosConfig_absolute_path . '/components/com_fireboard/template/' . $fb_change_template . '/forum.css'))
+                if (file_exists($mosConfig_absolute_path . '/components/com_kunena/template/' . $fb_change_template . '/forum.css'))
                 {
                     $lifetime = 60 * 10;
                     $fb_current_template = $fb_change_template;
@@ -916,7 +928,7 @@ else
                     }
 
                 // check that template exists in case it was deleted
-                if (file_exists(JPATH_ROOT. '/components/com_fireboard/template/' . $fb_change_img_template . '/forum.css'))
+                if (file_exists(JPATH_ROOT. '/components/com_kunena/template/' . $fb_change_img_template . '/forum.css'))
                 {
                     $lifetime = 60 * 10;
                     $fb_current_img_template = $fb_change_img_template;
@@ -927,29 +939,28 @@ else
                     }
             }
 
-            mosRedirect (JRoute::_(JB_LIVEURLREL));
+            mosRedirect (JRoute::_(KUNENA_LIVEURLREL));
             break;
 
         #########################################################################################
         case 'credits':
-            include (FB_COMP_C_SRC . '\fb_credits.php');
+            include (KUNENA_ABSSOURCESPATH . 'kunena.credits.php');
 
             break;
 
         #########################################################################################
         default:
-            if (file_exists(FB_ABSTMPLTPATH . '/listcat.php')) {
-                include (FB_ABSTMPLTPATH . '/listcat.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/listcat.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/listcat.php');
                 }
             else {
-                include (FB_COMP_F . '/template/default/listcat.php');
+                include (KUNENA_ABSPATH . '/template/default/listcat.php');
                 }
 
             break;
     } //hctiws
 
     // Bottom Module
-
 ?>
 
         <div class = "bof-bottom-modul">
@@ -960,17 +971,17 @@ else
     
 
     // Credits
-    echo '<div class="fb_credits"> ' . fb_link::GetTeamCreditsLink($catid, _FB_POWEREDBY) . ' ' . fb_link::GetCreditsLink();
+    echo '<div class="fb_credits"> ' . CKunenaLink::GetTeamCreditsLink($catid, _KUNENA_POWEREDBY) . ' ' . CKunenaLink::GetCreditsLink();
     if ($fbConfig->enablerss)
     {
-    	$document->addCustomTag('<link rel="alternate" type="application/rss+xml" title="'._LISTCAT_RSS.'" href="'.JRoute::_(JB_LIVEURLREL.'&amp;func=fb_rss&amp;no_html=1').'")/>');
-        echo fb_link::GetRSSLink('<img class="rsslink" src="' . JB_URLEMOTIONSPATH . 'rss.gif" border="0" alt="' . _LISTCAT_RSS . '" title="' . _LISTCAT_RSS . '" />');
+    	$document->addCustomTag('<link rel="alternate" type="application/rss+xml" title="'._LISTCAT_RSS.'" href="'.JRoute::_(KUNENA_LIVEURLREL.'&amp;func=fb_rss&amp;no_html=1').'")/>');
+        echo CKunenaLink::GetRSSLink('<img class="rsslink" src="' . KUNENA_URLEMOTIONSPATH . 'rss.gif" border="0" alt="' . _LISTCAT_RSS . '" title="' . _LISTCAT_RSS . '" />');
     }
     echo '</div>';
 
     // display footer
-    $obj_FB_tmpl->readTemplatesFromFile("footer.html");
-    $obj_FB_tmpl->displayParsedTemplate('fb-footer');
+    $obj_KUNENA_tmpl->readTemplatesFromFile("footer.html");
+    $obj_KUNENA_tmpl->displayParsedTemplate('fb-footer');
 } //else
 
 // Just for debugging and performance analysis

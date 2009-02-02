@@ -1,22 +1,22 @@
 <?php
 /**
-* @version $Id: CHANGELOG.php 536 2007-12-27 22:08:36Z miro_dietiker $
-* Fireboard Component
-* @package Fireboard
+* @version $Id: CHANGELOG.php 251 2009-02-01 19:27:28Z noelhunter $
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
 */
 
 // no direct access
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_VALID_MOS' ) or die( 'Restricted access' );
 ?>
 
 Changelog
 ------------
 This is a non-exhaustive (but still near complete) changelog for
-the Fireboard 1.x, including beta and release candidate versions.
-The Fireboard 1.x is based on the Joomlaboard releases but includes some
+the Kunena 1.x, including beta and release candidate versions.
+The Kunena 1.x is based on the FireBoard releases but includes some
 drastic technical changes.
 Legend:
 
@@ -28,183 +28,110 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-FireBoard 1.0.5
-27-December-2007 Miro Dietiker
-# border=0 in images in parsed content
-# parse url & smilies reactivated in [quote]
-# force quickreply closed with display:none
-# fixed CB avatar images source in flat.php, thanks alakentu
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-FireBoard 1.0.4
-19-December-2007 Oliver Ratzesberger (fxstein)
-# Tracker [#8686] Incorrect link to CB user list
-# Tracker [#8683] Incorrect link to CB registration and password retrieval
+Kunena 1.0.8
 
-19-December-2007 Miro Dietiker
-# userlist fix case CB column count vary, tnnophoto.jpg
-# profile case CB show nophoto.jpg
-# search broken in non-default template
+1-February-2009 Noel Hunter
+^ Use default_ex if current template is missing
++ Add title tags to reply and other buttons in "default" template
+^ Work around ie bug which prevented jump to last message
 
-18-December-2007 Danial Taherzadeh (danialt)
-# Tracker [#8652] Blank/error pages when plugin is activated but not installed
-# Tracker [#8621] RSS: can not view if you are not logged in
-^ Preview button now returns real parsed bbcode - no popup
+1-February-2009 Matias
+# xhtml fixes
+# My Messages will redirect to Last Messages if user has logged out
+# Regression: Fix broken icon in Joomla Backend
 
+31-January-2009 fxstein
+^ default_ex jscript and image cleanup
 
-17-December-2007 Oliver Ratzesberger (fxstein)
-+ Duplicate post prevention - eliminate identical post of past 30 min
-# enable save CSS in backend
-# fb_stripos - implementation for non PHP5 systems to support mixed case tags
-^ config & XML files updated for 1.0.4
-# Tracker [#8620] multiple format and redirection fixes - e.g. after post edit
-# Tracker [#6851] post number wrong when stats bar disabled
+31-January-2009 Matias
+# Additional BBCode fixes
 
-13-December-2007 Miro Dietiker
- # signature now allowing full bbcode!
- # moved many language consts into FB
- # search special chars allowed
- # URLs in mail now not html-encoded
- # approve: unapproved messages no more show up anywhere in public
- # avatar upload design no more broken
- # meta title special chars now correct
- # sorry, no complete list of all fixes from last 14 days ;-)
+30-January-2009 fxstein
+# Additional jQuery fixes
+- Removed outdated jquery.chili 1.9 libraries (different file structure)
++ Added new jquery.chili 2.2 libraries
+^ Moved jquery.chili jscripts to load at the bottom of the page for faster pageloads
++ add jomSocial css in header when integration is on to enable floating PM window
 
-13-December-2007 Miro Dietiker, Danial Taherzadeh (danialt)
- + Final parser introduction - after many tests and improvements
-   This fixes a whole lot of things, allowing code highlighting, smilies
-   natural XSS protection, improved autolinking, auto mailto, raw HTML allowed
- + Full Joomla1.5 compatibility in legacy mode - now approved by us!
- # several high risk security vulnerabilities
-   Thanks: Ultra Security Research
+30-January-2009 Matias
+# Regression: favorite star didn't usually show up
++ default_ex: Added grey favorite icon for other peoples favorite threads
 
-12-December-2007 Oliver Ratzesberger (fxstein)
-# fixed avatar directory for category view
-# fixed search problem with international chars
-+ cleanup of search results (strip smilies and bbcode)
-09-December-2007 Oliver Ratzesberger (fxstein)
-^ Redesigned user session management
-* Cookie independent session length management
-# NEW indicator logic fixed
-# Correct board offset applied to systime
-- Double page reload eliminated
-# Flood protection enabled through new session management
-! SVN keyword expansion re-enabled
-# Broken report plugin fixed and success message cleaned up
-^ whoisonline session timeout synchronized with new session management
+29-January-2009 fxstein
+# Fixed incorrect MyProfile link logic with various integration options
+- Removed unsusable threaded view option
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-17-October-2007 Miro Dietiker
- + Syncronize user instead of prune only - thanks Martin Masci
-30-September-2007 Miro Dietiker
- # show/hide email now working appropriate definitions
- # Topic locking removes button reply / quickreply correct
-29-September-2007 Miro Dietiker
- # Joomla 1.5 Legacy Compatibility - Now FB Working identical to Joomla 1.0
-01-September-2007 Miro Dietiker
- + DB Iterator to iterate on huge queries for optimum performance
-   (related results are not loaded fully in php memory causing memory exhaust)
- # reCountBoards now is able to reCount without exhausting php in huge forums
-17-August-2007 Miro Dietiker
- + CSS Suffixes per forum
- + Feature User Edit disable after n seconds
- + Forums can have header text showing up persistently in forum
- # Migration from JB now produces indices and identical layout as plain
- install from zero
- # Better code stripping for mails when post containing boardcode
- # Announcements can now contain HTML
- # Textarea fields (descriptions) get no more trailing spaces on each edit
+29-January-2009 Matias
+# Regression: Backend won't be translated
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-FireBoard 1.0.3
-30-August-2007 Danial Taherzadeh (danialt)
+28-January-2009 fxstein
+# Fixed broken display with wide code
+# Fixed jQuery conflicts caused by $() usage
++ PHP and MYSQL version checks during install
 
+28-January-2009 Matias
+# Replace all occurences of jos_fb_ with #__fb_
+# Don't allow anonymous users to subscribe/favorite
+# Do not send email on new post if the category is moderated
+# Fix broken tables fb_favorites and fb_subscriptions
+# Regression from Kunena 1.0.7b: avatar upload page internal error
+# Avatar upload was broken if you didn't use profile integration
+# default_ex: My Profile internal link was wrong
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-23-July-2007 Danial Taherzadeh (danialt)
- # Cpanel order
- ^ Uploaded directory moved to root/fbfiles and required upgrade added to sql
+27-January-2009 fxstein
+# BBCode fix for legacy [code:1] support
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-17-July-2007 Dan Syme (igd)
- # bug fix - sample data table
- + rank administration added
+Kunena 1.0.7 beta
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-15-July-2007 Danial Taherzadeh (danialt)
- # [#5693] Permission Code error case pub_recurse (&fix)
- + Bulk delete to forum list added
- ^ jQuery updated to the latest version 1.3.1.1
+26-January-2009 fxstein
++ JomSocial userlist integration for Kunena userlist link in front stats
+- Remove old unused legacy code
+^ Fixed broken PDF display
+^ Corrected upgrade logic order
 
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-18-May-2007 Danial Taherzadeh (danialt)
- # [#440] Warning: Invalid argument supplied for foreach() in /components/com_fireboard/template/default/view.php on line 636
- # wrong variable name for live path of fireboard
- # itemid bugs, pagination error
- + added missed images on userlist and pm . And uhits field. userprofile fix, userlist fix.
- # missing com_ for com_fireboard option text
- # SEF problem on menu links .. a new variable JB_LIVEURLREL is introduced for SEF calls
- # forum top - forum bottom links now working
- + v1.0.1 release db changes added to installation and upgraded the sql files
+26-January-2009 Matias
+# default_ex: Link to first unread message was sometimes broken
+^ view: Message is marked new only if thread hasn't been read
++ kunena.credits.php: Added myself
+# Stats should work again (typos fixed)
+* My Profile: My Avatar didn't have security check for anonymous users
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-14-May-2007 Aliyar FIRAT (greatpixels)
- ^ Change all css file and bof- to fb_ , Better css coding. All tempaltes should be updated!
- # Fix IE "No post" table show problem
- # mark all read FB_ITEMID_SUFFIX Fix
- + Added linkable category images.
- # Announcement css and fix userprofile.php
+25-January-2009 fxstein
++ Basic JomSocial Integration
+^ updated jquery to latest 1.3.1 minimized
+^ fb_link class changes to CKunenaLinks
+# Minor typo in include paths fixed
+^ kunena.credits.php: Updated credits page
+^ Various links updated
++ Kunena logos added to default and default_ex tamplates
+# smile.class.php: parser references fixed
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-10-May-2007 Danial Taherzadeh (danialt)
- ^ FB is moved to a class structure, Itemids and general path are defined there. Hence to avoid any extra DB calls and code, please use the constants defined in that file
- ^ All the unncessary mosGetParams where removed.
- ^ _JB_ renamed to _FB_
- ^ Moved common functions to the class.fireboard.hp
+25-January-2009 Matias
+# Stats: Visible even if they were disabled
+# Stats: Wrong count in topics and messages
+# Stats: Today/yesterday stats didn't include messages between 23:59
+  and 00:01.
+^ Stats: Optimized SQL queries for speed and saved 11-20 queries
+! DATABASE UPDATED: new keys added to fb_messages and fb_users
+# Emoticons: Broken "more emoticons" pop up in IE7.
+# Forum Tools: Fixed CSS rules in default_ex
+^ Anonymous user cannot be admin, saves many SQL queries
+# Removing moved thread (or written by anonymous user) didn't
+  work in showcat
++ view: Make new messages visible (green topic icon).
++ default_ex: Show number of new messages (just like in category view).
++ default_ex: Jump to first new message by clicking new message indicator.
+! Current behaviour is "first message after logout or mark all forums read".
+^ showcat, latestx: Use faster query to find all messages in a thread.
+# Message posted notification page redirects after you click a link
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-04-May-2007 Danial Taherzadeh (danialt)
- # Fixed the MySQL 3 JOIN problem
- # Fixed bug in avatar gallery selection
- # Fixed confliction between SMF hacks and FB : Timeformat function
- # Fixed CB and FB confliction: fmodReplace & check_image_type functions
- ^ Added missing brackets for single IF tags in message.php
- # Apostrophes used in Fireboard cause a backslash to be displayed in front of the apostrophe only in the Topic Header, Pathway, and Last Post sections
- # Missing sendPM icon, not take consideration for templates other than default
- # Include the Community Builder language file if necessary and set CB itemid value / wrong config var
- + Userlist plugin added, lang files updated, config tab added for plugins, options for userlist
- # Missing table tag when in guest mode, listcat.php
- # Do not reload the page if user is posting, to avoid duplicate posts
- # Quick reply cancel not working
+24-January-2009 Matias
+# Fixed over 100 xhtml bugs
+^ No default size for [img]
+^ Category parent list: jump to Board Categories with "Go" button
+^ Forum stats show users in alphabetical order
 
+01-January-2009 fxstein
++ Initial fork from FireBoard 1.0.5RC3
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-23-Apr-2007 Tomislav Ribicic (Riba)
- # Fixed the Community Builder itemid retreival
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-22-Apr-2007 Danial Taherzadeh (danialt)
-
- # Announcements SEF urls were created wrong
- + FB Profile switch added
- + subscription ON by default switch
- + online user status added
- + total fav count
- + added module positions
- # missing link css for whois part
- + subscribe to the thread box is checked by default, with a switch for admin config
- ^ code beautifying and formating
- + basic group management added, at least to work on boj website. the values are kept in a new table, fb_groups and a new field is added to fb_user, group_id
- + Fireboard profile page plugin has been added, needs to be polished though
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-22-Apr-2007 Ivo Apostolov (iapostolov)
- + Adding Missus Support
- + Adding JIM Support
- ^ Polished some GUI classes in the administration
- + Added new definitions in english.php
- + Added language variables to admin.fireboard.html.php
- - Removal of all hardcoded strings from admin.fireboard.html.php
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Initial version published (Fireboard 1.0)

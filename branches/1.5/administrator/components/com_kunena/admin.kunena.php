@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: admin.fireboard.php 1070 2008-10-06 08:11:18Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -20,11 +20,11 @@ $lang = $language->getBackwardLang();
 // Kill notices (we have many..)
 //error_reporting(E_ALL);
 
-include_once (JPATH_COMPONENT_ADMINISTRATOR . '/sources/fb_debug.php');
+include_once (JPATH_COMPONENT_ADMINISTRATOR . '/lib/kunena.debug.php');
 
 // get fireboards configuration params in
 global $mainframe,$fbConfig;
-require_once (JPATH_COMPONENT_ADMINISTRATOR . '/sources/fb_config.class.php');
+require_once (JPATH_COMPONENT_ADMINISTRATOR . '/lib/kunena.config.class.php');
 
 $fbConfig = new fb_config();
 $fbConfig->load();
@@ -45,7 +45,7 @@ if (file_exists(JPATH_COMPONENT_ADMINISTRATOR . '/language/' . $lang .'.php')) {
     include (JPATH_COMPONENT_ADMINISTRATOR . '/language/' . $lang .'.php');
 }
 else {
-    include (JPATH_COMPONENT_ADMINISTRATOR . '/language/english.php');
+    include (JPATH_COMPONENT_ADMINISTRATOR . '/language/kunena.english.php');
 }
 
 $cid = JRequest::getVar('cid', array ( 0 ));
@@ -72,9 +72,7 @@ $pt_stop = '0';
 
 if (!$no_html)
 {
-require_once (JPATH_COMPONENT_ADMINISTRATOR . '/admin.fireboard.html.php');
-
-	HTML_SIMPLEBOARD::showFbHeader();
+	html_Kunena::showFbHeader();
 }
 
 switch ($task)
@@ -254,8 +252,8 @@ switch ($task)
         break;
 
     case 'deleteFile':
-        deleteFile($database, $option, JRequest::getVar('fileName', '')); 
-		
+        deleteFile($database, $option, JRequest::getVar('fileName', ''));
+
 
         break;
 
@@ -274,7 +272,7 @@ switch ($task)
        FBTools::reCountBoards();
        // Also reset the name info stored with messages
        FBTools::updateNameInfo();
-       $mainframe->redirect( JURI::base() .'index2.php?option=com_fireboard', _FB_RECOUNTFORUMS_DONE);
+       $mainframe->redirect( JURI::base() .'index2.php?option=com_kunena', _KUNENA_RECOUNTFORUMS_DONE);
         break;
 
 	case 'showsmilies':
@@ -329,14 +327,12 @@ switch ($task)
 
     case 'cpanel':
     default:
-        HTML_Simpleboard::controlPanel();
+        html_Kunena::controlPanel();
         break;
 }
 
-
-HTML_SIMPLEBOARD::showFbFooter();
-//function showAdministration( $option,$joomla1_5 )
-
+html_Kunena::showFbFooter();
+//function showAdministration( $option,$joomla1_5 ) {
 function showAdministration($option)
 {
     global $mainframe;
@@ -390,7 +386,7 @@ $pageNav = new JPagination( $total, $limitstart, $limit );
     *@end
     */
 
-    HTML_SIMPLEBOARD::showAdministration($list, $pageNav, $option);
+    html_Kunena::showAdministration($list, $pageNav, $option);
 }
 
 
@@ -407,9 +403,6 @@ $database = &JFactory::getDBO();
     // load the row from the db table
     $row->load($uid);
 
-
-
-
     //echo "<pre>"; print_r ($row); echo "</pre>";
     if ($uid)
     {
@@ -418,9 +411,8 @@ $database = &JFactory::getDBO();
     }
     else
     {
-	
         // initialise new record
-        $categories[] = JHTML::_('select.option', '0', JText::_( _FB_TOPLEVEL), 'value', 'text');
+        $categories[] = JHTML::_('select.option', '0', JText::_( _KUNENA_TOPLEVEL), 'value', 'text');
         $row->parent = 0;
         $row->published = 0;
         $row->ordering = 9999;
@@ -434,7 +426,7 @@ $database = &JFactory::getDBO();
     if ($row->parent == 0)
     {
         //make sure the Top Level Category is available in edit mode as well:
-        $database->setQuery("SELECT distinct '0' AS value, '"._FB_TOPLEVEL."' AS text FROM #__fb_categories AS a WHERE parent='0' AND id<>'$row->id' ORDER BY ordering");
+        $database->setQuery("SELECT distinct '0' AS value, '"._KUNENA_TOPLEVEL."' AS text FROM #__fb_categories AS a WHERE parent='0' AND id<>'$row->id' ORDER BY ordering");
         $categories = array_merge($categories, (array)$database->loadObjectList());
         	check_dberror("Unable to load categories.");
 
@@ -461,17 +453,17 @@ $database = &JFactory::getDBO();
     $accessLists = array ();
     //create custom group levels to include into the public group selectList
     $pub_groups = array ();
-    $pub_groups[] = JHTML::_('select.option',0, _FB_EVERYBODY);
-    $pub_groups[] = JHTML::_('select.option', -1, _FB_ALLREGISTERED);
+    $pub_groups[] = JHTML::_('select.option',0, _KUNENA_EVERYBODY);
+    $pub_groups[] = JHTML::_('select.option', -1, _KUNENA_ALLREGISTERED);
 	
 	
 	
 	
 	
-    $pub_groups = array_merge($pub_groups, $acl->get_group_children_tree(null, _FB_REGISTERED, true));
+    $pub_groups = array_merge($pub_groups, $acl->get_group_children_tree(null, _KUNENA_REGISTERED, true));
     //create admin groups array for use in selectList:
     $adm_groups = array ();
-    $adm_groups = array_merge($adm_groups, $acl->get_group_children_tree(null, _FB_PUBLICBACKEND, true));
+    $adm_groups = array_merge($adm_groups, $acl->get_group_children_tree(null, _KUNENA_PUBLICBACKEND, true));
     //create the access control list
     $accessLists['pub_access'] = JHTML::_('select.genericlist',$pub_groups, 'pub_access', 'class="inputbox" size="4"', 'value', 'text', $row->pub_access);
     $accessLists['admin_access'] = JHTML::_('select.genericlist',$adm_groups, 'admin_access', 'class="inputbox" size="4"', 'value', 'text', $row->admin_access);
@@ -490,7 +482,7 @@ $database = &JFactory::getDBO();
         	check_dberror("Unable to load moderator list.");
     }
 
-    HTML_SIMPLEBOARD::editForum($row, $categoryList, $moderatorList, $lists, $accessLists, $option);
+    html_Kunena::editForum($row, $categoryList, $moderatorList, $lists, $accessLists, $option);
 }
 
 function saveForum($option)
@@ -530,7 +522,7 @@ $my =  &JFactory::getUser();
     if (!is_array($cid) || count($cid) < 1)
     {
         $action = $publish ? 'publish' : 'unpublish';
-        echo "<script> alert('" . _FB_SELECTANITEMTO . " $action'); window.history.go(-1);</script>\n";
+        echo "<script> alert('" . _KUNENA_SELECTANITEMTO . " $action'); window.history.go(-1);</script>\n";
         exit;
     }
 
@@ -559,7 +551,7 @@ $my =  &JFactory::getUser();
     if (!is_array($cid) || count($cid) < 1)
     {
         $action = 'delete';
-        echo "<script> alert('" . _FB_SELECTANITEMTO . " $action'); window.history.go(-1);</script>\n";
+        echo "<script> alert('" . _KUNENA_SELECTANITEMTO . " $action'); window.history.go(-1);</script>\n";
         exit;
     }
 
@@ -628,7 +620,7 @@ $lang = $language->getBackwardLang();
 
     $lists = array ();
 
-    // the default page when entering FireBoard
+    // the default page when entering Kunena
     $defpagelist = array ();
 $defpagelist[] = JHTML::_('select.option', '0', JText::_('recent'), _COM_A_FBDEFAULT_PAGE_RECENT, 'text');
 $defpagelist[] = JHTML::_('select.option', '0', JText::_('my'), _COM_A_FBDEFAULT_PAGE_MY, 'text'); 
@@ -673,20 +665,20 @@ $lists['rsstype'] = JHTML::_('select.genericlist', $list ,'cfg_rsstype', 'class=
 
     // source of avatar picture
     $avlist = array ();
-	$avlist[] = JHTML::_('select.option', '0', JText::_('fb'),_FB_FIREBOARD, 'text'); 
-	$avlist[] = JHTML::_('select.option', '0', JText::_('clexuspm'),_FB_CLEXUS, 'text');
-	$avlist[] = JHTML::_('select.option', '0', JText::_('cb'),_FB_CB, 'text');
+	$avlist[] = JHTML::_('select.option', '0', JText::_('fb'),_KUNENA_FIREBOARD, 'text'); 
+	$avlist[] = JHTML::_('select.option', '0', JText::_('clexuspm'),_KUNENA_CLEXUS, 'text');
+	$avlist[] = JHTML::_('select.option', '0', JText::_('cb'),_KUNENA_CB, 'text');
     // build the html select list
     $lists['avatar_src'] = JHTML::_('select.genericlist', $avlist,'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rsshistory);	
 	
     // private messaging system to use
     $pmlist = array ();
 	$pmlist[] = JHTML::_('select.option', '0', JText::_('no'),_COM_A_NO, 'text'); 
-	$pmlist[] = JHTML::_('select.option', '0', JText::_('pms'),_FB_MYPMS, 'text'); 
-	$pmlist[] = JHTML::_('select.option', '0', JText::_('clexuspm'),_FB_CLEXUS, 'text'); 
-	$pmlist[] = JHTML::_('select.option', '0', JText::_('uddeim'),_FB_UDDEIM, 'text'); 
-	$pmlist[] = JHTML::_('select.option', '0', JText::_('jim'),_FB_JIM, 'text'); 
-	$pmlist[] = JHTML::_('select.option', '0', JText::_('missus'),_FB_MISSUS, 'text'); 
+	$pmlist[] = JHTML::_('select.option', '0', JText::_('pms'),_KUNENA_MYPMS, 'text'); 
+	$pmlist[] = JHTML::_('select.option', '0', JText::_('clexuspm'),_KUNENA_CLEXUS, 'text'); 
+	$pmlist[] = JHTML::_('select.option', '0', JText::_('uddeim'),_KUNENA_UDDEIM, 'text'); 
+	$pmlist[] = JHTML::_('select.option', '0', JText::_('jim'),_KUNENA_JIM, 'text'); 
+	$pmlist[] = JHTML::_('select.option', '0', JText::_('missus'),_KUNENA_MISSUS, 'text'); 
 	
     $lists['pm_component'] = JHTML::_('select.genericlist', $pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pm_component);
 	
@@ -694,9 +686,9 @@ $lists['rsstype'] = JHTML::_('select.genericlist', $list ,'cfg_rsstype', 'class=
 //redundant    $lists['pm_component'] = JHTML::_('select.genericlist',$pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pm_component);
     // Profile select
     $prflist = array ();
-	$prflist[] = JHTML::_('select.option', '0', JText::_('fb'),_FB_FIREBOARD, 'text'); 
-	$prflist[] = JHTML::_('select.option', '0', JText::_('clexuspm'),_FB_CLEXUS, 'text'); 
-	$prflist[] = JHTML::_('select.option', '0', JText::_('cb'),_FB_CB, 'text'); 
+	$prflist[] = JHTML::_('select.option', '0', JText::_('fb'),_KUNENA_FIREBOARD, 'text'); 
+	$prflist[] = JHTML::_('select.option', '0', JText::_('clexuspm'),_KUNENA_CLEXUS, 'text'); 
+	$prflist[] = JHTML::_('select.option', '0', JText::_('cb'),_KUNENA_CB, 'text'); 
 	
     $lists['fb_profile'] = JHTML::_('select.genericlist', $prflist, 'cfg_fb_profile', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->fb_profile);
 	
@@ -711,15 +703,15 @@ $lists['rsstype'] = JHTML::_('select.genericlist', $list ,'cfg_rsstype', 'class=
     // This function was modified from the one posted to PHP.net by rockinmusicgv
     // It is available under the readdir() entry in the PHP online manual
     //function get_dirs($directory, $select_name, $selected = "") {
-    $listitems[] = JHTML::_('select.option',  JText::_('1'),_FB_SELECTTEMPLATE, 'text');
+    $listitems[] = JHTML::_('select.option',  JText::_('1'),_KUNENA_SELECTTEMPLATE, 'text');
 
-    if ($dir = @opendir(JPATH_ROOT . "/components/com_fireboard/template"))
+    if ($dir = @opendir(JPATH_ROOT . "/components/com_kunena/template"))
     {
         while (($file = readdir($dir)) !== false)
         {
             if ($file != ".." && $file != ".")
             {
-                if (is_dir(JPATH_ROOT . "/components/com_fireboard/template" . "/" . $file))
+                if (is_dir(JPATH_ROOT . "/components/com_kunena/template" . "/" . $file))
                 {
                     if (!($file[0] == '.')) {
                         $filelist[] = $file;
@@ -744,104 +736,25 @@ $lists['rsstype'] = JHTML::_('select.genericlist', $list ,'cfg_rsstype', 'class=
 		$listitems[] = JHTML::_('select.option',  JText::_($val),$val, 'text');
     }
 
-
-
-
-  $lists['badwords'] = JHTML::_('select.genericlist', $yesno, 'cfg_badwords', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->badwords);
-  
-  
-  
-  
+	$lists['badwords'] = JHTML::_('select.genericlist', $yesno, 'cfg_badwords', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->badwords);
 	$lists['jmambot'] = JHTML::_('select.genericlist', $yesno, 'cfg_jmambot', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->jmambot);
-	 
-	
-	
     $lists['disemoticons'] = JHTML::_('select.genericlist', $yesno, 'cfg_disemoticons', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->disemoticons);
-	
-	
-	
     $lists['template'] = JHTML::_('select.genericlist', $listitems, 'cfg_template', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->template);
-	
-	
-	
     $lists['templateimagepath'] = JHTML::_('select.genericlist', $listitems, 'cfg_templateimagepath', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->templateimagepath);
-	
-	
-	
-	
-	
     $lists['regonly'] = JHTML::_('select.genericlist', $yesno, 'cfg_regonly', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->regonly);
-	
-	
-
     $lists['board_offline'] = 	JHTML::_('select.genericlist', $yesno, 'cfg_board_offline', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->board_offline); 
-	
-	
-
-	
     $lists['pubwrite'] = JHTML::_('select.genericlist', $yesno, 'cfg_pubwrite', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pubwrite);
-	
-	
-	
-
     $lists['useredit'] = JHTML::_('select.genericlist', $yesno, 'cfg_useredit', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->useredit); 
-	
-	
-			
-	
-	
-	
     $lists['showhistory'] = JHTML::_('select.genericlist', $yesno, 'cfg_showhistory', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showhistory);
-	
-	
-
     $lists['joomlastyle'] = JHTML::_('select.genericlist', $yesno,'cfg_joomlastyle', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->joomlastyle);
-	
-		
-	
     $lists['showannouncement'] = JHTML::_('select.genericlist', $yesno,'cfg_showannouncement', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showannouncement);
-	
-	
-	
-	
     $lists['avataroncat'] =	JHTML::_('select.genericlist', $yesno,'cfg_avataroncat', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->avataroncat);
-	
-	
-
-	
-	
     $lists['showlatest'] = 		JHTML::_('select.genericlist', $yesno,'cfg_showlatest', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showlatest);
-	
-
-	
-	
     $lists['latestsinglesubject'] =			JHTML::_('select.genericlist', $yesno,'cfg_latestsinglesubject', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->latestsinglesubject);
-	
-	
-
-	
-	
     $lists['latestreplysubject'] = 	JHTML::_('select.genericlist', $yesno,'cfg_latestreplysubject', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->latestreplysubject);
-	
-
-	
     $lists['latestshowdate'] = JHTML::_('select.genericlist', $yesno,'cfg_latestshowdate', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->latestshowdate);
-					
-	
-	
     $lists['showchildcaticon'] =	JHTML::_('select.genericlist', $yesno,'cfg_showchildcaticon', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showchildcaticon);
-	
-	
-	
-
-	
-	
     $lists['latestshowhits'] = JHTML::_('select.genericlist', $yesno,'cfg_latestshowhits', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->latestshowhits);
-	
-		
-	
-	
-	
     $lists['showuserstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showuserstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showuserstats);
     $lists['showwhoisonline'] = JHTML::_('select.genericlist', $yesno, 'cfg_showwhoisonline', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showwhoisonline);
     $lists['showpopsubjectstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpopsubjectstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showpopsubjectstats);
@@ -858,17 +771,12 @@ $lists['rsstype'] = JHTML::_('select.genericlist', $list ,'cfg_rsstype', 'class=
     $lists['allowavatar'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowavatar', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowavatar);
     $lists['allowavatarupload'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowavatarupload', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowavatarupload);
     $lists['allowavatargallery'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowavatargallery', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowavatargallery);
-    
-	
 	$lists['avatar_src'] = JHTML::_('select.genericlist', $avlist, 'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->avatar_src);
 	
-	
-$ip_opt[] = JHTML::_('select.option', 'gd2', 'GD2');
-$ip_opt[] = JHTML::_('select.option', 'gd1', 'GD1');
-$ip_opt[] = JHTML::_('select.option', 'none', _FB_IMAGE_PROCESSOR_NONE);
-    //$ip_opt[] = mosHTML::makeOption( 'gd2', 'GD2' );
-    //$ip_opt[] = mosHTML::makeOption( 'gd1', 'GD1' );
-    //$ip_opt[] = mosHTML::makeOption( 'none', _FB_IMAGE_PROCESSOR_NONE );
+	$ip_opt[] = JHTML::_('select.option', 'gd2', 'GD2');
+	$ip_opt[] = JHTML::_('select.option', 'gd1', 'GD1');
+	$ip_opt[] = JHTML::_('select.option', 'none', _KUNENA_IMAGE_PROCESSOR_NONE);
+    //$ip_opt[] = mosHTML::makeOption( 'none', _KUNENA_IMAGE_PROCESSOR_NONE );
 
     $lists['imageprocessor'] = JHTML::_('select.genericlist', $ip_opt, 'cfg_imageprocessor', 'class="inputbox"', 'value', 'text', $fbConfig->imageprocessor );
     $lists['showstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showstats);
@@ -917,7 +825,7 @@ $ip_opt[] = JHTML::_('select.option', 'none', _FB_IMAGE_PROCESSOR_NONE);
 	$lists['autoembedebay'] = JHTML::_('select.genericlist', $yesno, 'cfg_autoembedebay', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->autoembedebay);
 	$lists['highlightcode'] = JHTML::_('select.genericlist', $yesno, 'cfg_highlightcode', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->highlightcode);
 
-    HTML_SIMPLEBOARD::showConfig($fbConfig, $lists, $option);
+    html_Kunena::showConfig($fbConfig, $lists, $option);
 }
 
 function saveConfig($option)
@@ -1012,12 +920,12 @@ $database = &JFactory::getDBO();
     }
     // end legacy support
 
-    $mainframe->redirect( JURI::base() . "index2.php?option=$option&task=showconfig", _FB_CONFIGSAVED . 'test');
+    $mainframe->redirect( JURI::base() . "index2.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED . 'test');
 }
 
 function showInstructions($database, $option, $lang) {
 $database = &JFactory::getDBO();
-    HTML_SIMPLEBOARD::showInstructions($database, $option, $lang);
+    html_Kunena::showInstructions($database, $option, $lang);
 }
 
 //===============================
@@ -1026,43 +934,43 @@ $database = &JFactory::getDBO();
 function showCss($option)
 {
     global $fbConfig;
-    $file = "../components/com_fireboard/template/" . $fbConfig->template . "/forum.css";
+    $file = "../components/com_kunena/template/" . $fbConfig->template . "/forum.css";
     @chmod($file, 0766);
     $permission = is_writable($file);
 
     if (!$permission)
     {
-        echo "<center><h1><font color=red>" . _FB_WARNING . "</FONT></h1><BR>";
-        echo "<B>Your css file is <#__root>/components/com_fireboard/template/" . $fbConfig->template . "/forum.css</b><BR>";
-        echo "<B>" . _FB_CHMOD1 . "</B></center><BR><BR>";
+        echo "<center><h1><font color=red>" . _KUNENA_WARNING . "</FONT></h1><BR>";
+        echo "<B>Your css file is <#__root>/components/com_kunena/template/" . $fbConfig->template . "/forum.css</b><BR>";
+        echo "<B>" . _KUNENA_CHMOD1 . "</B></center><BR><BR>";
     }
 
-    HTML_SIMPLEBOARD::showCss($file, $option);
+    html_Kunena::showCss($file, $option);
 }
 
 function saveCss($file, $csscontent, $option)
 {global $mainframe;
-    $tmpstr = _FB_CSS_SAVE;
+    $tmpstr = _KUNENA_CSS_SAVE;
     $tmpstr = str_replace("%file%", $file, $tmpstr);
     echo $tmpstr;
 
     if (is_writable($file) == false)
     {
-        echo "<script>alert('" . _FB_TFINW . "')</script>";
-        echo "<script>document.location.href='index2.php?option=com_fireboard&task=showCss'</script>\n";
+        echo "<script>alert('" . _KUNENA_TFINW . "')</script>";
+        echo "<script>document.location.href='index2.php?option=com_kunena&task=showCss'</script>\n";
     }
 
-    echo "<script>alert('" . _FB_FBCFS . "')</script>";
-    echo "<script>document.location.href='index2.php?option=com_fireboard&task=showCss'</script>\n";
+    echo "<script>alert('" . _KUNENA_FBCFS . "')</script>";
+    echo "<script>document.location.href='index2.php?option=com_kunena&task=showCss'</script>\n";
 
     if ($fp = fopen($file, "w"))
     {
         fputs($fp, stripslashes($csscontent));
         fclose ($fp);
-        $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showCss", _FB_CFS);
+        $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showCss", _KUNENA_CFS);
     }
     else {
-        $mainframe->redirect( JURI::base() ."index2.php?option=$option", _FB_CFCNBO);
+        $mainframe->redirect( JURI::base() ."index2.php?option=$option", _KUNENA_CFCNBO);
     }
 }
 
@@ -1119,7 +1027,7 @@ function newModerator($option, $id = null)
         $moderators = 0;
     }
 
-    HTML_SIMPLEBOARD::newModerator($option, $id, $moderators, $modIDs, $forumName, $userList, $countUL, $pageNav);
+    html_Kunena::newModerator($option, $id, $moderators, $modIDs, $forumName, $userList, $countUL, $pageNav);
 }
 
 function addModerator($option, $id, $cid = null, $publish = 1)
@@ -1139,7 +1047,7 @@ $database = &JFactory::getDBO();
 
     if (!is_array($cid) || count($cid) < 1)
     {
-        echo "<script> alert('" . _FB_SELECTMODTO . " $action'); window.history.go(-1);</script>\n";
+        echo "<script> alert('" . _KUNENA_SELECTMODTO . " $action'); window.history.go(-1);</script>\n";
         exit;
     }
 
@@ -1216,7 +1124,7 @@ $lang = $language->getBackwardLang();
 
 jimport('joomla.html.pagination');
 $pageNavSP = new JPagination( $total, $limitstart, $limit );
-    HTML_SIMPLEBOARD::showProfiles($option, $lang, $profileList, $countPL, $pageNavSP, $order, $search);
+    html_Kunena::showProfiles($option, $lang, $profileList, $countPL, $pageNavSP, $order, $search);
 }
 
 function editUserProfile($uid)
@@ -1285,9 +1193,9 @@ function editUserProfile($uid)
         $__modCats[] = JHTML::_('select.option', $_v );
     }
 
-    $modCats = FB_GetAvailableModCats($__modCats);
+    $modCats = KUNENA_GetAvailableModCats($__modCats);
 
-    HTML_SIMPLEBOARD::editUserProfile($user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid[0], $modCats);
+    html_Kunena::editUserProfile($user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid[0], $modCats);
 }
 
 function saveUserProfile($option)
@@ -1333,7 +1241,7 @@ global $mainframe;
     	}
     }
 
-    $mainframe->redirect( JURI::base() ."index2.php?option=com_fireboard&task=showprofiles");
+    $mainframe->redirect( JURI::base() ."index2.php?option=com_kunena&task=showprofiles");
 }
 
 //===============================
@@ -1348,7 +1256,7 @@ function pruneforum($database, $option)
     $forums_list = $database->loadObjectList();
     	check_dberror("Unable to load unlocked forums.");
     $forumList['forum'] = JHTML::_('select.genericlist',$forums_list, 'prune_forum', 'class="inputbox" size="4"', 'value', 'text', '');
-    HTML_SIMPLEBOARD::pruneforum($option, $forumList);
+    html_Kunena::pruneforum($option, $forumList);
 }
 
 function doprune($database, $option)
@@ -1359,7 +1267,7 @@ global $mainframe ;
 
     if ($catid == -1)
     {
-        echo "<script> alert('" . _FB_CHOOSEFORUMTOPRUNE . "'); window.history.go(-1); </script>\n";
+        echo "<script> alert('" . _KUNENA_CHOOSEFORUMTOPRUNE . "'); window.history.go(-1); </script>\n";
         exit();
     }
 
@@ -1422,14 +1330,14 @@ global $mainframe ;
         }
     }
 
-    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=pruneforum", "" . _FB_FORUMPRUNEDFOR . " " . $prune_days . " " . _FB_PRUNEDAYS . "; " . _FB_PRUNEDELETED . "" . $deleted . " " . _FB_PRUNETHREADS . "");
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=pruneforum", "" . _KUNENA_FORUMPRUNEDFOR . " " . $prune_days . " " . _KUNENA_PRUNEDAYS . "; " . _KUNENA_PRUNEDELETED . "" . $deleted . " " . _KUNENA_PRUNETHREADS . "");
 }
 
 //===============================
 // Sync users
 //===============================
 function syncusers($database, $option) {
-    HTML_SIMPLEBOARD::syncusers($option);
+    html_Kunena::syncusers($option);
 }
 
 function douserssync($database, $option)
@@ -1439,7 +1347,7 @@ $database = &JFactory::getDBO();
 	$database->setQuery("UPDATE #__fb_sessions SET allowed='na'");
 	$database->query() or trigger_dberror("Unable to update sessions.");
 
-    //get userlist to remove from Fireboard users list
+    //get userlist to remove from Kunena users list
     $database->setQuery("SELECT a.userid from #__fb_users as a left join #__users as b on a.userid=b.id where b.username is null");
     $idlistR = $database->loadObjectList();
             check_dberror("Unable to load users.");
@@ -1456,7 +1364,7 @@ $database = &JFactory::getDBO();
         $idsR = implode(',', $allIDsR);
     }
 
-    //get userlist to add into Fireboard users list
+    //get userlist to add into Kunena users list
     $database->setQuery("SELECT a.id from #__users as a left join #__fb_users as b on b.userid=a.id where b.userid is null");
     $idlistA = $database->loadObjectList();
             check_dberror("Unable to load users.");
@@ -1488,12 +1396,12 @@ $database = &JFactory::getDBO();
 				$database->query() or trigger_dberror("Unable to add new users.");
 			}
 		}
-        $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=pruneusers", "" . _FB_USERSSYNCDELETED . "" . $cids . " " . _FB_SYNCUSERPROFILES . "");
+        $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=pruneusers", "" . _KUNENA_USERSSYNCDELETED . "" . $cids . " " . _KUNENA_SYNCUSERPROFILES . "");
     }
     else
     {
         $cids = 0;
-        $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=pruneusers", _FB_NOPROFILESFORSYNC);
+        $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=pruneusers", _KUNENA_NOPROFILESFORSYNC);
     }
 }
 
@@ -1518,20 +1426,19 @@ global $mainframe;
 	$database->setQuery( $query );
 	$database->query() or trigger_dbwarning("Unable to insert sample categories.");
 
-
 	// Load Sample Messages
 	$query = "INSERT INTO `#__fb_messages` "
-				. "\n VALUES (1, 0, 1, 2, 'bestofjoomla', 0, 'anonymous@forum.here', 'Sample Post', 1178882702, '127.0.0.1', 0, 0, 0, 0, 1, 0, 0, 0, 0)";
+				. "\n VALUES (1, 0, 1, 2, 'Kunena', 0, 'anonymous@forum.here', 'Sample Post', 1178882702, '127.0.0.1', 0, 0, 0, 0, 1, 0, 0, 0, 0)";
 
 	$database->setQuery( $query );
 	$database->query() or trigger_dbwarning("Unable to insert sample messages.");
 
 	// Load Sample Messages Text
 	$query = "INSERT INTO `#__fb_messages_text` "
-				. "\n VALUES (1, 'Fireboard is fully integrated forum solution for joomla, no bridges, no hacking core files: It can be installed just like any other component with only a few clicks.\r\n\r\nThe administration backend is fully integrated, native ACL implemented, and it has all the capabilities one would have come to expect from a mature, full-fledged forum solution!')";
+				. "\n VALUES (1, 'Kunena is fully integrated forum solution for joomla, no bridges, no hacking core files: It can be installed just like any other component with only a few clicks.\r\n\r\nThe administration backend is fully integrated, native ACL implemented, and it has all the capabilities one would have come to expect from a mature, full-fledged forum solution!')";
 	$database->query() or trigger_dbwarning("Unable to insert sample messages texts.");
 
-    $mainframe->redirect( JURI::base() ."index2.php?option=$option", _FB_SAMPLESUCCESS);
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option", _KUNENA_SAMPLESUCCESS);
 }
 
 //===============================
@@ -1554,7 +1461,7 @@ $database = &JFactory::getDBO();
 	$database->query();
 		check_dberror("Unable to remove sample messages texts.");
 
-	$mainframe->redirect( JURI::base() ."index2.php?option=$option", _FB_SAMPLEREMOVED);
+	$mainframe->redirect( JURI::base() ."index2.php?option=$option", _KUNENA_SAMPLEREMOVED);
 }
 
 //===============================
@@ -1571,20 +1478,20 @@ $database = &JFactory::getDBO();
     $database->query() or trigger_dbwarning("Unable to drop comprofiler columns.");
 
     $database->setQuery("DELETE FROM #__comprofiler_field_values WHERE fieldtitle IN ".
-    	"('_UE_FB_VIEWTYPE_FLAT','_UE_FB_VIEWTYPE_THREADED','_UE_FB_ORDERING_OLDEST','_UE_FB_ORDERING_LATEST')");
+    	"('_UE_KUNENA_VIEWTYPE_FLAT','_UE_KUNENA_VIEWTYPE_THREADED','_UE_KUNENA_ORDERING_OLDEST','_UE_KUNENA_ORDERING_LATEST')");
     $database->query() or trigger_dberror("Unable to delete comprofiler field values.");
 
     $database->setQuery("DELETE FROM #__comprofiler_fields WHERE name IN ('fbviewtype','fbordering','fbsignature')");
     $database->query() or trigger_dberror("Unable to delete comprofiler fields.");
 
-    $database->setQuery("DELETE FROM #__comprofiler_tabs WHERE title = '_UE_FB_TABTITLE'");
+    $database->setQuery("DELETE FROM #__comprofiler_tabs WHERE title = '_UE_KUNENA_TABTITLE'");
     $database->query() or trigger_dberror("Unable to delete comprofiler field.");
 
     // Now let's create the requires entries
-    $database->setQuery("INSERT INTO #__comprofiler_tabs SET title='_UE_FB_TABTITLE', description='_UE_FB_TABDESC'");
+    $database->setQuery("INSERT INTO #__comprofiler_tabs SET title='_UE_KUNENA_TABTITLE', description='_UE_KUNENA_TABDESC'");
     $database->query() or trigger_dberror("Unable to insert comprofiler tab.");
 
-    $database->setQuery("SELECT tabid FROM #__comprofiler_tabs WHERE title='_UE_FB_TABTITLE'");
+    $database->setQuery("SELECT tabid FROM #__comprofiler_tabs WHERE title='_UE_KUNENA_TABTITLE'");
     $database->query() or trigger_dberror("Unable to load comprofiler tab.");
     $tabid = $database->loadResult();
 
@@ -1592,9 +1499,9 @@ $database = &JFactory::getDBO();
     $isCB12 = isset($cols['#__comprofiler_fields']['tablecolumns']);
 
     $database->setQuery("INSERT INTO #__comprofiler_fields (name,".($isCB12?"tablecolumns,":"")."title,type,maxlength,cols,rows,ordering,published,profile,calculated,sys,tabid) VALUES ".
-    	"('fbviewtype',".($isCB12?"'fbviewtype',":"")."'_UE_FB_VIEWTYPE_TITLE','select',0,0,0,1,1,0,0,0,$tabid),".
-    	"('fbordering',".($isCB12?"'fbordering',":"")."'_UE_FB_ORDERING_TITLE','select',0,0,0,2,1,0,0,0,$tabid),".
-    	"('fbsignature',".($isCB12?"'fbsignature',":"")."'_UE_FB_SIGNATURE','textarea',300,60,5,3,1,0,0,0,$tabid)");
+    	"('fbviewtype',".($isCB12?"'fbviewtype',":"")."'_UE_KUNENA_VIEWTYPE_TITLE','select',0,0,0,1,1,0,0,0,$tabid),".
+    	"('fbordering',".($isCB12?"'fbordering',":"")."'_UE_KUNENA_ORDERING_TITLE','select',0,0,0,2,1,0,0,0,$tabid),".
+    	"('fbsignature',".($isCB12?"'fbsignature',":"")."'_UE_KUNENA_SIGNATURE','textarea',300,60,5,3,1,0,0,0,$tabid)");
     $database->query() or trigger_dberror("Unable to insert comprofiler fields.");
 
     $database->setQuery("SELECT name,fieldid FROM #__comprofiler_fields WHERE name IN ('fbviewtype','fbordering')");
@@ -1602,19 +1509,19 @@ $database = &JFactory::getDBO();
     $fieldid = $database->loadObjectList('name');
 
     $database->setQuery("INSERT INTO #__comprofiler_field_values (fieldid,fieldtitle,ordering) VALUES ".
-    	"(".$fieldid['fbviewtype']->fieldid.",'_UE_FB_VIEWTYPE_FLAT',1),".
-    	"(".$fieldid['fbviewtype']->fieldid.",'_UE_FB_VIEWTYPE_THREADED',2),".
-    	"(".$fieldid['fbordering']->fieldid.",'_UE_FB_ORDERING_OLDEST',1),".
-    	"(".$fieldid['fbordering']->fieldid.",'_UE_FB_ORDERING_LATEST',2)");
+    	"(".$fieldid['fbviewtype']->fieldid.",'_UE_KUNENA_VIEWTYPE_FLAT',1),".
+    	"(".$fieldid['fbviewtype']->fieldid.",'_UE_KUNENA_VIEWTYPE_THREADED',2),".
+    	"(".$fieldid['fbordering']->fieldid.",'_UE_KUNENA_ORDERING_OLDEST',1),".
+    	"(".$fieldid['fbordering']->fieldid.",'_UE_KUNENA_ORDERING_LATEST',2)");
     $database->query() or trigger_dberror("Unable to insert comprofiler field values.");
 
     $database->setQuery("ALTER TABLE #__comprofiler ".
-    	"ADD fbviewtype varchar(255) DEFAULT '_UE_FB_VIEWTYPE_FLAT' NOT NULL, ".
-		"ADD fbordering varchar(255) DEFAULT '_UE_FB_ORDERING_OLDEST' NOT NULL, ".
+    	"ADD fbviewtype varchar(255) DEFAULT '_UE_KUNENA_VIEWTYPE_FLAT' NOT NULL, ".
+		"ADD fbordering varchar(255) DEFAULT '_UE_KUNENA_ORDERING_OLDEST' NOT NULL, ".
 		"ADD fbsignature mediumtext");
     $database->query() or trigger_dberror("Unable to add signature column.");
 
-    $mainframe->redirect( JURI::base() ."index2.php?option=$option", _FB_CBADDED);
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option", _KUNENA_CBADDED);
 }
 
 //===============================
@@ -1625,13 +1532,13 @@ function browseUploaded($database, $option, $type)
 $database = &JFactory::getDBO();
     if ($type)
     { //we're doing images
-        $dir = @opendir(FB_ABSUPLOADEDPATH. '/images');
-        $uploaded_path = FB_ABSUPLOADEDPATH. '/images';
+        $dir = @opendir(KUNENA_ABSUPLOADEDPATH. '/images');
+        $uploaded_path = KUNENA_ABSUPLOADEDPATH. '/images';
     }
     else
     { //we're doing regular files
-        $dir = @opendir(FB_ABSUPLOADEDPATH.'/files');
-        $uploaded_path = FB_ABSUPLOADEDPATH.'/files';
+        $dir = @opendir(KUNENA_ABSUPLOADEDPATH.'/files');
+        $uploaded_path = KUNENA_ABSUPLOADEDPATH.'/files';
     }
 
     $uploaded = array ();
@@ -1653,7 +1560,7 @@ $database = &JFactory::getDBO();
     @closedir ($dir);
     @ksort ($uploaded);
     @reset ($uploaded);
-    HTML_SIMPLEBOARD::browseUploaded($option, $uploaded, $uploaded_path, $type);
+    html_Kunena::browseUploaded($option, $uploaded, $uploaded_path, $type);
 }
 
 function replaceImage($database, $option, $imageName, $OxP)
@@ -1666,7 +1573,7 @@ $database = &JFactory::getDBO();
 
     // This function will replace the selected image with a dummy (OxP=1) or delete it
     // step 1: Remove image that must be replaced:
-    unlink (FB_ABSUPLOADEDPATH.'/images/' . $imageName);
+    unlink (KUNENA_ABSUPLOADEDPATH.'/images/' . $imageName);
 
     if ($OxP == "1")
     {
@@ -1675,16 +1582,16 @@ $database = &JFactory::getDBO();
         $fileName = $filename[0];
         $fileExt = $filename[1];
         // step 3: copy the dummy and give it the old file name:
-        copy(FB_ABSUPLOADEDPATH.'/dummy.' . $fileExt, FB_ABSUPLOADEDPATH.'/images/' . $imageName);
+        copy(KUNENA_ABSUPLOADEDPATH.'/dummy.' . $fileExt, KUNENA_ABSUPLOADEDPATH.'/images/' . $imageName);
     }
     else
     {
         //remove the database link as well
-        $database->setQuery("DELETE FROM #__fb_attachments where filelocation='" . FB_ABSUPLOADEDPATH . "/images/" . $imageName . "'");
+        $database->setQuery("DELETE FROM #__fb_attachments where filelocation='" . KUNENA_ABSUPLOADEDPATH . "/images/" . $imageName . "'");
         $database->query() or trigger_dberror("Unable to delete attachment.");
     }
 
-    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=browseImages", _FB_IMGDELETED);
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=browseImages", _KUNENA_IMGDELETED);
 }
 
 function deleteFile($database, $option, $fileName)
@@ -1698,11 +1605,11 @@ $database = &JFactory::getDBO();
     }
 
     // step 1: Remove file
-    unlink (FB_ABSUPLOADEDPATH.'/files/' . $fileName);
+    unlink (KUNENA_ABSUPLOADEDPATH.'/files/' . $fileName);
     //step 2: remove the database link to the file
-    $database->setQuery("DELETE FROM #__fb_attachments where filelocation='" . FB_ABSUPLOADEDPATH . "/files/" . $fileName . "'");
+    $database->setQuery("DELETE FROM #__fb_attachments where filelocation='" . KUNENA_ABSUPLOADEDPATH . "/files/" . $fileName . "'");
     $database->query() or trigger_dberror("Unable to delete attachment.");
-    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=browseFiles", _FB_FILEDELETED);
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=browseFiles", _KUNENA_FILEDELETED);
 }
 
 //===============================
@@ -1757,8 +1664,7 @@ $lang = $language->getBackwardLang();
     $list = catTreeRecurse(0, '', array (), $children);
     // assemble menu items to the array
     $mitems = array ();
-	
-    $mitems[] = JHTML::_('select.option', '0', JText::_(_FB_NOPARENT), 'value', 'text');
+    $mitems[] = JHTML::_('select.option', '0', JText::_(_KUNENA_NOPARENT), 'value', 'text');
     $this_treename = '';
 
     foreach ($list as $item)
@@ -1773,7 +1679,6 @@ $lang = $language->getBackwardLang();
         {
             if ($item->id != $mitems) {
                 $mitems[] = JHTML::_('select.option', $item->id, $item->treename);
-				
             }
             else {
                 $this_treename = "$item->treename/";
@@ -1849,7 +1754,7 @@ function dircopy($srcdir, $dstdir, $verbose = false) {
 
                     if ($ow > 0) {
                         if ($verbose) {
-                            $tmpstr = _FB_COPY_FILE;
+                            $tmpstr = _KUNENA_COPY_FILE;
                             $tmpstr = str_replace('%src%', $srcfile, $tmpstr);
                             $tmpstr = str_replace('%dst%', $dstfile, $tmpstr);
                             echo $tmpstr;
@@ -1860,11 +1765,11 @@ function dircopy($srcdir, $dstdir, $verbose = false) {
                             $num++;
 
                             if ($verbose) {
-                                echo _FB_COPY_OK;
+                                echo _KUNENA_COPY_OK;
                             }
                         }
                         else {
-                            echo "" . _FB_DIRCOPERR . " '$srcfile' " . _FB_DIRCOPERR1 . "";
+                            echo "" . _KUNENA_DIRCOPERR . " '$srcfile' " . _KUNENA_DIRCOPERR1 . "";
                         }
                     }
                 }
@@ -1906,7 +1811,7 @@ $lang = $language->getBackwardLang();
 
     require_once ("includes/pageNavigation.php");
     $pageNavSP = new mosPageNav($total, $limitstart, $limit);
-    HTML_SIMPLEBOARD::showsmilies($option, $lang, $smileytmp, $pageNavSP, $smileypath);
+    html_Kunena::showsmilies($option, $lang, $smileytmp, $pageNavSP, $smileypath);
 
 }
 
@@ -1941,7 +1846,7 @@ $_lang = $language->getBackwardLang();
 
 		$filename_list .= '<option value="' . $smiley_images[$i] . '"' . $smiley_selected . '>' . $smiley_images[$i] . '</option>'."\n";
     }
-    HTML_SIMPLEBOARD::editsmiley($option, $_lang, $smiley_edit_img, $filename_list, $smileypath, $smileycfg);
+    html_Kunena::editsmiley($option, $_lang, $smiley_edit_img, $filename_list, $smileypath, $smileycfg);
 }
 
 function newsmiley($option)
@@ -1960,7 +1865,7 @@ $_lang = $language->getBackwardLang();
 		$filename_list .= '<option value="' . $smiley_images[$i] . '">' . $smiley_images[$i] . '</option>'."\n";
     }
 
-    HTML_SIMPLEBOARD::newsmiley($option, $filename_list, $smileypath);
+    html_Kunena::newsmiley($option, $filename_list, $smileypath);
 }
 
 function savesmiley($option, $id = NULL)
@@ -1975,7 +1880,7 @@ global  $mainframe;
     if (empty($smiley_code) || empty($smiley_location))
     {
     	$task = ($id == NULL) ? 'newsmiley' : 'editsmiley&id='.$id;
-        $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=".$task, _FB_MISSING_PARAMETER);
+        $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=".$task, _KUNENA_MISSING_PARAMETER);
         exit();
     }
 
@@ -1987,7 +1892,7 @@ global  $mainframe;
     	if (in_array($smiley_code, $value) && !($value['id'] == $id))
     	{
             $task = ($id == NULL) ? 'newsmiley' : 'editsmiley&id='.$id;
-        	$mainframe->redirect( JURI::base() ."index2.php?option=$option&task=".$task, _FB_CODE_ALLREADY_EXITS);
+        	$mainframe->redirect( JURI::base() ."index2.php?option=$option&task=".$task, _KUNENA_CODE_ALLREADY_EXITS);
         	exit();
     	}
 
@@ -2004,7 +1909,7 @@ global  $mainframe;
 
     $database->query() or trigger_dberror("Unable to save smiley.");
 
-    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showsmilies", _FB_SMILEY_SAVED);
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showsmilies", _KUNENA_SMILEY_SAVED);
 }
 
 function deletesmiley($option, $cid)
@@ -2017,7 +1922,7 @@ $database = &JFactory::getDBO();
 		$database->query() or trigger_dberror("Unable to delete smiley.");
 	}
 
-    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showsmilies", _FB_SMILEY_DELETED);
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showsmilies", _KUNENA_SMILEY_DELETED);
 }
 
 function smileypath()
@@ -2027,13 +1932,13 @@ function smileypath()
 	$language = JLanguage::getInstance($frontend_lang);
 $lang = $language->getBackwardLang();
 // $JLanguage = JLanguage;
-    if (is_dir(JPATH_ROOT . '/components/com_fireboard/template/'.$fbConfig->template.'/images/'.$lang.'/emoticons')) {
-        $smiley_live_path = $mainframe->getCfg('live_site') . '/components/com_fireboard/template/'.$fbConfig->template.'/images/'.$lang.'/emoticons';
-        $smiley_abs_path = JPATH_ROOT . '/components/com_fireboard/template/'.$fbConfig->template.'/images/'.$lang.'/emoticons';
+    if (is_dir(JPATH_ROOT . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$lang.'/emoticons')) {
+        $smiley_live_path = $mainframe->getCfg('live_site') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$lang.'/emoticons';
+        $smiley_abs_path = JPATH_ROOT . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$lang.'/emoticons';
     }
     else {
-        $smiley_live_path = JPATH_ROOT . '/components/com_fireboard/template/default/images/'.$lang.'/emoticons';
-        $smiley_abs_path = JPATH_ROOT . '/components/com_fireboard/template/default/images/'.$lang.'/emoticons';
+        $smiley_live_path = JPATH_ROOT . '/components/com_kunena/template/default/images/'.$lang.'/emoticons';
+        $smiley_abs_path = JPATH_ROOT . '/components/com_kunena/template/default/images/'.$lang.'/emoticons';
     }
 
     $smileypath['live'] = $smiley_live_path;
@@ -2100,7 +2005,7 @@ $lang = $language->getBackwardLang();
 
 	require_once( "includes/pageNavigation.php" );
 	$pageNavSP = new mosPageNav( $total,$limitstart,$limit );
-	HTML_SIMPLEBOARD::showRanks( $option,$lang,$ranks,$pageNavSP,$order,$rankpath );
+	html_Kunena::showRanks( $option,$lang,$ranks,$pageNavSP,$order,$rankpath );
 
 }
 
@@ -2113,13 +2018,13 @@ $lang = $language->getBackwardLang();
 
 	 
 	//$_lang	= &	JLanguage::setLanguage("english");
-    if (is_dir(JURI::root() . '/components/com_fireboard/template/'.$fbConfig->template.'/images/'.$lang.'/ranks')) {
-        $rank_live_path = JURI::root() . '/components/com_fireboard/template/'.$fbConfig->template.'/images/'.$lang.'/ranks';
-        $rank_abs_path = 	JPATH_ROOT . '/components/com_fireboard/template/'.$fbConfig->template.'/images/'.$lang.'/ranks';
+    if (is_dir(JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$lang.'/ranks')) {
+        $rank_live_path = JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$lang.'/ranks';
+        $rank_abs_path = 	JPATH_ROOT . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$lang.'/ranks';
     }
     else {
-        $rank_live_path = JURI::root() . '/components/com_fireboard/template/default/images/'.$lang.'/ranks';
-        $rank_abs_path = 	JPATH_ROOT . '/components/com_fireboard/template/default/images/'.$lang.'/ranks';
+        $rank_live_path = JURI::root() . '/components/com_kunena/template/default/images/'.$lang.'/ranks';
+        $rank_abs_path = 	JPATH_ROOT . '/components/com_kunena/template/default/images/'.$lang.'/ranks';
     }
 
     $rankpath['live'] = $rank_live_path;
@@ -2168,7 +2073,7 @@ $database = &JFactory::getDBO();
 		$filename_list .= '<option value="' . $rank_images[$id] . '">' . $rank_images[$id] . '</option>'."\n";
 	}
 
-    HTML_SIMPLEBOARD::newRank($option, $filename_list, $rankpath);
+    html_Kunena::newRank($option, $filename_list, $rankpath);
 }
 
 function deleteRank($option, $cid = null)
@@ -2181,7 +2086,7 @@ $database = &JFactory::getDBO();
 		$database->query() or trigger_dberror("Unable to delete rank.");
 	}
 
-    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=ranks", _FB_RANK_DELETED);
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=ranks", _KUNENA_RANK_DELETED);
 }
 
 function saveRank($option, $id = NULL)
@@ -2197,7 +2102,7 @@ function saveRank($option, $id = NULL)
     if (empty($rank_title) || empty($rank_image))
     {
     	$task = ($id == NULL) ? 'newRank' : 'editRank&id='.$id;
-        $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=".$task, _FB_MISSING_PARAMETER);
+        $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=".$task, _KUNENA_MISSING_PARAMETER);
         exit();
     }
 
@@ -2210,7 +2115,7 @@ function saveRank($option, $id = NULL)
     	if (in_array($rank_title, $value) && !($value['rank_id'] == $id))
     	{
             $task = ($id == NULL) ? 'newRank' : 'editRank&id='.$id;
-        	$mainframe->redirect( JURI::base() ."index2.php?option=$option&task=".$task, _FB_RANK_ALLREADY_EXITS);
+        	$mainframe->redirect( JURI::base() ."index2.php?option=$option&task=".$task, _KUNENA_RANK_ALLREADY_EXITS);
         	exit();
     	}
     }
@@ -2225,7 +2130,7 @@ function saveRank($option, $id = NULL)
     }
     $database->query() or trigger_dberror("Unable to save ranks.");
 
-    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=ranks", _FB_RANK_SAVED);
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=ranks", _KUNENA_RANK_SAVED);
 }
 
 function editRank($option, $id)
@@ -2273,7 +2178,7 @@ $database = &JFactory::getDBO();
 		}
 	}
 
-    HTML_SIMPLEBOARD::editRank($option, $lang, $edit_img, $filename_list, $path, $row);
+    html_Kunena::editRank($option, $lang, $edit_img, $filename_list, $path, $row);
 }
 
 //===============================
@@ -2281,7 +2186,7 @@ $database = &JFactory::getDBO();
 //===============================
 // Dan Syme/IGD - Ranks Management
 
-function FB_GetAvailableModCats($catids) {
+function KUNENA_GetAvailableModCats($catids) {
     $database = &JFactory::getDBO();
     $list = JJ_categoryArray(1);
     $this_treename = '';
@@ -2308,7 +2213,7 @@ function FB_GetAvailableModCats($catids) {
 
 // Grabs gd version
 
- function FB_gdVersion() {
+ function KUNENA_gdVersion() {
   // Simplified GD Version check
   if (!extension_loaded('gd')) {
     return;

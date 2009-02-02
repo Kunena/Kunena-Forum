@@ -18,7 +18,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 /**
 * fireboard stats support class
-* @package com_fireboard
+* @package com_kunena
 */
 class jbStats {
 

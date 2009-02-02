@@ -64,7 +64,7 @@
         <?php
         defined( '_JEXEC' ) or die('Restricted access');
 
-        include_once ("../../../components/com_fireboard/sources/fb_debug.php");
+        include_once ("../../../components/com_kunena/lib/kunena.debug.php");
         require_once ("../../../configuration.php");
         require_once ("../../../includes/mambo.php");
 

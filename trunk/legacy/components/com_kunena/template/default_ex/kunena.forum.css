@@ -23,14 +23,14 @@
 }
 #Kunena tr.fb_sth { 
 	background: #8CABC8 url(images/cat_title_head_bg.gif) repeat-x top left;
-	font-size:11px;
+	font-size:small;
 	font-family:Arial, Helvetica, sans-serif;
 }
 #Kunena th.fb_sectiontableheader {
 	padding:3px 5px;
 	color:#FFFFFF;
 	font-weight:normal;
-	font-size:11px;
+	font-size:small;
 	font-family:Arial, Helvetica, sans-serif;
 }
 #Kunena tr.fb_sectiontableentry1 td {
@@ -60,17 +60,17 @@
 }
 #Kunena td.td-0 strong {
 	display:block;
-	font-size:26px;
+	font-size:large;
 	font-weight:normal;
 	line-height:21px;
 	margin:5px 0;
 }
 #Kunena .topic_latest_post, #Kunena .topic_date {
-	font-size:10px;
+	font-size:x-small;
 }
 #Kunena a.fb-topic-title {
 	font-weight:bold;
-	font-size:14px;
+	font-size:medium;
 }
 #Kunena .topic_latest_post_avatar {
 	display:block;
@@ -95,7 +95,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	right:0px;
 }
 .fb_credits, .fb_footer {
-	font-size:10px
+	font-size:x-small
 }
 /* MEnu */
 #Kunena #Kunena_top td {
@@ -144,7 +144,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	background:url("images/tabmenuleft.gif") no-repeat left top;
 	padding:0 10px 0 10px;
 	font-family:Arial, Helvetica, sans-serif;
-	font-size:11px;
+	font-size:small;
 	color:#FFFFFF;
 	font-weight:bold;
 	line-height:35px;
@@ -190,7 +190,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	color:#666666;
 	float:right;
 	font-family:Arial, Helvetica, sans-serif;
-	font-size:15px;
+	font-size:medium;
 	font-weight:bold;
 	height:28px;
 	line-height:28px;
@@ -222,7 +222,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	border-left:1px solid #D1D1D1;
 	color:#666666;
 	font-family:Arial, Helvetica, sans-serif;
-	font-size:15px;
+	font-size:medium;
 	font-weight:bold;
 	height:28px;
 	line-height:28px;
@@ -249,13 +249,13 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	display:table;
 }
 #Kunena .fb_list_times_all .inputboxusl {
-	font-size:10px;
+	font-size:x-small;
 	margin:0pt;
 	padding:0pt;
 	width:50px;
 }
 #Kunena .fb_list_jump_all form .inputbox {
-	font-size:10px;
+	font-size:x-small;
 	margin:0pt;
 	padding:0pt;
 	width:150px;
@@ -284,22 +284,22 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	color: #FF0000;
 }
 #Kunena .fbxs {
-	font-size: 8px;
+	font-size:xx-small;
 }
 #Kunena .fbs {
-	font-size: 10px;
+	font-size:x-small;
 }
 #Kunena .fbm {
-	font-size: 11px;
+	font-size:small;
 }
 #Kunena .fbl {
-	font-size: 14px;
+	font-size:medium;
 }
 #Kunena .fbxl {
-	font-size: 18px;
+	font-size:medium;
 }
 #Kunena .fbxxl {
-	font-size: 28px;
+	font-size:large;
 }
 /* HEADER
 ----------------------------------------------------------------------------------------------- */
@@ -436,7 +436,7 @@ span.newchar {
 	color: #009900;
 	font-weight: bold;
 	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
-	font-size: 8px;
+	font-size:xx-small;
 }
 /* SHOW CATEGORY 
 ----------------------------------------------------------------------------------------------- */
@@ -551,7 +551,7 @@ span.msgtitle, span.msgtitle_new {
 	padding-left:25px;
 	line-height:26px;
 	color:#000000;
-	font-size:14px;
+	font-size:medium;
 }
 span.msgtitle_new {
 	background: url(images/msgtitlenew.gif) no-repeat left center;
@@ -560,7 +560,7 @@ span.msgdate {
 	font-weight:     normal;
 	text-decoration: none;
 	padding-left:10px;
-	font-size:10px;
+	font-size:x-small;
 	font-family:Arial, Helvetica, sans-serif;
 }
 span.msgkarma {
@@ -621,7 +621,7 @@ td.fb-msgview-right-c {
 	border-left:1px solid #D4C9AD;
 }
 div.fb_smalltext {
-	font-size:10px;
+	font-size:x-small;
 	font-family:Arial, Helvetica, sans-serif;
 }
 td.fb-msgview-right-c div.fb_smalltext {
@@ -638,7 +638,7 @@ span.fb_message_editMarkUp {
 	border-right:1px dotted #999;
 	border-top:1px dotted #999;
 	padding:2px 5px 2px 20px;
-	font-size:9px;
+	font-size:xx-small;
 	color:#666666;
 }
 div.msgsignature {
@@ -646,7 +646,7 @@ div.msgsignature {
 	text-align: left;
 	color:#999;
 	padding-top: 10px;
-	font-size:10px;
+	font-size:x-small;
 	font-family:Arial, Helvetica, sans-serif
 }
 td.fb-msgview-left-b {
@@ -680,7 +680,7 @@ span.fb_quote {
 #Kunena div.fbhide {
 	background:#FFF8F2 url(images/bullet-tips.gif) no-repeat scroll 5px center;
 	border:1px dotted #F2CAB7;
-	font-size:12px;
+	font-size:medium;
 	padding:10px 10px 10px 25px;
 }
 /*

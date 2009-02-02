@@ -35,6 +35,7 @@ Kunena 1.0.8
 ^ Change all references from forum.css to kunena.forum.css
 + If kunena.forum.css is present in the current Joomla template css directory,
   load it instead of Kunena template's kunena.forum.css
+^ Change font sizes in kunena.forum.css for default_ex from px to relative sizes (small, medium, etc)
 
 2-February-2009 Matias
 ^ Move forced width from message text to [code] tag

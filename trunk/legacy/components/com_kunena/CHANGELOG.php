@@ -31,6 +31,11 @@ Legend:
 
 Kunena 1.0.8
 
+2-February-2009 Noel Hunter
+^ Change all references from forum.css to kunena.forum.css
++ If kunena.forum.css is present in the current Joomla template css directory,
+  load it instead of Kunena template's kunena.forum.css
+
 2-February-2009 Matias
 ^ Move forced width from message text to [code] tag
 ^ Remove confusing link from avatar upload

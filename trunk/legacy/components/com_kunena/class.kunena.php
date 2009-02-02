@@ -22,6 +22,10 @@ define('KUNENA_JABSPATH', $mainframe->getCfg('absolute_path'));
 // Joomla absolute path
 define('KUNENA_JLIVEURL', $mainframe->getCfg('live_site'));
 
+// Joomla template dir
+define('KUNENA_JTEMPLATEPATH', KUNENA_JABSPATH. DS. "templates".DS . $mainframe->getTemplate());
+define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "/templates/".$mainframe->getTemplate());
+
 //Kunena
 $Itemid = intval(mosGetParam($_REQUEST, 'Itemid'));
 
@@ -203,7 +207,7 @@ define('KUNENA_TMPLTURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_template);
 define('KUNENA_TMPLTMAINIMGURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_img_template);
 
 // IMAGES URL PATH
-define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . '/forum.css');
+define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . '/kunena.forum.css');
 
 if (is_dir(KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANG . '')) {
     define('KUNENA_URLIMAGESPATH', KUNENA_TMPLTMAINIMGURL . '/images/' . KUNENA_LANG . '/');

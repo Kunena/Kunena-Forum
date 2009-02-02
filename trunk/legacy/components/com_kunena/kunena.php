@@ -184,10 +184,15 @@ if (defined('KUNENA_COREJSURL'))
 }
 
 if ($fbConfig->joomlastyle < 1) {
-    $mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_TMPLTCSSURL . '" />');
+        if (file_exists(KUNENA_JTEMPLATEPATH.'/css/kunena.forum.css')) {
+           $mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_JTEMPLATEURL . '/css/kunena.forum.css" />');
+                }
+        else {
+         $mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_TMPLTCSSURL . '" />');
+         }
     }
 else {
-    $mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_DIRECTURL . '/template/default/joomla.css" />');
+   $mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_DIRECTURL . '/template/default/joomla.css" />');
     }
 
 // WHOIS ONLINE IN FORUM
@@ -529,7 +534,12 @@ else
     $obj_KUNENA_tmpl->readTemplatesFromFile("header.html");
     $obj_KUNENA_tmpl->addVar('jb-header', 'menu', $fbMenu);
     $obj_KUNENA_tmpl->addVar('jb-header', 'board_title', $board_title);
-    $obj_KUNENA_tmpl->addVar('jb-header', 'css_path', KUNENA_DIRECTURL . '/template/' . $fbConfig->template . '/forum.css');
+    if (file_exists(KUNENA_JTEMPLATEPATH.'/css/kunena.forum.css')) {
+   		$obj_KUNENA_tmpl->addVar('jb-header', 'css_path', KUNENA_JTEMPLATEURL . '/template/' . $fbConfig->template . '/kunena.forum.css');
+    } else {
+   	    $obj_KUNENA_tmpl->addVar('jb-header', 'css_path', KUNENA_DIRECTURL . '/template/' . $fbConfig->template . '/kunena.forum.css');
+	}
+
     $obj_KUNENA_tmpl->addVar('jb-header', 'offline_message', $fbConfig->board_offline ? '<span id="fbOffline">' . _FORUM_IS_OFFLINE . '</span>' : '');
     $obj_KUNENA_tmpl->addVar('jb-header', 'searchbox', getSearchBox());
     $obj_KUNENA_tmpl->addVar('jb-header', 'pb_imgswitchurl', KUNENA_URLIMAGESPATH . "shrink.gif");
@@ -880,7 +890,7 @@ else
                     }
 
                 // check that template exists in case it was deleted
-                if (file_exists($mosConfig_absolute_path . '/components/com_kunena/template/' . $fb_change_template . '/forum.css'))
+                if (file_exists($mosConfig_absolute_path . '/components/com_kunena/template/' . $fb_change_template . '/kunena.forum.css'))
                 {
                     $lifetime = 60 * 10;
                     $fb_current_template = $fb_change_template;
@@ -901,7 +911,7 @@ else
                     }
 
                 // check that template exists in case it was deleted
-                if (file_exists($mosConfig_absolute_path . '/components/com_kunena/template/' . $fb_change_img_template . '/forum.css'))
+                if (file_exists($mosConfig_absolute_path . '/components/com_kunena/template/' . $fb_change_img_template . '/kunena.forum.css'))
                 {
                     $lifetime = 60 * 10;
                     $fb_current_img_template = $fb_change_img_template;

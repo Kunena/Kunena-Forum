@@ -884,14 +884,14 @@ function showInstructions($database, $option, $mosConfig_lang) {
 function showCss($option)
 {
     global $fbConfig;
-    $file = "../components/com_kunena/template/" . $fbConfig->template . "/forum.css";
+    $file = "../components/com_kunena/template/" . $fbConfig->template . "/kunena.forum.css";
     @chmod($file, 0766);
     $permission = is_writable($file);
 
     if (!$permission)
     {
         echo "<center><h1><font color=red>" . _KUNENA_WARNING . "</FONT></h1><BR>";
-        echo "<B>Your css file is <#__root>/components/com_kunena/template/" . $fbConfig->template . "/forum.css</b><BR>";
+        echo "<B>Your css file is <#__root>/components/com_kunena/template/" . $fbConfig->template . "/kunena.forum.css</b><BR>";
         echo "<B>" . _KUNENA_CHMOD1 . "</B></center><BR><BR>";
     }
 

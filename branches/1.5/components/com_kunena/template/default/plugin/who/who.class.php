@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: who.class.php 1070 2008-10-06 08:11:18Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -23,9 +23,6 @@ $id = intval(JRequest::getInt('id',"","REQUEST"));
 
 $catid = intval(JRequest::getInt('catid',"","REQUEST"));
 //$func = mosGetParam($_REQUEST, 'func');
-
-
-
 $task =intval(JRequest::getVar('task',"","REQUEST"));
 $replyto = intval(JRequest::getInt('replyto',"","REQUEST"));
 $do = intval(JRequest::getVar('do',"","REQUEST"));
@@ -57,7 +54,7 @@ if ($task == 'listcat' || $func == 'showcat') {
     $what = $database->loadResult();
     }
 else if ($func == 'latest') {
-    $what = _FB_LATEST_POSTS;
+    $what = _KUNENA_LATEST_POSTS;
     }
 else if ($id) {
     $database->setQuery("SELECT subject FROM #__fb_messages WHERE id = {$id}");
@@ -76,20 +73,19 @@ else if ($func == 'post' && $do == 'edit') {
     $what = $database->loadResult();
     }
 else if ($func == 'who') {
-    $what = _FB_WHO_LATEST_POSTS;
+    $what = _KUNENA_WHO_LATEST_POSTS;
     }
 else {
-    $what = _FB_WHO_MAINPAGE;
+    $what = _KUNENA_WHO_MAINPAGE;
     }
 
 $link = $_SERVER['REQUEST_URI'];
-//$what = escape_quotes($what);
-//$link = escape_quotes($link);
 $what = addslashes($what);
 $link = addslashes($link);
 
 if ($online == 1) {
-    $sql = "UPDATE #__fb_whoisonline SET time='{$now}', what='{$what}', do= '{$do}', task= '{$task}', link= '{$link}', func='{$func}' WHERE userid={$my->id} AND userip='{$myip}'";
+    $sql = "UPDATE #__fb_whoisonline SET time='{$now}', what='{$what}', do= '{$do}', task= '{$task}', link= '{$link}', func= '{$func}'"
+            . "\n WHERE userid={$my->id} AND userip='{$myip}'";
     $database->setQuery($sql);
     }
 else {

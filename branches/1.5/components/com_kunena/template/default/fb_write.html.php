@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fb_write.html.php 1029 2008-08-25 15:40:07Z racoon $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -18,7 +18,7 @@ $my = &JFactory::getUser();
 global $fbConfig;
 //Some initial thingies needed anyway:
 $htmlText = stripslashes($htmlText);
-include_once(FB_COMP_C_SRC . '\fb_bb.js.php');
+include_once(KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
@@ -95,7 +95,7 @@ include_once(FB_COMP_C_SRC . '\fb_bb.js.php');
                 </td>
 
                 <td>
-                    <input type = "text" class = "<?php echo $boardclass; ?>inputbox postinput" name = "subject" size = "35" maxlength = "<?php echo $fbConfig->maxsubject;?>" value = "<?php echo $resubject;?>"/>
+                    <input type = "text" class = "<?php echo $boardclass; ?>inputbox postinput" name = "subject" size = "35" maxlength = "<?php echo $fbConfig->maxsubject;?>" value = "<?php echo $resubject;?>" />
                 </td>
 
             <?php
@@ -109,7 +109,7 @@ include_once(FB_COMP_C_SRC . '\fb_bb.js.php');
                 </td>
 
                 <td>
-                    <input type = "hidden" class = "inputbox" name = "subject" size = "35" maxlength = "<?php echo $fbConfig->maxsubject;?>" value = "<?php echo $resubject;?>"/><?php echo $resubject; ?>
+                    <input type = "hidden" class = "inputbox" name = "subject" size = "35" maxlength = "<?php echo $fbConfig->maxsubject;?>" value = "<?php echo $resubject;?>" /><?php echo $resubject; ?>
                 </td>
 
             <?php
@@ -151,7 +151,7 @@ include_once(FB_COMP_C_SRC . '\fb_bb.js.php');
         echo $fbTextArea;
 
         if ($setFocus == 0) {
-            echo "<script type=\"text/javascript\">document.postform.message.focus();</script>";
+            echo '<tr><td style="display:none;"><script type="text/javascript">document.postform.message.focus();</script></td></tr>';
         }
 
         //check if this user is already subscribed to this topic but only if subscriptions are allowed
@@ -199,9 +199,9 @@ include_once(FB_COMP_C_SRC . '\fb_bb.js.php');
                 </td>
 
                 <td>
-                    <input type = 'file' class = 'button' name = 'attachimage' onmouseover = "helpline('iu')"/>
+                    <input type = 'file' class = 'button' name = 'attachimage' onmouseover = "helpline('iu')" />
 
-                    <input type = "button" class = "button" name = "addImagePH" value = "<?php echo _POST_ATTACH_IMAGE;?>" style = "cursor:hand; width: 40px" onclick = "javascript:emo(' [img] ');" onmouseover = "helpline('ip')"/>
+                    <input type = "button" class = "button" name = "addImagePH" value = "<?php echo _POST_ATTACH_IMAGE;?>" style = "cursor:hand; width: 4em" onclick = "javascript:emo(' [img] ');" onmouseover = "helpline('ip')" />
                 </td>
             </tr>
 
@@ -220,9 +220,9 @@ include_once(FB_COMP_C_SRC . '\fb_bb.js.php');
                 </td>
 
                 <td>
-                    <input type = 'file' class = 'button' name = 'attachfile' onmouseover = "helpline('fu')" style = "cursor:hand"/>
+                    <input type = 'file' class = 'button' name = 'attachfile' onmouseover = "helpline('fu')" style = "cursor:hand" />
 
-                    <input type = "button" class = "button" name = "addFilePH" value = "<?php echo _POST_ATTACH_FILE;?>" style = "cursor:hand; width: 40px" onclick = "javascript:emo(' [file] ');" onmouseover = "helpline('fp')"/>
+                    <input type = "button" class = "button" name = "addFilePH" value = "<?php echo _POST_ATTACH_FILE;?>" style = "cursor:hand; width: 4em" onclick = "javascript:emo(' [file] ');" onmouseover = "helpline('fp')" />
                 </td>
             </tr>
 
@@ -254,7 +254,7 @@ include_once(FB_COMP_C_SRC . '\fb_bb.js.php');
                     {
                     ?>
 
-                        <input type = "checkbox" name = "subscribeMe" value = "1"/>
+                        <input type = "checkbox" name = "subscribeMe" value = "1" />
 
                         <i><?php echo _POST_NOTIFIED; ?></i>
 
@@ -271,9 +271,9 @@ include_once(FB_COMP_C_SRC . '\fb_bb.js.php');
 		// Begin captcha . Thanks Adeptus
 		if ($fbConfig->captcha == 1 && $my->id < 1) { ?>
         <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
-            <td class = "fb_leftcolumn">&nbsp;<strong><?php echo _FB_CAPDESC; ?></strong>&nbsp;</td>
+            <td class = "fb_leftcolumn">&nbsp;<strong><?php echo _KUNENA_CAPDESC; ?></strong>&nbsp;</td>
             <td align="left" valign="middle" height="35px">&nbsp;<input name="txtNumber" type="text" id="txtNumber" value="" class="button" style="vertical-align:top" size="15">
-			<img src="index2.php?option=com_fireboard&func=showcaptcha" alt="" />
+			<img src="index2.php?option=com_kunena&func=showcaptcha" alt="" />
 		 </td>
          </tr>
         <?php
@@ -282,10 +282,10 @@ include_once(FB_COMP_C_SRC . '\fb_bb.js.php');
 		?>
         <tr>
             <td colspan = "2" style = "text-align: center;">
-                <input type = "submit" class = "button" name = "submit" value = "<?php echo _GEN_CONTINUE;?>" onclick = "return submitForm()" onmouseover = "helpline('submit')"/>
+                <input type = "submit" class = "button" name = "submit" value = "<?php echo _GEN_CONTINUE;?>" onclick = "return submitForm()" onmouseover = "helpline('submit')" />
 
-                 <input name="preview" type="button" class="button"  onClick="fbGetPreview(document.postform.message.value,<?php echo FB_FB_ITEMID?>);" value="<?php echo _PREVIEW?>"  onmouseover = "helpline('preview');">
-                <input type = "button" class = "button" value = "<?php echo _GEN_CANCEL;?>" onclick = "javascript:window.history.back();" onmouseover = "helpline('cancel')"/>
+                 <input name="preview" type="button" class="button"  onClick="fbGetPreview(document.postform.message.value,<?php echo KUNENA_COMPONENT_ITEMID?>);" value="<?php echo _PREVIEW?>"  onmouseover = "helpline('preview');" />
+                <input type = "button" class = "button" value = "<?php echo _GEN_CANCEL;?>" onclick = "javascript:window.history.back();" onmouseover = "helpline('cancel')" />
             </td>
         </tr>
     </tbody>
@@ -295,7 +295,7 @@ include_once(FB_COMP_C_SRC . '\fb_bb.js.php');
 </div>
 </div>
 </div>
-<input type="hidden" value="<?php echo JB_DIRECTURL . '/template/default';?>" name="templatePath"/>
+<input type="hidden" value="<?php echo KUNENA_DIRECTURL . '/template/default';?>" name="templatePath" />
 </form>
 
 </td>

@@ -114,7 +114,7 @@ $database->loadObject($user);
 								if ($fbConfig->captcha && $my->id < 1) { ?>
 								<?php echo _FB_CAPDESC.'&nbsp;'?>
 								<input name="txtNumber" type="text" id="txtNumber" value="" style="vertical-align:middle" size="10">&nbsp;
-								<img src="index2.php?option=com_fireboard&func=showcaptcha" alt="" /><br />
+								<img src="index2.php?option=com_kunena&func=showcaptcha" alt="" /><br />
 								<?php
 								}
 								// Finish captcha

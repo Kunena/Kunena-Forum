@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: function.tabber.php 462 2007-12-10 00:05:53Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -30,13 +30,13 @@ $document =& JFactory::getDocument();
         if (!$useCookies) {
             echo("
         <script type='text/javascript'
-        src= '$link/components/com_fireboard/template/default/plugin/recentposts/tabber.js' >
+        src= '$link/components/com_kunena/template/default/plugin/recentposts/tabber.js' >
         </script>");
         }
 
         if ($xhtml) {
            $document->addCustomTag("
-        <link rel='stylesheet' href= '$link/components/com_fireboard/template/default/plugin/recentposts/tabber.css' type='text/css' />
+        <link rel='stylesheet' href= '$link/components/com_kunena/template/default/plugin/recentposts/tabber.css' type='text/css' />
 
         <script type='text/javascript'>
         /* Optional: Temporarily hide the 'tabber' class so it does not 'flash'
@@ -47,7 +47,7 @@ $document =& JFactory::getDocument();
         }
         else {
             echo("
-        <link rel='stylesheet' href= '$link/components/com_fireboard/template/default/plugin/recentposts/tabber.css' type='text/css' >
+        <link rel='stylesheet' href= '$link/components/com_kunena/template/default/plugin/recentposts/tabber.css' type='text/css' >
 
         <script type='text/javascript'>
         /* Optional: Temporarily hide the 'tabber' class so it does not 'flash'
@@ -135,7 +135,7 @@ $document =& JFactory::getDocument();
             if ($useCookies) {
                 echo("
         <script type='text/javascript'
-        src= '$link/components/com_fireboard/template/default/plugin/recentposts/tabber.js' >
+        src= '$link/components/com_kunena/template/default/plugin/recentposts/tabber.js' >
         </script>
         ");
             }

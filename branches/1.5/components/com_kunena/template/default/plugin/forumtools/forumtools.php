@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: forumtools.php 855 2008-07-16 15:35:10Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -15,19 +15,9 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
-define("FB_L", "#");
 ?>
 
 <script type = "text/javascript">
-
-function test(){
- jQuery("#jrftsw").click(function()
-        {
-            jQuery(".forumtools_contentBox").slideToggle("fast");
-            return false;
-        }
-}
-
     jQuery(document).ready(function()
     {
         jQuery("#jrftsw").click(function()
@@ -40,7 +30,7 @@ function test(){
 
 <div id = "fb_ft-cover">
     <div id = "forumtools_control">
-        <a href = "<?php echo FB_L ?>" onclick='return false;' id = "jrftsw" class = "forumtools"><?php echo _FB_FORUMTOOLS;?></a>
+        <a href = "#" id = "jrftsw" class = "forumtools"><?php echo _KUNENA_FORUMTOOLS;?></a>
     </div>
 
     <div class = "forumtools_contentBox" id = "box1">
@@ -48,7 +38,7 @@ function test(){
             <ul>
                 <li>
                 <?php
-                echo '<a href="' . JRoute::_(JB_LIVEURLREL . '&amp;func=post&amp;do=reply&amp;catid=' . $catid) . '">' . _GEN_POST_NEW_TOPIC . '</a>';
+                echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=post&amp;do=reply&amp;catid=' . $catid) . '">' . _GEN_POST_NEW_TOPIC . '</a>';
                 ?>
 
                 </li>
@@ -62,7 +52,7 @@ function test(){
 
                         <li>
                         <?php
-                        echo '<a href="' . JRoute::_(JB_LIVEURLREL . '&amp;id=' . $id . '&amp;catid=' . $catid . '&amp;func=fb_pdf') . '">' . _GEN_PDF . '</a>';
+                        echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;id=' . $id . '&amp;catid=' . $catid . '&amp;func=fb_pdf') . '">' . _GEN_PDF . '</a>';
                         ?>
 
                         </li>
@@ -75,7 +65,7 @@ function test(){
                 <li>
                 <?php
                 if ($my->id != 0) {
-                    echo '<a href="' . JRoute::_(JB_LIVEURLREL . '&amp;func=markThisRead&amp;catid=' . $catid) . '">' . _GEN_MARK_THIS_FORUM_READ . '</a>';
+                    echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=markThisRead&amp;catid=' . $catid) . '">' . _GEN_MARK_THIS_FORUM_READ . '</a>';
                 }
                 ?>
 
@@ -88,13 +78,13 @@ function test(){
 
                     if ($view == "flat")
                     {
-                        echo '<a href="' . JRoute::_(JB_LIVEURLREL . '&amp;func=showcat&amp;view=threaded&amp;id=' . $id . '&amp;catid=' . $catid) . '" >';
+                        echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;view=threaded&amp;id=' . $id . '&amp;catid=' . $catid) . '" >';
                         echo _GEN_THREADED_VIEW;
                         echo '</a>';
                     }
                     else
                     {
-                        echo '<a href="' . JRoute::_(JB_LIVEURLREL . '&amp;func=showcat&amp;id=' . $id . '&amp;view=flat&amp;catid=' . $catid) . '" >';
+                        echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;id=' . $id . '&amp;view=flat&amp;catid=' . $catid) . '" >';
                         echo _GEN_FLAT_VIEW;
                         echo "</a>";
                     }
@@ -105,7 +95,7 @@ function test(){
 
                 <li>
                 <?php
-                echo ' <a href="' . JRoute::_(JB_LIVEURLREL . '&amp;func=latest') . '" >' . _GEN_LATEST_POSTS . '</a>';
+                echo ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=latest') . '" >' . _GEN_LATEST_POSTS . '</a>';
                 ?>
 
                 </li>
@@ -115,7 +105,7 @@ function test(){
                 {
 				 if ($fbConfig->rules_infb) {
                     echo '<li>';
-                    echo '<a href="' . JRoute::_(JB_LIVEURLREL . '&amp;func=rules') . '" >';
+                    echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=rules') . '" >';
                     echo _GEN_RULES;
                     echo '</a></li>';
 					} else {
@@ -129,7 +119,7 @@ function test(){
                 {
 				 if ($fbConfig->help_infb) {
 					echo '<li>';
-					echo '<a href="' . JRoute::_(JB_LIVEURLREL . '&amp;func=faq') . '" >';
+					echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=faq') . '" >';
 					echo _GEN_HELP;
 					echo '</a></li>';
 					} else {

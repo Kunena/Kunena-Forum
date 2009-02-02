@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: moderate_messages.php 1029 2008-08-25 15:40:07Z racoon $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -34,18 +34,18 @@ switch ($action)
         switch (jbDeletePosts($database, $cid))
         {
             case -1:
-                mosRedirect(JB_LIVEURL . 'func=review&amp;catid=' . $catid, "ERROR: The post has been deleted but the text could not be deleted\n Check the #__fb_messages_text table for mesid IN " . explode(',', $cid));
+                mosRedirect(KUNENA_LIVEURL . 'func=review&amp;catid=' . $catid, "ERROR: The post has been deleted but the text could not be deleted\n Check the #__fb_messages_text table for mesid IN " . explode(',', $cid));
 
                 break;
 
             case 0:
-                mosRedirect(JB_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_DELETE_ERROR);
+                mosRedirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_DELETE_ERROR);
 
                 break;
 
             case 1:
             default:
-                mosRedirect(JB_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_DELETE_SUCCESS);
+                mosRedirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_DELETE_SUCCESS);
 
                 break;
         }
@@ -56,13 +56,13 @@ switch ($action)
         switch (jbApprovePosts($database, $cid))
         {
             case 0:
-                mosRedirect(JB_LIVEURL . 'amp;func=review&amp;catid=' . $catid, _MODERATION_APPROVE_ERROR);
+                mosRedirect(KUNENA_LIVEURL . 'amp;func=review&amp;catid=' . $catid, _MODERATION_APPROVE_ERROR);
 
                 break;
 
             default:
             case 1:
-                mosRedirect(JB_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_APPROVE_SUCCESS);
+                mosRedirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_APPROVE_SUCCESS);
 
                 break;
         }
@@ -96,7 +96,7 @@ switch ($action)
 function jbListMessages($allMes, $catid)
 {
     global $fbConfig;
-    echo '<form action="' . JRoute::_(JB_LIVEURLREL . '&amp;func=review') . '" name="moderation" method="post">';
+    echo '<form action="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=review') . '" name="moderation" method="post">';
 ?>
 
     <script>
@@ -164,8 +164,8 @@ function jbListMessages($allMes, $catid)
 </tr>
 
 <tr height = "10" bgcolor = "#e2e2e2">
-    <td colspan = "5">&nbsp;
-        
+    <td colspan = "5">
+        &nbsp;
     </td>
 </tr>
     </table>

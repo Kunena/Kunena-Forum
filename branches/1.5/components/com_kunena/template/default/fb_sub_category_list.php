@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fb_sub_category_list.php 1083 2008-10-27 07:07:49Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -50,8 +50,8 @@ else
                 <th colspan = "5" align="left">
                     <div class = "fb_title_cover fbm" >
                         <?php
-//                        echo '<a class="fb_title fbl" href="' . JRoute::_(JB_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $objCatInfo->id) . '">' . $objCatInfo->name . '</a>';
-                        echo fb_link::GetCategoryLink('showcat', $objCatInfo->id, $objCatInfo->name, $rel='follow', $class='fb_title fbl');
+//                        echo '<a class="fb_title fbl" href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $objCatInfo->id) . '">' . $objCatInfo->name . '</a>';
+                        echo CKunenaLink::GetCategoryLink('showcat', $objCatInfo->id, $objCatInfo->name, $rel='follow', $class='fb_title fbl');
                         ?>
 
                         <?php
@@ -61,7 +61,7 @@ else
                         ?>
                     </div>
 
-                    <img id = "BoxSwitch_<?php echo $objCatInfo->id ; ?>__catid_<?php echo $objCatInfo->id ; ?>" class = "hideshow" src = "<?php echo JB_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+                    <img id = "BoxSwitch_<?php echo $objCatInfo->id ; ?>__catid_<?php echo $objCatInfo->id ; ?>" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
                 </th>
             </tr>
         </thead>
@@ -112,13 +112,13 @@ else
                     $lastPosttime = $database->loadResult();
                     	check_dberror("Unable to get max time.");
                     //changed lastPosttime to lastptime
-                    $lastptime = FB_timeformat(FBTools::fbGetShowTime($lastPosttime));
+                    $lastptime = KUNENA_timeformat(FBTools::fbGetShowTime($lastPosttime));
                     $lastPosttime = (int)$lastPosttime;
 
                     if ($my->id != 0)
                     {
                         //    get all threads with posts after the users last visit; don't bother for guests
-                        $database->setQuery("SELECT thread from #__fb_messages where catid='$singlerow->id' and hold='0' and time>{'$prevCheck'} group by thread");
+                        $database->setQuery("SELECT thread from #__fb_messages where catid='$singlerow->id' and hold='0' and time>$prevCheck group by thread");
                         $newThreadsAll = $database->loadObjectList();
                         	check_dberror("Unable to load messages.");
 
@@ -212,38 +212,38 @@ else
                             $cxThereisNewInForum = 1;
 
                             // Check Unread    Cat Images
-                            if (is_file(JB_ABSCATIMAGESPATH . "" . $singlerow->id . "_on.gif")) {
-                                $categoryicon .= "<img src=\"" . JB_URLCATIMAGES . "" . $singlerow->id . "_on.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
+                            if (is_file(KUNENA_ABSCATIMAGESPATH . "" . $singlerow->id . "_on.gif")) {
+                                $categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . "" . $singlerow->id . "_on.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
                             }
                             else {
-                                $categoryicon .= $fbIcons['unreadforum'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['unreadforum'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '"/>' : $fbConfig->newchar;
+                                $categoryicon .= $fbIcons['unreadforum'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unreadforum'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '"/>' : $fbConfig->newchar;
                             }
                         }
                         else
                         {
                             // Check Read Cat Images
-                            if (is_file(JB_ABSCATIMAGESPATH . "" . $singlerow->id . "_off.gif")) {
-                                $categoryicon .=  "<img src=\"" . JB_URLCATIMAGES . "" . $singlerow->id . "_off.gif\" border=\"0\" class='forum-cat-image' alt=\" \"  />";
+                            if (is_file(KUNENA_ABSCATIMAGESPATH . "" . $singlerow->id . "_off.gif")) {
+                                $categoryicon .=  "<img src=\"" . KUNENA_URLCATIMAGES . "" . $singlerow->id . "_off.gif\" border=\"0\" class='forum-cat-image' alt=\" \"  />";
                             }
                             else {
-                                $categoryicon .=  $fbIcons['readforum'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['readforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : $fbConfig->newchar;
+                                $categoryicon .=  $fbIcons['readforum'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['readforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : $fbConfig->newchar;
                             }
                         }
                     }
                     // Not Login Cat Images
                     else
                     {
-                        if (is_file(JB_ABSCATIMAGESPATH . "" . $singlerow->id . "_notlogin.gif")) {
-                            $categoryicon .=  "<img src=\"" . JB_URLCATIMAGES . "" . $singlerow->id . "_notlogin.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
+                        if (is_file(KUNENA_ABSCATIMAGESPATH . "" . $singlerow->id . "_notlogin.gif")) {
+                            $categoryicon .=  "<img src=\"" . KUNENA_URLCATIMAGES . "" . $singlerow->id . "_notlogin.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
                         }
                         else {
-                            $categoryicon .=  $fbIcons['notloginforum'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['notloginforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : $fbConfig->newchar;
+                            $categoryicon .=  $fbIcons['notloginforum'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['notloginforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : $fbConfig->newchar;
                         }
                     }
-                    echo fb_link::GetCategoryLink('listcat', $singlerow->id, $categoryicon, 'follow');
+                    echo CKunenaLink::GetCategoryLink('listcat', $singlerow->id, $categoryicon, 'follow');
 					echo '</td>';
                     echo '<td class="td-2"  align="left"><div class="'
-                             . $boardclass . 'thead-title fbl">'.fb_link::GetCategoryLink('showcat', $singlerow->id, $singlerow->name, 'follow');
+                             . $boardclass . 'thead-title fbl">'.CKunenaLink::GetCategoryLink('showcat', $singlerow->id, $singlerow->name, 'follow');
 
                     //new posts available
                     if ($cxThereisNewInForum == 1 && $my->id > 0) {
@@ -255,15 +255,15 @@ else
                     if ($singlerow->locked)
                     {
                         echo
-                            $fbIcons['forumlocked'] ? '&nbsp;&nbsp;<img src="' . JB_URLICONSPATH . ''
-                                . $fbIcons['forumlocked'] . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : '&nbsp;&nbsp;<img src="' . JB_URLEMOTIONSPATH . 'lock.gif"  border="0" alt="' . _GEN_LOCKED_FORUM . '">';
+                            $fbIcons['forumlocked'] ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . ''
+                                . $fbIcons['forumlocked'] . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : '&nbsp;&nbsp;<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0" alt="' . _GEN_LOCKED_FORUM . '">';
                         $lockedForum = 1;
                     }
 
                     if ($singlerow->review)
                     {
-                        echo $fbIcons['forummoderated'] ? '&nbsp;&nbsp;<img src="' . JB_URLICONSPATH . ''
-                                 . $fbIcons['forummoderated'] . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : '&nbsp;&nbsp;<img src="' . JB_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '"/>';
+                        echo $fbIcons['forummoderated'] ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . ''
+                                 . $fbIcons['forummoderated'] . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : '&nbsp;&nbsp;<img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '"/>';
                         $moderatedForum = 1;
                     }
 
@@ -276,9 +276,9 @@ else
                     if (count($forumparents) > 0)
                     {
                         if(count($forumparents)==1) {
-                          echo '<div class="' . $boardclass . 'thead-child  fbs"><b>' . _FB_CHILD_BOARD . ' </b>';
+                          echo '<div class="' . $boardclass . 'thead-child  fbs"><b>' . _KUNENA_CHILD_BOARD . ' </b>';
                         } else {
-                          echo '<div class="' . $boardclass . 'thead-child  fbs"><b>' . _FB_CHILD_BOARDS . ' </b>';
+                          echo '<div class="' . $boardclass . 'thead-child  fbs"><b>' . _KUNENA_CHILD_BOARDS . ' </b>';
                         };
 
                         foreach ($forumparents as $forumparent)
@@ -316,23 +316,23 @@ else
                                     {
 
                                         // Check Unread    Cat Images
-                                        if (is_file(JB_ABSCATIMAGESPATH . "" . $forumparent->id . "_on_childsmall.gif")) {
-                                            echo "<img src=\"" . JB_URLCATIMAGES . "" . $forumparent->id . "_on_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
+                                        if (is_file(KUNENA_ABSCATIMAGESPATH . "" . $forumparent->id . "_on_childsmall.gif")) {
+                                            echo "<img src=\"" . KUNENA_URLCATIMAGES . "" . $forumparent->id . "_on_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
                                         }
                                         else {
                                             echo $fbIcons['unreadforum']
-                                                     ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['unreadforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '" />' : $fbConfig->newchar;
+                                                     ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unreadforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '" />' : $fbConfig->newchar;
                                         }
                                     }
                                     else
                                     {
                                         // Check Read Cat Images
-                                        if (is_file(JB_ABSCATIMAGESPATH . "" . $forumparent->id . "_off_childsmall.gif")) {
-                                            echo "<img src=\"" . JB_URLCATIMAGES . "" . $forumparent->id . "_off_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
+                                        if (is_file(KUNENA_ABSCATIMAGESPATH . "" . $forumparent->id . "_off_childsmall.gif")) {
+                                            echo "<img src=\"" . KUNENA_URLCATIMAGES . "" . $forumparent->id . "_off_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
                                         }
                                         else {
                                             echo $fbIcons['readforum']
-                                                     ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['readforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : $fbConfig->newchar;
+                                                     ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['readforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : $fbConfig->newchar;
                                         }
                                     }
                                 }
@@ -340,12 +340,12 @@ else
                                 // Not Login Cat Images
                                 else
                                 {
-                                    if (is_file(JB_ABSCATIMAGESPATH . "" . $forumparent->id . "_notlogin_childsmall.gif")) {
-                                        echo "<img src=\"" . JB_URLCATIMAGES . "" . $forumparent->id . "_notlogin_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
+                                    if (is_file(KUNENA_ABSCATIMAGESPATH . "" . $forumparent->id . "_notlogin_childsmall.gif")) {
+                                        echo "<img src=\"" . KUNENA_URLCATIMAGES . "" . $forumparent->id . "_notlogin_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
                                     }
                                     else {
                                         echo $fbIcons['notloginforum']
-                                                 ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['notloginforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : $fbConfig->newchar;
+                                                 ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['notloginforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : $fbConfig->newchar;
                                     }
             ?>
 
@@ -357,7 +357,7 @@ else
             ?>
 
             <?php
-                            echo fb_link::GetCategoryLink('showcat', $forumparent->id, $forumparent->name, 'follow').' &nbsp;';
+                            echo CKunenaLink::GetCategoryLink('showcat', $forumparent->id, $forumparent->name, 'follow').' &nbsp;';
                         }
 
                         echo "</div>";
@@ -374,7 +374,7 @@ else
                         echo '<div class="' . $boardclass . 'thead-moderators  fbs">' . _GEN_MODERATORS . ": ";
 
                         foreach ($modslist as $mod) {
-                             echo '&nbsp;' .fb_link::GetProfileLink($mod->userid, $fbConfig->username ? $mod->username : $mod->name, 'nofollow').'&nbsp; ';
+                             echo '&nbsp;' .CKunenaLink::GetProfileLink($mod->userid, $fbConfig->username ? $mod->username : $mod->name, 'nofollow').'&nbsp; ';
                         }
 
                         echo '</div>';
@@ -385,7 +385,7 @@ else
                         if ($numPending > 0)
                         {
                             echo '<div class="fbs" ><font color="red">';
-                            echo ' ' . fb_link::GetCategoryReviewListLink($singlerow->id, $numcolor.' '.$numPending.' '. _SHOWCAT_PENDING, 'nofollow');
+                            echo ' ' . CKunenaLink::GetCategoryReviewListLink($singlerow->id, $numcolor.' '.$numPending.' '. _SHOWCAT_PENDING, 'nofollow');
                             echo '</font></div>';
                         }
                     }
@@ -400,16 +400,16 @@ else
 
                         <td class = "td-5" align="left">
                             <div class = "<?php echo $boardclass ?>latest-subject fbm">
-                                <?php echo fb_link::GetThreadLink('view', $latestcatid, $latestthread, htmlspecialchars(stripslashes($latestsubject)), htmlspecialchars(stripslashes($latestsubject)), $rel='nofollow');?>
+                                <?php echo CKunenaLink::GetThreadLink('view', $latestcatid, $latestthread, htmlspecialchars(stripslashes($latestsubject)), htmlspecialchars(stripslashes($latestsubject)), $rel='nofollow');?>
                             </div>
 
                             <div class = "<?php echo $boardclass ?>latest-subject-by  fbs">
 <?php echo _GEN_BY; ?>
 
-                                <?php echo fb_link::GetProfileLink($latestuserid, $latestname, $rel='nofollow');?>
+                                <?php echo CKunenaLink::GetProfileLink($latestuserid, $latestname, $rel='nofollow');?>
 
-                    | <?php echo $lastptime; ?> <?php echo fb_link::GetThreadPageLink('view', $latestcatid, $latestthread, $latestpage, $fbConfig->messages_per_page, ($fbIcons['latestpost'] ? '<img src="'
-             . JB_URLICONSPATH . '' . $fbIcons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />' : '  <img src="' . JB_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'), $latestid, $rel='nofollow');?>
+                    | <?php echo $lastptime; ?> <?php echo CKunenaLink::GetThreadPageLink('view', $latestcatid, $latestthread, $latestpage, $fbConfig->messages_per_page, ($fbIcons['latestpost'] ? '<img src="'
+             . KUNENA_URLICONSPATH . '' . $fbIcons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'), $latestid, $rel='nofollow');?>
                             </div>
                         </td>
 

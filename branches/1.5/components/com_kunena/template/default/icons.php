@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: icons.php 920 2008-08-07 07:59:19Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -42,6 +42,7 @@ $fbIcons['unsubscribe'] = 'unsubscribe.gif';
 $fbIcons['favorite'] = 'favorite.gif';
 $fbIcons['unfavorite'] = 'unfavorite.gif';
 $fbIcons['favoritestar'] = 'favoritestar.gif';
+$fbIcons['favoritestar_grey'] = 'kunena.favoritestar.grey.gif';
 $fbIcons['unlock'] = 'unlock.gif';
 $fbIcons['unsticky'] = 'unsticky.gif';
 $fbIcons['topicreply'] = 'reply.gif';

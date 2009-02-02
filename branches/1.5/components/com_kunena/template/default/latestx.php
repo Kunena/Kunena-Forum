@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: latestx.php 964 2008-08-12 04:31:36Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -19,7 +19,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 //Start with determining which forums the user can see
 
-require_once (FB_COMP_C_SRC . '/fb_auth.php');
+require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
 //resetting some things:
 $lockedForum = 0;
 $lockedTopic = 0;
@@ -93,13 +93,13 @@ if ($sel == "0")
 
                     <?php echo $lastvisit; ?> <?php echo _SHOW_HOURS; ?> (<?php echo _SHOW_POSTS; ?><?php echo $countRS; ?>)</span> <?php echo _DESCRIPTION_POSTS; ?><br/>
 
-                    <?php echo fb_link::GetShowLatestThreadsLink(4, _SHOW_4_HOURS) . ' | ';
-                          echo fb_link::GetShowLatestThreadsLink(8, _SHOW_8_HOURS) . ' | ';
-                          echo fb_link::GetShowLatestThreadsLink(12, _SHOW_12_HOURS) . ' | ';
-                          echo fb_link::GetShowLatestThreadsLink(24, _SHOW_24_HOURS) . ' | ';
-                          echo fb_link::GetShowLatestThreadsLink(48, _SHOW_48_HOURS) . ' | ';
-                          echo fb_link::GetShowLatestThreadsLink(168, _SHOW_WEEK) . ' | ';
-                          echo fb_link::GetShowLatestThreadsLink(0, _SHOW_LASTVISIT) ;
+                    <?php echo CKunenaLink::GetShowLatestThreadsLink(4, _SHOW_4_HOURS) . ' | ';
+                          echo CKunenaLink::GetShowLatestThreadsLink(8, _SHOW_8_HOURS) . ' | ';
+                          echo CKunenaLink::GetShowLatestThreadsLink(12, _SHOW_12_HOURS) . ' | ';
+                          echo CKunenaLink::GetShowLatestThreadsLink(24, _SHOW_24_HOURS) . ' | ';
+                          echo CKunenaLink::GetShowLatestThreadsLink(48, _SHOW_48_HOURS) . ' | ';
+                          echo CKunenaLink::GetShowLatestThreadsLink(168, _SHOW_WEEK) . ' | ';
+                          echo CKunenaLink::GetShowLatestThreadsLink(0, _SHOW_LASTVISIT) ;
                     ?>
 
                 </div>
@@ -156,14 +156,14 @@ if ($sel == "0")
                 $k = 1 - $k;
                 echo '<tr  class="' . $boardclass . '' . $tabclass[$k] . '" >';
                 echo '<td  class="td-1"  align="left" >';
-                echo fb_link::GetThreadLink('view', $latestPostCatid, $rs->thread, htmlspecialchars(stripslashes($rs->subject)), htmlspecialchars(stripslashes($rs->subject))).' ';
+                echo CKunenaLink::GetThreadLink('view', $latestPostCatid, $rs->thread, htmlspecialchars(stripslashes($rs->subject)), htmlspecialchars(stripslashes($rs->subject))).' ';
 
                 $threadPages = 1;
                 if ($thisThread->totalmessages > $fbConfig->messages_per_page)
                 {
                     $threadPages = ceil($thisThread->totalmessages / $fbConfig->messages_per_page);
                     echo ("<span class=\"jr-showcat-perpage\">[");
-                    echo _PAGE.' '.fb_link::GetThreadPageLink('view', $latestPostCatid, $rs->thread, 1, $fbConfig->messages_per_page, 1);
+                    echo _PAGE.' '.CKunenaLink::GetThreadPageLink('view', $latestPostCatid, $rs->thread, 1, $fbConfig->messages_per_page, 1);
 
                     if ($threadPages > 3)
                     {
@@ -187,20 +187,20 @@ if ($sel == "0")
                             echo (",");
                             }
 
-                        echo fb_link::GetThreadPageLink('view', $latestPostCatid, $rs->thread, $hopPage, $fbConfig->messages_per_page, $hopPage);
+                        echo CKunenaLink::GetThreadPageLink('view', $latestPostCatid, $rs->thread, $hopPage, $fbConfig->messages_per_page, $hopPage);
                     }
 
                     echo ']</span> ';
                 }
 
                 $tmpicon = $fbIcons['latestpost'] ? '<img src="'
-                     .JB_URLICONSPATH.''.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" />':'  <img src="'.JB_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />';
-                echo fb_link::GetThreadPageLink('view', $latestPostCatid, $rs->thread, $threadPages, $fbConfig->messages_per_page, $tmpicon, $latestPostId);
+                     .KUNENA_URLICONSPATH.''.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />':'  <img src="'.KUNENA_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />';
+                echo CKunenaLink::GetThreadPageLink('view', $latestPostCatid, $rs->thread, $threadPages, $fbConfig->messages_per_page, $tmpicon, $latestPostId);
 
                 echo '<br />' . _GEN_FORUM . ' : ' . $catname . '</td>';
                 echo '<td class="td-2" align="center">' . $numberOfPosts . '</td>';
                 echo '<td class="td-3" align="center">';
-                echo fb_link::GetProfileLink($latestPostUserid, htmlspecialchars($latestPostName));
+                echo CKunenaLink::GetProfileLink($latestPostUserid, htmlspecialchars($latestPostName));
                 echo '</td>';
                 echo '<td class="td-4" align="left">' . date(_DATETIME, $latestPostTime) . '</td>';
                 echo '</tr>';
@@ -227,7 +227,7 @@ if ($sel == "0")
 
                         //(JJ) FINISH: CAT LIST BOTTOM
                         if ($fbConfig->enableforumjump)
-                            require_once (FB_COMP_C_SRC . '/fb_forumjump.php');
+                            require_once (KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
                         ?>
                     </th>
                 </tr>

@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: faq.php 895 2008-08-03 06:15:11Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -26,10 +26,11 @@ global $fbConfig;
 <table class = "fb_blocktable" id ="fb_forumfaq" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
-                    <th >
+                    <th>
                         <div class = "fb_title_cover fbm">
                         <span class="fb_title fbl" ><?php echo _COM_FORUM_HELP; ?></span>
                         </div>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -66,7 +67,7 @@ global $fbConfig;
        <?php
 //(JJ) FINISH: CAT LIST BOTTOM
 if ($fbConfig->enableforumjump)
-require_once (FB_COMP_C_SRC . '\fb_forumjump.php');
+require_once (KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
 ?></th>
     </tr>
   </thead>

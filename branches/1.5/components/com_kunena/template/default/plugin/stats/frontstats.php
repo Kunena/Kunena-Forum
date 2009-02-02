@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: frontstats.php 1064 2008-10-05 23:29:35Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -17,46 +17,24 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
-$forumurl = JRoute::_(JB_LIVEURLREL);
-if ($fbConfig->cb_profile /*&& $my->id != 0*/) {
+$forumurl = JRoute::_(KUNENA_LIVEURLREL);
+$statslink = JRoute::_(KUNENA_LIVEURLREL.'&amp;func=stats');
+
+if ($fbConfig->fb_profile == "jomsocial")
+{
+	$userlist = JRoute::_('index.php?option=com_community&amp;view=search&amp;task=browse');
+}
+else if ($fbConfig->cb_profile)
+{
     $userlist = JRoute::_('index.php?option=com_comprofiler&amp;task=usersList');
 }
-else {
-    $userlist = JRoute::_(JB_LIVEURLREL . '&amp;func=userlist&amp');
+else
+{
+    $userlist = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userlist');
 }
-?>
 
-<?php
 if ($fbConfig->showstats > 0)
 {
-?>
-
-<?php
-    $database->setQuery(
-        "SELECT COUNT(*) FROM #__fb_messages AS m" . "\n LEFT JOIN #__fb_categories AS c ON c.id = m.catid" . "\n LEFT JOIN #__users AS u ON u.gid >= c.pub_access" . "\n WHERE m.moved='0' AND u.id = $my->id AND c.published = 1 AND m.hold = 0");
-    $totalmsg = $database->loadResult();
-    	check_dberror("Unable to load message count 1.");
-    $database->setQuery("SELECT COUNT(*) FROM #__fb_messages AS m"
-                            . "\n LEFT JOIN #__fb_categories AS c ON c.id = m.catid" . "\n LEFT JOIN #__users AS u ON u.gid >= c.pub_access" . "\n WHERE m.moved='0' AND u.id = $my->id AND c.published = 1 AND m.hold = 0 AND m.parent= 0");
-    $totaltitle = $database->loadResult();
-    	check_dberror("Unable to load message count 2.");
-    $database->setQuery(
-        "SELECT m.*, m.time AS sendtime FROM #__fb_messages AS m"
-            . "\n LEFT JOIN #__fb_categories AS c ON c.id = m.catid" . "\n LEFT JOIN #__users AS u ON u.gid >= c.pub_access" . "\n WHERE m.moved='0' AND u.id = $my->id AND c.published = 1 AND m.hold = 0" . "\n ORDER BY m.id DESC LIMIT 0,1");
-    $msgs = $database->loadObjectList();
-    	check_dberror("Unable to load messages.");
-    $statslink = JRoute::_(JB_LIVEURLREL.'&amp;func=stats');
-    if ($fbConfig->cb_profile /*&& $my->id != 0*/) {
-        $userlist = JRoute::_('index.php?option=com_comprofiler&amp;task=usersList');
-    }
-    else {
-        $userlist = JRoute::_(JB_LIVEURLREL .'&amp;func=userlist');
-    }
-
-
-?>
-
-<?php
     if ($fbConfig->showgenstats > 0)
     {
 ?>
@@ -73,7 +51,7 @@ if ($fbConfig->showstats > 0)
                         <div class = "fb_title_cover fbm">
                             <a class="fb_title fbl" href = "<?php echo $statslink;?>"><?php echo $fbConfig->board_title; ?> <?php echo _STAT_FORUMSTATS; ?></a>
                         </div>
-                        <img id = "BoxSwitch_frontstats__frontstats_tbody" class = "hideshow" src = "<?php echo JB_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+                        <img id = "BoxSwitch_frontstats__frontstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
                     </th>
                 </tr>
             </thead>
@@ -82,17 +60,17 @@ if ($fbConfig->showstats > 0)
                 <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
                     <td class = "td-1  fbm" align="left">
 <?php echo _STAT_TOTAL_USERS; ?>:<b> <a href = "<?php echo $userlist;?>"><?php echo $totalmembers; ?></a> </b>
-                    &nbsp; <?php echo _STAT_LATEST_MEMBERS; ?>:<b> <a href = "<?php echo JRoute::_(FB_PROFILE_LINK_SUFFIX.''.$lastestmemberid)?>" title = "<?php echo _STAT_PROFILE_INFO; ?> <?php echo $lastestmember;?>"><?php echo $lastestmember; ?></a> </b>
+                    &nbsp; <?php echo _STAT_LATEST_MEMBERS; ?>:<b> <a href = "<?php echo sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX.''.$lastestmemberid)?>" title = "<?php echo _STAT_PROFILE_INFO; ?> <?php echo $lastestmember;?>"><?php echo $lastestmember; ?></a> </b>
 
                 <br/> <?php echo _STAT_TOTAL_MESSAGES; ?>: <b> <?php echo $totalmsgs; ?></b> &nbsp;
     <?php echo _STAT_TOTAL_SUBJECTS; ?>: <b> <?php echo $totaltitles; ?></b> &nbsp; <?php echo _STAT_TOTAL_SECTIONS; ?>: <b> <?php echo $totalcats; ?></b> &nbsp; <?php echo _STAT_TOTAL_CATEGORIES; ?>: <b> <?php echo $totalsections; ?></b>
 
-                <br/> <?php echo _STAT_TODAY_OPEN_THREAD; ?>: <b> <?php echo $todaystitle; ?></b> &nbsp; <?php echo
-    _STAT_YESTERDAY_OPEN_THREAD; ?>: <b> <?php echo $yesterdaystitle; ?></b> &nbsp; <?php echo _STAT_TODAY_TOTAL_ANSWER; ?>: <b> <?php echo $todaytotal; ?></b> &nbsp; <?php echo _STAT_YESTERDAY_TOTAL_ANSWER; ?>: <b> <?php echo $yesterdaytotal; ?></b>
+                <br/> <?php echo _STAT_TODAY_OPEN_THREAD; ?>: <b> <?php echo $todayopen; ?></b> &nbsp; <?php echo
+    _STAT_YESTERDAY_OPEN_THREAD; ?>: <b> <?php echo $yesterdayopen; ?></b> &nbsp; <?php echo _STAT_TODAY_TOTAL_ANSWER; ?>: <b> <?php echo $todayanswer; ?></b> &nbsp; <?php echo _STAT_YESTERDAY_TOTAL_ANSWER; ?>: <b> <?php echo $yesterdayanswer; ?></b>
 
                 <br/>
 
-                &raquo; <a href = "<?php echo JRoute::_(JB_LIVEURLREL .'&amp;func=latest');?>"><?php echo _STAT_VIEW_RECENT_POSTS_ON_FORUM; ?></a> &raquo; <a href = "<?php echo $statslink;?>"><?php echo _STAT_MORE_ABOUT_STATS; ?></a> &raquo; <a href="<?php echo $userlist;?>"><?php echo _STAT_USERLIST; ?></a>
+                &raquo; <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL .'&amp;func=latest');?>"><?php echo _STAT_VIEW_RECENT_POSTS_ON_FORUM; ?></a> &raquo; <a href = "<?php echo $statslink;?>"><?php echo _STAT_MORE_ABOUT_STATS; ?></a> &raquo; <a href="<?php echo $userlist;?>"><?php echo _STAT_USERLIST; ?></a>
                     </td>
                 </tr>
             </tbody>

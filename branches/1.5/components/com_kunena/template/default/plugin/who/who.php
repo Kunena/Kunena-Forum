@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: who.php 855 2008-07-16 15:35:10Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -68,7 +68,7 @@ if ($fbConfig->showwhoisonline > 0)
                 $k = 1 - $k;
 
                 if ($user->userid == 0) {
-                    $user->username = _FB_GUEST;
+                    $user->username = _KUNENA_GUEST;
                 }
 
                 $time = date("H:i:s", $user->time);
@@ -89,7 +89,7 @@ if ($fbConfig->showwhoisonline > 0)
                         {
                         ?>
 
-                       <a href = "<?php echo JRoute::_(FB_PROFILE_LINK_SUFFIX.''.$user->userid)?>"><?php echo $user->username; ?></a>
+                       <a href = "<?php echo JRoute::_(KUNENA_PROFILE_LINK_SUFFIX.''.$user->userid)?>"><?php echo $user->username; ?></a>
 
                         <?php
                         }

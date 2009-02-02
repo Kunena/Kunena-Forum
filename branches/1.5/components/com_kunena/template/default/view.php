@@ -1252,7 +1252,7 @@ $my = &JFactory::getUser();
 
                                     <?php
                                     // TODO: fxstein - Need to perform SEO cleanup
-                                    echo $pageNav-> getPagesLinks  ("index.php?option=com_fireboard&amp;Itemid=$Itemid&amp;func=view&amp;id=$id&amp;catid=$catid");
+                                    echo $pageNav-> getPagesLinks  ("index.php?option=com_kunena&amp;Itemid=$Itemid&amp;func=view&amp;id=$id&amp;catid=$catid");
                                     ?>
 
                                     </li>

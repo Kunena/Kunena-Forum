@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: whoisonline.php 1064 2008-10-05 23:29:35Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -18,12 +18,12 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
 
-if ($fbConfig->showwhoisonline > 0)
+if ($fbConfig->showstats && $fbConfig->showwhoisonline)
 {
 ?>
 <!-- WHOIS ONLINE -->
 <?php
-    $whoislink = JRoute::_('index.php?option=com_fireboard&amp;func=who');
+    $whoislink = JRoute::_('index.php?option=com_kunena&amp;func=who');
     $fb_queryName = $fbConfig->username ? "username" : "name";
     $query
         = "SELECT w.userip, w.time, w.what, u.$fb_queryName AS username, u.id, k.moderator, k.showOnline "
@@ -35,7 +35,7 @@ if ($fbConfig->showwhoisonline > 0)
 	. "\n  ON s.guest=0 AND s.userid=w.userid "
         . "\n WHERE w.userid!=0 "
         . "\n GROUP BY u.id "
-        . "\n  ORDER BY w.time DESC";
+        . "\n  ORDER BY username ASC";
     $database->setQuery($query);
     $users = $database->loadObjectList();
     $totaluser = count($users);
@@ -61,10 +61,10 @@ if ($fbConfig->showwhoisonline > 0)
 						<?php if($totaluser==1) { echo _WHO_ONLINE_MEMBER; } else { echo _WHO_ONLINE_MEMBERS; } ?>
 						<?php echo _WHO_AND; ?>
                         <b><?php echo $totalguests; ?></b>
-						<?php if($totaluser==1) { echo _WHO_ONLINE_GUEST; } else { echo _WHO_ONLINE_GUESTS; } ?>
+						<?php if($totalguests==1) { echo _WHO_ONLINE_GUEST; } else { echo _WHO_ONLINE_GUESTS; } ?>
                         </a>
                     </div>
-                    <img id = "BoxSwitch_whoisonline__whoisonline_tbody" class = "hideshow" src = "<?php echo JB_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+                    <img id = "BoxSwitch_whoisonline__whoisonline_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
                 </th>
             </tr>
         </thead>
@@ -82,7 +82,7 @@ if ($fbConfig->showwhoisonline > 0)
 
                   		 <?php if ( $user->showOnline > 0 ){ ?>
 
-                            <a class = "whois<?php echo $user->moderator;?>  <?php echo "fb_group_".$grp->id;?>" href = "<?php echo JRoute::_(FB_PROFILE_LINK_SUFFIX.''.$user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
+                            <a class = "whois<?php echo $user->moderator;?>  <?php echo "fb_group_".$grp->id;?>" href = "<?php echo sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX.''.$user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
 
                 		  <?php  } ?>
 
@@ -93,7 +93,7 @@ if ($fbConfig->showwhoisonline > 0)
 
 					 ?>
 
-                    <br /><span class="fbs"><b><?php echo _FB_HIDDEN_USERS; ?>: </b></span>
+                    <br /><span class="fbs"><b><?php echo _KUNENA_HIDDEN_USERS; ?>: </b></span>
 
                     <?php
 
@@ -108,7 +108,7 @@ if ($fbConfig->showwhoisonline > 0)
 
                   		 <?php if ( $user->showOnline < 1 && $my->gid > 1 ){ ?>
 
-                            <a class = "whois<?php echo $user->moderator;?>  <?php echo "fb_group_".$grp->id;?>" href = "<?php echo JRoute::_(FB_PROFILE_LINK_SUFFIX.''.$user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
+                            <a class = "whois<?php echo $user->moderator;?>  <?php echo "fb_group_".$grp->id;?>" href = "<?php echo sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX.''.$user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
 
                 		  <?php   } ?>
 

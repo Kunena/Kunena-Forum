@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: fb_category_list_bottom.php 855 2008-07-16 15:35:10Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -35,8 +35,8 @@ $my = &JFactory::getUser();
 
                     <form action = "<?php echo JURI::root() ."/index2.php";?>" name = "markAllForumsRead" method = "post">
                         <input type = "hidden" name = "markaction" value = "allread"/>
-                        <input type = "hidden" name = "Itemid" value = "<?php echo FB_FB_ITEMID?>"/>
-                        <input type = "hidden" name = "option" value = "com_fireboard"/>
+                        <input type = "hidden" name = "Itemid" value = "<?php echo KUNENA_COMPONENT_ITEMID?>"/>
+                        <input type = "hidden" name = "option" value = "com_kunena"/>
                         <input type = "hidden" name = "no_html" value = "1"/>
 
                         <input type = "submit" class = "button<?php echo $boardclass ;?> fbs" value = "<?php echo _GEN_MARK_ALL_FORUMS_READ ;?>"/>
@@ -51,7 +51,7 @@ $my = &JFactory::getUser();
                 <?php
                 //(FB) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump)
-                    require_once (FB_COMP_C_SRC . '/fb_forumjump.php');
+                    require_once (KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
                 ?>
             </th>
         </tr>
@@ -61,14 +61,14 @@ $my = &JFactory::getUser();
         <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
             <td class = "td-1 fbs">
                 <?php
-                echo $fbIcons['unreadforum_s'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['unreadforum_s'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '"/>' : $fbConfig->newchar;
+                echo $fbIcons['unreadforum_s'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unreadforum_s'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '"/>' : $fbConfig->newchar;
                 echo '- ' . _GEN_FORUM_NEWPOST . '';
                 ?>
 
                 <br/>
 
 <?php
-echo $fbIcons['readforum_s'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['readforum_s'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : $fbConfig->newchar;
+echo $fbIcons['readforum_s'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['readforum_s'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : $fbConfig->newchar;
 echo ' - ' . _GEN_FORUM_NOTNEW . '';
 ?>
             </td>
@@ -80,8 +80,8 @@ echo ' - ' . _GEN_FORUM_NOTNEW . '';
                 ?>
 
                 <?php
-                    echo $fbIcons['forumlocked'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['forumlocked'] . '" border="0" alt="'
-                             . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '" /> - ' . _GEN_LOCKED_FORUM . '' : '  <img src="' . JB_URLEMOTIONSPATH . 'lock.gif" border="0"  alt="' . _GEN_LOCKED_FORUM . '" /> - ' . _GEN_LOCKED_FORUM . ''; ?>
+                    echo $fbIcons['forumlocked'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forumlocked'] . '" border="0" alt="'
+                             . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '" /> - ' . _GEN_LOCKED_FORUM . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif" border="0"  alt="' . _GEN_LOCKED_FORUM . '" /> - ' . _GEN_LOCKED_FORUM . ''; ?>
 
                 <?php
                 }
@@ -94,8 +94,8 @@ if ($moderatedForum == 1)
 {
 ?>
 
-<?php echo $fbIcons['forummoderated'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['forummoderated']
-               . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '" /> - ' . _GEN_MODERATED . '' : '  <img src="' . JB_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" /> - ' . _GEN_MODERATED . ''; ?>
+<?php echo $fbIcons['forummoderated'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forummoderated']
+               . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '" /> - ' . _GEN_MODERATED . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" /> - ' . _GEN_MODERATED . ''; ?>
 
 <?php
 }

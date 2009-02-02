@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: userinfos.php 895 2008-08-03 06:15:11Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -20,8 +20,9 @@ defined( '_JEXEC' ) or die('Restricted access');
         <tr>
             <th>
                 <div class = "fb_title_cover fbm">
-                    <span class="fb_title fbl"> <?php echo $msg_username; ?>  <?php echo _FB_USERPROFILE_PROFILE; ?></span>
+                    <span class="fb_title fbl"> <?php echo $msg_username; ?>  <?php echo _KUNENA_USERPROFILE_PROFILE; ?></span>
                 </div>
+            </th>
         </tr>
     </thead>
 
@@ -60,7 +61,7 @@ defined( '_JEXEC' ) or die('Restricted access');
                         ?>
                         </div>
 						<div class="viewcover">
-						<?php echo _FB_USERPROFILE_PROFILEHITS; ?>:
+						<?php echo _KUNENA_USERPROFILE_PROFILEHITS; ?>:
 						<?php echo $msg_userhits; ?>
 						</div>
                     <?php

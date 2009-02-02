@@ -290,7 +290,7 @@ if ($my->id)
                                         {
                                 ?>
 
-                                            <img src = "components/com_fireboard/avatars/<?php echo $avatar;?>" alt="" />
+                                            <img src = "components/com_kunena/avatars/<?php echo $avatar;?>" alt="" />
 
                                             <br/>
 
@@ -633,7 +633,7 @@ if ($my->id)
 <?php
         }
         else {
-            echo _USER_RETURN_A . " <a href=\"index.php?option=com_fireboard&amp;Itemid=$Itemid&amp;func=userprofile&amp;do=show\">" . _USER_RETURN_B . "</a><br /><br />";
+            echo _USER_RETURN_A . " <a href=\"index.php?option=com_kunena&amp;Itemid=$Itemid&amp;func=userprofile&amp;do=show\">" . _USER_RETURN_B . "</a><br /><br />";
 ?>
 
         <script language = "javascript">

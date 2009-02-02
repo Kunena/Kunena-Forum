@@ -1,8 +1,8 @@
 <?php
 /**
 * @version $Id: stats.class.php 1064 2008-10-05 23:29:35Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* Kunena Component
+* @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -16,52 +16,59 @@
 defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 
+if ($fbConfig->showstats)
+{
+
+if ($fbConfig->showgenstats)
+{
 $database->setQuery("SELECT COUNT(*) FROM #__users");
 $totalmembers = $database->loadResult();
 
-$database->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE moved=0 AND hold=0");
-$totalmsgs = $database->loadResult();
+$database->setQuery("SELECT SUM(numTopics) AS titles, SUM(numPosts) AS msgs FROM #__fb_categories WHERE parent=0");
+$database->loadObject($totaltmp);
+$totaltitles = $totaltmp->titles;
+$totalmsgs = $totaltmp->msgs + $totaltitles;
+unset($totaltmp);
 
-$database->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE parent=0 AND moved=0 AND hold=0");
-$totaltitles = $database->loadResult();
+$database->setQuery("SELECT SUM(parent=0) AS totalcats, SUM(parent>0) AS totalsections
+FROM #__fb_categories");
+$database->loadObject($totaltmp);
+$totalsections = $totaltmp->totalsections;
+$totalcats = $totaltmp->totalcats;
+unset($totaltmp);
 
-$database->setQuery("SELECT COUNT(*) FROM #__fb_categories WHERE parent=0");
-$totalcats = $database->loadResult();
-
-$database->setQuery("SELECT COUNT(*) FROM #__fb_categories WHERE parent>0");
-$totalsections = $database->loadResult();
-
-unset($_lastestmember);
 $fb_queryName = $fbConfig->username ? "username" : "name";
 $database->setQuery("SELECT id, $fb_queryName as username FROM #__users WHERE block=0 AND activation='' ORDER BY id DESC LIMIT 0,1");
 $database->loadObject($_lastestmember);
 $lastestmember = $_lastestmember->username;
 $lastestmemberid =$_lastestmember->id;
+unset($_lastestmember);
 
-$today = date('Y-m-d');
-$yesterday = time() - (1 * 24 * 60 * 60);
-$yesterday = date('Y-m-d', $yesterday);
-$todaystart = strtotime(date("Y-m-d 00:00:01"));
-$todayend = strtotime(date("Y-m-d 23:59:59"));
-$yesterdaystart = strtotime(date("$yesterday 00:00:01")); #NOTE: 00:00:00 is daystart
-$yesterdayend = strtotime(date("$yesterday 23:59:59"));
+$todaystart = strtotime(date('Y-m-d'));
+$yesterdaystart = $todaystart - (1 * 24 * 60 * 60);
+$database->setQuery("SELECT SUM(time >= $todaystart AND parent=0) AS todayopen, "
+                   ."SUM(time >= $yesterdaystart AND time < $todaystart AND parent=0) AS yesterdayopen, "
+                   ."SUM(time >= $todaystart AND parent>0) AS todayanswer, "
+                   ."SUM(time >= $yesterdaystart AND time < $todaystart AND parent>0) AS yesterdayanswer "
+                   ."FROM #__fb_messages WHERE time >= $yesterdaystart AND hold=0");
 
-$database->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE time > $todaystart AND time < $todayend AND parent>0");
-$todaytotal = $database->loadResult();
+$database->loadObject($totaltmp);
+$todayopen = $totaltmp->todayopen?$totaltmp->todayopen:0;
+$yesterdayopen = $totaltmp->yesterdayopen?$totaltmp->yesterdayopen:0;
+$todayanswer = $totaltmp->todayanswer?$totaltmp->todayanswer:0;
+$yesterdayanswer = $totaltmp->yesterdayanswer?$totaltmp->yesterdayanswer:0;
+unset($totaltmp);
 
-$database->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE time > $yesterdaystart AND time < $yesterdayend AND parent>0");
-$yesterdaytotal = $database->loadResult();
-
-$database->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE time > $todaystart AND time < $todayend AND parent=0");
-$todaystitle = $database->loadResult();
-
-$database->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE time > $yesterdaystart AND time < $yesterdayend AND parent=0");
-$yesterdaystitle = $database->loadResult();
+} // ENDIF: showgenstats
 
 $PopUserCount = $fbConfig->popusercount;
+if ($fbConfig->showpopuserstats)
+{
 
 $database->setQuery("SELECT p.userid, p.posts, u.$fb_queryName as username FROM #__fb_users AS p" . "\n LEFT JOIN #__users AS u ON u.id = p.userid" . "\n WHERE p.posts > 0 ORDER BY p.posts DESC LIMIT $PopUserCount");
 $topposters = $database->loadObjectList();
+
+$topmessage = $topposters[0]->posts;
 
 if ($fbConfig->fb_profile == "cb") {
 $database->setQuery("SELECT u.$fb_queryName AS user, p.hits, p.user_id FROM #__users AS u"
@@ -69,32 +76,28 @@ $database->setQuery("SELECT u.$fb_queryName AS user, p.hits, p.user_id FROM #__u
 . "\n WHERE p.hits > 0 ORDER BY p.hits DESC LIMIT $PopUserCount");
 $topprofiles = $database->loadObjectList();
 
-$database->setQuery("SELECT p.hits FROM #__comprofiler AS p"
-. "\n LEFT JOIN #__users AS u ON u.id = p.user_id"
-. "\n WHERE p.hits > 0 ORDER BY p.hits DESC LIMIT 1");
-$topprofil = $database->loadResult();
+$topprofil = $topprofiles[0]->hits;
 
-}
-
-else {
+} else {
 $database->setQuery("SELECT u.uhits AS hits, u.userid AS user_id, j.$fb_queryName AS user  FROM #__fb_users AS u"
 . "\n LEFT JOIN #__users AS j ON j.id = u.userid"
 . "\n WHERE u.uhits > 0 ORDER BY u.uhits DESC LIMIT $PopUserCount");
 $topprofiles = $database->loadObjectList();
 
-$database->setQuery("SELECT uhits FROM #__fb_users"
-. "\n WHERE uhits > 0 ORDER BY uhits DESC LIMIT 1");
-$topprofil = $database->loadResult();
-}
+$topprofil = $topprofiles[0]->hits;
+} // ENDIF: fb_profile
 
-$database->setQuery("SELECT posts FROM #__fb_users WHERE posts > 0 ORDER BY posts DESC LIMIT 0,1");
-$topmessage = $database->loadResult();
+} // ENDIF: showpopuserstats
 
 $PopSubjectCount = $fbConfig->popsubjectcount;
+if ($fbConfig->showpopsubjectstats)
+{
 
 $database->setQuery("SELECT * FROM #__fb_messages WHERE moved=0 AND hold=0 AND parent=0 ORDER BY hits DESC LIMIT $PopSubjectCount");
 $toptitles = $database->loadObjectList();
 
-$database->setQuery("SELECT hits FROM #__fb_messages WHERE moved=0 AND hold=0 AND parent=0 ORDER BY hits DESC LIMIT 1");
-$toptitlehits = $database->loadResult();
+$toptitlehits = $toptitles[0]->hits;
+} // ENDIF: showpopsubjectstats
+
+} // ENDIF: showstats
 ?>

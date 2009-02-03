@@ -18,7 +18,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 
 if (strtolower($func) == '' ){
-include (JB_ABSTMPLTPATH . '/latestx.php');
+include (KUNENA_ABSTMPLTPATH . '/latestx.php');
 } else {
 
 //securing passed form elements
@@ -39,8 +39,8 @@ $categories = array ();
 $mainframe->setPageTitle(_GEN_FORUMLIST . ' - ' . $fbConfig->board_title);
 
 //meta description and keywords
-$metaDesc=(_FB_CATEGORIES . ' - ' . $fbConfig->board_title);
-$metaKeys=(_FB_CATEGORIES . ', ' . $fbConfig->board_title . ', ' . $GLOBALS['mosConfig_sitename']);
+$metaDesc=(_KUNENA_CATEGORIES . ' - ' . $fbConfig->board_title);
+$metaKeys=(_KUNENA_CATEGORIES . ', ' . $fbConfig->board_title . ', ' . $GLOBALS['mosConfig_sitename']);
 
 if( FBTools::isJoomla15() )
 {
@@ -93,11 +93,11 @@ if ($fbConfig->showannouncement > 0)
 ?>
 <!-- B: announcementBox -->
 <?php
-    if (file_exists(JB_ABSTMPLTPATH . '/plugin/announcement/announcementbox.php')) {
-        require_once (JB_ABSTMPLTPATH . '/plugin/announcement/announcementbox.php');
+    if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcementbox.php')) {
+        require_once (KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcementbox.php');
     }
     else {
-        require_once (JB_ABSPATH . '/template/default/plugin/announcement/announcementbox.php');
+        require_once (KUNENA_ABSPATH . '/template/default/plugin/announcement/announcementbox.php');
     }
 ?>
 <!-- F: announcementBox -->
@@ -121,11 +121,11 @@ if (mosCountModules('fb_2'))
 ?>
 <!-- B: Pathway -->
 <?php
-if (file_exists(JB_ABSTMPLTPATH . '/fb_pathway.php')) {
-    require_once (JB_ABSTMPLTPATH . '/fb_pathway.php');
+if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
+    require_once (KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
 }
 else {
-    require_once (JB_ABSPATH . '/template/default/fb_pathway.php');
+    require_once (KUNENA_ABSPATH . '/template/default/fb_pathway.php');
 }
 ?>
 <!-- F: Pathway -->
@@ -166,7 +166,7 @@ if (count($categories[0]) > 0)
                                 }
                                 ?>
                             </div>
-                            <img id = "BoxSwitch_<?php echo $cat->id ; ?>__catid_<?php echo $cat->id ; ?>" class = "hideshow" src = "<?php echo JB_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+                            <img id = "BoxSwitch_<?php echo $cat->id ; ?>__catid_<?php echo $cat->id ; ?>" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
                         </th>
                     </tr>
                 </thead>
@@ -228,7 +228,7 @@ if (count($categories[0]) > 0)
                                 $numtopics = $singlerow->numTopics;
                                 $numreplies = $singlerow->numPosts;
                                 $lastPosttime = $singlerow->time_last_msg;
-                                $lastptime = FB_timeformat(FBTools::fbGetShowTime($singlerow->time_last_msg));
+                                $lastptime = KUNENA_timeformat(FBTools::fbGetShowTime($singlerow->time_last_msg));
                                 $forumDesc = $singlerow->description;
 
                                 //    Get the forumsubparent categories :: get the subcategories here
@@ -313,36 +313,36 @@ if (count($categories[0]) > 0)
                                                 $cxThereisNewInForum = 1;
 
                                                 // Check Unread    Cat Images
-                                                if (is_file(JB_ABSCATIMAGESPATH . "" . $singlerow->id . "_on.gif"))
+                                                if (is_file(KUNENA_ABSCATIMAGESPATH . "" . $singlerow->id . "_on.gif"))
                                                 {
-                                                    $tmpIcon = '<img src="'.JB_URLCATIMAGES.$singlerow->id.'_on.gif" border="0" class="forum-cat-image"alt=" " />';
+                                                    $tmpIcon = '<img src="'.KUNENA_URLCATIMAGES.$singlerow->id.'_on.gif" border="0" class="forum-cat-image"alt=" " />';
                                                 }
                                                 else
                                                 {
-                                                    $tmpIcon = $fbIcons['unreadforum'] ? '<img src="'.JB_URLICONSPATH.$fbIcons['unreadforum'].'" border="0" alt="'._GEN_FORUM_NEWPOST.'" title="'._GEN_FORUM_NEWPOST.'" />' : $fbConfig->newchar;
+                                                    $tmpIcon = $fbIcons['unreadforum'] ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['unreadforum'].'" border="0" alt="'._GEN_FORUM_NEWPOST.'" title="'._GEN_FORUM_NEWPOST.'" />' : $fbConfig->newchar;
                                                 }
                                             }
                                             else
                                             {
                                                 // Check Read Cat Images
-                                                if (is_file(JB_ABSCATIMAGESPATH . "" . $singlerow->id . "_off.gif"))
+                                                if (is_file(KUNENA_ABSCATIMAGESPATH . "" . $singlerow->id . "_off.gif"))
                                                 {
-                                                    $tmpIcon = '<img src="'.JB_URLCATIMAGES.$singlerow->id.'_off.gif" border="0" class="forum-cat-image" alt=" " />';
+                                                    $tmpIcon = '<img src="'.KUNENA_URLCATIMAGES.$singlerow->id.'_off.gif" border="0" class="forum-cat-image" alt=" " />';
                                                 }
                                                 else
                                                 {
-                                                    $tmpIcon = $fbIcons['readforum'] ? '<img src="'.JB_URLICONSPATH.$fbIcons['readforum'].'" border="0" alt="'._GEN_FORUM_NOTNEW.'" title="'._GEN_FORUM_NOTNEW.'" />' : $fbConfig->newchar;
+                                                    $tmpIcon = $fbIcons['readforum'] ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['readforum'].'" border="0" alt="'._GEN_FORUM_NOTNEW.'" title="'._GEN_FORUM_NOTNEW.'" />' : $fbConfig->newchar;
                                                 }
                                             }
                                         }
                                         // Not Login Cat Images
                                         else
                                         {
-                                            if (is_file(JB_ABSCATIMAGESPATH . "" . $singlerow->id . "_notlogin.gif")) {
-                                                $tmpIcon = '<img src="'.JB_URLCATIMAGES.$singlerow->id.'_notlogin.gif" border="0" class="forum-cat-image" alt=" " />';
+                                            if (is_file(KUNENA_ABSCATIMAGESPATH . "" . $singlerow->id . "_notlogin.gif")) {
+                                                $tmpIcon = '<img src="'.KUNENA_URLCATIMAGES.$singlerow->id.'_notlogin.gif" border="0" class="forum-cat-image" alt=" " />';
                                             }
                                             else {
-                                                $tmpIcon = $fbIcons['notloginforum'] ? '<img src="'.JB_URLICONSPATH.$fbIcons['notloginforum'].'" border="0" alt="'._GEN_FORUM_NOTNEW.'" title="'._GEN_FORUM_NOTNEW.'" />' : $fbConfig->newchar;
+                                                $tmpIcon = $fbIcons['notloginforum'] ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['notloginforum'].'" border="0" alt="'._GEN_FORUM_NOTNEW.'" title="'._GEN_FORUM_NOTNEW.'" />' : $fbConfig->newchar;
                                             }
                                         }
                                         echo fb_link::GetCategoryLink('showcat', $singlerow->id, $tmpIcon);
@@ -364,15 +364,15 @@ if (count($categories[0]) > 0)
                                             <?php
                                             if ($singlerow->locked)
                                             {
-                                                echo $fbIcons['forumlocked'] ? '&nbsp;&nbsp;<img src="' . JB_URLICONSPATH . '' . $fbIcons['forumlocked']
-                                                         . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : '&nbsp;&nbsp;<img src="' . JB_URLEMOTIONSPATH . 'lock.gif"  border="0" alt="' . _GEN_LOCKED_FORUM . '">';
+                                                echo $fbIcons['forumlocked'] ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forumlocked']
+                                                         . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : '&nbsp;&nbsp;<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0" alt="' . _GEN_LOCKED_FORUM . '">';
                                                 $lockedForum = 1;
                                             }
 
                                             if ($singlerow->review)
                                             {
-                                                echo $fbIcons['forummoderated'] ? '&nbsp;&nbsp;<img src="' . JB_URLICONSPATH . '' . $fbIcons['forummoderated']
-                                                         . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : '&nbsp;&nbsp;<img src="' . JB_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '">';
+                                                echo $fbIcons['forummoderated'] ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forummoderated']
+                                                         . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : '&nbsp;&nbsp;<img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '">';
                                                 $moderatedForum = 1;
                                             }
                                             ?>
@@ -397,7 +397,7 @@ if (count($categories[0]) > 0)
 
                                             <div class = "<?php echo $boardclass?>thead-child">
                                                 <div class = "<?php echo $boardclass?>cc-childcat-title fbs">
-                                                    <b><?php if(count($forumparents)==1) { echo _FB_CHILD_BOARD; } else { echo _FB_CHILD_BOARDS; } ?>:</b>
+                                                    <b><?php if(count($forumparents)==1) { echo _KUNENA_CHILD_BOARD; } else { echo _KUNENA_CHILD_BOARDS; } ?>:</b>
                                                 </div>
 
                                                 <table cellpadding = "0" cellspacing = "0" border = "0" class = "<?php echo $boardclass?>cc-table">
@@ -450,22 +450,22 @@ if (count($categories[0]) > 0)
                                                                         if ($newPPostsAvailable > 0 && count($newPThreadsAll) != 0)
                                                                         {
                                                                             // Check Unread    Cat Images
-                                                                            if (is_file(JB_ABSCATIMAGESPATH . "" . $forumparent->id . "_on_childsmall.gif")) {
-                                                                                echo "<img src=\"" . JB_URLCATIMAGES . "" . $forumparent->id . "_on_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
+                                                                            if (is_file(KUNENA_ABSCATIMAGESPATH . "" . $forumparent->id . "_on_childsmall.gif")) {
+                                                                                echo "<img src=\"" . KUNENA_URLCATIMAGES . "" . $forumparent->id . "_on_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
                                                                             }
                                                                             else {
-                                                                                echo $fbIcons['unreadforum'] ? '<img src="' . JB_URLICONSPATH
+                                                                                echo $fbIcons['unreadforum'] ? '<img src="' . KUNENA_URLICONSPATH
                                                                                          . '' . $fbIcons['unreadforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '" />' : $fbConfig->newchar;
                                                                             }
                                                                         }
                                                                         else
                                                                         {
                                                                             // Check Read Cat Images
-                                                                            if (is_file(JB_ABSCATIMAGESPATH . "" . $forumparent->id . "_off_childsmall.gif")) {
-                                                                                echo "<img src=\"" . JB_URLCATIMAGES . "" . $forumparent->id . "_off_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
+                                                                            if (is_file(KUNENA_ABSCATIMAGESPATH . "" . $forumparent->id . "_off_childsmall.gif")) {
+                                                                                echo "<img src=\"" . KUNENA_URLCATIMAGES . "" . $forumparent->id . "_off_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
                                                                             }
                                                                             else {
-                                                                                echo $fbIcons['readforum'] ? '<img src="' . JB_URLICONSPATH
+                                                                                echo $fbIcons['readforum'] ? '<img src="' . KUNENA_URLICONSPATH
                                                                                          . '' . $fbIcons['readforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : $fbConfig->newchar;
                                                                             }
                                                                         }
@@ -473,11 +473,11 @@ if (count($categories[0]) > 0)
                                                                     // Not Login Cat Images
                                                                     else
                                                                     {
-                                                                        if (is_file(JB_ABSCATIMAGESPATH . "" . $forumparent->id . "_notlogin_childsmall.gif")) {
-                                                                            echo "<img src=\"" . JB_URLCATIMAGES . "" . $forumparent->id . "_notlogin_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
+                                                                        if (is_file(KUNENA_ABSCATIMAGESPATH . "" . $forumparent->id . "_notlogin_childsmall.gif")) {
+                                                                            echo "<img src=\"" . KUNENA_URLCATIMAGES . "" . $forumparent->id . "_notlogin_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
                                                                         }
                                                                         else {
-                                                                            echo $fbIcons['notloginforum'] ? '<img src="' . JB_URLICONSPATH
+                                                                            echo $fbIcons['notloginforum'] ? '<img src="' . KUNENA_URLICONSPATH
                                                                                      . '' . $fbIcons['notloginforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : $fbConfig->newchar;
                                                                         }
                                                     ?>
@@ -566,8 +566,8 @@ if (count($categories[0]) > 0)
                                                 echo fb_link::GetProfileLink($latestuserid, $latestname);
                                                 echo ' | '.$lastptime.' ';
                                                 echo fb_link::GetThreadPageLink('view', $singlerow->lastcat, $latestthread, $latestthreadpages, $fbConfig->messages_per_page,
-                                                $fbIcons['latestpost'] ? '<img src="'.JB_URLICONSPATH.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" title="'. _SHOW_LAST.'"/>' :
-                                                                         '<img src="'.JB_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'"/>', $latestid);
+                                                $fbIcons['latestpost'] ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" title="'. _SHOW_LAST.'"/>' :
+                                                                         '<img src="'.KUNENA_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'"/>', $latestid);
 ?>
                                             </div>
                                         </td>
@@ -612,11 +612,11 @@ if (count($categories[0]) > 0)
     {
 
 		//(JJ) BEGIN: WHOISONLINE
-		if (file_exists(JB_ABSTMPLTPATH . '/plugin/who/whoisonline.php')) {
-			include (JB_ABSTMPLTPATH . '/plugin/who/whoisonline.php');
+		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php')) {
+			include (KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php');
 		}
 		else {
-			include (JB_ABSPATH . '/template/default/plugin/who/whoisonline.php');
+			include (KUNENA_ABSPATH . '/template/default/plugin/who/whoisonline.php');
 		}
 		//(JJ) FINISH: WHOISONLINE
 
@@ -626,27 +626,27 @@ if (count($categories[0]) > 0)
     {
 
 		//(JJ) BEGIN: STATS
-		if (file_exists(JB_ABSTMPLTPATH . '/plugin/stats/stats.class.php')) {
-			include_once (JB_ABSTMPLTPATH . '/plugin/stats/stats.class.php');
+		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php')) {
+			include_once (KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php');
 		}
 		else {
-			include_once (JB_ABSPATH . '/template/default/plugin/stats/stats.class.php');
+			include_once (KUNENA_ABSPATH . '/template/default/plugin/stats/stats.class.php');
 		}
 
-		if (file_exists(JB_ABSTMPLTPATH . '/plugin/stats/frontstats.php')) {
-			include (JB_ABSTMPLTPATH . '/plugin/stats/frontstats.php');
+		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php')) {
+			include (KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php');
 		}
 		else {
-			include (JB_ABSPATH . '/template/default/plugin/stats/frontstats.php');
+			include (KUNENA_ABSPATH . '/template/default/plugin/stats/frontstats.php');
 		}
 	}
 
     //(JJ) FINISH: CAT LIST BOTTOM
-    if (file_exists(JB_ABSTMPLTPATH . '/fb_category_list_bottom.php')) {
-        include (JB_ABSTMPLTPATH . '/fb_category_list_bottom.php');
+    if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php')) {
+        include (KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php');
     }
     else {
-        include (JB_ABSPATH . '/template/default/fb_category_list_bottom.php');
+        include (KUNENA_ABSPATH . '/template/default/fb_category_list_bottom.php');
     }
 ?>
 
@@ -662,7 +662,7 @@ else
         echo _LISTCAT_ADMIN . '<br />';
         echo _LISTCAT_PANEL . '<br /><br />';
         echo _LISTCAT_INFORM . '<br /><br />';
-        echo _LISTCAT_DO . ' <img src="' . JB_URLEMOTIONSPATH . 'wink.png"  alt="" border="0" />';
+        echo _LISTCAT_DO . ' <img src="' . KUNENA_URLEMOTIONSPATH . 'wink.png"  alt="" border="0" />';
         ?>
     </div>
 

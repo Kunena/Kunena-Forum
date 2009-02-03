@@ -58,11 +58,11 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
 							    $database->query() or trigger_dberror("Unable to update karma.");
 							    $database->setQuery('UPDATE #__fb_users SET karma=karma+1 WHERE userid=' . $userid . '');
 							    $database->query() or trigger_dberror("Unable to update karma.");
-							    echo _KARMA_INCREASED . '<br /> <a href="' . JRoute::_(JB_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
+							    echo _KARMA_INCREASED . '<br /> <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
                 ?>
 
                             <script language = "javascript">
-                                setTimeout("location='<?php echo JRoute::_(JB_LIVEURLREL.'&func=view&catid='.$catid.'&id='.$pid); ?>'", 3500);
+                                setTimeout("location='<?php echo JRoute::_(KUNENA_LIVEURLREL.'&func=view&catid='.$catid.'&id='.$pid); ?>'", 3500);
                             </script>
 
                 <?php
@@ -73,11 +73,11 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                                 $database->query() or trigger_dberror("Unable to update karma.");
                                 $database->setQuery('UPDATE #__fb_users SET karma=karma-1 WHERE userid=' . $userid . '');
                                 $database->query() or trigger_dberror("Unable to update karma.");
-                                echo _KARMA_DECREASED . '<br /> <a href="' . JRoute::_(JB_LIVEURLREL. '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
+                                echo _KARMA_DECREASED . '<br /> <a href="' . JRoute::_(KUNENA_LIVEURLREL. '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
                 ?>
 
                             <script language = "javascript">
-                                setTimeout("location='<?php echo JRoute::_(JB_LIVEURLREL.'&func=view&catid='.$catid.'&id='.$pid); ?>'", 3500);
+                                setTimeout("location='<?php echo JRoute::_(KUNENA_LIVEURLREL.'&func=view&catid='.$catid.'&id='.$pid); ?>'", 3500);
                             </script>
 
                 <?php

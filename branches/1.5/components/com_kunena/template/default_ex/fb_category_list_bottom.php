@@ -30,7 +30,7 @@ global $fbConfig;
 
                     <form action = "<?php echo $mainframe->getCfg("live_site")."/index2.php";?>" name = "markAllForumsRead" method = "post">
                         <input type = "hidden" name = "markaction" value = "allread"/>
-                        <input type = "hidden" name = "Itemid" value = "<?php echo FB_FB_ITEMID?>"/>
+                        <input type = "hidden" name = "Itemid" value = "<?php echo KUNENA_COMPONENT_ITEMID?>"/>
                         <input type = "hidden" name = "option" value = "com_kunena"/>
                         <input type = "hidden" name = "no_html" value = "1"/>
 
@@ -45,7 +45,7 @@ global $fbConfig;
                 <?php
                 //(FB) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump)
-                    require_once (JB_ABSSOURCESPATH . 'fb_forumjump.php');
+                    require_once (KUNENA_ABSSOURCESPATH . 'fb_forumjump.php');
                 ?>
             </td>
         </tr>

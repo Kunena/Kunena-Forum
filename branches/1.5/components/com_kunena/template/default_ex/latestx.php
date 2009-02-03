@@ -22,24 +22,24 @@ $document =& JFactory::getDocument();
 
 
 
-$document->addCustomTag('<script type="text/javascript" src="' . JB_TMPLTURL . '/plugin/jtip/jquery.dimensions.js"></script>');
-$document->addCustomTag('<script type="text/javascript" src="' . JB_TMPLTURL . '/plugin/jtip/jquery.cluetip.js"></script>');
-$document->addCustomTag('<script type="text/javascript" src="' . JB_TMPLTURL . '/plugin/jtip/demo.js"></script>');
-$document->addCustomTag('<script type="text/javascript" src="' . JB_TMPLTURL . '/js/cube_common.js"></script>');
-require_once (JB_ABSSOURCESPATH . 'fb_auth.php');
+$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL . '/plugin/jtip/jquery.dimensions.js"></script>');
+$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL . '/plugin/jtip/jquery.cluetip.js"></script>');
+$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL . '/plugin/jtip/demo.js"></script>');
+$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL . '/js/cube_common.js"></script>');
+require_once (KUNENA_ABSSOURCESPATH . 'fb_auth.php');
 
-if (file_exists(JB_ABSTMPLTPATH . '/smile.class.php'))
+if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php'))
 {
-	include (JB_ABSTMPLTPATH . '/smile.class.php');
+	include (KUNENA_ABSTMPLTPATH . '/smile.class.php');
 }
 else
 {
-	include (JB_ABSPATH . '/template/default/smile.class.php');
+	include (KUNENA_ABSPATH . '/template/default/smile.class.php');
 }
 
 //meta description and keywords
-$metaKeys=(_FB_ALL_DISCUSSIONS . ', ' . $fbConfig->board_title . ', ' . $GLOBALS['mosConfig_sitename']);
-$metaDesc=(_FB_ALL_DISCUSSIONS . ' - ' . $fbConfig->board_title);
+$metaKeys=(_KUNENA_ALL_DISCUSSIONS . ', ' . $fbConfig->board_title . ', ' . $GLOBALS['mosConfig_sitename']);
+$metaDesc=(_KUNENA_ALL_DISCUSSIONS . ' - ' . $fbConfig->board_title);
 
 if( FBTools::isJoomla15() )
 {
@@ -215,22 +215,22 @@ if (count($threadids) > 0)
 	<div class="fb_list_actions"><table border="0" cellpadding="0" cellspacing="0" width="100%">
                                   <tr>
                                     <td   class="fb_list_actions_info_all" width="100%">
-    <strong><?php echo $total; ?></strong> <?php echo _FB_DISCUSSIONS; ?>
+    <strong><?php echo $total; ?></strong> <?php echo _KUNENA_DISCUSSIONS; ?>
 								</td>
 									<?php if ($func!='mylatest') {?>
                                     <td class="fb_list_times_all">
 
 									<?php  $show_list_time = mosGetParam($_REQUEST, 'sel', '');  ?>
 									<select class="inputboxusl" onchange="document.location.href=this.options[this.selectedIndex].value;" size="1" name="select" style = "margin:0; padding:0; width:100px;">
-									 <option <?php if ($show_list_time =='720') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(JB_LIVEURLREL.'&amp;func=latest'); ?>"><?php echo _SHOW_MONTH ; ?></option>
-									  <option <?php if ($show_list_time =='0') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(JB_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=0'); ?>"><?php echo _SHOW_LASTVISIT; ?></option>
-									  <option <?php if ($show_list_time =='4') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(JB_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=4'); ?>"><?php echo _SHOW_4_HOURS; ?></option>
-									  <option <?php if ($show_list_time =='8') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(JB_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=8'); ?>"><?php echo _SHOW_8_HOURS; ?></option>
-									  <option <?php if ($show_list_time =='12') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(JB_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=12'); ?>"><?php echo _SHOW_12_HOURS; ?></option>
-									  <option <?php if ($show_list_time =='24') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(JB_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=24'); ?>"><?php echo _SHOW_24_HOURS; ?></option>
-									  <option <?php if ($show_list_time =='48') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(JB_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=48'); ?>"><?php echo _SHOW_48_HOURS; ?></option>
-									  <option <?php if ($show_list_time =='168') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(JB_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=168'); ?>"><?php echo _SHOW_WEEK; ?></option>
-									  <option <?php if ($show_list_time =='8760') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(JB_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=8760'); ?>"><?php echo _SHOW_YEAR; ?></option>
+									 <option <?php if ($show_list_time =='720') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest'); ?>"><?php echo _SHOW_MONTH ; ?></option>
+									  <option <?php if ($show_list_time =='0') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=0'); ?>"><?php echo _SHOW_LASTVISIT; ?></option>
+									  <option <?php if ($show_list_time =='4') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=4'); ?>"><?php echo _SHOW_4_HOURS; ?></option>
+									  <option <?php if ($show_list_time =='8') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=8'); ?>"><?php echo _SHOW_8_HOURS; ?></option>
+									  <option <?php if ($show_list_time =='12') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=12'); ?>"><?php echo _SHOW_12_HOURS; ?></option>
+									  <option <?php if ($show_list_time =='24') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=24'); ?>"><?php echo _SHOW_24_HOURS; ?></option>
+									  <option <?php if ($show_list_time =='48') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=48'); ?>"><?php echo _SHOW_48_HOURS; ?></option>
+									  <option <?php if ($show_list_time =='168') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=168'); ?>"><?php echo _SHOW_WEEK; ?></option>
+									  <option <?php if ($show_list_time =='8760') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=8760'); ?>"><?php echo _SHOW_YEAR; ?></option>
 									</select>
 
                                   </td>
@@ -238,7 +238,7 @@ if (count($threadids) > 0)
                                     <td class="fb_list_jump_all">
 
                                     <?php if ($fbConfig->enableforumjump)
- 									 require_once (JB_ABSSOURCESPATH . 'fb_forumjump.php');
+ 									 require_once (KUNENA_ABSSOURCESPATH . 'fb_forumjump.php');
  									 ?>
 
                                    </td>
@@ -300,18 +300,18 @@ if (count($threadids) > 0)
 				} //make sure at least something is in there..
 				//make it into an array
 				$read_topics = explode(',', $readTopics);
-				if (file_exists(JB_ABSTMPLTPATH . '/flat.php'))
+				if (file_exists(KUNENA_ABSTMPLTPATH . '/flat.php'))
 				{
-					include (JB_ABSTMPLTPATH . '/flat.php');
+					include (KUNENA_ABSTMPLTPATH . '/flat.php');
 				}
 				else
 				{
-					include (JB_ABSPATH . '/template/default/flat.php');
+					include (KUNENA_ABSPATH . '/template/default/flat.php');
 				}
 				?>
 <!-- B: List Actions -->
 	<div class="fb_list_actions">
-     <span class="fb_list_actions_info" ><?php echo _FB_TOTAL_THREADS; ?>  <strong><?php echo $total; ?></strong></span>
+     <span class="fb_list_actions_info" ><?php echo _KUNENA_TOTAL_THREADS; ?>  <strong><?php echo $total; ?></strong></span>
 								<?php
 
 								//pagination 1
@@ -354,18 +354,18 @@ if (count($threadids) > 0)
 	if ($fbConfig->showstats > 0)
     {
 		//(JJ) BEGIN: STATS
-		if (file_exists(JB_ABSTMPLTPATH . '/plugin/stats/stats.class.php')) {
-			include_once (JB_ABSTMPLTPATH . '/plugin/stats/stats.class.php');
+		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php')) {
+			include_once (KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php');
 		}
 		else {
-			include_once (JB_ABSPATH . '/template/default/plugin/stats/stats.class.php');
+			include_once (KUNENA_ABSPATH . '/template/default/plugin/stats/stats.class.php');
 		}
 
-		if (file_exists(JB_ABSTMPLTPATH . '/plugin/stats/frontstats.php')) {
-			include (JB_ABSTMPLTPATH . '/plugin/stats/frontstats.php');
+		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php')) {
+			include (KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php');
 		}
 		else {
-			include (JB_ABSPATH . '/template/default/plugin/stats/frontstats.php');
+			include (KUNENA_ABSPATH . '/template/default/plugin/stats/frontstats.php');
 		}
 	}
     //(JJ) FINISH: STATS
@@ -374,11 +374,11 @@ if (count($threadids) > 0)
     {
 
 		//(JJ) BEGIN: WHOISONLINE
-		if (file_exists(JB_ABSTMPLTPATH . '/plugin/who/whoisonline.php')) {
-			include (JB_ABSTMPLTPATH . '/plugin/who/whoisonline.php');
+		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php')) {
+			include (KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php');
 		}
 		else {
-			include (JB_ABSPATH . '/template/default/plugin/who/whoisonline.php');
+			include (KUNENA_ABSPATH . '/template/default/plugin/who/whoisonline.php');
 		}
 		//(JJ) FINISH: WHOISONLINE
 

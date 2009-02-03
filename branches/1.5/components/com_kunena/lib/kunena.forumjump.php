@@ -19,7 +19,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 $catid = intval(JRequest::getInt('catid', 0,'REQUEST'));
 
 $options = array ();
-$options[] = JHTML::makeOption(0, _FB_FORUM_TOP);
+$options[] = JHTML::makeOption(0, _KUNENA_FORUM_TOP);
 $lists['parent'] = JJ_categoryParentList($catid, "", $options);
 ?>
 

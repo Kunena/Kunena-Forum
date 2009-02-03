@@ -82,13 +82,13 @@ if ($my->id)
         }
 
         //here we go:
-        include(FB_COMP_C_SRC . '\fb_bb.js.php');
+        include(KUNENA_COMP_C_SRC . '\fb_bb.js.php');
 
-        if (file_exists(FB_ABSTMPLTPATH . '/fb_pathway.php')) {
-            require_once(FB_ABSTMPLTPATH . '/fb_pathway.php');
+        if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
+            require_once(KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
         }
         else {
-            require_once(FB_COMP_F . '/template/default/fb_pathway.php');
+            require_once(KUNENA_COMP_F . '/template/default/fb_pathway.php');
         }
 ?>
 
@@ -101,7 +101,7 @@ if ($my->id)
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-            <form action = "<?php echo JRoute::_(JB_LIVEURLREL.'&amp;func=userprofile&amp;do=update'); ?>" method = "post" name = "postform">
+            <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=userprofile&amp;do=update'); ?>" method = "post" name = "postform">
                 <input type = "hidden" name = "do" value = "update">
 
                 <table class = "fb_blocktable" id ="fb_forumprofile"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
@@ -294,7 +294,7 @@ if ($my->id)
 
                                             <br/>
 
-                                            <a href = "<?php echo JRoute::_(JB_LIVEURLREL.'&amp;func=upload');?>"> <?php echo _SET_NEW_AVATAR; ?></a>
+                                            <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=upload');?>"> <?php echo _SET_NEW_AVATAR; ?></a>
 
                                             <br/> <input type = "checkbox" value = "1" name = "deleteAvatar"><i> <?php echo _USER_DELETEAV; ?></i>
 
@@ -304,7 +304,7 @@ if ($my->id)
                                             echo _NON_SELECTED;
                                 ?>
 
-                                        <a href = "<?php echo JRoute::_(JB_LIVEURLREL.'&amp;func=upload');?>"> <?php echo _SET_NEW_AVATAR; ?></a>
+                                        <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=upload');?>"> <?php echo _SET_NEW_AVATAR; ?></a>
 
                                 <?php
                                         }
@@ -404,8 +404,8 @@ if ($my->id)
                                 {
                                     $k = 1 - $k;
                                     echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" >';
-                                    echo '<td class="td-1" >' . $enum. ': <a href="'.JRoute::_(JB_LIVEURLREL. '&amp;func=view&amp;catid=' . $sub->catid . '&amp;id=' . $sub->id ).'">' . $sub->subject . '</a> - ' . _GEN_BY . '  ' . $sub->name  .'</td>';
-                                    echo '<td class="td-2" ><a href="'.JRoute::_(JB_LIVEURLREL. '&amp;func=userprofile&amp;do=unsubscribe&amp;thread=' . $subs->thread) . '">' . _THREAD_UNSUBSCRIBE . '</a></td>';
+                                    echo '<td class="td-1" >' . $enum. ': <a href="'.JRoute::_(KUNENA_LIVEURLREL. '&amp;func=view&amp;catid=' . $sub->catid . '&amp;id=' . $sub->id ).'">' . $sub->subject . '</a> - ' . _GEN_BY . '  ' . $sub->name  .'</td>';
+                                    echo '<td class="td-2" ><a href="'.JRoute::_(KUNENA_LIVEURLREL. '&amp;func=userprofile&amp;do=unsubscribe&amp;thread=' . $subs->thread) . '">' . _THREAD_UNSUBSCRIBE . '</a></td>';
                                     echo "</tr>";
                                     $enum++;
                                 }
@@ -461,8 +461,8 @@ if ($my->id)
                         {
                             $k = 1 - $k;
                             echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '">';
-                            echo '<td class="td-1">' . $enum . ': <a href="'.JRoute::_(JB_LIVEURLREL. '&amp;func=view&amp;catid=' . $fav->catid . '&amp;id=' . $fav->id) . '">' . $fav->subject . '</a> - ' . _GEN_BY . ' ' . $fav->name .'</td>';
-                            echo '<td class="td-2"><a href="'.JRoute::_(JB_LIVEURLREL. '&amp;func=userprofile&amp;do=unfavorite&amp;thread=' . $favs->thread) . '">' . _THREAD_UNFAVORITE . '</a></td>';
+                            echo '<td class="td-1">' . $enum . ': <a href="'.JRoute::_(KUNENA_LIVEURLREL. '&amp;func=view&amp;catid=' . $fav->catid . '&amp;id=' . $fav->id) . '">' . $fav->subject . '</a> - ' . _GEN_BY . ' ' . $fav->name .'</td>';
+                            echo '<td class="td-2"><a href="'.JRoute::_(KUNENA_LIVEURLREL. '&amp;func=userprofile&amp;do=unfavorite&amp;thread=' . $favs->thread) . '">' . _THREAD_UNFAVORITE . '</a></td>';
                             echo "</tr>";
                             $enum++;
                         }
@@ -558,7 +558,7 @@ if ($my->id)
             echo _USER_PROFILE_UPDATED . "<br /><br />";
         }
 
-        echo _USER_RETURN_A . ' <a href="'.JRoute::_(JB_LIVEURLREL."&amp;func=userprofile&amp;do=show").'">' . _USER_RETURN_B . "</a><br /><br />";
+        echo _USER_RETURN_A . ' <a href="'.JRoute::_(KUNENA_LIVEURLREL."&amp;func=userprofile&amp;do=show").'">' . _USER_RETURN_B . "</a><br /><br />";
 
         if ($unsubscribeAll)
         {
@@ -574,7 +574,7 @@ if ($my->id)
                 ?>
 
     <script language = "javascript">
-        setTimeout("location='<?php echo JRoute::_(JB_LIVEURLREL . '&func=userprofile&do=show');?>'", 3500);
+        setTimeout("location='<?php echo JRoute::_(KUNENA_LIVEURLREL . '&func=userprofile&do=show');?>'", 3500);
     </script>
 
     <?php
@@ -591,21 +591,21 @@ if ($my->id)
         }
 
         if ($fbConfig->cb_profile) {
-            echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='".FB_CB_ITEMID."'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
+            echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='".KUNENA_CB_ITEMID."'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
     ?>
 
         <script language = "javascript">
-            setTimeout("location='index.php?option=com_comprofiler<?php echo FB_CB_ITEMID_SUFFIX; ?>&tab=getForumTab'", 3500);
+            setTimeout("location='index.php?option=com_comprofiler<?php echo KUNENA_CB_ITEMID_SUFFIX; ?>&tab=getForumTab'", 3500);
         </script>
 
 <?php
         }
         else {
-            echo _USER_RETURN_A . " <a href=\"". JRoute::_(JB_LIVEURLREL . '&amp;func=userprofile&amp;do=show')."\">" . _USER_RETURN_B . "</a><br /><br />";
+            echo _USER_RETURN_A . " <a href=\"". JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show')."\">" . _USER_RETURN_B . "</a><br /><br />";
 ?>
 
         <script language = "javascript">
-        setTimeout("location='<?php echo JRoute::_(JB_LIVEURLREL . '&func=userprofile&do=show');?>'", 3500);
+        setTimeout("location='<?php echo JRoute::_(KUNENA_LIVEURLREL . '&func=userprofile&do=show');?>'", 3500);
         </script>
 
 <?php
@@ -623,11 +623,11 @@ if ($my->id)
         }
 
         if ($fbConfig->cb_profile) {
-            echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler".FB_CB_ITEMID_SUFFIX."&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
+            echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
 ?>
 
         <script language = "javascript">
-            setTimeout("location='index.php?option=com_comprofiler".FB_CB_ITEMID_SUFFIX."&tab=getForumTab'", 3500);
+            setTimeout("location='index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&tab=getForumTab'", 3500);
         </script>
 
 <?php
@@ -637,7 +637,7 @@ if ($my->id)
 ?>
 
         <script language = "javascript">
-               setTimeout("location='<?php echo JRoute::_(JB_LIVEURLREL . '&func=userprofile&do=show');?>'", 3500);
+               setTimeout("location='<?php echo JRoute::_(KUNENA_LIVEURLREL . '&func=userprofile&do=show');?>'", 3500);
         </script>
 
 <?php
@@ -671,7 +671,7 @@ else
                 <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump)
-                    require_once(FB_COMP_C_SRC . '\fb_forumjump.php');
+                    require_once(KUNENA_COMP_C_SRC . '\fb_forumjump.php');
                 ?>
             </th>
         </tr>

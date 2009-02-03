@@ -96,7 +96,7 @@ if ($GLOBALS['KUNENA_rc'])
         $code = '[img]' . KUNENA_LIVEUPLOADEDPATH. '/images/' . $newFileName . '[/img]';
     }
     else {
-        $code = '[img size=' . $width . ']' . FB_LIVEUPLOADEDPATH. '/images/' . $newFileName . '[/img]';
+        $code = '[img size=' . $width . ']' . KUNENA_LIVEUPLOADEDPATH. '/images/' . $newFileName . '[/img]';
     }
 
     if (preg_match("/\[img\]/si", $message)) {

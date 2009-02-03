@@ -120,7 +120,7 @@ $k = 0;
 		   else {
 		   $barwidth = round(($toptitle->hits * 100) / $toptitlehits);
 		   }
-	  $link = JRoute::_(JB_LIVEURLREL . '&amp;func=view&amp;id=' . $toptitle->id . '&amp;catid=' . $toptitle->catid);
+	  $link = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $toptitle->id . '&amp;catid=' . $toptitle->catid);
 ?>
 
     <tr class = "<?php echo ''.$boardclass.''. $tabclass[$k] . ''; ?>">

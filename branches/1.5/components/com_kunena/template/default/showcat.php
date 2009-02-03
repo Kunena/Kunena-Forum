@@ -19,7 +19,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 global $is_Moderator;
 $database = &JFactory::getDBO();
-require_once(FB_COMP_C_SRC . '/fb_auth.php');
+require_once(KUNENA_COMP_C_SRC . '/fb_auth.php');
 //Security basics begin
 //Securing passed form elements:
 $catid = (int)$catid; // redundant
@@ -101,11 +101,11 @@ if ($letPass || $is_Moderator)
 
 function loadPathway(){
 $database = &JFactory::getDBO();
-    if (file_exists(FB_ABSTMPLTPATH . '/fb_pathway.php')) {
-        require_once(FB_ABSTMPLTPATH . '/fb_pathway.php');
+    if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
+        require_once(KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
     }
     else {
-        require_once(FB_COMP_F . '/template/default/fb_pathway.php');
+        require_once(KUNENA_COMP_F . '/template/default/fb_pathway.php');
     }
 
     //Get the category name for breadcrumb
@@ -132,11 +132,11 @@ $database = &JFactory::getDBO();
 <?php
 function loadSubCategory(){
     //(JJ)
-    if (file_exists(FB_ABSTMPLTPATH . '/fb_sub_category_list.php')) {
-        include(FB_ABSTMPLTPATH . '/fb_sub_category_list.php');
+    if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_sub_category_list.php')) {
+        include(KUNENA_ABSTMPLTPATH . '/fb_sub_category_list.php');
     }
     else {
-        include(FB_COMP_F . '/template/default/fb_sub_category_list.php');
+        include(KUNENA_COMP_F . '/template/default/fb_sub_category_list.php');
   }  }
   loadSubCategory();
 ?>
@@ -148,14 +148,14 @@ function loadSubCategory(){
                 <?php
                 //go to bottom
                 echo '<a name="forumtop" /> ';
-                echo fb_link::GetSamePageAnkerLink('forumbottom', $fbIcons['bottomarrow'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM);
+                echo fb_link::GetSamePageAnkerLink('forumbottom', $fbIcons['bottomarrow'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM);
                 ?>
 
                 <?php
                 if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite == 1) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
                 {
                     //this user is allowed to post a new topic:
-                    echo fb_link::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
+                    echo fb_link::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
                 }
 
                 echo '</td><td class="jr-topnav-right">';
@@ -210,17 +210,17 @@ function loadSubCategory(){
     if (count($messages) > 0)
     {
         if ($view == "flat")
-            if (file_exists(FB_ABSTMPLTPATH . '/flat.php')) {
-                include(FB_ABSTMPLTPATH . '/flat.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/flat.php')) {
+                include(KUNENA_ABSTMPLTPATH . '/flat.php');
             }
             else {
-                include(FB_COMP_F . '/template/default/flat.php');
+                include(KUNENA_COMP_F . '/template/default/flat.php');
             }
-        else if (file_exists(FB_ABSTMPLTPATH . '/thread.php')) {
-            include(FB_ABSTMPLTPATH . '/thread.php');
+        else if (file_exists(KUNENA_ABSTMPLTPATH . '/thread.php')) {
+            include(KUNENA_ABSTMPLTPATH . '/thread.php');
         }
         else {
-            include(FB_COMP_F . '/template/default/thread.php');
+            include(KUNENA_COMP_F . '/template/default/thread.php');
         }
     }
     else
@@ -238,14 +238,14 @@ function loadSubCategory(){
                 <?php
                 //go to top
                 echo '<a name="forumbottom" />';
-                echo fb_link::GetSamePageAnkerLink('forumtop', $fbIcons['toparrow'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP);
+                echo fb_link::GetSamePageAnkerLink('forumtop', $fbIcons['toparrow'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP);
                 ?>
 
                 <?php
                 if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite == 1) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
                 {
                     //this user is allowed to post a new topic:
-                    echo fb_link::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
+                    echo fb_link::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
                 }
 
                 echo '</td><td class="jr-topnav-right">';
@@ -296,7 +296,7 @@ function loadSubCategory(){
                     <?php
                     if ($my->id != 0)
                     {
-                        echo fb_link::GetCategoryLink('markThisRead', $catid, $fbIcons['markThisForumRead'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['markThisForumRead'] . '" border="0" alt="' . _GEN_MARK_THIS_FORUM_READ . '" title="' . _GEN_MARK_THIS_FORUM_READ . '"/>' : _GEN_MARK_THIS_FORUM_READ, $rel='nofollow');
+                        echo fb_link::GetCategoryLink('markThisRead', $catid, $fbIcons['markThisForumRead'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['markThisForumRead'] . '" border="0" alt="' . _GEN_MARK_THIS_FORUM_READ . '" title="' . _GEN_MARK_THIS_FORUM_READ . '"/>' : _GEN_MARK_THIS_FORUM_READ, $rel='nofollow');
                     }
                     ?>
                     <!-- Mod List -->
@@ -332,7 +332,7 @@ function loadSubCategory(){
                     <?php
                     //(JJ) FINISH: CAT LIST BOTTOM
                     if ($fbConfig->enableforumjump)
-                        require_once (FB_COMP_C_SRC . '/fb_forumjump.php');
+                        require_once (KUNENA_COMP_C_SRC . '/fb_forumjump.php');
                     ?>
                 </th>
             </tr>
@@ -344,7 +344,7 @@ function loadSubCategory(){
                     <?php
                     if ($my->id != 0)
                     {
-                        echo $fbIcons['unreadmessage'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '" />' : $fbConfig->newchar;
+                        echo $fbIcons['unreadmessage'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '" />' : $fbConfig->newchar;
                         echo ' - ' . _GEN_UNREAD . '';
                     }
                     ?>
@@ -354,7 +354,7 @@ function loadSubCategory(){
                     <?php
                     if ($my->id != 0)
                     {
-                        echo $fbIcons['readmessage'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $fbConfig->newchar;
+                        echo $fbIcons['readmessage'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $fbConfig->newchar;
                         echo ' - ' . _GEN_NOUNREAD . '';
                     }
                     ?>
@@ -363,8 +363,8 @@ function loadSubCategory(){
 
                 <?php
                 if ($moderatedForum == 1) {
-                    echo $fbIcons['forummoderated'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['forummoderated']
-                             . '" border="0" alt="' . _GEN_MODERATED . '" /> - ' . _GEN_MODERATED . '' : '  <img src="' . JB_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" /> - ' . _GEN_MODERATED . '';
+                    echo $fbIcons['forummoderated'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forummoderated']
+                             . '" border="0" alt="' . _GEN_MODERATED . '" /> - ' . _GEN_MODERATED . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" /> - ' . _GEN_MODERATED . '';
                 }
                 else {
                     echo "";
@@ -376,8 +376,8 @@ function loadSubCategory(){
                     <?php
                     if ($topicLocked) {
                         echo
-                            $fbIcons['topiclocked'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['topiclocked'] . '" border="0" alt="' . _GEN_LOCKED_TOPIC
-                                . '" title="' . _GEN_LOCKED_TOPIC . '" /> - ' . _GEN_LOCKED_TOPIC . '' : '<img src="' . JB_URLEMOTIONSPATH . 'lock.gif" alt="' . _GEN_LOCKED_TOPIC . '" title="' . _GEN_LOCKED_TOPIC . '" /> - ' . _GEN_LOCKED_TOPIC . '';
+                            $fbIcons['topiclocked'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['topiclocked'] . '" border="0" alt="' . _GEN_LOCKED_TOPIC
+                                . '" title="' . _GEN_LOCKED_TOPIC . '" /> - ' . _GEN_LOCKED_TOPIC . '' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif" alt="' . _GEN_LOCKED_TOPIC . '" title="' . _GEN_LOCKED_TOPIC . '" /> - ' . _GEN_LOCKED_TOPIC . '';
                     }
                     ?>
 
@@ -385,8 +385,8 @@ function loadSubCategory(){
 
                     <?php
                     if ($topicSticky) {
-                        echo $fbIcons['topicsticky'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['topicsticky'] . '" border="0" alt="'
-                                 . _GEN_ISSTICKY . '" title="' . _GEN_ISSTICKY . '" /> - ' . _GEN_ISSTICKY . '' : '<img src="' . JB_URLEMOTIONSPATH . 'pushpin.gif" alt="' . _GEN_ISSTICKY . '" title="' . _GEN_ISSTICKY . '" /> - ' . _GEN_ISSTICKY . '';
+                        echo $fbIcons['topicsticky'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['topicsticky'] . '" border="0" alt="'
+                                 . _GEN_ISSTICKY . '" title="' . _GEN_ISSTICKY . '" /> - ' . _GEN_ISSTICKY . '' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'pushpin.gif" alt="' . _GEN_ISSTICKY . '" title="' . _GEN_ISSTICKY . '" /> - ' . _GEN_ISSTICKY . '';
                     }
                     ?>
 
@@ -395,8 +395,8 @@ function loadSubCategory(){
                         <?php
                         if ($lockedForum == 1)
                         {
-                            echo $fbIcons['forumlocked'] ? '<img src="' . JB_URLICONSPATH . '' . $fbIcons['forumlocked']
-                                     . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" /> - ' . _GEN_LOCKED_FORUM . '' : '  <img src="' . JB_URLEMOTIONSPATH . 'lock.gif" border="0"   alt="' . _GEN_LOCKED_FORUM . '" /> - ' . _GEN_LOCKED_FORUM . '';
+                            echo $fbIcons['forumlocked'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forumlocked']
+                                     . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" /> - ' . _GEN_LOCKED_FORUM . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif" border="0"   alt="' . _GEN_LOCKED_FORUM . '" /> - ' . _GEN_LOCKED_FORUM . '';
                             echo '<br />';
                         }
                         else {
@@ -421,7 +421,7 @@ else
 
     <div>
         <?php
-        echo _FB_NO_ACCESS;
+        echo _KUNENA_NO_ACCESS;
 
         if ($fbConfig->enableforumjump)
         {
@@ -429,13 +429,13 @@ else
 
             <form id = "jumpto" name = "jumpto" method = "post" target = "_self" action = "index.php" onsubmit = "if(document.jumpto.catid.value &lt; 2){return false;}">
                 <div style = "width: 100%" align = "right">
-                    <input type = "hidden" name = "Itemid" value = "<?php echo FB_FB_ITEMID;?>"/>
+                    <input type = "hidden" name = "Itemid" value = "<?php echo KUNENA_COMPONENT_ITEMID;?>"/>
 
                     <input type = "hidden" name = "option" value = "com_kunena"/>
 
                     <input type = "hidden" name = "func" value = "showcat"/>
 
-                    <input type = "submit" name = "Go"  class="fbs" value = "<?php echo _FB_GO; ?>"/>
+                    <input type = "submit" name = "Go"  class="fbs" value = "<?php echo _KUNENA_GO; ?>"/>
 
                     <select name = "catid" class="fbs" onchange = "if(this.options[this.selectedIndex].value > 0){ forms['jumpto'].submit() }">
                         <option name = "" SELECTED><?php echo _GEN_FORUM_JUMP; ?></option>

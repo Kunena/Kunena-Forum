@@ -38,6 +38,7 @@ Kunena 1.0.8
 ^ Change font sizes in kunena.forum.css for default_ex from px to relative sizes (small, medium, etc)
 ^ Change names in for forum tools in kunena.forum.css from fireboard to kunena, add z-index:2 to menu
 ^ Fix css typos for forum tools menu, add z-index
+^ Removed unused group styles from kunena.forum.css, and associated images files from default_ex images
 
 2-February-2009 Matias
 ^ Move forced width from message text to [code] tag

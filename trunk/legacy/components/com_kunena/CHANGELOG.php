@@ -31,6 +31,10 @@ Legend:
 
 Kunena 1.0.8
 
+4-February-2009 fxstein
+^ New ad module position logic. Much Simplified with support for n module positions: kunena_msg_1
+  through kunena_msg_n. n being the number of posts per page.
+
 4-February-2009 Matias
 + First version of CKunenaUser(s) class
 

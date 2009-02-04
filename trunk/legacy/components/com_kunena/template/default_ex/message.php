@@ -453,82 +453,26 @@ if ($msg_signature) {
     </tbody>
 </table>
 <!-- Begin: Message Module Positions -->
-
 <?php
-//FIXME: Need to change for Joomla 1.5 currently not working
-if (mosCountModules('fb_msg_t'))
+if (mosCountModules('kunena_msg_'.$mmm))
 {
 ?>
-
-    <div class = "fb_msg_t">
+    <div class = "kunena_msg_<?php echo $mmm; ?>">
         <?php
-        mosLoadModules('fb_msg_t', -2);
+        if (FBTools::isJoomla15())
+        {
+	        $document	= &JFactory::getDocument();
+	        $renderer	= $document->loadRenderer('modules');
+	        $options	= array('style' => 'xhtml');
+	        $position	= 'kunena_msg_'.$mmm;
+	        echo $renderer->render($position, $options, null);
+        }
+        else
+        {
+        	mosLoadModules('kunena_msg_'.$mmm, -2);
+        }
         ?>
     </div>
-
-<?php
-}
-?>
-
-<?php
-if (mosCountModules('fb_msg_1'))
-{
-?>
-
-<?php
-    if ($mmm == 1)
-    {
-?>
-
-            <div class = "fb_msg_1">
-                <?php
-                mosLoadModules('fb_msg_1', -2);
-                ?>
-            </div>
-
-<?php
-    }
-?>
-
-<?php
-}
-?>
-
-<?php
-if (mosCountModules('fb_msg_2'))
-{
-?>
-
-<?php
-    if ($mmm == 2)
-    {
-?>
-
-            <div class = "fb_msg_2">
-                <?php
-                mosLoadModules('fb_msg_2', -2);
-                ?>
-            </div>
-
-<?php
-    }
-?>
-
-<?php
-}
-?>
-
-<?php
-if (mosCountModules('fb_msg_b'))
-{
-?>
-
-    <div class = "fb_msg_b">
-        <?php
-        mosLoadModules('fb_msg_b', -2);
-        ?>
-    </div>
-
 <?php
 }
 ?>

@@ -27,7 +27,7 @@ $database->loadObject($user);
 </caption>
 
 <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
- 
+
     <tbody>
         <tr class = "fb_sth">
             <th colspan = "2" class = "view-th <?php echo $boardclass; ?>sectiontableheader">
@@ -450,81 +450,26 @@ if ($msg_signature) {
     </tbody>
 </table>
 <!-- Begin: Message Module Positions -->
-
 <?php
-if (mosCountModules('fb_msg_t'))
+if (mosCountModules('kunena_msg_'.$mmm))
 {
 ?>
-
-    <div class = "fb_msg_t">
+    <div class = "kunena_msg_<?php echo $mmm; ?>">
         <?php
-        mosLoadModules('fb_msg_t', -2);
+        if (FBTools::isJoomla15())
+        {
+	        $document	= &JFactory::getDocument();
+	        $renderer	= $document->loadRenderer('modules');
+	        $options	= array('style' => 'xhtml');
+	        $position	= 'kunena_msg_'.$mmm;
+	        echo $renderer->render($position, $options, null);
+        }
+        else
+        {
+        	mosLoadModules('kunena_msg_'.$mmm, -2);
+        }
         ?>
     </div>
-
-<?php
-}
-?>
-
-<?php
-if (mosCountModules('fb_msg_1'))
-{
-?>
-
-<?php
-    if ($mmm == 1)
-    {
-?>
-
-            <div class = "fb_msg_1">
-                <?php
-                mosLoadModules('fb_msg_1', -2);
-                ?>
-            </div>
-
-<?php
-    }
-?>
-
-<?php
-}
-?>
-
-<?php
-if (mosCountModules('fb_msg_2'))
-{
-?>
-
-<?php
-    if ($mmm == 2)
-    {
-?>
-
-            <div class = "fb_msg_2">
-                <?php
-                mosLoadModules('fb_msg_2', -2);
-                ?>
-            </div>
-
-<?php
-    }
-?>
-
-<?php
-}
-?>
-
-<?php
-if (mosCountModules('fb_msg_b'))
-{
-?>
-
-    <div class = "fb_msg_b">
-        <?php
-        mosLoadModules('fb_msg_b', -2);
-        ?>
-    </div>
-
 <?php
 }
 ?>

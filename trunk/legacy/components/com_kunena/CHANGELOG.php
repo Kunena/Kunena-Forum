@@ -34,6 +34,8 @@ Kunena 1.0.8
 4-February-2009 Noel Hunter
 ^ Changes to colors in kunena.forum.css to prevent inheritance of colors 
   from joomla templates making text unreadable
+^ Changes to kunena.forum.css to expand whos-online in pathway for
+  longer lists, reduce line height, additional color fixes
 
 4-February-2009 fxstein
 ^ font size regression fix: reply counts in default_ex back to x-large

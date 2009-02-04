@@ -803,7 +803,7 @@ POST HISTORY
 	padding: 3px;
 	margin: 5px 0 5px 0;
 	border: 1px solid #BFC3C6;
-	background:#F7F7F7;
+	background-color:#F7F7F7;
 	color:#000000;
 }
 .forum-pathway-1 {
@@ -816,8 +816,8 @@ POST HISTORY
 	padding-top: 4px;
 }
 .forum-pathway-2 {
-	height: 18px;
-	line-height: 18px;
+	min-height: 18px;
+	line-height: 12px;
 	background:  url(images/pathway_finallink.gif) no-repeat left center;
 	padding-left: 30px;
 }
@@ -979,6 +979,7 @@ td.fb_faqdesc, td.fb_rulesdesc, td.fb_uadesc, td.fb_anndesc, td.fb_creditsdesc {
 	padding: 5px;
 	border:  1px solid #ccc;
 	background: #FFFFFF;
+	color:#000000;
 }
 .fb_credits_intro {padding:10px 0 10px 0;}
 .fb_team { margin:0; padding:0; border-top:1px solid #dddddd; }
@@ -1066,4 +1067,5 @@ img.rsslink {
 	overflow:auto;
 	width:95%;
 }
+
 

@@ -13,7 +13,7 @@
 # FILENAME: interpreter.Kunena.inc.php                                  #
 # AUTOR:    Miro Dietiker, MD Systems, All rights reserved                 #
 # LICENSE:  http://www.gnu.org/copyleft/gpl.html GNU/GPL                   #
-# CONTACT: m.dietiker@md-systems.ch        © 2007 Miro Dietiker 13.11.2007 #
+# CONTACT: m.dietiker@md-systems.ch        ï¿½ 2007 Miro Dietiker 13.11.2007 #
 ############################################################################
 # This parser is based on an earlier CMS parser implementation.
 # It has been completely rewritten and generalized for Kunena and
@@ -263,7 +263,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
                     $types = array ("php", "mysql", "html", "js", "javascript");
 
-                    $code_start_html = '<div class="fbcode" style="width:'. $GLOBALS["fbConfig"]->rtewidth .'px;"><table cellspacing="1" cellpadding="3" border="0" align="center"><tr><td><b>'._KUNENA_MSG_CODE.'</b></td></tr><tr><td><hr />';
+                    $code_start_html = '<div class="fbcode" style="width:'. $GLOBALS["fbConfig"]->rtewidth .'px;"><table cellspacing="1" cellpadding="3" border="0"><tr><td><b>'._KUNENA_MSG_CODE.'</b></td></tr><tr><td><hr />';
 
                     if (in_array($tag->options["type"], $types)) {
                         $t_type = $tag->options["type"];

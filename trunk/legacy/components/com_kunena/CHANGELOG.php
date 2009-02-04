@@ -36,6 +36,7 @@ Kunena 1.0.8
   from joomla templates making text unreadable
 ^ Changes to kunena.forum.css to expand whos-online in pathway for
   longer lists, reduce line height, additional color fixes
+^ Remove centering from code tags in parser, to fix ie bug
 
 4-February-2009 fxstein
 ^ font size regression fix: reply counts in default_ex back to x-large

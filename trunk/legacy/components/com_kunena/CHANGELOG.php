@@ -45,6 +45,7 @@ Kunena 1.0.8
 # Backend, User Profile: include path fixed
 ^ Backend, User Profile: Removed bbcode, it didn't work
 ^ Removed flat/threaded setting, it wasn't used
+# Backend, Ranks: fixed bug when you had no ranks
 
 3-February-2009 fxstein
 # Reverse sort bug fix. Newest messages first now work in threads.

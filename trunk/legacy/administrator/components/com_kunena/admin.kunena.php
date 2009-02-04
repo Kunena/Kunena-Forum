@@ -1953,6 +1953,7 @@ function collectRanks()
 
     $dir = @opendir($rankpath['abs']);
 
+	$rank_images = array()
 	while($file = @readdir($dir))
 	{
 		if( !@is_dir($rank_abs_path . '/' . $file) )

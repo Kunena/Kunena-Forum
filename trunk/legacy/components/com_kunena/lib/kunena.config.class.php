@@ -209,7 +209,7 @@ class CKunenaConfig extends CKunenaConfigBase
     var $catimagepath            = 'category_images/';
     var $numchildcolumn          = 2;
     var $showchildcaticon        = 1;
-    var $annmodid                = 62;
+    var $annmodid                = '62';
     var $rtewidth                = 450;
     var $rteheight               = 300;
     var $enablerulespage         = 1;

@@ -2812,7 +2812,11 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
         //that's what we got now; later the 'future_use' columns can be used..
 
         $csubslist = count($subslist);
-        include_once ('components/com_kunena/js/kunena.bbcode.ctrl.js');
+/*
+// FIXME: bbcode does not work, it should be ported to jQuery..
+	$postform = 'adminForm';
+	include (KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
+*/
 ?>
 
         <form action = "index2.php?option=<?php echo $option;?>" method = "POST" name = "adminForm">
@@ -2830,7 +2834,8 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 <?php echo _KUNENA_GENPROF; ?>
 
                 </tr>
-
+<?php
+/*
                 <tr>
                     <td width = "150" class = "contentpane"><?php echo _KUNENA_PREFVIEW; ?>
                     </td>
@@ -2843,7 +2848,8 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 
                     </td>
                 </tr>
-
+*/
+?>
                 <tr>
                     <td width = "150" class = "contentpane"><?php echo _KUNENA_PREFOR; ?>
                     </td>
@@ -2874,11 +2880,14 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 
                             <td width = "150" valign = "top" class = "contentpane">
 <?php echo _GEN_SIGNATURE; ?>:
+<?php /*
+// FIXME: bbcode broken
 
         <br/> <?php echo $fbConfig->maxsig; ?>
 
         <input readonly type = text name = rem size = 3 maxlength = 3 value = "" class = "inputbox"> <?php echo _CHARS; ?><br/>
 <?php echo _HTML_YES; ?>
+*/ ?>
                             </td>
 
                             <td align = "left" valign = "top" class = "contentpane">
@@ -2889,6 +2898,8 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                                     onKeyDown = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);"
                                     onKeyUp = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);" cols = "50" type = "text" name = "message"><?php echo $signature; ?></textarea>
 
+<?php /*
+// FIXME: bbcode broken
                                 <br/>
 
                                 <input type = "button" class = "button" accesskey = "b" name = "addbbcode0" value = " B " style = "font-weight:bold; width: 30px" onClick = "bbstyle(0)" onMouseOver = "helpline('b')"/>
@@ -2936,6 +2947,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
         <br/>
 
         <input type = "text" name = "helpbox" size = "45" maxlength = "100" style = "width:400px; font-size:8px" class = "options" value = "<?php echo _BBCODE_HINT;?>"/>
+*/ ?>
                             </td>
 
                             <?php

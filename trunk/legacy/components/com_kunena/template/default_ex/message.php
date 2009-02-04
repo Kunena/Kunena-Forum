@@ -455,6 +455,7 @@ if ($msg_signature) {
 <!-- Begin: Message Module Positions -->
 
 <?php
+//FIXME: Need to change for Joomla 1.5 currently not working
 if (mosCountModules('fb_msg_t'))
 {
 ?>

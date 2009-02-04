@@ -31,6 +31,9 @@ Legend:
 
 Kunena 1.0.8
 
+3-February-2009 fxstein
+# Reverse sort bug fix. Newest messages first now work in threads.
+
 2-February-2009 Noel Hunter
 ^ Change all references from forum.css to kunena.forum.css
 + If kunena.forum.css is present in the current Joomla template css directory,

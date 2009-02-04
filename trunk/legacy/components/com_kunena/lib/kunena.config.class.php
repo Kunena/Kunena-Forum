@@ -324,6 +324,8 @@ class CKunenaConfig extends CKunenaConfigBase
     var $rsstype				 = 'thread';
     var $rsshistory				 = 'month';
     var $fbdefaultpage			 = 'recent';
+    // New 1.0.8 config variables
+    var $default_sort            = 'asc'; // 'desc' for latest post first
 
     //
     // Mandatory overrides from abstract base class
@@ -342,6 +344,32 @@ class CKunenaConfig extends CKunenaConfigBase
     function DoUserOverrides($userid)
     {
         // TODO: Need to integrate with new CKunenaUser class for user specific settings
+
+        // Example of setting override:
+        // $this->default_sort = 'desc';
+
+        // TODO: Old sort order code from view.php
+//        if ($fbConfig->cb_profile && $my->id != 0)
+//        {
+//            $database->setQuery("SELECT fbordering from #__comprofiler where user_id=$my->id");
+//            $fbordering = $database->loadResult();
+//
+//            if ($fbordering == "_UE_KUNENA_ORDERING_OLDEST") {
+//                $orderingNum = 0;
+//            }
+//            else {
+//                $orderingNum = 1;
+//            }
+//        }
+//        else
+//        {
+//            $database->setQuery("SELECT ordering from #__fb_users where userid=$my->id");
+//            $orderingNum = $database->loadResult();
+//        }
+//
+//        $ordering = $orderingNum ? 'DESC' : 'ASC';
+
+
     }
 }
 

@@ -68,7 +68,7 @@ include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.config.class.php");
 global $fbConfig;
 $fbConfig = new CKunenaConfig();
-$fbConfig->load();
+$fbConfig->load($my->id); // Provide current users id to enable user specific settings
 
 // Central Location for all internal links
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.link.class.php");

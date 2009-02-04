@@ -136,32 +136,14 @@ if ($letPass || $is_Moderator)
         // changed to 0 to fix the missing post when the thread splits over multiple pages
         $i = 0;
 
-        if ($fbConfig->cb_profile && $my->id != 0)
-        {
-            $database->setQuery("SELECT fbordering from #__comprofiler where user_id=$my->id");
-            $fbordering = $database->loadResult();
+        $ordering = ($fbConfig->default_sort == 'desc' ? 'desc' : 'asc'); // Just to make sure only valid options make it
 
-            if ($fbordering == "_UE_KUNENA_ORDERING_OLDEST") {
-                $orderingNum = 0;
-            }
-            else {
-                $orderingNum = 1;
-            }
-        }
-        else
-        {
-            $database->setQuery("SELECT ordering from #__fb_users where userid=$my->id");
-            $orderingNum = $database->loadResult();
-        }
-
-        $ordering = $orderingNum ? 'DESC' : 'ASC';
-        // Advanced moderator merge-split sort order for merged threads
+        // Get messages of current thread
         $database->setQuery("(SELECT * FROM #__fb_messages AS a "
            ."\n LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.id='$thread' AND a.hold=0 AND a.catid='$catid') UNION (SELECT * FROM #__fb_messages AS a "
            ."\n LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.thread='$thread' AND a.hold=0 AND a.catid='$catid') ORDER BY time $ordering");
 
-        if ($view != "flat")
-        $flat_messages[] = $this_message;
+        if ($view != "flat") $flat_messages[] = $this_message;
 
         foreach ($database->loadObjectList()as $message)
         {
@@ -178,6 +160,11 @@ if ($letPass || $is_Moderator)
             else {
                 $messages[$message->parent][] = $message;
             }
+        }
+
+        if ($ordering=='desc')
+        {
+            $idmatch = $i - $idmatch;
         }
 
         if ($view == "flat")

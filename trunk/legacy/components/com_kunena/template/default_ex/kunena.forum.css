@@ -17,30 +17,33 @@
 }
 #Kunena table.fb_blocktable thead tr th {
 	background: #3B3B3B url(images/cat_title_bg.gif) repeat-x top left;
-	padding: 2px;
 	color:#ffffff;
+	padding: 2px;
 	font-weight:normal;
 }
 #Kunena tr.fb_sth { 
 	background: #8CABC8 url(images/cat_title_head_bg.gif) repeat-x top left;
+	color:#000000;
 	font-size:small;
 	font-family:Arial, Helvetica, sans-serif;
 }
 #Kunena th.fb_sectiontableheader {
 	padding:3px 5px;
-	color:#FFFFFF;
 	font-weight:normal;
 	font-size:small;
 	font-family:Arial, Helvetica, sans-serif;
 }
 #Kunena tr.fb_sectiontableentry1 td {
 	background: #F2F1EE;
+	color: #000000;
 	padding:5px;
 	border-bottom:1px solid #BFC3C6;
 	border-left:1px solid #FFFFFF;
 	border-right:1px solid #BFC3C6;
 }
 #Kunena tr.fb_sectiontableentry2 td {
+	background: #F2F1EE;
+	color: #000000;
 	padding:5px;
 	border-bottom:1px solid #BFC3C6;
 	border-left:1px solid #FFFFFF;
@@ -62,8 +65,8 @@
 	display:block;
 	font-size:x-large;
 	font-weight:normal;
-	line-height:21px;
 	margin:5px 0;
+	line-height:21px;
 }
 #Kunena .topic_latest_post, #Kunena .topic_date {
 	font-size:x-small;
@@ -99,8 +102,9 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 }
 /* Menu */
 #Kunena #Kunena_top td {
-	height:35px;
 	background: #FFFFFF;
+	color:#000000;
+	height:35px;
 	margin:0;
 	border-style:solid;
 	border-color:#5182A4;
@@ -316,7 +320,6 @@ td.fb_profileboxcnt {
 #Kunena .fb_header div#fb_topmenu {
 } /* topmenu div */
 #Kunena .fb_header div#fb_topmenu a {
-	color: #FFFFFF;
 	padding: 0 8px;
 	display: block;
 	text-decoration: none;
@@ -386,9 +389,6 @@ td.fb_profileboxcnt {
 	position: relative;
 	z-index: 1;
 }
-/*
-#Kunena tr.fb_sth {background: #BFC3C6;font-weight: bold;font-family: Tahoma, Arial, Helvetica, sans-serif;}
-*/
 th.fb_sectiontableheader {
 }
 /*
@@ -472,8 +472,10 @@ span.newchar {
 }
 .fb_sectiontableentry2_stickymsg {
 	background: #FEFECC;
+	color:#000000;
 }
 tr.fb_sectiontableentry1_stickymsg td, tr.fb_sectiontableentry2_stickymsg td {
+	color:#000000;
 	border-bottom:1px solid #BFC3C6;
 	border-left:1px solid #FFFFFF;
 	border-right:1px solid #BFC3C6;
@@ -481,7 +483,11 @@ tr.fb_sectiontableentry1_stickymsg td, tr.fb_sectiontableentry2_stickymsg td {
 }
 /*
 tr.fb_sectiontableentry1_stickymsg td.td-1, 
-tr.fb_sectiontableentry2_stickymsg td.td-1{border-left: 1px solid #BFC3C6;}
+tr.fb_sectiontableentry2_stickymsg td.td-1{
+	background: #F2F1EE;
+	color:#FFFFFF;
+	border-left: 1px solid #BFC3C6;
+}
 */
 
 /*
@@ -550,7 +556,6 @@ span.msgtitle, span.msgtitle_new {
 	background: url(images/msgtitleicon.gif) no-repeat left center;
 	padding-left:25px;
 	line-height:26px;
-	color:#000000;
 	font-size:medium;
 }
 span.msgtitle_new {
@@ -799,6 +804,7 @@ POST HISTORY
 	margin: 5px 0 5px 0;
 	border: 1px solid #BFC3C6;
 	background:#F7F7F7;
+	color:#000000;
 }
 .forum-pathway-1 {
 	font-weight: normal;
@@ -1060,3 +1066,4 @@ img.rsslink {
 	overflow:auto;
 	width:95%;
 }
+

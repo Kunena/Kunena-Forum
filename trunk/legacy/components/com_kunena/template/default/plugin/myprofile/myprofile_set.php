@@ -34,11 +34,11 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 		<tbody class = "fb_myprofile_general">
 			<tr >
-				<td >
+				<td>
 					<strong><?php echo _USER_ORDER; ?>*</strong>:
 				</td>
 
-				<td  colspan = "2">
+				<td>
 					<?php
 					// make the select list for the view type
 					$yesno1[] = mosHTML::makeOption(0, _USER_ORDER_ASC);
@@ -51,7 +51,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 				</td>
 			</tr>
             <tr >
-				<td >
+				<td>
 					<strong><?php echo _KUNENA_USER_HIDEEMAIL; ?>*</strong>:
 				</td>
 
@@ -69,11 +69,11 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 			</tr>
 
             <tr >
-				<td >
+				<td>
 					<strong><?php echo _USER_SHOWONLINE; ?>*</strong>:
 				</td>
 
-				<td  colspan = "2">
+				<td>
 					<?php
 					// make the select list for the view type
 					$yesno4[] = mosHTML::makeOption(0, _COM_A_NO);

@@ -446,8 +446,16 @@ if (count($messages[0]) > 0)
                                                 <!-- Latest Post -->
         <span class="topic_latest_post">
         <?php
-        echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->thread, $threadPages, $fbConfig->messages_per_page, _GEN_LAST_POST, $last_reply[$leaf->id]->id); ?>
-        <?php echo ' '._GEN_BY. ' '.CKunenaLink::GetProfileLink($last_reply[$leaf->id]->userid, $last_reply[$leaf->id]->name, 'nofollow', 'topic_latest_post_user'); ?>
+        if ($fbConfig->default_sort == 'asc')
+        {
+        	echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->thread, $threadPages, $fbConfig->messages_per_page, _GEN_LAST_POST, $last_reply[$leaf->id]->id);
+        }
+        else
+        {
+        	echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->thread, 1, $fbConfig->messages_per_page, _GEN_LAST_POST, $last_reply[$leaf->id]->id);
+        }
+
+        echo ' '._GEN_BY. ' '.CKunenaLink::GetProfileLink($last_reply[$leaf->id]->userid, $last_reply[$leaf->id]->name, 'nofollow', 'topic_latest_post_user'); ?>
         </span>
         <!-- /Latest Post -->
         <br />

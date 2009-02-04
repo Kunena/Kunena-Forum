@@ -32,6 +32,7 @@ Legend:
 Kunena 1.0.8
 
 4-February-2009 fxstein
+^ font size regression fix: reply counts in default_ex back to x-large
 ^ New ad module position logic. Much Simplified with support for n module positions: kunena_msg_1
   through kunena_msg_n. n being the number of posts per page.
 

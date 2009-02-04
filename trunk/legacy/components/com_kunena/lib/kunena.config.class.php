@@ -148,7 +148,7 @@ class CKunenaConfigBase
     //
     // Load config settings from database table
     //
-    function load($userid=0)
+    function load($KunenaUser=null)
     {
         global $database;
 
@@ -168,10 +168,10 @@ class CKunenaConfigBase
         }
 
         // Check for user specific overrides
-        if($userid != 0)
+        if(is_object($KunenaUser))
         {
             // overload the settings with user specific ones
-            $this->DoUserOverrides($userid);
+            $this->DoUserOverrides($KunenaUser);
             // Now the variables of the class contain the global settings
             // overloaded with the user specific ones
             // No other code changes required to support user specific settings.
@@ -327,6 +327,13 @@ class CKunenaConfig extends CKunenaConfigBase
     // New 1.0.8 config variables
     var $default_sort            = 'asc'; // 'desc' for latest post first
 
+
+    function CKunenaConfig($KunenaUser=null)
+	{
+		if (!is_object($KunenaUser)) return;
+		$this->load($KunenaUser);
+	}
+
     //
     // Mandatory overrides from abstract base class
     //
@@ -341,35 +348,36 @@ class CKunenaConfig extends CKunenaConfigBase
         return "fb_config"; // w/o joomla prefix - is being added by based class
     }
 
-    function DoUserOverrides($userid)
+    function DoUserOverrides($KunenaUser)
     {
-        // TODO: Need to integrate with new CKunenaUser class for user specific settings
+    	global $database;
+
+    	// Only perform overrides if we got a valid user handed to us
+    	if (is_object($KunenaUser)==FALSE) return FALSE;
+    	if ($KunenaUser->getID()==0) return FALSE;
 
         // Example of setting override:
         // $this->default_sort = 'desc';
 
-        // TODO: Old sort order code from view.php
-//        if ($fbConfig->cb_profile && $my->id != 0)
-//        {
-//            $database->setQuery("SELECT fbordering from #__comprofiler where user_id=$my->id");
-//            $fbordering = $database->loadResult();
-//
-//            if ($fbordering == "_UE_KUNENA_ORDERING_OLDEST") {
-//                $orderingNum = 0;
-//            }
-//            else {
-//                $orderingNum = 1;
-//            }
-//        }
-//        else
-//        {
-//            $database->setQuery("SELECT ordering from #__fb_users where userid=$my->id");
-//            $orderingNum = $database->loadResult();
-//        }
-//
-//        $ordering = $orderingNum ? 'DESC' : 'ASC';
+    	// Overload default with user specific from user profile
+        if ($this->cb_profile)
+        {
+            $database->setQuery("SELECT fbordering from #__comprofiler where user_id=".$KunenaUser->getID());
+            $cbordering = $database->loadResult();
 
+            $orderingNum = ($cbordering == "_UE_KUNENA_ORDERING_OLDEST" ? 0 : 1);
+        }
+        else
+        {
+            $database->setQuery("SELECT ordering from #__fb_users where userid=".$KunenaUser->getID());
+            $orderingNum = $database->loadResult();
+        }
 
+        $this->default_sort = $orderingNum ? 'desc' : 'asc';
+
+        // Add additional Overrides...
+
+        return TRUE;
     }
 }
 

@@ -20,14 +20,9 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 $mtime = explode(" ", microtime());
 $tstart = $mtime[1] + $mtime[0];
 
-// Kill notices (we have many..)
+// TODO: Get rid of THIS!!! - Kill notices (we have many..)
 error_reporting (E_ALL ^ E_NOTICE);
 
-global $mosConfig_lang, $fbIcons;
-global $is_Moderator;
-
-// ERROR: global scope mix
-global $message;
 // Get all the variables we need and strip them in case
 $action 		= mosGetParam($_REQUEST, 'action', '');
 $attachfile 	= mosGetParam($_FILES['attachfile'], 'name', '');
@@ -62,13 +57,27 @@ $userid 		= intval(mosGetParam($_REQUEST, 'userid', 0));
 $view 			= mosGetParam($_REQUEST, 'view', '');
 $msgpreview 	= mosGetParam($_REQUEST, 'msgpreview', '');
 
+// Debug helpers
 include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.debug.php");
 
 // get Kunenas configuration params in
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.config.class.php");
-global $fbConfig;
-$fbConfig = new CKunenaConfig();
-$fbConfig->load($my->id); // Provide current users id to enable user specific settings
+
+// Get CKunanaUser and CKunenaUsers
+require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.user.class.php");
+
+global $fbConfig, $KunenaUser;
+
+// Get data about the current user - its ok to not have a userid = guest
+$KunenaUser = new CKunenaUser($my->id);
+// Load configuration and personal settings for current user
+$fbConfig = new CKunenaConfig($KunenaUser);
+
+global $mosConfig_lang, $fbIcons;
+global $is_Moderator;
+
+// ERROR: global scope mix
+global $message;
 
 // Central Location for all internal links
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.link.class.php");
@@ -77,12 +86,14 @@ require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/class.kunena.php");
 
 // get right Language file
-if (file_exists(KUNENA_ABSADMPATH . '/language/kunena.' . KUNENA_LANG . '.php')) {
+if (file_exists(KUNENA_ABSADMPATH . '/language/kunena.' . KUNENA_LANG . '.php'))
+{
     include_once (KUNENA_ABSADMPATH . '/language/kunena.' . KUNENA_LANG . '.php');
-    }
-else {
+}
+else
+{
     include_once (KUNENA_ABSADMPATH . '/language/kunena.english.php');
-    }
+}
 
 // Include Clexus PM class file
 if ($fbConfig->pm_component == "clexuspm")

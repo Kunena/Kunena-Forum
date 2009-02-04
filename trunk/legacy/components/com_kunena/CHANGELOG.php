@@ -31,6 +31,9 @@ Legend:
 
 Kunena 1.0.8
 
+4-February-2009 Matias
++ First version of CKunenaUser(s) class
+
 3-February-2009 fxstein
 # Reverse sort bug fix. Newest messages first now work in threads.
 

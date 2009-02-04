@@ -22,15 +22,12 @@ unset($user);
 $database->setQuery("SELECT email, name from #__users WHERE `id`={$my->id}");
 $database->loadObject($user);
 ?>
-<caption>
-	<a name = "<?php echo $msg_id;?>"/>
-</caption>
 
 <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
-
     <tbody>
         <tr class = "fb_sth">
             <th colspan = "2" class = "view-th <?php echo $boardclass; ?>sectiontableheader">
+        	<a name = "<?php echo $msg_id; ?>"></a>
 <?php
                 echo CKunenaLink::GetSamePageAnkerLink($msg_id, '#'.$msg_id)
 ?>

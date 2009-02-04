@@ -31,6 +31,9 @@ Legend:
 
 Kunena 1.0.8
 
+5-February-2009 Matias
+# Try 2: Work around IE bug which prevented jump to last message
+
 4-February-2009 Noel Hunter
 ^ Changes to colors in kunena.forum.css to prevent inheritance of colors 
   from joomla templates making text unreadable

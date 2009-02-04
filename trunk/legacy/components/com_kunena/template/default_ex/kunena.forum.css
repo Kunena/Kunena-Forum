@@ -34,7 +34,7 @@
 	font-family:Arial, Helvetica, sans-serif;
 }
 #Kunena tr.fb_sectiontableentry1 td {
-	background: #F2F1EE;
+	background: #FFFFFF;
 	color: #000000;
 	padding:5px;
 	border-bottom:1px solid #BFC3C6;
@@ -98,7 +98,8 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	right:0px;
 }
 .fb_credits, .fb_footer {
-	font-size:x-small
+	line-height: 18px;
+	font-size:x-small;
 }
 /* Menu */
 #Kunena #Kunena_top td {

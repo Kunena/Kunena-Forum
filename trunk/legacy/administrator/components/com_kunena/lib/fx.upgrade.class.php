@@ -200,7 +200,7 @@ class fx_Upgrade {
 				<table class="adminlist">
 				<tr>
 					<td>Creating version table</td>
-					<td width="20"><a href="#" onMouseOver="return overlib('<?=$this->_error?>', BELOW, RIGHT,WIDTH,300);" onmouseout="return nd();" ><img src="images/<?php echo $img;?>" border="0"></a></td>
+					<td width="20"><a href="#" onmouseover="return overlib('\<?php $this->_error; ?>', BELOW, RIGHT,WIDTH,300);" onmouseout="return nd();" ><img src="images/<?php echo $img; ?>" border="0"></a></td>
 				</tr>
 				</table>
 				<?php
@@ -230,10 +230,10 @@ class fx_Upgrade {
 			{
 				?>
 				<div id="overDiv" style="position:absolute; visibility:hidden; z-index:10000;"></div>
-				<script  type="text/javascript" src="<?php echo $mosConfig_live_site;?>/includes/js/overlib_mini.js"></script>
+				<script  type="text/javascript" src="<?php echo $mosConfig_live_site; ?>/includes/js/overlib_mini.js"></script>
 				<table class="adminlist">
 					<tr>
-						<th colspan="2">Installing "<?=$this->component?>" (Version: <?=$version;?> / Date: <?=$versiondate;?> / Build: <?=build;?> / VersionName: <?=$versionname;?> )</th>
+						<th colspan="2">Installing "\<?php $this->component?>" (Version: \<?php $version; ?> / Date: \<?php $versiondate; ?> / Build: \<?php $build; ?> / VersionName: \<?php $versionname; ?> )</th>
 					</tr>
 				<?php
 			}
@@ -252,10 +252,10 @@ class fx_Upgrade {
 			if(!$this->silent) {
 				?>
 				<div id="overDiv" style="position:absolute; visibility:hidden; z-index:10000;"></div>
-				<script  type="text/javascript" src="<?php echo $mosConfig_live_site;?>/includes/js/overlib_mini.js"></script>
+				<script  type="text/javascript" src="<?php echo $mosConfig_live_site; ?>/includes/js/overlib_mini.js"></script>
 				<table class="adminlist">
 					<tr>
-						<th colspan="2">Upgrading "<?=$this->component?>" (Version: <?=@$currentVersion->version; ?> / Version Date: <?=@$currentVersion->versiondate;?> / Install Date: <?=@$currentVersion->installdate;?> / Build: <?=@$currentVersion->build;?> / Version Name: <?=@$currentVersion->versionname;?>)</th>
+						<th colspan="2">Upgrading "\<?php $this->component?>" (Version: \<?php @$currentVersion->version; ?> / Version Date: \<?php @$currentVersion->versiondate; ?> / Install Date: \<?php @$currentVersion->installdate; ?> / Build: \<?php @$currentVersion->build; ?> / Version Name: \<?php @$currentVersion->versionname; ?>)</th>
 					</tr>
 				<?php
 			}
@@ -283,7 +283,7 @@ class fx_Upgrade {
 								<td colspan="2">&nbsp;</td>
 							</tr>
 							<tr>
-								<th colspan="2">Version: <?=$version;?> (Version Date: <?=$versiondate;?>, Build: <?=$build;?>, Version Name: <?=$versionname;?>)</th>
+								<th colspan="2">Version: \<?php $version; ?> (Version Date: \<?php $versiondate; ?>, Build: \<?php $build; ?>, Version Name: \<?php $versionname; ?>)</th>
 							</tr>
 							<?php
 						}
@@ -335,13 +335,13 @@ class fx_Upgrade {
 						?>
 						<tr>
 							<td>
-								<div id="id<?=$i;?>_<?=$batch;?>" onClick="javascript:showDetail(this);" style="cursor:pointer;">
-									<img id="id<?=$i;?>_<?=$batch;?>_img" src="images/expandall.png" border="0">
+								<div id="id\<?php $i; ?>_\<?php $batch; ?>" onclick="javascript:showDetail(this);" style="cursor:pointer;">
+									<img id="id\<?php $i; ?>_\<?php $batch; ?>_img" src="images/expandall.png" border="0">
 									Including file
 								</div>
-								<div id="id<?=$i;?>_<?=$batch;?>_details" style="display:None;" class="details"><?=$this->_error;?><pre><?=$include;?></pre></div>
+								<div id="id\<?php $i; ?>_\<?php $batch; ?>_details" style="display:none;" class="details">\<?php $this->_error; ?><pre>\<?php $include; ?></pre></div>
 							</td>
-							<td width="20" valign="top"><img src="images/<?php echo $img;?>"></td>
+							<td width="20" valign="top"><img src="images/<?php echo $img; ?>"></td>
 						</tr>
 						<?php
 					}
@@ -370,13 +370,13 @@ class fx_Upgrade {
 						?>
 						<tr>
 							<td>
-								<div id="id<?=$i;?>_<?=$batch;?>" onClick="javascript:showDetail(this);" style="cursor:pointer;">
-									<img id="id<?=$i;?>_<?=$batch;?>_img" src="images/expandall.png" border="0">
+								<div id="id\<?php $i; ?>_\<?php $batch; ?>" onclick="javascript:showDetail(this);" style="cursor:pointer;">
+									<img id="id\<?php $i; ?>_\<?php $batch; ?>_img" src="images/expandall.png" border="0">
 									Running SQL Query
 								</div>
-								<div id="id<?=$i;?>_<?=$batch;?>_details" style="display:None;" class="details"><?=$this->_error;?><pre><?=$database->_sql;?></pre></div>
+								<div id="id\<?php $i; ?>_\<?php $batch;?>_details" style="display:none;" class="details">\<?php $this->_error; ?><pre>\<?php $database->_sql; ?></pre></div>
 							</td>
-							<td width="20" valign="top"><img src="images/<?php echo $img;?>" border="0"></td>
+							<td width="20" valign="top"><img src="images/<?php echo $img; ?>" border="0"></td>
 						</tr>
 						<?php
 						}
@@ -397,13 +397,13 @@ class fx_Upgrade {
 						?>
 						<tr>
 							<td>
-								<div id="id<?=$i;?>_<?=$batch;?>" onClick="javascript:showDetail(this);" style="cursor:pointer;">
-									<img id="id<?=$i;?>_<?=$batch;?>_img" src="images/expandall.png" border="0">
+								<div id="id\<?php $i; ?>_\<?php $batch; ?>" onclick="javascript:showDetail(this);" style="cursor:pointer;">
+									<img id="id\<?php $i; ?>_\<?php $batch; ?>_img" src="images/expandall.png" border="0">
 									Executing PHP Code
 								</div>
-								<div id="id<?=$i;?>_<?=$batch;?>_details" style="display:None;" class="details"><?=$this->_error;?><?php highlight_string( "<?php\n".$code."\n?>" );?></div>
+								<div id="id\<?php $i; ?>_\<?php $batch; ?>_details" style="display:None;" class="details">\<?php $this->_error; ?><?php highlight_string( "<?php\n".$code."\n?>" ); ?></div>
 							</td>
-							<td width="20" valign="top"><img src="images/<?php echo $img;?>" border="0"></td>
+							<td width="20" valign="top"><img src="images/<?php echo $img; ?>" border="0"></td>
 						</tr>
 						<?php
 					}

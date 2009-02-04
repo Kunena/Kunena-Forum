@@ -123,13 +123,13 @@ class fb_Converter {
 					if(!$this->silent) {
 						?>
 						<td>
-								<div id="id<?=$i;?>_<?=$batch;?>" onClick="javascript:showDetail(this);" style="cursor:pointer;">
-									<img id="id<?=$i;?>_<?=$batch;?>_img" src="images/expandall.png" border="0">
+								<div id="id\<?php $i; ?>_\<?php $batch; ?>" onclick="javascript:showDetail(this);" style="cursor:pointer;">
+									<img id="id\<?php $i; ?>_\<?php $batch; ?>_img" src="images/expandall.png" border="0">
 									Including file
 								</div>
-								<div id="id<?=$i;?>_<?=$batch;?>_details" style="display:None;" class="details"><?=$this->_error;?><pre><?=$include;?></pre></div>
+								<div id="id\<?php $i; ?>_\<?php $batch; ?>_details" style="display:none;" class="details">\<?php $this->_error; ?><pre>\<?php $include; ?></pre></div>
 							</td>
-							<td width="20" valign="top"><img src="images/<?php echo $img;?>"></td>
+							<td width="20" valign="top"><img src="images/<?php echo $img; ?>"></td>
 						</tr>
 						<?php
 					}
@@ -152,13 +152,13 @@ class fb_Converter {
 						?>
 						<tr>
 							<td>
-								<div id="id<?=$i;?>_<?=$batch;?>" onClick="javascript:showDetail(this);" style="cursor:pointer;">
-									<img id="id<?=$i;?>_<?=$batch;?>_img" src="images/expandall.png" border="0">
+								<div id="id\<?php $i; ?>_\<?php $batch; ?>" onclick="javascript:showDetail(this);" style="cursor:pointer;">
+									<img id="id\<?php $i; ?>_\<?php $batch; ?>_img" src="images/expandall.png" border="0">
 									Running SQL Query
 								</div>
-								<div id="id<?=$i;?>_<?=$batch;?>_details" style="display:None;" class="details"><?=$this->_error;?><pre><?=$database->_sql;?></pre></div>
+								<div id="id\<?php $i; ?>_\<?php $batch; ?>_details" style="display:none;" class="details">\<?php $this->_error; ?><pre>\<?php $database->_sql; ?></pre></div>
 							</td>
-							<td width="20" valign="top"><img src="images/<?php echo $img;?>" border="0"></td>
+							<td width="20" valign="top"><img src="images/<?php echo $img; ?>" border="0"></td>
 						</tr>
 						<?php
 					}
@@ -177,13 +177,13 @@ class fb_Converter {
 					if(!$this->silent) {
 						?>
 						<td>
-								<div id="id<?=$i;?>_<?=$batch;?>" onClick="javascript:showDetail(this);" style="cursor:pointer;">
-									<img id="id<?=$i;?>_<?=$batch;?>_img" src="images/expandall.png" border="0">
+								<div id="id\<?php $i; ?>_\<?php $batch; ?>" onClick="javascript:showDetail(this);" style="cursor:pointer;">
+									<img id="id\<?php $i; ?>_\<?php $batch; ?>_img" src="images/expandall.png" border="0">
 									Executing PHP Code
 								</div>
-								<div id="id<?=$i;?>_<?=$batch;?>_details" style="display:None;" class="details"><?=$this->_error;?><?php highlight_string( "<?php\n".$code."\n?>" );?></div>
+								<div id="id\<?php $i; ?>_\<?php $batch; ?>_details" style="display:none;" class="details">\<?php $this->_error; ?><?php highlight_string( "<?php\n".$code."\n?>" ); ?></div>
 							</td>
-							<td width="20" valign="top"><img src="images/<?php echo $img;?>" border="0"></td>
+							<td width="20" valign="top"><img src="images/<?php echo $img; ?>" border="0"></td>
 						</tr>
 						<?php
 					}

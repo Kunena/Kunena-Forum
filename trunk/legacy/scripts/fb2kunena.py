@@ -1,11 +1,11 @@
 import os,sys,re
 
-dictionary = {	# 'JB':'KUNENA', 
-		# 'FB':'KUNENA', 
+# Remember that these are regexps:
+dictionary = {	'JB_':'KUNENA_', 
+		'FB_':'KUNENA_', 
 		'fb_link':'CKunenaLink', 
 		'jos_fb_':'#__fb_',
-		'\r\n':'\n',
-		'\r':'\n'}
+		'\<\?=':'\<?php '}
 
 
 

@@ -11,6 +11,7 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+// Kunena User class
 class CKunenaUser
 {
 	var $id = 0;
@@ -35,7 +36,7 @@ class CKunenaUser
 		} else {
 			return FALSE;
 		}
-		
+
 		switch ($scope) {
 			case "joomla":
 				return $this->_getJoomlaProperty($field);
@@ -90,12 +91,12 @@ class CKunenaUser
 class CKunenaUsers
 {
 	var $mapping = array(
-		'name' => array('joomla', 'name'), 
-		'realname' => array('joomla', 'name'), 
-		'username' => array('joomla', 'username'), 
-		'email' => array('joomla', 'email'), 
-		'usertype' => array('joomla', 'usertype'), 
-		'registerDate' => array('joomla', 'registerDate'), 
+		'name' => array('joomla', 'name'),
+		'realname' => array('joomla', 'name'),
+		'username' => array('joomla', 'username'),
+		'email' => array('joomla', 'email'),
+		'usertype' => array('joomla', 'usertype'),
+		'registerDate' => array('joomla', 'registerDate'),
 		'lastvisitDate' => array('joomla', 'lastvisitDate'),
 		'view' => array('kunena', 'view'),
 		'signature' => array('kunena', 'signature'),

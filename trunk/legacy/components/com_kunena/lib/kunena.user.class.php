@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id:kunena.pdf.php 150 2009-01-24 10:42:53Z fxstein $
+* @version $Id$
 * Kunena Component - CKunenaUser class
 * @package Kunena
 * @Copyright (C) 2009 www.kunena.com All rights reserved

@@ -184,7 +184,6 @@ else
                         $database->setQuery("SELECT count(id) from #__fb_messages WHERE thread=$latestthread AND hold=0");
                         $latestcount = $database->loadResult();
                         $latestpage = ceil($latestcount / $fbConfig->messages_per_page);
-                        echo($latestpage);
                     }
 
                     echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" id="fb_cat'.$singlerow->id.'" >';

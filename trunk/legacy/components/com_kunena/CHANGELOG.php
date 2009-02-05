@@ -3,9 +3,10 @@
 * @version $Id$
 * Kunena Component
 * @package Kunena
-* @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
+*
+* @Copyright (C) 2009 www.kunena.com All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.bestofjoomla.com
+* @link http://www.kunena.com
 */
 
 // no direct access
@@ -34,6 +35,7 @@ Kunena 1.0.8
 5-February-2009 Matias
 # Try 2: Work around IE bug which prevented jump to last message
 # Removed odd number that was sometimes showing up
+^ Added Kunena Copyright to all php files
 
 4-February-2009 Noel Hunter
 ^ Changes to colors in kunena.forum.css to prevent inheritance of colors 

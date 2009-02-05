@@ -1,11 +1,23 @@
 import os,sys,re
 
+copyright = """\\1*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
+\\2""";
+
+
 # Remember that these are regexps:
 dictionary = {	'JB_':'KUNENA_', 
 		'FB_':'KUNENA_', 
 		'fb_link':'CKunenaLink', 
 		'jos_fb_':'#__fb_',
-		'\<\?=':'\<?php '}
+		'\<\?\=':'\<?php ',
+		'(\* \@version \$Id\:)(\w+)':'\\1 \\2',
+		'(\* \@package Kunena\W+?)(\* \@Copyright.*?Best Of Joomla)':copyright
+}
 
 
 
@@ -22,7 +34,7 @@ def file_replace(filename, dic):
     f.close()
   
     txt = string_replace(filename, file, dic)
-
+#    print (txt[1:500])
     f = open(filename, 'wb')
     f.write(txt)
     f.close()

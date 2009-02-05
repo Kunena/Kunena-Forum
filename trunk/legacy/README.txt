@@ -282,8 +282,8 @@ format.
 UPGRADE INSTALL Kunena 1.0.5 ON JOOMLA 1.5.x
 ================================================
 
-Since you are upgrading form a prior Kunena version on Joomla 1.5.x it is assumed
-that Joomla legacy support is already enabled on your system or FireBaord would not
+Since you are upgrading from a prior Kunena version on Joomla 1.5.x it is assumed
+that Joomla legacy support is already enabled on your system or FireBoard would not
 be able to run. In case you are not sure see the First Time Install section for 
 Joomla 1.5.x for further information on how to check and enable Joomla Legacy support.
 

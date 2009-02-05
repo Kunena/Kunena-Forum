@@ -1,8 +1,14 @@
 <?php
 /**
-* @version $Id:kunena.file.upload.php 142 2009-01-24 10:31:49Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com

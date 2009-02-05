@@ -38,7 +38,7 @@ Kunena 1.0.8
 ^ Added Kunena Copyright to all php files
 
 4-February-2009 Noel Hunter
-^ Changes to colors in kunena.forum.css to prevent inheritance of colors 
+^ Changes to colors in kunena.forum.css to prevent inheritance of colors
   from joomla templates making text unreadable
 ^ Changes to kunena.forum.css to expand whos-online in pathway for
   longer lists, reduce line height, additional color fixes
@@ -56,7 +56,7 @@ Kunena 1.0.8
 ^ Removed flat/threaded setting, it wasn't used
 # Backend, Ranks: fixed bug when you had no ranks
 # You may now have more than one announcement moderator
-# Removed all short tags: <?=
+# Removed all short tags: < ?=
 # Fixed My Profile / Forum Settings / Look and Layout
 
 3-February-2009 fxstein

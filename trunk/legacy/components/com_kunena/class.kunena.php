@@ -55,6 +55,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     {
         $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_community' AND published=1");
         $JOMSOCIAL_Itemid = $database->loadResult();
+        	check_dberror('Unable to load jomSocial item id');
 
         define("KUNENA_JOMSOCIAL_ITEMID", (int)$JOMSOCIAL_Itemid);
         define("KUNENA_JOMSOCIAL_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_JOMSOCIAL_ITEMID);
@@ -77,6 +78,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     if ($fbConfig->cb_profile || $fbConfig->fb_profile == "cb") {
         $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_comprofiler' AND published=1");
         $CB_Itemid = $database->loadResult();
+        	check_dberror('Unable to load CB item id');
 
         define("KUNENA_CB_ITEMID", (int)$CB_Itemid);
         define("KUNENA_CB_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_CB_ITEMID);
@@ -86,6 +88,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     if ($fbConfig->pm_component == 'clexuspm' || $fbConfig->fb_profile == 'clexuspm') {
         $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_mypms' AND published=1");
         $CPM_Itemid = $database->loadResult();
+        	check_dberror('Unable to load Clexus item id');
 
         define("KUNENA_CPM_ITEMID", (int)$CPM_Itemid);
         define("KUNENA_CPM_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_CPM_ITEMID);
@@ -95,6 +98,8 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     if ($fbConfig->pm_component == 'uddeim') {
         $database->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_uddeim'");
         $UIM_itemid = $database->loadResult();
+                	check_dberror('Unable to load uddeim item id');
+
         define("KUNENA_UIM_ITEMID", (int)$UIM_itemid);
         define("KUNENA_UIM_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_UIM_ITEMID);
         }
@@ -103,6 +108,8 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     if ($fbConfig->pm_component == 'missus') {
         $database->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_missus'");
         $MISSUS_itemid = $database->loadResult();
+                	check_dberror('Unable to load missus item id');
+
         define("KUNENA_MISSUS_ITEMID", (int)$MISSUS_itemid);
         define("KUNENA_MISSUS_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_MISSUS_ITEMID);
         }

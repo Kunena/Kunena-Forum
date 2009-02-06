@@ -16,6 +16,7 @@
 
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+global $mainframe;
 global $fbConfig;
 global $is_Moderator;
 
@@ -72,6 +73,19 @@ global $is_Moderator;
     </div>
   </div>
 </div>
+
+<?php
+include ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.version.php');
+// << $KunenaDbVersion
+?>
+ <!-- Version Info -->
+<div class="fbfooter">
+Installed version:  <?php echo $KunenaDbVersion; ?> |
+&copy; Copyright: <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>  |
+License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a>
+</div>
+<!-- /Version Info -->
+
 <!-- Begin: Forum Jump -->
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
   <div class="<?php echo $boardclass; ?>_bt_cvr2">

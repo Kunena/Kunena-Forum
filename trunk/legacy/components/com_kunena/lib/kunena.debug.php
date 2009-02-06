@@ -38,8 +38,19 @@ function debug_assert_callback($script, $line, $message) {
 // Production error handling
 function trigger_dberror($text = '')
 {
-	global $database;
+	global $mainframe;
 	echo debug_callstackinfo();
+
+	include ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.version.php');
+	// << $KunenaDbVersion
+?>
+ <!-- Version Info -->
+<div class="fbfooter">
+Installed version:  <?php echo $KunenaDbVersion; ?> | php <?php echo $KunenaPHPVersion; ?> | mysql <?php echo $KunenaMySQLVersion; ?>
+</div>
+<!-- /Version Info -->
+<?php
+
 	trigger_error($text.'\n'.$database->stderr(true), E_USER_ERROR);
 }
 

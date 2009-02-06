@@ -34,6 +34,10 @@ Kunena 1.0.8
 
 6-February-2009 fxstein
 + additional jomSocial CSS integration for better looking PM windows
+^ $fbversion is now $KunenaDbVersion
++ additional db check in class.kunena.php
++ basic version info on credits page
++ enhanced version info including php and mysql on debug screen
 
 6-February-2009 Matias
 # Use meaningful page titles, add missing page titles

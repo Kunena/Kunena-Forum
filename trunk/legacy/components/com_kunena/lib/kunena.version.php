@@ -19,7 +19,14 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
 include_once($mainframe->getCfg("absolute_path")."/administrator/components/com_kunena/lib/fx.upgrade.class.php");
 
-$VersionInfo = fx_Upgrade::getLatestVersion('#__fb_version');
-$fbversion = $VersionInfo->version.' | '.$VersionInfo->versiondate.' | '.$VersionInfo->build.' [ '.$VersionInfo->versionname.' ]';
+global $database;
 
+// Determine MySQL version
+$database->setQuery("SELECT VERSION() as mysql_version");
+$mysqlversion = $database->loadResult();
+
+$VersionInfo = fx_Upgrade::getLatestVersion('#__fb_version');
+$KunenaDbVersion = $VersionInfo->version.' | '.$VersionInfo->versiondate.' | '.$VersionInfo->build.' [ '.$VersionInfo->versionname.' ]';
+$KunenaPHPVersion = phpversion();
+$KunenaMySQLVersion = $mysqlversion;
 ?>

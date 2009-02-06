@@ -448,12 +448,6 @@ if ($letPass || $is_Moderator)
                                 }
                                 /* Fininsh Joomla Mambot Support */
 
-                                //set page title
-                                if ($leaf->parent == 0)
-                                {
-                                    $mainframe->setPageTitle($fmessage->subject . ' - ' . $fbConfig->board_title);
-                                }
-
                                 //meta description and keywords
 								$metaKeys=(htmlspecialchars($fmessage->subject). ', ' .htmlspecialchars($objCatParentInfo->name) . ', ' . htmlspecialchars($fbConfig->board_title) . ', ' . htmlspecialchars($GLOBALS['mosConfig_sitename']));
 								$metaDesc=(htmlspecialchars($fmessage->subject) . ' - ' .htmlspecialchars($objCatParentInfo->name) . ' - ' . htmlspecialchars($objCatInfo->name) .' - ' . htmlspecialchars($fbConfig->board_title));

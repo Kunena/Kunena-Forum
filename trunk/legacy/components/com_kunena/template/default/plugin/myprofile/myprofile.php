@@ -23,6 +23,8 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
 
+$mainframe->setPageTitle(_GEN_MYPROFILE . ' - ' . $fbConfig->board_title);
+
 if ($my->id != "" && $my->id != 0)
 {
 
@@ -33,16 +35,6 @@ if ($my->id != "" && $my->id != 0)
 }
 
 */
-
-//we got a valid and logged on user so we can go on
-if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php'))
-{
-    require_once (KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
-}
-else
-{
-    require_once (KUNENA_ABSPATH . '/template/default/fb_pathway.php');
-}
 
 if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
 {

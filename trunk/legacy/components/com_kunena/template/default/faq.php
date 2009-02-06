@@ -23,6 +23,9 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
+
+$mainframe->setPageTitle(_GEN_HELP . ' - ' . $fbConfig->board_title);
+
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">

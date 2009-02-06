@@ -98,6 +98,7 @@ if ($sel == "0")
 
 if ($func == "mylatest")
 {
+	$mainframe->setPageTitle(_KUNENA_MY_DISCUSSIONS . ' - ' . $fbConfig->board_title);
 	$query = "SELECT count(distinct tmp.thread) FROM
 				(SELECT thread
 					FROM #__fb_messages
@@ -110,6 +111,7 @@ if ($func == "mylatest")
 }
 else
 {
+	$mainframe->setPageTitle(_KUNENA_ALL_DISCUSSIONS . ' - ' . $fbConfig->board_title);
 	$query = "Select count(distinct thread) FROM #__fb_messages WHERE time >'$querytime' AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)";
 }
 $database->setQuery($query);

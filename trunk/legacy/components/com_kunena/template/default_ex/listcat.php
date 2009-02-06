@@ -41,9 +41,6 @@ $allCat = $database->loadObjectList();
 $threadids = array ();
 $categories = array ();
 
-// set page title
-$mainframe->setPageTitle(_GEN_FORUMLIST . ' - ' . $fbConfig->board_title);
-
 //meta description and keywords
 $metaDesc=(_KUNENA_CATEGORIES . ' - ' . $fbConfig->board_title);
 $metaKeys=(_KUNENA_CATEGORIES . ', ' . $fbConfig->board_title . ', ' . $GLOBALS['mosConfig_sitename']);

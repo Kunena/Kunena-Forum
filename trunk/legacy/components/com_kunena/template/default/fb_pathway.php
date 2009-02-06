@@ -161,7 +161,8 @@ if ($func != "")
        }
 
         unset($shome, $spath, $parent_ids, $catids, $results, $sname);
-        $mainframe->setPageTitle($fr_title_name . (($jr_topic_title) ? $jr_topic_title : "") . ' - ' . $fbConfig->board_title);
+	$fr_title = $fr_title_name . $jr_topic_title;
+        $mainframe->setPageTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . $fbConfig->board_title);
         ?>
     </div>
 

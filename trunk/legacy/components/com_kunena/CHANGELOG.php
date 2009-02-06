@@ -32,6 +32,10 @@ Legend:
 
 Kunena 1.0.8
 
+6-February-2009 Matias
+# Use meaningful page titles, add missing page titles
+^ Small fixes to CSS
+
 5-February-2009 Matias
 # Try 2: Work around IE bug which prevented jump to last message
 # Removed odd number that was sometimes showing up

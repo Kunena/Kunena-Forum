@@ -97,8 +97,12 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	top:-5px;
 	right:0px;
 }
-.fb_credits, .fb_footer {
-	line-height: 18px;
+.fb_credits {
+	height: 31px;
+	line-height: 26px;
+	font-size:x-small;
+}
+.fb_footer {
 	font-size:x-small;
 }
 /* Menu */
@@ -375,10 +379,16 @@ td.fb_profileboxcnt {
 	line-height:normal;
 	padding:2px;
 }
-#Kunena a.fb_title, #Kunena .fb_title {
+#Kunena .fb_title, #Kunena a.fb_title {
 	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-weight:bold;
 	display:block;
+	color:#FFFFFF;
+	text-decoration: none;
+}
+#Kunena .fb_title a {
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-weight:bold;
 	color:#FFFFFF;
 	text-decoration: none;
 }

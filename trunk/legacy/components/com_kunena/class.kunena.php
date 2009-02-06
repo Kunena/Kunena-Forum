@@ -62,14 +62,16 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 		require_once(JPATH_ROOT.DS.'components'.DS.'com_community'.DS.'libraries'.DS.'core.php');
 		require_once(JPATH_ROOT.DS.'components'.DS.'com_community'.DS.'libraries'.DS.'messaging.php');
 
+		//Second require dcss is dependent on jomSocial configuration - selected template
+		$config =& CFactory::getConfig();
 		$mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="'.KUNENA_JLIVEURL.DS.'components'.DS.'com_community'.DS.'assets'.DS.'window.css" />');
+		$mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="'.KUNENA_JLIVEURL.DS.'components'.DS.'com_community'.DS.'templates'.DS.$config->get('template').DS.'css'.DS.'style.css" />');
     }
 
-// Check if fb_user_template is present, otherwise set to default_ex
-
-if (!file_exists(KUNENA_ABSPATH . '/template/' . $fb_cur_template)) {
-        $fb_cur_template='default_ex';
-}
+	// Check if fb_user_template is present, otherwise set to default_ex
+	if (!file_exists(KUNENA_ABSPATH . '/template/' . $fb_cur_template)) {
+	        $fb_cur_template='default_ex';
+	}
 
     //Community Builder
     if ($fbConfig->cb_profile || $fbConfig->fb_profile == "cb") {

@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.8
 
+6-February-2009 fxstein
++ additional jomSocial CSS integration for better looking PM windows
+
 6-February-2009 Matias
 # Use meaningful page titles, add missing page titles
 ^ Small fixes to CSS

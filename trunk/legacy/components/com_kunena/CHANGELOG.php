@@ -38,6 +38,7 @@ Kunena 1.0.8
 6-February-2009 Matias
 # Use meaningful page titles, add missing page titles
 ^ Small fixes to CSS
+# Regression, done this again: Removed all short tags: < ?=
 
 5-February-2009 Matias
 # Try 2: Work around IE bug which prevented jump to last message

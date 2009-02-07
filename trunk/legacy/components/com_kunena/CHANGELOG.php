@@ -39,6 +39,7 @@ Kunena 1.0.8
 + basic version info on credits page
 + enhanced version info including php and mysql on debug screen
 # added default values for various user fields in backend save function
+# fix broken viewtypes during upgrade and reset to flat
 
 6-February-2009 Matias
 # Use meaningful page titles, add missing page titles

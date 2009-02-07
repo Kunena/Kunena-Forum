@@ -1032,10 +1032,6 @@ $catName = $objCatInfo->name;
                 }
                 else if ($do == "domovepost")
                 {
-                    if (!$is_Moderator) {
-                        die ("Hacking Attempt!");
-                    }
-
                     $catid = (int)$catid;
                     $id = (int)$id;
                     $bool_leaveGhost = (int)mosGetParam($_POST, 'leaveGhost', 0);
@@ -1043,6 +1039,12 @@ $catName = $objCatInfo->name;
                     $database->setQuery("SELECT `subject`, `catid`, `time` AS timestamp FROM #__fb_messages WHERE `id`='$id'");
                     $oldRecord = $database->loadObjectList();
                     	check_dberror("Unable to load messages.");
+
+                    $newCatObj = new jbCategory($database, $oldRecord[0]->catid);
+		    if (!fb_has_moderator_permission($database, $newCatObj, $my->id, $is_admin)) {
+                        die ("Hacking Attempt!");
+                    }
+
                     $newSubject = _MOVED_TOPIC . " " . $oldRecord[0]->subject;
 
                     $database->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE `thread`='$id'");

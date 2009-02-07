@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.8
 
+7-February-2009 Matias
+# Moderators can move messages outside their own area (no more Hacking Attempt!)
+
 6-February-2009 fxstein
 + additional jomSocial CSS integration for better looking PM windows
 ^ $fbversion is now $KunenaDbVersion

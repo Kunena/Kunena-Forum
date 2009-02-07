@@ -663,8 +663,13 @@ class FBTools {
     function fbMovePosts($catid, $isMod, $return) {
         global $my, $database;
 
+	$database->setQuery('SELECT userid FROM #__fb_moderation WHERE userid='.$my->id);
+	$isMod = $database->loadResult();
+	check_dberror("Unable to load moderation info.");
+
         //isMod will stay until better group management comes in
-        if (!FBTools::isModOrAdmin() && !$isMod) {
+        if (!$isMod) {
+            echo "You don't have moderator permissions!";
             return;
             }
 
@@ -673,6 +678,7 @@ class FBTools {
 	        $items = fbGetArrayInts("fbDelete");
 
 	        // start iterating here
+		
 	        foreach ($items as $id => $value) {
 	            $id = (int)$id;
 
@@ -680,26 +686,32 @@ class FBTools {
 	            $oldRecord = $database->loadObjectList();
 	            	check_dberror("Unable to load message detail.");
 
-	            $newSubject = _MOVED_TOPIC . " " . $oldRecord[0]->subject;
-	            $database->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE `thread`=" . $id);
-	            $lastTimestamp = $database->loadResult();
-	            	check_dberror("Unable to load messages max(time).");
+                    $newCatObj = new jbCategory($database, $oldRecord[0]->catid);
+		    if (fb_has_moderator_permission($database, $newCatObj, $my->id, $is_admin)) {
 
-	            if ($lastTimestamp == "") {
-	                $lastTimestamp = $oldRecord[0]->timestamp;
-                }
+		        $newSubject = _MOVED_TOPIC . " " . $oldRecord[0]->subject;
+		        $database->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE `thread`=" . $id);
+		        $lastTimestamp = $database->loadResult();
+			check_dberror("Unable to load messages max(time).");
 
-	            //perform the actual move
-				$database->setQuery("UPDATE #__fb_messages SET `catid`='$catid' WHERE `id`='$id' OR `thread`='$id'");
-				$database->query();
-					check_dberror("Unable to move thread.");
-	        } //end foreach
+			if ($lastTimestamp == "") {
+				$lastTimestamp = $oldRecord[0]->timestamp;
+                	}
+
+			//perform the actual move
+			$database->setQuery("UPDATE #__fb_messages SET `catid`='$catid' WHERE `id`='$id' OR `thread`='$id'");
+			$database->query();
+			check_dberror("Unable to move thread.");
+
+			$err = _POST_SUCCESS_MOVE;
+		    }
+		} //end foreach
 		} else {
 			$err = _POST_NO_DEST_CATEGORY;
 		}
         FBTools::reCountBoards();
 
-        mosRedirect($return, $err ? $err : _POST_SUCCESS_MOVE);
+        mosRedirect($return, $err);
         }
 
         function isJoomla15()

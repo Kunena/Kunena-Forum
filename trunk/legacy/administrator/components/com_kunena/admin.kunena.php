@@ -1151,15 +1151,15 @@ function editUserProfile($uid)
 function saveUserProfile($option)
 {
     global $database;
-    $newview = mosGetParam($_POST, 'newview');
-    $newrank = mosGetParam($_POST, 'newrank');
-    $signature = mosGetParam($_POST, 'message');
-    $deleteSig = mosGetParam($_POST, 'deleteSig');
-    $moderator = mosGetParam($_POST, 'moderator');
+    $newview = mosGetParam($_POST, 'newview', 'flat');
+    $newrank = mosGetParam($_POST, 'newrank', '');
+    $signature = mosGetParam($_POST, 'message', '');
+    $deleteSig = mosGetParam($_POST, 'deleteSig', 0);
+    $moderator = mosGetParam($_POST, 'moderator', 0);
     $uid = mosGetParam($_POST, 'uid');
-    $avatar = mosGetParam($_POST, 'avatar');
-    $deleteAvatar = mosGetParam($_POST, 'deleteAvatar');
-    $neworder = mosGetParam($_POST, 'neworder');
+    $avatar = mosGetParam($_POST, 'avatar', '');
+    $deleteAvatar = mosGetParam($_POST, 'deleteAvatar', 0);
+    $neworder = mosGetParam($_POST, 'neworder', 'asc');
     $modCatids = mosGetParam($_POST, 'catid', array());
 
     if ($deleteSig == 1) {

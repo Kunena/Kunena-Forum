@@ -78,25 +78,25 @@ global $fbConfig;
                 </li>
 
                 <?php
-                if ($my->id != 0)
-                {
-                    echo ' <li>';
-
-                    if ($view == "flat")
-                    {
-                        echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;view=threaded&amp;id=' . $id . '&amp;catid=' . $catid) . '" >';
-                        echo _GEN_THREADED_VIEW;
-                        echo '</a>';
-                    }
-                    else
-                    {
-                        echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;id=' . $id . '&amp;view=flat&amp;catid=' . $catid) . '" >';
-                        echo _GEN_FLAT_VIEW;
-                        echo "</a>";
-                    }
-
-                    echo ' </li>';
-                }
+//                if ($my->id != 0)
+//                {
+//                    echo ' <li>';
+//
+//                    if ($view == "flat")
+//                    {
+//                        echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;view=threaded&amp;id=' . $id . '&amp;catid=' . $catid) . '" >';
+//                        echo _GEN_THREADED_VIEW;
+//                        echo '</a>';
+//                    }
+//                    else
+//                    {
+//                        echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;id=' . $id . '&amp;view=flat&amp;catid=' . $catid) . '" >';
+//                        echo _GEN_FLAT_VIEW;
+//                        echo "</a>";
+//                    }
+//
+//                    echo ' </li>';
+//                }
                 ?>
 
                 <li>

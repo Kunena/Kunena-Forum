@@ -1157,7 +1157,6 @@ function saveUserProfile($option)
     $deleteSig = mosGetParam($_POST, 'deleteSig', 0);
     $moderator = mosGetParam($_POST, 'moderator', 0);
     $uid = mosGetParam($_POST, 'uid');
-    $avatar = mosGetParam($_POST, 'avatar', '');
     $deleteAvatar = mosGetParam($_POST, 'deleteAvatar', 0);
     $neworder = mosGetParam($_POST, 'neworder', 'asc');
     $modCatids = mosGetParam($_POST, 'catid', array());
@@ -1170,7 +1169,7 @@ function saveUserProfile($option)
         $avatar = "";
     }
 
-    $database->setQuery("UPDATE #__fb_users set signature='$signature', view='$newview',moderator='$moderator', avatar='$avatar', ordering='$neworder', rank='$newrank' where userid=$uid");
+    $database->setQuery("UPDATE #__fb_users set signature='$signature', view='$newview',moderator='$moderator', ordering='$neworder', rank='$newrank' where userid=$uid");
     $database->query() or trigger_dberror("Unable to update signature.");
 
     //delete all moderator traces before anyway

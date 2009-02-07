@@ -45,6 +45,7 @@ Kunena 1.0.8
 # fix broken viewtypes during upgrade and reset to flat
 # modified logic to detect Kunena user profiles to avoid forum crash in rare cases
 # remove avatar update from backend save to avoid user profile corruption
+^ Search class renamed to CKunenaSearch
 
 6-February-2009 Matias
 # Use meaningful page titles, add missing page titles

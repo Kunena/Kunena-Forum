@@ -30,7 +30,7 @@ else {
 }
 
 
-class jbSearch
+class CKunenaSearch
 {
     /** search results **/
     var $arr_KUNENA_results;
@@ -50,7 +50,7 @@ class jbSearch
      * @param string search
      * @param int uid (userid)
      */
-    function jbSearch(&$database, $search, $uid, $limitstart = 0, $limit = 3)
+    function CKunenaSearch(&$database, $search, $uid, $limitstart = 0, $limit = 3)
     {
         $this->limitstart = $limitstart;
         $this->limit = $limit;
@@ -139,6 +139,10 @@ class jbSearch
             $groupby = ' GROUP BY ' . implode(',', $groupby);
         else
             $groupby = '';
+
+
+// echo '<div>Search LIMITSTART='.$limitstart.' LIMIT='.$limit.'</div>';
+// echo '<div>Search WHERE='.$where.' GROUP BY='.$groupby.' ORDER BY='.$orderby.'</div>';
 
         $sql = 'SELECT m.id,m.subject,m.catid,m.thread,m.name,m.time,t.message FROM #__fb_messages_text as t JOIN #__fb_messages as m ON m.id=t.mesid WHERE ' . $where . $groupby . ' ORDER BY ' . $orderby . ' LIMIT ' . $limitstart . ',' . $limit;
         /* get total */
@@ -282,6 +286,7 @@ class jbSearch
                         <th colspan = "3" style = "text-align:center" class = "th-1 <?php echo $boardclass; ?>sectiontableheader">
                             <?php
                             // TODO: fxstein - Need to perform SEO cleanup
+// echo '<div>SEARCHWORD: '.$searchword.'</div>';
                             echo $pageNav->writePagesLinks(KUNENA_LIVEURL . '&amp;func=search&amp;searchword=' . $searchword);
                             ?>
                         </th>

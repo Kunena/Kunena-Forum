@@ -40,6 +40,7 @@ Kunena 1.0.8
 + enhanced version info including php and mysql on debug screen
 # added default values for various user fields in backend save function
 # fix broken viewtypes during upgrade and reset to flat
+# modified logic to detect Kunena user profiles to avoid forum crash in rare cases
 
 6-February-2009 Matias
 # Use meaningful page titles, add missing page titles

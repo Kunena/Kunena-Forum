@@ -422,22 +422,26 @@ else
 		// who does not yet have a Kunena profile -> lets create one
 		if ($prefview == "")
 		{
-			//assume there's no profile; set userid and the default view type as preferred view type.
 			$prefview = $fbConfig->default_view;
 
-			$database->setQuery("insert into #__fb_users (userid,view,moderator) values ('$my_id','$prefview','$is_admin')");
-			$database->query();
-				check_dberror('Unable to create user profile.');
-
-			// If Cummunity Builder is enabled, lets make sure we update the view preference
-			if ($fbConfig->cb_profile)
-			{
-		        $cbprefview = $prefview = "flat"; //= "threaded" ? "_UE_KUNENA_VIEWTYPE_THREADED" : "_UE_KUNENA_VIEWTYPE_FLAT";
-
-				$database->setQuery("update #__comprofiler set fbviewtype='$cbprefview' where user_id='$my_id'");
+		    // In a few legacy cases the prefview comes back empty for an existing user - check
+		    if ($database->getNumRows() == 0 )
+		    {
+				// there's no profile; set userid and the default view type as preferred view type.
+				$database->setQuery("insert into #__fb_users (userid,view,moderator) values ('$my_id','$prefview','$is_admin')");
 				$database->query();
-					check_dberror('Unable to update Community Builder profile.');
-			}
+					check_dberror('Unable to create user profile.');
+
+				// If Cummunity Builder is enabled, lets make sure we update the view preference
+				if ($fbConfig->cb_profile)
+				{
+			        $cbprefview = $prefview = "flat"; //= "threaded" ? "_UE_KUNENA_VIEWTYPE_THREADED" : "_UE_KUNENA_VIEWTYPE_FLAT";
+
+					$database->setQuery("update #__comprofiler set fbviewtype='$cbprefview' where user_id='$my_id'");
+					$database->query();
+						check_dberror('Unable to update Community Builder profile.');
+				}
+		    }
 		}
 		// If its not a new profile check if we have Community Builder enabled and read from there
 		else if ($fbConfig->cb_profile)
@@ -811,7 +815,7 @@ else
 
             $searchword = mosGetParam($_REQUEST, 'searchword', '');
 
-            $obj_KUNENA_search = &new jbSearch($database, $searchword, $my_id, $limitstart, $fbConfig->messages_per_page_search);
+            $obj_KUNENA_search = &new CKunenaSearch($database, $searchword, $my_id, $limitstart, $fbConfig->messages_per_page_search);
             $obj_KUNENA_search->show();
             break;
 

@@ -218,7 +218,7 @@ $database->loadObject($user);
 
                     <tr>
                         <td colspan = "2" valign = "top">
-                            <div style = "width:<?php echo $fbConfig->rtewidth ?>px;" class = "msgtext"><?php echo $msg_text; ?></div>
+                            <div class = "msgtext"><?php echo $msg_text; ?></div>
 
                             <?php
                             if (!$msg_closed)
@@ -249,10 +249,6 @@ $database->loadObject($user);
                                 <input type = "hidden" name = "action" value = "post"/>
 
                                 <input type = "hidden" name = "contentURL" value = "empty"/>
-
-                                <input type = "hidden" name = "fb_authorname" size = "35" class = "inputbox" maxlength = "35" value = "<?php echo $authorName;?>"/>
-
-                                <input type = "hidden" name = "email" size = "35" class = "inputbox" maxlength = "35" value = "<?php echo $user->email;?>"/>
 
                                 <input type = "hidden" name = "subject" size = "35" class = "inputbox" maxlength = "<?php echo $fbConfig->maxsubject;?>" value = "<?php echo $resubject;?>"/>
 

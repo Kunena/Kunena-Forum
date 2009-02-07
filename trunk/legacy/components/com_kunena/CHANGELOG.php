@@ -33,7 +33,11 @@ Legend:
 Kunena 1.0.8
 
 7-February-2009 Matias
-# Moderators can move messages outside their own area (no more Hacking Attempt!)
+# Moderators can now move messages outside their own area (no more Hacking Attempt!)
+# Remove users name and email address from every message in the view (Quick Reply)
+# Fix "Post a new message" form when email is mandatory
+# Allow messages to be sent even if user has no email address
+# Require email address setting wasn't enforced when you posted a message
 
 6-February-2009 fxstein
 + additional jomSocial CSS integration for better looking PM windows

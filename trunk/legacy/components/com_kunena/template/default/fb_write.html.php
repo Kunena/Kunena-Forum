@@ -43,7 +43,7 @@ include_once(KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
     </thead>
 
     <tbody id = "fb_post_message">
-        <tr class = "<?php echo $boardclass; ?>sectiontableentry2">
+        <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
             <td class = "fb_leftcolumn">
                 <strong><?php echo _GEN_NAME; ?></strong>:
             </td>
@@ -70,23 +70,15 @@ include_once(KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
         <?php
         if ($fbConfig->askemail)
         {
+            echo '<tr class = "'. $boardclass . 'sectiontableentry2"><td class = "fb_leftcolumn"><strong>' . _GEN_EMAIL . ' *</strong>:</td>';
             if (($fbConfig->regonly == "1" || $fbConfig->changename == '0') && $my_id != "" && !$is_Moderator) {
-                echo "<tr><td class=\"fb_leftcolumn\"><strong>"
-                         . _GEN_EMAIL . "*</strong>:</td><td><input type=\"hidden\" name=\"email\" size=\"35\" class=\"" . $boardclass . "inputbox postinput\" maxlength=\"35\" value=\"$my_email\" />$my_email</td></tr>";
+                echo "<td>$my_email</td>";
             }
             else
             {
-                if ($registeredUser == 1) {
-                    echo "<tr><td class=\"fb_leftcolumn\"><strong>"
-                             . _GEN_EMAIL . "*</strong>:</td><td><input type=\"text\" name=\"email\"  size=\"35\" class=\"" . $boardclass . "inputbox postinput\" maxlength=\"35\" value=\"$my_email\" /></td></tr>";
-                }
-                else {
-                    echo "<tr><td class=\"fb_leftcolumn\"><strong>" . _GEN_EMAIL . "*</strong>:</td><td><input type=\"text\" name=\"email\" size=\"35\" class=\"" . $boardclass . "inputbox postinput\" maxlength=\"35\" value=\"\" /></td></tr>";
-                }
+                echo "<td><input type=\"text\" name=\"email\"  size=\"35\" class=\"" . $boardclass . "inputbox postinput\" maxlength=\"35\" value=\"$my_email\" /></td>";
             }
-        }
-        else {
-            echo $registeredUser ? '<tr><td><input type="hidden" name="email" value="' . $my_email . '" /></td></tr>' : '<tr><td><input type="hidden" name="email" value="anonymous@forum.here" /></td></tr>';
+            echo '</tr>';
         }
         ?>
 

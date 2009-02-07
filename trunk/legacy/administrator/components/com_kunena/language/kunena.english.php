@@ -22,6 +22,8 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+// 1.0.8
+DEFINE('_POST_FORGOT_EMAIL', 'You forgot to include your email address.  Click your browser&#146s back button to go back and try again.');
 // 1.0.6
 DEFINE('_KUNENA_JOMSOCIAL', 'JomSocial');
 

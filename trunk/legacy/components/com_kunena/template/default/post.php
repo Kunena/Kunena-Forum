@@ -92,23 +92,17 @@ if (($fbConfig->floodprotection != 0 && ((($lastPostTime + $fbConfig->floodprote
     //Let's find out who we're dealing with if a registered user wants to make a post
     if ($my->id)
     {
-        $database->setQuery("SELECT name, username, email FROM #__users WHERE id={$my->id}");
-        $database->query() or trigger_dberror('Unable to load user.');
-        unset($user);
-        $database->loadObject($user);
-
-        if ($user->email)
-        {
-            $my_name = $fbConfig->username ? $user->username : $user->name;
-            $my_email = $user->email;
-            $registeredUser = 1;
-        }
-        else
-        {
-            echo _POST_ERROR . "<br />";
-            echo _POST_EXIT;
-            return;
-        }
+        $my_name = $fbConfig->username ? $my->username : $my->name;
+        $my_email = $my->email;
+        $registeredUser = 1;
+	if ($is_Moderator) {
+		if (!empty($fb_authorname)) $my_name = $fb_authorname;
+		if(isset($email) && !empty($email)) $my_email = $email;
+	}
+    } else {
+        $my_name = $fb_authorname;
+	$my_email = (isset($email) && !empty($email))? $email:'';
+	$registeredUser = 0;
     }
 }
 else
@@ -149,14 +143,12 @@ $catName = $objCatInfo->name;
                             <?php
                             $parent = (int)$parentid;
 
-							if (($my->id > 0) and !$is_Moderator) {
-								$fb_authorname = $my->username;
-								$email = $my->email;
-							}
-
-                            if (empty($fb_authorname)) {
+                            if (empty($my_name)) {
                                 echo _POST_FORGOT_NAME;
                             }
+                            else if ($fbConfig->askemail && empty($my_email)) {
+                                echo _POST_FORGOT_EMAIL;
+                            } 
                             else if (empty($subject)) {
                                 echo _POST_FORGOT_SUBJECT;
                             }
@@ -214,7 +206,7 @@ $catName = $objCatInfo->name;
 
                                 $messagesubject = $subject; //before we add slashes and all... used later in mail
 
-                                $fb_authorname = trim(addslashes($fb_authorname));
+                                $fb_authorname = trim(addslashes($my_name));
                                 $subject = trim(addslashes($subject));
                                 $message = trim(addslashes($message));
 
@@ -222,11 +214,10 @@ $catName = $objCatInfo->name;
                                     $message = $contentURL . '\n\n' . $message;
                                 }
 
-
                                 //--
-                                $email = trim(addslashes($email));
+                                $email = trim(addslashes($my_email));
                                 $topic_emoticon = (int)$topic_emoticon;
-                                $topic_emoticon = $topic_emoticon > 7 ? 0 : $topic_emoticon;
+                                $topic_emoticon = ($topic_emoticon < 0 || $topic_emoticon > 7) ? 0 : $topic_emoticon;
                                 $posttime = FBTools::fbGetInternalTime();
                                 //check if the post must be reviewed by a Moderator prior to showing
                                 //doesn't apply to admin/moderator posts ;-)

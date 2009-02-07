@@ -109,10 +109,6 @@ $database->loadObject($user);
 
                                 <input type = "hidden" name = "contentURL" value = "empty"/>
 
-                                <input type = "hidden" name = "fb_authorname" size = "35" class = "inputbox" maxlength = "35" value = "<?php echo $authorName;?>"/>
-
-                                <input type = "hidden" name = "email" size = "35" class = "inputbox" maxlength = "35" value = "<?php echo $user->email;?>"/>
-
                                 <input type = "hidden" name = "subject" size = "35" class = "inputbox" maxlength = "<?php echo $fbConfig->maxsubject;?>" value = "<?php echo $resubject;?>"/>
 
                                 <textarea class = "inputbox" name = "message" rows = "6" cols = "60" style = "height: 100px; width: 100%; overflow:auto;"></textarea>

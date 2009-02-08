@@ -33,7 +33,7 @@ else {
 class CKunenaSearch
 {
     /** search results **/
-    var $arr_KUNENA_results;
+    var $arr_KUNENA_results = array();
     /** search strings **/
     var $arr_KUNENA_searchstrings;
     /** error number **/
@@ -63,7 +63,7 @@ class CKunenaSearch
             $this->int_KUNENA_errornr = 2;
             $this->str_KUNENA_errormsg = _NOKEYWORD;
             $this->arr_KUNENA_results = array ();
-            return array ();
+            return;
         }
 
         for ($x = 0; $x < count($arr_searchwords); $x++)
@@ -122,7 +122,7 @@ class CKunenaSearch
         {
             $this->int_KUNENA_errornr = 1;
             $this->str_KUNENA_errormsg = _KUNENA_SEARCH_NOFORUM;
-            return 0;
+            return;
         }
         /* build query */
         $querystrings[] = 'm.catid IN (' . $allowed_forums . ')';
@@ -162,7 +162,7 @@ class CKunenaSearch
         else
             $this->arr_KUNENA_results = array ();
 
-        return $this->arr_KUNENA_results;
+        return;
     }
     /** get searchstrings (array) **/
     function get_searchstrings() {

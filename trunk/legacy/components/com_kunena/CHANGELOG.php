@@ -37,6 +37,7 @@ Kunena 1.0.8
 # Fix error when deleting message(s) with missing attachment files
 # Fix error when deleting message(s) written by anonymous user
 # Regression: fixed an old bbCode bug again..
+# Fixed error in search when there are no categories
 
 7-February-2009 Matias
 # Moderators can now move messages outside their own area (no more Hacking Attempt!)

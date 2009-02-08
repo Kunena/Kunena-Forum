@@ -36,6 +36,7 @@ Kunena 1.0.8
 # Image and file attachments should now work in Windows too
 # Fix error when deleting message(s) with missing attachment files
 # Fix error when deleting message(s) written by anonymous user
+# Regression: fixed an old bbCode bug again..
 
 7-February-2009 Matias
 # Moderators can now move messages outside their own area (no more Hacking Attempt!)

@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.8
 
+8-February-2009 fxstein
++ Make images clickable and enable lightbox/slimbox if present in template
+
 8-February-2009 Matias
 # Image and file attachments should now work in Windows too
 # Fix error when deleting message(s) with missing attachment files

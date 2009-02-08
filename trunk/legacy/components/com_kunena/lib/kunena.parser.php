@@ -340,7 +340,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                     }
 
                     $tag_new = "";
-                    $tag_new .= "<img src='".$between.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' />";
+                    $tag_new .= "<a href='".$between."' rel=\"lightbox\"><img src='".$between.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' /></a>";
 
                     return TAGPARSER_RET_REPLACED;
                 }

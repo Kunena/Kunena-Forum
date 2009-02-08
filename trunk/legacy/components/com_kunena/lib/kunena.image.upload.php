@@ -56,7 +56,7 @@ if (file_exists(KUNENA_ABSUPLOADEDPATH. "/images/$newFileName")) {
 if ($GLOBALS['KUNENA_rc'])
 {
     //Filename + proper path
-    $imageLocation = KUNENA_ABSUPLOADEDPATH. "/images/$newFileName";
+    $imageLocation = strtr(KUNENA_ABSUPLOADEDPATH . "/images/$newFileName", "\\", "/");
 
     // Check for empty filename
     if (empty($_FILES['attachimage']['name'])) {

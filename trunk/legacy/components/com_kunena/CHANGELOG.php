@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.8
 
+8-February-2009 Matias
+# Image and file attachments should now work in Windows too. 
+
 7-February-2009 Matias
 # Moderators can now move messages outside their own area (no more Hacking Attempt!)
 # Remove users name and email address from every message in the view (Quick Reply)

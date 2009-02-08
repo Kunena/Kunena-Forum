@@ -851,6 +851,7 @@ $catName = $objCatInfo->name;
                                 //Update the attachments table if an image has been attached
                                 if ($imageLocation != "")
                                 {
+                                    $imageLocation = addslashes($imageLocation);
                                     $database->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$id','$imageLocation')");
 
                                     if (!$database->query()) {
@@ -861,6 +862,7 @@ $catName = $objCatInfo->name;
                                 //Update the attachments table if an file has been attached
                                 if ($fileLocation != "")
                                 {
+                                    $fileLocation = addslashes($fileLocation);
                                     $database->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$id','$fileLocation')");
 
                                     if (!$database->query()) {

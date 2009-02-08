@@ -963,6 +963,12 @@ $catName = $objCatInfo->name;
                             echo _KUNENA_POST_DEL_ERR_USR;
                             break;
 
+                        case -5:
+                            echo _POST_ERROR_TOPIC . '<br />';
+
+                            echo _KUNENA_POST_DEL_ERR_FILE;
+                            break;
+
                         default:
                             echo '<br /><br /><div align="center">' . _POST_SUCCESS_DELETE . "</div><br />";
 
@@ -1846,11 +1852,11 @@ function fb_delete_post(&$database, $id, $dellattach)
     $database->loadObject($mes);
     $thread = $mes->thread;
 
+    $userid_array = array ();
     if ($mes->parent == 0)
     {
         // this is the forum topic; if removed, all children must be removed as well.
         $children = array ();
-        $userids = array ();
         $database->setQuery('SELECT userid,id, catid FROM #__fb_messages WHERE thread=' . $id . ' OR id=' . $id);
 
         foreach ($database->loadObjectList() as $line)
@@ -1858,12 +1864,12 @@ function fb_delete_post(&$database, $id, $dellattach)
             $children[] = $line->id;
 
             if ($line->userid > 0) {
-                $userids[] = $line->userid;
+                $userid_array[] = $line->userid;
             }
         }
 
         $children = implode(',', $children);
-        $userids = implode(',', $userids);
+        $userids = implode(',', $userid_array);
     }
     else
     {
@@ -1893,7 +1899,7 @@ function fb_delete_post(&$database, $id, $dellattach)
     }
 
     //Update user post stats
-    if (count($userids) > 0)
+    if (count($userid_array) > 0)
     {
         $database->setQuery('UPDATE #__fb_users SET posts=posts-1 WHERE userid IN (' . $userids . ')');
 
@@ -1917,6 +1923,7 @@ function fb_delete_post(&$database, $id, $dellattach)
     //Delete attachments
     if ($dellattach)
     {
+        $errorcode = 0;
         $database->setQuery('SELECT filelocation FROM #__fb_attachments WHERE mesid IN (' . $children . ')');
         $fileList = $database->loadObjectList();
         	check_dberror("Unable to load attachments.");
@@ -1924,12 +1931,18 @@ function fb_delete_post(&$database, $id, $dellattach)
         if (count($fileList) > 0)
         {
             foreach ($fileList as $fl) {
-                unlink ($fl->filelocation);
+		if (file_exists($fl->filelocation)) 
+		{
+			unlink($fl->filelocation);
+		} else {
+			$errorcode = -5;
+		}
             }
 
             $database->setQuery('DELETE FROM #__fb_attachments WHERE mesid IN (' . $children . ')');
             $database->query();
-            	check_dberror("Unable to delete attachements.");
+       	    check_dberror("Unable to delete attachements.");
+	    if ($errorcode) return $errorcode;
         }
     }
 

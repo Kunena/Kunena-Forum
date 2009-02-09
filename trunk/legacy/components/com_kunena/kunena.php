@@ -815,8 +815,8 @@ else
 
             $searchword = mosGetParam($_REQUEST, 'searchword', '');
 
-            $obj_KUNENA_search = &new CKunenaSearch($database, $searchword, $my_id, $limitstart, $fbConfig->messages_per_page_search);
-            $obj_KUNENA_search->show();
+            $KunenaSearch = &new CKunenaSearch($database, $searchword, $my_id, $limitstart, $fbConfig->messages_per_page_search);
+            $KunenaSearch->show();
             break;
 
         //needs work ... still in progress

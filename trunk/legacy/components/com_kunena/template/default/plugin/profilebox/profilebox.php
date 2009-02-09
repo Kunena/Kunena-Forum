@@ -165,14 +165,14 @@ $annlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show'.KUNEN
 
 </td>
                 <?php
-                if (mosCountModules('fb_1'))
+                if (mosCountModules('kunena_profilebox'))
                 {
                 ?>
 
           <td>
                             <div class = "fb_profilebox_modul">
                                 <?php
-                                mosLoadModules('fb_1', -2);
+                                mosLoadModules('kunena_profilebox', -2);
                                 ?>
                             </div>
 
@@ -208,14 +208,14 @@ else
 
 </td>
                 <?php
-                if (mosCountModules('fb_1'))
+                if (mosCountModules('kunena_profilebox'))
                 {
                 ?>
 
                         <td>
                             <div class = "fb_profilebox_modul">
                                 <?php
-                                mosLoadModules('fb_1', -2);
+                                mosLoadModules('kunena_profilebox', -2);
                                 ?>
                             </div>
                        </td>

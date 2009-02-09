@@ -339,8 +339,16 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                     	$imgmaxsize = $imgtagsize;
                     }
 
-                    $tag_new = "";
-                    $tag_new .= "<a href='".$between."' rel=\"lightbox\"><img src='".$between.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' /></a>";
+                    // Need to check if we are nested inside a URL code
+					if($task->autolink_disable == 0)
+					{
+						$tag_new = "<a href='".$between."' rel=\"lightbox\"><img src='".$between.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' /></a>";
+					}
+					else
+					{
+						$tag_new = "<img src='".$between.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' />";
+					}
+
 
                     return TAGPARSER_RET_REPLACED;
                 }

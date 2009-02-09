@@ -35,6 +35,8 @@ Kunena 1.0.8
 8-February-2009 fxstein
 + Make images clickable and enable lightbox/slimbox if present in template
 ^ changed $obj_KUNENA_search to $KunenaSearch to match new naming convention
+^ clickable images and lightboxes only on non nested images; images within URL
+  codes link to the URL specified
 
 8-February-2009 Matias
 # Image and file attachments should now work in Windows too

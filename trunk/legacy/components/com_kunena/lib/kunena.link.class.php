@@ -293,7 +293,7 @@ class CKunenaLink
 
     function GetLatestCategoryAutoRedirectHTML($catid)
     {
-        $Output  = '<div align="center">';
+        $Output  = '<div id="Kunena_post_result" align="center">';
         $Output .= CKunenaLink::GetCategoryLink('showcat', $catid, _POST_SUCCESS_FORUM).'<br />';
         $Output .= '</div>';
         $Output .= '<script language = "javascript">';

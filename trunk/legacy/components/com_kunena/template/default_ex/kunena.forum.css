@@ -778,6 +778,11 @@ table#fb_postmessage .button {
 	width:160px;
 	text-align: right;
 }
+#Kunena #Kunena_post_result div {
+	border: 1px solid #999;
+	font-size: small;
+}
+
 /*
 POST HISTORY
 -------------------------------------------------------------------- */

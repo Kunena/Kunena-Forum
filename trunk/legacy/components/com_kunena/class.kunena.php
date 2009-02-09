@@ -50,29 +50,43 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     define("KUNENA_COMPONENT_ITEMID", (int)$Itemid);
     define("KUNENA_COMPONENT_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_COMPONENT_ITEMID);
 
-    //JomSocial
-    if ($fbConfig->pm_component == 'jomsocial' || $fbConfig->fb_profile == 'jomsocial' || $fbConfig->avatar_src == 'jomsocial')
-    {
-        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_community' AND published=1");
-        $JOMSOCIAL_Itemid = $database->loadResult();
-        	check_dberror('Unable to load jomSocial item id');
-
-        define("KUNENA_JOMSOCIAL_ITEMID", (int)$JOMSOCIAL_Itemid);
-        define("KUNENA_JOMSOCIAL_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_JOMSOCIAL_ITEMID);
-
-		require_once(JPATH_ROOT.DS.'components'.DS.'com_community'.DS.'libraries'.DS.'core.php');
-		require_once(JPATH_ROOT.DS.'components'.DS.'com_community'.DS.'libraries'.DS.'messaging.php');
-
-		//Second require dcss is dependent on jomSocial configuration - selected template
-		$config =& CFactory::getConfig();
-		$mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="'.KUNENA_JLIVEURL.DS.'components'.DS.'com_community'.DS.'assets'.DS.'window.css" />');
-		$mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="'.KUNENA_JLIVEURL.DS.'components'.DS.'com_community'.DS.'templates'.DS.$config->get('template').DS.'css'.DS.'style.css" />');
-    }
-
 	// Check if fb_user_template is present, otherwise set to default_ex
 	if (!file_exists(KUNENA_ABSPATH . '/template/' . $fb_cur_template)) {
 	        $fb_cur_template='default_ex';
 	}
+
+    //JomSocial
+    if ($fbConfig->pm_component == 'jomsocial' || $fbConfig->fb_profile == 'jomsocial' || $fbConfig->avatar_src == 'jomsocial')
+    {
+    	// Only proceed if jomSocial is really installed
+	    if ( file_exists( $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php' ) )
+	    {
+	        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_community' AND published=1");
+	        $JOMSOCIAL_Itemid = $database->loadResult();
+	        	check_dberror('Unable to load jomSocial item id');
+
+	        define("KUNENA_JOMSOCIAL_ITEMID", (int)$JOMSOCIAL_Itemid);
+	        define("KUNENA_JOMSOCIAL_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_JOMSOCIAL_ITEMID);
+
+			require_once(JPATH_ROOT.DS.'components'.DS.'com_community'.DS.'libraries'.DS.'core.php');
+			require_once(JPATH_ROOT.DS.'components'.DS.'com_community'.DS.'libraries'.DS.'messaging.php');
+
+			//Second require dcss is dependent on jomSocial configuration - selected template
+			$config =& CFactory::getConfig();
+			$mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="'.KUNENA_JLIVEURL.DS.'components'.DS.'com_community'.DS.'assets'.DS.'window.css" />');
+			$mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="'.KUNENA_JLIVEURL.DS.'components'.DS.'com_community'.DS.'templates'.DS.$config->get('template').DS.'css'.DS.'style.css" />');
+	    }
+	    else
+	    {
+	    	// JomSocial not present reset config settings to avoid problems
+	    	$fbConfig->pm_component = $fbConfig->pm_component == 'jomsocial' ? 'none' : $fbConfig->pm_component;
+	    	$fbConfig->fb_profile = $fbConfig->fb_profile == 'jomsocial' ? 'kunena' : $fbConfig->fb_profile;
+	    	$fbConfig->avatar_src = $fbConfig->avatar_src == 'jomsocial' ? 'kunena' : $fbConfig->avatar_src;
+
+	    	// Do not save new config - thats a task for the backend
+	    	// This is just a catch all in case it is not present
+	    }
+    }
 
     //Community Builder
     if ($fbConfig->cb_profile || $fbConfig->fb_profile == "cb") {
@@ -678,7 +692,7 @@ class FBTools {
 	        $items = fbGetArrayInts("fbDelete");
 
 	        // start iterating here
-		
+
 	        foreach ($items as $id => $value) {
 	            $id = (int)$id;
 

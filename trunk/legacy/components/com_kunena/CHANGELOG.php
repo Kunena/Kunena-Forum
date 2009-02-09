@@ -37,7 +37,8 @@ Kunena 1.0.8
 ^ changed $obj_KUNENA_search to $KunenaSearch to match new naming convention
 ^ clickable images and lightboxes only on non nested images; images within URL
   codes link to the URL specified
-^ fb_1 module position renamed to kunena_profilebox to match new module postion naming
+^ fb_1 module position renamed to kunena_profilebox to match new module position naming
+# Avoid forum crash when JomSocial is secelted in config but not installed on system
 
 8-February-2009 Matias
 # Image and file attachments should now work in Windows too

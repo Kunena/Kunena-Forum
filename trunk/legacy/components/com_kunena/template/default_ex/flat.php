@@ -367,9 +367,14 @@ if (count($messages[0]) > 0)
 
         <span class="topic_posted_time"><?php echo _KUNENA_POSTED_AT ?> <?php echo time_since($leaf->time , time() + ($fbConfig->board_ofset * 3600)); ?> <?php echo _KUNENA_AGO ?>
         </span>
-        <span class="topic_by">
-        <?php echo _GEN_BY.' '.CKunenaLink::GetProfileLink($fbConfig, $leaf->userid, $leaf->name); ?>
-        </span>
+<?php
+	if ($leaf->name) 
+	{
+        	echo '<span class="topic_by">';
+	        echo _GEN_BY.' '.CKunenaLink::GetProfileLink($fbConfig, $leaf->userid, $leaf->name);
+        	echo '</span>';
+	}
+?>
         <!-- /By -->
 
          <?php if (strtolower($func) != 'showcat' ){ ?>
@@ -425,6 +430,8 @@ if (count($messages[0]) > 0)
 
   <span class="topic_latest_post_avatar">
   <?php
+		if ($leaf->userid) 
+		{
   		if ($fbConfig->avatar_src == "jomsocial")
 		{
 			// Get CUser object
@@ -444,6 +451,7 @@ if (count($messages[0]) > 0)
 			} else {
 			    echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_nophoto.jpg" alt="" />');
 	        }
+		}
          }?>
   </span>
     <?php } ?>
@@ -461,7 +469,8 @@ if (count($messages[0]) > 0)
         	echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->thread, 1, $fbConfig->messages_per_page, _GEN_LAST_POST, $last_reply[$leaf->id]->id);
         }
 
-        echo ' '._GEN_BY. ' '.CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, $last_reply[$leaf->id]->name, 'nofollow', 'topic_latest_post_user'); ?>
+        if ($leaf->name) 
+		echo ' '._GEN_BY. ' '.CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, $last_reply[$leaf->id]->name, 'nofollow', 'topic_latest_post_user'); ?>
         </span>
         <!-- /Latest Post -->
         <br />

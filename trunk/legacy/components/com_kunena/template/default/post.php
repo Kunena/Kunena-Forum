@@ -386,8 +386,6 @@ $catName = $objCatInfo->name;
                                                     $msg .= "$_COM_A_NOTIFICATION3\n";
                                                     $msg .= "\n\n\n\n";
                                                     $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
-							echo $mailsubject.'<br /><pre>'.$msg.'</pre>';
-
                                                     if ($ip != "127.0.0.1" && $my->id != $subs->id) { //don't mail yourself
                                                         mosmail($fbConfig->email, _KUNENA_FORUM_AT." " . $_SERVER['SERVER_NAME'], $subs->email, $mailsubject, $msg);
                                                     }
@@ -448,8 +446,6 @@ $catName = $objCatInfo->name;
                                                     $msg .= "$_COM_A_NOTIFICATION3\n";
                                                     $msg .= "\n\n\n\n";
                                                     $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
-
-							echo $mailsubject.'<br /><pre>'.$msg.'</pre>';
 
                                                     if ($ip != "127.0.0.1" && $my->id != $mods->id) { //don't mail yourself
                                                         //Send away

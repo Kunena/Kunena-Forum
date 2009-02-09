@@ -1986,18 +1986,6 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 			<legend> <?php echo _COM_A_COMBUILDER_TITLE ?></legend>
    <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
 
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _COM_A_COMBUILDER ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['cb_profile']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_COMBUILDER_DESC ?>
-                    </td>
-                </tr>
-
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top"><?php echo _COM_A_COMBUILDER_PROFILE ?>
                     </td>

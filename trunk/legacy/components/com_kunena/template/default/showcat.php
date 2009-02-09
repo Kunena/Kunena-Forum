@@ -316,7 +316,7 @@ if ($letPass || $is_Moderator)
                             echo '' . _GEN_MODERATORS . ": ";
 
                             foreach ($modslist as $mod) {
-                                echo '&nbsp;'.CKunenaLink::GetProfileLink($mod->userid, $mod->username).'&nbsp; ';
+                                echo '&nbsp;'.CKunenaLink::GetProfileLink($fbConfig, $mod->userid, $mod->username).'&nbsp; ';
                             } ?>
                              </div>
                             <?php

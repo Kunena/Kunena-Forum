@@ -21,7 +21,7 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
-    if ($fbConfig->cb_profile)
+    if ($fbConfig->fb_profile == 'cb')
     {
         $database->setQuery("select fbsignature from #__comprofiler where user_id=$userid");
         $signature = $database->loadResult();

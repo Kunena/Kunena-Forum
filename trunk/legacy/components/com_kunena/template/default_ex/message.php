@@ -150,7 +150,7 @@ $database->loadObject($user);
 <?php
                         if ($fmessage->userid > 0)
                         {
-                        	echo CKunenaLink::GetProfileLink($fmessage->userid, $msg_username);
+                        	echo CKunenaLink::GetProfileLink($fbConfig, $fmessage->userid, $msg_username);
                         }
                         else
                         {
@@ -162,7 +162,7 @@ $database->loadObject($user);
 <?php
                         if ($fmessage->userid > 0)
                         {
-                        	echo CKunenaLink::GetProfileLink($fmessage->userid, $msg_avatar);
+                        	echo CKunenaLink::GetProfileLink($fbConfig, $fmessage->userid, $msg_avatar);
                         }
                         else
                         {

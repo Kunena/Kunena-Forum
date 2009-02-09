@@ -289,7 +289,7 @@ if (count($messages[0]) > 0)
                                     ?>
                                     <!--            /Favourite       -->
 
-                                    <span class = "fb-topic-by fbs"> <?php echo _GEN_BY.' '.CKunenaLink::GetProfileLink($leaf->userid, $leaf->name);?></span>
+                                    <span class = "fb-topic-by fbs"> <?php echo _GEN_BY.' '.CKunenaLink::GetProfileLink($fbConfig, $leaf->userid, $leaf->name);?></span>
 
                                     <?php
                                     if ($fbConfig->shownew && $my->id != 0)
@@ -395,7 +395,7 @@ if (count($messages[0]) > 0)
     {
 ?>
 
-<?php echo _GEN_BY; ?> <?php echo CKunenaLink::GetProfileLink($last_reply[$leaf->id]->userid, $last_reply[$leaf->id]->name);?>
+<?php echo _GEN_BY; ?> <?php echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, $last_reply[$leaf->id]->name);?>
 
 <?php
     }

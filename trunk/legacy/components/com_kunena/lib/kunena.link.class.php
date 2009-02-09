@@ -157,7 +157,7 @@ class CKunenaLink
     {
     	if($fbConfig->fb_profile == 'jomsocial' || $fbConfig->fb_profile == 'cb')
     	{
-    		return CKunenaLink::GetProfileLink($userid, $name, $rel);
+    		return CKunenaLink::GetProfileLink($fbConfig, $userid, $name, $rel);
     	}
     	else
     	{
@@ -165,12 +165,12 @@ class CKunenaLink
     	}
     }
 
-    function GetProfileLink($userid, $name, $rel='nofollow', $class='')
+    function GetProfileLink($fbConfig, $userid, $name, $rel='nofollow', $class='')
     {
     	// Only create links for valid users
     	if ($userid > 0)
     	{
-    		return CKunenaLink::GetSefHrefLink(KUNENA_PROFILE_LINK_SUFFIX.$userid, $name, '', $rel, $class);
+   			return CKunenaLink::GetSefHrefLink(KUNENA_PROFILE_LINK_SUFFIX.$userid, $name, '', $rel, $class);
     	}
     	else // supress links for guests
     	{

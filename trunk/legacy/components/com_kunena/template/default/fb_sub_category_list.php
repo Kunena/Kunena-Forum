@@ -376,7 +376,7 @@ else
                         echo '<div class="' . $boardclass . 'thead-moderators  fbs">' . _GEN_MODERATORS . ": ";
 
                         foreach ($modslist as $mod) {
-                             echo '&nbsp;' .CKunenaLink::GetProfileLink($mod->userid, $fbConfig->username ? $mod->username : $mod->name, 'nofollow').'&nbsp; ';
+                             echo '&nbsp;' .CKunenaLink::GetProfileLink($fbConfig, $mod->userid, $fbConfig->username ? $mod->username : $mod->name, 'nofollow').'&nbsp; ';
                         }
 
                         echo '</div>';
@@ -408,7 +408,7 @@ else
                             <div class = "<?php echo $boardclass ?>latest-subject-by  fbs">
 <?php echo _GEN_BY; ?>
 
-                                <?php echo CKunenaLink::GetProfileLink($latestuserid, $latestname, $rel='nofollow');?>
+                                <?php echo CKunenaLink::GetProfileLink($fbConfig, $latestuserid, $latestname, $rel='nofollow');?>
 
                     | <?php echo $lastptime; ?> <?php echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $latestcatid, $latestthread, $latestpage, $fbConfig->messages_per_page, ($fbIcons['latestpost'] ? '<img src="'
              . KUNENA_URLICONSPATH . '' . $fbIcons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'), $latestid, $rel='nofollow');?>

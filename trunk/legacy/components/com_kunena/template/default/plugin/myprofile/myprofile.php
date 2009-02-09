@@ -36,7 +36,7 @@ if ($my->id != "" && $my->id != 0)
 
 */
 
-if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
+if ($fbConfig->fb_profile == 'cb') //<-- IF CB profile active begin
 {
 
 	//Get joomla userinfo needed later on, this limits the amount of queries
@@ -174,7 +174,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                 case "showavatar":
 
                     // B: Settings
-                    if (!$fbConfig->cb_profile)
+                    if ($fbConfig->fb_profile != 'cb' && $fbConfig->fb_profile != 'jomsocial')
                     {
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar.php'))
                         {
@@ -223,7 +223,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
 
                 case "showset":
                     // B: Settings
-                    if (!$fbConfig->cb_profile)
+                    if ($fbConfig->fb_profile != 'cb' && $fbConfig->fb_profile == 'jomsocial')
                     {
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_set.php'))
                         {
@@ -285,7 +285,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                     $ulists["gender"] = mosHTML::selectList( $genders, 'gender', 'class="inputbox"', 'value', 'text', $userinfo->gender );
 
 
-                    if (!$fbConfig->cb_profile)
+                    if ($fbConfig->fb_profile != 'cb' && $fbConfig->fb_profile != 'jomSocial')
                     {
                         include (KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
 
@@ -473,10 +473,10 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                         echo _USER_UNSUBSCRIBE_YES . ".<br /><br />";
                     }
 
-                    if ($fbConfig->cb_profile)
+                    if ($fbConfig->fb_profile == 'cb')
                     {
                         echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='" . KUNENA_CB_ITEMID . "'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
-                ?>
+                    	?>
 
                 <script language = "javascript">
                     setTimeout("location='index.php?option=com_comprofiler<?php echo KUNENA_CB_ITEMID_SUFFIX; ?>&tab=getForumTab'", 3500);
@@ -510,7 +510,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
 							echo _USER_UNSUBSCRIBE_YES . ".<br /><br />";
 						}
 
-						if ($fbConfig->cb_profile) {
+						if ($fbConfig->fb_profile == 'cb') {
 							echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='".KUNENA_CB_ITEMID."'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
 					?>
 
@@ -556,7 +556,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                         echo _USER_UNFAVORITE_YES . ".<br /><br />";
                     }
 
-                    if ($fbConfig->cb_profile)
+                    if ($fbConfig->fb_profile == 'cb')
                     {
                         echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler" . KUNENA_CB_ITEMID_SUFFIX . "&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
             ?>
@@ -594,7 +594,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
 							echo _USER_UNFAVORITE_YES . ".<br /><br />";
 						}
 
-						if ($fbConfig->cb_profile) {
+						if ($fbConfig->fb_profile == 'cb') {
 							echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
 				?>
 

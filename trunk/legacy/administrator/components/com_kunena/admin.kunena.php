@@ -632,14 +632,15 @@ function showConfig($option)
     // source of avatar picture
     $avlist = array ();
     $avlist[] = mosHTML::makeOption('fb', _KUNENA_KUNENA);
+    $avlist[] = mosHTML::makeOption('cb', _KUNENA_CB);
     $avlist[] = mosHTML::makeOption('jomsocial', _KUNENA_JOMSOCIAL);
     $avlist[] = mosHTML::makeOption('clexuspm', _KUNENA_CLEXUS);
-    $avlist[] = mosHTML::makeOption('cb', _KUNENA_CB);
     // build the html select list
     $lists['avatar_src'] = mosHTML::selectList($avlist, 'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->avatar_src);
     // private messaging system to use
     $pmlist = array ();
     $pmlist[] = mosHTML::makeOption('no', _COM_A_NO);
+    $pmlist[] = mosHTML::makeOption('cb', _KUNENA_CB);
     $pmlist[] = mosHTML::makeOption('jomsocial', _KUNENA_JOMSOCIAL);
     $pmlist[] = mosHTML::makeOption('pms', _KUNENA_MYPMS);
     $pmlist[] = mosHTML::makeOption('clexuspm', _KUNENA_CLEXUS);
@@ -651,9 +652,9 @@ function showConfig($option)
     // Profile select
     $prflist = array ();
     $prflist[] = mosHTML::makeOption('fb', _KUNENA_KUNENA);
+    $prflist[] = mosHTML::makeOption('cb', _KUNENA_CB);
     $prflist[] = mosHTML::makeOption('jomsocial', _KUNENA_JOMSOCIAL);
     $prflist[] = mosHTML::makeOption('clexuspm', _KUNENA_CLEXUS);
-    $prflist[] = mosHTML::makeOption('cb', _KUNENA_CB);
     $lists['fb_profile'] = mosHTML::selectList($prflist, 'cfg_fb_profile', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->fb_profile);
     // build the html select list
     // make a standard yes/no list
@@ -751,7 +752,8 @@ function showConfig($option)
     $lists['enablerss'] = mosHTML::selectList($yesno, 'cfg_enablerss', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enablerss);
     $lists['poststats'] = mosHTML::selectList($yesno, 'cfg_poststats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->poststats);
     $lists['showkarma'] = mosHTML::selectList($yesno, 'cfg_showkarma', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showkarma);
-    $lists['cb_profile'] = mosHTML::selectList($yesno, 'cfg_cb_profile', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->cb_profile);
+// Depreciated old CB integration setting - now controlled via avatar, profile and pm settings
+//    $lists['cb_profile'] = mosHTML::selectList($yesno, 'cfg_cb_profile', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->cb_profile);
     $lists['enablepdf'] = mosHTML::selectList($yesno, 'cfg_enablepdf', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enablepdf);
     $lists['enablerulespage'] = mosHTML::selectList($yesno, 'cfg_enablerulespage', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enablerulespage);
 	$lists['rules_infb'] = mosHTML::selectList($yesno, 'cfg_rules_infb', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rules_infb);

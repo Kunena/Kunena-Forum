@@ -272,7 +272,7 @@ class CKunenaConfig extends CKunenaConfigBase
     var $avatar_src              = 'fb';
     var $fb_profile              = 'fb';
     var $pm_component            = 'no';
-    var $cb_profile              = 0;
+    var $cb_profile              = 0;  // Depreciated legacy CB integration - Now controlled via avatar, profile and pm settings
     var $badwords                = 0;
     var $discussbot              = 0;
     var $userlist_rows           = 30;
@@ -366,7 +366,7 @@ class CKunenaConfig extends CKunenaConfigBase
         // $this->default_sort = 'desc';
 
     	// Overload default with user specific from user profile
-        if ($this->cb_profile)
+        if ($fbConfig->fb_profile == 'cb')
         {
             $database->setQuery("SELECT fbordering from #__comprofiler where user_id=".$KunenaUser->getID());
             $cbordering = $database->loadResult();

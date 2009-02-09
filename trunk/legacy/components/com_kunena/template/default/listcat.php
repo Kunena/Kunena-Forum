@@ -505,7 +505,7 @@ if (count($categories[0]) > 0)
 
                                                 <?php
                                                 foreach ($modslist as $mod) {
-                                                 echo '&nbsp;'.CKunenaLink::GetProfileLink($mod->userid, $mod->username).'&nbsp; ';
+                                                 echo '&nbsp;'.CKunenaLink::GetProfileLink($fbConfig, $mod->userid, $mod->username).'&nbsp; ';
 
                                                 }
                                                 ?>
@@ -547,7 +547,7 @@ if (count($categories[0]) > 0)
                                             <div class = "<?php echo $boardclass ?>latest-subject-by fbs">
 <?php
                                                 echo _GEN_BY.' ';
-                                                echo CKunenaLink::GetProfileLink($latestuserid, $latestname);
+                                                echo CKunenaLink::GetProfileLink($fbConfig, $latestuserid, $latestname);
                                                 echo ' | '.$lastptime.' ';
                                                 echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $singlerow->lastcat, $latestthread, $latestthreadpages, $fbConfig->messages_per_page,
                                                 $fbIcons['latestpost'] ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" title="'. _SHOW_LAST.'"/>' :

@@ -148,7 +148,7 @@ $catName = $objCatInfo->name;
                             }
                             else if ($fbConfig->askemail && empty($my_email)) {
                                 echo _POST_FORGOT_EMAIL;
-                            } 
+                            }
                             else if (empty($subject)) {
                                 echo _POST_FORGOT_SUBJECT;
                             }
@@ -1820,7 +1820,7 @@ function hasPostPermission($database, $catid, $replyto, $userid, $pubwrite, $ism
             echo _POST_NO_PUBACCESS1 . "<br />";
             echo _POST_NO_PUBACCESS2 . "<br /><br />";
 
-            if ($fbConfig->cb_profile) {
+            if ($fbConfig->fb_profile == 'cb') {
                 echo '<a href="' . sefRelToAbs('index.php?option=com_comprofiler&amp;task=registers') . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
             }
             else {
@@ -1931,7 +1931,7 @@ function fb_delete_post(&$database, $id, $dellattach)
         if (count($fileList) > 0)
         {
             foreach ($fileList as $fl) {
-		if (file_exists($fl->filelocation)) 
+		if (file_exists($fl->filelocation))
 		{
 			unlink($fl->filelocation);
 		} else {

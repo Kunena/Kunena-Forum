@@ -149,7 +149,7 @@ if ($func != "")
 				if ($user->userid != 0)
 				{
 					if ( $user->showOnline > 0 ){
-					echo '<small>' . CKunenaLink::GetProfileLink( $user->userid, $user->username) . ' ,</small> ';
+					echo '<small>' . CKunenaLink::GetProfileLink($fbConfig,  $user->userid, $user->username) . ' ,</small> ';
 					}
 				}
 				else

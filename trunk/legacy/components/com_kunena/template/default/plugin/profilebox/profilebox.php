@@ -78,19 +78,12 @@ else
 
 }
 
-if ($fbConfig->fb_profile == "jomsocial")
+if ($fbConfig->fb_profile == "cb" || $fbConfig->fb_profile == "jomsocial")
 {
-    $jr_profilelink = CKunenaLink::GetProfileLink($my->id, _PROFILEBOX_MYPROFILE);
+    $jr_profilelink = CKunenaLink::GetProfileLink($fbConfig, $my->id, _PROFILEBOX_MYPROFILE);
 }
 else if ($fbConfig->fb_profile == "clexuspm") {
     $jr_profilelink = '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
-}
-else if ($fbConfig->fb_profile == "cb")
-{
-    $jr_profilelink = '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
-    if($fbConfig->cb_profile) {
-        $jr_profilelink = '<a href="' . sefRelToAbs('index.php?option=com_comprofiler&amp;task=userDetails'.KUNENA_CB_ITEMID_SUFFIX) . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
-    }
 }
 else
 {
@@ -103,16 +96,12 @@ $jr_latestpost = sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=latest');
 
 <?php // AFTER LOGIN AREA
 $j15 = FBTools::isJoomla15();
-if ($fbConfig->cb_profile)
+if ($fbConfig->fb_profile == 'cb')
 {
-    $loginlink = sefRelToAbs('index.php');
-    $logoutlink = sefRelToAbs('index.php?option=logout');
+    $loginlink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=login');
+    $logoutlink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=logout');
     $registerlink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=registers');//.KUNENA_CB_ITEMID_SUFFIX);
     $lostpasslink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=lostPassword');//.KUNENA_CB_ITEMID_SUFFIX);
-    if($j15) {
-      $loginlink = sefRelToAbs('index.php?option=com_user&amp;view=login');
-      $logoutlink = sefRelToAbs('index.php?option=com_user&amp;view=login');
-    }
 }
 else
 {
@@ -136,7 +125,7 @@ if ($my->id)
         <tbody id = "topprofilebox_tbody">
             <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
                 <td  class = "td-1  fbm" align="left" width="5%">
-<?php echo CKunenaLink::GetProfileLink($my->id, $jr_avatar);?>
+<?php echo CKunenaLink::GetProfileLink($fbConfig, $my->id, $jr_avatar);?>
                 </td>
 
                 <td valign = "top" class = "td-2  fbm fb_profileboxcnt" align="left">

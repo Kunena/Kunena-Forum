@@ -30,7 +30,7 @@ if ($fbConfig->fb_profile == "jomsocial")
 {
 	$userlist = sefReltoAbs('index.php?option=com_community&amp;view=search&amp;task=browse');
 }
-else if ($fbConfig->cb_profile)
+else if ($fbConfig->fb_profile == 'cb')
 {
     $userlist = sefReltoAbs('index.php?option=com_comprofiler&amp;task=usersList');
 }

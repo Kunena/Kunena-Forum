@@ -784,7 +784,7 @@ if ($letPass || $is_Moderator)
 
                                     $msg_pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
                                     //mypms pro profile link
-                                    $msg_profile = "<a href=\"" . MyPMSTools::getProfileLink($fmessage->userid) . "\"><img src=\"";
+                                    $msg_profile = "<a href=\"" . MyPMSTools::GetProfileLink($fbConfig, $fmessage->userid) . "\"><img src=\"";
 
                                     if ($fbIcons['userprofile']) {
                                         $msg_profile .= KUNENA_URLICONSPATH . '' . $fbIcons['userprofile'];
@@ -833,7 +833,7 @@ if ($letPass || $is_Moderator)
                                 //Check if the Integration settings are on, and set the variables accordingly.
                                 if ($fbConfig->fb_profile == "cb")
                                 {
-                                    if ($fbConfig->cb_profile && $fmessage->userid > 0)
+                                    if ($fbConfig->fb_profile == 'cb' && $fmessage->userid > 0)
                                     {
                                         $msg_prflink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $fmessage->userid . '');
                                         $msg_profile = "<a href=\"" . sefRelToAbs('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $fmessage->userid . '') . "\">                                              <img src=\"";
@@ -851,8 +851,8 @@ if ($letPass || $is_Moderator)
                                 else if ($fbConfig->fb_profile == "clexuspm")
                                 {
                                     //mypms pro profile link
-                                    $msg_prflink = MyPMSTools::getProfileLink($fmessage->userid);
-                                    $msg_profile = "<a href=\"" . MyPMSTools::getProfileLink($fmessage->userid) . "\"><img src=\"";
+                                    $msg_prflink = MyPMSTools::GetProfileLink($fbConfig, $fmessage->userid);
+                                    $msg_profile = "<a href=\"" . MyPMSTools::GetProfileLink($fbConfig, $fmessage->userid) . "\"><img src=\"";
 
                                     if ($fbIcons['userprofile']) {
                                         $msg_profile .= KUNENA_URLICONSPATH . '' . $fbIcons['userprofile'];
@@ -877,7 +877,7 @@ if ($letPass || $is_Moderator)
                                     }
 
                                     $msg_profileicon .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" />";
-                                    $msg_profile = CKunenaLink::GetProfileLink($fmessage->userid, $msg_profileicon);
+                                    $msg_profile = CKunenaLink::GetProfileLink($fbConfig, $fmessage->userid, $msg_profileicon);
                                 }
 
                                 // Begin: Additional Info //
@@ -984,7 +984,7 @@ if ($letPass || $is_Moderator)
                                 }
                                 // Finish Joomla Mambot Support
 
-                                if ($fbConfig->cb_profile)
+                                if ($fbConfig->fb_profile == 'cb')
                                 {
                                     $database->setQuery("select fbsignature from #__comprofiler where user_id=$fmessage->userid");
                                     $signature = $database->loadResult();

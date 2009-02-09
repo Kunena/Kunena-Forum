@@ -59,7 +59,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     if ($fbConfig->pm_component == 'jomsocial' || $fbConfig->fb_profile == 'jomsocial' || $fbConfig->avatar_src == 'jomsocial')
     {
     	// Only proceed if jomSocial is really installed
-	    if ( file_exists( $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php' ) )
+	    if ( file_exists( $mainframe->getCfg( 'absolute_path' ) . '/components/com_community/libraries.core.php' ) )
 	    {
 	        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_community' AND published=1");
 	        $JOMSOCIAL_Itemid = $database->loadResult();
@@ -68,13 +68,13 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 	        define("KUNENA_JOMSOCIAL_ITEMID", (int)$JOMSOCIAL_Itemid);
 	        define("KUNENA_JOMSOCIAL_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_JOMSOCIAL_ITEMID);
 
-			require_once(JPATH_ROOT.DS.'components'.DS.'com_community'.DS.'libraries'.DS.'core.php');
-			require_once(JPATH_ROOT.DS.'components'.DS.'com_community'.DS.'libraries'.DS.'messaging.php');
+			include_once(JPATH_ROOT.'/components/com_community/libraries/core.php');
+			include_once(JPATH_ROOT.'/components/com_community/libraries/messaging.php');
 
-			//Second require dcss is dependent on jomSocial configuration - selected template
+			//PM popup requires JomSocial css to be loaded from selected template
 			$config =& CFactory::getConfig();
-			$mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="'.KUNENA_JLIVEURL.DS.'components'.DS.'com_community'.DS.'assets'.DS.'window.css" />');
-			$mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="'.KUNENA_JLIVEURL.DS.'components'.DS.'com_community'.DS.'templates'.DS.$config->get('template').DS.'css'.DS.'style.css" />');
+			$mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="'.KUNENA_JLIVEURL.'/components/com_community/assets/window.css" />');
+			$mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="'.KUNENA_JLIVEURL.'/components/com_community/templates/'.$config->get('template').'/css/style.css" />');
 	    }
 	    else
 	    {
@@ -88,15 +88,34 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 	    }
     }
 
-    //Community Builder
-    if ($fbConfig->cb_profile || $fbConfig->fb_profile == "cb") {
-        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_comprofiler' AND published=1");
-        $CB_Itemid = $database->loadResult();
-        	check_dberror('Unable to load CB item id');
+    //Community Builder 1.2 - older 1.1 integration no longer supported
+    if ($fbConfig->pm_component == 'cb' || $fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
+    {
+    	// Only proceed if Community Builder is really installed
+	    if ( file_exists( $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php' ) )
+	    {
+	    	global $_CB_framework, $_CB_database, $ueConfig, $mainframe;
 
-        define("KUNENA_CB_ITEMID", (int)$CB_Itemid);
-        define("KUNENA_CB_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_CB_ITEMID);
-        }
+	        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_comprofiler' AND published=1");
+	        $CB_Itemid = $database->loadResult();
+	        	check_dberror('Unable to load CB item id');
+
+	        define("KUNENA_CB_ITEMID", (int)$CB_Itemid);
+	        define("KUNENA_CB_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_CB_ITEMID);
+
+	        // include_once( $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php' );
+	    }
+	    else
+	    {
+	    	// Community Builder not present reset config settings to avoid problems
+	    	$fbConfig->pm_component = $fbConfig->pm_component == 'cb' ? 'none' : $fbConfig->pm_component;
+	    	$fbConfig->fb_profile = $fbConfig->fb_profile == 'cb' ? 'kunena' : $fbConfig->fb_profile;
+	    	$fbConfig->avatar_src = $fbConfig->avatar_src == 'cb' ? 'kunena' : $fbConfig->avatar_src;
+
+	    	// Do not save new config - thats a task for the backend
+	    	// This is just a catch all in case it is not present
+	    }
+    }
 
     //Clexus PM
     if ($fbConfig->pm_component == 'clexuspm' || $fbConfig->fb_profile == 'clexuspm') {

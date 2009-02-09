@@ -368,7 +368,7 @@ if (count($messages[0]) > 0)
         <span class="topic_posted_time"><?php echo _KUNENA_POSTED_AT ?> <?php echo time_since($leaf->time , time() + ($fbConfig->board_ofset * 3600)); ?> <?php echo _KUNENA_AGO ?>
         </span>
         <span class="topic_by">
-        <?php echo _GEN_BY.' '.CKunenaLink::GetProfileLink($leaf->userid, $leaf->name); ?>
+        <?php echo _GEN_BY.' '.CKunenaLink::GetProfileLink($fbConfig, $leaf->userid, $leaf->name); ?>
         </span>
         <!-- /By -->
 
@@ -430,19 +430,19 @@ if (count($messages[0]) > 0)
 			// Get CUser object
 			$user =& CFactory::getUser($last_reply[$leaf->id]->userid);
 		    $useravatar = '<img class="fb_list_avatar" src="' . $user->getThumbAvatar() . '" alt=" " />';
-		   	echo CKunenaLink::GetProfileLink($last_reply[$leaf->id]->userid, $useravatar);
+		   	echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, $useravatar);
 		}
 		else
 		{
 		   $javatar =  $last_reply[$leaf->id]->avatar;
 		   if ($javatar!='') {
 			   if ($fbConfig->avatar_src == "cb") {
-		   		    echo CKunenaLink::GetProfileLink($last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="images/comprofiler/'.$javatar.'" alt="" />');
+		   		    echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="images/comprofiler/'.$javatar.'" alt="" />');
 	            }  else {
-		   		    echo CKunenaLink::GetProfileLink($last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.(!file_exists(KUNENA_ABSUPLOADEDPATH . '/avatars/s_' . $javatar)?KUNENA_LIVEUPLOADEDPATH.'/avatars/'.$javatar:KUNENA_LIVEUPLOADEDPATH.'/avatars/s_'.$javatar) .'" alt="" />');
+		   		    echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.(!file_exists(KUNENA_ABSUPLOADEDPATH . '/avatars/s_' . $javatar)?KUNENA_LIVEUPLOADEDPATH.'/avatars/'.$javatar:KUNENA_LIVEUPLOADEDPATH.'/avatars/s_'.$javatar) .'" alt="" />');
 				}
 			} else {
-			    echo CKunenaLink::GetProfileLink($last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_nophoto.jpg" alt="" />');
+			    echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_nophoto.jpg" alt="" />');
 	        }
          }?>
   </span>
@@ -461,7 +461,7 @@ if (count($messages[0]) > 0)
         	echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->thread, 1, $fbConfig->messages_per_page, _GEN_LAST_POST, $last_reply[$leaf->id]->id);
         }
 
-        echo ' '._GEN_BY. ' '.CKunenaLink::GetProfileLink($last_reply[$leaf->id]->userid, $last_reply[$leaf->id]->name, 'nofollow', 'topic_latest_post_user'); ?>
+        echo ' '._GEN_BY. ' '.CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, $last_reply[$leaf->id]->name, 'nofollow', 'topic_latest_post_user'); ?>
         </span>
         <!-- /Latest Post -->
         <br />

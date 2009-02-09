@@ -206,7 +206,7 @@ if ($sel == "0")
                 echo '<br />' . _GEN_FORUM . ' : ' . $catname . '</td>';
                 echo '<td class="td-2" align="center">' . $numberOfPosts . '</td>';
                 echo '<td class="td-3" align="center">';
-                echo CKunenaLink::GetProfileLink($latestPostUserid, htmlspecialchars($latestPostName));
+                echo CKunenaLink::GetProfileLink($fbConfig, $latestPostUserid, htmlspecialchars($latestPostName));
                 echo '</td>';
                 echo '<td class="td-4" align="left">' . date(_DATETIME, $latestPostTime) . '</td>';
                 echo '</tr>';

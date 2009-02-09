@@ -33,6 +33,7 @@ Legend:
 Kunena 1.0.8
 
 8-February-2009 fxstein
++ Community Builder 1.2 basic integration
 + Make images clickable and enable lightbox/slimbox if present in template
 ^ changed $obj_KUNENA_search to $KunenaSearch to match new naming convention
 ^ clickable images and lightboxes only on non nested images; images within URL

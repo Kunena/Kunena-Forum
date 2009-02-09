@@ -356,7 +356,7 @@ function showprf($userid, $page)
 
         $msg_pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
         //mypms pro profile link
-        $msg_profile = "<a href=\"" . MyPMSTools::getProfileLink($userid) . "\"><img src=\"";
+        $msg_profile = "<a href=\"" . MyPMSTools::GetProfileLink($fbConfig, $userid) . "\"><img src=\"";
 
         if ($fbIcons['userprofile']) {
             $msg_profile .= KUNENA_URLICONSPATH . '' . $fbIcons['userprofile'];
@@ -404,7 +404,7 @@ function showprf($userid, $page)
     }
 
     //Check if the Community Builder settings are on, and set the variables accordingly.
-    if ($fbConfig->cb_profile && $userid > 0)
+    if ($this->fb_profile == 'cb' && $userid > 0)
     {
         $msg_profile = "<a href=\"" . sefRelToAbs('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $userid . '&amp;Itemid=1') . "\"><img src=\"";
 

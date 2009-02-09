@@ -292,7 +292,7 @@ if ($func == '') // Set default start page as per config settings
 // Include the Community Builder language file if necessary and set CB itemid value
 $cbitemid = 0;
 
-if ($fbConfig->cb_profile)
+if ($fbConfig->fb_profile == 'cb')
 {
     // Include CB language files
     $UElanguagePath = $mainframe->getCfg('absolute_path') . '/components/com_comprofiler/plugin/language';
@@ -433,7 +433,7 @@ else
 					check_dberror('Unable to create user profile.');
 
 				// If Cummunity Builder is enabled, lets make sure we update the view preference
-				if ($fbConfig->cb_profile)
+				if ($fbConfig->fb_profile == 'cb')
 				{
 			        $cbprefview = $prefview = "flat"; //= "threaded" ? "_UE_KUNENA_VIEWTYPE_THREADED" : "_UE_KUNENA_VIEWTYPE_FLAT";
 
@@ -444,11 +444,12 @@ else
 		    }
 		}
 		// If its not a new profile check if we have Community Builder enabled and read from there
-		else if ($fbConfig->cb_profile)
+		else if ($fbConfig->fb_profile == 'cb')
 		{
-			$database->setQuery("select fbviewtype from #__comprofiler where user_id='$my_id'");
-			$fbviewtype = $database->loadResult();
-				check_dberror('Unable load default view type for user from Community Builder.');
+// Threaded view option depreciated in K1.0.8
+//			$database->setQuery("select fbviewtype from #__comprofiler where user_id='$my_id'");
+//			$fbviewtype = $database->loadResult();
+//				check_dberror('Unable load default view type for user from Community Builder.');
 
 			$prefview = $fbviewtype = "flat"; //= "_UE_KUNENA_VIEWTYPE_THREADED" ? "threaded" : "flat";
 		}

@@ -30,7 +30,7 @@ if ($my->id)
     //What should we do?
     if ($do == "show")
     { //show it is..
-        if (!$fbConfig->cb_profile)
+        if ($fbConfig->fb_profile != 'cb' && $fbConfig->fb_profile != 'jomsocial')
         {
             //first we gather some information about this person - bypass if (s)he is a guest
             unset($user);
@@ -99,7 +99,7 @@ if ($my->id)
 ?>
 
 <?php
-        if (!$fbConfig->cb_profile)
+        if ($fbConfig->fb_profile != 'cb' && $fbConfig->fb_profile != 'jomsocial')
         {
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
@@ -596,7 +596,7 @@ if ($my->id)
             echo _USER_UNSUBSCRIBE_YES . ".<br /><br />";
         }
 
-        if ($fbConfig->cb_profile) {
+        if ($fbConfig->fb_profile == 'cb') {
             echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='".KUNENA_CB_ITEMID."'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
     ?>
 
@@ -628,7 +628,7 @@ if ($my->id)
             echo _USER_UNFAVORITE_YES . ".<br /><br />";
         }
 
-        if ($fbConfig->cb_profile) {
+        if ($fbConfig->fb_profile == 'cb') {
             echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
 ?>
 

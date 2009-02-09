@@ -59,7 +59,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     if ($fbConfig->pm_component == 'jomsocial' || $fbConfig->fb_profile == 'jomsocial' || $fbConfig->avatar_src == 'jomsocial')
     {
     	// Only proceed if jomSocial is really installed
-	    if ( file_exists( $mainframe->getCfg( 'absolute_path' ) . '/components/com_community/libraries.core.php' ) )
+	    if ( file_exists( $mainframe->getCfg( 'absolute_path' ) . '/components/com_community/libraries/core.php' ) )
 	    {
 	        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_community' AND published=1");
 	        $JOMSOCIAL_Itemid = $database->loadResult();

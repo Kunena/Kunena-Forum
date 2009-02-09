@@ -424,9 +424,11 @@ else
 		{
 			$prefview = $fbConfig->default_view;
 
-		    // In a few legacy cases the prefview comes back empty for an existing user - check
-		    if ($database->getNumRows() == 0 )
-		    {
+			$database->setQuery("SELECT count(*) FROM #__fb_users WHERE userid=$my_id");
+			$userexists = $database->loadResult();
+			check_dberror('Unable load default view type for user.');
+			if (!$userexists)
+			{
 				// there's no profile; set userid and the default view type as preferred view type.
 				$database->setQuery("insert into #__fb_users (userid,view,moderator) values ('$my_id','$prefview','$is_admin')");
 				$database->query();
@@ -441,7 +443,7 @@ else
 					$database->query();
 						check_dberror('Unable to update Community Builder profile.');
 				}
-		    }
+			}
 		}
 		// If its not a new profile check if we have Community Builder enabled and read from there
 		else if ($fbConfig->fb_profile == 'cb')
@@ -477,6 +479,7 @@ else
 		// For guests we don't show new posts
 		$prevCheck = $systime;
 	}
+
 	// no access to categories?
 	if (!$fbSession->allowed) $fbSession->allowed = '0';
 

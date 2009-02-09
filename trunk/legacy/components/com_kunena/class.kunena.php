@@ -569,6 +569,7 @@ class FBTools {
         global $my, $database;
 
         if (!FBTools::isModOrAdmin() && !$isMod) {
+            echo "You don't have moderator permissions!";
             return;
             }
 
@@ -701,7 +702,7 @@ class FBTools {
 	check_dberror("Unable to load moderation info.");
 
         //isMod will stay until better group management comes in
-        if (!$isMod) {
+        if (!FBTools::isModOrAdmin() && !$isMod) {
             echo "You don't have moderator permissions!";
             return;
             }

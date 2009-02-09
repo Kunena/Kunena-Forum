@@ -1065,7 +1065,7 @@ $catName = $objCatInfo->name;
                     // insert 'moved topic' notification in old forum if needed
                     if ($bool_leaveGhost)
                     {
-                    	$database->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`) VALUES ('0','$newSubject','" . $lastTimestamp . "','" . $oldRecord[0]->catid . "','1')");
+                    	$database->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','$newSubject','$lastTimestamp','{$oldRecord[0]->catid}','1', '{$my->id}', '".trim(addslashes($my_name))."')");
                     	$database->query() or trigger_dberror('Unable to insert ghost message.');
 
                     	//determine the new location for link composition

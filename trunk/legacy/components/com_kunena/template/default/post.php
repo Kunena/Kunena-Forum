@@ -354,37 +354,39 @@ $catName = $objCatInfo->name;
 						$_catobj = new jbCategory($database, $catid);
                                                 foreach ($subsList as $subs)
                                                 {
-													//check for permission
-													if ($subs->id) {
-														$_arogrp = $acl->getAroGroup($subs->id);
-														if ($_arogrp and FBTools::isJoomla15()) $_arogrp->group_id = $_arogrp->id;
-														$_isadm = (strtolower($_arogrp->name) == 'super administrator' || strtolower($_arogrp->name) == 'administrator');
-													} else
-														$_arogrp = $_isadm = 0;
-													if (!fb_has_moderator_permission($database, $_catobj, $subs->id, $_isadm)) {
-														$allow_forum = array();
-														if (!fb_has_read_permission($_catobj, $allow_forum, $_arogrp->group_id, $acl)) {
-															//maybe remove record from subscription list?
-															continue;
-														}
-													}
+							//check for permission
+							if ($subs->id) {
+								$_arogrp = $acl->getAroGroup($subs->id);
+								if ($_arogrp and FBTools::isJoomla15()) $_arogrp->group_id = $_arogrp->id;
+									$_isadm = (strtolower($_arogrp->name) == 'super administrator' || strtolower($_arogrp->name) == 'administrator');
+								} else
+									$_arogrp = $_isadm = 0;
+								if (!fb_has_moderator_permission($database, $_catobj, $subs->id, $_isadm)) {
+									$allow_forum = array();
+									if (!fb_has_read_permission($_catobj, $allow_forum, $_arogrp->group_id, $acl)) {
+										//maybe remove record from subscription list?
+										continue;
+								}
+							}
 
-                                                    $mailsubject = "$_COM_A_NOTIFICATION "._GEN_SUBJECT.": '" . stripslashes($messagesubject) . "' "._KUNENA_IN_FORUM." '" . stripslashes($catName) . "'";
+                                                    $mailsubject = "[$board_title ".trim(_GEN_FORUM)."] " . stripslashes($messagesubject) . " (" . stripslashes($catName) . ")";
                                                     $msg = "$subs->name,\n\n";
-                                                    $msg .= "$_COM_A_NOTIFICATION1 $board_title "._KUNENA_FORUM."\n\n";
-                                                    $msg .= _GEN_SUBJECT.": '" . stripslashes($messagesubject) . "' "._KUNENA_IN_FORUM." '" . stripslashes($catName) . "'\n";
+                                                    $msg .= trim($_COM_A_NOTIFICATION1)." $board_title "._GEN_FORUM."\n\n";
+                                                    $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
+						    $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
                                                     $msg .= _VIEW_POSTED.": " . stripslashes($fb_authorname) . "\n\n";
                                                     $msg .= "$_COM_A_NOTIFICATION2\n";
                                                     $msg .= "URL: $LastPostUrl\n\n";
                                                     if ($fbConfig->mailfull == 1) {
-                                                        $msg .= _GEN_MESSAGE.":\n";
+                                                        $msg .= _GEN_MESSAGE.":\n-----\n";
                                                         $msg .= stripslashes($mailmessage);
+                                                        $msg .= "\n-----";
                                                     }
                                                     $msg .= "\n\n";
                                                     $msg .= "$_COM_A_NOTIFICATION3\n";
-                                                    $msg .= "\n\n\n\n\n";
-                                                    $msg .= "** Powered by Kunena **\n";
-                                                    $msg .= "** Kunena! - http://www.Kunena.com **";
+                                                    $msg .= "\n\n\n\n";
+                                                    $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
+							echo $mailsubject.'<br /><pre>'.$msg.'</pre>';
 
                                                     if ($ip != "127.0.0.1" && $my->id != $subs->id) { //don't mail yourself
                                                         mosmail($fbConfig->email, _KUNENA_FORUM_AT." " . $_SERVER['SERVER_NAME'], $subs->email, $mailsubject, $msg);
@@ -429,22 +431,25 @@ $catName = $objCatInfo->name;
 
                                                 foreach ($modsList as $mods)
                                                 {
-                                                    $mailsubject = "$_COM_A_NOTIFICATION "._GEN_SUBJECT.": '" . stripslashes($messagesubject) . "' "._KUNENA_IN_FORUM." '" . stripslashes($catName) . "'";
-                                                    $msg = "$mods->name,\n\n";
-                                                    $msg .= "$_COM_A_NOT_MOD1 $board_title "._KUNENA_FORUM."\n\n";
-                                                    $msg .= _GEN_SUBJECT.": '" . stripslashes($messagesubject) . "' "._KUNENA_IN_FORUM." '" . stripslashes($catName) . "'\n";
+                                                    $mailsubject = "[$board_title "._GEN_FORUM."] " . stripslashes($messagesubject) . " (" . stripslashes($catName) . ")";
+                                                    $msg = "$subs->name,\n\n";
+                                                    $msg .= trim($_COM_A_NOT_MOD1)." $board_title "._GEN_FORUM."\n\n";
+                                                    $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
+						    $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
                                                     $msg .= _VIEW_POSTED.": " . stripslashes($fb_authorname) . "\n\n";
                                                     $msg .= "$_COM_A_NOT_MOD2\n";
                                                     $msg .= "URL: $LastPostUrl\n\n";
                                                     if ($fbConfig->mailfull == 1) {
-                                                        $msg .= _GEN_MESSAGE.":\n";
+                                                        $msg .= _GEN_MESSAGE.":\n-----\n";
                                                         $msg .= stripslashes($mailmessage);
+                                                        $msg .= "\n-----";
                                                     }
                                                     $msg .= "\n\n";
                                                     $msg .= "$_COM_A_NOTIFICATION3\n";
-                                                    $msg .= "\n\n\n\n\n";
-                                                    $msg .= "** Powered by Kunena **\n";
-                                                    $msg .= "** Kunena! - http://www.Kunena.com **";
+                                                    $msg .= "\n\n\n\n";
+                                                    $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
+
+							echo $mailsubject.'<br /><pre>'.$msg.'</pre>';
 
                                                     if ($ip != "127.0.0.1" && $my->id != $mods->id) { //don't mail yourself
                                                         //Send away
@@ -453,7 +458,6 @@ $catName = $objCatInfo->name;
                                                 }
                                             }
                                         }
-
                                         //now try adding any new subscriptions if asked for by the poster
                                         if ($subscribeMe == 1)
                                         {

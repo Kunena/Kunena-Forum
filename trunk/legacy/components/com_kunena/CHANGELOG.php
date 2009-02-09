@@ -32,6 +32,11 @@ Legend:
 
 Kunena 1.0.8
 
+9-February-2009 Matias
+^ Changed email notification sent to subscribed users
+^ Changed email notification sent to moderators
+^ Changed email when someone reports message to moderators
+
 8-February-2009 fxstein
 + Community Builder 1.2 basic integration
 + Make images clickable and enable lightbox/slimbox if present in template

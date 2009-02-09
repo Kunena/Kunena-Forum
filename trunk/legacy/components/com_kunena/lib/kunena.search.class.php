@@ -140,10 +140,6 @@ class CKunenaSearch
         else
             $groupby = '';
 
-
-// echo '<div>Search LIMITSTART='.$limitstart.' LIMIT='.$limit.'</div>';
-// echo '<div>Search WHERE='.$where.' GROUP BY='.$groupby.' ORDER BY='.$orderby.'</div>';
-
         $sql = 'SELECT m.id,m.subject,m.catid,m.thread,m.name,m.time,t.message FROM #__fb_messages_text as t JOIN #__fb_messages as m ON m.id=t.mesid WHERE ' . $where . $groupby . ' ORDER BY ' . $orderby . ' LIMIT ' . $limitstart . ',' . $limit;
         /* get total */
         $database->setQuery('SELECT count(m.id) FROM #__fb_messages as m JOIN #__fb_messages_text as t ON m.id=t.mesid WHERE ' . $where . $groupby . ' LIMIT 300');
@@ -249,10 +245,10 @@ class CKunenaSearch
                     echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" ><td colspan="3"  style="text-align:center;font-weight:bold">Error ' . $this->int_KUNENA_errornr . ': ' . $this->str_KUNENA_errormsg . '</td></tr>';
                 }
 
-								// Cleanup incoming searchword; international chars can cause garbage at the end
-								// real problem might lie with search box form and how we post and receive the data
-								// However, this works for now
-								$searchword = trim($searchword);
+				// Cleanup incoming searchword; international chars can cause garbage at the end
+				// real problem might lie with search box form and how we post and receive the data
+				// However, this works for now
+				$searchword = trim($searchword);
 
                 // JJ Add different color
                 foreach ($results as $result)
@@ -285,8 +281,6 @@ class CKunenaSearch
                     <tr  class = "fb_sth" >
                         <th colspan = "3" style = "text-align:center" class = "th-1 <?php echo $boardclass; ?>sectiontableheader">
                             <?php
-                            // TODO: fxstein - Need to perform SEO cleanup
-// echo '<div>SEARCHWORD: '.$searchword.'</div>';
                             echo $pageNav->writePagesLinks(KUNENA_LIVEURL . '&amp;func=search&amp;searchword=' . $searchword);
                             ?>
                         </th>

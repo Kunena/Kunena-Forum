@@ -16,7 +16,8 @@ dictionary = {	'JB_':'KUNENA_',
 		'jos_fb_':'#__fb_',
 		'\<\?\=':'<?php echo ',
 		'(\* \@version \$Id\:)(\w+)':'\\1 \\2',
-		'(\* \@package Kunena\W+?)(\* \@Copyright.*?Best Of Joomla)':copyright
+		'(\* \@package Kunena\W+?)(\* \@Copyright.*?Best Of Joomla)':copyright,
+		'FBTools':'CKunenaTools'
 }
 
 

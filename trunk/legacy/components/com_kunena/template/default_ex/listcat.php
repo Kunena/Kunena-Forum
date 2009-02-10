@@ -45,7 +45,7 @@ $categories = array ();
 $metaDesc=(_KUNENA_CATEGORIES . ' - ' . $fbConfig->board_title);
 $metaKeys=(_KUNENA_CATEGORIES . ', ' . $fbConfig->board_title . ', ' . $GLOBALS['mosConfig_sitename']);
 
-if( FBTools::isJoomla15() )
+if( CKunenaTools::isJoomla15() )
 {
 	$document =& JFactory::getDocument();
 	$cur = $document->get( 'description' );
@@ -231,7 +231,7 @@ if (count($categories[0]) > 0)
                                 $numtopics = $singlerow->numTopics;
                                 $numreplies = $singlerow->numPosts;
                                 $lastPosttime = $singlerow->time_last_msg;
-                                $lastptime = KUNENA_timeformat(FBTools::fbGetShowTime($singlerow->time_last_msg));
+                                $lastptime = KUNENA_timeformat(CKunenaTools::fbGetShowTime($singlerow->time_last_msg));
                                 $forumDesc = $singlerow->description;
 
                                 //    Get the forumsubparent categories :: get the subcategories here

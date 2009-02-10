@@ -190,7 +190,7 @@ if ($letPass || $is_Moderator)
 	$metaKeys=(_KUNENA_CATEGORIES . ', ' . $objCatParentInfo->name . ', ' . $objCatInfo->name . ', ' . $fbConfig->board_title . ', ' . $GLOBALS['mosConfig_sitename']);
 	$metaDesc=($objCatParentInfo->name . ' - ' . $objCatInfo->name .' - ' . $fbConfig->board_title);
 
-	if( FBTools::isJoomla15() )
+	if( CKunenaTools::isJoomla15() )
 	{
 		$document =& JFactory::getDocument();
 		$cur = $document->get( 'description' );

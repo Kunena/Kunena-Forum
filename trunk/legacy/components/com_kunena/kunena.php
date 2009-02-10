@@ -249,7 +249,7 @@ $obj_KUNENA_tmpl->setBasedir($str_KUNENA_templ_path);
 if ($my->id != 0)
 {
     $aro_group = $acl->getAroGroup($my->id);
-    if ($aro_group and FBTools::isJoomla15())
+    if ($aro_group and CKunenaTools::isJoomla15())
     	$aro_group->group_id = $aro_group->id;  // changed fieldname in Joomla 1.5: "group_id" -> "id"
     $is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
 }
@@ -394,7 +394,7 @@ else
 
 		// get all accessaible forums if needed (eg on forum modification, new session)
 		if (!$fbSession->allowed or $fbSession->allowed == 'na' or $fbSessionTimeOut) {
-			$allow_forums = FBTools::getAllowedForums($my_id, $aro_group->group_id, $acl);
+			$allow_forums = CKunenaTools::getAllowedForums($my_id, $aro_group->group_id, $acl);
 			if (!$allow_forums) $allow_forums = '0';
 			if ($allow_forums <> $fbSession->allowed)
 				$fbSession->allowed = $fbSessionUpd->allowed = $allow_forums;
@@ -884,12 +884,12 @@ else
             switch ($do)
             {
                 case "bulkDel":
-                    FBTools::fbDeletePosts( $is_Moderator, $return);
+                    CKunenaTools::fbDeletePosts( $is_Moderator, $return);
 
                     break;
 
                 case "bulkMove":
-                    FBTools::fbMovePosts($catid, $is_Moderator, $return);
+                    CKunenaTools::fbMovePosts($catid, $is_Moderator, $return);
                     break;
             }
 

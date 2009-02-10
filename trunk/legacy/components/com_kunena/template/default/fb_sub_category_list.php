@@ -115,7 +115,7 @@ else
                     $lastPosttime = $database->loadResult();
                     	check_dberror("Unable to get max time.");
                     //changed lastPosttime to lastptime
-                    $lastptime = KUNENA_timeformat(FBTools::fbGetShowTime($lastPosttime));
+                    $lastptime = KUNENA_timeformat(CKunenaTools::fbGetShowTime($lastPosttime));
                     $lastPosttime = (int)$lastPosttime;
 
                     if ($my->id != 0)

@@ -96,7 +96,7 @@ function KUNENA_timeformat($logTime, $show_today = true)
     if ($show_today === true)
     {
         // Get the current time.
-        $nowtime = FBTools::fbGetShowTime();
+        $nowtime = CKunenaTools::fbGetShowTime();
         $then = @getdate($time);
         $now = @getdate($nowtime);
         // Try to make something of a time format string...

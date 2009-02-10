@@ -93,7 +93,7 @@ function convertDate($date)
     if ($date != "0000-00-00 00:00:00" && ereg("([0-9]{4})-([0-9]{2})-([0-9]{2})[ ]([0-9]{2}):([0-9]{2}):([0-9]{2})", $date, $regs))
     {
         $date = mktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
-        $date = $date > -1 ? strftime($format, FBTools::fbGetShowTime($date, 'UTC')) : '-';
+        $date = $date > -1 ? strftime($format, CKunenaTools::fbGetShowTime($date, 'UTC')) : '-';
     }
     else {
         $date = _KUNENA_USRL_NEVER;

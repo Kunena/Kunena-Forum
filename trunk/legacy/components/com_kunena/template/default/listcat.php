@@ -212,7 +212,7 @@ if (count($categories[0]) > 0)
                                 $numtopics = $singlerow->numTopics;
                                 $numreplies = $singlerow->numPosts;
                                 $lastPosttime = $singlerow->time_last_msg;
-                                $lastptime = KUNENA_timeformat(FBTools::fbGetShowTime($singlerow->time_last_msg));
+                                $lastptime = KUNENA_timeformat(CKunenaTools::fbGetShowTime($singlerow->time_last_msg));
                                 $forumDesc = $singlerow->description;
 
                                 //    Get the forumsubparent categories :: get the subcategories here

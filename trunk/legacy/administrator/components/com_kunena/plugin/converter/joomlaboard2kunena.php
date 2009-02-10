@@ -36,5 +36,5 @@ if ($database->query()) {
 }
 
 // As a last step we recount all forum stats
-FBTools::reCountBoards();
+CKunenaTools::reCountBoards();
 ?>

@@ -343,7 +343,7 @@ function getFBGroupName($id) {
         }
     }
 
-class FBTools {
+class CKunenaTools {
     var $id = null;
 
 /*
@@ -375,7 +375,7 @@ class FBTools {
           return 0;
         }
         if($time===null) {
-          $time = FBTools::fbGetInternalTime();
+          $time = CKunenaTools::fbGetInternalTime();
           $space = 'FB';
         }
         if($space=='UTC') {
@@ -568,7 +568,7 @@ class FBTools {
     function fbDeletePosts($isMod, $return) {
         global $my, $database;
 
-        if (!FBTools::isModOrAdmin() && !$isMod) {
+        if (!CKunenaTools::isModOrAdmin() && !$isMod) {
             echo "You don't have moderator permissions!";
             return;
             }
@@ -623,7 +623,7 @@ class FBTools {
                 }
 
             // now update stats
-            FBTools::decreaseCategoryStats($id, $mes->catid);
+            CKunenaTools::decreaseCategoryStats($id, $mes->catid);
 
             //Delete message text(s)
             $database->setQuery('DELETE FROM #__fb_messages_text WHERE mesid IN (' . $children . ')');
@@ -669,7 +669,7 @@ class FBTools {
                     }
                 }
             } //end foreach
-            FBTools::reCountBoards();
+            CKunenaTools::reCountBoards();
 
             mosRedirect($return, _KUNENA_BULKMSG_DELETED);
         }
@@ -702,7 +702,7 @@ class FBTools {
 	check_dberror("Unable to load moderation info.");
 
         //isMod will stay until better group management comes in
-        if (!FBTools::isModOrAdmin() && !$isMod) {
+        if (!CKunenaTools::isModOrAdmin() && !$isMod) {
             echo "You don't have moderator permissions!";
             return;
             }
@@ -743,7 +743,7 @@ class FBTools {
 		} else {
 			$err = _POST_NO_DEST_CATEGORY;
 		}
-        FBTools::reCountBoards();
+        CKunenaTools::reCountBoards();
 
         mosRedirect($return, $err);
         }
@@ -1071,7 +1071,7 @@ function KUNENA_GetAvailableForums($catid, $action, $options = array (), $disabl
         }
 
 	$tag_attribs = 'class="inputbox fbs" '.($multiple?' size="5" MULTIPLE ':' size="1" ') . ($disabled ? " disabled " : "");
-	if (FBTools::isJoomla15()) {
+	if (CKunenaTools::isJoomla15()) {
     	$parent = JHTML::_('select.genericlist', $options, 'catid', $tag_attribs , 'value', 'text', $catid, 'KUNENA_AvailableForums');
 		}
     else {
@@ -1211,7 +1211,7 @@ function fbGetArrayInts($name, $type = NULL) {
 
     // $newer_date will equal false if we want to know the time elapsed between a date and the current time
     // $newer_date will have a value if we want to work out time elapsed between two known dates
-    //$newer_date = ($newer_date == false) ? FBTools::fbGetInternalTime() : $newer_date;
+    //$newer_date = ($newer_date == false) ? CKunenaTools::fbGetInternalTime() : $newer_date;
 
     // difference in seconds
     $since = $newer_date - $older_date;

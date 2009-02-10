@@ -452,7 +452,7 @@ if ($letPass || $is_Moderator)
 								$metaKeys=(htmlspecialchars($fmessage->subject). ', ' .htmlspecialchars($objCatParentInfo->name) . ', ' . htmlspecialchars($fbConfig->board_title) . ', ' . htmlspecialchars($GLOBALS['mosConfig_sitename']));
 								$metaDesc=(htmlspecialchars($fmessage->subject) . ' - ' .htmlspecialchars($objCatParentInfo->name) . ' - ' . htmlspecialchars($objCatInfo->name) .' - ' . htmlspecialchars($fbConfig->board_title));
 
-								if( FBTools::isJoomla15() )
+								if( CKunenaTools::isJoomla15() )
 								{
 								    $document =& JFactory::getDocument();
 								    $cur = $document->get( 'description' );
@@ -1048,7 +1048,7 @@ if ($letPass || $is_Moderator)
                                             {
                                                 $modtime = $fmessage->time;
                                             }
-                                            if(($modtime + ((int)$fbConfig->useredittime)) >= FBTools::fbGetInternalTime())
+                                            if(($modtime + ((int)$fbConfig->useredittime)) >= CKunenaTools::fbGetInternalTime())
                                             {
                                                 $allowEdit = 1;
                                             }

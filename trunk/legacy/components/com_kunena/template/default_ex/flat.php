@@ -538,7 +538,7 @@ if (count($messages[0]) > 0)
                             </select>
 
                             <?php
-                            FBTools::showBulkActionCats();
+                            CKunenaTools::showBulkActionCats();
                             ?>
 
             <input type = "submit" name = "fbBulkActionsGo" class = "fbs" value = "<?php echo _KUNENA_GO ; ?>"/>

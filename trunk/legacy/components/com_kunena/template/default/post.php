@@ -218,7 +218,7 @@ $catName = $objCatInfo->name;
                                 $email = trim(addslashes($my_email));
                                 $topic_emoticon = (int)$topic_emoticon;
                                 $topic_emoticon = ($topic_emoticon < 0 || $topic_emoticon > 7) ? 0 : $topic_emoticon;
-                                $posttime = FBTools::fbGetInternalTime();
+                                $posttime = CKunenaTools::fbGetInternalTime();
                                 //check if the post must be reviewed by a Moderator prior to showing
                                 //doesn't apply to admin/moderator posts ;-)
                                 $holdPost = 0;
@@ -257,7 +257,7 @@ $catName = $objCatInfo->name;
 
                                         // now increase the #s in categories only case approved
                                         if($holdPost==0) {
-                                          FBTools::modifyCategoryStats($pid, $parent, $posttime, $catid);
+                                          CKunenaTools::modifyCategoryStats($pid, $parent, $posttime, $catid);
                                         }
 
                                         $database->setQuery("INSERT INTO #__fb_messages_text (mesid,message) VALUES('$pid','$message')");
@@ -357,7 +357,7 @@ $catName = $objCatInfo->name;
 							//check for permission
 							if ($subs->id) {
 								$_arogrp = $acl->getAroGroup($subs->id);
-								if ($_arogrp and FBTools::isJoomla15()) $_arogrp->group_id = $_arogrp->id;
+								if ($_arogrp and CKunenaTools::isJoomla15()) $_arogrp->group_id = $_arogrp->id;
 									$_isadm = (strtolower($_arogrp->name) == 'super administrator' || strtolower($_arogrp->name) == 'administrator');
 								} else
 									$_arogrp = $_isadm = 0;
@@ -699,7 +699,7 @@ $catName = $objCatInfo->name;
                                 if(!$modtime) {
                                     $modtime = $mes->time;
                                 }
-                                if(($modtime + ((int)$fbConfig->useredittime)) >= FBTools::fbGetInternalTime()) {
+                                if(($modtime + ((int)$fbConfig->useredittime)) >= CKunenaTools::fbGetInternalTime()) {
                                     $allowEdit = 1;
                                 }
                             }
@@ -774,7 +774,7 @@ $catName = $objCatInfo->name;
                 {
                     $modified_reason = addslashes(mosGetParam($_POST, "modified_reason", null));
                     $modified_by = $my->id;
-                    $modified_time = FBTools::fbGetInternalTime();
+                    $modified_time = CKunenaTools::fbGetInternalTime();
                     $id  = (int) $id;
 
                     $database->setQuery("SELECT * FROM #__fb_messages LEFT JOIN #__fb_messages_text ON #__fb_messages.id=#__fb_messages_text.mesid WHERE #__fb_messages.id=$id");
@@ -800,7 +800,7 @@ $catName = $objCatInfo->name;
                                 if(!$modtime) {
                                     $modtime = $mes->time;
                                 }
-                                if(($modtime + ((int)$fbConfig->useredittime) + ((int)$fbConfig->useredittimegrace)) >= FBTools::fbGetInternalTime()) {
+                                if(($modtime + ((int)$fbConfig->useredittime) + ((int)$fbConfig->useredittimegrace)) >= CKunenaTools::fbGetInternalTime()) {
                                     $allowEdit = 1;
                                 }
                             }
@@ -933,7 +933,7 @@ $catName = $objCatInfo->name;
                     $dellattach = mosGetParam($_POST, 'delAttachments', '') == 'delAtt' ? 1 : 0;
                     $thread = fb_delete_post($database, $id, $dellattach);
 
-                    FBTools::reCountBoards();
+                    CKunenaTools::reCountBoards();
 
                     switch ($thread)
                     {
@@ -1080,7 +1080,7 @@ $catName = $objCatInfo->name;
                     	$database->query() or trigger_dberror('Unable to move thread.');
                     }
                     //move succeeded
-                    FBTools::reCountBoards();
+                    CKunenaTools::reCountBoards();
 
                     echo '<br /><br /><div align="center">' . _POST_SUCCESS_MOVE . "</div><br />";
                     echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page);
@@ -1239,7 +1239,7 @@ $catName = $objCatInfo->name;
                             }
 
                             //merge succeeded
-                            FBTools::reCountBoards();
+                            CKunenaTools::reCountBoards();
 
                             echo '<br /><br /><div align="center">' . _POST_SUCCESS_MERGE . "</div><br />";
                             echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $targetid, $fbConfig->messages_per_page);
@@ -1558,7 +1558,7 @@ $catName = $objCatInfo->name;
                     $database->query();
 
                     //split succeeded
-                    FBTools::reCountBoards();
+                    CKunenaTools::reCountBoards();
 
                     echo '<br /><br /><div align="center">' . _POST_SUCCESS_SPLIT . "</div><br />";
                     echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $new_topic, $fbConfig->messages_per_page);
@@ -1947,7 +1947,7 @@ function fb_delete_post(&$database, $id, $dellattach)
     }
 
 // Already done outside - see dodelete code above
-//    FBTools::reCountBoards();
+//    CKunenaTools::reCountBoards();
 
     return $thread; // all went well :-)
 }

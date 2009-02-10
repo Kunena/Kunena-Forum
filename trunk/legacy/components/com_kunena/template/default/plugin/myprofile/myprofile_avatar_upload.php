@@ -615,7 +615,7 @@ else if ($do == 'validate')
     @chmod($fileLocation_l, 0777);
     @chmod($fileLocation_s, 0777);
 
-    $newFileName = FBTools::fbRemoveXSS($newFileName);
+    $newFileName = CKunenaTools::fbRemoveXSS($newFileName);
     $database->setQuery("UPDATE #__fb_users SET avatar='{$newFileName}' WHERE userid={$my->id}");
     $database->query() or trigger_dberror("Unable to update avatar.");
     echo " <strong>" . _UPLOAD_UPLOADED . "</strong>...<br /><br />";
@@ -631,7 +631,7 @@ else if ($do == 'fromgallery')
     require_once(KUNENA_ABSSOURCESPATH . 'kunena.helpers.php');
     $newAvatar = mosGetParam($_POST, 'newAvatar', '');
 
-    $newAvatar = FBTools::fbRemoveXSS($newAvatar);
+    $newAvatar = CKunenaTools::fbRemoveXSS($newAvatar);
     if ($newAvatar == '') {
         mosRedirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_CHOOSE);
     }

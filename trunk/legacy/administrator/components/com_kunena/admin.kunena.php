@@ -264,9 +264,9 @@ switch ($task)
         break;
 
     case 'recount':
-       FBTools::reCountBoards();
+       CKunenaTools::reCountBoards();
        // Also reset the name info stored with messages
-       FBTools::updateNameInfo();
+       CKunenaTools::updateNameInfo();
        mosRedirect("index2.php?option=com_kunena", _KUNENA_RECOUNTFORUMS_DONE);
         break;
 
@@ -342,8 +342,8 @@ function showAdministration($option)
     $database->setQuery("SELECT a.*, a.name AS category, u.name AS editor, g.name AS groupname, h.name AS admingroup"
     . "\nFROM #__fb_categories AS a"
     . "\nLEFT JOIN #__users AS u ON u.id = a.checked_out"
-    . "\nLEFT JOIN #__core_acl_aro_groups AS g ON g.".((FBTools::isJoomla15())?"":"group_")."id = a.pub_access"
-    . "\nLEFT JOIN #__core_acl_aro_groups AS h ON h.".((FBTools::isJoomla15())?"":"group_")."id = a.admin_access"
+    . "\nLEFT JOIN #__core_acl_aro_groups AS g ON g.".((CKunenaTools::isJoomla15())?"":"group_")."id = a.pub_access"
+    . "\nLEFT JOIN #__core_acl_aro_groups AS h ON h.".((CKunenaTools::isJoomla15())?"":"group_")."id = a.admin_access"
     . "\n GROUP BY a.id"
     . "\n ORDER BY a.ordering, a.name");
 
@@ -1228,7 +1228,7 @@ function doprune($database, $option)
         check_dberror("Unable to load thread list.");
 
     // Convert days to seconds for timestamp functions...
-    $prune_date = FBTools::fbGetInternalTime() - ($prune_days * 86400);
+    $prune_date = CKunenaTools::fbGetInternalTime() - ($prune_days * 86400);
 
     if (count($threadlist) > 0)
     {

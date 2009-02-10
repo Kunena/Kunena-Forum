@@ -46,7 +46,7 @@ else
 $metaKeys=(_KUNENA_ALL_DISCUSSIONS . ', ' . $fbConfig->board_title . ', ' . $GLOBALS['mosConfig_sitename']);
 $metaDesc=(_KUNENA_ALL_DISCUSSIONS . ' - ' . $fbConfig->board_title);
 
-if( FBTools::isJoomla15() )
+if( CKunenaTools::isJoomla15() )
 {
 	$document =& JFactory::getDocument();
 	$cur = $document->get( 'description' );

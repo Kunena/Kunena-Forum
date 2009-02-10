@@ -230,7 +230,7 @@ function jbApprovePosts($database, $cid)
         if(!$database->query()) {
         	$ret = 0; // mark error
         }
-        FBTools::modifyCategoryStats($id, $msg->parent, $msg->time, $msg->catid);
+        CKunenaTools::modifyCategoryStats($id, $msg->parent, $msg->time, $msg->catid);
     }
     return $ret;
 }

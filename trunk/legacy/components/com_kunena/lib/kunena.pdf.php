@@ -85,7 +85,7 @@ function dofreePDF($database)
                 check_dberror("Unable to load category detail.");
 
 
-        $allow_forum = explode(',', FBTools::getAllowedForums($my->id, $aro_group->group_id, $acl));
+        $allow_forum = explode(',', CKunenaTools::getAllowedForums($my->id, $aro_group->group_id, $acl));
 
         //Do user identification based upon the ACL
         $letPass = 0;
@@ -132,7 +132,7 @@ function dofreePDF($database)
         $strtmp = str_replace('%version%', "NEW VERSION GOES HERE" /*$fbConfig->version*/, $strtmp); // TODO: fxstein - Need to change version handling
         $pdf->addText(250, 34, 6, $strtmp);
         $strtmp = _KUNENA_PDF_DATE;
-        $strtmp = str_replace('%date%', date('j F, Y, H:i', FBTools::fbGetShowTime()), $strtmp);
+        $strtmp = str_replace('%date%', date('j F, Y, H:i', CKunenaTools::fbGetShowTime()), $strtmp);
         $pdf->addText(450, 34, 6, $strtmp);
 
         $pdf->restoreState();

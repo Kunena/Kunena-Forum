@@ -95,7 +95,7 @@ $jr_latestpost = sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=latest');
 ?>
 
 <?php // AFTER LOGIN AREA
-$j15 = FBTools::isJoomla15();
+$j15 = CKunenaTools::isJoomla15();
 if ($fbConfig->fb_profile == 'cb')
 {
     $loginlink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=login');

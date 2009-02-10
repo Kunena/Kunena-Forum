@@ -784,7 +784,7 @@ if ($letPass || $is_Moderator)
 
                                     $msg_pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
                                     //mypms pro profile link
-                                    $msg_profile = "<a href=\"" . MyPMSTools::GetProfileLink($fbConfig, $fmessage->userid) . "\"><img src=\"";
+                                    $msg_profile = "<a href=\"" . MyPMSTools::GetProfileLink($fmessage->userid) . "\"><img src=\"";
 
                                     if ($fbIcons['userprofile']) {
                                         $msg_profile .= KUNENA_URLICONSPATH . '' . $fbIcons['userprofile'];
@@ -851,8 +851,8 @@ if ($letPass || $is_Moderator)
                                 else if ($fbConfig->fb_profile == "clexuspm")
                                 {
                                     //mypms pro profile link
-                                    $msg_prflink = MyPMSTools::GetProfileLink($fbConfig, $fmessage->userid);
-                                    $msg_profile = "<a href=\"" . MyPMSTools::GetProfileLink($fbConfig, $fmessage->userid) . "\"><img src=\"";
+                                    $msg_prflink = MyPMSTools::GetProfileLink($fmessage->userid);
+                                    $msg_profile = "<a href=\"" . MyPMSTools::GetProfileLink($fmessage->userid) . "\"><img src=\"";
 
                                     if ($fbIcons['userprofile']) {
                                         $msg_profile .= KUNENA_URLICONSPATH . '' . $fbIcons['userprofile'];

@@ -216,7 +216,7 @@ if (count($categories[0]) > 0)
                                 $forumDesc = $singlerow->description;
 
                                 //    Get the forumsubparent categories :: get the subcategories here
-                                $database->setQuery("SELECT id, name, numTopics, numPosts from #__fb_categories WHERE parent='$singlerow->id' AND published =1 ");
+                                $database->setQuery("SELECT id, name, numTopics, numPosts from #__fb_categories WHERE parent='$singlerow->id' AND published=1 ORDER BY ordering");
                                 $forumparents = $database->loadObjectList();
                                 	check_dberror("Unable to load categories.");
 

@@ -40,6 +40,7 @@ Kunena 1.0.8
 ^ Shadow message (MOVED) will now have moderator as its author
 # Regression: moving messages in viewcat didn't work for admins
 # New user gets PHP warning
+# No ordering for child boards
 
 8-February-2009 fxstein
 + Community Builder 1.2 basic integration

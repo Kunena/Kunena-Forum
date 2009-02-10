@@ -35,6 +35,7 @@ Kunena 1.0.8
 9-February-2009 fxstein
 # Broken RSS feed in Joomla 1.0.x fixed
 ^ FBTools Changed to CKunenaTools
+# Updated README
 
 9-February-2009 Noel Hunter
 # Significant leading and trailing spaces in language file replaced with

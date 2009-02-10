@@ -37,6 +37,7 @@ Kunena 1.0.8
 # Regression in r338: Broke FB Profile
 # Regression in r246: Broke Quick Reply for UTF-8 strings
 ^ Show Topic in Quick Reply
+# Do not add smiley if it is attached to a letter, for example TV:s, TV:seen
 
 9-February-2009 fxstein
 # Broken RSS feed in Joomla 1.0.x fixed

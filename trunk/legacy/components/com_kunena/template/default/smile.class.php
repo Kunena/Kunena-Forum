@@ -29,13 +29,14 @@ include_once(KUNENA_ABSSOURCESPATH."kunena.parser.php");
 
 class smile
 {
-
     function smileParserCallback($fb_message, $history, $emoticons, $iconList = null)
     {
         // from context HTML into HTML
 
         // where $history can be 1 or 0. If 1 then we need to load the grey
         // emoticons for the Topic History. If 0 we need the normal ones
+
+	static $regexp_trans = array('/' => '\/', '^' => '\^', '$' => '\$', '.' => '\.', '[' => '\[', ']' => '\]', '|' => '\|', '(' => '\(', ')' => '\)', '?' => '\?', '*' => '\*', '+' => '\+', '{' => '\{', '}' => '\}', '\\' => '\\\\', '^' => '\^', '-' => '\-');
 
         $type = ($history == 1) ? "-grey" : "";
         $message_emoticons = array();
@@ -48,7 +49,8 @@ class smile
             reset($message_emoticons);
 
             while (list($emo_txt, $emo_src) = each($message_emoticons)) {
-                $fb_message_txt = str_replace($emo_txt, '<img src="' . $emo_src . '" alt="" style="vertical-align: middle;border:0px;" />', $fb_message_txt);
+		$emo_txt = strtr($emo_txt, $regexp_trans);
+                $fb_message_txt = preg_replace('/(\W|\A)'.$emo_txt.'(\W|\Z)/u', '\1<img src="' . $emo_src . '" alt="" style="vertical-align: middle;border:0px;" />\2', $fb_message_txt);
             }
         }
 

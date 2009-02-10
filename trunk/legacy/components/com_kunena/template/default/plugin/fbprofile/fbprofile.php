@@ -404,7 +404,7 @@ function showprf($userid, $page)
     }
 
     //Check if the Community Builder settings are on, and set the variables accordingly.
-    if ($this->fb_profile == 'cb' && $userid > 0)
+    if ($fbConfig->fb_profile == 'cb' && $userid > 0)
     {
         $msg_profile = "<a href=\"" . sefRelToAbs('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $userid . '&amp;Itemid=1') . "\"><img src=\"";
 

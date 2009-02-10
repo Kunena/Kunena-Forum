@@ -34,6 +34,7 @@ Kunena 1.0.8
 
 10-February-2009 Matias
 # Regression in r338: Broke My Profile
+# Regression in r338: Broke FB Profile
 
 9-February-2009 fxstein
 # Broken RSS feed in Joomla 1.0.x fixed

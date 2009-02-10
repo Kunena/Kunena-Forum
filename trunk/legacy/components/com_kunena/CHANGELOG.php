@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.8
 
+10-February-2009 Matias
+# Regression in r338: Broke My Profile
+
 9-February-2009 fxstein
 # Broken RSS feed in Joomla 1.0.x fixed
 ^ FBTools Changed to CKunenaTools

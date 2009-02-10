@@ -36,7 +36,7 @@ if ($my->id != "" && $my->id != 0)
 
 */
 
-if ($fbConfig->fb_profile == 'cb') //<-- IF CB profile active begin
+if ($fbConfig->fb_profile != 'cb') //<-- IF CB profile not active begin
 {
 
 	//Get joomla userinfo needed later on, this limits the amount of queries
@@ -223,7 +223,7 @@ if ($fbConfig->fb_profile == 'cb') //<-- IF CB profile active begin
 
                 case "showset":
                     // B: Settings
-                    if ($fbConfig->fb_profile != 'cb' && $fbConfig->fb_profile == 'jomsocial')
+                    if ($fbConfig->fb_profile != 'cb' && $fbConfig->fb_profile != 'jomsocial')
                     {
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_set.php'))
                         {

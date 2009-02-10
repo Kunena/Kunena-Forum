@@ -97,6 +97,7 @@ class CKunenaUsers
 		'username' => array('joomla', 'username'),
 		'email' => array('joomla', 'email'),
 		'usertype' => array('joomla', 'usertype'),
+		'gid' => array('joomla', 'gid'),
 		'registerDate' => array('joomla', 'registerDate'),
 		'lastvisitDate' => array('joomla', 'lastvisitDate'),
 		'view' => array('kunena', 'view'),

@@ -35,6 +35,8 @@ Kunena 1.0.8
 10-February-2009 Matias
 # Regression in r338: Broke My Profile
 # Regression in r338: Broke FB Profile
+# Regression in r246: Broke Quick Reply for UTF-8 strings
+^ Show Topic in Quick Reply
 
 9-February-2009 fxstein
 # Broken RSS feed in Joomla 1.0.x fixed

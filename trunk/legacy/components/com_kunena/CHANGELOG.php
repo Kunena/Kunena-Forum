@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.8
 
+10-February-2009 fxstein
+# Incorrect error message on version table creation for new installs
+
 10-February-2009 Matias
 # Regression in r338: Broke My Profile
 # Regression in r338: Broke FB Profile

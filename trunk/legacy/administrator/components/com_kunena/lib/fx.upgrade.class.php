@@ -57,7 +57,8 @@ class fx_Upgrade {
 								`build` VARCHAR(20) NOT NULL,
 								`versionname` VARCHAR(40) NULL,
 								PRIMARY KEY(`id`));" );
-		$database->query() or trigger_dberror('Unable to create version table.');
+		// Let the install handle the error
+		return $database->query();
 	}
 
 	// helper function to drop existing version table

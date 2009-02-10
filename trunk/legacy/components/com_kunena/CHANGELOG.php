@@ -32,6 +32,10 @@ Legend:
 
 Kunena 1.0.8
 
+9-February-2009 Noel Hunter
+# Significant leading and trailing spaces in language file replaced with
+  &#32; to avoid inadvertant omission in translation
+
 9-February-2009 severdia
 # English: Spelling & grammar corrected
 

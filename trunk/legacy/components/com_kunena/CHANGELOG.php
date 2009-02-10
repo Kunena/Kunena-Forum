@@ -44,6 +44,7 @@ Kunena 1.0.8
 
 9-February-2009 severdia
 # English: Spelling & grammar corrected
+# README.txt: Spelling & grammar corrected
 
 9-February-2009 Matias
 ^ Changed email notification sent to subscribed users

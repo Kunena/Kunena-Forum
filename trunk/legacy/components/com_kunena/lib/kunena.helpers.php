@@ -22,6 +22,8 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+
+
 function fbJsEscape($msg)
 {
     // escape javascript quotes and backslashes, newlines, etc.
@@ -64,12 +66,13 @@ function fbAssertOrGoTo($predicate, $msg, $url)
     }
 }
 
+// FIXME: deprecated
 function fbSetTimeout($url, $time, $script = 1)
 {
     $url = sefRelToAbs($url);
 
     if ($script)
-        echo '<script language="javascript">setTimeout("location=\'' . $url . '\'",$time)</script>';
+        echo CKunenaLink::GetAutoRedirectHTML($url, $time);
     else
         echo 'setTimeout("location=\'' . $url . '\'",$time)';
 }

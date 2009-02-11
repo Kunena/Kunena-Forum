@@ -577,13 +577,8 @@ if ($my->id)
             $database->setQuery("DELETE FROM #__fb_favorites WHERE userid='$my_id'");
             $database->query();
         }
-                ?>
 
-    <script language = "javascript">
-        setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&func=userprofile&do=show');?>'", 3500);
-    </script>
-
-    <?php
+	echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show'), 3500);
     }
     else if ($do == "unsubscribe")
     { //ergo, ergo delete
@@ -598,23 +593,11 @@ if ($my->id)
 
         if ($fbConfig->fb_profile == 'cb') {
             echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='".KUNENA_CB_ITEMID."'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
-    ?>
-
-        <script language = "javascript">
-            setTimeout("location='index.php?option=com_comprofiler<?php echo KUNENA_CB_ITEMID_SUFFIX; ?>&tab=getForumTab'", 3500);
-        </script>
-
-<?php
+	    echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs('index.php?option=com_comprofiler'. KUNENA_CB_ITEMID_SUFFIX .'&amp;tab=getForumTab'), 3500);
         }
         else {
             echo _USER_RETURN_A . " <a href=\"". sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show')."\">" . _USER_RETURN_B . "</a><br /><br />";
-?>
-
-        <script language = "javascript">
-        setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&func=userprofile&do=show');?>'", 3500);
-        </script>
-
-<?php
+	    echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show'), 3500);
         }
     }
     else if ($do == "unfavorite")
@@ -630,23 +613,11 @@ if ($my->id)
 
         if ($fbConfig->fb_profile == 'cb') {
             echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
-?>
-
-        <script language = "javascript">
-            setTimeout("location='index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&tab=getForumTab'", 3500);
-        </script>
-
-<?php
+	    echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs('index.php?option=com_comprofiler'.KUNENA_CB_ITEMID_SUFFIX.'&amp;tab=getForumTab'), 3500);
         }
         else {
             echo _USER_RETURN_A . " <a href=\"index.php?option=com_kunena&amp;Itemid=$Itemid&amp;func=userprofile&amp;do=show\">" . _USER_RETURN_B . "</a><br /><br />";
-?>
-
-        <script language = "javascript">
-               setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&func=userprofile&do=show');?>'", 3500);
-        </script>
-
-<?php
+	    echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show'), 3500);
         }
     }
     else

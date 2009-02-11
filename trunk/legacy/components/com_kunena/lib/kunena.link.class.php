@@ -283,10 +283,7 @@ class CKunenaLink
         $Output .= CKunenaLink::GetThreadPageLink($fbConfig, 'view', $result->catid, $result->thread, $threadPages, $limit, _POST_SUCCESS_VIEW, $result->latest_id) .'<br />';
         $Output .= CKunenaLink::GetCategoryLink('showcat', $result->catid, _POST_SUCCESS_FORUM).'<br />';
         $Output .= '</div>';
-        $Output .= '<script language = "javascript">';
-        $Output .= 'var redirect_timeout = setTimeout("location=\''. htmlspecialchars_decode(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $result->catid, $result->thread, $threadPages, $limit, $result->latest_id)) .'\'", 3500);';
-        $Output .= 'jQuery(document).ready(function ($) { jQuery("body").bind("click", function(e) { clearTimeout(redirect_timeout); } ); });';
-        $Output .= '</script>';
+        $Output .= CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $result->catid, $result->thread, $threadPages, $limit, $result->latest_id), 3500);
 
         return $Output;
     }
@@ -296,10 +293,17 @@ class CKunenaLink
         $Output  = '<div id="Kunena_post_result" align="center">';
         $Output .= CKunenaLink::GetCategoryLink('showcat', $catid, _POST_SUCCESS_FORUM).'<br />';
         $Output .= '</div>';
-        $Output .= '<script language = "javascript">';
-        $Output .= 'var redirect_timeout = setTimeout("location=\''. htmlspecialchars_decode(KUNENA_LIVEURLREL . '&func=showcat&catid=' . $catid) .'\'", 3500);';
-        $Output .= 'jQuery(document).ready(function ($) { jQuery("body").bind("click", function(e) { clearTimeout(redirect_timeout); } ); });';
-        $Output .= '</script>';
+        $Output .= CKunenaLink::GetAutoRedirectHTML(KUNENA_LIVEURLREL . '&func=showcat&catid=' . $catid, 3500);
+
+        return $Output;
+    }
+
+    function GetAutoRedirectHTML($url, $timeout)
+    {
+	$url = htmlspecialchars_decode($url);
+        $Output = "\n<script type=\"text/javascript\">\n// <![CDATA[\n";
+        $Output .= "kunenaRedirectTimeout('$url', $timeout);";
+        $Output .= "\n// ]]>\n</script>\n";
 
         return $Output;
     }

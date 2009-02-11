@@ -620,11 +620,7 @@ else if ($do == 'validate')
     $database->query() or trigger_dberror("Unable to update avatar.");
     echo " <strong>" . _UPLOAD_UPLOADED . "</strong>...<br /><br />";
     echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '">' . _GEN_CONTINUE . ".</a>";
-    ?>
-                <script language = "javascript">
-                    setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&func=myprofile&do=show');?>'", 3500);
-                </script>
-	<?php
+    echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'), 3500);
 }
 else if ($do == 'fromgallery')
 {
@@ -642,7 +638,7 @@ else if ($do == 'fromgallery')
     echo _USER_PROFILE_UPDATED . "<br /><br />";
 
     echo _USER_RETURN_A . ' <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '">' . _USER_RETURN_B . '</a><br /><br />';
-    fbSetTimeout(KUNENA_LIVEURL . '&func=myprofile&do=show', 3500);
+    echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURL . '&amp;func=myprofile&amp;do=show'), 3500);
 }
 
 ?>

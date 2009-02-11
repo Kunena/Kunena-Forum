@@ -108,6 +108,11 @@ function fbGetPreview(content, sitemid) {
     return false;
 }
 
+function kunenaRedirectTimeout(redirecturl, timeout) {
+    var redirect_timeout = setTimeout("location='"+redirecturl+"'", 3500);
+    jQuery("body").bind("click", function(e) { clearTimeout(redirect_timeout); } );
+}
+
 jQuery(function()
 {
     jQuery(".hideshow").click(function()

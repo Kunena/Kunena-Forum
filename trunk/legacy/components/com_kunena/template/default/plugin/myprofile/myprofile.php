@@ -212,13 +212,8 @@ if ($fbConfig->fb_profile != 'cb') //<-- IF CB profile not active begin
                     }
 
                     echo _USER_RETURN_A . ' <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . "&amp;func=uploadavatar") . '">' . _USER_RETURN_B . "</a><br /><br />";
-            ?>
 
-                <script language = "javascript">
-                    setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&func=uploadavatar');?>'", 3500);
-                </script>
-
-                <?php
+                    echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=uploadavatar'), 3500);
                 break;
 
                 case "showset":
@@ -260,13 +255,8 @@ if ($fbConfig->fb_profile != 'cb') //<-- IF CB profile not active begin
                     }
 
                     echo _USER_RETURN_A . ' <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . "&amp;func=myprofile&amp;do=showset") . '">' . _USER_RETURN_B . "</a><br /><br />";
-                ?>
 
-                <script language = "javascript">
-                    setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&func=myprofile&do=showset');?>'", 3500);
-                </script>
-
-                <?php
+                    echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showset'), 3500);
                 break;
 
                 case "profileinfo":
@@ -355,15 +345,8 @@ if ($fbConfig->fb_profile != 'cb') //<-- IF CB profile not active begin
     }
 
                         echo _USER_RETURN_A . ' <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . "&amp;func=myprofile&amp;do=showsig") . '">' . _USER_RETURN_B . "</a><br /><br />";
-                ?>
 
-
-
-                <script language = "javascript">
-                    setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&func=myprofile&do=profileinfo');?>'", 3500);
-                </script>
-<?php
-
+                        echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=profileinfo'), 3500);
                 break;
 
                 case "showsub":
@@ -476,24 +459,14 @@ if ($fbConfig->fb_profile != 'cb') //<-- IF CB profile not active begin
                     if ($fbConfig->fb_profile == 'cb')
                     {
                         echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='" . KUNENA_CB_ITEMID . "'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
-                    	?>
 
-                <script language = "javascript">
-                    setTimeout("location='index.php?option=com_comprofiler<?php echo KUNENA_CB_ITEMID_SUFFIX; ?>&tab=getForumTab'", 3500);
-                </script>
-
-            <?php
+                        echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs('index.php?option=com_comprofiler'. KUNENA_CB_ITEMID_SUFFIX .'&amp;tab=getForumTab'), 3500);
                     }
                     else
                     {
                         echo _USER_RETURN_A . " <a href=\"" . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub') . "\">" . _USER_RETURN_B . "</a><br /><br />";
-            ?>
 
-                    <script language = "javascript">
-                        setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&func=myprofile&do=showsub');?>'", 3500);
-                    </script>
-
-            <?php
+                        echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub'), 3500);
                     }
 
                     break;
@@ -512,25 +485,16 @@ if ($fbConfig->fb_profile != 'cb') //<-- IF CB profile not active begin
 
 						if ($fbConfig->fb_profile == 'cb') {
 							echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='".KUNENA_CB_ITEMID."'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
-					?>
 
-						<script language = "javascript">
-							setTimeout("location='index.php?option=com_comprofiler<?php echo KUNENA_CB_ITEMID_SUFFIX; ?>&tab=getForumTab'", 3500);
-						</script>
-                        <a href="javascript:history.go(-1)"><?php echo _BACK ;?></a>
+							echo CKunenaLink::GetAutoRedirectHTML('index.php?option=com_comprofiler'. KUNENA_CB_ITEMID_SUFFIX .'&amp;tab=getForumTab', 3500);
+							echo '<a href="javascript:history.go(-1)">'._BACK.'</a>';
 
-				<?php
 						}
 						else {
 							echo _USER_RETURN_A . " <a href=\"". sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show')."\">" . _USER_RETURN_B . "</a><br /><br />";
-				?>
 
-						<script language = "javascript">
-						setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&func=myprofile&do=show');?>'", 3500);
-						</script>
-                        <a href="javascript:history.go(-1)"><?php echo _BACK ;?></a>
-
-            <?php
+							echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'), 3500);
+							echo '<a href="javascript:history.go(-1)">'._BACK.'</a>';
                     }
 
                     break;
@@ -559,29 +523,17 @@ if ($fbConfig->fb_profile != 'cb') //<-- IF CB profile not active begin
                     if ($fbConfig->fb_profile == 'cb')
                     {
                         echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler" . KUNENA_CB_ITEMID_SUFFIX . "&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
-            ?>
 
-                <script language = "javascript">
-                    setTimeout("location='index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&tab=getForumTab'", 3500);
-                </script>
-
-            <?php
+			echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs("index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab"), 3500);
                     }
                     else
                     {
                         echo _USER_RETURN_A . " <a href=\"" . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav') . "\">" . _USER_RETURN_B . "</a><br /><br />";
-            ?>
 
-                    <script language = "javascript">
-                        setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&func=myprofile&do=showfav');?>'", 3500);
-                    </script>
-
-                        <?php // B: unfavoriteall
+			echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav'), 3500);
                     }
 
                     break;
-
-					//
 
 					 case "unfavoriteitem":
 
@@ -596,25 +548,15 @@ if ($fbConfig->fb_profile != 'cb') //<-- IF CB profile not active begin
 
 						if ($fbConfig->fb_profile == 'cb') {
 							echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
-				?>
 
-						<script language = "javascript">
-							setTimeout("location='index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&tab=getForumTab'", 3500);
-						</script>
-                        <a href="javascript:history.go(-1)"><?php echo _BACK ;?></a>
-
-				<?php
+							echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs("index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab"), 3500);
+							echo '<a href="javascript:history.go(-1)">'. _BACK .'</a>';
 						}
 						else {
 							echo _USER_RETURN_A . " <a href=\"index.php?option=com_kunena&amp;Itemid=$Itemid&amp;func=myprofile&amp;do=show\">" . _USER_RETURN_B . "</a><br /><br />";
-				?>
-					<a href="javascript:history.go(-1)"><?php echo _BACK ;?></a>
 
-						<script language = "javascript">
-							   setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&func=myprofile&do=show');?>'", 3500);
-						</script>
-
-                   <?php
+							echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'), 3500);
+							echo '<a href="javascript:history.go(-1)">'. _BACK .'</a>';
 						}
 
                     break;

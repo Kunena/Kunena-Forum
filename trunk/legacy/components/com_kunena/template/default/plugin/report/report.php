@@ -116,11 +116,8 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
     echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id) . '#' . $msg_id . '">' . _POST_SUCCESS_VIEW . '</a><br />';
     echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $catid) . '">' . _POST_SUCCESS_FORUM . '</a><br />';
     echo '</div>';
-?>
-     <script language = "javascript">
-     setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&func=view&catid='.$catid.'&id='.$msg_id).'#'.$msg_id;?>'", 3500);
-     </script>
-<?php
+
+     echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&amp;id='.$msg_id).'#'.$msg_id, 3500);
 }
 
 function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins) {
@@ -186,7 +183,7 @@ function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
 function ReportForm($msg_id, $catid) {
     global $my, $fbConfig;
 
-    $redirect = 'index.php?option=com_kunena&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id . '&amp;Itemid=' . KUNENA_COMPONENT_ITEMID . '#' . $msg_id;
+    $redirect = sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id . '&amp;Itemid=' . KUNENA_COMPONENT_ITEMID) . '#' . $msg_id;
 
     //$redirect = sefRelToAbs($redirect);
     if (!$my->id) {

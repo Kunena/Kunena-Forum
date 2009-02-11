@@ -41,6 +41,7 @@ Kunena 1.0.8
 11-February-2009 Matias
 # default: No menu entry pointed to Categories if default Kunena page wasn't Categories
 # Huge amount of missing slashes added and extra slashes removed from templates
+# Fixed broken timed redirects
 
 10-February-2009 fxstein
 # Incorrect error message on version table creation for new installs

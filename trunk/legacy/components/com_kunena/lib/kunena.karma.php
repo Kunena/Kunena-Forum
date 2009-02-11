@@ -65,13 +65,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
 							    $database->setQuery('UPDATE #__fb_users SET karma=karma+1 WHERE userid=' . $userid . '');
 							    $database->query() or trigger_dberror("Unable to update karma.");
 							    echo _KARMA_INCREASED . '<br /> <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
-                ?>
-
-                            <script language = "javascript">
-                                setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&func=view&catid='.$catid.'&id='.$pid); ?>'", 3500);
-                            </script>
-
-                <?php
+							echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&id='.$pid), 3500);
                             }
                             else if ($do == "decrease")
                             {
@@ -80,13 +74,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                                 $database->setQuery('UPDATE #__fb_users SET karma=karma-1 WHERE userid=' . $userid . '');
                                 $database->query() or trigger_dberror("Unable to update karma.");
                                 echo _KARMA_DECREASED . '<br /> <a href="' . sefRelToAbs(KUNENA_LIVEURLREL. '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
-                ?>
-
-                            <script language = "javascript">
-                                setTimeout("location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&func=view&catid='.$catid.'&id='.$pid); ?>'", 3500);
-                            </script>
-
-                <?php
+				echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&id='.$pid), 3500);
                             }
                             else
                             { //you got me there... don't know what to $do

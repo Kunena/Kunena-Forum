@@ -82,7 +82,7 @@ if ($letPass || $is_Moderator)
     $topicLock = $this_message->locked;
 
     if (count($this_message) < 1) {
-        echo '<p align="center">' . _MODERATION_INVALID_ID . '</p>\n';
+        echo '<p align="center">' . _MODERATION_INVALID_ID . '</p>';
     }
     else
     {
@@ -315,10 +315,12 @@ if ($letPass || $is_Moderator)
                     $database->setQuery("SELECT COUNT(*) FROM #__fb_favorites where thread='$thread'");
                     $fb_totalfavorited = $database->loadResult();
 
+                    if ($fb_totalfavorited) {
                     echo '<span class="fb_totalfavorite">';
                     echo _KUNENA_TOTALFAVORITE;
                     echo $fb_totalfavorited;
                     echo '</span>';
+                    }
                     ?>
                 <!-- Finish: Total Favorite -->
                 </td>

@@ -198,7 +198,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                         echo "</td>";
                         echo "<td class=\"td-2 fbm\"  align=\"left\" >";
                         echo " <a class=\"fbrecent fbm\" href='$link' >";
-                        echo substr(stripslashes($row->subject), 0, $subject_length);
+                        echo substr(htmlentities(stripslashes($row->subject)), 0, $subject_length);
                         echo "</a>";
                         echo "</td>";
 
@@ -211,7 +211,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 
                                 echo sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX . "" . $row->id);
                                 echo "\">";
-                                echo stripslashes($row->username);
+                                echo $row->username;
                                 echo "</a></td>";
                                 break;
 
@@ -220,7 +220,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 
                                 echo sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX . "" . $row->id);
                                 echo "\">";
-                                echo stripslashes($row->name);
+                                echo $row->name;
                                 echo "</a></td>";
                                 break;
                         }

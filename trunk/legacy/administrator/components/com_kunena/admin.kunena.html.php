@@ -489,7 +489,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                         </td>
 
                         <td>
-                            <input class = "inputbox" type = "text" name = "name" size = "25" maxlength = "100" value = "<?php echo $row->name; ?>">
+                            <input class = "inputbox" type = "text" name = "name" size = "25" maxlength = "100" value = "<?php echo stripslashes($row->name); ?>">
                         </td>
                     </tr>
 
@@ -498,7 +498,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                         </td>
 
                         <td>
-                            <textarea class = "inputbox" cols = "50" rows = "3" name = "description" id = "description" style = "width:500px" width = "500"><?php echo $row->description; ?></textarea>
+                            <textarea class = "inputbox" cols = "50" rows = "3" name = "description" id = "description" style = "width:500px" width = "500"><?php echo stripslashes($row->description); ?></textarea>
                         </td>
                     </tr>
 
@@ -507,7 +507,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                         </td>
 
                         <td>
-                            <textarea class = "inputbox" cols = "50" rows = "3" name = "headerdesc" id = "headerdesc" style = "width:500px" width = "500"><?php echo $row->headerdesc; ?></textarea>
+                            <textarea class = "inputbox" cols = "50" rows = "3" name = "headerdesc" id = "headerdesc" style = "width:500px" width = "500"><?php echo stripslashes($row->headerdesc); ?></textarea>
                         </td>
                     </tr>
             </table>
@@ -740,7 +740,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
 
                     <td align = "left" valign = "top"  width="25%" >
-                        <input type = "text" name = "cfg_board_title" value = "<?php echo $fbConfig->board_title; ?>"/>
+                        <input type = "text" name = "cfg_board_title" value = "<?php echo stripslashes($fbConfig->board_title); ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_BOARD_TITLE_DESC ?>
@@ -799,7 +799,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
 
                     <td align = "left" valign = "top" colspan = "2">
-                        <textarea name = "cfg_offline_message" rows = "3" cols = "50"><?php echo $fbConfig->offline_message; ?></textarea>
+                        <textarea name = "cfg_offline_message" rows = "3" cols = "50"><?php echo stripslashes($fbConfig->offline_message); ?></textarea>
                     </td>
                 </tr>
 
@@ -932,7 +932,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_newchar" value = "<?php echo $fbConfig->newchar;?>"/>
+                        <input type = "text" name = "cfg_newchar" value = "<?php echo stripslashes($fbConfig->newchar);?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_NEWCHAR_DESC ?>
@@ -2615,7 +2615,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                                 </td>
 
                                 <td width = "*">
-<?php echo $pl->signature; ?>&nbsp;
+<?php echo htmlentities(stripslashes($pl->signature)); ?>&nbsp;
                                 </td>
                             </tr>
 
@@ -2890,7 +2890,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                                     onMouseOver = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);"
                                     onClick = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);"
                                     onKeyDown = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);"
-                                    onKeyUp = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);" cols = "50" type = "text" name = "message"><?php echo $signature; ?></textarea>
+                                    onKeyUp = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);" cols = "50" type = "text" name = "message"><?php echo htmlentities(stripslashes($signature)); ?></textarea>
 
 <?php /*
 // FIXME: bbcode broken
@@ -3070,7 +3070,7 @@ else
                     {
                         $k = 1 - $k;
                         echo "<tr class=\"row$k\">";
-                        echo "  <td>$enum: $sub->subject by $sub->name";
+                        echo "  <td>$enum: ".htmlentities(stripslashes($sub->subject))." by ".htmlentities(stripslashes($sub->name));
                         echo "  <td>&nbsp;</td>";
                         echo "</tr>";
                         $enum++;

@@ -55,12 +55,12 @@ else
                     <div class = "fb_title_cover fbm" >
                         <?php
 //                        echo '<a class="fb_title fbl" href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $objCatInfo->id) . '">' . $objCatInfo->name . '</a>';
-                        echo CKunenaLink::GetCategoryLink('showcat', $objCatInfo->id, $objCatInfo->name, $rel='follow', $class='fb_title fbl');
+                        echo CKunenaLink::GetCategoryLink('showcat', $objCatInfo->id, stripslashes($objCatInfo->name), $rel='follow', $class='fb_title fbl');
                         ?>
 
                         <?php
                         if ($objCatInfo->description != "") {
-                            echo '' . $objCatInfo->description . '';
+                            echo '' . stripslashes($objCatInfo->description) . '';
                         }
                         ?>
                     </div>
@@ -183,7 +183,7 @@ else
                         $latestname = $obj_lp->name;
                         $latestcatid = $obj_lp->catid;
                         $latestid = $obj_lp->id;
-                        $latestsubject = stripslashes($obj_lp->subject);
+                        $latestsubject = $obj_lp->subject;
                         $latestuserid = $obj_lp->userid;
                         $latestthread = $obj_lp->thread;
                         // count messages in thread
@@ -218,7 +218,7 @@ else
                                 $categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . "" . $singlerow->id . "_on.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
                             }
                             else {
-                                $categoryicon .= $fbIcons['unreadforum'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unreadforum'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '"/>' : $fbConfig->newchar;
+                                $categoryicon .= $fbIcons['unreadforum'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unreadforum'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '"/>' : stripslashes($fbConfig->newchar);
                             }
                         }
                         else
@@ -228,7 +228,7 @@ else
                                 $categoryicon .=  "<img src=\"" . KUNENA_URLCATIMAGES . "" . $singlerow->id . "_off.gif\" border=\"0\" class='forum-cat-image' alt=\" \"  />";
                             }
                             else {
-                                $categoryicon .=  $fbIcons['readforum'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['readforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : $fbConfig->newchar;
+                                $categoryicon .=  $fbIcons['readforum'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['readforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : stripslashes($fbConfig->newchar);
                             }
                         }
                     }
@@ -239,17 +239,17 @@ else
                             $categoryicon .=  "<img src=\"" . KUNENA_URLCATIMAGES . "" . $singlerow->id . "_notlogin.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
                         }
                         else {
-                            $categoryicon .=  $fbIcons['notloginforum'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['notloginforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : $fbConfig->newchar;
+                            $categoryicon .=  $fbIcons['notloginforum'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['notloginforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : stripslashes($fbConfig->newchar);
                         }
                     }
                     echo CKunenaLink::GetCategoryLink('listcat', $singlerow->id, $categoryicon, 'follow');
 					echo '</td>';
                     echo '<td class="td-2"  align="left"><div class="'
-                             . $boardclass . 'thead-title fbl">'.CKunenaLink::GetCategoryLink('showcat', $singlerow->id, $singlerow->name, 'follow');
+                             . $boardclass . 'thead-title fbl">'.CKunenaLink::GetCategoryLink('showcat', $singlerow->id, stripslashes($singlerow->name), 'follow');
 
                     //new posts available
                     if ($cxThereisNewInForum == 1 && $my->id > 0) {
-                        echo '<sup><span class="newchar">&nbsp;(' . $newPostsAvailable . ' ' . $fbConfig->newchar . ")</span></sup>";
+                        echo '<sup><span class="newchar">&nbsp;(' . $newPostsAvailable . ' ' . stripslashes($fbConfig->newchar) . ")</span></sup>";
                     }
 
                     $cxThereisNewInForum = 0;
@@ -323,7 +323,7 @@ else
                                         }
                                         else {
                                             echo $fbIcons['unreadforum']
-                                                     ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unreadforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '" />' : $fbConfig->newchar;
+                                                     ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unreadforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '" />' : stripslashes($fbConfig->newchar);
                                         }
                                     }
                                     else
@@ -334,7 +334,7 @@ else
                                         }
                                         else {
                                             echo $fbIcons['readforum']
-                                                     ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['readforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : $fbConfig->newchar;
+                                                     ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['readforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : stripslashes($fbConfig->newchar);
                                         }
                                     }
                                 }
@@ -347,7 +347,7 @@ else
                                     }
                                     else {
                                         echo $fbIcons['notloginforum']
-                                                 ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['notloginforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : $fbConfig->newchar;
+                                                 ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['notloginforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : stripslashes($fbConfig->newchar);
                                     }
             ?>
 
@@ -359,7 +359,7 @@ else
             ?>
 
             <?php
-                            echo CKunenaLink::GetCategoryLink('showcat', $forumparent->id, $forumparent->name, 'follow').' &nbsp;';
+                            echo CKunenaLink::GetCategoryLink('showcat', $forumparent->id, stripslashes($forumparent->name), 'follow').' &nbsp;';
                         }
 
                         echo "</div>";

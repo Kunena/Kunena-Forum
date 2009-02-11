@@ -70,7 +70,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 					{
 						$k = 1 - $k;
 						echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" >';
-						echo '<td class="td-1" width="73%" align="left">' . $enum . ': <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $fav->catid . '&amp;id=' . $fav->id) . '">' . htmlspecialchars($fav->subject);
+						echo '<td class="td-1" width="73%" align="left">' . $enum . ': <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $fav->catid . '&amp;id=' . $fav->id) . '">' . htmlspecialchars(stripslashes($fav->subject));
 			?>
 
 						</a>

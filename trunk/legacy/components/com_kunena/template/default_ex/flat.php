@@ -104,7 +104,7 @@ if (count($messages[0]) > 0)
                 <tr>
                     <th colspan = "<?php echo ($is_Moderator?"5":"4");?>">
                         <div class = "fb_title_cover fbm">
-                            <span class = "fb_title fbl"><b><?php echo _KUNENA_THREADS_IN_FORUM; ?>:</b> <?php echo '' . $objCatInfo->name . ''; ?></span>
+                            <span class = "fb_title fbl"><b><?php echo _KUNENA_THREADS_IN_FORUM; ?>:</b> <?php echo '' . stripslashes($objCatInfo->name) . ''; ?></span>
                         </div>
                         <!-- FORUM TOOLS -->
 
@@ -151,9 +151,8 @@ if (count($messages[0]) > 0)
                 foreach ($messages[0] as $leaf)
                 {
                     $k = 1 - $k; //used for alternating colours
-                    //$leaf->subject = htmlspecialchars($leaf->subject);
-                    $leaf->name = htmlspecialchars($leaf->name);
-                    $leaf->email = htmlspecialchars($leaf->email);
+                    $leaf->name = htmlspecialchars(stripslashes($leaf->name));
+                    $leaf->email = htmlspecialchars(stripslashes($leaf->email));
 					$bof_avatar = "";
                 ?>
 
@@ -290,7 +289,7 @@ if (count($messages[0]) > 0)
                                     {
                                         if (($prevCheck < $last_reply[$leaf->id]->time) && !in_array($last_reply[$leaf->id]->thread, $read_topics)) {
                                             //new post(s) in topic
-                                            echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->id, $unreadPage, $fbConfig->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $last_read[$leaf->id]->unread . ' ' . $fbConfig->newchar . ')</span></sup>', $last_read[$leaf->id]->lastread);
+                                            echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->id, $unreadPage, $fbConfig->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $last_read[$leaf->id]->unread . ' ' . stripslashes($fbConfig->newchar) . ')</span></sup>', $last_read[$leaf->id]->lastread);
                                             }
                                     }
                                     ?>
@@ -380,7 +379,7 @@ if (count($messages[0]) > 0)
          <?php if (strtolower($func) != 'showcat' ){ ?>
         <!-- Category -->
         <span class="topic_category">
-        <?php echo _KUNENA_CATEGORY.' '.CKunenaLink::GetCategoryLink('showcat', $leaf->catid, $leaf->catname); ?>
+        <?php echo _KUNENA_CATEGORY.' '.CKunenaLink::GetCategoryLink('showcat', $leaf->catid, stripslashes($leaf->catname)); ?>
         </span>
         <!-- /Category -->
         <?php } ?>

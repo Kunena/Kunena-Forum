@@ -13,7 +13,7 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
 *
-* Based on Joomlaboard Component
+* Based on Joomlaboard Componentsho
 * @copyright (C) 2000 - 2004 TSMF / Jan de Graaff / All Rights Reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @author TSMF & Jan de Graaff
@@ -357,7 +357,7 @@ function showAdministration($option)
     foreach ($rows as $v)
     {
         $pt = $v->parent;
-        $list = @$children[$pt] ? $children[$pt] : array ();
+        $list = isset($children[$pt]) ? $children[$pt] : array ();
         array_push($list, $v);
         $children[$pt] = $list;
     }
@@ -394,35 +394,13 @@ function editForum($uid, $option)
     if ($uid)
     {
         $row->checkout($my->id);
-        $categories = array ();
     }
     else
     {
         // initialise new record
-        $categories[] = mosHTML::makeOption(0, _KUNENA_TOPLEVEL);
         $row->parent = 0;
         $row->published = 0;
         $row->ordering = 9999;
-    }
-
-    // get a list of just the categories
-    $database->setQuery("SELECT a.id AS value, a.name AS text FROM #__fb_categories AS a WHERE parent='0' AND id<>'$row->id' ORDER BY ordering");
-    $categories = array_merge($categories, $database->loadObjectList());
-    	check_dberror("Unable to load categories.");
-
-    if ($row->parent == 0)
-    {
-        //make sure the Top Level Category is available in edit mode as well:
-        $database->setQuery("SELECT distinct '0' AS value, '"._KUNENA_TOPLEVEL."' AS text FROM #__fb_categories AS a WHERE parent='0' AND id<>'$row->id' ORDER BY ordering");
-        $categories = array_merge($categories, (array)$database->loadObjectList());
-        	check_dberror("Unable to load categories.");
-
-        //build the select list:
-        $categoryList = mosHTML::selectList($categories, 'parent', 'class="inputbox" size="1"', 'value', 'text', $row->parent);
-    }
-    else
-    {
-        $categoryList = mosHTML::selectList($categories, 'parent', 'class="inputbox" size="1"', 'value', 'text', $row->parent);
     }
 
     $categoryList = showCategories($row->parent, "parent", "", "4");
@@ -1610,16 +1588,16 @@ function showCategories($cat, $cname, $extras = "", $levellimit = "4")
         if ($this_treename)
         {
             if ($item->id != $mitems && strpos($item->treename, $this_treename) === false) {
-                $mitems[] = mosHTML::makeOption($item->id, $item->treename);
+                $mitems[] = mosHTML::makeOption($item->id, stripslashes($item->treename));
             }
         }
         else
         {
             if ($item->id != $mitems) {
-                $mitems[] = mosHTML::makeOption($item->id, $item->treename);
+                $mitems[] = mosHTML::makeOption($item->id, stripslashes($item->treename));
             }
             else {
-                $this_treename = "$item->treename/";
+                $this_treename = stripslashes($item->treename)."/";
             }
         }
     }
@@ -2110,15 +2088,15 @@ function KUNENA_GetAvailableModCats($catids) {
     foreach ($list as $item) {
         if ($this_treename) {
             if ($item->id != $catid && strpos($item->treename, $this_treename) === false) {
-                $options[] = mosHTML::makeOption($item->id, $item->treename);
+                $options[] = mosHTML::makeOption($item->id, stripslashes($item->treename));
                 }
             }
         else {
             if ($item->id != $catid) {
-                $options[] = mosHTML::makeOption($item->id, $item->treename);
+                $options[] = mosHTML::makeOption($item->id, stripslashes($item->treename));
                 }
             else {
-                $this_treename = "$item->treename/";
+                $this_treename = stripslashes($item->treename)."/";
                 }
             }
         }

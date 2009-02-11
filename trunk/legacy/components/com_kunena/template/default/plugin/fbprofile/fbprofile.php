@@ -17,6 +17,9 @@
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
+
+$mainframe->setPageTitle(_KUNENA_USERPROFILE_PROFILE . ' - ' . stripslashes($fbConfig->board_title));
+
 if ($my->id) //registered only
 {
     require_once(KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
@@ -72,12 +75,12 @@ function showprf($userid, $page)
     $fb_username = $userinfo->{$fb_queryName};
 
     if ($fb_username == "" || $fbConfig->changename) {
-        $fb_username = $fmessage->name;
+        $fb_username = htmlentities(stripslashes($fmessage->name));
     }
 
     $msg_id = $fmessage->id;
     $lists["userid"] = $userid;
-    $msg_username = ($fmessage->email != "" && $my->id > 0 && $fbConfig->showemail == '1') ? "<a href=\"mailto:" . stripslashes($fmessage->email) . "\">" . stripslashes($fb_username) . "</a>" : stripslashes($fb_username);
+    $msg_username = ($fmessage->email != "" && $my->id > 0 && $fbConfig->showemail == '1') ? "<a href=\"mailto:" . $fmessage->email . "\">" . $fb_username . "</a>" : $fb_username;
 
     if ($fbConfig->allowavatar)
     {

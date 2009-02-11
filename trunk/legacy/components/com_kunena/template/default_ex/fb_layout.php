@@ -61,7 +61,7 @@ function KUNENA_get_pathway(&$database, $obj_fb_cat, $bool_set_title, $obj_post 
     if ($objCatParentInfo)
     {
         if ($bool_set_title)
-            $mainframe->setPageTitle($objCatParentInfo->name . ' - ' . $obj_fb_cat->getName() . ' - ' . $fbConfig->board_title);
+            $mainframe->setPageTitle(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($obj_fb_cat->getName()) . ' - ' . stripslashes($fbConfig->board_title));
 
         // show lines
         $return .= '&nbsp;<img src="' . KUNENA_URLIMAGESPATH . 'tree-end.gif" alt="|-" border="0" style="vertical-align: middle;" />';
@@ -73,7 +73,7 @@ function KUNENA_get_pathway(&$database, $obj_fb_cat, $bool_set_title, $obj_post 
     else
     {
         if ($bool_set_title)
-            $mainframe->setPageTitle($obj_fb_cat->getName() . ' - ' . $fbConfig->board_title);
+            $mainframe->setPageTitle(stripslashes($obj_fb_cat->getName()) . ' - ' . stripslashes($fbConfig->board_title));
     }
 
     // Forum
@@ -115,7 +115,7 @@ function KUNENA_get_pathway(&$database, $obj_fb_cat, $bool_set_title, $obj_post 
     if ($obj_post != 0)
     {
         if ($bool_set_title)
-            $mainframe->setPageTitle($obj_post->subject . ' - ' . $fbConfig->board_title);
+            $mainframe->setPageTitle($obj_post->subject . ' - ' . stripslashes($fbConfig->board_title));
 
         // Topic
         // show lines

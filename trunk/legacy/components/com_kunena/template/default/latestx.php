@@ -153,10 +153,10 @@ if ($sel == "0")
                 $database->loadObject($result);
 
                 $latestPostId = $result->id;
-                $latestPostName = $result->name;
+                $latestPostName = htmlentities(stripslashes($result->name));
 				$latestPostUserid = $result->userid;
                 $latestPostCatid = $result->catid;
-                $catname = $result->catname;
+                $catname = stripslashes($result->catname);
                 $database->setQuery("SELECT count(*) from #__fb_messages where time>'{$querytime}' and thread={$rs->thread}");
                 $numberOfPosts = $database->loadResult();
                 $k = 1 - $k;

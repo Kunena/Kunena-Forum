@@ -107,7 +107,7 @@ global $fbConfig;
      <?php  if ( $userinfo->personalText !='' ) { ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_PERSONALTEXT; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo $userinfo->personalText; ?></td>
+      <td  class = "td-2 fbm"><?php echo htmlentities(stripslashes($userinfo->personalText)); ?></td>
     </tr>
     <?php }?>
      <?php  if ( $userinfo->gender !=0 ) { ?>
@@ -125,7 +125,7 @@ global $fbConfig;
     <?php  if ( $userinfo->location !='' ) { ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_LOCATION; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo $userinfo->location; ?></td>
+      <td  class = "td-2 fbm"><?php echo htmlentities(stripslashes($userinfo->location)); ?></td>
     </tr>
     <?php }?>
     <?php  if ( $userinfo->ICQ !='' ) { ?>

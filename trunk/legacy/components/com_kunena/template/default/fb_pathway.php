@@ -44,7 +44,7 @@ if ($func != "")
         $parent_ids = 1000;
         $jr_it = 1;
         $jr_path_menu = array ();
-        $shome = '<div class="forum-pathway-1">' . CKunenaLink::GetKunenaLink( htmlspecialchars($fbConfig->board_title) );
+        $shome = '<div class="forum-pathway-1">' . CKunenaLink::GetKunenaLink( htmlspecialchars(stripslashes($fbConfig->board_title)) );
 
         while ($parent_ids)
         {
@@ -52,7 +52,7 @@ if ($func != "")
             $database->setQuery($query);
             $database->loadObject($results);
 			$parent_ids = $results->parent;
-			$fr_name = htmlspecialchars(trim($results->name));
+			$fr_name = htmlspecialchars(trim(stripslashes($results->name)));
             //$cids=@mysql_result( $results, 0, 'id' );
             $sname = CKunenaLink::GetCategoryLink( 'showcat', $catids, $fr_name);
 
@@ -162,7 +162,7 @@ if ($func != "")
 
         unset($shome, $spath, $parent_ids, $catids, $results, $sname);
 	$fr_title = $fr_title_name . $jr_topic_title;
-        $mainframe->setPageTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . $fbConfig->board_title);
+        $mainframe->setPageTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($fbConfig->board_title));
         ?>
     </div>
 

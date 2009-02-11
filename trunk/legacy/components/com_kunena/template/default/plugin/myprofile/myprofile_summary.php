@@ -33,7 +33,6 @@ global $fbConfig;
 
     if ($signature)
     {
-        $signature = stripslashes($signature);
         $signature = stripslashes(smile::smileReplace($signature, 0, $fbConfig->disemoticons, $smileyList));
         $signature = str_replace("\n", "<br />", $signature);
         $signature = str_replace("<P>&nbsp;</P><br />", "", $signature);
@@ -104,7 +103,7 @@ global $fbConfig;
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_PERSONALTEXT; ?></b> </td>
-      <td><?php echo $userinfo->personalText; ?></td>
+      <td><?php echo htmlentities(stripslashes($userinfo->personalText)); ?></td>
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_GENDER; ?></b> </td>
@@ -116,7 +115,7 @@ global $fbConfig;
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_LOCATION; ?></b> </td>
-      <td><?php echo $userinfo->location; ?></td>
+      <td><?php echo htmlentities(stripslashes($userinfo->location)); ?></td>
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_ICQ; ?></b> </td>

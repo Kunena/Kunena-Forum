@@ -24,7 +24,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
 
-$mainframe->setPageTitle(_GEN_RULES . ' - ' . $fbConfig->board_title);
+$mainframe->setPageTitle(_GEN_RULES . ' - ' . stripslashes($fbConfig->board_title));
 
 ?>
 <!-- INSERT YOUR RULES IN HTML BEGINNING HERE -->

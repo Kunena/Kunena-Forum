@@ -24,6 +24,8 @@ defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
 
+$mainframe->setPageTitle(_STAT_FORUMSTATS . ' - ' . stripslashes($fbConfig->board_title));
+
 if($fbConfig->showstats):
 
 $forumurl = 'index.php?option=com_kunena';
@@ -43,7 +45,7 @@ $userlist = 'index.php?option=com_comprofiler&amp;task=usersList';
                 <tr>
                     <th>
                         <div class = "fb_title_cover fbm">
-                            <a class="fb_title fbl" href = "<?php echo $statslink;?>"><?php echo $fbConfig->board_title; ?> <?php echo _STAT_FORUMSTATS; ?></a>
+                            <a class="fb_title fbl" href = "<?php echo $statslink;?>"><?php echo stripslashes($fbConfig->board_title); ?> <?php echo _STAT_FORUMSTATS; ?></a>
                         </div>
                         <img id = "BoxSwitch__morestat_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
                     </th>
@@ -131,7 +133,7 @@ $k = 0;
 
     <tr class = "<?php echo ''.$boardclass.''. $tabclass[$k] . ''; ?>">
       <td class="td-1" align="left">
-       <a href = "<?php echo $link;?>"><?php echo htmlspecialchars($toptitle->subject); ?></a>
+       <a href = "<?php echo $link;?>"><?php echo htmlspecialchars(stripslashes($toptitle->subject)); ?></a>
       </td>
       <td  class="td-2">
        <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>

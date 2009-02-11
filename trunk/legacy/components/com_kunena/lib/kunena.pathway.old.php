@@ -67,7 +67,7 @@ global $fbConfig;
                 $database->setQuery("SELECT name,id FROM #__fb_categories WHERE id='$objCatInfo->parent'");
                 $database->loadObject($objCatParentInfo) or trigger_dberror("Unable to read from categories.");
                 // set page title
-                $mainframe->setPageTitle($objCatParentInfo->name . ' - ' . $objCatInfo->name . ' - ' . $fbConfig->board_title);
+                $mainframe->setPageTitle(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($objCatInfo->name) . ' - ' . stripslashes($fbConfig->board_title));
                 //check if this forum is locked
                 $forumLocked = $objCatInfo->locked;
                 //check if this forum is subject to review

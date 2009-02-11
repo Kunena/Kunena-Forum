@@ -80,7 +80,7 @@ if (count($messages[0]) > 0)
                 <tr>
                     <th colspan = "<?php echo ($is_Moderator?"7":"6");?>">
                         <div class = "fb_title_cover fbm">
-                            <span class = "fb_title fbl"><b><?php echo _KUNENA_THREADS_IN_FORUM; ?>:</b> <?php echo '' . $objCatInfo->name . ''; ?></span>
+                            <span class = "fb_title fbl"><b><?php echo _KUNENA_THREADS_IN_FORUM; ?>:</b> <?php echo '' . stripslashes($objCatInfo->name) . ''; ?></span>
                         </div>
                         <!-- FORUM TOOLS -->
 
@@ -214,14 +214,14 @@ if (count($messages[0]) > 0)
                                     {
                                         //new post(s) in topic
                                         echo '<td  class="td-1" align="center">';
-                                        echo $fbIcons['unreadmessage'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '"/>' : $fbConfig->newchar;
+                                        echo $fbIcons['unreadmessage'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '"/>' : stripslashes($fbConfig->newchar);
                                         echo '</td>';
                                     }
                                     else
                                     {
                                         //no new posts in topic
                                         echo '<td  class="td-1" align="center">';
-                                        echo $fbIcons['readmessage'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $fbConfig->newchar;
+                                        echo $fbIcons['readmessage'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : stripslashes($fbConfig->newchar);
                                         echo '</td>';
                                     }
                                 }
@@ -229,7 +229,7 @@ if (count($messages[0]) > 0)
                                 {
                                     //not Login
                                     echo '<td class="td-1" align="center">';
-                                    echo $fbIcons['notloginmessage'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['notloginmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $fbConfig->newchar;
+                                    echo $fbIcons['notloginmessage'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['notloginmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : stripslashes($fbConfig->newchar);
                                     echo '</td>';
                                 }
                             }
@@ -289,7 +289,7 @@ if (count($messages[0]) > 0)
                                     ?>
                                     <!--            /Favourite       -->
 
-                                    <span class = "fb-topic-by fbs"> <?php echo _GEN_BY.' '.CKunenaLink::GetProfileLink($fbConfig, $leaf->userid, $leaf->name);?></span>
+                                    <span class = "fb-topic-by fbs"> <?php echo _GEN_BY.' '.CKunenaLink::GetProfileLink($fbConfig, $leaf->userid, htmlentities(stripslashes($leaf->name)));?></span>
 
                                     <?php
                                     if ($fbConfig->shownew && $my->id != 0)
@@ -395,7 +395,7 @@ if (count($messages[0]) > 0)
     {
 ?>
 
-<?php echo _GEN_BY; ?> <?php echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, $last_reply[$leaf->id]->name);?>
+<?php echo _GEN_BY; ?> <?php echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, htmlentities(stripslashes($last_reply[$leaf->id]->name)));?>
 
 <?php
     }

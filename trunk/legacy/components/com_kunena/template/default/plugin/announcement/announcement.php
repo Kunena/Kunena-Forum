@@ -23,7 +23,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
 
-$mainframe->setPageTitle(_ANN_ANNOUNCEMENTS . ' - ' . $fbConfig->board_title);
+$mainframe->setPageTitle(_ANN_ANNOUNCEMENTS . ' - ' . stripslashes($fbConfig->board_title));
 
 # Check for Editor rights  $fbConfig->annmodid
 $do = mosGetParam($_REQUEST, "do", "");

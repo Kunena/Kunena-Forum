@@ -369,9 +369,9 @@ $catName = $objCatInfo->name;
 								}
 							}
 
-                                                    $mailsubject = "[$board_title ".trim(_GEN_FORUM)."] " . stripslashes($messagesubject) . " (" . stripslashes($catName) . ")";
+                                                    $mailsubject = "[".stripslashes($board_title)." ".trim(_GEN_FORUM)."] " . stripslashes($messagesubject) . " (" . stripslashes($catName) . ")";
                                                     $msg = "$subs->name,\n\n";
-                                                    $msg .= trim($_COM_A_NOTIFICATION1)." $board_title "._GEN_FORUM."\n\n";
+                                                    $msg .= trim($_COM_A_NOTIFICATION1)." ".stripslashes($board_title)." "._GEN_FORUM."\n\n";
                                                     $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
 						    $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
                                                     $msg .= _VIEW_POSTED.": " . stripslashes($fb_authorname) . "\n\n";
@@ -386,6 +386,7 @@ $catName = $objCatInfo->name;
                                                     $msg .= "$_COM_A_NOTIFICATION3\n";
                                                     $msg .= "\n\n\n\n";
                                                     $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
+
                                                     if ($ip != "127.0.0.1" && $my->id != $subs->id) { //don't mail yourself
                                                         mosmail($fbConfig->email, _KUNENA_FORUM_AT." " . $_SERVER['SERVER_NAME'], $subs->email, $mailsubject, $msg);
                                                     }
@@ -429,9 +430,9 @@ $catName = $objCatInfo->name;
 
                                                 foreach ($modsList as $mods)
                                                 {
-                                                    $mailsubject = "[$board_title "._GEN_FORUM."] " . stripslashes($messagesubject) . " (" . stripslashes($catName) . ")";
+                                                    $mailsubject = "[".stripslashes($board_title)." "._GEN_FORUM."] " . stripslashes($messagesubject) . " (" . stripslashes($catName) . ")";
                                                     $msg = "$subs->name,\n\n";
-                                                    $msg .= trim($_COM_A_NOT_MOD1)." $board_title "._GEN_FORUM."\n\n";
+                                                    $msg .= trim($_COM_A_NOT_MOD1)." ".stripslashes($board_title)." "._GEN_FORUM."\n\n";
                                                     $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
 						    $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
                                                     $msg .= _VIEW_POSTED.": " . stripslashes($fb_authorname) . "\n\n";

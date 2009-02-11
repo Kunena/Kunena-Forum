@@ -332,7 +332,7 @@ if ($fbConfig->regonly && !$my_id)
 // or if the board is offline
 else if ($fbConfig->board_offline && !$is_admin)
 {
-    echo $fbConfig->offline_message;
+    echo stripslashes($fbConfig->offline_message);
 }
 else
 {
@@ -558,14 +558,14 @@ else
     // display header
     $obj_KUNENA_tmpl->readTemplatesFromFile("header.html");
     $obj_KUNENA_tmpl->addVar('jb-header', 'menu', $fbMenu);
-    $obj_KUNENA_tmpl->addVar('jb-header', 'board_title', $board_title);
+    $obj_KUNENA_tmpl->addVar('jb-header', 'board_title', stripslashes($board_title));
     if (file_exists(KUNENA_JTEMPLATEPATH.'/css/kunena.forum.css')) {
    		$obj_KUNENA_tmpl->addVar('jb-header', 'css_path', KUNENA_JTEMPLATEURL . '/template/' . $fbConfig->template . '/kunena.forum.css');
     } else {
    	    $obj_KUNENA_tmpl->addVar('jb-header', 'css_path', KUNENA_DIRECTURL . '/template/' . $fbConfig->template . '/kunena.forum.css');
 	}
 
-    $obj_KUNENA_tmpl->addVar('jb-header', 'offline_message', $fbConfig->board_offline ? '<span id="fbOffline">' . _FORUM_IS_OFFLINE . '</span>' : '');
+    $obj_KUNENA_tmpl->addVar('jb-header', 'offline_message', stripslashes($fbConfig->board_offline) ? '<span id="fbOffline">' . _FORUM_IS_OFFLINE . '</span>' : '');
     $obj_KUNENA_tmpl->addVar('jb-header', 'searchbox', getSearchBox());
     $obj_KUNENA_tmpl->addVar('jb-header', 'pb_imgswitchurl', KUNENA_URLIMAGESPATH . "shrink.gif");
     $obj_KUNENA_tmpl->displayParsedTemplate('jb-header');

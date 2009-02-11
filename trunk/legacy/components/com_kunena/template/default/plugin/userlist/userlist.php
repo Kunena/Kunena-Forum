@@ -22,7 +22,10 @@
 // Dont allow direct linking
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $base_url;
+global $base_url, $fbConfig;
+
+$mainframe->setPageTitle(_KUNENA_USRL_USERLIST . ' - ' . stripslashes($fbConfig->board_title));
+
 $base_url = "index.php?option=com_kunena&amp;func=userlist" . KUNENA_COMPONENT_ITEMID_SUFFIX; // Base URL string
 
 list_users();

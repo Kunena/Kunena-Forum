@@ -64,10 +64,10 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
     $sender = $database->loadResult();
 
     if ($reason) {
-        $subject = "[{$fbConfig->board_title} ".trim(_GEN_FORUM)."] "._KUNENA_REPORT_MSG . ": " . $reason;
+        $subject = "[".stripslashes($fbConfig->board_title)." ".trim(_GEN_FORUM)."] "._KUNENA_REPORT_MSG . ": " . $reason;
         }
     else {
-        $subject = "[{$fbConfig->board_title} ".trim(_GEN_FORUM)."] "._KUNENA_REPORT_MSG . ": " . stripslashes($row->subject);
+        $subject = "[".stripslashes($fbConfig->board_title)." ".trim(_GEN_FORUM)."] "._KUNENA_REPORT_MSG . ": " . stripslashes($row->subject);
         }
 
     $msglink = "index.php?option=com_kunena&amp;func=view&amp;catid=" . $row->catid . "&amp;id=" . $row->id . KUNENA_COMPONENT_ITEMID_SUFFIX;

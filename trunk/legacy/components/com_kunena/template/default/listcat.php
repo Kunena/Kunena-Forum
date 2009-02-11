@@ -37,7 +37,7 @@ $threadids = array ();
 $categories = array ();
 
 // set page title
-$mainframe->setPageTitle(_GEN_FORUMLIST . ' - ' . $fbConfig->board_title);
+$mainframe->setPageTitle(_GEN_FORUMLIST . ' - ' . stripslashes($fbConfig->board_title));
 
 if (count($allCat) > 0)
 {
@@ -141,10 +141,10 @@ if (count($categories[0]) > 0)
                         <th colspan = "5">
                             <div class = "fb_title_cover fbm" >
                                 <?php
-                                echo CKunenaLink::GetCategoryLink('listcat', $cat->id, $cat->name, 'follow', $class='fb_title fbl');
+                                echo CKunenaLink::GetCategoryLink('listcat', $cat->id, stripslashes($cat->name), 'follow', $class='fb_title fbl');
 
                                 if ($cat->description != "") {
-                                    echo '' . $cat->description . '';
+                                    echo '' . stripslashes($cat->description) . '';
                                 }
                                 ?>
                             </div>
@@ -213,7 +213,7 @@ if (count($categories[0]) > 0)
                                 $numreplies = $singlerow->numPosts;
                                 $lastPosttime = $singlerow->time_last_msg;
                                 $lastptime = KUNENA_timeformat(CKunenaTools::fbGetShowTime($singlerow->time_last_msg));
-                                $forumDesc = $singlerow->description;
+                                $forumDesc = stripslashes($singlerow->description);
 
                                 //    Get the forumsubparent categories :: get the subcategories here
                                 $database->setQuery("SELECT id, name, numTopics, numPosts from #__fb_categories WHERE parent='$singlerow->id' AND published=1 ORDER BY ordering");
@@ -270,9 +270,9 @@ if (count($categories[0]) > 0)
                                 $latestthreadpages = ceil($thisThread->totalmessages / $fbConfig->messages_per_page);
                                 $latestthread = $thisThread->thread;
                                 $latestname = $singlerow->mname;
-                                $latestcatid = $singlerow->catid;
+                                $latestcatid = stripslashes($singlerow->catid);
                                 $latestid = $singlerow->id_last_msg;
-                                $latestsubject = stripslashes($singlerow->subject);
+                                $latestsubject = htmlentities(stripslashes($singlerow->subject));
                                 $latestuserid = $singlerow->userid;
                     ?>
 
@@ -303,7 +303,7 @@ if (count($categories[0]) > 0)
                                                 }
                                                 else
                                                 {
-                                                    $tmpIcon = $fbIcons['unreadforum'] ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['unreadforum'].'" border="0" alt="'._GEN_FORUM_NEWPOST.'" title="'._GEN_FORUM_NEWPOST.'" />' : $fbConfig->newchar;
+                                                    $tmpIcon = $fbIcons['unreadforum'] ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['unreadforum'].'" border="0" alt="'._GEN_FORUM_NEWPOST.'" title="'._GEN_FORUM_NEWPOST.'" />' : stripslashes($fbConfig->newchar);
                                                 }
                                             }
                                             else
@@ -315,7 +315,7 @@ if (count($categories[0]) > 0)
                                                 }
                                                 else
                                                 {
-                                                    $tmpIcon = $fbIcons['readforum'] ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['readforum'].'" border="0" alt="'._GEN_FORUM_NOTNEW.'" title="'._GEN_FORUM_NOTNEW.'" />' : $fbConfig->newchar;
+                                                    $tmpIcon = $fbIcons['readforum'] ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['readforum'].'" border="0" alt="'._GEN_FORUM_NOTNEW.'" title="'._GEN_FORUM_NOTNEW.'" />' : stripslashes($fbConfig->newchar);
                                                 }
                                             }
                                         }
@@ -326,7 +326,7 @@ if (count($categories[0]) > 0)
                                                 $tmpIcon = '<img src="'.KUNENA_URLCATIMAGES.$singlerow->id.'_notlogin.gif" border="0" class="forum-cat-image" alt=" " />';
                                             }
                                             else {
-                                                $tmpIcon = $fbIcons['notloginforum'] ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['notloginforum'].'" border="0" alt="'._GEN_FORUM_NOTNEW.'" title="'._GEN_FORUM_NOTNEW.'" />' : $fbConfig->newchar;
+                                                $tmpIcon = $fbIcons['notloginforum'] ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['notloginforum'].'" border="0" alt="'._GEN_FORUM_NOTNEW.'" title="'._GEN_FORUM_NOTNEW.'" />' : stripslashes($fbConfig->newchar);
                                             }
                                         }
                                         echo CKunenaLink::GetCategoryLink('showcat', $singlerow->id, $tmpIcon);
@@ -336,7 +336,7 @@ if (count($categories[0]) > 0)
                                     <td class = "td-2" align="left">
                                         <div class = "<?php echo $boardclass ?>thead-title fbl">
                                             <?php //new posts available
-                                            echo CKunenaLink::GetCategoryLink('showcat', $singlerow->id, $singlerow->name);
+                                            echo CKunenaLink::GetCategoryLink('showcat', $singlerow->id, stripslashes($singlerow->name));
 
                                             if ($cxThereisNewInForum == 1 && $my->id > 0) {
                                                 echo '<sup><span class="newchar">&nbsp;(' . $newPostsAvailable . ' ' . $fbConfig->newchar . ")</span></sup>";
@@ -439,7 +439,7 @@ if (count($categories[0]) > 0)
                                                                             }
                                                                             else {
                                                                                 echo $fbIcons['unreadforum'] ? '<img src="' . KUNENA_URLICONSPATH
-                                                                                         . '' . $fbIcons['unreadforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '" />' : $fbConfig->newchar;
+                                                                                         . '' . $fbIcons['unreadforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '" />' : stripslashes($fbConfig->newchar);
                                                                             }
                                                                         }
                                                                         else
@@ -450,7 +450,7 @@ if (count($categories[0]) > 0)
                                                                             }
                                                                             else {
                                                                                 echo $fbIcons['readforum'] ? '<img src="' . KUNENA_URLICONSPATH
-                                                                                         . '' . $fbIcons['readforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : $fbConfig->newchar;
+                                                                                         . '' . $fbIcons['readforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : stripslashes($fbConfig->newchar);
                                                                             }
                                                                         }
                                                                     }
@@ -462,7 +462,7 @@ if (count($categories[0]) > 0)
                                                                         }
                                                                         else {
                                                                             echo $fbIcons['notloginforum'] ? '<img src="' . KUNENA_URLICONSPATH
-                                                                                     . '' . $fbIcons['notloginforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : $fbConfig->newchar;
+                                                                                     . '' . $fbIcons['notloginforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : stripslashes($fbConfig->newchar);
                                                                         }
                                                     ?>
 
@@ -474,7 +474,7 @@ if (count($categories[0]) > 0)
                                                     ?>
 
                                                     <?php
-                                                                echo CKunenaLink::GetCategoryLink('showcat', $forumparent->id, $forumparent->name);
+                                                                echo CKunenaLink::GetCategoryLink('showcat', $forumparent->id, stripslashes($forumparent->name));
                                                                 echo '<span class="fb_childcount fbs">('.$forumparent->numTopics."/".$forumparent->numPosts.')</span>';
                                                             }
                                                             echo "</td>";

@@ -23,7 +23,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
 
-$mainframe->setPageTitle(_GEN_MYPROFILE . ' - ' . $fbConfig->board_title);
+$mainframe->setPageTitle(_GEN_MYPROFILE . ' - ' . stripslashes($fbConfig->board_title));
 
 if ($my->id != "" && $my->id != 0)
 {

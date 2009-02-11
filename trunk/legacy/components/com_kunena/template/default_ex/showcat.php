@@ -187,8 +187,8 @@ if ($letPass || $is_Moderator)
     $forumReviewed = $objCatInfo->review;
 
 	//meta description and keywords
-	$metaKeys=(_KUNENA_CATEGORIES . ', ' . $objCatParentInfo->name . ', ' . $objCatInfo->name . ', ' . $fbConfig->board_title . ', ' . $GLOBALS['mosConfig_sitename']);
-	$metaDesc=($objCatParentInfo->name . ' - ' . $objCatInfo->name .' - ' . $fbConfig->board_title);
+	$metaKeys=(_KUNENA_CATEGORIES . ', ' . stripslashes($objCatParentInfo->name) . ', ' . stripslashes($objCatInfo->name) . ', ' . stripslashes($fbConfig->board_title) . ', ' . $GLOBALS['mosConfig_sitename']);
+	$metaDesc=(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($objCatInfo->name) .' - ' . stripslashes($fbConfig->board_title));
 
 	if( CKunenaTools::isJoomla15() )
 	{

@@ -150,7 +150,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 				<td class = "td-3">
 					<div class = "jr-topic-cat">
-						<a href = "<?php echo $fbCatURL; ?>"> <?php echo $item->catname; ?></a>
+						<a href = "<?php echo $fbCatURL; ?>"> <?php echo stripslashes($item->catname); ?></a>
 					</div>
 				</td>
 

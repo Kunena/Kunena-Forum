@@ -449,8 +449,8 @@ if ($letPass || $is_Moderator)
                                 /* Fininsh Joomla Mambot Support */
 
                                 //meta description and keywords
-								$metaKeys=(htmlspecialchars($fmessage->subject). ', ' .htmlspecialchars($objCatParentInfo->name) . ', ' . htmlspecialchars($fbConfig->board_title) . ', ' . htmlspecialchars($GLOBALS['mosConfig_sitename']));
-								$metaDesc=(htmlspecialchars($fmessage->subject) . ' - ' .htmlspecialchars($objCatParentInfo->name) . ' - ' . htmlspecialchars($objCatInfo->name) .' - ' . htmlspecialchars($fbConfig->board_title));
+								$metaKeys=(htmlspecialchars(stripslashes($fmessage->subject)). ', ' .htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . htmlspecialchars(stripslashes($fbConfig->board_title)) . ', ' . htmlspecialchars($GLOBALS['mosConfig_sitename']));
+								$metaDesc=(htmlspecialchars(stripslashes($fmessage->subject)) . ' - ' .htmlspecialchars(stripslashes($objCatParentInfo->name)) . ' - ' . htmlspecialchars(stripslashes($objCatInfo->name)) .' - ' . htmlspecialchars(stripslashes($fbConfig->board_title)));
 
 								if( CKunenaTools::isJoomla15() )
 								{
@@ -494,7 +494,7 @@ if ($letPass || $is_Moderator)
 
                                 $msg_id = $fmessage->id;
                                 $lists["userid"] = $fmessage->userid;
-                                $msg_username = $fmessage->email != "" && $my_id > 0 && $fbConfig->showemail ? CKunenaLink::GetEmailLink($fmessage->email, $fb_username) : stripslashes($fb_username);
+                                $msg_username = $fmessage->email != "" && $my_id > 0 && $fbConfig->showemail ? CKunenaLink::GetEmailLink($fmessage->email, $fb_username) : $fb_username;
 
                                 if ($fbConfig->allowavatar)
                                 {
@@ -896,14 +896,14 @@ if ($letPass || $is_Moderator)
                                 }
 
                                 if ($userinfo->personalText != '') {
-                                    $msg_personal = $userinfo->personalText;
+                                    $msg_personal = htmlentities(stripslashes($userinfo->personalText));
                                 }
 
                                 if ($userinfo->ICQ != '') {
                                     $msg_icq = '<a href="http://www.icq.com/people/cmd.php?uin='.$userinfo->ICQ.'&action=message"><img src="http://status.icq.com/online.gif?icq='.$userinfo->ICQ.'&img=5" title="ICQ#: '.$userinfo->ICQ.'" alt="ICQ#: '.$userinfo->ICQ.'" /></a>';
                                 }
                                 if ($userinfo->location != '') {
-                                    $msg_location = $fbIcons['msglocation'] ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msglocation'] . '" border="0" alt="'._KUNENA_MYPROFILE_LOCATION.': '.$userinfo->location.'" title="'._KUNENA_MYPROFILE_LOCATION.': '.$userinfo->location.'" />' : ' '._KUNENA_MYPROFILE_LOCATION.': '.$userinfo->location.'';
+                                    $msg_location = $fbIcons['msglocation'] ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msglocation'] . '" border="0" alt="'._KUNENA_MYPROFILE_LOCATION.': '.$userinfo->location.'" title="'._KUNENA_MYPROFILE_LOCATION.': '.htmlentities(stripslashes($userinfo->location)).'" />' : ' '._KUNENA_MYPROFILE_LOCATION.': '.$userinfo->location.'';
                                 }
                                 if ($userinfo->birthdate !='0001-01-01' AND $userinfo->birthdate !='0000-00-00' and $userinfo->birthdate !='') {
                                     $msg_birthdate = $fbIcons['msgbirthdate'] ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msgbirthdate'] . '" border="0" alt="'._KUNENA_MYPROFILE_BIRTHDATE.': '.$userinfo->birthdate.'" title="'._KUNENA_MYPROFILE_BIRTHDATE.': '.$userinfo->birthdate.'" />' : ' '._KUNENA_MYPROFILE_BIRTHDATE.': '.$userinfo->birthdate.'';
@@ -945,7 +945,7 @@ if ($letPass || $is_Moderator)
                                 $fb_subject_txt = smile::fbHtmlSafe($fb_subject_txt);
                                 $fb_subject_txt = stripslashes($fb_subject_txt);
 
-                                $msg_subject = htmlspecialchars(stripslashes($fb_subject_txt));
+                                $msg_subject = htmlspecialchars($fb_subject_txt);
                                 $msg_date = date(_DATETIME, $fmessage->time);
                                 $fb_message_txt = stripslashes($fmessage->message);
 
@@ -965,7 +965,7 @@ if ($letPass || $is_Moderator)
                                 }
 
                                 // Code tag: restore TABS as we had to 'hide' them from the rest of the logic
-                                $fb_message_txt = str_replace("__FBTAB__", "&#009;", stripslashes($fb_message_txt));
+                                $fb_message_txt = str_replace("__FBTAB__", "&#009;", $fb_message_txt);
 
                                 // Joomla Mambot Support , Thanks hacksider
                                 if ($fbConfig->jmambot)

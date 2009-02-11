@@ -22,6 +22,11 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+// Help get past php timeouts if we made it that far
+// Joomla 1.5 installer can be very slow and this helps avoid timeouts
+set_time_limit(300);
+ini_set("memory_limit", "32M");
+
 // Minimum version requirements
 DEFINE('KUNENA_MIN_PHP', '4.3.0');
 DEFINE('KUNENA_MIN_MYSQL', '5.0.0');

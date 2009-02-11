@@ -32,6 +32,11 @@ Legend:
 
 Kunena 1.0.8
 
+11-February-2009 fxstein
+# fixed and rename various Joomla module positions for Kunena:
+  kunena_profilebox, kunena_announcement, kunena_bottom
+  in addtion to the previously changed kunena_msg_1 ... n
+
 11-February-2009 Matias
 # default: No menu entry pointed to Categories if default Kunena page wasn't Categories
 # Huge amount of missing slashes added and extra slashes removed from templates

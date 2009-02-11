@@ -969,13 +969,24 @@ else
     } //hctiws
 
     // Bottom Module
-    if (mosCountModules('fb_bottom'))
+    if (mosCountModules('kunena_bottom'))
     {
 ?>
 
         <div class = "bof-bottom-modul">
             <?php
-            mosLoadModules('fb_bottom', -2);
+            if (CKunenaTools::isJoomla15())
+            {
+            	$document	= &JFactory::getDocument();
+            	$renderer	= $document->loadRenderer('modules');
+            	$options	= array('style' => 'xhtml');
+            	$position	= 'kunena_bottom';
+            	echo $renderer->render($position, $options, null);
+            }
+            else
+            {
+            	mosLoadModules('kunena_bottom', -2);
+            }
             ?>
         </div>
 

@@ -161,7 +161,18 @@ $annlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show'.KUNEN
           <td>
                             <div class = "fb_profilebox_modul">
                                 <?php
-                                mosLoadModules('kunena_profilebox', -2);
+                                if (CKunenaTools::isJoomla15())
+                                {
+                                	$document	= &JFactory::getDocument();
+                                	$renderer	= $document->loadRenderer('modules');
+                                	$options	= array('style' => 'xhtml');
+                                	$position	= 'kunena_profilebox';
+                                	echo $renderer->render($position, $options, null);
+                                }
+                                else
+                                {
+                                	mosLoadModules('kunena_profilebox', -2);
+                                }
                                 ?>
                             </div>
 
@@ -204,7 +215,18 @@ else
                         <td>
                             <div class = "fb_profilebox_modul">
                                 <?php
-                                mosLoadModules('kunena_profilebox', -2);
+                                if (CKunenaTools::isJoomla15())
+                                {
+                                	$document	= &JFactory::getDocument();
+                                	$renderer	= $document->loadRenderer('modules');
+                                	$options	= array('style' => 'xhtml');
+                                	$position	= 'kunena_profilebox';
+                                	echo $renderer->render($position, $options, null);
+                                }
+                                else
+                                {
+                                	mosLoadModules('kunena_profilebox', -2);
+                                }
                                 ?>
                             </div>
                        </td>

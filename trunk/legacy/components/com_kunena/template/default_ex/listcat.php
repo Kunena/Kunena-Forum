@@ -109,13 +109,24 @@ if ($fbConfig->showannouncement > 0)
 // (JJ) FINISH: ANNOUNCEMENT BOX
 
 // load module
-if (mosCountModules('fb_2'))
+if (mosCountModules('kunena_announcement'))
 {
 ?>
 
     <div class = "fb-fb_2">
         <?php
-        mosLoadModules('fb_2', -3);
+        if (CKunenaTools::isJoomla15())
+        {
+        	$document	= &JFactory::getDocument();
+        	$renderer	= $document->loadRenderer('modules');
+        	$options	= array('style' => 'xhtml');
+        	$position	= 'kunena_announcement';
+        	echo $renderer->render($position, $options, null);
+        }
+        else
+        {
+        	mosLoadModules('kunena_announcement', -2);
+        }
         ?>
     </div>
 

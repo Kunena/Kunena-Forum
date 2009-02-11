@@ -359,7 +359,7 @@ class fx_Upgrade {
 					if (!@$database->query())
 					{
 						$this->_error = "DB function failed with error number $database->_errorNum<br /><font color=\"red\">";
-						$this->_error .= mysql_error($database->_resource);
+						$this->_error .= $database->stderr(true);
 						$this->_error .= "</font>";
 						$img = "publish_x.png";
 						$this->_return = false;

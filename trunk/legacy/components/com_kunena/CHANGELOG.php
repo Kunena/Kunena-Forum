@@ -37,6 +37,7 @@ Kunena 1.0.8
   kunena_profilebox, kunena_announcement, kunena_bottom
   in addtion to the previously changed kunena_msg_1 ... n
 + Increase php timepout and memory setting once Kunena install starts
+# updated database error handling for upgrade base class
 
 11-February-2009 Matias
 # default: No menu entry pointed to Categories if default Kunena page wasn't Categories

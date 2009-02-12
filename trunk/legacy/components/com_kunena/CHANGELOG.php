@@ -32,6 +32,11 @@ Legend:
 
 Kunena 1.0.8
 
+12-February-2009 Riba
+^ Pathway: Removed hardcoded styling
+^ Pathway: Edited html output and CSS styles for easier customization
+# Pathway: Removed comma separator after last user
+
 12-February-2009 Noel Hunter
 # Changes to icons in default_ex for transparency, visibility
 

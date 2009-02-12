@@ -921,48 +921,57 @@ POST HISTORY
 	color:  #999;
 	display: block;
 }
-/* PATHWAY 
+ /* PATHWAY 
 ----------------------------------------------------------------------------------------------- */
 .fb_forum-pathway {
 	padding: 3px;
 	margin: 5px 0 0 0;
-	border: 1px solid #BFC3C6;
-	background-color:#F7F7F7;
-	color:#000000;
-}
-.fb_forum-pathway-bottom {
-	padding: 3px;
-	margin: 0px 0 5px 0;
-	border: 1px solid #BFC3C6;
+	border: 1px solid #CCCCCC; 
 	background:#F7F7F7;
 }
-.forum-pathway-1 {
+.path-element-first {
 	font-weight: normal;
 	height: 18px;
 	line-height: 18px;
 	padding-left: 22px;
-	background: url(images/pathway_start.gif) no-repeat left center;
-	padding-top: 2px !important;
-	padding-top: 4px;
+	background: url(images/pathway_start.gif) no-repeat left center; 
+	float:left;
+	padding-right:3px; 
 }
-.forum-pathway-2 {
-	min-height: 18px;
-	line-height: 12px;
-	background:  url(images/pathway_finallink.gif) no-repeat left center;
-	padding-left: 30px;
-}
-.forum-pathway-1 a:link, .forum-pathway-1 a:visited {
+.path-element-first a:link, 
+.path-element-first a:visited {
 	font-weight:normal;
 	text-decoration: none;
 	background:none;
 }
-.forum-pathway-2, .forum-pathway-2 a:link {
+.path-element-last, 
+.path-element-last a:link {
 	font-weight:bold;
 	text-decoration: none;
 	text-indent:5px;
+	clear:left;
+	float:left;
 }
-/*
-PAGENAV
+.fb_forum-pathway .path-element {
+	background: url(images/arrow.png) no-repeat left center;
+	padding-left: 12px;
+	float:left;
+	font-weight: normal;
+	height: 18px;
+	line-height: 18px;
+	padding-right:3px;
+}
+.fb_forum-pathway .path-element-last {
+	height: 18px;
+	line-height: 18px;
+	background:  url(images/pathway_finallink.gif) no-repeat left center; 
+	padding-left: 30px; 
+	padding-right:5px;
+}
+.path-element-users {
+	margin-top:21px;
+}
+/* PAGENAV
 -------------------------------------------------------------------- */
 table.jr-topnav {
 	width: 100%;

@@ -29,13 +29,6 @@ $sfunc = mosGetParam($_REQUEST, "func", null);
 
 if ($func != "")
 {
-        if (file_exists($mosConfig_absolute_path . '/templates/' . $mainframe->getTemplate() . '/images/arrow.png')) {
-            $jr_arrow = '<img src="' . KUNENA_JLIVEURL . '/templates/' . $mainframe->getTemplate() . '/images/arrow.png" alt="" />';
-        }
-        else {
-            $jr_arrow = '<img src="' . KUNENA_JLIVEURL . '/images/M_images/arrow.png" alt="" />';
-        }
-
         $catids = intval($catid);
         $parent_ids = 1000;
         $jr_it = 1;
@@ -65,7 +58,7 @@ if ($func != "")
                 $spath = $sname;
             }
             else {
-                $spath = $sname . " " . $jr_arrow . $jr_arrow . " " . $spath;
+                $spath = $sname . '<div class="path-element">' . $spath . '</div>';
             }
 
             // next looping
@@ -83,7 +76,7 @@ if ($func != "")
         {
             $sql = "select subject from #__fb_messages where id = $id";
             $database->setQuery($sql);
-            $jr_topic_title = stripslashes(htmlspecialchars($database->loadResult()));
+            $jr_topic_title = stripslashes(html_entity_decode_utf8($database->loadResult()));
             $jr_path_menu[] = $jr_topic_title;
         //     echo " " . $jr_arrow .$jr_arrow ." ". $jr_topic_title;
         }
@@ -92,13 +85,16 @@ if ($func != "")
         $jr_forum_count = count($jr_path_menu);
 
 	$firepath = '';
-        for ($i = 0; $i <= (count($jr_path_menu) - 2); $i++)
+        for ($i = 0; $i <= (count($jr_path_menu) - 1); $i++)
         {
-            if ($i > 0 && $i != $jr_forum_count) {
-                $firepath .= " " . $jr_arrow . $jr_arrow . " ";
+            if ($i > 0 && $i == $jr_forum_count - 1) {
+                $firepath .= '<div class="path-element-last">';
+            }
+            else if ($i > 0) {
+                $firepath .= '<div class="path-element">';
             }
 
-            $firepath .= $jr_path_menu[$i] . " ";
+            $firepath .= $jr_path_menu[$i] . '</div>';
         }
 
 	$fireinfo = '';
@@ -131,13 +127,18 @@ if ($func != "")
             $fireonline .= $username;
         }
         else {
-			$fireonline .= " ($total_viewing " . _KUNENA_PATHWAY_VIEWING . ")&nbsp;";
+			$fireonline .= "<div class=\"path-element-users\">($total_viewing " . _KUNENA_PATHWAY_VIEWING . ")&nbsp;";
 			$totalguest = 0;
+                        $divider = ', ';
 			foreach ($users as $user) {
 				if ($user->userid != 0)
 				{
+                                        $lastone = next($users)===FALSE;
+                                        if($lastone && !$totalguest){
+                                            $divider = '';
+                                        }
 					if ( $user->showOnline > 0 ){
-					$fireonline .= '<small>' . CKunenaLink::GetProfileLink($fbConfig,  $user->userid, $user->username) . ' ,</small> ';
+					$fireonline .= CKunenaLink::GetProfileLink($fbConfig,  $user->userid, $user->username) . $divider;
 					}
 				}
 				else
@@ -145,18 +146,21 @@ if ($func != "")
 					$totalguest = $totalguest + 1;
 				}
 			}
-      if ($totalguest > 0) { if ($totalguest==1) { $fireonline .= '<small style="font-weight:normal;" >('.$totalguest.') '._WHO_ONLINE_GUEST.'</small>'; } else { $fireonline .= '<small style="font-weight:normal;" >('.$totalguest.') '._WHO_ONLINE_GUESTS.'</small>'; } }
+			if ($totalguest > 0) { 
+				if ($totalguest==1) { 
+					$fireonline .= '('.$totalguest.') '._WHO_ONLINE_GUEST; 
+				} else { 
+					$fireonline .= '('.$totalguest.') '._WHO_ONLINE_GUESTS; 
+				}
+			}
+			$fireonline .= '</div>';
        }
 
 	$fr_title = $fr_title_name . $jr_topic_title;
         $mainframe->setPageTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($fbConfig->board_title));
 
-	$pathway1 = '<div class="forum-pathway-1">';
-	$pathway1 .= CKunenaLink::GetKunenaLink( htmlspecialchars(stripslashes($fbConfig->board_title)) ) . $firepath . $fireinfo;
-	$pathway1 .= '</div>';
-	$pathway2 = '<div class="forum-pathway-2">';
+	$pathway1 = '<div class="path-element-first">'. CKunenaLink::GetKunenaLink( htmlspecialchars(stripslashes($fbConfig->board_title)) ) . $firepath . $fireinfo;
 	$pathway2 .= $fireonline;
-	$pathway2 .= '</div>';
         unset($shome, $spath, $parent_ids, $catids, $results, $sname);
 
       echo '<div class = "'. $boardclass .'forum-pathway">';

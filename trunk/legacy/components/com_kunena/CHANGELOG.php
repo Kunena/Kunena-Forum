@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.8
 
+12-February-2009 Noel Hunter
+# Changes to icons in default_ex for transparency, visibility
+
 12-February-2009 Matias
 ^ Improved pagination in latestx
 ^ Improved pagination in showcat

@@ -181,7 +181,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	margin-top:-1px;
 	width:100%;
 }
-#fireboard .fb_list_actions_bottom {
+#Kunena .fb_list_actions_bottom {
 	border:1px solid #D1D1D1;
 	clear:both;
 	margin-bottom:-1px;
@@ -232,6 +232,16 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	padding-left:15px;
 	padding-right:10px;
 }
+#Kunena .fb_list_actions_goto {
+	height:28px;
+	padding: 0px 2px 0px 2px;
+}
+#Kunena .fb_list_actions_forum {
+	border-left:1px solid #D1D1D1;
+	height:28px;
+	padding: 1px 4px 1px 4px;
+	white-space: nowrap;
+}
 #Kunena .fb_list_pages_all {
 	border-left:1px solid #D1D1D1;
 	color:#666666;
@@ -281,6 +291,29 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 }
 #Kunena td.fb_list_jump_all input.fbjumpgo {
 	display:none;
+}
+#Kunena .fb_list_bottom {
+	background:#F7F7F7 none;
+	border:1px solid #D1D1D1;
+	clear:both;
+	margin:0px 0 5px;
+	width:100%;
+}
+#Kunena .fb_list_moderators {
+	height:28px;
+	padding-left:5px;
+	padding-right:10px;
+	width: 100%;
+}
+#Kunena .fb_list_categories {
+	border-left:1px solid #D1D1D1;
+	color:#666666;
+	font-size:11px;
+	height:28px;
+	line-height:28px;
+	padding-left:10px;
+	padding-right:5px;
+	white-space: nowrap;
 }
 #Kunena .fb_pagination {
 	font-weight: normal;
@@ -692,6 +725,13 @@ div.msgsignature {
 	font-size:x-small;
 	font-family:Arial, Helvetica, sans-serif
 }
+div.fb_message_buttons_cover {
+	height: 15px;
+	line-height: 15px;
+	margin: 1px 0px 3px;
+	text-align:right;
+	line-height: 14px;
+}
 td.fb-msgview-left-b {
 	background:#EFF0F4;
 	vertical-align: top;
@@ -844,10 +884,16 @@ POST HISTORY
 ----------------------------------------------------------------------------------------------- */
 .fb_forum-pathway {
 	padding: 3px;
-	margin: 5px 0 5px 0;
+	margin: 5px 0 0 0;
 	border: 1px solid #BFC3C6;
 	background-color:#F7F7F7;
 	color:#000000;
+}
+.fb_forum-pathway-bottom {
+	padding: 3px;
+	margin: 0px 0 5px 0;
+	border: 1px solid #BFC3C6;
+	background:#F7F7F7;
 }
 .forum-pathway-1 {
 	font-weight: normal;

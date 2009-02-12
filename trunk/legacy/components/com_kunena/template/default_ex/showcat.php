@@ -23,6 +23,50 @@ defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 global $fbConfig;
 global $is_Moderator;
 
+function KunenaShowcatPagination($catid, $page, $totalpages, $maxpages) {
+    $startpage = ($page - floor($maxpages/2) < 1) ? 1 : $page - floor($maxpages/2);
+    $endpage = $startpage + $maxpages;
+    if ($endpage > $totalpages) {
+	$startpage = ($totalpages-$maxpages) < 1 ? 1 : $totalpages-$maxpages;
+	$endpage = $totalpages;
+    }
+
+    $output = '<div class="fb_pagination">'._PAGE;
+
+    if (($startpage) > 1)
+    {
+	if ($endpage < $totalpages) $endpage--;
+        $output .= CKunenaLink::GetCategoryPageLink('showcat', $catid, 1, 1, $rel='follow');
+	if (($startpage) > 2)
+        {
+	    $output .= "..."; 
+	}
+    }
+
+    for ($i = $startpage; $i <= $endpage && $i <= $totalpages; $i++)
+    {
+        if ($page == $i) {
+            $output .= "<strong>$i</strong>";
+        }
+        else {
+            $output .= CKunenaLink::GetCategoryPageLink('showcat', $catid, $i, $i, $rel='follow');
+        }
+    }
+
+    if ($endpage < $totalpages)
+    {
+	if ($endpage < $totalpages-1)
+        { 
+	    $output .= "..."; 
+	}
+
+        $output .= CKunenaLink::GetCategoryPageLink('showcat', $catid, $totalpages, $totalpages, $rel='follow');
+    }
+
+    $output .= '</div>';
+    return $output;
+}
+
 require_once(KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
 
 //Security basics begin
@@ -224,53 +268,48 @@ if ($letPass || $is_Moderator)
 ?>
     <!-- top nav -->
 
-    <table border = "0" cellspacing = "0" class = "jr-topnav" cellpadding = "0">
-        <tr>
-            <td class = "jr-topnav-left">
+	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0" width="100%">
+		<tr>
+			<td class="fb_list_actions_goto">
                 <?php
                 //go to bottom
                 echo '<a name="forumtop" /> ';
                 echo CKunenaLink::GetSamePageAnkerLink('forumbottom', $fbIcons['bottomarrow'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM);
                 ?>
 
+		</td><td class="fb_list_actions_forum" width="100%">
+
+
                 <?php
                 if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
                 {
                     //this user is allowed to post a new topic:
-                    echo CKunenaLink::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
+                    $forum_new = CKunenaLink::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
                 }
-
-                echo '</td><td class="jr-topnav-right">';
-
-                //pagination 1
-                if (count($messages[0]) > 0)
+                if ($my->id != 0)
                 {
-                    echo '<div class="jr-pagenav">'. _PAGE;
-
-                    if (($page - 2) > 1)
-                    {
-                        echo ' '.CKunenaLink::GetCategoryPageLink('showcat', $catid, 1, 1, $rel='follow', $class='jr-pagenav-nb');
-                    }
-
-                    for ($i = ($page - 2) <= 0 ? 1 : ($page - 2); $i <= $page + 2 && $i <= ceil($total / $threads_per_page); $i++)
-                    {
-                        if ($page == $i) {
-                            echo "<div class=\"jr-pagenav-nb-act\"> $i</div>";
-                        }
-                        else {
-                        echo ' '.CKunenaLink::GetCategoryPageLink('showcat', $catid, $i, $i, $rel='follow', $class='jr-pagenav-nb');
-                        }
-                    }
-
-                    if ($page + 2 < ceil($total / $threads_per_page))
-                    {
-                        echo "<div class=\"jr-pagenav-nb\"> ...&nbsp;</div>";
-
-                        echo ' '.CKunenaLink::GetCategoryPageLink('showcat', $catid, ceil($total / $threads_per_page), ceil($total / $threads_per_page), $rel='follow', $class='jr-pagenav-nb');
-                    }
-
-                    echo '</div>';
+                    $forum_markread = CKunenaLink::GetCategoryLink('markThisRead', $catid, $fbIcons['markThisForumRead'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['markThisForumRead'] . '" alt="' . _GEN_MARK_THIS_FORUM_READ . '" title="' . _GEN_MARK_THIS_FORUM_READ . '" border="0" />' : _GEN_MARK_THIS_FORUM_READ, $rel='nofollow');
                 }
+
+		if (isset($forum_new) || isset($forum_markread))
+		{
+	        echo '<div class="fb_message_buttons_cover" style="text-align: left;">';
+	        echo $forum_new;
+	        echo ' '.$forum_markread;
+	        echo '</div>';
+		}
+		?>
+
+		</td><td class="fb_list_pages_all" nowrap="nowrap">
+
+		<?php
+                //pagination 1
+		if (count($messages[0]) > 0)
+		{
+			$maxpages = 9 - 2; // odd number here (show - 2)
+			$totalpages = ceil($total / $threads_per_page);
+			echo $pagination = KunenaShowcatPagination($catid, $page, $totalpages, $maxpages);
+		}
                 ?>
             </td>
         </tr>
@@ -313,98 +352,82 @@ if ($letPass || $is_Moderator)
         echo "</p>";
     }
     ?>
-    <!-- bottom nav -->
 
-    <table border = "0" cellspacing = "0" class = "jr-bottomnav" cellpadding = "0">
-        <tr>
-            <td class = "jr-topnav-left">
+<!-- bottom nav -->
+
+<!-- B: List Actions -->
+
+	<table class="fb_list_actions_bottom" border="0" cellpadding="0" cellspacing="0" width="100%">
+		<tr>
+		<td class="fb_list_actions_goto">
                 <?php
                 //go to top
                 echo '<a name="forumbottom" />';
                 echo CKunenaLink::GetSamePageAnkerLink('forumtop', $fbIcons['toparrow'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP);
                 ?>
 
+		</td><td class="fb_list_actions_forum" width="100%">
+
                 <?php
-                if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
-                {
-                    //this user is allowed to post a new topic:
-                    echo CKunenaLink::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
-                }
+		if (isset($forum_new) || isset($forum_markread))
+		{
+	        echo '<div class="fb_message_buttons_cover" style="text-align: left;">';
+	        echo $forum_new;
+	        echo ' '.$forum_markread;
+	        echo '</div>';
+		}
+		echo '</td>';
+		?>
 
-                echo '</td><td class="jr-topnav-right">';
+		</td><td class="fb_list_pages_all" nowrap="nowrap">
 
-                //pagination 2
+		<?php
+		//pagination 2
                 if (count($messages[0]) > 0)
-                {
-                    echo '<div class="jr-pagenav">'. _PAGE;
+		{
+			echo $pagination;
+		}
+		?>
+		</td>
+		</tr>
+	</table>
+	<?php
+	echo '<div class = "'. $boardclass .'forum-pathway-bottom">';
+	echo $pathway1;
+	echo '</div>';
+	?>
 
-                    if (($page - 2) > 1)
-                    {
-                        echo ' '.CKunenaLink::GetCategoryPageLink('showcat', $catid, 1, 1, $rel='follow', $class='jr-pagenav-nb');
-                    }
+<!-- F: List Actions -->
 
-                    for ($i = ($page - 2) <= 0 ? 1 : ($page - 2); $i <= $page + 2 && $i <= ceil($total / $threads_per_page); $i++)
-                    {
-                        if ($page == $i) {
-                            echo "<div class=\"jr-pagenav-nb-act\"> $i</div>";
-                        }
-                        else {
-                        echo ' '.CKunenaLink::GetCategoryPageLink('showcat', $catid, $i, $i, $rel='follow', $class='jr-pagenav-nb');
-                        }
-                    }
+<!-- B: Category List Bottom -->
 
-                    if ($page + 2 < ceil($total / $threads_per_page))
-                    {
-                        echo "<div class=\"jr-pagenav-nb\"> ...&nbsp;</div>";
+<table class="fb_list_bottom" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+	<tr>
+		<td class="fb_list_moderators">
 
-                        echo ' '.CKunenaLink::GetCategoryPageLink('showcat', $catid, ceil($total / $threads_per_page), ceil($total / $threads_per_page), $rel='follow', $class='jr-pagenav-nb');
-                    }
+			<!-- Mod List -->
 
-                    echo '</div>';
-                }
-                ?>
-            </td>
-        </tr>
-    </table>
-    <!-- -->
+			<?php
+			//get the Moderator list for display
+			$database->setQuery("select * from #__fb_moderation left join #__users on #__users.id=#__fb_moderation.userid where #__fb_moderation.catid=$catid");
+			$modslist = $database->loadObjectList();
+			check_dberror("Unable to load moderators.");
 
+			if (count($modslist) > 0):
+			?>
 
-
-<!-- Category List Bottom -->
-
-<table  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
-    <tr>
-      <td style="padding-left:20px;" align="left" > <?php
-                    if ($my->id != 0)
-                    {
-                        echo CKunenaLink::GetCategoryLink('markThisRead', $catid, _GEN_MARK_THIS_FORUM_READ, $rel='nofollow');
-                    }
-                    ?>
-                    <!-- Mod List -->
-
+			<div class = "fbbox-bottomarea-modlist">
 
                         <?php
-                        //get the Moderator list for display
-                        $database->setQuery("select * from #__fb_moderation left join #__users on #__users.id=#__fb_moderation.userid where #__fb_moderation.catid=$catid");
-                        $modslist = $database->loadObjectList();
-                        	check_dberror("Unable to load moderators.");
-                        ?>
-
-                        <?php
-                        if (count($modslist) > 0)
-                        { ?>
-        <div class = "fbbox-bottomarea-modlist" style=" font-size:10px;">
-          <?php
-                            echo '' . _GEN_MODERATORS . ": ";
-
-                            foreach ($modslist as $mod) {
-                                echo '&nbsp;'.CKunenaLink::GetProfileLink($fbConfig, $mod->userid, $mod->username).'&nbsp; ';
-                            } ?>
-        </div>
-        <?php  } ?>
-        <!-- /Mod List -->
+				echo '' . _GEN_MODERATORS . ": ";
+				foreach ($modslist as $mod) {
+					echo '&nbsp;'.CKunenaLink::GetProfileLink($fbConfig, $mod->userid, $mod->username).'&nbsp; ';
+				} ?>
+			</div>
+	<?php endif; ?>
+	<!-- /Mod List -->
       </td>
-      <td  align="right" style="padding-right:20px;"> <?php
+      <td class="fb_list_categories"> <?php
 
                     //(JJ) FINISH: CAT LIST BOTTOM
 
@@ -416,7 +439,7 @@ if ($letPass || $is_Moderator)
     </tr>
 </table>
 
-<!-- / Category List Bottom -->
+<!-- F: Category List Bottom -->
 
 
 

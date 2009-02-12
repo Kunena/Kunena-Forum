@@ -34,6 +34,9 @@ Kunena 1.0.8
 
 12-February-2009 Matias
 ^ Improved pagination in latestx
+^ Improved pagination in showcat
++ Added pathway to the bottom of the showcat page
+^ Improved looks of the showcat page
 
 11-February-2009 fxstein
 # fixed and rename various Joomla module positions for Kunena:

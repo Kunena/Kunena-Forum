@@ -40,6 +40,7 @@ Kunena 1.0.8
 ^ Improved pagination in showcat
 + Added pathway to the bottom of the showcat page
 ^ Improved looks of the showcat page
+^ Improved looks of the listcat page
 # Missing addslashes for signature in admin.kunena.php
 # Regression in r362: Broke UTF-8 letters in many places
 

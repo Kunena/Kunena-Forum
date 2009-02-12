@@ -176,7 +176,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 
 /* B: all disc top */
 #Kunena .fb_list_actions {
-	background-color:#F7F7F7;
+	background-color:#FFFFFF;
 	color:#000000;
 	border:1px solid #D1D1D1;
 	clear:both;
@@ -184,7 +184,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	width:100%;
 }
 #Kunena .fb_list_actions_bottom {
-	background-color:#F7F7F7;
+	background-color:#FFFFFF;
 	color:#000000;
 	border:1px solid #D1D1D1;
 	clear:both;
@@ -297,7 +297,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	display:none;
 }
 #Kunena .fb_list_top {
-	background:#FFFFFF none;
+	background:#F7F7F7 none;
 	border:1px solid #D1D1D1;
 	clear:both;
 	margin:-1px 0px 5px;

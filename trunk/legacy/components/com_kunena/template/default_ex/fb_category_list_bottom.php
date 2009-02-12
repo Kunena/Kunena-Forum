@@ -23,11 +23,8 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 global $fbConfig;
 ?>
-<!-- Cat List Bottom -->
-
-<table  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
-    <tr>
-      <td style="padding-left:20px;" align="left" >
+	<tr>
+		<td class="fb_list_markallcatsread">
                 <?php
                 if ($my->id != 0)
                 {
@@ -45,15 +42,12 @@ global $fbConfig;
                 <?php
                 }
                 ?>
-           </td>
-      <td  align="right" style="padding-right:20px;">
+		</td>
+		<td class="fb_list_categories">
                 <?php
-                //(FB) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump)
-                    require_once (KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
+                    require (KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
                 ?>
-            </td>
-        </tr>
-</table>
+		</td>
+	</tr>
 
-<!-- /Cat List Bottom -->

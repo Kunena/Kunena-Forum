@@ -143,6 +143,20 @@ else {
 }
 ?>
 <!-- F: Pathway -->
+<!-- B: Cat list Top -->
+<table class="fb_list_top" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<?php
+if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php')) {
+	include (KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php');
+}
+else {
+	include (KUNENA_ABSPATH . '/template/default/fb_category_list_bottom.php');
+}
+?>
+</table>
+<!-- F: Cat list Top -->
+
+
 <?php
 if (count($categories[0]) > 0)
 {
@@ -620,26 +634,34 @@ if (count($categories[0]) > 0)
         }
     }
 
-    //(JJ) FINISH: STATS
+	//(JJ) BEGIN: CAT LIST BOTTOM
+	echo '<!-- B: Cat list Bottom -->';
+	echo '<table class="fb_list_bottom" border = "0" cellspacing = "0" cellpadding = "0" width="100%">';
+	if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php')) {
+		include (KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php');
+	}
+	else {
+		include (KUNENA_ABSPATH . '/template/default/fb_category_list_bottom.php');
+	}
+	echo '</table>';
+	echo '<!-- F: Cat list Bottom -->';
+	//(JJ) FINISH: CAT LIST BOTTOM
 
+	//(JJ) BEGIN: WHOISONLINE
 	if ($fbConfig->showwhoisonline > 0)
-    {
-
-		//(JJ) BEGIN: WHOISONLINE
+	{
 		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php')) {
 			include (KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php');
 		}
 		else {
 			include (KUNENA_ABSPATH . '/template/default/plugin/who/whoisonline.php');
 		}
-		//(JJ) FINISH: WHOISONLINE
-
 	}
+	//(JJ) FINISH: WHOISONLINE
 
+	//(JJ) BEGIN: STATS
 	if ($fbConfig->showstats > 0)
-    {
-
-		//(JJ) BEGIN: STATS
+	{
 		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php')) {
 			include_once (KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php');
 		}
@@ -654,14 +676,7 @@ if (count($categories[0]) > 0)
 			include (KUNENA_ABSPATH . '/template/default/plugin/stats/frontstats.php');
 		}
 	}
-
-    //(JJ) FINISH: CAT LIST BOTTOM
-    if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php')) {
-        include (KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php');
-    }
-    else {
-        include (KUNENA_ABSPATH . '/template/default/fb_category_list_bottom.php');
-    }
+	//(JJ) FINISH: STATS
 ?>
 
 <?php

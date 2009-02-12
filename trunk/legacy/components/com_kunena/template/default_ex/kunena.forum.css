@@ -296,11 +296,18 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 #Kunena td.fb_list_jump_all input.fbjumpgo {
 	display:none;
 }
+#Kunena .fb_list_top {
+	background:#FFFFFF none;
+	border:1px solid #D1D1D1;
+	clear:both;
+	margin:-1px 0px 5px;
+	width:100%;
+}
 #Kunena .fb_list_bottom {
 	background:#F7F7F7 none;
 	border:1px solid #D1D1D1;
 	clear:both;
-	margin:0px 0 5px;
+	margin:0px 0px 5px;
 	width:100%;
 }
 #Kunena .fb_list_moderators {
@@ -309,10 +316,15 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	padding-right:10px;
 	width: 100%;
 }
+#Kunena .fb_list_markallcatsread {
+	height:28px;
+	padding-left:5px;
+	padding-right:10px;
+	width: 100%;
+}
 #Kunena .fb_list_categories {
 	border-left:1px solid #D1D1D1;
 	color:#666666;
-	font-size:11px;
 	height:28px;
 	line-height:28px;
 	padding-left:10px;

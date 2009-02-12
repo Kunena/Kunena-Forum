@@ -1,6 +1,13 @@
 /**
+* @version $Id$
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -455,6 +462,14 @@ td.fb_profileboxcnt {
 	line-height:normal;
 	padding:2px;
 }
+#Kunena div.fb_totalfavorite {
+	float:right;
+	text-align:left;
+	color:#FFFFFF;
+	font-weight:normal;
+	line-height:normal;
+	padding:4px;
+}
 #Kunena .fb_title, #Kunena a.fb_title {
 	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-weight:bold;
@@ -581,6 +596,7 @@ tr.fb_sectiontableentry2_stickymsg td.td-1{
 VIEW PAGE
 -------------------------------------------------------------------- */
 #fb_views {
+	background: #FFFFFF;
 }
 th.view-th {
 	text-align:right;
@@ -592,12 +608,13 @@ td.fb-msgview-left {
 	background:#EFF0F4;
 	vertical-align: top;
 	width:170px;
+	min-width:170px;
 	border-bottom:  0px solid #BFC3C6;
 	border-right:1px solid #BFC3C6;
 }
 td.fb-msgview-right {
 	border-right:1px solid #BFC3C6;
-	padding:5px 10px 5px 30px;
+	padding:5px 10px 5px 10px;
 	vertical-align: top;
 	border-left:1px solid #BFC3C6;
 }
@@ -662,9 +679,10 @@ span.msgkarma {
 	padding-right: 10px;
 }
 div.msgtext {
+	width: 100%;
 	overflow:hidden;
 	border-top:1px solid #ddd;
-	padding-top:10px;
+	padding:10px 0 0 0;
 	margin-top:5px;
 }
 div.fbcode {
@@ -701,17 +719,6 @@ input.fb_qm_btn {
 }
 input.fb_qm_cncl_btn {
 }
-td.fb-msgview-left-c {
-	background:#EFF0F4;
-	vertical-align: top;
-	border-right:  1px solid #BFC3C6;
-}
-td.fb-msgview-right-c {
-	border-right:  1px solid #BFC3C6;
-	padding:1px 5px 1px 5px;
-	vertical-align: top;
-	border-left:1px solid #D4C9AD;
-}
 div.fb_smalltext {
 	font-size:x-small;
 	font-family:Arial, Helvetica, sans-serif;
@@ -722,31 +729,49 @@ td.fb-msgview-right-c div.fb_smalltext {
 }
 div.fb_message_editMarkUp_cover {
 	padding-top:5px;
+	margin-left:5px;
 	text-align:right;
+	border-bottom: 1px dotted #CCC;
 }
 span.fb_message_editMarkUp {
-	background:#f7f7f7 url(images/edit.gif) no-repeat left center;
-	border-left:1px dotted #999;
-	border-right:1px dotted #999;
-	border-top:1px dotted #999;
-	padding:2px 5px 2px 20px;
+	background:#f7f7f7 no-repeat left center; 
+	height: 16px;
+	border-left:1px dotted #CCC;
+	border-right:1px dotted #CCC;
+	border-top:1px dotted #CCC;
+	padding:2px 5px 2px 5px;
+	margin-left: 3px;
 	font-size:xx-small;
 	color:#666666;
 }
-div.msgsignature {
-	border-top: dotted 1px #ccc;
+span.fb_message_informMarkUp {
+	background:#f7f7f7;
+	height: 16px;
+	border-left:1px dotted #CCC;
+	border-right:1px dotted #CCC;
+	border-top:1px dotted #CCC;
+	padding:2px 5px 2px 5px;
+	margin-left: 3px;
+	font-size:xx-small;
+	color:#666666;
+}
+td.msgsignature {
+	width: 100%;
+}
+td.msgsignature div {
 	text-align: left;
+	overflow: hidden;
 	color:#999;
-	padding-top: 10px;
 	font-size:x-small;
-	font-family:Arial, Helvetica, sans-serif
+	padding: 5px 5px;
 }
 div.fb_message_buttons_cover {
+	text-align:right;
 	height: 15px;
 	line-height: 15px;
-	margin: 1px 0px 3px;
-	text-align:right;
+	margin: 4px 0px 3px;
 	line-height: 14px;
+	white-space: nowrap;
 }
 td.fb-msgview-left-b {
 	background:#EFF0F4;
@@ -1022,6 +1047,7 @@ td.ft-td2 {
 }
 #forumtools_control {
 	width: 150px;
+	float: right;
 }
 .forumtools_contentBox {
 	z-index:2;
@@ -1029,6 +1055,7 @@ td.ft-td2 {
 	display: none;
 	position: absolute;
 	right:   0px;
+	top: 20px;
 	background:  #555555;
 	overflow: hidden;
 	width:150px;

@@ -289,64 +289,36 @@ $database->loadObject($user);
 
         </tr>
 
-  <tr><td class = "fb-msgview-right-c" >
-                         <div class="fb_smalltext" >
-                   <?php
+	<tr><td class = "fb-msgview-right-b" >
+		<div class="fb_message_editMarkUp_cover">
+<?php
+	if ($fmessage->modified_by) {
+		echo '<span class="fb_message_editMarkUp">'. _KUNENA_EDITING_LASTEDIT .': '. date(_DATETIME, $fmessage->modified_time) .' '. _KUNENA_BY .' '. CKunenaTools::whoisID($fmessage->modified_by) .'.';
+		if ($fmessage->modified_reason) {
+			echo _KUNENA_REASON .': '. $fmessage->modified_reason;
+		}
+		echo '</span>';
+	}
+
                             if ($fbConfig->reportmsg && $my->id > 1)
                             {
-                                echo CKunenaLink::GetReportMessageLink($catid, $msg_id, _KUNENA_REPORT);
+                                echo '<span class="fb_message_informMarkUp">'.CKunenaLink::GetReportMessageLink($catid, $msg_id, _KUNENA_REPORT).'</span>';
+                            }
+                            if ($msg_ip)
+                            {
+				echo '<span class="fb_message_informMarkUp">'.CKunenaLink::GetMessageIPLink($msg_ip).'</span>';
                             } ?>
-
-                            <?php echo $fbIcons['msgip'] ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['msgip'] .'" border="0" alt="'._KUNENA_REPORT_LOGGED.'" />' : ' <img src="'.KUNENA_URLEMOTIONSPATH.'ip.gif" border="0" alt="'. _KUNENA_REPORT_LOGGED.'" />';
-                            ?> <span class="fb_smalltext"> <?php echo _KUNENA_REPORT_LOGGED;?></span>
-                            <?php
-                            echo CKunenaLink::GetMessageIPLink($msg_ip);
-                            ?>
-                            </div>
-       </td>
-            <td class = "fb-msgview-left-c">&nbsp;
-            </td>
-
-        </tr>
-<?php
-if ($fmessage->modified_by) {
-  ?>
-        <tr><td class = "fb-msgview-right-c" >
-                    <div class="fb_message_editMarkUp_cover">
-                    <span class="fb_message_editMarkUp" ><?php echo _KUNENA_EDITING_LASTEDIT;?>: <?php echo date(_DATETIME, $fmessage->modified_time);?> <?php echo _KUNENA_BY; ?> <?php echo CKunenaTools::whoisID($fmessage->modified_by)?>.
-                    <?php
-                    if ($fmessage->modified_reason) {
-                    echo _KUNENA_REASON.": ".$fmessage->modified_reason;
-                    }
-                        ?></span>
-                    </div>
-       </td>
-            <td class = "fb-msgview-left-c">&nbsp;
-            </td>
-
-        </tr>
-<?php
-}
-?>
-
+		</div>
+<table width="100%" cellpadding="0" cellspacing="0"><tr>
 <?php
 if ($msg_signature) {
-  ?>
-        <tr><td class = "fb-msgview-right-c" >
-
-				   <div class="msgsignature" >
-					<?php   echo $msg_signature; ?>
-				</div>
-       </td>
-            <td class = "fb-msgview-left-c">&nbsp;
-            </td>
-
-        </tr>
-<?php
+	echo '<td class="msgsignature"><div>';
+	echo $msg_signature;
+	echo '</div></td>';
 }
 ?>
-
-        <tr><td class = "fb-msgview-right-b" align = "right">
+	<td valign="bottom">
+	<div class="fb_message_buttons_cover">
                 <span id = "fb_qr_sc__<?php echo $msg_id;?>" class = "fb_qr_fire" style = "cursor:hand; cursor:pointer">
 
                 <?php
@@ -369,40 +341,30 @@ if ($msg_signature) {
                 {
                     if ($msg_closed == "")
                     {
-                        echo $msg_reply;
+                        echo " " . $msg_reply;
                         echo " " . $msg_quote;
 
-                        if ($msg_delete) {
-                            echo " " . $msg_delete;
-                        }
-
-                        if ($msg_move) {
-                            echo " " . $msg_move;
-                        }
+			if ($is_Moderator) echo ' </div><div class="fb_message_buttons_cover">';
 
                         if ($msg_merge) {
                              echo " " . $msg_merge;
-                         }
+                        }
 
                         if ($msg_split) {
                              echo " " . $msg_split;
-                         }
-
+                        }
+                        if ($msg_delete) {
+                            echo " " . $msg_delete;
+                        }
                         if ($msg_edit) {
                             echo " " . $msg_edit;
                         }
 
-                        if ($msg_sticky) {
-                            echo " " . $msg_sticky;
-                        }
-
-                        if ($msg_lock) {
-                            echo " " . $msg_lock;
-                        }
                     }
                     else {
                         echo $msg_closed;
                     }
+
                 }
                 else
                 {
@@ -441,12 +403,13 @@ if ($msg_signature) {
                     }
                 }
                 ?>
+		</div>
+</td></tr></table>
 
             </td>
             <td class = "fb-msgview-left-b">&nbsp;
 
             </td>
-
 
         </tr>
     </tbody>

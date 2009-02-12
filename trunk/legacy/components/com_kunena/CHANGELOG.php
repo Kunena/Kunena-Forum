@@ -38,11 +38,15 @@ Kunena 1.0.8
 12-February-2009 Matias
 ^ Improved pagination in latestx
 ^ Improved pagination in showcat
+^ Improved pagination in view
 + Added pathway to the bottom of the showcat page
++ Added pathway to the bottom of the view page
 ^ Improved looks of the showcat page
 ^ Improved looks of the listcat page
+^ Improved looks of the view page
 # Missing addslashes for signature in admin.kunena.php
 # Regression in r362: Broke UTF-8 letters in many places
+^ Moved Thread specific moderator tools from message contents to action list
 
 11-February-2009 fxstein
 # fixed and rename various Joomla module positions for Kunena:

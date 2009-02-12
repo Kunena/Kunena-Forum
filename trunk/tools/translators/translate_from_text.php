@@ -18,7 +18,7 @@
 // diff kunena.english.php kunena.test.php
 
 $filename = "kunena.english.php"; 
-$filename2 = "translation.txt"; 
+$filename2 = "translation_combined.txt"; 
 
 $english = file( $filename );	// Read the English into an array
 $words = file( $filename2 ); 	// Read translation into an array

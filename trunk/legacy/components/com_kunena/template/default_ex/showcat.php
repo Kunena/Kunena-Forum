@@ -254,19 +254,7 @@ if ($letPass || $is_Moderator)
 </tr>
 </table>-->
 <!-- / Pathway -->
-<?php if($objCatInfo->headerdesc) { ?>
-<div class="headerdesc"><?php echo $objCatInfo->headerdesc; ?></div>
-<?php } ?>
-<?php
-    //(JJ)
-    if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_sub_category_list.php')) {
-        include(KUNENA_ABSTMPLTPATH . '/fb_sub_category_list.php');
-    }
-    else {
-        include(KUNENA_ABSPATH . '/template/default/fb_sub_category_list.php');
-    }
-?>
-    <!-- top nav -->
+<!-- top nav -->
 
 	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0" width="100%">
 		<tr>
@@ -314,7 +302,20 @@ if ($letPass || $is_Moderator)
             </td>
         </tr>
     </table>
-    <!-- /top nav -->
+<!-- /top nav -->
+
+<?php if($objCatInfo->headerdesc) { ?>
+<div class="headerdesc"><?php echo $objCatInfo->headerdesc; ?></div>
+<?php } ?>
+<?php
+    //(JJ)
+    if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_sub_category_list.php')) {
+        include(KUNENA_ABSTMPLTPATH . '/fb_sub_category_list.php');
+    }
+    else {
+        include(KUNENA_ABSPATH . '/template/default/fb_sub_category_list.php');
+    }
+?>
 
     <?php
     //get all readTopics in an array

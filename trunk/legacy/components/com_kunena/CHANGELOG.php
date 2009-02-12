@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.8
 
+12-February-2009 Matias
+^ Improved pagination in latestx
+
 11-February-2009 fxstein
 # fixed and rename various Joomla module positions for Kunena:
   kunena_profilebox, kunena_announcement, kunena_bottom

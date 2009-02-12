@@ -178,8 +178,13 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 #Kunena .fb_list_actions {
 	border:1px solid #D1D1D1;
 	clear:both;
-	display:table;
 	margin-top:-1px;
+	width:100%;
+}
+#fireboard .fb_list_actions_bottom {
+	border:1px solid #D1D1D1;
+	clear:both;
+	margin-bottom:-1px;
 	width:100%;
 }
 #Kunena .fb_list_actions_info {
@@ -236,7 +241,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	height:28px;
 	line-height:28px;
 	padding-left:5px;
-	padding-right:30px;
+	padding-right:3px;
 }
 #Kunena .fb_list_times_all {
 	border-left:1px solid #D1D1D1;
@@ -252,7 +257,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	height:28px;
 	line-height:28px;
 	padding-left:5px;
-	padding-right:10px;
+	padding-right:5px;
 }
 #Kunena .fb_list_jump_all form {
 	display:table;
@@ -276,6 +281,28 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 }
 #Kunena td.fb_list_jump_all input.fbjumpgo {
 	display:none;
+}
+#Kunena .fb_pagination {
+	font-weight: normal;
+	font-size: 13px;
+	color: #666666;
+}
+#Kunena .fb_pagination a, #Kunena .fb_pagination strong {
+	font-weight: normal;
+	margin: 0px 2px;
+	padding: 0px 2px;
+	text-decoration: none;
+}
+
+#Kunena .fb_pagination a, #Kunena .fb_pagination a:link, #Kunena .fb_pagination a:visited {
+	background-color: #F7F7F7;
+	border: 1px solid #BFC3C6;
+	color: #666666;
+}
+#Kunena .fb_pagination strong, #Kunena .fb_pagination a:active,  #Kunena .fb_pagination a:hover {
+	background-color: #609FBF;
+	border: 1px solid #006699;
+	color: #FFFFFF;
 }
 /* F: all disc top */
 

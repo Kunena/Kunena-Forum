@@ -24,6 +24,50 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
 
+function KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages) {
+    $startpage = ($page - floor($maxpages/2) < 1) ? 1 : $page - floor($maxpages/2);
+    $endpage = $startpage + $maxpages;
+    if ($endpage > $totalpages) {
+	$startpage = ($totalpages-$maxpages) < 1 ? 1 : $totalpages-$maxpages;
+	$endpage = $totalpages;
+    }
+
+    $output = '<div class="fb_pagination">'._PAGE;
+
+    if (($startpage) > 1)
+    {
+	if ($endpage < $totalpages) $endpage--;
+        $output .= CKunenaLink::GetLatestPageLink($func, 1, 'follow', '',$sel);
+	if (($startpage) > 2)
+        {
+	    $output .= "..."; 
+	}
+    }
+
+    for ($i = $startpage; $i <= $endpage && $i <= $totalpages; $i++)
+    {
+        if ($page == $i) {
+            $output .= "<strong>$i</strong>";
+        }
+        else {
+            $output .= CKunenaLink::GetLatestPageLink($func, $i, 'follow', '',$sel);
+        }
+    }
+
+    if ($endpage < $totalpages)
+    {
+	if ($endpage < $totalpages-1)
+        { 
+	    $output .= "..."; 
+	}
+
+        $output .= CKunenaLink::GetLatestPageLink($func, $totalpages, 'follow', '',$sel);
+    }
+
+    $output .= '</div>';
+    return $output;
+}
+
 if (!$my->id && $func == "mylatest") 
 {
         	header("HTTP/1.1 307 Temporary Redirect");
@@ -248,9 +292,9 @@ if (count($threadids) > 0)
 ?>
 
 <!-- B: List Actions -->
-	<div class="fb_list_actions"><table border="0" cellpadding="0" cellspacing="0" width="100%">
-                                  <tr>
-                                    <td   class="fb_list_actions_info_all" width="100%">
+	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0" width="100%">
+		<tr>
+			<td class="fb_list_actions_info_all" width="100%">
     <strong><?php echo $total; ?></strong> <?php echo _KUNENA_DISCUSSIONS; ?>
 								</td>
 									<?php if ($func!='mylatest') {?>
@@ -279,47 +323,20 @@ if (count($threadids) > 0)
 
                                    </td>
 
-                                   <td class="fb_list_pages_all" nowrap="nowrap">
-
-
-								<?php
+				<?php
                                 //pagination 1
-								if (count($messages[0]) > 0)
-								{
+					if (count($messages[0]) > 0)
+					{
+					    echo '<td class="fb_list_pages_all" nowrap="nowrap">';
+					    $maxpages = 5 - 2; // odd number here (show - 2)
+					    $totalpages = ceil($total / $threads_per_page);
+					    echo $pagination = KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages);	
+					    echo '</td>';
+					}
+				?>
 
-									echo _PAGE;
-									if (($page - 2) > 1)
-									{
-									    echo CKunenaLink::GetLatestPageLink($func, 1, 'follow', 'fb_list_pages_link',$sel);
-										echo "...&nbsp;";
-									}
-									for ($i = ($page - 2) <= 0 ? 1 : ($page - 2); $i <= $page + 2 && $i <= ceil($total / $threads_per_page); $i++)
-									{
-										if ($page == $i)
-										{
-											echo "$i";
-										}
-										else
-										{
-                                            echo CKunenaLink::GetLatestPageLink($func, $i, 'follow', 'fb_list_pages_link',$sel);
-										}
-									}
-									if ($page + 2 < ceil($total / $threads_per_page))
-									{
-										echo "...&nbsp;";
-									    echo CKunenaLink::GetLatestPageLink($func, ceil($total / $threads_per_page), 'follow', 'fb_list_pages_link',$sel);
-									}
-
-								}
-								?>
-
-                                </td>
-
-                                  </tr>
-                                </table>
-
-
-				</div>
+		</tr>
+	</table>
   <!-- F: List Actions -->
 <?php
 if (count($threadids) > 0)
@@ -346,40 +363,23 @@ if (count($threadids) > 0)
 				}
 				?>
 <!-- B: List Actions -->
-	<div class="fb_list_actions">
-     <span class="fb_list_actions_info" ><?php echo _KUNENA_TOTAL_THREADS; ?>  <strong><?php echo $total; ?></strong></span>
-								<?php
+	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0" width="100%">
+		<tr>
+			<td   class="fb_list_actions_info_all" width="100%">
+				<strong><?php echo $total; ?></strong> <?php echo _KUNENA_DISCUSSIONS; ?>
+			</td>
 
-								//pagination 1
-								if (count($messages[0]) > 0)
-								{
-									echo '<span   class="fb_list_pages" >';
-									echo _PAGE;
-									if (($page - 2) > 1)
-									{
-									    echo CKunenaLink::GetLatestPageLink($func, 1, 'follow', 'fb_list_pages_link',$sel);
-										echo "...&nbsp;";
-									}
-									for ($i = ($page - 2) <= 0 ? 1 : ($page - 2); $i <= $page + 2 && $i <= ceil($total / $threads_per_page); $i++)
-									{
-										if ($page == $i)
-										{
-											echo "$i";
-										}
-										else
-										{
-                                            echo CKunenaLink::GetLatestPageLink($func, $i, 'follow', 'fb_list_pages_link',$sel);
-										}
-									}
-									if ($page + 2 < ceil($total / $threads_per_page))
-									{
-										echo "...&nbsp;";
-									    echo CKunenaLink::GetLatestPageLink($func, ceil($total / $threads_per_page), 'follow', 'fb_list_pages_link',$sel);
-									}
-									echo '</span>';
-								}
-								?>
-	</div>
+			<?php
+				//pagination 1
+				if (count($messages[0]) > 0)
+				{
+					echo '<td class="fb_list_pages_all" nowrap="nowrap">';
+					echo $pagination;
+					echo '</td>';
+				}
+			?>
+		</tr>
+	</table>
   <!-- F: List Actions -->
 <?php
 }

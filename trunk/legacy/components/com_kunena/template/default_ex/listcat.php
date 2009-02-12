@@ -299,10 +299,10 @@ if (count($categories[0]) > 0)
                                 $database->loadObject($thisThread);
                                 $latestthreadpages = ceil($thisThread->totalmessages / $fbConfig->messages_per_page);
                                 $latestthread = $thisThread->thread;
-                                $latestname = htmlentities(stripslashes($singlerow->mname));
+                                $latestname = html_entity_decode_utf8(stripslashes($singlerow->mname));
                                 $latestcatid = $singlerow->catid;
                                 $latestid = $singlerow->id_last_msg;
-                                $latestsubject = htmlentities(stripslashes($singlerow->subject));
+                                $latestsubject = html_entity_decode_utf8(stripslashes($singlerow->subject));
                                 $latestuserid = $singlerow->userid;
                     ?>
 
@@ -366,7 +366,7 @@ if (count($categories[0]) > 0)
                                     <td class = "td-2" align="left">
                                         <div class = "<?php echo $boardclass ?>thead-title fbl">
                                             <?php //new posts available
-                                            echo CKunenaLink::GetCategoryLink('showcat', $singlerow->id, htmlentities(stripslashes($singlerow->name)));
+                                            echo CKunenaLink::GetCategoryLink('showcat', $singlerow->id, html_entity_decode_utf8(stripslashes($singlerow->name)));
 
                                             if ($cxThereisNewInForum == 1 && $my->id > 0) {
                                                 echo '<sup><span class="newchar">&nbsp;(' . $newPostsAvailable . ' ' . stripslashes($fbConfig->newchar) . ")</span></sup>";

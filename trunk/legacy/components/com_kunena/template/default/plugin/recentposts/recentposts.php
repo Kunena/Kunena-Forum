@@ -162,7 +162,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                 if ($rows) foreach ($rows as $row) {
                     $i++;
                     $overlib = "<table>";
-                    //$row->subject = htmlentities($row->subject, ENT_QUOTES);
+                    //$row->subject = html_entity_decode_utf8($row->subject, ENT_QUOTES);
                     $overlib .= "<tr><td valign=top>" . _GEN_TOPIC . "</td><td>$row->subject</td></tr>";
                     $row_catname = stripslashes($row->catname);
                     $row_username = stripslashes($row->username);
@@ -198,7 +198,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                         echo "</td>";
                         echo "<td class=\"td-2 fbm\"  align=\"left\" >";
                         echo " <a class=\"fbrecent fbm\" href='$link' >";
-                        echo substr(htmlentities(stripslashes($row->subject)), 0, $subject_length);
+                        echo substr(html_entity_decode_utf8(stripslashes($row->subject)), 0, $subject_length);
                         echo "</a>";
                         echo "</td>";
 

@@ -2615,7 +2615,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                                 </td>
 
                                 <td width = "*">
-<?php echo htmlentities(stripslashes($pl->signature)); ?>&nbsp;
+<?php echo html_entity_decode_utf8(stripslashes($pl->signature)); ?>&nbsp;
                                 </td>
                             </tr>
 
@@ -2890,7 +2890,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                                     onMouseOver = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);"
                                     onClick = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);"
                                     onKeyDown = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);"
-                                    onKeyUp = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);" cols = "50" type = "text" name = "message"><?php echo htmlentities(stripslashes($signature)); ?></textarea>
+                                    onKeyUp = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);" cols = "50" type = "text" name = "message"><?php echo html_entity_decode_utf8(stripslashes($signature)); ?></textarea>
 
 <?php /*
 // FIXME: bbcode broken
@@ -3070,7 +3070,7 @@ else
                     {
                         $k = 1 - $k;
                         echo "<tr class=\"row$k\">";
-                        echo "  <td>$enum: ".htmlentities(stripslashes($sub->subject))." by ".htmlentities(stripslashes($sub->name));
+                        echo "  <td>$enum: ".html_entity_decode_utf8(stripslashes($sub->subject))." by ".html_entity_decode_utf8(stripslashes($sub->name));
                         echo "  <td>&nbsp;</td>";
                         echo "</tr>";
                         $enum++;

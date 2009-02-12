@@ -17,7 +17,8 @@ dictionary = {	'JB_':'KUNENA_',
 		'\<\?\=':'<?php echo ',
 		'(\* \@version \$Id\:)(\w+)':'\\1 \\2',
 		'(\* \@package Kunena\W+?)(\* \@Copyright.*?Best Of Joomla)':copyright,
-		'FBTools':'CKunenaTools'
+		'FBTools':'CKunenaTools',
+		'htmlentities':'html_entity_decode_utf8'
 }
 
 

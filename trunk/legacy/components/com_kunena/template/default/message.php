@@ -237,7 +237,7 @@ $database->loadObject($user);
                                     }
 
                                     //contruct the reply subject
-                                    $resubject = htmlentities(stripslashes($msg_subject), ENT_COMPAT, 'UTF-8');
+                                    $resubject = html_entity_decode_utf8(stripslashes($msg_subject), ENT_COMPAT, 'UTF-8');
                                     $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? $resubject : _POST_RE . $resubject;
                                     ?>
 

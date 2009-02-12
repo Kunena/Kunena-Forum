@@ -153,7 +153,7 @@ if ($sel == "0")
                 $database->loadObject($result);
 
                 $latestPostId = $result->id;
-                $latestPostName = htmlentities(stripslashes($result->name));
+                $latestPostName = html_entity_decode_utf8(stripslashes($result->name));
 				$latestPostUserid = $result->userid;
                 $latestPostCatid = $result->catid;
                 $catname = stripslashes($result->catname);

@@ -103,7 +103,7 @@ global $fbConfig;
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_PERSONALTEXT; ?></b> </td>
-      <td><?php echo htmlentities(stripslashes($userinfo->personalText)); ?></td>
+      <td><?php echo html_entity_decode_utf8(stripslashes($userinfo->personalText)); ?></td>
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_GENDER; ?></b> </td>
@@ -115,7 +115,7 @@ global $fbConfig;
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_LOCATION; ?></b> </td>
-      <td><?php echo htmlentities(stripslashes($userinfo->location)); ?></td>
+      <td><?php echo html_entity_decode_utf8(stripslashes($userinfo->location)); ?></td>
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_ICQ; ?></b> </td>

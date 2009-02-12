@@ -1144,6 +1144,7 @@ function saveUserProfile($option)
     if ($deleteSig == 1) {
         $signature = "";
     }
+    $signature = addslashes($signature);
 
     if ($deleteAvatar == 1) {
         $avatar = "";

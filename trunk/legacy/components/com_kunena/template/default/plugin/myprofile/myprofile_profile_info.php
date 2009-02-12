@@ -49,7 +49,7 @@ global $fbConfig;
                             <tr>
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_PERSONALTEXT; ?> </b></td>
 
-                                <td><input name="personalText" size="50" maxlength="50" value="<?php echo htmlentities(stripslashes($userinfo->personalText))?>" type="text"/></td>
+                                <td><input name="personalText" size="50" maxlength="50" value="<?php echo html_entity_decode_utf8(stripslashes($userinfo->personalText))?>" type="text"/></td>
                             </tr>
                             <tr>
                                 <td width="40%">
@@ -65,7 +65,7 @@ global $fbConfig;
                             </tr><tr>
 
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_LOCATION; ?> </b></td>
-                                <td><input name="location" size="50" value="<?php echo htmlentities(stripslashes($userinfo->location));?>" type="text"/></td>
+                                <td><input name="location" size="50" value="<?php echo html_entity_decode_utf8(stripslashes($userinfo->location));?>" type="text"/></td>
                             </tr>
                             <tr>
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_GENDER; ?></b></td>

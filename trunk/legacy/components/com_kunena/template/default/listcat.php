@@ -283,7 +283,7 @@ if (count($categories[0]) > 0)
                                 $latestname = $singlerow->mname;
                                 $latestcatid = stripslashes($singlerow->catid);
                                 $latestid = $singlerow->id_last_msg;
-                                $latestsubject = htmlentities(stripslashes($singlerow->subject));
+                                $latestsubject = html_entity_decode_utf8(stripslashes($singlerow->subject));
                                 $latestuserid = $singlerow->userid;
                     ?>
 

@@ -75,7 +75,7 @@ function showprf($userid, $page)
     $fb_username = $userinfo->{$fb_queryName};
 
     if ($fb_username == "" || $fbConfig->changename) {
-        $fb_username = htmlentities(stripslashes($fmessage->name));
+        $fb_username = html_entity_decode_utf8(stripslashes($fmessage->name));
     }
 
     $msg_id = $fmessage->id;

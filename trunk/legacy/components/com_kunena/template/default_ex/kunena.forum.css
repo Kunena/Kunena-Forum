@@ -176,12 +176,16 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 
 /* B: all disc top */
 #Kunena .fb_list_actions {
+	background-color:#F7F7F7;
+	color:#000000;
 	border:1px solid #D1D1D1;
 	clear:both;
 	margin-top:-1px;
 	width:100%;
 }
 #Kunena .fb_list_actions_bottom {
+	background-color:#F7F7F7;
+	color:#000000;
 	border:1px solid #D1D1D1;
 	clear:both;
 	margin-bottom:-1px;

@@ -321,7 +321,7 @@
             <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[CODE", "[code")</query>
             <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[/CODE", "[/code")</query>
 		</version>
-		<version version="1.0.6" versiondate="2009-1-10" build="870" versionname="Communicate">
+		<version version="1.0.6" versiondate="2009-01-10" build="870" versionname="Communicate">
 			<query mode="silenterror">ALTER TABLE `#__fb_messages` ADD KEY `parent_hits`(`parent`,`hits`)</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD KEY `posts` ( `posts` )</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD KEY `uhits` ( `uhits` )</query>

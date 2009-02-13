@@ -8,11 +8,6 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.com
 *
-* Based on FireBoard Component
-* @Copyright (C) 2006 - 2008 Best Of Joomla All rights reserved
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.bestofjoomla.com
-*
 * Based on comUpgrade class
 * @copyright (C) 2005 - 2007 Samuel Suter / All Rights Reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL

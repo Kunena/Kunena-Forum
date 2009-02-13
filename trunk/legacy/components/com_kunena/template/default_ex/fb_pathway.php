@@ -53,14 +53,6 @@ if ($func != "")
                 $jr_path_menu[] = $sname;
             }
 
-            // write path
-            if (empty($spath)) {
-                $spath = $sname;
-            }
-            else {
-                $spath = $sname . '<div class="path-element">' . $spath . '</div>';
-            }
-
             // next looping
             $catids = $parent_ids;
             $jr_it++;
@@ -70,7 +62,6 @@ if ($func != "")
         //reverse the array
         $jr_path_menu = array_reverse($jr_path_menu);
 
-        //  echo $shome." " . $jr_arrow .$jr_arrow ." ". $spath;
         //attach topic name
         if ($sfunc == "view" and $id)
         {
@@ -84,17 +75,16 @@ if ($func != "")
         // print the list
         $jr_forum_count = count($jr_path_menu);
 
-	$firepath = '';
+	$firepath = '<div class="path-element-first">'. CKunenaLink::GetKunenaLink( htmlspecialchars(stripslashes($fbConfig->board_title)) ) . '</div>';
+	$filelast = '';
         for ($i = 0; $i <= (count($jr_path_menu) - 1); $i++)
         {
             if ($i > 0 && $i == $jr_forum_count - 1) {
-                $firepath .= '<div class="path-element-last">';
+                $firelast .= '<br /><div class="path-element-last">' . $jr_path_menu[$i] . '</div>';
             }
             else if ($i > 0) {
-                $firepath .= '<div class="path-element">';
+                $firepath .= '<div class="path-element">' . $jr_path_menu[$i] . '</div>';
             }
-
-            $firepath .= $jr_path_menu[$i] . '</div>';
         }
 
 	$fireinfo = '';
@@ -159,8 +149,8 @@ if ($func != "")
 	$fr_title = $fr_title_name . $jr_topic_title;
         $mainframe->setPageTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($fbConfig->board_title));
 
-	$pathway1 = '<div class="path-element-first">'. CKunenaLink::GetKunenaLink( htmlspecialchars(stripslashes($fbConfig->board_title)) ) . $firepath . $fireinfo;
-	$pathway2 .= $fireonline;
+	$pathway1 = $firepath . $fireinfo;
+	$pathway2 .= $firelast . $fireonline;
         unset($shome, $spath, $parent_ids, $catids, $results, $sname);
 
       echo '<div class = "'. $boardclass .'forum-pathway">';

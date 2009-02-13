@@ -925,7 +925,15 @@ POST HISTORY
 ----------------------------------------------------------------------------------------------- */
 .fb_forum-pathway {
 	padding: 3px;
+	line-height: 18px;
 	margin: 5px 0 0 0;
+	border: 1px solid #CCCCCC; 
+	background:#F7F7F7;
+}
+.fb_forum-pathway-bottom {
+	padding: 3px;
+	line-height: 18px;
+	margin: 0 0 5px 0;
 	border: 1px solid #CCCCCC; 
 	background:#F7F7F7;
 }
@@ -935,7 +943,7 @@ POST HISTORY
 	line-height: 18px;
 	padding-left: 22px;
 	background: url(images/pathway_start.gif) no-repeat left center; 
-	float:left;
+	display: inline;
 	padding-right:3px; 
 }
 .path-element-first a:link, 
@@ -949,26 +957,26 @@ POST HISTORY
 	font-weight:bold;
 	text-decoration: none;
 	text-indent:5px;
-	clear:left;
-	float:left;
+	display: inline;
 }
-.fb_forum-pathway .path-element {
+.fb_forum-pathway .path-element, .fb_forum-pathway-bottom .path-element {
 	background: url(images/arrow.png) no-repeat left center;
 	padding-left: 12px;
-	float:left;
+	display: inline;
 	font-weight: normal;
 	height: 18px;
 	line-height: 18px;
 	padding-right:3px;
 }
-.fb_forum-pathway .path-element-last {
+.fb_forum-pathway .path-element-last, .fb_forum-pathway-bottom .path-element-last {
 	height: 18px;
 	line-height: 18px;
 	background:  url(images/pathway_finallink.gif) no-repeat left center; 
-	padding-left: 30px; 
+	padding-left: 37px; 
 	padding-right:5px;
 }
 .path-element-users {
+	display: inline;
 	margin-top:21px;
 }
 /* PAGENAV

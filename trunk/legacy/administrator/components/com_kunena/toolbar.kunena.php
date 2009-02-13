@@ -30,94 +30,94 @@ switch ($task)
     case "new":
     case "edit":
     case "edit2":
-        TOOLBAR_simpleBoard::_EDIT();
+        CKunenaToolbar::_EDIT();
 
         break;
 
     case "cancel":
-        TOOLBAR_simpleBoard::DEFAULT_MENU();
+        CKunenaToolbar::DEFAULT_MENU();
 
         break;
 
     case "showconfig":
-        TOOLBAR_simpleBoard::_EDIT_CONFIG();
+        CKunenaToolbar::_EDIT_CONFIG();
 
         break;
 
     case "showCss":
-        TOOLBAR_simpleBoard::CSS_MENU();
+        CKunenaToolbar::CSS_MENU();
 
         break;
 
     case "profiles":
-        TOOLBAR_simpleBoard::_PROFILE_MENU();
+        CKunenaToolbar::_PROFILE_MENU();
 
         break;
 
     case "instructions": break;
 
     case "newmoderator":
-        TOOLBAR_simpleBoard::_NEWMOD_MENU();
+        CKunenaToolbar::_NEWMOD_MENU();
 
         break;
 
     case "userprofile":
-        TOOLBAR_simpleBoard::_EDITUSER_MENU();
+        CKunenaToolbar::_EDITUSER_MENU();
 
         break;
 
     case "pruneforum":
-        TOOLBAR_simpleBoard::_PRUNEFORUM_MENU();
+        CKunenaToolbar::_PRUNEFORUM_MENU();
 
         break;
 
     case "syncusers":
-        TOOLBAR_simpleBoard::_SYNCUSERS_MENU();
+        CKunenaToolbar::_SYNCUSERS_MENU();
 
         break;
 
     case "showAdministration":
-        TOOLBAR_simpleBoard::_ADMIN();
+        CKunenaToolbar::_ADMIN();
 
         break;
 
     case "showprofiles":
-        TOOLBAR_simpleBoard::_PROFILE_MENU();
+        CKunenaToolbar::_PROFILE_MENU();
 
         break;
 		
 				case "showsmilies":
-        TOOLBAR_simpleBoard::_SHOWSMILEY_MENU();
+        CKunenaToolbar::_SHOWSMILEY_MENU();
 
         break;
 
     case "editsmiley":
-        TOOLBAR_simpleBoard::_EDITSMILEY_MENU();
+        CKunenaToolbar::_EDITSMILEY_MENU();
 
         break;
 
     case "newsmiley":
-        TOOLBAR_simpleBoard::_NEWSMILEY_MENU();
+        CKunenaToolbar::_NEWSMILEY_MENU();
 
         break;
 				
 				case "ranks":
-        TOOLBAR_simpleBoard::_SHOWRANKS_MENU();
+        CKunenaToolbar::_SHOWRANKS_MENU();
 
         break;
 
     case "editRank":
-        TOOLBAR_simpleBoard::_EDITRANK_MENU();
+        CKunenaToolbar::_EDITRANK_MENU();
 
         break;
 
     case "newRank":
-        TOOLBAR_simpleBoard::_NEWRANK_MENU();
+        CKunenaToolbar::_NEWRANK_MENU();
 
         break;
 
     default:
-        TOOLBAR_simpleBoard::BACKONLY_MENU();
+        CKunenaToolbar::BACKONLY_MENU();
 
         break;
 								

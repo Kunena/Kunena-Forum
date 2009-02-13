@@ -150,11 +150,8 @@ color:#666;
            <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=showCss"><?php echo _COM_C_CSS; ?></a>
            <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=pruneforum"><?php echo _COM_C_PRUNETAB; ?></a>
            <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=syncusers"><?php echo _KUNENA_SYNC_USERS; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=loadSample"><?php echo _COM_C_LOADSAMPLE; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=removeSample" onclick="return confirm('<?php echo _KUNENA_CONFIRM_REMOVESAMPLEDATA?>');"><?php echo _COM_C_REMOVESAMPLE; ?></a>
            <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=recount"><?php echo _KUNENA_RECOUNTFORUMS; ?></a>
            <a class="fbmainmenu"  href = "http://www.Kunena.com" target = "_blank" ><?php echo _COM_C_SUPPORT; ?></a>
-
 
         </div>
         <!-- Finish : Kunena Left Menu -->

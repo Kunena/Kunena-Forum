@@ -23,7 +23,7 @@
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // ################################################################
-class TOOLBAR_simpleBoard
+class CKunenaToolbar
 {
     function _ADMIN()
     {
@@ -130,7 +130,7 @@ class TOOLBAR_simpleBoard
     {
         mosMenuBar::startTable();
         mosMenuBar::spacer();
-        mosMenuBar::custom('douserssync', 'delete.png', 'delete_f2.png', 'Sync', false);
+        mosMenuBar::custom('dousersync', 'delete.png', 'delete_f2.png', 'Sync', false);
         mosMenuBar::spacer();
         mosMenuBar::cancel();
         mosMenuBar::spacer();

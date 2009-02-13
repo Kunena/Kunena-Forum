@@ -1,7 +1,6 @@
 <?xml version="1.0" ?>
 <comupgrade version="1.0">
 	<install version="@fbversion@" versiondate="@fbversiondate@" build="@fbbuild@" versionname="@fbversionname@">
-		<phpfile name="kunena.special.install.php" />
 		<query>CREATE TABLE `#__fb_announcement` (
                     `id` int(3) NOT NULL auto_increment,
                     `title` tinytext NOT NULL,
@@ -217,6 +216,7 @@
                     (7, 'Administrator', 0, 1, 'rankadmin.gif'),
                     (8, 'Moderator', 0, 1, 'rankmod.gif'),
                     (9, 'Spammer', 0, 1, 'rankspammer.gif')</query>
+		<phpfile name="kunena.special.install.php" />
    	</install>
 	<upgrade>
 		<version version="1.0.5" versiondate="2008-12-1" build="855" versionname="Redwood">

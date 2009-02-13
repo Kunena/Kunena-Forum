@@ -24,7 +24,46 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // 1.0.8
 DEFINE('_POST_FORGOT_EMAIL', 'You forgot to include your e-mail address.  Click your browser&#146s back button to go back and try again.');
-DEFINE('_KUNENA_POST_DEL_ERR_FILE', 'Everything deletedâ€”some attachment files were missing!');
+DEFINE('_KUNENA_POST_DEL_ERR_FILE', 'Everything deletedâ some attachment files were missing!');
+// New strings for initial forum setup. Replacement for legacy sample data
+DEFINE('_KUNENA_SAMPLE_FORUM_MENU_TITLE', 'Forum');
+DEFINE('_KUNENA_SAMPLE_MAIN_CATEGORY_TITLE', 'Main Forum');
+DEFINE('_KUNENA_SAMPLE_MAIN_CATEGORY_DESC', 'This is the main forum category. As a level one category it serves as a container for individual boards or forums. It is also referred to as a level 1 category and is a must have for any Kunena Forum setup.');
+DEFINE('_KUNENA_SAMPLE_MAIN_CATEGORY_HEADER', 'In order to provide additional information for you guests and members, the forum header can be leveraged to display text at the very top of a particular category.');
+DEFINE('_KUNENA_SAMPLE_FORUM1_TITLE', 'Welcome Mat');
+DEFINE('_KUNENA_SAMPLE_FORUM1_DESC', 'We encourage new members to post a short introduction of themselves in this forum category. Get to know each other and share you common interests.<br>');
+DEFINE('_KUNENA_SAMPLE_FORUM1_HEADER', '<strong>Welcome to the Kunena forum!</strong><br><br>Tell us and our members who you are, what you like and why you became a member of this site.<br>We welcome all new members and hope to see you around a lot!<br>');
+DEFINE('_KUNENA_SAMPLE_FORUM2_TITLE', 'Suggestion Box');
+DEFINE('_KUNENA_SAMPLE_FORUM2_DESC', 'Have some feedback and input to share?<br>Don\'t be shy and drop us a note. We want to hear from you and strive to make our site better and more user friendly for our guests and members a like.');
+DEFINE('_KUNENA_SAMPLE_FORUM2_HEADER', 'This is the optional Forum header for the Suggestion Box.<br>');
+DEFINE('_KUNENA_SAMPLE_POST1_SUBJECT', 'Welcome to Kunena!');
+DEFINE('_KUNENA_SAMPLE_POST1_TEXT', '[size=4][b]Welcome to Kunena![/b][/size]
+
+Thank you for choosing Kunena for your community forum needs in Joomla.
+
+Kunena, translated from Swahili meaning "to speak", is built by a team of open source professionals with the goal of providing a top-quality, tightly unified forum solution for Joomla. Kunena even supports social networking components like Community Builder and JomSocial.
+
+
+[size=4][b]Additional Kunena Resources[/b][/size]
+
+[b]Kunena Documentation:[/b] http://www.kunena.com/docs
+(http://docs.kunena.com)
+
+[b]Kunena Support Forum[/b]: http://www.kunena.com/forum
+(http://www.kunena.com/index.php?option=com_kunena&Itemid=125)
+
+[b]Kunena Downloads:[/b] http://www.kunena.com/downloads
+(http://joomlacode.org/gf/project/kunena/frs/)
+
+[b]Kunena Blog:[/b] http://www.kunena.com/blog
+(http://www.kunena.com/index.php?option=com_content&view=section&layout=blog&id=7&Itemid=128)
+
+[b]Submit your feature ideas:[/b] http://www.kunena.com/uservoice
+(http://kunena.uservoice.com/pages/general?referer_type=top3)
+
+[b]Follow Kunena on Twitter:[/b] http://www.kunena.com/twitter
+(https://twitter.com/kunena)');
+
 // 1.0.6
 DEFINE('_KUNENA_JOMSOCIAL', 'JomSocial');
 
@@ -218,8 +257,6 @@ DEFINE('_KUNENA_DATE_WEEKS','Weeks');
 DEFINE('_KUNENA_DATE_DAYS', 'Days');
 DEFINE('_KUNENA_DATE_HOURS', 'Hours');
 DEFINE('_KUNENA_DATE_MINUTES', 'Minutes');
-// 1.0.3
-DEFINE('_KUNENA_CONFIRM_REMOVESAMPLEDATA', 'Are you sure you want to remove the sample data? You cannot undo this.');
 // 1.0.2
 DEFINE('_KUNENA_HEADERADD', 'Forumheader:');
 DEFINE('_KUNENA_ADVANCEDDISPINFO', "Forum display");
@@ -516,13 +553,6 @@ DEFINE('_KUNENA_PRUNEUSERPROFILES', 'user profiles'); // <=FB 1.0.3
 DEFINE('_KUNENA_NOPROFILESFORPRUNNING', 'No profiles found eligible for pruning.'); // <=FB 1.0.3
 DEFINE('_KUNENA_TABLESUPGRADED', 'Kunena tables are upgraded to version');
 DEFINE('_KUNENA_FORUMCATEGORY', 'Forum Category');
-DEFINE('_KUNENA_SAMPLWARN1', 'Make absolutely sure that you load the sample data on completely empty Kunena tables. If they are not empty, it will not work!');
-DEFINE('_KUNENA_FORUM1', 'Forum 1');
-DEFINE('_KUNENA_SAMPLEPOST1', 'Sample Post 1');
-DEFINE('_KUNENA_SAMPLEFORUM11', 'Sample Forum 1\r\n');
-DEFINE('_KUNENA_SAMPLEPOST11', '[b][size=4][color=#FF6600]Sample Post[/color][/size][/b]\nCongratulations with your new Forum!\n\n[url=http://Kunena.com]- Kunena[/url]');
-DEFINE('_KUNENA_SAMPLESUCCESS', 'Sample data loaded');
-DEFINE('_KUNENA_SAMPLEREMOVED', 'Sample data removed');
 DEFINE('_KUNENA_CBADDED', 'Community Builder profile added');
 DEFINE('_KUNENA_IMGDELETED', 'Image deleted');
 DEFINE('_KUNENA_FILEDELETED', 'File deleted');
@@ -531,7 +561,6 @@ DEFINE('_KUNENA_DIRCOPERR', 'Error: File');
 DEFINE('_KUNENA_DIRCOPERR1', 'could not be copied!\n');
 DEFINE('_KUNENA_INSTALL1', '<strong>Kunena Forum</strong> Component <em>for Joomla! </em> <br />&copy; 2008 - 2009 by www.Kunena.com<br />All rights reserved.');
 DEFINE('_KUNENA_INSTALL2', 'Transfer/Installation :</code></strong><br /><br /><font color="red"><b>succesfull');
-// added by aliyar
 DEFINE('_KUNENA_FORUMPRF_TITLE', 'Profile Settings');
 DEFINE('_KUNENA_FORUMPRF', 'Profile');
 DEFINE('_KUNENA_FORUMPRRDESC', 'If you have the Clexus PM or Community Builder components installed, you can configure Kunena to use the user profile page.');
@@ -941,10 +970,6 @@ DEFINE('_COM_C_PRUNETAB', 'Prune Forums');
 DEFINE('_COM_C_PRUNETABDESC', 'Remove old threads (configurable)');
 DEFINE('_COM_C_PRUNEUSERS', 'Prune Users'); // <=FB 1.0.3
 DEFINE('_COM_C_PRUNEUSERSDESC', 'Sync Kunena user table with Joomla! user table'); // <=FB 1.0.3
-DEFINE('_COM_C_LOADSAMPLE', 'Load Sample Data');
-DEFINE('_COM_C_LOADSAMPLEDESC', 'For an easy start: load the Sample Data on an empty Kunena database');
-DEFINE('_COM_C_REMOVESAMPLE', 'Remove Sample Data');
-DEFINE('_COM_C_REMOVESAMPLEDESC', 'Remove Sample Data from your database');
 DEFINE('_COM_C_LOADMODPOS', 'Load Module Positions');
 DEFINE('_COM_C_LOADMODPOSDESC', 'Load Module Positions for Kunena Template');
 DEFINE('_COM_C_UPGRADEDESC', 'Get your database up to the latest version after an upgrade');

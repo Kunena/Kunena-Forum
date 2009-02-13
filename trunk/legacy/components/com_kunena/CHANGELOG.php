@@ -32,6 +32,11 @@ Legend:
 
 Kunena 1.0.8
 
+12-Februray-2009 fxstein
+^ TOOLBAR_simpleBoard renamed to CKunenaToolbar
+- Legacy FB sample data code removed
++ New Kunena sample data added for new installs
+
 12-February-2009 Riba
 ^ Pathway: Removed hardcoded styling
 ^ Pathway: Edited html output and CSS styles for easier customization
@@ -59,6 +64,8 @@ Kunena 1.0.8
   in addtion to the previously changed kunena_msg_1 ... n
 + Increase php timepout and memory setting once Kunena install starts
 # updated database error handling for upgrade base class
+# minor language file cleanup, removed none ascii characters
++ additional language strings for initial board setup on fresh install
 
 11-February-2009 Matias
 # default: No menu entry pointed to Categories if default Kunena page wasn't Categories

@@ -240,7 +240,7 @@ class fx_Upgrade {
 				<script  type="text/javascript" src="<?php echo $mosConfig_live_site;?>/includes/js/overlib_mini.js"></script>
 				<table class="adminlist">
 					<tr>
-						<th colspan="2">Installing "<?php echo $this->component?>" (Version: <?php echo $version;?> / Date: <?php echo $versiondate;?> / Build: <?php echo build;?> / VersionName: <?php echo $versionname;?> )</th>
+						<th colspan="2">Installing "<?php echo $this->component?>" (Version: <?php echo $version;?> / Date: <?php echo $versiondate;?> / Build: <?php echo $build;?> / VersionName: <?php echo $versionname;?> )</th>
 					</tr>
 				<?php
 			}

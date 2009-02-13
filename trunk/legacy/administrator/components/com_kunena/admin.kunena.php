@@ -202,16 +202,6 @@ switch ($task)
 
         break;
 
-    case "loadSample":
-        loadSample($database, $option);
-
-        break;
-
-	case "removeSample":
-        removeSample($database, $option);
-
-        break;
-
     case "pruneforum":
         pruneforum($database, $option);
 
@@ -222,8 +212,8 @@ switch ($task)
 
         break;
 
-    case "douserssync":
-        douserssync($database, $option);
+    case "dousersync":
+        doUserSync($database, $option);
 
         break;
 
@@ -1268,7 +1258,7 @@ function syncusers($database, $option) {
     html_Kunena::syncusers($option);
 }
 
-function douserssync($database, $option)
+function doUserSync($database, $option)
 {
 	//reset access rights
 	$database->setQuery("UPDATE #__fb_sessions SET allowed='na'");
@@ -1330,61 +1320,6 @@ function douserssync($database, $option)
         $cids = 0;
         mosRedirect("index2.php?option=$option&task=pruneusers", _KUNENA_NOPROFILESFORSYNC);
     }
-}
-
-//===============================
-// Load Sample Data
-//===============================
-function loadSample($database, $option)
-{
- 	// Load Sample Categories
-	$query = "INSERT INTO `#__fb_categories` "
-                                . "\n (`id`, `parent`, `name`, `cat_emoticon`, `locked`, `alert_admin`, `moderated`, `moderators`, `pub_access`, `pub_recurse`, `admin_access`, `admin_recurse`, `ordering`, `future2`, `published`, `checked_out`, `checked_out_time`, `review`, `hits`, `description`, `id_last_msg`, `time_last_msg`, `numTopics`, `numPosts`)"
-				. "\n VALUES (1, 0, 'Sample Board (Level 1 Category)', 0, 0, 0, 1, NULL, 0, 0, 0, 0, 1, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Description for level 1 Category board.', 0, 0, 0, 0),"
-				. "\n (2, 1, 'Level 2 Category', 0, 0, 0, 1, NULL, 0, 0, 0, 0, 1, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Level 2 Category description.', 0, 0, 0, 0),"
-				. "\n (3, 2, 'Level 3 Category A', 0, 0, 0, 1, NULL, 0, 0, 0, 0, 3, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, '', 0, 0, 0, 0),"
-				. "\n (4, 2, 'Level 3 Category B', 0, 0, 0, 1, NULL, 0, 0, 0, 0, 2, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, '', 0, 0, 0, 0),"
-				. "\n (5, 2, 'Level 3 Category C', 0, 0, 0, 1, NULL, 0, 0, 0, 0, 1, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, '', 0, 0, 0, 0),"
-				. "\n (6, 1, 'Sample Locked Forum', 0, 1, 0, 1, NULL, 0, 0, 0, 0, 2, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, 'Nobody, except Moderators and Admins can create new topics or replies in a locked forum (or move posts to it).', 0, 0, 0, 0),"
-				. "\n (7, 1, 'Sample Review On Forum', 0, 0, 0, 1, NULL, 0, 0, 0, 0, 3, 0, 1, 0, '0000-00-00 00:00:00', 1, 0, 'Posts to be reviewed by Moderators prior to publishing them in this forum. This is useful in a Moderated forum only! If you set this without any Moderators specified, the Site Admin is solely responsible for approving/deleting submitted posts as these will be kept ''on hold''!', 0, 0, 0, 0)";
-
-	$database->setQuery( $query );
-	$database->query() or trigger_dbwarning("Unable to insert sample categories.");
-
-	// Load Sample Messages
-	$query = "INSERT INTO `#__fb_messages` "
-				. "\n VALUES (1, 0, 1, 2, 'Kunena', 0, 'anonymous@forum.here', 'Sample Post', 1178882702, '127.0.0.1', 0, 0, 0, 0, 1, 0, 0, 0, 0)";
-
-	$database->setQuery( $query );
-	$database->query() or trigger_dbwarning("Unable to insert sample messages.");
-
-	// Load Sample Messages Text
-	$query = "INSERT INTO `#__fb_messages_text` "
-				. "\n VALUES (1, 'Kunena is fully integrated forum solution for joomla, no bridges, no hacking core files: It can be installed just like any other component with only a few clicks.\r\n\r\nThe administration backend is fully integrated, native ACL implemented, and it has all the capabilities one would have come to expect from a mature, full-fledged forum solution!')";
-	$database->query() or trigger_dbwarning("Unable to insert sample messages texts.");
-
-    mosRedirect("index2.php?option=$option", _KUNENA_SAMPLESUCCESS);
-}
-
-//===============================
-// Remove Sample Data
-//===============================
-function removeSample($database, $option)
-{
- 	// Remove Sample Categories
-	$database->setQuery("DELETE FROM #__fb_categories WHERE id BETWEEN 1 AND 7");
-	$database->query();
-		check_dberror("Unable to remove sample categories.");
-	// Remove Sample Messages
-	$database->setQuery("DELETE FROM #__fb_messages WHERE id = 1");
-	$database->query();
-		check_dberror("Unable to remove sample messages.");
-	// Remove Sample Messages Text
-	$database->setQuery("DELETE FROM #__fb_messages_text WHERE id = 1");
-	$database->query();
-		check_dberror("Unable to remove sample messages texts.");
-
-	mosRedirect("index2.php?option=$option", _KUNENA_SAMPLEREMOVED);
 }
 
 //===============================

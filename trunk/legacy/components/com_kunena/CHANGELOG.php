@@ -34,6 +34,7 @@ Kunena 1.0.8
 
 13-February-2009 Matias
 # Regression in r381: New pathway was slightly broken, also some css was missing
+# Fixed sender in all emails. It's now "BOARD_TITLE Forum"
 
 12-Februray-2009 fxstein
 ^ TOOLBAR_simpleBoard renamed to CKunenaToolbar

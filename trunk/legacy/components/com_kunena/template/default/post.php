@@ -388,7 +388,7 @@ $catName = $objCatInfo->name;
                                                     $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
 
                                                     if ($ip != "127.0.0.1" && $my->id != $subs->id) { //don't mail yourself
-                                                        mosmail($fbConfig->email, _KUNENA_FORUM_AT." " . $_SERVER['SERVER_NAME'], $subs->email, $mailsubject, $msg);
+                                                        mosmail($fbConfig->email, stripslashes($board_title)." ".trim(_GEN_FORUM), $subs->email, $mailsubject, $msg);
                                                     }
                                                 }
                                                 unset($_catobj);
@@ -450,7 +450,7 @@ $catName = $objCatInfo->name;
 
                                                     if ($ip != "127.0.0.1" && $my->id != $mods->id) { //don't mail yourself
                                                         //Send away
-                                                        mosmail($fbConfig->email, "Forum at " . $_SERVER['SERVER_NAME'], $mods->email, $mailsubject, $msg);
+                                                        mosmail($fbConfig->email, stripslashes($board_title)." ".trim(_GEN_FORUM), $mods->email, $mailsubject, $msg);
                                                     }
                                                 }
                                             }

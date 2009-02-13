@@ -138,7 +138,7 @@ function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins)
         $database->setQuery("SELECT email FROM #__users WHERE id={$admin->id}");
         $email = $database->loadResult();
 
-        mosMail($fbConfig->email, $fbConfig->board_title, $email, $subject, $message);
+        mosMail($fbConfig->email, stripslashes($board_title)." ".trim(_GEN_FORUM), $email, $subject, $message);
         }
     }
 

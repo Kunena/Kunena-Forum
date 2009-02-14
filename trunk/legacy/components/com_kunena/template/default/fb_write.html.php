@@ -280,7 +280,7 @@ include_once(KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
 		?>
         <tr>
             <td colspan = "2" style = "text-align: center;">
-                <input type="button" name="submit"  class="fb_button" value="<?php echo ' '._GEN_CONTINUE.' ';?>" onclick="return submitForm()" onmouseover = "helpline('submit')" />
+                <input type="submit" name="submit"  class="fb_button" value="<?php echo ' '._GEN_CONTINUE.' ';?>" onclick="return submitForm()" onmouseover = "helpline('submit')" />
                 <input type="button" name="preview" class="fb_button" value="<?php echo ' '._PREVIEW.' ';?>"      onClick="fbGetPreview(document.postform.message.value,<?php echo KUNENA_COMPONENT_ITEMID?>);" onmouseover = "helpline('preview');" />
                 <input type="button" name="cancel"  class="fb_button" value="<?php echo ' '._GEN_CANCEL.' ';?>"   onclick="javascript:window.history.back();" onmouseover = "helpline('cancel')" />
             </td>

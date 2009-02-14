@@ -34,7 +34,6 @@ Kunena 1.0.8
 
 13-Februray-2009 fxstein
 # Minor bug fix in automatic upgrade that re-run 1.0.6 portion unneccesarily
-^ Do not load our jquery library when integrated with jomSocial (comes with own copy)
 
 13-February-2009 Matias
 # Regression in r381: New pathway was slightly broken, also some css was missing

@@ -34,6 +34,7 @@ Kunena 1.0.8
 
 14-Februray-2009 fxstein
 # Added missing SEF call to mark all forums read button
++ Replace com_fireboard with com_kunena in all messages and signatures
 
 13-February-2009 Matias
 # Try 2: Use default_ex template if current template is missing

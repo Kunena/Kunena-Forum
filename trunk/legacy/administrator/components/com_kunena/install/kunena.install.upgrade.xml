@@ -331,6 +331,8 @@
 			<query mode="silenterror">ALTER TABLE `#_fb_config` CHANGE `annmodid` `annmodid` TEXT NULL DEFAULT NULL</query>
 			<query mode="silenterror">ALTER TABLE `#_fb_config_backup` CHANGE `annmodid` `annmodid` TEXT NULL DEFAULT NULL</query>
 			<query>UPDATE `#__fb_users` SET `view`='flat'</query>
+			<query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "com_fireboard", "com_kunena")</query>
+            <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "com_fireboard", "com_kunena")</query>
 		</version>
 	</upgrade>
 </comupgrade>

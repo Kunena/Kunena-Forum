@@ -93,7 +93,7 @@ global $fbConfig;
       <td><?php echo $numPosts; ?></td>
     </tr>
     <tr>
-      <td><b><?php echo _KUNENA_MYPROFILE_PROFILEVIEW; ?>:</b> </td>
+      <td><b><?php echo _KUNENA_MYPROFILE_PROFILEVIEW; ?></b> </td>
       <td><?php echo $userinfo->uhits; ?></td>
     </tr>
     <tr class="fb_sth">

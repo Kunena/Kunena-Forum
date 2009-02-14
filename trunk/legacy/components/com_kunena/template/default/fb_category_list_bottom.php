@@ -38,7 +38,7 @@ global $fbConfig;
                 {
                 ?>
 
-                    <form action = "<?php echo $mainframe->getCfg("live_site")."/index2.php";?>" name = "markAllForumsRead" method = "post">
+                    <form action = "<?php echo sefRelToAbs($mainframe->getCfg("live_site")."/index2.php");?>" name = "markAllForumsRead" method = "post">
                         <input type = "hidden" name = "markaction" value = "allread"/>
                         <input type = "hidden" name = "Itemid" value = "<?php echo KUNENA_COMPONENT_ITEMID?>"/>
                         <input type = "hidden" name = "option" value = "com_kunena"/>

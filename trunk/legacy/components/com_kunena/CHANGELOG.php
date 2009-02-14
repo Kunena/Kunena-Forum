@@ -32,11 +32,14 @@ Legend:
 
 Kunena 1.0.8
 
+14-Februray-2009 fxstein
+# Added missing SEF call to mark all forums read button
+
 13-February-2009 Matias
 # Try 2: Use default_ex template if current template is missing
 
 13-Februray-2009 fxstein
-# Minor bug fix in automatic upgrade that re-run 1.0.6 portion unneccesarily
+# Minor bug fix in automatic upgrade that re-ran 1.0.6 portion unneccesarily
 
 13-February-2009 Matias
 # Regression in r381: New pathway was slightly broken, also some css was missing

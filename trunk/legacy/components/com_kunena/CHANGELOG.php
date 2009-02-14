@@ -35,6 +35,9 @@ Kunena 1.0.8
 14-Februray-2009 fxstein
 # Added missing SEF call to mark all forums read button
 + Replace com_fireboard with com_kunena in all messages and signatures
+^ Preview button label now with capital 'P'
+# Incorrect button css classes on write message screen fixed
+^ Extra spacing for text buttons to conform with Joomla button style
 
 13-February-2009 Matias
 # Try 2: Use default_ex template if current template is missing

@@ -882,7 +882,7 @@ DEFINE('_MODERATION_DELETE_SUCCESS', 'The post(s) have been deleted');
 DEFINE('_COM_A_RANKING', 'Ranking');
 DEFINE('_COM_A_BOT_REFERENCE', 'Show Bot Reference Chart');
 DEFINE('_COM_A_MOSBOT', 'Enable the Discuss Bot');
-DEFINE('_PREVIEW', 'preview');
+DEFINE('_PREVIEW', 'Preview');
 DEFINE('_COM_A_MOSBOT_TITLE', 'Discussbot');
 DEFINE('_COM_A_MOSBOT_DESC', 'The Discuss Bot enables your users to discuss content items in the forums. The Content Title is used as the topic subject.'
            . '<br />If a topic does not exist, a new one is created. If the topic already exists, the user is shown the thread and where to reply.' . '<br /><strong>You will need to download and install the bot separately.</strong>'

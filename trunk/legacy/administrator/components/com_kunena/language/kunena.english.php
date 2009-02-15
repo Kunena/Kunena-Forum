@@ -23,6 +23,7 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // 1.0.8
+DEFINE('_POST_NO_FAVORITED_TOPIC', 'This thread has <b>NOT</b> been added to your favorites');
 DEFINE('_COM_A_3P_PROFILE', 'Create/Update 3rd Party forum profile fields');
 DEFINE('_COM_A_3P_PROFILE_DESC',
     'Click the link to create necessary forum fields in the 3rd party profile provider selected above. After they are created, you can move them using the admin interface of the profile provider. Do not change their names or options.');

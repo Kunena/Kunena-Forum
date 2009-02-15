@@ -40,6 +40,7 @@ Kunena 1.0.8
 # Regression: Missing css class in default template
 # Removed extra slashes in headerdesc, moved it to the right place in showcat
 ^ Tweaks in css, fix dark themes
+# Missing define for _POST_NO_FAVORITED_TOPIC in kunena.english.php
 
 15-Februray-2009 fxstein
 # Proper favicon in menu for Joomla 1.0.x

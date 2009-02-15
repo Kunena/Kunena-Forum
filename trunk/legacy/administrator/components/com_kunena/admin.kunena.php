@@ -243,21 +243,20 @@ switch ($task)
         break;
 
     case "showAdministration":
-        //showAdministration( $option,$joomla1_5);
         showAdministration ($option);
 
         break;
 
-    case "loadCBprofile":
-        loadCBprofile($database, $option);
+    case "create3pprofile": // Create 3rd party profile integration colums and fields
+        create3PProfile($database, $option);
 
         break;
 
     case 'recount':
-       CKunenaTools::reCountBoards();
-       // Also reset the name info stored with messages
-       CKunenaTools::updateNameInfo();
-       mosRedirect("index2.php?option=com_kunena", _KUNENA_RECOUNTFORUMS_DONE);
+    	CKunenaTools::reCountBoards();
+    	// Also reset the name info stored with messages
+    	CKunenaTools::updateNameInfo();
+    	mosRedirect("index2.php?option=com_kunena", _KUNENA_RECOUNTFORUMS_DONE);
         break;
 
 	case "showsmilies":
@@ -1322,62 +1321,108 @@ function doUserSync($database, $option)
     }
 }
 
-//===============================
-// Create Community Builder profile
-//===============================
-function loadCBprofile($database, $option)
+//=====================================
+// Create 3rd party integration profile
+//=====================================
+function create3PProfile($database, $option)
 {
-    // First remove any existing entries
-    // Not the most elegant way to deal with duplicate entries, but certainly the most foolproof
-    // No checking for non existing DB content
-    $database->setQuery("ALTER TABLE #__comprofiler DROP fbviewtype, DROP fbordering, DROP fbsignature");
-    $database->query() or trigger_dbwarning("Unable to drop comprofiler columns.");
+	global $fbConfig;
 
-    $database->setQuery("DELETE FROM #__comprofiler_field_values WHERE fieldtitle IN ".
-    	"('_UE_KUNENA_VIEWTYPE_FLAT','_UE_KUNENA_VIEWTYPE_THREADED','_UE_KUNENA_ORDERING_OLDEST','_UE_KUNENA_ORDERING_LATEST')");
-    $database->query() or trigger_dberror("Unable to delete comprofiler field values.");
+	// Create/Update the proper integration fields for the profile provider selected
+	if ($fbConfig->fb_profile == 'cb')
+	{
+//	    $database->setQuery("ALTER TABLE #__comprofiler ADD kunena_ordering varchar(255) DEFAULT 'asc' NOT NULL");
+//	    $database->query() or trigger_dbwarning("Unable to add kunena_ordering field to Community Builder");
+//		$database->setQuery("ALTER TABLE #__comprofiler ADD kunena_hideEmail varchar(255) DEFAULT 'yes' NOT NULL");
+//	    $database->query() or trigger_dbwarning("Unable to add kunena_hideEmail field to Community Builder");
+//	    $database->setQuery("ALTER TABLE #__comprofiler ADD kunena_showOnline varchar(255) DEFAULT 'yes' NOT NULL");
+//	    $database->query() or trigger_dbwarning("Unable to add kunena_showOnline field to Community Builder");
+//	    $database->setQuery("ALTER TABLE #__comprofiler ADD kunena_personalText varchar(255)");
+//	    $database->query() or trigger_dbwarning("Unable to add kunena_personalText field to Community Builder");
+//	    $database->setQuery("ALTER TABLE #__comprofiler ADD kunena_location varchar(255)");
+//	    $database->query() or trigger_dbwarning("Unable to add kunena_location field to Community Builder");
+//	    $database->setQuery("ALTER TABLE #__comprofiler ADD kunena_ICQ varchar(255)");
+//	    $database->query() or trigger_dbwarning("Unable to add kunena_ICQ field to Community Builder");
+//	    $database->setQuery("ALTER TABLE #__comprofiler ADD kunena_AIM varchar(255)");
+//	    $database->query() or trigger_dbwarning("Unable to add kunena_AIM field to Community Builder");
+//	    $database->setQuery("ALTER TABLE #__comprofiler ADD kunena_YIM varchar(255)");
+//	    $database->query() or trigger_dbwarning("Unable to add kunena_YIM field to Community Builder");
+//	    $database->setQuery("ALTER TABLE #__comprofiler ADD kunena_MSN varchar(255)");
+//	    $database->query() or trigger_dbwarning("Unable to add kunena_MSN field to Community Builder");
+//	    $database->setQuery("ALTER TABLE #__comprofiler ADD kunena_SKYPE varchar(255)");
+//	    $database->query() or trigger_dbwarning("Unable to add kunena_SKYPE field to Community Builder");
+//	    $database->setQuery("ALTER TABLE #__comprofiler ADD kunena_GTALK varchar(255)");
+//	    $database->query() or trigger_dbwarning("Unable to add kunena_GTALK field to Community Builder");
+//	    $database->setQuery("ALTER TABLE #__comprofiler ADD kunena_websitename varchar(255)");
+//	    $database->query() or trigger_dbwarning("Unable to add kunena_websitename field to Community Builder");
+//	    $database->setQuery("ALTER TABLE #__comprofiler ADD kunena_websiteurl varchar(255)");
+//	    $database->query() or trigger_dbwarning("Unable to add kunena_websiteurl field to Community Builder");
+//	    $database->setQuery("ALTER TABLE #__comprofiler ADD kunena_signature mediumtext");
+//	    $database->query() or trigger_dbwarning("Unable to add kunena_signature field to Community Builder");
 
-    $database->setQuery("DELETE FROM #__comprofiler_fields WHERE name IN ('fbviewtype','fbordering','fbsignature')");
-    $database->query() or trigger_dberror("Unable to delete comprofiler fields.");
 
-    $database->setQuery("DELETE FROM #__comprofiler_tabs WHERE title = '_UE_KUNENA_TABTITLE'");
-    $database->query() or trigger_dberror("Unable to delete comprofiler field.");
 
-    // Now let's create the requires entries
-    $database->setQuery("INSERT INTO #__comprofiler_tabs SET title='_UE_KUNENA_TABTITLE', description='_UE_KUNENA_TABDESC'");
-    $database->query() or trigger_dberror("Unable to insert comprofiler tab.");
 
-    $database->setQuery("SELECT tabid FROM #__comprofiler_tabs WHERE title='_UE_KUNENA_TABTITLE'");
-    $database->query() or trigger_dberror("Unable to load comprofiler tab.");
-    $tabid = $database->loadResult();
+	}
+	else if ($fbConfig->fb_profile == 'jomsocial')
+	{
 
-    $cols = $database->getTableFields(array('#__comprofiler_fields'));
-    $isCB12 = isset($cols['#__comprofiler_fields']['tablecolumns']);
 
-    $database->setQuery("INSERT INTO #__comprofiler_fields (name,".($isCB12?"tablecolumns,":"")."title,type,maxlength,cols,rows,ordering,published,profile,calculated,sys,tabid) VALUES ".
-    	"('fbviewtype',".($isCB12?"'fbviewtype',":"")."'_UE_KUNENA_VIEWTYPE_TITLE','select',0,0,0,1,1,0,0,0,$tabid),".
-    	"('fbordering',".($isCB12?"'fbordering',":"")."'_UE_KUNENA_ORDERING_TITLE','select',0,0,0,2,1,0,0,0,$tabid),".
-    	"('fbsignature',".($isCB12?"'fbsignature',":"")."'_UE_KUNENA_SIGNATURE','textarea',300,60,5,3,1,0,0,0,$tabid)");
-    $database->query() or trigger_dberror("Unable to insert comprofiler fields.");
+	}
 
-    $database->setQuery("SELECT name,fieldid FROM #__comprofiler_fields WHERE name IN ('fbviewtype','fbordering')");
-    $database->query() or trigger_dberror("Unable to load comprofiler fields.");
-    $fieldid = $database->loadObjectList('name');
 
-    $database->setQuery("INSERT INTO #__comprofiler_field_values (fieldid,fieldtitle,ordering) VALUES ".
-    	"(".$fieldid['fbviewtype']->fieldid.",'_UE_KUNENA_VIEWTYPE_FLAT',1),".
-    	"(".$fieldid['fbviewtype']->fieldid.",'_UE_KUNENA_VIEWTYPE_THREADED',2),".
-    	"(".$fieldid['fbordering']->fieldid.",'_UE_KUNENA_ORDERING_OLDEST',1),".
-    	"(".$fieldid['fbordering']->fieldid.",'_UE_KUNENA_ORDERING_LATEST',2)");
-    $database->query() or trigger_dberror("Unable to insert comprofiler field values.");
 
-    $database->setQuery("ALTER TABLE #__comprofiler ".
-    	"ADD fbviewtype varchar(255) DEFAULT '_UE_KUNENA_VIEWTYPE_FLAT' NOT NULL, ".
-		"ADD fbordering varchar(255) DEFAULT '_UE_KUNENA_ORDERING_OLDEST' NOT NULL, ".
-		"ADD fbsignature mediumtext");
-    $database->query() or trigger_dberror("Unable to add signature column.");
+//    // First remove any existing entries
+//    // Not the most elegant way to deal with duplicate entries, but certainly the most foolproof
+//    // No checking for non existing DB content
+//    $database->setQuery("ALTER TABLE #__comprofiler DROP fbviewtype, DROP fbordering, DROP fbsignature");
+//    $database->query() or trigger_dbwarning("Unable to drop comprofiler columns.");
+//
+//    $database->setQuery("DELETE FROM #__comprofiler_field_values WHERE fieldtitle IN ".
+//    	"('_UE_KUNENA_VIEWTYPE_FLAT','_UE_KUNENA_VIEWTYPE_THREADED','_UE_KUNENA_ORDERING_OLDEST','_UE_KUNENA_ORDERING_LATEST')");
+//    $database->query() or trigger_dberror("Unable to delete comprofiler field values.");
+//
+//    $database->setQuery("DELETE FROM #__comprofiler_fields WHERE name IN ('fbviewtype','fbordering','fbsignature')");
+//    $database->query() or trigger_dberror("Unable to delete comprofiler fields.");
+//
+//    $database->setQuery("DELETE FROM #__comprofiler_tabs WHERE title = '_UE_KUNENA_TABTITLE'");
+//    $database->query() or trigger_dberror("Unable to delete comprofiler field.");
+//
+//    // Now let's create the requires entries
+//    $database->setQuery("INSERT INTO #__comprofiler_tabs SET title='_UE_KUNENA_TABTITLE', description='_UE_KUNENA_TABDESC'");
+//    $database->query() or trigger_dberror("Unable to insert comprofiler tab.");
+//
+//    $database->setQuery("SELECT tabid FROM #__comprofiler_tabs WHERE title='_UE_KUNENA_TABTITLE'");
+//    $database->query() or trigger_dberror("Unable to load comprofiler tab.");
+//    $tabid = $database->loadResult();
+//
+//    $cols = $database->getTableFields(array('#__comprofiler_fields'));
+//    $isCB12 = isset($cols['#__comprofiler_fields']['tablecolumns']);
+//
+//    $database->setQuery("INSERT INTO #__comprofiler_fields (name,".($isCB12?"tablecolumns,":"")."title,type,maxlength,cols,rows,ordering,published,profile,calculated,sys,tabid) VALUES ".
+//    	"('fbviewtype',".($isCB12?"'fbviewtype',":"")."'_UE_KUNENA_VIEWTYPE_TITLE','select',0,0,0,1,1,0,0,0,$tabid),".
+//    	"('fbordering',".($isCB12?"'fbordering',":"")."'_UE_KUNENA_ORDERING_TITLE','select',0,0,0,2,1,0,0,0,$tabid),".
+//    	"('fbsignature',".($isCB12?"'fbsignature',":"")."'_UE_KUNENA_SIGNATURE','textarea',300,60,5,3,1,0,0,0,$tabid)");
+//    $database->query() or trigger_dberror("Unable to insert comprofiler fields.");
+//
+//    $database->setQuery("SELECT name,fieldid FROM #__comprofiler_fields WHERE name IN ('fbviewtype','fbordering')");
+//    $database->query() or trigger_dberror("Unable to load comprofiler fields.");
+//    $fieldid = $database->loadObjectList('name');
+//
+//    $database->setQuery("INSERT INTO #__comprofiler_field_values (fieldid,fieldtitle,ordering) VALUES ".
+//    	"(".$fieldid['fbviewtype']->fieldid.",'_UE_KUNENA_VIEWTYPE_FLAT',1),".
+//    	"(".$fieldid['fbviewtype']->fieldid.",'_UE_KUNENA_VIEWTYPE_THREADED',2),".
+//    	"(".$fieldid['fbordering']->fieldid.",'_UE_KUNENA_ORDERING_OLDEST',1),".
+//    	"(".$fieldid['fbordering']->fieldid.",'_UE_KUNENA_ORDERING_LATEST',2)");
+//    $database->query() or trigger_dberror("Unable to insert comprofiler field values.");
+//
+//    $database->setQuery("ALTER TABLE #__comprofiler ".
+//    	"ADD fbviewtype varchar(255) DEFAULT '_UE_KUNENA_VIEWTYPE_FLAT' NOT NULL, ".
+//		"ADD fbordering varchar(255) DEFAULT '_UE_KUNENA_ORDERING_OLDEST' NOT NULL, ".
+//		"ADD fbsignature mediumtext");
+//    $database->query() or trigger_dberror("Unable to add signature column.");
 
-    mosRedirect("index2.php?option=$option", _KUNENA_CBADDED);
+    mosRedirect("index2.php?option=$option", _KUNENA_3P_ADDED);
 }
 
 //===============================

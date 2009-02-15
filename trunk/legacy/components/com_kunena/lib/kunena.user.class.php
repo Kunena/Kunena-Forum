@@ -18,6 +18,7 @@ class CKunenaUser
 	var $id = 0;
 	var $joomlaProperties = NULL;
 	var $kunenaProperties = NULL;
+	var $CBProperties = NULL;
 
 	function CKunenaUser($userid)
 	{
@@ -83,6 +84,24 @@ class CKunenaUser
 
 		if (array_key_exists($field, $this->kunenaProperties)) {
 			return $this->kunenaProperties[$field];
+		} else {
+			return FALSE;
+		}
+	}
+
+	function _getCBProperty($field) {
+		global $database;
+
+		if ($this->id == 0) return FALSE;
+		if ($this->CBProperties == NULL)
+		{
+			$database->setQuery("SELECT * FROM #__comprofiler WHERE userid='{$this->id}' LIMIT 1");
+			$this->CBProperties = $database->loadAssoc();
+			check_dberror("Unable to load CB user information.");
+		}
+
+		if (array_key_exists($field, $this->CBProperties)) {
+			return $this->CBProperties[$field];
 		} else {
 			return FALSE;
 		}

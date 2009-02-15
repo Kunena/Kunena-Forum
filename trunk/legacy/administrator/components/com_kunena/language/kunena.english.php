@@ -23,8 +23,13 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // 1.0.8
-DEFINE('_COM_C_SYNCEUSERSDESC', 'Sync the Kunena user table with the Joomla user table');
+DEFINE('_COM_A_3P_PROFILE', 'Create/Update 3rd Party forum profile fields');
+DEFINE('_COM_A_3P_PROFILE_DESC',
+    'Click the link to create necessary forum fields in the 3rd party profile provider selected above. After they are created, you can move them using the admin interface of the profile provider. Do not change their names or options.');
+DEFINE('_COM_A_3P_PROFILE_CLICK', 'Create/Update');
+DEFINE('_KUNENA_3P_ADDED', '3rd party profile fields added');
 
+DEFINE('_COM_C_SYNCEUSERSDESC', 'Sync the Kunena user table with the Joomla user table');
 DEFINE('_POST_FORGOT_EMAIL', 'You forgot to include your e-mail address.  Click your browser&#146s back button to go back and try again.');
 DEFINE('_KUNENA_POST_DEL_ERR_FILE', 'Everything deletedâ some attachment files were missing!');
 // New strings for initial forum setup. Replacement for legacy sample data
@@ -555,7 +560,6 @@ DEFINE('_KUNENA_PRUNEUSERPROFILES', 'user profiles'); // <=FB 1.0.3
 DEFINE('_KUNENA_NOPROFILESFORPRUNNING', 'No profiles found eligible for pruning.'); // <=FB 1.0.3
 DEFINE('_KUNENA_TABLESUPGRADED', 'Kunena tables are upgraded to version');
 DEFINE('_KUNENA_FORUMCATEGORY', 'Forum Category');
-DEFINE('_KUNENA_CBADDED', 'Community Builder profile added');
 DEFINE('_KUNENA_IMGDELETED', 'Image deleted');
 DEFINE('_KUNENA_FILEDELETED', 'File deleted');
 DEFINE('_KUNENA_NOPARENT', 'No Parent');
@@ -940,13 +944,6 @@ DEFINE('_COM_A_BADWORDS_TITLE', 'Bad Words filtering');
 DEFINE('_COM_A_BADWORDS', 'Use bad words filtering');
 DEFINE('_COM_A_BADWORDS_DESC', 'Set to &quot;Yes&quot; if you want to filter posts containing the words you defined in the Badword Component config. To use this function you must have Badword Component installed!');
 DEFINE('_COM_A_BADWORDS_NOTICE', '* This message has been censored because it contained one or more words flagged by the administrator *');
-DEFINE('_COM_A_COMBUILDER_PROFILE', 'Create Community Builder forum profile');
-DEFINE('_COM_A_COMBUILDER_PROFILE_DESC',
-    'Click the link to create necessary the Forum fields in the Community Builder user profile. After they are created, you can move them using the Community Builder admin. Do not change their names or options. If you delete them from your Community Builder admin, you can create them again using this link. Do not click on the link multiple times!');
-DEFINE('_COM_A_COMBUILDER_PROFILE_CLICK', '> Click here <');
-DEFINE('_COM_A_COMBUILDER', 'Community Builder user profiles');
-DEFINE('_COM_A_COMBUILDER_DESC',
-    'Setting to &quot;Yes&quot; will activate integration with the Community Builder component (www.joomlapolis.com). All Kunena user profile functions will be handled by the Community Builder and the profile link in the forums will take you to the Community Builder user profile. This setting will override the the Clexus PM profile setting if both are set to &quot;Yes&quot;. Also, make sure you apply the required changes in the Community Builder database by using the option below.');
 DEFINE('_COM_A_AVATAR_SRC', 'Use avatar picture from');
 DEFINE('_COM_A_AVATAR_SRC_DESC',
     'If you have JomSocial, Clexus PM or the Community Builder component installed, you can configure Kunena to use the user avatar picture from JomSocial, Clexus PM or Community Builder user profile. NOTE: For Community Builder you need to have the thumbnail option turned on because the forum uses thumbnail user pictures instead of originals.');

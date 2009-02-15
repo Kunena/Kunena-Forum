@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.8
 
+15-February-2009 Matias
+^ Change time formating in announcements
+
 15-Februray-2009 fxstein
 # Proper favicon in menu for Joomla 1.0.x
 + Add missing user sync language string to language file
@@ -51,7 +54,7 @@ Kunena 1.0.8
 + Missing css styling added to forum header description
 ^ Forumjump: put Go button to the right side of the drop down category list
 
-13-February-2009 Matias
+14-February-2009 Matias
 # Try 2: Use default_ex template if current template is missing
 ^ Changed Quick Reply icon.
 ^ Use the same style in all buttons. CSS simplifications, fixes

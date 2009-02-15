@@ -175,23 +175,6 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	font-style:normal;
 	text-decoration:none;
 }
-/*
-#Kunena input, 
-#Kunena select, #Kunena select:focus, #Kunena select:hover {
-	background:#F7F7F7 none repeat scroll 0 0;
-	font-size:x-small;
-	border:1px solid #999999;
-	color:#000000;
-	padding: 0px 4px;
-}
-#Kunena input:hover, #Kunena input:focus {
-	background:#609FBF none repeat scroll 0 0;
-	font-size:x-small;
-	border:1px solid #006699;
-	color:#FFFFFF;
-	padding: 0px 4px;
-}
-*/
 #Kunena select, #Kunena select:focus, #Kunena select:hover {
 	background:#F7F7F7 none repeat scroll 0 0;
 	font-size:x-small;
@@ -920,7 +903,6 @@ table#fb_postmessage .fb_posthint .fb_inputbox {
 	margin: 2px;
 }
 #Kunena tr.fb_sectiontableentry1 .fb-postbuttons {
-	border: 0px solid #FFFFCC;
 	border: 1px solid #CCC;
 }
 table#fb_postmessage .fb_txtarea {
@@ -1198,8 +1180,6 @@ td.ft-td2 {
 /*
 FAQ , RULES , UPLOAD AVATAR, ANNOUNCEMENT
 -------------------------------------------------------------------- */
-#Kunena .fb_announcement input
-
 td.fb_faqdesc, td.fb_rulesdesc, td.fb_uadesc, td.fb_anndesc, td.fb_creditsdesc {
 	vertical-align: top;
 	padding: 5px;

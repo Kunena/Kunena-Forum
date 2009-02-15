@@ -52,7 +52,7 @@ $annID = $ann->id;
 $anntitle = $ann->title;
 $annsdescription = $ann->sdescription;
 $anndescription = $ann->description;
-$anncreated = $ann->created;
+$anncreated = KUNENA_timeformat(strtotime($ann->created));
 $annpublished = $ann->published;
 $annshowdate = $ann->showdate;
 

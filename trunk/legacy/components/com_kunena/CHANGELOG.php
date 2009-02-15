@@ -39,6 +39,7 @@ Kunena 1.0.8
 # Incorrect button css classes on write message screen fixed
 ^ Extra spacing for text buttons to conform with Joomla button style
 # Regression: Disabled the submit button because of incorrect type
+# Regression: Moderator tools got disabled during relocation - fixed
 
 13-February-2009 Matias
 # Try 2: Use default_ex template if current template is missing

@@ -41,7 +41,7 @@ function KunenaViewPagination($catid, $threadid, $page, $totalpages, $maxpages) 
 	$output .= CKunenaLink::GetThreadPageLink($fbConfig, 'view', $catid, $threadid, 1, $fbConfig->messages_per_page, 1, '', $rel='follow');
 	if ($startpage > 2)
         {
-	    $output .= "..."; 
+	    $output .= "...";
 	}
     }
 
@@ -58,8 +58,8 @@ function KunenaViewPagination($catid, $threadid, $page, $totalpages, $maxpages) 
     if ($endpage < $totalpages)
     {
 	if ($endpage < $totalpages-1)
-        { 
-	    $output .= "..."; 
+        {
+	    $output .= "...";
 	}
 
 	$output .= CKunenaLink::GetThreadPageLink($fbConfig, 'view', $catid, $threadid, $totalpages, $fbConfig->messages_per_page, $totalpages, '', $rel='follow');
@@ -286,7 +286,7 @@ if ($letPass || $is_Moderator)
             $thread_subscribe = CKunenaLink::GetTopicPostLink('subscribe', $catid, $id, $fbIcons['subscribe'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['subscribe'] . '" alt="' . _VIEW_SUBSCRIBETXT . '" title="' . _VIEW_SUBSCRIBETXT . '" border="0" />' : _VIEW_SUBSCRIBETXT);
         }
 
-	//START: FAVORITES
+        //START: FAVORITES
         if ($my_id != 0 && $fbConfig->allowsubscriptions && $fb_cansubscribe == 0)
         {
             // this user is allowed to unsubscribe
@@ -318,27 +318,27 @@ if ($letPass || $is_Moderator)
             // offer the moderator always the move link to relocate a topic to another forum
             // and the (un)sticky bit links
             // and the (un)lock links
-            $thread_move = CKunenaLink::GetTopicPostLink('move', $catid, $first_message->id, $fbIcons['move']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['move'] . '" alt="Move" border="0" title="' . _VIEW_MOVE . '" />':_GEN_MOVE);
+            $thread_move = CKunenaLink::GetTopicPostLink('move', $catid, $id, $fbIcons['move']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['move'] . '" alt="Move" border="0" title="' . _VIEW_MOVE . '" />':_GEN_MOVE);
 
             if ($first_message->ordering == 0)
             {
-                $thread_sticky = CKunenaLink::GetTopicPostLink('sticky', $catid, $first_message->id, $fbIcons['sticky']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['sticky'] . '" alt="Sticky" border="0" title="' . _VIEW_STICKY . '" />':_GEN_STICKY);
+                $thread_sticky = CKunenaLink::GetTopicPostLink('sticky', $catid, $id, $fbIcons['sticky']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['sticky'] . '" alt="Sticky" border="0" title="' . _VIEW_STICKY . '" />':_GEN_STICKY);
             }
             else
             {
-                $thread_sticky = CKunenaLink::GetTopicPostLink('unsticky', $catid, $first_message->id, $fbIcons['unsticky']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['unsticky'] . '" alt="Unsticky" border="0" title="' . _VIEW_UNSTICKY . '" />':_GEN_UNSTICKY);
+                $thread_sticky = CKunenaLink::GetTopicPostLink('unsticky', $catid, $id, $fbIcons['unsticky']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['unsticky'] . '" alt="Unsticky" border="0" title="' . _VIEW_UNSTICKY . '" />':_GEN_UNSTICKY);
             }
 
             if ($first_message->locked == 0)
             {
-                $thread_lock = CKunenaLink::GetTopicPostLink('lock', $catid, $first_message->id, $fbIcons['lock']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['lock'] . '" alt="Lock" border="0" title="' . _VIEW_LOCK . '" />':_GEN_LOCK);
+                $thread_lock = CKunenaLink::GetTopicPostLink('lock', $catid, $id, $fbIcons['lock']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['lock'] . '" alt="Lock" border="0" title="' . _VIEW_LOCK . '" />':_GEN_LOCK);
             }
             else
             {
-                $thread_lock = CKunenaLink::GetTopicPostLink('unlock', $catid, $first_message->id, $fbIcons['unlock']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['unlock'] . '" alt="Unlock" border="0" title="' . _VIEW_UNLOCK . '" />':_GEN_UNLOCK);
+                $thread_lock = CKunenaLink::GetTopicPostLink('unlock', $catid, $id, $fbIcons['unlock']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['unlock'] . '" alt="Unlock" border="0" title="' . _VIEW_UNLOCK . '" />':_GEN_UNLOCK);
             }
-            $thread_delete = CKunenaLink::GetTopicPostLink('delete', $catid, $first_message->id, $fbIcons['delete']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />':_GEN_DELETE);
-            $thread_merge = CKunenaLink::GetTopicPostLink('merge', $catid, $first_message->id, $fbIcons['merge']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['merge'] . '" alt="Merge" border="0" title="' . _VIEW_MERGE . '" />':_GEN_MERGE);
+            $thread_delete = CKunenaLink::GetTopicPostLink('delete', $catid, $id, $fbIcons['delete']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />':_GEN_DELETE);
+            $thread_merge = CKunenaLink::GetTopicPostLink('merge', $catid, $id, $fbIcons['merge']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['merge'] . '" alt="Merge" border="0" title="' . _VIEW_MERGE . '" />':_GEN_MERGE);
         }
 ?>
 

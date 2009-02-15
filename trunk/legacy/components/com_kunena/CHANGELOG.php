@@ -37,6 +37,7 @@ Kunena 1.0.8
 + Add missing user sync language string to language file
 - load and remove sample data images removed as functionality has been depriciated
 # Regression: Proper Joomla 1.5 vs 1.0 detection during install
+^ Backend Kunena Information updated
 
 14-Februray-2009 fxstein
 # Added missing SEF call to mark all forums read button

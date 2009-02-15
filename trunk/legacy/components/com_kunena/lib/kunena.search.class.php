@@ -182,16 +182,15 @@ class CKunenaSearch
      */
     function show()
     {
+	global $fbConfig;
+
         $searchword = implode(' ', $this->get_searchstrings());
         $results = $this->get_results();
         $totalRows = $this->total;
         $actionstring = $this->str_KUNENA_actionstring;
+	$start = $this->get_limitstart();
 
-        if ($this->get_limit() < $totalRows)
-        {
-            require_once(KUNENA_JABSPATH . '/includes/pageNavigation.php');
-            $pageNav = new mosPageNav($totalRows, $this->get_limitstart(), $this->get_limit());
-        }
+	$pagination = KunenaSearchPagination($searchword, floor($start/$fbConfig->messages_per_page_search)+1, floor($totalRows/$fbConfig->messages_per_page_search)+1, 7);
 
         if (defined('KUNENA_DEBUG'))
             echo '<p style="background-color:#FFFFCC;border:1px solid red;">' . $this->str_KUNENA_errormsg . '</p>';
@@ -256,18 +255,18 @@ class CKunenaSearch
                     $k = 1 - $k;
                     $ressubject = $result->subject;
                     // Clean up subject
-                    $ressubject = smile::purify($ressubject);
+                    $ressubject = stripslashes(smile::purify($ressubject));
                     $ressubject = preg_replace("/".preg_quote($searchword, '/')."/i", '<span  class="searchword" >' . $searchword . '</span>', $ressubject);
-                    $resmessage = $result->message;
+                    $resmessage = stripslashes($result->message);
                     // Strip smiles and bbcode out of search results; they look ugly
                     $resmessage = smile::purify($resmessage);
                     $resmessage = preg_replace("/".preg_quote($searchword, '/')."/i", '{{' . $searchword . '}}', $resmessage);
-                    $searchResultList = str_replace("{{", '<span class="fb_search-results">', substr(htmlspecialchars($resmessage), 0, 300));
+                    $searchResultList = str_replace("{{", '<span class="fb_search-results">', mb_substr(html_entity_decode_utf8($resmessage), 0, 300));
                     $searchResultList = str_replace("}}", '</span>', $searchResultList);
                     echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '">';
                     echo '<td  class = "td-1" ><a href="'
                              . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $result->id . '&amp;catid=' . $result->catid . '#' . $result->id) . '" >' . $ressubject . '</a><br />' . $searchResultList . '<br /><br /></td>';
-                    echo '<td class = "td-2" >' . $result->name . '</td>';
+                    echo '<td class = "td-2" >' . html_entity_decode_utf8(stripslashes($result->name)) . '</td>';
                     echo '<td class = "td-3" >' . date(_DATETIME, $result->time) . '</td></tr>';
                     echo "\n";
                 }
@@ -281,7 +280,7 @@ class CKunenaSearch
                     <tr  class = "fb_sth" >
                         <th colspan = "3" style = "text-align:center" class = "th-1 <?php echo $boardclass; ?>sectiontableheader">
                             <?php
-                            echo $pageNav->writePagesLinks(KUNENA_LIVEURL . '&amp;func=search&amp;searchword=' . $searchword);
+                            echo $pagination;
                             ?>
                         </th>
                     </tr>
@@ -293,7 +292,8 @@ class CKunenaSearch
                 <tr  class = "fb_sth" >
                    <th colspan = "3" style = "text-align:center" class = "th-1 <?php echo $boardclass; ?>sectiontableheader">
                         <?php
-                        printf(_FORUM_SEARCHRESULTS, count($results), $totalRows);
+			$resStartStop = (string)($start+1).' - '.(string)($start+count($results));
+                        printf(_FORUM_SEARCHRESULTS, $resStartStop, $totalRows);
                         ?>
                     </th>
                 </tr>
@@ -306,5 +306,54 @@ class CKunenaSearch
 </div>
 <?php
     }
-}?>
+}
+
+function KunenaSearchPagination($searchword, $page, $totalpages, $maxpages) {
+    global $fbConfig;
+
+    if ($page==0) $page++;
+    $startpage = ($page - floor($maxpages/2) < 1) ? 1 : $page - floor($maxpages/2);
+    $endpage = $startpage + $maxpages;
+    if ($endpage > $totalpages) {
+	$startpage = ($totalpages-$maxpages) < 1 ? 1 : $totalpages-$maxpages;
+	$endpage = $totalpages;
+    }
+
+    $output = '<div class="fb_pagination">'._PAGE;
+    if ($startpage > 1)
+    {
+	if ($endpage < $totalpages) $endpage--;
+	$output .= CKunenaLink::GetSearchLink($fbConfig, $searchword, 0, 1, $rel='nofollow');
+
+	if ($startpage > 2)
+        {
+	    $output .= "...";
+	}
+    }
+
+    for ($i = $startpage; $i <= $endpage && $i <= $totalpages; $i++)
+    {
+        if ($page == $i) {
+            $output .= "<strong>$i</strong>";
+        }
+        else {
+	    $output .= CKunenaLink::GetSearchLink($fbConfig, $searchword, ($i-1)*$fbConfig->messages_per_page_search, $i, $rel='nofollow');
+        }
+    }
+
+    if ($endpage < $totalpages)
+    {
+	if ($endpage < $totalpages-1)
+        {
+	    $output .= "...";
+	}
+
+	$output .= CKunenaLink::GetSearchLink($fbConfig, $searchword, ($totalpages-1)*$fbConfig->messages_per_page_search, $totalpages, $rel='nofollow');
+    }
+
+    $output .= '</div>';
+    return $output;
+}
+
+?>
 

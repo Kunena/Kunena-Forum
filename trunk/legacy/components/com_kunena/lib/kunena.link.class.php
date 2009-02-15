@@ -253,6 +253,11 @@ class CKunenaLink
         return CKunenaLink::GetSefHrefLink($helplink, $name, '', $rel);
     }
 
+    function GetSearchLink($fbConfig, $searchword, $start, $name, $rel='nofollow')
+    {
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=search&amp;searchword=' . $searchword . '&amp;start='.$start, $name, '', $rel);
+    }
+
     //
     // Macro functions that build more complex html output with embedded links
     //

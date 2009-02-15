@@ -42,6 +42,8 @@ Kunena 1.0.8
 ^ Tweaks in css, fix dark themes
 # Missing define for _POST_NO_FAVORITED_TOPIC in kunena.english.php
 # Show user only once in pathway
+# Fix broken search pagination
+# Fix Search contents
 
 15-Februray-2009 fxstein
 # Proper favicon in menu for Joomla 1.0.x

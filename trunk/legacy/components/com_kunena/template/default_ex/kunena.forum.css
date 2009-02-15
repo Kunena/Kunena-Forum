@@ -1109,6 +1109,18 @@ li.jr-pagenav-nb span.pagenav, li.jr-pagenav-nb a.pagenav:link, li.jr-pagenav-nb
 }
 
 /*
+FORUM HEADER DESCRIPTION
+-------------------------------------------------------------------- */
+.fb_forum-headerdesc {
+	padding: 3px;
+	line-height: 18px;
+	margin: 5px 0 0 0;
+	border: 1px solid #CCCCCC; 
+	color: #000000;
+	background:#F7F7F7;
+}
+
+/*
 FORUM TOOLS
 -------------------------------------------------------------------- */
 #fb_ft-cover {

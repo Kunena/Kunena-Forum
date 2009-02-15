@@ -39,7 +39,7 @@ function KunenaShowcatPagination($catid, $page, $totalpages, $maxpages) {
         $output .= CKunenaLink::GetCategoryPageLink('showcat', $catid, 1, 1, $rel='follow');
 	if (($startpage) > 2)
         {
-	    $output .= "..."; 
+	    $output .= "...";
 	}
     }
 
@@ -56,8 +56,8 @@ function KunenaShowcatPagination($catid, $page, $totalpages, $maxpages) {
     if ($endpage < $totalpages)
     {
 	if ($endpage < $totalpages-1)
-        { 
-	    $output .= "..."; 
+        {
+	    $output .= "...";
 	}
 
         $output .= CKunenaLink::GetCategoryPageLink('showcat', $catid, $totalpages, $totalpages, $rel='follow');
@@ -305,7 +305,13 @@ if ($letPass || $is_Moderator)
 <!-- /top nav -->
 
 <?php if($objCatInfo->headerdesc) { ?>
-<div class="headerdesc"><?php echo $objCatInfo->headerdesc; ?></div>
+<table class="fb_forum-headerdesc" border="0" cellpadding="0" cellspacing="0" width="100%">
+	<tr>
+		<td>
+		<?php echo $objCatInfo->headerdesc; ?>
+		</td>
+	</tr>
+</table>
 <?php } ?>
 <?php
     //(JJ)

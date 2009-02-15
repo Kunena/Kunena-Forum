@@ -50,11 +50,6 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     define("KUNENA_COMPONENT_ITEMID", (int)$Itemid);
     define("KUNENA_COMPONENT_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_COMPONENT_ITEMID);
 
-	// Check if fb_user_template is present, otherwise set to default_ex
-	if (!file_exists(KUNENA_ABSPATH . '/template/' . $fb_cur_template)) {
-	        $fb_cur_template='default_ex';
-	}
-
     //JomSocial
     if ($fbConfig->pm_component == 'jomsocial' || $fbConfig->fb_profile == 'jomsocial' || $fbConfig->avatar_src == 'jomsocial')
     {
@@ -211,11 +206,11 @@ $fb_user_img_template = strval(mosGetParam($_COOKIE, 'fb_user_img_template', '')
 $fb_user_template = strtr($fb_user_template, '\\/', '');
 $fb_user_img_template = strtr($fb_user_template, '\\/', '');
 
-if (strlen($fb_user_template) > 0 && is_dir(KUNENA_JLIVEURL . '/templates/' . $fb_user_template))
+if (strlen($fb_user_template) > 0 && file_exists(KUNENA_ABSPATH . '/template/' . $fb_user_template))
 {
     $fb_cur_template = $fb_user_template;
     }
-else if (is_dir(KUNENA_JLIVEURL . '/templates/' . $fbConfig->template))
+else if (file_exists(KUNENA_ABSPATH . '/template/' . $fbConfig->template))
 {
     $fb_cur_template = $fbConfig->template;
     }
@@ -224,11 +219,11 @@ else
     $fb_cur_template = 'default_ex';
     }
 
-if (strlen($fb_user_img_template) > 0 && is_dir(KUNENA_JLIVEURL . '/templates/' . $fb_user_template))
+if (strlen($fb_user_img_template) > 0 && file_exists(KUNENA_ABSPATH . '/template/' . $fb_user_template . '/images'))
 {
     $fb_cur_img_template = $fb_user_img_template;
     }
-else if (is_dir(KUNENA_JLIVEURL . '/templates/' . $fbConfig->templateimagepath . '/images'))
+else if (file_exists(KUNENA_ABSPATH . '/template/' . $fbConfig->templateimagepath . '/images'))
 {
     $fb_cur_img_template = $fbConfig->templateimagepath;
     }

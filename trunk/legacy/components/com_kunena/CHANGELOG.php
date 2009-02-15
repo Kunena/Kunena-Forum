@@ -36,6 +36,7 @@ Kunena 1.0.8
 ^ Change time formating in announcements
 # Regression: Removed &#32 ; from report emails
 # Fixed report URLs
+# Regression: Typos in template exists checks
 
 15-Februray-2009 fxstein
 # Proper favicon in menu for Joomla 1.0.x

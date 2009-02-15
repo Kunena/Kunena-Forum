@@ -51,7 +51,7 @@ Kunena 1.0.8
 - load and remove sample data images removed as functionality has been depriciated
 # Regression: Proper Joomla 1.5 vs 1.0 detection during install
 ^ Backend Kunena Information updated
-^ Initial based for new 3rd party profile integration framework
+^ Initial base for new 3rd party profile integration framework
 
 14-Februray-2009 fxstein
 # Added missing SEF call to mark all forums read button

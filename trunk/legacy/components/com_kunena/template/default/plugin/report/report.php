@@ -64,29 +64,29 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
     $sender = $database->loadResult();
 
     if ($reason) {
-        $subject = "[".stripslashes($fbConfig->board_title)." ".trim(_GEN_FORUM)."] "._KUNENA_REPORT_MSG . ": " . $reason;
+        $subject = "[".stripslashes($fbConfig->board_title)." "._GEN_FORUM."] "._KUNENA_REPORT_MSG . ": " . $reason;
         }
     else {
-        $subject = "[".stripslashes($fbConfig->board_title)." ".trim(_GEN_FORUM)."] "._KUNENA_REPORT_MSG . ": " . stripslashes($row->subject);
+        $subject = "[".stripslashes($fbConfig->board_title)." "._GEN_FORUM."] "._KUNENA_REPORT_MSG . ": " . stripslashes($row->subject);
         }
 
-    $msglink = "index.php?option=com_kunena&amp;func=view&amp;catid=" . $row->catid . "&amp;id=" . $row->id . KUNENA_COMPONENT_ITEMID_SUFFIX;
-    $msglink = sefRelToAbs($msglink . '#' . $row->id);
+    $msglink = str_replace('&amp;', '&', sefRelToAbs(KUNENA_LIVEURLREL . "&amp;func=view&amp;catid=" . $row->catid . "&amp;id=" . $row->id) . '#' . $row->id);
 
-    $message .= "" . _KUNENA_REPORT_RSENDER . "" . $sender;
+    $message .= "" . _KUNENA_REPORT_RSENDER . " " . $sender;
     $message .= "\n";
-    $message .= "" . _KUNENA_REPORT_RREASON . "" . $reason;
+    $message .= "" . _KUNENA_REPORT_RREASON . " " . $reason;
     $message .= "\n";
-    $message .= "" . _KUNENA_REPORT_RMESSAGE . "" . $text;
+    $message .= "" . _KUNENA_REPORT_RMESSAGE . " " . $text;
     $message .= "\n\n";
-    $message .= "" . _KUNENA_REPORT_POST_POSTER . "" . $baduser;
+    $message .= "" . _KUNENA_REPORT_POST_POSTER . " " . $baduser;
     $message .= "\n";
-    $message .= "" . _KUNENA_REPORT_POST_SUBJECT . "" . stripslashes($row->subject);
+    $message .= "" . _KUNENA_REPORT_POST_SUBJECT . " " . stripslashes($row->subject);
     $message .= "\n";
     $message .= "" . _KUNENA_REPORT_POST_MESSAGE . "\n-----\n" . stripslashes($row->msg_text);
     $message .= "\n-----\n\n";
-    $message .= "" . _KUNENA_REPORT_POST_LINK . "" . $msglink;
+    $message .= "" . _KUNENA_REPORT_POST_LINK . " " . $msglink;
     $message .= "\n\n\n\n** Powered by Kunena! - http://www.Kunena.com **";
+    $message = strtr($message, array('&#32;'=>''));
 
     //get category moderators
     $database->setQuery("SELECT userid FROM #__fb_moderation WHERE catid={$row->catid}");
@@ -215,7 +215,7 @@ function ReportForm($msg_id, $catid) {
                         <tbody>
                             <tr>
                                 <td class = "fb_faqdesc">
-                                    <form method = "post" action = "index.php">
+                                    <form method = "post" action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=report'); ?>">
                                         <table width = "100%" border = "0">
                                             <tr>
                                                 <td width = "10%">
@@ -240,8 +240,6 @@ function ReportForm($msg_id, $catid) {
                                             </tr>
                                         </table>
 
-                                        <input type = "hidden" name = "option" value = "com_kunena"/>
-                                        <input type = "hidden" name = "func" value = "report"/>
                                         <input type = "hidden" name = "do" value = "report"/>
                                         <input type = "hidden" name = "msg_id" value = "<?php echo $msg_id;?>"/>
                                         <input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>

@@ -355,7 +355,7 @@ DEFINE('_KUNENA_CAPTCHA_DESC','Antispam and antibot CAPTCHA system On/Off');
 DEFINE('_KUNENA_CAPDESC','Enter code here');
 DEFINE('_KUNENA_CAPERR','Code not correct!');
 DEFINE('_KUNENA_COM_A_REPORT', 'Message Reporting');
-DEFINE('_KUNENA_COM_A_REPORT_DESC', 'If you want to allow users toreport any message, select &quot;Yes.&quot;');
+DEFINE('_KUNENA_COM_A_REPORT_DESC', 'If you want to allow users to report any message, select &quot;Yes.&quot;');
 DEFINE('_KUNENA_REPORT_MSG', 'Message Reported');
 DEFINE('_KUNENA_REPORT_REASON', 'Reason');
 DEFINE('_KUNENA_REPORT_MESSAGE', 'Your Message');
@@ -1177,11 +1177,11 @@ DEFINE('_COM_A_RANKINGIMAGES_DESC',
     'Set to &quot;Yes&quot; if you want to show the rank registered users have using an image (from components/com_kunena/ranks). Turning this of will show the text for that rank. Check the documentation on www.kunena.com for more information on ranking images.');
 
 //email and stuff
-$_COM_A_NOTIFICATION = "New post notification from ";
-$_COM_A_NOTIFICATION1 = "A new post has been made to a topic to which you have subscribed on the ";
+$_COM_A_NOTIFICATION = "New post notification from";
+$_COM_A_NOTIFICATION1 = "A new post has been made to a topic to which you have subscribed on the";
 $_COM_A_NOTIFICATION2 = "You can administer your subscriptions by following the 'My Profile' link on the Forum home page after you have logged in on the site. From your profile you can also unsubscribe from the topic.";
 $_COM_A_NOTIFICATION3 = "Do not answer to this e-mail notification as it is a generated e-mail.";
-$_COM_A_NOT_MOD1 = "A new post has been made to a forum to which you have assigned as moderator on the ";
+$_COM_A_NOT_MOD1 = "A new post has been made to a forum to which you have assigned as moderator on the";
 $_COM_A_NOT_MOD2 = "Please have a look at it after you have logged in on the site.";
 DEFINE('_COM_A_NO', 'No');
 DEFINE('_COM_A_YES', 'Yes');

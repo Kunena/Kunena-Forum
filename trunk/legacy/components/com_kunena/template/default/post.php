@@ -369,7 +369,10 @@ $catName = $objCatInfo->name;
 								}
 							}
 
-                                                    $mailsubject = "[".stripslashes($board_title)." ".trim(_GEN_FORUM)."] " . stripslashes($messagesubject) . " (" . stripslashes($catName) . ")";
+                                                    $mailsender = stripslashes($board_title)." "._GEN_FORUM;
+
+                                                    $mailsubject = "[".stripslashes($board_title)." "._GEN_FORUM."] " . stripslashes($messagesubject) . " (" . stripslashes($catName) . ")";
+
                                                     $msg = "$subs->name,\n\n";
                                                     $msg .= trim($_COM_A_NOTIFICATION1)." ".stripslashes($board_title)." "._GEN_FORUM."\n\n";
                                                     $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
@@ -388,7 +391,7 @@ $catName = $objCatInfo->name;
                                                     $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
 
                                                     if ($ip != "127.0.0.1" && $my->id != $subs->id) { //don't mail yourself
-                                                        mosmail($fbConfig->email, stripslashes($board_title)." ".trim(_GEN_FORUM), $subs->email, $mailsubject, $msg);
+                                                        mosmail($fbConfig->email, $mailsender, $subs->email, $mailsubject, $msg);
                                                     }
                                                 }
                                                 unset($_catobj);
@@ -430,9 +433,12 @@ $catName = $objCatInfo->name;
 
                                                 foreach ($modsList as $mods)
                                                 {
+                                                    $mailsender = stripslashes($board_title)." "._GEN_FORUM;
+
                                                     $mailsubject = "[".stripslashes($board_title)." "._GEN_FORUM."] " . stripslashes($messagesubject) . " (" . stripslashes($catName) . ")";
+
                                                     $msg = "$subs->name,\n\n";
-                                                    $msg .= trim($_COM_A_NOT_MOD1)." ".stripslashes($board_title)." "._GEN_FORUM."\n\n";
+                                                    $msg .= trim($_COM_A_NOT_MOD1)." ".stripslashes($board_title)." ".trim(_GEN_FORUM)."\n\n";
                                                     $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
 						    $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
                                                     $msg .= _VIEW_POSTED.": " . stripslashes($fb_authorname) . "\n\n";
@@ -450,7 +456,7 @@ $catName = $objCatInfo->name;
 
                                                     if ($ip != "127.0.0.1" && $my->id != $mods->id) { //don't mail yourself
                                                         //Send away
-                                                        mosmail($fbConfig->email, stripslashes($board_title)." ".trim(_GEN_FORUM), $mods->email, $mailsubject, $msg);
+                                                        mosmail($fbConfig->email, $mailsender, $mods->email, $mailsubject, $msg);
                                                     }
                                                 }
                                             }

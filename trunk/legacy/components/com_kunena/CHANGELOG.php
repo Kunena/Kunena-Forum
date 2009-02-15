@@ -43,6 +43,7 @@ Kunena 1.0.8
 13-February-2009 Matias
 # Try 2: Use default_ex template if current template is missing
 ^ Changed Quick Reply icon. 
+^ Use the same style in all buttons. CSS simplifications, fixes
 
 13-Februray-2009 fxstein
 # Minor bug fix in automatic upgrade that re-ran 1.0.6 portion unneccesarily

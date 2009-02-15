@@ -540,7 +540,7 @@ if (count($messages[0]) > 0)
                             CKunenaTools::showBulkActionCats();
                             ?>
 
-            <input type = "submit" name = "fbBulkActionsGo" class = "fbs" value = "<?php echo _KUNENA_GO ; ?>"/>
+            <input type = "submit" name = "fbBulkActionsGo" class = "fb_button fbs" value = "<?php echo _KUNENA_GO ; ?>"/>
                         </td>
 
                         </tr>

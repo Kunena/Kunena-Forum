@@ -175,11 +175,52 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	font-style:normal;
 	text-decoration:none;
 }
+/*
+#Kunena input, 
+#Kunena select, #Kunena select:focus, #Kunena select:hover {
+	background:#F7F7F7 none repeat scroll 0 0;
+	font-size:x-small;
+	border:1px solid #999999;
+	color:#000000;
+	padding: 0px 4px;
+}
+#Kunena input:hover, #Kunena input:focus {
+	background:#609FBF none repeat scroll 0 0;
+	font-size:x-small;
+	border:1px solid #006699;
+	color:#FFFFFF;
+	padding: 0px 4px;
+}
+*/
+#Kunena select, #Kunena select:focus, #Kunena select:hover {
+	background:#F7F7F7 none repeat scroll 0 0;
+	font-size:x-small;
+	border:1px solid #999999;
+	color:#000000;
+	padding: 0px;
+}
+#Kunena option {
+	background:#FFFFFF none repeat scroll 0 0;
+	font-size:x-small;
+	color:#000000;
+	padding: 0px 10px 0px 0px;
+}
+#Kunena .button, #Kunena .fb_button {
+	background:#F7F7F7 none repeat scroll 0 0;
+	font-size: x-small;
+	border:1px solid #999999;
+	color:#000000;
+	padding: 0px 4px;
+}
+#Kunena .fb_button:hover, #Kunena .fb_button:focus {
+	background:#609FBF none repeat scroll 0 0;
+	font-size: x-small;
+	border:1px solid #006699;
+	color:#FFFFFF;
+	padding: 0px 4px;
+}
+
 /* Menu */
-
-
-
-
 
 /* B: all disc top */
 #Kunena .fb_list_actions {
@@ -279,6 +320,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	line-height:28px;
 	padding-left:5px;
 	padding-right:5px;
+	white-space: nowrap;
 }
 #Kunena .fb_list_jump_all form {
 	display:table;
@@ -304,14 +346,14 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	display:none;
 }
 #Kunena .fb_list_top {
-	background:#F7F7F7 none;
+	background:#FFFFFF none;
 	border:1px solid #D1D1D1;
 	clear:both;
 	margin:-1px 0px 5px;
 	width:100%;
 }
 #Kunena .fb_list_bottom {
-	background:#F7F7F7 none;
+	background:#FFFFFF none;
 	border:1px solid #D1D1D1;
 	clear:both;
 	margin:0px 0px 5px;
@@ -339,21 +381,21 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	white-space: nowrap;
 }
 #Kunena .fb_pagination {
+	white-space: nowrap;
 	font-weight: normal;
-	font-size: 13px;
-	color: #666666;
+	font-size: small;
 }
 #Kunena .fb_pagination a, #Kunena .fb_pagination strong {
 	font-weight: normal;
 	margin: 0px 2px;
-	padding: 0px 2px;
+	padding: 0px 4px;
 	text-decoration: none;
 }
 
 #Kunena .fb_pagination a, #Kunena .fb_pagination a:link, #Kunena .fb_pagination a:visited {
 	background-color: #F7F7F7;
-	border: 1px solid #BFC3C6;
-	color: #666666;
+	border: 1px solid #999999;
+	color: #000000;
 }
 #Kunena .fb_pagination strong, #Kunena .fb_pagination a:active,  #Kunena .fb_pagination a:hover {
 	background-color: #609FBF;
@@ -430,12 +472,21 @@ td.fb_profileboxcnt {
 #fb_searchbox .fb_search_inputbox {
 	width: auto;
 	margin: 0 0 0 5px;
-	border: 1px solid #666666;
+	border: 1px solid #999999;
 	background: #FFFFFF url(images/search_icon.gif) no-repeat 5px center;
 	font-weight: normal;
-	padding: 2px 5px 2px 20px;
+	padding: 1px 5px 1px 20px;
 }
-#fb_searchbox .fb_search_button {
+#fb_searchbox .fb_search_inputbox:hover, #fb_searchbox .fb_search_inputbox:focus {
+	width: auto;
+	margin: 0 0 0 5px;
+	border: 1px solid #999999;
+	background: #FFFFFF url(images/search_icon.gif) no-repeat 5px center;
+	font-weight: normal;
+	color: #000000;
+	padding: 1px 5px 1px 20px;
+}
+#fb_searchbox .fb_button {
 	margin:0 5px 0 0;
 }
 .fb_search-results {
@@ -715,10 +766,6 @@ span.contentheading {
 }
 div.switchcontent {
 }
-input.fb_qm_btn {
-}
-input.fb_qm_cncl_btn {
-}
 div.fb_smalltext {
 	font-size:x-small;
 	font-family:Arial, Helvetica, sans-serif;
@@ -792,6 +839,12 @@ span.fb_qr_fire {
 .switchcontent {
 	display:none;
 }
+#Kunena .switchcontent .inputbox {
+	border: 1px solid #999999;
+	background: #FFFFFF;
+	color: #000000;
+	margin: 2px 0px;
+}
 span.fb_quote {
 	display: block;
 	border: 1px dotted #CCC;
@@ -826,26 +879,31 @@ div#fb_threadview table.fb_blocktable {
 /*
 POST PAGE
 -------------------------------------------------------------------- */
-#fb_postmessage {
+#Kunena #fb_postmessage {
 	border-left:  1px solid #BFC3C6;
-	border-right: 1px solid #BFC3C6;
-}
-table#fb_postmessage .fb_button {
-	border: 1px solid #999;
-	color: #000;
-	padding: 1px;
-}
-table#fb_postmessage .fb_slcbox {
-	border: 1px solid #999;
-	color: #000;
 }
 #fb_post_message .postinput {
 	width:  94%;
+	background: #FFFFFF;
+	color: #000000;
 	border: 1px solid #ccc;
 	padding: 3px 5px;
 }
-#fb_postmessage tr.fb_sectiontableentry2 td.fb-topicicons td {
-	border-bottom: 0px solid #BFC3C6;
+#fb_post_message .postinput:hover, #fb_post_message .postinput:focus {
+	width:  94%;
+	background: #FFFFFF;
+	color: #000000;
+	border: 1px solid #ccc;
+	padding: 3px 5px;
+}
+#Kunena #fb_postmessage tr.fb_sectiontableentry2 td.fb-topicicons table {
+	width: 95%;
+}
+#Kunena #fb_postmessage tr.fb_sectiontableentry2 td.fb-topicicons td {
+	background: #FFFFFF;
+	color: #000000;
+	border: 1px solid #ccc;
+	width: 99%;
 }
 #fb_postmessage tr.fb_sectiontableentry1 .fb-postbuttonset td.fb_posthint {
 	background: #FFFFCC;
@@ -855,12 +913,15 @@ table#fb_postmessage .fb_slcbox {
 table#fb_postmessage .fb_posthint .fb_inputbox {
 	background: #FFFFCC;
 	border: 0px solid #FFFFCC;
-	width:  100%;
+	width:  99%;
 }
 .fb-postbuttonset {
 	width: 95%;
+	margin: 2px;
 }
-.fb-postbuttons {
+#Kunena tr.fb_sectiontableentry1 .fb-postbuttons {
+	border: 0px solid #FFFFCC;
+	border: 1px solid #CCC;
 }
 table#fb_postmessage .fb_txtarea {
 	width:95%;
@@ -875,13 +936,6 @@ table#fb_postmessage .fb_txtarea {
 #fb_postmessage tr.fb_sectiontableentry1 .fb-postbuttonset td, #fb_postmessage tr.fb_sectiontableentry2 .fb-postbuttonset td {
 	border-bottom: 0px solid #BFC3C6;
 }
-table#fb_postmessage .button {
-	border: 1px solid #999;
-	color: #333;
-	font-weight: bold;
-	padding: 3px 10px;
-	margin: 3px;
-}
 .fb_leftcolumn {
 	width:160px;
 	text-align: right;
@@ -890,7 +944,14 @@ table#fb_postmessage .button {
 	border: 1px solid #999;
 	font-size: small;
 }
-
+#Kunena #fb_post_buttons {
+	padding: 4px;
+}
+#Kunena #fb_post_buttons .fb_button {
+	padding: 4px;
+	font-weight: bold;
+	font-size: small;
+}
 /*
 POST HISTORY
 -------------------------------------------------------------------- */
@@ -928,6 +989,7 @@ POST HISTORY
 	line-height: 18px;
 	margin: 5px 0 0 0;
 	border: 1px solid #CCCCCC; 
+	color: #000000;
 	background:#F7F7F7;
 }
 .fb_forum-pathway-bottom {
@@ -935,6 +997,7 @@ POST HISTORY
 	line-height: 18px;
 	margin: 0 0 5px 0;
 	border: 1px solid #CCCCCC; 
+	color: #000000;
 	background:#F7F7F7;
 }
 .path-element-first {
@@ -1123,6 +1186,8 @@ td.ft-td2 {
 /*
 FAQ , RULES , UPLOAD AVATAR, ANNOUNCEMENT
 -------------------------------------------------------------------- */
+#Kunena .fb_announcement input
+
 td.fb_faqdesc, td.fb_rulesdesc, td.fb_uadesc, td.fb_anndesc, td.fb_creditsdesc {
 	vertical-align: top;
 	padding: 5px;

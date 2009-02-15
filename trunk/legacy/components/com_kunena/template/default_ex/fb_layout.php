@@ -284,7 +284,7 @@ function getSearchBox()
         $boxsize = 15;
 
    $return .= '<input class="fb_search_inputbox fbs" type="text" name="searchword" size="'. $boxsize . '" value="' . _GEN_SEARCH_BOX . '" onblur="if(this.value==\'\') this.value=\'' . _GEN_SEARCH_BOX . '\';" onfocus="if(this.value==\'' . _GEN_SEARCH_BOX . '\') this.value=\'\';" />';
-	$return .= ' <input type="submit" value="'._KUNENA_GO.'" name="submit" class="fb_search_button fbs"/>';
+	$return .= ' <input type="submit" value="'._KUNENA_GO.'" name="submit" class="fb_button fbs"/>';
     $return .= '</form></div>';
     return $return;
 }

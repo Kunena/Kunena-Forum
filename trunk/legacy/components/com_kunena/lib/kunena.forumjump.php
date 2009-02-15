@@ -37,7 +37,7 @@ $lists['parent'] = JJ_categoryParentList($catid, "", $options);
 
         <input type = "hidden" name = "func" value = "showcat"/>
 
-        <input type = "submit" name = "Go"  class="fbjumpgo fbs" value = "<?php echo _KUNENA_GO; ?>"/>
+        <input type = "submit" name = "Go"  class="fb_button fbs" value = "<?php echo _KUNENA_GO; ?>"/>
 <?php echo $lists['parent']; ?>
     </div>
 </form>

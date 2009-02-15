@@ -271,7 +271,7 @@ class smile
                             <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "w" name = "addbbcode16" value = "URL" style = "text-decoration: underline; " onclick = "bbstyle(16)" onmouseover = "helpline('w')" />
 
                             <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "h" name = "addbbcode24" value = "Hide" onclick = "bbstyle(20)" onmouseover = "helpline('h')" />
-
+		<br />
                             &nbsp;<?php echo _SMILE_COLOUR; ?>:
 
                     <select name = "addbbcode20"
@@ -301,7 +301,7 @@ class smile
 
                     &nbsp;<?php echo _SMILE_SIZE; ?>:
 
-                    <select name = "addbbcode22" onchange = "bbfontstyle('[size=' + this.form.addbbcode22.options[this.form.addbbcode22.selectedIndex].value + ']', '[/size]')" onmouseover = "helpline('f')" class = "<?php echo $boardclass;?>button">
+                    <select name = "addbbcode22" onchange = "bbfontstyle('[size=' + this.form.addbbcode22.options[this.form.addbbcode22.selectedIndex].value + ']', '[/size]')" onmouseover = "helpline('f')" class = "<?php echo $boardclass;?>slcbox">
                         <option value = "1"><?php echo _SIZE_VSMALL; ?></option>
 
                         <option value = "2"><?php echo _SIZE_SMALL; ?></option>

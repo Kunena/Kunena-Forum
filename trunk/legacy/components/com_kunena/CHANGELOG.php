@@ -42,6 +42,7 @@ Kunena 1.0.8
 # Regression: Moderator tools got disabled during relocation - fixed
 + Missing serarch icon in default_ex userlist added
 + Missing css styling added to forum header description
+^ Forumjump: put Go button to the right side of the drop down category list
 
 13-February-2009 Matias
 # Try 2: Use default_ex template if current template is missing

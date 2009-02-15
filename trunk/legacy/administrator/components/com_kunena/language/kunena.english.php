@@ -23,6 +23,8 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // 1.0.8
+DEFINE('_COM_C_SYNCEUSERSDESC', 'Sync the Kunena user table with the Joomla user table');
+
 DEFINE('_POST_FORGOT_EMAIL', 'You forgot to include your e-mail address.  Click your browser&#146s back button to go back and try again.');
 DEFINE('_KUNENA_POST_DEL_ERR_FILE', 'Everything deletedâ some attachment files were missing!');
 // New strings for initial forum setup. Replacement for legacy sample data

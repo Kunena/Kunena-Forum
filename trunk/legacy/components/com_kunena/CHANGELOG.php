@@ -34,6 +34,7 @@ Kunena 1.0.8
 
 15-Februray-2009 fxstein
 # Proper favicon in menu for Joomla 1.0.x
++ Add missing user sync language string to language file
 
 14-Februray-2009 fxstein
 # Added missing SEF call to mark all forums read button

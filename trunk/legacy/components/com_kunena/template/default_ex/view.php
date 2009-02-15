@@ -368,7 +368,13 @@ if ($letPass || $is_Moderator)
             ?>
         </div>
         <?php if($objCatInfo->headerdesc) { ?>
-        <div class="headerdesc"><?php echo $objCatInfo->headerdesc; ?></div>
+		<table class="fb_forum-headerdesc" border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<td>
+				<?php echo $objCatInfo->headerdesc; ?>
+				</td>
+			</tr>
+		</table>
         <?php } ?>
         <!-- top nav -->
         <table class="fb_list_actions" border = "0" cellspacing = "0" cellpadding = "0" width="100%">

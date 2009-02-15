@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.8
 
+15-Februray-2009 fxstein
+# Proper favicon in menu for Joomla 1.0.x
+
 14-Februray-2009 fxstein
 # Added missing SEF call to mark all forums read button
 + Replace com_fireboard with com_kunena in all messages and signatures

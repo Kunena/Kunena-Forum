@@ -59,7 +59,14 @@ function com_install() {
 		$id = $database->loadResult();
 
 		//add new admin menu images
-		$database->setQuery("UPDATE #__components SET admin_menu_img  = 'components/com_kunena/images/kunenafavicon.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
+		if(CKunenaTool::isJoomla15())
+		{
+			$database->setQuery("UPDATE #__components SET admin_menu_img  = 'components/com_kunena/images/kunenafavicon.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
+		}
+		else
+		{
+			$database->setQuery("UPDATE #__components SET admin_menu_img  = '../administrator/components/com_kunena/images/kunenafavicon.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
+		}
 		$database->query() or trigger_dbwarning("Unable to set admin menu image.");
 
 		//install & upgrade class

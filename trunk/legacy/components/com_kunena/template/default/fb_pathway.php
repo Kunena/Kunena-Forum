@@ -123,7 +123,7 @@ if ($func != "")
 
          //get viewing
         $fb_queryName = $fbConfig->username ? "username" : "name";
-		$query= "SELECT w.userid, u.$fb_queryName AS username , k.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS k ON k.userid=w.userid  WHERE w.link like '%" . addslashes($_SERVER['REQUEST_URI']) . "%' ORDER BY w.userid ASC";
+		$query= "SELECT w.userid, u.$fb_queryName AS username , k.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS k ON k.userid=w.userid  WHERE w.link like '%" . addslashes($_SERVER['REQUEST_URI']) . "%' GROUP BY w.userid ORDER BY w.userid ASC";
 		$database->setQuery($query);
 		$users = $database->loadObjectList();
 			check_dberror("Unable to load who is online.");

@@ -215,7 +215,9 @@ if ($letPass || $is_Moderator)
     else {
         require_once(KUNENA_ABSPATH . '/template/default/fb_pathway.php');
     }
-
+?>
+<!-- / Pathway -->
+<?php
     //Get the category name for breadcrumb
     unset($objCatInfo, $objCatParentInfo);
     $database->setQuery("SELECT * from #__fb_categories where id = {$catid}");
@@ -249,11 +251,15 @@ if ($letPass || $is_Moderator)
 		$mainframe->appendMetaTag( 'description' ,$metaDesc );
 	}
 ?>
-<!--</div>
-</td>
-</tr>
-</table>-->
-<!-- / Pathway -->
+<?php if($objCatInfo->headerdesc) { ?>
+<table class="fb_forum-headerdesc" border="0" cellpadding="0" cellspacing="0" width="100%">
+	<tr>
+		<td>
+		<?php echo stripslashes($objCatInfo->headerdesc); ?>
+		</td>
+	</tr>
+</table>
+<?php } ?>
 <!-- top nav -->
 
 	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -304,15 +310,6 @@ if ($letPass || $is_Moderator)
     </table>
 <!-- /top nav -->
 
-<?php if($objCatInfo->headerdesc) { ?>
-<table class="fb_forum-headerdesc" border="0" cellpadding="0" cellspacing="0" width="100%">
-	<tr>
-		<td>
-		<?php echo $objCatInfo->headerdesc; ?>
-		</td>
-	</tr>
-</table>
-<?php } ?>
 <?php
     //(JJ)
     if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_sub_category_list.php')) {

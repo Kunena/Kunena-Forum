@@ -631,6 +631,7 @@ VIEW PAGE
 -------------------------------------------------------------------- */
 #fb_views {
 	background: #FFFFFF;
+	color: #000000;
 }
 th.view-th {
 	text-align:right;
@@ -1096,7 +1097,7 @@ FORUM HEADER DESCRIPTION
 .fb_forum-headerdesc {
 	padding: 3px;
 	line-height: 18px;
-	margin: 5px 0 0 0;
+	margin: -1px 0 0 0;
 	border: 1px solid #CCCCCC; 
 	color: #000000;
 	background:#F7F7F7;

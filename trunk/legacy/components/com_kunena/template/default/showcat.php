@@ -121,13 +121,9 @@ if ($letPass || $is_Moderator)
     //check if this forum is subject to review
     $forumReviewed = $objCatInfo->review;
 ?>
-<!--</div>
-</td>
-</tr>
-</table>-->
 <!-- / Pathway -->
 <?php if($objCatInfo->headerdesc) { ?>
-<div class="headerdesc"><?php echo $objCatInfo->headerdesc; ?></div>
+<div class="fb_forum-headerdesc"><?php echo stripslashes($objCatInfo->headerdesc); ?></div>
 <?php } ?>
 <?php
     //(JJ)

@@ -367,16 +367,17 @@ if ($letPass || $is_Moderator)
             }
             ?>
         </div>
+        <!-- top nav -->
         <?php if($objCatInfo->headerdesc) { ?>
 		<table class="fb_forum-headerdesc" border="0" cellpadding="0" cellspacing="0" width="100%">
 			<tr>
 				<td>
-				<?php echo $objCatInfo->headerdesc; ?>
+				<?php echo stripslashes($objCatInfo->headerdesc); ?>
 				</td>
 			</tr>
 		</table>
         <?php } ?>
-        <!-- top nav -->
+
         <table class="fb_list_actions" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <tr>
                 <td class = "fb_list_actions_goto">
@@ -425,10 +426,10 @@ if ($letPass || $is_Moderator)
 	echo $pagination;
 	echo '</td>';
 	?>
-        <!-- /top nav -->
             </tr>
         </table>
         <!-- /top nav -->
+
         <!-- <table border = "0" cellspacing = "0" cellpadding = "0" width = "100%" align = "center"> -->
 
             <table class = "fb_blocktable<?php echo $objCatInfo->class_sfx; ?>"  id="fb_views" cellpadding = "0" cellspacing = "0" border = "0" width = "100%">

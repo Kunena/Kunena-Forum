@@ -259,10 +259,10 @@ if ($letPass || $is_Moderator)
             }
             ?>
         </div>
-        <?php if($objCatInfo->headerdesc) { ?>
-        <div class="headerdesc"><?php echo $objCatInfo->headerdesc; ?></div>
-        <?php } ?>
         <!-- top nav -->
+        <?php if($objCatInfo->headerdesc) { ?>
+        <div class="fb_forum-headerdesc"><?php echo stripslashes($objCatInfo->headerdesc); ?></div>
+        <?php } ?>
         <table border = "0" cellspacing = "0" class = "jr-topnav" cellpadding = "0" width="100%">
             <tr>
                 <td class = "jr-topnav-left">

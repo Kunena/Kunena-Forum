@@ -37,6 +37,9 @@ Kunena 1.0.8
 # Regression: Removed &#32 ; from report emails
 # Fixed report URLs
 # Regression: Typos in template exists checks
+# Regression: Missing css class in default template
+# Removed extra slashes in headerdesc, moved it to the right place in showcat
+^ Tweaks in css, fix dark themes
 
 15-Februray-2009 fxstein
 # Proper favicon in menu for Joomla 1.0.x

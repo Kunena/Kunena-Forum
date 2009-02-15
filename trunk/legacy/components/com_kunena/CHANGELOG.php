@@ -36,6 +36,7 @@ Kunena 1.0.8
 # Proper favicon in menu for Joomla 1.0.x
 + Add missing user sync language string to language file
 - load and remove sample data images removed as functionality has been depriciated
+# Regression: Proper Joomla 1.5 vs 1.0 detection during install
 
 14-Februray-2009 fxstein
 # Added missing SEF call to mark all forums read button
@@ -45,7 +46,7 @@ Kunena 1.0.8
 ^ Extra spacing for text buttons to conform with Joomla button style
 # Regression: Disabled the submit button because of incorrect type - fixed
 # Regression: Moderator tools got disabled during relocation - fixed
-+ Missing serarch icon in default_ex userlist added
++ Missing search icon in default_ex userlist added
 + Missing css styling added to forum header description
 ^ Forumjump: put Go button to the right side of the drop down category list
 

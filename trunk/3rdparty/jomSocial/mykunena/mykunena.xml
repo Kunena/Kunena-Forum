@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install version="1.5" type="plugin" group="community">
-	<name>My Kunena Updates</name>
-	<author>AzrulStudio</author>
+	<name>MyKunena</name>
+	<author>www.kunena.com</author>
 	<creationDate>7 October 2008</creationDate>
 	<copyright>Copyright (C) 2008. All rights reserved.</copyright>
 	<license></license>
-	<authorEmail></authorEmail>
-	<authorUrl></authorUrl>
+	<authorEmail>info@kunena.com</authorEmail>
+	<authorUrl>www.kunena.com</authorUrl>
 	<version>1.0</version>
 	<isapplication>true</isapplication>
 	<isbrowseable>true</isbrowseable>
 	<description>
-		kunena for JomSocial
+		MyKunena for JomSocial
 	</description>
 	<files>
-		<file plugin="Kunena">kunena.php</file>
+		<file plugin="MyKunena">kunena.php</file>
 		<file>kunena/favicon.png</file>
 		<file>kunena/no-post.gif</file>
 		<file>kunena/style.css</file>

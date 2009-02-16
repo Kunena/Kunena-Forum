@@ -774,7 +774,7 @@ $catName = $objCatInfo->name;
                         //}
                     }
                     else {
-                        echo "Hacking attempt!";
+			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
                     }
                 }
                 else if ($do == "editpostnow")
@@ -889,13 +889,13 @@ $catName = $objCatInfo->name;
                         }
                     }
                     else {
-                        echo ("Hacking attempt");
+			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
                     }
                 }
                 else if ($do == "delete")
                 {
                     if (!$is_Moderator) {
-                        die ("Hacking Attempt!");
+			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
                     }
 
                     $id = (int)$id;
@@ -933,7 +933,7 @@ $catName = $objCatInfo->name;
                 else if ($do == "deletepostnow")
                 {
                     if (!$is_Moderator) {
-                        die ("Hacking Attempt!");
+			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
                     }
 
                     $id = (int)mosGetParam($_POST, 'id', '');
@@ -987,7 +987,7 @@ $catName = $objCatInfo->name;
                 else if ($do == "move")
                 {
                     if (!$is_Moderator) {
-                        die ("Hacking Attempt!");
+			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
                     }
 
                     $catid = (int)$catid;
@@ -1048,7 +1048,7 @@ $catName = $objCatInfo->name;
 
                     $newCatObj = new jbCategory($database, $oldRecord[0]->catid);
 		    if (!fb_has_moderator_permission($database, $newCatObj, $my->id, $is_admin)) {
-                        die ("Hacking Attempt!");
+			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
                     }
 
                     $newSubject = _MOVED_TOPIC . " " . $oldRecord[0]->subject;
@@ -1097,7 +1097,7 @@ $catName = $objCatInfo->name;
                 {
                     if (!$is_Moderator)
                     {
-                        die("Hacking Attempt!");
+			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
                     }
 
                     $catid = (int)$catid;
@@ -1156,7 +1156,7 @@ $catName = $objCatInfo->name;
                 else if ($do == "domergepost")
                 {
                     if (!$is_Moderator) {
-                        die("Hacking Attempt!");
+			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
                     }
 
                     $catid = (int)$catid;
@@ -1271,7 +1271,7 @@ $catName = $objCatInfo->name;
                 else if ($do == "split")
                 {
                     if (!$is_Moderator) {
-                        die("Hacking Attempt!");
+			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
                     }
 
                     $error = mosGetParam($_POST, 'error', 0);
@@ -1409,7 +1409,7 @@ $catName = $objCatInfo->name;
                 {
                     if (!$is_Moderator)
                     {
-                        die("Hacking Attempt!");
+			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
                     }
 
                     $catid = (int)$catid;
@@ -1589,7 +1589,7 @@ $catName = $objCatInfo->name;
 
 								$obj_fb_cat = new jbCategory($database, $row->catid);
 								if (!fb_has_read_permission($obj_fb_cat, $allow_forum, $aro_group->group_id, $acl)) {
-								echo "Hacking Attempt!";
+									mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
 								return;
 							}
 						}
@@ -1696,7 +1696,7 @@ $catName = $objCatInfo->name;
                 else if ($do == "sticky")
                 {
                     if (!$is_Moderator) {
-                        die ("Hacking Attempt!");
+			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
                     }
 
                     $database->setQuery("update #__fb_messages set ordering=1 where id=$id");
@@ -1714,7 +1714,7 @@ $catName = $objCatInfo->name;
                 else if ($do == "unsticky")
                 {
                     if (!$is_Moderator) {
-                        die ("Hacking Attempt!");
+			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
                     }
 
                     $database->setQuery("update #__fb_messages set ordering=0 where id=$id");
@@ -1732,7 +1732,7 @@ $catName = $objCatInfo->name;
                 else if ($do == "lock")
                 {
                     if (!$is_Moderator) {
-                        die ("Hacking Attempt!");
+			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
                     }
 
                     //lock topic post
@@ -1751,7 +1751,7 @@ $catName = $objCatInfo->name;
                 else if ($do == "unlock")
                 {
                     if (!$is_Moderator) {
-                        die ("Hacking Attempt!");
+			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
                     }
 
                     $database->setQuery("update #__fb_messages set locked=0 where id=$id");

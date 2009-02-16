@@ -377,7 +377,6 @@ else
 		if ($markaction == "allread") {
 			$fbSession->lasttime = $fbSessionUpd->lasttime = $systime;
 			$fbSession->readtopics = $fbSessionUpd->readtopics = '';
-			echo "<script> alert('" . _GEN_ALL_MARKED . "'); window.location='" . sefRelToAbs(KUNENA_LIVEURLREL) . "';</script>\n";
 		} elseif ($fbSessionTimeOut) {
 			$fbSession->lasttime = $fbSessionUpd->lasttime = $fbSession->currvisit;
 			$fbSession->readtopics = $fbSessionUpd->readtopics = '';
@@ -403,6 +402,10 @@ else
 				check_dberror('Unable to update session record for user.');
 		}
 		unset($fbSessionUpd);
+
+		if ($markaction == "allread") {
+		        mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _GEN_ALL_MARKED);
+		}
 
 		// Now lets get the view type for the forum
 		$database->setQuery("select view from #__fb_users where userid=$my_id");

@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.8
 
+16-February-2009 Matias
+# Fix broken link in "Mark all forums read"
+
 15-February-2009 Matias
 ^ Change time formating in announcements
 # Regression: Removed &#32 ; from report emails

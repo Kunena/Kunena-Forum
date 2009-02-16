@@ -573,8 +573,7 @@ class CKunenaTools {
         global $my, $database;
 
         if (!CKunenaTools::isModOrAdmin() && !$isMod) {
-            echo "You don't have moderator permissions!";
-            return;
+            mosRedirect($return, _POST_NOT_MODERATOR);
             }
 
         $items = fbGetArrayInts("fbDelete");
@@ -700,15 +699,16 @@ class CKunenaTools {
 
     function fbMovePosts($catid, $isMod, $return) {
         global $my, $database;
+	$err = "ERROR!";
 
 	$database->setQuery('SELECT userid FROM #__fb_moderation WHERE userid='.$my->id);
 	$isMod = $database->loadResult();
 	check_dberror("Unable to load moderation info.");
+	$isAdmin = CKunenaTools::isModOrAdmin();
 
         //isMod will stay until better group management comes in
-        if (!CKunenaTools::isModOrAdmin() && !$isMod) {
-            echo "You don't have moderator permissions!";
-            return;
+        if (!$isAdmin && !$isMod) {
+            mosRedirect($return, _POST_NOT_MODERATOR);
             }
 
 		$catid = (int)$catid;
@@ -725,7 +725,7 @@ class CKunenaTools {
 	            	check_dberror("Unable to load message detail.");
 
                     $newCatObj = new jbCategory($database, $oldRecord[0]->catid);
-		    if (fb_has_moderator_permission($database, $newCatObj, $my->id, $is_admin)) {
+		    if (fb_has_moderator_permission($database, $newCatObj, $my->id, $isAdmin)) {
 
 		        $newSubject = _MOVED_TOPIC . " " . $oldRecord[0]->subject;
 		        $database->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE `thread`=" . $id);
@@ -742,7 +742,9 @@ class CKunenaTools {
 			check_dberror("Unable to move thread.");
 
 			$err = _POST_SUCCESS_MOVE;
-		    }
+		    } else {
+                        $err = _POST_NOT_MODERATOR;
+                    }
 		} //end foreach
 		} else {
 			$err = _POST_NO_DEST_CATEGORY;

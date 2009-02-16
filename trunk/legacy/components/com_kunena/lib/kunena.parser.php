@@ -315,7 +315,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 break;
             case 'url':
                 $tempstr = $between;
-                if(substr($tempstr, 0, 4)=='www.') {
+                if(substr($tempstr, 0, 7)=='http://') {
                   $tempstr = 'http://'.$tempstr;
                 }
                 $tag_new = "<a href='".$tempstr."' rel=\"nofollow\" target=\"_blank\">".$between.'</a>';

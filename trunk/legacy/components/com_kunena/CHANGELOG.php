@@ -52,6 +52,8 @@ Kunena 1.0.8
 # Regression: Proper Joomla 1.5 vs 1.0 detection during install
 ^ Backend Kunena Information updated
 ^ Initial base for new 3rd party profile integration framework
+- Removal of legacy CB integration for profile fields. New functionality
+  through plugin for all 3rd party profile providers
 
 14-Februray-2009 fxstein
 # Added missing SEF call to mark all forums read button

@@ -21,30 +21,23 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
-    if ($fbConfig->fb_profile == 'cb')
-    {
-        $database->setQuery("select fbsignature from #__comprofiler where user_id=$userid");
-        $signature = $database->loadResult();
-    }
-    else
-    {
-        $signature = $userinfo->signature;
-    }
 
-    if ($signature)
-    {
-        $signature = stripslashes($signature);
-        $signature = smile::smileReplace($signature, 0, $fbConfig->disemoticons, $smileyList);
-        $signature = nl2br($signature);
-        $signature = str_replace("<P>&nbsp;</P><br />", "", $signature);
-        $signature = str_replace("</P><br />", "</P>", $signature);
-        $signature = str_replace("<P><br />", "<P>", $signature);
-        //wordwrap:
-        $signature = smile::htmlwrap($signature, $fbConfig->wrap);
-        //restore the \n (were replaced with _CTRL_) occurences inside code tags, but only after we have striplslashes; otherwise they will be stripped again
-        //$signature = str_replace("_CRLF_", "\\n", stripslashes($signature));
-        $usr_signature = $signature;
-    }
+$signature = $userinfo->signature;
+
+if ($signature)
+{
+	$signature = stripslashes($signature);
+	$signature = smile::smileReplace($signature, 0, $fbConfig->disemoticons, $smileyList);
+	$signature = nl2br($signature);
+	$signature = str_replace("<P>&nbsp;</P><br />", "", $signature);
+	$signature = str_replace("</P><br />", "</P>", $signature);
+	$signature = str_replace("<P><br />", "<P>", $signature);
+	//wordwrap:
+	$signature = smile::htmlwrap($signature, $fbConfig->wrap);
+	//restore the \n (were replaced with _CTRL_) occurences inside code tags, but only after we have striplslashes; otherwise they will be stripped again
+	//$signature = str_replace("_CRLF_", "\\n", stripslashes($signature));
+	$usr_signature = $signature;
+}
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">

@@ -986,14 +986,7 @@ if ($letPass || $is_Moderator)
                                 }
                                 // Finish Joomla Mambot Support
 
-                                if ($fbConfig->fb_profile == 'cb')
-                                {
-                                    $database->setQuery("select fbsignature from #__comprofiler where user_id=$fmessage->userid");
-                                    $signature = $database->loadResult();
-                                }
-                                else {
-                                    $signature = $userinfo->signature;
-                                }
+                                $signature = $userinfo->signature;
 
                                 if ($signature)
                                 {

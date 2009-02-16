@@ -21,31 +21,23 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 global $fbConfig;
 
-    if ($fbConfig->fb_profile == 'cb')
-    {
-        $database->setQuery("select fbsignature from #__comprofiler where user_id=$my->id");
-        $signature = $database->loadResult();
-    }
-    else
-    {
-        $signature = $userinfo->signature;
-    }
+$signature = $userinfo->signature;
 
-    if ($signature)
-    {
-        $signature = stripslashes(smile::smileReplace($signature, 0, $fbConfig->disemoticons, $smileyList));
-        $signature = str_replace("\n", "<br />", $signature);
-        $signature = str_replace("<P>&nbsp;</P><br />", "", $signature);
-        $signature = str_replace("</P><br />", "</P>", $signature);
-        $signature = str_replace("<P><br />", "<P>", $signature);
-        //wordwrap:
-        $signature = smile::htmlwrap($signature, $fbConfig->wrap);
-        $signature = nl2br($signature);
-        //restore the \n (were replaced with _CTRL_) occurences inside code tags, but only after we have striplslashes; otherwise they will be stripped again
-        //$signature = stripslashes($signature);
-        //$signature = str_replace("_CRLF_", "\\n", $signature);
-        $usr_signature = $signature;
-    }
+if ($signature)
+{
+	$signature = stripslashes(smile::smileReplace($signature, 0, $fbConfig->disemoticons, $smileyList));
+	$signature = str_replace("\n", "<br />", $signature);
+	$signature = str_replace("<P>&nbsp;</P><br />", "", $signature);
+	$signature = str_replace("</P><br />", "</P>", $signature);
+	$signature = str_replace("<P><br />", "<P>", $signature);
+	//wordwrap:
+	$signature = smile::htmlwrap($signature, $fbConfig->wrap);
+	$signature = nl2br($signature);
+	//restore the \n (were replaced with _CTRL_) occurences inside code tags, but only after we have striplslashes; otherwise they will be stripped again
+	//$signature = stripslashes($signature);
+	//$signature = str_replace("_CRLF_", "\\n", $signature);
+	$usr_signature = $signature;
+}
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">

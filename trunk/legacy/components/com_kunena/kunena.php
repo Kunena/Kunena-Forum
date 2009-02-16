@@ -424,27 +424,7 @@ else
 				$database->setQuery("insert into #__fb_users (userid,view,moderator) values ('$my_id','$prefview','$is_admin')");
 				$database->query();
 					check_dberror('Unable to create user profile.');
-
-				// If Cummunity Builder is enabled, lets make sure we update the view preference
-				if ($fbConfig->fb_profile == 'cb')
-				{
-			        $cbprefview = $prefview = "flat"; //= "threaded" ? "_UE_KUNENA_VIEWTYPE_THREADED" : "_UE_KUNENA_VIEWTYPE_FLAT";
-
-					$database->setQuery("update #__comprofiler set fbviewtype='$cbprefview' where user_id='$my_id'");
-					$database->query();
-						check_dberror('Unable to update Community Builder profile.');
-				}
 			}
-		}
-		// If its not a new profile check if we have Community Builder enabled and read from there
-		else if ($fbConfig->fb_profile == 'cb')
-		{
-// Threaded view option depreciated in K1.0.8
-//			$database->setQuery("select fbviewtype from #__comprofiler where user_id='$my_id'");
-//			$fbviewtype = $database->loadResult();
-//				check_dberror('Unable load default view type for user from Community Builder.');
-
-			$prefview = $fbviewtype = "flat"; //= "_UE_KUNENA_VIEWTYPE_THREADED" ? "threaded" : "flat";
 		}
 		// Only reset the view if we have determined above that we need to
 		// Without that test the user would not be able to make intra session

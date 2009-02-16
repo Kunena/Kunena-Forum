@@ -1960,17 +1960,6 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     <td align = "left" valign = "top"><?php echo _KUNENA_FORUMPRRDESC ?>
                     </td>
                 </tr>
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_3P_PROFILE ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <a href = "index2.php?option=com_kunena&amp;task=create3pprofile" style = "text-decoration:none;" title = "<?php echo _COM_A_3P_PROFILE_DESC;?>"><?php echo _COM_A_3P_PROFILE_CLICK ?></a>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_3P_PROFILE_DESC ?>
-                    </td>
-                </tr>
 
 			</table>
 			</fieldset>

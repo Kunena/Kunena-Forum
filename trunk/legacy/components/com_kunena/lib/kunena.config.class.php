@@ -366,18 +366,8 @@ class CKunenaConfig extends CKunenaConfigBase
         // $this->default_sort = 'desc';
 
     	// Overload default with user specific from user profile
-        if ($fbConfig->fb_profile == 'cb')
-        {
-            $database->setQuery("SELECT fbordering from #__comprofiler where user_id=".$KunenaUser->getID());
-            $cbordering = $database->loadResult();
-
-            $orderingNum = ($cbordering == "_UE_KUNENA_ORDERING_OLDEST" ? 0 : 1);
-        }
-        else
-        {
-            $database->setQuery("SELECT ordering from #__fb_users where userid=".$KunenaUser->getID());
-            $orderingNum = $database->loadResult();
-        }
+    	$database->setQuery("SELECT ordering from #__fb_users where userid=".$KunenaUser->getID());
+    	$orderingNum = $database->loadResult();
 
         $this->default_sort = $orderingNum ? 'desc' : 'asc';
 

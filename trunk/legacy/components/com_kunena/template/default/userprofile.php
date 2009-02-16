@@ -30,40 +30,38 @@ if ($my->id)
     //What should we do?
     if ($do == "show")
     { //show it is..
-        if ($fbConfig->fb_profile != 'cb' && $fbConfig->fb_profile != 'jomsocial')
+        //first we gather some information about this person - bypass if (s)he is a guest
+        unset($user);
+        $database->setQuery("SELECT * FROM #__fb_users as su "
+        	    . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$my->id}");
+
+        $database->loadObject($user);
+
+        $prefview = $user->view;
+        $signature = $user->signature;
+        $username = $user->name;
+        $moderator = $user->moderator;
+        $fbavatar = $user->avatar;
+        $ordering = $user->ordering;
+
+        list($avWidth, $avHeight) = @getimagesize($avatar);
+
+        //use integration avatar if configured
+        if ($fbConfig->avatar_src == "pmspro")
         {
-            //first we gather some information about this person - bypass if (s)he is a guest
-            unset($user);
-            $database->setQuery("SELECT * FROM #__fb_users as su "
-            . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$my->id}");
-
-            $database->loadObject($user);
-
-                $prefview = $user->view;
-                $signature = $user->signature;
-                $username = $user->name;
-                $moderator = $user->moderator;
-                $fbavatar = $user->avatar;
-                $ordering = $user->ordering;
-
-                list($avWidth, $avHeight) = @getimagesize($avatar);
-
-                //use integration avatar if configured
-	            if ($fbConfig->avatar_src == "pmspro")
-	            {
-	                $database->setQuery("SELECT picture FROM #__mypms_profiles WHERE name='$username'");
-	                $avatar = $database->loadResult();
-	            }
-	            elseif ($fbConfig->avatar_src == "cb")
-	            {
-	                $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$my->id'");
-	                $avatar = $database->loadResult();
-	                	check_dberror("Unable to load CB avatar.");
-	            }
-	            else {
-	                $avatar = $fbavatar;
-	            }
-	        }
+            $database->setQuery("SELECT picture FROM #__mypms_profiles WHERE name='$username'");
+            $avatar = $database->loadResult();
+        }
+        elseif ($fbConfig->avatar_src == "cb")
+        {
+        	$database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$my->id'");
+        	$avatar = $database->loadResult();
+        		check_dberror("Unable to load CB avatar.");
+        }
+        else
+        {
+        	$avatar = $fbavatar;
+        }
 
         //get all subscriptions for this user
         $database->setQuery("select thread from #__fb_subscriptions where userid=$my->id");
@@ -98,10 +96,6 @@ if ($my->id)
         }
 ?>
 
-<?php
-        if ($fbConfig->fb_profile != 'cb' && $fbConfig->fb_profile != 'jomsocial')
-        {
-?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
@@ -368,9 +362,6 @@ if ($my->id)
 </div>
 </div>
 </div>
-<?php
-        }
-?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
@@ -543,7 +534,7 @@ if ($my->id)
         (int)$neworder = mosGetParam($_POST, 'neworder', 0);
 
         if ($deleteSig == 1) {
-            $signature = "";
+        	$signature = "";
         }
 
         $signature = trim(addslashes($signature));
@@ -578,7 +569,7 @@ if ($my->id)
             $database->query();
         }
 
-	echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show'), 3500);
+        echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show'), 3500);
     }
     else if ($do == "unsubscribe")
     { //ergo, ergo delete

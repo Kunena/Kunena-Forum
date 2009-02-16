@@ -27,18 +27,6 @@ $mainframe->setPageTitle(_GEN_MYPROFILE . ' - ' . stripslashes($fbConfig->board_
 
 if ($my->id != "" && $my->id != 0)
 {
-
-
-/* if ($my->id < 1)
-{
-   mosRedirect("index.php?option=com_kunena" . KUNENA_COMPONENT_ITEMID_SUFFIX, "Please login first");
-}
-
-*/
-
-if ($fbConfig->fb_profile != 'cb') //<-- IF CB profile not active begin
-{
-
 	//Get joomla userinfo needed later on, this limits the amount of queries
     $juserinfo = new mosUser($database);
     $juserinfo->load($my->id);
@@ -107,7 +95,6 @@ if ($fbConfig->fb_profile != 'cb') //<-- IF CB profile not active begin
     $ordering = $userinfo->ordering;
 	$hideEmail = $userinfo->hideEmail;
 	$showOnline = $userinfo->showOnline;
-} // <-- IF CB profile active finish
 ?>
 <!-- B:My Profile -->
 
@@ -524,13 +511,13 @@ if ($fbConfig->fb_profile != 'cb') //<-- IF CB profile not active begin
                     {
                         echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler" . KUNENA_CB_ITEMID_SUFFIX . "&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
 
-			echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs("index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab"), 3500);
+                        echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs("index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab"), 3500);
                     }
                     else
                     {
                         echo _USER_RETURN_A . " <a href=\"" . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav') . "\">" . _USER_RETURN_B . "</a><br /><br />";
 
-			echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav'), 3500);
+                        echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav'), 3500);
                     }
 
                     break;

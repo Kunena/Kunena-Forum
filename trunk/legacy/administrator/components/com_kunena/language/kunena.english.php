@@ -24,11 +24,6 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // 1.0.8
 DEFINE('_POST_NO_FAVORITED_TOPIC', 'This thread has <b>NOT</b> been added to your favorites');
-DEFINE('_COM_A_3P_PROFILE', 'Create/Update 3rd Party forum profile fields');
-DEFINE('_COM_A_3P_PROFILE_DESC',
-    'Click the link to create necessary forum fields in the 3rd party profile provider selected above. After they are created, you can move them using the admin interface of the profile provider. Do not change their names or options.');
-DEFINE('_COM_A_3P_PROFILE_CLICK', 'Create/Update');
-DEFINE('_KUNENA_3P_ADDED', '3rd party profile fields added');
 
 DEFINE('_COM_C_SYNCEUSERSDESC', 'Sync the Kunena user table with the Joomla user table');
 DEFINE('_POST_FORGOT_EMAIL', 'You forgot to include your e-mail address.  Click your browser&#146s back button to go back and try again.');

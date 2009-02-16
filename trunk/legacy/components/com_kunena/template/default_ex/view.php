@@ -125,6 +125,7 @@ if ($letPass || $is_Moderator)
     	check_dberror('Unable to load message.');
 
     $topicLock = $this_message->locked;
+    $topicSticky = $this_message->ordering;
 
     if (count($this_message) < 1) {
         echo '<p align="center">' . _MODERATION_INVALID_ID . '</p>';
@@ -320,7 +321,7 @@ if ($letPass || $is_Moderator)
             // and the (un)lock links
             $thread_move = CKunenaLink::GetTopicPostLink('move', $catid, $id, $fbIcons['move']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['move'] . '" alt="Move" border="0" title="' . _VIEW_MOVE . '" />':_GEN_MOVE);
 
-            if ($first_message->ordering == 0)
+            if ($topicSticky == 0)
             {
                 $thread_sticky = CKunenaLink::GetTopicPostLink('sticky', $catid, $id, $fbIcons['sticky']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['sticky'] . '" alt="Sticky" border="0" title="' . _VIEW_STICKY . '" />':_GEN_STICKY);
             }
@@ -329,7 +330,7 @@ if ($letPass || $is_Moderator)
                 $thread_sticky = CKunenaLink::GetTopicPostLink('unsticky', $catid, $id, $fbIcons['unsticky']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['unsticky'] . '" alt="Unsticky" border="0" title="' . _VIEW_UNSTICKY . '" />':_GEN_UNSTICKY);
             }
 
-            if ($first_message->locked == 0)
+            if ($topicLock == 0)
             {
                 $thread_lock = CKunenaLink::GetTopicPostLink('lock', $catid, $id, $fbIcons['lock']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['lock'] . '" alt="Lock" border="0" title="' . _VIEW_LOCK . '" />':_GEN_LOCK);
             }

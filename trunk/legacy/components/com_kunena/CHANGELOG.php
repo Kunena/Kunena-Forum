@@ -36,7 +36,9 @@ Kunena 1.0.8
 # Fix broken link in "Mark all forums read"
 # Regression: Moderator tools in showcat didn't work
 # Changed all "Hacking attempt!" messages to be less radical and not to die().
-# Changed behaviour of "Mark forum read" to be the same as in "Mark all forums read"
+# Regression: Unsticky and Unlock didn't work
+^ Changed behavior of Mark all forums read, Mark forum read - no more extra screen
+^ Changed behavior of Subscribe, Favorite, Sticky, Lock - no more extra screen
 
 15-February-2009 Matias
 ^ Change time formating in announcements

@@ -774,7 +774,7 @@ $catName = $objCatInfo->name;
                         //}
                     }
                     else {
-			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
+			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
                 }
                 else if ($do == "editpostnow")
@@ -889,13 +889,13 @@ $catName = $objCatInfo->name;
                         }
                     }
                     else {
-			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
+			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
                 }
                 else if ($do == "delete")
                 {
                     if (!$is_Moderator) {
-			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
+			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $id = (int)$id;
@@ -933,7 +933,7 @@ $catName = $objCatInfo->name;
                 else if ($do == "deletepostnow")
                 {
                     if (!$is_Moderator) {
-			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
+			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $id = (int)mosGetParam($_POST, 'id', '');
@@ -987,7 +987,7 @@ $catName = $objCatInfo->name;
                 else if ($do == "move")
                 {
                     if (!$is_Moderator) {
-			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
+			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $catid = (int)$catid;
@@ -1048,7 +1048,7 @@ $catName = $objCatInfo->name;
 
                     $newCatObj = new jbCategory($database, $oldRecord[0]->catid);
 		    if (!fb_has_moderator_permission($database, $newCatObj, $my->id, $is_admin)) {
-			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
+			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $newSubject = _MOVED_TOPIC . " " . $oldRecord[0]->subject;
@@ -1097,7 +1097,7 @@ $catName = $objCatInfo->name;
                 {
                     if (!$is_Moderator)
                     {
-			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
+			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $catid = (int)$catid;
@@ -1156,7 +1156,7 @@ $catName = $objCatInfo->name;
                 else if ($do == "domergepost")
                 {
                     if (!$is_Moderator) {
-			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
+			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $catid = (int)$catid;
@@ -1271,7 +1271,7 @@ $catName = $objCatInfo->name;
                 else if ($do == "split")
                 {
                     if (!$is_Moderator) {
-			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
+			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $error = mosGetParam($_POST, 'error', 0);
@@ -1409,7 +1409,7 @@ $catName = $objCatInfo->name;
                 {
                     if (!$is_Moderator)
                     {
-			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
+			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $catid = (int)$catid;
@@ -1575,8 +1575,9 @@ $catName = $objCatInfo->name;
                 {
                     $catid = (int)$catid;
                     $id = (int)$id;
+                    $success_msg = _POST_NO_SUBSCRIBED_TOPIC;
                     $database->setQuery("SELECT thread,catid from #__fb_messages WHERE id=$id");
-                    if ($my->id && $database->query())
+                    if ($id && $my->id && $database->query())
                     {
 						$database->loadObject($row);
 
@@ -1589,7 +1590,7 @@ $catName = $objCatInfo->name;
 
 								$obj_fb_cat = new jbCategory($database, $row->catid);
 								if (!fb_has_read_permission($obj_fb_cat, $allow_forum, $aro_group->group_id, $acl)) {
-									mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
+									mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
 								return;
 							}
 						}
@@ -1597,174 +1598,121 @@ $catName = $objCatInfo->name;
                         $thread = $row->thread;
                         $database->setQuery("INSERT INTO #__fb_subscriptions (thread,userid) VALUES ('$thread','$my->id')");
 
-                        if ($database->query()) {
-                            echo '<br /><br /><div align="center">' . _POST_SUBSCRIBED_TOPIC . "</div><br />";
-                        }
-                        else {
-                            echo '<br /><br /><div align="center">' . _POST_NO_SUBSCRIBED_TOPIC . "</div><br />";
+                        if ($database->query() && $database->getAffectedRows()==1) {
+                            $success_msg = _POST_SUBSCRIBED_TOPIC;
                         }
                     }
-                    else
-                    {
-                        echo '<br /><br /><div align="center">' . _POST_NO_SUBSCRIBED_TOPIC . "</div><br />";
-                    }
-
-                    echo '<br /><br /><div align="center">' . _POST_SUCCESS_SUBSCRIBE . "</div><br />";
-                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page);
+                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "unsubscribe")
                 {
                     $catid = (int)$catid;
                     $id = (int)$id;
+                    $success_msg = _POST_NO_UNSUBSCRIBED_TOPIC;
                     $database->setQuery("SELECT max(thread) AS thread from #__fb_messages WHERE id=$id");
-                    if ($my->id && $database->query())
+                    if ($id && $my->id && $database->query())
                     {
                         $thread = $database->loadResult();
                         $database->setQuery("DELETE FROM #__fb_subscriptions WHERE thread=$thread AND userid=$my->id");
 
-                        if ($database->query())
+                        if ($database->query() && $database->getAffectedRows()==1)
                         {
-                            echo '<br /><br /><div align="center">' . _POST_UNSUBSCRIBED_TOPIC . "</div><br />";
-                        }
-                        else
-                        {
-                            echo '<br /><br /><div align="center">' . _POST_NO_UNSUBSCRIBED_TOPIC . "</div><br />";
+                            $success_msg = _POST_UNSUBSCRIBED_TOPIC;
                         }
                     }
-                    else
-                    {
-                        echo '<br /><br /><div align="center">' . _POST_NO_UNSUBSCRIBED_TOPIC . "</div><br />";
-                    }
-
-                    echo '<br /><br /><div align="center">' . _POST_SUCCESS_UNSUBSCRIBE . "</div><br />";
-                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page);
+                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "favorite")
                 {
                     $catid = (int)$catid;
                     $id = (int)$id;
+                    $success_msg = _POST_NO_FAVORITED_TOPIC;
                     $database->setQuery("SELECT max(thread) AS thread from #__fb_messages WHERE id=$id");
-                    if ($my->id && $database->query())
+                    if ($id && $my->id && $database->query())
                     {
                         $thread = $database->loadResult();
                         $database->setQuery("INSERT INTO #__fb_favorites (thread,userid) VALUES ('$thread','$my->id')");
 
-                        if ($database->query())
+                        if ($database->query() && $database->getAffectedRows()==1)
                         {
-                            echo '<br /><br /><div align="center">' . _POST_FAVORITED_TOPIC . "</div><br />";
-                        }
-                        else
-                        {
-                            echo '<br /><br /><div align="center">' . _POST_NO_FAVORITED_TOPIC . "</div><br />";
+                             $success_msg = _POST_FAVORITED_TOPIC;
                         }
                     }
-                    else
-                    {
-                        echo '<br /><br /><div align="center">' . _POST_NO_FAVORITED_TOPIC . "</div><br />";
-                    }
-
-                    echo '<br /><br /><div align="center">' . _POST_SUCCESS_FAVORITE . "</div><br />";
-                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page);
+                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "unfavorite")
                 {
                     $catid = (int)$catid;
                     $id = (int)$id;
+                    $success_msg = _POST_NO_UNFAVORITED_TOPIC;
                     $database->setQuery("SELECT max(thread) AS thread from #__fb_messages WHERE id=$id");
-                    if ($my->id && $database->query())
+                    if ($id && $my->id && $database->query())
                     {
                         $thread = $database->loadResult();
                         $database->setQuery("DELETE FROM #__fb_favorites WHERE thread=$thread AND userid=$my->id");
 
-                        if ($database->query())
+                        if ($database->query() && $database->getAffectedRows()==1)
                         {
-                            echo '<br /><br /><div align="center">' . _POST_UNFAVORITED_TOPIC . "</div><br />";
-                        }
-                        else
-                        {
-                            echo '<br /><br /><div align="center">' . _POST_NO_UNFAVORITED_TOPIC . "</div><br />";
+                            $success_msg = _POST_UNFAVORITED_TOPIC;
                         }
                     }
-                    else
-                    {
-                        echo '<br /><br /><div align="center">' . _POST_NO_UNFAVORITED_TOPIC . "</div><br />";
-                    }
-
-                    echo '<br /><br /><div align="center">' . _POST_SUCCESS_UNFAVORITE . "</div><br />";
-                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page);
+                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "sticky")
                 {
                     if (!$is_Moderator) {
-			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
+			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
+                    $id = (int)$id;
+                    $success_msg = _POST_STICKY_NOT_SET;
                     $database->setQuery("update #__fb_messages set ordering=1 where id=$id");
-
-                    if ($database->query()) {
-                        echo '<br /><br /><div align="center">' . _POST_STICKY_SET . "</div><br />";
+                    if ($id && $database->query() && $database->getAffectedRows()==1) {
+                        $success_msg = _POST_STICKY_SET;
                     }
-                    else {
-                        echo '<br /><br /><div align="center">' . _POST_STICKY_NOT_SET . "</div><br />";
-                    }
-
-                    echo '<br /><br /><div align="center">' . _POST_SUCCESS_REQUEST2 . "</div><br />";
-                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page);
+                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "unsticky")
                 {
                     if (!$is_Moderator) {
-			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
+			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
+                    $id = (int)$id;
+                    $success_msg = _POST_STICKY_NOT_UNSET;
                     $database->setQuery("update #__fb_messages set ordering=0 where id=$id");
-
-                    if ($database->query()) {
-                        echo '<br /><br /><div align="center">' . _POST_STICKY_UNSET . "</div><br />";
+                    if ($id && $database->query() && $database->getAffectedRows()==1) {
+                        $success_msg = _POST_STICKY_UNSET;
                     }
-                    else {
-                        echo '<br /><br /><div align="center">' . _POST_STICKY_NOT_UNSET . "</div><br />";
-                    }
-
-                    echo '<br /><br /><div align="center">' . _POST_SUCCESS_REQUEST2 . "</div><br />";
-                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page);
+                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "lock")
                 {
                     if (!$is_Moderator) {
-			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
+			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
-                    //lock topic post
+                    $id = (int)$id;
+                    $success_msg = _POST_LOCK_NOT_SET;
                     $database->setQuery("update #__fb_messages set locked=1 where id=$id");
-
-                    if ($database->query()) {
-                        echo '<br /><br /><div align="center">' . _POST_LOCK_SET . "</div><br />";
+                    if ($id && $database->query() && $database->getAffectedRows()==1) {
+                        $success_msg = _POST_LOCK_SET;
                     }
-                    else {
-                        echo '<br /><br /><div align="center">' . _POST_LOCK_NOT_SET . "</div><br />";
-                    }
-
-                    echo '<br /><br /><div align="center">' . _POST_SUCCESS_REQUEST2 . "</div><br />";
-                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page);
+                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "unlock")
                 {
                     if (!$is_Moderator) {
-			mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _POST_NOT_MODERATOR);
+			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
+                    $id = (int)$id;
+                    $success_msg = _POST_LOCK_NOT_UNSET;
                     $database->setQuery("update #__fb_messages set locked=0 where id=$id");
-
-                    if ($database->query()) {
-                        echo '<br /><br /><div align="center">' . _POST_LOCK_UNSET . "</div><br />";
+                    if ($id && $database->query() && $database->getAffectedRows()==1) {
+                        $success_msg = _POST_LOCK_UNSET;
                     }
-                    else {
-                        echo '<br /><br /><div align="center">' . _POST_LOCK_NOT_UNSET . "</div><br />";
-                    }
-
-                    echo '<br /><br /><div align="center">' . _POST_SUCCESS_REQUEST2 . "</div><br />";
-                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page);
+                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
             }
             ?>

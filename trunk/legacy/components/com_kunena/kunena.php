@@ -404,7 +404,7 @@ else
 		unset($fbSessionUpd);
 
 		if ($markaction == "allread") {
-		        mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL), _GEN_ALL_MARKED);
+		        mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _GEN_ALL_MARKED);
 		}
 
 		// Now lets get the view type for the forum
@@ -844,7 +844,7 @@ else
             $database->query();
             	check_dberror('Unable to update readtopics in session table.');
 
-            mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid), _GEN_FORUM_MARKED);
+            mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid)), _GEN_FORUM_MARKED);
             break;
 
         #########################################################################################
@@ -921,7 +921,7 @@ else
                     }
             }
 
-            mosRedirect (sefRelToAbs(KUNENA_LIVEURLREL));
+            mosRedirect (htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)));
             break;
 
         #########################################################################################

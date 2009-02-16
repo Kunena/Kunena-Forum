@@ -293,6 +293,26 @@ class CKunenaLink
         return $Output;
     }
 
+    function GetLatestPageAutoRedirectURL($fbConfig, $pid, $limit)
+    {
+        global $database;
+        // First determine the thread, latest post and number of posts for the post supplied
+        $database->setQuery('SELECT a.thread AS thread, max(a.id) AS latest_id, max(a.catid) AS catid, count(*) AS totalmessages
+                             FROM #__fb_messages AS a,
+                                (SELECT max(thread) AS thread FROM #__fb_messages WHERE id='.$pid.') AS b
+                             WHERE a.thread = b.thread AND a.hold = 0
+                             GROUP BY a.thread');
+        $database->loadObject($result);
+        	check_dberror("Unable to retrieve latest post.");
+
+        // Now Calculate the number of pages for this particular thread
+        $threadPages = ceil($result->totalmessages / $limit);
+
+        // Finally build output block
+
+        return htmlspecialchars_decode(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $result->catid, $result->thread, $threadPages, $limit));
+    }
+
     function GetLatestCategoryAutoRedirectHTML($catid)
     {
         $Output  = '<div id="Kunena_post_result" align="center">';

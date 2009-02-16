@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install version="1.5" type="plugin" group="community">
 	<name>MyKunena</name>
+	<version>1.0.0</version>
 	<author>www.kunena.com</author>
-	<creationDate>7 October 2008</creationDate>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenabuild@</build>
 	<copyright>Copyright (C) 2008. All rights reserved.</copyright>
 	<license></license>
 	<authorEmail>info@kunena.com</authorEmail>
 	<authorUrl>www.kunena.com</authorUrl>
-	<version>1.0</version>
 	<isapplication>true</isapplication>
 	<isbrowseable>true</isbrowseable>
+	
 	<description>
-		MyKunena for JomSocial
+		MyKunena plugin for JomSocial
 	</description>
 	<files>
 		<file plugin="MyKunena">kunena.php</file>

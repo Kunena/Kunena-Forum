@@ -19,10 +19,9 @@
   
 -->
 <project name="MyKunena" default="dist" basedir=".">
-	<description>Ant Build File for MyKunena</description>
+	<description>Ant Build File for MyKunena Plugin</description>
 	<property file="mykunena.build.config.ini" />
 	<property name="plugin" value="${project_dir}/mykunena" />
-	<property name="plugin.list" value="" />
 
 	<target name="dist" depends="mkdir,archive,copy,init,package,zip,gzip,bz2,info,cleanup" />
 
@@ -80,16 +79,11 @@
 		<condition property="version.date" value="${str.datefmt}" else="">
 			<istrue value="${cfg.adddate}" />
 		</condition>
-		<filter token="fbversion" value="${xml.version}" />
-		<filter token="fbversiondate" value="${version.date}" />		
-		<filter token="fbbuild" value="${build.number}" />		
-		<filter token="fbversionname" value="${xml.versionname}" />		
+		<filter token="kunenaversion" value="${xml.version}" />
+		<filter token="kunenaversiondate" value="${version.date}" />		
+		<filter token="kunenabuild" value="${build.number}" />		
 
-		<copy file="${project_dir}/administrator/components/com_kunena/kunena.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/administrator/components/com_kunena/install/kunena.install.upgrade.xml" todir="${tmp_dir}/install" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/components/com_kunena/lib/kunena.config.class.php" todir="${tmp_dir}/lib" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/components/com_kunena/lib/kunena.rss.php" todir="${tmp_dir}/lib" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/README.txt" todir="${tmp_dir}" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/mykunena/mykunena.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
 	</target>
 
 	<target name="zip" depends="package" if="do.zip">

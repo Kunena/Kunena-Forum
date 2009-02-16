@@ -844,7 +844,7 @@ else
             $database->query();
             	check_dberror('Unable to update readtopics in session table.');
 
-            echo "<script> alert('" . _GEN_FORUM_MARKED . "'); window.history.go(-1); </script>\n";
+            mosRedirect(sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid), _GEN_FORUM_MARKED);
             break;
 
         #########################################################################################

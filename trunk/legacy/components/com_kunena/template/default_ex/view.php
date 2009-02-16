@@ -34,7 +34,7 @@ function KunenaViewPagination($catid, $threadid, $page, $totalpages, $maxpages) 
 	$endpage = $totalpages;
     }
 
-    $output = '<div class="fb_pagination">'._PAGE;
+    $output = '<span class="fb_pagination">'._PAGE;
     if ($startpage > 1)
     {
 	if ($endpage < $totalpages) $endpage--;
@@ -65,7 +65,7 @@ function KunenaViewPagination($catid, $threadid, $page, $totalpages, $maxpages) 
 	$output .= CKunenaLink::GetThreadPageLink($fbConfig, 'view', $catid, $threadid, $totalpages, $fbConfig->messages_per_page, $totalpages, '', $rel='follow');
     }
 
-    $output .= '</div>';
+    $output .= '</span>';
     return $output;
 }
 

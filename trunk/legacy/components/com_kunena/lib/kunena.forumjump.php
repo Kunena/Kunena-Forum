@@ -28,9 +28,8 @@ $options = array ();
 $options[] = mosHTML::makeOption('0', _KUNENA_FORUM_TOP);
 $lists['parent'] = JJ_categoryParentList($catid, "", $options);
 ?>
-
 <form id = "jumpto" name = "jumpto" method = "get" target = "_self" action = "index.php">
-    <div align = "right" style = "width: 100%;">
+    <span align = "right" style = "width: 100%;">
         <input type = "hidden" name = "Itemid" value = "<?php echo KUNENA_COMPONENT_ITEMID;?>"/>
 
         <input type = "hidden" name = "option" value = "com_kunena"/>
@@ -40,5 +39,5 @@ $lists['parent'] = JJ_categoryParentList($catid, "", $options);
 <?php echo $lists['parent']; ?>
 
         <input type = "submit" name = "Go"  class="fb_button fbs" value = "<?php echo _KUNENA_GO; ?>"/>
-    </div>
+    </span>
 </form>

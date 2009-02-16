@@ -31,7 +31,7 @@ function KunenaShowcatPagination($catid, $page, $totalpages, $maxpages) {
 	$endpage = $totalpages;
     }
 
-    $output = '<div class="fb_pagination">'._PAGE;
+    $output = '<span class="fb_pagination">'._PAGE;
 
     if (($startpage) > 1)
     {
@@ -63,7 +63,7 @@ function KunenaShowcatPagination($catid, $page, $totalpages, $maxpages) {
         $output .= CKunenaLink::GetCategoryPageLink('showcat', $catid, $totalpages, $totalpages, $rel='follow');
     }
 
-    $output .= '</div>';
+    $output .= '</span>';
     return $output;
 }
 

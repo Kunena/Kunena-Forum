@@ -266,6 +266,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	line-height:28px;
 	padding-left:15px;
 	padding-right:10px;
+	width: 100%;
 }
 #Kunena .fb_list_actions_goto {
 	height:28px;
@@ -278,6 +279,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	white-space: nowrap;
 }
 #Kunena .fb_list_pages_all {
+	width: 1%;
 	border-left:1px solid #D1D1D1;
 	color:#666666;
 	font-family:Arial, Helvetica, sans-serif;
@@ -289,6 +291,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	padding-right:3px;
 }
 #Kunena .fb_list_times_all {
+	width: 1%;
 	border-left:1px solid #D1D1D1;
 	color:#666666;
 	height:28px;
@@ -297,6 +300,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	padding-right:5px;
 }
 #Kunena .fb_list_jump_all {
+	width: 1%;
 	border-left:1px solid #D1D1D1;
 	color:#666666;
 	height:28px;
@@ -312,7 +316,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	font-size:x-small;
 	margin:0pt;
 	padding:0pt;
-	width:50px;
+	width:100px;
 }
 #Kunena .fb_list_jump_all form .inputbox {
 	font-size:x-small;

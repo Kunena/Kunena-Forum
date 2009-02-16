@@ -32,7 +32,7 @@ function KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages) {
 	$endpage = $totalpages;
     }
 
-    $output = '<div class="fb_pagination">'._PAGE;
+    $output = '<span class="fb_pagination">'._PAGE;
 
     if (($startpage) > 1)
     {
@@ -64,7 +64,7 @@ function KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages) {
         $output .= CKunenaLink::GetLatestPageLink($func, $totalpages, 'follow', '',$sel);
     }
 
-    $output .= '</div>';
+    $output .= '</span>';
     return $output;
 }
 
@@ -292,16 +292,16 @@ if (count($threadids) > 0)
 ?>
 
 <!-- B: List Actions -->
-	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0" width="100%">
+	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0">
 		<tr>
-			<td class="fb_list_actions_info_all" width="100%">
+			<td class="fb_list_actions_info_all">
     <strong><?php echo $total; ?></strong> <?php echo _KUNENA_DISCUSSIONS; ?>
 								</td>
 									<?php if ($func!='mylatest') {?>
                                     <td class="fb_list_times_all">
 
 									<?php  $show_list_time = mosGetParam($_REQUEST, 'sel', '');  ?>
-									<select class="inputboxusl" onchange="document.location.href=this.options[this.selectedIndex].value;" size="1" name="select" style = "margin:0; padding:0; width:100px;">
+									<select class="inputboxusl" onchange="document.location.href=this.options[this.selectedIndex].value;" size="1" name="select">
 									 <option <?php if ($show_list_time =='720') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest'); ?>"><?php echo _SHOW_MONTH ; ?></option>
 									  <option <?php if ($show_list_time =='0') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=0'); ?>"><?php echo _SHOW_LASTVISIT; ?></option>
 									  <option <?php if ($show_list_time =='4') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=4'); ?>"><?php echo _SHOW_4_HOURS; ?></option>
@@ -327,7 +327,7 @@ if (count($threadids) > 0)
                                 //pagination 1
 					if (count($messages[0]) > 0)
 					{
-					    echo '<td class="fb_list_pages_all" nowrap="nowrap">';
+					    echo '<td class="fb_list_pages_all">';
 					    $maxpages = 5 - 2; // odd number here (show - 2)
 					    $totalpages = ceil($total / $threads_per_page);
 					    echo $pagination = KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages);	

@@ -39,6 +39,7 @@ Kunena 1.0.8
 # Regression: Unsticky and Unlock didn't work
 ^ Changed behavior of Mark all forums read, Mark forum read - no more extra screen
 ^ Changed behavior of Subscribe, Favorite, Sticky, Lock - no more extra screen
+# Fixed broken layout in FireFox 2
 
 15-February-2009 Matias
 ^ Change time formating in announcements

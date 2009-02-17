@@ -350,7 +350,6 @@ class smile
 					</select></span>
 					<?php } ?>
 
-                    &nbsp;&nbsp;<a href = "javascript: bbstyle(-1)" onmouseover = "helpline('a')"><small><?php echo _BBCODE_CLOSA; ?></small></a>
                         </td>
                     </tr>
 

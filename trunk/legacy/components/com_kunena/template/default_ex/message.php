@@ -124,9 +124,9 @@ $database->loadObject($user);
 								// Finish captcha
 								?>
 
-                                <input type = "submit" class = "fb_button" name = "submit" value = "<?php echo _GEN_CONTINUE;?>"/>
+                                <input type = "submit" class = "fb_button fb_qr_fire" name = "submit" value = "<?php echo _GEN_CONTINUE;?>"/>
 
-                                <input type = "button" class = "fb_button" id = "cancel__<?php echo $msg_id; ?>" name = "cancel" value = "<?php echo _KUNENA_CANCEL;?>"/>
+                                <input type = "button" class = "fb_button fb_qm_cncl_btn" id = "cancel__<?php echo $msg_id; ?>" name = "cancel" value = "<?php echo _KUNENA_CANCEL;?>"/>
 
                                 <small><em><?php echo _KUNENA_QMESSAGE_NOTE?></em></small>
                             </form>

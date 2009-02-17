@@ -619,7 +619,7 @@ else if ($do == 'validate')
     $database->setQuery("UPDATE #__fb_users SET avatar='{$newFileName}' WHERE userid={$my->id}");
     $database->query() or trigger_dberror("Unable to update avatar.");
     echo " <strong>" . _UPLOAD_UPLOADED . "</strong>...<br /><br />";
-    echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '">' . _GEN_CONTINUE . ".</a>";
+    echo  _USER_RETURN_A . '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '">' . _USER_RETURN_B . ".</a>";
     echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'), 3500);
 }
 else if ($do == 'fromgallery')

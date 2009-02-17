@@ -44,6 +44,8 @@ Kunena 1.0.8
 17-Februray-2009 Matias
 # Strip extra slashes in preview
 # Regression: Quick Reply Cancel button does not work
+# Backend: you removing user's avatar dind't work
+# My Profile: Wrong click here text after uploading avatar
 
 16-Februray-2009 fxstein
 # Fix the fix - url tags now have http added only when needed but then for sure

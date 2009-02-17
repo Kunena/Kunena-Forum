@@ -1130,11 +1130,12 @@ function saveUserProfile($option)
     }
     $signature = addslashes($signature);
 
+    $avatar = '';
     if ($deleteAvatar == 1) {
-        $avatar = "";
+        $avatar = ",avatar=''";
     }
 
-    $database->setQuery("UPDATE #__fb_users set signature='$signature', view='$newview',moderator='$moderator', ordering='$neworder', rank='$newrank' where userid=$uid");
+    $database->setQuery("UPDATE #__fb_users set signature='$signature', view='$newview',moderator='$moderator', ordering='$neworder', rank='$newrank' $avatar where userid=$uid");
     $database->query() or trigger_dberror("Unable to update signature.");
 
     //delete all moderator traces before anyway

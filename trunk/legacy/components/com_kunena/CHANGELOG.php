@@ -37,6 +37,7 @@ Kunena 1.0.8
 
 16-Februray-2009 fxstein
 # Fix the fix - url tags now have http added only when needed but then for sure
+# jquery Cookier error: Prevent JomSocial from loading their jquery library
 
 16-February-2009 Matias
 # Fix broken link in "Mark all forums read"

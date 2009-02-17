@@ -63,6 +63,9 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 	        define("KUNENA_JOMSOCIAL_ITEMID", (int)$JOMSOCIAL_Itemid);
 	        define("KUNENA_JOMSOCIAL_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_JOMSOCIAL_ITEMID);
 
+	        // Prevent JomSocial from loading their jquery library - we got one loaded already
+	        define( 'C_ASSET_JQUERY', 1 );
+
 			include_once(JPATH_ROOT.'/components/com_community/libraries/core.php');
 			include_once(JPATH_ROOT.'/components/com_community/libraries/messaging.php');
 

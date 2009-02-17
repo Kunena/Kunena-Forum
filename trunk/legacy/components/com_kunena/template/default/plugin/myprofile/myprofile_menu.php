@@ -38,10 +38,28 @@ global $fbConfig;
     </thead>
 
     <tbody class = "fb_myprofile_menu">
+
         <tr>
             <td class = "fb_myprofile_menu_staff">
-                <span class = "fb_myprofile_menu_title"><?php echo _KUNENA_MYPROFILE_PERSONAL_INFO; ?></span> <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'); ?>"> <?php echo _KUNENA_MYPROFILE_SUMMARY; ?> </a>
-            <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=userdetails'); ?>"> <?php echo _KUNENA_EDIT_TITLE; ?> </a> <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=uploadavatar'); ?>"> <?php echo _KUNENA_MYPROFILE_MYAVATAR; ?></a>
+                <span class = "fb_myprofile_menu_title"><?php echo _KUNENA_MYPROFILE_PERSONAL_INFO; ?></span>
+                <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'); ?>"> <?php echo _KUNENA_MYPROFILE_SUMMARY; ?> </a>
+<?php
+ 	// Only show userdetails link if we are in charge of the profile
+    if ($fbConfig->fb_profile == 'fb')
+    {
+?>
+            	<a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=userdetails'); ?>"> <?php echo _KUNENA_EDIT_TITLE; ?> </a>
+<?php
+    }
+
+    // Only show avatar link if we are in charge of it
+    if ($fbConfig->avatar_src == 'fb')
+    {
+?>
+            	<a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=uploadavatar'); ?>"> <?php echo _KUNENA_MYPROFILE_MYAVATAR; ?></a>
+<?php
+    }
+?>
             </td>
         </tr>
 

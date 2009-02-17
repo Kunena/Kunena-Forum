@@ -205,16 +205,13 @@ if ($my->id != "" && $my->id != 0)
 
                 case "showset":
                     // B: Settings
-                    if ($fbConfig->fb_profile != 'cb' && $fbConfig->fb_profile != 'jomsocial')
+                	if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_set.php'))
+                	{
+                		include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_set.php');
+                    }
+                    else
                     {
-                        if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_set.php'))
-                        {
-                            include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_set.php');
-                        }
-                        else
-                        {
-                            include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_set.php');
-                        }
+                    	include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_set.php');
                     }
 
                     // F: Settings

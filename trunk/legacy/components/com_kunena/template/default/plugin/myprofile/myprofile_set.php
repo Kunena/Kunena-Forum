@@ -52,7 +52,6 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 					// build the html select list
 					$tosend   = mosHTML::selectList($yesno1, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $ordering);
 					echo $tosend;
-					echo '<br /><font size="1"><em>*' . _USER_CHANGE_VIEW . '</em></font>';
 					?>
 				</td>
 			</tr>
@@ -93,7 +92,15 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 			</tr>
 
 
-			<tr><td colspan = "2" align="center"><input type = "submit" class = "button" value = "<?php echo _GEN_SUBMIT;?>"></td>
+			<tr>
+				<td colspan = "2" align="center">
+					<input type = "submit" class = "button" value = "<?php echo _GEN_SUBMIT;?>">
+				</td>
+			</tr>
+            <tr >
+				<td colspan = "2">
+					<?php echo '<br /><font size="1"><em>*' . _USER_CHANGE_VIEW . '</em></font>'; ?>
+				</td>
 			</tr>
 		</tbody>
 	</table>

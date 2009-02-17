@@ -1115,7 +1115,7 @@ DEFINE('_COM_A_IMGB_DIMS', 'Dimensions');
 DEFINE('_COM_A_IMGB_CONFIRM', 'Are you absolutely sure you want to delete this file? \n Deleting a file will create a broken referencing post...');
 DEFINE('_COM_A_IMGB_VIEW', 'Open post (to edit)');
 DEFINE('_COM_A_IMGB_NO_POST', 'No referencing post!');
-DEFINE('_USER_CHANGE_VIEW', 'Changes in these settings will become active the next time you visit the forums.<br /> If you want to change the view type &quot;Mid-Flight&quot;, you can use the options from the forum menu bar.');
+DEFINE('_USER_CHANGE_VIEW', 'Changes in these settings will become active the next time you visit the forums.');
 DEFINE('_MOSBOT_DISCUSS_A', 'Discuss this article on the forums. (');
 DEFINE('_MOSBOT_DISCUSS_B', '&#32;posts)');
 DEFINE('_POST_DISCUSS', 'This thread discusses the content article');

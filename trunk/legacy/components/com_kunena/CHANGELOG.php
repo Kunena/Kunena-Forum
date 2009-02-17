@@ -37,11 +37,11 @@ Kunena 1.0.8
   Backend Show Category setting in Recent Posts can now limit the categories displayed
 + Added category id to display in backend forum administration
 # Integration dependent myprofile page fixes
+- Remove broken "Close all tags" when writing the message in all places
 
 17-Februray-2009 Matias
 # Strip extra slashes in preview
 # Regression: Quick Reply Cancel button does not work
-- Remove broken "Close all tags" when writing the message
 
 16-Februray-2009 fxstein
 # Fix the fix - url tags now have http added only when needed but then for sure

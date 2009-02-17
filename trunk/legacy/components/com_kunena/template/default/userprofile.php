@@ -225,10 +225,6 @@ if ($my->id)
 
                     <br/>
 
-                    <a href = "javascript: bbstyle(-1)"onMouseOver = "helpline('a')"><small><?php echo _BBCODE_CLOSA; ?></small></a>
-
-                    <br/>
-
                     <input type = "checkbox" value = "1" name = "deleteSig"><i> <?php echo _USER_DELETE; ?></i>
                             </td>
                         </tr>

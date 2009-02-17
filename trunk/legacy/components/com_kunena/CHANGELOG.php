@@ -38,6 +38,8 @@ Kunena 1.0.8
 + Added category id to display in backend forum administration
 # Integration dependent myprofile page fixes
 - Remove broken "Close all tags" when writing the message in all places
++ Installer upgrade added for recent posts categories setting
+# minor naming change in 1.0.8 upgrade procedure
 
 17-Februray-2009 Matias
 # Strip extra slashes in preview

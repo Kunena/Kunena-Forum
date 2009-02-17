@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.8
 
+17-Februray-2009 Matias
+# Strip extra slashes in preview
+
 16-Februray-2009 fxstein
 # Fix the fix - url tags now have http added only when needed but then for sure
 

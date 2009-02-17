@@ -158,7 +158,7 @@ if ($func == "getpreview") {
         include (KUNENA_ABSPATH . '/template/default/smile.class.php');
     }
 
-    $message = utf8_urldecode(utf8_decode($msgpreview));
+    $message = utf8_urldecode(utf8_decode(stripslashes($msgpreview)));
 
     $msgbody = smile::smileReplace( $message , 0, $fbConfig->disemoticons, $smileyList);
     $msgbody = nl2br($msgbody);

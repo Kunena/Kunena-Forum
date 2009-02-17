@@ -710,12 +710,14 @@ span.msgdate {
 	padding-left:10px;
 	font-size:x-small;
 	font-family:Arial, Helvetica, sans-serif;
+	white-space: nowrap;
 }
 span.msgkarma {
 	font-weight: bold;
 	color: #333333;
 	text-decoration: none;
 	padding-right: 10px;
+	white-space: nowrap;
 }
 div.msgtext {
 	width: 100%;

@@ -291,7 +291,7 @@ class CKunenaConfig extends CKunenaConfigBase
     var $showlatest              = 1;
     var $latestcount             = 10;
     var $latestcountperpage      = 5;
-    var $latestcategory          = 0;
+    var $latestcategory          = ''; //Also used by default_ex recent topics
     var $latestsinglesubject     = 1;
     var $latestreplysubject      = 1;
     var $latestsubjectlength     = 100;

@@ -40,7 +40,7 @@ function KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages) {
         $output .= CKunenaLink::GetLatestPageLink($func, 1, 'follow', '',$sel);
 	if (($startpage) > 2)
         {
-	    $output .= "..."; 
+	    $output .= "...";
 	}
     }
 
@@ -57,8 +57,8 @@ function KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages) {
     if ($endpage < $totalpages)
     {
 	if ($endpage < $totalpages-1)
-        { 
-	    $output .= "..."; 
+        {
+	    $output .= "...";
 	}
 
         $output .= CKunenaLink::GetLatestPageLink($func, $totalpages, 'follow', '',$sel);
@@ -68,7 +68,7 @@ function KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages) {
     return $output;
 }
 
-if (!$my->id && $func == "mylatest") 
+if (!$my->id && $func == "mylatest")
 {
         	header("HTTP/1.1 307 Temporary Redirect");
         	header("Location: " . htmlspecialchars_decode(CKunenaLink::GetShowLatestURL()));
@@ -156,8 +156,11 @@ if ($func == "mylatest")
 else
 {
 	$mainframe->setPageTitle(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
-	$query = "Select count(distinct thread) FROM #__fb_messages WHERE time >'$querytime' AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)";
+	$query = "Select count(distinct thread) FROM #__fb_messages WHERE time >'$querytime'".
+			" AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)".
+			((trim($fbConfig->latestcategory)!="")?(" AND catid IN (".trim($fbConfig->latestcategory).")"):""); // if categories are limited apply filter
 }
+
 $database->setQuery($query);
 $total = (int)$database->loadResult();
 	check_dberror('Unable to count total threads');
@@ -193,8 +196,9 @@ else
 	$query .=			"JOIN (  SELECT thread, MAX(time) AS lastpost
                                 FROM #__fb_messages
                                 WHERE time >'$querytime'
-                                AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)
-                                GROUP BY 1) AS b ON b.thread = a.thread ";
+                                AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)".
+                                ((trim($fbConfig->latestcategory)!="")?(" AND catid IN (".trim($fbConfig->latestcategory).")"):"").
+                                " GROUP BY 1) AS b ON b.thread = a.thread ";
 }
 
 $query .=				"JOIN #__fb_messages_text AS t ON a.thread = t.mesid
@@ -330,7 +334,7 @@ if (count($threadids) > 0)
 					    echo '<td class="fb_list_pages_all">';
 					    $maxpages = 5 - 2; // odd number here (show - 2)
 					    $totalpages = ceil($total / $threads_per_page);
-					    echo $pagination = KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages);	
+					    echo $pagination = KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages);
 					    echo '</td>';
 					}
 				?>

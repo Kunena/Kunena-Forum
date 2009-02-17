@@ -23,6 +23,7 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // 1.0.8
+DEFINE('_KUNENA_CATID', 'ID');
 DEFINE('_POST_NOT_MODERATOR', 'You don\'t have moderator permissions!');
 DEFINE('_POST_NO_FAVORITED_TOPIC', 'This thread has <b>NOT</b> been added to your favorites');
 DEFINE('_COM_C_SYNCEUSERSDESC', 'Sync the Kunena user table with the Joomla user table');

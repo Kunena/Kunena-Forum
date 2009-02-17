@@ -243,6 +243,10 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </th>
 
                     <th>
+                      <small><?php echo _KUNENA_CATID; ?></small>
+                    </th>
+
+                    <th>
                       <small><?php echo _KUNENA_LOCKED; ?></small>
                     </th>
 
@@ -315,6 +319,12 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                         ?>
 
                         </a>
+                    </td>
+
+                    <td align = "center">
+                        <?php
+                            echo $row->id;
+                        ?>
                     </td>
 
                     <td align = "center">

@@ -32,6 +32,11 @@ Legend:
 
 Kunena 1.0.8
 
+17-Februray-2009 fxstein
+# Missing category check added to default_ex Recent Discussions tab
+  Backend Show Category setting in Recent Posts can now limit the categories displayed
++ Added category id to display in backend forum administration
+
 17-Februray-2009 Matias
 # Strip extra slashes in preview
 # Regression: Quick Reply Cancel button does not work

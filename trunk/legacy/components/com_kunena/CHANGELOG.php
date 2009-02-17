@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.8
 
+16-Februray-2009 fxstein
+# Fix the fix - url tags now have http added only when needed but then for sure
+
 16-February-2009 Matias
 # Fix broken link in "Mark all forums read"
 # Regression: Moderator tools in showcat didn't work

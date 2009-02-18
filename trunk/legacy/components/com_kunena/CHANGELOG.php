@@ -30,6 +30,9 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+18-Februray-2009 Matias
+# Broke PHP4 compability, added emulation for htmlspecialchars_decode()
+
 Kunena 1.0.8
 
 17-Februray-2009 fxstein

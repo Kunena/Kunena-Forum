@@ -32,6 +32,7 @@ Legend:
 
 18-Februray-2009 Matias
 # Broke PHP4 compability, added emulation for htmlspecialchars_decode()
+# Pathway: removed multiple instances of one user, use alphabetical order
 
 Kunena 1.0.8
 

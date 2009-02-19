@@ -1272,6 +1272,14 @@ function fbGetArrayInts($name, $type = NULL) {
 function make_pattern(&$pat, $key) {
   $pat = '/'.preg_quote($pat, '/').'/i';
 }
+if (!function_exists("htmlspecialchars_decode")) {
+    function htmlspecialchars_decode($string,$style=ENT_COMPAT) 
+    {
+        $translation = array_flip(get_html_translation_table(HTML_SPECIALCHARS,$style));
+        if($style === ENT_QUOTES) { $translation['&#039;'] = '\''; }
+        return strtr($string,$translation);
+    }
+}
 if(!function_exists('str_ireplace')){
 function str_ireplace($search, $replace, $subject){
 if(is_array($search)){

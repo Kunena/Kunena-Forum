@@ -30,6 +30,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+19-Februray-2009 Matias
+# Search: Fixed SEF/no SEF issues. Pagination and links should now work for all
+# Pathway: comma (,) was missing between usernames if there were no guests
+# Thread View: Minor fix in pagination
+
 18-Februray-2009 Matias
 # Broke PHP4 compability, added emulation for htmlspecialchars_decode()
 # Pathway: removed multiple instances of one user, use alphabetical order

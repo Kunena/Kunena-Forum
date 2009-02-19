@@ -235,7 +235,7 @@ if ($letPass || $is_Moderator)
             $total = count($flat_messages);
 
 	    $maxpages = 9 - 2; // odd number here (show - 2)
-	    $page = ceil($limitstart / $limit)+1;
+	    $page = floor($limitstart / $limit)+1;
 	    $totalpages = ceil($total / $limit);
 	    $pagination = KunenaViewPagination($catid, $thread, $page, $totalpages, $maxpages);
             $flat_messages = array_slice($flat_messages, ($page-1)*$limit, $limit);

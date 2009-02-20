@@ -137,12 +137,11 @@ if ($func != "")
         else {
 			echo "<div class=\"path-element-users\">($total_viewing " . _KUNENA_PATHWAY_VIEWING . ")&nbsp;";
 			$totalguest = 0;
-			$divider = ', ';
+			$lastone = end($users);
 			foreach ($users as $user) {
 				if ($user->userid != 0)
 				{
-					$lastone = next($users)===FALSE;
-					if($lastone && !$totalguest){ 
+					if($user==$lastone && !$totalguest){ 
 					$divider = '';
 					}
 					if ( $user->showOnline > 0 ){

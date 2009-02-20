@@ -253,9 +253,9 @@ class CKunenaLink
         return CKunenaLink::GetSefHrefLink($helplink, $name, '', $rel);
     }
 
-    function GetSearchLink($fbConfig, $searchword, $start, $name, $rel='nofollow')
+    function GetSearchLink($fbConfig, $searchword, $limitstart, $name, $rel='nofollow')
     {
-        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=search&amp;searchword=' . $searchword . '&amp;start='.$start, $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=search&amp;searchword=' . $searchword . '&amp;limitstart='.$limitstart, $name, '', $rel);
     }
 
     //

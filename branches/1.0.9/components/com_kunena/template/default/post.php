@@ -437,7 +437,7 @@ $catName = $objCatInfo->name;
 
                                                     $mailsubject = "[".stripslashes($board_title)." "._GEN_FORUM."] " . stripslashes($messagesubject) . " (" . stripslashes($catName) . ")";
 
-                                                    $msg = "$subs->name,\n\n";
+                                                    $msg = "$mods->name,\n\n";
                                                     $msg .= trim($_COM_A_NOT_MOD1)." ".stripslashes($board_title)." ".trim(_GEN_FORUM)."\n\n";
                                                     $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
 						    $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";

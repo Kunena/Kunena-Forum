@@ -528,7 +528,7 @@ DEFINE('_KUNENA_PUBLICBACKEND', 'Public Backend');
 DEFINE('_KUNENA_SELECTANITEMTO', 'Select an item to');
 DEFINE('_KUNENA_ERRORSUBS', 'Something went wrong deleting the messages and subscriptions.');
 DEFINE('_KUNENA_WARNING', 'Warning...');
-DEFINE('_KUNENA_CHMOD1', 'You need to chmod this to 766 in order for the file to be updated.');
+DEFINE('_KUNENA_CHMOD1', 'You need to change permissions for the file to be updated.');
 DEFINE('_KUNENA_YOURCONFIGFILEIS', 'Your config file is');
 DEFINE('_KUNENA_KUNENA', 'Kunena');
 DEFINE('_KUNENA_CLEXUS', 'Clexus PM');

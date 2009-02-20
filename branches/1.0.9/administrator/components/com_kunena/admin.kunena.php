@@ -797,7 +797,6 @@ function saveConfig($option)
     // we also write an old style config file
 	global $mainframe;
     $configfile = $mainframe->getCfg('absolute_path') . "/administrator/components/com_kunena/Kunena_config.php";
-    @chmod($configfile, 0766);
 
 	$ref = array();
 	$array = array(
@@ -855,7 +854,6 @@ function showCss($option)
 {
     global $fbConfig;
     $file = "../components/com_kunena/template/" . $fbConfig->template . "/kunena.forum.css";
-    @chmod($file, 0766);
     $permission = is_writable($file);
 
     if (!$permission)
@@ -1524,7 +1522,6 @@ function dircopy($srcdir, $dstdir, $verbose = false) {
 
     if (!is_dir($dstdir)) {
         mkdir($dstdir);
-        chmod($dstdir, 0777);
     }
 
     if ($curdir = opendir($srcdir)) {

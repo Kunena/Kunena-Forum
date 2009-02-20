@@ -30,6 +30,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.0.9
+
+19-Februray-2009 fxstein
+# Incorrect permissions handling fixed
+
 18-Februray-2009 Matias
 # Broke PHP4 compability, added emulation for htmlspecialchars_decode()
 # Pathway: removed multiple instances of one user, use alphabetical order

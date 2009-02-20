@@ -169,8 +169,7 @@ function com_install() {
 			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/files
 			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/images
 </pre> a) You can copy the contents of _kunena.files.distribution under
-			components/com_kunena to your Joomla root, under images/ folder,
-			rename it to "fbfiles" and then chmod it to 777 (making it writable)
+			components/com_kunena to your Joomla root, under images/ folder.
 
 			<br />
 			b) If you already have the contents there, but Kunena installation
@@ -278,7 +277,6 @@ function dircopy($srcdir, $dstdir, $verbose = true) {
 
 	if (!is_dir($dstdir)) {
 		mkdir ($dstdir);
-		chmod ($dstdir, 0777);
 	}
 
 	if ($curdir = opendir($srcdir)) {

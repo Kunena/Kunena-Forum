@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.9
 
+20-Februray-2009 fxstein
+# [#15151] Ensure fbConfig is array during legacy config file write - Thx JoniJnm!
+
 20-February-2009 Matias
 # [#15148] Post emails for moderators: name missing
 # [#15150] Don't send email to banned users

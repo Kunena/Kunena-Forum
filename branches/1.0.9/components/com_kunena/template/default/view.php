@@ -433,22 +433,6 @@ if ($letPass || $is_Moderator)
                                 else {
                                     $fb_thread = $fmessage->thread;
                                 }
-                                //Joomla Mambot Support , Thanks hacksider
-                                if ($fbConfig->jmambot)
-                                {
-                                    global $_MAMBOTS;
-                                    $row = new t();
-                                    $row->text = $fb_message_txt;
-                                    $_MAMBOTS->loadBotGroup( 'content' );
-                                    $params =& new mosParameters( '' );
-                                    $results = $_MAMBOTS->trigger( 'onPrepareContent', array( &$row, &$params, 0 ), true );
-                                    $msg_text = $row->text;
-                                }
-                                else
-                                {
-                                    $msg_text = $fb_message_txt;
-                                }
-                                /* Fininsh Joomla Mambot Support */
 
                                 //meta description and keywords
 								$metaKeys=(htmlspecialchars(stripslashes($fmessage->subject)). ', ' .htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . htmlspecialchars(stripslashes($fbConfig->board_title)) . ', ' . htmlspecialchars($GLOBALS['mosConfig_sitename']));

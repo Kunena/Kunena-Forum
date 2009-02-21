@@ -38,6 +38,7 @@ class smile
 
 	static $regexp_trans = array('/' => '\/', '^' => '\^', '$' => '\$', '.' => '\.', '[' => '\[', ']' => '\]', '|' => '\|', '(' => '\(', ')' => '\)', '?' => '\?', '*' => '\*', '+' => '\+', '{' => '\{', '}' => '\}', '\\' => '\\\\', '^' => '\^', '-' => '\-');
 
+	$utf8 = (mb_detect_encoding($str . 'a' , 'UTF-8') == 'UTF-8') ? "u" : "";
         $type = ($history == 1) ? "-grey" : "";
         $message_emoticons = array();
         $message_emoticons = $iconList? $iconList : smile::getEmoticons($history);
@@ -50,7 +51,10 @@ class smile
 
             while (list($emo_txt, $emo_src) = each($message_emoticons)) {
 		$emo_txt = strtr($emo_txt, $regexp_trans);
-                $fb_message_txt = preg_replace('/(\W|\A)'.$emo_txt.'(\W|\Z)/u', '\1<img src="' . $emo_src . '" alt="" style="vertical-align: middle;border:0px;" />\2', $fb_message_txt);
+		// Check that smileys are not part of text like:soon (:s)
+                $fb_message_txt = preg_replace('/(\W|\A)'.$emo_txt.'(\W|\Z)/'.$utf8, '\1<img src="' . $emo_src . '" alt="" style="vertical-align: middle;border:0px;" />\2', $fb_message_txt);
+		// Previous check causes :) :) not to work, workaround is to run the same regexp twice
+                $fb_message_txt = preg_replace('/(\W|\A)'.$emo_txt.'(\W|\Z)/'.$utf8, '\1<img src="' . $emo_src . '" alt="" style="vertical-align: middle;border:0px;" />\2', $fb_message_txt);
             }
         }
 

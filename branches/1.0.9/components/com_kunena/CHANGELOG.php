@@ -32,6 +32,10 @@ Legend:
 
 Kunena 1.0.9
 
+21-February-2009 Matias
+# [#15157] Empty messages in Joomla 1.0
+# [#15162] Two same smileys in a row do not work
+
 20-Februray-2009 fxstein
 # [#15151] Ensure fbConfig is array during legacy config file write - Thx JoniJnm!
 

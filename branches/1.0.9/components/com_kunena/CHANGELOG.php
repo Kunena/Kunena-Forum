@@ -34,6 +34,7 @@ Kunena 1.0.9
 
 20-February-2009 Matias
 # [#15148] Post emails for moderators: name missing
+# [#15150] Don't send email to banned users
 
 19-Februray-2009 fxstein
 # Incorrect permissions handling fixed

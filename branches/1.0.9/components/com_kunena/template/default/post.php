@@ -342,7 +342,7 @@ $catName = $objCatInfo->name;
                                             $mailmessage = smile::purify($message);
                                             $database->setQuery("SELECT * FROM #__fb_subscriptions AS a"
                                             . "\n LEFT JOIN #__users as u ON a.userid=u.id "
-                                            . "\n WHERE a.thread= {$querythread}");
+                                            . "\n WHERE u.block=0 AND a.thread= {$querythread}");
 
                                             $subsList = $database->loadObjectList();
                                             	check_dberror("Unable to load subscriptions.");
@@ -409,7 +409,7 @@ $catName = $objCatInfo->name;
                                                 $sql .= "\n ON a.userid=u.id";
                                                 $sql .= "\n  AND a.catid=$catid";
                                             }
-                                            $sql .= "\n WHERE 1=1";
+                                            $sql .= "\n WHERE u.block=0";
                                             $sql .= "\n AND (";
                                             // helper for OR condition
                                             $sql2 = '';

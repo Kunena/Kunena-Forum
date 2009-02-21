@@ -29,7 +29,7 @@ define('KUNENA_JABSPATH', $mainframe->getCfg('absolute_path'));
 define('KUNENA_JLIVEURL', $mainframe->getCfg('live_site'));
 
 // Joomla template dir
-define('KUNENA_JTEMPLATEPATH', KUNENA_JABSPATH. DS. "templates".DS . $mainframe->getTemplate());
+define('KUNENA_JTEMPLATEPATH', KUNENA_JABSPATH. "/templates/" . $mainframe->getTemplate());
 define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "/templates/".$mainframe->getTemplate());
 
 //Kunena

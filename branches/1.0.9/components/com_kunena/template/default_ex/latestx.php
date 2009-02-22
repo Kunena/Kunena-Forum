@@ -132,6 +132,16 @@ $page             = $page < 1 ? 1 : $page;
 $offset           = ($page - 1) * $threads_per_page;
 $row_count        = $page * $threads_per_page;
 
+if ($func != "mylatest") {
+	$lookcats = split(',', $fbConfig->latestcategory);
+	$catlist = array();
+	$latestcats = '';
+	foreach ($lookcats as $catnum) {
+		if ((int)$catnum && (int)$catnum>0) $catlist[] = (int)$catnum;
+	}
+	if (count($catlist)) $latestcats = " AND catid IN (". implode(',', $catlist) .") ";
+}
+
  //check if $sel has a reasonable value and not a Unix timestamp:
 $since = false;
 if ($sel == "0")
@@ -157,8 +167,7 @@ else
 {
 	$mainframe->setPageTitle(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
 	$query = "Select count(distinct thread) FROM #__fb_messages WHERE time >'$querytime'".
-			" AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)".
-			((trim($fbConfig->latestcategory)!="")?(" AND catid IN (".trim($fbConfig->latestcategory).")"):""); // if categories are limited apply filter
+			" AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)" . $latestcats; // if categories are limited apply filter
 }
 
 $database->setQuery($query);
@@ -196,8 +205,8 @@ else
 	$query .=			"JOIN (  SELECT thread, MAX(time) AS lastpost
                                 FROM #__fb_messages
                                 WHERE time >'$querytime'
-                                AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)".
-                                ((trim($fbConfig->latestcategory)!="")?(" AND catid IN (".trim($fbConfig->latestcategory).")"):"").
+                                AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)" .
+                                $latestcats .
                                 " GROUP BY 1) AS b ON b.thread = a.thread ";
 }
 

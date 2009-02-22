@@ -1297,12 +1297,37 @@ function fbReturnDashed (&$string, $key) {
 }
 
 if (!function_exists('mb_detect_encoding')) {
-  // We're on an aged PHP version
   function mb_detect_encoding($text) {
-    return 'UTF-8';
+	$c=0; $b=0;
+	$bits=0;
+	$len=strlen($text);
+	for($i=0; $i<$len; $i++){
+		$c=ord($text[$i]);
+		if($c > 128){
+			if(($c >= 254)) return 'ISO-8859-1';
+			elseif($c >= 252) $bits=6;
+			elseif($c >= 248) $bits=5;
+			elseif($c >= 240) $bits=4;
+			elseif($c >= 224) $bits=3;
+			elseif($c >= 192) $bits=2;
+			else return 'ISO-8859-1';
+			if(($i+$bits) > $len) return 'ISO-8859-1';
+			while($bits > 1){
+				$i++;
+				$b=ord($text[$i]);
+				if($b < 128 || $b > 191) return 'ISO-8859-1';
+				$bits--;
+			}
+		}
+	}
+	return 'UTF-8';
   }
   function mb_convert_encoding($text,$target_encoding,$source_encoding) {
-    return $text;
+	return $text;
+  }
+  function mb_substr($str, $start, $lenght=NULL, $encoding=NULL) {
+	if ($lenght===NULL) $lenght = strlen($str);
+	return substr($str, $start, $lenght);
   }
 }
 

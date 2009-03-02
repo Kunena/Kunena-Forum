@@ -273,7 +273,7 @@ function getFBGroupName($id) {
     $database = &JFactory::getDBO();
     $gr = '';
     $database->setQuery("select id, title from #__fb_groups as g, #__fb_users as u where u.group_id = g.id and u.userid= $id");
-    $database->loadObject($gr);
+    $gr = $database->loadObject();
 
     if ($gr->id > 1) {
         return $gr;
@@ -471,7 +471,7 @@ class FBTools {
 
             unset($lastMsgInCat);
             $database->setQuery("select id, time from #__fb_messages where catid={$msg_cat} and (thread <> {$msg_id} AND id<>{$msg_id}) order by time desc limit 1;");
-            $database->loadObject($lastMsgInCat);
+            $lastMsgInCat = $database->loadObject();
             	check_dberror("Unable to load messages.");
 
             $ctg[$msg_cat]->numTopics = (int) ($ctg[$msg_cat]->numTopics - $cntTopics);
@@ -523,7 +523,7 @@ class FBTools {
                 return -2;
                 }
 
-            $database->loadObject($mes);
+            $mes = $database->loadObject();
             $thread = $mes->thread;
 
             if ($mes->parent == 0) {

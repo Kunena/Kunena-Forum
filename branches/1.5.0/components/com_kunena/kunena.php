@@ -218,26 +218,27 @@ else {
 
 require_once (KUNENA_ABSSOURCESPATH . '/kunena.permissions.php');
 require_once (KUNENA_ABSSOURCESPATH . '/kunena.category.class.php');
+require_once (KUNENA_ABSSOURCESPATH . '/kunena.template.class.php');
 
 if ($catid != '') {
     $thisCat = new jbCategory($database, $catid);
     }
 
-if (defined('JPATH_BASE')) {
-    jimport ('pattemplate.patTemplate');
-    }
-else {
-    require_once (KUNENA_JABSPATH . '/includes/patTemplate/patTemplate.php');
-    }
+//if (defined('JPATH_BASE')) {
+//    jimport ('pattemplate.patTemplate');
+//    }
+//else {
+//    require_once (KUNENA_JABSPATH . '/includes/patTemplate/patTemplate.php');
+//    }
 
-$obj_KUNENA_tmpl = new patTemplate();
-$obj_KUNENA_tmpl->setBasedir($str_KUNENA_templ_path);
+//    echo "<div>$str_KUNENA_templ_path</div>";
+$KunenaTemplate = new CKunenaTemplate;
+$KunenaTemplate->setRoot($str_KUNENA_templ_path);
 
 // Permissions: Check for administrators and moderators
 if ($my->id != 0)
 {
-
-$acl = &JFactory::getACL();
+    $acl = &JFactory::getACL();
     $aro_group = $acl->getAroGroup($my->id);
     if ($aro_group and FBTools::isJoomla15())
     	$aro_group->group_id = $aro_group->id;  // changed fieldname in Joomla 1.5: "group_id" -> "id"
@@ -540,14 +541,14 @@ else
     }
 
     // display header
-    $obj_KUNENA_tmpl->readTemplatesFromFile("header.html");
-    $obj_KUNENA_tmpl->addVar('jb-header', 'menu', $fbMenu);
-    $obj_KUNENA_tmpl->addVar('jb-header', 'board_title', $board_title);
-    $obj_KUNENA_tmpl->addVar('jb-header', 'css_path', KUNENA_DIRECTURL . '/template/' . $fbConfig->template . '/forum.css');
-    $obj_KUNENA_tmpl->addVar('jb-header', 'offline_message', $fbConfig->board_offline ? '<span id="fbOffline">' . _FORUM_IS_OFFLINE . '</span>' : '');
-    $obj_KUNENA_tmpl->addVar('jb-header', 'searchbox', getSearchBox());
-    $obj_KUNENA_tmpl->addVar('jb-header', 'pb_imgswitchurl', KUNENA_URLIMAGESPATH . "shrink.gif");
-    $obj_KUNENA_tmpl->displayParsedTemplate('jb-header');
+    $KunenaTemplate->parse("header.html");
+    $KunenaTemplate->addVar('kunena-header', 'menu', $fbMenu);
+    $KunenaTemplate->addVar('kunena-header', 'board_title', $board_title);
+    $KunenaTemplate->addVar('kunena-header', 'css_path', KUNENA_DIRECTURL . '/template/' . $fbConfig->template . '/forum.css');
+    $KunenaTemplate->addVar('kunena-header', 'offline_message', $fbConfig->board_offline ? '<span id="fbOffline">' . _FORUM_IS_OFFLINE . '</span>' : '');
+    $KunenaTemplate->addVar('kunena-header', 'searchbox', getSearchBox());
+    $KunenaTemplate->addVar('kunena-header', 'pb_imgswitchurl', KUNENA_URLIMAGESPATH . "shrink.gif");
+    $KunenaTemplate->display('kunena-header');
 
     //BEGIN: PROFILEBOX
     if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/profilebox/profilebox.php')) {
@@ -967,8 +968,8 @@ else
     echo '</div>';
 
     // display footer
-    $obj_KUNENA_tmpl->readTemplatesFromFile("footer.html");
-    $obj_KUNENA_tmpl->displayParsedTemplate('fb-footer');
+    $KunenaTemplate->readTemplatesFromFile("footer.html");
+    $KunenaTemplate->displayParsedTemplate('kunena-footer');
 } //else
 
 // Just for debugging and performance analysis

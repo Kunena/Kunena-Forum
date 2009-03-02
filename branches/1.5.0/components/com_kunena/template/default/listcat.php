@@ -86,8 +86,8 @@ if ($fbConfig->showannouncement > 0)
 ?>
 
     <div class = "fb-fb_2">
-<jdoc:include type="modules" name="fb_2" /> 
-		
+<jdoc:include type="modules" name="fb_2" />
+
     </div>
 
 
@@ -256,7 +256,7 @@ $my = &JFactory::getUser();
                                 LEFT JOIN #__fb_messages AS mm ON m.thread=mm.thread
                                 WHERE m.id='$singlerow->id_last_msg'
                                 GROUP BY m.thread");
-                                $database->loadObject($thisThread);
+                                $thisThread = $database->loadObject();
                                 $latestthreadpages = ceil($thisThread->totalmessages / $fbConfig->messages_per_page);
                                 $latestthread = $thisThread->thread;
                                 $latestname = $singlerow->mname;

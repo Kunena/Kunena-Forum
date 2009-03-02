@@ -17,7 +17,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 global $is_Moderator;
 
-require_once(KUNENA_ABSSOURCESPATH . 'fb_auth.php');
+require_once(KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
 
 //Security basics begin
 //Securing passed form elements:

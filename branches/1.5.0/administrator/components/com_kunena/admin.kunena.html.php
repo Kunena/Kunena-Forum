@@ -723,11 +723,11 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 
     function showConfig(&$fbConfig, &$lists, $option)
     {
-	jimport('joomla.html.pane');
+        jimport('joomla.html.pane');
         $pane =& JPane::getInstance('tabs', array('startOffset'=>0));
 
 		echo $pane->startPane( 'pane' );
-echo $pane->startPanel( 'Config', 'panel1' );
+		echo $pane->startPanel( 'Config', 'panel1' );
         ?>
 <div id="fbcongifcover">
 <div class="fbfunctitle"><?php echo _COM_A_CONFIG ?></div>

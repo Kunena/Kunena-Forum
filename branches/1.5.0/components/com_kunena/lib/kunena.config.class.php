@@ -13,6 +13,13 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 class boj_Config
 {
+    var $_db=null;
+
+    function boj_Config()
+    {
+        $this->_db = &JFactory::getDBO();
+    }
+
     //
     // The following functions MUST be overridden in derived classes
     // Basically an abstract base class that must not be used by itself
@@ -43,8 +50,14 @@ class boj_Config
         }
         else
         {
-            return mosBindArrayToObject($array, $this, $ignore);
-        }
+			foreach ($array as $k => $v)
+			{
+//echo "<div>Var: $k Value: $v</div>";
+			    $this->$k = $v;
+			}
+		}
+
+		return true;
     }
 
     //
@@ -52,7 +65,7 @@ class boj_Config
     //
     function create()
     {
-        global $database, $mosConfig_absolute_path;
+        global $mosConfig_absolute_path;
 
         $fields = array ();
 
@@ -64,22 +77,27 @@ class boj_Config
             // Need to provide ability to override certain settings
             // in derived class without the need to recode this entire function
             //
-            switch (gettype($value))
+
+            // Exclude private class variables
+            if ($name!='_db')
             {
-                case 'integer':
-                    $fields[] = "`$name` INTEGER NULL";
+	            switch (gettype($value))
+	            {
+	                case 'integer':
+	                    $fields[] = "`$name` INTEGER NULL";
 
-                    break;
+	                    break;
 
-                case 'string':
-                    $fields[] = "`$name` TEXT NULL";
+	                case 'string':
+	                    $fields[] = "`$name` TEXT NULL";
 
-                    break;
+	                    break;
+	            }
             }
         }
 
-        $database->setQuery("CREATE TABLE #__".$this->GetConfigTableName()." (" . implode(', ', $fields) . ")");
-        $database->query();
+        $this->_db->setQuery("CREATE TABLE #__".$this->GetConfigTableName()." (" . implode(', ', $fields) . ")");
+        $this->_db->query();
         	check_dberror("Unable to create configuration table.");
 
         // Insert current Settings
@@ -96,8 +114,8 @@ class boj_Config
             }
         }
 
-        $database->setQuery("INSERT INTO #__".$this->GetConfigTableName()." SET " . implode(', ', $fields));
-        $database->query();
+        $this->_db->setQuery("INSERT INTO #__".$this->GetConfigTableName()." SET " . implode(', ', $fields));
+        $this->_db->query();
         	check_dberror("Unable to insert configuration data.");
     }
 
@@ -106,21 +124,20 @@ class boj_Config
     //
     function backup()
     {
-        $database = &JFactory::getDBO();
         // remove old backup if one exists
-        $database->setQuery("DROP TABLE IF EXISTS #__".$this->GetConfigTableName()."_backup");
-        $database->query();
+        $this->_db->setQuery("DROP TABLE IF EXISTS #__".$this->GetConfigTableName()."_backup");
+        $this->_db->query();
         	check_dberror("Unable to drop old configuration backup table.");
 
         // Only create backup if config table already exists
-        $database->setQuery( "SHOW TABLES LIKE '%".$this->GetConfigTableName()."'" );
-		$database->query();
+        $this->_db->setQuery( "SHOW TABLES LIKE '%".$this->GetConfigTableName()."'" );
+		$this->_db->query();
 			check_dberror('Unable to check for existing config table.');
-		if($database->loadResult())
+		if($this->_db->loadResult())
 		{
 			// backup current settings
-			$database->setQuery("CREATE TABLE #__".$this->GetConfigTableName()."_backup SELECT * FROM #__".$this->GetConfigTableName());
-			$database->query();
+			$this->_db->setQuery("CREATE TABLE #__".$this->GetConfigTableName()."_backup SELECT * FROM #__".$this->GetConfigTableName());
+			$this->_db->query();
 				check_dberror("Unable to create new configuration backup table.");
 		}
     }
@@ -130,9 +147,8 @@ class boj_Config
     //
     function remove()
     {
-        $database = &JFactory::getDBO();
-        $database->setQuery("DROP TABLE IF EXISTS #__".$this->GetConfigTableName());
-        $database->query();
+        $this->_db->setQuery("DROP TABLE IF EXISTS #__".$this->GetConfigTableName());
+        $this->_db->query();
         	check_dberror("Unable to drop existing configuration table.");
     }
 
@@ -141,22 +157,23 @@ class boj_Config
     //
     function load($silent=false)
     {
-        $database = &JFactory::getDBO();
-
-        $database->setQuery("SELECT * FROM #__".$this->GetConfigTableName());
+        $this->_db->setQuery("SELECT * FROM #__".$this->GetConfigTableName());
 
         // Special error handling!
         // This query might actually fail on new installs or upgrades when
         // no configuration table is present. That is ok. It only tells us to
         // create the table and populate it with defualt setting.
         // DO NOT THROW an error
-        $database->loadObject($this);
 
-        if($database->_errorNum != 0)
+        if ($config = $this->_db->loadAssoc( ))
         {
+			$this->bind($config);
+		}
+		else
+		{
         	// If no configuration is present, save default values
         	$this->create(); //create has its own error handling
-        }
+		}
     }
 }
 
@@ -317,7 +334,7 @@ class fb_Config extends boj_Config
 
     function GetConfigTableName()
     {
-        return "fb_config"; // w/o joomla prefix - is being added by based class
+        return "fb_config"; // w/o joomla prefix - is being added by base class
     }
 }
 

@@ -14,7 +14,6 @@
 **/
 
 defined( '_JEXEC' ) or die('Restricted access');
-$database =& JFactory::getDBO();
 $language =& JFactory::getLanguage();
 $lang = $language->getBackwardLang();
 

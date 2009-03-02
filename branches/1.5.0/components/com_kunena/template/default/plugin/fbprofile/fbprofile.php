@@ -48,7 +48,7 @@ function showprf($userid, $page)
                         . "\n LEFT JOIN #__users as b on b.id=a.userid"
                         . "\n where a.userid=$userid");
 
-    $database->loadObject($userinfo) or trigger_dberror("Unable to get user info.");;
+    $userinfo = $database->loadObject() or trigger_dberror("Unable to get user info.");;
 
 	// get userprofile hits
 	$msg_userhits = $userinfo->uhits;

@@ -56,10 +56,10 @@ global $fbConfig;
 
                 //Get the category name for breadcrumb
                 $database->setQuery("SELECT name,locked,review,id, description, parent from #__fb_categories where id='$catid'");
-                $database->loadObject($objCatInfo) or trigger_dberror("Unable to read from categories.");
+                $objCatInfo = $database->loadObject() or trigger_dberror("Unable to read from categories.");
                 //Get the Category's parent category name for breadcrumb
                 $database->setQuery("SELECT name,id FROM #__fb_categories WHERE id='$objCatInfo->parent'");
-                $database->loadObject($objCatParentInfo) or trigger_dberror("Unable to read from categories.");
+                $objCatParentInfo = $database->loadObject() or trigger_dberror("Unable to read from categories.");
                 // set page title
                 $mainframe->setPageTitle($objCatParentInfo->name . ' - ' . $objCatInfo->name . ' - ' . $fbConfig->board_title);
                 //check if this forum is locked

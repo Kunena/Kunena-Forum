@@ -18,8 +18,8 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 // ################################################################
 
-include_once(KUNENA_ABSSOURCESPATH."parser.inc.php");
-include_once(KUNENA_ABSSOURCESPATH."interpreter.fireboard.inc.php");
+include_once(KUNENA_ABSSOURCESPATH."/kunena.parser.base.php");
+include_once(KUNENA_ABSSOURCESPATH."/kunena.parser.php");
 
 class smile
 {
@@ -56,7 +56,7 @@ class smile
 
         //implement the new parser
         $parser = new TagParser();
-        $interpreter = new FireBoardBBCodeInterpreter($parser);
+        $interpreter = new KunenaBBCodeInterpreter($parser);
         $task = $interpreter->NewTask();
         $task->SetText($fb_message_txt);
         $task->dry = FALSE;

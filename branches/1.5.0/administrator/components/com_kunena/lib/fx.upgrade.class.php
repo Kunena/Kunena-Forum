@@ -42,8 +42,8 @@ class fx_Upgrade {
 	// helper function to create new version table
 	function createVersionTable()
 	{
-		global $database;
-		$database->setQuery( "CREATE TABLE `$this->versionTable`
+		$database =& JFactory::getDBO();
+	    $database->setQuery( "CREATE TABLE `$this->versionTable`
 								(`id` INTEGER NOT NULL AUTO_INCREMENT,
 								`version` VARCHAR(20) NOT NULL,
 								`versiondate` DATE NOT NULL,
@@ -57,31 +57,34 @@ class fx_Upgrade {
 	// helper function to drop existing version table
 	function dropVersionTable()
 	{
-		global $database;
-        $database->setQuery("DROP TABLE IF EXISTS `$this->versionTable`;");
+		$database =& JFactory::getDBO();
+	    $database->setQuery("DROP TABLE IF EXISTS `$this->versionTable`;");
 		$database->query() or trigger_dberror('Unable to drop version table.');
    	}
 
 	// helper function retrieve latest version from version table
 	function getLatestVersion($versionTable)
 	{
-		global $database;
-		$database->setQuery( 	"SELECT
-									`version`,
-									`versiondate`,
-									`installdate`,
-									`build`,
-									`versionname`
-								FROM `$versionTable`
-								ORDER BY `id` DESC LIMIT 1;" );
-		$database->loadObject($currentVersion) or trigger_dbwarning('Could not load latest Version record.');
+		$database =& JFactory::getDBO();
+
+		$query = "SELECT
+		                `version`,
+		                `versiondate`,
+		                `installdate`,
+		                `build`,
+		                `versionname`
+		            FROM `$versionTable`
+		            ORDER BY `id` DESC";
+
+	    $database->setQuery($query,0,1);// LIMIT 1
+		$currentVersion = $database->loadObject() or trigger_dbwarning('Could not load latest Version record.');
 		return $currentVersion;
 	}
 
 	function insertVersionData( $version, $versiondate, $build, $versionname)
 	{
-		global $database;
-		$database->setQuery( "INSERT INTO `$this->versionTable`
+		$database =& JFactory::getDBO();
+	    $database->setQuery( "INSERT INTO `$this->versionTable`
 								SET `version` = '".$version."',
 								`versiondate` = '".$versiondate."',
 								`installdate` = CURDATE(),
@@ -98,9 +101,8 @@ class fx_Upgrade {
 
 	function backupVersionTable()
 	{
-		global $database;
-
-        $database->setQuery("DROP TABLE IF EXISTS `".$this->versionTable."_backup`;");
+		$database =& JFactory::getDBO();
+	    $database->setQuery("DROP TABLE IF EXISTS `".$this->versionTable."_backup`;");
         $database->query() or trigger_dberror('Unable to drop previous backup version table.');
 
         $database->setQuery("CREATE TABLE `".$this->versionTable."_backup` SELECT * FROM `".$this->versionTable."`;");
@@ -111,7 +113,7 @@ class fx_Upgrade {
 	 * Main upgrade function. Processes XML file
 	 */
 	function doUpgrade() {
-		global $database, $mosConfig_absolute_path, $mosConfig_live_site;
+		global $mosConfig_absolute_path, $mosConfig_live_site;
 		require_once( $mosConfig_absolute_path . '/includes/domit/xml_domit_lite_include.php' );
 		if(!$this->silent) {
 			?>
@@ -151,6 +153,8 @@ class fx_Upgrade {
 		//get current version, check if version table exists
 		$createVersionTable = 1;
 		$upgrade=null;
+
+		$database =& JFactory::getDBO();
 		$database->setQuery( "SHOW TABLES LIKE '%".$versionTableNoPrefix."'" );
 		$database->query() or trigger_dberror('Unable to check for existing version table.');
 		if($database->loadResult()) {
@@ -307,7 +311,6 @@ class fx_Upgrade {
 	 * Processes "phpfile", "query" and "phpcode" child-nodes of the node provided
 	 */
 	function processNode(&$startNode,$batch = 0) {
-		global $database;
 		$numChildren =& $startNode->childCount;
 		$childNodes =& $startNode->childNodes;
 
@@ -348,11 +351,13 @@ class fx_Upgrade {
 					break;
 				case "query":
 					$query = $currentNode->getText();
+					$database =& JFactory::getDBO();
+
 					$database->setQuery($query);
 					if (!@$database->query())
 					{
-						$this->_error = "DB function failed with error number $database->_errorNum<br /><font color=\"red\">";
-						$this->_error .= mysql_error($database->_resource);
+						$this->_error = "DB function failed with error number ".$this->_database->_errorNum."<br /><font color=\"red\">";
+						$this->_error .= mysql_error($this->_database->_resource);
 						$this->_error .= "</font>";
 						$img = "publish_x.png";
 						$this->_return = false;

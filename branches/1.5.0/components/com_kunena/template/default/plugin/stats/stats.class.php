@@ -25,21 +25,21 @@ $database->setQuery("SELECT COUNT(*) FROM #__users");
 $totalmembers = $database->loadResult();
 
 $database->setQuery("SELECT SUM(numTopics) AS titles, SUM(numPosts) AS msgs FROM #__fb_categories WHERE parent=0");
-$database->loadObject($totaltmp);
+$totaltmp = $database->loadObject();
 $totaltitles = $totaltmp->titles;
 $totalmsgs = $totaltmp->msgs + $totaltitles;
 unset($totaltmp);
 
 $database->setQuery("SELECT SUM(parent=0) AS totalcats, SUM(parent>0) AS totalsections
 FROM #__fb_categories");
-$database->loadObject($totaltmp);
+$totaltmp = $database->loadObject();
 $totalsections = $totaltmp->totalsections;
 $totalcats = $totaltmp->totalcats;
 unset($totaltmp);
 
 $fb_queryName = $fbConfig->username ? "username" : "name";
 $database->setQuery("SELECT id, $fb_queryName as username FROM #__users WHERE block=0 AND activation='' ORDER BY id DESC LIMIT 0,1");
-$database->loadObject($_lastestmember);
+$_lastestmember = $database->loadObject();
 $lastestmember = $_lastestmember->username;
 $lastestmemberid =$_lastestmember->id;
 unset($_lastestmember);
@@ -52,7 +52,7 @@ $database->setQuery("SELECT SUM(time >= $todaystart AND parent=0) AS todayopen, 
                    ."SUM(time >= $yesterdaystart AND time < $todaystart AND parent>0) AS yesterdayanswer "
                    ."FROM #__fb_messages WHERE time >= $yesterdaystart AND hold=0");
 
-$database->loadObject($totaltmp);
+$totaltmp = $database->loadObject();
 $todayopen = $totaltmp->todayopen?$totaltmp->todayopen:0;
 $yesterdayopen = $totaltmp->yesterdayopen?$totaltmp->yesterdayopen:0;
 $todayanswer = $totaltmp->todayanswer?$totaltmp->todayanswer:0;

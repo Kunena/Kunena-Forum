@@ -20,7 +20,7 @@ global $my, $database;
 global $fbConfig;
 unset($user);
 $database->setQuery("SELECT email, name from #__users WHERE `id`={$my->id}");
-$database->loadObject($user);
+$user = $database->loadObject();
 ?>
 
 <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">

@@ -124,7 +124,7 @@ class CKunenaLink
 
     function GetSamePageAnkerLink($anker, $name, $rel='nofollow')
     {
-        return CKunenaLink::GetSefHrefLink(htmlspecialchars(sefRelToAbs('index.php?'.$_SERVER['QUERY_STRING'])), $name, '', $rel, '', $anker);
+        return CKunenaLink::GetSefHrefLink(htmlspecialchars(JRoute::_('index.php?'.$_SERVER['QUERY_STRING'])), $name, '', $rel, '', $anker);
     }
 
     function GetReportMessageLink($catid, $msg_id, $name, $rel='nofollow')
@@ -260,7 +260,7 @@ class CKunenaLink
                                 (SELECT max(thread) AS thread FROM #__fb_messages WHERE id='.$pid.') AS b
                              WHERE a.thread = b.thread AND a.hold = 0
                              GROUP BY a.thread');
-        $database->loadObject($result);
+        $result = $database->loadObject();
         	check_dberror("Unable to retrieve latest post.");
 
         // Now Calculate the number of pages for this particular thread

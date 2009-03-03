@@ -414,7 +414,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
             </table>
 
             <input type = "hidden" name = "option" value = "<?php echo $option; ?>"> <input type = "hidden" name = "task" value = "showAdministration"> <input type = "hidden" name = "boxchecked" value = "0">
-            <?php if (FBTools::isJoomla15()) echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
+            <?php echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
         </form>
 
 <?php
@@ -2664,7 +2664,7 @@ $lang = $language->getBackwardLang();
 
     <input type = "hidden"
         name = "order" value = "<?php echo "$order";?>"> <input type = "hidden" name = "option" value = "<?php echo $option; ?>"> <input type = "hidden" name = "task" value = "showprofiles"> <input type = "hidden" name = "boxchecked" value = "0">
-    <?php if (FBTools::isJoomla15()) echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
+    <?php echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
 
     <tr>
         <th align = "center" colspan = "7"> <?php
@@ -2801,7 +2801,7 @@ $lang = $language->getBackwardLang();
 
     <input type = "hidden"
         name = "option" value = "<?php echo $option; ?>"> <input type = "hidden" name = "id" value = "<?php echo $id; ?>"> <input type = "hidden" name = "boxchecked" value = "0"> <input type = "hidden" name = "task" value = "newmoderator">
-    <?php if (FBTools::isJoomla15()) echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
+    <?php echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
 
     <tr>
         <th align = "center" colspan = "7"> <?php
@@ -3369,7 +3369,7 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
             </tr>
       	</table>
                 <input type = "hidden" name = "option" value = "<?php echo $option; ?>"><input type = "hidden" name = "task" value = "showsmilies"><input type = "hidden" name = "boxchecked" value = "0">
-                <?php if (FBTools::isJoomla15()) echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
+                <?php echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
         </form>
 <?php
         }//end function showsmilies
@@ -3500,7 +3500,7 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
     <input type="hidden" name="option" value="<?php echo $option; ?>">
    	<input type="hidden" name="boxchecked" value="0">
    	<input type="hidden" name="task" value="ranks">
-   	<?php if (FBTools::isJoomla15()) echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
+   	<?php echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
 
     <tr>
       <th align="center" colspan="7"><?php

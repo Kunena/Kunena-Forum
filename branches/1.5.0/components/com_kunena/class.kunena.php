@@ -674,12 +674,6 @@ $my = &JFactory::getUser();
         mosRedirect($return, $err ? $err : _POST_SUCCESS_MOVE);
         }
 
-        function isJoomla15()
-        {
-            return (defined('_JEXEC') && class_exists('JApplication'));
-        }
-
-
         function fbRemoveXSS($val, $reverse = 0) {
 
            // now the only remaining whitespace attacks are \t, \n, and \r
@@ -1000,14 +994,9 @@ function KUNENA_GetAvailableForums($catid, $action, $options = array (), $disabl
         }
 
 	$tag_attribs = 'class="inputbox fbs" '.($multiple?' size="5" MULTIPLE ':' size="1" ') . ($disabled ? " disabled " : "");
-	if (FBTools::isJoomla15()) {
-    	$parent = JHTML::_('select.genericlist', $options, 'catid', $tag_attribs , 'value', 'text', $catid, 'KUNENA_AvailableForums');
-		}
-    else {
-		$parent = mosHTML::selectList($options, 'catid', $tag_attribs . ' ID="KUNENA_AvailableForums"' , 'value', 'text', $catid);
-		}
+   	$parent = JHTML::_('select.genericlist', $options, 'catid', $tag_attribs , 'value', 'text', $catid, 'KUNENA_AvailableForums');
     return $parent;
-    }
+}
 
 //
 //Begin Smilies mod

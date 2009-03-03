@@ -341,8 +341,8 @@ $lang = $language->getBackwardLang();
     $database->setQuery("SELECT a.*, a.name AS category, u.name AS editor, g.name AS groupname, h.name AS admingroup"
     . "\nFROM #__fb_categories AS a"
     . "\nLEFT JOIN #__users AS u ON u.id = a.checked_out"
-    . "\nLEFT JOIN #__core_acl_aro_groups AS g ON g.".((FBTools::isJoomla15())?"":"group_")."id = a.pub_access"
-    . "\nLEFT JOIN #__core_acl_aro_groups AS h ON h.".((FBTools::isJoomla15())?"":"group_")."id = a.admin_access"
+    . "\nLEFT JOIN #__core_acl_aro_groups AS g ON g.id = a.pub_access"
+    . "\nLEFT JOIN #__core_acl_aro_groups AS h ON h.id = a.admin_access"
     . "\n GROUP BY a.id"
     . "\n ORDER BY a.ordering, a.name");
 

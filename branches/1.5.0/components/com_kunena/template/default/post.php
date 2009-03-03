@@ -39,7 +39,7 @@ $my = &JFactory::getUser();
 $acl = &JFactory::getACL();
 $editmode = 0;
 // $message=JRequest::getVar( 'message','',1); // For some reason this just doesn't work like it should
-$message = JRequest::getVar( "message", '',_MOS_ALLOWRAW); //null, 
+$message = JRequest::getVar( "message", '',_MOS_ALLOWRAW); //null,
 $resubject = JRequest::getVar( "resubject",'');
 
 
@@ -365,7 +365,7 @@ $catName = $objCatInfo->name;
 													//check for permission
 													if ($subs->id) {
 														$_arogrp = $acl->getAroGroup($subs->id);
-														if ($_arogrp and FBTools::isJoomla15()) $_arogrp->group_id = $_arogrp->id;
+														if ($_arogrp) $_arogrp->group_id = $_arogrp->id;
 														$_isadm = (strtolower($_arogrp->name) == 'super administrator' || strtolower($_arogrp->name) == 'administrator');
 													} else
 														$_arogrp = $_isadm = 0;

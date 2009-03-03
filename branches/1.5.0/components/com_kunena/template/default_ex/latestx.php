@@ -41,20 +41,12 @@ else
 $metaKeys=(_KUNENA_ALL_DISCUSSIONS . ', ' . $fbConfig->board_title . ', ' . $GLOBALS['mosConfig_sitename']);
 $metaDesc=(_KUNENA_ALL_DISCUSSIONS . ' - ' . $fbConfig->board_title);
 
-if( FBTools::isJoomla15() )
-{
-	$document =& JFactory::getDocument();
-	$cur = $document->get( 'description' );
-	$metaDesc = $cur .'. ' . $metaDesc;
-	$document =& JFactory::getDocument();
-	$document->setMetadata( 'keywords', $metaKeys );
-	$document->setDescription($metaDesc);
-}
-else
-{
-    $mainframe->appendMetaTag( 'keywords',$metaKeys );
-	$mainframe->appendMetaTag( 'description' ,$metaDesc );
-}
+$document =& JFactory::getDocument();
+$cur = $document->get( 'description' );
+$metaDesc = $cur .'. ' . $metaDesc;
+$document =& JFactory::getDocument();
+$document->setMetadata( 'keywords', $metaKeys );
+$document->setDescription($metaDesc);
 
 //resetting some things:
 $lockedForum = 0;

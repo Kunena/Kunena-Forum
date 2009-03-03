@@ -239,8 +239,7 @@ if ($my->id != 0)
 {
     $acl = &JFactory::getACL();
     $aro_group = $acl->getAroGroup($my->id);
-    if ($aro_group and FBTools::isJoomla15())
-    	$aro_group->group_id = $aro_group->id;  // changed fieldname in Joomla 1.5: "group_id" -> "id"
+    if ($aro_group)	$aro_group->group_id = $aro_group->id;  // changed fieldname in Joomla 1.5: "group_id" -> "id"
     $is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
 }
 else

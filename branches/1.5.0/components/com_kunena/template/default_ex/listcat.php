@@ -42,20 +42,12 @@ $mainframe->setPageTitle(_GEN_FORUMLIST . ' - ' . $fbConfig->board_title);
 $metaDesc=(_KUNENA_CATEGORIES . ' - ' . $fbConfig->board_title);
 $metaKeys=(_KUNENA_CATEGORIES . ', ' . $fbConfig->board_title . ', ' . $GLOBALS['mosConfig_sitename']);
 
-if( FBTools::isJoomla15() )
-{
-	$document =& JFactory::getDocument();
-	$cur = $document->get( 'description' );
-	$metaDesc = $cur .'. ' . $metaDesc;
-	$document =& JFactory::getDocument();
-	$document->setMetadata( 'keywords', $metaKeys );
-	$document->setDescription($metaDesc);
-}
-else
-{
-    $mainframe->appendMetaTag( 'keywords',$metaKeys );
-	$mainframe->appendMetaTag( 'description' ,$metaDesc );
-}
+$document =& JFactory::getDocument();
+$cur = $document->get( 'description' );
+$metaDesc = $cur .'. ' . $metaDesc;
+$document =& JFactory::getDocument();
+$document->setMetadata( 'keywords', $metaKeys );
+$document->setDescription($metaDesc);
 
 if (count($allCat) > 0)
 {

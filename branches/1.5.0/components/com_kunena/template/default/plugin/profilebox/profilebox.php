@@ -97,30 +97,19 @@ $jr_latestpost = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=latest');
 ?>
 
 <?php // AFTER LOGIN AREA
-$j15 = FBTools::isJoomla15();
 if ($fbConfig->cb_profile)
 {
-    $loginlink = JRoute::_('index.php');
-    $logoutlink = JRoute::_('index.php?option=logout');
-    $registerlink = JRoute::_('index.php?option=com_comprofiler&amp;task=registers');//.KUNENA_CB_ITEMID_SUFFIX);
+	$loginlink = JRoute::_('index.php?option=com_user&amp;view=login');
+	$logoutlink = JRoute::_('index.php?option=com_user&amp;view=login');
+	$registerlink = JRoute::_('index.php?option=com_comprofiler&amp;task=registers');//.KUNENA_CB_ITEMID_SUFFIX);
     $lostpasslink = JRoute::_('index.php?option=com_comprofiler&amp;task=lostPassword');//.KUNENA_CB_ITEMID_SUFFIX);
-    if($j15) {
-      $loginlink = JRoute::_('index.php?option=com_user&amp;view=login');
-      $logoutlink = JRoute::_('index.php?option=com_user&amp;view=login');
-    }
 }
 else
 {
-    $loginlink = JRoute::_('index.php?option=com_login&amp;Itemid=' . $Itemid);
-    $logoutlink = JRoute::_('index.php?option=logout');
-    $registerlink = JRoute::_('index.php?option=com_registration&amp;task=register&amp;Itemid=' . $Itemid);
-    $lostpasslink = JRoute::_('index.php?option=com_registration&amp;task=lostPassword&amp;Itemid=' . $Itemid);
-    if($j15) {
-      $loginlink = JRoute::_('index.php?option=com_user&amp;view=login');
-      $logoutlink = JRoute::_('index.php?option=com_user&amp;view=login');
-      $registerlink = JRoute::_('index.php?option=com_user&amp;task=register&amp;Itemid=' . $Itemid);
-      $lostpasslink = JRoute::_('index.php?option=com_user&amp;view=reset&amp;Itemid=' . $Itemid);
-    }
+	$loginlink = JRoute::_('index.php?option=com_user&amp;view=login');
+	$logoutlink = JRoute::_('index.php?option=com_user&amp;view=login');
+	$registerlink = JRoute::_('index.php?option=com_user&amp;task=register&amp;Itemid=' . $Itemid);
+	$lostpasslink = JRoute::_('index.php?option=com_user&amp;view=reset&amp;Itemid=' . $Itemid);
 }
 
 $my = &JFactory::getUser();
@@ -161,7 +150,7 @@ $annlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show'.KUNEN
 <?php } ?>
 
 </td>
- 	
+
 
 <jdoc:exists type="modules" condition="{fb_1}" />
 
@@ -201,7 +190,7 @@ else
                 <?php
                /* if (mosCountModules('fb_1'))
                 {
-                */?> 
+                */?>
 
                         <td>
                             <div class = "fb_profilebox_modul">

@@ -64,7 +64,7 @@
 	</target>
 
 	<target name="init" depends="copy">
-		<xmlproperty file="${tmp_dir}/${cfg.name}.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
+		<xmlproperty file="${tmp_dir}/manifest.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
 		<buildnumber />
 		<tstamp>
 			<format property="str.datefmt" pattern="${cfg.datefmt}" locale="${cfg.dateloc}" />
@@ -164,7 +164,7 @@
 		</script>
 		<filter token="fbfrontendlist" value="${fb.frontend.list}" />		
 		<filter token="fbbackendlist" value="${fb.backend.list}" />		
-		<copy file="${project_dir}/administrator/components/com_kunena/kunena.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/administrator/components/com_kunena/manifest.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/administrator/components/com_kunena/install/kunena.install.upgrade.xml" todir="${tmp_dir}/install" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/components/com_kunena/lib/kunena.config.class.php" todir="${tmp_dir}/lib" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/components/com_kunena/lib/kunena.rss.php" todir="${tmp_dir}/lib" overwrite="true" filtering="true" />

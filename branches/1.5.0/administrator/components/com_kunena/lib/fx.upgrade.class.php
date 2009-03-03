@@ -113,8 +113,7 @@ class fx_Upgrade {
 	 * Main upgrade function. Processes XML file
 	 */
 	function doUpgrade() {
-		global $mosConfig_absolute_path, $mosConfig_live_site;
-		require_once( $mosConfig_absolute_path . '/includes/domit/xml_domit_lite_include.php' );
+		require_once( JPATH_ROOT . '/includes/domit/xml_domit_lite_include.php' );
 		if(!$this->silent) {
 			?>
 			<script language=JavaScript>
@@ -146,7 +145,7 @@ class fx_Upgrade {
 			<?php
 		}
 
-		$componentBaseDir	= mosPathName( $mosConfig_absolute_path . '/administrator/components' );
+		$componentBaseDir = JPATH_ROOT . '/administrator/components/';
 		$this->_upgradeDir = $componentBaseDir . $this->component . '/' . $this->subdir;
 		$versionTableNoPrefix = $this->versionTablePrefix . "version";
 
@@ -356,8 +355,8 @@ class fx_Upgrade {
 					$database->setQuery($query);
 					if (!@$database->query())
 					{
-						$this->_error = "DB function failed with error number ".$this->_database->_errorNum."<br /><font color=\"red\">";
-						$this->_error .= mysql_error($this->_database->_resource);
+						$this->_error = "DB function failed with error number ".$database->_errorNum."<br /><font color=\"red\">";
+						$this->_error .= $database->stderr(true);
 						$this->_error .= "</font>";
 						$img = "publish_x.png";
 						$this->_return = false;

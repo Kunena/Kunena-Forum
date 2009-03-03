@@ -178,12 +178,12 @@ if ($func == "showcaptcha") {
 
 // Add required header tags
 $document =& JFactory::getDocument();
+
 if (defined('KUNENA_JQURL'))
 {
 	$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
 }
 
-$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
 $document->addCustomTag('<script type="text/javascript">
 //1: show, 0 : hide
 jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";</script>');
@@ -193,12 +193,15 @@ if (defined('KUNENA_COREJSURL'))
 	$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_COREJSURL . '"></script>');
 }
 
-if ($fbConfig->joomlastyle < 1) {
+if ($fbConfig->joomlastyle < 1)
+{
     $document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_TMPLTCSSURL . '" />');
-    }
-else {
+}
+else
+{
     $document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_DIRECTURL . '/template/default/joomla.css" />');
-    }
+}
+
 
 // WHOIS ONLINE IN FORUM
 if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/who/who.class.php')) {
@@ -224,19 +227,12 @@ if ($catid != '') {
     $thisCat = new jbCategory($database, $catid);
     }
 
-//if (defined('JPATH_BASE')) {
-//    jimport ('pattemplate.patTemplate');
-//    }
-//else {
-//    require_once (KUNENA_JABSPATH . '/includes/patTemplate/patTemplate.php');
-//    }
+//$KunenaTemplate = new CKunenaTemplate($str_KUNENA_templ_path);
+$KunenaTemplate = new patTemplate();
+$KunenaTemplate->setBasedir($str_KUNENA_templ_path);
 
-echo "<div>$str_KUNENA_templ_path</div>";
-
-$KunenaTemplate = new CKunenaTemplate;
-$KunenaTemplate->setRoot($str_KUNENA_templ_path);
-$KunenaTemplate->setNamespace('kunena');
-
+$KunenaTemplate->readTemplatesFromFile("header.html");
+$KunenaTemplate->readTemplatesFromFile("footer.html");
 
 // Permissions: Check for administrators and moderators
 if ($my->id != 0)
@@ -544,7 +540,6 @@ else
     }
 
     // display header
-    $KunenaTemplate->parse("header.html");
     $KunenaTemplate->addVar('kunena-header', 'menu', $fbMenu);
     $KunenaTemplate->addVar('kunena-header', 'board_title', $board_title);
     $KunenaTemplate->addVar('kunena-header', 'css_path', KUNENA_DIRECTURL . '/template/' . $fbConfig->template . '/forum.css');
@@ -552,9 +547,7 @@ else
     $KunenaTemplate->addVar('kunena-header', 'searchbox', getSearchBox());
     $KunenaTemplate->addVar('kunena-header', 'pb_imgswitchurl', KUNENA_URLIMAGESPATH . "shrink.gif");
 
-    $KunenaTemplate->dump();
-
-    $KunenaTemplate->display('kunena-header');
+    $KunenaTemplate->displayParsedTemplate('kunena-header');
 
     //BEGIN: PROFILEBOX
     if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/profilebox/profilebox.php')) {
@@ -974,7 +967,6 @@ else
     echo '</div>';
 
     // display footer
-    $KunenaTemplate->readTemplatesFromFile("footer.html");
     $KunenaTemplate->displayParsedTemplate('kunena-footer');
 } //else
 

@@ -20,19 +20,32 @@ defined( '_JEXEC' ) or die('Restricted access');
 DEFINE('KUNENA_MIN_PHP', '4.3.0');
 DEFINE('KUNENA_MIN_MYSQL', '5.0.0');
 
-global $mainframe;
-//Get right Language file
-if (file_exists($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.' . $mainframe->getCfg('lang') . '.php')) {
-    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.' . $mainframe->getCfg('lang') . '.php');
-}
-else {
-    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.english.php');
-}
+define('KUNENA_JABSPATH', JPATH_BASE);
 
-include_once($mainframe->getCfg("absolute_path")."/administrator/components/com_kunena/lib/fx.upgrade.class.php");
+// Kunena sources url
+$language = JLanguage::getInstance($frontend_lang);
+$lang = $language->getBackwardLang();
+
+define('KUNENA_LANG', $lang);
+define('KUNENA_ABSADMPATH', KUNENA_JABSPATH . '/components/com_kunena');
+
+
+global $mainframe;
+
+// get right Language file
+if (file_exists(KUNENA_ABSADMPATH . '/language/kunena.' . KUNENA_LANG . '.php')) {
+    include_once (KUNENA_ABSADMPATH . '/language/kunena.' . KUNENA_LANG . '.php');
+    }
+else {
+    include_once (KUNENA_ABSADMPATH . '/language/kunena.english.php');
+    }
+
+include_once(KUNENA_ABSADMPATH."/lib/fx.upgrade.class.php");
 
 function com_install() {
-	global $database, $mainframe, $mosConfig_absolute_path;
+	global $mainframe, $mosConfig_absolute_path;
+
+	$database = JFactory::getDBO();
 
 	// Determine MySQL version from phpinfo
 	$database->setQuery("SELECT VERSION() as mysql_version");

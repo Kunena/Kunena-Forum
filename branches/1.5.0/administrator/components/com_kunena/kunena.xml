@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
-<mosinstall type="component">
- <name>Kunena</name>
+<install version="1.5.1" type="component">
+	<name>Kunena</name>
     <version>1.5.0</version>
-    <versionname>Speakup!</versionname>
+    <versionname>Language</versionname>
     <creationDate>@fbversiondate@</creationDate>
 	<build>@fbbuild@</build>
     <author>www.Kunena.com</author>
@@ -27,4 +27,4 @@
         <menu link="">Kunena Forum</menu>
     </administration>
     <params />
-</mosinstall>
+</install>

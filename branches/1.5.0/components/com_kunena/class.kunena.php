@@ -95,8 +95,6 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 $uri        = & JFactory::getURI();
 $live_site= $uri->toString( array('scheme', 'host', 'port', 'path'));
 
-
-define('KUNENA_JABSPATH', JPATH_ROOT);
 define('KUNENA_JABSPATH', JPATH_BASE);
 define('KUNENA_JABSPATH_HTTP', JURI::root() .'components/com_kunena');
 define('KUNENA_FABSPATH_ADMIN',JPATH_COMPONENT_ADMINISTRATOR);

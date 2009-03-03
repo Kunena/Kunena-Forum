@@ -19,6 +19,9 @@ global $mainframe;
 // Most or all sql statements should be covered within comupgrade.xml
 
 $temporary = 1;
+
+$database =& JFactory::getDBO();
+
 $database->setQuery("CREATE TEMPORARY TABLE #__fb_temp SELECT thread, userid FROM #__fb_favorites WHERE userid>0 GROUP BY thread, userid");
 if ($database->query() == FALSE) {
 	$temporary=0;

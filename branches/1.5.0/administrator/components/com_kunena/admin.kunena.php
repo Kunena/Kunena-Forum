@@ -863,55 +863,6 @@ $database = &JFactory::getDBO();
 
     $fbConfig->create();
 
-    // Legacy support
-    // To enable legacy 3rd party modules to 'see' our config
-    // we also write an old style config file
-	global $mainframe;
-    $configfile = JPATH_COMPONENT_ADMINISTRATOR . "/fireboard_config.php";
-    @chmod($configfile, 0766);
-
-	$ref = array();
-	$array = array(
-		'enableRSS','enablePDF','showHistory','historyLimit','showNew','newChar','joomlaStyle','showAnnouncement',
-		'avatarOnCat','CatImagePath','showChildCatIcon','AnnModId','enableRulesPage','enableForumJump',
-		'postStats','statsColor','usereditTime','usereditTimeGrace','editMarkUp','maxSubject','maxSig',
-		'allowAvatar','allowAvatarUpload','allowAvatarGallery','imageProcessor','avatarSmallHeight',
-		'avatarSmallWidth','avatarHeight','avatarWidth','avatarLargeHeight','avatarLargeWidth','avatarQuality',
-		'avatarSize','allowImageUpload','allowImageRegUpload','imageHeight','imageWidth','imageSize',
-		'allowFileUpload','allowFileRegUpload','fileTypes','fileSize','showLatest','latestCount','latestCountPerPage',
-		'latestCategory','latestSingleSubject','latestReplySubject','latestSubjectLength','latestShowDate',
-		'latestShowHits','latestShowAuthor','showWhoisOnline','showGenStats','showPopUserStats',
-		'PopUserCount','showPopSubjectStats','PopSubjectCount','enableHelpPage');
-	foreach ($array as $value) $ref[strtolower($value)] = $value;
-	unset($array);
-
-    $txt = "<?php\n";
-    $txt .= "global \$fbConfig;\n";
-
-    foreach ($_POST as $k => $v)
-    {
-        if (strpos($k, 'cfg_') === 0)
-        {
-        	$key = substr($k, 4);
-        	if (isset($ref[$key])) {
-        		$key = $ref[$key];
-        	}
-            if (!get_magic_quotes_gpc()) {
-                $v = addslashes($v);
-            }
-            $txt .= "\$fbConfig['" . $key . "']='$v';\n";
-        }
-    }
-
-    $txt .= "?>";
-
-    if ($fp = fopen($configfile, "w"))
-    {
-        fputs($fp, $txt, strlen($txt));
-        fclose ($fp);
-    }
-    // end legacy support
-
     $mainframe->redirect( JURI::base() . "index2.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED . 'test');
 }
 

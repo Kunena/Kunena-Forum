@@ -231,9 +231,12 @@ if ($catid != '') {
 //    require_once (KUNENA_JABSPATH . '/includes/patTemplate/patTemplate.php');
 //    }
 
-//    echo "<div>$str_KUNENA_templ_path</div>";
+echo "<div>$str_KUNENA_templ_path</div>";
+
 $KunenaTemplate = new CKunenaTemplate;
 $KunenaTemplate->setRoot($str_KUNENA_templ_path);
+$KunenaTemplate->setNamespace('kunena');
+
 
 // Permissions: Check for administrators and moderators
 if ($my->id != 0)
@@ -548,6 +551,9 @@ else
     $KunenaTemplate->addVar('kunena-header', 'offline_message', $fbConfig->board_offline ? '<span id="fbOffline">' . _FORUM_IS_OFFLINE . '</span>' : '');
     $KunenaTemplate->addVar('kunena-header', 'searchbox', getSearchBox());
     $KunenaTemplate->addVar('kunena-header', 'pb_imgswitchurl', KUNENA_URLIMAGESPATH . "shrink.gif");
+
+    $KunenaTemplate->dump();
+
     $KunenaTemplate->display('kunena-header');
 
     //BEGIN: PROFILEBOX

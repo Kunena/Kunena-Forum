@@ -18,5 +18,21 @@ class CKunenaTemplate extends JTemplate
 // Place holder for future native functionality
 // For now we only need to get away from patTemplate that the old FB used.
 
+	public function __construct()
+	{
+		parent::__construct();
+
+		//set the namespace
+		$this->setNamespace( 'kunena' );
+
+		//add module directories
+		// $this->addModuleDir('Function',		dirname(__FILE__). DS. 'module'. DS .'function');
+		// $this->addModuleDir('Modifier', 	dirname(__FILE__). DS. 'module'. DS .'modifier');
+
+		//set root template directory
+		//$this->setRoot( dirname(__FILE__).DS.'tmpl' );
+
+	}
+
 }
 ?>

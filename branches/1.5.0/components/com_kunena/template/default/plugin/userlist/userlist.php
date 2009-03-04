@@ -638,7 +638,7 @@ class HTML_userlist_content
             include(KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php');
         }
         else {
-            include(KUNENA_ABSPATH . '/template/default/plugin/who/whoisonline.php');
+            include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/who/whoisonline.php');
         }
         //(JJ) FINISH: WHOISONLINE
         ?>
@@ -655,7 +655,7 @@ class HTML_userlist_content
                         <?php
                         //(JJ) FINISH: CAT LIST BOTTOM
                         if ($fbConfig->enableforumjump) {
-                            require_once(KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
+                            require_once(KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                         }
                         ?>
                     </th>

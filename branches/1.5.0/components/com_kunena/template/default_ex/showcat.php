@@ -17,7 +17,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 global $is_Moderator;
 
-require_once(KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
+require_once(KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
 
 //Security basics begin
 //Securing passed form elements:
@@ -134,7 +134,7 @@ if ($letPass || $is_Moderator)
         require_once(KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
     }
     else {
-        require_once(KUNENA_ABSPATH . '/template/default/fb_pathway.php');
+        require_once(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_pathway.php');
     }
 
     //Get the category name for breadcrumb
@@ -176,7 +176,7 @@ if ($letPass || $is_Moderator)
         include(KUNENA_ABSTMPLTPATH . '/fb_sub_category_list.php');
     }
     else {
-        include(KUNENA_ABSPATH . '/template/default/fb_sub_category_list.php');
+        include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_sub_category_list.php');
     }
 ?>
     <!-- top nav -->
@@ -254,13 +254,13 @@ if ($letPass || $is_Moderator)
                 include(KUNENA_ABSTMPLTPATH . '/flat.php');
             }
             else {
-                include(KUNENA_ABSPATH . '/template/default/flat.php');
+                include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'flat.php');
             }
         else if (file_exists(KUNENA_ABSTMPLTPATH . '/thread.php')) {
             include(KUNENA_ABSTMPLTPATH . '/thread.php');
         }
         else {
-            include(KUNENA_ABSPATH . '/template/default/thread.php');
+            include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'thread.php');
         }
     }
     else
@@ -367,7 +367,7 @@ if ($letPass || $is_Moderator)
                     //(JJ) FINISH: CAT LIST BOTTOM
 
                     if ($fbConfig->enableforumjump)
-                        require_once (KUNENA_ABSSOURCESPATH . 'fb_forumjump.php');
+                        require_once (KUNENA_PATH_LIB .DS. 'fb_forumjump.php');
 
                     ?>
       </td>

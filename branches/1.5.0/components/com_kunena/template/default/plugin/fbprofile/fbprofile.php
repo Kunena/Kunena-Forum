@@ -13,8 +13,8 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 if ($my->id) //registered only
 {
-    require_once(KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
-    require_once(KUNENA_ABSSOURCESPATH . 'kunena.statsbar.php');
+    require_once(KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
+    require_once(KUNENA_PATH_LIB .DS. 'kunena.statsbar.php');
 
     $task = mosGetParam($_GET, 'task', "");
 
@@ -431,7 +431,7 @@ function showprf($userid, $page)
                     include(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/userinfos.php');
                 }
                 else {
-                    include(KUNENA_ABSPATH . '/template/default/plugin/fbprofile/userinfos.php');
+                    include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/fbprofile/userinfos.php');
                 }
                 ?>
 
@@ -451,14 +451,14 @@ function showprf($userid, $page)
 				}
 				else
 				{
-					include (KUNENA_ABSPATH . '/template/default/smile.class.php');
+					include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
 				}
 
                 if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/summary.php')) {
                     include(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/summary.php');
                 }
                 else {
-                    include(KUNENA_ABSPATH . '/template/default/plugin/fbprofile/summary.php');
+                    include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/fbprofile/summary.php');
                 }
                 ?>
 
@@ -467,7 +467,7 @@ function showprf($userid, $page)
                     include(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/forummsg.php');
                 }
                 else {
-                    include(KUNENA_ABSPATH . '/template/default/plugin/fbprofile/forummsg.php');
+                    include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/fbprofile/forummsg.php');
                 }
                 ?>
             </td>
@@ -493,7 +493,7 @@ function showprf($userid, $page)
                 <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump)
-                    require_once(KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
+                    require_once(KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 ?>
             </th>
         </tr>

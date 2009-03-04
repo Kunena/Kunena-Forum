@@ -73,7 +73,7 @@ if ($fbConfig->showannouncement > 0)
         require_once (KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcementbox.php');
     }
     else {
-        require_once (KUNENA_ABSPATH . '/template/default/plugin/announcement/announcementbox.php');
+        require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/announcement/announcementbox.php');
     }
 ?>
 <!-- F: announcementBox -->
@@ -97,7 +97,7 @@ if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
     require_once (KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
 }
 else {
-    require_once (KUNENA_ABSPATH . '/template/default/fb_pathway.php');
+    require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_pathway.php');
 }
 ?>
 <!-- F: Pathway -->
@@ -589,7 +589,7 @@ $my = &JFactory::getUser();
             include (KUNENA_ABSTMPLTPATH . '/plugin/recentposts/recentposts.php');
         }
         else {
-            include (KUNENA_ABSPATH . '/template/default/plugin/recentposts/recentposts.php');
+            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/recentposts/recentposts.php');
         }
     }
 
@@ -603,14 +603,14 @@ $my = &JFactory::getUser();
 			include_once (KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php');
 		}
 		else {
-			include_once (KUNENA_ABSPATH . '/template/default/plugin/stats/stats.class.php');
+			include_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/stats.class.php');
 		}
 
 		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php')) {
 			include (KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php');
 		}
 		else {
-			include (KUNENA_ABSPATH . '/template/default/plugin/stats/frontstats.php');
+			include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/frontstats.php');
 		}
 	}
 
@@ -624,7 +624,7 @@ $my = &JFactory::getUser();
 			include (KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php');
 		}
 		else {
-			include (KUNENA_ABSPATH . '/template/default/plugin/who/whoisonline.php');
+			include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/who/whoisonline.php');
 		}
 		//(JJ) FINISH: WHOISONLINE
 
@@ -635,7 +635,7 @@ $my = &JFactory::getUser();
         include (KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php');
     }
     else {
-        include (KUNENA_ABSPATH . '/template/default/fb_category_list_bottom.php');
+        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_category_list_bottom.php');
     }
 ?>
 

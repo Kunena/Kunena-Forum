@@ -45,7 +45,7 @@ global $fbConfig;
                 <?php
                 //(FB) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump)
-                    require_once (KUNENA_ABSSOURCESPATH . 'fb_forumjump.php');
+                    require_once (KUNENA_PATH_LIB .DS. 'fb_forumjump.php');
                 ?>
             </td>
         </tr>

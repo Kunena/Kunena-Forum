@@ -26,7 +26,7 @@ $document->addCustomTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL
 $document->addCustomTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL . '/plugin/jtip/jquery.cluetip.js"></script>');
 $document->addCustomTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL . '/plugin/jtip/demo.js"></script>');
 $document->addCustomTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL . '/js/cube_common.js"></script>');
-require_once (KUNENA_ABSSOURCESPATH . 'fb_auth.php');
+require_once (KUNENA_PATH_LIB .DS. 'fb_auth.php');
 
 if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php'))
 {
@@ -34,7 +34,7 @@ if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php'))
 }
 else
 {
-	include (KUNENA_ABSPATH . '/template/default/smile.class.php');
+	include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
 }
 
 //meta description and keywords
@@ -230,7 +230,7 @@ if (count($threadids) > 0)
                                     <td class="fb_list_jump_all">
 
                                     <?php if ($fbConfig->enableforumjump)
- 									 require_once (KUNENA_ABSSOURCESPATH . 'fb_forumjump.php');
+ 									 require_once (KUNENA_PATH_LIB .DS. 'fb_forumjump.php');
  									 ?>
 
                                    </td>
@@ -298,7 +298,7 @@ if (count($threadids) > 0)
 				}
 				else
 				{
-					include (KUNENA_ABSPATH . '/template/default/flat.php');
+					include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'flat.php');
 				}
 				?>
 <!-- B: List Actions -->
@@ -350,14 +350,14 @@ if (count($threadids) > 0)
 			include_once (KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php');
 		}
 		else {
-			include_once (KUNENA_ABSPATH . '/template/default/plugin/stats/stats.class.php');
+			include_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/stats.class.php');
 		}
 
 		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php')) {
 			include (KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php');
 		}
 		else {
-			include (KUNENA_ABSPATH . '/template/default/plugin/stats/frontstats.php');
+			include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/frontstats.php');
 		}
 	}
     //(JJ) FINISH: STATS
@@ -370,7 +370,7 @@ if (count($threadids) > 0)
 			include (KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php');
 		}
 		else {
-			include (KUNENA_ABSPATH . '/template/default/plugin/who/whoisonline.php');
+			include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/who/whoisonline.php');
 		}
 		//(JJ) FINISH: WHOISONLINE
 

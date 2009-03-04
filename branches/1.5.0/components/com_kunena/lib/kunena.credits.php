@@ -78,7 +78,7 @@ global $is_Moderator;
                 <th class = "th-right"> <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump)
-                    require_once (KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
+                    require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 ?>
                 </th>
               </tr>

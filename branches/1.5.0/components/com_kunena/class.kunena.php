@@ -999,14 +999,14 @@ function generate_smilies() {
             $col = 0;
             reset ($rowset);
 
-            if (file_exists(KUNENA_ABSPATH . '/template/default/plugin/emoticons/emoticons.js.php')) {
+            if (file_exists(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/emoticons/emoticons.js.php')) {
                 echo '<tr><td style="display:none;">';
-                include (KUNENA_ABSPATH . '/template/default/plugin/emoticons/emoticons.js.php');
+                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/emoticons/emoticons.js.php');
                 echo '</td></tr>';
                 reset ($rowset);
                 }
             else {
-                die ("file is missing: " . KUNENA_ABSPATH . '/template/default/plugin/emoticons/emoticons.js.php');
+                die ("file is missing: " . KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/emoticons/emoticons.js.php');
                 }
 
             $cur = 0;

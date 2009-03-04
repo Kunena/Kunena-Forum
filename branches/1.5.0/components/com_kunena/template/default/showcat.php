@@ -19,7 +19,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 global $is_Moderator;
 $database = &JFactory::getDBO();
-require_once(KUNENA_ABSSOURCESPATH . '/kunena.authentication.php');
+require_once(KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
 
 //Security basics begin
 //Securing passed form elements:

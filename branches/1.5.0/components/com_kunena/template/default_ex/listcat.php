@@ -89,7 +89,7 @@ if ($fbConfig->showannouncement > 0)
         require_once (KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcementbox.php');
     }
     else {
-        require_once (KUNENA_ABSPATH . '/template/default/plugin/announcement/announcementbox.php');
+        require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/announcement/announcementbox.php');
     }
 ?>
 <!-- F: announcementBox -->
@@ -117,7 +117,7 @@ if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
     require_once (KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
 }
 else {
-    require_once (KUNENA_ABSPATH . '/template/default/fb_pathway.php');
+    require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_pathway.php');
 }
 ?>
 <!-- F: Pathway -->
@@ -608,7 +608,7 @@ if (count($categories[0]) > 0)
 			include (KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php');
 		}
 		else {
-			include (KUNENA_ABSPATH . '/template/default/plugin/who/whoisonline.php');
+			include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/who/whoisonline.php');
 		}
 		//(JJ) FINISH: WHOISONLINE
 
@@ -622,14 +622,14 @@ if (count($categories[0]) > 0)
 			include_once (KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php');
 		}
 		else {
-			include_once (KUNENA_ABSPATH . '/template/default/plugin/stats/stats.class.php');
+			include_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/stats.class.php');
 		}
 
 		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php')) {
 			include (KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php');
 		}
 		else {
-			include (KUNENA_ABSPATH . '/template/default/plugin/stats/frontstats.php');
+			include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/frontstats.php');
 		}
 	}
 
@@ -638,7 +638,7 @@ if (count($categories[0]) > 0)
         include (KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php');
     }
     else {
-        include (KUNENA_ABSPATH . '/template/default/fb_category_list_bottom.php');
+        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_category_list_bottom.php');
     }
 ?>
 

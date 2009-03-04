@@ -54,7 +54,7 @@ function dofreePDF($database)
 {
     global $mosConfig_sitename, $my, $aro_group, $acl;
     global $fbConfig, $fbSession;
-    require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
+    require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
     $is_Mod = 0;
 
     $catid = JRequest::getInt('catid', 0);

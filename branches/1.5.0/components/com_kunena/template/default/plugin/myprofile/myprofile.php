@@ -35,7 +35,7 @@ if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php'))
 }
 else
 {
-    require_once (KUNENA_ABSPATH . '/template/default/fb_pathway.php');
+    require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_pathway.php');
 }
 
 if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
@@ -124,7 +124,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
             }
             else
             {
-                include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_menu.php');
+                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_menu.php');
             }
             ?>
 
@@ -151,7 +151,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                     }
                     else
                     {
-                        include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_summary.php');
+                        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_summary.php');
                     }
 
                     // F: Summary
@@ -167,7 +167,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                     }
                     else
                     {
-                        include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_msg.php');
+                        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_msg.php');
                     }
 
                     // F: Show Posts
@@ -184,7 +184,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                         }
                         else
                         {
-                            include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_avatar.php');
+                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_avatar.php');
                         }
                     }
 
@@ -233,7 +233,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                         }
                         else
                         {
-                            include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_set.php');
+                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_set.php');
                         }
                     }
 
@@ -289,7 +289,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
 
                     if (!$fbConfig->cb_profile)
                     {
-                        include (KUNENA_ABSSOURCESPATH . 'fb_bb.js.php');
+                        include (KUNENA_PATH_LIB .DS. 'fb_bb.js.php');
 
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_profile_info.php'))
                         {
@@ -297,7 +297,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                         }
                         else
                         {
-                            include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_profile_info.php');
+                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_profile_info.php');
                         }
                     }
 
@@ -397,7 +397,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                     }
                     else
                     {
-                        include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_subs.php');
+                        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_subs.php');
                     }
 
                     break;
@@ -431,7 +431,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                     }
                     else
                     {
-                        include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_fav.php');
+                        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_fav.php');
                     }
 
                     break;
@@ -453,7 +453,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                     }
                     else
                     {
-                        include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_mod.php');
+                        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_mod.php');
                     }
 
                     break;
@@ -660,7 +660,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                     }
                     else
                     {
-                        include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_userdetails_form.php');
+                        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_userdetails_form.php');
                     }
 
                     break;
@@ -806,7 +806,7 @@ else
                 //(JJ) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump)
                 {
-                    require_once (KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
+                    require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 }
                 ?>
             </th>

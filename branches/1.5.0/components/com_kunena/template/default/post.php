@@ -135,7 +135,7 @@ $catName = $objCatInfo->name;
                 require_once (KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
             }
             else {
-                require_once (KUNENA_ABSPATH . '/template/default/fb_pathway.php');
+                require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_pathway.php');
             }
 
             if ($action == "post" && (hasPostPermission($database, $catid, $parentid, $my->id, $fbConfig->pubwrite, $is_Moderator)))
@@ -193,7 +193,7 @@ $catName = $objCatInfo->name;
                                 {
                                     $noFileUpload = 0;
                                     $GLOBALS['KUNENA_rc'] = 1;
-                                    include (KUNENA_ABSSOURCESPATH . 'kunena.file.upload.php');
+                                    include (KUNENA_PATH_LIB .DS. 'kunena.file.upload.php');
 
                                     if ($GLOBALS['KUNENA_rc'] == 0) {
                                         $noFileUpload = 1;
@@ -204,7 +204,7 @@ $catName = $objCatInfo->name;
                                 {
                                     $noImgUpload = 0;
                                     $GLOBALS['KUNENA_rc'] = 1;
-                                    include (KUNENA_ABSSOURCESPATH . 'kunena.image.upload.php');
+                                    include (KUNENA_PATH_LIB .DS. 'kunena.image.upload.php');
 
                                     if ($GLOBALS['KUNENA_rc'] == 0) {
                                         $noImgUpload = 1;
@@ -357,7 +357,7 @@ $catName = $objCatInfo->name;
 
                                             if (count($subsList) > 0)
                                             {                                                     //we got more than 0 subscriptions
-                                                require_once (KUNENA_ABSSOURCESPATH . 'kunena.mail.php'); // include fbMail class for mailing
+                                                require_once (KUNENA_PATH_LIB .DS. 'kunena.mail.php'); // include fbMail class for mailing
 
 												$_catobj = new jbCategory($database, $catid);
                                                 foreach ($subsList as $subs)
@@ -433,7 +433,7 @@ $catName = $objCatInfo->name;
 
                                             if (count($modsList) > 0)
                                             {                                                     //we got more than 0 moderators eligible for email
-                                                require_once (KUNENA_ABSSOURCESPATH . 'kunena.mail.php'); // include fbMail class for mailing
+                                                require_once (KUNENA_PATH_LIB .DS. 'kunena.mail.php'); // include fbMail class for mailing
 
                                                 foreach ($modsList as $mods)
                                                 {
@@ -572,7 +572,7 @@ $catName = $objCatInfo->name;
                             include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
                         else {
-                            include (KUNENA_ABSPATH . '/template/default/fb_write.html.php');
+                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_write.html.php');
                         }
                         //--
                         //echo "</form>";
@@ -622,7 +622,7 @@ $catName = $objCatInfo->name;
                             include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
                         else {
-                            include (KUNENA_ABSPATH . '/template/default/fb_write.html.php');
+                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_write.html.php');
                         }
                         //--
                         //echo "</form>";
@@ -673,7 +673,7 @@ $catName = $objCatInfo->name;
                             include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
                         else {
-                            include (KUNENA_ABSPATH . '/template/default/fb_write.html.php');
+                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_write.html.php');
                         }
                         //--
                         //echo "</form>";
@@ -769,7 +769,7 @@ $catName = $objCatInfo->name;
                             include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
                         else {
-                            include (KUNENA_ABSPATH . '/template/default/fb_write.html.php');
+                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_write.html.php');
                         }
                         //echo "</form>";
                         //}
@@ -818,11 +818,11 @@ $catName = $objCatInfo->name;
                     if ($allowEdit == 1)
                     {
                         if ($attachfile != '') {
-                            include KUNENA_ABSSOURCESPATH . 'kunena.file.upload.php';
+                            include KUNENA_PATH_LIB .DS. 'kunena.file.upload.php';
                         }
 
                         if ($attachimage != '') {
-                            include KUNENA_ABSSOURCESPATH . 'kunena.image.upload.php';
+                            include KUNENA_PATH_LIB .DS. 'kunena.image.upload.php';
                         }
 
                         //$message = trim(htmlspecialchars(addslashes($message)));
@@ -2068,7 +2068,7 @@ function listThreadHistory($id, $fbConfig, $database)
                 <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump) {
-                    require_once (KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
+                    require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 }
                 ?>
             </th>

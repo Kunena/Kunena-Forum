@@ -19,7 +19,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 //Start with determining which forums the user can see
 
-require_once (KUNENA_ABSSOURCESPATH . '/kunena.authentication.php');
+require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
 //resetting some things:
 $lockedForum = 0;
 $lockedTopic = 0;
@@ -227,7 +227,7 @@ if ($sel == "0")
 
                         //(JJ) FINISH: CAT LIST BOTTOM
                         if ($fbConfig->enableforumjump)
-                            require_once (KUNENA_ABSSOURCESPATH . '/kunena.forumjump.php');
+                            require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                         ?>
                     </th>
                 </tr>

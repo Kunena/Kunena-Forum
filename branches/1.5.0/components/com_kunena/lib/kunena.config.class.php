@@ -11,37 +11,29 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-class boj_Config
-{
-    var $_db=null;
+require_once (KUNENA_PATH_LIB . DS . 'kunena.debug.php');
 
-    function boj_Config()
+abstract class boj_Config
+{
+    protected $_db = null;
+
+    public function __construct()
     {
         $this->_db = &JFactory::getDBO();
     }
 
     //
     // The following functions MUST be overridden in derived classes
-    // Basically an abstract base class that must not be used by itself
     //
-    function GetClassVars()
-    {
-    	echo '<div>Undefined GetClassVars() function in derived class!</div>';
-    	die();
-    }
-
-    function GetConfigTableName()
-    {
-    	echo '<div>Undefined GetConfigTableName() function in derived class!</div>';
-    	die();
-    }
+    abstract public function GetClassVars();
+    abstract protected function GetConfigTableName();
 
     //
     //  binds a named array/hash to this object
     //  @param array $hash named array
     //  @return null|string null is operation was satisfactory, otherwise returns an error
     //
-    function bind($array, $ignore = '')
+    protected function bind($array, $ignore = '')
     {
         if (!is_array($array))
         {
@@ -52,7 +44,6 @@ class boj_Config
         {
 			foreach ($array as $k => $v)
 			{
-//echo "<div>Var: $k Value: $v</div>";
 			    $this->$k = $v;
 			}
 		}
@@ -63,10 +54,8 @@ class boj_Config
     //
     // Create the config table for Kunena and add initial default values
     //
-    function create()
+    public function create()
     {
-        global $mosConfig_absolute_path;
-
         $fields = array ();
 
         $vars = $this->GetClassVars();
@@ -106,10 +95,10 @@ class boj_Config
 
         foreach ($vars as $name => $value)
         {
-        	// Only allow variables that have been defined in the class
-        	if(array_key_exists($name , $this->GetClassVars()))
+        	// Exclude internal class vars e.g. _db
+        	if($name[0] != '_')
             {
-	            $value =addslashes($value);
+	            $value = addslashes($value);
 	        	$fields[] = "`$name`='$value'";
             }
         }
@@ -122,7 +111,7 @@ class boj_Config
     //
     // Create a backup of most current config table
     //
-    function backup()
+    public function backup()
     {
         // remove old backup if one exists
         $this->_db->setQuery("DROP TABLE IF EXISTS #__".$this->GetConfigTableName()."_backup");
@@ -145,7 +134,7 @@ class boj_Config
     //
     // Remove the current config table
     //
-    function remove()
+    public function remove()
     {
         $this->_db->setQuery("DROP TABLE IF EXISTS #__".$this->GetConfigTableName());
         $this->_db->query();
@@ -155,7 +144,7 @@ class boj_Config
     //
     // Load config settings from database table
     //
-    function load($silent=false)
+    public function load($silent=false)
     {
         $this->_db->setQuery("SELECT * FROM #__".$this->GetConfigTableName());
 
@@ -165,14 +154,21 @@ class boj_Config
         // create the table and populate it with defualt setting.
         // DO NOT THROW an error
 
-        if ($config = $this->_db->loadAssoc( ))
+        $config = $this->_db->loadAssoc();
+
+        if ($config!=null)
         {
 			$this->bind($config);
 		}
 		else
 		{
         	// If no configuration is present, save default values
-        	$this->create(); //create has its own error handling
+
+		    // Call remove in case we have an empty table
+		    $this->remove();
+
+		    // Now create new table and insert current config settings
+        	$this->create();
 		}
     }
 }
@@ -323,16 +319,21 @@ class fb_Config extends boj_Config
     var $rsshistory				 = 'month';
     var $fbdefaultpage			 = 'recent';
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     //
     // Mandatory overrides from abstract base class
     //
 
-    function GetClassVars()
+    public function GetClassVars()
     {
         return get_class_vars('fb_Config');
     }
 
-    function GetConfigTableName()
+    protected function GetConfigTableName()
     {
         return "fb_config"; // w/o joomla prefix - is being added by base class
     }

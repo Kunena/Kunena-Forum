@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: kunena.defines.php 1070 2008-10-06 08:11:18Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2009 Kunena All rights reserved
@@ -9,6 +9,12 @@
 **/
 
 // Common used defines
+$language =& JFactory::getLanguage();
+$lang = $language->getBackwardLang();
+
+define('KUNENA_LANGUAGE', $lang);
+
+// File system paths
 define('KUNENA_COMPONENT_NAME', 'com_kunena');
 define('KUNENA_COMPONENT_RELPATH', 'components' .DS. KUNENA_COMPONENT_NAME);
 
@@ -24,4 +30,24 @@ define('KUNENA_PATH_ADMIN_LIB', KUNENA_PATH_ADMIN .DS. 'lib');
 define('KUNENA_PATH_ADMIN_LANGUAGE', KUNENA_PATH_ADMIN .DS. 'language');
 define('KUNENA_PATH_ADMIN_INSTALL', KUNENA_PATH_ADMIN .DS. 'install');
 define('KUNENA_PATH_ADMIN_IMAGES', KUNENA_PATH_ADMIN .DS. 'images');
+
+// Kunena uploaded files directory
+define('KUNENA_PATH_UPLOADED', KUNENA_ROOT_PATH . '/images/fbfiles');
+
+// URLs
+
+
+// Constants
+
+// Minimum version requirements
+DEFINE('KUNENA_MIN_PHP',   '5.0.0');
+DEFINE('KUNENA_MIN_MYSQL', '5.0.0');
+
+// Time related
+define ('KUNENA_SECONDS_IN_HOUR', 3600);
+define ('KUNENA_SECONDS_IN_YEAR', 31536000);
+
+// Database defines
+define ('KUNENA_DB_MISSING_COLUMN', 1054);
+
 ?>

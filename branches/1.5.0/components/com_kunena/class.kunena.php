@@ -15,9 +15,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 *@desc Getting the correct Itemids, for components required
 */
 
-//Fireboard
-
-$Itemid = intval(JRequest::getVar('Itemid', '',REQUEST));
+$Itemid = JRequest::getInt('Itemid', 0);
 
 //check if we have all the itemid sets. if so, then no need for DB call
 
@@ -95,12 +93,6 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 $uri        = & JFactory::getURI();
 $live_site= $uri->toString( array('scheme', 'host', 'port', 'path'));
 
-define('KUNENA_JABSPATH', JPATH_BASE);
-define('KUNENA_JABSPATH_HTTP', JURI::root() .'components/com_kunena');
-define('KUNENA_FABSPATH_ADMIN',JPATH_COMPONENT_ADMINISTRATOR);
-define('KUNENA_FABSPATH_ADMINSRC',JPATH_COMPONENT_ADMINISTRATOR . '/lib');
-define('KUNENA_ABSPATH', JPATH_ROOT . '/components/com_kunena');
-define('KUNENA_ABSSOURCESPATH', KUNENA_ABSPATH . '/lib');
 // Joomla absolute path
 define('KUNENA_JLIVEURL', $live_site);
 
@@ -108,25 +100,10 @@ define('KUNENA_JLIVEURL', $live_site);
 define('KUNENA_LIVEURL', KUNENA_JLIVEURL . '/index.php?option=com_kunena' . KUNENA_COMPONENT_ITEMID_SUFFIX);
 define('KUNENA_CLEANLIVEURL', KUNENA_JLIVEURL . '/index2.php?option=com_kunena&amp;no_html=1' . KUNENA_COMPONENT_ITEMID_SUFFIX);
 define('KUNENA_LIVEURLREL', 'index.php?option=com_kunena' . KUNENA_COMPONENT_ITEMID_SUFFIX);
-define('KUNENA_FABSPATH', KUNENA_JABSPATH . '/components/com_kunena');
-define('KUNENA_FABSPATH_SRC',KUNENA_FABSPATH . '/lib');
-define('KUNENA_FABSPATH_SRCFC',KUNENA_FABSPATH_SRC . '/kunena.config.class.php');
-
-// Kunena absolute path
-define('KUNENA_ABSSOURCESPATH', KUNENA_ABSPATH . '/lib/');
+define('KUNENA_LIVEUPLOADEDPATH', '/images/fbfiles');
 
 // Kunena souces absolute path
 define('KUNENA_DIRECTURL', KUNENA_JLIVEURL . '/components/com_kunena');
-
-// Kunena direct url
-define('KUNENA_URLSOURCESPATH', KUNENA_DIRECTURL . '/lib/');
-
-// Kunena sources url
-$language = JLanguage::getInstance($frontend_lang);
-$lang = $language->getBackwardLang();
-
-define('KUNENA_LANG', $lang);
-define('KUNENA_ABSADMPATH', KUNENA_JABSPATH . '/administrator/components/com_kunena');
 
 if (!defined("KUNENA_JCSSURL")) {
     $database->setQuery("SELECT template FROM #__templates_menu where client_id ='0'");
@@ -134,42 +111,13 @@ if (!defined("KUNENA_JCSSURL")) {
     define('KUNENA_JCSSURL', KUNENA_JLIVEURL . '/templates/' . $current_stylesheet . '/css/template_css.css');
     }
 
-// Kunena uploaded files directory
-define('KUNENA_ABSUPLOADEDPATH', KUNENA_JABSPATH . '/images/fbfiles');
-define('KUNENA_LIVEUPLOADEDPATH', KUNENA_JLIVEURL . '/images/fbfiles');
-
-
 // now continue with other paths
 
-$fb_user_template = strval(JRequest::getVar('fb_user_template', 'default',COOKIE));
-$fb_user_img_template = strval(JRequest::getVar('fb_user_img_template', 'default',COOKIE));
-if (strlen($fb_user_template) > 0) {
-    $fb_cur_template = $fb_user_template;
-    }
-else {
-    $fb_cur_template = $fbConfig->template;
-    }
-
-if (strlen($fb_user_img_template) > 0) {
-    $fb_cur_img_template = $fb_user_img_template;
-    }
-else {
-    $fb_cur_img_template = $fbConfig->templateimagepath;
-    }
-
-// Check if fb_user_template is present, otherwise set to default_ex
-
-if (!file_exists($str_KUNENA_templ_path)) {
-        $str_KUNENA_templ_path=KUNENA_ABSPATH . '/template/default_ex';
-}
-
-// only for preview module - maybe used later by users to change template
-
-define('KUNENA_ABSTMPLTPATH', KUNENA_ABSPATH . '/template/' . $fb_cur_template);
-define('KUNENA_ABSTMPLTMAINIMGPATH', KUNENA_ABSPATH . '/template/' . $fbConfig->templateimagepath);
+define('KUNENA_ABSTMPLTPATH', KUNENA_PATH_TEMPLATE .DS. $fbConfig->template);
+define('KUNENA_ABSTMPLTMAINIMGPATH', KUNENA_PATH_TEMPLATE .DS. $fbConfig->templateimagepath);
 
 // IMAGES ABSOLUTE PATH
-define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANG . '/');
+define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANGUAGE . '/');
 
 // absolute images path
 define('KUNENA_ABSICONSPATH', KUNENA_ABSIMAGESPATH . 'icons/');
@@ -184,16 +132,16 @@ define('KUNENA_ABSGRAPHPATH', KUNENA_ABSIMAGESPATH . 'graph/');
 define('KUNENA_ABSRANKSPATH', KUNENA_ABSIMAGESPATH . 'ranks/');
 
 // absolute ranks path
-define('KUNENA_ABSCATIMAGESPATH', KUNENA_ABSUPLOADEDPATH . '/' . $fbConfig->catimagepath); // Kunena category images absolute path
+define('KUNENA_ABSCATIMAGESPATH', KUNENA_PATH_UPLOADED . '/' . $fbConfig->catimagepath); // Kunena category images absolute path
 
-define('KUNENA_TMPLTURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_template);
-define('KUNENA_TMPLTMAINIMGURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_img_template);
+define('KUNENA_TMPLTURL', KUNENA_DIRECTURL . '/template/' . $fbConfig->template);
+define('KUNENA_TMPLTMAINIMGURL', KUNENA_DIRECTURL . '/template/' . $fbConfig->templateimagepath);
 
 // IMAGES URL PATH
 define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . '/forum.css');
 
-if (is_dir(KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANG . '')) {
-    define('KUNENA_URLIMAGESPATH', KUNENA_TMPLTMAINIMGURL . '/images/' . KUNENA_LANG . '/');
+if (is_dir(KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANGUAGE . '')) {
+    define('KUNENA_URLIMAGESPATH', KUNENA_TMPLTMAINIMGURL . '/images/' . KUNENA_LANGUAGE . '/');
     }
 else {
     define('KUNENA_URLIMAGESPATH', KUNENA_TMPLTMAINIMGURL . '/images/english/');
@@ -330,7 +278,7 @@ class FBTools {
 
     function reCountBoards() {
         $database = &JFactory::getDBO();
-        include_once (KUNENA_ABSSOURCESPATH . '/kunena.db.iterator.class.php');
+        include_once (KUNENA_PATH_LIB .DS. 'kunena.db.iterator.class.php');
 
         //reset all stats to 0
         $database->setQuery("UPDATE `#__fb_categories` SET `id_last_msg`='0',`time_last_msg`='0',`numTopics`='0',`numPosts`='0'");
@@ -820,8 +768,9 @@ class fbForum
     /**
     * @param database A database connector object
     */
-    function fbForum(&$database) {
-        $this->JTable('#__fb_categories', 'id', $database);
+    function __construct( &$database )
+	{
+		parent::__construct( '#__fb_categories', 'id', $database );
     }
 
 	// check for potential problems

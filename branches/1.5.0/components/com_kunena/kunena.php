@@ -16,18 +16,11 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-// Just for debugging and performance analysis
-$mtime = explode(" ", microtime());
-$tstart = $mtime[1] + $mtime[0];
-
-// Kill notices (we have many..)
-error_reporting (E_ALL ^ E_NOTICE);
+// Kunena wide defines
+require_once (JPATH_BASE  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 
 global $fbIcons;
 global $is_Moderator;
-
-$language =& JFactory::getLanguage();
-$lang = $language->getBackwardLang();
 
 // ERROR: global scope mix
 global $message;
@@ -85,8 +78,8 @@ $fbConfig->load();
 include_once (KUNENA_FABSPATH_SRC  . "/kunena.debug.php");
 
 // get right Language file
-if (file_exists(KUNENA_ABSADMPATH . '/language/kunena.' . KUNENA_LANG . '.php')) {
-    include_once (KUNENA_ABSADMPATH . '/language/kunena.' . KUNENA_LANG . '.php');
+if (file_exists(KUNENA_ABSADMPATH . '/language/kunena.' . KUNENA_LANGUAGE . '.php')) {
+    include_once (KUNENA_ABSADMPATH . '/language/kunena.' . KUNENA_LANGUAGE . '.php');
     }
 else {
     include_once (KUNENA_ABSADMPATH . '/language/kunena.english.php');
@@ -102,31 +95,10 @@ if ($fbConfig->pm_component == "clexuspm")
 //time format
 include_once (KUNENA_FABSPATH_SRC . '/kunena.timeformat.class.php');
 
-// systime is current time with proper board offset
-define ('KUNENA_SECONDS_IN_HOUR', 3600);
-define ('KUNENA_SECONDS_IN_YEAR', 31536000);
-// define ('KUNENA_OFFSET_USER', ($mainframe->getCfg('offset_user') * KUNENA_SECONDS_IN_HOUR));
-// For now: we add the correct offset to systime
-// In the future the offset should be removed and only applied when
-// displaying items -> store data in UTC
-define ('KUNENA_OFFSET_BOARD',($fbConfig->board_ofset * KUNENA_SECONDS_IN_HOUR));
-
-$systime = time() + KUNENA_OFFSET_BOARD;
-
-// additional database defines
-define ('KUNENA_DB_MISSING_COLUMN', 1054);
+$systime = time() + $fbConfig->board_ofset * KUNENA_SECONDS_IN_HOUR;
 
 // Retrieve current cookie data for session handling
 $settings = $_COOKIE['fboard_settings'];
-
-// set configuration dependent params
-$str_KUNENA_templ_path = KUNENA_ABSPATH . '/template/' . ($fb_user_template?$fb_user_template:$fbConfig->template);
-
-// Check if fb_user_template is present, otherwise set to default_ex
-
-if (!file_exists($str_KUNENA_templ_path)) {
-        $str_KUNENA_templ_path=KUNENA_ABSPATH . '/template/default_ex';
-}
 
 $board_title = $fbConfig->board_title;
 $fromBot = 0;
@@ -227,9 +199,8 @@ if ($catid != '') {
     $thisCat = new jbCategory($database, $catid);
     }
 
-//$KunenaTemplate = new CKunenaTemplate($str_KUNENA_templ_path);
 $KunenaTemplate = new patTemplate();
-$KunenaTemplate->setBasedir($str_KUNENA_templ_path);
+$KunenaTemplate->setBasedir(KUNENA_ABSTMPLTPATH);
 
 $KunenaTemplate->readTemplatesFromFile("header.html");
 $KunenaTemplate->readTemplatesFromFile("footer.html");

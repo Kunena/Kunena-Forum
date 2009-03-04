@@ -14,29 +14,28 @@
 **/
 
 defined( '_JEXEC' ) or die('Restricted access');
-$language =& JFactory::getLanguage();
-$lang = $language->getBackwardLang();
 
-// Kill notices (we have many..)
-//error_reporting(E_ALL);
+// Kunena wide defines
+require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 
-include_once (JPATH_ROOT . '/components/com_kunena/lib/kunena.debug.php');
+// Now that we have the global defines we can use shortcut defines
+require_once (KUNENA_PATH_LIB .DS. 'kunena.debug.php');
+require_once (KUNENA_PATH_LIB .DS. 'kunena.config.class.php');
 
 // get fireboards configuration params in
 global $mainframe, $fbConfig, $database;
 
 $database = JFactory::getDBO();
 
-require_once (JPATH_ROOT . '/components/com_kunena/lib/kunena.config.class.php');
 $fbConfig = new fb_config();
 $fbConfig->load();
 
 // Class structure should be used after this and all the common task should be moved to this class
-require_once (JPATH_ROOT."/components/com_kunena/class.kunena.php");
-require_once (JPATH_ROOT."/administrator/components/com_kunena/admin.kunena.html.php");
+require_once (KUNENA_PATH .DS. 'class.kunena.php');
+require_once (KUNENA_PATH_ADMIN .DS. 'admin.kunena.html.php');
 
-$langfile = JPATH_ROOT."/administrator/components/com_kunena/language/kunena.$lang.php";
-$defaultlangfile = JPATH_ROOT."/administrator/components/com_kunena/language/kunena.english.php";
+$langfile = KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.'.KUNENA_LANGUAGE.'.php';
+$defaultlangfile = KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.english.php';
 
 (file_exists($langfile)) ? require_once ($langfile) : require_once ($defaultlangfile);
 
@@ -329,8 +328,6 @@ function showAdministration($option)
 {
     global $mainframe;
 	$database = &JFactory::getDBO();
-    $language = JLanguage::getInstance($frontend_lang);
-$lang = $language->getBackwardLang();
 
     $limit = $mainframe->getUserStateFromRequest("viewlistlimit", 'limit', 10);
     $limitstart = $mainframe->getUserStateFromRequest("view{$option}limitstart", 'limitstart', 0);
@@ -365,13 +362,11 @@ $lang = $language->getBackwardLang();
     $list = fbTreeRecurse(0, '', array (), $children, max(0, $levellimit - 1));
     $total = count($list);
     if ($limitstart >= $total) $limitstart = 0;
-    //require_once (JPATH_ROOT  . '/administrator/includes/pageNavigation.php');
 
-jimport('joomla.html.pagination');
-$pageNav = new JPagination( $total, $limitstart, $limit );
+	jimport('joomla.html.pagination');
+	$pageNav = new JPagination( $total, $limitstart, $limit );
 
-
-   $levellist = JHTML::_('select.integerList' , 1, 20, 1, 'levellimit', 'size="1" onchange="document.adminForm.submit();"', $levellimit);
+	$levellist = JHTML::_('select.integerList' , 1, 20, 1, 'levellimit', 'size="1" onchange="document.adminForm.submit();"', $levellimit);
     // slice out elements based on limits
     $list = array_slice($list, $pageNav->limitstart, $pageNav->limit);
     /**
@@ -604,8 +599,6 @@ function orderForum($uid, $inc, $option)
 function showConfig($option)
 {
     $database = &JFactory::getDBO();
-$language = JLanguage::getInstance($frontend_lang);
-$lang = $language->getBackwardLang();
     global $mosConfig_admin_template;
     global $mainframe;
     global $fbConfig;
@@ -614,9 +607,12 @@ $lang = $language->getBackwardLang();
 
     // the default page when entering Kunena
     $defpagelist = array ();
-$defpagelist[] = JHTML::_('select.option', '0', JText::_('recent'), _COM_A_FBDEFAULT_PAGE_RECENT, 'text');
-$defpagelist[] = JHTML::_('select.option', '0', JText::_('my'), _COM_A_FBDEFAULT_PAGE_MY, 'text');
-$defpagelist[] = JHTML::_('select.option', '0', JText::_('categories'),_COM_A_FBDEFAULT_PAGE_CATEGORIES, 'text');
+	$defpagelist[] = JHTML::_('select.option', JText::_('recent'), _COM_A_FBDEFAULT_PAGE_RECENT);
+
+
+
+	$defpagelist[] = JHTML::_('select.option', JText::_('my'), _COM_A_FBDEFAULT_PAGE_MY);
+	$defpagelist[] = JHTML::_('select.option', JText::_('categories'),_COM_A_FBDEFAULT_PAGE_CATEGORIES);
 
     // build the html select list
     $lists['fbdefaultpage'] = JHTML::_('select.genericlist', $defpagelist ,'cfg_fbdefaultpage', 'class="inputbox" size="1" ','value', 'text', $fbConfig->fbdefaultpage);
@@ -625,8 +621,8 @@ $defpagelist[] = JHTML::_('select.option', '0', JText::_('categories'),_COM_A_FB
     // the default view
     $list = array ();
 
-	$list[] =JHTML::_('select.option', '0', JText::_('flat'),_COM_A_FLAT, 'text');
-	$list[] =JHTML::_('select.option', '0', JText::_('threaded'),_COM_A_THREADED, 'text');
+	$list[] =JHTML::_('select.option', JText::_('flat'),_COM_A_FLAT);
+	$list[] =JHTML::_('select.option', JText::_('threaded'),_COM_A_THREADED);
 
     // build the html select list
     $lists['default_view'] = JHTML::_('select.genericlist', $list ,'cfg_default_view', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->default_view);
@@ -635,19 +631,19 @@ $defpagelist[] = JHTML::_('select.option', '0', JText::_('categories'),_COM_A_FB
 
 
     $rsslist = array ();
-	$rsslist[] = JHTML::_('select.option', '0', JText::_('thread'),_COM_A_RSS_BY_THREAD, 'text');
-	$rsslist[] = JHTML::_('select.option', '0', JText::_('post'),_COM_A_RSS_BY_POST, 'text');
+	$rsslist[] = JHTML::_('select.option', JText::_('thread'),_COM_A_RSS_BY_THREAD);
+	$rsslist[] = JHTML::_('select.option', JText::_('post'),_COM_A_RSS_BY_POST);
 
     // build the html select list
-$lists['rsstype'] = JHTML::_('select.genericlist', $list ,'cfg_rsstype', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rsstype);
+	$lists['rsstype'] = JHTML::_('select.genericlist', $list ,'cfg_rsstype', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rsstype);
 
 
 
 
     $rsshistorylist = array ();
-	$rsshistorylist[] =JHTML::_('select.option', '0', JText::_('Week'),_COM_A_RSS_HISTORY_WEEK, 'text');
-	$rsshistorylist[] =JHTML::_('select.option', '0', JText::_('Month'),_COM_A_RSS_HISTORY_MONTH, 'text');
-	$rsshistorylist[] =JHTML::_('select.option', '0', JText::_('Year'),_COM_A_RSS_HISTORY_YEAR, 'text');
+	$rsshistorylist[] =JHTML::_('select.option', JText::_('Week'),_COM_A_RSS_HISTORY_WEEK);
+	$rsshistorylist[] =JHTML::_('select.option', JText::_('Month'),_COM_A_RSS_HISTORY_MONTH);
+	$rsshistorylist[] =JHTML::_('select.option', JText::_('Year'),_COM_A_RSS_HISTORY_YEAR);
 
 
     // build the html select list
@@ -657,20 +653,20 @@ $lists['rsstype'] = JHTML::_('select.genericlist', $list ,'cfg_rsstype', 'class=
 
     // source of avatar picture
     $avlist = array ();
-	$avlist[] = JHTML::_('select.option', '0', JText::_('fb'),_KUNENA_FIREBOARD, 'text');
-	$avlist[] = JHTML::_('select.option', '0', JText::_('clexuspm'),_KUNENA_CLEXUS, 'text');
-	$avlist[] = JHTML::_('select.option', '0', JText::_('cb'),_KUNENA_CB, 'text');
+	$avlist[] = JHTML::_('select.option', JText::_('fb'),_KUNENA_KUNENA);
+	$avlist[] = JHTML::_('select.option', JText::_('clexuspm'),_KUNENA_CLEXUS);
+	$avlist[] = JHTML::_('select.option', JText::_('cb'),_KUNENA_CB);
     // build the html select list
     $lists['avatar_src'] = JHTML::_('select.genericlist', $avlist,'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rsshistory);
 
     // private messaging system to use
     $pmlist = array ();
-	$pmlist[] = JHTML::_('select.option', '0', JText::_('no'),_COM_A_NO, 'text');
-	$pmlist[] = JHTML::_('select.option', '0', JText::_('pms'),_KUNENA_MYPMS, 'text');
-	$pmlist[] = JHTML::_('select.option', '0', JText::_('clexuspm'),_KUNENA_CLEXUS, 'text');
-	$pmlist[] = JHTML::_('select.option', '0', JText::_('uddeim'),_KUNENA_UDDEIM, 'text');
-	$pmlist[] = JHTML::_('select.option', '0', JText::_('jim'),_KUNENA_JIM, 'text');
-	$pmlist[] = JHTML::_('select.option', '0', JText::_('missus'),_KUNENA_MISSUS, 'text');
+	$pmlist[] = JHTML::_('select.option', JText::_('no'),_COM_A_NO);
+	$pmlist[] = JHTML::_('select.option', JText::_('pms'),_KUNENA_MYPMS);
+	$pmlist[] = JHTML::_('select.option', JText::_('clexuspm'),_KUNENA_CLEXUS);
+	$pmlist[] = JHTML::_('select.option', JText::_('uddeim'),_KUNENA_UDDEIM);
+	$pmlist[] = JHTML::_('select.option', JText::_('jim'),_KUNENA_JIM);
+	$pmlist[] = JHTML::_('select.option', JText::_('missus'),_KUNENA_MISSUS);
 
     $lists['pm_component'] = JHTML::_('select.genericlist', $pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pm_component);
 
@@ -678,9 +674,9 @@ $lists['rsstype'] = JHTML::_('select.genericlist', $list ,'cfg_rsstype', 'class=
 //redundant    $lists['pm_component'] = JHTML::_('select.genericlist',$pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pm_component);
     // Profile select
     $prflist = array ();
-	$prflist[] = JHTML::_('select.option', '0', JText::_('fb'),_KUNENA_FIREBOARD, 'text');
-	$prflist[] = JHTML::_('select.option', '0', JText::_('clexuspm'),_KUNENA_CLEXUS, 'text');
-	$prflist[] = JHTML::_('select.option', '0', JText::_('cb'),_KUNENA_CB, 'text');
+	$prflist[] = JHTML::_('select.option', JText::_('fb'),_KUNENA_KUNENA);
+	$prflist[] = JHTML::_('select.option', JText::_('clexuspm'),_KUNENA_CLEXUS);
+	$prflist[] = JHTML::_('select.option', JText::_('cb'),_KUNENA_CB);
 
     $lists['fb_profile'] = JHTML::_('select.genericlist', $prflist, 'cfg_fb_profile', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->fb_profile);
 
@@ -689,13 +685,13 @@ $lists['rsstype'] = JHTML::_('select.genericlist', $list ,'cfg_rsstype', 'class=
     // build the html select list
     // make a standard yes/no list
     $yesno = array ();
-	$yesno[] = JHTML::_('select.option',JText::_('0'), _COM_A_NO, 'text');
-	$yesno[] = JHTML::_('select.option', JText::_('1'), _COM_A_YES, 'text');
+	$yesno[] = JHTML::_('select.option',JText::_('0'), _COM_A_NO);
+	$yesno[] = JHTML::_('select.option', JText::_('1'), _COM_A_YES);
     /* Build the templates list*/
     // This function was modified from the one posted to PHP.net by rockinmusicgv
     // It is available under the readdir() entry in the PHP online manual
     //function get_dirs($directory, $select_name, $selected = "") {
-    $listitems[] = JHTML::_('select.option',  JText::_('1'),_KUNENA_SELECTTEMPLATE, 'text');
+    $listitems[] = JHTML::_('select.option',  JText::_('1'),_KUNENA_SELECTTEMPLATE);
 
     if ($dir = @opendir(JPATH_ROOT . "/components/com_kunena/template"))
     {
@@ -725,7 +721,7 @@ $lists['rsstype'] = JHTML::_('select.genericlist', $list ,'cfg_rsstype', 'class=
         //echo ">$val Gallery</option>\n";
         //$listitems[] = JHTML::_('select.option',$val, $val);
 
-		$listitems[] = JHTML::_('select.option',  JText::_($val),$val, 'text');
+		$listitems[] = JHTML::_('select.option',  JText::_($val),$val);
     }
 
 	$lists['badwords'] = JHTML::_('select.genericlist', $yesno, 'cfg_badwords', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->badwords);
@@ -822,8 +818,9 @@ $lists['rsstype'] = JHTML::_('select.genericlist', $list ,'cfg_rsstype', 'class=
 
 function saveConfig($option)
 {
-$database = &JFactory::getDBO();
-	global $fbConfig;
+	global $mainframe, $fbConfig;
+
+    $database = &JFactory::getDBO();
 
 	$fbConfig->backup();
 	$fbConfig->remove();
@@ -863,7 +860,7 @@ $database = &JFactory::getDBO();
 
     $fbConfig->create();
 
-    $mainframe->redirect( JURI::base() . "index2.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED . 'test');
+    $mainframe->redirect( JURI::base() . "index2.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED);
 }
 
 function showInstructions($database, $option, $lang) {
@@ -1021,10 +1018,8 @@ $database = &JFactory::getDBO();
 //===============================
 function showProfiles($database, $option, $lang, $order)
 {
-$database = &JFactory::getDBO();
-$language = JLanguage::getInstance($frontend_lang);
-$lang = $language->getBackwardLang();
     global $mainframe;
+    $database = &JFactory::getDBO();
     //$limit = intval(JRequest::getVar( 'limit', 10));
     //$limitstart = intval(JRequest::getVar( 'limitstart', 0));
     $limit = $mainframe->getUserStateFromRequest("viewlistlimit", 'limit', 10);
@@ -1060,13 +1055,12 @@ $lang = $language->getBackwardLang();
     }
 
     $profileList = $database->loadObjectList();
-	$database->getErrorMsg;
     	check_dberror('Unable to load user profiles.');
 
     $countPL = count($profileList);
 
-jimport('joomla.html.pagination');
-$pageNavSP = new JPagination( $total, $limitstart, $limit );
+    jimport('joomla.html.pagination');
+    $pageNavSP = new JPagination( $total, $limitstart, $limit );
     html_Kunena::showProfiles($option, $lang, $profileList, $countPL, $pageNavSP, $order, $search);
 }
 
@@ -1131,6 +1125,8 @@ function editUserProfile($uid)
     $database->setQuery("select catid from #__fb_moderation where userid=". $uid[0]);
     $_modCats = $database->loadResultArray();
     	check_dberror('Unable to moderation category ids for user.');
+
+    $__modCats = array();
 
     foreach ($_modCats as $_v) {
         $__modCats[] = JHTML::_('select.option', $_v );
@@ -1285,7 +1281,9 @@ function syncusers($database, $option) {
 
 function douserssync($database, $option)
 {
-$database = &JFactory::getDBO();
+    global $mainframe;
+
+    $database = &JFactory::getDBO();
 	//reset access rights
 	$database->setQuery("UPDATE #__fb_sessions SET allowed='na'");
 	$database->query() or trigger_dberror("Unable to update sessions.");
@@ -1475,13 +1473,13 @@ function browseUploaded($database, $option, $type)
 $database = &JFactory::getDBO();
     if ($type)
     { //we're doing images
-        $dir = @opendir(KUNENA_ABSUPLOADEDPATH. '/images');
-        $uploaded_path = KUNENA_ABSUPLOADEDPATH. '/images';
+        $dir = @opendir(KUNENA_PATH_UPLOADED. '/images');
+        $uploaded_path = KUNENA_PATH_UPLOADED. '/images';
     }
     else
     { //we're doing regular files
-        $dir = @opendir(KUNENA_ABSUPLOADEDPATH.'/files');
-        $uploaded_path = KUNENA_ABSUPLOADEDPATH.'/files';
+        $dir = @opendir(KUNENA_PATH_UPLOADED.'/files');
+        $uploaded_path = KUNENA_PATH_UPLOADED.'/files';
     }
 
     $uploaded = array ();
@@ -1583,9 +1581,7 @@ function catTreeRecurse($id, $indent = "&nbsp;&nbsp;&nbsp;", $list, &$children, 
 
 function showCategories($cat, $cname, $extras = "", $levellimit = "4")
 {
-$database = &JFactory::getDBO();
-   $language = JLanguage::getInstance($frontend_lang);
-$lang = $language->getBackwardLang();
+    $database = &JFactory::getDBO();
     $database->setQuery("select id ,parent,name from
           #__fb_categories" . "\nORDER BY name");
     $mitems = $database->loadObjectList();
@@ -1735,8 +1731,7 @@ function showsmilies($option)
 {
 $database = &JFactory::getDBO();
     global $mainframe;
-	$language = JLanguage::getInstance($frontend_lang);
-$lang = $language->getBackwardLang();
+
     $limit = intval(JRequest::getVar('limit', 10));
     $limitstart = intval(JRequest::getVar('limitstart', 0));
     $limit = $mainframe->getUserStateFromRequest("viewlistlimit", 'limit', 10);
@@ -1754,17 +1749,16 @@ $lang = $language->getBackwardLang();
 
     require_once ("includes/pageNavigation.php");
     $pageNavSP = new mosPageNav($total, $limitstart, $limit);
-    html_Kunena::showsmilies($option, $lang, $smileytmp, $pageNavSP, $smileypath);
+    html_Kunena::showsmilies($option, KUNENA_LANGUAGE, $smileytmp, $pageNavSP, $smileypath);
 
 }
 
 function editsmiley($option, $id)
 {
-$database = &JFactory::getDBO();
 	global  $mainframe;
-	$language = JLanguage::getInstance($frontend_lang);
-$_lang = $language->getBackwardLang();
-    $database->setQuery("SELECT * FROM #__fb_smileys WHERE id = $id");
+
+	$database = &JFactory::getDBO();
+	$database->setQuery("SELECT * FROM #__fb_smileys WHERE id = $id");
 
     $smileytmp = $database->loadAssocList();
     $smileycfg = $smileytmp[0];
@@ -1789,16 +1783,16 @@ $_lang = $language->getBackwardLang();
 
 		$filename_list .= '<option value="' . $smiley_images[$i] . '"' . $smiley_selected . '>' . $smiley_images[$i] . '</option>'."\n";
     }
-    html_Kunena::editsmiley($option, $_lang, $smiley_edit_img, $filename_list, $smileypath, $smileycfg);
+    html_Kunena::editsmiley($option, KUNENA_LANGUAGE, $smiley_edit_img, $filename_list, $smileypath, $smileycfg);
 }
 
 function newsmiley($option)
 {
-$database = &JFactory::getDBO();
 	global  $mainframe;
-$language = JLanguage::getInstance($frontend_lang);
-$_lang = $language->getBackwardLang();
-    $smiley_images = collect_smilies();
+
+	$database = &JFactory::getDBO();
+
+	$smiley_images = collect_smilies();
     $smileypath = smileypath();
     $smileypath = $smileypath['live'].'/';
 
@@ -1813,7 +1807,7 @@ $_lang = $language->getBackwardLang();
 
 function savesmiley($option, $id = NULL)
 {
-global  $mainframe;
+    global  $mainframe;
 	$database = &JFactory::getDBO();
 
     $smiley_code = JRequest::getVar( 'smiley_code');
@@ -1857,8 +1851,9 @@ global  $mainframe;
 
 function deletesmiley($option, $cid)
 {
-$database = &JFactory::getDBO();
 	global $mainframe;
+
+	$database = &JFactory::getDBO();
 
 	if ($cids = implode(',', $cid)) {
 		$database->setQuery("DELETE FROM #__fb_smileys WHERE id IN ($cids)");
@@ -1872,16 +1867,14 @@ function smileypath()
 {
     global $mainframe;
 	global $fbConfig;
-	$language = JLanguage::getInstance($frontend_lang);
-$lang = $language->getBackwardLang();
-// $JLanguage = JLanguage;
-    if (is_dir(JPATH_ROOT . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$lang.'/emoticons')) {
-        $smiley_live_path = $mainframe->getCfg('live_site') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$lang.'/emoticons';
-        $smiley_abs_path = JPATH_ROOT . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$lang.'/emoticons';
+
+	if (is_dir(JPATH_ROOT . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/emoticons')) {
+        $smiley_live_path = $mainframe->getCfg('live_site') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/emoticons';
+        $smiley_abs_path = JPATH_ROOT . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/emoticons';
     }
     else {
-        $smiley_live_path = JPATH_ROOT . '/components/com_kunena/template/default/images/'.$lang.'/emoticons';
-        $smiley_abs_path = JPATH_ROOT . '/components/com_kunena/template/default/images/'.$lang.'/emoticons';
+        $smiley_live_path = JPATH_ROOT . '/components/com_kunena/template/default/images/'.KUNENA_LANGUAGE.'/emoticons';
+        $smiley_abs_path = JPATH_ROOT . '/components/com_kunena/template/default/images/'.KUNENA_LANGUAGE.'/emoticons';
     }
 
     $smileypath['live'] = $smiley_live_path;
@@ -1926,11 +1919,11 @@ function collect_smilies()
 
 function showRanks($option)
 {
-$database = &JFactory::getDBO();
     global $mainframe, $order;
-$language = JLanguage::getInstance($frontend_lang);
-$lang = $language->getBackwardLang();
-	//$limit = intval(JRequest::getVar( 'limit', 10));
+
+    $database = &JFactory::getDBO();
+
+    //$limit = intval(JRequest::getVar( 'limit', 10));
 	//$limitstart = intval(JRequest::getVar( 'limitstart', 0));
     $limit = $mainframe->getUserStateFromRequest("viewlistlimit", 'limit', 10);
 	$limitstart = $mainframe->getUserStateFromRequest("view{$option}limitstart", 'limitstart', 0);
@@ -1948,7 +1941,7 @@ $lang = $language->getBackwardLang();
 
 	require_once( "includes/pageNavigation.php" );
 	$pageNavSP = new mosPageNav( $total,$limitstart,$limit );
-	html_Kunena::showRanks( $option,$lang,$ranks,$pageNavSP,$order,$rankpath );
+	html_Kunena::showRanks( $option,KUNENA_LANGUAGE,$ranks,$pageNavSP,$order,$rankpath );
 
 }
 
@@ -1956,18 +1949,14 @@ function rankpath()
 {
     global $mainframe;
 	global $fbConfig;
-$language = JLanguage::getInstance($frontend_lang);
-$lang = $language->getBackwardLang();
 
-
-	//$_lang	= &	JLanguage::setLanguage("english");
-    if (is_dir(JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$lang.'/ranks')) {
-        $rank_live_path = JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$lang.'/ranks';
-        $rank_abs_path = 	JPATH_ROOT . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$lang.'/ranks';
+    if (is_dir(JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/ranks')) {
+        $rank_live_path = JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/ranks';
+        $rank_abs_path = 	JPATH_ROOT . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/ranks';
     }
     else {
-        $rank_live_path = JURI::root() . '/components/com_kunena/template/default/images/'.$lang.'/ranks';
-        $rank_abs_path = 	JPATH_ROOT . '/components/com_kunena/template/default/images/'.$lang.'/ranks';
+        $rank_live_path = JURI::root() . '/components/com_kunena/template/default/images/'.KUNENA_LANGUAGE.'/ranks';
+        $rank_abs_path = 	JPATH_ROOT . '/components/com_kunena/template/default/images/'.KUNENA_LANGUAGE.'/ranks';
     }
 
     $rankpath['live'] = $rank_live_path;
@@ -2078,9 +2067,7 @@ function saveRank($option, $id = NULL)
 
 function editRank($option, $id)
 {
-$language = JLanguage::getInstance($frontend_lang);
-$lang = $language->getBackwardLang();
-$database = &JFactory::getDBO();
+    $database = &JFactory::getDBO();
 	global $mainframe;
 
 	$database->setQuery("SELECT * FROM #__fb_ranks WHERE rank_id = '$id'");
@@ -2121,7 +2108,7 @@ $database = &JFactory::getDBO();
 		}
 	}
 
-    html_Kunena::editRank($option, $lang, $edit_img, $filename_list, $path, $row);
+    html_Kunena::editRank($option, KUNENA_LANGUAGE, $edit_img, $filename_list, $path, $row);
 }
 
 //===============================

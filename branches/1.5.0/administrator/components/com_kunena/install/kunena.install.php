@@ -16,31 +16,20 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-// Minimum version requirements
-DEFINE('KUNENA_MIN_PHP', '4.3.0');
-DEFINE('KUNENA_MIN_MYSQL', '5.0.0');
-
-define('KUNENA_JABSPATH', JPATH_BASE);
-
-// Kunena sources url
-$language = JLanguage::getInstance($frontend_lang);
-$lang = $language->getBackwardLang();
-
-define('KUNENA_LANG', $lang);
-define('KUNENA_ABSADMPATH', KUNENA_JABSPATH . '/components/com_kunena');
-
+// Kunena wide defines
+require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 
 global $mainframe;
 
 // get right Language file
-if (file_exists(KUNENA_ABSADMPATH . '/language/kunena.' . KUNENA_LANG . '.php')) {
-    include_once (KUNENA_ABSADMPATH . '/language/kunena.' . KUNENA_LANG . '.php');
+if (file_exists(KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.' . KUNENA_LANGUAGE . '.php')) {
+    include_once (KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.' . KUNENA_LANGUAGE . '.php');
     }
 else {
-    include_once (KUNENA_ABSADMPATH . '/language/kunena.english.php');
+    include_once (KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.english.php');
     }
 
-include_once(KUNENA_ABSADMPATH."/lib/fx.upgrade.class.php");
+include_once(KUNENA_PATH_ADMIN_LIB .DS. 'fx.upgrade.class.php');
 
 function com_install() {
 	global $mainframe, $mosConfig_absolute_path;

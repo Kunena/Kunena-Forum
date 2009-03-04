@@ -57,7 +57,7 @@ function dofreePDF($database)
     require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
     $is_Mod = 0;
 
-    $catid = JRequest::getInt('catid', 2);
+    $catid = JRequest::getInt('catid', 0);
 
     if (!$is_admin)
     {
@@ -88,8 +88,8 @@ function dofreePDF($database)
 
     if ($letPass || $is_Mod)
     {
-        $id = intval(mosGetParam($_REQUEST, 'id', 1));
-        $catid = intval(mosGetParam($_REQUEST, 'catid', 2));
+        $id = JRequest::getInt('id', 0);
+        $catid = JRequest::getInt('catid', 0);
         //first get the thread id for the current post to later on determine the parent post
         $database->setQuery("SELECT `thread` FROM #__fb_messages WHERE id='$id' AND catid='$catid'");
         $threadid = $database->loadResult();

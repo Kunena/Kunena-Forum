@@ -16,7 +16,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 //Get main categories with child categories
-$catid = intval(mosGetParam($_REQUEST, "catid", 0));
+$catid = JRequest::getInt('catid', 0);;
 
 function JJ_categoryArray()
 {

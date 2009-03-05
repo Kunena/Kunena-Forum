@@ -3,9 +3,10 @@
 * @version $Id:fx.upgrade.class.php 97 2009-01-23 21:58:23Z fxstein $
 * Kunena Component
 * @package Kunena
-* @Copyright (C) 2006 - 2008 Best Of Joomla All rights reserved
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.bestofjoomla.com
+* @link http://www.kunena.com
 *
 * Based on comUpgrade class
 * @copyright (C) 2005 - 2007 Samuel Suter / All Rights Reserved
@@ -51,7 +52,8 @@ class fx_Upgrade {
 								`build` VARCHAR(20) NOT NULL,
 								`versionname` VARCHAR(40) NULL,
 								PRIMARY KEY(`id`));" );
-		$database->query() or trigger_dberror('Unable to create version table.');
+		// Let the install handle the error
+		return $database->query();
 	}
 
 	// helper function to drop existing version table
@@ -203,7 +205,7 @@ class fx_Upgrade {
 				<table class="adminlist">
 				<tr>
 					<td>Creating version table</td>
-					<td width="20"><a href="#" onMouseOver="return overlib('<?=$this->_error?>', BELOW, RIGHT,WIDTH,300);" onmouseout="return nd();" ><img src="images/<?php echo $img;?>" border="0"></a></td>
+					<td width="20"><a href="#" onMouseOver="return overlib('<?php echo $this->_error?>', BELOW, RIGHT,WIDTH,300);" onmouseout="return nd();" ><img src="images/<?php echo $img;?>" border="0"></a></td>
 				</tr>
 				</table>
 				<?php
@@ -236,7 +238,7 @@ class fx_Upgrade {
 				<script  type="text/javascript" src="<?php echo $mosConfig_live_site;?>/includes/js/overlib_mini.js"></script>
 				<table class="adminlist">
 					<tr>
-						<th colspan="2">Installing "<?=$this->component?>" (Version: <?=$version;?> / Date: <?=$versiondate;?> / Build: <?=build;?> / VersionName: <?=$versionname;?> )</th>
+						<th colspan="2">Installing "<?php echo $this->component?>" (Version: <?php echo $version;?> / Date: <?php echo $versiondate;?> / Build: <?php echo $build;?> / VersionName: <?php echo $versionname;?> )</th>
 					</tr>
 				<?php
 			}
@@ -258,7 +260,7 @@ class fx_Upgrade {
 				<script  type="text/javascript" src="<?php echo $mosConfig_live_site;?>/includes/js/overlib_mini.js"></script>
 				<table class="adminlist">
 					<tr>
-						<th colspan="2">Upgrading "<?=$this->component?>" (Version: <?=@$currentVersion->version; ?> / Version Date: <?=@$currentVersion->versiondate;?> / Install Date: <?=@$currentVersion->installdate;?> / Build: <?=@$currentVersion->build;?> / Version Name: <?=@$currentVersion->versionname;?>)</th>
+						<th colspan="2">Upgrading "<?php echo $this->component?>" (Version: <?php echo @$currentVersion->version; ?> / Version Date: <?php echo @$currentVersion->versiondate;?> / Install Date: <?php echo @$currentVersion->installdate;?> / Build: <?php echo @$currentVersion->build;?> / Version Name: <?php echo @$currentVersion->versionname;?>)</th>
 					</tr>
 				<?php
 			}
@@ -286,7 +288,7 @@ class fx_Upgrade {
 								<td colspan="2">&nbsp;</td>
 							</tr>
 							<tr>
-								<th colspan="2">Version: <?=$version;?> (Version Date: <?=$versiondate;?>, Build: <?=$build;?>, Version Name: <?=$versionname;?>)</th>
+								<th colspan="2">Version: <?php echo $version;?> (Version Date: <?php echo $versiondate;?>, Build: <?php echo $build;?>, Version Name: <?php echo $versionname;?>)</th>
 							</tr>
 							<?php
 						}
@@ -337,11 +339,11 @@ class fx_Upgrade {
 						?>
 						<tr>
 							<td>
-								<div id="id<?=$i;?>_<?=$batch;?>" onClick="javascript:showDetail(this);" style="cursor:pointer;">
-									<img id="id<?=$i;?>_<?=$batch;?>_img" src="images/expandall.png" border="0">
+								<div id="id<?php echo $i;?>_<?php echo $batch;?>" onClick="javascript:showDetail(this);" style="cursor:pointer;">
+									<img id="id<?php echo $i;?>_<?php echo $batch;?>_img" src="images/expandall.png" border="0">
 									Including file
 								</div>
-								<div id="id<?=$i;?>_<?=$batch;?>_details" style="display:None;" class="details"><?=$this->_error;?><pre><?=$include;?></pre></div>
+								<div id="id<?php echo $i;?>_<?php echo $batch;?>_details" style="display:None;" class="details"><?php echo $this->_error;?><pre><?php echo $include;?></pre></div>
 							</td>
 							<td width="20" valign="top"><img src="images/<?php echo $img;?>"></td>
 						</tr>
@@ -355,7 +357,7 @@ class fx_Upgrade {
 					$database->setQuery($query);
 					if (!@$database->query())
 					{
-						$this->_error = "DB function failed with error number ".$database->_errorNum."<br /><font color=\"red\">";
+						$this->_error = "DB function failed with error number $database->_errorNum<br /><font color=\"red\">";
 						$this->_error .= $database->stderr(true);
 						$this->_error .= "</font>";
 						$img = "publish_x.png";
@@ -374,11 +376,11 @@ class fx_Upgrade {
 						?>
 						<tr>
 							<td>
-								<div id="id<?=$i;?>_<?=$batch;?>" onClick="javascript:showDetail(this);" style="cursor:pointer;">
-									<img id="id<?=$i;?>_<?=$batch;?>_img" src="images/expandall.png" border="0">
+								<div id="id<?php echo $i;?>_<?php echo $batch;?>" onClick="javascript:showDetail(this);" style="cursor:pointer;">
+									<img id="id<?php echo $i;?>_<?php echo $batch;?>_img" src="images/expandall.png" border="0">
 									Running SQL Query
 								</div>
-								<div id="id<?=$i;?>_<?=$batch;?>_details" style="display:None;" class="details"><?=$this->_error;?><pre><?=$database->_sql;?></pre></div>
+								<div id="id<?php echo $i;?>_<?php echo $batch;?>_details" style="display:None;" class="details"><?php echo $this->_error;?><pre><?php echo $database->_sql;?></pre></div>
 							</td>
 							<td width="20" valign="top"><img src="images/<?php echo $img;?>" border="0"></td>
 						</tr>
@@ -401,11 +403,11 @@ class fx_Upgrade {
 						?>
 						<tr>
 							<td>
-								<div id="id<?=$i;?>_<?=$batch;?>" onClick="javascript:showDetail(this);" style="cursor:pointer;">
-									<img id="id<?=$i;?>_<?=$batch;?>_img" src="images/expandall.png" border="0">
+								<div id="id<?php echo $i;?>_<?php echo $batch;?>" onClick="javascript:showDetail(this);" style="cursor:pointer;">
+									<img id="id<?php echo $i;?>_<?php echo $batch;?>_img" src="images/expandall.png" border="0">
 									Executing PHP Code
 								</div>
-								<div id="id<?=$i;?>_<?=$batch;?>_details" style="display:None;" class="details"><?=$this->_error;?><?php highlight_string( "<?php\n".$code."\n?>" );?></div>
+								<div id="id<?php echo $i;?>_<?php echo $batch;?>_details" style="display:None;" class="details"><?php echo $this->_error;?><?php highlight_string( "<?php\n".$code."\n?>" );?></div>
 							</td>
 							<td width="20" valign="top"><img src="images/<?php echo $img;?>" border="0"></td>
 						</tr>

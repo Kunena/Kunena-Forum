@@ -150,11 +150,8 @@ color:#666;
            <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=showCss"><?php echo _COM_C_CSS; ?></a>
            <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=pruneforum"><?php echo _COM_C_PRUNETAB; ?></a>
            <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=syncusers"><?php echo _KUNENA_SYNC_USERS; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=loadSample"><?php echo _COM_C_LOADSAMPLE; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=removeSample" onclick="return confirm('<?php echo _KUNENA_CONFIRM_REMOVESAMPLEDATA?>');"><?php echo _COM_C_REMOVESAMPLE; ?></a>
            <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=recount"><?php echo _KUNENA_RECOUNTFORUMS; ?></a>
            <a class="fbmainmenu"  href = "http://www.Kunena.com" target = "_blank" ><?php echo _COM_C_SUPPORT; ?></a>
-
 
         </div>
         <!-- Finish : Kunena Left Menu -->
@@ -175,7 +172,6 @@ global $mainframe;
 global $fbConfig;
 
 include_once (JPATH_ROOT.'/components/com_kunena/lib/kunena.version.php');
-// << $fbversion
 ?>
 
 <!-- Finish: AdminRight -->
@@ -185,7 +181,7 @@ include_once (JPATH_ROOT.'/components/com_kunena/lib/kunena.version.php');
   <tr><td></td><td>
  <!-- Footer -->
 <div class="fbfooter">
-Installed version:  <?php echo $fbversion; ?> |
+Installed version:  <?php echo $KunenaDbVersion; ?> |
 &copy; Copyright: <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>  |
 License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a>
 </div>
@@ -214,7 +210,6 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
         else
         {
             echo '<br />mcap==: ' . JPATH_COMPONENT_ADMINISTRATOR . ' .... help!!';
-            // mosLoadAdminModules('cpanel', 1);
         }
     }
 
@@ -243,6 +238,10 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 
                     <th class = "title">
                       <?php echo _KUNENA_CATFOR; ?>
+                    </th>
+
+                    <th>
+                      <small><?php echo _KUNENA_CATID; ?></small>
                     </th>
 
                     <th>
@@ -318,6 +317,12 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                         ?>
 
                         </a>
+                    </td>
+
+                    <td align = "center">
+                        <?php
+                            echo $row->id;
+                        ?>
                     </td>
 
                     <td align = "center">
@@ -490,7 +495,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                         </td>
 
                         <td>
-                            <input class = "inputbox" type = "text" name = "name" size = "25" maxlength = "100" value = "<?php echo $row->name; ?>">
+                            <input class = "inputbox" type = "text" name = "name" size = "25" maxlength = "100" value = "<?php echo stripslashes($row->name); ?>">
                         </td>
                     </tr>
 
@@ -499,7 +504,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                         </td>
 
                         <td>
-                            <textarea class = "inputbox" cols = "50" rows = "3" name = "description" id = "description" style = "width:500px" width = "500"><?php echo $row->description; ?></textarea>
+                            <textarea class = "inputbox" cols = "50" rows = "3" name = "description" id = "description" style = "width:500px" width = "500"><?php echo stripslashes($row->description); ?></textarea>
                         </td>
                     </tr>
 
@@ -508,7 +513,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                         </td>
 
                         <td>
-                            <textarea class = "inputbox" cols = "50" rows = "3" name = "headerdesc" id = "headerdesc" style = "width:500px" width = "500"><?php echo $row->headerdesc; ?></textarea>
+                            <textarea class = "inputbox" cols = "50" rows = "3" name = "headerdesc" id = "headerdesc" style = "width:500px" width = "500"><?php echo stripslashes($row->headerdesc); ?></textarea>
                         </td>
                     </tr>
             </table>
@@ -744,7 +749,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
 
                     <td align = "left" valign = "top"  width="25%" >
-                        <input type = "text" name = "cfg_board_title" value = "<?php echo $fbConfig->board_title; ?>"/>
+                        <input type = "text" name = "cfg_board_title" value = "<?php echo stripslashes($fbConfig->board_title); ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_BOARD_TITLE_DESC ?>
@@ -803,7 +808,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
 
                     <td align = "left" valign = "top" colspan = "2">
-                        <textarea name = "cfg_offline_message" rows = "3" cols = "50"><?php echo $fbConfig->offline_message; ?></textarea>
+                        <textarea name = "cfg_offline_message" rows = "3" cols = "50"><?php echo stripslashes($fbConfig->offline_message); ?></textarea>
                     </td>
                 </tr>
 
@@ -936,7 +941,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_newchar" value = "<?php echo $fbConfig->newchar;?>"/>
+                        <input type = "text" name = "cfg_newchar" value = "<?php echo stripslashes($fbConfig->newchar);?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_NEWCHAR_DESC ?>
@@ -1967,6 +1972,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     <td align = "left" valign = "top"><?php echo _KUNENA_FORUMPRRDESC ?>
                     </td>
                 </tr>
+
 			</table>
 			</fieldset>
 			<fieldset>
@@ -1982,35 +1988,6 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_PMS_DESC ?>
-                    </td>
-                </tr>
-</table>
-</fieldset>
-<fieldset>
-			<legend> <?php echo _COM_A_COMBUILDER_TITLE ?></legend>
-   <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
-
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _COM_A_COMBUILDER ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['cb_profile']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_COMBUILDER_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_COMBUILDER_PROFILE ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <a href = "index2.php?option=com_kunena&amp;task=loadCBprofile" style = "text-decoration:none;" title = "<?php echo _COM_A_COMBUILDER_PROFILE_DESC;?>"><?php echo _COM_A_COMBUILDER_PROFILE_CLICK ?></a>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_COMBUILDER_PROFILE_DESC ?>
                     </td>
                 </tr>
 </table>
@@ -2059,7 +2036,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                         //-->
             </script>
 
-            <input type = "button" class = "button" value = "<?php echo _COM_A_BOT_REFERENCE;?>" onClick = "openWin('components/com_kunena/fireboard_mosbot_help.php')">
+            <input type = "button" class = "button" value = "<?php echo _COM_A_BOT_REFERENCE;?>" onClick = "openWin('components/com_kunena/Kunena_mosbot_help.php')">
                     <!-- End Arno code test -->
                     </td>
                 </tr>
@@ -2468,11 +2445,7 @@ echo $pane->endPane();
 */
     }
 
-
-
-
    function showInstructions($database, $option, $lang) {
-
 ?>
 
     <table width = "100%" border = "0" cellpadding = "2" cellspacing = "2" class = "adminheading">
@@ -2497,7 +2470,6 @@ echo $pane->endPane();
     </table>
 
 <?php
-
     } //end function showInstructions
 
     function showCss($file, $option)
@@ -2648,7 +2620,7 @@ echo $pane->endPane();
                                 </td>
 
                                 <td width = "*">
-<?php echo $pl->signature; ?>&nbsp;
+<?php echo html_entity_decode_utf8(stripslashes($pl->signature)); ?>&nbsp;
                                 </td>
                             </tr>
 
@@ -2902,7 +2874,7 @@ echo $pane->endPane();
                                     onMouseOver = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);"
                                     onClick = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);"
                                     onKeyDown = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);"
-                                    onKeyUp = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);" cols = "50" type = "text" name = "message"><?php echo $signature; ?></textarea>
+                                    onKeyUp = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);" cols = "50" type = "text" name = "message"><?php echo html_entity_decode_utf8(stripslashes($signature)); ?></textarea>
 
                                 <br/>
 
@@ -2964,7 +2936,7 @@ echo $pane->endPane();
 <?php
 if ($avatar != '')
 {
-   echo '<img src="' . FB_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" ><br />';
+   echo '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" ><br />';
    echo '<input type="hidden" value="' . $avatar . '" name="avatar">';
 }
 else
@@ -3031,7 +3003,7 @@ else
 
                     <?php
                     //admins are always moderators
-                    if (FBTools::isModOrAdmin($uid))
+                    if (CKunenaTools::isModOrAdmin($uid))
                     {
                     echo _KUNENA_ISADM; ?> <input type = "hidden" name = "moderator" value = "1">
                     <?php
@@ -3079,7 +3051,7 @@ else
                     {
                         $k = 1 - $k;
                         echo "<tr class=\"row$k\">";
-                        echo "  <td>$enum: $sub->subject by $sub->name";
+                        echo "  <td>$enum: ".html_entity_decode_utf8(stripslashes($sub->subject))." by ".html_entity_decode_utf8(stripslashes($sub->name));
                         echo "  <td>&nbsp;</td>";
                         echo "</tr>";
                         $enum++;

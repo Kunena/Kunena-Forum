@@ -3,6 +3,12 @@
 * @version $Id: kunena.converter.class.php 104 2009-01-23 23:23:51Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2008 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -123,11 +129,11 @@ class fb_Converter {
 					if(!$this->silent) {
 						?>
 						<td>
-								<div id="id<?=$i;?>_<?=$batch;?>" onClick="javascript:showDetail(this);" style="cursor:pointer;">
-									<img id="id<?=$i;?>_<?=$batch;?>_img" src="images/expandall.png" border="0">
+								<div id="id<?php echo $i;?>_<?php echo $batch;?>" onClick="javascript:showDetail(this);" style="cursor:pointer;">
+									<img id="id<?php echo $i;?>_<?php echo $batch;?>_img" src="images/expandall.png" border="0">
 									Including file
 								</div>
-								<div id="id<?=$i;?>_<?=$batch;?>_details" style="display:None;" class="details"><?=$this->_error;?><pre><?=$include;?></pre></div>
+								<div id="id<?php echo $i;?>_<?php echo $batch;?>_details" style="display:None;" class="details"><?php echo $this->_error;?><pre><?php echo $include;?></pre></div>
 							</td>
 							<td width="20" valign="top"><img src="images/<?php echo $img;?>"></td>
 						</tr>
@@ -152,11 +158,11 @@ class fb_Converter {
 						?>
 						<tr>
 							<td>
-								<div id="id<?=$i;?>_<?=$batch;?>" onClick="javascript:showDetail(this);" style="cursor:pointer;">
-									<img id="id<?=$i;?>_<?=$batch;?>_img" src="images/expandall.png" border="0">
+								<div id="id<?php echo $i;?>_<?php echo $batch;?>" onClick="javascript:showDetail(this);" style="cursor:pointer;">
+									<img id="id<?php echo $i;?>_<?php echo $batch;?>_img" src="images/expandall.png" border="0">
 									Running SQL Query
 								</div>
-								<div id="id<?=$i;?>_<?=$batch;?>_details" style="display:None;" class="details"><?=$this->_error;?><pre><?=$database->_sql;?></pre></div>
+								<div id="id<?php echo $i;?>_<?php echo $batch;?>_details" style="display:None;" class="details"><?php echo $this->_error;?><pre><?php echo $database->_sql;?></pre></div>
 							</td>
 							<td width="20" valign="top"><img src="images/<?php echo $img;?>" border="0"></td>
 						</tr>
@@ -177,11 +183,11 @@ class fb_Converter {
 					if(!$this->silent) {
 						?>
 						<td>
-								<div id="id<?=$i;?>_<?=$batch;?>" onClick="javascript:showDetail(this);" style="cursor:pointer;">
-									<img id="id<?=$i;?>_<?=$batch;?>_img" src="images/expandall.png" border="0">
+								<div id="id<?php echo $i;?>_<?php echo $batch;?>" onClick="javascript:showDetail(this);" style="cursor:pointer;">
+									<img id="id<?php echo $i;?>_<?php echo $batch;?>_img" src="images/expandall.png" border="0">
 									Executing PHP Code
 								</div>
-								<div id="id<?=$i;?>_<?=$batch;?>_details" style="display:None;" class="details"><?=$this->_error;?><?php highlight_string( "<?php\n".$code."\n?>" );?></div>
+								<div id="id<?php echo $i;?>_<?php echo $batch;?>_details" style="display:None;" class="details"><?php echo $this->_error;?><?php highlight_string( "<?php\n".$code."\n?>" );?></div>
 							</td>
 							<td width="20" valign="top"><img src="images/<?php echo $img;?>" border="0"></td>
 						</tr>

@@ -3,7 +3,13 @@
  * @version $Id: kunena.install.php 250 2009-02-01 10:18:56Z mahagr $
  * Kunena Component
  * @package Kunena
- * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
+ *
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
+* @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.bestofjoomla.com
  *
@@ -15,6 +21,11 @@
 //
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
+
+// Help get past php timeouts if we made it that far
+// Joomla 1.5 installer can be very slow and this helps avoid timeouts
+set_time_limit(300);
+ini_set("memory_limit", "32M");
 
 // Kunena wide defines
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
@@ -151,8 +162,7 @@ function com_install() {
 			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/files
 			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/images
 </pre> a) You can copy the contents of _kunena.files.distribution under
-			components/com_kunena to your Joomla root, under images/ folder,
-			rename it to "fbfiles" and then chmod it to 777 (making it writable)
+			components/com_kunena to your Joomla root, under images/ folder.
 
 			<br />
 			b) If you already have the contents there, but Kunena installation
@@ -260,7 +270,6 @@ function dircopy($srcdir, $dstdir, $verbose = true) {
 
 	if (!is_dir($dstdir)) {
 		mkdir ($dstdir);
-		chmod ($dstdir, 0777);
 	}
 
 	if ($curdir = opendir($srcdir)) {

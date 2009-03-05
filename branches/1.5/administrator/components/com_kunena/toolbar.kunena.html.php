@@ -3,6 +3,12 @@
 * @version $Id: toolbar.fireboard.html.php 462 2007-12-10 00:05:53Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -17,7 +23,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 // ################################################################
-class TOOLBAR_simpleBoard
+class CKunenaToolbar
 {
     function _ADMIN()
     {
@@ -145,8 +151,8 @@ class TOOLBAR_simpleBoard
         JToolBarHelper::spacer();
         
     }
-		
-				function _SHOWSMILEY_MENU()
+
+	function _SHOWSMILEY_MENU()
     {
         
         JToolBarHelper::spacer();
@@ -179,8 +185,8 @@ class TOOLBAR_simpleBoard
         JToolBarHelper::cancel('showsmilies');
         
     }
-				
-				function _SHOWRANKS_MENU()
+
+	function _SHOWRANKS_MENU()
     {
         
         JToolBarHelper::spacer();
@@ -193,8 +199,8 @@ class TOOLBAR_simpleBoard
         JToolBarHelper::back();
         
     }
-				
-				function _EDITRANK_MENU()
+
+	function _EDITRANK_MENU()
     {
         
         JToolBarHelper::spacer();

@@ -3,6 +3,12 @@
 * @version $Id: fb_cpanel.php 526 2007-12-20 00:35:37Z miro_dietiker $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -131,12 +137,6 @@ table.fbstat .col2 {
           </div>
           <div style = "float:left;">
             <div class = "icon"> <a href = "http://www.kunena.com" target = "_blank" style = "text-decoration:none;" title = "<?php echo _COM_C_SUPPORTDESC;?>"> <img src = "components/com_kunena/images/fbtechsupport.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_SUPPORT; ?> </span></a> </div>
-          </div>
-          <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=loadSample" style = "text-decoration:none;" title = "<?php echo _COM_C_LOADSAMPLEDESC;?>"> <img src = "components/com_kunena/images/fbloadsample.png" align = "middle" border = "0"/> <span> <?php echo _COM_C_LOADSAMPLE; ?> </a> </div>
-          </div>
-          <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=removeSample" style = "text-decoration:none;" title = "<?php echo _COM_C_REMOVESAMPLEDESC;?>"> <img src = "components/com_kunena/images/fbremovesample.png" align = "middle" border = "0"/  onclick="return confirm('<?php echo _KUNENA_CONFIRM_REMOVESAMPLEDATA?>');"> <span> <?php echo _COM_C_REMOVESAMPLE; ?> </a> </div>
           </div>
           <div style = "float:left;">
             <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=showsmilies" style = "text-decoration:none;" title = "<?php echo _KUNENA_EMOTICONS_EDIT_SMILIES;?>"> <img src = "components/com_kunena/images/fbsmiley.png"  align = "middle" border = "0"/> <span> <?php echo _KUNENA_EMOTICONS_EDIT_SMILIES;?> </a> </div>

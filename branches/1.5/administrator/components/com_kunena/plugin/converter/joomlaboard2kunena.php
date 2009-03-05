@@ -3,6 +3,12 @@
 * @version $Id: joomlaboard2kunena.php 127 2009-01-24 08:49:58Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -30,5 +36,5 @@ if ($database->query()) {
 }
 
 // As a last step we recount all forum stats
-FBTools::reCountBoards();
+CKunenaTools::reCountBoards();
 ?>

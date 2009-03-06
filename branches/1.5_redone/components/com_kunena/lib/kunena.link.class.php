@@ -292,7 +292,7 @@ class CKunenaLink
 
         return $Output;
     }
-
+    
     function GetLatestPageAutoRedirectURL($fbConfig, $pid, $limit)
     {
         $database = &JFactory::getDBO();

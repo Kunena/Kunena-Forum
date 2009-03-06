@@ -410,7 +410,7 @@ class CKunenaTools {
 
     function reCountBoards() {
         $database = &JFactory::getDBO();
-        include_once (KUNENA_ABSSOURCESPATH . 'kunena.db.iterator.class.php');
+        include_once (KUNENA_PATH_LIB .DS. 'kunena.db.iterator.class.php');
 
         //reset all stats to 0
         $database->setQuery("UPDATE `#__fb_categories` SET `id_last_msg`='0',`time_last_msg`='0',`numTopics`='0',`numPosts`='0'");
@@ -741,7 +741,7 @@ class CKunenaTools {
 		    if (fb_has_moderator_permission($database, $newCatObj, $my->id, $isAdmin)) {
 
 		        $newSubject = _MOVED_TOPIC . " " . $oldRecord[0]->subject;
-		        $database->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE `thread`=" . $id);
+		        $database->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE thread=$id");
 		        $lastTimestamp = $database->loadResult();
 			check_dberror("Unable to load messages max(time).");
 
@@ -765,11 +765,6 @@ class CKunenaTools {
         CKunenaTools::reCountBoards();
 
         $mainframe->redirect( JURI::base() .$return, $err);
-        }
-
-        function isJoomla15()
-        {
-            return (defined('_JEXEC') && class_exists('JApplication'));
         }
 
 
@@ -919,8 +914,9 @@ class fbForum
     /**
     * @param database A database connector object
     */
-    function fbForum(&$database) {
-        $this->JTable('#__fb_categories', 'id', $database);
+    function __construct( &$database )
+	{
+		parent::__construct( '#__fb_categories', 'id', $database );
     }
 
 	// check for potential problems
@@ -1148,14 +1144,14 @@ function generate_smilies() {
             $col = 0;
             reset ($rowset);
 
-            if (file_exists(KUNENA_ABSPATH . '/template/default/plugin/emoticons/emoticons.js.php')) {
+            if (file_exists(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/emoticons/emoticons.js.php')) {
                 echo '<tr><td style="display:none;">';
-                include (KUNENA_ABSPATH . '/template/default/plugin/emoticons/emoticons.js.php');
+                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/emoticons/emoticons.js.php');
                 echo '</td></tr>';
                 reset ($rowset);
                 }
             else {
-                die ("file is missing: " . KUNENA_ABSPATH . '/template/default/plugin/emoticons/emoticons.js.php');
+                die ("file is missing: " . KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/emoticons/emoticons.js.php');
                 }
 
             $cur = 0;
@@ -1304,12 +1300,37 @@ function fbReturnDashed (&$string, $key) {
 }
 
 if (!function_exists('mb_detect_encoding')) {
-  // We're on an aged PHP version
   function mb_detect_encoding($text) {
-    return 'UTF-8';
+	$c=0; $b=0;
+	$bits=0;
+	$len=strlen($text);
+	for($i=0; $i<$len; $i++){
+		$c=ord($text[$i]);
+		if($c > 128){
+			if(($c >= 254)) return 'ISO-8859-1';
+			elseif($c >= 252) $bits=6;
+			elseif($c >= 248) $bits=5;
+			elseif($c >= 240) $bits=4;
+			elseif($c >= 224) $bits=3;
+			elseif($c >= 192) $bits=2;
+			else return 'ISO-8859-1';
+			if(($i+$bits) > $len) return 'ISO-8859-1';
+			while($bits > 1){
+				$i++;
+				$b=ord($text[$i]);
+				if($b < 128 || $b > 191) return 'ISO-8859-1';
+				$bits--;
+			}
+		}
+	}
+	return 'UTF-8';
   }
   function mb_convert_encoding($text,$target_encoding,$source_encoding) {
-    return $text;
+	return $text;
+  }
+  function mb_substr($str, $start, $lenght=NULL, $encoding=NULL) {
+	if ($lenght===NULL) $lenght = strlen($str);
+	return substr($str, $start, $lenght);
   }
 }
 

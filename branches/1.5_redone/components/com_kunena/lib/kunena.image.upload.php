@@ -92,7 +92,6 @@ if ($GLOBALS['KUNENA_rc'])
 {
     // file is OK, move it to the proper location
     move_uploaded_file($_FILES['attachimage']['tmp_name'], $imageLocation);
-    @chmod($imageLocation, 0777);
 }
 
 if ($GLOBALS['KUNENA_rc'])

@@ -306,7 +306,7 @@ if (count($threadids) > 0)
 									<?php if ($func!='mylatest') {?>
                                     <td class="fb_list_times_all">
 
-									<?php  $show_list_time = JRequest::getVar('sel', '');  ?>
+									<?php  $show_list_time = JRequest::getInt('sel', 720);  ?>
 									<select class="inputboxusl" onchange="document.location.href=this.options[this.selectedIndex].value;" size="1" name="select">
 									 <option <?php if ($show_list_time =='720') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest'); ?>"><?php echo _SHOW_MONTH ; ?></option>
 									  <option <?php if ($show_list_time =='0') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=0'); ?>"><?php echo _SHOW_LASTVISIT; ?></option>

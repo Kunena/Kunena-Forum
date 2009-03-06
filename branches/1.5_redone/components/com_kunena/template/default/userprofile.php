@@ -22,7 +22,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
-$rowItemid = JRequest::getVar('Itemid');
+$rowItemid = JRequest::getInt('Itemid');
 
 if ($my->id)
 {
@@ -519,15 +519,15 @@ if ($my->id)
     }
     else if ($do == "update")
     { //we update anything
-        $rowItemid = JRequest::getVar('Itemid');
-        $deleteAvatar = JRequest::getVar('deleteAvatar', 0);
-        $deleteSig = JRequest::getVar('deleteSig', 0);
-        $unsubscribeAll = JRequest::getVar('unsubscribeAll', 0);
-        $unfavoriteAll = JRequest::getVar('unfavoriteAll', 0);
+        $rowItemid = JRequest::getInt('Itemid');
+        $deleteAvatar = JRequest::getInt('deleteAvatar', 0);
+        $deleteSig = JRequest::getInt('deleteSig', 0);
+        $unsubscribeAll = JRequest::getInt('unsubscribeAll', 0);
+        $unfavoriteAll = JRequest::getInt('unfavoriteAll', 0);
         $signature = JRequest::getVar('message', '');
         $newview = JRequest::getVar('newview', 'flat');
         $avatar = JRequest::getVar('avatar', '');
-        (int)$neworder = JRequest::getVar('neworder', 0);
+        (int)$neworder = JRequest::getInt('neworder', 0);
 
         if ($deleteSig == 1) {
         	$signature = "";

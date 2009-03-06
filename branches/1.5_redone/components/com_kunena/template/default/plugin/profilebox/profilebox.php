@@ -27,7 +27,7 @@ $my = &JFactory::getUser();
 $database = &JFactory::getDBO();
 //first we gather some information about this person
 $database->setQuery("SELECT su.view, u.name, su.moderator,su.avatar FROM #__fb_users as su"
-                    . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$my->id}");
+                    . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$my->id} LIMIT 1");
 
 $_user = $database->loadObject();
 

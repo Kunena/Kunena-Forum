@@ -46,8 +46,8 @@ $acl = &JFactory::getACL();
 $editmode = 0;
 // $message=JRequest::getVar('message','',1); // For some reason this just doesn't work like it should
 // FIXME: J!1.5
-$message = JRequest::getVar("message", null, _MOS_ALLOWRAW);
-$resubject = JRequest::getVar("resubject", null);
+$message = JRequest::getVar("message", '', _MOS_ALLOWRAW);
+$resubject = JRequest::getVar("resubject", '');
 
 // Begin captcha
 if ($fbConfig->captcha == 1 && $my->id < 1) {
@@ -337,7 +337,7 @@ $catName = $objCatInfo->name;
                                             $mailmessage = smile::purify($message);
                                             $database->setQuery("SELECT * FROM #__fb_subscriptions AS a"
                                             . "\n LEFT JOIN #__users as u ON a.userid=u.id "
-                                            . "\n WHERE a.thread= {$querythread}");
+                                            . "\n WHERE u.block=0 AND a.thread= {$querythread}");
 
                                             $subsList = $database->loadObjectList();
                                             	check_dberror("Unable to load subscriptions.");
@@ -346,16 +346,15 @@ $catName = $objCatInfo->name;
                                             {                                                     //we got more than 0 subscriptions
                                                 require_once (KUNENA_PATH_LIB .DS. 'kunena.mail.php'); // include fbMail class for mailing
 
-						$_catobj = new jbCategory($database, $catid);
+												$_catobj = new jbCategory($database, $catid);
                                                 foreach ($subsList as $subs)
                                                 {
 							//check for permission
 							if ($subs->id) {
 								$_arogrp = $acl->getAroGroup($subs->id);
-								if ($_arogrp and CKunenaTools::isJoomla15()) $_arogrp->group_id = $_arogrp->id;
-									$_isadm = (strtolower($_arogrp->name) == 'super administrator' || strtolower($_arogrp->name) == 'administrator');
-								} else
-									$_arogrp = $_isadm = 0;
+								$_arogrp->group_id = $_arogrp->id;
+								$_isadm = (strtolower($_arogrp->name) == 'super administrator' || strtolower($_arogrp->name) == 'administrator');
+								
 								if (!fb_has_moderator_permission($database, $_catobj, $subs->id, $_isadm)) {
 									$allow_forum = array();
 									if (!fb_has_read_permission($_catobj, $allow_forum, $_arogrp->group_id, $acl)) {
@@ -405,7 +404,7 @@ $catName = $objCatInfo->name;
                                                 $sql .= "\n ON a.userid=u.id";
                                                 $sql .= "\n  AND a.catid=$catid";
                                             }
-                                            $sql .= "\n WHERE 1=1";
+                                            $sql .= "\n WHERE u.block=0";
                                             $sql .= "\n AND (";
                                             // helper for OR condition
                                             $sql2 = '';
@@ -433,7 +432,7 @@ $catName = $objCatInfo->name;
 
                                                     $mailsubject = "[".stripslashes($board_title)." "._GEN_FORUM."] " . stripslashes($messagesubject) . " (" . stripslashes($catName) . ")";
 
-                                                    $msg = "$subs->name,\n\n";
+                                                    $msg = "$mods->name,\n\n";
                                                     $msg .= trim($_COM_A_NOT_MOD1)." ".stripslashes($board_title)." ".trim(_GEN_FORUM)."\n\n";
                                                     $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
 						    $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
@@ -1037,7 +1036,7 @@ $catName = $objCatInfo->name;
                 {
                     $catid = (int)$catid;
                     $id = (int)$id;
-                    $bool_leaveGhost = (int)JRequest::getVar('leaveGhost', 0);
+                    $bool_leaveGhost = JRequest::getInt('leaveGhost', 0);
                     //get the some details from the original post for later
                     $database->setQuery("SELECT `subject`, `catid`, `time` AS timestamp FROM #__fb_messages WHERE `id`='$id'");
                     $oldRecord = $database->loadObjectList();
@@ -1158,9 +1157,9 @@ $catName = $objCatInfo->name;
 
                     $catid = (int)$catid;
                     $id = (int)$id;
-                    $target = (int)JRequest::getVar('threadid', 0);
-                    $how = (int)JRequest::getVar('how', 0);
-                    $bool_leaveGhost = (int)JRequest::getVar('leaveGhost', 0);
+                    $target = JRequest::getInt('threadid', 0);
+                    $how = JRequest::getInt('how', 0);
+                    $bool_leaveGhost = JRequest::getInt('leaveGhost', 0);
 
 
                     switch ($how)
@@ -1410,10 +1409,10 @@ $catName = $objCatInfo->name;
                     }
 
                     $catid = (int)$catid;
-                    $id = (int)JRequest::getVar('id', 0);
-                    $to_split = JRequest::getVar('to_split', 0);
-                    $how = (int)JRequest::getVar('how', 0);
-                    $new_topic = (int)JRequest::getVar('to_topic', 0);
+                    $id = JRequest::getInt('id', 0);
+                    $to_split = JRequest::getInt('to_split', 0);
+                    $how = JRequest::getInt('how', 0);
+                    $new_topic = JRequest::getInt('to_topic', 0);
                     $topic_change = 0;
 
                     if (!$to_split)
@@ -2028,6 +2027,7 @@ function listThreadHistory($id, $fbConfig, $database)
                 <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump) {
+                    require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 }
                 ?>
             </th>

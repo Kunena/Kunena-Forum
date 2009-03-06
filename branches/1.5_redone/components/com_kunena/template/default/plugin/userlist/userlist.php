@@ -162,7 +162,7 @@ class HTML_userlist_content
                                 </td>
 
                                 <td align = "right">
-                                    <form name = "usrlform" method = "post" action = "<?php echo JRoute::_("$base_url"); ?>" onsubmit = "return validate()">
+                                    <form name = "usrlform" method = "post" action = "<?php echo sefRelToAbs("$base_url"); ?>" onsubmit = "return validate()">
                                         <input type = "text"
                                             name = "search"
                                             class = "inputbox"

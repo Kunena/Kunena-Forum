@@ -550,20 +550,12 @@ if ($letPass || $is_Moderator)
 								$metaKeys=(htmlspecialchars(stripslashes($fmessage->subject)). ', ' .htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . htmlspecialchars(stripslashes($fbConfig->board_title)) . ', ' . htmlspecialchars($GLOBALS['mosConfig_sitename']));
 								$metaDesc=(htmlspecialchars(stripslashes($fmessage->subject)) . ' - ' .htmlspecialchars(stripslashes($objCatParentInfo->name)) . ' - ' . htmlspecialchars(stripslashes($objCatInfo->name)) .' - ' . htmlspecialchars(stripslashes($fbConfig->board_title)));
 
-								if( CKunenaTools::isJoomla15() )
-								{
-								    $document =& JFactory::getDocument();
-								    $cur = $document->get( 'description' );
-								    $metaDesc = $cur .'. ' . $metaDesc;
-								    $document =& JFactory::getDocument();
-								    $document->setMetadata( 'keywords', $metaKeys );
-								    $document->setDescription($metaDesc);
-								}
-								else
-								{
-								    $mainframe->appendMetaTag( 'keywords', $metaKeys );
-								    $mainframe->appendMetaTag( 'description', $metaDesc );
-								}
+							    $document =& JFactory::getDocument();
+							    $cur = $document->get( 'description' );
+							    $metaDesc = $cur .'. ' . $metaDesc;
+							    $document =& JFactory::getDocument();
+							    $document->setMetadata( 'keywords', $metaKeys );
+							    $document->setDescription($metaDesc);
 
                                 //filter out clear html
                                 $fmessage->name = htmlspecialchars($fmessage->name);

@@ -448,7 +448,7 @@ else
 
 function showChildren($category, $prefix = "", &$allow_forum)
 {
-    $database = &JFactory::getDBO();
+    $database =& JFactory::getDBO();
     $database->setQuery("SELECT id, name, parent FROM #__fb_categories WHERE parent='$category'  and published='1' order by ordering");
     $forums = $database->loadObjectList();
     	check_dberror("Unable to load categories.");

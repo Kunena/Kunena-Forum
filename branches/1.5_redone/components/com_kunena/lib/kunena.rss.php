@@ -151,11 +151,6 @@ echo "<?xml version=\"1.0\" encoding=\"" . $encoding[1] . "\"?>\n";
             echo "            <title>" . _GEN_SUBJECT . ": " . stripslashes(htmlspecialchars($row->subject)) . " - " . _GEN_BY . ": " . stripslashes(htmlspecialchars($row->lastpostname)) . "</title>" . "\n";
             echo "            <link>";
             $itemlink = CKunenaLink::GetThreadPageURL($fbConfig, 'view', $row->catid, $row->thread, ceil($row->numberposts / $fbConfig->messages_per_page), $fbConfig->messages_per_page, $row->lastpostid);
-            if (!CKunenaTools::isJoomla15())
-            {
-            	// On legacy Joomla we need to encode the link or the RSS XML would break
-            	htmlspecialchars($itemlink);
-            }
             echo $itemlink;
             echo "</link>\n";
             $words = $row->lastpostmessage;

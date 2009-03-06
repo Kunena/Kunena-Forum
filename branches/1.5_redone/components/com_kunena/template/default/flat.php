@@ -496,8 +496,7 @@ if (count($messages[0]) > 0)
 </div>
 <?php
 }
-else
-{
+else {
     echo "<p align=\"center\">" . _VIEW_NO_POSTS . "</p>";
 }
 ?>

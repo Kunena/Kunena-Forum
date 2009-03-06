@@ -155,7 +155,7 @@ abstract class CKunenaConfigBase
     //
     // Load config settings from database table
     //
-    public function load($silent=false)
+    public function load($KunenaUser=null)
     {
         $this->_db->setQuery("SELECT * FROM #__".$this->GetConfigTableName());
         

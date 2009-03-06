@@ -33,7 +33,7 @@ Legend:
 Kunena 1.5.0
 
 6-March-2009 Matias
-
+# [#15378] Merge new changes from branch 1.5 to a tree with history (frontend)
 # [#15378] Merge latest revision from Branch 1.0 back into 1.5 (reverse merge)
 
 25-February-2009 fxstein
@@ -43,6 +43,25 @@ Kunena 1.5.0
 # Various syntax errors after initial port fixed
 
 Kunena 1.0.9
+
+22-February-2009 Matias
+# [#15157] Empty messages in Joomla 1.0 part 2
+# [#15170] Add backward compability to FB 1.0.5: Same meaning for 0 in latestcategory
+
+21-February-2009 Matias
+# [#15157] Empty messages in Joomla 1.0
+# [#15162] Two same smileys in a row do not work
+# [#15163] Fetch Kunena template from Joomla theme fails with warnings
+
+20-Februray-2009 fxstein
+# [#15151] Ensure fbConfig is array during legacy config file write - Thx JoniJnm!
+
+20-February-2009 Matias
+# [#15148] Post emails for moderators: name missing
+# [#15150] Don't send email to banned users
+
+19-Februray-2009 fxstein
+# Incorrect permissions handling fixed
 
 19-Februray-2009 Matias
 # Search: Fixed SEF/no SEF issues. Pagination and links should now work for all

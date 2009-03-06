@@ -183,7 +183,6 @@ $tree = thread_flat($tree, $messages);
                         $newURL .= '&amp;id=' . $leaf->id . $viewstr . '&amp;catid=' . $catid;
 
                     $newURL = JRoute::_($newURL);
-                    //JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;id='.$leaf->id.$viewstr.'&amp;catid='.$catid);
                     ?>
 
                     <td<?php echo $leaf->id == $id ? " class=\"".$boardclass."sectiontableentry2\"" : ""; ?>>

@@ -22,6 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+
 global $fbConfig;
 
 $mainframe->setPageTitle(_GEN_RULES . ' - ' . stripslashes($fbConfig->board_title));

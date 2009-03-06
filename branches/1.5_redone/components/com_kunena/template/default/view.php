@@ -188,7 +188,7 @@ if ($letPass || $is_Moderator)
                 $limitstart = 0;
             }
 
-            $limitstart = intval(JRequest::getVar('limitstart', $limitstart));
+            $limitstart = intval(JRequest::getVar('limitstarttask', $limitstart, $HASH = "REQUEST"));
             $total = count($flat_messages);
 
             if ($total > $limit)
@@ -343,7 +343,7 @@ if ($letPass || $is_Moderator)
 
                                 <?php
                                 // TODO: fxstein - Need to perform SEO cleanup
-                                echo $pageNav->getPagesLinks( KUNENA_LIVEURLREL."&amp;func=view&amp;id=$id&amp;catid=$catid");
+                                echo $pageNav->getPagesLinks( JRoute::_(KUNENA_LIVEURLREL."&amp;func=view&amp;id=$id&amp;catid=$catid"));
                                 ?>
 
                                 </li>
@@ -437,22 +437,6 @@ if ($letPass || $is_Moderator)
                                 else {
                                     $fb_thread = $fmessage->thread;
                                 }
-                                //Joomla Mambot Support , Thanks hacksider
-                                if ($fbConfig->jmambot)
-                                {
-                                    $row = new t();
-                                    $row->text = $fb_message_txt;
-				    $group = "content";
-                                    JPluginHelper::importPlugin($group, null, false);
-                                    $params =& new JParameter( '' );
-                                    $results = $mainframe->triggerEvent( 'onPrepareContent', array( &$row, &$params, 0 ), true );
-                                    $msg_text = $row->text;
-                                }
-                                else
-                                {
-                                    $msg_text = $fb_message_txt;
-                                }
-                                /* Fininsh Joomla Mambot Support */
 
                                 //meta description and keywords
 								$metaKeys=(htmlspecialchars(stripslashes($fmessage->subject)). ', ' .htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . htmlspecialchars(stripslashes($fbConfig->board_title)) . ', ' . htmlspecialchars($GLOBALS['mosConfig_sitename']));

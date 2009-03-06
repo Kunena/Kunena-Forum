@@ -179,7 +179,7 @@ if ($my->id != "" && $my->id != 0)
                 case "updateavatar":
                     $rowItemid = JRequest::getVar('Itemid');
 
-                    $deleteAvatar = JRequest::getVar('deleteAvatar', 0);
+                    $deleteAvatar = JRequest::getInt('deleteAvatar', 0);
                     $avatar = JRequest::getVar('avatar', '');
 
                     if ($deleteAvatar == 1)
@@ -218,13 +218,13 @@ if ($my->id != "" && $my->id != 0)
                     break;
 
                 case "updateset":
-                    $rowItemid = JRequest::getVar('Itemid');
+                    $rowItemid = JRequest::getInt('Itemid');
 
 //                    $newview = JRequest::getVar('newview', 'flat');
                     $newview = 'flat';
-                    (int)$neworder = JRequest::getVar('neworder', 0);
-					(int)$newhideEmail = JRequest::getVar('newhideEmail', 1);
-					(int)$newshowOnline = JRequest::getVar('newshowOnline', 1);
+                    (int)$neworder = JRequest::getInt('neworder', 0);
+					(int)$newhideEmail = JRequest::getInt('newhideEmail', 1);
+					(int)$newshowOnline = JRequest::getInt('newshowOnline', 1);
 
                     $database->setQuery("UPDATE #__fb_users set  view='$newview', ordering='$neworder', hideEmail='$newhideEmail', showOnline='$newshowOnline'  where userid=$my_id");
                     setcookie("fboard_settings[current_view]", $newview);
@@ -337,8 +337,8 @@ if ($my->id != "" && $my->id != 0)
                 case "showsub":
                     $pageperlistlm = 15;
 
-                    $limit = intval(trim(JRequest::getVar('limit', $pageperlistlm)));
-                    $limitstart = intval(trim(JRequest::getVar('limitstart', 0)));
+                    $limit = JRequest::getInt('limit', $pageperlistlm);
+                    $limitstart = JRequest::getInt('limitstart', 0);
 
                     $query = "select thread from #__fb_subscriptions where userid=$my->id";
                     $database->setQuery($query);
@@ -371,8 +371,8 @@ if ($my->id != "" && $my->id != 0)
                 case "showfav":
                     $pageperlistlm = 15;
 
-                    $limit = intval(trim(JRequest::getVar('limit', $pageperlistlm)));
-                    $limitstart = intval(trim(JRequest::getVar('limitstart', 0)));
+                    $limit = JRequest::getInt('limit', $pageperlistlm);
+                    $limitstart = JRequest::getInt('limitstart', 0);
 
                     $query = "select thread from #__fb_favorites where userid=$my->id";
                     $database->setQuery($query);
@@ -568,8 +568,7 @@ if ($my->id != "" && $my->id != 0)
 
                     require_once (JPATH_ROOT . '/administrator/components/com_users/users.class.php');
 
-                    $row = new JUser($database);
-                    $row->load((int)$my->id);
+                    $row = new JUser($my->id);
                     $row->orig_password = $row->password;
 
                     $row->name = trim($row->name);
@@ -591,7 +590,7 @@ if ($my->id != "" && $my->id != 0)
                     break;
 
                 case "usersave":
-                    $user_id = intval(JRequest::getVar('id', 0));
+                    $user_id = JRequest::getInt('id', 0);
 
                     $uid = $my->id;
 

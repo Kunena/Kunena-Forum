@@ -3,6 +3,12 @@
 * @version $Id: fireboard.php 1070 2008-10-06 08:11:18Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -130,7 +136,7 @@ if ($func == "getpreview") {
         include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
     }
 
-    $message = utf8_urldecode(utf8_decode($msgpreview));
+    $message = utf8_urldecode(utf8_decode(stripslashes($msgpreview)));
 
     $msgbody = smile::smileReplace( $message , 0, $fbConfig->disemoticons, $smileyList);
     $msgbody = nl2br($msgbody);
@@ -252,7 +258,7 @@ if ($func == '') // Set default start page as per config settings
 // Include the Community Builder language file if necessary and set CB itemid value
 $cbitemid = 0;
 
-if ($fbConfig->cb_profile)
+if ($fbConfig->fb_profile == 'cb')
 {
     // $cbitemid = JBgetCBprofileItemid();
     // Include CB language files
@@ -294,7 +300,7 @@ if ($fbConfig->regonly && !$my_id)
 // or if the board is offline
 else if ($fbConfig->board_offline && !$is_admin)
 {
-    echo $fbConfig->offline_message;
+    echo stripslashes($fbConfig->offline_message);
 }
 else
 {
@@ -348,7 +354,6 @@ else
 		if ($markaction == "allread") {
 			$fbSession->lasttime = $fbSessionUpd->lasttime = $systime;
 			$fbSession->readtopics = $fbSessionUpd->readtopics = '';
-			echo "<script> alert('" . _GEN_ALL_MARKED . "'); window.location='" . JRoute::_(KUNENA_LIVEURLREL) . "';</script>\n";
 		} elseif ($fbSessionTimeOut) {
 			$fbSession->lasttime = $fbSessionUpd->lasttime = $fbSession->currvisit;
 			$fbSession->readtopics = $fbSessionUpd->readtopics = '';
@@ -356,7 +361,7 @@ else
 
 		// get all accessaible forums if needed (eg on forum modification, new session)
 		if (!$fbSession->allowed or $fbSession->allowed == 'na' or $fbSessionTimeOut) {
-			$allow_forums = FBTools::getAllowedForums($my_id, $aro_group->group_id, $acl);
+			$allow_forums = CKunenaTools::getAllowedForums($my_id, $aro_group->group_id, $acl);
 			if (!$allow_forums) $allow_forums = '0';
 			if ($allow_forums <> $fbSession->allowed)
 				$fbSession->allowed = $fbSessionUpd->allowed = $allow_forums;
@@ -375,6 +380,10 @@ else
 		}
 		unset($fbSessionUpd);
 
+		if ($markaction == "allread") {
+		        mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _GEN_ALL_MARKED);
+		}
+
 		// Now lets get the view type for the forum
 		$database->setQuery("select view from #__fb_users where userid=$my_id");
 		$prefview = $database->loadResult();
@@ -384,31 +393,18 @@ else
 		// who does not yet have a Kunena profile -> lets create one
 		if ($prefview == "")
 		{
-			//assume there's no profile; set userid and the default view type as preferred view type.
 			$prefview = $fbConfig->default_view;
 
-			$database->setQuery("insert into #__fb_users (userid,view,moderator) values ('$my_id','$prefview','$is_admin')");
-			$database->query();
-				check_dberror('Unable to create user profile.');
-
-			// If Cummunity Builder is enabled, lets make sure we update the view preference
-			if ($fbConfig->cb_profile)
+			$database->setQuery("SELECT count(*) FROM #__fb_users WHERE userid=$my_id");
+			$userexists = $database->loadResult();
+			check_dberror('Unable load default view type for user.');
+			if (!$userexists)
 			{
-		        $cbprefview = $prefview = "flat"; //= "threaded" ? "_UE_KUNENA_VIEWTYPE_THREADED" : "_UE_KUNENA_VIEWTYPE_FLAT";
-
-				$database->setQuery("update #__comprofiler set fbviewtype='$cbprefview' where user_id='$my_id'");
+				// there's no profile; set userid and the default view type as preferred view type.
+				$database->setQuery("insert into #__fb_users (userid,view,moderator) values ('$my_id','$prefview','$is_admin')");
 				$database->query();
-					check_dberror('Unable to update Community Builder profile.');
+					check_dberror('Unable to create user profile.');
 			}
-		}
-		// If its not a new profile check if we have Community Builder enabled and read from there
-		else if ($fbConfig->cb_profile)
-		{
-			$database->setQuery("select fbviewtype from #__comprofiler where user_id='$my_id'");
-			$fbviewtype = $database->loadResult();
-				check_dberror('Unable load default view type for user from Community Builder.');
-
-			$prefview = $fbviewtype = "flat"; //= "_UE_KUNENA_VIEWTYPE_THREADED" ? "threaded" : "flat";
 		}
 		// Only reset the view if we have determined above that we need to
 		// Without that test the user would not be able to make intra session
@@ -434,6 +430,7 @@ else
 		// For guests we don't show new posts
 		$prevCheck = $systime;
 	}
+
 	// no access to categories?
 	if (!$fbSession->allowed) $fbSession->allowed = '0';
 
@@ -511,9 +508,9 @@ else
 
     // display header
     $KunenaTemplate->addVar('kunena-header', 'menu', $fbMenu);
-    $KunenaTemplate->addVar('kunena-header', 'board_title', $board_title);
+    $KunenaTemplate->addVar('kunena-header', 'board_title', stripslashes($board_title));
     $KunenaTemplate->addVar('kunena-header', 'css_path', KUNENA_DIRECTURL . '/template/' . $fbConfig->template . '/forum.css');
-    $KunenaTemplate->addVar('kunena-header', 'offline_message', $fbConfig->board_offline ? '<span id="fbOffline">' . _FORUM_IS_OFFLINE . '</span>' : '');
+    $KunenaTemplate->addVar('kunena-header', 'offline_message', stripslashes($fbConfig->board_offline ? '<span id="fbOffline">' . _FORUM_IS_OFFLINE . '</span>' : ''));
     $KunenaTemplate->addVar('kunena-header', 'searchbox', getSearchBox());
     $KunenaTemplate->addVar('kunena-header', 'pb_imgswitchurl', KUNENA_URLIMAGESPATH . "shrink.gif");
 
@@ -768,8 +765,8 @@ else
 
             $searchword = JRequest::getVar( 'searchword', '');
 
-            $obj_KUNENA_search = &new jbSearch($database, $searchword, $my_id, $limitstart, $fbConfig->messages_per_page_search);
-            $obj_KUNENA_search->show();
+            $KunenaSearch = &new CKunenaSearch($database, $searchword, $my_id, $limitstart, $fbConfig->messages_per_page_search);
+            $KunenaSearch->show();
             break;
 
         //needs work ... still in progress
@@ -819,7 +816,7 @@ else
             $database->query();
             	check_dberror('Unable to update readtopics in session table.');
 
-            echo "<script> alert('" . _GEN_FORUM_MARKED . "'); window.history.go(-1); </script>\n";
+            mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid)), _GEN_FORUM_MARKED);
             break;
 
         #########################################################################################
@@ -833,12 +830,12 @@ else
             switch ($do)
             {
                 case "bulkDel":
-                    FBTools::fbDeletePosts( $is_Moderator, $return);
+                    CKunenaTools::fbDeletePosts( $is_Moderator, $return);
 
                     break;
 
                 case "bulkMove":
-                    FBTools::fbMovePosts($catid, $is_Moderator, $return);
+                    CKunenaTools::fbMovePosts($catid, $is_Moderator, $return);
                     break;
             }
 
@@ -864,7 +861,7 @@ else
                     }
 
                 // check that template exists in case it was deleted
-                if (file_exists($mosConfig_absolute_path . '/components/com_kunena/template/' . $fb_change_template . '/forum.css'))
+                if (file_exists($mosConfig_absolute_path . '/components/com_kunena/template/' . $fb_change_template . '/kunena.forum.css'))
                 {
                     $lifetime = 60 * 10;
                     $fb_current_template = $fb_change_template;
@@ -918,14 +915,22 @@ else
     } //hctiws
 
     // Bottom Module
+    if (mosCountModules('kunena_bottom'))
+    {
 ?>
 
         <div class = "bof-bottom-modul">
-<jdoc:include type="modules" name="fb_bottom" />
+            <?php
+               	$document	= &JFactory::getDocument();
+            	$renderer	= $document->loadRenderer('modules');
+            	$options	= array('style' => 'xhtml');
+            	$position	= 'kunena_bottom';
+            	echo $renderer->render($position, $options, null);
+            ?>
         </div>
 
 <?php
-
+    }
 
     // Credits
     echo '<div class="fb_credits"> ' . CKunenaLink::GetTeamCreditsLink($catid, _KUNENA_POWEREDBY) . ' ' . CKunenaLink::GetCreditsLink();

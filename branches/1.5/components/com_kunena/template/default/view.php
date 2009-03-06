@@ -1,8 +1,14 @@
 <?php
 /**
-* @version $Id: view.php 1073 2008-10-09 20:10:29Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* @version $Id: view.php 471 2009-02-21 21:35:40Z mahagr $
+* Kunena Component
+* @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -70,7 +76,7 @@ $database = &JFactory::getDBO();
 
     //Do user identification based upon the ACL
     $letPass = 0;
-    $letPass = kunena_authentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $acl);
+    $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $acl);
 }
 
 $topicLock = 0;
@@ -90,7 +96,7 @@ if ($letPass || $is_Moderator)
     $topicLock = $this_message->locked;
 
     if (count($this_message) < 1) {
-        echo '<p align="center">' . _MODERATION_INVALID_ID . '</p>\n';
+        echo '<p align="center">' . _MODERATION_INVALID_ID . '</p>';
     }
     else
     {
@@ -113,7 +119,7 @@ if ($letPass || $is_Moderator)
         	$replyPage = $replyCount > $fbConfig->messages_per_page ? ceil($replyCount / $fbConfig->messages_per_page) : 1;
 
         	header("HTTP/1.1 301 Moved Permanently");
-        	header("Location: " . fb_link::GetThreadPageURL('view', $this_message->catid, $thread, $replyPage, $fbConfig->messages_per_page, $this_message->id) );
+        	header("Location: " . htmlspecialchars_decode(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $this_message->catid, $thread, $replyPage, $fbConfig->messages_per_page, $this_message->id)));
 
         	die();
         }
@@ -151,31 +157,14 @@ $my = &JFactory::getUser();
         // changed to 0 to fix the missing post when the thread splits over multiple pages
         $i = 0;
 
-        if ($fbConfig->cb_profile && $my->id != 0)
-        {
-            $database->setQuery("SELECT fbordering from #__comprofiler where user_id=$my->id");
-            $fbordering = $database->loadResult();
+        $ordering = ($fbConfig->default_sort == 'desc' ? 'desc' : 'asc'); // Just to make sure only valid options make it
 
-            if ($fbordering == "_UE_KUNENA_ORDERING_OLDEST") {
-                $orderingNum = 0;
-            }
-            else {
-                $orderingNum = 1;
-            }
-        }
-        else
-        {
-            $database->setQuery("SELECT ordering from #__fb_users where userid=$my->id");
-            $orderingNum = $database->loadResult();
-        }
+        // Get messages of current thread
+        $database->setQuery("(SELECT * FROM #__fb_messages AS a "
+           ."\n LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.id='$thread' AND a.hold=0 AND a.catid='$catid') UNION (SELECT * FROM #__fb_messages AS a "
+           ."\n LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.thread='$thread' AND a.hold=0 AND a.catid='$catid') ORDER BY time $ordering");
 
-        $ordering = $orderingNum ? 'DESC' : 'ASC';
-        // Advanced moderator merge-split sort order for merged threads
-        $database->setQuery("SELECT * FROM #__fb_messages AS a "
-           ."\n LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE (a.thread='$thread' OR a.id='$thread') AND a.hold=0 AND a.catid='$catid' ORDER BY a.time $ordering");
-
-        if ($view != "flat")
-        $flat_messages[] = $this_message;
+        if ($view != "flat") $flat_messages[] = $this_message;
 
         foreach ($database->loadObjectList()as $message)
         {
@@ -192,6 +181,11 @@ $my = &JFactory::getUser();
             else {
                 $messages[$message->parent][] = $message;
             }
+        }
+
+        if ($ordering=='desc')
+        {
+            $idmatch = $i - $idmatch;
         }
 
         if ($view == "flat")
@@ -278,14 +272,14 @@ $my = &JFactory::getUser();
                 require_once (KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
             }
             else {
-                require_once (KUNENA_COMP_F . '/template/default/fb_pathway.php');
+                require_once (KUNENA_ABSPATH . '/template/default/fb_pathway.php');
             }
             ?>
         </div>
-        <?php if($objCatInfo->headerdesc) { ?>
-        <div class="headerdesc"><?php echo $objCatInfo->headerdesc; ?></div>
-        <?php } ?>
         <!-- top nav -->
+        <?php if($objCatInfo->headerdesc) { ?>
+        <div class="fb_forum-headerdesc"><?php echo stripslashes($objCatInfo->headerdesc); ?></div>
+        <?php } ?>
         <table border = "0" cellspacing = "0" class = "jr-topnav" cellpadding = "0" width="100%">
             <tr>
                 <td class = "jr-topnav-left">
@@ -338,10 +332,12 @@ $my = &JFactory::getUser();
                     $database->setQuery("SELECT COUNT(*) FROM #__fb_favorites where thread='$thread'");
                     $fb_totalfavorited = $database->loadResult();
 
+                    if ($fb_totalfavorited) {
                     echo '<span class="fb_totalfavorite">';
                     echo _KUNENA_TOTALFAVORITE;
                     echo $fb_totalfavorited;
                     echo '</span>';
+                    }
                     ?>
                 <!-- Finish: Total Favorite -->
                 </td>
@@ -392,7 +388,7 @@ $my = &JFactory::getUser();
                                 include (KUNENA_ABSTMPLTPATH . '/plugin/forumtools/forumtools.php');
                             }
                             else {
-                                include (KUNENA_COMP_F . '/template/default/plugin/forumtools/forumtools.php');
+                                include (KUNENA_ABSPATH . '/template/default/plugin/forumtools/forumtools.php');
                             }
 
                             //(JJ) FINISH: RECENT POSTS
@@ -454,33 +450,10 @@ $my = &JFactory::getUser();
                                 else {
                                     $fb_thread = $fmessage->thread;
                                 }
-                                //Joomla Mambot Support , Thanks hacksider
-                                if ($fbConfig->jmambot)
-                                {
-                                    global $_MAMBOTS;
-                                    $row = new t();
-                                    $row->text = $fb_message_txt;
-									$group = "content";
-                                    JPluginHelper::importPlugin($group, null, false);
-                                    $params =& new JParameter( '' );
-                                    $results = $mainframe->triggerEvent( 'onPrepareContent', array( &$row, &$params, 0 ), true );
-                                    $msg_text = $row->text;
-                                }
-                                else
-                                {
-                                    $msg_text = $fb_message_txt;
-                                }
-                                /* Fininsh Joomla Mambot Support */
-
-                                //set page title
-                                if ($leaf->parent == 0)
-                                {
-                                    $mainframe->setPageTitle(stripslashes($fmessage->subject) . ' - ' . $fbConfig->board_title);
-                                }
 
                                 //meta description and keywords
-								$metaKeys=($fmessage->subject. ', ' .$objCatParentInfo->name . ', ' . $fbConfig->board_title . ', ' . $GLOBALS['mosConfig_sitename']);
-								$metaDesc=($fmessage->subject . ' - ' .$objCatParentInfo->name . ' - ' . $objCatInfo->name .' - ' . $fbConfig->board_title);
+								$metaKeys=(htmlspecialchars(stripslashes($fmessage->subject)). ', ' .htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . htmlspecialchars(stripslashes($fbConfig->board_title)) . ', ' . htmlspecialchars($GLOBALS['mosConfig_sitename']));
+								$metaDesc=(htmlspecialchars(stripslashes($fmessage->subject)) . ' - ' .htmlspecialchars(stripslashes($objCatParentInfo->name)) . ' - ' . htmlspecialchars(stripslashes($objCatInfo->name)) .' - ' . htmlspecialchars(stripslashes($fbConfig->board_title)));
 
 
 								    $document =& JFactory::getDocument();
@@ -517,16 +490,22 @@ $my = &JFactory::getUser();
 
                                 $msg_id = $fmessage->id;
                                 $lists["userid"] = $fmessage->userid;
-                                $msg_username = $fmessage->email != "" && $my_id > 0 && $fbConfig->showemail ? fb_link::GetEmailLink($fmessage->email, $fb_username) : stripslashes($fb_username);
+                                $msg_username = $fmessage->email != "" && $my_id > 0 && $fbConfig->showemail ? CKunenaLink::GetEmailLink($fmessage->email, $fb_username) : $fb_username;
 
                                 if ($fbConfig->allowavatar)
                                 {
                                     $Avatarname = $userinfo->username;
 
-                                    if ($fbConfig->avatar_src == "clexuspm") {
+                                    if ($fbConfig->avatar_src == "jomsocial")
+									{
+										// Get CUser object
+										$jsuser =& CFactory::getUser($fmessage->userid);
+									    $msg_avatar = '<span class="fb_avatar"><img src="' . $jsuser->getThumbAvatar() . '" alt=" " /></span>';
+									}
+                                    else if ($fbConfig->avatar_src == "clexuspm") {
                                         $msg_avatar = '<span class="fb_avatar"><img src="' . MyPMSTools::getAvatarLinkWithID($fmessage->userid) . '" /></span>';
                                     }
-                                    elseif ($fbConfig->avatar_src == "cb")
+                                    else if ($fbConfig->avatar_src == "cb")
                                     {
                                         $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$fmessage->userid' AND avatarapproved='1'");
                                         $avatar = $database->loadResult();
@@ -643,9 +622,8 @@ $my = &JFactory::getUser();
                                         if (!$fbConfig->poststats)
                                         {
                                             $msg_posts = '<div class="viewcover">' .
-                                              "<table  border=\"0\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\"><tr>" .
                                               "<strong>" . _POSTS . " $numPosts" . "</strong>" .
-                                              "</td></tr>" . "</table></div>";
+                                              "</div>";
 
                                             $useGraph = 0;
                                         }
@@ -678,8 +656,8 @@ $my = &JFactory::getUser();
 
                                     if ($my->id != '0' && $my->id != $fmessage->userid)
                                     {
-                                        $msg_karmaminus = fb_link::GetKarmaLink('decrease', $catid, $fmessage->id, $fmessage->userid, '<img src="'.($fbIcons['karmaminus']?(KUNENA_URLICONSPATH . "" . $fbIcons['karmaminus']):(KUNENA_URLEMOTIONSPATH . "karmaminus.gif")).'" alt="Karma-" border="0" title="' . _KARMA_SMITE . '" align="middle" />' );
-                                        $msg_karmaplus  = fb_link::GetKarmaLink('increase', $catid, $fmessage->id, $fmessage->userid, '<img src="'.($fbIcons['karmaplus']?(KUNENA_URLICONSPATH . "" . $fbIcons['karmaplus']):(KUNENA_URLEMOTIONSPATH . "karmaplus.gif")).'" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" align="middle" />' );
+                                        $msg_karmaminus = CKunenaLink::GetKarmaLink('decrease', $catid, $fmessage->id, $fmessage->userid, '<img src="'.($fbIcons['karmaminus']?(KUNENA_URLICONSPATH . "" . $fbIcons['karmaminus']):(KUNENA_URLEMOTIONSPATH . "karmaminus.gif")).'" alt="Karma-" border="0" title="' . _KARMA_SMITE . '" align="middle" />' );
+                                        $msg_karmaplus  = CKunenaLink::GetKarmaLink('increase', $catid, $fmessage->id, $fmessage->userid, '<img src="'.($fbIcons['karmaplus']?(KUNENA_URLICONSPATH . "" . $fbIcons['karmaplus']):(KUNENA_URLEMOTIONSPATH . "karmaplus.gif")).'" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" align="middle" />' );
                                     }
                                 }
                                 /*let's see if we should use Missus integration */
@@ -769,8 +747,24 @@ $my = &JFactory::getUser();
                                         . KUNENA_URLICONSPATH . '' . $fbIcons['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
                                     }
                                 }
-                                /* ClexusPM integration */
-                                if ($fbConfig->pm_component == "clexuspm" && $fmessage->userid && $my->id)
+                                /* PM integration */
+                                if ($fbConfig->pm_component == "jomsocial" && $fmessage->userid && $my->id)
+                                {
+                                	$onclick = CMessaging::getPopup($fmessage->userid);
+                                	$msg_pms = '<a href="javascript:void(0)" onclick="'. $onclick . "\">";
+
+                                    if ($fbIcons['pms']) {
+                                        $msg_pms .= "<img src=\"".KUNENA_URLICONSPATH."".$fbIcons['pms']."\" alt=\""._VIEW_PMS."\" border=\"0\" title=\""._VIEW_PMS."\" />";
+                                    }
+                                    else
+                                    {
+                                    	$msg_pms .= _VIEW_PMS;
+                                    }
+
+                                    $msg_pms .= "</a>";
+                                	//$msg_pms = '<a href="javascript:void(0)" onclick="'. $onclick .'">Send message</a>';
+                                }
+                                else if ($fbConfig->pm_component == "clexuspm" && $fmessage->userid && $my->id)
                                 {
                                     //we should offer the user a PMS link
                                     //first get the username of the user to contact
@@ -832,10 +826,10 @@ $my = &JFactory::getUser();
                                     unset ($mostables);
                                 }
 
-                                //Check if the Community Builder settings are on, and set the variables accordingly.
+                                //Check if the Integration settings are on, and set the variables accordingly.
                                 if ($fbConfig->fb_profile == "cb")
                                 {
-                                    if ($fbConfig->cb_profile && $fmessage->userid > 0)
+                                    if ($fbConfig->fb_profile == 'cb' && $fmessage->userid > 0)
                                     {
                                         $msg_prflink = JRoute::_('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $fmessage->userid . '');
                                         $msg_profile = "<a href=\"" . JRoute::_('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $fmessage->userid . '') . "\">                                              <img src=\"";
@@ -867,23 +861,22 @@ $my = &JFactory::getUser();
                                 }
                                 else if ($userinfo->gid > 0)
                                 {
-                                    //FireBoard Profile link.
+                                    //Kunena Profile link.
                                     $msg_prflink = JRoute::_(KUNENA_LIVEURLREL.'&amp;func=fbprofile&amp;task=showprf&amp;userid=' . $fmessage->userid);
-                                    $msg_profile = "<a href=\"" . JRoute::_(KUNENA_LIVEURLREL.'&amp;func=fbprofile&amp;task=showprf&amp;userid=' . $fmessage->userid) . "\"> <img src=\"";
+                                    $msg_profileicon = "<img src=\"";
 
                                     if ($fbIcons['userprofile']) {
-                                        $msg_profile .= KUNENA_URLICONSPATH . "" . $fbIcons['userprofile'];
+                                        $msg_profileicon .= KUNENA_URLICONSPATH . "" . $fbIcons['userprofile'];
                                     }
                                     else {
-                                        $msg_profile .= KUNENA_URLICONSPATH . "profile.gif";
+                                        $msg_profileicon .= KUNENA_URLICONSPATH . "profile.gif";
                                     }
 
-                                    $msg_profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
+                                    $msg_profileicon .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" />";
+                                    $msg_profile = CKunenaLink::GetProfileLink($fbConfig, $fmessage->userid, $msg_profileicon);
                                 }
 
-
                                 // Begin: Additional Info //
-
                                 if ($userinfo->gender != '') {
                                     $gender = _KUNENA_NOGENDER;
                                     if ($userinfo->gender ==1)  {
@@ -899,14 +892,14 @@ $my = &JFactory::getUser();
                                 }
 
                                 if ($userinfo->personalText != '') {
-                                    $msg_personal = $userinfo->personalText;
+                                    $msg_personal = html_entity_decode_utf8(stripslashes($userinfo->personalText));
                                 }
 
                                 if ($userinfo->ICQ != '') {
                                     $msg_icq = '<a href="http://www.icq.com/people/cmd.php?uin='.$userinfo->ICQ.'&action=message"><img src="http://status.icq.com/online.gif?icq='.$userinfo->ICQ.'&img=5" title="ICQ#: '.$userinfo->ICQ.'" alt="ICQ#: '.$userinfo->ICQ.'" /></a>';
                                 }
                                 if ($userinfo->location != '') {
-                                    $msg_location = $fbIcons['msglocation'] ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msglocation'] . '" border="0" alt="'._KUNENA_MYPROFILE_LOCATION.': '.$userinfo->location.'" title="'._KUNENA_MYPROFILE_LOCATION.': '.$userinfo->location.'" />' : ' '._KUNENA_MYPROFILE_LOCATION.': '.$userinfo->location.'';
+                                    $msg_location = $fbIcons['msglocation'] ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msglocation'] . '" border="0" alt="'._KUNENA_MYPROFILE_LOCATION.': '.$userinfo->location.'" title="'._KUNENA_MYPROFILE_LOCATION.': '.html_entity_decode_utf8(stripslashes($userinfo->location)).'" />' : ' '._KUNENA_MYPROFILE_LOCATION.': '.$userinfo->location.'';
                                 }
                                 if ($userinfo->birthdate !='0001-01-01' AND $userinfo->birthdate !='0000-00-00' and $userinfo->birthdate !='') {
                                     $msg_birthdate = $fbIcons['msgbirthdate'] ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msgbirthdate'] . '" border="0" alt="'._KUNENA_MYPROFILE_BIRTHDATE.': '.$userinfo->birthdate.'" title="'._KUNENA_MYPROFILE_BIRTHDATE.': '.$userinfo->birthdate.'" />' : ' '._KUNENA_MYPROFILE_BIRTHDATE.': '.$userinfo->birthdate.'';
@@ -941,7 +934,6 @@ $my = &JFactory::getUser();
                                 }
 
                                 $fb_subject_txt = $fmessage->subject;
-								$fb_subject_txt = stripslashes($fb_subject_txt);
 
                                 $table = array_flip(get_html_translation_table(HTML_ENTITIES));
 
@@ -949,7 +941,7 @@ $my = &JFactory::getUser();
                                 $fb_subject_txt = smile::fbHtmlSafe($fb_subject_txt);
                                 $fb_subject_txt = stripslashes($fb_subject_txt);
 
-                                $msg_subject = stripslashes($fb_subject_txt);
+                                $msg_subject = htmlspecialchars($fb_subject_txt);
                                 $msg_date = date(_DATETIME, $fmessage->time);
                                 $fb_message_txt = stripslashes($fmessage->message);
 
@@ -969,7 +961,7 @@ $my = &JFactory::getUser();
                                 }
 
                                 // Code tag: restore TABS as we had to 'hide' them from the rest of the logic
-                                $fb_message_txt = str_replace("__FBTAB__", "&#009;", stripslashes($fb_message_txt));
+                                $fb_message_txt = str_replace("__FBTAB__", "&#009;", $fb_message_txt);
 
                                 // Joomla Mambot Support , Thanks hacksider
                                 if ($fbConfig->jmambot)
@@ -983,25 +975,13 @@ $my = &JFactory::getUser();
                                     $results = $mainframe->triggerEvent( 'onPrepareContent', array( &$row, &$params, 0 ), true );
                                     $msg_text = $row->text;
                                 }
-
-
-
-
-
                                 else
                                 {
                                 	$msg_text = $fb_message_txt;
                                 }
                                 // Finish Joomla Mambot Support
 
-                                if ($fbConfig->cb_profile)
-                                {
-                                    $database->setQuery("select fbsignature from #__comprofiler where user_id=$fmessage->userid");
-                                    $signature = $database->loadResult();
-                                }
-                                else {
-                                    $signature = $userinfo->signature;
-                                }
+                                $signature = $userinfo->signature;
 
                                 if ($signature)
                                 {
@@ -1017,8 +997,8 @@ $my = &JFactory::getUser();
                                 if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite == 1) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
                                 {
                                     //user is allowed to reply/quote
-                                    $msg_reply = fb_link::GetTopicPostReplyLink('reply', $catid, $fmessage->id , $fbIcons['reply']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['reply'] . '" alt="Reply" border="0" title="' . _VIEW_REPLY . '" />':_GEN_REPLY);
-                                    $msg_quote = fb_link::GetTopicPostReplyLink('quote', $catid, $fmessage->id , $fbIcons['quote']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['quote'] . '" alt="Quote" border="0" title="' . _VIEW_QUOTE . '" />':_GEN_QUOTE);
+                                    $msg_reply = CKunenaLink::GetTopicPostReplyLink('reply', $catid, $fmessage->id , $fbIcons['reply']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['reply'] . '" alt="Reply" border="0" title="' . _VIEW_REPLY . '" />':_GEN_REPLY);
+                                    $msg_quote = CKunenaLink::GetTopicPostReplyLink('quote', $catid, $fmessage->id , $fbIcons['quote']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['quote'] . '" alt="Quote" border="0" title="' . _VIEW_QUOTE . '" />':_GEN_QUOTE);
                                 }
                                 else
                                 {
@@ -1035,9 +1015,9 @@ $my = &JFactory::getUser();
                                 //Offer an moderator the delete link
                                 if ($is_Moderator)
                                 {
-                                    $msg_delete = fb_link::GetTopicPostLink('delete', $catid, $fmessage->id , $fbIcons['delete']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />':_GEN_DELETE);
-                                    $msg_merge = fb_link::GetTopicPostLink('merge', $catid, $fmessage->id , $fbIcons['merge']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['merge'] . '" alt="Merge" border="0" title="' . _VIEW_MERGE . '" />':_GEN_MERGE);
-                                    $msg_split = fb_link::GetTopicPostLink('split', $catid, $fmessage->id , $fbIcons['split']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['split'] . '" alt="Split" border="0" title="' . _VIEW_SPLIT . '" />':_GEN_SPLIT);
+                                    $msg_delete = CKunenaLink::GetTopicPostLink('delete', $catid, $fmessage->id , $fbIcons['delete']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />':_GEN_DELETE);
+                                    $msg_merge = CKunenaLink::GetTopicPostLink('merge', $catid, $fmessage->id , $fbIcons['merge']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['merge'] . '" alt="' . _GEN_MERGE . '" border="0" title="' . _GEN_MERGE . '" />':_GEN_MERGE);
+                                    $msg_split = CKunenaLink::GetTopicPostLink('split', $catid, $fmessage->id , $fbIcons['split']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['split'] . '" alt="' . _GEN_SPLIT . '" border="0" title="' . _GEN_SPLIT . '" />':_GEN_SPLIT);
                                 }
 
                                 if ($fbConfig->useredit && $my_id != "")
@@ -1058,7 +1038,7 @@ $my = &JFactory::getUser();
                                             {
                                                 $modtime = $fmessage->time;
                                             }
-                                            if(($modtime + ((int)$fbConfig->useredittime)) >= FBTools::fbGetInternalTime())
+                                            if(($modtime + ((int)$fbConfig->useredittime)) >= CKunenaTools::fbGetInternalTime())
                                             {
                                                 $allowEdit = 1;
                                             }
@@ -1066,7 +1046,7 @@ $my = &JFactory::getUser();
                                     }
                                     if($allowEdit)
                                     {
-                                        $msg_edit = fb_link::GetTopicPostLink('edit', $catid, $fmessage->id , $fbIcons['edit']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />':_GEN_EDIT);
+                                        $msg_edit = CKunenaLink::GetTopicPostLink('edit', $catid, $fmessage->id , $fbIcons['edit']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />':_GEN_EDIT);
                                         $showedEdit = 1;
                                     }
                                 }
@@ -1074,7 +1054,7 @@ $my = &JFactory::getUser();
                                 if ($is_Moderator && $showedEdit != 1)
                                 {
                                     //Offer a moderator always the edit link except when it is already showing..
-                                    $msg_edit = fb_link::GetTopicPostLink('edit', $catid, $fmessage->id , $fbIcons['edit']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />':_GEN_EDIT);
+                                    $msg_edit = CKunenaLink::GetTopicPostLink('edit', $catid, $fmessage->id , $fbIcons['edit']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />':_GEN_EDIT);
                                 }
 
                                 if ($is_Moderator && $fmessage->parent == '0')
@@ -1083,24 +1063,24 @@ $my = &JFactory::getUser();
                                     // and the (un)sticky bit links
                                     // and the (un)lock links
                                     // but ONLY when it is a topic and not a reply
-                                    $msg_move = fb_link::GetTopicPostLink('move', $catid, $fmessage->id , $fbIcons['move']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['move'] . '" alt="Move" border="0" title="' . _VIEW_MOVE . '" />':_GEN_MOVE);
+                                    $msg_move = CKunenaLink::GetTopicPostLink('move', $catid, $fmessage->id , $fbIcons['move']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['move'] . '" alt="Move" border="0" title="' . _VIEW_MOVE . '" />':_GEN_MOVE);
 
                                     if ($fmessage->ordering == 0)
                                     {
-                                        $msg_sticky = fb_link::GetTopicPostLink('sticky', $catid, $fmessage->id , $fbIcons['sticky']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['sticky'] . '" alt="Sticky" border="0" title="' . _VIEW_STICKY . '" />':_GEN_STICKY);
+                                        $msg_sticky = CKunenaLink::GetTopicPostLink('sticky', $catid, $fmessage->id , $fbIcons['sticky']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['sticky'] . '" alt="Sticky" border="0" title="' . _VIEW_STICKY . '" />':_GEN_STICKY);
                                     }
                                     else
                                     {
-                                        $msg_sticky = fb_link::GetTopicPostLink('unsticky', $catid, $fmessage->id , $fbIcons['unsticky']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['unsticky'] . '" alt="Unsticky" border="0" title="' . _VIEW_UNSTICKY . '" />':_GEN_UNSTICKY);
+                                        $msg_sticky = CKunenaLink::GetTopicPostLink('unsticky', $catid, $fmessage->id , $fbIcons['unsticky']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['unsticky'] . '" alt="Unsticky" border="0" title="' . _VIEW_UNSTICKY . '" />':_GEN_UNSTICKY);
                                     }
 
                                     if ($fmessage->locked == 0)
                                     {
-                                        $msg_lock = fb_link::GetTopicPostLink('lock', $catid, $fmessage->id , $fbIcons['lock']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['lock'] . '" alt="Lock" border="0" title="' . _VIEW_LOCK . '" />':_GEN_LOCK);
+                                        $msg_lock = CKunenaLink::GetTopicPostLink('lock', $catid, $fmessage->id , $fbIcons['lock']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['lock'] . '" alt="Lock" border="0" title="' . _VIEW_LOCK . '" />':_GEN_LOCK);
                                     }
                                     else
                                     {
-                                        $msg_lock = fb_link::GetTopicPostLink('unlock', $catid, $fmessage->id , $fbIcons['unlock']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['unlock'] . '" alt="Unlock" border="0" title="' . _VIEW_UNLOCK . '" />':_GEN_UNLOCK);
+                                        $msg_lock = CKunenaLink::GetTopicPostLink('unlock', $catid, $fmessage->id , $fbIcons['unlock']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['unlock'] . '" alt="Unlock" border="0" title="' . _VIEW_UNLOCK . '" />':_GEN_UNLOCK);
                                     }
                                 }
 
@@ -1109,7 +1089,7 @@ $my = &JFactory::getUser();
                                     include (KUNENA_ABSTMPLTPATH . '/message.php');
                                 }
                                 else {
-                                    include (KUNENA_COMP_F . '/template/default/message.php');
+                                    include (KUNENA_ABSPATH . '/template/default/message.php');
                                 }
 
                                 unset(
@@ -1176,7 +1156,7 @@ $my = &JFactory::getUser();
                                 include (KUNENA_ABSTMPLTPATH . '/thread.php');
                             }
                             else {
-                                include (KUNENA_COMP_F . '/template/default/thread.php');
+                                include (KUNENA_ABSPATH . '/template/default/thread.php');
                             }
                             ?>
                         </td>
@@ -1316,7 +1296,7 @@ $my = &JFactory::getUser();
                             <?php
                             //(JJ) FINISH: CAT LIST BOTTOM
                             if ($fbConfig->enableforumjump)
-                            require_once (KUNENA_COMP_C_SRC . '/fb_forumjump.php');
+                            require_once (KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
                             ?>
                         </th>
                     </tr>
@@ -1335,6 +1315,17 @@ $my = &JFactory::getUser();
 }
 else {
     echo _KUNENA_NO_ACCESS;
+}
+
+if ($fbConfig->highlightcode)
+{
+	echo '
+	<script type="text/javascript" src="'.KUNENA_DIRECTURL . '/template/default/plugin/chili/jquery.chili-2.2.js"></script>
+	<script id="setup" type="text/javascript">
+	ChiliBook.recipeFolder     = "'.KUNENA_DIRECTURL . '/template/default/plugin/chili/";
+	ChiliBook.stylesheetFolder     = "'.KUNENA_DIRECTURL . '/template/default/plugin/chili/";
+	</script>
+	';
 }
 
 ?>

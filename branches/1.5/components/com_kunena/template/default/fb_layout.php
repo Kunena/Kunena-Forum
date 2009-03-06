@@ -3,6 +3,12 @@
 * @version $Id: fb_layout.php 947 2008-08-11 01:56:01Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -55,7 +61,7 @@ function KUNENA_get_pathway(&$database, $obj_fb_cat, $bool_set_title, $obj_post 
     if ($objCatParentInfo)
     {
         if ($bool_set_title)
-            $mainframe->setPageTitle($objCatParentInfo->name . ' - ' . $obj_fb_cat->getName() . ' - ' . $fbConfig->board_title);
+            $mainframe->setPageTitle(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($obj_fb_cat->getName()) . ' - ' . stripslashes($fbConfig->board_title));
 
         // show lines
         $return .= '&nbsp;<img src="' . KUNENA_URLIMAGESPATH . 'tree-end.gif" alt="|-" border="0" style="vertical-align: middle;" />';
@@ -67,7 +73,7 @@ function KUNENA_get_pathway(&$database, $obj_fb_cat, $bool_set_title, $obj_post 
     else
     {
         if ($bool_set_title)
-            $mainframe->setPageTitle($obj_fb_cat->getName() . ' - ' . $fbConfig->board_title);
+            $mainframe->setPageTitle(stripslashes($obj_fb_cat->getName()) . ' - ' . stripslashes($fbConfig->board_title));
     }
 
     // Forum
@@ -109,7 +115,7 @@ function KUNENA_get_pathway(&$database, $obj_fb_cat, $bool_set_title, $obj_post 
     if ($obj_post != 0)
     {
         if ($bool_set_title)
-            $mainframe->setPageTitle($obj_post->subject . ' - ' . $fbConfig->board_title);
+            $mainframe->setPageTitle(stripslashes($obj_post->subject) . ' - ' . stripslashes($fbConfig->board_title));
 
         // Topic
         // show lines
@@ -160,7 +166,7 @@ function KUNENA_get_pathway(&$database, $obj_fb_cat, $bool_set_title, $obj_post 
 function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = "", $catid = 0, $id = 0, $thread = 0, $is_moderator = false, $numPending = 0)
 {
     $header = '<div id="fb_topmenu" >';
-    $header .= CKunenaLink::GetKunenaLink( $fbIcons['home'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['home'] . '" border="0" alt="' . _HOME . '"  title="' . _HOME . '" />' : _HOME);
+    $header .= CKunenaLink::GetCategoryListLink('<span>'.($fbIcons['home'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['home'] . '" border="0" alt="' . _KUNENA_CATEGORIES . '"  title="' . _KUNENA_CATEGORIES . '" />' : _KUNENA_CATEGORIES).'</span>');
 
     if ($my_id != 0)
     {

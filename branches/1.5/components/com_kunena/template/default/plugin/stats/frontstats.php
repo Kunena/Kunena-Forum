@@ -3,6 +3,12 @@
 * @version $Id: frontstats.php 1064 2008-10-05 23:29:35Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -24,7 +30,7 @@ if ($fbConfig->fb_profile == "jomsocial")
 {
 	$userlist = JRoute::_('index.php?option=com_community&amp;view=search&amp;task=browse');
 }
-else if ($fbConfig->cb_profile)
+else if ($fbConfig->fb_profile == 'cb')
 {
     $userlist = JRoute::_('index.php?option=com_comprofiler&amp;task=usersList');
 }
@@ -49,7 +55,7 @@ if ($fbConfig->showstats > 0)
                 <tr>
                     <th align="left">
                         <div class = "fb_title_cover fbm">
-                            <a class="fb_title fbl" href = "<?php echo $statslink;?>"><?php echo $fbConfig->board_title; ?> <?php echo _STAT_FORUMSTATS; ?></a>
+                            <a class="fb_title fbl" href = "<?php echo $statslink;?>"><?php echo stripslashes($fbConfig->board_title); ?> <?php echo _STAT_FORUMSTATS; ?></a>
                         </div>
                         <img id = "BoxSwitch_frontstats__frontstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
                     </th>
@@ -70,7 +76,7 @@ if ($fbConfig->showstats > 0)
 
                 <br/>
 
-                &raquo; <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL .'&amp;func=latest');?>"><?php echo _STAT_VIEW_RECENT_POSTS_ON_FORUM; ?></a> &raquo; <a href = "<?php echo $statslink;?>"><?php echo _STAT_MORE_ABOUT_STATS; ?></a> &raquo; <a href="<?php echo $userlist;?>"><?php echo _STAT_USERLIST; ?></a>
+                &raquo; <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL .'&amp;func=latest');?>"><?php echo _STAT_VIEW_RECENT_POSTS_ON_FORUM; ?></a> <?php if ($fbConfig->showpopuserstats || $fbConfig->showpopsubjectstats) echo '&raquo; <a href = "'.$statslink.'">'. _STAT_MORE_ABOUT_STATS.'</a>'; ?>  &raquo; <a href="<?php echo $userlist;?>"><?php echo _STAT_USERLIST; ?></a>
                     </td>
                 </tr>
             </tbody>

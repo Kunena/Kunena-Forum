@@ -3,6 +3,12 @@
 * @version $Id: fbprofile.php 947 2008-08-11 01:56:01Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -11,6 +17,9 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
+
+$mainframe->setPageTitle(_KUNENA_USERPROFILE_PROFILE . ' - ' . stripslashes($fbConfig->board_title));
+
 if ($my->id) //registered only
 {
     require_once(KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
@@ -66,12 +75,12 @@ function showprf($userid, $page)
     $fb_username = $userinfo->{$fb_queryName};
 
     if ($fb_username == "" || $fbConfig->changename) {
-        $fb_username = $fmessage->name;
+        $fb_username = html_entity_decode_utf8(stripslashes($fmessage->name));
     }
 
     $msg_id = $fmessage->id;
     $lists["userid"] = $userid;
-    $msg_username = ($fmessage->email != "" && $my->id > 0 && $fbConfig->showemail == '1') ? "<a href=\"mailto:" . stripslashes($fmessage->email) . "\">" . stripslashes($fb_username) . "</a>" : stripslashes($fb_username);
+    $msg_username = ($fmessage->email != "" && $my->id > 0 && $fbConfig->showemail == '1') ? "<a href=\"mailto:" . $fmessage->email . "\">" . $fb_username . "</a>" : $fb_username;
 
     if ($fbConfig->allowavatar)
     {

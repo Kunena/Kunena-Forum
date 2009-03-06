@@ -3,6 +3,12 @@
 * @version $Id: fb_pathway_old.php 831 2008-07-15 04:14:59Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -61,7 +67,7 @@ global $fbConfig;
                 $database->setQuery("SELECT name,id FROM #__fb_categories WHERE id='$objCatInfo->parent'");
                 $objCatParentInfo = $database->loadObject() or trigger_dberror("Unable to read from categories.");
                 // set page title
-                $mainframe->setPageTitle($objCatParentInfo->name . ' - ' . $objCatInfo->name . ' - ' . $fbConfig->board_title);
+                $mainframe->setPageTitle(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($objCatInfo->name) . ' - ' . stripslashes($fbConfig->board_title));
                 //check if this forum is locked
                 $forumLocked = $objCatInfo->locked;
                 //check if this forum is subject to review

@@ -1,8 +1,14 @@
 <?php
 /**
-* @version $Id: message.php 1081 2008-10-27 06:24:13Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* @version $Id: message.php 447 2009-02-17 08:46:17Z mahagr $
+* Kunena Component
+* @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -24,15 +30,12 @@ $user = $database->loadObject();
 ?>
 
 <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
-    <caption>
-        <a name = "<?php echo $msg_id;?>"/>
-    </caption>
-
     <tbody>
         <tr class = "fb_sth">
             <th colspan = "2" class = "view-th <?php echo $boardclass; ?>sectiontableheader">
+        	<a name = "<?php echo $msg_id; ?>"></a>
 <?php
-                echo fb_link::GetSamePageAnkerLink($msg_id, '#'.$msg_id)
+                echo CKunenaLink::GetSamePageAnkerLink($msg_id, '#'.$msg_id)
 ?>
             </th>
         </tr>
@@ -45,9 +48,15 @@ $user = $database->loadObject();
                         <td align = "left">
                             <?php
                             $msg_time_since = _KUNENA_TIME_SINCE;
-                            $msg_time_since = str_replace('%time%', time_since($fmessage->time , FBTools::fbGetInternalTime()), $msg_time_since);
+                            $msg_time_since = str_replace('%time%', time_since($fmessage->time , CKunenaTools::fbGetInternalTime()), $msg_time_since);
+
+                            if ($prevCheck < $msg_time && !in_array($fmessage->thread, $read_topics)) {
+                                $msgtitle = 'msgtitle_new';
+                            } else {
+                                $msgtitle = 'msgtitle';
+                            }
                             ?>
-                            <span class = "msgtitle"><?php echo $msg_subject; ?> </span> <span class = "msgdate" title="<?php echo $msg_date; ?>"><?php echo $msg_time_since; ?></span>
+                            <span class = "<?php echo $msgtitle; ?>"><?php echo $msg_subject; ?> </span> <span class = "msgdate" title="<?php echo $msg_date; ?>"><?php echo $msg_time_since; ?></span>
                         </td>
 
                         <td align = "right">
@@ -87,9 +96,8 @@ $user = $database->loadObject();
                                     }
 
                                     //contruct the reply subject
-                                    $table = array_flip(get_html_translation_table(HTML_ENTITIES));
-                                    $resubject = htmlspecialchars(strtr($msg_subject, $table));
-                                    $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? stripslashes($resubject) : _POST_RE . stripslashes($resubject);
+                                    $resubject = html_entity_decode_utf8($msg_subject);
+                                    $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? $resubject : _POST_RE . $resubject;
                                     ?>
 
                             <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL. '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
@@ -101,13 +109,9 @@ $user = $database->loadObject();
 
                                 <input type = "hidden" name = "contentURL" value = "empty"/>
 
-                                <input type = "hidden" name = "fb_authorname" size = "35" class = "inputbox" maxlength = "35" value = "<?php echo $authorName;?>"/>
+                                <input type = "text" name = "subject" size = "35" class = "inputbox" maxlength = "<?php echo $fbConfig->maxsubject;?>" value = "<?php echo $resubject;?>"/>
 
-                                <input type = "hidden" name = "email" size = "35" class = "inputbox" maxlength = "35" value = "<?php echo $user->email;?>"/>
-
-                                <input type = "hidden" name = "subject" size = "35" class = "inputbox" maxlength = "<?php echo $fbConfig->maxsubject;?>" value = "<?php echo $resubject;?>"/>
-
-                                <textarea class = "inputbox" name = "message" id = "message" style = "height: 100px; width: 100%; overflow:auto;"></textarea>
+                                <textarea class = "inputbox" name = "message" rows = "6" cols = "60" style = "height: 100px; width: 100%; overflow:auto;"></textarea>
 
                                  <?php
 								// Begin captcha . Thanks Adeptus
@@ -120,9 +124,9 @@ $user = $database->loadObject();
 								// Finish captcha
 								?>
 
-                                <input type = "submit" class = "fb_qm_btn" name = "submit" value = "<?php echo _GEN_CONTINUE;?>"/>
+                                <input type = "submit" class = "fb_button fb_qr_fire" name = "submit" value = "<?php echo _GEN_CONTINUE;?>"/>
 
-                                <input type = "button" class = "fb_qm_btn fb_qm_cncl_btn" id = "cancel__<?php echo $msg_id; ?>" name = "cancel" value = "<?php echo _KUNENA_CANCEL;?>"/>
+                                <input type = "button" class = "fb_button fb_qm_cncl_btn" id = "cancel__<?php echo $msg_id; ?>" name = "cancel" value = "<?php echo _KUNENA_CANCEL;?>"/>
 
                                 <small><em><?php echo _KUNENA_QMESSAGE_NOTE?></em></small>
                             </form>
@@ -146,7 +150,7 @@ $user = $database->loadObject();
 <?php
                         if ($fmessage->userid > 0)
                         {
-                        	echo fb_link::GetProfileLink($fmessage->userid, $msg_username);
+                        	echo CKunenaLink::GetProfileLink($fbConfig, $fmessage->userid, $msg_username);
                         }
                         else
                         {
@@ -158,7 +162,7 @@ $user = $database->loadObject();
 <?php
                         if ($fmessage->userid > 0)
                         {
-                        	echo fb_link::GetProfileLink($fmessage->userid, $msg_avatar);
+                        	echo CKunenaLink::GetProfileLink($fbConfig, $fmessage->userid, $msg_avatar);
                         }
                         else
                         {
@@ -285,64 +289,36 @@ $user = $database->loadObject();
 
         </tr>
 
-  <tr><td class = "fb-msgview-right-c" >
-                         <div class="fb_smalltext" >
-                   <?php
+	<tr><td class = "fb-msgview-right-b" >
+		<div class="fb_message_editMarkUp_cover">
+<?php
+	if ($fmessage->modified_by) {
+		echo '<span class="fb_message_editMarkUp">'. _KUNENA_EDITING_LASTEDIT .': '. date(_DATETIME, $fmessage->modified_time) .' '. _KUNENA_BY .' '. CKunenaTools::whoisID($fmessage->modified_by) .'.';
+		if ($fmessage->modified_reason) {
+			echo _KUNENA_REASON .': '. $fmessage->modified_reason;
+		}
+		echo '</span>';
+	}
+
                             if ($fbConfig->reportmsg && $my->id > 1)
                             {
-                                echo fb_link::GetReportMessageLink($catid, $msg_id, _KUNENA_REPORT);
+                                echo '<span class="fb_message_informMarkUp">'.CKunenaLink::GetReportMessageLink($catid, $msg_id, _KUNENA_REPORT).'</span>';
+                            }
+                            if ($msg_ip)
+                            {
+				echo '<span class="fb_message_informMarkUp">'.CKunenaLink::GetMessageIPLink($msg_ip).'</span>';
                             } ?>
-
-                            <?php echo $fbIcons['msgip'] ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['msgip'] .'" border="0" alt="'._KUNENA_REPORT_LOGGED.'" />' : ' <img src="'.KUNENA_URLEMOTIONSPATH.'ip.gif" border="0" alt="'. _KUNENA_REPORT_LOGGED.'" />';
-                            ?> <span class="fb_smalltext"> <?php echo _KUNENA_REPORT_LOGGED;?></span>
-                            <?php
-                            echo fb_link::GetMessageIPLink($msg_ip);
-                            ?>
-                            </div>
-       </td>
-            <td class = "fb-msgview-left-c">&nbsp;
-            </td>
-
-        </tr>
-<?php
-if ($fmessage->modified_by) {
-  ?>
-        <tr><td class = "fb-msgview-right-c" >
-                    <div class="fb_message_editMarkUp_cover">
-                    <span class="fb_message_editMarkUp" ><?php echo _KUNENA_EDITING_LASTEDIT;?>: <?php echo date(_DATETIME, $fmessage->modified_time);?> <?php echo _KUNENA_BY; ?> <?php echo FBTools::whoisID($fmessage->modified_by)?>.
-                    <?php
-                    if ($fmessage->modified_reason) {
-                    echo _KUNENA_REASON.": ".$fmessage->modified_reason;
-                    }
-                        ?></span>
-                    </div>
-       </td>
-            <td class = "fb-msgview-left-c">&nbsp;
-            </td>
-
-        </tr>
-<?php
-}
-?>
-
+		</div>
+<table width="100%" cellpadding="0" cellspacing="0"><tr>
 <?php
 if ($msg_signature) {
-  ?>
-        <tr><td class = "fb-msgview-right-c" >
-
-				   <div class="msgsignature" >
-					<?php   echo $msg_signature; ?>
-				</div>
-       </td>
-            <td class = "fb-msgview-left-c">&nbsp;
-            </td>
-
-        </tr>
-<?php
+	echo '<td class="msgsignature"><div>';
+	echo $msg_signature;
+	echo '</div></td>';
 }
 ?>
-
-        <tr><td class = "fb-msgview-right-b" align = "right">
+	<td valign="bottom">
+	<div class="fb_message_buttons_cover">
                 <span id = "fb_qr_sc__<?php echo $msg_id;?>" class = "fb_qr_fire" style = "cursor:hand; cursor:pointer">
 
                 <?php
@@ -365,40 +341,30 @@ if ($msg_signature) {
                 {
                     if ($msg_closed == "")
                     {
-                        echo $msg_reply;
+                        echo " " . $msg_reply;
                         echo " " . $msg_quote;
 
-                        if ($msg_delete) {
-                            echo " " . $msg_delete;
-                        }
-
-                        if ($msg_move) {
-                            echo " " . $msg_move;
-                        }
+			if ($is_Moderator) echo ' </div><div class="fb_message_buttons_cover">';
 
                         if ($msg_merge) {
                              echo " " . $msg_merge;
-                         }
+                        }
 
                         if ($msg_split) {
                              echo " " . $msg_split;
-                         }
-
+                        }
+                        if ($msg_delete) {
+                            echo " " . $msg_delete;
+                        }
                         if ($msg_edit) {
                             echo " " . $msg_edit;
                         }
 
-                        if ($msg_sticky) {
-                            echo " " . $msg_sticky;
-                        }
-
-                        if ($msg_lock) {
-                            echo " " . $msg_lock;
-                        }
                     }
                     else {
                         echo $msg_closed;
                     }
+
                 }
                 else
                 {
@@ -437,92 +403,31 @@ if ($msg_signature) {
                     }
                 }
                 ?>
+		</div>
+</td></tr></table>
 
             </td>
             <td class = "fb-msgview-left-b">&nbsp;
 
             </td>
 
-
         </tr>
     </tbody>
 </table>
 <!-- Begin: Message Module Positions -->
-
 <?php
-if (mosCountModules('fb_msg_t'))
+if (mosCountModules('kunena_msg_'.$mmm))
 {
 ?>
-
-    <div class = "fb_msg_t">
+    <div class = "kunena_msg_<?php echo $mmm; ?>">
         <?php
-        mosLoadModules('fb_msg_t', -2);
+	        $document	= &JFactory::getDocument();
+	        $renderer	= $document->loadRenderer('modules');
+	        $options	= array('style' => 'xhtml');
+	        $position	= 'kunena_msg_'.$mmm;
+	        echo $renderer->render($position, $options, null);
         ?>
     </div>
-
-<?php
-}
-?>
-
-<?php
-if (mosCountModules('fb_msg_1'))
-{
-?>
-
-<?php
-    if ($mmm == 1)
-    {
-?>
-
-            <div class = "fb_msg_1">
-                <?php
-                mosLoadModules('fb_msg_1', -2);
-                ?>
-            </div>
-
-<?php
-    }
-?>
-
-<?php
-}
-?>
-
-<?php
-if (mosCountModules('fb_msg_2'))
-{
-?>
-
-<?php
-    if ($mmm == 2)
-    {
-?>
-
-            <div class = "fb_msg_2">
-                <?php
-                mosLoadModules('fb_msg_2', -2);
-                ?>
-            </div>
-
-<?php
-    }
-?>
-
-<?php
-}
-?>
-
-<?php
-if (mosCountModules('fb_msg_b'))
-{
-?>
-
-    <div class = "fb_msg_b">
-        <?php
-        mosLoadModules('fb_msg_b', -2);
-        ?>
-    </div>
-
 <?php
 }
 ?>

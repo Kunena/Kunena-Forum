@@ -3,6 +3,12 @@
 * @version $Id: faq.php 895 2008-08-03 06:15:11Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -17,6 +23,9 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
+
+$mainframe->setPageTitle(_GEN_HELP . ' - ' . stripslashes($fbConfig->board_title));
+
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">

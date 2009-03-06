@@ -3,6 +3,12 @@
 * @version $Id: interpreter.fireboard.inc.php 1076 2008-10-18 14:12:52Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -13,7 +19,7 @@
 # FILENAME: interpreter.Kunena.inc.php                                  #
 # AUTOR:    Miro Dietiker, MD Systems, All rights reserved                 #
 # LICENSE:  http://www.gnu.org/copyleft/gpl.html GNU/GPL                   #
-# CONTACT: m.dietiker@md-systems.ch        © 2007 Miro Dietiker 13.11.2007 #
+# CONTACT: m.dietiker@md-systems.ch        ï¿½ 2007 Miro Dietiker 13.11.2007 #
 ############################################################################
 # This parser is based on an earlier CMS parser implementation.
 # It has been completely rewritten and generalized for Kunena and
@@ -263,7 +269,8 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
                     $types = array ("php", "mysql", "html", "js", "javascript");
 
-                    $code_start_html = '<div class="fbcode"><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr><td><b>'._KUNENA_MSG_CODE.'</b></td></tr><tr><td><hr />';
+                    $code_start_html = '<div class="fbcode" style="width:'. $GLOBALS["fbConfig"]->rtewidth .'px;"><table cellspacing="1" cellpadding="3" border="0"><tr><td><b>'._KUNENA_MSG_CODE.'</b></td></tr><tr><td><hr />';
+
                     if (in_array($tag->options["type"], $types)) {
                         $t_type = $tag->options["type"];
                     }
@@ -293,7 +300,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
             return TAGPARSER_RET_NOTHING;
         }
         switch(strtolower($tag->name)) {
-            # call htmlentities if Encode() did not already!!!
+            # call html_entity_decode_utf8 if Encode() did not already!!!
             # in general $between was already Encoded (if not explicitly suppressed!)
             case 'email':
                 $tempstr = $between;
@@ -308,7 +315,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 break;
             case 'url':
                 $tempstr = $between;
-                if(substr($tempstr, 0, 4)=='www.') {
+                if(substr($tempstr, 0, 7)!='http://') {
                   $tempstr = 'http://'.$tempstr;
                 }
                 $tag_new = "<a href='".$tempstr."' rel=\"nofollow\" target=\"_blank\">".$between.'</a>';
@@ -332,8 +339,16 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                     	$imgmaxsize = $imgtagsize;
                     }
 
-                    $tag_new = "";
-                    $tag_new .= "<img src='".$between.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' />";
+                    // Need to check if we are nested inside a URL code
+					if($task->autolink_disable == 0)
+					{
+						$tag_new = "<a href='".$between."' rel=\"lightbox\"><img src='".$between.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' /></a>";
+					}
+					else
+					{
+						$tag_new = "<img src='".$between.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' />";
+					}
+
 
                     return TAGPARSER_RET_REPLACED;
                 }

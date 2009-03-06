@@ -3,6 +3,12 @@
 * @version $Id: fb_config.class.php 1070 2008-10-06 08:11:18Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -13,7 +19,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 require_once (KUNENA_PATH_LIB . DS . 'kunena.debug.php');
 
-abstract class boj_Config
+abstract class CKunenaConfigBase
 {
     protected $_db = null;
 
@@ -27,6 +33,7 @@ abstract class boj_Config
     //
     abstract public function GetClassVars();
     abstract protected function GetConfigTableName();
+    abstract protected function DoUserOverrides($userid);
 
     //
     //  binds a named array/hash to this object
@@ -144,14 +151,14 @@ abstract class boj_Config
     //
     // Load config settings from database table
     //
-    public function load($silent=false)
+    public function load($KunenaUser=null)
     {
         $this->_db->setQuery("SELECT * FROM #__".$this->GetConfigTableName());
 
         // Special error handling!
         // This query might actually fail on new installs or upgrades when
         // no configuration table is present. That is ok. It only tells us to
-        // create the table and populate it with defualt setting.
+        // create the table and populate it with default settings.
         // DO NOT THROW an error
 
         $config = $this->_db->loadAssoc();
@@ -170,11 +177,21 @@ abstract class boj_Config
 		    // Now create new table and insert current config settings
         	$this->create();
 		}
+		
+		// Check for user specific overrides
+        if(is_object($KunenaUser))
+        {
+            // overload the settings with user specific ones
+            $this->DoUserOverrides($KunenaUser);
+            // Now the variables of the class contain the global settings
+            // overloaded with the user specific ones
+            // No other code changes required to support user specific settings.
+        }
     }
 }
 
 
-class fb_Config extends boj_Config
+class CKunenaConfig extends CKunenaConfigBase
 {
 	// All vars MUST BE LOWER CASE!
     var $board_title             = 'Kunena';
@@ -203,7 +220,7 @@ class fb_Config extends boj_Config
     var $catimagepath            = 'category_images/';
     var $numchildcolumn          = 2;
     var $showchildcaticon        = 1;
-    var $annmodid                = 62;
+    var $annmodid                = '62';
     var $rtewidth                = 450;
     var $rteheight               = 300;
     var $enablerulespage         = 1;
@@ -260,7 +277,7 @@ class fb_Config extends boj_Config
     var $avatar_src              = 'fb';
     var $fb_profile              = 'fb';
     var $pm_component            = 'no';
-    var $cb_profile              = 0;
+    var $cb_profile              = 0;  // Depreciated legacy CB integration - Now controlled via avatar, profile and pm settings
     var $badwords                = 0;
     var $discussbot              = 0;
     var $userlist_rows           = 30;
@@ -279,7 +296,7 @@ class fb_Config extends boj_Config
     var $showlatest              = 1;
     var $latestcount             = 10;
     var $latestcountperpage      = 5;
-    var $latestcategory          = 0;
+    var $latestcategory          = ''; //Also used by default_ex recent topics
     var $latestsinglesubject     = 1;
     var $latestreplysubject      = 1;
     var $latestsubjectlength     = 100;
@@ -318,10 +335,15 @@ class fb_Config extends boj_Config
     var $rsstype				 = 'thread';
     var $rsshistory				 = 'month';
     var $fbdefaultpage			 = 'recent';
+    // New 1.0.8 config variables
+    var $default_sort            = 'asc'; // 'desc' for latest post first
 
-    public function __construct()
+    public function __construct($KunenaUser=null)
     {
         parent::__construct();
+        
+  		if (!is_object($KunenaUser)) return;
+		$this->load($KunenaUser);      
     }
 
     //
@@ -330,13 +352,34 @@ class fb_Config extends boj_Config
 
     public function GetClassVars()
     {
-        return get_class_vars('fb_Config');
+        return get_class_vars('CKunenaConfig');
     }
 
     protected function GetConfigTableName()
     {
         return "fb_config"; // w/o joomla prefix - is being added by base class
     }
+    
+    function DoUserOverrides($KunenaUser)
+    {
+    	// Only perform overrides if we got a valid user handed to us
+    	if (is_object($KunenaUser)==FALSE) return FALSE;
+    	if ($KunenaUser->getID()==0) return FALSE;
+
+        // Example of setting override:
+        // $this->default_sort = 'desc';
+
+    	// Overload default with user specific from user profile
+    	$this->_db->setQuery("SELECT ordering from #__fb_users where userid=".$KunenaUser->getID());
+    	$orderingNum = $this->_db->loadResult();
+
+        $this->default_sort = $orderingNum ? 'desc' : 'asc';
+
+        // Add additional Overrides...
+
+        return TRUE;
+    }
+    
 }
 
 

@@ -3,6 +3,12 @@
 * @version $Id: fb_pathway.php 1064 2008-10-05 23:29:35Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -27,18 +33,11 @@ if ($func != "")
 
     <div class = "<?php echo $boardclass ?>forum-pathway">
         <?php
-        if (file_exists($mosConfig_absolute_path . '/templates/' . $mainframe->getTemplate() . '/images/arrow.png')) {
-            $jr_arrow = '<img src="' . KUNENA_JLIVEURL . '/templates/' . $mainframe->getTemplate() . '/images/arrow.png" alt="" />';
-        }
-        else {
-            $jr_arrow = '<img src="' . KUNENA_JLIVEURL . '/images/M_images/arrow.png" alt="" />';
-        }
-
         $catids = intval($catid);
         $parent_ids = 1000;
         $jr_it = 1;
         $jr_path_menu = array ();
-        $shome = '<div class="forum-pathway-1">' . CKunenaLink::GetKunenaLink( htmlspecialchars($fbConfig->board_title) );
+        $shome = '<div class="path-element-first">' . CKunenaLink::GetKunenaLink( htmlspecialchars(stripslashes($fbConfig->board_title)) );
 
         while ($parent_ids)
         {
@@ -46,7 +45,7 @@ if ($func != "")
             $database->setQuery($query);
             $results = $database->loadObject();
 			$parent_ids = $results->parent;
-			$fr_name = htmlspecialchars(trim($results->name));
+			$fr_name = htmlspecialchars(trim(stripslashes($results->name)));
             //$cids=@mysql_result( $results, 0, 'id' );
             $sname = CKunenaLink::GetCategoryLink( 'showcat', $catids, $fr_name);
 
@@ -64,7 +63,7 @@ if ($func != "")
                 $spath = $sname;
             }
             else {
-                $spath = $sname . " " . $jr_arrow . $jr_arrow . " " . $spath;
+                $spath = $sname . "<div class=\"path-element\">" . $spath . "</div>";
             }
 
             // next looping
@@ -93,13 +92,13 @@ if ($func != "")
         for ($i = 0; $i <= (count($jr_path_menu) - 1); $i++)
         {
             if ($i > 0 && $i == $jr_forum_count - 1) {
-                echo '</div><div class="forum-pathway-2">';
+                echo '<div class="path-element-last">';
             }
             else if ($i > 0) {
-                echo " " . $jr_arrow . $jr_arrow . " ";
+                echo '<div class="path-element">';
             }
 
-            echo $jr_path_menu[$i] . " ";
+            echo $jr_path_menu[$i] . "</div>";
         }
 
         if ($forumLocked)
@@ -124,12 +123,11 @@ if ($func != "")
 
          //get viewing
         $fb_queryName = $fbConfig->username ? "username" : "name";
-		$query= "SELECT w.userid, u.$fb_queryName AS username , k.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS k ON k.userid=w.userid  WHERE w.link like '%" . addslashes($_SERVER['REQUEST_URI']) . "%'";
+		$query= "SELECT w.userid, u.$fb_queryName AS username , k.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS k ON k.userid=w.userid  WHERE w.link like '%" . addslashes($_SERVER['REQUEST_URI']) . "%' GROUP BY w.userid ORDER BY u.$fb_queryName ASC";
 		$database->setQuery($query);
 		$users = $database->loadObjectList();
 			check_dberror("Unable to load who is online.");
 		$total_viewing = count($users);
-
 
         if ($sfunc == "userprofile")
         {
@@ -137,13 +135,17 @@ if ($func != "")
             echo $username;
         }
         else {
-			echo " ($total_viewing " . _KUNENA_PATHWAY_VIEWING . ")&nbsp;";
+			echo "<div class=\"path-element-users\">($total_viewing " . _KUNENA_PATHWAY_VIEWING . ")&nbsp;";
 			$totalguest = 0;
+			$lastone = end($users);
 			foreach ($users as $user) {
 				if ($user->userid != 0)
 				{
+					if($user==$lastone && !$totalguest){ 
+					$divider = '';
+					}
 					if ( $user->showOnline > 0 ){
-					echo '<small>' . CKunenaLink::GetProfileLink( $user->userid, $user->username) . ' ,</small> ';
+					echo CKunenaLink::GetProfileLink($fbConfig,  $user->userid, $user->username) . $divider.' ';
 					}
 				}
 				else
@@ -151,14 +153,14 @@ if ($func != "")
 					$totalguest = $totalguest + 1;
 				}
 			}
-      if ($totalguest > 0) { if ($totalguest==1) { echo '<small style="font-weight:normal;" >('.$totalguest.') '._WHO_ONLINE_GUEST.'</small>'; } else { echo '<small style="font-weight:normal;" >('.$totalguest.') '._WHO_ONLINE_GUESTS.'</small>'; } }
+      if ($totalguest > 0) { if ($totalguest==1) { echo $totalguest.'&nbsp;'._WHO_ONLINE_GUEST; } else { echo '('.$totalguest.') '._WHO_ONLINE_GUESTS; } }
        }
 
         unset($shome, $spath, $parent_ids, $catids, $results, $sname);
-        $mainframe->setPageTitle($fr_title_name . (($jr_topic_title) ? $jr_topic_title : "") . ' - ' . $fbConfig->board_title);
+	$fr_title = $fr_title_name . $jr_topic_title;
+        $mainframe->setPageTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($fbConfig->board_title));
         ?>
-    </div>
-
+		</div>
     </div>
 
 <?php

@@ -3,9 +3,9 @@
 * @version $Id: kunenaforum.js 185 2009-01-26 07:20:32Z fxstein $
 * Kunena Component
 * @package Kunena
-* @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
+* @Copyright (C) 2009 Kunena All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.bestofjoomla.com
+* @link http://www.kunena.com
 **/
 
 jQuery.noConflict();
@@ -106,6 +106,11 @@ function fbGetPreview(content, sitemid) {
     }
     });
     return false;
+}
+
+function kunenaRedirectTimeout(redirecturl, timeout) {
+    var redirect_timeout = setTimeout("location='"+redirecturl+"'", 3500);
+    jQuery("body").bind("click", function(e) { clearTimeout(redirect_timeout); } );
 }
 
 jQuery(function()

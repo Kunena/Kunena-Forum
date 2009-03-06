@@ -3,6 +3,12 @@
 * @version $Id: myprofile_avatar_upload.php 855 2008-07-16 15:35:10Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -220,10 +226,6 @@ if ($do == 'init')
                     ?>
 
                                 <img src = "<?php echo KUNENA_LIVEUPLOADEDPATH ;?>/avatars/<?php echo $avatar;?>" alt="" />
-
-                                <br />
-
-                                <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=uploadavatar');?>"> <?php echo _SET_NEW_AVATAR; ?></a>
 
                                 <br />
 
@@ -608,12 +610,7 @@ else if ($do == 'validate')
     break;
    }
 
-
-    @chmod($fileLocation, 0777);
-    @chmod($fileLocation_l, 0777);
-    @chmod($fileLocation_s, 0777);
-
-    $newFileName = FBTools::fbRemoveXSS($newFileName);
+    $newFileName = CKunenaTools::fbRemoveXSS($newFileName);
     $database->setQuery("UPDATE #__fb_users SET avatar='{$newFileName}' WHERE userid={$my->id}");
     $database->query() or trigger_dberror("Unable to update avatar.");
     echo " <strong>" . _UPLOAD_UPLOADED . "</strong>...<br /><br />";
@@ -629,7 +626,7 @@ else if ($do == 'fromgallery')
     require_once(KUNENA_PATH_LIB .DS. 'kunena.helpers.php');
     $newAvatar = mosGetParam($_POST, 'newAvatar', '');
 
-    $newAvatar = FBTools::fbRemoveXSS($newAvatar);
+    $newAvatar = CKunenaTools::fbRemoveXSS($newAvatar);
     if ($newAvatar == '') {
         mosRedirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_CHOOSE);
     }
@@ -640,7 +637,7 @@ else if ($do == 'fromgallery')
     echo _USER_PROFILE_UPDATED . "<br /><br />";
 
     echo _USER_RETURN_A . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '">' . _USER_RETURN_B . '</a><br /><br />';
-    fbSetTimeout(KUNENA_LIVEURL . '&func=myprofile&do=show', 3500);
+    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURL . '&amp;func=myprofile&amp;do=show'), 3500);
 }
 
 ?>

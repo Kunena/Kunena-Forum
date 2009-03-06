@@ -3,6 +3,12 @@
 * @version $Id: stats.class.php 1064 2008-10-05 23:29:35Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -64,29 +70,17 @@ unset($totaltmp);
 $PopUserCount = $fbConfig->popusercount;
 if ($fbConfig->showpopuserstats)
 {
+	$database->setQuery("SELECT p.userid, p.posts, u.$fb_queryName as username FROM #__fb_users AS p" . "\n LEFT JOIN #__users AS u ON u.id = p.userid" . "\n WHERE p.posts > 0 ORDER BY p.posts DESC LIMIT $PopUserCount");
+	$topposters = $database->loadObjectList();
 
-$database->setQuery("SELECT p.userid, p.posts, u.$fb_queryName as username FROM #__fb_users AS p" . "\n LEFT JOIN #__users AS u ON u.id = p.userid" . "\n WHERE p.posts > 0 ORDER BY p.posts DESC LIMIT $PopUserCount");
-$topposters = $database->loadObjectList();
+	$topmessage = $topposters[0]->posts;
 
-$topmessage = $topposters[0]->posts;
+	$database->setQuery("SELECT u.uhits AS hits, u.userid AS user_id, j.$fb_queryName AS user  FROM #__fb_users AS u"
+	. "\n LEFT JOIN #__users AS j ON j.id = u.userid"
+	. "\n WHERE u.uhits > 0 ORDER BY u.uhits DESC LIMIT $PopUserCount");
+	$topprofiles = $database->loadObjectList();
 
-if ($fbConfig->fb_profile == "cb") {
-$database->setQuery("SELECT u.$fb_queryName AS user, p.hits, p.user_id FROM #__users AS u"
-. "\n LEFT JOIN #__comprofiler AS p ON p.user_id = u.id"
-. "\n WHERE p.hits > 0 ORDER BY p.hits DESC LIMIT $PopUserCount");
-$topprofiles = $database->loadObjectList();
-
-$topprofil = $topprofiles[0]->hits;
-
-} else {
-$database->setQuery("SELECT u.uhits AS hits, u.userid AS user_id, j.$fb_queryName AS user  FROM #__fb_users AS u"
-. "\n LEFT JOIN #__users AS j ON j.id = u.userid"
-. "\n WHERE u.uhits > 0 ORDER BY u.uhits DESC LIMIT $PopUserCount");
-$topprofiles = $database->loadObjectList();
-
-$topprofil = $topprofiles[0]->hits;
-} // ENDIF: fb_profile
-
+	$topprofil = $topprofiles[0]->hits;
 } // ENDIF: showpopuserstats
 
 $PopSubjectCount = $fbConfig->popsubjectcount;

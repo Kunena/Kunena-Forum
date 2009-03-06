@@ -1,79 +1,88 @@
 /**
-* Fireboard Component
-* @package Fireboard
+* @version $Id: kunena.forum.css 445 2009-02-17 08:34:49Z mahagr $
+* Kunena Component
+* @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
 **/
 
-
 /* ======= */
 
-#fireboard td, #fireboard table, #fireboard th, #fireboard div, #fireboard p, #fireboard span {
+#Kunena td, #Kunena table, #Kunena th, #Kunena div, #Kunena p, #Kunena span {
 	font-family:Arial, Helvetica, sans-serif;
 }
-#fireboard .fb_header {
+#Kunena .fb_header {
 	background: #3B3B3B url(images/cat_title_bg.gif) repeat-x top left;
 	height: 30px;
 }
-#fireboard table.fb_blocktable thead tr th {
+#Kunena table.fb_blocktable thead tr th {
 	background: #3B3B3B url(images/cat_title_bg.gif) repeat-x top left;
-	padding: 2px;
 	color:#ffffff;
+	padding: 2px;
 	font-weight:normal;
 }
-#fireboard tr.fb_sth { 
+#Kunena tr.fb_sth { 
 	background: #8CABC8 url(images/cat_title_head_bg.gif) repeat-x top left;
-	font-size:11px;
+	color:#000000;
+	font-size:small;
 	font-family:Arial, Helvetica, sans-serif;
 }
-#fireboard th.fb_sectiontableheader {
+#Kunena th.fb_sectiontableheader {
 	padding:3px 5px;
-	color:#FFFFFF;
 	font-weight:normal;
-	font-size:11px;
+	font-size:small;
 	font-family:Arial, Helvetica, sans-serif;
 }
-#fireboard tr.fb_sectiontableentry1 td {
+#Kunena tr.fb_sectiontableentry1 td {
+	background: #FFFFFF;
+	color: #000000;
+	padding:5px;
+	border-bottom:1px solid #BFC3C6;
+	border-left:1px solid #FFFFFF;
+	border-right:1px solid #BFC3C6;
+}
+#Kunena tr.fb_sectiontableentry2 td {
 	background: #F2F1EE;
+	color: #000000;
 	padding:5px;
 	border-bottom:1px solid #BFC3C6;
 	border-left:1px solid #FFFFFF;
 	border-right:1px solid #BFC3C6;
 }
-#fireboard tr.fb_sectiontableentry2 td {
-	padding:5px;
-	border-bottom:1px solid #BFC3C6;
-	border-left:1px solid #FFFFFF;
-	border-right:1px solid #BFC3C6;
-}
-#fireboard tr.fb_sectiontableentry1 td.td-1, #fireboard tr.fb_sectiontableentry2 td.td-1 {
+#Kunena tr.fb_sectiontableentry1 td.td-1, #Kunena tr.fb_sectiontableentry2 td.td-1 {
 	background: #EEEEEE;
 }
-#fireboard tr.fb_sectiontableentry1 td.fb_cc-sectiontableentry1, #fireboard tr.fb_sectiontableentry2 td.fb_cc-sectiontableentry1 {
+#Kunena tr.fb_sectiontableentry1 td.fb_cc-sectiontableentry1, #Kunena tr.fb_sectiontableentry2 td.fb_cc-sectiontableentry1 {
 	background:none;
 }
-#fireboard tr.fb_sectiontableentry1 td.td-0, #fireboard tr.fb_sectiontableentry2 td.td-0 {
+#Kunena tr.fb_sectiontableentry1 td.td-0, #Kunena tr.fb_sectiontableentry2 td.td-0 {
 	border-left:1px solid #BFC3C6;
 	background: #EEEEEE;
 	text-align:center;
 	color:#999999;
 }
-#fireboard td.td-0 strong {
+#Kunena td.td-0 strong {
 	display:block;
-	font-size:26px;
+	font-size:x-large;
 	font-weight:normal;
-	line-height:21px;
 	margin:5px 0;
+	line-height:21px;
 }
-#fireboard .topic_latest_post, #fireboard .topic_date {
-	font-size:10px;
+#Kunena .topic_latest_post, #Kunena .topic_date {
+	font-size:x-small;
 }
-#fireboard a.fb-topic-title {
+#Kunena a.fb-topic-title {
 	font-weight:bold;
-	font-size:14px;
+	font-size:medium;
 }
-#fireboard .topic_latest_post_avatar {
+#Kunena .topic_latest_post_avatar {
 	display:block;
 	height:auto;
 	width:40px;
@@ -82,7 +91,7 @@
 	border:1px solid #CCCCCC;
 	float:left;
 }
-#fireboard img.fb_list_avatar {
+#Kunena img.fb_list_avatar {
 	height:auto;
 	width:40px;
 	border:0px
@@ -90,18 +99,24 @@
 tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg td.td-0 {
 	border-left: 1px solid #BFC3C6;
 }
-#fireboard .topic_sticky {
+#Kunena .topic_sticky {
 	position:absolute;
 	top:-5px;
 	right:0px;
 }
-.fb_credits, .fb_footer {
-	font-size:10px
+.fb_credits {
+	height: 31px;
+	line-height: 26px;
+	font-size:x-small;
 }
-/* MEnu */
-#fireboard #fireboard_top td {
-	height:35px;
+.fb_footer {
+	font-size:x-small;
+}
+/* Menu */
+#Kunena #Kunena_top td {
 	background: #FFFFFF;
+	color:#000000;
+	height:35px;
 	margin:0;
 	border-style:solid;
 	border-color:#5182A4;
@@ -110,28 +125,28 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	border-bottom-width:3px;
 	border-left-width:0;
 }
-#fireboard #fireboard_top td img.hideshow {
+#Kunena #Kunena_top td img.hideshow {
 	background:#5182A4;
 }
-#fireboard #fb_topmenu {
+#Kunena #fb_topmenu {
 }
-#fireboard #fireboard_tab {
+#Kunena #Kunena_tab {
 	margin:0;
 	top:0;
 }
-#fireboard #fireboard_tab ul {
+#Kunena #Kunena_tab ul {
 	margin:0;
 	padding:0;
 	list-style:none;
 	float:left;
 }
-#fireboard #fireboard_tab li {
+#Kunena #Kunena_tab li {
 	display:inline;
 	float:left;
 	margin:0 1px 0 0;
 	padding:0;
 }
-#fireboard #fireboard_tab a {
+#Kunena #Kunena_tab a {
 	background: url("images/tabmenuright.gif") no-repeat right top;
 	margin:0;
 	padding:0;
@@ -140,41 +155,74 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	display:block;
 	float:left;
 }
-#fireboard #fireboard_tab a span {
+#Kunena #Kunena_tab a span {
 	display:block;
 	background:url("images/tabmenuleft.gif") no-repeat left top;
 	padding:0 10px 0 10px;
 	font-family:Arial, Helvetica, sans-serif;
-	font-size:11px;
+	font-size:small;
 	color:#FFFFFF;
 	font-weight:bold;
 	line-height:35px;
 }
-#fireboard #fireboard_tab a:hover, #fireboard #fireboard_tab li.fireboard_item_active a {
+#Kunena #Kunena_tab a:hover, #Kunena #Kunena_tab li.Kunena_item_active a {
 	background-position:right bottom;
 }
-#fireboard #fireboard_tab a:hover span, #fireboard #fireboard_tab li.fireboard_item_active a span {
+#Kunena #Kunena_tab a:hover span, #Kunena #Kunena_tab li.Kunena_item_active a span {
 	background-position:left bottom;
 	color:#FFFFFF;
 	font-weight:bold;
 	font-style:normal;
 	text-decoration:none;
 }
+#Kunena select, #Kunena select:focus, #Kunena select:hover {
+	background:#F7F7F7 none repeat scroll 0 0;
+	font-size:x-small;
+	border:1px solid #999999;
+	color:#000000;
+	padding: 0px;
+}
+#Kunena option {
+	background:#FFFFFF none repeat scroll 0 0;
+	font-size:x-small;
+	color:#000000;
+	padding: 0px 10px 0px 0px;
+}
+#Kunena .button, #Kunena .fb_button {
+	background:#F7F7F7 none repeat scroll 0 0;
+	font-size: x-small;
+	border:1px solid #999999;
+	color:#000000;
+	padding: 0px 4px;
+}
+#Kunena .fb_button:hover, #Kunena .fb_button:focus {
+	background:#609FBF none repeat scroll 0 0;
+	font-size: x-small;
+	border:1px solid #006699;
+	color:#FFFFFF;
+	padding: 0px 4px;
+}
+
 /* Menu */
 
-
-
-
-
 /* B: all disc top */
-#fireboard .fb_list_actions {
+#Kunena .fb_list_actions {
+	background-color:#FFFFFF;
+	color:#000000;
 	border:1px solid #D1D1D1;
 	clear:both;
-	display:table;
 	margin-top:-1px;
 	width:100%;
 }
-#fireboard .fb_list_actions_info {
+#Kunena .fb_list_actions_bottom {
+	background-color:#FFFFFF;
+	color:#000000;
+	border:1px solid #D1D1D1;
+	clear:both;
+	margin-bottom:-1px;
+	width:100%;
+}
+#Kunena .fb_list_actions_info {
 	float:left;
 	font-weight:bold;
 	height:28px;
@@ -182,23 +230,23 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	padding-left:15px;
 	padding-right:10px;
 }
-#fireboard .fb_list_actions_info a {
+#Kunena .fb_list_actions_info a {
 	color:#009933;
 	text-decoration:underline;
 }
-#fireboard .fb_list_pages {
+#Kunena .fb_list_pages {
 	border-left:1px solid #D1D1D1;
 	color:#666666;
 	float:right;
 	font-family:Arial, Helvetica, sans-serif;
-	font-size:15px;
+	font-size:medium;
 	font-weight:bold;
 	height:28px;
 	line-height:28px;
 	padding-left:10px;
 	padding-right:5px;
 }
-#fireboard .fb_list_times {
+#Kunena .fb_list_times {
 	border-left:1px solid #D1D1D1;
 	color:#666666;
 	height:28px;
@@ -206,31 +254,44 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	padding-left:5px;
 	padding-right:10px;
 }
-#fireboard a.fb_list_pages_link:link, a.fb_list_pages_link:visited {
+#Kunena a.fb_list_pages_link:link, a.fb_list_pages_link:visited {
 	text-decoration:underline;
 }
-#fireboard .fb_list_pages_link {
+#Kunena .fb_list_pages_link {
 	padding:0pt 5px;
 }
-#fireboard .fb_list_actions_info_all {
+#Kunena .fb_list_actions_info_all {
 	font-weight:bold;
 	height:28px;
 	line-height:28px;
 	padding-left:15px;
 	padding-right:10px;
+	width: 100%;
 }
-#fireboard .fb_list_pages_all {
+#Kunena .fb_list_actions_goto {
+	height:28px;
+	padding: 0px 2px 0px 2px;
+}
+#Kunena .fb_list_actions_forum {
+	border-left:1px solid #D1D1D1;
+	height:28px;
+	padding: 1px 4px 1px 4px;
+	white-space: nowrap;
+}
+#Kunena .fb_list_pages_all {
+	width: 1%;
 	border-left:1px solid #D1D1D1;
 	color:#666666;
 	font-family:Arial, Helvetica, sans-serif;
-	font-size:15px;
+	font-size:medium;
 	font-weight:bold;
 	height:28px;
 	line-height:28px;
 	padding-left:5px;
-	padding-right:30px;
+	padding-right:3px;
 }
-#fireboard .fb_list_times_all {
+#Kunena .fb_list_times_all {
+	width: 1%;
 	border-left:1px solid #D1D1D1;
 	color:#666666;
 	height:28px;
@@ -238,75 +299,134 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	padding-left:5px;
 	padding-right:5px;
 }
-#fireboard .fb_list_jump_all {
+#Kunena .fb_list_jump_all {
+	width: 1%;
 	border-left:1px solid #D1D1D1;
 	color:#666666;
 	height:28px;
 	line-height:28px;
 	padding-left:5px;
-	padding-right:10px;
+	padding-right:5px;
+	white-space: nowrap;
 }
-#fireboard .fb_list_jump_all form {
+#Kunena .fb_list_jump_all form {
 	display:table;
 }
-#fireboard .fb_list_times_all .inputboxusl {
-	font-size:10px;
+#Kunena .fb_list_times_all .inputboxusl {
+	font-size:x-small;
 	margin:0pt;
 	padding:0pt;
-	width:50px;
+	width:100px;
 }
-#fireboard .fb_list_jump_all form .inputbox {
-	font-size:10px;
+#Kunena .fb_list_jump_all form .inputbox {
+	font-size:x-small;
 	margin:0pt;
 	padding:0pt;
 	width:150px;
 }
-#fireboard .fb_list_pages_all table tr td {
+#Kunena .fb_list_pages_all table tr td {
 	height:28px;
 	line-height:28px;
 	white-space:nowrap;
 }
-#fireboard td.fb_list_jump_all input.fbjumpgo {
+#Kunena td.fb_list_jump_all input.fbjumpgo {
 	display:none;
+}
+#Kunena .fb_list_top {
+	background:#FFFFFF none;
+	border:1px solid #D1D1D1;
+	clear:both;
+	margin:-1px 0px 5px;
+	width:100%;
+}
+#Kunena .fb_list_bottom {
+	background:#FFFFFF none;
+	border:1px solid #D1D1D1;
+	clear:both;
+	margin:0px 0px 5px;
+	width:100%;
+}
+#Kunena .fb_list_moderators {
+	height:28px;
+	padding-left:5px;
+	padding-right:10px;
+	width: 100%;
+}
+#Kunena .fb_list_markallcatsread {
+	height:28px;
+	padding-left:5px;
+	padding-right:10px;
+	width: 100%;
+}
+#Kunena .fb_list_categories {
+	border-left:1px solid #D1D1D1;
+	color:#666666;
+	height:28px;
+	line-height:28px;
+	padding-left:10px;
+	padding-right:5px;
+	white-space: nowrap;
+}
+#Kunena .fb_pagination {
+	white-space: nowrap;
+	font-weight: normal;
+	font-size: small;
+}
+#Kunena .fb_pagination a, #Kunena .fb_pagination strong {
+	font-weight: normal;
+	margin: 0px 2px;
+	padding: 0px 4px;
+	text-decoration: none;
+}
+
+#Kunena .fb_pagination a, #Kunena .fb_pagination a:link, #Kunena .fb_pagination a:visited {
+	background-color: #F7F7F7;
+	border: 1px solid #999999;
+	color: #000000;
+}
+#Kunena .fb_pagination strong, #Kunena .fb_pagination a:active,  #Kunena .fb_pagination a:hover {
+	background-color: #609FBF;
+	border: 1px solid #006699;
+	color: #FFFFFF;
 }
 /* F: all disc top */
 
 /* ======= */
 
 
-#fireboard a {
+#Kunena a {
 	text-decoration:none;
 	font-weight:normal;
 }
-#fireboard a:link, #fireboard a:visited {
+#Kunena a:link, #Kunena a:visited {
 	color:#006699;
 }
-#fireboard a:hover {
+#Kunena a:hover {
 	color: #FF0000;
 }
-#fireboard .fbxs {
-	font-size: 8px;
+#Kunena .fbxs {
+	font-size:xx-small;
 }
-#fireboard .fbs {
-	font-size: 10px;
+#Kunena .fbs {
+	font-size:x-small;
 }
-#fireboard .fbm {
-	font-size: 11px;
+#Kunena .fbm {
+	font-size:small;
 }
-#fireboard .fbl {
-	font-size: 14px;
+#Kunena .fbl {
+	font-size:medium;
 }
-#fireboard .fbxl {
-	font-size: 18px;
+#Kunena .fbxl {
+	font-size:medium;
 }
-#fireboard .fbxxl {
-	font-size: 28px;
+#Kunena .fbxxl {
+	font-size:large;
 }
 /* HEADER
 ----------------------------------------------------------------------------------------------- */
-/* #fireboard .fb_header {background: #555555;height: 30px; }
+/* #Kunena .fb_header {background: #555555;height: 30px; }
 */
-#fireboard .fb_header_th_1 {
+#Kunena .fb_header_th_1 {
 	padding:5px;
 }
 td.fb_profileboxcnt {
@@ -314,17 +434,16 @@ td.fb_profileboxcnt {
 }
 /* TOPMENU
 ----------------------------------------------------------------------------------------------- */
-#fireboard .fb_header div#fb_topmenu {
+#Kunena .fb_header div#fb_topmenu {
 } /* topmenu div */
-#fireboard .fb_header div#fb_topmenu a {
-	color: #FFFFFF;
+#Kunena .fb_header div#fb_topmenu a {
 	padding: 0 8px;
 	display: block;
 	text-decoration: none;
 	font-weight: bold;
 	float: left;
 } /* topmenu link items */
-#fireboard .fb_header div#fb_topmenu a:hover {
+#Kunena .fb_header div#fb_topmenu a:hover {
 	color: #BFC3C6;
 }
 /* SEARCHBOX
@@ -340,12 +459,21 @@ td.fb_profileboxcnt {
 #fb_searchbox .fb_search_inputbox {
 	width: auto;
 	margin: 0 0 0 5px;
-	border: 1px solid #666666;
+	border: 1px solid #999999;
 	background: #FFFFFF url(images/search_icon.gif) no-repeat 5px center;
 	font-weight: normal;
-	padding: 2px 5px 2px 20px;
+	padding: 1px 5px 1px 20px;
 }
-#fb_searchbox .fb_search_button {
+#fb_searchbox .fb_search_inputbox:hover, #fb_searchbox .fb_search_inputbox:focus {
+	width: auto;
+	margin: 0 0 0 5px;
+	border: 1px solid #999999;
+	background: #FFFFFF url(images/search_icon.gif) no-repeat 5px center;
+	font-weight: normal;
+	color: #000000;
+	padding: 1px 5px 1px 20px;
+}
+#fb_searchbox .fb_button {
 	margin:0 5px 0 0;
 }
 .fb_search-results {
@@ -354,7 +482,7 @@ td.fb_profileboxcnt {
 }
 /* CATEGORY LIST
 ----------------------------------------------------------------------------------------------- */
-#fireboard table.fb_blocktable {
+#Kunena table.fb_blocktable {
 	width:  100%;
 	margin: 5px 0;
 	border-style:solid;
@@ -362,9 +490,9 @@ td.fb_profileboxcnt {
 	border-width:0px 0px 4px 0px;
 	text-align:left;
 }
-/* #fireboard table.fb_blocktable thead tr th { background: #555555; padding: 2px; color:#ffffff; font-weight:normal; }
+/* #Kunena table.fb_blocktable thead tr th { background: #555555; padding: 2px; color:#ffffff; font-weight:normal; }
 */
-#fireboard div.fb_title_cover {
+#Kunena div.fb_title_cover {
 	float:left;
 	text-align:left;
 	color:#FFFFFF;
@@ -372,14 +500,28 @@ td.fb_profileboxcnt {
 	line-height:normal;
 	padding:2px;
 }
-#fireboard a.fb_title, #fireboard .fb_title {
+#Kunena div.fb_totalfavorite {
+	float:right;
+	text-align:left;
+	color:#FFFFFF;
+	font-weight:normal;
+	line-height:normal;
+	padding:4px;
+}
+#Kunena .fb_title, #Kunena a.fb_title {
 	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-weight:bold;
 	display:block;
 	color:#FFFFFF;
 	text-decoration: none;
 }
-#fireboard img.hideshow {
+#Kunena .fb_title a {
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	color:#FFFFFF;
+	text-decoration: none;
+}
+#Kunena img.hideshow {
 	float:right;
 	margin:0;
 	padding:0;
@@ -387,36 +529,33 @@ td.fb_profileboxcnt {
 	position: relative;
 	z-index: 1;
 }
-/*
-#fireboard tr.fb_sth {background: #BFC3C6;font-weight: bold;font-family: Tahoma, Arial, Helvetica, sans-serif;}
-*/
 th.fb_sectiontableheader {
 }
 /*
-#fireboard tr.fb_sectiontableentry1 td {background: #EEEEEE; padding:5px; border-bottom:1px solid #BFC3C6;border-left:1px solid #FFFFFF;border-right:1px solid #BFC3C6;}
+#Kunena tr.fb_sectiontableentry1 td {background: #EEEEEE; padding:5px; border-bottom:1px solid #BFC3C6;border-left:1px solid #FFFFFF;border-right:1px solid #BFC3C6;}
 */
-#fireboard tr.fb_sectiontableentry1 td.td-1 {
+#Kunena tr.fb_sectiontableentry1 td.td-1 {
 	border-left:1px solid #BFC3C6;
 }
 /*
-#fireboard tr.fb_sectiontableentry2 td {background: #F7F7F7; padding:5px; border-bottom:1px solid #BFC3C6;border-left:1px solid #FFFFFF;border-right:1px solid #BFC3C6;}
+#Kunena tr.fb_sectiontableentry2 td {background: #F7F7F7; padding:5px; border-bottom:1px solid #BFC3C6;border-left:1px solid #FFFFFF;border-right:1px solid #BFC3C6;}
 */
-#fireboard tr.fb_sectiontableentry2 td.td-1 {
+#Kunena tr.fb_sectiontableentry2 td.td-1 {
 	border-left:1px solid #BFC3C6;
 }
-#fireboard div.fb_thead-title a {
+#Kunena div.fb_thead-title a {
 	font-weight:     bold;
 }
 div.fb_thead-desc {
 }
-#fireboard div.fb_thead-child {
+#Kunena div.fb_thead-child {
 	border-top: 1px dotted #D4C9AD;
 	margin-top: 4px;
 }
-#fireboard table.fb_cc-table tr td {
+#Kunena table.fb_cc-table tr td {
 	border: 0px solid #FFFFFF;
 }
-#fireboard div.fb_cc-childcat-title {
+#Kunena div.fb_cc-childcat-title {
 	width: 90px;
 	float:left;
 }
@@ -428,7 +567,7 @@ tr.fb_cc-sectiontableentry2 {
 }
 span.fb_childcount {
 }
-#fireboard div.fb_latest-subject a {
+#Kunena div.fb_latest-subject a {
 	font-weight:     bold;
 }
 div.fb_latest-subject-by {
@@ -437,19 +576,19 @@ span.newchar {
 	color: #009900;
 	font-weight: bold;
 	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
-	font-size: 8px;
+	font-size:xx-small;
 }
 /* SHOW CATEGORY 
 ----------------------------------------------------------------------------------------------- */
 /*
-#fireboard  a.fb-topic-title { font-weight:bold;}
+#Kunena  a.fb-topic-title { font-weight:bold;}
 */
-#fireboard img.stickyicon, #fireboard img.attachicon {
+#Kunena img.stickyicon, #Kunena img.attachicon {
 	float:  right;
 	border: 0;
 	margin: 2px;
 }
-#fireboard img.catavatar {
+#Kunena img.catavatar {
 	width:  20px;
 	height: 20px;
 	margin-left: 4px;
@@ -473,8 +612,10 @@ span.newchar {
 }
 .fb_sectiontableentry2_stickymsg {
 	background: #FEFECC;
+	color:#000000;
 }
 tr.fb_sectiontableentry1_stickymsg td, tr.fb_sectiontableentry2_stickymsg td {
+	color:#000000;
 	border-bottom:1px solid #BFC3C6;
 	border-left:1px solid #FFFFFF;
 	border-right:1px solid #BFC3C6;
@@ -482,13 +623,19 @@ tr.fb_sectiontableentry1_stickymsg td, tr.fb_sectiontableentry2_stickymsg td {
 }
 /*
 tr.fb_sectiontableentry1_stickymsg td.td-1, 
-tr.fb_sectiontableentry2_stickymsg td.td-1{border-left: 1px solid #BFC3C6;}
+tr.fb_sectiontableentry2_stickymsg td.td-1{
+	background: #F2F1EE;
+	color:#FFFFFF;
+	border-left: 1px solid #BFC3C6;
+}
 */
 
 /*
 VIEW PAGE
 -------------------------------------------------------------------- */
 #fb_views {
+	background: #FFFFFF;
+	color: #000000;
 }
 th.view-th {
 	text-align:right;
@@ -500,12 +647,13 @@ td.fb-msgview-left {
 	background:#EFF0F4;
 	vertical-align: top;
 	width:170px;
+	min-width:170px;
 	border-bottom:  0px solid #BFC3C6;
 	border-right:1px solid #BFC3C6;
 }
 td.fb-msgview-right {
 	border-right:1px solid #BFC3C6;
-	padding:5px 10px 5px 30px;
+	padding:5px 10px 5px 10px;
 	vertical-align: top;
 	border-left:1px solid #BFC3C6;
 }
@@ -545,32 +693,37 @@ div.viewcover {
 	text-align: center;
 	margin:2px 5px;
 }
-span.msgtitle {
+span.msgtitle, span.msgtitle_new {
 	font-weight:bold;
 	text-decoration: none;
 	background: url(images/msgtitleicon.gif) no-repeat left center;
 	padding-left:25px;
 	line-height:26px;
-	color:#000000;
-	font-size:14px;
+	font-size:medium;
+}
+span.msgtitle_new {
+	background: url(images/msgtitlenew.gif) no-repeat left center;
 }
 span.msgdate {
 	font-weight:     normal;
 	text-decoration: none;
 	padding-left:10px;
-	font-size:10px;
+	font-size:x-small;
 	font-family:Arial, Helvetica, sans-serif;
+	white-space: nowrap;
 }
 span.msgkarma {
 	font-weight: bold;
 	color: #333333;
 	text-decoration: none;
 	padding-right: 10px;
+	white-space: nowrap;
 }
 div.msgtext {
+	width: 100%;
 	overflow:hidden;
 	border-top:1px solid #ddd;
-	padding-top:10px;
+	padding:10px 0 0 0;
 	margin-top:5px;
 }
 div.fbcode {
@@ -603,23 +756,8 @@ span.contentheading {
 }
 div.switchcontent {
 }
-input.fb_qm_btn {
-}
-input.fb_qm_cncl_btn {
-}
-td.fb-msgview-left-c {
-	background:#EFF0F4;
-	vertical-align: top;
-	border-right:  1px solid #BFC3C6;
-}
-td.fb-msgview-right-c {
-	border-right:  1px solid #BFC3C6;
-	padding:1px 5px 1px 5px;
-	vertical-align: top;
-	border-left:1px solid #D4C9AD;
-}
 div.fb_smalltext {
-	font-size:10px;
+	font-size:x-small;
 	font-family:Arial, Helvetica, sans-serif;
 }
 td.fb-msgview-right-c div.fb_smalltext {
@@ -628,24 +766,49 @@ td.fb-msgview-right-c div.fb_smalltext {
 }
 div.fb_message_editMarkUp_cover {
 	padding-top:5px;
+	margin-left:5px;
 	text-align:right;
+	border-bottom: 1px dotted #CCC;
 }
 span.fb_message_editMarkUp {
-	background:#f7f7f7 url(images/edit.gif) no-repeat left center;
-	border-left:1px dotted #999;
-	border-right:1px dotted #999;
-	border-top:1px dotted #999;
-	padding:2px 5px 2px 20px;
-	font-size:9px;
+	background:#f7f7f7 no-repeat left center; 
+	height: 16px;
+	border-left:1px dotted #CCC;
+	border-right:1px dotted #CCC;
+	border-top:1px dotted #CCC;
+	padding:2px 5px 2px 5px;
+	margin-left: 3px;
+	font-size:xx-small;
 	color:#666666;
 }
-div.msgsignature {
-	border-top: dotted 1px #ccc;
+span.fb_message_informMarkUp {
+	background:#f7f7f7;
+	height: 16px;
+	border-left:1px dotted #CCC;
+	border-right:1px dotted #CCC;
+	border-top:1px dotted #CCC;
+	padding:2px 5px 2px 5px;
+	margin-left: 3px;
+	font-size:xx-small;
+	color:#666666;
+}
+td.msgsignature {
+	width: 100%;
+}
+td.msgsignature div {
 	text-align: left;
+	overflow: hidden;
 	color:#999;
-	padding-top: 10px;
-	font-size:10px;
-	font-family:Arial, Helvetica, sans-serif
+	font-size:x-small;
+	padding: 5px 5px;
+}
+div.fb_message_buttons_cover {
+	text-align:right;
+	height: 15px;
+	line-height: 15px;
+	margin: 4px 0px 3px;
+	line-height: 14px;
+	white-space: nowrap;
 }
 td.fb-msgview-left-b {
 	background:#EFF0F4;
@@ -666,6 +829,12 @@ span.fb_qr_fire {
 .switchcontent {
 	display:none;
 }
+#Kunena .switchcontent .inputbox {
+	border: 1px solid #999999;
+	background: #FFFFFF;
+	color: #000000;
+	margin: 2px 0px;
+}
 span.fb_quote {
 	display: block;
 	border: 1px dotted #CCC;
@@ -675,10 +844,10 @@ span.fb_quote {
 	font-style: italic;
 	background: #F7F7F7;
 }
-#fireboard div.fbhide {
+#Kunena div.fbhide {
 	background:#FFF8F2 url(images/bullet-tips.gif) no-repeat scroll 5px center;
 	border:1px dotted #F2CAB7;
-	font-size:12px;
+	font-size:medium;
 	padding:10px 10px 10px 25px;
 }
 /*
@@ -700,26 +869,31 @@ div#fb_threadview table.fb_blocktable {
 /*
 POST PAGE
 -------------------------------------------------------------------- */
-#fb_postmessage {
+#Kunena #fb_postmessage {
 	border-left:  1px solid #BFC3C6;
-	border-right: 1px solid #BFC3C6;
-}
-table#fb_postmessage .fb_button {
-	border: 1px solid #999;
-	color: #000;
-	padding: 1px;
-}
-table#fb_postmessage .fb_slcbox {
-	border: 1px solid #999;
-	color: #000;
 }
 #fb_post_message .postinput {
 	width:  94%;
+	background: #FFFFFF;
+	color: #000000;
 	border: 1px solid #ccc;
 	padding: 3px 5px;
 }
-#fb_postmessage tr.fb_sectiontableentry2 td.fb-topicicons td {
-	border-bottom: 0px solid #BFC3C6;
+#fb_post_message .postinput:hover, #fb_post_message .postinput:focus {
+	width:  94%;
+	background: #FFFFFF;
+	color: #000000;
+	border: 1px solid #ccc;
+	padding: 3px 5px;
+}
+#Kunena #fb_postmessage tr.fb_sectiontableentry2 td.fb-topicicons table {
+	width: 95%;
+}
+#Kunena #fb_postmessage tr.fb_sectiontableentry2 td.fb-topicicons td {
+	background: #FFFFFF;
+	color: #000000;
+	border: 1px solid #ccc;
+	width: 99%;
 }
 #fb_postmessage tr.fb_sectiontableentry1 .fb-postbuttonset td.fb_posthint {
 	background: #FFFFCC;
@@ -729,12 +903,14 @@ table#fb_postmessage .fb_slcbox {
 table#fb_postmessage .fb_posthint .fb_inputbox {
 	background: #FFFFCC;
 	border: 0px solid #FFFFCC;
-	width:  100%;
+	width:  99%;
 }
 .fb-postbuttonset {
 	width: 95%;
+	margin: 2px;
 }
-.fb-postbuttons {
+#Kunena tr.fb_sectiontableentry1 .fb-postbuttons {
+	border: 1px solid #CCC;
 }
 table#fb_postmessage .fb_txtarea {
 	width:95%;
@@ -749,16 +925,21 @@ table#fb_postmessage .fb_txtarea {
 #fb_postmessage tr.fb_sectiontableentry1 .fb-postbuttonset td, #fb_postmessage tr.fb_sectiontableentry2 .fb-postbuttonset td {
 	border-bottom: 0px solid #BFC3C6;
 }
-table#fb_postmessage .button {
-	border: 1px solid #999;
-	color: #333;
-	font-weight: bold;
-	padding: 3px 10px;
-	margin: 3px;
-}
 .fb_leftcolumn {
 	width:160px;
 	text-align: right;
+}
+#Kunena #Kunena_post_result div {
+	border: 1px solid #999;
+	font-size: small;
+}
+#Kunena #fb_post_buttons {
+	padding: 4px;
+}
+#Kunena #fb_post_buttons .fb_button {
+	padding: 4px;
+	font-weight: bold;
+	font-size: small;
 }
 /*
 POST HISTORY
@@ -790,41 +971,67 @@ POST HISTORY
 	color:  #999;
 	display: block;
 }
-/* PATHWAY 
+ /* PATHWAY 
 ----------------------------------------------------------------------------------------------- */
 .fb_forum-pathway {
 	padding: 3px;
-	margin: 5px 0 5px 0;
-	border: 1px solid #BFC3C6;
+	line-height: 18px;
+	margin: 5px 0 0 0;
+	border: 1px solid #CCCCCC; 
+	color: #000000;
 	background:#F7F7F7;
 }
-.forum-pathway-1 {
+.fb_forum-pathway-bottom {
+	padding: 3px;
+	line-height: 18px;
+	margin: 0 0 5px 0;
+	border: 1px solid #CCCCCC; 
+	color: #000000;
+	background:#F7F7F7;
+}
+.path-element-first {
 	font-weight: normal;
 	height: 18px;
 	line-height: 18px;
 	padding-left: 22px;
-	background: url(images/pathway_start.gif) no-repeat left center;
-	padding-top: 2px !important;
-	padding-top: 4px;
+	background: url(images/pathway_start.gif) no-repeat left center; 
+	display: inline;
+	padding-right:3px; 
 }
-.forum-pathway-2 {
-	height: 18px;
-	line-height: 18px;
-	background:  url(images/pathway_finallink.gif) no-repeat left center;
-	padding-left: 30px;
-}
-.forum-pathway-1 a:link, .forum-pathway-1 a:visited {
+.path-element-first a:link, 
+.path-element-first a:visited {
 	font-weight:normal;
 	text-decoration: none;
 	background:none;
 }
-.forum-pathway-2, .forum-pathway-2 a:link {
+.path-element-last, 
+.path-element-last a:link {
 	font-weight:bold;
 	text-decoration: none;
 	text-indent:5px;
+	display: inline;
 }
-/*
-PAGENAV
+.fb_forum-pathway .path-element, .fb_forum-pathway-bottom .path-element {
+	background: url(images/arrow.png) no-repeat left center;
+	padding-left: 12px;
+	display: inline;
+	font-weight: normal;
+	height: 18px;
+	line-height: 18px;
+	padding-right:3px;
+}
+.fb_forum-pathway .path-element-last, .fb_forum-pathway-bottom .path-element-last {
+	height: 18px;
+	line-height: 18px;
+	background:  url(images/pathway_finallink.gif) no-repeat left center; 
+	padding-left: 37px; 
+	padding-right:5px;
+}
+.path-element-users {
+	display: inline;
+	margin-top:21px;
+}
+/* PAGENAV
 -------------------------------------------------------------------- */
 table.jr-topnav {
 	width: 100%;
@@ -866,6 +1073,9 @@ div.jr-pagenav ul li.jr-pagenav-text {
 	display:block;
 	float:left;
 }
+div.jr-pagenav-nb, div.jr-pagenav-nb-act {
+	display: inline;
+}
 a.jr-pagenav-nb:link, a.jr-pagenav-nb:visited {
 	font-weight:bold;
 	text-decoration: none;
@@ -886,7 +1096,18 @@ li.jr-pagenav-nb span.pagenav, li.jr-pagenav-nb a.pagenav:link, li.jr-pagenav-nb
 .fb_bottom_pathway {
 	display: none;
 }
+
 /*
+FORUM HEADER DESCRIPTION
+-------------------------------------------------------------------- */
+.fb_forum-headerdesc {
+	padding: 3px;
+	line-height: 18px;
+	margin: -1px 0 0 0;
+	border: 1px solid #CCCCCC; 
+	color: #000000;
+	background:#F7F7F7;
+}
 
 /*
 FORUM TOOLS
@@ -907,12 +1128,15 @@ td.ft-td2 {
 }
 #forumtools_control {
 	width: 150px;
+	float: right;
 }
 .forumtools_contentBox {
+	z-index:2;
 	border:  1px solid #BFC3C6;
 	display: none;
 	position: absolute;
 	right:   0px;
+	top: 20px;
 	background:  #555555;
 	overflow: hidden;
 	width:150px;
@@ -945,7 +1169,7 @@ td.ft-td2 {
 #subBox1 ul li a:hover {
 	text-decoration: underline;
 }
-a.forumtools:link, a.forumtools:visited {
+#Kunena a.forumtools:link, #Kunena a.forumtools:visited {
 	background: url(images/menu_open.gif) no-repeat right center;
 	padding-right: 20px;
 	color:#FFFFFF;
@@ -957,7 +1181,7 @@ a.forumtools:link, a.forumtools:visited {
 	text-align:    center;
 	text-decoration: none;
 }
-a.forumtools:hover {
+#Kunena a.forumtools:hover {
 	text-decoration: underline;
 }
 /*
@@ -968,6 +1192,7 @@ td.fb_faqdesc, td.fb_rulesdesc, td.fb_uadesc, td.fb_anndesc, td.fb_creditsdesc {
 	padding: 5px;
 	border:  1px solid #ccc;
 	background: #FFFFFF;
+	color:#000000;
 }
 .fb_credits_intro {padding:10px 0 10px 0;}
 .fb_team { margin:0; padding:0; border-top:1px solid #dddddd; }
@@ -1028,12 +1253,12 @@ MY PROFILE
 }
 /* RECENT POSTS
 ----------------------------------------------------------------------------------------------- */
-#fireboard a.fbrecent {
+#Kunena a.fbrecent {
 	font-weight:bold;
 }
 /* WHOIS ONLINE 
 ----------------------------------------------------------------------------------------------- */
-#fireboard .fbgrouplist {
+#Kunena .fbgrouplist {
 	padding:5px;
 }
 /* FOOTER
@@ -1050,105 +1275,10 @@ img.rsslink {
 	right:3px;
 	top:0px;
 }
-/* BOJ */
-/* User Group Style
------------------------------------------------*/
-span.view-group_1 {
-}
-span.fb_group_1 {
-}
-span.view-group_2 {
-	display:block;
-	background:url(images/group_2.gif) no-repeat left top;
-	width:135px;
-	height:37px;
-	text-indent:-1000px;
-	margin:0 auto 5px auto;
-	overflow:hidden;
-	color:#FF0000;
-}
-span.fb_group_2, a.fb_group_2:link, a.fb_group_2:visited {
-	color:#FF0000;
-}
-span.view-group_3 {
-	display:block;
-	background:url(images/group_3.gif) no-repeat left top;
-	width:135px;
-	height:37px;
-	text-indent:-1000px;
-	margin:0 auto 5px auto;
-	overflow:hidden;
-	color:#FF9900;
-}
-span.fb_group_3, a.fb_group_3:link, a.fb_group_3:visited {
-	color:#FF9900;
-}
-span.view-group_4 {
-	display:block;
-	background:url(images/group_4.gif) no-repeat left top;
-	width:135px;
-	height:37px;
-	text-indent:-1000px;
-	margin:0 auto 5px auto;
-	overflow:hidden;
-	color:#FFCC00;
-}
-span.fb_group_4, a.fb_group_4:link, a.fb_group_4:visited {
-	color:#FFCC00;
-}
-span.view-group_5 {
-	display:block;
-	background:url(images/group_5.gif) no-repeat left top;
-	width:135px;
-	height:37px;
-	text-indent:-1000px;
-	margin:0 auto 5px auto;
-	overflow:hidden;
-	color:#990099;
-}
-span.fb_group_5, a.fb_group_5:link, a.fb_group_5:visited {
-	color:#990099;
-}
-span.view-group_6 {
-	display:block;
-	background:url(images/group_6.gif) no-repeat left top;
-	width:135px;
-	height:37px;
-	text-indent:-1000px;
-	margin:0 auto 5px auto;
-	overflow:hidden;
-	color:#669900;
-}
-span.fb_group_6, a.fb_group_6:link, a.fb_group_6:visited {
-	color:#669900;
-}
-span.view-group_7 {
-	display:block;
-	background:url(images/group_7.gif) no-repeat left top;
-	width:135px;
-	height:37px;
-	text-indent:-1000px;
-	margin:0 auto 5px auto;
-	overflow:hidden;
-	color:#0066CC;
-}
-span.fb_group_7, a.fb_group_7:link, a.fb_group_7:visited {
-	color:#0066CC;
-}
-span.view-group_8 {
-	display:block;
-	background:url(images/bojteam.gif) no-repeat left top;
-	width:135px;
-	height:37px;
-	text-indent:-1000px;
-	margin:0 auto 5px auto;
-	overflow:hidden;
-	color:#000000;
-}
-span.fb_group_8, a.fb_group_8:link, a.fb_group_8:visited {
-	color:#000000;
-}
+
 .msgtext {
 	overflow:auto;
 	width:95%;
 }
+
+

@@ -3,6 +3,12 @@
 * @version $Id: myprofile.php 1016 2008-08-16 15:09:55Z racoon $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -17,30 +23,10 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
 
+$mainframe->setPageTitle(_GEN_MYPROFILE . ' - ' . stripslashes($fbConfig->board_title));
+
 if ($my->id != "" && $my->id != 0)
 {
-
-
-/* if ($my->id < 1)
-{
-   mosRedirect("index.php?option=com_kunena" . KUNENA_COMPONENT_ITEMID_SUFFIX, "Please login first");
-}
-
-*/
-
-//we got a valid and logged on user so we can go on
-if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php'))
-{
-    require_once (KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
-}
-else
-{
-    require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_pathway.php');
-}
-
-if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
-{
-
 	//Get joomla userinfo needed later on, this limits the amount of queries
     $juserinfo = new mosUser($database);
     $juserinfo->load($my->id);
@@ -109,7 +95,6 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
     $ordering = $userinfo->ordering;
 	$hideEmail = $userinfo->hideEmail;
 	$showOnline = $userinfo->showOnline;
-} // <-- IF CB profile active finish
 ?>
 <!-- B:My Profile -->
 
@@ -176,7 +161,7 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                 case "showavatar":
 
                     // B: Settings
-                    if (!$fbConfig->cb_profile)
+                    if ($fbConfig->fb_profile != 'cb' && $fbConfig->fb_profile != 'jomsocial')
                     {
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar.php'))
                         {
@@ -214,27 +199,19 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                     }
 
                     echo _USER_RETURN_A . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . "&amp;func=uploadavatar") . '">' . _USER_RETURN_B . "</a><br /><br />";
-            ?>
 
-                <script language = "javascript">
-                    setTimeout("location='<?php echo JRoute::_(KUNENA_LIVEURLREL . '&func=uploadavatar');?>'", 3500);
-                </script>
-
-                <?php
+                    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=uploadavatar'), 3500);
                 break;
 
                 case "showset":
                     // B: Settings
-                    if (!$fbConfig->cb_profile)
+                	if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_set.php'))
+                	{
+                		include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_set.php');
+                    }
+                    else
                     {
-                        if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_set.php'))
-                        {
-                            include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_set.php');
-                        }
-                        else
-                        {
-                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_set.php');
-                        }
+                        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_set.php');
                     }
 
                     // F: Settings
@@ -262,13 +239,8 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                     }
 
                     echo _USER_RETURN_A . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . "&amp;func=myprofile&amp;do=showset") . '">' . _USER_RETURN_B . "</a><br /><br />";
-                ?>
 
-                <script language = "javascript">
-                    setTimeout("location='<?php echo JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=showset');?>'", 3500);
-                </script>
-
-                <?php
+                    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showset'), 3500);
                 break;
 
                 case "profileinfo":
@@ -287,9 +259,9 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                     $ulists["gender"] = mosHTML::selectList( $genders, 'gender', 'class="inputbox"', 'value', 'text', $userinfo->gender );
 
 
-                    if (!$fbConfig->cb_profile)
+                    if ($fbConfig->fb_profile != 'cb' && $fbConfig->fb_profile != 'jomSocial')
                     {
-                        include (KUNENA_PATH_LIB .DS. 'fb_bb.js.php');
+                        include (KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_profile_info.php'))
                         {
@@ -357,15 +329,8 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
     }
 
                         echo _USER_RETURN_A . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . "&amp;func=myprofile&amp;do=showsig") . '">' . _USER_RETURN_B . "</a><br /><br />";
-                ?>
 
-
-
-                <script language = "javascript">
-                    setTimeout("location='<?php echo JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=profileinfo');?>'", 3500);
-                </script>
-<?php
-
+                        echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=profileinfo'), 3500);
                 break;
 
                 case "showsub":
@@ -475,27 +440,17 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                         echo _USER_UNSUBSCRIBE_YES . ".<br /><br />";
                     }
 
-                    if ($fbConfig->cb_profile)
+                    if ($fbConfig->fb_profile == 'cb')
                     {
                         echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='" . KUNENA_CB_ITEMID . "'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
-                ?>
 
-                <script language = "javascript">
-                    setTimeout("location='index.php?option=com_comprofiler<?php echo KUNENA_CB_ITEMID_SUFFIX; ?>&tab=getForumTab'", 3500);
-                </script>
-
-            <?php
+                        echo CKunenaLink::GetAutoRedirectHTML(JRoute::_('index.php?option=com_comprofiler'. KUNENA_CB_ITEMID_SUFFIX .'&amp;tab=getForumTab'), 3500);
                     }
                     else
                     {
                         echo _USER_RETURN_A . " <a href=\"" . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub') . "\">" . _USER_RETURN_B . "</a><br /><br />";
-            ?>
 
-                    <script language = "javascript">
-                        setTimeout("location='<?php echo JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=showsub');?>'", 3500);
-                    </script>
-
-            <?php
+                        echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub'), 3500);
                     }
 
                     break;
@@ -512,27 +467,18 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
 							echo _USER_UNSUBSCRIBE_YES . ".<br /><br />";
 						}
 
-						if ($fbConfig->cb_profile) {
+						if ($fbConfig->fb_profile == 'cb') {
 							echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='".KUNENA_CB_ITEMID."'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
-					?>
 
-						<script language = "javascript">
-							setTimeout("location='index.php?option=com_comprofiler<?php echo KUNENA_CB_ITEMID_SUFFIX; ?>&tab=getForumTab'", 3500);
-						</script>
-                        <a href="javascript:history.go(-1)"><?php echo _BACK ;?></a>
+							echo CKunenaLink::GetAutoRedirectHTML('index.php?option=com_comprofiler'. KUNENA_CB_ITEMID_SUFFIX .'&amp;tab=getForumTab', 3500);
+							echo '<a href="javascript:history.go(-1)">'._BACK.'</a>';
 
-				<?php
 						}
 						else {
 							echo _USER_RETURN_A . " <a href=\"". JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show')."\">" . _USER_RETURN_B . "</a><br /><br />";
-				?>
 
-						<script language = "javascript">
-						setTimeout("location='<?php echo JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=show');?>'", 3500);
-						</script>
-                        <a href="javascript:history.go(-1)"><?php echo _BACK ;?></a>
-
-            <?php
+							echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'), 3500);
+							echo '<a href="javascript:history.go(-1)">'._BACK.'</a>';
                     }
 
                     break;
@@ -558,32 +504,20 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
                         echo _USER_UNFAVORITE_YES . ".<br /><br />";
                     }
 
-                    if ($fbConfig->cb_profile)
+                    if ($fbConfig->fb_profile == 'cb')
                     {
                         echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler" . KUNENA_CB_ITEMID_SUFFIX . "&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
-            ?>
 
-                <script language = "javascript">
-                    setTimeout("location='index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&tab=getForumTab'", 3500);
-                </script>
-
-            <?php
+                        echo CKunenaLink::GetAutoRedirectHTML(JRoute::_("index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab"), 3500);
                     }
                     else
                     {
                         echo _USER_RETURN_A . " <a href=\"" . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav') . "\">" . _USER_RETURN_B . "</a><br /><br />";
-            ?>
 
-                    <script language = "javascript">
-                        setTimeout("location='<?php echo JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=showfav');?>'", 3500);
-                    </script>
-
-                        <?php // B: unfavoriteall
+                        echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav'), 3500);
                     }
 
                     break;
-
-					//
 
 					 case "unfavoriteitem":
 
@@ -596,27 +530,17 @@ if (!$fbConfig->cb_profile) //<-- IF CB profile active begin
 							echo _USER_UNFAVORITE_YES . ".<br /><br />";
 						}
 
-						if ($fbConfig->cb_profile) {
+						if ($fbConfig->fb_profile == 'cb') {
 							echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
-				?>
 
-						<script language = "javascript">
-							setTimeout("location='index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&tab=getForumTab'", 3500);
-						</script>
-                        <a href="javascript:history.go(-1)"><?php echo _BACK ;?></a>
-
-				<?php
+							echo CKunenaLink::GetAutoRedirectHTML(JRoute::_("index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab"), 3500);
+							echo '<a href="javascript:history.go(-1)">'. _BACK .'</a>';
 						}
 						else {
 							echo _USER_RETURN_A . " <a href=\"index.php?option=com_kunena&amp;Itemid=$Itemid&amp;func=myprofile&amp;do=show\">" . _USER_RETURN_B . "</a><br /><br />";
-				?>
-					<a href="javascript:history.go(-1)"><?php echo _BACK ;?></a>
 
-						<script language = "javascript">
-							   setTimeout("location='<?php echo JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=show');?>'", 3500);
-						</script>
-
-                   <?php
+							echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'), 3500);
+							echo '<a href="javascript:history.go(-1)">'. _BACK .'</a>';
 						}
 
                     break;

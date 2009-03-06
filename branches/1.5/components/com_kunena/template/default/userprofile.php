@@ -1,8 +1,14 @@
 <?php
 /**
-* @version $Id: userprofile.php 947 2008-08-11 01:56:01Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* @version $Id: userprofile.php 451 2009-02-17 11:23:25Z fxstein $
+* Kunena Component
+* @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -24,39 +30,37 @@ if ($my->id)
     //What should we do?
     if ($do == "show")
     { //show it is..
-        if (!$fbConfig->cb_profile)
-        {
-            //first we gather some information about this person - bypass if (s)he is a guest
-            unset($user);
-            $database->setQuery("SELECT * FROM #__fb_users as su "
-            . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$my->id}");
+        //first we gather some information about this person - bypass if (s)he is a guest
+        unset($user);
+        $database->setQuery("SELECT * FROM #__fb_users as su "
+        	    . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$my->id}");
 
             $user = $database->loadObject();
 
-                $prefview = $user->view;
-                $signature = $user->signature;
-                $username = $user->name;
-                $moderator = $user->moderator;
-                $fbavatar = $user->avatar;
-                $ordering = $user->ordering;
+        $prefview = $user->view;
+        $signature = $user->signature;
+        $username = $user->name;
+        $moderator = $user->moderator;
+        $fbavatar = $user->avatar;
+        $ordering = $user->ordering;
 
-                list($avWidth, $avHeight) = @getimagesize($avatar);
+        list($avWidth, $avHeight) = @getimagesize($avatar);
 
-            //use mypms pro avatar if configured
-            if ($fbConfig->avatar_src == "pmspro")
-            {
-                $database->setQuery("SELECT picture FROM #__mypms_profiles WHERE name='$username'");
-                $avatar = $database->loadResult();
-            }
-            elseif ($fbConfig->avatar_src == "cb")
-            {
-                $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$my->id'");
-                $avatar = $database->loadResult();
-                	check_dberror("Unable to load CB avatar.");
-            }
-            else {
-                $avatar = $fbavatar;
-            }
+        //use integration avatar if configured
+        if ($fbConfig->avatar_src == "pmspro")
+        {
+            $database->setQuery("SELECT picture FROM #__mypms_profiles WHERE name='$username'");
+            $avatar = $database->loadResult();
+        }
+        elseif ($fbConfig->avatar_src == "cb")
+        {
+        	$database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$my->id'");
+        	$avatar = $database->loadResult();
+        		check_dberror("Unable to load CB avatar.");
+        }
+        else
+        {
+        	$avatar = $fbavatar;
         }
 
         //get all subscriptions for this user
@@ -82,20 +86,16 @@ if ($my->id)
         }
 
         //here we go:
-        include(KUNENA_COMP_C_SRC . '\fb_bb.js.php');
+        include(KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
 
         if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
             require_once(KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
         }
         else {
-            require_once(KUNENA_COMP_F . '/template/default/fb_pathway.php');
+            require_once(KUNENA_ABSPATH . '/template/default/fb_pathway.php');
         }
 ?>
 
-<?php
-        if (!$fbConfig->cb_profile)
-        {
-?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
@@ -222,10 +222,6 @@ if ($my->id)
                     <br/>
 
                     <input type = "text" name = "helpbox" size = "45" maxlength = "100" style = "width: <?php echo $fbConfig->rtewidth?>px; font-size:9px" class = "helpline" value = "<?php echo _BBCODE_HINT;?>"/>
-
-                    <br/>
-
-                    <a href = "javascript: bbstyle(-1)"onMouseOver = "helpline('a')"><small><?php echo _BBCODE_CLOSA; ?></small></a>
 
                     <br/>
 
@@ -362,9 +358,6 @@ if ($my->id)
 </div>
 </div>
 </div>
-<?php
-        }
-?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
@@ -537,7 +530,7 @@ if ($my->id)
         (int)$neworder = mosGetParam($_POST, 'neworder', 0);
 
         if ($deleteSig == 1) {
-            $signature = "";
+        	$signature = "";
         }
 
         $signature = trim(addslashes($signature));
@@ -571,13 +564,8 @@ if ($my->id)
             $database->setQuery("DELETE FROM #__fb_favorites WHERE userid='$my_id'");
             $database->query();
         }
-                ?>
 
-    <script language = "javascript">
-        setTimeout("location='<?php echo JRoute::_(KUNENA_LIVEURLREL . '&func=userprofile&do=show');?>'", 3500);
-    </script>
-
-    <?php
+        echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show'), 3500);
     }
     else if ($do == "unsubscribe")
     { //ergo, ergo delete
@@ -590,25 +578,13 @@ if ($my->id)
             echo _USER_UNSUBSCRIBE_YES . ".<br /><br />";
         }
 
-        if ($fbConfig->cb_profile) {
+        if ($fbConfig->fb_profile == 'cb') {
             echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='".KUNENA_CB_ITEMID."'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
-    ?>
-
-        <script language = "javascript">
-            setTimeout("location='index.php?option=com_comprofiler<?php echo KUNENA_CB_ITEMID_SUFFIX; ?>&tab=getForumTab'", 3500);
-        </script>
-
-<?php
+	    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_('index.php?option=com_comprofiler'. KUNENA_CB_ITEMID_SUFFIX .'&amp;tab=getForumTab'), 3500);
         }
         else {
             echo _USER_RETURN_A . " <a href=\"". JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show')."\">" . _USER_RETURN_B . "</a><br /><br />";
-?>
-
-        <script language = "javascript">
-        setTimeout("location='<?php echo JRoute::_(KUNENA_LIVEURLREL . '&func=userprofile&do=show');?>'", 3500);
-        </script>
-
-<?php
+	    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show'), 3500);
         }
     }
     else if ($do == "unfavorite")
@@ -622,25 +598,13 @@ if ($my->id)
             echo _USER_UNFAVORITE_YES . ".<br /><br />";
         }
 
-        if ($fbConfig->cb_profile) {
+        if ($fbConfig->fb_profile == 'cb') {
             echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
-?>
-
-        <script language = "javascript">
-            setTimeout("location='index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&tab=getForumTab'", 3500);
-        </script>
-
-<?php
+	    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_('index.php?option=com_comprofiler'.KUNENA_CB_ITEMID_SUFFIX.'&amp;tab=getForumTab'), 3500);
         }
         else {
             echo _USER_RETURN_A . " <a href=\"index.php?option=com_kunena&amp;Itemid=$Itemid&amp;func=userprofile&amp;do=show\">" . _USER_RETURN_B . "</a><br /><br />";
-?>
-
-        <script language = "javascript">
-               setTimeout("location='<?php echo JRoute::_(KUNENA_LIVEURLREL . '&func=userprofile&do=show');?>'", 3500);
-        </script>
-
-<?php
+	    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show'), 3500);
         }
     }
     else
@@ -671,7 +635,7 @@ else
                 <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump)
-                    require_once(KUNENA_COMP_C_SRC . '\fb_forumjump.php');
+                    require_once(KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
                 ?>
             </th>
         </tr>

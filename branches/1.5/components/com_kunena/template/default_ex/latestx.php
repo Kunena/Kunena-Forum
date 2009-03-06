@@ -1,8 +1,14 @@
 <?php
 /**
-* @version $Id: latestx.php 1070 2008-10-06 08:11:18Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* @version $Id: latestx.php 474 2009-02-22 23:00:37Z mahagr $
+* Kunena Component
+* @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -18,15 +24,58 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
 
-$document =& JFactory::getDocument();
+function KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages) {
+    $startpage = ($page - floor($maxpages/2) < 1) ? 1 : $page - floor($maxpages/2);
+    $endpage = $startpage + $maxpages;
+    if ($endpage > $totalpages) {
+	$startpage = ($totalpages-$maxpages) < 1 ? 1 : $totalpages-$maxpages;
+	$endpage = $totalpages;
+    }
 
+    $output = '<span class="fb_pagination">'._PAGE;
 
+    if (($startpage) > 1)
+    {
+	if ($endpage < $totalpages) $endpage--;
+        $output .= CKunenaLink::GetLatestPageLink($func, 1, 'follow', '',$sel);
+	if (($startpage) > 2)
+        {
+	    $output .= "...";
+	}
+    }
 
-$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL . '/plugin/jtip/jquery.dimensions.js"></script>');
-$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL . '/plugin/jtip/jquery.cluetip.js"></script>');
-$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL . '/plugin/jtip/demo.js"></script>');
-$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_TMPLTURL . '/js/cube_common.js"></script>');
-require_once (KUNENA_PATH_LIB .DS. 'fb_auth.php');
+    for ($i = $startpage; $i <= $endpage && $i <= $totalpages; $i++)
+    {
+        if ($page == $i) {
+            $output .= "<strong>$i</strong>";
+        }
+        else {
+            $output .= CKunenaLink::GetLatestPageLink($func, $i, 'follow', '',$sel);
+        }
+    }
+
+    if ($endpage < $totalpages)
+    {
+	if ($endpage < $totalpages-1)
+        {
+	    $output .= "...";
+	}
+
+        $output .= CKunenaLink::GetLatestPageLink($func, $totalpages, 'follow', '',$sel);
+    }
+
+    $output .= '</span>';
+    return $output;
+}
+
+if (!$my->id && $func == "mylatest")
+{
+        	header("HTTP/1.1 307 Temporary Redirect");
+        	header("Location: " . htmlspecialchars_decode(CKunenaLink::GetShowLatestURL()));
+        	die();
+}
+
+require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
 
 if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php'))
 {
@@ -38,8 +87,8 @@ else
 }
 
 //meta description and keywords
-$metaKeys=(_KUNENA_ALL_DISCUSSIONS . ', ' . $fbConfig->board_title . ', ' . $GLOBALS['mosConfig_sitename']);
-$metaDesc=(_KUNENA_ALL_DISCUSSIONS . ' - ' . $fbConfig->board_title);
+$metaKeys=(_KUNENA_ALL_DISCUSSIONS . ', ' . stripslashes($fbConfig->board_title) . ', ' . $GLOBALS['mosConfig_sitename']);
+$metaDesc=(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
 
 $document =& JFactory::getDocument();
 $cur = $document->get( 'description' );
@@ -75,6 +124,16 @@ $page             = $page < 1 ? 1 : $page;
 $offset           = ($page - 1) * $threads_per_page;
 $row_count        = $page * $threads_per_page;
 
+if ($func != "mylatest") {
+	$lookcats = split(',', $fbConfig->latestcategory);
+	$catlist = array();
+	$latestcats = '';
+	foreach ($lookcats as $catnum) {
+		if ((int)$catnum && (int)$catnum>0) $catlist[] = (int)$catnum;
+	}
+	if (count($catlist)) $latestcats = " AND catid IN (". implode(',', $catlist) .") ";
+}
+
  //check if $sel has a reasonable value and not a Unix timestamp:
 $since = false;
 if ($sel == "0")
@@ -85,6 +144,7 @@ if ($sel == "0")
 
 if ($func == "mylatest")
 {
+	$mainframe->setPageTitle(_KUNENA_MY_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
 	$query = "SELECT count(distinct tmp.thread) FROM
 				(SELECT thread
 					FROM #__fb_messages
@@ -97,8 +157,11 @@ if ($func == "mylatest")
 }
 else
 {
-	$query = "Select count(distinct thread) FROM #__fb_messages WHERE time >'$querytime' AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)";
+	$mainframe->setPageTitle(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
+	$query = "Select count(distinct thread) FROM #__fb_messages WHERE time >'$querytime'".
+			" AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)" . $latestcats; // if categories are limited apply filter
 }
+
 $database->setQuery($query);
 $total = (int)$database->loadResult();
 	check_dberror('Unable to count total threads');
@@ -107,7 +170,7 @@ $query = 			"SELECT
                         a.*,
                         t.message AS messagetext,
                         m.mesid AS attachmesid,
-                        f.thread AS favthread,
+                        (f.thread>0) AS myfavorite,
                         u.avatar,
                         c.name AS catname,
                         b.lastpost
@@ -134,8 +197,9 @@ else
 	$query .=			"JOIN (  SELECT thread, MAX(time) AS lastpost
                                 FROM #__fb_messages
                                 WHERE time >'$querytime'
-                                AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)
-                                GROUP BY 1) AS b ON b.thread = a.thread ";
+                                AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)" .
+                                $latestcats .
+                                " GROUP BY 1) AS b ON b.thread = a.thread ";
 }
 
 $query .=				"JOIN #__fb_messages_text AS t ON a.thread = t.mesid
@@ -157,11 +221,14 @@ $database->setQuery($query);
 $msglist = $database->loadObjectList();
 	check_dberror("Unable to load messages.");
 
+$favthread = array();
 if ($msglist) foreach ($msglist as $message)
 {
 	$threadids[]                  = $message->id;
 	$messages[$message->parent][] = $message;
 	$last_reply[$message->id]     = $message;
+	$last_read[$message->id]->lastread = $last_reply[$message->thread];
+	$last_read[$message->id]->unread = 0;
 	$hits[$message->id]           = $message->hits;
 	// Message text for tooltips
 	$messagetext[$message->id]	  = substr(smile::purify($message->messagetext), 0, 500);
@@ -169,7 +236,22 @@ if ($msglist) foreach ($msglist as $message)
 if (count($threadids) > 0)
 {
 	$idstr = @join("','", $threadids);
-	$query = "	SELECT
+
+        $database->setQuery("SELECT
+        					thread AS id,
+        					count(thread) AS favcount
+					FROM #__fb_favorites
+       					WHERE thread IN ('$idstr') GROUP BY thread");
+        $favlist = $database->loadObjectList();
+        check_dberror("Unable to load messages.");
+
+	foreach($favlist AS $fthread)
+	{
+		$favthread[$fthread->id] = $fthread->favcount;
+	}
+	unset($favlist, $fthread);
+
+ 	$query = "	SELECT
 					a.id,
 					a.parent,
 					a.thread,
@@ -193,27 +275,38 @@ if (count($threadids) > 0)
 
     $database->setQuery($query);
     $msglist = $database->loadObjectList();
-    	check_dberror("Unable to load messages.");
-	if ($msglist) foreach ($msglist as $message)
-	{
-		$messages[$message->parent][] = $message;
-		$thread_counts[$message->thread]++;
-		$last_reply[$message->thread] = $last_reply[$message->thread]->time < $message->time ? $message : $last_reply[$message->thread];
-	}
+    check_dberror("Unable to load messages.");
+    if ($msglist) foreach ($msglist as $message)
+    {
+	$messages[$message->parent][] = $message;
+	$thread_counts[$message->thread]++;
+	$last_reply[$message->thread] = $last_reply[$message->thread]->time < $message->time ? $message : $last_reply[$message->thread];
+	$last_read[$message->id]->lastread = $last_reply[$message->thread];
+    }
+
+    $database->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages "
+                       ."WHERE thread IN ('$idstr') AND time>'$prevCheck' GROUP BY thread");
+    $msgidlist = $database->loadObjectList();
+    check_dberror("Unable to get unread messages count and first id.");
+
+    foreach ($msgidlist as $msgid)
+    {
+        if (!in_array($msgid->thread, $read_topics)) $last_read[$msgid->thread] = $msgid;
+    }
 }
 ?>
 
 <!-- B: List Actions -->
-	<div class="fb_list_actions"><table border="0" cellpadding="0" cellspacing="0" width="100%">
-                                  <tr>
-                                    <td   class="fb_list_actions_info_all" width="100%">
+	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="fb_list_actions_info_all">
     <strong><?php echo $total; ?></strong> <?php echo _KUNENA_DISCUSSIONS; ?>
 								</td>
 									<?php if ($func!='mylatest') {?>
                                     <td class="fb_list_times_all">
 
 									<?php  $show_list_time = mosGetParam($_REQUEST, 'sel', '');  ?>
-									<select class="inputboxusl" onchange="document.location.href=this.options[this.selectedIndex].value;" size="1" name="select" style = "margin:0; padding:0; width:100px;">
+									<select class="inputboxusl" onchange="document.location.href=this.options[this.selectedIndex].value;" size="1" name="select">
 									 <option <?php if ($show_list_time =='720') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest'); ?>"><?php echo _SHOW_MONTH ; ?></option>
 									  <option <?php if ($show_list_time =='0') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=0'); ?>"><?php echo _SHOW_LASTVISIT; ?></option>
 									  <option <?php if ($show_list_time =='4') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=4'); ?>"><?php echo _SHOW_4_HOURS; ?></option>
@@ -235,47 +328,20 @@ if (count($threadids) > 0)
 
                                    </td>
 
-                                   <td class="fb_list_pages_all" nowrap="nowrap">
-
-
-								<?php
+				<?php
                                 //pagination 1
-								if (count($messages[0]) > 0)
-								{
+					if (count($messages[0]) > 0)
+					{
+					    echo '<td class="fb_list_pages_all">';
+					    $maxpages = 5 - 2; // odd number here (show - 2)
+					    $totalpages = ceil($total / $threads_per_page);
+					    echo $pagination = KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages);
+					    echo '</td>';
+					}
+				?>
 
-									echo _PAGE;
-									if (($page - 2) > 1)
-									{
-									    echo fb_link::GetLatestPageLink($func, 1, 'follow', 'fb_list_pages_link',$sel);
-										echo "...&nbsp;";
-									}
-									for ($i = ($page - 2) <= 0 ? 1 : ($page - 2); $i <= $page + 2 && $i <= ceil($total / $threads_per_page); $i++)
-									{
-										if ($page == $i)
-										{
-											echo "$i";
-										}
-										else
-										{
-                                            echo fb_link::GetLatestPageLink($func, $i, 'follow', 'fb_list_pages_link',$sel);
-										}
-									}
-									if ($page + 2 < ceil($total / $threads_per_page))
-									{
-										echo "...&nbsp;";
-									    echo fb_link::GetLatestPageLink($func, ceil($total / $threads_per_page), 'follow', 'fb_list_pages_link',$sel);
-									}
-
-								}
-								?>
-
-                                </td>
-
-                                  </tr>
-                                </table>
-
-
-				</div>
+		</tr>
+	</table>
   <!-- F: List Actions -->
 <?php
 if (count($threadids) > 0)
@@ -302,40 +368,23 @@ if (count($threadids) > 0)
 				}
 				?>
 <!-- B: List Actions -->
-	<div class="fb_list_actions">
-     <span class="fb_list_actions_info" ><?php echo _KUNENA_TOTAL_THREADS; ?>  <strong><?php echo $total; ?></strong></span>
-								<?php
+	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0" width="100%">
+		<tr>
+			<td   class="fb_list_actions_info_all" width="100%">
+				<strong><?php echo $total; ?></strong> <?php echo _KUNENA_DISCUSSIONS; ?>
+			</td>
 
-								//pagination 1
-								if (count($messages[0]) > 0)
-								{
-									echo '<span   class="fb_list_pages" >';
-									echo _PAGE;
-									if (($page - 2) > 1)
-									{
-									    echo fb_link::GetLatestPageLink($func, 1, 'follow', 'fb_list_pages_link',$sel);
-										echo "...&nbsp;";
-									}
-									for ($i = ($page - 2) <= 0 ? 1 : ($page - 2); $i <= $page + 2 && $i <= ceil($total / $threads_per_page); $i++)
-									{
-										if ($page == $i)
-										{
-											echo "$i";
-										}
-										else
-										{
-                                            echo fb_link::GetLatestPageLink($func, $i, 'follow', 'fb_list_pages_link',$sel);
-										}
-									}
-									if ($page + 2 < ceil($total / $threads_per_page))
-									{
-										echo "...&nbsp;";
-									    echo fb_link::GetLatestPageLink($func, ceil($total / $threads_per_page), 'follow', 'fb_list_pages_link',$sel);
-									}
-									echo '</span>';
-								}
-								?>
-	</div>
+			<?php
+				//pagination 1
+				if (count($messages[0]) > 0)
+				{
+					echo '<td class="fb_list_pages_all" nowrap="nowrap">';
+					echo $pagination;
+					echo '</td>';
+				}
+			?>
+		</tr>
+	</table>
   <!-- F: List Actions -->
 <?php
 }

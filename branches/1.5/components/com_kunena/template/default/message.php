@@ -3,6 +3,12 @@
 * @version $Id: message.php 1081 2008-10-27 06:24:13Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -23,15 +29,12 @@ unset($user);
 $database->setQuery("SELECT email, name from #__users WHERE `id`={$my->id}");
 $user = $database->loadObject();
 ?>
-<caption>
-	<a name = "<?php echo $msg_id;?>"/>
-</caption>
 
 <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
- 
     <tbody>
         <tr class = "fb_sth">
             <th colspan = "2" class = "view-th <?php echo $boardclass; ?>sectiontableheader">
+        	<a name = "<?php echo $msg_id; ?>"></a>
 <?php
                 echo CKunenaLink::GetSamePageAnkerLink($msg_id, '#'.$msg_id)
 ?>
@@ -45,7 +48,7 @@ $user = $database->loadObject();
 <?php
                         if ($fmessage->userid > 0)
                         {
-                        	echo CKunenaLink::GetProfileLink($fmessage->userid, $msg_username);
+                        	echo CKunenaLink::GetProfileLink($fbConfig, $fmessage->userid, $msg_username);
                         }
                         else
                         {
@@ -57,7 +60,7 @@ $user = $database->loadObject();
 <?php
                         if ($fmessage->userid > 0)
                         {
-                        	echo CKunenaLink::GetProfileLink($fmessage->userid, $msg_avatar);
+                        	echo CKunenaLink::GetProfileLink($fbConfig, $fmessage->userid, $msg_avatar);
                         }
                         else
                         {
@@ -187,7 +190,7 @@ $user = $database->loadObject();
                         <td align = "left">
                             <?php
                             $msg_time_since = _KUNENA_TIME_SINCE;
-                            $msg_time_since = str_replace('%time%', time_since($fmessage->time , FBTools::fbGetInternalTime()), $msg_time_since);
+                            $msg_time_since = str_replace('%time%', time_since($fmessage->time , CKunenaTools::fbGetInternalTime()), $msg_time_since);
 
                             if ($prevCheck < $msg_time && !in_array($fmessage->thread, $read_topics)) {
                                 $msgtitle = 'msgtitle_new';
@@ -216,7 +219,7 @@ $user = $database->loadObject();
 
                     <tr>
                         <td colspan = "2" valign = "top">
-                            <div style = "width:<?php echo $fbConfig->rtewidth ?>px;" class = "msgtext"><?php echo $msg_text; ?></div>
+                            <div class = "msgtext"><?php echo $msg_text; ?></div>
 
                             <?php
                             if (!$msg_closed)
@@ -236,8 +239,8 @@ $user = $database->loadObject();
                                     }
 
                                     //contruct the reply subject
-                                    $resubject = htmlentities($msg_subject);
-                                    $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? stripslashes($resubject) : _POST_RE . stripslashes($resubject);
+                                    $resubject = html_entity_decode_utf8(stripslashes($msg_subject), ENT_COMPAT, 'UTF-8');
+                                    $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? $resubject : _POST_RE . $resubject;
                                     ?>
 
                             <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL. '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
@@ -249,11 +252,7 @@ $user = $database->loadObject();
 
                                 <input type = "hidden" name = "contentURL" value = "empty"/>
 
-                                <input type = "hidden" name = "fb_authorname" size = "35" class = "inputbox" maxlength = "35" value = "<?php echo $authorName;?>"/>
-
-                                <input type = "hidden" name = "email" size = "35" class = "inputbox" maxlength = "35" value = "<?php echo $user->email;?>"/>
-
-                                <input type = "hidden" name = "subject" size = "35" class = "inputbox" maxlength = "<?php echo $fbConfig->maxsubject;?>" value = "<?php echo $resubject;?>"/>
+                                <input type = "text" name = "subject" size = "35" class = "inputbox" maxlength = "<?php echo $fbConfig->maxsubject;?>" value = "<?php echo $resubject;?>"/>
 
                                 <textarea class = "inputbox" name = "message" rows = "6" cols = "60" style = "height: 100px; width: 100%; overflow:auto;"></textarea>
 
@@ -316,7 +315,7 @@ if ($fmessage->modified_by) {
             </td>
             <td class = "fb-msgview-right-c" >
                     <div class="fb_message_editMarkUp_cover">
-                    <span class="fb_message_editMarkUp" ><?php echo _KUNENA_EDITING_LASTEDIT;?>: <?php echo date(_DATETIME, $fmessage->modified_time);?> <?php echo _KUNENA_BY; ?> <?php echo FBTools::whoisID($fmessage->modified_by)?>.
+                    <span class="fb_message_editMarkUp" ><?php echo _KUNENA_EDITING_LASTEDIT;?>: <?php echo date(_DATETIME, $fmessage->modified_time);?> <?php echo _KUNENA_BY; ?> <?php echo CKunenaTools::whoisID($fmessage->modified_by)?>.
                     <?php
                     if ($fmessage->modified_reason) {
                     echo _KUNENA_REASON.": ".$fmessage->modified_reason;
@@ -452,87 +451,21 @@ if ($msg_signature) {
     </tbody>
 </table>
 <!-- Begin: Message Module Positions -->
-
 <?php
-//if ($this->countModules('fb_msg_t'))
-//{
+if (mosCountModules('kunena_msg_'.$mmm))
+{
 ?>
-
-    <div class = "fb_msg_t">
+    <div class = "kunena_msg_<?php echo $mmm; ?>">
         <?php
-       // mosLoadModules('fb_msg_t', -2);
+	        $document	= &JFactory::getDocument();
+	        $renderer	= $document->loadRenderer('modules');
+	        $options	= array('style' => 'xhtml');
+	        $position	= 'kunena_msg_'.$mmm;
+	        echo $renderer->render($position, $options, null);
         ?>
-		<jdoc:include type="modules" name="{fb_msg_t}" style="{}" />
     </div>
-
-<?php
-//}
-?>
-
-<?php
-//if (mosCountModules('fb_msg_1'))
-//{
-?>
-
-<?php
-    if ($mmm == 1)
-    {
-?>
-
-            <div class = "fb_msg_1">
-                <?php
-                //mosLoadModules('fb_msg_1', -2);
-                ?>
-				<jdoc:include type="modules" name="{fb_msg_1}" style="{}" />
-            </div>
-
-<?php
-    }
-?>
-
-<?php
-//}
-?>
-
-<?php
-//if (mosCountModules('fb_msg_2'))
-//{
-?>
-
-<?php
-    if ($mmm == 2)
-    {
-?>
-
-            <div class = "fb_msg_2">
-                <?php
-              //  mosLoadModules('fb_msg_2', -2);
-			 
-                ?>
-				<jdoc:include type="modules" name="{fb_msg_2}" style="{}" />
-            </div>
-
-<?php
-   // }
-?>
-
 <?php
 }
-?>
-
-<?php
-//if (mosCountModules('fb_msg_b'))
-//{
-?>
-
-    <div class = "fb_msg_b">
-        <?php
-       // mosLoadModules('fb_msg_b', -2);
-        ?>
-    </div>
-<jdoc:include type="modules" name="{fb_msg_b}" style="{}" />
-<?php
-//}
 ?>
 <!-- Finish: Message Module Positions -->
 <?php

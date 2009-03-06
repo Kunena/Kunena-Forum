@@ -3,6 +3,12 @@
 * @version $Id: report.php 947 2008-08-11 01:56:01Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -38,6 +44,7 @@ switch ($do)
 
 function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
     global $database, $my;
+    global $fbConfig;
 
     if (!$my->id) {
         mosNotAuth();
@@ -57,37 +64,30 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
     $sender = $database->loadResult();
 
     if ($reason) {
-        $subject = _KUNENA_REPORT_MSG . ":" . $reason;
+        $subject = "[".stripslashes($fbConfig->board_title)." "._GEN_FORUM."] "._KUNENA_REPORT_MSG . ": " . $reason;
         }
     else {
-        $subject = _KUNENA_REPORT_MSG . ":" . $row->subject;
+        $subject = "[".stripslashes($fbConfig->board_title)." "._GEN_FORUM."] "._KUNENA_REPORT_MSG . ": " . stripslashes($row->subject);
         }
 
     $msglink = "index.php?option=com_kunena&amp;func=view&amp;catid=" . $row->catid . "&amp;id=" . $row->id . KUNENA_COMPONENT_ITEMID_SUFFIX;
     $msglink = JRoute::_($msglink . '#' . $row->id);
 
-    $message = $sender . "" . _KUNENA_REPORT_INTRO . "" . $reason . " ";
+    $message .= "" . _KUNENA_REPORT_RSENDER . " " . $sender;
     $message .= "\n";
+    $message .= "" . _KUNENA_REPORT_RREASON . " " . $reason;
     $message .= "\n";
+    $message .= "" . _KUNENA_REPORT_RMESSAGE . " " . $text;
+    $message .= "\n\n";
+    $message .= "" . _KUNENA_REPORT_POST_POSTER . " " . $baduser;
     $message .= "\n";
-    $message .= "" . _KUNENA_REPORT_RSENDER . "" . $sender;
+    $message .= "" . _KUNENA_REPORT_POST_SUBJECT . " " . stripslashes($row->subject);
     $message .= "\n";
-    $message .= "" . _KUNENA_REPORT_RREASON . "" . $reason;
-    $message .= "\n";
-    $message .= "" . _KUNENA_REPORT_RMESSAGE . "" . $text;
-    $message .= "\n";
-    $message .= "\n";
-    $message .= "\n";
-    $message .= "\n";
-    $message .= "" . _KUNENA_REPORT_POST_POSTER . "" . $baduser;
-    $message .= "\n";
-    $message .= "" . _KUNENA_REPORT_POST_SUBJECT . "" . $row->subject;
-    $message .= "\n";
-    $message .= "" . _KUNENA_REPORT_POST_MESSAGE . "" . $row->msg_text;
-    $message .= "\n";
-    $message .= "\n";
-    $message .= "\n";
-    $message .= "" . _KUNENA_REPORT_POST_LINK . "" . $msglink;
+    $message .= "" . _KUNENA_REPORT_POST_MESSAGE . "\n-----\n" . stripslashes($row->msg_text);
+    $message .= "\n-----\n\n";
+    $message .= "" . _KUNENA_REPORT_POST_LINK . " " . $msglink;
+    $message .= "\n\n\n\n** Powered by Kunena! - http://www.Kunena.com **";
+    $message = strtr($message, array('&#32;'=>''));
 
     //get category moderators
     $database->setQuery("SELECT userid FROM #__fb_moderation WHERE catid={$row->catid}");
@@ -117,11 +117,8 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
     echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id) . '#' . $msg_id . '">' . _POST_SUCCESS_VIEW . '</a><br />';
     echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $catid) . '">' . _POST_SUCCESS_FORUM . '</a><br />';
     echo '</div>';
-?>
-     <script language = "javascript">
-     setTimeout("location='<?php echo JRoute::_(KUNENA_LIVEURLREL.'&func=view&catid='.$catid.'&id='.$msg_id).'#'.$msg_id;?>'", 3500);
-     </script>
-<?php
+
+     echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&amp;id='.$msg_id).'#'.$msg_id, 3500);
 }
 
 function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins) {
@@ -142,7 +139,7 @@ function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins)
         $database->setQuery("SELECT email FROM #__users WHERE id={$admin->id}");
         $email = $database->loadResult();
 
-        mosMail($fbConfig->email, $fbConfig->board_title, $email, $subject, $message);
+        mosMail($fbConfig->email, stripslashes($board_title)." ".trim(_GEN_FORUM), $email, $subject, $message);
         }
     }
 
@@ -187,7 +184,7 @@ function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
 function ReportForm($msg_id, $catid) {
     global $my, $fbConfig;
 
-    $redirect = 'index.php?option=com_kunena&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id . '&amp;Itemid=' . KUNENA_COMPONENT_ITEMID . '#' . $msg_id;
+    $redirect = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id . '&amp;Itemid=' . KUNENA_COMPONENT_ITEMID) . '#' . $msg_id;
 
     //$redirect = JRoute::_($redirect);
     if (!$my->id) {
@@ -219,7 +216,7 @@ function ReportForm($msg_id, $catid) {
                         <tbody>
                             <tr>
                                 <td class = "fb_faqdesc">
-                                    <form method = "post" action = "index.php">
+                                    <form method = "post" action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=report'); ?>">
                                         <table width = "100%" border = "0">
                                             <tr>
                                                 <td width = "10%">
@@ -244,8 +241,6 @@ function ReportForm($msg_id, $catid) {
                                             </tr>
                                         </table>
 
-                                        <input type = "hidden" name = "option" value = "com_kunena"/>
-                                        <input type = "hidden" name = "func" value = "report"/>
                                         <input type = "hidden" name = "do" value = "report"/>
                                         <input type = "hidden" name = "msg_id" value = "<?php echo $msg_id;?>"/>
                                         <input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
@@ -267,7 +262,7 @@ function ReportForm($msg_id, $catid) {
 
 function SendClexusPM($reporter, $subject, $message, $msglink, $mods, $admins) {
     $database = &JFactory::getDBO();
-    $time = mosFormatDate(FBTools::fbGetInternalTime(), '%Y-%m-%d %H:%M:%S');
+    $time = mosFormatDate(CKunenaTools::fbGetInternalTime(), '%Y-%m-%d %H:%M:%S');
 
     foreach ($admins as $admin) {
         $database->setQuery("INSERT INTO #__mypms" . "\n ( `userid` , `whofrom` , `time` , `readstate` , `subject` , `message` , `owner` , `folder` , `sent_id` , `replyid` , `ip` , `alert` , `flag` , `pm_notify` , `email_notify` )"

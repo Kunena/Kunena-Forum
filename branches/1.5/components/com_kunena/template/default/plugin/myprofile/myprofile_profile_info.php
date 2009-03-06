@@ -3,6 +3,12 @@
 * @version $Id: myprofile_profile_info.php 923 2008-08-07 19:23:34Z racoon $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -43,7 +49,7 @@ global $fbConfig;
                             <tr>
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_PERSONALTEXT; ?> </b></td>
 
-                                <td><input name="personalText" size="50" maxlength="50" value="<?php echo $userinfo->personalText?>" type="text"/></td>
+                                <td><input name="personalText" size="50" maxlength="50" value="<?php echo html_entity_decode_utf8(stripslashes($userinfo->personalText))?>" type="text"/></td>
                             </tr>
                             <tr>
                                 <td width="40%">
@@ -59,7 +65,7 @@ global $fbConfig;
                             </tr><tr>
 
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_LOCATION; ?> </b></td>
-                                <td><input name="location" size="50" value="<?php echo $userinfo->location;?>" type="text"/></td>
+                                <td><input name="location" size="50" value="<?php echo html_entity_decode_utf8(stripslashes($userinfo->location));?>" type="text"/></td>
                             </tr>
                             <tr>
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_GENDER; ?></b></td>
@@ -172,10 +178,6 @@ global $fbConfig;
 					<br/>
 
 					<input type = "text" name = "helpbox" size = "45" maxlength = "100" style = "width: <?php echo $fbConfig->rtewidth-150?>px; font-size:9px" class = "helpline" value = "<?php echo _BBCODE_HINT;?>"/>
-
-					<br/>
-
-					<a href = "javascript: bbstyle(-1)" onmouseover = "helpline('a')"><small><?php echo _BBCODE_CLOSA; ?></small></a>
 
 					<br/>
 

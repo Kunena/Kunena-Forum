@@ -3,6 +3,12 @@
 * @version $Id: moderate_messages.php 1029 2008-08-25 15:40:07Z racoon $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -224,7 +230,7 @@ function jbApprovePosts($database, $cid)
         if(!$database->query()) {
         	$ret = 0; // mark error
         }
-        FBTools::modifyCategoryStats($id, $msg->parent, $msg->time, $msg->catid);
+        CKunenaTools::modifyCategoryStats($id, $msg->parent, $msg->time, $msg->catid);
     }
     return $ret;
 }

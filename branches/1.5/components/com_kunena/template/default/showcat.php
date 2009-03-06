@@ -1,8 +1,14 @@
 <?php
 /**
-* @version $Id: showcat.php 1064 2008-10-05 23:29:35Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* @version $Id: showcat.php 420 2009-02-15 18:51:01Z mahagr $
+* Kunena Component
+* @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -12,8 +18,6 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @author TSMF & Jan de Graaff
 **/
-// error_reporting(E_ALL);
-
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
@@ -21,6 +25,7 @@ global $is_Moderator;
 $database = &JFactory::getDBO();
 require_once(KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
 
+require_once(KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
 //Security basics begin
 //Securing passed form elements:
 $catid = (int)$catid; // redundant
@@ -45,7 +50,7 @@ if (!$is_Moderator)
     	check_dberror("Unable to load categories.");
     //Do user identification based upon the ACL
     $letPass = 0;
-    $letPass = kunena_authentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $acl);
+    $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $acl);
 }
 
 if ($letPass || $is_Moderator)
@@ -99,14 +104,11 @@ if ($letPass || $is_Moderator)
 ?>
 <!-- Pathway -->
 <?php
-
-function loadPathway(){
-$database = &JFactory::getDBO();
     if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
         require_once(KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
     }
     else {
-        require_once(KUNENA_COMP_F . '/template/default/fb_pathway.php');
+        require_once(KUNENA_ABSPATH . '/template/default/fb_pathway.php');
     }
 
     //Get the category name for breadcrumb
@@ -119,27 +121,20 @@ $database = &JFactory::getDBO();
     //check if this forum is locked
     $forumLocked = $objCatInfo->locked;
     //check if this forum is subject to review
-    $forumReviewed = $objCatInfo->review;}
-	loadPathway();
+    $forumReviewed = $objCatInfo->review;
 ?>
-<!--</div>
-</td>
-</tr>
-</table>-->
 <!-- / Pathway -->
 <?php if($objCatInfo->headerdesc) { ?>
-<div class="headerdesc"><?php echo $objCatInfo->headerdesc; ?></div>
+<div class="fb_forum-headerdesc"><?php echo stripslashes($objCatInfo->headerdesc); ?></div>
 <?php } ?>
 <?php
-function loadSubCategory(){
     //(JJ)
     if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_sub_category_list.php')) {
         include(KUNENA_ABSTMPLTPATH . '/fb_sub_category_list.php');
     }
     else {
-        include(KUNENA_COMP_F . '/template/default/fb_sub_category_list.php');
-  }  }
-  loadSubCategory();
+        include(KUNENA_ABSPATH . '/template/default/fb_sub_category_list.php');
+    }
 ?>
     <!-- top nav -->
 
@@ -174,7 +169,7 @@ function loadSubCategory(){
                     for ($i = ($page - 2) <= 0 ? 1 : ($page - 2); $i <= $page + 2 && $i <= ceil($total / $threads_per_page); $i++)
                     {
                         if ($page == $i) {
-                            echo "<class=\"jr-pagenav-nb-act\"> $i</class>";
+                            echo "<div class=\"jr-pagenav-nb-act\"> $i</div>";
                         }
                         else {
                         echo ' '.CKunenaLink::GetCategoryPageLink('showcat', $catid, $i, $i, $rel='follow', $class='jr-pagenav-nb');
@@ -183,7 +178,7 @@ function loadSubCategory(){
 
                     if ($page + 2 < ceil($total / $threads_per_page))
                     {
-                        echo "<class=\"jr-pagenav-nb\"> ...&nbsp;</class>";
+                        echo "<div class=\"jr-pagenav-nb\"> ...&nbsp;</div>";
 
                         echo ' '.CKunenaLink::GetCategoryPageLink('showcat', $catid, ceil($total / $threads_per_page), ceil($total / $threads_per_page), $rel='follow', $class='jr-pagenav-nb');
                     }
@@ -215,13 +210,13 @@ function loadSubCategory(){
                 include(KUNENA_ABSTMPLTPATH . '/flat.php');
             }
             else {
-                include(KUNENA_COMP_F . '/template/default/flat.php');
+                include(KUNENA_ABSPATH . '/template/default/flat.php');
             }
         else if (file_exists(KUNENA_ABSTMPLTPATH . '/thread.php')) {
             include(KUNENA_ABSTMPLTPATH . '/thread.php');
         }
         else {
-            include(KUNENA_COMP_F . '/template/default/thread.php');
+            include(KUNENA_ABSPATH . '/template/default/thread.php');
         }
     }
     else
@@ -264,7 +259,7 @@ function loadSubCategory(){
                     for ($i = ($page - 2) <= 0 ? 1 : ($page - 2); $i <= $page + 2 && $i <= ceil($total / $threads_per_page); $i++)
                     {
                         if ($page == $i) {
-                            echo "<class=\"jr-pagenav-nb-act\"> $i</class>";
+                            echo "<div class=\"jr-pagenav-nb-act\"> $i</div>";
                         }
                         else {
                         echo ' '.CKunenaLink::GetCategoryPageLink('showcat', $catid, $i, $i, $rel='follow', $class='jr-pagenav-nb');
@@ -273,7 +268,7 @@ function loadSubCategory(){
 
                     if ($page + 2 < ceil($total / $threads_per_page))
                     {
-                        echo "<class=\"jr-pagenav-nb\"> ...&nbsp;</class>";
+                        echo "<div class=\"jr-pagenav-nb\"> ...&nbsp;</div>";
 
                         echo ' '.CKunenaLink::GetCategoryPageLink('showcat', $catid, ceil($total / $threads_per_page), ceil($total / $threads_per_page), $rel='follow', $class='jr-pagenav-nb');
                     }
@@ -319,7 +314,7 @@ function loadSubCategory(){
                             echo '' . _GEN_MODERATORS . ": ";
 
                             foreach ($modslist as $mod) {
-                                echo '&nbsp;'.CKunenaLink::GetProfileLink($mod->userid, $mod->username).'&nbsp; ';
+                                echo '&nbsp;'.CKunenaLink::GetProfileLink($fbConfig, $mod->userid, $mod->username).'&nbsp; ';
                             } ?>
                              </div>
                             <?php
@@ -333,7 +328,7 @@ function loadSubCategory(){
                     <?php
                     //(JJ) FINISH: CAT LIST BOTTOM
                     if ($fbConfig->enableforumjump)
-                        require_once (KUNENA_COMP_C_SRC . '/fb_forumjump.php');
+                        require_once (KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
                     ?>
                 </th>
             </tr>

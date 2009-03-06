@@ -3,6 +3,12 @@
 * @version $Id: flat.php 992 2008-08-13 22:51:35Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -211,14 +217,14 @@ if (count($messages[0]) > 0)
                                     {
                                         //new post(s) in topic
                                         echo '<td  class="td-1" align="center">';
-                                        echo $fbIcons['unreadmessage'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '"/>' : $fbConfig->newchar;
+                                        echo $fbIcons['unreadmessage'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '"/>' : stripslashes($fbConfig->newchar);
                                         echo '</td>';
                                     }
                                     else
                                     {
                                         //no new posts in topic
                                         echo '<td  class="td-1" align="center">';
-                                        echo $fbIcons['readmessage'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $fbConfig->newchar;
+                                        echo $fbIcons['readmessage'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : stripslashes($fbConfig->newchar);
                                         echo '</td>';
                                     }
                                 }
@@ -226,7 +232,7 @@ if (count($messages[0]) > 0)
                                 {
                                     //not Login
                                     echo '<td class="td-1" align="center">';
-                                    echo $fbIcons['notloginmessage'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['notloginmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $fbConfig->newchar;
+                                    echo $fbIcons['notloginmessage'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['notloginmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : stripslashes($fbConfig->newchar);
                                     echo '</td>';
                                 }
                             }
@@ -286,7 +292,7 @@ if (count($messages[0]) > 0)
                                     ?>
                                     <!--            /Favourite       -->
 
-                                    <span class = "fb-topic-by fbs"> <?php echo _GEN_BY.' '.CKunenaLink::GetProfileLink($leaf->userid, $leaf->name);?></span>
+                                    <span class = "fb-topic-by fbs"> <?php echo _GEN_BY.' '.CKunenaLink::GetProfileLink($fbConfig, $leaf->userid, html_entity_decode_utf8(stripslashes($leaf->name)));?></span>
 
                                     <?php
                                     if ($fbConfig->shownew && $my->id != 0)
@@ -313,7 +319,7 @@ if (count($messages[0]) > 0)
                                     {
                                         $threadPages = ceil($totalMessages / $fbConfig->messages_per_page);
                                         echo ("<span class=\"jr-showcat-perpage\">[");
-                                        echo _PAGE.' '.CKunenaLink::GetThreadPageLink('view', $leaf->catid, $leaf->id, 1, $fbConfig->messages_per_page, 1);
+                                        echo _PAGE.' '.CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->id, 1, $fbConfig->messages_per_page, 1);
 
                                         if ($threadPages > 3)
                                         {
@@ -337,7 +343,7 @@ if (count($messages[0]) > 0)
                                                 echo (",");
                                                 }
 
-                                            echo CKunenaLink::GetThreadPageLink('view', $leaf->catid, $leaf->id, $hopPage, $fbConfig->messages_per_page, $hopPage);
+                                            echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->id, $hopPage, $fbConfig->messages_per_page, $hopPage);
                                         }
 
                                         echo ("]</span>");
@@ -392,7 +398,7 @@ if (count($messages[0]) > 0)
     {
 ?>
 
-<?php echo _GEN_BY; ?> <?php echo CKunenaLink::GetProfileLink($last_reply[$leaf->id]->userid, $last_reply[$leaf->id]->name);?>
+<?php echo _GEN_BY; ?> <?php echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, html_entity_decode_utf8(stripslashes($last_reply[$leaf->id]->name)));?>
 
 <?php
     }
@@ -405,7 +411,7 @@ if (count($messages[0]) > 0)
         $tmpicon = $fbIcons['latestpost'] ? '<img src="'
                  .KUNENA_URLICONSPATH.''.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" />':'  <img src="'.KUNENA_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />';
     }
-    echo CKunenaLink::GetThreadPageLink('view', $leaf->catid, $leaf->id, $threadPages, $fbConfig->messages_per_page, $tmpicon, $last_reply[$leaf->id]->id);
+    echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->id, $threadPages, $fbConfig->messages_per_page, $tmpicon, $last_reply[$leaf->id]->id);
     ?>
                                 </div>
                             </td>
@@ -466,7 +472,7 @@ if (count($messages[0]) > 0)
                             </select>
 
                             <?php
-                            FBTools::showBulkActionCats();
+                            CKunenaTools::showBulkActionCats();
                             ?>
 
             <input type = "submit" name = "fbBulkActionsGo" class = "fbs" value = "<?php echo _KUNENA_GO ; ?>"/>
@@ -493,8 +499,7 @@ if (count($messages[0]) > 0)
 </div>
 <?php
 }
-else
-{
+else {
     echo "<p align=\"center\">" . _VIEW_NO_POSTS . "</p>";
 }
 ?>

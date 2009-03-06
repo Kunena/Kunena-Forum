@@ -3,6 +3,12 @@
 * @version $Id: fb_file_upload.php 855 2008-07-16 15:35:10Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -48,7 +54,7 @@ if (file_exists(KUNENA_ABSUPLOADEDPATH. "/files/$newFileName")) {
 if ($GLOBALS['KUNENA_rc'])
 {
     //Filename + proper path
-    $fileLocation = KUNENA_ABSUPLOADEDPATH . "/files/$newFileName";
+    $fileLocation = strtr(KUNENA_ABSUPLOADEDPATH . "/files/$newFileName", "\\", "/");
 
     // Check for empty filename
     if (empty($_FILES['attachfile']['name'])) {
@@ -74,7 +80,6 @@ if ($GLOBALS['KUNENA_rc'])
 {
     // file is OK, move it to the proper location
     move_uploaded_file($_FILES['attachfile']['tmp_name'], $fileLocation);
-    @chmod($fileLocation, 0777);
 }
 
 // Insert file code into message

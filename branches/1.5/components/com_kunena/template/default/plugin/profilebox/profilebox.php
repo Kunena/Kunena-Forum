@@ -3,6 +3,12 @@
 * @version $Id: profilebox.php 901 2008-08-03 21:39:37Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -73,19 +79,12 @@ else
 
 }
 
-if ($fbConfig->fb_profile == "jomsocial")
+if ($fbConfig->fb_profile == "cb" || $fbConfig->fb_profile == "jomsocial")
 {
-    $jr_profilelink = CKunenaLink::GetProfileLink($my->id, _PROFILEBOX_MYPROFILE);
+    $jr_profilelink = CKunenaLink::GetProfileLink($fbConfig, $my->id, _PROFILEBOX_MYPROFILE);
 }
 else if ($fbConfig->fb_profile == "clexuspm") {
     $jr_profilelink = '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
-}
-else if ($fbConfig->fb_profile == "cb")
-{
-    $jr_profilelink = '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
-    if($fbConfig->cb_profile) {
-        $jr_profilelink = '<a href="' . JRoute::_('index.php?option=com_comprofiler&amp;task=userDetails'.KUNENA_CB_ITEMID_SUFFIX) . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
-    }
 }
 else
 {
@@ -97,11 +96,11 @@ $jr_latestpost = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=latest');
 ?>
 
 <?php // AFTER LOGIN AREA
-if ($fbConfig->cb_profile)
+if ($fbConfig->fb_profile == 'cb')
 {
-	$loginlink = JRoute::_('index.php?option=com_user&amp;view=login');
-	$logoutlink = JRoute::_('index.php?option=com_user&amp;view=login');
-	$registerlink = JRoute::_('index.php?option=com_comprofiler&amp;task=registers');//.KUNENA_CB_ITEMID_SUFFIX);
+    $loginlink = JRoute::_('index.php?option=com_comprofiler&amp;task=login');
+    $logoutlink = JRoute::_('index.php?option=com_comprofiler&amp;task=logout');
+    $registerlink = JRoute::_('index.php?option=com_comprofiler&amp;task=registers');//.KUNENA_CB_ITEMID_SUFFIX);
     $lostpasslink = JRoute::_('index.php?option=com_comprofiler&amp;task=lostPassword');//.KUNENA_CB_ITEMID_SUFFIX);
 }
 else
@@ -122,7 +121,7 @@ if ($my->id)
         <tbody id = "topprofilebox_tbody">
             <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
                 <td  class = "td-1  fbm" align="left" width="5%">
-<?php echo CKunenaLink::GetProfileLink($my->id, $jr_avatar);?>
+<?php echo CKunenaLink::GetProfileLink($fbConfig, $my->id, $jr_avatar);?>
                 </td>
 
                 <td valign = "top" class = "td-2  fbm fb_profileboxcnt" align="left">
@@ -150,16 +149,26 @@ $annlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show'.KUNEN
 <?php } ?>
 
 </td>
-
-
-<jdoc:exists type="modules" condition="{fb_1}" />
+                <?php
+                if (mosCountModules('kunena_profilebox'))
+                {
+                ?>
 
           <td>
                             <div class = "fb_profilebox_modul">
-                                <jdoc:include type="modules" name="{fb_1}" style="{}" />
+                                <?php
+                                	$document	= &JFactory::getDocument();
+                                	$renderer	= $document->loadRenderer('modules');
+                                	$options	= array('style' => 'xhtml');
+                                	$position	= 'kunena_profilebox';
+                                	echo $renderer->render($position, $options, null);
+                                ?>
                             </div>
 
 </td>
+                <?php
+                }
+                ?>
 
             </tr>
         </tbody>
@@ -188,15 +197,19 @@ else
 
 </td>
                 <?php
-               /* if (mosCountModules('fb_1'))
+                if (mosCountModules('kunena_profilebox'))
                 {
-                */?>
+                ?>
 
                         <td>
                             <div class = "fb_profilebox_modul">
-                                <?php /*
-                                mosLoadModules('fb_1', -2);
-                                */?>
+                                <?php
+                                	$document	= &JFactory::getDocument();
+                                	$renderer	= $document->loadRenderer('modules');
+                                	$options	= array('style' => 'xhtml');
+                                	$position	= 'kunena_profilebox';
+                                	echo $renderer->render($position, $options, null);
+                                ?>
                             </div>
                        </td>
 
@@ -209,5 +222,5 @@ else
     </table>
 
 <?php
-//}
+}
 ?>

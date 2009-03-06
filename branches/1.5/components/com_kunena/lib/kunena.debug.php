@@ -3,6 +3,12 @@
 * @version $Id: fb_debug.php 966 2008-08-12 05:00:34Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2008 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -34,6 +40,17 @@ function trigger_dberror($text = '')
 {
 	$database = &JFactory::getDBO();
 	echo debug_callstackinfo();
+
+	include ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.version.php');
+	// << $KunenaDbVersion
+?>
+ <!-- Version Info -->
+<div class="fbfooter">
+Installed version:  <?php echo $KunenaDbVersion; ?> | php <?php echo $KunenaPHPVersion; ?> | mysql <?php echo $KunenaMySQLVersion; ?>
+</div>
+<!-- /Version Info -->
+<?php
+
 	trigger_error($text.'\n'.$database->stderr(true), E_USER_ERROR);
 }
 

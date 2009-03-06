@@ -3,6 +3,12 @@
 * @version $Id: fb_search.class.php 946 2008-08-11 01:55:08Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -24,10 +30,10 @@ else {
 }
 
 
-class jbSearch
+class CKunenaSearch
 {
     /** search results **/
-    var $arr_KUNENA_results;
+    var $arr_KUNENA_results = array();
     /** search strings **/
     var $arr_KUNENA_searchstrings;
     /** error number **/
@@ -44,7 +50,7 @@ class jbSearch
      * @param string search
      * @param int uid (userid)
      */
-    function jbSearch(&$database, $search, $uid, $limitstart = 0, $limit = 3)
+    function CKunenaSearch(&$database, $search, $uid, $limitstart = 0, $limit = 3)
     {
         $this->limitstart = $limitstart;
         $this->limit = $limit;
@@ -57,7 +63,7 @@ class jbSearch
             $this->int_KUNENA_errornr = 2;
             $this->str_KUNENA_errormsg = _NOKEYWORD;
             $this->arr_KUNENA_results = array ();
-            return array ();
+            return;
         }
 
         for ($x = 0; $x < count($arr_searchwords); $x++)
@@ -116,7 +122,7 @@ class jbSearch
         {
             $this->int_KUNENA_errornr = 1;
             $this->str_KUNENA_errormsg = _KUNENA_SEARCH_NOFORUM;
-            return 0;
+            return;
         }
         /* build query */
         $querystrings[] = 'm.catid IN (' . $allowed_forums . ')';
@@ -152,7 +158,7 @@ class jbSearch
         else
             $this->arr_KUNENA_results = array ();
 
-        return $this->arr_KUNENA_results;
+        return;
     }
     /** get searchstrings (array) **/
     function get_searchstrings() {
@@ -176,16 +182,15 @@ class jbSearch
      */
     function show()
     {
+	global $fbConfig;
+
         $searchword = implode(' ', $this->get_searchstrings());
         $results = $this->get_results();
         $totalRows = $this->total;
         $actionstring = $this->str_KUNENA_actionstring;
+	$start = $this->get_limitstart();
 
-        if ($this->get_limit() < $totalRows)
-        {
-            require_once(KUNENA_JABSPATH . '/includes/pageNavigation.php');
-            $pageNav = new mosPageNav($totalRows, $this->get_limitstart(), $this->get_limit());
-        }
+	$pagination = KunenaSearchPagination($searchword, floor($start/$fbConfig->messages_per_page_search)+1, floor($totalRows/$fbConfig->messages_per_page_search)+1, 7);
 
         if (defined('KUNENA_DEBUG'))
             echo '<p style="background-color:#FFFFCC;border:1px solid red;">' . $this->str_KUNENA_errormsg . '</p>';
@@ -239,10 +244,10 @@ class jbSearch
                     echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" ><td colspan="3"  style="text-align:center;font-weight:bold">Error ' . $this->int_KUNENA_errornr . ': ' . $this->str_KUNENA_errormsg . '</td></tr>';
                 }
 
-								// Cleanup incoming searchword; international chars can cause garbage at the end
-								// real problem might lie with search box form and how we post and receive the data
-								// However, this works for now
-								$searchword = trim($searchword);
+				// Cleanup incoming searchword; international chars can cause garbage at the end
+				// real problem might lie with search box form and how we post and receive the data
+				// However, this works for now
+				$searchword = trim($searchword);
 
                 // JJ Add different color
                 foreach ($results as $result)
@@ -250,18 +255,18 @@ class jbSearch
                     $k = 1 - $k;
                     $ressubject = $result->subject;
                     // Clean up subject
-                    $ressubject = smile::purify($ressubject);
+                    $ressubject = stripslashes(smile::purify($ressubject));
                     $ressubject = preg_replace("/".preg_quote($searchword, '/')."/i", '<span  class="searchword" >' . $searchword . '</span>', $ressubject);
-                    $resmessage = $result->message;
+                    $resmessage = stripslashes($result->message);
                     // Strip smiles and bbcode out of search results; they look ugly
                     $resmessage = smile::purify($resmessage);
                     $resmessage = preg_replace("/".preg_quote($searchword, '/')."/i", '{{' . $searchword . '}}', $resmessage);
-                    $searchResultList = str_replace("{{", '<span class="fb_search-results">', substr(htmlspecialchars($resmessage), 0, 300));
+                    $searchResultList = str_replace("{{", '<span class="fb_search-results">', mb_substr(html_entity_decode_utf8($resmessage), 0, 300));
                     $searchResultList = str_replace("}}", '</span>', $searchResultList);
                     echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '">';
                     echo '<td  class = "td-1" ><a href="'
                              . JRoute::_(KUNENA_LIVEURL . '&amp;func=view&amp;id=' . $result->id . '&amp;catid=' . $result->catid . '#' . $result->id) . '" >' . $ressubject . '</a><br />' . $searchResultList . '<br /><br /></td>';
-                    echo '<td class = "td-2" >' . $result->name . '</td>';
+                    echo '<td class = "td-2" >' . html_entity_decode_utf8(stripslashes($result->name)) . '</td>';
                     echo '<td class = "td-3" >' . date(_DATETIME, $result->time) . '</td></tr>';
                     echo "\n";
                 }
@@ -275,8 +280,7 @@ class jbSearch
                     <tr  class = "fb_sth" >
                         <th colspan = "3" style = "text-align:center" class = "th-1 <?php echo $boardclass; ?>sectiontableheader">
                             <?php
-                            // TODO: fxstein - Need to perform SEO cleanup
-                            echo $pageNav->writePagesLinks(KUNENA_LIVEURL . '&amp;func=search&amp;searchword=' . $searchword);
+                            echo $pagination;
                             ?>
                         </th>
                     </tr>
@@ -288,7 +292,8 @@ class jbSearch
                 <tr  class = "fb_sth" >
                    <th colspan = "3" style = "text-align:center" class = "th-1 <?php echo $boardclass; ?>sectiontableheader">
                         <?php
-                        printf(_FORUM_SEARCHRESULTS, count($results), $totalRows);
+			$resStartStop = (string)($start+1).' - '.(string)($start+count($results));
+                        printf(_FORUM_SEARCHRESULTS, $resStartStop, $totalRows);
                         ?>
                     </th>
                 </tr>
@@ -301,5 +306,54 @@ class jbSearch
 </div>
 <?php
     }
-}?>
+}
+
+function KunenaSearchPagination($searchword, $page, $totalpages, $maxpages) {
+    global $fbConfig;
+
+    if ($page==0) $page++;
+    $startpage = ($page - floor($maxpages/2) < 1) ? 1 : $page - floor($maxpages/2);
+    $endpage = $startpage + $maxpages;
+    if ($endpage > $totalpages) {
+	$startpage = ($totalpages-$maxpages) < 1 ? 1 : $totalpages-$maxpages;
+	$endpage = $totalpages;
+    }
+
+    $output = '<div class="fb_pagination">'._PAGE;
+    if ($startpage > 1)
+    {
+	if ($endpage < $totalpages) $endpage--;
+	$output .= CKunenaLink::GetSearchLink($fbConfig, $searchword, 0, 1, $rel='nofollow');
+
+	if ($startpage > 2)
+        {
+	    $output .= "...";
+	}
+    }
+
+    for ($i = $startpage; $i <= $endpage && $i <= $totalpages; $i++)
+    {
+        if ($page == $i) {
+            $output .= "<strong>$i</strong>";
+        }
+        else {
+	    $output .= CKunenaLink::GetSearchLink($fbConfig, $searchword, ($i-1)*$fbConfig->messages_per_page_search, $i, $rel='nofollow');
+        }
+    }
+
+    if ($endpage < $totalpages)
+    {
+	if ($endpage < $totalpages-1)
+        {
+	    $output .= "...";
+	}
+
+	$output .= CKunenaLink::GetSearchLink($fbConfig, $searchword, ($totalpages-1)*$fbConfig->messages_per_page_search, $totalpages, $rel='nofollow');
+    }
+
+    $output .= '</div>';
+    return $output;
+}
+
+?>
 

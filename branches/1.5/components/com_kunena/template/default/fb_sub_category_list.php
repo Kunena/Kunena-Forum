@@ -3,6 +3,12 @@
 * @version $Id: fb_sub_category_list.php 1083 2008-10-27 07:07:49Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -50,13 +56,12 @@ else
                 <th colspan = "5" align="left">
                     <div class = "fb_title_cover fbm" >
                         <?php
-//                        echo '<a class="fb_title fbl" href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $objCatInfo->id) . '">' . $objCatInfo->name . '</a>';
-                        echo CKunenaLink::GetCategoryLink('showcat', $objCatInfo->id, $objCatInfo->name, $rel='follow', $class='fb_title fbl');
+                        echo CKunenaLink::GetCategoryLink('showcat', $objCatInfo->id, stripslashes($objCatInfo->name), $rel='follow', $class='fb_title fbl');
                         ?>
 
                         <?php
                         if ($objCatInfo->description != "") {
-                            echo '' . $objCatInfo->description . '';
+                            echo '' . stripslashes($objCatInfo->description) . '';
                         }
                         ?>
                     </div>
@@ -112,7 +117,7 @@ else
                     $lastPosttime = $database->loadResult();
                     	check_dberror("Unable to get max time.");
                     //changed lastPosttime to lastptime
-                    $lastptime = KUNENA_timeformat(FBTools::fbGetShowTime($lastPosttime));
+                    $lastptime = KUNENA_timeformat(CKunenaTools::fbGetShowTime($lastPosttime));
                     $lastPosttime = (int)$lastPosttime;
 
                     if ($my->id != 0)
@@ -180,14 +185,13 @@ else
                         $latestname = $obj_lp->name;
                         $latestcatid = $obj_lp->catid;
                         $latestid = $obj_lp->id;
-                        $latestsubject = stripslashes($obj_lp->subject);
+                        $latestsubject = $obj_lp->subject;
                         $latestuserid = $obj_lp->userid;
                         $latestthread = $obj_lp->thread;
                         // count messages in thread
                         $database->setQuery("SELECT count(id) from #__fb_messages WHERE thread=$latestthread AND hold=0");
                         $latestcount = $database->loadResult();
                         $latestpage = ceil($latestcount / $fbConfig->messages_per_page);
-                        echo($latestpage);
                     }
 
                     echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" id="fb_cat'.$singlerow->id.'" >';
@@ -216,7 +220,7 @@ else
                                 $categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . "" . $singlerow->id . "_on.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
                             }
                             else {
-                                $categoryicon .= $fbIcons['unreadforum'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unreadforum'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '"/>' : $fbConfig->newchar;
+                                $categoryicon .= $fbIcons['unreadforum'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unreadforum'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '"/>' : stripslashes($fbConfig->newchar);
                             }
                         }
                         else
@@ -226,7 +230,7 @@ else
                                 $categoryicon .=  "<img src=\"" . KUNENA_URLCATIMAGES . "" . $singlerow->id . "_off.gif\" border=\"0\" class='forum-cat-image' alt=\" \"  />";
                             }
                             else {
-                                $categoryicon .=  $fbIcons['readforum'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['readforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : $fbConfig->newchar;
+                                $categoryicon .=  $fbIcons['readforum'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['readforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : stripslashes($fbConfig->newchar);
                             }
                         }
                     }
@@ -237,17 +241,17 @@ else
                             $categoryicon .=  "<img src=\"" . KUNENA_URLCATIMAGES . "" . $singlerow->id . "_notlogin.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
                         }
                         else {
-                            $categoryicon .=  $fbIcons['notloginforum'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['notloginforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : $fbConfig->newchar;
+                            $categoryicon .=  $fbIcons['notloginforum'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['notloginforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : stripslashes($fbConfig->newchar);
                         }
                     }
                     echo CKunenaLink::GetCategoryLink('listcat', $singlerow->id, $categoryicon, 'follow');
 					echo '</td>';
                     echo '<td class="td-2"  align="left"><div class="'
-                             . $boardclass . 'thead-title fbl">'.CKunenaLink::GetCategoryLink('showcat', $singlerow->id, $singlerow->name, 'follow');
+                             . $boardclass . 'thead-title fbl">'.CKunenaLink::GetCategoryLink('showcat', $singlerow->id, stripslashes($singlerow->name), 'follow');
 
                     //new posts available
                     if ($cxThereisNewInForum == 1 && $my->id > 0) {
-                        echo '<sup><span class="newchar">&nbsp;(' . $newPostsAvailable . ' ' . $fbConfig->newchar . ")</span></sup>";
+                        echo '<sup><span class="newchar">&nbsp;(' . $newPostsAvailable . ' ' . stripslashes($fbConfig->newchar) . ")</span></sup>";
                     }
 
                     $cxThereisNewInForum = 0;
@@ -321,7 +325,7 @@ else
                                         }
                                         else {
                                             echo $fbIcons['unreadforum']
-                                                     ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unreadforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '" />' : $fbConfig->newchar;
+                                                     ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unreadforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '" />' : stripslashes($fbConfig->newchar);
                                         }
                                     }
                                     else
@@ -332,7 +336,7 @@ else
                                         }
                                         else {
                                             echo $fbIcons['readforum']
-                                                     ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['readforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : $fbConfig->newchar;
+                                                     ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['readforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : stripslashes($fbConfig->newchar);
                                         }
                                     }
                                 }
@@ -345,7 +349,7 @@ else
                                     }
                                     else {
                                         echo $fbIcons['notloginforum']
-                                                 ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['notloginforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : $fbConfig->newchar;
+                                                 ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['notloginforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : stripslashes($fbConfig->newchar);
                                     }
             ?>
 
@@ -357,7 +361,7 @@ else
             ?>
 
             <?php
-                            echo CKunenaLink::GetCategoryLink('showcat', $forumparent->id, $forumparent->name, 'follow').' &nbsp;';
+                            echo CKunenaLink::GetCategoryLink('showcat', $forumparent->id, stripslashes($forumparent->name), 'follow').' &nbsp;';
                         }
 
                         echo "</div>";
@@ -374,7 +378,7 @@ else
                         echo '<div class="' . $boardclass . 'thead-moderators  fbs">' . _GEN_MODERATORS . ": ";
 
                         foreach ($modslist as $mod) {
-                             echo '&nbsp;' .CKunenaLink::GetProfileLink($mod->userid, $fbConfig->username ? $mod->username : $mod->name, 'nofollow').'&nbsp; ';
+                             echo '&nbsp;' .CKunenaLink::GetProfileLink($fbConfig, $mod->userid, $fbConfig->username ? $mod->username : $mod->name, 'nofollow').'&nbsp; ';
                         }
 
                         echo '</div>';
@@ -406,9 +410,9 @@ else
                             <div class = "<?php echo $boardclass ?>latest-subject-by  fbs">
 <?php echo _GEN_BY; ?>
 
-                                <?php echo CKunenaLink::GetProfileLink($latestuserid, $latestname, $rel='nofollow');?>
+                                <?php echo CKunenaLink::GetProfileLink($fbConfig, $latestuserid, $latestname, $rel='nofollow');?>
 
-                    | <?php echo $lastptime; ?> <?php echo CKunenaLink::GetThreadPageLink('view', $latestcatid, $latestthread, $latestpage, $fbConfig->messages_per_page, ($fbIcons['latestpost'] ? '<img src="'
+                    | <?php echo $lastptime; ?> <?php echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $latestcatid, $latestthread, $latestpage, $fbConfig->messages_per_page, ($fbIcons['latestpost'] ? '<img src="'
              . KUNENA_URLICONSPATH . '' . $fbIcons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'), $latestid, $rel='nofollow');?>
                             </div>
                         </td>

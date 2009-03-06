@@ -3,6 +3,12 @@
 * @version $Id: fb_pdf.php 969 2008-08-12 09:23:54Z racoon $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -79,11 +85,11 @@ function dofreePDF($database)
                 check_dberror("Unable to load category detail.");
 
 
-        $allow_forum = explode(',', FBTools::getAllowedForums($my->id, $aro_group->group_id, $acl));
+        $allow_forum = explode(',', CKunenaTools::getAllowedForums($my->id, $aro_group->group_id, $acl));
 
         //Do user identification based upon the ACL
         $letPass = 0;
-        $letPass = kunena_authentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $acl);
+        $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $acl);
     }
 
     if ($letPass || $is_Mod)
@@ -126,7 +132,7 @@ function dofreePDF($database)
         $strtmp = str_replace('%version%', "NEW VERSION GOES HERE" /*$fbConfig->version*/, $strtmp); // TODO: fxstein - Need to change version handling
         $pdf->addText(250, 34, 6, $strtmp);
         $strtmp = _KUNENA_PDF_DATE;
-        $strtmp = str_replace('%date%', date('j F, Y, H:i', FBTools::fbGetShowTime()), $strtmp);
+        $strtmp = str_replace('%date%', date('j F, Y, H:i', CKunenaTools::fbGetShowTime()), $strtmp);
         $pdf->addText(450, 34, 6, $strtmp);
 
         $pdf->restoreState();

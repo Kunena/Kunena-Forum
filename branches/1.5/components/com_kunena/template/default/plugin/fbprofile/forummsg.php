@@ -3,6 +3,12 @@
 * @version $Id: forummsg.php 947 2008-08-11 01:56:01Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -142,7 +148,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
                 <td class = "td-3 fbm" align="left">
 
-                        <a  class="fb-topic-cat fbm" href = "<?php echo $fbCatURL; ?>"> <?php echo $item->catname; ?></a>
+                        <a  class="fb-topic-cat fbm" href = "<?php echo $fbCatURL; ?>"> <?php echo stripslashes($item->catname); ?></a>
 
                 </td>
 
@@ -190,10 +196,10 @@ defined( '_JEXEC' ) or die('Restricted access');
 
                 <?php
                 // TODO: fxstein - Need to perform SEO cleanup
-                echo $pageNav->writePagesLinks("index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=$userid".KUNENA_KUNENA_ITEMID_SUFFIX);
+                echo $pageNav->writePagesLinks("index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=$userid".KUNENA_COMPONENT_ITEMID_SUFFIX);
                 ?>
 <?php
-echo $pageNav->writeLimitBox("index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=$userid" . KUNENA_KUNENA_ITEMID_SUFFIX . "");
+echo $pageNav->writeLimitBox("index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=$userid" . KUNENA_COMPONENT_ITEMID_SUFFIX . "");
 ?>
                 <br/>
 <?php echo $pageNav->writePagesCounter(); ?>

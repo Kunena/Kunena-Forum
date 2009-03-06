@@ -3,6 +3,12 @@
 * @version $Id: fb_helpers.php 462 2007-12-10 00:05:53Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -63,7 +69,7 @@ function fbSetTimeout($url, $time, $script = 1)
     $url = JRoute::_($url);
 
     if ($script)
-        echo '<script language="javascript">setTimeout("location=\'' . $url . '\'",$time)</script>';
+        echo CKunenaLink::GetAutoRedirectHTML($url, $time);
     else
         echo 'setTimeout("location=\'' . $url . '\'",$time)';
 }

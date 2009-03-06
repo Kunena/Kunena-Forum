@@ -3,6 +3,12 @@
 * @version $Id: myprofile_set.php 479 2007-12-12 18:52:34Z sisko1990 $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -34,29 +40,11 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 		<tbody class = "fb_myprofile_general">
 			<tr >
-				<td >
-					<strong><?php echo _USER_PREFERED; ?>*</strong>:
-				</td>
-
-				<td >
-					<?php
-//Threaded view option removed for Kunena
-//					// make the select list for the view type
-//					$yesno[]  = mosHTML::makeOption('flat', _GEN_FLAT);
-//					$yesno[]  = mosHTML::makeOption('threaded', _GEN_THREADED);
-//					// build the html select list
-//					$tosend   = mosHTML::selectList($yesno, 'newview', 'class="inputbox" size="2"', 'value', 'text', $prefview);
-//					echo $tosend;
-					?>
-				</td>
-			</tr>
-
-			<tr >
-				<td >
+				<td>
 					<strong><?php echo _USER_ORDER; ?>*</strong>:
 				</td>
 
-				<td  colspan = "2">
+				<td>
 					<?php
 					// make the select list for the view type
 					$yesno1[] = mosHTML::makeOption(0, _USER_ORDER_ASC);
@@ -64,12 +52,11 @@ defined( '_JEXEC' ) or die('Restricted access');
 					// build the html select list
 					$tosend   = mosHTML::selectList($yesno1, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $ordering);
 					echo $tosend;
-					echo '<br /><font size="1"><em>*' . _USER_CHANGE_VIEW . '</em></font>';
 					?>
 				</td>
 			</tr>
             <tr >
-				<td >
+				<td>
 					<strong><?php echo _KUNENA_USER_HIDEEMAIL; ?>*</strong>:
 				</td>
 
@@ -87,11 +74,11 @@ defined( '_JEXEC' ) or die('Restricted access');
 			</tr>
 
             <tr >
-				<td >
+				<td>
 					<strong><?php echo _USER_SHOWONLINE; ?>*</strong>:
 				</td>
 
-				<td  colspan = "2">
+				<td>
 					<?php
 					// make the select list for the view type
 					$yesno4[] = mosHTML::makeOption(0, _COM_A_NO);
@@ -105,7 +92,15 @@ defined( '_JEXEC' ) or die('Restricted access');
 			</tr>
 
 
-			<tr><td colspan = "2" align="center"><input type = "submit" class = "button" value = "<?php echo _GEN_SUBMIT;?>"></td>
+			<tr>
+				<td colspan = "2" align="center">
+					<input type = "submit" class = "button" value = "<?php echo _GEN_SUBMIT;?>">
+				</td>
+			</tr>
+            <tr >
+				<td colspan = "2">
+					<?php echo '<br /><font size="1"><em>*' . _USER_CHANGE_VIEW . '</em></font>'; ?>
+				</td>
 			</tr>
 		</tbody>
 	</table>

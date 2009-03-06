@@ -3,6 +3,12 @@
 * @version $Id: stats.php 895 2008-08-03 06:15:11Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -17,6 +23,8 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
+
+$mainframe->setPageTitle(_STAT_FORUMSTATS . ' - ' . stripslashes($fbConfig->board_title));
 
 if($fbConfig->showstats):
 
@@ -37,7 +45,7 @@ $userlist = 'index.php?option=com_comprofiler&amp;task=usersList';
                 <tr>
                     <th>
                         <div class = "fb_title_cover fbm">
-                            <a class="fb_title fbl" href = "<?php echo $statslink;?>"><?php echo $fbConfig->board_title; ?> <?php echo _STAT_FORUMSTATS; ?></a>
+                            <a class="fb_title fbl" href = "<?php echo $statslink;?>"><?php echo stripslashes($fbConfig->board_title); ?> <?php echo _STAT_FORUMSTATS; ?></a>
                         </div>
                         <img id = "BoxSwitch__morestat_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
                     </th>
@@ -53,7 +61,7 @@ $userlist = 'index.php?option=com_comprofiler&amp;task=usersList';
                 <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
                     <td class = "td-1" align="left">
 <?php echo _STAT_TOTAL_USERS; ?>:<b> <a href = "<?php echo $userlist;?>"><?php echo $totalmembers; ?></a> </b>
-                    &nbsp; <?php echo _STAT_LATEST_MEMBERS; ?>:<b><?php echo CKunenaLink::GetProfileLink($lastestmemberid, $lastestmember); ?></b>
+                    &nbsp; <?php echo _STAT_LATEST_MEMBERS; ?>:<b><?php echo CKunenaLink::GetProfileLink($fbConfig, $lastestmemberid, $lastestmember); ?></b>
 
                 <br/> <?php echo _STAT_TOTAL_MESSAGES; ?>: <b> <?php echo $totalmsgs; ?></b> &nbsp;
     <?php echo _STAT_TOTAL_SUBJECTS; ?>: <b> <?php echo $totaltitles; ?></b> &nbsp; <?php echo _STAT_TOTAL_SECTIONS; ?>: <b> <?php echo $totalcats; ?></b> &nbsp; <?php echo _STAT_TOTAL_CATEGORIES; ?>: <b> <?php echo $totalsections; ?></b>
@@ -125,7 +133,7 @@ $k = 0;
 
     <tr class = "<?php echo ''.$boardclass.''. $tabclass[$k] . ''; ?>">
       <td class="td-1" align="left">
-       <a href = "<?php echo $link;?>"><?php echo htmlspecialchars($toptitle->subject); ?></a>
+       <a href = "<?php echo $link;?>"><?php echo htmlspecialchars(stripslashes($toptitle->subject)); ?></a>
       </td>
       <td  class="td-2">
        <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
@@ -190,7 +198,7 @@ $k = 0;
     <tr class = "<?php echo ''.$boardclass.''. $tabclass[$k] . ''; ?>">
       <td  class="td-1"  align="left">
 
-         <?php echo CKunenaLink::GetProfileLink($poster->userid, $poster->username); ?>
+         <?php echo CKunenaLink::GetProfileLink($fbConfig, $poster->userid, $poster->username); ?>
 
 </td>
       <td  class="td-2">
@@ -254,7 +262,7 @@ $barwidth = round(($topprofile->hits * 100) / $topprofil);
 
     <tr class = "<?php echo ''.$boardclass.''. $tabclass[$k] . ''; ?>">
       <td  class="td-1"  align="left">
-        <?php echo CKunenaLink::GetProfileLink($topprofile->user_id, $topprofile->user); ?>
+        <?php echo CKunenaLink::GetProfileLink($fbConfig, $topprofile->user_id, $topprofile->user); ?>
 </td>
       <td  class="td-2">
          <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>

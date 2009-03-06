@@ -3,6 +3,12 @@
 * @version $Id: fb_karma.php 831 2008-07-15 04:14:59Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -38,7 +44,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                 // - if he specifies the user that will have the karma modified
                 if ($fbConfig->showkarma && $my->id != "" && $my->id != 0 && $do != '' && $userid != '')
                 {
-                    $time = FBTools::fbGetInternalTime();
+                    $time = CKunenaTools::fbGetInternalTime();
 
                     if ($my->id != $userid)
                     {

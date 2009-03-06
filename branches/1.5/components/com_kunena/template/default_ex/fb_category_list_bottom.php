@@ -1,8 +1,14 @@
 <?php
 /**
-* @version $Id: fb_category_list_bottom.php 855 2008-07-16 15:35:10Z fxstein $
-* Fireboard Component
-* @package Fireboard
+* @version $Id: fb_category_list_bottom.php 436 2009-02-16 11:28:19Z mahagr $
+* Kunena Component
+* @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -17,40 +23,27 @@
 defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 ?>
-<!-- Cat List Bottom -->
-
-<table  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
-  <thead>
-    <tr>
-      <td style="padding-left:20px;" align="left" >
+	<tr>
+		<td class="fb_list_markallcatsread">
                 <?php
                 if ($my->id != 0)
                 {
                 ?>
 
-                    <form action = "<?php echo $mainframe->getCfg("live_site")."/index2.php";?>" name = "markAllForumsRead" method = "post">
+                    <form action = "<?php echo KUNENA_LIVEURLREL; ?>" name = "markAllForumsRead" method = "post">
                         <input type = "hidden" name = "markaction" value = "allread"/>
-                        <input type = "hidden" name = "Itemid" value = "<?php echo KUNENA_COMPONENT_ITEMID?>"/>
-                        <input type = "hidden" name = "option" value = "com_kunena"/>
-                        <input type = "hidden" name = "no_html" value = "1"/>
-
-                        <input type = "submit" class = "button<?php echo $boardclass ;?> fbs" value = "<?php echo _GEN_MARK_ALL_FORUMS_READ ;?>"/>
+                        <input type = "submit" class = "fb_button button<?php echo $boardclass ;?> fbs" value = "<?php echo _GEN_MARK_ALL_FORUMS_READ ;?>"/>
                     </form>
 
                 <?php
                 }
                 ?>
-           </td>
-      <td  align="right" style="padding-right:20px;">
+		</td>
+		<td class="fb_list_categories">
                 <?php
-                //(FB) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump)
-                    require_once (KUNENA_PATH_LIB .DS. 'fb_forumjump.php');
+                    require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 ?>
-            </td>
-        </tr>
+		</td>
+	</tr>
 
-
-</table>
-
-<!-- /Cat List Bottom -->

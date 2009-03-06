@@ -3,6 +3,12 @@
 * @version $Id: myprofile_summary.php 833 2008-07-15 04:16:46Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -15,32 +21,23 @@
 defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 
-    if ($fbConfig->cb_profile)
-    {
-        $database->setQuery("select fbsignature from #__comprofiler where user_id=$my->id");
-        $signature = $database->loadResult();
-    }
-    else
-    {
-        $signature = $userinfo->signature;
-    }
+$signature = $userinfo->signature;
 
-    if ($signature)
-    {
-        $signature = stripslashes($signature);
-        $signature = stripslashes(smile::smileReplace($signature, 0, $fbConfig->disemoticons, $smileyList));
-        $signature = str_replace("\n", "<br />", $signature);
-        $signature = str_replace("<P>&nbsp;</P><br />", "", $signature);
-        $signature = str_replace("</P><br />", "</P>", $signature);
-        $signature = str_replace("<P><br />", "<P>", $signature);
-        //wordwrap:
-        $signature = smile::htmlwrap($signature, $fbConfig->wrap);
-        $signature = nl2br($signature);
-        //restore the \n (were replaced with _CTRL_) occurences inside code tags, but only after we have striplslashes; otherwise they will be stripped again
-        //$signature = stripslashes($signature);
-        //$signature = str_replace("_CRLF_", "\\n", $signature);
-        $usr_signature = $signature;
-    }
+if ($signature)
+{
+	$signature = stripslashes(smile::smileReplace($signature, 0, $fbConfig->disemoticons, $smileyList));
+	$signature = str_replace("\n", "<br />", $signature);
+	$signature = str_replace("<P>&nbsp;</P><br />", "", $signature);
+	$signature = str_replace("</P><br />", "</P>", $signature);
+	$signature = str_replace("<P><br />", "<P>", $signature);
+	//wordwrap:
+	$signature = smile::htmlwrap($signature, $fbConfig->wrap);
+	$signature = nl2br($signature);
+	//restore the \n (were replaced with _CTRL_) occurences inside code tags, but only after we have striplslashes; otherwise they will be stripped again
+	//$signature = stripslashes($signature);
+	//$signature = str_replace("_CRLF_", "\\n", $signature);
+	$usr_signature = $signature;
+}
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
@@ -88,7 +85,7 @@ global $fbConfig;
       <td><?php echo $numPosts; ?></td>
     </tr>
     <tr>
-      <td><b><?php echo _KUNENA_MYPROFILE_PROFILEVIEW; ?>:</b> </td>
+      <td><b><?php echo _KUNENA_MYPROFILE_PROFILEVIEW; ?></b> </td>
       <td><?php echo $userinfo->uhits; ?></td>
     </tr>
     <tr class="fb_sth">
@@ -98,7 +95,7 @@ global $fbConfig;
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_PERSONALTEXT; ?></b> </td>
-      <td><?php echo $userinfo->personalText; ?></td>
+      <td><?php echo html_entity_decode_utf8(stripslashes($userinfo->personalText)); ?></td>
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_GENDER; ?></b> </td>
@@ -110,7 +107,7 @@ global $fbConfig;
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_LOCATION; ?></b> </td>
-      <td><?php echo $userinfo->location; ?></td>
+      <td><?php echo html_entity_decode_utf8(stripslashes($userinfo->location)); ?></td>
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_ICQ; ?></b> </td>

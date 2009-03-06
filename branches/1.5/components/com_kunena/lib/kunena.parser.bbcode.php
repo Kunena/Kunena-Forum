@@ -3,6 +3,12 @@
 * @version $Id: interpreter.bbcode.inc.php 1077 2008-10-20 19:01:15Z racoon $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -102,6 +108,7 @@ class BBCodeInterpreter extends TagInterpreter {
                 return TAGPARSER_RET_OK;
             }
             // temporarily close code tag if not exists
+            $task->in_code = 0;
             return TAGPARSER_RET_ERR;
         }
         // in_noparse state

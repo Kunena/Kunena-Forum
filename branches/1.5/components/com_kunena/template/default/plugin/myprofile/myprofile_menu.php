@@ -3,6 +3,12 @@
 * @version $Id: myprofile_menu.php 807 2008-07-13 04:31:27Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -32,6 +38,7 @@ global $fbConfig;
     </thead>
 
     <tbody class = "fb_myprofile_menu">
+
         <tr>
             <td class = "fb_myprofile_menu_staff">
                 <span class = "fb_myprofile_menu_title"><?php echo _KUNENA_MYPROFILE_PERSONAL_INFO; ?></span> <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'); ?>"> <?php echo _KUNENA_MYPROFILE_SUMMARY; ?> </a>

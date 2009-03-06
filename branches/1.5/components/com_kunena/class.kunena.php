@@ -3,6 +3,12 @@
 * @version $Id: class.fireboard.php 1079 2008-10-27 05:50:14Z fxstein $
 * Kunena Component
 * @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
@@ -33,19 +39,76 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     define("KUNENA_COMPONENT_ITEMID", (int)$Itemid);
     define("KUNENA_COMPONENT_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_COMPONENT_ITEMID);
 
-    //Community Builder
-    if ($fbConfig->cb_profile || $fbConfig->fb_profile == "cb") {
-        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_comprofiler' AND published=1");
-        $CB_Itemid = $database->loadResult();
+    //JomSocial
+    if ($fbConfig->pm_component == 'jomsocial' || $fbConfig->fb_profile == 'jomsocial' || $fbConfig->avatar_src == 'jomsocial')
+    {
+    	// Only proceed if jomSocial is really installed
+	    if ( file_exists( $mainframe->getCfg( 'absolute_path' ) . '/components/com_community/libraries/core.php' ) )
+	    {
+	        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_community' AND published=1");
+	        $JOMSOCIAL_Itemid = $database->loadResult();
+	        	check_dberror('Unable to load jomSocial item id');
 
-        define("KUNENA_CB_ITEMID", (int)$CB_Itemid);
-        define("KUNENA_CB_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_CB_ITEMID);
-        }
+	        define("KUNENA_JOMSOCIAL_ITEMID", (int)$JOMSOCIAL_Itemid);
+	        define("KUNENA_JOMSOCIAL_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_JOMSOCIAL_ITEMID);
+
+	        // Prevent JomSocial from loading their jquery library - we got one loaded already
+	        define( 'C_ASSET_JQUERY', 1 );
+
+			include_once(JPATH_ROOT.'/components/com_community/libraries/core.php');
+			include_once(JPATH_ROOT.'/components/com_community/libraries/messaging.php');
+
+			//PM popup requires JomSocial css to be loaded from selected template
+			$config =& CFactory::getConfig();
+			$mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="'.KUNENA_JLIVEURL.'/components/com_community/assets/window.css" />');
+			$mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="'.KUNENA_JLIVEURL.'/components/com_community/templates/'.$config->get('template').'/css/style.css" />');
+	    }
+	    else
+	    {
+	    	// JomSocial not present reset config settings to avoid problems
+	    	$fbConfig->pm_component = $fbConfig->pm_component == 'jomsocial' ? 'none' : $fbConfig->pm_component;
+	    	$fbConfig->fb_profile = $fbConfig->fb_profile == 'jomsocial' ? 'kunena' : $fbConfig->fb_profile;
+	    	$fbConfig->avatar_src = $fbConfig->avatar_src == 'jomsocial' ? 'kunena' : $fbConfig->avatar_src;
+
+	    	// Do not save new config - thats a task for the backend
+	    	// This is just a catch all in case it is not present
+	    }
+    }
+
+    //Community Builder 1.2 - older 1.1 integration no longer supported
+    if ($fbConfig->pm_component == 'cb' || $fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
+    {
+    	// Only proceed if Community Builder is really installed
+	    if ( file_exists( $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php' ) )
+	    {
+	    	global $_CB_framework, $_CB_database, $ueConfig, $mainframe;
+
+	        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_comprofiler' AND published=1");
+	        $CB_Itemid = $database->loadResult();
+	        	check_dberror('Unable to load CB item id');
+
+	        define("KUNENA_CB_ITEMID", (int)$CB_Itemid);
+	        define("KUNENA_CB_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_CB_ITEMID);
+
+	        // include_once( $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php' );
+	    }
+	    else
+	    {
+	    	// Community Builder not present reset config settings to avoid problems
+	    	$fbConfig->pm_component = $fbConfig->pm_component == 'cb' ? 'none' : $fbConfig->pm_component;
+	    	$fbConfig->fb_profile = $fbConfig->fb_profile == 'cb' ? 'kunena' : $fbConfig->fb_profile;
+	    	$fbConfig->avatar_src = $fbConfig->avatar_src == 'cb' ? 'kunena' : $fbConfig->avatar_src;
+
+	    	// Do not save new config - thats a task for the backend
+	    	// This is just a catch all in case it is not present
+	    }
+    }
 
     //Clexus PM
-    if ($fbConfig->pm_component == 'clexuspm' || $fbConfig->fb_profile == "clexuspm") {
+    if ($fbConfig->pm_component == 'clexuspm' || $fbConfig->fb_profile == 'clexuspm') {
         $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_mypms' AND published=1");
         $CPM_Itemid = $database->loadResult();
+        	check_dberror('Unable to load Clexus item id');
 
         define("KUNENA_CPM_ITEMID", (int)$CPM_Itemid);
         define("KUNENA_CPM_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_CPM_ITEMID);
@@ -55,6 +118,8 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     if ($fbConfig->pm_component == 'uddeim') {
         $database->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_uddeim'");
         $UIM_itemid = $database->loadResult();
+                	check_dberror('Unable to load uddeim item id');
+
         define("KUNENA_UIM_ITEMID", (int)$UIM_itemid);
         define("KUNENA_UIM_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_UIM_ITEMID);
         }
@@ -63,12 +128,18 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     if ($fbConfig->pm_component == 'missus') {
         $database->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_missus'");
         $MISSUS_itemid = $database->loadResult();
+                	check_dberror('Unable to load missus item id');
+
         define("KUNENA_MISSUS_ITEMID", (int)$MISSUS_itemid);
         define("KUNENA_MISSUS_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_MISSUS_ITEMID);
         }
 
     // PROFILE LINK
-    if ($fbConfig->fb_profile == "cb") {
+    if ($fbConfig->fb_profile == "jomsocial") {
+        $profilelink = 'index.php?option=com_community&amp;view=profile&amp;userid=';
+        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_community&amp;view=profile&amp;Itemid=" . KUNENA_JOMSOCIAL_ITEMID . "&amp;userid=");
+        }
+    else if ($fbConfig->fb_profile == "cb") {
         $profilelink = 'index.php?option=com_comprofiler&amp;task=userProfile&amp;user=';
         define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_comprofiler&amp;task=userProfile&amp;Itemid=" . KUNENA_CB_ITEMID . "&amp;user=");
         }
@@ -226,7 +297,7 @@ function getFBGroupName($id) {
         }
     }
 
-class FBTools {
+class CKunenaTools {
     var $id = null;
 
 /*
@@ -259,7 +330,7 @@ class FBTools {
           return 0;
         }
         if($time===null) {
-          $time = FBTools::fbGetInternalTime();
+          $time = CKunenaTools::fbGetInternalTime();
           $space = 'FB';
         }
         if($space=='UTC') {
@@ -454,7 +525,7 @@ class FBTools {
         global $my;
 		$database = &JFactory::getDBO();
 
-        if (!FBTools::isModOrAdmin() && !$isMod) {
+        if (!CKunenaTools::isModOrAdmin() && !$isMod) {
             return;
             }
 
@@ -478,7 +549,7 @@ class FBTools {
                 $userids = array ();
                 $database->setQuery('SELECT userid,id, catid FROM #__fb_messages WHERE thread=' . $id . ' OR id=' . $id);
 
-                foreach ($database->loadObjectList()as $line) {
+                foreach ($database->loadObjectList() as $line) {
                     $children[] = $line->id;
 
                     if ($line->userid > 0) {
@@ -508,7 +579,7 @@ class FBTools {
                 }
 
             // now update stats
-            FBTools::decreaseCategoryStats($id, $mes->catid);
+            CKunenaTools::decreaseCategoryStats($id, $mes->catid);
 
             //Delete message text(s)
             $database->setQuery('DELETE FROM #__fb_messages_text WHERE mesid IN (' . $children . ')');
@@ -554,7 +625,7 @@ class FBTools {
                     }
                 }
             } //end foreach
-            FBTools::reCountBoards();
+            CKunenaTools::reCountBoards();
 
             mosRedirect($return, _KUNENA_BULKMSG_DELETED);
         }
@@ -580,12 +651,19 @@ class FBTools {
 
     function fbMovePosts($catid, $isMod, $return) {
         $database = &JFactory::getDBO();
+		$my = &JFactory::getUser();
+		
+		$err = "ERROR!";
 
-$my = &JFactory::getUser();
+		$database->setQuery('SELECT userid FROM #__fb_moderation WHERE userid='.$my->id);
+		$isMod = $database->loadResult();
+			check_dberror("Unable to load moderation info.");
+		$isAdmin = CKunenaTools::isModOrAdmin();
+		
 
         //isMod will stay until better group management comes in
-        if (!FBTools::isModOrAdmin() && !$isMod) {
-            return;
+        if (!$isAdmin && !$isMod) {
+            mosRedirect($return, _POST_NOT_MODERATOR);
             }
 
 		$catid = (int)$catid;
@@ -593,12 +671,16 @@ $my = &JFactory::getUser();
 	        $items = fbGetArrayInts("fbDelete");
 
 	        // start iterating here
+
 	        foreach ($items as $id => $value) {
 	            $id = (int)$id;
 
 	            $database->setQuery("SELECT `subject`, `catid`, `time` AS timestamp FROM #__fb_messages WHERE `id`=" . $id);
 	            $oldRecord = $database->loadObjectList();
 	            	check_dberror("Unable to load message detail.");
+
+                    $newCatObj = new jbCategory($database, $oldRecord[0]->catid);
+		    if (fb_has_moderator_permission($database, $newCatObj, $my->id, $isAdmin)) {
 
 	            $newSubject = _MOVED_TOPIC . " " . $oldRecord[0]->subject;
 	            $database->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE `thread`=" . $id);
@@ -609,17 +691,22 @@ $my = &JFactory::getUser();
 	                $lastTimestamp = $oldRecord[0]->timestamp;
                 }
 
-	            //perform the actual move
-				$database->setQuery("UPDATE #__fb_messages SET `catid`='$catid' WHERE `id`='$id' OR `thread`='$id'");
-				$database->query();
-					check_dberror("Unable to move thread.");
-	        } //end foreach
+			//perform the actual move
+			$database->setQuery("UPDATE #__fb_messages SET `catid`='$catid' WHERE `id`='$id' OR `thread`='$id'");
+			$database->query();
+			check_dberror("Unable to move thread.");
+
+			$err = _POST_SUCCESS_MOVE;
+		    } else {
+                        $err = _POST_NOT_MODERATOR;
+                    }
+		} //end foreach
 		} else {
 			$err = _POST_NO_DEST_CATEGORY;
 		}
-        FBTools::reCountBoards();
+        CKunenaTools::reCountBoards();
 
-        mosRedirect($return, $err ? $err : _POST_SUCCESS_MOVE);
+        mosRedirect($return, $err);
         }
 
         function fbRemoveXSS($val, $reverse = 0) {
@@ -883,7 +970,7 @@ function fbTreeRecurse( $id, $indent, $list, &$children, $maxlevel=9999, $level=
             }
             $pt = $v->parent;
             $list[$id] = $v;
-            $list[$id]->treename = "$indent$txt";
+            $list[$id]->treename = stripslashes("$indent$txt");
             $list[$id]->children = count( @$children[$id] );
 
             $list = fbTreeRecurse( $id, $indent . $spacer, $list, $children, $maxlevel, $level+1, $type );
@@ -1078,7 +1165,7 @@ function fbGetArrayInts($name, $type = NULL) {
 
     // $newer_date will equal false if we want to know the time elapsed between a date and the current time
     // $newer_date will have a value if we want to work out time elapsed between two known dates
-    //$newer_date = ($newer_date == false) ? FBTools::fbGetInternalTime() : $newer_date;
+    //$newer_date = ($newer_date == false) ? CKunenaTools::fbGetInternalTime() : $newer_date;
 
     // difference in seconds
     $since = $newer_date - $older_date;
@@ -1130,6 +1217,14 @@ function fbGetArrayInts($name, $type = NULL) {
 function make_pattern(&$pat, $key) {
   $pat = '/'.preg_quote($pat, '/').'/i';
 }
+if (!function_exists("htmlspecialchars_decode")) {
+    function htmlspecialchars_decode($string,$style=ENT_COMPAT) 
+    {
+        $translation = array_flip(get_html_translation_table(HTML_SPECIALCHARS,$style));
+        if($style === ENT_QUOTES) { $translation['&#039;'] = '\''; }
+        return strtr($string,$translation);
+    }
+}
 if(!function_exists('str_ireplace')){
 function str_ireplace($search, $replace, $subject){
 if(is_array($search)){
@@ -1147,12 +1242,37 @@ function fbReturnDashed (&$string, $key) {
 }
 
 if (!function_exists('mb_detect_encoding')) {
-  // We're on an aged PHP version
   function mb_detect_encoding($text) {
-    return 'UTF-8';
+	$c=0; $b=0;
+	$bits=0;
+	$len=strlen($text);
+	for($i=0; $i<$len; $i++){
+		$c=ord($text[$i]);
+		if($c > 128){
+			if(($c >= 254)) return 'ISO-8859-1';
+			elseif($c >= 252) $bits=6;
+			elseif($c >= 248) $bits=5;
+			elseif($c >= 240) $bits=4;
+			elseif($c >= 224) $bits=3;
+			elseif($c >= 192) $bits=2;
+			else return 'ISO-8859-1';
+			if(($i+$bits) > $len) return 'ISO-8859-1';
+			while($bits > 1){
+				$i++;
+				$b=ord($text[$i]);
+				if($b < 128 || $b > 191) return 'ISO-8859-1';
+				$bits--;
+			}
+		}
+	}
+	return 'UTF-8';
   }
   function mb_convert_encoding($text,$target_encoding,$source_encoding) {
-    return $text;
+	return $text;
+  }
+  function mb_substr($str, $start, $lenght=NULL, $encoding=NULL) {
+	if ($lenght===NULL) $lenght = strlen($str);
+	return substr($str, $start, $lenght);
   }
 }
 

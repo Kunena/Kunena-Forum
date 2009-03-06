@@ -34,13 +34,13 @@ function list_users()
 {
     global $database, $lang, $fbConfig;
 
-    require_once("includes/pageNavigation.php");
+    jimport('joomla.html.pagination');
 
     $orderby = JRequest::getVar('orderby', 'registerDate');
     $direction = JRequest::getVar('direction', 'ASC');
     $search = JRequest::getVar('search', '');
-    $limitstart = (int) JRequest::getVar('limitstart', 0);
-    $limit = (int) JRequest::getVar('limit', $fbConfig->userlist_rows);
+    $limitstart = JRequest::getInt('limitstart', 0);
+    $limit = JRequest::getInt('limit', $fbConfig->userlist_rows);
 
     // Total
     $database->setQuery("SELECT count(id) FROM #__users");
@@ -84,7 +84,7 @@ function list_users()
     $ulrows = $database->loadObjectList();
 
     // echo "<pre>"; print_r($ulrows); die;
-    $pageNav = new mosPageNav($total, $limitstart, $limit);
+    $pageNav = new JPagination($total, $limitstart, $limit);
     HTML_userlist_content::showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search);
 }
 
@@ -162,7 +162,7 @@ class HTML_userlist_content
                                 </td>
 
                                 <td align = "right">
-                                    <form name = "usrlform" method = "post" action = "<?php echo sefRelToAbs("$base_url"); ?>" onsubmit = "return validate()">
+                                    <form name = "usrlform" method = "post" action = "<?php echo JRoute::_("$base_url"); ?>" onsubmit = "return validate()">
                                         <input type = "text"
                                             name = "search"
                                             class = "inputbox"

@@ -79,8 +79,8 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 
 			//PM popup requires JomSocial css to be loaded from selected template
 			$config =& CFactory::getConfig();
-			$document->addCustomTag('<link type="text/css" rel="stylesheet" href="'.KUNENA_JLIVEURL.'/components/com_community/assets/window.css" />');
-			$document->addCustomTag('<link type="text/css" rel="stylesheet" href="'.KUNENA_JLIVEURL.'/components/com_community/templates/'.$config->get('template').'/css/style.css" />');
+			$document->addStyleSheet(KUNENA_JLIVEURL.'/components/com_community/assets/window.css');
+			$document->addStyleSheet(KUNENA_JLIVEURL.'/components/com_community/templates/'.$config->get('template').'/css/style.css');
 	    }
 	    else
 	    {

@@ -111,8 +111,8 @@ defined( '_JEXEC' ) or die('Restricted access');
         $items = $database->loadObjectList();
         	check_dberror("Unable to load messages.");
 
-        require (JPATH_ROOT . "/includes/pageNavigation.php");
-        $pageNav = new mosPageNav($total, $limitstart, $limit);
+        jimport('joomla.html.pagination');
+        $pageNav = new JPagination($total, $limitstart, $limit);
 
         if (count($items) > 0)
         {

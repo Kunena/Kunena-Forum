@@ -31,7 +31,8 @@ class my_tabs
     function my_tabs($useCookies, $xhtml = NULL)
     {
         global $mainframe;
-	$link = JURI::root();
+		$link = JURI::root();
+		$document =& JFactory::getDocument();
 
         if (!$useCookies) {
             echo("
@@ -41,7 +42,7 @@ class my_tabs
         }
 
         if ($xhtml) {
-            $document->addCustomTag("
+            $document->addCustomHeadTag("
         <link rel='stylesheet' href='$link/components/com_kunena/template/default/plugin/recentposts/tabber.css' type='text/css' />
 
         <script type='text/javascript'>

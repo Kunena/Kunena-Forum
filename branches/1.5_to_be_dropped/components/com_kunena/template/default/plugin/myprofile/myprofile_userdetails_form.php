@@ -30,7 +30,7 @@ $validate = josSpoofValue();
 // <![CDATA[
     function submitbuttons(pressbutton)
     {
-        var form = document.JUserForm;
+        var form = document.mosUserForm;
         var r = new RegExp("[\<|\>|\"|\'|\%|\;|\(|\)|\&|\+|\-]", "i");
 
         // do field validation
@@ -70,7 +70,7 @@ $validate = josSpoofValue();
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<form action = "index.php" method = "post" name = "JUserForm">
+<form action = "index.php" method = "post" name = "mosUserForm">
     <div style = "float: right; display:none">
         <?php
         mosToolBar::startTable();

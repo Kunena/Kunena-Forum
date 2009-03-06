@@ -23,11 +23,11 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $msg_id = JRequest::getVar('msg_id');
-$catid = (int)JRequest::getVar('catid', 0);
+$catid = JRequest::getInt('catid', 0);
 $reporter = JRequest::getVar('reporter');
 $reason = strval(JRequest::getVar('reason'));
 $text = strval(JRequest::getVar('text'));
-$type = JRequest::getVar('type', 0); // 0 = send e-mail, 1 = send pm
+$type = JRequest::getInt('type', 0); // 0 = send e-mail, 1 = send pm
 
 switch ($do)
 {

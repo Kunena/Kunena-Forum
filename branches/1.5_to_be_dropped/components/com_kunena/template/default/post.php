@@ -932,7 +932,7 @@ $catName = $objCatInfo->name;
 			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
-                    $id = (int)JRequest::getVar('id', '');
+                    $id = JRequest::getInt('id', 0);
                     $dellattach = JRequest::getVar('delAttachments', '') == 'delAtt' ? 1 : 0;
                     $thread = fb_delete_post($database, $id, $dellattach);
 
@@ -1270,7 +1270,7 @@ $catName = $objCatInfo->name;
 			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
-                    $error = JRequest::getVar('error', 0);
+                    $error = JRequest::getInt('error', 0);
                     $id = (int)$id;
                     $catid = (int)$catid;
                     //get list of posts in thread

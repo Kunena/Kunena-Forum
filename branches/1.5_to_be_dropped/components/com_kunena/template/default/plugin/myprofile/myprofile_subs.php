@@ -65,9 +65,8 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 			$k    = 0; //value for alternating rows
 
-			require(JPATH_ROOT . "/includes/pageNavigation.php");
-			// FIXME: J!1.5
-			$pageNav = new mosPageNav($total, $limitstart, $limit);
+			jimport('joomla.html.pagination');
+			$pageNav = new JPagination($total, $limitstart, $limit);
 
 			if ($csubslist > 0)
 			{

@@ -28,8 +28,7 @@ $mainframe->setPageTitle(_GEN_MYPROFILE . ' - ' . stripslashes($fbConfig->board_
 if ($my->id != "" && $my->id != 0)
 {
 	//Get joomla userinfo needed later on, this limits the amount of queries
-    $juserinfo = new JUser($database);
-    $juserinfo->load($my->id);
+    $juserinfo = new JUser($my->id);
 
     //Get userinfo needed later on, this limits the amount of queries
     $userinfo = new fbUserprofile($database);

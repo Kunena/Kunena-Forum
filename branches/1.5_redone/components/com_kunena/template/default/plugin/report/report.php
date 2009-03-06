@@ -55,7 +55,7 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
     . "\n LEFT JOIN #__fb_messages_text AS b ON b.mesid = a.id"
     . "\n WHERE a.id={$msg_id}");
 
-    $database->loadObject($row);
+    $row = $database->loadObject();
 
     $database->setQuery("SELECT username FROM #__users WHERE id={$row->userid}");
     $baduser = $database->loadResult();

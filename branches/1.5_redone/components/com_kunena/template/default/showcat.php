@@ -23,7 +23,9 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 global $is_Moderator;
 
-require_once(KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
+$database = &JFactory::getDBO();
+require_once(KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
+
 //Security basics begin
 //Securing passed form elements:
 $catid = (int)$catid; // redundant
@@ -112,10 +114,10 @@ if ($letPass || $is_Moderator)
     //Get the category name for breadcrumb
     unset($objCatInfo, $objCatParentInfo);
     $database->setQuery("SELECT * from #__fb_categories where id = {$catid}");
-    $database->loadObject($objCatInfo);
+    $objCatInfo = $database->loadObject();
     //Get the Category's parent category name for breadcrumb
     $database->setQuery("SELECT name,id FROM #__fb_categories WHERE id = {$objCatInfo->parent}");
-    $database->loadObject($objCatParentInfo);
+    $objCatParentInfo = $database->loadObject();
     //check if this forum is locked
     $forumLocked = $objCatInfo->locked;
     //check if this forum is subject to review

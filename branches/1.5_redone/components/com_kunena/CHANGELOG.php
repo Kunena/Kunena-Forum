@@ -30,6 +30,20 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.5.0
+
+6-March-2009 Matias
+
+# [#15378] Merge latest revision from Branch 1.0 back into 1.5 (reverse merge)
+
+25-February-2009 fxstein
+# [#15131] Initial cut at working Kunena 1.5 native backend
+
+23-February-2009 fxstein
+# Various syntax errors after initial port fixed
+
+Kunena 1.0.9
+
 19-Februray-2009 Matias
 # Search: Fixed SEF/no SEF issues. Pagination and links should now work for all
 # Pathway: comma (,) was missing between usernames if there were no guests

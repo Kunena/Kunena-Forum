@@ -295,7 +295,7 @@ if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php')) {
     include(KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php');
 }
 else {
-    include(KUNENA_ABSPATH . '/template/default/plugin/who/whoisonline.php');
+    include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/who/whoisonline.php');
 }
 
 //(FB) FINISH: WHOISONLINE

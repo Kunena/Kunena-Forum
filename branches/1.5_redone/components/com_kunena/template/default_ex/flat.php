@@ -24,7 +24,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
 global $is_Moderator;
-
+$my = &JFactory::getUser();
 // Func Check
 if (strtolower($func) == 'latest' ||  strtolower($func) == '')
 {
@@ -114,7 +114,7 @@ if (count($messages[0]) > 0)
                             include (KUNENA_ABSTMPLTPATH . '/plugin/forumtools/forumtools.php');
                             }
                         else {
-                            include (KUNENA_ABSPATH . '/template/default/plugin/forumtools/forumtools.php');
+                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/forumtools/forumtools.php');
                             }
                         //(JJ) FINISH: RECENT POSTS
                         ?>

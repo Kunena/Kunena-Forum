@@ -38,7 +38,7 @@ if ($func != "")
         {
             $query = "select * from #__fb_categories where id=$catids and published=1";
             $database->setQuery($query);
-            $database->loadObject($results);
+            $results = $database->loadObject();
 			$parent_ids = $results->parent;
 			$fr_name = htmlspecialchars(trim(stripslashes($results->name)));
             //$cids=@mysql_result( $results, 0, 'id' );

@@ -23,7 +23,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
-require_once(KUNENA_ABSSOURCESPATH . 'kunena.helpers.php');
+require_once(KUNENA_PATH_LIB .DS. 'kunena.helpers.php');
 
 function imageUploadError($msg)
 {

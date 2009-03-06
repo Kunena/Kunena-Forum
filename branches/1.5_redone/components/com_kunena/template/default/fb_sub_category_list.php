@@ -179,7 +179,7 @@ else
                     {
                         unset($obj_lp);
                         $database->setQuery("SELECT id, thread, catid,name, subject, userid from #__fb_messages WHERE time=$lastPosttime and hold='0' and moved!='1' LIMIT 1");
-                        $database->loadObject($obj_lp);
+                        $obj_lp = $database->loadObject();
                         $latestname = $obj_lp->name;
                         $latestcatid = $obj_lp->catid;
                         $latestid = $obj_lp->id;

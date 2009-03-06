@@ -17,39 +17,34 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-class CKunenaConfigBase
+require_once (KUNENA_PATH_LIB . DS . 'kunena.debug.php');
+
+abstract class CKunenaConfigBase
 {
+    protected $_db = null;
+
+    public function __construct()
+    {
+        $this->_db = &JFactory::getDBO();
+    }
+
     //
     // The following functions MUST be overridden in derived classes
-    // Basically an abstract base class that must not be used by itself
     //
-    function GetClassVars()
-    {
-    	echo '<div>Undefined GetClassVars() function in derived class!</div>';
-    	die();
-    }
-
-    function GetConfigTableName()
-    {
-    	echo '<div>Undefined GetConfigTableName() function in derived class!</div>';
-    	die();
-    }
-
+    abstract public function GetClassVars();
+    abstract protected function GetConfigTableName();
+    
     // This function allows for the overload of user specific settings.
     // All settings can now be user specific. No further code changes
     // are required inside of Kunena.
-    function DoUserOverrides($userid)
-    {
-    	echo '<div>Undefined DoUserOverrides() function in derived class!</div>';
-    	die();
-    }
+    abstract public function DoUserOverrides($userid);
 
     //
     //  binds a named array/hash to this object
     //  @param array $hash named array
     //  @return null|string null is operation was satisfactory, otherwise returns an error
     //
-    function bind($array, $ignore = '')
+    protected function bind($array, $ignore = '')
     {
         if (!is_array($array))
         {
@@ -58,18 +53,21 @@ class CKunenaConfigBase
         }
         else
         {
-            return mosBindArrayToObject($array, $this, $ignore);
-        }
+			foreach ($array as $k => $v)
+			{
+			    $this->$k = $v;
+			}
+		}
+
+		return true;
     }
 
     //
     // Create the config table for Kunena and add initial default values
     //
-    function create()
+    public function create()
     {
-        $database = &JFactory::getDBO();
-
-        $fields = array ();
+            $fields = array ();
 
         $vars = $this->GetClassVars();
 
@@ -79,22 +77,27 @@ class CKunenaConfigBase
             // Need to provide ability to override certain settings
             // in derived class without the need to recode this entire function
             //
-            switch (gettype($value))
+
+            // Exclude private class variables
+            if ($name!='_db')
             {
-                case 'integer':
-                    $fields[] = "`$name` INTEGER NULL";
+	            switch (gettype($value))
+	            {
+	                case 'integer':
+	                    $fields[] = "`$name` INTEGER NULL";
 
-                    break;
+	                    break;
 
-                case 'string':
-                    $fields[] = "`$name` TEXT NULL";
+	                case 'string':
+	                    $fields[] = "`$name` TEXT NULL";
 
-                    break;
+	                    break;
+	            }
             }
         }
 
-        $database->setQuery("CREATE TABLE #__".$this->GetConfigTableName()." (" . implode(', ', $fields) . ")");
-        $database->query();
+        $this->_db->setQuery("CREATE TABLE #__".$this->GetConfigTableName()." (" . implode(', ', $fields) . ")");
+        $this->_db->query();
         	check_dberror("Unable to create configuration table.");
 
         // Insert current Settings
@@ -103,39 +106,38 @@ class CKunenaConfigBase
 
         foreach ($vars as $name => $value)
         {
-        	// Only allow variables that have been defined in the class
-        	if(array_key_exists($name , $this->GetClassVars()))
+        	// Exclude internal class vars e.g. _db
+        	if($name[0] != '_')
             {
-	            $value =addslashes($value);
+	            $value = addslashes($value);
 	        	$fields[] = "`$name`='$value'";
             }
         }
 
-        $database->setQuery("INSERT INTO #__".$this->GetConfigTableName()." SET " . implode(', ', $fields));
-        $database->query();
+        $this->_db->setQuery("INSERT INTO #__".$this->GetConfigTableName()." SET " . implode(', ', $fields));
+        $this->_db->query();
         	check_dberror("Unable to insert configuration data.");
     }
 
     //
     // Create a backup of most current config table
     //
-    function backup()
+    public function backup()
     {
-        $database = &JFactory::getDBO();
         // remove old backup if one exists
-        $database->setQuery("DROP TABLE IF EXISTS #__".$this->GetConfigTableName()."_backup");
-        $database->query();
+        $this->_db->setQuery("DROP TABLE IF EXISTS #__".$this->GetConfigTableName()."_backup");
+        $this->_db->query();
         	check_dberror("Unable to drop old configuration backup table.");
 
         // Only create backup if config table already exists
-        $database->setQuery( "SHOW TABLES LIKE '%".$this->GetConfigTableName()."'" );
-		$database->query();
+        $this->_db->setQuery( "SHOW TABLES LIKE '%".$this->GetConfigTableName()."'" );
+		$this->_db->query();
 			check_dberror('Unable to check for existing config table.');
-		if($database->loadResult())
+		if($this->_db->loadResult())
 		{
 			// backup current settings
-			$database->setQuery("CREATE TABLE #__".$this->GetConfigTableName()."_backup SELECT * FROM #__".$this->GetConfigTableName());
-			$database->query();
+			$this->_db->setQuery("CREATE TABLE #__".$this->GetConfigTableName()."_backup SELECT * FROM #__".$this->GetConfigTableName());
+			$this->_db->query();
 				check_dberror("Unable to create new configuration backup table.");
 		}
     }
@@ -143,35 +145,42 @@ class CKunenaConfigBase
     //
     // Remove the current config table
     //
-    function remove()
+    public function remove()
     {
-        $database = &JFactory::getDBO();
-        $database->setQuery("DROP TABLE IF EXISTS #__".$this->GetConfigTableName());
-        $database->query();
+        $this->_db->setQuery("DROP TABLE IF EXISTS #__".$this->GetConfigTableName());
+        $this->_db->query();
         	check_dberror("Unable to drop existing configuration table.");
     }
 
     //
     // Load config settings from database table
     //
-    function load($KunenaUser=null)
+    public function load($silent=false)
     {
-        $database = &JFactory::getDBO();
-
-        $database->setQuery("SELECT * FROM #__".$this->GetConfigTableName());
-
+        $this->_db->setQuery("SELECT * FROM #__".$this->GetConfigTableName());
+        
         // Special error handling!
         // This query might actually fail on new installs or upgrades when
         // no configuration table is present. That is ok. It only tells us to
         // create the table and populate it with default settings.
         // DO NOT THROW an error
-        $database->loadObject($this);
 
-        if($database->_errorNum != 0)
+        $config = $this->_db->loadAssoc();
+
+        if ($config!=null)
         {
+			$this->bind($config);
+		}
+		else
+		{
         	// If no configuration is present, save default values
-        	$this->create(); //create has its own error handling
-        }
+
+		    // Call remove in case we have an empty table
+		    $this->remove();
+
+		    // Now create new table and insert current config settings
+        	$this->create();
+		}
 
         // Check for user specific overrides
         if(is_object($KunenaUser))
@@ -333,31 +342,29 @@ class CKunenaConfig extends CKunenaConfigBase
     // New 1.0.8 config variables
     var $default_sort            = 'asc'; // 'desc' for latest post first
 
-
-    function CKunenaConfig($KunenaUser=null)
-	{
-		if (!is_object($KunenaUser)) return;
+    public function __construct($KunenaUser=null)
+    {
+        parent::__construct();
+        if (!is_object($KunenaUser)) return;
 		$this->load($KunenaUser);
-	}
+    }
 
     //
     // Mandatory overrides from abstract base class
     //
 
-    function GetClassVars()
+    public function GetClassVars()
     {
         return get_class_vars('CKunenaConfig');
     }
 
-    function GetConfigTableName()
+    protected function GetConfigTableName()
     {
-        return "fb_config"; // w/o joomla prefix - is being added by based class
+        return "fb_config"; // w/o joomla prefix - is being added by base class
     }
 
-    function DoUserOverrides($KunenaUser)
+    public function DoUserOverrides($KunenaUser)
     {
-    	$database = &JFactory::getDBO();
-
     	// Only perform overrides if we got a valid user handed to us
     	if (is_object($KunenaUser)==FALSE) return FALSE;
     	if ($KunenaUser->getID()==0) return FALSE;
@@ -366,8 +373,8 @@ class CKunenaConfig extends CKunenaConfigBase
         // $this->default_sort = 'desc';
 
     	// Overload default with user specific from user profile
-    	$database->setQuery("SELECT ordering from #__fb_users where userid=".$KunenaUser->getID());
-    	$orderingNum = $database->loadResult();
+    	$this->_db->setQuery("SELECT ordering from #__fb_users where userid=".$KunenaUser->getID());
+    	$orderingNum = $this->_db->loadResult();
 
         $this->default_sort = $orderingNum ? 'desc' : 'asc';
 

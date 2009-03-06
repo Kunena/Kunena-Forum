@@ -26,7 +26,7 @@ if (file_exists(KUNENA_ABSTMPLTPATH."/smile.class.php")) {
   include_once(KUNENA_ABSTMPLTPATH."/smile.class.php");
 }
 else {
-  include(KUNENA_ABSPATH . '/template/default/smile.class.php');
+  include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
 }
 
 

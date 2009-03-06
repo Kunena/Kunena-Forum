@@ -137,7 +137,7 @@ if ($do == 'init')
             }
             else
             {
-                include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_menu.php');
+                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_menu.php');
             }
             ?>
 
@@ -624,7 +624,7 @@ else if ($do == 'validate')
 }
 else if ($do == 'fromgallery')
 {
-    require_once(KUNENA_ABSSOURCESPATH . 'kunena.helpers.php');
+    require_once(KUNENA_PATH_LIB .DS. 'kunena.helpers.php');
     $newAvatar = JRequest::getVar('newAvatar', '');
 
     $newAvatar = CKunenaTools::fbRemoveXSS($newAvatar);
@@ -670,7 +670,7 @@ else
                 //(JJ) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump)
                 {
-                    require_once (KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
+                    require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 }
                 ?>
             </th>

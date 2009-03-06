@@ -223,7 +223,7 @@ function jbApprovePosts($database, $cid)
         $newQuery = "SELECT * FROM #__fb_messages WHERE id = " . $id . " LIMIT 1";
         $database->setQuery($newQuery);
         $msg = null;
-        $database->loadObject($msg);
+        $msg = $database->loadObject();
         if(!$msg) { continue; }
         // continue stats
         $database->setQuery("UPDATE `#__fb_messages` SET `hold`=0 WHERE `id`=".$id);

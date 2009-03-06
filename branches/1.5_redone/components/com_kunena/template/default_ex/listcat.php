@@ -45,20 +45,12 @@ $categories = array ();
 $metaDesc=(_KUNENA_CATEGORIES . ' - ' . stripslashes($fbConfig->board_title));
 $metaKeys=(_KUNENA_CATEGORIES . ', ' . stripslashes($fbConfig->board_title) . ', ' . $GLOBALS['mosConfig_sitename']);
 
-if( CKunenaTools::isJoomla15() )
-{
-	$document =& JFactory::getDocument();
-	$cur = $document->get( 'description' );
-	$metaDesc = $cur .'. ' . $metaDesc;
-	$document =& JFactory::getDocument();
-	$document->setMetadata( 'keywords', $metaKeys );
-	$document->setDescription($metaDesc);
-}
-else
-{
-    $mainframe->appendMetaTag( 'keywords',$metaKeys );
-	$mainframe->appendMetaTag( 'description' ,$metaDesc );
-}
+$document =& JFactory::getDocument();
+$cur = $document->get( 'description' );
+$metaDesc = $cur .'. ' . $metaDesc;
+$document =& JFactory::getDocument();
+$document->setMetadata( 'keywords', $metaKeys );
+$document->setDescription($metaDesc);
 
 if (count($allCat) > 0)
 {
@@ -100,7 +92,7 @@ if ($fbConfig->showannouncement > 0)
         require_once (KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcementbox.php');
     }
     else {
-        require_once (KUNENA_ABSPATH . '/template/default/plugin/announcement/announcementbox.php');
+        require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/announcement/announcementbox.php');
     }
 ?>
 <!-- F: announcementBox -->
@@ -121,7 +113,7 @@ if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
     require_once (KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
 }
 else {
-    require_once (KUNENA_ABSPATH . '/template/default/fb_pathway.php');
+    require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_pathway.php');
 }
 ?>
 <!-- F: Pathway -->
@@ -132,7 +124,7 @@ if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php')) {
 	include (KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php');
 }
 else {
-	include (KUNENA_ABSPATH . '/template/default/fb_category_list_bottom.php');
+	include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_category_list_bottom.php');
 }
 ?>
 </table>
@@ -292,7 +284,7 @@ if (count($categories[0]) > 0)
                                 LEFT JOIN #__fb_messages AS mm ON m.thread=mm.thread
                                 WHERE m.id='$singlerow->id_last_msg'
                                 GROUP BY m.thread");
-                                $database->loadObject($thisThread);
+                                $thisThread = $database->loadObject();
                                 $latestthreadpages = ceil($thisThread->totalmessages / $fbConfig->messages_per_page);
                                 $latestthread = $thisThread->thread;
                                 $latestname = html_entity_decode_utf8(stripslashes($singlerow->mname));
@@ -636,7 +628,7 @@ if (count($categories[0]) > 0)
 			include (KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php');
 		}
 		else {
-			include (KUNENA_ABSPATH . '/template/default/plugin/who/whoisonline.php');
+			include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/who/whoisonline.php');
 		}
 	}
 	//(JJ) FINISH: WHOISONLINE
@@ -648,14 +640,14 @@ if (count($categories[0]) > 0)
 			include_once (KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php');
 		}
 		else {
-			include_once (KUNENA_ABSPATH . '/template/default/plugin/stats/stats.class.php');
+			include_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/stats.class.php');
 		}
 
 		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php')) {
 			include (KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php');
 		}
 		else {
-			include (KUNENA_ABSPATH . '/template/default/plugin/stats/frontstats.php');
+			include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/frontstats.php');
 		}
 	}
 	//(JJ) FINISH: STATS

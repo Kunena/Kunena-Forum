@@ -83,27 +83,19 @@ if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php'))
 }
 else
 {
-	include (KUNENA_ABSPATH . '/template/default/smile.class.php');
+	include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
 }
 
 //meta description and keywords
 $metaKeys=(_KUNENA_ALL_DISCUSSIONS . ', ' . stripslashes($fbConfig->board_title) . ', ' . $GLOBALS['mosConfig_sitename']);
 $metaDesc=(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
 
-if( CKunenaTools::isJoomla15() )
-{
-	$document =& JFactory::getDocument();
-	$cur = $document->get( 'description' );
-	$metaDesc = $cur .'. ' . $metaDesc;
-	$document =& JFactory::getDocument();
-	$document->setMetadata( 'keywords', $metaKeys );
-	$document->setDescription($metaDesc);
-}
-else
-{
-    $mainframe->appendMetaTag( 'keywords',$metaKeys );
-	$mainframe->appendMetaTag( 'description' ,$metaDesc );
-}
+$document =& JFactory::getDocument();
+$cur = $document->get( 'description' );
+$metaDesc = $cur .'. ' . $metaDesc;
+$document =& JFactory::getDocument();
+$document->setMetadata( 'keywords', $metaKeys );
+$document->setDescription($metaDesc);
 
 //resetting some things:
 $lockedForum = 0;
@@ -132,6 +124,16 @@ $page             = $page < 1 ? 1 : $page;
 $offset           = ($page - 1) * $threads_per_page;
 $row_count        = $page * $threads_per_page;
 
+if ($func != "mylatest") {
+	$lookcats = split(',', $fbConfig->latestcategory);
+	$catlist = array();
+	$latestcats = '';
+	foreach ($lookcats as $catnum) {
+		if ((int)$catnum && (int)$catnum>0) $catlist[] = (int)$catnum;
+	}
+	if (count($catlist)) $latestcats = " AND catid IN (". implode(',', $catlist) .") ";
+}
+
  //check if $sel has a reasonable value and not a Unix timestamp:
 $since = false;
 if ($sel == "0")
@@ -157,8 +159,8 @@ else
 {
 	$mainframe->setPageTitle(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
 	$query = "Select count(distinct thread) FROM #__fb_messages WHERE time >'$querytime'".
-			" AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)".
-			((trim($fbConfig->latestcategory)!="")?(" AND catid IN (".trim($fbConfig->latestcategory).")"):""); // if categories are limited apply filter
+			" AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)" . $latestcats; // if categories are limited apply filter
+
 }
 
 $database->setQuery($query);
@@ -196,8 +198,8 @@ else
 	$query .=			"JOIN (  SELECT thread, MAX(time) AS lastpost
                                 FROM #__fb_messages
                                 WHERE time >'$querytime'
-                                AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)".
-                                ((trim($fbConfig->latestcategory)!="")?(" AND catid IN (".trim($fbConfig->latestcategory).")"):"").
+                                AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)" .
+                                $latestcats .
                                 " GROUP BY 1) AS b ON b.thread = a.thread ";
 }
 
@@ -322,7 +324,7 @@ if (count($threadids) > 0)
                                     <td class="fb_list_jump_all">
 
                                     <?php if ($fbConfig->enableforumjump)
- 									 require_once (KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
+ 									 require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
  									 ?>
 
                                    </td>
@@ -363,7 +365,7 @@ if (count($threadids) > 0)
 				}
 				else
 				{
-					include (KUNENA_ABSPATH . '/template/default/flat.php');
+					include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'flat.php');
 				}
 				?>
 <!-- B: List Actions -->
@@ -398,14 +400,14 @@ if (count($threadids) > 0)
 			include_once (KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php');
 		}
 		else {
-			include_once (KUNENA_ABSPATH . '/template/default/plugin/stats/stats.class.php');
+			include_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/stats.class.php');
 		}
 
 		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php')) {
 			include (KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php');
 		}
 		else {
-			include (KUNENA_ABSPATH . '/template/default/plugin/stats/frontstats.php');
+			include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/frontstats.php');
 		}
 	}
     //(JJ) FINISH: STATS
@@ -418,7 +420,7 @@ if (count($threadids) > 0)
 			include (KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php');
 		}
 		else {
-			include (KUNENA_ABSPATH . '/template/default/plugin/who/whoisonline.php');
+			include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/who/whoisonline.php');
 		}
 		//(JJ) FINISH: WHOISONLINE
 

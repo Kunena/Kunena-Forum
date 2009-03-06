@@ -25,7 +25,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 //Start with determining which forums the user can see
 
-require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
+require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
 //resetting some things:
 $lockedForum = 0;
 $lockedTopic = 0;
@@ -144,13 +144,13 @@ if ($sel == "0")
                 //get the latest post time for this thread
                 unset($thisThread);
                 $database->setQuery("SELECT max(time) AS maxtime, count(*) AS totalmessages FROM #__fb_messages where thread={$rs->thread}");
-                $database->loadObject($thisThread);
+                $thisThread = $database->loadObject();
                 $latestPostTime = $thisThread->maxtime;
 
                 //get the latest post itself
                 unset($result);
                 $database->setQuery("SELECT a.id,a.name,a.userid,a.catid,b.name as catname from #__fb_messages as a LEFT JOIN #__fb_categories as b on a.catid=b.id where a.time={$latestPostTime}");
-                $database->loadObject($result);
+                $result = $database->loadObject();
 
                 $latestPostId = $result->id;
                 $latestPostName = html_entity_decode_utf8(stripslashes($result->name));
@@ -233,7 +233,7 @@ if ($sel == "0")
 
                         //(JJ) FINISH: CAT LIST BOTTOM
                         if ($fbConfig->enableforumjump)
-                            require_once (KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
+                            require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                         ?>
                     </th>
                 </tr>

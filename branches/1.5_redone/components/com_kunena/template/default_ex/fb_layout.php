@@ -44,7 +44,7 @@ function KUNENA_get_pathway(&$database, $obj_fb_cat, $bool_set_title, $obj_post 
     global $mainframe, $fbConfig, $fbIcons;
     //Get the Category's parent category name for breadcrumb
     $database->setQuery('SELECT name,id FROM #__fb_categories WHERE id=' . $obj_fb_cat->getParent());
-    $database->loadObject($objCatParentInfo);
+    $objCatParentInfo = $database->loadObject();
     	check_dberror("Unable to load category.");
     //get the Moderator list for display
     $database->setQuery('SELECT * FROM #__fb_moderation LEFT JOIN #__users ON #__users.id=#__fb_moderation.userid WHERE #__fb_moderation.catid=' . $obj_fb_cat->getId());

@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-require_once(KUNENA_ABSSOURCESPATH . 'kunena.helpers.php');
+require_once(KUNENA_PATH_LIB .DS. 'kunena.helpers.php');
 
 function fileUploadError($msg)
 {

@@ -109,7 +109,7 @@ if ($my->id != "" && $my->id != 0)
             }
             else
             {
-                include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_menu.php');
+                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_menu.php');
             }
             ?>
 
@@ -136,7 +136,7 @@ if ($my->id != "" && $my->id != 0)
                     }
                     else
                     {
-                        include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_summary.php');
+                        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_summary.php');
                     }
 
                     // F: Summary
@@ -152,7 +152,7 @@ if ($my->id != "" && $my->id != 0)
                     }
                     else
                     {
-                        include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_msg.php');
+                        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_msg.php');
                     }
 
                     // F: Show Posts
@@ -169,7 +169,7 @@ if ($my->id != "" && $my->id != 0)
                         }
                         else
                         {
-                            include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_avatar.php');
+                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_avatar.php');
                         }
                     }
 
@@ -211,7 +211,7 @@ if ($my->id != "" && $my->id != 0)
                     }
                     else
                     {
-                    	include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_set.php');
+                    	include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_set.php');
                     }
 
                     // F: Settings
@@ -261,7 +261,7 @@ if ($my->id != "" && $my->id != 0)
 
                     if ($fbConfig->fb_profile != 'cb' && $fbConfig->fb_profile != 'jomSocial')
                     {
-                        include (KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
+                        include (KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_profile_info.php'))
                         {
@@ -269,7 +269,7 @@ if ($my->id != "" && $my->id != 0)
                         }
                         else
                         {
-                            include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_profile_info.php');
+                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_profile_info.php');
                         }
                     }
 
@@ -363,7 +363,7 @@ if ($my->id != "" && $my->id != 0)
                     }
                     else
                     {
-                        include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_subs.php');
+                        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_subs.php');
                     }
 
                     break;
@@ -397,7 +397,7 @@ if ($my->id != "" && $my->id != 0)
                     }
                     else
                     {
-                        include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_fav.php');
+                        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_fav.php');
                     }
 
                     break;
@@ -419,7 +419,7 @@ if ($my->id != "" && $my->id != 0)
                     }
                     else
                     {
-                        include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_mod.php');
+                        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_mod.php');
                     }
 
                     break;
@@ -585,7 +585,7 @@ if ($my->id != "" && $my->id != 0)
                     }
                     else
                     {
-                        include (KUNENA_ABSPATH . '/template/default/plugin/myprofile/myprofile_userdetails_form.php');
+                        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_userdetails_form.php');
                     }
 
                     break;
@@ -605,8 +605,7 @@ if ($my->id != "" && $my->id != 0)
                     // simple spoof check security
                     josSpoofCheck();
 
-                    $row = new JUser($database);
-                    $row->load((int)$user_id);
+                    $row = new JUser($user_id);
 
                     $orig_password = $row->password;
                     $orig_username = $row->username;
@@ -731,7 +730,7 @@ else
                 //(JJ) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump)
                 {
-                    require_once (KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
+                    require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 }
                 ?>
             </th>

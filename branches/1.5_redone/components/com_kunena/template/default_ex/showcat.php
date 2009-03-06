@@ -213,7 +213,7 @@ if ($letPass || $is_Moderator)
         require_once(KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
     }
     else {
-        require_once(KUNENA_ABSPATH . '/template/default/fb_pathway.php');
+        require_once(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_pathway.php');
     }
 ?>
 <!-- / Pathway -->
@@ -221,11 +221,11 @@ if ($letPass || $is_Moderator)
     //Get the category name for breadcrumb
     unset($objCatInfo, $objCatParentInfo);
     $database->setQuery("SELECT * from #__fb_categories where id = {$catid}");
-    $database->loadObject($objCatInfo);
+    $objCatInfo = $database->loadObject();
     	check_dberror('Unable to get categories.');
     //Get the Category's parent category name for breadcrumb
     $database->setQuery("SELECT name,id FROM #__fb_categories WHERE id = {$objCatInfo->parent}");
-    $database->loadObject($objCatParentInfo);
+    $objCatParentInfo = $database->loadObject();
     	check_dberror('Unable to get parent category.');;
     //check if this forum is locked
     $forumLocked = $objCatInfo->locked;
@@ -236,20 +236,12 @@ if ($letPass || $is_Moderator)
 	$metaKeys=(_KUNENA_CATEGORIES . ', ' . stripslashes($objCatParentInfo->name) . ', ' . stripslashes($objCatInfo->name) . ', ' . stripslashes($fbConfig->board_title) . ', ' . $GLOBALS['mosConfig_sitename']);
 	$metaDesc=(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($objCatInfo->name) .' - ' . stripslashes($fbConfig->board_title));
 
-	if( CKunenaTools::isJoomla15() )
-	{
-		$document =& JFactory::getDocument();
-		$cur = $document->get( 'description' );
-		$metaDesc = $cur .'. ' . $metaDesc;
-		$document =& JFactory::getDocument();
-		$document->setMetadata( 'keywords', $metaKeys );
-		$document->setDescription($metaDesc);
-	}
-	else
-	{
-	    $mainframe->appendMetaTag( 'keywords',$metaKeys );
-		$mainframe->appendMetaTag( 'description' ,$metaDesc );
-	}
+	$document =& JFactory::getDocument();
+	$cur = $document->get( 'description' );
+	$metaDesc = $cur .'. ' . $metaDesc;
+	$document =& JFactory::getDocument();
+	$document->setMetadata( 'keywords', $metaKeys );
+	$document->setDescription($metaDesc);
 ?>
 <?php if($objCatInfo->headerdesc) { ?>
 <table class="fb_forum-headerdesc" border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -340,13 +332,13 @@ if ($letPass || $is_Moderator)
                 include(KUNENA_ABSTMPLTPATH . '/flat.php');
             }
             else {
-                include(KUNENA_ABSPATH . '/template/default/flat.php');
+                include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'flat.php');
             }
         else if (file_exists(KUNENA_ABSTMPLTPATH . '/thread.php')) {
             include(KUNENA_ABSTMPLTPATH . '/thread.php');
         }
         else {
-            include(KUNENA_ABSPATH . '/template/default/thread.php');
+            include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'thread.php');
         }
     }
     else

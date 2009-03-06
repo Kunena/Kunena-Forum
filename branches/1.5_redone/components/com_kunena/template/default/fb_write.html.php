@@ -24,7 +24,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 //Some initial thingies needed anyway:
 $htmlText = stripslashes($htmlText);
-include_once(KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
+include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">

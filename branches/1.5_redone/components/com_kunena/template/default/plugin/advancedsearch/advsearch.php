@@ -22,7 +22,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 //Get main categories with child categories
-$catid = intval(JRequest::getVar("catid", 0));
+$catid = JRequest::getInt('catid', 0);
 
 function JJ_categoryArray()
 {
@@ -130,9 +130,9 @@ $lists['parent'] = JJ_categoryParentList($catid, "", $options);
                                         <tr>
                                             <td>
                                                 <select name = "titleonly">
-                                                    <option value = "0" selected = "selected">Bütün Mesajlarda ara</option>
+                                                    <option value = "0" selected = "selected">Bï¿½tï¿½n Mesajlarda ara</option>
 
-                                                    <option value = "1">Mesaj baþlýklarýnda ara</option>
+                                                    <option value = "1">Mesaj baï¿½lï¿½klarï¿½nda ara</option>
                                                 </select>
                                             </td>
 
@@ -147,14 +147,14 @@ $lists['parent'] = JJ_categoryParentList($catid, "", $options);
                             <td align = "left" valign = "top" width = "50%">
                                 <fieldset class = "fieldset" style = "margin:0px">
                                     <legend>
-                                        Kullanýcý adý ara
+                                        Kullanï¿½cï¿½ adï¿½ ara
                                     </legend>
 
                                     <table cellpadding = "0" cellspacing = "3" border = "0">
                                         <tr>
                                             <td colspan = "2">
                                                 <div>
-                                                    Kullanýcý ismi:
+                                                    Kullanï¿½cï¿½ ismi:
                                                 </div>
 
                                                 <div id = "userfield">
@@ -169,9 +169,9 @@ $lists['parent'] = JJ_categoryParentList($catid, "", $options);
                                         <tr>
                                             <td>
                                                 <select name = "starteronly">
-                                                    <option value = "0" selected = "selected">Kullanýcýnýn Mesajlarýný ara</option>
+                                                    <option value = "0" selected = "selected">Kullanï¿½cï¿½nï¿½n Mesajlarï¿½nï¿½ ara</option>
 
-                                                    <option value = "1">Kullanýcýnýn Konularýný ara</option>
+                                                    <option value = "1">Kullanï¿½cï¿½nï¿½n Konularï¿½nï¿½ ara</option>
                                                 </select>
                                             </td>
 
@@ -197,7 +197,7 @@ $lists['parent'] = JJ_categoryParentList($catid, "", $options);
                 <tr>
                     <th>
                         <div class = "cat-title">
-                            <h3>Arama Ayarlarý</h3>
+                            <h3>Arama Ayarlarï¿½</h3>
                         </div>
 
                         <img id = "BoxSwitch_announcements__announcements_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
@@ -214,7 +214,7 @@ $lists['parent'] = JJ_categoryParentList($catid, "", $options);
                                     <td width = "50%">
                                         <fieldset class = "fieldset">
                                             <legend>
-                                                Cevap Sayýsýna Göre
+                                                Cevap Sayï¿½sï¿½na Gï¿½re
                                             </legend>
 
                                             <div style = "padding:3px">
@@ -232,7 +232,7 @@ $lists['parent'] = JJ_categoryParentList($catid, "", $options);
 
                                         <fieldset class = "fieldset">
                                             <legend>
-                                                Tarihe göre
+                                                Tarihe gï¿½re
                                             </legend>
 
                                             <div style = "padding:3px">
@@ -241,11 +241,11 @@ $lists['parent'] = JJ_categoryParentList($catid, "", $options);
 
                                                     <option value = "lastvisit">son Ziyaretinizden</option>
 
-                                                    <option value = "1">Dün</option>
+                                                    <option value = "1">Dï¿½n</option>
 
                                                     <option value = "7">son Haftadan</option>
 
-                                                    <option value = "14">2 Hafta önce</option>
+                                                    <option value = "14">2 Hafta ï¿½nce</option>
 
                                                     <option value = "30">son Aydan itibaren</option>
 
@@ -266,30 +266,30 @@ $lists['parent'] = JJ_categoryParentList($catid, "", $options);
 
                                         <fieldset class = "fieldset">
                                             <legend>
-                                                Sonuçlarý Sýrala
+                                                Sonuï¿½larï¿½ Sï¿½rala
                                             </legend>
 
                                             <div style = "padding:3px">
                                                 <select name = "sortby" style = "width:150px">
-                                                    <option value = "title">Baþlýk</option>
+                                                    <option value = "title">Baï¿½lï¿½k</option>
 
-                                                    <option value = "replycount">Cevap sayýsýna göre</option>
+                                                    <option value = "replycount">Cevap sayï¿½sï¿½na gï¿½re</option>
 
-                                                    <option value = "views">Görüntüleme sayýsýna göre</option>
+                                                    <option value = "views">Gï¿½rï¿½ntï¿½leme sayï¿½sï¿½na gï¿½re</option>
 
                                                     <option value = "threadstart">Konu Tarihine</option>
 
                                                     <option value = "lastpost" selected = "selected">son Mesaj</option>
 
-                                                    <option value = "postusername">Kullanýcý ismi</option>
+                                                    <option value = "postusername">Kullanï¿½cï¿½ ismi</option>
 
                                                     <option value = "forum">Forum</option>
                                                 </select>
 
                                                 <select name = "order">
-                                                    <option value = "descending" selected = "selected">Azalan Sýralamasý</option>
+                                                    <option value = "descending" selected = "selected">Azalan Sï¿½ralamasï¿½</option>
 
-                                                    <option value = "ascending">Yükselen Sýralamasý</option>
+                                                    <option value = "ascending">Yï¿½kselen Sï¿½ralamasï¿½</option>
                                                 </select>
                                             </div>
                                         </fieldset>
@@ -309,7 +309,7 @@ $lists['parent'] = JJ_categoryParentList($catid, "", $options);
                                                 <div>
                                                     <label for = "cb_childforums"><input type = "checkbox" name = "childforums" value = "1" id = "cb_childforums" checked = "checked"/>
 
-                                                    Alt Forumlarý da aramaya dahil et</label>
+                                                    Alt Forumlarï¿½ da aramaya dahil et</label>
                                                 </div>
                                             </div>
                                         </fieldset>

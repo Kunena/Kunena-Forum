@@ -41,6 +41,8 @@ $ip = $_SERVER["REMOTE_ADDR"];
 //reset variables used
 // ERROR: mixed global $editmode
 global $editmode;
+$my = &JFactory::getUser();
+$acl = &JFactory::getACL();
 $editmode = 0;
 // $message=JRequest::getVar('message','',1); // For some reason this just doesn't work like it should
 // FIXME: J!1.5
@@ -111,7 +113,7 @@ unset($objCatInfo);
 $database->setQuery("SELECT * FROM #__fb_categories WHERE id={$catid}");
 $database->query() or trigger_dberror('Unable to load category.');
 
-$database->loadObject($objCatInfo);
+$objCatInfo = $database->loadObject();
 $catName = $objCatInfo->name;
 ?>
 
@@ -123,7 +125,7 @@ $catName = $objCatInfo->name;
                 require_once (KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
             }
             else {
-                require_once (KUNENA_ABSPATH . '/template/default/fb_pathway.php');
+                require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_pathway.php');
             }
 
             if ($action == "post" && (hasPostPermission($database, $catid, $parentid, $my->id, $fbConfig->pubwrite, $is_Moderator)))
@@ -157,7 +159,7 @@ $catName = $objCatInfo->name;
                                 $database->setQuery("SELECT id,thread,parent FROM #__fb_messages WHERE id={$parent}");
                                 $database->query() or trigger_dberror('Unable to load parent post.');
                                 unset($m);
-                                $database->loadObject($m);
+                                $m = $database->loadObject();
 
                                 if (count($m) < 1)
                                 {
@@ -179,7 +181,7 @@ $catName = $objCatInfo->name;
                                 {
                                     $noFileUpload = 0;
                                     $GLOBALS['KUNENA_rc'] = 1;
-                                    include (KUNENA_ABSSOURCESPATH . 'kunena.file.upload.php');
+                                    include (KUNENA_PATH_LIB .DS. 'kunena.file.upload.php');
 
                                     if ($GLOBALS['KUNENA_rc'] == 0) {
                                         $noFileUpload = 1;
@@ -190,7 +192,7 @@ $catName = $objCatInfo->name;
                                 {
                                     $noImgUpload = 0;
                                     $GLOBALS['KUNENA_rc'] = 1;
-                                    include (KUNENA_ABSSOURCESPATH . 'kunena.image.upload.php');
+                                    include (KUNENA_PATH_LIB .DS. 'kunena.image.upload.php');
 
                                     if ($GLOBALS['KUNENA_rc'] == 0) {
                                         $noImgUpload = 1;
@@ -232,7 +234,7 @@ $catName = $objCatInfo->name;
                                 $database->setQuery("SELECT id FROM #__fb_messages JOIN #__fb_messages_text ON id=mesid WHERE userid={$my->id} AND name='$fb_authorname' AND email='$email' AND subject='$subject' AND ip='$ip' AND message='$message' AND time>='$duplicatetimewindow'");
                                 $database->query() or trigger_dberror('Unable to load post.');
 
-                                $database->loadObject($existingPost);
+                                $existingPost = $database->loadObject();
                                 $pid = $existingPost->id;
 
                                 // echo 'pid: '.$pid;
@@ -320,7 +322,7 @@ $catName = $objCatInfo->name;
 
                                         unset($result);
                                         $database->setQuery("SELECT count(*) AS totalmessages FROM #__fb_messages where thread={$querythread}");
-                                        $database->loadObject($result);
+                                        $result = $database->loadObject();
                                         	check_dberror("Unable to load messages.");
                                         $threadPages = ceil($result->totalmessages / $fbConfig->messages_per_page);
                                         //construct a useable URL (for plaintext - so no &amp; encoding!)
@@ -342,7 +344,7 @@ $catName = $objCatInfo->name;
 
                                             if (count($subsList) > 0)
                                             {                                                     //we got more than 0 subscriptions
-                                                require_once (KUNENA_ABSSOURCESPATH . 'kunena.mail.php'); // include fbMail class for mailing
+                                                require_once (KUNENA_PATH_LIB .DS. 'kunena.mail.php'); // include fbMail class for mailing
 
 						$_catobj = new jbCategory($database, $catid);
                                                 foreach ($subsList as $subs)
@@ -384,6 +386,7 @@ $catName = $objCatInfo->name;
                                                     $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
 
                                                     if ($ip != "127.0.0.1" && $my->id != $subs->id) { //don't mail yourself
+														// FIXME: J!1.5
                                                         mosmail($fbConfig->email, $mailsender, $subs->email, $mailsubject, $msg);
                                                     }
                                                 }
@@ -422,7 +425,7 @@ $catName = $objCatInfo->name;
 
                                             if (count($modsList) > 0)
                                             {                                                     //we got more than 0 moderators eligible for email
-                                                require_once (KUNENA_ABSSOURCESPATH . 'kunena.mail.php'); // include fbMail class for mailing
+                                                require_once (KUNENA_PATH_LIB .DS. 'kunena.mail.php'); // include fbMail class for mailing
 
                                                 foreach ($modsList as $mods)
                                                 {
@@ -449,6 +452,7 @@ $catName = $objCatInfo->name;
 
                                                     if ($ip != "127.0.0.1" && $my->id != $mods->id) { //don't mail yourself
                                                         //Send away
+                                                        // FIXME: J!1.5
                                                         mosmail($fbConfig->email, $mailsender, $mods->email, $mailsubject, $msg);
                                                     }
                                                 }
@@ -524,7 +528,7 @@ $catName = $objCatInfo->name;
                         if ($database->getNumRows() > 0)
                         {
                             unset($message);
-                            $database->loadObject($message);
+                            $message = $database->loadObject();
 
                             // don't forget stripslashes
                             //$message->message=smile::smileReplace($message->message,0);
@@ -564,7 +568,7 @@ $catName = $objCatInfo->name;
                             include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
                         else {
-                            include (KUNENA_ABSPATH . '/template/default/fb_write.html.php');
+                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_write.html.php');
                         }
                         //--
                         //echo "</form>";
@@ -585,7 +589,7 @@ $catName = $objCatInfo->name;
                         if ($database->getNumRows() > 0)
                         {
                             unset($message);
-                            $database->loadObject($message);
+                            $message = $database->loadObject();
                             $table = array_flip(get_html_translation_table(HTML_ENTITIES));
                             $resubject = htmlspecialchars(strtr($message->subject, $table));
                             $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? stripslashes($resubject) : _POST_RE . stripslashes($resubject);
@@ -614,7 +618,7 @@ $catName = $objCatInfo->name;
                             include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
                         else {
-                            include (KUNENA_ABSPATH . '/template/default/fb_write.html.php');
+                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_write.html.php');
                         }
                         //--
                         //echo "</form>";
@@ -665,7 +669,7 @@ $catName = $objCatInfo->name;
                             include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
                         else {
-                            include (KUNENA_ABSPATH . '/template/default/fb_write.html.php');
+                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_write.html.php');
                         }
                         //--
                         //echo "</form>";
@@ -761,7 +765,7 @@ $catName = $objCatInfo->name;
                             include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
                         else {
-                            include (KUNENA_ABSPATH . '/template/default/fb_write.html.php');
+                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_write.html.php');
                         }
                         //echo "</form>";
                         //}
@@ -810,11 +814,11 @@ $catName = $objCatInfo->name;
                     if ($allowEdit == 1)
                     {
                         if ($attachfile != '') {
-                            include KUNENA_ABSSOURCESPATH . 'kunena.file.upload.php';
+                            include KUNENA_PATH_LIB .DS. 'kunena.file.upload.php';
                         }
 
                         if ($attachimage != '') {
-                            include KUNENA_ABSSOURCESPATH . 'kunena.image.upload.php';
+                            include KUNENA_PATH_LIB .DS. 'kunena.image.upload.php';
                         }
 
                         //$message = trim(htmlspecialchars(addslashes($message)));
@@ -1572,7 +1576,7 @@ $catName = $objCatInfo->name;
                     $database->setQuery("SELECT thread,catid from #__fb_messages WHERE id=$id");
                     if ($id && $my->id && $database->query())
                     {
-						$database->loadObject($row);
+						$row = $database->loadObject();
 
 						//check for permission
 						if (!$is_Moderator) {
@@ -1797,7 +1801,7 @@ function fb_delete_post(&$database, $id, $dellattach)
     }
 
     unset($mes);
-    $database->loadObject($mes);
+    $mes = $database->loadObject();
     $thread = $mes->thread;
 
     $userid_array = array ();
@@ -1974,7 +1978,6 @@ function listThreadHistory($id, $fbConfig, $database)
                         // Joomla Mambot Support
                         if ($fbConfig->jmambot)
                         {
-			    global $mainframe;
                             $row = new t();
                             $row->text = $fb_message_txt;
                             JPluginHelper::importPlugin($group, null, false);
@@ -2025,7 +2028,6 @@ function listThreadHistory($id, $fbConfig, $database)
                 <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump) {
-                    require_once (KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
                 }
                 ?>
             </th>

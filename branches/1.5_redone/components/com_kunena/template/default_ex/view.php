@@ -121,7 +121,7 @@ if ($letPass || $is_Moderator)
 
     $database->setQuery("SELECT * FROM #__fb_messages AS a LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.id={$id} and a.hold=0");
     unset($this_message);
-    $database->loadObject($this_message);
+    $this_message = $database->loadObject();
     	check_dberror('Unable to load message.');
 
     $topicLock = $this_message->locked;
@@ -244,10 +244,10 @@ if ($letPass || $is_Moderator)
         //Get the category name for breadcrumb
         unset($objCatInfo, $objCatParentInfo);
         $database->setQuery("SELECT * from #__fb_categories where id='$catid'");
-        $database->loadObject($objCatInfo);
+        $objCatInfo = $database->loadObject();
         //Get Parent's cat.name for breadcrumb
         $database->setQuery("SELECT name,id from #__fb_categories WHERE id='$objCatInfo->parent'");
-        $database->loadObject($objCatParentInfo);
+        $objCatParentInfo = $database->loadObject();
 
         //Perform subscriptions check only once
         $fb_cansubscribe = 0;
@@ -573,7 +573,7 @@ if ($letPass || $is_Moderator)
                                 //Get userinfo needed later on, this limits the amount of queries
                                 unset($userinfo);
                                 $database->setQuery("SELECT  a.*,b.name,b.username,b.gid FROM #__fb_users as a LEFT JOIN #__users as b on b.id=a.userid where a.userid='$fmessage->userid'");
-                                $database->loadObject($userinfo);
+                                $userinfo = $database->loadObject();
                                 //get the username:
                                 $fb_username = "";
 
@@ -693,7 +693,7 @@ if ($letPass || $is_Moderator)
                                                 //post count rank
                                                 $database->setQuery("SELECT * FROM #__fb_ranks WHERE ((rank_min <= $numPosts) AND (rank_special = 0))  ORDER BY rank_min DESC LIMIT 1");
                                             }
-                                            $database->loadObject($rank);
+                                            $rank = $database->loadObject();
                                             $rText = $rank->rank_title;
                                             $rImg = KUNENA_URLRANKSPATH . $rank->rank_image;
                                         }

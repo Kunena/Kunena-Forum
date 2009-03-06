@@ -22,7 +22,7 @@
 // MOS Intruder Alerts
 defined( '_JEXEC' ) or die('Restricted access');
 
-$catid = intval(JRequest::getInt("catid", 0, 'REQUEST'));
+$catid = JRequest::getInt('catid', 0);
 
 $options = array ();
 $options[] = JHTML::_('select.option', '0', _KUNENA_FORUM_TOP);

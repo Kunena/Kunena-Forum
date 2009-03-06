@@ -276,7 +276,7 @@ class CKunenaLink
                                 (SELECT max(thread) AS thread FROM #__fb_messages WHERE id='.$pid.') AS b
                              WHERE a.thread = b.thread AND a.hold = 0
                              GROUP BY a.thread');
-        $database->loadObject($result);
+        $result = $database->loadObject();
         	check_dberror("Unable to retrieve latest post.");
 
         // Now Calculate the number of pages for this particular thread
@@ -302,7 +302,7 @@ class CKunenaLink
                                 (SELECT max(thread) AS thread FROM #__fb_messages WHERE id='.$pid.') AS b
                              WHERE a.thread = b.thread AND a.hold = 0
                              GROUP BY a.thread');
-        $database->loadObject($result);
+        $result = $database->loadObject();
         	check_dberror("Unable to retrieve latest post.");
 
         // Now Calculate the number of pages for this particular thread

@@ -90,7 +90,7 @@ if (count($messages[0]) > 0)
                             include (KUNENA_ABSTMPLTPATH . '/plugin/forumtools/forumtools.php');
                             }
                         else {
-                            include (KUNENA_ABSPATH . '/template/default/plugin/forumtools/forumtools.php');
+                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/forumtools/forumtools.php');
                             }
                         //(JJ) FINISH: RECENT POSTS
                         ?>
@@ -153,7 +153,7 @@ if (count($messages[0]) > 0)
 	                            $database->setQuery("SELECT * FROM #__fb_users as su"
 	                                                . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$leaf->userid}");
 
-	                            $database->loadObject($CatUser);
+	                            $CatUser = $database->loadObject();
 	                            $javatar = $CatUser->avatar;
 
 	                        if ($fbConfig->avatar_src == "cb")
@@ -496,7 +496,8 @@ if (count($messages[0]) > 0)
 </div>
 <?php
 }
-else {
+else
+{
     echo "<p align=\"center\">" . _VIEW_NO_POSTS . "</p>";
-    }
+}
 ?>

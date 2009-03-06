@@ -23,11 +23,13 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
+$my = &JFactory::getUser();
+$database = &JFactory::getDBO();
 //first we gather some information about this person
 $database->setQuery("SELECT su.view, u.name, su.moderator,su.avatar FROM #__fb_users as su"
                     . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$my->id}");
 
-$database->loadObject($_user);
+$_user = $database->loadObject();
 
 $prefview = $_user->view;
 $username = $_user->name; // externally used  by fb_pathway, myprofile_menu
@@ -95,7 +97,6 @@ $jr_latestpost = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=latest');
 ?>
 
 <?php // AFTER LOGIN AREA
-$j15 = CKunenaTools::isJoomla15();
 if ($fbConfig->fb_profile == 'cb')
 {
     $loginlink = JRoute::_('index.php?option=com_comprofiler&amp;task=login');
@@ -105,16 +106,10 @@ if ($fbConfig->fb_profile == 'cb')
 }
 else
 {
-    $loginlink = JRoute::_('index.php?option=com_login&amp;Itemid=' . $Itemid);
-    $logoutlink = JRoute::_('index.php?option=logout');
-    $registerlink = JRoute::_('index.php?option=com_registration&amp;task=register&amp;Itemid=' . $Itemid);
-    $lostpasslink = JRoute::_('index.php?option=com_registration&amp;task=lostPassword&amp;Itemid=' . $Itemid);
-    if($j15) {
-      $loginlink = JRoute::_('index.php?option=com_user&amp;view=login');
-      $logoutlink = JRoute::_('index.php?option=com_user&amp;view=login');
-      $registerlink = JRoute::_('index.php?option=com_user&amp;task=register&amp;Itemid=' . $Itemid);
-      $lostpasslink = JRoute::_('index.php?option=com_user&amp;view=reset&amp;Itemid=' . $Itemid);
-    }
+	$loginlink = JRoute::_('index.php?option=com_user&amp;view=login');
+	$logoutlink = JRoute::_('index.php?option=com_user&amp;view=login');
+	$registerlink = JRoute::_('index.php?option=com_user&amp;task=register&amp;Itemid=' . $Itemid);
+	$lostpasslink = JRoute::_('index.php?option=com_user&amp;view=reset&amp;Itemid=' . $Itemid);
 }
 
 if ($my->id)
@@ -153,11 +148,13 @@ $annlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show'.KUNEN
 <?php } ?>
 
 </td>
+<jdoc:exists type="modules" condition="{kunena_profilebox}">
 		<td>
 			<div class = "fb_profilebox_modul">
-				<jdoc:include type="modules" name="kunena_profilebox" />
+				<jdoc:include type="modules" name="kunena_profilebox" style="{}" />
 			</div>
 		</td>
+</jdoc:exists>
             </tr>
         </tbody>
     </table>
@@ -184,11 +181,13 @@ else
                 <a href = "<?php echo $lostpasslink;?>"><?php echo _PROFILEBOX_LOST_PASSWORD; ?></a>
 
 </td>
-                        <td>
-                            <div class = "fb_profilebox_modul">
-				<jdoc:include type="modules" name="kunena_profilebox" />
-                            </div>
-                       </td>
+<jdoc:exists type="modules" condition="{kunena_profilebox}">
+		<td>
+			<div class = "fb_profilebox_modul">
+				<jdoc:include type="modules" name="kunena_profilebox" style="{}" />
+			</div>
+		</td>
+</jdoc:exists>
             </tr>
         </tbody>
     </table>

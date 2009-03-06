@@ -23,13 +23,16 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
+$database = &JFactory::getDBO();
+$my = &JFactory::getUser();
 
 // For joomla mambot support
 if ($fbConfig->jmambot) { class t{ var $text = ""; }    }
 //
 
 global $is_Moderator;
-global $acl;
+
+$acl = &JFactory::getACL();
 //securing form elements
 $catid = (int)$catid;
 $id = (int)$id;
@@ -38,8 +41,8 @@ $smileyList = smile::getEmoticons(0);
 
 //ob_start();
 $showedEdit = 0;
-require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
-require_once (KUNENA_ABSSOURCESPATH . 'kunena.statsbar.php');
+require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
+require_once (KUNENA_PATH_LIB .DS. 'kunena.statsbar.php');
 
 if (!$is_Moderator)
 {
@@ -76,7 +79,7 @@ if ($letPass || $is_Moderator)
 
     $database->setQuery("SELECT * FROM #__fb_messages AS a LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.id={$id} and a.hold=0");
     unset($this_message);
-    $database->loadObject($this_message);
+    $this_message = $database->loadObject();
     	check_dberror('Unable to load message.');
 
     $topicLock = $this_message->locked;
@@ -190,8 +193,9 @@ if ($letPass || $is_Moderator)
 
             if ($total > $limit)
             {
-                require_once (KUNENA_JABSPATH . '/includes/pageNavigation.php');
-                $pageNav = new mosPageNav($total, $limitstart, $limit);
+				jimport('joomla.html.pagination');
+
+					$pageNav = new JPagination( $total, $limitstart, $limit );
                 // slice out elements based on limits
                 $flat_messages = array_slice($flat_messages, $pageNav->limitstart, $pageNav->limit);
             }
@@ -203,10 +207,10 @@ if ($letPass || $is_Moderator)
         //Get the category name for breadcrumb
         unset($objCatInfo, $objCatParentInfo);
         $database->setQuery("SELECT * from #__fb_categories where id='$catid'");
-        $database->loadObject($objCatInfo);
+        $objCatInfo = $database->loadObject();
         //Get Parent's cat.name for breadcrumb
         $database->setQuery("SELECT name,id from #__fb_categories WHERE id='$objCatInfo->parent'");
-        $database->loadObject($objCatParentInfo);
+        $objCatParentInfo = $database->loadObject();
 
         //Perform subscriptions check only once
         $fb_cansubscribe = 0;
@@ -339,7 +343,7 @@ if ($letPass || $is_Moderator)
 
                                 <?php
                                 // TODO: fxstein - Need to perform SEO cleanup
-                                echo $pageNav->writePagesLinks( KUNENA_LIVEURLREL."&amp;func=view&amp;id=$id&amp;catid=$catid");
+                                echo $pageNav->getPagesLinks( KUNENA_LIVEURLREL."&amp;func=view&amp;id=$id&amp;catid=$catid");
                                 ?>
 
                                 </li>
@@ -469,7 +473,7 @@ if ($letPass || $is_Moderator)
                                 //Get userinfo needed later on, this limits the amount of queries
                                 unset($userinfo);
                                 $database->setQuery("SELECT  a.*,b.name,b.username,b.gid FROM #__fb_users as a LEFT JOIN #__users as b on b.id=a.userid where a.userid='$fmessage->userid'");
-                                $database->loadObject($userinfo);
+                                $userinfo = $database->loadObject();
                                 //get the username:
                                 $fb_username = "";
 
@@ -588,7 +592,7 @@ if ($letPass || $is_Moderator)
                                                 //post count rank
                                                 $database->setQuery("SELECT * FROM #__fb_ranks WHERE ((rank_min <= $numPosts) AND (rank_special = 0))  ORDER BY rank_min DESC LIMIT 1");
                                             }
-                                            $database->loadObject($rank);
+                                            $rank = $database->loadObject();
                                             $rText = $rank->rank_title;
                                             $rImg = KUNENA_URLRANKSPATH . $rank->rank_image;
                                         }
@@ -964,12 +968,12 @@ if ($letPass || $is_Moderator)
                                 // Joomla Mambot Support , Thanks hacksider
                                 if ($fbConfig->jmambot)
                                 {
-                                    global $_MAMBOTS;
                                     $row = new t();
                                     $row->text = $fb_message_txt;
-                                    $_MAMBOTS->loadBotGroup( 'content' );
-                                    $params =& new mosParameters( '' );
-                                    $results = $_MAMBOTS->trigger( 'onPrepareContent', array( &$row, &$params, 0 ), true );
+									$group = "content";
+                                    JPluginHelper::importPlugin($group, null, false);
+                                    $params =& new JParameter( '' );
+                                    $results = $mainframe->triggerEvent( 'onPrepareContent', array( &$row, &$params, 0 ), true );
                                     $msg_text = $row->text;
                                 }
                                 else
@@ -1229,7 +1233,7 @@ if ($letPass || $is_Moderator)
 
                                     <?php
                                     // TODO: fxstein - Need to perform SEO cleanup
-                                    echo $pageNav->writePagesLinks("index.php?option=com_kunena&amp;Itemid=$Itemid&amp;func=view&amp;id=$id&amp;catid=$catid");
+                                    echo $pageNav->getPagesLinks("index.php?option=com_kunena&amp;Itemid=$Itemid&amp;func=view&amp;id=$id&amp;catid=$catid");
                                     ?>
 
                                     </li>
@@ -1262,8 +1266,8 @@ if ($letPass || $is_Moderator)
                             <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=listcat&amp;catid='.$objCatParentInfo->id);?>" rel="nofollow"> <?php echo $objCatParentInfo->name; ?> </a>
 
                             <?php
-                            if (file_exists(JPATH_ROOT . '/templates/' . $mainframe->getTemplate() . '/images/arrow.png')) {
-                                echo ' <img src="' . KUNENA_JLIVEURL . '/templates/' . $mainframe->getTemplate() . '/images/arrow.png" alt="" /> ';
+                            if (file_exists(JPATH_ROOT . '/templates/' . $this->getTemplate() . '/images/arrow.png')) {
+                                echo ' <img src="' . KUNENA_JLIVEURL . '/templates/' . $this->getTemplate() . '/images/arrow.png" alt="" /> ';
                             }
                             else {
                                 echo ' <img src="' . KUNENA_JLIVEURL . '/images/M_images/arrow.png" alt="" /> ';
@@ -1313,7 +1317,6 @@ if ($letPass || $is_Moderator)
 else {
     echo _KUNENA_NO_ACCESS;
 }
-
 if ($fbConfig->highlightcode)
 {
 	echo '

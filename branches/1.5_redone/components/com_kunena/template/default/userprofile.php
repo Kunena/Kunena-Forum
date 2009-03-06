@@ -35,7 +35,7 @@ if ($my->id)
         $database->setQuery("SELECT * FROM #__fb_users as su "
         	    . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$my->id}");
 
-        $database->loadObject($user);
+        $user = $database->loadObject();
 
         $prefview = $user->view;
         $signature = $user->signature;

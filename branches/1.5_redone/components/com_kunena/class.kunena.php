@@ -33,7 +33,7 @@ define('KUNENA_JTEMPLATEPATH', KUNENA_JABSPATH. DS. "templates".DS . $mainframe-
 define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "/templates/".$mainframe->getTemplate());
 
 //Kunena
-$Itemid = intval(JRequest::getVar('Itemid'), REQUEST);
+$Itemid = JRequest::getInt('Itemid', 0, REQUEST);
 
 //check if we have all the itemid sets. if so, then no need for DB call
 
@@ -62,7 +62,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     if ($fbConfig->pm_component == 'jomsocial' || $fbConfig->fb_profile == 'jomsocial' || $fbConfig->avatar_src == 'jomsocial')
     {
     	// Only proceed if jomSocial is really installed
-	    if ( file_exists( $mainframe->getCfg( 'absolute_path' ) . '/components/com_community/libraries/core.php' ) )
+	    if ( file_exists( JPATH_ROOT . '/components/com_community/libraries/core.php' ) )
 	    {
 	        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_community' AND published=1");
 	        $JOMSOCIAL_Itemid = $database->loadResult();
@@ -98,7 +98,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     if ($fbConfig->pm_component == 'cb' || $fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
     {
     	// Only proceed if Community Builder is really installed
-	    if ( file_exists( $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php' ) )
+	    if ( file_exists( JPATH_ROOT . '/administrator/components/com_comprofiler/plugin.foundation.php' ) )
 	    {
 	    	global $_CB_framework, $_CB_database, $ueConfig, $mainframe;
 
@@ -109,7 +109,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 	        define("KUNENA_CB_ITEMID", (int)$CB_Itemid);
 	        define("KUNENA_CB_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_CB_ITEMID);
 
-	        // include_once( $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php' );
+	        // include_once( JPATH_ROOT . '/administrator/components/com_comprofiler/plugin.foundation.php' );
 	    }
 	    else
 	    {
@@ -211,8 +211,8 @@ define('KUNENA_LIVEUPLOADEDPATH', KUNENA_JLIVEURL . '/images/fbfiles');
 
 // now continue with other paths
 
-$fb_user_template = strval(JRequest::getVar('fb_user_template', '', COOKIE));
-$fb_user_img_template = strval(JRequest::getVar('fb_user_img_template', '', COOKIE));
+$fb_user_template = JRequest::getString('fb_user_template', '', COOKIE);
+$fb_user_img_template = JRequest::getString('fb_user_img_template', '', COOKIE);
 // don't allow directory travelling
 $fb_user_template = strtr($fb_user_template, '\\/', '');
 $fb_user_img_template = strtr($fb_user_template, '\\/', '');
@@ -351,7 +351,7 @@ function getFBGroupName($id) {
     $database = &JFactory::getDBO();
     $gr = '';
     $database->setQuery("select id, title from #__fb_groups as g, #__fb_users as u where u.group_id = g.id and u.userid= $id");
-    $database->loadObject($gr);
+    $gr = $database->loadObject();
 
     if ($gr->id > 1) {
         return $gr;
@@ -384,6 +384,7 @@ class CKunenaTools {
     function fbGetShowTime ($time=null, $space='FB') {
     	// converts internal (FB)|UTC representing time to display time
     	// could consider user properties (zones) for future
+		$database = &JFactory::getDBO();
         global $fbConfig;
         // Prevent zeroes
         if($time===0) {
@@ -548,7 +549,7 @@ class CKunenaTools {
 
             unset($lastMsgInCat);
             $database->setQuery("select id, time from #__fb_messages where catid={$msg_cat} and (thread <> {$msg_id} AND id<>{$msg_id}) order by time desc limit 1;");
-            $database->loadObject($lastMsgInCat);
+            $lastMsgInCat = $database->loadObject();
             	check_dberror("Unable to load messages.");
 
             $ctg[$msg_cat]->numTopics = (int) ($ctg[$msg_cat]->numTopics - $cntTopics);
@@ -581,7 +582,8 @@ class CKunenaTools {
         }
 
     function fbDeletePosts($isMod, $return) {
-        global $my, $database;
+        global $my;
+		$database = &JFactory::getDBO();
 
         if (!CKunenaTools::isModOrAdmin() && !$isMod) {
             $mainframe->redirect( JURI::base() .$return, _POST_NOT_MODERATOR);
@@ -598,7 +600,7 @@ class CKunenaTools {
                 return -2;
                 }
 
-            $database->loadObject($mes);
+            $mes = $database->loadObject();
             $thread = $mes->thread;
 
             if ($mes->parent == 0) {
@@ -689,13 +691,12 @@ class CKunenaTools {
         }
 
     function isModOrAdmin($id = 0) {
-        global $database, $my;
+        global $my;
 // echo '<div>CALL isModOrAdmin</div>';
         $userid = intval($id);
 
         if ($userid) {
-            $user = new JUser($database);
-            $user->load($userid);
+            $user = new JUser($userid);
             }
         else {
             $user = $my;
@@ -709,8 +710,9 @@ class CKunenaTools {
         }
 
     function fbMovePosts($catid, $isMod, $return) {
-        global $my, $database;
-	$err = "ERROR!";
+        $database = &JFactory::getDBO();
+
+	$my = &JFactory::getUser();
 
 	$database->setQuery('SELECT userid FROM #__fb_moderation WHERE userid='.$my->id);
 	$isMod = $database->loadResult();
@@ -1088,12 +1090,9 @@ function KUNENA_GetAvailableForums($catid, $action, $options = array (), $disabl
         }
 
 	$tag_attribs = 'class="inputbox fbs" '.($multiple?' size="5" MULTIPLE ':' size="1" ') . ($disabled ? " disabled " : "");
-	if (CKunenaTools::isJoomla15()) {
+
     	$parent = JHTML::_('select.genericlist', $options, 'catid', $tag_attribs , 'value', 'text', $catid, 'KUNENA_AvailableForums');
-		}
-    else {
-		$parent = JHTML::_('select.genericlist', $options, 'catid', $tag_attribs . ' ID="KUNENA_AvailableForums"' , 'value', 'text', $catid);
-		}
+
     return $parent;
     }
 

@@ -32,6 +32,10 @@ Legend:
 
 Kunena 1.5.0
 
+5-March-2009 fxstein
+^ [#15378] Kunena branch 1.0.9 merged into 1.5
+# [#15378] Post merge cleanup: Incorrect list assignement in configuration
+
 25-February-2009 fxstein
 # [#15131] Initial cut at working Kunena 1.5 native backend
 

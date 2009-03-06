@@ -597,7 +597,7 @@ function showConfig($option)
 
     // the default page when entering Kunena
     $defpagelist = array ();
-    
+
 	$defpagelist[] = JHTML::_('select.option', JText::_('recent'), _COM_A_FBDEFAULT_PAGE_RECENT);
 	$defpagelist[] = JHTML::_('select.option', JText::_('my'), _COM_A_FBDEFAULT_PAGE_MY);
 	$defpagelist[] = JHTML::_('select.option', JText::_('categories'),_COM_A_FBDEFAULT_PAGE_CATEGORIES);
@@ -613,18 +613,15 @@ function showConfig($option)
 	$rsslist[] = JHTML::_('select.option', JText::_('post'),_COM_A_RSS_BY_POST);
 
     // build the html select list
-	$lists['rsstype'] = JHTML::_('select.genericlist', $list ,'cfg_rsstype', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rsstype);
+	$lists['rsstype'] = JHTML::_('select.genericlist', $rsslist ,'cfg_rsstype', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rsstype);
 
     $rsshistorylist = array ();
 	$rsshistorylist[] =JHTML::_('select.option', JText::_('Week'),_COM_A_RSS_HISTORY_WEEK);
 	$rsshistorylist[] =JHTML::_('select.option', JText::_('Month'),_COM_A_RSS_HISTORY_MONTH);
 	$rsshistorylist[] =JHTML::_('select.option', JText::_('Year'),_COM_A_RSS_HISTORY_YEAR);
 
-
     // build the html select list
-    $lists['rsshistory'] = JHTML::_('select.genericlist', $list ,'cfg_rsshistory', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rsshistory);
-
-
+    $lists['rsshistory'] = JHTML::_('select.genericlist', $rsshistorylist ,'cfg_rsshistory', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rsshistory);
 
     // source of avatar picture
     $avlist = array ();

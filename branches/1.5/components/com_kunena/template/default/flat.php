@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: flat.php 992 2008-08-13 22:51:35Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

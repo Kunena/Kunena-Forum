@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: fb_cpanel.php 526 2007-12-20 00:35:37Z miro_dietiker $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

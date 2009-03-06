@@ -1,5 +1,5 @@
 /**
-* @version $Id: README.txt 1037 2008-09-01 04:12:50Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2008-2009 Kunena All rights reserved

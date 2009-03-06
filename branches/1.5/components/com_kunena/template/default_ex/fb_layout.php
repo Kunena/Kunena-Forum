@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: fb_layout.php 402 2009-02-15 01:29:00Z mahagr $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

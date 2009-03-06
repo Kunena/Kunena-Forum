@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: showcat.php 420 2009-02-15 18:51:01Z mahagr $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: smile.class.php 473 2009-02-22 21:52:41Z mahagr $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: fb_pdf.php 969 2008-08-12 09:23:54Z racoon $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

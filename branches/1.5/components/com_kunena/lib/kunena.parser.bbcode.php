@@ -1,6 +1,6 @@
 <?PHP
 /**
-* @version $Id: interpreter.bbcode.inc.php 1077 2008-10-20 19:01:15Z racoon $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

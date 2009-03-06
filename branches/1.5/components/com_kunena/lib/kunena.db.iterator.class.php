@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: fb_db_iterator.class.php 804 2008-07-12 18:15:06Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

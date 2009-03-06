@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: joomlaboard2kunena.php 127 2009-01-24 08:49:58Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

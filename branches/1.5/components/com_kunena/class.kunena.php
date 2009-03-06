@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: class.fireboard.php 1079 2008-10-27 05:50:14Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

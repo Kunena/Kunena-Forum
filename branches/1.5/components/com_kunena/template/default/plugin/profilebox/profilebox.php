@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: profilebox.php 901 2008-08-03 21:39:37Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

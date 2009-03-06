@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: kunena.special.upgrade.1.0.5.php 103 2009-01-23 23:23:23Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved

@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: fb_write.html.php 1029 2008-08-25 15:40:07Z racoon $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

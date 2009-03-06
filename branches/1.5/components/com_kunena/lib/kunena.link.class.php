@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: fb_link.class.php 1082 2008-10-27 06:44:15Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: fb_mail.php 462 2007-12-10 00:05:53Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

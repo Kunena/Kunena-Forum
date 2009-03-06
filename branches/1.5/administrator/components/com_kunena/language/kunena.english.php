@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: kunena.english.php 465 2009-02-20 06:59:43Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

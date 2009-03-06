@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: kunena.user.class.php 426 2009-02-16 01:06:03Z fxstein $
+* @version $Id$
 * Kunena Component - CKunenaUser class
 * @package Kunena
 *

@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: kunena.converter.class.php 104 2009-01-23 23:23:51Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

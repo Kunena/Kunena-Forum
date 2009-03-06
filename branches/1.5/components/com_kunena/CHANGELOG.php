@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: CHANGELOG.php 251 2009-02-01 19:27:28Z noelhunter $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

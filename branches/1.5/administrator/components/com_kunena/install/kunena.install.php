@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: kunena.install.php 250 2009-02-01 10:18:56Z mahagr $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *
@@ -42,8 +42,9 @@ else {
 
 include_once(KUNENA_PATH_ADMIN_LIB .DS. 'fx.upgrade.class.php');
 
-function com_install() {
-	global $mainframe, $mosConfig_absolute_path;
+function com_install()
+{
+	global $mainframe;
 
 	$database = JFactory::getDBO();
 
@@ -142,12 +143,12 @@ function com_install() {
 			//
 			// We might want to make the file copy below part of the install as well
 			//
-			if (is_writable($mainframe->getCfg("absolute_path")."/images" ))
+
+		    $ret = JFolder::copy(JPATH_ROOT .DS. "components" .DS. "com_kunena" .DS. "kunena.files.distribution",
+		    				JPATH_ROOT .DS. "images" .DS. "fbfiles", '', true);
+
+			if (JError::isError($ret))
 			{
-				//ok now it is installed, just copy the fbfiles directory, and apply 0777
-				dircopy($mainframe->getCfg("absolute_path") . "/components/com_kunena/kunena.files.distribution", $mainframe->getCfg("absolute_path") . "/images/fbfiles", false);
-			}
-			else {
 			?>
 
 			<li class="fbscslisterror">
@@ -265,57 +266,60 @@ function com_install() {
 
 }
 
-function dircopy($srcdir, $dstdir, $verbose = true) {
-	$num = 0;
-
-	if (!is_dir($dstdir)) {
-		mkdir ($dstdir);
-	}
-
-	if ($curdir = opendir($srcdir)) {
-		while ($file = readdir($curdir)) {
-			if ($file != '.' && $file != '..') {
-				$srcfile = $srcdir . '/' . $file;
-				$dstfile = $dstdir . '/' . $file;
-
-				if (is_file($srcfile)) {
-					if (is_file($dstfile)) {
-						$ow = filemtime($srcfile) - filemtime($dstfile);
-					}
-					else {
-						$ow = 1;
-					}
-
-					if ($ow > 0) {
-						if ($verbose) {
-							$tmpstr = _KUNENA_COPY_FILE;
-							$tmpstr = str_replace('%src%', $srcfile, $tmpstr);
-							$tmpstr = str_replace('%dst%', $dstfile, $tmpstr);
-							echo "<li class=\"fbscslist\">".$tmpstr;
-						}
-
-						if (copy($srcfile, $dstfile)) {
-							touch($dstfile, filemtime($srcfile));
-							$num++;
-
-							if ($verbose) {
-								echo _KUNENA_COPY_OK." </li>";
-							}
-						}
-						else {
-							echo "<li class=\"fbscslisterror\">"._KUNENA_DIRCOPERR . " '$srcfile' " . _KUNENA_DIRCOPERR1."</li>";
-						}
-					}
-				}
-				else if (is_dir($srcfile)) {
-					$num += dircopy($srcfile, $dstfile, $verbose);
-				}
-			}
-		}
-
-		closedir ($curdir);
-	}
-
-	return $num;
-}
+//function dircopy($srcdir, $dstdir, $verbose = true) {
+//	$num = 0;
+//
+//	if (!JFolder::exists($dstdir)) {
+//		JFolder::create($dstdir);
+//	}
+//
+//	JFolder::copy($srcdir, $dstdir);
+//
+////	if ($curdir = opendir($srcdir)) {
+////		while ($file = readdir($curdir)) {
+////			if ($file != '.' && $file != '..') {
+////				$srcfile = $srcdir . '/' . $file;
+////				$dstfile = $dstdir . '/' . $file;
+////
+////				if (is_file($srcfile)) {
+////					if (is_file($dstfile)) {
+////						$ow = filemtime($srcfile) - filemtime($dstfile);
+////					}
+////					else {
+////						$ow = 1;
+////					}
+////
+////					if ($ow > 0) {
+////						if ($verbose) {
+////							$tmpstr = _KUNENA_COPY_FILE;
+////							$tmpstr = str_replace('%src%', $srcfile, $tmpstr);
+////							$tmpstr = str_replace('%dst%', $dstfile, $tmpstr);
+////							echo "<li class=\"fbscslist\">".$tmpstr;
+////						}
+////
+////						if (copy($srcfile, $dstfile)) {
+////							touch($dstfile, filemtime($srcfile));
+////							$num++;
+////
+////							if ($verbose) {
+////								echo _KUNENA_COPY_OK." </li>";
+////							}
+////						}
+////						else {
+////							echo "<li class=\"fbscslisterror\">"._KUNENA_DIRCOPERR . " '$srcfile' " . _KUNENA_DIRCOPERR1."</li>";
+////						}
+////					}
+////				}
+////				else if (is_dir($srcfile)) {
+////					$num += dircopy($srcfile, $dstfile, $verbose);
+////				}
+////			}
+////		}
+////
+////		closedir ($curdir);
+////	}
+////
+////	return $num;
+//
+//}
 ?>

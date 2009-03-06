@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: thread.php 308 2009-02-05 22:42:00Z mahagr $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

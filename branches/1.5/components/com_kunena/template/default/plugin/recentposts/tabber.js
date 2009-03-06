@@ -1,5 +1,5 @@
 /*==================================================
-  $Id: tabber.js 462 2007-12-10 00:05:53Z fxstein $
+  $Id$
   tabber.js by Patrick Fitzgerald pat@barelyfitz.com
   Documentation can be found at the following URL:
   http://www.barelyfitz.com/projects/tabber/

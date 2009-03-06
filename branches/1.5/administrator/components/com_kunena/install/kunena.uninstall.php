@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: kunena.uninstall.php 103 2009-01-23 23:23:23Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: userprofile.php 451 2009-02-17 11:23:25Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

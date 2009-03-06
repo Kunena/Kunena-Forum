@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: message.php 447 2009-02-17 08:46:17Z mahagr $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

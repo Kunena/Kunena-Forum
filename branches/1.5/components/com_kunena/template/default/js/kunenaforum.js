@@ -1,6 +1,6 @@
 /*<![CDATA[*/
 /**
-* @version $Id: kunenaforum.js 185 2009-01-26 07:20:32Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2009 Kunena All rights reserved

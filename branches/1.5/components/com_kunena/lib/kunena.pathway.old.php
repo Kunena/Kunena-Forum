@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: fb_pathway_old.php 831 2008-07-15 04:14:59Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

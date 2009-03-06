@@ -20,7 +20,7 @@
 **/
 
 // Dont allow direct linking
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
 //first we gather some information about this person
@@ -73,7 +73,7 @@ else
     }
     else {
  		$jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_nophoto.jpg" alt=" " />';
-        $jr_profilelink = '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
+        $jr_profilelink = '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
     }
 
 }
@@ -83,37 +83,37 @@ if ($fbConfig->fb_profile == "cb" || $fbConfig->fb_profile == "jomsocial")
     $jr_profilelink = CKunenaLink::GetProfileLink($fbConfig, $my->id, _PROFILEBOX_MYPROFILE);
 }
 else if ($fbConfig->fb_profile == "clexuspm") {
-    $jr_profilelink = '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
+    $jr_profilelink = '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
 }
 else
 {
-    $jr_profilelink = '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
+    $jr_profilelink = '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
 }
 
-$jr_myposts = '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL .  '&amp;func=showauthor&amp;task=showmsg&amp;auth=' . $my->id . '') . '" >' . _PROFILEBOX_SHOW_MYPOSTS . '</a>';
-$jr_latestpost = sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=latest');
+$jr_myposts = '<a href="' . JRoute::_(KUNENA_LIVEURLREL .  '&amp;func=showauthor&amp;task=showmsg&amp;auth=' . $my->id . '') . '" >' . _PROFILEBOX_SHOW_MYPOSTS . '</a>';
+$jr_latestpost = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=latest');
 ?>
 
 <?php // AFTER LOGIN AREA
 $j15 = CKunenaTools::isJoomla15();
 if ($fbConfig->fb_profile == 'cb')
 {
-    $loginlink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=login');
-    $logoutlink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=logout');
-    $registerlink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=registers');//.KUNENA_CB_ITEMID_SUFFIX);
-    $lostpasslink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=lostPassword');//.KUNENA_CB_ITEMID_SUFFIX);
+    $loginlink = JRoute::_('index.php?option=com_comprofiler&amp;task=login');
+    $logoutlink = JRoute::_('index.php?option=com_comprofiler&amp;task=logout');
+    $registerlink = JRoute::_('index.php?option=com_comprofiler&amp;task=registers');//.KUNENA_CB_ITEMID_SUFFIX);
+    $lostpasslink = JRoute::_('index.php?option=com_comprofiler&amp;task=lostPassword');//.KUNENA_CB_ITEMID_SUFFIX);
 }
 else
 {
-    $loginlink = sefRelToAbs('index.php?option=com_login&amp;Itemid=' . $Itemid);
-    $logoutlink = sefRelToAbs('index.php?option=logout');
-    $registerlink = sefRelToAbs('index.php?option=com_registration&amp;task=register&amp;Itemid=' . $Itemid);
-    $lostpasslink = sefRelToAbs('index.php?option=com_registration&amp;task=lostPassword&amp;Itemid=' . $Itemid);
+    $loginlink = JRoute::_('index.php?option=com_login&amp;Itemid=' . $Itemid);
+    $logoutlink = JRoute::_('index.php?option=logout');
+    $registerlink = JRoute::_('index.php?option=com_registration&amp;task=register&amp;Itemid=' . $Itemid);
+    $lostpasslink = JRoute::_('index.php?option=com_registration&amp;task=lostPassword&amp;Itemid=' . $Itemid);
     if($j15) {
-      $loginlink = sefRelToAbs('index.php?option=com_user&amp;view=login');
-      $logoutlink = sefRelToAbs('index.php?option=com_user&amp;view=login');
-      $registerlink = sefRelToAbs('index.php?option=com_user&amp;task=register&amp;Itemid=' . $Itemid);
-      $lostpasslink = sefRelToAbs('index.php?option=com_user&amp;view=reset&amp;Itemid=' . $Itemid);
+      $loginlink = JRoute::_('index.php?option=com_user&amp;view=login');
+      $logoutlink = JRoute::_('index.php?option=com_user&amp;view=login');
+      $registerlink = JRoute::_('index.php?option=com_user&amp;task=register&amp;Itemid=' . $Itemid);
+      $lostpasslink = JRoute::_('index.php?option=com_user&amp;view=reset&amp;Itemid=' . $Itemid);
     }
 }
 
@@ -153,34 +153,11 @@ $annlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show'.KUNEN
 <?php } ?>
 
 </td>
-                <?php
-                if (mosCountModules('kunena_profilebox'))
-                {
-                ?>
-
-          <td>
-                            <div class = "fb_profilebox_modul">
-                                <?php
-                                if (CKunenaTools::isJoomla15())
-                                {
-                                	$document	= &JFactory::getDocument();
-                                	$renderer	= $document->loadRenderer('modules');
-                                	$options	= array('style' => 'xhtml');
-                                	$position	= 'kunena_profilebox';
-                                	echo $renderer->render($position, $options, null);
-                                }
-                                else
-                                {
-                                	mosLoadModules('kunena_profilebox', -2);
-                                }
-                                ?>
-                            </div>
-
-</td>
-                <?php
-                }
-                ?>
-
+		<td>
+			<div class = "fb_profilebox_modul">
+				<jdoc:include type="modules" name="kunena_profilebox" />
+			</div>
+		</td>
             </tr>
         </tbody>
     </table>
@@ -207,34 +184,11 @@ else
                 <a href = "<?php echo $lostpasslink;?>"><?php echo _PROFILEBOX_LOST_PASSWORD; ?></a>
 
 </td>
-                <?php
-                if (mosCountModules('kunena_profilebox'))
-                {
-                ?>
-
                         <td>
                             <div class = "fb_profilebox_modul">
-                                <?php
-                                if (CKunenaTools::isJoomla15())
-                                {
-                                	$document	= &JFactory::getDocument();
-                                	$renderer	= $document->loadRenderer('modules');
-                                	$options	= array('style' => 'xhtml');
-                                	$position	= 'kunena_profilebox';
-                                	echo $renderer->render($position, $options, null);
-                                }
-                                else
-                                {
-                                	mosLoadModules('kunena_profilebox', -2);
-                                }
-                                ?>
+				<jdoc:include type="modules" name="kunena_profilebox" />
                             </div>
                        </td>
-
-                <?php
-                }
-                ?>
-
             </tr>
         </tbody>
     </table>

@@ -20,12 +20,12 @@
 **/
 
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 ?>
 <!-- Pathway -->
 <?php
-$sfunc = mosGetParam($_REQUEST, "func", null);
+$sfunc = JRequest::getVar("func", null);
 
 if ($func != "")
 {

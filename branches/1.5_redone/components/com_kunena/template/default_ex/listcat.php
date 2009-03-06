@@ -19,7 +19,7 @@
 * @author TSMF & Jan de Graaff
 **/
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
 
@@ -109,30 +109,12 @@ if ($fbConfig->showannouncement > 0)
 // (JJ) FINISH: ANNOUNCEMENT BOX
 
 // load module
-if (mosCountModules('kunena_announcement'))
-{
 ?>
 
     <div class = "fb-fb_2">
-        <?php
-        if (CKunenaTools::isJoomla15())
-        {
-        	$document	= &JFactory::getDocument();
-        	$renderer	= $document->loadRenderer('modules');
-        	$options	= array('style' => 'xhtml');
-        	$position	= 'kunena_announcement';
-        	echo $renderer->render($position, $options, null);
-        }
-        else
-        {
-        	mosLoadModules('kunena_announcement', -2);
-        }
-        ?>
+	<jdoc:include type="modules" name="kunena_announcement" />
     </div>
 
-<?php
-}
-?>
 <!-- B: Pathway -->
 <?php
 if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {

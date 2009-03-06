@@ -20,14 +20,14 @@
 **/
 
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
-$msg_id = mosGetParam($_REQUEST, 'msg_id');
-$catid = (int)mosGetParam($_REQUEST, 'catid', 0);
-$reporter = mosGetParam($_REQUEST, 'reporter');
-$reason = strval(mosGetParam($_REQUEST, 'reason'));
-$text = strval(mosGetParam($_REQUEST, 'text'));
-$type = mosGetParam($_REQUEST, 'type', 0); // 0 = send e-mail, 1 = send pm
+$msg_id = JRequest::getVar('msg_id');
+$catid = (int)JRequest::getVar('catid', 0);
+$reporter = JRequest::getVar('reporter');
+$reason = strval(JRequest::getVar('reason'));
+$text = strval(JRequest::getVar('text'));
+$type = JRequest::getVar('type', 0); // 0 = send e-mail, 1 = send pm
 
 switch ($do)
 {
@@ -70,7 +70,7 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
         $subject = "[".stripslashes($fbConfig->board_title)." "._GEN_FORUM."] "._KUNENA_REPORT_MSG . ": " . stripslashes($row->subject);
         }
 
-    $msglink = str_replace('&amp;', '&', sefRelToAbs(KUNENA_LIVEURLREL . "&amp;func=view&amp;catid=" . $row->catid . "&amp;id=" . $row->id) . '#' . $row->id);
+    $msglink = str_replace('&amp;', '&', JRoute::_(KUNENA_LIVEURLREL . "&amp;func=view&amp;catid=" . $row->catid . "&amp;id=" . $row->id) . '#' . $row->id);
 
     $message .= "" . _KUNENA_REPORT_RSENDER . " " . $sender;
     $message .= "\n";
@@ -113,11 +113,11 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
     }
 
     echo '<div align="center">' . _KUNENA_REPORT_SUCCESS . '<br /><br />';
-    echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id) . '#' . $msg_id . '">' . _POST_SUCCESS_VIEW . '</a><br />';
-    echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $catid) . '">' . _POST_SUCCESS_FORUM . '</a><br />';
+    echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id) . '#' . $msg_id . '">' . _POST_SUCCESS_VIEW . '</a><br />';
+    echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $catid) . '">' . _POST_SUCCESS_FORUM . '</a><br />';
     echo '</div>';
 
-     echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&amp;id='.$msg_id).'#'.$msg_id, 3500);
+     echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&amp;id='.$msg_id).'#'.$msg_id, 3500);
 }
 
 function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins) {
@@ -183,16 +183,16 @@ function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
 function ReportForm($msg_id, $catid) {
     global $my, $fbConfig;
 
-    $redirect = sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id . '&amp;Itemid=' . KUNENA_COMPONENT_ITEMID) . '#' . $msg_id;
+    $redirect = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id . '&amp;Itemid=' . KUNENA_COMPONENT_ITEMID) . '#' . $msg_id;
 
-    //$redirect = sefRelToAbs($redirect);
+    //$redirect = JRoute::_($redirect);
     if (!$my->id) {
-        mosRedirect ($redirect);
+        $mainframe->redirect( JURI::base() .$redirect);
         return;
         }
 
     if ($fbConfig->reportmsg == 0) {
-        mosRedirect ($redirect);
+        $mainframe->redirect( JURI::base() .$redirect);
         return;
         }
 ?>
@@ -215,7 +215,7 @@ function ReportForm($msg_id, $catid) {
                         <tbody>
                             <tr>
                                 <td class = "fb_faqdesc">
-                                    <form method = "post" action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=report'); ?>">
+                                    <form method = "post" action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=report'); ?>">
                                         <table width = "100%" border = "0">
                                             <tr>
                                                 <td width = "10%">
@@ -260,7 +260,7 @@ function ReportForm($msg_id, $catid) {
     }
 
 function SendClexusPM($reporter, $subject, $message, $msglink, $mods, $admins) {
-    global $database;
+    $database = &JFactory::getDBO();
     $time = mosFormatDate(CKunenaTools::fbGetInternalTime(), '%Y-%m-%d %H:%M:%S');
 
     foreach ($admins as $admin) {

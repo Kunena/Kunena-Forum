@@ -18,7 +18,7 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @author TSMF & Jan de Graaff
 **/
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
@@ -42,13 +42,13 @@ global $fbConfig;
         <tr>
             <td class = "fb_myprofile_menu_staff">
                 <span class = "fb_myprofile_menu_title"><?php echo _KUNENA_MYPROFILE_PERSONAL_INFO; ?></span>
-                <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'); ?>"> <?php echo _KUNENA_MYPROFILE_SUMMARY; ?> </a>
+                <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'); ?>"> <?php echo _KUNENA_MYPROFILE_SUMMARY; ?> </a>
 <?php
  	// Only show userdetails link if we are in charge of the profile
     if ($fbConfig->fb_profile == 'fb')
     {
 ?>
-            	<a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=userdetails'); ?>"> <?php echo _KUNENA_EDIT_TITLE; ?> </a>
+            	<a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=userdetails'); ?>"> <?php echo _KUNENA_EDIT_TITLE; ?> </a>
 <?php
     }
 
@@ -56,7 +56,7 @@ global $fbConfig;
     if ($fbConfig->avatar_src == 'fb')
     {
 ?>
-            	<a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=uploadavatar'); ?>"> <?php echo _KUNENA_MYPROFILE_MYAVATAR; ?></a>
+            	<a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=uploadavatar'); ?>"> <?php echo _KUNENA_MYPROFILE_MYAVATAR; ?></a>
 <?php
     }
 ?>
@@ -65,8 +65,8 @@ global $fbConfig;
 
         <tr>
             <td class = "fb_myprofile_menu_staff">
-                <span class = "fb_myprofile_menu_title"><?php echo _KUNENA_MYPROFILE_FORUM_SETTINGS; ?></span> <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showset'); ?>"><?php echo _KUNENA_MYPROFILE_LOOK_AND_LAYOUT; ?></a>
-            <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=profileinfo'); ?>"><?php echo _KUNENA_MYPROFILE_MY_PROFILE_INFO; ?></a> <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showmsg'); ?>"><?php echo _KUNENA_MYPROFILE_MY_POSTS; ?></a> <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub'); ?>"><?php echo _KUNENA_MYPROFILE_MY_SUBSCRIBES; ?></a> <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav'); ?>"><?php echo _KUNENA_MYPROFILE_MY_FAVORITES; ?></a>
+                <span class = "fb_myprofile_menu_title"><?php echo _KUNENA_MYPROFILE_FORUM_SETTINGS; ?></span> <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showset'); ?>"><?php echo _KUNENA_MYPROFILE_LOOK_AND_LAYOUT; ?></a>
+            <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=profileinfo'); ?>"><?php echo _KUNENA_MYPROFILE_MY_PROFILE_INFO; ?></a> <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showmsg'); ?>"><?php echo _KUNENA_MYPROFILE_MY_POSTS; ?></a> <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub'); ?>"><?php echo _KUNENA_MYPROFILE_MY_SUBSCRIBES; ?></a> <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav'); ?>"><?php echo _KUNENA_MYPROFILE_MY_FAVORITES; ?></a>
             </td>
         </tr>
 
@@ -78,13 +78,13 @@ global $fbConfig;
        <tr>
             <td class = "fb_myprofile_menu_staff">
                 <span class = "fb_myprofile_menu_title"><?php echo _KUNENA_MYPROFILE_PRIVATE_MESSAGING; ?></span>
-            <a href = "<?php echo sefRelToAbs('index.php?option=com_mypms&amp;Itemid=' . KUNENA_CPM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_INBOX; ?> </a>
-            <a href = "<?php echo sefRelToAbs('index.php?option=com_mypms&amp;task=compose&amp;Itemid=' . KUNENA_CPM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_NEW_MESSAGE; ?></a>
-            <a href = "<?php echo sefRelToAbs('index.php?option=com_mypms&amp;task=sent&amp;Itemid=' . KUNENA_CPM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_OUTBOX; ?></a>
-            <a href = "<?php echo sefRelToAbs('index.php?option=com_mypms&amp;task=trash&amp;Itemid=' . KUNENA_CPM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_TRASH; ?></a>
-            <a href = "<?php echo sefRelToAbs('index.php?option=com_mypms&amp;task=viewblocked&amp;Itemid=' . KUNENA_CPM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_BLOCKEDLIST; ?></a>
-            <a href = "<?php echo sefRelToAbs('index.php?option=com_mypms&amp;task=contacts&amp;Itemid=' . KUNENA_CPM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_CONTACTS; ?></a>
-            <a href = "<?php echo sefRelToAbs('index.php?option=com_mypms&amp;task=preferences&amp;Itemid=' . KUNENA_CPM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_SETTINGS; ?></a>
+            <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;Itemid=' . KUNENA_CPM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_INBOX; ?> </a>
+            <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=compose&amp;Itemid=' . KUNENA_CPM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_NEW_MESSAGE; ?></a>
+            <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=sent&amp;Itemid=' . KUNENA_CPM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_OUTBOX; ?></a>
+            <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=trash&amp;Itemid=' . KUNENA_CPM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_TRASH; ?></a>
+            <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=viewblocked&amp;Itemid=' . KUNENA_CPM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_BLOCKEDLIST; ?></a>
+            <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=contacts&amp;Itemid=' . KUNENA_CPM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_CONTACTS; ?></a>
+            <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=preferences&amp;Itemid=' . KUNENA_CPM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_SETTINGS; ?></a>
             </td>
         </tr>
 <?php
@@ -97,10 +97,10 @@ global $fbConfig;
         <tr>
             <td class = "fb_myprofile_menu_staff">
                 <span class = "fb_myprofile_menu_title"><?php echo _KUNENA_MYPROFILE_PRIVATE_MESSAGING; ?></span>
-            <a href = "<?php echo sefRelToAbs('index.php?option=com_uddeim&amp;Itemid=' . KUNENA_UIM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_INBOX; ?> </a>
-            <a href = "<?php echo sefRelToAbs('index.php?option=com_uddeim&amp;task=new&amp;Itemid=' . KUNENA_UIM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_NEW_MESSAGE; ?></a>
-            <a href = "<?php echo sefRelToAbs('index.php?option=com_uddeim&amp;task=outbox&amp;Itemid=' . KUNENA_UIM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_OUTBOX; ?></a>
-            <a href = "<?php echo sefRelToAbs('index.php?option=com_uddeim&amp;task=trashcan&amp;Itemid=' . KUNENA_UIM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_TRASH; ?></a>
+            <a href = "<?php echo JRoute::_('index.php?option=com_uddeim&amp;Itemid=' . KUNENA_UIM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_INBOX; ?> </a>
+            <a href = "<?php echo JRoute::_('index.php?option=com_uddeim&amp;task=new&amp;Itemid=' . KUNENA_UIM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_NEW_MESSAGE; ?></a>
+            <a href = "<?php echo JRoute::_('index.php?option=com_uddeim&amp;task=outbox&amp;Itemid=' . KUNENA_UIM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_OUTBOX; ?></a>
+            <a href = "<?php echo JRoute::_('index.php?option=com_uddeim&amp;task=trashcan&amp;Itemid=' . KUNENA_UIM_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_TRASH; ?></a>
             </td>
         </tr>
 <?php
@@ -114,12 +114,12 @@ global $fbConfig;
        <tr>
             <td class = "fb_myprofile_menu_staff">
                 <span class = "fb_myprofile_menu_title"><?php echo _KUNENA_MYPROFILE_PRIVATE_MESSAGING; ?></span>
-            <a href = "<?php echo sefRelToAbs('index.php?option=com_missus&amp;func=showinbox&amp;Itemid=' . KUNENA_MISSUS_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_INBOX; ?> </a>
-            <a href = "<?php echo sefRelToAbs('index.php?option=com_missus&amp;func=newmsg&amp;Itemid=' . KUNENA_MISSUS_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_NEW_MESSAGE; ?></a>
-            <a href = "<?php echo sefRelToAbs('index.php?option=com_missus&amp;func=showsent&amp;Itemid=' . KUNENA_MISSUS_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_OUTBOX; ?></a>
-            <a href = "<?php echo sefRelToAbs('index.php?option=com_missus&amp;func=showtrash&amp;Itemid=' . KUNENA_MISSUS_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_TRASH; ?></a>
-            <a href = "<?php echo sefRelToAbs('index.php?option=com_missus&amp;func=showcontacts&amp;Itemid=' . KUNENA_MISSUS_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_CONTACTS; ?></a>
-            <a href = "<?php echo sefRelToAbs('index.php?option=com_missus&amp;func=showconfig&amp;Itemid=' . KUNENA_MISSUS_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_SETTINGS; ?></a>
+            <a href = "<?php echo JRoute::_('index.php?option=com_missus&amp;func=showinbox&amp;Itemid=' . KUNENA_MISSUS_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_INBOX; ?> </a>
+            <a href = "<?php echo JRoute::_('index.php?option=com_missus&amp;func=newmsg&amp;Itemid=' . KUNENA_MISSUS_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_NEW_MESSAGE; ?></a>
+            <a href = "<?php echo JRoute::_('index.php?option=com_missus&amp;func=showsent&amp;Itemid=' . KUNENA_MISSUS_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_OUTBOX; ?></a>
+            <a href = "<?php echo JRoute::_('index.php?option=com_missus&amp;func=showtrash&amp;Itemid=' . KUNENA_MISSUS_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_TRASH; ?></a>
+            <a href = "<?php echo JRoute::_('index.php?option=com_missus&amp;func=showcontacts&amp;Itemid=' . KUNENA_MISSUS_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_CONTACTS; ?></a>
+            <a href = "<?php echo JRoute::_('index.php?option=com_missus&amp;func=showconfig&amp;Itemid=' . KUNENA_MISSUS_ITEMID.''); ?>"><?php echo _KUNENA_MYPROFILE_SETTINGS; ?></a>
             </td>
         </tr>
 <?php
@@ -133,9 +133,9 @@ global $fbConfig;
        <tr>
             <td class = "fb_myprofile_menu_staff">
                 <span class = "fb_myprofile_menu_title"><?php echo _KUNENA_MYPROFILE_PRIVATE_MESSAGING; ?></span>
-            <a href = "<?php echo sefRelToAbs('index.php?option=com_jim&amp;task=inbox'); ?>"><?php echo _KUNENA_MYPROFILE_INBOX; ?> </a>
-            <a href = "<?php echo sefRelToAbs('index.php?option=com_jim&amp;task=new'); ?>"><?php echo _KUNENA_MYPROFILE_NEW_MESSAGE; ?></a>
-            <a href = "<?php echo sefRelToAbs('index.php?option=com_jim&amp;task=outbox'); ?>"><?php echo _KUNENA_MYPROFILE_OUTBOX; ?></a>
+            <a href = "<?php echo JRoute::_('index.php?option=com_jim&amp;task=inbox'); ?>"><?php echo _KUNENA_MYPROFILE_INBOX; ?> </a>
+            <a href = "<?php echo JRoute::_('index.php?option=com_jim&amp;task=new'); ?>"><?php echo _KUNENA_MYPROFILE_NEW_MESSAGE; ?></a>
+            <a href = "<?php echo JRoute::_('index.php?option=com_jim&amp;task=outbox'); ?>"><?php echo _KUNENA_MYPROFILE_OUTBOX; ?></a>
             </td>
         </tr>
 <?php

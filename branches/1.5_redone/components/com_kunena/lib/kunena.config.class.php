@@ -15,7 +15,7 @@
 **/
 
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 class CKunenaConfigBase
 {
@@ -67,7 +67,7 @@ class CKunenaConfigBase
     //
     function create()
     {
-        global $database, $mosConfig_absolute_path;
+        $database = &JFactory::getDBO();
 
         $fields = array ();
 
@@ -121,7 +121,7 @@ class CKunenaConfigBase
     //
     function backup()
     {
-        global $database;
+        $database = &JFactory::getDBO();
         // remove old backup if one exists
         $database->setQuery("DROP TABLE IF EXISTS #__".$this->GetConfigTableName()."_backup");
         $database->query();
@@ -145,7 +145,7 @@ class CKunenaConfigBase
     //
     function remove()
     {
-        global $database;
+        $database = &JFactory::getDBO();
         $database->setQuery("DROP TABLE IF EXISTS #__".$this->GetConfigTableName());
         $database->query();
         	check_dberror("Unable to drop existing configuration table.");
@@ -156,7 +156,7 @@ class CKunenaConfigBase
     //
     function load($KunenaUser=null)
     {
-        global $database;
+        $database = &JFactory::getDBO();
 
         $database->setQuery("SELECT * FROM #__".$this->GetConfigTableName());
 
@@ -356,7 +356,7 @@ class CKunenaConfig extends CKunenaConfigBase
 
     function DoUserOverrides($KunenaUser)
     {
-    	global $database;
+    	$database = &JFactory::getDBO();
 
     	// Only perform overrides if we got a valid user handed to us
     	if (is_object($KunenaUser)==FALSE) return FALSE;

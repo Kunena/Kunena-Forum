@@ -20,17 +20,17 @@
 **/
 
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
 
 //Get some variables
-$id = intval(mosGetParam($_REQUEST, 'id'));
-$catid = intval(mosGetParam($_REQUEST, 'catid'));
-//$func = mosGetParam($_REQUEST, 'func');
-$task = mosGetParam($_REQUEST, 'task');
-$replyto = intval(mosGetParam($_REQUEST, 'replyto'));
-$do = mosGetParam($_REQUEST, 'do');
+$id = intval(JRequest::getVar('id'));
+$catid = intval(JRequest::getVar('catid'));
+//$func = JRequest::getVar('func');
+$task = JRequest::getVar('task');
+$replyto = intval(JRequest::getVar('replyto'));
+$do = JRequest::getVar('do');
 
 $now = time();
 $past = $now - $fbConfig->fbsessiontimeout;

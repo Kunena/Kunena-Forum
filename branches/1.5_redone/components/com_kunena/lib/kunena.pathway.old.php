@@ -20,7 +20,7 @@
 **/
 
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 ?>
 <!-- Pathway -->
@@ -42,7 +42,7 @@ global $fbConfig;
                     ;
                     $parent_ids = @mysql_result($results, 0, 'parent');
                     //$cids=@mysql_result( $results, 0, 'id' );
-                    $sname = "<a href='" . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $catids) . "'>" . @mysql_result($results, 0, 'name') . "</a>";
+                    $sname = "<a href='" . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $catids) . "'>" . @mysql_result($results, 0, 'name') . "</a>";
 
                     // write path
                     if (empty($spath)) {
@@ -56,7 +56,7 @@ global $fbConfig;
                     $catids = $parent_ids;
                 }
 
-                $shome = '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL) . '">' . _GEN_FORUMLIST . '</a> ';
+                $shome = '<a href="' . JRoute::_(KUNENA_LIVEURLREL) . '">' . _GEN_FORUMLIST . '</a> ';
                 $pathNames = $shome . ' » ' . $spath . " ";
                 echo $pathNames;
 
@@ -72,16 +72,16 @@ global $fbConfig;
                 $forumLocked = $objCatInfo->locked;
                 //check if this forum is subject to review
                 $forumReviewed = $objCatInfo->review;
-                /*      echo '<a href="'.sefRelToAbs(KUNENA_LIVEURLREL).'">';
+                /*      echo '<a href="'.JRoute::_(KUNENA_LIVEURLREL).'">';
                       echo $fbIcons['forumlist'] ? '<img src="' . KUNENA_TMPLTURL . '/images/icons/'.$fbIcons['forumlist'].'" border="0" alt="'._GEN_FORUMLIST.'" > > ' : _GEN_FORUMLIST;
                       echo '</a> ';
-                      if (file_exists($mosConfig_absolute_path.'/templates/'.$mainframe->getTemplate().'/images/arrow.png')) {
+                      if (file_exists(JPATH_ROOT.'/templates/'.$mainframe->getTemplate().'/images/arrow.png')) {
                       echo '<img src="'.KUNENA_JLIVEURL.'/templates/'.$mainframe->getTemplate().'/images/arrow.png" alt="" />';
                       } else {
                       echo '<img src="'.KUNENA_JLIVEURL.'/images/M_images/arrow.png" alt="" />';
                     }
-                      echo ' <a href="'.sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$objCatParentInfo->id).'">'.$objCatParentInfo->name.'</a> ';
-                      if (file_exists($mosConfig_absolute_path.'/templates/'.$mainframe->getTemplate().'/images/arrow.png')) {
+                      echo ' <a href="'.JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$objCatParentInfo->id).'">'.$objCatParentInfo->name.'</a> ';
+                      if (file_exists(JPATH_ROOT.'/templates/'.$mainframe->getTemplate().'/images/arrow.png')) {
                       echo '<img src="'.KUNENA_JLIVEURL.'/templates/'.$mainframe->getTemplate().'/images/arrow.png" alt="" />';
                       } else {
                       echo '<img src="'.KUNENA_JLIVEURL.'/images/M_images/arrow.png" alt="" /> ';

@@ -17,7 +17,7 @@
 * component: com_kunena
 **/
 
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 //
 // This is a place to add custom install code required
@@ -31,7 +31,7 @@ global $mainframe, $database;
 // Kill notices (we have many..)
 error_reporting (E_ALL ^ E_NOTICE);
 
-include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/class.kunena.php");
+include_once (JPATH_ROOT . "/components/com_kunena/class.kunena.php");
 
 //DEFINE('_KUNENA_SAMPLE_FORUM_MENU_TITLE', 'Forum');
 

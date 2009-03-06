@@ -10,7 +10,7 @@
 **/
 
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 // Kunena User class
 class CKunenaUser
@@ -54,12 +54,12 @@ class CKunenaUser
 	}
 
 	function _getJoomlaProperty($field) {
-		global $database;
+		$database = &JFactory::getDBO();
 
 		if ($this->id == 0) return FALSE;
 		if ($this->joomlaProperties == NULL)
 		{
-			$this->joomlaProperties = new mosUser($database);
+			$this->joomlaProperties = new JUser($database);
 			$this->joomlaProperties->load($this->id);
 		}
 
@@ -72,7 +72,7 @@ class CKunenaUser
 	}
 
 	function _getKunenaProperty($field) {
-		global $database;
+		$database = &JFactory::getDBO();
 
 		if ($this->id == 0) return FALSE;
 		if ($this->kunenaProperties == NULL)

@@ -41,7 +41,7 @@
 #  parser reduce parse steps
 #    change ParseNext, UnEscape, ParseTag, CheckTag
 #  separate run instead task passing
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 define('TAGPARSER_RET_OK', 0);
 define('TAGPARSER_RET_ERR', 1);

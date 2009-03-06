@@ -18,10 +18,10 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @author TSMF & Jan de Graaff
 **/
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 
-require_once ($mosConfig_absolute_path . '/includes/HTML_toolbar.php');
+require_once (JPATH_ROOT . '/includes/HTML_toolbar.php');
 
 // used for spoof hardening
 $validate = josSpoofValue();
@@ -30,7 +30,7 @@ $validate = josSpoofValue();
 // <![CDATA[
     function submitbuttons(pressbutton)
     {
-        var form = document.mosUserForm;
+        var form = document.JUserForm;
         var r = new RegExp("[\<|\>|\"|\'|\%|\;|\(|\)|\&|\+|\-]", "i");
 
         // do field validation
@@ -70,7 +70,7 @@ $validate = josSpoofValue();
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<form action = "index.php" method = "post" name = "mosUserForm">
+<form action = "index.php" method = "post" name = "JUserForm">
     <div style = "float: right; display:none">
         <?php
         mosToolBar::startTable();

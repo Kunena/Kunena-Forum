@@ -18,7 +18,7 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @author TSMF & Jan de Graaff
 **/
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
@@ -74,8 +74,8 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 		//determine visitors allowable threads based on session
 		//find group id
 		$pageperlistlm      = 15;
-		$limit              = intval(trim(mosGetParam($_REQUEST, 'limit', $pageperlistlm)));
-		$limitstart         = intval(trim(mosGetParam($_REQUEST, 'limitstart', 0)));
+		$limit              = intval(trim(JRequest::getVar('limit', $pageperlistlm)));
+		$limitstart         = intval(trim(JRequest::getVar('limitstart', 0)));
 
 		$query              = "select gid from #__users where id=$my->id";
 		$database->setQuery($query);
@@ -111,7 +111,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 		$items   = $database->loadObjectList();
 			check_dberror("Unable to load messages.");
 
-		require ("$mosConfig_absolute_path/includes/pageNavigation.php");
+		require (JPATH_ROOT . "/includes/pageNavigation.php");
 		$pageNav = new mosPageNav($total, $limitstart, $limit);
 
 		if (count($items) > 0)
@@ -133,9 +133,9 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 					$item->created = "";
 				}
 
-				$fbURL    = sefRelToAbs("index.php?option=com_kunena&amp;func=view" . KUNENA_COMPONENT_ITEMID_SUFFIX . "&amp;catid=" . $item->catid . "&amp;id=" . $item->id . "#" . $item->id);
+				$fbURL    = JRoute::_("index.php?option=com_kunena&amp;func=view" . KUNENA_COMPONENT_ITEMID_SUFFIX . "&amp;catid=" . $item->catid . "&amp;id=" . $item->id . "#" . $item->id);
 
-				$fbCatURL = sefRelToAbs("index.php?option=com_kunena" . KUNENA_COMPONENT_ITEMID_SUFFIX . "&amp;func=showcat&amp;catid=" . $item->catid);
+				$fbCatURL = JRoute::_("index.php?option=com_kunena" . KUNENA_COMPONENT_ITEMID_SUFFIX . "&amp;func=showcat&amp;catid=" . $item->catid);
 		?>
 
 			<tr class = "<?php echo ''.$boardclass.''. $tabclass[$k] . ''; ?>">
@@ -206,7 +206,7 @@ echo $pageNav->writePagesLinks("index.php?option=com_kunena&amp;func=myprofile&a
 ?>
 
 <br/>
-<?php echo $pageNav->writePagesCounter(); ?>
+<?php echo $pageNav->getPagesCounter(); ?>
 			</td>
 		</tr>
 	</tbody>

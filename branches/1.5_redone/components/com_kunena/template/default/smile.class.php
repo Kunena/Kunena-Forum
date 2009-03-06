@@ -20,7 +20,7 @@
 **/
 // ################################################################
 // MOS Intruder Alerts
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 // ################################################################
 
@@ -93,7 +93,7 @@ class smile
     */
     function getEmoticons($grayscale, $emoticonbar = 0)
     {
-        global $database;
+        $database = &JFactory::getDBO();
         $grayscale == 1 ? $column = "greylocation" : $column = "location";
         $sql = "SELECT `code` , `$column` FROM `#__fb_smileys`";
 
@@ -243,7 +243,7 @@ class smile
 
         <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
             <td class = "fb_leftcolumn" valign = "top">
-                <strong><a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=faq').'#boardcode';?>"><?php echo _COM_BOARDCODE; ?></a></strong>:
+                <strong><a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=faq').'#boardcode';?>"><?php echo _COM_BOARDCODE; ?></a></strong>:
             </td>
 
             <td>

@@ -15,11 +15,11 @@
 **/
 
 // no direct access
-defined( '_VALID_MOS' ) or die( 'Restricted access' );
+defined( '_JEXEC' ) or die('Restricted access');
 
-include_once($mainframe->getCfg("absolute_path")."/administrator/components/com_kunena/lib/fx.upgrade.class.php");
+include_once(JPATH_ROOT."/administrator/components/com_kunena/lib/fx.upgrade.class.php");
 
-global $database;
+$database = &JFactory::getDBO();
 
 // Determine MySQL version
 $database->setQuery("SELECT VERSION() as mysql_version");

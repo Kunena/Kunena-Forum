@@ -19,7 +19,7 @@
 * @author TSMF & Jan de Graaff
 **/
 
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 // ################################################################
 /**
@@ -162,7 +162,7 @@ function KUNENA_get_pathway(&$database, $obj_fb_cat, $bool_set_title, $obj_post 
 
 function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = "", $catid = 0, $id = 0, $thread = 0, $is_moderator = false, $numPending = 0)
 {
-	$func = strtolower(mosGetParam($_REQUEST, 'func', ''));
+	$func = strtolower(JRequest::getVar('func', ''));
 	if ($func == '') // Set default as per config settings
 	{
 		switch ($fbConfig->fbdefaultpage)
@@ -277,7 +277,7 @@ function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = 
 
 function getSearchBox()
 {
-    $return = '<div id="fb_searchbox"><form action="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=search') . '" name="searchFB" method="post">';
+    $return = '<div id="fb_searchbox"><form action="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=search') . '" name="searchFB" method="post">';
     $boxsize = strlen(_GEN_SEARCH_BOX);
 
     if ($boxsize <= 15)

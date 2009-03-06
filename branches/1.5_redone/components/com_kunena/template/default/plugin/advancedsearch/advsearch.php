@@ -19,14 +19,14 @@
 * @author TSMF & Jan de Graaff
 **/
 
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 //Get main categories with child categories
-$catid = intval(mosGetParam($_REQUEST, "catid", 0));
+$catid = intval(JRequest::getVar("catid", 0));
 
 function JJ_categoryArray()
 {
-    global $database;
+    $database = &JFactory::getDBO();
     // get a list of the menu items
     $query = "SELECT c.*, c.parent" . "\n FROM #__fb_categories c" . "\n WHERE published =1" . "\n ORDER BY name";
     $database->setQuery($query);
@@ -52,7 +52,7 @@ function JJ_categoryArray()
 
 function JJ_categoryParentList($catid, $action, $options = array ())
 {
-    global $database;
+    $database = &JFactory::getDBO();
     $list = JJ_categoryArray();
     $this_treename = '';
 
@@ -61,13 +61,13 @@ function JJ_categoryParentList($catid, $action, $options = array ())
         if ($this_treename)
         {
             if ($item->id != $catid && strpos($item->treename, $this_treename) === false) {
-                $options[] = mosHTML::makeOption($item->id, $item->treename);
+                $options[] = JHTML::_('select.option', $item->id, $item->treename);
             }
         }
         else
         {
             if ($item->id != $catid) {
-                $options[] = mosHTML::makeOption($item->id, $item->treename);
+                $options[] = JHTML::_('select.option', $item->id, $item->treename);
             }
             else {
                 $this_treename = "$item->treename/";
@@ -75,13 +75,13 @@ function JJ_categoryParentList($catid, $action, $options = array ())
         }
     }
 
-    $parent = mosHTML::selectList($options, 'catid', 'class="inputbox" size="13" multiple="multiple"', 'value', 'text', $catid);
+    $parent = JHTML::_('select.genericlist', $options, 'catid', 'class="inputbox" size="13" multiple="multiple"', 'value', 'text', $catid);
     return $parent;
 }
 
 //category select list
 $options = array ();
-$options[] = mosHTML::makeOption('0', 'All Categories');
+$options[] = JHTML::_('select.option', '0', 'All Categories');
 $lists['parent'] = JJ_categoryParentList($catid, "", $options);
 ?>
 

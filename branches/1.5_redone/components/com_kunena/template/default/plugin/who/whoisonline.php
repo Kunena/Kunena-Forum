@@ -20,7 +20,7 @@
 **/
 
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
 
@@ -29,7 +29,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
 ?>
 <!-- WHOIS ONLINE -->
 <?php
-    $whoislink = sefRelToAbs('index.php?option=com_kunena&amp;func=who');
+    $whoislink = JRoute::_('index.php?option=com_kunena&amp;func=who');
     $fb_queryName = $fbConfig->username ? "username" : "name";
     $query
         = "SELECT w.userip, w.time, w.what, u.$fb_queryName AS username, u.id, k.moderator, k.showOnline "
@@ -88,7 +88,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
 
                   		 <?php if ( $user->showOnline > 0 ){ ?>
 
-                            <a class = "whois<?php echo $user->moderator;?>  <?php echo "fb_group_".$grp->id;?>" href = "<?php echo sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX.''.$user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
+                            <a class = "whois<?php echo $user->moderator;?>  <?php echo "fb_group_".$grp->id;?>" href = "<?php echo JRoute::_(KUNENA_PROFILE_LINK_SUFFIX.''.$user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
 
                 		  <?php  } ?>
 
@@ -114,7 +114,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
 
                   		 <?php if ( $user->showOnline < 1 && $my->gid > 1 ){ ?>
 
-                            <a class = "whois<?php echo $user->moderator;?>  <?php echo "fb_group_".$grp->id;?>" href = "<?php echo sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX.''.$user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
+                            <a class = "whois<?php echo $user->moderator;?>  <?php echo "fb_group_".$grp->id;?>" href = "<?php echo JRoute::_(KUNENA_PROFILE_LINK_SUFFIX.''.$user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
 
                 		  <?php   } ?>
 

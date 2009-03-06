@@ -15,7 +15,7 @@
 */
 
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 /**
 *@desc Getting the correct Itemids, for components required
@@ -23,19 +23,27 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 
 // Shortcuts to all the path we have:
-define('KUNENA_JABSPATH', $mainframe->getCfg('absolute_path'));
+define('KUNENA_JABSPATH', JPATH_ROOT);
 
 // Joomla absolute path
-define('KUNENA_JLIVEURL', $mainframe->getCfg('live_site'));
+define('KUNENA_JLIVEURL', JURI::root());
 
 // Joomla template dir
 define('KUNENA_JTEMPLATEPATH', KUNENA_JABSPATH. DS. "templates".DS . $mainframe->getTemplate());
 define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "/templates/".$mainframe->getTemplate());
 
 //Kunena
-$Itemid = intval(mosGetParam($_REQUEST, 'Itemid'));
+$Itemid = intval(JRequest::getVar('Itemid'), REQUEST);
 
 //check if we have all the itemid sets. if so, then no need for DB call
+
+global $database, $lang, $my, $my_id;
+
+$database = &JFactory::getDBO();
+$language = JLanguage::getInstance($frontend_lang);
+$lang = $language->getBackwardLang();
+$my = &JFactory::getUser();
+$my_id = $my->id;
 
 global $fbConfig;
 
@@ -71,8 +79,8 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 
 			//PM popup requires JomSocial css to be loaded from selected template
 			$config =& CFactory::getConfig();
-			$mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="'.KUNENA_JLIVEURL.'/components/com_community/assets/window.css" />');
-			$mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="'.KUNENA_JLIVEURL.'/components/com_community/templates/'.$config->get('template').'/css/style.css" />');
+			$document->addCustomTag('<link type="text/css" rel="stylesheet" href="'.KUNENA_JLIVEURL.'/components/com_community/assets/window.css" />');
+			$document->addCustomTag('<link type="text/css" rel="stylesheet" href="'.KUNENA_JLIVEURL.'/components/com_community/templates/'.$config->get('template').'/css/style.css" />');
 	    }
 	    else
 	    {
@@ -187,7 +195,7 @@ define('KUNENA_DIRECTURL', KUNENA_JLIVEURL . '/components/com_kunena');
 define('KUNENA_URLSOURCESPATH', KUNENA_DIRECTURL . '/lib/');
 
 // Kunena sources url
-define('KUNENA_LANG', $mainframe->getCfg('lang'));
+define('KUNENA_LANG', $lang);
 define('KUNENA_ABSADMPATH', KUNENA_JABSPATH . '/administrator/components/com_kunena');
 
 if (!defined("KUNENA_JCSSURL")) {
@@ -203,8 +211,8 @@ define('KUNENA_LIVEUPLOADEDPATH', KUNENA_JLIVEURL . '/images/fbfiles');
 
 // now continue with other paths
 
-$fb_user_template = strval(mosGetParam($_COOKIE, 'fb_user_template', ''));
-$fb_user_img_template = strval(mosGetParam($_COOKIE, 'fb_user_img_template', ''));
+$fb_user_template = strval(JRequest::getVar('fb_user_template', '', COOKIE));
+$fb_user_img_template = strval(JRequest::getVar('fb_user_img_template', '', COOKIE));
 // don't allow directory travelling
 $fb_user_template = strtr($fb_user_template, '\\/', '');
 $fb_user_img_template = strtr($fb_user_template, '\\/', '');
@@ -340,7 +348,7 @@ function KUNENA_check_image_type(&$type) {
     }
 
 function getFBGroupName($id) {
-    global $database;
+    $database = &JFactory::getDBO();
     $gr = '';
     $database->setQuery("select id, title from #__fb_groups as g, #__fb_users as u where u.group_id = g.id and u.userid= $id");
     $database->loadObject($gr);
@@ -392,7 +400,7 @@ class CKunenaTools {
     }
 
     function whoisID($id) {
-        global $database, $mosConfig_live_site;
+        $database = &JFactory::getDBO();
 
         $id = intval($database->getEscaped($id));
         $database->setQuery("select username from #__users where id=$id");
@@ -400,7 +408,7 @@ class CKunenaTools {
         }
 
     function reCountBoards() {
-        global $database;
+        $database = &JFactory::getDBO();
         include_once (KUNENA_ABSSOURCESPATH . 'kunena.db.iterator.class.php');
 
         //reset all stats to 0
@@ -453,7 +461,7 @@ class CKunenaTools {
 
     function updateNameInfo()
     {
-        global $database;
+        $database = &JFactory::getDBO();
         global $fbConfig;
 
         $fb_queryName = $fbConfig->username ? "username" : "name";
@@ -467,7 +475,7 @@ class CKunenaTools {
     }
 
     function modifyCategoryStats($msg_id, $msg_parent, $msg_time, $msg_cat) {
-        global $database;
+        $database = &JFactory::getDBO();
         $database->setQuery("select id, parent, numTopics, numPosts,id_last_msg, time_last_msg from #__fb_categories order by id asc");
         $cats = $database->loadObjectList();
         	check_dberror("Unable to load categories.");
@@ -508,7 +516,7 @@ class CKunenaTools {
 
     function decreaseCategoryStats($msg_id, $msg_cat) {
         //topic : 1 , message = 0
-        global $database;
+        $database = &JFactory::getDBO();
         $database->setQuery("select id, parent, numTopics, numPosts,id_last_msg, time_last_msg from #__fb_categories order by id asc");
         $cats = $database->loadObjectList();
         	check_dberror("Unable to load categories.");
@@ -563,10 +571,10 @@ class CKunenaTools {
         }
 
     function showBulkActionCats($disabled = 1) {
-        global $database;
+        $database = &JFactory::getDBO();
 
         $options = array ();
-        $options[] = mosHTML::makeOption('0', "&nbsp;");
+        $options[] = JHTML::_('select.option', '0', "&nbsp;");
         $lists['parent'] = KUNENA_GetAvailableForums(0, "", $options, $disabled);
 
         echo $lists['parent'];
@@ -576,7 +584,7 @@ class CKunenaTools {
         global $my, $database;
 
         if (!CKunenaTools::isModOrAdmin() && !$isMod) {
-            mosRedirect($return, _POST_NOT_MODERATOR);
+            $mainframe->redirect( JURI::base() .$return, _POST_NOT_MODERATOR);
             }
 
         $items = fbGetArrayInts("fbDelete");
@@ -677,7 +685,7 @@ class CKunenaTools {
             } //end foreach
             CKunenaTools::reCountBoards();
 
-            mosRedirect($return, _KUNENA_BULKMSG_DELETED);
+            $mainframe->redirect(JURI::base() . $return, _KUNENA_BULKMSG_DELETED);
         }
 
     function isModOrAdmin($id = 0) {
@@ -686,7 +694,7 @@ class CKunenaTools {
         $userid = intval($id);
 
         if ($userid) {
-            $user = new mosUser($database);
+            $user = new JUser($database);
             $user->load($userid);
             }
         else {
@@ -711,7 +719,7 @@ class CKunenaTools {
 
         //isMod will stay until better group management comes in
         if (!$isAdmin && !$isMod) {
-            mosRedirect($return, _POST_NOT_MODERATOR);
+            $mainframe->redirect( JURI::base() .$return, _POST_NOT_MODERATOR);
             }
 
 		$catid = (int)$catid;
@@ -754,7 +762,7 @@ class CKunenaTools {
 		}
         CKunenaTools::reCountBoards();
 
-        mosRedirect($return, $err);
+        $mainframe->redirect( JURI::base() .$return, $err);
         }
 
         function isJoomla15()
@@ -784,7 +792,7 @@ class CKunenaTools {
         }
 
 		function getAllowedForums($uid = 0, $gid = 0, &$acl) {
-        	global $database;
+        	$database = &JFactory::getDBO();
 
 			function _has_rights(&$acl, $gid, $access, $recurse) {
 				if ($gid == $access) return 1;
@@ -823,7 +831,7 @@ class CKunenaTools {
 * Provides access to the #__fb_users table
 */
 class fbUserprofile
-    extends mosDBTable {
+    extends JTable {
     var $userid = null;
     var $view = null;
     var $signature = null;
@@ -853,7 +861,7 @@ class fbUserprofile
     * @param database A database connector object
     */
     function fbUserprofile(&$database) {
-        $this->mosDBTable('#__fb_users', 'userid', $database);
+        $this->JTable('#__fb_users', 'userid', $database);
         }
     }
 /**
@@ -862,7 +870,7 @@ class fbUserprofile
 * Provides access to the #__fb_moderator table
 */
 class fbModeration
-    extends mosDBTable {
+    extends JTable {
     /** @var int Unique id*/
     var $catid = null;
     /** @var int */
@@ -875,12 +883,12 @@ class fbModeration
     * @param database A database connector object
     */
     function fbModeration(&$database) {
-        $this->mosDBTable('#__fb_moderation', 'catid', $database);
+        $this->JTable('#__fb_moderation', 'catid', $database);
         }
     }
 
 class fbForum
-    extends mosDBTable {
+    extends JTable {
     /** @var int Unique id*/
     var $id = null;
     /** @var string */
@@ -910,7 +918,7 @@ class fbForum
     * @param database A database connector object
     */
     function fbForum(&$database) {
-        $this->mosDBTable('#__fb_categories', 'id', $database);
+        $this->JTable('#__fb_categories', 'id', $database);
     }
 
 	// check for potential problems
@@ -969,7 +977,7 @@ class fbForum
 }
 
 function JJ_categoryArray($admin=0) {
-    global $database;
+    $database = &JFactory::getDBO();
     // ERROR: mixed global $fbSession
     global $fbSession;
     global $aro_group;
@@ -1033,7 +1041,7 @@ function fbTreeRecurse( $id, $indent, $list, &$children, $maxlevel=9999, $level=
 }
 
 function JJ_categoryParentList($catid, $action, $options = array ()) {
-    global $database;
+    $database = &JFactory::getDBO();
 
     $list = JJ_categoryArray();
     $this_treename = '';
@@ -1041,12 +1049,12 @@ function JJ_categoryParentList($catid, $action, $options = array ()) {
     foreach ($list as $item) {
         if ($this_treename) {
             if ($item->id != $catid && strpos($item->treename, $this_treename) === false) {
-                $options[] = mosHTML::makeOption($item->id, $item->treename);
+                $options[] = JHTML::_('select.option', $item->id, $item->treename);
                 }
             }
         else {
             if ($item->id != $catid) {
-                $options[] = mosHTML::makeOption($item->id, $item->treename);
+                $options[] = JHTML::_('select.option', $item->id, $item->treename);
                 }
             else {
                 $this_treename = "$item->treename/";
@@ -1054,24 +1062,24 @@ function JJ_categoryParentList($catid, $action, $options = array ()) {
             }
         }
 
-    $parent = mosHTML::selectList($options, 'catid', 'class="inputbox fbs" size="1"  onchange = "if(this.options[this.selectedIndex].value > 0){ forms[\'jumpto\'].submit() }"', 'value', 'text', $catid);
+    $parent = JHTML::_('select.genericlist', $options, 'catid', 'class="inputbox fbs" size="1"  onchange = "if(this.options[this.selectedIndex].value > 0){ forms[\'jumpto\'].submit() }"', 'value', 'text', $catid);
     return $parent;
     }
 
 function KUNENA_GetAvailableForums($catid, $action, $options = array (), $disabled, $multiple = 0) {
-    global $database;
+    $database = &JFactory::getDBO();
     $list = JJ_categoryArray();
     $this_treename = '';
 
     foreach ($list as $item) {
         if ($this_treename) {
             if ($item->id != $catid && strpos($item->treename, $this_treename) === false) {
-                $options[] = mosHTML::makeOption($item->id, $item->treename);
+                $options[] = JHTML::_('select.option', $item->id, $item->treename);
                 }
             }
         else {
             if ($item->id != $catid) {
-                $options[] = mosHTML::makeOption($item->id, $item->treename);
+                $options[] = JHTML::_('select.option', $item->id, $item->treename);
                 }
             else {
                 $this_treename = "$item->treename/";
@@ -1084,7 +1092,7 @@ function KUNENA_GetAvailableForums($catid, $action, $options = array (), $disabl
     	$parent = JHTML::_('select.genericlist', $options, 'catid', $tag_attribs , 'value', 'text', $catid, 'KUNENA_AvailableForums');
 		}
     else {
-		$parent = mosHTML::selectList($options, 'catid', $tag_attribs . ' ID="KUNENA_AvailableForums"' , 'value', 'text', $catid);
+		$parent = JHTML::_('select.genericlist', $options, 'catid', $tag_attribs . ' ID="KUNENA_AvailableForums"' , 'value', 'text', $catid);
 		}
     return $parent;
     }
@@ -1093,7 +1101,7 @@ function KUNENA_GetAvailableForums($catid, $action, $options = array (), $disabl
 //Begin Smilies mod
 //
 function generate_smilies() {
-    global $database;
+    $database = &JFactory::getDBO();
 
     $inline_columns = 4;
     $inline_rows = 5;

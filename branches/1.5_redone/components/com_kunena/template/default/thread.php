@@ -20,7 +20,7 @@
 **/
 
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
 // arrows and lines
@@ -182,8 +182,8 @@ $tree = thread_flat($tree, $messages);
                     else
                         $newURL .= '&amp;id=' . $leaf->id . $viewstr . '&amp;catid=' . $catid;
 
-                    $newURL = sefRelToAbs($newURL);
-                    //sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=view&amp;id='.$leaf->id.$viewstr.'&amp;catid='.$catid);
+                    $newURL = JRoute::_($newURL);
+                    //JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;id='.$leaf->id.$viewstr.'&amp;catid='.$catid);
                     ?>
 
                     <td<?php echo $leaf->id == $id ? " class=\"".$boardclass."sectiontableentry2\"" : ""; ?>>

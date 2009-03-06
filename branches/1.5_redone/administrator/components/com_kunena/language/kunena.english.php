@@ -20,7 +20,7 @@
 **/
 
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 // 1.0.8
 DEFINE('_KUNENA_CATID', 'ID');

@@ -20,7 +20,7 @@
 **/
 
 // Dont allow direct linking
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 function check_filesize($file, $maxSize)
 {
@@ -116,8 +116,8 @@ if ($my->id != "" && $my->id != 0)
 global $my;
 global $fbConfig;
 $do = '';
-$do = mosGetParam($_REQUEST, 'do', 'init');
-$gallery  = mosGetParam($_REQUEST, 'gallery', '');
+$do = JRequest::getVar('do', 'init');
+$gallery  = JRequest::getVar('gallery', '');
 
 if ($do == 'init')
 {
@@ -156,7 +156,7 @@ if ($do == 'init')
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-            <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=updateavatar'); ?>" method = "post" name = "postform">
+            <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=updateavatar'); ?>" method = "post" name = "postform">
     <input type = "hidden" name = "do" value = "updateavatar"/>
     <table class = "fb_blocktable" id = "fb_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>
@@ -186,7 +186,7 @@ if ($do == 'init')
 
                             <img src = "<?php echo MyPMSTools::getAvatarLinkWithID($my->id)?>" alt="" />
 
-                            <br /> <a href = "<?php echo sefRelToAbs('index.php?option=com_mypms&amp;task=upload&amp;Itemid='._CLEXUSPM_ITEMID);?>"><?php echo _SET_NEW_AVATAR; ?></a>
+                            <br /> <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=upload&amp;Itemid='._CLEXUSPM_ITEMID);?>"><?php echo _SET_NEW_AVATAR; ?></a>
 
                     <?php
                         }
@@ -201,7 +201,7 @@ if ($do == 'init')
 
                                 <img src = "components/com_comprofiler/images/<?php echo $avatar;?>" alt="" />
 
-                                <br /> <a href = "<?php echo sefRelToAbs('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar');?>"><?php echo _SET_NEW_AVATAR; ?></a>
+                                <br /> <a href = "<?php echo JRoute::_('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar');?>"><?php echo _SET_NEW_AVATAR; ?></a>
 
                     <?php
                             }
@@ -210,7 +210,7 @@ if ($do == 'init')
                                 echo _NON_SELECTED;
                     ?>
 
-                            <br /> <a href = "<?php echo sefRelToAbs('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar');?>"><?php echo _SET_NEW_AVATAR; ?></a>
+                            <br /> <a href = "<?php echo JRoute::_('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar');?>"><?php echo _SET_NEW_AVATAR; ?></a>
 
                     <?php
                             }
@@ -238,7 +238,7 @@ if ($do == 'init')
                                 echo _NON_SELECTED;
                     ?>
 
-                            <br /> <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=uploadavatar');?>"> <?php echo _SET_NEW_AVATAR; ?></a>
+                            <br /> <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=uploadavatar');?>"> <?php echo _SET_NEW_AVATAR; ?></a>
 
                     <?php
                             }
@@ -296,7 +296,7 @@ if ($do == 'init')
             <td class="fb_uadesc">
 <?php
 
-        echo '<form action="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=uploadavatar&amp;do=validate') . '" method="post" name="adminForm" enctype="multipart/form-data">';
+        echo '<form action="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=uploadavatar&amp;do=validate') . '" method="post" name="adminForm" enctype="multipart/form-data">';
         echo "<input type='hidden' value='do' name='validate'/>";
         echo "<table width='100%' border='0' cellpadding='4' cellspacing='2'>";
         echo "<tr align='center' valign='middle'><td align='center' valign='top'>";
@@ -362,7 +362,7 @@ if ($do == 'init')
         echo '<input type="button" value="'. _KUNENA_GO .'" class="button" onclick="switch_avatar_category(this.options[this.selectedIndex].value)" />'."\n";
         echo "</p>";
         echo "<br />\n";
-        echo '<form action="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=uploadavatar&amp;do=fromgallery') . '" method="post" name="adminForm">';
+        echo '<form action="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=uploadavatar&amp;do=fromgallery') . '" method="post" name="adminForm">';
         echo "<table width='100%' border='0' cellpadding='4' cellspacing='2'>";
         echo "<tr align='center' valign='middle'>";
 
@@ -448,19 +448,19 @@ else if ($do == 'validate')
     //check for empty file
     if (empty($_FILES['avatar']['name']))
     {
-        mosRedirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_EMPTY);
+        $mainframe->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_EMPTY);
     }
 
     //check for allowed file type (jpeg, gif, png)
     if (!($imgtype = KUNENA_check_image_type($avatarExt)))
     {
-        mosRedirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_TYPE);
+        $mainframe->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_TYPE);
     }
 
     //check file name characteristics
     if (eregi("[^0-9a-zA-Z_]", $avatarExt))
     {
-        mosRedirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_NAME);
+        $mainframe->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_NAME);
     }
 
     //check filesize
@@ -468,7 +468,7 @@ else if ($do == 'validate')
 
     if ($avatarSize > $maxAvSize)
     {
-        mosRedirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_SIZE . " (" . $fbConfig->avatarsize . " KiloBytes)");
+        $mainframe->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_SIZE . " (" . $fbConfig->avatarsize . " KiloBytes)");
         return;
     }
 
@@ -619,17 +619,17 @@ else if ($do == 'validate')
     $database->setQuery("UPDATE #__fb_users SET avatar='{$newFileName}' WHERE userid={$my->id}");
     $database->query() or trigger_dberror("Unable to update avatar.");
     echo " <strong>" . _UPLOAD_UPLOADED . "</strong>...<br /><br />";
-    echo  _USER_RETURN_A . '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '">' . _USER_RETURN_B . ".</a>";
-    echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'), 3500);
+    echo  _USER_RETURN_A . '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '">' . _USER_RETURN_B . ".</a>";
+    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'), 3500);
 }
 else if ($do == 'fromgallery')
 {
     require_once(KUNENA_ABSSOURCESPATH . 'kunena.helpers.php');
-    $newAvatar = mosGetParam($_POST, 'newAvatar', '');
+    $newAvatar = JRequest::getVar('newAvatar', '');
 
     $newAvatar = CKunenaTools::fbRemoveXSS($newAvatar);
     if ($newAvatar == '') {
-        mosRedirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_CHOOSE);
+        $mainframe->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_CHOOSE);
     }
 
     $database->setQuery("UPDATE #__fb_users SET avatar='{$newAvatar}' WHERE userid={$my->id}");
@@ -637,8 +637,8 @@ else if ($do == 'fromgallery')
 
     echo _USER_PROFILE_UPDATED . "<br /><br />";
 
-    echo _USER_RETURN_A . ' <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '">' . _USER_RETURN_B . '</a><br /><br />';
-    echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURL . '&amp;func=myprofile&amp;do=show'), 3500);
+    echo _USER_RETURN_A . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '">' . _USER_RETURN_B . '</a><br /><br />';
+    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURL . '&amp;func=myprofile&amp;do=show'), 3500);
 }
 
 ?>

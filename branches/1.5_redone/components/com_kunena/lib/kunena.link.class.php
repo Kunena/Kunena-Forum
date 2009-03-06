@@ -15,7 +15,7 @@
 **/
 
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 class CKunenaLink
 {
@@ -25,7 +25,7 @@ class CKunenaLink
     function GetSefHrefLink($link, $name, $title, $rel, $class ='', $anker='', $attr='')
     {
     	// For Joomla 1.0.x SEF compatibility we must add the anker after the SEF translation or it gets stripped
-        return '<a '.($class ? 'class="'.$class.'" ' : '').'href="'.sefRelToAbs($link).($anker?('#'.$anker):'').'" title="'.$title.'"'.($rel ? ' rel="'.$rel.'"' : '').($attr ? ' '.$attr : '').'>'.$name.'</a>';
+        return '<a '.($class ? 'class="'.$class.'" ' : '').'href="'.JRoute::_($link).($anker?('#'.$anker):'').'" title="'.$title.'"'.($rel ? ' rel="'.$rel.'"' : '').($attr ? ' '.$attr : '').'>'.$name.'</a>';
     }
 
     // Simple link is a barebones href link used for e.g. Jscript links
@@ -125,12 +125,12 @@ class CKunenaLink
                           .'&limit='.$limit.'&limitstart='.(($page-1)*$limit);
         }
 
-        return sefRelToAbs($pageURL).($anker?('#'.$anker):'');
+        return JRoute::_($pageURL).($anker?('#'.$anker):'');
     }
 
     function GetSamePageAnkerLink($anker, $name, $rel='nofollow')
     {
-        return CKunenaLink::GetSefHrefLink(htmlspecialchars(sefRelToAbs('index.php?'.$_SERVER['QUERY_STRING'])), $name, '', $rel, '', $anker);
+        return CKunenaLink::GetSefHrefLink(htmlspecialchars(JRoute::_('index.php?'.$_SERVER['QUERY_STRING'])), $name, '', $rel, '', $anker);
     }
 
     function GetReportMessageLink($catid, $msg_id, $name, $rel='nofollow')
@@ -196,7 +196,7 @@ class CKunenaLink
 
     function GetShowLatestURL()
     {
-        return sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest');
+        return JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest');
     }
 
     function GetShowMyLatestLink($name, $rel='nofollow')
@@ -269,7 +269,7 @@ class CKunenaLink
     //
     function GetLatestPostAutoRedirectHTML($fbConfig, $pid, $limit)
     {
-        global $database;
+        $database = &JFactory::getDBO();
         // First determine the thread, latest post and number of posts for the post supplied
         $database->setQuery('SELECT a.thread AS thread, max(a.id) AS latest_id, max(a.catid) AS catid, count(*) AS totalmessages
                              FROM #__fb_messages AS a,
@@ -295,7 +295,7 @@ class CKunenaLink
 
     function GetLatestPageAutoRedirectURL($fbConfig, $pid, $limit)
     {
-        global $database;
+        $database = &JFactory::getDBO();
         // First determine the thread, latest post and number of posts for the post supplied
         $database->setQuery('SELECT a.thread AS thread, max(a.id) AS latest_id, max(a.catid) AS catid, count(*) AS totalmessages
                              FROM #__fb_messages AS a,

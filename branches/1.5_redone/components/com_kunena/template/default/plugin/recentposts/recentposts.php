@@ -19,14 +19,14 @@
 * @author TSMF & Jan de Graaff
 **/
 
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
-global $mosConfig_absolute_path, $mosConfig_lang, $mosConfig_live_site, $mainframe;
+global $lang, $mainframe;
 global $fbConfig;
 
-$Kunena_adm_path = "$mosConfig_absolute_path/administrator/components/com_kunena";
+$Kunena_adm_path = JPATH_ROOT . "/administrator/components/com_kunena";
 //Get right Language file
-$Kunena_language_file = "$Kunena_adm_path/language/kunena.$mosConfig_lang.php";
+$Kunena_language_file = "$Kunena_adm_path/language/kunena.$lang.php";
 
 if (file_exists($Kunena_language_file)) {
     require_once($Kunena_language_file);
@@ -41,10 +41,10 @@ else {
 
 //Tabber check
 //
-$source_file = "$mosConfig_absolute_path/components/com_kunena/template/default/plugin/recentposts/tabber.css";
-$source_file = "$mosConfig_absolute_path/components/com_kunena/template/default/plugin/recentposts/tabber.js";
-$source_file = "$mosConfig_absolute_path/components/com_kunena/template/default/plugin/recentposts/tabber-minimized.js";
-$source_file = "$mosConfig_absolute_path/components/com_kunena/template/default/plugin/recentposts/function.tabber.php";
+$source_file = JPATH_ROOT . "/components/com_kunena/template/default/plugin/recentposts/tabber.css";
+$source_file = JPATH_ROOT . "/components/com_kunena/template/default/plugin/recentposts/tabber.js";
+$source_file = JPATH_ROOT . "/components/com_kunena/template/default/plugin/recentposts/tabber-minimized.js";
+$source_file = JPATH_ROOT . "/components/com_kunena/template/default/plugin/recentposts/function.tabber.php";
 //
 $category = trim($fbConfig->latestcategory); // 2,3,4
 $count = $fbConfig->latestcount;
@@ -120,7 +120,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                 $numitems = count($rows);
 
                 if ($numitems > $count_per_page) {
-                    include_once("$mosConfig_absolute_path/components/com_kunena/template/default/plugin/recentposts/function.tabber.php");
+                    include_once(JPATH_ROOT . "/components/com_kunena/template/default/plugin/recentposts/function.tabber.php");
                     $tabs = new my_tabs(1, 1);
                     $tabs->my_pane_start('mod_fb_last_subjects-pane');
                     $tabs->my_tab_start(1, 1);
@@ -166,7 +166,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                     $overlib .= "<tr><td valign=top>" . _GEN_TOPIC . "</td><td>$row->subject</td></tr>";
                     $row_catname = stripslashes($row->catname);
                     $row_username = stripslashes($row->username);
-                    $row_date = mosFormatDate($row->date);
+                    $row_date = JHTML::_( 'date', $row->date, '%d/%m' );
                     $row_lock = ($row->locked ? _CMN_YES : _CMN_NO);
                     $overlib .= "<tr><td valign=top>" . _GEN_CATEGORY . "</td><td>$row_catname</td></tr>";
                     $overlib .= "<tr><td valign=top>" . ucfirst(_GEN_BY) . "</td><td>$row_username</td></tr>";
@@ -178,7 +178,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 
                     $overlib .= "<tr><td valign=top>" . ucfirst(_GEN_LOCK) . "</td><td>$row_lock</td></tr>";
                     $overlib .= "</table>";
-                    $link = sefRelToAbs(KUNENA_LIVEURLREL . "&amp;func=view&amp;id=$row->fbid" . "&amp;catid=$row->catid#$row->fbid");
+                    $link = JRoute::_(KUNENA_LIVEURLREL . "&amp;func=view&amp;id=$row->fbid" . "&amp;catid=$row->catid#$row->fbid");
 
                     $tooltips = '';
 
@@ -209,7 +209,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                             case '1':
                                 echo "<td  class=\"td-3 fbm\"  align=\"center\"  ><a href=\"";
 
-                                echo sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX . "" . $row->id);
+                                echo JRoute::_(KUNENA_PROFILE_LINK_SUFFIX . "" . $row->id);
                                 echo "\">";
                                 echo $row->username;
                                 echo "</a></td>";
@@ -218,7 +218,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                             case '2':
                                 echo "<td  class=\"td-3 fbm\"  align=\"center\"  ><a href=\"";
 
-                                echo sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX . "" . $row->id);
+                                echo JRoute::_(KUNENA_PROFILE_LINK_SUFFIX . "" . $row->id);
                                 echo "\">";
                                 echo $row->name;
                                 echo "</a></td>";
@@ -231,7 +231,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 
                         if ($show_date) {
                             echo "<td  class=\"td-5 fbm\"  align=\"left\" >";
-                            echo mosFormatDate(date($row->date), $date_format);
+                            echo JHTML::_('date', $row->date, $date_format);
                             echo "</td>";
                             }
 

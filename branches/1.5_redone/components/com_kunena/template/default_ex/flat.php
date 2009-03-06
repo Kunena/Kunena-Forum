@@ -20,7 +20,7 @@
 **/
 
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
 global $is_Moderator;
@@ -58,7 +58,7 @@ $topic_emoticons[6] = KUNENA_URLEMOTIONSPATH . 'shock.gif';
 $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 
 // url of current page that user will be returned to after login
-if ($query_string = mosGetParam($_SERVER, 'QUERY_STRING', '')) {
+if ($query_string = JRequest::getVar('QUERY_STRING', '')) {
     $Breturn = 'index.php?' . $query_string;
     }
 else {
@@ -555,7 +555,7 @@ if (count($messages[0]) > 0)
         <input type = "hidden" name = "Itemid" value = "<?php echo KUNENA_COMPONENT_ITEMID;?>"/>
         <input type = "hidden" name = "option" value = "com_kunena"/>
         <input type = "hidden" name = "func" value = "bulkactions" />
-        <input type = "hidden" name = "return" value = "<?php echo sefRelToAbs( $Breturn ); ?>" />
+        <input type = "hidden" name = "return" value = "<?php echo JRoute::_( $Breturn ); ?>" />
     </form>
 </div>
 </div>

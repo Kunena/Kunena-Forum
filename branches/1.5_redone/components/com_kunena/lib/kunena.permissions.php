@@ -19,7 +19,7 @@
 * @author TSMF & Jan de Graaff
 **/
 
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+defined( '_JEXEC' ) or die('Restricted access');
 
 /**
  * Checks if a user has postpermission in given thread
@@ -98,6 +98,7 @@ function fb_has_moderator_permission(&$database,&$obj_fb_cat,$int_fb_uid,$bool_f
  * @param obj
  */
 function fb_has_read_permission(&$obj_fbcat,&$allow_forum,$groupid,&$acl) {
+    $acl = &JFactory::getACL();
     if ($obj_fbcat->getPubRecurse())
         $pub_recurse="RECURSE";
     else

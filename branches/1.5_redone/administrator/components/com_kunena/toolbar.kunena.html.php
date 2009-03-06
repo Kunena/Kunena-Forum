@@ -20,204 +20,204 @@
 **/
 // ################################################################
 // MOS Intruder Alerts
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 // ################################################################
 class CKunenaToolbar
 {
     function _ADMIN()
     {
-        mosMenuBar::startTable();
-        mosMenuBar::spacer();
-        mosMenuBar::publish();
-        mosMenuBar::spacer();
-        mosMenuBar::unpublish();
-        mosMenuBar::spacer();
-        mosMenuBar::addNew();
-        mosMenuBar::spacer();
-        mosMenuBar::editList();
-        mosMenuBar::spacer();
-        mosMenuBar::deleteList();
-        mosMenuBar::spacer();
-        mosMenuBar::endTable();
+        JToolBarHelper::startTable();
+        JToolBarHelper::spacer();
+        JToolBarHelper::publish();
+        JToolBarHelper::spacer();
+        JToolBarHelper::unpublish();
+        JToolBarHelper::spacer();
+        JToolBarHelper::addNew();
+        JToolBarHelper::spacer();
+        JToolBarHelper::editList();
+        JToolBarHelper::spacer();
+        JToolBarHelper::deleteList();
+        JToolBarHelper::spacer();
+        JToolBarHelper::endTable();
     }
 
     function _EDIT()
     {
-        mosMenuBar::startTable();
-        mosMenuBar::spacer();
-        mosMenuBar::save();
-        mosMenuBar::spacer();
-        mosMenuBar::cancel();
-        mosMenuBar::spacer();
-        mosMenuBar::unpublish('removemoderator');
-        mosMenuBar::spacer();
-        mosMenuBar::endTable();
+        JToolBarHelper::startTable();
+        JToolBarHelper::spacer();
+        JToolBarHelper::save();
+        JToolBarHelper::spacer();
+        JToolBarHelper::cancel();
+        JToolBarHelper::spacer();
+        JToolBarHelper::unpublish('removemoderator');
+        JToolBarHelper::spacer();
+        JToolBarHelper::endTable();
     }
 
     function _NEWMOD_MENU()
     {
-        mosMenuBar::startTable();
-        mosMenuBar::spacer();
-        mosMenuBar::publish('addmoderator');
-        mosMenuBar::spacer();
-        mosMenuBar::unpublish('removemoderator');
-        mosMenuBar::spacer();
-        mosMenuBar::cancel();
-        mosMenuBar::spacer();
-        mosMenuBar::endTable();
+        JToolBarHelper::startTable();
+        JToolBarHelper::spacer();
+        JToolBarHelper::publish('addmoderator');
+        JToolBarHelper::spacer();
+        JToolBarHelper::unpublish('removemoderator');
+        JToolBarHelper::spacer();
+        JToolBarHelper::cancel();
+        JToolBarHelper::spacer();
+        JToolBarHelper::endTable();
     }
 
     function _EDIT_CONFIG()
     {
-        mosMenuBar::startTable();
-        mosMenuBar::spacer();
-        mosMenuBar::save('saveconfig');
-        mosMenuBar::spacer();
-        mosMenuBar::back();
-        mosMenuBar::spacer();
-        mosMenuBar::endTable();
+        JToolBarHelper::startTable();
+        JToolBarHelper::spacer();
+        JToolBarHelper::save('saveconfig');
+        JToolBarHelper::spacer();
+        JToolBarHelper::back();
+        JToolBarHelper::spacer();
+        JToolBarHelper::endTable();
     }
 
     function _EDITUSER_MENU()
     {
-        mosMenuBar::startTable();
-        mosMenuBar::spacer();
-        mosMenuBar::save('saveuserprofile');
-        mosMenuBar::spacer();
-        mosMenuBar::cancel('showprofiles', 'Back');
-        mosMenuBar::spacer();
-        mosMenuBar::endTable();
+        JToolBarHelper::startTable();
+        JToolBarHelper::spacer();
+        JToolBarHelper::save('saveuserprofile');
+        JToolBarHelper::spacer();
+        JToolBarHelper::cancel('showprofiles', 'Back');
+        JToolBarHelper::spacer();
+        JToolBarHelper::endTable();
     }
 
     function _PROFILE_MENU()
     {
-        mosMenuBar::startTable();
-        mosMenuBar::spacer();
-        mosMenuBar::custom('userprofile', 'edit.png', 'edit_f2.png', 'Edit');
-        mosMenuBar::spacer();
-        mosMenuBar::cancel();
-        mosMenuBar::spacer();
-        mosMenuBar::back();
-        mosMenuBar::spacer();
-        mosMenuBar::endTable();
+        JToolBarHelper::startTable();
+        JToolBarHelper::spacer();
+        JToolBarHelper::custom('userprofile', 'edit.png', 'edit_f2.png', 'Edit');
+        JToolBarHelper::spacer();
+        JToolBarHelper::cancel();
+        JToolBarHelper::spacer();
+        JToolBarHelper::back();
+        JToolBarHelper::spacer();
+        JToolBarHelper::endTable();
     }
 
     function CSS_MENU()
     {
-        mosMenuBar::startTable();
-        mosMenuBar::spacer();
-        mosMenuBar::save('saveeditcss');
-        mosMenuBar::spacer();
-        mosMenuBar::cancel();
-        mosMenuBar::spacer();
-        mosMenuBar::endTable();
+        JToolBarHelper::startTable();
+        JToolBarHelper::spacer();
+        JToolBarHelper::save('saveeditcss');
+        JToolBarHelper::spacer();
+        JToolBarHelper::cancel();
+        JToolBarHelper::spacer();
+        JToolBarHelper::endTable();
     }
 
     function _PRUNEFORUM_MENU()
     {
-        mosMenuBar::startTable();
-        mosMenuBar::spacer();
-        mosMenuBar::spacer();
-        mosMenuBar::custom('doprune', 'delete.png', 'delete_f2.png', 'Prune', false);
-        mosMenuBar::spacer();
-        mosMenuBar::cancel();
-        mosMenuBar::spacer();
-        mosMenuBar::endTable();
+        JToolBarHelper::startTable();
+        JToolBarHelper::spacer();
+        JToolBarHelper::spacer();
+        JToolBarHelper::custom('doprune', 'delete.png', 'delete_f2.png', 'Prune', false);
+        JToolBarHelper::spacer();
+        JToolBarHelper::cancel();
+        JToolBarHelper::spacer();
+        JToolBarHelper::endTable();
     }
 
     function _SYNCUSERS_MENU()
     {
-        mosMenuBar::startTable();
-        mosMenuBar::spacer();
-        mosMenuBar::custom('dousersync', 'delete.png', 'delete_f2.png', 'Sync', false);
-        mosMenuBar::spacer();
-        mosMenuBar::cancel();
-        mosMenuBar::spacer();
-        mosMenuBar::endTable();
+        JToolBarHelper::startTable();
+        JToolBarHelper::spacer();
+        JToolBarHelper::custom('dousersync', 'delete.png', 'delete_f2.png', 'Sync', false);
+        JToolBarHelper::spacer();
+        JToolBarHelper::cancel();
+        JToolBarHelper::spacer();
+        JToolBarHelper::endTable();
     }
 
     function BACKONLY_MENU()
     {
-        mosMenuBar::startTable();
-        mosMenuBar::back();
-        mosMenuBar::endTable();
+        JToolBarHelper::startTable();
+        JToolBarHelper::back();
+        JToolBarHelper::endTable();
     }
 
     function DEFAULT_MENU()
     {
-        mosMenuBar::startTable();
-        mosMenuBar::deleteList();
-        mosMenuBar::spacer();
-        mosMenuBar::endTable();
+        JToolBarHelper::startTable();
+        JToolBarHelper::deleteList();
+        JToolBarHelper::spacer();
+        JToolBarHelper::endTable();
     }
 
 	function _SHOWSMILEY_MENU()
     {
-        mosMenuBar::startTable();
-        mosMenuBar::spacer();
-        mosMenuBar::addNew('newsmiley', 'New Smilie');
-        mosMenuBar::spacer();
-        mosMenuBar::custom('editsmiley', 'edit.png', 'edit_f2.png', 'Edit');
-        mosMenuBar::spacer();
-        mosMenuBar::custom('deletesmiley', 'delete.png', 'delete_f2.png', 'Delete');
-        mosMenuBar::spacer();
-        mosMenuBar::back();
-        mosMenuBar::endTable();
+        JToolBarHelper::startTable();
+        JToolBarHelper::spacer();
+        JToolBarHelper::addNew('newsmiley', 'New Smilie');
+        JToolBarHelper::spacer();
+        JToolBarHelper::custom('editsmiley', 'edit.png', 'edit_f2.png', 'Edit');
+        JToolBarHelper::spacer();
+        JToolBarHelper::custom('deletesmiley', 'delete.png', 'delete_f2.png', 'Delete');
+        JToolBarHelper::spacer();
+        JToolBarHelper::back();
+        JToolBarHelper::endTable();
     }
 
     function _EDITSMILEY_MENU()
     {
-        mosMenuBar::startTable();
-        mosMenuBar::spacer();
-        mosMenuBar::save('savesmiley');
-        mosMenuBar::spacer();
-        mosMenuBar::cancel('showsmilies');
-        mosMenuBar::endTable();
+        JToolBarHelper::startTable();
+        JToolBarHelper::spacer();
+        JToolBarHelper::save('savesmiley');
+        JToolBarHelper::spacer();
+        JToolBarHelper::cancel('showsmilies');
+        JToolBarHelper::endTable();
     }
 
     function _NEWSMILEY_MENU()
     {
-        mosMenuBar::startTable();
-        mosMenuBar::spacer();
-        mosMenuBar::save('savesmiley');
-        mosMenuBar::spacer();
-        mosMenuBar::cancel('showsmilies');
-        mosMenuBar::endTable();
+        JToolBarHelper::startTable();
+        JToolBarHelper::spacer();
+        JToolBarHelper::save('savesmiley');
+        JToolBarHelper::spacer();
+        JToolBarHelper::cancel('showsmilies');
+        JToolBarHelper::endTable();
     }
 
 	function _SHOWRANKS_MENU()
     {
-        mosMenuBar::startTable();
-        mosMenuBar::spacer();
-        mosMenuBar::addNew('newRank', 'New Rank');
-        mosMenuBar::spacer();
-        mosMenuBar::custom('editRank', 'edit.png', 'edit_f2.png', 'Edit');
-        mosMenuBar::spacer();
-        mosMenuBar::custom('deleteRank', 'delete.png', 'delete_f2.png', 'Delete');
-        mosMenuBar::spacer();
-        mosMenuBar::back();
-        mosMenuBar::endTable();
+        JToolBarHelper::startTable();
+        JToolBarHelper::spacer();
+        JToolBarHelper::addNew('newRank', 'New Rank');
+        JToolBarHelper::spacer();
+        JToolBarHelper::custom('editRank', 'edit.png', 'edit_f2.png', 'Edit');
+        JToolBarHelper::spacer();
+        JToolBarHelper::custom('deleteRank', 'delete.png', 'delete_f2.png', 'Delete');
+        JToolBarHelper::spacer();
+        JToolBarHelper::back();
+        JToolBarHelper::endTable();
     }
 
 	function _EDITRANK_MENU()
     {
-        mosMenuBar::startTable();
-        mosMenuBar::spacer();
-        mosMenuBar::save('saveRank');
-        mosMenuBar::spacer();
-        mosMenuBar::cancel('ranks');
-        mosMenuBar::endTable();
+        JToolBarHelper::startTable();
+        JToolBarHelper::spacer();
+        JToolBarHelper::save('saveRank');
+        JToolBarHelper::spacer();
+        JToolBarHelper::cancel('ranks');
+        JToolBarHelper::endTable();
     }
 
     function _NEWRANK_MENU()
     {
-        mosMenuBar::startTable();
-        mosMenuBar::spacer();
-        mosMenuBar::save('saveRank');
-        mosMenuBar::spacer();
-        mosMenuBar::cancel('ranks');
-        mosMenuBar::endTable();
+        JToolBarHelper::startTable();
+        JToolBarHelper::spacer();
+        JToolBarHelper::save('saveRank');
+        JToolBarHelper::spacer();
+        JToolBarHelper::cancel('ranks');
+        JToolBarHelper::endTable();
     }
 
 }

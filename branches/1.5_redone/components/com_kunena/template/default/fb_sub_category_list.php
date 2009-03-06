@@ -20,7 +20,7 @@
 **/
 
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 ?>
 <!--  sub cat -->
@@ -54,7 +54,7 @@ else
                 <th colspan = "5" align="left">
                     <div class = "fb_title_cover fbm" >
                         <?php
-//                        echo '<a class="fb_title fbl" href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $objCatInfo->id) . '">' . $objCatInfo->name . '</a>';
+//                        echo '<a class="fb_title fbl" href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $objCatInfo->id) . '">' . $objCatInfo->name . '</a>';
                         echo CKunenaLink::GetCategoryLink('showcat', $objCatInfo->id, stripslashes($objCatInfo->name), $rel='follow', $class='fb_title fbl');
                         ?>
 

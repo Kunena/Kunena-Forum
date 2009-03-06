@@ -20,7 +20,7 @@
 **/
 
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
 
@@ -185,7 +185,7 @@ if ($letPass || $is_Moderator)
                 $limitstart = 0;
             }
 
-            $limitstart = intval(mosGetParam($_REQUEST, 'limitstart', $limitstart));
+            $limitstart = intval(JRequest::getVar('limitstart', $limitstart));
             $total = count($flat_messages);
 
             if ($total > $limit)
@@ -436,12 +436,12 @@ if ($letPass || $is_Moderator)
                                 //Joomla Mambot Support , Thanks hacksider
                                 if ($fbConfig->jmambot)
                                 {
-                                    global $_MAMBOTS;
                                     $row = new t();
                                     $row->text = $fb_message_txt;
-                                    $_MAMBOTS->loadBotGroup( 'content' );
-                                    $params =& new mosParameters( '' );
-                                    $results = $_MAMBOTS->trigger( 'onPrepareContent', array( &$row, &$params, 0 ), true );
+				    $group = "content";
+                                    JPluginHelper::importPlugin($group, null, false);
+                                    $params =& new JParameter( '' );
+                                    $results = $mainframe->triggerEvent( 'onPrepareContent', array( &$row, &$params, 0 ), true );
                                     $msg_text = $row->text;
                                 }
                                 else
@@ -454,20 +454,12 @@ if ($letPass || $is_Moderator)
 								$metaKeys=(htmlspecialchars(stripslashes($fmessage->subject)). ', ' .htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . htmlspecialchars(stripslashes($fbConfig->board_title)) . ', ' . htmlspecialchars($GLOBALS['mosConfig_sitename']));
 								$metaDesc=(htmlspecialchars(stripslashes($fmessage->subject)) . ' - ' .htmlspecialchars(stripslashes($objCatParentInfo->name)) . ' - ' . htmlspecialchars(stripslashes($objCatInfo->name)) .' - ' . htmlspecialchars(stripslashes($fbConfig->board_title)));
 
-								if( CKunenaTools::isJoomla15() )
-								{
 								    $document =& JFactory::getDocument();
 								    $cur = $document->get( 'description' );
 								    $metaDesc = $cur .'. ' . $metaDesc;
 								    $document =& JFactory::getDocument();
 								    $document->setMetadata( 'keywords', $metaKeys );
 								    $document->setDescription($metaDesc);
-								}
-								else
-								{
-								    $mainframe->appendMetaTag( 'keywords', $metaKeys );
-								    $mainframe->appendMetaTag( 'description', $metaDesc );
-								}
 
                                 //filter out clear html
                                 $fmessage->name = htmlspecialchars($fmessage->name);
@@ -673,7 +665,7 @@ if ($letPass || $is_Moderator)
                                     //first get the username of the user to contact
                                     $PMSName = $userinfo->username;
                                     $msg_pms
-                                    = "<a href=\"" . sefRelToAbs('index.php?option=com_missus&amp;func=newmsg&amp;user=' . $fmessage->userid . '&amp;subject=' . _GEN_FORUM . ': ' . urlencode(utf8_encode($fmessage->subject))) . "\"><img src='";
+                                    = "<a href=\"" . JRoute::_('index.php?option=com_missus&amp;func=newmsg&amp;user=' . $fmessage->userid . '&amp;subject=' . _GEN_FORUM . ': ' . urlencode(utf8_encode($fmessage->subject))) . "\"><img src='";
 
                                     if ($fbIcons['pms']) {
                                         $msg_pms .= KUNENA_URLICONSPATH . "" . $fbIcons['pms'];
@@ -691,7 +683,7 @@ if ($letPass || $is_Moderator)
                                     //we should offer the user a JIM link
                                     //first get the username of the user to contact
                                     $PMSName = $userinfo->username;
-                                    $msg_pms = "<a href=\"" . sefRelToAbs('index.php?option=com_jim&amp;page=new&amp;id=' . $PMSName . '&title=' . $fmessage->subject) . "\"><img src='";
+                                    $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_jim&amp;page=new&amp;id=' . $PMSName . '&title=' . $fmessage->subject) . "\"><img src='";
 
                                     if ($fbIcons['pms']) {
                                         $msg_pms .= KUNENA_URLICONSPATH . "" . $fbIcons['pms'];
@@ -708,7 +700,7 @@ if ($letPass || $is_Moderator)
                                     //we should offer the user a PMS link
                                     //first get the username of the user to contact
                                     $PMSName = $userinfo->username;
-                                    $msg_pms = "<a href=\"" . sefRelToAbs('index.php?option=com_uddeim&amp;task=new&recip=' . $fmessage->userid) . "\"><img src=\"";
+                                    $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_uddeim&amp;task=new&recip=' . $fmessage->userid) . "\"><img src=\"";
 
                                     if ($fbIcons['pms']) {
                                         $msg_pms .= KUNENA_URLICONSPATH . '' . $fbIcons['pms'];
@@ -725,7 +717,7 @@ if ($letPass || $is_Moderator)
                                     //we should offer the user a PMS link
                                     //first get the username of the user to contact
                                     $PMSName = $userinfo->username;
-                                    $msg_pms = "<a href=\"" . sefRelToAbs('index.php?option=com_pms&amp;page=new&amp;id=' . $PMSName . '&title=' . $fmessage->subject) . "\"><img src=\"";
+                                    $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_pms&amp;page=new&amp;id=' . $PMSName . '&title=' . $fmessage->subject) . "\"><img src=\"";
 
                                     if ($fbIcons['pms']) {
                                         $msg_pms .= KUNENA_URLICONSPATH . "" . $fbIcons['pms'];
@@ -775,7 +767,7 @@ if ($letPass || $is_Moderator)
                                     //we should offer the user a PMS link
                                     //first get the username of the user to contact
                                     $PMSName = $userinfo->aid;
-                                    $msg_pms = "<a href=\"" . sefRelToAbs('index.php?option=com_mypms&amp;task=new&amp;to=' . $fmessage->userid . '&title=' . $fmessage->subject) . "\"><img src=\"";
+                                    $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=new&amp;to=' . $fmessage->userid . '&title=' . $fmessage->subject) . "\"><img src=\"";
 
                                     if ($fbIcons['pms']) {
                                         $msg_pms .= KUNENA_URLICONSPATH . "" . $fbIcons['pms'];
@@ -797,7 +789,7 @@ if ($letPass || $is_Moderator)
 
                                     $msg_profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
                                     //mypms add buddy link
-                                    $msg_buddy = "<a href=\"" . sefRelToAbs('index.php?option=com_mypms&amp;user=' . $PMSName . '&amp;task=addbuddy') . "\"><img src=\"";
+                                    $msg_buddy = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;user=' . $PMSName . '&amp;task=addbuddy') . "\"><img src=\"";
 
                                     if ($fbIcons['pms2buddy']) {
                                         $msg_buddy .= KUNENA_URLICONSPATH . "" . $fbIcons['pms2buddy'];
@@ -820,7 +812,7 @@ if ($letPass || $is_Moderator)
                                         $msg_icq = "<a href=\"http://www.icq.com/whitepages/wwp.php?uin=" . $mostables->icq . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "icq.png\" border=0 alt=\"\" /></a>";
 
                                         if ($mostables->msn)
-                                        $msg_msn = "<a href=\"" . sefRelToAbs('index.php?option=com_mypms&amp;task=showprofile&amp;user=' . $PMSName) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "msn.png\" border=0 alt=\"\" /></a>";
+                                        $msg_msn = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=showprofile&amp;user=' . $PMSName) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "msn.png\" border=0 alt=\"\" /></a>";
 
                                         if ($mostables->ym)
                                         $msg_yahoo = "<a href=\"http://edit.yahoo.com/config/send_webmesg?.target=" . $mostables->ym . "&.src=pg\"><img src=\"http://opi.yahoo.com/online?u=" . $mostables->ym . "&m=g&t=0\" border=0 alt=\"\" /></a>";
@@ -837,8 +829,8 @@ if ($letPass || $is_Moderator)
                                 {
                                     if ($fbConfig->fb_profile == 'cb' && $fmessage->userid > 0)
                                     {
-                                        $msg_prflink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $fmessage->userid . '');
-                                        $msg_profile = "<a href=\"" . sefRelToAbs('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $fmessage->userid . '') . "\">                                              <img src=\"";
+                                        $msg_prflink = JRoute::_('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $fmessage->userid . '');
+                                        $msg_profile = "<a href=\"" . JRoute::_('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $fmessage->userid . '') . "\">                                              <img src=\"";
 
                                         if ($fbIcons['userprofile']) {
                                             $msg_profile .= KUNENA_URLICONSPATH . "" . $fbIcons['userprofile'];
@@ -868,7 +860,7 @@ if ($letPass || $is_Moderator)
                                 else if ($userinfo->gid > 0)
                                 {
                                     //Kunena Profile link.
-                                    $msg_prflink = sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=fbprofile&amp;task=showprf&amp;userid=' . $fmessage->userid);
+                                    $msg_prflink = JRoute::_(KUNENA_LIVEURLREL.'&amp;func=fbprofile&amp;task=showprf&amp;userid=' . $fmessage->userid);
                                     $msg_profileicon = "<img src=\"";
 
                                     if ($fbIcons['userprofile']) {
@@ -1255,11 +1247,11 @@ if ($letPass || $is_Moderator)
                 <tr>
                     <td>
                         <div id="fb_bottom_pathway">
-                            <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL);?>">
+                            <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL);?>">
     <?php echo $fbIcons['forumlist'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forumlist'] . '" border="0" alt="' . _GEN_FORUMLIST . '" title="' . _GEN_FORUMLIST . '">' : _GEN_FORUMLIST; ?> </a>
 
                             <?php
-                            if (file_exists($mosConfig_absolute_path . '/templates/' . $mainframe->getTemplate() . '/images/arrow.png')) {
+                            if (file_exists(JPATH_ROOT . '/templates/' . $mainframe->getTemplate() . '/images/arrow.png')) {
                                 echo ' <img src="' . KUNENA_JLIVEURL . '/templates/' . $mainframe->getTemplate() . '/images/arrow.png" alt="" /> ';
                             }
                             else {
@@ -1267,10 +1259,10 @@ if ($letPass || $is_Moderator)
                             }
                             ?>
 
-                            <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=listcat&amp;catid='.$objCatParentInfo->id);?>" rel="nofollow"> <?php echo $objCatParentInfo->name; ?> </a>
+                            <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=listcat&amp;catid='.$objCatParentInfo->id);?>" rel="nofollow"> <?php echo $objCatParentInfo->name; ?> </a>
 
                             <?php
-                            if (file_exists($mosConfig_absolute_path . '/templates/' . $mainframe->getTemplate() . '/images/arrow.png')) {
+                            if (file_exists(JPATH_ROOT . '/templates/' . $mainframe->getTemplate() . '/images/arrow.png')) {
                                 echo ' <img src="' . KUNENA_JLIVEURL . '/templates/' . $mainframe->getTemplate() . '/images/arrow.png" alt="" /> ';
                             }
                             else {
@@ -1278,7 +1270,7 @@ if ($letPass || $is_Moderator)
                             }
                             ?>
 
-                            <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid);?>" rel="nofollow"> <?php echo $objCatInfo->name; ?> </a>
+                            <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid);?>" rel="nofollow"> <?php echo $objCatInfo->name; ?> </a>
                         </div>
                     </td>
                 </tr>

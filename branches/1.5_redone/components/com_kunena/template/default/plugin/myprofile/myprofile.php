@@ -19,7 +19,7 @@
 * @author TSMF & Jan de Graaff
 **/
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
 
@@ -28,7 +28,7 @@ $mainframe->setPageTitle(_GEN_MYPROFILE . ' - ' . stripslashes($fbConfig->board_
 if ($my->id != "" && $my->id != 0)
 {
 	//Get joomla userinfo needed later on, this limits the amount of queries
-    $juserinfo = new mosUser($database);
+    $juserinfo = new JUser($database);
     $juserinfo->load($my->id);
 
     //Get userinfo needed later on, this limits the amount of queries
@@ -177,10 +177,10 @@ if ($my->id != "" && $my->id != 0)
                     break;
 
                 case "updateavatar":
-                    $rowItemid = mosGetParam($_REQUEST, 'Itemid');
+                    $rowItemid = JRequest::getVar('Itemid');
 
-                    $deleteAvatar = mosGetParam($_POST, 'deleteAvatar', 0);
-                    $avatar = mosGetParam($_POST, 'avatar', '');
+                    $deleteAvatar = JRequest::getVar('deleteAvatar', 0);
+                    $avatar = JRequest::getVar('avatar', '');
 
                     if ($deleteAvatar == 1)
                     {
@@ -198,9 +198,9 @@ if ($my->id != "" && $my->id != 0)
                         echo _USER_PROFILE_UPDATED . "<br /><br />";
                     }
 
-                    echo _USER_RETURN_A . ' <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . "&amp;func=uploadavatar") . '">' . _USER_RETURN_B . "</a><br /><br />";
+                    echo _USER_RETURN_A . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . "&amp;func=uploadavatar") . '">' . _USER_RETURN_B . "</a><br /><br />";
 
-                    echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=uploadavatar'), 3500);
+                    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=uploadavatar'), 3500);
                 break;
 
                 case "showset":
@@ -218,13 +218,13 @@ if ($my->id != "" && $my->id != 0)
                     break;
 
                 case "updateset":
-                    $rowItemid = mosGetParam($_REQUEST, 'Itemid');
+                    $rowItemid = JRequest::getVar('Itemid');
 
-//                    $newview = mosGetParam($_POST, 'newview', 'flat');
+//                    $newview = JRequest::getVar('newview', 'flat');
                     $newview = 'flat';
-                    (int)$neworder = mosGetParam($_POST, 'neworder', 0);
-					(int)$newhideEmail = mosGetParam($_POST, 'newhideEmail', 1);
-					(int)$newshowOnline = mosGetParam($_POST, 'newshowOnline', 1);
+                    (int)$neworder = JRequest::getVar('neworder', 0);
+					(int)$newhideEmail = JRequest::getVar('newhideEmail', 1);
+					(int)$newshowOnline = JRequest::getVar('newshowOnline', 1);
 
                     $database->setQuery("UPDATE #__fb_users set  view='$newview', ordering='$neworder', hideEmail='$newhideEmail', showOnline='$newshowOnline'  where userid=$my_id");
                     setcookie("fboard_settings[current_view]", $newview);
@@ -238,9 +238,9 @@ if ($my->id != "" && $my->id != 0)
                         echo _USER_PROFILE_UPDATED . "<br /><br />";
                     }
 
-                    echo _USER_RETURN_A . ' <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . "&amp;func=myprofile&amp;do=showset") . '">' . _USER_RETURN_B . "</a><br /><br />";
+                    echo _USER_RETURN_A . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . "&amp;func=myprofile&amp;do=showset") . '">' . _USER_RETURN_B . "</a><br /><br />";
 
-                    echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showset'), 3500);
+                    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showset'), 3500);
                 break;
 
                 case "profileinfo":
@@ -252,11 +252,11 @@ if ($my->id != "" && $my->id != 0)
                     $ulists["month"] = $bd[1];
                     $ulists["day"] = $bd[2];
 
-                    $genders[] = mosHTML::makeOption("", "");
-                    $genders[] = mosHTML::makeOption("1", _KUNENA_MYPROFILE_MALE);
-                    $genders[] = mosHTML::makeOption("2", _KUNENA_MYPROFILE_FEMALE);
+                    $genders[] = JHTML::_('select.option', "", "");
+                    $genders[] = JHTML::_('select.option', "1", _KUNENA_MYPROFILE_MALE);
+                    $genders[] = JHTML::_('select.option', "2", _KUNENA_MYPROFILE_FEMALE);
 
-                    $ulists["gender"] = mosHTML::selectList( $genders, 'gender', 'class="inputbox"', 'value', 'text', $userinfo->gender );
+                    $ulists["gender"] = JHTML::_('select.genericlist',  $genders, 'gender', 'class="inputbox"', 'value', 'text', $userinfo->gender );
 
 
                     if ($fbConfig->fb_profile != 'cb' && $fbConfig->fb_profile != 'jomSocial')
@@ -292,11 +292,12 @@ if ($my->id != "" && $my->id != 0)
         $rowu = new fbUserprofile( $database );
         $rowu->load( (int)$user_id );
 
-                    $deleteSig = mosGetParam($_POST, 'deleteSig', 0);
-                    $signature = mosGetParam($_POST, 'message', null, _MOS_ALLOWRAW);
-                    $bday1 = mosGetParam($_POST, 'bday1', '0000');
-                    $bday2 = mosGetParam($_POST, 'bday2', '00');
-                    $bday3 = mosGetParam($_POST, 'bday3', '00');
+                    $deleteSig = JRequest::getVar('deleteSig', 0);
+			// FIXME: J!1.5
+                    $signature = JRequest::getVar('message', null, _MOS_ALLOWRAW);
+                    $bday1 = JRequest::getVar('bday1', '0000');
+                    $bday2 = JRequest::getVar('bday2', '00');
+                    $bday3 = JRequest::getVar('bday3', '00');
 
 
                         if (!$rowu->bind( $_POST, 'moderator posts karma group_id uhits' )) {
@@ -328,16 +329,16 @@ if ($my->id != "" && $my->id != 0)
         exit();
     }
 
-                        echo _USER_RETURN_A . ' <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . "&amp;func=myprofile&amp;do=showsig") . '">' . _USER_RETURN_B . "</a><br /><br />";
+                        echo _USER_RETURN_A . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . "&amp;func=myprofile&amp;do=showsig") . '">' . _USER_RETURN_B . "</a><br /><br />";
 
-                        echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=profileinfo'), 3500);
+                        echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=profileinfo'), 3500);
                 break;
 
                 case "showsub":
                     $pageperlistlm = 15;
 
-                    $limit = intval(trim(mosGetParam($_REQUEST, 'limit', $pageperlistlm)));
-                    $limitstart = intval(trim(mosGetParam($_REQUEST, 'limitstart', 0)));
+                    $limit = intval(trim(JRequest::getVar('limit', $pageperlistlm)));
+                    $limitstart = intval(trim(JRequest::getVar('limitstart', 0)));
 
                     $query = "select thread from #__fb_subscriptions where userid=$my->id";
                     $database->setQuery($query);
@@ -370,8 +371,8 @@ if ($my->id != "" && $my->id != 0)
                 case "showfav":
                     $pageperlistlm = 15;
 
-                    $limit = intval(trim(mosGetParam($_REQUEST, 'limit', $pageperlistlm)));
-                    $limitstart = intval(trim(mosGetParam($_REQUEST, 'limitstart', 0)));
+                    $limit = intval(trim(JRequest::getVar('limit', $pageperlistlm)));
+                    $limitstart = intval(trim(JRequest::getVar('limitstart', 0)));
 
                     $query = "select thread from #__fb_favorites where userid=$my->id";
                     $database->setQuery($query);
@@ -424,7 +425,7 @@ if ($my->id != "" && $my->id != 0)
                     break;
 
                 case "unsubscribe":
-                    $cid = mosGetParam($_REQUEST, "cid", array ());
+                    $cid = JRequest::getVar("cid", array ());
 
                     @array_walk($cid, "intval");
                     $cids = @implode(',', $cid);
@@ -444,13 +445,13 @@ if ($my->id != "" && $my->id != 0)
                     {
                         echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='" . KUNENA_CB_ITEMID . "'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
 
-                        echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs('index.php?option=com_comprofiler'. KUNENA_CB_ITEMID_SUFFIX .'&amp;tab=getForumTab'), 3500);
+                        echo CKunenaLink::GetAutoRedirectHTML(JRoute::_('index.php?option=com_comprofiler'. KUNENA_CB_ITEMID_SUFFIX .'&amp;tab=getForumTab'), 3500);
                     }
                     else
                     {
-                        echo _USER_RETURN_A . " <a href=\"" . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub') . "\">" . _USER_RETURN_B . "</a><br /><br />";
+                        echo _USER_RETURN_A . " <a href=\"" . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub') . "\">" . _USER_RETURN_B . "</a><br /><br />";
 
-                        echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub'), 3500);
+                        echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub'), 3500);
                     }
 
                     break;
@@ -475,9 +476,9 @@ if ($my->id != "" && $my->id != 0)
 
 						}
 						else {
-							echo _USER_RETURN_A . " <a href=\"". sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show')."\">" . _USER_RETURN_B . "</a><br /><br />";
+							echo _USER_RETURN_A . " <a href=\"". JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show')."\">" . _USER_RETURN_B . "</a><br /><br />";
 
-							echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'), 3500);
+							echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'), 3500);
 							echo '<a href="javascript:history.go(-1)">'._BACK.'</a>';
                     }
 
@@ -488,7 +489,7 @@ if ($my->id != "" && $my->id != 0)
 					////
 
                 case "unfavorite":
-                    $cid = mosGetParam($_REQUEST, "cid", array ());
+                    $cid = JRequest::getVar("cid", array ());
 
                     @array_walk($cid, "intval");
                     $cids = @implode(',', $cid);
@@ -508,13 +509,13 @@ if ($my->id != "" && $my->id != 0)
                     {
                         echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler" . KUNENA_CB_ITEMID_SUFFIX . "&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
 
-                        echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs("index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab"), 3500);
+                        echo CKunenaLink::GetAutoRedirectHTML(JRoute::_("index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab"), 3500);
                     }
                     else
                     {
-                        echo _USER_RETURN_A . " <a href=\"" . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav') . "\">" . _USER_RETURN_B . "</a><br /><br />";
+                        echo _USER_RETURN_A . " <a href=\"" . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav') . "\">" . _USER_RETURN_B . "</a><br /><br />";
 
-                        echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav'), 3500);
+                        echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav'), 3500);
                     }
 
                     break;
@@ -533,13 +534,13 @@ if ($my->id != "" && $my->id != 0)
 						if ($fbConfig->fb_profile == 'cb') {
 							echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
 
-							echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs("index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab"), 3500);
+							echo CKunenaLink::GetAutoRedirectHTML(JRoute::_("index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab"), 3500);
 							echo '<a href="javascript:history.go(-1)">'. _BACK .'</a>';
 						}
 						else {
 							echo _USER_RETURN_A . " <a href=\"index.php?option=com_kunena&amp;Itemid=$Itemid&amp;func=myprofile&amp;do=show\">" . _USER_RETURN_B . "</a><br /><br />";
 
-							echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'), 3500);
+							echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'), 3500);
 							echo '<a href="javascript:history.go(-1)">'. _BACK .'</a>';
 						}
 
@@ -565,9 +566,9 @@ if ($my->id != "" && $my->id != 0)
                     }
 					*/
 
-                    require_once ($mainframe->getCfg("absolute_path") . '/administrator/components/com_users/users.class.php');
+                    require_once (JPATH_ROOT . '/administrator/components/com_users/users.class.php');
 
-                    $row = new mosUser($database);
+                    $row = new JUser($database);
                     $row->load((int)$my->id);
                     $row->orig_password = $row->password;
 
@@ -576,7 +577,7 @@ if ($my->id != "" && $my->id != 0)
                     $row->username = trim($row->username);
 
                     $file = $mainframe->getPath('com_xml', 'com_users');
-                    $params = &new mosUserParameters($row->params, $file, 'component');
+                    $params = &new JUserParameters($row->params, $file, 'component');
 
                     if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_userdetails_form.php'))
                     {
@@ -590,7 +591,7 @@ if ($my->id != "" && $my->id != 0)
                     break;
 
                 case "usersave":
-                    $user_id = intval(mosGetParam($_POST, 'id', 0));
+                    $user_id = intval(JRequest::getVar('id', 0));
 
                     $uid = $my->id;
 
@@ -604,7 +605,7 @@ if ($my->id != "" && $my->id != 0)
                     // simple spoof check security
                     josSpoofCheck();
 
-                    $row = new mosUser($database);
+                    $row = new JUser($database);
                     $row->load((int)$user_id);
 
                     $orig_password = $row->password;
@@ -659,7 +660,7 @@ if ($my->id != "" && $my->id != 0)
                     if ($mosConfig_frontend_userparams == '1' || $mosConfig_frontend_userparams == 1 || $mosConfig_frontend_userparams == NULL)
                     {
                         // save params
-                        $params = mosGetParam($_POST, 'params', '');
+                        $params = JRequest::getVar('params', '');
 
                         if (is_array($params))
                         {
@@ -697,7 +698,7 @@ if ($my->id != "" && $my->id != 0)
                         $database->query();
                     }
 
-                    mosRedirect('index.php?option=com_kunena&amp;func=myprofile' . KUNENA_COMPONENT_ITEMID_SUFFIX, _KUNENA_USER_DETAILS_SAVE);
+                    $mainframe->redirect( JURI::base() .'index.php?option=com_kunena&amp;func=myprofile' . KUNENA_COMPONENT_ITEMID_SUFFIX, _KUNENA_USER_DETAILS_SAVE);
                     break;
             }
             ?>

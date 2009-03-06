@@ -20,7 +20,7 @@
 **/
 
 // Dont allow direct linking
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
 
@@ -128,7 +128,7 @@ $k = 0;
 		   else {
 		   $barwidth = round(($toptitle->hits * 100) / $toptitlehits);
 		   }
-	  $link = sefReltoAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $toptitle->id . '&amp;catid=' . $toptitle->catid);
+	  $link = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $toptitle->id . '&amp;catid=' . $toptitle->catid);
 ?>
 
     <tr class = "<?php echo ''.$boardclass.''. $tabclass[$k] . ''; ?>">

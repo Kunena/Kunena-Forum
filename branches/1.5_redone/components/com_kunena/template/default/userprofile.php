@@ -19,10 +19,10 @@
 * @author TSMF & Jan de Graaff
 **/
 // Dont allow direct linking
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
-$rowItemid = mosGetParam($_REQUEST, 'Itemid');
+$rowItemid = JRequest::getVar('Itemid');
 
 if ($my->id)
 {
@@ -101,7 +101,7 @@ if ($my->id)
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-            <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=userprofile&amp;do=update'); ?>" method = "post" name = "postform">
+            <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=userprofile&amp;do=update'); ?>" method = "post" name = "postform">
                 <input type = "hidden" name = "do" value = "update">
 
                 <table class = "fb_blocktable" id ="fb_forumprofile"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
@@ -127,10 +127,10 @@ if ($my->id)
                             <td class = "td-2">
                                 <?php
                                 // make the select list for the view type
-                                $yesno[] = mosHTML::makeOption('flat', _GEN_FLAT);
-                                $yesno[] = mosHTML::makeOption('threaded', _GEN_THREADED);
+                                $yesno[] = JHTML::_('select.option', 'flat', _GEN_FLAT);
+                                $yesno[] = JHTML::_('select.option', 'threaded', _GEN_THREADED);
                                 // build the html select list
-                                $tosend = mosHTML::selectList($yesno, 'newview', 'class="inputbox" size="2"', 'value', 'text', $prefview);
+                                $tosend = JHTML::_('select.genericlist', $yesno, 'newview', 'class="inputbox" size="2"', 'value', 'text', $prefview);
                                 echo $tosend;
                                 ?>
                             </td>
@@ -144,10 +144,10 @@ if ($my->id)
                             <td class = "td-2" colspan = "2">
                                 <?php
                                 // make the select list for the view type
-                                $yesno1[] = mosHTML::makeOption(0, _USER_ORDER_ASC);
-                                $yesno1[] = mosHTML::makeOption(1, _USER_ORDER_DESC);
+                                $yesno1[] = JHTML::_('select.option', 0, _USER_ORDER_ASC);
+                                $yesno1[] = JHTML::_('select.option', 1, _USER_ORDER_DESC);
                                 // build the html select list
-                                $tosend = mosHTML::selectList($yesno1, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $ordering);
+                                $tosend = JHTML::_('select.genericlist', $yesno1, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $ordering);
                                 echo $tosend;
                                 echo '<br /><font size="1"><em>*' . _USER_CHANGE_VIEW . '</em></font>';
                                 ?>
@@ -255,7 +255,7 @@ if ($my->id)
 
                                         <img src = "<?php echo MyPMSTools::getAvatarLinkWithID($my->id)?>" alt="" />
 
-                                        <br/> <a href = "<?php echo sefRelToAbs('index.php?option=com_mypms&amp;task=upload&amp;Itemid='._CLEXUSPM_ITEMID);?>"><?php echo _SET_NEW_AVATAR; ?></a>
+                                        <br/> <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=upload&amp;Itemid='._CLEXUSPM_ITEMID);?>"><?php echo _SET_NEW_AVATAR; ?></a>
 
                                 <?php
                                     }
@@ -267,7 +267,7 @@ if ($my->id)
 
                                             <img src = "components/com_comprofiler/images/<?php echo $avatar;?>" alt="" />
 
-                                            <br/> <a href = "<?php echo sefRelToAbs('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar');?>"><?php echo _SET_NEW_AVATAR; ?></a>
+                                            <br/> <a href = "<?php echo JRoute::_('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar');?>"><?php echo _SET_NEW_AVATAR; ?></a>
 
                                 <?php
                                         }
@@ -275,7 +275,7 @@ if ($my->id)
                                             echo _NON_SELECTED;
                                 ?>
 
-                                        <a href = "<?php echo sefRelToAbs('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar');?>"><?php echo _SET_NEW_AVATAR; ?></a>
+                                        <a href = "<?php echo JRoute::_('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar');?>"><?php echo _SET_NEW_AVATAR; ?></a>
 
                                 <?php
                                         }
@@ -290,7 +290,7 @@ if ($my->id)
 
                                             <br/>
 
-                                            <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=upload');?>"> <?php echo _SET_NEW_AVATAR; ?></a>
+                                            <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=upload');?>"> <?php echo _SET_NEW_AVATAR; ?></a>
 
                                             <br/> <input type = "checkbox" value = "1" name = "deleteAvatar"><i> <?php echo _USER_DELETEAV; ?></i>
 
@@ -300,7 +300,7 @@ if ($my->id)
                                             echo _NON_SELECTED;
                                 ?>
 
-                                        <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=upload');?>"> <?php echo _SET_NEW_AVATAR; ?></a>
+                                        <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=upload');?>"> <?php echo _SET_NEW_AVATAR; ?></a>
 
                                 <?php
                                         }
@@ -397,8 +397,8 @@ if ($my->id)
                                 {
                                     $k = 1 - $k;
                                     echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" >';
-                                    echo '<td class="td-1" >' . $enum. ': <a href="'.sefRelToAbs(KUNENA_LIVEURLREL. '&amp;func=view&amp;catid=' . $sub->catid . '&amp;id=' . $sub->id ).'">' . $sub->subject . '</a> - ' . _GEN_BY . '  ' . $sub->name  .'</td>';
-                                    echo '<td class="td-2" ><a href="'.sefRelToAbs(KUNENA_LIVEURLREL. '&amp;func=userprofile&amp;do=unsubscribe&amp;thread=' . $subs->thread) . '">' . _THREAD_UNSUBSCRIBE . '</a></td>';
+                                    echo '<td class="td-1" >' . $enum. ': <a href="'.JRoute::_(KUNENA_LIVEURLREL. '&amp;func=view&amp;catid=' . $sub->catid . '&amp;id=' . $sub->id ).'">' . $sub->subject . '</a> - ' . _GEN_BY . '  ' . $sub->name  .'</td>';
+                                    echo '<td class="td-2" ><a href="'.JRoute::_(KUNENA_LIVEURLREL. '&amp;func=userprofile&amp;do=unsubscribe&amp;thread=' . $subs->thread) . '">' . _THREAD_UNSUBSCRIBE . '</a></td>';
                                     echo "</tr>";
                                     $enum++;
                                 }
@@ -454,8 +454,8 @@ if ($my->id)
                         {
                             $k = 1 - $k;
                             echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '">';
-                            echo '<td class="td-1">' . $enum . ': <a href="'.sefRelToAbs(KUNENA_LIVEURLREL. '&amp;func=view&amp;catid=' . $fav->catid . '&amp;id=' . $fav->id) . '">' . $fav->subject . '</a> - ' . _GEN_BY . ' ' . $fav->name .'</td>';
-                            echo '<td class="td-2"><a href="'.sefRelToAbs(KUNENA_LIVEURLREL. '&amp;func=userprofile&amp;do=unfavorite&amp;thread=' . $favs->thread) . '">' . _THREAD_UNFAVORITE . '</a></td>';
+                            echo '<td class="td-1">' . $enum . ': <a href="'.JRoute::_(KUNENA_LIVEURLREL. '&amp;func=view&amp;catid=' . $fav->catid . '&amp;id=' . $fav->id) . '">' . $fav->subject . '</a> - ' . _GEN_BY . ' ' . $fav->name .'</td>';
+                            echo '<td class="td-2"><a href="'.JRoute::_(KUNENA_LIVEURLREL. '&amp;func=userprofile&amp;do=unfavorite&amp;thread=' . $favs->thread) . '">' . _THREAD_UNFAVORITE . '</a></td>';
                             echo "</tr>";
                             $enum++;
                         }
@@ -519,15 +519,15 @@ if ($my->id)
     }
     else if ($do == "update")
     { //we update anything
-        $rowItemid = mosGetParam($_REQUEST, 'Itemid');
-        $deleteAvatar = mosGetParam($_POST, 'deleteAvatar', 0);
-        $deleteSig = mosGetParam($_POST, 'deleteSig', 0);
-        $unsubscribeAll = mosGetParam($_POST, 'unsubscribeAll', 0);
-        $unfavoriteAll = mosGetParam($_POST, 'unfavoriteAll', 0);
-        $signature = mosGetParam($_POST, 'message', '');
-        $newview = mosGetParam($_POST, 'newview', 'flat');
-        $avatar = mosGetParam($_POST, 'avatar', '');
-        (int)$neworder = mosGetParam($_POST, 'neworder', 0);
+        $rowItemid = JRequest::getVar('Itemid');
+        $deleteAvatar = JRequest::getVar('deleteAvatar', 0);
+        $deleteSig = JRequest::getVar('deleteSig', 0);
+        $unsubscribeAll = JRequest::getVar('unsubscribeAll', 0);
+        $unfavoriteAll = JRequest::getVar('unfavoriteAll', 0);
+        $signature = JRequest::getVar('message', '');
+        $newview = JRequest::getVar('newview', 'flat');
+        $avatar = JRequest::getVar('avatar', '');
+        (int)$neworder = JRequest::getVar('neworder', 0);
 
         if ($deleteSig == 1) {
         	$signature = "";
@@ -551,7 +551,7 @@ if ($my->id)
             echo _USER_PROFILE_UPDATED . "<br /><br />";
         }
 
-        echo _USER_RETURN_A . ' <a href="'.sefRelToAbs(KUNENA_LIVEURLREL."&amp;func=userprofile&amp;do=show").'">' . _USER_RETURN_B . "</a><br /><br />";
+        echo _USER_RETURN_A . ' <a href="'.JRoute::_(KUNENA_LIVEURLREL."&amp;func=userprofile&amp;do=show").'">' . _USER_RETURN_B . "</a><br /><br />";
 
         if ($unsubscribeAll)
         {
@@ -565,7 +565,7 @@ if ($my->id)
             $database->query();
         }
 
-        echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show'), 3500);
+        echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show'), 3500);
     }
     else if ($do == "unsubscribe")
     { //ergo, ergo delete
@@ -580,11 +580,11 @@ if ($my->id)
 
         if ($fbConfig->fb_profile == 'cb') {
             echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='".KUNENA_CB_ITEMID."'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
-	    echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs('index.php?option=com_comprofiler'. KUNENA_CB_ITEMID_SUFFIX .'&amp;tab=getForumTab'), 3500);
+	    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_('index.php?option=com_comprofiler'. KUNENA_CB_ITEMID_SUFFIX .'&amp;tab=getForumTab'), 3500);
         }
         else {
-            echo _USER_RETURN_A . " <a href=\"". sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show')."\">" . _USER_RETURN_B . "</a><br /><br />";
-	    echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show'), 3500);
+            echo _USER_RETURN_A . " <a href=\"". JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show')."\">" . _USER_RETURN_B . "</a><br /><br />";
+	    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show'), 3500);
         }
     }
     else if ($do == "unfavorite")
@@ -600,11 +600,11 @@ if ($my->id)
 
         if ($fbConfig->fb_profile == 'cb') {
             echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
-	    echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs('index.php?option=com_comprofiler'.KUNENA_CB_ITEMID_SUFFIX.'&amp;tab=getForumTab'), 3500);
+	    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_('index.php?option=com_comprofiler'.KUNENA_CB_ITEMID_SUFFIX.'&amp;tab=getForumTab'), 3500);
         }
         else {
             echo _USER_RETURN_A . " <a href=\"index.php?option=com_kunena&amp;Itemid=$Itemid&amp;func=userprofile&amp;do=show\">" . _USER_RETURN_B . "</a><br /><br />";
-	    echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show'), 3500);
+	    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show'), 3500);
         }
     }
     else

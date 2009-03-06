@@ -19,7 +19,7 @@
 * @author TSMF & Jan de Graaff
 **/
 /** ensure this file is being included by a parent file */
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 ?>
 <style>
 .fbwelcome {
@@ -155,7 +155,7 @@ table.fbstat .col2 {
 <div class="fbstatscover">
   <?php
 
-   include_once ($mainframe->getCfg("absolute_path") .'/administrator/components/com_kunena/lib/kunena.stats.class.php');
+   include_once (JPATH_ROOT .'/administrator/components/com_kunena/lib/kunena.stats.class.php');
     ?>
   <table cellspacing="1"  border="0" width="100%" class="fbstat">
     <caption>

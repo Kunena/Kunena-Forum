@@ -19,7 +19,7 @@
 * @author TSMF & Jan de Graaff
 **/
 
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 class html_Kunena
 {
@@ -126,7 +126,7 @@ color:#666;
         <!-- Begin : Kunena Left Menu -->
         <div id="fbmenu">
 
-        <?php $stask=mosGetParam($_REQUEST, "task", null);	?>
+        <?php $stask=JRequest::getVar("task", null);	?>
         <a class="fbmainmenu" href = "index2.php?option=com_kunena"><?php echo _KUNENA_CP; ?></a>
 
            <a class="fbmainmenu" href = "index2.php?option=com_kunena&task=showconfig"><?php echo _COM_C_FBCONFIG; ?></a>
@@ -171,7 +171,7 @@ function showFbFooter () {
 global $mainframe;
 global $fbConfig;
 
-include ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.version.php');
+include (JPATH_ROOT . '/components/com_kunena/lib/kunena.version.php');
 // << $KunenaDbVersion
 ?>
 
@@ -203,15 +203,16 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 
 
         <?php
-        $path = $mainframe->getCfg('absolute_path') . "/administrator/components/com_kunena/kunena.cpanel.php";
+        $path = JPATH_ROOT . "/administrator/components/com_kunena/kunena.cpanel.php";
 
         if (file_exists($path)) {
             require $path;
         }
         else
         {
-            echo '<br />mcap==: ' . $mainframe->getCfg('absolute_path') . ' .... help!!';
-            mosLoadAdminModules('cpanel', 1);
+            echo '<br />mcap==: ' . JPATH_ROOT . ' .... help!!';
+            // FIXME: To J!1.5 Native
+            // mosLoadAdminModules('cpanel', 1);
         }
     }
 
@@ -223,7 +224,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
             <table  cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
                 <tr>
                     <td  align="right">
-                  <?php echo _COM_A_DISPLAY; ?> <?php echo $pageNav->writeLimitBox(); ?>
+                  <?php echo _COM_A_DISPLAY; ?> <?php echo $pageNav->getLimitBox(); ?>
                     </td>
                 </tr>
             </table>
@@ -410,12 +411,12 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                         <tr>
                             <th align = "center" colspan = "12"> <?php
                             // TODO: fxstein - Need to perform SEO cleanup
-                            echo $pageNav->writePagesLinks(); ?>
+                            echo $pageNav->getPagesLinks(); ?>
                             </th>
                         </tr>
 
                         <tr>
-                            <td align = "center" colspan = "12"> <?php echo $pageNav->writePagesCounter(); ?>
+                            <td align = "center" colspan = "12"> <?php echo $pageNav->getPagesCounter(); ?>
                             </td>
                         </tr>
             </table>
@@ -429,7 +430,8 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 
     function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $option)
     {
-        $tabs = new mosTabs(3);
+	jimport('joomla.html.pane');
+	$pane =& JPane::getInstance('tabs', array('startOffset'=>0));
 ?>
 
         <style>
@@ -729,8 +731,11 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 
     function showConfig(&$fbConfig, &$lists, $option)
     {
-        global $mosConfig_live_site;
-        $tabs = new mosTabs(2);
+	jimport('joomla.html.pane');
+	$pane =& JPane::getInstance('tabs', array('startOffset'=>0));
+        
+	echo $pane->startPane( 'pane' );
+	echo $pane->startPanel( 'Config', 'panel1' );
         ?>
 <div id="fbcongifcover">
 <div class="fbfunctitle"><?php echo _COM_A_CONFIG ?></div>
@@ -818,7 +823,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
 
                     <td align = "left" valign = "top">
-                        <img src = "<?php echo $mosConfig_live_site;?>/images/M_images/rss.png"/> <?php echo _COM_A_RSS_DESC ?>
+                        <img src = "<?php echo JURI::root();?>/images/M_images/rss.png"/> <?php echo _COM_A_RSS_DESC ?>
                     </td>
                 </tr>
 
@@ -852,7 +857,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
 
                     <td align = "left" valign = "top">
-                        <img src = "<?php echo $mosConfig_live_site;?>/images/M_images/pdf_button.png"/> <?php echo _COM_A_PDF_DESC ?>
+                        <img src = "<?php echo JURI::root();?>/images/M_images/pdf_button.png"/> <?php echo _COM_A_PDF_DESC ?>
                     </td>
                 </tr>
             </table>
@@ -1283,43 +1288,43 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                         <table size = 100%>
                             <tr>
                               <td>
-                                1: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col1m.png" width = "15" height = "4">
+                                1: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col1m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                2: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col2m.png" width = "15" height = "4">
+                                2: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col2m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                3: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col3m.png" width = "15" height = "4">
+                                3: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col3m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                4: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col4m.png" width = "15" height = "4">
+                                4: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col4m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                5: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col5m.png" width = "15" height = "4">
+                                5: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col5m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                6: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col6m.png" width = "15" height = "4">
+                                6: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col6m.png" width = "15" height = "4">
                               </td>
                             </tr>
 
                             <tr>
                               <td>
-                                7: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col7m.png" width = "15" height = "4">
+                                7: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col7m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                8: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col8m.png" width = "15" height = "4">
+                                8: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col8m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                9: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col9m.png" width = "15" height = "4">
+                                9: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col9m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                10: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col10m.png" width = "15" height = "4">
+                                10: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col10m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                11: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col11m.png" width = "15" height = "4">
+                                11: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col11m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                12: <img src = "<?php echo $mosConfig_live_site;?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col12m.png" width = "15" height = "4">
+                                12: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col12m.png" width = "15" height = "4">
                               </td>
                             </tr>
                         </table>
@@ -2429,9 +2434,13 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
         </form>
 </div><!-- closed div#fnconfigcover -->
 <?php
+	echo $pane->endPanel();
+	echo $pane->startPanel( 'Show Instructions', 'panel2' );
+	showInstructions($database, $option, $lang);
+	echo $pane->endPanel();
     }
 
-    function showInstructions($database, $option, $mosConfig_lang) {
+    function showInstructions($database, $option, $lang) {
 ?>
 
     <table width = "100%" border = "0" cellpadding = "2" cellspacing = "2" class = "adminheading">
@@ -2496,7 +2505,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 <?php
     } //end function showCss
 
-    function showProfiles($option, $mosConfig_lang, &$profileList, $countPL, $pageNavSP, $order, $search)
+    function showProfiles($option, $lang, &$profileList, $countPL, $pageNavSP, $order, $search)
     {
 ?>
 <div class="fbfunctitle"><?php echo _KUNENA_FUM; ?></div>
@@ -2509,7 +2518,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
 
                     <td nowrap align = "right">
-<?php echo $pageNavSP->writeLimitBox(); ?>
+<?php echo $pageNavSP->getLimitBox(); ?>
                     </td>
 
                     <td nowrap align = "right">
@@ -2625,12 +2634,12 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
     <tr>
         <th align = "center" colspan = "7"> <?php
         // TODO: fxstein - Need to perform SEO cleanup
-        echo $pageNavSP->writePagesLinks(); ?>
+        echo $pageNavSP->getPagesLinks(); ?>
         </th>
     </tr>
 
     <tr>
-        <td align = "center" colspan = "7"> <?php echo $pageNavSP->writePagesCounter(); ?>
+        <td align = "center" colspan = "7"> <?php echo $pageNavSP->getPagesCounter(); ?>
         </td>
     </tr>
             </table>
@@ -2653,7 +2662,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
 
                     <td>
-<?php echo $pageNav->writeLimitBox(); ?>
+<?php echo $pageNav->getLimitBox(); ?>
                     </td>
 
                     <td>&nbsp;
@@ -2762,12 +2771,12 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
     <tr>
         <th align = "center" colspan = "7"> <?php
         // TODO: fxstein - Need to perform SEO cleanup
-        echo $pageNav->writePagesLinks(); ?>
+        echo $pageNav->getPagesLinks(); ?>
         </th>
     </tr>
 
     <tr>
-        <td align = "center" colspan = "7"> <?php echo $pageNav->writePagesCounter(); ?>
+        <td align = "center" colspan = "7"> <?php echo $pageNav->getPagesCounter(); ?>
         </td>
     </tr>
 
@@ -3158,7 +3167,7 @@ else
     function browseUploaded($option, $uploaded, $uploaded_path, $type)
     {
         global $database, $mainframe;
-        $map = $mainframe->getCfg('absolute_path');
+        $map = JPATH_ROOT;
 ?>
 
         <SCRIPT LANGUAGE = "Javascript">
@@ -3245,7 +3254,7 @@ else
     // show smilies
     //***************************************
 
-function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileypath)
+function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
         {
 ?>
 <div class="fbfunctitle"><?php echo _KUNENA_EMOTICONS; ?></div>
@@ -3259,7 +3268,7 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
                     </td>
 
                     <td nowrap align = "right">
-					<?php echo $pageNavSP->writeLimitBox(); ?>
+					<?php echo $pageNavSP->getLimitBox(); ?>
                     </td>
                 </tr>
 
@@ -3327,11 +3336,11 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
             <tr>
         		<th align = "center" colspan = "6"> <?php
         		// TODO: fxstein - Need to perform SEO cleanup
-        		echo $pageNavSP->writePagesLinks(); ?>
+        		echo $pageNavSP->getPagesLinks(); ?>
 		        </th>
 		    </tr>
             <tr>
-        		<td align = "center" colspan = "6"> <?php echo $pageNavSP->writePagesCounter(); ?>
+        		<td align = "center" colspan = "6"> <?php echo $pageNavSP->getPagesCounter(); ?>
 		        </td>
             </tr>
       	</table>
@@ -3341,7 +3350,7 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
 <?php
         }//end function showsmilies
 
-		function editsmiley($option, $mosConfig_lang, $smiley_edit_img, $filename_list, $smileypath, $smileycfg)
+		function editsmiley($option, $lang, $smiley_edit_img, $filename_list, $smileypath, $smileycfg)
 		{
         ?>
         <script language="javascript" type="text/javascript">
@@ -3425,7 +3434,7 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
 		}//end function newsmilies
 
 /// Dan Syme/IGD Rank Administration
- function showRanks( $option,$mosConfig_lang,&$ranks,$pageNavSP,$order,$rankpath )
+ function showRanks( $option,$lang,&$ranks,$pageNavSP,$order,$rankpath )
 		 {
    global $database, $mainframe;
    ?>
@@ -3434,7 +3443,7 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
   <table class="adminheading" cellpadding="4" cellspacing="0" border="0" width="100%">
     <tr>
       <td nowrap="nowrap" align="right"><?php echo _COM_A_DISPLAY;?></td>
-      <td nowrap="nowrap"  align="right"><?php echo $pageNavSP->writeLimitBox(); ?></td>
+      <td nowrap="nowrap"  align="right"><?php echo $pageNavSP->getLimitBox(); ?></td>
     </tr>
   </table>
   <table class="adminlist" border=0 cellspacing=0 cellpadding=3 width="100%" >
@@ -3471,10 +3480,10 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
     <tr>
       <th align="center" colspan="7"><?php
       // TODO: fxstein - Need to perform SEO cleanup
-      echo $pageNavSP->writePagesLinks(); ?></th>
+      echo $pageNavSP->getPagesLinks(); ?></th>
     </tr>
     <tr>
-      <td align="center" colspan="7"><?php echo $pageNavSP->writePagesCounter(); ?></td>
+      <td align="center" colspan="7"><?php echo $pageNavSP->getPagesCounter(); ?></td>
 	</tr>
   </table>
   </form>
@@ -3520,7 +3529,7 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
 
 <?php }//end function edit rank
 
-		function editrank($option, $mosConfig_lang, $edit_img, $filename_list, $path, $row)
+		function editrank($option, $lang, $edit_img, $filename_list, $path, $row)
 		{
 ?>
   <script language="javascript" type="text/javascript">

@@ -14,7 +14,7 @@
 * @link http://www.bestofjoomla.com
 **/
 
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
 
@@ -25,12 +25,12 @@ if ($my->id) //registered only
     require_once(KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
     require_once(KUNENA_ABSSOURCESPATH . 'kunena.statsbar.php');
 
-    $task = mosGetParam($_GET, 'task', "");
+    $task = JRequest::getVar('task', "");
 
     switch ($task)
     {
         case "showprf":
-            $userid = mosGetParam($_GET, 'userid', null);
+            $userid = JRequest::getVar('userid', null);
 
             $page = 0;
             showprf((int)$userid, $page);
@@ -43,7 +43,7 @@ else {
 
 function showprf($userid, $page)
 {
-    global $database, $fbConfig,  $acl, $my, $mosConfig_absolute_path;
+    global $database, $fbConfig, $acl, $my;
     // ERROR: mixed global $fbIcons
     global $fbIcons;
 
@@ -257,7 +257,7 @@ function showprf($userid, $page)
 
         if ($my->id != '0' && $my->id != $userid)
         {
-            $msg_karmaminus = "<a href=\"" . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=decrease&amp;userid=' . $userid . '&amp;pid=' . $fmessage->id . '&amp;catid=' . $catid . '') . "\"><img src=\"";
+            $msg_karmaminus = "<a href=\"" . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=decrease&amp;userid=' . $userid . '&amp;pid=' . $fmessage->id . '&amp;catid=' . $catid . '') . "\"><img src=\"";
 
             if ($fbIcons['karmaminus']) {
                 $msg_karmaminus .= KUNENA_URLICONSPATH . "" . $fbIcons['karmaminus'];
@@ -267,7 +267,7 @@ function showprf($userid, $page)
             }
 
             $msg_karmaminus .= "\" alt=\"Karma-\" border=\"0\" title=\"" . _KARMA_SMITE . "\" align=\"middle\" /></a>";
-            $msg_karmaplus = "<a href=\"" . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=increase&amp;userid=' . $userid . '&amp;pid=' . $fmessage->id . '&amp;catid=' . $catid . '') . "\"><img src=\"";
+            $msg_karmaplus = "<a href=\"" . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=increase&amp;userid=' . $userid . '&amp;pid=' . $fmessage->id . '&amp;catid=' . $catid . '') . "\"><img src=\"";
 
             if ($fbIcons['karmaplus']) {
                 $msg_karmaplus .= KUNENA_URLICONSPATH . "" . $fbIcons['karmaplus'];
@@ -288,7 +288,7 @@ function showprf($userid, $page)
         //we should offer the user a PMS link
         //first get the username of the user to contact
         $PMSName = $userinfo->username;
-        $msg_pms = "<a href=\"" . sefRelToAbs('index.php?option=com_uddeim&amp;task=new&recip=' . $userid) . "\"><img src=\"";
+        $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_uddeim&amp;task=new&recip=' . $userid) . "\"><img src=\"";
 
         if ($fbIcons['pms']) {
             $msg_pms .= KUNENA_URLICONSPATH . '' . $fbIcons['pms'];
@@ -306,7 +306,7 @@ function showprf($userid, $page)
         //we should offer the user a PMS link
         //first get the username of the user to contact
         $PMSName = $userinfo->username;
-        $msg_pms = "<a href=\"" . sefRelToAbs('index.php?option=com_pms&amp;page=new&amp;id=' . $PMSName . '&title=' . $fmessage->subject) . "\"><img src=\"";
+        $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_pms&amp;page=new&amp;id=' . $PMSName . '&title=' . $fmessage->subject) . "\"><img src=\"";
 
         if ($fbIcons['pms']) {
             $msg_pms .= KUNENA_URLICONSPATH . "" . $fbIcons['pms'];
@@ -348,7 +348,7 @@ function showprf($userid, $page)
         //first get the username of the user to contact
 
         $PMSName = $userinfo->aid;
-        $msg_pms = "<a href=\"" . sefRelToAbs('index.php?option=com_mypms&amp;task=new&amp;to=' . $userid . '' . $fmessage->subject) . "\"><img src=\"";
+        $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=new&amp;to=' . $userid . '' . $fmessage->subject) . "\"><img src=\"";
 
         if ($fbIcons['pms']) {
             $msg_pms .= KUNENA_URLICONSPATH . "" . $fbIcons['pms'];
@@ -370,7 +370,7 @@ function showprf($userid, $page)
 
         $msg_profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
         //mypms add buddy link
-        $msg_buddy = "<a href=\"" . sefRelToAbs('index.php?option=com_mypms&amp;user=' . $PMSName . '&amp;task=addbuddy') . "\"><img src=\"";
+        $msg_buddy = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;user=' . $PMSName . '&amp;task=addbuddy') . "\"><img src=\"";
 
         if ($fbIcons['pms2buddy']) {
             $msg_buddy .= KUNENA_URLICONSPATH . "" . $fbIcons['pms2buddy'];
@@ -394,7 +394,7 @@ function showprf($userid, $page)
                 $msg_icq = "<a href=\"http://www.icq.com/whitepages/wwp.php?uin=" . $mostables->icq . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "icq.png\" border=0 alt=\"\" /></a>";
 
             if ($mostables->msn)
-                $msg_msn = "<a href=\"" . sefRelToAbs('index.php?option=com_mypms&amp;task=showprofile&amp;user=' . $PMSName) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "msn.png\" border=0 alt=\"\" /></a>";
+                $msg_msn = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=showprofile&amp;user=' . $PMSName) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "msn.png\" border=0 alt=\"\" /></a>";
 
             if ($mostables->ym)
                 $msg_yahoo = "<a href=\"http://edit.yahoo.com/config/send_webmesg?.target=" . $mostables->ym . "&.src=pg\"><img src=\"http://opi.yahoo.com/online?u=" . $mostables->ym . "&m=g&t=0\" border=0 alt=\"\" /></a>";
@@ -409,7 +409,7 @@ function showprf($userid, $page)
     //Check if the Community Builder settings are on, and set the variables accordingly.
     if ($fbConfig->fb_profile == 'cb' && $userid > 0)
     {
-        $msg_profile = "<a href=\"" . sefRelToAbs('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $userid . '&amp;Itemid=1') . "\"><img src=\"";
+        $msg_profile = "<a href=\"" . JRoute::_('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $userid . '&amp;Itemid=1') . "\"><img src=\"";
 
         if ($fbIcons['userprofile']) {
             $msg_profile .= KUNENA_URLICONSPATH . "" . $fbIcons['userprofile'];

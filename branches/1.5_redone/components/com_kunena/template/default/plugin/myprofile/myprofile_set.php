@@ -18,14 +18,14 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @author TSMF & Jan de Graaff
 **/
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=updateset'); ?>" method = "post" name = "postform">
+<form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=updateset'); ?>" method = "post" name = "postform">
 	<input type = "hidden" name = "do" value = "updateset">
 	<table class = "fb_blocktable" id = "fb_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
 		<thead>
@@ -47,10 +47,10 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 				<td>
 					<?php
 					// make the select list for the view type
-					$yesno1[] = mosHTML::makeOption(0, _USER_ORDER_ASC);
-					$yesno1[] = mosHTML::makeOption(1, _USER_ORDER_DESC);
+					$yesno1[] = JHTML::_('select.option', 0, _USER_ORDER_ASC);
+					$yesno1[] = JHTML::_('select.option', 1, _USER_ORDER_DESC);
 					// build the html select list
-					$tosend   = mosHTML::selectList($yesno1, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $ordering);
+					$tosend   = JHTML::_('select.genericlist', $yesno1, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $ordering);
 					echo $tosend;
 					?>
 				</td>
@@ -63,10 +63,10 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 				<td colspan = "2">
 					<?php
 					// make the select list for the view type
-					$yesno3[] = mosHTML::makeOption(0, _COM_A_NO);
-					$yesno3[] = mosHTML::makeOption(1, _COM_A_YES);
+					$yesno3[] = JHTML::_('select.option', 0, _COM_A_NO);
+					$yesno3[] = JHTML::_('select.option', 1, _COM_A_YES);
 					// build the html select list
-					$tosend   = mosHTML::selectList($yesno3, 'newhideEmail', 'class="inputbox" size="2"', 'value', 'text', $hideEmail);
+					$tosend   = JHTML::_('select.genericlist', $yesno3, 'newhideEmail', 'class="inputbox" size="2"', 'value', 'text', $hideEmail);
 					echo $tosend;
 
 					?>
@@ -81,10 +81,10 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 				<td>
 					<?php
 					// make the select list for the view type
-					$yesno4[] = mosHTML::makeOption(0, _COM_A_NO);
-					$yesno4[] = mosHTML::makeOption(1, _COM_A_YES);
+					$yesno4[] = JHTML::_('select.option', 0, _COM_A_NO);
+					$yesno4[] = JHTML::_('select.option', 1, _COM_A_YES);
 					// build the html select list
-					$tosend   = mosHTML::selectList($yesno4, 'newshowOnline', 'class="inputbox" size="2"', 'value', 'text', $showOnline);
+					$tosend   = JHTML::_('select.genericlist', $yesno4, 'newshowOnline', 'class="inputbox" size="2"', 'value', 'text', $showOnline);
 					echo $tosend;
 
 					?>

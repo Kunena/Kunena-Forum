@@ -19,7 +19,7 @@
 * @author TSMF & Jan de Graaff
 **/
 
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 // ################################################################
 /**
@@ -177,7 +177,7 @@ function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = 
     {
         case 3:
             /* DISABLE MENU
-            $header.= '<a href="'.sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=post&amp;do=reply&amp;replyto='.$thread.'&amp;catid='.$catid).'" >';
+            $header.= '<a href="'.JRoute::_(KUNENA_LIVEURLREL.'&amp;func=post&amp;do=reply&amp;replyto='.$thread.'&amp;catid='.$catid).'" >';
             $header.= $fbIcons['menureply'] ? '<img src="' . KUNENA_URLICONSPATH . ''.$fbIcons['menureply'].'" border="0" alt="'._GEN_POST_REPLY.'" title="'._GEN_POST_REPLY.'"/>' : _GEN_POST_REPLY;
             $header.= '</a>';
            */
@@ -233,7 +233,7 @@ function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = 
 
 function getSearchBox()
 {
-    $return = '<div id="fb_searchbox"><form action="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=search') . '" name="searchFB" method="post">';
+    $return = '<div id="fb_searchbox"><form action="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=search') . '" name="searchFB" method="post">';
     $boxsize = strlen(_GEN_SEARCH_BOX);
 
     if ($boxsize <= 15)

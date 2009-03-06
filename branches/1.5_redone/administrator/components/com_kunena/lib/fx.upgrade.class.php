@@ -15,9 +15,9 @@
 **/
 
 // ensure this file is being included by a parent file
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+defined( '_JEXEC' ) or die('Restricted access');
 
-include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.debug.php");
+include_once (JPATH_ROOT . "/components/com_kunena/lib/kunena.debug.php");
 
 class fx_Upgrade {
 	var $component=null;
@@ -43,7 +43,7 @@ class fx_Upgrade {
 	// helper function to create new version table
 	function createVersionTable()
 	{
-		global $database;
+		$database = &JFactory::getDBO();
 		$database->setQuery( "CREATE TABLE `$this->versionTable`
 								(`id` INTEGER NOT NULL AUTO_INCREMENT,
 								`version` VARCHAR(20) NOT NULL,
@@ -59,7 +59,7 @@ class fx_Upgrade {
 	// helper function to drop existing version table
 	function dropVersionTable()
 	{
-		global $database;
+		$database = &JFactory::getDBO();
         $database->setQuery("DROP TABLE IF EXISTS `$this->versionTable`;");
 		$database->query() or trigger_dberror('Unable to drop version table.');
    	}
@@ -67,7 +67,7 @@ class fx_Upgrade {
 	// helper function retrieve latest version from version table
 	function getLatestVersion($versionTable)
 	{
-		global $database;
+		$database = &JFactory::getDBO();
 		$database->setQuery( 	"SELECT
 									`version`,
 									`versiondate`,
@@ -82,7 +82,7 @@ class fx_Upgrade {
 
 	function insertVersionData( $version, $versiondate, $build, $versionname)
 	{
-		global $database;
+		$database = &JFactory::getDBO();
 		$database->setQuery( "INSERT INTO `$this->versionTable`
 								SET `version` = '".$version."',
 								`versiondate` = '".$versiondate."',
@@ -100,7 +100,7 @@ class fx_Upgrade {
 
 	function backupVersionTable()
 	{
-		global $database;
+		$database = &JFactory::getDBO();
 
         $database->setQuery("DROP TABLE IF EXISTS `".$this->versionTable."_backup`;");
         $database->query() or trigger_dberror('Unable to drop previous backup version table.');
@@ -113,8 +113,8 @@ class fx_Upgrade {
 	 * Main upgrade function. Processes XML file
 	 */
 	function doUpgrade() {
-		global $database, $mosConfig_absolute_path, $mosConfig_live_site;
-		require_once( $mosConfig_absolute_path . '/includes/domit/xml_domit_lite_include.php' );
+		$database = &JFactory::getDBO();
+		require_once( JPATH_ROOT . '/includes/domit/xml_domit_lite_include.php' );
 		if(!$this->silent) {
 			?>
 			<script language=JavaScript>
@@ -146,7 +146,7 @@ class fx_Upgrade {
 			<?php
 		}
 
-		$componentBaseDir	= mosPathName( $mosConfig_absolute_path . '/administrator/components' );
+		$componentBaseDir	= mosPathName( JPATH_ROOT . '/administrator/components' );
 		$this->_upgradeDir = $componentBaseDir . $this->component . '/' . $this->subdir;
 		$versionTableNoPrefix = $this->versionTablePrefix . "version";
 
@@ -232,7 +232,7 @@ class fx_Upgrade {
 			{
 				?>
 				<div id="overDiv" style="position:absolute; visibility:hidden; z-index:10000;"></div>
-				<script  type="text/javascript" src="<?php echo $mosConfig_live_site;?>/includes/js/overlib_mini.js"></script>
+				<script  type="text/javascript" src="<?php echo JURI::root();?>/includes/js/overlib_mini.js"></script>
 				<table class="adminlist">
 					<tr>
 						<th colspan="2">Installing "<?php echo $this->component?>" (Version: <?php echo $version;?> / Date: <?php echo $versiondate;?> / Build: <?php echo $build;?> / VersionName: <?php echo $versionname;?> )</th>
@@ -254,7 +254,7 @@ class fx_Upgrade {
 			if(!$this->silent) {
 				?>
 				<div id="overDiv" style="position:absolute; visibility:hidden; z-index:10000;"></div>
-				<script  type="text/javascript" src="<?php echo $mosConfig_live_site;?>/includes/js/overlib_mini.js"></script>
+				<script  type="text/javascript" src="<?php echo JURI::root();?>/includes/js/overlib_mini.js"></script>
 				<table class="adminlist">
 					<tr>
 						<th colspan="2">Upgrading "<?php echo $this->component?>" (Version: <?php echo @$currentVersion->version; ?> / Version Date: <?php echo @$currentVersion->versiondate;?> / Install Date: <?php echo @$currentVersion->installdate;?> / Build: <?php echo @$currentVersion->build;?> / Version Name: <?php echo @$currentVersion->versionname;?>)</th>
@@ -309,7 +309,7 @@ class fx_Upgrade {
 	 * Processes "phpfile", "query" and "phpcode" child-nodes of the node provided
 	 */
 	function processNode(&$startNode,$batch = 0) {
-		global $database;
+		$database = &JFactory::getDBO();
 		$numChildren =& $startNode->childCount;
 		$childNodes =& $startNode->childNodes;
 

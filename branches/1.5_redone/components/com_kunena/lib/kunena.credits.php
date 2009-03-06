@@ -14,7 +14,7 @@
 * @link http://www.bestofjoomla.com
 **/
 
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 global $mainframe;
 global $fbConfig;
@@ -76,7 +76,7 @@ global $is_Moderator;
 </div>
 
 <?php
-include ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.version.php');
+include (JPATH_ROOT . '/components/com_kunena/lib/kunena.version.php');
 // << $KunenaDbVersion
 ?>
  <!-- Version Info -->

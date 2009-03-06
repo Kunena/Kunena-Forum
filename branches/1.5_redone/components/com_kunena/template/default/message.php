@@ -20,7 +20,7 @@
 **/
 
 // Dont allow direct linking
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 global $my, $database;
 global $fbConfig;
@@ -241,7 +241,7 @@ $database->loadObject($user);
                                     $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? $resubject : _POST_RE . $resubject;
                                     ?>
 
-                            <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL. '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
+                            <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL. '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
                                 <input type = "hidden" name = "parentid" value = "<?php echo $msg_id;?>"/>
 
                                 <input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
@@ -455,18 +455,11 @@ if (mosCountModules('kunena_msg_'.$mmm))
 ?>
     <div class = "kunena_msg_<?php echo $mmm; ?>">
         <?php
-        if (CKunenaTools::isJoomla15())
-        {
 	        $document	= &JFactory::getDocument();
 	        $renderer	= $document->loadRenderer('modules');
 	        $options	= array('style' => 'xhtml');
 	        $position	= 'kunena_msg_'.$mmm;
 	        echo $renderer->render($position, $options, null);
-        }
-        else
-        {
-        	mosLoadModules('kunena_msg_'.$mmm, -2);
-        }
         ?>
     </div>
 <?php

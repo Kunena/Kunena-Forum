@@ -20,7 +20,7 @@
 **/
 
 // Dont allow direct linking
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 global $base_url, $fbConfig;
 
@@ -32,15 +32,15 @@ list_users();
 
 function list_users()
 {
-    global $database, $mosConfig_lang, $fbConfig;
+    global $database, $lang, $fbConfig;
 
     require_once("includes/pageNavigation.php");
 
-    $orderby = mosGetParam($_REQUEST, 'orderby', 'registerDate');
-    $direction = mosGetParam($_REQUEST, 'direction', 'ASC');
-    $search = mosGetParam($_REQUEST, 'search', '');
-    $limitstart = (int) mosGetParam($_REQUEST, 'limitstart', 0);
-    $limit = (int) mosGetParam($_REQUEST, 'limit', $fbConfig->userlist_rows);
+    $orderby = JRequest::getVar('orderby', 'registerDate');
+    $direction = JRequest::getVar('direction', 'ASC');
+    $search = JRequest::getVar('search', '');
+    $limitstart = (int) JRequest::getVar('limitstart', 0);
+    $limit = (int) JRequest::getVar('limit', $fbConfig->userlist_rows);
 
     // Total
     $database->setQuery("SELECT count(id) FROM #__users");
@@ -162,7 +162,7 @@ class HTML_userlist_content
                                 </td>
 
                                 <td align = "right">
-                                    <form name = "usrlform" method = "post" action = "<?php echo sefRelToAbs("$base_url"); ?>" onsubmit = "return validate()">
+                                    <form name = "usrlform" method = "post" action = "<?php echo JRoute::_("$base_url"); ?>" onsubmit = "return validate()">
                                         <input type = "text"
                                             name = "search"
                                             class = "inputbox"
@@ -219,9 +219,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-4 <?php echo $boardclass; ?>sectiontableheader" align="center">
-<?php echo _KUNENA_USRL_NAME; ?> <a href = "<?php echo sefRelToAbs("$base_url&amp;orderby=name&amp;direction=ASC"); ?>">
+<?php echo _KUNENA_USRL_NAME; ?> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=name&amp;direction=ASC"); ?>">
 
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif'; ?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo sefRelToAbs("$base_url&amp;orderby=name&amp;direction=DESC"); ?>">
+    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif'; ?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=name&amp;direction=DESC"); ?>">
 
     <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/up.gif';?>"  border = "0" alt = "<?php echo _KUNENA_USRL_DESC; ?>" /></a>
                                     </th>
@@ -236,9 +236,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-5 <?php echo $boardclass; ?>sectiontableheader" align="center">
-<?php echo _KUNENA_USRL_USERNAME; ?> <a href = "<?php echo sefRelToAbs("$base_url&amp;orderby=username&amp;direction=ASC"); ?>">
+<?php echo _KUNENA_USRL_USERNAME; ?> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=username&amp;direction=ASC"); ?>">
 
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ; ?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo sefRelToAbs("$base_url&amp;orderby=username&amp;direction=DESC"); ?>">
+    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ; ?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=username&amp;direction=DESC"); ?>">
 
     <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/up.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_DESC; ?>" /></a>
                                     </th>
@@ -253,9 +253,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-6 <?php echo $boardclass; ?>sectiontableheader" align="center">
-<?php echo _KUNENA_USRL_GROUP; ?> <a href = "<?php echo sefRelToAbs("$base_url&amp;orderby=group_id&amp;direction=ASC"); ?>">
+<?php echo _KUNENA_USRL_GROUP; ?> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=group_id&amp;direction=ASC"); ?>">
 
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?> " border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo sefRelToAbs("$base_url&amp;orderby=group_id&amp;direction=DESC"); ?>">
+    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?> " border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=group_id&amp;direction=DESC"); ?>">
 
     <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/up.gif'; ?>" border = "0" alt = "<?php echo _KUNENA_USRL_DESC; ?>" /></a>
                                     </th>
@@ -270,9 +270,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-7 <?php echo $boardclass; ?>sectiontableheader" align="center">
-<?php echo _KUNENA_USRL_POSTS; ?> <a href = "<?php echo sefRelToAbs("$base_url&amp;orderby=posts&amp;direction=ASC"); ?>">
+<?php echo _KUNENA_USRL_POSTS; ?> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=posts&amp;direction=ASC"); ?>">
 
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo sefRelToAbs("$base_url&amp;orderby=posts&amp;direction=DESC"); ?>">
+    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=posts&amp;direction=DESC"); ?>">
 
     <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/up.gif'; ?>" border = "0" alt = "<?php echo _KUNENA_USRL_DESC; ?>" /></a>
                                     </th>
@@ -287,9 +287,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-7 <?php echo $boardclass; ?>sectiontableheader" align="center">
-<?php echo _KUNENA_USRL_KARMA; ?> <a href = "<?php echo sefRelToAbs("$base_url&amp;orderby=karma&amp;direction=ASC"); ?>">
+<?php echo _KUNENA_USRL_KARMA; ?> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=karma&amp;direction=ASC"); ?>">
 
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>"  border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo sefRelToAbs("$base_url&amp;orderby=karma&amp;direction=DESC"); ?>">
+    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>"  border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=karma&amp;direction=DESC"); ?>">
 
     <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/up.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_DESC; ?>" /></a>
                                     </th>
@@ -304,9 +304,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-8 <?php echo $boardclass; ?>sectiontableheader" align="center">
-<?php echo _KUNENA_USRL_EMAIL; ?> <a href = "<?php echo sefRelToAbs("$base_url&amp;orderby=email&amp;direction=ASC"); ?>">
+<?php echo _KUNENA_USRL_EMAIL; ?> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=email&amp;direction=ASC"); ?>">
 
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo sefRelToAbs("$base_url&amp;orderby=email&amp;direction=DESC"); ?>">
+    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=email&amp;direction=DESC"); ?>">
 
     <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/up.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_DESC; ?>" /></a>
                                     </th>
@@ -321,9 +321,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-9 <?php echo $boardclass; ?>sectiontableheader" align="center">
-<?php echo _KUNENA_USRL_USERTYPE; ?> <a href = "<?php echo sefRelToAbs("$base_url&amp;orderby=usertype&amp;direction=ASC"); ?>">
+<?php echo _KUNENA_USRL_USERTYPE; ?> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=usertype&amp;direction=ASC"); ?>">
 
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo sefRelToAbs("$base_url&amp;orderby=usertype&amp;direction=DESC"); ?>">
+    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=usertype&amp;direction=DESC"); ?>">
 
     <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/up.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_DESC; ?>" /></a>
                                     </th>
@@ -338,9 +338,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-10 <?php echo $boardclass; ?>sectiontableheader" align="center">
-<?php echo _KUNENA_USRL_JOIN_DATE; ?> <a href = "<?php echo sefRelToAbs("$base_url&amp;orderby=registerDate&amp;direction=ASC"); ?>">
+<?php echo _KUNENA_USRL_JOIN_DATE; ?> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=registerDate&amp;direction=ASC"); ?>">
 
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo sefRelToAbs("$base_url&amp;orderby=registerDate&amp;direction=DESC"); ?>">
+    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=registerDate&amp;direction=DESC"); ?>">
 
     <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/up.gif'; ?>" border = "0" alt = "<?php echo _KUNENA_USRL_DESC; ?>" /></a>
                                     </th>
@@ -355,9 +355,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-11  <?php echo $boardclass; ?>sectiontableheader" align="center">
-<?php echo _KUNENA_USRL_LAST_LOGIN; ?> <a href = "<?php echo sefRelToAbs("$base_url&amp;orderby=lastvisitDate&amp;direction=ASC"); ?>">
+<?php echo _KUNENA_USRL_LAST_LOGIN; ?> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=lastvisitDate&amp;direction=ASC"); ?>">
 
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo sefRelToAbs("$base_url&amp;orderby=lastvisitDate&amp;direction=DESC"); ?>">
+    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=lastvisitDate&amp;direction=DESC"); ?>">
 
     <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/up.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_DESC; ?>" /></a>
                                     </th>
@@ -371,9 +371,9 @@ class HTML_userlist_content
                                 if ($fbConfig->userlist_userhits)
                                 {
                                 ?>
-<?php echo _KUNENA_USRL_HITS; ?> <a href = "<?php echo sefRelToAbs("$base_url&amp;orderby=uhits&amp;direction=ASC"); ?>">
+<?php echo _KUNENA_USRL_HITS; ?> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=uhits&amp;direction=ASC"); ?>">
 
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo sefRelToAbs("$base_url&amp;orderby=uhits&amp;direction=DESC"); ?>">
+    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=uhits&amp;direction=DESC"); ?>">
 
     <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/up.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_DESC; ?>" /></a>
 
@@ -401,7 +401,7 @@ class HTML_userlist_content
                                 $nr = $i + $limitstart;
 
                                 // Profile Link
-                                $profilelink =  sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX."".$ulrow->id);
+                                $profilelink =  JRoute::_(KUNENA_PROFILE_LINK_SUFFIX."".$ulrow->id);
 
                                 // Avatar
                                 $uslavatar = '';
@@ -622,7 +622,7 @@ class HTML_userlist_content
         <table class = "fb_blocktable" id="fb_userlist_bottom" style="border-bottom:0px;margin:0;" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
                 <tr>
                     <th  class = "th-right  fbs" align="right" style="text-align:right">
-                     <?php echo $pageNav->writePagesCounter(); ?> | <?php echo _KUNENA_USRL_DISPLAY_NR; ?> <?php echo $pageNav->writeLimitBox("$base_url$query_ext"); ?>
+                     <?php echo $pageNav->getPagesCounter(); ?> | <?php echo _KUNENA_USRL_DISPLAY_NR; ?> <?php echo $pageNav->writeLimitBox("$base_url$query_ext"); ?>
                 </th>
             </tr>
         </table>

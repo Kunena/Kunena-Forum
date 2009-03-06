@@ -20,7 +20,7 @@
 **/
 
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 ?>
 <!-- Cat List Bottom -->
@@ -38,7 +38,7 @@ global $fbConfig;
                 {
                 ?>
 
-                    <form action = "<?php echo sefRelToAbs($mainframe->getCfg("live_site")."/index2.php");?>" name = "markAllForumsRead" method = "post">
+                    <form action = "<?php echo JRoute::_(JURI::root()."/index2.php");?>" name = "markAllForumsRead" method = "post">
                         <input type = "hidden" name = "markaction" value = "allread"/>
                         <input type = "hidden" name = "Itemid" value = "<?php echo KUNENA_COMPONENT_ITEMID?>"/>
                         <input type = "hidden" name = "option" value = "com_kunena"/>

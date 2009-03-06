@@ -19,7 +19,7 @@
 * @author TSMF & Jan de Graaff
 **/
 
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 class fbpdfwrapper {
 	// small wrapper class for J1.5 to emulate Cezpdf-class
@@ -63,7 +63,7 @@ function dofreePDF($database)
     require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
     $is_Mod = 0;
 
-    $catid = intval(mosGetParam($_REQUEST, 'catid', 2));
+    $catid = intval(JRequest::getVar('catid', 2));
 
     if (!$is_admin)
     {
@@ -94,8 +94,8 @@ function dofreePDF($database)
 
     if ($letPass || $is_Mod)
     {
-        $id = intval(mosGetParam($_REQUEST, 'id', 1));
-        $catid = intval(mosGetParam($_REQUEST, 'catid', 2));
+        $id = intval(JRequest::getVar('id', 1));
+        $catid = intval(JRequest::getVar('catid', 2));
         //first get the thread id for the current post to later on determine the parent post
         $database->setQuery("SELECT `thread` FROM #__fb_messages WHERE id='$id' AND catid='$catid'");
         $threadid = $database->loadResult();

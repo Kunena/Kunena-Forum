@@ -14,7 +14,7 @@
 * @link http://www.bestofjoomla.com
 **/
 
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 // Debugging helpers
 
@@ -41,7 +41,7 @@ function trigger_dberror($text = '')
 	global $mainframe;
 	echo debug_callstackinfo();
 
-	include ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.version.php');
+	include (JPATH_ROOT . '/components/com_kunena/lib/kunena.version.php');
 	// << $KunenaDbVersion
 ?>
  <!-- Version Info -->
@@ -56,7 +56,7 @@ Installed version:  <?php echo $KunenaDbVersion; ?> | php <?php echo $KunenaPHPV
 
 function check_dberror($text='')
 {
-	global $database;
+	$database = &JFactory::getDBO();
 	if ($database->_errorNum != 0)
 	{
 		trigger_dberror($text);
@@ -65,7 +65,7 @@ function check_dberror($text='')
 
 function trigger_dbwarning($text = '')
 {
-	global $database;
+	$database = &JFactory::getDBO();
 	trigger_error($text.'\n'.$database->stderr(true), E_USER_WARNING);
 }
 

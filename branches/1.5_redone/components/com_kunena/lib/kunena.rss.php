@@ -19,10 +19,10 @@
 * @author TSMF & Jan de Graaff
 **/
 
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
-global $database, $mainframe, $my, $mosConfig_absolute_path, $fbConfig;
-include ($mosConfig_absolute_path . "/components/com_kunena/template/default/smile.class.php");
+global $database, $mainframe, $my, $fbConfig;
+include (JPATH_ROOT . "/components/com_kunena/template/default/smile.class.php");
 
 $hours = 0;
 
@@ -135,13 +135,13 @@ echo "<?xml version=\"1.0\" encoding=\"" . $encoding[1] . "\"?>\n";
     <channel>
         <title><?php echo stripslashes(htmlspecialchars($mosConfig_sitename)); ?> - Forum</title>
         <description>Kunena Site Syndication</description>
-        <link><?php echo $mosConfig_live_site; ?></link>
+        <link><?php echo JURI::root(); ?></link>
         <lastBuildDate><?php echo date("r");?></lastBuildDate>
         <generator>Kunena @fbversion@</generator>
         <image>
 	        <url><?php echo KUNENA_URLEMOTIONSPATH; ?>rss.gif</url>
 	        <title>Powered by Kunena</title>
-	        <link><?php echo $mosConfig_live_site; ?></link>
+	        <link><?php echo JURI::root(); ?></link>
 	        <description>Kunena Site Syndication</description>
         </image>
 <?php

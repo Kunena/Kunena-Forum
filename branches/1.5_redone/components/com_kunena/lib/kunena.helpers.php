@@ -20,7 +20,7 @@
 **/
 
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 
 
@@ -61,7 +61,7 @@ function fbAssertOrGoTo($predicate, $msg, $url)
     if (!$predicate)
     {
         $msg = fbJsEscape($msg);
-        $url = sefRelToAbs($url);
+        $url = JRoute::_($url);
         echo "<script> alert('$msg'); window.location=$url'; </script>\n";
     }
 }
@@ -69,7 +69,7 @@ function fbAssertOrGoTo($predicate, $msg, $url)
 // FIXME: deprecated
 function fbSetTimeout($url, $time, $script = 1)
 {
-    $url = sefRelToAbs($url);
+    $url = JRoute::_($url);
 
     if ($script)
         echo CKunenaLink::GetAutoRedirectHTML($url, $time);

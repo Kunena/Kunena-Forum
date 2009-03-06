@@ -19,7 +19,7 @@
 * @author TSMF & Jan de Graaff
 **/
 // Dont allow direct linking
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 // Need purify function for search result display
 if (file_exists(KUNENA_ABSTMPLTPATH."/smile.class.php")) {
@@ -265,7 +265,7 @@ class CKunenaSearch
                     $searchResultList = str_replace("}}", '</span>', $searchResultList);
                     echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '">';
                     echo '<td  class = "td-1" ><a href="'
-                             . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $result->id . '&amp;catid=' . $result->catid) . '#' . $result->id . '" >' . $ressubject . '</a><br />' . $searchResultList . '<br /><br /></td>';
+                             . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $result->id . '&amp;catid=' . $result->catid) . '#' . $result->id . '" >' . $ressubject . '</a><br />' . $searchResultList . '<br /><br /></td>';
                     echo '<td class = "td-2" >' . html_entity_decode_utf8(stripslashes($result->name)) . '</td>';
                     echo '<td class = "td-3" >' . date(_DATETIME, $result->time) . '</td></tr>';
                     echo "\n";

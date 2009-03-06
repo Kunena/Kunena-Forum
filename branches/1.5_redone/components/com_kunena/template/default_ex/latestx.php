@@ -20,7 +20,7 @@
 **/
 
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
 
@@ -304,17 +304,17 @@ if (count($threadids) > 0)
 									<?php if ($func!='mylatest') {?>
                                     <td class="fb_list_times_all">
 
-									<?php  $show_list_time = mosGetParam($_REQUEST, 'sel', '');  ?>
+									<?php  $show_list_time = JRequest::getVar('sel', '');  ?>
 									<select class="inputboxusl" onchange="document.location.href=this.options[this.selectedIndex].value;" size="1" name="select">
-									 <option <?php if ($show_list_time =='720') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest'); ?>"><?php echo _SHOW_MONTH ; ?></option>
-									  <option <?php if ($show_list_time =='0') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=0'); ?>"><?php echo _SHOW_LASTVISIT; ?></option>
-									  <option <?php if ($show_list_time =='4') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=4'); ?>"><?php echo _SHOW_4_HOURS; ?></option>
-									  <option <?php if ($show_list_time =='8') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=8'); ?>"><?php echo _SHOW_8_HOURS; ?></option>
-									  <option <?php if ($show_list_time =='12') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=12'); ?>"><?php echo _SHOW_12_HOURS; ?></option>
-									  <option <?php if ($show_list_time =='24') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=24'); ?>"><?php echo _SHOW_24_HOURS; ?></option>
-									  <option <?php if ($show_list_time =='48') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=48'); ?>"><?php echo _SHOW_48_HOURS; ?></option>
-									  <option <?php if ($show_list_time =='168') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=168'); ?>"><?php echo _SHOW_WEEK; ?></option>
-									  <option <?php if ($show_list_time =='8760') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=8760'); ?>"><?php echo _SHOW_YEAR; ?></option>
+									 <option <?php if ($show_list_time =='720') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest'); ?>"><?php echo _SHOW_MONTH ; ?></option>
+									  <option <?php if ($show_list_time =='0') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=0'); ?>"><?php echo _SHOW_LASTVISIT; ?></option>
+									  <option <?php if ($show_list_time =='4') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=4'); ?>"><?php echo _SHOW_4_HOURS; ?></option>
+									  <option <?php if ($show_list_time =='8') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=8'); ?>"><?php echo _SHOW_8_HOURS; ?></option>
+									  <option <?php if ($show_list_time =='12') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=12'); ?>"><?php echo _SHOW_12_HOURS; ?></option>
+									  <option <?php if ($show_list_time =='24') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=24'); ?>"><?php echo _SHOW_24_HOURS; ?></option>
+									  <option <?php if ($show_list_time =='48') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=48'); ?>"><?php echo _SHOW_48_HOURS; ?></option>
+									  <option <?php if ($show_list_time =='168') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=168'); ?>"><?php echo _SHOW_WEEK; ?></option>
+									  <option <?php if ($show_list_time =='8760') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=8760'); ?>"><?php echo _SHOW_YEAR; ?></option>
 									</select>
 
                                   </td>

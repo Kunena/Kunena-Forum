@@ -19,7 +19,7 @@
 * @author TSMF & Jan de Graaff
 **/
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 global $my;
 //securing form elements
@@ -31,8 +31,8 @@ if (!$is_Moderator) {
 
 //but we don't send the email; we might do that in the future, but for now we just want to scare 'em off..
 // determine what to do
-$action = mosGetParam($_POST, 'action', 'list');
-$cid = mosGetParam($_POST, 'cid', array ());
+$action = JRequest::getVar('action', 'list');
+$cid = JRequest::getVar('cid', array ());
 
 switch ($action)
 {
@@ -40,18 +40,18 @@ switch ($action)
         switch (jbDeletePosts($database, $cid))
         {
             case -1:
-                mosRedirect(KUNENA_LIVEURL . 'func=review&amp;catid=' . $catid, "ERROR: The post has been deleted but the text could not be deleted\n Check the #__fb_messages_text table for mesid IN " . explode(',', $cid));
+                $mainframe->redirect(KUNENA_LIVEURL . 'func=review&amp;catid=' . $catid, "ERROR: The post has been deleted but the text could not be deleted\n Check the #__fb_messages_text table for mesid IN " . explode(',', $cid));
 
                 break;
 
             case 0:
-                mosRedirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_DELETE_ERROR);
+                $mainframe->redirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_DELETE_ERROR);
 
                 break;
 
             case 1:
             default:
-                mosRedirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_DELETE_SUCCESS);
+                $mainframe->redirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_DELETE_SUCCESS);
 
                 break;
         }
@@ -62,13 +62,13 @@ switch ($action)
         switch (jbApprovePosts($database, $cid))
         {
             case 0:
-                mosRedirect(KUNENA_LIVEURL . 'amp;func=review&amp;catid=' . $catid, _MODERATION_APPROVE_ERROR);
+                $mainframe->redirect(KUNENA_LIVEURL . 'amp;func=review&amp;catid=' . $catid, _MODERATION_APPROVE_ERROR);
 
                 break;
 
             default:
             case 1:
-                mosRedirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_APPROVE_SUCCESS);
+                $mainframe->redirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_APPROVE_SUCCESS);
 
                 break;
         }
@@ -102,7 +102,7 @@ switch ($action)
 function jbListMessages($allMes, $catid)
 {
     global $fbConfig;
-    echo '<form action="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=review') . '" name="moderation" method="post">';
+    echo '<form action="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=review') . '" name="moderation" method="post">';
 ?>
 
     <script>

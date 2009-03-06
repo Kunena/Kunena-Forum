@@ -20,7 +20,7 @@
 **/
 
 // ensure this file is being included by a parent file
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+defined( '_JEXEC' ) or die('Restricted access');
 
 class fb_Converter {
 	var $xmlFileName=null;
@@ -40,8 +40,8 @@ class fb_Converter {
 	 * Main conversion/import function. Processes XML file
 	 */
 	function doConversion() {
-		global $database, $mosConfig_absolute_path, $mosConfig_live_site;
-		require_once( $mosConfig_absolute_path . '/includes/domit/xml_domit_lite_include.php' );
+		$database = &JFactory::getDBO();
+		require_once( JPATH_ROOT . '/includes/domit/xml_domit_lite_include.php' );
 		if(!$this->silent) {
 ?>
 			<script language=JavaScript>
@@ -74,7 +74,7 @@ class fb_Converter {
 		}
 
 		$componentBaseDir = '';
-		$this->_converterDir = mosPathName( $mosConfig_absolute_path . '/administrator/components/Kunena' ) . '/' . $this->subdir;
+		$this->_converterDir = mosPathName( JPATH_ROOT . '/administrator/components/Kunena' ) . '/' . $this->subdir;
 
 		//initiate XML doc
 		$xmlDoc = new DOMIT_Lite_Document();
@@ -104,7 +104,7 @@ class fb_Converter {
 	 * Processes "phpfile", "query" and "phpcode" child-nodes of the node provided
 	 */
 	function processNode(&$startNode,$batch = 0) {
-		global $database;
+		$database = &JFactory::getDBO();
 		$numChildren =& $startNode->childCount;
 		$childNodes =& $startNode->childNodes;
 

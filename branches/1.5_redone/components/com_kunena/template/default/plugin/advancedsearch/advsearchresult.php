@@ -19,24 +19,24 @@
 * @author TSMF & Jan de Graaff
 **/
 
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
-$searchword = mosGetParam($_REQUEST, 'searchword');
-$titleonly = intval(mosGetParam($_REQUEST, 'titleonly'));
-$searchuser = mosGetParam($_REQUEST, 'searchuser');
-$starteronly = intval(mosGetParam($_REQUEST, 'starteronly'));
-$exactname = intval(mosGetParam($_REQUEST, 'exactname'));
-$replyless = intval(mosGetParam($_REQUEST, 'replyless'));
-$replylimit = intval(mosGetParam($_REQUEST, 'replylimit'));
-$searchdate = mosGetParam($_REQUEST, 'searchdate');
-$beforeafter = mosGetParam($_REQUEST, 'beforeafter');
-$sortby = mosGetParam($_REQUEST, 'sortby');
-$order = mosGetParam($_REQUEST, 'order');
-$catid = mosGetParam($_REQUEST, 'catid');
+$searchword = JRequest::getVar('searchword');
+$titleonly = intval(JRequest::getVar('titleonly'));
+$searchuser = JRequest::getVar('searchuser');
+$starteronly = intval(JRequest::getVar('starteronly'));
+$exactname = intval(JRequest::getVar('exactname'));
+$replyless = intval(JRequest::getVar('replyless'));
+$replylimit = intval(JRequest::getVar('replylimit'));
+$searchdate = JRequest::getVar('searchdate');
+$beforeafter = JRequest::getVar('beforeafter');
+$sortby = JRequest::getVar('sortby');
+$order = JRequest::getVar('order');
+$catid = JRequest::getVar('catid');
 
 // searchword must contain a minimum of 3 characters
 if ($searchword && strlen($searchword) < 3 || strlen($searchword) == '0') {
-    mosRedirect('index.php?option=com_kunena&amp;func=advsearch&amp;Itemid=' . KUNENA_COMPONENT_ITEMID);
+    $mainframe->redirect( JURI::base() .'index.php?option=com_kunena&amp;func=advsearch&amp;Itemid=' . KUNENA_COMPONENT_ITEMID);
 }
 
 $searchword = strval($searchword);

@@ -18,14 +18,14 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @author TSMF & Jan de Graaff
 **/
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=unsubscribe'); ?>" method = "post" name = "postform">
+<form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=unsubscribe'); ?>" method = "post" name = "postform">
 	<input type = "hidden" name = "do" value = "unsubscribe"/>
 	<table class = "fb_blocktable" id = "fb_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
 		<thead>
@@ -65,7 +65,8 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 			$k    = 0; //value for alternating rows
 
-			require("$mosConfig_absolute_path/includes/pageNavigation.php");
+			require(JPATH_ROOT . "/includes/pageNavigation.php");
+			// FIXME: J!1.5
 			$pageNav = new mosPageNav($total, $limitstart, $limit);
 
 			if ($csubslist > 0)
@@ -81,7 +82,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 						$k = 1 - $k;
 
 						echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" >';
-						echo '<td class="td-1" width="54%" align="left">' . $enum . ': <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $sub->catid . '&amp;id=' . $sub->id) . '">' . htmlspecialchars(stripslashes($sub->subject));
+						echo '<td class="td-1" width="54%" align="left">' . $enum . ': <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $sub->catid . '&amp;id=' . $sub->id) . '">' . htmlspecialchars(stripslashes($sub->subject));
 			?>
 
 						</a>
@@ -133,7 +134,7 @@ echo $pageNav->writeLimitBox("index.php?option=com_kunena&amp;func=myprofile&amp
 					?>
 
 					<br/>
-<?php echo $pageNav->writePagesCounter(); ?>
+<?php echo $pageNav->getPagesCounter(); ?>
 				</td>
 			</tr>
 		</tbody>

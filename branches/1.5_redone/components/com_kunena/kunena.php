@@ -20,7 +20,7 @@
 **/
 
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 // Just for debugging and performance analysis
 $mtime = explode(" ", microtime());
@@ -30,47 +30,49 @@ $tstart = $mtime[1] + $mtime[0];
 error_reporting (E_ALL ^ E_NOTICE);
 
 // Get all the variables we need and strip them in case
-$action 		= mosGetParam($_REQUEST, 'action', '');
-$attachfile 	= mosGetParam($_FILES['attachfile'], 'name', '');
-$attachimage 	= mosGetParam($_FILES['attachimage'], 'name', '');
-$catid 			= intval(mosGetParam($_REQUEST, 'catid', 0));
-$contentURL 	= mosGetParam($_REQUEST, 'contentURL', '');
-$do 			= mosGetParam($_REQUEST, 'do', '');
-$email 			= mosGetParam($_REQUEST, 'email', '');
-$favoriteMe 	= mosGetParam($_REQUEST, 'favoriteMe', '');
-$fb_authorname 	= mosGetParam($_REQUEST, 'fb_authorname', '');
-$fb_thread 		= intval(mosGetParam($_REQUEST, 'fb_thread', 0));
-$func 			= strtolower(mosGetParam($_REQUEST, 'func', ''));
-$id 			= intval(mosGetParam($_REQUEST, 'id', ''));
-$limit 			= intval(mosGetParam($_REQUEST, 'limit', 0));
-$limitstart 	= intval(mosGetParam($_REQUEST, 'limitstart', 0));
-$markaction 	= mosGetParam($_REQUEST, 'markaction', '');
-$message 		= mosGetParam($_REQUEST, 'message', '');
-$page 			= intval(mosGetParam($_REQUEST, 'page', 0));
-$parentid 		= intval(mosGetParam($_REQUEST, 'parentid', 0));
-$pid 			= intval(mosGetParam($_REQUEST, 'pid', 0));
-$replyto 		= intval(mosGetParam($_REQUEST, 'replyto', 0));
-$resubject 		= mosGetParam($_REQUEST, 'resubject', '');
-$return 		= mosGetParam($_REQUEST, 'return', '');
-$rowid 			= intval(mosGetParam($_REQUEST, 'rowid', 0));
-$rowItemid 		= intval(mosGetParam($_REQUEST, 'rowItemid', 0));
-$sel 			= mosGetParam($_REQUEST, 'sel', '');
-$subject 		= mosGetParam($_REQUEST, 'subject', '');
-$subscribeMe 	= mosGetParam($_REQUEST, 'subscribeMe', '');
-$thread 		= intval(mosGetParam($_REQUEST, 'thread', 0));
-$topic_emoticon = mosGetParam($_REQUEST, 'topic_emoticon', '');
-$userid 		= intval(mosGetParam($_REQUEST, 'userid', 0));
-$view 			= mosGetParam($_REQUEST, 'view', '');
-$msgpreview 	= mosGetParam($_REQUEST, 'msgpreview', '');
+$action 		= JRequest::getVar('action', '');
+// FIXME: J!1.5: These are wrong!!
+$attachfile 	= JRequest::getVar($_FILES['attachfile'], 'name', '');
+$attachimage 	= JRequest::getVar($_FILES['attachimage'], 'name', '');
+
+$catid 			= intval(JRequest::getVar('catid', 0));
+$contentURL 	= JRequest::getVar('contentURL', '');
+$do 			= JRequest::getVar('do', '');
+$email 			= JRequest::getVar('email', '');
+$favoriteMe 	= JRequest::getVar('favoriteMe', '');
+$fb_authorname 	= JRequest::getVar('fb_authorname', '');
+$fb_thread 		= intval(JRequest::getVar('fb_thread', 0));
+$func 			= strtolower(JRequest::getVar('func', ''));
+$id 			= intval(JRequest::getVar('id', ''));
+$limit 			= intval(JRequest::getVar('limit', 0));
+$limitstart 	= intval(JRequest::getVar('limitstart', 0));
+$markaction 	= JRequest::getVar('markaction', '');
+$message 		= JRequest::getVar('message', '');
+$page 			= intval(JRequest::getVar('page', 0));
+$parentid 		= intval(JRequest::getVar('parentid', 0));
+$pid 			= intval(JRequest::getVar('pid', 0));
+$replyto 		= intval(JRequest::getVar('replyto', 0));
+$resubject 		= JRequest::getVar('resubject', '');
+$return 		= JRequest::getVar('return', '');
+$rowid 			= intval(JRequest::getVar('rowid', 0));
+$rowItemid 		= intval(JRequest::getVar('rowItemid', 0));
+$sel 			= JRequest::getVar('sel', '');
+$subject 		= JRequest::getVar('subject', '');
+$subscribeMe 	= JRequest::getVar('subscribeMe', '');
+$thread 		= intval(JRequest::getVar('thread', 0));
+$topic_emoticon = JRequest::getVar('topic_emoticon', '');
+$userid 		= intval(JRequest::getVar('userid', 0));
+$view 			= JRequest::getVar('view', '');
+$msgpreview 	= JRequest::getVar('msgpreview', '');
 
 // Debug helpers
-include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.debug.php");
+include_once (JPATH_ROOT . "/components/com_kunena/lib/kunena.debug.php");
 
 // get Kunenas configuration params in
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.config.class.php");
+require_once (JPATH_ROOT . "/components/com_kunena/lib/kunena.config.class.php");
 
 // Get CKunanaUser and CKunenaUsers
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.user.class.php");
+require_once (JPATH_ROOT . "/components/com_kunena/lib/kunena.user.class.php");
 
 global $fbConfig, $KunenaUser;
 
@@ -79,17 +81,17 @@ $KunenaUser = new CKunenaUser($my->id);
 // Load configuration and personal settings for current user
 $fbConfig = new CKunenaConfig($KunenaUser);
 
-global $mosConfig_lang, $fbIcons;
+global $lang, $fbIcons;
 global $is_Moderator;
 
 // ERROR: global scope mix
 global $message;
 
 // Central Location for all internal links
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.link.class.php");
+require_once (JPATH_ROOT . "/components/com_kunena/lib/kunena.link.class.php");
 
 // Class structure should be used after this and all the common task should be moved to this class
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/class.kunena.php");
+require_once (JPATH_ROOT . "/components/com_kunena/class.kunena.php");
 
 // get right Language file
 if (file_exists(KUNENA_ABSADMPATH . '/language/kunena.' . KUNENA_LANG . '.php'))
@@ -104,7 +106,7 @@ else
 // Include Clexus PM class file
 if ($fbConfig->pm_component == "clexuspm")
 {
-    require_once ($mosConfig_absolute_path . '/components/com_mypms/class.mypms.php');
+    require_once (JPATH_ROOT . '/components/com_mypms/class.mypms.php');
     $ClexusPMconfig = new ClexusPMConfig();
 }
 
@@ -140,7 +142,7 @@ if ($fbConfig->joomlastyle < 1) {
 // Include Badword class file
 if ($fbConfig->badwords and !class_exists('Badword')) {
 	foreach (array('badwords2','badword') as $com_bw) {
-		$com_bw = $mosConfig_absolute_path.'/components/com_'.$com_bw.'/class.'.$com_bw.'.php';
+		$com_bw = JPATH_ROOT.'/components/com_'.$com_bw.'/class.'.$com_bw.'.php';
 		if (is_file($com_bw)) {
 			require_once ($com_bw);
 			break;
@@ -176,31 +178,33 @@ if ($func == "showcaptcha") {
    die();
 }
 
+$document =& JFactory::getDocument();
+
 // Add required header tags
 if (defined('KUNENA_JQURL'))
 {
-	$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
+	$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
 }
 
 // inline jscript with image location
-$mainframe->addCustomHeadTag('<script type="text/javascript">
+$document->addCustomTag('<script type="text/javascript">
 jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";</script>');
 
 if (defined('KUNENA_COREJSURL'))
 {
-	$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_COREJSURL . '"></script>');
+	$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_COREJSURL . '"></script>');
 }
 
 if ($fbConfig->joomlastyle < 1) {
         if (file_exists(KUNENA_JTEMPLATEPATH.'/css/kunena.forum.css')) {
-           $mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_JTEMPLATEURL . '/css/kunena.forum.css" />');
+           $document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_JTEMPLATEURL . '/css/kunena.forum.css" />');
                 }
         else {
-         $mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_TMPLTCSSURL . '" />');
+         $document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_TMPLTCSSURL . '" />');
          }
     }
 else {
-   $mainframe->addCustomHeadTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_DIRECTURL . '/template/default/joomla.css" />');
+   $document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_DIRECTURL . '/template/default/joomla.css" />');
     }
 
 // WHOIS ONLINE IN FORUM
@@ -286,10 +290,10 @@ $cbitemid = 0;
 if ($fbConfig->fb_profile == 'cb')
 {
     // Include CB language files
-    $UElanguagePath = $mainframe->getCfg('absolute_path') . '/components/com_comprofiler/plugin/language';
-    $UElanguage = $mainframe->getCfg('lang');
+    $UElanguagePath = JPATH_ROOT . '/components/com_comprofiler/plugin/language';
+    $UElanguage = $lang;
 
-    if (!file_exists($UElanguagePath . '/' . $mosConfig_lang . '/' . $mosConfig_lang . '.php')) {
+    if (!file_exists($UElanguagePath . '/' . $lang . '/' . $lang . '.php')) {
         $UElanguage = 'default_language';
         }
 
@@ -310,9 +314,6 @@ else
 {
     include_once (KUNENA_ABSPATH . '/template/default/icons.php');
 }
-
-//Get the userid; sometimes the new var works whilst $my->id doesn't..?!?
-$my_id = $my->id;
 
 // Check if we only allow registered users
 if ($fbConfig->regonly && !$my_id)
@@ -404,7 +405,7 @@ else
 		unset($fbSessionUpd);
 
 		if ($markaction == "allread") {
-		        mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _GEN_ALL_MARKED);
+		        $mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _GEN_ALL_MARKED);
 		}
 
 		// Now lets get the view type for the forum
@@ -791,7 +792,7 @@ else
         case 'search':
             require_once (KUNENA_ABSSOURCESPATH . 'kunena.search.class.php');
 
-            $searchword = mosGetParam($_REQUEST, 'searchword', '');
+            $searchword = JRequest::getVar('searchword', '');
 
             $KunenaSearch = &new CKunenaSearch($database, $searchword, $my_id, $limitstart, $fbConfig->messages_per_page_search);
             $KunenaSearch->show();
@@ -844,7 +845,7 @@ else
             $database->query();
             	check_dberror('Unable to update readtopics in session table.');
 
-            mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid)), _GEN_FORUM_MARKED);
+            $mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid)), _GEN_FORUM_MARKED);
             break;
 
         #########################################################################################
@@ -873,11 +874,11 @@ else
 
         /*    template chooser    */
         case "templatechooser":
-            $fb_user_template = strval(mosGetParam($_COOKIE, 'fb_user_template', ''));
+            $fb_user_template = strval(JRequest::getVar('fb_user_template', '','COOKIE'));
 
-            $fb_user_img_template = strval(mosGetParam($_REQUEST, 'fb_user_img_template', $fb_user_img_template));
-            $fb_change_template = strval(mosGetParam($_REQUEST, 'fb_change_template', $fb_user_template));
-            $fb_change_img_template = strval(mosGetParam($_REQUEST, 'fb_change_img_template', $fb_user_img_template));
+            $fb_user_img_template = strval(JRequest::getVar('fb_user_img_template', $fb_user_img_template));
+            $fb_change_template = strval(JRequest::getVar('fb_change_template', $fb_user_template));
+            $fb_change_img_template = strval(JRequest::getVar('fb_change_img_template', $fb_user_img_template));
 
             if ($fb_change_template)
             {
@@ -889,7 +890,7 @@ else
                     }
 
                 // check that template exists in case it was deleted
-                if (file_exists($mosConfig_absolute_path . '/components/com_kunena/template/' . $fb_change_template . '/kunena.forum.css'))
+                if (file_exists(JPATH_ROOT . '/components/com_kunena/template/' . $fb_change_template . '/kunena.forum.css'))
                 {
                     $lifetime = 60 * 10;
                     $fb_current_template = $fb_change_template;
@@ -910,7 +911,7 @@ else
                     }
 
                 // check that template exists in case it was deleted
-                if (file_exists($mosConfig_absolute_path . '/components/com_kunena/template/' . $fb_change_img_template . '/kunena.forum.css'))
+                if (file_exists(JPATH_ROOT . '/components/com_kunena/template/' . $fb_change_img_template . '/kunena.forum.css'))
                 {
                     $lifetime = 60 * 10;
                     $fb_current_img_template = $fb_change_img_template;
@@ -921,7 +922,7 @@ else
                     }
             }
 
-            mosRedirect (htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)));
+            $mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)));
             break;
 
         #########################################################################################
@@ -943,35 +944,18 @@ else
     } //hctiws
 
     // Bottom Module
-    if (mosCountModules('kunena_bottom'))
-    {
 ?>
 
         <div class = "bof-bottom-modul">
-            <?php
-            if (CKunenaTools::isJoomla15())
-            {
-            	$document	= &JFactory::getDocument();
-            	$renderer	= $document->loadRenderer('modules');
-            	$options	= array('style' => 'xhtml');
-            	$position	= 'kunena_bottom';
-            	echo $renderer->render($position, $options, null);
-            }
-            else
-            {
-            	mosLoadModules('kunena_bottom', -2);
-            }
-            ?>
+		<jdoc:include type="modules" name="kunena_bottom" />
         </div>
 
 <?php
-    }
-
     // Credits
     echo '<div class="fb_credits"> ' . CKunenaLink::GetTeamCreditsLink($catid, _KUNENA_POWEREDBY) . ' ' . CKunenaLink::GetCreditsLink();
     if ($fbConfig->enablerss)
     {
-    	$mainframe->addCustomHeadTag('<link rel="alternate" type="application/rss+xml" title="'._LISTCAT_RSS.'" href="'.sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=fb_rss&amp;no_html=1').'" />');
+    	$document->addCustomTag('<link rel="alternate" type="application/rss+xml" title="'._LISTCAT_RSS.'" href="'.JRoute::_(KUNENA_LIVEURLREL.'&amp;func=fb_rss&amp;no_html=1').'" />');
         echo CKunenaLink::GetRSSLink('<img class="rsslink" src="' . KUNENA_URLEMOTIONSPATH . 'rss.gif" border="0" alt="' . _LISTCAT_RSS . '" title="' . _LISTCAT_RSS . '" />');
     }
     echo '</div>';

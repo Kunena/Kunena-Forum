@@ -19,7 +19,7 @@
 * @author TSMF & Jan de Graaff
 **/
 
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
 global $is_Moderator;
@@ -64,8 +64,8 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
 							    $database->query() or trigger_dberror("Unable to update karma.");
 							    $database->setQuery('UPDATE #__fb_users SET karma=karma+1 WHERE userid=' . $userid . '');
 							    $database->query() or trigger_dberror("Unable to update karma.");
-							    echo _KARMA_INCREASED . '<br /> <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
-							echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&id='.$pid), 3500);
+							    echo _KARMA_INCREASED . '<br /> <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
+							echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&id='.$pid), 3500);
                             }
                             else if ($do == "decrease")
                             {
@@ -73,8 +73,8 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                                 $database->query() or trigger_dberror("Unable to update karma.");
                                 $database->setQuery('UPDATE #__fb_users SET karma=karma-1 WHERE userid=' . $userid . '');
                                 $database->query() or trigger_dberror("Unable to update karma.");
-                                echo _KARMA_DECREASED . '<br /> <a href="' . sefRelToAbs(KUNENA_LIVEURLREL. '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
-				echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&id='.$pid), 3500);
+                                echo _KARMA_DECREASED . '<br /> <a href="' . JRoute::_(KUNENA_LIVEURLREL. '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
+				echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&id='.$pid), 3500);
                             }
                             else
                             { //you got me there... don't know what to $do
@@ -84,7 +84,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                             }
                         }
                         else
-                            echo _KARMA_WAIT . '<br /> ' . _KARMA_BACK . ' <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
+                            echo _KARMA_WAIT . '<br /> ' . _KARMA_BACK . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
                     }
                     else if ($my->id == $userid) // In case the user tries modifing his own karma by changing the userid from the URL...
                     {
@@ -92,14 +92,14 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                         {
                             $database->setQuery('UPDATE #__fb_users SET karma=karma-10, karma_time=' . $time . ' WHERE userid=' . $my->id . '');
                             $database->query() or trigger_dberror("Unable to update karma.");
-							echo _KARMA_SELF_INCREASE . '<br />' . _KARMA_BACK . ' <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
+							echo _KARMA_SELF_INCREASE . '<br />' . _KARMA_BACK . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
                         }
 
                         if ($do == "decrease") // Stop him from decreasing his karma but still update karma_time
                         {
                             $database->setQuery('UPDATE #__fb_users SET karma_time=' . $time . ' WHERE userid=' . $my->id . '');
                             $database->query() or trigger_dberror("Unable to update karma.");
-                            echo _KARMA_SELF_DECREASE . '<br /> ' . _KARMA_BACK . ' <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
+                            echo _KARMA_SELF_DECREASE . '<br /> ' . _KARMA_BACK . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
                         }
                     }
                 }

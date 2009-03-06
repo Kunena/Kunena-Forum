@@ -19,7 +19,7 @@
 * @author TSMF & Jan de Graaff
 **/
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 global $is_Moderator;
 
@@ -42,9 +42,10 @@ $ip = $_SERVER["REMOTE_ADDR"];
 // ERROR: mixed global $editmode
 global $editmode;
 $editmode = 0;
-// $message=mosGetParam($_POST, 'message','',1); // For some reason this just doesn't work like it should
-$message = mosGetParam($_REQUEST, "message", null, _MOS_ALLOWRAW);
-$resubject = mosGetParam($_REQUEST, "resubject", null);
+// $message=JRequest::getVar('message','',1); // For some reason this just doesn't work like it should
+// FIXME: J!1.5
+$message = JRequest::getVar("message", null, _MOS_ALLOWRAW);
+$resubject = JRequest::getVar("resubject", null);
 
 // Begin captcha
 if ($fbConfig->captcha == 1 && $my->id < 1) {
@@ -52,17 +53,9 @@ if ($fbConfig->captcha == 1 && $my->id < 1) {
 
     if ($message != NULL)
     {
-		if (class_exists('JFactory')) {
-    		// J1.5
-			$session =& JFactory::getSession();
-			$rand = $session->get('fb_image_random_value');
-			unset($session);
-		} else {
-			// J1.0
-			session_start();
-			$rand = $_SESSION['fb_image_random_value'];
-		}
-
+	$session =& JFactory::getSession();
+	$rand = $session->get('fb_image_random_value');
+	unset($session);
     	if (md5($number) != $rand)
         {
             $mess = _KUNENA_CAPERR;
@@ -554,7 +547,7 @@ $catName = $objCatInfo->name;
                     }
             ?>
 
-                    <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
+                    <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
                         <input type = "hidden" name = "parentid" value = "<?php echo $parentid;?>"/>
 
                         <input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
@@ -604,7 +597,7 @@ $catName = $objCatInfo->name;
                     $authorName = $my_name;
                         ?>
 
-                    <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
+                    <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
                         <input type = "hidden" name = "parentid" value = "<?php echo $parentid;?>"/>
 
                         <input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
@@ -642,20 +635,20 @@ $catName = $objCatInfo->name;
                     //$resubject = strtr($resubject, $table);
                     $fromBot = 1; //this new topic comes from the discuss mambot
                     $authorName = htmlspecialchars($my_name);
-                    $rowid = mosGetParam($_REQUEST, 'rowid', 0);
-                    $rowItemid = mosGetParam($_REQUEST, 'rowItemid', 0);
+                    $rowid = JRequest::getVar('rowid', 0);
+                    $rowItemid = JRequest::getVar('rowItemid', 0);
 
                     if ($rowItemid) {
-                        $contentURL = sefRelToAbs('index.php?option=com_content&amp;task=view&amp;Itemid=' . $rowItemid . '&amp;id=' . $rowid);
+                        $contentURL = JRoute::_('index.php?option=com_content&amp;task=view&amp;Itemid=' . $rowItemid . '&amp;id=' . $rowid);
                     }
                     else {
-                        $contentURL = sefRelToAbs('index.php?option=com_content&amp;task=view&amp;Itemid=1&amp;id=' . $rowid);
+                        $contentURL = JRoute::_('index.php?option=com_content&amp;task=view&amp;Itemid=1&amp;id=' . $rowid);
                     }
 
                     $contentURL = _POST_DISCUSS . ': [url=' . $contentURL . ']' . $resubject . '[/url]';
                         ?>
 
-                    <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL."&amp;func=post");?>" method = "post" name = "postform" enctype = "multipart/form-data">
+                    <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL."&amp;func=post");?>" method = "post" name = "postform" enctype = "multipart/form-data">
                         <input type = "hidden" name = "parentid" value = "<?php echo $parentid;?>"/>
 
                         <input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
@@ -732,7 +725,7 @@ $catName = $objCatInfo->name;
                         $authorName = htmlspecialchars($mes->name);
                         ?>
 
-                        <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL."&amp;catid=$catid&amp;func=post"); ?>" method = "post" name = "postform" enctype = "multipart/form-data"/>
+                        <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL."&amp;catid=$catid&amp;func=post"); ?>" method = "post" name = "postform" enctype = "multipart/form-data"/>
 
                         <input type = "hidden" name = "id" value = "<?php echo $mes->id;?>"/>
 
@@ -774,12 +767,12 @@ $catName = $objCatInfo->name;
                         //}
                     }
                     else {
-			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
                 }
                 else if ($do == "editpostnow")
                 {
-                    $modified_reason = addslashes(mosGetParam($_POST, "modified_reason", null));
+                    $modified_reason = addslashes(JRequest::getVar("modified_reason", null));
                     $modified_by = $my->id;
                     $modified_time = CKunenaTools::fbGetInternalTime();
                     $id  = (int) $id;
@@ -889,13 +882,13 @@ $catName = $objCatInfo->name;
                         }
                     }
                     else {
-			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
                 }
                 else if ($do == "delete")
                 {
                     if (!$is_Moderator) {
-			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $id = (int)$id;
@@ -907,7 +900,7 @@ $catName = $objCatInfo->name;
                     {
                         ?>
 
-                        <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL."&amp;catid=$catid&amp;func=post"); ?>" method = "post" name = "myform">
+                        <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL."&amp;catid=$catid&amp;func=post"); ?>" method = "post" name = "myform">
                             <input type = "hidden" name = "do" value = "deletepostnow"/>
 
                             <input type = "hidden" name = "id" value = "<?php echo $mes->id;?>"/> <?php echo _POST_ABOUT_TO_DELETE; ?>: <strong><?php echo stripslashes(htmlspecialchars($mes->subject)); ?></strong>.
@@ -924,7 +917,7 @@ $catName = $objCatInfo->name;
 
     <br/>
 
-    <a href = "javascript:document.myform.submit();"><?php echo _GEN_CONTINUE; ?></a> | <a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL."&amp;func=view&amp;catid=$catid;&amp;id=$id");?>"><?php echo _GEN_CANCEL; ?></a>
+    <a href = "javascript:document.myform.submit();"><?php echo _GEN_CONTINUE; ?></a> | <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL."&amp;func=view&amp;catid=$catid;&amp;id=$id");?>"><?php echo _GEN_CANCEL; ?></a>
                         </form>
 
             <?php
@@ -933,11 +926,11 @@ $catName = $objCatInfo->name;
                 else if ($do == "deletepostnow")
                 {
                     if (!$is_Moderator) {
-			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
-                    $id = (int)mosGetParam($_POST, 'id', '');
-                    $dellattach = mosGetParam($_POST, 'delAttachments', '') == 'delAtt' ? 1 : 0;
+                    $id = (int)JRequest::getVar('id', '');
+                    $dellattach = JRequest::getVar('delAttachments', '') == 'delAtt' ? 1 : 0;
                     $thread = fb_delete_post($database, $id, $dellattach);
 
                     CKunenaTools::reCountBoards();
@@ -987,7 +980,7 @@ $catName = $objCatInfo->name;
                 else if ($do == "move")
                 {
                     if (!$is_Moderator) {
-			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $catid = (int)$catid;
@@ -1003,7 +996,7 @@ $catName = $objCatInfo->name;
                     	check_dberror("Unable to load messages.");
             ?>
 
-                    <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL."&amp;func=post"); ?>" method = "post" name = "myform">
+                    <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL."&amp;func=post"); ?>" method = "post" name = "myform">
                         <input type = "hidden" name = "do" value = "domovepost"/>
 
                         <input type = "hidden" name = "id" value = "<?php echo $id;?>"/>
@@ -1040,7 +1033,7 @@ $catName = $objCatInfo->name;
                 {
                     $catid = (int)$catid;
                     $id = (int)$id;
-                    $bool_leaveGhost = (int)mosGetParam($_POST, 'leaveGhost', 0);
+                    $bool_leaveGhost = (int)JRequest::getVar('leaveGhost', 0);
                     //get the some details from the original post for later
                     $database->setQuery("SELECT `subject`, `catid`, `time` AS timestamp FROM #__fb_messages WHERE `id`='$id'");
                     $oldRecord = $database->loadObjectList();
@@ -1048,7 +1041,7 @@ $catName = $objCatInfo->name;
 
                     $newCatObj = new jbCategory($database, $oldRecord[0]->catid);
 		    if (!fb_has_moderator_permission($database, $newCatObj, $my->id, $is_admin)) {
-			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $newSubject = _MOVED_TOPIC . " " . $oldRecord[0]->subject;
@@ -1097,7 +1090,7 @@ $catName = $objCatInfo->name;
                 {
                     if (!$is_Moderator)
                     {
-			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $catid = (int)$catid;
@@ -1113,7 +1106,7 @@ $catName = $objCatInfo->name;
                     	check_dberror("Unable to load messages.");
             ?>
 
-                    <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL."&func=post"); ?>" method = "post" name = "myform">
+                    <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL."&func=post"); ?>" method = "post" name = "myform">
                         <input type = "hidden" name = "do" value = "domergepost"/>
 
                         <input type = "hidden" name = "id" value = "<?php echo $id;?>"/>
@@ -1156,14 +1149,14 @@ $catName = $objCatInfo->name;
                 else if ($do == "domergepost")
                 {
                     if (!$is_Moderator) {
-			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $catid = (int)$catid;
                     $id = (int)$id;
-                    $target = (int)mosGetParam($_POST, 'threadid', 0);
-                    $how = (int)mosGetParam($_POST, 'how', 0);
-                    $bool_leaveGhost = (int)mosGetParam($_POST, 'leaveGhost', 0);
+                    $target = (int)JRequest::getVar('threadid', 0);
+                    $how = (int)JRequest::getVar('how', 0);
+                    $bool_leaveGhost = (int)JRequest::getVar('leaveGhost', 0);
 
 
                     switch ($how)
@@ -1271,10 +1264,10 @@ $catName = $objCatInfo->name;
                 else if ($do == "split")
                 {
                     if (!$is_Moderator) {
-			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
-                    $error = mosGetParam($_POST, 'error', 0);
+                    $error = JRequest::getVar('error', 0);
                     $id = (int)$id;
                     $catid = (int)$catid;
                     //get list of posts in thread
@@ -1289,7 +1282,7 @@ $catName = $objCatInfo->name;
 
             ?>
 
-                    <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL."&func=post"); ?>" method = "post" name = "myform">
+                    <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL."&func=post"); ?>" method = "post" name = "myform">
                         <input type = "hidden" name = "do" value = "dosplit"/>
 
                         <input type = "hidden" name = "id" value = "<?php echo $id;?>"/>
@@ -1409,14 +1402,14 @@ $catName = $objCatInfo->name;
                 {
                     if (!$is_Moderator)
                     {
-			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $catid = (int)$catid;
-                    $id = (int)mosGetParam($_POST, 'id', 0);
-                    $to_split = mosGetParam($_POST, 'to_split', 0);
-                    $how = (int)mosGetParam($_POST, 'how', 0);
-                    $new_topic = (int)mosGetParam($_POST, 'to_topic', 0);
+                    $id = (int)JRequest::getVar('id', 0);
+                    $to_split = JRequest::getVar('to_split', 0);
+                    $how = (int)JRequest::getVar('how', 0);
+                    $new_topic = (int)JRequest::getVar('to_topic', 0);
                     $topic_change = 0;
 
                     if (!$to_split)
@@ -1590,7 +1583,7 @@ $catName = $objCatInfo->name;
 
 								$obj_fb_cat = new jbCategory($database, $row->catid);
 								if (!fb_has_read_permission($obj_fb_cat, $allow_forum, $aro_group->group_id, $acl)) {
-									mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+									$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
 								return;
 							}
 						}
@@ -1602,7 +1595,7 @@ $catName = $objCatInfo->name;
                             $success_msg = _POST_SUBSCRIBED_TOPIC;
                         }
                     }
-                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $mainframe->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "unsubscribe")
                 {
@@ -1620,7 +1613,7 @@ $catName = $objCatInfo->name;
                             $success_msg = _POST_UNSUBSCRIBED_TOPIC;
                         }
                     }
-                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $mainframe->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "favorite")
                 {
@@ -1638,7 +1631,7 @@ $catName = $objCatInfo->name;
                              $success_msg = _POST_FAVORITED_TOPIC;
                         }
                     }
-                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $mainframe->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "unfavorite")
                 {
@@ -1656,12 +1649,12 @@ $catName = $objCatInfo->name;
                             $success_msg = _POST_UNFAVORITED_TOPIC;
                         }
                     }
-                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $mainframe->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "sticky")
                 {
                     if (!$is_Moderator) {
-			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $id = (int)$id;
@@ -1670,12 +1663,12 @@ $catName = $objCatInfo->name;
                     if ($id && $database->query() && $database->getAffectedRows()==1) {
                         $success_msg = _POST_STICKY_SET;
                     }
-                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $mainframe->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "unsticky")
                 {
                     if (!$is_Moderator) {
-			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $id = (int)$id;
@@ -1684,12 +1677,12 @@ $catName = $objCatInfo->name;
                     if ($id && $database->query() && $database->getAffectedRows()==1) {
                         $success_msg = _POST_STICKY_UNSET;
                     }
-                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $mainframe->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "lock")
                 {
                     if (!$is_Moderator) {
-			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $id = (int)$id;
@@ -1698,12 +1691,12 @@ $catName = $objCatInfo->name;
                     if ($id && $database->query() && $database->getAffectedRows()==1) {
                         $success_msg = _POST_LOCK_SET;
                     }
-                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $mainframe->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "unlock")
                 {
                     if (!$is_Moderator) {
-			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $id = (int)$id;
@@ -1712,7 +1705,7 @@ $catName = $objCatInfo->name;
                     if ($id && $database->query() && $database->getAffectedRows()==1) {
                         $success_msg = _POST_LOCK_UNSET;
                     }
-                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $mainframe->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
             }
             ?>
@@ -1776,10 +1769,10 @@ function hasPostPermission($database, $catid, $replyto, $userid, $pubwrite, $ism
             echo _POST_NO_PUBACCESS2 . "<br /><br />";
 
             if ($fbConfig->fb_profile == 'cb') {
-                echo '<a href="' . sefRelToAbs('index.php?option=com_comprofiler&amp;task=registers') . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
+                echo '<a href="' . JRoute::_('index.php?option=com_comprofiler&amp;task=registers') . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
             }
             else {
-                echo '<a href="' . sefRelToAbs('index.php?option=com_registration&amp;task=register') . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
+                echo '<a href="' . JRoute::_('index.php?option=com_registration&amp;task=register') . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
             }
         }
 
@@ -1981,12 +1974,12 @@ function listThreadHistory($id, $fbConfig, $database)
                         // Joomla Mambot Support
                         if ($fbConfig->jmambot)
                         {
-                            global $_MAMBOTS;
+			    global $mainframe;
                             $row = new t();
                             $row->text = $fb_message_txt;
-                            $_MAMBOTS->loadBotGroup('content');
-                            $params = &new mosParameters('');
-                            $results = $_MAMBOTS->trigger('onPrepareContent', array
+                            JPluginHelper::importPlugin($group, null, false);
+                            $params =& new JParameter('');
+                            $results = $mainframe->triggerEvent( 'onPrepareContent', array
                             (
                             &$row,
                             &$params,

@@ -19,7 +19,7 @@
 * @author TSMF & Jan de Graaff
 **/
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 ?>
 
@@ -44,7 +44,7 @@ global $fbConfig;
             <ul>
                 <li>
                 <?php
-                echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=post&amp;do=reply&amp;catid=' . $catid) . '">' . _GEN_POST_NEW_TOPIC . '</a>';
+                echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=post&amp;do=reply&amp;catid=' . $catid) . '">' . _GEN_POST_NEW_TOPIC . '</a>';
                 ?>
 
                 </li>
@@ -58,7 +58,7 @@ global $fbConfig;
 
                         <li>
                         <?php
-                        echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;id=' . $id . '&amp;catid=' . $catid . '&amp;func=fb_pdf') . '">' . _GEN_PDF . '</a>';
+                        echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;id=' . $id . '&amp;catid=' . $catid . '&amp;func=fb_pdf') . '">' . _GEN_PDF . '</a>';
                         ?>
 
                         </li>
@@ -71,7 +71,7 @@ global $fbConfig;
                 <li>
                 <?php
                 if ($my->id != 0) {
-                    echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=markThisRead&amp;catid=' . $catid) . '">' . _GEN_MARK_THIS_FORUM_READ . '</a>';
+                    echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=markThisRead&amp;catid=' . $catid) . '">' . _GEN_MARK_THIS_FORUM_READ . '</a>';
                 }
                 ?>
 
@@ -84,13 +84,13 @@ global $fbConfig;
 //
 //                    if ($view == "flat")
 //                    {
-//                        echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;view=threaded&amp;id=' . $id . '&amp;catid=' . $catid) . '" >';
+//                        echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;view=threaded&amp;id=' . $id . '&amp;catid=' . $catid) . '" >';
 //                        echo _GEN_THREADED_VIEW;
 //                        echo '</a>';
 //                    }
 //                    else
 //                    {
-//                        echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;id=' . $id . '&amp;view=flat&amp;catid=' . $catid) . '" >';
+//                        echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;id=' . $id . '&amp;view=flat&amp;catid=' . $catid) . '" >';
 //                        echo _GEN_FLAT_VIEW;
 //                        echo "</a>";
 //                    }
@@ -101,7 +101,7 @@ global $fbConfig;
 
                 <li>
                 <?php
-                echo ' <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=latest') . '" >' . _GEN_LATEST_POSTS . '</a>';
+                echo ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=latest') . '" >' . _GEN_LATEST_POSTS . '</a>';
                 ?>
 
                 </li>
@@ -111,7 +111,7 @@ global $fbConfig;
                 {
 				 if ($fbConfig->rules_infb) {
                     echo '<li>';
-                    echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=rules') . '" >';
+                    echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=rules') . '" >';
                     echo _GEN_RULES;
                     echo '</a></li>';
 					} else {
@@ -125,7 +125,7 @@ global $fbConfig;
                 {
 				 if ($fbConfig->help_infb) {
 					echo '<li>';
-					echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=faq') . '" >';
+					echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=faq') . '" >';
 					echo _GEN_HELP;
 					echo '</a></li>';
 					} else {

@@ -19,7 +19,7 @@
 * @author TSMF & Jan de Graaff
 **/
 // Dont allow direct linking
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 global $is_Moderator;
 
@@ -456,7 +456,7 @@ else
 
 function showChildren($category, $prefix = "", &$allow_forum)
 {
-    global $database;
+    $database = &JFactory::getDBO();
     $database->setQuery("SELECT id, name, parent FROM #__fb_categories WHERE parent='$category'  and published='1' order by ordering");
     $forums = $database->loadObjectList();
     	check_dberror("Unable to load categories.");

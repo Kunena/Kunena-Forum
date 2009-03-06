@@ -20,12 +20,12 @@
 **/
 
 // MOS Intruder Alerts
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
-$catid = intval(mosGetParam($_REQUEST, "catid", 0));
+$catid = intval(JRequest::getInt("catid", 0, 'REQUEST'));
 
 $options = array ();
-$options[] = mosHTML::makeOption('0', _KUNENA_FORUM_TOP);
+$options[] = JHTML::_('select.option', '0', _KUNENA_FORUM_TOP);
 $lists['parent'] = JJ_categoryParentList($catid, "", $options);
 ?>
 <form id = "jumpto" name = "jumpto" method = "get" target = "_self" action = "index.php">

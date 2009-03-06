@@ -19,15 +19,15 @@
 * @author TSMF & Jan de Graaff
 **/
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
 
 $mainframe->setPageTitle(_ANN_ANNOUNCEMENTS . ' - ' . stripslashes($fbConfig->board_title));
 
 # Check for Editor rights  $fbConfig->annmodid
-$do = mosGetParam($_REQUEST, "do", "");
-$id = intval(mosGetParam($_REQUEST, "id", ""));
+$do = JRequest::getVar("do", "");
+$id = intval(JRequest::getVar("id", ""));
 $user_fields = @explode(',', $fbConfig->annmodid);
 
 if (in_array($my->id, $user_fields) || $my->usertype == 'Administrator' || $my->usertype == 'Super Administrator') {
@@ -39,8 +39,8 @@ else {
 
 $is_user = (strtolower($my->usertype) <> '');
 
-$showlink = sefRelToAbs('index.php?option=com_kunena&amp;func=announcement' . KUNENA_COMPONENT_ITEMID_SUFFIX . '&amp;do=show');
-$addlink = sefRelToAbs('index.php?option=com_kunena&amp;func=announcement' . KUNENA_COMPONENT_ITEMID_SUFFIX . '&amp;do=add');
+$showlink = JRoute::_('index.php?option=com_kunena&amp;func=announcement' . KUNENA_COMPONENT_ITEMID_SUFFIX . '&amp;do=show');
+$addlink = JRoute::_('index.php?option=com_kunena&amp;func=announcement' . KUNENA_COMPONENT_ITEMID_SUFFIX . '&amp;do=add');
 $readlink = 'index.php?option=com_kunena&amp;func=announcement' . KUNENA_COMPONENT_ITEMID_SUFFIX . '&amp;do=read&amp;id=';
 $editlink = 'index.php?option=com_kunena&amp;func=announcement' . KUNENA_COMPONENT_ITEMID_SUFFIX . '&amp;do=edit&amp;id=';
 $deletelink = 'index.php?option=com_kunena&amp;func=announcement' . KUNENA_COMPONENT_ITEMID_SUFFIX . '&amp;do=delete&amp;id=';
@@ -208,11 +208,11 @@ if ($is_editor) {
                                 </td>
 
                                 <td class = "td-5"  align="center">
-                                    <a href = "<?php echo sefRelToAbs($editlink.$row->id); ?>"><?php echo _ANN_EDIT; ?> </a>
+                                    <a href = "<?php echo JRoute::_($editlink.$row->id); ?>"><?php echo _ANN_EDIT; ?> </a>
                                 </td>
 
                                 <td class = "td-6"  align="center">
-                                    <a href = "<?php echo sefRelToAbs($deletelink.$row->id); ?>"><?php echo _ANN_DELETE; ?></a>
+                                    <a href = "<?php echo JRoute::_($deletelink.$row->id); ?>"><?php echo _ANN_DELETE; ?></a>
                                 </td>
                             </tr>
 
@@ -234,18 +234,19 @@ if ($is_editor) {
     // BEGIN: ADD ANN
     if ($do == "doadd") {
         mosMakeHtmlSafe ($_POST);
-        $title = mosGetParam($_REQUEST, "title", "");
-        $description = mosGetParam($_REQUEST, "description", "", _MOS_ALLOWRAW);
-        $sdescription = mosGetParam($_REQUEST, "sdescription", "", _MOS_ALLOWRAW);
-        $created = mosGetParam($_REQUEST, "created", "");
-        $published = mosGetParam($_REQUEST, "published", 0);
-        $showdate = mosGetParam($_REQUEST, "showdate", "");
+        $title = JRequest::getVar("title", "");
+	// FIXME: for J!1.5
+        $description = JRequest::getVar("description", "", _MOS_ALLOWRAW);
+        $sdescription = JRequest::getVar("sdescription", "", _MOS_ALLOWRAW);
+        $created = JRequest::getVar("created", "");
+        $published = JRequest::getVar("published", 0);
+        $showdate = JRequest::getVar("showdate", "");
         # Clear any HTML
         $query1 = "INSERT INTO #__fb_announcement VALUES ('', '$title', '$sdescription', '$description', " . (($created <> '')?"'$created'":"NOW()") . ", '$published', '$ordering','$showdate')";
         $database->setQuery($query1);
 
         $database->query() or trigger_dberror("Unable to insert announcement.");
-        mosRedirect($showlink, _ANN_SUCCESS_ADD);
+        $mainframe->redirect( JURI::base() .$showlink, _ANN_SUCCESS_ADD);
     }
 
     if ($do == "add") {
@@ -274,7 +275,7 @@ if ($is_editor) {
     <tbody id = "announcement_tbody">
         <tr>
             <td class = "fb_anndesc" valign="top">
-                <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=announcement&amp;do=doadd'); ?>" method = "post" name = "addform">
+                <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=announcement&amp;do=doadd'); ?>" method = "post" name = "addform">
                     <strong><?php echo _ANN_TITLE; ?>:</strong>
 
                     <br/>
@@ -357,17 +358,18 @@ if ($is_editor) {
     // BEGIN: EDIT ANN
     if ($do == "doedit") {
         mosMakeHtmlSafe ($_POST);
-        $title = mosGetParam($_REQUEST, "title", "");
-        $description = mosGetParam($_REQUEST, "description", "", _MOS_ALLOWRAW);
-        $sdescription = mosGetParam($_REQUEST, "sdescription", "", _MOS_ALLOWRAW);
-        $created = mosGetParam($_REQUEST, "created", "");
-        $published = mosGetParam($_REQUEST, "published", 0);
-        $showdate = mosGetParam($_REQUEST, "showdate", "");
+        $title = JRequest::getVar("title", "");
+	// FIXME: J!1.5
+        $description = JRequest::getVar("description", "", _MOS_ALLOWRAW);
+        $sdescription = JRequest::getVar("sdescription", "", _MOS_ALLOWRAW);
+        $created = JRequest::getVar("created", "");
+        $published = JRequest::getVar("published", 0);
+        $showdate = JRequest::getVar("showdate", "");
 
         $database->setQuery("UPDATE #__fb_announcement SET title='$title', description='$description', sdescription='$sdescription',  created=" . (($created <> '')?"'$created'":"NOW()") . ", published='$published', showdate='$showdate' WHERE id=$id");
 
         if ($database->query()) {
-            mosRedirect($showlink, _ANN_SUCCESS_EDIT);
+            $mainframe->redirect( JURI::base() .$showlink, _ANN_SUCCESS_EDIT);
             }
         }
 
@@ -386,7 +388,7 @@ if ($is_editor) {
         $annordering = $ann->ordering;
         $annshowdate = $ann->showdate;
         mosCommonHTML::loadCalendar();
-        //$mainframe->addCustomHeadTag('<link rel="stylesheet" type="text/css" media="all" href="' . $mosConfig_live_site . '/includes/js/calendar/calendar-mos.css" title="green" />');
+        //$document->addCustomTag('<link rel="stylesheet" type="text/css" media="all" href="' . JURI::root() . '/includes/js/calendar/calendar-mos.css" title="green" />');
 ?>
 <script type = "text/javascript">
     <!--
@@ -429,7 +431,7 @@ if ($is_editor) {
     <tbody id = "announcement_tbody">
         <tr>
             <td class = "fb_anndesc" valign="top">
-                <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=announcement&amp;do=doedit'); ?>" method = "post" name = "editform" onSubmit = "return validate_form ( );">
+                <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=announcement&amp;do=doedit'); ?>" method = "post" name = "editform" onSubmit = "return validate_form ( );">
                     <strong>#<?php echo $annID; ?> : <?php echo $anntitle; ?></strong>
 
                     <br/>
@@ -520,7 +522,7 @@ if ($is_editor) {
         $database->setQuery($query1);
         $database->query() or trigger_dberror("Unable to delete announcement.");
 
-        mosRedirect($showlink, _ANN_DELETED);
+        $mainframe->redirect( JURI::base() .$showlink, _ANN_DELETED);
     }
     // FINISH: delete ANN
 ?>

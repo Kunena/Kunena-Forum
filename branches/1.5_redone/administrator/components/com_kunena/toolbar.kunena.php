@@ -20,10 +20,10 @@
 **/
 // ################################################################
 // MOS Intruder Alerts
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 // ################################################################
-require_once($mainframe->getPath('toolbar_html'));
+require_once(JApplicationHelper::getPath('toolbar_html'));
 
 switch ($task)
 {

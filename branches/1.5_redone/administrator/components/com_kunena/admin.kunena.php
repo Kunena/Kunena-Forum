@@ -19,38 +19,39 @@
 * @author TSMF & Jan de Graaff
 **/
 
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 // Kill notices (we have many..)
 error_reporting (E_ALL ^ E_NOTICE);
 
-include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.debug.php");
+include_once (JPATH_ROOT . "/components/com_kunena/lib/kunena.debug.php");
 
 // get Kunenas configuration params in
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.config.class.php");
+require_once (JPATH_ROOT . "/components/com_kunena/lib/kunena.config.class.php");
 global $fbConfig;
 $fbConfig = new CKunenaConfig();
 $fbConfig->load();
 
 // Class structure should be used after this and all the common task should be moved to this class
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/class.kunena.php");
-require_once ($mainframe->getPath('admin_html'));
+require_once (JPATH_ROOT . "/components/com_kunena/class.kunena.php");
+// FIXME: To J!1.5 Native
+//require_once ($mainframe->getPath('admin_html'));
 
 //Get right Language file
-if (file_exists($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.' . $mainframe->getCfg('lang') . '.php')) {
-    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.' . $mainframe->getCfg('lang') . '.php');
+if (file_exists(JPATH_ROOT . '/administrator/components/com_kunena/language/kunena.' . $lang . '.php')) {
+    include (JPATH_ROOT . '/administrator/components/com_kunena/language/kunena.' . $lang . '.php');
 }
 else {
-    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.english.php');
+    include (JPATH_ROOT . '/administrator/components/com_kunena/language/kunena.english.php');
 }
 
-$cid = mosGetParam($_REQUEST, 'cid', array ( 0 ));
+$cid = JRequest::getVar('cid', array ( 0 ));
 
 if (!is_array($cid)) {
     $cid = array ( 0 );
 }
 
-$uid = mosGetParam($_REQUEST, 'uid', array ( 0 ));
+$uid = JRequest::getVar('uid', array ( 0 ));
 
 if (!is_array($uid)) {
     $uid = array ( $uid );
@@ -58,23 +59,24 @@ if (!is_array($uid)) {
 
 // ERROR: global scope mix
 global $order;
-$order = mosGetParam($_REQUEST, 'order');
+$order = JRequest::getVar('order', '');
 
 // initialise some request directives (specifically for J1.5 compatibility)
-$no_html = intval(mosGetParam($_REQUEST, 'no_html', 0));
-$id = intval(mosGetParam($_REQUEST, 'id', 0));
+$no_html = intval(JRequest::getVar('no_html', 0));
+$id = intval(JRequest::getVar('id', 0));
 
 $pt_stop = "0";
 
 if (!$no_html)
 {
+	require_once (JPATH_COMPONENT_ADMINISTRATOR . '/admin.fireboard.html.php');
 	html_Kunena::showFbHeader();
 }
 
 switch ($task)
 {
     case "installfb":
-        $mode = mosGetParam($_REQUEST, "mode", 1);
+        $mode = JRequest::getVar("mode", 1);
 
         com_install_Kunena ($mode);
         break;
@@ -155,12 +157,12 @@ switch ($task)
         break;
 
     case "showprofiles":
-        showProfiles($database, $option, $mosConfig_lang, $order);
+        showProfiles($database, $option, $lang, $order);
 
         break;
 
     case "profiles":
-        showProfiles($database, $option, $mosConfig_lang, $order);
+        showProfiles($database, $option, $lang, $order);
 
         break;
 
@@ -170,7 +172,7 @@ switch ($task)
         break;
 
     case "showinstructions":
-        showInstructions($database, $option, $mosConfig_lang);
+        showInstructions($database, $option, $lang);
 
         break;
 
@@ -180,15 +182,15 @@ switch ($task)
         break;
 
     case "saveeditcss":
-        $file = mosGetParam($_REQUEST, "file", 1);
-        $csscontent = mosGetParam($_REQUEST, "csscontent", 1);
+        $file = JRequest::getVar("file", 1);
+        $csscontent = JRequest::getVar("csscontent", 1);
 
         saveCss($file, $csscontent, $option);
 
         break;
 
     case "instructions":
-        showInstructions($database, $option, $mosConfig_lang);
+        showInstructions($database, $option, $lang);
 
         break;
 
@@ -233,12 +235,12 @@ switch ($task)
         break;
 
     case "replaceImage":
-        replaceImage($database, $option, mosGetParam($_REQUEST, 'img', ''), $OxP);
+        replaceImage($database, $option, JRequest::getVar('img', ''), $OxP);
 
         break;
 
     case "deleteFile":
-        deleteFile($database, $option, mosGetParam($_REQUEST, 'fileName', ''));
+        deleteFile($database, $option, JRequest::getVar('fileName', ''));
 
         break;
 
@@ -251,7 +253,7 @@ switch ($task)
     	CKunenaTools::reCountBoards();
     	// Also reset the name info stored with messages
     	CKunenaTools::updateNameInfo();
-    	mosRedirect("index2.php?option=com_kunena", _KUNENA_RECOUNTFORUMS_DONE);
+    	$mainframe->redirect( JURI::base() ."index2.php?option=com_kunena", _KUNENA_RECOUNTFORUMS_DONE);
         break;
 
 	case "showsmilies":
@@ -315,7 +317,7 @@ html_Kunena::showFbFooter();
 function showAdministration($option)
 {
     global $database, $mainframe;
-    global $mosConfig_lang;
+    global $lang;
 
     $limit = $mainframe->getUserStateFromRequest("viewlistlimit", 'limit', 10);
     $limitstart = $mainframe->getUserStateFromRequest("view{$option}limitstart", 'limitstart', 0);
@@ -350,9 +352,10 @@ function showAdministration($option)
     $list = fbTreeRecurse(0, '', array (), $children, max(0, $levellimit - 1));
     $total = count($list);
     if ($limitstart >= $total) $limitstart = 0;
-    require_once ($GLOBALS['mosConfig_absolute_path'] . '/administrator/includes/pageNavigation.php');
-    $pageNav = new mosPageNav($total, $limitstart, $limit);
-    $levellist = mosHTML::integerSelectList(1, 20, 1, 'levellimit', 'size="1" onchange="document.adminForm.submit();"', $levellimit);
+    //require_once (JPATH_COMPONENT_ADMINISTRATOR .DS. 'includes/pageNavigation.php');
+    jimport('joomla.html.pagination');
+    $pageNav = new JPagination($total, $limitstart, $limit);
+    $levellist = JHTML::_('select.integerList', 1, 20, 1, 'levellimit', 'size="1" onchange="document.adminForm.submit();"', $levellimit);
     // slice out elements based on limits
     $list = array_slice($list, $pageNav->limitstart, $pageNav->limit);
     /**
@@ -390,32 +393,32 @@ function editForum($uid, $option)
     $categoryList = showCategories($row->parent, "parent", "", "4");
     // make a standard yes/no list
     $yesno = array ();
-    $yesno[] = mosHTML::makeOption('0', _ANN_NO);
-    $yesno[] = mosHTML::makeOption('1', _ANN_YES);
+    $yesno[] = JHTML::_('select.option', '0', _ANN_NO);
+    $yesno[] = JHTML::_('select.option', '1', _ANN_YES);
 
 	// make a standard no/yes list
     $noyes = array ();
-    $noyes[] = mosHTML::makeOption('1', _ANN_YES);
-    $noyes[] = mosHTML::makeOption('0', _ANN_NO);
+    $noyes[] = JHTML::_('select.option', '1', _ANN_YES);
+    $noyes[] = JHTML::_('select.option', '0', _ANN_NO);
     //Create all kinds of Lists
     $lists = array ();
     $accessLists = array ();
     //create custom group levels to include into the public group selectList
     $pub_groups = array ();
-    $pub_groups[] = mosHTML::makeOption(0, _KUNENA_EVERYBODY);
-    $pub_groups[] = mosHTML::makeOption(-1, _KUNENA_ALLREGISTERED);
+    $pub_groups[] = JHTML::_('select.option', 0, _KUNENA_EVERYBODY);
+    $pub_groups[] = JHTML::_('select.option', -1, _KUNENA_ALLREGISTERED);
     $pub_groups = array_merge($pub_groups, $acl->get_group_children_tree(null, _KUNENA_REGISTERED, true));
     //create admin groups array for use in selectList:
     $adm_groups = array ();
     $adm_groups = array_merge($adm_groups, $acl->get_group_children_tree(null, _KUNENA_PUBLICBACKEND, true));
     //create the access control list
-    $accessLists['pub_access'] = mosHTML::selectList($pub_groups, 'pub_access', 'class="inputbox" size="4"', 'value', 'text', $row->pub_access);
-    $accessLists['admin_access'] = mosHTML::selectList($adm_groups, 'admin_access', 'class="inputbox" size="4"', 'value', 'text', $row->admin_access);
-    $lists['pub_recurse'] = mosHTML::selectList($yesno, 'pub_recurse', 'class="inputbox" size="1"', 'value', 'text', $row->pub_recurse);
-    $lists['admin_recurse'] = mosHTML::selectList($yesno, 'admin_recurse', 'class="inputbox" size="1"', 'value', 'text', $row->admin_recurse);
-    $lists['forumLocked'] = mosHTML::selectList($yesno, 'locked', 'class="inputbox" size="1"', 'value', 'text', $row->locked);
-    $lists['forumModerated'] = mosHTML::selectList($noyes, 'moderated', 'class="inputbox" size="1"', 'value', 'text', $row->moderated);
-    $lists['forumReview'] = mosHTML::selectList($yesno, 'review', 'class="inputbox" size="1"', 'value', 'text', $row->review);
+    $accessLists['pub_access'] = JHTML::_('select.genericlist', $pub_groups, 'pub_access', 'class="inputbox" size="4"', 'value', 'text', $row->pub_access);
+    $accessLists['admin_access'] = JHTML::_('select.genericlist', $adm_groups, 'admin_access', 'class="inputbox" size="4"', 'value', 'text', $row->admin_access);
+    $lists['pub_recurse'] = JHTML::_('select.genericlist', $yesno, 'pub_recurse', 'class="inputbox" size="1"', 'value', 'text', $row->pub_recurse);
+    $lists['admin_recurse'] = JHTML::_('select.genericlist', $yesno, 'admin_recurse', 'class="inputbox" size="1"', 'value', 'text', $row->admin_recurse);
+    $lists['forumLocked'] = JHTML::_('select.genericlist', $yesno, 'locked', 'class="inputbox" size="1"', 'value', 'text', $row->locked);
+    $lists['forumModerated'] = JHTML::_('select.genericlist', $noyes, 'moderated', 'class="inputbox" size="1"', 'value', 'text', $row->moderated);
+    $lists['forumReview'] = JHTML::_('select.genericlist', $yesno, 'review', 'class="inputbox" size="1"', 'value', 'text', $row->review);
     //get a list of moderators, if forum/category is moderated
     $moderatorList = array ();
 
@@ -454,7 +457,7 @@ function saveForum($option)
 
     $row->checkin();
     $row->updateOrder("parent='$row->parent'");
-    mosRedirect ("index2.php?option=$option&task=showAdministration");
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showAdministration");
 }
 
 function publishForum($cid = null, $publish = 1, $option)
@@ -482,7 +485,7 @@ function publishForum($cid = null, $publish = 1, $option)
     $database->setQuery("UPDATE #__fb_sessions SET allowed='na'");
 	$database->query() or trigger_dberror("Unable to update sessions.");
 
-    mosRedirect ("index2.php?option=$option&task=showAdministration");
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showAdministration");
 }
 
 function deleteForum($cid = null, $option)
@@ -523,25 +526,25 @@ function deleteForum($cid = null, $option)
     	}
     }
 
-    mosRedirect ("index2.php?option=$option&task=showAdministration");
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showAdministration");
 }
 
 function cancelForum($option)
 {
-    global $database;
+    $database = &JFactory::getDBO();
     $row = new fbForum($database);
     $row->bind($_POST);
     $row->checkin();
-    mosRedirect ("index2.php?option=$option&task=showAdministration");
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showAdministration");
 }
 
 function orderForum($uid, $inc, $option)
 {
-    global $database;
+    $database = &JFactory::getDBO();
     $row = new fbForum($database);
     $row->load($uid);
     $row->move($inc, "parent='$row->parent'");
-    mosRedirect ("index2.php?option=$option&task=showAdministration");
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showAdministration");
 }
 
 //===============================
@@ -549,8 +552,8 @@ function orderForum($uid, $inc, $option)
 //===============================
 function showConfig($option)
 {
-    global $database;
-    global $mosConfig_lang;
+    $database = &JFactory::getDBO();
+    global $lang;
     global $mosConfig_admin_template;
     global $mainframe;
     global $fbConfig;
@@ -560,82 +563,82 @@ function showConfig($option)
     // the default page when entering Kunena
     $defpagelist = array ();
 
-    $defpagelist[] = mosHTML::makeOption('recent', _COM_A_FBDEFAULT_PAGE_RECENT);
-    $defpagelist[] = mosHTML::makeOption('my', _COM_A_FBDEFAULT_PAGE_MY);
-    $defpagelist[] = mosHTML::makeOption('categories', _COM_A_FBDEFAULT_PAGE_CATEGORIES);
+    $defpagelist[] = JHTML::_('select.option', 'recent', _COM_A_FBDEFAULT_PAGE_RECENT);
+    $defpagelist[] = JHTML::_('select.option', 'my', _COM_A_FBDEFAULT_PAGE_MY);
+    $defpagelist[] = JHTML::_('select.option', 'categories', _COM_A_FBDEFAULT_PAGE_CATEGORIES);
 
     // build the html select list
-    $lists['fbdefaultpage'] = mosHTML::selectList($defpagelist, 'cfg_fbdefaultpage', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->fbdefaultpage);
+    $lists['fbdefaultpage'] = JHTML::_('select.genericlist', $defpagelist, 'cfg_fbdefaultpage', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->fbdefaultpage);
 
 //Threaded view option removed from Kunena
 //    // the default view
 //    $list = array ();
-//    $list[] = mosHTML::makeOption('flat', _COM_A_FLAT);
-//    $list[] = mosHTML::makeOption('threaded', _COM_A_THREADED);
+//    $list[] = JHTML::_('select.option', 'flat', _COM_A_FLAT);
+//    $list[] = JHTML::_('select.option', 'threaded', _COM_A_THREADED);
 //    // build the html select list
-//    $lists['default_view'] = mosHTML::selectList($list, 'cfg_default_view', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->default_view);
+//    $lists['default_view'] = JHTML::_('select.genericlist', $list, 'cfg_default_view', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->default_view);
     $fbConfig->default_view = 'flat';
 
     $rsslist = array ();
 
-    $rsslist[] = mosHTML::makeOption('thread', _COM_A_RSS_BY_THREAD);
-    $rsslist[] = mosHTML::makeOption('post', _COM_A_RSS_BY_POST);
+    $rsslist[] = JHTML::_('select.option', 'thread', _COM_A_RSS_BY_THREAD);
+    $rsslist[] = JHTML::_('select.option', 'post', _COM_A_RSS_BY_POST);
     // build the html select list
-    $lists['rsstype'] = mosHTML::selectList($rsslist, 'cfg_rsstype', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rsstype);
+    $lists['rsstype'] = JHTML::_('select.genericlist', $rsslist, 'cfg_rsstype', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rsstype);
 
     $rsshistorylist = array ();
 
-    $rsshistorylist[] = mosHTML::makeOption('week', _COM_A_RSS_HISTORY_WEEK);
-    $rsshistorylist[] = mosHTML::makeOption('month', _COM_A_RSS_HISTORY_MONTH);
-    $rsshistorylist[] = mosHTML::makeOption('year', _COM_A_RSS_HISTORY_YEAR);
+    $rsshistorylist[] = JHTML::_('select.option', 'week', _COM_A_RSS_HISTORY_WEEK);
+    $rsshistorylist[] = JHTML::_('select.option', 'month', _COM_A_RSS_HISTORY_MONTH);
+    $rsshistorylist[] = JHTML::_('select.option', 'year', _COM_A_RSS_HISTORY_YEAR);
     // build the html select list
-    $lists['rsshistory'] = mosHTML::selectList($rsshistorylist, 'cfg_rsshistory', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rsshistory);
+    $lists['rsshistory'] = JHTML::_('select.genericlist', $rsshistorylist, 'cfg_rsshistory', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rsshistory);
 
     // source of avatar picture
     $avlist = array ();
-    $avlist[] = mosHTML::makeOption('fb', _KUNENA_KUNENA);
-    $avlist[] = mosHTML::makeOption('cb', _KUNENA_CB);
-    $avlist[] = mosHTML::makeOption('jomsocial', _KUNENA_JOMSOCIAL);
-    $avlist[] = mosHTML::makeOption('clexuspm', _KUNENA_CLEXUS);
+    $avlist[] = JHTML::_('select.option', 'fb', _KUNENA_KUNENA);
+    $avlist[] = JHTML::_('select.option', 'cb', _KUNENA_CB);
+    $avlist[] = JHTML::_('select.option', 'jomsocial', _KUNENA_JOMSOCIAL);
+    $avlist[] = JHTML::_('select.option', 'clexuspm', _KUNENA_CLEXUS);
     // build the html select list
-    $lists['avatar_src'] = mosHTML::selectList($avlist, 'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->avatar_src);
+    $lists['avatar_src'] = JHTML::_('select.genericlist', $avlist, 'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->avatar_src);
     // private messaging system to use
     $pmlist = array ();
-    $pmlist[] = mosHTML::makeOption('no', _COM_A_NO);
-    $pmlist[] = mosHTML::makeOption('cb', _KUNENA_CB);
-    $pmlist[] = mosHTML::makeOption('jomsocial', _KUNENA_JOMSOCIAL);
-    $pmlist[] = mosHTML::makeOption('pms', _KUNENA_MYPMS);
-    $pmlist[] = mosHTML::makeOption('clexuspm', _KUNENA_CLEXUS);
-    $pmlist[] = mosHTML::makeOption('uddeim', _KUNENA_UDDEIM);
-    $pmlist[] = mosHTML::makeOption('jim', _KUNENA_JIM);
-    $pmlist[] = mosHTML::makeOption('missus', _KUNENA_MISSUS);
-    $lists['pm_component'] = mosHTML::selectList($pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pm_component);
-//redundant    $lists['pm_component'] = mosHTML::selectList($pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pm_component);
+    $pmlist[] = JHTML::_('select.option', 'no', _COM_A_NO);
+    $pmlist[] = JHTML::_('select.option', 'cb', _KUNENA_CB);
+    $pmlist[] = JHTML::_('select.option', 'jomsocial', _KUNENA_JOMSOCIAL);
+    $pmlist[] = JHTML::_('select.option', 'pms', _KUNENA_MYPMS);
+    $pmlist[] = JHTML::_('select.option', 'clexuspm', _KUNENA_CLEXUS);
+    $pmlist[] = JHTML::_('select.option', 'uddeim', _KUNENA_UDDEIM);
+    $pmlist[] = JHTML::_('select.option', 'jim', _KUNENA_JIM);
+    $pmlist[] = JHTML::_('select.option', 'missus', _KUNENA_MISSUS);
+    $lists['pm_component'] = JHTML::_('select.genericlist', $pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pm_component);
+//redundant    $lists['pm_component'] = JHTML::_('select.genericlist', $pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pm_component);
     // Profile select
     $prflist = array ();
-    $prflist[] = mosHTML::makeOption('fb', _KUNENA_KUNENA);
-    $prflist[] = mosHTML::makeOption('cb', _KUNENA_CB);
-    $prflist[] = mosHTML::makeOption('jomsocial', _KUNENA_JOMSOCIAL);
-    $prflist[] = mosHTML::makeOption('clexuspm', _KUNENA_CLEXUS);
-    $lists['fb_profile'] = mosHTML::selectList($prflist, 'cfg_fb_profile', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->fb_profile);
+    $prflist[] = JHTML::_('select.option', 'fb', _KUNENA_KUNENA);
+    $prflist[] = JHTML::_('select.option', 'cb', _KUNENA_CB);
+    $prflist[] = JHTML::_('select.option', 'jomsocial', _KUNENA_JOMSOCIAL);
+    $prflist[] = JHTML::_('select.option', 'clexuspm', _KUNENA_CLEXUS);
+    $lists['fb_profile'] = JHTML::_('select.genericlist', $prflist, 'cfg_fb_profile', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->fb_profile);
     // build the html select list
     // make a standard yes/no list
     $yesno = array ();
-    $yesno[] = mosHTML::makeOption('0', _COM_A_NO);
-    $yesno[] = mosHTML::makeOption('1', _COM_A_YES);
+    $yesno[] = JHTML::_('select.option', '0', _COM_A_NO);
+    $yesno[] = JHTML::_('select.option', '1', _COM_A_YES);
     /* Build the templates list*/
     // This function was modified from the one posted to PHP.net by rockinmusicgv
     // It is available under the readdir() entry in the PHP online manual
     //function get_dirs($directory, $select_name, $selected = "") {
-    $listitems[] = mosHTML::makeOption('0', _KUNENA_SELECTTEMPLATE);
+    $listitems[] = JHTML::_('select.option', '0', _KUNENA_SELECTTEMPLATE);
 
-    if ($dir = @opendir($mainframe->getCfg('absolute_path') . "/components/com_kunena/template"))
+    if ($dir = @opendir(JPATH_ROOT . "/components/com_kunena/template"))
     {
         while (($file = readdir($dir)) !== false)
         {
             if ($file != ".." && $file != ".")
             {
-                if (is_dir($mainframe->getCfg('absolute_path') . "/components/com_kunena/template" . "/" . $file))
+                if (is_dir(JPATH_ROOT . "/components/com_kunena/template" . "/" . $file))
                 {
                     if (!($file[0] == '.')) {
                         $filelist[] = $file;
@@ -655,97 +658,97 @@ function showConfig($option)
         //    echo " selected";
         //}
         //echo ">$val Gallery</option>\n";
-        $listitems[] = mosHTML::makeOption($val, $val);
+        $listitems[] = JHTML::_('select.option', $val, $val);
     }
 
-    $lists['badwords'] = mosHTML::selectList($yesno, 'cfg_badwords', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->badwords);
-	$lists['jmambot'] = mosHTML::selectList($yesno, 'cfg_jmambot', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->jmambot);
-    $lists['disemoticons'] = mosHTML::selectList($yesno, 'cfg_disemoticons', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->disemoticons);
-    $lists['template'] = mosHTML::selectList($listitems, 'cfg_template', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->template);
-    $lists['templateimagepath'] = mosHTML::selectList($listitems, 'cfg_templateimagepath', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->templateimagepath);
-    $lists['regonly'] = mosHTML::selectList($yesno, 'cfg_regonly', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->regonly);
-    $lists['board_offline'] = mosHTML::selectList($yesno, 'cfg_board_offline', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->board_offline);
-    $lists['pubwrite'] = mosHTML::selectList($yesno, 'cfg_pubwrite', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pubwrite);
-    $lists['useredit'] = mosHTML::selectList($yesno, 'cfg_useredit', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->useredit);
-    $lists['showhistory'] = mosHTML::selectList($yesno, 'cfg_showhistory', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showhistory);
-    $lists['joomlastyle'] = mosHTML::selectList($yesno, 'cfg_joomlastyle', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->joomlastyle);
-    $lists['showannouncement'] = mosHTML::selectList($yesno, 'cfg_showannouncement', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showannouncement);
-    $lists['avataroncat'] = mosHTML::selectList($yesno, 'cfg_avataroncat', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->avataroncat);
-    $lists['showlatest'] = mosHTML::selectList($yesno, 'cfg_showlatest', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showlatest);
-    $lists['latestsinglesubject'] = mosHTML::selectList($yesno, 'cfg_latestsinglesubject', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->latestsinglesubject);
-    $lists['latestreplysubject'] = mosHTML::selectList($yesno, 'cfg_latestreplysubject', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->latestreplysubject);
-    $lists['latestshowdate'] = mosHTML::selectList($yesno, 'cfg_latestshowdate', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->latestshowdate);
-    $lists['showchildcaticon'] = mosHTML::selectList($yesno, 'cfg_showchildcaticon', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showchildcaticon);
-    $lists['latestshowhits'] = mosHTML::selectList($yesno, 'cfg_latestshowhits', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->latestshowhits);
-    $lists['showuserstats'] = mosHTML::selectList($yesno, 'cfg_showuserstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showuserstats);
-    $lists['showwhoisonline'] = mosHTML::selectList($yesno, 'cfg_showwhoisonline', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showwhoisonline);
-    $lists['showpopsubjectstats'] = mosHTML::selectList($yesno, 'cfg_showpopsubjectstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showpopsubjectstats);
-    $lists['showgenstats'] = mosHTML::selectList($yesno, 'cfg_showgenstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showgenstats);
-    $lists['showpopuserstats'] = mosHTML::selectList($yesno, 'cfg_showpopuserstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showpopuserstats);
-    $lists['allowsubscriptions'] = mosHTML::selectList($yesno, 'cfg_allowsubscriptions', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowsubscriptions);
-    $lists['subscriptionschecked'] = mosHTML::selectList($yesno, 'cfg_subscriptionschecked', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->subscriptionschecked);
-    $lists['allowfavorites'] = mosHTML::selectList($yesno, 'cfg_allowfavorites', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowfavorites);
-    $lists['mailmod'] = mosHTML::selectList($yesno, 'cfg_mailmod', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->mailmod);
-    $lists['mailadmin'] = mosHTML::selectList($yesno, 'cfg_mailadmin', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->mailadmin);
-    $lists['showemail'] = mosHTML::selectList($yesno, 'cfg_showemail', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showemail);
-    $lists['askemail'] = mosHTML::selectList($yesno, 'cfg_askemail', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->askemail);
-    $lists['changename'] = mosHTML::selectList($yesno, 'cfg_changename', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->changename);
-    $lists['allowavatar'] = mosHTML::selectList($yesno, 'cfg_allowavatar', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowavatar);
-    $lists['allowavatarupload'] = mosHTML::selectList($yesno, 'cfg_allowavatarupload', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowavatarupload);
-    $lists['allowavatargallery'] = mosHTML::selectList($yesno, 'cfg_allowavatargallery', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowavatargallery);
-    $lists['avatar_src'] = mosHTML::selectList($avlist, 'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->avatar_src);
+    $lists['badwords'] = JHTML::_('select.genericlist', $yesno, 'cfg_badwords', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->badwords);
+	$lists['jmambot'] = JHTML::_('select.genericlist', $yesno, 'cfg_jmambot', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->jmambot);
+    $lists['disemoticons'] = JHTML::_('select.genericlist', $yesno, 'cfg_disemoticons', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->disemoticons);
+    $lists['template'] = JHTML::_('select.genericlist', $listitems, 'cfg_template', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->template);
+    $lists['templateimagepath'] = JHTML::_('select.genericlist', $listitems, 'cfg_templateimagepath', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->templateimagepath);
+    $lists['regonly'] = JHTML::_('select.genericlist', $yesno, 'cfg_regonly', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->regonly);
+    $lists['board_offline'] = JHTML::_('select.genericlist', $yesno, 'cfg_board_offline', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->board_offline);
+    $lists['pubwrite'] = JHTML::_('select.genericlist', $yesno, 'cfg_pubwrite', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pubwrite);
+    $lists['useredit'] = JHTML::_('select.genericlist', $yesno, 'cfg_useredit', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->useredit);
+    $lists['showhistory'] = JHTML::_('select.genericlist', $yesno, 'cfg_showhistory', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showhistory);
+    $lists['joomlastyle'] = JHTML::_('select.genericlist', $yesno, 'cfg_joomlastyle', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->joomlastyle);
+    $lists['showannouncement'] = JHTML::_('select.genericlist', $yesno, 'cfg_showannouncement', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showannouncement);
+    $lists['avataroncat'] = JHTML::_('select.genericlist', $yesno, 'cfg_avataroncat', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->avataroncat);
+    $lists['showlatest'] = JHTML::_('select.genericlist', $yesno, 'cfg_showlatest', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showlatest);
+    $lists['latestsinglesubject'] = JHTML::_('select.genericlist', $yesno, 'cfg_latestsinglesubject', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->latestsinglesubject);
+    $lists['latestreplysubject'] = JHTML::_('select.genericlist', $yesno, 'cfg_latestreplysubject', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->latestreplysubject);
+    $lists['latestshowdate'] = JHTML::_('select.genericlist', $yesno, 'cfg_latestshowdate', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->latestshowdate);
+    $lists['showchildcaticon'] = JHTML::_('select.genericlist', $yesno, 'cfg_showchildcaticon', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showchildcaticon);
+    $lists['latestshowhits'] = JHTML::_('select.genericlist', $yesno, 'cfg_latestshowhits', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->latestshowhits);
+    $lists['showuserstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showuserstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showuserstats);
+    $lists['showwhoisonline'] = JHTML::_('select.genericlist', $yesno, 'cfg_showwhoisonline', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showwhoisonline);
+    $lists['showpopsubjectstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpopsubjectstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showpopsubjectstats);
+    $lists['showgenstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showgenstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showgenstats);
+    $lists['showpopuserstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpopuserstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showpopuserstats);
+    $lists['allowsubscriptions'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowsubscriptions', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowsubscriptions);
+    $lists['subscriptionschecked'] = JHTML::_('select.genericlist', $yesno, 'cfg_subscriptionschecked', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->subscriptionschecked);
+    $lists['allowfavorites'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowfavorites', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowfavorites);
+    $lists['mailmod'] = JHTML::_('select.genericlist', $yesno, 'cfg_mailmod', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->mailmod);
+    $lists['mailadmin'] = JHTML::_('select.genericlist', $yesno, 'cfg_mailadmin', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->mailadmin);
+    $lists['showemail'] = JHTML::_('select.genericlist', $yesno, 'cfg_showemail', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showemail);
+    $lists['askemail'] = JHTML::_('select.genericlist', $yesno, 'cfg_askemail', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->askemail);
+    $lists['changename'] = JHTML::_('select.genericlist', $yesno, 'cfg_changename', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->changename);
+    $lists['allowavatar'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowavatar', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowavatar);
+    $lists['allowavatarupload'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowavatarupload', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowavatarupload);
+    $lists['allowavatargallery'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowavatargallery', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowavatargallery);
+    $lists['avatar_src'] = JHTML::_('select.genericlist', $avlist, 'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->avatar_src);
 
-    $ip_opt[] = mosHTML::makeOption( 'gd2', 'GD2' );
-    $ip_opt[] = mosHTML::makeOption( 'gd1', 'GD1' );
-    $ip_opt[] = mosHTML::makeOption( 'none', _KUNENA_IMAGE_PROCESSOR_NONE );
+    $ip_opt[] = JHTML::_('select.option',  'gd2', 'GD2' );
+    $ip_opt[] = JHTML::_('select.option',  'gd1', 'GD1' );
+    $ip_opt[] = JHTML::_('select.option',  'none', _KUNENA_IMAGE_PROCESSOR_NONE );
 
-    $lists['imageprocessor'] = mosHTML::selectList( $ip_opt, 'cfg_imageprocessor', 'class="inputbox"', 'value', 'text', $fbConfig->imageprocessor );
-    $lists['showstats'] = mosHTML::selectList($yesno, 'cfg_showstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showstats);
-    $lists['showranking'] = mosHTML::selectList($yesno, 'cfg_showranking', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showranking);
-    $lists['rankimages'] = mosHTML::selectList($yesno, 'cfg_rankimages', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rankimages);
-    $lists['username'] = mosHTML::selectList($yesno, 'cfg_username', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->username);
-    $lists['shownew'] = mosHTML::selectList($yesno, 'cfg_shownew', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->shownew);
-    $lists['allowimageupload'] = mosHTML::selectList($yesno, 'cfg_allowimageupload', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowimageupload);
-    $lists['allowimageregupload'] = mosHTML::selectList($yesno, 'cfg_allowimageregupload', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowimageregupload);
-    $lists['allowfileupload'] = mosHTML::selectList($yesno, 'cfg_allowfileupload', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowfileupload);
-    $lists['allowfileregupload'] = mosHTML::selectList($yesno, 'cfg_allowfileregupload', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowfileregupload);
-    $lists['editmarkup'] = mosHTML::selectList($yesno, 'cfg_editmarkup', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->editmarkup);
-    $lists['discussbot'] = mosHTML::selectList($yesno, 'cfg_discussbot', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->discussbot);
-    $lists['enablerss'] = mosHTML::selectList($yesno, 'cfg_enablerss', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enablerss);
-    $lists['poststats'] = mosHTML::selectList($yesno, 'cfg_poststats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->poststats);
-    $lists['showkarma'] = mosHTML::selectList($yesno, 'cfg_showkarma', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showkarma);
+    $lists['imageprocessor'] = JHTML::_('select.genericlist',  $ip_opt, 'cfg_imageprocessor', 'class="inputbox"', 'value', 'text', $fbConfig->imageprocessor );
+    $lists['showstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showstats);
+    $lists['showranking'] = JHTML::_('select.genericlist', $yesno, 'cfg_showranking', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showranking);
+    $lists['rankimages'] = JHTML::_('select.genericlist', $yesno, 'cfg_rankimages', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rankimages);
+    $lists['username'] = JHTML::_('select.genericlist', $yesno, 'cfg_username', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->username);
+    $lists['shownew'] = JHTML::_('select.genericlist', $yesno, 'cfg_shownew', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->shownew);
+    $lists['allowimageupload'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowimageupload', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowimageupload);
+    $lists['allowimageregupload'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowimageregupload', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowimageregupload);
+    $lists['allowfileupload'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowfileupload', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowfileupload);
+    $lists['allowfileregupload'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowfileregupload', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowfileregupload);
+    $lists['editmarkup'] = JHTML::_('select.genericlist', $yesno, 'cfg_editmarkup', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->editmarkup);
+    $lists['discussbot'] = JHTML::_('select.genericlist', $yesno, 'cfg_discussbot', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->discussbot);
+    $lists['enablerss'] = JHTML::_('select.genericlist', $yesno, 'cfg_enablerss', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enablerss);
+    $lists['poststats'] = JHTML::_('select.genericlist', $yesno, 'cfg_poststats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->poststats);
+    $lists['showkarma'] = JHTML::_('select.genericlist', $yesno, 'cfg_showkarma', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showkarma);
 // Depreciated old CB integration setting - now controlled via avatar, profile and pm settings
-//    $lists['cb_profile'] = mosHTML::selectList($yesno, 'cfg_cb_profile', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->cb_profile);
-    $lists['enablepdf'] = mosHTML::selectList($yesno, 'cfg_enablepdf', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enablepdf);
-    $lists['enablerulespage'] = mosHTML::selectList($yesno, 'cfg_enablerulespage', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enablerulespage);
-	$lists['rules_infb'] = mosHTML::selectList($yesno, 'cfg_rules_infb', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rules_infb);
-	$lists['enablehelppage'] = mosHTML::selectList($yesno, 'cfg_enablehelppage', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enablehelppage);
-	$lists['help_infb'] = mosHTML::selectList($yesno, 'cfg_help_infb', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->help_infb);
-    $lists['enableforumjump'] = mosHTML::selectList($yesno, 'cfg_enableforumjump', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enableforumjump);
-    $lists['userlist_online'] = mosHTML::selectList($yesno, 'cfg_userlist_online', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_online);
-    $lists['userlist_avatar'] = mosHTML::selectList($yesno, 'cfg_userlist_avatar', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_avatar);
-    $lists['userlist_name'] = mosHTML::selectList($yesno, 'cfg_userlist_name', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_name);
-    $lists['userlist_username'] = mosHTML::selectList($yesno, 'cfg_userlist_username', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_username);
-    $lists['userlist_group'] = mosHTML::selectList($yesno, 'cfg_userlist_group', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_group);
-    $lists['userlist_posts'] = mosHTML::selectList($yesno, 'cfg_userlist_posts', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_posts);
-    $lists['userlist_karma'] = mosHTML::selectList($yesno, 'cfg_userlist_karma', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_karma);
-    $lists['userlist_email'] = mosHTML::selectList($yesno, 'cfg_userlist_email', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_email);
-    $lists['userlist_usertype'] = mosHTML::selectList($yesno, 'cfg_userlist_usertype', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_usertype);
-    $lists['userlist_joindate'] = mosHTML::selectList($yesno, 'cfg_userlist_joindate', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_joindate);
-    $lists['userlist_lastvisitdate'] = mosHTML::selectList($yesno, 'cfg_userlist_lastvisitdate', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_lastvisitdate);
-	$lists['userlist_userhits'] = mosHTML::selectList($yesno, 'cfg_userlist_userhits', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_userhits);
-	$lists['usernamechange'] = mosHTML::selectList($yesno, 'cfg_usernamechange', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->usernamechange);
-	$lists['reportmsg'] = mosHTML::selectList($yesno, 'cfg_reportmsg', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->reportmsg);
-	$lists['captcha'] = mosHTML::selectList($yesno, 'cfg_captcha', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->captcha);
-	$lists['mailfull'] = mosHTML::selectList($yesno, 'cfg_mailfull', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->mailfull);
+//    $lists['cb_profile'] = JHTML::_('select.genericlist', $yesno, 'cfg_cb_profile', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->cb_profile);
+    $lists['enablepdf'] = JHTML::_('select.genericlist', $yesno, 'cfg_enablepdf', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enablepdf);
+    $lists['enablerulespage'] = JHTML::_('select.genericlist', $yesno, 'cfg_enablerulespage', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enablerulespage);
+	$lists['rules_infb'] = JHTML::_('select.genericlist', $yesno, 'cfg_rules_infb', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rules_infb);
+	$lists['enablehelppage'] = JHTML::_('select.genericlist', $yesno, 'cfg_enablehelppage', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enablehelppage);
+	$lists['help_infb'] = JHTML::_('select.genericlist', $yesno, 'cfg_help_infb', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->help_infb);
+    $lists['enableforumjump'] = JHTML::_('select.genericlist', $yesno, 'cfg_enableforumjump', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enableforumjump);
+    $lists['userlist_online'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_online', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_online);
+    $lists['userlist_avatar'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_avatar', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_avatar);
+    $lists['userlist_name'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_name', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_name);
+    $lists['userlist_username'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_username', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_username);
+    $lists['userlist_group'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_group', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_group);
+    $lists['userlist_posts'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_posts', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_posts);
+    $lists['userlist_karma'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_karma', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_karma);
+    $lists['userlist_email'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_email', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_email);
+    $lists['userlist_usertype'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_usertype', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_usertype);
+    $lists['userlist_joindate'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_joindate', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_joindate);
+    $lists['userlist_lastvisitdate'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_lastvisitdate', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_lastvisitdate);
+	$lists['userlist_userhits'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_userhits', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_userhits);
+	$lists['usernamechange'] = JHTML::_('select.genericlist', $yesno, 'cfg_usernamechange', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->usernamechange);
+	$lists['reportmsg'] = JHTML::_('select.genericlist', $yesno, 'cfg_reportmsg', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->reportmsg);
+	$lists['captcha'] = JHTML::_('select.genericlist', $yesno, 'cfg_captcha', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->captcha);
+	$lists['mailfull'] = JHTML::_('select.genericlist', $yesno, 'cfg_mailfull', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->mailfull);
 	// New for 1.0.5
-	$lists['showspoilertag'] = mosHTML::selectList($yesno, 'cfg_showspoilertag', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showspoilertag);
-	$lists['showvideotag'] = mosHTML::selectList($yesno, 'cfg_showvideotag', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showvideotag);
-	$lists['showebaytag'] = mosHTML::selectList($yesno, 'cfg_showebaytag', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showebaytag);
-	$lists['trimlongurls'] = mosHTML::selectList($yesno, 'cfg_trimlongurls', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->trimlongurls);
-	$lists['autoembedyoutube'] = mosHTML::selectList($yesno, 'cfg_autoembedyoutube', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->autoembedyoutube);
-	$lists['autoembedebay'] = mosHTML::selectList($yesno, 'cfg_autoembedebay', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->autoembedebay);
-	$lists['highlightcode'] = mosHTML::selectList($yesno, 'cfg_highlightcode', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->highlightcode);
+	$lists['showspoilertag'] = JHTML::_('select.genericlist', $yesno, 'cfg_showspoilertag', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showspoilertag);
+	$lists['showvideotag'] = JHTML::_('select.genericlist', $yesno, 'cfg_showvideotag', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showvideotag);
+	$lists['showebaytag'] = JHTML::_('select.genericlist', $yesno, 'cfg_showebaytag', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showebaytag);
+	$lists['trimlongurls'] = JHTML::_('select.genericlist', $yesno, 'cfg_trimlongurls', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->trimlongurls);
+	$lists['autoembedyoutube'] = JHTML::_('select.genericlist', $yesno, 'cfg_autoembedyoutube', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->autoembedyoutube);
+	$lists['autoembedebay'] = JHTML::_('select.genericlist', $yesno, 'cfg_autoembedebay', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->autoembedebay);
+	$lists['highlightcode'] = JHTML::_('select.genericlist', $yesno, 'cfg_highlightcode', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->highlightcode);
 
     html_Kunena::showConfig($fbConfig, $lists, $option);
 }
@@ -796,7 +799,7 @@ function saveConfig($option)
     // To enable legacy 3rd party modules to 'see' our config
     // we also write an old style config file
 	global $mainframe;
-    $configfile = $mainframe->getCfg('absolute_path') . "/administrator/components/com_kunena/Kunena_config.php";
+    $configfile = JPATH_ROOT . "/administrator/components/com_kunena/Kunena_config.php";
     @chmod($configfile, 0766);
 
 	$ref = array();
@@ -841,11 +844,11 @@ function saveConfig($option)
     }
     // end legacy support
 
-    mosRedirect("index2.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED);
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED);
 }
 
-function showInstructions($database, $option, $mosConfig_lang) {
-    html_Kunena::showInstructions($database, $option, $mosConfig_lang);
+function showInstructions($database, $option, $lang) {
+    html_Kunena::showInstructions($database, $option, $lang);
 }
 
 //===============================
@@ -887,10 +890,10 @@ function saveCss($file, $csscontent, $option)
     {
         fputs($fp, stripslashes($csscontent));
         fclose ($fp);
-        mosRedirect("index2.php?option=$option&task=showCss", _KUNENA_CFS);
+        $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showCss", _KUNENA_CFS);
     }
     else {
-        mosRedirect("index2.php?option=$option", _KUNENA_CFCNBO);
+        $mainframe->redirect( JURI::base() ."index2.php?option=$option", _KUNENA_CFCNBO);
     }
 }
 
@@ -899,10 +902,10 @@ function saveCss($file, $csscontent, $option)
 //===============================
 function newModerator($option, $id = null)
 {
-    global $database;
+    $database = &JFactory::getDBO();
     //die ("New Moderator");
-    //$limit = intval(mosGetParam($_POST, 'limit', 10));
-    //$limitstart = intval(mosGetParam($_POST, 'limitstart', 0));
+    //$limit = intval(JRequest::getVar('limit', 10));
+    //$limitstart = intval(JRequest::getVar('limitstart', 0));
     $limit = $mainframe->getUserStateFromRequest("viewlistlimit", 'limit', 10);
     $limitstart = $mainframe->getUserStateFromRequest("view{$option}limitstart", 'limitstart', 0);
     $database->setQuery("SELECT COUNT(*) FROM #__users AS a" . "\n LEFT JOIN #__fb_users AS b" . "\n ON a.id=b.userid where b.moderator=1");
@@ -989,17 +992,17 @@ function addModerator($option, $id, $cid = null, $publish = 1)
 
     $row = new fbForum($database);
     $row->checkin($id);
-    mosRedirect ("index2.php?option=$option&task=edit2&uid=" . $id);
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=edit2&uid=" . $id);
 }
 
 //===============================
 //   User Profile functions
 //===============================
-function showProfiles($database, $option, $mosConfig_lang, $order)
+function showProfiles($database, $option, $lang, $order)
 {
     global $mainframe;
-    //$limit = intval(mosGetParam($_POST, 'limit', 10));
-    //$limitstart = intval(mosGetParam($_POST, 'limitstart', 0));
+    //$limit = intval(JRequest::getVar('limit', 10));
+    //$limitstart = intval(JRequest::getVar('limitstart', 0));
     $limit = $mainframe->getUserStateFromRequest("viewlistlimit", 'limit', 10);
     $limitstart = $mainframe->getUserStateFromRequest("view{$option}limitstart", 'limitstart', 0);
 
@@ -1037,9 +1040,9 @@ function showProfiles($database, $option, $mosConfig_lang, $order)
 
     $countPL = count($profileList);
 
-    require_once ("includes/pageNavigation.php");
-    $pageNavSP = new mosPageNav($total, $limitstart, $limit);
-    html_Kunena::showProfiles($option, $mosConfig_lang, $profileList, $countPL, $pageNavSP, $order, $search);
+    jimport('joomla.html.pagination');
+    $pageNavSP = new JPagination($total, $limitstart, $limit);
+    html_Kunena::showProfiles($option, $lang, $profileList, $countPL, $pageNavSP, $order, $search);
 }
 
 function editUserProfile($uid)
@@ -1069,29 +1072,29 @@ function editUserProfile($uid)
     	check_dberror('Unable to load special ranks.');
 
     //build select list options
-    $yesnoRank[] = mosHTML::makeOption('0', 'No Rank Assigned');
+    $yesnoRank[] = JHTML::_('select.option', '0', 'No Rank Assigned');
     foreach ($specialRanks as $ranks)
     {
-    	$yesnoRank[] = mosHTML::makeOption($ranks->rank_id, $ranks->rank_title);
+    	$yesnoRank[] = JHTML::_('select.option', $ranks->rank_id, $ranks->rank_title);
     }
     //build special ranks select list
-    $selectRank = mosHTML::selectList($yesnoRank, 'newrank', 'class="inputbox" size="5"', 'value', 'text', $userRank);
+    $selectRank = JHTML::_('select.genericlist', $yesnoRank, 'newrank', 'class="inputbox" size="5"', 'value', 'text', $userRank);
 
     // make the select list for the view type
-    $yesno[] = mosHTML::makeOption('flat', _COM_A_FLAT);
-    $yesno[] = mosHTML::makeOption('threaded', _COM_A_THREADED);
+    $yesno[] = JHTML::_('select.option', 'flat', _COM_A_FLAT);
+    $yesno[] = JHTML::_('select.option', 'threaded', _COM_A_THREADED);
     // build the html select list
-    $selectPref = mosHTML::selectList($yesno, 'newview', 'class="inputbox" size="2"', 'value', 'text', $prefview);
+    $selectPref = JHTML::_('select.genericlist', $yesno, 'newview', 'class="inputbox" size="2"', 'value', 'text', $prefview);
     // make the select list for the moderator flag
-    $yesnoMod[] = mosHTML::makeOption('1', _ANN_YES);
-    $yesnoMod[] = mosHTML::makeOption('0', _ANN_NO);
+    $yesnoMod[] = JHTML::_('select.option', '1', _ANN_YES);
+    $yesnoMod[] = JHTML::_('select.option', '0', _ANN_NO);
     // build the html select list
-    $selectMod = mosHTML::selectList($yesnoMod, 'moderator', 'class="inputbox" size="2"', 'value', 'text', $moderator);
+    $selectMod = JHTML::_('select.genericlist', $yesnoMod, 'moderator', 'class="inputbox" size="2"', 'value', 'text', $moderator);
     // make the select list for the moderator flag
-    $yesnoOrder[] = mosHTML::makeOption('0', _USER_ORDER_ASC);
-    $yesnoOrder[] = mosHTML::makeOption('1', _USER_ORDER_DESC);
+    $yesnoOrder[] = JHTML::_('select.option', '0', _USER_ORDER_ASC);
+    $yesnoOrder[] = JHTML::_('select.option', '1', _USER_ORDER_DESC);
     // build the html select list
-    $selectOrder = mosHTML::selectList($yesnoOrder, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $ordering);
+    $selectOrder = JHTML::_('select.genericlist', $yesnoOrder, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $ordering);
 
     //get all subscriptions for this user
     $database->setQuery("select thread from #__fb_subscriptions where userid=$uid[0]");
@@ -1104,7 +1107,7 @@ function editUserProfile($uid)
     	check_dberror('Unable to moderation category ids for user.');
 
     foreach ($_modCats as $_v) {
-        $__modCats[] = mosHTML::makeOption( $_v );
+        $__modCats[] = JHTML::_('select.option',  $_v );
     }
 
     $modCats = KUNENA_GetAvailableModCats($__modCats);
@@ -1114,16 +1117,16 @@ function editUserProfile($uid)
 
 function saveUserProfile($option)
 {
-    global $database;
-    $newview = mosGetParam($_POST, 'newview', 'flat');
-    $newrank = mosGetParam($_POST, 'newrank', '');
-    $signature = mosGetParam($_POST, 'message', '');
-    $deleteSig = mosGetParam($_POST, 'deleteSig', 0);
-    $moderator = mosGetParam($_POST, 'moderator', 0);
-    $uid = mosGetParam($_POST, 'uid');
-    $deleteAvatar = mosGetParam($_POST, 'deleteAvatar', 0);
-    $neworder = mosGetParam($_POST, 'neworder', 'asc');
-    $modCatids = mosGetParam($_POST, 'catid', array());
+    $database = &JFactory::getDBO();
+    $newview = JRequest::getVar('newview', 'flat');
+    $newrank = JRequest::getVar('newrank', '');
+    $signature = JRequest::getVar('message', '');
+    $deleteSig = JRequest::getVar('deleteSig', 0);
+    $moderator = JRequest::getVar('moderator', 0);
+    $uid = JRequest::getVar('uid');
+    $deleteAvatar = JRequest::getVar('deleteAvatar', 0);
+    $neworder = JRequest::getVar('neworder', 'asc');
+    $modCatids = JRequest::getVar('catid', array());
 
     if ($deleteSig == 1) {
         $signature = "";
@@ -1155,7 +1158,7 @@ function saveUserProfile($option)
     	}
     }
 
-    mosRedirect ("index2.php?option=com_kunena&task=showprofiles");
+    $mainframe->redirect( JURI::base() ."index2.php?option=com_kunena&task=showprofiles");
 }
 
 //===============================
@@ -1169,13 +1172,13 @@ function pruneforum($database, $option)
     //get all subscriptions for this user
     $forums_list = $database->loadObjectList();
     	check_dberror("Unable to load unlocked forums.");
-    $forumList['forum'] = mosHTML::selectList($forums_list, 'prune_forum', 'class="inputbox" size="4"', 'value', 'text', '');
+    $forumList['forum'] = JHTML::_('select.genericlist', $forums_list, 'prune_forum', 'class="inputbox" size="4"', 'value', 'text', '');
     html_Kunena::pruneforum($option, $forumList);
 }
 
 function doprune($database, $option)
 {
-    $catid = intval(mosGetParam($_POST, 'prune_forum', -1));
+    $catid = intval(JRequest::getVar('prune_forum', -1));
     $deleted = 0;
 
     if ($catid == -1)
@@ -1184,7 +1187,7 @@ function doprune($database, $option)
         exit();
     }
 
-    $prune_days = intval(mosGetParam($_POST, 'prune_days', 0));
+    $prune_days = intval(JRequest::getVar('prune_days', 0));
     //get the thread list for this forum
     $database->setQuery("SELECT DISTINCT a.thread AS thread, max(a.time) AS lastpost, c.locked AS locked " . "\n FROM #__fb_messages AS a" . "\n JOIN #__fb_categories AS b ON a.catid=b.id " . "\n JOIN #__fb_messages   AS c ON a.thread=c.thread"
                             . "\n where a.catid=$catid " . "\n and b.locked != 1 " . "\n and a.locked != 1 " . "\n and c.locked != 1 " . "\n and c.parent = 0 " . "\n and c.ordering != 1 " . "\n group by thread");
@@ -1243,7 +1246,7 @@ function doprune($database, $option)
         }
     }
 
-    mosRedirect("index2.php?option=$option&task=pruneforum", "" . _KUNENA_FORUMPRUNEDFOR . " " . $prune_days . " " . _KUNENA_PRUNEDAYS . "; " . _KUNENA_PRUNEDELETED . "" . $deleted . " " . _KUNENA_PRUNETHREADS . "");
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=pruneforum", "" . _KUNENA_FORUMPRUNEDFOR . " " . $prune_days . " " . _KUNENA_PRUNEDAYS . "; " . _KUNENA_PRUNEDELETED . "" . $deleted . " " . _KUNENA_PRUNETHREADS . "");
 }
 
 //===============================
@@ -1308,12 +1311,12 @@ function doUserSync($database, $option)
 				$database->query() or trigger_dberror("Unable to add new users.");
 			}
 		}
-        mosRedirect("index2.php?option=$option&task=pruneusers", "" . _KUNENA_USERSSYNCDELETED . "" . $cids . " " . _KUNENA_SYNCUSERPROFILES . "");
+        $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=pruneusers", "" . _KUNENA_USERSSYNCDELETED . "" . $cids . " " . _KUNENA_SYNCUSERPROFILES . "");
     }
     else
     {
         $cids = 0;
-        mosRedirect("index2.php?option=$option&task=pruneusers", _KUNENA_NOPROFILESFORSYNC);
+        $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=pruneusers", _KUNENA_NOPROFILESFORSYNC);
     }
 }
 
@@ -1359,7 +1362,7 @@ function replaceImage($database, $option, $imageName, $OxP)
 {
 
 	if (!$imageName) {
-		mosRedirect("index2.php?option=$option&task=browseImages");
+		$mainframe->redirect( JURI::base() ."index2.php?option=$option&task=browseImages");
 		return;
 	}
 
@@ -1383,7 +1386,7 @@ function replaceImage($database, $option, $imageName, $OxP)
         $database->query() or trigger_dberror("Unable to delete attachment.");
     }
 
-    mosRedirect("index2.php?option=$option&task=browseImages", _KUNENA_IMGDELETED);
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=browseImages", _KUNENA_IMGDELETED);
 }
 
 function deleteFile($database, $option, $fileName)
@@ -1391,7 +1394,7 @@ function deleteFile($database, $option, $fileName)
     global $mosConfig_admin_template;
 
     if (!$fileName) {
-    	mosRedirect("index2.php?option=$option&task=browseFiles");
+    	$mainframe->redirect( JURI::base() ."index2.php?option=$option&task=browseFiles");
     	return;
     }
 
@@ -1400,7 +1403,7 @@ function deleteFile($database, $option, $fileName)
     //step 2: remove the database link to the file
     $database->setQuery("DELETE FROM #__fb_attachments where filelocation='" . KUNENA_ABSUPLOADEDPATH . "/files/" . $fileName . "'");
     $database->query() or trigger_dberror("Unable to delete attachment.");
-    mosRedirect("index2.php?option=$option&task=browseFiles", _KUNENA_FILEDELETED);
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=browseFiles", _KUNENA_FILEDELETED);
 }
 
 //===============================
@@ -1431,7 +1434,7 @@ function catTreeRecurse($id, $indent = "&nbsp;&nbsp;&nbsp;", $list, &$children, 
 
 function showCategories($cat, $cname, $extras = "", $levellimit = "4")
 {
-    global $database, $mosConfig_lang;
+    global $database, $lang;
     $database->setQuery("select id ,parent,name from
           #__fb_categories" . "\nORDER BY name");
     $mitems = $database->loadObjectList();
@@ -1453,7 +1456,7 @@ function showCategories($cat, $cname, $extras = "", $levellimit = "4")
     $list = catTreeRecurse(0, '', array (), $children);
     // assemble menu items to the array
     $mitems = array ();
-    $mitems[] = mosHTML::makeOption('0', _KUNENA_NOPARENT);
+    $mitems[] = JHTML::_('select.option', '0', _KUNENA_NOPARENT);
     $this_treename = '';
 
     foreach ($list as $item)
@@ -1461,13 +1464,13 @@ function showCategories($cat, $cname, $extras = "", $levellimit = "4")
         if ($this_treename)
         {
             if ($item->id != $mitems && strpos($item->treename, $this_treename) === false) {
-                $mitems[] = mosHTML::makeOption($item->id, stripslashes($item->treename));
+                $mitems[] = JHTML::_('select.option', $item->id, stripslashes($item->treename));
             }
         }
         else
         {
             if ($item->id != $mitems) {
-                $mitems[] = mosHTML::makeOption($item->id, stripslashes($item->treename));
+                $mitems[] = JHTML::_('select.option', $item->id, stripslashes($item->treename));
             }
             else {
                 $this_treename = stripslashes($item->treename)."/";
@@ -1579,9 +1582,9 @@ function dircopy($srcdir, $dstdir, $verbose = false) {
 //===============================
 function showsmilies($option)
 {
-    global $database, $mainframe, $mosConfig_lang;
-    //$limit = intval(mosGetParam($_POST, 'limit', 10));
-    //$limitstart = intval(mosGetParam($_POST, 'limitstart', 0));
+    global $database, $mainframe, $lang;
+    //$limit = intval(JRequest::getVar('limit', 10));
+    //$limitstart = intval(JRequest::getVar('limitstart', 0));
     $limit = $mainframe->getUserStateFromRequest("viewlistlimit", 'limit', 10);
     $limitstart = $mainframe->getUserStateFromRequest("view{$option}limitstart", 'limitstart', 0);
 	$database->setQuery("SELECT COUNT(*) FROM #__fb_smileys");
@@ -1597,13 +1600,13 @@ function showsmilies($option)
 
     require_once ("includes/pageNavigation.php");
     $pageNavSP = new mosPageNav($total, $limitstart, $limit);
-    html_Kunena::showsmilies($option, $mosConfig_lang, $smileytmp, $pageNavSP, $smileypath);
+    html_Kunena::showsmilies($option, $lang, $smileytmp, $pageNavSP, $smileypath);
 
 }
 
 function editsmiley($option, $id)
 {
-	global $database, $mainframe, $mosConfig_lang;
+	global $database, $mainframe, $lang;
     $database->setQuery("SELECT * FROM #__fb_smileys WHERE id = $id");
 
     $smileytmp = $database->loadAssocList();
@@ -1629,7 +1632,7 @@ function editsmiley($option, $id)
 
 		$filename_list .= '<option value="' . $smiley_images[$i] . '"' . $smiley_selected . '>' . $smiley_images[$i] . '</option>'."\n";
     }
-    html_Kunena::editsmiley($option, $mosConfig_lang, $smiley_edit_img, $filename_list, $smileypath, $smileycfg);
+    html_Kunena::editsmiley($option, $lang, $smiley_edit_img, $filename_list, $smileypath, $smileycfg);
 }
 
 function newsmiley($option)
@@ -1651,16 +1654,16 @@ function newsmiley($option)
 
 function savesmiley($option, $id = NULL)
 {
-	global $database;
+	$database = &JFactory::getDBO();
 
-    $smiley_code = mosGetParam($_POST, 'smiley_code');
-    $smiley_location = mosGetParam($_POST, 'smiley_url');
-    $smiley_emoticonbar = (mosGetParam($_POST, 'smiley_emoticonbar')) ? mosGetParam($_POST, 'smiley_emoticonbar') : 0;
+    $smiley_code = JRequest::getVar('smiley_code');
+    $smiley_location = JRequest::getVar('smiley_url');
+    $smiley_emoticonbar = (JRequest::getVar('smiley_emoticonbar')) ? JRequest::getVar('smiley_emoticonbar') : 0;
 
     if (empty($smiley_code) || empty($smiley_location))
     {
     	$task = ($id == NULL) ? 'newsmiley' : 'editsmiley&id='.$id;
-        mosRedirect ("index2.php?option=$option&task=".$task, _KUNENA_MISSING_PARAMETER);
+        $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=".$task, _KUNENA_MISSING_PARAMETER);
         exit();
     }
 
@@ -1672,7 +1675,7 @@ function savesmiley($option, $id = NULL)
     	if (in_array($smiley_code, $value) && !($value['id'] == $id))
     	{
             $task = ($id == NULL) ? 'newsmiley' : 'editsmiley&id='.$id;
-        	mosRedirect ("index2.php?option=$option&task=".$task, _KUNENA_CODE_ALLREADY_EXITS);
+        	$mainframe->redirect( JURI::base() ."index2.php?option=$option&task=".$task, _KUNENA_CODE_ALLREADY_EXITS);
         	exit();
     	}
 
@@ -1689,7 +1692,7 @@ function savesmiley($option, $id = NULL)
 
     $database->query() or trigger_dberror("Unable to save smiley.");
 
-    mosRedirect ("index2.php?option=$option&task=showsmilies", _KUNENA_SMILEY_SAVED);
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showsmilies", _KUNENA_SMILEY_SAVED);
 }
 
 function deletesmiley($option, $cid)
@@ -1701,21 +1704,21 @@ function deletesmiley($option, $cid)
 		$database->query() or trigger_dberror("Unable to delete smiley.");
 	}
 
-    mosRedirect ("index2.php?option=$option&task=showsmilies", _KUNENA_SMILEY_DELETED);
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showsmilies", _KUNENA_SMILEY_DELETED);
 }
 
 function smileypath()
 {
-    global $mainframe, $mosConfig_lang;
+    global $mainframe, $lang;
 	global $fbConfig;
 
-    if (is_dir($mainframe->getCfg('absolute_path') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/emoticons')) {
-        $smiley_live_path = $mainframe->getCfg('live_site') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/emoticons';
-        $smiley_abs_path = $mainframe->getCfg('absolute_path') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/emoticons';
+    if (is_dir(JPATH_ROOT . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$lang.'/emoticons')) {
+        $smiley_live_path = JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$lang.'/emoticons';
+        $smiley_abs_path = JPATH_ROOT . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$lang.'/emoticons';
     }
     else {
-        $smiley_live_path = $mainframe->getCfg('live_site') . '/components/com_kunena/template/default/images/'.$mosConfig_lang.'/emoticons';
-        $smiley_abs_path = $mainframe->getCfg('absolute_path') . '/components/com_kunena/template/default/images/'.$mosConfig_lang.'/emoticons';
+        $smiley_live_path = JURI::root() . '/components/com_kunena/template/default/images/'.$lang.'/emoticons';
+        $smiley_abs_path = JPATH_ROOT . '/components/com_kunena/template/default/images/'.$lang.'/emoticons';
     }
 
     $smileypath['live'] = $smiley_live_path;
@@ -1760,10 +1763,10 @@ function collect_smilies()
 
 function showRanks($option)
 {
-    global $mainframe, $database, $mosConfig_lang, $order;
+    global $mainframe, $database, $lang, $order;
 
-	//$limit = intval(mosGetParam($_POST, 'limit', 10));
-	//$limitstart = intval(mosGetParam($_POST, 'limitstart', 0));
+	//$limit = intval(JRequest::getVar('limit', 10));
+	//$limitstart = intval(JRequest::getVar('limitstart', 0));
     $limit = $mainframe->getUserStateFromRequest("viewlistlimit", 'limit', 10);
 	$limitstart = $mainframe->getUserStateFromRequest("view{$option}limitstart", 'limitstart', 0);
 	$database->setQuery("SELECT COUNT(*) FROM #__fb_ranks");
@@ -1780,22 +1783,22 @@ function showRanks($option)
 
 	require_once( "includes/pageNavigation.php" );
 	$pageNavSP = new mosPageNav( $total,$limitstart,$limit );
-	html_Kunena::showRanks( $option,$mosConfig_lang,$ranks,$pageNavSP,$order,$rankpath );
+	html_Kunena::showRanks( $option,$lang,$ranks,$pageNavSP,$order,$rankpath );
 
 }
 
 function rankpath()
 {
-    global $mainframe, $mosConfig_lang;
+    global $mainframe, $lang;
 	global $fbConfig;
 
-    if (is_dir($mainframe->getCfg('absolute_path') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/ranks')) {
-        $rank_live_path = $mainframe->getCfg('live_site') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/ranks';
-        $rank_abs_path = $mainframe->getCfg('absolute_path') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/ranks';
+    if (is_dir(JPATH_ROOT . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$lang.'/ranks')) {
+        $rank_live_path = JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$lang.'/ranks';
+        $rank_abs_path = JPATH_ROOT . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$lang.'/ranks';
     }
     else {
-        $rank_live_path = $mainframe->getCfg('live_site') . '/components/com_kunena/template/default/images/'.$mosConfig_lang.'/ranks';
-        $rank_abs_path = $mainframe->getCfg('absolute_path') . '/components/com_kunena/template/default/images/'.$mosConfig_lang.'/ranks';
+        $rank_live_path = JURI::root() . '/components/com_kunena/template/default/images/'.$lang.'/ranks';
+        $rank_abs_path = JPATH_ROOT . '/components/com_kunena/template/default/images/'.$lang.'/ranks';
     }
 
     $rankpath['live'] = $rank_live_path;
@@ -1856,22 +1859,22 @@ function deleteRank($option, $cid = null)
 		$database->query() or trigger_dberror("Unable to delete rank.");
 	}
 
-    mosRedirect ("index2.php?option=$option&task=ranks", _KUNENA_RANK_DELETED);
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=ranks", _KUNENA_RANK_DELETED);
 }
 
 function saveRank($option, $id = NULL)
 {
-	global $database;
+	$database = &JFactory::getDBO();
 
-    $rank_title = mosGetParam($_POST, 'rank_title');
-    $rank_image = mosGetParam($_POST, 'rank_image');
-    $rank_special = mosGetParam($_POST, 'rank_special');
-    $rank_min = mosGetParam($_POST, 'rank_min');
+    $rank_title = JRequest::getVar('rank_title');
+    $rank_image = JRequest::getVar('rank_image');
+    $rank_special = JRequest::getVar('rank_special');
+    $rank_min = JRequest::getVar('rank_min');
 
     if (empty($rank_title) || empty($rank_image))
     {
     	$task = ($id == NULL) ? 'newRank' : 'editRank&id='.$id;
-        mosRedirect ("index2.php?option=$option&task=".$task, _KUNENA_MISSING_PARAMETER);
+        $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=".$task, _KUNENA_MISSING_PARAMETER);
         exit();
     }
 
@@ -1884,7 +1887,7 @@ function saveRank($option, $id = NULL)
     	if (in_array($rank_title, $value) && !($value['rank_id'] == $id))
     	{
             $task = ($id == NULL) ? 'newRank' : 'editRank&id='.$id;
-        	mosRedirect ("index2.php?option=$option&task=".$task, _KUNENA_RANK_ALLREADY_EXITS);
+        	$mainframe->redirect( JURI::base() ."index2.php?option=$option&task=".$task, _KUNENA_RANK_ALLREADY_EXITS);
         	exit();
     	}
     }
@@ -1899,12 +1902,12 @@ function saveRank($option, $id = NULL)
     }
     $database->query() or trigger_dberror("Unable to save ranks.");
 
-    mosRedirect ("index2.php?option=$option&task=ranks", _KUNENA_RANK_SAVED);
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=ranks", _KUNENA_RANK_SAVED);
 }
 
 function editRank($option, $id)
 {
-	global $database, $mainframe, $mosConfig_lang;
+	global $database, $mainframe, $lang;
 
 	$database->setQuery("SELECT * FROM #__fb_ranks WHERE rank_id = '$id'");
     $database->query() or trigger_dberror("Unable to load ranks.");
@@ -1944,7 +1947,7 @@ function editRank($option, $id)
 		}
 	}
 
-    html_Kunena::editRank($option, $mosConfig_lang, $edit_img, $filename_list, $path, $row);
+    html_Kunena::editRank($option, $lang, $edit_img, $filename_list, $path, $row);
 }
 
 //===============================
@@ -1953,7 +1956,7 @@ function editRank($option, $id)
 // Dan Syme/IGD - Ranks Management
 
 function KUNENA_GetAvailableModCats($catids) {
-    global $database;
+    $database = &JFactory::getDBO();
     $list = JJ_categoryArray(1);
     $this_treename = '';
     $catid = 0;
@@ -1961,19 +1964,19 @@ function KUNENA_GetAvailableModCats($catids) {
     foreach ($list as $item) {
         if ($this_treename) {
             if ($item->id != $catid && strpos($item->treename, $this_treename) === false) {
-                $options[] = mosHTML::makeOption($item->id, stripslashes($item->treename));
+                $options[] = JHTML::_('select.option', $item->id, stripslashes($item->treename));
                 }
             }
         else {
             if ($item->id != $catid) {
-                $options[] = mosHTML::makeOption($item->id, stripslashes($item->treename));
+                $options[] = JHTML::_('select.option', $item->id, stripslashes($item->treename));
                 }
             else {
                 $this_treename = stripslashes($item->treename)."/";
                 }
             }
         }
-    $parent = mosHTML::selectList($options, 'catid[]', 'class="inputbox fbs"  multiple="multiple"   id="KUNENA_AvailableForums" ', 'value', 'text', $catids);
+    $parent = JHTML::_('select.genericlist', $options, 'catid[]', 'class="inputbox fbs"  multiple="multiple"   id="KUNENA_AvailableForums" ', 'value', 'text', $catids);
     return $parent;
 }
 

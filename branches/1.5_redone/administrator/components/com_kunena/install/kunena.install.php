@@ -20,7 +20,7 @@
  **/
 //
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 // Help get past php timeouts if we made it that far
 // Joomla 1.5 installer can be very slow and this helps avoid timeouts
@@ -33,17 +33,17 @@ DEFINE('KUNENA_MIN_MYSQL', '5.0.0');
 
 global $mainframe;
 //Get right Language file
-if (file_exists($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.' . $mainframe->getCfg('lang') . '.php')) {
-    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.' . $mainframe->getCfg('lang') . '.php');
+if (file_exists(JPATH_ROOT . '/administrator/components/com_kunena/language/kunena.' . $lang . '.php')) {
+    include (JPATH_ROOT . '/administrator/components/com_kunena/language/kunena.' . $lang . '.php');
 }
 else {
-    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.english.php');
+    include (JPATH_ROOT . '/administrator/components/com_kunena/language/kunena.english.php');
 }
 
-include_once($mainframe->getCfg("absolute_path")."/administrator/components/com_kunena/lib/fx.upgrade.class.php");
+include_once(JPATH_ROOT."/administrator/components/com_kunena/lib/fx.upgrade.class.php");
 
 function com_install() {
-	global $database, $mainframe, $mosConfig_absolute_path;
+	global $database, $mainframe;
 
 	// Determine MySQL version from phpinfo
 	$database->setQuery("SELECT VERSION() as mysql_version");
@@ -149,10 +149,10 @@ function com_install() {
 			//
 			// We might want to make the file copy below part of the install as well
 			//
-			if (is_writable($mainframe->getCfg("absolute_path")."/images" ))
+			if (is_writable(JPATH_ROOT."/images" ))
 			{
 				//ok now it is installed, just copy the fbfiles directory, and apply 0777
-				dircopy($mainframe->getCfg("absolute_path") . "/components/com_kunena/kunena.files.distribution", $mainframe->getCfg("absolute_path") . "/images/fbfiles", false);
+				dircopy(JPATH_ROOT . "/components/com_kunena/kunena.files.distribution", JPATH_ROOT . "/images/fbfiles", false);
 			}
 			else {
 			?>
@@ -162,12 +162,12 @@ function com_install() {
 				style="border: 1px solid #FF6666; background: #FFCC99; padding: 10px; text-align: left; margin: 10px 0;">
 			<img src='images/publish_x.png' align='absmiddle'>
 			Creation/permission setting of the following directories failed: <br>
-			<pre> <?php echo $mainframe->getCfg("absolute_path"); ?>/images/fbfiles/
-			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/avatars
-			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/avatars/gallery (you have to put avatars inside if you want to use it)
-			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/category_images
-			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/files
-			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/images
+			<pre> <?php echo JPATH_ROOT; ?>/images/fbfiles/
+			<?php echo JPATH_ROOT;?>/images/fbfiles/avatars
+			<?php echo JPATH_ROOT;?>/images/fbfiles/avatars/gallery (you have to put avatars inside if you want to use it)
+			<?php echo JPATH_ROOT;?>/images/fbfiles/category_images
+			<?php echo JPATH_ROOT;?>/images/fbfiles/files
+			<?php echo JPATH_ROOT;?>/images/fbfiles/images
 </pre> a) You can copy the contents of _kunena.files.distribution under
 			components/com_kunena to your Joomla root, under images/ folder,
 			rename it to "fbfiles" and then chmod it to 777 (making it writable)

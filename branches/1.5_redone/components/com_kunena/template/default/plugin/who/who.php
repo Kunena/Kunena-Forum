@@ -20,7 +20,7 @@
 **/
 
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
 ?>
@@ -95,7 +95,7 @@ if ($fbConfig->showwhoisonline > 0)
                         {
                         ?>
 
-                       <a href = "<?php echo sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX.''.$user->userid)?>"><?php echo $user->username; ?></a>
+                       <a href = "<?php echo JRoute::_(KUNENA_PROFILE_LINK_SUFFIX.''.$user->userid)?>"><?php echo $user->username; ?></a>
 
                         <?php
                         }

@@ -354,7 +354,7 @@ $catName = $objCatInfo->name;
 								$_arogrp = $acl->getAroGroup($subs->id);
 								$_arogrp->group_id = $_arogrp->id;
 								$_isadm = (strtolower($_arogrp->name) == 'super administrator' || strtolower($_arogrp->name) == 'administrator');
-								
+							}
 								if (!fb_has_moderator_permission($database, $_catobj, $subs->id, $_isadm)) {
 									$allow_forum = array();
 									if (!fb_has_read_permission($_catobj, $allow_forum, $_arogrp->group_id, $acl)) {

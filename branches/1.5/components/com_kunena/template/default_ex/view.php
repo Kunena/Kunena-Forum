@@ -231,7 +231,7 @@ if ($letPass || $is_Moderator)
                 $limitstart = 0;
             }
 
-            $limitstart = JRequest::getInt('limitstart', $limitstart));
+            $limitstart = JRequest::getInt('limitstart', $limitstart);
             $total = count($flat_messages);
 
 	    $maxpages = 9 - 2; // odd number here (show - 2)

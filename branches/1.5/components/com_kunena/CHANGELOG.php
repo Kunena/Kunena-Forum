@@ -33,6 +33,9 @@ Legend:
 Kunena 1.5.0
 
 6-March-2009 Matias
+# [#15378] Post merge cleanup: PHP errors
+
+6-March-2009 Matias
 # [#15378] Merge new changes from branch 1.5 to a tree with history (frontend)
 # [#15378] Merge latest revision from Branch 1.0 back into 1.5 (reverse merge)
 

@@ -36,6 +36,10 @@ Kunena 1.5.0
 # [#15378] Merge new changes from branch 1.5 to a tree with history (frontend)
 # [#15378] Merge latest revision from Branch 1.0 back into 1.5 (reverse merge)
 
+5-March-2009 fxstein
+^ [#15378] Kunena branch 1.0.9 merged into 1.5 (r498)
+# [#15378] Post merge cleanup: Incorrect list assignement in configuration
+
 25-February-2009 fxstein
 # [#15131] Initial cut at working Kunena 1.5 native backend
 

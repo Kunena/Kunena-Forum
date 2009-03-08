@@ -35,7 +35,6 @@ Kunena 1.5.0
 7-March-2009 fxstein
 - [#15378] Drop CKunenaTemplate - not longer needed/supported
 # [#15378] Re-apply fixes to class.kunena.php that did not make the merge
-# [#15378] Make default_ex default for templates
 
 6-March-2009 Matias
 # [#15378] Post merge cleanup: PHP errors

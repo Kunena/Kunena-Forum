@@ -147,7 +147,7 @@ function com_install()
 		    $ret = JFolder::copy(JPATH_ROOT .DS. "components" .DS. "com_kunena" .DS. "kunena.files.distribution",
 		    				JPATH_ROOT .DS. "images" .DS. "fbfiles", '', true);
 
-			if (JError::isError($ret))
+			if ($ret !== true)
 			{
 			?>
 
@@ -156,12 +156,12 @@ function com_install()
 				style="border: 1px solid #FF6666; background: #FFCC99; padding: 10px; text-align: left; margin: 10px 0;">
 			<img src='images/publish_x.png' align='absmiddle'>
 			Creation/permission setting of the following directories failed: <br>
-			<pre> <?php echo $mainframe->getCfg("absolute_path"); ?>/images/fbfiles/
-			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/avatars
-			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/avatars/gallery (you have to put avatars inside if you want to use it)
-			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/category_images
-			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/files
-			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/images
+			<pre> <?php echo JPATH_ROOT; ?>/images/fbfiles/
+			<?php echo JPATH_ROOT;?>/images/fbfiles/avatars
+			<?php echo JPATH_ROOT;?>/images/fbfiles/avatars/gallery (you have to put avatars inside if you want to use it)
+			<?php echo JPATH_ROOT;?>/images/fbfiles/category_images
+			<?php echo JPATH_ROOT;?>/images/fbfiles/files
+			<?php echo JPATH_ROOT;?>/images/fbfiles/images
 </pre> a) You can copy the contents of _kunena.files.distribution under
 			components/com_kunena to your Joomla root, under images/ folder.
 
@@ -265,61 +265,4 @@ function com_install()
 	<?php
 
 }
-
-//function dircopy($srcdir, $dstdir, $verbose = true) {
-//	$num = 0;
-//
-//	if (!JFolder::exists($dstdir)) {
-//		JFolder::create($dstdir);
-//	}
-//
-//	JFolder::copy($srcdir, $dstdir);
-//
-////	if ($curdir = opendir($srcdir)) {
-////		while ($file = readdir($curdir)) {
-////			if ($file != '.' && $file != '..') {
-////				$srcfile = $srcdir . '/' . $file;
-////				$dstfile = $dstdir . '/' . $file;
-////
-////				if (is_file($srcfile)) {
-////					if (is_file($dstfile)) {
-////						$ow = filemtime($srcfile) - filemtime($dstfile);
-////					}
-////					else {
-////						$ow = 1;
-////					}
-////
-////					if ($ow > 0) {
-////						if ($verbose) {
-////							$tmpstr = _KUNENA_COPY_FILE;
-////							$tmpstr = str_replace('%src%', $srcfile, $tmpstr);
-////							$tmpstr = str_replace('%dst%', $dstfile, $tmpstr);
-////							echo "<li class=\"fbscslist\">".$tmpstr;
-////						}
-////
-////						if (copy($srcfile, $dstfile)) {
-////							touch($dstfile, filemtime($srcfile));
-////							$num++;
-////
-////							if ($verbose) {
-////								echo _KUNENA_COPY_OK." </li>";
-////							}
-////						}
-////						else {
-////							echo "<li class=\"fbscslisterror\">"._KUNENA_DIRCOPERR . " '$srcfile' " . _KUNENA_DIRCOPERR1."</li>";
-////						}
-////					}
-////				}
-////				else if (is_dir($srcfile)) {
-////					$num += dircopy($srcfile, $dstfile, $verbose);
-////				}
-////			}
-////		}
-////
-////		closedir ($curdir);
-////	}
-////
-////	return $num;
-//
-//}
 ?>

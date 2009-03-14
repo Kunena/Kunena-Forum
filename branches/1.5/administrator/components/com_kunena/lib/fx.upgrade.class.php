@@ -235,7 +235,7 @@ class fx_Upgrade {
 			{
 				?>
 				<div id="overDiv" style="position:absolute; visibility:hidden; z-index:10000;"></div>
-				<script  type="text/javascript" src="<?php echo $mosConfig_live_site;?>/includes/js/overlib_mini.js"></script>
+				<script  type="text/javascript" src="<?php echo JURI::root();?>/includes/js/overlib_mini.js"></script>
 				<table class="adminlist">
 					<tr>
 						<th colspan="2">Installing "<?php echo $this->component?>" (Version: <?php echo $version;?> / Date: <?php echo $versiondate;?> / Build: <?php echo $build;?> / VersionName: <?php echo $versionname;?> )</th>
@@ -257,7 +257,7 @@ class fx_Upgrade {
 			if(!$this->silent) {
 				?>
 				<div id="overDiv" style="position:absolute; visibility:hidden; z-index:10000;"></div>
-				<script  type="text/javascript" src="<?php echo $mosConfig_live_site;?>/includes/js/overlib_mini.js"></script>
+				<script  type="text/javascript" src="<?php echo JURI::root();?>/includes/js/overlib_mini.js"></script>
 				<table class="adminlist">
 					<tr>
 						<th colspan="2">Upgrading "<?php echo $this->component?>" (Version: <?php echo @$currentVersion->version; ?> / Version Date: <?php echo @$currentVersion->versiondate;?> / Install Date: <?php echo @$currentVersion->installdate;?> / Build: <?php echo @$currentVersion->build;?> / Version Name: <?php echo @$currentVersion->versionname;?>)</th>

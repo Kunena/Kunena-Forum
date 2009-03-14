@@ -25,14 +25,14 @@ global $mainframe;
 // Most or all sql statements should be covered within comupgrade.xml
 
 // now lets do some checks and upgrades to 1.0.2 version of attachment table
-$database->setQuery("select from #__fb_attachments where filelocation like '%" . $mainframe->getCfg("absolute_path") . "%'");
+$database->setQuery("select from #__fb_attachments where filelocation like '%" . JPATH_ROOT . "%'");
 
 // if >0 then it means we are on fb version below 1.0.2
 $is_101_version = $database->loadResult();
 
 if ($is_101_version) {
     // now do the upgrade
-    $database->setQuery("update #__fb_attachments set filelocation = replace(filelocation,'" . $mainframe->getCfg("absolute_path") . "/components/com_kunena/uploaded','/images/fbfiles');");
+    $database->setQuery("update #__fb_attachments set filelocation = replace(filelocation,'" . JPATH_ROOT . "/components/com_kunena/uploaded','/images/fbfiles');");
     if ($database->query()) print '<li class="fbscslist">Attachment table successfully upgraded to 1.0.2+ version schema!</li>';
     else
     {

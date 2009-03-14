@@ -598,9 +598,9 @@ function showConfig($option)
     // the default page when entering Kunena
     $defpagelist = array ();
 
-	$defpagelist[] = JHTML::_('select.option', JText::_('recent'), _COM_A_FBDEFAULT_PAGE_RECENT);
-	$defpagelist[] = JHTML::_('select.option', JText::_('my'), _COM_A_FBDEFAULT_PAGE_MY);
-	$defpagelist[] = JHTML::_('select.option', JText::_('categories'),_COM_A_FBDEFAULT_PAGE_CATEGORIES);
+	$defpagelist[] = JHTML::_('select.option', 'recent', _COM_A_FBDEFAULT_PAGE_RECENT);
+	$defpagelist[] = JHTML::_('select.option', 'my', _COM_A_FBDEFAULT_PAGE_MY);
+	$defpagelist[] = JHTML::_('select.option', 'categories',_COM_A_FBDEFAULT_PAGE_CATEGORIES);
 
     // build the html select list
     $lists['fbdefaultpage'] = JHTML::_('select.genericlist', $defpagelist ,'cfg_fbdefaultpage', 'class="inputbox" size="1" ','value', 'text', $fbConfig->fbdefaultpage);
@@ -609,40 +609,40 @@ function showConfig($option)
     // build the html select list
 
     $rsslist = array ();
-	$rsslist[] = JHTML::_('select.option', JText::_('thread'),_COM_A_RSS_BY_THREAD);
-	$rsslist[] = JHTML::_('select.option', JText::_('post'),_COM_A_RSS_BY_POST);
+	$rsslist[] = JHTML::_('select.option', 'thread',_COM_A_RSS_BY_THREAD);
+	$rsslist[] = JHTML::_('select.option', 'post',_COM_A_RSS_BY_POST);
 
     // build the html select list
 	$lists['rsstype'] = JHTML::_('select.genericlist', $rsslist ,'cfg_rsstype', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rsstype);
 
     $rsshistorylist = array ();
-	$rsshistorylist[] =JHTML::_('select.option', JText::_('Week'),_COM_A_RSS_HISTORY_WEEK);
-	$rsshistorylist[] =JHTML::_('select.option', JText::_('Month'),_COM_A_RSS_HISTORY_MONTH);
-	$rsshistorylist[] =JHTML::_('select.option', JText::_('Year'),_COM_A_RSS_HISTORY_YEAR);
+	$rsshistorylist[] =JHTML::_('select.option', 'Week',_COM_A_RSS_HISTORY_WEEK);
+	$rsshistorylist[] =JHTML::_('select.option', 'Month',_COM_A_RSS_HISTORY_MONTH);
+	$rsshistorylist[] =JHTML::_('select.option', 'Year',_COM_A_RSS_HISTORY_YEAR);
 
     // build the html select list
     $lists['rsshistory'] = JHTML::_('select.genericlist', $rsshistorylist ,'cfg_rsshistory', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rsshistory);
 
     // source of avatar picture
     $avlist = array ();
-	$avlist[] = JHTML::_('select.option', JText::_('fb'),_KUNENA_KUNENA);
-	$avlist[] = JHTML::_('select.option', JText::_('cb'),_KUNENA_CB);
-	$avlist[] = JHTML::_('select.option', JText::_('jomsocial'),_KUNENA_JOMSOCIAL);
-	$avlist[] = JHTML::_('select.option', JText::_('clexuspm'),_KUNENA_CLEXUS);
+	$avlist[] = JHTML::_('select.option', 'fb',_KUNENA_KUNENA);
+	$avlist[] = JHTML::_('select.option', 'cb',_KUNENA_CB);
+	$avlist[] = JHTML::_('select.option', 'jomsocial',_KUNENA_JOMSOCIAL);
+	$avlist[] = JHTML::_('select.option', 'clexuspm',_KUNENA_CLEXUS);
     // build the html select list
     $lists['avatar_src'] = JHTML::_('select.genericlist', $avlist,'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rsshistory);
 
     // private messaging system to use
     $pmlist = array ();
-	$pmlist[] = JHTML::_('select.option', JText::_('no'),_COM_A_NO);
-	$pmlist[] = JHTML::_('select.option', JText::_('cb'),_KUNENA_CB);
-	$pmlist[] = JHTML::_('select.option', JText::_('jomsocial'),_KUNENA_JOMSOCIAL);
-	$pmlist[] = JHTML::_('select.option', JText::_('pms'),_KUNENA_MYPMS);
-	$pmlist[] = JHTML::_('select.option', JText::_('pms'),_KUNENA_MYPMS);
-	$pmlist[] = JHTML::_('select.option', JText::_('clexuspm'),_KUNENA_CLEXUS);
-	$pmlist[] = JHTML::_('select.option', JText::_('uddeim'),_KUNENA_UDDEIM);
-	$pmlist[] = JHTML::_('select.option', JText::_('jim'),_KUNENA_JIM);
-	$pmlist[] = JHTML::_('select.option', JText::_('missus'),_KUNENA_MISSUS);
+	$pmlist[] = JHTML::_('select.option', 'no',_COM_A_NO);
+	$pmlist[] = JHTML::_('select.option', 'cb',_KUNENA_CB);
+	$pmlist[] = JHTML::_('select.option', 'jomsocial',_KUNENA_JOMSOCIAL);
+	$pmlist[] = JHTML::_('select.option', 'pms',_KUNENA_MYPMS);
+	$pmlist[] = JHTML::_('select.option', 'pms',_KUNENA_MYPMS);
+	$pmlist[] = JHTML::_('select.option', 'clexuspm',_KUNENA_CLEXUS);
+	$pmlist[] = JHTML::_('select.option', 'uddeim',_KUNENA_UDDEIM);
+	$pmlist[] = JHTML::_('select.option', 'jim',_KUNENA_JIM);
+	$pmlist[] = JHTML::_('select.option', 'missus',_KUNENA_MISSUS);
 
     $lists['pm_component'] = JHTML::_('select.genericlist', $pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pm_component);
 
@@ -650,10 +650,10 @@ function showConfig($option)
 //redundant    $lists['pm_component'] = JHTML::_('select.genericlist',$pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pm_component);
     // Profile select
     $prflist = array ();
-	$prflist[] = JHTML::_('select.option', JText::_('fb'),_KUNENA_KUNENA);
-	$prflist[] = JHTML::_('select.option', JText::_('cb'),_KUNENA_CB);
-	$prflist[] = JHTML::_('select.option', JText::_('jomsocial'),_KUNENA_JOMSOCIAL);
-	$prflist[] = JHTML::_('select.option', JText::_('clexuspm'),_KUNENA_CLEXUS);
+	$prflist[] = JHTML::_('select.option', 'fb',_KUNENA_KUNENA);
+	$prflist[] = JHTML::_('select.option', 'cb',_KUNENA_CB);
+	$prflist[] = JHTML::_('select.option', 'jomsocial',_KUNENA_JOMSOCIAL);
+	$prflist[] = JHTML::_('select.option', 'clexuspm',_KUNENA_CLEXUS);
 
     $lists['fb_profile'] = JHTML::_('select.genericlist', $prflist, 'cfg_fb_profile', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->fb_profile);
 
@@ -662,13 +662,13 @@ function showConfig($option)
     // build the html select list
     // make a standard yes/no list
     $yesno = array ();
-	$yesno[] = JHTML::_('select.option',JText::_('0'), _COM_A_NO);
-	$yesno[] = JHTML::_('select.option', JText::_('1'), _COM_A_YES);
+	$yesno[] = JHTML::_('select.option','0', _COM_A_NO);
+	$yesno[] = JHTML::_('select.option', '1', _COM_A_YES);
     /* Build the templates list*/
     // This function was modified from the one posted to PHP.net by rockinmusicgv
     // It is available under the readdir() entry in the PHP online manual
     //function get_dirs($directory, $select_name, $selected = "") {
-    $listitems[] = JHTML::_('select.option',  JText::_('1'),_KUNENA_SELECTTEMPLATE);
+    $listitems[] = JHTML::_('select.option',  '1',_KUNENA_SELECTTEMPLATE);
 
     if ($dir = @opendir(JPATH_ROOT . "/components/com_kunena/template"))
     {
@@ -741,7 +741,7 @@ function showConfig($option)
 	$ip_opt[] = JHTML::_('select.option', 'gd2', 'GD2');
 	$ip_opt[] = JHTML::_('select.option', 'gd1', 'GD1');
 	$ip_opt[] = JHTML::_('select.option', 'none', _KUNENA_IMAGE_PROCESSOR_NONE);
-    //$ip_opt[] = mosHTML::makeOption( 'none', _KUNENA_IMAGE_PROCESSOR_NONE );
+    //$ip_opt[] = JHTML::_('select.option',  'none', _KUNENA_IMAGE_PROCESSOR_NONE );
 
     $lists['imageprocessor'] = JHTML::_('select.genericlist', $ip_opt, 'cfg_imageprocessor', 'class="inputbox"', 'value', 'text', $fbConfig->imageprocessor );
     $lists['showstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showstats);
@@ -914,8 +914,8 @@ function newModerator($option, $id = null)
     	check_dberror('Unable to load moderators.');
     $countUL = count($userList);
 
-    require_once ("includes/pageNavigation.php");
-    $pageNav = new mosPageNav($total, $limitstart, $limit);
+    jimport('joomla.html.pagination');
+    $pageNav = new JPagination($total, $limitstart, $limit);
     //$id = intval( mosGetParam( $_POST, 'id') );
     //get forum name
     $forumName = '';
@@ -1605,8 +1605,8 @@ $database = &JFactory::getDBO();
 
 	$smileypath = smileypath();
 
-    require_once ("includes/pageNavigation.php");
-    $pageNavSP = new mosPageNav($total, $limitstart, $limit);
+    jimport('joomla.html.pagination');
+    $pageNavSP = new JPagination($total, $limitstart, $limit);
     html_Kunena::showsmilies($option, KUNENA_LANGUAGE, $smileytmp, $pageNavSP, $smileypath);
 
 }
@@ -1727,7 +1727,7 @@ function smileypath()
 	global $fbConfig;
 
 	if (is_dir(JPATH_ROOT . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/emoticons')) {
-        $smiley_live_path = $mainframe->getCfg('live_site') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/emoticons';
+        $smiley_live_path = JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/emoticons';
         $smiley_abs_path = JPATH_ROOT . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/emoticons';
     }
     else {
@@ -1797,8 +1797,8 @@ function showRanks($option)
 
 	$rankpath = rankpath();
 
-	require_once( "includes/pageNavigation.php" );
-	$pageNavSP = new mosPageNav( $total,$limitstart,$limit );
+	jimport('joomla.html.pagination');
+	$pageNavSP = new JPagination( $total,$limitstart,$limit );
 	html_Kunena::showRanks( $option,KUNENA_LANGUAGE,$ranks,$pageNavSP,$order,$rankpath );
 
 }

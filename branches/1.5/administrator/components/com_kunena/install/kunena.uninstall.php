@@ -24,11 +24,11 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 global $mainframe;
 //Get right Language file
-if (file_exists($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.' . $mainframe->getCfg('lang') . '.php')) {
-    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.' . $mainframe->getCfg('lang') . '.php');
+if (file_exists(JPATH_ROOT . '/administrator/components/com_kunena/language/kunena.' . $lang . '.php')) {
+    include (JPATH_ROOT . '/administrator/components/com_kunena/language/kunena.' . $lang . '.php');
 }
 else {
-    include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.english.php');
+    include (JPATH_ROOT . '/administrator/components/com_kunena/language/kunena.english.php');
 }
 
 function com_uninstall()

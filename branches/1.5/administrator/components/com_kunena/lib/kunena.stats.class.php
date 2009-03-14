@@ -35,7 +35,7 @@ class jbStats {
 	 * @return int
 	 */
 	function get_total_messages($start='',$end='') {
-		global $database;
+		$database = &JFactory::getDBO();
 		$where=array();
 		if (!empty($start))
 			$where[]='time > UNIX_TIMESTAMP(\'' . $start. '\')';
@@ -55,7 +55,7 @@ class jbStats {
 	 * @return int
 	 */
 	function get_total_topics($start='',$end='') {
-		global $database;
+		$database = &JFactory::getDBO();
 		$where=array();
 		if (!empty($start))
 			$where[]='time > UNIX_TIMESTAMP(\'' . $start. '\')';
@@ -73,7 +73,7 @@ class jbStats {
 	 * @return array
 	 */
 	function get_top_topics() {
-		global $database;
+		$database = &JFactory::getDBO();
 		$database->setQuery('SELECT * FROM #__fb_messages WHERE parent = 0 ' .
 				'AND hits > 0  ORDER BY hits DESC LIMIT 5');
 		$results=$database->loadObjectList();
@@ -87,7 +87,7 @@ class jbStats {
 	 * @return int
 	 */
 	function get_total_categories() {
-		global $database;
+		$database = &JFactory::getDBO();
 		$database->setQuery('SELECT COUNT(*) FROM #__fb_categories WHERE parent=0');
 		return intval($database->loadResult());
 	}
@@ -96,7 +96,7 @@ class jbStats {
 	 * @return array
 	 */
 	function get_top_categories() {
-		global $database;
+		$database = &JFactory::getDBO();
 		$database->setQuery('SELECT catid,COUNT(id) as totalmsg FROM #__fb_messages' .
 				' GROUP BY c.id ORDER BY catid LIMIT 5');
 		$results=$database->loadObjectList();
@@ -119,7 +119,7 @@ class jbStats {
 	 * @return int
 	 */
 	function get_total_sections() {
-		global $database;
+		$database = &JFactory::getDBO();
 		$database->setQuery('SELECT COUNT(*) FROM #__fb_categories WHERE parent>0');
 		return intval($database->loadResult());
 	}
@@ -129,7 +129,7 @@ class jbStats {
 	 * @return string
 	 */
 	function get_latest_member() {
-		global $database;
+		$database = &JFactory::getDBO();
 		$database->setQuery('SELECT username FROM #__users WHERE block=0 AND activation=\'\' ORDER BY id DESC LIMIT 1');
 		return $database->loadResult();
 	}
@@ -139,7 +139,7 @@ class jbStats {
 	 * @return int
 	 */
 	function get_total_members() {
-		global $database;
+		$database = &JFactory::getDBO();
 		$database->setQuery('SELECT COUNT(*) FROM #__users');
 		return intval($database->loadresult());
 	}
@@ -149,7 +149,7 @@ class jbStats {
 	 * @return array
 	 */
 	function get_top_posters() {
-		global $database;
+		$database = &JFactory::getDBO();
 		$database->setQuery('SELECT s.userid,s.posts,u.username FROM #__fb_users as s ' .
 				"\n INNER JOIN  #__users as u ON s.userid=u.id" .
 				"\n WHERE s.posts > 0 ORDER BY s.posts DESC LIMIT 10");
@@ -161,7 +161,7 @@ class jbStats {
 	 * @return array
 	 */
 	function get_top_profiles() {
-		global $database;
+		$database = &JFactory::getDBO();
 		$database->setQuery('SELECT s.userid,s.uhits,u.username FROM #__fb_users as s ' .
 				"\n INNER JOIN  #__users as u ON s.userid=u.id" .
 				"\n WHERE s.uhits > 0 ORDER BY s.uhits DESC LIMIT 10");
@@ -173,7 +173,7 @@ class jbStats {
 	 * @return array
 	 */
 	 function get_top_cbprofiles() {
-	 	global $database;
+	 	$database = &JFactory::getDBO();
  		$database->setQuery("SELECT u.username AS user, p.hits FROM #__users AS u"
 			. "\n LEFT JOIN #__comprofiler AS p ON p.user_id = u.id"
 			. "\n WHERE p.hits > 0 ORDER BY p.hits DESC LIMIT 10");

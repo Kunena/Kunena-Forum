@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.5.0
 
+14-March-2009 Matias
+# [#15131] Replaced many legacy functions, removed misplaced JText::_()
+
 7-March-2009 fxstein
 - [#15378] Drop CKunenaTemplate - not longer needed/supported
 # [#15378] Re-apply fixes to class.kunena.php that did not make the merge

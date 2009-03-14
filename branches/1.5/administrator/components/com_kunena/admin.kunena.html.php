@@ -3148,7 +3148,7 @@ else
     function browseUploaded($option, $uploaded, $uploaded_path, $type)
     {
         global $database, $mainframe;
-        $map = $mainframe->getCfg('absolute_path');
+        $map = JPATH_ROOT;
 ?>
 
         <SCRIPT LANGUAGE = "Javascript">
@@ -3235,7 +3235,7 @@ else
     // show smilies
     //***************************************
 
-function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileypath)
+function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
         {
 ?>
 <div class="fbfunctitle"><?php echo _KUNENA_EMOTICONS; ?></div>
@@ -3331,7 +3331,7 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
 <?php
         }//end function showsmilies
 
-		function editsmiley($option, $mosConfig_lang, $smiley_edit_img, $filename_list, $smileypath, $smileycfg)
+		function editsmiley($option, $lang, $smiley_edit_img, $filename_list, $smileypath, $smileycfg)
 		{
         ?>
         <script language="javascript" type="text/javascript">
@@ -3415,7 +3415,7 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
 		}//end function newsmilies
 
 /// Dan Syme/IGD Rank Administration
- function showRanks( $option,$mosConfig_lang,&$ranks,$pageNavSP,$order,$rankpath )
+ function showRanks( $option,$lang,&$ranks,$pageNavSP,$order,$rankpath )
 		 {
    global $mainframe;
    $database = &JFactory::getDBO();

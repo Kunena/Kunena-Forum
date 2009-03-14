@@ -221,13 +221,14 @@ else {
 
 require_once (KUNENA_PATH_LIB .DS. 'kunena.permissions.php');
 require_once (KUNENA_PATH_LIB .DS. 'kunena.category.class.php');
-require_once (KUNENA_PATH_LIB .DS. 'kunena.template.class.php');
+require_once (JPATH_BASE.'/libraries/joomla/template/template.php');
 
 if ($catid != '') {
     $thisCat = new jbCategory($database, $catid);
     }
 
-$KunenaTemplate = new CKunenaTemplate(KUNENA_ABSTMPLTPATH);
+$KunenaTemplate = new patTemplate();
+$KunenaTemplate->setRoot( KUNENA_ABSTMPLTPATH );
 
 $KunenaTemplate->readTemplatesFromFile("header.html");
 $KunenaTemplate->readTemplatesFromFile("footer.html");

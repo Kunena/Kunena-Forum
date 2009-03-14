@@ -33,15 +33,14 @@ define('KUNENA_JTEMPLATEPATH', KUNENA_JABSPATH. DS. "templates".DS . $mainframe-
 define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "/templates/".$mainframe->getTemplate());
 
 //Kunena
-$Itemid = JRequest::getInt('Itemid', 0, REQUEST);
+$Itemid = JRequest::getInt('Itemid', 0, 'REQUEST');
 
 //check if we have all the itemid sets. if so, then no need for DB call
 
-global $database, $lang, $my, $my_id;
+global $database, $my, $my_id;
 
 $database = &JFactory::getDBO();
-$language = JLanguage::getInstance($frontend_lang);
-$lang = $language->getBackwardLang();
+
 $my = &JFactory::getUser();
 $my_id = $my->id;
 
@@ -195,7 +194,6 @@ define('KUNENA_DIRECTURL', KUNENA_JLIVEURL . '/components/com_kunena');
 define('KUNENA_URLSOURCESPATH', KUNENA_DIRECTURL . '/lib/');
 
 // Kunena sources url
-define('KUNENA_LANG', $lang);
 define('KUNENA_ABSADMPATH', KUNENA_JABSPATH . '/administrator/components/com_kunena');
 
 if (!defined("KUNENA_JCSSURL")) {
@@ -211,8 +209,8 @@ define('KUNENA_LIVEUPLOADEDPATH', KUNENA_JLIVEURL . '/images/fbfiles');
 
 // now continue with other paths
 
-$fb_user_template = JRequest::getString('fb_user_template', '', COOKIE);
-$fb_user_img_template = JRequest::getString('fb_user_img_template', '', COOKIE);
+$fb_user_template = JRequest::getString('fb_user_template', '', 'COOKIE');
+$fb_user_img_template = JRequest::getString('fb_user_img_template', '', 'COOKIE');
 // don't allow directory travelling
 $fb_user_template = strtr($fb_user_template, '\\/', '');
 $fb_user_img_template = strtr($fb_user_template, '\\/', '');
@@ -249,7 +247,7 @@ define('KUNENA_ABSTMPLTPATH', KUNENA_ABSPATH . '/template/' . $fb_cur_template);
 define('KUNENA_ABSTMPLTMAINIMGPATH', KUNENA_ABSPATH . '/template/' . $fb_cur_img_template);
 
 // IMAGES ABSOLUTE PATH
-define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANG . '/');
+define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANGUAGE . '/');
 
 // absolute images path
 define('KUNENA_ABSICONSPATH', KUNENA_ABSIMAGESPATH . 'icons/');
@@ -272,8 +270,8 @@ define('KUNENA_TMPLTMAINIMGURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_img_t
 // IMAGES URL PATH
 define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . '/kunena.forum.css');
 
-if (is_dir(KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANG . '')) {
-    define('KUNENA_URLIMAGESPATH', KUNENA_TMPLTMAINIMGURL . '/images/' . KUNENA_LANG . '/');
+if (is_dir(KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANGUAGE . '')) {
+    define('KUNENA_URLIMAGESPATH', KUNENA_TMPLTMAINIMGURL . '/images/' . KUNENA_LANGUAGE . '/');
     }
 else {
     define('KUNENA_URLIMAGESPATH', KUNENA_TMPLTMAINIMGURL . '/images/english/');
@@ -1276,7 +1274,7 @@ function make_pattern(&$pat, $key) {
   $pat = '/'.preg_quote($pat, '/').'/i';
 }
 if (!function_exists("htmlspecialchars_decode")) {
-    function htmlspecialchars_decode($string,$style=ENT_COMPAT) 
+    function htmlspecialchars_decode($string,$style=ENT_COMPAT)
     {
         $translation = array_flip(get_html_translation_table(HTML_SPECIALCHARS,$style));
         if($style === ENT_QUOTES) { $translation['&#039;'] = '\''; }

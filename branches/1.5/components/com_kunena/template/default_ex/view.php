@@ -74,7 +74,7 @@ if ($fbConfig->jmambot) { class t{ var $text = ""; }    }
 //
 
 global $is_Moderator;
-global $acl;
+$acl = &JFactory::getACL();
 //securing form elements
 $catid = (int)$catid;
 $id = (int)$id;

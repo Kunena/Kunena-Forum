@@ -43,10 +43,10 @@ else {
 
 function showprf($userid, $page)
 {
-    global $fbConfig, $acl;
+    global $fbConfig;
 
+    $acl = &JFactory::getACL();
     $my = &JFactory::getUser();
-
     $database = &JFactory::getDBO();
     // ERROR: mixed global $fbIcons
     global $fbIcons;

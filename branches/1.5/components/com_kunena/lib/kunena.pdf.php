@@ -58,7 +58,9 @@ class fbpdfwrapper {
 
 function dofreePDF($database)
 {
-    global $aro_group, $acl;
+    global $aro_group;
+
+    $acl = &JFactory::getACL();
 
     $my = &JFactory::getUser();
     global $fbConfig, $fbSession;

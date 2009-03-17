@@ -1172,21 +1172,20 @@ function generate_smilies() {
         }
     }
 
-function fbGetArrayInts($name, $type = NULL) {
-    if ($type == NULL) {
-        $type = $_POST;
-        }
+function fbGetArrayInts($name) {
+    $array = JRequest::getVar($name, array ( 0 ));
 
-    $array = mosGetParam($type, $name, array ( 0 ));
-
-    mosArrayToInts ($array);
+    foreach ($array as $item) {
+        if ((int)$item && (int)$item>0) $items[] = (int)$item;
+    }
+    $array = $items;
 
     if (!is_array($array)) {
         $array = array ( 0 );
-        }
+    }
 
     return $array;
-    }
+}
 
     function time_since($older_date, $newer_date)
     {

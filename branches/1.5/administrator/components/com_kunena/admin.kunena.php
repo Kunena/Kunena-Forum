@@ -917,7 +917,7 @@ function newModerator($option, $id = null)
 
     jimport('joomla.html.pagination');
     $pageNav = new JPagination($total, $limitstart, $limit);
-    //$id = intval( mosGetParam( $_POST, 'id') );
+    //$id = intval( JRequest::getVar('id') );
     //get forum name
     $forumName = '';
     $database->setQuery("select name from #__fb_categories where id=$id");

@@ -277,7 +277,7 @@ if ($my->id != "" && $my->id != 0)
 
                 case "saveprofileinfo":
 
-                    $user_id = intval( mosGetParam( $_POST, 'id', 0 ));
+                    $user_id = intval( JRequest::getVar('id', 0 ));
 
     // do some security checks
     if ($my->id == 0 || $user_id == 0 || $user_id != $my->id) {

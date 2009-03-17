@@ -39,6 +39,7 @@ Kunena 1.5.0
 # [#15131] Replaced global $database with local reference of JFactory::getDBO()
 # [#15131] Replaced global $my with local reference of JFactory::getUser()
 # [#15131] Replaced global $acl with local reference of JFactory::getACL()
+# [#15131] Replaced remaining mosGetParam() with JRequest::getVar()
 
 14-March-2009 Matias
 # [#15131] Replaced many legacy functions, removed misplaced JText::_()

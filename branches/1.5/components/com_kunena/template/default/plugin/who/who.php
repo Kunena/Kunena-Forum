@@ -39,7 +39,7 @@ if ($fbConfig->showwhoisonline > 0)
             <tr>
                 <th colspan = "4">
                    <div class = "fb_title_cover">
-                        <span class="fb_title"><?php echo $mosConfig_sitename; ?> - <?php echo _WHO_WHOIS_ONLINE; ?></span>
+                        <span class="fb_title"><?php echo $mainframe->getCfg('sitename'); ?> - <?php echo _WHO_WHOIS_ONLINE; ?></span>
                     </div>
             </tr>
         </thead>

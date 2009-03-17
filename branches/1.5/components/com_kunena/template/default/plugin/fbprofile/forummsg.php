@@ -196,10 +196,10 @@ defined( '_JEXEC' ) or die('Restricted access');
 
                 <?php
                 // TODO: fxstein - Need to perform SEO cleanup
-                echo $pageNav->writePagesLinks("index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=$userid".KUNENA_COMPONENT_ITEMID_SUFFIX);
+                echo $pageNav->getPagesLinks("index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=$userid".KUNENA_COMPONENT_ITEMID_SUFFIX);
                 ?>
 <?php
-echo $pageNav->writeLimitBox("index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=$userid" . KUNENA_COMPONENT_ITEMID_SUFFIX);
+echo $pageNav->getLimitBox("index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=$userid" . KUNENA_COMPONENT_ITEMID_SUFFIX);
 ?>
                 <br/>
 <?php echo $pageNav->getPagesCounter(); ?>

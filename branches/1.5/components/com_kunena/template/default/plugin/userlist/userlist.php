@@ -111,7 +111,7 @@ class HTML_userlist_content
 {
     function showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search = "")
     {
-        global $base_url, $mosConfig_sitename, $fbConfig, $database;
+        global $base_url, $mainframe, $fbConfig, $database;
 
         if ($search == "") {
             $search = _KUNENA_USRL_SEARCH;
@@ -156,7 +156,7 @@ class HTML_userlist_content
                                         <span class="fb_title fbl"> <?php echo _KUNENA_USRL_USERLIST; ?></span>
 
                                         <?php
-                                        printf(_KUNENA_USRL_REGISTERED_USERS, $mosConfig_sitename, $total_results);
+                                        printf(_KUNENA_USRL_REGISTERED_USERS, $mainframe->getCfg('sitename'), $total_results);
                                         ?>
                                     </div>
                                 </td>
@@ -610,7 +610,7 @@ class HTML_userlist_content
 
                             <?php
                             // TODO: fxstein - Need to perform SEO cleanup
-                            echo $pageNav->writePagesLinks("$base_url$query_ext"); ?>
+                            echo $pageNav->getPagesLinks("$base_url$query_ext"); ?>
                 </th>
             </tr>
         </table>
@@ -620,7 +620,7 @@ class HTML_userlist_content
         <table class = "fb_blocktable" id="fb_userlist_bottom" style="border-bottom:0px;margin:0;" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
                 <tr>
                     <th  class = "th-right  fbs" align="right" style="text-align:right">
-                     <?php echo $pageNav->getPagesCounter(); ?> | <?php echo _KUNENA_USRL_DISPLAY_NR; ?> <?php echo $pageNav->writeLimitBox("$base_url$query_ext"); ?>
+                     <?php echo $pageNav->getPagesCounter(); ?> | <?php echo _KUNENA_USRL_DISPLAY_NR; ?> <?php echo $pageNav->getLimitBox("$base_url$query_ext"); ?>
                 </th>
             </tr>
         </table>

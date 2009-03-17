@@ -109,11 +109,11 @@ function get_dirs($directory, $select_name, $selected = "")
     echo "</select>\n";
 }
 
+$my = &JFactory::getUser();
 
 if ($my->id != "" && $my->id != 0)
 {
 
-global $my;
 global $fbConfig;
 $do = '';
 $do = JRequest::getVar('do', 'init');
@@ -217,8 +217,7 @@ if ($do == 'init')
                         }
                         else
                         {
-                            $database->setQuery("SELECT su.avatar FROM #__fb_users as su "
-                                              . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$my->id}");
+                            $database->setQuery("SELECT avatar FROM #__fb_users WHERE userid={$my->id}");
                             $avatar = $database->loadResult();
                             check_dberror("Unable to load Kunena Avatar.");
                             if ($avatar != "")

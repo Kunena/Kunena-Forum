@@ -58,7 +58,7 @@ class fbpdfwrapper {
 
 function dofreePDF($database)
 {
-    global $mosConfig_sitename, $my, $aro_group, $acl;
+    global $my, $aro_group, $acl;
     global $fbConfig, $fbSession;
     require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
     $is_Mod = 0;
@@ -126,7 +126,7 @@ function dofreePDF($database)
         // footer
         $pdf->line(10, 40, 578, 40);
         $pdf->line(10, 822, 578, 822);
-        $pdf->addText(30, 34, 6, $fbConfig->board_title . ' - ' . $mosConfig_sitename);
+        $pdf->addText(30, 34, 6, $fbConfig->board_title . ' - ' . $mainframe->getCfg('sitename'));
 
         $strtmp = _KUNENA_PDF_VERSION;
         $strtmp = str_replace('%version%', "NEW VERSION GOES HERE" /*$fbConfig->version*/, $strtmp); // TODO: fxstein - Need to change version handling

@@ -67,7 +67,7 @@ if ($do == "read") {
                 <tr>
                     <th>
                         <div class = "fb_title_cover fbm">
-                            <span class = "fb_title fbl"> <?php echo $mosConfig_sitename; ?> <?php echo _ANN_ANNOUNCEMENTS; ?></span>
+                            <span class = "fb_title fbl"> <?php echo $mainframe->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?></span>
                         </div>
                     </th>
                 </tr>
@@ -137,7 +137,7 @@ if ($is_editor) {
                     <tr>
                         <th colspan = "6">
                             <div class = "fb_title_cover fbm">
-                                <span class = "fb_title fbl"> <?php echo $mosConfig_sitename; ?> <?php echo _ANN_ANNOUNCEMENTS; ?> | <a href = "<?php echo $addlink;?>"><?php echo _ANN_ADD; ?></a></span>
+                                <span class = "fb_title fbl"> <?php echo $mainframe->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?> | <a href = "<?php echo $addlink;?>"><?php echo _ANN_ADD; ?></a></span>
                             </div>
                         </th>
                     </tr>
@@ -233,11 +233,11 @@ if ($is_editor) {
     // FINISH: SHOW ANN
     // BEGIN: ADD ANN
     if ($do == "doadd") {
-        mosMakeHtmlSafe ($_POST);
+        JFilterOutput::objectHTMLSafe ($_POST);
         $title = JRequest::getVar("title", "");
 	// FIXME: for J!1.5
-        $description = JRequest::getVar("description", "", _MOS_ALLOWRAW);
-        $sdescription = JRequest::getVar("sdescription", "", _MOS_ALLOWRAW);
+        $description = JRequest::getVar("description", "");
+        $sdescription = JRequest::getVar("sdescription", "");
         $created = JRequest::getVar("created", "");
         $published = JRequest::getVar("published", 0);
         $showdate = JRequest::getVar("showdate", "");
@@ -357,11 +357,11 @@ if ($is_editor) {
 <?php
     // BEGIN: EDIT ANN
     if ($do == "doedit") {
-        mosMakeHtmlSafe ($_POST);
+        JFilterOutput::objectHTMLSafe ($_POST);
         $title = JRequest::getVar("title", "");
 	// FIXME: J!1.5
-        $description = JRequest::getVar("description", "", _MOS_ALLOWRAW);
-        $sdescription = JRequest::getVar("sdescription", "", _MOS_ALLOWRAW);
+        $description = JRequest::getVar("description", "");
+        $sdescription = JRequest::getVar("sdescription", "");
         $created = JRequest::getVar("created", "");
         $published = JRequest::getVar("published", 0);
         $showdate = JRequest::getVar("showdate", "");

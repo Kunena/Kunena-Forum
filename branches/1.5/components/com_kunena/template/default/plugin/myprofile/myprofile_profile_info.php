@@ -20,7 +20,7 @@
 **/
 defined( '_JEXEC' ) or die('Restricted access');
         // used for spoof hardening
-        $validate = josSpoofValue();
+        $validate = JUtility::getToken();
 global $fbConfig;
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">

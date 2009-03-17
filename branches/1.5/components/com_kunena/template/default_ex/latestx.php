@@ -72,7 +72,7 @@ if (!$my->id && $func == "mylatest")
 {
         	header("HTTP/1.1 307 Temporary Redirect");
         	header("Location: " . htmlspecialchars_decode(CKunenaLink::GetShowLatestURL()));
-        	die();
+        	$mainframe->close();
 }
 
 require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
@@ -87,7 +87,7 @@ else
 }
 
 //meta description and keywords
-$metaKeys=(_KUNENA_ALL_DISCUSSIONS . ', ' . stripslashes($fbConfig->board_title) . ', ' . $GLOBALS['mosConfig_sitename']);
+$metaKeys=(_KUNENA_ALL_DISCUSSIONS . ', ' . stripslashes($fbConfig->board_title) . ', ' . $mainframe->getCfg('sitename'));
 $metaDesc=(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
 
 $document =& JFactory::getDocument();

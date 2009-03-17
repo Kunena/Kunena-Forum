@@ -285,15 +285,12 @@ if ($my->id != "" && $my->id != 0)
         return;
     }
 
-        // simple spoof check security
-    josSpoofCheck();
-
         $rowu = new fbUserprofile( $database );
         $rowu->load( (int)$user_id );
 
                     $deleteSig = JRequest::getVar('deleteSig', 0);
 			// FIXME: J!1.5
-                    $signature = JRequest::getVar('message', null, _MOS_ALLOWRAW);
+                    $signature = JRequest::getVar('message', null);
                     $bday1 = JRequest::getVar('bday1', '0000');
                     $bday2 = JRequest::getVar('bday2', '00');
                     $bday3 = JRequest::getVar('bday3', '00');
@@ -301,7 +298,7 @@ if ($my->id != "" && $my->id != 0)
 
                         if (!$rowu->bind( $_POST, 'moderator posts karma group_id uhits' )) {
         echo "<script> alert('".$rowu->getError()."'); window.history.go(-1); </script>\n";
-        exit();
+        $mainframe->close();
     }
                     $rowu->birthdate = $bday1."-".$bday2."-".$bday3;
 
@@ -316,16 +313,16 @@ if ($my->id != "" && $my->id != 0)
                         $rowu->signature = "";
                     }
 
-                    //mosMakeHtmlSafe($rowu);
+                    //JFilterOutput::objectHTMLSafe($rowu);
 
                         if (!$rowu->check()) {
         echo "<script> alert('".$rowu->getError()."'); window.history.go(-1); </script>\n";
-        exit();
+        $mainframe->close();
     }
 
     if (!$rowu->store()) {
         echo "<script> alert('".$rowu->getError()."'); window.history.go(-1); </script>\n";
-        exit();
+        $mainframe->close();
     }
 
                         echo _USER_RETURN_A . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . "&amp;func=myprofile&amp;do=showsig") . '">' . _USER_RETURN_B . "</a><br /><br />";
@@ -575,7 +572,7 @@ if ($my->id != "" && $my->id != 0)
                     $row->username = trim($row->username);
 
                     $file = $mainframe->getPath('com_xml', 'com_users');
-                    $params = &new JUserParameters($row->params, $file, 'component');
+                    $params = &new mosUserParameters($row->params, $file, 'component');
 
                     if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_userdetails_form.php'))
                     {
@@ -590,6 +587,9 @@ if ($my->id != "" && $my->id != 0)
 
                 case "usersave":
                     $user_id = JRequest::getInt('id', 0);
+                    $password = JRequest::getVar('password', '');
+                    $password_clear = JRequest::getVar('password_clear', '');
+                    unset($_POST['password']);
 
                     $uid = $my->id;
 
@@ -600,52 +600,41 @@ if ($my->id != "" && $my->id != 0)
                         return;
                     }
 
-                    // simple spoof check security
-                    josSpoofCheck();
-
                     $row = new JUser($user_id);
 
                     $orig_password = $row->password;
                     $orig_username = $row->username;
 
-                    if (!$row->bind($_POST, 'gid usertype'))
+                    if (!$row->bind($_POST))
                     {
                         echo "<script> alert('" . $row->getError() . "'); window.history.go(-1); </script>\n";
-                        exit();
+                        $mainframe->close();
                     }
 
                     $row->name = trim($row->name);
                     $row->email = trim($row->email);
                     $row->username = trim($row->username);
 
-                    mosMakeHtmlSafe ($row);
+                    JFilterOutput::objectHTMLSafe ($row);
 
-                    if (isset($_POST['password']) && $_POST['password'] != '')
+                    if ($password != '')
                     {
-                        if (isset($_POST['verifyPass']) && ($_POST['verifyPass'] == $_POST['password']))
+                        if ($password_clear == $password)
                         {
-                            $row->password = trim($row->password);
-                            $password = md5($row->password);
+                            // FIXME: J!1.5: Changing password does not work!
+			    echo "<script> alert(\"Changing password does not work!\"); window.history.go(-1); </script>\n";
+                            $mainframe->close();
 
-                            $before1013 = false;
-                            if (class_exists('joomlaVersion')) {
-                            	$joomlaVersion = new joomlaVersion();
-                            	$before1013 = $joomlaVersion->getShortVersion() < "1.0.13";
-                            }
-                            if ($before1013) {
-                            	$row->password = md5($row->password);
-                            }
-                            else {
-                            //Joomla 1.0.13+ compatibility
-                                $salt = mosMakePassword(16);
-                                $crypt = md5($row->password.$salt);
-                                $row->password = $crypt.':'.$salt;
-                            }
+                            $row->password_clear = $password;
+                            jimport('joomla.user.helper');
+                            $salt = JUserHelper::genRandomPassword(32);
+                            $crypt = JUserHelper::getCryptedPassword($data['userpassword'], $salt);
+                            $row->password= $crypt.':'.$salt;
                         }
                         else
                         {
-                            echo "<script> alert(\"" . addslashes(_PASS_MATCH) . "\"); window.history.go(-1); </script>\n";
-                            exit();
+                            echo "<script> alert(\"" . _PASS_MATCH . "\"); window.history.go(-1); </script>\n";
+                            $mainframe->close();
                         }
                     }
                     else
@@ -654,7 +643,7 @@ if ($my->id != "" && $my->id != 0)
                         $row->password = $orig_password;
                     }
 
-                    if ($mosConfig_frontend_userparams == '1' || $mosConfig_frontend_userparams == 1 || $mosConfig_frontend_userparams == NULL)
+                    if (in_array($mainframe->getCfg( "frontend_userparams" ), array( '1', null)))
                     {
                         // save params
                         $params = JRequest::getVar('params', '');
@@ -672,16 +661,10 @@ if ($my->id != "" && $my->id != 0)
                         }
                     }
 
-                    if (!$row->check())
+                    if (!$row->save(TRUE))
                     {
                         echo "<script> alert('" . $row->getError() . "'); window.history.go(-1); </script>\n";
-                        exit();
-                    }
-
-                    if (!$row->store())
-                    {
-                        echo "<script> alert('" . $row->getError() . "'); window.history.go(-1); </script>\n";
-                        exit();
+                        $mainframe->close();
                     }
 
                     // check if username has been changed

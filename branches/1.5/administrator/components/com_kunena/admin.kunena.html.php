@@ -2022,22 +2022,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
 
                     <td align = "left" valign = "top">
-<?php echo _COM_A_MOSBOT_DESC ?><br/>
-
-            <br/>
-            <!-- Start Arno code test -->
-            <script language = "javascript">
-                <!--
-                function openWin(url)
-                {
-                    var newWin = window.open(url, "popup", "toolbar=no,scrollbars=yes,width=500,height=250,left=0,top=0");
-                    newWin.focus();
-                }
-                        //-->
-            </script>
-
-            <input type = "button" class = "button" value = "<?php echo _COM_A_BOT_REFERENCE;?>" onClick = "openWin('components/com_kunena/Kunena_mosbot_help.php')">
-                    <!-- End Arno code test -->
+<?php echo _COM_A_MOSBOT_DESC ?>
                     </td>
                 </tr>
             </table>
@@ -2667,7 +2652,7 @@ echo $pane->endPane();
                     </td>
 
                     <td>
-<?php echo $pageNav->writeLimitBox(); ?>
+<?php echo $pageNav->getLimitBox(); ?>
                     </td>
 
                     <td>&nbsp;
@@ -3249,7 +3234,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
                     </td>
 
                     <td nowrap align = "right">
-					<?php echo $pageNavSP->writeLimitBox(); ?>
+					<?php echo $pageNavSP->getLimitBox(); ?>
                     </td>
                 </tr>
 
@@ -3425,7 +3410,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
   <table class="adminheading" cellpadding="4" cellspacing="0" border="0" width="100%">
     <tr>
       <td nowrap="nowrap" align="right"><?php echo _COM_A_DISPLAY;?></td>
-      <td nowrap="nowrap"  align="right"><?php echo $pageNavSP->writeLimitBox(); ?></td>
+      <td nowrap="nowrap"  align="right"><?php echo $pageNavSP->getLimitBox(); ?></td>
     </tr>
   </table>
   <table class="adminlist" border=0 cellspacing=0 cellpadding=3 width="100%" >

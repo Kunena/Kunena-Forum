@@ -24,7 +24,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 class fbMail
 {
     /**
-    * function to send mails (uses mosmail in mambo 4.5.1 and later, falls back to phpmail if mosmail doesn't exist
+    * function to send mails (uses JUtility::sendMail in mambo 4.5.1 and later, falls back to phpmail if JUtility::sendMail doesn't exist
     *
     * @param string $fromMail
     * @param string $fromName
@@ -35,8 +35,8 @@ class fbMail
     */
     function send($fromMail, $fromName, $toMail, $subject, $body)
     {
-        if (function_exists(mosMail))
-            mosMail($fromMail, $fromName, $toMail, $subject, $body);
+        if (function_exists(JUtility::sendMail))
+            JUtility::sendMail($fromMail, $fromName, $toMail, $subject, $body);
         else
         {
             $headers = "MIME-Version: 1.0\r\n";

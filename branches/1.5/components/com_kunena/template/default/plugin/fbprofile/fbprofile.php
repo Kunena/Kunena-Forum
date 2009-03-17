@@ -382,28 +382,28 @@ function showprf($userid, $page)
         $msg_buddy .= "\" alt=\"" . _VIEW_ADDBUDDY . "\" border=\"0\" title=\"" . _VIEW_ADDBUDDY . "\" /></a>";
 
         $database->setQuery("SELECT icq,ym,msn,aim,website,location FROM #__mypms_profiles WHERE user='" . $PMSName . "'");
-        $mostables = $database->loadObjectList();
+        $profileitems = $database->loadObjectList();
         	check_dberror("Unable to load mypms_profiles.");
 
-        foreach ($mostables as $mostables)
+        foreach ($profileitems as $profileitems)
         {
-            if ($mostables->aim)
-                $msg_aim = "<a href=\"aim:goim?screenname=" . str_replace(" ", "+", $mostables->aim) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "aim.png\" border=0 alt=\"\" /></a>";
+            if ($profileitems->aim)
+                $msg_aim = "<a href=\"aim:goim?screenname=" . str_replace(" ", "+", $profileitems->aim) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "aim.png\" border=0 alt=\"\" /></a>";
 
-            if ($mostables->icq)
-                $msg_icq = "<a href=\"http://www.icq.com/whitepages/wwp.php?uin=" . $mostables->icq . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "icq.png\" border=0 alt=\"\" /></a>";
+            if ($profileitems->icq)
+                $msg_icq = "<a href=\"http://www.icq.com/whitepages/wwp.php?uin=" . $profileitems->icq . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "icq.png\" border=0 alt=\"\" /></a>";
 
-            if ($mostables->msn)
+            if ($profileitems->msn)
                 $msg_msn = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=showprofile&amp;user=' . $PMSName) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "msn.png\" border=0 alt=\"\" /></a>";
 
-            if ($mostables->ym)
-                $msg_yahoo = "<a href=\"http://edit.yahoo.com/config/send_webmesg?.target=" . $mostables->ym . "&.src=pg\"><img src=\"http://opi.yahoo.com/online?u=" . $mostables->ym . "&m=g&t=0\" border=0 alt=\"\" /></a>";
+            if ($profileitems->ym)
+                $msg_yahoo = "<a href=\"http://edit.yahoo.com/config/send_webmesg?.target=" . $profileitems->ym . "&.src=pg\"><img src=\"http://opi.yahoo.com/online?u=" . $profileitems->ym . "&m=g&t=0\" border=0 alt=\"\" /></a>";
 
-            if ($mostables->location)
-                $msg_loc = $mostables->location;
+            if ($profileitems->location)
+                $msg_loc = $profileitems->location;
         }
 
-        unset($mostables);
+        unset($profileitems);
     }
 
     //Check if the Community Builder settings are on, and set the variables accordingly.

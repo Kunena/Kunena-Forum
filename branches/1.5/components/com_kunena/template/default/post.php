@@ -44,9 +44,7 @@ global $editmode;
 $my = &JFactory::getUser();
 $acl = &JFactory::getACL();
 $editmode = 0;
-// $message=JRequest::getVar('message','',1); // For some reason this just doesn't work like it should
-// FIXME: J!1.5
-$message = JRequest::getVar("message", '', _MOS_ALLOWRAW);
+$message = JRequest::getVar("message", '');
 $resubject = JRequest::getVar("resubject", '');
 
 // Begin captcha
@@ -64,7 +62,7 @@ if ($fbConfig->captcha == 1 && $my->id < 1) {
             echo "<script language='javascript' type='text/javascript'>alert('" . $mess . "')</script>";
             echo "<script language='javascript' type='text/javascript'>window.history.back()</script>";
             return;
-            die();
+            $mainframe->close();
             //break;
         }
     }
@@ -385,8 +383,7 @@ $catName = $objCatInfo->name;
                                                     $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
 
                                                     if ($ip != "127.0.0.1" && $my->id != $subs->id) { //don't mail yourself
-														// FIXME: J!1.5
-                                                        mosmail($fbConfig->email, $mailsender, $subs->email, $mailsubject, $msg);
+                                                        JUtility::sendMail($fbConfig->email, $mailsender, $subs->email, $mailsubject, $msg);
                                                     }
                                                 }
                                                 unset($_catobj);
@@ -450,9 +447,7 @@ $catName = $objCatInfo->name;
                                                     $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
 
                                                     if ($ip != "127.0.0.1" && $my->id != $mods->id) { //don't mail yourself
-                                                        //Send away
-                                                        // FIXME: J!1.5
-                                                        mosmail($fbConfig->email, $mailsender, $mods->email, $mailsubject, $msg);
+                                                        JUtility::sendMail($fbConfig->email, $mailsender, $mods->email, $mailsubject, $msg);
                                                     }
                                                 }
                                             }
@@ -638,8 +633,8 @@ $catName = $objCatInfo->name;
                     //$resubject = strtr($resubject, $table);
                     $fromBot = 1; //this new topic comes from the discuss mambot
                     $authorName = htmlspecialchars($my_name);
-                    $rowid = JRequest::getVar('rowid', 0);
-                    $rowItemid = JRequest::getVar('rowItemid', 0);
+                    $rowid = JRequest::getInt('rowid', 0);
+                    $rowItemid = JRequest::getInt('rowItemid', 0);
 
                     if ($rowItemid) {
                         $contentURL = JRoute::_('index.php?option=com_content&amp;task=view&amp;Itemid=' . $rowItemid . '&amp;id=' . $rowid);
@@ -1905,6 +1900,7 @@ function fb_delete_post(&$database, $id, $dellattach)
 
 function listThreadHistory($id, $fbConfig, $database)
 {
+    global $mainframe;
     if ($id != 0)
     {
         //get the parent# for the post on which 'reply' or 'quote' is chosen

@@ -471,19 +471,19 @@ $database = &JFactory::getDBO();
     if (!$row->bind($_POST))
     {
         echo "<script> alert('" . $row->getError() . "'); window.history.go(-1); </script>\n";
-        exit();
+        $mainframe->close();
     }
 
     if (!$row->check())
     {
         echo "<script> alert('" . $row->getError() . "'); window.history.go(-1); </script>\n";
-        exit();
+        $mainframe->close();
     }
 
     if (!$row->store())
     {
         echo "<script> alert('" . $row->getError() . "'); window.history.go(-1); </script>\n";
-        exit();
+        $mainframe->close();
     }
 
     $row->checkin();
@@ -589,7 +589,6 @@ function orderForum($uid, $inc, $option)
 function showConfig($option)
 {
     $database = &JFactory::getDBO();
-    global $mosConfig_admin_template;
     global $mainframe;
     global $fbConfig;
 
@@ -1185,7 +1184,7 @@ global $mainframe ;
     if ($catid == -1)
     {
         echo "<script> alert('" . _KUNENA_CHOOSEFORUMTOPRUNE . "'); window.history.go(-1); </script>\n";
-        exit();
+        $mainframe->close();
     }
 
     $prune_days = intval(JRequest::getVar( 'prune_days', 0));
@@ -1396,8 +1395,7 @@ $database = &JFactory::getDBO();
 
 function deleteFile($database, $option, $fileName)
 {
-$database = &JFactory::getDBO();
-    global $mosConfig_admin_template;
+    $database = &JFactory::getDBO();
 
     if (!$fileName) {
     	$mainframe->redirect( JURI::base() ."index2.php?option=$option&task=browseFiles");
@@ -1676,7 +1674,7 @@ function savesmiley($option, $id = NULL)
     {
     	$task = ($id == NULL) ? 'newsmiley' : 'editsmiley&id='.$id;
         $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=".$task, _KUNENA_MISSING_PARAMETER);
-        exit();
+        $mainframe->close();
     }
 
     $database->setQuery("SELECT * FROM #__fb_smileys");
@@ -1688,7 +1686,7 @@ function savesmiley($option, $id = NULL)
     	{
             $task = ($id == NULL) ? 'newsmiley' : 'editsmiley&id='.$id;
         	$mainframe->redirect( JURI::base() ."index2.php?option=$option&task=".$task, _KUNENA_CODE_ALLREADY_EXITS);
-        	exit();
+        	$mainframe->close();
     	}
 
     }
@@ -1894,7 +1892,7 @@ function saveRank($option, $id = NULL)
     {
     	$task = ($id == NULL) ? 'newRank' : 'editRank&id='.$id;
         $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=".$task, _KUNENA_MISSING_PARAMETER);
-        exit();
+        $mainframe->close();
     }
 
     $database->setQuery("SELECT * FROM #__fb_ranks");
@@ -1907,7 +1905,7 @@ function saveRank($option, $id = NULL)
     	{
             $task = ($id == NULL) ? 'newRank' : 'editRank&id='.$id;
         	$mainframe->redirect( JURI::base() ."index2.php?option=$option&task=".$task, _KUNENA_RANK_ALLREADY_EXITS);
-        	exit();
+        	$mainframe->close();
     	}
     }
 

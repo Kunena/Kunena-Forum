@@ -419,7 +419,7 @@ class CKunenaTools {
         $i=0;
         while ($messages_iter->loadNextObject($l)) {
         	$i++;
-            //if($i==100) { die(); }
+            //if($i==100) { $mainframe->close(); }
             $cat_l = $l->catid;
 
             while ($cat_l) {
@@ -844,8 +844,8 @@ class fbUserprofile
     /**
     * @param database A database connector object
     */
-    function fbUserprofile(&$database) {
-        $this->JTable('#__fb_users', 'userid', $database);
+    function __construct(&$database) {
+        parent::__construct('#__fb_users', 'userid', $database);
         }
     }
 /**
@@ -866,8 +866,8 @@ class fbModeration
     /**
     * @param database A database connector object
     */
-    function fbModeration(&$database) {
-        $this->JTable('#__fb_moderation', 'catid', $database);
+    function __construct(&$database) {
+        parent::__construct('#__fb_moderation', 'catid', $database);
         }
     }
 

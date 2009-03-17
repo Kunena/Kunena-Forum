@@ -197,12 +197,12 @@ defined( '_JEXEC' ) or die('Restricted access');
 <?php echo _KUNENA_USRL_DISPLAY_NR; ?>
 
 <?php
-echo $pageNav->writeLimitBox("index.php?option=com_kunena&amp;func=myprofile&amp;do=showmsg" . KUNENA_COMPONENT_ITEMID_SUFFIX);
+echo $pageNav->getLimitBox("index.php?option=com_kunena&amp;func=myprofile&amp;do=showmsg" . KUNENA_COMPONENT_ITEMID_SUFFIX);
 ?>
 
 <?php
 // TODO: fxstein - Need to perform SEO cleanup
-echo $pageNav->writePagesLinks("index.php?option=com_kunena&amp;func=myprofile&amp;do=showmsg" . KUNENA_COMPONENT_ITEMID_SUFFIX);
+echo $pageNav->getPagesLinks("index.php?option=com_kunena&amp;func=myprofile&amp;do=showmsg" . KUNENA_COMPONENT_ITEMID_SUFFIX);
 ?>
 
 <br/>

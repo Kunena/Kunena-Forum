@@ -52,7 +52,7 @@ function fbAssertOrGoBack($predicate, $msg)
     {
         $msg = fbJsEscape($msg);
         echo "<script> alert('$msg'); window.history.go(-1); </script>\n";
-        exit();
+        $mainframe->close();
     }
 }
 

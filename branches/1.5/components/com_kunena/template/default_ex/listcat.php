@@ -43,7 +43,7 @@ $categories = array ();
 
 //meta description and keywords
 $metaDesc=(_KUNENA_CATEGORIES . ' - ' . stripslashes($fbConfig->board_title));
-$metaKeys=(_KUNENA_CATEGORIES . ', ' . stripslashes($fbConfig->board_title) . ', ' . $GLOBALS['mosConfig_sitename']);
+$metaKeys=(_KUNENA_CATEGORIES . ', ' . stripslashes($fbConfig->board_title) . ', ' . $mainframe->getCfg('sitename'));
 
 $document =& JFactory::getDocument();
 $cur = $document->get( 'description' );

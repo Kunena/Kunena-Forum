@@ -74,7 +74,7 @@ class fb_Converter {
 		}
 
 		$componentBaseDir = '';
-		$this->_converterDir = mosPathName( KUNENA_PATH_ADMIN .DS) .DS . $this->subdir;
+		$this->_converterDir = KUNENA_PATH_ADMIN .DS. $this->subdir;
 
 		//initiate XML doc
 		$xmlDoc = new DOMIT_Lite_Document();

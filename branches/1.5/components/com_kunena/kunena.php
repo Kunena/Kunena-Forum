@@ -42,9 +42,12 @@ global $message;
 
 // Get all the variables we need and strip them in case
 $action 		= JRequest::getVar('action', '');
-// FIXME: J!1.5: These are wrong!!
-$attachfile 	= JRequest::getVar($_FILES['attachfile'], 'name', '');
-$attachimage 	= JRequest::getVar($_FILES['attachimage'], 'name', '');
+
+// FIXME: move this to post.php
+$attachfile 	= JRequest::getVar('attachfile', '', 'FILES');
+$attachimage 	= JRequest::getVar('attachimage', '', 'FILES');
+$attachfile = $attachfile['name'];
+$attachimage = $attachfile['name'];
 
 $catid 			= JRequest::getInt('catid', 0);
 $contentURL 	= JRequest::getVar('contentURL', '');
@@ -86,6 +89,9 @@ require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 require_once (KUNENA_PATH_LIB .DS. "kunena.user.class.php");
 
 global $fbConfig, $KunenaUser;
+
+$my = &JFactory::getUser();
+$my_id = $my->id;
 
 // Get data about the current user - its ok to not have a userid = guest
 $KunenaUser = new CKunenaUser($my->id);
@@ -253,13 +259,13 @@ $is_Moderator = fb_has_moderator_permission($database, $thisCat, $my->id, $is_ad
 if ($func == 'fb_rss')
 {
     include (KUNENA_PATH_LIB .DS. 'kunena.rss.php');
-    die();
+    $mainframe->close();
 }
 
 if ($func == 'fb_pdf')
 {
     include (KUNENA_PATH_LIB .DS. 'kunena.pdf.php');
-    die();
+    $mainframe->close();
 }
 
 if ($func == '') // Set default start page as per config settings
@@ -308,10 +314,6 @@ else
     include_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS.  'icons.php');
 }
 
-//Get the userid; sometimes the new var works whilst $my->id doesn't..?!?
-
-$my = &JFactory::getUser();
-$my_id = $my->id;
 // Check if we only allow registered users
 if ($fbConfig->regonly && !$my_id)
 {

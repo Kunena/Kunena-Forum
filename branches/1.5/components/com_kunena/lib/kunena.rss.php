@@ -133,7 +133,7 @@ echo "<?xml version=\"1.0\" encoding=\"" . $encoding[1] . "\"?>\n";
 <!-- generator="Kunena @fbversion@"> -->
 <rss version="0.91">
     <channel>
-        <title><?php echo stripslashes(htmlspecialchars($mosConfig_sitename)); ?> - Forum</title>
+        <title><?php echo stripslashes(htmlspecialchars($mainframe->getCfg('sitename'))); ?> - Forum</title>
         <description>Kunena Site Syndication</description>
         <link><?php echo JURI::root(); ?></link>
         <lastBuildDate><?php echo date("r");?></lastBuildDate>

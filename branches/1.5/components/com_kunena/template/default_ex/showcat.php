@@ -233,7 +233,7 @@ if ($letPass || $is_Moderator)
     $forumReviewed = $objCatInfo->review;
 
 	//meta description and keywords
-	$metaKeys=(_KUNENA_CATEGORIES . ', ' . stripslashes($objCatParentInfo->name) . ', ' . stripslashes($objCatInfo->name) . ', ' . stripslashes($fbConfig->board_title) . ', ' . $GLOBALS['mosConfig_sitename']);
+	$metaKeys=(_KUNENA_CATEGORIES . ', ' . stripslashes($objCatParentInfo->name) . ', ' . stripslashes($objCatInfo->name) . ', ' . stripslashes($fbConfig->board_title) . ', ' . $mainframe->getCfg('sitename'));
 	$metaDesc=(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($objCatInfo->name) .' - ' . stripslashes($fbConfig->board_title));
 
 	$document =& JFactory::getDocument();

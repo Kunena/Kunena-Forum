@@ -24,7 +24,7 @@ global $fbConfig;
 require_once (KUNENA_ROOT_PATH .DS. 'includes/HTML_toolbar.php');
 
 // used for spoof hardening
-$validate = josSpoofValue();
+$validate = JUtility::getToken();
 ?>
 <script language = "javascript" type = "text/javascript">
 // <![CDATA[
@@ -50,7 +50,7 @@ $validate = josSpoofValue();
         {
             alert("<?php echo addslashes( _REGWARN_MAIL );?>");
         }
-        else if ((form.password.value != "") && (form.password.value != form.verifyPass.value))
+        else if ((form.password.value != "") && (form.password.value != form.password_clear.value))
         {
             alert("<?php echo addslashes( _REGWARN_VPASS2 );?>");
         }
@@ -115,10 +115,10 @@ $validate = josSpoofValue();
       </tr>
       <tr>
         <td><?php echo _KUNENA_VPASS; ?> </td>
-        <td><input class = "inputbox" type = "password" name = "verifyPass" size = "40"/></td>
+        <td><input class = "inputbox" type = "password" name = "password_clear" size = "40"/></td>
       </tr>
       <?php
-        if ($mosConfig_frontend_userparams == '1' || $mosConfig_frontend_userparams == 1 || $mosConfig_frontend_userparams == NULL)
+        if (in_array($mainframe->getCfg( "frontend_userparams" ), array( '1', null)))
         {
         ?>
       <tr>

@@ -49,7 +49,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
             </td>
 
             <?php
-            if (($fbConfig->regonly == "1" || $fbConfig->changename == '0') && $my_id != "" && !$is_Moderator) {
+            if (($fbConfig->regonly == "1" || $fbConfig->changename == '0') && $my->id != "" && !$is_Moderator) {
                 echo "<td><input type=\"hidden\" name=\"fb_authorname\" size=\"35\" class=\"" . $boardclass . "inputbox postinput\"  maxlength=\"35\" value=\"$authorName\" /><b>$authorName</b></td>";
             }
             else
@@ -71,7 +71,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
         if ($fbConfig->askemail)
         {
             echo '<tr class = "'. $boardclass . 'sectiontableentry2"><td class = "fb_leftcolumn"><strong>' . _GEN_EMAIL . ' *</strong>:</td>';
-            if (($fbConfig->regonly == "1" || $fbConfig->changename == '0') && $my_id != "" && !$is_Moderator) {
+            if (($fbConfig->regonly == "1" || $fbConfig->changename == '0') && $my->id != "" && !$is_Moderator) {
                 echo "<td>$my_email</td>";
             }
             else
@@ -164,7 +164,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
                 $fb_thread = $database->loadResult();
             }
 
-            $database->setQuery("SELECT thread from #__fb_subscriptions where userid=$my_id and thread='$fb_thread'");
+            $database->setQuery("SELECT thread from #__fb_subscriptions where userid=$my->id and thread='$fb_thread'");
             $fb_subscribed = $database->loadResult();
 
             if ($fb_subscribed == "" || $replyto == 0) {
@@ -227,7 +227,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
         <?php
         }
 
-        if ($my_id != 0 && $fbConfig->allowsubscriptions == 1 && $fb_cansubscribe == 1 && !$editmode)
+        if ($my->id != 0 && $fbConfig->allowsubscriptions == 1 && $fb_cansubscribe == 1 && !$editmode)
         {
         ?>
 

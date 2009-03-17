@@ -541,7 +541,7 @@ if ($my->id)
             $avatar = "";
         }
 
-        $database->setQuery("UPDATE #__fb_users set signature='$signature', view='$newview', avatar='$avatar', ordering='$neworder'  where userid=$my_id");
+        $database->setQuery("UPDATE #__fb_users set signature='$signature', view='$newview', avatar='$avatar', ordering='$neworder'  where userid=$my->id");
         setcookie("fboard_settings[current_view]", $newview);
 
         if (!$database->query()) {
@@ -555,13 +555,13 @@ if ($my->id)
 
         if ($unsubscribeAll)
         {
-            $database->setQuery("DELETE FROM #__fb_subscriptions WHERE userid=$my_id");
+            $database->setQuery("DELETE FROM #__fb_subscriptions WHERE userid=$my->id");
             $database->query();
         }
 
         if ($unfavoriteAll)
         {
-            $database->setQuery("DELETE FROM #__fb_favorites WHERE userid='$my_id'");
+            $database->setQuery("DELETE FROM #__fb_favorites WHERE userid='$my->id'");
             $database->query();
         }
 

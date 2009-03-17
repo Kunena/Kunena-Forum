@@ -34,12 +34,10 @@ $Itemid = JRequest::getInt('Itemid', 0, 'REQUEST');
 
 //check if we have all the itemid sets. if so, then no need for DB call
 
-global $database, $my, $my_id;
+global $database, $my;
 
 $database = &JFactory::getDBO();
-
 $my = &JFactory::getUser();
-$my_id = $my->id;
 
 global $fbConfig;
 

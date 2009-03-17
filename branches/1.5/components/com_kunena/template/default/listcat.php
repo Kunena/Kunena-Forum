@@ -245,7 +245,7 @@ if (count($categories[0]) > 0)
                                 $nummodIDs = count($modIDs);
                                 $numPending = 0;
 
-                                if ((in_array($my_id, $modIDs)) || $is_admin == 1)
+                                if ((in_array($my->id, $modIDs)) || $is_admin == 1)
                                 {
                                     $database->setQuery("select count(*) from #__fb_messages where catid='$singlerow->id' and hold='1'");
                                     $numPending = $database->loadResult();

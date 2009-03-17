@@ -267,7 +267,7 @@ if ($letPass || $is_Moderator)
 
 
                 <?php
-                if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
+                if ((($fbConfig->pubwrite == 0 && $my->id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
                 {
                     //this user is allowed to post a new topic:
                     $forum_new = CKunenaLink::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);

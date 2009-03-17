@@ -78,7 +78,7 @@ $tree = thread_flat($tree, $messages);
         <th class = "th-2 <?php echo $boardclass ?>sectiontableheader" align = "center" width = "5">&nbsp; </th>
         <th class = "th-3 <?php echo $boardclass ?>sectiontableheader" align = "center" width = "5">&nbsp; </th>
         <?php
-        if ($my_id == 0) {
+        if ($my->id == 0) {
             echo '<td class="sectiontableheader" width="5" align="center">&nbsp;</td>';
         }
         ?>
@@ -209,7 +209,7 @@ if ($fbConfig->allowfavorites)
     </td>
 
     <td align = "center" <?php echo $leaf->id==$id?' class="'.$boardclass.'sectiontableentry2"':'';?>>
-        <small><?php echo $leaf->email != "" && $my_id > 0 && $fbConfig->showemail ? '<a href="mailto:' . stripslashes($leaf->email) . '">' . stripslashes($leaf->name) . '</a>' : stripslashes($leaf->name); ?></small>
+        <small><?php echo $leaf->email != "" && $my->id > 0 && $fbConfig->showemail ? '<a href="mailto:' . stripslashes($leaf->email) . '">' . stripslashes($leaf->name) . '</a>' : stripslashes($leaf->name); ?></small>
     </td>
 
     <td align = "center" <?php echo $leaf->id==$id?' class=""'.$boardclass.'sectiontableentry2"':'';?>>

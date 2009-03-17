@@ -214,9 +214,9 @@ if ($letPass || $is_Moderator)
 
         //Perform subscriptions check only once
         $fb_cansubscribe = 0;
-        if ($fbConfig->allowsubscriptions && ("" != $my_id || 0 != $my_id))
+        if ($fbConfig->allowsubscriptions && ("" != $my->id || 0 != $my->id))
         {
-            $database->setQuery("SELECT thread from #__fb_subscriptions where userid=$my_id and thread='$thread'");
+            $database->setQuery("SELECT thread from #__fb_subscriptions where userid=$my->id and thread='$thread'");
             $fb_subscribed = $database->loadResult();
 
             if ($fb_subscribed == "") {
@@ -225,9 +225,9 @@ if ($letPass || $is_Moderator)
         }
         //Perform favorites check only once
         $fb_canfavorite = 0;
-        if ($fbConfig->allowfavorites && ("" != $my_id || 0 != $my_id))
+        if ($fbConfig->allowfavorites && ("" != $my->id || 0 != $my->id))
         {
-            $database->setQuery("SELECT thread from #__fb_favorites where userid=$my_id and thread='$thread'");
+            $database->setQuery("SELECT thread from #__fb_favorites where userid=$my->id and thread='$thread'");
             $fb_favorited = $database->loadResult();
 
             if ($fb_favorited == "") {
@@ -275,13 +275,13 @@ if ($letPass || $is_Moderator)
                     echo '<a name="forumtop" /> ';
                     echo CKunenaLink::GetSamePageAnkerLink('forumbottom', $fbIcons['bottomarrow'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM);
 
-                    if (($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite)
+                    if (($fbConfig->pubwrite == 0 && $my->id != 0) || $fbConfig->pubwrite)
                     {
                         //this user is allowed to post a new topic:
                         echo CKunenaLink::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
                     }
 
-                    if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
+                    if ((($fbConfig->pubwrite == 0 && $my->id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
                     {
                         //this user is allowed to reply to this topic:
                         echo CKunenaLink::GetTopicPostReplyLink('reply', $catid, $thread, $fbIcons['topicreply'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['topicreply'] . '" alt="' . _GEN_POST_REPLY . '" title="' . _GEN_POST_REPLY . '" border="0" />' : _GEN_POST_REPLY);
@@ -294,7 +294,7 @@ if ($letPass || $is_Moderator)
                         echo CKunenaLink::GetTopicPostLink('subscribe', $catid, $id, $fbIcons['subscribe'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['subscribe'] . '" alt="' . _VIEW_SUBSCRIBETXT . '" title="' . _VIEW_SUBSCRIBETXT . '" border="0" />' : _VIEW_SUBSCRIBETXT);
                     }
 
-                    if ($my_id != 0 && $fbConfig->allowsubscriptions && $fb_cansubscribe == 0)
+                    if ($my->id != 0 && $fbConfig->allowsubscriptions && $fb_cansubscribe == 0)
                     {
                         // this user is allowed to unsubscribe
                         echo CKunenaLink::GetTopicPostLink('unsubscribe', $catid, $id, $fbIcons['unsubscribe'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unsubscribe'] . '" alt="' . _VIEW_UNSUBSCRIBETXT . '" title="' . _VIEW_UNSUBSCRIBETXT . '" border="0" />' : _VIEW_UNSUBSCRIBETXT);
@@ -307,7 +307,7 @@ if ($letPass || $is_Moderator)
                         echo CKunenaLink::GetTopicPostLink('favorite', $catid, $id, $fbIcons['favorite'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['favorite'] . '" alt="' . _VIEW_FAVORITETXT . '" title="' . _VIEW_FAVORITETXT . '" border="0" />' : _VIEW_FAVORITETXT);
                     }
 
-                    if ($my_id != 0 && $fbConfig->allowfavorites && $fb_canfavorite == 0)
+                    if ($my->id != 0 && $fbConfig->allowfavorites && $fb_canfavorite == 0)
                     {
                         // this user is allowed to unfavorite
                         echo CKunenaLink::GetTopicPostLink('unfavorite', $catid, $id, $fbIcons['unfavorite'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unfavorite'] . '" alt="' . _VIEW_UNFAVORITETXT . '" title="' . _VIEW_UNFAVORITETXT . '" border="0" />' : _VIEW_UNFAVORITETXT);
@@ -476,7 +476,7 @@ if ($letPass || $is_Moderator)
 
                                 $msg_id = $fmessage->id;
                                 $lists["userid"] = $fmessage->userid;
-                                $msg_username = $fmessage->email != "" && $my_id > 0 && $fbConfig->showemail ? CKunenaLink::GetEmailLink($fmessage->email, $fb_username) : $fb_username;
+                                $msg_username = $fmessage->email != "" && $my->id > 0 && $fbConfig->showemail ? CKunenaLink::GetEmailLink($fmessage->email, $fb_username) : $fb_username;
 
                                 if ($fbConfig->allowavatar)
                                 {
@@ -979,7 +979,7 @@ if ($letPass || $is_Moderator)
                                     $msg_signature = $signature;
                                 }
 
-                                if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite == 1) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
+                                if ((($fbConfig->pubwrite == 0 && $my->id != 0) || $fbConfig->pubwrite == 1) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
                                 {
                                     //user is allowed to reply/quote
                                     $msg_reply = CKunenaLink::GetTopicPostReplyLink('reply', $catid, $fmessage->id , $fbIcons['reply']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['reply'] . '" alt="Reply" border="0" title="' . _VIEW_REPLY . '" />':_GEN_REPLY);
@@ -1005,11 +1005,11 @@ if ($letPass || $is_Moderator)
                                     $msg_split = CKunenaLink::GetTopicPostLink('split', $catid, $fmessage->id , $fbIcons['split']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['split'] . '" alt="' . _GEN_SPLIT . '" border="0" title="' . _GEN_SPLIT . '" />':_GEN_SPLIT);
                                 }
 
-                                if ($fbConfig->useredit && $my_id != "")
+                                if ($fbConfig->useredit && $my->id != "")
                                 {
                                     //Now, if the viewer==author and the viewer is allowed to edit his/her own post then offer an 'edit' link
                                     $allowEdit = 0;
-                                    if ($my_id == $fmessage->userid)
+                                    if ($my->id == $fmessage->userid)
                                     {
                                         if(((int)$fbConfig->useredittime)==0)
                                         {
@@ -1162,13 +1162,13 @@ if ($letPass || $is_Moderator)
                         echo '<a name="forumbottom" /> ';
                         echo CKunenaLink::GetSamePageAnkerLink('forumtop', $fbIcons['toparrow'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP);
 
-                        if (($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite)
+                        if (($fbConfig->pubwrite == 0 && $my->id != 0) || $fbConfig->pubwrite)
                         {
                             //this user is allowed to post a new topic:
                             echo CKunenaLink::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
                         }
 
-                        if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
+                        if ((($fbConfig->pubwrite == 0 && $my->id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
                         {
                             //this user is allowed to reply to this topic:
                             echo CKunenaLink::GetTopicPostReplyLink('reply', $catid, $thread, $fbIcons['topicreply'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['topicreply'] . '" alt="' . _GEN_POST_REPLY . '" title="' . _GEN_POST_REPLY . '" border="0" />' : _GEN_POST_REPLY);
@@ -1181,7 +1181,7 @@ if ($letPass || $is_Moderator)
                             echo CKunenaLink::GetTopicPostLink('subscribe', $catid, $id, $fbIcons['subscribe'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['subscribe'] . '" alt="' . _VIEW_SUBSCRIBETXT . '" title="' . _VIEW_SUBSCRIBETXT . '" border="0" />' : _VIEW_SUBSCRIBETXT);
                         }
 
-                        if ($my_id != 0 && $fbConfig->allowsubscriptions && $fb_cansubscribe == 0)
+                        if ($my->id != 0 && $fbConfig->allowsubscriptions && $fb_cansubscribe == 0)
                         {
                             // this user is allowed to unsubscribe
                             echo CKunenaLink::GetTopicPostLink('unsubscribe', $catid, $id, $fbIcons['unsubscribe'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unsubscribe'] . '" alt="' . _VIEW_UNSUBSCRIBETXT . '" title="' . _VIEW_UNSUBSCRIBETXT . '" border="0" />' : _VIEW_UNSUBSCRIBETXT);
@@ -1194,7 +1194,7 @@ if ($letPass || $is_Moderator)
                             echo CKunenaLink::GetTopicPostLink('favorite', $catid, $id, $fbIcons['favorite'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['favorite'] . '" alt="' . _VIEW_FAVORITETXT . '" title="' . _VIEW_FAVORITETXT . '" border="0" />' : _VIEW_FAVORITETXT);
                         }
 
-                        if ($my_id != 0 && $fbConfig->allowfavorites && $fb_canfavorite == 0)
+                        if ($my->id != 0 && $fbConfig->allowfavorites && $fb_canfavorite == 0)
                         {
                             // this user is allowed to unfavorite
                             echo CKunenaLink::GetTopicPostLink('unfavorite', $catid, $id, $fbIcons['unfavorite'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unfavorite'] . '" alt="' . _VIEW_UNFAVORITETXT . '" title="' . _VIEW_UNFAVORITETXT . '" border="0" />' : _VIEW_UNFAVORITETXT);

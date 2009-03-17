@@ -186,7 +186,7 @@ if ($my->id != "" && $my->id != 0)
                         $avatar = "";
                     }
 
-                    $database->setQuery("UPDATE #__fb_users set   avatar='$avatar'  where userid=$my_id");
+                    $database->setQuery("UPDATE #__fb_users set   avatar='$avatar'  where userid=$my->id");
 
                     if (!$database->query())
                     {
@@ -225,7 +225,7 @@ if ($my->id != "" && $my->id != 0)
 					(int)$newhideEmail = JRequest::getInt('newhideEmail', 1);
 					(int)$newshowOnline = JRequest::getInt('newshowOnline', 1);
 
-                    $database->setQuery("UPDATE #__fb_users set  view='$newview', ordering='$neworder', hideEmail='$newhideEmail', showOnline='$newshowOnline'  where userid=$my_id");
+                    $database->setQuery("UPDATE #__fb_users set  view='$newview', ordering='$neworder', hideEmail='$newhideEmail', showOnline='$newshowOnline'  where userid=$my->id");
                     setcookie("fboard_settings[current_view]", $newview);
 
                     if (!$database->query())

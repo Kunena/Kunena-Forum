@@ -67,7 +67,7 @@ else if ($fbConfig->avatar_src == "cb")
 else
 {
     if ($fbavatar != "") {
-		if(!file_exists(KUNENA_ABSUPLOADEDPATH . '/avatars/s_' . $fbavatar)) {
+		if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $fbavatar)) {
             $jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/' . $fbavatar . '" alt=" " />';
 		} else {
 		  $jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_' . $fbavatar . '" alt=" " />';

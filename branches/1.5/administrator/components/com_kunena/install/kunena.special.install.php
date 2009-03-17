@@ -31,7 +31,7 @@ global $mainframe, $database;
 // Kill notices (we have many..)
 error_reporting (E_ALL ^ E_NOTICE);
 
-include_once (JPATH_ROOT . "/components/com_kunena/class.kunena.php");
+include_once (KUNENA_PATH .DS. "class.kunena.php");
 
 //DEFINE('_KUNENA_SAMPLE_FORUM_MENU_TITLE', 'Forum');
 

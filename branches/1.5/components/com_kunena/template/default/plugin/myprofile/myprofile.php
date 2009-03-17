@@ -565,7 +565,7 @@ if ($my->id != "" && $my->id != 0)
                     }
 					*/
 
-                    require_once (JPATH_ROOT . '/administrator/components/com_users/users.class.php');
+                    require_once (KUNENA_ROOT_PATH_ADMIN .DS. 'components/com_users/users.class.php');
 
                     $row = new JUser($my->id);
                     $row->orig_password = $row->password;

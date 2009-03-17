@@ -670,13 +670,13 @@ function showConfig($option)
     //function get_dirs($directory, $select_name, $selected = "") {
     $listitems[] = JHTML::_('select.option',  '1',_KUNENA_SELECTTEMPLATE);
 
-    if ($dir = @opendir(JPATH_ROOT . "/components/com_kunena/template"))
+    if ($dir = @opendir(KUNENA_PATH_TEMPLATE))
     {
         while (($file = readdir($dir)) !== false)
         {
             if ($file != ".." && $file != ".")
             {
-                if (is_dir(JPATH_ROOT . "/components/com_kunena/template" . "/" . $file))
+                if (is_dir(KUNENA_PATH_TEMPLATE .DS. $file))
                 {
                     if (!($file[0] == '.')) {
                         $filelist[] = $file;
@@ -1247,7 +1247,7 @@ global $mainframe ;
         }
     }
 
-    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=pruneforum", "" . _KUNENA_FORUMPRUNEDFOR . " " . $prune_days . " " . _KUNENA_PRUNEDAYS . "; " . _KUNENA_PRUNEDELETED . "" . $deleted . " " . _KUNENA_PRUNETHREADS . "");
+    $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=pruneforum", "" . _KUNENA_FORUMPRUNEDFOR . " " . $prune_days . " " . _KUNENA_PRUNEDAYS . "; " . _KUNENA_PRUNEDELETED . $deleted . " " . _KUNENA_PRUNETHREADS);
 }
 
 //===============================
@@ -1315,7 +1315,7 @@ function douserssync($database, $option)
 				$database->query() or trigger_dberror("Unable to add new users.");
 			}
 		}
-        $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=pruneusers", "" . _KUNENA_USERSSYNCDELETED . "" . $cids . " " . _KUNENA_SYNCUSERPROFILES . "");
+        $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=pruneusers", "" . _KUNENA_USERSSYNCDELETED . $cids . " " . _KUNENA_SYNCUSERPROFILES);
     }
     else
     {
@@ -1332,13 +1332,13 @@ function browseUploaded($database, $option, $type)
 $database = &JFactory::getDBO();
     if ($type)
     { //we're doing images
-        $dir = @opendir(KUNENA_PATH_UPLOADED. '/images');
-        $uploaded_path = KUNENA_PATH_UPLOADED. '/images';
+        $dir = @opendir(KUNENA_PATH_UPLOADED .DS. 'images');
+        $uploaded_path = KUNENA_PATH_UPLOADED .DS. 'images';
     }
     else
     { //we're doing regular files
-        $dir = @opendir(KUNENA_PATH_UPLOADED.'/files');
-        $uploaded_path = KUNENA_PATH_UPLOADED.'/files';
+        $dir = @opendir(KUNENA_PATH_UPLOADED .DS. 'files');
+        $uploaded_path = KUNENA_PATH_UPLOADED .DS. 'files';
     }
 
     $uploaded = array ();
@@ -1346,7 +1346,7 @@ $database = &JFactory::getDBO();
 
     while ($file = @readdir($dir))
     {
-        if ($file != '.' && $file != '..' && is_file($uploaded_path . '/' . $file) && !is_link($uploaded_path . '/' . $file))
+        if ($file != '.' && $file != '..' && is_file($uploaded_path .DS . $file) && !is_link($uploaded_path .DS . $file))
         {
             //if( preg_match('/(\.gif$|\.png$|\.jpg|\.jpeg)$/is', $file) )
             //{
@@ -1373,7 +1373,7 @@ $database = &JFactory::getDBO();
 
     // This function will replace the selected image with a dummy (OxP=1) or delete it
     // step 1: Remove image that must be replaced:
-    unlink (KUNENA_ABSUPLOADEDPATH.'/images/' . $imageName);
+    unlink (KUNENA_PATH_UPLOADED .DS. 'images/' . $imageName);
 
     if ($OxP == "1")
     {
@@ -1382,12 +1382,12 @@ $database = &JFactory::getDBO();
         $fileName = $filename[0];
         $fileExt = $filename[1];
         // step 3: copy the dummy and give it the old file name:
-        copy(KUNENA_ABSUPLOADEDPATH.'/dummy.' . $fileExt, KUNENA_ABSUPLOADEDPATH.'/images/' . $imageName);
+        copy(KUNENA_PATH_UPLOADED .DS. 'dummy.' . $fileExt, KUNENA_PATH_UPLOADED .DS. 'images/' . $imageName);
     }
     else
     {
         //remove the database link as well
-        $database->setQuery("DELETE FROM #__fb_attachments where filelocation='" . KUNENA_ABSUPLOADEDPATH . "/images/" . $imageName . "'");
+        $database->setQuery("DELETE FROM #__fb_attachments where filelocation='" . KUNENA_PATH_UPLOADED .DS. "images/" . $imageName . "'");
         $database->query() or trigger_dberror("Unable to delete attachment.");
     }
 
@@ -1405,9 +1405,9 @@ $database = &JFactory::getDBO();
     }
 
     // step 1: Remove file
-    unlink (KUNENA_ABSUPLOADEDPATH.'/files/' . $fileName);
+    unlink (KUNENA_PATH_UPLOADED .DS. 'files/' . $fileName);
     //step 2: remove the database link to the file
-    $database->setQuery("DELETE FROM #__fb_attachments where filelocation='" . KUNENA_ABSUPLOADEDPATH . "/files/" . $fileName . "'");
+    $database->setQuery("DELETE FROM #__fb_attachments where filelocation='" . KUNENA_PATH_UPLOADED .DS. "files/" . $fileName . "'");
     $database->query() or trigger_dberror("Unable to delete attachment.");
     $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=browseFiles", _KUNENA_FILEDELETED);
 }
@@ -1538,8 +1538,8 @@ function dircopy($srcdir, $dstdir, $verbose = false) {
     if ($curdir = opendir($srcdir)) {
         while ($file = readdir($curdir)) {
             if ($file != '.' && $file != '..') {
-                $srcfile = $srcdir . '/' . $file;
-                $dstfile = $dstdir . '/' . $file;
+                $srcfile = $srcdir .DS . $file;
+                $dstfile = $dstdir .DS . $file;
 
                 if (is_file($srcfile)) {
                     if (is_file($dstfile)) {
@@ -1624,7 +1624,7 @@ function editsmiley($option, $id)
     $smiley_images = collect_smilies();
 
     $smileypath = smileypath();
-    $smileypath = $smileypath['live'].'/';
+    $smileypath = $smileypath['live'] .DS;
 
     $filename_list = "";
 	for( $i = 0; $i < count($smiley_images); $i++ )
@@ -1652,7 +1652,7 @@ function newsmiley($option)
 
 	$smiley_images = collect_smilies();
     $smileypath = smileypath();
-    $smileypath = $smileypath['live'].'/';
+    $smileypath = $smileypath['live'] .DS;
 
     $filename_list = "";
 	for( $i = 0; $i < count($smiley_images); $i++ )
@@ -1726,13 +1726,13 @@ function smileypath()
     global $mainframe;
 	global $fbConfig;
 
-	if (is_dir(JPATH_ROOT . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/emoticons')) {
+	if (is_dir(KUNENA_PATH_TEMPLATE .DS. $fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/emoticons')) {
         $smiley_live_path = JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/emoticons';
-        $smiley_abs_path = JPATH_ROOT . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/emoticons';
+        $smiley_abs_path = KUNENA_PATH_TEMPLATE .DS. $fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/emoticons';
     }
     else {
-        $smiley_live_path = JPATH_ROOT . '/components/com_kunena/template/default/images/'.KUNENA_LANGUAGE.'/emoticons';
-        $smiley_abs_path = JPATH_ROOT . '/components/com_kunena/template/default/images/'.KUNENA_LANGUAGE.'/emoticons';
+        $smiley_live_path = KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'images/'.KUNENA_LANGUAGE.'/emoticons';
+        $smiley_abs_path = KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'images/'.KUNENA_LANGUAGE.'/emoticons';
     }
 
     $smileypath['live'] = $smiley_live_path;
@@ -1751,9 +1751,9 @@ function collect_smilies()
 
 	while($file = @readdir($dir))
 	{
-		if( !@is_dir($smiley_abs_path . '/' . $file) )
+		if( !@is_dir($smiley_abs_path .DS . $file) )
 		{
-			$img_size = @getimagesize($smileypath['abs'] . '/' . $file);
+			$img_size = @getimagesize($smileypath['abs'] .DS . $file);
 
 			if( $img_size[0] && $img_size[1] )
 			{
@@ -1810,11 +1810,11 @@ function rankpath()
 
     if (is_dir(JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/ranks')) {
         $rank_live_path = JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/ranks';
-        $rank_abs_path = 	JPATH_ROOT . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/ranks';
+        $rank_abs_path = 	KUNENA_PATH_TEMPLATE .DS. $fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/ranks';
     }
     else {
         $rank_live_path = JURI::root() . '/components/com_kunena/template/default/images/'.KUNENA_LANGUAGE.'/ranks';
-        $rank_abs_path = 	JPATH_ROOT . '/components/com_kunena/template/default/images/'.KUNENA_LANGUAGE.'/ranks';
+        $rank_abs_path = 	KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'images/'.KUNENA_LANGUAGE.'/ranks';
     }
 
     $rankpath['live'] = $rank_live_path;
@@ -1833,9 +1833,9 @@ function collectRanks()
 	$rank_images = array();
 	while($file = @readdir($dir))
 	{
-		if( !@is_dir($rank_abs_path . '/' . $file) )
+		if( !@is_dir($rank_abs_path .DS . $file) )
 		{
-			$img_size = @getimagesize($rankpath['abs'] . '/' . $file);
+			$img_size = @getimagesize($rankpath['abs'] .DS . $file);
 
 			if( $img_size[0] && $img_size[1] )
 			{
@@ -1855,7 +1855,7 @@ $database = &JFactory::getDBO();
 
 	$rank_images = collectRanks();
 	$rankpath = rankpath();
-	$rankpath = $rankpath['live'].'/';
+	$rankpath = $rankpath['live'] .DS;
 
 	$filename_list = "";
 	$i = 0;
@@ -1938,7 +1938,7 @@ function editRank($option, $id)
     $rank_images = collectRanks();
 
     $path = rankpath();
-    $path = $path['live'].'/';
+    $path = $path['live'] .DS;
 
     $edit_img = $filename_list = '';
 

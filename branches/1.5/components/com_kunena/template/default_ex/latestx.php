@@ -75,7 +75,7 @@ if (!$my->id && $func == "mylatest")
         	die();
 }
 
-require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
+require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
 
 if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php'))
 {

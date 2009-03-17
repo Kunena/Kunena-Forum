@@ -41,7 +41,7 @@ class fb_Converter {
 	 */
 	function doConversion() {
 		$database = &JFactory::getDBO();
-		require_once( JPATH_ROOT . '/includes/domit/xml_domit_lite_include.php' );
+		require_once( KUNENA_ROOT_PATH .DS. 'includes/domit/xml_domit_lite_include.php' );
 		if(!$this->silent) {
 ?>
 			<script language=JavaScript>
@@ -74,11 +74,11 @@ class fb_Converter {
 		}
 
 		$componentBaseDir = '';
-		$this->_converterDir = mosPathName( JPATH_ROOT . '/administrator/components/Kunena' ) . '/' . $this->subdir;
+		$this->_converterDir = mosPathName( KUNENA_PATH_ADMIN .DS) .DS . $this->subdir;
 
 		//initiate XML doc
 		$xmlDoc = new DOMIT_Lite_Document();
-		$xmlDoc->loadXML( $this->converterDir . '/'. $this->xmlFileName, false, true );
+		$xmlDoc->loadXML( $this->converterDir .DS. $this->xmlFileName, false, true );
 
 		//load root element and check XML version (for future use)
 		$root = &$xmlDoc->documentElement;
@@ -115,7 +115,7 @@ class fb_Converter {
 				case "phpfile":
 					//include file
 					$fileName = $currentNode->getAttribute( "name" );
-					$include = $this->_upgradeDir . '/' . $fileName;
+					$include = $this->_upgradeDir .DS . $fileName;
 					$fileCheck = file_exists($include);
 					if($fileCheck) {
 						require( $include );

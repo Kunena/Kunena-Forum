@@ -164,7 +164,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 				</td>
 
 				<td class = "td-6">
-					<a href = "<?php echo $fbURL; ?>"> <?php echo $fbIcons['latestpost'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />'
+					<a href = "<?php echo $fbURL; ?>"> <?php echo $fbIcons['latestpost'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />'
 																	  : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'; ?> </a>
 				</td>
 			</tr>
@@ -197,7 +197,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 <?php echo _KUNENA_USRL_DISPLAY_NR; ?>
 
 <?php
-echo $pageNav->writeLimitBox("index.php?option=com_kunena&amp;func=myprofile&amp;do=showmsg" . KUNENA_COMPONENT_ITEMID_SUFFIX . "");
+echo $pageNav->writeLimitBox("index.php?option=com_kunena&amp;func=myprofile&amp;do=showmsg" . KUNENA_COMPONENT_ITEMID_SUFFIX);
 ?>
 
 <?php

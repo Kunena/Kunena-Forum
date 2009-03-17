@@ -275,6 +275,6 @@ function SendClexusPM($reporter, $subject, $message, $msglink, $mods, $admins) {
         $database->query();
         }
 
-    mosErrorAlert('' . _KUNENA_REPORT_SUCCESS . '', 'window.history.go(-2);');
+    mosErrorAlert('' . _KUNENA_REPORT_SUCCESS, 'window.history.go(-2);');
     }
 ?>

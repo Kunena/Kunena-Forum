@@ -24,7 +24,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $lang, $mainframe;
 global $fbConfig;
 
-$Kunena_adm_path = JPATH_ROOT . "/administrator/components/com_kunena";
+$Kunena_adm_path = KUNENA_PATH_ADMIN;
 //Get right Language file
 $Kunena_language_file = "$Kunena_adm_path/language/kunena.$lang.php";
 
@@ -41,10 +41,10 @@ else {
 
 //Tabber check
 //
-$source_file = JPATH_ROOT . "/components/com_kunena/template/default/plugin/recentposts/tabber.css";
-$source_file = JPATH_ROOT . "/components/com_kunena/template/default/plugin/recentposts/tabber.js";
-$source_file = JPATH_ROOT . "/components/com_kunena/template/default/plugin/recentposts/tabber-minimized.js";
-$source_file = JPATH_ROOT . "/components/com_kunena/template/default/plugin/recentposts/function.tabber.php";
+$source_file = KUNENA_PATH_TEMPLATE_DEFAULT .DS. "plugin/recentposts/tabber.css";
+$source_file = KUNENA_PATH_TEMPLATE_DEFAULT .DS. "plugin/recentposts/tabber.js";
+$source_file = KUNENA_PATH_TEMPLATE_DEFAULT .DS. "plugin/recentposts/tabber-minimized.js";
+$source_file = KUNENA_PATH_TEMPLATE_DEFAULT .DS. "plugin/recentposts/function.tabber.php";
 //
 $category = trim($fbConfig->latestcategory); // 2,3,4
 $count = $fbConfig->latestcount;
@@ -120,7 +120,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                 $numitems = count($rows);
 
                 if ($numitems > $count_per_page) {
-                    include_once(JPATH_ROOT . "/components/com_kunena/template/default/plugin/recentposts/function.tabber.php");
+                    include_once(KUNENA_PATH_TEMPLATE_DEFAULT .DS. "plugin/recentposts/function.tabber.php");
                     $tabs = new my_tabs(1, 1);
                     $tabs->my_pane_start('mod_fb_last_subjects-pane');
                     $tabs->my_tab_start(1, 1);
@@ -209,7 +209,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                             case '1':
                                 echo "<td  class=\"td-3 fbm\"  align=\"center\"  ><a href=\"";
 
-                                echo JRoute::_(KUNENA_PROFILE_LINK_SUFFIX . "" . $row->id);
+                                echo JRoute::_(KUNENA_PROFILE_LINK_SUFFIX . $row->id);
                                 echo "\">";
                                 echo $row->username;
                                 echo "</a></td>";
@@ -218,7 +218,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                             case '2':
                                 echo "<td  class=\"td-3 fbm\"  align=\"center\"  ><a href=\"";
 
-                                echo JRoute::_(KUNENA_PROFILE_LINK_SUFFIX . "" . $row->id);
+                                echo JRoute::_(KUNENA_PROFILE_LINK_SUFFIX . $row->id);
                                 echo "\">";
                                 echo $row->name;
                                 echo "</a></td>";

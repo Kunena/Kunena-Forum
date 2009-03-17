@@ -17,7 +17,7 @@
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
 
-include_once(JPATH_ROOT."/administrator/components/com_kunena/lib/fx.upgrade.class.php");
+include_once(KUNENA_PATH_ADMIN_LIB .DS. "fx.upgrade.class.php");
 
 $database = &JFactory::getDBO();
 

@@ -86,13 +86,13 @@ if ($my->id)
         }
 
         //here we go:
-        include(KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
+        include(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 
         if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
             require_once(KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
         }
         else {
-            require_once(KUNENA_ABSPATH . '/template/default/fb_pathway.php');
+            require_once(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_pathway.php');
         }
 ?>
 
@@ -635,7 +635,7 @@ else
                 <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
                 if ($fbConfig->enableforumjump)
-                    require_once(KUNENA_ABSSOURCESPATH . 'kunena.forumjump.php');
+                    require_once(KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 ?>
             </th>
         </tr>

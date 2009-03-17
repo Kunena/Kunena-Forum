@@ -102,7 +102,7 @@ global $message;
 require_once (KUNENA_PATH_LIB .DS. "kunena.link.class.php");
 
 // Class structure should be used after this and all the common task should be moved to this class
-require_once (JPATH_ROOT . "/components/com_kunena/class.kunena.php");
+require_once (KUNENA_PATH .DS. "class.kunena.php");
 
 // get right Language file
 if (file_exists(KUNENA_FILE_LANGUAGE)) {
@@ -138,7 +138,7 @@ if ($fbConfig->joomlastyle < 1) {
 // Include Badword class file
 if ($fbConfig->badwords and !class_exists('Badword')) {
 	foreach (array('badwords2','badword') as $com_bw) {
-		$com_bw = KUNENA_ROOT_PATH .DS. '/components/com_'.$com_bw.'/class.'.$com_bw.'.php';
+		$com_bw = KUNENA_ROOT_PATH .DS. 'components/com_'.$com_bw.'/class.'.$com_bw.'.php';
 		if (is_file($com_bw)) {
 			require_once ($com_bw);
 			break;
@@ -286,11 +286,11 @@ if ($fbConfig->fb_profile == 'cb')
     $UElanguagePath = KUNENA_ROOT_PATH .DS. 'components/com_comprofiler/plugin/language';
     $UElanguage = $lang;
 
-    if (!file_exists($UElanguagePath . '/' . $lang . '/' . $lang . '.php')) {
+    if (!file_exists($UElanguagePath .DS . $lang .DS . $lang . '.php')) {
         $UElanguage = 'default_language';
         }
 
-    include_once ($UElanguagePath . '/' . $UElanguage . '/' . $UElanguage . '.php');
+    include_once ($UElanguagePath .DS . $UElanguage .DS . $UElanguage . '.php');
 }
 
 // Kunena Current Template Icons Pack
@@ -886,7 +886,7 @@ else
                     }
 
                 // check that template exists in case it was deleted
-                if (file_exists(JPATH_ROOT . '/components/com_kunena/template/' . $fb_change_template . '/kunena.forum.css'))
+                if (file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_change_template . '/kunena.forum.css'))
                 {
                     $lifetime = 60 * 10;
                     $fb_current_template = $fb_change_template;
@@ -907,7 +907,7 @@ else
                     }
 
                 // check that template exists in case it was deleted
-                if (file_exists(JPATH_ROOT . '/components/com_kunena/template/' . $fb_change_img_template . '/kunena.forum.css'))
+                if (file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_change_img_template . '/kunena.forum.css'))
                 {
                     $lifetime = 60 * 10;
                     $fb_current_img_template = $fb_change_img_template;

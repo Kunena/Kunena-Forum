@@ -24,8 +24,8 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 // ################################################################
 
-include_once(KUNENA_ABSSOURCESPATH."/kunena.parser.base.php");
-include_once(KUNENA_ABSSOURCESPATH."/kunena.parser.php");
+include_once(KUNENA_PATH_LIB .DS. "kunena.parser.base.php");
+include_once(KUNENA_PATH_LIB .DS. "kunena.parser.php");
 
 class smile
 {
@@ -111,7 +111,7 @@ class smile
 
         $smileyArray = array();
         foreach ($smilies as $smiley) {                                                    // We load all smileys in array, so we can sort them
-            $smileyArray[$smiley->code] = '' . KUNENA_URLEMOTIONSPATH . '' . $smiley->$column; // This makes sure that for example :pinch: gets translated before :p
+            $smileyArray[$smiley->code] = '' . KUNENA_URLEMOTIONSPATH . $smiley->$column; // This makes sure that for example :pinch: gets translated before :p
         }
 
         if ($emoticonbar == 0)

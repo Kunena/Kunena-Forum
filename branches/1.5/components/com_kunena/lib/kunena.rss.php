@@ -22,7 +22,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $database, $mainframe, $my, $fbConfig;
-include (JPATH_ROOT . "/components/com_kunena/template/default/smile.class.php");
+include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. "smile.class.php");
 
 $hours = 0;
 

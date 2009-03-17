@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.5.0
 
+17-March-2009 Matias
+# [#15131] Massive renaming of defines.
+
 14-March-2009 Matias
 # [#15131] Replaced many legacy functions, removed misplaced JText::_()
 

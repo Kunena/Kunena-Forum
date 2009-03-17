@@ -107,8 +107,8 @@ function dofreePDF($database)
         $mes_text = $row[0]->message;
         filterHTML($mes_text);
 
-		if (file_exists(KUNENA_JABSPATH . '/includes/class.ezpdf.php')) {
-			include (KUNENA_JABSPATH . '/includes/class.ezpdf.php');
+		if (file_exists(KUNENA_ROOT_PATH .DS. 'includes/class.ezpdf.php')) {
+			include (KUNENA_ROOT_PATH .DS. 'includes/class.ezpdf.php');
 			$pdf = &new Cezpdf('a4', 'P'); //A4 Portrait
 		} elseif (class_exists('JDocument')) {
         	$pdf = &new fbpdfwrapper();

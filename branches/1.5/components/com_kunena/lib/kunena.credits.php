@@ -76,7 +76,7 @@ global $is_Moderator;
 </div>
 
 <?php
-include (JPATH_ROOT . '/components/com_kunena/lib/kunena.version.php');
+include (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 // << $KunenaDbVersion
 ?>
  <!-- Version Info -->

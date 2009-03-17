@@ -171,7 +171,7 @@ function showFbFooter () {
 global $mainframe;
 global $fbConfig;
 
-include_once (JPATH_ROOT.'/components/com_kunena/lib/kunena.version.php');
+include_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 ?>
 
 <!-- Finish: AdminRight -->
@@ -3187,15 +3187,15 @@ else
                 $catid = $database->loadResult();
                 echo $mesid == '' ? '<td>' : '<td>';
                 echo '<table style="border: 1px solid #ccc;"><tr><td height="90" width="130" style="text-align: center">';
-                echo $type ? '<a href="' . KUNENA_PATH_UPLOADED . '/images/' . $uploaded[$i] . '" target="_blank" title="' . _COM_A_IMGB_ENLARGE . '" alt="' . _COM_A_IMGB_ENLARGE . '"><img src="' . KUNENA_LIVEUPLOADEDPATH . '/images/' . $uploaded[$i]
+                echo $type ? '<a href="' . KUNENA_PATH_UPLOADED .DS. 'images/' . $uploaded[$i] . '" target="_blank" title="' . _COM_A_IMGB_ENLARGE . '" alt="' . _COM_A_IMGB_ENLARGE . '"><img src="' . KUNENA_LIVEUPLOADEDPATH . '/images/' . $uploaded[$i]
                          . '" width="80" heigth="80" border="0"></a>' : '<a href="'
-                         . KUNENA_PATH_UPLOADED . '/files/' . $uploaded[$i] . '" title="' . _COM_A_IMGB_DOWNLOAD . '" alt="' . _COM_A_IMGB_DOWNLOAD . '"><img src="../administrator/components/com_kunena/images/fbfile.png"   border="0"></a>';
+                         . KUNENA_PATH_UPLOADED .DS. 'files/' . $uploaded[$i] . '" title="' . _COM_A_IMGB_DOWNLOAD . '" alt="' . _COM_A_IMGB_DOWNLOAD . '"><img src="../administrator/components/com_kunena/images/fbfile.png"   border="0"></a>';
                 echo '</td></tr><tr><td style="text-align: center">';
                 //echo '<input type="radio" name="newAvatar" value="gallery/'.$uploaded[$i].'">';
                 echo '<br /><small>';
                 echo '<strong>' . _COM_A_IMGB_NAME . ': </strong> ' . $uploaded[$i] . '<br />';
-                echo '<strong>' . _COM_A_IMGB_SIZE . ': </strong> ' . filesize($uploaded_path . '/' . $uploaded[$i]) . ' bytes<br />';
-                $type ? list($width, $height) = @getimagesize($uploaded_path . '/' . $uploaded[$i]) : '';
+                echo '<strong>' . _COM_A_IMGB_SIZE . ': </strong> ' . filesize($uploaded_path .DS . $uploaded[$i]) . ' bytes<br />';
+                $type ? list($width, $height) = @getimagesize($uploaded_path .DS . $uploaded[$i]) : '';
                 echo $type ? '<strong>' . _COM_A_IMGB_DIMS . ': </strong> ' . $width . 'x' . $height . '<br />' : '';
                 echo $type ? '<a href="index2.php?option=' . $option . '&task=replaceImage&OxP=1&img=' . $uploaded[$i] . '">' . _COM_A_IMGB_REPLACE . '</a><br />' : '';
                 echo $type ? '<a href="javascript:decision(\'' . _COM_A_IMGB_CONFIRM . '\',\'index2.php?option=' . $option . '&task=replaceImage&OxP=2&img=' . $uploaded[$i] . '\')">'
@@ -3295,7 +3295,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
                                 </td>
 
                                 <td width = "200">
-                                    <a href = "#edit" onclick = "return listItemTask('cb<?php echo $i; ?>','editsmiley')"><img src="<?php echo ($smileypath['live'] . '/'. $s->location); ?>" alt="<?php echo $s->location; ?>"  border="0" /></a>
+                                    <a href = "#edit" onclick = "return listItemTask('cb<?php echo $i; ?>','editsmiley')"><img src="<?php echo ($smileypath['live'] .DS. $s->location); ?>" alt="<?php echo $s->location; ?>"  border="0" /></a>
                                 </td>
 
                                 <td width = "100">
@@ -3446,7 +3446,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
     <tr class="row<?php echo $k;?>">
       <td width="20" align="center"><?php echo ($id+$pageNavSP->limitstart+1);?></td>
       <td width="20" align="center"><input type="checkbox" id="cb<?php echo $id;?>" name="cid[]" value="<?php echo $row->rank_id; ?>" onClick="isChecked(this.checked);"></td>
-      <td><a href = "#edit" onclick = "return listItemTask('cb<?php echo $id; ?>','editRank')"><img src="<?php echo ($rankpath['live'] . '/'. $row->rank_image); ?>" alt="<?php echo $row->rank_image; ?>"  border="0" /></a></td>
+      <td><a href = "#edit" onclick = "return listItemTask('cb<?php echo $id; ?>','editRank')"><img src="<?php echo ($rankpath['live'] .DS. $row->rank_image); ?>" alt="<?php echo $row->rank_image; ?>"  border="0" /></a></td>
       <td nowrap="nowrap"><a href = "#edit" onclick = "return listItemTask('cb<?php echo $id; ?>','editRank')"><?php echo $row->rank_title; ?></a></td>
       <td><?php if ($row->rank_special == 1 ) { echo _ANN_YES; } else { echo _ANN_NO; } ?></td>
       <td align="center"><?php echo $row->rank_min; ?></td>

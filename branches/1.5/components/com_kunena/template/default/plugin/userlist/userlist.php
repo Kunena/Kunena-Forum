@@ -401,7 +401,7 @@ class HTML_userlist_content
                                 $nr = $i + $limitstart;
 
                                 // Profile Link
-                                $profilelink =  JRoute::_(KUNENA_PROFILE_LINK_SUFFIX."".$ulrow->id);
+                                $profilelink =  JRoute::_(KUNENA_PROFILE_LINK_SUFFIX.$ulrow->id);
 
                                 // Avatar
                                 $uslavatar = '';
@@ -439,7 +439,7 @@ class HTML_userlist_content
 
                                     if ($avatar != '') {
 
-									if(!file_exists(KUNENA_ABSUPLOADEDPATH . '/avatars/s_' . $avatar)) {
+									if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $avatar)) {
 										$uslavatar = '<img  border="0" class="usl_avatar" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" />';
 										}else {
                                         $uslavatar = '<img  border="0" class="usl_avatar" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_' . $avatar . '" alt="" />';
@@ -469,12 +469,10 @@ class HTML_userlist_content
 
 
                                             if ($isonline && $ulrow->showOnline ==1 ) {
-                                                echo $fbIcons['onlineicon'] ? '<img src="' . KUNENA_URLICONSPATH
-                                                         . '' . $fbIcons['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';
+                                                echo $fbIcons['onlineicon'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';
                                             }
                                             else {
-                                                echo $fbIcons['offlineicon'] ? '<img src="' . KUNENA_URLICONSPATH
-                                                         . '' . $fbIcons['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
+                                                echo $fbIcons['offlineicon'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
                                             }
                                             ?>
                                         </td>

@@ -22,13 +22,16 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+// Kunena wide defines
+require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
+
 global $mainframe;
 //Get right Language file
-if (file_exists(JPATH_ROOT . '/administrator/components/com_kunena/language/kunena.' . $lang . '.php')) {
-    include (JPATH_ROOT . '/administrator/components/com_kunena/language/kunena.' . $lang . '.php');
+if (file_exists(KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.' . $lang . '.php')) {
+    include (KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.' . $lang . '.php');
 }
 else {
-    include (JPATH_ROOT . '/administrator/components/com_kunena/language/kunena.english.php');
+    include (KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.english.php');
 }
 
 function com_uninstall()

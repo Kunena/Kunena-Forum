@@ -17,7 +17,7 @@
 // ensure this file is being included by a parent file
 defined( '_JEXEC' ) or die('Restricted access');
 
-include_once (JPATH_ROOT.'/components/com_kunena/lib/kunena.debug.php');
+include_once (KUNENA_PATH_LIB .DS. 'kunena.debug.php');
 
 class fx_Upgrade {
 	var $component=null;
@@ -115,7 +115,7 @@ class fx_Upgrade {
 	 * Main upgrade function. Processes XML file
 	 */
 	function doUpgrade() {
-		require_once( JPATH_ROOT . '/includes/domit/xml_domit_lite_include.php' );
+		require_once( KUNENA_ROOT_PATH .DS. 'includes/domit/xml_domit_lite_include.php' );
 		if(!$this->silent) {
 			?>
 			<script language=JavaScript>
@@ -147,8 +147,8 @@ class fx_Upgrade {
 			<?php
 		}
 
-		$componentBaseDir = JPATH_ROOT . '/administrator/components/';
-		$this->_upgradeDir = $componentBaseDir . $this->component . '/' . $this->subdir;
+		$componentBaseDir = KUNENA_ROOT_PATH_ADMIN .DS. 'components/';
+		$this->_upgradeDir = $componentBaseDir . $this->component .DS . $this->subdir;
 		$versionTableNoPrefix = $this->versionTablePrefix . "version";
 
 		//get current version, check if version table exists
@@ -214,7 +214,7 @@ class fx_Upgrade {
 
 		//initiate XML doc
 		$xmlDoc = new DOMIT_Lite_Document();
-		$xmlDoc->loadXML( $this->_upgradeDir . '/'. $this->xmlFileName, false, true );
+		$xmlDoc->loadXML( $this->_upgradeDir .DS. $this->xmlFileName, false, true );
 
 		//load root element and check XML version (for future use)
 		$root = &$xmlDoc->documentElement;
@@ -324,7 +324,7 @@ class fx_Upgrade {
 				case "phpfile":
 					//include file
 					$fileName = $currentNode->getAttribute( "name" );
-					$include = $this->_upgradeDir . '/' . $fileName;
+					$include = $this->_upgradeDir .DS . $fileName;
 					$fileCheck = file_exists($include);
 					if($fileCheck) {
 						require( $include );

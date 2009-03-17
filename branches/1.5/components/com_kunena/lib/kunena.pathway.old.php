@@ -75,13 +75,13 @@ global $fbConfig;
                 /*      echo '<a href="'.JRoute::_(KUNENA_LIVEURLREL).'">';
                       echo $fbIcons['forumlist'] ? '<img src="' . KUNENA_TMPLTURL . '/images/icons/'.$fbIcons['forumlist'].'" border="0" alt="'._GEN_FORUMLIST.'" > > ' : _GEN_FORUMLIST;
                       echo '</a> ';
-                      if (file_exists(JPATH_ROOT.'/templates/'.$mainframe->getTemplate().'/images/arrow.png')) {
+                      if (file_exists(KUNENA_ROOT_PATH .DS. 'templates/'.$mainframe->getTemplate().'/images/arrow.png')) {
                       echo '<img src="'.KUNENA_JLIVEURL.'/templates/'.$mainframe->getTemplate().'/images/arrow.png" alt="" />';
                       } else {
                       echo '<img src="'.KUNENA_JLIVEURL.'/images/M_images/arrow.png" alt="" />';
                     }
                       echo ' <a href="'.JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$objCatParentInfo->id).'">'.$objCatParentInfo->name.'</a> ';
-                      if (file_exists(JPATH_ROOT.'/templates/'.$mainframe->getTemplate().'/images/arrow.png')) {
+                      if (file_exists(KUNENA_ROOT_PATH .DS. 'templates/'.$mainframe->getTemplate().'/images/arrow.png')) {
                       echo '<img src="'.KUNENA_JLIVEURL.'/templates/'.$mainframe->getTemplate().'/images/arrow.png" alt="" />';
                       } else {
                       echo '<img src="'.KUNENA_JLIVEURL.'/images/M_images/arrow.png" alt="" /> ';
@@ -89,7 +89,7 @@ global $fbConfig;
                 // echo '<strong> '.$objCatInfo->name.'</strong>  ';
                 if ($forumLocked)
                 {
-                    echo $fbIcons['forumlocked'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forumlocked']
+                    echo $fbIcons['forumlocked'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['forumlocked']
                              . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"   alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
                     $lockedForum = 1;
                 }
@@ -99,7 +99,7 @@ global $fbConfig;
 
                 if ($forumReviewed)
                 {
-                    echo $fbIcons['forummoderated'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forummoderated']
+                    echo $fbIcons['forummoderated'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['forummoderated']
                              . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '">';
                     $moderatedForum = 1;
                 }

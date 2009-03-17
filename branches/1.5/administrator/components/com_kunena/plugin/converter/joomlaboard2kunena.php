@@ -20,13 +20,13 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 //copy the attachments to Kunena directory
-dircopy(JPATH_ROOT . "/components/com_joomlaboard/uploaded", JPATH_ROOT . "/images/fbfiles", false);
-dircopy(JPATH_ROOT . "/components/com_joomlaboard/avatars", JPATH_ROOT . "/images/fbfiles/avatars", false);
+dircopy(KUNENA_ROOT_PATH .DS. "components/com_joomlaboard/uploaded", KUNENA_PATH_UPLOADED .DS, false);
+dircopy(KUNENA_ROOT_PATH .DS. "components/com_joomlaboard/avatars", KUNENA_PATH_UPLOADED .DS. "avatars", false);
 
 $database->setQuery("update #__fb_attachments set filelocation = replace(filelocation,'com_joomlaboard','com_kunena');");
 $database->query();
 
-$database->setQuery("update #__fb_attachments set filelocation = replace(filelocation,'".JPATH_ROOT."/components/com_kunena/uploaded','/images/fbfiles');");
+$database->setQuery("update #__fb_attachments set filelocation = replace(filelocation,'".KUNENA_PATH .DS. "uploaded','/images/fbfiles');");
 if ($database->query()) {
 //    echo "<img src='images/tick.png' align='absmiddle'>"._KUNENA_UP_ATT_10."<br />";
 }

@@ -47,14 +47,14 @@ $newFileName = $fileName . '.' . $fileExt;
 $fileSize = $_FILES['attachfile']['size'];
 
 //Enforce it is a new file
-if (file_exists(KUNENA_ABSUPLOADEDPATH. "/files/$newFileName")) {
+if (file_exists(KUNENA_PATH_UPLOADED .DS. "files/$newFileName")) {
     $newFileName = $fileName . '-' . md5(microtime()) . "." . $fileExt;
 }
 
 if ($GLOBALS['KUNENA_rc'])
 {
     //Filename + proper path
-    $fileLocation = strtr(KUNENA_ABSUPLOADEDPATH . "/files/$newFileName", "\\", "/");
+    $fileLocation = strtr(KUNENA_PATH_UPLOADED .DS. "files/$newFileName", "\\", "/");
 
     // Check for empty filename
     if (empty($_FILES['attachfile']['name'])) {

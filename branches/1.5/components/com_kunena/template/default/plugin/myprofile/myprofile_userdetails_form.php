@@ -21,7 +21,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 
-require_once (JPATH_ROOT . '/includes/HTML_toolbar.php');
+require_once (KUNENA_ROOT_PATH .DS. 'includes/HTML_toolbar.php');
 
 // used for spoof hardening
 $validate = josSpoofValue();

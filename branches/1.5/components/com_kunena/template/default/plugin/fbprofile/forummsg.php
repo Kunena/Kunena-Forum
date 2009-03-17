@@ -164,7 +164,7 @@ defined( '_JEXEC' ) or die('Restricted access');
                 <td class = "td-6  fbm" align="center">
                     <a href = "<?php echo $fbURL; ?>"> <?php
     echo $fbIcons['latestpost'] ? '<img src="'
-             . KUNENA_URLICONSPATH . '' . $fbIcons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'; ?> </a>
+             . KUNENA_URLICONSPATH . $fbIcons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'; ?> </a>
                 </td>
             </tr>
 
@@ -199,7 +199,7 @@ defined( '_JEXEC' ) or die('Restricted access');
                 echo $pageNav->writePagesLinks("index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=$userid".KUNENA_COMPONENT_ITEMID_SUFFIX);
                 ?>
 <?php
-echo $pageNav->writeLimitBox("index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=$userid" . KUNENA_COMPONENT_ITEMID_SUFFIX . "");
+echo $pageNav->writeLimitBox("index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=$userid" . KUNENA_COMPONENT_ITEMID_SUFFIX);
 ?>
                 <br/>
 <?php echo $pageNav->getPagesCounter(); ?>

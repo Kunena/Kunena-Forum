@@ -28,7 +28,7 @@ $join = '<img src="' . KUNENA_URLIMAGESPATH . 'tree-join.gif" width="12" height=
 $end = '<img src="' . KUNENA_URLIMAGESPATH . 'tree-end.gif" width="12" height="18" alt="thread link" />';
 $blank = '<img src="' . KUNENA_URLIMAGESPATH . 'tree-blank.gif" width="12" height="18" alt="thread link" />';
 $vert = '<img src="' . KUNENA_URLIMAGESPATH . 'tree-vert.gif" width="12" height="18" alt="thread link" />';
-$loc_emoticons = KUNENA_URLEMOTIONSPATH . '';
+$loc_emoticons = KUNENA_URLEMOTIONSPATH;
 
 // topic emoticons
 $topic_emoticons = array ();
@@ -106,14 +106,14 @@ $tree = thread_flat($tree, $messages);
                 {
                     //new post
                     echo '<td width="1%" class="fb_new">';
-                   // echo $fbIcons['unreadmessage'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '"/>' : $fbConfig->newchar;
+                   // echo $fbIcons['unreadmessage'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '"/>' : $fbConfig->newchar;
                     echo '</td>';
                 }
                 else
                 {
                     //not new posts
                     echo '<td width="1%" class="fb_notnew">';
-                   // echo $fbIcons['readmessage'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $fbConfig->newchar;
+                   // echo $fbIcons['readmessage'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $fbConfig->newchar;
                     echo '</td>';
                 }
             }
@@ -131,13 +131,13 @@ $tree = thread_flat($tree, $messages);
                      }
                      else
                      {
-                      //  echo $fbIcons['topiclocked'] ? '<img src="' . KUNENA_URLICONSPATH . ''.$fbIcons['topiclocked'].'" border="0" alt="'._GEN_LOCKED_TOPIC.'" title="'._GEN_LOCKED_TOPIC.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'lock.gif" width="15" height="15" alt="'._GEN_LOCKED_TOPIC.'" />';
+                      //  echo $fbIcons['topiclocked'] ? '<img src="' . KUNENA_URLICONSPATH.$fbIcons['topiclocked'].'" border="0" alt="'._GEN_LOCKED_TOPIC.'" title="'._GEN_LOCKED_TOPIC.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'lock.gif" width="15" height="15" alt="'._GEN_LOCKED_TOPIC.'" />';
                         $topicLocked=1;
                      }
                   }
                   else
                   {
-                   //  echo $fbIcons['topicsticky'] ? '<img src="' . KUNENA_URLICONSPATH . ''.$fbIcons['topicsticky'].'" border="0" alt="'._GEN_ISSTICKY.'" title="'._GEN_ISSTICKY.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'pushpin.gif" width="15" height="15" alt="'._GEN_ISSTICKY.'" />';
+                   //  echo $fbIcons['topicsticky'] ? '<img src="' . KUNENA_URLICONSPATH.$fbIcons['topicsticky'].'" border="0" alt="'._GEN_ISSTICKY.'" title="'._GEN_ISSTICKY.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'pushpin.gif" width="15" height="15" alt="'._GEN_ISSTICKY.'" />';
                      $topicSticky=1;
                   }
                   ?></td>
@@ -194,8 +194,7 @@ if ($fbConfig->allowfavorites)
     $database->setQuery("select count(*) from #__fb_favorites where thread = $leaf->id && userid = $my->id");
 
     if (intval($database->loadResult()) > 0) {
-        echo $fbIcons['favoritestar'] ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH
-                 . '' . $fbIcons['favoritestar'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
+        echo $fbIcons['favoritestar'] ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $fbIcons['favoritestar'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
     }
 }
 ?>

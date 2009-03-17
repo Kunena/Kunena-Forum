@@ -41,7 +41,7 @@ function display_avatar_gallery($avatar_gallery_path)
 
     while ($file = @readdir($dir))
     {
-        if ($file != '.' && $file != '..' && is_file($avatar_gallery_path . '/' . $file) && !is_link($avatar_gallery_path . '/' . $file))
+        if ($file != '.' && $file != '..' && is_file($avatar_gallery_path .DS . $file) && !is_link($avatar_gallery_path .DS . $file))
         {
             if (preg_match('/(\.gif$|\.png$|\.jpg|\.jpeg)$/is', $file))
             {
@@ -358,7 +358,7 @@ if ($do == 'init')
 
 <?php
         echo "<p align=\"center\">";
-        get_dirs(KUNENA_ABSUPLOADEDPATH . '/avatars/gallery', "categoryid", $gallery);
+        get_dirs(KUNENA_PATH_UPLOADED .DS. 'avatars/gallery', "categoryid", $gallery);
         echo '<input type="button" value="'. _KUNENA_GO .'" class="button" onclick="switch_avatar_category(this.options[this.selectedIndex].value)" />'."\n";
         echo "</p>";
         echo "<br />\n";
@@ -375,7 +375,7 @@ if ($do == 'init')
             $gallery2 = str_replace("%20", " ", $gallery) . "/";
         }
 
-        $avatar_gallery_path = KUNENA_ABSUPLOADEDPATH . '/avatars/gallery' . $gallery1;
+        $avatar_gallery_path = KUNENA_PATH_UPLOADED .DS. 'avatars/gallery' . $gallery1;
         $avatar_images = array ();
         $avatar_images = display_avatar_gallery($avatar_gallery_path);
 
@@ -383,7 +383,7 @@ if ($do == 'init')
         {
             $j = $i + 1;
             echo '<td>';
-            //echo '<img src="'.$avatar_gallery_path .'/'. $avatar_images[$i].'">';
+            //echo '<img src="'.$avatar_gallery_path .DS. $avatar_images[$i].'">';
             echo '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/gallery/' . $gallery2 . $avatar_images[$i] . '" alt="" />';
             echo '<input type="radio" name="newAvatar" value="gallery/' . $gallery2 . $avatar_images[$i] . '"/>';
             echo "</td>\n";
@@ -431,15 +431,15 @@ else if ($do == 'validate')
     $imageType = array( 1 => 'GIF', 2 => 'JPG', 3 => 'PNG', 4 => 'SWF', 5 => 'PSD', 6 => 'BMP', 7 => 'TIFF', 8 => 'TIFF', 9 => 'JPC', 10 => 'JP2', 11 => 'JPX', 12 => 'JB2', 13 => 'SWC', 14 => 'IFF');
 
     //move it to the proper location
-    //if (!move_uploaded_file($_FILES['avatar']['tmp_name'], KUNENA_ABSUPLOADEDPATH . "/avatars/$newFileName"))
+    //if (!move_uploaded_file($_FILES['avatar']['tmp_name'], KUNENA_PATH_UPLOADED .DS. "avatars/$newFileName"))
     //echo _UPLOAD_ERROR_GENERAL;
 
     //Filename Medium + proper path
-    $fileLocation = KUNENA_ABSUPLOADEDPATH . "/avatars/$newFileName";
+    $fileLocation = KUNENA_PATH_UPLOADED .DS. "avatars/$newFileName";
     //Filename Small + proper path
-    $fileLocation_s = KUNENA_ABSUPLOADEDPATH . "/avatars/s_$newFileName";
+    $fileLocation_s = KUNENA_PATH_UPLOADED .DS. "avatars/s_$newFileName";
     //Filename Large + proper path
-    $fileLocation_l = KUNENA_ABSUPLOADEDPATH . "/avatars/l_$newFileName";
+    $fileLocation_l = KUNENA_PATH_UPLOADED .DS. "avatars/l_$newFileName";
     echo '<table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">';
     echo '<tr><td><div><div><div><div><table><tbody><tr><td>';
     //Avatar Size

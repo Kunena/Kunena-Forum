@@ -37,6 +37,7 @@ Kunena 1.5.0
 # [#15131] Replaced many legacy functions.
 # [#15131] Replaced global $database with local reference of JFactory::getDBO()
 # [#15131] Replaced all occurences of $my_id with $my->id
+# [#15131] Replaced global $my with local reference of JFactory::getUser()
 
 14-March-2009 Matias
 # [#15131] Replaced many legacy functions, removed misplaced JText::_()

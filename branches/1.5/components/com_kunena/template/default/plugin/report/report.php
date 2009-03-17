@@ -43,7 +43,7 @@ switch ($do)
 }
 
 function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
-    global $my;
+    $my = &JFactory::getUser();
 
     $database = &JFactory::getDBO();
     global $fbConfig;
@@ -187,7 +187,9 @@ function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
     }
 
 function ReportForm($msg_id, $catid) {
-    global $my, $fbConfig;
+    global $fbConfig;
+
+    $my = &JFactory::getUser();
 
     $redirect = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id . '&amp;Itemid=' . KUNENA_COMPONENT_ITEMID) . '#' . $msg_id;
 

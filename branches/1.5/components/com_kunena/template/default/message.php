@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $my;
+$my = &JFactory::getUser();
 
 $database = &JFactory::getDBO();
 global $fbConfig;

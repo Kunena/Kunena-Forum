@@ -465,7 +465,9 @@ $database = &JFactory::getDBO();
 function saveForum($option)
 {
 $database = &JFactory::getDBO();
-    global  $my,$mainframe;
+    global $mainframe;
+
+    $my = &JFactory::getUser();
     $row = new fbForum($database);
 
     if (!$row->bind($_POST))

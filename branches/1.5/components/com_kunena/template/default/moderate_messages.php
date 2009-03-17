@@ -21,7 +21,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $my;
+$my = &JFactory::getUser();
 //securing form elements
 $catid = (int)$catid;
 

@@ -261,7 +261,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
     function TagExtended(&$tag_new, &$task, $tag, $between) {
         # Function replaces TAGs with corresponding
         # Encode was already been called for between
-        global $my;
+        $my = &JFactory::getUser();
         if($task->in_code) {
             switch(strtolower($tag->name)) {
                 case 'code:1': // fb ancient compatibility

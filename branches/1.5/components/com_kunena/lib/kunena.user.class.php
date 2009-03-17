@@ -152,7 +152,7 @@ class CKunenaUsers
 	}
 
 	function &getMyself() {
-		global $my;
+		$my = &JFactory::getUser();
 		return $this->get($my->id);
 	}
 }

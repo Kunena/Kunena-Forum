@@ -17,11 +17,6 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-/**
-*@desc Getting the correct Itemids, for components required
-*/
-
-
 // Joomla absolute path
 define('KUNENA_JLIVEURL', JURI::root());
 
@@ -29,18 +24,18 @@ define('KUNENA_JLIVEURL', JURI::root());
 define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH .DS. "templates".DS . $mainframe->getTemplate());
 define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "/templates/".$mainframe->getTemplate());
 
-//Kunena
-$Itemid = JRequest::getInt('Itemid', 0, 'REQUEST');
-
-//check if we have all the itemid sets. if so, then no need for DB call
-
 global $database, $my;
+global $fbConfig;
 
 $database = &JFactory::getDBO();
 $my = &JFactory::getUser();
 
-global $fbConfig;
+/**
+*@desc Getting the correct Itemids, for components required
+*/
+$Itemid = JRequest::getInt('Itemid', 0, 'REQUEST');
 
+//check if we have all the itemid sets. if so, then no need for DB call
 if (!defined("KUNENA_COMPONENT_ITEMID")) {
         $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_kunena' AND published = 1");
         $Itemid = $database->loadResult();
@@ -567,7 +562,7 @@ class CKunenaTools {
         }
 
     function fbDeletePosts($isMod, $return) {
-        global $my;
+        $my = &JFactory::getUser();
 		$database = &JFactory::getDBO();
 
         if (!CKunenaTools::isModOrAdmin() && !$isMod) {
@@ -676,7 +671,7 @@ class CKunenaTools {
         }
 
     function isModOrAdmin($id = 0) {
-        global $my;
+        $my = &JFactory::getUser();
 // echo '<div>CALL isModOrAdmin</div>';
         $userid = intval($id);
 

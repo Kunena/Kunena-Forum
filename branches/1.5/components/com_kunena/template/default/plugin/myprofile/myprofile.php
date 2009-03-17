@@ -281,7 +281,7 @@ if ($my->id != "" && $my->id != 0)
 
     // do some security checks
     if ($my->id == 0 || $user_id == 0 || $user_id != $my->id) {
-        mosNotAuth();
+        JError::raiseError( 403, JText::_("ALERTNOTAUTH") );;
         return;
     }
 
@@ -557,7 +557,7 @@ if ($my->id != "" && $my->id != 0)
 
                     if (!$exists)
                     {
-                        mosNotAuth();
+                        JError::raiseError( 403, JText::_("ALERTNOTAUTH") );;
                         return;
                     }
 					*/
@@ -572,7 +572,7 @@ if ($my->id != "" && $my->id != 0)
                     $row->username = trim($row->username);
 
                     $file = $mainframe->getPath('com_xml', 'com_users');
-                    $params = &new mosUserParameters($row->params, $file, 'component');
+                    $params = &new JParameter($row->params, $file, 'component');
 
                     if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_userdetails_form.php'))
                     {
@@ -596,7 +596,7 @@ if ($my->id != "" && $my->id != 0)
                     // do some security checks
                     if ($uid == 0 || $user_id == 0 || $user_id != $uid)
                     {
-                        mosNotAuth();
+                        JError::raiseError( 403, JText::_("ALERTNOTAUTH") );;
                         return;
                     }
 

@@ -49,7 +49,7 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
     global $fbConfig;
 
     if (!$my->id) {
-        mosNotAuth();
+        JError::raiseError( 403, JText::_("ALERTNOTAUTH") );;
         return;
         }
 
@@ -269,7 +269,7 @@ function ReportForm($msg_id, $catid) {
 
 function SendClexusPM($reporter, $subject, $message, $msglink, $mods, $admins) {
     $database = &JFactory::getDBO();
-    $time = mosFormatDate(CKunenaTools::fbGetInternalTime(), '%Y-%m-%d %H:%M:%S');
+    $time = JHTML::_('date', CKunenaTools::fbGetInternalTime(), '%Y-%m-%d %H:%M:%S');
 
     foreach ($admins as $admin) {
         $database->setQuery("INSERT INTO #__mypms" . "\n ( `userid` , `whofrom` , `time` , `readstate` , `subject` , `message` , `owner` , `folder` , `sent_id` , `replyid` , `ip` , `alert` , `flag` , `pm_notify` , `email_notify` )"
@@ -282,7 +282,5 @@ function SendClexusPM($reporter, $subject, $message, $msglink, $mods, $admins) {
                                 . "\n VALUES ('$mod->id', '$reporter', '$time', '0', '$subject', '$message', '$mod->id', NULL , '0', '0', NULL , '0', '0', '0', '1'");
         $database->query();
         }
-
-    mosErrorAlert('' . _KUNENA_REPORT_SUCCESS, 'window.history.go(-2);');
     }
 ?>

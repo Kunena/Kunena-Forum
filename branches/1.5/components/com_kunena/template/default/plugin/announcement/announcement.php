@@ -253,10 +253,8 @@ if ($is_editor) {
         if (!$is_editor) {
             die ("Hacking attempt");
             }
-
-        mosCommonHTML::loadCalendar();
+	$calendar = JHTML::_('calendar', '', 'created', 'addcreated');  
             ?>
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
@@ -304,9 +302,7 @@ if ($is_editor) {
 
                     <strong><?php echo _ANN_DATE; ?>:</strong>
 
-                    <input type = "text" name = "created" id = "anncreated" size = "40" maxlength = "150" value = "<?php echo $anncreated ;?>"/>
-
-                    <input type = "reset" class = "button" value = "..." onclick = "return showCalendar('anncreated', '%Y-%m-%d');"/>
+                    <?php echo $calendar;?>
 
                     <br/>
 
@@ -387,7 +383,7 @@ if ($is_editor) {
         $annpublished = $ann->published;
         $annordering = $ann->ordering;
         $annshowdate = $ann->showdate;
-        mosCommonHTML::loadCalendar();
+        $calendar = JHTML::_('calendar', $anncreated, 'created', 'addcreated');
         //$document->addCustomTag('<link rel="stylesheet" type="text/css" media="all" href="' . JURI::root() . '/includes/js/calendar/calendar-mos.css" title="green" />');
 ?>
 <script type = "text/javascript">
@@ -464,9 +460,7 @@ if ($is_editor) {
 
                     <strong><?php echo _ANN_DATE; ?>:</strong>
 
-                    <input type = "text" name = "created" id = "anncreated" size = "40" maxlength = "150" value = "<?php echo $anncreated ;?>"/>
-
-                    <input type = "reset" class = "button" value = "..." onclick = "return showCalendar('anncreated', '%Y-%m-%d');"/>
+                    <?php echo $calendar;?>
 
                     <br/>
 

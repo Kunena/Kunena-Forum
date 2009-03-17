@@ -148,12 +148,12 @@ $annlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show'.KUNEN
 <?php } ?>
 
 </td>
-<jdoc:exists type="modules" condition="{kunena_profilebox}">
-		<td>
-			<div class = "fb_profilebox_modul">
-				<jdoc:include type="modules" name="kunena_profilebox" style="{}" />
-			</div>
-		</td>
+<jdoc:exists type="modules" condition="kunena_profilebox">
+	<td>
+		<div class = "fb_profilebox_modul">
+			<jdoc:include type="modules" name="kunena_profilebox" />
+		</div>
+	</td>
 </jdoc:exists>
             </tr>
         </tbody>
@@ -181,12 +181,12 @@ else
                 <a href = "<?php echo $lostpasslink;?>"><?php echo _PROFILEBOX_LOST_PASSWORD; ?></a>
 
 </td>
-<jdoc:exists type="modules" condition="{kunena_profilebox}">
-		<td>
-			<div class = "fb_profilebox_modul">
-				<jdoc:include type="modules" name="kunena_profilebox" style="{}" />
-			</div>
-		</td>
+<jdoc:exists type="modules" condition="kunena_profilebox">
+	<td>
+		<div class = "fb_profilebox_modul">
+			<jdoc:include type="modules" name="kunena_profilebox" />
+		</div>
+	</td>
 </jdoc:exists>
             </tr>
         </tbody>

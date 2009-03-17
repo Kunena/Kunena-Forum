@@ -416,9 +416,11 @@ if ($msg_signature) {
     </tbody>
 </table>
 <!-- Begin: Message Module Positions -->
-    <div class = "kunena_msg_<?php echo $mmm; ?>">
-	<jdoc:include type="modules" name="kunena_msg_<?php echo $mmm; ?>" />
-    </div>
+<jdoc:exists type="modules" condition="kunena_msg_<?php echo $mmm; ?>" />
+	<div class = "kunena_msg_<?php echo $mmm; ?>">
+		<jdoc:include type="modules" name="kunena_msg_<?php echo $mmm; ?>" />
+	</div>
+</jdoc:exists>
 <!-- Finish: Message Module Positions -->
 <?php
 // --------------------------------------------------------------

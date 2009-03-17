@@ -943,10 +943,11 @@ else
     // Bottom Module
 ?>
 
+<jdoc:exists type="modules" condition="kunena_bottom" />
         <div class = "bof-bottom-modul">
 		<jdoc:include type="modules" name="kunena_bottom" />
         </div>
-
+</jdoc:exists>
 <?php
     // Credits
     echo '<div class="fb_credits"> ' . CKunenaLink::GetTeamCreditsLink($catid, _KUNENA_POWEREDBY) . ' ' . CKunenaLink::GetCreditsLink();

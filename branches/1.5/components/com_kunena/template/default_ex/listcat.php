@@ -103,9 +103,11 @@ if ($fbConfig->showannouncement > 0)
 // load module
 ?>
 
-    <div class = "fb-fb_2">
-	<jdoc:include type="modules" name="kunena_announcement" />
-    </div>
+<jdoc:exists type="modules" condition="kunena_announcement" />
+	<div class = "fb-fb_2">
+		<jdoc:include type="modules" name="kunena_announcement" />
+	</div>
+</jdoc:exists>
 
 <!-- B: Pathway -->
 <?php

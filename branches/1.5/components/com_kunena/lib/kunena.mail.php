@@ -40,12 +40,12 @@ class fbMail
         else
         {
             $headers = "MIME-Version: 1.0\r\n";
-            $headers .= "Content-Type: text/plain;" . _ISO . "\r\n";
+            $headers .= "Content-Type: text/plain; charset=\"utf-8\"\r\n";
             $headers .= "From: $fromName <$fromMail>\r\n";
             $headers .= "Reply-To: $fromName <$fromMail>\r\n";
             $headers .= "X-Priority: 3\r\n";
             $headers .= "X-MSMail-Priority: Low\r\n";
-            $headers .= "X-Mailer: Mambo Open Source 4.5\r\n";
+            $headers .= "X-Mailer: Kunena Forum\r\n";
             mail($toMail, $subject, $body, $headers);
         }
     }

@@ -451,22 +451,11 @@ if ($msg_signature) {
     </tbody>
 </table>
 <!-- Begin: Message Module Positions -->
-<?php
-if (mosCountModules('kunena_msg_'.$mmm))
-{
-?>
+<jdoc:exists type="modules" condition="kunena_msg_<?php echo $mmm; ?>" />
     <div class = "kunena_msg_<?php echo $mmm; ?>">
-        <?php
-	        $document	= &JFactory::getDocument();
-	        $renderer	= $document->loadRenderer('modules');
-	        $options	= array('style' => 'xhtml');
-	        $position	= 'kunena_msg_'.$mmm;
-	        echo $renderer->render($position, $options, null);
-        ?>
+	<jdoc:include type="modules" name="kunena_msg_<?php echo $mmm; ?>" />
     </div>
-<?php
-}
-?>
+</jdoc:exists>
 <!-- Finish: Message Module Positions -->
 <?php
 // --------------------------------------------------------------

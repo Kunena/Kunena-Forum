@@ -43,7 +43,9 @@ switch ($do)
 }
 
 function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
-    global $database, $my;
+    global $my;
+
+    $database = &JFactory::getDBO();
     global $fbConfig;
 
     if (!$my->id) {
@@ -121,7 +123,9 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
 }
 
 function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins) {
-    global $database, $mainframe, $fbConfig;
+    global $mainframe, $fbConfig;
+
+    $database = &JFactory::getDBO();
 
     //send report to category moderators
     if (count($mods)>0) {
@@ -143,7 +147,9 @@ function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins)
     }
 
 function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
-    global $database, $fbConfig;
+    global $fbConfig;
+
+    $database = &JFactory::getDBO();
 
     switch ($fbConfig->pm_component)
     {

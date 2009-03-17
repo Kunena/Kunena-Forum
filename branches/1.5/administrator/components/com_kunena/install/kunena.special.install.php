@@ -26,7 +26,10 @@ defined( '_JEXEC' ) or die('Restricted access');
 // off special code that can't be put into the xml file directly.
 //
 
-global $mainframe, $database;
+global $mainframe;
+
+
+$database = &JFactory::getDBO();
 
 // Kill notices (we have many..)
 error_reporting (E_ALL ^ E_NOTICE);

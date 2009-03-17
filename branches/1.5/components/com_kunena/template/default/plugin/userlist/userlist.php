@@ -32,7 +32,9 @@ list_users();
 
 function list_users()
 {
-    global $database, $lang, $fbConfig;
+    global $lang, $fbConfig;
+
+    $database = &JFactory::getDBO();
 
     jimport('joomla.html.pagination');
 
@@ -111,7 +113,9 @@ class HTML_userlist_content
 {
     function showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search = "")
     {
-        global $base_url, $mainframe, $fbConfig, $database;
+        global $base_url, $mainframe, $fbConfig;
+
+        $database = &JFactory::getDBO();
 
         if ($search == "") {
             $search = _KUNENA_USRL_SEARCH;

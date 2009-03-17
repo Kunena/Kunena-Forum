@@ -3132,7 +3132,9 @@ else
     //***************************************
     function browseUploaded($option, $uploaded, $uploaded_path, $type)
     {
-        global $database, $mainframe;
+        global $mainframe;
+
+        $database = &JFactory::getDBO();
         $map = JPATH_ROOT;
 ?>
 

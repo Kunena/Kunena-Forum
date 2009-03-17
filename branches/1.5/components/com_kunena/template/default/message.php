@@ -22,7 +22,9 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $my, $database;
+global $my;
+
+$database = &JFactory::getDBO();
 global $fbConfig;
 unset($user);
 $database->setQuery("SELECT email, name from #__users WHERE `id`={$my->id}");

@@ -29,7 +29,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.debug.php');
 require_once (KUNENA_PATH_LIB .DS. 'kunena.config.class.php');
 
 // get fireboards configuration params in
-global $mainframe, $fbConfig, $database;
+global $mainframe, $fbConfig;
 
 $database = JFactory::getDBO();
 

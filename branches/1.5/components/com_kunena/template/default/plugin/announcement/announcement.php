@@ -235,9 +235,8 @@ if ($is_editor) {
     if ($do == "doadd") {
         JFilterOutput::objectHTMLSafe ($_POST);
         $title = JRequest::getVar("title", "");
-	// FIXME: for J!1.5
-        $description = JRequest::getVar("description", "");
-        $sdescription = JRequest::getVar("sdescription", "");
+        $description = JRequest::getVar('description', '', 'string', JREQUEST_ALLOWRAW);
+        $sdescription = JRequest::getVar('sdescription', '', 'string', JREQUEST_ALLOWRAW);
         $created = JRequest::getVar("created", "");
         $published = JRequest::getVar("published", 0);
         $showdate = JRequest::getVar("showdate", "");
@@ -355,9 +354,8 @@ if ($is_editor) {
     if ($do == "doedit") {
         JFilterOutput::objectHTMLSafe ($_POST);
         $title = JRequest::getVar("title", "");
-	// FIXME: J!1.5
-        $description = JRequest::getVar("description", "");
-        $sdescription = JRequest::getVar("sdescription", "");
+        $description = JRequest::getVar('description', '', 'string', JREQUEST_ALLOWRAW);
+        $sdescription = JRequest::getVar('sdescription', '', 'string', JREQUEST_ALLOWRAW);
         $created = JRequest::getVar("created", "");
         $published = JRequest::getVar("published", 0);
         $showdate = JRequest::getVar("showdate", "");

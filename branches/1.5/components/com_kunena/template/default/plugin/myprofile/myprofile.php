@@ -289,8 +289,7 @@ if ($my->id != "" && $my->id != 0)
         $rowu->load( (int)$user_id );
 
                     $deleteSig = JRequest::getVar('deleteSig', 0);
-			// FIXME: J!1.5
-                    $signature = JRequest::getVar('message', null);
+                    $signature = JRequest::getVar('message', null, 'REQUEST', 'string', JREQUEST_ALLOWRAW);
                     $bday1 = JRequest::getVar('bday1', '0000');
                     $bday2 = JRequest::getVar('bday2', '00');
                     $bday3 = JRequest::getVar('bday3', '00');

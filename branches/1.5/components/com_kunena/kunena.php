@@ -42,13 +42,6 @@ global $message;
 
 // Get all the variables we need and strip them in case
 $action 		= JRequest::getVar('action', '');
-
-// FIXME: move this to post.php
-$attachfile 	= JRequest::getVar('attachfile', '', 'FILES');
-$attachimage 	= JRequest::getVar('attachimage', '', 'FILES');
-$attachfile = $attachfile['name'];
-$attachimage = $attachfile['name'];
-
 $catid 			= JRequest::getInt('catid', 0);
 $contentURL 	= JRequest::getVar('contentURL', '');
 $do 			= JRequest::getVar('do', '');

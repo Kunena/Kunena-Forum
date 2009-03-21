@@ -32,9 +32,13 @@ Legend:
 
 Kunena 1.5.0
 
+21-March-2009 Matias
+# [#15131] Attachment uploads are working again
+# [#15131] Fixes for JRequest::getVar()
+
 17-March-2009 Matias
-# [#15131] Massive renaming of defines.
-# [#15131] Replaced many legacy functions.
+# [#15131] Massive renaming of defines
+# [#15131] Replaced many legacy functions
 # [#15131] Replaced all occurences of $my_id with $my->id
 # [#15131] Replaced global $database with local reference of JFactory::getDBO()
 # [#15131] Replaced global $my with local reference of JFactory::getUser()

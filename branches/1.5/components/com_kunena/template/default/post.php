@@ -44,8 +44,11 @@ global $editmode;
 $my = &JFactory::getUser();
 $acl = &JFactory::getACL();
 $editmode = 0;
-$message = JRequest::getVar("message", '');
-$resubject = JRequest::getVar("resubject", '');
+$message = JRequest::getVar('message', '', 'REQUEST', 'string', JREQUEST_ALLOWRAW);
+$resubject = JRequest::getVar('resubject', '', 'REQUEST', 'string');
+
+$attachfile 	= JRequest::getVar('attachfile', NULL, 'FILES', 'array');
+$attachimage 	= JRequest::getVar('attachimage', NULL, 'FILES', 'array');
 
 // Begin captcha
 if ($fbConfig->captcha == 1 && $my->id < 1) {
@@ -175,7 +178,7 @@ $catName = $objCatInfo->name;
                                     $catid = 1; //make sure there's a proper category
                                 }
 
-                                if ($attachfile != '')
+                                if (is_array($attachfile) && $attachfile['error'] != UPLOAD_ERR_NO_FILE)
                                 {
                                     $noFileUpload = 0;
                                     $GLOBALS['KUNENA_rc'] = 1;
@@ -186,7 +189,7 @@ $catName = $objCatInfo->name;
                                     }
                                 }
 
-                                if ($attachimage != '')
+                                if (is_array($attachimage) && $attachimage['error'] != UPLOAD_ERR_NO_FILE)
                                 {
                                     $noImgUpload = 0;
                                     $GLOBALS['KUNENA_rc'] = 1;
@@ -807,11 +810,11 @@ $catName = $objCatInfo->name;
 
                     if ($allowEdit == 1)
                     {
-                        if ($attachfile != '') {
+                        if (is_array($attachfile) && $attachfile['error'] != UPLOAD_ERR_NO_FILE) {
                             include KUNENA_PATH_LIB .DS. 'kunena.file.upload.php';
                         }
 
-                        if ($attachimage != '') {
+                        if (is_array($attachfile) && $attachfile['error'] != UPLOAD_ERR_NO_FILE) {
                             include KUNENA_PATH_LIB .DS. 'kunena.image.upload.php';
                         }
 

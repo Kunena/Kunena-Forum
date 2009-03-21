@@ -24,6 +24,10 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 require_once(KUNENA_PATH_LIB .DS. 'kunena.helpers.php');
 
+$attachfile = JRequest::getVar('attachfile', NULL, 'FILES', 'array');
+jimport('joomla.filesystem.file');
+$filename = JFile::makeSafe($attachfile['name']);
+
 function fileUploadError($msg)
 {
     global $message;
@@ -33,7 +37,7 @@ function fileUploadError($msg)
 }
 
 $GLOBALS['KUNENA_rc'] = 1; //reset return code
-$filename = split("\.", $_FILES['attachfile']['name']);
+$filename = split("\.", $filename);
 //some transaltions for readability
 //numExtensions= people tend to upload malicious files using mutliple extensions like: virus.txt.vbs; we'll want to have the last extension to validate against..
 $numExtensions = (count($filename)) - 1;
@@ -44,7 +48,7 @@ $fileExt = $filename[$numExtensions];
 // create the new filename
 $newFileName = $fileName . '.' . $fileExt;
 // Get the Filesize
-$fileSize = $_FILES['attachfile']['size'];
+$fileSize = $attachfile['size'];
 
 //Enforce it is a new file
 if (file_exists(KUNENA_PATH_UPLOADED .DS. "files/$newFileName")) {
@@ -57,7 +61,7 @@ if ($GLOBALS['KUNENA_rc'])
     $fileLocation = strtr(KUNENA_PATH_UPLOADED .DS. "files/$newFileName", "\\", "/");
 
     // Check for empty filename
-    if (empty($_FILES['attachfile']['name'])) {
+    if (empty($attachfile['name'])) {
         fileUploadError(_FILE_ERROR_EMPTY);
     }
 
@@ -79,7 +83,7 @@ if ($GLOBALS['KUNENA_rc'])
 if ($GLOBALS['KUNENA_rc'])
 {
     // file is OK, move it to the proper location
-    move_uploaded_file($_FILES['attachfile']['tmp_name'], $fileLocation);
+    JFile::upload($attachfile['tmp_name'], $fileLocation);
 }
 
 // Insert file code into message

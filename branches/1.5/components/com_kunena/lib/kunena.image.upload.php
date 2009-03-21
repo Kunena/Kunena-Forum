@@ -25,6 +25,10 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $fbConfig;
 require_once(KUNENA_PATH_LIB .DS. 'kunena.helpers.php');
 
+$attachimage = JRequest::getVar('attachimage', NULL, 'FILES', 'array');
+jimport('joomla.filesystem.file');
+$filename = JFile::makeSafe($attachimage['name']);
+
 function imageUploadError($msg)
 {
     global $message;
@@ -35,7 +39,7 @@ function imageUploadError($msg)
 }
 
 $GLOBALS['KUNENA_rc'] = 1; //reset return code
-$filename = split("\.", $_FILES['attachimage']['name']);
+$filename = split("\.", $filename);
 //some transaltions for readability
 //numExtensions= people tend to upload malicious files using mutliple extensions like: virus.txt.vbs; we'll want to have the last extension to validate against..
 $numExtensions = (count($filename)) - 1;
@@ -46,7 +50,7 @@ $imageExt = $filename[$numExtensions];
 // create the new filename
 $newFileName = $imageName . '.' . $imageExt;
 // Get the Filesize
-$imageSize = $_FILES['attachimage']['size'];
+$imageSize = $attachimage['size'];
 
 //Enforce it is a new file
 if (file_exists(KUNENA_PATH_UPLOADED .DS. "images/$newFileName")) {
@@ -59,7 +63,7 @@ if ($GLOBALS['KUNENA_rc'])
     $imageLocation = strtr(KUNENA_PATH_UPLOADED .DS. "images/$newFileName", "\\", "/");
 
     // Check for empty filename
-    if (empty($_FILES['attachimage']['name'])) {
+    if (empty($attachimage['name'])) {
         imageUploadError(_IMAGE_ERROR_EMPTY);
     }
 
@@ -75,7 +79,7 @@ if ($GLOBALS['KUNENA_rc'])
         imageUploadError(_IMAGE_ERROR_SIZE . " (" . $fbConfig->imagesize . "kb)");
     }
 
-    list($width, $height) = @getimagesize($_FILES['attachimage']['tmp_name']);
+    list($width, $height) = @getimagesize($attachimage['tmp_name']);
 
     // Check image width
     if ($width > $fbConfig->imagewidth) {
@@ -91,7 +95,7 @@ if ($GLOBALS['KUNENA_rc'])
 if ($GLOBALS['KUNENA_rc'])
 {
     // file is OK, move it to the proper location
-    move_uploaded_file($_FILES['attachimage']['tmp_name'], $imageLocation);
+    JFile::upload($attachimage['tmp_name'], $imageLocation);
 }
 
 if ($GLOBALS['KUNENA_rc'])

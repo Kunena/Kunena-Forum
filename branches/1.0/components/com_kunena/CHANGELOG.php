@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.9
 
+22-March-2009 Matias
+# [#15565] Board Categories showed only public categories
+
 22-February-2009 Matias
 # [#15157] Empty messages in Joomla 1.0 part 2
 # [#15170] Add backward compability to FB 1.0.5: Same meaning for 0 in latestcategory

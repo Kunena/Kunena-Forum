@@ -37,6 +37,7 @@ $Itemid = intval(mosGetParam($_REQUEST, 'Itemid'));
 
 //check if we have all the itemid sets. if so, then no need for DB call
 
+global $fbSession;
 global $fbConfig;
 
 if (!defined("KUNENA_COMPONENT_ITEMID")) {
@@ -783,7 +784,7 @@ class CKunenaTools {
            return $val;
         }
 
-		function getAllowedForums($uid = 0, $gid = 0, &$acl) {
+	function getAllowedForums($uid = 0, $gid = 0, &$acl) {
         	global $database;
 
 			function _has_rights(&$acl, $gid, $access, $recurse) {
@@ -975,10 +976,10 @@ function JJ_categoryArray($admin=0) {
     global $aro_group;
 
     // get a list of the menu items
-	$query = "SELECT c.* FROM #__fb_categories c";
+	$query = "SELECT * FROM #__fb_categories";
 	if(!$admin) {
-		if ($fbSession) {
-			$query .= " WHERE c.id IN ($fbSession->allowed)";
+		if ($fbSession->allowed != 'na') {
+			$query .= " WHERE id IN ($fbSession->allowed)";
 		} else {
 			$query .= " WHERE pub_access=0 AND published=1";
 		}

@@ -30,15 +30,16 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-CUSTOM WORK
+CUSTOM BRANCH
 
 22-March-2009 Matias
-# [#15566] Fireboard 1.0.1 didn't contain directory com_kunena/uploaded
++ [#15567] Implement working advanced search
 
 Kunena 1.0.9
 
 22-March-2009 Matias
 # [#15565] Board Categories showed only public categories
+# [#15566] Fireboard 1.0.1 didn't contain directory com_kunena/uploaded
 
 22-February-2009 Matias
 # [#15157] Empty messages in Joomla 1.0 part 2

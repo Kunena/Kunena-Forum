@@ -29,40 +29,118 @@ else {
   include(KUNENA_ABSPATH . '/template/default/smile.class.php');
 }
 
+DEFINE('KUNENA_URL_LIST_SEPARATOR', 'x');
 
 class CKunenaSearch
 {
     /** search results **/
-    var $arr_KUNENA_results = array();
+    var $arr_kunena_results = array();
+    /** search words **/
+    var $kunena_searchword;
+    /** function **/
+    var $func;
     /** search strings **/
-    var $arr_KUNENA_searchstrings;
+    var $arr_kunena_searchstrings;
+    /** search username **/
+    var $str_kunena_username;  
     /** error number **/
-    var $int_KUNENA_errornr;
+    var $int_kunena_errornr;
     /** error msg **/
-    var $str_KUNENA_errormsg;
+    var $str_kunena_errormsg;
     /** limit **/
     var $limit;
     /** limitstart **/
     var $limitstart;
+    /** params **/
+    var $params = array();
+    /** defaults **/
+    var $defaults = array(
+	'titleonly' => 0,
+	'searchuser' => '',
+	'starteronly' => 0,
+	'replyless' => 0,
+	'replylimit' => 0,
+	'searchdate' => '365',
+	'beforeafter' => 'after',
+	'sortby' => 'lastpost',
+	'order' => 'dec',
+	'catids' => '0');
     /**
      * Search constructor
-     * @param object database
-     * @param string search
-     * @param int uid (userid)
+     * @param limitstart First shown item
+     * @param limit Limit
      */
-    function CKunenaSearch(&$database, $search, $uid, $limitstart = 0, $limit = 3)
+    function CKunenaSearch()
     {
-        $this->limitstart = $limitstart;
+        global $fbConfig, $database, $my;
+
+        // TODO: started_by
+        // TODO: active_in
+
+	// Default values for checkboxes depends on function
+	$this->func = mosGetParam($_REQUEST, 'func');
+	if($this->func == 'search') {
+		$this->defaults['exactname'] = $this->defaults['childforums'] = 1;
+	} else {
+		$this->defaults['exactname'] = $this->defaults['childforums'] = 0;
+	}
+	$this->params['searchword'] = mosGetParam($_REQUEST, 'searchword', '');
+	$this->params['titleonly'] = intval(mosGetParam($_REQUEST, 'titleonly', $this->defaults['titleonly']));
+	$this->params['searchuser'] = mosGetParam($_REQUEST, 'searchuser', $this->defaults['searchuser']);
+	$this->params['starteronly'] = intval(mosGetParam($_REQUEST, 'starteronly', $this->defaults['starteronly']));
+	$this->params['exactname'] = intval(mosGetParam($_REQUEST, 'exactname', $this->defaults['exactname']));
+	$this->params['replyless'] = intval(mosGetParam($_REQUEST, 'replyless', $this->defaults['replyless']));
+	$this->params['replylimit'] = intval(mosGetParam($_REQUEST, 'replylimit', $this->defaults['replylimit']));
+	$this->params['searchdate'] = mosGetParam($_REQUEST, 'searchdate', $this->defaults['searchdate']);
+	$this->params['beforeafter'] = mosGetParam($_REQUEST, 'beforeafter', $this->defaults['beforeafter']);
+	$this->params['sortby'] = mosGetParam($_REQUEST, 'sortby', $this->defaults['sortby']);
+	$this->params['order'] = mosGetParam($_REQUEST, 'order', $this->defaults['order']);
+	$this->params['childforums'] = intval(mosGetParam($_REQUEST, 'childforums', $this->defaults['childforums']));
+	$this->params['catids'] = strtr(mosGetParam($_REQUEST, 'catids', '0'), KUNENA_URL_LIST_SEPARATOR, ',');
+	$this->params['limitstart'] = intval(mosGetParam($_REQUEST, 'limitstart', '0'));
+	$this->params['limit'] = intval(mosGetParam($_REQUEST, 'limit', $fbConfig->messages_per_page_search));
+	extract($this->params);
+
+	if (isset($_POST['searchword'])) {
+		$this->params['catids'] = implode(',', mosGetParam($_POST, 'catid', array(0)));
+		$url = CKunenaLink::GetSearchURL($fbConfig, $this->func, $searchword, $limitstart, $limit, $this->getUrlParams());
+        	header("HTTP/1.1 303 See Other");
+        	header("Location: " . htmlspecialchars_decode($url));
+        	die();
+	}
+
+        $searchword = $this->utf8_urldecode($searchword);
+	if ($searchword == _GEN_SEARCH_BOX) $searchword = '';
+	$this->searchword = $searchword;
+	$searchword = $database->getEscaped($searchword);
+        $arr_searchwords = split(' ', $searchword);
+	$do_search = FALSE;
+	$this->arr_kunena_searchstrings = array();
+	foreach ($arr_searchwords as $searchword) 
+	{
+		$searchword = trim($searchword);
+		if (strlen($searchword)>2) $do_search = TRUE;
+		$this->arr_kunena_searchstrings[] = $searchword;
+	}
+        $arr_searchwords = $this->arr_kunena_searchstrings;
+	$this->str_kunena_username = $searchuser;
+
+	if ($limit<1 || $limit>40) $limit = $fbConfig->messages_per_page_search;
         $this->limit = $limit;
-        /* handle search string */
-        $search = htmlspecialchars($search, ENT_COMPAT, 'UTF-8');
-        $arr_searchwords = split(' ', $search);
-        /* return error if empty search string */
-        if (count($arr_searchwords) == 0)
+
+        if ($do_search != TRUE)
         {
-            $this->int_KUNENA_errornr = 2;
-            $this->str_KUNENA_errormsg = _NOKEYWORD;
-            $this->arr_KUNENA_results = array ();
+            $this->int_kunena_errornr = 1;
+            $this->str_kunena_errormsg = _KUNENA_SEARCH_ERR_SHORTKEYWORD;
+            return;
+        }
+
+	$search_forums = $this->get_search_forums($catids, $childforums);
+        /* if there are no forums to search in, set error and return */
+        if (empty($search_forums))
+        {
+            $this->int_kunena_errornr = 2;
+            $this->str_kunena_errormsg = _KUNENA_SEARCH_NOFORUM;
             return;
         }
 
@@ -81,89 +159,131 @@ class CKunenaSearch
                 $searchword = substr($searchword, 1);
             }
 
-            if (preg_match('/^author:(\w+)/', $searchword, $matches)) {
-                $querystrings[] = 'm.name ' . $not . ' LIKE \'%' . $matches[1] . '%\'';
-            }
-            else if (preg_match('/^after:(\d{8})/', $searchword, $matches)) {
-                $querystrings[] = 'm.time > UNIX_TIMESTAMP(' . $matches[1] . ')';
-            }
-            else if (preg_match('/^before:(\d{8})/', $searchword, $matches)) {
-                $querystrings[] = 'm.time < UNIX_TIMESTAMP(' . $matches[1] . ')';
-            }
-            else if (preg_match('/^groupby:(\w{4,6})/', $searchword, $matches)) {
-                $groupby[] = $matches[1];
-            }
-            else if (preg_match('/^orderby:(\w{4,6})/', $searchword, $matches)) {
-                $orderby[] = $matches[1];
-            }
-            else {
+            if($titleonly=='0')
+            {
                 $querystrings[] = '(t.message ' . $not . ' LIKE \'%' . $searchword . '%\' ' . $operator . ' m.subject ' . $not . ' LIKE \'%' . $searchword . '%\')';
+            } else {
+                $querystrings[] = '(m.subject ' . $not . ' LIKE \'%' . $searchword . '%\')';
+            }
+        }
+ 
+	//User searching
+        if(strlen($searchuser)>0)
+        {
+            if($exactname=='1') { 
+                $querystrings[] = 'm.name LIKE \'' . $searchuser . '\''; 
+            } else { 
+                $querystrings[] = 'm.name LIKE \'%' . $searchuser . '%\'';
             }
         }
 
-        $this->arr_KUNENA_searchstrings = $arr_searchwords;
-        /* get allowed forums */
-        $allowed_forums = '';
+	$time = 0;
+	switch($searchdate) {
+		case 'lastvisit':
+			$database->setQuery('SELECT lasttime FROM #__fb_sessions WHERE userid = '. $my->id);
+			$time = $database->loadResult();
+			break;
+		case 'all':
+			break;
+		case '1':
+		case '7':
+		case '14':
+		case '30':						
+		case '90':
+		case '180':
+		case '365':
+			$time = time() - 86400*intval($searchdate); //24*3600
+                        break;
+		default:
+			$time = time() - 86400*365;
+			$searchdate = '365';					
+	}
 
-        if ($uid > 0)
-        {
-            $database->setQuery('SELECT allowed FROM #__fb_sessions WHERE userid=' . $uid);
-            $allowed_forums = $database->loadResult();
-        }
-        /* non registered users can only search in public forums */
-        if (empty($allowed_forums))
-        {
-            $database->setQuery("SELECT id FROM #__fb_categories WHERE pub_access=0 AND published=1");
-            if ($arr_pubcats = $database->loadResultArray())
-                $allowed_forums = implode(',', $arr_pubcats);
-        }
-        /* if there are no forums to search in, set error and return */
-        if (empty($allowed_forums))
-        {
-            $this->int_KUNENA_errornr = 1;
-            $this->str_KUNENA_errormsg = _KUNENA_SEARCH_NOFORUM;
-            return;
-        }
+	if ($time) {
+		if($beforeafter == 'after') {
+			$querystrings[] = 'm.time > \''.$time.'\'';
+		} else {
+			$querystrings[] = 'm.time <= \''.$time.'\'';
+		}
+	}
+
         /* build query */
-        $querystrings[] = 'm.catid IN (' . $allowed_forums . ')';
-        $querystrings[] = 'm.moved!=1';
+        $querystrings[] = 'm.moved=0';
         $querystrings[] = 'm.hold=0';
+        $querystrings[] = "m.catid IN ($search_forums)";
         $where = implode(' AND ', $querystrings);
 
-        if (count($orderby) > 0)
-            $orderby = implode(',', $orderby);
-        else
-            $orderby = 'm.ordering DESC, m.time DESC,m.hits DESC';
+        if($order =='dec') $order1 = 'DESC';
+        else $order1 = 'ASC';
+        switch ($sortby) {
+        case 'title':
+		$orderby = 'm.subject '. $order1. 'm.time '.$order1;
+		break;
+        case 'views':
+		$orderby = 'm.hits '. $order1 .', m.time '.$order1;
+        break;
+/*
+        case 'threadstart':
+		$orderby = 'm.time '.$order1.', m.ordering '.$order1.', m.hits '.$order1;
+        break;
+*/
+        case 'forum':
+		$orderby = 'm.catid '.$order1.', m.time '.$order1.', m.ordering '.$order1;
+		break;        
+/*
+        case 'replycount':        
+        case 'postusername':	                                   
+*/
+        case 'lastpost':
+        default:
+		$orderby = 'm.time '.$order1.', m.ordering '.$order1.', m.catid '.$order1;
+        }
 
         if (count($groupby) > 0)
             $groupby = ' GROUP BY ' . implode(',', $groupby);
         else
             $groupby = '';
 
-        $sql = 'SELECT m.id,m.subject,m.catid,m.thread,m.name,m.time,t.message FROM #__fb_messages_text as t JOIN #__fb_messages as m ON m.id=t.mesid WHERE ' . $where . $groupby . ' ORDER BY ' . $orderby . ' LIMIT ' . $limitstart . ',' . $limit;
         /* get total */
-        $database->setQuery('SELECT count(m.id) FROM #__fb_messages as m JOIN #__fb_messages_text as t ON m.id=t.mesid WHERE ' . $where . $groupby . ' LIMIT 300');
+        $database->setQuery('SELECT count(m.id) FROM #__fb_messages as m JOIN #__fb_messages_text as t ON m.id=t.mesid WHERE ' . $where . $groupby);
         $this->total = $database->loadResult();
-                check_dberror("Unable to count messages.");
+        check_dberror("Unable to count messages.");
+
+        /* if there are no forums to search in, set error and return */
+        if ($this->total == 0)
+        {
+            $this->int_kunena_errornr = 3;
+            $this->str_kunena_errormsg = _KUNENA_SEARCH_ERR_NOPOSTS;
+            return;
+        }
+	if ($this->total < $this->params['limitstart']) $this->params['limitstart'] = $limitstart = (int)($this->total / $this->params['limit']);
 
         /* get results */
+        $sql = 'SELECT m.id,m.subject,m.catid,m.thread,m.name,m.time,t.message FROM #__fb_messages_text as t JOIN #__fb_messages as m ON m.id=t.mesid WHERE ' . $where . $groupby . ' ORDER BY ' . $orderby . ' LIMIT ' . $limitstart . ',' . $limit;
         $database->setQuery($sql);
         $rows = $database->loadObjectList();
-                check_dberror("Unable to load messages.");
+        check_dberror("Unable to load messages.");
 
-        $this->str_KUNENA_errormsg = $sql . '<br />' . $database->getErrorMsg();
+        $this->str_kunena_errormsg = $sql . '<br />' . $database->getErrorMsg();
 
         if (count($rows) > 0)
-            $this->arr_KUNENA_results = $rows;
+            $this->arr_kunena_results = $rows;
         else
-            $this->arr_KUNENA_results = array ();
+            $this->arr_kunena_results = array ();
 
         return;
     }
     /** get searchstrings (array) **/
     function get_searchstrings() {
-        return $this->arr_KUNENA_searchstrings;
+        return $this->arr_kunena_searchstrings;
     }
+    function get_searchusername() {
+        return $this->str_kunena_username;
+    }    
+    function utf8_urldecode($str) { 
+        $str = preg_replace("/%u([0-9a-f]{3,4})/i","\1;",urldecode($str)); 
+        return html_entity_decode($str,ENT_NOQUOTES,'UTF-8' ); 
+    } 
     /** get limit (int) **/
     function get_limit() {
         return $this->limit;
@@ -174,8 +294,49 @@ class CKunenaSearch
     }
     /** get results (array) **/
     function get_results() {
-        return $this->arr_KUNENA_results;
+        return $this->arr_kunena_results;
     }
+    function getUrlParams() {
+	$url_params = '';
+	foreach ($this->params as $param => $value) {
+		if ($param == 'catids') $value = strtr($value, ',', KUNENA_URL_LIST_SEPARATOR);
+		if ($value != $this->defaults[$param]) $url_params .= "&amp;$param=$value";
+	}
+	return $url_params;
+    }
+    function get_search_forums(&$catids, $childforums = 1) {
+        global $database, $my, $fbSession;
+
+        /* get allowed forums */
+        $allowed_forums = array();
+        if ($fbSession->allowed != 'na')
+            $allowed_forums = split(',', $fbSession->allowed);
+
+        /* non registered users can only search in public forums */
+        if (count($allowed_forums) == 0)
+        {
+            $database->setQuery("SELECT id, parent, published FROM #__fb_categories WHERE pub_access='0' AND published='1'");
+            $allowed_forums = $database->loadAssocList('id');
+            check_dberror("Unable to get public categories.");
+        }  
+	
+	$catids = split(',', $catids);
+	if (count($catids) > 0)
+	{
+		foreach ($allowed_forums as $forum)
+		{
+			if (in_array($forum['parent'], $catids)) $catids[] = $forum['id'];
+		}
+	}
+	$allowed_forums = array_keys($allowed_forums);
+
+	if (count($catids) > 0 && !in_array(0, $catids)) {
+		$search_forums = implode(",", array_intersect($allowed_forums, $catids));
+	} else {
+		$search_forums = implode(",", $allowed_forums);
+	}
+	return $search_forums;
+    }    
     /**
      * Display results
      * @param string actionstring
@@ -184,19 +345,41 @@ class CKunenaSearch
     {
 	global $fbConfig;
 
-        $searchword = implode(' ', $this->get_searchstrings());
+	extract($this->params);
+        $searchword = implode(" ", $this->get_searchstrings());
+        $searchuser = $this->get_searchusername();
+
+	$selected = ' selected="selected"';
+	$checked = ' checked="checked"';
+	$fb_advsearch_hide = 1;
+	if ($this->int_kunena_errornr) {
+	        $searchword = $this->searchword;
+		$fb_advsearch_hide = 0;
+	}
+        if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php')) {
+        	include (KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php');
+        }
+        else {
+                include (KUNENA_ABSPATH . '/template/default/plugin/advancedsearch/advsearch.php');
+        }
+
         $results = $this->get_results();
-        $totalRows = $this->total;
-        $actionstring = $this->str_KUNENA_actionstring;
+        $totalRows = (int)($this->total);
+        $actionstring = $this->str_kunena_actionstring;
 	$start = $this->get_limitstart();
 
-	$pagination = KunenaSearchPagination($searchword, floor($start/$fbConfig->messages_per_page_search)+1, floor($totalRows/$fbConfig->messages_per_page_search)+1, 7);
+	$pagination = KunenaSearchPagination($this->func, $searchword, $this->getUrlParams(), floor($start/$this->limit)+1, $this->limit, floor($totalRows/$this->limit)+1, 7);
 
         if (defined('KUNENA_DEBUG'))
-            echo '<p style="background-color:#FFFFCC;border:1px solid red;">' . $this->str_KUNENA_errormsg . '</p>';
+            echo '<p style="background-color:#FFFFCC;border:1px solid red;">' . $this->str_kunena_errormsg . '</p>';
 ?>
 
 <?php
+
+	if (empty($searchword)) {
+		return;
+	}
+
         $boardclass = 'fb_';
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
@@ -209,7 +392,7 @@ class CKunenaSearch
                 <tr>
                     <th colspan = "3">
                         <div class = "fb_title_cover">
-                            <span class="fb_title"><?php echo _FORUM_SEARCHTITLE; ?></span>
+                            <span class="fb_title fbl"><?php echo _KUNENA_SEARCH_RESULTS; ?></span>
                             <b><?php printf(_FORUM_SEARCH, $searchword); ?></b>
                         </div>
                     </th>
@@ -240,8 +423,8 @@ class CKunenaSearch
 
                 $k = 0;
 
-                if ($totalRows == 0 && $this->int_KUNENA_errornr) {
-                    echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" ><td colspan="3"  style="text-align:center;font-weight:bold">Error ' . $this->int_KUNENA_errornr . ': ' . $this->str_KUNENA_errormsg . '</td></tr>';
+                if ($totalRows == 0 && $this->int_kunena_errornr) {
+                    echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" ><td colspan="3"  style="text-align:center;font-weight:bold">' . $this->str_kunena_errormsg . '</td></tr>';
                 }
 
 				// Cleanup incoming searchword; international chars can cause garbage at the end
@@ -292,7 +475,10 @@ class CKunenaSearch
                 <tr  class = "fb_sth" >
                    <th colspan = "3" style = "text-align:center" class = "th-1 <?php echo $boardclass; ?>sectiontableheader">
                         <?php
-			$resStartStop = (string)($start+1).' - '.(string)($start+count($results));
+			$resStart = $start+1;
+			$resStop = $start+count($results);
+			if ($resStart<$resStop) $resStartStop = (string)($resStart).' - '.(string)($resStop);
+			else $resStartStop = '0';
                         printf(_FORUM_SEARCHRESULTS, $resStartStop, $totalRows);
                         ?>
                     </th>
@@ -308,9 +494,8 @@ class CKunenaSearch
     }
 }
 
-function KunenaSearchPagination($searchword, $page, $totalpages, $maxpages) {
+function KunenaSearchPagination($function, $searchword, $urlparams, $page, $limit, $totalpages, $maxpages) {
     global $fbConfig;
-
     if ($page==0) $page++;
     $startpage = ($page - floor($maxpages/2) < 1) ? 1 : $page - floor($maxpages/2);
     $endpage = $startpage + $maxpages;
@@ -323,7 +508,7 @@ function KunenaSearchPagination($searchword, $page, $totalpages, $maxpages) {
     if ($startpage > 1)
     {
 	if ($endpage < $totalpages) $endpage--;
-	$output .= CKunenaLink::GetSearchLink($fbConfig, $searchword, 0, 1, $rel='nofollow');
+	$output .= CKunenaLink::GetSearchLink($fbConfig, $function, $searchword, 0, $limit, 1, $urlparams, $rel='nofollow');
 
 	if ($startpage > 2)
         {
@@ -337,7 +522,7 @@ function KunenaSearchPagination($searchword, $page, $totalpages, $maxpages) {
             $output .= "<strong>$i</strong>";
         }
         else {
-	    $output .= CKunenaLink::GetSearchLink($fbConfig, $searchword, ($i-1)*$fbConfig->messages_per_page_search, $i, $rel='nofollow');
+	    $output .= CKunenaLink::GetSearchLink($fbConfig, $function, $searchword, ($i-1)*$limit, $limit, $i, $urlparams, $rel='nofollow');
         }
     }
 
@@ -348,7 +533,7 @@ function KunenaSearchPagination($searchword, $page, $totalpages, $maxpages) {
 	    $output .= "...";
 	}
 
-	$output .= CKunenaLink::GetSearchLink($fbConfig, $searchword, ($totalpages-1)*$fbConfig->messages_per_page_search, $totalpages, $rel='nofollow');
+	$output .= CKunenaLink::GetSearchLink($fbConfig, $function, $searchword, ($totalpages-1)*$limit, $limit, $totalpages, $urlparams, $rel='nofollow');
     }
 
     $output .= '</div>';

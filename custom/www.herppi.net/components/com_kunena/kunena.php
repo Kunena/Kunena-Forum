@@ -789,33 +789,11 @@ else
 
         #########################################################################################
         case 'search':
-            require_once (KUNENA_ABSSOURCESPATH . 'kunena.search.class.php');
-
-            $searchword = mosGetParam($_REQUEST, 'searchword', '');
-
-            $KunenaSearch = &new CKunenaSearch($database, $searchword, $my_id, $limitstart, $fbConfig->messages_per_page_search);
-            $KunenaSearch->show();
-            break;
-
-        //needs work ... still in progress
         case 'advsearch':
-            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php')) {
-                include (KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php');
-                }
-            else {
-                include (KUNENA_ABSPATH . '/template/default/plugin/advancedsearch/advsearch.php');
-                }
-
-            break;
-
-        case 'advsearchresult':
-            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearchresult.php')) {
-                include (KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearchresult.php');
-                }
-            else {
-                include (KUNENA_ABSPATH . '/template/default/plugin/advancedsearch/advsearchresult.php');
-                }
-
+            require_once (KUNENA_ABSSOURCESPATH . 'kunena.search.class.php');
+ 
+            $kunenaSearch = &new CKunenaSearch();
+            $kunenaSearch->show();
             break;
 
         #########################################################################################

@@ -125,7 +125,15 @@ jQuery(function()
     {
         var imgId = jQuery(this).attr("id");
         var cId = imgId.split("__")[1];
-
+	var el = jQuery("#" + cId);
+	if (el.hasClass("fb-hidden"))
+	{
+            jQuery.cookie("upshrink_" + imgId, 1);
+	}
+	if (el.hasClass("fb-visible"))
+	{
+	    jQuery.cookie("upshrink_" + imgId, 0);
+	}
         if (jQuery.cookie("upshrink_" + imgId) == 1)
         {
             JRshrinkHeaderMulti(0, imgId, cId);

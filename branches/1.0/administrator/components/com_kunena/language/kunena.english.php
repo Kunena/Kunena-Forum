@@ -22,6 +22,60 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+// Search
+DEFINE('_KUNENA_SEARCH_RESULTS', 'Search Results');
+DEFINE('_KUNENA_SEARCH_ADVSEARCH', 'Advanced Search');
+DEFINE('_KUNENA_SEARCH_SEARCHBY_KEYWORD', 'Search by Keyword');
+DEFINE('_KUNENA_SEARCH_KEYWORDS', 'Keywords');
+DEFINE('_KUNENA_SEARCH_SEARCH_POSTS', 'Search entire posts');
+DEFINE('_KUNENA_SEARCH_SEARCH_TITLES', 'Search titles only');
+DEFINE('_KUNENA_SEARCH_SEARCHBY_USER', 'Search by User Name');
+DEFINE('_KUNENA_SEARCH_UNAME', 'User Name');
+DEFINE('_KUNENA_SEARCH_EXACT', 'Exact Name');
+DEFINE('_KUNENA_SEARCH_USER_POSTED', 'Messages posted by');
+DEFINE('_KUNENA_SEARCH_USER_STARTED', 'Threads started by');
+DEFINE('_KUNENA_SEARCH_USER_ACTIVE', 'Activity in threads');
+DEFINE('_KUNENA_SEARCH_OPTIONS', 'Search Options');
+DEFINE('_KUNENA_SEARCH_FIND_WITH', 'Find Threads with');
+DEFINE('_KUNENA_SEARCH_LEAST', 'At least');
+DEFINE('_KUNENA_SEARCH_MOST', 'At most');
+DEFINE('_KUNENA_SEARCH_ANSWERS', 'Answers');
+DEFINE('_KUNENA_SEARCH_FIND_POSTS', 'Find Posts from');
+DEFINE('_KUNENA_SEARCH_DATE_ANY', 'Any date');
+DEFINE('_KUNENA_SEARCH_DATE_LASTVISIT', 'Last visit');
+DEFINE('_KUNENA_SEARCH_DATE_YESTERDAY', 'Yesterday');
+DEFINE('_KUNENA_SEARCH_DATE_WEEK', 'A week ago');
+DEFINE('_KUNENA_SEARCH_DATE_2WEEKS', '2 weeks ago');
+DEFINE('_KUNENA_SEARCH_DATE_MONTH', 'A month ago');
+DEFINE('_KUNENA_SEARCH_DATE_3MONTHS', '3 months ago');
+DEFINE('_KUNENA_SEARCH_DATE_6MONTHS', '6 months ago');
+DEFINE('_KUNENA_SEARCH_DATE_YEAR', 'A year ago');
+DEFINE('_KUNENA_SEARCH_DATE_NEWER', 'And newer');
+DEFINE('_KUNENA_SEARCH_DATE_OLDER', 'And older');
+DEFINE('_KUNENA_SEARCH_SORTBY', 'Sort Results by');
+DEFINE('_KUNENA_SEARCH_SORTBY_TITLE', 'Title');
+DEFINE('_KUNENA_SEARCH_SORTBY_POSTS', 'Number of posts');
+DEFINE('_KUNENA_SEARCH_SORTBY_VIEWS', 'Number of views');
+DEFINE('_KUNENA_SEARCH_SORTBY_START', 'Thread start date');
+DEFINE('_KUNENA_SEARCH_SORTBY_POST', 'Posting date');
+DEFINE('_KUNENA_SEARCH_SORTBY_USER', 'User name');
+DEFINE('_KUNENA_SEARCH_SORTBY_FORUM', 'Forum');
+DEFINE('_KUNENA_SEARCH_SORTBY_INC', 'Increasing order');
+DEFINE('_KUNENA_SEARCH_SORTBY_DEC', 'Decreasing order');
+DEFINE('_KUNENA_SEARCH_START', 'Jump to Result Number');
+DEFINE('_KUNENA_SEARCH_LIMIT5', 'Show 5 Search Results');
+DEFINE('_KUNENA_SEARCH_LIMIT10', 'Show 10 Search Results');
+DEFINE('_KUNENA_SEARCH_LIMIT15', 'Show 15 Search Results');
+DEFINE('_KUNENA_SEARCH_LIMIT20', 'Show 20 Search Results');
+DEFINE('_KUNENA_SEARCH_SEARCHIN', 'Search in Categories');
+DEFINE('_KUNENA_SEARCH_SEARCHIN_ALLCATS', 'All Categories');
+DEFINE('_KUNENA_SEARCH_SEARCHIN_CHILDREN', 'Also search in child forums');
+DEFINE('_KUNENA_SEARCH_SEND', 'Send');
+DEFINE('_KUNENA_SEARCH_CANCEL', 'Cancel');
+DEFINE('_KUNENA_SEARCH_RESULTS', 'Search Results');
+DEFINE('_KUNENA_SEARCH_ERR_NOPOSTS', 'No messages containing all your search terms were found.');
+DEFINE('_KUNENA_SEARCH_ERR_SHORTKEYWORD', 'At least one keyword should be over 3 characters long!');
+
 // 1.0.8
 DEFINE('_KUNENA_CATID', 'ID');
 DEFINE('_POST_NOT_MODERATOR', 'You don\'t have moderator permissions!');

@@ -253,9 +253,18 @@ class CKunenaLink
         return CKunenaLink::GetSefHrefLink($helplink, $name, '', $rel);
     }
 
-    function GetSearchLink($fbConfig, $searchword, $limitstart, $name, $rel='nofollow')
+    function GetSearchURL($fbConfig, $func, $searchword, $limitstart, $limit, $params='')
     {
-        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=search&amp;searchword=' . $searchword . '&amp;limitstart='.$limitstart, $name, '', $rel);
+	$limitstr = "&amp;limitstart=$limitstart";
+	if ($limit != $fbConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
+        return sefRelToAbs(KUNENA_LIVEURLREL."&amp;func={$func}&amp;searchword={$searchword}{$params}{$limitstr}");
+    }
+
+    function GetSearchLink($fbConfig, $func, $searchword, $limitstart, $limit, $name, $params='', $rel='nofollow')
+    {
+	$limitstr = "&amp;limitstart=$limitstart";
+	if ($limit != $fbConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL."&amp;func={$func}&amp;searchword={$searchword}{$params}{$limitstr}", $name, '', $rel);
     }
 
     //

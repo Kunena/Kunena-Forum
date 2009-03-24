@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.5.0
 
+24-March-2009 Matias
+# [#15131] Changing password works again
+
 21-March-2009 Matias
 # [#15131] Attachment uploads are working again
 # [#15131] Fixes for JRequest::getVar()

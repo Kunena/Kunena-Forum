@@ -586,10 +586,6 @@ if ($my->id != "" && $my->id != 0)
 
                 case "usersave":
                     $user_id = JRequest::getInt('id', 0);
-                    $password = JRequest::getVar('password', '');
-                    $password_clear = JRequest::getVar('password_clear', '');
-                    unset($_POST['password']);
-
                     $uid = $my->id;
 
                     // do some security checks
@@ -601,47 +597,11 @@ if ($my->id != "" && $my->id != 0)
 
                     $row = new JUser($user_id);
 
-                    $orig_password = $row->password;
-                    $orig_username = $row->username;
-
                     if (!$row->bind($_POST))
                     {
                         echo "<script> alert('" . $row->getError() . "'); window.history.go(-1); </script>\n";
                         $mainframe->close();
-                    }
-
-                    $row->name = trim($row->name);
-                    $row->email = trim($row->email);
-                    $row->username = trim($row->username);
-
-                    JFilterOutput::objectHTMLSafe ($row);
-
-                    if ($password != '')
-                    {
-                        if ($password_clear == $password)
-                        {
-                            // FIXME: J!1.5: Changing password does not work!
-			    echo "<script> alert(\"Changing password does not work!\"); window.history.go(-1); </script>\n";
-                            $mainframe->close();
-
-                            $row->password_clear = $password;
-                            jimport('joomla.user.helper');
-                            $salt = JUserHelper::genRandomPassword(32);
-                            $crypt = JUserHelper::getCryptedPassword($data['userpassword'], $salt);
-                            $row->password= $crypt.':'.$salt;
-                        }
-                        else
-                        {
-                            echo "<script> alert(\"" . _PASS_MATCH . "\"); window.history.go(-1); </script>\n";
-                            $mainframe->close();
-                        }
-                    }
-                    else
-                    {
-                        // Restore 'original password'
-                        $row->password = $orig_password;
-                    }
-
+                    }
                     if (in_array($mainframe->getCfg( "frontend_userparams" ), array( '1', null)))
                     {
                         // save params

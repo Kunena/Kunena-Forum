@@ -50,7 +50,7 @@ $validate = JUtility::getToken();
         {
             alert("<?php echo addslashes( _REGWARN_MAIL );?>");
         }
-        else if ((form.password.value != "") && (form.password.value != form.password_clear.value))
+        else if ((form.password.value != "") && (form.password.value != form.password2.value))
         {
             alert("<?php echo addslashes( _REGWARN_VPASS2 );?>");
         }
@@ -115,7 +115,7 @@ $validate = JUtility::getToken();
       </tr>
       <tr>
         <td><?php echo _KUNENA_VPASS; ?> </td>
-        <td><input class = "inputbox" type = "password" name = "password_clear" size = "40"/></td>
+        <td><input class = "inputbox" type = "password" name = "password2" size = "40"/></td>
       </tr>
       <?php
         if (in_array($mainframe->getCfg( "frontend_userparams" ), array( '1', null)))

@@ -33,6 +33,7 @@ Legend:
 Kunena 1.0.9
 
 24-March-2009 fxstein
+# [#15625] Prepare for 1.0.9 build
 # [#15624] Fix language file re-declaration
 
 22-March-2009 Matias

@@ -129,7 +129,7 @@ $rows = $database->loadObjectList();
 	check_dberror("Unable to load messages.");
 
 header ('Content-type: application/xml');
-echo "<?xml version="1.0" encoding=\"utf-8\"?>\n";
+echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 ?>
 <!-- generator="Kunena @fbversion@"> -->
 <rss version="0.91">

@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.5.0
 
+24-March-2009 fxstein
+^ [#15627] Prepare for 1.5.0a Alpha release
+
 24-March-2009 Matias
 # [#15131] Changing password works again
 

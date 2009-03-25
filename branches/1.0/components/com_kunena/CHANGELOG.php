@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.9
 
+24-March-2009 fxstein
+# [#15624] Fix language file re-declaration
+
 22-March-2009 Matias
 # [#15565] Board Categories showed only public categories
 # [#15566] Fireboard 1.0.1 didn't contain directory com_kunena/uploaded

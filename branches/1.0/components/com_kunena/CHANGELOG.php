@@ -32,6 +32,11 @@ Legend:
 
 Kunena 1.0.9
 
+26-March-2009 Matias
+# [#15567] Fix pagination in search
++ [#15671] Add API for changing user settings in CB (part 1)
+! Renamed fbUserprofile to CKunenaProfile. It can be found from lib/kunena.user.class.php
+
 24-March-2009 fxstein
 # [#15625] Prepare for 1.0.9 build
 # [#15624] Fix language file re-declaration

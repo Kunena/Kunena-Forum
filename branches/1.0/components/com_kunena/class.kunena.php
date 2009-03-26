@@ -1285,7 +1285,7 @@ if (!function_exists('mb_detect_encoding')) {
 	}
 	return 'UTF-8';
   }
-  function mb_convert_encoding($text,$target_encoding,$source_encoding) {
+  function mb_convert_encoding($text,$target_encoding,$source_encoding=NULL) {
 	return $text;
   }
   function mb_substr($str, $start, $lenght=NULL, $encoding=NULL) {

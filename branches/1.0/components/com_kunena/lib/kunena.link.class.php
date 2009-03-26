@@ -257,14 +257,14 @@ class CKunenaLink
     {
 	$limitstr = "&amp;limitstart=$limitstart";
 	if ($limit != $fbConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
-        return sefRelToAbs(KUNENA_LIVEURLREL."&amp;func={$func}&amp;searchword={$searchword}{$params}{$limitstr}");
+        return sefRelToAbs(KUNENA_LIVEURLREL."&amp;func={$func}&amp;q={$searchword}{$params}{$limitstr}");
     }
 
     function GetSearchLink($fbConfig, $func, $searchword, $limitstart, $limit, $name, $params='', $rel='nofollow')
     {
 	$limitstr = "&amp;limitstart=$limitstart";
 	if ($limit != $fbConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
-        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL."&amp;func={$func}&amp;searchword={$searchword}{$params}{$limitstr}", $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL."&amp;func={$func}&amp;q={$searchword}{$params}{$limitstr}", $name, '', $rel);
     }
 
     //

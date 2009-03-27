@@ -32,6 +32,13 @@ Legend:
 
 Kunena 1.0.9
 
+27-March-2009 Matias
+# [#15677] Fix UI issues: IE7 bug having collapsed tabs
+# [#15677] Fix UI issues: Big empty space on some templates
+# [#15677] Fix UI issues: Spoiler icon has wrong URL if Joomla is not in document root
+# [#15677] Fix UI issues: Open Kunena.com to a new window/tab (=external link)
+# [#15677] Fix UI issues: Show announcements also in latestx
+
 26-March-2009 Matias
 # [#15567] Fix pagination in search
 + [#15671] Add API for changing user settings in CB (part 1)

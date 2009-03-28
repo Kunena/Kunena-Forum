@@ -47,17 +47,26 @@ function showprf($userid, $page)
     // ERROR: mixed global $fbIcons
     global $fbIcons;
 
-	// User Hits
-	$database->setQuery('UPDATE #__fb_users SET uhits=uhits+1 WHERE userid='.$userid);
-	$database->query() or trigger_dberror("Unable to update user hits.");;
-
     //Get userinfo needed later on, this limits the amount of queries
     unset($userinfo);
-    $database->setQuery("SELECT  a.*, b.* FROM #__fb_users as a"
+    $database->setQuery("SELECT a.*, b.* FROM #__fb_users as a"
                         . "\n LEFT JOIN #__users as b on b.id=a.userid"
                         . "\n where a.userid=$userid");
 
-    $database->loadObject($userinfo) or trigger_dberror("Unable to get user info.");;
+    $database->loadObject($userinfo);
+    check_dberror('Unable to get user profile info.');
+
+    if (!$userinfo) {
+	$database->setQuery("SELECT * FROM #__users WHERE id=$userid");	
+	$database->loadObject($userinfo);
+	if (!$userinfo) echo '<h3>' . _KUNENA_PROFILE_NO_USER . '</h3>';
+	else echo '<h3>' . _KUNENA_PROFILE_NOT_FOUND . '</h3>';
+	return;
+    }
+
+	// User Hits
+	$database->setQuery('UPDATE #__fb_users SET uhits=uhits+1 WHERE userid='.$userid);
+	$database->query() or trigger_dberror("Unable to update user hits.");
 
 	// get userprofile hits
 	$msg_userhits = $userinfo->uhits;

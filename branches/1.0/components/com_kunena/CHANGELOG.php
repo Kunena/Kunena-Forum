@@ -33,7 +33,9 @@ Legend:
 Kunena 1.0.9
 
 28-March-2009 Matias
-[#15638] Latest member profile link causes fatal error
+# [#15638] Latest member profile link causes fatal error
+! For now on stats counts only users which have visited forum at least once
+! User profile detects now nonexistent users and user profiles
 
 27-March-2009 Matias
 # [#15677] Fix UI issues: IE7 bug having collapsed tabs

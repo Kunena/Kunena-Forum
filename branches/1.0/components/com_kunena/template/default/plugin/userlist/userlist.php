@@ -47,7 +47,7 @@ function list_users()
     $total_results = $database->loadResult();
 
     // Search total
-    $query = "SELECT count(*) FROM #__users AS u LEFT JOIN #__fb_users AS fu ON u.id=fu.userid";
+    $query = "SELECT count(*) FROM #__users AS u INNER JOIN #__fb_users AS fu ON u.id=fu.userid";
 
     if ($search != "") {
         $query .= " WHERE (u.name LIKE '%$search%' OR u.username LIKE '%$search%')";

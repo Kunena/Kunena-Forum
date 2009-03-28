@@ -40,7 +40,7 @@ class CKunenaLink
 
     function GetCreditsLink()
     {
-        return CKunenaLink::GetSefHrefLink('http://www.kunena.com', 'Kunena', 'Kunena', 'follow');
+        return CKunenaLink::GetSefHrefLink('http://www.kunena.com', 'Kunena', 'Kunena', 'follow', NULL, NULL, 'target="_blank"');
     }
 
     function GetTeamCreditsLink($catid, $name='')
@@ -257,14 +257,14 @@ class CKunenaLink
     {
 	$limitstr = "&amp;limitstart=$limitstart";
 	if ($limit != $fbConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
-        return sefRelToAbs(KUNENA_LIVEURLREL."&amp;func={$func}&amp;searchword={$searchword}{$params}{$limitstr}");
+        return sefRelToAbs(KUNENA_LIVEURLREL."&amp;func={$func}&amp;q={$searchword}{$params}{$limitstr}");
     }
 
     function GetSearchLink($fbConfig, $func, $searchword, $limitstart, $limit, $name, $params='', $rel='nofollow')
     {
 	$limitstr = "&amp;limitstart=$limitstart";
 	if ($limit != $fbConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
-        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL."&amp;func={$func}&amp;searchword={$searchword}{$params}{$limitstr}", $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL."&amp;func={$func}&amp;q={$searchword}{$params}{$limitstr}", $name, '', $rel);
     }
 
     //

@@ -116,7 +116,6 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 #Kunena #Kunena_top td {
 	background: #FFFFFF;
 	color:#000000;
-	height:35px;
 	margin:0;
 	border-style:solid;
 	border-color:#5182A4;
@@ -335,14 +334,12 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 #Kunena .fb_list_top {
 	background:#FFFFFF none;
 	border:1px solid #D1D1D1;
-	clear:both;
 	margin:-1px 0px 5px;
 	width:100%;
 }
 #Kunena .fb_list_bottom {
 	background:#FFFFFF none;
 	border:1px solid #D1D1D1;
-	clear:both;
 	margin:0px 0px 5px;
 	width:100%;
 }

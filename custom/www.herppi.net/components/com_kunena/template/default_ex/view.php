@@ -469,7 +469,7 @@ if ($letPass || $is_Moderator)
 			        if ($fb_totalfavorited>=10) echo '<img src="'.KUNENA_URLICONSPATH . $fbIcons['favoritestar'].'" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
 			        if ($fb_totalfavorited>=15) echo '<img src="'.KUNENA_URLICONSPATH . $fbIcons['favoritestar'].'" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
 			    } else {
-                                echo _FB_TOTALFAVORITE;
+                                echo _KUNENA_TOTALFAVORITE;
                                 echo $fb_totalfavorited;
 			    }
         	            echo '</div>';

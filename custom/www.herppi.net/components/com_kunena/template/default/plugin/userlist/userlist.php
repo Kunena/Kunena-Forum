@@ -43,14 +43,14 @@ function list_users()
     $limit = (int) mosGetParam($_REQUEST, 'limit', $fbConfig->userlist_rows);
 
     // Total
-    $database->setQuery("SELECT count(id) FROM #__users");
+    $database->setQuery("SELECT count(*) FROM #__fb_users");
     $total_results = $database->loadResult();
 
     // Search total
-    $query = "SELECT count(id) FROM #__users";
+    $query = "SELECT count(*) FROM #__users AS u INNER JOIN #__fb_users AS fu ON u.id=fu.userid";
 
     if ($search != "") {
-        $query .= " WHERE (name LIKE '%$search%' OR username LIKE '%$search%')";
+        $query .= " WHERE (u.name LIKE '%$search%' OR u.username LIKE '%$search%')";
     }
 
     $database->setQuery($query);
@@ -156,7 +156,7 @@ class HTML_userlist_content
                                         <span class="fb_title fbl"> <?php echo _KUNENA_USRL_USERLIST; ?></span>
 
                                         <?php
-                                        printf(_KUNENA_USRL_REGISTERED_USERS, $mosConfig_sitename, $total_results);
+                                        printf(_KUNENA_USRL_TOTAL_USERS, $mosConfig_sitename, $total_results);
                                         ?>
                                     </div>
                                 </td>

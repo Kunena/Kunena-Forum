@@ -22,6 +22,11 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+// 1.0.9
+DEFINE('_KUNENA_USRL_TOTAL_USERS','%s has <b>%d</b> users in the forum');
+DEFINE('_KUNENA_PROFILE_NO_USER', 'User does not exist.');
+DEFINE('_KUNENA_PROFILE_NOT_FOUND', 'User has not yet visited forum and has no profile.');
+
 // Search
 DEFINE('_KUNENA_SEARCH_RESULTS', 'Search Results');
 DEFINE('_KUNENA_SEARCH_ADVSEARCH', 'Advanced Search');
@@ -72,7 +77,6 @@ DEFINE('_KUNENA_SEARCH_SEARCHIN_ALLCATS', 'All Categories');
 DEFINE('_KUNENA_SEARCH_SEARCHIN_CHILDREN', 'Also search in child forums');
 DEFINE('_KUNENA_SEARCH_SEND', 'Send');
 DEFINE('_KUNENA_SEARCH_CANCEL', 'Cancel');
-DEFINE('_KUNENA_SEARCH_RESULTS', 'Search Results');
 DEFINE('_KUNENA_SEARCH_ERR_NOPOSTS', 'No messages containing all your search terms were found.');
 DEFINE('_KUNENA_SEARCH_ERR_SHORTKEYWORD', 'At least one keyword should be over 3 characters long!');
 

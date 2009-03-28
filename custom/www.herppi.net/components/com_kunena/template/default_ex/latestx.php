@@ -302,8 +302,49 @@ if (count($threadids) > 0)
         if (!in_array($msgid->thread, $read_topics)) $last_read[$msgid->thread] = $msgid;
     }
 }
+// (JJ) BEGIN: ANNOUNCEMENT BOX
+if ($fbConfig->showannouncement > 0)
+{
+?>
+<!-- B: announcementBox -->
+<?php
+    if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcementbox.php')) {
+        require_once (KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcementbox.php');
+    }
+    else {
+        require_once (KUNENA_ABSPATH . '/template/default/plugin/announcement/announcementbox.php');
+    }
+?>
+<!-- F: announcementBox -->
+<?php
+}
+// (JJ) FINISH: ANNOUNCEMENT BOX
+
+// load module
+if (mosCountModules('kunena_announcement'))
+{
 ?>
 
+    <div class = "fb-fb_2">
+        <?php
+        if (CKunenaTools::isJoomla15())
+        {
+        	$document	= &JFactory::getDocument();
+        	$renderer	= $document->loadRenderer('modules');
+        	$options	= array('style' => 'xhtml');
+        	$position	= 'kunena_announcement';
+        	echo $renderer->render($position, $options, null);
+        }
+        else
+        {
+        	mosLoadModules('kunena_announcement', -2);
+        }
+        ?>
+    </div>
+
+<?php
+}
+?>
 <!-- B: List Actions -->
 	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0">
 		<tr>

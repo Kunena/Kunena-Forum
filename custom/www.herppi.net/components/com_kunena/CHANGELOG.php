@@ -37,9 +37,36 @@ CUSTOM BRANCH
 
 Kunena 1.0.9
 
+28-March-2009 Matias
+# [#15638] Latest member profile link causes fatal error
+! For now on forum stats counts only users who have visited forum at least once
+! User profile detects now nonexistent users and user profiles
+# [#15639] User list incomplete
+! Only users who have visited the forum at least once are listed
+# [#15567] Implement working advanced search: add backwards compability for old templates
+
+27-March-2009 Matias
+# [#15677] Fix UI issues: IE7 bug having collapsed tabs
+# [#15677] Fix UI issues: Big empty space on some templates
+# [#15677] Fix UI issues: Spoiler icon has wrong URL if Joomla is not in document root
+# [#15677] Fix UI issues: Open Kunena.com to a new window/tab (=external link)
+# [#15677] Fix UI issues: Show announcements also in latestx
+
+26-March-2009 Matias
+# [#15567] Fix pagination in search
++ [#15671] Add API for changing user settings in CB (part 1)
+! Renamed fbUserprofile to CKunenaProfile. It can be found from lib/kunena.user.class.php
+# [#15667] Missing argument 3 for mb_convert_encoding
+# [#15154] Auto linked email addresses contain two slashes in front of the address
+
+24-March-2009 fxstein
+# [#15625] Prepare for 1.0.9 build
+# [#15624] Fix language file re-declaration
+
 22-March-2009 Matias
 # [#15565] Board Categories showed only public categories
 # [#15566] Fireboard 1.0.1 didn't contain directory com_kunena/uploaded
++ [#15567] Implement working advanced search
 
 22-February-2009 Matias
 # [#15157] Empty messages in Joomla 1.0 part 2

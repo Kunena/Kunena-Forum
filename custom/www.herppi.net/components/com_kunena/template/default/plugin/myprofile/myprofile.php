@@ -21,6 +21,8 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+require_once (KUNENA_ABSSOURCESPATH . 'kunena.user.class.php');
+
 global $fbConfig;
 
 $mainframe->setPageTitle(_GEN_MYPROFILE . ' - ' . stripslashes($fbConfig->board_title));
@@ -32,7 +34,7 @@ if ($my->id != "" && $my->id != 0)
     $juserinfo->load($my->id);
 
     //Get userinfo needed later on, this limits the amount of queries
-    $userinfo = new fbUserprofile($database);
+    $userinfo = new CKunenaProfile($database);
     $userinfo->load($my->id);
 
     //use ClexusPM avatar if configured
@@ -289,7 +291,7 @@ if ($my->id != "" && $my->id != 0)
         // simple spoof check security
     josSpoofCheck();
 
-        $rowu = new fbUserprofile( $database );
+        $rowu = new CKunenaProfile( $database );
         $rowu->load( (int)$user_id );
 
                     $deleteSig = mosGetParam($_POST, 'deleteSig', 0);

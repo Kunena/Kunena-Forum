@@ -820,44 +820,6 @@ class CKunenaTools {
     } // end of class
 
 /**
-* Users Table Class
-* Provides access to the #__fb_users table
-*/
-class fbUserprofile
-    extends mosDBTable {
-    var $userid = null;
-    var $view = null;
-    var $signature = null;
-    var $moderator = null;
-    var $ordering = null;
-    var $posts = null;
-    var $avatar = null;
-    var $karma = null;
-    var $karma_time = null;
-    var $group_id = null;
-    var $uhits = null;
-    var $personalText = null;
-    var $gender = null;
-    var $birthdate = null;
-    var $location = null;
-    var $ICQ = null;
-    var $AIM = null;
-    var $YIM = null;
-    var $MSN = null;
-    var $SKYPE = null;
-	var $GTALK = null;
-	var $websitename = null;
-	var $websiteurl = null;
-    var $hideEmail = null;
-    var $showOnline = null;
-    /**
-    * @param database A database connector object
-    */
-    function fbUserprofile(&$database) {
-        $this->mosDBTable('#__fb_users', 'userid', $database);
-        }
-    }
-/**
 * Moderator Table Class
 *
 * Provides access to the #__fb_moderator table
@@ -1323,7 +1285,7 @@ if (!function_exists('mb_detect_encoding')) {
 	}
 	return 'UTF-8';
   }
-  function mb_convert_encoding($text,$target_encoding,$source_encoding) {
+  function mb_convert_encoding($text,$target_encoding,$source_encoding=NULL) {
 	return $text;
   }
   function mb_substr($str, $start, $lenght=NULL, $encoding=NULL) {

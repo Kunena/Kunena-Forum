@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.9
 
+28-March-2009 Matias
+[#15638] Latest member profile link causes fatal error
+
 27-March-2009 Matias
 # [#15677] Fix UI issues: IE7 bug having collapsed tabs
 # [#15677] Fix UI issues: Big empty space on some templates

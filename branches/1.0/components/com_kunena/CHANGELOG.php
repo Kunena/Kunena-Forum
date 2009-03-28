@@ -38,6 +38,7 @@ Kunena 1.0.9
 ! User profile detects now nonexistent users and user profiles
 # [#15639] User list incomplete
 ! Only users who have visited the forum at least once are listed
+# [#15567] Implement working advanced search: add backwards compability for old templates
 
 27-March-2009 Matias
 # [#15677] Fix UI issues: IE7 bug having collapsed tabs

@@ -86,6 +86,10 @@ class CKunenaSearch
 	}
 
 	$q = mosGetParam($_REQUEST, 'q', ''); // Search words
+	// Backwards compability for old templates
+	if (empty($q) && isset($_REQUEST['searchword'])) {
+		$q = mosGetParam($_REQUEST, 'searchword', '');
+	}
 	$this->params['titleonly'] = intval(mosGetParam($_REQUEST, 'titleonly', $this->defaults['titleonly']));
 	$this->params['searchuser'] = mosGetParam($_REQUEST, 'searchuser', $this->defaults['searchuser']);
 	$this->params['starteronly'] = intval(mosGetParam($_REQUEST, 'starteronly', $this->defaults['starteronly']));
@@ -104,7 +108,7 @@ class CKunenaSearch
 
 	if ($limit<1 || $limit>40) $limit = $this->limit = $fbConfig->messages_per_page_search;
 
-	if (isset($_POST['q'])) {
+	if (isset($_POST['q']) || isset($_POST['searchword'])) {
 		$this->params['catids'] = implode(',', mosGetParam($_POST, 'catid', array(0)));
 		$url = CKunenaLink::GetSearchURL($fbConfig, $this->func, $q, $limitstart, $limit, $this->getUrlParams());
         	header("HTTP/1.1 303 See Other");

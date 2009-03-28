@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.9
 
+28-March-2009 fxstein
+# [#15702] Fix broken RSS feed on Joomla 1.0.x without SEF
+
 28-March-2009 Matias
 # [#15638] Latest member profile link causes fatal error
 ! For now on forum stats counts only users who have visited forum at least once

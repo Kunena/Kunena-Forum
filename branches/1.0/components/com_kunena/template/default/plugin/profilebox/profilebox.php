@@ -154,7 +154,7 @@ $annlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show'.KUNEN
 
 </td>
                 <?php
-                if (mosCountModules('kunena_profilebox'))
+                if (mosCountModules('kunena_profilebox') || mosCountModules('kna_pbox'))
                 {
                 ?>
 
@@ -171,7 +171,7 @@ $annlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show'.KUNEN
                                 }
                                 else
                                 {
-                                	mosLoadModules('kunena_profilebox', -2);
+                                	mosLoadModules('kna_pbox', -2);
                                 }
                                 ?>
                             </div>
@@ -208,7 +208,7 @@ else
 
 </td>
                 <?php
-                if (mosCountModules('kunena_profilebox'))
+                if (mosCountModules('kunena_profilebox') || mosCountModules('kna_pbox'))
                 {
                 ?>
 
@@ -225,7 +225,7 @@ else
                                 }
                                 else
                                 {
-                                	mosLoadModules('kunena_profilebox', -2);
+                                	mosLoadModules('kna_pbox', -2);
                                 }
                                 ?>
                             </div>

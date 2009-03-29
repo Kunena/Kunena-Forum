@@ -416,7 +416,7 @@ if ($msg_signature) {
 </table>
 <!-- Begin: Message Module Positions -->
 <?php
-if (mosCountModules('kunena_msg_'.$mmm))
+if (mosCountModules('kunena_msg_'.$mmm)||mosCountModules('kna_msg'.$mmm))
 {
 ?>
     <div class = "kunena_msg_<?php echo $mmm; ?>">
@@ -431,7 +431,7 @@ if (mosCountModules('kunena_msg_'.$mmm))
         }
         else
         {
-        	mosLoadModules('kunena_msg_'.$mmm, -2);
+        	mosLoadModules('kna_msg'.$mmm, -2);
         }
         ?>
     </div>

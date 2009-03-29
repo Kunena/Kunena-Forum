@@ -64,7 +64,7 @@ Kunena 1.0.9
 26-March-2009 Matias
 # [#15567] Fix pagination in search
 + [#15671] Add API for changing user settings in CB (part 1)
-! Renamed fbUserprofile to CKunenaProfile. It can be found from lib/kunena.user.class.php
+! Renamed fbUserprofile to CKunenaUserprofile. It can be found from lib/kunena.user.class.php
 # [#15667] Missing argument 3 for mb_convert_encoding
 # [#15154] Auto linked email addresses contain two slashes in front of the address
 

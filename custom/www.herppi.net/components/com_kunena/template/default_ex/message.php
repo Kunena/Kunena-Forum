@@ -48,9 +48,9 @@ $database->loadObject($user);
                         <td align = "left">
                             <?php
                             $msg_time_since = _KUNENA_TIME_SINCE;
-                            $msg_time_since = str_replace('%time%', time_since($fmessage->time , CKunenaTools::fbGetInternalTime()), $msg_time_since);
+                            $msg_time_since = str_replace('%time%', time_since($fmessage->time, CKunenaTools::fbGetInternalTime()), $msg_time_since);
 
-                            if ($prevCheck < $msg_time && !in_array($fmessage->thread, $read_topics)) {
+                            if ($prevCheck < $fmessage->time && !in_array($fmessage->thread, $read_topics)) {
                                 $msgtitle = 'msgtitle_new';
                             } else {
                                 $msgtitle = 'msgtitle';
@@ -319,22 +319,19 @@ if ($msg_signature) {
 ?>
 	<td valign="bottom">
 	<div class="fb_message_buttons_cover">
-                <span id = "fb_qr_sc__<?php echo $msg_id;?>" class = "fb_qr_fire" style = "cursor:hand; cursor:pointer">
-
                 <?php
                 //we should only show the Quick Reply section to registered users. otherwise we are missing too much information!!
                 /*    onClick="expandcontent(this, 'sc<?php echo $msg_id;?>')" */
-                if ($my->id > 0 && !$msg_closed)
-                {
+                if ($my->id > 0 && !$msg_closed):
                 ?>
-
+                <span id = "fb_qr_sc__<?php echo $msg_id;?>" class = "fb_qr_fire" style = "cursor:hand; cursor:pointer">
                 <?php echo
                     $fbIcons['quickmsg']
                         ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['quickmsg'] . '" border="0" alt="' . _KUNENA_QUICKMSG . '" />' . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _KUNENA_QUICKMSG . '" />'; ?>
-                <?php
-                }
-                ?>
                 </span>
+                <?php
+                endif;
+                ?>
 
                 <?php
                 if ($fbIcons['reply'])
@@ -416,7 +413,7 @@ if ($msg_signature) {
 </table>
 <!-- Begin: Message Module Positions -->
 <?php
-if (mosCountModules('kunena_msg_'.$mmm))
+if (mosCountModules('kunena_msg_'.$mmm)||mosCountModules('kna_msg'.$mmm))
 {
 ?>
     <div class = "kunena_msg_<?php echo $mmm; ?>">
@@ -431,7 +428,7 @@ if (mosCountModules('kunena_msg_'.$mmm))
         }
         else
         {
-        	mosLoadModules('kunena_msg_'.$mmm, -2);
+        	mosLoadModules('kna_msg'.$mmm, -2);
         }
         ?>
     </div>

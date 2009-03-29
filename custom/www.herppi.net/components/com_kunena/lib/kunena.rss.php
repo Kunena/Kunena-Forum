@@ -154,7 +154,7 @@ echo "<?xml version=\"1.0\" encoding=\"" . $encoding[1] . "\"?>\n";
             if (!CKunenaTools::isJoomla15())
             {
             	// On legacy Joomla we need to encode the link or the RSS XML would break
-            	htmlspecialchars($itemlink);
+            	$itemlink = htmlspecialchars($itemlink);
             }
             echo $itemlink;
             echo "</link>\n";

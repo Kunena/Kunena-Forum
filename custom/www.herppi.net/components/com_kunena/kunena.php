@@ -791,7 +791,7 @@ else
         case 'search':
         case 'advsearch':
             require_once (KUNENA_ABSSOURCESPATH . 'kunena.search.class.php');
- 
+
             $kunenaSearch = &new CKunenaSearch();
             $kunenaSearch->show();
             break;
@@ -921,7 +921,7 @@ else
     } //hctiws
 
     // Bottom Module
-    if (mosCountModules('kunena_bottom'))
+    if (mosCountModules('kunena_bottom')||mosCountModules('kna_btm'))
     {
 ?>
 
@@ -937,7 +937,7 @@ else
             }
             else
             {
-            	mosLoadModules('kunena_bottom', -2);
+            	mosLoadModules('kna_btm', -2);
             }
             ?>
         </div>

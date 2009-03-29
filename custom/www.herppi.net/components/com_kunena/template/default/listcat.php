@@ -88,7 +88,7 @@ if ($fbConfig->showannouncement > 0)
 // (JJ) FINISH: ANNOUNCEMENT BOX
 
 // load module
-if (mosCountModules('kunena_announcement'))
+if (mosCountModules('kunena_announcement') || mosCountModules('kna_ancmt'))
 {
 ?>
 
@@ -104,7 +104,7 @@ if (mosCountModules('kunena_announcement'))
         }
         else
         {
-        	mosLoadModules('kunena_announcement', -2);
+        	mosLoadModules('kna_ancmt', -2);
         }
         ?>
     </div>

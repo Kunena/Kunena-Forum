@@ -32,6 +32,14 @@ Legend:
 
 Kunena 1.0.9
 
+29-March-2009 Matias
+# [#15677] Fix UI issues: Showcat does not validate
+# [#15677] Fix UI issues: Latestx shows "Show last visit" option for anonymous users
+# [#15677] Fix UI issues: Latestx "x time ago" options are not fully ordered
+# [#15677] Fix UI issues: Latestx, showcat do not validate for moderators
+# [#15677] Fix UI issues: Message view does not mark new messages by green icon
+# [#15677] Fix UI issues: Message view contains some code for Quick Reply even if it's disabled
+
 28-March-2009 fxstein
 # [#15702] Fix broken RSS feed on Joomla 1.0.x without SEF
 + [#15705] Short names for external module positions for Joomla 1.0.x

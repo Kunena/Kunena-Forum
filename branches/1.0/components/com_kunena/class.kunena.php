@@ -1042,7 +1042,7 @@ function KUNENA_GetAvailableForums($catid, $action, $options = array (), $disabl
             }
         }
 
-	$tag_attribs = 'class="inputbox fbs" '.($multiple?' size="5" MULTIPLE ':' size="1" ') . ($disabled ? " disabled " : "");
+	$tag_attribs = 'class="inputbox fbs" '.($multiple?' size="5" MULTIPLE ':' size="1" ') . ($disabled ? ' disabled="disabled"' : '');
 	if (CKunenaTools::isJoomla15()) {
     	$parent = JHTML::_('select.genericlist', $options, 'catid', $tag_attribs , 'value', 'text', $catid, 'KUNENA_AvailableForums');
 		}

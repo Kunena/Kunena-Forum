@@ -34,7 +34,7 @@ if ($my->id != "" && $my->id != 0)
     $juserinfo->load($my->id);
 
     //Get userinfo needed later on, this limits the amount of queries
-    $userinfo = new CKunenaProfile($database);
+    $userinfo = new CKunenaUserprofile($database);
     $userinfo->load($my->id);
 
     //use ClexusPM avatar if configured
@@ -291,7 +291,7 @@ if ($my->id != "" && $my->id != 0)
         // simple spoof check security
     josSpoofCheck();
 
-        $rowu = new CKunenaProfile( $database );
+        $rowu = new CKunenaUserprofile( $database );
         $rowu->load( (int)$user_id );
 
                     $deleteSig = mosGetParam($_POST, 'deleteSig', 0);

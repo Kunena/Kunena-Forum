@@ -19,7 +19,7 @@ dictionary = {	'JB_':'KUNENA_',
 		'(\* \@package Kunena\W+?)(\* \@Copyright.*?Best Of Joomla)':copyright,
 		'FBTools':'CKunenaTools',
 		'htmlentities':'html_entity_decode_utf8',
-		'fbUserprofile':'CKunenaProfile',
+		'fbUserprofile':'CKunenaUserprofile',
 }
 
 

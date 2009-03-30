@@ -761,6 +761,13 @@ function showConfig($option)
 	$lists['post_dateformat'] = mosHTML::selectList($dateformatlist, 'cfg_post_dateformat', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->post_dateformat);
 	$lists['post_dateformat_hover'] = mosHTML::selectList($dateformatlist, 'cfg_post_dateformat_hover', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->post_dateformat_hover);
 
+        $stats_countuserslist = array ();
+        $stats_countuserslist[] = mosHTML::makeOption('all', _KUNENA_OPTION_STATS_COUNTUSERS_ALL);
+        $stats_countuserslist[] = mosHTML::makeOption('registered', _KUNENA_OPTION_STATS_COUNTUSERS_REGISTERED);
+        $stats_countuserslist[] = mosHTML::makeOption('forum', _KUNENA_OPTION_STATS_COUNTUSERS_FORUM);
+        // build the html select list
+        $lists['stats_countusers'] = mosHTML::selectList($stats_countuserslist, 'cfg_stats_countusers', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->stats_countusers);
+
     html_Kunena::showConfig($fbConfig, $lists, $option);
 }
 

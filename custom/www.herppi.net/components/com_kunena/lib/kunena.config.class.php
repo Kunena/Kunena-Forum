@@ -335,6 +335,7 @@ class CKunenaConfig extends CKunenaConfigBase
     // New custom branch config variables
     var $post_dateformat         = 'ago'; // See CKunenaTimeformat::showDate()
     var $post_dateformat_hover   = 'datetime'; // See CKunenaTimeformat::showDate()
+    var $stats_countusers        = 'all'; // 'all', 'registered' or 'forum'
 
     function CKunenaConfig($KunenaUser=null)
 	{

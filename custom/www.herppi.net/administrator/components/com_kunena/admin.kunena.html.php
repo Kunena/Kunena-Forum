@@ -2353,6 +2353,17 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                 </tr>
 
                 <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"><?php echo _KUNENA_STATS_COUNTUSERS; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo $lists['stats_countusers']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_STATS_COUNTUSERS_DESC; ?>
+                    </td>
+                </tr>
+
+                <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top"><?php echo _KUNENA_SHOWWHOIS; ?>
                     </td>
 

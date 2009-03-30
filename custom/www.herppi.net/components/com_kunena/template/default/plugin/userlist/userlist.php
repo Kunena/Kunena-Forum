@@ -43,7 +43,20 @@ function list_users()
     $limit = (int) mosGetParam($_REQUEST, 'limit', $fbConfig->userlist_rows);
 
     // Total
-    $database->setQuery("SELECT count(*) FROM #__fb_users");
+    if ($fbConfig->stats_countusers == 'forum')
+    {
+        $query_countusers = "SELECT COUNT(*) FROM #__fb_users";
+    } 
+    else if ($fbConfig->stats_countusers == 'all') 
+    {
+        $query_countusers = "SELECT COUNT(*) FROM #__users";
+    }
+    else // registered
+    {
+        $query_countusers = "SELECT COUNT(*) FROM #__users WHERE lastvisitDate!='0000-00-00 00:00:00' OR block=0";
+    }
+
+    $database->setQuery($query_countusers);    
     $total_results = $database->loadResult();
 
     // Search total

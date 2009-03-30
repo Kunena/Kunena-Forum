@@ -24,6 +24,11 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // CUSTOM STRINGS
 
+DEFINE('_KUNENA_STATS_COUNTUSERS', 'User Count Shows');
+DEFINE('_KUNENA_STATS_COUNTUSERS_DESC', 'Choose which users do you want to be counted in Forum Stats. "All Users": counts all user accounts including failed registrations, "Registered Users": counts all activated user accounts, "Forum Users": counts only users who have visited the forum.');
+DEFINE('_KUNENA_OPTION_STATS_COUNTUSERS_ALL', 'All Users');
+DEFINE('_KUNENA_OPTION_STATS_COUNTUSERS_REGISTERED', 'Registered Users');
+DEFINE('_KUNENA_OPTION_STATS_COUNTUSERS_FORUM', 'Forum Users');
 DEFINE('_KUNENA_DATEFORMAT_NONE', 'Hide time');
 DEFINE('_KUNENA_POST_DATEFORMAT','Message Time Format');
 DEFINE('_KUNENA_POST_DATEFORMAT_DESC','Choose time format for messages shown in the forum.');

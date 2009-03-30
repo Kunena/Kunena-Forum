@@ -142,7 +142,7 @@ class CKunenaLink
     {
         if ($msg_ip)
         {
-            $iplink = '<a href="http://openrbl.org/dnsbl?i='.$msg_ip.'&amp;f=2" target="_blank">';
+            $iplink = '<a href="http://whois.domaintools.com/'.$msg_ip.'" target="_blank">';
             $iplink .= 'IP: '.$msg_ip.'</a>';
         }
         else

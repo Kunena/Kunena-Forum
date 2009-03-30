@@ -34,6 +34,7 @@ Kunena 1.0.9
 
 30-March-2009 fxstein
 + [#15724] Add bbcode and smilie support to forum headers in default_ex
+# [#15139] Fixed broken IP address lookup link
 
 29-March-2009 Matias
 # [#15677] Fix UI issues: Showcat does not validate

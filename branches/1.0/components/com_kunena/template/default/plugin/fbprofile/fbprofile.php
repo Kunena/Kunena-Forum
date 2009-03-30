@@ -16,7 +16,7 @@
 
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $fbConfig;
+global $fbConfig, $acl;
 
 $mainframe->setPageTitle(_KUNENA_USERPROFILE_PROFILE . ' - ' . stripslashes($fbConfig->board_title));
 
@@ -43,7 +43,7 @@ else {
 
 function showprf($userid, $page)
 {
-    global $database, $fbConfig,  $acl, $my, $mosConfig_absolute_path;
+    global $database, $fbConfig, $acl, $my, $mosConfig_absolute_path;
     // ERROR: mixed global $fbIcons
     global $fbIcons;
 
@@ -59,9 +59,35 @@ function showprf($userid, $page)
     if (!$userinfo) {
 	$database->setQuery("SELECT * FROM #__users WHERE id=$userid");	
 	$database->loadObject($userinfo);
-	if (!$userinfo) echo '<h3>' . _KUNENA_PROFILE_NO_USER . '</h3>';
-	else echo '<h3>' . _KUNENA_PROFILE_NOT_FOUND . '</h3>';
-	return;
+	check_dberror('Unable to get user profile info.');
+
+	if (!$userinfo) {
+		echo '<h3>' . _KUNENA_PROFILE_NO_USER . '</h3>';
+		return;
+	} else {
+		// Check moderator status (admin is moderator)
+		$aro_group = $acl->getAroGroup($userid);
+		if ($aro_group and CKunenaTools::isJoomla15())
+		$aro_group->group_id = $aro_group->id;  // changed fieldname in Joomla 1.5: "group_id" -> "id"
+		$is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
+
+		// there's no profile; set userid and moderator status.
+		$database->setQuery("INSERT INTO #__fb_users (userid,uhits,moderator) VALUES ('$userid',1,'$is_admin')");
+		$database->query();
+		check_dberror('Unable to create user profile.');
+
+		$database->setQuery("SELECT a.*, b.* FROM #__fb_users as a"
+			. "\n LEFT JOIN #__users as b on b.id=a.userid"
+			. "\n where a.userid=$userid");
+
+		$database->loadObject($userinfo);
+		check_dberror('Unable to get user profile info.');
+
+		// TODO: For future use
+		// echo '<h3>' . _KUNENA_PROFILE_NOT_FOUND . '</h3>';
+		// return;
+	}
+
     }
 
 	// User Hits

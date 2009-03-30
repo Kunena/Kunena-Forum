@@ -33,7 +33,9 @@ Legend:
 Kunena 1.0.9
 
 30-March-2009 Matias
-# [#15638] Latest member profile link causes fatal error (Regression: fixed user count)
+# [#15638] Latest member profile link causes fatal error 
+! Regression: fixed user count and latest user from Forum Stats (1.0.8 behaviour)
+! Create new profile with default values if profile does not exist
 
 30-March-2009 fxstein
 + [#15724] Add bbcode and smilie support to forum headers in default_ex

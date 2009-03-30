@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.9
 
+30-March-2009 Matias
+# [#15638] Latest member profile link causes fatal error (Regression: fixed user count)
+
 30-March-2009 fxstein
 + [#15724] Add bbcode and smilie support to forum headers in default_ex
 # [#15139] Fixed broken IP address lookup link
@@ -52,10 +55,9 @@ Kunena 1.0.9
 
 28-March-2009 Matias
 # [#15638] Latest member profile link causes fatal error
-! For now on forum stats counts only users who have visited forum at least once
 ! User profile detects now nonexistent users and user profiles
 # [#15639] User list incomplete
-! Only users who have visited the forum at least once are listed
+! Only users who have Kunena user profile are listed
 # [#15567] Implement working advanced search: add backwards compability for old templates
 
 27-March-2009 Matias

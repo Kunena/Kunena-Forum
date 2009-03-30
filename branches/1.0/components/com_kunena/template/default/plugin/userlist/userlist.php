@@ -43,7 +43,7 @@ function list_users()
     $limit = (int) mosGetParam($_REQUEST, 'limit', $fbConfig->userlist_rows);
 
     // Total
-    $database->setQuery("SELECT count(*) FROM #__fb_users");
+    $database->setQuery("SELECT count(*) FROM #__users");
     $total_results = $database->loadResult();
 
     // Search total
@@ -156,7 +156,7 @@ class HTML_userlist_content
                                         <span class="fb_title fbl"> <?php echo _KUNENA_USRL_USERLIST; ?></span>
 
                                         <?php
-                                        printf(_KUNENA_USRL_TOTAL_USERS, $mosConfig_sitename, $total_results);
+                                        printf(_KUNENA_USRL_REGISTERED_USERS, $mosConfig_sitename, $total_results);
                                         ?>
                                     </div>
                                 </td>

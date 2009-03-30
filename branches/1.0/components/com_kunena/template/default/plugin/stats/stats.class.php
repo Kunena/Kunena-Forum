@@ -27,7 +27,7 @@ if ($fbConfig->showstats)
 
 if ($fbConfig->showgenstats)
 {
-$database->setQuery("SELECT COUNT(*) FROM #__fb_users");
+$database->setQuery("SELECT COUNT(*) FROM #__users");
 $totalmembers = $database->loadResult();
 
 $database->setQuery("SELECT SUM(numTopics) AS titles, SUM(numPosts) AS msgs FROM #__fb_categories WHERE parent=0");
@@ -44,7 +44,7 @@ $totalcats = $totaltmp->totalcats;
 unset($totaltmp);
 
 $fb_queryName = $fbConfig->username ? "username" : "name";
-$database->setQuery("SELECT id, $fb_queryName as username FROM #__users AS u LEFT JOIN #__fb_users AS f ON u.id=f.userid WHERE u.block=0 ORDER BY f.userid DESC LIMIT 0,1");
+$database->setQuery("SELECT id, $fb_queryName as username FROM #__users WHERE block=0 AND activation='' ORDER BY id DESC LIMIT 0,1");
 $database->loadObject($_lastestmember);
 $lastestmember = $_lastestmember->username;
 $lastestmemberid =$_lastestmember->id;

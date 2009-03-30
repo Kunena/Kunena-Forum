@@ -23,7 +23,6 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // 1.0.9
-DEFINE('_KUNENA_USRL_TOTAL_USERS','%s has <b>%d</b> users in the forum');
 DEFINE('_KUNENA_PROFILE_NO_USER', 'User does not exist.');
 DEFINE('_KUNENA_PROFILE_NOT_FOUND', 'User has not yet visited forum and has no profile.');
 

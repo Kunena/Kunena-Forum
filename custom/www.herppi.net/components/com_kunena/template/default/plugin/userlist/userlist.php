@@ -91,12 +91,10 @@ function list_users()
 function convertDate($date)
 {
 	// used for non-FB dates only!
-    $format = _KUNENA_USRL_DATE_FORMAT;
-
     if ($date != "0000-00-00 00:00:00" && ereg("([0-9]{4})-([0-9]{2})-([0-9]{2})[ ]([0-9]{2}):([0-9]{2}):([0-9]{2})", $date, $regs))
     {
         $date = mktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
-        $date = $date > -1 ? strftime($format, CKunenaTools::fbGetShowTime($date, 'UTC')) : '-';
+        $date = $date > -1 ?  CKunenaTimeformat::showDate($date, TRUE, 'datetime', 'utc') : '-';
     }
     else {
         $date = _KUNENA_USRL_NEVER;
@@ -578,11 +576,11 @@ class HTML_userlist_content
                                     }
 
                                     if ($fbConfig->userlist_joindate) {
-                                        echo "\t\t<td  class=\"td-10 fbs\"  align=\"center\">" . convertDate($ulrow->registerDate) . "</td>\n";
+                                        echo "\t\t<td  class=\"td-10 fbs\"  align=\"center\">" . CKunenaTimeformat::showDate($ulrow->registerDate, TRUE, 'date', 'utc') . "</td>\n";
                                     }
 
                                     if ($fbConfig->userlist_lastvisitdate) {
-                                        echo "\t\t<td  class=\"td-11 fbs\"  align=\"center\">" . convertDate($ulrow->lastvisitDate) . "</td>\n";
+                                        echo "\t\t<td  class=\"td-11 fbs\"  align=\"center\">" . CKunenaTimeformat::showDate($ulrow->lastvisitDate, TRUE, 'date', 'utc') . "</td>\n";
                                     }
                                     ?>
 

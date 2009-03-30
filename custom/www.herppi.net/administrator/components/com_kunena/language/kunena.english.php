@@ -22,6 +22,13 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+// CUSTOM STRINGS
+
+DEFINE('_KUNENA_DT_DATE_TODAY_FMT','Today');
+DEFINE('_KUNENA_DT_DATETIME_TODAY_FMT','Today %H:%M');
+DEFINE('_KUNENA_DT_DATE_YESTERDAY_FMT','Yesterday');
+DEFINE('_KUNENA_DT_DATETIME_YESTERDAY_FMT','Yesterday %H:%M');
+
 // 1.0.9
 DEFINE('_KUNENA_USRL_TOTAL_USERS','%s has <b>%d</b> users in the forum');
 DEFINE('_KUNENA_PROFILE_NO_USER', 'User does not exist.');

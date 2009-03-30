@@ -354,44 +354,6 @@ function getFBGroupName($id) {
 class CKunenaTools {
     var $id = null;
 
-/*
-    function fbGetCurrentTime () {
-    	// tells current FB internal representing time
-        global $fbConfig;
-        return time() + ($fbConfig->board_ofset * 3600);
-    }
-*/
-    function fbGetInternalTime ($time=null) {
-    	// tells internal FB representing time from UTC $time
-        global $fbConfig;
-        // Prevent zeroes
-        if($time===0) {
-          return 0;
-        }
-        if($time===null) {
-          $time = time();
-        }
-        return $time + ($fbConfig->board_ofset * 3600);
-    }
-
-    function fbGetShowTime ($time=null, $space='FB') {
-    	// converts internal (FB)|UTC representing time to display time
-    	// could consider user properties (zones) for future
-        global $fbConfig;
-        // Prevent zeroes
-        if($time===0) {
-          return 0;
-        }
-        if($time===null) {
-          $time = CKunenaTools::fbGetInternalTime();
-          $space = 'FB';
-        }
-        if($space=='UTC') {
-          return $time + ($fbConfig->board_ofset * 3600);
-        }
-        return $time;
-    }
-
     function whoisID($id) {
         global $database, $mosConfig_live_site;
 
@@ -1183,7 +1145,7 @@ function fbGetArrayInts($name, $type = NULL) {
 
     // $newer_date will equal false if we want to know the time elapsed between a date and the current time
     // $newer_date will have a value if we want to work out time elapsed between two known dates
-    //$newer_date = ($newer_date == false) ? CKunenaTools::fbGetInternalTime() : $newer_date;
+    //$newer_date = ($newer_date == false) ? CKunenaTimeformat::internalTime() : $newer_date;
 
     // difference in seconds
     $since = $newer_date - $older_date;

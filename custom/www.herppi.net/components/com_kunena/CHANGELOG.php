@@ -30,6 +30,15 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+CUSTOM BRANCH
+
+30-March-2009 Matias
+# [#15677] Custom branch: Moved time related functions to CKunenaTimeformat:
+  KUNENA_timeformat -> CKunenaTimeformat::showDate
+  CKunenaTools::fbGetInternalTime -> CKunenaTimeformat::internalTime
+# [#15677] Custom branch: Use always localized time formating by using new class
+# [#15677] Custom branch: Add titles for times in flat.php just like in message.php
+
 Kunena 1.0.9
 
 29-March-2009 Matias

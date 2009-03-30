@@ -76,67 +76,83 @@ $GLOBALS['KUNENA_DT_txt']['months_short'] = array
     _KUNENA_DT_MON_DEC,
 );
 
-// Format a time to make it look purdy.
-function KUNENA_timeformat($logTime, $show_today = true)
+class CKunenaTimeformat
 {
-	// formatts a time in Display space! Don't pass internal times!
-	// ToDo: Pass format!
-   $usertime_format = _KUNENA_DT_DATETIME_FMT;
 
-    global $mosConfig_locale;
-    $time = $logTime;
-    $todayMod = 2;
-
-    // We can't have a negative date (on Windows, at least.)
-    if ($time < 0) {
-        $time = 0;
-    }
-
-    // Today and Yesterday?
-    if ($show_today === true)
-    {
-        // Get the current time.
-        $nowtime = CKunenaTools::fbGetShowTime();
-        $then = @getdate($time);
-        $now = @getdate($nowtime);
-        // Try to make something of a time format string...
-        $s = strpos($usertime_format, '%S') === false ? '' : ':%S';
-
-        if (strpos($usertime_format, '%H') === false && strpos($usertime_format, '%T') === false) {
-            $today_fmt = '%I:%M' . $s . ' %p';
+    function internalTime($time=null) {
+    	// tells internal FB representing time from UTC $time
+        global $fbConfig;
+        // Prevent zeroes
+        if($time===0) {
+          return 0;
         }
-        else {
-            $today_fmt = '%H:%M' . $s;
+        if($time===null) {
+          $time = time();
+        }
+        return $time + ($fbConfig->board_ofset * 3600);
+    }
+
+    // Format a time to make it look purdy.
+    function showDate($time, $show_today=TRUE, $mode='datetime', $tz='internal')
+    {
+        global $fbConfig, $mosConfig_offset;
+
+	$site_offset = $mosConfig_offset;
+        if (!is_numeric($time)) $time = strtotime($time);
+        switch (strtolower($tz)) {
+            case 'utc':
+                $time = $time + $site_offset * 3600;
+                break;
+            case 'internal':
+                break;
+            default:
+		$time = $time + ($site_offset - (float)$tz + $fbConfig->board_ofset) * 3600;
+                break;
+        }
+        switch (strtolower($mode)) {
+            case 'time':
+                $usertime_format = _KUNENA_DT_TIME_FMT;
+                $today_format = _KUNENA_DT_TIME_FMT;
+                $yesterday_format = _KUNENA_DT_TIME_FMT;
+                break;
+            case 'date':
+                $usertime_format = _KUNENA_DT_DATE_FMT;
+                $today_format = _KUNENA_DT_DATE_TODAY_FMT;
+                $yesterday_format = _KUNENA_DT_DATE_YESTERDAY_FMT;
+                break;
+            default:
+                $usertime_format = _KUNENA_DT_DATETIME_FMT;
+                $today_format = _KUNENA_DT_DATETIME_TODAY_FMT;
+                $yesterday_format = _KUNENA_DT_DATETIME_YESTERDAY_FMT;
+                break;
+        }
+        global $mosConfig_locale;
+        $todayMod = 2;
+
+        // We can't have a negative date (on Windows, at least.)
+        if ($time < 0) {
+            $time = 0;
         }
 
-        // Same day of the year, same year.... Today!
-        if ($then['yday'] == $now['yday'] && $then['year'] == $now['year'])
-            return '' . _TIME_TODAY . '' . KUNENA_timeformat($logTime, $today_fmt);
+        // Today and Yesterday?
+        if ($show_today === true)
+        {
+            // Get the current time.
+            $nowtime = CKunenaTimeformat::InternalTime();
+            $then = @getdate($time);
+            $now = @getdate($nowtime);
 
-        // Day-of-year is one less and same year, or it's the first of the year and that's the last of the year...
-        if ($todayMod == '2' && (($then['yday'] == $now['yday'] - 1 && $then['year'] == $now['year']) || ($now['yday'] == 0 && $then['year'] == $now['year'] - 1) && $then['mon'] == 12 && $then['mday'] == 31))
-            return '' . _TIME_YESTERDAY . '' . KUNENA_timeformat($logTime, $today_fmt);
-    }
+            // Same day of the year, same year.... Today!
+            if ($then['yday'] == $now['yday'] && $then['year'] == $now['year'])
+                $usertime_format = $today_format;
 
-    $str = !is_bool($show_today) ? $show_today : $usertime_format;
+            // Day-of-year is one less and same year, or it's the first of the year and that's the last of the year...
+            if ($todayMod == '2' && (($then['yday'] == $now['yday'] - 1 && $then['year'] == $now['year']) || ($now['yday'] == 0 && $then['year'] == $now['year'] - 1) && $then['mon'] == 12 && $then['mday'] == 31))
+                $usertime_format = $yesterday_format;
+        }
 
-    /*
-    // setlocale issues known in multithreaded server env. this affects many shared hostings!
-    if (setlocale(LC_TIME, $mosConfig_locale))
-    {
-        foreach (array
-        (
-            '%a',
-            '%A',
-            '%b',
-            '%B'
-        )as $token)
-            if (strpos($str, $token) !== false)
-                $str = str_replace($token, ucwords((strftime($token, $time))), $str);
-    }
-    else
-    */
-    {
+        $str = !is_bool($show_today) ? $show_today : $usertime_format;
+
         // Do-it-yourself time localization.  Fun.
         foreach (array
         (
@@ -150,10 +166,9 @@ function KUNENA_timeformat($logTime, $show_today = true)
 
         if (strpos($str, '%p'))
             $str = str_replace('%p', (strftime('%H', $time) < 12 ? 'am' : 'pm'), $str);
+
+        // Format any other characters..
+        return strftime($str, $time);
     }
 
-    // Format any other characters..
-    return strftime($str, $time);
 }
-
-?>

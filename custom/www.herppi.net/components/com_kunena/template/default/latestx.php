@@ -72,7 +72,7 @@ $since = false;
 
 if ($sel == "0")
 {
-    $lastvisit = date(_DATETIME, $querytime);
+    $lastvisit = CKunenaTimeformat::showDate($querytime);
     $since = true;
 }
 ?>
@@ -208,7 +208,7 @@ if ($sel == "0")
                 echo '<td class="td-3" align="center">';
                 echo CKunenaLink::GetProfileLink($fbConfig, $latestPostUserid, htmlspecialchars($latestPostName));
                 echo '</td>';
-                echo '<td class="td-4" align="left">' . date(_DATETIME, $latestPostTime) . '</td>';
+                echo '<td class="td-4" align="left">' . CKunenaTimeformat::showDate($latestPostTime) . '</td>';
                 echo '</tr>';
             }
         }

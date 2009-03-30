@@ -189,7 +189,7 @@ $database->loadObject($user);
                         <td align = "left">
                             <?php
                             $msg_time_since = _KUNENA_TIME_SINCE;
-                            $msg_time_since = str_replace('%time%', time_since($fmessage->time , CKunenaTools::fbGetInternalTime()), $msg_time_since);
+                            $msg_time_since = str_replace('%time%', time_since($fmessage->time , CKunenaTimeformat::internalTime()), $msg_time_since);
 
                             if ($prevCheck < $msg_time && !in_array($fmessage->thread, $read_topics)) {
                                 $msgtitle = 'msgtitle_new';
@@ -313,7 +313,7 @@ if ($fmessage->modified_by) {
             </td>
             <td class = "fb-msgview-right-c" >
                     <div class="fb_message_editMarkUp_cover">
-                    <span class="fb_message_editMarkUp" ><?php echo _KUNENA_EDITING_LASTEDIT;?>: <?php echo date(_DATETIME, $fmessage->modified_time);?> <?php echo _KUNENA_BY; ?> <?php echo CKunenaTools::whoisID($fmessage->modified_by)?>.
+                    <span class="fb_message_editMarkUp" ><?php echo _KUNENA_EDITING_LASTEDIT;?>: <?php echo CKunenaTimeformat::showDate($fmessage->modified_time);?> <?php echo _KUNENA_BY; ?> <?php echo CKunenaTools::whoisID($fmessage->modified_by)?>.
                     <?php
                     if ($fmessage->modified_reason) {
                     echo _KUNENA_REASON.": ".$fmessage->modified_reason;

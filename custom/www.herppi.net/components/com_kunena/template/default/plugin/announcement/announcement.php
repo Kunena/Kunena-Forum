@@ -55,7 +55,7 @@ if ($do == "read") {
     $annID = $ann->id;
     $anntitle = $ann->title;
     $anndescription = $ann->description;
-    $anncreated = KUNENA_timeformat(strtotime($ann->created));
+    $anncreated = CKunenaTimeformat::showDate($ann->created, TRUE, 'date');
     $annpublished = $ann->published;
     $annshowdate = $ann->showdate;
 
@@ -189,7 +189,7 @@ if ($is_editor) {
                                 </td>
 
                                 <td class = "td-2" align="left">
-<?php echo KUNENA_timeformat(strtotime($row->created)); ?>
+<?php echo CKunenaTimeformat::showDate($row->created, TRUE, 'date'); ?>
                                 </td>
 
                                 <td class = "td-3"  align="left">

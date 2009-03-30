@@ -159,7 +159,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 				<td class = "td-5">
 					<div class = "jr-latest-subject-date">
-<?php echo '' . date(_DATETIME, $item->time) . ''; ?>
+<?php echo '' . CKunenaTimeformat::showDate($item->time) . ''; ?>
 					</div>
 				</td>
 

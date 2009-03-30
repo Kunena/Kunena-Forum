@@ -78,11 +78,11 @@ if ($signature)
     </tr>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_REGISTERDATE; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo $userinfo->registerDate; ?></td>
+      <td  class = "td-2 fbm"><?php echo CKunenaTimeformat::showDate($userinfo->registerDate, TRUE, 'date', 'utc'); ?></td>
     </tr>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_LASTVISITDATE; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo $userinfo->lastvisitDate; ?></td>
+      <td  class = "td-2 fbm"><?php echo CKunenaTimeformat::showDate($userinfo->lastvisitDate, TRUE, 'datetime', 'utc'); ?></td>
     </tr>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_POSTS; ?></b> </td>
@@ -112,7 +112,7 @@ if ($signature)
     <?php  if ($userinfo->birthdate !='0001-01-01' AND $userinfo->birthdate !='0000-00-00') {?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_BIRTHDATE; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo $userinfo->birthdate; ?></td>
+      <td  class = "td-2 fbm"><?php echo CKunenaTimeformat::showDate($userinfo->birthdate, FALSE, 'date'); ?></td>
     </tr>
     <?php }?>
     <?php  if ( $userinfo->location !='' ) { ?>

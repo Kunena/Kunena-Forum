@@ -364,7 +364,7 @@ if (count($messages[0]) > 0)
                         <div class="fbs">
                         <!-- By -->
 
-        <span class="topic_posted_time"><?php echo _KUNENA_POSTED_AT ?> <?php echo time_since($leaf->time , time() + ($fbConfig->board_ofset * 3600)); ?> <?php echo _KUNENA_AGO ?>
+        <span class="topic_posted_time" title="<?php echo CKunenaTimeformat::showDate($leaf->time); ?>"><?php echo _KUNENA_POSTED_AT ?> <?php echo time_since($leaf->time, CKunenaTimeformat::internalTime()); ?> <?php echo _KUNENA_AGO ?>
         </span>
 <?php
 	if ($leaf->name) 
@@ -474,8 +474,8 @@ if (count($messages[0]) > 0)
         <!-- /Latest Post -->
         <br />
                                 <!-- Latest Post Date -->
-        <span class="topic_date">
-        <?php echo time_since($last_reply[$leaf->id]->time , time() + ($fbConfig->board_ofset * 3600)); ?> <?php echo _KUNENA_AGO ?>
+        <span class="topic_date" title="<?php echo CKunenaTimeformat::showDate($last_reply[$leaf->id]->time); ?>">
+        <?php echo time_since($last_reply[$leaf->id]->time, CKunenaTimeformat::internalTime()); ?> <?php echo _KUNENA_AGO ?>
         </span>
         <!-- /Latest Post Date -->
         </div>

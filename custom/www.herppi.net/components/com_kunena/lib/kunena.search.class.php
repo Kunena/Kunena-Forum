@@ -455,7 +455,7 @@ class CKunenaSearch
                     echo '<td  class = "td-1" ><a href="'
                              . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $result->id . '&amp;catid=' . $result->catid) . '#' . $result->id . '" >' . $ressubject . '</a><br />' . $searchResultList . '<br /><br /></td>';
                     echo '<td class = "td-2" >' . html_entity_decode_utf8(stripslashes($result->name)) . '</td>';
-                    echo '<td class = "td-3" >' . date(_DATETIME, $result->time) . '</td></tr>';
+                    echo '<td class = "td-3" >' . CKunenaTimeformat::showDate($result->time) . '</td></tr>';
                     echo "\n";
                 }
                 ?>

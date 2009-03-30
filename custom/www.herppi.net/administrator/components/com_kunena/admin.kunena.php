@@ -1191,7 +1191,7 @@ function doprune($database, $option)
         check_dberror("Unable to load thread list.");
 
     // Convert days to seconds for timestamp functions...
-    $prune_date = CKunenaTools::fbGetInternalTime() - ($prune_days * 86400);
+    $prune_date = CKunenaTimeformat::internalTime() - ($prune_days * 86400);
 
     if (count($threadlist) > 0)
     {

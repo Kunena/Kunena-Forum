@@ -991,7 +991,8 @@ if ($letPass || $is_Moderator)
                                     $msg_location = $fbIcons['msglocation'] ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msglocation'] . '" border="0" alt="'._KUNENA_MYPROFILE_LOCATION.': '.$userinfo->location.'" title="'._KUNENA_MYPROFILE_LOCATION.': '.html_entity_decode_utf8(stripslashes($userinfo->location)).'" />' : ' '._KUNENA_MYPROFILE_LOCATION.': '.$userinfo->location.'';
                                 }
                                 if ($userinfo->birthdate !='0001-01-01' AND $userinfo->birthdate !='0000-00-00' and $userinfo->birthdate !='') {
-                                    $msg_birthdate = $fbIcons['msgbirthdate'] ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msgbirthdate'] . '" border="0" alt="'._KUNENA_MYPROFILE_BIRTHDATE.': '.$userinfo->birthdate.'" title="'._KUNENA_MYPROFILE_BIRTHDATE.': '.$userinfo->birthdate.'" />' : ' '._KUNENA_MYPROFILE_BIRTHDATE.': '.$userinfo->birthdate.'';
+                                    $birthdatestr = CKunenaTimeformat::showDate($userinfo->birthdate, FALSE, 'date');
+                                    $msg_birthdate = $fbIcons['msgbirthdate'] ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msgbirthdate'] . '" border="0" alt="'._KUNENA_MYPROFILE_BIRTHDATE.': '.$birthdatestr.'" title="'._KUNENA_MYPROFILE_BIRTHDATE.': '.$birthdatestr.'" />' : ' '._KUNENA_MYPROFILE_BIRTHDATE.': '.$birthdatestr.'';
                                 }
 
                                 if ($userinfo->AIM != '') {
@@ -1031,7 +1032,7 @@ if ($letPass || $is_Moderator)
                                 $fb_subject_txt = stripslashes($fb_subject_txt);
 
                                 $msg_subject = htmlspecialchars($fb_subject_txt);
-                                $msg_date = date(_DATETIME, $fmessage->time);
+                                $msg_date = CKunenaTimeformat::showDate($fmessage->time);
                                 $fb_message_txt = stripslashes($fmessage->message);
 
                                 $fb_message_txt = smile::smileReplace($fb_message_txt, 0, $fbConfig->disemoticons, $smileyList);
@@ -1126,7 +1127,7 @@ if ($letPass || $is_Moderator)
                                             {
                                                 $modtime = $fmessage->time;
                                             }
-                                            if(($modtime + ((int)$fbConfig->useredittime)) >= CKunenaTools::fbGetInternalTime())
+                                            if(($modtime + ((int)$fbConfig->useredittime)) >= CKunenaTimeformat::internalTime())
                                             {
                                                 $allowEdit = 1;
                                             }

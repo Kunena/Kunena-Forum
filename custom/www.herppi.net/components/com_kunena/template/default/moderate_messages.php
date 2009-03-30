@@ -147,7 +147,7 @@ function jbListMessages($allMes, $catid)
         {
             $i = 1 - $i;
             echo '<tr class="fb_message' . $i . '">';
-            echo '<td valign="top">' . date(_DATETIME, $message->time) . '</td>';
+            echo '<td valign="top">' . CKunenaTimeformat::showDate($message->time) . '</td>';
             echo '<td valign="top">' . $message->name . '</td>';
             echo '<td valign="top"><b>' . $message->subject . '<b></td>';
 

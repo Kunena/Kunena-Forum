@@ -218,7 +218,7 @@ $catName = $objCatInfo->name;
                                 $email = trim(addslashes($my_email));
                                 $topic_emoticon = (int)$topic_emoticon;
                                 $topic_emoticon = ($topic_emoticon < 0 || $topic_emoticon > 7) ? 0 : $topic_emoticon;
-                                $posttime = CKunenaTools::fbGetInternalTime();
+                                $posttime = CKunenaTimeformat::internalTime();
                                 //check if the post must be reviewed by a Moderator prior to showing
                                 //doesn't apply to admin/moderator posts ;-)
                                 $holdPost = 0;
@@ -706,7 +706,7 @@ $catName = $objCatInfo->name;
                                 if(!$modtime) {
                                     $modtime = $mes->time;
                                 }
-                                if(($modtime + ((int)$fbConfig->useredittime)) >= CKunenaTools::fbGetInternalTime()) {
+                                if(($modtime + ((int)$fbConfig->useredittime)) >= CKunenaTimeformat::internalTime()) {
                                     $allowEdit = 1;
                                 }
                             }
@@ -781,7 +781,7 @@ $catName = $objCatInfo->name;
                 {
                     $modified_reason = addslashes(mosGetParam($_POST, "modified_reason", null));
                     $modified_by = $my->id;
-                    $modified_time = CKunenaTools::fbGetInternalTime();
+                    $modified_time = CKunenaTimeformat::internalTime();
                     $id  = (int) $id;
 
                     $database->setQuery("SELECT * FROM #__fb_messages LEFT JOIN #__fb_messages_text ON #__fb_messages.id=#__fb_messages_text.mesid WHERE #__fb_messages.id=$id");
@@ -807,7 +807,7 @@ $catName = $objCatInfo->name;
                                 if(!$modtime) {
                                     $modtime = $mes->time;
                                 }
-                                if(($modtime + ((int)$fbConfig->useredittime) + ((int)$fbConfig->useredittimegrace)) >= CKunenaTools::fbGetInternalTime()) {
+                                if(($modtime + ((int)$fbConfig->useredittime) + ((int)$fbConfig->useredittimegrace)) >= CKunenaTimeformat::internalTime()) {
                                     $allowEdit = 1;
                                 }
                             }

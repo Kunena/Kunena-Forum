@@ -37,7 +37,7 @@ include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/clas
 
 // Install sample data on initial install (this will not get executed for upgrades)
 
-$posttime = CKunenaTools::fbGetInternalTime();
+$posttime = CKunenaTimeformat::internalTime();
 
 $query="INSERT INTO `#__fb_categories` VALUES (1, 0, '".addslashes(_KUNENA_SAMPLE_MAIN_CATEGORY_TITLE)."', 0, 0, 0, 1, NULL, 0, 0, 0, 0, 1, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, '".addslashes(_KUNENA_SAMPLE_MAIN_CATEGORY_DESC)."', '".addslashes(_KUNENA_SAMPLE_MAIN_CATEGORY_HEADER)."', '', 0, 0, 0, NULL);";
 $database->setQuery($query);

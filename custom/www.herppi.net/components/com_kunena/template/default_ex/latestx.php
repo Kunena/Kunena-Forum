@@ -152,7 +152,7 @@ if ($func != "mylatest") {
 $since = false;
 if ($sel == "0")
 {
-	$lastvisit = date(_DATETIME, $querytime);
+	$lastvisit = CKunenaTimeformat::showDate($querytime);
 	$since = true;
 }
 

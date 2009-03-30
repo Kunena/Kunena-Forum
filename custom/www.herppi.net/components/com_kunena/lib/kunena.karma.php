@@ -44,7 +44,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                 // - if he specifies the user that will have the karma modified
                 if ($fbConfig->showkarma && $my->id != "" && $my->id != 0 && $do != '' && $userid != '')
                 {
-                    $time = CKunenaTools::fbGetInternalTime();
+                    $time = CKunenaTimeformat::internalTime();
 
                     if ($my->id != $userid)
                     {

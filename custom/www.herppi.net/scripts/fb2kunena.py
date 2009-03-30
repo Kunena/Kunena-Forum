@@ -20,6 +20,10 @@ dictionary = {	'JB_':'KUNENA_',
 		'FBTools':'CKunenaTools',
 		'htmlentities':'html_entity_decode_utf8',
 		'fbUserprofile':'CKunenaUserprofile',
+		'KUNENA_timeformat':'CKunenaTimeformat::showDate',
+		'CKunenaTools::fbGetInternalTime':'CKunenaTimeformat::internalTime',
+
+		'date\(_DATETIME,\s*':'CKunenaTimeformat::showDate(',
 }
 
 

@@ -261,7 +261,7 @@ function ReportForm($msg_id, $catid) {
 
 function SendClexusPM($reporter, $subject, $message, $msglink, $mods, $admins) {
     global $database;
-    $time = mosFormatDate(CKunenaTools::fbGetInternalTime(), '%Y-%m-%d %H:%M:%S');
+    $time = mosFormatDate(CKunenaTimeformat::internalTime(), '%Y-%m-%d %H:%M:%S');
 
     foreach ($admins as $admin) {
         $database->setQuery("INSERT INTO #__mypms" . "\n ( `userid` , `whofrom` , `time` , `readstate` , `subject` , `message` , `owner` , `folder` , `sent_id` , `replyid` , `ip` , `alert` , `flag` , `pm_notify` , `email_notify` )"

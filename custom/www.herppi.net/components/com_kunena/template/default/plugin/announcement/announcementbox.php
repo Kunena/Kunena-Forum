@@ -43,20 +43,21 @@ $deletelink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=delete&a
 
 <?php
 // BEGIN: BOX ANN
-$database->setQuery("SELECT id,title,sdescription,description, created ,published,showdate" . "\n FROM #__fb_announcement  WHERE  published = 1 ORDER BY created DESC LIMIT 1");
+$database->setQuery("SELECT id, title, sdescription, description, created, published, showdate FROM #__fb_announcement WHERE published=1 ORDER BY created DESC LIMIT 1");
 
-$anns = $database->loadObjectList();
-	check_dberror("Unable to load announcements.");
-$ann = $anns[0];
+$database->loadObject($ann);
+check_dberror("Unable to load announcements.");
+
+if ($ann->id > 0) {
+
 $annID = $ann->id;
 $anntitle = $ann->title;
 $annsdescription = $ann->sdescription;
 $anndescription = $ann->description;
-$anncreated = KUNENA_timeformat(strtotime($ann->created));
+$anncreated = CKunenaTimeformat::showDate($ann->created, TRUE, 'date');
 $annpublished = $ann->published;
 $annshowdate = $ann->showdate;
 
-if ($annID > 0) {
 ?>
     <!-- ANNOUNCEMENTS BOX -->
 <div class="<?php echo $boardclass; ?>_bt_cvr1">

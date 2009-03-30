@@ -372,7 +372,13 @@ if ($letPass || $is_Moderator)
 		<table class="fb_forum-headerdesc" border="0" cellpadding="0" cellspacing="0" width="100%">
 			<tr>
 				<td>
-				<?php echo stripslashes($objCatInfo->headerdesc); ?>
+					<?php
+					$headerdesc = stripslashes(smile::smileReplace($objCatInfo->headerdesc, 0, $fbConfig->disemoticons, $smileyList));
+			        $headerdesc = nl2br($headerdesc);
+			        //wordwrap:
+			        $headerdesc = smile::htmlwrap($headerdesc, $fbConfig->wrap);
+					echo $headerdesc;
+					?>
 				</td>
 			</tr>
 		</table>

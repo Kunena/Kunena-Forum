@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.9
 
+30-March-2009 fxstein
++ [#15724] Add bbcode and smilie support to forum headers in default_ex
+
 29-March-2009 Matias
 # [#15677] Fix UI issues: Showcat does not validate
 # [#15677] Fix UI issues: Latestx shows "Show last visit" option for anonymous users

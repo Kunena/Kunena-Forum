@@ -32,6 +32,12 @@ Legend:
 
 CUSTOM BRANCH
 
+31-March-2009 Matias
+# [#15554] Custom branch: Forum Tools / Message Topic layout issues in FF2 and IE6
+# [#15554] Custom branch: Sticky icon in the wrong place in IE6 
+# [#15554] Custom branch: Possible IE6 crash fixed when Show Avatar on Categories list = Yes
+# [#15554] Custom branch: CSS Conflicts between Joomla themes and Kunena mostly fixed by adding #Kunena to the rules
+
 30-March-2009 Matias
 # [#15554] Custom branch: Moved time related functions to CKunenaTimeformat:
   KUNENA_timeformat -> CKunenaTimeformat::showDate

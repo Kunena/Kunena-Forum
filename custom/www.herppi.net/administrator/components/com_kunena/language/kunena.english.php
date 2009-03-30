@@ -24,6 +24,11 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // CUSTOM STRINGS
 
+DEFINE('_KUNENA_DATEFORMAT_NONE', 'Hide time');
+DEFINE('_KUNENA_POST_DATEFORMAT','Message Time Format');
+DEFINE('_KUNENA_POST_DATEFORMAT_DESC','Choose time format for messages shown in the forum.');
+DEFINE('_KUNENA_POST_DATEFORMAT_HOVER','Hover Message Time Format');
+DEFINE('_KUNENA_POST_DATEFORMAT_HOVER_DESC','Choose time format, which is shown when you hover on message time.');
 DEFINE('_KUNENA_DT_DATE_TODAY_FMT','Today');
 DEFINE('_KUNENA_DT_DATETIME_TODAY_FMT','Today %H:%M');
 DEFINE('_KUNENA_DT_DATE_YESTERDAY_FMT','Yesterday');

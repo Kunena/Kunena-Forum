@@ -924,6 +924,28 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                 </tr>
 
                 <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"><?php echo _KUNENA_POST_DATEFORMAT ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo $lists['post_dateformat']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_POST_DATEFORMAT_DESC ?>
+                    </td>
+                </tr>
+
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"><?php echo _KUNENA_POST_DATEFORMAT_HOVER ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo $lists['post_dateformat_hover']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_POST_DATEFORMAT_HOVER_DESC ?>
+                    </td>
+                </tr>
+
+                <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top"><?php echo _COM_A_SHOWNEW ?>
                     </td>
 

@@ -747,6 +747,20 @@ function showConfig($option)
 	$lists['autoembedebay'] = mosHTML::selectList($yesno, 'cfg_autoembedebay', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->autoembedebay);
 	$lists['highlightcode'] = mosHTML::selectList($yesno, 'cfg_highlightcode', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->highlightcode);
 
+	// New for CUSTOM BRANCH
+
+	require_once($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.timeformat.class.php");
+	// the default page when entering Kunena
+	$dateformatlist = array ();
+	$time = CKunenaTimeformat::internalTime() - 101000;
+	$dateformatlist[] = mosHTML::makeOption('none', _KUNENA_DATEFORMAT_NONE);
+	$dateformatlist[] = mosHTML::makeOption('ago', CKunenaTimeformat::showDate($time, 'ago'));
+	$dateformatlist[] = mosHTML::makeOption('datetime_today', CKunenaTimeformat::showDate($time, 'datetime_today'));
+	$dateformatlist[] = mosHTML::makeOption('datetime', CKunenaTimeformat::showDate($time, 'datetime'));
+	// build the html select list
+	$lists['post_dateformat'] = mosHTML::selectList($dateformatlist, 'cfg_post_dateformat', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->post_dateformat);
+	$lists['post_dateformat_hover'] = mosHTML::selectList($dateformatlist, 'cfg_post_dateformat_hover', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->post_dateformat_hover);
+
     html_Kunena::showConfig($fbConfig, $lists, $option);
 }
 

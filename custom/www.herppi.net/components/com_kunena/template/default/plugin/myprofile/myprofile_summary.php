@@ -74,11 +74,11 @@ if ($signature)
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_REGISTERDATE; ?></b> </td>
-      <td><?php echo CKunenaTimeformat::showDate($juserinfo->registerDate, TRUE, 'datetime', 'utc'); ?></td>
+      <td><?php echo CKunenaTimeformat::showDate($juserinfo->registerDate, 'datetime_today', 'utc'); ?></td>
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_LASTVISITDATE; ?></b> </td>
-      <td><?php echo CKunenaTimeformat::showDate($juserinfo->lastvisitDate, TRUE, 'datetime', 'utc'); ?></td>
+      <td><?php echo CKunenaTimeformat::showDate($juserinfo->lastvisitDate, 'datetime_today', 'utc'); ?></td>
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_POSTS; ?></b> </td>
@@ -103,7 +103,7 @@ if ($signature)
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_BIRTHDATE; ?></b> </td>
-      <td><?php echo CKunenaTimeformat::showDate($userinfo->birthdate, FALSE, 'date'); ?></td>
+      <td><?php echo CKunenaTimeformat::showDate($userinfo->birthdate, 'date'); ?></td>
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_LOCATION; ?></b> </td>

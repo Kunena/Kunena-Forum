@@ -54,7 +54,7 @@ $annID = $ann->id;
 $anntitle = $ann->title;
 $annsdescription = $ann->sdescription;
 $anndescription = $ann->description;
-$anncreated = CKunenaTimeformat::showDate($ann->created, TRUE, 'date');
+$anncreated = CKunenaTimeformat::showDate($ann->created, 'date_today');
 $annpublished = $ann->published;
 $annshowdate = $ann->showdate;
 

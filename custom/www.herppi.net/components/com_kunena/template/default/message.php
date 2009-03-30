@@ -188,8 +188,7 @@ $database->loadObject($user);
                     <tr>
                         <td align = "left">
                             <?php
-                            $msg_time_since = _KUNENA_TIME_SINCE;
-                            $msg_time_since = str_replace('%time%', time_since($fmessage->time , CKunenaTimeformat::internalTime()), $msg_time_since);
+                            $msg_time_since = CKunenaTimeformat::showDate($fmessage->time, 'config_post_dateformat');
 
                             if ($prevCheck < $msg_time && !in_array($fmessage->thread, $read_topics)) {
                                 $msgtitle = 'msgtitle_new';

@@ -991,7 +991,7 @@ if ($letPass || $is_Moderator)
                                     $msg_location = $fbIcons['msglocation'] ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msglocation'] . '" border="0" alt="'._KUNENA_MYPROFILE_LOCATION.': '.$userinfo->location.'" title="'._KUNENA_MYPROFILE_LOCATION.': '.html_entity_decode_utf8(stripslashes($userinfo->location)).'" />' : ' '._KUNENA_MYPROFILE_LOCATION.': '.$userinfo->location.'';
                                 }
                                 if ($userinfo->birthdate !='0001-01-01' AND $userinfo->birthdate !='0000-00-00' and $userinfo->birthdate !='') {
-                                    $birthdatestr = CKunenaTimeformat::showDate($userinfo->birthdate, FALSE, 'date');
+                                    $birthdatestr = CKunenaTimeformat::showDate($userinfo->birthdate, 'date');
                                     $msg_birthdate = $fbIcons['msgbirthdate'] ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msgbirthdate'] . '" border="0" alt="'._KUNENA_MYPROFILE_BIRTHDATE.': '.$birthdatestr.'" title="'._KUNENA_MYPROFILE_BIRTHDATE.': '.$birthdatestr.'" />' : ' '._KUNENA_MYPROFILE_BIRTHDATE.': '.$birthdatestr.'';
                                 }
 

@@ -38,6 +38,7 @@ CUSTOM BRANCH
   CKunenaTools::fbGetInternalTime -> CKunenaTimeformat::internalTime
 # [#15677] Custom branch: Use always localized time formating by using new class
 # [#15677] Custom branch: Add titles for times in flat.php just like in message.php
+# [#15677] Custom branch: Make date format configurable for latestx, showcat and view
 
 Kunena 1.0.9
 

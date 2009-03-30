@@ -22,8 +22,8 @@ dictionary = {	'JB_':'KUNENA_',
 		'fbUserprofile':'CKunenaUserprofile',
 		'KUNENA_timeformat':'CKunenaTimeformat::showDate',
 		'CKunenaTools::fbGetInternalTime':'CKunenaTimeformat::internalTime',
-
 		'date\(_DATETIME,\s*':'CKunenaTimeformat::showDate(',
+		'time_since\(':'CKunenaTimeformat::showTimeSince(',
 }
 
 

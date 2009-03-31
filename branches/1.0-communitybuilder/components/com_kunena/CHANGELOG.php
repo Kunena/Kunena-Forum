@@ -38,6 +38,7 @@ Kunena CB branch
 # [#15671] Workaround for Community Builder: don't redefine $database
 + [#15671] Initial support for CB user profiles
 + [#15671] New class CKunenaCBProfile, use it for avatars and for user profile
++ [#15671] Working version, contains avatars and profile
 
 Kunena 1.0.9
 

@@ -44,46 +44,36 @@ class CKunenaCBProfile {
 	var $sidebarText;
 	
 	function CKunenaCBProfile() {
-		$this->sidebarText = <<<EOS
-<span class="view-username">[cb:userfield field="username"/]</span>
-<span class="fb_avatar">[cb:userfield field="avatar"/]</span>
-<div class="viewcover">
-  <span>[cb:userfield field="forumkarma"/]</span>
-</div>
-<div class="viewcover">
-  <span>[cb:userfield field="forumrank"/]</span>
-</div>
-<div class="viewcover">
-  <span>[cb:userfield field="connections"/] Connections</span>
-</div>
-EOS;
 	}
 	
-	function showUserProfile($userid) {
-		$cbUser =& CBuser::getInstance( $userid );
-		if ( $cbUser !== null ) {
-			return $cbUser->replaceUserVars( $this->sidebarText );
-		} else {
-    		return "User doesn't exist anymore";
-		}
-	}
-
 	function &getInstance() {
 		static $instance;
 		if (!$instance) $instance = new CKunenaCBProfile();
 		return $instance;
 	}
 
-	function showAvatar($userid, $size='medium') {
+	function getProfileURL($userid) {
+		$cbUser =& CBuser::getInstance( (int) $userid );
+		if($cbUser === null) return;
+		return cbSef( 'index.php?option=com_comprofiler&user=' .$userid. getCBprofileItemid() );
+	}
+	
+	function showAvatar($userid, $class='', $thumb=true) {
 		if ( $userid ) {
 			$cbUser =& CBuser::getInstance( (int) $userid );
-			if ( $cbUser == null ) {
-				// FIXME: handle this one!
-				return '';
+			if ( $cbUser === null ) {
+				$cbUser =& CBuser::getInstance( null );
 			}
-			if ($size=='large') return $cbUser->getField( 'avatar' );
-			else return $cbUser->getField( 'avatar', null, 'html', 'none', 'list' );
+			if ($class) $class=' class="'.$class.'"';
+			if ($thumb==0) return $cbUser->getField( 'avatar' );
+			else return '<img'.$class.' src="'.$cbUser->avatarFilePath( 2 ).'" alt="" />';
 		}
 	}
-}
 	
+	function showProfile($userid) 
+	{
+		global $_PLUGINS;
+		return implode( '', $_PLUGINS->trigger( 'forumSideProfile', array( $userid ) ) );
+	}
+
+}

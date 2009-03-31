@@ -133,7 +133,7 @@ function showprf($userid, $page)
         else if ($fbConfig->avatar_src == "cb")
         {
             $kunenaProfile = CKunenaCBProfile::getInstance();
-			$msg_avatar = $kunenaProfile->showAvatar($leaf->userid, 'large');
+			$msg_avatar = $kunenaProfile->showAvatar($leaf->userid, '', FALSE);
         }
         else
         {

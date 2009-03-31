@@ -20,18 +20,16 @@ global $_CB_framework, $_CB_database, $ueConfig, $mainframe;
 $tmp_db =& $database;
 
 if ( defined( 'JPATH_ADMINISTRATOR' ) ) {
-        if ( ! file_exists( JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php' ) ) {
-                echo 'CB not installed';
-                return;
-        }
-        include_once( JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php' );
+	$cbpath = JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
 } else {
-        if ( ! file_exists( $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php' ) ) {
-                echo 'CB not installed';
-                return;
-        }
-        include_once( $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php' );
+	$cbpath = $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php';
 }
+if ( ! file_exists( $cbpath ) ) 
+{
+	$fbConfig->fb_profile = 'fb';
+	return;
+}
+include_once( $cbpath );
 cbimport( 'cb.database' );
 cbimport( 'cb.tables' );
 cbimport( 'language.front' );
@@ -73,7 +71,20 @@ class CKunenaCBProfile {
 	function showProfile($userid) 
 	{
 		global $_PLUGINS;
+		$_PLUGINS->loadPluginGroup('user');
 		return implode( '', $_PLUGINS->trigger( 'forumSideProfile', array( $userid ) ) );
+	}
+	
+	/**
+	* Triggers CB events
+	* 
+	* Current events: profileIntegration=0/1, avatarIntegration=0/1
+	**/
+	function trigger($event, $params)
+	{
+		global $_PLUGINS;
+		$_PLUGINS->loadPluginGroup('user');
+		$_PLUGINS->trigger( 'kunenaIntegration', array( $event, $params ) );
 	}
 
 }

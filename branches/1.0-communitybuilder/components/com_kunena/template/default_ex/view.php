@@ -611,8 +611,10 @@ if ($letPass || $is_Moderator)
                                         if ($avatar != '') {
                                             $msg_avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" /></span>';
                                         }
-
-                                        else {$msg_avatar = '<span class="fb_avatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_nophoto.jpg" alt="" /></span>'; }
+                                        else
+                                        {
+                                        	$msg_avatar = '<span class="fb_avatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_nophoto.jpg" alt="" /></span>'; 
+                                        }
                                     }
                                 }
 

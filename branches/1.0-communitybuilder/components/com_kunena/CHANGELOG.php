@@ -39,6 +39,7 @@ Kunena CB branch
 + [#15671] Initial support for CB user profiles
 + [#15671] New class CKunenaCBProfile, use it for avatars and for user profile
 + [#15671] Working version, contains avatars and profile
++ [#15671] Added callback for profile integration changes, code cleanup
 
 Kunena 1.0.9
 

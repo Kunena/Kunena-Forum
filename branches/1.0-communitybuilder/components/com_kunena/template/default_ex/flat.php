@@ -413,7 +413,8 @@ if (count($messages[0]) > 0)
 		}
 		else if ($fbConfig->avatar_src == "cb")
 		{
-  		    echo $kunenaProfile->showAvatar($last_reply[$leaf->id]->userid, 'fb_list_avatar');
+			$useravatar = $kunenaProfile->showAvatar($last_reply[$leaf->id]->userid, 'fb_list_avatar');
+  		    echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, $useravatar);
 		} else {
 		  	$javatar =  $last_reply[$leaf->id]->avatar;
 		   	if ($javatar!='') {

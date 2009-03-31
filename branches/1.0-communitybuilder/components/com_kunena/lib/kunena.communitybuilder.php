@@ -17,6 +17,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
  * @global CBframework $_CB_framework
  */
 global $_CB_framework, $_CB_database, $ueConfig, $mainframe;
+$tmp_db =& $database;
 
 if ( defined( 'JPATH_ADMINISTRATOR' ) ) {
         if ( ! file_exists( JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php' ) ) {
@@ -34,3 +35,6 @@ if ( defined( 'JPATH_ADMINISTRATOR' ) ) {
 cbimport( 'cb.database' );
 cbimport( 'cb.tables' );
 cbimport( 'language.front' );
+
+$database =& $tmp_db;
+unset ($tmp_db);

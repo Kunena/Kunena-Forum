@@ -35,6 +35,7 @@ Kunena CB branch
 30-March-2009 Matias
 + [#15671] Source code documentation for CKunenaUserprofile class variables
 + [#15671] Added lib/kunena.communitybuilder.php for CB compability
+# [#15671] Workaround for Community Builder: don't redefine $database
 
 Kunena 1.0.9
 

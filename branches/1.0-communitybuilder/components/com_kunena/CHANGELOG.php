@@ -36,7 +36,8 @@ Kunena CB branch
 + [#15671] Source code documentation for CKunenaUserprofile class variables
 + [#15671] Added lib/kunena.communitybuilder.php for CB compability
 # [#15671] Workaround for Community Builder: don't redefine $database
-+ [#15671] Initiial support for CB user profiles
++ [#15671] Initial support for CB user profiles
++ [#15671] New class CKunenaCBProfile, use it for avatars and for user profile
 
 Kunena 1.0.9
 

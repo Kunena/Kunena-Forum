@@ -48,19 +48,7 @@ else if ($fbConfig->avatar_src == "clexuspm")
 }
 else if ($fbConfig->avatar_src == "cb")
 {
-    $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id=".$my->id);
-    $avatar = $database->loadResult();
-    if ($avatar != "") {
-        $imgpath = KUNENA_JLIVEURL . '/images/comprofiler/';
-
-        if (eregi("gallery/", $avatar) == false)
-            $imgpath .= "tn" . $avatar;
-        else
-            $imgpath .= $avatar;
-    } else {
-        $imgpath = KUNENA_JLIVEURL."/components/com_comprofiler/plugin/language/default_language/images/tnnophoto.jpg";
-    }
-    $jr_avatar = '<img src="' . $imgpath . '" alt=" " />';
+	$jr_avatar = $kunenaProfile->showAvatar($my->id);
 }
 else
 {

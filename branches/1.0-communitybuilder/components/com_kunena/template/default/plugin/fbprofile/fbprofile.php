@@ -132,25 +132,8 @@ function showprf($userid, $page)
         }
         else if ($fbConfig->avatar_src == "cb")
         {
-            $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id=$userid AND avatarapproved=1");
-            $avatar = $database->loadResult();
-
-            if ($avatar != '')
-            {
-                //This now  has the right path to the upload directory and also handles the thumbnail and gallery photos.
-                $imgpath = KUNENA_JLIVEURL . '/images/comprofiler/';
-
-                if (eregi("gallery/", $avatar) == false)
-                    $imgpath .= "tn" . $avatar;
-                else
-                    $imgpath .= $avatar;
-
-                $msg_avatar = '<span class="fb_avatar"><img src="' . $imgpath . '"  alt="" /></span>';
-            }
-            else {
-                $imgpath = KUNENA_JLIVEURL."/components/com_comprofiler/plugin/language/default_language/images/nophoto.jpg";
-                $msg_avatar = '<span class="fb_avatar"><img src="' . $imgpath . '"  alt="" /></span>';
-            }
+            $kunenaProfile = CKunenaCBProfile::getInstance();
+			$msg_avatar = $kunenaProfile->showAvatar($leaf->userid, 'large');
         }
         else
         {

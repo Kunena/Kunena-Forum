@@ -39,3 +39,51 @@ cbimport( 'cb.tabs' );
 
 $database =& $tmp_db;
 unset ($tmp_db);
+
+class CKunenaCBProfile {
+	var $sidebarText;
+	
+	function CKunenaCBProfile() {
+		$this->sidebarText = <<<EOS
+<span class="view-username">[cb:userfield field="username"/]</span>
+<span class="fb_avatar">[cb:userfield field="avatar"/]</span>
+<div class="viewcover">
+  <span>[cb:userfield field="forumkarma"/]</span>
+</div>
+<div class="viewcover">
+  <span>[cb:userfield field="forumrank"/]</span>
+</div>
+<div class="viewcover">
+  <span>[cb:userfield field="connections"/] Connections</span>
+</div>
+EOS;
+	}
+	
+	function showUserProfile($userid) {
+		$cbUser =& CBuser::getInstance( $userid );
+		if ( $cbUser !== null ) {
+			return $cbUser->replaceUserVars( $this->sidebarText );
+		} else {
+    		return "User doesn't exist anymore";
+		}
+	}
+
+	function &getInstance() {
+		static $instance;
+		if (!$instance) $instance = new CKunenaCBProfile();
+		return $instance;
+	}
+
+	function showAvatar($userid, $size='medium') {
+		if ( $userid ) {
+			$cbUser =& CBuser::getInstance( (int) $userid );
+			if ( $cbUser == null ) {
+				// FIXME: handle this one!
+				return '';
+			}
+			if ($size=='large') return $cbUser->getField( 'avatar' );
+			else return $cbUser->getField( 'avatar', null, 'html', 'none', 'list' );
+		}
+	}
+}
+	

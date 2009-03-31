@@ -30,6 +30,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena CB branch
+
+30-March-2009 Matias
++ [#15671] Source code documentation for CKunenaUserprofile class variables
+
 Kunena 1.0.9
 
 30-March-2009 Matias

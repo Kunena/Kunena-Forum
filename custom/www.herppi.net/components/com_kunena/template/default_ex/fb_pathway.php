@@ -83,7 +83,7 @@ if ($func != "")
                 $firelast .= '<br />';
                 $firelast .= '<div class="path-element-last">' . $jr_path_menu[$i] . '</div>';
             }
-            else {
+            else if (!empty($jr_path_menu[$i])) {
                 $firepath .= '<div class="path-element">' . $jr_path_menu[$i] . '</div>';
             }
         }

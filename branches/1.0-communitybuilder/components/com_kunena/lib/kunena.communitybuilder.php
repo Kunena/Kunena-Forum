@@ -35,6 +35,7 @@ if ( defined( 'JPATH_ADMINISTRATOR' ) ) {
 cbimport( 'cb.database' );
 cbimport( 'cb.tables' );
 cbimport( 'language.front' );
+cbimport( 'cb.tabs' );
 
 $database =& $tmp_db;
 unset ($tmp_db);

@@ -146,6 +146,26 @@ $database->loadObject($user);
 
               <td class = "fb-msgview-left">
                 <div class = "fb-msgview-l-cover">
+<?php 
+if ($fbConfig->fb_profile == 'cb')
+{
+	$sidebarText = <<<EOS
+<div class="kunsAvatar">[cb:userfield field="avatar"/]</div>
+<div class="kunsUsername">[cb:userfield field="username"/]</div>
+<div class="kunsStats">
+  <span class="kunsKarma">[cb:userfield field="forumkarma"/]</span>
+  <span class="kunsRank">[cb:userfield field="forumrank"/]</span>
+  <span class="kunsConnections">[cb:userfield field="connections"/] Connections</span>
+</div>
+EOS;
+	$cbUser =& CBuser::getInstance( $fmessage->userid );
+	if ( $cbUser !== null ) {
+		echo $cbUser->replaceUserVars( $sidebarText );
+	} else {
+    	echo "User doesn't exist anymore";
+	}
+} else {
+?>
                     <span class = "view-username">
 <?php
                         if ($fmessage->userid > 0)
@@ -281,6 +301,7 @@ $database->loadObject($user);
                     if ($msg_birthdate) {
                         echo $msg_birthdate;
                     }
+}
                     ?>
 
                 </div>

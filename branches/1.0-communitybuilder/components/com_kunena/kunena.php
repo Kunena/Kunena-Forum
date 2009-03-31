@@ -79,6 +79,12 @@ $KunenaUser = new CKunenaUser($my->id);
 // Load configuration and personal settings for current user
 $fbConfig = new CKunenaConfig($KunenaUser);
 
+if ($fbConfig->fb_profile == 'cb')
+{
+	// Get Community Builder compability
+	require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.communitybuilder.php");
+}
+
 global $mosConfig_lang, $fbIcons;
 global $is_Moderator;
 

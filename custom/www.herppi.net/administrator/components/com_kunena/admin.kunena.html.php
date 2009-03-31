@@ -924,24 +924,24 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_POST_DATEFORMAT ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_POST_DATEFORMAT ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['post_dateformat']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _KUNENA_POST_DATEFORMAT_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_POST_DATEFORMAT_DESC ?>
                     </td>
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_POST_DATEFORMAT_HOVER ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_POST_DATEFORMAT_HOVER ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['post_dateformat_hover']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _KUNENA_POST_DATEFORMAT_HOVER_DESC ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_POST_DATEFORMAT_HOVER_DESC ?>
                     </td>
                 </tr>
 
@@ -965,6 +965,17 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_NEWCHAR_DESC ?>
+                    </td>
+                </tr>
+
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_PATHWAY ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo $lists['pathway']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_PATHWAY_DESC ?>
                     </td>
                 </tr>
 
@@ -2364,13 +2375,13 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                 </tr>
 
                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_STATS_COUNTUSERS; ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_STATS_COUNTUSERS; ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo $lists['stats_countusers']; ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo _KUNENA_STATS_COUNTUSERS_DESC; ?>
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_STATS_COUNTUSERS_DESC; ?>
                     </td>
                 </tr>
 

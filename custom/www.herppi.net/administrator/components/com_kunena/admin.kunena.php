@@ -752,8 +752,8 @@ function showConfig($option)
 	require_once($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.timeformat.class.php");
 	// Date formats for the site
 	$dateformatlist = array ();
-	$time = CKunenaTimeformat::internalTime() - 101000;
-	$dateformatlist[] = mosHTML::makeOption('none', _KUNENA_DATEFORMAT_NONE);
+	$time = CKunenaTimeformat::internalTime() - 80000;
+	$dateformatlist[] = mosHTML::makeOption('none', _KUNENA_OPTION_DATEFORMAT_NONE);
 	$dateformatlist[] = mosHTML::makeOption('ago', CKunenaTimeformat::showDate($time, 'ago'));
 	$dateformatlist[] = mosHTML::makeOption('datetime_today', CKunenaTimeformat::showDate($time, 'datetime_today'));
 	$dateformatlist[] = mosHTML::makeOption('datetime', CKunenaTimeformat::showDate($time, 'datetime'));
@@ -770,6 +770,7 @@ function showConfig($option)
         $lists['stats_countusers'] = mosHTML::selectList($stats_countuserslist, 'cfg_stats_countusers', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->stats_countusers);
 
 	$lists['forumtools'] = mosHTML::selectList($yesno, 'cfg_forumtools', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->forumtools);
+	$lists['pathway'] = mosHTML::selectList($yesno, 'cfg_pathway', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pathway);
 
     html_Kunena::showConfig($fbConfig, $lists, $option);
 }

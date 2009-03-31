@@ -24,18 +24,20 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // CUSTOM STRINGS
 
+DEFINE('_KUNENA_CFG_PATHWAY', 'Show users in Pathway');
+DEFINE('_KUNENA_CFG_PATHWAY_DESC', 'If set to "Yes", Kunena will long version of pathway with list of users watching the current page.');
 DEFINE('_KUNENA_CFG_FORUMTOOLS', 'Enable Forum Tools');
 DEFINE('_KUNENA_CFG_FORUMTOOLS_DESC', 'If set to "Yes", Kunena will enable Forum Tools.');
-DEFINE('_KUNENA_STATS_COUNTUSERS', 'User Count Shows');
-DEFINE('_KUNENA_STATS_COUNTUSERS_DESC', 'Choose which users do you want to be counted in Forum Stats. "All Users": counts all user accounts including failed registrations, "Registered Users": counts all activated user accounts, "Forum Users": counts only users who have visited the forum.');
+DEFINE('_KUNENA_CFG_STATS_COUNTUSERS', 'User Count Shows');
+DEFINE('_KUNENA_CFG_STATS_COUNTUSERS_DESC', 'Choose which users do you want to be counted in Forum Stats. "All Users": counts all user accounts including failed registrations, "Registered Users": counts all activated user accounts, "Forum Users": counts only users who have visited the forum.');
 DEFINE('_KUNENA_OPTION_STATS_COUNTUSERS_ALL', 'All Users');
 DEFINE('_KUNENA_OPTION_STATS_COUNTUSERS_REGISTERED', 'Registered Users');
 DEFINE('_KUNENA_OPTION_STATS_COUNTUSERS_FORUM', 'Forum Users');
-DEFINE('_KUNENA_DATEFORMAT_NONE', 'Hide time');
-DEFINE('_KUNENA_POST_DATEFORMAT','Message Time Format');
-DEFINE('_KUNENA_POST_DATEFORMAT_DESC','Choose time format for messages shown in the forum.');
-DEFINE('_KUNENA_POST_DATEFORMAT_HOVER','Hover Message Time Format');
-DEFINE('_KUNENA_POST_DATEFORMAT_HOVER_DESC','Choose time format, which is shown when you hover on message time.');
+DEFINE('_KUNENA_OPTION_DATEFORMAT_NONE', 'Hide time');
+DEFINE('_KUNENA_CFG_POST_DATEFORMAT','Message Time Format');
+DEFINE('_KUNENA_CFG_POST_DATEFORMAT_DESC','Choose time format for messages shown in the forum.');
+DEFINE('_KUNENA_CFG_POST_DATEFORMAT_HOVER','Hover Message Time Format');
+DEFINE('_KUNENA_CFG_POST_DATEFORMAT_HOVER_DESC','Choose time format, which is shown when you hover on message time.');
 DEFINE('_KUNENA_DT_DATE_TODAY_FMT','Today');
 DEFINE('_KUNENA_DT_DATETIME_TODAY_FMT','Today %H:%M');
 DEFINE('_KUNENA_DT_DATE_YESTERDAY_FMT','Yesterday');

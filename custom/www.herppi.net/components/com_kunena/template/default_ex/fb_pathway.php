@@ -77,12 +77,13 @@ if ($func != "")
 
 	$firepath = '<div class="path-element-first">'. CKunenaLink::GetKunenaLink( htmlspecialchars(stripslashes($fbConfig->board_title)) ) . '</div>';
 	$filelast = '';
-        for ($i = 0; $i <= (count($jr_path_menu) - 1); $i++)
+        for ($i = 1; $i <= (count($jr_path_menu) - 1); $i++)
         {
-            if ($i > 0 && $i == $jr_forum_count - 1) {
-                $firelast .= '<br /><div class="path-element-last">' . $jr_path_menu[$i] . '</div>';
+            if ($i == $jr_forum_count - 1 && $fbConfig->pathway == TRUE) {
+                $firelast .= '<br />';
+                $firelast .= '<div class="path-element-last">' . $jr_path_menu[$i] . '</div>';
             }
-            else if ($i > 0) {
+            else {
                 $firepath .= '<div class="path-element">' . $jr_path_menu[$i] . '</div>';
             }
         }
@@ -116,7 +117,7 @@ if ($func != "")
             $fireonline .= _USER_PROFILE;
             $fireonline .= $username;
         }
-        else {
+        else if ($fbConfig->pathway == TRUE) {
 			$fireonline .= "<div class=\"path-element-users\">($total_viewing " . _KUNENA_PATHWAY_VIEWING . ")&nbsp;";
 			$totalguest = 0;
                         $divider = ', ';

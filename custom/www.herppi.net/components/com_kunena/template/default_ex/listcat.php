@@ -534,14 +534,15 @@ if (count($categories[0]) > 0)
                                         <?php
                                         }
 
-                                        //get the Moderator list for display
-                                        $database->setQuery("select * from #__fb_moderation left join #__users on #__users.id=#__fb_moderation.userid where #__fb_moderation.catid=$singlerow->id");
-                                        $modslist = $database->loadObjectList();
-                                        	check_dberror("Unable to load moderators.");
+                                        if ($fbConfig->listcat_moderators == TRUE) {
+                                            //get the Moderator list for display
+                                            $database->setQuery("select * from #__fb_moderation left join #__users on #__users.id=#__fb_moderation.userid where #__fb_moderation.catid=$singlerow->id");
+                                            $modslist = $database->loadObjectList();
+                                            check_dberror("Unable to load moderators.");
 
-                                        // moderator list
-                                        if (count($modslist) > 0)
-                                        {
+                                            // moderator list
+                                            if (count($modslist) > 0)
+                                            {
                                         ?>
 
                                             <div class = "<?php echo $boardclass ;?>thead-moderators fbs">
@@ -556,6 +557,7 @@ if (count($categories[0]) > 0)
                                             </div>
 
                                         <?php
+                                            }
                                         }
 
                                         if ($is_Mod)

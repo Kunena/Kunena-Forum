@@ -24,6 +24,8 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // CUSTOM STRINGS
 
+DEFINE('_KUNENA_CFG_LISTCAT_MODERATORS', 'Moderators in Category List');
+DEFINE('_KUNENA_CFG_LISTCAT_MODERATORS_DESC', 'If set to "Yes", moderators will be shown for each forum in Category List.');
 DEFINE('_KUNENA_CFG_PATHWAY', 'Show users in Pathway');
 DEFINE('_KUNENA_CFG_PATHWAY_DESC', 'If set to "Yes", Kunena will long version of pathway with list of users watching the current page.');
 DEFINE('_KUNENA_CFG_FORUMTOOLS', 'Enable Forum Tools');

@@ -39,6 +39,7 @@ CUSTOM BRANCH
 # [#15554] Custom branch: CSS Conflicts between Joomla themes and Kunena mostly fixed by adding #Kunena to the rules
 # [#15554] Custom branch: Add configuration option for enabling / disabling Forum Tools
 # [#15554] Custom branch: Add configuration option for showing users in the Pathway
+# [#15554] Custom branch: Add configuration option for showing moderators in Category View
 
 30-March-2009 Matias
 # [#15554] Custom branch: Moved time related functions to CKunenaTimeformat:

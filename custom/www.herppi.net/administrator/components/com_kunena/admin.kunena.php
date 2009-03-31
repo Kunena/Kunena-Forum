@@ -771,6 +771,7 @@ function showConfig($option)
 
 	$lists['forumtools'] = mosHTML::selectList($yesno, 'cfg_forumtools', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->forumtools);
 	$lists['pathway'] = mosHTML::selectList($yesno, 'cfg_pathway', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pathway);
+	$lists['listcat_moderators'] = mosHTML::selectList($yesno, 'cfg_listcat_moderators', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->listcat_moderators);
 
     html_Kunena::showConfig($fbConfig, $lists, $option);
 }

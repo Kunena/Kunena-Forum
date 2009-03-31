@@ -990,6 +990,17 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
                 </tr>
 
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_LISTCAT_MODERATORS ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo $lists['listcat_moderators']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_LISTCAT_MODERATORS_DESC ?>
+                    </td>
+                </tr>
+
 		<tr align = "center" valign = "middle">
                     <td align = "left" valign = "top"><?php echo _KUNENA_MAMBOT_SUPPORT ?>
                     </td>

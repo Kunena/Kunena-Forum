@@ -338,6 +338,7 @@ class CKunenaConfig extends CKunenaConfigBase
     var $stats_countusers        = 'all'; // 'all', 'registered' or 'forum'
     var $forumtools              = 1; 
     var $pathway                 = 1; 
+    var $listcat_moderators      = 1; 
 
     function CKunenaConfig($KunenaUser=null)
 	{

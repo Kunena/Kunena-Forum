@@ -24,6 +24,8 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // CUSTOM STRINGS
 
+DEFINE('_KUNENA_CFG_FORUMTOOLS', 'Enable Forum Tools');
+DEFINE('_KUNENA_CFG_FORUMTOOLS_DESC', 'If set to "Yes", Kunena will enable Forum Tools.');
 DEFINE('_KUNENA_STATS_COUNTUSERS', 'User Count Shows');
 DEFINE('_KUNENA_STATS_COUNTUSERS_DESC', 'Choose which users do you want to be counted in Forum Stats. "All Users": counts all user accounts including failed registrations, "Registered Users": counts all activated user accounts, "Forum Users": counts only users who have visited the forum.');
 DEFINE('_KUNENA_OPTION_STATS_COUNTUSERS_ALL', 'All Users');

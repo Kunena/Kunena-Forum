@@ -968,7 +968,18 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
                     </td>
                 </tr>
 
-				<tr align = "center" valign = "middle">
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_FORUMTOOLS ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo $lists['forumtools']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_FORUMTOOLS_DESC ?>
+                    </td>
+                </tr>
+
+		<tr align = "center" valign = "middle">
                     <td align = "left" valign = "top"><?php echo _KUNENA_MAMBOT_SUPPORT ?>
                     </td>
 

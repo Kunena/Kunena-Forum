@@ -750,7 +750,7 @@ function showConfig($option)
 	// New for CUSTOM BRANCH
 
 	require_once($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.timeformat.class.php");
-	// the default page when entering Kunena
+	// Date formats for the site
 	$dateformatlist = array ();
 	$time = CKunenaTimeformat::internalTime() - 101000;
 	$dateformatlist[] = mosHTML::makeOption('none', _KUNENA_DATEFORMAT_NONE);
@@ -761,12 +761,15 @@ function showConfig($option)
 	$lists['post_dateformat'] = mosHTML::selectList($dateformatlist, 'cfg_post_dateformat', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->post_dateformat);
 	$lists['post_dateformat_hover'] = mosHTML::selectList($dateformatlist, 'cfg_post_dateformat_hover', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->post_dateformat_hover);
 
+	// Stats user count
         $stats_countuserslist = array ();
         $stats_countuserslist[] = mosHTML::makeOption('all', _KUNENA_OPTION_STATS_COUNTUSERS_ALL);
         $stats_countuserslist[] = mosHTML::makeOption('registered', _KUNENA_OPTION_STATS_COUNTUSERS_REGISTERED);
         $stats_countuserslist[] = mosHTML::makeOption('forum', _KUNENA_OPTION_STATS_COUNTUSERS_FORUM);
         // build the html select list
         $lists['stats_countusers'] = mosHTML::selectList($stats_countuserslist, 'cfg_stats_countusers', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->stats_countusers);
+
+	$lists['forumtools'] = mosHTML::selectList($yesno, 'cfg_forumtools', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->forumtools);
 
     html_Kunena::showConfig($fbConfig, $lists, $option);
 }

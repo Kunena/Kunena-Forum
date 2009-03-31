@@ -21,6 +21,8 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 global $fbConfig;
+
+if ($fbConfig->forumtools == TRUE):
 ?>
 
 <script type = "text/javascript">
@@ -140,3 +142,5 @@ global $fbConfig;
         </div>
     </div>
 </div>
+<?php endif;
+

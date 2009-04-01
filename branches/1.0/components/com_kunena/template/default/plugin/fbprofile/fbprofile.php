@@ -18,6 +18,14 @@ defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig, $acl;
 
+if ($fbConfig->fb_profile == 'cb') {
+        $userid = mosGetParam($_GET, 'userid', null);
+	$url = CKunenaCBProfile::getProfileURL($userid);
+	header("HTTP/1.1 307 Temporary Redirect");
+	header("Location: " . htmlspecialchars_decode($url));
+	die();
+}
+
 $mainframe->setPageTitle(_KUNENA_USERPROFILE_PROFILE . ' - ' . stripslashes($fbConfig->board_title));
 
 if ($my->id) //registered only

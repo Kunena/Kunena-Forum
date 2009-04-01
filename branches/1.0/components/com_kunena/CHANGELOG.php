@@ -32,7 +32,13 @@ Legend:
 
 Kunena 1.0.9
 
-30-March-2009 Matias
+1-April-2009 Matias
+^ [#15671] CB integration: Changed CB Migration API
+^ [#15671] CB integration: If internal fbprofile page is accessed, forward request to CB
++ [#15671] CB integration: New class CKunenaVersion, make lib/kunena.version.php and lib/kunena.config.class.php safe to be included to external components
+! New translations: make version string localized
+
+31-March-2009 Matias
 # [#15567] Implement working advanced search: fix user search without search words
 + [#15671] CB integration: Source code documentation for CKunenaUserprofile class variables
 + [#15671] CB integration: Added lib/kunena.communitybuilder.php for CB compability

@@ -66,11 +66,11 @@ class CKunenaCBProfile {
 		else return '<img'.$class.' src="'.$cbUser->avatarFilePath( 2 ).'" alt="" />';
 	}
 	
-	function showProfile($userid) 
+	function showProfile($userid, &$kuserprofile=null) 
 	{
-		global $_PLUGINS;
-		$_PLUGINS->loadPluginGroup('user');
-		return implode( '', $_PLUGINS->trigger( 'forumSideProfile', array( $userid ) ) );
+		global $_PLUGINS, $fbConfig;
+		$_PLUGINS->loadPluginGroup('user');		
+		return implode( '', $_PLUGINS->trigger( 'forumSideProfile', array( 'kunena', null, $userid, array( 'config'=> &$fbConfig, 'profile'=> &$kuserprofile) ) ) );
 	}
 	
 	/**
@@ -78,11 +78,12 @@ class CKunenaCBProfile {
 	* 
 	* Current events: profileIntegration=0/1, avatarIntegration=0/1
 	**/
-	function trigger($event, $params)
+	function trigger($event, &$params)
 	{
-		global $_PLUGINS;
+		global $_PLUGINS, $fbConfig;
+		$params['config'] =& $fbConfig;
 		$_PLUGINS->loadPluginGroup('user');
-		$_PLUGINS->trigger( 'kunenaIntegration', array( $event, $params ) );
+		$_PLUGINS->trigger( 'kunenaIntegration', array( $event, &$fbConfig, &$params ));
 	}
 
 }

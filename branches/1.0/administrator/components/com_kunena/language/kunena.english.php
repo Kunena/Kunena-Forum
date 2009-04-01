@@ -23,6 +23,9 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // 1.0.9
+DEFINE('_KUNENA_INSTALLED_VERSION', 'Installed version');
+DEFINE('_KUNENA_COPYRIGHT', 'Copyright');
+DEFINE('_KUNENA_LICENSE', 'License');
 DEFINE('_KUNENA_PROFILE_NO_USER', 'User does not exist.');
 DEFINE('_KUNENA_PROFILE_NOT_FOUND', 'User has not yet visited forum and has no profile.');
 

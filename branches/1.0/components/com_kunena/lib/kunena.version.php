@@ -17,16 +17,86 @@
 // no direct access
 defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
-include_once($mainframe->getCfg("absolute_path")."/administrator/components/com_kunena/lib/fx.upgrade.class.php");
+require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.debug.php');
 
-global $database;
+// use default translations if none are available
+if (!defined('_KUNENA_INSTALLED_VERSION')) DEFINE('_KUNENA_INSTALLED_VERSION', 'Installed version');
+if (!defined('_KUNENA_COPYRIGHT')) DEFINE('_KUNENA_COPYRIGHT', 'Copyright');
+if (!defined('_KUNENA_LICENSE')) DEFINE('_KUNENA_LICENSE', 'License');
 
-// Determine MySQL version
-$database->setQuery("SELECT VERSION() as mysql_version");
-$mysqlversion = $database->loadResult();
+class CKunenaVersion {
+	/**
+	* Retrieve installed Kunena version as array.
+	*
+	* @return array Contains fields: version, versiondate, build, versionname
+	*/
+	function versionArray()
+	{
+		global $database;
+		static $kunenaversion;
 
-$VersionInfo = fx_Upgrade::getLatestVersion('#__fb_version');
-$KunenaDbVersion = $VersionInfo->version.' | '.$VersionInfo->versiondate.' | '.$VersionInfo->build.' [ '.$VersionInfo->versionname.' ]';
-$KunenaPHPVersion = phpversion();
-$KunenaMySQLVersion = $mysqlversion;
-?>
+		if (!$kunenaversion)
+		{
+			$versionTable = '#__fb_version';
+			$database->setQuery( 	"SELECT
+							`version`,
+							`versiondate`,
+							`installdate`,
+							`build`,
+							`versionname`
+						FROM `$versionTable`
+						ORDER BY `id` DESC LIMIT 1;" );
+			$database->loadObject($kunenaversion) or trigger_dbwarning('Could not load latest Version record.');
+		}
+		return $kunenaversion;
+	}
+
+	/** 
+	* Retrieve installed Kunena version as string.
+	*
+	* @return string "X.Y.Z | YYYY-MM-DD | BUILDNUMBER [versionname]"
+	*/
+	function version()
+	{
+		$version = CKunenaVersion::versionArray();
+		return 'Kunena '.$version->version.' | '.$version->versiondate.' | '.$version->build.' [ '.$version->versionname.' ]';
+	}
+
+	/** 
+	* Retrieve installed Kunena version, copyright and license as string.
+	*
+	* @return string "Installed version: Kunena X.Y.Z | YYYY-MM-DD | BUILDNUMBER [versionname] | © Copyright: Kunena | License: GNU GPL"
+	*/
+	function versionHTML()
+	{
+		$version = CKunenaVersion::version();
+		return _KUNENA_INSTALLED_VERSION.': '.$version.' | '._KUNENA_COPYRIGHT.': &copy; 2008-2009 <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>  | '._KUNENA_LICENSE.': <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a>';
+	}
+
+	/** 
+	* Retrieve MySQL Server version.
+	*
+	* @return string MySQL version
+	*/
+	function MySQLVersion()
+	{
+		static $mysqlversion;
+		if (!$mysqlversion)
+		{
+			$database->setQuery("SELECT VERSION() as mysql_version");
+			$mysqlversion = $database->loadResult();
+		}
+		return $mysqlversion;
+	}
+
+	/** 
+	* Retrieve PHP Server version.
+	*
+	* @return string PHP version
+	*/
+	function PHPVersion()
+	{
+		return phpversion();
+	}
+}
+

@@ -602,27 +602,7 @@ if ($letPass || $is_Moderator)
                                     }
                                     else if ($fbConfig->avatar_src == "cb")
                                     {
-                                        $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$fmessage->userid' AND avatarapproved='1'");
-                                        $avatar = $database->loadResult();
-
-                                        if ($avatar != '')
-                                        {
-                                            //added or modified by mambojoe
-                                            //This now  has the right path to the upload directory and also handles the thumbnail and gallery photos.
-                                            $imgpath = KUNENA_JLIVEURL . '/images/comprofiler/';
-
-                                            if (eregi("gallery/", $avatar) == false)
-                                            $imgpath .= "tn" . $avatar;
-                                            else
-                                            $imgpath .= $avatar;
-
-                                            $msg_avatar = '<span class="fb_avatar"><img src="' . $imgpath . '" alt="" /></span>';
-                                            //added or modified by mambojoe
-                                        }
-                                        else {
-                                            $imgpath = KUNENA_JLIVEURL."/components/com_comprofiler/plugin/language/default_language/images/tnnophoto.jpg";
-                                            $msg_avatar = '<span class="fb_avatar"><img src="' . $imgpath . '" alt="" /></span>';
-                                        }
+                                    	$msg_avatar = '<span class="fb_avatar">'.$kunenaProfile->showAvatar($fmessage->userid).'</span>';
                                     }
                                     else
                                     {
@@ -631,8 +611,10 @@ if ($letPass || $is_Moderator)
                                         if ($avatar != '') {
                                             $msg_avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" /></span>';
                                         }
-
-                                        else {$msg_avatar = '<span class="fb_avatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_nophoto.jpg" alt="" /></span>'; }
+                                        else
+                                        {
+                                        	$msg_avatar = '<span class="fb_avatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_nophoto.jpg" alt="" /></span>'; 
+                                        }
                                     }
                                 }
 

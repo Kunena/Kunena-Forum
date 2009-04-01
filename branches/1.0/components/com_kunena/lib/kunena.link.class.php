@@ -170,7 +170,20 @@ class CKunenaLink
     	// Only create links for valid users
     	if ($userid > 0)
     	{
-   			return CKunenaLink::GetSefHrefLink(KUNENA_PROFILE_LINK_SUFFIX.$userid, $name, '', $rel, $class);
+    		if($fbConfig->fb_profile == 'cb') 
+    		{
+    			$kunenaProfile = CKunenaCBProfile::getInstance();
+    			if ($link = $kunenaProfile->getProfileURL($userid))
+    			{
+    				return CKunenaLink::GetSefHrefLink($link, $name, '', $rel, $class);
+    			}
+    			else 
+    			{
+    				return $name;
+    			}
+    		} else {
+   				return CKunenaLink::GetSefHrefLink(KUNENA_PROFILE_LINK_SUFFIX.$userid, $name, '', $rel, $class);
+    		}
     	}
     	else // supress links for guests
     	{

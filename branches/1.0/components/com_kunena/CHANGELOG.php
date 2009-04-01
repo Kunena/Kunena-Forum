@@ -34,6 +34,11 @@ Kunena 1.0.9
 
 30-March-2009 Matias
 # [#15567] Implement working advanced search: fix user search without search words
++ [#15671] Source code documentation for CKunenaUserprofile class variables
++ [#15671] Added lib/kunena.communitybuilder.php for CB compability
+# [#15671] Workaround for Community Builder: don't redefine $database
++ [#15671] New class CKunenaCBProfile, use it for integration
++ [#15671] Added callback for profile integration changes, code cleanup
 
 30-March-2009 Matias
 # [#15638] Latest member profile link causes fatal error 

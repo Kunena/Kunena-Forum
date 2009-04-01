@@ -146,6 +146,18 @@ $database->loadObject($user);
 
               <td class = "fb-msgview-left">
                 <div class = "fb-msgview-l-cover">
+<?php 
+					if ($fbConfig->fb_profile == 'cb')
+					{
+						 $profileHtml = $kunenaProfile->showProfile($fmessage->userid);
+					}
+					if ($profileHtml)
+					{
+						echo $profileHtml;
+					}
+					else
+					{
+?>
                     <span class = "view-username">
 <?php
                         if ($fmessage->userid > 0)
@@ -281,6 +293,7 @@ $database->loadObject($user);
                     if ($msg_birthdate) {
                         echo $msg_birthdate;
                     }
+				}
                     ?>
 
                 </div>

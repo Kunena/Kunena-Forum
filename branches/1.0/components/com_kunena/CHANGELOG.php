@@ -33,6 +33,9 @@ Legend:
 Kunena 1.0.9
 
 30-March-2009 Matias
+# [#15567] Implement working advanced search: fix user search without search words
+
+30-March-2009 Matias
 # [#15638] Latest member profile link causes fatal error 
 ! Regression: fixed user count and latest user from Forum Stats (1.0.8 behaviour)
 ! Create new profile with default values if profile does not exist

@@ -72,7 +72,7 @@ function showprf($userid, $page)
 		$is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
 
 		// there's no profile; set userid and moderator status.
-		$database->setQuery("INSERT INTO #__fb_users (userid,uhits,moderator) VALUES ('$userid',1,'$is_admin')");
+		$database->setQuery("INSERT INTO #__fb_users (userid,moderator) VALUES ('$userid','$is_admin')");
 		$database->query();
 		check_dberror('Unable to create user profile.');
 

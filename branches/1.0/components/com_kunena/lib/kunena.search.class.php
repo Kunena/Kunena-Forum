@@ -129,6 +129,7 @@ class CKunenaSearch
 		if (strlen($q)>2) $do_search = TRUE;
 		$this->arr_kunena_searchstrings[] = $q;
 	}
+	if (strlen($searchuser)>0) $do_search = TRUE;
         $arr_searchwords = $this->arr_kunena_searchstrings;
 	$this->str_kunena_username = $searchuser;
 
@@ -150,24 +151,25 @@ class CKunenaSearch
 
         for ($x = 0; $x < count($arr_searchwords); $x++)
         {
-            $q = $arr_searchwords[$x];
-            $q = $database->getEscaped(trim(strtolower($q)));
+            $searchword = $arr_searchwords[$x];
+            $searchword = $database->getEscaped(trim(strtolower($searchword)));
+            if (empty($searchword)) continue;
             $matches = array ();
             $not = '';
             $operator = ' OR ';
 
-            if (strstr($q, '-') == $q)
+            if (strstr($searchword, '-') == $searchword)
             {
                 $not = 'NOT';
                 $operator = 'AND';
-                $q = substr($q, 1);
+                $searchword = substr($searchword, 1);
             }
 
             if($titleonly=='0')
             {
-                $querystrings[] = '(t.message ' . $not . ' LIKE \'%' . $q . '%\' ' . $operator . ' m.subject ' . $not . ' LIKE \'%' . $q . '%\')';
+                $querystrings[] = '(t.message ' . $not . ' LIKE \'%' . $searchword . '%\' ' . $operator . ' m.subject ' . $not . ' LIKE \'%' . $searchword . '%\')';
             } else {
-                $querystrings[] = '(m.subject ' . $not . ' LIKE \'%' . $q . '%\')';
+                $querystrings[] = '(m.subject ' . $not . ' LIKE \'%' . $searchword . '%\')';
             }
         }
  
@@ -381,7 +383,7 @@ class CKunenaSearch
 
 <?php
 
-	if (empty($q)) {
+	if (empty($q) && empty($searchuser)) {
 		return;
 	}
 
@@ -438,22 +440,27 @@ class CKunenaSearch
 				$q = trim($q);
 
                 // JJ Add different color
+                $searchlist = $this->get_searchstrings();
                 foreach ($results as $result)
                 {
                     $k = 1 - $k;
                     $ressubject = $result->subject;
                     // Clean up subject
                     $ressubject = stripslashes(smile::purify($ressubject));
-                    $ressubject = preg_replace("/".preg_quote($q, '/')."/i", '<span  class="searchword" >' . $q . '</span>', $ressubject);
                     $resmessage = stripslashes($result->message);
                     // Strip smiles and bbcode out of search results; they look ugly
                     $resmessage = smile::purify($resmessage);
-                    $resmessage = preg_replace("/".preg_quote($q, '/')."/i", '{{' . $q . '}}', $resmessage);
-                    $searchResultList = str_replace("{{", '<span class="fb_search-results">', mb_substr(html_entity_decode_utf8($resmessage), 0, 300));
-                    $searchResultList = str_replace("}}", '</span>', $searchResultList);
+                    $resmessage = mb_substr(html_entity_decode_utf8($resmessage), 0, 300);
+                    $utf8 = (mb_detect_encoding($ressubject . $resmessage . 'a', 'UTF-8,ISO-8859-1') == 'UTF-8') ? "u" : "";
+                    foreach ($searchlist as $searchword)
+                    {
+                        if (empty($searchword)) continue;
+                        $ressubject = preg_replace("/".preg_quote($searchword, '/')."/i".$utf8, '<span  class="searchword" >' . $searchword . '</span>', $ressubject);
+                        $resmessage = preg_replace("/".preg_quote($searchword, '/')."/i".$utf8, '<span  class="searchword" >' . $searchword . '</span>', $resmessage); 
+                    }
                     echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '">';
                     echo '<td  class = "td-1" ><a href="'
-                             . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $result->id . '&amp;catid=' . $result->catid) . '#' . $result->id . '" >' . $ressubject . '</a><br />' . $searchResultList . '<br /><br /></td>';
+                             . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $result->id . '&amp;catid=' . $result->catid) . '#' . $result->id . '" >' . $ressubject . '</a><br />' . $resmessage . '<br /><br /></td>';
                     echo '<td class = "td-2" >' . html_entity_decode_utf8(stripslashes($result->name)) . '</td>';
                     echo '<td class = "td-3" >' . date(_DATETIME, $result->time) . '</td></tr>';
                     echo "\n";

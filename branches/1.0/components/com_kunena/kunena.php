@@ -72,12 +72,10 @@ require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/
 // Get CKunanaUser and CKunenaUsers
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.user.class.php");
 
-global $fbConfig, $KunenaUser, $kunenaProfile;
+global $fbConfig, $kunenaProfile;
 
-// Get data about the current user - its ok to not have a userid = guest
-$KunenaUser = new CKunenaUser($my->id);
 // Load configuration and personal settings for current user
-$fbConfig = new CKunenaConfig($KunenaUser);
+$fbConfig = CKunenaConfig::getInstance();
 
 if ($fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
 {

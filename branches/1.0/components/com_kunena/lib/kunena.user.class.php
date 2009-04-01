@@ -12,6 +12,8 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.config.class.php');
+
 /**
 * Kunena Users Table Class
 * Provides access to the #__fb_users table
@@ -136,10 +138,14 @@ class CKunenaUserprofile extends mosDBTable
 	**/
 	var $showOnline = null;
 	/**
-	* @param database A database connector object
+	* @param userid NULL=current user
 	*/
-	function CKunenaUserprofile(&$database) {
+	function CKunenaUserprofile($userid=null) 
+	{
+		global $database, $my;
 		$this->mosDBTable('#__fb_users', 'userid', $database);
+		if ($userid === null) $userid = $my->id;
+		$this->load($userid);
 	}
 }
 
@@ -264,7 +270,7 @@ class CKunenaUsers
 
 	function CKunenaUsers()
 	{
-		global $fbConfig;
+		$fbConfig =& CKunenaConfig::getInstance();
 		if ($fbConfig->username == 1) $this->mapping['name'] = $this->mapping['username'];
 	}
 
@@ -290,4 +296,3 @@ class CKunenaUsers
 	}
 }
 
-?>

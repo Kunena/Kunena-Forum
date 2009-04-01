@@ -18,9 +18,16 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.debug.php');
+require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.user.class.php');
 
 class CKunenaConfigBase
 {
+    function &getInstance() 
+    {
+        echo '<div>Undefined getInstance() function in derived class!</div>';
+        die();	
+    }
+
     //
     // The following functions MUST be overridden in derived classes
     // Basically an abstract base class that must not be used by itself
@@ -346,6 +353,16 @@ class CKunenaConfig extends CKunenaConfigBase
     // Mandatory overrides from abstract base class
     //
 
+    function &getInstance()
+    {
+        static $instance;
+        if (!$instance) {
+            $userinfo = new CKunenaUserprofile();
+	    $instance = new CKunenaConfig($userinfo);
+	}
+        return $instance;
+    }
+
     function GetClassVars()
     {
         return get_class_vars('CKunenaConfig');
@@ -362,16 +379,9 @@ class CKunenaConfig extends CKunenaConfigBase
 
     	// Only perform overrides if we got a valid user handed to us
     	if (is_object($KunenaUser)==FALSE) return FALSE;
-    	if ($KunenaUser->getID()==0) return FALSE;
+    	if ($KunenaUser->userid==0) return FALSE;
 
-        // Example of setting override:
-        // $this->default_sort = 'desc';
-
-    	// Overload default with user specific from user profile
-    	$database->setQuery("SELECT ordering from #__fb_users where userid=".$KunenaUser->getID());
-    	$orderingNum = $database->loadResult();
-
-        $this->default_sort = $orderingNum ? 'desc' : 'asc';
+        $this->default_sort = $KunenaUser->ordering ? 'desc' : 'asc';
 
         // Add additional Overrides...
 
@@ -379,5 +389,3 @@ class CKunenaConfig extends CKunenaConfigBase
     }
 }
 
-
-?>

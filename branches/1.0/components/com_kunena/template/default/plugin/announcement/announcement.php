@@ -22,6 +22,7 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
+require_once ($mosConfig_absolute_path . "/components/com_kunena/template/default/smile.class.php");
 
 $mainframe->setPageTitle(_ANN_ANNOUNCEMENTS . ' - ' . stripslashes($fbConfig->board_title));
 
@@ -54,7 +55,11 @@ if ($do == "read") {
     $ann = $anns_[0];
     $annID = $ann->id;
     $anntitle = stripslashes($ann->title);
-    $anndescription = stripslashes($ann->description);
+
+	$anndescription = stripslashes(smile::smileReplace($ann->description, 0, $fbConfig->disemoticons, $smileyList));
+	$anndescription = nl2br($anndescription);
+	$anndescription = smile::htmlwrap($anndescription, $fbConfig->wrap);
+
     $anncreated = KUNENA_timeformat(strtotime($ann->created));
     $annpublished = $ann->published;
     $annshowdate = $ann->showdate;

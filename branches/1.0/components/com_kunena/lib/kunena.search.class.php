@@ -327,16 +327,11 @@ class CKunenaSearch
         }
 
 	$catids = split(',', $catids);
-	if (count($catids) > 0)
-	{
+	if (count($catids) > 0 && !in_array(0, $catids)) {
 		foreach ($allowed_forums as $forum)
 		{
 			if (in_array($forum['parent'], $catids)) $catids[] = $forum['id'];
 		}
-	}
-	$allowed_forums = array_keys($allowed_forums);
-
-	if (count($catids) > 0 && !in_array(0, $catids)) {
 		$search_forums = implode(",", array_intersect($allowed_forums, $catids));
 	} else {
 		$search_forums = implode(",", $allowed_forums);

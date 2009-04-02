@@ -34,6 +34,7 @@ Kunena 1.0.9
 
 3-April-2009 Matias
 # [#15671] CB integration: do not pass array() as reference
+# [#15671] CB integration: extra parameters 'subject', 'messagetext' and 'messageobject' to be passed as reference into showProfile()
 
 2-April-2009 fxstein
 + [#15724] Added bbcode and smilie support for forum headers AND descriptions in default AND default_ex

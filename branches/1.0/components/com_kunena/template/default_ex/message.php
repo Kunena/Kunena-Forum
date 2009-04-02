@@ -27,6 +27,13 @@ global $fbConfig;
 unset($user);
 $database->setQuery("SELECT email, name from #__users WHERE `id`={$my->id}");
 $database->loadObject($user);
+if ($fbConfig->fb_profile == 'cb')
+{
+	$msg_params = array('username' => &$msg_username, 'messageobject' => &$fmessage, 'subject' => &$msg_subject, 'messagetext' => &$msg_text);
+	$profileHtml = $kunenaProfile->showProfile($fmessage->userid, $msg_params);
+} else {
+	$profileHtml = null;
+}
 ?>
 
 <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
@@ -147,11 +154,6 @@ $database->loadObject($user);
               <td class = "fb-msgview-left">
                 <div class = "fb-msgview-l-cover">
 <?php 
-					if ($fbConfig->fb_profile == 'cb')
-					{
-						$msg_params = array('username'=>$msg_username);
-						$profileHtml = $kunenaProfile->showProfile($fmessage->userid, $msg_params);
-					}
 					if ($profileHtml)
 					{
 						echo $profileHtml;

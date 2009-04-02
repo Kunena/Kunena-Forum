@@ -53,8 +53,8 @@ if ($do == "read") {
 
     $ann = $anns_[0];
     $annID = $ann->id;
-    $anntitle = $ann->title;
-    $anndescription = $ann->description;
+    $anntitle = stripslashes($ann->title);
+    $anndescription = stripslashes($ann->description);
     $anncreated = KUNENA_timeformat(strtotime($ann->created));
     $annpublished = $ann->published;
     $annshowdate = $ann->showdate;
@@ -193,7 +193,7 @@ if ($is_editor) {
                                 </td>
 
                                 <td class = "td-3"  align="left">
-                                    <a href = "<?php echo $readlink;?><?php echo $row->id; ?>"><?php echo $row->title; ?></a>
+                                    <a href = "<?php echo $readlink;?><?php echo $row->id; ?>"><?php echo stripslashes($row->title); ?></a>
                                 </td>
 
                                 <td class = "td-4"  align="center">
@@ -234,9 +234,9 @@ if ($is_editor) {
     // BEGIN: ADD ANN
     if ($do == "doadd") {
         mosMakeHtmlSafe ($_POST);
-        $title = mosGetParam($_REQUEST, "title", "");
-        $description = mosGetParam($_REQUEST, "description", "", _MOS_ALLOWRAW);
-        $sdescription = mosGetParam($_REQUEST, "sdescription", "", _MOS_ALLOWRAW);
+        $title = addslashes(mosGetParam($_REQUEST, "title", ""));
+        $description = addslashes(mosGetParam($_REQUEST, "description", "", _MOS_ALLOWRAW));
+        $sdescription = addslashes(mosGetParam($_REQUEST, "sdescription", "", _MOS_ALLOWRAW));
         $created = mosGetParam($_REQUEST, "created", "");
         $published = mosGetParam($_REQUEST, "published", 0);
         $showdate = mosGetParam($_REQUEST, "showdate", "");
@@ -357,9 +357,9 @@ if ($is_editor) {
     // BEGIN: EDIT ANN
     if ($do == "doedit") {
         mosMakeHtmlSafe ($_POST);
-        $title = mosGetParam($_REQUEST, "title", "");
-        $description = mosGetParam($_REQUEST, "description", "", _MOS_ALLOWRAW);
-        $sdescription = mosGetParam($_REQUEST, "sdescription", "", _MOS_ALLOWRAW);
+        $title = addslashes(mosGetParam($_REQUEST, "title", ""));
+        $description = addslashes(mosGetParam($_REQUEST, "description", "", _MOS_ALLOWRAW));
+        $sdescription = addslashes(mosGetParam($_REQUEST, "sdescription", "", _MOS_ALLOWRAW));
         $created = mosGetParam($_REQUEST, "created", "");
         $published = mosGetParam($_REQUEST, "published", 0);
         $showdate = mosGetParam($_REQUEST, "showdate", "");
@@ -378,9 +378,9 @@ if ($is_editor) {
 
         $ann = $anns[0];
         $annID = $ann->id;
-        $anntitle = $ann->title;
-        $annsdescription = $ann->sdescription;
-        $anndescription = $ann->description;
+        $anntitle = stripslashes($ann->title);
+        $annsdescription = stripslashes($ann->sdescription);
+        $anndescription = stripslashes($ann->description);
         $anncreated = $ann->created;
         $annpublished = $ann->published;
         $annordering = $ann->ordering;

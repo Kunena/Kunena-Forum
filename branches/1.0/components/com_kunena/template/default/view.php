@@ -261,7 +261,13 @@ if ($letPass || $is_Moderator)
         </div>
         <!-- top nav -->
         <?php if($objCatInfo->headerdesc) { ?>
-        <div class="fb_forum-headerdesc"><?php echo stripslashes($objCatInfo->headerdesc); ?></div>
+        <div class="fb_forum-headerdesc"><?php
+        			$headerdesc = stripslashes(smile::smileReplace($objCatInfo->headerdesc, 0, $fbConfig->disemoticons, $smileyList));
+			        $headerdesc = nl2br($headerdesc);
+			        //wordwrap:
+			        $headerdesc = smile::htmlwrap($headerdesc, $fbConfig->wrap);
+					echo $headerdesc;
+        ?></div>
         <?php } ?>
         <table border = "0" cellspacing = "0" class = "jr-topnav" cellpadding = "0" width="100%">
             <tr>

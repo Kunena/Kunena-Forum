@@ -23,10 +23,10 @@ defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // Need purify function for search result display
 if (file_exists(KUNENA_ABSTMPLTPATH."/smile.class.php")) {
-  include_once(KUNENA_ABSTMPLTPATH."/smile.class.php");
+  require_once(KUNENA_ABSTMPLTPATH."/smile.class.php");
 }
 else {
-  include(KUNENA_ABSPATH . '/template/default/smile.class.php');
+  require_once(KUNENA_ABSPATH . '/template/default/smile.class.php');
 }
 
 DEFINE('KUNENA_URL_LIST_SEPARATOR', 'x');
@@ -42,7 +42,7 @@ class CKunenaSearch
     /** search strings **/
     var $arr_kunena_searchstrings;
     /** search username **/
-    var $str_kunena_username;  
+    var $str_kunena_username;
     /** error number **/
     var $int_kunena_errornr;
     /** error msg **/
@@ -123,7 +123,7 @@ class CKunenaSearch
         $arr_searchwords = split(' ', $q);
 	$do_search = FALSE;
 	$this->arr_kunena_searchstrings = array();
-	foreach ($arr_searchwords as $q) 
+	foreach ($arr_searchwords as $q)
 	{
 		$q = trim($q);
 		if (strlen($q)>2) $do_search = TRUE;
@@ -172,13 +172,13 @@ class CKunenaSearch
                 $querystrings[] = '(m.subject ' . $not . ' LIKE \'%' . $searchword . '%\')';
             }
         }
- 
+
 	//User searching
         if(strlen($searchuser)>0)
         {
-            if($exactname=='1') { 
-                $querystrings[] = 'm.name LIKE \'' . $searchuser . '\''; 
-            } else { 
+            if($exactname=='1') {
+                $querystrings[] = 'm.name LIKE \'' . $searchuser . '\'';
+            } else {
                 $querystrings[] = 'm.name LIKE \'%' . $searchuser . '%\'';
             }
         }
@@ -194,7 +194,7 @@ class CKunenaSearch
 		case '1':
 		case '7':
 		case '14':
-		case '30':						
+		case '30':
 		case '90':
 		case '180':
 		case '365':
@@ -202,7 +202,7 @@ class CKunenaSearch
                         break;
 		default:
 			$time = time() - 86400*365;
-			$searchdate = '365';					
+			$searchdate = '365';
 	}
 
 	if ($time) {
@@ -235,10 +235,10 @@ class CKunenaSearch
 */
         case 'forum':
 		$orderby = 'm.catid '.$order1.', m.time '.$order1.', m.ordering '.$order1;
-		break;        
+		break;
 /*
-        case 'replycount':        
-        case 'postusername':	                                   
+        case 'replycount':
+        case 'postusername':
 */
         case 'lastpost':
         default:
@@ -285,11 +285,11 @@ class CKunenaSearch
     }
     function get_searchusername() {
         return $this->str_kunena_username;
-    }    
-    function utf8_urldecode($str) { 
-        $str = preg_replace("/%u([0-9a-f]{3,4})/i","\1;",urldecode($str)); 
-        return html_entity_decode($str,ENT_NOQUOTES,'UTF-8' ); 
-    } 
+    }
+    function utf8_urldecode($str) {
+        $str = preg_replace("/%u([0-9a-f]{3,4})/i","\1;",urldecode($str));
+        return html_entity_decode($str,ENT_NOQUOTES,'UTF-8' );
+    }
     /** get limit (int) **/
     function get_limit() {
         return $this->limit;
@@ -324,8 +324,8 @@ class CKunenaSearch
             $database->setQuery("SELECT id, parent, published FROM #__fb_categories WHERE pub_access='0' AND published='1'");
             $allowed_forums = $database->loadAssocList('id');
             check_dberror("Unable to get public categories.");
-        }  
-	
+        }
+
 	$catids = split(',', $catids);
 	if (count($catids) > 0)
 	{
@@ -342,7 +342,7 @@ class CKunenaSearch
 		$search_forums = implode(",", $allowed_forums);
 	}
 	return $search_forums;
-    }    
+    }
     /**
      * Display results
      * @param string actionstring
@@ -456,7 +456,7 @@ class CKunenaSearch
                     {
                         if (empty($searchword)) continue;
                         $ressubject = preg_replace("/".preg_quote($searchword, '/')."/i".$utf8, '<span  class="searchword" >' . $searchword . '</span>', $ressubject);
-                        $resmessage = preg_replace("/".preg_quote($searchword, '/')."/i".$utf8, '<span  class="searchword" >' . $searchword . '</span>', $resmessage); 
+                        $resmessage = preg_replace("/".preg_quote($searchword, '/')."/i".$utf8, '<span  class="searchword" >' . $searchword . '</span>', $resmessage);
                     }
                     echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '">';
                     echo '<td  class = "td-1" ><a href="'

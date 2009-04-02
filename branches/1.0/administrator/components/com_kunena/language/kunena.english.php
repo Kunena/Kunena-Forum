@@ -95,11 +95,18 @@ DEFINE('_KUNENA_SAMPLE_MAIN_CATEGORY_TITLE', 'Main Forum');
 DEFINE('_KUNENA_SAMPLE_MAIN_CATEGORY_DESC', 'This is the main forum category. As a level one category it serves as a container for individual boards or forums. It is also referred to as a level 1 category and is a must have for any Kunena Forum setup.');
 DEFINE('_KUNENA_SAMPLE_MAIN_CATEGORY_HEADER', 'In order to provide additional information for you guests and members, the forum header can be leveraged to display text at the very top of a particular category.');
 DEFINE('_KUNENA_SAMPLE_FORUM1_TITLE', 'Welcome Mat');
-DEFINE('_KUNENA_SAMPLE_FORUM1_DESC', 'We encourage new members to post a short introduction of themselves in this forum category. Get to know each other and share you common interests.<br>');
-DEFINE('_KUNENA_SAMPLE_FORUM1_HEADER', '<strong>Welcome to the Kunena forum!</strong><br><br>Tell us and our members who you are, what you like and why you became a member of this site.<br>We welcome all new members and hope to see you around a lot!<br>');
+DEFINE('_KUNENA_SAMPLE_FORUM1_DESC', 'We encourage new members to post a short introduction of themselves in this forum category. Get to know each other and share you common interests.
+');
+DEFINE('_KUNENA_SAMPLE_FORUM1_HEADER', '[b]Welcome to the Kunena forum![/b]
+
+Tell us and our members who you are, what you like and why you became a member of this site.
+We welcome all new members and hope to see you around a lot!
+');
 DEFINE('_KUNENA_SAMPLE_FORUM2_TITLE', 'Suggestion Box');
-DEFINE('_KUNENA_SAMPLE_FORUM2_DESC', 'Have some feedback and input to share?<br>Don\'t be shy and drop us a note. We want to hear from you and strive to make our site better and more user friendly for our guests and members a like.');
-DEFINE('_KUNENA_SAMPLE_FORUM2_HEADER', 'This is the optional Forum header for the Suggestion Box.<br>');
+DEFINE('_KUNENA_SAMPLE_FORUM2_DESC', 'Have some feedback and input to share?
+Don\'t be shy and drop us a note. We want to hear from you and strive to make our site better and more user friendly for our guests and members a like.');
+DEFINE('_KUNENA_SAMPLE_FORUM2_HEADER', 'This is the optional Forum header for the Suggestion Box.
+');
 DEFINE('_KUNENA_SAMPLE_POST1_SUBJECT', 'Welcome to Kunena!');
 DEFINE('_KUNENA_SAMPLE_POST1_TEXT', '[size=4][b]Welcome to Kunena![/b][/size]
 
@@ -116,16 +123,16 @@ Kunena, translated from Swahili meaning "to speak", is built by a team of open s
 [b]Kunena Support Forum[/b]: http://www.kunena.com/forum
 (http://www.kunena.com/index.php?option=com_kunena&Itemid=125)
 
-[b]Kunena Downloads:[/b] http://www.kunena.com/downloads
+[b]Kunena Downloads:[/b] [url=http://joomlacode.org/gf/project/kunena/frs/]http://www.kunena.com/downloads[/url]
 (http://joomlacode.org/gf/project/kunena/frs/)
 
 [b]Kunena Blog:[/b] http://www.kunena.com/blog
 (http://www.kunena.com/index.php?option=com_content&view=section&layout=blog&id=7&Itemid=128)
 
-[b]Submit your feature ideas:[/b] http://www.kunena.com/uservoice
+[b]Submit your feature ideas:[/b] [url=http://kunena.uservoice.com/pages/general?referer_type=top3]http://www.kunena.com/uservoice[/url]
 (http://kunena.uservoice.com/pages/general?referer_type=top3)
 
-[b]Follow Kunena on Twitter:[/b] http://www.kunena.com/twitter
+[b]Follow Kunena on Twitter:[/b] [url=https://twitter.com/kunena]http://www.kunena.com/twitter[/url
 (https://twitter.com/kunena)');
 
 // 1.0.6

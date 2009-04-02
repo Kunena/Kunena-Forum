@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.9
 
+1-April-2009 fxstein
+# [#15761] Regression fix: Added missing php close tag to class.kunena.php
+
 1-April-2009 Matias
 ^ [#15671] CB integration: Changed CB Migration API
 ^ [#15671] CB integration: If internal fbprofile page is accessed, forward request to CB
@@ -48,7 +51,7 @@ Kunena 1.0.9
 + [#15671] CB integration: Added callback for profile integration changes, code cleanup
 
 30-March-2009 Matias
-# [#15638] Latest member profile link causes fatal error 
+# [#15638] Latest member profile link causes fatal error
 ! Regression: fixed user count and latest user from Forum Stats (1.0.8 behaviour)
 ! Create new profile with default values if profile does not exist
 

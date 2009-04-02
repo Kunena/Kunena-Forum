@@ -295,4 +295,4 @@ class CKunenaUsers
 		return $this->get($my->id);
 	}
 }
-
+?>

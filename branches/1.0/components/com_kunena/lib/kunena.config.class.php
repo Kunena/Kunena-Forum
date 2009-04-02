@@ -389,3 +389,4 @@ class CKunenaConfig extends CKunenaConfigBase
     }
 }
 
+?>

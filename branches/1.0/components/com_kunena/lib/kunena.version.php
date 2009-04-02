@@ -99,4 +99,4 @@ class CKunenaVersion {
 		return phpversion();
 	}
 }
-
+?>

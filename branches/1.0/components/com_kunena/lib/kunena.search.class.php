@@ -553,4 +553,3 @@ function KunenaSearchPagination($function, $q, $urlparams, $page, $limit, $total
 }
 
 ?>
-

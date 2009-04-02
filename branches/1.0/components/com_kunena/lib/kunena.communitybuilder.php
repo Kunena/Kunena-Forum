@@ -66,11 +66,13 @@ class CKunenaCBProfile {
 		else return '<img'.$class.' src="'.$cbUser->avatarFilePath( 2 ).'" alt="" />';
 	}
 	
-	function showProfile($userid, &$kuserprofile=null) 
+	function showProfile($userid, &$msg_params) 
 	{
 		global $_PLUGINS, $fbConfig;
+		$userprofile = new CKunenaUserprofile($userid);
 		$_PLUGINS->loadPluginGroup('user');		
-		return implode( '', $_PLUGINS->trigger( 'forumSideProfile', array( 'kunena', null, $userid, array( 'config'=> &$fbConfig, 'profile'=> &$kuserprofile) ) ) );
+		return implode( '', $_PLUGINS->trigger( 'forumSideProfile', array( 'kunena', null, $userid, 
+			array( 'config'=> &$fbConfig, 'userprofile'=> &$userprofile, 'msg_params'=>&$msg_params) ) ) );
 	}
 	
 	/**
@@ -87,3 +89,4 @@ class CKunenaCBProfile {
 	}
 
 }
+?>

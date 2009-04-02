@@ -32,6 +32,10 @@ Legend:
 
 Kunena 1.0.9
 
+2-April-2009 Matias
+^ [#15671] CB integration: Show Profile: Provide all needed information to CB plugin (Kunena Profile, username from message)
+# [#15761] Added missing php close tags in lib/ where they were missing
+
 1-April-2009 fxstein
 # [#15761] Regression fix: Added missing php close tag to class.kunena.php
 

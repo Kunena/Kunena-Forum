@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.9
 
+3-April-2009 Matias
+# [#15671] CB integration: do not pass array() as reference
+
 2-April-2009 fxstein
 + [#15724] Added bbcode and smilie support for forum headers AND descriptions in default AND default_ex
 + [#15724] Added bbcode and smilie support to forum announcements

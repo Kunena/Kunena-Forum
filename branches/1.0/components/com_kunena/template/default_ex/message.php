@@ -149,7 +149,8 @@ $database->loadObject($user);
 <?php 
 					if ($fbConfig->fb_profile == 'cb')
 					{
-						$profileHtml = $kunenaProfile->showProfile($fmessage->userid, array('username'=>$msg_username));
+						$msg_params = array('username'=>$msg_username
+						$profileHtml = $kunenaProfile->showProfile($fmessage->userid, $msg_params));
 					}
 					if ($profileHtml)
 					{

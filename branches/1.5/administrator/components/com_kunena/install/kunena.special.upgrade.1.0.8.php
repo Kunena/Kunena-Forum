@@ -7,7 +7,7 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
 *
-* Kunena Upgrade file for 1.0.5
+* Kunena Upgrade file for 1.0.8
 * component: com_kunena
 **/
 

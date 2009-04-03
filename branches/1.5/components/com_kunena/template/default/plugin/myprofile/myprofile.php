@@ -21,6 +21,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+require_once (KUNENA_PATH_LIB .DS. "kunena.user.class.php");
+
 global $fbConfig;
 
 $mainframe->setPageTitle(_GEN_MYPROFILE . ' - ' . stripslashes($fbConfig->board_title));
@@ -31,8 +33,7 @@ if ($my->id != "" && $my->id != 0)
     $juserinfo = new JUser($my->id);
 
     //Get userinfo needed later on, this limits the amount of queries
-    $userinfo = new fbUserprofile($database);
-    $userinfo->load($my->id);
+    $userinfo = new CKunenaUserprofile();
 
     //use ClexusPM avatar if configured
     if ($fbConfig->avatar_src == "clexuspm")
@@ -285,7 +286,7 @@ if ($my->id != "" && $my->id != 0)
         return;
     }
 
-        $rowu = new fbUserprofile( $database );
+        $rowu = new CKunenaUserprofile( $database );
         $rowu->load( (int)$user_id );
 
                     $deleteSig = JRequest::getVar('deleteSig', 0);

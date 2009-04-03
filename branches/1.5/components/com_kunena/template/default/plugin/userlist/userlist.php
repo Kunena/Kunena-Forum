@@ -45,14 +45,14 @@ function list_users()
     $limit = JRequest::getInt('limit', $fbConfig->userlist_rows);
 
     // Total
-    $database->setQuery("SELECT count(id) FROM #__users");
+    $database->setQuery("SELECT count(*) FROM #__users");
     $total_results = $database->loadResult();
 
     // Search total
-    $query = "SELECT count(id) FROM #__users";
+    $query = "SELECT count(*) FROM #__users AS u INNER JOIN #__fb_users AS fu ON u.id=fu.userid";
 
     if ($search != "") {
-        $query .= " WHERE (name LIKE '%$search%' OR username LIKE '%$search%')";
+        $query .= " WHERE (u.name LIKE '%$search%' OR u.username LIKE '%$search%')";
     }
 
     $database->setQuery($query);
@@ -414,27 +414,8 @@ class HTML_userlist_content
                                 }
                                 else if ($fbConfig->avatar_src == "cb")
                                 {
-                                    $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$ulrow->id' AND avatarapproved='1'");
-                                    $avatar = $database->loadResult();
-
-                                    //This now  has the right path to the upload directory and also handles the thumbnail and gallery photos.
-                                    $imgpath = KUNENA_JLIVEURL . '/images/comprofiler/';
-                                    if ($avatar != '')
-                                    {
-
-                                        if (eregi("gallery/", $avatar) == false) {
-                                            $imgpath .= "tn" . $avatar;
-                                        }
-                                        else {
-                                            $imgpath .= $avatar;
-                                        }
-
-                                        $uslavatar = '<img  border="0" class="usl_avatar" src="' . $imgpath . '" alt="" />';
-                                    }
-                                    else {
-                                        $imgpath = KUNENA_JLIVEURL."/components/com_comprofiler/plugin/language/default_language/images/tnnophoto.jpg";
-                                        $uslavatar = '<img  border="0" class="usl_avatar" src="' . $imgpath . '" alt="" />';
-                                    }
+                                	$kunenaProfile = CKunenaCBProfile::getInstance();
+									$uslavatar = $kunenaProfile->showAvatar($ulrow->id);
                                 }
                                 else
                                 {

@@ -41,12 +41,14 @@ function trigger_dberror($text = '')
 	global $mainframe;
 	echo debug_callstackinfo();
 
-	include (KUNENA_PATH_LIB .DS. 'kunena.version.php');
-	// << $KunenaDbVersion
+	require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
+	$kunenaVersion = CKunenaVersion::version();
+	$kunenaPHPVersion = CKunenaVersion::PHPVersion();
+	$kunenaMySQLVersion = CKunenaVersion::MySQLVersion();
 ?>
  <!-- Version Info -->
 <div class="fbfooter">
-Installed version:  <?php echo $KunenaDbVersion; ?> | php <?php echo $KunenaPHPVersion; ?> | mysql <?php echo $KunenaMySQLVersion; ?>
+Installed version:  <?php echo $kunenaVersion; ?> | php <?php echo $kunenaPHPVersion; ?> | mysql <?php echo $kunenaMySQLVersion; ?>
 </div>
 <!-- /Version Info -->
 <?php
@@ -60,6 +62,15 @@ function check_dberror($text='')
 	if ($database->_errorNum != 0)
 	{
 		trigger_dberror($text);
+	}
+}
+
+function check_dbwarning($text='')
+{
+	$database = &JFactory::getDBO();
+	if ($database->_errorNum != 0)
+	{
+		trigger_dbwarning($text);
 	}
 }
 

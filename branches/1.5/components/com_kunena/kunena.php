@@ -81,14 +81,21 @@ require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 // Get CKunanaUser and CKunenaUsers
 require_once (KUNENA_PATH_LIB .DS. "kunena.user.class.php");
 
-global $fbConfig, $KunenaUser;
+global $fbConfig, $kunenaProfile;
 
 $my = &JFactory::getUser();
 
 // Get data about the current user - its ok to not have a userid = guest
 $KunenaUser = new CKunenaUser($my->id);
 // Load configuration and personal settings for current user
-$fbConfig = new CKunenaConfig($KunenaUser);
+$fbConfig = CKunenaConfig::getInstance();
+
+if ($fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
+{
+	// Get Community Builder compability
+	require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.communitybuilder.php");
+	$kunenaProfile =& new CkunenaCBProfile();
+}
 
 global $lang, $fbIcons;
 global $is_Moderator;
@@ -174,32 +181,35 @@ if ($func == "showcaptcha") {
 
 $document =& JFactory::getDocument();
 
-// Add required header tags
-if (defined('KUNENA_JQURL'))
+if ($func != 'fb_rss' && $func != 'fb_pdf')
 {
-	$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
+	// Add required header tags
+	if (defined('KUNENA_JQURL'))
+	{
+		$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
+	}
+
+	// inline jscript with image location
+	$document->addCustomTag('<script type="text/javascript">
+	jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";</script>');
+
+	if (defined('KUNENA_COREJSURL'))
+	{
+		$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_COREJSURL . '"></script>');
+	}
+
+	if ($fbConfig->joomlastyle < 1) {
+	        if (file_exists(KUNENA_JTEMPLATEPATH.'/css/kunena.forum.css')) {
+	           $document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_JTEMPLATEURL . '/css/kunena.forum.css" />');
+	                }
+	        else {
+	         $document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_TMPLTCSSURL . '" />');
+	         }
+	    }
+	else {
+	   $document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_DIRECTURL . '/template/default/joomla.css" />');
+	    }
 }
-
-// inline jscript with image location
-$document->addCustomTag('<script type="text/javascript">
-jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";</script>');
-
-if (defined('KUNENA_COREJSURL'))
-{
-	$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_COREJSURL . '"></script>');
-}
-
-if ($fbConfig->joomlastyle < 1) {
-        if (file_exists(KUNENA_JTEMPLATEPATH.'/css/kunena.forum.css')) {
-           $document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_JTEMPLATEURL . '/css/kunena.forum.css" />');
-                }
-        else {
-         $document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_TMPLTCSSURL . '" />');
-         }
-    }
-else {
-   $document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_DIRECTURL . '/template/default/joomla.css" />');
-    }
 
 // WHOIS ONLINE IN FORUM
 if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/who/who.class.php')) {
@@ -780,33 +790,11 @@ else
 
         #########################################################################################
         case 'search':
+        case 'advsearch':
             require_once (KUNENA_PATH_LIB .DS. 'kunena.search.class.php');
 
-            $searchword = JRequest::getVar('searchword', '');
-
-            $KunenaSearch = &new CKunenaSearch($database, $searchword, $my->id, $limitstart, $fbConfig->messages_per_page_search);
-            $KunenaSearch->show();
-            break;
-
-        //needs work ... still in progress
-        case 'advsearch':
-            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php')) {
-                include (KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php');
-                }
-            else {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/advancedsearch/advsearch.php');
-                }
-
-            break;
-
-        case 'advsearchresult':
-            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearchresult.php')) {
-                include (KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearchresult.php');
-                }
-            else {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/advancedsearch/advsearchresult.php');
-                }
-
+            $kunenaSearch = &new CKunenaSearch();
+            $kunenaSearch->show();
             break;
 
         #########################################################################################

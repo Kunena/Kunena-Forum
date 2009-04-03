@@ -59,7 +59,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 	    $text = preg_replace('/(?<!S)((http(s?):\/\/)|(www.))+([a-zA-Z0-9\/*+-_?&;:%=.,#]+)/', '<a href="http$3://$4$5" target="_blank" rel="nofollow">$4$5</a>', $text);
 
 	    // match name@address
-	    $text = preg_replace('/(?<!S)([a-zA-Z0-9_.\-]+\@[a-zA-Z][a-zA-Z0-9_.\-]+[a-zA-Z]{2,6})/', '<a href="mailto://$1">$1</a>', $text);
+	    $text = preg_replace('/(?<!S)([a-zA-Z0-9_.\-]+\@[a-zA-Z][a-zA-Z0-9_.\-]+[a-zA-Z]{2,6})/', '<a href="mailto:$1">$1</a>', $text);
 
 	    return substr($text, 1, -1);
 	}
@@ -643,10 +643,10 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 										'imgElement = document.getElementById(imgElementID);'.
 										'if (targetElement.style.display == "none") {'.
 											'targetElement.style.display = "";'.
-											'imgElement.src = "/components/com_kunena/template/default/images/english/emoticons/w00t.png";'.
+											'imgElement.src = "'.KUNENA_JLIVEURL.'/components/com_kunena/template/default/images/english/emoticons/w00t.png";'.
 										'} else {'.
 											'targetElement.style.display = "none";'.
-											'imgElement.src = "/components/com_kunena/template/default/images/english/emoticons/pinch.png";'.
+											'imgElement.src = "'.KUNENA_JLIVEURL.'/components/com_kunena/template/default/images/english/emoticons/pinch.png";'.
 										'}}	</script>';
                     }
                     else
@@ -659,7 +659,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                     $randomid = rand();
 
                     $tag_new .= '<div id="'.$randomid.'" onClick="javascript:fb_showDetail(this);" style="cursor:pointer;"><img id="'.$randomid.'_img"'.
-                    			'src="/components/com_kunena/template/default/images/english/emoticons/pinch.png" border="0"> <strong>'.
+                    			'src="'.KUNENA_JLIVEURL.'/components/com_kunena/template/default/images/english/emoticons/pinch.png" border="0"> <strong>'.
                     			(isset($tag->options["title"]) ? ($tag->options["title"]) : (_KUNENA_BBCODE_SPOILER))
                     			. '</strong></div><div id="'. $randomid . '_details" style="display:None;"><span class="fb_quote">' . $between . '</span></div>';
 

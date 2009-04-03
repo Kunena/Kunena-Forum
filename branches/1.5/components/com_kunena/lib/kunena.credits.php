@@ -76,15 +76,11 @@ global $is_Moderator;
 </div>
 
 <?php
-include (KUNENA_PATH_LIB .DS. 'kunena.version.php');
+require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 // << $KunenaDbVersion
 ?>
  <!-- Version Info -->
-<div class="fbfooter">
-Installed version:  <?php echo $KunenaDbVersion; ?> |
-&copy; Copyright: <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>  |
-License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a>
-</div>
+<div class="fbfooter"><?php echo CKunenaVersion::versionHTML(); ?></div>
 <!-- /Version Info -->
 
 <!-- Begin: Forum Jump -->

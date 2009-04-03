@@ -28,6 +28,13 @@ unset($user);
 $database = &JFactory::getDBO();
 $database->setQuery("SELECT email, name from #__users WHERE `id`={$my->id}");
 $user = $database->loadObject();
+if ($fbConfig->fb_profile == 'cb')
+{
+	$msg_params = array('username' => &$msg_username, 'messageobject' => &$fmessage, 'subject' => &$msg_subject, 'messagetext' => &$msg_text);
+	$profileHtml = $kunenaProfile->showProfile($fmessage->userid, $msg_params);
+} else {
+	$profileHtml = null;
+}
 ?>
 
 <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
@@ -49,9 +56,9 @@ $user = $database->loadObject();
                         <td align = "left">
                             <?php
                             $msg_time_since = _KUNENA_TIME_SINCE;
-                            $msg_time_since = str_replace('%time%', time_since($fmessage->time , CKunenaTools::fbGetInternalTime()), $msg_time_since);
+                            $msg_time_since = str_replace('%time%', time_since($fmessage->time, CKunenaTools::fbGetInternalTime()), $msg_time_since);
 
-                            if ($prevCheck < $msg_time && !in_array($fmessage->thread, $read_topics)) {
+                            if ($prevCheck < $fmessage->time && !in_array($fmessage->thread, $read_topics)) {
                                 $msgtitle = 'msgtitle_new';
                             } else {
                                 $msgtitle = 'msgtitle';
@@ -147,6 +154,14 @@ $user = $database->loadObject();
 
               <td class = "fb-msgview-left">
                 <div class = "fb-msgview-l-cover">
+<?php 
+					if ($profileHtml)
+					{
+						echo $profileHtml;
+					}
+					else
+					{
+?>
                     <span class = "view-username">
 <?php
                         if ($fmessage->userid > 0)
@@ -282,6 +297,7 @@ $user = $database->loadObject();
                     if ($msg_birthdate) {
                         echo $msg_birthdate;
                     }
+				}
                     ?>
 
                 </div>
@@ -320,22 +336,19 @@ if ($msg_signature) {
 ?>
 	<td valign="bottom">
 	<div class="fb_message_buttons_cover">
-                <span id = "fb_qr_sc__<?php echo $msg_id;?>" class = "fb_qr_fire" style = "cursor:hand; cursor:pointer">
-
                 <?php
                 //we should only show the Quick Reply section to registered users. otherwise we are missing too much information!!
                 /*    onClick="expandcontent(this, 'sc<?php echo $msg_id;?>')" */
-                if ($my->id > 0 && !$msg_closed)
-                {
+                if ($my->id > 0 && !$msg_closed):
                 ?>
-
+                <span id = "fb_qr_sc__<?php echo $msg_id;?>" class = "fb_qr_fire" style = "cursor:hand; cursor:pointer">
                 <?php echo
                     $fbIcons['quickmsg']
                         ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['quickmsg'] . '" border="0" alt="' . _KUNENA_QUICKMSG . '" />' . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _KUNENA_QUICKMSG . '" />'; ?>
-                <?php
-                }
-                ?>
                 </span>
+                <?php
+                endif;
+                ?>
 
                 <?php
                 if ($fbIcons['reply'])

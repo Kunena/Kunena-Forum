@@ -247,12 +247,19 @@ if ($letPass || $is_Moderator)
 <table class="fb_forum-headerdesc" border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tr>
 		<td>
-		<?php echo stripslashes($objCatInfo->headerdesc); ?>
+		<?php
+		$headerdesc = stripslashes(smile::smileReplace($objCatInfo->headerdesc, 0, $fbConfig->disemoticons, $smileyList));
+        $headerdesc = nl2br($headerdesc);
+        //wordwrap:
+        $headerdesc = smile::htmlwrap($headerdesc, $fbConfig->wrap);
+		echo $headerdesc;
+		?>
 		</td>
 	</tr>
 </table>
 <?php } ?>
-<!-- top nav -->
+
+<!-- B: List Actions -->
 
 	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0" width="100%">
 		<tr>
@@ -300,7 +307,8 @@ if ($letPass || $is_Moderator)
             </td>
         </tr>
     </table>
-<!-- /top nav -->
+
+<!-- F: List Actions -->
 
 <?php
     //(JJ)
@@ -349,9 +357,7 @@ if ($letPass || $is_Moderator)
     }
     ?>
 
-<!-- bottom nav -->
-
-<!-- B: List Actions -->
+<!-- B: List Actions Bottom -->
 
 	<table class="fb_list_actions_bottom" border="0" cellpadding="0" cellspacing="0" width="100%">
 		<tr>
@@ -372,7 +378,6 @@ if ($letPass || $is_Moderator)
 	        echo ' '.$forum_markread;
 	        echo '</div>';
 		}
-		echo '</td>';
 		?>
 
 		</td><td class="fb_list_pages_all" nowrap="nowrap">
@@ -393,7 +398,7 @@ if ($letPass || $is_Moderator)
 	echo '</div>';
 	?>
 
-<!-- F: List Actions -->
+<!-- F: List Actions Bottom -->
 
 <!-- B: Category List Bottom -->
 
@@ -417,7 +422,7 @@ if ($letPass || $is_Moderator)
                         <?php
 				echo '' . _GEN_MODERATORS . ": ";
 				foreach ($modslist as $mod) {
-					echo '&nbsp;'.CKunenaLink::GetProfileLink($fbConfig, $mod->userid, $mod->username).'&nbsp; ';
+					echo CKunenaLink::GetProfileLink($fbConfig, $mod->userid, $mod->username).'&nbsp; ';
 				} ?>
 			</div>
 	<?php endif; ?>

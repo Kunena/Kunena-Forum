@@ -804,44 +804,6 @@ class CKunenaTools {
     } // end of class
 
 /**
-* Users Table Class
-* Provides access to the #__fb_users table
-*/
-class fbUserprofile
-    extends JTable {
-    var $userid = null;
-    var $view = null;
-    var $signature = null;
-    var $moderator = null;
-    var $ordering = null;
-    var $posts = null;
-    var $avatar = null;
-    var $karma = null;
-    var $karma_time = null;
-    var $group_id = null;
-    var $uhits = null;
-    var $personalText = null;
-    var $gender = null;
-    var $birthdate = null;
-    var $location = null;
-    var $ICQ = null;
-    var $AIM = null;
-    var $YIM = null;
-    var $MSN = null;
-    var $SKYPE = null;
-	var $GTALK = null;
-	var $websitename = null;
-	var $websiteurl = null;
-    var $hideEmail = null;
-    var $showOnline = null;
-    /**
-    * @param database A database connector object
-    */
-    function __construct(&$database) {
-        parent::__construct('#__fb_users', 'userid', $database);
-        }
-    }
-/**
 * Moderator Table Class
 *
 * Provides access to the #__fb_moderator table
@@ -961,10 +923,10 @@ function JJ_categoryArray($admin=0) {
     global $aro_group;
 
     // get a list of the menu items
-	$query = "SELECT c.* FROM #__fb_categories c";
+	$query = "SELECT * FROM #__fb_categories";
 	if(!$admin) {
-		if ($fbSession) {
-			$query .= " WHERE c.id IN ($fbSession->allowed)";
+		if ($fbSession && $fbSession->allowed != 'na') {
+			$query .= " WHERE id IN ($fbSession->allowed)";
 		} else {
 			$query .= " WHERE pub_access=0 AND published=1";
 		}
@@ -1304,7 +1266,7 @@ if (!function_exists('mb_detect_encoding')) {
 	}
 	return 'UTF-8';
   }
-  function mb_convert_encoding($text,$target_encoding,$source_encoding) {
+  function mb_convert_encoding($text,$target_encoding,$source_encoding=NULL) {
 	return $text;
   }
   function mb_substr($str, $start, $lenght=NULL, $encoding=NULL) {
@@ -1348,5 +1310,4 @@ function code2utf($num)
     return '';
 }
 
-
-
+?>

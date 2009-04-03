@@ -16,7 +16,15 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $fbConfig;
+global $fbConfig, $acl;
+
+if ($fbConfig->fb_profile == 'cb') {
+        $userid = mosGetParam($_GET, 'userid', null);
+	$url = CKunenaCBProfile::getProfileURL($userid);
+	header("HTTP/1.1 307 Temporary Redirect");
+	header("Location: " . htmlspecialchars_decode($url));
+	die();
+}
 
 $mainframe->setPageTitle(_KUNENA_USERPROFILE_PROFILE . ' - ' . stripslashes($fbConfig->board_title));
 
@@ -51,17 +59,52 @@ function showprf($userid, $page)
     // ERROR: mixed global $fbIcons
     global $fbIcons;
 
-	// User Hits
-	$database->setQuery('UPDATE #__fb_users SET uhits=uhits+1 WHERE userid='.$userid);
-	$database->query() or trigger_dberror("Unable to update user hits.");;
-
     //Get userinfo needed later on, this limits the amount of queries
     unset($userinfo);
-    $database->setQuery("SELECT  a.*, b.* FROM #__fb_users as a"
+    $database->setQuery("SELECT a.*, b.* FROM #__fb_users as a"
                         . "\n LEFT JOIN #__users as b on b.id=a.userid"
                         . "\n where a.userid=$userid");
 
-    $userinfo = $database->loadObject() or trigger_dberror("Unable to get user info.");;
+    $userinfo = $database->loadObject();
+    check_dberror('Unable to get user profile info.');
+
+    if (!$userinfo) {
+	$database->setQuery("SELECT * FROM #__users WHERE id=$userid");	
+	$database->loadObject($userinfo);
+	check_dberror('Unable to get user profile info.');
+
+	if (!$userinfo) {
+		echo '<h3>' . _KUNENA_PROFILE_NO_USER . '</h3>';
+		return;
+	} else {
+		// Check moderator status (admin is moderator)
+		$aro_group = $acl->getAroGroup($userid);
+		if ($aro_group and CKunenaTools::isJoomla15())
+		$aro_group->group_id = $aro_group->id;  // changed fieldname in Joomla 1.5: "group_id" -> "id"
+		$is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
+
+		// there's no profile; set userid and moderator status.
+		$database->setQuery("INSERT INTO #__fb_users (userid,moderator) VALUES ('$userid','$is_admin')");
+		$database->query();
+		check_dberror('Unable to create user profile.');
+
+		$database->setQuery("SELECT a.*, b.* FROM #__fb_users as a"
+			. "\n LEFT JOIN #__users as b on b.id=a.userid"
+			. "\n where a.userid=$userid");
+
+		$database->loadObject($userinfo);
+		check_dberror('Unable to get user profile info.');
+
+		// TODO: For future use
+		// echo '<h3>' . _KUNENA_PROFILE_NOT_FOUND . '</h3>';
+		// return;
+	}
+
+    }
+
+	// User Hits
+	$database->setQuery('UPDATE #__fb_users SET uhits=uhits+1 WHERE userid='.$userid);
+	$database->query() or trigger_dberror("Unable to update user hits.");
 
 	// get userprofile hits
 	$msg_userhits = $userinfo->uhits;
@@ -93,7 +136,7 @@ function showprf($userid, $page)
         if ($fbConfig->avatar_src == "jomsocial")
 		{
 			// Get CUser object
-			$user =& CFactory::getUser($leaf->userid);
+			$user =& CFactory::getUser($userid);
 		    $msg_avatar = '<span class="fb_avatar"><img src="' . $user->getAvatar() . '" alt="" /></span>';
 		}
         else if ($fbConfig->avatar_src == "clexuspm") {
@@ -101,25 +144,8 @@ function showprf($userid, $page)
         }
         else if ($fbConfig->avatar_src == "cb")
         {
-            $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id=$userid AND avatarapproved=1");
-            $avatar = $database->loadResult();
-
-            if ($avatar != '')
-            {
-                //This now  has the right path to the upload directory and also handles the thumbnail and gallery photos.
-                $imgpath = KUNENA_JLIVEURL . '/images/comprofiler/';
-
-                if (eregi("gallery/", $avatar) == false)
-                    $imgpath .= "tn" . $avatar;
-                else
-                    $imgpath .= $avatar;
-
-                $msg_avatar = '<span class="fb_avatar"><img src="' . $imgpath . '"  alt="" /></span>';
-            }
-            else {
-                $imgpath = KUNENA_JLIVEURL."/components/com_comprofiler/plugin/language/default_language/images/nophoto.jpg";
-                $msg_avatar = '<span class="fb_avatar"><img src="' . $imgpath . '"  alt="" /></span>';
-            }
+            $kunenaProfile = CKunenaCBProfile::getInstance();
+			$msg_avatar = '<span class="fb_avatar">' . $kunenaProfile->showAvatar($userid, '', 0) . '</span>';
         }
         else
         {

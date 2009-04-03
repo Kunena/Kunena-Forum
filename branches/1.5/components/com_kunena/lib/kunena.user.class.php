@@ -12,7 +12,148 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-// Kunena User class
+require_once (KUNENA_PATH_LIB .DS. 'kunena.config.class.php');
+
+/**
+* Kunena Users Table Class
+* Provides access to the #__fb_users table
+*/
+class CKunenaUserprofile extends JTable
+{
+	/**
+	* User ID
+	* @var int
+	**/
+	var $userid = null;
+	var $view = null;
+	/**
+	* Signature
+	* @var string
+	**/
+	var $signature = null;
+	/**
+	* Is moderator?
+	* @var int
+	**/
+	var $moderator = null;
+	/**
+	* Ordering of posts
+	* @var int
+	**/
+	var $ordering = null;
+	/**
+	* User post count
+	* @var int
+	**/
+	var $posts = null;
+	/**
+	* Avatar image file
+	* @var string
+	**/
+	var $avatar = null;
+	/**
+	* User karma
+	* @var int
+	**/
+	var $karma = null;
+	var $karma_time = null;
+	/**
+	* Kunena Group ID
+	* @var int
+	**/
+	var $group_id = null;
+	/**
+	* Kunena Profile hits
+	* @var int
+	**/
+	var $uhits = null;
+	/**
+	* Personal text
+	* @var string
+	**/
+	var $personalText = null;
+	/**
+	* Gender
+	* @var int
+	**/
+	var $gender = null;
+	/**
+	* Birthdate
+	* @var string
+	**/
+	var $birthdate = null;
+	/**
+	* User Location
+	* @var string
+	**/
+	var $location = null;
+	/**
+	* ICQ ID
+	* @var string
+	**/
+	var $ICQ = null;
+	/**
+	* AIM ID
+	* @var string
+	**/
+	var $AIM = null;
+	/**
+	* YIM ID
+	* @var string
+	**/
+	var $YIM = null;
+	/**
+	* MSN ID
+	* @var string
+	**/
+	var $MSN = null;
+	/**
+	* SKYPE ID
+	* @var string
+	**/
+	var $SKYPE = null;
+	/**
+	* GTALK ID
+	* @var string
+	**/
+	var $GTALK = null;
+	/**
+	* Name of web site
+	* @var string
+	**/
+	var $websitename = null;
+	/**
+	* URL to web site
+	* @var string
+	**/
+	var $websiteurl = null;
+	/**
+	* Hide Email address
+	* @var int
+	**/
+	var $hideEmail = null;
+	/**
+	* Show online
+	* @var int
+	**/
+	var $showOnline = null;
+	/**
+	* @param userid NULL=current user
+	*/
+
+	function __construct($userid=null)
+	{
+	    $database = &JFactory::getDBO();
+	    $my = &JFactory::getUser();
+		parent::__construct('#__fb_users', 'userid', $database);
+		if ($userid === null) $userid = $my->id;
+		$this->load($userid);
+	}
+}
+
+/**
+* Kunena User Class
+*/
 class CKunenaUser
 {
 	var $id = 0;
@@ -131,7 +272,7 @@ class CKunenaUsers
 
 	function CKunenaUsers()
 	{
-		global $fbConfig;
+		$fbConfig =& CKunenaConfig::getInstance();
 		if ($fbConfig->username == 1) $this->mapping['name'] = $this->mapping['username'];
 	}
 
@@ -156,5 +297,4 @@ class CKunenaUsers
 		return $this->get($my->id);
 	}
 }
-
 ?>

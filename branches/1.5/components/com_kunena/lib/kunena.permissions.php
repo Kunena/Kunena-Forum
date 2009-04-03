@@ -161,3 +161,4 @@ function fb_has_read_permission(&$obj_fbcat,&$allow_forum,$groupid,&$acl) {
     //passage not allowed
     return 0;
 }
+?>

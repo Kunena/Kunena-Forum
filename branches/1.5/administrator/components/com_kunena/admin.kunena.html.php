@@ -171,7 +171,7 @@ function showFbFooter () {
 global $mainframe;
 global $fbConfig;
 
-include_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
+require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 ?>
 
 <!-- Finish: AdminRight -->
@@ -180,11 +180,7 @@ include_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
   </tr>
   <tr><td></td><td>
  <!-- Footer -->
-<div class="fbfooter">
-Installed version:  <?php echo $KunenaDbVersion; ?> |
-&copy; Copyright: <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>  |
-License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a>
-</div>
+<div class="fbfooter"><?php echo CKunenaVersion::versionHTML(); ?></div>
 <!-- /Footer -->
   </td></tr>
 </table>
@@ -2417,10 +2413,11 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 </div><!-- closed div#fnconfigcover -->
 <?php
 
-echo $pane->endPanel();
+/*echo $pane->endPanel();
 echo $pane->startPanel( 'Show Instructions', 'panel2' );
 showInstructions($database, $option, $lang);
 echo $pane->endPanel();
+*/
 
 /*echo $pane->startPanel( 'Forum Administration', 'panel3' );
 showCss($file, $option);

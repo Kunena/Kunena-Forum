@@ -102,15 +102,21 @@ $lockedForum = 0;
 $lockedTopic = 0;
 $topicSticky = 0;
 
+if ('' == $sel || (!$my->id && $sel == 0)) {
+/*
+    if($my->id != 0) { $sel="0"; }	// Users: show messages after last visit
+    else { $sel="720"; }		// Others: show 1 month as default
+*/
+    $sel="720";
+}
+$show_list_time = $sel;
+
 //start the latest x
-if ($sel == "0") {
+if ($sel == 0) {
     $querytime = ($prevCheck - $fbConfig->fbsessiontimeout); //move 30 minutes back to compensate for expired sessions
 }
 else
 {
-    if ("" == $sel) {
-        $sel = 720;
-    } //take 720 hours ~ 1 month as default
     //Time translation
     $back_time = $sel * 3600; //hours*(mins*secs)
     $querytime = time() - $back_time;
@@ -160,7 +166,6 @@ else
 	$mainframe->setPageTitle(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
 	$query = "Select count(distinct thread) FROM #__fb_messages WHERE time >'$querytime'".
 			" AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)" . $latestcats; // if categories are limited apply filter
-
 }
 
 $database->setQuery($query);
@@ -295,7 +300,32 @@ if (count($threadids) > 0)
         if (!in_array($msgid->thread, $read_topics)) $last_read[$msgid->thread] = $msgid;
     }
 }
+// (JJ) BEGIN: ANNOUNCEMENT BOX
+if ($fbConfig->showannouncement > 0)
+{
 ?>
+<!-- B: announcementBox -->
+<?php
+    if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcementbox.php')) {
+        require_once (KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcementbox.php');
+    }
+    else {
+        require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/announcement/announcementbox.php');
+    }
+?>
+<!-- F: announcementBox -->
+<?php
+}
+// (JJ) FINISH: ANNOUNCEMENT BOX
+
+// load module
+?>
+
+<jdoc:exists type="modules" condition="kunena_announcement" />
+	<div class = "fb-fb_2">
+		<jdoc:include type="modules" name="kunena_announcement" />
+	</div>
+</jdoc:exists>
 
 <!-- B: List Actions -->
 	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0">

@@ -40,7 +40,7 @@ if ($is_101_version) {
     	trigger_dbwarning("Unable to upgrade attachement table.");
     }
 
-    $database->setQuery("update #__fb_messages_text set message = replace(message,'/components/com_kunena/uploaded','/images/fbfiles');");
+    $database->setQuery("update #__fb_messages_text set message = replace(message,'/components/com_fireboard/uploaded','/images/fbfiles');");
     if ($database->query()) print '<li class="fbscslist">Attachments in messages table successfully upgraded to 1.0.2+ version schema!</li>';
     else
     {

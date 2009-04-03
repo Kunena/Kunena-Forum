@@ -1135,6 +1135,7 @@ global $mainframe;
     }
     $signature = addslashes($signature);
 
+    $avatar = '';
     if ($deleteAvatar == 1) {
         $avatar = ",avatar=''";
     }

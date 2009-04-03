@@ -353,6 +353,16 @@ class CKunenaConfig extends CKunenaConfigBase
     // Mandatory overrides from abstract base class
     //
 
+    public function &getInstance()
+    {
+        static $instance;
+        if (!$instance) {
+            $userinfo = new CKunenaUserprofile();
+	    $instance = new CKunenaConfig($userinfo);
+	}
+        return $instance;
+    }
+
     public function GetClassVars()
     {
         return get_class_vars('CKunenaConfig');
@@ -367,22 +377,14 @@ class CKunenaConfig extends CKunenaConfigBase
     {
     	// Only perform overrides if we got a valid user handed to us
     	if (is_object($KunenaUser)==FALSE) return FALSE;
-    	if ($KunenaUser->getID()==0) return FALSE;
+    	if ($KunenaUser->userid==0) return FALSE;
 
-        // Example of setting override:
-        // $this->default_sort = 'desc';
-
-    	// Overload default with user specific from user profile
-    	$this->_db->setQuery("SELECT ordering from #__fb_users where userid=".$KunenaUser->getID());
-    	$orderingNum = $this->_db->loadResult();
-
-        $this->default_sort = $orderingNum ? 'desc' : 'asc';
+        $this->default_sort = $KunenaUser->ordering ? 'desc' : 'asc';
 
         // Add additional Overrides...
 
         return TRUE;
     }
 }
-
 
 ?>

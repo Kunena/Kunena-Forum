@@ -23,6 +23,9 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
+
+require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
+
 # Check for Editor rights  $fbConfig->annmodid
 $user_fields = @explode(',', $fbConfig->annmodid);
 
@@ -49,9 +52,16 @@ $anns = $database->loadObjectList();
 	check_dberror("Unable to load announcements.");
 $ann = $anns[0];
 $annID = $ann->id;
-$anntitle = $ann->title;
-$annsdescription = $ann->sdescription;
-$anndescription = $ann->description;
+$anntitle = stripslashes($ann->title);
+
+$annsdescription = stripslashes(smile::smileReplace($ann->sdescription, 0, $fbConfig->disemoticons, $smileyList));
+$annsdescription = nl2br($annsdescription);
+$annsdescription = smile::htmlwrap($annsdescription, $fbConfig->wrap);
+
+$anndescription = stripslashes(smile::smileReplace($ann->description, 0, $fbConfig->disemoticons, $smileyList));
+$anndescription = nl2br($anndescription);
+$anndescription = smile::htmlwrap($anndescription, $fbConfig->wrap);
+
 $anncreated = KUNENA_timeformat(strtotime($ann->created));
 $annpublished = $ann->published;
 $annshowdate = $ann->showdate;

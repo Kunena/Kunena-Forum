@@ -22,6 +22,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
+require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
 
 $mainframe->setPageTitle(_ANN_ANNOUNCEMENTS . ' - ' . stripslashes($fbConfig->board_title));
 
@@ -53,8 +54,12 @@ if ($do == "read") {
 
     $ann = $anns_[0];
     $annID = $ann->id;
-    $anntitle = $ann->title;
-    $anndescription = $ann->description;
+    $anntitle = stripslashes($ann->title);
+
+	$anndescription = stripslashes(smile::smileReplace($ann->description, 0, $fbConfig->disemoticons, $smileyList));
+	$anndescription = nl2br($anndescription);
+	$anndescription = smile::htmlwrap($anndescription, $fbConfig->wrap);
+
     $anncreated = KUNENA_timeformat(strtotime($ann->created));
     $annpublished = $ann->published;
     $annshowdate = $ann->showdate;
@@ -193,7 +198,7 @@ if ($is_editor) {
                                 </td>
 
                                 <td class = "td-3"  align="left">
-                                    <a href = "<?php echo $readlink;?><?php echo $row->id; ?>"><?php echo $row->title; ?></a>
+                                    <a href = "<?php echo $readlink;?><?php echo $row->id; ?>"><?php echo stripslashes($row->title); ?></a>
                                 </td>
 
                                 <td class = "td-4"  align="center">
@@ -252,7 +257,7 @@ if ($is_editor) {
         if (!$is_editor) {
             die ("Hacking attempt");
             }
-	$calendar = JHTML::_('calendar', '', 'created', 'addcreated');  
+	$calendar = JHTML::_('calendar', '', 'created', 'addcreated');
             ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
@@ -374,9 +379,9 @@ if ($is_editor) {
 
         $ann = $anns[0];
         $annID = $ann->id;
-        $anntitle = $ann->title;
-        $annsdescription = $ann->sdescription;
-        $anndescription = $ann->description;
+        $anntitle = stripslashes($ann->title);
+        $annsdescription = stripslashes($ann->sdescription);
+        $anndescription = stripslashes($ann->description);
         $anncreated = $ann->created;
         $annpublished = $ann->published;
         $annordering = $ann->ordering;

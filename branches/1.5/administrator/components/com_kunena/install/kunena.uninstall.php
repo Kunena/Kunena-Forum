@@ -36,11 +36,8 @@ else {
 
 function com_uninstall()
 {
-    // Really nothing to do as the database table stay as they are
-    // Will need to provide a little utility to convert the pre 1.0.5 configuration settings
-    // into the new database table for configurations. This makes upgrades easy and straight
-    // forward. Uninstall old version and install new version. All settings, setup and
-    // posts will be maintained. Nothing to be removed from the database.
+    // Really nothing to do as the database table stay as they are.
+    // Nothing to be removed from the database.
     // If somebody wants to truly remove that data phpAdmin is required to drop all
     // Kunena tables manually.
 }

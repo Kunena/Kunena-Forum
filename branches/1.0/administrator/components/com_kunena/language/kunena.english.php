@@ -132,7 +132,7 @@ Kunena, translated from Swahili meaning "to speak", is built by a team of open s
 [b]Submit your feature ideas:[/b] [url=http://kunena.uservoice.com/pages/general?referer_type=top3]http://www.kunena.com/uservoice[/url]
 (http://kunena.uservoice.com/pages/general?referer_type=top3)
 
-[b]Follow Kunena on Twitter:[/b] [url=https://twitter.com/kunena]http://www.kunena.com/twitter[/url
+[b]Follow Kunena on Twitter:[/b] [url=https://twitter.com/kunena]http://www.kunena.com/twitter[/url]
 (https://twitter.com/kunena)');
 
 // 1.0.6

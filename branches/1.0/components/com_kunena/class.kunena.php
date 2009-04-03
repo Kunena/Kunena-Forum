@@ -939,7 +939,7 @@ function JJ_categoryArray($admin=0) {
     // get a list of the menu items
 	$query = "SELECT * FROM #__fb_categories";
 	if(!$admin) {
-		if ($fbSession->allowed != 'na') {
+		if ($fbSession && $fbSession->allowed != 'na') {
 			$query .= " WHERE id IN ($fbSession->allowed)";
 		} else {
 			$query .= " WHERE pub_access=0 AND published=1";

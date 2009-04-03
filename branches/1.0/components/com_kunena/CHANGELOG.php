@@ -34,6 +34,7 @@ Kunena 1.0.9
 
 3-April-2009 fxstein
 # [#15781] Minor typo in language file: Missing closing tag ] for twitter url
+# [#15782] Session category check regression
 
 3-April-2009 Matias
 # [#15671] CB integration: do not pass array() as reference

@@ -36,6 +36,7 @@ Kunena 1.0.10
 ^ [#15799] Prpepare version information for 1.0.10 builds
 ^ [#15798] Updated credits page
 # [#15800] Fix broken smilie class includes
+# [#15805] Fix incorrect sort description in backend
 
 Kunena 1.0.9
 

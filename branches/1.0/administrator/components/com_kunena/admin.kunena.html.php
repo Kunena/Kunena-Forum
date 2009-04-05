@@ -404,7 +404,6 @@ require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/
 
                         <tr>
                             <th align = "center" colspan = "12"> <?php
-                            // TODO: fxstein - Need to perform SEO cleanup
                             echo $pageNav->writePagesLinks(); ?>
                             </th>
                         </tr>
@@ -2521,7 +2520,7 @@ require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/
 
                     <td colspan = "4" nowrap>
                         :: <a href = "index2.php?option=com_kunena&task=profiles&order=0"><?php
-    echo _KUNENA_SORTID; ?></a> :: <a href = "index2.php?option=com_kunena&task=profiles&order=1"><?php echo _KUNENA_MOD; ?></a> :: <a href = "index2.php?option=com_kunena&task=profiles&order=2"><?php echo _KUNENA_SORTNAME; ?></a>
+    echo _KUNENA_SORTID; ?></a> :: <a href = "index2.php?option=com_kunena&task=profiles&order=1"><?php echo _KUNENA_SORTMOD; ?></a> :: <a href = "index2.php?option=com_kunena&task=profiles&order=2"><?php echo _KUNENA_SORTNAME; ?></a>
                     </td>
                 </tr>
             </table>
@@ -2619,7 +2618,6 @@ require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/
 
     <tr>
         <th align = "center" colspan = "7"> <?php
-        // TODO: fxstein - Need to perform SEO cleanup
         echo $pageNavSP->writePagesLinks(); ?>
         </th>
     </tr>
@@ -2756,7 +2754,6 @@ require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/
 
     <tr>
         <th align = "center" colspan = "7"> <?php
-        // TODO: fxstein - Need to perform SEO cleanup
         echo $pageNav->writePagesLinks(); ?>
         </th>
     </tr>
@@ -3321,7 +3318,6 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
                 ?>
             <tr>
         		<th align = "center" colspan = "6"> <?php
-        		// TODO: fxstein - Need to perform SEO cleanup
         		echo $pageNavSP->writePagesLinks(); ?>
 		        </th>
 		    </tr>
@@ -3465,7 +3461,6 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
 
     <tr>
       <th align="center" colspan="7"><?php
-      // TODO: fxstein - Need to perform SEO cleanup
       echo $pageNavSP->writePagesLinks(); ?></th>
     </tr>
     <tr>

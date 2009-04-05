@@ -69,7 +69,7 @@ function showprf($userid, $page)
     check_dberror('Unable to get user profile info.');
 
     if (!$userinfo) {
-	$database->setQuery("SELECT * FROM #__users WHERE id=$userid");	
+	$database->setQuery("SELECT * FROM #__users WHERE id=$userid");
 	$database->loadObject($userinfo);
 	check_dberror('Unable to get user profile info.');
 
@@ -483,15 +483,6 @@ function showprf($userid, $page)
 
 
             <?php
-
-				 if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php'))
-				{
-					include (KUNENA_ABSTMPLTPATH . '/smile.class.php');
-				}
-				else
-				{
-					include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
-				}
 
                 if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/summary.php')) {
                     include(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/summary.php');

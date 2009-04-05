@@ -116,6 +116,15 @@ if (file_exists(KUNENA_FILE_LANGUAGE)) {
     include_once (KUNENA_FILE_LANGUAGE_DEFAULT);
 }
 
+if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'smile.class.php'))
+{
+	include (KUNENA_ABSTMPLTPATH .DS. 'smile.class.php');
+}
+else
+{
+	include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
+}
+
 // Include Clexus PM class file
 if ($fbConfig->pm_component == "clexuspm")
 {
@@ -152,15 +161,8 @@ if ($fbConfig->badwords and !class_exists('Badword')) {
 }
 
 // Include preview here before inclusion of other files
-if ($func == "getpreview") {
-
-    if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'smile.class.php')) {
-        include (KUNENA_ABSTMPLTPATH .DS. 'smile.class.php');
-    }
-    else {
-        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
-    }
-
+if ($func == "getpreview")
+{
     $message = utf8_urldecode(utf8_decode(stripslashes($msgpreview)));
 
     $msgbody = smile::smileReplace( $message , 0, $fbConfig->disemoticons, $smileyList);
@@ -619,13 +621,6 @@ else
 
         #########################################################################################
         case 'post':
-            if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php')) {
-                include (KUNENA_ABSTMPLTPATH . '/smile.class.php');
-                }
-            else {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
-                }
-
             if (file_exists(KUNENA_ABSTMPLTPATH . '/post.php')) {
                 include (KUNENA_ABSTMPLTPATH . '/post.php');
                 }
@@ -637,13 +632,6 @@ else
 
         #########################################################################################
         case 'view':
-            if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php')) {
-                include (KUNENA_ABSTMPLTPATH . '/smile.class.php');
-                }
-            else {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
-                }
-
             if (file_exists(KUNENA_ABSTMPLTPATH . '/view.php')) {
                 include (KUNENA_ABSTMPLTPATH . '/view.php');
                 }
@@ -666,13 +654,6 @@ else
 
         #########################################################################################
         case 'showcat':
-            if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php')) {
-                include (KUNENA_ABSTMPLTPATH . '/smile.class.php');
-                }
-            else {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
-                }
-
             if (file_exists(KUNENA_ABSTMPLTPATH . '/showcat.php')) {
                 include (KUNENA_ABSTMPLTPATH . '/showcat.php');
                 }
@@ -695,13 +676,6 @@ else
 
         #########################################################################################
         case 'review':
-            if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php')) {
-                include (KUNENA_ABSTMPLTPATH . '/smile.class.php');
-                }
-            else {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
-                }
-
             if (file_exists(KUNENA_ABSTMPLTPATH . '/moderate_messages.php')) {
                 include (KUNENA_ABSTMPLTPATH . '/moderate_messages.php');
                 }
@@ -738,13 +712,6 @@ else
 
         #########################################################################################
         case 'myprofile':
-            if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php')) {
-                include (KUNENA_ABSTMPLTPATH . '/smile.class.php');
-                }
-            else {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
-                }
-
             if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php')) {
                 include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php');
                 }

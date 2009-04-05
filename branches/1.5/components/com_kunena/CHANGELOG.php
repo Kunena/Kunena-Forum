@@ -35,6 +35,7 @@ Kunena 1.5.1b
 5-April-2009 fxstein
 ^ [#15801] Update package version info
 ^ [#15798] Updated credits page
+# [#15800] Fix broken smilie class includes
 
 Kunena 1.5.0a
 

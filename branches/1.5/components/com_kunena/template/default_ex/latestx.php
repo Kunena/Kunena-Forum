@@ -77,15 +77,6 @@ if (!$my->id && $func == "mylatest")
 
 require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
 
-if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php'))
-{
-	include (KUNENA_ABSTMPLTPATH . '/smile.class.php');
-}
-else
-{
-	include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
-}
-
 //meta description and keywords
 $metaKeys=(_KUNENA_ALL_DISCUSSIONS . ', ' . stripslashes($fbConfig->board_title) . ', ' . $mainframe->getCfg('sitename'));
 $metaDesc=(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));

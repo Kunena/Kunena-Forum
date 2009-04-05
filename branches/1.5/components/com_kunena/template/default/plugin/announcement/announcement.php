@@ -22,7 +22,6 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
-require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
 
 $mainframe->setPageTitle(_ANN_ANNOUNCEMENTS . ' - ' . stripslashes($fbConfig->board_title));
 

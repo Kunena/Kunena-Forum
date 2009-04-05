@@ -24,7 +24,6 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $mainframe, $my, $fbConfig;
 
 $database = &JFactory::getDBO();
-include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. "smile.class.php");
 
 $hours = 0;
 

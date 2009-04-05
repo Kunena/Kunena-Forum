@@ -24,8 +24,6 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 global $fbConfig;
 
-require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
-
 # Check for Editor rights  $fbConfig->annmodid
 $user_fields = @explode(',', $fbConfig->annmodid);
 

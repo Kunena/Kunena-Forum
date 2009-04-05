@@ -21,14 +21,6 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-// Need purify function for search result display
-if (file_exists(KUNENA_ABSTMPLTPATH."/smile.class.php")) {
-  require_once(KUNENA_ABSTMPLTPATH."/smile.class.php");
-}
-else {
-  include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
-}
-
 DEFINE('KUNENA_URL_LIST_SEPARATOR', 'x');
 
 class CKunenaSearch

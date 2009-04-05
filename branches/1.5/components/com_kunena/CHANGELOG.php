@@ -33,6 +33,7 @@ Legend:
 Kunena 1.5.1b
 
 5-April-2009 fxstein
+^ [#15801] Update package version info
 ^ [#15798] Updated credits page
 
 Kunena 1.5.0a

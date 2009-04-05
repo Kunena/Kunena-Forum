@@ -22,7 +22,6 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $database, $mainframe, $my, $mosConfig_absolute_path, $fbConfig;
-require_once ($mosConfig_absolute_path . "/components/com_kunena/template/default/smile.class.php");
 
 $hours = 0;
 

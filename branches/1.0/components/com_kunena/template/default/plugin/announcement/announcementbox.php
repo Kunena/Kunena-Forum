@@ -23,7 +23,6 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
-require_once ($mosConfig_absolute_path . "/components/com_kunena/template/default/smile.class.php");
 
 # Check for Editor rights  $fbConfig->annmodid
 $user_fields = @explode(',', $fbConfig->annmodid);

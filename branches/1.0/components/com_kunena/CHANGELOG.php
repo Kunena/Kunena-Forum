@@ -35,6 +35,7 @@ Kunena 1.0.10
 5-April-2009 fxstein
 ^ [#15799] Prpepare version information for 1.0.10 builds
 ^ [#15798] Updated credits page
+# [#15800] Fix broken smilie class includes
 
 Kunena 1.0.9
 

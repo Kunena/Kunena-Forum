@@ -30,7 +30,12 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.5.0
+Kunena 1.5.1b
+
+5-April-2009 fxstein
+^ [#15798] Updated credits page
+
+Kunena 1.5.0a
 
 3-April-2009 fxstein
 ^ [#15784] Merge final 1.0.9 fixes from revision 450 to 601

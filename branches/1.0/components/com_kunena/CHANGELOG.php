@@ -30,6 +30,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.0.10
+
+5-April-2009 fxstein
+^ [#15798] Updated credits page
+
 Kunena 1.0.9
 
 3-April-2009 fxstein

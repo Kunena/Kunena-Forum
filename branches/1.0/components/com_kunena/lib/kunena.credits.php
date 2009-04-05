@@ -49,8 +49,6 @@ global $is_Moderator;
                           <li class="fb_teammember"><a href="http://www.kunena.com/index.php?option=com_community&view=profile&userid=63" target='_blank' rel='follow'>Matias</a> Kunena developer</li>
                           <li class="fb_teammember"><a href="http://www.camelcity.com" target='_blank' rel='follow'>Noel Hunter</a> Kunena developer and admin of <a href="http://www.housecalls.com/view-qaa?func=listcat" target='_blank' rel='follow'>House Calls Q&A Forum/</a></li>
                           <li class="fb_teammember"><a href="http://www.racoonpages.de/" target='_blank' rel='follow'>racoon</a> Kunena developer</li>
-
-                          <li class="fb_teammember"><a href="http://www.bestofjoomla.com" target='_blank' rel='follow'>Best Of Joomla</a> The Home of FireBoard the basis of <a href="www.kunena.com" target='_blank' rel='follow'>Kunena</a>.</li>
                         </ul></td>
                     </tr>
                     <tr valign="top">

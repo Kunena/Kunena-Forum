@@ -37,6 +37,7 @@ Kunena 1.5.1b
 ^ [#15798] Updated credits page
 # [#15800] Fix broken smilie class includes
 # [#15805] Fix incorrect sort description in backend
+# [#15807] Fix broken database upgrade script for version 1.0.5
 
 Kunena 1.5.0a
 

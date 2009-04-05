@@ -23,6 +23,7 @@ global $mainframe;
 
 // Add custom upgrade code here
 // Most or all sql statements should be covered within comupgrade.xml
+$database =& JFactory::getDBO();
 
 // now lets do some checks and upgrades to 1.0.2 version of attachment table
 $database->setQuery("select from #__fb_attachments where filelocation like '%" . JPATH_ROOT . "%'");

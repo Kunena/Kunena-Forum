@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.5.1b
 
+6-April-2009 fxstein
+# [#15808] Fix broken New Category button in admin backend
+
 5-April-2009 fxstein
 ^ [#15801] Update package version info
 ^ [#15798] Updated credits page

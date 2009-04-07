@@ -373,7 +373,7 @@ function showAdministration($option)
 //---------------------------------------
 function editForum($uid, $option)
 {
-$database = &JFactory::getDBO();
+    $database = &JFactory::getDBO();
     $acl = &JFactory::getACL();
 	$my = &JFactory::getUser();
     $row = new fbForum($database);

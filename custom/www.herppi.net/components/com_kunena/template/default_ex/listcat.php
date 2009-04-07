@@ -190,7 +190,10 @@ if (count($categories[0]) > 0)
                                 echo CKunenaLink::GetCategoryLink('listcat', $cat->id, stripslashes($cat->name), 'follow', $class='fb_title fbl');
 
                                 if ($cat->description != "") {
-                                    echo '' . stripslashes($cat->description) . '';
+                                    $tmpforumdesc = stripslashes(smile::smileReplace($cat->description, 0, $fbConfig->disemoticons, $smileyList));
+							        $tmpforumdesc = nl2br($tmpforumdesc);
+							        $tmpforumdesc = smile::htmlwrap($tmpforumdesc, $fbConfig->wrap);
+									echo $tmpforumdesc;
                                 }
                                 ?>
                             </div>
@@ -257,7 +260,10 @@ if (count($categories[0]) > 0)
                                 $numreplies = $singlerow->numPosts;
                                 $lastPosttime = $singlerow->time_last_msg;
                                 $lastptime = CKunenaTimeformat::showDate($singlerow->time_last_msg);
-                                $forumDesc = stripslashes($singlerow->description);
+
+                                $forumDesc = stripslashes(smile::smileReplace($singlerow->description, 0, $fbConfig->disemoticons, $smileyList));
+						        $forumDesc = nl2br($forumDesc);
+						        $forumDesc = smile::htmlwrap($forumDesc, $fbConfig->wrap);
 
                                 //    Get the forumsubparent categories :: get the subcategories here
                                 $database->setQuery("SELECT id, name, numTopics, numPosts from #__fb_categories WHERE parent='$singlerow->id' AND published=1 ORDER BY ordering");

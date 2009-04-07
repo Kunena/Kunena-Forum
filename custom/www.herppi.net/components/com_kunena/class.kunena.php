@@ -21,7 +21,6 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 *@desc Getting the correct Itemids, for components required
 */
 
-
 // Shortcuts to all the path we have:
 define('KUNENA_JABSPATH', $mainframe->getCfg('absolute_path'));
 
@@ -902,7 +901,7 @@ function JJ_categoryArray($admin=0) {
     // get a list of the menu items
 	$query = "SELECT * FROM #__fb_categories";
 	if(!$admin) {
-		if ($fbSession->allowed != 'na') {
+		if ($fbSession && $fbSession->allowed != 'na') {
 			$query .= " WHERE id IN ($fbSession->allowed)";
 		} else {
 			$query .= " WHERE pub_access=0 AND published=1";
@@ -1134,7 +1133,7 @@ function make_pattern(&$pat, $key) {
   $pat = '/'.preg_quote($pat, '/').'/i';
 }
 if (!function_exists("htmlspecialchars_decode")) {
-    function htmlspecialchars_decode($string,$style=ENT_COMPAT) 
+    function htmlspecialchars_decode($string,$style=ENT_COMPAT)
     {
         $translation = array_flip(get_html_translation_table(HTML_SPECIALCHARS,$style));
         if($style === ENT_QUOTES) { $translation['&#039;'] = '\''; }
@@ -1227,5 +1226,4 @@ function code2utf($num)
     return '';
 }
 
-
-
+?>

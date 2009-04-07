@@ -171,8 +171,7 @@ function showFbFooter () {
 global $mainframe;
 global $fbConfig;
 
-include ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.version.php');
-// << $KunenaDbVersion
+require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.version.php');
 ?>
 
 <!-- Finish: AdminRight -->
@@ -181,11 +180,7 @@ include ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunen
   </tr>
   <tr><td></td><td>
  <!-- Footer -->
-<div class="fbfooter">
-Installed version:  <?php echo $KunenaDbVersion; ?> |
-&copy; Copyright: <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>  |
-License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a>
-</div>
+<div class="fbfooter"><?php echo CKunenaVersion::versionHTML(); ?></div>
 <!-- /Footer -->
   </td></tr>
 </table>
@@ -409,7 +404,6 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 
                         <tr>
                             <th align = "center" colspan = "12"> <?php
-                            // TODO: fxstein - Need to perform SEO cleanup
                             echo $pageNav->writePagesLinks(); ?>
                             </th>
                         </tr>
@@ -2592,7 +2586,7 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 
                     <td colspan = "4" nowrap>
                         :: <a href = "index2.php?option=com_kunena&task=profiles&order=0"><?php
-    echo _KUNENA_SORTID; ?></a> :: <a href = "index2.php?option=com_kunena&task=profiles&order=1"><?php echo _KUNENA_MOD; ?></a> :: <a href = "index2.php?option=com_kunena&task=profiles&order=2"><?php echo _KUNENA_SORTNAME; ?></a>
+    echo _KUNENA_SORTID; ?></a> :: <a href = "index2.php?option=com_kunena&task=profiles&order=1"><?php echo _KUNENA_SORTMOD; ?></a> :: <a href = "index2.php?option=com_kunena&task=profiles&order=2"><?php echo _KUNENA_SORTNAME; ?></a>
                     </td>
                 </tr>
             </table>
@@ -2690,7 +2684,6 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 
     <tr>
         <th align = "center" colspan = "7"> <?php
-        // TODO: fxstein - Need to perform SEO cleanup
         echo $pageNavSP->writePagesLinks(); ?>
         </th>
     </tr>
@@ -2827,7 +2820,6 @@ License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU 
 
     <tr>
         <th align = "center" colspan = "7"> <?php
-        // TODO: fxstein - Need to perform SEO cleanup
         echo $pageNav->writePagesLinks(); ?>
         </th>
     </tr>
@@ -3392,7 +3384,6 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
                 ?>
             <tr>
         		<th align = "center" colspan = "6"> <?php
-        		// TODO: fxstein - Need to perform SEO cleanup
         		echo $pageNavSP->writePagesLinks(); ?>
 		        </th>
 		    </tr>
@@ -3536,7 +3527,6 @@ function showsmilies($option, $mosConfig_lang, &$smileytmp, $pageNavSP, $smileyp
 
     <tr>
       <th align="center" colspan="7"><?php
-      // TODO: fxstein - Need to perform SEO cleanup
       echo $pageNavSP->writePagesLinks(); ?></th>
     </tr>
     <tr>

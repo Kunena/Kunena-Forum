@@ -50,7 +50,60 @@ CUSTOM BRANCH
 # [#15554] Custom branch: Make date format configurable for latestx, showcat and view
 # [#15554] Custom branch: Make user count algorithm configurable in Stats and Userlist
 
+Kunena 1.0.10
+
+5-April-2009 fxstein
+^ [#15799] Prpepare version information for 1.0.10 builds
+^ [#15798] Updated credits page
+# [#15800] Fix broken smilie class includes
+# [#15805] Fix incorrect sort description in backend
+
 Kunena 1.0.9
+
+3-April-2009 fxstein
+# [#15781] Minor typo in language file: Missing closing tag ] for twitter url
+# [#15782] Session category check regression
+
+3-April-2009 Matias
+# [#15671] CB integration: do not pass array() as reference
+# [#15671] CB integration: extra parameters 'subject', 'messagetext' and 'messageobject' to be passed as reference into showProfile()
+
+2-April-2009 fxstein
++ [#15724] Added bbcode and smilie support for forum headers AND descriptions in default AND default_ex
++ [#15724] Added bbcode and smilie support to forum announcements
+^ [#15771] Minor change: Update sample data on fresh installs to contain bbcode in forum headers & descriptions instead of html
+
+2-April-2009 Matias
+^ [#15671] CB integration: Show Profile: Provide all needed information to CB plugin (Kunena Profile, username from message)
+# [#15761] Added missing php close tags in lib/ where they were missing
+# [#15567] 1.0.9 internal regression: security issue fixed in search
+
+1-April-2009 fxstein
+# [#15761] Regression fix: Added missing php close tag to class.kunena.php
+
+1-April-2009 Matias
+^ [#15671] CB integration: Changed CB Migration API
+^ [#15671] CB integration: If internal fbprofile page is accessed, forward request to CB
++ [#15671] CB integration: New class CKunenaVersion, make lib/kunena.version.php safe to be included by external components
+! New translations: make version string localized
++ [#15671] CB integration: make lib/kunena.user.class.php and lib/kunena.config.class.php self-contained
+
+31-March-2009 Matias
+# [#15567] Implement working advanced search: fix user search without search words
++ [#15671] CB integration: Source code documentation for CKunenaUserprofile class variables
++ [#15671] CB integration: Added lib/kunena.communitybuilder.php for CB compability
+# [#15671] CB integration: Workaround for Community Builder: don't redefine $database
++ [#15671] CB integration: New class CKunenaCBProfile, use it for integration
++ [#15671] CB integration: Added callback for profile integration changes, code cleanup
+
+30-March-2009 Matias
+# [#15638] Latest member profile link causes fatal error
+! Regression: fixed user count and latest user from Forum Stats (1.0.8 behaviour)
+! Create new profile with default values if profile does not exist
+
+30-March-2009 fxstein
++ [#15724] Add bbcode and smilie support to forum headers in default_ex
+# [#15139] Fixed broken IP address lookup link
 
 29-March-2009 Matias
 # [#15677] Fix UI issues: Showcat does not validate
@@ -68,10 +121,9 @@ Kunena 1.0.9
 
 28-March-2009 Matias
 # [#15638] Latest member profile link causes fatal error
-! For now on forum stats counts only users who have visited forum at least once
 ! User profile detects now nonexistent users and user profiles
 # [#15639] User list incomplete
-! Only users who have visited the forum at least once are listed
+! Only users who have Kunena user profile are listed
 # [#15567] Implement working advanced search: add backwards compability for old templates
 
 27-March-2009 Matias

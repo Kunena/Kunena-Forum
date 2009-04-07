@@ -77,15 +77,6 @@ if (!$my->id && $func == "mylatest")
 
 require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
 
-if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php'))
-{
-	include (KUNENA_ABSTMPLTPATH . '/smile.class.php');
-}
-else
-{
-	include (KUNENA_ABSPATH . '/template/default/smile.class.php');
-}
-
 //meta description and keywords
 $metaKeys=(_KUNENA_ALL_DISCUSSIONS . ', ' . stripslashes($fbConfig->board_title) . ', ' . $GLOBALS['mosConfig_sitename']);
 $metaDesc=(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
@@ -117,7 +108,7 @@ if ('' == $sel || (!$my->id && $sel == 0)) {
 */
     $sel="720";
 }
-$show_list_time = $sel; 
+$show_list_time = $sel;
 
 //start the latest x
 if ($sel == 0) {

@@ -34,8 +34,7 @@ if ($my->id != "" && $my->id != 0)
     $juserinfo->load($my->id);
 
     //Get userinfo needed later on, this limits the amount of queries
-    $userinfo = new CKunenaUserprofile($database);
-    $userinfo->load($my->id);
+    $userinfo = new CKunenaUserprofile();
 
     //use ClexusPM avatar if configured
     if ($fbConfig->avatar_src == "clexuspm")

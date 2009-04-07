@@ -21,14 +21,6 @@
 // Dont allow direct linking
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-// Need purify function for search result display
-if (file_exists(KUNENA_ABSTMPLTPATH."/smile.class.php")) {
-  include_once(KUNENA_ABSTMPLTPATH."/smile.class.php");
-}
-else {
-  include(KUNENA_ABSPATH . '/template/default/smile.class.php');
-}
-
 DEFINE('KUNENA_URL_LIST_SEPARATOR', 'x');
 
 class CKunenaSearch
@@ -42,7 +34,7 @@ class CKunenaSearch
     /** search strings **/
     var $arr_kunena_searchstrings;
     /** search username **/
-    var $str_kunena_username;  
+    var $str_kunena_username;
     /** error number **/
     var $int_kunena_errornr;
     /** error msg **/
@@ -123,12 +115,13 @@ class CKunenaSearch
         $arr_searchwords = split(' ', $q);
 	$do_search = FALSE;
 	$this->arr_kunena_searchstrings = array();
-	foreach ($arr_searchwords as $q) 
+	foreach ($arr_searchwords as $q)
 	{
 		$q = trim($q);
 		if (strlen($q)>2) $do_search = TRUE;
 		$this->arr_kunena_searchstrings[] = $q;
 	}
+	if (strlen($searchuser)>0) $do_search = TRUE;
         $arr_searchwords = $this->arr_kunena_searchstrings;
 	$this->str_kunena_username = $searchuser;
 
@@ -150,33 +143,34 @@ class CKunenaSearch
 
         for ($x = 0; $x < count($arr_searchwords); $x++)
         {
-            $q = $arr_searchwords[$x];
-            $q = $database->getEscaped(trim(strtolower($q)));
+            $searchword = $arr_searchwords[$x];
+            $searchword = $database->getEscaped(trim(strtolower($searchword)));
+            if (empty($searchword)) continue;
             $matches = array ();
             $not = '';
             $operator = ' OR ';
 
-            if (strstr($q, '-') == $q)
+            if (strstr($searchword, '-') == $searchword)
             {
                 $not = 'NOT';
                 $operator = 'AND';
-                $q = substr($q, 1);
+                $searchword = substr($searchword, 1);
             }
 
             if($titleonly=='0')
             {
-                $querystrings[] = '(t.message ' . $not . ' LIKE \'%' . $q . '%\' ' . $operator . ' m.subject ' . $not . ' LIKE \'%' . $q . '%\')';
+                $querystrings[] = '(t.message ' . $not . ' LIKE \'%' . $searchword . '%\' ' . $operator . ' m.subject ' . $not . ' LIKE \'%' . $searchword . '%\')';
             } else {
-                $querystrings[] = '(m.subject ' . $not . ' LIKE \'%' . $q . '%\')';
+                $querystrings[] = '(m.subject ' . $not . ' LIKE \'%' . $searchword . '%\')';
             }
         }
- 
+
 	//User searching
         if(strlen($searchuser)>0)
         {
-            if($exactname=='1') { 
-                $querystrings[] = 'm.name LIKE \'' . $searchuser . '\''; 
-            } else { 
+            if($exactname=='1') {
+                $querystrings[] = 'm.name LIKE \'' . $searchuser . '\'';
+            } else {
                 $querystrings[] = 'm.name LIKE \'%' . $searchuser . '%\'';
             }
         }
@@ -192,7 +186,7 @@ class CKunenaSearch
 		case '1':
 		case '7':
 		case '14':
-		case '30':						
+		case '30':
 		case '90':
 		case '180':
 		case '365':
@@ -200,7 +194,7 @@ class CKunenaSearch
                         break;
 		default:
 			$time = time() - 86400*365;
-			$searchdate = '365';					
+			$searchdate = '365';
 	}
 
 	if ($time) {
@@ -233,10 +227,10 @@ class CKunenaSearch
 */
         case 'forum':
 		$orderby = 'm.catid '.$order1.', m.time '.$order1.', m.ordering '.$order1;
-		break;        
+		break;
 /*
-        case 'replycount':        
-        case 'postusername':	                                   
+        case 'replycount':
+        case 'postusername':
 */
         case 'lastpost':
         default:
@@ -283,11 +277,11 @@ class CKunenaSearch
     }
     function get_searchusername() {
         return $this->str_kunena_username;
-    }    
-    function utf8_urldecode($str) { 
-        $str = preg_replace("/%u([0-9a-f]{3,4})/i","\1;",urldecode($str)); 
-        return html_entity_decode($str,ENT_NOQUOTES,'UTF-8' ); 
-    } 
+    }
+    function utf8_urldecode($str) {
+        $str = preg_replace("/%u([0-9a-f]{3,4})/i","\1;",urldecode($str));
+        return html_entity_decode($str,ENT_NOQUOTES,'UTF-8' );
+    }
     /** get limit (int) **/
     function get_limit() {
         return $this->limit;
@@ -322,25 +316,20 @@ class CKunenaSearch
             $database->setQuery("SELECT id, parent, published FROM #__fb_categories WHERE pub_access='0' AND published='1'");
             $allowed_forums = $database->loadAssocList('id');
             check_dberror("Unable to get public categories.");
-        }  
-	
+        }
+
 	$catids = split(',', $catids);
-	if (count($catids) > 0)
-	{
+	if (count($catids) > 0 && !in_array(0, $catids)) {
 		foreach ($allowed_forums as $forum)
 		{
 			if (in_array($forum['parent'], $catids)) $catids[] = $forum['id'];
 		}
-	}
-	$allowed_forums = array_keys($allowed_forums);
-
-	if (count($catids) > 0 && !in_array(0, $catids)) {
 		$search_forums = implode(",", array_intersect($allowed_forums, $catids));
 	} else {
 		$search_forums = implode(",", $allowed_forums);
 	}
 	return $search_forums;
-    }    
+    }
     /**
      * Display results
      * @param string actionstring
@@ -381,7 +370,7 @@ class CKunenaSearch
 
 <?php
 
-	if (empty($q)) {
+	if (empty($q) && empty($searchuser)) {
 		return;
 	}
 
@@ -438,22 +427,27 @@ class CKunenaSearch
 				$q = trim($q);
 
                 // JJ Add different color
+                $searchlist = $this->get_searchstrings();
                 foreach ($results as $result)
                 {
                     $k = 1 - $k;
                     $ressubject = $result->subject;
                     // Clean up subject
                     $ressubject = stripslashes(smile::purify($ressubject));
-                    $ressubject = preg_replace("/".preg_quote($q, '/')."/i", '<span  class="searchword" >' . $q . '</span>', $ressubject);
                     $resmessage = stripslashes($result->message);
                     // Strip smiles and bbcode out of search results; they look ugly
                     $resmessage = smile::purify($resmessage);
-                    $resmessage = preg_replace("/".preg_quote($q, '/')."/i", '{{' . $q . '}}', $resmessage);
-                    $searchResultList = str_replace("{{", '<span class="fb_search-results">', mb_substr(html_entity_decode_utf8($resmessage), 0, 300));
-                    $searchResultList = str_replace("}}", '</span>', $searchResultList);
+                    $resmessage = mb_substr(html_entity_decode_utf8($resmessage), 0, 300);
+                    $utf8 = (mb_detect_encoding($ressubject . $resmessage . 'a', 'UTF-8,ISO-8859-1') == 'UTF-8') ? "u" : "";
+                    foreach ($searchlist as $searchword)
+                    {
+                        if (empty($searchword)) continue;
+                        $ressubject = preg_replace("/".preg_quote($searchword, '/')."/i".$utf8, '<span  class="searchword" >' . $searchword . '</span>', $ressubject);
+                        $resmessage = preg_replace("/".preg_quote($searchword, '/')."/i".$utf8, '<span  class="searchword" >' . $searchword . '</span>', $resmessage);
+                    }
                     echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '">';
                     echo '<td  class = "td-1" ><a href="'
-                             . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $result->id . '&amp;catid=' . $result->catid) . '#' . $result->id . '" >' . $ressubject . '</a><br />' . $searchResultList . '<br /><br /></td>';
+                             . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $result->id . '&amp;catid=' . $result->catid) . '#' . $result->id . '" >' . $ressubject . '</a><br />' . $resmessage . '<br /><br /></td>';
                     echo '<td class = "td-2" >' . html_entity_decode_utf8(stripslashes($result->name)) . '</td>';
                     echo '<td class = "td-3" >' . CKunenaTimeformat::showDate($result->time) . '</td></tr>';
                     echo "\n";
@@ -546,4 +540,3 @@ function KunenaSearchPagination($function, $q, $urlparams, $page, $limit, $total
 }
 
 ?>
-

@@ -153,33 +153,6 @@ if (count($messages[0]) > 0)
                     $k = 1 - $k; //used for alternating colours
                     $leaf->name = htmlspecialchars(stripslashes($leaf->name));
                     $leaf->email = htmlspecialchars(stripslashes($leaf->email));
-					$bof_avatar = "";
-                ?>
-
-                <?php
-                    //(JJ) AVATAR
-                    if ($fbConfig->avataroncat > 0)
-                    {
-                    	if ($fbConfig->avatar_src == "jomsocial")
-						{
-							// Get CUser object
-							$user =& CFactory::getUser($leaf->userid);
-						    $bof_avatar = '<img class="catavatar" src="' . $user->getThumbAvatar() . '" alt=" " />';
-						}
-						else
-						{
-	                        $javatar = $leaf->avatar;
-
-	                        if ($fbConfig->avatar_src == "cb" && $javatar)
-	                        {
-	                            $bof_avatar = '<img class="catavatar" src="images/comprofiler/' . $javatar . '" alt=" " />';
-	                        }
-	                        else if ($javatar)
-	                        {
-	                            $bof_avatar = '<img class="catavatar" src="images/fbfiles/avatars/' . $javatar . '" alt=" " />';
-	                        }
-						}
-                    }
                 ?>
 
                 <?php
@@ -438,17 +411,16 @@ if (count($messages[0]) > 0)
 		    $useravatar = '<img class="fb_list_avatar" src="' . $user->getThumbAvatar() . '" alt=" " />';
 		   	echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, $useravatar);
 		}
-		else
+		else if ($fbConfig->avatar_src == "cb")
 		{
-		   $javatar =  $last_reply[$leaf->id]->avatar;
-		   if ($javatar!='') {
-			   if ($fbConfig->avatar_src == "cb") {
-		   		    echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="images/comprofiler/'.$javatar.'" alt="" />');
-	            }  else {
-		   		    echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.(!file_exists(KUNENA_ABSUPLOADEDPATH . '/avatars/s_' . $javatar)?KUNENA_LIVEUPLOADEDPATH.'/avatars/'.$javatar:KUNENA_LIVEUPLOADEDPATH.'/avatars/s_'.$javatar) .'" alt="" />');
-				}
-			} else {
-			    echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_nophoto.jpg" alt="" />');
+			$useravatar = $kunenaProfile->showAvatar($last_reply[$leaf->id]->userid, 'fb_list_avatar');
+  		    echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, $useravatar);
+		} else {
+		  	$javatar =  $last_reply[$leaf->id]->avatar;
+		   	if ($javatar!='') {
+				echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.(!file_exists(KUNENA_ABSUPLOADEDPATH . '/avatars/s_' . $javatar)?KUNENA_LIVEUPLOADEDPATH.'/avatars/'.$javatar:KUNENA_LIVEUPLOADEDPATH.'/avatars/s_'.$javatar) .'" alt="" />');
+	        }  else {
+		   		echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_nophoto.jpg" alt="" />');
 	        }
 		}
          }?>

@@ -34,6 +34,7 @@ Kunena 1.5.1b
 
 6-April-2009 fxstein
 # [#15808] Fix broken New Category button in admin backend
+# [#15840] Fix invalid document object on jomsocial integration
 
 5-April-2009 fxstein
 ^ [#15801] Update package version info

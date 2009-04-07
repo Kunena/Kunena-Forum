@@ -29,6 +29,7 @@ global $fbConfig;
 
 $database = &JFactory::getDBO();
 $my = &JFactory::getUser();
+$document =& JFactory::getDocument();
 
 /**
 *@desc Getting the correct Itemids, for components required

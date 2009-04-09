@@ -816,6 +816,7 @@ function saveConfig($option)
 
     $txt = "<?php\n";
     $txt .= "global \$fbConfig;\n";
+    $txt .= "if (!is_array(\$fbConfig)) { \$fbConfig = array(); }\n"; // Thx JoniJnm
 
     foreach ($_POST as $k => $v)
     {

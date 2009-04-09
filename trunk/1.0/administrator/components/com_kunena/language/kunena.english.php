@@ -22,6 +22,66 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+// 1.0.9
+DEFINE('_KUNENA_INSTALLED_VERSION', 'Installed version');
+DEFINE('_KUNENA_COPYRIGHT', 'Copyright');
+DEFINE('_KUNENA_LICENSE', 'License');
+DEFINE('_KUNENA_PROFILE_NO_USER', 'User does not exist.');
+DEFINE('_KUNENA_PROFILE_NOT_FOUND', 'User has not yet visited forum and has no profile.');
+
+// Search
+DEFINE('_KUNENA_SEARCH_RESULTS', 'Search Results');
+DEFINE('_KUNENA_SEARCH_ADVSEARCH', 'Advanced Search');
+DEFINE('_KUNENA_SEARCH_SEARCHBY_KEYWORD', 'Search by Keyword');
+DEFINE('_KUNENA_SEARCH_KEYWORDS', 'Keywords');
+DEFINE('_KUNENA_SEARCH_SEARCH_POSTS', 'Search entire posts');
+DEFINE('_KUNENA_SEARCH_SEARCH_TITLES', 'Search titles only');
+DEFINE('_KUNENA_SEARCH_SEARCHBY_USER', 'Search by User Name');
+DEFINE('_KUNENA_SEARCH_UNAME', 'User Name');
+DEFINE('_KUNENA_SEARCH_EXACT', 'Exact Name');
+DEFINE('_KUNENA_SEARCH_USER_POSTED', 'Messages posted by');
+DEFINE('_KUNENA_SEARCH_USER_STARTED', 'Threads started by');
+DEFINE('_KUNENA_SEARCH_USER_ACTIVE', 'Activity in threads');
+DEFINE('_KUNENA_SEARCH_OPTIONS', 'Search Options');
+DEFINE('_KUNENA_SEARCH_FIND_WITH', 'Find Threads with');
+DEFINE('_KUNENA_SEARCH_LEAST', 'At least');
+DEFINE('_KUNENA_SEARCH_MOST', 'At most');
+DEFINE('_KUNENA_SEARCH_ANSWERS', 'Answers');
+DEFINE('_KUNENA_SEARCH_FIND_POSTS', 'Find Posts from');
+DEFINE('_KUNENA_SEARCH_DATE_ANY', 'Any date');
+DEFINE('_KUNENA_SEARCH_DATE_LASTVISIT', 'Last visit');
+DEFINE('_KUNENA_SEARCH_DATE_YESTERDAY', 'Yesterday');
+DEFINE('_KUNENA_SEARCH_DATE_WEEK', 'A week ago');
+DEFINE('_KUNENA_SEARCH_DATE_2WEEKS', '2 weeks ago');
+DEFINE('_KUNENA_SEARCH_DATE_MONTH', 'A month ago');
+DEFINE('_KUNENA_SEARCH_DATE_3MONTHS', '3 months ago');
+DEFINE('_KUNENA_SEARCH_DATE_6MONTHS', '6 months ago');
+DEFINE('_KUNENA_SEARCH_DATE_YEAR', 'A year ago');
+DEFINE('_KUNENA_SEARCH_DATE_NEWER', 'And newer');
+DEFINE('_KUNENA_SEARCH_DATE_OLDER', 'And older');
+DEFINE('_KUNENA_SEARCH_SORTBY', 'Sort Results by');
+DEFINE('_KUNENA_SEARCH_SORTBY_TITLE', 'Title');
+DEFINE('_KUNENA_SEARCH_SORTBY_POSTS', 'Number of posts');
+DEFINE('_KUNENA_SEARCH_SORTBY_VIEWS', 'Number of views');
+DEFINE('_KUNENA_SEARCH_SORTBY_START', 'Thread start date');
+DEFINE('_KUNENA_SEARCH_SORTBY_POST', 'Posting date');
+DEFINE('_KUNENA_SEARCH_SORTBY_USER', 'User name');
+DEFINE('_KUNENA_SEARCH_SORTBY_FORUM', 'Forum');
+DEFINE('_KUNENA_SEARCH_SORTBY_INC', 'Increasing order');
+DEFINE('_KUNENA_SEARCH_SORTBY_DEC', 'Decreasing order');
+DEFINE('_KUNENA_SEARCH_START', 'Jump to Result Number');
+DEFINE('_KUNENA_SEARCH_LIMIT5', 'Show 5 Search Results');
+DEFINE('_KUNENA_SEARCH_LIMIT10', 'Show 10 Search Results');
+DEFINE('_KUNENA_SEARCH_LIMIT15', 'Show 15 Search Results');
+DEFINE('_KUNENA_SEARCH_LIMIT20', 'Show 20 Search Results');
+DEFINE('_KUNENA_SEARCH_SEARCHIN', 'Search in Categories');
+DEFINE('_KUNENA_SEARCH_SEARCHIN_ALLCATS', 'All Categories');
+DEFINE('_KUNENA_SEARCH_SEARCHIN_CHILDREN', 'Also search in child forums');
+DEFINE('_KUNENA_SEARCH_SEND', 'Send');
+DEFINE('_KUNENA_SEARCH_CANCEL', 'Cancel');
+DEFINE('_KUNENA_SEARCH_ERR_NOPOSTS', 'No messages containing all your search terms were found.');
+DEFINE('_KUNENA_SEARCH_ERR_SHORTKEYWORD', 'At least one keyword should be over 3 characters long!');
+
 // 1.0.8
 DEFINE('_KUNENA_CATID', 'ID');
 DEFINE('_POST_NOT_MODERATOR', 'You don\'t have moderator permissions!');
@@ -35,11 +95,18 @@ DEFINE('_KUNENA_SAMPLE_MAIN_CATEGORY_TITLE', 'Main Forum');
 DEFINE('_KUNENA_SAMPLE_MAIN_CATEGORY_DESC', 'This is the main forum category. As a level one category it serves as a container for individual boards or forums. It is also referred to as a level 1 category and is a must have for any Kunena Forum setup.');
 DEFINE('_KUNENA_SAMPLE_MAIN_CATEGORY_HEADER', 'In order to provide additional information for you guests and members, the forum header can be leveraged to display text at the very top of a particular category.');
 DEFINE('_KUNENA_SAMPLE_FORUM1_TITLE', 'Welcome Mat');
-DEFINE('_KUNENA_SAMPLE_FORUM1_DESC', 'We encourage new members to post a short introduction of themselves in this forum category. Get to know each other and share you common interests.<br>');
-DEFINE('_KUNENA_SAMPLE_FORUM1_HEADER', '<strong>Welcome to the Kunena forum!</strong><br><br>Tell us and our members who you are, what you like and why you became a member of this site.<br>We welcome all new members and hope to see you around a lot!<br>');
+DEFINE('_KUNENA_SAMPLE_FORUM1_DESC', 'We encourage new members to post a short introduction of themselves in this forum category. Get to know each other and share you common interests.
+');
+DEFINE('_KUNENA_SAMPLE_FORUM1_HEADER', '[b]Welcome to the Kunena forum![/b]
+
+Tell us and our members who you are, what you like and why you became a member of this site.
+We welcome all new members and hope to see you around a lot!
+');
 DEFINE('_KUNENA_SAMPLE_FORUM2_TITLE', 'Suggestion Box');
-DEFINE('_KUNENA_SAMPLE_FORUM2_DESC', 'Have some feedback and input to share?<br>Don\'t be shy and drop us a note. We want to hear from you and strive to make our site better and more user friendly for our guests and members a like.');
-DEFINE('_KUNENA_SAMPLE_FORUM2_HEADER', 'This is the optional Forum header for the Suggestion Box.<br>');
+DEFINE('_KUNENA_SAMPLE_FORUM2_DESC', 'Have some feedback and input to share?
+Don\'t be shy and drop us a note. We want to hear from you and strive to make our site better and more user friendly for our guests and members a like.');
+DEFINE('_KUNENA_SAMPLE_FORUM2_HEADER', 'This is the optional Forum header for the Suggestion Box.
+');
 DEFINE('_KUNENA_SAMPLE_POST1_SUBJECT', 'Welcome to Kunena!');
 DEFINE('_KUNENA_SAMPLE_POST1_TEXT', '[size=4][b]Welcome to Kunena![/b][/size]
 
@@ -56,16 +123,16 @@ Kunena, translated from Swahili meaning "to speak", is built by a team of open s
 [b]Kunena Support Forum[/b]: http://www.kunena.com/forum
 (http://www.kunena.com/index.php?option=com_kunena&Itemid=125)
 
-[b]Kunena Downloads:[/b] http://www.kunena.com/downloads
+[b]Kunena Downloads:[/b] [url=http://joomlacode.org/gf/project/kunena/frs/]http://www.kunena.com/downloads[/url]
 (http://joomlacode.org/gf/project/kunena/frs/)
 
 [b]Kunena Blog:[/b] http://www.kunena.com/blog
 (http://www.kunena.com/index.php?option=com_content&view=section&layout=blog&id=7&Itemid=128)
 
-[b]Submit your feature ideas:[/b] http://www.kunena.com/uservoice
+[b]Submit your feature ideas:[/b] [url=http://kunena.uservoice.com/pages/general?referer_type=top3]http://www.kunena.com/uservoice[/url]
 (http://kunena.uservoice.com/pages/general?referer_type=top3)
 
-[b]Follow Kunena on Twitter:[/b] http://www.kunena.com/twitter
+[b]Follow Kunena on Twitter:[/b] [url=https://twitter.com/kunena]http://www.kunena.com/twitter[/url]
 (https://twitter.com/kunena)');
 
 // 1.0.6

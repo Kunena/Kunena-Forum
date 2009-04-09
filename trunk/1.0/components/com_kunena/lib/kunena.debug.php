@@ -41,12 +41,14 @@ function trigger_dberror($text = '')
 	global $mainframe;
 	echo debug_callstackinfo();
 
-	include ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.version.php');
-	// << $KunenaDbVersion
+	require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.version.php');
+	$kunenaVersion = CKunenaVersion::version();
+	$kunenaPHPVersion = CKunenaVersion::PHPVersion();
+	$kunenaMySQLVersion = CKunenaVersion::MySQLVersion();
 ?>
  <!-- Version Info -->
 <div class="fbfooter">
-Installed version:  <?php echo $KunenaDbVersion; ?> | php <?php echo $KunenaPHPVersion; ?> | mysql <?php echo $KunenaMySQLVersion; ?>
+Installed version:  <?php echo $kunenaVersion; ?> | php <?php echo $kunenaPHPVersion; ?> | mysql <?php echo $kunenaMySQLVersion; ?>
 </div>
 <!-- /Version Info -->
 <?php

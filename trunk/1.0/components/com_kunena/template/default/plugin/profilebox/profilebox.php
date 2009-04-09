@@ -48,19 +48,7 @@ else if ($fbConfig->avatar_src == "clexuspm")
 }
 else if ($fbConfig->avatar_src == "cb")
 {
-    $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id=".$my->id);
-    $avatar = $database->loadResult();
-    if ($avatar != "") {
-        $imgpath = KUNENA_JLIVEURL . '/images/comprofiler/';
-
-        if (eregi("gallery/", $avatar) == false)
-            $imgpath .= "tn" . $avatar;
-        else
-            $imgpath .= $avatar;
-    } else {
-        $imgpath = KUNENA_JLIVEURL."/components/com_comprofiler/plugin/language/default_language/images/tnnophoto.jpg";
-    }
-    $jr_avatar = '<img src="' . $imgpath . '" alt=" " />';
+	$jr_avatar = $kunenaProfile->showAvatar($my->id);
 }
 else
 {
@@ -154,7 +142,7 @@ $annlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show'.KUNEN
 
 </td>
                 <?php
-                if (mosCountModules('kunena_profilebox'))
+                if (mosCountModules('kunena_profilebox') || mosCountModules('kna_pbox'))
                 {
                 ?>
 
@@ -171,7 +159,7 @@ $annlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show'.KUNEN
                                 }
                                 else
                                 {
-                                	mosLoadModules('kunena_profilebox', -2);
+                                	mosLoadModules('kna_pbox', -2);
                                 }
                                 ?>
                             </div>
@@ -208,7 +196,7 @@ else
 
 </td>
                 <?php
-                if (mosCountModules('kunena_profilebox'))
+                if (mosCountModules('kunena_profilebox') || mosCountModules('kna_pbox'))
                 {
                 ?>
 
@@ -225,7 +213,7 @@ else
                                 }
                                 else
                                 {
-                                	mosLoadModules('kunena_profilebox', -2);
+                                	mosLoadModules('kna_pbox', -2);
                                 }
                                 ?>
                             </div>

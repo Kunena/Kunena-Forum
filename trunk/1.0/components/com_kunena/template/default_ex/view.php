@@ -368,16 +368,23 @@ if ($letPass || $is_Moderator)
             }
             ?>
         </div>
-        <!-- top nav -->
         <?php if($objCatInfo->headerdesc) { ?>
 		<table class="fb_forum-headerdesc" border="0" cellpadding="0" cellspacing="0" width="100%">
 			<tr>
 				<td>
-				<?php echo stripslashes($objCatInfo->headerdesc); ?>
+					<?php
+					$headerdesc = stripslashes(smile::smileReplace($objCatInfo->headerdesc, 0, $fbConfig->disemoticons, $smileyList));
+			        $headerdesc = nl2br($headerdesc);
+			        //wordwrap:
+			        $headerdesc = smile::htmlwrap($headerdesc, $fbConfig->wrap);
+					echo $headerdesc;
+					?>
 				</td>
 			</tr>
 		</table>
         <?php } ?>
+
+        <!-- B: List Actions -->
 
         <table class="fb_list_actions" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <tr>
@@ -429,7 +436,8 @@ if ($letPass || $is_Moderator)
 	?>
             </tr>
         </table>
-        <!-- /top nav -->
+
+        <!-- F: List Actions -->
 
         <!-- <table border = "0" cellspacing = "0" cellpadding = "0" width = "100%" align = "center"> -->
 
@@ -440,7 +448,7 @@ if ($letPass || $is_Moderator)
                              <div class = "fb_title_cover  fbm">
                                 <span class = "fb_title fbl"><b><?php echo _KUNENA_TOPIC; ?></b> <?php echo $jr_topic_title; ?></span>
                             </div>
-                            <!-- FORUM TOOLS -->
+                            <!-- B: FORUM TOOLS -->
 
                             <?php
 
@@ -455,7 +463,7 @@ if ($letPass || $is_Moderator)
                             //(JJ) FINISH: RECENT POSTS
 
                             ?>
-			    <!-- /FORUM TOOLS -->
+			    <!-- F: FORUM TOOLS -->
         	            <!-- Begin: Total Favorite -->
 	                    <?php
         	            $database->setQuery("SELECT COUNT(*) FROM #__fb_favorites where thread='$thread'");
@@ -469,7 +477,7 @@ if ($letPass || $is_Moderator)
 			        if ($fb_totalfavorited>=10) echo '<img src="'.KUNENA_URLICONSPATH . $fbIcons['favoritestar'].'" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
 			        if ($fb_totalfavorited>=15) echo '<img src="'.KUNENA_URLICONSPATH . $fbIcons['favoritestar'].'" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
 			    } else {
-                                echo _FB_TOTALFAVORITE;
+                                echo _KUNENA_TOTALFAVORITE;
                                 echo $fb_totalfavorited;
 			    }
         	            echo '</div>';
@@ -530,22 +538,6 @@ if ($letPass || $is_Moderator)
                                 else {
                                     $fb_thread = $fmessage->thread;
                                 }
-                                //Joomla Mambot Support , Thanks hacksider
-                                if ($fbConfig->jmambot)
-                                {
-                                    global $_MAMBOTS;
-                                    $row = new t();
-                                    $row->text = $fb_message_txt;
-                                    $_MAMBOTS->loadBotGroup( 'content' );
-                                    $params =& new mosParameters( '' );
-                                    $results = $_MAMBOTS->trigger( 'onPrepareContent', array( &$row, &$params, 0 ), true );
-                                    $msg_text = $row->text;
-                                }
-                                else
-                                {
-                                    $msg_text = $fb_message_txt;
-                                }
-                                /* Fininsh Joomla Mambot Support */
 
                                 //meta description and keywords
 								$metaKeys=(htmlspecialchars(stripslashes($fmessage->subject)). ', ' .htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . htmlspecialchars(stripslashes($fbConfig->board_title)) . ', ' . htmlspecialchars($GLOBALS['mosConfig_sitename']));
@@ -610,27 +602,7 @@ if ($letPass || $is_Moderator)
                                     }
                                     else if ($fbConfig->avatar_src == "cb")
                                     {
-                                        $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$fmessage->userid' AND avatarapproved='1'");
-                                        $avatar = $database->loadResult();
-
-                                        if ($avatar != '')
-                                        {
-                                            //added or modified by mambojoe
-                                            //This now  has the right path to the upload directory and also handles the thumbnail and gallery photos.
-                                            $imgpath = KUNENA_JLIVEURL . '/images/comprofiler/';
-
-                                            if (eregi("gallery/", $avatar) == false)
-                                            $imgpath .= "tn" . $avatar;
-                                            else
-                                            $imgpath .= $avatar;
-
-                                            $msg_avatar = '<span class="fb_avatar"><img src="' . $imgpath . '" alt="" /></span>';
-                                            //added or modified by mambojoe
-                                        }
-                                        else {
-                                            $imgpath = KUNENA_JLIVEURL."/components/com_comprofiler/plugin/language/default_language/images/tnnophoto.jpg";
-                                            $msg_avatar = '<span class="fb_avatar"><img src="' . $imgpath . '" alt="" /></span>';
-                                        }
+                                    	$msg_avatar = '<span class="fb_avatar">'.$kunenaProfile->showAvatar($fmessage->userid).'</span>';
                                     }
                                     else
                                     {
@@ -639,8 +611,10 @@ if ($letPass || $is_Moderator)
                                         if ($avatar != '') {
                                             $msg_avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" /></span>';
                                         }
-
-                                        else {$msg_avatar = '<span class="fb_avatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_nophoto.jpg" alt="" /></span>'; }
+                                        else
+                                        {
+                                        	$msg_avatar = '<span class="fb_avatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_nophoto.jpg" alt="" /></span>'; 
+                                        }
                                     }
                                 }
 
@@ -1159,33 +1133,6 @@ if ($letPass || $is_Moderator)
                                     $msg_edit = CKunenaLink::GetTopicPostLink('edit', $catid, $fmessage->id , $fbIcons['edit']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />':_GEN_EDIT);
                                 }
 
-                                if ($is_Moderator && $fmessage->parent == '0')
-                                {
-                                    // offer the moderator always the move link to relocate a topic to another forum
-                                    // and the (un)sticky bit links
-                                    // and the (un)lock links
-                                    // but ONLY when it is a topic and not a reply
-                                    $msg_move = CKunenaLink::GetTopicPostLink('move', $catid, $fmessage->id , $fbIcons['move']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['move'] . '" alt="Move" border="0" title="' . _VIEW_MOVE . '" />':_GEN_MOVE);
-
-                                    if ($fmessage->ordering == 0)
-                                    {
-                                        $msg_sticky = CKunenaLink::GetTopicPostLink('sticky', $catid, $fmessage->id , $fbIcons['sticky']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['sticky'] . '" alt="Sticky" border="0" title="' . _VIEW_STICKY . '" />':_GEN_STICKY);
-                                    }
-                                    else
-                                    {
-                                        $msg_sticky = CKunenaLink::GetTopicPostLink('unsticky', $catid, $fmessage->id , $fbIcons['unsticky']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['unsticky'] . '" alt="Unsticky" border="0" title="' . _VIEW_UNSTICKY . '" />':_GEN_UNSTICKY);
-                                    }
-
-                                    if ($fmessage->locked == 0)
-                                    {
-                                        $msg_lock = CKunenaLink::GetTopicPostLink('lock', $catid, $fmessage->id , $fbIcons['lock']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['lock'] . '" alt="Lock" border="0" title="' . _VIEW_LOCK . '" />':_GEN_LOCK);
-                                    }
-                                    else
-                                    {
-                                        $msg_lock = CKunenaLink::GetTopicPostLink('unlock', $catid, $fmessage->id , $fbIcons['unlock']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['unlock'] . '" alt="Unlock" border="0" title="' . _VIEW_UNLOCK . '" />':_GEN_UNLOCK);
-                                    }
-                                }
-
                                 //(JJ)
                                 if (file_exists(KUNENA_ABSTMPLTPATH . '/message.php')) {
                                     include (KUNENA_ABSTMPLTPATH . '/message.php');
@@ -1270,12 +1217,12 @@ if ($letPass || $is_Moderator)
             </table>
 
 
-            <!-- bottom nav -->
+            <!-- B: List Actions Bottom -->
             <table class="fb_list_actions_bottom" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
                 <tr>
                     <td class="fb_list_actions_goto">
                         <?php
-                        //go to bottom
+                        //go to top
                         echo '<a name="forumbottom" /> ';
                         echo CKunenaLink::GetSamePageAnkerLink('forumtop', $fbIcons['toparrow'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP);
 
@@ -1323,9 +1270,9 @@ if ($letPass || $is_Moderator)
 	echo $pathway1;
 	echo '</div>';
     ?>
-	<!-- /bottom nav -->
+	<!-- F: List Actions Bottom -->
 
-	<!-- Category List Bottom -->
+	<!-- B: Category List Bottom -->
 
 <table class="fb_list_bottom" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <tr>
@@ -1361,7 +1308,7 @@ if ($letPass || $is_Moderator)
       </td>
     </tr>
 </table>
-	<!-- / Category List Bottom -->
+	<!-- F: Category List Bottom -->
 
 <?php
     }

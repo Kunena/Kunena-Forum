@@ -77,15 +77,6 @@ if (!$my->id && $func == "mylatest")
 
 require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
 
-if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php'))
-{
-	include (KUNENA_ABSTMPLTPATH . '/smile.class.php');
-}
-else
-{
-	include (KUNENA_ABSPATH . '/template/default/smile.class.php');
-}
-
 //meta description and keywords
 $metaKeys=(_KUNENA_ALL_DISCUSSIONS . ', ' . stripslashes($fbConfig->board_title) . ', ' . $GLOBALS['mosConfig_sitename']);
 $metaDesc=(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
@@ -110,15 +101,21 @@ $lockedForum = 0;
 $lockedTopic = 0;
 $topicSticky = 0;
 
+if ('' == $sel || (!$my->id && $sel == 0)) {
+/*
+    if($my->id != 0) { $sel="0"; }	// Users: show messages after last visit
+    else { $sel="720"; }		// Others: show 1 month as default
+*/
+    $sel="720";
+}
+$show_list_time = $sel;
+
 //start the latest x
-if ($sel == "0") {
+if ($sel == 0) {
     $querytime = ($prevCheck - $fbConfig->fbsessiontimeout); //move 30 minutes back to compensate for expired sessions
 }
 else
 {
-    if ("" == $sel) {
-        $sel = 720;
-    } //take 720 hours ~ 1 month as default
     //Time translation
     $back_time = $sel * 3600; //hours*(mins*secs)
     $querytime = time() - $back_time;
@@ -131,6 +128,16 @@ $page             = (int)$page;
 $page             = $page < 1 ? 1 : $page;
 $offset           = ($page - 1) * $threads_per_page;
 $row_count        = $page * $threads_per_page;
+
+if ($func != "mylatest") {
+	$lookcats = split(',', $fbConfig->latestcategory);
+	$catlist = array();
+	$latestcats = '';
+	foreach ($lookcats as $catnum) {
+		if ((int)$catnum && (int)$catnum>0) $catlist[] = (int)$catnum;
+	}
+	if (count($catlist)) $latestcats = " AND catid IN (". implode(',', $catlist) .") ";
+}
 
  //check if $sel has a reasonable value and not a Unix timestamp:
 $since = false;
@@ -157,8 +164,7 @@ else
 {
 	$mainframe->setPageTitle(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
 	$query = "Select count(distinct thread) FROM #__fb_messages WHERE time >'$querytime'".
-			" AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)".
-			((trim($fbConfig->latestcategory)!="")?(" AND catid IN (".trim($fbConfig->latestcategory).")"):""); // if categories are limited apply filter
+			" AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)" . $latestcats; // if categories are limited apply filter
 }
 
 $database->setQuery($query);
@@ -196,8 +202,8 @@ else
 	$query .=			"JOIN (  SELECT thread, MAX(time) AS lastpost
                                 FROM #__fb_messages
                                 WHERE time >'$querytime'
-                                AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)".
-                                ((trim($fbConfig->latestcategory)!="")?(" AND catid IN (".trim($fbConfig->latestcategory).")"):"").
+                                AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)" .
+                                $latestcats .
                                 " GROUP BY 1) AS b ON b.thread = a.thread ";
 }
 
@@ -293,8 +299,49 @@ if (count($threadids) > 0)
         if (!in_array($msgid->thread, $read_topics)) $last_read[$msgid->thread] = $msgid;
     }
 }
+// (JJ) BEGIN: ANNOUNCEMENT BOX
+if ($fbConfig->showannouncement > 0)
+{
+?>
+<!-- B: announcementBox -->
+<?php
+    if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcementbox.php')) {
+        require_once (KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcementbox.php');
+    }
+    else {
+        require_once (KUNENA_ABSPATH . '/template/default/plugin/announcement/announcementbox.php');
+    }
+?>
+<!-- F: announcementBox -->
+<?php
+}
+// (JJ) FINISH: ANNOUNCEMENT BOX
+
+// load module
+if (mosCountModules('kunena_announcement')||mosCountModules('kna_ancmt'))
+{
 ?>
 
+    <div class = "fb-fb_2">
+        <?php
+        if (CKunenaTools::isJoomla15())
+        {
+        	$document	= &JFactory::getDocument();
+        	$renderer	= $document->loadRenderer('modules');
+        	$options	= array('style' => 'xhtml');
+        	$position	= 'kunena_announcement';
+        	echo $renderer->render($position, $options, null);
+        }
+        else
+        {
+        	mosLoadModules('kna_ancmt', -2);
+        }
+        ?>
+    </div>
+
+<?php
+}
+?>
 <!-- B: List Actions -->
 	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0">
 		<tr>
@@ -304,16 +351,15 @@ if (count($threadids) > 0)
 									<?php if ($func!='mylatest') {?>
                                     <td class="fb_list_times_all">
 
-									<?php  $show_list_time = mosGetParam($_REQUEST, 'sel', '');  ?>
 									<select class="inputboxusl" onchange="document.location.href=this.options[this.selectedIndex].value;" size="1" name="select">
-									 <option <?php if ($show_list_time =='720') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest'); ?>"><?php echo _SHOW_MONTH ; ?></option>
-									  <option <?php if ($show_list_time =='0') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=0'); ?>"><?php echo _SHOW_LASTVISIT; ?></option>
+<?php if ($my->id): ?>									  <option <?php if ($show_list_time =='0') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=0'); ?>"><?php echo _SHOW_LASTVISIT; ?></option><?php endif; ?>
 									  <option <?php if ($show_list_time =='4') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=4'); ?>"><?php echo _SHOW_4_HOURS; ?></option>
 									  <option <?php if ($show_list_time =='8') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=8'); ?>"><?php echo _SHOW_8_HOURS; ?></option>
 									  <option <?php if ($show_list_time =='12') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=12'); ?>"><?php echo _SHOW_12_HOURS; ?></option>
 									  <option <?php if ($show_list_time =='24') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=24'); ?>"><?php echo _SHOW_24_HOURS; ?></option>
 									  <option <?php if ($show_list_time =='48') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=48'); ?>"><?php echo _SHOW_48_HOURS; ?></option>
 									  <option <?php if ($show_list_time =='168') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=168'); ?>"><?php echo _SHOW_WEEK; ?></option>
+									  <option <?php if ($show_list_time =='720') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=720'); ?>"><?php echo _SHOW_MONTH ; ?></option>
 									  <option <?php if ($show_list_time =='8760') {?> selected="selected"  <?php }?> value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=8760'); ?>"><?php echo _SHOW_YEAR; ?></option>
 									</select>
 

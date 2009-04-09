@@ -30,6 +30,124 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.0.10
+
+5-April-2009 fxstein
+^ [#15799] Prpepare version information for 1.0.10 builds
+^ [#15798] Updated credits page
+# [#15800] Fix broken smilie class includes
+# [#15805] Fix incorrect sort description in backend
+
+Kunena 1.0.9
+
+3-April-2009 fxstein
+# [#15781] Minor typo in language file: Missing closing tag ] for twitter url
+# [#15782] Session category check regression
+
+3-April-2009 Matias
+# [#15671] CB integration: do not pass array() as reference
+# [#15671] CB integration: extra parameters 'subject', 'messagetext' and 'messageobject' to be passed as reference into showProfile()
+
+2-April-2009 fxstein
++ [#15724] Added bbcode and smilie support for forum headers AND descriptions in default AND default_ex
++ [#15724] Added bbcode and smilie support to forum announcements
+^ [#15771] Minor change: Update sample data on fresh installs to contain bbcode in forum headers & descriptions instead of html
+
+2-April-2009 Matias
+^ [#15671] CB integration: Show Profile: Provide all needed information to CB plugin (Kunena Profile, username from message)
+# [#15761] Added missing php close tags in lib/ where they were missing
+# [#15567] 1.0.9 internal regression: security issue fixed in search
+
+1-April-2009 fxstein
+# [#15761] Regression fix: Added missing php close tag to class.kunena.php
+
+1-April-2009 Matias
+^ [#15671] CB integration: Changed CB Migration API
+^ [#15671] CB integration: If internal fbprofile page is accessed, forward request to CB
++ [#15671] CB integration: New class CKunenaVersion, make lib/kunena.version.php safe to be included by external components
+! New translations: make version string localized
++ [#15671] CB integration: make lib/kunena.user.class.php and lib/kunena.config.class.php self-contained
+
+31-March-2009 Matias
+# [#15567] Implement working advanced search: fix user search without search words
++ [#15671] CB integration: Source code documentation for CKunenaUserprofile class variables
++ [#15671] CB integration: Added lib/kunena.communitybuilder.php for CB compability
+# [#15671] CB integration: Workaround for Community Builder: don't redefine $database
++ [#15671] CB integration: New class CKunenaCBProfile, use it for integration
++ [#15671] CB integration: Added callback for profile integration changes, code cleanup
+
+30-March-2009 Matias
+# [#15638] Latest member profile link causes fatal error
+! Regression: fixed user count and latest user from Forum Stats (1.0.8 behaviour)
+! Create new profile with default values if profile does not exist
+
+30-March-2009 fxstein
++ [#15724] Add bbcode and smilie support to forum headers in default_ex
+# [#15139] Fixed broken IP address lookup link
+
+29-March-2009 Matias
+# [#15677] Fix UI issues: Showcat does not validate
+# [#15677] Fix UI issues: Latestx shows "Show last visit" option for anonymous users
+# [#15677] Fix UI issues: Latestx "x time ago" options are not fully ordered
+# [#15677] Fix UI issues: Latestx, showcat do not validate for moderators
+# [#15677] Fix UI issues: Message view does not mark new messages by green icon
+# [#15677] Fix UI issues: Message view contains some code for Quick Reply even if it's disabled
+
+28-March-2009 fxstein
+# [#15702] Fix broken RSS feed on Joomla 1.0.x without SEF
++ [#15705] Short names for external module positions for Joomla 1.0.x
+  kunena_profilebox -> kna_pbox, kunena_announcement -> kna_ancmt,
+  kunena_msg_'n' -> kna_msg'n', kunena_bottom -> kna_btm
+
+28-March-2009 Matias
+# [#15638] Latest member profile link causes fatal error
+! User profile detects now nonexistent users and user profiles
+# [#15639] User list incomplete
+! Only users who have Kunena user profile are listed
+# [#15567] Implement working advanced search: add backwards compability for old templates
+
+27-March-2009 Matias
+# [#15677] Fix UI issues: IE7 bug having collapsed tabs
+# [#15677] Fix UI issues: Big empty space on some templates
+# [#15677] Fix UI issues: Spoiler icon has wrong URL if Joomla is not in document root
+# [#15677] Fix UI issues: Open Kunena.com to a new window/tab (=external link)
+# [#15677] Fix UI issues: Show announcements also in latestx
+
+26-March-2009 Matias
+# [#15567] Fix pagination in search
++ [#15671] Add API for changing user settings in CB (part 1)
+! Renamed fbUserprofile to CKunenaUserprofile. It can be found from lib/kunena.user.class.php
+# [#15667] Missing argument 3 for mb_convert_encoding
+# [#15154] Auto linked email addresses contain two slashes in front of the address
+
+24-March-2009 fxstein
+# [#15625] Prepare for 1.0.9 build
+# [#15624] Fix language file re-declaration
+
+22-March-2009 Matias
+# [#15565] Board Categories showed only public categories
+# [#15566] Fireboard 1.0.1 didn't contain directory com_kunena/uploaded
++ [#15567] Implement working advanced search
+
+22-February-2009 Matias
+# [#15157] Empty messages in Joomla 1.0 part 2
+# [#15170] Add backward compability to FB 1.0.5: Same meaning for 0 in latestcategory
+
+21-February-2009 Matias
+# [#15157] Empty messages in Joomla 1.0
+# [#15162] Two same smileys in a row do not work
+# [#15163] Fetch Kunena template from Joomla theme fails with warnings
+
+20-Februray-2009 fxstein
+# [#15151] Ensure fbConfig is array during legacy config file write - Thx JoniJnm!
+
+20-February-2009 Matias
+# [#15148] Post emails for moderators: name missing
+# [#15150] Don't send email to banned users
+
+19-Februray-2009 fxstein
+# Incorrect permissions handling fixed
+
 19-Februray-2009 Matias
 # Search: Fixed SEF/no SEF issues. Pagination and links should now work for all
 # Pathway: comma (,) was missing between usernames if there were no guests

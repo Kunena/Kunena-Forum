@@ -22,7 +22,6 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $database, $mainframe, $my, $mosConfig_absolute_path, $fbConfig;
-include ($mosConfig_absolute_path . "/components/com_kunena/template/default/smile.class.php");
 
 $hours = 0;
 
@@ -154,7 +153,7 @@ echo "<?xml version=\"1.0\" encoding=\"" . $encoding[1] . "\"?>\n";
             if (!CKunenaTools::isJoomla15())
             {
             	// On legacy Joomla we need to encode the link or the RSS XML would break
-            	htmlspecialchars($itemlink);
+            	$itemlink = htmlspecialchars($itemlink);
             }
             echo $itemlink;
             echo "</link>\n";

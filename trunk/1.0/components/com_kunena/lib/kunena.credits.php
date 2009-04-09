@@ -49,8 +49,6 @@ global $is_Moderator;
                           <li class="fb_teammember"><a href="http://www.kunena.com/index.php?option=com_community&view=profile&userid=63" target='_blank' rel='follow'>Matias</a> Kunena developer</li>
                           <li class="fb_teammember"><a href="http://www.camelcity.com" target='_blank' rel='follow'>Noel Hunter</a> Kunena developer and admin of <a href="http://www.housecalls.com/view-qaa?func=listcat" target='_blank' rel='follow'>House Calls Q&A Forum/</a></li>
                           <li class="fb_teammember"><a href="http://www.racoonpages.de/" target='_blank' rel='follow'>racoon</a> Kunena developer</li>
-
-                          <li class="fb_teammember"><a href="http://www.bestofjoomla.com" target='_blank' rel='follow'>Best Of Joomla</a> The Home of FireBoard the basis of <a href="www.kunena.com" target='_blank' rel='follow'>Kunena</a>.</li>
                         </ul></td>
                     </tr>
                     <tr valign="top">
@@ -76,15 +74,10 @@ global $is_Moderator;
 </div>
 
 <?php
-include ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.version.php');
-// << $KunenaDbVersion
+require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.version.php');
 ?>
  <!-- Version Info -->
-<div class="fbfooter">
-Installed version:  <?php echo $KunenaDbVersion; ?> |
-&copy; Copyright: <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>  |
-License: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a>
-</div>
+<div class="fbfooter"><?php echo CKunenaVersion::versionHTML(); ?></div>
 <!-- /Version Info -->
 
 <!-- Begin: Forum Jump -->

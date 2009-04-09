@@ -131,3 +131,4 @@ class jbCategory {
         return $this->desc;
     }
 }
+?>

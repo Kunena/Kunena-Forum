@@ -261,7 +261,13 @@ if ($letPass || $is_Moderator)
         </div>
         <!-- top nav -->
         <?php if($objCatInfo->headerdesc) { ?>
-        <div class="fb_forum-headerdesc"><?php echo stripslashes($objCatInfo->headerdesc); ?></div>
+        <div class="fb_forum-headerdesc"><?php
+        			$headerdesc = stripslashes(smile::smileReplace($objCatInfo->headerdesc, 0, $fbConfig->disemoticons, $smileyList));
+			        $headerdesc = nl2br($headerdesc);
+			        //wordwrap:
+			        $headerdesc = smile::htmlwrap($headerdesc, $fbConfig->wrap);
+					echo $headerdesc;
+        ?></div>
         <?php } ?>
         <table border = "0" cellspacing = "0" class = "jr-topnav" cellpadding = "0" width="100%">
             <tr>
@@ -433,22 +439,6 @@ if ($letPass || $is_Moderator)
                                 else {
                                     $fb_thread = $fmessage->thread;
                                 }
-                                //Joomla Mambot Support , Thanks hacksider
-                                if ($fbConfig->jmambot)
-                                {
-                                    global $_MAMBOTS;
-                                    $row = new t();
-                                    $row->text = $fb_message_txt;
-                                    $_MAMBOTS->loadBotGroup( 'content' );
-                                    $params =& new mosParameters( '' );
-                                    $results = $_MAMBOTS->trigger( 'onPrepareContent', array( &$row, &$params, 0 ), true );
-                                    $msg_text = $row->text;
-                                }
-                                else
-                                {
-                                    $msg_text = $fb_message_txt;
-                                }
-                                /* Fininsh Joomla Mambot Support */
 
                                 //meta description and keywords
 								$metaKeys=(htmlspecialchars(stripslashes($fmessage->subject)). ', ' .htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . htmlspecialchars(stripslashes($fbConfig->board_title)) . ', ' . htmlspecialchars($GLOBALS['mosConfig_sitename']));
@@ -513,27 +503,7 @@ if ($letPass || $is_Moderator)
                                     }
                                     else if ($fbConfig->avatar_src == "cb")
                                     {
-                                        $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$fmessage->userid' AND avatarapproved='1'");
-                                        $avatar = $database->loadResult();
-
-                                        if ($avatar != '')
-                                        {
-                                            //added or modified by mambojoe
-                                            //This now  has the right path to the upload directory and also handles the thumbnail and gallery photos.
-                                            $imgpath = KUNENA_JLIVEURL . '/images/comprofiler/';
-
-                                            if (eregi("gallery/", $avatar) == false)
-                                            $imgpath .= "tn" . $avatar;
-                                            else
-                                            $imgpath .= $avatar;
-
-                                            $msg_avatar = '<span class="fb_avatar"><img src="' . $imgpath . '" alt="" /></span>';
-                                            //added or modified by mambojoe
-                                        }
-                                        else {
-                                            $imgpath = KUNENA_JLIVEURL."/components/com_comprofiler/plugin/language/default_language/images/tnnophoto.jpg";
-                                            $msg_avatar = '<span class="fb_avatar"><img src="' . $imgpath . '" alt="" /></span>';
-                                        }
+                                            $msg_avatar = '<span class="fb_avatar">' .$kunenaProfile->showAvatar($fmessage->userid) . '</span>';
                                     }
                                     else
                                     {

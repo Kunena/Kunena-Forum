@@ -38,6 +38,7 @@ class smile
 
 	static $regexp_trans = array('/' => '\/', '^' => '\^', '$' => '\$', '.' => '\.', '[' => '\[', ']' => '\]', '|' => '\|', '(' => '\(', ')' => '\)', '?' => '\?', '*' => '\*', '+' => '\+', '{' => '\{', '}' => '\}', '\\' => '\\\\', '^' => '\^', '-' => '\-');
 
+	$utf8 = (mb_detect_encoding($fb_message . 'a', 'UTF-8,ISO-8859-1') == 'UTF-8') ? "u" : "";
         $type = ($history == 1) ? "-grey" : "";
         $message_emoticons = array();
         $message_emoticons = $iconList? $iconList : smile::getEmoticons($history);
@@ -50,7 +51,10 @@ class smile
 
             while (list($emo_txt, $emo_src) = each($message_emoticons)) {
 		$emo_txt = strtr($emo_txt, $regexp_trans);
-                $fb_message_txt = preg_replace('/(\W|\A)'.$emo_txt.'(\W|\Z)/u', '\1<img src="' . $emo_src . '" alt="" style="vertical-align: middle;border:0px;" />\2', $fb_message_txt);
+		// Check that smileys are not part of text like:soon (:s)
+                $fb_message_txt = preg_replace('/(\W|\A)'.$emo_txt.'(\W|\Z)/'.$utf8, '\1<img src="' . $emo_src . '" alt="" style="vertical-align: middle;border:0px;" />\2', $fb_message_txt);
+		// Previous check causes :) :) not to work, workaround is to run the same regexp twice
+                $fb_message_txt = preg_replace('/(\W|\A)'.$emo_txt.'(\W|\Z)/'.$utf8, '\1<img src="' . $emo_src . '" alt="" style="vertical-align: middle;border:0px;" />\2', $fb_message_txt);
             }
         }
 
@@ -628,7 +632,7 @@ if ($editmode) {
 //	  $utf8 = (preg_match("/^([\x09\x0A\x0D\x20-\x7E]|[\xC2-\xDF][\x80-\xBF]|\xE0[\xA0-\xBF][\x80-\xBF]|[\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}|\xED[\x80-\x9F][\x80-\xBF]|\xF0[\x90-\xBF][\x80-\xBF]{2}|[\xF1-\xF3][\x80-\xBF]{3}|\xF4[\x80-\x8F][\x80-\xBF]{2})*$/", $str)) ? "u" : "";
 	  // original utf8 problems seems to cause problems with very long text (forumposts)
 	  // replaced by a little simpler function call by fxstein 8-13-08
-	  $utf8 = (mb_detect_encoding($str . 'a' , 'UTF-8') == 'UTF-8') ? "u" : "";
+	  $utf8 = (mb_detect_encoding($str . 'a' , 'UTF-8,ISO-8859-1') == 'UTF-8') ? "u" : "";
 
 	  while (list(, $value) = each($content)) {
 	    switch ($value) {

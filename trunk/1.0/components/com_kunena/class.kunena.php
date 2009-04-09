@@ -21,7 +21,6 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 *@desc Getting the correct Itemids, for components required
 */
 
-
 // Shortcuts to all the path we have:
 define('KUNENA_JABSPATH', $mainframe->getCfg('absolute_path'));
 
@@ -29,7 +28,7 @@ define('KUNENA_JABSPATH', $mainframe->getCfg('absolute_path'));
 define('KUNENA_JLIVEURL', $mainframe->getCfg('live_site'));
 
 // Joomla template dir
-define('KUNENA_JTEMPLATEPATH', KUNENA_JABSPATH. DS. "templates".DS . $mainframe->getTemplate());
+define('KUNENA_JTEMPLATEPATH', KUNENA_JABSPATH. "/templates/" . $mainframe->getTemplate());
 define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "/templates/".$mainframe->getTemplate());
 
 //Kunena
@@ -37,6 +36,7 @@ $Itemid = intval(mosGetParam($_REQUEST, 'Itemid'));
 
 //check if we have all the itemid sets. if so, then no need for DB call
 
+global $fbSession;
 global $fbConfig;
 
 if (!defined("KUNENA_COMPONENT_ITEMID")) {
@@ -783,7 +783,7 @@ class CKunenaTools {
            return $val;
         }
 
-		function getAllowedForums($uid = 0, $gid = 0, &$acl) {
+	function getAllowedForums($uid = 0, $gid = 0, &$acl) {
         	global $database;
 
 			function _has_rights(&$acl, $gid, $access, $recurse) {
@@ -818,44 +818,6 @@ class CKunenaTools {
 
     } // end of class
 
-/**
-* Users Table Class
-* Provides access to the #__fb_users table
-*/
-class fbUserprofile
-    extends mosDBTable {
-    var $userid = null;
-    var $view = null;
-    var $signature = null;
-    var $moderator = null;
-    var $ordering = null;
-    var $posts = null;
-    var $avatar = null;
-    var $karma = null;
-    var $karma_time = null;
-    var $group_id = null;
-    var $uhits = null;
-    var $personalText = null;
-    var $gender = null;
-    var $birthdate = null;
-    var $location = null;
-    var $ICQ = null;
-    var $AIM = null;
-    var $YIM = null;
-    var $MSN = null;
-    var $SKYPE = null;
-	var $GTALK = null;
-	var $websitename = null;
-	var $websiteurl = null;
-    var $hideEmail = null;
-    var $showOnline = null;
-    /**
-    * @param database A database connector object
-    */
-    function fbUserprofile(&$database) {
-        $this->mosDBTable('#__fb_users', 'userid', $database);
-        }
-    }
 /**
 * Moderator Table Class
 *
@@ -975,10 +937,10 @@ function JJ_categoryArray($admin=0) {
     global $aro_group;
 
     // get a list of the menu items
-	$query = "SELECT c.* FROM #__fb_categories c";
+	$query = "SELECT * FROM #__fb_categories";
 	if(!$admin) {
-		if ($fbSession) {
-			$query .= " WHERE c.id IN ($fbSession->allowed)";
+		if ($fbSession && $fbSession->allowed != 'na') {
+			$query .= " WHERE id IN ($fbSession->allowed)";
 		} else {
 			$query .= " WHERE pub_access=0 AND published=1";
 		}
@@ -1079,7 +1041,7 @@ function KUNENA_GetAvailableForums($catid, $action, $options = array (), $disabl
             }
         }
 
-	$tag_attribs = 'class="inputbox fbs" '.($multiple?' size="5" MULTIPLE ':' size="1" ') . ($disabled ? " disabled " : "");
+	$tag_attribs = 'class="inputbox fbs" '.($multiple?' size="5" MULTIPLE ':' size="1" ') . ($disabled ? ' disabled="disabled"' : '');
 	if (CKunenaTools::isJoomla15()) {
     	$parent = JHTML::_('select.genericlist', $options, 'catid', $tag_attribs , 'value', 'text', $catid, 'KUNENA_AvailableForums');
 		}
@@ -1273,7 +1235,7 @@ function make_pattern(&$pat, $key) {
   $pat = '/'.preg_quote($pat, '/').'/i';
 }
 if (!function_exists("htmlspecialchars_decode")) {
-    function htmlspecialchars_decode($string,$style=ENT_COMPAT) 
+    function htmlspecialchars_decode($string,$style=ENT_COMPAT)
     {
         $translation = array_flip(get_html_translation_table(HTML_SPECIALCHARS,$style));
         if($style === ENT_QUOTES) { $translation['&#039;'] = '\''; }
@@ -1297,12 +1259,37 @@ function fbReturnDashed (&$string, $key) {
 }
 
 if (!function_exists('mb_detect_encoding')) {
-  // We're on an aged PHP version
   function mb_detect_encoding($text) {
-    return 'UTF-8';
+	$c=0; $b=0;
+	$bits=0;
+	$len=strlen($text);
+	for($i=0; $i<$len; $i++){
+		$c=ord($text[$i]);
+		if($c > 128){
+			if(($c >= 254)) return 'ISO-8859-1';
+			elseif($c >= 252) $bits=6;
+			elseif($c >= 248) $bits=5;
+			elseif($c >= 240) $bits=4;
+			elseif($c >= 224) $bits=3;
+			elseif($c >= 192) $bits=2;
+			else return 'ISO-8859-1';
+			if(($i+$bits) > $len) return 'ISO-8859-1';
+			while($bits > 1){
+				$i++;
+				$b=ord($text[$i]);
+				if($b < 128 || $b > 191) return 'ISO-8859-1';
+				$bits--;
+			}
+		}
+	}
+	return 'UTF-8';
   }
-  function mb_convert_encoding($text,$target_encoding,$source_encoding) {
-    return $text;
+  function mb_convert_encoding($text,$target_encoding,$source_encoding=NULL) {
+	return $text;
+  }
+  function mb_substr($str, $start, $lenght=NULL, $encoding=NULL) {
+	if ($lenght===NULL) $lenght = strlen($str);
+	return substr($str, $start, $lenght);
   }
 }
 
@@ -1341,5 +1328,4 @@ function code2utf($num)
     return '';
 }
 
-
-
+?>

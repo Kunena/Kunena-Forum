@@ -342,7 +342,7 @@ $catName = $objCatInfo->name;
                                             $mailmessage = smile::purify($message);
                                             $database->setQuery("SELECT * FROM #__fb_subscriptions AS a"
                                             . "\n LEFT JOIN #__users as u ON a.userid=u.id "
-                                            . "\n WHERE a.thread= {$querythread}");
+                                            . "\n WHERE u.block=0 AND a.thread= {$querythread}");
 
                                             $subsList = $database->loadObjectList();
                                             	check_dberror("Unable to load subscriptions.");
@@ -409,7 +409,7 @@ $catName = $objCatInfo->name;
                                                 $sql .= "\n ON a.userid=u.id";
                                                 $sql .= "\n  AND a.catid=$catid";
                                             }
-                                            $sql .= "\n WHERE 1=1";
+                                            $sql .= "\n WHERE u.block=0";
                                             $sql .= "\n AND (";
                                             // helper for OR condition
                                             $sql2 = '';
@@ -437,7 +437,7 @@ $catName = $objCatInfo->name;
 
                                                     $mailsubject = "[".stripslashes($board_title)." "._GEN_FORUM."] " . stripslashes($messagesubject) . " (" . stripslashes($catName) . ")";
 
-                                                    $msg = "$subs->name,\n\n";
+                                                    $msg = "$mods->name,\n\n";
                                                     $msg .= trim($_COM_A_NOT_MOD1)." ".stripslashes($board_title)." ".trim(_GEN_FORUM)."\n\n";
                                                     $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
 						    $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";

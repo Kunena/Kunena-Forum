@@ -203,7 +203,25 @@ if (count($messages[0]) > 0)
 
 
                         <?php
-                            $topic_icon = $topic_emoticons[$leaf->topic_emoticon];
+				if ($fbConfig->usertopicicons) 
+				{
+					$topic_icon = $topic_emoticons[$leaf->topic_emoticon];
+				}
+				else
+				{
+					$topic_icon_dir = KUNENA_TMPLTMAINIMGURL ."/images/topicicons/";
+					if ($fbConfig->shownew && ($my->id != 0 && ($prevCheck < $last_reply[$leaf->id]->time) && !in_array($last_reply[$leaf->id]->thread, $read_topics))) {
+						$topic_icon_dir .= 'green/';
+					} else {
+						$topic_icon_dir .= 'golden/';
+					}
+
+					$topic_icon = $topic_icon_dir ."message.gif";
+					if ($leaf->ordering) $topic_icon = $topic_icon_dir ."sticky.gif";
+					if ($leaf->favthread) $topic_icon = $topic_icon_dir ."favorite.gif";
+					if ($leaf->locked) $topic_icon = $topic_icon_dir ."locked.gif";
+					if ($leaf->moved) $topic_icon = $topic_icon_dir ."moved.gif";
+				}
                             if ($leaf->moved == 0)
                             {
                                 // Need to add +1 as we only have the replies in the buffer

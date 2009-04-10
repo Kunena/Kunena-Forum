@@ -24,6 +24,8 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // CUSTOM STRINGS
 
+DEFINE('_KUNENA_CFG_USERTOPICICONS', 'User defined topic icons');
+DEFINE('_KUNENA_CFG_USERTOPICICONS_DESC', 'If set to "Yes", users can choose topic icons for their threads. If set to "No", system icons are used.');
 DEFINE('_KUNENA_CFG_LISTCAT_MODERATORS', 'Moderators in Category List');
 DEFINE('_KUNENA_CFG_LISTCAT_MODERATORS_DESC', 'If set to "Yes", moderators will be shown for each forum in Category List.');
 DEFINE('_KUNENA_CFG_PATHWAY', 'Show users in Pathway');

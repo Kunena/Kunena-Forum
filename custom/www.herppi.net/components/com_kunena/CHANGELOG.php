@@ -35,6 +35,8 @@ CUSTOM BRANCH
 10-April-2009 Matias
 + [#15554] Custom branch: In forum view make topic icon clickable, link points to first unread message
 # [#15554] Custom branch: Latest message of previously moved topic pointed sometimes to wrong thread
++ [#15554] Custom branch: Add configuration option for user defined topic icons
++ [#15554] Custom branch: Add default icon set when user defined topic icons is set to 'No'
 
 31-March-2009 Matias
 # [#15554] Custom branch: Forum Tools / Message Topic layout issues in FF2 and IE6

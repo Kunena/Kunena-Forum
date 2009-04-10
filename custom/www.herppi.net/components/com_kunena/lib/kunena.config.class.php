@@ -348,6 +348,7 @@ class CKunenaConfig extends CKunenaConfigBase
     var $forumtools              = 1; 
     var $pathway                 = 1; 
     var $listcat_moderators      = 1; 
+    var $usertopicicons          = 1; 
 
     function CKunenaConfig($KunenaUser=null)
 	{

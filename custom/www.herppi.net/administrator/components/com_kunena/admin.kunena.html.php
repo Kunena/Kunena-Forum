@@ -1007,6 +1007,17 @@ require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/
                 </tr>
 
                 <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_USERTOPICICONS ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo $lists['usertopicicons']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_USERTOPICICONS_DESC ?>
+                    </td>
+                </tr>
+
+                <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top"><?php echo _COM_A_DISEMOTICONS ?>
                     </td>
 

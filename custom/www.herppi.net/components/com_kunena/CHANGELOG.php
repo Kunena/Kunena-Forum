@@ -32,23 +32,27 @@ Legend:
 
 CUSTOM BRANCH
 
+10-April-2009 Matias
++ [#15554] Custom branch: In forum view make topic icon clickable, link points to first unread message
+# [#15554] Custom branch: Latest message of previously moved topic pointed sometimes to wrong thread
+
 31-March-2009 Matias
 # [#15554] Custom branch: Forum Tools / Message Topic layout issues in FF2 and IE6
 # [#15554] Custom branch: Sticky icon in the wrong place in IE6 
 # [#15554] Custom branch: Possible IE6 crash fixed when Show Avatar on Categories list = Yes
 # [#15554] Custom branch: CSS Conflicts between Joomla themes and Kunena mostly fixed by adding #Kunena to the rules
-# [#15554] Custom branch: Add configuration option for enabling / disabling Forum Tools
-# [#15554] Custom branch: Add configuration option for showing users in the Pathway
-# [#15554] Custom branch: Add configuration option for showing moderators in Category View
++ [#15554] Custom branch: Add configuration option for enabling / disabling Forum Tools
++ [#15554] Custom branch: Add configuration option for showing users in the Pathway
++ [#15554] Custom branch: Add configuration option for showing moderators in Category View
 
 30-March-2009 Matias
-# [#15554] Custom branch: Moved time related functions to CKunenaTimeformat:
+^ [#15554] Custom branch: Moved time related functions to CKunenaTimeformat:
   KUNENA_timeformat -> CKunenaTimeformat::showDate
   CKunenaTools::fbGetInternalTime -> CKunenaTimeformat::internalTime
 # [#15554] Custom branch: Use always localized time formating by using new class
-# [#15554] Custom branch: Add titles for times in flat.php just like in message.php
-# [#15554] Custom branch: Make date format configurable for latestx, showcat and view
-# [#15554] Custom branch: Make user count algorithm configurable in Stats and Userlist
++ [#15554] Custom branch: Add titles for times in flat.php just like in message.php
++ [#15554] Custom branch: Make date format configurable for latestx, showcat and view
++ [#15554] Custom branch: Make user count algorithm configurable in Stats and Userlist
 
 Kunena 1.0.10
 

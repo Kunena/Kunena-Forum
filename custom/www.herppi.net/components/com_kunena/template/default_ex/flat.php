@@ -203,6 +203,7 @@ if (count($messages[0]) > 0)
 
 
                         <?php
+                            $topic_icon = $topic_emoticons[$leaf->topic_emoticon];
                             if ($leaf->moved == 0)
                             {
                                 // Need to add +1 as we only have the replies in the buffer
@@ -214,7 +215,7 @@ if (count($messages[0]) > 0)
 
                                 <td class = "td-2"  align="center">
                                     <?php echo CKunenaLink::GetSimpleLink($id);
-                                    	echo $leaf->topic_emoticon == 0 ? '<img src="' . KUNENA_URLEMOTIONSPATH . 'default.gif" border="0"  alt="" />' : "<img src=\"" . $topic_emoticons[$leaf->topic_emoticon] . "\" alt=\"emo\" border=\"0\" />"; ?>
+					echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->id, $unreadPage, $fbConfig->messages_per_page, "<img src=\"" . $topic_icon . "\" alt=\"emo\" border=\"0\" />", $last_read[$leaf->id]->lastread); ?>
                                 </td>
 
                                 <?php
@@ -318,8 +319,7 @@ if (count($messages[0]) > 0)
 
                             <td class = "td-2">
                                 <?php echo CKunenaLink::GetSimpleLink($id);?>
-
-                                <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>arrow.gif" alt = "emo"/>
+                                <?php echo CKunenaLink::GetThreadLink('view', $newURLParams['catid'], $newURLParams['id'], '<img src = "'.$topic_icon.'" alt = "moved"/>', '', 'follow'); ?>
                             </td>
 
                             <td class = "td-3">
@@ -433,11 +433,11 @@ if (count($messages[0]) > 0)
         <?php
         if ($fbConfig->default_sort == 'asc')
         {
-        	echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->thread, $threadPages, $fbConfig->messages_per_page, _GEN_LAST_POST, $last_reply[$leaf->id]->id);
+        	echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->id, $threadPages, $fbConfig->messages_per_page, _GEN_LAST_POST, $last_reply[$leaf->id]->id);
         }
         else
         {
-        	echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->thread, 1, $fbConfig->messages_per_page, _GEN_LAST_POST, $last_reply[$leaf->id]->id);
+        	echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->id, 1, $fbConfig->messages_per_page, _GEN_LAST_POST, $last_reply[$leaf->id]->id);
         }
 
         if ($leaf->name) 

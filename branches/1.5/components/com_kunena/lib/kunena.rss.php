@@ -21,9 +21,9 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $mainframe, $my, $fbConfig;
+global $mainframe, $kunena_my, $fbConfig;
 
-$database = &JFactory::getDBO();
+$kunena_db = &JFactory::getDBO();
 
 $hours = 0;
 
@@ -123,8 +123,8 @@ else
 					ORDER BY l.time DESC";
 }
 
-$database->setQuery($query);
-$rows = $database->loadObjectList();
+$kunena_db->setQuery($query);
+$rows = $kunena_db->loadObjectList();
 	check_dberror("Unable to load messages.");
 
 header ('Content-type: application/xml');

@@ -27,14 +27,14 @@ global $fbConfig;
 # Check for Editor rights  $fbConfig->annmodid
 $user_fields = @explode(',', $fbConfig->annmodid);
 
-if (in_array($my->id, $user_fields) || $my->usertype == 'Administrator' || $my->usertype == 'Super Administrator') {
+if (in_array($kunena_my->id, $user_fields) || $kunena_my->usertype == 'Administrator' || $kunena_my->usertype == 'Super Administrator') {
     $is_editor = true;
     }
 else {
     $is_editor = false;
     }
 
-$is_user = (strtolower($my->usertype) <> '');
+$is_user = (strtolower($kunena_my->usertype) <> '');
 $showlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show';
 $addlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=add';
 $readlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=read&amp;id=';
@@ -44,9 +44,9 @@ $deletelink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=delete&a
 
 <?php
 // BEGIN: BOX ANN
-$database->setQuery("SELECT id,title,sdescription,description, created ,published,showdate" . "\n FROM #__fb_announcement  WHERE  published = 1 ORDER BY created DESC LIMIT 1");
+$kunena_db->setQuery("SELECT id,title,sdescription,description, created ,published,showdate" . "\n FROM #__fb_announcement  WHERE  published = 1 ORDER BY created DESC LIMIT 1");
 
-$anns = $database->loadObjectList();
+$anns = $kunena_db->loadObjectList();
 	check_dberror("Unable to load announcements.");
 $ann = $anns[0];
 $annID = $ann->id;

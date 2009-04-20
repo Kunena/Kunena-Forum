@@ -110,8 +110,8 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 					. " LEFT JOIN #__fb_categories cat ON cat.id = msg.catid"
 					. " LEFT JOIN #__fb_messages thread ON thread.id = msg.thread"
 					. " ORDER BY msg.time DESC LIMIT $count";
-				$database->setQuery($query);
-                $rows = $database->loadObjectList();
+				$kunena_db->setQuery($query);
+                $rows = $kunena_db->loadObjectList();
                 	check_dberror("Unable to load recent messages.");
 
                 // cycle through the returned rows displaying them in a table

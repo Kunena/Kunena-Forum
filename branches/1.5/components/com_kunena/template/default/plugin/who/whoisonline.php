@@ -42,14 +42,14 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
         . "\n WHERE w.userid!=0 "
         . "\n GROUP BY u.id "
         . "\n  ORDER BY username ASC";
-    $database->setQuery($query);
-    $users = $database->loadObjectList();
+    $kunena_db->setQuery($query);
+    $users = $kunena_db->loadObjectList();
     $totaluser = count($users);
 
 
     $query = "SELECT COUNT(*) FROM #__fb_whoisonline WHERE user = 0";
-    $database->setQuery($query);
-    $totalguests = $database->loadResult();
+    $kunena_db->setQuery($query);
+    $totalguests = $kunena_db->loadResult();
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
@@ -95,7 +95,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
                     <?php
                     }
                     ?>
-                     <?php if ( $my->gid > 1 ){
+                     <?php if ( $kunena_my->gid > 1 ){
 
 					 ?>
 
@@ -112,7 +112,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
                         $time = date("H:i:s", $user->time);
                     ?>
 
-                  		 <?php if ( $user->showOnline < 1 && $my->gid > 1 ){ ?>
+                  		 <?php if ( $user->showOnline < 1 && $kunena_my->gid > 1 ){ ?>
 
                             <a class = "whois<?php echo $user->moderator;?>  <?php echo "fb_group_".$grp->id;?>" href = "<?php echo JRoute::_(KUNENA_PROFILE_LINK_SUFFIX.$user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
 
@@ -128,8 +128,8 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
                     <!--               groups     -->
 
                     <?php
-                    $database->setQuery("select id, title from #__fb_groups");
-                    $gr_row = $database->loadObjectList();
+                    $kunena_db->setQuery("select id, title from #__fb_groups");
+                    $gr_row = $kunena_db->loadObjectList();
 
                     if (count($gr_row) > 1) {
 					?>

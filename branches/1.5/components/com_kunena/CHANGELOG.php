@@ -38,7 +38,8 @@ Kunena 1.5.1b
 ! Fixed: Community Builder: Integration not working
 ! Fixed: Community Builder: Default avatar is missing
 ! Fixed: User Profile not working
-
+# [#16049] Global variables like $database conflicts with Legacy mode
+! Renamed: $acl -> $kunena_acl, $database -> $kunena_db, $my -> $kunena_my
 
 6-April-2009 fxstein
 # [#15808] Fix broken New Category button in admin backend

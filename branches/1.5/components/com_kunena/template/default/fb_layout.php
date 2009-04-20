@@ -29,8 +29,8 @@ defined( '_JEXEC' ) or die('Restricted access');
  *  @param int        the post id
  *  @param boolean    set title
  */
-function KUNENA_print_pathway(&$database, $obj_fb_cat, $bool_set_title, $obj_post = 0) {
-    echo '<div class="fb_pathway">' . fb_get_pathway($database, $obj_fb_cat, $bool_set_title, $obj_post) . '</div>';
+function KUNENA_print_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_post = 0) {
+    echo '<div class="fb_pathway">' . fb_get_pathway($kunena_db, $obj_fb_cat, $bool_set_title, $obj_post) . '</div>';
 }
 /**
  *  Function to print the pathway
@@ -39,16 +39,16 @@ function KUNENA_print_pathway(&$database, $obj_fb_cat, $bool_set_title, $obj_pos
  *  @param int        the post id
  *  @param boolean    set title
  */
-function KUNENA_get_pathway(&$database, $obj_fb_cat, $bool_set_title, $obj_post = 0)
+function KUNENA_get_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_post = 0)
 {
     global $mainframe, $fbConfig, $fbIcons;
     //Get the Category's parent category name for breadcrumb
-    $database->setQuery('SELECT name,id FROM #__fb_categories WHERE id=' . $obj_fb_cat->getParent());
-    $objCatParentInfo = $database->loadObject();
+    $kunena_db->setQuery('SELECT name,id FROM #__fb_categories WHERE id=' . $obj_fb_cat->getParent());
+    $objCatParentInfo = $kunena_db->loadObject();
     	check_dberror("Unable to load categories.");
     //get the Moderator list for display
-    $database->setQuery('SELECT * FROM #__fb_moderation LEFT JOIN #__users ON #__users.id=#__fb_moderation.userid WHERE #__fb_moderation.catid=' . $obj_fb_cat->getId());
-    $modslist = $database->loadObjectList();
+    $kunena_db->setQuery('SELECT * FROM #__fb_moderation LEFT JOIN #__users ON #__users.id=#__fb_moderation.userid WHERE #__fb_moderation.catid=' . $obj_fb_cat->getId());
+    $modslist = $kunena_db->loadObjectList();
     	check_dberror("Unable to load moderators.");
     //    echo '<div class="fb_pathway">';
     // List of Forums
@@ -144,7 +144,7 @@ function KUNENA_get_pathway(&$database, $obj_fb_cat, $bool_set_title, $obj_post 
  *             Community builder itemid, used for linking to cb profile
  * @param array $fbConfig
  * @param array $fbIcons
- * @param int $my_id
+ * @param int $kunena_my_id
  *             The user id
  * @param int $type
  *             What kind of header do you want to print: 1: default (home/profile/latest posts/faq), 2: extended1 (home/profile/view/pending messages/faq) ,3:extended2 (home/profile/reply/view/pdf/faq)
@@ -163,14 +163,14 @@ function KUNENA_get_pathway(&$database, $obj_fb_cat, $bool_set_title, $obj_post 
  * @return String $header
  *             The menu :-)
  */
-function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = "", $catid = 0, $id = 0, $thread = 0, $is_moderator = false, $numPending = 0)
+function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $kunena_my_id, $type, $view = "", $catid = 0, $id = 0, $thread = 0, $is_moderator = false, $numPending = 0)
 {
     $header = '<div id="fb_topmenu" >';
     $header .= CKunenaLink::GetCategoryListLink('<span>'.($fbIcons['home'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['home'] . '" border="0" alt="' . _KUNENA_CATEGORIES . '"  title="' . _KUNENA_CATEGORIES . '" />' : _KUNENA_CATEGORIES).'</span>');
 
-    if ($my_id != 0)
+    if ($kunena_my_id != 0)
     {
-        $header .= CKunenaLink::GetMyProfileLink( $fbConfig, $my_id, $fbIcons['profile'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['profile'] . '" border="0" alt="' . _GEN_MYPROFILE . '" title="' . _GEN_MYPROFILE . '"/>' : _GEN_MYPROFILE);
+        $header .= CKunenaLink::GetMyProfileLink( $fbConfig, $kunena_my_id, $fbIcons['profile'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['profile'] . '" border="0" alt="' . _GEN_MYPROFILE . '" title="' . _GEN_MYPROFILE . '"/>' : _GEN_MYPROFILE);
     }
 
     switch ($type)

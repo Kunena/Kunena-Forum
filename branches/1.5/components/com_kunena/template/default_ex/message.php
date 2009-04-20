@@ -22,12 +22,12 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$my = &JFactory::getUser();
+$kunena_my = &JFactory::getUser();
 global $fbConfig;
 unset($user);
-$database = &JFactory::getDBO();
-$database->setQuery("SELECT email, name from #__users WHERE `id`={$my->id}");
-$user = $database->loadObject();
+$kunena_db = &JFactory::getDBO();
+$kunena_db->setQuery("SELECT email, name from #__users WHERE `id`={$kunena_my->id}");
+$user = $kunena_db->loadObject();
 if ($fbConfig->fb_profile == 'cb')
 {
 	$msg_params = array('username' => &$msg_username, 'messageobject' => &$fmessage, 'subject' => &$msg_subject, 'messagetext' => &$msg_text);
@@ -97,7 +97,7 @@ if ($fbConfig->fb_profile == 'cb')
                                     <?php
                                     //see if we need the users realname or his loginname
                                     if ($fbConfig->username) {
-                                        $authorName = $my->username;
+                                        $authorName = $kunena_my->username;
                                     }
                                     else {
                                         $authorName = $user->name;
@@ -123,7 +123,7 @@ if ($fbConfig->fb_profile == 'cb')
 
                                  <?php
 								// Begin captcha . Thanks Adeptus
-								if ($fbConfig->captcha && $my->id < 1) { ?>
+								if ($fbConfig->captcha && $kunena_my->id < 1) { ?>
 								<?php echo _KUNENA_CAPDESC.'&nbsp;'?>
 								<input name="txtNumber" type="text" id="txtNumber" value="" style="vertical-align:middle" size="10">&nbsp;
 								<img src="index2.php?option=com_kunena&func=showcaptcha" alt="" /><br />
@@ -228,7 +228,7 @@ if ($fbConfig->fb_profile == 'cb')
 
                     <?php
                     if ($useGraph) {
-                        $myGraph->BarGraphHoriz();
+                        $kunena_myGraph->BarGraphHoriz();
                     }
                     ?>
 
@@ -317,7 +317,7 @@ if ($fbConfig->fb_profile == 'cb')
 		echo '</span>';
 	}
 
-                            if ($fbConfig->reportmsg && $my->id > 1)
+                            if ($fbConfig->reportmsg && $kunena_my->id > 1)
                             {
                                 echo '<span class="fb_message_informMarkUp">'.CKunenaLink::GetReportMessageLink($catid, $msg_id, _KUNENA_REPORT).'</span>';
                             }
@@ -339,7 +339,7 @@ if ($msg_signature) {
                 <?php
                 //we should only show the Quick Reply section to registered users. otherwise we are missing too much information!!
                 /*    onClick="expandcontent(this, 'sc<?php echo $msg_id;?>')" */
-                if ($my->id > 0 && !$msg_closed):
+                if ($kunena_my->id > 0 && !$msg_closed):
                 ?>
                 <span id = "fb_qr_sc__<?php echo $msg_id;?>" class = "fb_qr_fire" style = "cursor:hand; cursor:pointer">
                 <?php echo

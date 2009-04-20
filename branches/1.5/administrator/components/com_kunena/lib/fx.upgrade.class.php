@@ -43,8 +43,8 @@ class fx_Upgrade {
 	// helper function to create new version table
 	function createVersionTable()
 	{
-		$database =& JFactory::getDBO();
-	    $database->setQuery( "CREATE TABLE `$this->versionTable`
+		$kunena_db =& JFactory::getDBO();
+	    $kunena_db->setQuery( "CREATE TABLE `$this->versionTable`
 								(`id` INTEGER NOT NULL AUTO_INCREMENT,
 								`version` VARCHAR(20) NOT NULL,
 								`versiondate` DATE NOT NULL,
@@ -53,21 +53,21 @@ class fx_Upgrade {
 								`versionname` VARCHAR(40) NULL,
 								PRIMARY KEY(`id`));" );
 		// Let the install handle the error
-		return $database->query();
+		return $kunena_db->query();
 	}
 
 	// helper function to drop existing version table
 	function dropVersionTable()
 	{
-		$database =& JFactory::getDBO();
-	    $database->setQuery("DROP TABLE IF EXISTS `$this->versionTable`;");
-		$database->query() or trigger_dberror('Unable to drop version table.');
+		$kunena_db =& JFactory::getDBO();
+	    $kunena_db->setQuery("DROP TABLE IF EXISTS `$this->versionTable`;");
+		$kunena_db->query() or trigger_dberror('Unable to drop version table.');
    	}
 
 	// helper function retrieve latest version from version table
 	function getLatestVersion($versionTable)
 	{
-		$database =& JFactory::getDBO();
+		$kunena_db =& JFactory::getDBO();
 
 		$query = "SELECT
 		                `version`,
@@ -78,22 +78,22 @@ class fx_Upgrade {
 		            FROM `$versionTable`
 		            ORDER BY `id` DESC";
 
-	    $database->setQuery($query,0,1);// LIMIT 1
-		$currentVersion = $database->loadObject() or trigger_dbwarning('Could not load latest Version record.');
+	    $kunena_db->setQuery($query,0,1);// LIMIT 1
+		$currentVersion = $kunena_db->loadObject() or trigger_dbwarning('Could not load latest Version record.');
 		return $currentVersion;
 	}
 
 	function insertVersionData( $version, $versiondate, $build, $versionname)
 	{
-		$database =& JFactory::getDBO();
-	    $database->setQuery( "INSERT INTO `$this->versionTable`
+		$kunena_db =& JFactory::getDBO();
+	    $kunena_db->setQuery( "INSERT INTO `$this->versionTable`
 								SET `version` = '".$version."',
 								`versiondate` = '".$versiondate."',
 								`installdate` = CURDATE(),
 								`build` = '".$build."',
 								`versionname` = '".$versionname."';"
 								);
-		$database->query() or trigger_dberror('Unable to insert version record.');
+		$kunena_db->query() or trigger_dberror('Unable to insert version record.');
 	}
 
 	function insertDummyVersion()
@@ -103,12 +103,12 @@ class fx_Upgrade {
 
 	function backupVersionTable()
 	{
-		$database =& JFactory::getDBO();
-	    $database->setQuery("DROP TABLE IF EXISTS `".$this->versionTable."_backup`;");
-        $database->query() or trigger_dberror('Unable to drop previous backup version table.');
+		$kunena_db =& JFactory::getDBO();
+	    $kunena_db->setQuery("DROP TABLE IF EXISTS `".$this->versionTable."_backup`;");
+        $kunena_db->query() or trigger_dberror('Unable to drop previous backup version table.');
 
-        $database->setQuery("CREATE TABLE `".$this->versionTable."_backup` SELECT * FROM `".$this->versionTable."`;");
-        $database->query() or trigger_dberror('Unable to backup version table.');
+        $kunena_db->setQuery("CREATE TABLE `".$this->versionTable."_backup` SELECT * FROM `".$this->versionTable."`;");
+        $kunena_db->query() or trigger_dberror('Unable to backup version table.');
 	}
 
 	/**
@@ -155,10 +155,10 @@ class fx_Upgrade {
 		$createVersionTable = 1;
 		$upgrade=null;
 
-		$database =& JFactory::getDBO();
-		$database->setQuery( "SHOW TABLES LIKE '%".$versionTableNoPrefix."'" );
-		$database->query() or trigger_dberror('Unable to check for existing version table.');
-		if($database->loadResult()) {
+		$kunena_db =& JFactory::getDBO();
+		$kunena_db->setQuery( "SHOW TABLES LIKE '%".$versionTableNoPrefix."'" );
+		$kunena_db->query() or trigger_dberror('Unable to check for existing version table.');
+		if($kunena_db->loadResult()) {
 			//table already exists, so do not create a new table
 			$createVersionTable = 0;
 
@@ -192,8 +192,8 @@ class fx_Upgrade {
 		{
 			if (!$this->createVersionTable())
 			{
-				$this->_error = "DB function failed with error number <b>" . $database->_errorNum . "</b><br/>";
-				$this->_error .= $database->getErrorMsg();
+				$this->_error = "DB function failed with error number <b>" . $kunena_db->_errorNum . "</b><br/>";
+				$this->_error .= $kunena_db->getErrorMsg();
 				$img = "publish_x.png";
 				$this->_return = false;
 			} else
@@ -352,13 +352,13 @@ class fx_Upgrade {
 					break;
 				case "query":
 					$query = $currentNode->getText();
-					$database =& JFactory::getDBO();
+					$kunena_db =& JFactory::getDBO();
 
-					$database->setQuery($query);
-					if (!@$database->query())
+					$kunena_db->setQuery($query);
+					if (!@$kunena_db->query())
 					{
-						$this->_error = "DB function failed with error number $database->_errorNum<br /><font color=\"red\">";
-						$this->_error .= $database->stderr(true);
+						$this->_error = "DB function failed with error number $kunena_db->_errorNum<br /><font color=\"red\">";
+						$this->_error .= $kunena_db->stderr(true);
 						$this->_error .= "</font>";
 						$img = "publish_x.png";
 						$this->_return = false;
@@ -368,7 +368,7 @@ class fx_Upgrade {
 						$this->_error = "";
 						$img = "tick.png";
 					}
-					$database->setQuery($currentNode->getText());
+					$kunena_db->setQuery($currentNode->getText());
 					if(!$this->silent)
 					{
 						if (!($nodemode=='silenterror' AND $this->_error != ""))
@@ -380,7 +380,7 @@ class fx_Upgrade {
 									<img id="id<?php echo $i;?>_<?php echo $batch;?>_img" src="images/expandall.png" border="0">
 									Running SQL Query
 								</div>
-								<div id="id<?php echo $i;?>_<?php echo $batch;?>_details" style="display:None;" class="details"><?php echo $this->_error;?><pre><?php echo $database->_sql;?></pre></div>
+								<div id="id<?php echo $i;?>_<?php echo $batch;?>_details" style="display:None;" class="details"><?php echo $this->_error;?><pre><?php echo $kunena_db->_sql;?></pre></div>
 							</td>
 							<td width="20" valign="top"><img src="images/<?php echo $img;?>" border="0"></td>
 						</tr>

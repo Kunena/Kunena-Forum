@@ -97,7 +97,7 @@ class smile
     */
     function getEmoticons($grayscale, $emoticonbar = 0)
     {
-        $database = &JFactory::getDBO();
+        $kunena_db = &JFactory::getDBO();
         $grayscale == 1 ? $column = "greylocation" : $column = "location";
         $sql = "SELECT `code` , `$column` FROM `#__fb_smileys`";
 
@@ -105,8 +105,8 @@ class smile
         $sql .= " where `emoticonbar` = 1";
 
         $sql .= ";";
-        $database->setQuery($sql);
-        $smilies = $database->loadObjectList();
+        $kunena_db->setQuery($sql);
+        $smilies = $kunena_db->loadObjectList();
         	check_dberror("Unable to load smilies.");
 
         $smileyArray = array();

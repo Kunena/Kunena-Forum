@@ -37,10 +37,10 @@ class CKunenaVersion {
 
 		if (!$kunenaversion)
 		{
-		    $database = &JFactory::getDBO();
+		    $kunena_db = &JFactory::getDBO();
 
 			$versionTable = '#__fb_version';
-			$database->setQuery( 	"SELECT
+			$kunena_db->setQuery( 	"SELECT
 							`version`,
 							`versiondate`,
 							`installdate`,
@@ -48,7 +48,7 @@ class CKunenaVersion {
 							`versionname`
 						FROM `$versionTable`
 						ORDER BY `id` DESC LIMIT 1;" );
-			$kunenaversion = $database->loadObject();
+			$kunenaversion = $kunena_db->loadObject();
 			    check_dbwarning('Could not load latest Version record.');
 		}
 		return $kunenaversion;
@@ -83,15 +83,15 @@ class CKunenaVersion {
 	*/
 	function MySQLVersion()
 	{
-		static $mysqlversion;
-		if (!$mysqlversion)
+		static $kunena_mysqlversion;
+		if (!$kunena_mysqlversion)
 		{
-		    $database = &JFactory::getDBO();
+		    $kunena_db = &JFactory::getDBO();
 
-		    $database->setQuery("SELECT VERSION() as mysql_version");
-			$mysqlversion = $database->loadResult();
+		    $kunena_db->setQuery("SELECT VERSION() as mysql_version");
+			$kunena_mysqlversion = $kunena_db->loadResult();
 		}
-		return $mysqlversion;
+		return $kunena_mysqlversion;
 	}
 
 	/**

@@ -92,6 +92,9 @@ dictionary = {
 '(\s*)(global )\s*\$acl,\s*(.*?;)':'\\1\\2\\3\n\\1$acl = &JFactory::getACL();',
 '(\s*)(global .*?),\s*\$acl;':'\\1\\2;\n\\1$acl = &JFactory::getACL();',
 'mosNotAuth\(\)':'JError::raiseError( 403, JText::_("ALERTNOTAUTH") );',
+'\$acl':'$kunena_acl',
+'\$my':'$kunena_my',
+'\$database':'$kunena_db',
 }
 
 def string_replace(filename, text, dic):

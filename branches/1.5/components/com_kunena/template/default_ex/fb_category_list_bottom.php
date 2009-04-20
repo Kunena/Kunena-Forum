@@ -26,7 +26,7 @@ global $fbConfig;
 	<tr>
 		<td class="fb_list_markallcatsread">
                 <?php
-                if ($my->id != 0)
+                if ($kunena_my->id != 0)
                 {
                 ?>
 

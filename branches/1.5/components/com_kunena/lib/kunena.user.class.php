@@ -143,10 +143,10 @@ class CKunenaUserprofile extends JTable
 
 	function __construct($userid=null)
 	{
-	    $database = &JFactory::getDBO();
-	    $my = &JFactory::getUser();
-		parent::__construct('#__fb_users', 'userid', $database);
-		if ($userid === null) $userid = $my->id;
+	    $kunena_db = &JFactory::getDBO();
+	    $kunena_my = &JFactory::getUser();
+		parent::__construct('#__fb_users', 'userid', $kunena_db);
+		if ($userid === null) $userid = $kunena_my->id;
 		$this->load($userid);
 	}
 }
@@ -195,12 +195,12 @@ class CKunenaUser
 	}
 
 	function _getJoomlaProperty($field) {
-		$database = &JFactory::getDBO();
+		$kunena_db = &JFactory::getDBO();
 
 		if ($this->id == 0) return FALSE;
 		if ($this->joomlaProperties == NULL)
 		{
-			$this->joomlaProperties = new JUser($database);
+			$this->joomlaProperties = new JUser($kunena_db);
 			$this->joomlaProperties->load($this->id);
 		}
 
@@ -213,13 +213,13 @@ class CKunenaUser
 	}
 
 	function _getKunenaProperty($field) {
-		$database = &JFactory::getDBO();
+		$kunena_db = &JFactory::getDBO();
 
 		if ($this->id == 0) return FALSE;
 		if ($this->kunenaProperties == NULL)
 		{
-			$database->setQuery("SELECT * FROM #__fb_users WHERE userid='{$this->id}' LIMIT 1");
-			$this->kunenaProperties = $database->loadAssoc();
+			$kunena_db->setQuery("SELECT * FROM #__fb_users WHERE userid='{$this->id}' LIMIT 1");
+			$this->kunenaProperties = $kunena_db->loadAssoc();
 			check_dberror("Unable to load Kunena user information.");
 		}
 
@@ -293,8 +293,8 @@ class CKunenaUsers
 	}
 
 	function &getMyself() {
-		$my = &JFactory::getUser();
-		return $this->get($my->id);
+		$kunena_my = &JFactory::getUser();
+		return $this->get($kunena_my->id);
 	}
 }
 ?>

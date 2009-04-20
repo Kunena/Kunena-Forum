@@ -46,24 +46,24 @@ function com_install()
 {
 	global $mainframe;
 
-	$database = JFactory::getDBO();
+	$kunena_db = JFactory::getDBO();
 
 	// Determine MySQL version from phpinfo
-	$database->setQuery("SELECT VERSION() as mysql_version");
-	$mysqlversion = $database->loadResult();
+	$kunena_db->setQuery("SELECT VERSION() as mysql_version");
+	$kunena_mysqlversion = $kunena_db->loadResult();
 
 	//before we do anything else we want to check for minimum system requirements
-	if (version_compare(phpversion(), KUNENA_MIN_PHP, ">=") && version_compare($mysqlversion, KUNENA_MIN_MYSQL, ">="))
+	if (version_compare(phpversion(), KUNENA_MIN_PHP, ">=") && version_compare($kunena_mysqlversion, KUNENA_MIN_MYSQL, ">="))
 	{
 		// we're on 4.3.0 or later
 
 		//change fb menu icon
-		$database->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena'");
-		$id = $database->loadResult();
+		$kunena_db->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena'");
+		$id = $kunena_db->loadResult();
 
 		//add new admin menu images
-		$database->setQuery("UPDATE #__components SET admin_menu_img  = 'components/com_kunena/images/kunenafavicon.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
-		$database->query() or trigger_dbwarning("Unable to set admin menu image.");
+		$kunena_db->setQuery("UPDATE #__components SET admin_menu_img  = 'components/com_kunena/images/kunenafavicon.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
+		$kunena_db->query() or trigger_dbwarning("Unable to set admin menu image.");
 
 		//install & upgrade class
 		$fbupgrade = new fx_Upgrade("com_kunena", "kunena.install.upgrade.xml", "fb_", "install", false);
@@ -74,14 +74,14 @@ function com_install()
 		// a 'manual' check if this is going to be an upgrade and if so create that table
 		// and write a dummy version entry to force an upgrade.
 
-		$database->setQuery( "SHOW TABLES LIKE '%fb_messages'" );
-		$database->query() or trigger_dbwarning("Unable to search for messages table.");
+		$kunena_db->setQuery( "SHOW TABLES LIKE '%fb_messages'" );
+		$kunena_db->query() or trigger_dbwarning("Unable to search for messages table.");
 
-		if($database->getNumRows()) {
+		if($kunena_db->getNumRows()) {
 			// fb tables exist, now lets see if we have a version table
-			$database->setQuery( "SHOW TABLES LIKE '%fb_version'" );
-			$database->query() or trigger_dbwarning("Unable to search for version table.");;
-			if(!$database->getNumRows()) {
+			$kunena_db->setQuery( "SHOW TABLES LIKE '%fb_version'" );
+			$kunena_db->query() or trigger_dbwarning("Unable to search for version table.");;
+			if(!$kunena_db->getNumRows()) {
 				//version table does not exist - this is a pre 1.0.5 install - lets create
 				$fbupgrade->createVersionTable();
 				// insert dummy version entry to force upgrade
@@ -184,7 +184,7 @@ function com_install()
 		<br />
 		<strong>php version: <font color="green"><? echo phpversion(); ?> Required >= <? echo KUNENA_MIN_PHP; ?> </font> </strong>
 		<br />
-		<strong>mysql version: <font color="green"><? echo $mysqlversion; ?> Required >= <? echo KUNENA_MIN_MYSQL; ?> </font> </strong>
+		<strong>mysql version: <font color="green"><? echo $kunena_mysqlversion; ?> Required >= <? echo KUNENA_MIN_MYSQL; ?> </font> </strong>
 		</div>
 
 		<?php
@@ -243,7 +243,7 @@ function com_install()
 		<br />
 		<strong>php version: <font color="red"><? echo phpversion(); ?> Required >= <? echo KUNENA_MIN_PHP; ?> </font> </strong>
 		<br />
-		<strong>mysql version: <font color="red"><? echo $mysqlversion; ?> Required >= <? echo KUNENA_MIN_MYSQL; ?> </font> </strong>
+		<strong>mysql version: <font color="red"><? echo $kunena_mysqlversion; ?> Required >= <? echo KUNENA_MIN_MYSQL; ?> </font> </strong>
 		</div>
 
 		<?php

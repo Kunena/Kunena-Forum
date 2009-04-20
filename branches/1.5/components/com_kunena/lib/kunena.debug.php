@@ -53,13 +53,13 @@ Installed version:  <?php echo $kunenaVersion; ?> | php <?php echo $kunenaPHPVer
 <!-- /Version Info -->
 <?php
 
-	trigger_error($text.'\n'.$database->stderr(true), E_USER_ERROR);
+	trigger_error($text.'\n'.$kunena_db->stderr(true), E_USER_ERROR);
 }
 
 function check_dberror($text='')
 {
-	$database = &JFactory::getDBO();
-	if ($database->_errorNum != 0)
+	$kunena_db = &JFactory::getDBO();
+	if ($kunena_db->_errorNum != 0)
 	{
 		trigger_dberror($text);
 	}
@@ -67,8 +67,8 @@ function check_dberror($text='')
 
 function check_dbwarning($text='')
 {
-	$database = &JFactory::getDBO();
-	if ($database->_errorNum != 0)
+	$kunena_db = &JFactory::getDBO();
+	if ($kunena_db->_errorNum != 0)
 	{
 		trigger_dbwarning($text);
 	}
@@ -76,8 +76,8 @@ function check_dbwarning($text='')
 
 function trigger_dbwarning($text = '')
 {
-	$database = &JFactory::getDBO();
-	trigger_error($text.'\n'.$database->stderr(true), E_USER_WARNING);
+	$kunena_db = &JFactory::getDBO();
+	trigger_error($text.'\n'.$kunena_db->stderr(true), E_USER_WARNING);
 }
 
 // Little helper to created a formated output of variables

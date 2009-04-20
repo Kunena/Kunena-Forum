@@ -23,7 +23,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 function kunena_categoryParentList($catids, $action, $options = array ())
 {
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
     $list = JJ_categoryArray();
     $this_treename = '';
 

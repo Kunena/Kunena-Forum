@@ -21,7 +21,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$my = &JFactory::getUser();
+$kunena_my = &JFactory::getUser();
 //securing form elements
 $catid = (int)$catid;
 
@@ -37,7 +37,7 @@ $cid = JRequest::getVar('cid', array ());
 switch ($action)
 {
     case _MOD_DELETE:
-        switch (jbDeletePosts($database, $cid))
+        switch (jbDeletePosts($kunena_db, $cid))
         {
             case -1:
                 $mainframe->redirect(KUNENA_LIVEURL . 'func=review&amp;catid=' . $catid, "ERROR: The post has been deleted but the text could not be deleted\n Check the #__fb_messages_text table for mesid IN " . explode(',', $cid));
@@ -59,7 +59,7 @@ switch ($action)
         break;
 
     case _MOD_APPROVE:
-        switch (jbApprovePosts($database, $cid))
+        switch (jbApprovePosts($kunena_db, $cid))
         {
             case 0:
                 $mainframe->redirect(KUNENA_LIVEURL . 'amp;func=review&amp;catid=' . $catid, _MODERATION_APPROVE_ERROR);
@@ -79,12 +79,12 @@ switch ($action)
     case 'list':
         echo '<p class="sectionname"><?php echo _MESSAGE_ADMINISTRATION; ?></p>';
 
-        $database->setQuery("SELECT m.id,m.time,m.name,m.subject,m.hold,t.message FROM #__fb_messages AS m JOIN #__fb_messages_text as t ON m.id=t.mesid WHERE hold='1' AND catid=$catid ORDER BY id ASC");
+        $kunena_db->setQuery("SELECT m.id,m.time,m.name,m.subject,m.hold,t.message FROM #__fb_messages AS m JOIN #__fb_messages_text as t ON m.id=t.mesid WHERE hold='1' AND catid=$catid ORDER BY id ASC");
 
-        if (!$database->query())
-            echo $database->getErrorMsg();
+        if (!$kunena_db->query())
+            echo $kunena_db->getErrorMsg();
 
-        $allMes = $database->loadObjectList();
+        $allMes = $kunena_db->loadObjectList();
         	check_dberror("Unable to load messages.");
 
         if (count($allMes) > 0)
@@ -186,19 +186,19 @@ function jbListMessages($allMes, $catid)
  * @param array    cid post ids
  * @param string fbs action string
  */
-function jbDeletePosts($database, $cid)
+function jbDeletePosts($kunena_db, $cid)
 {
     if (count($cid) == 0)
         return 0;
 
     $ids = implode(',', $cid);
-    $database->setQuery('DELETE FROM `#__fb_messages` WHERE `id` IN (' . $ids . ')');
+    $kunena_db->setQuery('DELETE FROM `#__fb_messages` WHERE `id` IN (' . $ids . ')');
 
-    if ($database->query())
+    if ($kunena_db->query())
     {
-        $database->setQuery('DELETE FROM `#__fb_messages_text` WHERE `mesid` IN (' . $ids . ')');
+        $kunena_db->setQuery('DELETE FROM `#__fb_messages_text` WHERE `mesid` IN (' . $ids . ')');
 
-        if ($database->query())
+        if ($kunena_db->query())
             return 1;
         else
             return -1;
@@ -211,7 +211,7 @@ function jbDeletePosts($database, $cid)
  * @param object database
  * @param array cid post ids
  */
-function jbApprovePosts($database, $cid)
+function jbApprovePosts($kunena_db, $cid)
 {
     if (count($cid) == 0)
         return 0;
@@ -221,13 +221,13 @@ function jbApprovePosts($database, $cid)
     foreach($cid as $id) {
     	$id = (int)$id;
         $newQuery = "SELECT * FROM #__fb_messages WHERE id = " . $id . " LIMIT 1";
-        $database->setQuery($newQuery);
+        $kunena_db->setQuery($newQuery);
         $msg = null;
-        $msg = $database->loadObject();
+        $msg = $kunena_db->loadObject();
         if(!$msg) { continue; }
         // continue stats
-        $database->setQuery("UPDATE `#__fb_messages` SET `hold`=0 WHERE `id`=".$id);
-        if(!$database->query()) {
+        $kunena_db->setQuery("UPDATE `#__fb_messages` SET `hold`=0 WHERE `id`=".$id);
+        if(!$kunena_db->query()) {
         	$ret = 0; // mark error
         }
         CKunenaTools::modifyCategoryStats($id, $msg->parent, $msg->time, $msg->catid);

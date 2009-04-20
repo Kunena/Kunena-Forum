@@ -77,9 +77,9 @@ defined( '_JEXEC' ) or die('Restricted access');
 		$limit              = intval(trim(JRequest::getVar('limit', $pageperlistlm)));
 		$limitstart         = intval(trim(JRequest::getVar('limitstart', 0)));
 
-		$query              = "select gid from #__users where id=$my->id";
-		$database->setQuery($query);
-		$dse_groupid = $database->loadObjectList();
+		$query              = "select gid from #__users where id=$kunena_my->id";
+		$kunena_db->setQuery($query);
+		$dse_groupid = $kunena_db->loadObjectList();
 			check_dberror("Unable to load usergroups.");
 
 		if (count($dse_groupid))
@@ -92,10 +92,10 @@ defined( '_JEXEC' ) or die('Restricted access');
 		}
 
 		$query = "SELECT a.* , b.id as category, b.name as catname, c.hits AS 'threadhits' FROM #__fb_messages AS a, " . "\n #__fb_categories AS b, #__fb_messages AS c, #__fb_messages_text AS d" . "\n WHERE a.catid = b.id" . "\n AND a.thread = c.id"
-			. "\n AND a.id = d.mesid" . "\n AND a.hold = 0 AND b.published = 1" . "\n AND a.userid=$my->id" . "\n AND (b.pub_access<='$group_id') ";
-		$database->setQuery($query);
+			. "\n AND a.id = d.mesid" . "\n AND a.hold = 0 AND b.published = 1" . "\n AND a.userid=$kunena_my->id" . "\n AND (b.pub_access<='$group_id') ";
+		$kunena_db->setQuery($query);
 
-		$total = count($database->loadObjectList());
+		$total = count($kunena_db->loadObjectList());
 			check_dberror("Unable to load messages.");
 
 		if ($total <= $limit)
@@ -105,10 +105,10 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 		$query
 		= "SELECT a.* , b.id as category, b.name as catname, c.hits AS 'threadhits'" . "\n FROM #__fb_messages AS a, " . "\n #__fb_categories AS b, #__fb_messages AS c, #__fb_messages_text AS d" . "\n WHERE a.catid = b.id" . "\n AND a.thread = c.id"
-			. "\n AND a.id = d.mesid" . "\n AND a.hold = 0 AND b.published = 1" . "\n AND a.userid=$my->id" . "\n AND (b.pub_access<='$group_id') " . "\n ORDER BY time DESC" . "\n LIMIT $limitstart, $limit";
-		$database->setQuery($query);
+			. "\n AND a.id = d.mesid" . "\n AND a.hold = 0 AND b.published = 1" . "\n AND a.userid=$kunena_my->id" . "\n AND (b.pub_access<='$group_id') " . "\n ORDER BY time DESC" . "\n LIMIT $limitstart, $limit";
+		$kunena_db->setQuery($query);
 
-		$items   = $database->loadObjectList();
+		$items   = $kunena_db->loadObjectList();
 			check_dberror("Unable to load messages.");
 
 		jimport('joomla.html.pagination');

@@ -30,14 +30,14 @@ $do = JRequest::getVar("do", "");
 $id = intval(JRequest::getVar("id", ""));
 $user_fields = @explode(',', $fbConfig->annmodid);
 
-if (in_array($my->id, $user_fields) || $my->usertype == 'Administrator' || $my->usertype == 'Super Administrator') {
+if (in_array($kunena_my->id, $user_fields) || $kunena_my->usertype == 'Administrator' || $kunena_my->usertype == 'Super Administrator') {
     $is_editor = true;
     }
 else {
     $is_editor = false;
     }
 
-$is_user = (strtolower($my->usertype) <> '');
+$is_user = (strtolower($kunena_my->usertype) <> '');
 
 $showlink = JRoute::_('index.php?option=com_kunena&amp;func=announcement' . KUNENA_COMPONENT_ITEMID_SUFFIX . '&amp;do=show');
 $addlink = JRoute::_('index.php?option=com_kunena&amp;func=announcement' . KUNENA_COMPONENT_ITEMID_SUFFIX . '&amp;do=add');
@@ -47,8 +47,8 @@ $deletelink = 'index.php?option=com_kunena&amp;func=announcement' . KUNENA_COMPO
 
 // BEGIN: READ ANN
 if ($do == "read") {
-    $database->setQuery("SELECT id,title,description,created ,published,showdate  FROM #__fb_announcement  WHERE id=$id AND published = 1 ");
-    $anns_ = $database->loadObjectList();
+    $kunena_db->setQuery("SELECT id,title,description,created ,published,showdate  FROM #__fb_announcement  WHERE id=$id AND published = 1 ");
+    $anns_ = $kunena_db->loadObjectList();
     	check_dberror("Unable to load announcements.");
 
     $ann = $anns_[0];
@@ -170,8 +170,8 @@ if ($is_editor) {
 
                     <?php
                     $query = "SELECT id, title, created, published FROM #__fb_announcement" . "\n ORDER BY created DESC ";
-                    $database->setQuery($query);
-                    $rows = $database->loadObjectList();
+                    $kunena_db->setQuery($query);
+                    $rows = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load announcements.");
 
                     $tabclass = array
@@ -246,9 +246,9 @@ if ($is_editor) {
         $showdate = JRequest::getVar("showdate", "");
         # Clear any HTML
         $query1 = "INSERT INTO #__fb_announcement VALUES ('', '$title', '$sdescription', '$description', " . (($created <> '')?"'$created'":"NOW()") . ", '$published', '$ordering','$showdate')";
-        $database->setQuery($query1);
+        $kunena_db->setQuery($query1);
 
-        $database->query() or trigger_dberror("Unable to insert announcement.");
+        $kunena_db->query() or trigger_dberror("Unable to insert announcement.");
         $mainframe->redirect( JURI::base() .$showlink, _ANN_SUCCESS_ADD);
     }
 
@@ -364,16 +364,16 @@ if ($is_editor) {
         $published = JRequest::getVar("published", 0);
         $showdate = JRequest::getVar("showdate", "");
 
-        $database->setQuery("UPDATE #__fb_announcement SET title='$title', description='$description', sdescription='$sdescription',  created=" . (($created <> '')?"'$created'":"NOW()") . ", published='$published', showdate='$showdate' WHERE id=$id");
+        $kunena_db->setQuery("UPDATE #__fb_announcement SET title='$title', description='$description', sdescription='$sdescription',  created=" . (($created <> '')?"'$created'":"NOW()") . ", published='$published', showdate='$showdate' WHERE id=$id");
 
-        if ($database->query()) {
+        if ($kunena_db->query()) {
             $mainframe->redirect( JURI::base() .$showlink, _ANN_SUCCESS_EDIT);
             }
         }
 
     if ($do == "edit") {
-        $database->setQuery("SELECT * FROM #__fb_announcement WHERE id=$id");
-        $anns = $database->loadObjectList();
+        $kunena_db->setQuery("SELECT * FROM #__fb_announcement WHERE id=$id");
+        $anns = $kunena_db->loadObjectList();
         check_dberror("Unable to load announcements.");
 
         $ann = $anns[0];
@@ -515,8 +515,8 @@ if ($is_editor) {
     if ($do == "delete")
     {
         $query1 = "DELETE FROM #__fb_announcement WHERE id=$id ";
-        $database->setQuery($query1);
-        $database->query() or trigger_dberror("Unable to delete announcement.");
+        $kunena_db->setQuery($query1);
+        $kunena_db->query() or trigger_dberror("Unable to delete announcement.");
 
         $mainframe->redirect( JURI::base() .$showlink, _ANN_DELETED);
     }

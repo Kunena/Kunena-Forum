@@ -17,7 +17,7 @@ defined( '_JEXEC' ) or die('Restricted access');
  * @global CBframework $_CB_framework
  */
 global $_CB_framework, $_CB_database, $ueConfig, $mainframe;
-$tmp_db =& $database;
+$tmp_db =& $kunena_db;
 
 $cbpath = KUNENA_ROOT_PATH_ADMIN .DS. 'components/com_comprofiler/plugin.foundation.php';
 if ( ! file_exists( $cbpath ) )
@@ -31,7 +31,7 @@ cbimport( 'cb.tables' );
 cbimport( 'language.front' );
 cbimport( 'cb.tabs' );
 
-$database =& $tmp_db;
+$kunena_db =& $tmp_db;
 unset ($tmp_db);
 
 class CKunenaCBProfile {

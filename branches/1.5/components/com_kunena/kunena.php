@@ -28,9 +28,6 @@ global $mainframe;
 $mtime = explode(" ", microtime());
 $tstart = $mtime[1] + $mtime[0];
 
-// TODO: Get rid of THIS!!! - Kill notices (we have many..)
-error_reporting (E_ALL ^ E_NOTICE);
-
 // Kunena wide defines
 require_once (JPATH_BASE  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 

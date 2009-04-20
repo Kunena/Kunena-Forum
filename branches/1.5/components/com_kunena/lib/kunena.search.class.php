@@ -70,42 +70,42 @@ class CKunenaSearch
         // TODO: active_in
 
 	// Default values for checkboxes depends on function
-	$this->func = mosGetParam($_REQUEST, 'func');
+	$this->func = JRequest::getVar('func');
 	if($this->func == 'search') {
 		$this->defaults['exactname'] = $this->defaults['childforums'] = 1;
 	} else {
 		$this->defaults['exactname'] = $this->defaults['childforums'] = 0;
 	}
 
-	$q = mosGetParam($_REQUEST, 'q', ''); // Search words
+	$q = JRequest::getVar('q', ''); // Search words
 	// Backwards compability for old templates
 	if (empty($q) && isset($_REQUEST['searchword'])) {
-		$q = mosGetParam($_REQUEST, 'searchword', '');
+		$q = JRequest::getVar('searchword', '');
 	}
-	$this->params['titleonly'] = intval(mosGetParam($_REQUEST, 'titleonly', $this->defaults['titleonly']));
-	$this->params['searchuser'] = mosGetParam($_REQUEST, 'searchuser', $this->defaults['searchuser']);
-	$this->params['starteronly'] = intval(mosGetParam($_REQUEST, 'starteronly', $this->defaults['starteronly']));
-	$this->params['exactname'] = intval(mosGetParam($_REQUEST, 'exactname', $this->defaults['exactname']));
-	$this->params['replyless'] = intval(mosGetParam($_REQUEST, 'replyless', $this->defaults['replyless']));
-	$this->params['replylimit'] = intval(mosGetParam($_REQUEST, 'replylimit', $this->defaults['replylimit']));
-	$this->params['searchdate'] = mosGetParam($_REQUEST, 'searchdate', $this->defaults['searchdate']);
-	$this->params['beforeafter'] = mosGetParam($_REQUEST, 'beforeafter', $this->defaults['beforeafter']);
-	$this->params['sortby'] = mosGetParam($_REQUEST, 'sortby', $this->defaults['sortby']);
-	$this->params['order'] = mosGetParam($_REQUEST, 'order', $this->defaults['order']);
-	$this->params['childforums'] = intval(mosGetParam($_REQUEST, 'childforums', $this->defaults['childforums']));
-	$this->params['catids'] = strtr(mosGetParam($_REQUEST, 'catids', '0'), KUNENA_URL_LIST_SEPARATOR, ',');
-	$limitstart = $this->limitstart = intval(mosGetParam($_REQUEST, 'limitstart', 0));
-	$limit = $this->limit = intval(mosGetParam($_REQUEST, 'limit', $fbConfig->messages_per_page_search));
+	$this->params['titleonly'] = intval(JRequest::getVar('titleonly', $this->defaults['titleonly']));
+	$this->params['searchuser'] = JRequest::getVar('searchuser', $this->defaults['searchuser']);
+	$this->params['starteronly'] = intval(JRequest::getVar('starteronly', $this->defaults['starteronly']));
+	$this->params['exactname'] = intval(JRequest::getVar('exactname', $this->defaults['exactname']));
+	$this->params['replyless'] = intval(JRequest::getVar('replyless', $this->defaults['replyless']));
+	$this->params['replylimit'] = intval(JRequest::getVar('replylimit', $this->defaults['replylimit']));
+	$this->params['searchdate'] = JRequest::getVar('searchdate', $this->defaults['searchdate']);
+	$this->params['beforeafter'] = JRequest::getVar('beforeafter', $this->defaults['beforeafter']);
+	$this->params['sortby'] = JRequest::getVar('sortby', $this->defaults['sortby']);
+	$this->params['order'] = JRequest::getVar('order', $this->defaults['order']);
+	$this->params['childforums'] = intval(JRequest::getVar('childforums', $this->defaults['childforums']));
+	$this->params['catids'] = strtr(JRequest::getVar('catids', '0'), KUNENA_URL_LIST_SEPARATOR, ',');
+	$limitstart = $this->limitstart = intval(JRequest::getVar('limitstart', 0));
+	$limit = $this->limit = intval(JRequest::getVar('limit', $fbConfig->messages_per_page_search));
 	extract($this->params);
 
 	if ($limit<1 || $limit>40) $limit = $this->limit = $fbConfig->messages_per_page_search;
 
 	if (isset($_POST['q']) || isset($_POST['searchword'])) {
-		$this->params['catids'] = implode(',', mosGetParam($_POST, 'catid', array(0)));
+		$this->params['catids'] = implode(',', JRequest::getVar('catid', array(0)));
 		$url = CKunenaLink::GetSearchURL($fbConfig, $this->func, $q, $limitstart, $limit, $this->getUrlParams());
         	header("HTTP/1.1 303 See Other");
         	header("Location: " . htmlspecialchars_decode($url));
-        	die();
+        	$mainframe->close();
 	}
 
         $q = $this->utf8_urldecode($q);
@@ -355,7 +355,7 @@ class CKunenaSearch
         	include (KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php');
         }
         else {
-                include (KUNENA_ABSPATH . '/template/default/plugin/advancedsearch/advsearch.php');
+                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/advancedsearch/advsearch.php');
         }
 
         $results = $this->get_results();

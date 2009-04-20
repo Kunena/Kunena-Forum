@@ -93,7 +93,7 @@ $fbConfig = CKunenaConfig::getInstance();
 if ($fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
 {
 	// Get Community Builder compability
-	require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.communitybuilder.php");
+	require_once (JPATH_ROOT . "/components/com_kunena/lib/kunena.communitybuilder.php");
 	$kunenaProfile =& new CkunenaCBProfile();
 }
 

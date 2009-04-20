@@ -22,7 +22,7 @@ $temporary = 1;
 
 $database =& JFactory::getDBO();
 
-$database->setQuery("CREATE TEMPORARY TABLE #__fb_temp SELECT thread, userid FROM #__fb_favorites WHERE userid>0 GROUP BY thread, userid");
+$database->setQuery("CREATE TABLE #__fb_temp SELECT thread, userid FROM #__fb_favorites WHERE userid>0 GROUP BY thread, userid");
 if ($database->query() == FALSE) {
 	$temporary=0;
 	trigger_dbwarning("Unable to fix fb_favorites table. All Favorites will be removed.");
@@ -34,12 +34,12 @@ $database->query() or trigger_dberror("Unable to alter fb_favorites table, pleas
 if ($temporary) {
 	$database->setQuery("INSERT INTO #__fb_favorites (thread,userid) SELECT thread, userid FROM #__fb_temp");
 	$database->query() or trigger_dbwarning("Unable to fix fb_favorites table. All Favorites will be removed.");
-	$database->setQuery("DROP TEMPORARY TABLE #__fb_temp");
-	$database->query(); // Temporary table will go away, no check needed.
+	$database->setQuery("DROP TABLE #__fb_temp");
+	$database->query() or trigger_dbwarning("Unable to remove temporary table (#__fb_temp).");
 }
 
 $temporary = 1;
-$database->setQuery("CREATE TEMPORARY TABLE #__fb_temp SELECT thread, userid, future1 FROM #__fb_subscriptions WHERE userid>0 GROUP BY thread, userid");
+$database->setQuery("CREATE TABLE #__fb_temp SELECT thread, userid, future1 FROM #__fb_subscriptions WHERE userid>0 GROUP BY thread, userid");
 if ($database->query() == FALSE) {
 	$temporary=0;
 	trigger_dbwarning("Unable to fix fb_subscriptions table. All Subscriptions will be removed.");
@@ -51,8 +51,8 @@ $database->query() or trigger_dberror("Unable to alter fb_subscriptions table, p
 if ($temporary) {
 	$database->setQuery("INSERT INTO #__fb_subscriptions (thread,userid,future1) SELECT thread, userid, future1 FROM #__fb_temp");
 	$database->query() or trigger_dbwarning("Unable to fix fb_subscriptions table. All Subscriptions will be removed.");
-	$database->setQuery("DROP TEMPORARY TABLE #__fb_temp");
-	$database->query(); // Temporary table will go away, no check needed.
+	$database->setQuery("DROP TABLE #__fb_temp");
+	$database->query() or trigger_dbwarning("Unable to remove temporary table (#__fb_temp).");
 }
 
 ?>

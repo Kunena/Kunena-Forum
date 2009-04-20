@@ -32,6 +32,14 @@ Legend:
 
 Kunena 1.5.1b
 
+20-April-2009 Matias
+# [#16047] Replace all legacy functions which were introduced in 1.0.9 merge
+! Fixed: Search and Advanced Search do not work
+! Fixed: Community Builder: Integration not working
+! Fixed: Community Builder: Default avatar is missing
+! Fixed: User Profile not working
+
+
 6-April-2009 fxstein
 # [#15808] Fix broken New Category button in admin backend
 # [#15840] Fix invalid document object on jomsocial integration

@@ -19,11 +19,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $_CB_framework, $_CB_database, $ueConfig, $mainframe;
 $tmp_db =& $database;
 
-if ( defined( 'JPATH_ADMINISTRATOR' ) ) {
-	$cbpath = JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
-} else {
-	$cbpath = $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php';
-}
+$cbpath = KUNENA_ROOT_PATH_ADMIN .DS. 'components/com_comprofiler/plugin.foundation.php';
 if ( ! file_exists( $cbpath ) )
 {
 	$fbConfig->fb_profile = 'fb';

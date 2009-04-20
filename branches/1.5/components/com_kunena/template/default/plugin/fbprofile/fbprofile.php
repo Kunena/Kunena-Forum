@@ -16,14 +16,16 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $fbConfig, $acl;
+global $fbConfig;
+
+$acl = &JFactory::getACL();
 
 if ($fbConfig->fb_profile == 'cb') {
-        $userid = mosGetParam($_GET, 'userid', null);
+        $userid = JRequest::getVar('userid', null);
 	$url = CKunenaCBProfile::getProfileURL($userid);
 	header("HTTP/1.1 307 Temporary Redirect");
 	header("Location: " . htmlspecialchars_decode($url));
-	die();
+	$mainframe->close();
 }
 
 $mainframe->setPageTitle(_KUNENA_USERPROFILE_PROFILE . ' - ' . stripslashes($fbConfig->board_title));
@@ -70,7 +72,7 @@ function showprf($userid, $page)
 
     if (!$userinfo) {
 	$database->setQuery("SELECT * FROM #__users WHERE id=$userid");
-	$database->loadObject($userinfo);
+	$userinfo = $database->loadObject();
 	check_dberror('Unable to get user profile info.');
 
 	if (!$userinfo) {
@@ -92,7 +94,7 @@ function showprf($userid, $page)
 			. "\n LEFT JOIN #__users as b on b.id=a.userid"
 			. "\n where a.userid=$userid");
 
-		$database->loadObject($userinfo);
+		$userinfo = $database->loadObject();
 		check_dberror('Unable to get user profile info.');
 
 		// TODO: For future use

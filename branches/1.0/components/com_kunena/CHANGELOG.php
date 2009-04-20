@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.10
 
+21-April-2009 Matias
+# [#15945] Updating My Profile does not work
+
 5-April-2009 fxstein
 ^ [#15799] Prpepare version information for 1.0.10 builds
 ^ [#15798] Updated credits page

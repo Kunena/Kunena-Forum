@@ -290,8 +290,7 @@ if ($my->id != "" && $my->id != 0)
         // simple spoof check security
     josSpoofCheck();
 
-        $rowu = new CKunenaUserprofile( $database );
-        $rowu->load( (int)$user_id );
+        $rowu = new CKunenaUserprofile();
 
                     $deleteSig = mosGetParam($_POST, 'deleteSig', 0);
                     $signature = mosGetParam($_POST, 'message', null, _MOS_ALLOWRAW);

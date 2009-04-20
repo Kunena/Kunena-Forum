@@ -35,6 +35,7 @@ Kunena 1.0.10
 21-April-2009 Matias
 # [#15945] Updating My Profile does not work
 # [#16068] Announcements: links are broken in sh404SEF
+# [#16070] Forum Jump: links are broken in sh404SEF
 
 5-April-2009 fxstein
 ^ [#15799] Prpepare version information for 1.0.10 builds

@@ -41,6 +41,13 @@ Kunena 1.5.1b
 # [#16049] Global variables like $database conflicts with Legacy mode
 ! Renamed: $acl -> $kunena_acl, $database -> $kunena_db, $my -> $kunena_my
 # [#16048] PHP notices are still hidden in frontend
+# [#16053] Remove PHP Notices from the frontend
+! Fixed: Missing translations
+! Fixed: Saving configuration in backend fails
+! Fixed: Kunena Authentication: Joomla group check is broken
+! Fixed: Announcements: Smileys don't work
+! Fixed: My Profile: Smileys don't work in signature
+! Fixed: Joomla Plugins for content are not working
 
 6-April-2009 fxstein
 # [#15808] Fix broken New Category button in admin backend

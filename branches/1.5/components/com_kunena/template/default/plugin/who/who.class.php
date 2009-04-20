@@ -57,7 +57,7 @@ if ($task == 'listcat' || $func == 'showcat') {
     $what = $kunena_db->loadResult();
     }
 else if ($func == 'latest') {
-    $what = _KUNENA_LATEST_POSTS;
+    $what = _KUNENA_ALL_DISCUSSIONS;
     }
 else if ($id) {
     $kunena_db->setQuery("SELECT subject FROM #__fb_messages WHERE id = {$id}");

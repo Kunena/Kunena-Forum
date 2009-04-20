@@ -92,8 +92,13 @@ if (!$is_Moderator)
     $row = $kunena_db->loadObjectList();
     	check_dberror("Unable to load category detail.");
     //Do user identification based upon the ACL
-    $letPass = 0;
-    $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $kunena_acl);
+    if ($kunena_my->id) {
+	$aro_group = $kunena_acl->getAroGroup($kunena_my->id);
+	$group_id = $aro_group->group_id;
+    }
+    else $group_id = 0;
+
+    $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $group_id, $kunena_acl);
 }
 
 if ($letPass || $is_Moderator)
@@ -140,6 +145,10 @@ if ($letPass || $is_Moderator)
     	check_dberror("Unable to load messages.");
 
     $favthread = array();
+    $threadids = array();
+    $messages = array();
+    $messages[0] = array();
+    $thread_counts = array();
     foreach ($messagelist as $message)
     {
         $threadids[] = $message->id;
@@ -148,6 +157,7 @@ if ($letPass || $is_Moderator)
 	$last_read[$message->id]->lastread = $last_reply[$message->thread];
 	$last_read[$message->id]->unread = 0;
         $hits[$message->id] = $message->hits;
+        $thread_counts[$message->id] = 0;
         $messagetext[$message->id] = substr(smile::purify($message->messagetext), 0, 500);
     }
 
@@ -248,6 +258,7 @@ if ($letPass || $is_Moderator)
 	<tr>
 		<td>
 		<?php
+		$smileyList = smile::getEmoticons(0);
 		$headerdesc = stripslashes(smile::smileReplace($objCatInfo->headerdesc, 0, $fbConfig->disemoticons, $smileyList));
         $headerdesc = nl2br($headerdesc);
         //wordwrap:

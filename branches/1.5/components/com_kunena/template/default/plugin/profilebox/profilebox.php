@@ -31,11 +31,15 @@ $kunena_db->setQuery("SELECT su.view, u.name, su.moderator,su.avatar FROM #__fb_
 
 $_user = $kunena_db->loadObject();
 
-$prefview = $_user->view;
-$username = $_user->name; // externally used  by fb_pathway, myprofile_menu
-$moderator = $_user->moderator;
-$fbavatar = $_user->avatar;
-$jr_username = $_user->name;
+$fbavatar = NULL;
+if ($_user != NULL)
+{
+	$prefview = $_user->view;
+	$username = $_user->name; // externally used  by fb_pathway, myprofile_menu
+	$moderator = $_user->moderator;
+	$fbavatar = $_user->avatar;
+	$jr_username = $_user->name;
+}
 
 $jr_avatar = '';
 if ($fbConfig->avatar_src == "jomsocial")

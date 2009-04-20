@@ -80,7 +80,7 @@ if (count($messages[0]) > 0)
     foreach ($messages[0] as $leafa)
     {
 
-        if (($leafa->ordering > 0 && !$funcmylatest) || ($leafa->favthread && $funcmylatest))
+        if (($leafa->ordering > 0 && !$funcmylatest) || ($leafa->myfavorite && $funcmylatest))
         {
             $st_count++;
         }
@@ -148,6 +148,7 @@ if (count($messages[0]) > 0)
                 $k = 0;
                 $st_c = 0;
 
+		$st_occured = 0;
                 foreach ($messages[0] as $leaf)
                 {
                     $k = 1 - $k; //used for alternating colours
@@ -158,7 +159,6 @@ if (count($messages[0]) > 0)
                 <?php
                     if ($st_c == 0 && $st_occured != 1 && $st_count != 0 && $funclatest == 0)
                     {
-                    //$st_occured = 1;
                 ?>
 
                         <tr>
@@ -308,6 +308,8 @@ if (count($messages[0]) > 0)
                             }
                             else
                             {
+				$threadPages = 0;
+				$unreadPage = 0;
                                 //this thread has been moved, get the new location
                                 $newURL = ""; //init
                                 $kunena_db->setQuery("SELECT `message` FROM #__fb_messages_text WHERE `mesid`='" . $leaf->id . "'");

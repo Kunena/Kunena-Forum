@@ -368,6 +368,7 @@ if ($do == 'init')
         if ($gallery == "default")
             unset($gallery);
 
+	$gallery1 = $gallery2 = '';
         if ($gallery)
         {
             $gallery1 = "/" . str_replace("%20", " ", $gallery);

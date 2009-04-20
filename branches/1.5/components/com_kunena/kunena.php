@@ -453,6 +453,8 @@ else
 
 		// For guests we don't show new posts
 		$prevCheck = $systime;
+		$new_fb_user = 0;
+		$fbSession->readtopics = '';
 	}
 
 	// no access to categories?

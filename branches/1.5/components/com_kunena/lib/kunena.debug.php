@@ -16,6 +16,8 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
+$kunena_db = &JFactory::getDBO();
+
 // Debugging helpers
 
 // First lets set some assertion settings for the code

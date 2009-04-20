@@ -52,7 +52,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
     }
 
     //user type determination
-    $ugid = $userinfo->gid;
+    $ugid = $juserinfo->gid;
     $uIsMod = 0;
     $uIsAdm = 0;
 

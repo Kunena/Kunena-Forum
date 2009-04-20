@@ -145,7 +145,13 @@ if (count($categories[0]) > 0)
 
         //Do user identification based upon the ACL; but don't bother for moderators
         if (!$is_Mod) {
-            $letPass = fb_has_read_permission($obj_fb_cat, $allow_forum, $aro_group->group_id, $kunena_acl);
+            $kunena_acl = &JFactory::getACL();
+            if ($kunena_my->id) {
+		$aro_group = $kunena_acl->getAroGroup($kunena_my->id);
+		$group_id = $aro_group->group_id;
+            }
+            else $group_id = 0;
+            $letPass = fb_has_read_permission($obj_fb_cat, $allow_forum, $group_id, $kunena_acl);
         }
 
         if ($letPass || $is_Mod)
@@ -224,7 +230,13 @@ if (count($categories[0]) > 0)
                             $letPass = 0;
 
                             if (!$is_Mod) {
-                                $letPass = fb_has_read_permission($obj_fb_cat, $allow_forum, $aro_group->group_id, $kunena_acl);
+				$kunena_acl = &JFactory::getACL();
+				if ($kunena_my->id) {
+					$aro_group = $kunena_acl->getAroGroup($kunena_my->id);
+					$group_id = $aro_group->group_id;
+				}
+				else $group_id = 0;
+				$letPass = fb_has_read_permission($obj_fb_cat, $allow_forum, $group_id, $kunena_acl);
                             }
 
                             if ($letPass || $is_Mod)
@@ -296,7 +308,6 @@ if (count($categories[0]) > 0)
                                 $latestthreadpages = ceil($thisThread->totalmessages / $fbConfig->messages_per_page);
                                 $latestthread = $thisThread->thread;
                                 $latestname = html_entity_decode_utf8(stripslashes($singlerow->mname));
-                                $latestcatid = $singlerow->catid;
                                 $latestid = $singlerow->id_last_msg;
                                 $latestsubject = html_entity_decode_utf8(stripslashes($singlerow->subject));
                                 $latestuserid = $singlerow->userid;
@@ -306,6 +317,8 @@ if (count($categories[0]) > 0)
                                     <td class = "td-1" align="center">
                                         <?php
                                         $tmpIcon = '';
+					$cxThereisNewInForum = 0;
+
                                         if ($fbConfig->shownew && $kunena_my->id != 0)
                                         {
                                             //Check if unread threads are in any of the forums topics

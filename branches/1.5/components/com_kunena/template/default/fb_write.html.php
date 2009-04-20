@@ -138,7 +138,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 
 
         <?php
-        if (!$fbConfig->rte) {
+        if ($fbConfig->rtewidth = 0) {
             $useRte = 0;
         }
         else {

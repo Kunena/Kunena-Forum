@@ -22,6 +22,12 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+// 1.5.1b
+
+DEFINE('_KUNENA_DT_LMON_DEC', 'December');
+DEFINE('_KUNENA_DT_MON_DEC', 'Dec');
+DEFINE('_KUNENA_NOGENDER', 'Unknown');
+
 // 1.0.9
 DEFINE('_KUNENA_INSTALLED_VERSION', 'Installed version');
 DEFINE('_KUNENA_COPYRIGHT', 'Copyright');
@@ -300,7 +306,6 @@ DEFINE('_KUNENA_DT_LMON_AUG', 'August');
 DEFINE('_KUNENA_DT_LMON_SEP', 'September');
 DEFINE('_KUNENA_DT_LMON_OCT', 'October');
 DEFINE('_KUNENA_DT_LMON_NOV', 'November');
-DEFINE('_KUNENA_DT_LMON_DEV', 'December');
 DEFINE('_KUNENA_DT_MON_JAN', 'Jan');
 DEFINE('_KUNENA_DT_MON_FEB', 'Feb');
 DEFINE('_KUNENA_DT_MON_MAR', 'Mar');
@@ -312,7 +317,6 @@ DEFINE('_KUNENA_DT_MON_AUG', 'Aug');
 DEFINE('_KUNENA_DT_MON_SEP', 'Sep');
 DEFINE('_KUNENA_DT_MON_OCT', 'Oct');
 DEFINE('_KUNENA_DT_MON_NOV', 'Nov');
-DEFINE('_KUNENA_DT_MON_DEV', 'Dec');
 DEFINE('_KUNENA_CHILD_BOARD', 'Child Board');
 DEFINE('_WHO_ONLINE_GUEST', 'Guest');
 DEFINE('_WHO_ONLINE_MEMBER', 'Member');

@@ -54,7 +54,7 @@ if ($do == "read") {
     $ann = $anns_[0];
     $annID = $ann->id;
     $anntitle = stripslashes($ann->title);
-
+    $smileyList = smile::getEmoticons(0);
 	$anndescription = stripslashes(smile::smileReplace($ann->description, 0, $fbConfig->disemoticons, $smileyList));
 	$anndescription = nl2br($anndescription);
 	$anndescription = smile::htmlwrap($anndescription, $fbConfig->wrap);

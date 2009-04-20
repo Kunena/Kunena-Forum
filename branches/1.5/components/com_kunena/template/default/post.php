@@ -35,7 +35,7 @@ if ($fbConfig->jmambot)
 //
 //ob_start();
 $catid = (int)$catid;
-$pubwrite = (int)$pubwrite;
+$pubwrite = (int)$fbConfig->pubwrite;
 //ip for floodprotection, post logging, subscriptions, etcetera
 $ip = $_SERVER["REMOTE_ADDR"];
 //reset variables used
@@ -1929,7 +1929,7 @@ function listThreadHistory($id, $fbConfig, $kunena_db)
         $kunena_db->setQuery("SELECT subject FROM #__fb_messages WHERE id='$thread' and parent=0");
         $this_message_subject = $kunena_db->loadResult();
         	check_dberror("Unable to load messages.");
-        echo "<b>" . _POST_TOPIC_HISTORY . ":</b> " . htmlspecialchars($this_message_subject) . " <br />" . _POST_TOPIC_HISTORY_MAX . " $historylimit " . _POST_TOPIC_HISTORY_LAST . "<br />";
+        echo "<b>" . _POST_TOPIC_HISTORY . ":</b> " . htmlspecialchars($this_message_subject) . " <br />" . _POST_TOPIC_HISTORY_MAX . " $fbConfig->historylimit " . _POST_TOPIC_HISTORY_LAST . "<br />";
 ?>
 
         <table border = "0" cellspacing = "1" cellpadding = "3" width = "100%" class = "fb_review_table">
@@ -1978,7 +1978,7 @@ function listThreadHistory($id, $fbConfig, $kunena_db)
                         {
                             $row = new t();
                             $row->text = $fb_message_txt;
-                            JPluginHelper::importPlugin($group, null, false);
+                            JPluginHelper::importPlugin('content', null, false);
                             $params =& new JParameter('');
                             $results = $mainframe->triggerEvent( 'onPrepareContent', array
                             (

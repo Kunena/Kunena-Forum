@@ -280,6 +280,13 @@ class CKunenaLink
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL."&amp;func={$func}&amp;q={$searchword}{$params}{$limitstr}", $name, '', $rel);
     }
 
+    function GetAnnouncementURL($fbConfig, $do, $id=NULL)
+    {
+	$idstring = '';
+	if ($id !== NULL) $idstring .= "&amp;id=$id";
+	return sefRelToAbs(KUNENA_LIVEURLREL."&amp;func=announcement&amp;do={$do}{$idstring}");
+    }
+
     //
     // Macro functions that build more complex html output with embedded links
     //

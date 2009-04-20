@@ -134,10 +134,8 @@ else {
 }
 
 if ($is_editor) {
-$annlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show'.KUNENA_COMPONENT_ITEMID_SUFFIX;
-
 ?>
-| <a href = "<?php echo $annlink;?>"><?php echo _ANN_ANNOUNCEMENTS; ?> </a>
+| <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'show');?>"><?php echo _ANN_ANNOUNCEMENTS; ?> </a>
 <?php } ?>
 
 </td>

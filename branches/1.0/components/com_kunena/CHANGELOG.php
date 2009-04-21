@@ -36,6 +36,7 @@ Kunena 1.0.10
 # [#15945] Updating My Profile does not work
 # [#16068] Announcements: links are broken in sh404SEF
 # [#16070] Forum Jump: links are broken in sh404SEF
+# [#16092] File upload does not work in some servers
 
 5-April-2009 fxstein
 ^ [#15799] Prpepare version information for 1.0.10 builds

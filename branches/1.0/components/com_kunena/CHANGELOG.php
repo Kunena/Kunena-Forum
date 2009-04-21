@@ -37,6 +37,7 @@ Kunena 1.0.10
 # [#16068] Announcements: links are broken in sh404SEF
 # [#16070] Forum Jump: links are broken in sh404SEF
 # [#16092] File upload does not work in some servers
+# [#16084] Search: Call to undefined function mb_substr()
 
 5-April-2009 fxstein
 ^ [#15799] Prpepare version information for 1.0.10 builds

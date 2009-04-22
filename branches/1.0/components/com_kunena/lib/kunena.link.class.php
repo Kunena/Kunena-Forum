@@ -277,6 +277,7 @@ class CKunenaLink
     {
 	$limitstr = "&amp;limitstart=$limitstart";
 	if ($limit != $fbConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
+	$searchword = urlencode($searchword);
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL."&amp;func={$func}&amp;q={$searchword}{$params}{$limitstr}", $name, '', $rel);
     }
 

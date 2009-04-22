@@ -38,6 +38,7 @@ Kunena 1.0.10
 + Added index 'id' for the configuration
 - Removed all global $fbConfig notations, use CKunenaConfig::getInstance() instead
 ^ Changed CKunenaConfig to extend mosDBTable, a lot of code removed
+# [#16082] Search: umlauts and other special chars in redirects and URL's are broken
 
 21-April-2009 Matias
 # [#15945] Updating My Profile does not work

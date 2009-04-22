@@ -21,7 +21,7 @@
 // Dont allow direct linking
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-DEFINE('KUNENA_URL_LIST_SEPARATOR', 'x');
+DEFINE('KUNENA_URL_LIST_SEPARATOR', ' ');
 
 class CKunenaSearch
 {
@@ -300,7 +300,7 @@ class CKunenaSearch
 	$url_params = '';
 	foreach ($this->params as $param => $value) {
 		if ($param == 'catids') $value = strtr($value, ',', KUNENA_URL_LIST_SEPARATOR);
-		if ($value != $this->defaults[$param]) $url_params .= "&amp;$param=$value";
+		if ($value != $this->defaults[$param]) $url_params .= "&amp;$param=".urlencode($value);
 	}
 	return $url_params;
     }

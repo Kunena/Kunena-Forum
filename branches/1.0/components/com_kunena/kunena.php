@@ -75,7 +75,45 @@ require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/
 global $fbConfig, $kunenaProfile;
 
 // Load configuration and personal settings for current user
-$fbConfig = CKunenaConfig::getInstance();
+$fbConfig =& CKunenaConfig::getInstance();
+
+$kn_tables =& CKunenaTables::getInstance();
+if ($kn_tables->installed() === false) {
+	$fbConfig->board_offline = 1;
+}
+
+// Permissions: Check for administrators and moderators
+if ($my->id != 0)
+{
+    $aro_group = $acl->getAroGroup($my->id);
+    if ($aro_group and CKunenaTools::isJoomla15())
+    	$aro_group->group_id = $aro_group->id;  // changed fieldname in Joomla 1.5: "group_id" -> "id"
+    $is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
+}
+else
+{
+    $aro_group = 0;
+    $is_admin = 0;
+}
+
+//Get the userid; sometimes the new var works whilst $my->id doesn't..?!?
+$my_id = $my->id;
+
+// Check if we only allow registered users
+if ($fbConfig->regonly && !$my_id)
+{
+    echo _FORUM_UNAUTHORIZIED . "<br />";
+    echo _FORUM_UNAUTHORIZIED2;
+}
+// or if the board is offline
+else if ($fbConfig->board_offline && !$is_admin)
+{
+    echo stripslashes($fbConfig->offline_message);
+}
+else
+{
+// =======================================================================================
+// Forum is online:
 
 if ($fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
 {
@@ -244,20 +282,6 @@ else {
 $obj_KUNENA_tmpl = new patTemplate();
 $obj_KUNENA_tmpl->setBasedir(KUNENA_ABSTMPLTPATH);
 
-// Permissions: Check for administrators and moderators
-if ($my->id != 0)
-{
-    $aro_group = $acl->getAroGroup($my->id);
-    if ($aro_group and CKunenaTools::isJoomla15())
-    	$aro_group->group_id = $aro_group->id;  // changed fieldname in Joomla 1.5: "group_id" -> "id"
-    $is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
-}
-else
-{
-    $aro_group = 0;
-    $is_admin = 0;
-}
-
 $is_Moderator = fb_has_moderator_permission($database, $thisCat, $my->id, $is_admin);
 
 //intercept the RSS request; we should stop afterwards
@@ -319,22 +343,6 @@ else
     include_once (KUNENA_ABSPATH . '/template/default/icons.php');
 }
 
-//Get the userid; sometimes the new var works whilst $my->id doesn't..?!?
-$my_id = $my->id;
-
-// Check if we only allow registered users
-if ($fbConfig->regonly && !$my_id)
-{
-    echo _FORUM_UNAUTHORIZIED . "<br />";
-    echo _FORUM_UNAUTHORIZIED2;
-}
-// or if the board is offline
-else if ($fbConfig->board_offline && !$is_admin)
-{
-    echo stripslashes($fbConfig->offline_message);
-}
-else
-{
 //
 // This is the main session handling section. We rely both on cookie as well as our own
 // Kunena session table inside the database. We are leveraging the cookie to keep track

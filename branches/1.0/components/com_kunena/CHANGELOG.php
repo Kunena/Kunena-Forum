@@ -32,6 +32,13 @@ Legend:
 
 Kunena 1.0.10
 
+22-April-2009 Matias
+# [#16105] Check if installation has failed and have better error messages
++ [#15656] Improved JoomFish support:
++ Added index 'id' for the configuration
+- Removed all global $fbConfig notations, use CKunenaConfig::getInstance() instead
+^ Changed CKunenaConfig to extend mosDBTable, a lot of code removed
+
 21-April-2009 Matias
 # [#15945] Updating My Profile does not work
 # [#16068] Announcements: links are broken in sh404SEF
@@ -39,7 +46,6 @@ Kunena 1.0.10
 # [#16092] File upload does not work in some servers
 # [#16084] Search: Call to undefined function mb_substr()
 # [#16081] Fatal error in kunena.config.class.php
-# [#16105] Check if installation has failed and have better error messages
 
 5-April-2009 fxstein
 ^ [#15799] Prpepare version information for 1.0.10 builds

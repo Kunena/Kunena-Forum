@@ -20,6 +20,9 @@ dictionary = {	'JB_':'KUNENA_',
 		'FBTools':'CKunenaTools',
 		'htmlentities':'html_entity_decode_utf8',
 		'fbUserprofile':'CKunenaUserprofile',
+		'global\s*\$fbConfig;':'$fbConfig =& CKunenaConfig::getInstance();',
+		'(\s*)(global )\s*\$fbConfig,\s*(.*?;)':'\\1\\2\\3\n\\1$fbConfig =& CKunenaConfig::getInstance();',
+		'(\s*)(global .*?),\s*\$fbConfig;':'\\1\\2;\n\\1$fbConfig =& CKunenaConfig::getInstance();',
 }
 
 

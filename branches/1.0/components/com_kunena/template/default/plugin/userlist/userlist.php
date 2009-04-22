@@ -22,7 +22,10 @@
 // Dont allow direct linking
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $base_url, $fbConfig;
+global $base_url;
+
+
+$fbConfig =& CKunenaConfig::getInstance();
 
 $mainframe->setPageTitle(_KUNENA_USRL_USERLIST . ' - ' . stripslashes($fbConfig->board_title));
 
@@ -32,7 +35,9 @@ list_users();
 
 function list_users()
 {
-    global $database, $mosConfig_lang, $fbConfig;
+    global $database, $mosConfig_lang;
+
+    $fbConfig =& CKunenaConfig::getInstance();
 
     require_once("includes/pageNavigation.php");
 

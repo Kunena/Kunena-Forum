@@ -21,7 +21,10 @@
 
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $database, $mainframe, $my, $mosConfig_absolute_path, $fbConfig;
+global $database, $mainframe, $my, $mosConfig_absolute_path;
+
+
+$fbConfig =& CKunenaConfig::getInstance();
 
 $hours = 0;
 

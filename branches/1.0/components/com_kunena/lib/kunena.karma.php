@@ -21,7 +21,7 @@
 
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 global $is_Moderator;
 //Modify this to change the minimum time between karma modifications from the same user
 $karma_min_seconds = '14400'; // 14400 seconds = 6 hours

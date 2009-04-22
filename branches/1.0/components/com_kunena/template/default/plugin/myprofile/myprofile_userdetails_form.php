@@ -19,7 +19,7 @@
 * @author TSMF & Jan de Graaff
 **/
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 require_once ($mosConfig_absolute_path . '/includes/HTML_toolbar.php');
 

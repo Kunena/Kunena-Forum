@@ -60,7 +60,7 @@ class CKunenaTables
 	}
 }
 
-class CKunenaConfigBase
+class CKunenaConfigBase extends mosDBTable
 {
     function &getInstance() 
     {
@@ -94,24 +94,6 @@ class CKunenaConfigBase
     }
 
     //
-    //  binds a named array/hash to this object
-    //  @param array $hash named array
-    //  @return null|string null is operation was satisfactory, otherwise returns an error
-    //
-    function bind($array, $ignore = '')
-    {
-        if (!is_array($array))
-        {
-            $this->_error = strtolower(get_class($this)) . '::bind failed.';
-            return false;
-        }
-        else
-        {
-            return mosBindArrayToObject($array, $this, $ignore);
-        }
-    }
-
-    //
     // Create the config table for Kunena and add initial default values
     //
     function create()
@@ -128,41 +110,26 @@ class CKunenaConfigBase
             // Need to provide ability to override certain settings
             // in derived class without the need to recode this entire function
             //
+            if ($name[0] == '_') continue;
             switch (gettype($value))
             {
                 case 'integer':
-                    $fields[] = "`$name` INTEGER NULL";
-
+                    if ($name == 'id') {
+                        $fields[] = "`$name` INTEGER NOT NULL auto_increment";
+                    } else {
+                        $fields[] = "`$name` INTEGER NULL";
+                    }
                     break;
 
                 case 'string':
                     $fields[] = "`$name` TEXT NULL";
-
                     break;
             }
         }
 
-        $database->setQuery("CREATE TABLE ".$this->GetConfigTableName()." (" . implode(', ', $fields) . " )");
+        $database->setQuery("CREATE TABLE ".$this->GetConfigTableName()." (" . implode(', ', $fields) . ", PRIMARY KEY (`id`) )");
         $database->query();
-        	check_dberror("Unable to create configuration table.");
-
-        // Insert current Settings
-        $vars = get_object_vars($this); // for the actual values we must not use the class vars funtion
-        $fields = array ();
-
-        foreach ($vars as $name => $value)
-        {
-        	// Only allow variables that have been defined in the class
-        	if(array_key_exists($name , $this->GetClassVars()))
-            {
-	            $value =addslashes($value);
-	        	$fields[] = "`$name`='$value'";
-            }
-        }
-
-        $database->setQuery("INSERT INTO ".$this->GetConfigTableName()." SET " . implode(', ', $fields));
-        $database->query();
-        	check_dberror("Unable to insert configuration data.");
+        check_dberror("Unable to create configuration table.");
     }
 
     //
@@ -197,7 +164,7 @@ class CKunenaConfigBase
         global $database;
         $database->setQuery("DROP TABLE IF EXISTS ".$this->GetConfigTableName());
         $database->query();
-        	check_dberror("Unable to drop existing configuration table.");
+       	check_dberror("Unable to drop existing configuration table.");
     }
 
     //
@@ -208,9 +175,8 @@ class CKunenaConfigBase
         global $database;
 
         $database->setQuery("SELECT * FROM ".$this->GetConfigTableName());
-
         $database->loadObject($this);
-       	check_dberror("Unable to load configuration table.");
+       	check_dberror("Unable to get configuration.");
 
         // Check for user specific overrides
         if(is_object($KunenaUser))
@@ -234,7 +200,7 @@ class CKunenaConfig extends CKunenaConfigBase
     var $board_offline           = 0;
     var $board_ofset             = 0;
     var $offline_message         = '<h2>The Forum is currently offline for maintenance.</h2>
-    Check back soon!                        ';
+<div>Check back soon!<div>';
     var $default_view            = 'flat';
     var $enablerss               = 1;
     var $enablepdf               = 1;
@@ -375,12 +341,11 @@ class CKunenaConfig extends CKunenaConfigBase
 
     function CKunenaConfig($KunenaUser=null)
 	{
-		global $mainframe;
-
+		global $mainframe, $database;
+		$this->mosDBTable('#__fb_config', 'id', $database);
 		$tables = CKunenaTables::getInstance();
 		if (!$tables->check($this->GetConfigTableName())) {
-			// Do not create configuration in the frontend (J!1.5 only)
-			if (!is_a($mainframe, 'JSite')) $this->create();
+			// If there is no saved configuration, use default values
 			if(is_object($KunenaUser)) $this->DoUserOverrides($KunenaUser);
 			return;
 		}
@@ -392,14 +357,15 @@ class CKunenaConfig extends CKunenaConfigBase
     //
 
     function &getInstance()
-    {
+	{
         static $instance;
-        if (!$instance) {
-            $userinfo = new CKunenaUserprofile();
-	    $instance = new CKunenaConfig($userinfo);
+		if (!$instance) {
+			$userinfo = null;
+			if (!defined('_KUNENA_BACKEND')) $userinfo =& new CKunenaUserprofile();
+			$instance =& new CKunenaConfig($userinfo);
+		}
+		return $instance;
 	}
-        return $instance;
-    }
 
     function GetClassVars()
     {

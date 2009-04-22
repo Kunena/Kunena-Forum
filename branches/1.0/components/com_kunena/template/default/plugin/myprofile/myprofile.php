@@ -23,7 +23,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 require_once (KUNENA_ABSSOURCESPATH . 'kunena.user.class.php');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 $mainframe->setPageTitle(_GEN_MYPROFILE . ' - ' . stripslashes($fbConfig->board_title));
 

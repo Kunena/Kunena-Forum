@@ -33,7 +33,7 @@ defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.'
  * @pre: fb_has_read_permission()
  */
 function fb_has_post_permission(&$database,$catid,$replyto,$userid,$pubwrite,$ismod) {
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
     if ($ismod)
         return 1; // moderators always have post permission
     if($replyto != 0) {

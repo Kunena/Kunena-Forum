@@ -237,7 +237,7 @@ class smile
         // well $html is the $message to edit, generally it means in PLAINTEXT @Kunena!
         global $editmode;
         // ERROR: mixed global $editmode
-        global $fbConfig;
+        $fbConfig =& CKunenaConfig::getInstance();
 
         // (JJ) JOOMLA STYLE CHECK
         if ($fbConfig->joomlastyle < 1) {

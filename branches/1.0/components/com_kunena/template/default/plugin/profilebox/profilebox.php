@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 //first we gather some information about this person
 $database->setQuery("SELECT su.view, u.name, su.moderator,su.avatar FROM #__fb_users as su"
                     . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$my->id}");

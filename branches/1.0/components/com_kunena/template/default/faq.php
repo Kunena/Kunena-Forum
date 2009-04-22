@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 $mainframe->setPageTitle(_GEN_HELP . ' - ' . stripslashes($fbConfig->board_title));
 

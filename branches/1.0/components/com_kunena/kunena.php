@@ -77,6 +77,7 @@ global $fbConfig, $kunenaProfile;
 // Load configuration and personal settings for current user
 $fbConfig =& CKunenaConfig::getInstance();
 
+// Check if Kunena installation is complete
 $kn_tables =& CKunenaTables::getInstance();
 if ($kn_tables->installed() === false) {
 	$fbConfig->board_offline = 1;
@@ -86,7 +87,7 @@ if ($kn_tables->installed() === false) {
 if ($my->id != 0)
 {
     $aro_group = $acl->getAroGroup($my->id);
-    if ($aro_group and CKunenaTools::isJoomla15())
+    if ($aro_group && defined('_JEXEC') && class_exists('JApplication'))
     	$aro_group->group_id = $aro_group->id;  // changed fieldname in Joomla 1.5: "group_id" -> "id"
     $is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
 }

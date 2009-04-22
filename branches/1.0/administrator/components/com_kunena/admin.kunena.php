@@ -21,6 +21,8 @@
 
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+define ('_KUNENA_BACKEND', true);
+
 // Kill notices (we have many..)
 error_reporting (E_ALL ^ E_NOTICE);
 
@@ -30,9 +32,7 @@ include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/
 // get Kunenas configuration params in
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.config.class.php");
 
-global $fbConfig;
 $fbConfig =& CKunenaConfig::getInstance();
-$fbConfig->load();
 
 // Class structure should be used after this and all the common task should be moved to this class
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/class.kunena.php");
@@ -582,7 +582,7 @@ function showConfig($option)
     global $mosConfig_lang;
     global $mosConfig_admin_template;
     global $mainframe;
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
 
     $lists = array ();
 
@@ -781,96 +781,25 @@ function showConfig($option)
 
 function saveConfig($option)
 {
-	global $fbConfig;
-
+	$fbConfig =& CKunenaConfig::getInstance();
 	$fbConfig->backup();
 	$fbConfig->remove();
+	$fbConfig->create();
 
+	$newConfig = array();
 	foreach ($_POST as $postsetting => $postvalue)
-    {
-        if (strpos($postsetting, 'cfg_') === 0)
-        {
-        	//remove cfg_ and force lower case
-        	$postname = strtolower(substr($postsetting, 4));
-            $postvalue = addslashes($postvalue);
-
-            // No matter what got posted, we only store config parameters defined
-            // in the config class. Anything else posted gets ignored.
-            if(array_key_exists($postname , $fbConfig->GetClassVars()))
-            {
-            	if (is_numeric($postvalue))
-	            {
-					eval ("\$fbConfig->".$postname." = ".$postvalue.";");
-	            }
-	            else
-	            {
-	            	// Rest is treaded as strings
-					eval ("\$fbConfig->".$postname." = '".$postvalue."';");
-	            }
-            }
-            else
-            {
-            	// This really should not happen if assertions are enable
-            	// fail it and display the current scope of variables for debugging.
-            	// echo debug_vars(get_defined_vars());
-            	trigger_error ('Unknown configuration variable posted.');
-            	assert(0);
-            }
-        }
-    }
-
-    $fbConfig->create();
-
-    // Legacy support
-    // To enable legacy 3rd party modules to 'see' our config
-    // we also write an old style config file
-	global $mainframe;
-    $configfile = $mainframe->getCfg('absolute_path') . "/administrator/components/com_kunena/Kunena_config.php";
-
-	$ref = array();
-	$array = array(
-		'enableRSS','enablePDF','showHistory','historyLimit','showNew','newChar','joomlaStyle','showAnnouncement',
-		'avatarOnCat','CatImagePath','showChildCatIcon','AnnModId','enableRulesPage','enableForumJump',
-		'postStats','statsColor','usereditTime','usereditTimeGrace','editMarkUp','maxSubject','maxSig',
-		'allowAvatar','allowAvatarUpload','allowAvatarGallery','imageProcessor','avatarSmallHeight',
-		'avatarSmallWidth','avatarHeight','avatarWidth','avatarLargeHeight','avatarLargeWidth','avatarQuality',
-		'avatarSize','allowImageUpload','allowImageRegUpload','imageHeight','imageWidth','imageSize',
-		'allowFileUpload','allowFileRegUpload','fileTypes','fileSize','showLatest','latestCount','latestCountPerPage',
-		'latestCategory','latestSingleSubject','latestReplySubject','latestSubjectLength','latestShowDate',
-		'latestShowHits','latestShowAuthor','showWhoisOnline','showGenStats','showPopUserStats',
-		'PopUserCount','showPopSubjectStats','PopSubjectCount','enableHelpPage');
-	foreach ($array as $value) $ref[strtolower($value)] = $value;
-	unset($array);
-
-    $txt = "<?php\n";
-    $txt .= "global \$fbConfig;\n";
-    $txt .= "if (!is_array(\$fbConfig)) { \$fbConfig = array(); }\n"; // Thx JoniJnm
-
-    foreach ($_POST as $k => $v)
-    {
-        if (strpos($k, 'cfg_') === 0)
-        {
-        	$key = substr($k, 4);
-        	if (isset($ref[$key])) {
-        		$key = $ref[$key];
-        	}
-            if (!get_magic_quotes_gpc()) {
-                $v = addslashes($v);
-            }
-            $txt .= "\$fbConfig['" . $key . "']='$v';\n";
-        }
-    }
-
-    $txt .= "?>";
-
-    if ($fp = fopen($configfile, "w"))
-    {
-        fputs($fp, $txt, strlen($txt));
-        fclose ($fp);
-    }
-    // end legacy support
-
-    mosRedirect("index2.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED);
+	{
+		if (strpos($postsetting, 'cfg_') === 0)
+		{
+			//remove cfg_ and force lower case
+			$postname = strtolower(substr($postsetting, 4));
+			$postvalue = addslashes($postvalue);
+			$newConfig[$postname] = $postvalue;
+		}
+	}
+	$newConfig['id'] = 0;
+	$fbConfig->save($newConfig);
+	mosRedirect("index2.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED);
 }
 
 function showInstructions($database, $option, $mosConfig_lang) {
@@ -882,7 +811,7 @@ function showInstructions($database, $option, $mosConfig_lang) {
 //===============================
 function showCss($option)
 {
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
     $file = "../components/com_kunena/template/" . $fbConfig->template . "/kunena.forum.css";
     $permission = is_writable($file);
 
@@ -1734,7 +1663,7 @@ function deletesmiley($option, $cid)
 function smileypath()
 {
     global $mainframe, $mosConfig_lang;
-	global $fbConfig;
+	$fbConfig =& CKunenaConfig::getInstance();
 
     if (is_dir($mainframe->getCfg('absolute_path') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/emoticons')) {
         $smiley_live_path = $mainframe->getCfg('live_site') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/emoticons';
@@ -1814,7 +1743,7 @@ function showRanks($option)
 function rankpath()
 {
     global $mainframe, $mosConfig_lang;
-	global $fbConfig;
+	$fbConfig =& CKunenaConfig::getInstance();
 
     if (is_dir($mainframe->getCfg('absolute_path') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/ranks')) {
         $rank_live_path = $mainframe->getCfg('live_site') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/ranks';

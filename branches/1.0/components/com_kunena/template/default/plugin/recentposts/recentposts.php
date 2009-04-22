@@ -22,7 +22,7 @@
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $mosConfig_absolute_path, $mosConfig_lang, $mosConfig_live_site, $mainframe;
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 $Kunena_adm_path = "$mosConfig_absolute_path/administrator/components/com_kunena";
 //Get right Language file

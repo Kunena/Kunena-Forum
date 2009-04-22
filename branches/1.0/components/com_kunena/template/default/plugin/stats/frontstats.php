@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 $forumurl = sefReltoAbs(KUNENA_LIVEURLREL);
 $statslink = sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=stats');
 

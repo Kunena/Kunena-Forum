@@ -59,9 +59,12 @@ else
                         ?>
 
                         <?php
-                        if ($objCatInfo->description != "") {
-                            echo '' . stripslashes($objCatInfo->description) . '';
-                        }
+						if ($objCatInfo->description != "") {
+							$tmpforumdesc = stripslashes(smile::smileReplace($objCatInfo->description, 0, $fbConfig->disemoticons, $smileyList));
+							$tmpforumdesc = nl2br($tmpforumdesc);
+							$tmpforumdesc = smile::htmlwrap($tmpforumdesc, $fbConfig->wrap);
+							echo $tmpforumdesc;
+						}
                         ?>
                     </div>
 
@@ -272,7 +275,10 @@ else
                     echo '</div>';
 
                     if ($forumDesc != "") {
-                        echo '<div class="' . $boardclass . 'thead-desc  fbm">' . $forumDesc . ' </div>';
+                        $tmpforumdesc = stripslashes(smile::smileReplace($forumDesc, 0, $fbConfig->disemoticons, $smileyList));
+                        $tmpforumdesc = nl2br($tmpforumdesc);
+                        $tmpforumdesc = smile::htmlwrap($tmpforumdesc, $fbConfig->wrap);
+                        echo '<div class="' . $boardclass . 'thead-desc  fbm">' . $tmpforumdesc . ' </div>';
                     }
 
                     if (count($forumparents) > 0)

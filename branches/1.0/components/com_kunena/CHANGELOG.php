@@ -40,6 +40,7 @@ Kunena 1.0.10
 ^ Changed CKunenaConfig to extend mosDBTable, a lot of code removed
 # [#16082] Search: umlauts and other special chars in redirects and URL's are broken
 # [#16080] Advanced Search: when there are selected cats, childforums will not be searched
+# [#16090] BBCode is not working for subforum descriptions
 
 21-April-2009 Matias
 # [#15945] Updating My Profile does not work

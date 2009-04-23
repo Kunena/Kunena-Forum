@@ -21,7 +21,7 @@
 // Dont allow direct linking
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-DEFINE('KUNENA_URL_LIST_SEPARATOR', 'x');
+DEFINE('KUNENA_URL_LIST_SEPARATOR', ' ');
 
 class CKunenaSearch
 {
@@ -298,7 +298,7 @@ class CKunenaSearch
 	$url_params = '';
 	foreach ($this->params as $param => $value) {
 		if ($param == 'catids') $value = strtr($value, ',', KUNENA_URL_LIST_SEPARATOR);
-		if ($value != $this->defaults[$param]) $url_params .= "&amp;$param=$value";
+		if ($value != $this->defaults[$param]) $url_params .= "&amp;$param=".urlencode($value);
 	}
 	return $url_params;
     }
@@ -307,26 +307,40 @@ class CKunenaSearch
 
         /* get allowed forums */
         $allowed_forums = array();
+        $allowed_string = '';
         if ($fbSession->allowed != 'na')
-            $allowed_forums = split(',', $fbSession->allowed);
-
-        /* non registered users can only search in public forums */
-        if (count($allowed_forums) == 0)
         {
-            $database->setQuery("SELECT id, parent, published FROM #__fb_categories WHERE pub_access='0' AND published='1'");
-            $allowed_forums = $database->loadAssocList('id');
-            check_dberror("Unable to get public categories.");
-        }
+            $allowed_string = "AND id IN ({$fbSession->allowed})";
+	}
+
+        $database->setQuery("SELECT id, parent FROM #__fb_categories WHERE pub_access='0' AND published='1' $allowed_string");
+        $allowed_forums = $database->loadAssocList('id');
+        check_dberror("Unable to get public categories.");
+
+	foreach ($allowed_forums as $forum)
+	{
+		// Children list: parent => array(child1, child2, ...)
+		$allow_list[$forum['parent']][] = $forum['id'];
+	}
 
 	$catids = split(',', $catids);
+	$result = array();
 	if (count($catids) > 0 && !in_array(0, $catids)) {
-		foreach ($allowed_forums as $forum)
+		// Algorithm:
+		// Start with selected categories and pop them from the catlist one by one
+		// Every popped item in the catlist will be added into result list
+		// For every category: push all its children into the catlist
+		while ($cur = array_pop($catids))
 		{
-			if (in_array($forum['parent'], $catids)) $catids[] = $forum['id'];
+			$result[$cur] = $cur;
+			if (array_key_exists($cur, $allow_list))
+				foreach ($allow_list[$cur] as $forum) 
+					if (!in_array($forum, $catids))
+						array_push($catids, $forum);
 		}
-		$search_forums = implode(",", array_intersect($allowed_forums, $catids));
+		$search_forums = implode(",", $result);
 	} else {
-		$search_forums = implode(",", $allowed_forums);
+		$search_forums = implode(",", array_keys($allowed_forums));
 	}
 	return $search_forums;
     }

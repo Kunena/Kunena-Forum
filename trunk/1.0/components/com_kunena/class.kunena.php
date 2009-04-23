@@ -1284,9 +1284,13 @@ if (!function_exists('mb_detect_encoding')) {
 	}
 	return 'UTF-8';
   }
+}
+if (!function_exists('mb_convert_encoding')) {
   function mb_convert_encoding($text,$target_encoding,$source_encoding=NULL) {
 	return $text;
   }
+}
+if (!function_exists('mb_substr')) {
   function mb_substr($str, $start, $lenght=NULL, $encoding=NULL) {
 	if ($lenght===NULL) $lenght = strlen($str);
 	return substr($str, $start, $lenght);

@@ -90,8 +90,13 @@ if ($GLOBALS['KUNENA_rc'])
 
 if ($GLOBALS['KUNENA_rc'])
 {
-    // file is OK, move it to the proper location
-    move_uploaded_file($_FILES['attachimage']['tmp_name'], $imageLocation);
+	// file is OK, move it to the proper location
+	if( CKunenaTools::isJoomla15() ) {
+		jimport('joomla.filesystem.file');
+		JFile::upload($_FILES['attachimage']['tmp_name'], $imageLocation);
+	} else {
+		move_uploaded_file($_FILES['attachimage']['tmp_name'], $imageLocation);
+	}
     @chmod($imageLocation, 0777);
 }
 

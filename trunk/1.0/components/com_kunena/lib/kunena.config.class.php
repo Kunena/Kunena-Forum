@@ -17,6 +17,7 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+global $mainframe;
 require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.debug.php');
 require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.user.class.php');
 

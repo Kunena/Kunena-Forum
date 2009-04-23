@@ -32,6 +32,19 @@ Legend:
 
 Kunena 1.0.10
 
+22-April-2009 Matias
+# [#16082] Search: umlauts and other special chars in redirects and URL's are broken
+# [#16080] Advanced Search: when there are selected cats, childforums will not be searched
+# [#16090] BBCode is not working for subforum descriptions
+
+21-April-2009 Matias
+# [#15945] Updating My Profile does not work
+# [#16068] Announcements: links are broken in sh404SEF
+# [#16070] Forum Jump: links are broken in sh404SEF
+# [#16092] File upload does not work in some servers
+# [#16084] Search: Call to undefined function mb_substr()
+# [#16081] Fatal error in kunena.config.class.php
+
 5-April-2009 fxstein
 ^ [#15799] Prpepare version information for 1.0.10 builds
 ^ [#15798] Updated credits page

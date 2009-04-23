@@ -78,8 +78,13 @@ if ($GLOBALS['KUNENA_rc'])
 
 if ($GLOBALS['KUNENA_rc'])
 {
-    // file is OK, move it to the proper location
-    move_uploaded_file($_FILES['attachfile']['tmp_name'], $fileLocation);
+	// file is OK, move it to the proper location
+	if( CKunenaTools::isJoomla15() ) {
+		jimport('joomla.filesystem.file');
+		JFile::upload($_FILES['attachfile']['tmp_name'], $fileLocation);
+	} else {
+		move_uploaded_file($_FILES['attachfile']['tmp_name'], $fileLocation);
+	}
     @chmod($fileLocation, 0777);
 }
 

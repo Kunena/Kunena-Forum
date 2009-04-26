@@ -237,6 +237,11 @@ if (count($categories[0]) > 0)
                                 $forumparents = $database->loadObjectList();
                                 	check_dberror("Unable to load categories.");
 
+								foreach ($forumparents as $childnum=>$childforum)
+								{
+									if (!in_array($childforum->id, $allow_forum)) unset ($forumparents[$childnum]);
+								}
+
                                 if ($my->id)
                                 {
                                     //    get all threads with posts after the users last visit; don't bother for guests

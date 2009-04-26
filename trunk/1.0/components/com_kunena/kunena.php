@@ -171,6 +171,7 @@ if ($func == "getpreview") {
     $msgbody = smile::smileReplace( $message , 0, $fbConfig->disemoticons, $smileyList);
     $msgbody = nl2br($msgbody);
     $msgbody = str_replace("__FBTAB__", "\t", $msgbody);
+	$msgbody = CKunenaTools::prepareContent($msgbody);
     // $msgbody = ereg_replace('%u0([[:alnum:]]{3})', '&#x1;',$msgbody);
 
     $msgbody = smile::htmlwrap($msgbody, $fbConfig->wrap);

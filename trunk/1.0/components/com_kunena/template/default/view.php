@@ -24,10 +24,6 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $fbConfig;
 
-// For joomla mambot support
-if ($fbConfig->jmambot) { class t{ var $text = ""; }    }
-//
-
 global $is_Moderator;
 global $acl;
 //securing form elements
@@ -939,25 +935,9 @@ if ($letPass || $is_Moderator)
                                 // Code tag: restore TABS as we had to 'hide' them from the rest of the logic
                                 $fb_message_txt = str_replace("__FBTAB__", "&#009;", $fb_message_txt);
 
-                                // Joomla Mambot Support , Thanks hacksider
-                                if ($fbConfig->jmambot)
-                                {
-                                    global $_MAMBOTS;
-                                    $row = new t();
-                                    $row->text = $fb_message_txt;
-                                    $_MAMBOTS->loadBotGroup( 'content' );
-                                    $params =& new mosParameters( '' );
-                                    $results = $_MAMBOTS->trigger( 'onPrepareContent', array( &$row, &$params, 0 ), true );
-                                    $msg_text = $row->text;
-                                }
-                                else
-                                {
-                                	$msg_text = $fb_message_txt;
-                                }
-                                // Finish Joomla Mambot Support
+                                $msg_text = CKunenaTools::prepareContent($fb_message_txt);
 
                                 $signature = $userinfo->signature;
-
                                 if ($signature)
                                 {
                                     $signature = stripslashes(smile::smileReplace($signature, 0, $fbConfig->disemoticons, $smileyList));

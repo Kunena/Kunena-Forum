@@ -783,6 +783,31 @@ class CKunenaTools {
            return $val;
         }
 
+	function &prepareContent(&$content)
+	{
+		global $fbConfig;
+		
+		// Joomla Mambot Support, Thanks hacksider
+		if ($fbConfig->jmambot)
+		{
+			$row =& new stdClass();
+			$row->text =& $content;
+			$params =& new mosParameters( '' );
+			if (CKunenaTools::isJoomla15()) {
+				$dispatcher	=& JDispatcher::getInstance();
+				JPluginHelper::importPlugin('content');
+				$results = $dispatcher->trigger('onPrepareContent', array (&
+$row, & $params, 0));
+			} else {
+				global $_MAMBOTS;
+				$_MAMBOTS->loadBotGroup( 'content' );
+				$results = $_MAMBOTS->trigger( 'onPrepareContent', array( &$row, &$params, 0 ), true );
+			}
+			$content =& $row->text;
+		}
+		return $content;
+	}
+        
 	function getAllowedForums($uid = 0, $gid = 0, &$acl) {
         	global $database;
 

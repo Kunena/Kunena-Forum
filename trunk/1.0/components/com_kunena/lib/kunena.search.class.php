@@ -445,6 +445,7 @@ class CKunenaSearch
                     $ressubject = stripslashes(smile::purify($ressubject));
                     $resmessage = stripslashes($result->message);
                     // Strip smiles and bbcode out of search results; they look ugly
+                    $resmessage = CKunenaTools::prepareContent($resmessage);
                     $resmessage = smile::purify($resmessage);
                     $resmessage = mb_substr(html_entity_decode_utf8($resmessage), 0, 300);
                     $utf8 = (mb_detect_encoding($ressubject . $resmessage . 'a', 'UTF-8,ISO-8859-1') == 'UTF-8') ? "u" : "";

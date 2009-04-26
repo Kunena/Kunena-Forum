@@ -23,15 +23,6 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 global $fbConfig;
 global $is_Moderator;
 
-// For joomla mambot support
-if ($fbConfig->jmambot)
-{
-    class t
-    {
-        var $text = "";
-    }
-}
-
 //
 //ob_start();
 $catid = (int)$catid;
@@ -1978,25 +1969,8 @@ function listThreadHistory($id, $fbConfig, $database)
                         //Long Words Wrap:
                         $fb_message_txt = smile::htmlwrap($fb_message_txt, $fbConfig->wrap);
 
-                        // Joomla Mambot Support
-                        if ($fbConfig->jmambot)
-                        {
-                            global $_MAMBOTS;
-                            $row = new t();
-                            $row->text = $fb_message_txt;
-                            $_MAMBOTS->loadBotGroup('content');
-                            $params = &new mosParameters('');
-                            $results = $_MAMBOTS->trigger('onPrepareContent', array
-                            (
-                            &$row,
-                            &$params,
-                            0
-                            ), true);
-
-                            $fb_message_txt = $row->text;
-                        }
-                        // Finish Joomla Mambot Support
-
+						$fb_message_txt = CKunenaTools::prepareContent($fb_message_txt);
+                        
                         if ($fbConfig->badwords && class_exists('Badword') && Badword::filter($fb_message_txt, $my)) {
                            	if (method_exists('Badword','flush')) {
                            		$fb_message_txt = Badword::flush($fb_message_txt, $my);

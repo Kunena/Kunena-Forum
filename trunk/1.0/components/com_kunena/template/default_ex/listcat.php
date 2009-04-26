@@ -432,27 +432,24 @@ if (count($categories[0]) > 0)
                                         // loop over subcategories to show them under
                                         if (count($forumparents) > 0)
                                         {
-                                        ?>
+											$subwidth = '';
+											if ($fbConfig->numchildcolumn) $subwidth = ' style="width: ' . floor(99 / $fbConfig->numchildcolumn) . '%"';
+
+                                        	?>
 
                                             <div class = "<?php echo $boardclass?>thead-child">
-                                                <div class = "<?php echo $boardclass?>cc-childcat-title fbs">
-                                                    <b><?php if(count($forumparents)==1) { echo _KUNENA_CHILD_BOARD; } else { echo _KUNENA_CHILD_BOARDS; } ?>:</b>
-                                                </div>
 
-                                                <table cellpadding = "0" cellspacing = "0" border = "0" class = "<?php echo $boardclass?>cc-table">
+                                                <div class = "<?php echo $boardclass?>cc-table">
+	                                                <div<?php echo $subwidth?> class = "<?php echo $boardclass?>cc-childcat-title">
+    	                                                <?php if(count($forumparents)==1) { echo _KUNENA_CHILD_BOARD; } else { echo _KUNENA_CHILD_BOARDS; } ?>:
+        	                                        </div>
                                                     <?php
                                                     //row index
                                                     $ir9 = 0;
-                                                    $num_rows = ceil(count($forumparents) / $fbConfig->numchildcolumn);
 
-                                                    //     foreach ($forumparents as $forumparent)
-                                                    for ($row_count = 0; $row_count < $num_rows; $row_count++)
-                                                    {
-                                                        echo '<tr>';
-
-                                                        for ($col_count = 0; $col_count < $fbConfig->numchildcolumn; $col_count++)
-                                                        {
-                                                            echo '<td width="' . floor(100 / $fbConfig->numchildcolumn) . '%" class="' . $boardclass . 'cc-sectiontableentry1 fbm">';
+                                                    for ($row_count = 0; $row_count < count($forumparents); $row_count++)
+                                                    {														   
+														  echo "<div{$subwidth} class=\"{$boardclass}cc-subcat fbm\">";
 
                                                             $forumparent = @$forumparents[$ir9];
 
@@ -532,14 +529,11 @@ if (count($categories[0]) > 0)
                                                                 echo CKunenaLink::GetCategoryLink('showcat', $forumparent->id, stripslashes($forumparent->name));
                                                                 echo '<span class="fb_childcount fbs">('.$forumparent->numTopics."/".$forumparent->numPosts.')</span>';
                                                             }
-                                                            echo "</td>";
+                                                            echo "</div>";
                                                             $ir9++;
-                                                        } // inner column loop
-
-                                                        echo "</tr>";
                                                     }
                                                     ?>
-                                                </table>
+                                                </div>
                                             </div>
 
                                         <?php

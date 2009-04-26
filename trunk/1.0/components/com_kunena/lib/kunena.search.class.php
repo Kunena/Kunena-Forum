@@ -64,7 +64,9 @@ class CKunenaSearch
      */
     function CKunenaSearch()
     {
-        global $fbConfig, $database, $my;
+        global $database, $my;
+
+        $fbConfig =& CKunenaConfig::getInstance();
 
         // TODO: started_by
         // TODO: active_in
@@ -345,7 +347,7 @@ class CKunenaSearch
      */
     function show()
     {
-	global $fbConfig;
+	$fbConfig =& CKunenaConfig::getInstance();
 
 	extract($this->params);
         $q = implode(" ", $this->get_searchstrings());
@@ -504,7 +506,7 @@ class CKunenaSearch
 }
 
 function KunenaSearchPagination($function, $q, $urlparams, $page, $limit, $totalpages, $maxpages) {
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
     if ($page==0) $page++;
     $startpage = ($page - floor($maxpages/2) < 1) ? 1 : $page - floor($maxpages/2);
     $endpage = $startpage + $maxpages;

@@ -21,7 +21,7 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 if (strtolower($func) == '' ){
 include (KUNENA_ABSTMPLTPATH . '/latestx.php');

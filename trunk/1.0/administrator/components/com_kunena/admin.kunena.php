@@ -24,12 +24,13 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 // Kill notices (we have many..)
 error_reporting (E_ALL ^ E_NOTICE);
 
+global $mainframe;
 include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.debug.php");
 
 // get Kunenas configuration params in
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.config.class.php");
-global $fbConfig;
-$fbConfig = new CKunenaConfig();
+
+$fbConfig =& CKunenaConfig::getInstance();
 $fbConfig->load();
 
 // Class structure should be used after this and all the common task should be moved to this class
@@ -43,6 +44,31 @@ if (file_exists($mainframe->getCfg('absolute_path') . '/administrator/components
 else {
     include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.english.php');
 }
+
+$kn_tables = CKunenaTables::getInstance();
+if ($kn_tables->installed() === false) {
+	if (CKunenaTools::isJoomla15()) {
+		$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_ERROR, 'error');
+		$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_OFFLINE, 'notice');
+		$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_REASONS);
+		$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_1);
+		$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_2);
+		$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_3);
+		$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_SUPPORT.' <a href="http://www.kunena.com">www.kunena.com</a>');
+	}
+	else
+	{
+		echo '<div style="background: #E6C0C0; border: #DE7A7B 3px solid;"><h2>'._KUNENA_ERROR_INCOMPLETE_ERROR.'</h2>'
+			.'<p style="font-weight: bold; color: #CC0000;">'._KUNENA_ERROR_INCOMPLETE_OFFLINE.'</p>'
+			.'<p>'._KUNENA_ERROR_INCOMPLETE_REASONS.'</p>'
+			.'<p>'._KUNENA_ERROR_INCOMPLETE_1.'</p>'
+			.'<p>'._KUNENA_ERROR_INCOMPLETE_2.'</p>'
+			.'<p>'._KUNENA_ERROR_INCOMPLETE_3.'</p>'
+			.'<p>'._KUNENA_ERROR_INCOMPLETE_SUPPORT.' <a href="http://www.kunena.com">www.kunena.com</a></p></div>';
+	}
+}
+else
+{
 
 $cid = mosGetParam($_REQUEST, 'cid', array ( 0 ));
 
@@ -310,6 +336,8 @@ switch ($task)
         break;
 }
 
+} // ENDIF: is installed
+
 html_Kunena::showFbFooter();
 //function showAdministration( $option,$joomla1_5 ) {
 function showAdministration($option)
@@ -553,7 +581,7 @@ function showConfig($option)
     global $mosConfig_lang;
     global $mosConfig_admin_template;
     global $mainframe;
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
 
     $lists = array ();
 
@@ -752,10 +780,7 @@ function showConfig($option)
 
 function saveConfig($option)
 {
-	global $fbConfig;
-
-	$fbConfig->backup();
-	$fbConfig->remove();
+	$fbConfig =& CKunenaConfig::getInstance();
 
 	foreach ($_POST as $postsetting => $postvalue)
     {
@@ -790,7 +815,9 @@ function saveConfig($option)
         }
     }
 
-    $fbConfig->create();
+	$fbConfig->backup();
+	$fbConfig->remove();
+	$fbConfig->create();
 
     // Legacy support
     // To enable legacy 3rd party modules to 'see' our config
@@ -854,7 +881,7 @@ function showInstructions($database, $option, $mosConfig_lang) {
 //===============================
 function showCss($option)
 {
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
     $file = "../components/com_kunena/template/" . $fbConfig->template . "/kunena.forum.css";
     @chmod($file, 0766);
     $permission = is_writable($file);
@@ -1708,7 +1735,7 @@ function deletesmiley($option, $cid)
 function smileypath()
 {
     global $mainframe, $mosConfig_lang;
-	global $fbConfig;
+	$fbConfig =& CKunenaConfig::getInstance();
 
     if (is_dir($mainframe->getCfg('absolute_path') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/emoticons')) {
         $smiley_live_path = $mainframe->getCfg('live_site') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/emoticons';
@@ -1788,7 +1815,7 @@ function showRanks($option)
 function rankpath()
 {
     global $mainframe, $mosConfig_lang;
-	global $fbConfig;
+	$fbConfig =& CKunenaConfig::getInstance();
 
     if (is_dir($mainframe->getCfg('absolute_path') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/ranks')) {
         $rank_live_path = $mainframe->getCfg('live_site') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/ranks';

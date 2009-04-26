@@ -59,7 +59,9 @@ class fbpdfwrapper {
 function dofreePDF($database)
 {
     global $mosConfig_sitename, $my, $aro_group, $acl;
-    global $fbConfig, $fbSession;
+    global $fbSession;
+
+    $fbConfig =& CKunenaConfig::getInstance();
     require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
     $is_Mod = 0;
 

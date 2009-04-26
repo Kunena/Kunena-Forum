@@ -68,7 +68,9 @@ class CKunenaCBProfile {
 	
 	function showProfile($userid, &$msg_params) 
 	{
-		global $_PLUGINS, $fbConfig;
+		global $_PLUGINS;
+
+		$fbConfig =& CKunenaConfig::getInstance();
 		$userprofile = new CKunenaUserprofile($userid);
 		$_PLUGINS->loadPluginGroup('user');		
 		return implode( '', $_PLUGINS->trigger( 'forumSideProfile', array( 'kunena', null, $userid, 
@@ -82,7 +84,9 @@ class CKunenaCBProfile {
 	**/
 	function trigger($event, &$params)
 	{
-		global $_PLUGINS, $fbConfig;
+		global $_PLUGINS;
+
+		$fbConfig =& CKunenaConfig::getInstance();
 		$params['config'] =& $fbConfig;
 		$_PLUGINS->loadPluginGroup('user');
 		$_PLUGINS->trigger( 'kunenaIntegration', array( $event, &$fbConfig, &$params ));

@@ -44,6 +44,7 @@ Kunena 1.0.10
 # [#16085] Fix mambot support in Joomla! 1.5
 # [#15955] Partial fix for oversized words and linked images in signature
 ! Changes needed for default_ex CSS
+# [#16105] Check if installation has failed and have better error messages
 
 22-April-2009 Matias
 # [#16082] Search: umlauts and other special chars in redirects and URL's are broken

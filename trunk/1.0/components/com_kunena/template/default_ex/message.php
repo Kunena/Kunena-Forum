@@ -23,7 +23,7 @@
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $my, $database;
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 unset($user);
 $database->setQuery("SELECT email, name from #__users WHERE `id`={$my->id}");
 $database->loadObject($user);

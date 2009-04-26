@@ -20,7 +20,7 @@
 **/
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 global $is_Moderator;
 
 //
@@ -1722,7 +1722,7 @@ $catName = $objCatInfo->name;
  */
 function hasPostPermission($database, $catid, $replyto, $userid, $pubwrite, $ismod)
 {
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
 
     if ($replyto != 0)
     {

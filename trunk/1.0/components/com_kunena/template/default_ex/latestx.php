@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 function KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages) {
     $startpage = ($page - floor($maxpages/2) < 1) ? 1 : $page - floor($maxpages/2);

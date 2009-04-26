@@ -21,7 +21,7 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
         // used for spoof hardening
         $validate = josSpoofValue();
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">

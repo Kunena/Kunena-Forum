@@ -16,7 +16,10 @@
 
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $fbConfig, $acl;
+global $acl;
+
+
+$fbConfig =& CKunenaConfig::getInstance();
 
 if ($fbConfig->fb_profile == 'cb') {
         $userid = mosGetParam($_GET, 'userid', null);

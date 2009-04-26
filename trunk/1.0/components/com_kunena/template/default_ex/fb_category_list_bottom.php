@@ -21,7 +21,7 @@
 
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 ?>
 	<tr>
 		<td class="fb_list_markallcatsread">

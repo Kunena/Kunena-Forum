@@ -17,7 +17,7 @@
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $mainframe;
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 global $is_Moderator;
 
 // Team credits page is not translated

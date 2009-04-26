@@ -44,7 +44,7 @@ switch ($do)
 
 function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
     global $database, $my;
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
 
     if (!$my->id) {
         mosNotAuth();
@@ -121,7 +121,9 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
 }
 
 function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins) {
-    global $database, $mainframe, $fbConfig;
+    global $database, $mainframe;
+
+    $fbConfig =& CKunenaConfig::getInstance();
 
     //send report to category moderators
     if (count($mods)>0) {
@@ -143,7 +145,9 @@ function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins)
     }
 
 function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
-    global $database, $fbConfig;
+    global $database;
+
+    $fbConfig =& CKunenaConfig::getInstance();
 
     switch ($fbConfig->pm_component)
     {
@@ -181,7 +185,9 @@ function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
     }
 
 function ReportForm($msg_id, $catid) {
-    global $my, $fbConfig;
+    global $my;
+
+    $fbConfig =& CKunenaConfig::getInstance();
 
     $redirect = sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id . '&amp;Itemid=' . KUNENA_COMPONENT_ITEMID) . '#' . $msg_id;
 

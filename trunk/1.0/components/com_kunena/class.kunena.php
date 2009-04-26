@@ -37,7 +37,7 @@ $Itemid = intval(mosGetParam($_REQUEST, 'Itemid'));
 //check if we have all the itemid sets. if so, then no need for DB call
 
 global $fbSession;
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 if (!defined("KUNENA_COMPONENT_ITEMID")) {
         $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_kunena' AND published = 1");
@@ -356,13 +356,13 @@ class CKunenaTools {
 /*
     function fbGetCurrentTime () {
     	// tells current FB internal representing time
-        global $fbConfig;
+        $fbConfig =& CKunenaConfig::getInstance();
         return time() + ($fbConfig->board_ofset * 3600);
     }
 */
     function fbGetInternalTime ($time=null) {
     	// tells internal FB representing time from UTC $time
-        global $fbConfig;
+        $fbConfig =& CKunenaConfig::getInstance();
         // Prevent zeroes
         if($time===0) {
           return 0;
@@ -376,7 +376,7 @@ class CKunenaTools {
     function fbGetShowTime ($time=null, $space='FB') {
     	// converts internal (FB)|UTC representing time to display time
     	// could consider user properties (zones) for future
-        global $fbConfig;
+        $fbConfig =& CKunenaConfig::getInstance();
         // Prevent zeroes
         if($time===0) {
           return 0;
@@ -454,7 +454,7 @@ class CKunenaTools {
     function updateNameInfo()
     {
         global $database;
-        global $fbConfig;
+        $fbConfig =& CKunenaConfig::getInstance();
 
         $fb_queryName = $fbConfig->username ? "username" : "name";
 
@@ -785,7 +785,7 @@ class CKunenaTools {
 
 	function &prepareContent(&$content)
 	{
-		global $fbConfig;
+		$fbConfig =& CKunenaConfig::getInstance();
 		
 		// Joomla Mambot Support, Thanks hacksider
 		if ($fbConfig->jmambot)

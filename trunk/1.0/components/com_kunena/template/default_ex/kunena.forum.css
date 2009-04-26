@@ -738,7 +738,8 @@ span.msgkarma {
 }
 div.msgtext {
 	width: 100%;
-	overflow:hidden;
+	overflow: auto;
+	word-wrap: break-word;       /* Internet Explorer 5.5+ */
 	border-top:1px solid #ddd;
 	padding:10px 0 0 0;
 	margin-top:5px;
@@ -809,17 +810,17 @@ span.fb_message_informMarkUp {
 	font-size:xx-small;
 	color:#666666;
 }
-td.msgsignature {
-	width: 100%;
-}
-td.msgsignature div {
+div.msgsignature {
 	text-align: left;
-	overflow: hidden;
+	word-wrap: break-word;       /* Internet Explorer 5.5+ */
 	color:#999;
 	font-size:x-small;
 	padding: 5px 5px;
 }
 div.fb_message_buttons_cover {
+	float: right;
+}
+div.fb_message_buttons_row {
 	text-align:right;
 	height: 15px;
 	line-height: 15px;

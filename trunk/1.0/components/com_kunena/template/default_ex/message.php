@@ -325,16 +325,8 @@ if ($fbConfig->fb_profile == 'cb')
 				echo '<span class="fb_message_informMarkUp">'.CKunenaLink::GetMessageIPLink($msg_ip).'</span>';
                             } ?>
 		</div>
-<table width="100%" cellpadding="0" cellspacing="0"><tr>
-<?php
-if ($msg_signature) {
-	echo '<td class="msgsignature"><div>';
-	echo $msg_signature;
-	echo '</div></td>';
-}
-?>
-	<td valign="bottom">
-	<div class="fb_message_buttons_cover">
+		<div class="fb_message_buttons_cover">
+			<div class="fb_message_buttons_row">
                 <?php
                 //we should only show the Quick Reply section to registered users. otherwise we are missing too much information!!
                 /*    onClick="expandcontent(this, 'sc<?php echo $msg_id;?>')" */
@@ -357,7 +349,7 @@ if ($msg_signature) {
                         echo " " . $msg_reply;
                         echo " " . $msg_quote;
 
-			if ($is_Moderator) echo ' </div><div class="fb_message_buttons_cover">';
+			if ($is_Moderator) echo ' </div><div class="fb_message_buttons_row">';
 
                         if ($msg_merge) {
                              echo " " . $msg_merge;
@@ -416,8 +408,15 @@ if ($msg_signature) {
                     }
                 }
                 ?>
+			</div>
 		</div>
-</td></tr></table>
+<?php
+if ($msg_signature) {
+	echo '<div class="msgsignature">';
+	echo $msg_signature;
+	echo '</div>';
+}
+?>
 
             </td>
             <td class = "fb-msgview-left-b">&nbsp;

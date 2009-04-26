@@ -93,7 +93,8 @@ function fbGetPreview(content, sitemid) {
     var templatePath = document.postform.templatePath.value;
     var content = encodeURIComponent(content);
     
-    jQuery.ajax({url:"index2.php",
+    var kunenaPath = document.postform.kunenaPath.value;
+    jQuery.ajax({url:kunenaPath,
     data : { msgpreview : content, Itemid : sitemid , option: "com_kunena" , func: "getpreview" , no_html: 1},
     type: "POST",
     beforeSend : function (req){

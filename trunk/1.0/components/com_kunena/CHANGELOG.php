@@ -39,6 +39,7 @@ Kunena 1.0.10
 # [#15640] Typos and misspellings in admin panel
 # [#16140] Subforum list in Category View takes too much space
 # [#15956] Fix missing /div tags in post.php
+# [#16069] Editor Preview does not work with sh404SEF
 
 22-April-2009 Matias
 # [#16082] Search: umlauts and other special chars in redirects and URL's are broken

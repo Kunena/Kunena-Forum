@@ -394,14 +394,14 @@ if ($letPass || $is_Moderator)
 	if ($is_Moderator || isset($thread_reply) || isset($thread_subscribe) || isset($thread_favorite))
 	{
 	    echo '<td class="fb_list_actions_forum">';
-	    echo '<div class="fb_message_buttons_cover" style="text-align: center;">';
+	    echo '<div class="fb_message_buttons_row" style="text-align: center;">';
 	    if (isset($thread_reply)) echo $thread_reply;
 	    if (isset($thread_subscribe)) echo ' '.$thread_subscribe;
 	    if (isset($thread_favorite)) echo ' '.$thread_favorite;
 	    echo '</div>';
             if ($is_Moderator)
             {
-		echo '<div class="fb_message_buttons_cover" style="text-align: center;">';
+		echo '<div class="fb_message_buttons_row" style="text-align: center;">';
 		echo $thread_delete;
 		echo ' '.$thread_move;
 		echo ' '.$thread_sticky;
@@ -413,13 +413,13 @@ if ($letPass || $is_Moderator)
 	echo '<td class="fb_list_actions_forum" width="100%">';
         if (isset($thread_new))
         {
-	    echo '<div class="fb_message_buttons_cover" style="text-align: left;">';
+	    echo '<div class="fb_message_buttons_row" style="text-align: left;">';
 	    echo $thread_new;
 	    echo '</div>';
         }
         if (isset($thread_merge))
         {
-	    echo '<div class="fb_message_buttons_cover" style="text-align: left;">';
+	    echo '<div class="fb_message_buttons_row" style="text-align: left;">';
 	    echo $thread_merge;
 	    echo '</div>';
 	}
@@ -1211,14 +1211,14 @@ if ($letPass || $is_Moderator)
 	if ($is_Moderator || isset($thread_reply) || isset($thread_subscribe) || isset($thread_favorite))
 	{
 	    echo '<td class="fb_list_actions_forum">';
-	    echo '<div class="fb_message_buttons_cover" style="text-align: center;">';
+	    echo '<div class="fb_message_buttons_row" style="text-align: center;">';
 	    if (isset($thread_reply)) echo $thread_reply;
 	    if (isset($thread_subscribe)) echo ' '.$thread_subscribe;
 	    if (isset($thread_favorite)) echo ' '.$thread_favorite;
 	    echo '</div>';
             if ($is_Moderator)
             {
-		echo '<div class="fb_message_buttons_cover" style="text-align: center;">';
+		echo '<div class="fb_message_buttons_row" style="text-align: center;">';
 		echo $thread_delete;
 		echo ' '.$thread_move;
 		echo ' '.$thread_sticky;
@@ -1230,13 +1230,13 @@ if ($letPass || $is_Moderator)
 	echo '<td class="fb_list_actions_forum" width="100%">';
         if (isset($thread_new))
         {
-	    echo '<div class="fb_message_buttons_cover" style="text-align: left;">';
+	    echo '<div class="fb_message_buttons_row" style="text-align: left;">';
 	    echo $thread_new;
 	    echo '</div>';
         }
         if (isset($thread_merge))
         {
-	    echo '<div class="fb_message_buttons_cover" style="text-align: left;">';
+	    echo '<div class="fb_message_buttons_row" style="text-align: left;">';
 	    echo $thread_merge;
 	    echo '</div>';
 	}

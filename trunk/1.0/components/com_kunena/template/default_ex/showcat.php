@@ -294,7 +294,7 @@ if ($letPass || $is_Moderator)
 
 		if (isset($forum_new) || isset($forum_markread))
 		{
-	        echo '<div class="fb_message_buttons_cover" style="text-align: left;">';
+	        echo '<div class="fb_message_buttons_row" style="text-align: left;">';
 	        echo $forum_new;
 	        echo ' '.$forum_markread;
 	        echo '</div>';
@@ -381,7 +381,7 @@ if ($letPass || $is_Moderator)
                 <?php
 		if (isset($forum_new) || isset($forum_markread))
 		{
-	        echo '<div class="fb_message_buttons_cover" style="text-align: left;">';
+	        echo '<div class="fb_message_buttons_row" style="text-align: left;">';
 	        echo $forum_new;
 	        echo ' '.$forum_markread;
 	        echo '</div>';

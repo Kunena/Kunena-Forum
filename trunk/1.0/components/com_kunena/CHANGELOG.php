@@ -36,6 +36,7 @@ Kunena 1.0.10
 # [#16117] Search: html_entity_decode() throws warning in some environments
 # [#16074] Display real names in list of moderators when Username = no
 # [#16096] Subcategories in Forum View do not obey ACL rules
+# [#15640] Typos and misspellings in admin panel
 
 22-April-2009 Matias
 # [#16082] Search: umlauts and other special chars in redirects and URL's are broken

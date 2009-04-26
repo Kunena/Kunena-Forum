@@ -108,7 +108,6 @@ class CKunenaSearch
         	die();
 	}
 
-        $q = $this->utf8_urldecode($q);
 	if ($q == _GEN_SEARCH_BOX) $q = '';
 	$this->searchword = $q;
 	$q = $database->getEscaped($q);
@@ -277,10 +276,6 @@ class CKunenaSearch
     }
     function get_searchusername() {
         return $this->str_kunena_username;
-    }
-    function utf8_urldecode($str) {
-        $str = preg_replace("/%u([0-9a-f]{3,4})/i","\1;",urldecode($str));
-        return html_entity_decode($str,ENT_NOQUOTES,'UTF-8' );
     }
     /** get limit (int) **/
     function get_limit() {

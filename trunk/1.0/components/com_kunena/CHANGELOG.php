@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.10
 
+26-April-2009 Matias
+# [#16117] Search: html_entity_decode() throws warning in some environments
+
 22-April-2009 Matias
 # [#16082] Search: umlauts and other special chars in redirects and URL's are broken
 # [#16080] Advanced Search: when there are selected cats, childforums will not be searched

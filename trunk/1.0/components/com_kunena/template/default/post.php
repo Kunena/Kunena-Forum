@@ -474,21 +474,21 @@ $catName = $objCatInfo->name;
                                             $database->setQuery("INSERT INTO #__fb_subscriptions (thread,userid) VALUES ('$fb_thread','{$my->id}')");
 
                                             if ($database->query()) {
-                                                echo '<br /><br /><div align="center">' . _POST_SUBSCRIBED_TOPIC . '<br /><br />';
+                                                echo '<br /><br /><div align="center">' . _POST_SUBSCRIBED_TOPIC . '</div><br /><br />';
                                             }
                                             else {
-                                                echo '<br /><br /><div align="center">' . _POST_NO_SUBSCRIBED_TOPIC . '<br /><br />';
+                                                echo '<br /><br /><div align="center">' . _POST_NO_SUBSCRIBED_TOPIC . '</div><br /><br />';
                                             }
                                         }
 
                                         if ($holdPost == 1)
                                         {
-                                            echo '<br /><br /><div align="center">' . _POST_SUCCES_REVIEW . '<br /><br />';
+                                            echo '<br /><br /><div align="center">' . _POST_SUCCES_REVIEW . '</div><br /><br />';
                                             echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $pid, $fbConfig->messages_per_page);
                                         }
                                         else
                                         {
-                                            echo '<br /><br /><div align="center">' . _POST_SUCCESS_POSTED . '<br /><br />';
+                                            echo '<br /><br /><div align="center">' . _POST_SUCCESS_POSTED . '</div><br /><br />';
                                             echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $pid, $fbConfig->messages_per_page);
                                         }
                                     }
@@ -500,7 +500,7 @@ $catName = $objCatInfo->name;
                                 // We get here in case we have detected a double post
                                 // We did not do any further processing and just display the success message
                                 {
-                                    echo '<br /><br /><div align="center">' . _POST_DUPLICATE_IGNORED . '<br /><br />';
+                                    echo '<br /><br /><div align="center">' . _POST_DUPLICATE_IGNORED . '</div><br /><br />';
                                     echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $pid, $fbConfig->messages_per_page);
                                 }
                             }

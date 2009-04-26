@@ -1294,8 +1294,11 @@ if ($letPass || $is_Moderator)
           <?php
                             echo '' . _GEN_MODERATORS . ": ";
 
-                            foreach ($modslist as $mod) {
-                                echo CKunenaLink::GetProfileLink($fbConfig, $mod->userid, $mod->username).'&nbsp; ';
+                          	$mod_cnt = 0;
+                           	foreach ($modslist as $mod) {
+				            	if ($mod_cnt) echo ', '; 
+			                	$mod_cnt++;
+                                echo CKunenaLink::GetProfileLink($fbConfig, $mod->userid, ($fbConfig->username ? $mod->username : $mod->name));
                             } ?>
         </div>
         <?php  } ?>

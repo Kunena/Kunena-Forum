@@ -521,9 +521,11 @@ if (count($categories[0]) > 0)
 <?php echo _GEN_MODERATORS; ?>:
 
                                                 <?php
+												$mod_cnt = 0;
                                                 foreach ($modslist as $mod) {
-                                                 echo '&nbsp;'.CKunenaLink::GetProfileLink($fbConfig, $mod->userid, $mod->username).'&nbsp; ';
-
+					                               	if ($mod_cnt) echo ', '; 
+					                               	$mod_cnt++;
+													echo CKunenaLink::GetProfileLink($fbConfig, $mod->userid, ($fbConfig->username ? $mod->username : $mod->name));
                                                 }
                                                 ?>
                                             </div>

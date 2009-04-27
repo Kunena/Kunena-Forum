@@ -23,7 +23,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $my = &JFactory::getUser();
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 unset($user);
 $database = &JFactory::getDBO();
 $database->setQuery("SELECT email, name from #__users WHERE `id`={$my->id}");
@@ -326,16 +326,8 @@ if ($fbConfig->fb_profile == 'cb')
 				echo '<span class="fb_message_informMarkUp">'.CKunenaLink::GetMessageIPLink($msg_ip).'</span>';
                             } ?>
 		</div>
-<table width="100%" cellpadding="0" cellspacing="0"><tr>
-<?php
-if ($msg_signature) {
-	echo '<td class="msgsignature"><div>';
-	echo $msg_signature;
-	echo '</div></td>';
-}
-?>
-	<td valign="bottom">
-	<div class="fb_message_buttons_cover">
+		<div class="fb_message_buttons_cover">
+			<div class="fb_message_buttons_row">
                 <?php
                 //we should only show the Quick Reply section to registered users. otherwise we are missing too much information!!
                 /*    onClick="expandcontent(this, 'sc<?php echo $msg_id;?>')" */
@@ -358,7 +350,7 @@ if ($msg_signature) {
                         echo " " . $msg_reply;
                         echo " " . $msg_quote;
 
-			if ($is_Moderator) echo ' </div><div class="fb_message_buttons_cover">';
+			if ($is_Moderator) echo ' </div><div class="fb_message_buttons_row">';
 
                         if ($msg_merge) {
                              echo " " . $msg_merge;
@@ -417,8 +409,15 @@ if ($msg_signature) {
                     }
                 }
                 ?>
+			</div>
 		</div>
-</td></tr></table>
+<?php
+if ($msg_signature) {
+	echo '<div class="msgsignature">';
+	echo $msg_signature;
+	echo '</div>';
+}
+?>
 
             </td>
             <td class = "fb-msgview-left-b">&nbsp;
@@ -429,11 +428,22 @@ if ($msg_signature) {
     </tbody>
 </table>
 <!-- Begin: Message Module Positions -->
-<jdoc:exists type="modules" condition="kunena_msg_<?php echo $mmm; ?>" />
-	<div class = "kunena_msg_<?php echo $mmm; ?>">
-		<jdoc:include type="modules" name="kunena_msg_<?php echo $mmm; ?>" />
-	</div>
-</jdoc:exists>
+<?php
+if (mosCountModules('kunena_msg_'.$mmm))
+{
+?>
+    <div class = "kunena_msg_<?php echo $mmm; ?>">
+        <?php
+	        $document	= &JFactory::getDocument();
+	        $renderer	= $document->loadRenderer('modules');
+	        $options	= array('style' => 'xhtml');
+	        $position	= 'kunena_msg_'.$mmm;
+	        echo $renderer->render($position, $options, null);
+        ?>
+    </div>
+<?php
+}
+?>
 <!-- Finish: Message Module Positions -->
 <?php
 // --------------------------------------------------------------

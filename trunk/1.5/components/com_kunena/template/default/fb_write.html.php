@@ -21,7 +21,7 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 //Some initial thingies needed anyway:
 $htmlText = stripslashes($htmlText);
 include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
@@ -293,6 +293,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 </div>
 </div>
 <input type="hidden" value="<?php echo KUNENA_DIRECTURL . '/template/default';?>" name="templatePath" />
+<input type="hidden" value="<?php echo JRoute::_(KUNENA_LIVEURLREL);?>" name="kunenaPath" />
 </form>
 
 </td>

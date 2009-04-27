@@ -21,7 +21,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 if (strtolower($func) == '' ){
 include (KUNENA_ABSTMPLTPATH . '/latestx.php');
@@ -101,14 +101,24 @@ if ($fbConfig->showannouncement > 0)
 // (JJ) FINISH: ANNOUNCEMENT BOX
 
 // load module
+
+if (mosCountModules('kunena_announcement')||mosCountModules('kna_ancmt'))
+{
 ?>
 
-<jdoc:exists type="modules" condition="kunena_announcement" />
-	<div class = "fb-fb_2">
-		<jdoc:include type="modules" name="kunena_announcement" />
-	</div>
-</jdoc:exists>
+    <div class = "fb-fb_2">
+        <?php
+        	$document	= &JFactory::getDocument();
+        	$renderer	= $document->loadRenderer('modules');
+        	$options	= array('style' => 'xhtml');
+        	$position	= 'kunena_announcement';
+        	echo $renderer->render($position, $options, null);
+        ?>
+    </div>
 
+<?php
+}
+?>
 <!-- B: Pathway -->
 <?php
 if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
@@ -245,6 +255,11 @@ if (count($categories[0]) > 0)
                                 $database->setQuery("SELECT id, name, numTopics, numPosts from #__fb_categories WHERE parent='$singlerow->id' AND published=1 ORDER BY ordering");
                                 $forumparents = $database->loadObjectList();
                                 	check_dberror("Unable to load categories.");
+
+								foreach ($forumparents as $childnum=>$childforum)
+								{
+									if (!in_array($childforum->id, $allow_forum)) unset ($forumparents[$childnum]);
+								}
 
                                 if ($my->id)
                                 {
@@ -403,27 +418,24 @@ if (count($categories[0]) > 0)
                                         // loop over subcategories to show them under
                                         if (count($forumparents) > 0)
                                         {
-                                        ?>
+											$subwidth = '';
+											if ($fbConfig->numchildcolumn) $subwidth = ' style="width: ' . floor(99 / $fbConfig->numchildcolumn) . '%"';
+
+                                        	?>
 
                                             <div class = "<?php echo $boardclass?>thead-child">
-                                                <div class = "<?php echo $boardclass?>cc-childcat-title fbs">
-                                                    <b><?php if(count($forumparents)==1) { echo _KUNENA_CHILD_BOARD; } else { echo _KUNENA_CHILD_BOARDS; } ?>:</b>
-                                                </div>
 
-                                                <table cellpadding = "0" cellspacing = "0" border = "0" class = "<?php echo $boardclass?>cc-table">
+                                                <div class = "<?php echo $boardclass?>cc-table">
+	                                                <div<?php echo $subwidth?> class = "<?php echo $boardclass?>cc-childcat-title">
+    	                                                <?php if(count($forumparents)==1) { echo _KUNENA_CHILD_BOARD; } else { echo _KUNENA_CHILD_BOARDS; } ?>:
+        	                                        </div>
                                                     <?php
                                                     //row index
                                                     $ir9 = 0;
-                                                    $num_rows = ceil(count($forumparents) / $fbConfig->numchildcolumn);
 
-                                                    //     foreach ($forumparents as $forumparent)
-                                                    for ($row_count = 0; $row_count < $num_rows; $row_count++)
-                                                    {
-                                                        echo '<tr>';
-
-                                                        for ($col_count = 0; $col_count < $fbConfig->numchildcolumn; $col_count++)
-                                                        {
-                                                            echo '<td width="' . floor(100 / $fbConfig->numchildcolumn) . '%" class="' . $boardclass . 'cc-sectiontableentry1 fbm">';
+                                                    for ($row_count = 0; $row_count < count($forumparents); $row_count++)
+                                                    {														   
+														  echo "<div{$subwidth} class=\"{$boardclass}cc-subcat fbm\">";
 
                                                             $forumparent = @$forumparents[$ir9];
 
@@ -500,14 +512,11 @@ if (count($categories[0]) > 0)
                                                                 echo CKunenaLink::GetCategoryLink('showcat', $forumparent->id, stripslashes($forumparent->name));
                                                                 echo '<span class="fb_childcount fbs">('.$forumparent->numTopics."/".$forumparent->numPosts.')</span>';
                                                             }
-                                                            echo "</td>";
+                                                            echo "</div>";
                                                             $ir9++;
-                                                        } // inner column loop
-
-                                                        echo "</tr>";
                                                     }
                                                     ?>
-                                                </table>
+                                                </div>
                                             </div>
 
                                         <?php
@@ -527,9 +536,11 @@ if (count($categories[0]) > 0)
 <?php echo _GEN_MODERATORS; ?>:
 
                                                 <?php
+                                                $mod_cnt = 0;
                                                 foreach ($modslist as $mod) {
-                                                 echo '&nbsp;'.CKunenaLink::GetProfileLink($fbConfig, $mod->userid, $mod->username).'&nbsp; ';
-
+					                               	if ($mod_cnt) echo ', '; 
+					                               	$mod_cnt++;
+													echo CKunenaLink::GetProfileLink($fbConfig, $mod->userid, ($fbConfig->username ? $mod->username : $mod->name));
                                                 }
                                                 ?>
                                             </div>

@@ -21,7 +21,7 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 $database = &JFactory::getDBO();
 // $my = &JFactory::getUser();
 ?>
@@ -30,7 +30,14 @@ $database = &JFactory::getDBO();
 //    show forums within the categories
 $database->setQuery("SELECT id, name, locked,review, pub_access, pub_recurse, admin_access, admin_recurse FROM #__fb_categories WHERE parent='$catid'  and published='1' order by ordering");
 $rows = $database->loadObjectList();
-	check_dberror("Unable to load categories.");
+check_dberror("Unable to load categories.");
+
+$allow_forum = ($fbSession->allowed != '')?explode(',', $fbSession->allowed):array();
+foreach ($rows as $rownum=>$row)
+{
+	if (!in_array($row->id, $allow_forum)) unset ($rows[$rownum]);
+}
+
 $tabclass = array
 (
     "sectiontableentry1",
@@ -60,9 +67,12 @@ else
                         ?>
 
                         <?php
-                        if ($objCatInfo->description != "") {
-                            echo '' . stripslashes($objCatInfo->description) . '';
-                        }
+						if ($objCatInfo->description != "") {
+							$tmpforumdesc = stripslashes(smile::smileReplace($objCatInfo->description, 0, $fbConfig->disemoticons, $smileyList));
+							$tmpforumdesc = nl2br($tmpforumdesc);
+							$tmpforumdesc = smile::htmlwrap($tmpforumdesc, $fbConfig->wrap);
+							echo $tmpforumdesc;
+						}
                         ?>
                     </div>
 
@@ -89,15 +99,9 @@ else
             <?php
             foreach ($rows as $singlerow)
             {
-                $obj_fb_cat = new jbCategory($database, $singlerow->id);
-                $is_Mod = fb_has_moderator_permission($database, $obj_fb_cat, $my->id, $is_admin);
-                //Do user identification based upon the ACL; but don't bother for moderators
-                $letPass = 0;
+                $letPass = 1;
 
-                if (!$is_Mod)
-                    $letPass = fb_has_read_permission($obj_fb_cat, $allow_forum, $aro_group->group_id, $acl);
-
-                if ($letPass || $is_Mod)
+                if ($letPass)
                 {
                     //    $k=for alternating row colours:
                     $k = 1 - $k;
@@ -273,7 +277,10 @@ else
                     echo '</div>';
 
                     if ($forumDesc != "") {
-                        echo '<div class="' . $boardclass . 'thead-desc  fbm">' . $forumDesc . ' </div>';
+                        $tmpforumdesc = stripslashes(smile::smileReplace($forumDesc, 0, $fbConfig->disemoticons, $smileyList));
+                        $tmpforumdesc = nl2br($tmpforumdesc);
+                        $tmpforumdesc = smile::htmlwrap($tmpforumdesc, $fbConfig->wrap);
+                        echo '<div class="' . $boardclass . 'thead-desc  fbm">' . $tmpforumdesc . ' </div>';
                     }
 
                     if (count($forumparents) > 0)
@@ -376,8 +383,11 @@ else
                     {
                         echo '<div class="' . $boardclass . 'thead-moderators  fbs">' . _GEN_MODERATORS . ": ";
 
-                        foreach ($modslist as $mod) {
-                             echo '&nbsp;' .CKunenaLink::GetProfileLink($fbConfig, $mod->userid, $fbConfig->username ? $mod->username : $mod->name, 'nofollow').'&nbsp; ';
+						$mod_cnt = 0;
+						foreach ($modslist as $mod) {
+							if ($mod_cnt) echo ', '; 
+							$mod_cnt++;
+							echo CKunenaLink::GetProfileLink($fbConfig, $mod->userid, ($fbConfig->username ? $mod->username : $mod->name));
                         }
 
                         echo '</div>';

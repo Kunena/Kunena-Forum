@@ -22,7 +22,7 @@
 
 <script language = "JavaScript" type = "text/javascript">
 <?php
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 ?>
 <!--
 // bbCode control by

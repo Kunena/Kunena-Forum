@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 $forumurl = JRoute::_(KUNENA_LIVEURLREL);
 $statslink = JRoute::_(KUNENA_LIVEURLREL.'&amp;func=stats');
 

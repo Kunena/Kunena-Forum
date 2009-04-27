@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 require_once(KUNENA_PATH_LIB .DS. 'kunena.helpers.php');
 
 $attachimage = JRequest::getVar('attachimage', NULL, 'FILES', 'array');
@@ -95,6 +95,7 @@ if ($GLOBALS['KUNENA_rc'])
 if ($GLOBALS['KUNENA_rc'])
 {
     // file is OK, move it to the proper location
+    jimport('joomla.filesystem.file');
     JFile::upload($attachimage['tmp_name'], $imageLocation);
 }
 

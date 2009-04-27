@@ -21,7 +21,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
         // used for spoof hardening
         $validate = JUtility::getToken();
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">

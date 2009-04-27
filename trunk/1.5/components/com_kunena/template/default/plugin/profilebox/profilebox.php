@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 $my = &JFactory::getUser();
 $database = &JFactory::getDBO();
 //first we gather some information about this person
@@ -129,20 +129,31 @@ else {
 }
 
 if ($is_editor) {
-$annlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show'.KUNENA_COMPONENT_ITEMID_SUFFIX;
-
 ?>
-| <a href = "<?php echo $annlink;?>"><?php echo _ANN_ANNOUNCEMENTS; ?> </a>
+| <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'show');?>"><?php echo _ANN_ANNOUNCEMENTS; ?> </a>
 <?php } ?>
 
 </td>
-<jdoc:exists type="modules" condition="kunena_profilebox">
-	<td>
-		<div class = "fb_profilebox_modul">
-			<jdoc:include type="modules" name="kunena_profilebox" />
-		</div>
-	</td>
-</jdoc:exists>
+			<?php
+			if (mosCountModules('kunena_profilebox'))
+			{
+			?>
+
+			<td>
+				<div class = "fb_profilebox_modul">
+				<?php
+					$document	= &JFactory::getDocument();
+					$renderer	= $document->loadRenderer('modules');
+					$options	= array('style' => 'xhtml');
+					$position	= 'kunena_profilebox';
+					echo $renderer->render($position, $options, null);
+				?>
+				</div>
+			</td>
+			<?php
+			}
+			?>
+
             </tr>
         </tbody>
     </table>
@@ -169,13 +180,27 @@ else
                 <a href = "<?php echo $lostpasslink;?>"><?php echo _PROFILEBOX_LOST_PASSWORD; ?></a>
 
 </td>
-<jdoc:exists type="modules" condition="kunena_profilebox">
-	<td>
-		<div class = "fb_profilebox_modul">
-			<jdoc:include type="modules" name="kunena_profilebox" />
-		</div>
-	</td>
-</jdoc:exists>
+			<?php
+			if (mosCountModules('kunena_profilebox'))
+			{
+			?>
+
+			<td>
+				<div class = "fb_profilebox_modul">
+				<?php
+					$document	= &JFactory::getDocument();
+					$renderer	= $document->loadRenderer('modules');
+					$options	= array('style' => 'xhtml');
+					$position	= 'kunena_profilebox';
+					echo $renderer->render($position, $options, null);
+				?>
+				</div>
+			</td>
+
+			<?php
+			}
+			?>
+
             </tr>
         </tbody>
     </table>

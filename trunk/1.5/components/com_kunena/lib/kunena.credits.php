@@ -17,7 +17,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $mainframe;
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 global $is_Moderator;
 
 // Team credits page is not translated
@@ -75,7 +75,6 @@ global $is_Moderator;
 
 <?php
 require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
-// << $KunenaDbVersion
 ?>
  <!-- Version Info -->
 <div class="fbfooter"><?php echo CKunenaVersion::versionHTML(); ?></div>

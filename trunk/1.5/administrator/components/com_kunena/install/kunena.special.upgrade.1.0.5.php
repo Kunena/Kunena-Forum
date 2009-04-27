@@ -33,7 +33,7 @@ $is_101_version = $database->loadResult();
 
 if ($is_101_version) {
     // now do the upgrade
-    $database->setQuery("update #__fb_attachments set filelocation = replace(filelocation,'" . JPATH_ROOT . "/components/com_kunena/uploaded','/images/fbfiles');");
+    $database->setQuery("update #__fb_attachments set filelocation = replace(filelocation,'" . JPATH_ROOT . "/components/com_fireboard/uploaded','/images/fbfiles');");
     if ($database->query()) print '<li class="fbscslist">Attachment table successfully upgraded to 1.0.2+ version schema!</li>';
     else
     {

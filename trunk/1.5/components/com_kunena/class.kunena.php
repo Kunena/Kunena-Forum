@@ -25,7 +25,7 @@ define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH .DS. "templates".DS . $mainframe
 define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "/templates/".$mainframe->getTemplate());
 
 global $database, $my;
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 $database = &JFactory::getDBO();
 $my = &JFactory::getUser();
@@ -230,7 +230,7 @@ define('KUNENA_ABSTMPLTPATH', KUNENA_PATH_TEMPLATE .DS. $fb_cur_template);
 define('KUNENA_ABSTMPLTMAINIMGPATH', KUNENA_PATH_TEMPLATE .DS. $fb_cur_img_template);
 
 // IMAGES ABSOLUTE PATH
-define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANGUAGE .DS);
+define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH .DS. 'images' .DS. KUNENA_LANGUAGE .DS);
 
 // absolute images path
 define('KUNENA_ABSICONSPATH', KUNENA_ABSIMAGESPATH . 'icons/');
@@ -345,13 +345,13 @@ class CKunenaTools {
 /*
     function fbGetCurrentTime () {
     	// tells current FB internal representing time
-        global $fbConfig;
+        $fbConfig =& CKunenaConfig::getInstance();
         return time() + ($fbConfig->board_ofset * 3600);
     }
 */
     function fbGetInternalTime ($time=null) {
     	// tells internal FB representing time from UTC $time
-        global $fbConfig;
+        $fbConfig =& CKunenaConfig::getInstance();
         // Prevent zeroes
         if($time===0) {
           return 0;
@@ -366,7 +366,7 @@ class CKunenaTools {
     	// converts internal (FB)|UTC representing time to display time
     	// could consider user properties (zones) for future
 		$database = &JFactory::getDBO();
-        global $fbConfig;
+        $fbConfig =& CKunenaConfig::getInstance();
         // Prevent zeroes
         if($time===0) {
           return 0;
@@ -444,7 +444,7 @@ class CKunenaTools {
     function updateNameInfo()
     {
         $database = &JFactory::getDBO();
-        global $fbConfig;
+        $fbConfig =& CKunenaConfig::getInstance();
 
         $fb_queryName = $fbConfig->username ? "username" : "name";
 
@@ -769,8 +769,33 @@ class CKunenaTools {
            return $val;
         }
 
-		function getAllowedForums($uid = 0, $gid = 0, &$acl) {
-        	$database = &JFactory::getDBO();
+	function &prepareContent(&$content)
+	{
+		$fbConfig =& CKunenaConfig::getInstance();
+		
+		// Joomla Mambot Support, Thanks hacksider
+		if ($fbConfig->jmambot)
+		{
+			$row =& new stdClass();
+			$row->text =& $content;
+			$params =& new mosParameters( '' );
+			if (CKunenaTools::isJoomla15()) {
+				$dispatcher	=& JDispatcher::getInstance();
+				JPluginHelper::importPlugin('content');
+				$results = $dispatcher->trigger('onPrepareContent', array (&
+$row, & $params, 0));
+			} else {
+				global $_MAMBOTS;
+				$_MAMBOTS->loadBotGroup( 'content' );
+				$results = $_MAMBOTS->trigger( 'onPrepareContent', array( &$row, &$params, 0 ), true );
+			}
+			$content =& $row->text;
+		}
+		return $content;
+	}
+        
+	function getAllowedForums($uid = 0, $gid = 0, &$acl) {
+        	global $database;
 
 			function _has_rights(&$acl, $gid, $access, $recurse) {
 				if ($gid == $access) return 1;
@@ -1267,9 +1292,13 @@ if (!function_exists('mb_detect_encoding')) {
 	}
 	return 'UTF-8';
   }
+}
+if (!function_exists('mb_convert_encoding')) {
   function mb_convert_encoding($text,$target_encoding,$source_encoding=NULL) {
 	return $text;
   }
+}
+if (!function_exists('mb_substr')) {
   function mb_substr($str, $start, $lenght=NULL, $encoding=NULL) {
 	if ($lenght===NULL) $lenght = strlen($str);
 	return substr($str, $start, $lenght);
@@ -1311,4 +1340,5 @@ function code2utf($num)
     return '';
 }
 
+?>
 ?>

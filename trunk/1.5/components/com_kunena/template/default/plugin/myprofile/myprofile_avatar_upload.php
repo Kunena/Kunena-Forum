@@ -114,7 +114,7 @@ $my = &JFactory::getUser();
 if ($my->id != "" && $my->id != 0)
 {
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 $do = '';
 $do = JRequest::getVar('do', 'init');
 $gallery  = JRequest::getVar('gallery', '');

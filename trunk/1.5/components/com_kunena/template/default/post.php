@@ -20,17 +20,8 @@
 **/
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 global $is_Moderator;
-
-// For joomla mambot support
-if ($fbConfig->jmambot)
-{
-    class t
-    {
-        var $text = "";
-    }
-}
 
 //
 //ob_start();
@@ -468,21 +459,21 @@ $catName = $objCatInfo->name;
                                             $database->setQuery("INSERT INTO #__fb_subscriptions (thread,userid) VALUES ('$fb_thread','{$my->id}')");
 
                                             if ($database->query()) {
-                                                echo '<br /><br /><div align="center">' . _POST_SUBSCRIBED_TOPIC . '<br /><br />';
+                                                echo '<br /><br /><div align="center">' . _POST_SUBSCRIBED_TOPIC . '</div><br /><br />';
                                             }
                                             else {
-                                                echo '<br /><br /><div align="center">' . _POST_NO_SUBSCRIBED_TOPIC . '<br /><br />';
+                                                echo '<br /><br /><div align="center">' . _POST_NO_SUBSCRIBED_TOPIC . '</div><br /><br />';
                                             }
                                         }
 
                                         if ($holdPost == 1)
                                         {
-                                            echo '<br /><br /><div align="center">' . _POST_SUCCES_REVIEW . '<br /><br />';
+                                            echo '<br /><br /><div align="center">' . _POST_SUCCES_REVIEW . '</div><br /><br />';
                                             echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $pid, $fbConfig->messages_per_page);
                                         }
                                         else
                                         {
-                                            echo '<br /><br /><div align="center">' . _POST_SUCCESS_POSTED . '<br /><br />';
+                                            echo '<br /><br /><div align="center">' . _POST_SUCCESS_POSTED . '</div><br /><br />';
                                             echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $pid, $fbConfig->messages_per_page);
                                         }
                                     }
@@ -494,7 +485,7 @@ $catName = $objCatInfo->name;
                                 // We get here in case we have detected a double post
                                 // We did not do any further processing and just display the success message
                                 {
-                                    echo '<br /><br /><div align="center">' . _POST_DUPLICATE_IGNORED . '<br /><br />';
+                                    echo '<br /><br /><div align="center">' . _POST_DUPLICATE_IGNORED . '</div><br /><br />';
                                     echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $pid, $fbConfig->messages_per_page);
                                 }
                             }
@@ -1725,7 +1716,7 @@ $catName = $objCatInfo->name;
  */
 function hasPostPermission($database, $catid, $replyto, $userid, $pubwrite, $ismod)
 {
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
 
     if ($replyto != 0)
     {
@@ -1973,24 +1964,8 @@ function listThreadHistory($id, $fbConfig, $database)
                         //Long Words Wrap:
                         $fb_message_txt = smile::htmlwrap($fb_message_txt, $fbConfig->wrap);
 
-                        // Joomla Mambot Support
-                        if ($fbConfig->jmambot)
-                        {
-                            $row = new t();
-                            $row->text = $fb_message_txt;
-                            JPluginHelper::importPlugin($group, null, false);
-                            $params =& new JParameter('');
-                            $results = $mainframe->triggerEvent( 'onPrepareContent', array
-                            (
-                            &$row,
-                            &$params,
-                            0
-                            ), true);
-
-                            $fb_message_txt = $row->text;
-                        }
-                        // Finish Joomla Mambot Support
-
+						$fb_message_txt = CKunenaTools::prepareContent($fb_message_txt);
+                        
                         if ($fbConfig->badwords && class_exists('Badword') && Badword::filter($fb_message_txt, $my)) {
                            	if (method_exists('Badword','flush')) {
                            		$fb_message_txt = Badword::flush($fb_message_txt, $my);

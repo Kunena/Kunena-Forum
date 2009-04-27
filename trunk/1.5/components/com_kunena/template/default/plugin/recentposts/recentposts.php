@@ -22,7 +22,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $lang, $mainframe;
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 $Kunena_adm_path = KUNENA_PATH_ADMIN;
 //Get right Language file

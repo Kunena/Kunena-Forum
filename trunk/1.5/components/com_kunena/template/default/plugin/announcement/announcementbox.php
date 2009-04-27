@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 # Check for Editor rights  $fbConfig->annmodid
 $user_fields = @explode(',', $fbConfig->annmodid);
@@ -35,11 +35,6 @@ else {
     }
 
 $is_user = (strtolower($my->usertype) <> '');
-$showlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show';
-$addlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=add';
-$readlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=read&amp;id=';
-$editlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=edit&amp;id=';
-$deletelink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=delete&amp;id=';
 ?>
 
 <?php
@@ -92,8 +87,8 @@ if ($annID > 0) {
 
                     <tr class = "fb_sth">
                         <th class = "th-1 <?php echo $boardclass ;?>sectiontableheader fbm" align="left">
-                            <a href = "<?php echo $editlink;?><?php echo $annID; ?>"><?php echo _ANN_EDIT; ?> </a> |
-                        <a href = "<?php echo $deletelink;?><?php echo $annID; ?>"><?php echo _ANN_DELETE; ?> </a> | <a href = "<?php echo $addlink;?>"><?php echo _ANN_ADD; ?> </a> | <a href = "<?php echo $showlink;?>"><?php echo _ANN_CPANEL; ?> </a>
+                            <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'edit', $annID); ?>"><?php echo _ANN_EDIT; ?> </a> |
+                        <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'delete', $annID); ?>"><?php echo _ANN_DELETE; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'add');?>"><?php echo _ANN_ADD; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'show');?>"><?php echo _ANN_CPANEL; ?> </a>
                         </th>
                     </tr>
 
@@ -122,7 +117,7 @@ if ($annID > 0) {
 if ($anndescription != "") {
 ?>
 
-    &nbsp;&nbsp;&nbsp;<a href = "<?php echo $readlink;?><?php echo $annID;?>"> <?php echo _ANN_READMORE; ?></a>
+    &nbsp;&nbsp;&nbsp;<a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'read', $annID);?>"> <?php echo _ANN_READMORE; ?></a>
 
 <?php
     }

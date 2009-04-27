@@ -21,7 +21,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-DEFINE('KUNENA_URL_LIST_SEPARATOR', 'x');
+DEFINE('KUNENA_URL_LIST_SEPARATOR', ' ');
 
 class CKunenaSearch
 {
@@ -64,48 +64,50 @@ class CKunenaSearch
      */
     function CKunenaSearch()
     {
-        global $fbConfig, $database, $my;
+        global $database, $my;
+
+        $fbConfig =& CKunenaConfig::getInstance();
 
         // TODO: started_by
         // TODO: active_in
 
 	// Default values for checkboxes depends on function
-	$this->func = mosGetParam($_REQUEST, 'func');
+	$this->func = JRequest::getVar('func');
 	if($this->func == 'search') {
 		$this->defaults['exactname'] = $this->defaults['childforums'] = 1;
 	} else {
 		$this->defaults['exactname'] = $this->defaults['childforums'] = 0;
 	}
 
-	$q = mosGetParam($_REQUEST, 'q', ''); // Search words
+	$q = JRequest::getVar('q', ''); // Search words
 	// Backwards compability for old templates
 	if (empty($q) && isset($_REQUEST['searchword'])) {
-		$q = mosGetParam($_REQUEST, 'searchword', '');
+		$q = JRequest::getVar('searchword', '');
 	}
-	$this->params['titleonly'] = intval(mosGetParam($_REQUEST, 'titleonly', $this->defaults['titleonly']));
-	$this->params['searchuser'] = mosGetParam($_REQUEST, 'searchuser', $this->defaults['searchuser']);
-	$this->params['starteronly'] = intval(mosGetParam($_REQUEST, 'starteronly', $this->defaults['starteronly']));
-	$this->params['exactname'] = intval(mosGetParam($_REQUEST, 'exactname', $this->defaults['exactname']));
-	$this->params['replyless'] = intval(mosGetParam($_REQUEST, 'replyless', $this->defaults['replyless']));
-	$this->params['replylimit'] = intval(mosGetParam($_REQUEST, 'replylimit', $this->defaults['replylimit']));
-	$this->params['searchdate'] = mosGetParam($_REQUEST, 'searchdate', $this->defaults['searchdate']);
-	$this->params['beforeafter'] = mosGetParam($_REQUEST, 'beforeafter', $this->defaults['beforeafter']);
-	$this->params['sortby'] = mosGetParam($_REQUEST, 'sortby', $this->defaults['sortby']);
-	$this->params['order'] = mosGetParam($_REQUEST, 'order', $this->defaults['order']);
-	$this->params['childforums'] = intval(mosGetParam($_REQUEST, 'childforums', $this->defaults['childforums']));
-	$this->params['catids'] = strtr(mosGetParam($_REQUEST, 'catids', '0'), KUNENA_URL_LIST_SEPARATOR, ',');
-	$limitstart = $this->limitstart = intval(mosGetParam($_REQUEST, 'limitstart', 0));
-	$limit = $this->limit = intval(mosGetParam($_REQUEST, 'limit', $fbConfig->messages_per_page_search));
+	$this->params['titleonly'] = intval(JRequest::getVar('titleonly', $this->defaults['titleonly']));
+	$this->params['searchuser'] = JRequest::getVar('searchuser', $this->defaults['searchuser']);
+	$this->params['starteronly'] = intval(JRequest::getVar('starteronly', $this->defaults['starteronly']));
+	$this->params['exactname'] = intval(JRequest::getVar('exactname', $this->defaults['exactname']));
+	$this->params['replyless'] = intval(JRequest::getVar('replyless', $this->defaults['replyless']));
+	$this->params['replylimit'] = intval(JRequest::getVar('replylimit', $this->defaults['replylimit']));
+	$this->params['searchdate'] = JRequest::getVar('searchdate', $this->defaults['searchdate']);
+	$this->params['beforeafter'] = JRequest::getVar('beforeafter', $this->defaults['beforeafter']);
+	$this->params['sortby'] = JRequest::getVar('sortby', $this->defaults['sortby']);
+	$this->params['order'] = JRequest::getVar('order', $this->defaults['order']);
+	$this->params['childforums'] = intval(JRequest::getVar('childforums', $this->defaults['childforums']));
+	$this->params['catids'] = strtr(JRequest::getVar('catids', '0'), KUNENA_URL_LIST_SEPARATOR, ',');
+	$limitstart = $this->limitstart = intval(JRequest::getVar('limitstart', 0));
+	$limit = $this->limit = intval(JRequest::getVar('limit', $fbConfig->messages_per_page_search));
 	extract($this->params);
 
 	if ($limit<1 || $limit>40) $limit = $this->limit = $fbConfig->messages_per_page_search;
 
 	if (isset($_POST['q']) || isset($_POST['searchword'])) {
-		$this->params['catids'] = implode(',', mosGetParam($_POST, 'catid', array(0)));
+		$this->params['catids'] = implode(',', JRequest::getVar('catid', array(0)));
 		$url = CKunenaLink::GetSearchURL($fbConfig, $this->func, $q, $limitstart, $limit, $this->getUrlParams());
         	header("HTTP/1.1 303 See Other");
         	header("Location: " . htmlspecialchars_decode($url));
-        	die();
+        	$mainframe->close();
 	}
 
         $q = $this->utf8_urldecode($q);
@@ -278,10 +280,6 @@ class CKunenaSearch
     function get_searchusername() {
         return $this->str_kunena_username;
     }
-    function utf8_urldecode($str) {
-        $str = preg_replace("/%u([0-9a-f]{3,4})/i","\1;",urldecode($str));
-        return html_entity_decode($str,ENT_NOQUOTES,'UTF-8' );
-    }
     /** get limit (int) **/
     function get_limit() {
         return $this->limit;
@@ -298,7 +296,7 @@ class CKunenaSearch
 	$url_params = '';
 	foreach ($this->params as $param => $value) {
 		if ($param == 'catids') $value = strtr($value, ',', KUNENA_URL_LIST_SEPARATOR);
-		if ($value != $this->defaults[$param]) $url_params .= "&amp;$param=$value";
+		if ($value != $this->defaults[$param]) $url_params .= "&amp;$param=".urlencode($value);
 	}
 	return $url_params;
     }
@@ -307,26 +305,40 @@ class CKunenaSearch
 
         /* get allowed forums */
         $allowed_forums = array();
+        $allowed_string = '';
         if ($fbSession->allowed != 'na')
-            $allowed_forums = split(',', $fbSession->allowed);
-
-        /* non registered users can only search in public forums */
-        if (count($allowed_forums) == 0)
         {
-            $database->setQuery("SELECT id, parent, published FROM #__fb_categories WHERE pub_access='0' AND published='1'");
-            $allowed_forums = $database->loadAssocList('id');
-            check_dberror("Unable to get public categories.");
-        }
+            $allowed_string = "AND id IN ({$fbSession->allowed})";
+	}
+
+        $database->setQuery("SELECT id, parent FROM #__fb_categories WHERE pub_access='0' AND published='1' $allowed_string");
+        $allowed_forums = $database->loadAssocList('id');
+        check_dberror("Unable to get public categories.");
+
+	foreach ($allowed_forums as $forum)
+	{
+		// Children list: parent => array(child1, child2, ...)
+		$allow_list[$forum['parent']][] = $forum['id'];
+	}
 
 	$catids = split(',', $catids);
+	$result = array();
 	if (count($catids) > 0 && !in_array(0, $catids)) {
-		foreach ($allowed_forums as $forum)
+		// Algorithm:
+		// Start with selected categories and pop them from the catlist one by one
+		// Every popped item in the catlist will be added into result list
+		// For every category: push all its children into the catlist
+		while ($cur = array_pop($catids))
 		{
-			if (in_array($forum['parent'], $catids)) $catids[] = $forum['id'];
+			$result[$cur] = $cur;
+			if (array_key_exists($cur, $allow_list))
+				foreach ($allow_list[$cur] as $forum) 
+					if (!in_array($forum, $catids))
+						array_push($catids, $forum);
 		}
-		$search_forums = implode(",", array_intersect($allowed_forums, $catids));
+		$search_forums = implode(",", $result);
 	} else {
-		$search_forums = implode(",", $allowed_forums);
+		$search_forums = implode(",", array_keys($allowed_forums));
 	}
 	return $search_forums;
     }
@@ -336,7 +348,7 @@ class CKunenaSearch
      */
     function show()
     {
-	global $fbConfig;
+	$fbConfig =& CKunenaConfig::getInstance();
 
 	extract($this->params);
         $q = implode(" ", $this->get_searchstrings());
@@ -355,7 +367,7 @@ class CKunenaSearch
         	include (KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php');
         }
         else {
-                include (KUNENA_ABSPATH . '/template/default/plugin/advancedsearch/advsearch.php');
+                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/advancedsearch/advsearch.php');
         }
 
         $results = $this->get_results();
@@ -436,6 +448,7 @@ class CKunenaSearch
                     $ressubject = stripslashes(smile::purify($ressubject));
                     $resmessage = stripslashes($result->message);
                     // Strip smiles and bbcode out of search results; they look ugly
+                    $resmessage = CKunenaTools::prepareContent($resmessage);
                     $resmessage = smile::purify($resmessage);
                     $resmessage = mb_substr(html_entity_decode_utf8($resmessage), 0, 300);
                     $utf8 = (mb_detect_encoding($ressubject . $resmessage . 'a', 'UTF-8,ISO-8859-1') == 'UTF-8') ? "u" : "";
@@ -494,7 +507,7 @@ class CKunenaSearch
 }
 
 function KunenaSearchPagination($function, $q, $urlparams, $page, $limit, $totalpages, $maxpages) {
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
     if ($page==0) $page++;
     $startpage = ($page - floor($maxpages/2) < 1) ? 1 : $page - floor($maxpages/2);
     $endpage = $startpage + $maxpages;

@@ -25,7 +25,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 $my = &JFactory::getUser();
 
 $database = &JFactory::getDBO();
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 unset($user);
 $database->setQuery("SELECT email, name from #__users WHERE `id`={$my->id}");
 $user = $database->loadObject();
@@ -451,11 +451,22 @@ if ($msg_signature) {
     </tbody>
 </table>
 <!-- Begin: Message Module Positions -->
-<jdoc:exists type="modules" condition="kunena_msg_<?php echo $mmm; ?>" />
+<?php
+if (mosCountModules('kunena_msg_'.$mmm))
+{
+?>
     <div class = "kunena_msg_<?php echo $mmm; ?>">
-	<jdoc:include type="modules" name="kunena_msg_<?php echo $mmm; ?>" />
+        <?php
+	        $document	= &JFactory::getDocument();
+	        $renderer	= $document->loadRenderer('modules');
+	        $options	= array('style' => 'xhtml');
+	        $position	= 'kunena_msg_'.$mmm;
+	        echo $renderer->render($position, $options, null);
+        ?>
     </div>
-</jdoc:exists>
+<?php
+}
+?>
 <!-- Finish: Message Module Positions -->
 <?php
 // --------------------------------------------------------------

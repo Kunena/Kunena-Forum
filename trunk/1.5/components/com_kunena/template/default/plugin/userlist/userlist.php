@@ -22,7 +22,9 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $base_url, $fbConfig;
+global $base_url;
+
+$fbConfig =& CKunenaConfig::getInstance();
 
 $mainframe->setPageTitle(_KUNENA_USRL_USERLIST . ' - ' . stripslashes($fbConfig->board_title));
 
@@ -32,7 +34,9 @@ list_users();
 
 function list_users()
 {
-    global $lang, $fbConfig;
+    global $lang;
+
+    $fbConfig =& CKunenaConfig::getInstance();
 
     $database = &JFactory::getDBO();
 
@@ -113,7 +117,9 @@ class HTML_userlist_content
 {
     function showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search = "")
     {
-        global $base_url, $mainframe, $fbConfig;
+        global $base_url, $mainframe;
+
+        $fbConfig =& CKunenaConfig::getInstance();
 
         $database = &JFactory::getDBO();
 

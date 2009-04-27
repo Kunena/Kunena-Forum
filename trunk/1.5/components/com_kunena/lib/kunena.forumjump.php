@@ -28,16 +28,11 @@ $options = array ();
 $options[] = JHTML::_('select.option', '0', _KUNENA_FORUM_TOP);
 $lists['parent'] = JJ_categoryParentList($catid, "", $options);
 ?>
-<form id = "jumpto" name = "jumpto" method = "get" target = "_self" action = "index.php">
+<form id = "jumpto" name = "jumpto" method = "get" target = "_self" action = "<?php echo JRoute::_(KUNENA_LIVEURLREL); ?>">
     <span style = "width: 100%; text-align: right;">
-        <input type = "hidden" name = "Itemid" value = "<?php echo KUNENA_COMPONENT_ITEMID;?>"/>
-
-        <input type = "hidden" name = "option" value = "com_kunena"/>
 
         <input type = "hidden" name = "func" value = "showcat"/>
-
-<?php echo $lists['parent']; ?>
-
+	<?php echo $lists['parent']; ?>
         <input type = "submit" name = "Go"  class="fb_button fbs" value = "<?php echo _KUNENA_GO; ?>"/>
     </span>
 </form>

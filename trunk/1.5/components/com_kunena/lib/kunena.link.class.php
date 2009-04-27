@@ -270,14 +270,22 @@ class CKunenaLink
     {
 		$limitstr = "&amp;limitstart=$limitstart";
 		if ($limit != $fbConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
-        return sefRelToAbs(KUNENA_LIVEURLREL."&amp;func={$func}&amp;q={$searchword}{$params}{$limitstr}");
+        return JRoute::_(KUNENA_LIVEURLREL."&amp;func={$func}&amp;q={$searchword}{$params}{$limitstr}");
     }
 
     function GetSearchLink($fbConfig, $func, $searchword, $limitstart, $limit, $name, $params='', $rel='nofollow')
     {
-    	$limitstr = "&amp;limitstart=$limitstart";
-    	if ($limit != $fbConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
+		$limitstr = "&amp;limitstart=$limitstart";
+		if ($limit != $fbConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
+		$searchword = urlencode($searchword);
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL."&amp;func={$func}&amp;q={$searchword}{$params}{$limitstr}", $name, '', $rel);
+    }
+
+    function GetAnnouncementURL($fbConfig, $do, $id=NULL)
+    {
+	$idstring = '';
+	if ($id !== NULL) $idstring .= "&amp;id=$id";
+	return JRoute::_(KUNENA_LIVEURLREL."&amp;func=announcement&amp;do={$do}{$idstring}");
     }
 
     //

@@ -19,7 +19,7 @@
 * @author TSMF & Jan de Graaff
 **/
 defined( '_JEXEC' ) or die('Restricted access');
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 require_once (KUNENA_ROOT_PATH .DS. 'includes/HTML_toolbar.php');
 

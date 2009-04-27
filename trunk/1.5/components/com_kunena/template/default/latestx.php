@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 //Start with determining which forums the user can see
 
 require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');

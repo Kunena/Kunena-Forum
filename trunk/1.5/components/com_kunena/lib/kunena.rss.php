@@ -21,7 +21,10 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $mainframe, $my, $fbConfig;
+global $mainframe, $my;
+
+
+$fbConfig =& CKunenaConfig::getInstance();
 
 $database = &JFactory::getDBO();
 

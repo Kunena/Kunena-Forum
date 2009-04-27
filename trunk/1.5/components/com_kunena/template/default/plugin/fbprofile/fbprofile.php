@@ -16,14 +16,17 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $fbConfig, $acl;
+$acl = &JFactory::getACL();
+
+
+$fbConfig =& CKunenaConfig::getInstance();
 
 if ($fbConfig->fb_profile == 'cb') {
-        $userid = mosGetParam($_GET, 'userid', null);
+        $userid = JRequest::getVar('userid', null);
 	$url = CKunenaCBProfile::getProfileURL($userid);
 	header("HTTP/1.1 307 Temporary Redirect");
 	header("Location: " . htmlspecialchars_decode($url));
-	die();
+	$mainframe->close();
 }
 
 $mainframe->setPageTitle(_KUNENA_USERPROFILE_PROFILE . ' - ' . stripslashes($fbConfig->board_title));
@@ -51,7 +54,7 @@ else {
 
 function showprf($userid, $page)
 {
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
 
     $acl = &JFactory::getACL();
     $my = &JFactory::getUser();
@@ -70,7 +73,7 @@ function showprf($userid, $page)
 
     if (!$userinfo) {
 	$database->setQuery("SELECT * FROM #__users WHERE id=$userid");
-	$database->loadObject($userinfo);
+	$userinfo = $database->loadObject();
 	check_dberror('Unable to get user profile info.');
 
 	if (!$userinfo) {
@@ -79,7 +82,7 @@ function showprf($userid, $page)
 	} else {
 		// Check moderator status (admin is moderator)
 		$aro_group = $acl->getAroGroup($userid);
-		if ($aro_group and CKunenaTools::isJoomla15())
+		if ($aro_group)
 		$aro_group->group_id = $aro_group->id;  // changed fieldname in Joomla 1.5: "group_id" -> "id"
 		$is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
 
@@ -92,7 +95,7 @@ function showprf($userid, $page)
 			. "\n LEFT JOIN #__users as b on b.id=a.userid"
 			. "\n where a.userid=$userid");
 
-		$database->loadObject($userinfo);
+		$userinfo = $database->loadObject();
 		check_dberror('Unable to get user profile info.');
 
 		// TODO: For future use

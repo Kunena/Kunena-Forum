@@ -22,13 +22,9 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 $database = &JFactory::getDBO();
 $my = &JFactory::getUser();
-
-// For joomla mambot support
-if ($fbConfig->jmambot) { class t{ var $text = ""; }    }
-//
 
 global $is_Moderator;
 
@@ -188,7 +184,7 @@ if ($letPass || $is_Moderator)
                 $limitstart = 0;
             }
 
-            $limitstart = intval(JRequest::getVar('limitstarttask', $limitstart, $HASH = "REQUEST"));
+            $limitstart = intval(JRequest::getVar('limitstart', $limitstart, $HASH = "REQUEST"));
             $total = count($flat_messages);
 
             if ($total > $limit)
@@ -935,25 +931,9 @@ if ($letPass || $is_Moderator)
                                 // Code tag: restore TABS as we had to 'hide' them from the rest of the logic
                                 $fb_message_txt = str_replace("__FBTAB__", "&#009;", $fb_message_txt);
 
-                                // Joomla Mambot Support , Thanks hacksider
-                                if ($fbConfig->jmambot)
-                                {
-                                    $row = new t();
-                                    $row->text = $fb_message_txt;
-									$group = "content";
-                                    JPluginHelper::importPlugin($group, null, false);
-                                    $params =& new JParameter( '' );
-                                    $results = $mainframe->triggerEvent( 'onPrepareContent', array( &$row, &$params, 0 ), true );
-                                    $msg_text = $row->text;
-                                }
-                                else
-                                {
-                                	$msg_text = $fb_message_txt;
-                                }
-                                // Finish Joomla Mambot Support
+                                $msg_text = CKunenaTools::prepareContent($fb_message_txt);
 
                                 $signature = $userinfo->signature;
-
                                 if ($signature)
                                 {
                                     $signature = stripslashes(smile::smileReplace($signature, 0, $fbConfig->disemoticons, $smileyList));
@@ -1287,6 +1267,7 @@ if ($letPass || $is_Moderator)
 else {
     echo _KUNENA_NO_ACCESS;
 }
+
 if ($fbConfig->highlightcode)
 {
 	echo '

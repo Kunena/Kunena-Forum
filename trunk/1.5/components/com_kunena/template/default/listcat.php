@@ -21,7 +21,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 $my = &JFactory::getUser();
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 //securing passed form elements
 $catid = (int)$catid;
 
@@ -89,13 +89,24 @@ if ($fbConfig->showannouncement > 0)
 
 // load module
 
+if (mosCountModules('kunena_announcement') || mosCountModules('kna_ancmt'))
+{
 ?>
-<jdoc:exists type="modules" condition="kunena_announcement" />
-	<div class = "fb-fb_2">
-		<jdoc:include type="modules" name="kunena_announcement" />
-	</div>
-</jdoc:exists>
 
+
+    <div class = "fb-fb_2">
+        <?php
+        	$document	= &JFactory::getDocument();
+        	$renderer	= $document->loadRenderer('modules');
+        	$options	= array('style' => 'xhtml');
+        	$position	= 'kunena_announcement';
+        	echo $renderer->render($position, $options, null);
+        ?>
+    </div>
+
+<?php
+}
+?>
 <!-- B: Pathway -->
 <?php
 if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
@@ -220,6 +231,11 @@ if (count($categories[0]) > 0)
                                 $database->setQuery("SELECT id, name, numTopics, numPosts from #__fb_categories WHERE parent='$singlerow->id' AND published=1 ORDER BY ordering");
                                 $forumparents = $database->loadObjectList();
                                 	check_dberror("Unable to load categories.");
+
+								foreach ($forumparents as $childnum=>$childforum)
+								{
+									if (!in_array($childforum->id, $allow_forum)) unset ($forumparents[$childnum]);
+								}
 
                                 if ($my->id)
                                 {
@@ -502,9 +518,11 @@ if (count($categories[0]) > 0)
 <?php echo _GEN_MODERATORS; ?>:
 
                                                 <?php
+												$mod_cnt = 0;
                                                 foreach ($modslist as $mod) {
-                                                 echo '&nbsp;'.CKunenaLink::GetProfileLink($fbConfig, $mod->userid, $mod->username).'&nbsp; ';
-
+					                               	if ($mod_cnt) echo ', '; 
+					                               	$mod_cnt++;
+													echo CKunenaLink::GetProfileLink($fbConfig, $mod->userid, ($fbConfig->username ? $mod->username : $mod->name));
                                                 }
                                                 ?>
                                             </div>

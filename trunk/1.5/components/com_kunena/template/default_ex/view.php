@@ -22,10 +22,10 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 function KunenaViewPagination($catid, $threadid, $page, $totalpages, $maxpages) {
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
 
     $startpage = ($page - floor($maxpages/2) < 1) ? 1 : $page - floor($maxpages/2);
     $endpage = $startpage + $maxpages;
@@ -68,10 +68,6 @@ function KunenaViewPagination($catid, $threadid, $page, $totalpages, $maxpages) 
     $output .= '</span>';
     return $output;
 }
-
-// For joomla mambot support
-if ($fbConfig->jmambot) { class t{ var $text = ""; }    }
-//
 
 global $is_Moderator;
 $acl = &JFactory::getACL();
@@ -398,14 +394,14 @@ if ($letPass || $is_Moderator)
 	if ($is_Moderator || isset($thread_reply) || isset($thread_subscribe) || isset($thread_favorite))
 	{
 	    echo '<td class="fb_list_actions_forum">';
-	    echo '<div class="fb_message_buttons_cover" style="text-align: center;">';
+	    echo '<div class="fb_message_buttons_row" style="text-align: center;">';
 	    if (isset($thread_reply)) echo $thread_reply;
 	    if (isset($thread_subscribe)) echo ' '.$thread_subscribe;
 	    if (isset($thread_favorite)) echo ' '.$thread_favorite;
 	    echo '</div>';
             if ($is_Moderator)
             {
-		echo '<div class="fb_message_buttons_cover" style="text-align: center;">';
+		echo '<div class="fb_message_buttons_row" style="text-align: center;">';
 		echo $thread_delete;
 		echo ' '.$thread_move;
 		echo ' '.$thread_sticky;
@@ -417,13 +413,13 @@ if ($letPass || $is_Moderator)
 	echo '<td class="fb_list_actions_forum" width="100%">';
         if (isset($thread_new))
         {
-	    echo '<div class="fb_message_buttons_cover" style="text-align: left;">';
+	    echo '<div class="fb_message_buttons_row" style="text-align: left;">';
 	    echo $thread_new;
 	    echo '</div>';
         }
         if (isset($thread_merge))
         {
-	    echo '<div class="fb_message_buttons_cover" style="text-align: left;">';
+	    echo '<div class="fb_message_buttons_row" style="text-align: left;">';
 	    echo $thread_merge;
 	    echo '</div>';
 	}
@@ -538,21 +534,6 @@ if ($letPass || $is_Moderator)
                                 else {
                                     $fb_thread = $fmessage->thread;
                                 }
-                                //Joomla Mambot Support , Thanks hacksider
-                                if ($fbConfig->jmambot)
-                                {
-                                    $row = new t();
-                                    $row->text = $fb_message_txt;
-	                            JPluginHelper::importPlugin($group, null, false);
-	                            $params = &new JParameter('');
-	                            $results = $mainframe->triggerEvent( 'onPrepareContent',  array( &$row, &$params, 0 ), true );
-                                    $msg_text = $row->text;
-                                }
-                                else
-                                {
-                                    $msg_text = $fb_message_txt;
-                                }
-                                /* Fininsh Joomla Mambot Support */
 
                                 //meta description and keywords
 								$metaKeys=(htmlspecialchars(stripslashes($fmessage->subject)). ', ' .htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . htmlspecialchars(stripslashes($fbConfig->board_title)) . ', ' . htmlspecialchars($mainframe->getCfg('sitename')));
@@ -1048,24 +1029,9 @@ if ($letPass || $is_Moderator)
                                 // Code tag: restore TABS as we had to 'hide' them from the rest of the logic
                                 $fb_message_txt = str_replace("__FBTAB__", "&#009;", $fb_message_txt);
 
-                                // Joomla Mambot Support , Thanks hacksider
-                                if ($fbConfig->jmambot)
-                                {
-                                    $row = new t();
-                                    $row->text = $fb_message_txt;
-        	                    JPluginHelper::importPlugin($group, null, false);
-        	                    $params = &new JParameter('');
-	                            $results = $mainframe->triggerEvent( 'onPrepareContent',  array( &$row, &$params, 0 ), true );
-                                    $msg_text = $row->text;
-                                }
-                                else
-                                {
-                                	$msg_text = $fb_message_txt;
-                                }
-                                // Finish Joomla Mambot Support
+                                $msg_text = CKunenaTools::prepareContent($fb_message_txt);
 
                                 $signature = $userinfo->signature;
-
                                 if ($signature)
                                 {
                                     $signature = stripslashes(smile::smileReplace($signature, 0, $fbConfig->disemoticons, $smileyList));
@@ -1238,14 +1204,14 @@ if ($letPass || $is_Moderator)
 	if ($is_Moderator || isset($thread_reply) || isset($thread_subscribe) || isset($thread_favorite))
 	{
 	    echo '<td class="fb_list_actions_forum">';
-	    echo '<div class="fb_message_buttons_cover" style="text-align: center;">';
+	    echo '<div class="fb_message_buttons_row" style="text-align: center;">';
 	    if (isset($thread_reply)) echo $thread_reply;
 	    if (isset($thread_subscribe)) echo ' '.$thread_subscribe;
 	    if (isset($thread_favorite)) echo ' '.$thread_favorite;
 	    echo '</div>';
             if ($is_Moderator)
             {
-		echo '<div class="fb_message_buttons_cover" style="text-align: center;">';
+		echo '<div class="fb_message_buttons_row" style="text-align: center;">';
 		echo $thread_delete;
 		echo ' '.$thread_move;
 		echo ' '.$thread_sticky;
@@ -1257,13 +1223,13 @@ if ($letPass || $is_Moderator)
 	echo '<td class="fb_list_actions_forum" width="100%">';
         if (isset($thread_new))
         {
-	    echo '<div class="fb_message_buttons_cover" style="text-align: left;">';
+	    echo '<div class="fb_message_buttons_row" style="text-align: left;">';
 	    echo $thread_new;
 	    echo '</div>';
         }
         if (isset($thread_merge))
         {
-	    echo '<div class="fb_message_buttons_cover" style="text-align: left;">';
+	    echo '<div class="fb_message_buttons_row" style="text-align: left;">';
 	    echo $thread_merge;
 	    echo '</div>';
 	}
@@ -1301,8 +1267,11 @@ if ($letPass || $is_Moderator)
           <?php
                             echo '' . _GEN_MODERATORS . ": ";
 
-                            foreach ($modslist as $mod) {
-                                echo CKunenaLink::GetProfileLink($fbConfig, $mod->userid, $mod->username).'&nbsp; ';
+                          	$mod_cnt = 0;
+                           	foreach ($modslist as $mod) {
+				            	if ($mod_cnt) echo ', '; 
+			                	$mod_cnt++;
+                                echo CKunenaLink::GetProfileLink($fbConfig, $mod->userid, ($fbConfig->username ? $mod->username : $mod->name));
                             } ?>
         </div>
         <?php  } ?>

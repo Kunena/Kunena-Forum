@@ -169,7 +169,7 @@ color:#666;
 // Begin: FOOTER FUNC
 function showFbFooter () {
 global $mainframe;
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 ?>
@@ -2781,7 +2781,7 @@ echo $pane->endPane();
     //   }
     function editUserProfile($user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid , $modCats)
     {
-        global $fbConfig;
+        $fbConfig =& CKunenaConfig::getInstance();
 		$database = &JFactory::getDBO();
         //fill the variables needed later
             $signature = $user->signature;
@@ -2840,11 +2840,14 @@ echo $pane->endPane();
 
                             <td width = "150" valign = "top" class = "contentpane">
 <?php echo _GEN_SIGNATURE; ?>:
+<?php /*
+// FIXME: bbcode broken
 
         <br/> <?php echo $fbConfig->maxsig; ?>
 
         <input readonly type = text name = rem size = 3 maxlength = 3 value = "" class = "inputbox"> <?php echo _CHARS; ?><br/>
 <?php echo _HTML_YES; ?>
+*/ ?>
                             </td>
 
                             <td align = "left" valign = "top" class = "contentpane">
@@ -2855,6 +2858,8 @@ echo $pane->endPane();
                                     onKeyDown = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);"
                                     onKeyUp = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);" cols = "50" type = "text" name = "message"><?php echo html_entity_decode_utf8(stripslashes($signature)); ?></textarea>
 
+<?php /*
+// FIXME: bbcode broken
                                 <br/>
 
                                 <input type = "button" class = "button" accesskey = "b" name = "addbbcode0" value = " B " style = "font-weight:bold; width: 30px" onClick = "bbstyle(0)" onMouseOver = "helpline('b')"/>
@@ -2902,6 +2907,7 @@ echo $pane->endPane();
         <br/>
 
         <input type = "text" name = "helpbox" size = "45" maxlength = "100" style = "width:400px; font-size:8px" class = "options" value = "<?php echo _BBCODE_HINT;?>"/>
+*/ ?>
                             </td>
 
                             <?php

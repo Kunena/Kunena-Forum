@@ -83,6 +83,7 @@ if ($GLOBALS['KUNENA_rc'])
 if ($GLOBALS['KUNENA_rc'])
 {
     // file is OK, move it to the proper location
+    jimport('joomla.filesystem.file');
     JFile::upload($attachfile['tmp_name'], $fileLocation);
 }
 

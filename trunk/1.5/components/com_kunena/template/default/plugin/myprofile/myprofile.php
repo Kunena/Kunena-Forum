@@ -23,7 +23,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 require_once (KUNENA_PATH_LIB .DS. "kunena.user.class.php");
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 $mainframe->setPageTitle(_GEN_MYPROFILE . ' - ' . stripslashes($fbConfig->board_title));
 
@@ -286,8 +286,7 @@ if ($my->id != "" && $my->id != 0)
         return;
     }
 
-        $rowu = new CKunenaUserprofile( $database );
-        $rowu->load( (int)$user_id );
+        $rowu = new CKunenaUserprofile();
 
                     $deleteSig = JRequest::getVar('deleteSig', 0);
                     $signature = JRequest::getVar('message', null, 'REQUEST', 'string', JREQUEST_ALLOWRAW);

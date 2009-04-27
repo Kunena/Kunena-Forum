@@ -21,7 +21,7 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 ?>
 	<tr>
 		<td class="fb_list_markallcatsread">

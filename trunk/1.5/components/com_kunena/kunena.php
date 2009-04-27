@@ -81,19 +81,59 @@ require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 // Get CKunanaUser and CKunenaUsers
 require_once (KUNENA_PATH_LIB .DS. "kunena.user.class.php");
 
-global $fbConfig, $kunenaProfile;
+global $kunenaProfile;
+
+
+$fbConfig =& CKunenaConfig::getInstance();
 
 $my = &JFactory::getUser();
 
 // Get data about the current user - its ok to not have a userid = guest
 $KunenaUser = new CKunenaUser($my->id);
 // Load configuration and personal settings for current user
-$fbConfig = CKunenaConfig::getInstance();
+$fbConfig =& CKunenaConfig::getInstance();
+
+$kn_tables =& CKunenaTables::getInstance();
+if ($kn_tables->installed() === false) {
+	$fbConfig->board_offline = 1;
+}
+
+// Permissions: Check for administrators and moderators
+if ($my->id != 0)
+{
+    $aro_group = $acl->getAroGroup($my->id);
+   	$aro_group->group_id = $aro_group->id;  // changed fieldname in Joomla 1.5: "group_id" -> "id"
+    $is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
+}
+else
+{
+    $aro_group = 0;
+    $is_admin = 0;
+}
+
+//Get the userid; sometimes the new var works whilst $my->id doesn't..?!?
+$my_id = $my->id;
+
+// Check if we only allow registered users
+if ($fbConfig->regonly && !$my_id)
+{
+    echo _FORUM_UNAUTHORIZIED . "<br />";
+    echo _FORUM_UNAUTHORIZIED2;
+}
+// or if the board is offline
+else if ($fbConfig->board_offline && !$is_admin)
+{
+    echo stripslashes($fbConfig->offline_message);
+}
+else
+{
+// =======================================================================================
+// Forum is online:
 
 if ($fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
 {
 	// Get Community Builder compability
-	require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.communitybuilder.php");
+	require_once (JPATH_ROOT . "/components/com_kunena/lib/kunena.communitybuilder.php");
 	$kunenaProfile =& new CkunenaCBProfile();
 }
 
@@ -168,6 +208,7 @@ if ($func == "getpreview")
     $msgbody = smile::smileReplace( $message , 0, $fbConfig->disemoticons, $smileyList);
     $msgbody = nl2br($msgbody);
     $msgbody = str_replace("__FBTAB__", "\t", $msgbody);
+	$msgbody = CKunenaTools::prepareContent($msgbody);
     // $msgbody = ereg_replace('%u0([[:alnum:]]{3})', '&#x1;',$msgbody);
 
     $msgbody = smile::htmlwrap($msgbody, $fbConfig->wrap);
@@ -240,23 +281,6 @@ if ($catid != '') {
 $KunenaTemplate = new patTemplate();
 $KunenaTemplate->setRoot( KUNENA_ABSTMPLTPATH );
 
-$KunenaTemplate->readTemplatesFromFile("header.html");
-$KunenaTemplate->readTemplatesFromFile("footer.html");
-
-// Permissions: Check for administrators and moderators
-if ($my->id != 0)
-{
-    $acl = &JFactory::getACL();
-    $aro_group = $acl->getAroGroup($my->id);
-    if ($aro_group)	$aro_group->group_id = $aro_group->id;  // changed fieldname in Joomla 1.5: "group_id" -> "id"
-    $is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
-}
-else
-{
-    $aro_group = 0;
-    $is_admin = 0;
-}
-
 $is_Moderator = fb_has_moderator_permission($database, $thisCat, $my->id, $is_admin);
 
 //intercept the RSS request; we should stop afterwards
@@ -318,19 +342,6 @@ else
     include_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS.  'icons.php');
 }
 
-// Check if we only allow registered users
-if ($fbConfig->regonly && !$my->id)
-{
-    echo _FORUM_UNAUTHORIZIED . "<br />";
-    echo _FORUM_UNAUTHORIZIED2;
-}
-// or if the board is offline
-else if ($fbConfig->board_offline && !$is_admin)
-{
-    echo stripslashes($fbConfig->offline_message);
-}
-else
-{
 //
 // This is the main session handling section. We rely both on cookie as well as our own
 // Kunena session table inside the database. We are leveraging the cookie to keep track
@@ -694,13 +705,6 @@ else
         #########################################################################################
 
         case 'userprofile':
-            if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php')) {
-                include (KUNENA_ABSTMPLTPATH . '/smile.class.php');
-                }
-            else {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
-                }
-
             if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php')) {
                 include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php');
                 }
@@ -889,14 +893,24 @@ else
     } //hctiws
 
     // Bottom Module
+
+    if (mosCountModules('kunena_bottom'))
+    {
 ?>
 
-<jdoc:exists type="modules" condition="kunena_bottom" />
         <div class = "bof-bottom-modul">
-		<jdoc:include type="modules" name="kunena_bottom" />
+            <?php
+            	$document	= &JFactory::getDocument();
+            	$renderer	= $document->loadRenderer('modules');
+            	$options	= array('style' => 'xhtml');
+            	$position	= 'kunena_bottom';
+            	echo $renderer->render($position, $options, null);
+            ?>
         </div>
-</jdoc:exists>
+
 <?php
+    }
+
     // Credits
     echo '<div class="fb_credits"> ' . CKunenaLink::GetTeamCreditsLink($catid, _KUNENA_POWEREDBY) . ' ' . CKunenaLink::GetCreditsLink();
     if ($fbConfig->enablerss)

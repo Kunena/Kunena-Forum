@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 // arrows and lines
 $join = '<img src="' . KUNENA_URLIMAGESPATH . 'tree-join.gif" width="12" height="18" alt="thread link" />';
 $end = '<img src="' . KUNENA_URLIMAGESPATH . 'tree-end.gif" width="12" height="18" alt="thread link" />';

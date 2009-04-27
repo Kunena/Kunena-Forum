@@ -20,7 +20,7 @@ global $_CB_framework, $_CB_database, $ueConfig, $mainframe;
 $tmp_db =& $database;
 
 if ( defined( 'JPATH_ADMINISTRATOR' ) ) {
-	$cbpath = JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php';
+	$cbpath = KUNENA_ROOT_PATH_ADMIN .DS. 'components/com_comprofiler/plugin.foundation.php';
 } else {
 	$cbpath = $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php';
 }
@@ -68,7 +68,9 @@ class CKunenaCBProfile {
 
 	function showProfile($userid, &$msg_params)
 	{
-		global $_PLUGINS, $fbConfig;
+		global $_PLUGINS;
+
+		$fbConfig =& CKunenaConfig::getInstance();
 		$userprofile = new CKunenaUserprofile($userid);
 		$_PLUGINS->loadPluginGroup('user');
 		return implode( '', $_PLUGINS->trigger( 'forumSideProfile', array( 'kunena', null, $userid,
@@ -82,7 +84,9 @@ class CKunenaCBProfile {
 	**/
 	function trigger($event, &$params)
 	{
-		global $_PLUGINS, $fbConfig;
+		global $_PLUGINS;
+
+		$fbConfig =& CKunenaConfig::getInstance();
 		$params['config'] =& $fbConfig;
 		$_PLUGINS->loadPluginGroup('user');
 		$_PLUGINS->trigger( 'kunenaIntegration', array( $event, &$fbConfig, &$params ));

@@ -17,8 +17,9 @@
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
 
-require_once(KUNENA_PATH_ADMIN_LIB .DS. "fx.upgrade.class.php");
-include_once(KUNENA_PATH_LIB .DS. "kunena.debug.php");
+
+global $mainframe;
+require_once (JPATH_ROOT . '/components/com_kunena/lib/kunena.debug.php');
 
 // use default translations if none are available
 if (!defined('_KUNENA_INSTALLED_VERSION')) DEFINE('_KUNENA_INSTALLED_VERSION', 'Installed version');
@@ -33,12 +34,11 @@ class CKunenaVersion {
 	*/
 	function versionArray()
 	{
+		global $database;
 		static $kunenaversion;
 
 		if (!$kunenaversion)
 		{
-		    $database = &JFactory::getDBO();
-
 			$versionTable = '#__fb_version';
 			$database->setQuery( 	"SELECT
 							`version`,
@@ -49,12 +49,19 @@ class CKunenaVersion {
 						FROM `$versionTable`
 						ORDER BY `id` DESC LIMIT 1;" );
 			$kunenaversion = $database->loadObject();
-			    check_dbwarning('Could not load latest Version record.');
+			if(!$kunenaversion) {
+				$kunenaversion = new StdClass();
+				$kunenaversion->version = '1.0.x';
+				$kunenaversion->versiondate = 'NOT INSTALLED';
+				$kunenaversion->installdate = 'Not installed';
+				$kunenaversion->build = '';
+				$kunenaversion->versionname = 'Unknown';
+			}
 		}
 		return $kunenaversion;
 	}
 
-	/**
+	/** 
 	* Retrieve installed Kunena version as string.
 	*
 	* @return string "X.Y.Z | YYYY-MM-DD | BUILDNUMBER [versionname]"
@@ -65,7 +72,7 @@ class CKunenaVersion {
 		return 'Kunena '.$version->version.' | '.$version->versiondate.' | '.$version->build.' [ '.$version->versionname.' ]';
 	}
 
-	/**
+	/** 
 	* Retrieve installed Kunena version, copyright and license as string.
 	*
 	* @return string "Installed version: Kunena X.Y.Z | YYYY-MM-DD | BUILDNUMBER [versionname] | © Copyright: Kunena | License: GNU GPL"
@@ -76,20 +83,20 @@ class CKunenaVersion {
 		return _KUNENA_INSTALLED_VERSION.': '.$version.' | '._KUNENA_COPYRIGHT.': &copy; 2008-2009 <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>  | '._KUNENA_LICENSE.': <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a>';
 	}
 
-	/**
+	/** 
 	* Retrieve MySQL Server version.
 	*
 	* @return string MySQL version
 	*/
 	function MySQLVersion()
 	{
+		global $database;
 		static $mysqlversion;
 		if (!$mysqlversion)
 		{
-		    $database = &JFactory::getDBO();
-
-		    $database->setQuery("SELECT VERSION() as mysql_version");
+			$database->setQuery("SELECT VERSION() as mysql_version");
 			$mysqlversion = $database->loadResult();
+			if (!$mysqlversion) $mysqlversion = 'unknown';
 		}
 		return $mysqlversion;
 	}

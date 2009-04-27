@@ -22,6 +22,15 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+// 1.0.10
+DEFINE('_KUNENA_ERROR_INCOMPLETE_ERROR', 'Your Kunena installation is incomplete!');
+DEFINE('_KUNENA_ERROR_INCOMPLETE_OFFLINE', 'Because of the above errors your Forum is now Offline and Forum Administration has been disabled.');
+DEFINE('_KUNENA_ERROR_INCOMPLETE_REASONS', 'Possible reasons for this error:');
+DEFINE('_KUNENA_ERROR_INCOMPLETE_1', '1) Kunena installation process has failed or timed out (try to install it again)');
+DEFINE('_KUNENA_ERROR_INCOMPLETE_2', '2) You have removed some of the Kunena tables from your database');
+DEFINE('_KUNENA_ERROR_INCOMPLETE_3', '3) Your database has been corrupted');
+DEFINE('_KUNENA_ERROR_INCOMPLETE_SUPPORT', 'Our support forum can be found from:');
+
 // 1.0.9
 DEFINE('_KUNENA_INSTALLED_VERSION', 'Installed version');
 DEFINE('_KUNENA_COPYRIGHT', 'Copyright');
@@ -88,7 +97,7 @@ DEFINE('_POST_NOT_MODERATOR', 'You don\'t have moderator permissions!');
 DEFINE('_POST_NO_FAVORITED_TOPIC', 'This thread has <b>NOT</b> been added to your favorites');
 DEFINE('_COM_C_SYNCEUSERSDESC', 'Sync the Kunena user table with the Joomla user table');
 DEFINE('_POST_FORGOT_EMAIL', 'You forgot to include your e-mail address.  Click your browser&#146s back button to go back and try again.');
-DEFINE('_KUNENA_POST_DEL_ERR_FILE', 'Everything deletedâ some attachment files were missing!');
+DEFINE('_KUNENA_POST_DEL_ERR_FILE', 'Everything deletedï¿½ some attachment files were missing!');
 // New strings for initial forum setup. Replacement for legacy sample data
 DEFINE('_KUNENA_SAMPLE_FORUM_MENU_TITLE', 'Forum');
 DEFINE('_KUNENA_SAMPLE_MAIN_CATEGORY_TITLE', 'Main Forum');
@@ -265,7 +274,7 @@ DEFINE('_KUNENA_USERSSYNCDELETED', 'Users syncronized. Deleted:');
 DEFINE('_KUNENA_USERSSYNCADD', ', add:');
 DEFINE('_KUNENA_SYNCUSERPROFILES', 'user profiles.');
 DEFINE('_KUNENA_NOPROFILESFORSYNC', 'No eligible profiles found to synchronize.');
-DEFINE('_KUNENA_SYNC_USERS', 'Syncronize Users');
+DEFINE('_KUNENA_SYNC_USERS', 'Synchronize Users');
 DEFINE('_KUNENA_SYNC_USERS_DESC', 'Sync the Kunena user table with the Joomla user table');
 DEFINE('_KUNENA_A_MAIL_ADMIN', 'E-mail Administrators');
 DEFINE('_KUNENA_A_MAIL_ADMIN_DESC',
@@ -1027,7 +1036,7 @@ DEFINE('_COM_C_IMAGES', 'Uploaded Images Browser');
 DEFINE('_COM_C_IMAGESDESC', 'Browse and administer uploaded images');
 DEFINE('_COM_C_CSS', 'Edit CSS File');
 DEFINE('_COM_C_CSSDESC', 'Tweak Kunena\'s look and feel');
-DEFINE('_COM_C_SUPPORT', 'Support WebSite');
+DEFINE('_COM_C_SUPPORT', 'Support Web Site');
 DEFINE('_COM_C_SUPPORTDESC', 'Connect to the Kunena website (new window)');
 DEFINE('_COM_C_PRUNETAB', 'Prune Forums');
 DEFINE('_COM_C_PRUNETABDESC', 'Remove old threads (configurable)');
@@ -1525,7 +1534,7 @@ DEFINE('_COM_A_ASK_EMAIL', 'Require E-mail');
 DEFINE('_COM_A_ASK_EMAIL_DESC', 'Require an e-mail address when users or visitors make a post. Set to &quot;No&quot; if you want this feature to be skipped on the front end. Posters will not be asked for their e-mail address.');
 
 //Rank Administration - Dan Syme/IGD
-define('_KUNENA_RANKS_MANAGE', 'Ranks Management');
+define('_KUNENA_RANKS_MANAGE', 'Rank Management');
 define('_KUNENA_SORTRANKS', 'Sort by Ranks');
 
 define('_KUNENA_RANKSIMAGE', 'Rank Image');

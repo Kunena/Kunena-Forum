@@ -496,6 +496,8 @@ td.fb_profileboxcnt {
 	font-weight:normal;
 	line-height:normal;
 	padding:2px;
+	width:95%;
+	margin-left:2px;
 }
 #Kunena div.fb_totalfavorite {
 	float:right;
@@ -541,7 +543,12 @@ th.fb_sectiontableheader {
 	border-left:1px solid #BFC3C6;
 }
 #Kunena div.fb_thead-title a {
-	font-weight:     bold;
+	font-family:Lucida Grande, Arial, helvetica, sans serif;
+	font-size:95%;
+	display:inline-block;
+	padding-bottom:0;
+	margin-bottom:3px;
+	font-weight: bold;
 }
 div.fb_thead-desc {
 }
@@ -553,19 +560,25 @@ div.fb_thead-desc {
 	border: 0px solid #FFFFFF;
 }
 #Kunena div.fb_cc-childcat-title {
-	width: 90px;
-	float:left;
+	display: inline-block;
+	vertical-align:top;
 }
-table.fb_cc-table {
+#Kunena div.fb_cc-table {
+	display: inline;
 }
 tr.fb_cc-sectiontableentry1 {
 }
 tr.fb_cc-sectiontableentry2 {
 }
-span.fb_childcount {
+#Kunena span.fb_childcount {
+	margin-left:4px;
+	margin-right:4px;
+	display:inline;
+	bottom:2px;
+	position:relative;
+	letter-spacing:1px;
 }
 #Kunena div.fb_latest-subject a {
-	font-weight:     bold;
 }
 div.fb_latest-subject-by {
 }
@@ -574,6 +587,13 @@ span.newchar {
 	font-weight: bold;
 	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size:xx-small;
+}
+#Kunena div.fb_cc-subcat {
+	display:inline-block;
+	vertical-align:top;
+}
+#Kunena div.fb_cc-subcat a {
+	font-size:95%;
 }
 /* SHOW CATEGORY 
 ----------------------------------------------------------------------------------------------- */
@@ -718,7 +738,8 @@ span.msgkarma {
 }
 div.msgtext {
 	width: 100%;
-	overflow:hidden;
+	overflow: auto;
+	word-wrap: break-word;       /* Internet Explorer 5.5+ */
 	border-top:1px solid #ddd;
 	padding:10px 0 0 0;
 	margin-top:5px;
@@ -789,17 +810,17 @@ span.fb_message_informMarkUp {
 	font-size:xx-small;
 	color:#666666;
 }
-td.msgsignature {
-	width: 100%;
-}
-td.msgsignature div {
+div.msgsignature {
 	text-align: left;
-	overflow: hidden;
+	word-wrap: break-word;       /* Internet Explorer 5.5+ */
 	color:#999;
 	font-size:x-small;
 	padding: 5px 5px;
 }
 div.fb_message_buttons_cover {
+	float: right;
+}
+div.fb_message_buttons_row {
 	text-align:right;
 	height: 15px;
 	line-height: 15px;

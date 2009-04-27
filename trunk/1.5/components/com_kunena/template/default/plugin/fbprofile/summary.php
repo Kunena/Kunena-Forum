@@ -20,7 +20,7 @@
 **/
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 $signature = $userinfo->signature;
 

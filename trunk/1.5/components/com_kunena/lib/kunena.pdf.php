@@ -63,7 +63,9 @@ function dofreePDF($database)
     $acl = &JFactory::getACL();
 
     $my = &JFactory::getUser();
-    global $fbConfig, $fbSession;
+    global $fbSession;
+
+    $fbConfig =& CKunenaConfig::getInstance();
     require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
     $is_Mod = 0;
 

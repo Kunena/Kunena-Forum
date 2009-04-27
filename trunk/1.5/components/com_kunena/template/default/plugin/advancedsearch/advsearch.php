@@ -66,7 +66,7 @@ if(isset($fb_advsearch_hide) && $fb_advsearch_hide==1)
 }
 ?>
 
-<form action="<?php echo sefRelToAbs(KUNENA_LIVEURLREL. '&amp;func=advsearch'); ?>" method="post" id="searchform" name="adminForm">    
+<form action="<?php echo JRoute::_(KUNENA_LIVEURLREL. '&amp;func=advsearch'); ?>" method="post" id="searchform" name="adminForm">    
     <table id="fb_forumsearch" class="fb_blocktable" border="0" cellspacing="0" cellpadding="0">
         <thead>
             <tr>
@@ -259,7 +259,7 @@ if(isset($fb_advsearch_hide) && $fb_advsearch_hide==1)
 			<tr>
 				<td style="padding: 0 5px; height: 28px; line-height: 28px;">
         			<input class="fbs button" type="submit" value="<?php echo _KUNENA_SEARCH_SEND; ?>"/>
-        			<input class="fbs button" type="reset" value="<?php echo _KUNENA_SEARCH_CANCEL; ?>" onclick="window.location='<?php echo sefRelToAbs(KUNENA_LIVEURLREL);?>';"/>				
+        			<input class="fbs button" type="reset" value="<?php echo _KUNENA_SEARCH_CANCEL; ?>" onclick="window.location='<?php echo JRoute::_(KUNENA_LIVEURLREL);?>';"/>				
 				</td>
 			</tr>
 		</tbody>

@@ -32,6 +32,36 @@ Legend:
 
 Kunena 1.5.1b
 
+27-April-2009 Matias
+^ [#15784] Merge 1.0.10 fixes from revision 602 to 651
+
+26-April-2009 Matias
+# [#16117] Search: html_entity_decode() throws warning in some environments
+# [#16074] Display real names in list of moderators when Username = no
+# [#16096] Subcategories in Forum View do not obey ACL rules
+# [#15640] Typos and misspellings in admin panel
+# [#16140] Subforum list in Category View takes too much space
+! Changes needed for default_ex CSS
+# [#15956] Fix missing /div tags in post.php
+# [#16069] Editor Preview does not work with sh404SEF
+# [#16085] Fix mambot support in Joomla! 1.5
+# [#15955] Partial fix for oversized words and linked images in signature
+! Changes needed for default_ex CSS
+# [#16105] Check if installation has failed and have better error messages
+
+22-April-2009 Matias
+# [#16082] Search: umlauts and other special chars in redirects and URL's are broken
+# [#16080] Advanced Search: when there are selected cats, childforums will not be searched
+# [#16090] BBCode is not working for subforum descriptions
+
+21-April-2009 Matias
+# [#15945] Updating My Profile does not work
+# [#16068] Announcements: links are broken in sh404SEF
+# [#16070] Forum Jump: links are broken in sh404SEF
+# [#16092] File upload does not work in some servers
+# [#16084] Search: Call to undefined function mb_substr()
+# [#16081] Fatal error in kunena.config.class.php
+
 6-April-2009 fxstein
 # [#15808] Fix broken New Category button in admin backend
 # [#15840] Fix invalid document object on jomsocial integration
@@ -42,6 +72,9 @@ Kunena 1.5.1b
 # [#15800] Fix broken smilie class includes
 # [#15805] Fix incorrect sort description in backend
 # [#15807] Fix broken database upgrade script for version 1.0.5
+^ [#15798] Updated credits page
+# [#15800] Fix broken smilie class includes
+# [#15805] Fix incorrect sort description in backend
 
 Kunena 1.5.0a
 

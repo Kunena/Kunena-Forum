@@ -46,7 +46,7 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
     $my = &JFactory::getUser();
 
     $database = &JFactory::getDBO();
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
 
     if (!$my->id) {
         JError::raiseError( 403, JText::_("ALERTNOTAUTH") );;
@@ -123,7 +123,9 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
 }
 
 function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins) {
-    global $mainframe, $fbConfig;
+    global $mainframe;
+
+    $fbConfig =& CKunenaConfig::getInstance();
 
     $database = &JFactory::getDBO();
 
@@ -147,7 +149,7 @@ function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins)
     }
 
 function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
 
     $database = &JFactory::getDBO();
 
@@ -187,7 +189,7 @@ function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
     }
 
 function ReportForm($msg_id, $catid) {
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
 
     $my = &JFactory::getUser();
 

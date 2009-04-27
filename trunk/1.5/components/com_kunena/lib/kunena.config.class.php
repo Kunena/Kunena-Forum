@@ -19,9 +19,66 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 require_once (KUNENA_PATH_LIB . DS . 'kunena.debug.php');
 
-abstract class CKunenaConfigBase
+global $mainframe;
+require_once (JPATH_ROOT . '/components/com_kunena/lib/kunena.debug.php');
+require_once (JPATH_ROOT . '/components/com_kunena/lib/kunena.user.class.php');
+
+class CKunenaTables
 {
-    protected $_db = null;
+	var $tables = array();
+	var $_tables = array ( '#__fb_announcement', '#__fb_attachments', '#__fb_categories', '#__fb_favorites', '#__fb_groups', '#__fb_messages', '#__fb_messages_text', '#__fb_moderation', '#__fb_ranks', '#__fb_sessions', '#__fb_smileys', '#__fb_subscriptions', '#__fb_users', '#__fb_version', '#__fb_whoisonline');
+
+	function CKunenaTables()
+	{
+        	global $database;
+
+		$database->setQuery( "SHOW TABLES LIKE '" .$database->getPrefix(). "fb_%'");
+		$tables = $database->loadResultArray();
+		$prelen = strlen($database->getPrefix());
+		foreach	($tables as $table) $this->tables['#__'.substr($table,$prelen)] = 1;
+		check_dberror('Unable to check for existing tables.');
+	}
+
+	function &getInstance()
+	{
+		static $instance;
+		if (!$instance) {
+			$instance = new CKunenaTables();
+		}
+		return $instance;
+	}
+
+	function check($table)
+	{
+		return isset($this->tables[$table]);
+	}
+
+	function installed()
+	{
+		foreach ($this->_tables as $table) {
+			if (!isset($this->tables[$table])) return false;
+		}
+		return $true;
+	}
+}
+
+class CKunenaConfigBase
+{
+    function &getInstance() 
+    {
+        echo '<div>Undefined getInstance() function in derived class!</div>';
+        $mainframe->close();	
+    }
+
+    //
+    // The following functions MUST be overridden in derived classes
+    // Basically an abstract base class that must not be used by itself
+    //
+    function GetClassVars()
+    {
+    	echo '<div>Undefined GetClassVars() function in derived class!</div>';
+    	$mainframe->close();
+    }
 
     public function __construct()
     {
@@ -96,7 +153,7 @@ abstract class CKunenaConfigBase
             }
         }
 
-        $this->_db->setQuery("CREATE TABLE #__".$this->GetConfigTableName()." (" . implode(', ', $fields) . ")");
+        $this->_db->setQuery("CREATE TABLE ".$this->GetConfigTableName()." (" . implode(', ', $fields) . " )");
         $this->_db->query();
         	check_dberror("Unable to create configuration table.");
 
@@ -107,14 +164,14 @@ abstract class CKunenaConfigBase
         foreach ($vars as $name => $value)
         {
         	// Exclude internal class vars e.g. _db
-        	if($name[0] != '_')
+        	if($name[0] != '_' && array_key_exists($name , $this->GetClassVars()))
             {
 	            $value = addslashes($value);
 	        	$fields[] = "`$name`='$value'";
             }
         }
 
-        $this->_db->setQuery("INSERT INTO #__".$this->GetConfigTableName()." SET " . implode(', ', $fields));
+        $this->_db->setQuery("INSERT INTO ".$this->GetConfigTableName()." SET " . implode(', ', $fields));
         $this->_db->query();
         	check_dberror("Unable to insert configuration data.");
     }
@@ -125,7 +182,7 @@ abstract class CKunenaConfigBase
     public function backup()
     {
         // remove old backup if one exists
-        $this->_db->setQuery("DROP TABLE IF EXISTS #__".$this->GetConfigTableName()."_backup");
+        $this->_db->setQuery("DROP TABLE IF EXISTS ".$this->GetConfigTableName()."_backup");
         $this->_db->query();
         	check_dberror("Unable to drop old configuration backup table.");
 
@@ -136,7 +193,7 @@ abstract class CKunenaConfigBase
 		if($this->_db->loadResult())
 		{
 			// backup current settings
-			$this->_db->setQuery("CREATE TABLE #__".$this->GetConfigTableName()."_backup SELECT * FROM #__".$this->GetConfigTableName());
+			$this->_db->setQuery("CREATE TABLE ".$this->GetConfigTableName()."_backup SELECT * FROM #__".$this->GetConfigTableName());
 			$this->_db->query();
 				check_dberror("Unable to create new configuration backup table.");
 		}
@@ -147,7 +204,7 @@ abstract class CKunenaConfigBase
     //
     public function remove()
     {
-        $this->_db->setQuery("DROP TABLE IF EXISTS #__".$this->GetConfigTableName());
+        $this->_db->setQuery("DROP TABLE IF EXISTS ".$this->GetConfigTableName());
         $this->_db->query();
         	check_dberror("Unable to drop existing configuration table.");
     }
@@ -157,31 +214,14 @@ abstract class CKunenaConfigBase
     //
     public function load($KunenaUser=null)
     {
-        $this->_db->setQuery("SELECT * FROM #__".$this->GetConfigTableName());
+        $tables = CKunenaTables::getInstance();
+        if ($tables->check($this->GetConfigTableName())) {
+        	$this->_db->setQuery("SELECT * FROM ".$this->GetConfigTableName());
+
+        	$this->_db->loadObject($this);
+       		check_dberror("Unable to load configuration table.");
+        }
         
-        // Special error handling!
-        // This query might actually fail on new installs or upgrades when
-        // no configuration table is present. That is ok. It only tells us to
-        // create the table and populate it with default settings.
-        // DO NOT THROW an error
-
-        $config = $this->_db->loadAssoc();
-
-        if ($config!=null)
-        {
-			$this->bind($config);
-		}
-		else
-		{
-        	// If no configuration is present, save default values
-
-		    // Call remove in case we have an empty table
-		    $this->remove();
-
-		    // Now create new table and insert current config settings
-        	$this->create();
-		}
-
         // Check for user specific overrides
         if(is_object($KunenaUser))
         {
@@ -202,8 +242,7 @@ class CKunenaConfig extends CKunenaConfigBase
     var $email                   = 'change@me.com';
     var $board_offline           = 0;
     var $board_ofset             = 0;
-    var $offline_message         = '<h2>The Forum is currently offline for maintenance.</h2>
-    Check back soon!                        ';
+    var $offline_message         = "<h2>The Forum is currently offline for maintenance.</h2>\n<div>Check back soon!</div>";
     var $default_view            = 'flat';
     var $enablerss               = 1;
     var $enablepdf               = 1;
@@ -345,7 +384,6 @@ class CKunenaConfig extends CKunenaConfigBase
     public function __construct($KunenaUser=null)
     {
         parent::__construct();
-        if (!is_object($KunenaUser)) return;
 		$this->load($KunenaUser);
     }
 
@@ -370,7 +408,7 @@ class CKunenaConfig extends CKunenaConfigBase
 
     protected function GetConfigTableName()
     {
-        return "fb_config"; // w/o joomla prefix - is being added by base class
+        return "#__fb_config";
     }
 
     public function DoUserOverrides($KunenaUser)

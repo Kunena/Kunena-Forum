@@ -101,7 +101,7 @@ switch ($action)
  */
 function jbListMessages($allMes, $catid)
 {
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
     echo '<form action="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=review') . '" name="moderation" method="post">';
 ?>
 

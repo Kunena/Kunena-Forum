@@ -29,7 +29,9 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.debug.php');
 require_once (KUNENA_PATH_LIB .DS. 'kunena.config.class.php');
 
 // get fireboards configuration params in
-global $mainframe, $fbConfig;
+global $mainframe;
+
+$fbConfig =& CKunenaConfig::getInstance();
 
 $database = JFactory::getDBO();
 
@@ -44,6 +46,19 @@ $langfile = KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.'.KUNENA_LANGUAGE.'.php';
 $defaultlangfile = KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.english.php';
 
 (file_exists($langfile)) ? require_once ($langfile) : require_once ($defaultlangfile);
+
+$kn_tables = CKunenaTables::getInstance();
+if ($kn_tables->installed() === false) {
+	$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_ERROR, 'error');
+	$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_OFFLINE, 'notice');
+	$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_REASONS);
+	$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_1);
+	$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_2);
+	$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_3);
+	$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_SUPPORT.' <a href="http://www.kunena.com">www.kunena.com</a>');
+}
+else
+{
 
 $cid = JRequest::getVar('cid', array ( 0 ));
 
@@ -311,6 +326,8 @@ switch ($task)
         html_Kunena::controlPanel();
         break;
 }
+
+} // ENDIF: is installed
 
 html_Kunena::showFbFooter();
 
@@ -592,7 +609,7 @@ function showConfig($option)
 {
     $database = &JFactory::getDBO();
     global $mainframe;
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
 
     $lists = array ();
 
@@ -796,12 +813,11 @@ function showConfig($option)
 
 function saveConfig($option)
 {
-	global $mainframe, $fbConfig;
+	global $mainframe;
+
+	$fbConfig =& CKunenaConfig::getInstance();
 
     $database = &JFactory::getDBO();
-
-	$fbConfig->backup();
-	$fbConfig->remove();
 
 	foreach ($_POST as $postsetting => $postvalue)
     {
@@ -836,7 +852,9 @@ function saveConfig($option)
         }
     }
 
-    $fbConfig->create();
+	$fbConfig->backup();
+	$fbConfig->remove();
+	$fbConfig->create();
 
     $mainframe->redirect( JURI::base() . "index2.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED);
 }
@@ -851,7 +869,7 @@ $database = &JFactory::getDBO();
 //===============================
 function showCss($option)
 {
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
     $file = "../components/com_kunena/template/" . $fbConfig->template . "/kunena.forum.css";
     $permission = is_writable($file);
 
@@ -1725,7 +1743,7 @@ function deletesmiley($option, $cid)
 function smileypath()
 {
     global $mainframe;
-	global $fbConfig;
+	$fbConfig =& CKunenaConfig::getInstance();
 
 	if (is_dir(KUNENA_PATH_TEMPLATE .DS. $fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/emoticons')) {
         $smiley_live_path = JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/emoticons';
@@ -1807,7 +1825,7 @@ function showRanks($option)
 function rankpath()
 {
     global $mainframe;
-	global $fbConfig;
+	$fbConfig =& CKunenaConfig::getInstance();
 
     if (is_dir(JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/ranks')) {
         $rank_live_path = JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/ranks';

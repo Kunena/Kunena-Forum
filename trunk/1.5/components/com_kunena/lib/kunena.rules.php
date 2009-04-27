@@ -47,8 +47,8 @@ $mainframe->setPageTitle(_GEN_RULES . ' - ' . stripslashes($fbConfig->board_titl
         <tr>
             <td class = "<?php echo $boardclass; ?>rulesdesc">
 <?php
-          $database->setQuery("SELECT introtext FROM #__content  WHERE id=".$fbConfig->rules_cid."");
-		  $j_introtext = $database->loadResult();
+          $kunena_db->setQuery("SELECT introtext FROM #__content  WHERE id=".$fbConfig->rules_cid."");
+		  $j_introtext = $kunena_db->loadResult();
 
            ?>
             <?php echo $j_introtext; ?>

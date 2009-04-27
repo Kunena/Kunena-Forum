@@ -2414,7 +2414,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 
 /*echo $pane->endPanel();
 echo $pane->startPanel( 'Show Instructions', 'panel2' );
-showInstructions($database, $option, $lang);
+showInstructions($kunena_db, $option, $lang);
 echo $pane->endPanel();
 */
 
@@ -2426,7 +2426,7 @@ echo $pane->endPane();
 */
     }
 
-   function showInstructions($database, $option, $lang) {
+   function showInstructions($kunena_db, $option, $lang) {
 ?>
 
     <table width = "100%" border = "0" cellpadding = "2" cellspacing = "2" class = "adminheading">
@@ -2774,7 +2774,7 @@ echo $pane->endPane();
 <?php
     }
 
-    //   function showUserProfile ($database,$mosLang,$user_id,$do,$deleteSig,$signature,$newview,$user_id,$thread,$moderator)
+    //   function showUserProfile ($kunena_db,$mosLang,$user_id,$do,$deleteSig,$signature,$newview,$user_id,$thread,$moderator)
     //   {
     //
     //      include ('components/com_kunena/moderate_user.php');
@@ -2782,7 +2782,7 @@ echo $pane->endPane();
     function editUserProfile($user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid , $modCats)
     {
         $fbConfig =& CKunenaConfig::getInstance();
-		$database = &JFactory::getDBO();
+		$kunena_db = &JFactory::getDBO();
         //fill the variables needed later
             $signature = $user->signature;
             $username = $user->name;
@@ -3028,8 +3028,8 @@ else
             {
                 foreach ($subslist as $subs)
                 { //get all message details for each subscription
-                    $database->setQuery("select * from #__fb_messages where id=$subs->thread");
-                    $subdet = $database->loadObjectList();
+                    $kunena_db->setQuery("select * from #__fb_messages where id=$subs->thread");
+                    $subdet = $kunena_db->loadObjectList();
                         check_dberror("Unable to load subscription messages.");
 
                     foreach ($subdet as $sub)
@@ -3134,7 +3134,7 @@ else
     {
         global $mainframe;
 
-        $database = &JFactory::getDBO();
+        $kunena_db = &JFactory::getDBO();
         $map = JPATH_ROOT;
 ?>
 
@@ -3167,11 +3167,11 @@ else
                 $j = $i + 1;
                 //get the corresponding posting
                 $query = "SELECT mesid FROM #__fb_attachments where filelocation='".KUNENA_PATH_UPLOADED."/".($type?'images':'files')."/$uploaded[$i]'";
-                $database->setQuery($query);
-                $mesid = $database->loadResult();
+                $kunena_db->setQuery($query);
+                $mesid = $kunena_db->loadResult();
                 //get the catid for the posting
-                $database->setQuery("SELECT catid FROM #__fb_messages where id='$mesid'");
-                $catid = $database->loadResult();
+                $kunena_db->setQuery("SELECT catid FROM #__fb_messages where id='$mesid'");
+                $catid = $kunena_db->loadResult();
                 echo $mesid == '' ? '<td>' : '<td>';
                 echo '<table style="border: 1px solid #ccc;"><tr><td height="90" width="130" style="text-align: center">';
                 echo $type ? '<a href="' . KUNENA_PATH_UPLOADED .DS. 'images/' . $uploaded[$i] . '" target="_blank" title="' . _COM_A_IMGB_ENLARGE . '" alt="' . _COM_A_IMGB_ENLARGE . '"><img src="' . KUNENA_LIVEUPLOADEDPATH . '/images/' . $uploaded[$i]
@@ -3404,7 +3404,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
  function showRanks( $option,$lang,&$ranks,$pageNavSP,$order,$rankpath )
 		 {
    global $mainframe;
-   $database = &JFactory::getDBO();
+   $kunena_db = &JFactory::getDBO();
    ?>
   <div class="fbfunctitle"><?php echo _KUNENA_RANKS_MANAGE; ?></div>
   <form action="index2.php" method="POST" name="adminForm">

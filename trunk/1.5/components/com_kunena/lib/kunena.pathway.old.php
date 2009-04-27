@@ -37,8 +37,8 @@ $fbConfig =& CKunenaConfig::getInstance();
                 while ($parent_ids)
                 {
                     $query = "select * from #__fb_categories where id=$catids and published=1";
-                    $database->setQuery($query);
-                    $results = $database->query() or trigger_dberror("Unable to read categories.");
+                    $kunena_db->setQuery($query);
+                    $results = $kunena_db->query() or trigger_dberror("Unable to read categories.");
                     ;
                     $parent_ids = @mysql_result($results, 0, 'parent');
                     //$cids=@mysql_result( $results, 0, 'id' );
@@ -61,11 +61,11 @@ $fbConfig =& CKunenaConfig::getInstance();
                 echo $pathNames;
 
                 //Get the category name for breadcrumb
-                $database->setQuery("SELECT name,locked,review,id, description, parent from #__fb_categories where id='$catid'");
-                $objCatInfo = $database->loadObject() or trigger_dberror("Unable to read from categories.");
+                $kunena_db->setQuery("SELECT name,locked,review,id, description, parent from #__fb_categories where id='$catid'");
+                $objCatInfo = $kunena_db->loadObject() or trigger_dberror("Unable to read from categories.");
                 //Get the Category's parent category name for breadcrumb
-                $database->setQuery("SELECT name,id FROM #__fb_categories WHERE id='$objCatInfo->parent'");
-                $objCatParentInfo = $database->loadObject() or trigger_dberror("Unable to read from categories.");
+                $kunena_db->setQuery("SELECT name,id FROM #__fb_categories WHERE id='$objCatInfo->parent'");
+                $objCatParentInfo = $kunena_db->loadObject() or trigger_dberror("Unable to read from categories.");
                 // set page title
                 $mainframe->setPageTitle(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($objCatInfo->name) . ' - ' . stripslashes($fbConfig->board_title));
                 //check if this forum is locked

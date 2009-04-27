@@ -23,15 +23,17 @@ defined( '_JEXEC' ) or die('Restricted access');
 dircopy(KUNENA_ROOT_PATH .DS. "components/com_joomlaboard/uploaded", KUNENA_PATH_UPLOADED .DS, false);
 dircopy(KUNENA_ROOT_PATH .DS. "components/com_joomlaboard/avatars", KUNENA_PATH_UPLOADED .DS. "avatars", false);
 
-$database->setQuery("update #__fb_attachments set filelocation = replace(filelocation,'com_joomlaboard','com_kunena');");
-$database->query();
+$kunena_db = &JFactory::getDBO();
 
-$database->setQuery("update #__fb_attachments set filelocation = replace(filelocation,'".KUNENA_PATH .DS. "uploaded','/images/fbfiles');");
-if ($database->query()) {
+$kunena_db->setQuery("update #__fb_attachments set filelocation = replace(filelocation,'com_joomlaboard','com_kunena');");
+$kunena_db->query();
+
+$kunena_db->setQuery("update #__fb_attachments set filelocation = replace(filelocation,'".KUNENA_PATH .DS. "uploaded','/images/fbfiles');");
+if ($kunena_db->query()) {
 //    echo "<img src='images/tick.png' align='absmiddle'>"._KUNENA_UP_ATT_10."<br />";
 }
-$database->setQuery("update #__fb_messages_text set message = replace(message,'/components/com_kunena/uploaded','/images/fbfiles');");
-if ($database->query()) {
+$kunena_db->setQuery("update #__fb_messages_text set message = replace(message,'/components/com_kunena/uploaded','/images/fbfiles');");
+if ($kunena_db->query()) {
 //    echo "<img src='images/tick.png' align='absmiddle'>"._KUNENA_UP_ATT_10_MSG."<br />";
 }
 

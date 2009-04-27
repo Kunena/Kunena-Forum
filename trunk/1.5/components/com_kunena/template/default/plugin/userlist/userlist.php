@@ -38,7 +38,7 @@ function list_users()
 
     $fbConfig =& CKunenaConfig::getInstance();
 
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
 
     jimport('joomla.html.pagination');
 
@@ -49,8 +49,8 @@ function list_users()
     $limit = JRequest::getInt('limit', $fbConfig->userlist_rows);
 
     // Total
-    $database->setQuery("SELECT count(*) FROM #__users");
-    $total_results = $database->loadResult();
+    $kunena_db->setQuery("SELECT count(*) FROM #__users");
+    $total_results = $kunena_db->loadResult();
 
     // Search total
     $query = "SELECT count(*) FROM #__users AS u INNER JOIN #__fb_users AS fu ON u.id=fu.userid";
@@ -59,8 +59,8 @@ function list_users()
         $query .= " WHERE (u.name LIKE '%$search%' OR u.username LIKE '%$search%')";
     }
 
-    $database->setQuery($query);
-    $total = $database->loadResult();
+    $kunena_db->setQuery($query);
+    $total = $kunena_db->loadResult();
 
     if ($limit > $total) {
         $limitstart = 0;
@@ -86,8 +86,8 @@ function list_users()
 
     $query .= " LIMIT $limitstart, $limit";
 
-    $database->setQuery($query);
-    $ulrows = $database->loadObjectList();
+    $kunena_db->setQuery($query);
+    $ulrows = $kunena_db->loadObjectList();
 
     // echo "<pre>"; print_r($ulrows); die;
     $pageNav = new JPagination($total, $limitstart, $limit);
@@ -121,7 +121,7 @@ class HTML_userlist_content
 
         $fbConfig =& CKunenaConfig::getInstance();
 
-        $database = &JFactory::getDBO();
+        $kunena_db = &JFactory::getDBO();
 
         if ($search == "") {
             $search = _KUNENA_USRL_SEARCH;
@@ -425,8 +425,8 @@ class HTML_userlist_content
                                 }
                                 else
                                 {
-                                    $database->setQuery("SELECT avatar FROM #__fb_users WHERE userid='$ulrow->id'");
-                                    $avatar = $database->loadResult();
+                                    $kunena_db->setQuery("SELECT avatar FROM #__fb_users WHERE userid='$ulrow->id'");
+                                    $avatar = $kunena_db->loadResult();
 
                                     if ($avatar != '') {
 
@@ -454,8 +454,8 @@ class HTML_userlist_content
                                         <td class = "td-2">
                                             <?php // online - ofline status
                                             $sql = "SELECT count(userid) FROM #__session WHERE userid=" . $ulrow->id;
-                                            $database->setQuery($sql);
-                                            $isonline = $database->loadResult();
+                                            $kunena_db->setQuery($sql);
+                                            $isonline = $kunena_db->loadResult();
 
 
 

@@ -69,7 +69,7 @@ $tree = thread_flat($tree, $messages);
     <thead>
         <tr  class = "fb_sth fbs ">
         <?php
-        if ($fbConfig->shownew && $my->id != 0) { ?>
+        if ($fbConfig->shownew && $kunena_my->id != 0) { ?>
 
        <th width="10" class = "th-1 <?php echo $boardclass ?>sectiontableheader">&nbsp;</th>
             <?php
@@ -78,7 +78,7 @@ $tree = thread_flat($tree, $messages);
         <th class = "th-2 <?php echo $boardclass ?>sectiontableheader" align = "center" width = "5">&nbsp; </th>
         <th class = "th-3 <?php echo $boardclass ?>sectiontableheader" align = "center" width = "5">&nbsp; </th>
         <?php
-        if ($my->id == 0) {
+        if ($kunena_my->id == 0) {
             echo '<td class="sectiontableheader" width="5" align="center">&nbsp;</td>';
         }
         ?>
@@ -100,7 +100,7 @@ $tree = thread_flat($tree, $messages);
 
         <tr class="fb_threadview_row">
             <?php
-            if ($fbConfig->shownew && $my->id != 0 && !$leaf->moved)
+            if ($fbConfig->shownew && $kunena_my->id != 0 && !$leaf->moved)
             {
                 if (($prevCheck < ($leaf->time)) && (sizeof($read_topics) == 0) || !in_array($leaf->thread, $read_topics))
                 {
@@ -176,8 +176,8 @@ $tree = thread_flat($tree, $messages);
 
                     if ($leaf->moved)
                     {
-                        $database->setQuery("SELECT `mesid` FROM #__fb_messages_text WHERE `mesid`=" . $leaf->id);
-                        $newURL .= $database->loadResult();
+                        $kunena_db->setQuery("SELECT `mesid` FROM #__fb_messages_text WHERE `mesid`=" . $leaf->id);
+                        $newURL .= $kunena_db->loadResult();
                     }
                     else
                         $newURL .= '&amp;id=' . $leaf->id . $viewstr . '&amp;catid=' . $catid;
@@ -191,9 +191,9 @@ $tree = thread_flat($tree, $messages);
 <?php
 if ($fbConfig->allowfavorites)
 {
-    $database->setQuery("select count(*) from #__fb_favorites where thread = $leaf->id && userid = $my->id");
+    $kunena_db->setQuery("select count(*) from #__fb_favorites where thread = $leaf->id && userid = $kunena_my->id");
 
-    if (intval($database->loadResult()) > 0) {
+    if (intval($kunena_db->loadResult()) > 0) {
         echo $fbIcons['favoritestar'] ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $fbIcons['favoritestar'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
     }
 }
@@ -208,7 +208,7 @@ if ($fbConfig->allowfavorites)
     </td>
 
     <td align = "center" <?php echo $leaf->id==$id?' class="'.$boardclass.'sectiontableentry2"':'';?>>
-        <small><?php echo $leaf->email != "" && $my->id > 0 && $fbConfig->showemail ? '<a href="mailto:' . stripslashes($leaf->email) . '">' . stripslashes($leaf->name) . '</a>' : stripslashes($leaf->name); ?></small>
+        <small><?php echo $leaf->email != "" && $kunena_my->id > 0 && $fbConfig->showemail ? '<a href="mailto:' . stripslashes($leaf->email) . '">' . stripslashes($leaf->name) . '</a>' : stripslashes($leaf->name); ?></small>
     </td>
 
     <td align = "center" <?php echo $leaf->id==$id?' class=""'.$boardclass.'sectiontableentry2"':'';?>>

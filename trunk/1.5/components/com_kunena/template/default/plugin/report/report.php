@@ -43,27 +43,27 @@ switch ($do)
 }
 
 function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
-    $my = &JFactory::getUser();
+    $kunena_my = &JFactory::getUser();
 
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
     $fbConfig =& CKunenaConfig::getInstance();
 
-    if (!$my->id) {
+    if (!$kunena_my->id) {
         JError::raiseError( 403, JText::_("ALERTNOTAUTH") );;
         return;
         }
 
-    $database->setQuery("SELECT a.*, b.message AS msg_text FROM #__fb_messages AS a"
+    $kunena_db->setQuery("SELECT a.*, b.message AS msg_text FROM #__fb_messages AS a"
     . "\n LEFT JOIN #__fb_messages_text AS b ON b.mesid = a.id"
     . "\n WHERE a.id={$msg_id}");
 
-    $row = $database->loadObject();
+    $row = $kunena_db->loadObject();
 
-    $database->setQuery("SELECT username FROM #__users WHERE id={$row->userid}");
-    $baduser = $database->loadResult();
+    $kunena_db->setQuery("SELECT username FROM #__users WHERE id={$row->userid}");
+    $baduser = $kunena_db->loadResult();
 
-    $database->setQuery("SELECT username FROM #__users WHERE id={$reporter}");
-    $sender = $database->loadResult();
+    $kunena_db->setQuery("SELECT username FROM #__users WHERE id={$reporter}");
+    $sender = $kunena_db->loadResult();
 
     if ($reason) {
         $subject = "[".stripslashes($fbConfig->board_title)." "._GEN_FORUM."] "._KUNENA_REPORT_MSG . ": " . $reason;
@@ -91,13 +91,13 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
     $message = strtr($message, array('&#32;'=>''));
 
     //get category moderators
-    $database->setQuery("SELECT userid FROM #__fb_moderation WHERE catid={$row->catid}");
-    $mods = $database->loadObjectList();
+    $kunena_db->setQuery("SELECT userid FROM #__fb_moderation WHERE catid={$row->catid}");
+    $mods = $kunena_db->loadObjectList();
     	check_dberror("Unable to load moderators.");
 
     //get admins
-    $database->setQuery("SELECT id FROM #__users WHERE gid >= 24");
-    $admins = $database->loadObjectList();
+    $kunena_db->setQuery("SELECT id FROM #__users WHERE gid >= 24");
+    $admins = $kunena_db->loadObjectList();
     	check_dberror("Unable to load admin.");
 
     switch ($type)
@@ -127,13 +127,13 @@ function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins)
 
     $fbConfig =& CKunenaConfig::getInstance();
 
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
 
     //send report to category moderators
     if (count($mods)>0) {
         foreach ($mods as $mod) {
-            $database->setQuery("SELECT email FROM #__users WHERE id={$mod->userid}");
-            $email = $database->loadResult();
+            $kunena_db->setQuery("SELECT email FROM #__users WHERE id={$mod->userid}");
+            $email = $kunena_db->loadResult();
 
             JUtility::sendMail($fbConfig->email, $fbConfig->board_title, $email, $subject, $message);
             }
@@ -141,8 +141,8 @@ function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins)
 
     //send report to site admins
     foreach ($admins as $admin) {
-        $database->setQuery("SELECT email FROM #__users WHERE id={$admin->id}");
-        $email = $database->loadResult();
+        $kunena_db->setQuery("SELECT email FROM #__users WHERE id={$admin->id}");
+        $email = $kunena_db->loadResult();
 
         JUtility::sendMail($fbConfig->email, stripslashes($board_title)." ".trim(_GEN_FORUM), $email, $subject, $message);
         }
@@ -151,7 +151,7 @@ function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins)
 function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
     $fbConfig =& CKunenaConfig::getInstance();
 
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
 
     switch ($fbConfig->pm_component)
     {
@@ -191,12 +191,12 @@ function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
 function ReportForm($msg_id, $catid) {
     $fbConfig =& CKunenaConfig::getInstance();
 
-    $my = &JFactory::getUser();
+    $kunena_my = &JFactory::getUser();
 
     $redirect = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id . '&amp;Itemid=' . KUNENA_COMPONENT_ITEMID) . '#' . $msg_id;
 
     //$redirect = JRoute::_($redirect);
-    if (!$my->id) {
+    if (!$kunena_my->id) {
         $mainframe->redirect( JURI::base() .$redirect);
         return;
         }
@@ -253,7 +253,7 @@ function ReportForm($msg_id, $catid) {
                                         <input type = "hidden" name = "do" value = "report"/>
                                         <input type = "hidden" name = "msg_id" value = "<?php echo $msg_id;?>"/>
                                         <input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
-                                        <input type = "hidden" name = "reporter" value = "<?php echo $my->id;?>"/>
+                                        <input type = "hidden" name = "reporter" value = "<?php echo $kunena_my->id;?>"/>
                                         <input type = "submit" name = "Submit" value = "<?php echo _KUNENA_REPORT_SEND ?>"/>
                                     </form>
                                 </td>
@@ -270,19 +270,19 @@ function ReportForm($msg_id, $catid) {
     }
 
 function SendClexusPM($reporter, $subject, $message, $msglink, $mods, $admins) {
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
     $time = JHTML::_('date', CKunenaTools::fbGetInternalTime(), '%Y-%m-%d %H:%M:%S');
 
     foreach ($admins as $admin) {
-        $database->setQuery("INSERT INTO #__mypms" . "\n ( `userid` , `whofrom` , `time` , `readstate` , `subject` , `message` , `owner` , `folder` , `sent_id` , `replyid` , `ip` , `alert` , `flag` , `pm_notify` , `email_notify` )"
+        $kunena_db->setQuery("INSERT INTO #__mypms" . "\n ( `userid` , `whofrom` , `time` , `readstate` , `subject` , `message` , `owner` , `folder` , `sent_id` , `replyid` , `ip` , `alert` , `flag` , `pm_notify` , `email_notify` )"
                                 . "\n VALUES ('$admin->id', '$reporter', '$time', '0', '$subject', '$message', '$admin->id', NULL , '0', '0', NULL , '0', '0', '0', '1'");
-        $database->query();
+        $kunena_db->query();
         }
 
     foreach ($mods as $mod) {
-        $database->setQuery("INSERT INTO #__mypms" . "\n ( `userid` , `whofrom` , `time` , `readstate` , `subject` , `message` , `owner` , `folder` , `sent_id` , `replyid` , `ip` , `alert` , `flag` , `pm_notify` , `email_notify` )"
+        $kunena_db->setQuery("INSERT INTO #__mypms" . "\n ( `userid` , `whofrom` , `time` , `readstate` , `subject` , `message` , `owner` , `folder` , `sent_id` , `replyid` , `ip` , `alert` , `flag` , `pm_notify` , `email_notify` )"
                                 . "\n VALUES ('$mod->id', '$reporter', '$time', '0', '$subject', '$message', '$mod->id', NULL , '0', '0', NULL , '0', '0', '0', '1'");
-        $database->query();
+        $kunena_db->query();
         }
     }
 ?>

@@ -165,6 +165,7 @@ class phpGraph
     {
         $maxval = $this->_maxVal;
 
+	$sumval = 0;
         foreach ($this->_values as $value)
             $sumval += $value["value"];
 

@@ -70,7 +70,7 @@ $fbConfig =& CKunenaConfig::getInstance();
 
                 <li>
                 <?php
-                if ($my->id != 0) {
+                if ($kunena_my->id != 0) {
                     echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=markThisRead&amp;catid=' . $catid) . '">' . _GEN_MARK_THIS_FORUM_READ . '</a>';
                 }
                 ?>
@@ -78,7 +78,7 @@ $fbConfig =& CKunenaConfig::getInstance();
                 </li>
 
                 <?php
-//                if ($my->id != 0)
+//                if ($kunena_my->id != 0)
 //                {
 //                    echo ' <li>';
 //

@@ -60,8 +60,8 @@ if ($fbConfig->showwhoisonline > 0)
 
             <?php
             $query = "SELECT w.*, u.username FROM #__fb_whoisonline AS w" . "\n LEFT JOIN #__users AS u ON u.id=w.userid ORDER BY w.time DESC";
-            $database->setQuery($query);
-            $users = $database->loadObjectList();
+            $kunena_db->setQuery($query);
+            $users = $kunena_db->loadObjectList();
             $k = 0; //for alternating rows
             $tabclass = array
             (
@@ -104,7 +104,7 @@ if ($fbConfig->showwhoisonline > 0)
                         </span>
 
                         <?php
-                        if ($my->gid > 1)
+                        if ($kunena_my->gid > 1)
                         {
                         ?>
 

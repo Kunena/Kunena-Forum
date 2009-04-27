@@ -32,25 +32,25 @@ defined( '_JEXEC' ) or die('Restricted access');
  *
  * @pre: fb_has_read_permission()
  */
-function fb_has_post_permission(&$database,$catid,$replyto,$userid,$pubwrite,$ismod) {
+function fb_has_post_permission(&$kunena_db,$catid,$replyto,$userid,$pubwrite,$ismod) {
     $fbConfig =& CKunenaConfig::getInstance();
     if ($ismod)
         return 1; // moderators always have post permission
     if($replyto != 0) {
-        $database->setQuery("select thread from #__fb_messages where id='$replyto'");
-        $topicID=$database->loadResult();
+        $kunena_db->setQuery("select thread from #__fb_messages where id='$replyto'");
+        $topicID=$kunena_db->loadResult();
         if ($topicID != 0) //message replied to is not the topic post; check if the topic post itself is locked
             $sql='select locked from #__fb_messages where id='.$topicID;
         else
             $sql='select locked from #__fb_messages where id='.$replyto;
-        $database->setQuery($sql);
-        if ($database->loadResult()==1)
+        $kunena_db->setQuery($sql);
+        if ($kunena_db->loadResult()==1)
         return -1; // topic locked
     }
 
     //topic not locked; check if forum is locked
-    $database->setQuery("select locked from #__fb_categories where id=$catid");
-    if ($database->loadResult()==1)
+    $kunena_db->setQuery("select locked from #__fb_categories where id=$catid");
+    if ($kunena_db->loadResult()==1)
         return -2; // forum locked
 
     if ($userid != 0|| $pubwrite)
@@ -65,23 +65,23 @@ function fb_has_post_permission(&$database,$catid,$replyto,$userid,$pubwrite,$is
  * @param bool
  */
 
-function fb_has_moderator_permission(&$database,&$obj_fb_cat,$int_fb_uid,$bool_fb_isadmin) {
+function fb_has_moderator_permission(&$kunena_db,&$obj_fb_cat,$int_fb_uid,$bool_fb_isadmin) {
     if ($int_fb_uid == 0)
 	return 0; // Anonymous never has moderator permission
     if ($bool_fb_isadmin)
         return 1;
     if ($obj_fb_cat!='' && $obj_fb_cat->getModerated()) {
-        $database->setQuery('SELECT userid FROM #__fb_moderation WHERE catid='.$obj_fb_cat->getId().' AND userid='.$int_fb_uid);
+        $kunena_db->setQuery('SELECT userid FROM #__fb_moderation WHERE catid='.$obj_fb_cat->getId().' AND userid='.$int_fb_uid);
         
-        if ($database->loadResult()!='')
+        if ($kunena_db->loadResult()!='')
             return 1;
      }
 // Check if we have forum wide moderators - not limited to particular categories 
-    $database->setQuery('SELECT moderator FROM #__fb_users WHERE userid='.$int_fb_uid);
-    if ($database->loadResult()==1) // moderator YES
+    $kunena_db->setQuery('SELECT moderator FROM #__fb_users WHERE userid='.$int_fb_uid);
+    if ($kunena_db->loadResult()==1) // moderator YES
     {
-        $database->setQuery('SELECT userid FROM #__fb_moderation WHERE userid='.$int_fb_uid);
-        if ($database->loadResult()=='') // not limited to a specific category - as we checked for those above
+        $kunena_db->setQuery('SELECT userid FROM #__fb_moderation WHERE userid='.$int_fb_uid);
+        if ($kunena_db->loadResult()=='') // not limited to a specific category - as we checked for those above
         {
             return 1;
         }
@@ -97,8 +97,8 @@ function fb_has_moderator_permission(&$database,&$obj_fb_cat,$int_fb_uid,$bool_f
  * @param int
  * @param obj
  */
-function fb_has_read_permission(&$obj_fbcat,&$allow_forum,$groupid,&$acl) {
-    $acl = &JFactory::getACL();
+function fb_has_read_permission(&$obj_fbcat,&$allow_forum,$groupid,&$kunena_acl) {
+    $kunena_acl = &JFactory::getACL();
     if ($obj_fbcat->getPubRecurse())
         $pub_recurse="RECURSE";
     else
@@ -125,7 +125,7 @@ function fb_has_read_permission(&$obj_fbcat,&$allow_forum,$groupid,&$acl) {
             if ($pub_recurse=='RECURSE') {
                 //check if there are child groups for the Access Level
                 $group_childs=array();
-                $group_childs=$acl->get_group_children( $obj_fbcat->getPubAccess(), 'ARO', $pub_recurse );
+                $group_childs=$kunena_acl->get_group_children( $obj_fbcat->getPubAccess(), 'ARO', $pub_recurse );
 
                 if ( is_array( $group_childs ) && count( $group_childs ) > 0) {
                     //there are child groups. See if user is in any ot them
@@ -146,7 +146,7 @@ function fb_has_read_permission(&$obj_fbcat,&$allow_forum,$groupid,&$acl) {
             if ($admin_recurse=='RECURSE') {
                 //check if there are child groups for the Access Level
                 $group_childs=array();
-                $group_childs=$acl->get_group_children( $obj_fbcat->getAdminAccess(), 'ARO', $admin_recurse );
+                $group_childs=$kunena_acl->get_group_children( $obj_fbcat->getAdminAccess(), 'ARO', $admin_recurse );
 
                 if (is_array( $group_childs ) && count( $group_childs ) > 0) {
                     //there are child groups. See if user is in any ot them

@@ -133,8 +133,8 @@ if (count($messages[0]) > 0)
 
                 <?php
                     //(JJ) ATTACHMENTS
-                    $database->setQuery("SELECT mesid FROM #__fb_attachments WHERE mesid=$leaf->id");
-                    $attachmentsicon = $database->loadResult();
+                    $kunena_db->setQuery("SELECT mesid FROM #__fb_attachments WHERE mesid=$leaf->id");
+                    $attachmentsicon = $kunena_db->loadResult();
 
                     //(JJ) AVATAR
                     if ($fbConfig->avataroncat)
@@ -150,16 +150,16 @@ if (count($messages[0]) > 0)
 	                        // ///////
 	                        //first we gather some information about this person
 	                        unset($CatUser);
-	                            $database->setQuery("SELECT * FROM #__fb_users as su"
+	                            $kunena_db->setQuery("SELECT * FROM #__fb_users as su"
 	                                                . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$leaf->userid}");
 
-	                            $CatUser = $database->loadObject();
+	                            $CatUser = $kunena_db->loadObject();
 	                            $javatar = $CatUser->avatar;
 
 	                        if ($fbConfig->avatar_src == "cb")
 	                        {
-	                            $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id={$leaf->userid}");
-	                            $javatar = $database->loadResult();
+	                            $kunena_db->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id={$leaf->userid}");
+	                            $javatar = $kunena_db->loadResult();
 	                        }
 
 	                        if ($fbConfig->avatar_src == "cb" and $javatar!=false) {
@@ -208,7 +208,7 @@ if (count($messages[0]) > 0)
                         <?php
                             if ($leaf->locked == 0)
                             {
-                                if ($fbConfig->shownew && $my->id != 0 && !$leaf->moved)
+                                if ($fbConfig->shownew && $kunena_my->id != 0 && !$leaf->moved)
                                 {
                                     if (($prevCheck < $last_reply[$leaf->id]->time) && !in_array($last_reply[$leaf->id]->thread, $read_topics))
                                     {
@@ -278,9 +278,9 @@ if (count($messages[0]) > 0)
                                     <?php
                                     if ($fbConfig->allowfavorites)
                                     {
-                                        $database->setQuery("select count(*) from #__fb_favorites where thread = $leaf->id && userid = $my->id");
+                                        $kunena_db->setQuery("select count(*) from #__fb_favorites where thread = $leaf->id && userid = $kunena_my->id");
 
-                                        if (intval($database->loadResult()) > 0) {
+                                        if (intval($kunena_db->loadResult()) > 0) {
                                             echo $fbIcons['favoritestar'] ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $fbIcons['favoritestar']
                                                      . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
                                             }
@@ -291,7 +291,7 @@ if (count($messages[0]) > 0)
                                     <span class = "fb-topic-by fbs"> <?php echo _GEN_BY.' '.CKunenaLink::GetProfileLink($fbConfig, $leaf->userid, html_entity_decode_utf8(stripslashes($leaf->name)));?></span>
 
                                     <?php
-                                    if ($fbConfig->shownew && $my->id != 0)
+                                    if ($fbConfig->shownew && $kunena_my->id != 0)
                                     {
                                         if (($prevCheck < $last_reply[$leaf->id]->time) && !in_array($last_reply[$leaf->id]->thread, $read_topics)) {
                                             //new post(s) in topic
@@ -353,8 +353,8 @@ if (count($messages[0]) > 0)
                             {
                                 //this thread has been moved, get the new location
                                 $newURL = ""; //init
-                                $database->setQuery("SELECT `message` FROM #__fb_messages_text WHERE `mesid`='" . $leaf->id . "'");
-                                $newURL = $database->loadResult();
+                                $kunena_db->setQuery("SELECT `message` FROM #__fb_messages_text WHERE `mesid`='" . $leaf->id . "'");
+                                $newURL = $kunena_db->loadResult();
                                 // split the string and separate catid and id for proper link assembly
                                 parse_str($newURL, $newURLParams);
                                 ?>

@@ -30,11 +30,11 @@ class CKunenaTables
 
 	function CKunenaTables()
 	{
-        	global $database;
+        	global $kunena_db;
 
-		$database->setQuery( "SHOW TABLES LIKE '" .$database->getPrefix(). "fb_%'");
-		$tables = $database->loadResultArray();
-		$prelen = strlen($database->getPrefix());
+		$kunena_db->setQuery( "SHOW TABLES LIKE '" .$kunena_db->getPrefix(). "fb_%'");
+		$tables = $kunena_db->loadResultArray();
+		$prelen = strlen($kunena_db->getPrefix());
 		foreach	($tables as $table) $this->tables['#__'.substr($table,$prelen)] = 1;
 		check_dberror('Unable to check for existing tables.');
 	}

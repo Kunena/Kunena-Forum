@@ -95,6 +95,9 @@ dictionary = {
 'global\s*\$fbConfig;':'$fbConfig =& CKunenaConfig::getInstance();',
 '(\s*)(global )\s*\$fbConfig,\s*(.*?;)':'\\1\\2\\3\n\\1$fbConfig =& CKunenaConfig::getInstance();',
 '(\s*)(global .*?),\s*\$fbConfig;':'\\1\\2;\n\\1$fbConfig =& CKunenaConfig::getInstance();',
+'\$acl':'$kunena_acl',
+'\$my':'$kunena_my',
+'\$database':'$kunena_db',
 }
 
 def string_replace(filename, text, dic):

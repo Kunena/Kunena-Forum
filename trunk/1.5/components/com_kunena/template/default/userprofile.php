@@ -24,7 +24,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 $fbConfig =& CKunenaConfig::getInstance();
 $rowItemid = JRequest::getInt('Itemid');
 
-if ($my->id)
+if ($kunena_my->id)
 {
     //we got a valid and logged on user so we can go on
     //What should we do?
@@ -32,10 +32,10 @@ if ($my->id)
     { //show it is..
         //first we gather some information about this person - bypass if (s)he is a guest
         unset($user);
-        $database->setQuery("SELECT * FROM #__fb_users as su "
-        	    . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$my->id}");
+        $kunena_db->setQuery("SELECT * FROM #__fb_users as su "
+        	    . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$kunena_my->id}");
 
-        $user = $database->loadObject();
+        $user = $kunena_db->loadObject();
 
         $prefview = $user->view;
         $signature = $user->signature;
@@ -49,13 +49,13 @@ if ($my->id)
         //use integration avatar if configured
         if ($fbConfig->avatar_src == "pmspro")
         {
-            $database->setQuery("SELECT picture FROM #__mypms_profiles WHERE name='$username'");
-            $avatar = $database->loadResult();
+            $kunena_db->setQuery("SELECT picture FROM #__mypms_profiles WHERE name='$username'");
+            $avatar = $kunena_db->loadResult();
         }
         elseif ($fbConfig->avatar_src == "cb")
         {
-        	$database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$my->id'");
-        	$avatar = $database->loadResult();
+        	$kunena_db->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$kunena_my->id'");
+        	$avatar = $kunena_db->loadResult();
         		check_dberror("Unable to load CB avatar.");
         }
         else
@@ -64,14 +64,14 @@ if ($my->id)
         }
 
         //get all subscriptions for this user
-        $database->setQuery("select thread from #__fb_subscriptions where userid=$my->id");
-        $subslist = $database->loadObjectList();
+        $kunena_db->setQuery("select thread from #__fb_subscriptions where userid=$kunena_my->id");
+        $subslist = $kunena_db->loadObjectList();
         	check_dberror("Unable to load subscriptions.");
         $csubslist = count($subslist);
 
         //get all favorites for this user
-        $database->setQuery("select thread from #__fb_favorites where userid=$my->id");
-        $favslist = $database->loadObjectList();
+        $kunena_db->setQuery("select thread from #__fb_favorites where userid=$kunena_my->id");
+        $favslist = $kunena_db->loadObjectList();
         	check_dberror("Unable to load favorites.");
         $cfavslist = count($favslist);
 
@@ -79,8 +79,8 @@ if ($my->id)
         //since these are moderators for all forums (regardless if a forum is set to be moderated)
         if (!$is_admin)
         {
-            $database->setQuery("select #__fb_moderation.catid,#__fb_categories.name from #__fb_moderation left join #__fb_categories on #__fb_categories.id=#__fb_moderation.catid where #__fb_moderation.userid=$my->id");
-            $modslist = $database->loadObjectList();
+            $kunena_db->setQuery("select #__fb_moderation.catid,#__fb_categories.name from #__fb_moderation left join #__fb_categories on #__fb_categories.id=#__fb_moderation.catid where #__fb_moderation.userid=$kunena_my->id");
+            $modslist = $kunena_db->loadObjectList();
             	check_dberror("Unable to load moderators.");
             $cmodslist = count($modslist);
         }
@@ -253,7 +253,7 @@ if ($my->id)
                                     {
                                 ?>
 
-                                        <img src = "<?php echo MyPMSTools::getAvatarLinkWithID($my->id)?>" alt="" />
+                                        <img src = "<?php echo MyPMSTools::getAvatarLinkWithID($kunena_my->id)?>" alt="" />
 
                                         <br/> <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=upload&amp;Itemid='._CLEXUSPM_ITEMID);?>"><?php echo _SET_NEW_AVATAR; ?></a>
 
@@ -389,8 +389,8 @@ if ($my->id)
                         {
                             foreach ($subslist as $subs)
                             { //get all message details for each subscription
-                                $database->setQuery("select * from #__fb_messages where id=$subs->thread");
-                                $subdet = $database->loadObjectList();
+                                $kunena_db->setQuery("select * from #__fb_messages where id=$subs->thread");
+                                $subdet = $kunena_db->loadObjectList();
                                 	check_dberror("Unable to load messages.");
 
                                 foreach ($subdet as $sub)
@@ -446,8 +446,8 @@ if ($my->id)
                 {
                     foreach ($favslist as $favs)
                     { //get all message details for each favorite
-                        $database->setQuery("select * from #__fb_messages where id=$favs->thread");
-                        $favdet = $database->loadObjectList();
+                        $kunena_db->setQuery("select * from #__fb_messages where id=$favs->thread");
+                        $favdet = $kunena_db->loadObjectList();
                         	check_dberror("Unable to load messages.");
 
                         foreach ($favdet as $fav)
@@ -541,10 +541,10 @@ if ($my->id)
             $avatar = "";
         }
 
-        $database->setQuery("UPDATE #__fb_users set signature='$signature', view='$newview', avatar='$avatar', ordering='$neworder'  where userid=$my->id");
+        $kunena_db->setQuery("UPDATE #__fb_users set signature='$signature', view='$newview', avatar='$avatar', ordering='$neworder'  where userid=$kunena_my->id");
         setcookie("fboard_settings[current_view]", $newview);
 
-        if (!$database->query()) {
+        if (!$kunena_db->query()) {
             echo _USER_PROFILE_NOT_A . " <strong><font color=\"red\">" . _USER_PROFILE_NOT_B . "</font></strong> " . _USER_PROFILE_NOT_C . ".<br /><br />";
         }
         else {
@@ -555,23 +555,23 @@ if ($my->id)
 
         if ($unsubscribeAll)
         {
-            $database->setQuery("DELETE FROM #__fb_subscriptions WHERE userid=$my->id");
-            $database->query();
+            $kunena_db->setQuery("DELETE FROM #__fb_subscriptions WHERE userid=$kunena_my->id");
+            $kunena_db->query();
         }
 
         if ($unfavoriteAll)
         {
-            $database->setQuery("DELETE FROM #__fb_favorites WHERE userid='$my->id'");
-            $database->query();
+            $kunena_db->setQuery("DELETE FROM #__fb_favorites WHERE userid='$kunena_my->id'");
+            $kunena_db->query();
         }
 
         echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show'), 3500);
     }
     else if ($do == "unsubscribe")
     { //ergo, ergo delete
-        $database->setQuery("DELETE from #__fb_subscriptions where userid=$my->id and thread=$thread");
+        $kunena_db->setQuery("DELETE from #__fb_subscriptions where userid=$kunena_my->id and thread=$thread");
 
-        if (!$database->query()) {
+        if (!$kunena_db->query()) {
             echo _USER_UNSUBSCRIBE_A . " <strong><font color=\"red\">" . _USER_UNSUBSCRIBE_B . "</font></strong> " . _USER_UNSUBSCRIBE_C . ".<br /><br />";
         }
         else {
@@ -589,9 +589,9 @@ if ($my->id)
     }
     else if ($do == "unfavorite")
     { //ergo, ergo delete
-        $database->setQuery("DELETE from #__fb_favorites where userid=$my->id and thread=$thread");
+        $kunena_db->setQuery("DELETE from #__fb_favorites where userid=$kunena_my->id and thread=$thread");
 
-        if (!$database->query()) {
+        if (!$kunena_db->query()) {
             echo _USER_UNFAVORITE_A . " <strong><font color=\"red\">" . _USER_UNFAVORITE_B . "</font></strong> " . _USER_UNFAVORITE_C . ".<br /><br />";
         }
         else {

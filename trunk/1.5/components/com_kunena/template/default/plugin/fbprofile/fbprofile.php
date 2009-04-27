@@ -16,7 +16,7 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-$acl = &JFactory::getACL();
+$kunena_acl = &JFactory::getACL();
 
 
 $fbConfig =& CKunenaConfig::getInstance();
@@ -31,7 +31,7 @@ if ($fbConfig->fb_profile == 'cb') {
 
 $mainframe->setPageTitle(_KUNENA_USERPROFILE_PROFILE . ' - ' . stripslashes($fbConfig->board_title));
 
-if ($my->id) //registered only
+if ($kunena_my->id) //registered only
 {
     require_once(KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
     require_once(KUNENA_PATH_LIB .DS. 'kunena.statsbar.php');
@@ -56,24 +56,24 @@ function showprf($userid, $page)
 {
     $fbConfig =& CKunenaConfig::getInstance();
 
-    $acl = &JFactory::getACL();
-    $my = &JFactory::getUser();
-    $database = &JFactory::getDBO();
+    $kunena_acl = &JFactory::getACL();
+    $kunena_my = &JFactory::getUser();
+    $kunena_db = &JFactory::getDBO();
     // ERROR: mixed global $fbIcons
     global $fbIcons;
 
     //Get userinfo needed later on, this limits the amount of queries
     unset($userinfo);
-    $database->setQuery("SELECT a.*, b.* FROM #__fb_users as a"
+    $kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_users as a"
                         . "\n LEFT JOIN #__users as b on b.id=a.userid"
                         . "\n where a.userid=$userid");
 
-    $userinfo = $database->loadObject();
+    $userinfo = $kunena_db->loadObject();
     check_dberror('Unable to get user profile info.');
 
     if (!$userinfo) {
-	$database->setQuery("SELECT * FROM #__users WHERE id=$userid");
-	$userinfo = $database->loadObject();
+	$kunena_db->setQuery("SELECT * FROM #__users WHERE id=$userid");
+	$userinfo = $kunena_db->loadObject();
 	check_dberror('Unable to get user profile info.');
 
 	if (!$userinfo) {
@@ -81,21 +81,21 @@ function showprf($userid, $page)
 		return;
 	} else {
 		// Check moderator status (admin is moderator)
-		$aro_group = $acl->getAroGroup($userid);
+		$aro_group = $kunena_acl->getAroGroup($userid);
 		if ($aro_group)
 		$aro_group->group_id = $aro_group->id;  // changed fieldname in Joomla 1.5: "group_id" -> "id"
 		$is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
 
 		// there's no profile; set userid and moderator status.
-		$database->setQuery("INSERT INTO #__fb_users (userid,moderator) VALUES ('$userid','$is_admin')");
-		$database->query();
+		$kunena_db->setQuery("INSERT INTO #__fb_users (userid,moderator) VALUES ('$userid','$is_admin')");
+		$kunena_db->query();
 		check_dberror('Unable to create user profile.');
 
-		$database->setQuery("SELECT a.*, b.* FROM #__fb_users as a"
+		$kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_users as a"
 			. "\n LEFT JOIN #__users as b on b.id=a.userid"
 			. "\n where a.userid=$userid");
 
-		$userinfo = $database->loadObject();
+		$userinfo = $kunena_db->loadObject();
 		check_dberror('Unable to get user profile info.');
 
 		// TODO: For future use
@@ -106,8 +106,8 @@ function showprf($userid, $page)
     }
 
 	// User Hits
-	$database->setQuery('UPDATE #__fb_users SET uhits=uhits+1 WHERE userid='.$userid);
-	$database->query() or trigger_dberror("Unable to update user hits.");
+	$kunena_db->setQuery('UPDATE #__fb_users SET uhits=uhits+1 WHERE userid='.$userid);
+	$kunena_db->query() or trigger_dberror("Unable to update user hits.");
 
 	// get userprofile hits
 	$msg_userhits = $userinfo->uhits;
@@ -130,7 +130,7 @@ function showprf($userid, $page)
 
     $msg_id = $fmessage->id;
     $lists["userid"] = $userid;
-    $msg_username = ($fmessage->email != "" && $my->id > 0 && $fbConfig->showemail == '1') ? "<a href=\"mailto:" . $fmessage->email . "\">" . $fb_username . "</a>" : $fb_username;
+    $msg_username = ($fmessage->email != "" && $kunena_my->id > 0 && $fbConfig->showemail == '1') ? "<a href=\"mailto:" . $fmessage->email . "\">" . $fb_username . "</a>" : $fb_username;
 
     if ($fbConfig->allowavatar)
     {
@@ -178,7 +178,7 @@ function showprf($userid, $page)
         $uIsAdm = 0;
 
         if ($ugid > 0) { //only get the groupname from the ACL if we're sure there is one
-            $agrp = strtolower($acl->get_group_name($ugid, 'ARO'));
+            $agrp = strtolower($kunena_acl->get_group_name($ugid, 'ARO'));
         }
 
         if ($ugid == 0) {
@@ -202,8 +202,8 @@ function showprf($userid, $page)
         //done usertype determination, phew...
 
         //Get the max# of posts for any one user
-        $database->setQuery("SELECT max(posts) from #__fb_users");
-        $maxPosts = $database->loadResult();
+        $kunena_db->setQuery("SELECT max(posts) from #__fb_users");
+        $maxPosts = $kunena_db->loadResult();
 
         //# of post for this user and ranking
 
@@ -216,8 +216,8 @@ function showprf($userid, $page)
 								if ($userinfo->rank != '0')
 								{
 												//special rank
-												$database->setQuery("SELECT * FROM #__fb_ranks WHERE rank_id = '$userinfo->rank'");
-												$getRank = $database->loadObjectList();
+												$kunena_db->setQuery("SELECT * FROM #__fb_ranks WHERE rank_id = '$userinfo->rank'");
+												$getRank = $kunena_db->loadObjectList();
 													check_dberror("Unable to load ranks.");
 												$rank=$getRank[0];
 												$rText = $rank->rank_title;
@@ -226,8 +226,8 @@ function showprf($userid, $page)
 									if ($userinfo->rank == '0')
 									{
 											//post count rank
-												$database->setQuery("SELECT * FROM #__fb_ranks WHERE ((rank_min <= $numPosts) AND (rank_special = 0))  ORDER BY rank_min DESC LIMIT 1");
-												$getRank = $database->loadObjectList();
+												$kunena_db->setQuery("SELECT * FROM #__fb_ranks WHERE ((rank_min <= $numPosts) AND (rank_special = 0))  ORDER BY rank_min DESC LIMIT 1");
+												$getRank = $kunena_db->loadObjectList();
 													check_dberror("Unable to load ranks.");
 												$rank=$getRank[0];
 												$rText = $rank->rank_title;
@@ -263,19 +263,19 @@ function showprf($userid, $page)
             }
             else
             {
-                $myGraph = new phpGraph;
-                //$myGraph->SetGraphTitle(_POSTS);
-                $myGraph->AddValue(_POSTS, $numPosts);
-                $myGraph->SetRowSortMode(0);
-                $myGraph->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $fbConfig->statscolor . "m.png");
-                $myGraph->SetBarImg2(KUNENA_URLEMOTIONSPATH . "graph.gif");
-                $myGraph->SetMaxVal($maxPosts);
-                $myGraph->SetShowCountsMode(2);
-                $myGraph->SetBarWidth(4); //height of the bar
-                $myGraph->SetBorderColor("#333333");
-                $myGraph->SetBarBorderWidth(0);
-                $myGraph->SetGraphWidth(120); //should match column width in the <TD> above -5 pixels
-                //$myGraph->BarGraphHoriz();
+                $kunena_myGraph = new phpGraph;
+                //$kunena_myGraph->SetGraphTitle(_POSTS);
+                $kunena_myGraph->AddValue(_POSTS, $numPosts);
+                $kunena_myGraph->SetRowSortMode(0);
+                $kunena_myGraph->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $fbConfig->statscolor . "m.png");
+                $kunena_myGraph->SetBarImg2(KUNENA_URLEMOTIONSPATH . "graph.gif");
+                $kunena_myGraph->SetMaxVal($maxPosts);
+                $kunena_myGraph->SetShowCountsMode(2);
+                $kunena_myGraph->SetBarWidth(4); //height of the bar
+                $kunena_myGraph->SetBorderColor("#333333");
+                $kunena_myGraph->SetBarBorderWidth(0);
+                $kunena_myGraph->SetGraphWidth(120); //should match column width in the <TD> above -5 pixels
+                //$kunena_myGraph->BarGraphHoriz();
                 $useGraph = 1;
             }
         }
@@ -288,7 +288,7 @@ function showprf($userid, $page)
         $karmaPoints = (int)$karmaPoints;
         $msg_karma = "<strong>" . _KARMA . ":</strong> $karmaPoints";
 
-        if ($my->id != '0' && $my->id != $userid)
+        if ($kunena_my->id != '0' && $kunena_my->id != $userid)
         {
             $msg_karmaminus = "<a href=\"" . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=decrease&amp;userid=' . $userid . '&amp;pid=' . $fmessage->id . '&amp;catid=' . $catid . '') . "\"><img src=\"";
 
@@ -315,7 +315,7 @@ function showprf($userid, $page)
 
     /*let's see if we should use uddeIM integration */
 
-    if ($fbConfig->pm_component == "uddeim" && $userid && $my->id)
+    if ($fbConfig->pm_component == "uddeim" && $userid && $kunena_my->id)
     {
 
         //we should offer the user a PMS link
@@ -334,7 +334,7 @@ function showprf($userid, $page)
     }
 
     /*let's see if we should use myPMS2 integration */
-    if ($fbConfig->pm_component == "pms" && $userid && $my->id)
+    if ($fbConfig->pm_component == "pms" && $userid && $kunena_my->id)
     {
         //we should offer the user a PMS link
         //first get the username of the user to contact
@@ -357,9 +357,9 @@ function showprf($userid, $page)
     {
         $sql = "SELECT count(userid) FROM #__session WHERE userid=" . $userid;
 
-        $database->setQuery($sql);
+        $kunena_db->setQuery($sql);
 
-        $isonline = $database->loadResult();
+        $isonline = $kunena_db->loadResult();
 
         if ($isonline && $userinfo->showOnline ==1 ) {
             $msg_online .= $fbIcons['onlineicon']
@@ -414,8 +414,8 @@ function showprf($userid, $page)
 
         $msg_buddy .= "\" alt=\"" . _VIEW_ADDBUDDY . "\" border=\"0\" title=\"" . _VIEW_ADDBUDDY . "\" /></a>";
 
-        $database->setQuery("SELECT icq,ym,msn,aim,website,location FROM #__mypms_profiles WHERE user='" . $PMSName . "'");
-        $profileitems = $database->loadObjectList();
+        $kunena_db->setQuery("SELECT icq,ym,msn,aim,website,location FROM #__mypms_profiles WHERE user='" . $PMSName . "'");
+        $profileitems = $kunena_db->loadObjectList();
         	check_dberror("Unable to load mypms_profiles.");
 
         foreach ($profileitems as $profileitems)

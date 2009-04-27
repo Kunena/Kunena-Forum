@@ -34,9 +34,9 @@ $do = JRequest::getVar('do');
 
 $now = time();
 $past = $now - $fbConfig->fbsessiontimeout;
-$myip = getenv('REMOTE_ADDR');
+$kunena_myip = getenv('REMOTE_ADDR');
 
-if ($my->id > 0) {
+if ($kunena_my->id > 0) {
     $isuser = 1;
     }
 else {
@@ -44,36 +44,36 @@ else {
     }
 
 //Delete non online users from db
-$database->setQuery("DELETE FROM #__fb_whoisonline WHERE time < '$past'");
-$database->query();
+$kunena_db->setQuery("DELETE FROM #__fb_whoisonline WHERE time < '$past'");
+$kunena_db->query();
 
-$database->setQuery("SELECT COUNT(*) FROM #__fb_whoisonline WHERE userip='$myip' AND userid='$my->id'");
-$online = $database->loadResult();
+$kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_whoisonline WHERE userip='$kunena_myip' AND userid='$kunena_my->id'");
+$online = $kunena_db->loadResult();
 
 unset ($row);
 
 if ($task == 'listcat' || $func == 'showcat') {
-    $database->setQuery("SELECT name FROM #__fb_categories WHERE id = {$catid}");
-    $what = $database->loadResult();
+    $kunena_db->setQuery("SELECT name FROM #__fb_categories WHERE id = {$catid}");
+    $what = $kunena_db->loadResult();
     }
 else if ($func == 'latest') {
-    $what = _KUNENA_LATEST_POSTS;
+    $what = _KUNENA_ALL_DISCUSSIONS;
     }
 else if ($id) {
-    $database->setQuery("SELECT subject FROM #__fb_messages WHERE id = {$id}");
-    $what = $database->loadResult();
+    $kunena_db->setQuery("SELECT subject FROM #__fb_messages WHERE id = {$id}");
+    $what = $kunena_db->loadResult();
     }
 else if ($replyto) {
-    $database->setQuery("SELECT subject FROM #__fb_messages WHERE id = {$replyto}");
-    $what = $database->loadResult();
+    $kunena_db->setQuery("SELECT subject FROM #__fb_messages WHERE id = {$replyto}");
+    $what = $kunena_db->loadResult();
     }
 else if ($do == 'reply') {
-    $database->setQuery("SELECT name FROM #__fb_categories WHERE id = {$catid}");
-    $what = $database->loadResult();
+    $kunena_db->setQuery("SELECT name FROM #__fb_categories WHERE id = {$catid}");
+    $what = $kunena_db->loadResult();
     }
 else if ($func == 'post' && $do == 'edit') {
-    $database->setQuery("SELECT name FROM #__fb_messages WHERE id = {$id}");
-    $what = $database->loadResult();
+    $kunena_db->setQuery("SELECT name FROM #__fb_messages WHERE id = {$id}");
+    $what = $kunena_db->loadResult();
     }
 else if ($func == 'who') {
     $what = _KUNENA_WHO_LATEST_POSTS;
@@ -88,16 +88,16 @@ $link = addslashes($link);
 
 if ($online == 1) {
     $sql = "UPDATE #__fb_whoisonline SET time='{$now}', what='{$what}', do= '{$do}', task= '{$task}', link= '{$link}', func= '{$func}'"
-            . "\n WHERE userid={$my->id} AND userip='{$myip}'";
-    $database->setQuery($sql);
+            . "\n WHERE userid={$kunena_my->id} AND userip='{$kunena_myip}'";
+    $kunena_db->setQuery($sql);
     }
 else {
     $sql = "INSERT INTO #__fb_whoisonline (`userid` , `time`, `what`, `task`, `do`, `func`,`link`, `userip`, `user`) "
-            . "\n VALUES ('{$my->id}', '{$now}', '{$what}','{$task}','{$do}','{$func}','{$link}', '{$myip}', '{$isuser}')";
+            . "\n VALUES ('{$kunena_my->id}', '{$now}', '{$what}','{$task}','{$do}','{$func}','{$link}', '{$kunena_myip}', '{$isuser}')";
 
-    $database->setQuery($sql);
+    $kunena_db->setQuery($sql);
     }
 
-$database->query();
-echo $database->getErrorMsg();
+$kunena_db->query();
+echo $kunena_db->getErrorMsg();
 ?>

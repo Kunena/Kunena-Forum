@@ -261,7 +261,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
     function TagExtended(&$tag_new, &$task, $tag, $between) {
         # Function replaces TAGs with corresponding
         # Encode was already been called for between
-        $my = &JFactory::getUser();
+        $kunena_my = &JFactory::getUser();
         if($task->in_code) {
             switch(strtolower($tag->name)) {
                 case 'code:1': // fb ancient compatibility
@@ -613,7 +613,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 break;
             case 'hide':
                 if($between) {
-                    if ($my->id==0)
+                    if ($kunena_my->id==0)
                     {
                     	// Hide between content from non registered users
                     	$tag_new = '';

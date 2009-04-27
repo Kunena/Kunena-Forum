@@ -49,7 +49,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
             </td>
 
             <?php
-            if (($fbConfig->regonly == "1" || $fbConfig->changename == '0') && $my->id != "" && !$is_Moderator) {
+            if (($fbConfig->regonly == "1" || $fbConfig->changename == '0') && $kunena_my->id != "" && !$is_Moderator) {
                 echo "<td><input type=\"hidden\" name=\"fb_authorname\" size=\"35\" class=\"" . $boardclass . "inputbox postinput\"  maxlength=\"35\" value=\"$authorName\" /><b>$authorName</b></td>";
             }
             else
@@ -71,12 +71,12 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
         if ($fbConfig->askemail)
         {
             echo '<tr class = "'. $boardclass . 'sectiontableentry2"><td class = "fb_leftcolumn"><strong>' . _GEN_EMAIL . ' *</strong>:</td>';
-            if (($fbConfig->regonly == "1" || $fbConfig->changename == '0') && $my->id != "" && !$is_Moderator) {
-                echo "<td>$my_email</td>";
+            if (($fbConfig->regonly == "1" || $fbConfig->changename == '0') && $kunena_my->id != "" && !$is_Moderator) {
+                echo "<td>$kunena_my_email</td>";
             }
             else
             {
-                echo "<td><input type=\"text\" name=\"email\"  size=\"35\" class=\"" . $boardclass . "inputbox postinput\" maxlength=\"35\" value=\"$my_email\" /></td>";
+                echo "<td><input type=\"text\" name=\"email\"  size=\"35\" class=\"" . $boardclass . "inputbox postinput\" maxlength=\"35\" value=\"$kunena_my_email\" /></td>";
             }
             echo '</tr>';
         }
@@ -138,7 +138,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 
 
         <?php
-        if (!$fbConfig->rte) {
+        if ($fbConfig->rtewidth == 0) {
             $useRte = 0;
         }
         else {
@@ -160,12 +160,12 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
             }
             else
             {
-                $database->setQuery("select thread from #__fb_messages where id=$replyto");
-                $fb_thread = $database->loadResult();
+                $kunena_db->setQuery("select thread from #__fb_messages where id=$replyto");
+                $fb_thread = $kunena_db->loadResult();
             }
 
-            $database->setQuery("SELECT thread from #__fb_subscriptions where userid=$my->id and thread='$fb_thread'");
-            $fb_subscribed = $database->loadResult();
+            $kunena_db->setQuery("SELECT thread from #__fb_subscriptions where userid=$kunena_my->id and thread='$fb_thread'");
+            $fb_subscribed = $kunena_db->loadResult();
 
             if ($fb_subscribed == "" || $replyto == 0) {
                 $fb_cansubscribe = 1;
@@ -187,7 +187,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
         </tr>
 <!-- /preview -->
 <?php
-        if (($fbConfig->allowimageupload || ($fbConfig->allowimageregupload && $my->id != 0) || $is_Moderator) && ($no_upload == "0" || $no_image_upload == "0"))
+        if (($fbConfig->allowimageupload || ($fbConfig->allowimageregupload && $kunena_my->id != 0) || $is_Moderator) && ($no_upload == "0" || $no_image_upload == "0"))
         {
         ?>
 
@@ -208,7 +208,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
         ?>
 
         <?php
-        if (($fbConfig->allowfileupload || ($fbConfig->allowfileregupload && $my->id != 0) || $is_Moderator) && ($no_upload == "0" || $no_file_upload == "0"))
+        if (($fbConfig->allowfileupload || ($fbConfig->allowfileregupload && $kunena_my->id != 0) || $is_Moderator) && ($no_upload == "0" || $no_file_upload == "0"))
         {
         ?>
 
@@ -227,7 +227,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
         <?php
         }
 
-        if ($my->id != 0 && $fbConfig->allowsubscriptions == 1 && $fb_cansubscribe == 1 && !$editmode)
+        if ($kunena_my->id != 0 && $fbConfig->allowsubscriptions == 1 && $fb_cansubscribe == 1 && !$editmode)
         {
         ?>
 
@@ -267,7 +267,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
         ?>
 		<?php
 		// Begin captcha . Thanks Adeptus
-		if ($fbConfig->captcha == 1 && $my->id < 1) { ?>
+		if ($fbConfig->captcha == 1 && $kunena_my->id < 1) { ?>
         <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
             <td class = "fb_leftcolumn">&nbsp;<strong><?php echo _KUNENA_CAPDESC; ?></strong>&nbsp;</td>
             <td align="left" valign="middle" height="35px">&nbsp;<input name="txtNumber" type="text" id="txtNumber" value="" class="fb_button" style="vertical-align:top" size="15">
@@ -318,6 +318,6 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
     $no_upload = "0"; //reset the value.. you just never know..
 
     if ($fbConfig->showhistory == 1) {
-        listThreadHistory($replyto, $fbConfig, $database);
+        listThreadHistory($replyto, $fbConfig, $kunena_db);
     }
 ?>

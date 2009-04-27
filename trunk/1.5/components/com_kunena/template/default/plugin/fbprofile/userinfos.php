@@ -77,7 +77,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
                     <?php
                         if ($useGraph)
-                            $myGraph->BarGraphHoriz();
+                            $kunena_myGraph->BarGraphHoriz();
                     ?>
 
                     <?php

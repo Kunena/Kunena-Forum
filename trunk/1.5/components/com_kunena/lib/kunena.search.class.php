@@ -64,7 +64,7 @@ class CKunenaSearch
      */
     function CKunenaSearch()
     {
-        global $database, $my;
+        global $kunena_db, $kunena_my;
 
         $fbConfig =& CKunenaConfig::getInstance();
 
@@ -113,7 +113,7 @@ class CKunenaSearch
         $q = $this->utf8_urldecode($q);
 	if ($q == _GEN_SEARCH_BOX) $q = '';
 	$this->searchword = $q;
-	$q = $database->getEscaped($q);
+	$q = $kunena_db->getEscaped($q);
         $arr_searchwords = split(' ', $q);
 	$do_search = FALSE;
 	$this->arr_kunena_searchstrings = array();
@@ -146,7 +146,7 @@ class CKunenaSearch
         for ($x = 0; $x < count($arr_searchwords); $x++)
         {
             $searchword = $arr_searchwords[$x];
-            $searchword = $database->getEscaped(trim(strtolower($searchword)));
+            $searchword = $kunena_db->getEscaped(trim(strtolower($searchword)));
             if (empty($searchword)) continue;
             $matches = array ();
             $not = '';
@@ -180,8 +180,8 @@ class CKunenaSearch
 	$time = 0;
 	switch($searchdate) {
 		case 'lastvisit':
-			$database->setQuery('SELECT lasttime FROM #__fb_sessions WHERE userid = '. $my->id);
-			$time = $database->loadResult();
+			$kunena_db->setQuery('SELECT lasttime FROM #__fb_sessions WHERE userid = '. $kunena_my->id);
+			$time = $kunena_db->loadResult();
 			break;
 		case 'all':
 			break;
@@ -245,8 +245,8 @@ class CKunenaSearch
             $groupby = '';
 
         /* get total */
-        $database->setQuery('SELECT count(m.id) FROM #__fb_messages as m JOIN #__fb_messages_text as t ON m.id=t.mesid WHERE ' . $where . $groupby);
-        $this->total = $database->loadResult();
+        $kunena_db->setQuery('SELECT count(m.id) FROM #__fb_messages as m JOIN #__fb_messages_text as t ON m.id=t.mesid WHERE ' . $where . $groupby);
+        $this->total = $kunena_db->loadResult();
         check_dberror("Unable to count messages.");
 
         /* if there are no forums to search in, set error and return */
@@ -260,11 +260,11 @@ class CKunenaSearch
 
         /* get results */
         $sql = 'SELECT m.id,m.subject,m.catid,m.thread,m.name,m.time,t.message FROM #__fb_messages_text as t JOIN #__fb_messages as m ON m.id=t.mesid WHERE ' . $where . $groupby . ' ORDER BY ' . $orderby . ' LIMIT ' . $limitstart . ',' . $limit;
-        $database->setQuery($sql);
-        $rows = $database->loadObjectList();
+        $kunena_db->setQuery($sql);
+        $rows = $kunena_db->loadObjectList();
         check_dberror("Unable to load messages.");
 
-        $this->str_kunena_errormsg = $sql . '<br />' . $database->getErrorMsg();
+        $this->str_kunena_errormsg = $sql . '<br />' . $kunena_db->getErrorMsg();
 
         if (count($rows) > 0)
             $this->arr_kunena_results = $rows;
@@ -301,7 +301,7 @@ class CKunenaSearch
 	return $url_params;
     }
     function get_search_forums(&$catids, $childforums = 1) {
-        global $database, $my, $fbSession;
+        global $kunena_db, $kunena_my, $fbSession;
 
         /* get allowed forums */
         $allowed_forums = array();
@@ -311,8 +311,8 @@ class CKunenaSearch
             $allowed_string = "AND id IN ({$fbSession->allowed})";
 	}
 
-        $database->setQuery("SELECT id, parent FROM #__fb_categories WHERE pub_access='0' AND published='1' $allowed_string");
-        $allowed_forums = $database->loadAssocList('id');
+        $kunena_db->setQuery("SELECT id, parent FROM #__fb_categories WHERE pub_access='0' AND published='1' $allowed_string");
+        $allowed_forums = $kunena_db->loadAssocList('id');
         check_dberror("Unable to get public categories.");
 
 	foreach ($allowed_forums as $forum)

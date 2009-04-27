@@ -34,6 +34,7 @@ Kunena 1.5.1b
 
 27-April-2009 Matias
 ^ [#15784] Merge 1.0.10 fixes from revision 602 to 651
+^ [#15784] Merge from branch/1.5 from revision 624 to 627
 
 26-April-2009 Matias
 # [#16117] Search: html_entity_decode() throws warning in some environments
@@ -61,6 +62,23 @@ Kunena 1.5.1b
 # [#16092] File upload does not work in some servers
 # [#16084] Search: Call to undefined function mb_substr()
 # [#16081] Fatal error in kunena.config.class.php
+
+20-April-2009 Matias
+# [#16047] Replace all legacy functions which were introduced in 1.0.9 merge
+! Fixed: Search and Advanced Search do not work
+! Fixed: Community Builder: Integration not working
+! Fixed: Community Builder: Default avatar is missing
+! Fixed: User Profile not working
+# [#16049] Global variables like $database conflicts with Legacy mode
+! Renamed: $acl -> $kunena_acl, $database -> $kunena_db, $my -> $kunena_my
+# [#16048] PHP notices are still hidden in frontend
+# [#16053] Remove PHP Notices from the frontend
+! Fixed: Missing translations
+! Fixed: Saving configuration in backend fails
+! Fixed: Kunena Authentication: Joomla group check is broken
+! Fixed: Announcements: Smileys don't work
+! Fixed: My Profile: Smileys don't work in signature
+! Fixed: Joomla Plugins for content are not working
 
 6-April-2009 fxstein
 # [#15808] Fix broken New Category button in admin backend

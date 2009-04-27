@@ -22,6 +22,12 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+// 1.5.1b
+
+DEFINE('_KUNENA_DT_LMON_DEC', 'December');
+DEFINE('_KUNENA_DT_MON_DEC', 'Dec');
+DEFINE('_KUNENA_NOGENDER', 'Unknown');
+
 // 1.0.10
 DEFINE('_KUNENA_ERROR_INCOMPLETE_ERROR', 'Your Kunena installation is incomplete!');
 DEFINE('_KUNENA_ERROR_INCOMPLETE_OFFLINE', 'Because of the above errors your Forum is now Offline and Forum Administration has been disabled.');

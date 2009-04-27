@@ -28,9 +28,6 @@ global $mainframe;
 $mtime = explode(" ", microtime());
 $tstart = $mtime[1] + $mtime[0];
 
-// TODO: Get rid of THIS!!! - Kill notices (we have many..)
-error_reporting (E_ALL ^ E_NOTICE);
-
 // Kunena wide defines
 require_once (JPATH_BASE  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 
@@ -86,10 +83,10 @@ global $kunenaProfile;
 
 $fbConfig =& CKunenaConfig::getInstance();
 
-$my = &JFactory::getUser();
+$kunena_my = &JFactory::getUser();
 
 // Get data about the current user - its ok to not have a userid = guest
-$KunenaUser = new CKunenaUser($my->id);
+$KunenaUser = new CKunenaUser($kunena_my->id);
 // Load configuration and personal settings for current user
 $fbConfig =& CKunenaConfig::getInstance();
 
@@ -99,9 +96,9 @@ if ($kn_tables->installed() === false) {
 }
 
 // Permissions: Check for administrators and moderators
-if ($my->id != 0)
+if ($kunena_my->id != 0)
 {
-    $aro_group = $acl->getAroGroup($my->id);
+    $aro_group = $kunena_acl->getAroGroup($kunena_my->id);
    	$aro_group->group_id = $aro_group->id;  // changed fieldname in Joomla 1.5: "group_id" -> "id"
     $is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
 }
@@ -111,11 +108,11 @@ else
     $is_admin = 0;
 }
 
-//Get the userid; sometimes the new var works whilst $my->id doesn't..?!?
-$my_id = $my->id;
+//Get the userid; sometimes the new var works whilst $kunena_my->id doesn't..?!?
+$kunena_my_id = $kunena_my->id;
 
 // Check if we only allow registered users
-if ($fbConfig->regonly && !$my_id)
+if ($fbConfig->regonly && !$kunena_my_id)
 {
     echo _FORUM_UNAUTHORIZIED . "<br />";
     echo _FORUM_UNAUTHORIZIED2;
@@ -275,13 +272,16 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.category.class.php');
 require_once (JPATH_BASE.'/libraries/joomla/template/template.php');
 
 if ($catid != '') {
-    $thisCat = new jbCategory($database, $catid);
+    $thisCat = new jbCategory($kunena_db, $catid);
     }
 
 $KunenaTemplate = new patTemplate();
 $KunenaTemplate->setRoot( KUNENA_ABSTMPLTPATH );
 
-$is_Moderator = fb_has_moderator_permission($database, $thisCat, $my->id, $is_admin);
+$KunenaTemplate->readTemplatesFromFile("header.html");
+$KunenaTemplate->readTemplatesFromFile("footer.html");
+
+$is_Moderator = fb_has_moderator_permission($kunena_db, $thisCat, $kunena_my->id, $is_admin);
 
 //intercept the RSS request; we should stop afterwards
 if ($func == 'fb_rss')
@@ -304,7 +304,7 @@ if ($func == '') // Set default start page as per config settings
 			$func = 'latest';
 			break;
 		case 'my':
-			$func = $my->id > 0 ? 'mylatest' : 'latest';
+			$func = $kunena_my->id > 0 ? 'mylatest' : 'latest';
 			break;
 		default:
 			$func = 'listcat';
@@ -355,20 +355,20 @@ else
 //
 	// We only do the session handling for registered users
 	// No point in keeping track of whats new for guests
-	if ($my->id > 0)
+	if ($kunena_my->id > 0)
 	{
 		// First we drop an updated cookie, good for 1 year
 		// We have consolidated multiple instances of cookie management into this single location
 		// NOT SURE IF WE STILL NEED THIS ONE after session management got dbtized
-		setcookie("fboard_settings[member_id]", $my->id, time() + KUNENA_SECONDS_IN_YEAR, '/');
+		setcookie("fboard_settings[member_id]", $kunena_my->id, time() + KUNENA_SECONDS_IN_YEAR, '/');
 
 		// We assume that this is a new user and that we don't know about a previous visit
 		$new_fb_user = 0;
 		$resetView = 0;
 
 		// Lookup existing session sored in db. If none exists this is a first time visitor
-		$database->setQuery("SELECT * from #__fb_sessions where userid=" . $my->id);
-		$fbSessionArray = $database->loadObjectList();
+		$kunena_db->setQuery("SELECT * from #__fb_sessions where userid=" . $kunena_my->id);
+		$fbSessionArray = $kunena_db->loadObjectList();
 			check_dberror("Unable to load sessions.");
 		$fbSession = $fbSessionArray[0];
 		$fbSessionUpd = null;
@@ -378,7 +378,7 @@ else
 			$new_fb_user = 1;
 			$resetView = 1;
 			// Init new sessions for first time user
-			$fbSession->userid = $my->id;
+			$fbSession->userid = $kunena_my->id;
 			$fbSession->allowed = '';
 			$fbSession->lasttime = $systime - KUNENA_SECONDS_IN_YEAR;  // show threads up to 1 year back as new
 			$fbSession->readtopics = '';
@@ -399,7 +399,7 @@ else
 
 		// get all accessaible forums if needed (eg on forum modification, new session)
 		if (!$fbSession->allowed or $fbSession->allowed == 'na' or $fbSessionTimeOut) {
-			$allow_forums = CKunenaTools::getAllowedForums($my->id, $aro_group->group_id, $acl);
+			$allow_forums = CKunenaTools::getAllowedForums($kunena_my->id, $aro_group->group_id, $kunena_acl);
 			if (!$allow_forums) $allow_forums = '0';
 			if ($allow_forums <> $fbSession->allowed)
 				$fbSession->allowed = $fbSessionUpd->allowed = $allow_forums;
@@ -408,12 +408,12 @@ else
 
 		// save fbsession
 		if ($new_fb_user) {
-			$database->insertObject('#__fb_sessions', $fbSession);
+			$kunena_db->insertObject('#__fb_sessions', $fbSession);
 				check_dberror('Unable to insert new session record for user.');
 		} else {
 			$fbSessionUpd->userid = $fbSession->userid;
 			$fbSession->currvisit = $fbSessionUpd->currvisit = $systime;
-			$database->updateObject('#__fb_sessions', $fbSessionUpd, 'userid');
+			$kunena_db->updateObject('#__fb_sessions', $fbSessionUpd, 'userid');
 				check_dberror('Unable to update session record for user.');
 		}
 		unset($fbSessionUpd);
@@ -423,8 +423,8 @@ else
 		}
 
 		// Now lets get the view type for the forum
-		$database->setQuery("select view from #__fb_users where userid=$my->id");
-		$prefview = $database->loadResult();
+		$kunena_db->setQuery("select view from #__fb_users where userid=$kunena_my->id");
+		$prefview = $kunena_db->loadResult();
 			check_dberror('Unable load default view type for user.');
 
 		// If the prefferred view comes back empty this must be a new user
@@ -433,14 +433,14 @@ else
 		{
 			$prefview = $fbConfig->default_view;
 
-			$database->setQuery("SELECT count(*) FROM #__fb_users WHERE userid=$my->id");
-			$userexists = $database->loadResult();
+			$kunena_db->setQuery("SELECT count(*) FROM #__fb_users WHERE userid=$kunena_my->id");
+			$userexists = $kunena_db->loadResult();
 			check_dberror('Unable load default view type for user.');
 			if (!$userexists)
 			{
 				// there's no profile; set userid and the default view type as preferred view type.
-				$database->setQuery("insert into #__fb_users (userid,view,moderator) values ('$my->id','$prefview','$is_admin')");
-				$database->query();
+				$kunena_db->setQuery("insert into #__fb_users (userid,view,moderator) values ('$kunena_my->id','$prefview','$is_admin')");
+				$kunena_db->query();
 					check_dberror('Unable to create user profile.');
 			}
 		}
@@ -460,13 +460,15 @@ else
 	else
 	{
 		// collect accessaible categories for guest user
-		$database->setQuery("SELECT id FROM #__fb_categories WHERE pub_access=0 AND published=1");
+		$kunena_db->setQuery("SELECT id FROM #__fb_categories WHERE pub_access=0 AND published=1");
 		$fbSession->allowed =
-			($arr_pubcats = $database->loadResultArray())?implode(',', $arr_pubcats):'';
+			($arr_pubcats = $kunena_db->loadResultArray())?implode(',', $arr_pubcats):'';
 			check_dberror('Unable load accessible categories for user.');
 
 		// For guests we don't show new posts
 		$prevCheck = $systime;
+		$new_fb_user = 0;
+		$fbSession->readtopics = '';
 	}
 
 	// no access to categories?
@@ -491,8 +493,8 @@ else
     $view = "flat";
 
     //Get the max# of posts for any one user
-    $database->setQuery("SELECT max(posts) from #__fb_users");
-    $maxPosts = $database->loadResult();
+    $kunena_db->setQuery("SELECT max(posts) from #__fb_users");
+    $maxPosts = $kunena_db->loadResult();
     	check_dberror('Unable load max(posts) for user.');
 
     //Get the topics this user has already read this session from #__fb_sessions
@@ -512,8 +514,8 @@ else
     //the only thing we can do with it is 'listcat' and nothing else
     if ($func == "showcat" || $func == "view" || $func == "post")
     {
-        $database->setQuery("SELECT parent FROM #__fb_categories WHERE id=$catid");
-	    $strCatParent = $database->loadResult();
+        $kunena_db->setQuery("SELECT parent FROM #__fb_categories WHERE id=$catid");
+	    $strCatParent = $kunena_db->loadResult();
 			check_dberror('Unable to load categories.');
 
         if ($catid == '' || $strCatParent == 0)
@@ -525,21 +527,21 @@ else
     switch ($func)
     {
         case 'view':
-            $fbMenu = KUNENA_get_menu(KUNENA_CB_ITEMID, $fbConfig, $fbIcons, $my->id, 3, $view, $catid, $id, $thread);
+            $fbMenu = KUNENA_get_menu(KUNENA_CB_ITEMID, $fbConfig, $fbIcons, $kunena_my->id, 3, $view, $catid, $id, $thread);
 
             break;
 
         case 'showcat':
             //get number of pending messages
-            $database->setQuery("SELECT count(*) FROM #__fb_messages WHERE catid=$catid and hold=1");
-            $numPending = $database->loadResult();
+            $kunena_db->setQuery("SELECT count(*) FROM #__fb_messages WHERE catid=$catid and hold=1");
+            $numPending = $kunena_db->loadResult();
             	check_dberror('Unable load pending messages.');
 
-            $fbMenu = KUNENA_get_menu(KUNENA_CB_ITEMID, $fbConfig, $fbIcons, $my->id, 2, $view, $catid, $id, $thread, $is_Moderator, $numPending);
+            $fbMenu = KUNENA_get_menu(KUNENA_CB_ITEMID, $fbConfig, $fbIcons, $kunena_my->id, 2, $view, $catid, $id, $thread, $is_Moderator, $numPending);
             break;
 
         default:
-            $fbMenu = KUNENA_get_menu(KUNENA_CB_ITEMID, $fbConfig, $fbIcons, $my->id, 1);
+            $fbMenu = KUNENA_get_menu(KUNENA_CB_ITEMID, $fbConfig, $fbIcons, $kunena_my->id, 1);
 
             break;
     }
@@ -771,12 +773,12 @@ else
         #########################################################################################
         case 'markthisread':
             // get all already read topics
-            $database->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid=$my->id");
-            $allreadyRead = $database->loadResult();
+            $kunena_db->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid=$kunena_my->id");
+            $allreadyRead = $kunena_db->loadResult();
             	check_dberror("Unable to load read topics.");
             /* Mark all these topics read */
-            $database->setQuery("SELECT thread FROM #__fb_messages WHERE catid=$catid and thread not in ('$allreadyRead') GROUP BY THREAD");
-            $readForum = $database->loadObjectList();
+            $kunena_db->setQuery("SELECT thread FROM #__fb_messages WHERE catid=$catid and thread not in ('$allreadyRead') GROUP BY THREAD");
+            $readForum = $kunena_db->loadObjectList();
             	check_dberror("Unable to load messages.");
             $readTopics = '--';
 
@@ -790,8 +792,8 @@ else
                 $readTopics = $readTopics . ',' . $allreadyRead;
                 }
 
-            $database->setQuery("UPDATE #__fb_sessions set readtopics='$readTopics' WHERE userid=$my->id");
-            $database->query();
+            $kunena_db->setQuery("UPDATE #__fb_sessions set readtopics='$readTopics' WHERE userid=$kunena_my->id");
+            $kunena_db->query();
             	check_dberror('Unable to update readtopics in session table.');
 
             $mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid)), _GEN_FORUM_MARKED);

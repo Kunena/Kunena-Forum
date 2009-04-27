@@ -17,13 +17,8 @@ defined( '_JEXEC' ) or die('Restricted access');
  * @global CBframework $_CB_framework
  */
 global $_CB_framework, $_CB_database, $ueConfig, $mainframe;
-$tmp_db =& $database;
 
-if ( defined( 'JPATH_ADMINISTRATOR' ) ) {
-	$cbpath = KUNENA_ROOT_PATH_ADMIN .DS. 'components/com_comprofiler/plugin.foundation.php';
-} else {
-	$cbpath = $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php';
-}
+$cbpath = KUNENA_ROOT_PATH_ADMIN .DS. 'components/com_comprofiler/plugin.foundation.php';
 if ( ! file_exists( $cbpath ) )
 {
 	$fbConfig->fb_profile = 'fb';
@@ -35,7 +30,6 @@ cbimport( 'cb.tables' );
 cbimport( 'language.front' );
 cbimport( 'cb.tabs' );
 
-$database =& $tmp_db;
 unset ($tmp_db);
 
 class CKunenaCBProfile {

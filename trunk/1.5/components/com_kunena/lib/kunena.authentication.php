@@ -24,7 +24,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 class CKunenaAuthentication
 {
-    function validate_user(&$forum, &$allow_forum, $groupid, &$acl)
+    function validate_user(&$forum, &$allow_forum, $groupid, &$kunena_acl)
     {
         if ($forum->pub_recurse)
         {
@@ -64,7 +64,7 @@ class CKunenaAuthentication
                 {
                     //check if there are child groups for the Access Level
                     $group_childs = array ();
-                    $group_childs = $acl->get_group_children($forum->pub_access, 'ARO', $pub_recurse);
+                    $group_childs = $kunena_acl->get_group_children($forum->pub_access, 'ARO', $pub_recurse);
 
                     if (is_array($group_childs) && count($group_childs) > 0)
                     {
@@ -90,7 +90,7 @@ class CKunenaAuthentication
                 {
                     //check if there are child groups for the Access Level
                     $group_childs = array ();
-                    $group_childs = $acl->get_group_children($forum->admin_access, 'ARO', $admin_recurse);
+                    $group_childs = $kunena_acl->get_group_children($forum->admin_access, 'ARO', $admin_recurse);
 
                     if (is_array($group_childs) && count($group_childs) > 0)
                     {

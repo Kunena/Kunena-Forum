@@ -191,7 +191,7 @@ $fbConfig =& CKunenaConfig::getInstance();
 		</tbody>
 	</table>
             <input type="hidden" name="<?php echo $validate; ?>" value="1" />
-            <input type="hidden" name="id" value="<?php echo $my->id;?>" />
+            <input type="hidden" name="id" value="<?php echo $kunena_my->id;?>" />
 </form>
 </div>
 </div>

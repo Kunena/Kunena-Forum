@@ -299,14 +299,14 @@ class CKunenaLink
     //
     function GetLatestPostAutoRedirectHTML($fbConfig, $pid, $limit)
     {
-        $database = &JFactory::getDBO();
+        $kunena_db = &JFactory::getDBO();
         // First determine the thread, latest post and number of posts for the post supplied
-        $database->setQuery('SELECT a.thread AS thread, max(a.id) AS latest_id, max(a.catid) AS catid, count(*) AS totalmessages
+        $kunena_db->setQuery('SELECT a.thread AS thread, max(a.id) AS latest_id, max(a.catid) AS catid, count(*) AS totalmessages
                              FROM #__fb_messages AS a,
                                 (SELECT max(thread) AS thread FROM #__fb_messages WHERE id='.$pid.') AS b
                              WHERE a.thread = b.thread AND a.hold = 0
                              GROUP BY a.thread');
-        $result = $database->loadObject();
+        $result = $kunena_db->loadObject();
         	check_dberror("Unable to retrieve latest post.");
 
         // Now Calculate the number of pages for this particular thread
@@ -325,14 +325,14 @@ class CKunenaLink
     
     function GetLatestPageAutoRedirectURL($fbConfig, $pid, $limit)
     {
-        $database = &JFactory::getDBO();
+        $kunena_db = &JFactory::getDBO();
         // First determine the thread, latest post and number of posts for the post supplied
-        $database->setQuery('SELECT a.thread AS thread, max(a.id) AS latest_id, max(a.catid) AS catid, count(*) AS totalmessages
+        $kunena_db->setQuery('SELECT a.thread AS thread, max(a.id) AS latest_id, max(a.catid) AS catid, count(*) AS totalmessages
                              FROM #__fb_messages AS a,
                                 (SELECT max(thread) AS thread FROM #__fb_messages WHERE id='.$pid.') AS b
                              WHERE a.thread = b.thread AND a.hold = 0
                              GROUP BY a.thread');
-        $result = $database->loadObject();
+        $result = $kunena_db->loadObject();
         	check_dberror("Unable to retrieve latest post.");
 
         // Now Calculate the number of pages for this particular thread

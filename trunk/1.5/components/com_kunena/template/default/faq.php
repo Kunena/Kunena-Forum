@@ -47,8 +47,8 @@ $mainframe->setPageTitle(_GEN_HELP . ' - ' . stripslashes($fbConfig->board_title
             <td class="fb_faqdesc" valign="top">
 
         <?php
-          $database->setQuery("SELECT introtext FROM #__content  WHERE id=".$fbConfig->help_cid."");
-		  $j_introtext = $database->loadResult();
+          $kunena_db->setQuery("SELECT introtext FROM #__content  WHERE id=".$fbConfig->help_cid."");
+		  $j_introtext = $kunena_db->loadResult();
 
            ?>
             <?php echo $j_introtext; ?>

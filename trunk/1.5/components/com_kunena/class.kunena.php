@@ -24,11 +24,11 @@ define('KUNENA_JLIVEURL', JURI::root());
 define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH .DS. "templates".DS . $mainframe->getTemplate());
 define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "/templates/".$mainframe->getTemplate());
 
-global $database, $my;
+global $kunena_db, $kunena_my;
 $fbConfig =& CKunenaConfig::getInstance();
 
-$database = &JFactory::getDBO();
-$my = &JFactory::getUser();
+$kunena_db = &JFactory::getDBO();
+$kunena_my = &JFactory::getUser();
 $document =& JFactory::getDocument();
 
 /**
@@ -38,8 +38,8 @@ $Itemid = JRequest::getInt('Itemid', 0, 'REQUEST');
 
 //check if we have all the itemid sets. if so, then no need for DB call
 if (!defined("KUNENA_COMPONENT_ITEMID")) {
-        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_kunena' AND published = 1");
-        $Itemid = $database->loadResult();
+        $kunena_db->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_kunena' AND published = 1");
+        $Itemid = $kunena_db->loadResult();
 
         if ($Itemid < 1) {
             $Itemid = 0;
@@ -54,8 +54,8 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     	// Only proceed if jomSocial is really installed
 	    if ( file_exists( KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/core.php' ) )
 	    {
-	        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_community' AND published=1");
-	        $JOMSOCIAL_Itemid = $database->loadResult();
+	        $kunena_db->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_community' AND published=1");
+	        $JOMSOCIAL_Itemid = $kunena_db->loadResult();
 	        	check_dberror('Unable to load jomSocial item id');
 
 	        define("KUNENA_JOMSOCIAL_ITEMID", (int)$JOMSOCIAL_Itemid);
@@ -92,8 +92,8 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 	    {
 	    	global $_CB_framework, $_CB_database, $ueConfig, $mainframe;
 
-	        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_comprofiler' AND published=1");
-	        $CB_Itemid = $database->loadResult();
+	        $kunena_db->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_comprofiler' AND published=1");
+	        $CB_Itemid = $kunena_db->loadResult();
 	        	check_dberror('Unable to load CB item id');
 
 	        define("KUNENA_CB_ITEMID", (int)$CB_Itemid);
@@ -115,8 +115,8 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 
     //Clexus PM
     if ($fbConfig->pm_component == 'clexuspm' || $fbConfig->fb_profile == 'clexuspm') {
-        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_mypms' AND published=1");
-        $CPM_Itemid = $database->loadResult();
+        $kunena_db->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_mypms' AND published=1");
+        $CPM_Itemid = $kunena_db->loadResult();
         	check_dberror('Unable to load Clexus item id');
 
         define("KUNENA_CPM_ITEMID", (int)$CPM_Itemid);
@@ -125,8 +125,8 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 
     // UddeIM
     if ($fbConfig->pm_component == 'uddeim') {
-        $database->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_uddeim'");
-        $UIM_itemid = $database->loadResult();
+        $kunena_db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_uddeim'");
+        $UIM_itemid = $kunena_db->loadResult();
                 	check_dberror('Unable to load uddeim item id');
 
         define("KUNENA_UIM_ITEMID", (int)$UIM_itemid);
@@ -135,8 +135,8 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 
     // MISSUS
     if ($fbConfig->pm_component == 'missus') {
-        $database->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_missus'");
-        $MISSUS_itemid = $database->loadResult();
+        $kunena_db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_missus'");
+        $MISSUS_itemid = $kunena_db->loadResult();
                 	check_dberror('Unable to load missus item id');
 
         define("KUNENA_MISSUS_ITEMID", (int)$MISSUS_itemid);
@@ -181,8 +181,8 @@ define('KUNENA_DIRECTURL', KUNENA_JLIVEURL . '/components/com_kunena');
 define('KUNENA_URLSOURCESPATH', KUNENA_DIRECTURL . '/lib/');
 
 if (!defined("KUNENA_JCSSURL")) {
-    $database->setQuery("SELECT template FROM #__templates_menu where client_id ='0'");
-    $current_stylesheet = $database->loadResult();
+    $kunena_db->setQuery("SELECT template FROM #__templates_menu where client_id ='0'");
+    $current_stylesheet = $kunena_db->loadResult();
     define('KUNENA_JCSSURL', KUNENA_JLIVEURL . '/templates/' . $current_stylesheet . '/css/template_css.css');
     }
 
@@ -329,15 +329,18 @@ function KUNENA_check_image_type(&$type) {
     }
 
 function getFBGroupName($id) {
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
     $gr = '';
-    $database->setQuery("select id, title from #__fb_groups as g, #__fb_users as u where u.group_id = g.id and u.userid= $id");
-    $gr = $database->loadObject();
+    $kunena_db->setQuery("select id, title from #__fb_groups as g, #__fb_users as u where u.group_id = g.id and u.userid= $id");
+    $gr = $kunena_db->loadObject();
 
-    if ($gr->id > 1) {
-        return $gr;
-        }
+    if ($gr == NULL) {
+	$gr = new stdClass();
+	$gr->id = 0;
+	$gr->title = _VIEW_VISITOR;
     }
+    return $gr;
+}
 
 class CKunenaTools {
     var $id = null;
@@ -365,7 +368,7 @@ class CKunenaTools {
     function fbGetShowTime ($time=null, $space='FB') {
     	// converts internal (FB)|UTC representing time to display time
     	// could consider user properties (zones) for future
-		$database = &JFactory::getDBO();
+		$kunena_db = &JFactory::getDBO();
         $fbConfig =& CKunenaConfig::getInstance();
         // Prevent zeroes
         if($time===0) {
@@ -382,28 +385,28 @@ class CKunenaTools {
     }
 
     function whoisID($id) {
-        $database = &JFactory::getDBO();
+        $kunena_db = &JFactory::getDBO();
 
-        $id = intval($database->getEscaped($id));
-        $database->setQuery("select username from #__users where id=$id");
-        return $database->loadResult();
+        $id = intval($kunena_db->getEscaped($id));
+        $kunena_db->setQuery("select username from #__users where id=$id");
+        return $kunena_db->loadResult();
         }
 
     function reCountBoards() {
-        $database = &JFactory::getDBO();
+        $kunena_db = &JFactory::getDBO();
         include_once (KUNENA_PATH_LIB .DS. 'kunena.db.iterator.class.php');
 
         //reset all stats to 0
-        $database->setQuery("UPDATE `#__fb_categories` SET `id_last_msg`='0',`time_last_msg`='0',`numTopics`='0',`numPosts`='0'");
-        $database->query();
+        $kunena_db->setQuery("UPDATE `#__fb_categories` SET `id_last_msg`='0',`time_last_msg`='0',`numTopics`='0',`numPosts`='0'");
+        $kunena_db->query();
         	check_dberror("Unable to update categories.");
 
-        $database->setQuery("select id, time, parent, catid from #__fb_messages where hold=0 AND moved=0 order by id asc");
-        $messages_iter = new fb_DB_Iterator($database);
+        $kunena_db->setQuery("select id, time, parent, catid from #__fb_messages where hold=0 AND moved=0 order by id asc");
+        $messages_iter = new fb_DB_Iterator($kunena_db);
         	check_dberror("Unable to load messages.");
 
-        $database->setQuery("select id, parent, numTopics, numPosts,id_last_msg, time_last_msg from #__fb_categories order by id asc");
-        $cats = $database->loadObjectList();
+        $kunena_db->setQuery("select id, parent, numTopics, numPosts,id_last_msg, time_last_msg from #__fb_categories order by id asc");
+        $cats = $kunena_db->loadObjectList();
         	check_dberror("Unable to load messages.");
 
         foreach ($cats as $c) {
@@ -432,10 +435,10 @@ class CKunenaTools {
 
         // now back to db
         foreach ($ctg as $cc) {
-            $database->setQuery(
+            $kunena_db->setQuery(
                 "UPDATE `#__fb_categories` SET `time_last_msg`='" . $cc->time_last_msg . "',`id_last_msg`='" . $cc->id_last_msg . "',`numTopics`='" . $cc->numTopics . "',`numPosts`='" . $cc->numPosts . "' WHERE (`id`='" . $cc->id . "') ");
-            $database->query();
-            echo $database->getErrorMsg();
+            $kunena_db->query();
+            echo $kunena_db->getErrorMsg();
             }
         $messages_iter->Free();
 
@@ -443,7 +446,7 @@ class CKunenaTools {
 
     function updateNameInfo()
     {
-        $database = &JFactory::getDBO();
+        $kunena_db = &JFactory::getDBO();
         $fbConfig =& CKunenaConfig::getInstance();
 
         $fb_queryName = $fbConfig->username ? "username" : "name";
@@ -451,15 +454,15 @@ class CKunenaTools {
 	    $query = "UPDATE #__fb_messages AS m, #__users AS u
 	    			SET m.name = u.$fb_queryName
 					WHERE m.userid = u.id";
-        $database->setQuery($query);
-        $database->query();
+        $kunena_db->setQuery($query);
+        $kunena_db->query();
         	check_dberror ("Unable to update user name information");
     }
 
     function modifyCategoryStats($msg_id, $msg_parent, $msg_time, $msg_cat) {
-        $database = &JFactory::getDBO();
-        $database->setQuery("select id, parent, numTopics, numPosts,id_last_msg, time_last_msg from #__fb_categories order by id asc");
-        $cats = $database->loadObjectList();
+        $kunena_db = &JFactory::getDBO();
+        $kunena_db->setQuery("select id, parent, numTopics, numPosts,id_last_msg, time_last_msg from #__fb_categories order by id asc");
+        $cats = $kunena_db->loadObjectList();
         	check_dberror("Unable to load categories.");
 
         foreach ($cats as $c) {
@@ -479,15 +482,15 @@ class CKunenaTools {
             $ctg[$msg_cat]->time_last_msg = $msg_time;
 
             // store to db (only changed)
-            $database->setQuery(
+            $kunena_db->setQuery(
                 "UPDATE `#__fb_categories`"
                 ." SET `time_last_msg`='" . $ctg[$msg_cat]->time_last_msg . "'"
                 .",`id_last_msg`='" . $ctg[$msg_cat]->id_last_msg . "'"
                 .",`numTopics`='" . $ctg[$msg_cat]->numTopics . "'"
                 .",`numPosts`='" . $ctg[$msg_cat]->numPosts . "'"
                 ." WHERE (`id`='" . $ctg[$msg_cat]->id . "') ");
-            $database->query();
-            echo $database->getErrorMsg();
+            $kunena_db->query();
+            echo $kunena_db->getErrorMsg();
 
             // parent
             $msg_cat = $ctg[$msg_cat]->parent;
@@ -498,18 +501,18 @@ class CKunenaTools {
 
     function decreaseCategoryStats($msg_id, $msg_cat) {
         //topic : 1 , message = 0
-        $database = &JFactory::getDBO();
-        $database->setQuery("select id, parent, numTopics, numPosts,id_last_msg, time_last_msg from #__fb_categories order by id asc");
-        $cats = $database->loadObjectList();
+        $kunena_db = &JFactory::getDBO();
+        $kunena_db->setQuery("select id, parent, numTopics, numPosts,id_last_msg, time_last_msg from #__fb_categories order by id asc");
+        $cats = $kunena_db->loadObjectList();
         	check_dberror("Unable to load categories.");
 
         foreach ($cats as $c) {
             $ctg[$c->id] = $c;
             }
 
-        $database->setQuery('select id FROM #__fb_messages WHERE id=' . $msg_id . ' OR thread=' . $msg_id);
+        $kunena_db->setQuery('select id FROM #__fb_messages WHERE id=' . $msg_id . ' OR thread=' . $msg_id);
 
-        $msg_ids = $database->loadResultArray();
+        $msg_ids = $kunena_db->loadResultArray();
         	check_dberror("Unable to load messages.");
 
         $cntTopics = 0;
@@ -529,8 +532,8 @@ class CKunenaTools {
         while ($msg_cat) {
 
             unset($lastMsgInCat);
-            $database->setQuery("select id, time from #__fb_messages where catid={$msg_cat} and (thread <> {$msg_id} AND id<>{$msg_id}) order by time desc limit 1;");
-            $lastMsgInCat = $database->loadObject();
+            $kunena_db->setQuery("select id, time from #__fb_messages where catid={$msg_cat} and (thread <> {$msg_id} AND id<>{$msg_id}) order by time desc limit 1;");
+            $lastMsgInCat = $kunena_db->loadObject();
             	check_dberror("Unable to load messages.");
 
             $ctg[$msg_cat]->numTopics = (int) ($ctg[$msg_cat]->numTopics - $cntTopics);
@@ -544,8 +547,8 @@ class CKunenaTools {
 
         // now back to db
         foreach ($ctg as $cc) {
-            $database->setQuery("UPDATE `#__fb_categories` SET `time_last_msg`='" . $cc->time_last_msg . "',`id_last_msg`='" . $cc->id_last_msg . "',`numTopics`='" . $cc->numTopics . "',`numPosts`='" . $cc->numPosts . "' WHERE `id`='" . $cc->id . "' ");
-            $database->query();
+            $kunena_db->setQuery("UPDATE `#__fb_categories` SET `time_last_msg`='" . $cc->time_last_msg . "',`id_last_msg`='" . $cc->id_last_msg . "',`numTopics`='" . $cc->numTopics . "',`numPosts`='" . $cc->numPosts . "' WHERE `id`='" . $cc->id . "' ");
+            $kunena_db->query();
             	check_dberror("Unable to update categories.");
             }
 
@@ -553,7 +556,7 @@ class CKunenaTools {
         }
 
     function showBulkActionCats($disabled = 1) {
-        $database = &JFactory::getDBO();
+        $kunena_db = &JFactory::getDBO();
 
         $options = array ();
         $options[] = JHTML::_('select.option', '0', "&nbsp;");
@@ -563,8 +566,8 @@ class CKunenaTools {
         }
 
     function fbDeletePosts($isMod, $return) {
-        $my = &JFactory::getUser();
-		$database = &JFactory::getDBO();
+        $kunena_my = &JFactory::getUser();
+		$kunena_db = &JFactory::getDBO();
 
         if (!CKunenaTools::isModOrAdmin() && !$isMod) {
             $mainframe->redirect( JURI::base() .$return, _POST_NOT_MODERATOR);
@@ -575,22 +578,22 @@ class CKunenaTools {
 
         // start iterating here
         foreach ($items as $id => $value) {
-            $database->setQuery('SELECT id,catid,parent,thread,subject,userid FROM #__fb_messages WHERE id=' . $id);
+            $kunena_db->setQuery('SELECT id,catid,parent,thread,subject,userid FROM #__fb_messages WHERE id=' . $id);
 
-            if (!$database->query()) {
+            if (!$kunena_db->query()) {
                 return -2;
                 }
 
-            $mes = $database->loadObject();
+            $mes = $kunena_db->loadObject();
             $thread = $mes->thread;
 
             if ($mes->parent == 0) {
                 // this is the forum topic; if removed, all children must be removed as well.
                 $children = array ();
                 $userids = array ();
-                $database->setQuery('SELECT userid,id, catid FROM #__fb_messages WHERE thread=' . $id . ' OR id=' . $id);
+                $kunena_db->setQuery('SELECT userid,id, catid FROM #__fb_messages WHERE thread=' . $id . ' OR id=' . $id);
 
-                foreach ($database->loadObjectList() as $line) {
+                foreach ($kunena_db->loadObjectList() as $line) {
                     $children[] = $line->id;
 
                     if ($line->userid > 0) {
@@ -602,9 +605,9 @@ class CKunenaTools {
                 }
             else {
                 //this is not the forum topic, so delete it and promote the direct children one level up in the hierarchy
-                $database->setQuery('UPDATE #__fb_messages SET parent=\'' . $mes->parent . '\' WHERE parent=\'' . $id . '\'');
+                $kunena_db->setQuery('UPDATE #__fb_messages SET parent=\'' . $mes->parent . '\' WHERE parent=\'' . $id . '\'');
 
-                if (!$database->query()) {
+                if (!$kunena_db->query()) {
                     return -1;
                     }
 
@@ -613,9 +616,9 @@ class CKunenaTools {
                 }
 
             //Delete the post (and it's children when it's the first post)
-            $database->setQuery('DELETE FROM #__fb_messages WHERE id=' . $id . ' OR thread=' . $id);
+            $kunena_db->setQuery('DELETE FROM #__fb_messages WHERE id=' . $id . ' OR thread=' . $id);
 
-            if (!$database->query()) {
+            if (!$kunena_db->query()) {
                 return -2;
                 }
 
@@ -623,37 +626,37 @@ class CKunenaTools {
             CKunenaTools::decreaseCategoryStats($id, $mes->catid);
 
             //Delete message text(s)
-            $database->setQuery('DELETE FROM #__fb_messages_text WHERE mesid IN (' . $children . ')');
+            $kunena_db->setQuery('DELETE FROM #__fb_messages_text WHERE mesid IN (' . $children . ')');
 
-            if (!$database->query()) {
+            if (!$kunena_db->query()) {
                 return -3;
                 }
 
             //Update user post stats
             if (count($userids) > 0) {
                 $userids = implode(',', $userids);
-                $database->setQuery('UPDATE #__fb_users SET posts=posts-1 WHERE userid IN (' . $userids . ')');
+                $kunena_db->setQuery('UPDATE #__fb_users SET posts=posts-1 WHERE userid IN (' . $userids . ')');
 
-                if (!$database->query()) {
+                if (!$kunena_db->query()) {
                     return -4;
                     }
                 }
 
             //Delete (possible) ghost post
-            $database->setQuery('SELECT mesid FROM #__fb_messages_text WHERE message=\'catid=' . $mes->catid . '&amp;id=' . $id . '\'');
-            $int_ghost_id = $database->loadResult();
+            $kunena_db->setQuery('SELECT mesid FROM #__fb_messages_text WHERE message=\'catid=' . $mes->catid . '&amp;id=' . $id . '\'');
+            $int_ghost_id = $kunena_db->loadResult();
 
             if ($int_ghost_id > 0) {
-                $database->setQuery('DELETE FROM #__fb_messages WHERE id=' . $int_ghost_id);
-                $database->query();
-                $database->setQuery('DELETE FROM #__fb_messages_text WHERE mesid=' . $int_ghost_id);
-                $database->query();
+                $kunena_db->setQuery('DELETE FROM #__fb_messages WHERE id=' . $int_ghost_id);
+                $kunena_db->query();
+                $kunena_db->setQuery('DELETE FROM #__fb_messages_text WHERE mesid=' . $int_ghost_id);
+                $kunena_db->query();
                 }
 
             //Delete attachments
             if ($dellattach) {
-                $database->setQuery('SELECT filelocation FROM #__fb_attachments WHERE mesid IN (' . $children . ')');
-                $fileList = $database->loadObjectList();
+                $kunena_db->setQuery('SELECT filelocation FROM #__fb_attachments WHERE mesid IN (' . $children . ')');
+                $fileList = $kunena_db->loadObjectList();
                 	check_dberror("Unable to load attachments.");
 
                 if (count($fileList) > 0) {
@@ -661,8 +664,8 @@ class CKunenaTools {
                         unlink ($fl->filelocation);
                         }
 
-                    $database->setQuery('DELETE FROM #__fb_attachments WHERE mesid IN (' . $children . ')');
-                    $database->query();
+                    $kunena_db->setQuery('DELETE FROM #__fb_attachments WHERE mesid IN (' . $children . ')');
+                    $kunena_db->query();
                     }
                 }
             } //end foreach
@@ -672,7 +675,7 @@ class CKunenaTools {
         }
 
     function isModOrAdmin($id = 0) {
-        $my = &JFactory::getUser();
+        $kunena_my = &JFactory::getUser();
 // echo '<div>CALL isModOrAdmin</div>';
         $userid = intval($id);
 
@@ -680,7 +683,7 @@ class CKunenaTools {
             $user = new JUser($userid);
             }
         else {
-            $user = $my;
+            $user = $kunena_my;
             }
 
         if (strtolower($user->usertype) == 'super administrator' || strtolower($user->usertype) == 'administrator') {
@@ -691,12 +694,12 @@ class CKunenaTools {
         }
 
     function fbMovePosts($catid, $isMod, $return) {
-        $database = &JFactory::getDBO();
+        $kunena_db = &JFactory::getDBO();
 
-	$my = &JFactory::getUser();
+	$kunena_my = &JFactory::getUser();
 
-	$database->setQuery('SELECT userid FROM #__fb_moderation WHERE userid='.$my->id);
-	$isMod = $database->loadResult();
+	$kunena_db->setQuery('SELECT userid FROM #__fb_moderation WHERE userid='.$kunena_my->id);
+	$isMod = $kunena_db->loadResult();
 	check_dberror("Unable to load moderation info.");
 	$isAdmin = CKunenaTools::isModOrAdmin();
 
@@ -714,16 +717,16 @@ class CKunenaTools {
 	        foreach ($items as $id => $value) {
 	            $id = (int)$id;
 
-	            $database->setQuery("SELECT `subject`, `catid`, `time` AS timestamp FROM #__fb_messages WHERE `id`=" . $id);
-	            $oldRecord = $database->loadObjectList();
+	            $kunena_db->setQuery("SELECT `subject`, `catid`, `time` AS timestamp FROM #__fb_messages WHERE `id`=" . $id);
+	            $oldRecord = $kunena_db->loadObjectList();
 	            	check_dberror("Unable to load message detail.");
 
-                    $newCatObj = new jbCategory($database, $oldRecord[0]->catid);
-		    if (fb_has_moderator_permission($database, $newCatObj, $my->id, $isAdmin)) {
+                    $newCatObj = new jbCategory($kunena_db, $oldRecord[0]->catid);
+		    if (fb_has_moderator_permission($kunena_db, $newCatObj, $kunena_my->id, $isAdmin)) {
 
 		        $newSubject = _MOVED_TOPIC . " " . $oldRecord[0]->subject;
-		        $database->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE thread=$id");
-		        $lastTimestamp = $database->loadResult();
+		        $kunena_db->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE thread=$id");
+		        $lastTimestamp = $kunena_db->loadResult();
 			check_dberror("Unable to load messages max(time).");
 
 			if ($lastTimestamp == "") {
@@ -731,8 +734,8 @@ class CKunenaTools {
                 	}
 
 			//perform the actual move
-			$database->setQuery("UPDATE #__fb_messages SET `catid`='$catid' WHERE `id`='$id' OR `thread`='$id'");
-			$database->query();
+			$kunena_db->setQuery("UPDATE #__fb_messages SET `catid`='$catid' WHERE `id`='$id' OR `thread`='$id'");
+			$kunena_db->query();
 			check_dberror("Unable to move thread.");
 
 			$err = _POST_SUCCESS_MOVE;
@@ -794,13 +797,13 @@ $row, & $params, 0));
 		return $content;
 	}
         
-	function getAllowedForums($uid = 0, $gid = 0, &$acl) {
-        	global $database;
+	function getAllowedForums($uid = 0, $gid = 0, &$kunena_acl) {
+        	global $kunena_db;
 
-			function _has_rights(&$acl, $gid, $access, $recurse) {
+			function _has_rights(&$kunena_acl, $gid, $access, $recurse) {
 				if ($gid == $access) return 1;
 				if ($recurse) {
-					$childs = $acl->get_group_children($access, 'ARO', 'RECURSE');
+					$childs = $kunena_acl->get_group_children($access, 'ARO', 'RECURSE');
 					return (is_array($childs) and in_array($gid, $childs));
 				}
 				return 0;
@@ -811,16 +814,16 @@ $row, & $params, 0));
 				. ",(m.userid IS NOT NULL) AS ismod FROM #__fb_categories c"
 				. " LEFT JOIN #__fb_moderation m ON c.id=m.catid AND m.userid="
 				. (int)$uid . " WHERE published=1";
-			$database->setQuery($query);
-			$rows = $database->loadObjectList();
+			$kunena_db->setQuery($query);
+			$rows = $kunena_db->loadObjectList();
 					check_dberror("Unable to load category list.");
 			if ($rows) {
 				foreach($rows as $row) {
 					if (($row->moderated and $row->ismod) or
 						($row->pub_access == 0) or
 						($row->pub_access == -1 and $uid > 0) or
-						($row->pub_access > 0 and _has_rights($acl, $gid, $row->pub_access, $row->pub_recurse)) or
-						($row->admin_access > 0 and _has_rights($acl, $gid, $row->admin_access, $row->admin_recurse))
+						($row->pub_access > 0 and _has_rights($kunena_acl, $gid, $row->pub_access, $row->pub_recurse)) or
+						($row->admin_access > 0 and _has_rights($kunena_acl, $gid, $row->admin_access, $row->admin_recurse))
 					) $catlist .= (($catlist == '')?'':',').$row->id;
 				}
 			}
@@ -847,8 +850,8 @@ class fbModeration
     /**
     * @param database A database connector object
     */
-    function __construct(&$database) {
-        parent::__construct('#__fb_moderation', 'catid', $database);
+    function __construct(&$kunena_db) {
+        parent::__construct('#__fb_moderation', 'catid', $kunena_db);
         }
     }
 
@@ -882,9 +885,9 @@ class fbForum
     /**
     * @param database A database connector object
     */
-    function __construct( &$database )
+    function __construct( &$kunena_db )
 	{
-		parent::__construct( '#__fb_categories', 'id', $database );
+		parent::__construct( '#__fb_categories', 'id', $kunena_db );
     }
 
 	// check for potential problems
@@ -943,7 +946,7 @@ class fbForum
 }
 
 function JJ_categoryArray($admin=0) {
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
     // ERROR: mixed global $fbSession
     global $fbSession;
     global $aro_group;
@@ -958,8 +961,8 @@ function JJ_categoryArray($admin=0) {
 		}
 	}
     $query .= " ORDER BY ordering, name";
-    $database->setQuery($query);
-    $items = $database->loadObjectList();
+    $kunena_db->setQuery($query);
+    $items = $kunena_db->loadObjectList();
     	check_dberror("Unable to load categories.");
     // establish the hierarchy of the menu
     $children = array ();
@@ -1007,7 +1010,7 @@ function fbTreeRecurse( $id, $indent, $list, &$children, $maxlevel=9999, $level=
 }
 
 function JJ_categoryParentList($catid, $action, $options = array ()) {
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
 
     $list = JJ_categoryArray();
     $this_treename = '';
@@ -1033,7 +1036,7 @@ function JJ_categoryParentList($catid, $action, $options = array ()) {
     }
 
 function KUNENA_GetAvailableForums($catid, $action, $options = array (), $disabled, $multiple = 0) {
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
     $list = JJ_categoryArray();
     $this_treename = '';
 
@@ -1064,17 +1067,17 @@ function KUNENA_GetAvailableForums($catid, $action, $options = array (), $disabl
 //Begin Smilies mod
 //
 function generate_smilies() {
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
 
     $inline_columns = 4;
     $inline_rows = 5;
 
-    $database->setQuery("SELECT code, location, emoticonbar FROM #__fb_smileys ORDER BY id");
+    $kunena_db->setQuery("SELECT code, location, emoticonbar FROM #__fb_smileys ORDER BY id");
 
-    if ($database->query()) {
+    if ($kunena_db->query()) {
         $num_smilies = 0;
         $rowset = array ();
-        $set = $database->loadAssocList();
+        $set = $kunena_db->loadAssocList();
         $num_iconbar = 0;
 
         foreach ($set as $smilies) {
@@ -1340,5 +1343,4 @@ function code2utf($num)
     return '';
 }
 
-?>
 ?>

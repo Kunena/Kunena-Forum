@@ -33,7 +33,7 @@ global $mainframe;
 
 $fbConfig =& CKunenaConfig::getInstance();
 
-$database = JFactory::getDBO();
+$kunena_db = JFactory::getDBO();
 
 $fbConfig = new CKunenaConfig();
 $fbConfig->load();
@@ -171,12 +171,12 @@ switch ($task)
         break;
 
     case 'showprofiles':
-        showProfiles($database, $option, $lang, $order);
+        showProfiles($kunena_db, $option, $lang, $order);
 
         break;
 
     case 'profiles':
-        showProfiles($database, $option, $lang, $order);
+        showProfiles($kunena_db, $option, $lang, $order);
 
         break;
 
@@ -186,7 +186,7 @@ switch ($task)
         break;
 
     case 'showinstructions':
-        showInstructions($database, $option, $lang);
+        showInstructions($kunena_db, $option, $lang);
 
         break;
 
@@ -204,7 +204,7 @@ switch ($task)
         break;
 
     case 'instructions':
-        showInstructions($database, $option, $lang);
+        showInstructions($kunena_db, $option, $lang);
 
         break;
 
@@ -219,42 +219,42 @@ switch ($task)
         break;
 
     case 'pruneforum':
-        pruneforum($database, $option);
+        pruneforum($kunena_db, $option);
 
         break;
 
     case 'doprune':
-        doprune($database, $option);
+        doprune($kunena_db, $option);
 
         break;
 
     case 'douserssync':
-        douserssync($database, $option);
+        douserssync($kunena_db, $option);
 
         break;
 
     case 'syncusers':
-        syncusers($database, $option);
+        syncusers($kunena_db, $option);
 
         break;
 
     case 'browseImages':
-        browseUploaded($database, $option, 1);
+        browseUploaded($kunena_db, $option, 1);
 
         break;
 
     case 'browseFiles':
-        browseUploaded($database, $option, 0);
+        browseUploaded($kunena_db, $option, 0);
 
         break;
 
     case 'replaceImage':
-        replaceImage($database, $option, JRequest::getVar('img', ''), $OxP);
+        replaceImage($kunena_db, $option, JRequest::getVar('img', ''), $OxP);
 
         break;
 
     case 'deleteFile':
-        deleteFile($database, $option, JRequest::getVar('fileName', ''));
+        deleteFile($kunena_db, $option, JRequest::getVar('fileName', ''));
 
 
         break;
@@ -334,7 +334,7 @@ html_Kunena::showFbFooter();
 function showAdministration($option)
 {
     global $mainframe;
-	$database = &JFactory::getDBO();
+	$kunena_db = &JFactory::getDBO();
 
     $limit = $mainframe->getUserStateFromRequest("viewlistlimit", 'limit', 10);
     $limitstart = $mainframe->getUserStateFromRequest("view{$option}limitstart", 'limitstart', 0);
@@ -342,7 +342,7 @@ function showAdministration($option)
     /*
     * danial
     */
-    $database->setQuery("SELECT a.*, a.name AS category, u.name AS editor, g.name AS groupname, h.name AS admingroup"
+    $kunena_db->setQuery("SELECT a.*, a.name AS category, u.name AS editor, g.name AS groupname, h.name AS admingroup"
     . "\nFROM #__fb_categories AS a"
     . "\nLEFT JOIN #__users AS u ON u.id = a.checked_out"
     . "\nLEFT JOIN #__core_acl_aro_groups AS g ON g.id = a.pub_access"
@@ -350,7 +350,7 @@ function showAdministration($option)
     . "\n GROUP BY a.id"
     . "\n ORDER BY a.ordering, a.name");
 
-    $rows = $database->loadObjectList();
+    $rows = $kunena_db->loadObjectList();
     	check_dberror("Unable to load categories.");
 
     // establish the hierarchy of the categories
@@ -390,17 +390,17 @@ function showAdministration($option)
 //---------------------------------------
 function editForum($uid, $option)
 {
-    $database = &JFactory::getDBO();
-    $acl = &JFactory::getACL();
-	$my = &JFactory::getUser();
-    $row = new fbForum($database);
+    $kunena_db = &JFactory::getDBO();
+    $kunena_acl = &JFactory::getACL();
+	$kunena_my = &JFactory::getUser();
+    $row = new fbForum($kunena_db);
     // load the row from the db table
     $row->load($uid);
 
     //echo "<pre>"; print_r ($row); echo "</pre>";
     if ($uid)
     {
-        $row->checkout($my->id);
+        $row->checkout($kunena_my->id);
         $categories = array ();
     }
     else
@@ -413,15 +413,15 @@ function editForum($uid, $option)
     }
 
     // get a list of just the categories
-    $database->setQuery("SELECT a.id AS value, a.name AS text FROM #__fb_categories AS a WHERE parent='0' AND id<>'$row->id' ORDER BY ordering");
-    $categories = array_merge($categories, $database->loadObjectList());
+    $kunena_db->setQuery("SELECT a.id AS value, a.name AS text FROM #__fb_categories AS a WHERE parent='0' AND id<>'$row->id' ORDER BY ordering");
+    $categories = array_merge($categories, $kunena_db->loadObjectList());
     	check_dberror("Unable to load categories.");
 
     if ($row->parent == 0)
     {
         //make sure the Top Level Category is available in edit mode as well:
-        $database->setQuery("SELECT distinct '0' AS value, '"._KUNENA_TOPLEVEL."' AS text FROM #__fb_categories AS a WHERE parent='0' AND id<>'$row->id' ORDER BY ordering");
-        $categories = array_merge($categories, (array)$database->loadObjectList());
+        $kunena_db->setQuery("SELECT distinct '0' AS value, '"._KUNENA_TOPLEVEL."' AS text FROM #__fb_categories AS a WHERE parent='0' AND id<>'$row->id' ORDER BY ordering");
+        $categories = array_merge($categories, (array)$kunena_db->loadObjectList());
         	check_dberror("Unable to load categories.");
 
         //build the select list:
@@ -454,10 +454,10 @@ function editForum($uid, $option)
 
 
 
-    $pub_groups = array_merge($pub_groups, $acl->get_group_children_tree(null, _KUNENA_REGISTERED, true));
+    $pub_groups = array_merge($pub_groups, $kunena_acl->get_group_children_tree(null, _KUNENA_REGISTERED, true));
     //create admin groups array for use in selectList:
     $adm_groups = array ();
-    $adm_groups = array_merge($adm_groups, $acl->get_group_children_tree(null, _KUNENA_PUBLICBACKEND, true));
+    $adm_groups = array_merge($adm_groups, $kunena_acl->get_group_children_tree(null, _KUNENA_PUBLICBACKEND, true));
     //create the access control list
     $accessLists['pub_access'] = JHTML::_('select.genericlist',$pub_groups, 'pub_access', 'class="inputbox" size="4"', 'value', 'text', $row->pub_access);
     $accessLists['admin_access'] = JHTML::_('select.genericlist',$adm_groups, 'admin_access', 'class="inputbox" size="4"', 'value', 'text', $row->admin_access);
@@ -471,8 +471,8 @@ function editForum($uid, $option)
 
     if ($row->moderated == 1)
     {
-        $database->setQuery("SELECT * FROM #__fb_moderation AS a LEFT JOIN #__users as u ON a.userid=u.id where a.catid=$row->id");
-        $moderatorList = $database->loadObjectList();
+        $kunena_db->setQuery("SELECT * FROM #__fb_moderation AS a LEFT JOIN #__users as u ON a.userid=u.id where a.catid=$row->id");
+        $moderatorList = $kunena_db->loadObjectList();
         	check_dberror("Unable to load moderator list.");
     }
 
@@ -481,11 +481,11 @@ function editForum($uid, $option)
 
 function saveForum($option)
 {
-$database = &JFactory::getDBO();
+$kunena_db = &JFactory::getDBO();
     global $mainframe;
 
-    $my = &JFactory::getUser();
-    $row = new fbForum($database);
+    $kunena_my = &JFactory::getUser();
+    $row = new fbForum($kunena_db);
 
     if (!$row->bind($_POST))
     {
@@ -512,9 +512,9 @@ $database = &JFactory::getDBO();
 
 function publishForum($cid = null, $publish = 1, $option)
 {
-$database = &JFactory::getDBO();
+$kunena_db = &JFactory::getDBO();
     global  $mainframe;
-$my =  &JFactory::getUser();
+$kunena_my =  &JFactory::getUser();
     if (!is_array($cid) || count($cid) < 1)
     {
         $action = $publish ? 'publish' : 'unpublish';
@@ -523,27 +523,27 @@ $my =  &JFactory::getUser();
     }
 
     $cids = implode(',', $cid);
-    $database->setQuery("UPDATE #__fb_categories SET published='$publish'" . "\nWHERE id IN ($cids) AND (checked_out=0 OR (checked_out='$my->id'))");
-    $database->query() or trigger_dberror("Unable to update categories.");
+    $kunena_db->setQuery("UPDATE #__fb_categories SET published='$publish'" . "\nWHERE id IN ($cids) AND (checked_out=0 OR (checked_out='$kunena_my->id'))");
+    $kunena_db->query() or trigger_dberror("Unable to update categories.");
 
     if (count($cid) == 1)
     {
-        $row = new fbForum($database);
+        $row = new fbForum($kunena_db);
         $row->checkin($cid[0]);
     }
 
 	// we must reset fbSession->allowed, when forum record was changed
-    $database->setQuery("UPDATE #__fb_sessions SET allowed='na'");
-	$database->query() or trigger_dberror("Unable to update sessions.");
+    $kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
+	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
 
     $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showAdministration");
 }
 
 function deleteForum($cid = null, $option)
 {
-$database = &JFactory::getDBO();
+$kunena_db = &JFactory::getDBO();
     global  $mainframe;
-$my =  &JFactory::getUser();
+$kunena_my =  &JFactory::getUser();
     if (!is_array($cid) || count($cid) < 1)
     {
         $action = 'delete';
@@ -552,28 +552,28 @@ $my =  &JFactory::getUser();
     }
 
     $cids = implode(',', $cid);
-    $database->setQuery("DELETE FROM #__fb_categories" . "\nWHERE id IN ($cids) AND (checked_out=0 OR (checked_out='$my->id'))");
-    $database->query() or trigger_dberror("Unable to delete categories.");
+    $kunena_db->setQuery("DELETE FROM #__fb_categories" . "\nWHERE id IN ($cids) AND (checked_out=0 OR (checked_out='$kunena_my->id'))");
+    $kunena_db->query() or trigger_dberror("Unable to delete categories.");
 
-    $database->setQuery("SELECT id, parent FROM #__fb_messages where catid in ($cids)");
-    $mesList = $database->loadObjectList();
+    $kunena_db->setQuery("SELECT id, parent FROM #__fb_messages where catid in ($cids)");
+    $mesList = $kunena_db->loadObjectList();
     	check_dberror("Unable to load messages.");
 
     if (count($mesList) > 0)
     {
     	foreach ($mesList as $ml)
     	{
-    		$database->setQuery("DELETE FROM #__fb_messages WHERE id = $ml->id");
-    		$database->query() or trigger_dberror("Unable to delete messages.");
+    		$kunena_db->setQuery("DELETE FROM #__fb_messages WHERE id = $ml->id");
+    		$kunena_db->query() or trigger_dberror("Unable to delete messages.");
 
-    		$database->setQuery("DELETE FROM #__fb_messages_text WHERE mesid=$ml->id");
-    		$database->query() or trigger_dberror("Unable to delete message text.");
+    		$kunena_db->setQuery("DELETE FROM #__fb_messages_text WHERE mesid=$ml->id");
+    		$kunena_db->query() or trigger_dberror("Unable to delete message text.");
 
     		//and clear up all subscriptions as well
     		if ($ml->parent == 0)
     		{ //this was a topic message to which could have been subscribed
-    			$database->setQuery("DELETE FROM #__fb_subscriptions WHERE thread=$ml->id");
-    			$database->query() or trigger_dberror("Unable to delete subscriptions.");
+    			$kunena_db->setQuery("DELETE FROM #__fb_subscriptions WHERE thread=$ml->id");
+    			$kunena_db->query() or trigger_dberror("Unable to delete subscriptions.");
     		}
     	}
     }
@@ -585,8 +585,8 @@ function cancelForum($option)
 {
     global  $mainframe;
 
-    $database = &JFactory::getDBO();
-    $row = new fbForum($database);
+    $kunena_db = &JFactory::getDBO();
+    $row = new fbForum($kunena_db);
     $row->bind($_POST);
     $row->checkin();
     $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showAdministration");
@@ -595,8 +595,8 @@ function cancelForum($option)
 function orderForum($uid, $inc, $option)
 {
     global  $mainframe;
-    $database = &JFactory::getDBO();
-    $row = new fbForum($database);
+    $kunena_db = &JFactory::getDBO();
+    $row = new fbForum($kunena_db);
     $row->load($uid);
     $row->move($inc, "parent='$row->parent'");
     $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showAdministration");
@@ -607,7 +607,7 @@ function orderForum($uid, $inc, $option)
 //===============================
 function showConfig($option)
 {
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
     global $mainframe;
     $fbConfig =& CKunenaConfig::getInstance();
 
@@ -817,7 +817,7 @@ function saveConfig($option)
 
 	$fbConfig =& CKunenaConfig::getInstance();
 
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
 
 	foreach ($_POST as $postsetting => $postvalue)
     {
@@ -859,9 +859,9 @@ function saveConfig($option)
     $mainframe->redirect( JURI::base() . "index2.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED);
 }
 
-function showInstructions($database, $option, $lang) {
-$database = &JFactory::getDBO();
-    html_Kunena::showInstructions($database, $option, $lang);
+function showInstructions($kunena_db, $option, $lang) {
+$kunena_db = &JFactory::getDBO();
+    html_Kunena::showInstructions($kunena_db, $option, $lang);
 }
 
 //===============================
@@ -915,21 +915,21 @@ function saveCss($file, $csscontent, $option)
 //===============================
 function newModerator($option, $id = null)
 {
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
     //die ("New Moderator");
     //$limit = intval(JRequest::getVar( 'limit', 10));
     //$limitstart = intval(JRequest::getVar( 'limitstart', 0));
     $limit = $mainframe->getUserStateFromRequest("viewlistlimit", 'limit', 10);
     $limitstart = $mainframe->getUserStateFromRequest("view{$option}limitstart", 'limitstart', 0);
-    $database->setQuery("SELECT COUNT(*) FROM #__users AS a" . "\n LEFT JOIN #__fb_users AS b" . "\n ON a.id=b.userid where b.moderator=1");
-    $database->query() or trigger_dberror('Unable to load moderators w/o limit.');
+    $kunena_db->setQuery("SELECT COUNT(*) FROM #__users AS a" . "\n LEFT JOIN #__fb_users AS b" . "\n ON a.id=b.userid where b.moderator=1");
+    $kunena_db->query() or trigger_dberror('Unable to load moderators w/o limit.');
 
-    $total = $database->loadResult();
+    $total = $kunena_db->loadResult();
 	if ($limitstart >= $total) $limitstart = 0;
     $limit_sql = (($limit>0)?" LIMIT $limitstart,$limit":"");
 
-    $database->setQuery("SELECT * FROM #__users AS a" . "\n LEFT JOIN #__fb_users AS b" . "\n ON a.id=b.userid" . "\n WHERE b.moderator=1" . $limit_sql);
-    $userList = $database->loadObjectList();
+    $kunena_db->setQuery("SELECT * FROM #__users AS a" . "\n LEFT JOIN #__fb_users AS b" . "\n ON a.id=b.userid" . "\n WHERE b.moderator=1" . $limit_sql);
+    $userList = $kunena_db->loadObjectList();
     	check_dberror('Unable to load moderators.');
     $countUL = count($userList);
 
@@ -938,13 +938,13 @@ function newModerator($option, $id = null)
     //$id = intval( JRequest::getVar('id') );
     //get forum name
     $forumName = '';
-    $database->setQuery("select name from #__fb_categories where id=$id");
-    $database->query() or trigger_dberror('Unable to load forum name.');
-    $forumName = $database->loadResult();
+    $kunena_db->setQuery("select name from #__fb_categories where id=$id");
+    $kunena_db->query() or trigger_dberror('Unable to load forum name.');
+    $forumName = $kunena_db->loadResult();
 
     //get forum moderators
-    $database->setQuery("select userid from #__fb_moderation where catid=$id");
-    $moderatorList = $database->loadObjectList();
+    $kunena_db->setQuery("select userid from #__fb_moderation where catid=$id");
+    $moderatorList = $kunena_db->loadObjectList();
     	check_dberror('Unable to load moderator.');
     $moderators = 0;
     $modIDs[] = array ();
@@ -968,8 +968,8 @@ function newModerator($option, $id = null)
 
 function addModerator($option, $id, $cid = null, $publish = 1)
 {
-	$database = &JFactory::getDBO();
-    global  $my;
+	$kunena_db = &JFactory::getDBO();
+    global  $kunena_my;
     $numcid = count($cid);
     $action = "";
 
@@ -991,20 +991,20 @@ function addModerator($option, $id, $cid = null, $publish = 1)
     {
         for ($i = 0, $n = count($cid); $i < $n; $i++)
         {
-            $database->setQuery("INSERT INTO #__fb_moderation set catid='$id', userid='$cid[$i]'");
-            $database->query() or trigger_dberror("Unable to insert moderator.");
+            $kunena_db->setQuery("INSERT INTO #__fb_moderation set catid='$id', userid='$cid[$i]'");
+            $kunena_db->query() or trigger_dberror("Unable to insert moderator.");
         }
     }
     else
     {
         for ($i = 0, $n = count($cid); $i < $n; $i++)
         {
-            $database->setQuery("DELETE FROM #__fb_moderation WHERE catid='$id' and userid='$cid[$i]'");
-            $database->query() or trigger_dberror("Unable to delete moderator.");
+            $kunena_db->setQuery("DELETE FROM #__fb_moderation WHERE catid='$id' and userid='$cid[$i]'");
+            $kunena_db->query() or trigger_dberror("Unable to delete moderator.");
         }
     }
 
-    $row = new fbForum($database);
+    $row = new fbForum($kunena_db);
     $row->checkin($id);
     $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=edit2&uid=" . $id);
 }
@@ -1012,45 +1012,45 @@ function addModerator($option, $id, $cid = null, $publish = 1)
 //===============================
 //   User Profile functions
 //===============================
-function showProfiles($database, $option, $lang, $order)
+function showProfiles($kunena_db, $option, $lang, $order)
 {
     global $mainframe;
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
     //$limit = intval(JRequest::getVar( 'limit', 10));
     //$limitstart = intval(JRequest::getVar( 'limitstart', 0));
     $limit = $mainframe->getUserStateFromRequest("viewlistlimit", 'limit', 10);
     $limitstart = $mainframe->getUserStateFromRequest("view{$option}limitstart", 'limitstart', 0);
 
     $search = $mainframe->getUserStateFromRequest("search{$option}", 'search', '');
-    $search = $database->getEscaped(trim(strtolower($search)));
+    $search = $kunena_db->getEscaped(trim(strtolower($search)));
     $where = array ();
 
     if (isset($search) && $search != "") {
         $where[] = "(u.username LIKE '%$search%' OR u.email LIKE '%$search%' OR u.name LIKE '%$search%')";
     }
 
-    $database->setQuery("SELECT COUNT(*) FROM #__fb_users AS sbu" . "\n LEFT JOIN #__users AS u" . "\n ON sbu.userid=u.id" . (count($where) ? "\nWHERE " . implode(' AND ', $where) : ""));
-    $database->query() or trigger_dberror('Unable to load user profiles w/o limits.');
-    $total = $database->loadResult();
+    $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_users AS sbu" . "\n LEFT JOIN #__users AS u" . "\n ON sbu.userid=u.id" . (count($where) ? "\nWHERE " . implode(' AND ', $where) : ""));
+    $kunena_db->query() or trigger_dberror('Unable to load user profiles w/o limits.');
+    $total = $kunena_db->loadResult();
 
     if ($limitstart >= $total) $limitstart = 0;
     $limit_sql = (($limit>0)?" LIMIT $limitstart,$limit":"");
 
     if ($order == 1)
     {
-        $database->setQuery(
+        $kunena_db->setQuery(
             "select * from #__fb_users AS sbu" . "\n LEFT JOIN #__users AS u" . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY sbu.moderator DESC" . $limit_sql);
     }
     else if ($order == 2)
     {
-        $database->setQuery("SELECT * FROM #__fb_users AS sbu" . "\n LEFT JOIN #__users AS u " . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY u.name ASC " . $limit_sql);
+        $kunena_db->setQuery("SELECT * FROM #__fb_users AS sbu" . "\n LEFT JOIN #__users AS u " . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY u.name ASC " . $limit_sql);
     }
     else if ($order < 1)
     {
-        $database->setQuery("SELECT * FROM #__fb_users AS sbu " . "\n LEFT JOIN #__users AS u" . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY sbu.userid" . $limit_sql);
+        $kunena_db->setQuery("SELECT * FROM #__fb_users AS sbu " . "\n LEFT JOIN #__users AS u" . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY sbu.userid" . $limit_sql);
     }
 
-    $profileList = $database->loadObjectList();
+    $profileList = $kunena_db->loadObjectList();
     	check_dberror('Unable to load user profiles.');
 
     $countPL = count($profileList);
@@ -1062,11 +1062,11 @@ function showProfiles($database, $option, $lang, $order)
 
 function editUserProfile($uid)
 {
-   $database = &JFactory::getDBO();
-    $acl = &JFactory::getACL();
+   $kunena_db = &JFactory::getDBO();
+    $kunena_acl = &JFactory::getACL();
 
-    $database->setQuery("SELECT * FROM #__fb_users LEFT JOIN #__users on #__users.id=#__fb_users.userid WHERE userid=$uid[0]");
-    $userDetails = $database->loadObjectList();
+    $kunena_db->setQuery("SELECT * FROM #__fb_users LEFT JOIN #__users on #__users.id=#__fb_users.userid WHERE userid=$uid[0]");
+    $userDetails = $kunena_db->loadObjectList();
     	check_dberror('Unable to load user profile.');
     $user = $userDetails[0];
 
@@ -1078,13 +1078,13 @@ function editUserProfile($uid)
 
     //check to see if this is an administrator
     $result =  '';
-    //$database->setQuery("select usertype from #__users where id=$uid[0]");
-    //$result=$database->loadResult();
-    $result = $acl->getAroGroup($uid[0]);
+    //$kunena_db->setQuery("select usertype from #__users where id=$uid[0]");
+    //$result=$kunena_db->loadResult();
+    $result = $kunena_acl->getAroGroup($uid[0]);
 
     //grab all special ranks
-    $database->setQuery("SELECT * FROM #__fb_ranks WHERE rank_special = '1'");
-    $specialRanks = $database->loadObjectList();
+    $kunena_db->setQuery("SELECT * FROM #__fb_ranks WHERE rank_special = '1'");
+    $specialRanks = $kunena_db->loadObjectList();
     	check_dberror('Unable to load special ranks.');
 
     //build select list options
@@ -1113,13 +1113,13 @@ function editUserProfile($uid)
     $selectOrder = JHTML::_('select.genericlist',$yesnoOrder, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $ordering);
 
     //get all subscriptions for this user
-    $database->setQuery("select thread from #__fb_subscriptions where userid=$uid[0]");
-    $subslist = $database->loadObjectList();
+    $kunena_db->setQuery("select thread from #__fb_subscriptions where userid=$uid[0]");
+    $subslist = $kunena_db->loadObjectList();
     	check_dberror('Unable to load subscriptions for user.');
 
     //get all moderation category ids for this user
-    $database->setQuery("select catid from #__fb_moderation where userid=". $uid[0]);
-    $_modCats = $database->loadResultArray();
+    $kunena_db->setQuery("select catid from #__fb_moderation where userid=". $uid[0]);
+    $_modCats = $kunena_db->loadResultArray();
     	check_dberror('Unable to moderation category ids for user.');
 
     $__modCats = array();
@@ -1136,7 +1136,7 @@ function editUserProfile($uid)
 function saveUserProfile($option)
 {
 global $mainframe;
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
     $newview = JRequest::getVar( 'newview');
     $newrank = JRequest::getVar( 'newrank');
     $signature = JRequest::getVar( 'message');
@@ -1158,12 +1158,12 @@ global $mainframe;
         $avatar = ",avatar=''";
     }
 
-    $database->setQuery("UPDATE #__fb_users set signature='$signature', view='$newview',moderator='$moderator', ordering='$neworder', rank='$newrank' $avatar where userid=$uid");
-    $database->query() or trigger_dberror("Unable to update signature.");
+    $kunena_db->setQuery("UPDATE #__fb_users set signature='$signature', view='$newview',moderator='$moderator', ordering='$neworder', rank='$newrank' $avatar where userid=$uid");
+    $kunena_db->query() or trigger_dberror("Unable to update signature.");
 
     //delete all moderator traces before anyway
-    $database->setQuery("delete from #__fb_moderation where userid=$uid");
-    $database->query() or trigger_dberror("Unable to delete moderator.");
+    $kunena_db->setQuery("delete from #__fb_moderation where userid=$uid");
+    $kunena_db->query() or trigger_dberror("Unable to delete moderator.");
 
     //if there are moderatored forums, add them all
     if ($moderator == 1)
@@ -1172,8 +1172,8 @@ global $mainframe;
     	{
     		foreach ($modCatids as $c)
     		{
-                $database->setQuery("INSERT INTO #__fb_moderation set catid='$c', userid='$uid'");
-                $database->query() or trigger_dberror("Unable to insert moderator.");
+                $kunena_db->setQuery("INSERT INTO #__fb_moderation set catid='$c', userid='$uid'");
+                $kunena_db->query() or trigger_dberror("Unable to insert moderator.");
             }
     	}
     }
@@ -1184,19 +1184,19 @@ global $mainframe;
 //===============================
 // Prune Forum functions
 //===============================
-function pruneforum($database, $option)
+function pruneforum($kunena_db, $option)
 {
     $forums_list = array ();
     //get forum list; locked forums are excluded from pruning
-    $database->setQuery("SELECT a.id as value, a.name as text" . "\nFROM #__fb_categories AS a" . "\nWHERE a.parent != '0'" . "\nAND a.locked != '1'" . "\nORDER BY parent, ordering");
+    $kunena_db->setQuery("SELECT a.id as value, a.name as text" . "\nFROM #__fb_categories AS a" . "\nWHERE a.parent != '0'" . "\nAND a.locked != '1'" . "\nORDER BY parent, ordering");
     //get all subscriptions for this user
-    $forums_list = $database->loadObjectList();
+    $forums_list = $kunena_db->loadObjectList();
     	check_dberror("Unable to load unlocked forums.");
     $forumList['forum'] = JHTML::_('select.genericlist',$forums_list, 'prune_forum', 'class="inputbox" size="4"', 'value', 'text', '');
     html_Kunena::pruneforum($option, $forumList);
 }
 
-function doprune($database, $option)
+function doprune($kunena_db, $option)
 {
 global $mainframe ;
     $catid = intval(JRequest::getVar( 'prune_forum', -1));
@@ -1210,9 +1210,9 @@ global $mainframe ;
 
     $prune_days = intval(JRequest::getVar( 'prune_days', 0));
     //get the thread list for this forum
-    $database->setQuery("SELECT DISTINCT a.thread AS thread, max(a.time) AS lastpost, c.locked AS locked " . "\n FROM #__fb_messages AS a" . "\n JOIN #__fb_categories AS b ON a.catid=b.id " . "\n JOIN #__fb_messages   AS c ON a.thread=c.thread"
+    $kunena_db->setQuery("SELECT DISTINCT a.thread AS thread, max(a.time) AS lastpost, c.locked AS locked " . "\n FROM #__fb_messages AS a" . "\n JOIN #__fb_categories AS b ON a.catid=b.id " . "\n JOIN #__fb_messages   AS c ON a.thread=c.thread"
                             . "\n where a.catid=$catid " . "\n and b.locked != 1 " . "\n and a.locked != 1 " . "\n and c.locked != 1 " . "\n and c.parent = 0 " . "\n and c.ordering != 1 " . "\n group by thread");
-    $threadlist = $database->loadObjectList();
+    $threadlist = $kunena_db->loadObjectList();
         check_dberror("Unable to load thread list.");
 
     // Convert days to seconds for timestamp functions...
@@ -1226,8 +1226,8 @@ global $mainframe ;
             if ($tl->lastpost < $prune_date)
             {
                 //get the id's for all posts belonging to this thread
-                $database->setQuery("SELECT id from #__fb_messages WHERE thread=$tl->thread");
-                $idlist = $database->loadObjectList();
+                $kunena_db->setQuery("SELECT id from #__fb_messages WHERE thread=$tl->thread");
+                $idlist = $kunena_db->loadObjectList();
                         check_dberror("Unable to load thread messages.");
 
                 if (count($idlist) > 0)
@@ -1235,15 +1235,15 @@ global $mainframe ;
                     foreach ($idlist as $id)
                     {
                         //prune all messages belonging to the thread
-                        $database->setQuery("DELETE FROM #__fb_messages WHERE id=$id->id");
-                        $database->query() or trigger_dberror("Unable to delete messages.");
+                        $kunena_db->setQuery("DELETE FROM #__fb_messages WHERE id=$id->id");
+                        $kunena_db->query() or trigger_dberror("Unable to delete messages.");
 
-                        $database->setQuery("DELETE FROM #__fb_messages_text WHERE mesid=$id->id");
-                        $database->query() or trigger_dberror("Unable to delete message texts.");
+                        $kunena_db->setQuery("DELETE FROM #__fb_messages_text WHERE mesid=$id->id");
+                        $kunena_db->query() or trigger_dberror("Unable to delete message texts.");
 
                         //delete all attachments
-                        $database->setQuery("SELECT filelocation FROM #__fb_attachments WHERE mesid=$id->id");
-                        $fileList = $database->loadObjectList();
+                        $kunena_db->setQuery("SELECT filelocation FROM #__fb_attachments WHERE mesid=$id->id");
+                        $fileList = $kunena_db->loadObjectList();
                                 check_dberror("Unable to load attachments.");
 
                         if (count($fileList) > 0)
@@ -1252,8 +1252,8 @@ global $mainframe ;
                                 unlink ($fl->filelocation);
                             }
 
-                            $database->setQuery("DELETE FROM #__fb_attachments WHERE mesid=$id->id");
-                            $database->query() or trigger_dberror("Unable to delete attachments.");
+                            $kunena_db->setQuery("DELETE FROM #__fb_attachments WHERE mesid=$id->id");
+                            $kunena_db->query() or trigger_dberror("Unable to delete attachments.");
                         }
 
                         $deleted++;
@@ -1262,8 +1262,8 @@ global $mainframe ;
             }
 
             //clean all subscriptions to these deleted threads
-            $database->setQuery("DELETE FROM #__fb_subscriptions WHERE thread=$tl->thread");
-            $database->query() or trigger_dberror("Unable to delete subscriptions.");
+            $kunena_db->setQuery("DELETE FROM #__fb_subscriptions WHERE thread=$tl->thread");
+            $kunena_db->query() or trigger_dberror("Unable to delete subscriptions.");
         }
     }
 
@@ -1273,22 +1273,22 @@ global $mainframe ;
 //===============================
 // Sync users
 //===============================
-function syncusers($database, $option) {
+function syncusers($kunena_db, $option) {
     html_Kunena::syncusers($option);
 }
 
-function douserssync($database, $option)
+function douserssync($kunena_db, $option)
 {
     global $mainframe;
 
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
 	//reset access rights
-	$database->setQuery("UPDATE #__fb_sessions SET allowed='na'");
-	$database->query() or trigger_dberror("Unable to update sessions.");
+	$kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
+	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
 
     //get userlist to remove from Kunena users list
-    $database->setQuery("SELECT a.userid from #__fb_users as a left join #__users as b on a.userid=b.id where b.username is null");
-    $idlistR = $database->loadObjectList();
+    $kunena_db->setQuery("SELECT a.userid from #__fb_users as a left join #__users as b on a.userid=b.id where b.username is null");
+    $idlistR = $kunena_db->loadObjectList();
             check_dberror("Unable to load users.");
 
     $allIDsR = array ();
@@ -1304,8 +1304,8 @@ function douserssync($database, $option)
     }
 
     //get userlist to add into Kunena users list
-    $database->setQuery("SELECT a.id from #__users as a left join #__fb_users as b on b.userid=a.id where b.userid is null");
-    $idlistA = $database->loadObjectList();
+    $kunena_db->setQuery("SELECT a.id from #__users as a left join #__fb_users as b on b.userid=a.id where b.userid is null");
+    $idlistA = $kunena_db->loadObjectList();
             check_dberror("Unable to load users.");
 
     $allIDsA = array ();
@@ -1322,8 +1322,8 @@ function douserssync($database, $option)
 		// delete old users
 		if ($cidsR)
 		{
-			$database->setQuery("DELETE FROM #__fb_users WHERE userid in ($idsR)");
-			$database->query() or trigger_dberror("Unable to delete old users.");
+			$kunena_db->setQuery("DELETE FROM #__fb_users WHERE userid in ($idsR)");
+			$kunena_db->query() or trigger_dberror("Unable to delete old users.");
 		}
 
 		// add new users
@@ -1331,8 +1331,8 @@ function douserssync($database, $option)
 		{
 			for ($j = 0, $m = count($allIDsA); $j < $m; $j ++)
 			{
-				$database->setQuery("INSERT INTO #__fb_users (userid) "."\nVALUES ($allIDsA[$j])");
-				$database->query() or trigger_dberror("Unable to add new users.");
+				$kunena_db->setQuery("INSERT INTO #__fb_users (userid) "."\nVALUES ($allIDsA[$j])");
+				$kunena_db->query() or trigger_dberror("Unable to add new users.");
 			}
 		}
         $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=pruneusers", "" . _KUNENA_USERSSYNCDELETED . $cids . " " . _KUNENA_SYNCUSERPROFILES);
@@ -1347,9 +1347,9 @@ function douserssync($database, $option)
 //===============================
 // Uploaded Images browser
 //===============================
-function browseUploaded($database, $option, $type)
+function browseUploaded($kunena_db, $option, $type)
 {
-$database = &JFactory::getDBO();
+$kunena_db = &JFactory::getDBO();
     if ($type)
     { //we're doing images
         $dir = @opendir(KUNENA_PATH_UPLOADED .DS. 'images');
@@ -1383,9 +1383,9 @@ $database = &JFactory::getDBO();
     html_Kunena::browseUploaded($option, $uploaded, $uploaded_path, $type);
 }
 
-function replaceImage($database, $option, $imageName, $OxP)
+function replaceImage($kunena_db, $option, $imageName, $OxP)
 {
-$database = &JFactory::getDBO();
+$kunena_db = &JFactory::getDBO();
 	if (!$imageName) {
 		$mainframe->redirect( JURI::base() ."index2.php?option=$option&task=browseImages");
 		return;
@@ -1407,16 +1407,16 @@ $database = &JFactory::getDBO();
     else
     {
         //remove the database link as well
-        $database->setQuery("DELETE FROM #__fb_attachments where filelocation='" . KUNENA_PATH_UPLOADED .DS. "images/" . $imageName . "'");
-        $database->query() or trigger_dberror("Unable to delete attachment.");
+        $kunena_db->setQuery("DELETE FROM #__fb_attachments where filelocation='" . KUNENA_PATH_UPLOADED .DS. "images/" . $imageName . "'");
+        $kunena_db->query() or trigger_dberror("Unable to delete attachment.");
     }
 
     $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=browseImages", _KUNENA_IMGDELETED);
 }
 
-function deleteFile($database, $option, $fileName)
+function deleteFile($kunena_db, $option, $fileName)
 {
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
 
     if (!$fileName) {
     	$mainframe->redirect( JURI::base() ."index2.php?option=$option&task=browseFiles");
@@ -1426,8 +1426,8 @@ function deleteFile($database, $option, $fileName)
     // step 1: Remove file
     unlink (KUNENA_PATH_UPLOADED .DS. 'files/' . $fileName);
     //step 2: remove the database link to the file
-    $database->setQuery("DELETE FROM #__fb_attachments where filelocation='" . KUNENA_PATH_UPLOADED .DS. "files/" . $fileName . "'");
-    $database->query() or trigger_dberror("Unable to delete attachment.");
+    $kunena_db->setQuery("DELETE FROM #__fb_attachments where filelocation='" . KUNENA_PATH_UPLOADED .DS. "files/" . $fileName . "'");
+    $kunena_db->query() or trigger_dberror("Unable to delete attachment.");
     $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=browseFiles", _KUNENA_FILEDELETED);
 }
 
@@ -1459,10 +1459,10 @@ function catTreeRecurse($id, $indent = "&nbsp;&nbsp;&nbsp;", $list, &$children, 
 
 function showCategories($cat, $cname, $extras = "", $levellimit = "4")
 {
-    $database = &JFactory::getDBO();
-    $database->setQuery("select id ,parent,name from
+    $kunena_db = &JFactory::getDBO();
+    $kunena_db->setQuery("select id ,parent,name from
           #__fb_categories" . "\nORDER BY name");
-    $mitems = $database->loadObjectList();
+    $mitems = $kunena_db->loadObjectList();
             check_dberror("Unable to load categories.");
 
     // establish the hierarchy of the menu
@@ -1606,20 +1606,20 @@ function dircopy($srcdir, $dstdir, $verbose = false) {
 //===============================
 function showsmilies($option)
 {
-$database = &JFactory::getDBO();
+$kunena_db = &JFactory::getDBO();
     global $mainframe;
 
     $limit = intval(JRequest::getVar('limit', 10));
     $limitstart = intval(JRequest::getVar('limitstart', 0));
     $limit = $mainframe->getUserStateFromRequest("viewlistlimit", 'limit', 10);
     $limitstart = $mainframe->getUserStateFromRequest("view{$option}limitstart", 'limitstart', 0);
-	$database->setQuery("SELECT COUNT(*) FROM #__fb_smileys");
-	$total = $database->loadResult();
+	$kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_smileys");
+	$total = $kunena_db->loadResult();
 	if ($limitstart >= $total) $limitstart = 0;
     $limit_sql = (($limit>0)?" LIMIT $limitstart,$limit":"");
 
-    $database->setQuery("SELECT * FROM #__fb_smileys" . $limit_sql);
-    $smileytmp = $database->loadObjectList();
+    $kunena_db->setQuery("SELECT * FROM #__fb_smileys" . $limit_sql);
+    $smileytmp = $kunena_db->loadObjectList();
             check_dberror("Unable to load smileys.");
 
 	$smileypath = smileypath();
@@ -1634,10 +1634,10 @@ function editsmiley($option, $id)
 {
 	global  $mainframe;
 
-	$database = &JFactory::getDBO();
-	$database->setQuery("SELECT * FROM #__fb_smileys WHERE id = $id");
+	$kunena_db = &JFactory::getDBO();
+	$kunena_db->setQuery("SELECT * FROM #__fb_smileys WHERE id = $id");
 
-    $smileytmp = $database->loadAssocList();
+    $smileytmp = $kunena_db->loadAssocList();
     $smileycfg = $smileytmp[0];
 
     $smiley_images = collect_smilies();
@@ -1667,7 +1667,7 @@ function newsmiley($option)
 {
 	global  $mainframe;
 
-	$database = &JFactory::getDBO();
+	$kunena_db = &JFactory::getDBO();
 
 	$smiley_images = collect_smilies();
     $smileypath = smileypath();
@@ -1685,7 +1685,7 @@ function newsmiley($option)
 function savesmiley($option, $id = NULL)
 {
     global  $mainframe;
-	$database = &JFactory::getDBO();
+	$kunena_db = &JFactory::getDBO();
 
     $smiley_code = JRequest::getVar( 'smiley_code');
     $smiley_location = JRequest::getVar( 'smiley_url');
@@ -1698,9 +1698,9 @@ function savesmiley($option, $id = NULL)
         $mainframe->close();
     }
 
-    $database->setQuery("SELECT * FROM #__fb_smileys");
+    $kunena_db->setQuery("SELECT * FROM #__fb_smileys");
 
-    $smilies = $database->loadAssocList();
+    $smilies = $kunena_db->loadAssocList();
     foreach ($smilies as $value)
     {
     	if (in_array($smiley_code, $value) && !($value['id'] == $id))
@@ -1714,14 +1714,14 @@ function savesmiley($option, $id = NULL)
 
     if ($id == NULL)
     {
-    	$database->setQuery("INSERT INTO #__fb_smileys SET code = '$smiley_code', location = '$smiley_location', emoticonbar = '$smiley_emoticonbar'");
+    	$kunena_db->setQuery("INSERT INTO #__fb_smileys SET code = '$smiley_code', location = '$smiley_location', emoticonbar = '$smiley_emoticonbar'");
     }
     else
     {
-    	$database->setQuery("UPDATE #__fb_smileys SET code = '$smiley_code', location = '$smiley_location', emoticonbar = '$smiley_emoticonbar' WHERE id = $id");
+    	$kunena_db->setQuery("UPDATE #__fb_smileys SET code = '$smiley_code', location = '$smiley_location', emoticonbar = '$smiley_emoticonbar' WHERE id = $id");
     }
 
-    $database->query() or trigger_dberror("Unable to save smiley.");
+    $kunena_db->query() or trigger_dberror("Unable to save smiley.");
 
     $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showsmilies", _KUNENA_SMILEY_SAVED);
 }
@@ -1730,11 +1730,11 @@ function deletesmiley($option, $cid)
 {
 	global $mainframe;
 
-	$database = &JFactory::getDBO();
+	$kunena_db = &JFactory::getDBO();
 
 	if ($cids = implode(',', $cid)) {
-		$database->setQuery("DELETE FROM #__fb_smileys WHERE id IN ($cids)");
-		$database->query() or trigger_dberror("Unable to delete smiley.");
+		$kunena_db->setQuery("DELETE FROM #__fb_smileys WHERE id IN ($cids)");
+		$kunena_db->query() or trigger_dberror("Unable to delete smiley.");
 	}
 
     $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showsmilies", _KUNENA_SMILEY_DELETED);
@@ -1798,19 +1798,19 @@ function showRanks($option)
 {
     global $mainframe, $order;
 
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
 
     //$limit = intval(JRequest::getVar( 'limit', 10));
 	//$limitstart = intval(JRequest::getVar( 'limitstart', 0));
     $limit = $mainframe->getUserStateFromRequest("viewlistlimit", 'limit', 10);
 	$limitstart = $mainframe->getUserStateFromRequest("view{$option}limitstart", 'limitstart', 0);
-	$database->setQuery("SELECT COUNT(*) FROM #__fb_ranks");
-	$total = $database->loadResult();
+	$kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_ranks");
+	$total = $kunena_db->loadResult();
 	if ($limitstart >= $total) $limitstart = 0;
 	$limit_sql = (($limit>0)?" LIMIT $limitstart,$limit":"");
 
-	$database->setQuery("SELECT * FROM #__fb_ranks" . $limit_sql);
-	$ranks = $database->loadObjectList();
+	$kunena_db->setQuery("SELECT * FROM #__fb_ranks" . $limit_sql);
+	$ranks = $kunena_db->loadObjectList();
 	        check_dberror("Unable to load ranks.");
 
 
@@ -1869,7 +1869,7 @@ function collectRanks()
 
 function newRank($option)
 {
-$database = &JFactory::getDBO();
+$kunena_db = &JFactory::getDBO();
 	global  $mainframe;
 
 	$rank_images = collectRanks();
@@ -1888,12 +1888,12 @@ $database = &JFactory::getDBO();
 
 function deleteRank($option, $cid = null)
 {
-$database = &JFactory::getDBO();
+$kunena_db = &JFactory::getDBO();
 	global $mainframe;
 
 	if ($cids = implode(',', $cid)) {
-		$database->setQuery("DELETE FROM #__fb_ranks WHERE rank_id IN ($cids)");
-		$database->query() or trigger_dberror("Unable to delete rank.");
+		$kunena_db->setQuery("DELETE FROM #__fb_ranks WHERE rank_id IN ($cids)");
+		$kunena_db->query() or trigger_dberror("Unable to delete rank.");
 	}
 
     $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=ranks", _KUNENA_RANK_DELETED);
@@ -1902,7 +1902,7 @@ $database = &JFactory::getDBO();
 function saveRank($option, $id = NULL)
 {
 	global $mainframe;
-	$database = &JFactory::getDBO();
+	$kunena_db = &JFactory::getDBO();
 
     $rank_title = JRequest::getVar( 'rank_title');
     $rank_image = JRequest::getVar( 'rank_image');
@@ -1916,10 +1916,10 @@ function saveRank($option, $id = NULL)
         $mainframe->close();
     }
 
-    $database->setQuery("SELECT * FROM #__fb_ranks");
-    $database->query() or trigger_dberror("Unable to load ranks.");
+    $kunena_db->setQuery("SELECT * FROM #__fb_ranks");
+    $kunena_db->query() or trigger_dberror("Unable to load ranks.");
 
-    $ranks = $database->loadAssocList();
+    $ranks = $kunena_db->loadAssocList();
     foreach ($ranks as $value)
     {
     	if (in_array($rank_title, $value) && !($value['rank_id'] == $id))
@@ -1932,26 +1932,26 @@ function saveRank($option, $id = NULL)
 
     if ($id == NULL)
     {
-    	$database->setQuery("INSERT INTO #__fb_ranks SET rank_title = '$rank_title', rank_image = '$rank_image', rank_special = '$rank_special', rank_min = '$rank_min'");
+    	$kunena_db->setQuery("INSERT INTO #__fb_ranks SET rank_title = '$rank_title', rank_image = '$rank_image', rank_special = '$rank_special', rank_min = '$rank_min'");
     }
     else
     {
-    	$database->setQuery("UPDATE #__fb_ranks SET rank_title = '$rank_title', rank_image = '$rank_image', rank_special = '$rank_special', rank_min = '$rank_min' WHERE rank_id = $id");
+    	$kunena_db->setQuery("UPDATE #__fb_ranks SET rank_title = '$rank_title', rank_image = '$rank_image', rank_special = '$rank_special', rank_min = '$rank_min' WHERE rank_id = $id");
     }
-    $database->query() or trigger_dberror("Unable to save ranks.");
+    $kunena_db->query() or trigger_dberror("Unable to save ranks.");
 
     $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=ranks", _KUNENA_RANK_SAVED);
 }
 
 function editRank($option, $id)
 {
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
 	global $mainframe;
 
-	$database->setQuery("SELECT * FROM #__fb_ranks WHERE rank_id = '$id'");
-    $database->query() or trigger_dberror("Unable to load ranks.");
+	$kunena_db->setQuery("SELECT * FROM #__fb_ranks WHERE rank_id = '$id'");
+    $kunena_db->query() or trigger_dberror("Unable to load ranks.");
 
-	$ranks = $database->loadObjectList();
+	$ranks = $kunena_db->loadObjectList();
 	        check_dberror("Unable to load ranks.");
 
     $rank_images = collectRanks();
@@ -1995,7 +1995,7 @@ function editRank($option, $id)
 // Dan Syme/IGD - Ranks Management
 
 function KUNENA_GetAvailableModCats($catids) {
-    $database = &JFactory::getDBO();
+    $kunena_db = &JFactory::getDBO();
     $list = JJ_categoryArray(1);
     $this_treename = '';
     $catid = 0;

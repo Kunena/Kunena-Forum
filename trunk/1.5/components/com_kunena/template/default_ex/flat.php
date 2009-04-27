@@ -24,7 +24,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 $fbConfig =& CKunenaConfig::getInstance();
 global $is_Moderator;
-$my = &JFactory::getUser();
+$kunena_my = &JFactory::getUser();
 // Func Check
 if (strtolower($func) == 'latest' ||  strtolower($func) == '')
 {
@@ -148,6 +148,7 @@ if (count($messages[0]) > 0)
                 $k = 0;
                 $st_c = 0;
 
+		$st_occured = 0;
                 foreach ($messages[0] as $leaf)
                 {
                     $k = 1 - $k; //used for alternating colours
@@ -158,7 +159,6 @@ if (count($messages[0]) > 0)
                 <?php
                     if ($st_c == 0 && $st_occured != 1 && $st_count != 0 && $funclatest == 0)
                     {
-                    //$st_occured = 1;
                 ?>
 
                         <tr>
@@ -258,7 +258,7 @@ if (count($messages[0]) > 0)
 
 
                                     <?php
-                                    if ($fbConfig->shownew && $my->id != 0)
+                                    if ($fbConfig->shownew && $kunena_my->id != 0)
                                     {
                                         if (($prevCheck < $last_reply[$leaf->id]->time) && !in_array($last_reply[$leaf->id]->thread, $read_topics)) {
                                             //new post(s) in topic
@@ -308,10 +308,12 @@ if (count($messages[0]) > 0)
                             }
                             else
                             {
+				$threadPages = 0;
+				$unreadPage = 0;
                                 //this thread has been moved, get the new location
                                 $newURL = ""; //init
-                                $database->setQuery("SELECT `message` FROM #__fb_messages_text WHERE `mesid`='" . $leaf->id . "'");
-                                $newURL = $database->loadResult();
+                                $kunena_db->setQuery("SELECT `message` FROM #__fb_messages_text WHERE `mesid`='" . $leaf->id . "'");
+                                $newURL = $kunena_db->loadResult();
                                 // split the string and separate catid and id for proper link assembly
                                 parse_str($newURL, $newURLParams);
                                 ?>

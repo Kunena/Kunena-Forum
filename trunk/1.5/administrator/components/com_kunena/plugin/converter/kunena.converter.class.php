@@ -40,7 +40,7 @@ class fb_Converter {
 	 * Main conversion/import function. Processes XML file
 	 */
 	function doConversion() {
-		$database = &JFactory::getDBO();
+		$kunena_db = &JFactory::getDBO();
 		require_once( KUNENA_ROOT_PATH .DS. 'includes/domit/xml_domit_lite_include.php' );
 		if(!$this->silent) {
 ?>
@@ -104,7 +104,7 @@ class fb_Converter {
 	 * Processes "phpfile", "query" and "phpcode" child-nodes of the node provided
 	 */
 	function processNode(&$startNode,$batch = 0) {
-		$database = &JFactory::getDBO();
+		$kunena_db = &JFactory::getDBO();
 		$numChildren =& $startNode->childCount;
 		$childNodes =& $startNode->childNodes;
 
@@ -142,10 +142,10 @@ class fb_Converter {
 					break;
 				case "query":
 					$query = $currentNode->getText();
-					$database->setQuery($query);
-					if (!@$database->query()) {
-						$this->_error = "DB function failed with error number $database->_errorNum<br /><font color=\"red\">";
-						$this->_error .= mysql_error($database->_resource);
+					$kunena_db->setQuery($query);
+					if (!@$kunena_db->query()) {
+						$this->_error = "DB function failed with error number $kunena_db->_errorNum<br /><font color=\"red\">";
+						$this->_error .= mysql_error($kunena_db->_resource);
 						$this->_error .= "</font>";
 						$img = "publish_x.png";
 						$this->_return = false;
@@ -153,7 +153,7 @@ class fb_Converter {
 						$this->_error = "";
 						$img = "tick.png";
 					}
-					$database->setQuery($currentNode->getText());
+					$kunena_db->setQuery($currentNode->getText());
 					if(!$this->silent) {
 						?>
 						<tr>
@@ -162,7 +162,7 @@ class fb_Converter {
 									<img id="id<?php echo $i;?>_<?php echo $batch;?>_img" src="images/expandall.png" border="0">
 									Running SQL Query
 								</div>
-								<div id="id<?php echo $i;?>_<?php echo $batch;?>_details" style="display:None;" class="details"><?php echo $this->_error;?><pre><?php echo $database->_sql;?></pre></div>
+								<div id="id<?php echo $i;?>_<?php echo $batch;?>_details" style="display:None;" class="details"><?php echo $this->_error;?><pre><?php echo $kunena_db->_sql;?></pre></div>
 							</td>
 							<td width="20" valign="top"><img src="images/<?php echo $img;?>" border="0"></td>
 						</tr>

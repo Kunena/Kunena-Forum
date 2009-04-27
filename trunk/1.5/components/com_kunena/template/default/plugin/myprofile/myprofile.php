@@ -27,10 +27,10 @@ $fbConfig =& CKunenaConfig::getInstance();
 
 $mainframe->setPageTitle(_GEN_MYPROFILE . ' - ' . stripslashes($fbConfig->board_title));
 
-if ($my->id != "" && $my->id != 0)
+if ($kunena_my->id != "" && $kunena_my->id != 0)
 {
 	//Get joomla userinfo needed later on, this limits the amount of queries
-    $juserinfo = new JUser($my->id);
+    $juserinfo = new JUser($kunena_my->id);
 
     //Get userinfo needed later on, this limits the amount of queries
     $userinfo = new CKunenaUserprofile();
@@ -38,13 +38,13 @@ if ($my->id != "" && $my->id != 0)
     //use ClexusPM avatar if configured
     if ($fbConfig->avatar_src == "clexuspm")
     {
-        $database->setQuery("SELECT picture FROM #__mypms_profiles WHERE userid='$my->id'");
-        $avatar = $database->loadResult();
+        $kunena_db->setQuery("SELECT picture FROM #__mypms_profiles WHERE userid='$kunena_my->id'");
+        $avatar = $kunena_db->loadResult();
     }
     elseif ($fbConfig->avatar_src == "cb")
     {
-        $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$my->id'");
-        $avatar = $database->loadResult();
+        $kunena_db->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$kunena_my->id'");
+        $avatar = $kunena_db->loadResult();
     }
     else
     {
@@ -58,7 +58,7 @@ if ($my->id != "" && $my->id != 0)
 
     if ($ugid > 0)
     { //only get the groupname from the ACL if we're sure there is one
-        $agrp = strtolower($acl->get_group_name($ugid, 'ARO'));
+        $agrp = strtolower($kunena_acl->get_group_name($ugid, 'ARO'));
     }
 
     if ($ugid == 0)
@@ -86,8 +86,8 @@ if ($my->id != "" && $my->id != 0)
 
     //Get the max# of posts for any one user
 
-    $database->setQuery("SELECT max(posts) from #__fb_users");
-    $maxPosts = $database->loadResult();
+    $kunena_db->setQuery("SELECT max(posts) from #__fb_users");
+    $maxPosts = $kunena_db->loadResult();
 
     //# of post for this user and ranking
 
@@ -187,9 +187,9 @@ if ($my->id != "" && $my->id != 0)
                         $avatar = "";
                     }
 
-                    $database->setQuery("UPDATE #__fb_users set   avatar='$avatar'  where userid=$my->id");
+                    $kunena_db->setQuery("UPDATE #__fb_users set   avatar='$avatar'  where userid=$kunena_my->id");
 
-                    if (!$database->query())
+                    if (!$kunena_db->query())
                     {
                         echo _USER_PROFILE_NOT_A . " <strong><font color=\"red\">" . _USER_PROFILE_NOT_B . "</font></strong> " . _USER_PROFILE_NOT_C . ".<br /><br />";
                     }
@@ -226,10 +226,10 @@ if ($my->id != "" && $my->id != 0)
 					(int)$newhideEmail = JRequest::getInt('newhideEmail', 1);
 					(int)$newshowOnline = JRequest::getInt('newshowOnline', 1);
 
-                    $database->setQuery("UPDATE #__fb_users set  view='$newview', ordering='$neworder', hideEmail='$newhideEmail', showOnline='$newshowOnline'  where userid=$my->id");
+                    $kunena_db->setQuery("UPDATE #__fb_users set  view='$newview', ordering='$neworder', hideEmail='$newhideEmail', showOnline='$newshowOnline'  where userid=$kunena_my->id");
                     setcookie("fboard_settings[current_view]", $newview);
 
-                    if (!$database->query())
+                    if (!$kunena_db->query())
                     {
                         echo _USER_PROFILE_NOT_A . " <strong><font color=\"red\">" . _USER_PROFILE_NOT_B . "</font></strong> " . _USER_PROFILE_NOT_C . ".<br /><br />";
                     }
@@ -281,7 +281,7 @@ if ($my->id != "" && $my->id != 0)
                     $user_id = intval( JRequest::getVar('id', 0 ));
 
     // do some security checks
-    if ($my->id == 0 || $user_id == 0 || $user_id != $my->id) {
+    if ($kunena_my->id == 0 || $user_id == 0 || $user_id != $kunena_my->id) {
         JError::raiseError( 403, JText::_("ALERTNOTAUTH") );;
         return;
     }
@@ -335,10 +335,10 @@ if ($my->id != "" && $my->id != 0)
                     $limit = JRequest::getInt('limit', $pageperlistlm);
                     $limitstart = JRequest::getInt('limitstart', 0);
 
-                    $query = "select thread from #__fb_subscriptions where userid=$my->id";
-                    $database->setQuery($query);
+                    $query = "select thread from #__fb_subscriptions where userid=$kunena_my->id";
+                    $kunena_db->setQuery($query);
 
-                    $total = count($database->loadObjectList());
+                    $total = count($kunena_db->loadObjectList());
                     	check_dberror("Unable to load subscriptions for user.");
 
                     if ($total <= $limit)
@@ -347,8 +347,8 @@ if ($my->id != "" && $my->id != 0)
                     }
 
                     //get all subscriptions for this user
-                    $database->setQuery("select thread from #__fb_subscriptions where userid=$my->id ORDER BY thread DESC LIMIT $limitstart, $limit");
-                    $subslist = $database->loadObjectList();
+                    $kunena_db->setQuery("select thread from #__fb_subscriptions where userid=$kunena_my->id ORDER BY thread DESC LIMIT $limitstart, $limit");
+                    $subslist = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load subscriptions.");
                     $csubslist = count($subslist);
 
@@ -369,10 +369,10 @@ if ($my->id != "" && $my->id != 0)
                     $limit = JRequest::getInt('limit', $pageperlistlm);
                     $limitstart = JRequest::getInt('limitstart', 0);
 
-                    $query = "select thread from #__fb_favorites where userid=$my->id";
-                    $database->setQuery($query);
+                    $query = "select thread from #__fb_favorites where userid=$kunena_my->id";
+                    $kunena_db->setQuery($query);
 
-                    $total = count($database->loadObjectList());
+                    $total = count($kunena_db->loadObjectList());
                     	check_dberror("Unable to load favorites.");
 
                     if ($total <= $limit)
@@ -381,8 +381,8 @@ if ($my->id != "" && $my->id != 0)
                     }
 
                     //get all favorites for this user
-                    $database->setQuery("select thread from #__fb_favorites where userid=$my->id ORDER BY thread DESC LIMIT $limitstart, $limit");
-                    $favslist = $database->loadObjectList();
+                    $kunena_db->setQuery("select thread from #__fb_favorites where userid=$kunena_my->id ORDER BY thread DESC LIMIT $limitstart, $limit");
+                    $favslist = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load favorites.");
                     $cfavslist = count($favslist);
 
@@ -402,8 +402,8 @@ if ($my->id != "" && $my->id != 0)
                     //since these are moderators for all forums (regardless if a forum is set to be moderated)
                     if (!$is_admin)
                     {
-                        $database->setQuery("select #__fb_moderation.catid,#__fb_categories.name from #__fb_moderation left join #__fb_categories on #__fb_categories.id=#__fb_moderation.catid where #__fb_moderation.userid=$my->id");
-                        $modslist = $database->loadObjectList();
+                        $kunena_db->setQuery("select #__fb_moderation.catid,#__fb_categories.name from #__fb_moderation left join #__fb_categories on #__fb_categories.id=#__fb_moderation.catid where #__fb_moderation.userid=$kunena_my->id");
+                        $modslist = $kunena_db->loadObjectList();
                         	check_dberror("Unable to load moderators.");
                         $cmodslist = count($modslist);
                     }
@@ -425,9 +425,9 @@ if ($my->id != "" && $my->id != 0)
                     @array_walk($cid, "intval");
                     $cids = @implode(',', $cid);
 
-                    $database->setQuery("DELETE FROM #__fb_subscriptions WHERE  userid=$my->id  AND thread in ($cids) ");
+                    $kunena_db->setQuery("DELETE FROM #__fb_subscriptions WHERE  userid=$kunena_my->id  AND thread in ($cids) ");
 
-                    if (!$database->query())
+                    if (!$kunena_db->query())
                     {
                         echo _USER_UNSUBSCRIBE_A . " <strong><font color=\"red\">" . _USER_UNSUBSCRIBE_B . "</font></strong> " . _USER_UNSUBSCRIBE_C . ".<br /><br />";
                     }
@@ -454,9 +454,9 @@ if ($my->id != "" && $my->id != 0)
 
 					/////
 					case "unsubscribeitem":
-                   $database->setQuery("DELETE from #__fb_subscriptions where userid=$my->id and thread=$thread");
+                   $kunena_db->setQuery("DELETE from #__fb_subscriptions where userid=$kunena_my->id and thread=$thread");
 
-						if (!$database->query()) {
+						if (!$kunena_db->query()) {
 							echo _USER_UNSUBSCRIBE_A . " <strong><font color=\"red\">" . _USER_UNSUBSCRIBE_B . "</font></strong> " . _USER_UNSUBSCRIBE_C . ".<br /><br />";
 						}
 						else {
@@ -489,9 +489,9 @@ if ($my->id != "" && $my->id != 0)
                     @array_walk($cid, "intval");
                     $cids = @implode(',', $cid);
 
-                    $database->setQuery("DELETE from #__fb_favorites where userid=$my->id  AND thread in ($cids)");
+                    $kunena_db->setQuery("DELETE from #__fb_favorites where userid=$kunena_my->id  AND thread in ($cids)");
 
-                    if (!$database->query())
+                    if (!$kunena_db->query())
                     {
                         echo _USER_UNFAVORITE_A . " <strong><font color=\"red\">" . _USER_UNFAVORITE_B . "</font></strong> " . _USER_UNFAVORITE_C . ".<br /><br />";
                     }
@@ -517,9 +517,9 @@ if ($my->id != "" && $my->id != 0)
 
 					 case "unfavoriteitem":
 
-						$database->setQuery("DELETE from #__fb_favorites where userid=$my->id and thread=$thread");
+						$kunena_db->setQuery("DELETE from #__fb_favorites where userid=$kunena_my->id and thread=$thread");
 
-						if (!$database->query()) {
+						if (!$kunena_db->query()) {
 							echo _USER_UNFAVORITE_A . " <strong><font color=\"red\">" . _USER_UNFAVORITE_B . "</font></strong> " . _USER_UNFAVORITE_C . ".<br /><br />";
 						}
 						else {
@@ -551,8 +551,8 @@ if ($my->id != "" && $my->id != 0)
                     $link = 'index.php?option=com_user&amp;task=UserDetails';
 
                     $query = "SELECT id" . "\n FROM #__menu" . "\n WHERE link LIKE '%$link%'" . "\n AND published = 1";
-                    $database->setQuery($query);
-                    $exists = $database->loadResult();
+                    $kunena_db->setQuery($query);
+                    $exists = $kunena_db->loadResult();
 
                     if (!$exists)
                     {
@@ -563,7 +563,7 @@ if ($my->id != "" && $my->id != 0)
 
                     require_once (KUNENA_ROOT_PATH_ADMIN .DS. 'components/com_users/users.class.php');
 
-                    $row = new JUser($my->id);
+                    $row = new JUser($kunena_my->id);
                     $row->orig_password = $row->password;
 
                     $row->name = trim($row->name);
@@ -586,7 +586,7 @@ if ($my->id != "" && $my->id != 0)
 
                 case "usersave":
                     $user_id = JRequest::getInt('id', 0);
-                    $uid = $my->id;
+                    $uid = $kunena_my->id;
 
                     // do some security checks
                     if ($uid == 0 || $user_id == 0 || $user_id != $uid)
@@ -632,9 +632,9 @@ if ($my->id != "" && $my->id != 0)
                         // change username value in session table
                         $query
                             = "UPDATE #__session"
-                            . "\n SET username = " . $database->Quote($row->username) . "\n WHERE username = " . $database->Quote($orig_username) . "\n AND userid = " . (int)$my->id . "\n AND gid = " . (int)$my->gid . "\n AND guest = 0";
-                        $database->setQuery($query);
-                        $database->query();
+                            . "\n SET username = " . $kunena_db->Quote($row->username) . "\n WHERE username = " . $kunena_db->Quote($orig_username) . "\n AND userid = " . (int)$kunena_my->id . "\n AND gid = " . (int)$kunena_my->gid . "\n AND guest = 0";
+                        $kunena_db->setQuery($query);
+                        $kunena_db->query();
                     }
 
                     $mainframe->redirect( JURI::base() .'index.php?option=com_kunena&amp;func=myprofile' . KUNENA_COMPONENT_ITEMID_SUFFIX, _KUNENA_USER_DETAILS_SAVE);

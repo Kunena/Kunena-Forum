@@ -62,8 +62,8 @@ defined( '_JEXEC' ) or die('Restricted access');
 			{
 				foreach ($favslist as $favs)
 				{ //get all message details for each favorite
-					$database->setQuery("select * from #__fb_messages where id=$favs->thread");
-					$favdet = $database->loadObjectList();
+					$kunena_db->setQuery("select * from #__fb_messages where id=$favs->thread");
+					$favdet = $kunena_db->loadObjectList();
 						check_dberror("Unable to load messages.");
 
 					foreach ($favdet as $fav)

@@ -29,10 +29,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $mainframe;
 
 
-$database = &JFactory::getDBO();
-
-// Kill notices (we have many..)
-error_reporting (E_ALL ^ E_NOTICE);
+$kunena_db = &JFactory::getDBO();
 
 include_once (KUNENA_PATH .DS. "class.kunena.php");
 
@@ -43,24 +40,24 @@ include_once (KUNENA_PATH .DS. "class.kunena.php");
 $posttime = CKunenaTools::fbGetInternalTime();
 
 $query="INSERT INTO `#__fb_categories` VALUES (1, 0, '".addslashes(_KUNENA_SAMPLE_MAIN_CATEGORY_TITLE)."', 0, 0, 0, 1, NULL, 0, 0, 0, 0, 1, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, '".addslashes(_KUNENA_SAMPLE_MAIN_CATEGORY_DESC)."', '".addslashes(_KUNENA_SAMPLE_MAIN_CATEGORY_HEADER)."', '', 0, 0, 0, NULL);";
-$database->setQuery($query);
-$database->query() or trigger_dbwarning('Unable to insert sample top category');
+$kunena_db->setQuery($query);
+$kunena_db->query() or trigger_dbwarning('Unable to insert sample top category');
 
 $query="INSERT INTO `#__fb_categories` VALUES (2, 1, '".addslashes(_KUNENA_SAMPLE_FORUM1_TITLE)."', 0, 0, 0, 1, NULL, 0, 0, 0, 0, 1, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, '".addslashes(_KUNENA_SAMPLE_FORUM1_DESC)."', '".addslashes(_KUNENA_SAMPLE_FORUM1_HEADER)."', '', 0, 0, 0, NULL);";
-$database->setQuery($query);
-$database->query() or trigger_dbwarning('Unable to insert sample Forum 1');
+$kunena_db->setQuery($query);
+$kunena_db->query() or trigger_dbwarning('Unable to insert sample Forum 1');
 
 $query="INSERT INTO `#__fb_categories` VALUES (3, 1, '".addslashes(_KUNENA_SAMPLE_FORUM2_TITLE)."', 0, 0, 0, 1, NULL, 0, 0, 0, 0, 2, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, '".addslashes(_KUNENA_SAMPLE_FORUM2_DESC)."', '".addslashes(_KUNENA_SAMPLE_FORUM2_HEADER)."', '', 0, 0, 0, NULL);";
-$database->setQuery($query);
-$database->query() or trigger_dbwarning('Unable to insert sample Forum 2');
+$kunena_db->setQuery($query);
+$kunena_db->query() or trigger_dbwarning('Unable to insert sample Forum 2');
 
 $query="INSERT INTO `#__fb_messages` VALUES (1, 0, 1, 2, 'Kunena', 62, 'info@kunena.com', '".addslashes(_KUNENA_SAMPLE_POST1_SUBJECT)."', $posttime, '127.0.0.1', 0, 0, 0, 0, 0, 0, NULL, NULL, NULL);";
-$database->setQuery($query);
-$database->query() or trigger_dbwarning('Unable to insert sample post');
+$kunena_db->setQuery($query);
+$kunena_db->query() or trigger_dbwarning('Unable to insert sample post');
 
 $query="INSERT INTO `#__fb_messages_text` VALUES (1, '".addslashes(_KUNENA_SAMPLE_POST1_TEXT)."');";
-$database->setQuery($query);
-$database->query() or trigger_dbwarning('Unable to insert sample post text');
+$kunena_db->setQuery($query);
+$kunena_db->query() or trigger_dbwarning('Unable to insert sample post text');
 
 CKunenaTools::reCountBoards();
 

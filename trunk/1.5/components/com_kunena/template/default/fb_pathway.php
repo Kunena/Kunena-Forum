@@ -42,8 +42,8 @@ if ($func != "")
         while ($parent_ids)
         {
             $query = "select * from #__fb_categories where id=$catids and published=1";
-            $database->setQuery($query);
-            $results = $database->loadObject();
+            $kunena_db->setQuery($query);
+            $results = $kunena_db->loadObject();
 			$parent_ids = $results->parent;
 			$fr_name = htmlspecialchars(trim(stripslashes($results->name)));
             //$cids=@mysql_result( $results, 0, 'id' );
@@ -80,8 +80,8 @@ if ($func != "")
         if ($sfunc == "view" and $id)
         {
             $sql = "select subject from #__fb_messages where id = $id";
-            $database->setQuery($sql);
-            $jr_topic_title = stripslashes(htmlspecialchars($database->loadResult()));
+            $kunena_db->setQuery($sql);
+            $jr_topic_title = stripslashes(htmlspecialchars($kunena_db->loadResult()));
             $jr_path_menu[] = $jr_topic_title;
         //     echo " " . $jr_arrow .$jr_arrow ." ". $jr_topic_title;
         }
@@ -124,8 +124,8 @@ if ($func != "")
          //get viewing
         $fb_queryName = $fbConfig->username ? "username" : "name";
 		$query= "SELECT w.userid, u.$fb_queryName AS username , k.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS k ON k.userid=w.userid  WHERE w.link like '%" . addslashes($_SERVER['REQUEST_URI']) . "%' GROUP BY w.userid ORDER BY u.$fb_queryName ASC";
-		$database->setQuery($query);
-		$users = $database->loadObjectList();
+		$kunena_db->setQuery($query);
+		$users = $kunena_db->loadObjectList();
 			check_dberror("Unable to load who is online.");
 		$total_viewing = count($users);
 

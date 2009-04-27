@@ -23,7 +23,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 $fbConfig =& CKunenaConfig::getInstance();
 global $is_Moderator;
 
-$database = &JFactory::getDBO();
+$kunena_db = &JFactory::getDBO();
 require_once(KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
 
 //Security basics begin
@@ -45,12 +45,12 @@ if (!$is_Moderator)
 {
     //check Access Level Restrictions but don't bother for Moderators
     //get all the info on this forum:
-    $database->setQuery("SELECT id,pub_access,pub_recurse,admin_access,admin_recurse FROM #__fb_categories where id='$catid'");
-    $row = $database->loadObjectList();
+    $kunena_db->setQuery("SELECT id,pub_access,pub_recurse,admin_access,admin_recurse FROM #__fb_categories where id='$catid'");
+    $row = $kunena_db->loadObjectList();
     	check_dberror("Unable to load categories.");
     //Do user identification based upon the ACL
     $letPass = 0;
-    $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $acl);
+    $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $kunena_acl);
 }
 
 if ($letPass || $is_Moderator)
@@ -69,13 +69,13 @@ if ($letPass || $is_Moderator)
     $page = $page < 1 ? 1 : $page;
     $offset = ($page - 1) * $threads_per_page;
     $row_count = $page * $threads_per_page;
-    $database->setQuery("Select count(*) FROM #__fb_messages WHERE parent = '0' AND catid= '$catid' AND hold = '0' ");
-    $total = (int)$database->loadResult();
+    $kunena_db->setQuery("Select count(*) FROM #__fb_messages WHERE parent = '0' AND catid= '$catid' AND hold = '0' ");
+    $total = (int)$kunena_db->loadResult();
     	check_dberror("Unable to load messages.");
-    $database->setQuery(
+    $kunena_db->setQuery(
         "SELECT a. * , MAX( b.time )  AS lastpost FROM  #__fb_messages  AS a LEFT  JOIN #__fb_messages  AS b ON b.thread = a.thread WHERE a.parent =  '0' AND a.catid =  $catid AND a.hold =  '0' GROUP  BY id ORDER  BY ordering DESC , lastpost DESC  LIMIT $offset,$threads_per_page");
 
-    foreach ($database->loadObjectList()as $message)
+    foreach ($kunena_db->loadObjectList()as $message)
     {
         $threadids[] = $message->id;
         $messages[$message->parent][] = $message;
@@ -86,9 +86,9 @@ if ($letPass || $is_Moderator)
     if (count($threadids) > 0)
     {
         $idstr = @join("','", $threadids);
-        $database->setQuery("SELECT a.* FROM #__fb_messages AS a WHERE thread IN ('$idstr') AND id NOT IN ('$idstr') and hold=0");
+        $kunena_db->setQuery("SELECT a.* FROM #__fb_messages AS a WHERE thread IN ('$idstr') AND id NOT IN ('$idstr') and hold=0");
 
-        foreach ($database->loadObjectList()as $message)
+        foreach ($kunena_db->loadObjectList()as $message)
         {
             $messages[$message->parent][] = $message;
             $thread_counts[$message->thread]++;
@@ -97,8 +97,8 @@ if ($letPass || $is_Moderator)
     }
 
     //get number of pending messages
-    $database->setQuery("select count(*) from #__fb_messages where catid='$catid' and hold=1");
-    $numPending = $database->loadResult();
+    $kunena_db->setQuery("select count(*) from #__fb_messages where catid='$catid' and hold=1");
+    $numPending = $kunena_db->loadResult();
     	check_dberror("Unable to load messages.");
     //@rsort($messages[0]);
 ?>
@@ -113,11 +113,11 @@ if ($letPass || $is_Moderator)
 
     //Get the category name for breadcrumb
     unset($objCatInfo, $objCatParentInfo);
-    $database->setQuery("SELECT * from #__fb_categories where id = {$catid}");
-    $objCatInfo = $database->loadObject();
+    $kunena_db->setQuery("SELECT * from #__fb_categories where id = {$catid}");
+    $objCatInfo = $kunena_db->loadObject();
     //Get the Category's parent category name for breadcrumb
-    $database->setQuery("SELECT name,id FROM #__fb_categories WHERE id = {$objCatInfo->parent}");
-    $objCatParentInfo = $database->loadObject();
+    $kunena_db->setQuery("SELECT name,id FROM #__fb_categories WHERE id = {$objCatInfo->parent}");
+    $objCatParentInfo = $kunena_db->loadObject();
     //check if this forum is locked
     $forumLocked = $objCatInfo->locked;
     //check if this forum is subject to review
@@ -153,7 +153,7 @@ if ($letPass || $is_Moderator)
                 ?>
 
                 <?php
-                if ((($fbConfig->pubwrite == 0 && $my->id != 0) || $fbConfig->pubwrite == 1) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
+                if ((($fbConfig->pubwrite == 0 && $kunena_my->id != 0) || $fbConfig->pubwrite == 1) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
                 {
                     //this user is allowed to post a new topic:
                     echo CKunenaLink::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
@@ -199,8 +199,8 @@ if ($letPass || $is_Moderator)
     <?php
     //get all readTopics in an array
     $readTopics = "";
-    $database->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid=$my->id");
-    $readTopics = $database->loadResult();
+    $kunena_db->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid=$kunena_my->id");
+    $readTopics = $kunena_db->loadResult();
 
     if (count($readTopics) == 0) {
         $readTopics = "0";
@@ -243,7 +243,7 @@ if ($letPass || $is_Moderator)
                 ?>
 
                 <?php
-                if ((($fbConfig->pubwrite == 0 && $my->id != 0) || $fbConfig->pubwrite == 1) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
+                if ((($fbConfig->pubwrite == 0 && $kunena_my->id != 0) || $fbConfig->pubwrite == 1) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
                 {
                     //this user is allowed to post a new topic:
                     echo CKunenaLink::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
@@ -295,7 +295,7 @@ if ($letPass || $is_Moderator)
             <tr>
                 <th class = "th-left" align="left" >
                     <?php
-                    if ($my->id != 0)
+                    if ($kunena_my->id != 0)
                     {
                         echo CKunenaLink::GetCategoryLink('markThisRead', $catid, $fbIcons['markThisForumRead'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['markThisForumRead'] . '" border="0" alt="' . _GEN_MARK_THIS_FORUM_READ . '" title="' . _GEN_MARK_THIS_FORUM_READ . '"/>' : _GEN_MARK_THIS_FORUM_READ, $rel='nofollow');
                     }
@@ -306,8 +306,8 @@ if ($letPass || $is_Moderator)
                         <?php
                         //get the Moderator list for display
                         $fb_queryName = $fbConfig->username ? "username" : "name";
-                        $database->setQuery("select m.userid, u.$fb_queryName AS username from #__fb_moderation AS m left join #__users AS u ON u.id=m.userid where m.catid=$catid");
-                        $modslist = $database->loadObjectList();
+                        $kunena_db->setQuery("select m.userid, u.$fb_queryName AS username from #__fb_moderation AS m left join #__users AS u ON u.id=m.userid where m.catid=$catid");
+                        $modslist = $kunena_db->loadObjectList();
                         	check_dberror("Unable to load moderators.");
                         ?>
 
@@ -343,7 +343,7 @@ if ($letPass || $is_Moderator)
             <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
                 <td class = "td-1 fbs" align="left">
                     <?php
-                    if ($my->id != 0)
+                    if ($kunena_my->id != 0)
                     {
                         echo $fbIcons['unreadmessage'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '" />' : $fbConfig->newchar;
                         echo ' - ' . _GEN_UNREAD . '';
@@ -353,7 +353,7 @@ if ($letPass || $is_Moderator)
                     <br/>
 
                     <?php
-                    if ($my->id != 0)
+                    if ($kunena_my->id != 0)
                     {
                         echo $fbIcons['readmessage'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $fbConfig->newchar;
                         echo ' - ' . _GEN_NOUNREAD . '';
@@ -456,9 +456,9 @@ else
 
 function showChildren($category, $prefix = "", &$allow_forum)
 {
-    $database = &JFactory::getDBO();
-    $database->setQuery("SELECT id, name, parent FROM #__fb_categories WHERE parent='$category'  and published='1' order by ordering");
-    $forums = $database->loadObjectList();
+    $kunena_db = &JFactory::getDBO();
+    $kunena_db->setQuery("SELECT id, name, parent FROM #__fb_categories WHERE parent='$category'  and published='1' order by ordering");
+    $forums = $kunena_db->loadObjectList();
     	check_dberror("Unable to load categories.");
 
     foreach ($forums as $forum)

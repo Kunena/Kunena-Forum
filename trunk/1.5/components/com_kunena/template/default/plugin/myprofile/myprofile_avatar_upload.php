@@ -109,9 +109,9 @@ function get_dirs($directory, $select_name, $selected = "")
     echo "</select>\n";
 }
 
-$my = &JFactory::getUser();
+$kunena_my = &JFactory::getUser();
 
-if ($my->id != "" && $my->id != 0)
+if ($kunena_my->id != "" && $kunena_my->id != 0)
 {
 
 $fbConfig =& CKunenaConfig::getInstance();
@@ -184,7 +184,7 @@ if ($do == 'init')
                         {
                     ?>
 
-                            <img src = "<?php echo MyPMSTools::getAvatarLinkWithID($my->id)?>" alt="" />
+                            <img src = "<?php echo MyPMSTools::getAvatarLinkWithID($kunena_my->id)?>" alt="" />
 
                             <br /> <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=upload&amp;Itemid='._CLEXUSPM_ITEMID);?>"><?php echo _SET_NEW_AVATAR; ?></a>
 
@@ -192,8 +192,8 @@ if ($do == 'init')
                         }
                         elseif ($fbConfig->avatar_src == "cb")
                         {
-                            $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$my->id'");
-                            $avatar = $database->loadResult();
+                            $kunena_db->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$kunena_my->id'");
+                            $avatar = $kunena_db->loadResult();
                             check_dberror("Unable to load CB Avatar.");
                             if ($avatar != "")
                             {
@@ -217,8 +217,8 @@ if ($do == 'init')
                         }
                         else
                         {
-                            $database->setQuery("SELECT avatar FROM #__fb_users WHERE userid={$my->id}");
-                            $avatar = $database->loadResult();
+                            $kunena_db->setQuery("SELECT avatar FROM #__fb_users WHERE userid={$kunena_my->id}");
+                            $avatar = $kunena_db->loadResult();
                             check_dberror("Unable to load Kunena Avatar.");
                             if ($avatar != "")
                             {
@@ -368,6 +368,7 @@ if ($do == 'init')
         if ($gallery == "default")
             unset($gallery);
 
+	$gallery1 = $gallery2 = '';
         if ($gallery)
         {
             $gallery1 = "/" . str_replace("%20", " ", $gallery);
@@ -426,7 +427,7 @@ else if ($do == 'validate')
     $numExtensions = (count($filename)) - 1;
     $avatarName = $filename[0];
     $avatarExt = $filename[$numExtensions];
-    $newFileName = $my->id . "." . $avatarExt;
+    $newFileName = $kunena_my->id . "." . $avatarExt;
     $imageType = array( 1 => 'GIF', 2 => 'JPG', 3 => 'PNG', 4 => 'SWF', 5 => 'PSD', 6 => 'BMP', 7 => 'TIFF', 8 => 'TIFF', 9 => 'JPC', 10 => 'JP2', 11 => 'JPX', 12 => 'JB2', 13 => 'SWC', 14 => 'IFF');
 
     //move it to the proper location
@@ -610,8 +611,8 @@ else if ($do == 'validate')
    }
 
     $newFileName = CKunenaTools::fbRemoveXSS($newFileName);
-    $database->setQuery("UPDATE #__fb_users SET avatar='{$newFileName}' WHERE userid={$my->id}");
-    $database->query() or trigger_dberror("Unable to update avatar.");
+    $kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newFileName}' WHERE userid={$kunena_my->id}");
+    $kunena_db->query() or trigger_dberror("Unable to update avatar.");
     echo " <strong>" . _UPLOAD_UPLOADED . "</strong>...<br /><br />";
     echo  _USER_RETURN_A . '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '">' . _USER_RETURN_B . ".</a>";
     echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'), 3500);
@@ -626,8 +627,8 @@ else if ($do == 'fromgallery')
         $mainframe->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_CHOOSE);
     }
 
-    $database->setQuery("UPDATE #__fb_users SET avatar='{$newAvatar}' WHERE userid={$my->id}");
-    $database->query() or trigger_dberror("Unable to update user avatar.");
+    $kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newAvatar}' WHERE userid={$kunena_my->id}");
+    $kunena_db->query() or trigger_dberror("Unable to update user avatar.");
 
     echo _USER_PROFILE_UPDATED . "<br /><br />";
 

@@ -88,12 +88,17 @@ if (!$is_Moderator)
 {
     //check Access Level Restrictions but don't bother for Moderators
     //get all the info on this forum:
-    $database->setQuery("SELECT id,pub_access,pub_recurse,admin_access,admin_recurse FROM #__fb_categories where id='$catid'");
-    $row = $database->loadObjectList();
+    $kunena_db->setQuery("SELECT id,pub_access,pub_recurse,admin_access,admin_recurse FROM #__fb_categories where id='$catid'");
+    $row = $kunena_db->loadObjectList();
     	check_dberror("Unable to load category detail.");
     //Do user identification based upon the ACL
-    $letPass = 0;
-    $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $acl);
+    if ($kunena_my->id) {
+	$aro_group = $kunena_acl->getAroGroup($kunena_my->id);
+	$group_id = $aro_group->group_id;
+    }
+    else $group_id = 0;
+
+    $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $group_id, $kunena_acl);
 }
 
 if ($letPass || $is_Moderator)
@@ -112,10 +117,10 @@ if ($letPass || $is_Moderator)
     $page = $page < 1 ? 1 : $page;
     $offset = ($page - 1) * $threads_per_page;
     $row_count = $page * $threads_per_page;
-    $database->setQuery("Select count(*) FROM #__fb_messages WHERE parent = '0' AND catid= '$catid' AND hold = '0' ");
-    $total = (int)$database->loadResult();
+    $kunena_db->setQuery("Select count(*) FROM #__fb_messages WHERE parent = '0' AND catid= '$catid' AND hold = '0' ");
+    $total = (int)$kunena_db->loadResult();
     	check_dberror('Unable to get message count.');
-    $database->setQuery("SELECT
+    $kunena_db->setQuery("SELECT
     							a.*,
     							t.message AS messagetext,
     							m.mesid AS attachmesid,
@@ -126,7 +131,7 @@ if ($letPass || $is_Moderator)
     							JOIN #__fb_messages_text AS t ON a.thread = t.mesid
     							LEFT  JOIN #__fb_messages AS b ON b.thread = a.thread
     							LEFT  JOIN #__fb_attachments AS m ON m.mesid = a.id
-    							LEFT  JOIN #__fb_favorites AS f ON  f.thread = a.id && f.userid = $my->id
+    							LEFT  JOIN #__fb_favorites AS f ON  f.thread = a.id && f.userid = $kunena_my->id
         						" .(($fbConfig->avatar_src == "cb")?
 	                    		"LEFT JOIN #__comprofiler AS u ON u.user_id = a.userid":
 	                    		"LEFT JOIN #__fb_users AS u ON u.userid = a.userid")."
@@ -136,10 +141,14 @@ if ($letPass || $is_Moderator)
     						GROUP BY id
     						ORDER BY ordering DESC , lastpost DESC
     						LIMIT $offset,$threads_per_page");
-    $messagelist = $database->loadObjectList();
+    $messagelist = $kunena_db->loadObjectList();
     	check_dberror("Unable to load messages.");
 
     $favthread = array();
+    $threadids = array();
+    $messages = array();
+    $messages[0] = array();
+    $thread_counts = array();
     foreach ($messagelist as $message)
     {
         $threadids[] = $message->id;
@@ -148,6 +157,7 @@ if ($letPass || $is_Moderator)
 	$last_read[$message->id]->lastread = $last_reply[$message->thread];
 	$last_read[$message->id]->unread = 0;
         $hits[$message->id] = $message->hits;
+        $thread_counts[$message->id] = 0;
         $messagetext[$message->id] = substr(smile::purify($message->messagetext), 0, 500);
     }
 
@@ -155,12 +165,12 @@ if ($letPass || $is_Moderator)
     {
         $idstr = @join("','", $threadids);
 
-        $database->setQuery("SELECT
+        $kunena_db->setQuery("SELECT
         					thread AS id,
         					count(thread) AS favcount
 					FROM #__fb_favorites
        					WHERE thread IN ('$idstr') GROUP BY thread");
-        $favlist = $database->loadObjectList();
+        $favlist = $kunena_db->loadObjectList();
         check_dberror("Unable to load messages.");
 
 	foreach($favlist AS $fthread)
@@ -169,7 +179,7 @@ if ($letPass || $is_Moderator)
 	}
 	unset($favlist, $fthread);
 
-        $database->setQuery("SELECT
+        $kunena_db->setQuery("SELECT
         						a.*,
         						u.avatar
         					FROM #__fb_messages AS a
@@ -179,7 +189,7 @@ if ($letPass || $is_Moderator)
         					WHERE a.thread IN ('$idstr')
         					AND a.id NOT IN ('$idstr')
         					AND a.hold=0");
-        $messagelist = $database->loadObjectList();
+        $messagelist = $kunena_db->loadObjectList();
         	check_dberror("Unable to load messages.");
 
         foreach ($messagelist as $message)
@@ -190,9 +200,9 @@ if ($letPass || $is_Moderator)
             $last_read[$message->id]->lastread = $last_reply[$message->thread];
         }
 
-        $database->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages "
+        $kunena_db->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages "
                            ."WHERE thread IN ('$idstr') AND time>'$prevCheck' GROUP BY thread");
-        $msgidlist = $database->loadObjectList();
+        $msgidlist = $kunena_db->loadObjectList();
         check_dberror("Unable to get unread messages count and first id.");
 
         foreach ($msgidlist as $msgid)
@@ -202,8 +212,8 @@ if ($letPass || $is_Moderator)
     }
 
     //get number of pending messages
-    $database->setQuery("select count(*) from #__fb_messages where catid='$catid' and hold=1");
-    $numPending = $database->loadResult();
+    $kunena_db->setQuery("select count(*) from #__fb_messages where catid='$catid' and hold=1");
+    $numPending = $kunena_db->loadResult();
     	check_dberror('Unable to get number of pending messages.');
     //@rsort($messages[0]);
 ?>
@@ -220,12 +230,12 @@ if ($letPass || $is_Moderator)
 <?php
     //Get the category name for breadcrumb
     unset($objCatInfo, $objCatParentInfo);
-    $database->setQuery("SELECT * from #__fb_categories where id = {$catid}");
-    $objCatInfo = $database->loadObject();
+    $kunena_db->setQuery("SELECT * from #__fb_categories where id = {$catid}");
+    $objCatInfo = $kunena_db->loadObject();
     	check_dberror('Unable to get categories.');
     //Get the Category's parent category name for breadcrumb
-    $database->setQuery("SELECT name,id FROM #__fb_categories WHERE id = {$objCatInfo->parent}");
-    $objCatParentInfo = $database->loadObject();
+    $kunena_db->setQuery("SELECT name,id FROM #__fb_categories WHERE id = {$objCatInfo->parent}");
+    $objCatParentInfo = $kunena_db->loadObject();
     	check_dberror('Unable to get parent category.');;
     //check if this forum is locked
     $forumLocked = $objCatInfo->locked;
@@ -248,6 +258,7 @@ if ($letPass || $is_Moderator)
 	<tr>
 		<td>
 		<?php
+		$smileyList = smile::getEmoticons(0);
 		$headerdesc = stripslashes(smile::smileReplace($objCatInfo->headerdesc, 0, $fbConfig->disemoticons, $smileyList));
         $headerdesc = nl2br($headerdesc);
         //wordwrap:
@@ -274,12 +285,12 @@ if ($letPass || $is_Moderator)
 
 
                 <?php
-                if ((($fbConfig->pubwrite == 0 && $my->id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
+                if ((($fbConfig->pubwrite == 0 && $kunena_my->id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
                 {
                     //this user is allowed to post a new topic:
                     $forum_new = CKunenaLink::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
                 }
-                if ($my->id != 0)
+                if ($kunena_my->id != 0)
                 {
                     $forum_markread = CKunenaLink::GetCategoryLink('markThisRead', $catid, $fbIcons['markThisForumRead'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['markThisForumRead'] . '" alt="' . _GEN_MARK_THIS_FORUM_READ . '" title="' . _GEN_MARK_THIS_FORUM_READ . '" border="0" />' : _GEN_MARK_THIS_FORUM_READ, $rel='nofollow');
                 }
@@ -323,8 +334,8 @@ if ($letPass || $is_Moderator)
     <?php
     //get all readTopics in an array
     $readTopics = "";
-    $database->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid=$my->id");
-    $readTopics = $database->loadResult();
+    $kunena_db->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid=$kunena_my->id");
+    $readTopics = $kunena_db->loadResult();
     	check_dberror('Unable to get read topics.');
 
     if (count($readTopics) == 0) {
@@ -410,8 +421,8 @@ if ($letPass || $is_Moderator)
 
 			<?php
 			//get the Moderator list for display
-			$database->setQuery("select * from #__fb_moderation left join #__users on #__users.id=#__fb_moderation.userid where #__fb_moderation.catid=$catid");
-			$modslist = $database->loadObjectList();
+			$kunena_db->setQuery("select * from #__fb_moderation left join #__users on #__users.id=#__fb_moderation.userid where #__fb_moderation.catid=$catid");
+			$modslist = $kunena_db->loadObjectList();
 			check_dberror("Unable to load moderators.");
 
 			if (count($modslist) > 0):
@@ -453,9 +464,9 @@ else
 
 function showChildren($category, $prefix = "", &$allow_forum)
 {
-    $database =& JFactory::getDBO();
-    $database->setQuery("SELECT id, name, parent FROM #__fb_categories WHERE parent='$category'  and published='1' order by ordering");
-    $forums = $database->loadObjectList();
+    $kunena_db =& JFactory::getDBO();
+    $kunena_db->setQuery("SELECT id, name, parent FROM #__fb_categories WHERE parent='$category'  and published='1' order by ordering");
+    $forums = $kunena_db->loadObjectList();
     	check_dberror("Unable to load categories.");
 
     foreach ($forums as $forum)

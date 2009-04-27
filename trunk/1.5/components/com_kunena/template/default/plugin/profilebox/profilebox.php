@@ -23,34 +23,38 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $fbConfig =& CKunenaConfig::getInstance();
-$my = &JFactory::getUser();
-$database = &JFactory::getDBO();
+$kunena_my = &JFactory::getUser();
+$kunena_db = &JFactory::getDBO();
 //first we gather some information about this person
-$database->setQuery("SELECT su.view, u.name, su.moderator,su.avatar FROM #__fb_users as su"
-                    . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$my->id} LIMIT 1");
+$kunena_db->setQuery("SELECT su.view, u.name, su.moderator,su.avatar FROM #__fb_users as su"
+                    . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$kunena_my->id} LIMIT 1");
 
-$_user = $database->loadObject();
+$_user = $kunena_db->loadObject();
 
-$prefview = $_user->view;
-$username = $_user->name; // externally used  by fb_pathway, myprofile_menu
-$moderator = $_user->moderator;
-$fbavatar = $_user->avatar;
-$jr_username = $_user->name;
+$fbavatar = NULL;
+if ($_user != NULL)
+{
+	$prefview = $_user->view;
+	$username = $_user->name; // externally used  by fb_pathway, myprofile_menu
+	$moderator = $_user->moderator;
+	$fbavatar = $_user->avatar;
+	$jr_username = $_user->name;
+}
 
 $jr_avatar = '';
 if ($fbConfig->avatar_src == "jomsocial")
 {
 	// Get CUser object
-	$jsuser =& CFactory::getUser($my->id);
+	$jsuser =& CFactory::getUser($kunena_my->id);
     $jr_avatar = '<img src="' . $jsuser->getThumbAvatar() . '" alt=" " />';
 }
 else if ($fbConfig->avatar_src == "clexuspm")
 {
-    $jr_avatar = '<img src="' . MyPMSTools::getAvatarLinkWithID($my->id) . '" alt=" " />';
+    $jr_avatar = '<img src="' . MyPMSTools::getAvatarLinkWithID($kunena_my->id) . '" alt=" " />';
 }
 else if ($fbConfig->avatar_src == "cb")
 {
-	$jr_avatar = $kunenaProfile->showAvatar($my->id);
+	$jr_avatar = $kunenaProfile->showAvatar($kunena_my->id);
 }
 else
 {
@@ -70,7 +74,7 @@ else
 
 if ($fbConfig->fb_profile == "cb" || $fbConfig->fb_profile == "jomsocial")
 {
-    $jr_profilelink = CKunenaLink::GetProfileLink($fbConfig, $my->id, _PROFILEBOX_MYPROFILE);
+    $jr_profilelink = CKunenaLink::GetProfileLink($fbConfig, $kunena_my->id, _PROFILEBOX_MYPROFILE);
 }
 else if ($fbConfig->fb_profile == "clexuspm") {
     $jr_profilelink = '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
@@ -80,7 +84,7 @@ else
     $jr_profilelink = '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
 }
 
-$jr_myposts = '<a href="' . JRoute::_(KUNENA_LIVEURLREL .  '&amp;func=showauthor&amp;task=showmsg&amp;auth=' . $my->id . '') . '" >' . _PROFILEBOX_SHOW_MYPOSTS . '</a>';
+$jr_myposts = '<a href="' . JRoute::_(KUNENA_LIVEURLREL .  '&amp;func=showauthor&amp;task=showmsg&amp;auth=' . $kunena_my->id . '') . '" >' . _PROFILEBOX_SHOW_MYPOSTS . '</a>';
 $jr_latestpost = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=latest');
 ?>
 
@@ -100,7 +104,7 @@ else
 	$lostpasslink = JRoute::_('index.php?option=com_user&amp;view=reset&amp;Itemid=' . $Itemid);
 }
 
-if ($my->id)
+if ($kunena_my->id)
 {
 ?>
 
@@ -108,7 +112,7 @@ if ($my->id)
         <tbody id = "topprofilebox_tbody">
             <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
                 <td  class = "td-1  fbm" align="left" width="5%">
-<?php echo CKunenaLink::GetProfileLink($fbConfig, $my->id, $jr_avatar);?>
+<?php echo CKunenaLink::GetProfileLink($fbConfig, $kunena_my->id, $jr_avatar);?>
                 </td>
 
                 <td valign = "top" class = "td-2  fbm fb_profileboxcnt" align="left">
@@ -121,7 +125,7 @@ if ($my->id)
 <?php
 $user_fields = @explode(',', $fbConfig->annmodid);
 
-if (in_array($my->id, $user_fields) || $my->usertype == 'Administrator' || $my->usertype == 'Super Administrator') {
+if (in_array($kunena_my->id, $user_fields) || $kunena_my->usertype == 'Administrator' || $kunena_my->usertype == 'Super Administrator') {
     $is_editor = true;
 }
 else {

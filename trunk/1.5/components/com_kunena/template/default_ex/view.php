@@ -70,7 +70,7 @@ function KunenaViewPagination($catid, $threadid, $page, $totalpages, $maxpages) 
 }
 
 global $is_Moderator;
-$acl = &JFactory::getACL();
+$kunena_acl = &JFactory::getACL();
 //securing form elements
 $catid = (int)$catid;
 $id = (int)$id;
@@ -90,8 +90,8 @@ if (!$is_Moderator)
     $allow_forum = array ();
 
     //get all the info on this forum:
-    $database->setQuery("SELECT id,pub_access,pub_recurse,admin_access,admin_recurse FROM #__fb_categories where id=$catid");
-    $row = $database->loadObjectList();
+    $kunena_db->setQuery("SELECT id,pub_access,pub_recurse,admin_access,admin_recurse FROM #__fb_categories where id=$catid");
+    $row = $kunena_db->loadObjectList();
     	check_dberror("Unable to load categories.");
 
     if ($fbSession->allowed != "na" && !$new_fb_user) {
@@ -102,8 +102,13 @@ if (!$is_Moderator)
     }
 
     //Do user identification based upon the ACL
-    $letPass = 0;
-    $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $acl);
+    if ($kunena_my->id) {
+	$aro_group = $kunena_acl->getAroGroup($kunena_my->id);
+	$group_id = $aro_group->group_id;
+    }
+    else $group_id = 0;
+
+    $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $group_id, $kunena_acl);
 }
 
 $topicLock = 0;
@@ -115,9 +120,9 @@ if ($letPass || $is_Moderator)
 
     $id = (int)$id;
 
-    $database->setQuery("SELECT * FROM #__fb_messages AS a LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.id={$id} and a.hold=0");
+    $kunena_db->setQuery("SELECT * FROM #__fb_messages AS a LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.id={$id} and a.hold=0");
     unset($this_message);
-    $this_message = $database->loadObject();
+    $this_message = $kunena_db->loadObject();
     	check_dberror('Unable to load message.');
 
     $topicLock = $this_message->locked;
@@ -140,8 +145,8 @@ if ($letPass || $is_Moderator)
         				FROM #__fb_messages AS a
         				WHERE a.thread=$thread
         					AND a.id<=$this_message->id";
-        	$database->setQuery($query);
-        	$replyCount = $database->loadResult();
+        	$kunena_db->setQuery($query);
+        	$replyCount = $kunena_db->loadResult();
         		check_dberror('Unable to calculate replyCount.');
 
         	$replyPage = $replyCount > $fbConfig->messages_per_page ? ceil($replyCount / $fbConfig->messages_per_page) : 1;
@@ -152,11 +157,11 @@ if ($letPass || $is_Moderator)
         	$mainframe->close();
         }
 
-        if ($my->id)
+        if ($kunena_my->id)
         {
             //mark this topic as read
-            $database->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid={$my->id}");
-            $readTopics = $database->loadResult();
+            $kunena_db->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid={$kunena_my->id}");
+            $readTopics = $kunena_db->loadResult();
 
             if ($readTopics == "")
             {
@@ -172,14 +177,14 @@ if ($letPass || $is_Moderator)
                 }
             }
 
-            $database->setQuery("UPDATE #__fb_sessions set readtopics='{$readTopics}' WHERE userid={$my->id}");
-            $database->query();
+            $kunena_db->setQuery("UPDATE #__fb_sessions set readtopics='{$readTopics}' WHERE userid={$kunena_my->id}");
+            $kunena_db->query();
         }
 
         //update the hits counter for this topic & exclude the owner
-        if ($this_message->userid != $my->id) {
-            $database->setQuery("UPDATE #__fb_messages SET hits=hits+1 WHERE id=$thread AND parent=0");
-            $database->query();
+        if ($this_message->userid != $kunena_my->id) {
+            $kunena_db->setQuery("UPDATE #__fb_messages SET hits=hits+1 WHERE id=$thread AND parent=0");
+            $kunena_db->query();
         }
         // changed to 0 to fix the missing post when the thread splits over multiple pages
         $i = 0;
@@ -187,13 +192,13 @@ if ($letPass || $is_Moderator)
         $ordering = ($fbConfig->default_sort == 'desc' ? 'desc' : 'asc'); // Just to make sure only valid options make it
 
         // Get messages of current thread
-        $database->setQuery("(SELECT * FROM #__fb_messages AS a "
+        $kunena_db->setQuery("(SELECT * FROM #__fb_messages AS a "
            ."\n LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.id='$thread' AND a.hold=0 AND a.catid='$catid') UNION (SELECT * FROM #__fb_messages AS a "
            ."\n LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.thread='$thread' AND a.hold=0 AND a.catid='$catid') ORDER BY time $ordering");
 
         if ($view != "flat") $flat_messages[] = $this_message;
 
-        foreach ($database->loadObjectList()as $message)
+        foreach ($kunena_db->loadObjectList() as $message)
         {
             if (1) // if ($view == "flat")
             {
@@ -239,18 +244,18 @@ if ($letPass || $is_Moderator)
 
         //Get the category name for breadcrumb
         unset($objCatInfo, $objCatParentInfo);
-        $database->setQuery("SELECT * from #__fb_categories where id='$catid'");
-        $objCatInfo = $database->loadObject();
+        $kunena_db->setQuery("SELECT * from #__fb_categories where id='$catid'");
+        $objCatInfo = $kunena_db->loadObject();
         //Get Parent's cat.name for breadcrumb
-        $database->setQuery("SELECT name,id from #__fb_categories WHERE id='$objCatInfo->parent'");
-        $objCatParentInfo = $database->loadObject();
+        $kunena_db->setQuery("SELECT name,id from #__fb_categories WHERE id='$objCatInfo->parent'");
+        $objCatParentInfo = $kunena_db->loadObject();
 
         //Perform subscriptions check only once
         $fb_cansubscribe = 0;
-        if ($fbConfig->allowsubscriptions && ("" != $my->id || 0 != $my->id))
+        if ($fbConfig->allowsubscriptions && ("" != $kunena_my->id || 0 != $kunena_my->id))
         {
-            $database->setQuery("SELECT thread from #__fb_subscriptions where userid=$my->id and thread='$thread'");
-            $fb_subscribed = $database->loadResult();
+            $kunena_db->setQuery("SELECT thread from #__fb_subscriptions where userid=$kunena_my->id and thread='$thread'");
+            $fb_subscribed = $kunena_db->loadResult();
 
             if ($fb_subscribed == "") {
                 $fb_cansubscribe = 1;
@@ -258,10 +263,10 @@ if ($letPass || $is_Moderator)
         }
         //Perform favorites check only once
         $fb_canfavorite = 0;
-        if ($fbConfig->allowfavorites && ("" != $my->id || 0 != $my->id))
+        if ($fbConfig->allowfavorites && ("" != $kunena_my->id || 0 != $kunena_my->id))
         {
-            $database->setQuery("SELECT thread from #__fb_favorites where userid=$my->id and thread='$thread'");
-            $fb_favorited = $database->loadResult();
+            $kunena_db->setQuery("SELECT thread from #__fb_favorites where userid=$kunena_my->id and thread='$thread'");
+            $fb_favorited = $kunena_db->loadResult();
 
             if ($fb_favorited == "") {
                 $fb_canfavorite = 1;
@@ -270,7 +275,7 @@ if ($letPass || $is_Moderator)
 
         //data ready display now
 
-        if ((($fbConfig->pubwrite == 0 && $my->id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
+        if ((($fbConfig->pubwrite == 0 && $kunena_my->id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
         {
             //this user is allowed to reply to this topic
             $thread_reply = CKunenaLink::GetTopicPostReplyLink('reply', $catid, $thread, $fbIcons['topicreply'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['topicreply'] . '" alt="' . _GEN_POST_REPLY . '" title="' . _GEN_POST_REPLY . '" border="0" />' : _GEN_POST_REPLY);
@@ -284,7 +289,7 @@ if ($letPass || $is_Moderator)
         }
 
         //START: FAVORITES
-        if ($my->id != 0 && $fbConfig->allowsubscriptions && $fb_cansubscribe == 0)
+        if ($kunena_my->id != 0 && $fbConfig->allowsubscriptions && $fb_cansubscribe == 0)
         {
             // this user is allowed to unsubscribe
             $thread_subscribe = CKunenaLink::GetTopicPostLink('unsubscribe', $catid, $id, $fbIcons['unsubscribe'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unsubscribe'] . '" alt="' . _VIEW_UNSUBSCRIBETXT . '" title="' . _VIEW_UNSUBSCRIBETXT . '" border="0" />' : _VIEW_UNSUBSCRIBETXT);
@@ -297,14 +302,14 @@ if ($letPass || $is_Moderator)
             $thread_favorite = CKunenaLink::GetTopicPostLink('favorite', $catid, $id, $fbIcons['favorite'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['favorite'] . '" alt="' . _VIEW_FAVORITETXT . '" title="' . _VIEW_FAVORITETXT . '" border="0" />' : _VIEW_FAVORITETXT);
         }
 
-        if ($my->id != 0 && $fbConfig->allowfavorites && $fb_canfavorite == 0)
+        if ($kunena_my->id != 0 && $fbConfig->allowfavorites && $fb_canfavorite == 0)
         {
             // this user is allowed to unfavorite
             $thread_favorite = CKunenaLink::GetTopicPostLink('unfavorite', $catid, $id, $fbIcons['unfavorite'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unfavorite'] . '" alt="' . _VIEW_UNFAVORITETXT . '" title="' . _VIEW_UNFAVORITETXT . '" border="0" />' : _VIEW_UNFAVORITETXT);
         }
         // FINISH: FAVORITES
 
-        if (($fbConfig->pubwrite == 0 && $my->id != 0) || $fbConfig->pubwrite)
+        if (($fbConfig->pubwrite == 0 && $kunena_my->id != 0) || $fbConfig->pubwrite)
         {
             //this user is allowed to post a new topic
             $thread_new = CKunenaLink::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
@@ -462,8 +467,8 @@ if ($letPass || $is_Moderator)
 			    <!-- F: FORUM TOOLS -->
         	            <!-- Begin: Total Favorite -->
 	                    <?php
-        	            $database->setQuery("SELECT COUNT(*) FROM #__fb_favorites where thread='$thread'");
-        	            $fb_totalfavorited = $database->loadResult();
+        	            $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_favorites where thread='$thread'");
+        	            $fb_totalfavorited = $kunena_db->loadResult();
 
 	                    echo '<div class="fb_totalfavorite">';
 			    if ($fbIcons['favoritestar']) {
@@ -495,8 +500,8 @@ if ($letPass || $is_Moderator)
                         $mmm = 0;
                         $k = 0;
                         // Set up a list of moderators for this category (limits amount of queries)
-                        $database->setQuery("SELECT a.userid FROM #__fb_users AS a" . "\n LEFT JOIN #__fb_moderation AS b" . "\n ON b.userid=a.userid" . "\n WHERE b.catid='$catid'");
-                        $catModerators = $database->loadResultArray();
+                        $kunena_db->setQuery("SELECT a.userid FROM #__fb_users AS a" . "\n LEFT JOIN #__fb_moderation AS b" . "\n ON b.userid=a.userid" . "\n WHERE b.catid='$catid'");
+                        $catModerators = $kunena_db->loadResultArray();
 
 
                         /**
@@ -514,8 +519,8 @@ if ($letPass || $is_Moderator)
 
                         else
                         { //topic not locked; check if forum is locked
-                            $database->setQuery("select locked from #__fb_categories where id={$this_message->catid}");
-                            $topicLock = $database->loadResult();
+                            $kunena_db->setQuery("select locked from #__fb_categories where id={$this_message->catid}");
+                            $topicLock = $kunena_db->loadResult();
                             $lockedWhat = _FORUM_NOT_ALLOWED; // UNUSED
                         }
                         // END TOPIC LOCK
@@ -553,11 +558,29 @@ if ($letPass || $is_Moderator)
 
                                 //Get userinfo needed later on, this limits the amount of queries
                                 unset($userinfo);
-                                $database->setQuery("SELECT  a.*,b.name,b.username,b.gid FROM #__fb_users as a LEFT JOIN #__users as b on b.id=a.userid where a.userid='$fmessage->userid'");
-                                $userinfo = $database->loadObject();
-                                //get the username:
-                                $fb_username = "";
+                                $kunena_db->setQuery("SELECT  a.*,b.name,b.username,b.gid FROM #__fb_users as a LEFT JOIN #__users as b on b.id=a.userid where a.userid='$fmessage->userid'");
+                                $userinfo = $kunena_db->loadObject();
+				if ($userinfo == NULL) {
+					$userinfo = new stdClass();
+					$userinfo->name = '';
+					$userinfo->username = '';
+					$userinfo->avatar = '';
+					$userinfo->gid = 0;
+					$userinfo->gender = _KUNENA_NOGENDER;
+					$userinfo->personalText = '';
+					$userinfo->ICQ = '';
+					$userinfo->location = '';
+					$userinfo->birthdate = '';
+					$userinfo->AIM = '';
+					$userinfo->MSN = '';
+					$userinfo->YIM = '';
+					$userinfo->SKYPE = '';
+					$userinfo->GTALK = '';
+					$userinfo->websiteurl = '';
+					$userinfo->signature = '';
+				}
 
+                                //get the username:
                                 if ($fbConfig->username) {
                                     $fb_queryName = "username";
                                 }
@@ -573,7 +596,7 @@ if ($letPass || $is_Moderator)
 
                                 $msg_id = $fmessage->id;
                                 $lists["userid"] = $fmessage->userid;
-                                $msg_username = $fmessage->email != "" && $my->id > 0 && $fbConfig->showemail ? CKunenaLink::GetEmailLink($fmessage->email, $fb_username) : $fb_username;
+                                $msg_username = $fmessage->email != "" && $kunena_my->id > 0 && $fbConfig->showemail ? CKunenaLink::GetEmailLink($fmessage->email, $fb_username) : $fb_username;
 
                                 if ($fbConfig->allowavatar)
                                 {
@@ -608,7 +631,7 @@ if ($letPass || $is_Moderator)
 
                                 if ($fbConfig->showuserstats)
                                 {
-				    $acl =& JFactory::getACL();
+				    $kunena_acl =& JFactory::getACL();
                                     //user type determination
                                     $ugid = $userinfo->gid;
                                     $uIsMod = 0;
@@ -616,7 +639,7 @@ if ($letPass || $is_Moderator)
                                     $uIsMod = in_array($fmessage->userid, $catModerators);
 
                                     if ($ugid > 0) { //only get the groupname from the ACL if we're sure there is one
-                                        $agrp = strtolower($acl->get_group_name($ugid, 'ARO'));
+                                        $agrp = strtolower($kunena_acl->get_group_name($ugid, 'ARO'));
                                     }
 
                                     if ($ugid == 0) {
@@ -651,12 +674,12 @@ if ($letPass || $is_Moderator)
                                             if ($showSpRank = $userinfo->rank != '0')
                                             {
                                                 //special rank
-                                                $database->setQuery("SELECT * FROM #__fb_ranks WHERE rank_id = '$userinfo->rank'");
+                                                $kunena_db->setQuery("SELECT * FROM #__fb_ranks WHERE rank_id = '$userinfo->rank'");
                                             } else {
                                                 //post count rank
-                                                $database->setQuery("SELECT * FROM #__fb_ranks WHERE ((rank_min <= $numPosts) AND (rank_special = 0))  ORDER BY rank_min DESC LIMIT 1");
+                                                $kunena_db->setQuery("SELECT * FROM #__fb_ranks WHERE ((rank_min <= $numPosts) AND (rank_special = 0))  ORDER BY rank_min DESC LIMIT 1");
                                             }
-                                            $rank = $database->loadObject();
+                                            $rank = $kunena_db->loadObject();
                                             $rText = $rank->rank_title;
                                             $rImg = KUNENA_URLRANKSPATH . $rank->rank_image;
                                         }
@@ -695,19 +718,19 @@ if ($letPass || $is_Moderator)
                                         }
                                         else
                                         {
-                                            $myGraph = new phpGraph;
-                                            //$myGraph->SetGraphTitle(_POSTS);
-                                            $myGraph->AddValue(_POSTS, $numPosts);
-                                            $myGraph->SetRowSortMode(0);
-                                            $myGraph->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $fbConfig->statscolor . "m.png");
-                                            $myGraph->SetBarImg2(KUNENA_URLEMOTIONSPATH . "graph.gif");
-                                            $myGraph->SetMaxVal($maxPosts);
-                                            $myGraph->SetShowCountsMode(2);
-                                            $myGraph->SetBarWidth(4); //height of the bar
-                                            $myGraph->SetBorderColor("#333333");
-                                            $myGraph->SetBarBorderWidth(0);
-                                            $myGraph->SetGraphWidth(64); //should match column width in the <TD> above -5 pixels
-                                            //$myGraph->BarGraphHoriz();
+                                            $kunena_myGraph = new phpGraph;
+                                            //$kunena_myGraph->SetGraphTitle(_POSTS);
+                                            $kunena_myGraph->AddValue(_POSTS, $numPosts);
+                                            $kunena_myGraph->SetRowSortMode(0);
+                                            $kunena_myGraph->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $fbConfig->statscolor . "m.png");
+                                            $kunena_myGraph->SetBarImg2(KUNENA_URLEMOTIONSPATH . "graph.gif");
+                                            $kunena_myGraph->SetMaxVal($maxPosts);
+                                            $kunena_myGraph->SetShowCountsMode(2);
+                                            $kunena_myGraph->SetBarWidth(4); //height of the bar
+                                            $kunena_myGraph->SetBorderColor("#333333");
+                                            $kunena_myGraph->SetBarBorderWidth(0);
+                                            $kunena_myGraph->SetGraphWidth(64); //should match column width in the <TD> above -5 pixels
+                                            //$kunena_myGraph->BarGraphHoriz();
                                             $useGraph = 1;
                                         }
                                     }
@@ -720,14 +743,14 @@ if ($letPass || $is_Moderator)
                                     $karmaPoints = (int)$karmaPoints;
                                     $msg_karma = "<strong>" . _KARMA . ":</strong> $karmaPoints";
 
-                                    if ($my->id != '0' && $my->id != $fmessage->userid)
+                                    if ($kunena_my->id != '0' && $kunena_my->id != $fmessage->userid)
                                     {
                                         $msg_karmaminus = CKunenaLink::GetKarmaLink('decrease', $catid, $fmessage->id, $fmessage->userid, '<img src="'.($fbIcons['karmaminus']?(KUNENA_URLICONSPATH . $fbIcons['karmaminus']):(KUNENA_URLEMOTIONSPATH . "karmaminus.gif")).'" alt="Karma-" border="0" title="' . _KARMA_SMITE . '" align="middle" />' );
                                         $msg_karmaplus  = CKunenaLink::GetKarmaLink('increase', $catid, $fmessage->id, $fmessage->userid, '<img src="'.($fbIcons['karmaplus']?(KUNENA_URLICONSPATH . $fbIcons['karmaplus']):(KUNENA_URLEMOTIONSPATH . "karmaplus.gif")).'" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" align="middle" />' );
                                     }
                                 }
                                 /*let's see if we should use Missus integration */
-                                if ($fbConfig->pm_component == "missus" && $fmessage->userid && $my->id)
+                                if ($fbConfig->pm_component == "missus" && $fmessage->userid && $kunena_my->id)
                                 {
                                     //we should offer the user a Missus link
                                     //first get the username of the user to contact
@@ -746,7 +769,7 @@ if ($letPass || $is_Moderator)
                                 }
 
                                 /*let's see if we should use JIM integration */
-                                if ($fbConfig->pm_component == "jim" && $fmessage->userid && $my->id)
+                                if ($fbConfig->pm_component == "jim" && $fmessage->userid && $kunena_my->id)
                                 {
                                     //we should offer the user a JIM link
                                     //first get the username of the user to contact
@@ -763,7 +786,7 @@ if ($letPass || $is_Moderator)
                                     $msg_pms .= "' alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
                                 }
                                 /*let's see if we should use uddeIM integration */
-                                if ($fbConfig->pm_component == "uddeim" && $fmessage->userid && $my->id)
+                                if ($fbConfig->pm_component == "uddeim" && $fmessage->userid && $kunena_my->id)
                                 {
                                     //we should offer the user a PMS link
                                     //first get the username of the user to contact
@@ -780,7 +803,7 @@ if ($letPass || $is_Moderator)
                                     $msg_pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
                                 }
                                 /*let's see if we should use myPMS2 integration */
-                                if ($fbConfig->pm_component == "pms" && $fmessage->userid && $my->id)
+                                if ($fbConfig->pm_component == "pms" && $fmessage->userid && $kunena_my->id)
                                 {
                                     //we should offer the user a PMS link
                                     //first get the username of the user to contact
@@ -801,8 +824,8 @@ if ($letPass || $is_Moderator)
                                 if ($fmessage->userid > 0)
                                 {
                                     $sql = "SELECT count(userid) FROM #__session WHERE userid=" . $fmessage->userid;
-                                    $database->setQuery($sql);
-                                    $isonline = $database->loadResult();
+                                    $kunena_db->setQuery($sql);
+                                    $isonline = $kunena_db->loadResult();
 
                                     if ($isonline && $userinfo->showOnline ==1 ) {
                                         $msg_online .= $fbIcons['onlineicon'] ? '<img src="'
@@ -814,7 +837,7 @@ if ($letPass || $is_Moderator)
                                     }
                                 }
                                 /* PM integration */
-                                if ($fbConfig->pm_component == "jomsocial" && $fmessage->userid && $my->id)
+                                if ($fbConfig->pm_component == "jomsocial" && $fmessage->userid && $kunena_my->id)
                                 {
                                 	$onclick = CMessaging::getPopup($fmessage->userid);
                                 	$msg_pms = '<a href="javascript:void(0)" onclick="'. $onclick . "\">";
@@ -830,7 +853,7 @@ if ($letPass || $is_Moderator)
                                     $msg_pms .= "</a>";
                                 	//$msg_pms = '<a href="javascript:void(0)" onclick="'. $onclick .'">Send message</a>';
                                 }
-                                else if ($fbConfig->pm_component == "clexuspm" && $fmessage->userid && $my->id)
+                                else if ($fbConfig->pm_component == "clexuspm" && $fmessage->userid && $kunena_my->id)
                                 {
                                     //we should offer the user a PMS link
                                     //first get the username of the user to contact
@@ -867,8 +890,8 @@ if ($letPass || $is_Moderator)
                                     }
 
                                     $msg_buddy .= "\" alt=\"" . _VIEW_ADDBUDDY . "\" border=\"0\" title=\"" . _VIEW_ADDBUDDY . "\" /></a>";
-                                    $database->setQuery("SELECT icq,ym,msn,aim,website,location FROM #__mypms_profiles WHERE user='" . $PMSName . "'");
-                                    $profileitems = $database->loadObjectList();
+                                    $kunena_db->setQuery("SELECT icq,ym,msn,aim,website,location FROM #__mypms_profiles WHERE user='" . $PMSName . "'");
+                                    $profileitems = $kunena_db->loadObjectList();
                                     	check_dberror("Unable to load mypms profile.");
 
                                     foreach ($profileitems as $profileitems)
@@ -1018,9 +1041,9 @@ if ($letPass || $is_Moderator)
                                 //$fb_message_txt = str_replace("<P><br />","<P>",$fb_message_txt);
 
                                 //filter bad words
-                                if ($fbConfig->badwords && class_exists('Badword') && Badword::filter($fb_message_txt, $my)) {
+                                if ($fbConfig->badwords && class_exists('Badword') && Badword::filter($fb_message_txt, $kunena_my)) {
                                 	if (method_exists('Badword','flush')) {
-                                		$fb_message_txt = Badword::flush($fb_message_txt, $my);
+                                		$fb_message_txt = Badword::flush($fb_message_txt, $kunena_my);
                                 	} else {
                                			$fb_message_txt = _COM_A_BADWORDS_NOTICE;
                                 	}
@@ -1043,7 +1066,7 @@ if ($letPass || $is_Moderator)
                                     $msg_signature = $signature;
                                 }
 
-                                if ((($fbConfig->pubwrite == 0 && $my->id != 0) || $fbConfig->pubwrite == 1) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
+                                if ((($fbConfig->pubwrite == 0 && $kunena_my->id != 0) || $fbConfig->pubwrite == 1) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
                                 {
                                     //user is allowed to reply/quote
                                     $msg_reply = CKunenaLink::GetTopicPostReplyLink('reply', $catid, $fmessage->id , $fbIcons['reply']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['reply'] . '" alt="Reply" border="0" title="' . _VIEW_REPLY . '" />':_GEN_REPLY);
@@ -1069,11 +1092,11 @@ if ($letPass || $is_Moderator)
                                     $msg_split = CKunenaLink::GetTopicPostLink('split', $catid, $fmessage->id , $fbIcons['split']?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['split'] . '" alt="' . _GEN_SPLIT . '" border="0" title="' . _GEN_SPLIT . '" />':_GEN_SPLIT);
                                 }
 
-                                if ($fbConfig->useredit && $my->id != "")
+                                if ($fbConfig->useredit && $kunena_my->id != "")
                                 {
                                     //Now, if the viewer==author and the viewer is allowed to edit his/her own post then offer an 'edit' link
                                     $allowEdit = 0;
-                                    if ($my->id == $fmessage->userid)
+                                    if ($kunena_my->id == $fmessage->userid)
                                     {
                                         if(((int)$fbConfig->useredittime)==0)
                                         {
@@ -1158,7 +1181,7 @@ if ($letPass || $is_Moderator)
                                 $msg_location,
                                 $msg_gender,
                                 $msg_personal,
-                                $myGraph);
+                                $kunena_myGraph);
                                 $useGraph = 0;
                             } // end for
                         }
@@ -1255,8 +1278,8 @@ if ($letPass || $is_Moderator)
 
                         <?php
                         //get the Moderator list for display
-                        $database->setQuery("select * from #__fb_moderation left join #__users on #__users.id=#__fb_moderation.userid where #__fb_moderation.catid=$catid");
-                        $modslist = $database->loadObjectList();
+                        $kunena_db->setQuery("select * from #__fb_moderation left join #__users on #__users.id=#__fb_moderation.userid where #__fb_moderation.catid=$catid");
+                        $modslist = $kunena_db->loadObjectList();
                         	check_dberror("Unable to load moderators.");
                         ?>
 

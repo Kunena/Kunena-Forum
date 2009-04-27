@@ -56,13 +56,13 @@ class fbpdfwrapper {
 	}
 }
 
-function dofreePDF($database)
+function dofreePDF($kunena_db)
 {
     global $aro_group;
 
-    $acl = &JFactory::getACL();
+    $kunena_acl = &JFactory::getACL();
 
-    $my = &JFactory::getUser();
+    $kunena_my = &JFactory::getUser();
     global $fbSession;
 
     $fbConfig =& CKunenaConfig::getInstance();
@@ -73,9 +73,9 @@ function dofreePDF($database)
 
     if (!$is_admin)
     {
-        $database->setQuery("SELECT userid FROM #__fb_moderation WHERE catid=$catid and userid=$my->id");
+        $kunena_db->setQuery("SELECT userid FROM #__fb_moderation WHERE catid=$catid and userid=$kunena_my->id");
 
-        if ($database->loadResult()) {
+        if ($kunena_db->loadResult()) {
             $is_Mod = 1;
         }
     }
@@ -86,16 +86,16 @@ function dofreePDF($database)
     if (!$is_Mod)
     {
         //get all the info on this forum:
-        $database->setQuery("SELECT id,pub_access,pub_recurse,admin_access,admin_recurse FROM #__fb_categories where id=$catid");
-        $row = $database->loadObjectList();
+        $kunena_db->setQuery("SELECT id,pub_access,pub_recurse,admin_access,admin_recurse FROM #__fb_categories where id=$catid");
+        $row = $kunena_db->loadObjectList();
                 check_dberror("Unable to load category detail.");
 
 
-        $allow_forum = explode(',', CKunenaTools::getAllowedForums($my->id, $aro_group->group_id, $acl));
+        $allow_forum = explode(',', CKunenaTools::getAllowedForums($kunena_my->id, $aro_group->group_id, $kunena_acl));
 
         //Do user identification based upon the ACL
         $letPass = 0;
-        $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $acl);
+        $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $kunena_acl);
     }
 
     if ($letPass || $is_Mod)
@@ -103,11 +103,11 @@ function dofreePDF($database)
         $id = JRequest::getInt('id', 1);
         $catid = JRequest::getInt('catid', 2);
         //first get the thread id for the current post to later on determine the parent post
-        $database->setQuery("SELECT `thread` FROM #__fb_messages WHERE id='$id' AND catid='$catid'");
-        $threadid = $database->loadResult();
+        $kunena_db->setQuery("SELECT `thread` FROM #__fb_messages WHERE id='$id' AND catid='$catid'");
+        $threadid = $kunena_db->loadResult();
         //load topic post and details
-        $database->setQuery("SELECT a.*, b.message FROM #__fb_messages AS a, #__fb_messages_text AS b WHERE a.thread = $threadid AND a.catid=$catid AND a.parent=0 AND a.id=b.mesid");
-        $row = $database->loadObjectList();
+        $kunena_db->setQuery("SELECT a.*, b.message FROM #__fb_messages AS a, #__fb_messages_text AS b WHERE a.thread = $threadid AND a.catid=$catid AND a.parent=0 AND a.id=b.mesid");
+        $row = $kunena_db->loadObjectList();
                 check_dberror("Unable to load message details.");
 
         $mes_text = $row[0]->message;
@@ -157,8 +157,8 @@ function dofreePDF($database)
         $pdf->ezText($txt3, 10);
         $pdf->ezText("\n============================================================================\n\n", 8);
         //now let's try to see if there's more...
-        $database->setQuery("SELECT a.*, b.message FROM #__fb_messages AS a, #__fb_messages_text AS b WHERE a.catid=$catid AND a.thread=$threadid AND a.id=b.mesid AND a.parent != 0 ORDER BY a.time ASC");
-        $replies = $database->loadObjectList();
+        $kunena_db->setQuery("SELECT a.*, b.message FROM #__fb_messages AS a, #__fb_messages_text AS b WHERE a.catid=$catid AND a.thread=$threadid AND a.id=b.mesid AND a.parent != 0 ORDER BY a.time ASC");
+        $replies = $kunena_db->loadObjectList();
                 check_dberror("Unable to load messages & detail.");
 
         $countReplies = count($replies);
@@ -220,5 +220,5 @@ function get_php_setting($val)
     return $r ? 'ON' : 'OFF';
 }
 
-dofreePDF ($database);
+dofreePDF ($kunena_db);
 ?>

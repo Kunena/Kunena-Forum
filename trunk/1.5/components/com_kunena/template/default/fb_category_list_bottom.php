@@ -34,7 +34,7 @@ $fbConfig =& CKunenaConfig::getInstance();
         <tr>
             <th class = "th-left fbs" align="left">
                 <?php
-                if ($my->id != 0)
+                if ($kunena_my->id != 0)
                 {
                 ?>
 

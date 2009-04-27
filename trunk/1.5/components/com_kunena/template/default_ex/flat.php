@@ -80,7 +80,7 @@ if (count($messages[0]) > 0)
     foreach ($messages[0] as $leafa)
     {
 
-        if (($leafa->ordering > 0 && !$funcmylatest) || ($leafa->favthread && $funcmylatest))
+        if (($leafa->ordering > 0 && !$funcmylatest) || ($leafa->myfavorite && $funcmylatest))
         {
             $st_count++;
         }

@@ -403,7 +403,7 @@ if ($fbConfig->fb_profile == 'cb')
 			</div>
 		</div>
 <?php
-if ($msg_signature) {
+if (isset($msg_signature)) {
 	echo '<div class="msgsignature">';
 	echo $msg_signature;
 	echo '</div>';

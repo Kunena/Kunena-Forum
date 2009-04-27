@@ -28,9 +28,9 @@ class CKunenaTables
 	var $tables = array();
 	var $_tables = array ( '#__fb_announcement', '#__fb_attachments', '#__fb_categories', '#__fb_favorites', '#__fb_groups', '#__fb_messages', '#__fb_messages_text', '#__fb_moderation', '#__fb_ranks', '#__fb_sessions', '#__fb_smileys', '#__fb_subscriptions', '#__fb_users', '#__fb_version', '#__fb_whoisonline');
 
-	function CKunenaTables()
+	function __construct()
 	{
-        	global $kunena_db;
+       	global $kunena_db;
 
 		$kunena_db->setQuery( "SHOW TABLES LIKE '" .$kunena_db->getPrefix(). "fb_%'");
 		$tables = $kunena_db->loadResultArray();
@@ -62,24 +62,8 @@ class CKunenaTables
 	}
 }
 
-class CKunenaConfigBase
+abstract class CKunenaConfigBase
 {
-    function &getInstance() 
-    {
-        echo '<div>Undefined getInstance() function in derived class!</div>';
-        $mainframe->close();	
-    }
-
-    //
-    // The following functions MUST be overridden in derived classes
-    // Basically an abstract base class that must not be used by itself
-    //
-    function GetClassVars()
-    {
-    	echo '<div>Undefined GetClassVars() function in derived class!</div>';
-    	$mainframe->close();
-    }
-
     public function __construct()
     {
         $this->_db = &JFactory::getDBO();
@@ -88,6 +72,7 @@ class CKunenaConfigBase
     //
     // The following functions MUST be overridden in derived classes
     //
+    abstract public function &getInstance();
     abstract public function GetClassVars();
     abstract protected function GetConfigTableName();
     

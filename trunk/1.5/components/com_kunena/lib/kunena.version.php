@@ -34,11 +34,11 @@ class CKunenaVersion {
 	*/
 	function versionArray()
 	{
-		global $kunena_db;
 		static $kunenaversion;
 
 		if (!$kunenaversion)
 		{
+			$kunena_db = &JFactory::getDBO();
 			$versionTable = '#__fb_version';
 			$kunena_db->setQuery( 	"SELECT
 							`version`,
@@ -90,10 +90,10 @@ class CKunenaVersion {
 	*/
 	function MySQLVersion()
 	{
-		global $kunena_db;
 		static $kunena_mysqlversion;
 		if (!$kunena_mysqlversion)
 		{
+			$kunena_db = &JFactory::getDBO();
 			$kunena_db->setQuery("SELECT VERSION() as mysql_version");
 			$kunena_mysqlversion = $kunena_db->loadResult();
 			if (!$kunena_mysqlversion) $kunena_mysqlversion = 'unknown';

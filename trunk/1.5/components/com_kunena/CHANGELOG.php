@@ -35,6 +35,7 @@ Kunena 1.5.1b
 27-April-2009 Matias
 ^ [#15784] Merge 1.0.10 fixes from revision 602 to 651
 ^ [#15784] Merge from branch/1.5 from revision 624 to 627
+# [#15784] Internal: Fix a few missing lines from merges
 
 26-April-2009 Matias
 # [#16117] Search: html_entity_decode() throws warning in some environments

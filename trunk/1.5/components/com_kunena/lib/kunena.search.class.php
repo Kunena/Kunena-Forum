@@ -110,7 +110,6 @@ class CKunenaSearch
         	$mainframe->close();
 	}
 
-        $q = $this->utf8_urldecode($q);
 	if ($q == _GEN_SEARCH_BOX) $q = '';
 	$this->searchword = $q;
 	$q = $kunena_db->getEscaped($q);

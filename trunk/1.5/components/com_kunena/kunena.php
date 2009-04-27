@@ -78,10 +78,7 @@ require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 // Get CKunanaUser and CKunenaUsers
 require_once (KUNENA_PATH_LIB .DS. "kunena.user.class.php");
 
-global $kunenaProfile;
-
-
-$fbConfig =& CKunenaConfig::getInstance();
+global $fbConfig, $kunenaProfile;
 
 $kunena_my = &JFactory::getUser();
 

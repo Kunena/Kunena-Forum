@@ -82,6 +82,7 @@ $showedEdit = 0;
 require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
 require_once (KUNENA_PATH_LIB .DS. 'kunena.statsbar.php');
 
+$letPass = 0;
 if (!$is_Moderator)
 {
     //check Access Level Restrictions but don't bother for Moderators
@@ -745,8 +746,8 @@ if ($letPass || $is_Moderator)
 
                                     if ($kunena_my->id != '0' && $kunena_my->id != $fmessage->userid)
                                     {
-                                        $msg_karmaminus = CKunenaLink::GetKarmaLink('decrease', $catid, $fmessage->id, $fmessage->userid, '<img src="'.($fbIcons['karmaminus']?(KUNENA_URLICONSPATH . $fbIcons['karmaminus']):(KUNENA_URLEMOTIONSPATH . "karmaminus.gif")).'" alt="Karma-" border="0" title="' . _KARMA_SMITE . '" align="middle" />' );
-                                        $msg_karmaplus  = CKunenaLink::GetKarmaLink('increase', $catid, $fmessage->id, $fmessage->userid, '<img src="'.($fbIcons['karmaplus']?(KUNENA_URLICONSPATH . $fbIcons['karmaplus']):(KUNENA_URLEMOTIONSPATH . "karmaplus.gif")).'" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" align="middle" />' );
+                                        $msg_karmaminus = CKunenaLink::GetKarmaLink('decrease', $catid, $fmessage->id, $fmessage->userid, '<img src="'.(isset($fbIcons['karmaminus'])?(KUNENA_URLICONSPATH . $fbIcons['karmaminus']):(KUNENA_URLEMOTIONSPATH . "karmaminus.gif")).'" alt="Karma-" border="0" title="' . _KARMA_SMITE . '" align="middle" />' );
+                                        $msg_karmaplus  = CKunenaLink::GetKarmaLink('increase', $catid, $fmessage->id, $fmessage->userid, '<img src="'.(isset($fbIcons['karmaplus'])?(KUNENA_URLICONSPATH . $fbIcons['karmaplus']):(KUNENA_URLEMOTIONSPATH . "karmaplus.gif")).'" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" align="middle" />' );
                                     }
                                 }
                                 /*let's see if we should use Missus integration */
@@ -828,11 +829,11 @@ if ($letPass || $is_Moderator)
                                     $isonline = $kunena_db->loadResult();
 
                                     if ($isonline && $userinfo->showOnline ==1 ) {
-                                        $msg_online .= $fbIcons['onlineicon'] ? '<img src="'
+                                        $msg_online = isset($fbIcons['onlineicon']) ? '<img src="'
                                         . KUNENA_URLICONSPATH . $fbIcons['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';
                                     }
                                     else {
-                                        $msg_online .= $fbIcons['offlineicon'] ? '<img src="'
+                                        $msg_online = isset($fbIcons['offlineicon']) ? '<img src="'
                                         . KUNENA_URLICONSPATH . $fbIcons['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
                                     }
                                 }

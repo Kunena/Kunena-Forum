@@ -89,10 +89,9 @@ if ($fbConfig->showannouncement > 0)
 
 // load module
 
-if (mosCountModules('kunena_announcement') || mosCountModules('kna_ancmt'))
+if (mosCountModules('kunena_announcement'))
 {
 ?>
-
 
     <div class = "fb-fb_2">
         <?php

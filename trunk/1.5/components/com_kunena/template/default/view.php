@@ -61,7 +61,7 @@ if (!$is_Moderator)
 
     //Do user identification based upon the ACL
     $letPass = 0;
-    $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $kunena_acl);
+    $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->id, $kunena_acl);
 }
 
 $topicLock = 0;

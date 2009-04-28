@@ -220,6 +220,9 @@ $msglist = $kunena_db->loadObjectList();
 
 $favthread = array();
 $thread_counts = array();
+$threadids = array();
+$messages = array();
+$messages[0] = array();
 if ($msglist) foreach ($msglist as $message)
 {
 	$threadids[]                  = $message->id;
@@ -312,7 +315,7 @@ if ($fbConfig->showannouncement > 0)
 // (JJ) FINISH: ANNOUNCEMENT BOX
 
 // load module
-if (mosCountModules('kunena_announcement'))
+if (JDocumentHTML::countModules('kunena_announcement'))
 {
 ?>
 
@@ -323,6 +326,7 @@ if (mosCountModules('kunena_announcement'))
         	$options	= array('style' => 'xhtml');
         	$position	= 'kunena_announcement';
         	echo $renderer->render($position, $options, null);
+	?>
     </div>
 
 <?php

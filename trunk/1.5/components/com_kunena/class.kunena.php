@@ -24,7 +24,10 @@ define('KUNENA_JLIVEURL', JURI::root());
 define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH .DS. "templates".DS . $mainframe->getTemplate());
 define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "/templates/".$mainframe->getTemplate());
 
-global $kunena_db, $kunena_my;
+global $kunena_my;
+
+
+$kunena_db = &JFactory::getDBO();
 $fbConfig =& CKunenaConfig::getInstance();
 
 $kunena_db = &JFactory::getDBO();
@@ -781,24 +784,18 @@ class CKunenaTools {
 		{
 			$row =& new stdClass();
 			$row->text =& $content;
-			$params =& new mosParameters( '' );
-			if (CKunenaTools::isJoomla15()) {
-				$dispatcher	=& JDispatcher::getInstance();
-				JPluginHelper::importPlugin('content');
-				$results = $dispatcher->trigger('onPrepareContent', array (&
+			$params =& new JParameter( '' );
+			$dispatcher	=& JDispatcher::getInstance();
+			JPluginHelper::importPlugin('content');
+			$results = $dispatcher->trigger('onPrepareContent', array (&
 $row, & $params, 0));
-			} else {
-				global $_MAMBOTS;
-				$_MAMBOTS->loadBotGroup( 'content' );
-				$results = $_MAMBOTS->trigger( 'onPrepareContent', array( &$row, &$params, 0 ), true );
-			}
 			$content =& $row->text;
 		}
 		return $content;
 	}
         
 	function getAllowedForums($uid = 0, $gid = 0, &$kunena_acl) {
-        	global $kunena_db;
+        	$kunena_db = &JFactory::getDBO();
 
 			function _has_rights(&$kunena_acl, $gid, $access, $recurse) {
 				if ($gid == $access) return 1;

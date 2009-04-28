@@ -64,7 +64,9 @@ class CKunenaSearch
      */
     function CKunenaSearch()
     {
-        global $kunena_db, $kunena_my;
+        global $kunena_my;
+
+        $kunena_db = &JFactory::getDBO();
 
         $fbConfig =& CKunenaConfig::getInstance();
 
@@ -99,11 +101,10 @@ class CKunenaSearch
 	$limitstart = $this->limitstart = intval(JRequest::getVar('limitstart', 0));
 	$limit = $this->limit = intval(JRequest::getVar('limit', $fbConfig->messages_per_page_search));
 	extract($this->params);
-
 	if ($limit<1 || $limit>40) $limit = $this->limit = $fbConfig->messages_per_page_search;
 
 	if (isset($_POST['q']) || isset($_POST['searchword'])) {
-		$this->params['catids'] = implode(',', JRequest::getVar('catid', array(0)));
+		$this->params['catids'] = implode(',', JRequest::getVar('catid', array(0), 'post', 'array'));
 		$url = CKunenaLink::GetSearchURL($fbConfig, $this->func, $q, $limitstart, $limit, $this->getUrlParams());
         	header("HTTP/1.1 303 See Other");
         	header("Location: " . htmlspecialchars_decode($url));
@@ -212,6 +213,7 @@ class CKunenaSearch
         $querystrings[] = "m.catid IN ($search_forums)";
         $where = implode(' AND ', $querystrings);
 
+	$groupby = array();
         if($order =='dec') $order1 = 'DESC';
         else $order1 = 'ASC';
         switch ($sortby) {
@@ -300,7 +302,10 @@ class CKunenaSearch
 	return $url_params;
     }
     function get_search_forums(&$catids, $childforums = 1) {
-        global $kunena_db, $kunena_my, $fbSession;
+        global $fbSession;
+
+        $kunena_db = &JFactory::getDBO();
+	$kunena_my = &JFactory::getUser();
 
         /* get allowed forums */
         $allowed_forums = array();
@@ -371,7 +376,6 @@ class CKunenaSearch
 
         $results = $this->get_results();
         $totalRows = (int)($this->total);
-        $actionstring = $this->str_kunena_actionstring;
 
 	$pagination = KunenaSearchPagination($this->func, $q, $this->getUrlParams(), floor($limitstart/$limit)+1, $limit, floor($totalRows/$limit)+1, 7);
 

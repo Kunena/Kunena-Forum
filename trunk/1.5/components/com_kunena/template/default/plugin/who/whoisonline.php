@@ -23,6 +23,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $fbConfig =& CKunenaConfig::getInstance();
+$kunena_my = &JFactory::getUser();
 
 if ($fbConfig->showstats && $fbConfig->showwhoisonline)
 {

@@ -82,8 +82,6 @@ function showprf($userid, $page)
 	} else {
 		// Check moderator status (admin is moderator)
 		$aro_group = $kunena_acl->getAroGroup($userid);
-		if ($aro_group)
-		$aro_group->group_id = $aro_group->id;  // changed fieldname in Joomla 1.5: "group_id" -> "id"
 		$is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
 
 		// there's no profile; set userid and moderator status.
@@ -122,15 +120,7 @@ function showprf($userid, $page)
         $fb_queryName = "name";
     }
 
-    $fb_username = $userinfo->{$fb_queryName};
-
-    if ($fb_username == "" || $fbConfig->changename) {
-        $fb_username = html_entity_decode_utf8(stripslashes($fmessage->name));
-    }
-
-    $msg_id = $fmessage->id;
-    $lists["userid"] = $userid;
-    $msg_username = ($fmessage->email != "" && $kunena_my->id > 0 && $fbConfig->showemail == '1') ? "<a href=\"mailto:" . $fmessage->email . "\">" . $fb_username . "</a>" : $fb_username;
+    $msg_username = $fb_username = $userinfo->{$fb_queryName};
 
     if ($fbConfig->allowavatar)
     {
@@ -288,11 +278,13 @@ function showprf($userid, $page)
         $karmaPoints = (int)$karmaPoints;
         $msg_karma = "<strong>" . _KARMA . ":</strong> $karmaPoints";
 
+	$msg_karmaminus = '';
+	$msg_karmaplus = '';
         if ($kunena_my->id != '0' && $kunena_my->id != $userid)
         {
-            $msg_karmaminus = "<a href=\"" . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=decrease&amp;userid=' . $userid . '&amp;pid=' . $fmessage->id . '&amp;catid=' . $catid . '') . "\"><img src=\"";
+            $msg_karmaminus .= "<a href=\"" . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=decrease&amp;userid=' . $userid) . "\"><img src=\"";
 
-            if ($fbIcons['karmaminus']) {
+            if (isset($fbIcons['karmaminus'])) {
                 $msg_karmaminus .= KUNENA_URLICONSPATH . $fbIcons['karmaminus'];
             }
             else {
@@ -300,9 +292,9 @@ function showprf($userid, $page)
             }
 
             $msg_karmaminus .= "\" alt=\"Karma-\" border=\"0\" title=\"" . _KARMA_SMITE . "\" align=\"middle\" /></a>";
-            $msg_karmaplus = "<a href=\"" . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=increase&amp;userid=' . $userid . '&amp;pid=' . $fmessage->id . '&amp;catid=' . $catid . '') . "\"><img src=\"";
+            $msg_karmaplus .= "<a href=\"" . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=increase&amp;userid=' . $userid) . "\"><img src=\"";
 
-            if ($fbIcons['karmaplus']) {
+            if (isset($fbIcons['karmaplus'])) {
                 $msg_karmaplus .= KUNENA_URLICONSPATH . $fbIcons['karmaplus'];
             }
             else {
@@ -362,11 +354,11 @@ function showprf($userid, $page)
         $isonline = $kunena_db->loadResult();
 
         if ($isonline && $userinfo->showOnline ==1 ) {
-            $msg_online .= $fbIcons['onlineicon']
+            $msg_online = isset($fbIcons['onlineicon'])
                 ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';
         }
         else {
-            $msg_online .= $fbIcons['offlineicon']
+            $msg_online = isset($fbIcons['offlineicon'])
                 ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
         }
     }
@@ -456,7 +448,7 @@ function showprf($userid, $page)
 
     /* */
 
-    $jr_username = $user->name;
+    $jr_username = $userinfo->name;
 
     // (JJ) JOOMLA STYLE CHECK
     if ($fbConfig->joomlastyle < 1) {

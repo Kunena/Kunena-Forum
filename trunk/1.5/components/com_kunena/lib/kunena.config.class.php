@@ -30,8 +30,7 @@ class CKunenaTables
 
 	function __construct()
 	{
-       	global $kunena_db;
-
+       		$kunena_db = &JFactory::getDBO();
 		$kunena_db->setQuery( "SHOW TABLES LIKE '" .$kunena_db->getPrefix(). "fb_%'");
 		$tables = $kunena_db->loadResultArray();
 		$prelen = strlen($kunena_db->getPrefix());
@@ -58,7 +57,7 @@ class CKunenaTables
 		foreach ($this->_tables as $table) {
 			if (!isset($this->tables[$table])) return false;
 		}
-		return $true;
+		return true;
 	}
 }
 

@@ -491,6 +491,8 @@ else if ($do == 'validate')
         $src_img = imagecreatefromgif($src_file);
       }
 
+	$moved = false;
+
 	  // Create Medium Image
 	  if(($srcWidth > $fbConfig->avatarwidth) || ($srcHeight > $fbConfig->avatarheight)) {
       $dst_img = imagecreate($fbConfig->avatarwidth, $fbConfig->avatarheight);
@@ -557,6 +559,8 @@ else if ($do == 'validate')
       } else {
         $src_img = imagecreatefromgif($src_file);
       }
+
+	$moved = false;
 
 	  // Create Medium Image
 	  if(($srcWidth > $fbConfig->avatarwidth) || ($srcHeight > $fbConfig->avatarheight)) {

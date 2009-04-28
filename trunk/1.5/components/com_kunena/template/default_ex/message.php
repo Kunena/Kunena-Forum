@@ -343,17 +343,17 @@ if ($fbConfig->fb_profile == 'cb')
 
 			if ($is_Moderator) echo ' </div><div class="fb_message_buttons_row">';
 
-                        if ($msg_merge) {
+                        if (isset($msg_merge)) {
                              echo " " . $msg_merge;
                         }
 
-                        if ($msg_split) {
+                        if (isset($msg_split)) {
                              echo " " . $msg_split;
                         }
-                        if ($msg_delete) {
+                        if (isset($msg_delete)) {
                             echo " " . $msg_delete;
                         }
-                        if ($msg_edit) {
+                        if (isset($msg_edit)) {
                             echo " " . $msg_edit;
                         }
 
@@ -375,23 +375,23 @@ if ($fbConfig->fb_profile == 'cb')
                 <?php
                 echo $msg_quote;
 
-                if ($msg_delete) {
+                if (!isset($msg_delete)) {
                     echo " | " . $msg_delete;
                 }
 
-                if ($msg_move) {
+                if (!isset($msg_move)) {
                     echo " | " . $msg_move;
                 }
 
-                if ($msg_edit) {
+                if (!isset($msg_edit)) {
                     echo " | " . $msg_edit;
                 }
 
-                if ($msg_sticky) {
+                if (!isset($msg_sticky)) {
                     echo " | " . $msg_sticky;
                 }
 
-                if ($msg_lock) {
+                if (!isset($msg_lock)) {
                     echo "| " . $msg_lock;
                 }
                     }
@@ -420,7 +420,7 @@ if (isset($msg_signature)) {
 </table>
 <!-- Begin: Message Module Positions -->
 <?php
-if (mosCountModules('kunena_msg_'.$mmm))
+if (JDocumentHTML::countModules('kunena_msg_'.$mmm))
 {
 ?>
     <div class = "kunena_msg_<?php echo $mmm; ?>">

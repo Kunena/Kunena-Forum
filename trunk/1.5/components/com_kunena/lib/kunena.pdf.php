@@ -58,14 +58,13 @@ class fbpdfwrapper {
 
 function dofreePDF($kunena_db)
 {
-    global $aro_group;
-
-    $kunena_acl = &JFactory::getACL();
-
-    $kunena_my = &JFactory::getUser();
+    global $mainframe, $aro_group;
     global $fbSession;
 
+    $kunena_acl = &JFactory::getACL();
+    $kunena_my = &JFactory::getUser();
     $fbConfig =& CKunenaConfig::getInstance();
+
     require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
     $is_Mod = 0;
 
@@ -91,11 +90,10 @@ function dofreePDF($kunena_db)
                 check_dberror("Unable to load category detail.");
 
 
-        $allow_forum = explode(',', CKunenaTools::getAllowedForums($kunena_my->id, $aro_group->group_id, $kunena_acl));
+        $allow_forum = explode(',', CKunenaTools::getAllowedForums($kunena_my->id, $aro_group->id, $kunena_acl));
 
         //Do user identification based upon the ACL
-        $letPass = 0;
-        $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $kunena_acl);
+        $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->id, $kunena_acl);
     }
 
     if ($letPass || $is_Mod)

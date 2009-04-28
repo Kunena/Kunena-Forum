@@ -136,8 +136,6 @@ function KUNENA_get_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_post
 }
 /**
  * Function  that get the menu used in the header of our board
- * @param int $cbitemid
- *             Community builder itemid, used for linking to cb profile
  * @param array $fbConfig
  * @param array $fbIcons
  * @param int $kunena_my_id
@@ -160,7 +158,7 @@ function KUNENA_get_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_post
  *             The menu :-)
  */
 
-function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $kunena_my_id, $type, $view = "", $catid = 0, $id = 0, $thread = 0, $is_moderator = false, $numPending = 0)
+function KUNENA_get_menu($fbConfig, $fbIcons, $kunena_my_id, $type, $view = "", $catid = 0, $id = 0, $thread = 0, $is_moderator = false, $numPending = 0)
 {
 	$func = strtolower(JRequest::getVar('func', ''));
 	if ($func == '') // Set default as per config settings

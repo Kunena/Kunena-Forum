@@ -105,7 +105,7 @@ if (!$is_Moderator)
     //Do user identification based upon the ACL
     if ($kunena_my->id) {
 	$aro_group = $kunena_acl->getAroGroup($kunena_my->id);
-	$group_id = $aro_group->group_id;
+	$group_id = $aro_group->id;
     }
     else $group_id = 0;
 

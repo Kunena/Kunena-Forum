@@ -36,27 +36,27 @@ $validate = JUtility::getToken();
         // do field validation
         if (form.name.value == "")
         {
-            alert("<?php echo addslashes( _REGWARN_NAME );?>");
+            alert("<?php echo addslashes( _KUNENA_JS_WARN_NAME_MISSING );?>");
         }
         else if (form.username.value == "")
         {
-            alert("<?php echo addslashes( _REGWARN_UNAME );?>");
+            alert("<?php echo addslashes( _KUNENA_JS_WARN_UNAME_MISSING );?>");
         }
         else if (r.exec(form.username.value) || form.username.value.length < 3)
         {
-            alert("<?php printf( addslashes( _VALID_AZ09 ), addslashes( _PROMPT_UNAME ), 4 );?>");
+            alert("<?php printf( addslashes( _KUNENA_JS_WARN_VALID_AZ09 ), addslashes( _KUNENA_JS_PROMPT_UNAME ), 4 );?>");
         }
         else if (form.email.value == "")
         {
-            alert("<?php echo addslashes( _REGWARN_MAIL );?>");
+            alert("<?php echo addslashes( _KUNENA_JS_WARN_MAIL_MISSING );?>");
         }
         else if ((form.password.value != "") && (form.password.value != form.password2.value))
         {
-            alert("<?php echo addslashes( _REGWARN_VPASS2 );?>");
+            alert("<?php echo addslashes( _KUNENA_JS_WARN_PASSWORD2 );?>");
         }
         else if (r.exec(form.password.value))
         {
-            alert("<?php printf( addslashes( _VALID_AZ09 ), addslashes( _REGISTER_PASS ), 4 );?>");
+            alert("<?php printf( addslashes( _KUNENA_JS_WARN_VALID_AZ09 ), addslashes( _KUNENA_JS_PROMPT_PASS ), 4 );?>");
         }
         else
         {

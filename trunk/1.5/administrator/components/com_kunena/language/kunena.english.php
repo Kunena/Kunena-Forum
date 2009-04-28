@@ -24,6 +24,13 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 // 1.5.1b
 
+DEFINE('_KUNENA_JS_WARN_NAME_MISSING','Your name is missing');
+DEFINE('_KUNENA_JS_WARN_UNAME_MISSING','Your username is missing');
+DEFINE('_KUNENA_JS_WARN_VALID_AZ09','Field contains forbidden letters');
+DEFINE('_KUNENA_JS_WARN_MAIL_MISSING','Email address is missing');
+DEFINE('_KUNENA_JS_WARN_PASSWORD2','Please enter valid password');
+DEFINE('_KUNENA_JS_PROMPT_UNAME','Please retype your new username');
+DEFINE('_KUNENA_JS_PROMPT_PASS','Please retype your new password');
 DEFINE('_KUNENA_DT_LMON_DEC', 'December');
 DEFINE('_KUNENA_DT_MON_DEC', 'Dec');
 DEFINE('_KUNENA_NOGENDER', 'Unknown');

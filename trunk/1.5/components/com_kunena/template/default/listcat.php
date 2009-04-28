@@ -89,7 +89,7 @@ if ($fbConfig->showannouncement > 0)
 
 // load module
 
-if (mosCountModules('kunena_announcement'))
+if (JDocumentHTML::countModules('kunena_announcement'))
 {
 ?>
 
@@ -128,7 +128,7 @@ if (count($categories[0]) > 0)
 
         //Do user identification based upon the ACL; but don't bother for moderators
         if (!$is_Mod) {
-            $letPass = fb_has_read_permission($obj_fb_cat, $allow_forum, $aro_group->group_id, $kunena_acl);
+            $letPass = fb_has_read_permission($obj_fb_cat, $allow_forum, $aro_group->id, $kunena_acl);
         }
 
         if ($letPass || $is_Mod)
@@ -209,7 +209,7 @@ if (count($categories[0]) > 0)
                             $letPass = 0;
 
                             if (!$is_Mod) {
-                                $letPass = fb_has_read_permission($obj_fb_cat, $allow_forum, $aro_group->group_id, $kunena_acl);
+                                $letPass = fb_has_read_permission($obj_fb_cat, $allow_forum, $aro_group->id, $kunena_acl);
                             }
 
                             if ($letPass || $is_Mod)

@@ -26,6 +26,7 @@ $signature = $userinfo->signature;
 
 if ($signature)
 {
+	$smileyList = smile::getEmoticons(0);
 	$signature = stripslashes($signature);
 	$signature = smile::smileReplace($signature, 0, $fbConfig->disemoticons, $smileyList);
 	$signature = nl2br($signature);

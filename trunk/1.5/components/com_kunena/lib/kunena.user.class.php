@@ -142,9 +142,12 @@ class CKunenaUserprofile extends JTable
 	*/
 	function CKunenaUserprofile($userid=null) 
 	{
-		global $kunena_db, $kunena_my;
-		$this->JTable('#__fb_users', 'userid', $kunena_db);
-		if ($userid === null) $userid = $kunena_my->id;
+		$kunena_db = &JFactory::getDBO();
+		parent::__construct('#__fb_users', 'userid', $kunena_db);
+		if ($userid === null) {
+			$user =& JFactory::getUser();
+			$userid = $user->get('id');
+		}
 		$this->load($userid);
 	}
 }

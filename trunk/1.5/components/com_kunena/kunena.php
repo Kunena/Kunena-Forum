@@ -78,11 +78,10 @@ require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 // Get CKunanaUser and CKunenaUsers
 require_once (KUNENA_PATH_LIB .DS. "kunena.user.class.php");
 
-global $fbConfig, $kunenaProfile;
-
-$kunena_my = &JFactory::getUser();
+global $kunenaProfile;
 
 // Get data about the current user - its ok to not have a userid = guest
+$kunena_my = &JFactory::getUser();
 $KunenaUser = new CKunenaUser($kunena_my->id);
 // Load configuration and personal settings for current user
 $fbConfig =& CKunenaConfig::getInstance();
@@ -93,10 +92,11 @@ if ($kn_tables->installed() === false) {
 }
 
 // Permissions: Check for administrators and moderators
+$kunena_acl = &JFactory::getACL();
 if ($kunena_my->id != 0)
 {
     $aro_group = $kunena_acl->getAroGroup($kunena_my->id);
-   	$aro_group->group_id = $aro_group->id;  // changed fieldname in Joomla 1.5: "group_id" -> "id"
+   	$aro_group->id = $aro_group->id;
     $is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
 }
 else
@@ -352,6 +352,7 @@ else
 //
 	// We only do the session handling for registered users
 	// No point in keeping track of whats new for guests
+	global $fbSession;
 	if ($kunena_my->id > 0)
 	{
 		// First we drop an updated cookie, good for 1 year
@@ -363,15 +364,16 @@ else
 		$new_fb_user = 0;
 		$resetView = 0;
 
+		$fbSession = array();
 		// Lookup existing session sored in db. If none exists this is a first time visitor
 		$kunena_db->setQuery("SELECT * from #__fb_sessions where userid=" . $kunena_my->id);
 		$fbSessionArray = $kunena_db->loadObjectList();
 			check_dberror("Unable to load sessions.");
-		$fbSession = $fbSessionArray[0];
+		if (isset($fbSessionArray[0])) $fbSession = $fbSessionArray[0];
 		$fbSessionUpd = null;
 
 		// If userid is empty/null no prior record did exist -> new session and first time around
-		if ($fbSession->userid == "" ) {
+		if (!isset($fbSession->userid) || $fbSession->userid == "" ) {
 			$new_fb_user = 1;
 			$resetView = 1;
 			// Init new sessions for first time user
@@ -396,7 +398,7 @@ else
 
 		// get all accessaible forums if needed (eg on forum modification, new session)
 		if (!$fbSession->allowed or $fbSession->allowed == 'na' or $fbSessionTimeOut) {
-			$allow_forums = CKunenaTools::getAllowedForums($kunena_my->id, $aro_group->group_id, $kunena_acl);
+			$allow_forums = CKunenaTools::getAllowedForums($kunena_my->id, $aro_group->id, $kunena_acl);
 			if (!$allow_forums) $allow_forums = '0';
 			if ($allow_forums <> $fbSession->allowed)
 				$fbSession->allowed = $fbSessionUpd->allowed = $allow_forums;
@@ -524,7 +526,7 @@ else
     switch ($func)
     {
         case 'view':
-            $fbMenu = KUNENA_get_menu(KUNENA_CB_ITEMID, $fbConfig, $fbIcons, $kunena_my->id, 3, $view, $catid, $id, $thread);
+            $fbMenu = KUNENA_get_menu($fbConfig, $fbIcons, $kunena_my->id, 3, $view, $catid, $id, $thread);
 
             break;
 
@@ -534,11 +536,11 @@ else
             $numPending = $kunena_db->loadResult();
             	check_dberror('Unable load pending messages.');
 
-            $fbMenu = KUNENA_get_menu(KUNENA_CB_ITEMID, $fbConfig, $fbIcons, $kunena_my->id, 2, $view, $catid, $id, $thread, $is_Moderator, $numPending);
+            $fbMenu = KUNENA_get_menu($fbConfig, $fbIcons, $kunena_my->id, 2, $view, $catid, $id, $thread, $is_Moderator, $numPending);
             break;
 
         default:
-            $fbMenu = KUNENA_get_menu(KUNENA_CB_ITEMID, $fbConfig, $fbIcons, $kunena_my->id, 1);
+            $fbMenu = KUNENA_get_menu($fbConfig, $fbIcons, $kunena_my->id, 1);
 
             break;
     }
@@ -893,7 +895,7 @@ else
 
     // Bottom Module
 
-    if (mosCountModules('kunena_bottom'))
+    if (JDocumentHTML::countModules('kunena_bottom'))
     {
 ?>
 

@@ -41,7 +41,7 @@ function debug_assert_callback($script, $line, $message) {
 function trigger_dberror($text = '')
 {
 	global $mainframe;
-	global $kunena_db;
+	$kunena_db = &JFactory::getDBO();
 	echo debug_callstackinfo();
 
 	require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');

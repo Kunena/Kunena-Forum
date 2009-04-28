@@ -75,8 +75,8 @@ $catid = (int)$catid;
 
 //resetting some things:
 $moderatedForum = 0;
-$lockedForum = 0;
-$lockedTopic = 0;
+$forumLocked = 0;
+$topicLocked = 0;
 $topicSticky = 0;
 
 unset($allow_forum);
@@ -84,6 +84,7 @@ unset($allow_forum);
 //get the allowed forums and turn it into an array
 $allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):array();
 
+$letPass = 0;
 if (!$is_Moderator)
 {
     //check Access Level Restrictions but don't bother for Moderators
@@ -94,7 +95,7 @@ if (!$is_Moderator)
     //Do user identification based upon the ACL
     if ($kunena_my->id) {
 	$aro_group = $kunena_acl->getAroGroup($kunena_my->id);
-	$group_id = $aro_group->group_id;
+	$group_id = $aro_group->id;
     }
     else $group_id = 0;
 
@@ -285,7 +286,7 @@ if ($letPass || $is_Moderator)
 
 
                 <?php
-                if ((($fbConfig->pubwrite == 0 && $kunena_my->id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
+                if ((($fbConfig->pubwrite == 0 && $kunena_my->id != 0) || $fbConfig->pubwrite) && ($topicLocked == 0 || ($topicLocked == 1 && $is_Moderator)))
                 {
                     //this user is allowed to post a new topic:
                     $forum_new = CKunenaLink::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);

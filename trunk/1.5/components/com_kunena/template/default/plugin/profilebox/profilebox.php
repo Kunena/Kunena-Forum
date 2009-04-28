@@ -139,7 +139,7 @@ if ($is_editor) {
 
 </td>
 			<?php
-			if (mosCountModules('kunena_profilebox'))
+			if (JDocumentHTML::countModules('kunena_profilebox'))
 			{
 			?>
 
@@ -185,7 +185,7 @@ else
 
 </td>
 			<?php
-			if (mosCountModules('kunena_profilebox'))
+			if (JDocumentHTML::countModules('kunena_profilebox'))
 			{
 			?>
 

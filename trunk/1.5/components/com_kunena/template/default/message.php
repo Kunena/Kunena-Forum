@@ -452,7 +452,7 @@ if ($msg_signature) {
 </table>
 <!-- Begin: Message Module Positions -->
 <?php
-if (mosCountModules('kunena_msg_'.$mmm))
+if (JDocumentHTML::countModules('kunena_msg_'.$mmm))
 {
 ?>
     <div class = "kunena_msg_<?php echo $mmm; ?>">

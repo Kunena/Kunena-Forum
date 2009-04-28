@@ -169,9 +169,9 @@ $catName = $objCatInfo->name;
                                     $catid = 1; //make sure there's a proper category
                                 }
 
+                                $noFileUpload = 0;
                                 if (is_array($attachfile) && $attachfile['error'] != UPLOAD_ERR_NO_FILE)
                                 {
-                                    $noFileUpload = 0;
                                     $GLOBALS['KUNENA_rc'] = 1;
                                     include (KUNENA_PATH_LIB .DS. 'kunena.file.upload.php');
 
@@ -180,9 +180,9 @@ $catName = $objCatInfo->name;
                                     }
                                 }
 
+                                $noImgUpload = 0;
                                 if (is_array($attachimage) && $attachimage['error'] != UPLOAD_ERR_NO_FILE)
                                 {
-                                    $noImgUpload = 0;
                                     $GLOBALS['KUNENA_rc'] = 1;
                                     include (KUNENA_PATH_LIB .DS. 'kunena.image.upload.php');
 
@@ -227,12 +227,10 @@ $catName = $objCatInfo->name;
                                 $kunena_db->query() or trigger_dberror('Unable to load post.');
 
                                 $existingPost = $kunena_db->loadObject();
-                                $pid = $existingPost->id;
+				unset($pid);
+                                if ($existingPost !== null) $pid = $existingPost->id;
 
-                                // echo 'pid: '.$pid;
-                                // echo ' query: '.$kunena_db->GetQuery();
-
-                                if ($pid=='')
+                                if (!isset($pid))
                                 {
                                     $kunena_db->setQuery("INSERT INTO #__fb_messages
                                     						(parent,thread,catid,name,userid,email,subject,time,ip,topic_emoticon,hold)
@@ -265,9 +263,9 @@ $catName = $objCatInfo->name;
                                         }
 
                                         //Update the attachments table if an image has been attached
-                                        if ($imageLocation != "" && !$noImgUpload)
+                                        if (is_array($attachimage) && !$noImgUpload)
                                         {
-                                            $kunena_db->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid','$imageLocation')");
+                                            $kunena_db->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid','{$attachimage['tmp_name']}')");
 
                                             if (!$kunena_db->query()) {
                                                 echo "<script> alert('Storing image failed: " . $kunena_db->getErrorMsg() . "'); </script>\n";
@@ -275,9 +273,9 @@ $catName = $objCatInfo->name;
                                         }
 
                                         //Update the attachments table if an file has been attached
-                                        if ($fileLocation != "" && !$noFileUpload)
+                                        if (is_array($attachfile) && !$noFileUpload)
                                         {
-                                            $kunena_db->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid','$fileLocation')");
+                                            $kunena_db->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid','{$attachfile['tmp_name']}')");
 
                                             if (!$kunena_db->query()) {
                                                 echo "<script> alert('Storing file failed: " . $kunena_db->getErrorMsg() . "'); </script>\n";
@@ -1574,7 +1572,7 @@ $catName = $objCatInfo->name;
 								$allow_forum = array ();
 
 								$obj_fb_cat = new jbCategory($kunena_db, $row->catid);
-								if (!fb_has_read_permission($obj_fb_cat, $allow_forum, $aro_group->group_id, $kunena_acl)) {
+								if (!fb_has_read_permission($obj_fb_cat, $allow_forum, $aro_group->id, $kunena_acl)) {
 									$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
 								return;
 							}

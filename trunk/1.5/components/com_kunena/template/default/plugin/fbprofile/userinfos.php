@@ -40,7 +40,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
                     <br/> <?php echo $msg_avatar; ?>
 
-                <?php
+                <?php /*
                     $gr_title=getFBGroupName($lists["userid"]);
 
                     if ($gr_title->id > 1)
@@ -51,18 +51,18 @@ defined( '_JEXEC' ) or die('Restricted access');
 
                 <?php
                         }
-                ?>
+*/                ?>
 
                         <div class = "viewcover">
                         <?php
-                            if ($msg_userrank)
+                            if (isset($msg_userrank))
                                 echo $msg_userrank;
                         ?>
                         </div>
 
                         <div class = "viewcover">
                         <?php
-                            if ($msg_userrankimg)
+                            if (isset($msg_userrankimg))
                                 echo $msg_userrankimg;
                         ?>
                         </div>
@@ -71,49 +71,49 @@ defined( '_JEXEC' ) or die('Restricted access');
 						<?php echo $msg_userhits; ?>
 						</div>
                     <?php
-                        if ($msg_posts)
+                        if (isset($msg_posts))
                             echo $msg_posts;
                     ?>
 
                     <?php
-                        if ($useGraph)
+                        if (isset($useGraph))
                             $kunena_myGraph->BarGraphHoriz();
                     ?>
 
                     <?php
-                        if ($msg_icq)
+                        if (isset($msg_icq))
                             echo $msg_icq;
                     ?>
 
                         <?php echo $msg_online; ?>
 
                     <?php
-                        if ($msg_pms)
+                        if (isset($msg_pms))
                             echo $msg_pms;
                     ?>
 
                     <?php
-                        if ($msg_icq)
+                        if (isset($msg_icq))
                             echo $msg_icq;
                     ?>
 
                     <?php
-                        if ($msg_msn)
+                        if (isset($msg_msn))
                             echo $msg_msn;
                     ?>
 
                     <?php
-                        if ($msg_yahoo)
+                        if (isset($msg_yahoo))
                             echo $msg_yahoo;
                     ?>
 
                     <?php
-                        if ($msg_regdate)
+                        if (isset($msg_regdate))
                             echo "<br />Join Date: " . strip_tags($msg_date) . "<br />";
                     ?>
 
                     <?php
-                        if ($msg_loc)
+                        if (isset($msg_loc))
                             echo "Location: $msg_loc<br />";
                     ?>
                 </div>
@@ -121,7 +121,7 @@ defined( '_JEXEC' ) or die('Restricted access');
                 <span class = "msgkarma">
 
             <?php
-                if ($msg_karma)
+                if (isset($msg_karma))
                     echo $msg_karma . '&nbsp;&nbsp;' . $msg_karmaplus . ' ' . $msg_karmaminus;
                 else
                     echo '&nbsp;';

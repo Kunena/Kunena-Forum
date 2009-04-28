@@ -21,7 +21,7 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-function kunena_categoryParentList($catids, $action, $options = array ())
+function kunena_categoryList($catids, $options = array ())
 {
     $kunena_db = &JFactory::getDBO();
     $list = JJ_categoryArray();
@@ -29,21 +29,7 @@ function kunena_categoryParentList($catids, $action, $options = array ())
 
     foreach ($list as $item)
     {
-        if ($this_treename)
-        {
-            if ($item->id != $catid && strpos($item->treename, $this_treename) === false) {
-                $options[] = JHTML::_('select.option', $item->id, $item->treename);
-            }
-        }
-        else
-        {
-            if ($item->id != $catid) {
-                $options[] = JHTML::_('select.option', $item->id, $item->treename);
-            }
-            else {
-                $this_treename = "$item->treename/";
-            }
-        }
+	$options[] = JHTML::_('select.option', $item->id, $item->treename);
     }
 
     $parent = JHTML::_('select.genericlist', $options, 'catid', 'class="inputbox" size="13" multiple="multiple"', 'value', 'text', $catids);
@@ -53,7 +39,7 @@ function kunena_categoryParentList($catids, $action, $options = array ())
 //category select list
 $options = array ();
 $options[] = JHTML::_('select.option', '0', 'All Categories');
-$lists['parent'] = kunena_categoryParentList(split(',', $catids), "", $options);
+$lists['parent'] = kunena_categoryList(split(',', $catids), $options);
 if(isset($fb_advsearch_hide) && $fb_advsearch_hide==1) 
 {
     $fb_advsearch_class = ' class="fb-hidden"';

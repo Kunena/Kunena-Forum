@@ -23,7 +23,8 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 $fbConfig =& CKunenaConfig::getInstance();
 //Some initial thingies needed anyway:
-$htmlText = stripslashes($htmlText);
+if (!isset($htmlText)) $htmlText = '';
+
 include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">

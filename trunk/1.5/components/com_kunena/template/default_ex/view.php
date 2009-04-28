@@ -563,10 +563,14 @@ if ($letPass || $is_Moderator)
                                 $userinfo = $kunena_db->loadObject();
 				if ($userinfo == NULL) {
 					$userinfo = new stdClass();
+					$userinfo->userid = 0;
 					$userinfo->name = '';
 					$userinfo->username = '';
 					$userinfo->avatar = '';
 					$userinfo->gid = 0;
+					$userinfo->rank = 0;
+					$userinfo->posts = 0;
+					$userinfo->karma = 0;
 					$userinfo->gender = _KUNENA_NOGENDER;
 					$userinfo->personalText = '';
 					$userinfo->ICQ = '';
@@ -596,7 +600,7 @@ if ($letPass || $is_Moderator)
                                 }
 
                                 $msg_id = $fmessage->id;
-                                $lists["userid"] = $fmessage->userid;
+                                $lists["userid"] = $userinfo->userid;
                                 $msg_username = $fmessage->email != "" && $kunena_my->id > 0 && $fbConfig->showemail ? CKunenaLink::GetEmailLink($fmessage->email, $fb_username) : $fb_username;
 
                                 if ($fbConfig->allowavatar)
@@ -606,15 +610,15 @@ if ($letPass || $is_Moderator)
                                     if ($fbConfig->avatar_src == "jomsocial")
 									{
 										// Get CUser object
-										$jsuser =& CFactory::getUser($fmessage->userid);
+										$jsuser =& CFactory::getUser($userinfo->userid);
 									    $msg_avatar = '<span class="fb_avatar"><img src="' . $jsuser->getThumbAvatar() . '" alt=" " /></span>';
 									}
                                     else if ($fbConfig->avatar_src == "clexuspm") {
-                                        $msg_avatar = '<span class="fb_avatar"><img src="' . MyPMSTools::getAvatarLinkWithID($fmessage->userid) . '" /></span>';
+                                        $msg_avatar = '<span class="fb_avatar"><img src="' . MyPMSTools::getAvatarLinkWithID($userinfo->userid) . '" /></span>';
                                     }
                                     else if ($fbConfig->avatar_src == "cb")
                                     {
-                                    	$msg_avatar = '<span class="fb_avatar">'.$kunenaProfile->showAvatar($fmessage->userid).'</span>';
+                                    	$msg_avatar = '<span class="fb_avatar">'.$kunenaProfile->showAvatar($userinfo->userid).'</span>';
                                     }
                                     else
                                     {
@@ -637,7 +641,7 @@ if ($letPass || $is_Moderator)
                                     $ugid = $userinfo->gid;
                                     $uIsMod = 0;
                                     $uIsAdm = 0;
-                                    $uIsMod = in_array($fmessage->userid, $catModerators);
+                                    $uIsMod = in_array($userinfo->userid, $catModerators);
 
                                     if ($ugid > 0) { //only get the groupname from the ACL if we're sure there is one
                                         $agrp = strtolower($kunena_acl->get_group_name($ugid, 'ARO'));
@@ -663,7 +667,7 @@ if ($letPass || $is_Moderator)
 
                                     //done usertype determination, phew...
                                     //# of post for this user and ranking
-                                    if ($fmessage->userid)
+                                    if ($userinfo->userid)
                                     {
                                         $numPosts = (int)$userinfo->posts;
 
@@ -738,26 +742,26 @@ if ($letPass || $is_Moderator)
                                 }
 
                                 //karma points and buttons
-                                if ($fbConfig->showkarma && $fmessage->userid != '0')
+                                if ($fbConfig->showkarma && $userinfo->userid != '0')
                                 {
                                     $karmaPoints = $userinfo->karma;
                                     $karmaPoints = (int)$karmaPoints;
                                     $msg_karma = "<strong>" . _KARMA . ":</strong> $karmaPoints";
 
-                                    if ($kunena_my->id != '0' && $kunena_my->id != $fmessage->userid)
+                                    if ($kunena_my->id != '0' && $kunena_my->id != $userinfo->userid)
                                     {
-                                        $msg_karmaminus = CKunenaLink::GetKarmaLink('decrease', $catid, $fmessage->id, $fmessage->userid, '<img src="'.(isset($fbIcons['karmaminus'])?(KUNENA_URLICONSPATH . $fbIcons['karmaminus']):(KUNENA_URLEMOTIONSPATH . "karmaminus.gif")).'" alt="Karma-" border="0" title="' . _KARMA_SMITE . '" align="middle" />' );
-                                        $msg_karmaplus  = CKunenaLink::GetKarmaLink('increase', $catid, $fmessage->id, $fmessage->userid, '<img src="'.(isset($fbIcons['karmaplus'])?(KUNENA_URLICONSPATH . $fbIcons['karmaplus']):(KUNENA_URLEMOTIONSPATH . "karmaplus.gif")).'" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" align="middle" />' );
+                                        $msg_karmaminus = CKunenaLink::GetKarmaLink('decrease', $catid, $fmessage->id, $userinfo->userid, '<img src="'.(isset($fbIcons['karmaminus'])?(KUNENA_URLICONSPATH . $fbIcons['karmaminus']):(KUNENA_URLEMOTIONSPATH . "karmaminus.gif")).'" alt="Karma-" border="0" title="' . _KARMA_SMITE . '" align="middle" />' );
+                                        $msg_karmaplus  = CKunenaLink::GetKarmaLink('increase', $catid, $fmessage->id, $userinfo->userid, '<img src="'.(isset($fbIcons['karmaplus'])?(KUNENA_URLICONSPATH . $fbIcons['karmaplus']):(KUNENA_URLEMOTIONSPATH . "karmaplus.gif")).'" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" align="middle" />' );
                                     }
                                 }
                                 /*let's see if we should use Missus integration */
-                                if ($fbConfig->pm_component == "missus" && $fmessage->userid && $kunena_my->id)
+                                if ($fbConfig->pm_component == "missus" && $userinfo->userid && $kunena_my->id)
                                 {
                                     //we should offer the user a Missus link
                                     //first get the username of the user to contact
                                     $PMSName = $userinfo->username;
                                     $msg_pms
-                                    = "<a href=\"" . JRoute::_('index.php?option=com_missus&amp;func=newmsg&amp;user=' . $fmessage->userid . '&amp;subject=' . _GEN_FORUM . ': ' . urlencode(utf8_encode($fmessage->subject))) . "\"><img src='";
+                                    = "<a href=\"" . JRoute::_('index.php?option=com_missus&amp;func=newmsg&amp;user=' . $userinfo->userid . '&amp;subject=' . _GEN_FORUM . ': ' . urlencode(utf8_encode($fmessage->subject))) . "\"><img src='";
 
                                     if ($fbIcons['pms']) {
                                         $msg_pms .= KUNENA_URLICONSPATH . $fbIcons['pms'];
@@ -770,7 +774,7 @@ if ($letPass || $is_Moderator)
                                 }
 
                                 /*let's see if we should use JIM integration */
-                                if ($fbConfig->pm_component == "jim" && $fmessage->userid && $kunena_my->id)
+                                if ($fbConfig->pm_component == "jim" && $userinfo->userid && $kunena_my->id)
                                 {
                                     //we should offer the user a JIM link
                                     //first get the username of the user to contact
@@ -787,12 +791,12 @@ if ($letPass || $is_Moderator)
                                     $msg_pms .= "' alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
                                 }
                                 /*let's see if we should use uddeIM integration */
-                                if ($fbConfig->pm_component == "uddeim" && $fmessage->userid && $kunena_my->id)
+                                if ($fbConfig->pm_component == "uddeim" && $userinfo->userid && $kunena_my->id)
                                 {
                                     //we should offer the user a PMS link
                                     //first get the username of the user to contact
                                     $PMSName = $userinfo->username;
-                                    $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_uddeim&amp;task=new&recip=' . $fmessage->userid) . "\"><img src=\"";
+                                    $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_uddeim&amp;task=new&recip=' . $userinfo->userid) . "\"><img src=\"";
 
                                     if ($fbIcons['pms']) {
                                         $msg_pms .= KUNENA_URLICONSPATH . $fbIcons['pms'];
@@ -804,7 +808,7 @@ if ($letPass || $is_Moderator)
                                     $msg_pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
                                 }
                                 /*let's see if we should use myPMS2 integration */
-                                if ($fbConfig->pm_component == "pms" && $fmessage->userid && $kunena_my->id)
+                                if ($fbConfig->pm_component == "pms" && $userinfo->userid && $kunena_my->id)
                                 {
                                     //we should offer the user a PMS link
                                     //first get the username of the user to contact
@@ -822,9 +826,9 @@ if ($letPass || $is_Moderator)
                                 }
 
                                 // online - ofline status
-                                if ($fmessage->userid > 0)
+                                if ($userinfo->userid > 0)
                                 {
-                                    $sql = "SELECT count(userid) FROM #__session WHERE userid=" . $fmessage->userid;
+                                    $sql = "SELECT count(userid) FROM #__session WHERE userid=" . $userinfo->userid;
                                     $kunena_db->setQuery($sql);
                                     $isonline = $kunena_db->loadResult();
 
@@ -838,9 +842,9 @@ if ($letPass || $is_Moderator)
                                     }
                                 }
                                 /* PM integration */
-                                if ($fbConfig->pm_component == "jomsocial" && $fmessage->userid && $kunena_my->id)
+                                if ($fbConfig->pm_component == "jomsocial" && $userinfo->userid && $kunena_my->id)
                                 {
-                                	$onclick = CMessaging::getPopup($fmessage->userid);
+                                	$onclick = CMessaging::getPopup($userinfo->userid);
                                 	$msg_pms = '<a href="javascript:void(0)" onclick="'. $onclick . "\">";
 
                                     if ($fbIcons['pms']) {
@@ -854,12 +858,12 @@ if ($letPass || $is_Moderator)
                                     $msg_pms .= "</a>";
                                 	//$msg_pms = '<a href="javascript:void(0)" onclick="'. $onclick .'">Send message</a>';
                                 }
-                                else if ($fbConfig->pm_component == "clexuspm" && $fmessage->userid && $kunena_my->id)
+                                else if ($fbConfig->pm_component == "clexuspm" && $userinfo->userid && $kunena_my->id)
                                 {
                                     //we should offer the user a PMS link
                                     //first get the username of the user to contact
                                     $PMSName = $userinfo->aid;
-                                    $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=new&amp;to=' . $fmessage->userid . '&title=' . $fmessage->subject) . "\"><img src=\"";
+                                    $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=new&amp;to=' . $userinfo->userid . '&title=' . $fmessage->subject) . "\"><img src=\"";
 
                                     if ($fbIcons['pms']) {
                                         $msg_pms .= KUNENA_URLICONSPATH . $fbIcons['pms'];
@@ -870,7 +874,7 @@ if ($letPass || $is_Moderator)
 
                                     $msg_pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
                                     //mypms pro profile link
-                                    $msg_profile = "<a href=\"" . MyPMSTools::getProfileLink($fmessage->userid) . "\"><img src=\"";
+                                    $msg_profile = "<a href=\"" . MyPMSTools::getProfileLink($userinfo->userid) . "\"><img src=\"";
 
                                     if ($fbIcons['userprofile']) {
                                         $msg_profile .= KUNENA_URLICONSPATH . $fbIcons['userprofile'];
@@ -919,10 +923,10 @@ if ($letPass || $is_Moderator)
                                 //Check if the Integration settings are on, and set the variables accordingly.
                                 if ($fbConfig->fb_profile == "cb")
                                 {
-                                    if ($fbConfig->fb_profile == 'cb' && $fmessage->userid > 0)
+                                    if ($fbConfig->fb_profile == 'cb' && $userinfo->userid > 0)
                                     {
-                                        $msg_prflink = JRoute::_('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $fmessage->userid . '');
-                                        $msg_profile = "<a href=\"" . JRoute::_('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $fmessage->userid . '') . "\">                                              <img src=\"";
+                                        $msg_prflink = JRoute::_('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $userinfo->userid . '');
+                                        $msg_profile = "<a href=\"" . JRoute::_('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $userinfo->userid . '') . "\">                                              <img src=\"";
 
                                         if ($fbIcons['userprofile']) {
                                             $msg_profile .= KUNENA_URLICONSPATH . $fbIcons['userprofile'];
@@ -937,8 +941,8 @@ if ($letPass || $is_Moderator)
                                 else if ($fbConfig->fb_profile == "clexuspm")
                                 {
                                     //mypms pro profile link
-                                    $msg_prflink = MyPMSTools::getProfileLink($fmessage->userid);
-                                    $msg_profile = "<a href=\"" . MyPMSTools::getProfileLink($fmessage->userid) . "\"><img src=\"";
+                                    $msg_prflink = MyPMSTools::getProfileLink($userinfo->userid);
+                                    $msg_profile = "<a href=\"" . MyPMSTools::getProfileLink($userinfo->userid) . "\"><img src=\"";
 
                                     if ($fbIcons['userprofile']) {
                                         $msg_profile .= KUNENA_URLICONSPATH . $fbIcons['userprofile'];
@@ -952,7 +956,7 @@ if ($letPass || $is_Moderator)
                                 else if ($userinfo->gid > 0)
                                 {
                                     //Kunena Profile link.
-                                    $msg_prflink = JRoute::_(KUNENA_LIVEURLREL.'&amp;func=fbprofile&amp;task=showprf&amp;userid=' . $fmessage->userid);
+                                    $msg_prflink = JRoute::_(KUNENA_LIVEURLREL.'&amp;func=fbprofile&amp;task=showprf&amp;userid=' . $userinfo->userid);
                                     $msg_profileicon = "<img src=\"";
 
                                     if ($fbIcons['userprofile']) {
@@ -963,7 +967,7 @@ if ($letPass || $is_Moderator)
                                     }
 
                                     $msg_profileicon .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" />";
-                                    $msg_profile = CKunenaLink::GetProfileLink($fbConfig, $fmessage->userid, $msg_profileicon);
+                                    $msg_profile = CKunenaLink::GetProfileLink($fbConfig, $userinfo->userid, $msg_profileicon);
                                 }
 
                                 // Begin: Additional Info //
@@ -1097,7 +1101,7 @@ if ($letPass || $is_Moderator)
                                 {
                                     //Now, if the viewer==author and the viewer is allowed to edit his/her own post then offer an 'edit' link
                                     $allowEdit = 0;
-                                    if ($kunena_my->id == $fmessage->userid)
+                                    if ($kunena_my->id == $userinfo->userid)
                                     {
                                         if(((int)$fbConfig->useredittime)==0)
                                         {

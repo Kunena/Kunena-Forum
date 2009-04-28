@@ -364,7 +364,7 @@ else
 		$new_fb_user = 0;
 		$resetView = 0;
 
-		$fbSession = array();
+		$fbSession =& new StdClass();
 		// Lookup existing session sored in db. If none exists this is a first time visitor
 		$kunena_db->setQuery("SELECT * from #__fb_sessions where userid=" . $kunena_my->id);
 		$fbSessionArray = $kunena_db->loadObjectList();

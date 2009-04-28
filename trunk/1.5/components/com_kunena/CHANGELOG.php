@@ -35,6 +35,7 @@ Kunena 1.5.1b
 28-April-2009 Matias
 # [#16053] Remove PHP Notices from the frontend (part 2)
 ! Fixed many J!1.5 related bugs, frontend should be mostly working now
+# [#15952] Delete a user and he gets the rank of admin or moderator
 
 27-April-2009 Matias
 ^ [#15784] Merge 1.0.10 fixes from revision 602 to 651

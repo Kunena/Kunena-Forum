@@ -870,13 +870,13 @@ $kunena_db = &JFactory::getDBO();
 function showCss($option)
 {
     $fbConfig =& CKunenaConfig::getInstance();
-    $file = "../components/com_kunena/template/" . $fbConfig->template . "/kunena.forum.css";
+    $file = KUNENA_PATH_TEMPLATE .DS. $fbConfig->template .DS. "kunena.forum.css";
     $permission = is_writable($file);
 
     if (!$permission)
     {
         echo "<center><h1><font color=red>" . _KUNENA_WARNING . "</FONT></h1><BR>";
-        echo "<B>Your css file is <#__root>/components/com_kunena/template/" . $fbConfig->template . "/kunena.forum.css</b><BR>";
+        echo "<B>Your css file is: ".$file."</b><BR>";
         echo "<B>" . _KUNENA_CHMOD1 . "</B></center><BR><BR>";
     }
 
@@ -903,10 +903,10 @@ function saveCss($file, $csscontent, $option)
     {
         fputs($fp, stripslashes($csscontent));
         fclose ($fp);
-        $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showCss", _KUNENA_CFS);
+        $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showCss", _KUNENA_CFC_SAVED);
     }
     else {
-        $mainframe->redirect( JURI::base() ."index2.php?option=$option", _KUNENA_CFCNBO);
+        $mainframe->redirect( JURI::base() ."index2.php?option=$option", _KUNENA_CFC_NOTSAVED);
     }
 }
 
@@ -915,6 +915,7 @@ function saveCss($file, $csscontent, $option)
 //===============================
 function newModerator($option, $id = null)
 {
+	global $mainframe;
     $kunena_db = &JFactory::getDBO();
     //die ("New Moderator");
     //$limit = intval(JRequest::getVar( 'limit', 10));
@@ -968,6 +969,7 @@ function newModerator($option, $id = null)
 
 function addModerator($option, $id, $cid = null, $publish = 1)
 {
+	global $mainframe;
 	$kunena_db = &JFactory::getDBO();
     global  $kunena_my;
     $numcid = count($cid);
@@ -1135,7 +1137,7 @@ function editUserProfile($uid)
 
 function saveUserProfile($option)
 {
-global $mainframe;
+	global $mainframe;
     $kunena_db = &JFactory::getDBO();
     $newview = JRequest::getVar( 'newview');
     $newrank = JRequest::getVar( 'newrank');
@@ -1385,7 +1387,8 @@ $kunena_db = &JFactory::getDBO();
 
 function replaceImage($kunena_db, $option, $imageName, $OxP)
 {
-$kunena_db = &JFactory::getDBO();
+	global $mainframe;
+	$kunena_db = &JFactory::getDBO();
 	if (!$imageName) {
 		$mainframe->redirect( JURI::base() ."index2.php?option=$option&task=browseImages");
 		return;
@@ -1416,6 +1419,7 @@ $kunena_db = &JFactory::getDBO();
 
 function deleteFile($kunena_db, $option, $fileName)
 {
+	global $mainframe;
     $kunena_db = &JFactory::getDBO();
 
     if (!$fileName) {
@@ -1645,6 +1649,8 @@ function editsmiley($option, $id)
     $smileypath = smileypath();
     $smileypath = $smileypath['live'] .DS;
 
+	$smiley_edit_img = '';
+
     $filename_list = "";
 	for( $i = 0; $i < count($smiley_images); $i++ )
 	{
@@ -1765,6 +1771,7 @@ function smileypath()
 function collect_smilies()
 {
 	$smileypath = smileypath();
+	$smiley_images = array();
 
     $dir = @opendir($smileypath['abs']);
 

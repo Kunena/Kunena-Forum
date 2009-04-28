@@ -171,13 +171,11 @@ abstract class CKunenaConfigBase
         	check_dberror("Unable to drop old configuration backup table.");
 
         // Only create backup if config table already exists
-        $this->_db->setQuery( "SHOW TABLES LIKE '%".$this->GetConfigTableName()."'" );
-		$this->_db->query();
-			check_dberror('Unable to check for existing config table.');
-		if($this->_db->loadResult())
+        $tables = CKunenaTables::getInstance();
+        if ($tables->check($this->GetConfigTableName()))
 		{
 			// backup current settings
-			$this->_db->setQuery("CREATE TABLE ".$this->GetConfigTableName()."_backup SELECT * FROM #__".$this->GetConfigTableName());
+			$this->_db->setQuery("CREATE TABLE ".$this->GetConfigTableName()."_backup SELECT * FROM ".$this->GetConfigTableName());
 			$this->_db->query();
 				check_dberror("Unable to create new configuration backup table.");
 		}
@@ -199,11 +197,16 @@ abstract class CKunenaConfigBase
     public function load($KunenaUser=null)
     {
         $tables = CKunenaTables::getInstance();
-        if ($tables->check($this->GetConfigTableName())) {
+        if ($tables->check($this->GetConfigTableName())) 
+	{
         	$this->_db->setQuery("SELECT * FROM ".$this->GetConfigTableName());
-
-        	$this->_db->loadObject($this);
+		$config = $this->_db->loadAssoc();
        		check_dberror("Unable to load configuration table.");
+
+		if ($config!=null)
+		{
+			$this->bind($config);
+		}
         }
         
         // Check for user specific overrides

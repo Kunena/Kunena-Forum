@@ -24,6 +24,8 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 // 1.5.1b
 
+DEFINE('_KUNENA_CFC_SAVED','CSS file saved.');
+DEFINE('_KUNENA_CFC_NOTSAVED','CSS file not saved.');
 DEFINE('_KUNENA_JS_WARN_NAME_MISSING','Your name is missing');
 DEFINE('_KUNENA_JS_WARN_UNAME_MISSING','Your username is missing');
 DEFINE('_KUNENA_JS_WARN_VALID_AZ09','Field contains forbidden letters');

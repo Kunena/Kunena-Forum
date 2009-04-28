@@ -32,7 +32,7 @@ function kunena_categoryList($catids, $options = array ())
 	$options[] = JHTML::_('select.option', $item->id, $item->treename);
     }
 
-    $parent = JHTML::_('select.genericlist', $options, 'catid', 'class="inputbox" size="13" multiple="multiple"', 'value', 'text', $catids);
+    $parent = JHTML::_('select.genericlist', $options, 'catids[]', 'class="inputbox" size="13" multiple="multiple"', 'value', 'text', $catids);
     return $parent;
 }
 

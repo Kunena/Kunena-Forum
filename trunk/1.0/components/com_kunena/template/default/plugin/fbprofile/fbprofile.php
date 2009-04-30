@@ -54,9 +54,11 @@ else {
 
 function showprf($userid, $page)
 {
-    global $database, $fbConfig, $acl, $my, $mosConfig_absolute_path;
+    global $database, $acl, $my, $mosConfig_absolute_path;
     // ERROR: mixed global $fbIcons
     global $fbIcons;
+
+	$fbConfig =& CKunenaConfig::getInstance();
 
     //Get userinfo needed later on, this limits the amount of queries
     unset($userinfo);

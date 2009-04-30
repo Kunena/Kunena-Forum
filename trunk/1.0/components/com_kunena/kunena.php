@@ -72,7 +72,7 @@ require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/
 // Get CKunanaUser and CKunenaUsers
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.user.class.php");
 
-global $kunenaProfile;
+global $kunenaProfile, $fbConfig;
 
 // Load configuration and personal settings for current user
 $fbConfig =& CKunenaConfig::getInstance();

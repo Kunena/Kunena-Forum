@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.10
 
+30-April-2009 Matias
+# [#16168] Remove HTML entities in the subjects of replies
+
 26-April-2009 Matias
 # [#16117] Search: html_entity_decode() throws warning in some environments
 # [#16074] Display real names in list of moderators when Username = no

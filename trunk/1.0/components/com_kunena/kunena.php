@@ -369,7 +369,7 @@ else
 		$new_fb_user = 0;
 		$resetView = 0;
 
-		$fbSession = array();
+		$fbSession =& new StdClass();
 		// Lookup existing session sored in db. If none exists this is a first time visitor
 		$database->setQuery("SELECT * from #__fb_sessions where userid=" . $my_id);
 		$fbSessionArray = $database->loadObjectList();

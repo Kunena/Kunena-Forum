@@ -1722,6 +1722,7 @@ function hasPostPermission($database, $catid, $replyto, $userid, $pubwrite, $ism
 {
     $fbConfig =& CKunenaConfig::getInstance();
 
+    $topicLock = 0;
     if ($replyto != 0)
     {
         $database->setQuery("select thread from #__fb_messages where id='$replyto'");

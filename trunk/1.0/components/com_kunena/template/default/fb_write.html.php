@@ -23,7 +23,8 @@ defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 $fbConfig =& CKunenaConfig::getInstance();
 //Some initial thingies needed anyway:
-$htmlText = stripslashes($htmlText);
+if (!isset($htmlText)) $htmlText = '';
+
 include_once(KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">

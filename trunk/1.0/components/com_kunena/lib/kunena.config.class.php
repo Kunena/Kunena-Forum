@@ -56,7 +56,7 @@ class CKunenaTables
 		foreach ($this->_tables as $table) {
 			if (!isset($this->tables[$table])) return false;
 		}
-		return $true;
+		return true;
 	}
 }
 
@@ -177,10 +177,8 @@ class CKunenaConfigBase
         	check_dberror("Unable to drop old configuration backup table.");
 
         // Only create backup if config table already exists
-        $database->setQuery( "SHOW TABLES LIKE '%".$this->GetConfigTableName()."'" );
-		$database->query();
-			check_dberror('Unable to check for existing config table.');
-		if($database->loadResult())
+        $tables = CKunenaTables::getInstance();
+        if ($tables->check($this->GetConfigTableName()))
 		{
 			// backup current settings
 			$database->setQuery("CREATE TABLE ".$this->GetConfigTableName()."_backup SELECT * FROM ".$this->GetConfigTableName());
@@ -208,7 +206,8 @@ class CKunenaConfigBase
         global $database;
 
         $tables = CKunenaTables::getInstance();
-        if ($tables->check($this->GetConfigTableName())) {
+        if ($tables->check($this->GetConfigTableName())) 
+	{
         	$database->setQuery("SELECT * FROM ".$this->GetConfigTableName());
 
         	$database->loadObject($this);

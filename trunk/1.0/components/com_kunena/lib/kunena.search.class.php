@@ -212,6 +212,7 @@ class CKunenaSearch
         $querystrings[] = "m.catid IN ($search_forums)";
         $where = implode(' AND ', $querystrings);
 
+	$groupby = array();
         if($order =='dec') $order1 = 'DESC';
         else $order1 = 'ASC';
         switch ($sortby) {
@@ -371,7 +372,6 @@ class CKunenaSearch
 
         $results = $this->get_results();
         $totalRows = (int)($this->total);
-        $actionstring = $this->str_kunena_actionstring;
 
 	$pagination = KunenaSearchPagination($this->func, $q, $this->getUrlParams(), floor($limitstart/$limit)+1, $limit, floor($totalRows/$limit)+1, 7);
 

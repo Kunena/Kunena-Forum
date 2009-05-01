@@ -26,7 +26,7 @@ global $is_Moderator;
 //
 //ob_start();
 $catid = (int)$catid;
-$pubwrite = (int)$pubwrite;
+$pubwrite = (int)$fbConfig->pubwrite;
 //ip for floodprotection, post logging, subscriptions, etcetera
 $ip = $_SERVER["REMOTE_ADDR"];
 //reset variables used
@@ -173,9 +173,9 @@ $catName = $objCatInfo->name;
                                     $catid = 1; //make sure there's a proper category
                                 }
 
+                                $noFileUpload = 0;
                                 if ($attachfile != '')
                                 {
-                                    $noFileUpload = 0;
                                     $GLOBALS['KUNENA_rc'] = 1;
                                     include (KUNENA_ABSSOURCESPATH . 'kunena.file.upload.php');
 
@@ -184,9 +184,9 @@ $catName = $objCatInfo->name;
                                     }
                                 }
 
+                                $noImgUpload = 0;
                                 if ($attachimage != '')
                                 {
-                                    $noImgUpload = 0;
                                     $GLOBALS['KUNENA_rc'] = 1;
                                     include (KUNENA_ABSSOURCESPATH . 'kunena.image.upload.php');
 
@@ -231,12 +231,10 @@ $catName = $objCatInfo->name;
                                 $database->query() or trigger_dberror('Unable to load post.');
 
                                 $database->loadObject($existingPost);
-                                $pid = $existingPost->id;
+				unset($pid);
+                                if ($existingPost !== null) $pid = $existingPost->id;
 
-                                // echo 'pid: '.$pid;
-                                // echo ' query: '.$database->GetQuery();
-
-                                if ($pid=='')
+                                if (!isset($pid))
                                 {
                                     $database->setQuery("INSERT INTO #__fb_messages
                                     						(parent,thread,catid,name,userid,email,subject,time,ip,topic_emoticon,hold)
@@ -1925,7 +1923,7 @@ function listThreadHistory($id, $fbConfig, $database)
         $database->setQuery("SELECT subject FROM #__fb_messages WHERE id='$thread' and parent=0");
         $this_message_subject = $database->loadResult();
         	check_dberror("Unable to load messages.");
-        echo "<b>" . _POST_TOPIC_HISTORY . ":</b> " . htmlspecialchars($this_message_subject) . " <br />" . _POST_TOPIC_HISTORY_MAX . " $historylimit " . _POST_TOPIC_HISTORY_LAST . "<br />";
+        echo "<b>" . _POST_TOPIC_HISTORY . ":</b> " . htmlspecialchars($this_message_subject) . " <br />" . _POST_TOPIC_HISTORY_MAX . " $fbConfig->historylimit " . _POST_TOPIC_HISTORY_LAST . "<br />";
 ?>
 
         <table border = "0" cellspacing = "1" cellpadding = "3" width = "100%" class = "fb_review_table">

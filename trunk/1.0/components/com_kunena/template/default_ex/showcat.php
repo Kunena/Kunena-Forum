@@ -75,8 +75,8 @@ $catid = (int)$catid;
 
 //resetting some things:
 $moderatedForum = 0;
-$lockedForum = 0;
-$lockedTopic = 0;
+$forumLocked = 0;
+$topicLocked = 0;
 $topicSticky = 0;
 
 unset($allow_forum);
@@ -84,6 +84,7 @@ unset($allow_forum);
 //get the allowed forums and turn it into an array
 $allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):array();
 
+$letPass = 0;
 if (!$is_Moderator)
 {
     //check Access Level Restrictions but don't bother for Moderators
@@ -140,6 +141,10 @@ if ($letPass || $is_Moderator)
     	check_dberror("Unable to load messages.");
 
     $favthread = array();
+    $threadids = array();
+    $messages = array();
+    $messages[0] = array();
+    $thread_counts = array();
     foreach ($messagelist as $message)
     {
         $threadids[] = $message->id;
@@ -148,6 +153,7 @@ if ($letPass || $is_Moderator)
 	$last_read[$message->id]->lastread = $last_reply[$message->thread];
 	$last_read[$message->id]->unread = 0;
         $hits[$message->id] = $message->hits;
+        $thread_counts[$message->id] = 0;
         $messagetext[$message->id] = substr(smile::purify($message->messagetext), 0, 500);
     }
 
@@ -256,6 +262,7 @@ if ($letPass || $is_Moderator)
 	<tr>
 		<td>
 		<?php
+		$smileyList = smile::getEmoticons(0);
 		$headerdesc = stripslashes(smile::smileReplace($objCatInfo->headerdesc, 0, $fbConfig->disemoticons, $smileyList));
         $headerdesc = nl2br($headerdesc);
         //wordwrap:
@@ -282,7 +289,7 @@ if ($letPass || $is_Moderator)
 
 
                 <?php
-                if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
+                if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite) && ($topicLocked == 0 || ($topicLocked == 1 && $is_Moderator)))
                 {
                     //this user is allowed to post a new topic:
                     $forum_new = CKunenaLink::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);

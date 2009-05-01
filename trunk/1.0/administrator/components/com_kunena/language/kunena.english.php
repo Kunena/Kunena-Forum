@@ -23,6 +23,18 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // 1.0.10
+DEFINE('_KUNENA_CFC_SAVED','CSS file saved.');
+DEFINE('_KUNENA_CFC_NOTSAVED','CSS file not saved.');
+DEFINE('_KUNENA_JS_WARN_NAME_MISSING','Your name is missing');
+DEFINE('_KUNENA_JS_WARN_UNAME_MISSING','Your username is missing');
+DEFINE('_KUNENA_JS_WARN_VALID_AZ09','Field contains forbidden letters');
+DEFINE('_KUNENA_JS_WARN_MAIL_MISSING','Email address is missing');
+DEFINE('_KUNENA_JS_WARN_PASSWORD2','Please enter valid password');
+DEFINE('_KUNENA_JS_PROMPT_UNAME','Please retype your new username');
+DEFINE('_KUNENA_JS_PROMPT_PASS','Please retype your new password');
+DEFINE('_KUNENA_DT_LMON_DEC', 'December');
+DEFINE('_KUNENA_DT_MON_DEC', 'Dec');
+DEFINE('_KUNENA_NOGENDER', 'Unknown');
 DEFINE('_KUNENA_ERROR_INCOMPLETE_ERROR', 'Your Kunena installation is incomplete!');
 DEFINE('_KUNENA_ERROR_INCOMPLETE_OFFLINE', 'Because of the above errors your Forum is now Offline and Forum Administration has been disabled.');
 DEFINE('_KUNENA_ERROR_INCOMPLETE_REASONS', 'Possible reasons for this error:');
@@ -309,7 +321,6 @@ DEFINE('_KUNENA_DT_LMON_AUG', 'August');
 DEFINE('_KUNENA_DT_LMON_SEP', 'September');
 DEFINE('_KUNENA_DT_LMON_OCT', 'October');
 DEFINE('_KUNENA_DT_LMON_NOV', 'November');
-DEFINE('_KUNENA_DT_LMON_DEV', 'December');
 DEFINE('_KUNENA_DT_MON_JAN', 'Jan');
 DEFINE('_KUNENA_DT_MON_FEB', 'Feb');
 DEFINE('_KUNENA_DT_MON_MAR', 'Mar');
@@ -321,7 +332,6 @@ DEFINE('_KUNENA_DT_MON_AUG', 'Aug');
 DEFINE('_KUNENA_DT_MON_SEP', 'Sep');
 DEFINE('_KUNENA_DT_MON_OCT', 'Oct');
 DEFINE('_KUNENA_DT_MON_NOV', 'Nov');
-DEFINE('_KUNENA_DT_MON_DEV', 'Dec');
 DEFINE('_KUNENA_CHILD_BOARD', 'Child Board');
 DEFINE('_WHO_ONLINE_GUEST', 'Guest');
 DEFINE('_WHO_ONLINE_MEMBER', 'Member');

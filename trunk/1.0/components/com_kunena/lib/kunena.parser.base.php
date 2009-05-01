@@ -103,6 +103,7 @@ class TagParser {
         $st = Array(); $sti = 0; // stackarr and TopPositionOfStack
         // scan for candidate of tag
         $textlen = strlen($text);
+	$pos = 0;
         while($pos<$textlen) {
             microtime_float();
             // next tag candidate

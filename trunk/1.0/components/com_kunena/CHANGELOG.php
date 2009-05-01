@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.10
 
+1-May-2009 Matias
+# [#16187] Fix many bugs from undefined variables (merge r656-657 from trunk/1.5)
+
 30-April-2009 Matias
 # [#16168] Remove HTML entities in the subjects of replies
 # [#16185] Fix global $fbConfig's and legacy configuration file support

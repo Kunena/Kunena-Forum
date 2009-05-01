@@ -201,6 +201,7 @@ else
 
 					$categoryicon = '';
 
+                    $cxThereisNewInForum = 0;
                     if ($fbConfig->shownew && $my->id != 0)
                     {
                         //Check if unread threads are in any of the forums topics

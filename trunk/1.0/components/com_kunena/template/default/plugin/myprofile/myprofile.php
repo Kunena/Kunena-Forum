@@ -53,7 +53,7 @@ if ($my->id != "" && $my->id != 0)
     }
 
     //user type determination
-    $ugid = $userinfo->gid;
+    $ugid = $juserinfo->gid;
     $uIsMod = 0;
     $uIsAdm = 0;
 

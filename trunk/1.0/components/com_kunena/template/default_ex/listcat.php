@@ -218,7 +218,7 @@ if (count($categories[0]) > 0)
 
                     <?php
                     //    show forums within the categories
-                    $database->setQuery("SELECT c.*,m.subject, mm.catid as lastcat, m.name as mname, m.userid, u.username, u.name as uname FROM #__fb_categories as c
+                    $database->setQuery("SELECT c.*,m.subject, mm.catid, m.name as mname, m.userid, u.username, u.name as uname FROM #__fb_categories as c
                     left join #__fb_messages as m on c.id_last_msg = m.id
                     left join #__users as u on u.id = m.userid
                     left join #__fb_messages as mm on mm.id = c.id_last_msg
@@ -335,6 +335,7 @@ if (count($categories[0]) > 0)
                                     <td class = "td-1" align="center">
                                         <?php
                                         $tmpIcon = '';
+					$cxThereisNewInForum = 0;
                                         if ($fbConfig->shownew && $my->id != 0)
                                         {
                                             //Check if unread threads are in any of the forums topics
@@ -591,7 +592,7 @@ if (count($categories[0]) > 0)
                                         <td class = "td-5" align="left">
                                             <div class = "<?php echo $boardclass ?>latest-subject fbm">
 <?php
-                                                echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $singlerow->lastcat, $latestthread, $latestthreadpages, $fbConfig->messages_per_page, $latestsubject, $latestid);
+                                                echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $singlerow->catid, $latestthread, $latestthreadpages, $fbConfig->messages_per_page, $latestsubject, $latestid);
 ?>
                                             </div>
 
@@ -600,7 +601,7 @@ if (count($categories[0]) > 0)
                                                 echo _GEN_BY.' ';
                                                 echo CKunenaLink::GetProfileLink($fbConfig, $latestuserid, $latestname);
                                                 echo ' | '.$lastptime.' ';
-                                                echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $singlerow->lastcat, $latestthread, $latestthreadpages, $fbConfig->messages_per_page,
+                                                echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $singlerow->catid, $latestthread, $latestthreadpages, $fbConfig->messages_per_page,
                                                 $fbIcons['latestpost'] ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" title="'. _SHOW_LAST.'"/>' :
                                                                          '<img src="'.KUNENA_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'"/>', $latestid);
 ?>

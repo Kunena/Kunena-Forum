@@ -357,6 +357,7 @@ else
 //
 	// We only do the session handling for registered users
 	// No point in keeping track of whats new for guests
+	global $fbSession;
 	if ($my_id > 0)
 	{
 		// First we drop an updated cookie, good for 1 year
@@ -368,15 +369,16 @@ else
 		$new_fb_user = 0;
 		$resetView = 0;
 
+		$fbSession = array();
 		// Lookup existing session sored in db. If none exists this is a first time visitor
 		$database->setQuery("SELECT * from #__fb_sessions where userid=" . $my_id);
 		$fbSessionArray = $database->loadObjectList();
 			check_dberror("Unable to load sessions.");
-		$fbSession = $fbSessionArray[0];
+		if (isset($fbSessionArray[0])) $fbSession = $fbSessionArray[0];
 		$fbSessionUpd = null;
 
 		// If userid is empty/null no prior record did exist -> new session and first time around
-		if ($fbSession->userid == "" ) {
+		if (!isset($fbSession->userid) || $fbSession->userid == "" ) {
 			$new_fb_user = 1;
 			$resetView = 1;
 			// Init new sessions for first time user
@@ -469,6 +471,8 @@ else
 
 		// For guests we don't show new posts
 		$prevCheck = $systime;
+		$new_fb_user = 0;
+		$fbSession->readtopics = '';
 	}
 
 	// no access to categories?
@@ -527,7 +531,7 @@ else
     switch ($func)
     {
         case 'view':
-            $fbMenu = KUNENA_get_menu(KUNENA_CB_ITEMID, $fbConfig, $fbIcons, $my_id, 3, $view, $catid, $id, $thread);
+            $fbMenu = KUNENA_get_menu($fbConfig, $fbIcons, $my_id, 3, $view, $catid, $id, $thread);
 
             break;
 
@@ -537,11 +541,11 @@ else
             $numPending = $database->loadResult();
             	check_dberror('Unable load pending messages.');
 
-            $fbMenu = KUNENA_get_menu(KUNENA_CB_ITEMID, $fbConfig, $fbIcons, $my_id, 2, $view, $catid, $id, $thread, $is_Moderator, $numPending);
+            $fbMenu = KUNENA_get_menu($fbConfig, $fbIcons, $my_id, 2, $view, $catid, $id, $thread, $is_Moderator, $numPending);
             break;
 
         default:
-            $fbMenu = KUNENA_get_menu(KUNENA_CB_ITEMID, $fbConfig, $fbIcons, $my_id, 1);
+            $fbMenu = KUNENA_get_menu($fbConfig, $fbIcons, $my_id, 1);
 
             break;
     }

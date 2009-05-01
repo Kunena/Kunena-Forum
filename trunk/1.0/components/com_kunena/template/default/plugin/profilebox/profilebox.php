@@ -29,11 +29,15 @@ $database->setQuery("SELECT su.view, u.name, su.moderator,su.avatar FROM #__fb_u
 
 $database->loadObject($_user);
 
-$prefview = $_user->view;
-$username = $_user->name; // externally used  by fb_pathway, myprofile_menu
-$moderator = $_user->moderator;
-$fbavatar = $_user->avatar;
-$jr_username = $_user->name;
+$fbavatar = NULL;
+if ($_user != NULL)
+{
+	$prefview = $_user->view;
+	$username = $_user->name; // externally used  by fb_pathway, myprofile_menu
+	$moderator = $_user->moderator;
+	$fbavatar = $_user->avatar;
+	$jr_username = $_user->name;
+}
 
 $jr_avatar = '';
 if ($fbConfig->avatar_src == "jomsocial")

@@ -866,9 +866,9 @@ function showCss($option)
 
     if (!$permission)
     {
-        echo "<center><h1><font color=red>" . _KUNENA_WARNING . "</FONT></h1><BR>";
-        echo "<B>Your css file is <#__root>/components/com_kunena/template/" . $fbConfig->template . "/kunena.forum.css</b><BR>";
-        echo "<B>" . _KUNENA_CHMOD1 . "</B></center><BR><BR>";
+        echo "<center><h1><font color=red>" . _KUNENA_WARNING . "</font></h1><br />";
+        echo "<b>Your css file is: " . $file . "</b><br />";
+        echo "<b>" . _KUNENA_CHMOD1 . "</b></center><br /><br />";
     }
 
     html_Kunena::showCss($file, $option);
@@ -893,10 +893,10 @@ function saveCss($file, $csscontent, $option)
     {
         fputs($fp, stripslashes($csscontent));
         fclose ($fp);
-        mosRedirect("index2.php?option=$option&task=showCss", _KUNENA_CFS);
+        mosRedirect("index2.php?option=$option&task=showCss", _KUNENA_CFC_SAVED);
     }
     else {
-        mosRedirect("index2.php?option=$option", _KUNENA_CFCNBO);
+        mosRedirect("index2.php?option=$option", _KUNENA_CFC_NOTSAVED);
     }
 }
 
@@ -1646,6 +1646,8 @@ function newsmiley($option)
     $smileypath = smileypath();
     $smileypath = $smileypath['live'].'/';
 
+	$smiley_edit_img = '';
+
     $filename_list = "";
 	for( $i = 0; $i < count($smiley_images); $i++ )
 	{
@@ -1735,6 +1737,7 @@ function smileypath()
 function collect_smilies()
 {
 	$smileypath = smileypath();
+	$smiley_images = array();
 
     $dir = @opendir($smileypath['abs']);
 

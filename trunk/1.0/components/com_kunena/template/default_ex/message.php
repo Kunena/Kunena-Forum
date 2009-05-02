@@ -173,7 +173,10 @@ if ($fbConfig->fb_profile == 'cb')
                         	echo $msg_username;
                         }
 ?>
-                    </span> <span class = "msgusertype">(<?php echo $msg_usertype; ?>)</span>
+                    </span>
+<?php
+					if ( $fbConfig->userlist_usertype ) echo '<span class = "msgusertype">('.$msg_usertype.')</span>';
+?>
                     <br/>
 <?php
                         if ($fmessage->userid > 0)

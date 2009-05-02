@@ -122,13 +122,10 @@ function showprf($userid, $page)
 
     $fb_username = $userinfo->{$fb_queryName};
 
-    if ($fb_username == "" || $fbConfig->changename) {
-        $fb_username = html_entity_decode_utf8(stripslashes($fmessage->name));
-    }
-
-    $msg_id = $fmessage->id;
     $lists["userid"] = $userid;
-    $msg_username = ($fmessage->email != "" && $my->id > 0 && $fbConfig->showemail == '1') ? "<a href=\"mailto:" . $fmessage->email . "\">" . $fb_username . "</a>" : $fb_username;
+
+	$msg_username = $fb_username;
+    // $msg_username = ($fmessage->email != "" && $my->id > 0 && $fbConfig->showemail == '1') ? "<a href=\"mailto:" . $fmessage->email . "\">" . $fb_username . "</a>" : $fb_username;
 
     if ($fbConfig->allowavatar)
     {

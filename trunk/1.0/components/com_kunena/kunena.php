@@ -19,8 +19,19 @@
 * @author TSMF & Jan de Graaff
 **/
 
+// Show offline message if J!1.5 Legacy Mode is not turned on
+if (!defined ('_VALID_MOS') && defined ('_JEXEC'))
+{
+	$kunena_db = &JFactory::getDBO();
+	$kunena_db->setQuery("SELECT offline_message FROM #__fb_config");
+	$offline_message = $kunena_db->loadResult();
+	if (empty($offline_message))
+		$offline_message = "<h2>The Forum is currently offline for maintenance.</h2>\n<div>Check back soon!</div>";
+	echo $offline_message;
+	return;
+}
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined ('_VALID_MOS') or die('Kunena Forum cannot be run without Joomla!');
 
 // Just for debugging and performance analysis
 $mtime = explode(" ", microtime());

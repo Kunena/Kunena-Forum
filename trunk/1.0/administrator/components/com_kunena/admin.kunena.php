@@ -19,7 +19,16 @@
 * @author TSMF & Jan de Graaff
 **/
 
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+// Show error message if J!1.5 Legacy Mode is not turned on
+if (!defined ('_VALID_MOS') && defined ('_JEXEC'))
+{
+	$mainframe->enqueueMessage('Legacy Mode has been switched off!', 'error');
+	$mainframe->enqueueMessage('Because of the above errors your Forum is now Offline and Forum Administration has been disabled.', 'notice');
+	$mainframe->enqueueMessage('Please enable Legacy Mode from Extensions / Plugin Manager / System - Legacy.');
+	return;
+}
+// Dont allow direct linking
+defined ('_VALID_MOS') or die('Kunena Forum cannot be run without Joomla!');
 
 // Kill notices (we have many..)
 error_reporting (E_ALL ^ E_NOTICE);

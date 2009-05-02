@@ -35,6 +35,7 @@ Kunena 1.0.10
 2-May-2009 Matias
 # [#16221] Internal: fix crash in message.php, remove some PHP notices
 # [#15953] Delete the Display Moderator, Guest etc above Avatar
+# [#16163] Give error message when Legacy is not turned on
 
 1-May-2009 Matias
 # [#16187] Fix many bugs from undefined variables (merge r656-657 from trunk/1.5)

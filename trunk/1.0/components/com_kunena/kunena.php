@@ -92,7 +92,8 @@ if ($my->id != 0)
 }
 else
 {
-    $aro_group = 0;
+    $aro_group = new StdClass();
+    $aro_group->group_id = 0;
     $is_admin = 0;
 }
 

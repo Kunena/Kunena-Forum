@@ -303,7 +303,7 @@ if ($letPass || $is_Moderator)
 		{
 	        echo '<div class="fb_message_buttons_row" style="text-align: left;">';
 	        echo $forum_new;
-	        echo ' '.$forum_markread;
+	        if (isset($forum_markread)) echo ' '.$forum_markread;
 	        echo '</div>';
 		}
 		?>
@@ -390,7 +390,7 @@ if ($letPass || $is_Moderator)
 		{
 	        echo '<div class="fb_message_buttons_row" style="text-align: left;">';
 	        echo $forum_new;
-	        echo ' '.$forum_markread;
+	        if (isset($forum_markread)) echo ' '.$forum_markread;
 	        echo '</div>';
 		}
 		?>

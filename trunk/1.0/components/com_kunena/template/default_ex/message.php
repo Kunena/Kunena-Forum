@@ -89,7 +89,7 @@ if ($fbConfig->fb_profile == 'cb')
                             <div class = "msgtext"><?php echo $msg_text; ?></div>
 
                             <?php
-                            if (!$msg_closed)
+                            if (!isset($msg_closed))
                             {
                             ?>
 
@@ -227,14 +227,16 @@ if ($fbConfig->fb_profile == 'cb')
                     ?>
 
                     <?php
-                    if (isset($useGraph)) {
+                    if (isset($myGraph)) {
                         $myGraph->BarGraphHoriz();
                     }
                     ?>
 
-
-
-                    <?php echo $msg_online; ?>
+                    <?php
+                    if (isset($msg_online)) {
+                        echo $msg_online;
+                    }
+                    ?>
 
                     <?php
                     if (isset($msg_pms)) {

@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.10
 
+2-May-2009 Matias
+# [#16221] Internal: fix crash in message.php, remove some PHP notices
+
 1-May-2009 Matias
 # [#16187] Fix many bugs from undefined variables (merge r656-657 from trunk/1.5)
 # [#15952] Delete a user and he gets the rank of admin or moderator (merge r658 from trunk/1.5)

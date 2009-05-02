@@ -720,8 +720,6 @@ if ($letPass || $is_Moderator)
                                             $msg_posts = '<div class="viewcover">' .
                                               "<strong>" . _POSTS . " $numPosts" . "</strong>" .
                                               "</div>";
-
-                                            $useGraph = 0;
                                         }
                                         else
                                         {

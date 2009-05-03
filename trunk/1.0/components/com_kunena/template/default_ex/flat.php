@@ -188,7 +188,7 @@ if (count($messages[0]) > 0)
 
                     <tr class = "<?php
                     echo $boardclass.$tabclass[$k];
-                    if ($leaf->ordering==0  || $funclatest == 1 || $funcmylatest == 1)
+                    if ($leaf->ordering==0 || $funcmylatest == 1)
                     { }
                     else
                     {echo '_stickymsg'; $topicSticky=1; }

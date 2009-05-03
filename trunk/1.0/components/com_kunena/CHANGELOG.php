@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.10
 
+3-May-2009 Matias
++ [#16227] Feature: Highlight sticky message in Recent Discussions
+
 2-May-2009 Matias
 # [#16221] Internal: fix crash in message.php, remove some PHP notices
 # [#15953] Delete the Display Moderator, Guest etc above Avatar

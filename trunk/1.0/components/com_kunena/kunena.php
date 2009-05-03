@@ -74,6 +74,12 @@ $userid 		= intval(mosGetParam($_REQUEST, 'userid', 0));
 $view 			= mosGetParam($_REQUEST, 'view', '');
 $msgpreview 	= mosGetParam($_REQUEST, 'msgpreview', '');
 
+// Image does not work if there are included files (extra characters), so we will do it now:
+if ($func == "showcaptcha") {
+   include ($mainframe->getCfg("absolute_path") . '/components/com_kunena/template/default/plugin/captcha/randomImage.php');
+   die();
+}
+
 // Debug helpers
 include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.debug.php");
 
@@ -228,11 +234,6 @@ if ($func == "getpreview") {
     header("Content-Type: text/html; charset=utf-8");
     echo $msgbody;
     die();
-}
-
-if ($func == "showcaptcha") {
-   include (KUNENA_ABSPATH . '/template/default/plugin/captcha/randomImage.php');
-   die();
 }
 
 // Add required header tags

@@ -29,7 +29,16 @@ $database->setQuery("SELECT email, name from #__users WHERE `id`={$my->id}");
 $database->loadObject($user);
 if ($fbConfig->fb_profile == 'cb')
 {
-	$msg_params = array('username' => &$msg_username, 'messageobject' => &$fmessage, 'subject' => &$msg_subject, 'messagetext' => &$msg_text);
+	$msg_params = array(
+		'username' => &$msg_username, 
+		'messageobject' => &$fmessage, 
+		'subject' => &$msg_subject, 
+		'messagetext' => &$msg_text, 
+		'signature' => &$msg_signature, 
+		'karma' => &$msg_karma, 
+		'karmaplus' => &$msg_karmaplus, 
+		'karmaminus' => &$msg_karmaminus
+	);
 	$profileHtml = $kunenaProfile->showProfile($fmessage->userid, $msg_params);
 } else {
 	$profileHtml = null;

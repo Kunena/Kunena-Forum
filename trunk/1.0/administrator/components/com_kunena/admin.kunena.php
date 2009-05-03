@@ -1804,6 +1804,7 @@ function showRanks($option)
 
 function rankpath()
 {
+/*
     global $mainframe, $mosConfig_lang;
 	$fbConfig =& CKunenaConfig::getInstance();
 
@@ -1818,6 +1819,9 @@ function rankpath()
 
     $rankpath['live'] = $rank_live_path;
     $rankpath['abs'] = $rank_abs_path;
+*/
+    $rankpath['live'] = KUNENA_URLRANKSPATH;
+    $rankpath['abs'] = KUNENA_ABSRANKSPATH;
 
     return $rankpath;
 
@@ -1827,12 +1831,12 @@ function collectRanks()
 {
 	$rankpath = rankpath();
 
-    $dir = @opendir($rankpath['abs']);
+	$dir = @opendir($rankpath['abs']);
 
 	$rank_images = array();
 	while($file = @readdir($dir))
 	{
-		if( !@is_dir($rank_abs_path . '/' . $file) )
+		if( !@is_dir($rankpath['abs'] . '/' . $file) )
 		{
 			$img_size = @getimagesize($rankpath['abs'] . '/' . $file);
 

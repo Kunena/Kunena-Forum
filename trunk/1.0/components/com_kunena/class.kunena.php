@@ -241,7 +241,12 @@ define('KUNENA_ABSTMPLTPATH', KUNENA_ABSPATH . '/template/' . $fb_cur_template);
 define('KUNENA_ABSTMPLTMAINIMGPATH', KUNENA_ABSPATH . '/template/' . $fb_cur_img_template);
 
 // IMAGES ABSOLUTE PATH
-define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANG . '/');
+if (is_dir(KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANG . '')) {
+    define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANG . '/');
+    }
+else {
+    define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH . '/images/english/');
+    }
 
 // absolute images path
 define('KUNENA_ABSICONSPATH', KUNENA_ABSIMAGESPATH . 'icons/');

@@ -36,6 +36,7 @@ Kunena 1.0.10
 + [#16227] Feature: Highlight sticky message in Recent Discussions
 # [#16231] Fix Broken URLs for moved threads
 + [#16089] Community Builder integration improvements
+# [#16107] Rank images not showing in backend
 
 2-May-2009 Matias
 # [#16221] Internal: fix crash in message.php, remove some PHP notices

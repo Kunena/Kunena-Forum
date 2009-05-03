@@ -85,7 +85,7 @@ if ($letPass || $is_Moderator)
         $thread = $this_message->parent == 0 ? $this_message->id : $this_message->thread;
 
         // Test if this is a valid SEO URL if not we should redirect using a 301 - permanent redirect
-        if ($view == "flat" && $thread != $this_message->id)
+        if ($view == "flat" && ($thread != $this_message->id || $catid != $this_message->catid))
         {
         	// Invalid SEO URL detected!
         	// Create permanent re-direct and quit

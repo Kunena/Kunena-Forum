@@ -132,7 +132,7 @@ if ($letPass || $is_Moderator)
         $thread = $this_message->parent == 0 ? $this_message->id : $this_message->thread;
 
         // Test if this is a valid SEO URL if not we should redirect using a 301 - permanent redirect
-        if ($view == "flat" && $thread != $this_message->id)
+        if ($view == "flat" && ($thread != $this_message->id || $catid != $this_message->catid))
         {
         	// Invalid SEO URL detected!
         	// Create permanent re-direct and quit
@@ -192,6 +192,7 @@ if ($letPass || $is_Moderator)
            ."\n LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.id='$thread' AND a.hold=0 AND a.catid='$catid') UNION (SELECT * FROM #__fb_messages AS a "
            ."\n LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.thread='$thread' AND a.hold=0 AND a.catid='$catid') ORDER BY time $ordering");
 
+	$flat_messages = array();
         if ($view != "flat") $flat_messages[] = $this_message;
 
         foreach ($database->loadObjectList()as $message)

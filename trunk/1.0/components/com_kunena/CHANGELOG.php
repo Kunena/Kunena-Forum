@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.10
 
+4-May-2009 Matias
+# [#16247] Internal: Sticky favorite thread in mylatest does not have styling
+
 3-May-2009 Matias
 + [#16227] Feature: Highlight sticky message in Recent Discussions
 # [#16231] Fix Broken URLs for moved threads

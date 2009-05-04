@@ -34,6 +34,7 @@ Kunena 1.0.10
 
 4-May-2009 Matias
 # [#16247] Internal: Sticky favorite thread in mylatest does not have styling
+# [#16238] Internal: New installation fails on fatal error
 
 3-May-2009 Matias
 + [#16227] Feature: Highlight sticky message in Recent Discussions

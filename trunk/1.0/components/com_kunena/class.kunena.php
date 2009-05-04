@@ -36,6 +36,9 @@ $Itemid = intval(mosGetParam($_REQUEST, 'Itemid'));
 
 //check if we have all the itemid sets. if so, then no need for DB call
 
+// get kunena configuration class
+require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.config.class.php");
+
 global $fbSession;
 $fbConfig =& CKunenaConfig::getInstance();
 

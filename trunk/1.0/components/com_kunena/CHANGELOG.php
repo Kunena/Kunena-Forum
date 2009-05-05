@@ -39,6 +39,7 @@ Kunena 1.0.10
 # [#16250] Fix slightly broken session handling
 ! Internal: Broken search fixed
 ! Added new class CKunenaSession
+# [#16258] Internal: Missing stripslashes() in fb_write.html.php form
 
 4-May-2009 Matias
 # [#16247] Internal: Sticky favorite thread in mylatest does not have styling

@@ -527,7 +527,7 @@ $catName = $objCatInfo->name;
                             //$message->message=smile::smileReplace($message->message,0);
                             $table = array_flip(get_html_translation_table(HTML_ENTITIES, ENT_QUOTES));
                             //$quote = strtr($message->message, $table);
-                            $quote = $message->message;
+                            $quote = stripslashes($message->message);
 
                             $htmlText = "[b]" . stripslashes($message->name) . " " . _POST_WROTE . ":[/b]\n";
                             $htmlText .= '[quote]' . $quote . "[/quote]";
@@ -712,7 +712,7 @@ $catName = $objCatInfo->name;
                         {*/
 
                         //$htmlText = smile::fbStripHtmlTags($mes->message);
-                        $htmlText = $mes->message;
+                        $htmlText = stripslashes($mes->message);
                         $table = array_flip(get_html_translation_table(HTML_ENTITIES));
 
                         //$htmlText = strtr($htmlText, $table);

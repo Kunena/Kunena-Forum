@@ -93,11 +93,7 @@ if ($fbConfig->showwhoisonline > 0)
                         }
                         else
                         {
-                        ?>
-
-                       <a href = "<?php echo sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX.''.$user->userid)?>"><?php echo $user->username; ?></a>
-
-                        <?php
+				echo CKunenaLink::GetProfileLink($fbConfig, $user->userid, $user->username);
                         }
                         ?>
 

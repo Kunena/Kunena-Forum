@@ -29,7 +29,19 @@ $mainframe->setPageTitle(_STAT_FORUMSTATS . ' - ' . stripslashes($fbConfig->boar
 if($fbConfig->showstats):
 
 $forumurl = 'index.php?option=com_kunena';
-$userlist = 'index.php?option=com_comprofiler&amp;task=usersList';
+
+if ($fbConfig->fb_profile == "jomsocial")
+{
+	$userlist = sefReltoAbs('index.php?option=com_community&amp;view=search&amp;task=browse');
+}
+else if ($fbConfig->fb_profile == 'cb')
+{
+    $userlist = CKunenaCBProfile::getUserListURL();
+}
+else
+{
+    $userlist = sefReltoAbs(KUNENA_LIVEURLREL . '&amp;func=userlist');
+}
 
 ?>
 

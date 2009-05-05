@@ -32,7 +32,7 @@ if ($fbConfig->fb_profile == "jomsocial")
 }
 else if ($fbConfig->fb_profile == 'cb')
 {
-    $userlist = sefReltoAbs('index.php?option=com_comprofiler&amp;task=usersList');
+    $userlist = CKunenaCBProfile::getUserListURL();
 }
 else
 {

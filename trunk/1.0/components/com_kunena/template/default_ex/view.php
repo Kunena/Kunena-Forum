@@ -933,8 +933,8 @@ if ($letPass || $is_Moderator)
                                 {
                                     if ($fbConfig->fb_profile == 'cb' && $userinfo->userid > 0)
                                     {
-                                        $msg_prflink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $userinfo->userid . '');
-                                        $msg_profile = "<a href=\"" . sefRelToAbs('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $userinfo->userid . '') . "\">                                              <img src=\"";
+                                        $msg_prflink = CKunenaCBProfile::getProfileURL($userinfo->userid);
+                                        $msg_profile = "<a href=\"" . $msg_prflink . "\">                                              <img src=\"";
 
                                         if ($fbIcons['userprofile']) {
                                             $msg_profile .= KUNENA_URLICONSPATH . "" . $fbIcons['userprofile'];

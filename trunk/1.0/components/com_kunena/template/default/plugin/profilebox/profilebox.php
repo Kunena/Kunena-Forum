@@ -90,10 +90,10 @@ $jr_latestpost = sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=latest');
 $j15 = CKunenaTools::isJoomla15();
 if ($fbConfig->fb_profile == 'cb')
 {
-    $loginlink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=login');
-    $logoutlink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=logout');
-    $registerlink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=registers');//.KUNENA_CB_ITEMID_SUFFIX);
-    $lostpasslink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=lostPassword');//.KUNENA_CB_ITEMID_SUFFIX);
+	$loginlink = CKunenaCBProfile::getLoginURL();
+	$logoutlink = CKunenaCBProfile::getLogoutURL();
+	$registerlink = CKunenaCBProfile::getRegisterURL();
+	$lostpasslink = CKunenaCBProfile::getLostPasswordURL();
 }
 else
 {

@@ -400,9 +400,7 @@ if (count($messages[0]) > 0)
 
   <span class="topic_latest_post_avatar">
   <?php
-		if ($leaf->userid) 
-		{
-  		if ($fbConfig->avatar_src == "jomsocial")
+  		if ($fbConfig->avatar_src == "jomsocial" && $leaf->userid)
 		{
 			// Get CUser object
 			$user =& CFactory::getUser($last_reply[$leaf->id]->userid);
@@ -420,7 +418,6 @@ if (count($messages[0]) > 0)
 	        }  else {
 		   		echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_nophoto.jpg" alt="" />');
 	        }
-		}
          }?>
   </span>
     <?php } ?>

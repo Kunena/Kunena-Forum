@@ -442,9 +442,10 @@ if ($my->id != "" && $my->id != 0)
 
                     if ($fbConfig->fb_profile == 'cb')
                     {
-                        echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='" . KUNENA_CB_ITEMID . "'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
+			$forumtab_url = CKunenaCBProfile::getForumTabURL();
+                        echo _USER_RETURN_A . ' <a href="'. $forumtab_url . '">' . _USER_RETURN_B . "</a><br /><br />";
 
-                        echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs('index.php?option=com_comprofiler'. KUNENA_CB_ITEMID_SUFFIX .'&amp;tab=getForumTab'), 3500);
+                        echo CKunenaLink::GetAutoRedirectHTML($forumtab_url, 3500);
                     }
                     else
                     {
@@ -468,9 +469,10 @@ if ($my->id != "" && $my->id != 0)
 						}
 
 						if ($fbConfig->fb_profile == 'cb') {
-							echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='".KUNENA_CB_ITEMID."'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
+							$forumtab_url = CKunenaCBProfile::getForumTabURL();
+				                        echo _USER_RETURN_A . ' <a href="'. $forumtab_url . '">' . _USER_RETURN_B . "</a><br /><br />";
 
-							echo CKunenaLink::GetAutoRedirectHTML('index.php?option=com_comprofiler'. KUNENA_CB_ITEMID_SUFFIX .'&amp;tab=getForumTab', 3500);
+				                        echo CKunenaLink::GetAutoRedirectHTML($forumtab_url, 3500);
 							echo '<a href="javascript:history.go(-1)">'._BACK.'</a>';
 
 						}
@@ -506,9 +508,10 @@ if ($my->id != "" && $my->id != 0)
 
                     if ($fbConfig->fb_profile == 'cb')
                     {
-                        echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler" . KUNENA_CB_ITEMID_SUFFIX . "&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
+			$forumtab_url = CKunenaCBProfile::getForumTabURL();
+                        echo _USER_RETURN_A . ' <a href="'. $forumtab_url . '">' . _USER_RETURN_B . "</a><br /><br />";
 
-                        echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs("index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab"), 3500);
+                        echo CKunenaLink::GetAutoRedirectHTML($forumtab_url, 3500);
                     }
                     else
                     {
@@ -531,9 +534,10 @@ if ($my->id != "" && $my->id != 0)
 						}
 
 						if ($fbConfig->fb_profile == 'cb') {
-							echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
+							$forumtab_url = CKunenaCBProfile::getForumTabURL();
+				                        echo _USER_RETURN_A . ' <a href="'. $forumtab_url . '">' . _USER_RETURN_B . "</a><br /><br />";
 
-							echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs("index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab"), 3500);
+				                        echo CKunenaLink::GetAutoRedirectHTML($forumtab_url, 3500);
 							echo '<a href="javascript:history.go(-1)">'. _BACK .'</a>';
 						}
 						else {

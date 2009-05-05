@@ -406,9 +406,6 @@ class HTML_userlist_content
 
                                 $nr = $i + $limitstart;
 
-                                // Profile Link
-                                $profilelink =  sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX."".$ulrow->id);
-
                                 // Avatar
                                 $uslavatar = '';
                                 if ($fbConfig->avatar_src == "clexuspm") {
@@ -478,9 +475,7 @@ class HTML_userlist_content
                                         <td class = "td-3" align="center">
                                       <?php
                                       if(strlen($uslavatar)) {
-                                      ?>
-                                            <a href = "<?php echo $profilelink ;?>"> <?php echo $uslavatar; ?></a>
-                                      <?php
+						echo CKunenaLink::GetProfileLink($fbConfig, $ulrow->id, $uslavatar);
                                       }
                                       else { echo '&nbsp;'; }
                                       ?>
@@ -496,7 +491,7 @@ class HTML_userlist_content
                                     ?>
 
                                         <td class = "td-4  fbm" align="center">
-                                            <a href = "<?php echo $profilelink ;?>"> <?php echo $ulrow->name; ?></a>
+						<?php echo CKunenaLink::GetProfileLink($fbConfig, $ulrow->id, $ulrow->name); ?>
                                         </td>
 
                                     <?php
@@ -509,7 +504,7 @@ class HTML_userlist_content
                                     ?>
 
                                         <td class = "td-5  fbm" align="center">
-                                            <a href = "<?php echo $profilelink ;?>"> <?php echo $ulrow->username; ?></a>
+						<?php echo CKunenaLink::GetProfileLink($fbConfig, $ulrow->id, $ulrow->username); ?>
                                         </td>
 
                                     <?php

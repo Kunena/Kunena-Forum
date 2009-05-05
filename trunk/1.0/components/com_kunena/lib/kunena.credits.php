@@ -46,7 +46,7 @@ global $is_Moderator;
                     <tr valign="top">
                       <td colspan="2" style="padding-left:20px;padding-right:20px;"><ul  class="fb_team">
                           <li class="fb_teammember"><a href="http://www.starVmax.com" target='_blank' rel='follow'>fxstein</a> Kunena developer and admin of the world largest Yamaha Star VMax community at <a href="http://www.starVmax.com/forum/" target='_blank' rel='follow'>www.starVmax.com/forum/</a></li>
-                          <li class="fb_teammember"><a href="http://www.kunena.com/index.php?option=com_community&view=profile&userid=63" target='_blank' rel='follow'>Matias</a> Kunena developer</li>
+                          <li class="fb_teammember"><a href="http://www.kunena.com/community/profile?userid=63" target='_blank' rel='follow'>Matias</a> Kunena developer</li>
                           <li class="fb_teammember"><a href="http://www.camelcity.com" target='_blank' rel='follow'>Noel Hunter</a> Kunena developer and admin of <a href="http://www.housecalls.com/view-qaa?func=listcat" target='_blank' rel='follow'>House Calls Q&A Forum/</a></li>
                           <li class="fb_teammember"><a href="http://www.racoonpages.de/" target='_blank' rel='follow'>racoon</a> Kunena developer</li>
                         </ul></td>

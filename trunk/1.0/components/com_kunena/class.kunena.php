@@ -39,7 +39,6 @@ $Itemid = intval(mosGetParam($_REQUEST, 'Itemid'));
 // get kunena configuration class
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.config.class.php");
 
-global $fbSession;
 $fbConfig =& CKunenaConfig::getInstance();
 
 if (!defined("KUNENA_COMPONENT_ITEMID")) {
@@ -968,9 +967,9 @@ class fbForum
 
 function JJ_categoryArray($admin=0) {
     global $database;
-    // ERROR: mixed global $fbSession
-    global $fbSession;
     global $aro_group;
+
+    $fbSession = CKunenaSession::getInstance();
 
     // get a list of the menu items
 	$query = "SELECT * FROM #__fb_categories";

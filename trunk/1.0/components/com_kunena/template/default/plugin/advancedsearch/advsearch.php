@@ -29,24 +29,10 @@ function kunena_categoryParentList($catids, $action, $options = array ())
 
     foreach ($list as $item)
     {
-        if ($this_treename)
-        {
-            if ($item->id != $catid && strpos($item->treename, $this_treename) === false) {
-                $options[] = mosHTML::makeOption($item->id, $item->treename);
-            }
-        }
-        else
-        {
-            if ($item->id != $catid) {
-                $options[] = mosHTML::makeOption($item->id, $item->treename);
-            }
-            else {
-                $this_treename = "$item->treename/";
-            }
-        }
+	$options[] = mosHTML::makeOption($item->id, $item->treename);
     }
 
-    $parent = mosHTML::selectList($options, 'catid[]', 'class="inputbox" size="13" multiple="multiple"', 'value', 'text', $catids);
+    $parent = mosHTML::selectList($options, 'catids[]', 'class="inputbox" size="13" multiple="multiple"', 'value', 'text', $catids);
     return $parent;
 }
 

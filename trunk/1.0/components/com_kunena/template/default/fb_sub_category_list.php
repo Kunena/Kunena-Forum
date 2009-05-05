@@ -22,6 +22,7 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 $fbConfig =& CKunenaConfig::getInstance();
+$fbSession =& CKunenaSession::getInstance();
 ?>
 <!--  sub cat -->
 <?php

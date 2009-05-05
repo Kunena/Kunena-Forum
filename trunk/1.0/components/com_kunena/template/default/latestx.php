@@ -23,6 +23,7 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 $fbConfig =& CKunenaConfig::getInstance();
+$fbSession =& CKunenaSession::getInstance();
 //Start with determining which forums the user can see
 
 require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');

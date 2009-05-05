@@ -22,6 +22,7 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 $fbConfig =& CKunenaConfig::getInstance();
+$fbSession =& CKunenaSession::getInstance();
 
 if (strtolower($func) == '' ){
 include (KUNENA_ABSTMPLTPATH . '/latestx.php');
@@ -82,13 +83,8 @@ if (in_array($catid, $threadids))
     	check_dberror("Unable to load categories.");
 }
 
-//get the db data with allowed forums and turn it into an array
-if ($fbSession->allowed != "na" && !$new_fb_user) {
-    $allow_forum = explode(',', $fbSession->allowed);
-}
-else {
-    $allow_forum = array ();
-}
+//get the allowed forums and turn it into an array
+$allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):array();
 
 // (JJ) BEGIN: ANNOUNCEMENT BOX
 if ($fbConfig->showannouncement > 0)
@@ -165,14 +161,8 @@ if (count($categories[0]) > 0)
         $obj_fb_cat = new jbCategory($database, $cat->id);
 
         $is_Mod = fb_has_moderator_permission($database, $obj_fb_cat, $my->id, $is_admin);
-        $letPass = 0;
 
-        //Do user identification based upon the ACL; but don't bother for moderators
-        if (!$is_Mod) {
-            $letPass = fb_has_read_permission($obj_fb_cat, $allow_forum, $aro_group->group_id, $acl);
-        }
-
-        if ($letPass || $is_Mod)
+        if (in_array($cat->id, $allow_forum))
         {
 ?>
             <!-- B: List Cat -->
@@ -244,14 +234,8 @@ if (count($categories[0]) > 0)
 
                             $obj_fb_cat = new jbCategory($database, $singlerow->id);
                             $is_Mod = fb_has_moderator_permission($database, $obj_fb_cat, $my->id, $is_admin);
-                            //Do user identification based upon the ACL; but don't bother for moderators
-                            $letPass = 0;
 
-                            if (!$is_Mod) {
-                                $letPass = fb_has_read_permission($obj_fb_cat, $allow_forum, $aro_group->group_id, $acl);
-                            }
-
-                            if ($letPass || $is_Mod)
+                            if (in_array($singlerow->id, $allow_forum))
                             {
                                 //    $k=for alternating row colors:
                                 $k = 1 - $k;
@@ -272,8 +256,9 @@ if (count($categories[0]) > 0)
 
 								foreach ($forumparents as $childnum=>$childforum)
 								{
-									if (!in_array($childforum->id, $allow_forum)) unset ($forumparents[$childnum]);
+									if (!in_array($childforum->id, $allow_forum)) unset ($forumparents[$childnum]); 
 								}
+								$forumparents = array_values($forumparents);
 
                                 if ($my->id)
                                 {
@@ -445,14 +430,12 @@ if (count($categories[0]) > 0)
     	                                                <?php if(count($forumparents)==1) { echo _KUNENA_CHILD_BOARD; } else { echo _KUNENA_CHILD_BOARDS; } ?>:
         	                                        </div>
                                                     <?php
-                                                    //row index
-                                                    $ir9 = 0;
 
                                                     for ($row_count = 0; $row_count < count($forumparents); $row_count++)
                                                     {														   
 														  echo "<div{$subwidth} class=\"{$boardclass}cc-subcat fbm\">";
 
-                                                            $forumparent = @$forumparents[$ir9];
+                                                            $forumparent = $forumparents[$row_count];
 
                                                             if ($forumparent)
                                                             {
@@ -531,7 +514,6 @@ if (count($categories[0]) > 0)
                                                                 echo '<span class="fb_childcount fbs">('.$forumparent->numTopics."/".$forumparent->numPosts.')</span>';
                                                             }
                                                             echo "</div>";
-                                                            $ir9++;
                                                     }
                                                     ?>
                                                 </div>

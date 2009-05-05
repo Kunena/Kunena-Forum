@@ -103,7 +103,7 @@ class CKunenaSearch
 	if ($limit<1 || $limit>40) $limit = $this->limit = $fbConfig->messages_per_page_search;
 
 	if (isset($_POST['q']) || isset($_POST['searchword'])) {
-		$this->params['catids'] = implode(',', mosGetParam($_POST, 'catid', array(0)));
+		$this->params['catids'] = implode(',', mosGetParam($_POST, 'catids', array(0)));
 		$url = CKunenaLink::GetSearchURL($fbConfig, $this->func, $q, $limitstart, $limit, $this->getUrlParams());
         	header("HTTP/1.1 303 See Other");
         	header("Location: " . htmlspecialchars_decode($url));
@@ -301,12 +301,14 @@ class CKunenaSearch
 	return $url_params;
     }
     function get_search_forums(&$catids, $childforums = 1) {
-        global $database, $my, $fbSession;
+        global $database, $my;
+
+	$fbSession =& CKunenaSession::getInstance();
 
         /* get allowed forums */
         $allowed_forums = array();
         $allowed_string = '';
-        if ($fbSession->allowed != 'na')
+        if ($fbSession->allowed && $fbSession->allowed != 'na')
         {
             $allowed_string = "AND id IN ({$fbSession->allowed})";
 	}

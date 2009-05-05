@@ -589,6 +589,13 @@ if ($letPass || $is_Moderator)
 					$userinfo->signature = '';
 				}
 
+				if ($fbConfig->fb_profile == 'cb')
+				{
+					$triggerParams = array( 'userid'=> $fmessage->userid,
+						'userinfo'=> &$userinfo );
+					$kunenaProfile->trigger( 'profileIntegration', $triggerParams );
+				}
+
                                 //get the username:
                                 if ($fbConfig->username) {
                                     $fb_queryName = "username";

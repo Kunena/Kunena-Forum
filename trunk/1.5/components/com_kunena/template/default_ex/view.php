@@ -1032,10 +1032,9 @@ if ($letPass || $is_Moderator)
                                 $table = array_flip(get_html_translation_table(HTML_ENTITIES));
 
                                 $fb_subject_txt = strtr($fb_subject_txt, $table);
-                                $fb_subject_txt = smile::fbHtmlSafe($fb_subject_txt);
                                 $fb_subject_txt = stripslashes($fb_subject_txt);
+                                $msg_subject = smile::fbHtmlSafe($fb_subject_txt);
 
-                                $msg_subject = htmlspecialchars($fb_subject_txt);
                                 $msg_date = date(_DATETIME, $fmessage->time);
                                 $fb_message_txt = stripslashes($fmessage->message);
 

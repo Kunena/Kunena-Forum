@@ -55,7 +55,6 @@ else {
 function showprf($userid, $page)
 {
     $fbConfig =& CKunenaConfig::getInstance();
-
     $kunena_acl = &JFactory::getACL();
     $kunena_my = &JFactory::getUser();
     $kunena_db = &JFactory::getDBO();
@@ -278,8 +277,8 @@ function showprf($userid, $page)
         $karmaPoints = (int)$karmaPoints;
         $msg_karma = "<strong>" . _KARMA . ":</strong> $karmaPoints";
 
-	$msg_karmaminus = '';
-	$msg_karmaplus = '';
+		$msg_karmaminus = '';
+		$msg_karmaplus = '';
         if ($kunena_my->id != '0' && $kunena_my->id != $userid)
         {
             $msg_karmaminus .= "<a href=\"" . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=decrease&amp;userid=' . $userid) . "\"><img src=\"";

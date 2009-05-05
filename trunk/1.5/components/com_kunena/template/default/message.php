@@ -239,8 +239,7 @@ $user = $kunena_db->loadObject();
                                     }
 
                                     //contruct the reply subject
-                                    $resubject = html_entity_decode_utf8(stripslashes($msg_subject), ENT_COMPAT, 'UTF-8');
-                                    $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? $resubject : _POST_RE . $resubject;
+                                    $resubject = strtolower(substr($msg_subject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? $msg_subject : _POST_RE . $msg_subject;
                                     ?>
 
                             <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL. '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">

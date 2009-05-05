@@ -37,7 +37,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
         <tr>
             <th colspan = "2">
                 <div class = "fb_title_cover fbm">
-                    <span class = "fb_title fbl"> <?php echo _POST_MESSAGE; ?>"<?php echo $objCatInfo->name; ?>"</span>
+                    <span class = "fb_title fbl"> <?php echo _POST_MESSAGE; ?>"<?php echo stripslashes($objCatInfo->name); ?>"</span>
                 </div>
             </th>
         </tr>

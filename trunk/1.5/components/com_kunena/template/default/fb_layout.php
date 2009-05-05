@@ -41,7 +41,8 @@ function KUNENA_print_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_po
  */
 function KUNENA_get_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_post = 0)
 {
-    global $mainframe, $fbConfig, $fbIcons;
+    global $mainframe, $fbIcons;
+	$fbConfig =& CKunenaConfig::getInstance();
     //Get the Category's parent category name for breadcrumb
     $kunena_db->setQuery('SELECT name,id FROM #__fb_categories WHERE id=' . $obj_fb_cat->getParent());
     $objCatParentInfo = $kunena_db->loadObject();

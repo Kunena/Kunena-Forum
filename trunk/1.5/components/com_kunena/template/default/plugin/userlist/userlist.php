@@ -120,7 +120,6 @@ class HTML_userlist_content
         global $base_url, $mainframe;
 
         $fbConfig =& CKunenaConfig::getInstance();
-
         $kunena_db = &JFactory::getDBO();
 
         if ($search == "") {

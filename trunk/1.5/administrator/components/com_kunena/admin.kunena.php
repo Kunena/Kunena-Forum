@@ -28,14 +28,12 @@ require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'k
 require_once (KUNENA_PATH_LIB .DS. 'kunena.debug.php');
 require_once (KUNENA_PATH_LIB .DS. 'kunena.config.class.php');
 
-// get fireboards configuration params in
 global $mainframe;
-
-$fbConfig =& CKunenaConfig::getInstance();
 
 $kunena_db = JFactory::getDBO();
 
-$fbConfig = new CKunenaConfig();
+global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 $fbConfig->load();
 
 // Class structure should be used after this and all the common task should be moved to this class
@@ -80,7 +78,7 @@ $order = JRequest::getVar('order', '');
 $no_html = intval(JRequest::getVar('no_html', 0));
 $id = intval(JRequest::getVar('id', 0));
 
-$pt_stop = '0';
+$pt_stop = "0";
 
 if (!$no_html)
 {
@@ -89,113 +87,113 @@ if (!$no_html)
 
 switch ($task)
 {
-    case 'installfb':
+    case "installfb":
         $mode = JRequest::getVar('mode', 1);
 
         com_install_Kunena ($mode);
         break;
 
-    case 'new':
+    case "new":
         editForum(0, $option);
 
         break;
 
-    case 'edit':
+    case "edit":
         editForum($cid[0], $option);
 
         break;
 
-    case 'edit2':
+    case "edit2":
         editForum($uid[0], $option);
 
         break;
 
-    case 'save':
+    case "save":
         saveForum ($option);
 
         break;
 
-    case 'cancel':
+    case "cancel":
         cancelForum ($option);
 
         break;
 
-    case 'publish':
+    case "publish":
         publishForum($cid, 1, $option);
 
         break;
 
-    case 'unpublish':
+    case "unpublish":
         publishForum($cid, 0, $option);
 
         break;
 
-    case 'remove':
+    case "remove":
         deleteForum($cid, $option);
 
         break;
 
-    case 'orderup':
+    case "orderup":
         orderForum($cid[0], -1, $option);
 
         break;
 
-    case 'orderdown':
+    case "orderdown":
         orderForum($cid[0], 1, $option);
 
         break;
 
-    case 'showconfig':
+    case "showconfig":
         showConfig ($option);
 
         break;
 
-    case 'saveconfig':
+    case "saveconfig":
         saveConfig ($option);
 
         break;
 
-    case 'newmoderator':
+    case "newmoderator":
         newModerator($option, $id);
 
         break;
 
-    case 'addmoderator':
+    case "addmoderator":
         addModerator($option, $id, $cid, 1);
 
         break;
 
-    case 'removemoderator':
+    case "removemoderator":
         addModerator($option, $id, $cid, 0);
 
         break;
 
-    case 'showprofiles':
+    case "showprofiles":
         showProfiles($kunena_db, $option, $lang, $order);
 
         break;
 
-    case 'profiles':
+    case "profiles":
         showProfiles($kunena_db, $option, $lang, $order);
 
         break;
 
-    case 'userprofile':
+    case "userprofile":
         editUserProfile($uid);
 
         break;
 
-    case 'showinstructions':
+    case "showinstructions":
         showInstructions($kunena_db, $option, $lang);
 
         break;
 
-    case 'showCss':
+    case "showCss":
         showCss ($option);
 
         break;
 
-    case 'saveeditcss':
+    case "saveeditcss":
         $file =JRequest::getVar( 'file', 1);
         $csscontent = JRequest::getVar( 'csscontent', 1);
 
@@ -203,63 +201,63 @@ switch ($task)
 
         break;
 
-    case 'instructions':
+    case "instructions":
         showInstructions($kunena_db, $option, $lang);
 
         break;
 
-    case 'saveuserprofile':
+    case "saveuserprofile":
         saveUserProfile ($option);
 
         break;
 
-    case 'upgradetables':
+    case "upgradetables":
         upgradeTables ($option);
 
         break;
 
-    case 'pruneforum':
+    case "pruneforum":
         pruneforum($kunena_db, $option);
 
         break;
 
-    case 'doprune':
+    case "doprune":
         doprune($kunena_db, $option);
 
         break;
 
-    case 'douserssync':
+    case "douserssync":
         douserssync($kunena_db, $option);
 
         break;
 
-    case 'syncusers':
+    case "syncusers":
         syncusers($kunena_db, $option);
 
         break;
 
-    case 'browseImages':
+    case "browseImages":
         browseUploaded($kunena_db, $option, 1);
 
         break;
 
-    case 'browseFiles':
+    case "browseFiles":
         browseUploaded($kunena_db, $option, 0);
 
         break;
 
-    case 'replaceImage':
+    case "replaceImage":
         replaceImage($kunena_db, $option, JRequest::getVar('img', ''), $OxP);
 
         break;
 
-    case 'deleteFile':
+    case "deleteFile":
         deleteFile($kunena_db, $option, JRequest::getVar('fileName', ''));
 
 
         break;
 
-    case 'showAdministration':
+    case "showAdministration":
         showAdministration ($option);
 
         break;
@@ -271,27 +269,27 @@ switch ($task)
         $mainframe->redirect( JURI::base() .'index2.php?option=com_kunena', _KUNENA_RECOUNTFORUMS_DONE);
         break;
 
-	case 'showsmilies':
+	case "showsmilies":
     	showsmilies($option);
 
         break;
 
-    case 'editsmiley':
+    case "editsmiley":
     	editsmiley($option, $cid[0]);
 
         break;
 
-    case 'savesmiley':
+    case "savesmiley":
     	savesmiley($option, $id);
 
         break;
 
-    case 'deletesmiley':
+    case "deletesmiley":
     	deletesmiley($option, $cid);
 
         break;
 
-    case 'newsmiley':
+    case "newsmiley":
     	newsmiley($option);
 
         break;
@@ -301,22 +299,22 @@ switch ($task)
 
     	break;
 
-    case 'editRank':
+    case "editRank":
     	editRank($option, $cid[0]);
 
         break;
 
-    case 'saveRank':
+    case "saveRank":
     	saveRank($option, $id);
 
         break;
 
-    case 'deleteRank':
+    case "deleteRank":
     	deleteRank($option, $cid);
 
         break;
 
-    case 'newRank':
+    case "newRank":
     	newRank($option);
 
         break;
@@ -512,9 +510,9 @@ $kunena_db = &JFactory::getDBO();
 
 function publishForum($cid = null, $publish = 1, $option)
 {
-$kunena_db = &JFactory::getDBO();
-    global  $mainframe;
-$kunena_my =  &JFactory::getUser();
+	$kunena_db = &JFactory::getDBO();
+	global  $mainframe;
+	$kunena_my =  &JFactory::getUser();
     if (!is_array($cid) || count($cid) < 1)
     {
         $action = $publish ? 'publish' : 'unpublish';
@@ -541,9 +539,9 @@ $kunena_my =  &JFactory::getUser();
 
 function deleteForum($cid = null, $option)
 {
-$kunena_db = &JFactory::getDBO();
-    global  $mainframe;
-$kunena_my =  &JFactory::getUser();
+	$kunena_db = &JFactory::getDBO();
+	global  $mainframe;
+	$kunena_my =  &JFactory::getUser();
     if (!is_array($cid) || count($cid) < 1)
     {
         $action = 'delete';
@@ -585,7 +583,7 @@ function cancelForum($option)
 {
     global  $mainframe;
 
-    $kunena_db = &JFactory::getDBO();
+	$kunena_db = &JFactory::getDBO();
     $row = new fbForum($kunena_db);
     $row->bind($_POST);
     $row->checkin();
@@ -860,7 +858,7 @@ function saveConfig($option)
 }
 
 function showInstructions($kunena_db, $option, $lang) {
-$kunena_db = &JFactory::getDBO();
+	$kunena_db = &JFactory::getDBO();
     html_Kunena::showInstructions($kunena_db, $option, $lang);
 }
 
@@ -1064,8 +1062,8 @@ function showProfiles($kunena_db, $option, $lang, $order)
 
 function editUserProfile($uid)
 {
-   $kunena_db = &JFactory::getDBO();
-    $kunena_acl = &JFactory::getACL();
+	$kunena_db = &JFactory::getDBO();
+	$kunena_acl = &JFactory::getACL();
 
     $kunena_db->setQuery("SELECT * FROM #__fb_users LEFT JOIN #__users on #__users.id=#__fb_users.userid WHERE userid=$uid[0]");
     $userDetails = $kunena_db->loadObjectList();
@@ -1200,8 +1198,8 @@ function pruneforum($kunena_db, $option)
 
 function doprune($kunena_db, $option)
 {
-global $mainframe ;
-    $catid = intval(JRequest::getVar( 'prune_forum', -1));
+	global $mainframe ;
+	$catid = intval(JRequest::getVar( 'prune_forum', -1));
     $deleted = 0;
 
     if ($catid == -1)
@@ -1351,7 +1349,7 @@ function douserssync($kunena_db, $option)
 //===============================
 function browseUploaded($kunena_db, $option, $type)
 {
-$kunena_db = &JFactory::getDBO();
+	$kunena_db = &JFactory::getDBO();
     if ($type)
     { //we're doing images
         $dir = @opendir(KUNENA_PATH_UPLOADED .DS. 'images');
@@ -1876,7 +1874,7 @@ function collectRanks()
 
 function newRank($option)
 {
-$kunena_db = &JFactory::getDBO();
+	$kunena_db = &JFactory::getDBO();
 	global  $mainframe;
 
 	$rank_images = collectRanks();
@@ -1895,7 +1893,7 @@ $kunena_db = &JFactory::getDBO();
 
 function deleteRank($option, $cid = null)
 {
-$kunena_db = &JFactory::getDBO();
+	$kunena_db = &JFactory::getDBO();
 	global $mainframe;
 
 	if ($cids = implode(',', $cid)) {

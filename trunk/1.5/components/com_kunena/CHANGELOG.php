@@ -32,6 +32,13 @@ Legend:
 
 Kunena 1.5.1b
 
+5-May-2009 Matias
+^ [#15784] Merge 1.0.10 fixes from revision 658 to 660
+
+30-April-2009 Matias
+# [#16168] Remove HTML entities in the subjects of replies
+# [#16185] Fix global $fbConfigs
+
 28-April-2009 Matias
 # [#16053] Remove PHP Notices from the frontend (part 2)
 ! Fixed many J!1.5 related bugs, frontend should be mostly working now

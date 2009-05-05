@@ -88,7 +88,7 @@ if ($letPass || $is_Moderator)
         $thread = $this_message->parent == 0 ? $this_message->id : $this_message->thread;
 
         // Test if this is a valid SEO URL if not we should redirect using a 301 - permanent redirect
-        if ($view == "flat" && $thread != $this_message->id)
+        if ($view == "flat" && ($thread != $this_message->id || $catid != $this_message->catid))
         {
         	// Invalid SEO URL detected!
         	// Create permanent re-direct and quit
@@ -597,19 +597,19 @@ if ($letPass || $is_Moderator)
                                         }
                                         else
                                         {
-                                            $kunena_myGraph = new phpGraph;
-                                            //$kunena_myGraph->SetGraphTitle(_POSTS);
-                                            $kunena_myGraph->AddValue(_POSTS, $numPosts);
-                                            $kunena_myGraph->SetRowSortMode(0);
-                                            $kunena_myGraph->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $fbConfig->statscolor . "m.png");
-                                            $kunena_myGraph->SetBarImg2(KUNENA_URLEMOTIONSPATH . "graph.gif");
-                                            $kunena_myGraph->SetMaxVal($maxPosts);
-                                            $kunena_myGraph->SetShowCountsMode(2);
-                                            $kunena_myGraph->SetBarWidth(4); //height of the bar
-                                            $kunena_myGraph->SetBorderColor("#333333");
-                                            $kunena_myGraph->SetBarBorderWidth(0);
-                                            $kunena_myGraph->SetGraphWidth(64); //should match column width in the <TD> above -5 pixels
-                                            //$kunena_myGraph->BarGraphHoriz();
+                                            $myGraph = new phpGraph;
+                                            //$myGraph->SetGraphTitle(_POSTS);
+                                            $myGraph->AddValue(_POSTS, $numPosts);
+                                            $myGraph->SetRowSortMode(0);
+                                            $myGraph->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $fbConfig->statscolor . "m.png");
+                                            $myGraph->SetBarImg2(KUNENA_URLEMOTIONSPATH . "graph.gif");
+                                            $myGraph->SetMaxVal($maxPosts);
+                                            $myGraph->SetShowCountsMode(2);
+                                            $myGraph->SetBarWidth(4); //height of the bar
+                                            $myGraph->SetBorderColor("#333333");
+                                            $myGraph->SetBarBorderWidth(0);
+                                            $myGraph->SetGraphWidth(64); //should match column width in the <TD> above -5 pixels
+                                            //$myGraph->BarGraphHoriz();
                                             $useGraph = 1;
                                         }
                                     }
@@ -1086,7 +1086,7 @@ if ($letPass || $is_Moderator)
                                 $msg_location,
                                 $msg_gender,
                                 $msg_personal,
-                                $kunena_myGraph);
+                                $myGraph);
                                 $useGraph = 0;
                             } // end for
                         }

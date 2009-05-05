@@ -34,6 +34,17 @@ Kunena 1.5.1b
 
 5-May-2009 Matias
 ^ [#15784] Merge 1.0.10 fixes from revision 658 to 660
+^ [#15784] Merge 1.0.10 fixes from revision 662 to 670
+
+3-May-2009 Matias
++ [#16227] Feature: Highlight sticky message in Recent Discussions
+# [#16231] Fix Broken URLs for moved threads
++ [#16089] Community Builder integration improvements
+# [#16107] Rank images not showing in backend
+
+2-May-2009 Matias
+# [#16221] Internal: fix crash in message.php, remove some PHP notices
+# [#15953] Delete the Display Moderator, Guest etc above Avatar
 
 30-April-2009 Matias
 # [#16168] Remove HTML entities in the subjects of replies

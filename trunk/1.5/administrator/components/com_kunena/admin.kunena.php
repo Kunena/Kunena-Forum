@@ -29,6 +29,8 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.debug.php');
 require_once (KUNENA_PATH_LIB .DS. 'kunena.config.class.php');
 
 global $mainframe;
+$mainframe->enqueueMessage('Kunena 1.5.1 Beta Release is not meant to be used in Production Server!', 'notice');
+$mainframe->enqueueMessage('This is an unstable version. Please use latest Kunena 1.0 instead.');
 
 $kunena_db = JFactory::getDBO();
 
@@ -1829,6 +1831,7 @@ function showRanks($option)
 
 function rankpath()
 {
+/*
     global $mainframe;
 	$fbConfig =& CKunenaConfig::getInstance();
 
@@ -1843,6 +1846,9 @@ function rankpath()
 
     $rankpath['live'] = $rank_live_path;
     $rankpath['abs'] = $rank_abs_path;
+*/
+    $rankpath['live'] = KUNENA_URLRANKSPATH;
+    $rankpath['abs'] = KUNENA_ABSRANKSPATH;
 
     return $rankpath;
 
@@ -1852,12 +1858,12 @@ function collectRanks()
 {
 	$rankpath = rankpath();
 
-    $dir = @opendir($rankpath['abs']);
+	$dir = @opendir($rankpath['abs']);
 
 	$rank_images = array();
 	while($file = @readdir($dir))
 	{
-		if( !@is_dir($rank_abs_path .DS . $file) )
+		if( !@is_dir($rankpath['abs'] . DS . $file) )
 		{
 			$img_size = @getimagesize($rankpath['abs'] .DS . $file);
 

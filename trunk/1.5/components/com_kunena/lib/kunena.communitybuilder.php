@@ -47,7 +47,7 @@ class CKunenaCBProfile {
 	function getProfileURL($userid) {
 		$cbUser =& CBuser::getInstance( (int) $userid );
 		if($cbUser === null) return;
-		return cbSef( 'index.php?option=com_comprofiler&user=' .$userid. getCBprofileItemid() );
+		return cbSef( 'index.php?option=com_comprofiler&task=userProfile&user=' .$userid. getCBprofileItemid() );
 	}
 
 	function showAvatar($userid, $class='', $thumb=true) {

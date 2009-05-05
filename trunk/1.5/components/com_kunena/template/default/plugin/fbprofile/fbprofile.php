@@ -119,7 +119,12 @@ function showprf($userid, $page)
         $fb_queryName = "name";
     }
 
-    $msg_username = $fb_username = $userinfo->{$fb_queryName};
+    $fb_username = $userinfo->{$fb_queryName};
+
+    $lists["userid"] = $userid;
+
+	$msg_username = $fb_username;
+    // $msg_username = ($fmessage->email != "" && $my->id > 0 && $fbConfig->showemail == '1') ? "<a href=\"mailto:" . $fmessage->email . "\">" . $fb_username . "</a>" : $fb_username;
 
     if ($fbConfig->allowavatar)
     {
@@ -252,19 +257,19 @@ function showprf($userid, $page)
             }
             else
             {
-                $kunena_myGraph = new phpGraph;
-                //$kunena_myGraph->SetGraphTitle(_POSTS);
-                $kunena_myGraph->AddValue(_POSTS, $numPosts);
-                $kunena_myGraph->SetRowSortMode(0);
-                $kunena_myGraph->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $fbConfig->statscolor . "m.png");
-                $kunena_myGraph->SetBarImg2(KUNENA_URLEMOTIONSPATH . "graph.gif");
-                $kunena_myGraph->SetMaxVal($maxPosts);
-                $kunena_myGraph->SetShowCountsMode(2);
-                $kunena_myGraph->SetBarWidth(4); //height of the bar
-                $kunena_myGraph->SetBorderColor("#333333");
-                $kunena_myGraph->SetBarBorderWidth(0);
-                $kunena_myGraph->SetGraphWidth(120); //should match column width in the <TD> above -5 pixels
-                //$kunena_myGraph->BarGraphHoriz();
+                $myGraph = new phpGraph;
+                //$myGraph->SetGraphTitle(_POSTS);
+                $myGraph->AddValue(_POSTS, $numPosts);
+                $myGraph->SetRowSortMode(0);
+                $myGraph->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $fbConfig->statscolor . "m.png");
+                $myGraph->SetBarImg2(KUNENA_URLEMOTIONSPATH . "graph.gif");
+                $myGraph->SetMaxVal($maxPosts);
+                $myGraph->SetShowCountsMode(2);
+                $myGraph->SetBarWidth(4); //height of the bar
+                $myGraph->SetBorderColor("#333333");
+                $myGraph->SetBarBorderWidth(0);
+                $myGraph->SetGraphWidth(120); //should match column width in the <TD> above -5 pixels
+                //$myGraph->BarGraphHoriz();
                 $useGraph = 1;
             }
         }

@@ -30,7 +30,16 @@ $kunena_db->setQuery("SELECT email, name from #__users WHERE `id`={$kunena_my->i
 $user = $kunena_db->loadObject();
 if ($fbConfig->fb_profile == 'cb')
 {
-	$msg_params = array('username' => &$msg_username, 'messageobject' => &$fmessage, 'subject' => &$msg_subject, 'messagetext' => &$msg_text);
+	$msg_params = array(
+		'username' => &$msg_username, 
+		'messageobject' => &$fmessage, 
+		'subject' => &$msg_subject, 
+		'messagetext' => &$msg_text, 
+		'signature' => &$msg_signature, 
+		'karma' => &$msg_karma, 
+		'karmaplus' => &$msg_karmaplus, 
+		'karmaminus' => &$msg_karmaminus
+	);
 	$profileHtml = $kunenaProfile->showProfile($fmessage->userid, $msg_params);
 } else {
 	$profileHtml = null;
@@ -174,7 +183,10 @@ if ($fbConfig->fb_profile == 'cb')
                         	echo $msg_username;
                         }
 ?>
-                    </span> <span class = "msgusertype">(<?php echo $msg_usertype; ?>)</span>
+                    </span>
+<?php
+					if ( $fbConfig->userlist_usertype ) echo '<span class = "msgusertype">('.$msg_usertype.')</span>';
+?>
                     <br/>
 <?php
                         if ($fmessage->userid > 0)
@@ -215,8 +227,8 @@ if ($fbConfig->fb_profile == 'cb')
                     ?>
 
                     <?php
-                    if (isset($useGraph)) {
-                        $kunena_myGraph->BarGraphHoriz();
+                    if (isset($myGraph)) {
+                        $myGraph->BarGraphHoriz();
                     }
                     ?>
 

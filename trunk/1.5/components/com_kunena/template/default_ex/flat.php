@@ -188,7 +188,7 @@ if (count($messages[0]) > 0)
 
                     <tr class = "<?php
                     echo $boardclass.$tabclass[$k];
-                    if ($leaf->ordering==0  || $funclatest == 1 || $funcmylatest == 1)
+                    if ($leaf->ordering==0)
                     { }
                     else
                     {echo '_stickymsg'; $topicSticky=1; }
@@ -231,7 +231,7 @@ if (count($messages[0]) > 0)
                                 <?php
                                 //(JJ) ATTACHMENTS ICON
                                 if ($leaf->attachmesid > 0) {
-                                    echo $fbIcons['topicattach'] ? '<img  class="attachicon" src="' . KUNENA_URLICONSPATH
+                                    echo isset($fbIcons['topicattach']) ? '<img  class="attachicon" src="' . KUNENA_URLICONSPATH . ''
                                              . $fbIcons['topicattach'] . '" border="0" alt="' . _KUNENA_ATTACH . '" />' : '<img class="attachicon" src="' . KUNENA_URLEMOTIONSPATH . 'attachment.gif"  alt="' . _KUNENA_ATTACH . '" title="' . _KUNENA_ATTACH . '" />';
                                     }
                                 ?>

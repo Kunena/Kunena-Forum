@@ -69,6 +69,12 @@ $userid 		= JRequest::getInt('userid', 0);
 $view 			= JRequest::getVar('view', '');
 $msgpreview 	= JRequest::getVar('msgpreview', '');
 
+// Image does not work if there are included files (extra characters), so we will do it now:
+if ($func == "showcaptcha") {
+   include ($mainframe->getCfg("absolute_path") . '/components/com_kunena/template/default/plugin/captcha/randomImage.php');
+   $mainframe->close();
+}
+
 // Debug helpers
 include_once (KUNENA_PATH_LIB .DS. "kunena.debug.php");
 
@@ -101,7 +107,8 @@ if ($kunena_my->id != 0)
 }
 else
 {
-    $aro_group = 0;
+    $aro_group = new StdClass();
+    $aro_group->group_id = 0;
     $is_admin = 0;
 }
 
@@ -209,11 +216,6 @@ if ($func == "getpreview")
     header("Content-Type: text/html; charset=utf-8");
     echo $msgbody;
     $mainframe->close();
-}
-
-if ($func == "showcaptcha") {
-   include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/captcha/randomImage.php');
-   $mainframe->close();
 }
 
 $document =& JFactory::getDocument();

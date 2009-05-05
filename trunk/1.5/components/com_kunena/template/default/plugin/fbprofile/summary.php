@@ -59,10 +59,12 @@ if ($signature)
           <?php echo _KUNENA_MYPROFILE_PERSONAL_INFO; ?>
         </center></th>
     </tr>
+    <?php  if ( $fbConfig->userlist_name ) { ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_NAME; ?></b> </td>
       <td  class = "td-2 fbm"><?php echo $userinfo->name; ?></td>
     </tr>
+    <?php } ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_USERNAME; ?></b> </td>
       <td  class = "td-2 fbm"><?php echo $userinfo->username; ?></td>
@@ -73,10 +75,12 @@ if ($signature)
       <td  class = "td-2 fbm"><?php echo $userinfo->email; ?></td>
     </tr>
     <?php } ?>
+    <?php  if ( $fbConfig->userlist_usertype ) { ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_USERTYPE; ?></b> </td>
       <td  class = "td-2 fbm"><?php echo $userinfo->usertype; ?></td>
     </tr>
+    <?php } ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_REGISTERDATE; ?></b> </td>
       <td  class = "td-2 fbm"><?php echo $userinfo->registerDate; ?></td>

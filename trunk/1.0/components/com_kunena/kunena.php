@@ -382,12 +382,11 @@ else
 		$new_fb_user = 0;
 		$resetView = 0;
 
-		$fbSession =& new StdClass();
 		// Lookup existing session sored in db. If none exists this is a first time visitor
 		$database->setQuery("SELECT * from #__fb_sessions where userid=" . $my_id);
 		$fbSessionArray = $database->loadObjectList();
 			check_dberror("Unable to load sessions.");
-		if (isset($fbSessionArray[0])) $fbSession = $fbSessionArray[0];
+		if (isset($fbSessionArray[0])) $fbSession =& $fbSessionArray[0];
 		$fbSessionUpd = null;
 
 		// If userid is empty/null no prior record did exist -> new session and first time around
@@ -478,6 +477,7 @@ else
 	{
 		// collect accessaible categories for guest user
 		$database->setQuery("SELECT id FROM #__fb_categories WHERE pub_access=0 AND published=1");
+		$fbSession =& new StdClass();
 		$fbSession->allowed =
 			($arr_pubcats = $database->loadResultArray())?implode(',', $arr_pubcats):'';
 			check_dberror('Unable load accessible categories for user.');
@@ -558,7 +558,7 @@ else
             break;
 
         default:
-            $fbMenu = KUNENA_get_menu($fbConfig, $fbIcons, $my_id, 1);
+            $fbMenu = KUNENA_get_menu($fbConfig, $fbIcons, $my_id, 1, $view);
 
             break;
     }

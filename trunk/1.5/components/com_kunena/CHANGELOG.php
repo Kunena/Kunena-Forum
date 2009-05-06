@@ -30,8 +30,13 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.5.1b
+Kunena 1.5.2b
 
+5-May-2009 fxstein
+^ [#16260] Update package version info
+
+
+Kunena 1.5.1b
 
 5-May-2009 Matias
 + [#16249] Community Builder integration: add trigger to modify userinfo

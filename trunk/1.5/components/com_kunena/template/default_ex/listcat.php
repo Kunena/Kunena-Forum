@@ -24,7 +24,6 @@ defined( '_JEXEC' ) or die('Restricted access');
 $fbConfig =& CKunenaConfig::getInstance();
 $fbSession =& CKunenaSession::getInstance();
 $kunena_my =& JFactory::getUser();
-
 if (strtolower($func) == '' ){
 include (KUNENA_ABSTMPLTPATH . '/latestx.php');
 } else {

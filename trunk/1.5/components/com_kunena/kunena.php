@@ -71,7 +71,7 @@ $msgpreview 	= JRequest::getVar('msgpreview', '');
 
 // Image does not work if there are included files (extra characters), so we will do it now:
 if ($func == "showcaptcha") {
-   include ($mainframe->getCfg("absolute_path") . '/components/com_kunena/template/default/plugin/captcha/randomImage.php');
+   include (JPATH_ROOT . '/components/com_kunena/template/default/plugin/captcha/randomImage.php');
    $mainframe->close();
 }
 
@@ -108,7 +108,7 @@ if ($kunena_my->id != 0)
 else
 {
     $aro_group = new StdClass();
-    $aro_group->group_id = 0;
+    $aro_group->id = 0;
     $is_admin = 0;
 }
 
@@ -341,7 +341,7 @@ else
     include_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS.  'icons.php');
 }
 
-require_once (KUNENA_PATH_LIB . 'kunena.session.class.php');
+require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
 //
 // This is the main session handling section. We rely both on cookie as well as our own

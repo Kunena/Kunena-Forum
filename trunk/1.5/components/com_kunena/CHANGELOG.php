@@ -42,6 +42,7 @@ Kunena 1.5.1b
 ! Added new class CKunenaSession
 # [#16258] Internal: Missing stripslashes() in fb_write.html.php form
 ^ [#15784] Merge 1.0.10 fixes from revision 658 to 680
+# [#15784] Internal: Fix few broken features after merge
 
 4-May-2009 Matias
 # [#16247] Internal: Sticky favorite thread in mylatest does not have styling

@@ -10,9 +10,11 @@
 *
 **/
 // Dont allow direct linking
-defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined( '_JEXEC' ) or die('Restricted access');
 
-class CKunenaSession extends mosDBTable
+require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
+
+class CKunenaSession extends JTable
 {
 	var $userid = 0;
 	var $allowed = 'na';
@@ -20,23 +22,25 @@ class CKunenaSession extends mosDBTable
 	var $readtopics = '';
 	var $currvisit = 0;
 	var $_exists = false;
+	private static $_instance;
 
-	function CKunenaSession($database)
+	function __construct(&$kunena_db)
 	{
-		$this->mosDBTable('#__fb_sessions', 'userid', $database);
-		$this->lasttime = time() + KUNENA_OFFSET_BOARD - KUNENA_SECONDS_IN_YEAR;
-		$this->currvisit = time() + KUNENA_OFFSET_BOARD;
+		$fbConfig =& CKunenaConfig::getInstance();
+		parent::__construct('#__fb_sessions', 'userid', $kunena_db);
+		$this->lasttime = time() + $fbConfig->board_ofset - KUNENA_SECONDS_IN_YEAR;
+		$this->currvisit = time() + $fbConfig->board_ofset;
 	}
 
 	function &getInstance()
 	{
-		global $database, $my;
-		static $instance;
-		if (!$instance) {
-			$instance = new CKunenaSession($database);
-			$instance->load($my->id);
+		if (!self::$_instance) {
+			$kunena_my = &JFactory::getUser();
+			$kunena_db = &JFactory::getDBO();
+			self::$_instance =& new CKunenaSession($kunena_db);
+			if ($kunena_my->id) self::$_instance->load($kunena_my->id);
 		}
-		return $instance;
+		return self::$_instance;
 	}
 
 	function load( $oid=null )

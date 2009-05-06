@@ -124,7 +124,7 @@ function showprf($userid, $page)
     $lists["userid"] = $userid;
 
 	$msg_username = $fb_username;
-    // $msg_username = ($fmessage->email != "" && $my->id > 0 && $fbConfig->showemail == '1') ? "<a href=\"mailto:" . $fmessage->email . "\">" . $fb_username . "</a>" : $fb_username;
+    // $msg_username = ($fmessage->email != "" && $kunena_my->id > 0 && $fbConfig->showemail == '1') ? "<a href=\"mailto:" . $fmessage->email . "\">" . $fb_username . "</a>" : $fb_username;
 
     if ($fbConfig->allowavatar)
     {

@@ -32,7 +32,7 @@ $forumurl = 'index.php?option=com_kunena';
 
 if ($fbConfig->fb_profile == "jomsocial")
 {
-	$userlist = sefReltoAbs('index.php?option=com_community&amp;view=search&amp;task=browse');
+	$userlist = JRoute::_('index.php?option=com_community&amp;view=search&amp;task=browse');
 }
 else if ($fbConfig->fb_profile == 'cb')
 {
@@ -40,7 +40,7 @@ else if ($fbConfig->fb_profile == 'cb')
 }
 else
 {
-    $userlist = sefReltoAbs(KUNENA_LIVEURLREL . '&amp;func=userlist');
+    $userlist = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userlist');
 }
 
 ?>

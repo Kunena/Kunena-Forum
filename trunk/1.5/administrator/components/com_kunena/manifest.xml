@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <install version="1.5.0a" type="component" method="upgrade">
 	<name>Kunena</name>
-    <version>1.5.1b</version>
-    <versionname>Puhua!</versionname>
+    <version>1.5.2b</version>
+    <versionname>話すため</versionname>
     <creationDate>@fbversiondate@</creationDate>
 	<build>@fbbuild@</build>
     <author>www.Kunena.com</author>

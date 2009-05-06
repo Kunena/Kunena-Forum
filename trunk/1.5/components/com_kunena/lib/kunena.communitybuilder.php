@@ -44,6 +44,34 @@ class CKunenaCBProfile {
 		return $instance;
 	}
 
+	function getLoginURL() {
+		return cbSef( 'index.php?option=com_comprofiler&amp;task=login' );
+	}
+
+	function getLogoutURL() {
+		return cbSef( 'index.php?option=com_comprofiler&amp;task=logout' );
+	}
+
+	function getRegisterURL() {
+		return cbSef( 'index.php?option=com_comprofiler&amp;task=registers' );
+	}
+
+	function getLostPasswordURL() {
+		return cbSef( 'index.php?option=com_comprofiler&amp;task=lostPassword' );
+	}
+
+	function getForumTabURL() {
+		return cbSef( 'index.php?option=com_comprofiler&amp;tab=getForumTab' . getCBprofileItemid() );
+	}
+
+	function getUserListURL() {
+		return cbSef( 'index.php?option=com_comprofiler&amp;task=usersList' );
+	}
+
+	function getAvatarURL() {
+		return cbSef( 'index.php?option=com_comprofiler&amp;task=userAvatar' . getCBprofileItemid() );
+	}
+
 	function getProfileURL($userid) {
 		$cbUser =& CBuser::getInstance( (int) $userid );
 		if($cbUser === null) return;

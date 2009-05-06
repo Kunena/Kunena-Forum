@@ -26,8 +26,8 @@ define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "/templates/".$mainframe->getTemp
 
 global $kunena_my;
 
+require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 
-$kunena_db = &JFactory::getDBO();
 $fbConfig =& CKunenaConfig::getInstance();
 
 $kunena_db = &JFactory::getDBO();
@@ -948,10 +948,10 @@ class fbForum
 }
 
 function JJ_categoryArray($admin=0) {
-    $kunena_db = &JFactory::getDBO();
-    // ERROR: mixed global $fbSession
-    global $fbSession;
     global $aro_group;
+
+    $fbSession = CKunenaSession::getInstance();
+    $kunena_db = &JFactory::getDBO();
 
     // get a list of the menu items
 	$query = "SELECT * FROM #__fb_categories";

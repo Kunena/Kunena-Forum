@@ -188,11 +188,7 @@ if (count($messages[0]) > 0)
 
                     <tr class = "<?php
                     echo $boardclass.$tabclass[$k];
-                    if ($leaf->ordering==0)
-                    { }
-                    else
-                    {echo '_stickymsg'; $topicSticky=1; }
-                    if ($leaf->myfavorite && $funcmylatest)
+                    if ($leaf->ordering != 0 || ($leaf->myfavorite && $funcmylatest))
                     {echo '_stickymsg'; $topicSticky=1; }
                     ?>">
                     <td class = "td-0 fbm" align="center">
@@ -389,7 +385,7 @@ if (count($messages[0]) > 0)
                             <div style="position:relative">
 
                               <!--  Sticky   -->
-        <?php if ($leaf->ordering != 0 &&  $funclatest == 0 && $funcmylatest == 0) { ?>
+        <?php if ($leaf->ordering != 0) { ?>
         <span class="topic_sticky">
         <?php echo $fbIcons['topicsticky'] ? '<img  src="' . KUNENA_URLICONSPATH . $fbIcons['topicsticky'] . '" border="0" alt="' . _GEN_ISSTICKY . '" />': '<img class="stickyicon" src="' . KUNENA_URLEMOTIONSPATH . 'pushpin.gif"  alt="' . _GEN_ISSTICKY . '" title="' . _GEN_ISSTICKY . '" />';
         $topicSticky = 1; ?>
@@ -404,9 +400,7 @@ if (count($messages[0]) > 0)
 
   <span class="topic_latest_post_avatar">
   <?php
-		if ($leaf->userid) 
-		{
-  		if ($fbConfig->avatar_src == "jomsocial")
+  		if ($fbConfig->avatar_src == "jomsocial" && $leaf->userid)
 		{
 			// Get CUser object
 			$user =& CFactory::getUser($last_reply[$leaf->id]->userid);
@@ -424,7 +418,6 @@ if (count($messages[0]) > 0)
 	        }  else {
 		   		echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_nophoto.jpg" alt="" />');
 	        }
-		}
          }?>
   </span>
     <?php } ?>

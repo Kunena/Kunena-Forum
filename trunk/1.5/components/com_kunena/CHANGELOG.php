@@ -32,9 +32,20 @@ Legend:
 
 Kunena 1.5.1b
 
+
 5-May-2009 Matias
-^ [#15784] Merge 1.0.10 fixes from revision 658 to 660
-^ [#15784] Merge 1.0.10 fixes from revision 662 to 670
++ [#16249] Community Builder integration: add trigger to modify userinfo
+# [#16239] Missing argument 5 for KUNENA_get_menu()
+# [#16237] Fix broken profile links
+# [#16250] Fix slightly broken session handling
+! Internal: Broken search fixed
+! Added new class CKunenaSession
+# [#16258] Internal: Missing stripslashes() in fb_write.html.php form
+^ [#15784] Merge 1.0.10 fixes from revision 658 to 680
+
+4-May-2009 Matias
+# [#16247] Internal: Sticky favorite thread in mylatest does not have styling
+# [#16238] Internal: New installation fails on fatal error
 
 3-May-2009 Matias
 + [#16227] Feature: Highlight sticky message in Recent Discussions

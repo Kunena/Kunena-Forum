@@ -59,7 +59,6 @@ class fbpdfwrapper {
 function dofreePDF($kunena_db)
 {
     global $mainframe, $aro_group;
-    global $fbSession;
 
     $kunena_acl = &JFactory::getACL();
     $kunena_my = &JFactory::getUser();

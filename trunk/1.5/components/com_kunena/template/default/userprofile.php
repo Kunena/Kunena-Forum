@@ -267,7 +267,7 @@ if ($kunena_my->id)
 
                                             <img src = "components/com_comprofiler/images/<?php echo $avatar;?>" alt="" />
 
-                                            <br/> <a href = "<?php echo JRoute::_('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar');?>"><?php echo _SET_NEW_AVATAR; ?></a>
+                                            <br/> <a href = "<?php echo CKunenaCBProfile::getAvatarURL();?>"><?php echo _SET_NEW_AVATAR; ?></a>
 
                                 <?php
                                         }
@@ -275,7 +275,7 @@ if ($kunena_my->id)
                                             echo _NON_SELECTED;
                                 ?>
 
-                                        <a href = "<?php echo JRoute::_('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar');?>"><?php echo _SET_NEW_AVATAR; ?></a>
+                                        <a href = "<?php echo CKunenaCBProfile::getAvatarURL();?>"><?php echo _SET_NEW_AVATAR; ?></a>
 
                                 <?php
                                         }
@@ -579,8 +579,8 @@ if ($kunena_my->id)
         }
 
         if ($fbConfig->fb_profile == 'cb') {
-            echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='".KUNENA_CB_ITEMID."'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
-	    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_('index.php?option=com_comprofiler'. KUNENA_CB_ITEMID_SUFFIX .'&amp;tab=getForumTab'), 3500);
+            echo _USER_RETURN_A . ' <a href="'.CKunenaCBProfile::getForumTabURL().'">' . _USER_RETURN_B . "</a><br /><br />";
+	    echo CKunenaLink::GetAutoRedirectHTML(CKunenaCBProfile::getForumTabURL(), 3500);
         }
         else {
             echo _USER_RETURN_A . " <a href=\"". JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show')."\">" . _USER_RETURN_B . "</a><br /><br />";
@@ -599,8 +599,8 @@ if ($kunena_my->id)
         }
 
         if ($fbConfig->fb_profile == 'cb') {
-            echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
-	    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_('index.php?option=com_comprofiler'.KUNENA_CB_ITEMID_SUFFIX.'&amp;tab=getForumTab'), 3500);
+            echo _USER_RETURN_A . ' <a href="'.CKunenaCBProfile::getForumTabURL().'">' . _USER_RETURN_B . "</a><br /><br />";
+	    echo CKunenaLink::GetAutoRedirectHTML(CKunenaCBProfile::getForumTabURL(), 3500);
         }
         else {
             echo _USER_RETURN_A . " <a href=\"index.php?option=com_kunena&amp;Itemid=$Itemid&amp;func=userprofile&amp;do=show\">" . _USER_RETURN_B . "</a><br /><br />";

@@ -435,23 +435,6 @@ function showprf($userid, $page)
         unset($profileitems);
     }
 
-    //Check if the Community Builder settings are on, and set the variables accordingly.
-    if ($fbConfig->fb_profile == 'cb' && $userid > 0)
-    {
-        $msg_profile = "<a href=\"" . JRoute::_('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $userid . '&amp;Itemid=1') . "\"><img src=\"";
-
-        if ($fbIcons['userprofile']) {
-            $msg_profile .= KUNENA_URLICONSPATH . $fbIcons['userprofile'];
-        }
-        else {
-            $msg_profile .= KUNENA_JLIVEURL . "/components/com_comprofiler/images/profiles.gif";
-        }
-
-        $msg_profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
-    }
-
-    /* */
-
     $jr_username = $userinfo->name;
 
     // (JJ) JOOMLA STYLE CHECK

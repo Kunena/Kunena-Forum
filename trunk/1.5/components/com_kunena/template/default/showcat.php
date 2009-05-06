@@ -21,6 +21,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 $fbConfig =& CKunenaConfig::getInstance();
+$fbSession =& CKunenaSession::getInstance();
 global $is_Moderator;
 
 $kunena_db = &JFactory::getDBO();
@@ -41,19 +42,7 @@ unset($allow_forum);
 //get the allowed forums and turn it into an array
 $allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):array();
 
-if (!$is_Moderator)
-{
-    //check Access Level Restrictions but don't bother for Moderators
-    //get all the info on this forum:
-    $kunena_db->setQuery("SELECT id,pub_access,pub_recurse,admin_access,admin_recurse FROM #__fb_categories where id='$catid'");
-    $row = $kunena_db->loadObjectList();
-    	check_dberror("Unable to load categories.");
-    //Do user identification based upon the ACL
-    $letPass = 0;
-    $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->id, $kunena_acl);
-}
-
-if ($letPass || $is_Moderator)
+if (in_array($catid, $allow_forum))
 {
     $threads_per_page = $fbConfig->threads_per_page;
 

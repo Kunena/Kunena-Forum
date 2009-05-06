@@ -23,6 +23,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $fbConfig =& CKunenaConfig::getInstance();
+$fbSession =& CKunenaSession::getInstance();
 
 function KunenaViewPagination($catid, $threadid, $page, $totalpages, $maxpages) {
     $fbConfig =& CKunenaConfig::getInstance();
@@ -82,39 +83,12 @@ $showedEdit = 0;
 require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
 require_once (KUNENA_PATH_LIB .DS. 'kunena.statsbar.php');
 
-$letPass = 0;
-if (!$is_Moderator)
-{
-    //check Access Level Restrictions but don't bother for Moderators
-    unset ($allow_forum);
-
-    $allow_forum = array ();
-
-    //get all the info on this forum:
-    $kunena_db->setQuery("SELECT id,pub_access,pub_recurse,admin_access,admin_recurse FROM #__fb_categories where id=$catid");
-    $row = $kunena_db->loadObjectList();
-    	check_dberror("Unable to load categories.");
-
-    if ($fbSession->allowed != "na" && !$new_fb_user) {
-        $allow_forum = explode(',', $fbSession->allowed);
-    }
-    else {
-        $allow_forum = array ();
-    }
-
-    //Do user identification based upon the ACL
-    if ($kunena_my->id) {
-	$aro_group = $kunena_acl->getAroGroup($kunena_my->id);
-	$group_id = $aro_group->id;
-    }
-    else $group_id = 0;
-
-    $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $group_id, $kunena_acl);
-}
+//get the allowed forums and turn it into an array
+$allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):array();
 
 $topicLock = 0;
 
-if ($letPass || $is_Moderator)
+if (in_array($catid, $allow_forum))
 {
     $view = $view == "" ? $settings[current_view] : $view;
     setcookie("fboard_settings[current_view]", $view, time() + 31536000, '/');
@@ -586,6 +560,13 @@ if ($letPass || $is_Moderator)
 					$userinfo->signature = '';
 				}
 
+				if ($fbConfig->fb_profile == 'cb')
+				{
+					$triggerParams = array( 'userid'=> $fmessage->userid,
+						'userinfo'=> &$userinfo );
+					$kunenaProfile->trigger( 'profileIntegration', $triggerParams );
+				}
+
                                 //get the username:
                                 if ($fbConfig->username) {
                                     $fb_queryName = "username";
@@ -924,8 +905,8 @@ if ($letPass || $is_Moderator)
                                 {
                                     if ($fbConfig->fb_profile == 'cb' && $userinfo->userid > 0)
                                     {
-                                        $msg_prflink = JRoute::_('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $userinfo->userid . '');
-                                        $msg_profile = "<a href=\"" . JRoute::_('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $userinfo->userid . '') . "\">                                              <img src=\"";
+                                        $msg_prflink = CKunenaCBProfile::getProfileURL($userinfo->userid);
+                                        $msg_profile = "<a href=\"" . $msg_prflink . "\">                                              <img src=\"";
 
                                         if ($fbIcons['userprofile']) {
                                             $msg_profile .= KUNENA_URLICONSPATH . $fbIcons['userprofile'];

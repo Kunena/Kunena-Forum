@@ -21,6 +21,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 $fbConfig =& CKunenaConfig::getInstance();
+$fbSession =& CKunenaSession::getInstance();
 global $is_Moderator;
 
 //
@@ -520,7 +521,7 @@ $catName = $objCatInfo->name;
                             //$message->message=smile::smileReplace($message->message,0);
                             $table = array_flip(get_html_translation_table(HTML_ENTITIES, ENT_QUOTES));
                             //$quote = strtr($message->message, $table);
-                            $quote = $message->message;
+                            $quote = stripslashes($message->message);
 
                             $htmlText = "[b]" . stripslashes($message->name) . " " . _POST_WROTE . ":[/b]\n";
                             $htmlText .= '[quote]' . $quote . "[/quote]";
@@ -705,7 +706,7 @@ $catName = $objCatInfo->name;
                         {*/
 
                         //$htmlText = smile::fbStripHtmlTags($mes->message);
-                        $htmlText = $mes->message;
+                        $htmlText = stripslashes($mes->message);
                         $table = array_flip(get_html_translation_table(HTML_ENTITIES));
 
                         //$htmlText = strtr($htmlText, $table);
@@ -1760,7 +1761,7 @@ function hasPostPermission($kunena_db, $catid, $replyto, $userid, $pubwrite, $is
             echo _POST_NO_PUBACCESS2 . "<br /><br />";
 
             if ($fbConfig->fb_profile == 'cb') {
-                echo '<a href="' . JRoute::_('index.php?option=com_comprofiler&amp;task=registers') . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
+                echo '<a href="' . CKunenaCBProfile::getRegisterURL() . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
             }
             else {
                 echo '<a href="' . JRoute::_('index.php?option=com_registration&amp;task=register') . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';

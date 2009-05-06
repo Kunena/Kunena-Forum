@@ -23,6 +23,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $fbConfig =& CKunenaConfig::getInstance();
+$fbSession =& CKunenaSession::getInstance();
 $kunena_db = &JFactory::getDBO();
 $kunena_my = &JFactory::getUser();
 
@@ -40,33 +41,12 @@ $showedEdit = 0;
 require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
 require_once (KUNENA_PATH_LIB .DS. 'kunena.statsbar.php');
 
-if (!$is_Moderator)
-{
-    //check Access Level Restrictions but don't bother for Moderators
-    unset ($allow_forum);
-
-    $allow_forum = array ();
-
-    //get all the info on this forum:
-    $kunena_db->setQuery("SELECT id,pub_access,pub_recurse,admin_access,admin_recurse FROM #__fb_categories where id=$catid");
-    $row = $kunena_db->loadObjectList();
-    	check_dberror("Unable to load categories.");
-
-    if ($fbSession->allowed != "na" && !$new_fb_user) {
-        $allow_forum = explode(',', $fbSession->allowed);
-    }
-    else {
-        $allow_forum = array ();
-    }
-
-    //Do user identification based upon the ACL
-    $letPass = 0;
-    $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->id, $kunena_acl);
-}
+//get the allowed forums and turn it into an array
+$allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):array();
 
 $topicLock = 0;
 
-if ($letPass || $is_Moderator)
+if (in_array($catid, $allowed_forum))
 {
     $view = $view == "" ? $settings[current_view] : $view;
     setcookie("fboard_settings[current_view]", $view, time() + 31536000, '/');
@@ -799,8 +779,8 @@ if ($letPass || $is_Moderator)
                                 {
                                     if ($fbConfig->fb_profile == 'cb' && $fmessage->userid > 0)
                                     {
-                                        $msg_prflink = JRoute::_('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $fmessage->userid . '');
-                                        $msg_profile = "<a href=\"" . JRoute::_('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $fmessage->userid . '') . "\">                                              <img src=\"";
+                                        $msg_prflink = CKunenaCBProfile::getProfileURL($fmessage->userid);
+                                        $msg_profile = "<a href=\"" . $msg_prflink . "\">                                              <img src=\"";
 
                                         if ($fbIcons['userprofile']) {
                                             $msg_profile .= KUNENA_URLICONSPATH . $fbIcons['userprofile'];

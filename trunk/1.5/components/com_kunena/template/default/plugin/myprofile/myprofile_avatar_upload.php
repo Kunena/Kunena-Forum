@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-function check_filesize($file, $maxSize)
+function kn_myprofile_kn_myprofile_check_filesize($file, $maxSize)
 {
     $size = filesize($file);
 
@@ -33,7 +33,7 @@ function check_filesize($file, $maxSize)
     return false;
 }
 
-function display_avatar_gallery($avatar_gallery_path)
+function kn_myprofile_display_avatar_gallery($avatar_gallery_path)
 {
     $dir = @opendir($avatar_gallery_path);
     $avatar_images = array ();
@@ -377,7 +377,7 @@ if ($do == 'init')
 
         $avatar_gallery_path = KUNENA_PATH_UPLOADED .DS. 'avatars/gallery' . $gallery1;
         $avatar_images = array ();
-        $avatar_images = display_avatar_gallery($avatar_gallery_path);
+        $avatar_images = kn_myprofile_display_avatar_gallery($avatar_gallery_path);
 
         for ($i = 0; $i < count($avatar_images); $i++)
         {

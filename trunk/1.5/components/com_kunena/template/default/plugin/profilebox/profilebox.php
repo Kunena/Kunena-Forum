@@ -91,10 +91,10 @@ $jr_latestpost = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=latest');
 <?php // AFTER LOGIN AREA
 if ($fbConfig->fb_profile == 'cb')
 {
-    $loginlink = JRoute::_('index.php?option=com_comprofiler&amp;task=login');
-    $logoutlink = JRoute::_('index.php?option=com_comprofiler&amp;task=logout');
-    $registerlink = JRoute::_('index.php?option=com_comprofiler&amp;task=registers');//.KUNENA_CB_ITEMID_SUFFIX);
-    $lostpasslink = JRoute::_('index.php?option=com_comprofiler&amp;task=lostPassword');//.KUNENA_CB_ITEMID_SUFFIX);
+	$loginlink = CKunenaCBProfile::getLoginURL();
+	$logoutlink = CKunenaCBProfile::getLogoutURL();
+	$registerlink = CKunenaCBProfile::getRegisterURL();
+	$lostpasslink = CKunenaCBProfile::getLostPasswordURL();
 }
 else
 {

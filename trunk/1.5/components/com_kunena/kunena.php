@@ -341,6 +341,8 @@ else
     include_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS.  'icons.php');
 }
 
+require_once (KUNENA_PATH_LIB . 'kunena.session.class.php');
+
 //
 // This is the main session handling section. We rely both on cookie as well as our own
 // Kunena session table inside the database. We are leveraging the cookie to keep track
@@ -355,6 +357,7 @@ else
 	// We only do the session handling for registered users
 	// No point in keeping track of whats new for guests
 	global $fbSession;
+	$fbSession =& CKunenaSession::getInstance();
 	if ($kunena_my->id > 0)
 	{
 		// First we drop an updated cookie, good for 1 year
@@ -366,24 +369,10 @@ else
 		$new_fb_user = 0;
 		$resetView = 0;
 
-		$fbSession =& new StdClass();
-		// Lookup existing session sored in db. If none exists this is a first time visitor
-		$kunena_db->setQuery("SELECT * from #__fb_sessions where userid=" . $kunena_my->id);
-		$fbSessionArray = $kunena_db->loadObjectList();
-			check_dberror("Unable to load sessions.");
-		if (isset($fbSessionArray[0])) $fbSession = $fbSessionArray[0];
-		$fbSessionUpd = null;
-
 		// If userid is empty/null no prior record did exist -> new session and first time around
-		if (!isset($fbSession->userid) || $fbSession->userid == "" ) {
+		if ($fbSession->_exists === false) {
 			$new_fb_user = 1;
 			$resetView = 1;
-			// Init new sessions for first time user
-			$fbSession->userid = $kunena_my->id;
-			$fbSession->allowed = '';
-			$fbSession->lasttime = $systime - KUNENA_SECONDS_IN_YEAR;  // show threads up to 1 year back as new
-			$fbSession->readtopics = '';
-			$fbSession->currvisit = $systime;
 		}
 
 		// detect fbsession timeout (default: after 30 minutes inactivity)
@@ -391,33 +380,25 @@ else
 
 		// new indicator handling
 		if ($markaction == "allread") {
-			$fbSession->lasttime = $fbSessionUpd->lasttime = $systime;
-			$fbSession->readtopics = $fbSessionUpd->readtopics = '';
+			$fbSession->lasttime = $systime;
+			$fbSession->readtopics = '';
 		} elseif ($fbSessionTimeOut) {
-			$fbSession->lasttime = $fbSessionUpd->lasttime = $fbSession->currvisit;
-			$fbSession->readtopics = $fbSessionUpd->readtopics = '';
+			$fbSession->lasttime = $fbSession->currvisit;
+			$fbSession->readtopics = '';
 		}
 
 		// get all accessaible forums if needed (eg on forum modification, new session)
 		if (!$fbSession->allowed or $fbSession->allowed == 'na' or $fbSessionTimeOut) {
 			$allow_forums = CKunenaTools::getAllowedForums($kunena_my->id, $aro_group->id, $kunena_acl);
 			if (!$allow_forums) $allow_forums = '0';
-			if ($allow_forums <> $fbSession->allowed)
-				$fbSession->allowed = $fbSessionUpd->allowed = $allow_forums;
+			if ($allow_forums != $fbSession->allowed)
+				$fbSession->allowed = $allow_forums;
 			unset($allow_forums);
 		}
 
 		// save fbsession
-		if ($new_fb_user) {
-			$kunena_db->insertObject('#__fb_sessions', $fbSession);
-				check_dberror('Unable to insert new session record for user.');
-		} else {
-			$fbSessionUpd->userid = $fbSession->userid;
-			$fbSession->currvisit = $fbSessionUpd->currvisit = $systime;
-			$kunena_db->updateObject('#__fb_sessions', $fbSessionUpd, 'userid');
-				check_dberror('Unable to update session record for user.');
-		}
-		unset($fbSessionUpd);
+		$fbSession->currvisit = $systime;
+		$fbSession->save($fbSession);
 
 		if ($markaction == "allread") {
 		        $mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _GEN_ALL_MARKED);
@@ -542,7 +523,7 @@ else
             break;
 
         default:
-            $fbMenu = KUNENA_get_menu($fbConfig, $fbIcons, $kunena_my->id, 1);
+            $fbMenu = KUNENA_get_menu($fbConfig, $fbIcons, $kunena_my->id, 1, $view);
 
             break;
     }

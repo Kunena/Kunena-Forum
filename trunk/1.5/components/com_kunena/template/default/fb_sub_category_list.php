@@ -22,6 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 $fbConfig =& CKunenaConfig::getInstance();
+$fbSession =& CKunenaSession::getInstance();
 $kunena_db = &JFactory::getDBO();
 // $kunena_my = &JFactory::getUser();
 ?>

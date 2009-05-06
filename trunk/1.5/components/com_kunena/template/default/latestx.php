@@ -23,6 +23,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $fbConfig =& CKunenaConfig::getInstance();
+$fbSession =& CKunenaSession::getInstance();
 //Start with determining which forums the user can see
 
 require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');

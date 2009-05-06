@@ -101,6 +101,7 @@ class CKunenaSearch
 	$limitstart = $this->limitstart = intval(JRequest::getVar('limitstart', 0));
 	$limit = $this->limit = intval(JRequest::getVar('limit', $fbConfig->messages_per_page_search));
 	extract($this->params);
+
 	if ($limit<1 || $limit>40) $limit = $this->limit = $fbConfig->messages_per_page_search;
 
 	if (isset($_POST['q']) || isset($_POST['searchword'])) {
@@ -302,15 +303,14 @@ class CKunenaSearch
 	return $url_params;
     }
     function get_search_forums(&$catids, $childforums = 1) {
-        global $fbSession;
-
+		$fbSession =& CKunenaSession::getInstance();
         $kunena_db = &JFactory::getDBO();
-	$kunena_my = &JFactory::getUser();
+		$kunena_my = &JFactory::getUser();
 
         /* get allowed forums */
         $allowed_forums = array();
         $allowed_string = '';
-        if ($fbSession->allowed != 'na')
+        if ($fbSession->allowed && $fbSession->allowed != 'na')
         {
             $allowed_string = "AND id IN ({$fbSession->allowed})";
 	}

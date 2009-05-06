@@ -23,6 +23,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 global $lang, $mainframe;
 $fbConfig =& CKunenaConfig::getInstance();
+$fbSession =& CKunenaSession::getInstance();
 
 $Kunena_adm_path = KUNENA_PATH_ADMIN;
 //Get right Language file
@@ -207,21 +208,15 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                             case '0': break;
 
                             case '1':
-                                echo "<td  class=\"td-3 fbm\"  align=\"center\"  ><a href=\"";
-
-                                echo JRoute::_(KUNENA_PROFILE_LINK_SUFFIX . $row->id);
-                                echo "\">";
-                                echo $row->username;
-                                echo "</a></td>";
+                                echo "<td  class=\"td-3 fbm\"  align=\"center\"  >";
+				echo CKunenaLink::GetProfileLink($fbConfig, $row->id, $row->username);
+                                echo "</td>";
                                 break;
 
                             case '2':
-                                echo "<td  class=\"td-3 fbm\"  align=\"center\"  ><a href=\"";
-
-                                echo JRoute::_(KUNENA_PROFILE_LINK_SUFFIX . $row->id);
-                                echo "\">";
-                                echo $row->name;
-                                echo "</a></td>";
+                                echo "<td  class=\"td-3 fbm\"  align=\"center\"  >";
+				echo CKunenaLink::GetProfileLink($fbConfig, $row->id, $row->name);
+                                echo "</td>";
                                 break;
                         }
 

@@ -102,7 +102,7 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 #Kunena .topic_sticky {
 	position:absolute;
 	top:-5px;
-	right:0px;
+	right:-3px;
 }
 .fb_credits {
 	height: 31px;
@@ -624,19 +624,19 @@ span.newchar {
 	background:   url(images/spoticon.gif) no-repeat left center;
 	padding-left: 16px;
 }
-.fb_sectiontableentry1_stickymsg {
+#Kunena .fb_sectiontableentry1_stickymsg {
 	background: #FEFECC;
 }
-.fb_sectiontableentry2_stickymsg {
+#Kunena .fb_sectiontableentry2_stickymsg {
 	background: #FEFECC;
 	color:#000000;
 }
-tr.fb_sectiontableentry1_stickymsg td, tr.fb_sectiontableentry2_stickymsg td {
+#Kunena tr.fb_sectiontableentry1_stickymsg td, tr.fb_sectiontableentry2_stickymsg td {
 	color:#000000;
 	border-bottom:1px solid #BFC3C6;
 	border-left:1px solid #FFFFFF;
 	border-right:1px solid #BFC3C6;
-	padding:2px;
+	padding:5px;
 }
 /*
 tr.fb_sectiontableentry1_stickymsg td.td-1, 

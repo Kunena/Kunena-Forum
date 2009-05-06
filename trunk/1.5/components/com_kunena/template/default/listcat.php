@@ -61,13 +61,8 @@ if (in_array($catid, $threadids))
     	check_dberror("Unable to load category.");
 }
 
-//get the db data with allowed forums and turn it into an array
-if ($fbSession->allowed != "na" && !$new_fb_user) {
-    $allow_forum = explode(',', $fbSession->allowed);
-}
-else {
-    $allow_forum = array ();
-}
+//get the allowed forums and turn it into an array
+$allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):array();
 
 // (JJ) BEGIN: ANNOUNCEMENT BOX
 if ($fbConfig->showannouncement > 0)
@@ -124,14 +119,8 @@ if (count($categories[0]) > 0)
         $obj_fb_cat = new jbCategory($kunena_db, $cat->id);
 
         $is_Mod = fb_has_moderator_permission($kunena_db, $obj_fb_cat, $kunena_my->id, $is_admin);
-        $letPass = 0;
 
-        //Do user identification based upon the ACL; but don't bother for moderators
-        if (!$is_Mod) {
-            $letPass = fb_has_read_permission($obj_fb_cat, $allow_forum, $aro_group->id, $kunena_acl);
-        }
-
-        if ($letPass || $is_Mod)
+        if (in_array($catid, $allow_forum))
         {
 ?>
             <!-- B: List Cat -->
@@ -205,14 +194,8 @@ if (count($categories[0]) > 0)
 
                             $obj_fb_cat = new jbCategory($kunena_db, $singlerow->id);
                             $is_Mod = fb_has_moderator_permission($kunena_db, $obj_fb_cat, $kunena_my->id, $is_admin);
-                            //Do user identification based upon the ACL; but don't bother for moderators
-                            $letPass = 0;
 
-                            if (!$is_Mod) {
-                                $letPass = fb_has_read_permission($obj_fb_cat, $allow_forum, $aro_group->id, $kunena_acl);
-                            }
-
-                            if ($letPass || $is_Mod)
+                            if (in_array($catid, $allow_forum))
                             {
                                 //    $k=for alternating row colors:
                                 $k = 1 - $k;

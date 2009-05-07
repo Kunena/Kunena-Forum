@@ -32,7 +32,10 @@ Legend:
 
 Kunena 1.0.10
 
-4-May-2009 Matias
+6-May-2009 Matias
+# [#16283] Internal: Editing user in Kunena Backend Fails
+
+5-May-2009 Matias
 + [#16249] Community Builder integration: add trigger to modify userinfo
 # [#16239] Missing argument 5 for KUNENA_get_menu()
 # [#16237] Fix broken profile links

@@ -969,11 +969,10 @@ function JJ_categoryArray($admin=0) {
     global $database;
     global $aro_group;
 
-    $fbSession = CKunenaSession::getInstance();
-
     // get a list of the menu items
 	$query = "SELECT * FROM #__fb_categories";
 	if(!$admin) {
+		$fbSession =& CKunenaSession::getInstance();
 		if ($fbSession && $fbSession->allowed != 'na') {
 			$query .= " WHERE id IN ($fbSession->allowed)";
 		} else {

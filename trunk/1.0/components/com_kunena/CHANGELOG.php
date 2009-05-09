@@ -38,6 +38,7 @@ Kunena 1.0.10
 # [#16282] Internal: Auto overflow in messages broken in IE on some environments
 # [#16281] Internal: Every thread contains word "Categories" in the title
 # [#16289] Category with moved topic contains 1 NEW! message in Category View
+# [#16321] Topic icons can be set in replies, but they have no effect
 
 6-May-2009 Matias
 # [#16283] Internal: Editing user in Kunena Backend Fails

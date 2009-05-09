@@ -38,6 +38,7 @@ if ($func != "")
             $query = "select * from #__fb_categories where id=$catids and published=1";
             $database->setQuery($query);
             $database->loadObject($results);
+			if (!$results) break;
 			$parent_ids = $results->parent;
 			$fr_name = htmlspecialchars(trim(stripslashes($results->name)));
             $sname = CKunenaLink::GetCategoryLink( 'showcat', $catids, $fr_name);

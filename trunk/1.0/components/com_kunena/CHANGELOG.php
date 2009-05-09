@@ -40,6 +40,7 @@ Kunena 1.0.10
 # [#16289] Category with moved topic contains 1 NEW! message in Category View
 # [#16321] Topic icons can be set in replies, but they have no effect
 # [#16323] Internal: Category is missing from pathway in default_ex
+# [#16324] External link to old location does not work if category has been removed but thread exists
 
 6-May-2009 Matias
 # [#16283] Internal: Editing user in Kunena Backend Fails

@@ -146,8 +146,7 @@ if ($func != "")
 			$fireonline .= '</div>';
        }
 
-	$fr_title = $fr_title_name . $jr_topic_title;
-        $mainframe->setPageTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($fbConfig->board_title));
+        $mainframe->setPageTitle(($jr_topic_title ?  $jr_topic_title : $fr_title_name) . ' - ' . stripslashes($fbConfig->board_title));
 
 	$pathway1 = $firepath . $fireinfo;
 	$pathway2 = $firelast . $fireonline;

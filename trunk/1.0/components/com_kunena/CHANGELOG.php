@@ -36,6 +36,7 @@ Kunena 1.0.10
 # [#16268] Wrong redirect in Backend: Saving CSS failed
 # [#16277] CSS issue: Large empty area with some Joomla themes
 # [#16282] Internal: Auto overflow in messages broken in IE on some environments
+# [#16281] Internal: Every thread contains word "Categories" in the title
 
 6-May-2009 Matias
 # [#16283] Internal: Editing user in Kunena Backend Fails

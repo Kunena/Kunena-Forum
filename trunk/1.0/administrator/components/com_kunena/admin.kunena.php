@@ -868,15 +868,16 @@ function showInstructions($database, $option, $mosConfig_lang) {
 //===============================
 function showCss($option)
 {
+	global $mainframe;
     $fbConfig =& CKunenaConfig::getInstance();
-    $file = "../components/com_kunena/template/" . $fbConfig->template . "/kunena.forum.css";
+    $file = $mainframe->getCfg('absolute_path') . "/components/com_kunena/template/" . $fbConfig->template . "/kunena.forum.css";
     @chmod($file, 0766);
     $permission = is_writable($file);
 
     if (!$permission)
     {
         echo "<center><h1><font color=red>" . _KUNENA_WARNING . "</font></h1><br />";
-        echo "<b>Your css file is: " . $file . "</b><br />";
+        echo "<b>" . _KUNENA_CFC_FILENAME . ": " . $file . "</b><br />";
         echo "<b>" . _KUNENA_CHMOD1 . "</b></center><br /><br />";
     }
 
@@ -905,7 +906,7 @@ function saveCss($file, $csscontent, $option)
         mosRedirect("index2.php?option=$option&task=showCss", _KUNENA_CFC_SAVED);
     }
     else {
-        mosRedirect("index2.php?option=$option", _KUNENA_CFC_NOTSAVED);
+        mosRedirect("index2.php?option=$option&task=showCss", _KUNENA_CFC_NOTSAVED);
     }
 }
 

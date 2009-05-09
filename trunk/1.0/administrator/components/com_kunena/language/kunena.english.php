@@ -23,6 +23,7 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // 1.0.10
+DEFINE('_KUNENA_CFC_FILENAME','CSS file to be modified');
 DEFINE('_KUNENA_CFC_SAVED','CSS file saved.');
 DEFINE('_KUNENA_CFC_NOTSAVED','CSS file not saved.');
 DEFINE('_KUNENA_JS_WARN_NAME_MISSING','Your name is missing');

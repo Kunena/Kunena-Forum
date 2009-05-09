@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.10
 
+9-May-2009 Matias
+# [#16268] Wrong redirect in Backend: Saving CSS failed
+
 6-May-2009 Matias
 # [#16283] Internal: Editing user in Kunena Backend Fails
 

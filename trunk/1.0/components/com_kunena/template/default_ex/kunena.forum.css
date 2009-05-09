@@ -209,7 +209,6 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	background-color:#FFFFFF;
 	color:#000000;
 	border:1px solid #D1D1D1;
-	clear:both;
 	margin-top:-1px;
 	width:100%;
 }
@@ -217,7 +216,6 @@ tr.fb_sectiontableentry1_stickymsg td.td-0, tr.fb_sectiontableentry2_stickymsg t
 	background-color:#FFFFFF;
 	color:#000000;
 	border:1px solid #D1D1D1;
-	clear:both;
 	margin-bottom:-1px;
 	width:100%;
 }
@@ -496,7 +494,6 @@ td.fb_profileboxcnt {
 	font-weight:normal;
 	line-height:normal;
 	padding:2px;
-	width:95%;
 	margin-left:2px;
 }
 #Kunena div.fb_totalfavorite {

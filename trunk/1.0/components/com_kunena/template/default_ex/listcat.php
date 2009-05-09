@@ -263,7 +263,7 @@ if (count($categories[0]) > 0)
                                 if ($my->id)
                                 {
                                     //    get all threads with posts after the users last visit; don't bother for guests
-                                    $database->setQuery("SELECT DISTINCT thread from #__fb_messages where catid=$singlerow->id and hold=0 and time>$prevCheck group by thread");
+                                    $database->setQuery("SELECT DISTINCT thread from #__fb_messages where catid=$singlerow->id and hold=0 and moved=0 and time>$prevCheck group by thread");
                                     $newThreadsAll = $database->loadObjectList();
                                     	check_dberror("Unable to load messages.");
 

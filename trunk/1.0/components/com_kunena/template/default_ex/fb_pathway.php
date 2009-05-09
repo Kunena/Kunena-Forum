@@ -30,12 +30,10 @@ $sfunc = mosGetParam($_REQUEST, "func", null);
 if ($func != "")
 {
         $catids = intval($catid);
-        $parent_ids = 1000;
-        $jr_it = 1;
         $jr_path_menu = array ();
 
 	$fr_title_name = _KUNENA_CATEGORIES;
-        while ($parent_ids && $catids)
+        while ($catids > 0)
         {
             $query = "select * from #__fb_categories where id=$catids and published=1";
             $database->setQuery($query);
@@ -44,7 +42,7 @@ if ($func != "")
 			$fr_name = htmlspecialchars(trim(stripslashes($results->name)));
             $sname = CKunenaLink::GetCategoryLink( 'showcat', $catids, $fr_name);
 
-            if ($jr_it == 1 && $sfunc != "view")
+            if ($catid == $catids && $sfunc != "view")
             {
                 $fr_title_name = $fr_name;
                 $jr_path_menu[] = $fr_name;
@@ -55,7 +53,6 @@ if ($func != "")
 
             // next looping
             $catids = $parent_ids;
-            $jr_it++;
         }
 
         //reverse the array
@@ -72,16 +69,17 @@ if ($func != "")
         }
 
         // print the list
+	if (count($jr_path_menu) == 0) $jr_path_menu[] = '';
         $jr_forum_count = count($jr_path_menu);
 
 	$firepath = '<div class="path-element-first">'. CKunenaLink::GetKunenaLink( htmlspecialchars(stripslashes($fbConfig->board_title)) ) . '</div>';
 	$firelast = '';
-        for ($i = 0; $i <= (count($jr_path_menu) - 1); $i++)
+        for ($i = 0; $i < $jr_forum_count; $i++)
         {
-            if ($i > 0 && $i == $jr_forum_count - 1) {
+            if ($i == $jr_forum_count-1) {
                 $firelast .= '<br /><div class="path-element-last">' . $jr_path_menu[$i] . '</div>';
             }
-            else if ($i > 0) {
+            else {
                 $firepath .= '<div class="path-element">' . $jr_path_menu[$i] . '</div>';
             }
         }

@@ -36,6 +36,7 @@ Kunena 1.0.10
 ^ [#16326] Change minumum PHP and MySQL requirements
 ! Minimum PHP version up to 4.3.9 (RHEL4) instead of 4.3.0
 ! Minimum MySQL version down to 4.1.20 (RHEL4) instead of 5.0.0
+# [#16335] Internal: Moderator tools in Forum view do not work for global moderators
 
 9-May-2009 Matias
 # [#16268] Wrong redirect in Backend: Saving CSS failed

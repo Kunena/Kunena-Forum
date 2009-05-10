@@ -714,9 +714,13 @@ class CKunenaTools {
         global $my, $database;
 	$err = "ERROR!";
 
-	$database->setQuery('SELECT userid FROM #__fb_moderation WHERE userid='.$my->id);
-	$isMod = $database->loadResult();
-	check_dberror("Unable to load moderation info.");
+	// $isMod if user is moderator in the current category
+	if (!$isMod) {
+		// Test also if user is a moderator in some other category
+		$database->setQuery('SELECT userid FROM #__fb_moderation WHERE userid='.$my->id);
+		$isMod = $database->loadResult();
+		check_dberror("Unable to load moderation info.");
+	}
 	$isAdmin = CKunenaTools::isModOrAdmin();
 
         //isMod will stay until better group management comes in

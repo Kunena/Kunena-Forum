@@ -28,8 +28,8 @@ set_time_limit(300);
 ini_set("memory_limit", "32M");
 
 // Minimum version requirements
-DEFINE('KUNENA_MIN_PHP', '4.3.0');
-DEFINE('KUNENA_MIN_MYSQL', '5.0.0');
+DEFINE('KUNENA_MIN_PHP', '4.3.9');
+DEFINE('KUNENA_MIN_MYSQL', '4.1.20');
 
 global $mainframe;
 //Get right Language file

@@ -32,6 +32,11 @@ Legend:
 
 Kunena 1.0.10
 
+10-May-2009 Matias
+^ [#16326] Change minumum PHP and MySQL requirements
+! Minimum PHP version up to 4.3.9 (RHEL4) instead of 4.3.0
+! Minimum MySQL version down to 4.1.20 (RHEL4) instead of 5.0.0
+
 9-May-2009 Matias
 # [#16268] Wrong redirect in Backend: Saving CSS failed
 # [#16277] CSS issue: Large empty area with some Joomla themes

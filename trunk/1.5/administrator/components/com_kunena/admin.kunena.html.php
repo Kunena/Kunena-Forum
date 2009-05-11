@@ -209,7 +209,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
         }
     }
 
-    function showAdministration($rows, $pageNav, $option)
+    function showAdministration($rows, $children, $pageNav, $option)
     {
         ?>
 <div class="fbfunctitle"><?php echo _KUNENA_ADMIN; ?></div>
@@ -369,30 +369,9 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 <?php echo $row->editor; ?>&nbsp;
                         </td>
 
-                        <td>
-                            <?php
-                            if ($i > 0 || ($i + $pageNav->limitstart > 0))
-                            {
-                            ?>
-
-                                <a href = "#reorder" onClick = "return listItemTask('cb<?php echo $i;?>','orderup')"> <img src = "images/uparrow.png" width = "12" height = "12" border = "0" alt = "<?php echo _KUNENA_MOVEUP; ?>"> </a>
-
-                            <?php
-                            }
-                            ?>
-                        </td>
-
-                        <td>
-                            <?php
-                            if ($i < $n - 1 || $i + $pageNav->limitstart < $pageNav->total - 1)
-                            {
-                            ?>
-
-                                <a href = "#reorder" onClick = "return listItemTask('cb<?php echo $i;?>','orderdown')"> <img src = "images/downarrow.png" width = "12" height = "12" border = "0" alt = "<?php echo _KUNENA_MOVEDOWN; ?>"> </a>
-
-                            <?php
-                            }
-                            ?>
+                        <td class="order" nowrap="nowrap">
+							<span><?php echo $pageNav->orderUpIcon( $i, isset($children[$row->parent][$row->location-1]), 'orderup', 'Move Up', 1); ?></span>
+							<span><?php echo $pageNav->orderDownIcon( $i, $n, isset($children[$row->parent][$row->location+1]), 'orderdown', 'Move Down', 1); ?></span>
                         </td>
 
                 <?php
@@ -402,13 +381,13 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                         </tr>
 
                         <tr>
-                            <th align = "center" colspan = "12"> <?php
+                            <th align = "center" colspan = "13"> <?php
                             echo $pageNav->getLimitBox(); ?>
                             </th>
                         </tr>
 
                         <tr>
-                            <td align = "center" colspan = "12"> <?php echo  $pageNav->getPagesLinks() ; ?>
+                            <td align = "center" colspan = "13"> <?php echo  $pageNav->getPagesLinks() ; ?>
                             </td>
                         </tr>
             </table>
@@ -654,7 +633,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                         <th align = "left"><?php echo _USRL_EMAIL; ?>
                         </th>
 
-                        <th align = "centercase "edit":"><?php echo _KUNENA_PUBLISHED; ?>
+                        <th align = "center"><?php echo _KUNENA_PUBLISHED; ?>
                         </th>
                     </tr>
 

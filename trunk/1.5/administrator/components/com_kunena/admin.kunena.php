@@ -29,8 +29,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.debug.php');
 require_once (KUNENA_PATH_LIB .DS. 'kunena.config.class.php');
 
 global $mainframe;
-$mainframe->enqueueMessage('Kunena 1.5.1 Beta Release is not meant to be used in Production Server!', 'notice');
-$mainframe->enqueueMessage('This is an unstable version. Please use latest Kunena 1.0 instead.');
+$mainframe->enqueueMessage('Kunena 1.5.2 Beta Release is meant only for testing. Please use Kunena 1.0 in production servers.', 'notice');
 
 $kunena_db = JFactory::getDBO();
 
@@ -361,6 +360,7 @@ function showAdministration($option)
     {
         $pt = $v->parent;
         $list = isset($children[$pt]) ? $children[$pt] : array ();
+        $v->location = count($list);
         array_push($list, $v);
         $children[$pt] = $list;
     }
@@ -380,7 +380,7 @@ function showAdministration($option)
     *@end
     */
 
-    html_Kunena::showAdministration($list, $pageNav, $option);
+    html_Kunena::showAdministration($list, $children, $pageNav, $option);
 }
 
 
@@ -450,10 +450,6 @@ function editForum($uid, $option)
     $pub_groups[] = JHTML::_('select.option',0, _KUNENA_EVERYBODY);
     $pub_groups[] = JHTML::_('select.option', -1, _KUNENA_ALLREGISTERED);
 
-
-
-
-
     $pub_groups = array_merge($pub_groups, $kunena_acl->get_group_children_tree(null, _KUNENA_REGISTERED, true));
     //create admin groups array for use in selectList:
     $adm_groups = array ();
@@ -486,27 +482,16 @@ $kunena_db = &JFactory::getDBO();
 
     $kunena_my = &JFactory::getUser();
     $row = new fbForum($kunena_db);
-
-    if (!$row->bind($_POST))
+    $id = JRequest::getInt('id', 0, 'post');
+	if ($id) {
+		$row->load($id);
+	}
+    if (!$row->save($_POST, 'parent'))
     {
         echo "<script> alert('" . $row->getError() . "'); window.history.go(-1); </script>\n";
         $mainframe->close();
     }
-
-    if (!$row->check())
-    {
-        echo "<script> alert('" . $row->getError() . "'); window.history.go(-1); </script>\n";
-        $mainframe->close();
-    }
-
-    if (!$row->store())
-    {
-        echo "<script> alert('" . $row->getError() . "'); window.history.go(-1); </script>\n";
-        $mainframe->close();
-    }
-
-    $row->checkin();
-    //$row->updateOrder("parent='$row->parent'");
+    $row->reorder();
     $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showAdministration");
 }
 
@@ -598,7 +583,13 @@ function orderForum($uid, $inc, $option)
     $kunena_db = &JFactory::getDBO();
     $row = new fbForum($kunena_db);
     $row->load($uid);
-    $row->move($inc, "parent='$row->parent'");
+
+    // Ensure that we have the right ordering
+    $where = $row->_db->nameQuote('parent') .'='. $row->_db->quote($row->parent);
+    $row->reorder($where);
+    $row->load($uid);
+
+    $row->move($inc, $where);
     $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showAdministration");
 }
 

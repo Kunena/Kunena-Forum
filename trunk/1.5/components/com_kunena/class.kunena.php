@@ -574,6 +574,7 @@ class CKunenaTools {
         }
 
     function fbDeletePosts($isMod, $return) {
+    	global $mainframe;
         $kunena_my = &JFactory::getUser();
 		$kunena_db = &JFactory::getDBO();
 
@@ -702,9 +703,9 @@ class CKunenaTools {
         }
 
     function fbMovePosts($catid, $isMod, $return) {
+    	global $mainframe;
         $kunena_db = &JFactory::getDBO();
-
-	$kunena_my = &JFactory::getUser();
+		$kunena_my = &JFactory::getUser();
 
 	// $isMod if user is moderator in the current category
 	if (!$isMod) {
@@ -1169,10 +1170,10 @@ function generate_smilies() {
     }
 
 function fbGetArrayInts($name) {
-    $array = JRequest::getVar($name, array ( 0 ));
-
-    foreach ($array as $item) {
-        if ((int)$item && (int)$item>0) $items[] = (int)$item;
+    $array = JRequest::getVar($name, array ( 0 ), 'post', 'array');
+print_r($array);
+    foreach ($array as $item=>$value) {
+        if ((int)$item && (int)$item>0) $items[(int)$item] = 1;
     }
     $array = $items;
 

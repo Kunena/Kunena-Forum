@@ -37,6 +37,7 @@ Kunena 1.5.2b
 # [#16340] Category list is missing in bottom of viewcat (default_ex)
 # [#16106] Cannot reorder forums/subforums/categories in backend
 # [#16355] Backend User Profile Manager uses a lot of memory if limit is not set
+# [#16356] Showcat: Moving and deleting threads fails
 
 10-May-2009 Matias
 # [#16335] Internal: Moderator tools in Forum view do not work for global moderators

@@ -42,7 +42,7 @@ $fbConfig =& CKunenaConfig::getInstance();
 		<td class="fb_list_categories">
                 <?php
                 if ($fbConfig->enableforumjump)
-                    require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
+                    require (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 ?>
 		</td>
 	</tr>

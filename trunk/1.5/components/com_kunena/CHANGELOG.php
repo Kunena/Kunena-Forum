@@ -34,6 +34,7 @@ Kunena 1.5.2b
 
 11-May-2009 Matias
 ^ [#15784] Merge 1.0.10 fixes from revision 681 to 706
+# [#16340] Category list is missing in bottom of viewcat (default_ex)
 
 10-May-2009 Matias
 # [#16335] Internal: Moderator tools in Forum view do not work for global moderators

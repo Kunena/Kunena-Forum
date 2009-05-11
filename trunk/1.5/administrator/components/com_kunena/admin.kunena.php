@@ -335,9 +335,9 @@ function showAdministration($option)
     global $mainframe;
 	$kunena_db = &JFactory::getDBO();
 
-    $limit = $mainframe->getUserStateFromRequest("viewlistlimit", 'limit', 10);
-    $limitstart = $mainframe->getUserStateFromRequest("view{$option}limitstart", 'limitstart', 0);
-    $levellimit = $mainframe->getUserStateFromRequest("view{$option}limit", 'levellimit', 10);
+    $limit = $mainframe->getUserStateFromRequest("global.list.limit", 'limit', $mainframe->getCfg('list_limit'), 'int');
+    $limitstart = $mainframe->getUserStateFromRequest("{$option}.limitstart", 'limitstart', 0, 'int');
+    $levellimit = $mainframe->getUserStateFromRequest("{$option}.limit", 'levellimit', 10, 'int');
     /*
     * danial
     */
@@ -911,16 +911,16 @@ function newModerator($option, $id = null)
     //die ("New Moderator");
     //$limit = intval(JRequest::getVar( 'limit', 10));
     //$limitstart = intval(JRequest::getVar( 'limitstart', 0));
-    $limit = $mainframe->getUserStateFromRequest("viewlistlimit", 'limit', 10);
-    $limitstart = $mainframe->getUserStateFromRequest("view{$option}limitstart", 'limitstart', 0);
+    $limit = $mainframe->getUserStateFromRequest("global.list.limit", 'limit', $mainframe->getCfg('list_limit'), 'int');
+    $limitstart = $mainframe->getUserStateFromRequest("{$option}.limitstart", 'limitstart', 0, 'int');
     $kunena_db->setQuery("SELECT COUNT(*) FROM #__users AS a" . "\n LEFT JOIN #__fb_users AS b" . "\n ON a.id=b.userid where b.moderator=1");
     $kunena_db->query() or trigger_dberror('Unable to load moderators w/o limit.');
 
     $total = $kunena_db->loadResult();
 	if ($limitstart >= $total) $limitstart = 0;
-    $limit_sql = (($limit>0)?" LIMIT $limitstart,$limit":"");
-
-    $kunena_db->setQuery("SELECT * FROM #__users AS a" . "\n LEFT JOIN #__fb_users AS b" . "\n ON a.id=b.userid" . "\n WHERE b.moderator=1" . $limit_sql);
+    if ($limit == 0 || $limit > 100) $limit = 100;
+	
+    $kunena_db->setQuery("SELECT * FROM #__users AS a" . "\n LEFT JOIN #__fb_users AS b" . "\n ON a.id=b.userid" . "\n WHERE b.moderator=1", $limitstart, $limit);
     $userList = $kunena_db->loadObjectList();
     	check_dberror('Unable to load moderators.');
     $countUL = count($userList);
@@ -1011,10 +1011,10 @@ function showProfiles($kunena_db, $option, $lang, $order)
     $kunena_db = &JFactory::getDBO();
     //$limit = intval(JRequest::getVar( 'limit', 10));
     //$limitstart = intval(JRequest::getVar( 'limitstart', 0));
-    $limit = $mainframe->getUserStateFromRequest("viewlistlimit", 'limit', 10);
-    $limitstart = $mainframe->getUserStateFromRequest("view{$option}limitstart", 'limitstart', 0);
+    $limit = $mainframe->getUserStateFromRequest("global.list.limit", 'limit', $mainframe->getCfg('list_limit'), 'int');
+    $limitstart = $mainframe->getUserStateFromRequest("{$option}.limitstart", 'limitstart', 0, 'int');
 
-    $search = $mainframe->getUserStateFromRequest("search{$option}", 'search', '');
+    $search = $mainframe->getUserStateFromRequest("{$option}.search", 'search', '', 'string');
     $search = $kunena_db->getEscaped(trim(strtolower($search)));
     $where = array ();
 
@@ -1027,20 +1027,20 @@ function showProfiles($kunena_db, $option, $lang, $order)
     $total = $kunena_db->loadResult();
 
     if ($limitstart >= $total) $limitstart = 0;
-    $limit_sql = (($limit>0)?" LIMIT $limitstart,$limit":"");
-
+    if ($limit == 0 || $limit > 100) $limit = 100;
+    
     if ($order == 1)
     {
         $kunena_db->setQuery(
-            "select * from #__fb_users AS sbu" . "\n LEFT JOIN #__users AS u" . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY sbu.moderator DESC" . $limit_sql);
+            "select * from #__fb_users AS sbu" . "\n LEFT JOIN #__users AS u" . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY sbu.moderator DESC", $limitstart, $limit);
     }
     else if ($order == 2)
     {
-        $kunena_db->setQuery("SELECT * FROM #__fb_users AS sbu" . "\n LEFT JOIN #__users AS u " . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY u.name ASC " . $limit_sql);
+        $kunena_db->setQuery("SELECT * FROM #__fb_users AS sbu" . "\n LEFT JOIN #__users AS u " . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY u.name ASC ", $limitstart, $limit);
     }
     else if ($order < 1)
     {
-        $kunena_db->setQuery("SELECT * FROM #__fb_users AS sbu " . "\n LEFT JOIN #__users AS u" . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY sbu.userid" . $limit_sql);
+        $kunena_db->setQuery("SELECT * FROM #__fb_users AS sbu " . "\n LEFT JOIN #__users AS u" . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY sbu.userid", $limitstart, $limit);
     }
 
     $profileList = $kunena_db->loadObjectList();
@@ -1604,16 +1604,14 @@ function showsmilies($option)
 $kunena_db = &JFactory::getDBO();
     global $mainframe;
 
-    $limit = intval(JRequest::getVar('limit', 10));
-    $limitstart = intval(JRequest::getVar('limitstart', 0));
-    $limit = $mainframe->getUserStateFromRequest("viewlistlimit", 'limit', 10);
-    $limitstart = $mainframe->getUserStateFromRequest("view{$option}limitstart", 'limitstart', 0);
+    $limit = $mainframe->getUserStateFromRequest("global.list.limit", 'limit', $mainframe->getCfg('list_limit'), 'int');
+    $limitstart = $mainframe->getUserStateFromRequest("{$option}.limitstart", 'limitstart', 0, 'int');
 	$kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_smileys");
 	$total = $kunena_db->loadResult();
 	if ($limitstart >= $total) $limitstart = 0;
-    $limit_sql = (($limit>0)?" LIMIT $limitstart,$limit":"");
-
-    $kunena_db->setQuery("SELECT * FROM #__fb_smileys" . $limit_sql);
+    if ($limit == 0 || $limit > 100) $limit = 100;
+	
+    $kunena_db->setQuery("SELECT * FROM #__fb_smileys", $limitstart, $limit);
     $smileytmp = $kunena_db->loadObjectList();
             check_dberror("Unable to load smileys.");
 
@@ -1798,16 +1796,14 @@ function showRanks($option)
 
     $kunena_db = &JFactory::getDBO();
 
-    //$limit = intval(JRequest::getVar( 'limit', 10));
-	//$limitstart = intval(JRequest::getVar( 'limitstart', 0));
-    $limit = $mainframe->getUserStateFromRequest("viewlistlimit", 'limit', 10);
-	$limitstart = $mainframe->getUserStateFromRequest("view{$option}limitstart", 'limitstart', 0);
+    $limit = $mainframe->getUserStateFromRequest("global.list.limit", 'limit', $mainframe->getCfg('list_limit'), 'int');
+	$limitstart = $mainframe->getUserStateFromRequest("{$option}.limitstart", 'limitstart', 0, 'int');
 	$kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_ranks");
 	$total = $kunena_db->loadResult();
 	if ($limitstart >= $total) $limitstart = 0;
-	$limit_sql = (($limit>0)?" LIMIT $limitstart,$limit":"");
+    if ($limit == 0 || $limit > 100) $limit = 100;
 
-	$kunena_db->setQuery("SELECT * FROM #__fb_ranks" . $limit_sql);
+	$kunena_db->setQuery("SELECT * FROM #__fb_ranks", $limitstart, $limit);
 	$ranks = $kunena_db->loadObjectList();
 	        check_dberror("Unable to load ranks.");
 

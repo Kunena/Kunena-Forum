@@ -124,6 +124,10 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
             ?>
         </tr>
 
+            <?php
+            if ($parentid == 0)
+            {
+?>
         <tr class = "<?php echo $boardclass; ?>sectiontableentry2">
             <td class = "fb_leftcolumn">
                 <strong><?php echo _GEN_TOPIC_ICON; ?></strong>:
@@ -136,7 +140,9 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
                 ?>
             </td>
         </tr>
-
+            <?php
+            }
+            ?>
 
         <?php
         if ($fbConfig->rtewidth == 0) {

@@ -88,17 +88,15 @@ $allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):arr
 
 $topicLock = 0;
 
-if (in_array($catid, $allow_forum))
+$kunena_db->setQuery("SELECT * FROM #__fb_messages AS a LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.id={$id} and a.hold=0");
+unset($this_message);
+$this_message = $kunena_db->loadObject();
+check_dberror('Unable to load message.');
+
+if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array($this_message->catid, $allow_forum)))
 {
     $view = $view == "" ? $settings[current_view] : $view;
     setcookie("fboard_settings[current_view]", $view, time() + 31536000, '/');
-
-    $id = (int)$id;
-
-    $kunena_db->setQuery("SELECT * FROM #__fb_messages AS a LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.id={$id} and a.hold=0");
-    unset($this_message);
-    $this_message = $kunena_db->loadObject();
-    	check_dberror('Unable to load message.');
 
     $topicLock = $this_message->locked;
     $topicSticky = $this_message->ordering;

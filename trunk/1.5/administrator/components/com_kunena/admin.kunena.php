@@ -875,9 +875,9 @@ function showCss($option)
 
     if (!$permission)
     {
-        echo "<center><h1><font color=red>" . _KUNENA_WARNING . "</FONT></h1><BR>";
-        echo "<B>Your css file is: ".$file."</b><BR>";
-        echo "<B>" . _KUNENA_CHMOD1 . "</B></center><BR><BR>";
+        echo "<center><h1><font color=red>" . _KUNENA_WARNING . "</font></h1><br />";
+        echo "<b>" . _KUNENA_CFC_FILENAME . ": " . $file . "</b><br />";
+        echo "<b>" . _KUNENA_CHMOD1 . "</b></center><br /><br />";
     }
 
     html_Kunena::showCss($file, $option);
@@ -906,7 +906,7 @@ function saveCss($file, $csscontent, $option)
         $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showCss", _KUNENA_CFC_SAVED);
     }
     else {
-        $mainframe->redirect( JURI::base() ."index2.php?option=$option", _KUNENA_CFC_NOTSAVED);
+        $mainframe->redirect( JURI::base() ."index2.php?option=$option&task=showCss", _KUNENA_CFC_NOTSAVED);
     }
 }
 

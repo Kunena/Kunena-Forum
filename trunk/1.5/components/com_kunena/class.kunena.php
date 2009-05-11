@@ -706,9 +706,13 @@ class CKunenaTools {
 
 	$kunena_my = &JFactory::getUser();
 
-	$kunena_db->setQuery('SELECT userid FROM #__fb_moderation WHERE userid='.$kunena_my->id);
-	$isMod = $kunena_db->loadResult();
-	check_dberror("Unable to load moderation info.");
+	// $isMod if user is moderator in the current category
+	if (!$isMod) {
+		// Test also if user is a moderator in some other category
+		$kunena_db->setQuery('SELECT userid FROM #__fb_moderation WHERE userid='.$my->id);
+		$isMod = $kunena_db->loadResult();
+		check_dberror("Unable to load moderation info.");
+	}
 	$isAdmin = CKunenaTools::isModOrAdmin();
 
         //isMod will stay until better group management comes in
@@ -949,13 +953,12 @@ class fbForum
 
 function JJ_categoryArray($admin=0) {
     global $aro_group;
-
-    $fbSession = CKunenaSession::getInstance();
     $kunena_db = &JFactory::getDBO();
 
     // get a list of the menu items
 	$query = "SELECT * FROM #__fb_categories";
 	if(!$admin) {
+		$fbSession =& CKunenaSession::getInstance();
 		if ($fbSession && $fbSession->allowed != 'na') {
 			$query .= " WHERE id IN ($fbSession->allowed)";
 		} else {

@@ -30,21 +30,20 @@ $sfunc = JRequest::getVar("func", null);
 if ($func != "")
 {
         $catids = intval($catid);
-        $parent_ids = 1000;
-        $jr_it = 1;
         $jr_path_menu = array ();
 
-	$fr_title_name = _KUNENA_CATEGORIES;
-        while ($parent_ids && $catids)
+		$fr_title_name = _KUNENA_CATEGORIES;
+		while ($catids > 0)
         {
             $query = "select * from #__fb_categories where id=$catids and published=1";
             $kunena_db->setQuery($query);
             $results = $kunena_db->loadObject();
+            if (!$results) break;
 			$parent_ids = $results->parent;
 			$fr_name = htmlspecialchars(trim(stripslashes($results->name)));
             $sname = CKunenaLink::GetCategoryLink( 'showcat', $catids, $fr_name);
 
-            if ($jr_it == 1 && $sfunc != "view")
+            if ($catid == $catids && $sfunc != "view")
             {
                 $fr_title_name = $fr_name;
                 $jr_path_menu[] = $fr_name;
@@ -55,7 +54,6 @@ if ($func != "")
 
             // next looping
             $catids = $parent_ids;
-            $jr_it++;
         }
 
         //reverse the array
@@ -72,16 +70,17 @@ if ($func != "")
         }
 
         // print the list
+		if (count($jr_path_menu) == 0) $jr_path_menu[] = '';
         $jr_forum_count = count($jr_path_menu);
 
 	$firepath = '<div class="path-element-first">'. CKunenaLink::GetKunenaLink( htmlspecialchars(stripslashes($fbConfig->board_title)) ) . '</div>';
 	$firelast = '';
-        for ($i = 0; $i <= (count($jr_path_menu) - 1); $i++)
+        for ($i = 0; $i < $jr_forum_count; $i++)
         {
-            if ($i > 0 && $i == $jr_forum_count - 1) {
+            if ($i == $jr_forum_count-1) {
                 $firelast .= '<br /><div class="path-element-last">' . $jr_path_menu[$i] . '</div>';
             }
-            else if ($i > 0) {
+            else {
                 $firepath .= '<div class="path-element">' . $jr_path_menu[$i] . '</div>';
             }
         }
@@ -146,8 +145,7 @@ if ($func != "")
 			$fireonline .= '</div>';
        }
 
-	$fr_title = $fr_title_name . $jr_topic_title;
-        $mainframe->setPageTitle($fr_title. ' - ' . stripslashes($fbConfig->board_title));
+        $mainframe->setPageTitle(($jr_topic_title ?  $jr_topic_title : $fr_title_name) . ' - ' . stripslashes($fbConfig->board_title));
 
 	$pathway1 = $firepath . $fireinfo;
 	$pathway2 = $firelast . $fireonline;

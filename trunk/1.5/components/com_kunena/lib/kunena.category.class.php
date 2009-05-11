@@ -45,6 +45,8 @@ class jbCategory {
         $this->database=$kunena_db;
         $kunena_db->setQuery('SELECT id,pub_access,pub_recurse,admin_access,admin_recurse,parent,name,locked,moderated,published,description,review FROM #__fb_categories WHERE id='.$id);
         $cat = $kunena_db->loadObject();
+        if ($cat)
+		{
         $this->setName($cat->name);
         $this->setParent($cat->parent);
         $this->setLocked($cat->locked);
@@ -57,6 +59,7 @@ class jbCategory {
         $this->setAdminAccess($cat->admin_access);
         $this->setAdminRecurse($cat->admin_recurse);
         $this->setId($cat->id);
+		}
     }
     function setPubAccess($pubaccess) {
         $this->pubaccess=$pubaccess;

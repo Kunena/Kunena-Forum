@@ -326,7 +326,7 @@
 			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD KEY `posts` ( `posts` )</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD KEY `uhits` ( `uhits` )</query>
 		</version>
-		<version version="1.0.8" versiondate="2009-02-17" build="1166" versionname="@fbversionname@">
+		<version version="1.0.8" versiondate="2009-02-17" build="1166" versionname="Speakup!">
 			<phpfile name="kunena.special.upgrade.1.0.8.php" />
 			<query mode="silenterror">ALTER TABLE `#__fb_config` CHANGE `annmodid` `annmodid` TEXT NULL DEFAULT NULL</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_config` CHANGE `latestcategory` `latestcategory` TEXT NULL DEFAULT NULL</query>
@@ -336,6 +336,7 @@
             <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "com_fireboard", "com_kunena")</query>
 		</version>
 		<version version="@fbversion@" versiondate="@fbversiondate@" build="@fbbuild@" versionname="@fbversionname@">
+			<query>UPDATE `#__fb_config` SET `jmambot`='0'</query>
 		</version>
 	</upgrade>
 </comupgrade>

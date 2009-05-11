@@ -249,7 +249,7 @@ if (count($categories[0]) > 0)
                                 if ($kunena_my->id)
                                 {
                                     //    get all threads with posts after the users last visit; don't bother for guests
-                                    $kunena_db->setQuery("SELECT DISTINCT thread from #__fb_messages where catid=$singlerow->id and hold=0 and time>$prevCheck group by thread");
+                                    $kunena_db->setQuery("SELECT DISTINCT thread from #__fb_messages where catid=$singlerow->id and hold=0 and moved=0 and time>$prevCheck group by thread");
                                     $newThreadsAll = $kunena_db->loadObjectList();
                                     	check_dberror("Unable to load messages.");
 

@@ -500,7 +500,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 	    $strCatParent = $kunena_db->loadResult();
 			check_dberror('Unable to load categories.');
 
-        if ($catid == '' || $strCatParent == 0)
+        if ($strCatParent === '0')
     		{
             $func = 'listcat';
         }

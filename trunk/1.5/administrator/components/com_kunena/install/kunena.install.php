@@ -31,7 +31,6 @@ ini_set("memory_limit", "32M");
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 
 global $mainframe;
-
 // get right Language file
 if (file_exists(KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.' . KUNENA_LANGUAGE . '.php')) {
     include_once (KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.' . KUNENA_LANGUAGE . '.php');
@@ -182,9 +181,9 @@ function com_install()
 		<strong>I N S T A L L : <font color="green">Successful</font> </strong>
 		<br />
 		<br />
-		<strong>php version: <font color="green"><? echo phpversion(); ?> Required >= <? echo KUNENA_MIN_PHP; ?> </font> </strong>
+		<strong>php version: <font color="green"><?php echo phpversion(); ?></font> (Required >= <?php echo KUNENA_MIN_PHP; ?>)</strong>
 		<br />
-		<strong>mysql version: <font color="green"><? echo $kunena_mysqlversion; ?> Required >= <? echo KUNENA_MIN_MYSQL; ?> </font> </strong>
+		<strong>mysql version: <font color="green"><?php echo $kunena_mysqlversion; ?></font> (Required >= <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
 		</div>
 
 		<?php
@@ -241,9 +240,9 @@ function com_install()
 		<strong>I N S T A L L : <font color="red">F A I L E D - Minimum Version Requirements not satisfied</font> </strong>
 		<br />
 		<br />
-		<strong>php version: <font color="red"><? echo phpversion(); ?> Required >= <? echo KUNENA_MIN_PHP; ?> </font> </strong>
+		<strong>php version: <font color="<?php echo version_compare(phpversion(), KUNENA_MIN_PHP, '>=')?'green':'red'; ?>"><?php echo phpversion(); ?></font> (Required >= <?php echo KUNENA_MIN_PHP; ?>)</strong>
 		<br />
-		<strong>mysql version: <font color="red"><? echo $kunena_mysqlversion; ?> Required >= <? echo KUNENA_MIN_MYSQL; ?> </font> </strong>
+		<strong>mysql version: <font color="<?php echo version_compare($kunena_mysqlversion, KUNENA_MIN_MYSQL, '>=')?'green':'red'; ?>"><?php echo $mysqlversion; ?></font> (Required >= <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
 		</div>
 
 		<?php

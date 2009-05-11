@@ -32,9 +32,30 @@ Legend:
 
 Kunena 1.5.2b
 
+11-May-2009 Matias
+^ [#15784] Merge 1.0.10 fixes from revision 681 to 706
+
+10-May-2009 Matias
+# [#16335] Internal: Moderator tools in Forum view do not work for global moderators
+
+9-May-2009 Matias
+# [#16268] Wrong redirect in Backend: Saving CSS failed
+# [#16277] CSS issue: Large empty area with some Joomla themes
+# [#16282] Internal: Auto overflow in messages broken in IE on some environments
+# [#16281] Internal: Every thread contains word "Categories" in the title
+# [#16289] Category with moved topic contains 1 NEW! message in Category View
+# [#16321] Topic icons can be set in replies, but they have no effect
+# [#16323] Internal: Category is missing from pathway in default_ex
+# [#16324] External link to old location does not work if category has been removed but thread exists
+# [#16325] Small changes to the English language file
+^ [#16251] Disable content plugins by default (also if updating Kunena)
+# [#16267] Upgrade thinks that 1.0.10 is older than 1.0.9
+
+6-May-2009 Matias
+# [#16283] Internal: Editing user in Kunena Backend Fails
+
 5-May-2009 fxstein
 ^ [#16260] Update package version info
-
 
 Kunena 1.5.1b
 

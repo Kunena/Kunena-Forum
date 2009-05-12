@@ -85,6 +85,8 @@ if (!$no_html)
 	html_Kunena::showFbHeader();
 }
 
+$option = JRequest::getCmd('option');
+
 switch ($task)
 {
     case "installfb":

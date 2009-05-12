@@ -34,6 +34,7 @@ Kunena 1.5.2b
 
 12-May-2009 Matias
 ^ [#16360] Replace $mainframe with $app =& JFactory::getApplication();
+^ [#16361] Do not trust that $option has been set (use JRequest::getCmd('option') instead)
 
 11-May-2009 Matias
 ^ [#15784] Merge 1.0.10 fixes from revision 681 to 706

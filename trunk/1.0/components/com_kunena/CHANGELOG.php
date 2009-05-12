@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.10
 
+12-May-2009 Matias
+# [#16373] Internal: Joomla! 1.5 Native call in legacy code
+
 10-May-2009 Matias
 ^ [#16326] Change minumum PHP and MySQL requirements
 ! Minimum PHP version up to 4.3.9 (RHEL4) instead of 4.3.0

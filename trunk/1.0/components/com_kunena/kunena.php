@@ -22,6 +22,7 @@
 // Show offline message if J!1.5 Legacy Mode is not turned on
 if (!defined ('_VALID_MOS') && defined ('_JEXEC'))
 {
+	// Joomla 1.5 Native Mode! Legacy is turned off
 	$kunena_db = &JFactory::getDBO();
 	$kunena_db->setQuery("SELECT offline_message FROM #__fb_config");
 	$offline_message = $kunena_db->loadResult();

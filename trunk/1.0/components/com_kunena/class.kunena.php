@@ -347,10 +347,10 @@ function KUNENA_check_image_type(&$type) {
     }
 
 function getFBGroupName($id) {
-    $kunena_db = &JFactory::getDBO();
+    global $database;
     $gr = '';
-    $kunena_db->setQuery("select id, title from #__fb_groups as g, #__fb_users as u where u.group_id = g.id and u.userid= $id");
-    $gr = $kunena_db->loadObject();
+    $database->setQuery("select id, title from #__fb_groups as g, #__fb_users as u where u.group_id = g.id and u.userid=".(int)$id);
+    $database->loadObject($gr);
 
     if ($gr == NULL) {
 	$gr = new stdClass();

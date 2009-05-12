@@ -22,7 +22,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 class html_Kunena
-
+{
 // Begin: HEADER FUNC
 function showFbHeader () {
 ?>

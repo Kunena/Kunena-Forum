@@ -20,19 +20,20 @@ defined( '_JEXEC' ) or die('Restricted access');
 // Joomla absolute path
 define('KUNENA_JLIVEURL', JURI::root());
 
+$app =& JFactory::getApplication();
+
 // Joomla template dir
-define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH .DS. "templates".DS . $mainframe->getTemplate());
-define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "/templates/".$mainframe->getTemplate());
+define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH .DS. "templates".DS . $app->getTemplate());
+define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "/templates/".$app->getTemplate());
 
 global $kunena_my;
 
 require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 
+$document =& JFactory::getDocument();
 $fbConfig =& CKunenaConfig::getInstance();
-
 $kunena_db = &JFactory::getDBO();
 $kunena_my = &JFactory::getUser();
-$document =& JFactory::getDocument();
 
 /**
 *@desc Getting the correct Itemids, for components required
@@ -93,7 +94,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     	// Only proceed if Community Builder is really installed
 	    if ( file_exists( KUNENA_ROOT_PATH_ADMIN .DS. 'components/com_comprofiler/plugin.foundation.php' ) )
 	    {
-	    	global $_CB_framework, $_CB_database, $ueConfig, $mainframe;
+	    	global $_CB_framework, $_CB_database, $ueConfig;
 
 	        $kunena_db->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_comprofiler' AND published=1");
 	        $CB_Itemid = $kunena_db->loadResult();
@@ -424,7 +425,6 @@ class CKunenaTools {
         $i=0;
         while ($messages_iter->loadNextObject($l)) {
         	$i++;
-            //if($i==100) { $mainframe->close(); }
             $cat_l = $l->catid;
 
             while ($cat_l) {
@@ -574,12 +574,12 @@ class CKunenaTools {
         }
 
     function fbDeletePosts($isMod, $return) {
-    	global $mainframe;
+    	$app =& JFactory::getApplication();
         $kunena_my = &JFactory::getUser();
 		$kunena_db = &JFactory::getDBO();
 
         if (!CKunenaTools::isModOrAdmin() && !$isMod) {
-            $mainframe->redirect( JURI::base() .$return, _POST_NOT_MODERATOR);
+            $app->redirect( JURI::base() .$return, _POST_NOT_MODERATOR);
             }
 
         $items = fbGetArrayInts("fbDelete");
@@ -680,7 +680,7 @@ class CKunenaTools {
             } //end foreach
             CKunenaTools::reCountBoards();
 
-            $mainframe->redirect(JURI::base() . $return, _KUNENA_BULKMSG_DELETED);
+            $app->redirect(JURI::base() . $return, _KUNENA_BULKMSG_DELETED);
         }
 
     function isModOrAdmin($id = 0) {
@@ -703,14 +703,14 @@ class CKunenaTools {
         }
 
     function fbMovePosts($catid, $isMod, $return) {
-    	global $mainframe;
+    	$app =& JFactory::getApplication();
         $kunena_db = &JFactory::getDBO();
 		$kunena_my = &JFactory::getUser();
 
 	// $isMod if user is moderator in the current category
 	if (!$isMod) {
 		// Test also if user is a moderator in some other category
-		$kunena_db->setQuery('SELECT userid FROM #__fb_moderation WHERE userid='.$my->id);
+		$kunena_db->setQuery('SELECT userid FROM #__fb_moderation WHERE userid='.$kunena_my->id);
 		$isMod = $kunena_db->loadResult();
 		check_dberror("Unable to load moderation info.");
 	}
@@ -718,7 +718,7 @@ class CKunenaTools {
 
         //isMod will stay until better group management comes in
         if (!$isAdmin && !$isMod) {
-            $mainframe->redirect( JURI::base() .$return, _POST_NOT_MODERATOR);
+            $app->redirect( JURI::base() .$return, _POST_NOT_MODERATOR);
             }
 
 		$catid = (int)$catid;
@@ -761,7 +761,7 @@ class CKunenaTools {
 		}
         CKunenaTools::reCountBoards();
 
-        $mainframe->redirect( JURI::base() .$return, $err);
+        $app->redirect( JURI::base() .$return, $err);
         }
 
 

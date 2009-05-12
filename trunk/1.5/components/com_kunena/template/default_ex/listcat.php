@@ -21,6 +21,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+$app =& JFactory::getApplication();
 $fbConfig =& CKunenaConfig::getInstance();
 $fbSession =& CKunenaSession::getInstance();
 $kunena_my =& JFactory::getUser();
@@ -44,7 +45,7 @@ $categories = array ();
 
 //meta description and keywords
 $metaDesc=(_KUNENA_CATEGORIES . ' - ' . stripslashes($fbConfig->board_title));
-$metaKeys=(_KUNENA_CATEGORIES . ', ' . stripslashes($fbConfig->board_title) . ', ' . $mainframe->getCfg('sitename'));
+$metaKeys=(_KUNENA_CATEGORIES . ', ' . stripslashes($fbConfig->board_title) . ', ' . $app->getCfg('sitename'));
 
 $document =& JFactory::getDocument();
 $cur = $document->get( 'description' );

@@ -23,8 +23,9 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $fbConfig =& CKunenaConfig::getInstance();
+$document =& JFactory::getDocument();
 
-$mainframe->setPageTitle(_STAT_FORUMSTATS . ' - ' . stripslashes($fbConfig->board_title));
+$document->setTitle(_STAT_FORUMSTATS . ' - ' . stripslashes($fbConfig->board_title));
 
 if($fbConfig->showstats):
 

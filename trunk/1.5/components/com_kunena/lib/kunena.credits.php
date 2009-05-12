@@ -16,7 +16,6 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $mainframe;
 $fbConfig =& CKunenaConfig::getInstance();
 global $is_Moderator;
 

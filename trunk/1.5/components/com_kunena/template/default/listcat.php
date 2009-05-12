@@ -37,7 +37,8 @@ $threadids = array ();
 $categories = array ();
 
 // set page title
-$mainframe->setPageTitle(_GEN_FORUMLIST . ' - ' . stripslashes($fbConfig->board_title));
+$document=& JFactory::getDocument();
+$document->setTitle(_GEN_FORUMLIST . ' - ' . stripslashes($fbConfig->board_title));
 
 if (count($allCat) > 0)
 {

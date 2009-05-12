@@ -41,7 +41,9 @@ function KUNENA_print_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_po
  */
 function KUNENA_get_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_post = 0)
 {
-    global $mainframe, $fbIcons;
+    global $fbIcons;
+
+	$document=& JFactory::getDocument();
 	$fbConfig =& CKunenaConfig::getInstance();
     //Get the Category's parent category name for breadcrumb
     $kunena_db->setQuery('SELECT name,id FROM #__fb_categories WHERE id=' . $obj_fb_cat->getParent());
@@ -62,7 +64,7 @@ function KUNENA_get_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_post
     if ($objCatParentInfo)
     {
         if ($bool_set_title)
-            $mainframe->setPageTitle(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($obj_fb_cat->getName()) . ' - ' . stripslashes($fbConfig->board_title));
+            $document->setTitle(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($obj_fb_cat->getName()) . ' - ' . stripslashes($fbConfig->board_title));
 
         // show lines
         $return .= '&nbsp;<img src="' . KUNENA_URLIMAGESPATH . 'tree-end.gif" alt="|-" border="0" style="vertical-align: middle;" />';
@@ -74,7 +76,7 @@ function KUNENA_get_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_post
     else
     {
         if ($bool_set_title)
-            $mainframe->setPageTitle(stripslashes($obj_fb_cat->getName()) . ' - ' . stripslashes($fbConfig->board_title));
+            $document->setTitle(stripslashes($obj_fb_cat->getName()) . ' - ' . stripslashes($fbConfig->board_title));
     }
 
     // Forum
@@ -116,7 +118,7 @@ function KUNENA_get_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_post
     if ($obj_post != 0)
     {
         if ($bool_set_title)
-            $mainframe->setPageTitle(stripslashes($obj_post->subject) . ' - ' . stripslashes($fbConfig->board_title));
+            $document->setTitle(stripslashes($obj_post->subject) . ' - ' . stripslashes($fbConfig->board_title));
 
         // Topic
         // show lines
@@ -145,7 +147,7 @@ function KUNENA_get_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_post
  *             Community builder itemid, used for linking to cb profile
  * @param array $fbConfig
  * @param array $fbIcons
- * @param int $kunena_my_id
+ * @param int $my_id
  *             The user id
  * @param int $type
  *             What kind of header do you want to print: 1: default (home/profile/latest posts/faq), 2: extended1 (home/profile/view/pending messages/faq) ,3:extended2 (home/profile/reply/view/pdf/faq)
@@ -164,14 +166,14 @@ function KUNENA_get_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_post
  * @return String $header
  *             The menu :-)
  */
-function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $kunena_my_id, $type, $view = "", $catid = 0, $id = 0, $thread = 0, $is_moderator = false, $numPending = 0)
+function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = "", $catid = 0, $id = 0, $thread = 0, $is_moderator = false, $numPending = 0)
 {
     $header = '<div id="fb_topmenu" >';
     $header .= CKunenaLink::GetCategoryListLink('<span>'.($fbIcons['home'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['home'] . '" border="0" alt="' . _KUNENA_CATEGORIES . '"  title="' . _KUNENA_CATEGORIES . '" />' : _KUNENA_CATEGORIES).'</span>');
 
-    if ($kunena_my_id != 0)
+    if ($my_id != 0)
     {
-        $header .= CKunenaLink::GetMyProfileLink( $fbConfig, $kunena_my_id, $fbIcons['profile'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['profile'] . '" border="0" alt="' . _GEN_MYPROFILE . '" title="' . _GEN_MYPROFILE . '"/>' : _GEN_MYPROFILE);
+        $header .= CKunenaLink::GetMyProfileLink( $fbConfig, $my_id, $fbIcons['profile'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['profile'] . '" border="0" alt="' . _GEN_MYPROFILE . '" title="' . _GEN_MYPROFILE . '"/>' : _GEN_MYPROFILE);
     }
 
     switch ($type)

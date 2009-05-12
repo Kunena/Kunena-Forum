@@ -22,7 +22,6 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 class html_Kunena
-{
 
 // Begin: HEADER FUNC
 function showFbHeader () {
@@ -168,7 +167,6 @@ color:#666;
 
 // Begin: FOOTER FUNC
 function showFbFooter () {
-global $mainframe;
 $fbConfig =& CKunenaConfig::getInstance();
 
 require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
@@ -191,7 +189,6 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 
     function controlPanel()
     {
-        global $mainframe;
 ?>
 
         <div class="fbfunctitle"><?php echo _KUNENA_CP; ?></div>
@@ -3111,8 +3108,6 @@ else
     //***************************************
     function browseUploaded($option, $uploaded, $uploaded_path, $type)
     {
-        global $mainframe;
-
         $kunena_db = &JFactory::getDBO();
         $map = JPATH_ROOT;
 ?>
@@ -3382,7 +3377,6 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
 /// Dan Syme/IGD Rank Administration
  function showRanks( $option,$lang,&$ranks,$pageNavSP,$order,$rankpath )
 		 {
-   global $mainframe;
    $kunena_db = &JFactory::getDBO();
    ?>
   <div class="fbfunctitle"><?php echo _KUNENA_RANKS_MANAGE; ?></div>

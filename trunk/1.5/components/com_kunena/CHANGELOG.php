@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.5.2b
 
+12-May-2009 Matias
+^ [#16360] Replace $mainframe with $app =& JFactory::getApplication();
+
 11-May-2009 Matias
 ^ [#15784] Merge 1.0.10 fixes from revision 681 to 706
 # [#16340] Category list is missing in bottom of viewcat (default_ex)

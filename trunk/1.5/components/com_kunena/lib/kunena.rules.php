@@ -23,8 +23,9 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $fbConfig =& CKunenaConfig::getInstance();
+$document=& JFactory::getDocument();
 
-$mainframe->setPageTitle(_GEN_RULES . ' - ' . stripslashes($fbConfig->board_title));
+$document->setTitle(_GEN_RULES . ' - ' . stripslashes($fbConfig->board_title));
 
 ?>
 <!-- INSERT YOUR RULES IN HTML BEGINNING HERE -->

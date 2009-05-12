@@ -22,6 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+$app =& JFactory::getApplication();
 $fbConfig =& CKunenaConfig::getInstance();
 ?>
 
@@ -39,7 +40,7 @@ if ($fbConfig->showwhoisonline > 0)
             <tr>
                 <th colspan = "4">
                    <div class = "fb_title_cover">
-                        <span class="fb_title"><?php echo $mainframe->getCfg('sitename'); ?> - <?php echo _WHO_WHOIS_ONLINE; ?></span>
+                        <span class="fb_title"><?php echo $app->getCfg('sitename'); ?> - <?php echo _WHO_WHOIS_ONLINE; ?></span>
                     </div>
             </tr>
         </thead>

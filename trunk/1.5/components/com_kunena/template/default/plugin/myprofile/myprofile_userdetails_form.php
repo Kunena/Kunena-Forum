@@ -19,6 +19,8 @@
 * @author TSMF & Jan de Graaff
 **/
 defined( '_JEXEC' ) or die('Restricted access');
+
+$app =& JFactory::getApplication();
 $fbConfig =& CKunenaConfig::getInstance();
 
 require_once (KUNENA_ROOT_PATH .DS. 'includes/HTML_toolbar.php');
@@ -118,7 +120,7 @@ $validate = JUtility::getToken();
         <td><input class = "inputbox" type = "password" name = "password2" size = "40"/></td>
       </tr>
       <?php
-        if (in_array($mainframe->getCfg( "frontend_userparams" ), array( '1', null)))
+        if (in_array($app->getCfg( "frontend_userparams" ), array( '1', null)))
         {
         ?>
       <tr>

@@ -22,6 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+$app =& JFactory::getApplication();
 $fbConfig =& CKunenaConfig::getInstance();
 $fbSession =& CKunenaSession::getInstance();
 $kunena_db = &JFactory::getDBO();
@@ -84,7 +85,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         	header("HTTP/1.1 301 Moved Permanently");
         	header("Location: " . htmlspecialchars_decode(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $this_message->catid, $thread, $replyPage, $fbConfig->messages_per_page, $this_message->id)));
 
-        	$mainframe->close();
+        	$app->close();
         }
 
         if ($kunena_my->id)
@@ -419,7 +420,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 }
 
                                 //meta description and keywords
-								$metaKeys=(htmlspecialchars(stripslashes($fmessage->subject)). ', ' .htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . htmlspecialchars(stripslashes($fbConfig->board_title)) . ', ' . htmlspecialchars($mainframe->getCfg('sitename')));
+								$metaKeys=(htmlspecialchars(stripslashes($fmessage->subject)). ', ' .htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . htmlspecialchars(stripslashes($fbConfig->board_title)) . ', ' . htmlspecialchars($app->getCfg('sitename')));
 								$metaDesc=(htmlspecialchars(stripslashes($fmessage->subject)) . ' - ' .htmlspecialchars(stripslashes($objCatParentInfo->name)) . ' - ' . htmlspecialchars(stripslashes($objCatInfo->name)) .' - ' . htmlspecialchars(stripslashes($fbConfig->board_title)));
 
 								    $document =& JFactory::getDocument();
@@ -1182,8 +1183,8 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
     <?php echo $fbIcons['forumlist'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['forumlist'] . '" border="0" alt="' . _GEN_FORUMLIST . '" title="' . _GEN_FORUMLIST . '">' : _GEN_FORUMLIST; ?> </a>
 
                             <?php
-                            if (file_exists(KUNENA_ROOT_PATH .DS. 'templates/' . $mainframe->getTemplate() . '/images/arrow.png')) {
-                                echo ' <img src="' . KUNENA_JLIVEURL . '/templates/' . $mainframe->getTemplate() . '/images/arrow.png" alt="" /> ';
+                            if (file_exists(KUNENA_ROOT_PATH .DS. 'templates/' . $app->getTemplate() . '/images/arrow.png')) {
+                                echo ' <img src="' . KUNENA_JLIVEURL . '/templates/' . $app->getTemplate() . '/images/arrow.png" alt="" /> ';
                             }
                             else {
                                 echo ' <img src="' . KUNENA_JLIVEURL . '/images/M_images/arrow.png" alt="" /> ';

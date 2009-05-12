@@ -26,9 +26,6 @@ defined( '_JEXEC' ) or die('Restricted access');
 // off special code that can't be put into the xml file directly.
 //
 
-global $mainframe;
-
-
 $kunena_db = &JFactory::getDBO();
 
 include_once (KUNENA_PATH .DS. "class.kunena.php");

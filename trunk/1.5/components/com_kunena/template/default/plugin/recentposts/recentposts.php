@@ -21,7 +21,8 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $lang, $mainframe;
+global $lang;
+
 $fbConfig =& CKunenaConfig::getInstance();
 $fbSession =& CKunenaSession::getInstance();
 

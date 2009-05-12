@@ -30,7 +30,6 @@ class my_tabs
 
     function my_tabs($useCookies, $xhtml = NULL)
     {
-        global $mainframe;
 		$link = JURI::root();
 		$document =& JFactory::getDocument();
 

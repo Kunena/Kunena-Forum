@@ -20,8 +20,11 @@
 **/
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
+
+$app =& JFactory::getApplication();
 $fbConfig =& CKunenaConfig::getInstance();
 $fbSession =& CKunenaSession::getInstance();
+
 global $is_Moderator;
 
 function KunenaShowcatPagination($catid, $page, $totalpages, $maxpages) {
@@ -227,7 +230,7 @@ if (in_array($catid, $allow_forum))
     $forumReviewed = $objCatInfo->review;
 
 	//meta description and keywords
-	$metaKeys=(_KUNENA_CATEGORIES . ', ' . stripslashes($objCatParentInfo->name) . ', ' . stripslashes($objCatInfo->name) . ', ' . stripslashes($fbConfig->board_title) . ', ' . $mainframe->getCfg('sitename'));
+	$metaKeys=(_KUNENA_CATEGORIES . ', ' . stripslashes($objCatParentInfo->name) . ', ' . stripslashes($objCatInfo->name) . ', ' . stripslashes($fbConfig->board_title) . ', ' . $app->getCfg('sitename'));
 	$metaDesc=(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($objCatInfo->name) .' - ' . stripslashes($fbConfig->board_title));
 
 	$document =& JFactory::getDocument();

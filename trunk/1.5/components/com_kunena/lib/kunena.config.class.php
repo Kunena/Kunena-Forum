@@ -19,7 +19,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 require_once (KUNENA_PATH_LIB . DS . 'kunena.debug.php');
 
-global $mainframe;
+$app =& JFactory::getApplication();
 require_once (JPATH_ROOT . '/components/com_kunena/lib/kunena.debug.php');
 require_once (JPATH_ROOT . '/components/com_kunena/lib/kunena.user.class.php');
 

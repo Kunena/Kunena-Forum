@@ -16,9 +16,8 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
+$app =& JFactory::getApplication();
 $kunena_acl = &JFactory::getACL();
-
-
 $fbConfig =& CKunenaConfig::getInstance();
 
 if ($fbConfig->fb_profile == 'cb') {
@@ -26,10 +25,11 @@ if ($fbConfig->fb_profile == 'cb') {
 	$url = CKunenaCBProfile::getProfileURL($userid);
 	header("HTTP/1.1 307 Temporary Redirect");
 	header("Location: " . htmlspecialchars_decode($url));
-	$mainframe->close();
+	$app->close();
 }
 
-$mainframe->setPageTitle(_KUNENA_USERPROFILE_PROFILE . ' - ' . stripslashes($fbConfig->board_title));
+$document=& JFactory::getDocument();
+$document->setTitle(_KUNENA_USERPROFILE_PROFILE . ' - ' . stripslashes($fbConfig->board_title));
 
 if ($kunena_my->id) //registered only
 {

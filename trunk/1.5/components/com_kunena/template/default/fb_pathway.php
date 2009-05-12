@@ -158,7 +158,9 @@ if ($func != "")
 
         unset($shome, $spath, $parent_ids, $catids, $results, $sname);
 	$fr_title = $fr_title_name . $jr_topic_title;
-        $mainframe->setPageTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($fbConfig->board_title));
+
+	$document=& JFactory::getDocument();
+        $document->setTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($fbConfig->board_title));
         ?>
 		</div>
     </div>

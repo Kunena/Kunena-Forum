@@ -22,6 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+$app =& JFactory::getApplication();
 $fbConfig =& CKunenaConfig::getInstance();
 $fbSession =& CKunenaSession::getInstance();
 
@@ -73,13 +74,13 @@ if (!$kunena_my->id && $func == "mylatest")
 {
         	header("HTTP/1.1 307 Temporary Redirect");
         	header("Location: " . htmlspecialchars_decode(CKunenaLink::GetShowLatestURL()));
-        	$mainframe->close();
+        	$app->close();
 }
 
 require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
 
 //meta description and keywords
-$metaKeys=(_KUNENA_ALL_DISCUSSIONS . ', ' . stripslashes($fbConfig->board_title) . ', ' . $mainframe->getCfg('sitename'));
+$metaKeys=(_KUNENA_ALL_DISCUSSIONS . ', ' . stripslashes($fbConfig->board_title) . ', ' . $app->getCfg('sitename'));
 $metaDesc=(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
 
 $document =& JFactory::getDocument();
@@ -142,7 +143,7 @@ if ($sel == "0")
 
 if ($func == "mylatest")
 {
-	$mainframe->setPageTitle(_KUNENA_MY_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
+	$document->setTitle(_KUNENA_MY_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
 	$query = "SELECT count(distinct tmp.thread) FROM
 				(SELECT thread
 					FROM #__fb_messages
@@ -155,7 +156,7 @@ if ($func == "mylatest")
 }
 else
 {
-	$mainframe->setPageTitle(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
+	$document->setTitle(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
 	$query = "Select count(distinct thread) FROM #__fb_messages WHERE time >'$querytime'".
 			" AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)" . $latestcats; // if categories are limited apply filter
 }

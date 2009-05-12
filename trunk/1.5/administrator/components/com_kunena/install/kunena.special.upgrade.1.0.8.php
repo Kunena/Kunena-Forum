@@ -13,8 +13,6 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $mainframe;
-
 // Add custom upgrade code here
 // Most or all sql statements should be covered within comupgrade.xml
 

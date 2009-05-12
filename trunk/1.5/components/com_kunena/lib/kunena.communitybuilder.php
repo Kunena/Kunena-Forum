@@ -16,7 +16,7 @@ defined( '_JEXEC' ) or die('Restricted access');
  * CB framework
  * @global CBframework $_CB_framework
  */
-global $_CB_framework, $_CB_database, $ueConfig, $mainframe;
+global $_CB_framework, $_CB_database, $ueConfig;
 
 $cbpath = KUNENA_ROOT_PATH_ADMIN .DS. 'components/com_comprofiler/plugin.foundation.php';
 if ( ! file_exists( $cbpath ) )

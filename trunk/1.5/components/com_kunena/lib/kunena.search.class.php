@@ -66,8 +66,8 @@ class CKunenaSearch
     {
         global $kunena_my;
 
+	$app =& JFactory::getApplication();
         $kunena_db = &JFactory::getDBO();
-
         $fbConfig =& CKunenaConfig::getInstance();
 
         // TODO: started_by
@@ -109,7 +109,7 @@ class CKunenaSearch
 		$url = CKunenaLink::GetSearchURL($fbConfig, $this->func, $q, $limitstart, $limit, $this->getUrlParams());
         	header("HTTP/1.1 303 See Other");
         	header("Location: " . htmlspecialchars_decode($url));
-        	$mainframe->close();
+        	$app->close();
 	}
 
 	if ($q == _GEN_SEARCH_BOX) $q = '';

@@ -17,8 +17,6 @@
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
 
-
-global $mainframe;
 require_once (JPATH_ROOT . '/components/com_kunena/lib/kunena.debug.php');
 
 // use default translations if none are available
@@ -90,15 +88,15 @@ class CKunenaVersion {
 	*/
 	function MySQLVersion()
 	{
-		static $kunena_mysqlversion;
-		if (!$kunena_mysqlversion)
+		static $mysqlversion;
+		if (!$mysqlversion)
 		{
 			$kunena_db = &JFactory::getDBO();
 			$kunena_db->setQuery("SELECT VERSION() as mysql_version");
-			$kunena_mysqlversion = $kunena_db->loadResult();
-			if (!$kunena_mysqlversion) $kunena_mysqlversion = 'unknown';
+			$mysqlversion = $kunena_db->loadResult();
+			if (!$mysqlversion) $mysqlversion = 'unknown';
 		}
-		return $kunena_mysqlversion;
+		return $mysqlversion;
 	}
 
 	/**

@@ -21,9 +21,11 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+$app =& JFactory::getApplication();
+$document =& JFactory::getDocument();
 $fbConfig =& CKunenaConfig::getInstance();
 
-$mainframe->setPageTitle(_ANN_ANNOUNCEMENTS . ' - ' . stripslashes($fbConfig->board_title));
+$document->setTitle(_ANN_ANNOUNCEMENTS . ' - ' . stripslashes($fbConfig->board_title));
 
 # Check for Editor rights  $fbConfig->annmodid
 $do = JRequest::getVar("do", "");
@@ -65,7 +67,7 @@ if ($do == "read") {
                 <tr>
                     <th>
                         <div class = "fb_title_cover fbm">
-                            <span class = "fb_title fbl"> <?php echo $mainframe->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?></span>
+                            <span class = "fb_title fbl"> <?php echo $app->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?></span>
                         </div>
                     </th>
                 </tr>
@@ -133,7 +135,7 @@ if ($is_editor) {
                     <tr>
                         <th colspan = "6">
                             <div class = "fb_title_cover fbm">
-                                <span class = "fb_title fbl"> <?php echo $mainframe->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'add');?>"><?php echo _ANN_ADD; ?></a></span>
+                                <span class = "fb_title fbl"> <?php echo $app->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'add');?>"><?php echo _ANN_ADD; ?></a></span>
                             </div>
                         </th>
                     </tr>
@@ -241,7 +243,7 @@ if ($is_editor) {
         $kunena_db->setQuery($query1);
 
         $kunena_db->query() or trigger_dberror("Unable to insert announcement.");
-        $mainframe->redirect( JURI::base() .CKunenaLink::GetAnnouncementURL($fbConfig, 'show'), _ANN_SUCCESS_ADD);
+        $app->redirect( JURI::base() .CKunenaLink::GetAnnouncementURL($fbConfig, 'show'), _ANN_SUCCESS_ADD);
     }
 
     if ($do == "add") {
@@ -360,7 +362,7 @@ if ($is_editor) {
         $kunena_db->setQuery("UPDATE #__fb_announcement SET title='$title', description='$description', sdescription='$sdescription',  created=" . (($created <> '')?"'$created'":"NOW()") . ", published='$published', showdate='$showdate' WHERE id=$id");
 
         if ($kunena_db->query()) {
-            $mainframe->redirect( JURI::base() .CKunenaLink::GetAnnouncementURL($fbConfig, 'show'), _ANN_SUCCESS_EDIT);
+            $app->redirect( JURI::base() .CKunenaLink::GetAnnouncementURL($fbConfig, 'show'), _ANN_SUCCESS_EDIT);
             }
         }
 
@@ -511,7 +513,7 @@ if ($is_editor) {
         $kunena_db->setQuery($query1);
         $kunena_db->query() or trigger_dberror("Unable to delete announcement.");
 
-        $mainframe->redirect(CKunenaLink::GetAnnouncementURL($fbConfig, 'show'), _ANN_DELETED);
+        $app->redirect(CKunenaLink::GetAnnouncementURL($fbConfig, 'show'), _ANN_DELETED);
     }
     // FINISH: delete ANN
 ?>

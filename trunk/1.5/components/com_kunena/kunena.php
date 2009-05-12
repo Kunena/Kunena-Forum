@@ -22,8 +22,6 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $mainframe;
-
 // Just for debugging and performance analysis
 $mtime = explode(" ", microtime());
 $tstart = $mtime[1] + $mtime[0];
@@ -69,10 +67,12 @@ $userid 		= JRequest::getInt('userid', 0);
 $view 			= JRequest::getVar('view', '');
 $msgpreview 	= JRequest::getVar('msgpreview', '');
 
+$app =& JFactory::getApplication();
+
 // Image does not work if there are included files (extra characters), so we will do it now:
 if ($func == "showcaptcha") {
    include (JPATH_ROOT . '/components/com_kunena/template/default/plugin/captcha/randomImage.php');
-   $mainframe->close();
+   $app->close();
 }
 
 // Debug helpers
@@ -84,7 +84,7 @@ require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 // Get CKunanaUser and CKunenaUsers
 require_once (KUNENA_PATH_LIB .DS. "kunena.user.class.php");
 
-global $kunenaProfile, $fbConfig;
+global $kunenaProfile;
 
 // Get data about the current user - its ok to not have a userid = guest
 $kunena_my = &JFactory::getUser();
@@ -113,10 +113,10 @@ else
 }
 
 //Get the userid; sometimes the new var works whilst $kunena_my->id doesn't..?!?
-$kunena_my_id = $kunena_my->id;
+$my_id = $kunena_my->id;
 
 // Check if we only allow registered users
-if ($fbConfig->regonly && !$kunena_my_id)
+if ($fbConfig->regonly && !$my_id)
 {
     echo _FORUM_UNAUTHORIZIED . "<br />";
     echo _FORUM_UNAUTHORIZIED2;
@@ -215,7 +215,7 @@ if ($func == "getpreview")
     $msgbody = smile::htmlwrap($msgbody, $fbConfig->wrap);
     header("Content-Type: text/html; charset=utf-8");
     echo $msgbody;
-    $mainframe->close();
+    $app->close();
 }
 
 $document =& JFactory::getDocument();
@@ -286,13 +286,13 @@ $is_Moderator = fb_has_moderator_permission($kunena_db, $thisCat, $kunena_my->id
 if ($func == 'fb_rss')
 {
     include (KUNENA_PATH_LIB .DS. 'kunena.rss.php');
-    $mainframe->close();
+    $app->close();
 }
 
 if ($func == 'fb_pdf')
 {
     include (KUNENA_PATH_LIB .DS. 'kunena.pdf.php');
-    $mainframe->close();
+    $app->close();
 }
 
 if ($func == '') // Set default start page as per config settings
@@ -401,7 +401,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 		$fbSession->save($fbSession);
 
 		if ($markaction == "allread") {
-		        $mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _GEN_ALL_MARKED);
+		        $app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _GEN_ALL_MARKED);
 		}
 
 		// Now lets get the view type for the forum
@@ -778,7 +778,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
             $kunena_db->query();
             	check_dberror('Unable to update readtopics in session table.');
 
-            $mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid)), _GEN_FORUM_MARKED);
+            $app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid)), _GEN_FORUM_MARKED);
             break;
 
         #########################################################################################
@@ -855,7 +855,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
                     }
             }
 
-            $mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)));
+            $app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)));
             break;
 
         #########################################################################################

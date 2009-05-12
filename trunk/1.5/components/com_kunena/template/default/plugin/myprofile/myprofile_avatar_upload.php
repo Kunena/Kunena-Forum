@@ -422,6 +422,8 @@ if ($do == 'init')
 }
 else if ($do == 'validate')
 {
+	$app =& JFactory::getApplication();
+
     //numExtensions= people tend to upload malicious files using mutliple extensions like: virus.txt.vbs; we'll want to have the last extension to validate against..
     $filename = split("\.", $_FILES['avatar']['name']);
     $numExtensions = (count($filename)) - 1;
@@ -448,19 +450,19 @@ else if ($do == 'validate')
     //check for empty file
     if (empty($_FILES['avatar']['name']))
     {
-        $mainframe->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_EMPTY);
+        $app->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_EMPTY);
     }
 
     //check for allowed file type (jpeg, gif, png)
     if (!($imgtype = KUNENA_check_image_type($avatarExt)))
     {
-        $mainframe->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_TYPE);
+        $app->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_TYPE);
     }
 
     //check file name characteristics
     if (eregi("[^0-9a-zA-Z_]", $avatarExt))
     {
-        $mainframe->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_NAME);
+        $app->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_NAME);
     }
 
     //check filesize
@@ -468,7 +470,7 @@ else if ($do == 'validate')
 
     if ($avatarSize > $maxAvSize)
     {
-        $mainframe->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_SIZE . " (" . $fbConfig->avatarsize . " KiloBytes)");
+        $app->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_SIZE . " (" . $fbConfig->avatarsize . " KiloBytes)");
         return;
     }
 
@@ -628,7 +630,7 @@ else if ($do == 'fromgallery')
 
     $newAvatar = CKunenaTools::fbRemoveXSS($newAvatar);
     if ($newAvatar == '') {
-        $mainframe->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_CHOOSE);
+        $app->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_CHOOSE);
     }
 
     $kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newAvatar}' WHERE userid={$kunena_my->id}");

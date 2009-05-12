@@ -96,13 +96,19 @@ dictionary = {
 '(\s*)(global )\s*\$fbConfig,\s*(.*?;)':'\\1\\2\\3\n\\1$fbConfig =& CKunenaConfig::getInstance();',
 '(\s*)(global .*?),\s*\$fbConfig;':'\\1\\2;\n\\1$fbConfig =& CKunenaConfig::getInstance();',
 '\$acl':'$kunena_acl',
-#'\$my':'$kunena_my',
+'\$my(\W)':'$kunena_my\\1',
 '\$database':'$kunena_db',
 'mosCountModules\(':'JDocumentHTML::countModules(',
 '\$GLOBALS\[\"fbConfig\"\]':'$fbConfig',
 'mosParameters':'JParameter',
 '\$aro_group->group_id':'$aro_group->id',
 '\$kunena_myGraph':'$myGraph',
+'global\s*\$mainframe;':'$app =& JFactory::getApplication();',
+'(\s*)(global )\s*\$mainframe,\s*(.*?;)':'\\1\\2\\3\n\\1$app =& JFactory::getApplication();',
+'(\s*)(global .*?),\s*\$mainframe\s*;':'\\1\\2;\n\\1$app =& JFactory::getApplication();',
+'\$mainframe':'$app',
+'(\s*)\$app->setPageTitle\((.*?)\);':'\n\\1$document=& JFactory::getDocument();\n\\1$document->setTitle(\\2);',
+'\$kunena_my([\w_])':'$my\\1',
 }
 
 def string_replace(filename, text, dic):

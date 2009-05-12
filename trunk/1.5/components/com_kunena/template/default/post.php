@@ -20,8 +20,11 @@
 **/
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
+
+$app =& JFactory::getApplication();
 $fbConfig =& CKunenaConfig::getInstance();
 $fbSession =& CKunenaSession::getInstance();
+
 global $is_Moderator;
 
 //
@@ -57,7 +60,7 @@ if ($fbConfig->captcha == 1 && $kunena_my->id < 1) {
             echo "<script language='javascript' type='text/javascript'>alert('" . $mess . "')</script>";
             echo "<script language='javascript' type='text/javascript'>window.history.back()</script>";
             return;
-            $mainframe->close();
+            $app->close();
             //break;
         }
     }
@@ -80,16 +83,16 @@ if (($fbConfig->floodprotection != 0 && ((($lastPostTime + $fbConfig->floodprote
     //Let's find out who we're dealing with if a registered user wants to make a post
     if ($kunena_my->id)
     {
-        $kunena_my_name = $fbConfig->username ? $kunena_my->username : $kunena_my->name;
-        $kunena_my_email = $kunena_my->email;
+        $my_name = $fbConfig->username ? $kunena_my->username : $kunena_my->name;
+        $my_email = $kunena_my->email;
         $registeredUser = 1;
 	if ($is_Moderator) {
-		if (!empty($fb_authorname)) $kunena_my_name = $fb_authorname;
-		if(isset($email) && !empty($email)) $kunena_my_email = $email;
+		if (!empty($fb_authorname)) $my_name = $fb_authorname;
+		if(isset($email) && !empty($email)) $my_email = $email;
 	}
     } else {
-        $kunena_my_name = $fb_authorname;
-	$kunena_my_email = (isset($email) && !empty($email))? $email:'';
+        $my_name = $fb_authorname;
+	$my_email = (isset($email) && !empty($email))? $email:'';
 	$registeredUser = 0;
     }
 }
@@ -131,10 +134,10 @@ $catName = $objCatInfo->name;
                             <?php
                             $parent = (int)$parentid;
 
-                            if (empty($kunena_my_name)) {
+                            if (empty($my_name)) {
                                 echo _POST_FORGOT_NAME;
                             }
-                            else if ($fbConfig->askemail && empty($kunena_my_email)) {
+                            else if ($fbConfig->askemail && empty($my_email)) {
                                 echo _POST_FORGOT_EMAIL;
                             }
                             else if (empty($subject)) {
@@ -194,7 +197,7 @@ $catName = $objCatInfo->name;
 
                                 $messagesubject = $subject; //before we add slashes and all... used later in mail
 
-                                $fb_authorname = trim(addslashes($kunena_my_name));
+                                $fb_authorname = trim(addslashes($my_name));
                                 $subject = trim(addslashes($subject));
                                 $message = trim(addslashes($message));
 
@@ -203,7 +206,7 @@ $catName = $objCatInfo->name;
                                 }
 
                                 //--
-                                $email = trim(addslashes($kunena_my_email));
+                                $email = trim(addslashes($my_email));
                                 $topic_emoticon = (int)$topic_emoticon;
                                 $topic_emoticon = ($topic_emoticon < 0 || $topic_emoticon > 7) ? 0 : $topic_emoticon;
                                 $posttime = CKunenaTools::fbGetInternalTime();
@@ -533,7 +536,7 @@ $catName = $objCatInfo->name;
                             $resubject = smile::fbStripHtmlTags($resubject);
                             //$resubject = smile::fbStripHtmlTags($resubject);
                             $parentid = $message->id;
-                            $authorName = $kunena_my_name;
+                            $authorName = $my_name;
                         }
                     }
             ?>
@@ -585,7 +588,7 @@ $catName = $objCatInfo->name;
                         }
                     }
 
-                    $authorName = $kunena_my_name;
+                    $authorName = $my_name;
                         ?>
 
                     <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
@@ -625,7 +628,7 @@ $catName = $objCatInfo->name;
                     //$table = array_flip(get_html_translation_table(HTML_ENTITIES));
                     //$resubject = strtr($resubject, $table);
                     $fromBot = 1; //this new topic comes from the discuss mambot
-                    $authorName = htmlspecialchars($kunena_my_name);
+                    $authorName = htmlspecialchars($my_name);
                     $rowid = JRequest::getInt('rowid', 0);
                     $rowItemid = JRequest::getInt('rowItemid', 0);
 
@@ -758,7 +761,7 @@ $catName = $objCatInfo->name;
                         //}
                     }
                     else {
-			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
                 }
                 else if ($do == "editpostnow")
@@ -873,13 +876,13 @@ $catName = $objCatInfo->name;
                         }
                     }
                     else {
-			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
                 }
                 else if ($do == "delete")
                 {
                     if (!$is_Moderator) {
-			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $id = (int)$id;
@@ -917,7 +920,7 @@ $catName = $objCatInfo->name;
                 else if ($do == "deletepostnow")
                 {
                     if (!$is_Moderator) {
-			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $id = JRequest::getInt('id', 0);
@@ -971,7 +974,7 @@ $catName = $objCatInfo->name;
                 else if ($do == "move")
                 {
                     if (!$is_Moderator) {
-			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $catid = (int)$catid;
@@ -1032,7 +1035,7 @@ $catName = $objCatInfo->name;
 
                     $newCatObj = new jbCategory($kunena_db, $oldRecord[0]->catid);
 		    if (!fb_has_moderator_permission($kunena_db, $newCatObj, $kunena_my->id, $is_admin)) {
-			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $newSubject = _MOVED_TOPIC . " " . $oldRecord[0]->subject;
@@ -1056,7 +1059,7 @@ $catName = $objCatInfo->name;
                     // insert 'moved topic' notification in old forum if needed
                     if ($bool_leaveGhost)
                     {
-                    	$kunena_db->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','$newSubject','$lastTimestamp','{$oldRecord[0]->catid}','1', '{$kunena_my->id}', '".trim(addslashes($kunena_my_name))."')");
+                    	$kunena_db->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','$newSubject','$lastTimestamp','{$oldRecord[0]->catid}','1', '{$kunena_my->id}', '".trim(addslashes($my_name))."')");
                     	$kunena_db->query() or trigger_dberror('Unable to insert ghost message.');
 
                     	//determine the new location for link composition
@@ -1081,7 +1084,7 @@ $catName = $objCatInfo->name;
                 {
                     if (!$is_Moderator)
                     {
-			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $catid = (int)$catid;
@@ -1140,7 +1143,7 @@ $catName = $objCatInfo->name;
                 else if ($do == "domergepost")
                 {
                     if (!$is_Moderator) {
-			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $catid = (int)$catid;
@@ -1255,7 +1258,7 @@ $catName = $objCatInfo->name;
                 else if ($do == "split")
                 {
                     if (!$is_Moderator) {
-			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $error = JRequest::getInt('error', 0);
@@ -1393,7 +1396,7 @@ $catName = $objCatInfo->name;
                 {
                     if (!$is_Moderator)
                     {
-			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $catid = (int)$catid;
@@ -1574,7 +1577,7 @@ $catName = $objCatInfo->name;
 
 								$obj_fb_cat = new jbCategory($kunena_db, $row->catid);
 								if (!fb_has_read_permission($obj_fb_cat, $allow_forum, $aro_group->id, $kunena_acl)) {
-									$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+									$app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
 								return;
 							}
 						}
@@ -1586,7 +1589,7 @@ $catName = $objCatInfo->name;
                             $success_msg = _POST_SUBSCRIBED_TOPIC;
                         }
                     }
-                    $mainframe->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $app->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "unsubscribe")
                 {
@@ -1604,7 +1607,7 @@ $catName = $objCatInfo->name;
                             $success_msg = _POST_UNSUBSCRIBED_TOPIC;
                         }
                     }
-                    $mainframe->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $app->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "favorite")
                 {
@@ -1622,7 +1625,7 @@ $catName = $objCatInfo->name;
                              $success_msg = _POST_FAVORITED_TOPIC;
                         }
                     }
-                    $mainframe->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $app->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "unfavorite")
                 {
@@ -1640,12 +1643,12 @@ $catName = $objCatInfo->name;
                             $success_msg = _POST_UNFAVORITED_TOPIC;
                         }
                     }
-                    $mainframe->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $app->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "sticky")
                 {
                     if (!$is_Moderator) {
-			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $id = (int)$id;
@@ -1654,12 +1657,12 @@ $catName = $objCatInfo->name;
                     if ($id && $kunena_db->query() && $kunena_db->getAffectedRows()==1) {
                         $success_msg = _POST_STICKY_SET;
                     }
-                    $mainframe->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $app->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "unsticky")
                 {
                     if (!$is_Moderator) {
-			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $id = (int)$id;
@@ -1668,12 +1671,12 @@ $catName = $objCatInfo->name;
                     if ($id && $kunena_db->query() && $kunena_db->getAffectedRows()==1) {
                         $success_msg = _POST_STICKY_UNSET;
                     }
-                    $mainframe->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $app->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "lock")
                 {
                     if (!$is_Moderator) {
-			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $id = (int)$id;
@@ -1682,12 +1685,12 @@ $catName = $objCatInfo->name;
                     if ($id && $kunena_db->query() && $kunena_db->getAffectedRows()==1) {
                         $success_msg = _POST_LOCK_SET;
                     }
-                    $mainframe->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $app->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "unlock")
                 {
                     if (!$is_Moderator) {
-			$mainframe->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+			$app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $id = (int)$id;
@@ -1696,7 +1699,7 @@ $catName = $objCatInfo->name;
                     if ($id && $kunena_db->query() && $kunena_db->getAffectedRows()==1) {
                         $success_msg = _POST_LOCK_UNSET;
                     }
-                    $mainframe->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $app->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
                 }
             }
             ?>
@@ -1894,7 +1897,6 @@ function fb_delete_post(&$kunena_db, $id, $dellattach)
 
 function listThreadHistory($id, $fbConfig, $kunena_db)
 {
-    global $mainframe;
     if ($id != 0)
     {
         //get the parent# for the post on which 'reply' or 'quote' is chosen

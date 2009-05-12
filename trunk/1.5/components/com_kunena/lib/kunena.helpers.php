@@ -48,11 +48,12 @@ function fbAlert($msg)
 
 function fbAssertOrGoBack($predicate, $msg)
 {
+    $app =& JFactory::getApplication();
     if (!$predicate)
     {
         $msg = fbJsEscape($msg);
         echo "<script> alert('$msg'); window.history.go(-1); </script>\n";
-        $mainframe->close();
+        $app->close();
     }
 }
 

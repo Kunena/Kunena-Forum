@@ -23,9 +23,11 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 require_once (KUNENA_PATH_LIB .DS. "kunena.user.class.php");
 
+$app =& JFactory::getApplication();
+$document =& JFactory::getDocument();
 $fbConfig =& CKunenaConfig::getInstance();
 
-$mainframe->setPageTitle(_GEN_MYPROFILE . ' - ' . stripslashes($fbConfig->board_title));
+$document->setTitle(_GEN_MYPROFILE . ' - ' . stripslashes($fbConfig->board_title));
 
 if ($kunena_my->id != "" && $kunena_my->id != 0)
 {
@@ -297,7 +299,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                         if (!$rowu->bind( $_POST, 'moderator posts karma group_id uhits' )) {
         echo "<script> alert('".$rowu->getError()."'); window.history.go(-1); </script>\n";
-        $mainframe->close();
+        $app->close();
     }
                     $rowu->birthdate = $bday1."-".$bday2."-".$bday3;
 
@@ -316,12 +318,12 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                         if (!$rowu->check()) {
         echo "<script> alert('".$rowu->getError()."'); window.history.go(-1); </script>\n";
-        $mainframe->close();
+        $app->close();
     }
 
     if (!$rowu->store()) {
         echo "<script> alert('".$rowu->getError()."'); window.history.go(-1); </script>\n";
-        $mainframe->close();
+        $app->close();
     }
 
                         echo _USER_RETURN_A . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . "&amp;func=myprofile&amp;do=showsig") . '">' . _USER_RETURN_B . "</a><br /><br />";
@@ -574,7 +576,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     $row->email = trim($row->email);
                     $row->username = trim($row->username);
 
-                    $file = $mainframe->getPath('com_xml', 'com_users');
+                    $file = $app->getPath('com_xml', 'com_users');
                     $params = &new JParameter($row->params, $file, 'component');
 
                     if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_userdetails_form.php'))
@@ -604,9 +606,9 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     if (!$row->bind($_POST))
                     {
                         echo "<script> alert('" . $row->getError() . "'); window.history.go(-1); </script>\n";
-                        $mainframe->close();
+                        $app->close();
                     }
-                    if (in_array($mainframe->getCfg( "frontend_userparams" ), array( '1', null)))
+                    if (in_array($app->getCfg( "frontend_userparams" ), array( '1', null)))
                     {
                         // save params
                         $params = JRequest::getVar('params', '');
@@ -627,7 +629,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     if (!$row->save(TRUE))
                     {
                         echo "<script> alert('" . $row->getError() . "'); window.history.go(-1); </script>\n";
-                        $mainframe->close();
+                        $app->close();
                     }
 
                     // check if username has been changed
@@ -641,7 +643,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                         $kunena_db->query();
                     }
 
-                    $mainframe->redirect( JURI::base() .'index.php?option=com_kunena&amp;func=myprofile' . KUNENA_COMPONENT_ITEMID_SUFFIX, _KUNENA_USER_DETAILS_SAVE);
+                    $app->redirect( JURI::base() .'index.php?option=com_kunena&amp;func=myprofile' . KUNENA_COMPONENT_ITEMID_SUFFIX, _KUNENA_USER_DETAILS_SAVE);
                     break;
             }
             ?>

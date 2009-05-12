@@ -21,7 +21,10 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
+
+$app =& JFactory::getApplication();
 $fbConfig =& CKunenaConfig::getInstance();
+
 ?>
 <!-- Pathway -->
 
@@ -67,7 +70,8 @@ $fbConfig =& CKunenaConfig::getInstance();
                 $kunena_db->setQuery("SELECT name,id FROM #__fb_categories WHERE id='$objCatInfo->parent'");
                 $objCatParentInfo = $kunena_db->loadObject() or trigger_dberror("Unable to read from categories.");
                 // set page title
-                $mainframe->setPageTitle(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($objCatInfo->name) . ' - ' . stripslashes($fbConfig->board_title));
+		$document=& JFactory::getDocument();
+                $document->setTitle(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($objCatInfo->name) . ' - ' . stripslashes($fbConfig->board_title));
                 //check if this forum is locked
                 $forumLocked = $objCatInfo->locked;
                 //check if this forum is subject to review
@@ -75,14 +79,14 @@ $fbConfig =& CKunenaConfig::getInstance();
                 /*      echo '<a href="'.JRoute::_(KUNENA_LIVEURLREL).'">';
                       echo $fbIcons['forumlist'] ? '<img src="' . KUNENA_TMPLTURL . '/images/icons/'.$fbIcons['forumlist'].'" border="0" alt="'._GEN_FORUMLIST.'" > > ' : _GEN_FORUMLIST;
                       echo '</a> ';
-                      if (file_exists(KUNENA_ROOT_PATH .DS. 'templates/'.$mainframe->getTemplate().'/images/arrow.png')) {
-                      echo '<img src="'.KUNENA_JLIVEURL.'/templates/'.$mainframe->getTemplate().'/images/arrow.png" alt="" />';
+                      if (file_exists(KUNENA_ROOT_PATH .DS. 'templates/'.$app->getTemplate().'/images/arrow.png')) {
+                      echo '<img src="'.KUNENA_JLIVEURL.'/templates/'.$app->getTemplate().'/images/arrow.png" alt="" />';
                       } else {
                       echo '<img src="'.KUNENA_JLIVEURL.'/images/M_images/arrow.png" alt="" />';
                     }
                       echo ' <a href="'.JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$objCatParentInfo->id).'">'.$objCatParentInfo->name.'</a> ';
-                      if (file_exists(KUNENA_ROOT_PATH .DS. 'templates/'.$mainframe->getTemplate().'/images/arrow.png')) {
-                      echo '<img src="'.KUNENA_JLIVEURL.'/templates/'.$mainframe->getTemplate().'/images/arrow.png" alt="" />';
+                      if (file_exists(KUNENA_ROOT_PATH .DS. 'templates/'.$app->getTemplate().'/images/arrow.png')) {
+                      echo '<img src="'.KUNENA_JLIVEURL.'/templates/'.$app->getTemplate().'/images/arrow.png" alt="" />';
                       } else {
                       echo '<img src="'.KUNENA_JLIVEURL.'/images/M_images/arrow.png" alt="" /> ';
                     }*/

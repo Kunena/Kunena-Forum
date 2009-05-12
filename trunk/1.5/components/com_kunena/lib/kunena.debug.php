@@ -40,7 +40,6 @@ function debug_assert_callback($script, $line, $message) {
 // Production error handling
 function trigger_dberror($text = '')
 {
-	global $mainframe;
 	$kunena_db = &JFactory::getDBO();
 	echo debug_callstackinfo();
 

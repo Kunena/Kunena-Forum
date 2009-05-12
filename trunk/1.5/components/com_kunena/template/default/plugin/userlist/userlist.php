@@ -25,8 +25,9 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $base_url;
 
 $fbConfig =& CKunenaConfig::getInstance();
+$document=& JFactory::getDocument();
 
-$mainframe->setPageTitle(_KUNENA_USRL_USERLIST . ' - ' . stripslashes($fbConfig->board_title));
+$document->setTitle(_KUNENA_USRL_USERLIST . ' - ' . stripslashes($fbConfig->board_title));
 
 $base_url = "index.php?option=com_kunena&amp;func=userlist" . KUNENA_COMPONENT_ITEMID_SUFFIX; // Base URL string
 
@@ -117,8 +118,9 @@ class HTML_userlist_content
 {
     function showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search = "")
     {
-        global $base_url, $mainframe;
+        global $base_url;
 
+	$app =& JFactory::getApplication();
         $fbConfig =& CKunenaConfig::getInstance();
         $kunena_db = &JFactory::getDBO();
 
@@ -165,7 +167,7 @@ class HTML_userlist_content
                                         <span class="fb_title fbl"> <?php echo _KUNENA_USRL_USERLIST; ?></span>
 
                                         <?php
-                                        printf(_KUNENA_USRL_REGISTERED_USERS, $mainframe->getCfg('sitename'), $total_results);
+                                        printf(_KUNENA_USRL_REGISTERED_USERS, $app->getCfg('sitename'), $total_results);
                                         ?>
                                     </div>
                                 </td>

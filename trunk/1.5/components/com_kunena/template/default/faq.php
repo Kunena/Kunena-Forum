@@ -23,8 +23,9 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $fbConfig =& CKunenaConfig::getInstance();
+$document=& JFactory::getDocument();
 
-$mainframe->setPageTitle(_GEN_HELP . ' - ' . stripslashes($fbConfig->board_title));
+$document->setTitle(_GEN_HELP . ' - ' . stripslashes($fbConfig->board_title));
 
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">

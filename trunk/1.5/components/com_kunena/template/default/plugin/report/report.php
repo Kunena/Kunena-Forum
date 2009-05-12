@@ -42,9 +42,9 @@ switch ($do)
         break;
 }
 
-function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
+function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) 
+{
     $kunena_my = &JFactory::getUser();
-
     $kunena_db = &JFactory::getDBO();
     $fbConfig =& CKunenaConfig::getInstance();
 
@@ -123,11 +123,8 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
 }
 
 function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins) {
-    global $mainframe;
-
     $fbConfig =& CKunenaConfig::getInstance();
-
-    $kunena_db = &JFactory::getDBO();
+    $kunena_db =& JFactory::getDBO();
 
     //send report to category moderators
     if (count($mods)>0) {
@@ -189,20 +186,20 @@ function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
     }
 
 function ReportForm($msg_id, $catid) {
+    $app =& JFactory::getApplication();
     $fbConfig =& CKunenaConfig::getInstance();
-
     $kunena_my = &JFactory::getUser();
 
     $redirect = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id . '&amp;Itemid=' . KUNENA_COMPONENT_ITEMID) . '#' . $msg_id;
 
     //$redirect = JRoute::_($redirect);
     if (!$kunena_my->id) {
-        $mainframe->redirect( JURI::base() .$redirect);
+        $app->redirect( JURI::base() .$redirect);
         return;
         }
 
     if ($fbConfig->reportmsg == 0) {
-        $mainframe->redirect( JURI::base() .$redirect);
+        $app->redirect( JURI::base() .$redirect);
         return;
         }
 ?>

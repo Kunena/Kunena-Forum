@@ -30,7 +30,6 @@ ini_set("memory_limit", "32M");
 // Kunena wide defines
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 
-global $mainframe;
 // get right Language file
 if (file_exists(KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.' . KUNENA_LANGUAGE . '.php')) {
     include_once (KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.' . KUNENA_LANGUAGE . '.php');
@@ -43,16 +42,14 @@ include_once(KUNENA_PATH_ADMIN_LIB .DS. 'fx.upgrade.class.php');
 
 function com_install()
 {
-	global $mainframe;
-
 	$kunena_db = JFactory::getDBO();
 
 	// Determine MySQL version from phpinfo
 	$kunena_db->setQuery("SELECT VERSION() as mysql_version");
-	$kunena_mysqlversion = $kunena_db->loadResult();
+	$mysqlversion = $kunena_db->loadResult();
 
 	//before we do anything else we want to check for minimum system requirements
-	if (version_compare(phpversion(), KUNENA_MIN_PHP, ">=") && version_compare($kunena_mysqlversion, KUNENA_MIN_MYSQL, ">="))
+	if (version_compare(phpversion(), KUNENA_MIN_PHP, ">=") && version_compare($mysqlversion, KUNENA_MIN_MYSQL, ">="))
 	{
 		// we're on 4.3.0 or later
 
@@ -183,7 +180,7 @@ function com_install()
 		<br />
 		<strong>php version: <font color="green"><?php echo phpversion(); ?></font> (Required >= <?php echo KUNENA_MIN_PHP; ?>)</strong>
 		<br />
-		<strong>mysql version: <font color="green"><?php echo $kunena_mysqlversion; ?></font> (Required >= <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
+		<strong>mysql version: <font color="green"><?php echo $mysqlversion; ?></font> (Required >= <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
 		</div>
 
 		<?php
@@ -242,7 +239,7 @@ function com_install()
 		<br />
 		<strong>php version: <font color="<?php echo version_compare(phpversion(), KUNENA_MIN_PHP, '>=')?'green':'red'; ?>"><?php echo phpversion(); ?></font> (Required >= <?php echo KUNENA_MIN_PHP; ?>)</strong>
 		<br />
-		<strong>mysql version: <font color="<?php echo version_compare($kunena_mysqlversion, KUNENA_MIN_MYSQL, '>=')?'green':'red'; ?>"><?php echo $mysqlversion; ?></font> (Required >= <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
+		<strong>mysql version: <font color="<?php echo version_compare($mysqlversion, KUNENA_MIN_MYSQL, '>=')?'green':'red'; ?>"><?php echo $mysqlversion; ?></font> (Required >= <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
 		</div>
 
 		<?php

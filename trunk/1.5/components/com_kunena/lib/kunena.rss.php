@@ -21,11 +21,10 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $mainframe, $kunena_my;
+global $kunena_my;
 
-
+$app =& JFactory::getApplication();
 $fbConfig =& CKunenaConfig::getInstance();
-
 $kunena_db = &JFactory::getDBO();
 
 $hours = 0;
@@ -136,7 +135,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 <!-- generator="Kunena @fbversion@"> -->
 <rss version="0.91">
     <channel>
-        <title><?php echo stripslashes(htmlspecialchars($mainframe->getCfg('sitename'))); ?> - Forum</title>
+        <title><?php echo stripslashes(htmlspecialchars($app->getCfg('sitename'))); ?> - Forum</title>
         <description>Kunena Site Syndication</description>
         <link><?php echo JURI::root(); ?></link>
         <lastBuildDate><?php echo date("r");?></lastBuildDate>

@@ -73,11 +73,11 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
         {
             echo '<tr class = "'. $boardclass . 'sectiontableentry2"><td class = "fb_leftcolumn"><strong>' . _GEN_EMAIL . ' *</strong>:</td>';
             if (($fbConfig->regonly == "1" || $fbConfig->changename == '0') && $kunena_my->id != "" && !$is_Moderator) {
-                echo "<td>$kunena_my_email</td>";
+                echo "<td>$my_email</td>";
             }
             else
             {
-                echo "<td><input type=\"text\" name=\"email\"  size=\"35\" class=\"" . $boardclass . "inputbox postinput\" maxlength=\"35\" value=\"$kunena_my_email\" /></td>";
+                echo "<td><input type=\"text\" name=\"email\"  size=\"35\" class=\"" . $boardclass . "inputbox postinput\" maxlength=\"35\" value=\"$my_email\" /></td>";
             }
             echo '</tr>';
         }

@@ -34,7 +34,7 @@ $do = JRequest::getVar('do');
 
 $now = time();
 $past = $now - $fbConfig->fbsessiontimeout;
-$kunena_myip = getenv('REMOTE_ADDR');
+$myip = getenv('REMOTE_ADDR');
 
 if ($kunena_my->id > 0) {
     $isuser = 1;
@@ -47,7 +47,7 @@ else {
 $kunena_db->setQuery("DELETE FROM #__fb_whoisonline WHERE time < '$past'");
 $kunena_db->query();
 
-$kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_whoisonline WHERE userip='$kunena_myip' AND userid='$kunena_my->id'");
+$kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_whoisonline WHERE userip='$myip' AND userid='$kunena_my->id'");
 $online = $kunena_db->loadResult();
 
 unset ($row);
@@ -88,12 +88,12 @@ $link = addslashes($link);
 
 if ($online == 1) {
     $sql = "UPDATE #__fb_whoisonline SET time='{$now}', what='{$what}', do= '{$do}', task= '{$task}', link= '{$link}', func= '{$func}'"
-            . "\n WHERE userid={$kunena_my->id} AND userip='{$kunena_myip}'";
+            . "\n WHERE userid={$kunena_my->id} AND userip='{$myip}'";
     $kunena_db->setQuery($sql);
     }
 else {
     $sql = "INSERT INTO #__fb_whoisonline (`userid` , `time`, `what`, `task`, `do`, `func`,`link`, `userip`, `user`) "
-            . "\n VALUES ('{$kunena_my->id}', '{$now}', '{$what}','{$task}','{$do}','{$func}','{$link}', '{$kunena_myip}', '{$isuser}')";
+            . "\n VALUES ('{$kunena_my->id}', '{$now}', '{$what}','{$task}','{$do}','{$func}','{$link}', '{$myip}', '{$isuser}')";
 
     $kunena_db->setQuery($sql);
     }

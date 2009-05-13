@@ -134,7 +134,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
         }
     else if ($fbConfig->fb_profile == "cb") {
         $profilelink = 'index.php?option=com_comprofiler&amp;task=userProfile&amp;user=';
-        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_comprofiler&amp;task=userProfile&amp;Itemid=" . KUNENA_CB_ITEMID . "&amp;user=");
+        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_comprofiler&amp;task=userProfile" . KUNENA_CB_ITEMID_SUFFIX . "&amp;user=");
         }
     else if ($fbConfig->fb_profile == "clexuspm") {
         $profilelink = 'index.php?option=com_mypms&amp;task=showprofile&amp;user=';

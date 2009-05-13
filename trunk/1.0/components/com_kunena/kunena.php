@@ -95,6 +95,16 @@ global $kunenaProfile, $fbConfig;
 // Load configuration and personal settings for current user
 $fbConfig =& CKunenaConfig::getInstance();
 
+// get right Language file
+if (file_exists($mainframe->getCfg("absolute_path") . '/administrator/components/com_kunena/language/kunena.' . $mainframe->getCfg('lang') . '.php'))
+{
+    include_once ($mainframe->getCfg("absolute_path") . '/administrator/components/com_kunena/language/kunena.' . $mainframe->getCfg('lang') . '.php');
+}
+else
+{
+    include_once ($mainframe->getCfg("absolute_path") . '/administrator/components/com_kunena/language/kunena.english.php');
+}
+
 $kn_tables =& CKunenaTables::getInstance();
 if ($kn_tables->installed() === false) {
 	$fbConfig->board_offline = 1;
@@ -121,8 +131,8 @@ $my_id = $my->id;
 // Check if we only allow registered users
 if ($fbConfig->regonly && !$my_id)
 {
-    echo _FORUM_UNAUTHORIZIED . "<br />";
-    echo _FORUM_UNAUTHORIZIED2;
+    echo '<div>' . _FORUM_UNAUTHORIZIED . '</div>';
+    echo '<div>' . _FORUM_UNAUTHORIZIED2 . '</div>';
 }
 // or if the board is offline
 else if ($fbConfig->board_offline && !$is_admin)
@@ -145,16 +155,6 @@ require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/
 
 // Class structure should be used after this and all the common task should be moved to this class
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/class.kunena.php");
-
-// get right Language file
-if (file_exists(KUNENA_ABSADMPATH . '/language/kunena.' . KUNENA_LANG . '.php'))
-{
-    include_once (KUNENA_ABSADMPATH . '/language/kunena.' . KUNENA_LANG . '.php');
-}
-else
-{
-    include_once (KUNENA_ABSADMPATH . '/language/kunena.english.php');
-}
 
 // bbcode and smilie support
 if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php'))

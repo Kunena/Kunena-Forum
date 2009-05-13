@@ -164,7 +164,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 				</td>
 
 				<td class = "td-6">
-					<a href = "<?php echo $fbURL; ?>"> <?php echo $fbIcons['latestpost'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />'
+					<a href = "<?php echo $fbURL; ?>"> <?php echo isset($fbIcons['latestpost']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />'
 																	  : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'; ?> </a>
 				</td>
 			</tr>

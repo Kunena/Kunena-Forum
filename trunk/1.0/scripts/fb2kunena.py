@@ -23,8 +23,8 @@ dictionary = {	'JB_':'KUNENA_',
 #		'global\s*\$fbConfig;':'$fbConfig =& CKunenaConfig::getInstance();',
 #		'(\s*)(global )\s*\$fbConfig,\s*(.*?;)':'\\1\\2\\3\n\\1$fbConfig =& CKunenaConfig::getInstance();',
 #		'(\s*)(global .*?),\s*\$fbConfig;':'\\1\\2;\n\\1$fbConfig =& CKunenaConfig::getInstance();',
-		'check_filesize\(':'kn_myprofile_check_filesize(',
-		'display_avatar_gallery\(':'kn_myprofile_display_avatar_gallery(',
+		'\$([\w_]+)\[(.*?)\]\s*\?\s*([\'\"])':'isset($\\1[\\2]) ? \\3',
+		'if\s*\(\s*(\$msg_[\w_]+)\s*\)':'if (isset(\\1))',
 }
 
 

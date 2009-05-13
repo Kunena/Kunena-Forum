@@ -200,7 +200,7 @@ if ($sel == "0")
                     echo ']</span> ';
                 }
 
-                $tmpicon = $fbIcons['latestpost'] ? '<img src="'
+                $tmpicon = isset($fbIcons['latestpost']) ? '<img src="'
                      .KUNENA_URLICONSPATH.''.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />':'  <img src="'.KUNENA_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />';
                 echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $latestPostCatid, $rs->thread, $threadPages, $fbConfig->messages_per_page, $tmpicon, $latestPostId);
 

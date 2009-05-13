@@ -140,7 +140,7 @@ class CKunenaLink
 
     function GetMessageIPLink($msg_ip, $rel='nofollow')
     {
-        if ($msg_ip)
+        if (!empty($msg_ip))
         {
             $iplink = '<a href="http://whois.domaintools.com/'.$msg_ip.'" target="_blank">';
             $iplink .= 'IP: '.$msg_ip.'</a>';

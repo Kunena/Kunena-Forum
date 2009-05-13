@@ -83,14 +83,14 @@ $database->loadObject($user);
                 }
                 ?>
 
-				<?php if ($msg_personal) { ?>
+				<?php if (isset($msg_personal)) { ?>
                     <div class = "viewcover">
                    <?php echo $msg_personal; ?>
                   </div>
                 <?php  }?>
                 <div class = "viewcover">
                     <?php
-                    if ($msg_userrank) {
+                    if (isset($msg_userrank)) {
                         echo $msg_userrank;
                     }
                     ?>
@@ -98,14 +98,14 @@ $database->loadObject($user);
 
                 <div class = "viewcover">
                     <?php
-                    if ($msg_userrankimg) {
+                    if (isset($msg_userrankimg)) {
                         echo $msg_userrankimg;
                     }
                     ?>
                 </div>
 
                     <?php
-                    if ($msg_posts) {
+                    if (isset($msg_posts)) {
                         echo $msg_posts;
                     }
                     ?>
@@ -121,64 +121,64 @@ $database->loadObject($user);
                     <?php echo $msg_online; ?>
 
                     <?php
-                    if ($msg_pms) {
+                    if (isset($msg_pms)) {
                         echo $msg_pms;
                     }
                     ?>
 
                     <?php
-                    if ($msg_profile) {
+                    if (isset($msg_profile)) {
                         echo $msg_profile;
                     }
                     ?>
                     <br />
  					<?php
-                    if ($msg_icq) {
+                    if (isset($msg_icq)) {
                         echo $msg_icq;
                     }
                     ?>
                     <?php
-                    if ($msg_gender) {
+                    if (isset($msg_gender)) {
                         echo $msg_gender;
                     }
                     ?>
                     <?php
-                    if ($msg_skype) {
+                    if (isset($msg_skype)) {
                         echo $msg_skype;
                     }
                     ?>
                     <?php
-                    if ($msg_website) {
+                    if (isset($msg_website)) {
                         echo $msg_website;
                     }
                     ?>
                     <?php
-                    if ($msg_gtalk) {
+                    if (isset($msg_gtalk)) {
                         echo $msg_gtalk;
                     }
                     ?>
                      <?php
-                    if ($msg_yim) {
+                    if (isset($msg_yim)) {
                         echo $msg_yim;
                     }
                     ?>
                     <?php
-                    if ($msg_msn) {
+                    if (isset($msg_msn)) {
                         echo $msg_msn;
                     }
                     ?>
 					<?php
-                    if ($msg_aim) {
+                    if (isset($msg_aim)) {
                         echo $msg_aim;
                     }
                     ?>
                     <?php
-                    if ($msg_location) {
+                    if (isset($msg_location)) {
                         echo $msg_location;
                     }
                     ?>
                     <?php
-                    if ($msg_birthdate) {
+                    if (isset($msg_birthdate)) {
                         echo $msg_birthdate;
                     }
                     ?>
@@ -207,7 +207,7 @@ $database->loadObject($user);
                             <span class = "msgkarma">
 
                             <?php
-                            if ($msg_karma) {
+                            if (isset($msg_karma)) {
                                 echo $msg_karma . '&nbsp;&nbsp;' . $msg_karmaplus . ' ' . $msg_karmaminus;
                             }
                             else {
@@ -299,7 +299,7 @@ $database->loadObject($user);
                                 echo CKunenaLink::GetReportMessageLink($catid, $msg_id, _KUNENA_REPORT);
                             } ?>
 
-                            <?php echo $fbIcons['msgip'] ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['msgip'] .'" border="0" alt="'._KUNENA_REPORT_LOGGED.'" />' : ' <img src="'.KUNENA_URLEMOTIONSPATH.'ip.gif" border="0" alt="'. _KUNENA_REPORT_LOGGED.'" />';
+                            <?php echo isset($fbIcons['msgip']) ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['msgip'] .'" border="0" alt="'._KUNENA_REPORT_LOGGED.'" />' : ' <img src="'.KUNENA_URLEMOTIONSPATH.'ip.gif" border="0" alt="'. _KUNENA_REPORT_LOGGED.'" />';
                             ?> <span class="fb_smalltext"> <?php echo _KUNENA_REPORT_LOGGED;?></span>
                             <?php
                             echo CKunenaLink::GetMessageIPLink($msg_ip);
@@ -329,7 +329,7 @@ if ($fmessage->modified_by) {
 ?>
 
 <?php
-if ($msg_signature) {
+if (isset($msg_signature)) {
   ?>
         <tr>
             <td class = "fb-msgview-left-c">&nbsp;
@@ -361,8 +361,7 @@ if ($msg_signature) {
                 ?>
 
                 <?php echo
-                    $fbIcons['quickmsg']
-                        ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['quickmsg'] . '" border="0" alt="' . _KUNENA_QUICKMSG . '" title="' . _KUNENA_QUICKMSG . '" />' . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _KUNENA_QUICKMSG . '" />'; ?>
+                    isset($fbIcons['quickmsg']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['quickmsg'] . '" border="0" alt="' . _KUNENA_QUICKMSG . '" title="' . _KUNENA_QUICKMSG . '" />' . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _KUNENA_QUICKMSG . '" />'; ?>
                 <?php
                 }
                 ?>
@@ -376,31 +375,31 @@ if ($msg_signature) {
                         echo $msg_reply;
                         echo " " . $msg_quote;
 
-                        if ($msg_delete) {
+                        if (isset($msg_delete)) {
                             echo " " . $msg_delete;
                         }
 
-                        if ($msg_move) {
+                        if (isset($msg_move)) {
                             echo " " . $msg_move;
                         }
 
-                        if ($msg_merge) {
+                        if (isset($msg_merge)) {
                              echo " " . $msg_merge;
                          }
 
-                        if ($msg_split) {
+                        if (isset($msg_split)) {
                              echo " " . $msg_split;
                          }
 
-                        if ($msg_edit) {
+                        if (isset($msg_edit)) {
                             echo " " . $msg_edit;
                         }
 
-                        if ($msg_sticky) {
+                        if (isset($msg_sticky)) {
                             echo " " . $msg_sticky;
                         }
 
-                        if ($msg_lock) {
+                        if (isset($msg_lock)) {
                             echo " " . $msg_lock;
                         }
                     }
@@ -420,23 +419,23 @@ if ($msg_signature) {
                 <?php
                 echo $msg_quote;
 
-                if ($msg_delete) {
+                if (isset($msg_delete)) {
                     echo " | " . $msg_delete;
                 }
 
-                if ($msg_move) {
+                if (isset($msg_move)) {
                     echo " | " . $msg_move;
                 }
 
-                if ($msg_edit) {
+                if (isset($msg_edit)) {
                     echo " | " . $msg_edit;
                 }
 
-                if ($msg_sticky) {
+                if (isset($msg_sticky)) {
                     echo " | " . $msg_sticky;
                 }
 
-                if ($msg_lock) {
+                if (isset($msg_lock)) {
                     echo "| " . $msg_lock;
                 }
                     }

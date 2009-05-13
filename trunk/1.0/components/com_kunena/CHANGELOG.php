@@ -36,6 +36,7 @@ Kunena 1.0.10
 # [#16378] Community Builder integration: solve jQuery conflict and small bug in profile links
 # [#16379] Breadcrumb has no style in default green, gray and red templates
 # [#16382] Internal: Translation is not working for unauthorized message if Registered Users Only = Yes
+# [#16387] Remove many notices from undefined variables
 
 12-May-2009 Matias
 # [#16373] Internal: Joomla! 1.5 Native call in legacy code

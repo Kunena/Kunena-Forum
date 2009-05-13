@@ -34,6 +34,7 @@ Kunena 1.0.10
 
 13-May-2009 Matias
 # [#16378] Community Builder integration: solve jQuery conflict and small bug in profile links
+# [#16379] Breadcrumb has no style in default green, gray and red templates
 
 12-May-2009 Matias
 # [#16373] Internal: Joomla! 1.5 Native call in legacy code

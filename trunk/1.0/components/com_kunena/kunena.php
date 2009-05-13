@@ -134,7 +134,7 @@ else
 // =======================================================================================
 // Forum is online:
 
-if ($fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
+if ($fbConfig->pm_component == 'cb' || $fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
 {
 	// Get Community Builder compability
 	require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.communitybuilder.php");
@@ -237,8 +237,14 @@ if ($func == "getpreview") {
     die();
 }
 
+if (is_object($kunenaProfile))
+{
+	$params = array();
+	$kunenaProfile->trigger('onStart', &$params);
+}
+
 // Add required header tags
-if (defined('KUNENA_JQURL'))
+if (defined('KUNENA_JQURL') && !defined('J_JQUERY_LOADED'))
 {
 	$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
 }
@@ -325,22 +331,6 @@ if ($func == '') // Set default start page as per config settings
 		default:
 			$func = 'listcat';
 	}
-}
-
-// Include the Community Builder language file if necessary and set CB itemid value
-$cbitemid = 0;
-
-if ($fbConfig->fb_profile == 'cb')
-{
-    // Include CB language files
-    $UElanguagePath = $mainframe->getCfg('absolute_path') . '/components/com_comprofiler/plugin/language';
-    $UElanguage = $mainframe->getCfg('lang');
-
-    if (!file_exists($UElanguagePath . '/' . $mosConfig_lang . '/' . $mosConfig_lang . '.php')) {
-        $UElanguage = 'default_language';
-        }
-
-    include_once ($UElanguagePath . '/' . $UElanguage . '/' . $UElanguage . '.php');
 }
 
 // Kunena Current Template Icons Pack
@@ -932,6 +922,12 @@ require_once (KUNENA_ABSSOURCESPATH . 'kunena.session.class.php');
     $obj_KUNENA_tmpl->readTemplatesFromFile("footer.html");
     $obj_KUNENA_tmpl->displayParsedTemplate('fb-footer');
 } //else
+
+if (is_object($kunenaProfile))
+{
+	$params = array();
+	$kunenaProfile->trigger('onEnd', &$params);
+}
 
 // Just for debugging and performance analysis
 $mtime = explode(" ", microtime());

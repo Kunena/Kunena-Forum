@@ -94,16 +94,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     	// Only proceed if Community Builder is really installed
 	    if ( file_exists( $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php' ) )
 	    {
-	    	global $_CB_framework, $_CB_database, $ueConfig, $mainframe;
-
-	        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_comprofiler' AND published=1");
-	        $CB_Itemid = $database->loadResult();
-	        	check_dberror('Unable to load CB item id');
-
-	        define("KUNENA_CB_ITEMID", (int)$CB_Itemid);
-	        define("KUNENA_CB_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_CB_ITEMID);
-
-	        // include_once( $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php' );
+	        define("KUNENA_CB_ITEMID_SUFFIX", getCBprofileItemid());
 	    }
 	    else
 	    {

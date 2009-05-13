@@ -88,24 +88,13 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 	    }
     }
 
+	global $kunenaProfile;
     //Community Builder 1.2 - older 1.1 integration no longer supported
-    if ($fbConfig->pm_component == 'cb' || $fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
+	if ($fbConfig->pm_component == 'cb' || $fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
     {
-    	// Only proceed if Community Builder is really installed
-	    if ( file_exists( $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php' ) )
-	    {
-	        define("KUNENA_CB_ITEMID_SUFFIX", getCBprofileItemid());
-	    }
-	    else
-	    {
-	    	// Community Builder not present reset config settings to avoid problems
-	    	$fbConfig->pm_component = $fbConfig->pm_component == 'cb' ? 'none' : $fbConfig->pm_component;
-	    	$fbConfig->fb_profile = $fbConfig->fb_profile == 'cb' ? 'kunena' : $fbConfig->fb_profile;
-	    	$fbConfig->avatar_src = $fbConfig->avatar_src == 'cb' ? 'kunena' : $fbConfig->avatar_src;
-
-	    	// Do not save new config - thats a task for the backend
-	    	// This is just a catch all in case it is not present
-	    }
+		// Get Community Builder compability
+		require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.communitybuilder.php");
+		$kunenaProfile =& new CkunenaCBProfile();
     }
 
     //Clexus PM

@@ -134,13 +134,6 @@ else
 // =======================================================================================
 // Forum is online:
 
-if ($fbConfig->pm_component == 'cb' || $fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
-{
-	// Get Community Builder compability
-	require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.communitybuilder.php");
-	$kunenaProfile =& new CkunenaCBProfile();
-}
-
 global $mosConfig_lang, $fbIcons;
 global $is_Moderator;
 

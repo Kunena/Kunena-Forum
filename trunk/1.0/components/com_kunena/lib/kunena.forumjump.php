@@ -28,7 +28,7 @@ $options = array ();
 $options[] = mosHTML::makeOption('0', _KUNENA_FORUM_TOP);
 $lists['parent'] = JJ_categoryParentList($catid, "", $options);
 ?>
-<form id = "jumpto" name = "jumpto" method = "get" target = "_self" action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL); ?>">
+<form id = "jumpto" name = "jumpto" method = "post" target = "_self" action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL); ?>">
     <span style = "width: 100%; text-align: right;">
 
         <input type = "hidden" name = "func" value = "showcat"/>

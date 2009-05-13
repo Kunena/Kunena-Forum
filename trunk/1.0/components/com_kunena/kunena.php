@@ -75,6 +75,15 @@ $userid 		= intval(mosGetParam($_REQUEST, 'userid', 0));
 $view 			= mosGetParam($_REQUEST, 'view', '');
 $msgpreview 	= mosGetParam($_REQUEST, 'msgpreview', '');
 
+// Redirect Forum Jump
+if (isset($_POST['func']) && $func == "showcat")
+{
+	global $Itemid;
+	header("HTTP/1.1 303 See Other");
+	header("Location: " . htmlspecialchars_decode(sefRelToAbs('index.php?option=com_kunena&amp;Itemid=' . $Itemid . '&amp;func=showcat&amp;catid=' . $catid)));
+	die();
+}
+
 // Image does not work if there are included files (extra characters), so we will do it now:
 if ($func == "showcaptcha") {
    include ($mainframe->getCfg("absolute_path") . '/components/com_kunena/template/default/plugin/captcha/randomImage.php');

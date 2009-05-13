@@ -245,6 +245,7 @@ if (count($categories[0]) > 0)
                                 $lastPosttime = $singlerow->time_last_msg;
                                 $lastptime = KUNENA_timeformat(CKunenaTools::fbGetShowTime($singlerow->time_last_msg));
 
+								$smileyList = smile::getEmoticons(0);
                                 $forumDesc = stripslashes(smile::smileReplace($singlerow->description, 0, $fbConfig->disemoticons, $smileyList));
 						        $forumDesc = nl2br($forumDesc);
 						        $forumDesc = smile::htmlwrap($forumDesc, $fbConfig->wrap);
@@ -307,6 +308,12 @@ if (count($categories[0]) > 0)
                                 WHERE m.id='$singlerow->id_last_msg'
                                 GROUP BY m.thread");
                                 $database->loadObject($thisThread);
+                                if (!is_object($thisThread))
+                                {
+                                	$thisThread = new stdClass();
+                                	$thisThread->totalmessages = 0;
+                                	$thisThread->thread = 0;
+                                }
                                 $latestthreadpages = ceil($thisThread->totalmessages / $fbConfig->messages_per_page);
                                 $latestthread = $thisThread->thread;
                                 $latestname = html_entity_decode_utf8(stripslashes($singlerow->mname));

@@ -42,7 +42,8 @@ $is_user = (strtolower($my->usertype) <> '');
 $database->setQuery("SELECT id,title,sdescription,description, created ,published,showdate" . "\n FROM #__fb_announcement  WHERE  published = 1 ORDER BY created DESC LIMIT 1");
 
 $anns = $database->loadObjectList();
-	check_dberror("Unable to load announcements.");
+check_dberror("Unable to load announcements.");
+if (count($anns) == 0) return;
 $ann = $anns[0];
 $annID = $ann->id;
 $anntitle = stripslashes($ann->title);

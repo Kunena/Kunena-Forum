@@ -268,7 +268,7 @@ $catName = $objCatInfo->name;
                                         }
 
                                         //Update the attachments table if an image has been attached
-                                        if ($imageLocation != "" && !$noImgUpload)
+                                        if (!empty($imageLocation) && !$noImgUpload)
                                         {
                                             $database->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid','$imageLocation')");
 
@@ -278,7 +278,7 @@ $catName = $objCatInfo->name;
                                         }
 
                                         //Update the attachments table if an file has been attached
-                                        if ($fileLocation != "" && !$noFileUpload)
+                                        if (!empty($fileLocation) && !$noFileUpload)
                                         {
                                             $database->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid','$fileLocation')");
 

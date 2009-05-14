@@ -35,7 +35,7 @@ if ($func != "")
         <?php
         $catids = intval($catid);
         $jr_path_menu = array ();
-        $shome = '<div class="path-element-first">' . CKunenaLink::GetKunenaLink( htmlspecialchars(stripslashes($fbConfig->board_title)) );
+        echo '<div class="path-element-first">' . CKunenaLink::GetKunenaLink( htmlspecialchars(stripslashes($fbConfig->board_title)) ) . '</div>';
 
         while ($catids > 0)
         {
@@ -69,7 +69,6 @@ if ($func != "")
             $catids = $parent_ids;
         }
 
-        $jr_path_menu[] = $shome;
         //reverse the array
         $jr_path_menu = array_reverse($jr_path_menu);
 
@@ -87,36 +86,29 @@ if ($func != "")
         // print the list
         $jr_forum_count = count($jr_path_menu);
 
-        for ($i = 0; $i <= (count($jr_path_menu) - 1); $i++)
-        {
-            if ($i > 0 && $i == $jr_forum_count - 1) {
-                echo '<div class="path-element-last">';
-            }
-            else if ($i > 0) {
-                echo '<div class="path-element">';
-            }
-
-            echo $jr_path_menu[$i] . "</div>";
-        }
-
+		$fireinfo = '';
         if (!empty($forumLocked))
         {
-            echo isset($fbIcons['forumlocked']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forumlocked']
-                     . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"  alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
+            $fireinfo = isset($fbIcons['forumlocked']) ? ' <img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forumlocked']
+                     . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"  alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
             $lockedForum = 1;
-        }
-        else {
-            echo "";
         }
 
         if (!empty($forumReviewed))
         {
-            echo isset($fbIcons['forummoderated']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forummoderated']
-                     . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '">';
+            $fireinfo = isset($fbIcons['forummoderated']) ? ' <img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forummoderated']
+                     . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '">';
             $moderatedForum = 1;
         }
-        else {
-            echo "";
+
+        for ($i = 0; $i < $jr_forum_count; $i++)
+        {
+            if ($i == $jr_forum_count-1) {
+                echo '<div class="path-element-last">' . $jr_path_menu[$i] . $fireinfo . '</div>';
+            }
+            else {
+                echo '<div class="path-element">' . $jr_path_menu[$i] . '</div>';
+            }
         }
 
          //get viewing

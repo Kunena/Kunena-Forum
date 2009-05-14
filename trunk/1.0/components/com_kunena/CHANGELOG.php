@@ -38,6 +38,7 @@ Kunena 1.0.10
 # [#16382] Internal: Translation is not working for unauthorized message if Registered Users Only = Yes
 # [#16387] Remove many notices from undefined variables
 # [#16388] Internal: Forum Jump forwards you to front page if SEF is turned off
++ [#16389] Community Builder integration: add profile integration to default theme
 
 12-May-2009 Matias
 # [#16373] Internal: Joomla! 1.5 Native call in legacy code

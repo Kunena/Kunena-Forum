@@ -43,6 +43,7 @@ if ($fbConfig->fb_profile == 'cb')
 } else {
 	$profileHtml = null;
 }
+
 ?>
 
 <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">

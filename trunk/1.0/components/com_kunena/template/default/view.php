@@ -41,7 +41,8 @@ require_once (KUNENA_ABSSOURCESPATH . 'kunena.statsbar.php');
 //get the allowed forums and turn it into an array
 $allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):array();
 
-$topicLock = 0;
+$forumLocked = 0;
+$topicLocked = 0;
 
 $database->setQuery("SELECT * FROM #__fb_messages AS a LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.id={$id} and a.hold=0");
 unset($this_message);
@@ -53,7 +54,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
     $view = $view == "" ? $settings[current_view] : $view;
     setcookie("fboard_settings[current_view]", $view, time() + 31536000, '/');
 
-    $topicLock = $this_message->locked;
+    $topicLocked = $this_message->locked;
 
     if (count($this_message) < 1) {
         echo '<p align="center">' . _MODERATION_INVALID_ID . '</p>';
@@ -182,6 +183,8 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         $database->setQuery("SELECT name,id from #__fb_categories WHERE id='$objCatInfo->parent'");
         $database->loadObject($objCatParentInfo);
 
+        $forumLocked = $objCatInfo->locked;
+        
         //Perform subscriptions check only once
         $fb_cansubscribe = 0;
         if ($fbConfig->allowsubscriptions && ("" != $my_id || 0 != $my_id))
@@ -251,13 +254,13 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                     echo '<a name="forumtop" /> ';
                     echo CKunenaLink::GetSamePageAnkerLink('forumbottom', isset($fbIcons['bottomarrow']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM);
 
-                    if (($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite)
+                    if ($is_Moderator || ($forumLocked == 0 && ($my->id > 0 || $fbConfig->pubwrite)))
                     {
                         //this user is allowed to post a new topic:
                         echo CKunenaLink::GetPostNewTopicLink($catid, isset($fbIcons['new_topic']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
                     }
 
-                    if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
+                    if ($is_Moderator || (($forumLocked == 0 && $topicLocked == 0) && ($my->id > 0 || $fbConfig->pubwrite)))
                     {
                         //this user is allowed to reply to this topic:
                         echo CKunenaLink::GetTopicPostReplyLink('reply', $catid, $thread, isset($fbIcons['topicreply']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['topicreply'] . '" alt="' . _GEN_POST_REPLY . '" title="' . _GEN_POST_REPLY . '" border="0" />' : _GEN_POST_REPLY);
@@ -384,7 +387,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 
                         //check if topic is locked
                         $_lockTopicID = $this_message->thread;
-                        $topicLock = $this_message->locked;
+                        $topicLocked = $this_message->locked;
 
                         if ($_lockTopicID) // prev UNDEFINED $topicID!!
                         {
@@ -394,7 +397,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                         else
                         { //topic not locked; check if forum is locked
                             $database->setQuery("select locked from #__fb_categories where id={$this_message->catid}");
-                            $topicLock = $database->loadResult();
+                            $topicLocked = $database->loadResult();
                             $lockedWhat = _FORUM_NOT_ALLOWED; // UNUSED
                         }
                         // END TOPIC LOCK
@@ -928,7 +931,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     $msg_signature = $signature;
                                 }
 
-                                if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite == 1) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
+                                if ($is_Moderator || (($forumLocked == 0 && $topicLocked == 0) && ($my->id > 0 || $fbConfig->pubwrite)))
                                 {
                                     //user is allowed to reply/quote
                                     $msg_reply = CKunenaLink::GetTopicPostReplyLink('reply', $catid, $fmessage->id , isset($fbIcons['reply']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['reply'] . '" alt="Reply" border="0" title="' . _VIEW_REPLY . '" />':_GEN_REPLY);
@@ -937,7 +940,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 else
                                 {
                                     //user is not allowed to write a post
-                                    if ($topicLock == 1) {
+                                    if ($topicLocked == 1 || $forumLocked == 1) {
                                         $msg_closed = _POST_LOCK_SET;
                                     }
                                     else {
@@ -1111,13 +1114,13 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                         echo '<a name="forumbottom" /> ';
                         echo CKunenaLink::GetSamePageAnkerLink('forumtop', isset($fbIcons['toparrow']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP);
 
-                        if (($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite)
+                        if ($is_Moderator || ($forumLocked == 0 && ($my->id > 0 || $fbConfig->pubwrite)))
                         {
                             //this user is allowed to post a new topic:
                             echo CKunenaLink::GetPostNewTopicLink($catid, isset($fbIcons['new_topic']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
                         }
 
-                        if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
+                        if ($is_Moderator || (($forumLocked == 0 && $topicLocked == 0) && ($my->id > 0 || $fbConfig->pubwrite)))
                         {
                             //this user is allowed to reply to this topic:
                             echo CKunenaLink::GetTopicPostReplyLink('reply', $catid, $thread, isset($fbIcons['topicreply']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['topicreply'] . '" alt="' . _GEN_POST_REPLY . '" title="' . _GEN_POST_REPLY . '" border="0" />' : _GEN_POST_REPLY);

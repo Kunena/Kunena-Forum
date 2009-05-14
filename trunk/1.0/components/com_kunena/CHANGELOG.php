@@ -33,6 +33,9 @@ Legend:
 Kunena 1.0.10
 
 13-May-2009 Matias
+# [#16395] If you are not logged in, there are icons "New thread" and "Reply topic" in a locked forum
+
+13-May-2009 Matias
 # [#16378] Community Builder integration: solve jQuery conflict and small bug in profile links
 # [#16379] Breadcrumb has no style in default green, gray and red templates
 # [#16382] Internal: Translation is not working for unauthorized message if Registered Users Only = Yes

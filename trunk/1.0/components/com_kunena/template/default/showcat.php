@@ -31,7 +31,7 @@ $catid = (int)$catid; // redundant
 
 //resetting some things:
 $moderatedForum = 0;
-$lockedForum = 0;
+$forumLocked = 0;
 $topicLocked = 0;
 $topicSticky = 0;
 
@@ -93,15 +93,6 @@ if (in_array($catid, $allow_forum))
     $numPending = $database->loadResult();
     	check_dberror("Unable to load messages.");
     //@rsort($messages[0]);
-?>
-<!-- Pathway -->
-<?php
-    if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
-        require_once(KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
-    }
-    else {
-        require_once(KUNENA_ABSPATH . '/template/default/fb_pathway.php');
-    }
 
     //Get the category name for breadcrumb
     unset($objCatInfo, $objCatParentInfo);
@@ -114,6 +105,15 @@ if (in_array($catid, $allow_forum))
     $forumLocked = $objCatInfo->locked;
     //check if this forum is subject to review
     $forumReviewed = $objCatInfo->review;
+?>
+<!-- Pathway -->
+<?php
+    if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
+        require_once(KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
+    }
+    else {
+        require_once(KUNENA_ABSPATH . '/template/default/fb_pathway.php');
+    }
 ?>
 <!-- / Pathway -->
 <?php if($objCatInfo->headerdesc) { ?>
@@ -146,7 +146,7 @@ if (in_array($catid, $allow_forum))
                 ?>
 
                 <?php
-                if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite == 1) && ($topicLocked == 0 || ($topicLocked == 1 && $is_Moderator)))
+                if ($is_Moderator || ($forumLocked == 0 && ($my->id > 0 || $fbConfig->pubwrite)))
                 {
                     //this user is allowed to post a new topic:
                     echo CKunenaLink::GetPostNewTopicLink($catid, isset($fbIcons['new_topic']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
@@ -236,7 +236,7 @@ if (in_array($catid, $allow_forum))
                 ?>
 
                 <?php
-                if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite == 1) && ($topicLocked == 0 || ($topicLock == 1 && $is_Moderator)))
+                if ($is_Moderator || ($forumLocked == 0 && ($my->id > 0 || $fbConfig->pubwrite)))
                 {
                     //this user is allowed to post a new topic:
                     echo CKunenaLink::GetPostNewTopicLink($catid, isset($fbIcons['new_topic']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
@@ -387,7 +387,7 @@ if (in_array($catid, $allow_forum))
                     <br/>
 
                         <?php
-                        if ($lockedForum == 1)
+                        if ($forumLocked == 1)
                         {
                             echo isset($fbIcons['forumlocked']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forumlocked']
                                      . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" /> - ' . _GEN_LOCKED_FORUM . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif" border="0"   alt="' . _GEN_LOCKED_FORUM . '" /> - ' . _GEN_LOCKED_FORUM . '';

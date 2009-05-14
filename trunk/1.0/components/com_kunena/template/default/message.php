@@ -194,7 +194,7 @@ $database->loadObject($user);
                             $msg_time_since = _KUNENA_TIME_SINCE;
                             $msg_time_since = str_replace('%time%', time_since($fmessage->time , CKunenaTools::fbGetInternalTime()), $msg_time_since);
 
-                            if ($prevCheck < $msg_time && !in_array($fmessage->thread, $read_topics)) {
+                            if ($prevCheck < $fmessage->time && !in_array($fmessage->thread, $read_topics)) {
                                 $msgtitle = 'msgtitle_new';
                             } else {
                                 $msgtitle = 'msgtitle';
@@ -208,7 +208,9 @@ $database->loadObject($user);
 
                             <?php
                             if (isset($msg_karma)) {
-                                echo $msg_karma . '&nbsp;&nbsp;' . $msg_karmaplus . ' ' . $msg_karmaminus;
+                                echo $msg_karma;
+								if (isset($msg_karmaplus)) 
+									echo '&nbsp;&nbsp;' . $msg_karmaplus . ' ' . $msg_karmaminus;
                             }
                             else {
                                 echo '&nbsp;';
@@ -224,7 +226,7 @@ $database->loadObject($user);
                             <div class = "msgtext"><?php echo $msg_text; ?></div>
 
                             <?php
-                            if (!$msg_closed)
+                            if (empty($msg_closed))
                             {
                             ?>
 
@@ -302,7 +304,7 @@ $database->loadObject($user);
                             <?php echo isset($fbIcons['msgip']) ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['msgip'] .'" border="0" alt="'._KUNENA_REPORT_LOGGED.'" />' : ' <img src="'.KUNENA_URLEMOTIONSPATH.'ip.gif" border="0" alt="'. _KUNENA_REPORT_LOGGED.'" />';
                             ?> <span class="fb_smalltext"> <?php echo _KUNENA_REPORT_LOGGED;?></span>
                             <?php
-                            echo CKunenaLink::GetMessageIPLink($msg_ip);
+                            if(!empty($msg_ip)) echo CKunenaLink::GetMessageIPLink($msg_ip);
                             ?>
                             </div>
        </td>
@@ -356,7 +358,7 @@ if (isset($msg_signature)) {
                 <?php
                 //we should only show the Quick Reply section to registered users. otherwise we are missing too much information!!
                 /*    onClick="expandcontent(this, 'sc<?php echo $msg_id;?>')" */
-                if ($my->id > 0 && !$msg_closed)
+                if ($my->id > 0 && empty($msg_closed))
                 {
                 ?>
 
@@ -370,7 +372,7 @@ if (isset($msg_signature)) {
                 <?php
                 if ($fbIcons['reply'])
                 {
-                    if ($msg_closed == "")
+                    if (empty($msg_closed))
                     {
                         echo $msg_reply;
                         echo " " . $msg_quote;

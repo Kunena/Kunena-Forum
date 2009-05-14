@@ -122,6 +122,7 @@ if (count($messages[0]) > 0)
                 $k = 0;
                 $st_c = 0;
 
+                $st_occured = 0;
                 foreach ($messages[0] as $leaf)
                 {
                     $k = 1 - $k; //used for alternating colours
@@ -139,39 +140,29 @@ if (count($messages[0]) > 0)
                     //(JJ) AVATAR
                     if ($fbConfig->avataroncat)
                     {
-                    	if ($fbConfig->avatar_src == "jomsocial")
+						if ($fbConfig->avatar_src == "jomsocial" && $leaf->userid)
 						{
 							// Get CUser object
-							$user =& CFactory::getUser($leaf->userid);
-						    $bof_avatar = '<img class="catavatar" src="' . $user->getThumbAvatar() . '" alt=" " />';
+							$user =& CFactory::getUser($last_reply[$leaf->id]->userid);
+							$bof_avatar = '<img class="catavatar" src="' . $user->getThumbAvatar() . '" alt=" " />';
 						}
-						else
+						else if ($fbConfig->avatar_src == "cb")
 						{
-	                        // ///////
-	                        //first we gather some information about this person
-	                        unset($CatUser);
-	                            $database->setQuery("SELECT * FROM #__fb_users as su"
-	                                                . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$leaf->userid}");
+							$bof_avatar = $kunenaProfile->showAvatar($last_reply[$leaf->id]->userid, 'catavatar');
+						} else {
+							//first we gather some information about this person
+							unset($CatUser);
+							$database->setQuery("SELECT * FROM #__fb_users as su"
+								. "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$leaf->userid}");
 
-	                            $database->loadObject($CatUser);
-	                            $javatar = $CatUser->avatar;
-
-	                        if ($fbConfig->avatar_src == "cb")
-	                        {
-	                            $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id={$leaf->userid}");
-	                            $javatar = $database->loadResult();
-	                        }
-
-	                        if ($fbConfig->avatar_src == "cb" and $javatar!=false) {
-	                            $bof_avatar = '<img class="catavatar" src="images/comprofiler/' . $javatar . '" alt=" " />';
-	                            }
-	                        elseif ($javatar!=false) {
-	                            $bof_avatar = '<img class="catavatar" src="images/fbfiles/avatars/' . $javatar . '" alt=" " />';
-	                            }
-						 }
-	                    // //////////
-                    }
-                ?>
+							$database->loadObject($CatUser);
+							if (is_object($CatUser)) $javatar = $CatUser->avatar;
+							if (isset($javatar)) {
+								$bof_avatar = '<img class="catavatar" src="'.(!file_exists(KUNENA_ABSUPLOADEDPATH . '/avatars/s_' . $javatar)?KUNENA_LIVEUPLOADEDPATH.'/avatars/'.$javatar:KUNENA_LIVEUPLOADEDPATH.'/avatars/s_'.$javatar) .'" alt="" />';
+							}
+						}
+					}
+				?>
 
                 <?php
                     if ($st_c == 0 && $st_occured != 1 && $st_count != 0)
@@ -273,7 +264,7 @@ if (count($messages[0]) > 0)
                                 ?>
 
                                 <div class = "fb-topic-title-cover">
-                                    <?php echo CKunenaLink::GetThreadLink('view', $leaf->catid, $leaf->id, htmlspecialchars(stripslashes($leaf->subject)), htmlspecialchars(stripslashes($messagetext[$leaf->id])), 'follow', 'fb-topic-title fbm');?>
+                                    <?php echo CKunenaLink::GetThreadLink('view', $leaf->catid, $leaf->id, htmlspecialchars(stripslashes($leaf->subject)), '', 'follow', 'fb-topic-title fbm');?>
                                     <!--            Favourite       -->
 
                                     <?php

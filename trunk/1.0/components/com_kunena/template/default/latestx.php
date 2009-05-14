@@ -71,6 +71,7 @@ $countRS = count($resultSet);
 //check if $sel has a reasonable value and not a Unix timestamp:
 $since = false;
 
+$lastvisit = '';
 if ($sel == "0")
 {
     $lastvisit = date(_DATETIME, $querytime);

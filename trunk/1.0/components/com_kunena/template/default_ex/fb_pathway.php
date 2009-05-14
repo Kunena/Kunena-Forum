@@ -86,21 +86,21 @@ if ($func != "")
         }
 
 	$fireinfo = '';
-/*
-        if ($forumLocked)
+
+        if (!empty($forumLocked))
         {
             $fireinfo = isset($fbIcons['forumlocked']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forumlocked']
                      . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"  alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
             $lockedForum = 1;
         }
 
-        if ($forumReviewed)
+        if (!empty($forumReviewed))
         {
             $fireinfo = isset($fbIcons['forummoderated']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forummoderated']
                      . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '">';
             $moderatedForum = 1;
         }
-*/
+
          //get viewing
         $fb_queryName = $fbConfig->username ? "username" : "name";
 		$query= "SELECT w.userid, u.$fb_queryName AS username , k.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS k ON k.userid=w.userid  WHERE w.link like '%" . addslashes($_SERVER['REQUEST_URI']) . "%' GROUP BY w.userid ORDER BY u.$fb_queryName ASC";

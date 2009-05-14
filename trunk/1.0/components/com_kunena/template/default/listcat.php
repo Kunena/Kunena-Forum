@@ -36,6 +36,8 @@ $allCat = $database->loadObjectList();
 $threadids = array ();
 $categories = array ();
 
+$smileyList = smile::getEmoticons(0);
+
 // set page title
 $mainframe->setPageTitle(_GEN_FORUMLIST . ' - ' . stripslashes($fbConfig->board_title));
 
@@ -126,7 +128,7 @@ if (count($categories[0]) > 0)
 
         $is_Mod = fb_has_moderator_permission($database, $obj_fb_cat, $my->id, $is_admin);
 
-        if (in_array($catid, $allow_forum))
+        if (in_array($cat->id, $allow_forum))
         {
 ?>
             <!-- B: List Cat -->
@@ -173,7 +175,7 @@ if (count($categories[0]) > 0)
                     <?php
                     //    show forums within the categories
                     $database->setQuery(
-                    "SELECT c.*,m.subject, m.catid AS lastcat, m.name AS mname, m.userid, u.username, u.name AS uname
+                    "SELECT c.*,m.subject, m.catid, m.name AS mname, m.userid, u.username, u.name AS uname
                     FROM #__fb_categories AS c
                     LEFT JOIN #__fb_messages AS m ON c.id_last_msg = m.id
                     LEFT JOIN #__users AS u ON u.id = m.userid
@@ -201,7 +203,7 @@ if (count($categories[0]) > 0)
                             $obj_fb_cat = new jbCategory($database, $singlerow->id);
                             $is_Mod = fb_has_moderator_permission($database, $obj_fb_cat, $my->id, $is_admin);
 
-                            if (in_array($catid, $allow_forum))
+                            if (in_array($singlerow->id, $allow_forum))
                             {
                                 //    $k=for alternating row colors:
                                 $k = 1 - $k;
@@ -272,6 +274,12 @@ if (count($categories[0]) > 0)
                                 WHERE m.id='$singlerow->id_last_msg'
                                 GROUP BY m.thread");
                                 $database->loadObject($thisThread);
+                                if (!is_object($thisThread))
+                                {
+                                	$thisThread = new stdClass();
+                                	$thisThread->totalmessages = 0;
+                                	$thisThread->thread = 0;
+                                }
                                 $latestthreadpages = ceil($thisThread->totalmessages / $fbConfig->messages_per_page);
                                 $latestthread = $thisThread->thread;
                                 $latestname = $singlerow->mname;
@@ -285,6 +293,7 @@ if (count($categories[0]) > 0)
                                     <td class = "td-1" align="center">
                                         <?php
                                         $tmpIcon = '';
+                                        $cxThereisNewInForum = 0;
                                         if ($fbConfig->shownew && $my->id != 0)
                                         {
                                             //Check if unread threads are in any of the forums topics
@@ -547,7 +556,7 @@ if (count($categories[0]) > 0)
                                         <td class = "td-5" align="left">
                                             <div class = "<?php echo $boardclass ?>latest-subject fbm">
 <?php
-                                               echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $singlerow->lastcat, $latestthread, $latestthreadpages, $fbConfig->messages_per_page, $latestsubject, $latestid);
+                                               echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $singlerow->catid, $latestthread, $latestthreadpages, $fbConfig->messages_per_page, $latestsubject, $latestid);
 ?>
                                             </div>
 
@@ -556,7 +565,7 @@ if (count($categories[0]) > 0)
                                                 echo _GEN_BY.' ';
                                                 echo CKunenaLink::GetProfileLink($fbConfig, $latestuserid, $latestname);
                                                 echo ' | '.$lastptime.' ';
-                                                echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $singlerow->lastcat, $latestthread, $latestthreadpages, $fbConfig->messages_per_page,
+                                                echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $singlerow->catid, $latestthread, $latestthreadpages, $fbConfig->messages_per_page,
                                                 isset($fbIcons['latestpost']) ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" title="'. _SHOW_LAST.'"/>' :
                                                                          '<img src="'.KUNENA_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'"/>', $latestid);
 ?>

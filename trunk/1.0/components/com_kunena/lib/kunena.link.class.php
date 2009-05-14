@@ -95,6 +95,7 @@ class CKunenaLink
 
     function GetThreadPageLink($fbConfig, $func, $catid, $threadid, $page, $limit, $name, $anker='', $rel='follow', $class='')
     {
+    	$fbConfig =& CKunenaConfig::getInstance();
         if ($page == 1 || !is_numeric($page) || !is_numeric($limit))
         {
             // page 1 is identical to a link to the top of the thread
@@ -155,6 +156,7 @@ class CKunenaLink
 
     function GetMyProfileLink($fbConfig, $userid, $name, $rel='nofollow')
     {
+    	$fbConfig =& CKunenaConfig::getInstance();
     	if($fbConfig->fb_profile == 'jomsocial' || $fbConfig->fb_profile == 'cb')
     	{
     		return CKunenaLink::GetProfileLink($fbConfig, $userid, $name, $rel);
@@ -167,6 +169,7 @@ class CKunenaLink
 
     function GetProfileLink($fbConfig, $userid, $name, $rel='nofollow', $class='')
     {
+    	$fbConfig =& CKunenaConfig::getInstance();
     	// Only create links for valid users
     	if ($userid > 0)
     	{
@@ -256,36 +259,40 @@ class CKunenaLink
 
     function GetRulesLink($fbConfig, $name, $rel='nofollow')
     {
+		$fbConfig =& CKunenaConfig::getInstance();
         $ruleslink = $fbConfig->rules_infb ? KUNENA_LIVEURLREL.'&amp;func=rules' : $fbConfig->rules_link;
         return CKunenaLink::GetSefHrefLink($ruleslink, $name, '', $rel);
     }
 
     function GetHelpLink($fbConfig, $name, $rel='nofollow')
     {
+    	$fbConfig =& CKunenaConfig::getInstance();
         $helplink = $fbConfig->help_infb ? KUNENA_LIVEURLREL.'&amp;func=faq' : $fbConfig->help_link;
         return CKunenaLink::GetSefHrefLink($helplink, $name, '', $rel);
     }
 
     function GetSearchURL($fbConfig, $func, $searchword, $limitstart, $limit, $params='')
     {
-	$limitstr = "&amp;limitstart=$limitstart";
-	if ($limit != $fbConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
+    	$fbConfig =& CKunenaConfig::getInstance();
+		$limitstr = "&amp;limitstart=$limitstart";
+		if ($limit != $fbConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
         return sefRelToAbs(KUNENA_LIVEURLREL."&amp;func={$func}&amp;q={$searchword}{$params}{$limitstr}");
     }
 
     function GetSearchLink($fbConfig, $func, $searchword, $limitstart, $limit, $name, $params='', $rel='nofollow')
     {
-	$limitstr = "&amp;limitstart=$limitstart";
-	if ($limit != $fbConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
-	$searchword = urlencode($searchword);
+    	$fbConfig =& CKunenaConfig::getInstance();
+		$limitstr = "&amp;limitstart=$limitstart";
+		if ($limit != $fbConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
+		$searchword = urlencode($searchword);
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL."&amp;func={$func}&amp;q={$searchword}{$params}{$limitstr}", $name, '', $rel);
     }
 
     function GetAnnouncementURL($fbConfig, $do, $id=NULL)
     {
-	$idstring = '';
-	if ($id !== NULL) $idstring .= "&amp;id=$id";
-	return sefRelToAbs(KUNENA_LIVEURLREL."&amp;func=announcement&amp;do={$do}{$idstring}");
+		$idstring = '';
+		if ($id !== NULL) $idstring .= "&amp;id=$id";
+		return sefRelToAbs(KUNENA_LIVEURLREL."&amp;func=announcement&amp;do={$do}{$idstring}");
     }
 
     //
@@ -299,7 +306,8 @@ class CKunenaLink
     //
     function GetLatestPostAutoRedirectHTML($fbConfig, $pid, $limit)
     {
-        global $database;
+		global $database;
+		$fbConfig =& CKunenaConfig::getInstance();
         // First determine the thread, latest post and number of posts for the post supplied
         $database->setQuery('SELECT a.thread AS thread, max(a.id) AS latest_id, max(a.catid) AS catid, count(*) AS totalmessages
                              FROM #__fb_messages AS a,
@@ -326,6 +334,7 @@ class CKunenaLink
     function GetLatestPageAutoRedirectURL($fbConfig, $pid, $limit)
     {
         global $database;
+        $fbConfig =& CKunenaConfig::getInstance();
         // First determine the thread, latest post and number of posts for the post supplied
         $database->setQuery('SELECT a.thread AS thread, max(a.id) AS latest_id, max(a.catid) AS catid, count(*) AS totalmessages
                              FROM #__fb_messages AS a,

@@ -34,22 +34,21 @@ if ($func != "")
     <div class = "<?php echo $boardclass ?>forum-pathway">
         <?php
         $catids = intval($catid);
-        $parent_ids = 1000;
-        $jr_it = 1;
         $jr_path_menu = array ();
         $shome = '<div class="path-element-first">' . CKunenaLink::GetKunenaLink( htmlspecialchars(stripslashes($fbConfig->board_title)) );
 
-        while ($parent_ids)
+        while ($catids > 0)
         {
             $query = "select * from #__fb_categories where id=$catids and published=1";
             $database->setQuery($query);
             $database->loadObject($results);
+            if (!$results) break;
 			$parent_ids = $results->parent;
 			$fr_name = htmlspecialchars(trim(stripslashes($results->name)));
             //$cids=@mysql_result( $results, 0, 'id' );
             $sname = CKunenaLink::GetCategoryLink( 'showcat', $catids, $fr_name);
 
-            if ($jr_it == 1 && $sfunc != "view")
+            if ($catid == $catids && $sfunc != "view")
             {
                 $fr_title_name = $fr_name;
                 $jr_path_menu[] = $fr_name;
@@ -68,7 +67,6 @@ if ($func != "")
 
             // next looping
             $catids = $parent_ids;
-            $jr_it++;
         }
 
         $jr_path_menu[] = $shome;
@@ -101,7 +99,7 @@ if ($func != "")
             echo $jr_path_menu[$i] . "</div>";
         }
 
-        if ($forumLocked)
+        if (!empty($forumLocked))
         {
             echo isset($fbIcons['forumlocked']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forumlocked']
                      . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"  alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
@@ -111,7 +109,7 @@ if ($func != "")
             echo "";
         }
 
-        if ($forumReviewed)
+        if (!empty($forumReviewed))
         {
             echo isset($fbIcons['forummoderated']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forummoderated']
                      . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '">';
@@ -138,6 +136,7 @@ if ($func != "")
 			echo "<div class=\"path-element-users\">($total_viewing " . _KUNENA_PATHWAY_VIEWING . ")&nbsp;";
 			$totalguest = 0;
 			$lastone = end($users);
+			$divider = ', ';
 			foreach ($users as $user) {
 				if ($user->userid != 0)
 				{
@@ -157,8 +156,10 @@ if ($func != "")
        }
 
         unset($shome, $spath, $parent_ids, $catids, $results, $sname);
-	$fr_title = $fr_title_name . $jr_topic_title;
-        $mainframe->setPageTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($fbConfig->board_title));
+        $fr_title = '';
+		if (!empty($fr_title_name)) $fr_title .= $fr_title_name;
+		if (!empty($jr_topic_title)) $fr_title .= $jr_topic_title;
+		$mainframe->setPageTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($fbConfig->board_title));
         ?>
 		</div>
     </div>

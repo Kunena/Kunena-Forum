@@ -168,13 +168,13 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                     $row_catname = stripslashes($row->catname);
                     $row_username = stripslashes($row->username);
                     $row_date = mosFormatDate($row->date);
-                    $row_lock = ($row->locked ? _CMN_YES : _CMN_NO);
+                    $row_lock = ($row->locked ? _KUNENA_LOCKED : '');
                     $overlib .= "<tr><td valign=top>" . _GEN_CATEGORY . "</td><td>$row_catname</td></tr>";
                     $overlib .= "<tr><td valign=top>" . ucfirst(_GEN_BY) . "</td><td>$row_username</td></tr>";
                     $overlib .= "<tr><td valign=top>" . _GEN_DATE . "</td><td>$row_date</td></tr>";
 
                     if (!$row->parent) {
-                        $overlib .= "<tr><td valign=top>" . _GEN_VIEWS . "</td><td>$row->hits</td></tr>";
+                        $overlib .= "<tr><td valign=top>" . _GEN_HITS . "</td><td>$row->hits</td></tr>";
                         }
 
                     $overlib .= "<tr><td valign=top>" . ucfirst(_GEN_LOCK) . "</td><td>$row_lock</td></tr>";
@@ -184,8 +184,8 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                     $tooltips = '';
 
                     if ($tooltips_enable == 1) {
-                        $title = _GEN_POSTS_DISPLAY;
-                        $tooltips = " onmouseout='return nd();'" . " onmouseover=\"return overlib('$overlib',CAPTION,'$title',BELOW,RIGHT);\"";
+                        //$title = _GEN_POSTS_DISPLAY;
+                        //$tooltips = " onmouseout='return nd();'" . " onmouseover=\"return overlib('$overlib',CAPTION,'$title',BELOW,RIGHT);\"";
                         }
 
                     $k = 3 - $k;
@@ -226,6 +226,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 
                         if ($show_date) {
                             echo "<td  class=\"td-5 fbm\"  align=\"left\" >";
+                            if (empty($date_format)) $date_format = _KUNENA_DT_DATETIME_FMT;
                             echo mosFormatDate(date($row->date), $date_format);
                             echo "</td>";
                             }

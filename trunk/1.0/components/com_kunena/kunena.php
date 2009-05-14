@@ -518,7 +518,7 @@ require_once (KUNENA_ABSSOURCESPATH . 'kunena.session.class.php');
     switch ($func)
     {
         case 'view':
-            $fbMenu = KUNENA_get_menu($fbConfig, $fbIcons, $my_id, 3, $view, $catid, $id, $thread);
+            $fbMenu = KUNENA_get_menu(NULL, $fbConfig, $fbIcons, $my_id, 3, $view, $catid, $id, $thread);
 
             break;
 
@@ -528,11 +528,11 @@ require_once (KUNENA_ABSSOURCESPATH . 'kunena.session.class.php');
             $numPending = $database->loadResult();
             	check_dberror('Unable load pending messages.');
 
-            $fbMenu = KUNENA_get_menu($fbConfig, $fbIcons, $my_id, 2, $view, $catid, $id, $thread, $is_Moderator, $numPending);
+            $fbMenu = KUNENA_get_menu(NULL, $fbConfig, $fbIcons, $my_id, 2, $view, $catid, $id, $thread, $is_Moderator, $numPending);
             break;
 
         default:
-            $fbMenu = KUNENA_get_menu($fbConfig, $fbIcons, $my_id, 1, $view);
+            $fbMenu = KUNENA_get_menu(NULL, $fbConfig, $fbIcons, $my_id, 1, $view);
 
             break;
     }

@@ -148,7 +148,7 @@ if (count($messages[0]) > 0)
                 $k = 0;
                 $st_c = 0;
 
-		$st_occured = 0;
+				$st_occured = 0;
                 foreach ($messages[0] as $leaf)
                 {
                     $k = 1 - $k; //used for alternating colours

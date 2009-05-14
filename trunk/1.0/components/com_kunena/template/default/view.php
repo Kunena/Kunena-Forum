@@ -606,8 +606,8 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 
                                     if ($my->id != '0' && $my->id != $fmessage->userid)
                                     {
-                                        $msg_karmaminus = CKunenaLink::GetKarmaLink('decrease', $catid, $fmessage->id, $fmessage->userid, '<img src="'.($fbIcons['karmaminus']?(KUNENA_URLICONSPATH . "" . $fbIcons['karmaminus']):(KUNENA_URLEMOTIONSPATH . "karmaminus.gif")).'" alt="Karma-" border="0" title="' . _KARMA_SMITE . '" align="middle" />' );
-                                        $msg_karmaplus  = CKunenaLink::GetKarmaLink('increase', $catid, $fmessage->id, $fmessage->userid, '<img src="'.($fbIcons['karmaplus']?(KUNENA_URLICONSPATH . "" . $fbIcons['karmaplus']):(KUNENA_URLEMOTIONSPATH . "karmaplus.gif")).'" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" align="middle" />' );
+                                        $msg_karmaminus = CKunenaLink::GetKarmaLink('decrease', $catid, $fmessage->id, $fmessage->userid, '<img src="'.(isset($fbIcons['karmaminus'])?(KUNENA_URLICONSPATH . "" . $fbIcons['karmaminus']):(KUNENA_URLEMOTIONSPATH . "karmaminus.gif")).'" alt="Karma-" border="0" title="' . _KARMA_SMITE . '" align="middle" />' );
+                                        $msg_karmaplus  = CKunenaLink::GetKarmaLink('increase', $catid, $fmessage->id, $fmessage->userid, '<img src="'.(isset($fbIcons['karmaplus'])?(KUNENA_URLICONSPATH . "" . $fbIcons['karmaplus']):(KUNENA_URLEMOTIONSPATH . "karmaplus.gif")).'" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" align="middle" />' );
                                     }
                                 }
                                 /*let's see if we should use Missus integration */
@@ -688,6 +688,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     $database->setQuery($sql);
                                     $isonline = $database->loadResult();
 
+                                    $msg_online = '';
                                     if ($isonline && $userinfo->showOnline ==1 ) {
                                         $msg_online .= isset($fbIcons['onlineicon']) ? '<img src="'
                                         . KUNENA_URLICONSPATH . '' . $fbIcons['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';

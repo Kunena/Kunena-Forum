@@ -31,6 +31,8 @@ include (KUNENA_ABSTMPLTPATH . '/latestx.php');
 //securing passed form elements
 $catid = (int)$catid;
 
+$smileyList = smile::getEmoticons(0);
+
 //resetting some things:
 $moderatedForum = 0;
 $lockedForum = 0;
@@ -327,7 +329,7 @@ if (count($categories[0]) > 0)
                                     <td class = "td-1" align="center">
                                         <?php
                                         $tmpIcon = '';
-					$cxThereisNewInForum = 0;
+										$cxThereisNewInForum = 0;
                                         if ($fbConfig->shownew && $my->id != 0)
                                         {
                                             //Check if unread threads are in any of the forums topics

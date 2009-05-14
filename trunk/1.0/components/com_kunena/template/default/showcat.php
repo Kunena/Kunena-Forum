@@ -32,7 +32,7 @@ $catid = (int)$catid; // redundant
 //resetting some things:
 $moderatedForum = 0;
 $lockedForum = 0;
-$lockedTopic = 0;
+$topicLocked = 0;
 $topicSticky = 0;
 
 unset($allow_forum);
@@ -62,12 +62,17 @@ if (in_array($catid, $allow_forum))
     $database->setQuery(
         "SELECT a. * , MAX( b.time )  AS lastpost FROM  #__fb_messages  AS a LEFT  JOIN #__fb_messages  AS b ON b.thread = a.thread WHERE a.parent =  '0' AND a.catid =  $catid AND a.hold =  '0' GROUP  BY id ORDER  BY ordering DESC , lastpost DESC  LIMIT $offset,$threads_per_page");
 
+    $threadids = array();
+    $messages = array();
+    $messages[0] = array();
+    $thread_counts = array();
     foreach ($database->loadObjectList()as $message)
     {
         $threadids[] = $message->id;
         $messages[$message->parent][] = $message;
         $last_reply[$message->id] = $message;
         $hits[$message->id] = $message->hits;
+        $thread_counts[$message->id] = 0;
     }
 
     if (count($threadids) > 0)
@@ -113,6 +118,7 @@ if (in_array($catid, $allow_forum))
 <!-- / Pathway -->
 <?php if($objCatInfo->headerdesc) { ?>
 <div class="fb_forum-headerdesc"><?php
+		$smileyList = smile::getEmoticons(0);
 		$headerdesc = stripslashes(smile::smileReplace($objCatInfo->headerdesc, 0, $fbConfig->disemoticons, $smileyList));
         $headerdesc = nl2br($headerdesc);
         //wordwrap:
@@ -140,7 +146,7 @@ if (in_array($catid, $allow_forum))
                 ?>
 
                 <?php
-                if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite == 1) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
+                if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite == 1) && ($topicLocked == 0 || ($topicLocked == 1 && $is_Moderator)))
                 {
                     //this user is allowed to post a new topic:
                     echo CKunenaLink::GetPostNewTopicLink($catid, isset($fbIcons['new_topic']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
@@ -230,7 +236,7 @@ if (in_array($catid, $allow_forum))
                 ?>
 
                 <?php
-                if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite == 1) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
+                if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite == 1) && ($topicLocked == 0 || ($topicLock == 1 && $is_Moderator)))
                 {
                     //this user is allowed to post a new topic:
                     echo CKunenaLink::GetPostNewTopicLink($catid, isset($fbIcons['new_topic']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);

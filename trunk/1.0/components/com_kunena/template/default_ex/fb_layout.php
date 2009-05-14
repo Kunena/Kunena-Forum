@@ -159,7 +159,7 @@ function KUNENA_get_pathway(&$database, $obj_fb_cat, $bool_set_title, $obj_post 
  *             The menu :-)
  */
 
-function KUNENA_get_menu($fbConfig, $fbIcons, $my_id, $type, $view = "", $catid = 0, $id = 0, $thread = 0, $is_moderator = false, $numPending = 0)
+function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = "", $catid = 0, $id = 0, $thread = 0, $is_moderator = false, $numPending = 0)
 {
 	$func = strtolower(mosGetParam($_REQUEST, 'func', ''));
 	if ($func == '') // Set default as per config settings

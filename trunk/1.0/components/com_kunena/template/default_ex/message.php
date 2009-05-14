@@ -81,8 +81,8 @@ if ($fbConfig->fb_profile == 'cb')
                             <?php
                             if (isset($msg_karma)) {
                                 echo $msg_karma;
-				if (isset($msg_karmaplus)) 
-					echo '&nbsp;&nbsp;' . $msg_karmaplus . ' ' . $msg_karmaminus;
+								if (isset($msg_karmaplus)) 
+									echo '&nbsp;&nbsp;' . $msg_karmaplus . ' ' . $msg_karmaminus;
                             }
                             else {
                                 echo '&nbsp;';

@@ -304,7 +304,7 @@ class CKunenaLink
     // It is used for various operations. Input parameter is any post id. It will determine the thread,
     // latest post of that thread and number of pages based on the supplied page limit.
     //
-    function GetLatestPostAutoRedirectHTML($fbConfig, $pid, $limit)
+    function GetLatestPostAutoRedirectHTML($fbConfig, $pid, $catid, $limit)
     {
 		global $database;
 		$fbConfig =& CKunenaConfig::getInstance();
@@ -312,26 +312,27 @@ class CKunenaLink
         $database->setQuery('SELECT a.thread AS thread, max(a.id) AS latest_id, max(a.catid) AS catid, count(*) AS totalmessages
                              FROM #__fb_messages AS a,
                                 (SELECT max(thread) AS thread FROM #__fb_messages WHERE id='.$pid.') AS b
-                             WHERE a.thread = b.thread AND a.hold = 0
+                             WHERE a.thread = b.thread AND a.hold = 0 AND a.catid = '.$catid.'
                              GROUP BY a.thread');
         $database->loadObject($result);
-        	check_dberror("Unable to retrieve latest post.");
+        check_dberror("Unable to retrieve latest post.");
 
         // Now Calculate the number of pages for this particular thread
-        $threadPages = ceil($result->totalmessages / $limit);
+        if (is_object($result)) $threadPages = ceil($result->totalmessages / $limit);
 
         // Finally build output block
 
         $Output  = '<div align="center">';
-        $Output .= CKunenaLink::GetThreadPageLink($fbConfig, 'view', $result->catid, $result->thread, $threadPages, $limit, _POST_SUCCESS_VIEW, $result->latest_id) .'<br />';
-        $Output .= CKunenaLink::GetCategoryLink('showcat', $result->catid, _POST_SUCCESS_FORUM).'<br />';
+        if (is_object($result)) $Output .= CKunenaLink::GetThreadPageLink($fbConfig, 'view', $catid, $result->thread, $threadPages, $limit, _POST_SUCCESS_VIEW, $result->latest_id) .'<br />';
+        $Output .= CKunenaLink::GetCategoryLink('showcat', $catid, _POST_SUCCESS_FORUM).'<br />';
         $Output .= '</div>';
-        $Output .= CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $result->catid, $result->thread, $threadPages, $limit, $result->latest_id), 3500);
-
+        if (is_object($result)) $Output .= CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $result->thread, $threadPages, $limit, $result->latest_id), 3500);
+        else $Output .= CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid), 3500);
+        
         return $Output;
     }
 
-    function GetLatestPageAutoRedirectURL($fbConfig, $pid, $limit)
+    function GetLatestPageAutoRedirectURL($fbConfig, $pid, $catid, $limit)
     {
         global $database;
         $fbConfig =& CKunenaConfig::getInstance();
@@ -339,17 +340,18 @@ class CKunenaLink
         $database->setQuery('SELECT a.thread AS thread, max(a.id) AS latest_id, max(a.catid) AS catid, count(*) AS totalmessages
                              FROM #__fb_messages AS a,
                                 (SELECT max(thread) AS thread FROM #__fb_messages WHERE id='.$pid.') AS b
-                             WHERE a.thread = b.thread AND a.hold = 0
+                             WHERE a.thread = b.thread AND a.hold = 0 AND a.catid = '.$catid.'
                              GROUP BY a.thread');
         $database->loadObject($result);
-        	check_dberror("Unable to retrieve latest post.");
+        check_dberror("Unable to retrieve latest post.");
 
+        if (!is_object($result)) return false;
         // Now Calculate the number of pages for this particular thread
         $threadPages = ceil($result->totalmessages / $limit);
 
         // Finally build output block
 
-        return htmlspecialchars_decode(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $result->catid, $result->thread, $threadPages, $limit));
+        return htmlspecialchars_decode(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $result->thread, $threadPages, $limit));
     }
 
     function GetLatestCategoryAutoRedirectHTML($catid)
@@ -364,7 +366,7 @@ class CKunenaLink
 
     function GetAutoRedirectHTML($url, $timeout)
     {
-	$url = htmlspecialchars_decode($url);
+		$url = htmlspecialchars_decode($url);
         $Output = "\n<script type=\"text/javascript\">\n// <![CDATA[\n";
         $Output .= "kunenaRedirectTimeout('$url', $timeout);";
         $Output .= "\n// ]]>\n</script>\n";

@@ -402,16 +402,17 @@ if (count($categories[0]) > 0)
                                                     <?php
                                                     //row index
                                                     $ir9 = 0;
-                                                    $num_rows = ceil(count($forumparents) / $fbConfig->numchildcolumn);
+                                                    $cfg_numforums = $fbConfig->numchildcolumn>0 ? $fbConfig->numchildcolumn : 2;
+                                                    $num_rows = ceil(count($forumparents) / $cfg_numforums);
 
                                                     //     foreach ($forumparents as $forumparent)
                                                     for ($row_count = 0; $row_count < $num_rows; $row_count++)
                                                     {
                                                         echo '<tr>';
 
-                                                        for ($col_count = 0; $col_count < $fbConfig->numchildcolumn; $col_count++)
+                                                        for ($col_count = 0; $col_count < $cfg_numforums; $col_count++)
                                                         {
-                                                            echo '<td width="' . floor(100 / $fbConfig->numchildcolumn) . '%" class="' . $boardclass . 'cc-sectiontableentry1 fbm">';
+                                                            echo '<td width="' . floor(100 / $cfg_numforums) . '%" class="' . $boardclass . 'cc-sectiontableentry1 fbm">';
 
                                                             $forumparent = @$forumparents[$ir9];
 
@@ -535,7 +536,7 @@ if (count($categories[0]) > 0)
                                             if ($numPending > 0)
                                             {
                                                 echo '<div class="fbs"><font color="red"> ';
-                                                echo CKunenaLink::GetPendingMessagesLink($singlerow->id, $numcolor.$numPending.' '._SHOWCAT_PENDING);
+                                                echo CKunenaLink::GetPendingMessagesLink($singlerow->id, $numPending.' '._SHOWCAT_PENDING);
                                                 echo '</font></div>';
                                             }
                                         }

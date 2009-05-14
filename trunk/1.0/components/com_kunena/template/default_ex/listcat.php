@@ -247,7 +247,6 @@ if (count($categories[0]) > 0)
                                 $lastPosttime = $singlerow->time_last_msg;
                                 $lastptime = KUNENA_timeformat(CKunenaTools::fbGetShowTime($singlerow->time_last_msg));
 
-								$smileyList = smile::getEmoticons(0);
                                 $forumDesc = stripslashes(smile::smileReplace($singlerow->description, 0, $fbConfig->disemoticons, $smileyList));
 						        $forumDesc = nl2br($forumDesc);
 						        $forumDesc = smile::htmlwrap($forumDesc, $fbConfig->wrap);
@@ -427,15 +426,21 @@ if (count($categories[0]) > 0)
                                         // loop over subcategories to show them under
                                         if (count($forumparents) > 0)
                                         {
-											$subwidth = '';
-											if ($fbConfig->numchildcolumn) $subwidth = ' style="width: ' . floor(99 / $fbConfig->numchildcolumn) . '%"';
+											if ($fbConfig->numchildcolumn > 0) {
+												$subtopicwidth = ' style="width: 99%;"';
+												$subwidth = ' style="width: ' . floor(99 / $fbConfig->numchildcolumn) . '%"';
+											}
+											else {
+												$subtopicwidth = ' style="display: inline-block;"';
+												$subwidth = '';
+											}
 
                                         	?>
 
                                             <div class = "<?php echo $boardclass?>thead-child">
 
                                                 <div class = "<?php echo $boardclass?>cc-table">
-	                                                <div<?php echo $subwidth?> class = "<?php echo $boardclass?>cc-childcat-title">
+	                                                <div<?php echo $subtopicwidth?> class = "<?php echo $boardclass?>cc-childcat-title">
     	                                                <?php if(count($forumparents)==1) { echo _KUNENA_CHILD_BOARD; } else { echo _KUNENA_CHILD_BOARDS; } ?>:
         	                                        </div>
                                                     <?php
@@ -562,7 +567,7 @@ if (count($categories[0]) > 0)
                                             if ($numPending > 0)
                                             {
                                                 echo '<div class="fbs"><font color="red"> ';
-                                                echo CKunenaLink::GetPendingMessagesLink($singlerow->id, $numcolor.$numPending.' '._SHOWCAT_PENDING);
+                                                echo CKunenaLink::GetPendingMessagesLink($singlerow->id, $numPending.' '._SHOWCAT_PENDING);
                                                 echo '</font></div>';
                                             }
                                         }

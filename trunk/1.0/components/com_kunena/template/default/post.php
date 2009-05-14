@@ -1319,7 +1319,8 @@ $catName = $objCatInfo->name;
 
             <?php
                     $k = 0;
-
+                    $smileyList = smile::getEmoticons(1);
+                    
                     foreach ($postlist as $mes)
                     {
                         $k = 1 - $k;

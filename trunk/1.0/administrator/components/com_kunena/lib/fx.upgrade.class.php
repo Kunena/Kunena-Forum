@@ -98,6 +98,11 @@ class fx_Upgrade {
 		$this->insertVersionData('1.0.0','20070101',0,'Placeholder for unknown prior version');
 	}
 
+	function insertEmptyVersion()
+	{
+		$this->insertVersionData('','',0,'Placeholder inserted by Uninstall');
+	}
+
 	function backupVersionTable()
 	{
 		global $database;

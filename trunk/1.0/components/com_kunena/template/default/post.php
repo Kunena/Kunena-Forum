@@ -556,8 +556,6 @@ $catName = $objCatInfo->name;
 
                         <?php
                         //get the writing stuff in:
-                        $no_upload = "0"; //only edit mode should disallow this
-
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
                             include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
@@ -606,8 +604,6 @@ $catName = $objCatInfo->name;
 
                         <?php
                         //get the writing stuff in:
-                        $no_upload = "0"; //only edit mode should disallow this
-
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
                             include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
@@ -657,8 +653,6 @@ $catName = $objCatInfo->name;
 
                         <?php
                         //get the writing stuff in:
-                        $no_upload = "0"; //only edit mode should disallow this
-
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
                             include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
@@ -750,9 +744,6 @@ $catName = $objCatInfo->name;
                                     $no_image_upload = "1";
                                 }
                             }
-                        }
-                        else {
-                            $no_upload = "0";
                         }
 
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {

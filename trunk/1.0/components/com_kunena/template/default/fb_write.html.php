@@ -24,6 +24,9 @@ defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 $fbConfig =& CKunenaConfig::getInstance();
 //Some initial thingies needed anyway:
 if (!isset($htmlText)) $htmlText = '';
+if (!isset($setFocus)) $setFocus = 0;
+if (!isset($no_image_upload)) $no_image_upload = 0;
+if (!isset($no_file_upload)) $no_file_upload = 0;
 
 include_once(KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
 ?>
@@ -194,7 +197,7 @@ include_once(KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
         </tr>
 <!-- /preview -->
 <?php
-        if (($fbConfig->allowimageupload || ($fbConfig->allowimageregupload && $my->id != 0) || $is_Moderator) && ($no_upload == "0" || $no_image_upload == "0"))
+        if (($fbConfig->allowimageupload || ($fbConfig->allowimageregupload && $my->id != 0) || $is_Moderator) && $no_image_upload == "0")
         {
         ?>
 
@@ -215,7 +218,7 @@ include_once(KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
         ?>
 
         <?php
-        if (($fbConfig->allowfileupload || ($fbConfig->allowfileregupload && $my->id != 0) || $is_Moderator) && ($no_upload == "0" || $no_file_upload == "0"))
+        if (($fbConfig->allowfileupload || ($fbConfig->allowfileregupload && $my->id != 0) || $is_Moderator) && $no_file_upload == "0")
         {
         ?>
 

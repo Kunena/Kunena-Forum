@@ -227,6 +227,7 @@ if ($func == "getpreview") {
 
     $message = utf8_urldecode(utf8_decode(stripslashes($msgpreview)));
 
+    $smileyList = smile::getEmoticons(1);
     $msgbody = smile::smileReplace( $message , 0, $fbConfig->disemoticons, $smileyList);
     $msgbody = nl2br($msgbody);
     $msgbody = str_replace("__FBTAB__", "\t", $msgbody);

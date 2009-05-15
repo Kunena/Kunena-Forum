@@ -34,6 +34,7 @@ Kunena 1.0.10
 
 15-May-2009 Matias
 # [#16409] Internal: Fix compatibility problems with CKunenaLink::GetLatestPageAutoRedirectURL() / HTML()
+# [#16387] Remove many notices from undefined variables
 
 14-May-2009 Matias
 # [#16395] If you are not logged in, there are icons "New thread" and "Reply topic" in a locked forum

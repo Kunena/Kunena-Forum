@@ -176,7 +176,7 @@ if (!defined("KUNENA_JCSSURL")) {
     $database->setQuery("SELECT template FROM #__templates_menu where client_id ='0'");
     $current_stylesheet = $database->loadResult();
     define('KUNENA_JCSSURL', KUNENA_JLIVEURL . '/templates/' . $current_stylesheet . '/css/template_css.css');
-    }
+}
 
 // Kunena uploaded files directory
 define('KUNENA_ABSUPLOADEDPATH', KUNENA_JABSPATH . '/images/fbfiles');
@@ -284,11 +284,13 @@ else
 
 if (file_exists(KUNENA_ABSTMPLTPATH . '/js/kunenaforum.js'))
 {
-    define('KUNENA_COREJSURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_template . '/js/kunenaforum.js');
+	define('KUNENA_COREJSPATH', '/components/com_kunena/template/' . $fb_cur_template . '/js/kunenaforum.js');
+	define('KUNENA_COREJSURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_template . '/js/kunenaforum.js');
 }
 else
 {
-    define('KUNENA_COREJSURL', KUNENA_DIRECTURL . '/template/default/js/kunenaforum.js');
+	define('KUNENA_COREJSPATH', '/components/com_kunena/template/default/js/kunenaforum.js');
+	define('KUNENA_COREJSURL', KUNENA_DIRECTURL . '/template/default/js/kunenaforum.js');
 }
 
 function KUNENA_fmodReplace($x, $y) { //function provided for older PHP versions which do not have an fmod function yet

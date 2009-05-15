@@ -36,6 +36,7 @@ Kunena 1.0.10
 # [#16409] Internal: Fix compatibility problems with CKunenaLink::GetLatestPageAutoRedirectURL() / HTML()
 # [#16387] Remove many notices from undefined variables
 # [#16411] PDF: Fix broken permission check
+# [#16378] Community Builder integration: solve jQuery conflict (try 2)
 
 14-May-2009 Matias
 # [#16395] If you are not logged in, there are icons "New thread" and "Reply topic" in a locked forum

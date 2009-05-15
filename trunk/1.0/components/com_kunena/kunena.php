@@ -247,19 +247,32 @@ if (is_object($kunenaProfile))
 	$kunenaProfile->trigger('onStart', &$params);
 }
 
-// Add required header tags
-if (defined('KUNENA_JQURL') && !defined('J_JQUERY_LOADED'))
-{
-	$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
-}
-
 // inline jscript with image location
-$mainframe->addCustomHeadTag('<script type="text/javascript">
-jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";</script>');
+$mainframe->addCustomHeadTag('<script type="text/javascript">jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";</script>');
 
-if (defined('KUNENA_COREJSURL'))
+global $_CB_framework;
+if (is_object($_CB_framework)) 
 {
-	$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_COREJSURL . '"></script>');
+	if (defined('KUNENA_COREJSURL'))
+	{
+		$_CB_framework->addJQueryPlugin( 'kunena_tmpl', KUNENA_COREJSPATH );
+		$_CB_framework->outputCbJQuery( '', 'kunena_tmpl' );
+	}
+}
+else
+{
+	// Add required header tags
+	if (defined('KUNENA_JQURL') && !defined('J_JQUERY_LOADED'))
+	{
+		define('J_JQUERY_LOADED', 1);
+		if (!defined('C_ASSET_JQUERY')) define('C_ASSET_JQUERY', 1);
+		$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
+	}
+
+	if (defined('KUNENA_COREJSURL'))
+	{
+		$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_COREJSURL . '"></script>');
+	}
 }
 
 if ($fbConfig->joomlastyle < 1) {

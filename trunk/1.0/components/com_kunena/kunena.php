@@ -120,6 +120,7 @@ if ($kn_tables->installed() === false) {
 }
 
 // Permissions: Check for administrators and moderators
+global $aro_group;
 if ($my->id != 0)
 {
     $aro_group = $acl->getAroGroup($my->id);

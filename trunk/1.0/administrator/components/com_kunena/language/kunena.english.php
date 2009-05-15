@@ -99,7 +99,7 @@ DEFINE('_KUNENA_SEARCH_LIMIT20', 'Show 20 Search Results');
 DEFINE('_KUNENA_SEARCH_SEARCHIN', 'Search in Categories');
 DEFINE('_KUNENA_SEARCH_SEARCHIN_ALLCATS', 'All Categories');
 DEFINE('_KUNENA_SEARCH_SEARCHIN_CHILDREN', 'Also search in child forums');
-DEFINE('_KUNENA_SEARCH_SEND', 'Send');
+DEFINE('_KUNENA_SEARCH_SEND', 'Search');
 DEFINE('_KUNENA_SEARCH_CANCEL', 'Cancel');
 DEFINE('_KUNENA_SEARCH_ERR_NOPOSTS', 'No messages containing all your search terms were found.');
 DEFINE('_KUNENA_SEARCH_ERR_SHORTKEYWORD', 'At least one keyword should be over 3 characters long!');

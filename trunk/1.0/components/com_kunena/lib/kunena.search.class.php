@@ -41,6 +41,8 @@ class CKunenaSearch
     var $str_kunena_errormsg;
     /** params **/
     var $params = array();
+    /** total **/
+    var $total = 0;
     /** limitstart **/
     var $limitstart;
     /** limit **/
@@ -373,7 +375,7 @@ class CKunenaSearch
         }
 
         $results = $this->get_results();
-        $totalRows = (int)($this->total);
+        $totalRows = $this->total;
 
 	$pagination = KunenaSearchPagination($this->func, $q, $this->getUrlParams(), floor($limitstart/$limit)+1, $limit, floor($totalRows/$limit)+1, 7);
 

@@ -56,7 +56,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                             $karma_time_diff = $time - $karma_time_old;
                         }
 
-                        if ($karma_time_diff >= $karma_min_seconds || $is_Moderator)
+                        if ($is_Moderator || $karma_time_diff >= $karma_min_seconds)
                         {
                             if ($do == "increase")
                             {

@@ -39,7 +39,7 @@ $mtime = explode(" ", microtime());
 $tstart = $mtime[1] + $mtime[0];
 
 // TODO: Get rid of THIS!!! - Kill notices (we have many..)
-error_reporting (E_ALL ^ E_NOTICE);
+//error_reporting (E_ALL ^ E_NOTICE);
 
 // Get all the variables we need and strip them in case
 $action 		= mosGetParam($_REQUEST, 'action', '');

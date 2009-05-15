@@ -69,23 +69,16 @@ function JRshrinkHeaderMulti(mode, imgId, cid)
     if (mode == 1)
     {
         cMod = 0;
+        jQuery("#" + cid).show();
     }
     else
     {
         cMod = 1;
+        jQuery("#" + cid).hide();
     }
 
     jQuery.cookie("upshrink_" + imgId, cMod);
     jQuery("#" + imgId).attr("src", window.jr_expandImg_url + (cMod ? "expand.gif" : "shrink.gif"));
-
-    if (cMod)
-    {
-        jQuery("#" + cid).hide();
-    }
-    else
-    {
-        jQuery("#" + cid).show();
-    }
 }
 
 
@@ -114,7 +107,7 @@ function kunenaRedirectTimeout(redirecturl, timeout) {
     jQuery("body").bind("click", function(e) { clearTimeout(redirect_timeout); } );
 }
 
-jQuery(function()
+jQuery(document).ready(function()
 {
     jQuery(".hideshow").click(function()
     {
@@ -126,15 +119,15 @@ jQuery(function()
     {
         var imgId = jQuery(this).attr("id");
         var cId = imgId.split("__")[1];
-	var el = jQuery("#" + cId);
-	if (el.hasClass("fb-hidden"))
-	{
+		var el = jQuery("#" + cId);
+		if (el.hasClass("fb-hidden"))
+		{
             jQuery.cookie("upshrink_" + imgId, 1);
-	}
-	if (el.hasClass("fb-visible"))
-	{
-	    jQuery.cookie("upshrink_" + imgId, 0);
-	}
+		}
+		if (el.hasClass("fb-visible"))
+		{
+		    jQuery.cookie("upshrink_" + imgId, 0);
+		}
         if (jQuery.cookie("upshrink_" + imgId) == 1)
         {
             JRshrinkHeaderMulti(0, imgId, cId);

@@ -273,7 +273,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
                     $code_start_html = '<div class="fbcode" style="width:'. $fbConfig->rtewidth .'px;"><table cellspacing="1" cellpadding="3" border="0"><tr><td><b>'._KUNENA_MSG_CODE.'</b></td></tr><tr><td><hr />';
 
-                    if (in_array($tag->options["type"], $types)) {
+                    if (!empty($tag->options["type"]) && in_array($tag->options["type"], $types)) {
                         $t_type = $tag->options["type"];
                     }
                     else {

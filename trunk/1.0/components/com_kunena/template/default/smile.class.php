@@ -347,8 +347,8 @@ class smile
 							'RealPlayer,realplayer]http://','Revver','RuTube','Sapo','Sevenload','Sharkle','Spikedhumor','Stickam','Streetfire','StupidVideos','Toufee','Tudou',
 							'Unf-Unf','Uume','Veoh','VideoclipsDump','Videojug','VideoTube','Vidiac','VidiLife','Vimeo','WangYou','WEB.DE','Wideo.fr','YouKu','YouTube');
 						foreach($vid_provider as $vid_type) {
-							list($vid_name, $vid_type) = explode(',', $vid_type);
-							echo '<option value = "'.(($vid_type)?$vid_type:strtolower($vid_name).']').'">'.$vid_name.'</option>';
+							$vid_type = explode(',', $vid_type);
+							echo '<option value = "'.(isset($vid_type[1])?$vid_type[1]:strtolower($vid_type[0]).']').'">'.$vid_type[0].'</option>';
 						}
 						?>
 					</select></span>

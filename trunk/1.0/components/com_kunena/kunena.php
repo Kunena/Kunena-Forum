@@ -201,7 +201,7 @@ $systime = time() + KUNENA_OFFSET_BOARD;
 define ('KUNENA_DB_MISSING_COLUMN', 1054);
 
 // Retrieve current cookie data for session handling
-$settings = $_COOKIE['fboard_settings'];
+$settings = !empty($_COOKIE['fboard_settings'])?$_COOKIE['fboard_settings']:'';
 
 $board_title = $fbConfig->board_title;
 $fromBot = 0;

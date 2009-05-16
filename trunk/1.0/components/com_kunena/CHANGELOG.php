@@ -37,6 +37,7 @@ Kunena 1.0.10
 # [#16416] Do not allow users to send empty reports to moderators
 # [#16418] Welcome message contains broken link to the documentation
 # [#16419] Format birthday, register date and last login time
+# [#16420] Changing karma from user profile redirects to invalid URL
 
 15-May-2009 Matias
 # [#16409] Internal: Fix compatibility problems with CKunenaLink::GetLatestPageAutoRedirectURL() / HTML()

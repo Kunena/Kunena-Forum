@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: kunena.link.class.php 735 2009-05-15 07:55:37Z mahagr $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

@@ -139,23 +139,18 @@ Kunena, translated from Swahili meaning "to speak", is built by a team of open s
 
 [size=4][b]Additional Kunena Resources[/b][/size]
 
-[b]Kunena Documentation:[/b] http://www.kunena.com/docs
-(http://docs.kunena.com)
+[b]Kunena Documentation:[/b] [url]http://www.kunena.com/docs[/url]
 
-[b]Kunena Support Forum[/b]: http://www.kunena.com/forum
-(http://www.kunena.com/index.php?option=com_kunena&Itemid=125)
+[b]Kunena Support Forum[/b]: [url]http://www.kunena.com/forum[/url]
 
-[b]Kunena Downloads:[/b] [url=http://joomlacode.org/gf/project/kunena/frs/]http://www.kunena.com/downloads[/url]
-(http://joomlacode.org/gf/project/kunena/frs/)
+[b]Kunena Downloads:[/b] [url]http://www.kunena.com/downloads[/url]
 
-[b]Kunena Blog:[/b] http://www.kunena.com/blog
-(http://www.kunena.com/index.php?option=com_content&view=section&layout=blog&id=7&Itemid=128)
+[b]Kunena Blog:[/b] [url]http://www.kunena.com/blog[/url]
 
-[b]Submit your feature ideas:[/b] [url=http://kunena.uservoice.com/pages/general?referer_type=top3]http://www.kunena.com/uservoice[/url]
-(http://kunena.uservoice.com/pages/general?referer_type=top3)
+[b]Submit your feature ideas:[/b] [url]http://www.kunena.com/uservoice[/url]
 
-[b]Follow Kunena on Twitter:[/b] [url=https://twitter.com/kunena]http://www.kunena.com/twitter[/url]
-(https://twitter.com/kunena)');
+[b]Follow Kunena on Twitter:[/b] [url]http://www.kunena.com/twitter[/url]
+');
 
 // 1.0.6
 DEFINE('_KUNENA_JOMSOCIAL', 'JomSocial');

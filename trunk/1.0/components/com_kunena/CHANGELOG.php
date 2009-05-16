@@ -35,6 +35,7 @@ Kunena 1.0.10
 16-May-2009 Matias
 # [#16415] Deleted users show up in Forum Stats without a name
 # [#16416] Do not allow users to send empty reports to moderators
+# [#16418] Welcome message contains broken link to the documentation
 
 15-May-2009 Matias
 # [#16409] Internal: Fix compatibility problems with CKunenaLink::GetLatestPageAutoRedirectURL() / HTML()

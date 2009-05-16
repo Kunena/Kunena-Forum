@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.10
 
+15-May-2009 fxstein
++ [#16414] New Moderation Tool class CKunenaModeration
+
 15-May-2009 Matias
 # [#16409] Internal: Fix compatibility problems with CKunenaLink::GetLatestPageAutoRedirectURL() / HTML()
 # [#16387] Remove many notices from undefined variables

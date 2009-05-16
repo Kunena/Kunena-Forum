@@ -16,10 +16,17 @@ class CKunenaModeration
 {
 	// Private data and functions
 	var $_db = '';
+	var $_errormsg = '';
 
 	function construct($db)
 	{
 		$this->_db = $db;
+		$this->_ResetErrorMessage();
+	}
+
+	function _ResetErrorMessage()
+	{
+		$this->_errormsg = '';
 	}
 
 	function _Move($MessageID, $TargetCatID, $TargetTitle = '', $TargetMessageID = 0, $mode = 0)
@@ -31,8 +38,18 @@ class CKunenaModeration
 		// = 2 ... move current message and all newer in current thread
 		// = 3 ... move current message and all replies and quotes - recursively
 
+		// Reset error message
+		$this->_ResetErrorMessage();
+
 		// Always check security clearance before taking action!
 
+		// Test parameters to see if they are valid selecions or abord
+
+		// Assemble move logic based on $mode
+
+		// Execute move
+
+		// Check result to see if we need to abord and set error message
 
 		// When done log the action
 		$this->_Log('Move', $MessageID, $TargetCatID, $TargetTitle, $TargetMessageID, $mode);
@@ -47,8 +64,21 @@ class CKunenaModeration
 		// = 0 ... delete current message only
 		// = 1 ... delete entire thread
 
+		// Reset error message
+		$this->_ResetErrorMessage();
+
 		// Always check security clearance before taking action!
 
+		// Test parameters to see if they are valid selecions or abord
+
+		// Check config if we perform deletes or only moves into a trash category
+		// When configured for trash check if current delete is within trash for real delete
+
+		// Assemble delete logic based on $mode
+
+		// Execute delete
+
+		// Check result to see if we need to abord and set error message
 
 		// When done log the action
 		$this->_Log('Delete', $MessageID, 0, '', 0, $mode);
@@ -106,5 +136,10 @@ class CKunenaModeration
 		return true;
 	}
 
+	// If a function failed - a detailed error message can be requested
+	function GetErrorMessage()
+	{
+		return $this->_errormsg;
+	}
 }
 ?>

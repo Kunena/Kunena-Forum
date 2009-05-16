@@ -287,7 +287,7 @@ function showprf($userid, $page)
 	$msg_karmaplus = '';
         if ($my->id != '0' && $my->id != $userid)
         {
-            $msg_karmaminus .= "<a href=\"" . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=decrease&amp;userid=' . $userid . '&amp;pid=' . $fmessage->id . '&amp;catid=' . $catid . '') . "\"><img src=\"";
+            $msg_karmaminus .= "<a href=\"" . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=decrease&amp;userid=' . $userid) . "\"><img src=\"";
 
             if (isset($fbIcons['karmaminus'])) {
                 $msg_karmaminus .= KUNENA_URLICONSPATH . "" . $fbIcons['karmaminus'];
@@ -297,7 +297,7 @@ function showprf($userid, $page)
             }
 
             $msg_karmaminus .= "\" alt=\"Karma-\" border=\"0\" title=\"" . _KARMA_SMITE . "\" align=\"middle\" /></a>";
-            $msg_karmaplus .= "<a href=\"" . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=increase&amp;userid=' . $userid . '&amp;pid=' . $fmessage->id . '&amp;catid=' . $catid . '') . "\"><img src=\"";
+            $msg_karmaplus .= "<a href=\"" . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=increase&amp;userid=' . $userid) . "\"><img src=\"";
 
             if (isset($fbIcons['karmaplus'])) {
                 $msg_karmaplus .= KUNENA_URLICONSPATH . "" . $fbIcons['karmaplus'];
@@ -359,11 +359,11 @@ function showprf($userid, $page)
         $isonline = $database->loadResult();
 
         if ($isonline && $userinfo->showOnline ==1 ) {
-            $msg_online .= isset($fbIcons['onlineicon'])
+            $msg_online = isset($fbIcons['onlineicon'])
                 ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';
         }
         else {
-            $msg_online .= isset($fbIcons['offlineicon'])
+            $msg_online = isset($fbIcons['offlineicon'])
                 ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
         }
     }

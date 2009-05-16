@@ -39,6 +39,8 @@ if ($signature)
 	//$signature = str_replace("_CRLF_", "\\n", stripslashes($signature));
 	$usr_signature = $signature;
 }
+$registerDate = strftime(_KUNENA_DT_DATETIME_FMT, strtotime($userinfo->registerDate));
+$lastvisitDate = strftime(_KUNENA_DT_DATETIME_FMT, strtotime($userinfo->lastvisitDate));
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
@@ -83,11 +85,11 @@ if ($signature)
     <?php } ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_REGISTERDATE; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo $userinfo->registerDate; ?></td>
+      <td  class = "td-2 fbm"><?php echo $registerDate; ?></td>
     </tr>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_LASTVISITDATE; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo $userinfo->lastvisitDate; ?></td>
+      <td  class = "td-2 fbm"><?php echo $lastvisitDate; ?></td>
     </tr>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_POSTS; ?></b> </td>
@@ -114,10 +116,12 @@ if ($signature)
       <td  class = "td-2 fbm"><?php if( $userinfo->gender == 1 ) { echo _KUNENA_MYPROFILE_MALE; } else if ( $userinfo->gender == 2 ) { echo _KUNENA_MYPROFILE_FEMALE; } else { }  ?></td>
     </tr>
     <?php } ?>
-    <?php  if ($userinfo->birthdate !='0001-01-01' AND $userinfo->birthdate !='0000-00-00') {?>
+    <?php  if ($userinfo->birthdate !='0001-01-01' AND $userinfo->birthdate !='0000-00-00') {
+		$birthday = strftime(_KUNENA_DT_MONTHDAY_FMT, strtotime($userinfo->birthdate));
+    ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
-      <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_BIRTHDATE; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo $userinfo->birthdate; ?></td>
+      <td  class = "td-1 fbm"><b><?php echo _KUNENA_PROFILE_BIRTHDAY; ?></b> </td>
+      <td  class = "td-2 fbm"><?php echo $birthday; ?></td>
     </tr>
     <?php }?>
     <?php  if ( $userinfo->location !='' ) { ?>

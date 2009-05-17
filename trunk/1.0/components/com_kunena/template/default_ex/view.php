@@ -615,7 +615,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     {
                                         $avatar = $userinfo->avatar;
 
-                                        if ($avatar != '') {
+                                        if (!empty($avatar)) {
                                             $msg_avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" /></span>';
                                         }
                                         else

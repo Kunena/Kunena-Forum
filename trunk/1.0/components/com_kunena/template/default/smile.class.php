@@ -70,7 +70,7 @@ class smile
         $parser = new TagParser();
         $interpreter = new KunenaBBCodeInterpreter($parser);
         $task = $interpreter->NewTask();
-        $task->SetText($fb_message_txt);
+        $task->SetText($fb_message_txt.' ');
         $task->dry = FALSE;
         $task->drop_errtag = FALSE;
 	    $task->history = $history;

@@ -37,6 +37,7 @@ Kunena 1.0.10
 ^ [#16061] Roland's BBCode Editor
 # [#16432] More smileys button on post message does not work
 # [#16433] Posting message without name/email/subject: warning, but still load page
+# [#15812] bbcode parser bug crashes server
 
 16-May-2009 Matias
 # [#16415] Deleted users show up in Forum Stats without a name

@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.10
 
+17-May-2009 Matias
+# [#16431] Wordwrap breaks Spoiler BBCode
+
 16-May-2009 Matias
 # [#16415] Deleted users show up in Forum Stats without a name
 # [#16416] Do not allow users to send empty reports to moderators

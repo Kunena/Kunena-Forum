@@ -1123,16 +1123,6 @@ function generate_smilies() {
             $col = 0;
             reset ($rowset);
 
-            if (file_exists(KUNENA_ABSPATH . '/template/default/plugin/emoticons/emoticons.js.php')) {
-                echo '<tr><td style="display:none;">';
-                include (KUNENA_ABSPATH . '/template/default/plugin/emoticons/emoticons.js.php');
-                echo '</td></tr>';
-                reset ($rowset);
-                }
-            else {
-                die ("file is missing: " . KUNENA_ABSPATH . '/template/default/plugin/emoticons/emoticons.js.php');
-                }
-
             $cur = 0;
 
             foreach ($rowset as $data) {
@@ -1144,8 +1134,8 @@ function generate_smilies() {
                             echo '<tr align="center" valign="middle">' . "\n";
                             }
 
-                        echo '<td onclick="javascript:emo(\''
-                                 . $data['code'] . ' \')" style="cursor:pointer"><img class="btnImage" src="' . KUNENA_URLEMOTIONSPATH . $data['location'] . '" border="0" alt="' . $data['code'] . ' " title="' . $data['code'] . ' " /></td>' . "\n";
+                        echo '<td onclick="bbfontstyle(\' '
+                                 . $data['code'] . ' \',\'\')" style="cursor:pointer"><img class="btnImage" src="' . KUNENA_URLEMOTIONSPATH . $data['location'] . '" border="0" alt="' . $data['code'] . ' " title="' . $data['code'] . ' " /></td>' . "\n";
 
                         $s_colspan = max($s_colspan, $col + 1);
 
@@ -1165,7 +1155,7 @@ function generate_smilies() {
                 }
 
             if ($num_smilies > $inline_rows * $inline_columns) {
-                echo "<tr><td class=\"moresmilies\" colspan=\"" . $inline_columns . "\" onclick=\"javascript:moreForumSmileys();\" style=\"cursor:pointer\"><b>" . _KUNENA_EMOTICONS_MORE_SMILIES . "</b></td></tr>";
+                echo "<tr><td class=\"moresmilies\" colspan=\"" . $inline_columns . "\" onclick=\"javascript:dE('smilie');\" style=\"cursor:pointer\"><b>" . _KUNENA_EMOTICONS_MORE_SMILIES . "</b></td></tr>";
                 }
             }
         }

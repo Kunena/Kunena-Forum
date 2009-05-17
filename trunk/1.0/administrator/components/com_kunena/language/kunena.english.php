@@ -23,6 +23,64 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // 1.0.10
+// Editor
+DEFINE('_KUNENA_EDITOR_HELPLINE_BOLD', 'Bold text: [b]text[/b]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_ITALIC', 'Italic text: [i]text[/i]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_UNDERL', 'Underline text: [u]text[/u]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_STRIKE', 'Strikethrough Text: [strike]Text[/strike]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_SUB', 'Subscript Text: [sub]Text[/sub]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_SUP', 'Superscript Text: [sup]Text[/sup]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_QUOTE', 'Quote text: [quote]text[/quote]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_CODE', 'Code display: [code]code[/code]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_UL', 'Unordered List: [ul] [li]text[/li] [/ul] - Hint: a list must contain List Items');
+DEFINE('_KUNENA_EDITOR_HELPLINE_OL', 'Ordered List: [ol] [li]text[/li] [/ol] - Hint: a list must contain List Items');
+DEFINE('_KUNENA_EDITOR_HELPLINE_LI', 'List Item: [li] list item [/li]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_ALIGN_LEFT', 'Align left: [left]Text[/left]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_ALIGN_CENTER', 'Align center: [center]Text[/center]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_ALIGN_RIGHT', 'Align right: [right]Text[/right]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_IMAGELINK', 'Imagelink: [img size=400]http://www.google.com/images/web_logo_left.gif[/img]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_IMAGELINKSIZE', 'Imagelink: Size');
+DEFINE('_KUNENA_EDITOR_HELPLINE_IMAGELINKURL', 'Imagelink: URL of the Imagelink');
+DEFINE('_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY', 'Imagelink: Apply Imagelink');
+DEFINE('_KUNENA_EDITOR_HELPLINE_LINK', 'Link: [url=http://www.zzz.com/]This is a link[/url]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_LINKURL', 'Link: URL of the link');
+DEFINE('_KUNENA_EDITOR_HELPLINE_LINKTEXT', 'Link: Text / Description of the link');
+DEFINE('_KUNENA_EDITOR_HELPLINE_LINKAPPLY', 'Link: Apply link');
+DEFINE('_KUNENA_EDITOR_HELPLINE_HIDE','Hidden text: [hide]any hidden text[/hide] - hide part of message from Guests');
+DEFINE('_KUNENA_EDITOR_HELPLINE_SPOILER', 'Spoiler: Text is only shown after you click the spoiler');
+DEFINE('_KUNENA_EDITOR_HELPLINE_COLOR', 'Color: [color=#FF6600]text[/color]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_FONTSIZE', 'Fontsize: [size=1]text size[/size] - Hint: sizes range from 1 to 5');
+DEFINE('_KUNENA_EDITOR_HELPLINE_FONTSIZESELECTION', 'Fontsize: Select Fontsize, mark text and press the button left from here');
+DEFINE('_KUNENA_EDITOR_HELPLINE_EBAY', 'eBay: [ebay]ItemId[/ebay]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_VIDEO', 'Video: Select Provider or URL - modus');
+DEFINE('_KUNENA_EDITOR_HELPLINE_VIDEOSIZE', 'Video: Size of the video');
+DEFINE('_KUNENA_EDITOR_HELPLINE_VIDEOWIDTH', 'Video: Width ot the video');
+DEFINE('_KUNENA_EDITOR_HELPLINE_VIDEOHEIGHT', 'Video: Height of the video');
+DEFINE('_KUNENA_EDITOR_HELPLINE_VIDEOPROVIDER', 'Video: Select video provider');
+DEFINE('_KUNENA_EDITOR_HELPLINE_VIDEOID', 'Video: ID of the Video - you can see it in the video-url');
+DEFINE('_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY1', 'Video: [video size=100 width=480 height=360 provider=clipfish]3423432[/video]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_VIDEOURL', 'Video: URL of the Video');
+DEFINE('_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY2', 'Video: [video size=100 width=480 height=360]http://myvideodomain.com/myvideo[/video]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_IMGPH', 'Insert [img] placeholder in the post for attached image');
+DEFINE('_KUNENA_EDITOR_HELPLINE_FILEPH', 'Insert [file] placeholder in the post for attached file');
+DEFINE('_KUNENA_EDITOR_HELPLINE_SUBMIT', 'Click here to submit your message');
+DEFINE('_KUNENA_EDITOR_HELPLINE_PREVIEW', 'Click here to see what your message will look like when submitted');
+DEFINE('_KUNENA_EDITOR_HELPLINE_CANCEL', 'Click here to cancel your message');
+DEFINE('_KUNENA_EDITOR_HELPLINE_HINT', 'bbCode Help - Hint: bbCode can be used on selected text!');
+DEFINE('_KUNENA_EDITOR_LINK_URL', ' URL: ');
+DEFINE('_KUNENA_EDITOR_LINK_TEXT', ' Text: ');
+DEFINE('_KUNENA_EDITOR_LINK_INSERT', 'Insert');
+DEFINE('_KUNENA_EDITOR_IMAGE_SIZE', ' Size: ');
+DEFINE('_KUNENA_EDITOR_IMAGE_URL', ' URL: ');
+DEFINE('_KUNENA_EDITOR_IMAGE_INSERT', 'Insert');
+DEFINE('_KUNENA_EDITOR_VIDEO_SIZE', 'Size: ');
+DEFINE('_KUNENA_EDITOR_VIDEO_WIDTH', 'Width: ');
+DEFINE('_KUNENA_EDITOR_VIDEO_HEIGHT', 'Height:');
+DEFINE('_KUNENA_EDITOR_VIDEO_URL', 'URL: ');
+DEFINE('_KUNENA_EDITOR_VIDEO_ID', 'ID: ');
+DEFINE('_KUNENA_EDITOR_VIDEO_PROVIDER', 'Provider: ');
+DEFINE('_KUNENA_BBCODE_HIDDENTEXT', '<span class="fb_quote">Something is hidden for guests. Please login or register to see it.</span>');
+
 DEFINE('_KUNENA_PROFILE_BIRTHDAY', 'Birthday');
 DEFINE('_KUNENA_DT_MONTHDAY_FMT','%m/%d');
 DEFINE('_KUNENA_CFC_FILENAME','CSS file to be modified');
@@ -424,9 +482,9 @@ DEFINE ('_KUNENA_MOVE_SELECTED','Move selected');
 DEFINE ('_KUNENA_REPORT_LOGGED','Logged');
 DEFINE ('_KUNENA_GO','Go');
 DEFINE('_KUNENA_MAILFULL','Include complete post content in the e-mail sent to subscribers.');
-DEFINE('_KUNENA_MAILFULL_DESC','If &quot;No,&quot; subscribers will receive only titles of new messages.');
+DEFINE('_KUNENA_MAILFULL_DESC','If &quot;No&quot;, subscribers will receive only titles of new messages.');
 DEFINE('_KUNENA_HIDETEXT','Please log in to view this content!');
-DEFINE('_BBCODE_HIDE','Hidden text: [hide]any hidden text[/hide] to hide part of a message from Guests');
+DEFINE('_BBCODE_HIDE','Hidden text: [hide]any hidden text[/hide] to hide part of a message from Guests');// Deprecated in 1.0.10
 DEFINE('_KUNENA_FILEATTACH','File Attachment:&#32;');
 DEFINE('_KUNENA_FILENAME','File Name:&#32;');
 DEFINE('_KUNENA_FILESIZE','File Size:&#32;');
@@ -1112,8 +1170,8 @@ DEFINE('_IMAGE_SELECT_FILE', 'Select image file to attach');
 DEFINE('_FILE_SELECT_FILE', 'Select file to attach');
 DEFINE('_FILE_NOT_UPLOADED', 'Your file has not been uploaded. Try posting again or editing the post.');
 DEFINE('_IMAGE_NOT_UPLOADED', 'Your image has not been uploaded. Try posting again or editing the post.');
-DEFINE('_BBCODE_IMGPH', 'Insert [img] placeholder in the post for attached image');
-DEFINE('_BBCODE_FILEPH', 'Insert [file] placeholder in the post for attached file');
+DEFINE('_BBCODE_IMGPH', 'Insert [img] placeholder in the post for attached image'); // Deprecated in 1.0.10
+DEFINE('_BBCODE_FILEPH', 'Insert [file] placeholder in the post for attached file'); // Deprecated in 1.0.10
 DEFINE('_POST_ATTACH_IMAGE', '[img]');
 DEFINE('_POST_ATTACH_FILE', '[file]');
 DEFINE('_USER_UNSUBSCRIBE_ALL', 'Check this box to <strong><u>unsubscribe</u></strong> from all topics (including invisible ones for troubleshooting purposes)');
@@ -1172,9 +1230,9 @@ DEFINE('_COM_A_FILEUPLOAD_DESC', 'Set to &quot;Yes&quot; if you want everybody (
 DEFINE('_COM_A_FILEREGUPLOAD', 'Allow File Upload for Registered');
 DEFINE('_COM_A_FILEREGUPLOAD_DESC', 'Set to &quot;Yes&quot; if you want registered and logged-in users to be able to upload a file.<br/> Note: (Super)administrators and moderators are always able to upload files.');
 DEFINE('_SUBMIT_CANCEL', 'Your post submission has been cancelled.');
-DEFINE('_HELP_SUBMIT', 'Click here to submit your message');
-DEFINE('_HELP_PREVIEW', 'Click here to see what your message will look like when submitted');
-DEFINE('_HELP_CANCEL', 'Click here to cancel your message');
+DEFINE('_HELP_SUBMIT', 'Click here to submit your message'); // Deprecated in 1.0.10
+DEFINE('_HELP_PREVIEW', 'Click here to see what your message will look like when submitted'); // Deprecated in 1.0.10
+DEFINE('_HELP_CANCEL', 'Click here to cancel your message'); // Deprecated in 1.0.10
 DEFINE('_POST_DELETE_ATT', 'If this box is checked, all image and file attachments of posts you are going to delete will be deleted as well (recommended).');
 //new since preRC4-III
 DEFINE('_COM_A_USER_MARKUP', 'Show Edited Mark Up');
@@ -1519,21 +1577,21 @@ DEFINE('_COM_A_PMS_DESC',
 DEFINE('_VIEW_PMS', 'Click here to send a Private Message to this user');
 //new in RC3
 DEFINE('_POST_RE', 'Re:');
-DEFINE('_BBCODE_BOLD', 'Bold text: [b]text[/b]&#32;');
-DEFINE('_BBCODE_ITALIC', 'Italic text: [i]text[/i]');
-DEFINE('_BBCODE_UNDERL', 'Underline text: [u]text[/u]');
-DEFINE('_BBCODE_QUOTE', 'Quote text: [quote]text[/quote]');
-DEFINE('_BBCODE_CODE', 'Code display: [code]code[/code]');
-DEFINE('_BBCODE_ULIST', 'Unordered List: [ul] [li]text[/li] [/ul] - Hint: a list must contain List Items');
-DEFINE('_BBCODE_OLIST', 'Ordered List: [ol] [li]text[/li] [/ol] - Hint: a list must contain List Items');
-DEFINE('_BBCODE_IMAGE', 'Image: [img size=(01-499)]http://www.google.com/images/web_logo_left.gif[/img]');
-DEFINE('_BBCODE_LINK', 'Link: [url=http://www.zzz.com/]This is a link[/url]');
-DEFINE('_BBCODE_CLOSA', 'Close all tags');
-DEFINE('_BBCODE_CLOSE', 'Close all open bbCode tags');
-DEFINE('_BBCODE_COLOR', 'Color: [color=#FF6600]text[/color]');
-DEFINE('_BBCODE_SIZE', 'Size: [size=1]text size[/size] - Hint: sizes range from 1 to 5');
-DEFINE('_BBCODE_LITEM', 'List Item: [li] list item [/li]');
-DEFINE('_BBCODE_HINT', 'bbCode Help - Hint: bbCode can be used on selected text!');
+DEFINE('_BBCODE_BOLD', 'Bold text: [b]text[/b]&#32;'); // Deprecated in 1.0.10
+DEFINE('_BBCODE_ITALIC', 'Italic text: [i]text[/i]'); // Deprecated in 1.0.10
+DEFINE('_BBCODE_UNDERL', 'Underline text: [u]text[/u]'); // Deprecated in 1.0.10
+DEFINE('_BBCODE_QUOTE', 'Quote text: [quote]text[/quote]'); // Deprecated in 1.0.10
+DEFINE('_BBCODE_CODE', 'Code display: [code]code[/code]'); // Deprecated in 1.0.10
+DEFINE('_BBCODE_ULIST', 'Unordered List: [ul] [li]text[/li] [/ul] - Hint: a list must contain List Items'); // Deprecated in 1.0.10
+DEFINE('_BBCODE_OLIST', 'Ordered List: [ol] [li]text[/li] [/ol] - Hint: a list must contain List Items'); // Deprecated in 1.0.10
+DEFINE('_BBCODE_IMAGE', 'Image: [img size=(01-499)]http://www.google.com/images/web_logo_left.gif[/img]'); // Deprecated in 1.0.10
+DEFINE('_BBCODE_LINK', 'Link: [url=http://www.zzz.com/]This is a link[/url]'); // Deprecated in 1.0.10
+DEFINE('_BBCODE_CLOSA', 'Close all tags'); // Deprecated in 1.0.10
+DEFINE('_BBCODE_CLOSE', 'Close all open bbCode tags'); // Deprecated in 1.0.10
+DEFINE('_BBCODE_COLOR', 'Color: [color=#FF6600]text[/color]'); // Deprecated in 1.0.10
+DEFINE('_BBCODE_SIZE', 'Size: [size=1]text size[/size] - Hint: sizes range from 1 to 5'); // Deprecated in 1.0.10
+DEFINE('_BBCODE_LITEM', 'List Item: [li] list item [/li]'); // Deprecated in 1.0.10
+DEFINE('_BBCODE_HINT', 'bbCode Help - Hint: bbCode can be used on selected text!'); // Deprecated in 1.0.10
 DEFINE('_COM_A_TAWIDTH', 'Textarea Width');
 DEFINE('_COM_A_TAWIDTH_DESC', 'Adjust the width of the reply/post text entry area to match your template. <br/>The Topic Emoticon Toolbar will be wrapped accross two lines if width <= 420 pixels');
 DEFINE('_COM_A_TAHEIGHT', 'Textarea Height');

@@ -34,6 +34,9 @@ Kunena 1.0.10
 
 17-May-2009 Matias
 # [#16431] Wordwrap breaks Spoiler BBCode
+^ [#16061] Roland's BBCode Editor
+# [#16432] More smileys button on post message does not work
+# [#16433] Posting message without name/email/subject: warning, but still load page
 
 16-May-2009 Matias
 # [#16415] Deleted users show up in Forum Stats without a name

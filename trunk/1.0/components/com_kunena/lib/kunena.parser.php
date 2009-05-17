@@ -176,6 +176,18 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 $tns = "<u>"; $tne = '</u>';
                 return TAGPARSER_RET_REPLACED;
                 break;
+            case 'strike':
+                $tns = "<strike>"; $tne = '</strike>';
+                return TAGPARSER_RET_REPLACED;
+                break;
+            case 'sub':
+                $tns = "<sub>"; $tne = '</sub>';
+                return TAGPARSER_RET_REPLACED;
+                break;
+            case 'sup':
+                $tns = "<sup>"; $tne = '</sup>';
+                return TAGPARSER_RET_REPLACED;
+                break;
             case 'size':
                 if(!isset($tag->options['default'])
                 || strlen($tag->options['default'])==0) {
@@ -618,7 +630,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                     if ($my->id==0)
                     {
                     	// Hide between content from non registered users
-                    	$tag_new = '';
+                    	$tag_new = _KUNENA_BBCODE_HIDDENTEXT;
                     }
                     else
                     {
@@ -657,7 +669,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
                     $randomid = rand();
 
-                    $tag_new = '<div id="'.$randomid.'" onClick="javascript:fb_showDetail(this);" style="cursor:pointer;"><img id="'.$randomid.'_img"'.
+                    $tag_new = '<div id="'.$randomid.'" onclick="javascript:fb_showDetail(this);" style="cursor:pointer;"><img id="'.$randomid.'_img"'.
                     			'src="'.KUNENA_JLIVEURL.'/components/com_kunena/template/default/images/english/emoticons/pinch.png" border="0"> <strong>'.
                     			(isset($tag->options["title"]) ? ($tag->options["title"]) : (_KUNENA_BBCODE_SPOILER))
                     			. '</strong></div><div id="'. $randomid . '_details" style="display:None;"><span class="fb_quote">' . $between . '</span></div>';

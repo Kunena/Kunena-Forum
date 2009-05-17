@@ -81,12 +81,16 @@ function JRshrinkHeaderMulti(mode, imgId, cid)
     jQuery("#" + imgId).attr("src", window.jr_expandImg_url + (cMod ? "expand.gif" : "shrink.gif"));
 }
 
+function kunenaShowHelp($text) {
+	jQuery('input[name=helpbox]').val($text);
+}
 
 function fbGetPreview(content, sitemid) {
     var templatePath = document.postform.templatePath.value;
     var content = encodeURIComponent(content);
-    
     var kunenaPath = document.postform.kunenaPath.value;
+    
+    jQuery('input[name=previewspeicher]').val('preview');
     jQuery.ajax({url:kunenaPath,
     data : { msgpreview : content, Itemid : sitemid , option: "com_kunena" , func: "getpreview" , no_html: 1},
     type: "POST",

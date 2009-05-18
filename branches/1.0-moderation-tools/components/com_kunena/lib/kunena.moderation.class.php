@@ -41,18 +41,34 @@ class CKunenaModeration
 		// Reset error message
 		$this->_ResetErrorMessage();
 
+		// Sanitize parameters!
+		$MessageID = intval($MessageID);
+		$TargetCatID = intval($TargetCatID);
+		$TargetSubject = addslashes($TargetSubject);
+		$TargetMessageID = intval($TargetMessageID);
+		$mode = intval($mode);
+
 		// Always check security clearance before taking action!
-		// TODO: Add security check
+		// TODO: Add security permissions check
 
 		// Test parameters to see if they are valid selecions or abord
 		unset($currentMessage);
 		unset($targetCategory);
 		unset($targetMessage);
 
+		// Check if message to move exists (also covers thread test)
 		$this->db->setQuery("SELECT `id`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__fb_messages WHERE `id`='$MessageID'");
 		$currentMessage = $this->db->loadObjectList();
 			check_dberror("Unable to load message.");
 		// TODO: Check if message exists
+
+		if ($TargetCatID == 0 AND $TargetMessageID == 0)
+		{
+			// Nothing to move. No new category, no target message to append
+			$this->_errormsg = 'No move targets specified.';
+
+			return false;
+		}
 
 		if ($TargetCatID != 0)
 		{
@@ -73,58 +89,74 @@ class CKunenaModeration
 			// TODO: Check if message exists
 
 			// TODO: Check if $MessageID == $TargetMessage ID
+
+			// If $TargetMessageID has been specified and is valid,
+			// overwrite $TargetCatID with the category ID of the target message
+			$TargetCatID = $targetMessage->catid;
+
 			// No recursive moves allowed
 		}
 
 		// Assemble move logic based on $mode
 		unset($sql);
 
+		// partial logic to update target subject if specified
+		$subjectupdatesql = $TargetSubject !='' ? "`subject`='$TargetSubject'" : "";
+
 		// TODO: Implement logic
 		switch ($mode)
 		{
-			case 0:
-				// TODO: Update new thread subject if not empty
-
-				if ($TargetMessageID=0)
+			case 0: // Move Single message only
+				if ($TargetMessageID==0)
 				{
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$MessageID' `parent`='$MessageID' WHERE `id`='$MessageID';";
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$MessageID' `parent`='$MessageID' $subjectupdatesql WHERE `id`='$MessageID';";
 				}
 				else
 				{
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$TargetMessageID' `parent`='$MessageID' WHERE `id`='$MessageID';";
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$TargetMessageID' `parent`='$MessageID' $subjectupdatesql WHERE `id`='$MessageID';";
 				}
 
 				// TODO: If we are moving the first message of a thread only - make the second post the new thread header
 
 				break;
-			case 1:
-				// TODO: Update new thread subject if not empty
-
-				if ($TargetMessageID=0)
+			case 1: // Move entire Thread
+				if ($TargetMessageID==0)
 				{
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' WHERE `id`='$MessageID';";
-					$sql .= "UPDATE #__fb_messages set `catid`='$TargetCatID' WHERE `thread`='$MessageID';";
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `id`='$MessageID';";
+					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='$MessageID';";
 
 				}
 				else
 				{
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$TargetMessageID' `parent`='$MessageID' WHERE `id`='$MessageID';";
-					$sql .= "UPDATE #__fb_messages set `catid`='$TargetCatID' `thread`='$TargetMessageID' WHERE `thread`='$MessageID';";
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$TargetMessageID' `parent`='$MessageID' $subjectupdatesql WHERE `id`='$MessageID';";
+					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$TargetMessageID' $subjectupdatesql WHERE `thread`='$MessageID';";
 				}
 
 				break;
-			case 2:
+			case 2: // Move message and all newer messages of thread
+				if ($TargetMessageID==0)
+				{
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$MessageID' `parent`='$MessageID' $subjectupdatesql WHERE `id`='$MessageID';";
+					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='$currentMessage->thread' AND `time`>='$currentMessage->timestamp';";
+				}
+				else
+				{
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$TargetMessageID' `parent`='$MessageID' $subjectupdatesql WHERE `id`='$MessageID';";
+					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$TargetMessageID' $subjectupdatesql WHERE `thread`='$currentMessage->thread' AND `time`>='$currentMessage->timestamp';";
+				}
 
+				// TODO: Add sql to move all newer posts of this thread than the one submited
 
 				break;
-			case 3:
+			case 3: // Move message and all replies and quotes - recursively
 
 
 				break;
 			default:
+				// Unsupported mode - Error!
+				$this->_errormsg = 'Move mode not supported. Logic not implemented.';
 
-
-				break;
+				return false;
 		}
 
 		// Execute move
@@ -149,6 +181,9 @@ class CKunenaModeration
 
 		// Reset error message
 		$this->_ResetErrorMessage();
+
+		// TODO: Sanitize parameters!
+
 
 		// Always check security clearance before taking action!
 		// An author should be able to delete her/his own message, without deleting an
@@ -212,7 +247,7 @@ class CKunenaModeration
 	function disableUserAccount($UserID)
 	{
 		// Future functionality
-		$this->_errormsg = 'Future feature. Logic not implemented';
+		$this->_errormsg = 'Future feature. Logic not implemented.';
 
 		return false;
 	}
@@ -220,7 +255,7 @@ class CKunenaModeration
 	function enableUserAccount($UserID)
 	{
 		// Future functionality
-		$this->_errormsg = 'Future feature. Logic not implemented';
+		$this->_errormsg = 'Future feature. Logic not implemented.';
 
 		return false;
 	}

@@ -445,9 +445,37 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 unset($userinfo);
                                 $database->setQuery("SELECT  a.*,b.name,b.username,b.gid FROM #__fb_users as a LEFT JOIN #__users as b on b.id=a.userid where a.userid='$fmessage->userid'");
                                 $database->loadObject($userinfo);
-                                //get the username:
-                                $fb_username = "";
+								if ($userinfo == NULL) {
+									$userinfo = new stdClass();
+									$userinfo->userid = 0;
+									$userinfo->name = '';
+									$userinfo->username = '';
+									$userinfo->avatar = '';
+									$userinfo->gid = 0;
+									$userinfo->rank = 0;
+									$userinfo->posts = 0;
+									$userinfo->karma = 0;
+									$userinfo->gender = _KUNENA_NOGENDER;
+									$userinfo->personalText = '';
+									$userinfo->ICQ = '';
+									$userinfo->location = '';
+									$userinfo->birthdate = '';
+									$userinfo->AIM = '';
+									$userinfo->MSN = '';
+									$userinfo->YIM = '';
+									$userinfo->SKYPE = '';
+									$userinfo->GTALK = '';
+									$userinfo->websiteurl = '';
+									$userinfo->signature = '';
+								}
 
+								if ($fbConfig->fb_profile == 'cb')
+								{
+									$triggerParams = array( 'userid'=> $fmessage->userid,
+										'userinfo'=> &$userinfo );
+									$kunenaProfile->trigger( 'profileIntegration', $triggerParams );
+								}
+				
                                 if ($fbConfig->username) {
                                     $fb_queryName = "username";
                                 }
@@ -857,7 +885,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 }
                                 if ($userinfo->birthdate !='0001-01-01' AND $userinfo->birthdate !='0000-00-00' and $userinfo->birthdate !='') {
                                 	$birthday = strftime(_KUNENA_DT_MONTHDAY_FMT, strtotime($userinfo->birthdate));
-                                    $msg_birthdate = isset($fbIcons['msgbirthdate']) ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msgbirthdate'] . '" border="0" alt="'._KUNENA_PROFILE_BIRTHDAY.': '.$birthday.'" title="'._KUNENA_PROFILE_BIRTHDAY.': '.$birthday.'" />' : ' '._KUNENA_PROFILE_BIRTHDAY.': '.$birthday.'';                                }
+                                    $msg_birthdate = isset($fbIcons['msgbirthdate']) ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msgbirthdate'] . '" border="0" alt="'._KUNENA_PROFILE_BIRTHDAY.': '.$birthday.'" title="'._KUNENA_PROFILE_BIRTHDAY.': '.$birthday.'" />' : ' '._KUNENA_PROFILE_BIRTHDAY.': '.$birthday.'';
                                 }
 
                                 if ($userinfo->AIM != '') {

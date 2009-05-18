@@ -224,8 +224,9 @@ if (count($categories[0]) > 0)
 
 								foreach ($forumparents as $childnum=>$childforum)
 								{
-									if (!in_array($childforum->id, $allow_forum)) unset ($forumparents[$childnum]);
+									if (!in_array($childforum->id, $allow_forum)) unset ($forumparents[$childnum]); 
 								}
+								$forumparents = array_values($forumparents);
 
                                 if ($my->id)
                                 {

@@ -141,9 +141,11 @@ if ($fbConfig->fb_profile == 'cb')
                     }
                     ?>
 
-
-
-                    <?php echo $msg_online; ?>
+                    <?php
+                    if (isset($msg_online)) {
+                    	echo $msg_online;
+                    } 
+                    ?>
 
                     <?php
                     if (isset($msg_pms)) {

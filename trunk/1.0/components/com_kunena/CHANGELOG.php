@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.10
 
+18-May-2009 Matias
+# [#16436] Internal: Fix sub forums in category view, PHP error and CB integration in view.php
+
 17-May-2009 Matias
 # [#16431] Wordwrap breaks Spoiler BBCode
 ^ [#16061] Roland's BBCode Editor

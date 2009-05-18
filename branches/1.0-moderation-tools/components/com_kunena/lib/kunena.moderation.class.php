@@ -29,7 +29,7 @@ class CKunenaModeration
 		$this->_errormsg = '';
 	}
 
-	function _Move($MessageID, $TargetCatID, $TargetTitle = '', $TargetMessageID = 0, $mode = 0)
+	function _Move($MessageID, $TargetCatID, $TargetSubject = '', $TargetMessageID = 0, $mode = 0)
 	{
 		// Private move function
 		// $mode
@@ -42,17 +42,72 @@ class CKunenaModeration
 		$this->_ResetErrorMessage();
 
 		// Always check security clearance before taking action!
+		// TODO: Add security check
 
 		// Test parameters to see if they are valid selecions or abord
+		unset($currentMessage);
+		unset($targetCategory);
+		unset($targetMessage);
+
+		$this->db->setQuery("SELECT `id`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__fb_messages WHERE `id`='$MessageID'");
+		$currentMessage = $this->db->loadObjectList();
+			check_dberror("Unable to load message.");
+		// TODO: Check if message exists
+
+		if ($TargetCatID != 0)
+		{
+			$this->db->setQuery("SELECT `id`, `name` FROM #__fb_categories WHERE `id`='$TargetCatID'");
+			$targetCategory = $this->db->loadObjectList();
+				check_dberror("Unable to load message.");
+			// TODO: Check if category exists
+
+			// TODO: Check if $TargetCatID = currentMessage.catid AND $TargetMessageID == 0
+			// Nothing to do...
+		}
+
+		if ($TargetMessageID != 0)
+		{
+			$this->db->setQuery("SELECT `id`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__fb_messages WHERE `id`='$TargetMessageID'");
+			$targetMessage = $this->db->loadObjectList();
+				check_dberror("Unable to load message.");
+			// TODO: Check if message exists
+
+			// TODO: Check if $MessageID == $TargetMessage ID
+			// No recursive moves allowed
+		}
 
 		// Assemble move logic based on $mode
+		// TODO: Implement logic
+		switch ($mode)
+		{
+			case 0:
+
+
+				break;
+			case 1:
+
+
+				break;
+			case 2:
+
+
+				break;
+			case 3:
+
+
+				break;
+			default:
+
+
+				break;
+		}
 
 		// Execute move
 
 		// Check result to see if we need to abord and set error message
 
 		// When done log the action
-		$this->_Log('Move', $MessageID, $TargetCatID, $TargetTitle, $TargetMessageID, $mode);
+		$this->_Log('Move', $MessageID, $TargetCatID, $TargetSubject, $TargetMessageID, $mode);
 
 		return true;
 	}
@@ -68,6 +123,8 @@ class CKunenaModeration
 		$this->_ResetErrorMessage();
 
 		// Always check security clearance before taking action!
+		// An author should be able to delete her/his own message, without deleting an
+		// entire thread should there be any responses in that thread.
 
 		// Test parameters to see if they are valid selecions or abord
 
@@ -86,7 +143,7 @@ class CKunenaModeration
 		return true;
 	}
 
-	function _Log($Task, $MessageID = 0, $TargetCatID = 0, $TargetTitle = '', $TargetMessageID = 0, $mode = 0)
+	function _Log($Task, $MessageID = 0, $TargetCatID = 0, $TargetSubject = '', $TargetMessageID = 0, $mode = 0)
 	{
 		// Implement logging utilizing CKunenaLogger class
 	}
@@ -94,50 +151,54 @@ class CKunenaModeration
 
 	// Public interface
 
-	function MoveThread($ThreadID, $TargetCatID)
+	function moveThread($ThreadID, $TargetCatID)
 	{
 		return $this->_Move($ThreadID, $TargetCatID, '', 0, 1);
 	}
 
-	function MoveMessage($ThreadID, $TargetCatID, $TargetTitle = '', $TargetThreadID = 0)
+	function moveMessage($ThreadID, $TargetCatID, $TargetSubject = '', $TargetThreadID = 0)
 	{
-		return $this->_Move($ThreadID, $TargetCatID, $TargetTitle, $TargetThreadID, 0);
+		return $this->_Move($ThreadID, $TargetCatID, $TargetSubject, $TargetThreadID, 0);
 	}
 
-	function MoveMessageAndNewer($ThreadID, $TargetCatID, $TargetTitle = '', $TargetThreadID = 0)
+	function moveMessageAndNewer($ThreadID, $TargetCatID, $TargetSubject = '', $TargetThreadID = 0)
 	{
-		return $this->_Move($ThreadID, $TargetCatID, $TargetTitle, $TargetThreadID, 2);
+		return $this->_Move($ThreadID, $TargetCatID, $TargetSubject, $TargetThreadID, 2);
 	}
 
-	function MoveMessageAndReplies($ThreadID, $TargetCatID, $TargetTitle = '', $TargetThreadID = 0)
+	function moveMessageAndReplies($ThreadID, $TargetCatID, $TargetSubject = '', $TargetThreadID = 0)
 	{
-		return $this->_Move($ThreadID, $TargetCatID, $TargetTitle, $TargetThreadID, 3);
+		return $this->_Move($ThreadID, $TargetCatID, $TargetSubject, $TargetThreadID, 3);
 	}
 
-	function DeleteThread($ThreadID)
+	function deleteThread($ThreadID)
 	{
 		return $this->_Delete($ThreadID, 1);
 	}
 
-	function DeleteMessage($MessageID)
+	function deleteMessage($MessageID)
 	{
 		return $this->_Delete($MessageID, 0);
 	}
 
-	function DisableUserAccount($UserID)
+	function disableUserAccount($UserID)
 	{
 		// Future functionality
-		return true;
+		$this->_errormsg = 'Future feature. Logic not implemented'
+
+		return false;
 	}
 
-	function EnableUserAccount($UserID)
+	function enableUserAccount($UserID)
 	{
 		// Future functionality
-		return true;
+		$this->_errormsg = 'Future feature. Logic not implemented'
+
+		return false;
 	}
 
 	// If a function failed - a detailed error message can be requested
-	function GetErrorMessage()
+	function getErrorMessage()
 	{
 		return $this->_errormsg;
 	}

@@ -184,7 +184,7 @@ class CKunenaModeration
 	function disableUserAccount($UserID)
 	{
 		// Future functionality
-		$this->_errormsg = 'Future feature. Logic not implemented'
+		$this->_errormsg = 'Future feature. Logic not implemented';
 
 		return false;
 	}
@@ -192,7 +192,7 @@ class CKunenaModeration
 	function enableUserAccount($UserID)
 	{
 		// Future functionality
-		$this->_errormsg = 'Future feature. Logic not implemented'
+		$this->_errormsg = 'Future feature. Logic not implemented';
 
 		return false;
 	}

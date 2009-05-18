@@ -77,15 +77,40 @@ class CKunenaModeration
 		}
 
 		// Assemble move logic based on $mode
+		unset($sql);
+
 		// TODO: Implement logic
 		switch ($mode)
 		{
 			case 0:
+				// TODO: Update new thread subject if not empty
 
+				if ($TargetMessageID=0)
+				{
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$MessageID' `parent`='$MessageID' WHERE `id`='$MessageID';";
+				}
+				else
+				{
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$TargetMessageID' `parent`='$MessageID' WHERE `id`='$MessageID';";
+				}
+
+				// TODO: If we are moving the first message of a thread only - make the second post the new thread header
 
 				break;
 			case 1:
+				// TODO: Update new thread subject if not empty
 
+				if ($TargetMessageID=0)
+				{
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' WHERE `id`='$MessageID';";
+					$sql .= "UPDATE #__fb_messages set `catid`='$TargetCatID' WHERE `thread`='$MessageID';";
+
+				}
+				else
+				{
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$TargetMessageID' `parent`='$MessageID' WHERE `id`='$MessageID';";
+					$sql .= "UPDATE #__fb_messages set `catid`='$TargetCatID' `thread`='$TargetMessageID' WHERE `thread`='$MessageID';";
+				}
 
 				break;
 			case 2:
@@ -103,8 +128,11 @@ class CKunenaModeration
 		}
 
 		// Execute move
+		$database->setQuery($sql);
+		$database->query() or trigger_dberror('Unable to perform move.');
 
 		// Check result to see if we need to abord and set error message
+		// TODO: check for success or set error message and return false
 
 		// When done log the action
 		$this->_Log('Move', $MessageID, $TargetCatID, $TargetSubject, $TargetMessageID, $mode);

@@ -33,7 +33,8 @@ Legend:
 Kunena 1.0.10
 
 18-May-2009 Matias
-# [#16436] Internal: Fix sub forums in category view, PHP error and CB integration in view.php
+# [#16436] Internal: Default: Fix sub forums in category view, PHP error and CB integration in view.php
+# [#16439] Missing translations in Kunena admin toolbar
 
 17-May-2009 Matias
 # [#16431] Wordwrap breaks Spoiler BBCode

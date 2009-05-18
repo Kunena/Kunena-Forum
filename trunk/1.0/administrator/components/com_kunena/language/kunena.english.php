@@ -23,6 +23,10 @@
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 // 1.0.10
+DEFINE('_KUNENA_BACK', 'Back');
+DEFINE('_KUNENA_SYNC', 'Sync');
+DEFINE('_KUNENA_NEW_SMILIE', 'New Smilie');
+DEFINE('_KUNENA_PRUNE', 'Prune');
 // Editor
 DEFINE('_KUNENA_EDITOR_HELPLINE_BOLD', 'Bold text: [b]text[/b]');
 DEFINE('_KUNENA_EDITOR_HELPLINE_ITALIC', 'Italic text: [i]text[/i]');

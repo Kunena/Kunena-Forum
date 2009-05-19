@@ -914,56 +914,28 @@ $catName = $objCatInfo->name;
                 }
                 else if ($do == "deletepostnow")
                 {
-                    if (!$is_Moderator) {
-			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
-                    }
-
-                    $id = (int)mosGetParam($_POST, 'id', '');
-                    $dellattach = mosGetParam($_POST, 'delAttachments', '') == 'delAtt' ? 1 : 0;
-                    $thread = fb_delete_post($database, $id, $dellattach);
-
-                    CKunenaTools::reCountBoards();
-
-                    switch ($thread)
-                    {
-                        case -1:
-                            echo _POST_ERROR_TOPIC . '<br />';
-
-                            echo _KUNENA_POST_DEL_ERR_CHILD;
-                            break;
-
-                        case -2:
-                            echo _POST_ERROR_TOPIC . '<br />';
-
-                            echo _KUNENA_POST_DEL_ERR_MSG;
-                            break;
-
-                        case -3:
-                            echo _POST_ERROR_TOPIC . '<br />';
-
-                            $tmpstr = _KUNENA_POST_DEL_ERR_TXT;
-                            $tmpstr = str_replace('%id%', $id, $tmpstr);
-                            echo $tmpstr;
-                            break;
-
-                        case -4:
-                            echo _POST_ERROR_TOPIC . '<br />';
-
-                            echo _KUNENA_POST_DEL_ERR_USR;
-                            break;
-
-                        case -5:
-                            echo _POST_ERROR_TOPIC . '<br />';
-
-                            echo _KUNENA_POST_DEL_ERR_FILE;
-                            break;
-
-                        default:
-                            echo '<br /><br /><div align="center">' . _POST_SUCCESS_DELETE . "</div><br />";
-
-                            break;
-                    }
-                    echo CKunenaLink::GetLatestCategoryAutoRedirectHTML($catid);
+					// Extra stings we have:
+					// _KUNENA_POST_DEL_ERR_CHILD
+					// _KUNENA_POST_DEL_ERR_MSG
+					// _KUNENA_POST_DEL_ERR_TXT
+					// _KUNENA_POST_DEL_ERR_USR
+					// _KUNENA_POST_DEL_ERR_FILE
+					// _POST_NOT_MODERATOR
+					$id = (int)mosGetParam($_POST, 'id', '');
+					$dellattach = mosGetParam($_POST, 'delAttachments', '') == 'delAtt' ? 1 : 0;
+					$modtools = CKunenaModeration::getInstance();
+					$success = $modTools->deleteMessage($id, $dellattach);
+					if ($success === false)
+					{
+						// TODO: translate error messages
+						echo '<div align="center">' . _POST_ERROR_TOPIC . "</div><br />";
+						echo '<div align="center">' . $modTools->getErrorMessage() . "</div>";
+					}
+					else 
+					{
+						echo '<div align="center">' . _POST_SUCCESS_DELETE . "</div>";
+					}
+                    echo '<br />'.CKunenaLink::GetLatestCategoryAutoRedirectHTML($catid);
 
                 } //fi $do==deletepostnow
                 else if ($do == "move")
@@ -1018,61 +990,26 @@ $catName = $objCatInfo->name;
 
             <?php
                 }
-                else if ($do == "domovepost")
+                else if ($do == "domovepost") // Actually moves a thread!
                 {
-                    $catid = (int)$catid;
-                    $id = (int)$id;
-                    $bool_leaveGhost = (int)mosGetParam($_POST, 'leaveGhost', 0);
-                    //get the some details from the original post for later
-                    $database->setQuery("SELECT `subject`, `catid`, `time` AS timestamp FROM #__fb_messages WHERE `id`='$id'");
-                    $oldRecord = $database->loadObjectList();
-                    	check_dberror("Unable to load messages.");
+					$catid = (int)$catid;
+					$id = (int)$id;
+					$ghostThread = (int)mosGetParam($_POST, 'leaveGhost', 0);
 
-                    $newCatObj = new jbCategory($database, $oldRecord[0]->catid);
-		    if (!fb_has_moderator_permission($database, $newCatObj, $my->id, $is_admin)) {
-			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
-                    }
+					$modtools = CKunenaModeration::getInstance();
+					$success = $modTools->moveThread($id, $catid, $ghostThread);
+					if ($success === false)
+					{
+						// TODO: translate error messages
+						echo '<div align="center">' . _POST_ERROR_TOPIC . "</div><br />";
+						echo '<div align="center">' . $modTools->getErrorMessage() . "</div>";
+					}
+					else 
+					{
+						echo '<div align="center">' . _POST_SUCCESS_MOVE . "</div>";
+					}
 
-                    $newSubject = _MOVED_TOPIC . " " . $oldRecord[0]->subject;
-
-                    $database->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE `thread`='$id'");
-                    $lastTimestamp = $database->loadResult();
-                    	check_dberror("Unable to load last timestamp.");
-
-                    if ($lastTimestamp == "") {
-                        $lastTimestamp = $oldRecord[0]->timestamp;
-                    }
-
-                    //perform the actual move
-                    //Move topic post first
-                    $database->setQuery("UPDATE #__fb_messages SET `catid`='$catid' WHERE `id`='$id'");
-                    $database->query() or trigger_dberror('Unable to move thread.');
-
-                    $database->setQuery("UPDATE #__fb_messages set `catid`='$catid' WHERE `thread`='$id'");
-                    $database->query() or trigger_dberror('Unable to move thread.');
-
-                    // insert 'moved topic' notification in old forum if needed
-                    if ($bool_leaveGhost)
-                    {
-                    	$database->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','$newSubject','$lastTimestamp','{$oldRecord[0]->catid}','1', '{$my->id}', '".trim(addslashes($my_name))."')");
-                    	$database->query() or trigger_dberror('Unable to insert ghost message.');
-
-                    	//determine the new location for link composition
-                    	$newId = $database->insertid();
-
-                    	$newURL = "catid=" . $catid . "&id=" . $id;
-                    	$database->setQuery("INSERT INTO #__fb_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')");
-                    	$database->query() or trigger_dberror('Unable to insert ghost message.');
-
-                    	//and update the thread id on the 'moved' post for the right ordering when viewing the forum..
-                    	$database->setQuery("UPDATE #__fb_messages SET `thread`='$newId' WHERE `id`='$newId'");
-                    	$database->query() or trigger_dberror('Unable to move thread.');
-                    }
-                    //move succeeded
-                    CKunenaTools::reCountBoards();
-
-                    echo '<br /><br /><div align="center">' . _POST_SUCCESS_MOVE . "</div><br />";
-                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page, $catid);
+					echo '<br />'.CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page, $catid);
                 }
                 //begin merge function
                 else if ($do == "merge")
@@ -1135,118 +1072,27 @@ $catName = $objCatInfo->name;
 
             <?php
                 }
-                else if ($do == "domergepost")
+                else if ($do == "domergepost") // we need to do this for thread also!
                 {
-                    if (!$is_Moderator) {
-			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
-                    }
+					$catid = (int)$catid;
+					$id = (int)$id;
+					$targetThread = (int)mosGetParam($_POST, 'threadid', 0);
+					$ghostThread = (int)mosGetParam($_POST, 'leaveGhost', 0);
 
-                    $catid = (int)$catid;
-                    $id = (int)$id;
-                    $target = (int)mosGetParam($_POST, 'threadid', 0);
-                    $how = (int)mosGetParam($_POST, 'how', 0);
-                    $bool_leaveGhost = (int)mosGetParam($_POST, 'leaveGhost', 0);
+					$modtools = CKunenaModeration::getInstance();
+					$success = $modTools->moveMessageAndNewer($id, $catid, null, $targetThread);
+					if ($success === false)
+					{
+						// TODO: translate error messages
+						echo '<div align="center">' . _POST_TOPIC_NOT_MERGED . "</div><br />";
+						echo '<div align="center">' . $modTools->getErrorMessage() . "</div>";
+					}
+					else 
+					{
+						echo '<div align="center">' . _POST_SUCCESS_MERGE . "</div>";
+					}
 
-
-                    switch ($how)
-                    {
-                    case '0' :  //attach first post in source to first post in target - merge (default)
-                    default  :
-                            $attachid=$target;
-                            $targetid=$target;
-                            $sourceid=$id;
-                            break;
-                    case '1' :  //attach first post in target to first post in source - inverse merge
-                            $attachid=$id;
-                            $sourceid=$target;
-                            $targetid=$id;
-                            break;
-                    }
-
-                    //get the some details from the original post for later
-                    $database->setQuery("SELECT `subject`, `catid`, `ordering`, `time` AS timestamp FROM #__fb_messages WHERE `id`='$sourceid'");
-                    $oldRecord = $database->loadObjectList();
-                    	check_dberror("Unable to load messages.");
-                    $newSubject = _MOVED_TOPIC . " " . $oldRecord[0]->subject;
-                    $database->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE `thread`='$sourceid'");
-                    $lastTimestamp = $database->loadResult();
-                    	check_dberror("Unable to load messages.");
-                    $database->setQuery("SELECT MAX(ordering) AS timestamp FROM #__fb_messages WHERE `thread`='$targetid'");
-                    $maxordering = $database->loadResult();
-                    	check_dberror("Unable to get max(ordering) from messages.");
-
-                    if ($lastTimestamp == "")
-                    {
-                        $lastTimestamp = $oldRecord[0]->timestamp;
-                    }
-
-                    //perform the actual merge
-                    //see if you can attach
-                    $database->setQuery("UPDATE #__fb_messages set `parent`='$attachid' WHERE `id`='$sourceid'");
-                    if ($database->query())
-                    { //succeeded; start moving posts
-                        //make sure default merged threads get sorted correcty
-                        $database->setQuery("UPDATE #__fb_messages set ordering='$maxordering' WHERE thread='$sourceid'");
-                        $database->query();
-
-                        //Now move first post
-                        $database->setQuery("UPDATE #__fb_messages SET `thread`='$targetid' WHERE `id`='$sourceid'");
-                        if ($database->query())
-                        {
-                            //Move the rest of the messages
-                            $database->setQuery("UPDATE #__fb_messages set `thread`='$targetid' WHERE `thread`='$sourceid'");
-                            $database->query();
-
-                            // insert 'moved topic' notification in old forum if needed
-                            if ($bool_leaveGhost)
-                            {
-                                $database->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`) VALUES ('0','$newSubject','" . $lastTimestamp . "','" . $oldRecord[0]->catid . "','1')");
-
-                                if ($database->query())
-                                {
-                                    //determine the new location for link composition
-                                    $newId = $database->insertid();
-                                    $newURL = "catid=" . $catid . "&id=" . $sourceid;
-                                    $database->setQuery("INSERT INTO #__fb_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')");
-
-                                    if (!$database->query())
-                                    {
-                                        $database->stderr(true);
-                                    }
-
-                                    //and update the thread id on the 'moved' post for the right ordering when viewing the forum..
-                                    $database->setQuery("UPDATE #__fb_messages SET `thread`='$newId' WHERE `id`='$newId'");
-
-                                    if (!$database->query())
-                                    {
-                                        $database->stderr(true);
-                                    }
-
-                                }
-                                else
-                                    echo '<p style="text-align:center">' . _POST_GHOST_FAILED . '</p>';
-                            }
-
-                            //merge succeeded
-                            CKunenaTools::reCountBoards();
-
-                            echo '<br /><br /><div align="center">' . _POST_SUCCESS_MERGE . "</div><br />";
-                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $targetid, $fbConfig->messages_per_page, $catid);
-                        }
-                        else
-                        {
-                            echo "Severe database error. Update your database manually so the replies to the topic are matched to the new forum as well";
-                            //this is severe.. takes a lot of coding to programatically correct it. Won't do that.
-                            //chances of this happening are very slim. Disclaimer: this is software as-is *lol*;
-                            //go read the GPL and the header of this file..
-                        }
-                    }
-                    else
-                    {
-                        echo '<br /><br /><div align="center">' . _POST_TOPIC_NOT_MERGED . "</div><br />";
-                        echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page);
-                    }
-
+					echo '<br />'.CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page);
 		        }
 // end merge function
 // begin split function
@@ -1390,168 +1236,26 @@ $catName = $objCatInfo->name;
                 }
                 else if ($do == "dosplit")
                 {
-                    if (!$is_Moderator)
-                    {
-			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
-                    }
+					$catid = (int)$catid;
+					$id = (int)$id;
+					$targetThread = (int)mosGetParam($_POST, 'threadid', 0);
+					$ghostThread = (int)mosGetParam($_POST, 'leaveGhost', 0);
+					$new_topic = (int)mosGetParam($_POST, 'to_topic', 0);
 
-                    $catid = (int)$catid;
-                    $id = (int)mosGetParam($_POST, 'id', 0);
-                    $to_split = mosGetParam($_POST, 'to_split', 0);
-                    $how = (int)mosGetParam($_POST, 'how', 0);
-                    $new_topic = (int)mosGetParam($_POST, 'to_topic', 0);
-                    $topic_change = 0;
+					$modtools = CKunenaModeration::getInstance();
+					$success = $modTools->moveMessageAndNewer($id, $catid, null, $targetThread);
+					if ($success === false)
+					{
+						// TODO: translate error messages
+						echo '<div align="center">' . _POST_TOPIC_NOT_MERGED . "</div><br />";
+						echo '<div align="center">' . $modTools->getErrorMessage() . "</div>";
+					}
+					else 
+					{
+						echo '<div align="center">' . _POST_SUCCESS_SPLIT . "</div>";
+					}
 
-                    if (!$to_split)
-                    {
-                        if ($new_topic != 0 && $id != $new_topic)
-                        {
-                            $topic_change = 1;
-                            $to_split = array();
-                            array_push($to_split, $new_topic);
-                        }
-                        else
-                        {
-                            echo '<br /><b> Select at least one post to split.</b></br>';
-                            return;
-                        }
-                    }
-
-                    //store sticky bit from old topic
-                    $database->setQuery("SELECT ordering FROM #__fb_messages WHERE id=$id");
-                    $sticky_bit = (int)$database->loadResult();
-
-                    //enter topic change only sequence
-                    if (in_array($id, $to_split) || $topic_change == 1)
-                    {
-                        echo '<div align="center"><br />Assuming that you want to change topic post.</br></div>';
-                        if ($new_topic != 0 && $id != $new_topic)
-                        {
-                            //select all posts in thread regardless of earlier selection
-                            $database->setQuery("SELECT id FROM #__fb_messages WHERE thread=$id");
-                            $to_split = $database->loadResultArray();
-
-                            $split_string=implode(",",$to_split);
-
-                            //old topic id adopted by new one: the new parent will appear after child unless sorting var added in view.php
-                            $database->setQuery("UPDATE #__fb_messages set parent=$new_topic WHERE id=$id");
-                            $database->query();
-
-                            //assign new thread ids
-                            $database->setQuery("UPDATE #__fb_messages set thread=$new_topic WHERE id IN ($split_string)");
-                            $database->query();
-
-                            //set new topic
-                            $database->setQuery("UPDATE #__fb_messages set parent=0 WHERE id=$new_topic");
-                            $database->query();
-
-                            //copy over hits from old topic
-                            $database->setQuery("SELECT hits FROM #__fb_messages WHERE id=$id");
-                            $hits = (int)$database->loadResult();
-                            $database->setQuery("UPDATE #__fb_messages set hits=$hits WHERE id=$new_topic");
-                            $database->query();
-
-
-                            $database->setQuery("UPDATE #__fb_messages set ordering='2' WHERE id=$id");
-                            $database->query();
-
-                            //move new topic to top regardless of viewing preferences and set sticky
-                            $database->setQuery("UPDATE #__fb_messages set ordering='$sticky_bit' WHERE id=$new_topic AND parent=0");
-                            $database->query();
-
-                            echo '<br /><br /><div align="center">' . _POST_SUCCESS_SPLIT_TOPIC_CHANGED . "</div><br />";
-                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $new_topic, $fbConfig->messages_per_page, $catid);
-
-                            return;
-                        }
-                        else
-                        {
-                            echo '<br /><br /><div align="center">' . _POST_SPLIT_TOPIC_NOT_CHANGED . "</div><br />";
-                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page);
-
-                            echo '<div align="center"><br />Topic change failed.</br></div>';
-                            return;
-                        }
-
-                    } //end topic change
-
-                    if (count($to_split) == 1)
-                    { //single split post automatically becomes topic
-                        if ($to_split[0] != $id)
-                        {
-                            $new_topic=$to_split[0];
-                        }
-                        else return;
-                    }
-
-                    if (!$new_topic)
-                    {
-                        echo '<br /><b> Select new topic.</b></br>';
-                        return;
-                    }
-
-                    if (!in_array($new_topic, $to_split))
-                    {
-                        array_push($to_split, $new_topic);
-                        echo '<div align="center"><br />Selected topic post has been force-added to split group.</br></div>';
-                    }
-
-                    $split_string=implode(",",$to_split);
-
-                    //assign new thread ids
-                    $database->setQuery("UPDATE #__fb_messages set thread='$new_topic' WHERE id IN ($split_string)");
-                    $database->query();
-
-                    foreach ($to_split as $split_id)
-                    { //assign new parents to topic and orphaned posts
-                        $database->setQuery("SELECT parent FROM #__fb_messages WHERE id=$split_id");
-                        $parent = (int)$database->loadResult();
-
-                        if ($split_id == $new_topic)
-                        { //set new topic
-                            $linkup = 0;
-                        }
-                        else if (!in_array($parent, $to_split))
-                        { //detected orphan
-                            if ($how) $linkup = $new_topic; //orphans adopted by new topic post
-                            else
-                            { //orphans adopted by lowest neighboring post id
-                                $closest = $split_id-1;
-                                while (!in_array($closest, $to_split))
-                                {
-                                    $closest--;
-                                }
-                                if (in_array($closest, $to_split)) $linkup = $closest;
-                                else $linkup = $new_topic;
-                            }
-                        }
-                        else //reset existing parent
-                        $linkup=$parent;
-
-                        $database->setQuery("UPDATE #__fb_messages set parent='$linkup' WHERE id=$split_id");
-                        $database->query();
-                    } //end parenting foreach loop
-
-
-                    //inherit hits from old topic
-                    $database->setQuery("SELECT hits FROM #__fb_messages WHERE id=$id");
-                    $hits = (int)$database->loadResult();
-                    $database->setQuery("UPDATE #__fb_messages set hits=$hits WHERE id=$new_topic");
-                    $database->query();
-
-                    //set the highest sorting for old topic
-                    $database->setQuery("UPDATE #__fb_messages set ordering='2' WHERE id=$id");
-                    $database->query();
-
-                    //copy over sticky bit to new topic
-                    $database->setQuery("UPDATE #__fb_messages set ordering='$sticky_bit' WHERE id=$new_topic AND parent=0");
-                    $database->query();
-
-                    //split succeeded
-                    CKunenaTools::reCountBoards();
-
-                    echo '<br /><br /><div align="center">' . _POST_SUCCESS_SPLIT . "</div><br />";
-                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $new_topic, $fbConfig->messages_per_page, $catid);
+					echo '<br />'.CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page);
 		        }
 // end split function
                 else if ($do == "subscribe")

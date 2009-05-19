@@ -32,7 +32,7 @@ Legend:
 
 Kunena 1.0.10
 
-15-May-2009 fxstein
+19-May-2009 fxstein & Matias
 + [#16414] New Moderation Tool class CKunenaModeration
 
 15-May-2009 Matias

@@ -313,7 +313,7 @@ class CKunenaLink
 		if ($catid > 0) $where .= " AND a.catid = {$catid} ";
 		$database->setQuery('SELECT a.thread AS thread, max(a.id) AS latest_id, max(a.catid) AS catid, count(*) AS totalmessages
                              FROM #__fb_messages AS a,
-                                (SELECT max(thread) AS thread FROM #__fb_messages WHERE id='.$pid.') AS b
+                                (SELECT thread FROM #__fb_messages WHERE id='.$pid.') AS b
                              WHERE a.thread = b.thread AND a.hold = 0 '.$where.'
                              GROUP BY a.thread');
         $database->loadObject($result);
@@ -347,7 +347,7 @@ class CKunenaLink
 		if ($catid > 0) $where .= " AND a.catid = {$catid} ";
         $database->setQuery('SELECT a.thread AS thread, max(a.id) AS latest_id, max(a.catid) AS catid, count(*) AS totalmessages
                              FROM #__fb_messages AS a,
-                                (SELECT max(thread) AS thread FROM #__fb_messages WHERE id='.$pid.') AS b
+                                (SELECT thread FROM #__fb_messages WHERE id='.$pid.') AS b
                              WHERE a.thread = b.thread AND a.hold = 0 '.$where.'
                              GROUP BY a.thread');
         $database->loadObject($result);

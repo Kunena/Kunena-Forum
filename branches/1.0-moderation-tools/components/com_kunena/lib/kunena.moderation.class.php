@@ -23,16 +23,28 @@ define (KN_DEL_MESSAGE, 0);
 define (KN_DEL_THREAD, 1);
 define (KN_DEL_ATTACH, 2);
 
+global $database;
+
 class CKunenaModeration
 {
 	// Private data and functions
 	var $_db = '';
 	var $_errormsg = '';
 
-	function construct($db)
+	function CKunenaModeration($db)
 	{
 		$this->_db = $db;
 		$this->_ResetErrorMessage();
+	}
+	
+	function &getInstance()
+	{
+		global $database;
+		static $instance;
+		if (!$instance) {
+			$instance = new CKunenaModeration($database);
+		}
+		return $instance;
 	}
 
 	function _ResetErrorMessage()
@@ -63,9 +75,12 @@ class CKunenaModeration
 		// no need to check $GhostThread as we only test for true
 
 		// Always check security clearance before taking action!
+
 		// TODO: Add security permissions check
-
-
+		// Assumption: only moderators can move messages
+		// - Check that user has moderator permissions for source category (= $currentMessage->catid)
+		// - Check that destination category exists and is visible to our moderator
+		// - Error message if one of those fails (log entry too?)
 
 		// Test parameters to see if they are valid selecions or abord
 
@@ -174,25 +189,39 @@ class CKunenaModeration
 				}
 
 				// Create ghost thread if requested
+				// TODO: move this to a function
 				if ($GhostThread==true)
 				{
+                    // Post time in ghost message is the same as in the last message of the thread
+					$database->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE `thread`='$id'");
+					$lastTimestamp = $database->loadResult();
+						check_dberror("Unable to load last timestamp.");
+					if ($lastTimestamp == "") {
+						$lastTimestamp = $currentMessage->timestamp;
+					}
+
 					// TODO: need to fetch correct user id for new ghost thread - current moderator who executed the move
-                    $this->_db->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','$currentMessage->subject','$currentMessage->timestamp','$currentMessage->catid','1', '$my->id', '".trim(addslashes($my_name))."')");
+					// @Oliver: we already have it. It's current user: $my->id
+					// TODO: obey configuration setting username vs realname
+                    // TODO: what do we do with ghost message title? _MOVED_TOPIC was used before
+                    // @Oliver: I'd like to get rid of it and add it while rendering.. 
+					$this->_db->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','$currentMessage->subject','$lastTimestamp','$currentMessage->catid','1', '$my->id', '".trim(addslashes($my_name))."')");
                     $this->_db->query();
                     	check_dberror('Unable to insert ghost message.');
 
                     //determine the new location for link composition
                     $newId = $this->_db->insertid();
 
-                    //and update the thread id on the 'moved' post for the right ordering when viewing the forum..
-                    $this->_db->setQuery("UPDATE #__fb_messages SET `thread`='$newId' WHERE `id`='$newId'");
-                    $this->_db->query();
-                    	check_dberror('Unable to update thread id of ghost thread.');
+					// and update the thread id on the 'moved' post for the right ordering when viewing the forum..
+					$this->_db->setQuery("UPDATE #__fb_messages SET `thread`='$newId' WHERE `id`='$newId'");
+					$this->_db->query();
+						check_dberror('Unable to update thread id of ghost thread.');
 
-                    $newURL = "id=" . $currentMessage->id;
-                    $this->_db->setQuery("INSERT INTO #__fb_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')");
-                    $this->_db->query();
-                    	check_dberror('Unable to insert ghost message.');
+					// TODO: we need to fix all old ghost messages and change behaviour of them
+					$newURL = "id=" . $currentMessage->id;
+					$this->_db->setQuery("INSERT INTO #__fb_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')");
+					$this->_db->query();
+						check_dberror('Unable to insert ghost message.');
 				}
 
 				break;
@@ -269,6 +298,8 @@ class CKunenaModeration
 		// Assemble delete logic based on $mode
 
 		// Execute delete
+		
+		// Remember to delete ghost post, too (note: replies may have ghosts)
 
 		// Check result to see if we need to abord and set error message
 

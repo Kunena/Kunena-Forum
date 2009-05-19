@@ -562,114 +562,6 @@ class CKunenaTools {
         echo $lists['parent'];
         }
 
-    function fbDeletePosts($isMod, $return) {
-        global $my, $database;
-
-        if (!CKunenaTools::isModOrAdmin() && !$isMod) {
-            mosRedirect($return, _POST_NOT_MODERATOR);
-            }
-
-        $items = fbGetArrayInts("fbDelete");
-        $dellattach = 1;
-
-        // start iterating here
-        foreach ($items as $id => $value) {
-            $database->setQuery('SELECT id,catid,parent,thread,subject,userid FROM #__fb_messages WHERE id=' . $id);
-
-            if (!$database->query()) {
-                return -2;
-                }
-
-            $database->loadObject($mes);
-            $thread = $mes->thread;
-
-            if ($mes->parent == 0) {
-                // this is the forum topic; if removed, all children must be removed as well.
-                $children = array ();
-                $userids = array ();
-                $database->setQuery('SELECT userid,id, catid FROM #__fb_messages WHERE thread=' . $id . ' OR id=' . $id);
-
-                foreach ($database->loadObjectList() as $line) {
-                    $children[] = $line->id;
-
-                    if ($line->userid > 0) {
-                        $userids[] = $line->userid;
-                        }
-                    }
-
-                $children = implode(',', $children);
-                }
-            else {
-                //this is not the forum topic, so delete it and promote the direct children one level up in the hierarchy
-                $database->setQuery('UPDATE #__fb_messages SET parent=\'' . $mes->parent . '\' WHERE parent=\'' . $id . '\'');
-
-                if (!$database->query()) {
-                    return -1;
-                    }
-
-                $children = $id;
-                $userids = $mes->userid > 0 ? $mes->userid : '';
-                }
-
-            //Delete the post (and it's children when it's the first post)
-            $database->setQuery('DELETE FROM #__fb_messages WHERE id=' . $id . ' OR thread=' . $id);
-
-            if (!$database->query()) {
-                return -2;
-                }
-
-            // now update stats
-            CKunenaTools::decreaseCategoryStats($id, $mes->catid);
-
-            //Delete message text(s)
-            $database->setQuery('DELETE FROM #__fb_messages_text WHERE mesid IN (' . $children . ')');
-
-            if (!$database->query()) {
-                return -3;
-                }
-
-            //Update user post stats
-            if (count($userids) > 0) {
-                $userids = implode(',', $userids);
-                $database->setQuery('UPDATE #__fb_users SET posts=posts-1 WHERE userid IN (' . $userids . ')');
-
-                if (!$database->query()) {
-                    return -4;
-                    }
-                }
-
-            //Delete (possible) ghost post
-            $database->setQuery('SELECT mesid FROM #__fb_messages_text WHERE message=\'catid=' . $mes->catid . '&amp;id=' . $id . '\'');
-            $int_ghost_id = $database->loadResult();
-
-            if ($int_ghost_id > 0) {
-                $database->setQuery('DELETE FROM #__fb_messages WHERE id=' . $int_ghost_id);
-                $database->query();
-                $database->setQuery('DELETE FROM #__fb_messages_text WHERE mesid=' . $int_ghost_id);
-                $database->query();
-                }
-
-            //Delete attachments
-            if ($dellattach) {
-                $database->setQuery('SELECT filelocation FROM #__fb_attachments WHERE mesid IN (' . $children . ')');
-                $fileList = $database->loadObjectList();
-                	check_dberror("Unable to load attachments.");
-
-                if (count($fileList) > 0) {
-                    foreach ($fileList as $fl) {
-                        unlink ($fl->filelocation);
-                        }
-
-                    $database->setQuery('DELETE FROM #__fb_attachments WHERE mesid IN (' . $children . ')');
-                    $database->query();
-                    }
-                }
-            } //end foreach
-            CKunenaTools::reCountBoards();
-
-            mosRedirect($return, _KUNENA_BULKMSG_DELETED);
-        }
-
     function isModOrAdmin($id = 0) {
         global $database, $my;
 // echo '<div>CALL isModOrAdmin</div>';
@@ -690,66 +582,37 @@ class CKunenaTools {
             return false;
         }
 
-    function fbMovePosts($catid, $isMod, $return) {
-        global $my, $database;
-	$err = "ERROR!";
+	// TODO: move this elsewhere
+	function fbDeletePosts($isMod, $return) {
+		$errmsg = _KUNENA_BULKMSG_DELETED;
 
-	// $isMod if user is moderator in the current category
-	if (!$isMod) {
-		// Test also if user is a moderator in some other category
-		$database->setQuery('SELECT userid FROM #__fb_moderation WHERE userid='.$my->id);
-		$isMod = $database->loadResult();
-		check_dberror("Unable to load moderation info.");
+		$items = fbGetArrayInts("fbDelete");
+		$deleteAttachments = 1;
+
+		$modtools = CKunenaModeration::getInstance();
+
+		foreach ($items as $threadid => $value) {
+			$success = $modTools->deleteThread($threadid, $deleteAttachments);
+			if ($success === false) $errmsg = $modTools->getErrorMessage();
+		}
+		mosRedirect($return, $errmsg);
 	}
-	$isAdmin = CKunenaTools::isModOrAdmin();
 
-        //isMod will stay until better group management comes in
-        if (!$isAdmin && !$isMod) {
-            mosRedirect($return, _POST_NOT_MODERATOR);
-            }
+	// TODO: move this elsewhere
+	function fbMovePosts($catid, $isMod, $return) {
+		$errmsg = _POST_SUCCESS_MOVE;
 
 		$catid = (int)$catid;
-		if ($catid > 0) {
-	        $items = fbGetArrayInts("fbDelete");
+		$items = fbGetArrayInts("fbDelete");
+		$ghostThread = true;
 
-	        // start iterating here
-
-	        foreach ($items as $id => $value) {
-	            $id = (int)$id;
-
-	            $database->setQuery("SELECT `subject`, `catid`, `time` AS timestamp FROM #__fb_messages WHERE `id`=" . $id);
-	            $oldRecord = $database->loadObjectList();
-	            	check_dberror("Unable to load message detail.");
-
-                    $newCatObj = new jbCategory($database, $oldRecord[0]->catid);
-		    if (fb_has_moderator_permission($database, $newCatObj, $my->id, $isAdmin)) {
-
-		        $newSubject = _MOVED_TOPIC . " " . $oldRecord[0]->subject;
-		        $database->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE `thread`=" . $id);
-		        $lastTimestamp = $database->loadResult();
-			check_dberror("Unable to load messages max(time).");
-
-			if ($lastTimestamp == "") {
-				$lastTimestamp = $oldRecord[0]->timestamp;
-                	}
-
-			//perform the actual move
-			$database->setQuery("UPDATE #__fb_messages SET `catid`='$catid' WHERE `id`='$id' OR `thread`='$id'");
-			$database->query();
-			check_dberror("Unable to move thread.");
-
-			$err = _POST_SUCCESS_MOVE;
-		    } else {
-                        $err = _POST_NOT_MODERATOR;
-                    }
-		} //end foreach
-		} else {
-			$err = _POST_NO_DEST_CATEGORY;
+		$modtools = CKunenaModeration::getInstance();
+		foreach ($items as $threadid => $value) {
+			$success = $modTools->moveThread($threadid, $cat, $ghostThread);
+			if ($success === false) $errmsg = $modTools->getErrorMessage();
 		}
-        CKunenaTools::reCountBoards();
-
-        mosRedirect($return, $err);
-        }
+		mosRedirect($return, $errmsg);
+	}
 
         function isJoomla15()
         {

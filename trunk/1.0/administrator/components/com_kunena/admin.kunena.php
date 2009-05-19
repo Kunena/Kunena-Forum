@@ -493,8 +493,8 @@ function saveForum($option)
     $row->checkin();
     $row->updateOrder("parent='$row->parent'");
 
-    $this->_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
-	$this->_db->query() or trigger_dberror("Unable to update sessions.");
+    $database->setQuery("UPDATE #__fb_sessions SET allowed='na'");
+	$database->query() or trigger_dberror("Unable to update sessions.");
     
 	mosRedirect ("index2.php?option=$option&task=showAdministration");
 }
@@ -565,8 +565,8 @@ function deleteForum($cid = null, $option)
     	}
     }
 
-	$this->_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
-	$this->_db->query() or trigger_dberror("Unable to update sessions.");
+	$database->setQuery("UPDATE #__fb_sessions SET allowed='na'");
+	$database->query() or trigger_dberror("Unable to update sessions.");
     
 	mosRedirect ("index2.php?option=$option&task=showAdministration");
 }
@@ -797,6 +797,7 @@ function showConfig($option)
 
 function saveConfig($option)
 {
+	global $database;
 	$fbConfig =& CKunenaConfig::getInstance();
 
 	foreach ($_POST as $postsetting => $postvalue)
@@ -863,8 +864,8 @@ function saveConfig($option)
 	}
     // end legacy support
 
-	$this->_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
-	$this->_db->query() or trigger_dberror("Unable to update sessions.");
+	$database->setQuery("UPDATE #__fb_sessions SET allowed='na'");
+	$database->query() or trigger_dberror("Unable to update sessions.");
 	
 	mosRedirect("index2.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED);
 }
@@ -1016,8 +1017,8 @@ function addModerator($option, $id, $cid = null, $publish = 1)
     $row = new fbForum($database);
     $row->checkin($id);
     
-    $this->_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
-	$this->_db->query() or trigger_dberror("Unable to update sessions.");
+    $database->setQuery("UPDATE #__fb_sessions SET allowed='na'");
+	$database->query() or trigger_dberror("Unable to update sessions.");
     
     mosRedirect ("index2.php?option=$option&task=edit2&uid=" . $id);
 }
@@ -1185,8 +1186,8 @@ function saveUserProfile($option)
     	}
     }
 
-	$this->_db->setQuery("UPDATE #__fb_sessions SET allowed='na' WHERE userid='$uid'");
-	$this->_db->query() or trigger_dberror("Unable to update sessions.");
+	$database->setQuery("UPDATE #__fb_sessions SET allowed='na' WHERE userid='$uid'");
+	$database->query() or trigger_dberror("Unable to update sessions.");
 
 	mosRedirect ("index2.php?option=com_kunena&task=showprofiles");
 }

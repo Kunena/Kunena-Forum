@@ -587,7 +587,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 $fb_username = $userinfo->$fb_queryName;
 
                                 if ($fb_username == "" || $fbConfig->changename) {
-                                    $fb_username = $fmessage->name;
+                                    $fb_username = stripslashes($fmessage->name);
                                 }
 
                                 $msg_id = $fmessage->id;

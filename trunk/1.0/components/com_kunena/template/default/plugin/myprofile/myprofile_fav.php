@@ -77,7 +77,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 						</td>
 
-						<td class = "td-2" style = "text-align:center; width:25%"> <?php echo $fav->name; ?></td>
+						<td class = "td-2" style = "text-align:center; width:25%"> <?php echo htmlspecialchars(stripslashes($fav->name)); ?></td>
 
 						<td class = "td-3" width = "1%">
 							<input id = "cid<?php echo $enum;?>" name = "cid[]" value = "<?php echo $favs->thread; ?>"  type = "checkbox"/>

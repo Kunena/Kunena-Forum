@@ -35,6 +35,7 @@ Kunena 1.0.10
 19-May-2009 Matias
 # [#16456] Quick reply: Empty subject if topic contains: "
 # [#16460] Extra slashes in username for anonymous users or if Allow Name Change = yes
+# [#16458] Search: Searching 'foo' is broken -- Result: \\\'foo\\\'
 
 18-May-2009 Matias
 # [#16436] Internal: Default: Fix sub forums in category view, PHP error and CB integration in view.php

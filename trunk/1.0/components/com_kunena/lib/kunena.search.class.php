@@ -86,8 +86,9 @@ class CKunenaSearch
 	if (empty($q) && isset($_REQUEST['searchword'])) {
 		$q = mosGetParam($_REQUEST, 'searchword', '');
 	}
+	$q = stripslashes($q);
 	$this->params['titleonly'] = intval(mosGetParam($_REQUEST, 'titleonly', $this->defaults['titleonly']));
-	$this->params['searchuser'] = mosGetParam($_REQUEST, 'searchuser', $this->defaults['searchuser']);
+	$this->params['searchuser'] = stripslashes(mosGetParam($_REQUEST, 'searchuser', $this->defaults['searchuser']));
 	$this->params['starteronly'] = intval(mosGetParam($_REQUEST, 'starteronly', $this->defaults['starteronly']));
 	$this->params['exactname'] = intval(mosGetParam($_REQUEST, 'exactname', $this->defaults['exactname']));
 	$this->params['replyless'] = intval(mosGetParam($_REQUEST, 'replyless', $this->defaults['replyless']));
@@ -114,8 +115,7 @@ class CKunenaSearch
 
 	if ($q == _GEN_SEARCH_BOX) $q = '';
 	$this->searchword = $q;
-	$q = $database->getEscaped($q);
-        $arr_searchwords = split(' ', $q);
+    $arr_searchwords = split(' ', $q);
 	$do_search = FALSE;
 	$this->arr_kunena_searchstrings = array();
 	foreach ($arr_searchwords as $q)
@@ -147,7 +147,7 @@ class CKunenaSearch
         for ($x = 0; $x < count($arr_searchwords); $x++)
         {
             $searchword = $arr_searchwords[$x];
-            $searchword = $database->getEscaped(trim(strtolower($searchword)));
+            $searchword = $database->getEscaped(addslashes(trim(strtolower($searchword))));
             if (empty($searchword)) continue;
             $matches = array ();
             $not = '';
@@ -172,9 +172,9 @@ class CKunenaSearch
         if(strlen($searchuser)>0)
         {
             if($exactname=='1') {
-                $querystrings[] = 'm.name LIKE \'' . $searchuser . '\'';
+                $querystrings[] = "m.name LIKE '" . $database->getEscaped(addslashes($searchuser)) . "'";
             } else {
-                $querystrings[] = 'm.name LIKE \'%' . $searchuser . '%\'';
+                $querystrings[] = "m.name LIKE '%" . $database->getEscaped(addslashes($searchuser)) . "%'";
             }
         }
 
@@ -247,7 +247,7 @@ class CKunenaSearch
             $groupby = '';
 
         /* get total */
-        $database->setQuery('SELECT count(m.id) FROM #__fb_messages as m JOIN #__fb_messages_text as t ON m.id=t.mesid WHERE ' . $where . $groupby);
+        $database->setQuery('SELECT count(*) FROM #__fb_messages as m JOIN #__fb_messages_text as t ON m.id=t.mesid WHERE ' . $where . $groupby);
         $this->total = $database->loadResult();
         check_dberror("Unable to count messages.");
 

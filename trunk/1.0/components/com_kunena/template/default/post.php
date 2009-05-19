@@ -1259,6 +1259,10 @@ $catName = $objCatInfo->name;
                     $error = mosGetParam($_POST, 'error', 0);
                     $id = (int)$id;
                     $catid = (int)$catid;
+
+					// TODO: Enable split when it's fixed
+                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page, $catid), 'Split has been disabled');
+                    
                     //get list of posts in thread
                     $database->setQuery("SELECT * FROM #__fb_messages AS a "
                     ."\n LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE (a.thread='$id' OR a.id='$id') AND a.hold=0 AND a.catid='$catid' ORDER BY a.parent ASC, a.ordering, a.time");
@@ -1401,6 +1405,9 @@ $catName = $objCatInfo->name;
                     $how = (int)mosGetParam($_POST, 'how', 0);
                     $new_topic = (int)mosGetParam($_POST, 'to_topic', 0);
                     $topic_change = 0;
+
+					// TODO: Enable split when it's fixed
+                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page, $catid), 'Split has been disabled');
 
                     if (!$to_split)
                     {

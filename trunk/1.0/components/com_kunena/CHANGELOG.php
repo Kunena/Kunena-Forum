@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.10
 
+19-May-2009 Matias
+# [#16456] Quick reply: Empty subject if topic contains: "
+
 18-May-2009 Matias
 # [#16436] Internal: Default: Fix sub forums in category view, PHP error and CB integration in view.php
 # [#16439] Missing translations in Kunena admin toolbar

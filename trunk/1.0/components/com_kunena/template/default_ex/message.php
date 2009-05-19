@@ -115,7 +115,7 @@ if ($fbConfig->fb_profile == 'cb')
                                     }
 
                                     //contruct the reply subject
-                                    $resubject = strtolower(substr($msg_subject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? $msg_subject : _POST_RE . $msg_subject;
+                                    $resubject = htmlentities(strtolower(substr($msg_subject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? $msg_subject : _POST_RE .' '. $msg_subject);
                                     ?>
 
                             <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL. '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
@@ -364,7 +364,7 @@ if ($fbConfig->fb_profile == 'cb')
                         echo " " . $msg_reply;
                         echo " " . $msg_quote;
 
-			if (isset($is_Moderator)) echo ' </div><div class="fb_message_buttons_row">';
+			if ($is_Moderator) echo ' </div><div class="fb_message_buttons_row">';
 
                         if (isset($msg_merge)) {
                              echo " " . $msg_merge;

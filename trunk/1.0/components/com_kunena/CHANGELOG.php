@@ -40,6 +40,7 @@ Kunena 1.0.10
 ! Split will be enabled after it has been fixed. It didn't work and could break threads.
 # [#16438] Session: allowed forums should be updated when user or category has been modified in backend
 ! All other cases should be covered except of changing user group in Joomla User Manager
+# [#16457] Warnings during install if there is no permissions to copy files
 
 18-May-2009 Matias
 # [#16436] Internal: Default: Fix sub forums in category view, PHP error and CB integration in view.php

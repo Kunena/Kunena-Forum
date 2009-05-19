@@ -274,18 +274,21 @@ class CKunenaLink
     function GetSearchURL($fbConfig, $func, $searchword, $limitstart, $limit, $params='')
     {
     	$fbConfig =& CKunenaConfig::getInstance();
-		$limitstr = "&amp;limitstart=$limitstart";
-		if ($limit != $fbConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
+		$limitstr = "";
+    	if ($limitstart > 0) $limitstr .= "&amp;limitstart=$limitstart";
+		if ($limit > 0 && $limit != $fbConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
+		if ($searchword) $searchword = '&amp;q=' . urlencode($searchword);
         return sefRelToAbs(KUNENA_LIVEURLREL."&amp;func={$func}&amp;q={$searchword}{$params}{$limitstr}");
     }
 
     function GetSearchLink($fbConfig, $func, $searchword, $limitstart, $limit, $name, $params='', $rel='nofollow')
     {
     	$fbConfig =& CKunenaConfig::getInstance();
-		$limitstr = "&amp;limitstart=$limitstart";
-		if ($limit != $fbConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
-		$searchword = urlencode($searchword);
-        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL."&amp;func={$func}&amp;q={$searchword}{$params}{$limitstr}", $name, '', $rel);
+		$limitstr = "";
+    	if ($limitstart > 0) $limitstr .= "&amp;limitstart=$limitstart";
+		if ($limit > 0 && $limit != $fbConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
+		if ($searchword) $searchword = '&amp;q=' . urlencode($searchword);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL."&amp;func={$func}{$searchword}{$params}{$limitstr}", $name, '', $rel);
     }
 
     function GetAnnouncementURL($fbConfig, $do, $id=NULL)

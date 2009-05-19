@@ -41,6 +41,7 @@ Kunena 1.0.10
 # [#16438] Session: allowed forums should be updated when user or category has been modified in backend
 ! All other cases should be covered except of changing user group in Joomla User Manager
 # [#16457] Warnings during install if there is no permissions to copy files
++ [#16437] Show link to advanced search
 
 18-May-2009 Matias
 # [#16436] Internal: Default: Fix sub forums in category view, PHP error and CB integration in view.php

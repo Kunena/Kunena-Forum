@@ -38,6 +38,8 @@ Kunena 1.0.10
 # [#16458] Search: Searching 'foo' is broken -- Result: \\\'foo\\\'
 - [#16459] Moderator tools: Disable broken split
 ! Split will be enabled after it has been fixed. It didn't work and could break threads.
+# [#16438] Session: allowed forums should be updated when user or category has been modified in backend
+! All other cases should be covered except of changing user group in Joomla User Manager
 
 18-May-2009 Matias
 # [#16436] Internal: Default: Fix sub forums in category view, PHP error and CB integration in view.php

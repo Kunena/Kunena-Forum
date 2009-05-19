@@ -492,7 +492,11 @@ function saveForum($option)
 
     $row->checkin();
     $row->updateOrder("parent='$row->parent'");
-    mosRedirect ("index2.php?option=$option&task=showAdministration");
+
+    $this->_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
+	$this->_db->query() or trigger_dberror("Unable to update sessions.");
+    
+	mosRedirect ("index2.php?option=$option&task=showAdministration");
 }
 
 function publishForum($cid = null, $publish = 1, $option)
@@ -561,7 +565,10 @@ function deleteForum($cid = null, $option)
     	}
     }
 
-    mosRedirect ("index2.php?option=$option&task=showAdministration");
+	$this->_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
+	$this->_db->query() or trigger_dberror("Unable to update sessions.");
+    
+	mosRedirect ("index2.php?option=$option&task=showAdministration");
 }
 
 function cancelForum($option)
@@ -856,7 +863,10 @@ function saveConfig($option)
 	}
     // end legacy support
 
-    mosRedirect("index2.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED);
+	$this->_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
+	$this->_db->query() or trigger_dberror("Unable to update sessions.");
+	
+	mosRedirect("index2.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED);
 }
 
 function showInstructions($database, $option, $mosConfig_lang) {
@@ -1005,6 +1015,10 @@ function addModerator($option, $id, $cid = null, $publish = 1)
 
     $row = new fbForum($database);
     $row->checkin($id);
+    
+    $this->_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
+	$this->_db->query() or trigger_dberror("Unable to update sessions.");
+    
     mosRedirect ("index2.php?option=$option&task=edit2&uid=" . $id);
 }
 
@@ -1171,7 +1185,10 @@ function saveUserProfile($option)
     	}
     }
 
-    mosRedirect ("index2.php?option=com_kunena&task=showprofiles");
+	$this->_db->setQuery("UPDATE #__fb_sessions SET allowed='na' WHERE userid='$uid'");
+	$this->_db->query() or trigger_dberror("Unable to update sessions.");
+
+	mosRedirect ("index2.php?option=com_kunena&task=showprofiles");
 }
 
 //===============================

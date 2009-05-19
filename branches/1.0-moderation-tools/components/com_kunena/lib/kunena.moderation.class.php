@@ -12,11 +12,16 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-// Defines for modes
+// Defines for moves
 define (KN_MOVE_MESSAGE, 0);
 define (KN_MOVE_THREAD, 1);
 define (KN_MOVE_NEWER, 2);
 define (KN_MOVE_REPLIES, 3);
+
+//Defines for deletes
+define (KN_DEL_MESSAGE, 0);
+define (KN_DEL_THREAD, 1);
+define (KN_DEL_ATTACH, 2);
 
 class CKunenaModeration
 {
@@ -35,14 +40,14 @@ class CKunenaModeration
 		$this->_errormsg = '';
 	}
 
-	function _Move($MessageID, $TargetCatID, $TargetSubject = '', $TargetMessageID = 0, $mode = KN_MOVE_MESSAGE)
+	function _Move($MessageID, $TargetCatID, $TargetSubject = '', $TargetMessageID = 0, $mode = KN_MOVE_MESSAGE, $GhostThread = false)
 	{
 		// Private move function
 		// $mode
 		// KN_MOVE_MESSAGE ... move current message only
 		// KN_MOVE_THREAD  ... move entire thread
 		// KN_MOVE_NEWER   ... move current message and all newer in current thread
-		// KN_MOVE_REPLIES ... move current message and all replies and quotes - recursively
+		// KN_MOVE_REPLIES ... move current message and replies and quotes - 1 level deep
 		//
 		// if $TargetMessagID is a valid message ID, the messages will be appended to that thread
 
@@ -55,18 +60,21 @@ class CKunenaModeration
 		$TargetSubject = addslashes($TargetSubject);
 		$TargetMessageID = intval($TargetMessageID);
 		$mode = intval($mode);
+		// no need to check $GhostThread as we only test for true
 
 		// Always check security clearance before taking action!
 		// TODO: Add security permissions check
 
+
+
 		// Test parameters to see if they are valid selecions or abord
 
 		// Check if message to move exists (also covers thread test)
-		$this->db->setQuery("SELECT `id`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__fb_messages WHERE `id`='$MessageID'");
+		$this->_db->setQuery("SELECT `id`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__fb_messages WHERE `id`='$MessageID'");
 		$currentMessage = $this->db->loadObjectList();
 			check_dberror("Unable to load message.");
 
-		if ($currentMessage->id == '')
+		if (empty($currentMessage->id))
 		{
 			// Message not found. Cannot proceed with move
 			$this->_errormsg = 'Message to move not found.';
@@ -82,14 +90,14 @@ class CKunenaModeration
 
 		if ($TargetCatID != 0)
 		{
-			$this->db->setQuery("SELECT `id`, `name` FROM #__fb_categories WHERE `id`='$TargetCatID'");
+			$this->_db->setQuery("SELECT `id`, `name` FROM #__fb_categories WHERE `id`='$TargetCatID'");
 			$targetCategory = $this->db->loadObjectList();
 				check_dberror("Unable to load message.");
 
-			if ($targetCategory->id == '')
+			if (empty($targetCategory->id))
 			{
 				// Category not found. Cannot proceed with move
-				$this->_errormsg = 'Category to move to not found.';
+				$this->_errormsg = 'Target category not found.';
 				return false;
 			}
 
@@ -102,24 +110,27 @@ class CKunenaModeration
 
 		if ($TargetMessageID != 0)
 		{
-			$this->db->setQuery("SELECT `id`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__fb_messages WHERE `id`='$TargetMessageID'");
+			$this->_db->setQuery("SELECT `id`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__fb_messages WHERE `id`='$TargetMessageID'");
 			$targetMessage = $this->db->loadObjectList();
 				check_dberror("Unable to load message.");
 
-			if ($targetMessage->id == '')
+			if (empty($targetMessage->id))
 			{
 				// Target message not found. Cannot proceed with move
 				$this->_errormsg = 'Target message for append not found.';
 				return false;
 			}
 
-			// TODO: Check if $MessageID == $TargetMessage ID
+			if($targetMessage->thread == $currentMessage->thread)
+			{
+				// Recursive self moves not supported
+				$this->_errormsg = 'Target thread identical to source threat. Recursive self moved not supported.';
+				return false;
+			}
 
 			// If $TargetMessageID has been specified and is valid,
 			// overwrite $TargetCatID with the category ID of the target message
 			$TargetCatID = $targetMessage->catid;
-
-			// No recursive moves allowed
 		}
 
 		// Assemble move logic based on $mode
@@ -130,7 +141,6 @@ class CKunenaModeration
 		// partial logic to update target subject if specified
 		$subjectupdatesql = $TargetSubject !='' ? "`subject`='$TargetSubject'" : "";
 
-		// TODO: Implement logic
 		switch ($mode)
 		{
 			case KN_MOVE_MESSAGE: // Move Single message only
@@ -156,11 +166,33 @@ class CKunenaModeration
 			case KN_MOVE_THREAD: // Move entire Thread
 				if ($TargetMessageID==0)
 				{
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='$MessageID';";
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='$currentMessage->thread';";
 				}
 				else
 				{
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$targetMessage->thread' $subjectupdatesql WHERE `thread`='$MessageID';";
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$targetMessage->thread' $subjectupdatesql WHERE `thread`='$currentMessage->thread';";
+				}
+
+				// Create ghost thread if requested
+				if ($GhostThread==true)
+				{
+					// TODO: need to fetch correct user id for new ghost thread - current moderator who executed the move
+                    $this->_db->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','$currentMessage->subject','$currentMessage->timestamp','$currentMessage->catid','1', '$my->id', '".trim(addslashes($my_name))."')");
+                    $this->_db->query();
+                    	check_dberror('Unable to insert ghost message.');
+
+                    //determine the new location for link composition
+                    $newId = $this->_db->insertid();
+
+                    //and update the thread id on the 'moved' post for the right ordering when viewing the forum..
+                    $this->_db->setQuery("UPDATE #__fb_messages SET `thread`='$newId' WHERE `id`='$newId'");
+                    $this->_db->query();
+                    	check_dberror('Unable to update thread id of ghost thread.');
+
+                    $newURL = "id=" . $currentMessage->id;
+                    $this->_db->setQuery("INSERT INTO #__fb_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')");
+                    $this->_db->query();
+                    	check_dberror('Unable to insert ghost message.');
 				}
 
 				break;
@@ -177,10 +209,17 @@ class CKunenaModeration
 				}
 
 				break;
-			case KN_MOVE_REPLIES: // Move message and all replies and quotes - recursively
-				$this->_errormsg = 'Recursive move mode not yet supported. Logic not implemented.';
-
-				return false;
+			case KN_MOVE_REPLIES: // Move message and all replies and quotes - 1 level deep for now
+				if ($TargetMessageID==0)
+				{
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `parent`=0 $subjectupdatesql WHERE id`='$MessageID';";
+					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='$currentMessage->thread' AND `id`>'$MessageID' AND `parent`='$MessageID';";
+				}
+				else
+				{
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `parent`='$TargetMessageID' $subjectupdatesql WHERE id`='$MessageID';";
+					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$TargetMessageID' $subjectupdatesql WHERE `thread`='$currentMessage->thread' AND `id`>'$MessageID' AND `parent`='$MessageID';";
+				}
 
 				break;
 			default:
@@ -191,26 +230,26 @@ class CKunenaModeration
 		}
 
 		// Execute move
-		$database->setQuery($sql);
-		$database->query() or trigger_dberror('Unable to perform move.');
-
-		// Check result to see if we need to abord and set error message
-		// TODO: check for success or set error message and return false
+		$this->_db->setQuery($sql);
+		$this->_db->query();
+			check_dberror('Unable to perform move.');
 
 		// When done log the action
 		$this->_Log('Move', $MessageID, $TargetCatID, $TargetSubject, $TargetMessageID, $mode);
 
-		// TODO: Last but not least update forum stats
+		// Last but not least update forum stats
+		CKunenaTools::reCountBoards();
 
 		return true;
 	}
 
-	function _Delete($MessageID, $mode = 0)
+	function _Delete($MessageID, $DeleteAttachments=false, $mode = KN_DEL_MESSAGE)
 	{
 		// Private delete function
 		// $mode
-		// = 0 ... delete current message only
-		// = 1 ... delete entire thread
+		// KN_DEL_MESSAGE ... delete current message only
+		// KN_DEL_THREAD  ... delete entire thread
+		// KN_DEL_ATTACH  ... delete Attachements of message
 
 		// Reset error message
 		$this->_ResetErrorMessage();
@@ -249,9 +288,9 @@ class CKunenaModeration
 
 	// Public interface
 
-	function moveThread($ThreadID, $TargetCatID)
+	function moveThread($ThreadID, $TargetCatID, $GhostThread=false)
 	{
-		return $this->_Move($ThreadID, $TargetCatID, '', 0, KN_MOVE_THREAD);
+		return $this->_Move($ThreadID, $TargetCatID, '', 0, KN_MOVE_THREAD, $GhostThread);
 	}
 
 	function moveMessage($ThreadID, $TargetCatID, $TargetSubject = '', $TargetThreadID = 0)
@@ -269,14 +308,19 @@ class CKunenaModeration
 		return $this->_Move($ThreadID, $TargetCatID, $TargetSubject, $TargetThreadID, KN_MOVE_REPLIES);
 	}
 
-	function deleteThread($ThreadID)
+	function deleteThread($ThreadID, $DeleteAttachments = false)
 	{
-		return $this->_Delete($ThreadID, 1);
+		return $this->_Delete($ThreadID, $DeleteAttachments, KN_DEL_THREAD);
 	}
 
-	function deleteMessage($MessageID)
+	function deleteMessage($MessageID, $DeleteAttachments = false)
 	{
-		return $this->_Delete($MessageID, 0);
+		return $this->_Delete($MessageID, $DeleteAttachments, KN_DEL_MESSAGE);
+	}
+
+	function deleteAttachments($MessageID)
+	{
+		return $this->_Delete($MessageID, true, KN_DEL_ATTACH);
 	}
 
 	function disableUserAccount($UserID)

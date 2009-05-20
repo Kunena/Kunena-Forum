@@ -164,8 +164,7 @@ BBCODE BUTTONS
 -------------------------------------------------------------------- */
 img.fb-bbcode {cursor: pointer;margin-top: 4px;margin-right: 1px;padding: 0px;}
 img.fb-bbcode:hover {background-color: #e4e4e4;cursor: pointer;margin-top: 4px;margin-right: 1px;padding: 0px;}
-.fb-color_table {width:auto;margin-left:auto;margin-right:auto;}
-#fb-color_palette {background-color:#F2F1EE;border-bottom:2px solid #BFC3C6;border-right:2px solid #BFC3C6;padding:5px;}
+.fb-color_table {cursor: pointer;width:100%;margin-left:auto;margin-right:auto;}
 #Kunena table.fb-postbuttonset tr td.fb-postbuttons select.fb_slcbox {position:relative;bottom:5px;}
 
 /*

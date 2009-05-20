@@ -89,7 +89,7 @@ function colorPalette(dir, width, height)
 	numberList[2] = '80';
 	numberList[3] = 'BF';
 	numberList[4] = 'FF';
-	document.writeln('<table class="fb-color_table" cellspacing="1" cellpadding="0" border="0">');
+	document.writeln('<table class="fb-color_table" cellspacing="1" cellpadding="0" border="0" style="width: 100%;">');
 	for (r = 0; r < 5; r++)
 	{
 		if (dir == 'h')	{document.writeln('<tr>');}
@@ -97,8 +97,8 @@ function colorPalette(dir, width, height)
 			if (dir == 'v')	{document.writeln('<tr>');}
 			for (b = 0; b < 5; b++)	{
 				color = String(numberList[r]) + String(numberList[g]) + String(numberList[b]);
-				document.write('<td style="background-color:#' + color + '; width: ' + width + '; height: ' + height + ';">');
-				document.write('<a href="#" onclick="bbfontstyle(\'[color=#' + color + ']\', \'[/color]\'); return false;"><img src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.gif" width="' + width + '" height="' + height + '" alt="#' + color + '" title="#' + color + '" /></a>');
+				document.write('<td id="' + color + '" style="background-color:#' + color + '; width: ' + width + '; height: ' + height + ';">');
+				document.write('&nbsp;');
 				document.writeln('</td>');
 			  }
 			if (dir == 'v')	{document.writeln('</tr>');}
@@ -108,7 +108,16 @@ function colorPalette(dir, width, height)
 	document.writeln('</table>');
 }
 
-
+jQuery(document).ready(function()
+{
+	jQuery('table.fb-color_table td').click( function() 
+	{ 
+//		var color = jQuery(this).css('background-color');
+		var color = jQuery(this).attr('id');
+		bbfontstyle('[color=#' + color + ']', '[/color]'); return false; 
+	} );
+} );
+	
 // From http://www.massless.org/mozedit/
 
 function mozWrap(txtarea, open, close)

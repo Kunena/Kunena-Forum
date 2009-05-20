@@ -174,26 +174,13 @@ $catName = $objCatInfo->name;
                                     $catid = 1; //make sure there's a proper category
                                 }
 
-                                $noFileUpload = 0;
                                 if ($attachfile != '')
                                 {
-                                    $GLOBALS['KUNENA_rc'] = 1;
                                     include (KUNENA_ABSSOURCESPATH . 'kunena.file.upload.php');
-
-                                    if ($GLOBALS['KUNENA_rc'] == 0) {
-                                        $noFileUpload = 1;
-                                    }
                                 }
-
-                                $noImgUpload = 0;
                                 if ($attachimage != '')
                                 {
-                                    $GLOBALS['KUNENA_rc'] = 1;
                                     include (KUNENA_ABSSOURCESPATH . 'kunena.image.upload.php');
-
-                                    if ($GLOBALS['KUNENA_rc'] == 0) {
-                                        $noImgUpload = 1;
-                                    }
                                 }
 
                                 $messagesubject = $subject; //before we add slashes and all... used later in mail
@@ -268,7 +255,7 @@ $catName = $objCatInfo->name;
                                         }
 
                                         //Update the attachments table if an image has been attached
-                                        if (!empty($imageLocation) && !$noImgUpload)
+                                        if (!empty($imageLocation) && file_exists($imageLocation))
                                         {
                                             $database->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid','$imageLocation')");
 
@@ -278,7 +265,7 @@ $catName = $objCatInfo->name;
                                         }
 
                                         //Update the attachments table if an file has been attached
-                                        if (!empty($fileLocation) && !$noFileUpload)
+                                        if (!empty($fileLocation) && file_exists($fileLocation))
                                         {
                                             $database->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid','$fileLocation')");
 
@@ -838,7 +825,7 @@ $catName = $objCatInfo->name;
                             if ($database->query() && $dbr_nameset)
                             {
                                 //Update the attachments table if an image has been attached
-                                if (!empty($imageLocation))
+                                if (!empty($imageLocation) && file_exists($imageLocation))
                                 {
                                     $imageLocation = addslashes($imageLocation);
                                     $database->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$id','$imageLocation')");
@@ -849,7 +836,7 @@ $catName = $objCatInfo->name;
                                 }
 
                                 //Update the attachments table if an file has been attached
-                                if (!empty($fileLocation))
+                                if (!empty($fileLocation) && file_exists($fileLocation))
                                 {
                                     $fileLocation = addslashes($fileLocation);
                                     $database->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$id','$fileLocation')");
@@ -1925,7 +1912,7 @@ function listThreadHistory($id, $fbConfig, $database)
         $database->setQuery("SELECT subject FROM #__fb_messages WHERE id='$thread' and parent=0");
         $this_message_subject = $database->loadResult();
         	check_dberror("Unable to load messages.");
-        echo "<b>" . _POST_TOPIC_HISTORY . ":</b> " . kunena_htmlspecialchars($this_message_subject) . " <br />" . _POST_TOPIC_HISTORY_MAX . " $fbConfig->historylimit " . _POST_TOPIC_HISTORY_LAST . "<br />";
+        echo "<b>" . _POST_TOPIC_HISTORY . ":</b> " . kunena_htmlspecialchars(stripslashes($this_message_subject)) . " <br />" . _POST_TOPIC_HISTORY_MAX . " $fbConfig->historylimit " . _POST_TOPIC_HISTORY_LAST . "<br />";
 ?>
 
         <table border = "0" cellspacing = "1" cellpadding = "3" width = "100%" class = "fb_review_table">

@@ -486,8 +486,9 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 $fb_username = $userinfo->$fb_queryName;
 
                                 if ($fb_username == "" || $fbConfig->changename) {
-                                    $fb_username = $fmessage->name;
+                                    $fb_username = stripslashes($fmessage->name);
                                 }
+                                $fb_username = kunena_htmlspecialchars($fb_username);
 
                                 $msg_id = $fmessage->id;
                                 $lists["userid"] = $fmessage->userid;
@@ -881,7 +882,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     $msg_icq = '<a href="http://www.icq.com/people/cmd.php?uin='.$userinfo->ICQ.'&action=message"><img src="http://status.icq.com/online.gif?icq='.$userinfo->ICQ.'&img=5" title="ICQ#: '.$userinfo->ICQ.'" alt="ICQ#: '.$userinfo->ICQ.'" /></a>';
                                 }
                                 if ($userinfo->location != '') {
-                                    $msg_location = isset($fbIcons['msglocation']) ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msglocation'] . '" border="0" alt="'._KUNENA_MYPROFILE_LOCATION.': '.$userinfo->location.'" title="'._KUNENA_MYPROFILE_LOCATION.': '.html_entity_decode_utf8(stripslashes($userinfo->location)).'" />' : ' '._KUNENA_MYPROFILE_LOCATION.': '.$userinfo->location.'';
+                                    $msg_location = isset($fbIcons['msglocation']) ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msglocation'] . '" border="0" alt="'._KUNENA_MYPROFILE_LOCATION.': '.kunena_htmlspecialchars(stripslashes($userinfo->location)).'" title="'._KUNENA_MYPROFILE_LOCATION.': '.kunena_htmlspecialchars(stripslashes($userinfo->location)).'" />' : ' '._KUNENA_MYPROFILE_LOCATION.': '.kunena_htmlspecialchars(stripslashes($userinfo->location)).'';
                                 }
                                 if ($userinfo->birthdate !='0001-01-01' AND $userinfo->birthdate !='0000-00-00' and $userinfo->birthdate !='') {
                                 	$birthday = strftime(_KUNENA_DT_MONTHDAY_FMT, strtotime($userinfo->birthdate));
@@ -889,22 +890,22 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 }
 
                                 if ($userinfo->AIM != '') {
-                                    $msg_aim = isset($fbIcons['msgaim']) ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msgaim'] . '" border="0" alt="'.$userinfo->AIM.'" title="AIM: '.$userinfo->AIM.'" />' : 'AIM: '.$userinfo->AIM.'';
+                                    $msg_aim = isset($fbIcons['msgaim']) ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msgaim'] . '" border="0" alt="'.kunena_htmlspecialchars(stripslashes($userinfo->AIM)).'" title="AIM: '.kunena_htmlspecialchars(stripslashes($userinfo->AIM)).'" />' : 'AIM: '.kunena_htmlspecialchars(stripslashes($userinfo->AIM)).'';
                                 }
                                 if ($userinfo->MSN != '') {
-                                    $msg_msn = isset($fbIcons['msgmsn']) ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msgmsn'] . '" border="0" alt="'.$userinfo->MSN.'" title="MSN: '.$userinfo->MSN.'" />' : 'MSN: '.$userinfo->MSN.'';
+                                    $msg_msn = isset($fbIcons['msgmsn']) ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msgmsn'] . '" border="0" alt="'.kunena_htmlspecialchars(stripslashes($userinfo->MSN)).'" title="MSN: '.kunena_htmlspecialchars(stripslashes($userinfo->MSN)).'" />' : 'MSN: '.kunena_htmlspecialchars(stripslashes($userinfo->MSN)).'';
                                 }
                                 if ($userinfo->YIM != '') {
-                                    $msg_yim = isset($fbIcons['msgyim']) ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msgyim'] . '" border="0" alt="'.$userinfo->YIM.'" title="YIM: '.$userinfo->YIM.'" />' : ' YIM: '.$userinfo->YIM.'';
+                                    $msg_yim = isset($fbIcons['msgyim']) ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msgyim'] . '" border="0" alt="'.kunena_htmlspecialchars(stripslashes($userinfo->YIM)).'" title="YIM: '.kunena_htmlspecialchars(stripslashes($userinfo->YIM)).'" />' : ' YIM: '.kunena_htmlspecialchars(stripslashes($userinfo->YIM)).'';
                                 }
                                 if ($userinfo->SKYPE != '') {
-                                    $msg_skype = isset($fbIcons['msgskype']) ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msgskype'] . '" border="0" alt="'.$userinfo->SKYPE.'" title="SKYPE: '.$userinfo->SKYPE.'" />' : 'SKYPE: '.$userinfo->SKYPE.'';
+                                    $msg_skype = isset($fbIcons['msgskype']) ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msgskype'] . '" border="0" alt="'.kunena_htmlspecialchars(stripslashes($userinfo->SKYPE)).'" title="SKYPE: '.kunena_htmlspecialchars(stripslashes($userinfo->SKYPE)).'" />' : 'SKYPE: '.kunena_htmlspecialchars(stripslashes($userinfo->SKYPE)).'';
                                 }
                                 if ($userinfo->GTALK != '') {
-                                    $msg_gtalk = isset($fbIcons['msggtalk']) ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msggtalk'] . '" border="0" alt="'.$userinfo->GTALK.'" title="GTALK: '.$userinfo->GTALK.'" />' : 'GTALK: '.$userinfo->GTALK.'';
+                                    $msg_gtalk = isset($fbIcons['msggtalk']) ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msggtalk'] . '" border="0" alt="'.kunena_htmlspecialchars(stripslashes($userinfo->GTALK)).'" title="GTALK: '.kunena_htmlspecialchars(stripslashes($userinfo->GTALK)).'" />' : 'GTALK: '.kunena_htmlspecialchars(stripslashes($userinfo->GTALK)).'';
                                 }
                                 if ($userinfo->websiteurl != '') {
-                                    $msg_website = isset($fbIcons['msgwebsite']) ? '<a href="http://'.$userinfo->websiteurl.'" target="_blank"><img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msgwebsite'] . '" border="0" alt="'.$userinfo->websitename.'" title="'.$userinfo->websitename.'" /></a>' : '<a href="http://'.$userinfo->websiteurl.'" target="_blank">'.$userinfo->websitename.'</a>';
+                                    $msg_website = isset($fbIcons['msgwebsite']) ? '<a href="http://'.kunena_htmlspecialchars(stripslashes($userinfo->websiteurl)).'" target="_blank"><img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msgwebsite'] . '" border="0" alt="'.kunena_htmlspecialchars(stripslashes($userinfo->websitename)).'" title="'.kunena_htmlspecialchars(stripslashes($userinfo->websitename)).'" /></a>' : '<a href="http://'.kunena_htmlspecialchars(stripslashes($userinfo->websiteurl)).'" target="_blank">'.kunena_htmlspecialchars(stripslashes($userinfo->websitename)).'</a>';
                                 }
 
                                 // Finish: Additional Info //

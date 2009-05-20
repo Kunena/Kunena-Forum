@@ -1027,12 +1027,12 @@ function JJ_categoryParentList($catid, $action, $options = array ()) {
     foreach ($list as $item) {
         if ($this_treename) {
             if ($item->id != $catid && strpos($item->treename, $this_treename) === false) {
-                $options[] = mosHTML::makeOption($item->id, $item->treename);
+                $options[] = mosHTML::makeOption($item->id, kunena_htmlspecialchars($item->treename));
                 }
             }
         else {
             if ($item->id != $catid) {
-                $options[] = mosHTML::makeOption($item->id, $item->treename);
+                $options[] = mosHTML::makeOption($item->id, kunena_htmlspecialchars($item->treename));
                 }
             else {
                 $this_treename = "$item->treename/";
@@ -1052,12 +1052,12 @@ function KUNENA_GetAvailableForums($catid, $action, $options = array (), $disabl
     foreach ($list as $item) {
         if ($this_treename) {
             if ($item->id != $catid && strpos($item->treename, $this_treename) === false) {
-                $options[] = mosHTML::makeOption($item->id, $item->treename);
+                $options[] = mosHTML::makeOption($item->id, kunena_htmlspecialchars($item->treename));
                 }
             }
         else {
             if ($item->id != $catid) {
-                $options[] = mosHTML::makeOption($item->id, $item->treename);
+                $options[] = mosHTML::makeOption($item->id, kunena_htmlspecialchars($item->treename));
                 }
             else {
                 $this_treename = "$item->treename/";

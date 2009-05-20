@@ -107,7 +107,7 @@ $lastvisitDate = strftime(_KUNENA_DT_DATETIME_FMT, strtotime($userinfo->lastvisi
      <?php  if ( $userinfo->personalText !='' ) { ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_PERSONALTEXT; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo html_entity_decode_utf8(stripslashes($userinfo->personalText)); ?></td>
+      <td  class = "td-2 fbm"><?php echo kunena_htmlspecialchars(stripslashes($userinfo->personalText)); ?></td>
     </tr>
     <?php }?>
      <?php  if ( $userinfo->gender !=0 ) { ?>
@@ -127,49 +127,49 @@ $lastvisitDate = strftime(_KUNENA_DT_DATETIME_FMT, strtotime($userinfo->lastvisi
     <?php  if ( $userinfo->location !='' ) { ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_LOCATION; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo html_entity_decode_utf8(stripslashes($userinfo->location)); ?></td>
+      <td  class = "td-2 fbm"><?php echo kunena_htmlspecialchars(stripslashes($userinfo->location)); ?></td>
     </tr>
     <?php }?>
     <?php  if ( $userinfo->ICQ !='' ) { ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_ICQ; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo $userinfo->ICQ; ?></td>
+      <td  class = "td-2 fbm"><?php echo kunena_htmlspecialchars(stripslashes($userinfo->ICQ)); ?></td>
     </tr>
     <?php }?>
     <?php  if ( $userinfo->AIM !='' ) { ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_AIM; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo $userinfo->AIM; ?></td>
+      <td  class = "td-2 fbm"><?php echo kunena_htmlspecialchars(stripslashes($userinfo->AIM)); ?></td>
     </tr>
      <?php }?>
     <?php  if ( $userinfo->YIM !='' ) { ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_YIM; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo $userinfo->YIM; ?></td>
+      <td  class = "td-2 fbm"><?php echo kunena_htmlspecialchars(stripslashes($userinfo->YIM)); ?></td>
     </tr>
       <?php }?>
     <?php  if ( $userinfo->MSN !='' ) { ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_MSN; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo $userinfo->MSN; ?></td>
+      <td  class = "td-2 fbm"><?php echo kunena_htmlspecialchars(stripslashes($userinfo->MSN)); ?></td>
     </tr>
       <?php }?>
     <?php  if ( $userinfo->SKYPE !='' ) { ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_SKYPE; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo $userinfo->SKYPE; ?></td>
+      <td  class = "td-2 fbm"><?php echo kunena_htmlspecialchars(stripslashes($userinfo->SKYPE)); ?></td>
     </tr>
     <?php }?>
      <?php  if ( $userinfo->GTALK !='' ) { ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_GTALK; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo $userinfo->GTALK; ?></td>
+      <td  class = "td-2 fbm"><?php echo kunena_htmlspecialchars(stripslashes($userinfo->GTALK)); ?></td>
     </tr>
     <?php }?>
      <?php  if ( $userinfo->websiteurl !='' ) { ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_WEBSITE; ?></b> </td>
-      <td  class = "td-2 fbm"><a href="http://<?php echo $userinfo->websiteurl; ?>" target="_blank"><?php echo $userinfo->websitename; ?></a></td>
+      <td  class = "td-2 fbm"><a href="http://<?php echo kunena_htmlspecialchars(stripslashes($userinfo->websiteurl)); ?>" target="_blank"><?php echo kunena_htmlspecialchars(stripslashes($userinfo->websitename)); ?></a></td>
     </tr>
     <?php }?>
     <?php  if ( $usr_signature !='' ) { ?>

@@ -80,7 +80,7 @@ if (count($messages[0]) > 0)
                 <tr>
                     <th colspan = "<?php echo ($is_Moderator?"7":"6");?>">
                         <div class = "fb_title_cover fbm">
-                            <span class = "fb_title fbl"><b><?php echo _KUNENA_THREADS_IN_FORUM; ?>:</b> <?php echo '' . stripslashes($objCatInfo->name) . ''; ?></span>
+                            <span class = "fb_title fbl"><b><?php echo _KUNENA_THREADS_IN_FORUM; ?>:</b> <?php echo '' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) . ''; ?></span>
                         </div>
                         <!-- FORUM TOOLS -->
 
@@ -280,7 +280,7 @@ if (count($messages[0]) > 0)
                                     ?>
                                     <!--            /Favourite       -->
 
-                                    <span class = "fb-topic-by fbs"> <?php echo _GEN_BY.' '.CKunenaLink::GetProfileLink($fbConfig, $leaf->userid, html_entity_decode_utf8(stripslashes($leaf->name)));?></span>
+                                    <span class = "fb-topic-by fbs"> <?php echo _GEN_BY.' '.CKunenaLink::GetProfileLink($fbConfig, $leaf->userid, kunena_htmlspecialchars(stripslashes($leaf->name)));?></span>
 
                                     <?php
                                     if ($fbConfig->shownew && $my->id != 0)
@@ -386,7 +386,7 @@ if (count($messages[0]) > 0)
     {
 ?>
 
-<?php echo _GEN_BY; ?> <?php echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, html_entity_decode_utf8(stripslashes($last_reply[$leaf->id]->name)));?>
+<?php echo _GEN_BY; ?> <?php echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, kunena_htmlspecialchars(stripslashes($last_reply[$leaf->id]->name)));?>
 
 <?php
     }

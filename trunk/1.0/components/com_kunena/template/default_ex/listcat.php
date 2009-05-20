@@ -179,7 +179,7 @@ if (count($categories[0]) > 0)
                         <th colspan = "5">
                             <div class = "fb_title_cover fbm" >
                                 <?php
-                                echo CKunenaLink::GetCategoryLink('listcat', $cat->id, stripslashes($cat->name), 'follow', $class='fb_title fbl');
+                                echo CKunenaLink::GetCategoryLink('listcat', $cat->id, kunena_htmlspecialchars(stripslashes($cat->name)), 'follow', $class='fb_title fbl');
 
                                 if ($cat->description != "") {
                                     $tmpforumdesc = stripslashes(smile::smileReplace($cat->description, 0, $fbConfig->disemoticons, $smileyList));
@@ -317,10 +317,10 @@ if (count($categories[0]) > 0)
                                 }
                                 $latestthreadpages = ceil($thisThread->totalmessages / $fbConfig->messages_per_page);
                                 $latestthread = $thisThread->thread;
-                                $latestname = html_entity_decode_utf8(stripslashes($singlerow->mname));
+                                $latestname = kunena_htmlspecialchars(stripslashes($singlerow->mname));
                                 $latestcatid = $singlerow->catid;
                                 $latestid = $singlerow->id_last_msg;
-                                $latestsubject = html_entity_decode_utf8(stripslashes($singlerow->subject));
+                                $latestsubject = kunena_htmlspecialchars(stripslashes($singlerow->subject));
                                 $latestuserid = $singlerow->userid;
                     ?>
 
@@ -385,7 +385,7 @@ if (count($categories[0]) > 0)
                                     <td class = "td-2" align="left">
                                         <div class = "<?php echo $boardclass ?>thead-title fbl">
                                             <?php //new posts available
-                                            echo CKunenaLink::GetCategoryLink('showcat', $singlerow->id, html_entity_decode_utf8(stripslashes($singlerow->name)));
+                                            echo CKunenaLink::GetCategoryLink('showcat', $singlerow->id, kunena_htmlspecialchars(stripslashes($singlerow->name)));
 
                                             if ($cxThereisNewInForum == 1 && $my->id > 0) {
                                                 echo '<sup><span class="newchar">&nbsp;(' . $newPostsAvailable . ' ' . stripslashes($fbConfig->newchar) . ")</span></sup>";
@@ -524,7 +524,7 @@ if (count($categories[0]) > 0)
                                                     ?>
 
                                                     <?php
-                                                                echo CKunenaLink::GetCategoryLink('showcat', $forumparent->id, stripslashes($forumparent->name));
+                                                                echo CKunenaLink::GetCategoryLink('showcat', $forumparent->id, kunena_htmlspecialchars(stripslashes($forumparent->name)));
                                                                 echo '<span class="fb_childcount fbs">('.$forumparent->numTopics."/".$forumparent->numPosts.')</span>';
                                                             }
                                                             echo "</div>";

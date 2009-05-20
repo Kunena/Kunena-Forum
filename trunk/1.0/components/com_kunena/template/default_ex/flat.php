@@ -104,7 +104,7 @@ if (count($messages[0]) > 0)
                 <tr>
                     <th colspan = "<?php echo ($is_Moderator?"5":"4");?>">
                         <div class = "fb_title_cover fbm">
-                            <span class = "fb_title fbl"><b><?php echo _KUNENA_THREADS_IN_FORUM; ?>:</b> <?php echo '' . stripslashes($objCatInfo->name) . ''; ?></span>
+                            <span class = "fb_title fbl"><b><?php echo _KUNENA_THREADS_IN_FORUM; ?>:</b> <?php echo '' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) . ''; ?></span>
                         </div>
                         <!-- FORUM TOOLS -->
 

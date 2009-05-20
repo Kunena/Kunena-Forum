@@ -217,8 +217,8 @@ if (in_array($catid, $allow_forum))
     $forumReviewed = $objCatInfo->review;
 
 	//meta description and keywords
-	$metaKeys=(_KUNENA_CATEGORIES . ', ' . stripslashes($objCatParentInfo->name) . ', ' . stripslashes($objCatInfo->name) . ', ' . stripslashes($fbConfig->board_title) . ', ' . $GLOBALS['mosConfig_sitename']);
-	$metaDesc=(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($objCatInfo->name) .' - ' . stripslashes($fbConfig->board_title));
+	$metaKeys=(_KUNENA_CATEGORIES . ', ' . kunena_htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) . ', ' . stripslashes($fbConfig->board_title) . ', ' . $GLOBALS['mosConfig_sitename']);
+	$metaDesc=(kunena_htmlspecialchars(stripslashes($objCatParentInfo->name)) . ' - ' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) .' - ' . stripslashes($fbConfig->board_title));
 
 	if( CKunenaTools::isJoomla15() )
 	{
@@ -464,7 +464,7 @@ function showChildren($category, $prefix = "", &$allow_forum)
     foreach ($forums as $forum)
     {
         if (in_array($forum->id, $allow_forum)) {
-            echo("<option value=\"{$forum->id}\">$prefix {$forum->name}</option>");
+            echo("<option value=\"{$forum->id}\">$prefix ".kunena_htmlspecialchars($forum->name)."</option>");
         }
 
         showChildren($forum->id, $prefix . "---", $allow_forum);

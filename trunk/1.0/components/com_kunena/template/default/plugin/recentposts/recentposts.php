@@ -165,7 +165,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                     $overlib = "<table>";
                     //$row->subject = html_entity_decode_utf8($row->subject, ENT_QUOTES);
                     $overlib .= "<tr><td valign=top>" . _GEN_TOPIC . "</td><td>$row->subject</td></tr>";
-                    $row_catname = stripslashes($row->catname);
+                    $row_catname = kunena_htmlspecialchars(stripslashes($row->catname));
                     $row_username = stripslashes($row->username);
                     $row_date = mosFormatDate($row->date);
                     $row_lock = ($row->locked ? _KUNENA_LOCKED : '');

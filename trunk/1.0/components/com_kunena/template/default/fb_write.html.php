@@ -208,8 +208,8 @@ include_once(KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
                 </td>
 
                 <td>
-                    <input type = 'file' class = 'fb_button' name = 'attachimage' onmouseover = "javascript:kunenaShowHelp('<?php echo _IMAGE_DIMENSIONS.": ".$fbConfig->imagewidth."x".$fbConfig->imageheight." - ".$fbConfig->imagesize." KB";?>')" />
-                    <input type = "button" class = "fb_button" name = "addImagePH" value = "<?php echo _POST_ATTACH_IMAGE;?>" style = "cursor:auto; width: 4em" onclick = "bbfontstyle(' [img] ','');" onmouseover = "javascript:kunenaShowHelp('<?php echo _KUNENA_EDITOR_HELPLINE_IMGPH;?>')" />
+                    <input type = 'file' class = 'fb_button' name = 'attachimage' onmouseover = "javascript:kunenaShowHelp('<?php @print(_IMAGE_DIMENSIONS).": ".$fbConfig->imagewidth."x".$fbConfig->imageheight." - ".$fbConfig->imagesize." KB";?>')" />
+                    <input type = "button" class = "fb_button" name = "addImagePH" value = "<?php @print(_POST_ATTACH_IMAGE);?>" style = "cursor:auto; width: 4em" onclick = "bbfontstyle(' [img] ','');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMGPH);?>')" />
                 </td>
             </tr>
 
@@ -228,8 +228,8 @@ include_once(KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
                 </td>
 
                 <td>
-                    <input type = 'file' class = 'fb_button' name = 'attachfile' onmouseover = "javascript:kunenaShowHelp('<?php echo _FILE_TYPES.": ".$fbConfig->filetypes." - ".$fbConfig->filesize." KB";?>')" style = "cursor:auto" />
-                    <input type = "button" class = "fb_button" name = "addFilePH" value = "<?php echo _POST_ATTACH_FILE;?>" style = "cursor:auto; width: 4em" onclick = "bbfontstyle(' [file] ','');" onmouseover = "javascript:kunenaShowHelp('<?php echo _KUNENA_EDITOR_HELPLINE_FILEPH;?>')" />
+                    <input type = 'file' class = 'fb_button' name = 'attachfile' onmouseover = "javascript:kunenaShowHelp('<?php @print(_FILE_TYPES).": ".$fbConfig->filetypes." - ".$fbConfig->filesize." KB";?>')" style = "cursor:auto" />
+                    <input type = "button" class = "fb_button" name = "addFilePH" value = "<?php @print(_POST_ATTACH_FILE);?>" style = "cursor:auto; width: 4em" onclick = "bbfontstyle(' [file] ','');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FILEPH);?>')" />
                 </td>
             </tr>
 
@@ -289,9 +289,9 @@ include_once(KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
 		?>
         <tr>
             <td id="fb_post_buttons" colspan = "2" style = "text-align: center;">
-                <input type="submit" name="submit"  class="fb_button" value="<?php echo ' '._GEN_CONTINUE.' ';?>" onclick="return submitForm()" onmouseover = "javascript:jQuery('input[name=helpbox]').val('<?php echo _KUNENA_EDITOR_HELPLINE_SUBMIT;?>')" />
-                <input type="button" name="preview" class="fb_button" value="<?php echo ' '._PREVIEW.' ';?>"      onClick="fbGetPreview(document.postform.message.value,<?php echo KUNENA_COMPONENT_ITEMID?>);" onmouseover = "javascript:jQuery('input[name=helpbox]').val('<?php echo _KUNENA_EDITOR_HELPLINE_PREVIEW;?>')" />
-                <input type="button" name="cancel"  class="fb_button" value="<?php echo ' '._GEN_CANCEL.' ';?>"   onclick="javascript:window.history.back();" onmouseover = "javascript:jQuery('input[name=helpbox]').val('<?php echo _KUNENA_EDITOR_HELPLINE_CANCEL;?>')" />
+                <input type="submit" name="submit"  class="fb_button" value="<?php @print(' '._GEN_CONTINUE.' ');?>" onclick="return submitForm()" onmouseover = "javascript:jQuery('input[name=helpbox]').val('<?php @print(_KUNENA_EDITOR_HELPLINE_SUBMIT);?>')" />
+                <input type="button" name="preview" class="fb_button" value="<?php @print(' '._PREVIEW.' ');?>"      onClick="fbGetPreview(document.postform.message.value,<?php echo KUNENA_COMPONENT_ITEMID?>);" onmouseover = "javascript:jQuery('input[name=helpbox]').val('<?php @print(_KUNENA_EDITOR_HELPLINE_PREVIEW);?>')" />
+                <input type="button" name="cancel"  class="fb_button" value="<?php @print(' '._GEN_CANCEL.' ');?>"   onclick="javascript:window.history.back();" onmouseover = "javascript:jQuery('input[name=helpbox]').val('<?php @print(_KUNENA_EDITOR_HELPLINE_CANCEL);?>')" />
             </td>
         </tr>
     </tbody>

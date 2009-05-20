@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.10
 
+20-May-2009 Matias
+# [#16455] Editor does not work with notices turned on (and if translations are missing)
+
 19-May-2009 Matias
 # [#16456] Quick reply: Empty subject if topic contains: "
 # [#16460] Extra slashes in username for anonymous users or if Allow Name Change = yes

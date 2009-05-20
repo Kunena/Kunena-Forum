@@ -97,7 +97,7 @@ function colorPalette(dir, width, height)
 			if (dir == 'v')	{document.writeln('<tr>');}
 			for (b = 0; b < 5; b++)	{
 				color = String(numberList[r]) + String(numberList[g]) + String(numberList[b]);
-				document.write('<td style="background-color:#' + color + '; width: ' + width + 'px; height: ' + height + 'px;">');
+				document.write('<td style="background-color:#' + color + '; width: ' + width + '; height: ' + height + ';">');
 				document.write('<a href="#" onclick="bbfontstyle(\'[color=#' + color + ']\', \'[/color]\'); return false;"><img src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.gif" width="' + width + '" height="' + height + '" alt="#' + color + '" title="#' + color + '" /></a>');
 				document.writeln('</td>');
 			  }
@@ -313,19 +313,19 @@ function submitForm() {
  submitme=1;
  formname=document.postform.fb_authorname.value;
  if ((formname.length<1)) {
-    alert("<?php echo _POST_FORGOT_NAME_ALERT; ?>");
+    alert("<?php @print( _POST_FORGOT_NAME_ALERT); ?>");
     submitme=0;
  }
 <?php if ($fbConfig->askemail) { ?>
  formmail=document.postform.email.value;
  if ((formmail.length<1)) {
-    alert("<?php echo _POST_FORGOT_EMAIL_ALERT; ?>");
+    alert("<?php @print( _POST_FORGOT_EMAIL_ALERT); ?>");
     submitme=0;
   }
   <?php } ?>
   formsubject=document.postform.subject.value;
   if ((formsubject.length<1)) {
-    alert("<?php echo _POST_FORGOT_SUBJECT_ALERT ?>");
+    alert("<?php @print( _POST_FORGOT_SUBJECT_ALERT); ?>");
     submitme=0;
   }
   if (submitme>0) {

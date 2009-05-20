@@ -350,7 +350,7 @@ if (count($messages[0]) > 0)
          <?php if (strtolower($func) != 'showcat' ){ ?>
         <!-- Category -->
         <span class="topic_category">
-        <?php echo _KUNENA_CATEGORY.' '.CKunenaLink::GetCategoryLink('showcat', $leaf->catid, stripslashes($leaf->catname)); ?>
+        <?php echo _KUNENA_CATEGORY.' '.CKunenaLink::GetCategoryLink('showcat', $leaf->catid, kunena_htmlspecialchars(stripslashes($leaf->catname))); ?>
         </span>
         <!-- /Category -->
         <?php } ?>

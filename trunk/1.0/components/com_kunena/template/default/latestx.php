@@ -158,7 +158,7 @@ if ($sel == "0")
                 $latestPostName = html_entity_decode_utf8(stripslashes($result->name));
 				$latestPostUserid = $result->userid;
                 $latestPostCatid = $result->catid;
-                $catname = stripslashes($result->catname);
+                $catname = kunena_htmlspecialchars(stripslashes($result->catname));
                 $database->setQuery("SELECT count(*) from #__fb_messages where time>'{$querytime}' and thread={$rs->thread}");
                 $numberOfPosts = $database->loadResult();
                 $k = 1 - $k;

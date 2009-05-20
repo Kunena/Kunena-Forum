@@ -36,6 +36,7 @@ Kunena 1.0.10
 # [#16455] Editor does not work with notices turned on (and if translations are missing)
 # [#16387] Remove many notices from undefined variables
 # [#16477] If attachment upload fails (wrong filetype), you cannot add another attachment to your message
+# [#16478] Font size in new editor does not work
 
 19-May-2009 Matias
 # [#16456] Quick reply: Empty subject if topic contains: "

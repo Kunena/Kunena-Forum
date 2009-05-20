@@ -116,6 +116,11 @@ jQuery(document).ready(function()
 		var color = jQuery(this).attr('id');
 		bbfontstyle('[color=#' + color + ']', '[/color]'); return false; 
 	} );
+	jQuery('select#fb-bbcode_size').change( function() 
+	{ 
+		var size = jQuery(this).val();
+		bbfontstyle('[size=' + size + ']', '[/size]'); return false; 
+	} );	
 } );
 	
 // From http://www.massless.org/mozedit/

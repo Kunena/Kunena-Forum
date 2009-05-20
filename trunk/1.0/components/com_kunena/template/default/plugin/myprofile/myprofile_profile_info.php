@@ -49,7 +49,7 @@ $fbConfig =& CKunenaConfig::getInstance();
                             <tr>
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_PERSONALTEXT; ?> </b></td>
 
-                                <td><input name="personalText" size="50" maxlength="50" value="<?php echo html_entity_decode_utf8(stripslashes($userinfo->personalText))?>" type="text"/></td>
+                                <td><input name="personalText" size="50" maxlength="50" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->personalText))?>" type="text"/></td>
                             </tr>
                             <tr>
                                 <td width="40%">
@@ -65,7 +65,7 @@ $fbConfig =& CKunenaConfig::getInstance();
                             </tr><tr>
 
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_LOCATION; ?> </b></td>
-                                <td><input name="location" size="50" value="<?php echo html_entity_decode_utf8(stripslashes($userinfo->location));?>" type="text"/></td>
+                                <td><input name="location" size="50" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->location));?>" type="text"/></td>
                             </tr>
                             <tr>
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_GENDER; ?></b></td>
@@ -78,35 +78,35 @@ $fbConfig =& CKunenaConfig::getInstance();
                             <tr>
 
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_ICQ; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_ICQ_DESC; ?></div></td>
-                                <td><input name="ICQ" size="24" value="<?php echo $userinfo->ICQ;?>" type="text"/></td>
+                                <td><input name="ICQ" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->ICQ));?>" type="text"/></td>
                             </tr><tr>
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_AIM; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_AIM_DESC; ?></div></td>
-                                <td><input name="AIM" maxlength="16" size="24" value="<?php echo $userinfo->AIM;?>" type="text"/></td>
+                                <td><input name="AIM" maxlength="16" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->AIM));?>" type="text"/></td>
                             </tr>
                             <tr>
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_MSN; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_MSN_DESC; ?></div></td>
 
-                                <td><input name="MSN" size="24" value="<?php echo $userinfo->MSN;?>" type="text"/></td>
+                                <td><input name="MSN" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->MSN));?>" type="text"/></td>
                             </tr>
                             <tr>
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_YIM; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_YIM_DESC; ?></div></td>
-                                <td><input name="YIM" maxlength="32" size="24" value="<?php echo $userinfo->YIM;?>" type="text"/></td>
+                                <td><input name="YIM" maxlength="32" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->YIM));?>" type="text"/></td>
                             </tr>
                             <tr>
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_SKYPE; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_SKYPE_DESC; ?></div></td>
-                                <td><input name="SKYPE" maxlength="32" size="24" value="<?php echo $userinfo->SKYPE;?>" type="text"/></td>
+                                <td><input name="SKYPE" maxlength="32" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->SKYPE));?>" type="text"/></td>
                             </tr>
                             <tr>
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_GTALK; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_GTALK_DESC; ?></div></td>
-                                <td><input name="GTALK" maxlength="32" size="24" value="<?php echo $userinfo->GTALK;?>" type="text"/></td>
+                                <td><input name="GTALK" maxlength="32" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->GTALK));?>" type="text"/></td>
                             </tr>
                             <tr>
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_WEBSITE_NAME; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_WEBSITE_NAME_DESC; ?></div></td>
-                                <td><input name="websitename" maxlength="32" size="24" value="<?php echo $userinfo->websitename;?>" type="text"/></td>
+                                <td><input name="websitename" maxlength="32" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->websitename));?>" type="text"/></td>
                             </tr>
                             <tr>
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_WEBSITE_URL; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_WEBSITE_URL_DESC; ?></div></td>
-                                <td><input name="websiteurl" maxlength="32" size="24" value="<?php echo $userinfo->websiteurl;?>" type="text"/></td>
+                                <td><input name="websiteurl" maxlength="32" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->websiteurl));?>" type="text"/></td>
                             </tr>
                             <tr>
                                 <td colspan="2"><hr class="hrcolor" size="1" width="100%" /></td>
@@ -132,7 +132,7 @@ $fbConfig =& CKunenaConfig::getInstance();
 				<td ><textarea style = "width: <?php echo $fbConfig->rtewidth-150?>px; height: 60px;" class = "inputbox"
 							onmouseover = "textCounter(this.form.message,this.form.counter,<?php echo $fbConfig->maxsig;?>);" onclick = "textCounter(this.form.message,this.form.counter,<?php echo $fbConfig->maxsig;?>);"
 							onkeydown = "textCounter(this.form.message,this.form.counter,<?php echo $fbConfig->maxsig;?>);" onkeyup = "textCounter(this.form.message,this.form.counter,<?php echo $fbConfig->maxsig;?>);"
-							rows="6" cols="60" name = "message"><?php echo htmlspecialchars(stripslashes($userinfo->signature), ENT_QUOTES); ?></textarea>
+							rows="6" cols="60" name = "message"><?php echo kunena_htmlspecialchars(stripslashes($userinfo->signature), ENT_QUOTES); ?></textarea>
 
 					<br/>
 

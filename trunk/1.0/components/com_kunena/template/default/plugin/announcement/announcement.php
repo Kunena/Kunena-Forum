@@ -375,9 +375,9 @@ if ($is_editor) {
 
         $ann = $anns[0];
         $annID = $ann->id;
-        $anntitle = stripslashes($ann->title);
-        $annsdescription = stripslashes($ann->sdescription);
-        $anndescription = stripslashes($ann->description);
+        $anntitle = kunena_htmlspecialchars(stripslashes($ann->title));
+        $annsdescription = kunena_htmlspecialchars(stripslashes($ann->sdescription));
+        $anndescription = kunena_htmlspecialchars(stripslashes($ann->description));
         $anncreated = $ann->created;
         $annpublished = $ann->published;
         $annordering = $ann->ordering;

@@ -144,7 +144,7 @@ $k = 0;
 
     <tr class = "<?php echo ''.$boardclass.''. $tabclass[$k] . ''; ?>">
       <td class="td-1" align="left">
-       <a href = "<?php echo $link;?>"><?php echo htmlspecialchars(stripslashes($toptitle->subject)); ?></a>
+       <a href = "<?php echo $link;?>"><?php echo kunena_htmlspecialchars(stripslashes($toptitle->subject)); ?></a>
       </td>
       <td  class="td-2">
        <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>

@@ -536,7 +536,7 @@ $catName = $objCatInfo->name;
                             $resubject = strtr($message->subject, $table);
 
                             $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? stripslashes($resubject) : _POST_RE . stripslashes($resubject);
-                            //$resubject = htmlspecialchars($resubject);
+                            //$resubject = kunena_htmlspecialchars($resubject);
                             $resubject = smile::fbStripHtmlTags($resubject);
                             //$resubject = smile::fbStripHtmlTags($resubject);
                             $parentid = $message->id;
@@ -583,7 +583,7 @@ $catName = $objCatInfo->name;
                             unset($message);
                             $database->loadObject($message);
                             $table = array_flip(get_html_translation_table(HTML_ENTITIES));
-                            $resubject = htmlspecialchars(strtr($message->subject, $table));
+                            $resubject = kunena_htmlspecialchars(strtr($message->subject, $table));
                             $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? stripslashes($resubject) : _POST_RE . stripslashes($resubject);
                             $parentid = $message->id;
                             $htmlText = "";
@@ -628,7 +628,7 @@ $catName = $objCatInfo->name;
                     //$table = array_flip(get_html_translation_table(HTML_ENTITIES));
                     //$resubject = strtr($resubject, $table);
                     $fromBot = 1; //this new topic comes from the discuss mambot
-                    $authorName = htmlspecialchars($my_name);
+                    $authorName = kunena_htmlspecialchars($my_name);
                     $rowid = mosGetParam($_REQUEST, 'rowid', 0);
                     $rowItemid = mosGetParam($_REQUEST, 'rowItemid', 0);
 
@@ -713,8 +713,8 @@ $catName = $objCatInfo->name;
                         //$htmlText = strtr($htmlText, $table);
 
                         //$htmlText = smile::fbHtmlSafe($htmlText);
-                        $resubject = htmlspecialchars(stripslashes($mes->subject));
-                        $authorName = htmlspecialchars($mes->name);
+                        $resubject = kunena_htmlspecialchars(stripslashes($mes->subject));
+                        $authorName = kunena_htmlspecialchars($mes->name);
                         ?>
 
                         <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL."&amp;catid=$catid&amp;func=post"); ?>" method = "post" name = "postform" enctype = "multipart/form-data"/>
@@ -806,7 +806,7 @@ $catName = $objCatInfo->name;
                             include KUNENA_ABSSOURCESPATH . 'kunena.image.upload.php';
                         }
 
-                        //$message = trim(htmlspecialchars(addslashes($message)));
+                        //$message = trim(kunena_htmlspecialchars(addslashes($message)));
                         $message = trim(addslashes($message));
 
                         //parse the message for some preliminary bbcode and stripping of HTML
@@ -892,7 +892,7 @@ $catName = $objCatInfo->name;
                         <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL."&amp;catid=$catid&amp;func=post"); ?>" method = "post" name = "myform">
                             <input type = "hidden" name = "do" value = "deletepostnow"/>
 
-                            <input type = "hidden" name = "id" value = "<?php echo $mes->id;?>"/> <?php echo _POST_ABOUT_TO_DELETE; ?>: <strong><?php echo stripslashes(htmlspecialchars($mes->subject)); ?></strong>.
+                            <input type = "hidden" name = "id" value = "<?php echo $mes->id;?>"/> <?php echo _POST_ABOUT_TO_DELETE; ?>: <strong><?php echo stripslashes(kunena_htmlspecialchars($mes->subject)); ?></strong>.
 
     <br/>
 
@@ -1319,8 +1319,8 @@ $catName = $objCatInfo->name;
                     foreach ($postlist as $mes)
                     {
                         $k = 1 - $k;
-                        $mes->name = htmlspecialchars($mes->name);
-                        $mes->subject = htmlspecialchars($mes->subject);
+                        $mes->name = kunena_htmlspecialchars($mes->name);
+                        $mes->subject = kunena_htmlspecialchars($mes->subject);
                         $mes->message = smile::smileReplace($mes->message, 1, $fbConfig->disemoticons, $smileyList);
             ?>
 
@@ -1925,7 +1925,7 @@ function listThreadHistory($id, $fbConfig, $database)
         $database->setQuery("SELECT subject FROM #__fb_messages WHERE id='$thread' and parent=0");
         $this_message_subject = $database->loadResult();
         	check_dberror("Unable to load messages.");
-        echo "<b>" . _POST_TOPIC_HISTORY . ":</b> " . htmlspecialchars($this_message_subject) . " <br />" . _POST_TOPIC_HISTORY_MAX . " $fbConfig->historylimit " . _POST_TOPIC_HISTORY_LAST . "<br />";
+        echo "<b>" . _POST_TOPIC_HISTORY . ":</b> " . kunena_htmlspecialchars($this_message_subject) . " <br />" . _POST_TOPIC_HISTORY_MAX . " $fbConfig->historylimit " . _POST_TOPIC_HISTORY_LAST . "<br />";
 ?>
 
         <table border = "0" cellspacing = "1" cellpadding = "3" width = "100%" class = "fb_review_table">
@@ -1946,9 +1946,9 @@ function listThreadHistory($id, $fbConfig, $database)
             foreach ($messages as $mes)
             {
                 $k = 1 - $k;
-                $mes->name = htmlspecialchars($mes->name);
-                $mes->email = htmlspecialchars($mes->email);
-                $mes->subject = htmlspecialchars($mes->subject);
+                $mes->name = kunena_htmlspecialchars($mes->name);
+                $mes->email = kunena_htmlspecialchars($mes->email);
+                $mes->subject = kunena_htmlspecialchars($mes->subject);
 
 
                 $fb_message_txt = stripslashes(($mes->message));

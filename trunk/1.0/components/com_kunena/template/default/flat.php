@@ -126,9 +126,9 @@ if (count($messages[0]) > 0)
                 foreach ($messages[0] as $leaf)
                 {
                     $k = 1 - $k; //used for alternating colours
-                    //$leaf->subject = htmlspecialchars($leaf->subject);
-                    $leaf->name = htmlspecialchars($leaf->name);
-                    $leaf->email = htmlspecialchars($leaf->email);
+                    //$leaf->subject = kunena_htmlspecialchars($leaf->subject);
+                    $leaf->name = kunena_htmlspecialchars($leaf->name);
+                    $leaf->email = kunena_htmlspecialchars($leaf->email);
 					$bof_avatar = "";
                 ?>
 
@@ -264,7 +264,7 @@ if (count($messages[0]) > 0)
                                 ?>
 
                                 <div class = "fb-topic-title-cover">
-                                    <?php echo CKunenaLink::GetThreadLink('view', $leaf->catid, $leaf->id, htmlspecialchars(stripslashes($leaf->subject)), '', 'follow', 'fb-topic-title fbm');?>
+                                    <?php echo CKunenaLink::GetThreadLink('view', $leaf->catid, $leaf->id, kunena_htmlspecialchars(stripslashes($leaf->subject)), '', 'follow', 'fb-topic-title fbm');?>
                                     <!--            Favourite       -->
 
                                     <?php
@@ -359,7 +359,7 @@ if (count($messages[0]) > 0)
 
                             <td class = "td-3">
                                 <div class = "fb-topic-title-cover">
-                                    <?php echo CKunenaLink::GetThreadLink('view', $newURLParams['catid'], $newURLParams['id'], htmlspecialchars(stripslashes($leaf->subject)), htmlspecialchars(stripslashes($leaf->subject)), 'follow', 'fb-topic-title-cover');?>
+                                    <?php echo CKunenaLink::GetThreadLink('view', $newURLParams['catid'], $newURLParams['id'], kunena_htmlspecialchars(stripslashes($leaf->subject)), kunena_htmlspecialchars(stripslashes($leaf->subject)), 'follow', 'fb-topic-title-cover');?>
                                 </div>
 
                         <?php

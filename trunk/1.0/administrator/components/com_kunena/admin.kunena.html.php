@@ -2457,7 +2457,7 @@ require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/
         $file = stripslashes($file);
         $f = fopen($file, "r");
         $content = fread($f, filesize($file));
-        $content = htmlspecialchars($content);
+        $content = kunena_htmlspecialchars($content);
 ?>
 <div class="fbfunctitle"><?php echo _KUNENA_CSSEDITOR; ?></div>
     <form action = "index2.php?" method = "post" name = "adminForm" class = "adminForm" id = "adminForm">

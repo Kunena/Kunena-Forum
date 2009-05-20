@@ -164,7 +164,7 @@ if ($sel == "0")
                 $k = 1 - $k;
                 echo '<tr  class="' . $boardclass . '' . $tabclass[$k] . '" >';
                 echo '<td  class="td-1"  align="left" >';
-                echo CKunenaLink::GetThreadLink('view', $latestPostCatid, $rs->thread, htmlspecialchars(stripslashes($rs->subject)), htmlspecialchars(stripslashes($rs->subject))).' ';
+                echo CKunenaLink::GetThreadLink('view', $latestPostCatid, $rs->thread, kunena_htmlspecialchars(stripslashes($rs->subject)), kunena_htmlspecialchars(stripslashes($rs->subject))).' ';
 
                 $threadPages = 1;
                 if ($thisThread->totalmessages > $fbConfig->messages_per_page)
@@ -208,7 +208,7 @@ if ($sel == "0")
                 echo '<br />' . _GEN_FORUM . ' : ' . $catname . '</td>';
                 echo '<td class="td-2" align="center">' . $numberOfPosts . '</td>';
                 echo '<td class="td-3" align="center">';
-                echo CKunenaLink::GetProfileLink($fbConfig, $latestPostUserid, htmlspecialchars($latestPostName));
+                echo CKunenaLink::GetProfileLink($fbConfig, $latestPostUserid, kunena_htmlspecialchars($latestPostName));
                 echo '</td>';
                 echo '<td class="td-4" align="left">' . date(_DATETIME, $latestPostTime) . '</td>';
                 echo '</tr>';

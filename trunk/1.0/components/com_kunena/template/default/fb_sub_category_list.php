@@ -411,7 +411,7 @@ else
 
                         <td class = "td-5" align="left">
                             <div class = "<?php echo $boardclass ?>latest-subject fbm">
-                                <?php echo CKunenaLink::GetThreadLink('view', $latestcatid, $latestthread, htmlspecialchars(stripslashes($latestsubject)), htmlspecialchars(stripslashes($latestsubject)), $rel='nofollow');?>
+                                <?php echo CKunenaLink::GetThreadLink('view', $latestcatid, $latestthread, kunena_htmlspecialchars(stripslashes($latestsubject)), kunena_htmlspecialchars(stripslashes($latestsubject)), $rel='nofollow');?>
                             </div>
 
                             <div class = "<?php echo $boardclass ?>latest-subject-by  fbs">

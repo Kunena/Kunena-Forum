@@ -418,8 +418,8 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 }
 
                                 //meta description and keywords
-								$metaKeys=(htmlspecialchars(stripslashes($fmessage->subject)). ', ' .htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . htmlspecialchars(stripslashes($fbConfig->board_title)) . ', ' . htmlspecialchars($GLOBALS['mosConfig_sitename']));
-								$metaDesc=(htmlspecialchars(stripslashes($fmessage->subject)) . ' - ' .htmlspecialchars(stripslashes($objCatParentInfo->name)) . ' - ' . htmlspecialchars(stripslashes($objCatInfo->name)) .' - ' . htmlspecialchars(stripslashes($fbConfig->board_title)));
+								$metaKeys=(kunena_htmlspecialchars(stripslashes($fmessage->subject)). ', ' .kunena_htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . kunena_htmlspecialchars(stripslashes($fbConfig->board_title)) . ', ' . kunena_htmlspecialchars($GLOBALS['mosConfig_sitename']));
+								$metaDesc=(kunena_htmlspecialchars(stripslashes($fmessage->subject)) . ' - ' .kunena_htmlspecialchars(stripslashes($objCatParentInfo->name)) . ' - ' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) .' - ' . kunena_htmlspecialchars(stripslashes($fbConfig->board_title)));
 
 								if( CKunenaTools::isJoomla15() )
 								{
@@ -437,9 +437,9 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 								}
 
                                 //filter out clear html
-                                $fmessage->name = htmlspecialchars($fmessage->name);
-                                $fmessage->email = htmlspecialchars($fmessage->email);
-                                $fmessage->subject = htmlspecialchars($fmessage->subject);
+                                $fmessage->name = kunena_htmlspecialchars($fmessage->name);
+                                $fmessage->email = kunena_htmlspecialchars($fmessage->email);
+                                $fmessage->subject = kunena_htmlspecialchars($fmessage->subject);
 
                                 //Get userinfo needed later on, this limits the amount of queries
                                 unset($userinfo);

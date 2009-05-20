@@ -38,7 +38,7 @@ class smile
 
 	static $regexp_trans = array('/' => '\/', '^' => '\^', '$' => '\$', '.' => '\.', '[' => '\[', ']' => '\]', '|' => '\|', '(' => '\(', ')' => '\)', '?' => '\?', '*' => '\*', '+' => '\+', '{' => '\{', '}' => '\}', '\\' => '\\\\', '^' => '\^', '-' => '\-');
 
-	$utf8 = (mb_detect_encoding($fb_message . 'a', 'UTF-8,ISO-8859-1') == 'UTF-8') ? "u" : "";
+		$utf8 = (KUNENA_CHARSET == 'UTF-8') ? "u" : "";
         $type = ($history == 1) ? "-grey" : "";
         $message_emoticons = array();
         $message_emoticons = $iconList? $iconList : smile::getEmoticons($history);
@@ -445,7 +445,7 @@ class smile
             </td>
 
             <td valign = "top">
-                <textarea cols="60" rows="6" class = "<?php echo $boardclass;?>txtarea" name = "<?php echo $areaname;?>" id = "<?php echo $areaname;?>"><?php echo htmlspecialchars($html, ENT_QUOTES); ?></textarea>
+                <textarea cols="60" rows="6" class = "<?php echo $boardclass;?>txtarea" name = "<?php echo $areaname;?>" id = "<?php echo $areaname;?>"><?php echo kunena_htmlspecialchars($html, ENT_QUOTES); ?></textarea>
 <?php
 if ($editmode) {
     // Moderator edit area
@@ -525,7 +525,7 @@ if ($editmode) {
         $text = preg_replace('/\[ebay\](.*?)\[\/ebay\]/s', '\\1', $text);
         $text = preg_replace('#/n#s', ' ', $text);
         $text = strip_tags($text);
-        //$text = stripslashes(htmlspecialchars($text));
+        //$text = stripslashes(kunena_htmlspecialchars($text));
         $text = stripslashes($text);
         return ($text);
     } //purify
@@ -678,7 +678,7 @@ if ($editmode) {
 //	  $utf8 = (preg_match("/^([\x09\x0A\x0D\x20-\x7E]|[\xC2-\xDF][\x80-\xBF]|\xE0[\xA0-\xBF][\x80-\xBF]|[\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}|\xED[\x80-\x9F][\x80-\xBF]|\xF0[\x90-\xBF][\x80-\xBF]{2}|[\xF1-\xF3][\x80-\xBF]{3}|\xF4[\x80-\x8F][\x80-\xBF]{2})*$/", $str)) ? "u" : "";
 	  // original utf8 problems seems to cause problems with very long text (forumposts)
 	  // replaced by a little simpler function call by fxstein 8-13-08
-	  $utf8 = (mb_detect_encoding($str . 'a' , 'UTF-8,ISO-8859-1') == 'UTF-8') ? "u" : "";
+	  $utf8 = (KUNENA_CHARSET == 'UTF-8') ? "u" : "";
 
 	  while (list(, $value) = each($content)) {
 	    switch ($value) {

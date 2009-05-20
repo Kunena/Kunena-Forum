@@ -35,7 +35,7 @@ if ($func != "")
         <?php
         $catids = intval($catid);
         $jr_path_menu = array ();
-        echo '<div class="path-element-first">' . CKunenaLink::GetKunenaLink( htmlspecialchars(stripslashes($fbConfig->board_title)) ) . '</div>';
+        echo '<div class="path-element-first">' . CKunenaLink::GetKunenaLink( kunena_htmlspecialchars(stripslashes($fbConfig->board_title)) ) . '</div>';
 
         while ($catids > 0)
         {
@@ -44,7 +44,7 @@ if ($func != "")
             $database->loadObject($results);
             if (!$results) break;
 			$parent_ids = $results->parent;
-			$fr_name = htmlspecialchars(trim(stripslashes($results->name)));
+			$fr_name = kunena_htmlspecialchars(trim(stripslashes($results->name)));
             //$cids=@mysql_result( $results, 0, 'id' );
             $sname = CKunenaLink::GetCategoryLink( 'showcat', $catids, $fr_name);
 
@@ -78,7 +78,7 @@ if ($func != "")
         {
             $sql = "select subject from #__fb_messages where id = $id";
             $database->setQuery($sql);
-            $jr_topic_title = stripslashes(htmlspecialchars($database->loadResult()));
+            $jr_topic_title = stripslashes(kunena_htmlspecialchars($database->loadResult()));
             $jr_path_menu[] = $jr_topic_title;
         //     echo " " . $jr_arrow .$jr_arrow ." ". $jr_topic_title;
         }

@@ -92,9 +92,9 @@ $tree = thread_flat($tree, $messages);
     <?php
     foreach ($tree as $leaf)
     {
-        $leaf->name = htmlspecialchars($leaf->name);
-        $leaf->subject = htmlspecialchars($leaf->subject);
-        $leaf->email = htmlspecialchars($leaf->email);
+        $leaf->name = kunena_htmlspecialchars($leaf->name);
+        $leaf->subject = kunena_htmlspecialchars($leaf->subject);
+        $leaf->email = kunena_htmlspecialchars($leaf->email);
         //get all html out of the subject & email & name before posting:
     ?>
 

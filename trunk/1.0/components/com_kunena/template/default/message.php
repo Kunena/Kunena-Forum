@@ -270,7 +270,7 @@ if ($fbConfig->fb_profile == 'cb')
                                     }
 
                                     //contruct the reply subject
-                                    $resubject = strtolower(substr($msg_subject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? $msg_subject : _POST_RE . $msg_subject;
+                                    $resubject = kunena_htmlspecialchars(strtolower(substr($msg_subject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? $msg_subject : _POST_RE . $msg_subject);
                                     ?>
 
                             <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL. '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
@@ -348,7 +348,7 @@ if ($fmessage->modified_by) {
                     <span class="fb_message_editMarkUp" ><?php echo _KUNENA_EDITING_LASTEDIT;?>: <?php echo date(_DATETIME, $fmessage->modified_time);?> <?php echo _KUNENA_BY; ?> <?php echo CKunenaTools::whoisID($fmessage->modified_by)?>.
                     <?php
                     if ($fmessage->modified_reason) {
-                    echo _KUNENA_REASON.": ".$fmessage->modified_reason;
+                    echo _KUNENA_REASON.": ".kunena_htmlspecialchars(stripslashes($fmessage->modified_reason));
                     }
                         ?></span>
                     </div>

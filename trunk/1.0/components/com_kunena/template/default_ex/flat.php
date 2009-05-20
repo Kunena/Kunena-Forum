@@ -152,8 +152,8 @@ if (count($messages[0]) > 0)
                 foreach ($messages[0] as $leaf)
                 {
                     $k = 1 - $k; //used for alternating colours
-                    $leaf->name = htmlspecialchars(stripslashes($leaf->name));
-                    $leaf->email = htmlspecialchars(stripslashes($leaf->email));
+                    $leaf->name = kunena_htmlspecialchars(stripslashes($leaf->name));
+                    $leaf->email = kunena_htmlspecialchars(stripslashes($leaf->email));
                 ?>
 
                 <?php
@@ -233,7 +233,7 @@ if (count($messages[0]) > 0)
                                 ?>
 
                                 <div class = "fb-topic-title-cover">
-                                    <?php echo CKunenaLink::GetThreadLink('view', $leaf->catid, $leaf->id, htmlspecialchars(stripslashes($leaf->subject)), htmlspecialchars(stripslashes($messagetext[$leaf->id])) , 'follow', 'fb-topic-title fbm');?>
+                                    <?php echo CKunenaLink::GetThreadLink('view', $leaf->catid, $leaf->id, kunena_htmlspecialchars(stripslashes($leaf->subject)), kunena_htmlspecialchars(stripslashes($messagetext[$leaf->id])) , 'follow', 'fb-topic-title fbm');?>
                                     <!--            Favourite       -->
 
                                     <?php
@@ -322,7 +322,7 @@ if (count($messages[0]) > 0)
 
                             <td class = "td-3">
                                 <div class = "fb-topic-title-cover">
-                                    <?php echo CKunenaLink::GetThreadLink('view', $newURLParams['catid'], $newURLParams['id'], htmlspecialchars(stripslashes($leaf->subject)), htmlspecialchars(stripslashes($leaf->subject)), 'follow', 'fb-topic-title fbm');?>
+                                    <?php echo CKunenaLink::GetThreadLink('view', $newURLParams['catid'], $newURLParams['id'], kunena_htmlspecialchars(stripslashes($leaf->subject)), kunena_htmlspecialchars(stripslashes($leaf->subject)), 'follow', 'fb-topic-title fbm');?>
                                 </div>
 
 

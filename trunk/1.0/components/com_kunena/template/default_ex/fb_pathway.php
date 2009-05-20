@@ -40,7 +40,7 @@ if ($func != "")
             $database->loadObject($results);
 			if (!$results) break;
 			$parent_ids = $results->parent;
-			$fr_name = htmlspecialchars(trim(stripslashes($results->name)));
+			$fr_name = kunena_htmlspecialchars(trim(stripslashes($results->name)));
             $sname = CKunenaLink::GetCategoryLink( 'showcat', $catids, $fr_name);
 
             if ($catid == $catids && $sfunc != "view")
@@ -88,7 +88,7 @@ if ($func != "")
             $moderatedForum = 1;
         }
 
-        $firepath = '<div class="path-element-first">'. CKunenaLink::GetKunenaLink( htmlspecialchars(stripslashes($fbConfig->board_title)) ) . '</div>';
+        $firepath = '<div class="path-element-first">'. CKunenaLink::GetKunenaLink( kunena_htmlspecialchars(stripslashes($fbConfig->board_title)) ) . '</div>';
 
         $firelast = '';
         for ($i = 0; $i < $jr_forum_count; $i++)

@@ -142,13 +142,13 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
                 <td class = "td-2  fbm"  align="left">
 
-                        <a  class="fb-topic-title fbm"  href = "<?php echo $fbURL; ?>"> <?php echo htmlspecialchars(stripslashes ($item->subject)); ?> </a>
+                        <a  class="fb-topic-title fbm"  href = "<?php echo $fbURL; ?>"> <?php echo kunena_htmlspecialchars(stripslashes ($item->subject)); ?> </a>
 
                 </td>
 
                 <td class = "td-3 fbm" align="left">
 
-                        <a  class="fb-topic-cat fbm" href = "<?php echo $fbCatURL; ?>"> <?php echo stripslashes($item->catname); ?></a>
+                        <a  class="fb-topic-cat fbm" href = "<?php echo $fbCatURL; ?>"> <?php echo kunena_htmlspecialchars(stripslashes($item->catname)); ?></a>
 
                 </td>
 

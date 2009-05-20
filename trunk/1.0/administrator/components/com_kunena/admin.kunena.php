@@ -1981,7 +1981,7 @@ function editRank($option, $id)
 				continue;
 			}
 
-			$filename_list .= '<option value="' . htmlspecialchars($img) . '"' . $selected . '>' . $img . '</option>';
+			$filename_list .= '<option value="' . kunena_htmlspecialchars($img) . '"' . $selected . '>' . $img . '</option>';
 		}
 	}
 

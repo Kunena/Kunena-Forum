@@ -453,7 +453,7 @@ class CKunenaSearch
                     // Strip smiles and bbcode out of search results; they look ugly
                     $resmessage = CKunenaTools::prepareContent($resmessage);
                     $resmessage = smile::purify($resmessage);
-                    $resmessage = mb_substr(html_entity_decode_utf8($resmessage), 0, 300);
+                    $resmessage = mb_substr(kunena_htmlspecialchars($resmessage), 0, 300);
                     $utf8 = (mb_detect_encoding($ressubject . $resmessage . 'a', 'UTF-8,ISO-8859-1') == 'UTF-8') ? "u" : "";
                     foreach ($searchlist as $searchword)
                     {
@@ -464,7 +464,7 @@ class CKunenaSearch
                     echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '">';
                     echo '<td  class = "td-1" ><a href="'
                              . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $result->id . '&amp;catid=' . $result->catid) . '#' . $result->id . '" >' . $ressubject . '</a><br />' . $resmessage . '<br /><br /></td>';
-                    echo '<td class = "td-2" >' . html_entity_decode_utf8(stripslashes($result->name)) . '</td>';
+                    echo '<td class = "td-2" >' . kunena_htmlspecialchars(stripslashes($result->name)) . '</td>';
                     echo '<td class = "td-3" >' . date(_DATETIME, $result->time) . '</td></tr>';
                     echo "\n";
                 }

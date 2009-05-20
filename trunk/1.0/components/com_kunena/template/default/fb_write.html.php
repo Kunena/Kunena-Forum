@@ -27,6 +27,7 @@ if (!isset($htmlText)) $htmlText = '';
 if (!isset($setFocus)) $setFocus = 0;
 if (!isset($no_image_upload)) $no_image_upload = 0;
 if (!isset($no_file_upload)) $no_file_upload = 0;
+$authorName = stripslashes($authorName);
 
 include_once(KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
 ?>

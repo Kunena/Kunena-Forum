@@ -21,6 +21,10 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 *@desc Getting the correct Itemids, for components required
 */
 
+// Detect charset
+if (defined('JPATH_ADMINISTRATOR')) define('KUNENA_CHARSET', 'UTF-8');
+else define('KUNENA_CHARSET',  ( defined( '_ISO' ) ? strtoupper( str_replace( "charset=", "", _ISO ) ) : 'ISO-8859-1' ) );
+
 // Shortcuts to all the path we have:
 define('KUNENA_JABSPATH', $mainframe->getCfg('absolute_path'));
 
@@ -1305,6 +1309,10 @@ if (!function_exists('mb_substr')) {
 	if ($lenght===NULL) $lenght = strlen($str);
 	return substr($str, $start, $lenght);
   }
+}
+
+function kunena_htmlspecialchars($string, $quote_style=ENT_COMPAT, $charset=KUNENA_CHARSET) {
+	return htmlspecialchars($string, $quote_style, $charset);
 }
 
 function utf8_urldecode($str) {

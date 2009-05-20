@@ -34,6 +34,7 @@ Kunena 1.0.10
 
 20-May-2009 Matias
 # [#16455] Editor does not work with notices turned on (and if translations are missing)
+# [#16387] Remove many notices from undefined variables
 
 19-May-2009 Matias
 # [#16456] Quick reply: Empty subject if topic contains: "

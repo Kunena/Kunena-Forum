@@ -21,6 +21,8 @@
 
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+global $database, $my;
+
 class fbpdfwrapper {
 	// small wrapper class for J1.5 to emulate Cezpdf-class
 	var $_title = '';

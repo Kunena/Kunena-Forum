@@ -31,6 +31,8 @@ $database->setQuery("SELECT id, name, locked,review, pub_access, pub_recurse, ad
 $rows = $database->loadObjectList();
 check_dberror("Unable to load categories.");
 
+$smileyList = smile::getEmoticons(0);
+
 $allow_forum = ($fbSession->allowed != '')?explode(',', $fbSession->allowed):array();
 foreach ($rows as $rownum=>$row)
 {

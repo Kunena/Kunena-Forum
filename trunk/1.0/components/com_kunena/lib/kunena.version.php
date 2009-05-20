@@ -17,7 +17,7 @@
 // no direct access
 defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
-global $mainframe;
+global $mainframe, $database;
 require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.debug.php');
 
 // use default translations if none are available

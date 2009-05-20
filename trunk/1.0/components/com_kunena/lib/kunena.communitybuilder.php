@@ -16,7 +16,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
  * CB framework
  * @global CBframework $_CB_framework
  */
-global $_CB_framework, $_CB_database, $ueConfig, $mainframe;
+global $_CB_framework, $_CB_database, $ueConfig, $mainframe, $database;
 $tmp_db =& $database;
 
 if ( defined( 'JPATH_ADMINISTRATOR' ) ) {

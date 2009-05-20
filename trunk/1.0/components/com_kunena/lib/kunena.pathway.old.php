@@ -21,6 +21,9 @@
 
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+
+global $mainframe, $database;
+
 $fbConfig =& CKunenaConfig::getInstance();
 ?>
 <!-- Pathway -->
@@ -49,7 +52,7 @@ $fbConfig =& CKunenaConfig::getInstance();
                         $spath = $sname;
                     }
                     else {
-                        $spath = $sname . ' » ' . $spath;
+                        $spath = $sname . ' ï¿½ ' . $spath;
                     }
 
                     // next looping
@@ -57,7 +60,7 @@ $fbConfig =& CKunenaConfig::getInstance();
                 }
 
                 $shome = '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL) . '">' . _GEN_FORUMLIST . '</a> ';
-                $pathNames = $shome . ' » ' . $spath . " ";
+                $pathNames = $shome . ' ï¿½ ' . $spath . " ";
                 echo $pathNames;
 
                 //Get the category name for breadcrumb

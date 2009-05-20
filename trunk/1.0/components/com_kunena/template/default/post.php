@@ -463,7 +463,7 @@ $catName = $objCatInfo->name;
 
                                             $database->setQuery("INSERT INTO #__fb_subscriptions (thread,userid) VALUES ('$fb_thread','{$my->id}')");
 
-                                            if ($database->query()) {
+                                            if (@$database->query()) {
                                                 echo '<br /><br /><div align="center">' . _POST_SUBSCRIBED_TOPIC . '</div><br /><br />';
                                             }
                                             else {
@@ -838,7 +838,7 @@ $catName = $objCatInfo->name;
                             if ($database->query() && $dbr_nameset)
                             {
                                 //Update the attachments table if an image has been attached
-                                if ($imageLocation != "")
+                                if (!empty($imageLocation))
                                 {
                                     $imageLocation = addslashes($imageLocation);
                                     $database->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$id','$imageLocation')");
@@ -849,7 +849,7 @@ $catName = $objCatInfo->name;
                                 }
 
                                 //Update the attachments table if an file has been attached
-                                if ($fileLocation != "")
+                                if (!empty($fileLocation))
                                 {
                                     $fileLocation = addslashes($fileLocation);
                                     $database->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$id','$fileLocation')");
@@ -1588,7 +1588,7 @@ $catName = $objCatInfo->name;
                         $thread = $row->thread;
                         $database->setQuery("INSERT INTO #__fb_subscriptions (thread,userid) VALUES ('$thread','$my->id')");
 
-                        if ($database->query() && $database->getAffectedRows()==1) {
+                        if (@$database->query() && $database->getAffectedRows()==1) {
                             $success_msg = _POST_SUBSCRIBED_TOPIC;
                         }
                     }
@@ -1623,7 +1623,7 @@ $catName = $objCatInfo->name;
                         $thread = $database->loadResult();
                         $database->setQuery("INSERT INTO #__fb_favorites (thread,userid) VALUES ('$thread','$my->id')");
 
-                        if ($database->query() && $database->getAffectedRows()==1)
+                        if (@$database->query() && $database->getAffectedRows()==1)
                         {
                              $success_msg = _POST_FAVORITED_TOPIC;
                         }

@@ -33,6 +33,8 @@
 
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+global $mainframe;
+
 include_once("kunena.parser.bbcode.php");
 
 class KunenaBBCodeInterpreter extends BBCodeInterpreter {

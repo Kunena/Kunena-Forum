@@ -85,7 +85,6 @@ if ($GLOBALS['KUNENA_rc'])
 	} else {
 		move_uploaded_file($_FILES['attachfile']['tmp_name'], $fileLocation);
 	}
-    @chmod($fileLocation, 0777);
 }
 
 // Insert file code into message

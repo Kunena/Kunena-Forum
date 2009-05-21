@@ -615,11 +615,6 @@ else if ($do == 'validate')
     break;
    }
 
-
-    @chmod($fileLocation, 0777);
-    @chmod($fileLocation_l, 0777);
-    @chmod($fileLocation_s, 0777);
-
     $newFileName = CKunenaTools::fbRemoveXSS($newFileName);
     $database->setQuery("UPDATE #__fb_users SET avatar='{$newFileName}' WHERE userid={$my->id}");
     $database->query() or trigger_dberror("Unable to update avatar.");

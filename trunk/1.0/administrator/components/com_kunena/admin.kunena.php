@@ -841,7 +841,6 @@ function saveConfig($option)
     // To enable legacy 3rd party modules to 'see' our config
 	global $mainframe;
     $configfile = $mainframe->getCfg('absolute_path') . "/administrator/components/com_kunena/Kunena_config.php";
-    @chmod($configfile, 0766);
 
     $txt = "<?php\n";
     $txt .= "require_once (\$mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.config.class.php');\n";
@@ -882,7 +881,6 @@ function showCss($option)
 	global $mainframe;
     $fbConfig =& CKunenaConfig::getInstance();
     $file = $mainframe->getCfg('absolute_path') . "/components/com_kunena/template/" . $fbConfig->template . "/kunena.forum.css";
-    @chmod($file, 0766);
     $permission = is_writable($file);
 
     if (!$permission)
@@ -1558,7 +1556,6 @@ function dircopy($srcdir, $dstdir, $verbose = false) {
 
     if (!is_dir($dstdir)) {
         mkdir($dstdir);
-        chmod($dstdir, 0777);
     }
 
     if ($curdir = opendir($srcdir)) {

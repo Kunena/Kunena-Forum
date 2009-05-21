@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.10
 
+21-May-2009 Matias
+# [#16487] Internal: Trunk is missing branches/1.0.9 Rev 465 (Incorrect permissions handling fixed)
+
 20-May-2009 fxstein
 - [#16413] Remove empty version record logic
 # [#16387] Remove notices from undefined variables in install class

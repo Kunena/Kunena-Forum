@@ -274,6 +274,7 @@ function com_install() {
 
 function dircopy($srcdir, $dstdir, $verbose = true) {
 	$success = true;
+	$num=0;
 
 	if (!is_dir($dstdir)) {
 		mkdir ($dstdir);

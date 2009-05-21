@@ -32,6 +32,10 @@ Legend:
 
 Kunena 1.0.10
 
+20-May-2009 fxstein
+- [#16413] Remove empty version record logic
+# [#16387] Remove notices from undefined variables in install class
+
 20-May-2009 Matias
 # [#16455] Editor does not work with notices turned on (and if translations are missing)
 # [#16387] Remove many notices from undefined variables

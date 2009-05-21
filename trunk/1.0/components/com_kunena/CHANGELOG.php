@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.10
 
+21-May-2009 fxstein
+# [#16490] mb_string related Joomla error on certain Joomla 1.5 installs
+
 21-May-2009 Matias
 # [#16487] Internal: Trunk is missing branches/1.0.9 Rev 465 (Incorrect permissions handling fixed)
 

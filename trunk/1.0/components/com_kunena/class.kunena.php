@@ -786,7 +786,7 @@ class CKunenaTools {
 	function &prepareContent(&$content)
 	{
 		$fbConfig =& CKunenaConfig::getInstance();
-		
+
 		// Joomla Mambot Support, Thanks hacksider
 		if ($fbConfig->jmambot)
 		{
@@ -807,7 +807,7 @@ $row, & $params, 0));
 		}
 		return $content;
 	}
-        
+
 	function getAllowedForums($uid = 0, $gid = 0, &$acl) {
         	global $database;
 
@@ -1272,43 +1272,25 @@ function fbReturnDashed (&$string, $key) {
             $string = "_".$string."_";
 }
 
-if (!function_exists('mb_detect_encoding')) {
-  function mb_detect_encoding($text) {
-	$c=0; $b=0;
-	$bits=0;
-	$len=strlen($text);
-	for($i=0; $i<$len; $i++){
-		$c=ord($text[$i]);
-		if($c > 128){
-			if(($c >= 254)) return 'ISO-8859-1';
-			elseif($c >= 252) $bits=6;
-			elseif($c >= 248) $bits=5;
-			elseif($c >= 240) $bits=4;
-			elseif($c >= 224) $bits=3;
-			elseif($c >= 192) $bits=2;
-			else return 'ISO-8859-1';
-			if(($i+$bits) > $len) return 'ISO-8859-1';
-			while($bits > 1){
-				$i++;
-				$b=ord($text[$i]);
-				if($b < 128 || $b > 191) return 'ISO-8859-1';
-				$bits--;
-			}
+function kn_mb_substr($str, $start, $lenght=NULL, $encoding=NULL) {
+	if (!function_exists('mb_substr'))
+	{
+		if (CKunenaTools::isJoomla15())
+		{
+			require_once(JPATH_LIBRARIES.DS.'phputf8'.DS.'utf8.php');
+
+			return mb_substr($str, $start, $lenght, $encoding);
+		}
+		else
+		{
+			if ($lenght===NULL) $lenght = strlen($str);
+			return substr($str, $start, $lenght);
 		}
 	}
-	return 'UTF-8';
-  }
-}
-if (!function_exists('mb_convert_encoding')) {
-  function mb_convert_encoding($text,$target_encoding,$source_encoding=NULL) {
-	return $text;
-  }
-}
-if (!function_exists('mb_substr')) {
-  function mb_substr($str, $start, $lenght=NULL, $encoding=NULL) {
-	if ($lenght===NULL) $lenght = strlen($str);
-	return substr($str, $start, $lenght);
-  }
+	else
+	{
+		return mb_substr($str, $start, $lenght, $encoding);
+	}
 }
 
 function kunena_htmlspecialchars($string, $quote_style=ENT_COMPAT, $charset=KUNENA_CHARSET) {

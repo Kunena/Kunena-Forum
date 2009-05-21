@@ -338,7 +338,7 @@ class CKunenaSearch
 		{
 			$result[$cur] = $cur;
 			if (array_key_exists($cur, $allow_list))
-				foreach ($allow_list[$cur] as $forum) 
+				foreach ($allow_list[$cur] as $forum)
 					if (!in_array($forum, $catids))
 						array_push($catids, $forum);
 		}
@@ -455,8 +455,9 @@ class CKunenaSearch
                     // Strip smiles and bbcode out of search results; they look ugly
                     $resmessage = CKunenaTools::prepareContent($resmessage);
                     $resmessage = smile::purify($resmessage);
-                    $resmessage = mb_substr(kunena_htmlspecialchars($resmessage), 0, 300);
-                    $utf8 = (mb_detect_encoding($ressubject . $resmessage . 'a', 'UTF-8,ISO-8859-1') == 'UTF-8') ? "u" : "";
+                    $resmessage = kn_mb_substr(kunena_htmlspecialchars($resmessage), 0, 300);
+                    $utf8 = (KUNENA_CHARSET == 'UTF-8') ? "u" : "";
+
                     foreach ($searchlist as $searchword)
                     {
                         if (empty($searchword)) continue;

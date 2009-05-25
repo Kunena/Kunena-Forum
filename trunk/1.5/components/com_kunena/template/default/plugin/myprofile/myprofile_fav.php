@@ -70,7 +70,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 					{
 						$k = 1 - $k;
 						echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" >';
-						echo '<td class="td-1" width="73%" align="left">' . $enum . ': <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $fav->catid . '&amp;id=' . $fav->id) . '">' . kunena_htmlspecialchars(stripslashes($fav->subject));
+						echo '<td class="td-1" width="73%" align="left">' . $enum . ': <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $fav->catid . '&amp;id=' . $fav->id) . '">' . kunena_htmlspecialchars(stripslashes($fav->subject));
 			?>
 
 						</a>

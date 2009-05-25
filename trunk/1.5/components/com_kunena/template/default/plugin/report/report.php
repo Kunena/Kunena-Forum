@@ -56,7 +56,7 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type)
 	if (!empty($reason) && !empty($text))
 	{
         
-    $database->setQuery("SELECT a.*, b.message AS msg_text FROM #__fb_messages AS a"
+    $kunena_db->setQuery("SELECT a.*, b.message AS msg_text FROM #__fb_messages AS a"
     . "\n LEFT JOIN #__fb_messages_text AS b ON b.mesid = a.id"
     . "\n WHERE a.id={$msg_id}");
 
@@ -118,7 +118,7 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type)
     }
     
     echo '<div align="center">' . _KUNENA_REPORT_SUCCESS;
-    echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&amp;id='.$msg_id).'#'.$msg_id, 3500);
+    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&amp;id='.$msg_id).'#'.$msg_id, 3500);
     
 	}
     else
@@ -129,8 +129,8 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type)
     	
     }
     echo '<br /><br />';
-    echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id) . '#' . $msg_id . '">' . _POST_SUCCESS_VIEW . '</a><br />';
-    echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $catid) . '">' . _POST_SUCCESS_FORUM . '</a><br />';
+    echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id) . '#' . $msg_id . '">' . _POST_SUCCESS_VIEW . '</a><br />';
+    echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $catid) . '">' . _POST_SUCCESS_FORUM . '</a><br />';
     echo '</div>';
 }
 

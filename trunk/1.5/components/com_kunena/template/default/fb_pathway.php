@@ -77,8 +77,8 @@ if ($func != "")
         if ($sfunc == "view" and $id)
         {
             $sql = "select subject from #__fb_messages where id = $id";
-            $database->setQuery($sql);
-            $jr_topic_title = stripslashes(kunena_htmlspecialchars($database->loadResult()));
+            $kunena_db->setQuery($sql);
+            $jr_topic_title = stripslashes(kunena_htmlspecialchars($kunena_db->loadResult()));
             $jr_path_menu[] = $jr_topic_title;
         //     echo " " . $jr_arrow .$jr_arrow ." ". $jr_topic_title;
         }
@@ -89,14 +89,14 @@ if ($func != "")
 		$fireinfo = '';
         if (!empty($forumLocked))
         {
-            $fireinfo = isset($fbIcons['forumlocked']) ? ' <img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forumlocked']
+            $fireinfo = isset($fbIcons['forumlocked']) ? ' <img src="' . KUNENA_URLICONSPATH . $fbIcons['forumlocked']
                      . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"  alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
             $lockedForum = 1;
         }
 
         if (!empty($forumReviewed))
         {
-            $fireinfo = isset($fbIcons['forummoderated']) ? ' <img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forummoderated']
+            $fireinfo = isset($fbIcons['forummoderated']) ? ' <img src="' . KUNENA_URLICONSPATH . $fbIcons['forummoderated']
                      . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '">';
             $moderatedForum = 1;
         }
@@ -151,7 +151,10 @@ if ($func != "")
         $fr_title = '';
 		if (!empty($fr_title_name)) $fr_title .= $fr_title_name;
 		if (!empty($jr_topic_title)) $fr_title .= $jr_topic_title;
-		$mainframe->setPageTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($fbConfig->board_title));
+
+		$document=& JFactory::getDocument();
+
+		$document->setTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($fbConfig->board_title));
         ?>
 		</div>
     </div>

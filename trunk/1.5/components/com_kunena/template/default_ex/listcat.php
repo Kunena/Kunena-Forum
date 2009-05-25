@@ -384,14 +384,14 @@ if (count($categories[0]) > 0)
                                             <?php
                                             if ($singlerow->locked)
                                             {
-                                                echo isset($fbIcons['forumlocked']) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forumlocked']
+                                                echo isset($fbIcons['forumlocked']) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . $fbIcons['forumlocked']
                                                          . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : '&nbsp;&nbsp;<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0" alt="' . _GEN_LOCKED_FORUM . '">';
                                                 $lockedForum = 1;
                                             }
 
                                             if ($singlerow->review)
                                             {
-                                                echo isset($fbIcons['forummoderated']) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forummoderated']
+                                                echo isset($fbIcons['forummoderated']) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . $fbIcons['forummoderated']
                                                          . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : '&nbsp;&nbsp;<img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '">';
                                                 $moderatedForum = 1;
                                             }
@@ -475,8 +475,7 @@ if (count($categories[0]) > 0)
                                                                                 echo "<img src=\"" . KUNENA_URLCATIMAGES . $forumparent->id . "_on_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
                                                                             }
                                                                             else {
-                                                                                echo isset($fbIcons['unreadforum']) ? '<img src="' . KUNENA_URLICONSPATH
-                                                                                         . '' . $fbIcons['unreadforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '" />' : stripslashes($fbConfig->newchar);
+                                                                                echo isset($fbIcons['unreadforum']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unreadforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '" />' : stripslashes($fbConfig->newchar);
                                                                             }
                                                                         }
                                                                         else
@@ -486,8 +485,7 @@ if (count($categories[0]) > 0)
                                                                                 echo "<img src=\"" . KUNENA_URLCATIMAGES . $forumparent->id . "_off_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
                                                                             }
                                                                             else {
-                                                                                echo isset($fbIcons['readforum']) ? '<img src="' . KUNENA_URLICONSPATH
-                                                                                         . '' . $fbIcons['readforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : stripslashes($fbConfig->newchar);
+                                                                                echo isset($fbIcons['readforum']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['readforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : stripslashes($fbConfig->newchar);
                                                                             }
                                                                         }
                                                                     }
@@ -498,8 +496,7 @@ if (count($categories[0]) > 0)
                                                                             echo "<img src=\"" . KUNENA_URLCATIMAGES . $forumparent->id . "_notlogin_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
                                                                         }
                                                                         else {
-                                                                            echo isset($fbIcons['notloginforum']) ? '<img src="' . KUNENA_URLICONSPATH
-                                                                                     . '' . $fbIcons['notloginforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : stripslashes($fbConfig->newchar);
+                                                                            echo isset($fbIcons['notloginforum']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['notloginforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : stripslashes($fbConfig->newchar);
                                                                         }
                                                     ?>
 

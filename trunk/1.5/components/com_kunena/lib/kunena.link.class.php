@@ -311,7 +311,6 @@ class CKunenaLink
     {
         $kunena_db = &JFactory::getDBO();
         // First determine the thread, latest post and number of posts for the post supplied
-        $kunena_db->setQuery('SELECT a.thread AS thread, max(a.id) AS latest_id, max(a.catid) AS catid, count(*) AS totalmessages
         $where = '';
 		if ($catid > 0) $where .= " AND a.catid = {$catid} ";
 		$kunena_db->setQuery('SELECT a.thread AS thread, max(a.id) AS latest_id, max(a.catid) AS catid, count(*) AS totalmessages
@@ -336,7 +335,7 @@ class CKunenaLink
         $Output .= CKunenaLink::GetCategoryLink('showcat', $catid, _POST_SUCCESS_FORUM).'<br />';
         $Output .= '</div>';
         if (is_object($result)) $Output .= CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $result->thread, $threadPages, $limit, $result->latest_id), 3500);
-        else $Output .= CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid), 3500);
+        else $Output .= CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid), 3500);
         
         return $Output;
     }
@@ -354,7 +353,7 @@ class CKunenaLink
                              GROUP BY a.thread');
         $result = $kunena_db->loadObject();
         	check_dberror("Unable to retrieve latest post.");
-        if (!is_object($result)) return htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid));
+        if (!is_object($result)) return htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid));
 
         // Now Calculate the number of pages for this particular thread
 		$catid = $result->catid;

@@ -34,6 +34,7 @@ Kunena 1.5.2RC
 
 25-May-2009 Matias
 ^ [#15784] Merge 1.0.10 fixes from revision 707 to 790
+# [#15784] Internal: Replace all legacy calls after merge
 
 21-May-2009 fxstein
 # [#16490] mb_string related Joomla error on certain Joomla 1.5 installs

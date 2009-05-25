@@ -70,12 +70,12 @@ unset($totaltmp);
 $PopUserCount = $fbConfig->popusercount;
 if ($fbConfig->showpopuserstats)
 {
-	$database->setQuery("SELECT p.userid, p.posts, u.$fb_queryName as username FROM #__fb_users AS p" . "\n INNER JOIN #__users AS u ON u.id = p.userid" . "\n WHERE p.posts > 0 ORDER BY p.posts DESC LIMIT $PopUserCount");
-	$topposters = $database->loadObjectList();
+	$kunena_db->setQuery("SELECT p.userid, p.posts, u.$fb_queryName as username FROM #__fb_users AS p" . "\n INNER JOIN #__users AS u ON u.id = p.userid" . "\n WHERE p.posts > 0 ORDER BY p.posts DESC LIMIT $PopUserCount");
+	$topposters = $kunena_db->loadObjectList();
 
 	$topmessage = !empty($topposters[0]->posts)?$topposters[0]->posts:0;
 
-	$database->setQuery("SELECT u.uhits AS hits, u.userid AS user_id, j.$fb_queryName AS user  FROM #__fb_users AS u"
+	$kunena_db->setQuery("SELECT u.uhits AS hits, u.userid AS user_id, j.$fb_queryName AS user  FROM #__fb_users AS u"
 	. "\n INNER JOIN #__users AS j ON j.id = u.userid"
 	. "\n WHERE u.uhits > 0 ORDER BY u.uhits DESC LIMIT $PopUserCount");
 	$topprofiles = $kunena_db->loadObjectList();

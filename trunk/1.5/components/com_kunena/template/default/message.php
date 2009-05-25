@@ -388,12 +388,12 @@ if (isset($msg_signature)) {
                 <?php
                 //we should only show the Quick Reply section to registered users. otherwise we are missing too much information!!
                 /*    onClick="expandcontent(this, 'sc<?php echo $msg_id;?>')" */
-                if ($my->id > 0 && empty($msg_closed))
+                if ($kunena_my->id > 0 && empty($msg_closed))
                 {
                 ?>
 
                 <?php echo
-                    isset($fbIcons['quickmsg']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['quickmsg'] . '" border="0" alt="' . _KUNENA_QUICKMSG . '" title="' . _KUNENA_QUICKMSG . '" />' . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _KUNENA_QUICKMSG . '" />'; ?>
+                    isset($fbIcons['quickmsg']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['quickmsg'] . '" border="0" alt="' . _KUNENA_QUICKMSG . '" title="' . _KUNENA_QUICKMSG . '" />' . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _KUNENA_QUICKMSG . '" />'; ?>
                 <?php
                 }
                 ?>

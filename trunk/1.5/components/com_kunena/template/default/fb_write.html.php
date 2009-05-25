@@ -198,7 +198,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
         </tr>
 <!-- /preview -->
 <?php
-        if (($fbConfig->allowimageupload || ($fbConfig->allowimageregupload && $my->id != 0) || $is_Moderator) && $no_image_upload == "0")
+        if (($fbConfig->allowimageupload || ($fbConfig->allowimageregupload && $kunena_my->id != 0) || $is_Moderator) && $no_image_upload == "0")
         {
         ?>
 
@@ -218,7 +218,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
         ?>
 
         <?php
-        if (($fbConfig->allowfileupload || ($fbConfig->allowfileregupload && $my->id != 0) || $is_Moderator) && $no_file_upload == "0")
+        if (($fbConfig->allowfileupload || ($fbConfig->allowfileregupload && $kunena_my->id != 0) || $is_Moderator) && $no_file_upload == "0")
         {
         ?>
 

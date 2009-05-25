@@ -494,8 +494,8 @@ $kunena_db = &JFactory::getDBO();
     }
     $row->reorder();
 
-    $database->setQuery("UPDATE #__fb_sessions SET allowed='na'");
-	$database->query() or trigger_dberror("Unable to update sessions.");
+    $kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
+	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
     
     $app->redirect( JURI::base() ."index2.php?option=$option&task=showAdministration");
 }
@@ -568,8 +568,8 @@ function deleteForum($cid = null, $option)
     	}
     }
 
-	$database->setQuery("UPDATE #__fb_sessions SET allowed='na'");
-	$database->query() or trigger_dberror("Unable to update sessions.");
+	$kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
+	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
     
     $app->redirect( JURI::base() ."index2.php?option=$option&task=showAdministration");
 }
@@ -852,8 +852,8 @@ function saveConfig($option)
 	$fbConfig->remove();
 	$fbConfig->create();
 
-	$database->setQuery("UPDATE #__fb_sessions SET allowed='na'");
-	$database->query() or trigger_dberror("Unable to update sessions.");
+	$kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
+	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
 	
 	$app->redirect( JURI::base() . "index2.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED);
 }
@@ -1008,8 +1008,8 @@ function addModerator($option, $id, $cid = null, $publish = 1)
     $row = new fbForum($kunena_db);
     $row->checkin($id);
     
-    $database->setQuery("UPDATE #__fb_sessions SET allowed='na'");
-	$database->query() or trigger_dberror("Unable to update sessions.");
+    $kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
+	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
 	
     $app->redirect( JURI::base() ."index2.php?option=$option&task=edit2&uid=" . $id);
 }
@@ -1183,8 +1183,8 @@ function saveUserProfile($option)
     	}
     }
 
-	$database->setQuery("UPDATE #__fb_sessions SET allowed='na' WHERE userid='$uid'");
-	$database->query() or trigger_dberror("Unable to update sessions.");
+	$kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na' WHERE userid='$uid'");
+	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
 
     $app->redirect( JURI::base() ."index2.php?option=com_kunena&task=showprofiles");
 }

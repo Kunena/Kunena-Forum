@@ -219,7 +219,7 @@ if (in_array($catid, $allow_forum))
     $forumReviewed = $objCatInfo->review;
 
 	//meta description and keywords
-	$metaKeys=(_KUNENA_CATEGORIES . ', ' . kunena_htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) . ', ' . stripslashes($fbConfig->board_title) . ', ' . $GLOBALS['mosConfig_sitename']);
+	$metaKeys=(_KUNENA_CATEGORIES . ', ' . kunena_htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) . ', ' . stripslashes($fbConfig->board_title) . ', ' . $app->getCfg('sitename'));
 	$metaDesc=(kunena_htmlspecialchars(stripslashes($objCatParentInfo->name)) . ' - ' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) .' - ' . stripslashes($fbConfig->board_title));
 
 	$document =& JFactory::getDocument();
@@ -235,7 +235,7 @@ if (in_array($catid, $allow_forum))
         require_once(KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
     }
     else {
-        require_once(KUNENA_ABSPATH . '/template/default/fb_pathway.php');
+        require_once(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_pathway.php');
     }
 ?>
 <!-- / Pathway -->
@@ -264,21 +264,21 @@ if (in_array($catid, $allow_forum))
                 <?php
                 //go to bottom
                 echo '<a name="forumtop" /> ';
-                echo CKunenaLink::GetSamePageAnkerLink('forumbottom', isset($fbIcons['bottomarrow']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM);
+                echo CKunenaLink::GetSamePageAnkerLink('forumbottom', isset($fbIcons['bottomarrow']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM);
                 ?>
 
 		</td><td class="fb_list_actions_forum" width="100%">
 
 
                 <?php
-                if ($is_Moderator || ($forumLocked == 0 && ($my->id > 0 || $fbConfig->pubwrite)))
+                if ($is_Moderator || ($forumLocked == 0 && ($kunena_my->id > 0 || $fbConfig->pubwrite)))
                 {
                     //this user is allowed to post a new topic:
-                    $forum_new = CKunenaLink::GetPostNewTopicLink($catid, isset($fbIcons['new_topic']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
+                    $forum_new = CKunenaLink::GetPostNewTopicLink($catid, isset($fbIcons['new_topic']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
                 }
                 if ($kunena_my->id != 0)
                 {
-                    $forum_markread = CKunenaLink::GetCategoryLink('markThisRead', $catid, isset($fbIcons['markThisForumRead']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['markThisForumRead'] . '" alt="' . _GEN_MARK_THIS_FORUM_READ . '" title="' . _GEN_MARK_THIS_FORUM_READ . '" border="0" />' : _GEN_MARK_THIS_FORUM_READ, $rel='nofollow');
+                    $forum_markread = CKunenaLink::GetCategoryLink('markThisRead', $catid, isset($fbIcons['markThisForumRead']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['markThisForumRead'] . '" alt="' . _GEN_MARK_THIS_FORUM_READ . '" title="' . _GEN_MARK_THIS_FORUM_READ . '" border="0" />' : _GEN_MARK_THIS_FORUM_READ, $rel='nofollow');
                 }
 
 		if (isset($forum_new) || isset($forum_markread))
@@ -362,7 +362,7 @@ if (in_array($catid, $allow_forum))
                 <?php
                 //go to top
                 echo '<a name="forumbottom" />';
-                echo CKunenaLink::GetSamePageAnkerLink('forumtop', isset($fbIcons['toparrow']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP);
+                echo CKunenaLink::GetSamePageAnkerLink('forumtop', isset($fbIcons['toparrow']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP);
                 ?>
 
 		</td><td class="fb_list_actions_forum" width="100%">

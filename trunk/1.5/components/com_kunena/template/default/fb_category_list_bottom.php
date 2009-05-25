@@ -66,14 +66,14 @@ $fbConfig =& CKunenaConfig::getInstance();
         <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
             <td class = "td-1 fbs">
                 <?php
-                echo isset($fbIcons['unreadforum_s']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unreadforum_s'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '"/>' : $fbConfig->newchar;
+                echo isset($fbIcons['unreadforum_s']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unreadforum_s'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '"/>' : $fbConfig->newchar;
                 echo '- ' . _GEN_FORUM_NEWPOST . '';
                 ?>
 
                 <br/>
 
 <?php
-echo isset($fbIcons['readforum_s']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['readforum_s'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : $fbConfig->newchar;
+echo isset($fbIcons['readforum_s']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['readforum_s'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : $fbConfig->newchar;
 echo ' - ' . _GEN_FORUM_NOTNEW . '';
 ?>
             </td>
@@ -85,7 +85,7 @@ echo ' - ' . _GEN_FORUM_NOTNEW . '';
                 ?>
 
                 <?php
-                    echo isset($fbIcons['forumlocked']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forumlocked'] . '" border="0" alt="'
+                    echo isset($fbIcons['forumlocked']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['forumlocked'] . '" border="0" alt="'
                              . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '" /> - ' . _GEN_LOCKED_FORUM . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif" border="0"  alt="' . _GEN_LOCKED_FORUM . '" /> - ' . _GEN_LOCKED_FORUM . ''; ?>
 
                 <?php
@@ -99,7 +99,7 @@ if ($moderatedForum == 1)
 {
 ?>
 
-<?php echo isset($fbIcons['forummoderated']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forummoderated']
+<?php echo isset($fbIcons['forummoderated']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['forummoderated']
                . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '" /> - ' . _GEN_MODERATED . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" /> - ' . _GEN_MODERATED . ''; ?>
 
 <?php

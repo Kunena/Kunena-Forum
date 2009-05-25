@@ -447,7 +447,7 @@ $catName = $objCatInfo->name;
 
                                             $kunena_db->setQuery("INSERT INTO #__fb_subscriptions (thread,userid) VALUES ('$fb_thread','{$kunena_my->id}')");
 
-                                            if (@$database->query()) {
+                                            if (@$kunena_db->query()) {
                                                 echo '<br /><br /><div align="center">' . _POST_SUBSCRIBED_TOPIC . '</div><br /><br />';
                                             }
                                             else {
@@ -1247,7 +1247,7 @@ $catName = $objCatInfo->name;
                     $catid = (int)$catid;
 
 					// TODO: Enable split when it's fixed
-                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page, $catid), 'Split has been disabled');
+                    $app->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page, $catid), 'Split has been disabled');
                     
                     //get list of posts in thread
                     $kunena_db->setQuery("SELECT * FROM #__fb_messages AS a "
@@ -1393,7 +1393,7 @@ $catName = $objCatInfo->name;
                     $topic_change = 0;
 
 					// TODO: Enable split when it's fixed
-                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page, $catid), 'Split has been disabled');
+                    $app->redirect( JURI::base() .CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page, $catid), 'Split has been disabled');
 
                     if (!$to_split)
                     {

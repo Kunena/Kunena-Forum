@@ -253,7 +253,7 @@ class smile
 
         <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
             <td class = "fb_leftcolumn" valign = "top">
-                <strong><a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=faq').'#boardcode';?>"><?php @print(_COM_BOARDCODE); ?></a></strong>:
+                <strong><a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=faq').'#boardcode';?>"><?php @print(_COM_BOARDCODE); ?></a></strong>:
             </td>
 
             <td>
@@ -375,11 +375,11 @@ class smile
 
 						<div id="smilie" style="display: none;">
 							<?php  
-							global $database;
-							$database->setQuery("SELECT code, location, emoticonbar FROM #__fb_smileys ORDER BY id");
-							if ($database->query()) {
+							$kunena_db = &JFactory::getDBO();
+							$kunena_db->setQuery("SELECT code, location, emoticonbar FROM #__fb_smileys ORDER BY id");
+							if ($kunena_db->query()) {
 								$rowset = array ();
-								$set = $database->loadAssocList();
+								$set = $kunena_db->loadAssocList();
 								foreach ($set as $smilies) {
 									$key_exists = false;
 									foreach ($rowset as $check) { //checks if the smiley (location) already exists with another code 

@@ -240,11 +240,11 @@ if (count($messages[0]) > 0)
                                     if ($fbConfig->allowfavorites && array_key_exists($leaf->id, $favthread))
                                     {
                                         if ($leaf->myfavorite) {
-                                    	    echo isset($fbIcons['favoritestar']) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . '' . $fbIcons['favoritestar']
+                                    	    echo isset($fbIcons['favoritestar']) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $fbIcons['favoritestar']
                                     		. '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
 					} else if (array_key_exists('favoritestar_grey', $fbIcons))
 					{
-                                    	    echo isset($fbIcons['favoritestar_grey']) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . '' . $fbIcons['favoritestar_grey']
+                                    	    echo isset($fbIcons['favoritestar_grey']) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $fbIcons['favoritestar_grey']
                                     		. '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
 					}
                                     }
@@ -365,7 +365,7 @@ if (count($messages[0]) > 0)
         <?php if ($leaf->locked != 0) {?>
         <!-- Locked -->
         <span class="topic_locked">
-        <?php echo isset($fbIcons['topiclocked']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['topiclocked'] . '" border="0" alt="' . _GEN_LOCKED_TOPIC . '" />'  : '<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  alt="' . _GEN_LOCKED_TOPIC . '" title="' . _GEN_LOCKED_TOPIC . '" />';
+        <?php echo isset($fbIcons['topiclocked']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['topiclocked'] . '" border="0" alt="' . _GEN_LOCKED_TOPIC . '" />'  : '<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  alt="' . _GEN_LOCKED_TOPIC . '" title="' . _GEN_LOCKED_TOPIC . '" />';
         $topicLocked = 1; ?>
         </span>
         <!-- /Locked -->
@@ -387,7 +387,7 @@ if (count($messages[0]) > 0)
                               <!--  Sticky   -->
         <?php if ($leaf->ordering != 0) { ?>
         <span class="topic_sticky">
-        <?php echo isset($fbIcons['topicsticky']) ? '<img  src="' . KUNENA_URLICONSPATH . '' . $fbIcons['topicsticky'] . '" border="0" alt="' . _GEN_ISSTICKY . '" />': '<img class="stickyicon" src="' . KUNENA_URLEMOTIONSPATH . 'pushpin.gif"  alt="' . _GEN_ISSTICKY . '" title="' . _GEN_ISSTICKY . '" />';
+        <?php echo isset($fbIcons['topicsticky']) ? '<img  src="' . KUNENA_URLICONSPATH . $fbIcons['topicsticky'] . '" border="0" alt="' . _GEN_ISSTICKY . '" />': '<img class="stickyicon" src="' . KUNENA_URLEMOTIONSPATH . 'pushpin.gif"  alt="' . _GEN_ISSTICKY . '" title="' . _GEN_ISSTICKY . '" />';
         $topicSticky = 1; ?>
         </span>
         <?php }?>

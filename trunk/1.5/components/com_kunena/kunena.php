@@ -251,7 +251,7 @@ else
 	{
 		define('J_JQUERY_LOADED', 1);
 		if (!defined('C_ASSET_JQUERY')) define('C_ASSET_JQUERY', 1);
-		$$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
+		$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
 	}
 
 	if (defined('KUNENA_COREJSURL'))

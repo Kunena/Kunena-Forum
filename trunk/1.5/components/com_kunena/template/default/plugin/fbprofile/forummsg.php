@@ -142,13 +142,13 @@ defined( '_JEXEC' ) or die('Restricted access');
 
                 <td class = "td-2  fbm"  align="left">
 
-                        <a  class="fb-topic-title fbm"  href = "<?php echo $fbURL; ?>"> <?php echo htmlspecialchars(stripslashes ($item->subject)); ?> </a>
+                        <a  class="fb-topic-title fbm"  href = "<?php echo $fbURL; ?>"> <?php echo kunena_htmlspecialchars(stripslashes ($item->subject)); ?> </a>
 
                 </td>
 
                 <td class = "td-3 fbm" align="left">
 
-                        <a  class="fb-topic-cat fbm" href = "<?php echo $fbCatURL; ?>"> <?php echo stripslashes($item->catname); ?></a>
+                        <a  class="fb-topic-cat fbm" href = "<?php echo $fbCatURL; ?>"> <?php echo kunena_htmlspecialchars(stripslashes($item->catname)); ?></a>
 
                 </td>
 
@@ -163,7 +163,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
                 <td class = "td-6  fbm" align="center">
                     <a href = "<?php echo $fbURL; ?>"> <?php
-    echo $fbIcons['latestpost'] ? '<img src="'
+    echo isset($fbIcons['latestpost']) ? '<img src="'
              . KUNENA_URLICONSPATH . $fbIcons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'; ?> </a>
                 </td>
             </tr>

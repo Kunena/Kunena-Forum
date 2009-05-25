@@ -122,8 +122,7 @@ function com_install()
 }
 </style>
 
-<div
-	style="border: 1px solid #ccc; background: #FBFBFB; padding: 10px; text-align: left; margin: 10px 0;">
+<div style="border: 1px solid #ccc; background: #FBFBFB; padding: 10px; text-align: left; margin: 10px 0;">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td width="20%" valign="top" style="padding: 10px;"><a
@@ -150,8 +149,8 @@ function com_install()
 			<li class="fbscslisterror">
 			<div
 				style="border: 1px solid #FF6666; background: #FFCC99; padding: 10px; text-align: left; margin: 10px 0;">
-			<img src='images/publish_x.png' align='absmiddle'>
-			Creation/permission setting of the following directories failed: <br>
+			<img src='images/publish_x.png' align='absmiddle' />
+			Creation/permission setting of the following directories failed: <br />
 			<pre> <?php echo JPATH_ROOT; ?>/images/fbfiles/
 			<?php echo JPATH_ROOT;?>/images/fbfiles/avatars
 			<?php echo JPATH_ROOT;?>/images/fbfiles/avatars/gallery (you have to put avatars inside if you want to use it)
@@ -178,9 +177,9 @@ function com_install()
 		<strong>I N S T A L L : <font color="green">Successful</font> </strong>
 		<br />
 		<br />
-		<strong>php version: <font color="green"><?php echo phpversion(); ?></font> (Required >= <?php echo KUNENA_MIN_PHP; ?>)</strong>
+		<strong>php version: <font color="green"><?php echo phpversion(); ?></font> (Required &gt;= <?php echo KUNENA_MIN_PHP; ?>)</strong>
 		<br />
-		<strong>mysql version: <font color="green"><?php echo $mysqlversion; ?></font> (Required >= <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
+		<strong>mysql version: <font color="green"><?php echo $mysqlversion; ?></font> (Required &gt;= <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
 		</div>
 
 		<?php
@@ -221,8 +220,7 @@ function com_install()
 }
 </style>
 
-<div
-	style="border: 1px solid #ccc; background: #FBFBFB; padding: 10px; text-align: left; margin: 10px 0;">
+<div style="border: 1px solid #ccc; background: #FBFBFB; padding: 10px; text-align: left; margin: 10px 0;">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td width="20%" valign="top" style="padding: 10px;"><a
@@ -237,9 +235,9 @@ function com_install()
 		<strong>I N S T A L L : <font color="red">F A I L E D - Minimum Version Requirements not satisfied</font> </strong>
 		<br />
 		<br />
-		<strong>php version: <font color="<?php echo version_compare(phpversion(), KUNENA_MIN_PHP, '>=')?'green':'red'; ?>"><?php echo phpversion(); ?></font> (Required >= <?php echo KUNENA_MIN_PHP; ?>)</strong>
+		<strong>php version: <font color="<?php echo version_compare(phpversion(), KUNENA_MIN_PHP, '>=')?'green':'red'; ?>"><?php echo phpversion(); ?></font> (Required &gt;= <?php echo KUNENA_MIN_PHP; ?>)</strong>
 		<br />
-		<strong>mysql version: <font color="<?php echo version_compare($mysqlversion, KUNENA_MIN_MYSQL, '>=')?'green':'red'; ?>"><?php echo $mysqlversion; ?></font> (Required >= <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
+		<strong>mysql version: <font color="<?php echo version_compare($mysqlversion, KUNENA_MIN_MYSQL, '>=')?'green':'red'; ?>"><?php echo $mysqlversion; ?></font> (Required &gt;= <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
 		</div>
 
 		<?php

@@ -24,6 +24,10 @@ defined( '_JEXEC' ) or die('Restricted access');
 $fbConfig =& CKunenaConfig::getInstance();
 //Some initial thingies needed anyway:
 if (!isset($htmlText)) $htmlText = '';
+if (!isset($setFocus)) $setFocus = 0;
+if (!isset($no_image_upload)) $no_image_upload = 0;
+if (!isset($no_file_upload)) $no_file_upload = 0;
+$authorName = stripslashes($authorName);
 
 include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 ?>
@@ -37,7 +41,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
         <tr>
             <th colspan = "2">
                 <div class = "fb_title_cover fbm">
-                    <span class = "fb_title fbl"> <?php echo _POST_MESSAGE; ?>"<?php echo stripslashes($objCatInfo->name); ?>"</span>
+                    <span class = "fb_title fbl"> <?php echo _POST_MESSAGE; ?>"<?php echo kunena_htmlspecialchars(stripslashes($objCatInfo->name)); ?>"</span>
                 </div>
             </th>
         </tr>
@@ -194,7 +198,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
         </tr>
 <!-- /preview -->
 <?php
-        if (($fbConfig->allowimageupload || ($fbConfig->allowimageregupload && $kunena_my->id != 0) || $is_Moderator) && ($no_upload == "0" || $no_image_upload == "0"))
+        if (($fbConfig->allowimageupload || ($fbConfig->allowimageregupload && $my->id != 0) || $is_Moderator) && $no_image_upload == "0")
         {
         ?>
 
@@ -204,9 +208,8 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
                 </td>
 
                 <td>
-                    <input type = 'file' class = 'fb_button' name = 'attachimage' onmouseover = "helpline('iu')" />
-
-                    <input type = "button" class = "fb_button" name = "addImagePH" value = "<?php echo _POST_ATTACH_IMAGE;?>" style = "cursor:hand; width: 4em" onclick = "javascript:emo(' [img] ');" onmouseover = "helpline('ip')" />
+                    <input type = 'file' class = 'fb_button' name = 'attachimage' onmouseover = "javascript:kunenaShowHelp('<?php @print(_IMAGE_DIMENSIONS).": ".$fbConfig->imagewidth."x".$fbConfig->imageheight." - ".$fbConfig->imagesize." KB";?>')" />
+                    <input type = "button" class = "fb_button" name = "addImagePH" value = "<?php @print(_POST_ATTACH_IMAGE);?>" style = "cursor:auto; width: 4em" onclick = "bbfontstyle(' [img] ','');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMGPH);?>')" />
                 </td>
             </tr>
 
@@ -215,7 +218,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
         ?>
 
         <?php
-        if (($fbConfig->allowfileupload || ($fbConfig->allowfileregupload && $kunena_my->id != 0) || $is_Moderator) && ($no_upload == "0" || $no_file_upload == "0"))
+        if (($fbConfig->allowfileupload || ($fbConfig->allowfileregupload && $my->id != 0) || $is_Moderator) && $no_file_upload == "0")
         {
         ?>
 
@@ -225,9 +228,8 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
                 </td>
 
                 <td>
-                    <input type = 'file' class = 'fb_button' name = 'attachfile' onmouseover = "helpline('fu')" style = "cursor:hand" />
-
-                    <input type = "button" class = "fb_button" name = "addFilePH" value = "<?php echo _POST_ATTACH_FILE;?>" style = "cursor:hand; width: 4em" onclick = "javascript:emo(' [file] ');" onmouseover = "helpline('fp')" />
+                    <input type = 'file' class = 'fb_button' name = 'attachfile' onmouseover = "javascript:kunenaShowHelp('<?php @print(_FILE_TYPES).": ".$fbConfig->filetypes." - ".$fbConfig->filesize." KB";?>')" style = "cursor:auto" />
+                    <input type = "button" class = "fb_button" name = "addFilePH" value = "<?php @print(_POST_ATTACH_FILE);?>" style = "cursor:auto; width: 4em" onclick = "bbfontstyle(' [file] ','');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FILEPH);?>')" />
                 </td>
             </tr>
 
@@ -287,9 +289,9 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 		?>
         <tr>
             <td id="fb_post_buttons" colspan = "2" style = "text-align: center;">
-                <input type="submit" name="submit"  class="fb_button" value="<?php echo ' '._GEN_CONTINUE.' ';?>" onclick="return submitForm()" onmouseover = "helpline('submit')" />
-                <input type="button" name="preview" class="fb_button" value="<?php echo ' '._PREVIEW.' ';?>"      onClick="fbGetPreview(document.postform.message.value,<?php echo KUNENA_COMPONENT_ITEMID?>);" onmouseover = "helpline('preview');" />
-                <input type="button" name="cancel"  class="fb_button" value="<?php echo ' '._GEN_CANCEL.' ';?>"   onclick="javascript:window.history.back();" onmouseover = "helpline('cancel')" />
+                <input type="submit" name="submit"  class="fb_button" value="<?php @print(' '._GEN_CONTINUE.' ');?>" onclick="return submitForm()" onmouseover = "javascript:jQuery('input[name=helpbox]').val('<?php @print(_KUNENA_EDITOR_HELPLINE_SUBMIT);?>')" />
+                <input type="button" name="preview" class="fb_button" value="<?php @print(' '._PREVIEW.' ');?>"      onClick="fbGetPreview(document.postform.message.value,<?php echo KUNENA_COMPONENT_ITEMID?>);" onmouseover = "javascript:jQuery('input[name=helpbox]').val('<?php @print(_KUNENA_EDITOR_HELPLINE_PREVIEW);?>')" />
+                <input type="button" name="cancel"  class="fb_button" value="<?php @print(' '._GEN_CANCEL.' ');?>"   onclick="javascript:window.history.back();" onmouseover = "javascript:jQuery('input[name=helpbox]').val('<?php @print(_KUNENA_EDITOR_HELPLINE_CANCEL);?>')" />
             </td>
         </tr>
     </tbody>

@@ -135,7 +135,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 <!-- generator="Kunena @fbversion@"> -->
 <rss version="0.91">
     <channel>
-        <title><?php echo stripslashes(htmlspecialchars($app->getCfg('sitename'))); ?> - Forum</title>
+        <title><?php echo stripslashes(kunena_htmlspecialchars($app->getCfg('sitename'))); ?> - Forum</title>
         <description>Kunena Site Syndication</description>
         <link><?php echo JURI::root(); ?></link>
         <lastBuildDate><?php echo date("r");?></lastBuildDate>
@@ -150,14 +150,14 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
         foreach ($rows as $row)
         {
             echo "        <item>\n";
-            echo "            <title>" . _GEN_SUBJECT . ": " . stripslashes(htmlspecialchars($row->subject)) . " - " . _GEN_BY . ": " . stripslashes(htmlspecialchars($row->lastpostname)) . "</title>" . "\n";
+            echo "            <title>" . _GEN_SUBJECT . ": " . stripslashes(kunena_htmlspecialchars($row->subject)) . " - " . _GEN_BY . ": " . stripslashes(kunena_htmlspecialchars($row->lastpostname)) . "</title>" . "\n";
             echo "            <link>";
             $itemlink = CKunenaLink::GetThreadPageURL($fbConfig, 'view', $row->catid, $row->thread, ceil($row->numberposts / $fbConfig->messages_per_page), $fbConfig->messages_per_page, $row->lastpostid);
             echo $itemlink;
             echo "</link>\n";
             $words = $row->lastpostmessage;
             $words = smile::purify($words);
-            echo "            <description>" . htmlspecialchars($words) . "</description>" . "\n";
+            echo "            <description>" . kunena_htmlspecialchars($words) . "</description>" . "\n";
             echo "            <pubDate>" . date('r', $row->lastposttime) . "</pubDate>" . "\n";
             echo "        </item>\n";
         }

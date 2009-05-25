@@ -32,6 +32,8 @@ $fbConfig =& CKunenaConfig::getInstance();
 // Startup variables
 var imageTag = false;
 var theSelection = false;
+var baseHeight;
+
 // Check for Browser & Platform for PC & IE specific bits
 // More details from: http://www.mozilla.org/docs/web-developer/sniffer/browser_type.html
 var clientPC = navigator.userAgent.toLowerCase(); // Get client info
@@ -43,156 +45,271 @@ var is_nav = ((clientPC.indexOf('mozilla')!=-1) && (clientPC.indexOf('spoofer')=
 var is_moz = 0;
 var is_win = ((clientPC.indexOf("win")!=-1) || (clientPC.indexOf("16bit") != -1));
 var is_mac = (clientPC.indexOf("mac")!=-1);
-// Define the bbCode tags
-bbcode = new Array();
-bbtags = new Array('[b]','[/b]','[i]','[/i]','[u]','[/u]','[quote]','[/quote]','[code]','[/code]','[ul]','[/ul]','[ol]','[/ol]','[img]','[/img]','[url]','[/url]','[li]','[/li]','[hide]','[/hide]');
-imageTag = false;
-// Shows the help messages in the helpline window
-function helpline(help) {
-   document.postform.helpbox.value = eval(help + "_help");
+var s;
+var newheight = 300;
+var change;
+
+function dE(n)
+{
+  s = document.postform.speicher.value;
+  if (document.getElementById(n).style.display == "none")
+    { 
+    if (s != "") {document.getElementById(s).style.display = "none";}
+    document.getElementById(n).style.display = "block"; 
+    s=document.getElementById(n).id;
+    document.postform.speicher.value = s;
+    }
+  else
+    {
+      document.getElementById(n).style.display = "none";
+      s = "";
+      document.postform.speicher.value = s;
+    }
 }
-// Replacement for arrayname.length property
-function getarraysize(thearray) {
-   for (i = 0; i < thearray.length; i++) {
-      if ((thearray[i] == "undefined") || (thearray[i] == "") || (thearray[i] == null))
-         return i;
-      }
-   return thearray.length;
+
+function size_messagebox(change)
+{
+    newheight = newheight + change;
+    if (newheight > 200) {document.postform.message.style.height = newheight + "px";}
+    else {
+      document.postform.message.style.height = "300px";
+      newheight = 300;}
 }
-// Replacement for arrayname.push(value) not implemented in IE until version 5.5
-// Appends element to the array
-function arraypush(thearray,value) {
-   thearray[ getarraysize(thearray) ] = value;
+
+/**
+* Color pallette. From http://www.phpbb.de
+*/
+function colorPalette(dir, width, height)
+{
+	var r = 0, g = 0, b = 0;
+	var numberList = new Array(6);
+	var color = '';
+	numberList[0] = '00';
+	numberList[1] = '40';
+	numberList[2] = '80';
+	numberList[3] = 'BF';
+	numberList[4] = 'FF';
+	document.writeln('<table class="fb-color_table" cellspacing="1" cellpadding="0" border="0" style="width: 100%;">');
+	for (r = 0; r < 5; r++)
+	{
+		if (dir == 'h')	{document.writeln('<tr>');}
+		for (g = 0; g < 5; g++)	{
+			if (dir == 'v')	{document.writeln('<tr>');}
+			for (b = 0; b < 5; b++)	{
+				color = String(numberList[r]) + String(numberList[g]) + String(numberList[b]);
+				document.write('<td id="' + color + '" style="background-color:#' + color + '; width: ' + width + '; height: ' + height + ';">');
+				document.write('&nbsp;');
+				document.writeln('</td>');
+			  }
+			if (dir == 'v')	{document.writeln('</tr>');}
+		}
+		if (dir == 'h')	{document.writeln('</tr>');}
+	}
+	document.writeln('</table>');
 }
-// Replacement for arrayname.pop() not implemented in IE until version 5.5
-// Removes and returns the last element of an array
-function arraypop(thearray) {
-   thearraysize = getarraysize(thearray);
-   retval = thearray[thearraysize - 1];
-   delete thearray[thearraysize - 1];
-   return retval;
-}
-function bbstyle(bbnumber) {
-   var txtarea = document.postform.message;
-   txtarea.focus();
-   donotinsert = false;
-   theSelection = false;
-   bblast = 0;
-   if (bbnumber == -1) { // Close all open tags & default button names
-      while (bbcode[0]) {
-         butnumber = arraypop(bbcode) - 1;
-         txtarea.value += bbtags[butnumber + 1];
-         buttext = eval('document.postform.addbbcode' + butnumber + '.value');
-         eval('document.postform.addbbcode' + butnumber + '.value ="' + buttext.substr(0,(buttext.length - 1)) + '"');
-      }
-      imageTag = false; // All tags are closed including image tags :D
-      txtarea.focus();
-      return;
-   }
-   if ((clientVer >= 4) && is_ie && is_win)
-   {
-      theSelection = document.selection.createRange().text; // Get text selection
-      if (theSelection) {
-         // Add tags around selection
-         document.selection.createRange().text = bbtags[bbnumber] + theSelection + bbtags[bbnumber+1];
-         txtarea.focus();
-         theSelection = '';
-         return;
-      }
-      else {
-        txtarea.focus();
-        document.selection.createRange().text = bbtags[bbnumber] + bbtags[bbnumber + 1];
-        return;
-      }
-   }
-   else if (txtarea.selectionEnd && (txtarea.selectionEnd - txtarea.selectionStart > 0))
-   {
-      mozWrap(txtarea, bbtags[bbnumber], bbtags[bbnumber+1]);
-      return;
-   }
-   else //if (txtarea.selectionEnd == txtarea.selectionStart) // don't know if we need it... it works even if commented out. ;)
-   {
-        txtarea.value = txtarea.value.substring(0, txtarea.selectionStart) + bbtags[bbnumber] + bbtags[bbnumber + 1] + txtarea.value.substring(txtarea.selectionEnd, txtarea.value.length);
-        return;
-   }
-   // Find last occurance of an open tag the same as the one just clicked
-   for (i = 0; i < bbcode.length; i++) {
-      if (bbcode[i] == bbnumber+1) {
-         bblast = i;
-         donotinsert = true;
-      }
-   }
-   if (donotinsert) {      // Close all open tags up to the one just clicked & default button names
-      while (bbcode[bblast]) {
-            butnumber = arraypop(bbcode) - 1;
-            txtarea.value += bbtags[butnumber + 1];
-            buttext = eval('document.postform.addbbcode' + butnumber + '.value');
-            eval('document.postform.addbbcode' + butnumber + '.value ="' + buttext.substr(0,(buttext.length - 1)) + '"');
-            imageTag = false;
-         }
-         txtarea.focus();
-         return;
-   } else { // Open tags
-      if (imageTag && (bbnumber != 14)) {    // Close image tag before adding another
-         txtarea.value += bbtags[15];
-         lastValue = arraypop(bbcode) - 1;   // Remove the close image tag from the list
-         document.postform.addbbcode14.value = "Img";  // Return button back to normal state
-         imageTag = false;
-      }
-      // Open tag
-      txtarea.value += bbtags[bbnumber];
-      if ((bbnumber == 14) && (imageTag == false)) imageTag = 1; // Check to stop additional tags after an unclosed image tag
-      arraypush(bbcode,bbnumber+1);
-      eval('document.postform.addbbcode'+bbnumber+'.value += "*"');
-      txtarea.focus();
-      return;
-   }
-   storeCaret(txtarea);
-}
+
+jQuery(document).ready(function()
+{
+	jQuery('table.fb-color_table td').click( function() 
+	{ 
+//		var color = jQuery(this).css('background-color');
+		var color = jQuery(this).attr('id');
+		bbfontstyle('[color=#' + color + ']', '[/color]'); return false; 
+	} );
+	jQuery('select#fb-bbcode_size').change( function() 
+	{ 
+		var size = jQuery(this).val();
+		bbfontstyle('[size=' + size + ']', '[/size]'); return false; 
+	} );	
+} );
+	
 // From http://www.massless.org/mozedit/
+
 function mozWrap(txtarea, open, close)
 {
-   var selLength = txtarea.textLength;
-   var selStart = txtarea.selectionStart;
-   var selEnd = txtarea.selectionEnd;
-   if (selEnd == 1 || selEnd == 2)
-      selEnd = selLength;
-   var s1 = (txtarea.value).substring(0,selStart);
-   var s2 = (txtarea.value).substring(selStart, selEnd)
-   var s3 = (txtarea.value).substring(selEnd, selLength);
-   txtarea.value = s1 + open + s2 + close + s3;
-   return;
+	var selLength = txtarea.textLength;
+	var selStart = txtarea.selectionStart;
+	var selEnd = txtarea.selectionEnd;
+	var scrollTop = txtarea.scrollTop;
+
+	if (selEnd == 1 || selEnd == 2) 
+	{
+		selEnd = selLength;
+	}
+
+	var s1 = (txtarea.value).substring(0,selStart);
+	var s2 = (txtarea.value).substring(selStart, selEnd)
+	var s3 = (txtarea.value).substring(selEnd, selLength);
+
+	txtarea.value = s1 + open + s2 + close + s3;
+	txtarea.selectionStart = selEnd + open.length + close.length;
+	txtarea.selectionEnd = txtarea.selectionStart;
+	txtarea.focus();
+	txtarea.scrollTop = scrollTop;
+
+	return;
 }
+
 // Insert at Claret position. Code from
 // http://www.faqts.com/knowledge_base/view.phtml/aid/1052/fid/130
-function storeCaret(textEl) {
-   if (textEl.createTextRange) textEl.caretPos = document.selection.createRange().duplicate();
+function storeCaret(textEl)
+{
+	if (textEl.createTextRange)
+	{
+		textEl.caretPos = document.selection.createRange().duplicate();
+	}
 }
+
+// Insert BBCode in textarea. Code from
+// http://www.phpbb.de/
 function bbfontstyle(bbopen, bbclose) {
+	theSelection = false;
    var txtarea = document.postform.message;
+	txtarea.focus();
    if ((clientVer >= 4) && is_ie && is_win) {
-      theSelection = document.selection.createRange().text;
-      txtarea.focus();
-      if (!theSelection) {
-         document.selection.createRange().text = bbopen + bbclose;
-      }
-      else {
-         document.selection.createRange().text = bbopen + theSelection + bbclose;
-      }
-      txtarea.focus();
-      return;
-   }
-   else if (txtarea.selectionEnd && (txtarea.selectionEnd - txtarea.selectionStart > 0))
-   {
-      mozWrap(txtarea, bbopen, bbclose);
-      return;
-   }
-   else
-   {
-      txtarea.value = txtarea.value.substring(0, txtarea.selectionStart) + bbopen + bbclose + txtarea.value.substring(txtarea.selectionEnd, txtarea.value.length);
-      txtarea.focus();
-   }
-   storeCaret(txtarea);
+    theSelection = document.selection.createRange().text;
+		if (theSelection)
+		{
+			// Add tags around selection
+			document.selection.createRange().text = bbopen + theSelection + bbclose;
+			document.postform.message.focus();
+			theSelection = '';
+			if (document.postform.previewspeicher.value == "preview") {fbGetPreview(document.postform.message.value,<?php echo KUNENA_COMPONENT_ITEMID?>);}
+			return;
+		}
+  }
+
+	else if (document.postform.message.selectionEnd && (document.postform.message.selectionEnd - document.postform.message.selectionStart > 0))
+	{
+		mozWrap(document.postform.message, bbopen, bbclose);
+		document.postform.message.focus();
+		theSelection = '';
+			if (document.postform.previewspeicher.value == "preview") {fbGetPreview(document.postform.message.value,<?php echo KUNENA_COMPONENT_ITEMID?>);}
+		return;
+	}
+	//The new position for the cursor after adding the bbcode
+	var caret_pos = getCaretPosition(txtarea).start;
+	var new_pos = caret_pos + bbopen.length;		
+
+	// Open tag
+	insert_text(bbopen + bbclose);
+
+	// Center the cursor when we don't have a selection
+	// Gecko and proper browsers
+	if (!isNaN(txtarea.selectionStart))
+	{
+		txtarea.selectionStart = new_pos;
+		txtarea.selectionEnd = new_pos;
+	}	
+	// IE
+	else if (document.selection)
+	{
+		var range = txtarea.createTextRange(); 
+		range.move("character", new_pos); 
+		range.select();
+		storeCaret(txtarea);
+	}
+
+	txtarea.focus();
+			if (document.postform.previewspeicher.value == "preview") {fbGetPreview(document.postform.message.value,<?php echo KUNENA_COMPONENT_ITEMID?>);}
+	return;
+}
+
+// Insert text at position. Code from
+// http://www.phpbb.de/
+function insert_text(text, spaces, popup)
+{
+	var txtarea;
+	
+	if (!popup) 
+	{
+		txtarea = document.postform.message;
+	} 
+	else 
+	{
+		txtarea = opener.document.postform.message;
+	}
+	if (spaces) 
+	{
+		text = ' ' + text + ' ';
+	}
+	
+	if (!isNaN(txtarea.selectionStart))
+	{
+		var sel_start = txtarea.selectionStart;
+		var sel_end = txtarea.selectionEnd;
+
+		mozWrap(txtarea, text, '')
+		txtarea.selectionStart = sel_start + text.length;
+		txtarea.selectionEnd = sel_end + text.length;
+	}
+	else if (txtarea.createTextRange && txtarea.caretPos)
+	{
+		if (baseHeight != txtarea.caretPos.boundingHeight) 
+		{
+			txtarea.focus();
+			storeCaret(txtarea);
+		}
+
+		var caret_pos = txtarea.caretPos;
+		caret_pos.text = caret_pos.text.charAt(caret_pos.text.length - 1) == ' ' ? caret_pos.text + text + ' ' : caret_pos.text + text;
+	}
+	else
+	{
+		txtarea.value = txtarea.value + text;
+	}
+	if (!popup) 
+	{
+		txtarea.focus();
+	}
+}
+
+// Caret Position object. Code from
+// http://www.phpbb.de/
+function caretPosition()
+{
+	var start = null;
+	var end = null;
+}
+
+// Get the caret position in an textarea. Code from
+// http://www.phpbb.de/
+function getCaretPosition(txtarea)
+{
+	var caretPos = new caretPosition();
+	
+	// simple Gecko/Opera way
+	if(txtarea.selectionStart || txtarea.selectionStart == 0)
+	{
+		caretPos.start = txtarea.selectionStart;
+		caretPos.end = txtarea.selectionEnd;
+	}
+	// dirty and slow IE way
+	else if(document.selection)
+	{
+	
+		// get current selection
+		var range = document.selection.createRange();
+
+		// a new selection of the whole txtarea
+		var range_all = document.body.createTextRange();
+		range_all.moveToElementText(txtarea);
+		
+		// calculate selection start point by moving beginning of range_all to beginning of range
+		var sel_start;
+		for (sel_start = 0; range_all.compareEndPoints('StartToStart', range) < 0; sel_start++)
+		{		
+			range_all.moveStart('character', 1);
+		}
+	
+		txtarea.sel_start = sel_start;
+	
+		// we ignore the end value for IE, this is already dirty enough and we don't need it
+		caretPos.start = txtarea.sel_start;
+		caretPos.end = txtarea.sel_start;			
+	}
+
+	return caretPos;
 }
 //#######################################################
 //code used in My Profile (userprofile.php)
@@ -204,46 +321,25 @@ function textCounter(field, countfield, maxlimit) {
       countfield.value = maxlimit - field.value.length;
    }
 }
-//*********************************************************
-// Insert emoticons
-function emo($e)
-{
-    var textfield = document.postform.message;
-    // Support for IE
-    if (document.selection)
-    {
-        textfield.focus();
-        var sel = document.selection.createRange();
-        sel.text = $e;
-    }
-    // Support for Mozilla
-    else if (textfield.selectionStart || textfield.selectionStart == '0')
-    {
-        var start = textfield.selectionStart;
-        var end = textfield.selectionEnd;
-        textfield.value = textfield.value.substring(0, start) + $e + textfield.value.substring(end, textfield.value.length);
-    }
-    else
-    {
-        textfield.value = textfield.value + $e;
-    }
-    textfield.focus();
-}
+
+
 function submitForm() {
  submitme=1;
  formname=document.postform.fb_authorname.value;
  if ((formname.length<1)) {
-    alert("<?php echo _POST_FORGOT_NAME_ALERT; ?>");
+    alert("<?php @print( _POST_FORGOT_NAME_ALERT); ?>");
     submitme=0;
  }
+<?php if ($fbConfig->askemail) { ?>
  formmail=document.postform.email.value;
  if ((formmail.length<1)) {
-    alert("<?php echo _POST_FORGOT_EMAIL_ALERT; ?>");
+    alert("<?php @print( _POST_FORGOT_EMAIL_ALERT); ?>");
     submitme=0;
   }
+  <?php } ?>
   formsubject=document.postform.subject.value;
   if ((formsubject.length<1)) {
-    alert("<?php echo _POST_FORGOT_SUBJECT_ALERT ?>");
+    alert("<?php @print( _POST_FORGOT_SUBJECT_ALERT); ?>");
     submitme=0;
   }
   if (submitme>0) {
@@ -260,45 +356,6 @@ function submitForm() {
 function cancelForm() {
    document.forms['postform'].action.value = "cancel";
    return true;
-}
-//**********************************************
-// Helpline messages
-
-h_help = "<?php echo _BBCODE_HIDE;?>";
-b_help = "<?php echo _BBCODE_BOLD;?>";
-i_help = "<?php echo _BBCODE_ITALIC;?>";
-u_help = "<?php echo _BBCODE_UNDERL;?>";
-q_help = "<?php echo _BBCODE_QUOTE;?>";
-c_help = "<?php echo _BBCODE_CODE;?>";
-k_help = "<?php echo _BBCODE_ULIST;?>";
-o_help = "<?php echo _BBCODE_OLIST;?>";
-p_help = "<?php echo _BBCODE_IMAGE;?>";
-w_help = "<?php echo _BBCODE_LINK;?>";
-a_help = "<?php echo _BBCODE_CLOSE;?>";
-s_help = "<?php echo _BBCODE_COLOR;?>";
-f_help = "<?php echo _BBCODE_SIZE;?>";
-l_help = "<?php echo _BBCODE_LITEM;?>";
-iu_help = "<?php echo _IMAGE_DIMENSIONS.": ".$fbConfig->imagewidth."x".$fbConfig->imageheight." - ".$fbConfig->imagesize." KB";?>";
-fu_help = "<?php echo _FILE_TYPES.": ".$fbConfig->filetypes." - ".$fbConfig->filesize." KB";?>";
-ip_help = "<?php echo _BBCODE_IMGPH;?>";
-fp_help = "<?php echo _BBCODE_FILEPH;?>";
-submit_help = "<?php echo _HELP_SUBMIT;?>";
-preview_help = "<?php echo _HELP_PREVIEW;?>";
-cancel_help = "<?php echo _HELP_CANCEL;?>";
-//**************************************************
-/**
-* Pops up a new window in the middle of the screen
-*/
-function popupWindow(mypage, myname, w, h, scroll) {
-   var winl = (screen.width - w) / 2;
-   var wint = (screen.height - h) / 2;
-   winprops = 'height='+h+',width='+w+',top='+wint+',left='+winl+',scrollbars='+scroll+',resizable'
-   win = window.open(mypage, myname, winprops);
-   if (win.opener == null) win.opener = self;
-   if (parseInt(navigator.appVersion) >= 4) { win.window.focus(); }
-}
-function popUp(URL) {
-    eval("page" + id + " = window.open(URL, '" + id + "', 'toolbar=0,scrollbars=no,location=0,statusbar=0,menubar=0,resizable=0,width=300,height=250,left = 262,top = 184');");
 }
 //-->
 </script>

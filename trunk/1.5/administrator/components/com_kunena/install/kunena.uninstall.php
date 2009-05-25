@@ -33,6 +33,8 @@ else {
     include (KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.english.php');
 }
 
+include_once($mainframe->getCfg("absolute_path")."/administrator/components/com_kunena/lib/fx.upgrade.class.php");
+
 function com_uninstall()
 {
     // Really nothing to do as the database table stay as they are.

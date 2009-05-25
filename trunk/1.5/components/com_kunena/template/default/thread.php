@@ -92,9 +92,9 @@ $tree = thread_flat($tree, $messages);
     <?php
     foreach ($tree as $leaf)
     {
-        $leaf->name = htmlspecialchars($leaf->name);
-        $leaf->subject = htmlspecialchars($leaf->subject);
-        $leaf->email = htmlspecialchars($leaf->email);
+        $leaf->name = kunena_htmlspecialchars($leaf->name);
+        $leaf->subject = kunena_htmlspecialchars($leaf->subject);
+        $leaf->email = kunena_htmlspecialchars($leaf->email);
         //get all html out of the subject & email & name before posting:
     ?>
 
@@ -106,14 +106,14 @@ $tree = thread_flat($tree, $messages);
                 {
                     //new post
                     echo '<td width="1%" class="fb_new">';
-                    echo $fbIcons['unreadmessage'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '"/>' : $fbConfig->newchar;
+                    echo isset($fbIcons['unreadmessage']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '"/>' : $fbConfig->newchar;
                     echo '</td>';
                 }
                 else
                 {
                     //not new posts
                     echo '<td width="1%" class="fb_notnew">';
-                    echo $fbIcons['readmessage'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $fbConfig->newchar;
+                    echo isset($fbIcons['readmessage']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $fbConfig->newchar;
                     echo '</td>';
                 }
             }
@@ -131,13 +131,13 @@ $tree = thread_flat($tree, $messages);
                      }
                      else
                      {
-                        echo $fbIcons['topiclocked'] ? '<img src="' . KUNENA_URLICONSPATH.$fbIcons['topiclocked'].'" border="0" alt="'._GEN_LOCKED_TOPIC.'" title="'._GEN_LOCKED_TOPIC.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'lock.gif" width="15" height="15" alt="'._GEN_LOCKED_TOPIC.'" />';
+                        echo isset($fbIcons['topiclocked']) ? '<img src="' . KUNENA_URLICONSPATH . ''.$fbIcons['topiclocked'].'" border="0" alt="'._GEN_LOCKED_TOPIC.'" title="'._GEN_LOCKED_TOPIC.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'lock.gif" width="15" height="15" alt="'._GEN_LOCKED_TOPIC.'" />';
                         $topicLocked=1;
                      }
                   }
                   else
                   {
-                     echo $fbIcons['topicsticky'] ? '<img src="' . KUNENA_URLICONSPATH.$fbIcons['topicsticky'].'" border="0" alt="'._GEN_ISSTICKY.'" title="'._GEN_ISSTICKY.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'pushpin.gif" width="15" height="15" alt="'._GEN_ISSTICKY.'" />';
+                     echo isset($fbIcons['topicsticky']) ? '<img src="' . KUNENA_URLICONSPATH . ''.$fbIcons['topicsticky'].'" border="0" alt="'._GEN_ISSTICKY.'" title="'._GEN_ISSTICKY.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'pushpin.gif" width="15" height="15" alt="'._GEN_ISSTICKY.'" />';
                      $topicSticky=1;
                   }
                   ?></td>
@@ -194,8 +194,9 @@ if ($fbConfig->allowfavorites)
 {
     $kunena_db->setQuery("select count(*) from #__fb_favorites where thread = $leaf->id && userid = $kunena_my->id");
 
-    if (intval($kunena_db->loadResult()) > 0) {
-        echo $fbIcons['favoritestar'] ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $fbIcons['favoritestar'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
+    if (intval($database->loadResult()) > 0) {
+        echo isset($fbIcons['favoritestar']) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH
+                 . '' . $fbIcons['favoritestar'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
     }
 }
 ?>

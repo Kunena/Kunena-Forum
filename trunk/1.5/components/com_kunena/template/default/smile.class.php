@@ -38,7 +38,7 @@ class smile
 
 	static $regexp_trans = array('/' => '\/', '^' => '\^', '$' => '\$', '.' => '\.', '[' => '\[', ']' => '\]', '|' => '\|', '(' => '\(', ')' => '\)', '?' => '\?', '*' => '\*', '+' => '\+', '{' => '\{', '}' => '\}', '\\' => '\\\\', '^' => '\^', '-' => '\-');
 
-	$utf8 = (mb_detect_encoding($fb_message . 'a', 'UTF-8,ISO-8859-1') == 'UTF-8') ? "u" : "";
+		$utf8 = (KUNENA_CHARSET == 'UTF-8') ? "u" : "";
         $type = ($history == 1) ? "-grey" : "";
         $message_emoticons = array();
         $message_emoticons = $iconList? $iconList : smile::getEmoticons($history);
@@ -70,7 +70,7 @@ class smile
         $parser = new TagParser();
         $interpreter = new KunenaBBCodeInterpreter($parser);
         $task = $interpreter->NewTask();
-        $task->SetText($fb_message_txt);
+        $task->SetText($fb_message_txt.' ');
         $task->dry = FALSE;
         $task->drop_errtag = FALSE;
 	    $task->history = $history;
@@ -136,7 +136,7 @@ class smile
         <table border = "0" cellspacing = "0" cellpadding = "0" class = "fb_flat">
             <tr>
                 <td>
-                    <input type = "radio" name = "topic_emoticon" value = "0"<?php echo $selected==0?" checked=\"checked\" ":"";?>/><?php echo _NO_SMILIE; ?>
+                    <input type = "radio" name = "topic_emoticon" value = "0"<?php echo $selected==0?" checked=\"checked\" ":"";?>/><?php @print(_NO_SMILIE); ?>
 
             <input type = "radio" name = "topic_emoticon" value = "1"<?php echo $selected==1?" checked=\"checked\" ":"";?>/>
 
@@ -205,6 +205,12 @@ class smile
         $fb_message_txt = preg_replace("%</i>%si", "[/i]", $fb_message_txt);
         $fb_message_txt = preg_replace("/<u>/si", "[u]", $fb_message_txt);
         $fb_message_txt = preg_replace("%</u>%si", "[/u]", $fb_message_txt);
+        $fb_message_txt = preg_replace("/<strike>/si", "[strike]", $fb_message_txt);
+        $fb_message_txt = preg_replace("/<sub>/si", "[sub]", $fb_message_txt);
+        $fb_message_txt = preg_replace("/<sup>/si", "[sup]", $fb_message_txt);
+		$fb_message_txt = preg_replace("/<right>/si", "[left]", $fb_message_txt);
+        $fb_message_txt = preg_replace("/<center>/si", "[center]", $fb_message_txt);
+        $fb_message_txt = preg_replace("/<right>/si", "[right]", $fb_message_txt);
         $fb_message_txt = preg_replace("/<s>/si", "[s]", $fb_message_txt);
         $fb_message_txt = preg_replace("%</s>%si", "[/s]", $fb_message_txt);
         $fb_message_txt = preg_replace("/<strong>/si", "[b]", $fb_message_txt);
@@ -247,119 +253,159 @@ class smile
 
         <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
             <td class = "fb_leftcolumn" valign = "top">
-                <strong><a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=faq').'#boardcode';?>"><?php echo _COM_BOARDCODE; ?></a></strong>:
+                <strong><a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=faq').'#boardcode';?>"><?php @print(_COM_BOARDCODE); ?></a></strong>:
             </td>
 
             <td>
                 <table border = "0" cellspacing = "0" cellpadding = "0" class = "fb-postbuttonset">
                     <tr>
                         <td class = "fb-postbuttons">
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "b" name = "addbbcode0" value = " B " style = "font-weight:bold; " onclick = "bbstyle(0)" onmouseover = "helpline('b')" />
-
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "i" name = "addbbcode2" value = " i " style = "font-style:italic; " onclick = "bbstyle(2)" onmouseover = "helpline('i')" />
-
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "u" name = "addbbcode4" value = " u " style = "text-decoration: underline;" onclick = "bbstyle(4)" onmouseover = "helpline('u')" />
-
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "q" name = "addbbcode6" value = "Quote" onclick = "bbstyle(6)" onmouseover = "helpline('q')" />
-
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "c" name = "addbbcode8" value = "Code" onclick = "bbstyle(8)" onmouseover = "helpline('c')" />
-
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "k" name = "addbbcode10" value = "ul" onclick = "bbstyle(10)" onmouseover = "helpline('k')" />
-
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "o" name = "addbbcode12" value = "ol" onclick = "bbstyle(12)" onmouseover = "helpline('o')" />
-
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "l" name = "addbbcode18" value = "li" onclick = "bbstyle(18)" onmouseover = "helpline('l')" />
-
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "p" name = "addbbcode14" value = "Img" onclick = "bbstyle(14)" onmouseover = "helpline('p')" />
-
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "w" name = "addbbcode16" value = "URL" style = "text-decoration: underline; " onclick = "bbstyle(16)" onmouseover = "helpline('w')" />
-
-                            <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "h" name = "addbbcode24" value = "Hide" onclick = "bbstyle(20)" onmouseover = "helpline('h')" />
-		<br />
-                            &nbsp;<?php echo _SMILE_COLOUR; ?>:
-
-                    <select name = "addbbcode20"
-                        onchange = "bbfontstyle('[color=' + this.form.addbbcode20.options[this.form.addbbcode20.selectedIndex].value + ']', '[/color]');" onmouseover = "helpline('s')" class = "<?php echo $boardclass;?>slcbox">
-                        <option style = "color:black;   background-color: #FAFAFA" value = ""><?php echo _COLOUR_DEFAULT; ?></option>
-
-                        <option style = "color:#FF0000; background-color: #FAFAFA" value = "#FF0000"><?php echo _COLOUR_RED; ?></option>
-
-                        <option style = "color:#800080; background-color: #FAFAFA" value = "#800080"><?php echo _COLOUR_PURPLE; ?></option>
-
-                        <option style = "color:#0000FF; background-color: #FAFAFA" value = "#0000FF"><?php echo _COLOUR_BLUE; ?></option>
-
-                        <option style = "color:#008000; background-color: #FAFAFA" value = "#008000"><?php echo _COLOUR_GREEN; ?></option>
-
-                        <option style = "color:#FFFF00; background-color: #FAFAFA" value = "#FFFF00"><?php echo _COLOUR_YELLOW; ?></option>
-
-                        <option style = "color:#FF6600; background-color: #FAFAFA" value = "#FF6600"><?php echo _COLOUR_ORANGE; ?></option>
-
-                        <option style = "color:#000080; background-color: #FAFAFA" value = "#000080"><?php echo _COLOUR_DARKBLUE; ?></option>
-
-                        <option style = "color:#825900; background-color: #FAFAFA" value = "#825900"><?php echo _COLOUR_BROWN; ?></option>
-
-                        <option style = "color:#9A9C02; background-color: #FAFAFA" value = "#9A9C02"><?php echo _COLOUR_GOLD; ?></option>
-
-                        <option style = "color:#A7A7A7; background-color: #FAFAFA" value = "#A7A7A7"><?php echo _COLOUR_SILVER; ?></option>
-                    </select>
-
-                    &nbsp;<?php echo _SMILE_SIZE; ?>:
-
-                    <select name = "addbbcode22" onchange = "bbfontstyle('[size=' + this.form.addbbcode22.options[this.form.addbbcode22.selectedIndex].value + ']', '[/size]')" onmouseover = "helpline('f')" class = "<?php echo $boardclass;?>slcbox">
-                        <option value = "1"><?php echo _SIZE_VSMALL; ?></option>
-
-                        <option value = "2"><?php echo _SIZE_SMALL; ?></option>
-
-                        <option value = "3" selected = "selected"><?php echo _SIZE_NORMAL; ?></option>
-
-                        <option value = "4"><?php echo _SIZE_BIG; ?></option>
-
-                        <option value = "5"><?php echo _SIZE_VBIG; ?></option>
-                    </select>
-
-					<?php if ($fbConfig->showspoilertag) {?>
-                    <script type="text/javascript">
-						function fb_spoiler_help() {document.postform.helpbox.value = 'Spoiler: [spoiler] ... [/spoiler]';}
-					</script>
-                    <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "s" name = "addbbcode40" value = "Spoiler" onclick = "bbfontstyle('[spoiler]', '[/spoiler]')" onmouseover = "fb_spoiler_help()" />
-					<?php } ?>
-
-					<?php if ($fbConfig->showebaytag) {?>
-                    <script type="text/javascript">
-						function fb_ebay_help() {document.postform.helpbox.value = 'eBay: [ebay]ItemId[/ebay]';}
-					</script>
-                    <input type = "button" class = "<?php echo $boardclass;?>button" accesskey = "e" name = "addbbcode30" value = "eBay" onclick = "bbfontstyle('[ebay]', '[/ebay]')" onmouseover = "fb_ebay_help()" />
-					<?php } ?>
-
-					<?php if ($fbConfig->showvideotag) {?>
-                    &nbsp;<span style="white-space:nowrap;">
-					<script type="text/javascript">
-						function fb_vid_help1() {document.postform.helpbox.value = 'Video: [video type=provider size=100 width=480 height=360]xyz[/video]';}
-						function fb_vid_help2() {document.postform.helpbox.value = 'Video: [video size=100 width=480 height=360]http://myvideodomain.com/myvideo[/video]';}
-					</script>
-					<a href = "javascript: bbfontstyle('[video]', '[/video]')" onmouseover = "fb_vid_help2()">Video:</a>
-					<select name = "fb_vid_code1" onchange = "bbfontstyle('[video type=' + this.form.fb_vid_code1.options[this.form.fb_vid_code1.selectedIndex].value, '[/video]');" onmouseover = "fb_vid_help1()" class = "<?php echo $boardclass;?>button">
-						<?php
-						$vid_provider = array('','AnimeEpisodes','Biku','Bofunk','Break','Clip.vn','Clipfish','Clipshack','Collegehumor','Current',
-							'DailyMotion','DivX,divx]http://','DownloadFestival','Flash,flash]http://','FlashVars,flashvars param=]http://','Fliptrack',
-							'Fliqz','Gametrailers','Gamevideos','Glumbert','GMX','Google','GooglyFoogly','iFilm','Jumpcut','Kewego','LiveLeak','LiveVideo',
-							'MediaPlayer,mediaplayer]http://','MegaVideo','Metacafe','Mofile','Multiply','MySpace','MyVideo','QuickTime,quicktime]http://','Quxiu',
-							'RealPlayer,realplayer]http://','Revver','RuTube','Sapo','Sevenload','Sharkle','Spikedhumor','Stickam','Streetfire','StupidVideos','Toufee','Tudou',
-							'Unf-Unf','Uume','Veoh','VideoclipsDump','Videojug','VideoTube','Vidiac','VidiLife','Vimeo','WangYou','WEB.DE','Wideo.fr','YouKu','YouTube');
-						foreach($vid_provider as $vid_type) {
-							list($vid_name, $vid_type) = explode(',', $vid_type);
-							echo '<option value = "'.(($vid_type)?$vid_type:strtolower($vid_name).']').'">'.$vid_name.'</option>';
-						}
-						?>
-					</select></span>
-					<?php } ?>
-
+							<input name="speicher" type="hidden" size="30" maxlength="100">
+							<input name="previewspeicher" type="hidden" size="30" maxlength="100">
+							<img class = "fb-bbcode" title = "Bold" accesskey = "b" name = "addbbcode0" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_bold.png" alt="B" onclick = "bbfontstyle('[b]', '[/b]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_BOLD);?>')" />
+							<img class = "fb-bbcode" accesskey = "i" name = "addbbcode2" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_italic.png" alt="I" onclick = "bbfontstyle('[i]', '[/i]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ITALIC);?>')" />
+							<img class = "fb-bbcode" accesskey = "u" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_underline.png" alt="U" onclick = "bbfontstyle('[u]', '[/u]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_UNDERL);?>')" />
+							<img class = "fb-bbcode" accesskey = "st" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_strike.png" alt="S" onclick = "bbfontstyle('[strike]', '[/strike]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_STRIKE);?>')" />
+							<img class = "fb-bbcode" accesskey = "sub" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_sub.png" alt="Sub" onclick = "bbfontstyle('[sub]', '[/sub]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_SUB);?>')" />
+							<img class = "fb-bbcode" accesskey = "sup" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_sup.png" alt="Sup" onclick = "bbfontstyle('[sup]', '[/sup]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_SUP);?>')" />
+							<img class = "fb-bbcode" name = "addbbcode62" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_smallcaps.png" alt="<?php @print(_SMILE_SIZE); ?>" onclick = "bbfontstyle('[size=' + document.postform.addbbcode22.options[document.postform.addbbcode22.selectedIndex].value + ']', '[/size]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FONTSIZE);?>')" />
+							<select id = "fb-bbcode_size" class = "<?php echo $boardclass;?>slcbox" name = "addbbcode22" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FONTSIZESELECTION);?>')">
+								<option value = "1"><?php @print(_SIZE_VSMALL); ?></option>
+								<option value = "2"><?php @print(_SIZE_SMALL); ?></option>
+								<option value = "3" selected = "selected"><?php @print(_SIZE_NORMAL); ?></option>
+								<option value = "4"><?php @print(_SIZE_BIG); ?></option>
+								<option value = "5"><?php @print(_SIZE_VBIG); ?></option>
+							</select>
+							<img id="ueberschrift" class = "fb-bbcode" name = "addbbcode20" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>color_swatch.png" alt="<?php @print(_SMILE_COLOUR); ?>" onclick = "javascript:change_palette();" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_COLOR);?>')" />
+							<?php if ($fbConfig->showspoilertag) {?>
+							<img class = "fb-bbcode" accesskey = "s" name = "addbbcode40" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spoiler.png" alt="Spoiler" onclick = "bbfontstyle('[spoiler]', '[/spoiler]')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_SPOILER);?>')" />
+							<?php } ?>
+							<img class = "fb-bbcode" accesskey = "h" name = "addbbcode24" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>group_key.png" alt="Hide" onclick = "bbfontstyle('[hide]', '[/hide]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_HIDE);?>')" />
+							<img class = "fb-bbcode" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.png" style="cursor: auto;" />
+							<img class = "fb-bbcode" accesskey = "k" name = "addbbcode10" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_list_bullets.png" alt="ul" onclick = "bbfontstyle('[ul]', '[/ul]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_UL);?>')" />
+							<img class = "fb-bbcode" accesskey = "o" name = "addbbcode12" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_list_numbers.png" alt="ol" onclick = "bbfontstyle('[ol]', '[/ol]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_OL);?>')" />
+							<img class = "fb-bbcode" accesskey = "l" name = "addbbcode18" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_list_none.png" alt="li" onclick = "bbfontstyle('[li]', '[/li]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LI);?>')" />
+							<img class = "fb-bbcode" accesskey = "left" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_align_left.png" alt="left" onclick = "bbfontstyle('[left]', '[/left]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ALIGN_LEFT);?>')" />
+							<img class = "fb-bbcode" accesskey = "center" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_align_center.png" alt="center" onclick = "bbfontstyle('[center]', '[/center]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ALIGN_CENTER);?>')" />
+							<img class = "fb-bbcode" accesskey = "right" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_align_right.png" alt="right" onclick = "bbfontstyle('[right]', '[/right]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ALIGN_RIGHT);?>')" />
+							<img class = "fb-bbcode" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.png" style="cursor: auto;" />
+							<img class = "fb-bbcode" accesskey = "q" name = "addbbcode6" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>comment.png" alt="Quote" onclick = "bbfontstyle('[quote]', '[/quote]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_QUOTE);?>')" />
+							<img class = "fb-bbcode" accesskey = "c" name = "addbbcode8" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>code.png" alt="Code" onclick = "bbfontstyle('[code]', '[/code]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_CODE);?>')" />                            
+							<img class = "fb-bbcode" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.png" style="cursor: auto;" />
+							<img class = "fb-bbcode" accesskey = "p" name = "addbbcode14" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>picture_link.png" alt="Img" onclick = "javascript:dE('image');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINK);?>')" />
+							<img class = "fb-bbcode" accesskey = "w" name = "addbbcode16" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>link_url.png" alt="URL" onclick = "javascript:dE('link');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINK);?>')" />	
+							<?php if ($fbConfig->showebaytag) {?>
+							<img class = "fb-bbcode" accesskey = "e" name = "addbbcode20" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>ebay.png" alt="Ebay" onclick = "bbfontstyle('[ebay]', '[/ebay]')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_EBAY);?>')" />
+							<?php } ?>
+							<?php if ($fbConfig->showvideotag) {?>
+								&nbsp;<span style="white-space:nowrap;">
+								<a href = "javascript:dE('video');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEO);?>')"><img  src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>film.png"  /></a>
+                              </span>
+							<?php } ?>
                         </td>
                     </tr>
+<!-- start of extendable fiels -->
+					<tr><td class = "fb-postbuttons">
+						<div id="fb-color_palette" style="display: none;">
+							<script type="text/javascript">
+								function change_palette() {dE('fb-color_palette');}
+								colorPalette('h', '4%', '15px');
+							</script>
+						</div>
 
+						<div id="link" style="display: none;">
+							<?php @print(_KUNENA_EDITOR_LINK_URL); ?><input name="url" type="text" size="40" maxlength="100" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKURL);?>')"> 
+							<?php @print(_KUNENA_EDITOR_LINK_TEXT); ?><input name="text2" type="text" size="30" maxlength="100" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKTEXT);?>')"> 
+							<input type="button" name="Link" accesskey = "w" value="<?php @print(_KUNENA_EDITOR_LINK_INSERT); ?>""
+								onclick="bbfontstyle('[url=' + this.form.url.value + ']'+ this.form.text2.value,'[/url]')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKAPPLY);?>')">
+						</div>
+
+						<div id="image" style="display: none;">
+							<?php @print(_KUNENA_EDITOR_IMAGE_SIZE); ?><input name="size" type="text" size="10" maxlength="10" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKSIZE);?>')"> 
+							<?php @print(_KUNENA_EDITOR_IMAGE_URL); ?><input name="url2" type="text" size="40" maxlength="100" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKURL);?>')"> 
+							<input type="button" name="Link" accesskey = "p" value="<?php @print(_KUNENA_EDITOR_IMAGE_INSERT); ?>" onclick="check_image()" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY);?>')">
+							<script type="text/javascript">
+								function check_image() {
+									if (document.postform.size.value == "") {
+										bbfontstyle('[img]'+ document.postform.url2.value,'[/img]');
+									} else {
+										bbfontstyle('[img size=' + document.postform.size.value + ']'+ document.postform.url2.value,'[/img]');
+									}
+								}
+							</script>
+						</div> 
+
+						<div id="video" style="display: none;">
+							<?php @print(_KUNENA_EDITOR_VIDEO_SIZE); ?><input name="videosize" type="text" size="5" maxlength="5" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOSIZE);?>')"> 
+							<?php @print(_KUNENA_EDITOR_VIDEO_WIDTH); ?><input name="videowidth" type="text" size="5" maxlength="5" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOWIDTH);?>')"> 
+							<?php @print(_KUNENA_EDITOR_VIDEO_HEIGHT); ?><input name="videoheight" type="text" size="5" maxlength="5" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOHEIGHT);?>')"> <br>
+							<?php @print(_KUNENA_EDITOR_VIDEO_PROVIDER); ?>
+							<select name = "fb_vid_code1" class = "<?php echo $boardclass;?>button" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOPROVIDER);?>')">
+								<?php
+								$vid_provider = array('','AnimeEpisodes','Biku','Bofunk','Break','Clip.vn','Clipfish','Clipshack','Collegehumor','Current',
+									'DailyMotion','DivX,divx]http://','DownloadFestival','Flash,flash]http://','FlashVars,flashvars param=]http://','Fliptrack',
+									'Fliqz','Gametrailers','Gamevideos','Glumbert','GMX','Google','GooglyFoogly','iFilm','Jumpcut','Kewego','LiveLeak','LiveVideo',
+									'MediaPlayer,mediaplayer]http://','MegaVideo','Metacafe','Mofile','Multiply','MySpace','MyVideo','QuickTime,quicktime]http://','Quxiu',
+									'RealPlayer,realplayer]http://','Revver','RuTube','Sapo','Sevenload','Sharkle','Spikedhumor','Stickam','Streetfire','StupidVideos','Toufee','Tudou',
+									'Unf-Unf','Uume','Veoh','VideoclipsDump','Videojug','VideoTube','Vidiac','VidiLife','Vimeo','WangYou','WEB.DE','Wideo.fr','YouKu','YouTube');
+								foreach($vid_provider as $vid_type) {
+									$vid_type = explode(',', $vid_type);
+									echo '<option value = "'.(!empty($vid_type[1])?$vid_type[1]:strtolower($vid_type[0]).'').'">'.$vid_type[0].'</option>';
+								}
+								?>
+							</select>
+							<?php @print(_KUNENA_EDITOR_VIDEO_ID); ?><input name="videoid" type="text" size="10" maxlength="10" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOID);?>')"> 
+							<input type="button" name="Video" accesskey = "p" value="<?php @print(_KUNENA_EDITOR_IMAGE_INSERT); ?>" onclick="check_video('video1')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY1);?>')"><br>
+							<?php @print(_KUNENA_EDITOR_VIDEO_URL); ?><input name="videourl" type="text" size="30" maxlength="100" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOURL);?>')">
+							<input type="button" name="Video" accesskey = "p" value="<?php @print(_KUNENA_EDITOR_IMAGE_INSERT); ?>" onclick="check_video('video2')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY2);?>')">
+							<script type="text/javascript">
+								function check_video(art) { 
+									var video;
+									if (document.postform.videosize.value != "") {video = " size=" + document.postform.videosize.value;}
+									else {video=""}
+									if (document.postform.videowidth.value != "") {video = video + " width=" + document.postform.videowidth.value;}
+									if (document.postform.videoheight.value != "") {video = video + " heigth=" + document.postform.videoheight.value;}
+									if (art=='video1'){
+									if (document.postform.fb_vid_code1.value != "") {video = video + " type=" + document.postform.fb_vid_code1.options[document.postform.fb_vid_code1.selectedIndex].value;}
+									bbfontstyle('[video' + video + ']'+ document.postform.videoid.value,'[/video]');}
+									else {bbfontstyle('[video' + video + ']'+ document.postform.videourl.value,'[/video]');}
+								}
+							</script>
+						</div>
+
+						<div id="smilie" style="display: none;">
+							<?php  
+							global $database;
+							$database->setQuery("SELECT code, location, emoticonbar FROM #__fb_smileys ORDER BY id");
+							if ($database->query()) {
+								$rowset = array ();
+								$set = $database->loadAssocList();
+								foreach ($set as $smilies) {
+									$key_exists = false;
+									foreach ($rowset as $check) { //checks if the smiley (location) already exists with another code 
+									if ($check['location'] == $smilies['location']) {$key_exists = true; }
+								}
+								if ($key_exists == false) {
+									$rowset[] = array (
+										'code' => $smilies['code'],
+										'location' => $smilies['location'],
+										'emoticonbar' => $smilies['emoticonbar'] );
+									}
+								}
+								reset ($rowset);
+								foreach ($rowset as $data) {
+								echo '<img class="btnImage" src="' . KUNENA_URLEMOTIONSPATH . $data['location'] . '" border="0" alt="' . $data['code'] . ' " title="' . $data['code'] . ' " onclick="bbfontstyle(\' '
+									. $data['code'] . ' \',\'\')" style="cursor:pointer"/>' . "\n";
+							}
+						}
+					?>
+					</div>
+
+					</td></tr>
+<!-- end of extendable fiels -->
                     <tr>
                         <td class = "<?php echo $boardclass;?>posthint">
-                            <input type = "text" name = "helpbox" size = "45" class = "<?php echo $boardclass;?>inputbox" maxlength = "100" value = "<?php echo _BBCODE_HINT;?>" />
+                            <input type = "text" name = "helpbox" size = "45" class = "<?php echo $boardclass;?>inputbox" maxlength = "100" value = "<?php @print(_KUNENA_EDITOR_HELPLINE_HINT);?>" />
                         </td>
                     </tr>
                 </table>
@@ -368,8 +414,8 @@ class smile
 
         <tr class = "<?php echo $boardclass; ?>sectiontableentry2">
             <td valign = "top" class = "fb_leftcolumn">
-                <strong><?php echo _MESSAGE; ?></strong>:
-
+                <strong><?php @print(_MESSAGE); ?></strong>:<br>
+               <b onclick = "size_messagebox(100);" style="cursor:pointer">(+)</b><b> / </b><b onclick = "size_messagebox(-100);" style="cursor:pointer">(-)</b>
                 <?php
                 if ($emoticons != 1)
                 {
@@ -383,7 +429,7 @@ class smile
                         <table border = "0" cellspacing = "3" cellpadding = "0">
                             <tr>
                                 <td colspan = "4" style = "text-align: center;">
-                                    <strong><?php echo _GEN_EMOTICONS; ?></strong>
+                                    <strong><?php @print(_GEN_EMOTICONS); ?></strong>
                                 </td>
                             </tr>
 
@@ -399,13 +445,13 @@ class smile
             </td>
 
             <td valign = "top">
-                <textarea cols="60" rows="6" class = "<?php echo $boardclass;?>txtarea" name = "<?php echo $areaname;?>" id = "<?php echo $areaname;?>"><?php echo htmlspecialchars($html, ENT_QUOTES); ?></textarea>
+                <textarea cols="60" rows="6" class = "<?php echo $boardclass;?>txtarea" name = "<?php echo $areaname;?>" id = "<?php echo $areaname;?>"><?php echo kunena_htmlspecialchars($html, ENT_QUOTES); ?></textarea>
 <?php
 if ($editmode) {
     // Moderator edit area
      ?>
      <fieldset>
-     <legend><?php echo _KUNENA_EDITING_REASON?></legend>
+     <legend><?php @print(_KUNENA_EDITING_REASON)?></legend>
         <input name="modified_reason" size="40" maxlength="200"  type="text"><br />
 
      </fieldset>
@@ -479,7 +525,7 @@ if ($editmode) {
         $text = preg_replace('/\[ebay\](.*?)\[\/ebay\]/s', '\\1', $text);
         $text = preg_replace('#/n#s', ' ', $text);
         $text = strip_tags($text);
-        //$text = stripslashes(htmlspecialchars($text));
+        //$text = stripslashes(kunena_htmlspecialchars($text));
         $text = stripslashes($text);
         return ($text);
     } //purify
@@ -632,7 +678,7 @@ if ($editmode) {
 //	  $utf8 = (preg_match("/^([\x09\x0A\x0D\x20-\x7E]|[\xC2-\xDF][\x80-\xBF]|\xE0[\xA0-\xBF][\x80-\xBF]|[\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}|\xED[\x80-\x9F][\x80-\xBF]|\xF0[\x90-\xBF][\x80-\xBF]{2}|[\xF1-\xF3][\x80-\xBF]{3}|\xF4[\x80-\x8F][\x80-\xBF]{2})*$/", $str)) ? "u" : "";
 	  // original utf8 problems seems to cause problems with very long text (forumposts)
 	  // replaced by a little simpler function call by fxstein 8-13-08
-	  $utf8 = (mb_detect_encoding($str . 'a' , 'UTF-8,ISO-8859-1') == 'UTF-8') ? "u" : "";
+	  $utf8 = (KUNENA_CHARSET == 'UTF-8') ? "u" : "";
 
 	  while (list(, $value) = each($content)) {
 	    switch ($value) {

@@ -56,7 +56,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                             $karma_time_diff = $time - $karma_time_old;
                         }
 
-                        if ($karma_time_diff >= $karma_min_seconds || $is_Moderator)
+                        if ($is_Moderator || $karma_time_diff >= $karma_min_seconds)
                         {
                             if ($do == "increase")
                             {
@@ -65,7 +65,11 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
 							    $kunena_db->setQuery('UPDATE #__fb_users SET karma=karma+1 WHERE userid=' . $userid . '');
 							    $kunena_db->query() or trigger_dberror("Unable to update karma.");
 							    echo _KARMA_INCREASED . '<br /> <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
-							echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&id='.$pid), 3500);
+								if ($pid) {
+                                	echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&id='.$pid), 3500);
+								} else {
+                                	echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_PROFILE_LINK_SUFFIX.$userid), 3500);
+                                }
                             }
                             else if ($do == "decrease")
                             {
@@ -74,7 +78,11 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                                 $kunena_db->setQuery('UPDATE #__fb_users SET karma=karma-1 WHERE userid=' . $userid . '');
                                 $kunena_db->query() or trigger_dberror("Unable to update karma.");
                                 echo _KARMA_DECREASED . '<br /> <a href="' . JRoute::_(KUNENA_LIVEURLREL. '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
-				echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&id='.$pid), 3500);
+								if ($pid) {
+                                	echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&id='.$pid), 3500);
+								} else {
+                                	echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_PROFILE_LINK_SUFFIX.$userid), 3500);
+                                }
                             }
                             else
                             { //you got me there... don't know what to $do

@@ -66,7 +66,7 @@ if ($fbConfig->showstats > 0)
                 <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
                     <td class = "td-1  fbm" align="left">
 <?php echo _STAT_TOTAL_USERS; ?>:<b> <a href = "<?php echo $userlist;?>"><?php echo $totalmembers; ?></a> </b>
-                    &nbsp; <?php echo _STAT_LATEST_MEMBERS; ?>:<b><?php echo CKunenaLink::GetProfileLink($fbConfig, $lastestmemberid, $lastestmember, $rel='nofollow'); ?></b>
+                    &nbsp; <?php echo _STAT_LATEST_MEMBERS; ?>:<b> <?php echo CKunenaLink::GetProfileLink($fbConfig, $lastestmemberid, $lastestmember, $rel='nofollow'); ?></b>
 
                 <br/> <?php echo _STAT_TOTAL_MESSAGES; ?>: <b> <?php echo $totalmsgs; ?></b> &nbsp;
     <?php echo _STAT_TOTAL_SUBJECTS; ?>: <b> <?php echo $totaltitles; ?></b> &nbsp; <?php echo _STAT_TOTAL_SECTIONS; ?>: <b> <?php echo $totalcats; ?></b> &nbsp; <?php echo _STAT_TOTAL_CATEGORIES; ?>: <b> <?php echo $totalsections; ?></b>

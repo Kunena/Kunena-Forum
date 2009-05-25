@@ -44,6 +44,7 @@ if ($fbConfig->fb_profile == 'cb')
 } else {
 	$profileHtml = null;
 }
+
 ?>
 
 <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
@@ -115,7 +116,7 @@ if ($fbConfig->fb_profile == 'cb')
                                     }
 
                                     //contruct the reply subject
-                                    $resubject = strtolower(substr($msg_subject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? $msg_subject : _POST_RE . $msg_subject;
+                                    $resubject = kunena_htmlspecialchars(strtolower(substr($msg_subject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? $msg_subject : _POST_RE .' '. $msg_subject);
                                     ?>
 
                             <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL. '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
@@ -142,9 +143,9 @@ if ($fbConfig->fb_profile == 'cb')
 								// Finish captcha
 								?>
 
-                                <input type = "submit" class = "fb_button fb_qr_fire" name = "submit" value = "<?php echo _GEN_CONTINUE;?>"/>
+                                <input type = "submit" class = "fb_button fb_qr_fire" name = "submit" value = "<?php @print(_GEN_CONTINUE);?>"/>
 
-                                <input type = "button" class = "fb_button fb_qm_cncl_btn" id = "cancel__<?php echo $msg_id; ?>" name = "cancel" value = "<?php echo _KUNENA_CANCEL;?>"/>
+                                <input type = "button" class = "fb_button fb_qm_cncl_btn" id = "cancel__<?php echo $msg_id; ?>" name = "cancel" value = "<?php @print(_KUNENA_CANCEL);?>"/>
 
                                 <small><em><?php echo _KUNENA_QMESSAGE_NOTE?></em></small>
                             </form>
@@ -199,7 +200,20 @@ if ($fbConfig->fb_profile == 'cb')
                         }
 ?>
 
-		<?php if (isset($msg_personal)) { ?>
+				<?php
+                $gr_title = getFBGroupName($lists["userid"]);
+
+                if ($gr_title->id > 1)
+                {
+                ?>
+
+                    <span class = "view-group_<?php echo $gr_title->id;?>"> <?php echo $gr_title->title; ?></span>
+
+                <?php
+                }
+                ?>
+
+				<?php if (isset($msg_personal)) { ?>
                     <div class = "viewcover">
                    <?php echo $msg_personal; ?>
                   </div>
@@ -314,7 +328,7 @@ if ($fbConfig->fb_profile == 'cb')
 	if ($fmessage->modified_by) {
 		echo '<span class="fb_message_editMarkUp">'. _KUNENA_EDITING_LASTEDIT .': '. date(_DATETIME, $fmessage->modified_time) .' '. _KUNENA_BY .' '. CKunenaTools::whoisID($fmessage->modified_by) .'.';
 		if ($fmessage->modified_reason) {
-			echo _KUNENA_REASON .': '. $fmessage->modified_reason;
+			echo _KUNENA_REASON .': '. kunena_htmlspecialchars(stripslashes($fmessage->modified_reason));
 		}
 		echo '</span>';
 	}
@@ -337,8 +351,7 @@ if ($fbConfig->fb_profile == 'cb')
                 ?>
                 <span id = "fb_qr_sc__<?php echo $msg_id;?>" class = "fb_qr_fire" style = "cursor:hand; cursor:pointer">
                 <?php echo
-                    $fbIcons['quickmsg']
-                        ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['quickmsg'] . '" border="0" alt="' . _KUNENA_QUICKMSG . '" />' . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _KUNENA_QUICKMSG . '" />'; ?>
+                    isset($fbIcons['quickmsg']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['quickmsg'] . '" border="0" alt="' . _KUNENA_QUICKMSG . '" />' . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _KUNENA_QUICKMSG . '" />'; ?>
                 </span>
                 <?php
                 endif;
@@ -386,23 +399,23 @@ if ($fbConfig->fb_profile == 'cb')
                 <?php
                 echo $msg_quote;
 
-                if (!isset($msg_delete)) {
+                if (isset($msg_delete)) {
                     echo " | " . $msg_delete;
                 }
 
-                if (!isset($msg_move)) {
+                if (isset($msg_move)) {
                     echo " | " . $msg_move;
                 }
 
-                if (!isset($msg_edit)) {
+                if (isset($msg_edit)) {
                     echo " | " . $msg_edit;
                 }
 
-                if (!isset($msg_sticky)) {
+                if (isset($msg_sticky)) {
                     echo " | " . $msg_sticky;
                 }
 
-                if (!isset($msg_lock)) {
+                if (isset($msg_lock)) {
                     echo "| " . $msg_lock;
                 }
                     }

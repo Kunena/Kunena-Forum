@@ -34,22 +34,21 @@ if ($func != "")
     <div class = "<?php echo $boardclass ?>forum-pathway">
         <?php
         $catids = intval($catid);
-        $parent_ids = 1000;
-        $jr_it = 1;
         $jr_path_menu = array ();
-        $shome = '<div class="path-element-first">' . CKunenaLink::GetKunenaLink( htmlspecialchars(stripslashes($fbConfig->board_title)) );
+        echo '<div class="path-element-first">' . CKunenaLink::GetKunenaLink( kunena_htmlspecialchars(stripslashes($fbConfig->board_title)) ) . '</div>';
 
-        while ($parent_ids)
+        while ($catids > 0)
         {
             $query = "select * from #__fb_categories where id=$catids and published=1";
             $kunena_db->setQuery($query);
             $results = $kunena_db->loadObject();
+            if (!$results) break;
 			$parent_ids = $results->parent;
-			$fr_name = htmlspecialchars(trim(stripslashes($results->name)));
+			$fr_name = kunena_htmlspecialchars(trim(stripslashes($results->name)));
             //$cids=@mysql_result( $results, 0, 'id' );
             $sname = CKunenaLink::GetCategoryLink( 'showcat', $catids, $fr_name);
 
-            if ($jr_it == 1 && $sfunc != "view")
+            if ($catid == $catids && $sfunc != "view")
             {
                 $fr_title_name = $fr_name;
                 $jr_path_menu[] = $fr_name;
@@ -68,10 +67,8 @@ if ($func != "")
 
             // next looping
             $catids = $parent_ids;
-            $jr_it++;
         }
 
-        $jr_path_menu[] = $shome;
         //reverse the array
         $jr_path_menu = array_reverse($jr_path_menu);
 
@@ -80,8 +77,8 @@ if ($func != "")
         if ($sfunc == "view" and $id)
         {
             $sql = "select subject from #__fb_messages where id = $id";
-            $kunena_db->setQuery($sql);
-            $jr_topic_title = stripslashes(htmlspecialchars($kunena_db->loadResult()));
+            $database->setQuery($sql);
+            $jr_topic_title = stripslashes(kunena_htmlspecialchars($database->loadResult()));
             $jr_path_menu[] = $jr_topic_title;
         //     echo " " . $jr_arrow .$jr_arrow ." ". $jr_topic_title;
         }
@@ -89,36 +86,29 @@ if ($func != "")
         // print the list
         $jr_forum_count = count($jr_path_menu);
 
-        for ($i = 0; $i <= (count($jr_path_menu) - 1); $i++)
+		$fireinfo = '';
+        if (!empty($forumLocked))
         {
-            if ($i > 0 && $i == $jr_forum_count - 1) {
-                echo '<div class="path-element-last">';
-            }
-            else if ($i > 0) {
-                echo '<div class="path-element">';
-            }
-
-            echo $jr_path_menu[$i] . "</div>";
-        }
-
-        if ($forumLocked)
-        {
-            echo $fbIcons['forumlocked'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['forumlocked']
-                     . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"  alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
+            $fireinfo = isset($fbIcons['forumlocked']) ? ' <img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forumlocked']
+                     . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"  alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
             $lockedForum = 1;
         }
-        else {
-            echo "";
-        }
 
-        if ($forumReviewed)
+        if (!empty($forumReviewed))
         {
-            echo $fbIcons['forummoderated'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['forummoderated']
-                     . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '">';
+            $fireinfo = isset($fbIcons['forummoderated']) ? ' <img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forummoderated']
+                     . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '">';
             $moderatedForum = 1;
         }
-        else {
-            echo "";
+
+        for ($i = 0; $i < $jr_forum_count; $i++)
+        {
+            if ($i == $jr_forum_count-1) {
+                echo '<div class="path-element-last">' . $jr_path_menu[$i] . $fireinfo . '</div>';
+            }
+            else {
+                echo '<div class="path-element">' . $jr_path_menu[$i] . '</div>';
+            }
         }
 
          //get viewing
@@ -138,6 +128,7 @@ if ($func != "")
 			echo "<div class=\"path-element-users\">($total_viewing " . _KUNENA_PATHWAY_VIEWING . ")&nbsp;";
 			$totalguest = 0;
 			$lastone = end($users);
+			$divider = ', ';
 			foreach ($users as $user) {
 				if ($user->userid != 0)
 				{
@@ -157,10 +148,10 @@ if ($func != "")
        }
 
         unset($shome, $spath, $parent_ids, $catids, $results, $sname);
-	$fr_title = $fr_title_name . $jr_topic_title;
-
-	$document=& JFactory::getDocument();
-        $document->setTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($fbConfig->board_title));
+        $fr_title = '';
+		if (!empty($fr_title_name)) $fr_title .= $fr_title_name;
+		if (!empty($jr_topic_title)) $fr_title .= $jr_topic_title;
+		$mainframe->setPageTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($fbConfig->board_title));
         ?>
 		</div>
     </div>

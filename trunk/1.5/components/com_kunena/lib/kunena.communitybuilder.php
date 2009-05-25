@@ -21,7 +21,10 @@ global $_CB_framework, $_CB_database, $ueConfig;
 $cbpath = KUNENA_ROOT_PATH_ADMIN .DS. 'components/com_comprofiler/plugin.foundation.php';
 if ( ! file_exists( $cbpath ) )
 {
-	$fbConfig->fb_profile = 'fb';
+	$fbConfig->pm_component = $fbConfig->pm_component == 'cb' ? 'none' : $fbConfig->pm_component;
+	$fbConfig->fb_profile = $fbConfig->fb_profile == 'cb' ? 'kunena' : $fbConfig->fb_profile;
+	$fbConfig->avatar_src = $fbConfig->avatar_src == 'cb' ? 'kunena' : $fbConfig->avatar_src;
+	
 	return;
 }
 include_once( $cbpath );
@@ -31,6 +34,8 @@ cbimport( 'language.front' );
 cbimport( 'cb.tabs' );
 
 unset ($tmp_db);
+
+define("KUNENA_CB_ITEMID_SUFFIX", getCBprofileItemid());
 
 class CKunenaCBProfile {
 	var $sidebarText;

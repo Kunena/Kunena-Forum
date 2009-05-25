@@ -81,14 +81,14 @@ defined( '_JEXEC' ) or die('Restricted access');
 						$k = 1 - $k;
 
 						echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" >';
-						echo '<td class="td-1" width="54%" align="left">' . $enum . ': <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $sub->catid . '&amp;id=' . $sub->id) . '">' . htmlspecialchars(stripslashes($sub->subject));
+						echo '<td class="td-1" width="54%" align="left">' . $enum . ': <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $sub->catid . '&amp;id=' . $sub->id) . '">' . kunena_htmlspecialchars(stripslashes($sub->subject));
 			?>
 
 						</a>
 
 						</td>
 
-						<td class = "td-2" style = "text-align:center; width:15%"> <?php echo htmlspecialchars(stripslashes($sub->name)); ?></td>
+						<td class = "td-2" style = "text-align:center; width:15%"> <?php echo kunena_htmlspecialchars(stripslashes($sub->name)); ?></td>
 
 						<td class = "td-3" style = "text-align:center; width:25%"> <?php echo '' . date(_DATETIME, $sub->time) . ''; ?></td>
 

@@ -136,6 +136,7 @@ if ($is_editor) {
 ?>
 | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'show');?>"><?php echo _ANN_ANNOUNCEMENTS; ?> </a>
 <?php } ?>
+| <?php echo CKunenaLink::GetSearchLink($fbConfig, 'search', '', 0, 0, _KUNENA_SEARCH_ADVSEARCH);?>
 
 </td>
 			<?php

@@ -41,6 +41,8 @@ class CKunenaSearch
     var $str_kunena_errormsg;
     /** params **/
     var $params = array();
+    /** total **/
+    var $total = 0;
     /** limitstart **/
     var $limitstart;
     /** limit **/
@@ -86,8 +88,9 @@ class CKunenaSearch
 	if (empty($q) && isset($_REQUEST['searchword'])) {
 		$q = JRequest::getVar('searchword', '');
 	}
+	$q = stripslashes($q);
 	$this->params['titleonly'] = intval(JRequest::getVar('titleonly', $this->defaults['titleonly']));
-	$this->params['searchuser'] = JRequest::getVar('searchuser', $this->defaults['searchuser']);
+	$this->params['searchuser'] = stripslashes(JRequest::getVar('searchuser', $this->defaults['searchuser']));
 	$this->params['starteronly'] = intval(JRequest::getVar('starteronly', $this->defaults['starteronly']));
 	$this->params['exactname'] = intval(JRequest::getVar('exactname', $this->defaults['exactname']));
 	$this->params['replyless'] = intval(JRequest::getVar('replyless', $this->defaults['replyless']));
@@ -114,8 +117,7 @@ class CKunenaSearch
 
 	if ($q == _GEN_SEARCH_BOX) $q = '';
 	$this->searchword = $q;
-	$q = $kunena_db->getEscaped($q);
-        $arr_searchwords = split(' ', $q);
+    $arr_searchwords = split(' ', $q);
 	$do_search = FALSE;
 	$this->arr_kunena_searchstrings = array();
 	foreach ($arr_searchwords as $q)
@@ -147,7 +149,7 @@ class CKunenaSearch
         for ($x = 0; $x < count($arr_searchwords); $x++)
         {
             $searchword = $arr_searchwords[$x];
-            $searchword = $kunena_db->getEscaped(trim(strtolower($searchword)));
+            $searchword = $kunena_db->getEscaped(addslashes(trim(strtolower($searchword))));
             if (empty($searchword)) continue;
             $matches = array ();
             $not = '';
@@ -172,9 +174,9 @@ class CKunenaSearch
         if(strlen($searchuser)>0)
         {
             if($exactname=='1') {
-                $querystrings[] = 'm.name LIKE \'' . $searchuser . '\'';
+                $querystrings[] = "m.name LIKE '" . $kunena_db->getEscaped(addslashes($searchuser)) . "'";
             } else {
-                $querystrings[] = 'm.name LIKE \'%' . $searchuser . '%\'';
+                $querystrings[] = "m.name LIKE '%" . $kunena_db->getEscaped(addslashes($searchuser)) . "%'";
             }
         }
 
@@ -247,7 +249,7 @@ class CKunenaSearch
             $groupby = '';
 
         /* get total */
-        $kunena_db->setQuery('SELECT count(m.id) FROM #__fb_messages as m JOIN #__fb_messages_text as t ON m.id=t.mesid WHERE ' . $where . $groupby);
+        $kunena_db->setQuery('SELECT count(*) FROM #__fb_messages as m JOIN #__fb_messages_text as t ON m.id=t.mesid WHERE ' . $where . $groupby);
         $this->total = $kunena_db->loadResult();
         check_dberror("Unable to count messages.");
 
@@ -336,7 +338,7 @@ class CKunenaSearch
 		{
 			$result[$cur] = $cur;
 			if (array_key_exists($cur, $allow_list))
-				foreach ($allow_list[$cur] as $forum) 
+				foreach ($allow_list[$cur] as $forum)
 					if (!in_array($forum, $catids))
 						array_push($catids, $forum);
 		}
@@ -375,7 +377,7 @@ class CKunenaSearch
         }
 
         $results = $this->get_results();
-        $totalRows = (int)($this->total);
+        $totalRows = $this->total;
 
 	$pagination = KunenaSearchPagination($this->func, $q, $this->getUrlParams(), floor($limitstart/$limit)+1, $limit, floor($totalRows/$limit)+1, 7);
 
@@ -453,8 +455,9 @@ class CKunenaSearch
                     // Strip smiles and bbcode out of search results; they look ugly
                     $resmessage = CKunenaTools::prepareContent($resmessage);
                     $resmessage = smile::purify($resmessage);
-                    $resmessage = mb_substr(html_entity_decode_utf8($resmessage), 0, 300);
-                    $utf8 = (mb_detect_encoding($ressubject . $resmessage . 'a', 'UTF-8,ISO-8859-1') == 'UTF-8') ? "u" : "";
+                    $resmessage = kn_mb_substr(kunena_htmlspecialchars($resmessage), 0, 300);
+                    $utf8 = (KUNENA_CHARSET == 'UTF-8') ? "u" : "";
+
                     foreach ($searchlist as $searchword)
                     {
                         if (empty($searchword)) continue;
@@ -464,7 +467,7 @@ class CKunenaSearch
                     echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '">';
                     echo '<td  class = "td-1" ><a href="'
                              . JRoute::_(KUNENA_LIVEURL . '&amp;func=view&amp;id=' . $result->id . '&amp;catid=' . $result->catid) . '#' . $result->id . '" >' . $ressubject . '</a><br />' . $resmessage . '<br /><br /></td>';
-                    echo '<td class = "td-2" >' . html_entity_decode_utf8(stripslashes($result->name)) . '</td>';
+                    echo '<td class = "td-2" >' . kunena_htmlspecialchars(stripslashes($result->name)) . '</td>';
                     echo '<td class = "td-3" >' . date(_DATETIME, $result->time) . '</td></tr>';
                     echo "\n";
                 }

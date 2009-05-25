@@ -10,7 +10,7 @@
 
 jQuery.noConflict();
 
-jQuery.cookie = function(name, value, options)
+jQuery.kunena_cookie = function(name, value, options)
 {
     if (typeof value != 'undefined')
     { // name and value given, set cookie
@@ -69,31 +69,28 @@ function JRshrinkHeaderMulti(mode, imgId, cid)
     if (mode == 1)
     {
         cMod = 0;
+        jQuery("#" + cid).show();
     }
     else
     {
         cMod = 1;
-    }
-
-    jQuery.cookie("upshrink_" + imgId, cMod);
-    jQuery("#" + imgId).attr("src", window.jr_expandImg_url + (cMod ? "expand.gif" : "shrink.gif"));
-
-    if (cMod)
-    {
         jQuery("#" + cid).hide();
     }
-    else
-    {
-        jQuery("#" + cid).show();
-    }
+
+    jQuery.kunena_cookie("upshrink_" + imgId, cMod);
+    jQuery("#" + imgId).attr("src", window.jr_expandImg_url + (cMod ? "expand.gif" : "shrink.gif"));
 }
 
+function kunenaShowHelp($text) {
+	jQuery('input[name=helpbox]').val($text);
+}
 
 function fbGetPreview(content, sitemid) {
     var templatePath = document.postform.templatePath.value;
     var content = encodeURIComponent(content);
-    
     var kunenaPath = document.postform.kunenaPath.value;
+    
+    jQuery('input[name=previewspeicher]').val('preview');
     jQuery.ajax({url:kunenaPath,
     data : { msgpreview : content, Itemid : sitemid , option: "com_kunena" , func: "getpreview" , no_html: 1},
     type: "POST",
@@ -102,7 +99,7 @@ function fbGetPreview(content, sitemid) {
         jQuery('#previewMsg'). html("<img src='"+templatePath+"/images/preview_loading.gif' />");    
     },
     success : function (req){
-        jQuery('#previewMsg'). html(req)
+        jQuery('#previewMsg'). html(req);
         return;
     }
     });
@@ -114,28 +111,28 @@ function kunenaRedirectTimeout(redirecturl, timeout) {
     jQuery("body").bind("click", function(e) { clearTimeout(redirect_timeout); } );
 }
 
-jQuery(function()
+jQuery(document).ready(function()
 {
     jQuery(".hideshow").click(function()
     {
         var imgId = jQuery(this).attr("id");
         var cId = imgId.split("__")[1];
-        var cVal = jQuery.cookie("upshrink_" + imgId);
+        var cVal = jQuery.kunena_cookie("upshrink_" + imgId);
         JRshrinkHeaderMulti(cVal, imgId, cId);
     }).each(function()
     {
         var imgId = jQuery(this).attr("id");
         var cId = imgId.split("__")[1];
-	var el = jQuery("#" + cId);
-	if (el.hasClass("fb-hidden"))
-	{
-            jQuery.cookie("upshrink_" + imgId, 1);
-	}
-	if (el.hasClass("fb-visible"))
-	{
-	    jQuery.cookie("upshrink_" + imgId, 0);
-	}
-        if (jQuery.cookie("upshrink_" + imgId) == 1)
+		var el = jQuery("#" + cId);
+		if (el.hasClass("fb-hidden"))
+		{
+            jQuery.kunena_cookie("upshrink_" + imgId, 1);
+		}
+		if (el.hasClass("fb-visible"))
+		{
+		    jQuery.kunena_cookie("upshrink_" + imgId, 0);
+		}
+        if (jQuery.kunena_cookie("upshrink_" + imgId) == 1)
         {
             JRshrinkHeaderMulti(0, imgId, cId);
         }

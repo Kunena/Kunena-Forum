@@ -98,18 +98,18 @@ $validate = JUtility::getToken();
       <tr>
         <td><?php echo _KUNENA_UNAME; ?> </td>
         <?php if ($fbConfig->usernamechange) { ?>
-        <td><input class = "inputbox" type = "text" name = "username" value = "<?php echo $row->username;?>" size = "40"/></td>
+        <td><input class = "inputbox" type = "text" name = "username" value = "<?php echo kunena_htmlspecialchars($row->username);?>" size = "40"/></td>
       <?php } else { ?>
-      <td><input class = "inputbox" type = "hidden" name = "username" value = "<?php echo $row->username;?>" size = "40"/><?php echo $row->username;?></td>
+      <td><input class = "inputbox" type = "hidden" name = "username" value = "<?php echo kunena_htmlspecialchars($row->username);?>" size = "40"/><?php echo kunena_htmlspecialchars($row->username);?></td>
       <?php } ?>
       </tr>
       <tr>
         <td><?php echo _KUNENA_YOUR_NAME; ?> </td>
-        <td><input class = "inputbox" type = "text" name = "name" value = "<?php echo $row->name;?>" size = "40"/></td>
+        <td><input class = "inputbox" type = "text" name = "name" value = "<?php echo kunena_htmlspecialchars($row->name);?>" size = "40"/></td>
       </tr>
       <tr>
         <td><?php echo _KUNENA_EMAIL; ?> </td>
-        <td><input class = "inputbox" type = "text" name = "email" value = "<?php echo $row->email;?>" size = "40"/></td>
+        <td><input class = "inputbox" type = "text" name = "email" value = "<?php echo kunena_htmlspecialchars($row->email);?>" size = "40"/></td>
       </tr>
       <tr>
         <td><?php echo _KUNENA_PASS; ?> </td>

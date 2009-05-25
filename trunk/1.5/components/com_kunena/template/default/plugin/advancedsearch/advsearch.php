@@ -77,7 +77,7 @@ if(isset($fb_advsearch_hide) && $fb_advsearch_hide==1)
                             <?php echo _KUNENA_SEARCH_KEYWORDS; ?>:
                         </div>
                         <div style="line-height: 28px">
-                            <input type="text" class="inputbox" name="q" size="35" value="<?php echo $q; ?>" style="width:250px"/>
+                            <input type="text" class="fbs input" name="q" size="35" value="<?php echo html_entity_decode_utf8($q); ?>" style="width:250px"/>
 
                             <select class="fbs" name="titleonly">
                                 <option value="0"<?php if ($titleonly==0) echo $selected;?>><?php echo _KUNENA_SEARCH_SEARCH_POSTS; ?></option>
@@ -98,7 +98,7 @@ if(isset($fb_advsearch_hide) && $fb_advsearch_hide==1)
                             <?php echo _KUNENA_SEARCH_EXACT; ?></label>
                         </div>
                         <div id="userfield" style="line-height: 28px">
-                            <input class="fbs input" type="text" name="searchuser" value="<?php echo $searchuser; ?>" style="width:250px"/>
+                            <input class="fbs input" type="text" name="searchuser" value="<?php echo html_entity_decode_utf8($searchuser); ?>" style="width:250px"/>
 
                             <select class="fbs" name="starteronly">
                                 <option value="0"<?php if ($starteronly==0) echo $selected;?>><?php echo _KUNENA_SEARCH_USER_POSTED; ?></option>

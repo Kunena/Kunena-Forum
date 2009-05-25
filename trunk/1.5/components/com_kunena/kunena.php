@@ -67,6 +67,15 @@ $userid 		= JRequest::getInt('userid', 0);
 $view 			= JRequest::getVar('view', '');
 $msgpreview 	= JRequest::getVar('msgpreview', '');
 
+// Redirect Forum Jump
+if (isset($_POST['func']) && $func == "showcat")
+{
+	global $Itemid;
+	header("HTTP/1.1 303 See Other");
+	header("Location: " . htmlspecialchars_decode(JRoute::_('index.php?option=com_kunena&amp;Itemid=' . $Itemid . '&amp;func=showcat&amp;catid=' . $catid)));
+	$app->close();
+}
+
 $app =& JFactory::getApplication();
 
 // Image does not work if there are included files (extra characters), so we will do it now:
@@ -92,12 +101,20 @@ $KunenaUser = new CKunenaUser($kunena_my->id);
 // Load configuration and personal settings for current user
 $fbConfig =& CKunenaConfig::getInstance();
 
+// get right Language file
+if (file_exists(KUNENA_FILE_LANGUAGE)) {
+    include_once (KUNENA_FILE_LANGUAGE);
+} else {
+    include_once (KUNENA_FILE_LANGUAGE_DEFAULT);
+}
+
 $kn_tables =& CKunenaTables::getInstance();
 if ($kn_tables->installed() === false) {
 	$fbConfig->board_offline = 1;
 }
 
 // Permissions: Check for administrators and moderators
+global $aro_group;
 $kunena_acl = &JFactory::getACL();
 if ($kunena_my->id != 0)
 {
@@ -118,8 +135,8 @@ $my_id = $kunena_my->id;
 // Check if we only allow registered users
 if ($fbConfig->regonly && !$my_id)
 {
-    echo _FORUM_UNAUTHORIZIED . "<br />";
-    echo _FORUM_UNAUTHORIZIED2;
+    echo '<div>' . _FORUM_UNAUTHORIZIED . '</div>';
+    echo '<div>' . _FORUM_UNAUTHORIZIED2 . '</div>';
 }
 // or if the board is offline
 else if ($fbConfig->board_offline && !$is_admin)
@@ -130,13 +147,6 @@ else
 {
 // =======================================================================================
 // Forum is online:
-
-if ($fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
-{
-	// Get Community Builder compability
-	require_once (JPATH_ROOT . "/components/com_kunena/lib/kunena.communitybuilder.php");
-	$kunenaProfile =& new CkunenaCBProfile();
-}
 
 global $lang, $fbIcons;
 global $is_Moderator;
@@ -150,20 +160,13 @@ require_once (KUNENA_PATH_LIB .DS. "kunena.link.class.php");
 // Class structure should be used after this and all the common task should be moved to this class
 require_once (KUNENA_PATH .DS. "class.kunena.php");
 
-// get right Language file
-if (file_exists(KUNENA_FILE_LANGUAGE)) {
-    include_once (KUNENA_FILE_LANGUAGE);
-} else {
-    include_once (KUNENA_FILE_LANGUAGE_DEFAULT);
-}
-
 if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'smile.class.php'))
 {
-	include (KUNENA_ABSTMPLTPATH .DS. 'smile.class.php');
+	require_once (KUNENA_ABSTMPLTPATH .DS. 'smile.class.php');
 }
 else
 {
-	include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
+	require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
 }
 
 // Include Clexus PM class file
@@ -179,7 +182,7 @@ include_once (KUNENA_PATH_LIB .DS. 'kunena.timeformat.class.php');
 $systime = time() + $fbConfig->board_ofset * KUNENA_SECONDS_IN_HOUR;
 
 // Retrieve current cookie data for session handling
-$settings = $_COOKIE['fboard_settings'];
+$settings = !empty($_COOKIE['fboard_settings'])?$_COOKIE['fboard_settings']:'';
 
 $board_title = $fbConfig->board_title;
 $fromBot = 0;
@@ -206,6 +209,7 @@ if ($func == "getpreview")
 {
     $message = utf8_urldecode(utf8_decode(stripslashes($msgpreview)));
 
+    $smileyList = smile::getEmoticons(1);
     $msgbody = smile::smileReplace( $message , 0, $fbConfig->disemoticons, $smileyList);
     $msgbody = nl2br($msgbody);
     $msgbody = str_replace("__FBTAB__", "\t", $msgbody);
@@ -218,36 +222,57 @@ if ($func == "getpreview")
     $app->close();
 }
 
+if (is_object($kunenaProfile))
+{
+	$params = array();
+	$kunenaProfile->trigger('onStart', &$params);
+}
+
+
 $document =& JFactory::getDocument();
 
-if ($func != 'fb_rss' && $func != 'fb_pdf')
+// inline jscript with image location
+$document->addCustomTag('<script type="text/javascript">jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";</script>');
+
+
+global $_CB_framework;
+if (is_object($_CB_framework)) 
+{
+	if (defined('KUNENA_COREJSURL'))
+	{
+		$_CB_framework->addJQueryPlugin( 'kunena_tmpl', KUNENA_COREJSPATH );
+		$_CB_framework->outputCbJQuery( '', 'kunena_tmpl' );
+	}
+}
+else
 {
 	// Add required header tags
-	if (defined('KUNENA_JQURL'))
+	if (defined('KUNENA_JQURL') && !defined('J_JQUERY_LOADED'))
 	{
-		$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
+		define('J_JQUERY_LOADED', 1);
+		if (!defined('C_ASSET_JQUERY')) define('C_ASSET_JQUERY', 1);
+		$$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
 	}
-
-	// inline jscript with image location
-	$document->addCustomTag('<script type="text/javascript">
-	jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";</script>');
 
 	if (defined('KUNENA_COREJSURL'))
 	{
 		$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_COREJSURL . '"></script>');
 	}
+}
 
-	if ($fbConfig->joomlastyle < 1) {
-	        if (file_exists(KUNENA_JTEMPLATEPATH.'/css/kunena.forum.css')) {
-	           $document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_JTEMPLATEURL . '/css/kunena.forum.css" />');
-	                }
-	        else {
-	         $document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_TMPLTCSSURL . '" />');
-	         }
-	    }
-	else {
-	   $document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_DIRECTURL . '/template/default/joomla.css" />');
-	    }
+if ($fbConfig->joomlastyle < 1) {
+	if (file_exists(KUNENA_JTEMPLATEPATH.'/css/kunena.forum.css')) 
+	{
+		$document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_JTEMPLATEURL . '/css/kunena.forum.css" />');
+	}
+	else 
+	{
+		$document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_TMPLTCSSURL . '" />');
+	}
+}
+else 
+{
+	$document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_DIRECTURL . '/template/default/joomla.css" />');
 }
 
 // WHOIS ONLINE IN FORUM
@@ -308,22 +333,6 @@ if ($func == '') // Set default start page as per config settings
 		default:
 			$func = 'listcat';
 	}
-}
-
-// Include the Community Builder language file if necessary and set CB itemid value
-$cbitemid = 0;
-
-if ($fbConfig->fb_profile == 'cb')
-{
-    // Include CB language files
-    $UElanguagePath = KUNENA_ROOT_PATH .DS. 'components/com_comprofiler/plugin/language';
-    $UElanguage = $lang;
-
-    if (!file_exists($UElanguagePath .DS . $lang .DS . $lang . '.php')) {
-        $UElanguage = 'default_language';
-        }
-
-    include_once ($UElanguagePath .DS . $UElanguage .DS . $UElanguage . '.php');
 }
 
 // Kunena Current Template Icons Pack
@@ -509,7 +518,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
     switch ($func)
     {
         case 'view':
-            $fbMenu = KUNENA_get_menu($fbConfig, $fbIcons, $kunena_my->id, 3, $view, $catid, $id, $thread);
+            $fbMenu = KUNENA_get_menu(NULL, $fbConfig, $fbIcons, $my_id, 3, $view, $catid, $id, $thread);
 
             break;
 
@@ -519,11 +528,11 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
             $numPending = $kunena_db->loadResult();
             	check_dberror('Unable load pending messages.');
 
-            $fbMenu = KUNENA_get_menu($fbConfig, $fbIcons, $kunena_my->id, 2, $view, $catid, $id, $thread, $is_Moderator, $numPending);
+            $fbMenu = KUNENA_get_menu(NULL, $fbConfig, $fbIcons, $my_id, 2, $view, $catid, $id, $thread, $is_Moderator, $numPending);
             break;
 
         default:
-            $fbMenu = KUNENA_get_menu($fbConfig, $fbIcons, $kunena_my->id, 1, $view);
+            $fbMenu = KUNENA_get_menu(NULL, $fbConfig, $fbIcons, $my_id, 1, $view);
 
             break;
     }
@@ -907,6 +916,12 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
     // display footer
     $KunenaTemplate->displayParsedTemplate('kunena-footer');
 } //else
+
+if (is_object($kunenaProfile))
+{
+	$params = array();
+	$kunenaProfile->trigger('onEnd', &$params);
+}
 
 // Just for debugging and performance analysis
 $mtime = explode(" ", microtime());

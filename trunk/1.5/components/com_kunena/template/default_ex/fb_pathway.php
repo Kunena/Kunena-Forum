@@ -40,7 +40,7 @@ if ($func != "")
             $results = $kunena_db->loadObject();
             if (!$results) break;
 			$parent_ids = $results->parent;
-			$fr_name = htmlspecialchars(trim(stripslashes($results->name)));
+			$fr_name = kunena_htmlspecialchars(trim(stripslashes($results->name)));
             $sname = CKunenaLink::GetCategoryLink( 'showcat', $catids, $fr_name);
 
             if ($catid == $catids && $sfunc != "view")
@@ -73,34 +73,34 @@ if ($func != "")
 		if (count($jr_path_menu) == 0) $jr_path_menu[] = '';
         $jr_forum_count = count($jr_path_menu);
 
-	$firepath = '<div class="path-element-first">'. CKunenaLink::GetKunenaLink( htmlspecialchars(stripslashes($fbConfig->board_title)) ) . '</div>';
-	$firelast = '';
+		$fireinfo = '';
+        if (!empty($forumLocked))
+        {
+            $fireinfo = isset($fbIcons['forumlocked']) ? ' <img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forumlocked']
+                     . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"  alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
+            $lockedForum = 1;
+        }
+
+        if (!empty($forumReviewed))
+        {
+            $fireinfo = isset($fbIcons['forummoderated']) ? ' <img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forummoderated']
+                     . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '">';
+            $moderatedForum = 1;
+        }
+
+        $firepath = '<div class="path-element-first">'. CKunenaLink::GetKunenaLink( kunena_htmlspecialchars(stripslashes($fbConfig->board_title)) ) . '</div>';
+
+        $firelast = '';
         for ($i = 0; $i < $jr_forum_count; $i++)
         {
             if ($i == $jr_forum_count-1) {
-                $firelast .= '<br /><div class="path-element-last">' . $jr_path_menu[$i] . '</div>';
+                $firelast .= '<br /><div class="path-element-last">' . $jr_path_menu[$i] . $fireinfo . '</div>';
             }
             else {
                 $firepath .= '<div class="path-element">' . $jr_path_menu[$i] . '</div>';
             }
         }
 
-	$fireinfo = '';
-/*
-        if ($forumLocked)
-        {
-            $fireinfo = $fbIcons['forumlocked'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['forumlocked']
-                     . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"  alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
-            $lockedForum = 1;
-        }
-
-        if ($forumReviewed)
-        {
-            $fireinfo = $fbIcons['forummoderated'] ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['forummoderated']
-                     . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '">';
-            $moderatedForum = 1;
-        }
-*/
          //get viewing
         $fb_queryName = $fbConfig->username ? "username" : "name";
 		$query= "SELECT w.userid, u.$fb_queryName AS username , k.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS k ON k.userid=w.userid  WHERE w.link like '%" . addslashes($_SERVER['REQUEST_URI']) . "%' GROUP BY w.userid ORDER BY u.$fb_queryName ASC";

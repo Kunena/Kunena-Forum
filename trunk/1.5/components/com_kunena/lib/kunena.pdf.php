@@ -92,12 +92,9 @@ function dofreePDF($kunena_db)
 
 
         $allow_forum = explode(',', CKunenaTools::getAllowedForums($kunena_my->id, $aro_group->id, $kunena_acl));
-
-        //Do user identification based upon the ACL
-        $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->id, $kunena_acl);
     }
 
-    if ($letPass || $is_Mod)
+	if ($is_Mod || in_array($catid, $allow_forum))
     {
         $id = JRequest::getInt('id', 1);
         $catid = JRequest::getInt('catid', 2);
@@ -183,7 +180,7 @@ function dofreePDF($kunena_db)
         $pdf->ezStream();
     }
     else {
-        echo "You don't have access to this resource. Your IP address has been logged and the System Admininstrator of this Web Site has been sent an email with these error details.";
+        echo "You don't have access to this resource.";
     }
 } //function dofreepdf
 

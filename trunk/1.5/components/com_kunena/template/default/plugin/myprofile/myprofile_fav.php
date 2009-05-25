@@ -70,14 +70,14 @@ defined( '_JEXEC' ) or die('Restricted access');
 					{
 						$k = 1 - $k;
 						echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" >';
-						echo '<td class="td-1" width="73%" align="left">' . $enum . ': <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $fav->catid . '&amp;id=' . $fav->id) . '">' . htmlspecialchars(stripslashes($fav->subject));
+						echo '<td class="td-1" width="73%" align="left">' . $enum . ': <a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $fav->catid . '&amp;id=' . $fav->id) . '">' . kunena_htmlspecialchars(stripslashes($fav->subject));
 			?>
 
 						</a>
 
 						</td>
 
-						<td class = "td-2" style = "text-align:center; width:25%"> <?php echo $fav->name; ?></td>
+						<td class = "td-2" style = "text-align:center; width:25%"> <?php echo kunena_htmlspecialchars(stripslashes($fav->name)); ?></td>
 
 						<td class = "td-3" width = "1%">
 							<input id = "cid<?php echo $enum;?>" name = "cid[]" value = "<?php echo $favs->thread; ?>"  type = "checkbox"/>

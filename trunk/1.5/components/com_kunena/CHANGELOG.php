@@ -33,7 +33,7 @@ Legend:
 Kunena 1.5.2RC
 
 31-May-2009 fxstein
-# [#16260] Version info updated to 1.5.2rc release candidate
+^ [#16260] Version info updated to 1.5.2rc release candidate
 # [#16260] Regression - Syntax error in recentpost.php fixed
 
 25-May-2009 Matias

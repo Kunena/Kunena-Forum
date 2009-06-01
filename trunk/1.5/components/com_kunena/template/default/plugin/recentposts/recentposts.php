@@ -169,7 +169,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                     $row_catname = kunena_htmlspecialchars(stripslashes($row->catname));
                     $row_username = stripslashes($row->username);
                     $row_date = JHTML::_( 'date', $row->date, '%d/%m' );
-                    $row_lock = ($row->locked ? _KUNENA_LOCKED : ');
+                    $row_lock = ($row->locked ? _KUNENA_LOCKED : '');
                     $overlib .= "<tr><td valign=top>" . _GEN_CATEGORY . "</td><td>$row_catname</td></tr>";
                     $overlib .= "<tr><td valign=top>" . ucfirst(_GEN_BY) . "</td><td>$row_username</td></tr>";
                     $overlib .= "<tr><td valign=top>" . _GEN_DATE . "</td><td>$row_date</td></tr>";

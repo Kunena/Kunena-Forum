@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.5.2RC
 
+31-May-2009 fxstein
+# [#16260] Regression - Syntax error in recentpost.php fixed
+
 25-May-2009 Matias
 ^ [#15784] Merge 1.0.10 fixes from revision 707 to 790
 # [#15784] Internal: Replace all legacy calls after merge

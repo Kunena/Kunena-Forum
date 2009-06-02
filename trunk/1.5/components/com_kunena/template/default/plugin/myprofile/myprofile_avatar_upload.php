@@ -22,6 +22,38 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+jimport('joomla.filesystem.file');
+
+function generateAvatarGD($gdversion, $src_img, $srcWidth, $srcHeight, $dstWidth, $dstHeight, $quality, $location)
+{
+	if ($srcWidth>$dstWidth || $srcHeight>$dstHeight) {
+		$ratio = $srcWidth/$srcHeight;
+		if ($dstWidth/$dstHeight > $ratio) {
+			$dstWidth = $dstHeight*$ratio;
+		} else {
+			$dstHeight = $dstWidth/$ratio;
+		}
+	} else {
+		$dstWidth = $srcWidth;
+		$dstHeight = $srcHeight;
+	}
+	if ((int)$gdversion == 1) {
+		$dst_img = imagecreate($dstWidth, $dstHeight);
+		imagecopyresized($dst_img, $src_img, 0, 0, 0, 0, (int)$dstWidth, (int)$dstHeight, $srcWidth, $srcHeight);
+	} else {
+		$dst_img = imagecreatetruecolor($dstWidth, $dstHeight);
+		imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0, (int)$dstWidth, (int)$dstHeight, $srcWidth, $srcHeight);
+	}
+	$tmpfile = tempnam(sys_get_temp_dir(), "kn_");
+	imagejpeg($dst_img, $tmpfile, $quality);
+	// FTP copy fails if previous owner was apache:, so delete it!
+	if (file_exists($location)) JFile::delete($location);
+	// Changes file owner to user
+	JFile::copy($tmpfile, $location);
+	unlink($tmpfile);
+	imagedestroy($dst_img);
+}
+
 function kn_myprofile_kn_myprofile_check_filesize($file, $maxSize)
 {
     $size = filesize($file);
@@ -121,7 +153,7 @@ $gallery  = JRequest::getVar('gallery', '');
 
 if ($do == 'init')
 {
-    if ($fbConfig->allowavatarupload)
+    if ($fbConfig->allowavatar)
     {
 ?>
 
@@ -173,11 +205,6 @@ if ($do == 'init')
             <tr>
                 <td >
                     <?php
-                    if ($fbConfig->allowavatar)
-                    {
-                    ?>
-
-                    <?php
                         echo _YOUR_AVATAR . "</td><td >";
 
                         if ($fbConfig->avatar_src == "clexuspm")
@@ -222,9 +249,13 @@ if ($do == 'init')
                             check_dberror("Unable to load Kunena Avatar.");
                             if ($avatar != "")
                             {
+								if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/l_' . $avatar)) {
+									$msg_avatar = '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: '.$fbConfig->avatarlargewidth.'px; max-height: '.$fbConfig->avatarlargeheight.'px;" />';
+								} else {
+									$msg_avatar = '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/l_' . $avatar . '" alt="" />';
+								}
+								echo $msg_avatar;
                     ?>
-
-                                <img src = "<?php echo KUNENA_LIVEUPLOADEDPATH ;?>/avatars/<?php echo $avatar;?>" alt="" />
 
                                 <br />
 
@@ -249,14 +280,6 @@ if ($do == 'init')
                     ?>
                 </td>
 
-                    <?php
-                    }
-                    else
-                    {
-                        echo "<td>&nbsp;";
-                        echo '<input type="hidden" value="" name="avatar"/></td>';
-                    }
-                    ?>
             </tr>
 <?php if ($avatar != ""){ ?>
             <tr><td colspan = "2" align="center">
@@ -272,6 +295,12 @@ if ($do == 'init')
 </div>
 </div>
             <!-- F: My AVATAR -->
+
+<?php
+if ($fbConfig->allowavatarupload)
+{
+?>
+
             <!-- B: Upload -->
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
@@ -319,7 +348,8 @@ if ($do == 'init')
 <?PHP
     }
 
-
+	} // allow avatar upload
+    
     if ($fbConfig->allowavatargallery)
     {
 ?>
@@ -471,15 +501,23 @@ else if ($do == 'validate')
     if ($avatarSize > $maxAvSize)
     {
         $app->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_SIZE . " (" . $fbConfig->avatarsize . " KiloBytes)");
-        return;
     }
 
-    $imgInfo = getimagesize($_FILES['avatar']['tmp_name']);
-    $imgInfo[2] = $imageType[$imgInfo[2]];
-    $srcWidth = $imgInfo[0];
-    $srcHeight = $imgInfo[1];
+	$imgInfo = false;
+    if (function_exists('getimagesize')) {
+    	$imgInfo = @getimagesize($_FILES['avatar']['tmp_name']);
+		if ($imgInfo !== false) {
+    		$imgInfo[2] = $imageType[$imgInfo[2]];
+    		$srcWidth = $imgInfo[0];
+    		$srcHeight = $imgInfo[1];
+		}
+    } else {
+		$fbConfig->imageprocessor = 'none';
+    }
     $src_file = $_FILES['avatar']['tmp_name'];
 
+    //$gdversion = ereg_replace('[[:alpha:][:space:]()]+', '', $GDArray['GD Version']); // just FYI for detection from gd_info()
+    
     switch ($fbConfig->imageprocessor) {
     case 'gd1' :
       if ( !function_exists('imagecreatefromjpeg' )) {
@@ -493,55 +531,17 @@ else if ($do == 'validate')
         $src_img = imagecreatefromgif($src_file);
       }
 
-	$moved = false;
-
-	  // Create Medium Image
-	  if(($srcWidth > $fbConfig->avatarwidth) || ($srcHeight > $fbConfig->avatarheight)) {
-      $dst_img = imagecreate($fbConfig->avatarwidth, $fbConfig->avatarheight);
-      imagecopyresized($dst_img, $src_img, 0, 0, 0, 0, $fbConfig->avatarwidth, (int)$fbConfig->avatarheight, $srcWidth, $srcHeight);
-      imagejpeg($dst_img, $fileLocation, $fbConfig->avatarquality);
-      imagedestroy($dst_img);
-	  } else {
-	  		if (!move_uploaded_file($_FILES['avatar']['tmp_name'], $fileLocation))
-    		echo _UPLOAD_ERROR_GENERAL;
-    		$moved = true;
-
-	  }
-
-      // Create Small Image
-      if(($srcWidth > $fbConfig->avatarsmallwidth) || ($srcHeight > $fbConfig->avatarsmallheight)) {
-      $dst_img = imagecreate($fbConfig->avatarsmallwidth, $fbConfig->avatarsmallheight);
-      imagecopyresized($dst_img, $src_img, 0, 0, 0, 0, $fbConfig->avatarsmallwidth, (int)$fbConfig->avatarsmallheight, $srcWidth, $srcHeight);
-      imagejpeg($dst_img, $fileLocation_s, $fbConfig->avatarquality);
-      imagedestroy($dst_img);
-      } else {
-	  		if($moved) {
-      			copy($fileLocation,$fileLocation_s);
-      		} else {
-	  			if (!move_uploaded_file($_FILES['avatar']['tmp_name'], $fileLocation_s))
-    			echo _UPLOAD_ERROR_GENERAL;
-    			$moved = true;
-      		}
-
-	   }
-
-      // Create Large Image
-      if(($srcWidth > $fbConfig->avatarlargewidth) || ($srcHeight > $fbConfig->avatarlargeheight)) {
-      $dst_img = imagecreate($fbConfig->avatarlargewidth, $fbConfig->avatarlargeheight);
-      imagecopyresized($dst_img, $src_img, 0, 0, 0, 0, $fbConfig->avatarlargewidth, (int)$fbConfig->avatarlargeheight, $srcWidth, $srcHeight);
-      imagejpeg($dst_img, $fileLocation_l, $fbConfig->avatarquality);
-      imagedestroy($dst_img);
-      } else {
-      		if($moved) {
-      			copy($fileLocation,$fileLocation_l);
-      		} else {
-	  			if (!move_uploaded_file($_FILES['avatar']['tmp_name'], $fileLocation_l))
-    			echo _UPLOAD_ERROR_GENERAL;
-      		}
-	  }
-
-      // Destroy source Image
-      imagedestroy($src_img);
+	// Create Large Image
+	generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarlargewidth, 
+		$fbConfig->avatarlargeheight, $fbConfig->avatarquality, $fileLocation_l);
+	// Create Medium Image
+	generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarwidth, 
+		$fbConfig->avatarheight, $fbConfig->avatarquality, $fileLocation);
+	// Create Small Image
+	generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarsmallwidth, 
+		$fbConfig->avatarsmallheight, $fbConfig->avatarquality, $fileLocation_s);
+	// Destroy source Image
+	imagedestroy($src_img);
 
     break;
 
@@ -562,61 +562,35 @@ else if ($do == 'validate')
         $src_img = imagecreatefromgif($src_file);
       }
 
-	$moved = false;
+	// Create Large Image
+	generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarlargewidth, 
+		$fbConfig->avatarlargeheight, $fbConfig->avatarquality, $fileLocation_l);
+	// Create Medium Image
+	generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarwidth, 
+		$fbConfig->avatarheight, $fbConfig->avatarquality, $fileLocation);
+	// Create Small Image
+	generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarsmallwidth, 
+		$fbConfig->avatarsmallheight, $fbConfig->avatarquality, $fileLocation_s);
+	// Destroy source Image
+	imagedestroy($src_img);
 
-	  // Create Medium Image
-	  if(($srcWidth > $fbConfig->avatarwidth) || ($srcHeight > $fbConfig->avatarheight)) {
-     	 $dst_img = imagecreate($fbConfig->avatarwidth, $fbConfig->avatarheight);
-      	$dst_img = imagecreatetruecolor($fbConfig->avatarwidth, $fbConfig->avatarheight);
-     	 imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0, $fbConfig->avatarwidth, (int)$fbConfig->avatarheight, $srcWidth, $srcHeight);
-    	  imagejpeg($dst_img, $fileLocation, $fbConfig->avatarquality);
-    	  imagedestroy($dst_img);
-	  } else {
-	  		if (!move_uploaded_file($_FILES['avatar']['tmp_name'], $fileLocation))
-    		echo _UPLOAD_ERROR_GENERAL;
-    		$moved = true;
+	break;
+    
+	default:
+		if (isset($srcWidth) && ($srcWidth > $fbConfig->avatarlargewidth || $srcHeight > $fbConfig->avatarlargeheight))
+			$app->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_SIZE . " (" . $fbConfig->avatarlargewidth . " x ". $fbConfig->avatarlargeheight .")");
+		// delete previous avatar
+		if (file_exists($fileLocation_l)) JFile::delete($fileLocation_l);
+		if (file_exists($fileLocation)) JFile::delete($fileLocation);
+		if (file_exists($fileLocation_s)) JFile::delete($fileLocation_s);
+		// Changes file owner to user
+		JFile::copy($src_file, $fileLocation);
+		break;
+	}
 
-	  }
-
-      // Create Small Image
-       if(($srcWidth > $fbConfig->avatarsmallwidth) || ($srcHeight > $fbConfig->avatarsmallheight)) {
-     	 $dst_img = imagecreatetruecolor($fbConfig->avatarsmallwidth, $fbConfig->avatarsmallheight);
-     	 imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0, $fbConfig->avatarsmallwidth, (int)$fbConfig->avatarsmallheight, $srcWidth, $srcHeight);
-   		 imagejpeg($dst_img, $fileLocation_s, $fbConfig->avatarquality);;
-    	 imagedestroy($dst_img);
-        } else {
-	  		if($moved) {
-      			copy($fileLocation,$fileLocation_s);
-      		} else {
-	  			if (!move_uploaded_file($_FILES['avatar']['tmp_name'], $fileLocation_s))
-    			echo _UPLOAD_ERROR_GENERAL;
-    			$moved = true;
-      		}
-
-	   }
-
-
-      // Create Large Image
-      if(($srcWidth > $fbConfig->avatarlargewidth) || ($srcHeight > $fbConfig->avatarlargeheight)) {
-     	 $dst_img = imagecreatetruecolor($fbConfig->avatarlargewidth, $fbConfig->avatarlargeheight);
-     	 imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0, $fbConfig->avatarlargewidth, (int)$fbConfig->avatarlargeheight, $srcWidth, $srcHeight);
-     	 imagejpeg($dst_img, $fileLocation_l, $fbConfig->avatarquality);
-     	 imagedestroy($dst_img);
-      } else {
-      		if($moved) {
-      			copy($fileLocation,$fileLocation_l);
-      		} else {
-	  			if (!move_uploaded_file($_FILES['avatar']['tmp_name'], $fileLocation_l))
-    			echo _UPLOAD_ERROR_GENERAL;
-      		}
-	  }
-
-       // Destroy source Image
-      imagedestroy($src_img);
-    break;
-   }
-
-    $newFileName = CKunenaTools::fbRemoveXSS($newFileName);
+	// delete original file
+	unlink($src_file);
+	
     $kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newFileName}' WHERE userid={$kunena_my->id}");
     $kunena_db->query() or trigger_dberror("Unable to update avatar.");
     echo " <strong>" . _UPLOAD_UPLOADED . "</strong>...<br /><br />";

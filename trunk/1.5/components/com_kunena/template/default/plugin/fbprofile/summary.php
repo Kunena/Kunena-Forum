@@ -24,6 +24,7 @@ $fbConfig =& CKunenaConfig::getInstance();
 
 $signature = $userinfo->signature;
 
+$usr_signature = '';
 if ($signature)
 {
 	$smileyList = smile::getEmoticons(0);

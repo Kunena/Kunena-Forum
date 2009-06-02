@@ -34,6 +34,9 @@ Kunena 1.5.2RC
 
 2-June-2009 Matias
 # [#16567] Warn/detect possible problems in Community Builder integration 
+# [#16588] Avatar upload fails in FTP mode with strict permissions
+# [#16590] If imageprocessor=none, large avatar can break layout
+# [#16591] Configuration options for allowing avatars and upload do not work
 
 31-May-2009 fxstein
 ^ [#16260] Version info updated to 1.5.2rc release candidate

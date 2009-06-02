@@ -51,8 +51,6 @@ function com_install()
 	//before we do anything else we want to check for minimum system requirements
 	if (version_compare(phpversion(), KUNENA_MIN_PHP, ">=") && version_compare($mysqlversion, KUNENA_MIN_MYSQL, ">="))
 	{
-		// we're on 4.3.0 or later
-
 		//change fb menu icon
 		$kunena_db->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena'");
 		$id = $kunena_db->loadResult();
@@ -139,6 +137,7 @@ function com_install()
 			// We might want to make the file copy below part of the install as well
 			//
 
+			jimport('joomla.filesystem.folder');
 		    $ret = JFolder::copy(JPATH_ROOT .DS. "components" .DS. "com_kunena" .DS. "kunena.files.distribution",
 		    				JPATH_ROOT .DS. "images" .DS. "fbfiles", '', true);
 

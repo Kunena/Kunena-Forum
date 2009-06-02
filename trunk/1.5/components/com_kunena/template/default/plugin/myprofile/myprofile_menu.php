@@ -53,7 +53,7 @@ $fbConfig =& CKunenaConfig::getInstance();
     }
 
     // Only show avatar link if we are in charge of it
-    if ($fbConfig->avatar_src == 'fb')
+    if ($fbConfig->allowavatar && $fbConfig->avatar_src == 'fb')
     {
 ?>
             	<a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=uploadavatar'); ?>"> <?php echo _KUNENA_MYPROFILE_MYAVATAR; ?></a>

@@ -60,7 +60,7 @@ else
 {
     if ($fbavatar != "") {
 		if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $fbavatar)) {
-            $jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/' . $fbavatar . '" alt=" " />';
+            $jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/' . $fbavatar . '" alt=" " style="max-width: '.$fbConfig->avatarsmallwidth.'px; max-height: '.$fbConfig->avatarsmallheight.'px;" />';
 		} else {
 		  $jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_' . $fbavatar . '" alt=" " />';
 		}

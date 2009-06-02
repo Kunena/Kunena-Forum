@@ -49,7 +49,7 @@ ONLINE README
 
 For details about this release and how to install or upgrade to it please see:
 
-http://docs.kunena.com/index.php/Kunena_1.0.5a_Read_Me
+http://docs.kunena.com/index.php/Kunena_1.5.2_Read_Me
 
 END OF README
 =============

@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<install version="1.5.0a" type="component" method="upgrade">
+<install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>
     <version>1.5.2rc</version>
     <versionname>話すため</versionname>
@@ -24,7 +24,7 @@
 @fbbackendlist@    
 
         </files>
-        <menu link="">Kunena Forum</menu>
+        <menu>Kunena Forum</menu>
     </administration>
     <params />
 </install>

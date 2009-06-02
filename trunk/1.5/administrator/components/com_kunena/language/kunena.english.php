@@ -20,8 +20,17 @@
 **/
 
 // Dont allow direct linking
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
+// 1.5.2RC
+DEFINE('_KUNENA_INTEGRATION_CB_WARN_GENERAL', 'Detected problems in Community Builder integration:');
+DEFINE('_KUNENA_INTEGRATION_CB_WARN_INSTALL', 'CB integration works only if you have Community Builder version %s or higher installed.');
+DEFINE('_KUNENA_INTEGRATION_CB_WARN_PUBLISH', 'CB Profile integration works only if Community Builder User profile has been published.');
+DEFINE('_KUNENA_INTEGRATION_CB_WARN_UPDATE', 'CB Profile integration works only if you are using Community Builder version %s or higher.');
+DEFINE('_KUNENA_INTEGRATION_CB_WARN_XHTML', 'CB Profile integration works only if Community Builder is in W3C XHTML 1.0 Trans. compliance mode.');
+DEFINE('_KUNENA_INTEGRATION_CB_WARN_INTEGRATION', 'CB Profile integration works only if Forum integration plugin has been enabled in Community Builder.');
+DEFINE('_KUNENA_INTEGRATION_CB_WARN_HIDE', 'Saving Kunena configuration will disable integration and hide this warning.');
+			
 // 1.0.10
 DEFINE('_KUNENA_BACK', 'Back');
 DEFINE('_KUNENA_SYNC', 'Sync');

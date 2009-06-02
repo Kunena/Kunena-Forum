@@ -175,7 +175,7 @@ class CKunenaLink
     	{
     		if($fbConfig->fb_profile == 'cb') 
     		{
-    			$kunenaProfile = CKunenaCBProfile::getInstance();
+    			$kunenaProfile =& CKunenaCBProfile::getInstance();
     			if ($link = $kunenaProfile->getProfileURL($userid))
     			{
     				return CKunenaLink::GetSefHrefLink($link, $name, '', $rel, $class);

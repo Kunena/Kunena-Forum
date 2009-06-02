@@ -24,12 +24,18 @@ defined( '_JEXEC' ) or die('Restricted access');
 // Kunena wide defines
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 
+$langfile = KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.'.KUNENA_LANGUAGE.'.php';
+$defaultlangfile = KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.english.php';
+(file_exists($langfile)) ? require_once ($langfile) : require_once ($defaultlangfile);
+
 // Now that we have the global defines we can use shortcut defines
 require_once (KUNENA_PATH_LIB .DS. 'kunena.debug.php');
 require_once (KUNENA_PATH_LIB .DS. 'kunena.config.class.php');
 
+global $fbConfig, $kunenaProfile;
+
 $app =& JFactory::getApplication();
-$app->enqueueMessage('Kunena 1.5.2 Beta Release is meant only for testing. Please use Kunena 1.0 in production servers.', 'notice');
+//$app->enqueueMessage('Kunena 1.5.2 Beta Release is meant only for testing. Please use Kunena 1.0 in production servers.', 'notice');
 
 $kunena_db = JFactory::getDBO();
 
@@ -39,11 +45,6 @@ $fbConfig->load();
 // Class structure should be used after this and all the common task should be moved to this class
 require_once (KUNENA_PATH .DS. 'class.kunena.php');
 require_once (KUNENA_PATH_ADMIN .DS. 'admin.kunena.html.php');
-
-$langfile = KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.'.KUNENA_LANGUAGE.'.php';
-$defaultlangfile = KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.english.php';
-
-(file_exists($langfile)) ? require_once ($langfile) : require_once ($defaultlangfile);
 
 $kn_tables = CKunenaTables::getInstance();
 if ($kn_tables->installed() === false) {
@@ -325,6 +326,13 @@ switch ($task)
     default:
         html_Kunena::controlPanel();
         break;
+}
+
+// Detect errors in CB integration
+if (is_object($kunenaProfile)) 
+{
+	$kunenaProfile->enqueueErrors();
+	//$kunenaProfile->close();
 }
 
 } // ENDIF: is installed

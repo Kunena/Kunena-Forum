@@ -91,13 +91,13 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 	    }
     }
 
-	global $kunenaProfile;
     //Community Builder 1.2 - older 1.1 integration no longer supported
 	if ($fbConfig->pm_component == 'cb' || $fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
     {
 		// Get Community Builder compability
 		require_once (JPATH_ROOT . "/components/com_kunena/lib/kunena.communitybuilder.php");
-		$kunenaProfile =& new CkunenaCBProfile();
+		global $kunenaProfile;
+		$kunenaProfile =& CkunenaCBProfile::getInstance();
     }
 
     //Clexus PM

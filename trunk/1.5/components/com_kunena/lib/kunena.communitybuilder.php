@@ -18,37 +18,95 @@ defined( '_JEXEC' ) or die('Restricted access');
  */
 global $_CB_framework, $_CB_database, $ueConfig;
 
-$cbpath = KUNENA_ROOT_PATH_ADMIN .DS. 'components/com_comprofiler/plugin.foundation.php';
-if ( ! file_exists( $cbpath ) )
-{
-	$fbConfig->pm_component = $fbConfig->pm_component == 'cb' ? 'none' : $fbConfig->pm_component;
-	$fbConfig->fb_profile = $fbConfig->fb_profile == 'cb' ? 'kunena' : $fbConfig->fb_profile;
-	$fbConfig->avatar_src = $fbConfig->avatar_src == 'cb' ? 'kunena' : $fbConfig->avatar_src;
-	
-	return;
-}
-include_once( $cbpath );
-cbimport( 'cb.database' );
-cbimport( 'cb.tables' );
-cbimport( 'language.front' );
-cbimport( 'cb.tabs' );
-
-unset ($tmp_db);
-
-define("KUNENA_CB_ITEMID_SUFFIX", getCBprofileItemid());
-
 class CKunenaCBProfile {
-	var $sidebarText;
+	var $error = 0;
+	var $errormsg = '';
 
-	function CKunenaCBProfile() {
+	function __construct() {
+		$fbConfig =& CKunenaConfig::getInstance();
+		$cbpath = KUNENA_ROOT_PATH_ADMIN .DS. 'components' .DS. 'com_comprofiler' .DS. 'plugin.foundation.php';
+		if (file_exists($cbpath)) { 
+			include_once($cbpath);
+			cbimport('cb.database');
+			cbimport('cb.tables');
+			cbimport('language.front');
+			cbimport('cb.tabs');
+			define("KUNENA_CB_ITEMID_SUFFIX", getCBprofileItemid());
+			if ($fbConfig->fb_profile == 'cb') {
+				$params = array();
+				$this->trigger('onStart', $params);
+			}
+		}
+		if ($this->_detectIntegration() === false) {
+			$fbConfig->pm_component = $fbConfig->pm_component == 'cb' ? 'none' : $fbConfig->pm_component;
+			$fbConfig->avatar_src = $fbConfig->avatar_src == 'cb' ? 'kunena' : $fbConfig->avatar_src;
+			$fbConfig->fb_profile = $fbConfig->fb_profile == 'cb' ? 'kunena' : $fbConfig->fb_profile;
+		}
+		else if ($this->useProfileIntegration() === false) {
+			$fbConfig->fb_profile = $fbConfig->fb_profile == 'cb' ? 'kunena' : $fbConfig->fb_profile;
+		}
+	}
+	
+	function close() {
+		$fbConfig =& CKunenaConfig::getInstance();
+		if ($fbConfig->fb_profile == 'cb') {
+			$params = array();
+			$this->trigger('onEnd', $params);
+		}
 	}
 
 	function &getInstance() {
 		static $instance;
-		if (!$instance) $instance = new CKunenaCBProfile();
+		if (!$instance) {
+			$instance = new CKunenaCBProfile();
+		}
 		return $instance;
 	}
 
+function enqueueErrors() {
+		if ($this->error) {
+			$app =& JFactory::getApplication();
+			$app->enqueueMessage(_KUNENA_INTEGRATION_CB_WARN_GENERAL, 'notice');
+			$app->enqueueMessage($this->errormsg, 'notice');
+			$app->enqueueMessage(_KUNENA_INTEGRATION_CB_WARN_HIDE, 'notice');
+		}
+	}
+	
+	function _detectIntegration() {
+		global $ueConfig;
+		$fbConfig =& CKunenaConfig::getInstance();
+
+		// Detect 
+		if (!isset($ueConfig['version'])) {
+			$this->errormsg = sprintf(_KUNENA_INTEGRATION_CB_WARN_INSTALL, '1.2');
+			$this->error = 1;
+			return false;
+		}
+		if ($fbConfig->fb_profile != 'cb') return true;
+		if (!getCBprofileItemid()) {
+			$this->errormsg = _KUNENA_INTEGRATION_CB_WARN_PUBLISH;
+			$this->error = 2;
+		}
+		if (!class_exists('getForumModel') && version_compare($ueConfig['version'], '1.2.1') < 0) {
+			$this->errormsg = sprintf(_KUNENA_INTEGRATION_CB_WARN_UPDATE, '1.2.1');
+			$this->error = 3;
+		}
+		else if (isset($ueConfig['xhtmlComply']) && $ueConfig['xhtmlComply'] == 0) {
+			$this->errormsg = _KUNENA_INTEGRATION_CB_WARN_XHTML;
+			$this->error = 4;
+		}
+		else if (!class_exists('getForumModel')) {
+			$this->errormsg = _KUNENA_INTEGRATION_CB_WARN_INTEGRATION;
+			$this->error = 5;
+		}
+		return true;
+	}
+
+	function useProfileIntegration() {
+		$fbConfig =& CKunenaConfig::getInstance();
+		return ($fbConfig->fb_profile == 'cb' && !$this->error);
+	}
+	
 	function getLoginURL() {
 		return cbSef( 'index.php?option=com_comprofiler&amp;task=login' );
 	}

@@ -39,6 +39,7 @@ Kunena 1.5.2RC
 # [#16634] Workaround for Joomla Bug: Overwriting files fail in FTP mode if they were not created by using FTP mode
 # [#16632] Administrator: Replacing image with dummy image never worked in Uploaded Images Browser
 # [#16635] Administrator: Hide index.php in Uploaded Files/Images Browser
+# [#16637] Administrator: Defaut_red/green/gray should not be shown in Image Set list as they contain no images
 
 2-June-2009 Matias
 # [#16567] Warn/detect possible problems in Community Builder integration 

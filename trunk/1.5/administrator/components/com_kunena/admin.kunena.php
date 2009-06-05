@@ -702,8 +702,11 @@ function showConfig($option)
             {
                 if (is_dir(KUNENA_PATH_TEMPLATE .DS. $file))
                 {
-                    if (!($file[0] == '.')) {
-                        $filelist[] = $file;
+                    if (!($file[0] == '.') && is_file(KUNENA_PATH_TEMPLATE .DS. $file .DS. 'kunena.forum.css')) {
+                        $templatelist[] = $file;
+                    }
+                    if (!($file[0] == '.') && is_dir(KUNENA_PATH_TEMPLATE .DS. $file .DS. 'images' .DS. 'english')) {
+                        $imagesetlist[] = $file;
                     }
                 }
             }
@@ -712,24 +715,21 @@ function showConfig($option)
         closedir ($dir);
     }
 
-    asort ($filelist);
-
-    while (list($key, $val) = each($filelist)) {
-        //echo "<option value=\"$val\"";
-        //if ($selected == $val) {
-        //    echo " selected";
-        //}
-        //echo ">$val Gallery</option>\n";
-        //$listitems[] = JHTML::_('select.option',$val, $val);
-
-		$listitems[] = JHTML::_('select.option',  JText::_($val),$val);
+    asort ($templatelist);
+    asort ($imagesetlist);
+    
+    while (list($key, $val) = each($templatelist)) {
+		$templatelistitems[] = JHTML::_('select.option',  $val, $val);
     }
-
+    while (list($key, $val) = each($imagesetlist)) {
+		$imagesetlistitems[] = JHTML::_('select.option',  $val, $val);
+    }
+    
 	$lists['badwords'] = JHTML::_('select.genericlist', $yesno, 'cfg_badwords', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->badwords);
 	$lists['jmambot'] = JHTML::_('select.genericlist', $yesno, 'cfg_jmambot', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->jmambot);
     $lists['disemoticons'] = JHTML::_('select.genericlist', $yesno, 'cfg_disemoticons', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->disemoticons);
-    $lists['template'] = JHTML::_('select.genericlist', $listitems, 'cfg_template', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->template);
-    $lists['templateimagepath'] = JHTML::_('select.genericlist', $listitems, 'cfg_templateimagepath', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->templateimagepath);
+    $lists['template'] = JHTML::_('select.genericlist', $templatelistitems, 'cfg_template', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->template);
+    $lists['templateimagepath'] = JHTML::_('select.genericlist', $imagesetlistitems, 'cfg_templateimagepath', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->templateimagepath);
     $lists['regonly'] = JHTML::_('select.genericlist', $yesno, 'cfg_regonly', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->regonly);
     $lists['board_offline'] = 	JHTML::_('select.genericlist', $yesno, 'cfg_board_offline', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->board_offline);
     $lists['pubwrite'] = JHTML::_('select.genericlist', $yesno, 'cfg_pubwrite', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pubwrite);

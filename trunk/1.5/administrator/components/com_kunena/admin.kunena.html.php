@@ -3148,9 +3148,9 @@ else
                 $catid = $kunena_db->loadResult();
                 echo $mesid == '' ? '<td>' : '<td>';
                 echo '<table style="border: 1px solid #ccc;"><tr><td height="90" width="130" style="text-align: center">';
-                echo $type ? '<a href="' . KUNENA_PATH_UPLOADED .DS. 'images/' . $uploaded[$i] . '" target="_blank" title="' . _COM_A_IMGB_ENLARGE . '" alt="' . _COM_A_IMGB_ENLARGE . '"><img src="' . KUNENA_LIVEUPLOADEDPATH . '/images/' . $uploaded[$i]
+                echo $type ? '<a href="' . KUNENA_LIVEUPLOADEDPATH . '/images/' . $uploaded[$i] . '" target="_blank" title="' . _COM_A_IMGB_ENLARGE . '" alt="' . _COM_A_IMGB_ENLARGE . '"><img src="' . KUNENA_LIVEUPLOADEDPATH . '/images/' . $uploaded[$i]
                          . '" width="80" heigth="80" border="0"></a>' : '<a href="'
-                         . KUNENA_PATH_UPLOADED .DS. 'files/' . $uploaded[$i] . '" title="' . _COM_A_IMGB_DOWNLOAD . '" alt="' . _COM_A_IMGB_DOWNLOAD . '"><img src="../administrator/components/com_kunena/images/fbfile.png"   border="0"></a>';
+                         . KUNENA_LIVEUPLOADEDPATH . '/files/' . $uploaded[$i] . '" title="' . _COM_A_IMGB_DOWNLOAD . '" alt="' . _COM_A_IMGB_DOWNLOAD . '"><img src="../administrator/components/com_kunena/images/fbfile.png"   border="0"></a>';
                 echo '</td></tr><tr><td style="text-align: center">';
                 //echo '<input type="radio" name="newAvatar" value="gallery/'.$uploaded[$i].'">';
                 echo '<br /><small>';

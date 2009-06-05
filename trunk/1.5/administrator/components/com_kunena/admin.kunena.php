@@ -250,7 +250,7 @@ switch ($task)
         break;
 
     case "replaceImage":
-        replaceImage($kunena_db, $option, JRequest::getVar('img', ''), $OxP);
+        replaceImage($kunena_db, $option, JRequest::getVar('img', ''), JRequest::getInt('OxP', 1));
 
         break;
 
@@ -1383,7 +1383,7 @@ function browseUploaded($kunena_db, $option, $type)
 
     while ($file = @readdir($dir))
     {
-        if ($file != '.' && $file != '..' && is_file($uploaded_path .DS . $file) && !is_link($uploaded_path .DS . $file))
+        if ($file != '.' && $file != '..' && $file != 'index.php' && is_file($uploaded_path .DS . $file) && !is_link($uploaded_path .DS . $file))
         {
             //if( preg_match('/(\.gif$|\.png$|\.jpg|\.jpeg)$/is', $file) )
             //{
@@ -1409,27 +1409,27 @@ function replaceImage($kunena_db, $option, $imageName, $OxP)
 		return;
 	}
 
-    // This function will replace the selected image with a dummy (OxP=1) or delete it
-    // step 1: Remove image that must be replaced:
-    unlink (KUNENA_PATH_UPLOADED .DS. 'images/' . $imageName);
+	require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
+	// This function will replace the selected image with a dummy (OxP=1) or delete it
 
     if ($OxP == "1")
     {
-        // step 2: the file name, without the extension:
         $filename = split("\.", $imageName);
         $fileName = $filename[0];
         $fileExt = $filename[1];
-        // step 3: copy the dummy and give it the old file name:
-        copy(KUNENA_PATH_UPLOADED .DS. 'dummy.' . $fileExt, KUNENA_PATH_UPLOADED .DS. 'images/' . $imageName);
+        $ret = CKunenaFile::copy(KUNENA_PATH_UPLOADED .DS. 'dummy.' . $fileExt, KUNENA_PATH_UPLOADED .DS. 'images' .DS. $imageName);
     }
     else
     {
-        //remove the database link as well
-        $kunena_db->setQuery("DELETE FROM #__fb_attachments where filelocation='" . KUNENA_PATH_UPLOADED .DS. "images/" . $imageName . "'");
-        $kunena_db->query() or trigger_dberror("Unable to delete attachment.");
+    	$ret = CKunenaFile::delete(KUNENA_PATH_UPLOADED .DS. 'images' .DS. $imageName);
+    	//remove the database link as well
+    	if ($ret) {
+			$kunena_db->setQuery("DELETE FROM #__fb_attachments where filelocation='%/images/" . $imageName . "'");
+			$kunena_db->query() or trigger_dberror("Unable to delete attachment.");
+    	}
     }
-
-    $app->redirect( JURI::base() ."index2.php?option=$option&task=browseImages", _KUNENA_IMGDELETED);
+    if ($ret) $app->enqueueMessage(_KUNENA_IMGDELETED);
+    $app->redirect( JURI::base() ."index2.php?option=$option&task=browseImages");
 }
 
 function deleteFile($kunena_db, $option, $fileName)
@@ -1442,12 +1442,17 @@ function deleteFile($kunena_db, $option, $fileName)
     	return;
     }
 
-    // step 1: Remove file
-    unlink (KUNENA_PATH_UPLOADED .DS. 'files/' . $fileName);
+	require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
+    
+	// step 1: Remove file
+    $ret = CKunenaFile::delete(KUNENA_PATH_UPLOADED .DS. 'files' .DS. $fileName);
     //step 2: remove the database link to the file
-    $kunena_db->setQuery("DELETE FROM #__fb_attachments where filelocation='" . KUNENA_PATH_UPLOADED .DS. "files/" . $fileName . "'");
-    $kunena_db->query() or trigger_dberror("Unable to delete attachment.");
-    $app->redirect( JURI::base() ."index2.php?option=$option&task=browseFiles", _KUNENA_FILEDELETED);
+    if ($ret) {
+    	$kunena_db->setQuery("DELETE FROM #__fb_attachments where filelocation='%/files/" . $fileName . "'");
+    	$kunena_db->query() or trigger_dberror("Unable to delete attachment.");
+    }
+    if ($ret) $app->enqueueMessage(_KUNENA_FILEDELETED);
+    $app->redirect( JURI::base() ."index2.php?option=$option&task=browseFiles");
 }
 
 //===============================

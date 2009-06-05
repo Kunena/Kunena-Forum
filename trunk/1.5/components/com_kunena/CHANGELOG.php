@@ -32,6 +32,14 @@ Legend:
 
 Kunena 1.5.2RC
 
+5-June-2009 Matias
++ [#16633] Allow many attachments in one message (no GUI yet, use edit instead)
+# [#16636] Fix attachments to use Joomla! 1.5 API (add new CKunenaFile class)
+# [#16596] Workaround for Joomla bug: Wrong attachment file permissions in FTP mode
+# [#16634] Workaround for Joomla Bug: Overwriting files fail in FTP mode if they were not created by using FTP mode
+# [#16632] Administrator: Replacing image with dummy image never worked in Uploaded Images Browser
+# [#16635] Administrator: Hide index.php in Uploaded Files/Images Browser
+
 2-June-2009 Matias
 # [#16567] Warn/detect possible problems in Community Builder integration 
 # [#16588] Avatar upload fails in FTP mode with strict permissions

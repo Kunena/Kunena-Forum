@@ -27,7 +27,7 @@ $app =& JFactory::getApplication();
 
 // Joomla template dir
 define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH .DS. "templates".DS . $app->getTemplate());
-define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "/templates/".$app->getTemplate());
+define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "templates/".$app->getTemplate());
 
 global $kunena_my;
 
@@ -76,8 +76,8 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 
 			//PM popup requires JomSocial css to be loaded from selected template
 			$config =& CFactory::getConfig();
-			$document->addStyleSheet(KUNENA_JLIVEURL.'/components/com_community/assets/window.css');
-			$document->addStyleSheet(KUNENA_JLIVEURL.'/components/com_community/templates/'.$config->get('template').'/css/style.css');
+			$document->addStyleSheet(KUNENA_JLIVEURL.'components/com_community/assets/window.css');
+			$document->addStyleSheet(KUNENA_JLIVEURL.'components/com_community/templates/'.$config->get('template').'/css/style.css');
 	    }
 	    else
 	    {
@@ -91,11 +91,11 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 	    }
     }
 
-    //Community Builder 1.2 - older 1.1 integration no longer supported
+    //Community Builder 1.2 integration
 	if ($fbConfig->pm_component == 'cb' || $fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
     {
 		// Get Community Builder compability
-		require_once (JPATH_ROOT . "/components/com_kunena/lib/kunena.communitybuilder.php");
+		require_once (KUNENA_PATH_LIB .DS. "kunena.communitybuilder.php");
 		global $kunenaProfile;
 		$kunenaProfile =& CkunenaCBProfile::getInstance();
     }
@@ -157,12 +157,12 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
  +----------------------------------------------*/
 
 // Kunena live url
-define('KUNENA_LIVEURL', KUNENA_JLIVEURL . '/index.php?option=com_kunena' . KUNENA_COMPONENT_ITEMID_SUFFIX);
-define('KUNENA_CLEANLIVEURL', KUNENA_JLIVEURL . '/index2.php?option=com_kunena&amp;no_html=1' . KUNENA_COMPONENT_ITEMID_SUFFIX);
+define('KUNENA_LIVEURL', KUNENA_JLIVEURL . 'index.php?option=com_kunena' . KUNENA_COMPONENT_ITEMID_SUFFIX);
+define('KUNENA_CLEANLIVEURL', KUNENA_JLIVEURL . 'index2.php?option=com_kunena&amp;no_html=1' . KUNENA_COMPONENT_ITEMID_SUFFIX);
 define('KUNENA_LIVEURLREL', 'index.php?option=com_kunena' . KUNENA_COMPONENT_ITEMID_SUFFIX);
 
 // Kunena souces absolute path
-define('KUNENA_DIRECTURL', KUNENA_JLIVEURL . '/components/com_kunena');
+define('KUNENA_DIRECTURL', KUNENA_JLIVEURL . 'components/com_kunena');
 
 // Kunena direct url
 define('KUNENA_URLSOURCESPATH', KUNENA_DIRECTURL . '/lib/');
@@ -174,7 +174,7 @@ if (!defined("KUNENA_JCSSURL")) {
 }
 
 // Kunena uploaded files directory
-define('KUNENA_LIVEUPLOADEDPATH', KUNENA_JLIVEURL . '/images/fbfiles');
+define('KUNENA_LIVEUPLOADEDPATH', KUNENA_JLIVEURL . 'images/fbfiles');
 
 
 // now continue with other paths

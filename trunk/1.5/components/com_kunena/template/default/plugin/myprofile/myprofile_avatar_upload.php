@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-jimport('joomla.filesystem.file');
+require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
 
 function generateAvatarGD($gdversion, $src_img, $srcWidth, $srcHeight, $dstWidth, $dstHeight, $quality, $location)
 {
@@ -46,10 +46,7 @@ function generateAvatarGD($gdversion, $src_img, $srcWidth, $srcHeight, $dstWidth
 	}
 	$tmpfile = tempnam(sys_get_temp_dir(), "kn_");
 	imagejpeg($dst_img, $tmpfile, $quality);
-	// FTP copy fails if previous owner was apache:, so delete it!
-	if (file_exists($location)) JFile::delete($location);
-	// Changes file owner to user
-	JFile::copy($tmpfile, $location);
+	CKunenaFile::copy($tmpfile, $location);
 	unlink($tmpfile);
 	imagedestroy($dst_img);
 }
@@ -476,9 +473,10 @@ else if ($do == 'validate')
     echo '<tr><td><div><div><div><div><table><tbody><tr><td>';
     //Avatar Size
     $avatarSize = $_FILES['avatar']['size'];
-
+    $src_file = $_FILES['avatar']['tmp_name'];
+    
     //check for empty file
-    if (empty($_FILES['avatar']['name']))
+    if (!is_uploaded_file($src_file) || empty($_FILES['avatar']['name']))
     {
         $app->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_EMPTY);
     }
@@ -514,7 +512,6 @@ else if ($do == 'validate')
     } else {
 		$fbConfig->imageprocessor = 'none';
     }
-    $src_file = $_FILES['avatar']['tmp_name'];
 
     //$gdversion = ereg_replace('[[:alpha:][:space:]()]+', '', $GDArray['GD Version']); // just FYI for detection from gd_info()
     
@@ -579,12 +576,10 @@ else if ($do == 'validate')
 	default:
 		if (isset($srcWidth) && ($srcWidth > $fbConfig->avatarlargewidth || $srcHeight > $fbConfig->avatarlargeheight))
 			$app->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_SIZE . " (" . $fbConfig->avatarlargewidth . " x ". $fbConfig->avatarlargeheight .")");
-		// delete previous avatar
-		if (file_exists($fileLocation_l)) JFile::delete($fileLocation_l);
-		if (file_exists($fileLocation)) JFile::delete($fileLocation);
-		if (file_exists($fileLocation_s)) JFile::delete($fileLocation_s);
-		// Changes file owner to user
-		JFile::copy($src_file, $fileLocation);
+		// Make sure that we do not use wrong avatar image
+		if (file_exists($fileLocation_s)) CKunenaFile::delete($fileLocation_s);
+		if (file_exists($fileLocation_l)) CKunenaFile::delete($fileLocation_l);
+		CKunenaFile::copy($src_file, $fileLocation);
 		break;
 	}
 

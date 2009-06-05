@@ -23,17 +23,18 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 require_once(KUNENA_PATH_LIB .DS. 'kunena.helpers.php');
+require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
 
 $attachfile = JRequest::getVar('attachfile', NULL, 'FILES', 'array');
-jimport('joomla.filesystem.file');
-$filename = JFile::makeSafe($attachfile['name']);
+$filename = CKunenaFile::makeSafe($attachfile['name']);
 
 function fileUploadError($msg)
 {
     global $message;
     $GLOBALS['KUNENA_rc'] = 0;
     $message = str_replace("[file]", "", $message);
-    fbAlert("$msg\n" . _FILE_NOT_UPLOADED);
+    $app =& JFactory::getApplication();
+    $app->enqueueMessage(_FILE_NOT_UPLOADED .' ('. $msg .')', 'notice');
 }
 
 $GLOBALS['KUNENA_rc'] = 1; //reset return code
@@ -51,45 +52,40 @@ $newFileName = $fileName . '.' . $fileExt;
 $fileSize = $attachfile['size'];
 
 //Enforce it is a new file
-if (file_exists(KUNENA_PATH_UPLOADED .DS. "files/$newFileName")) {
-    $newFileName = $fileName . '-' . md5(microtime()) . "." . $fileExt;
+if (file_exists(KUNENA_PATH_UPLOADED .DS. "files" .DS. $newFileName)) {
+    $newFileName = $fileName . '-' . date('Ymd') . "." . $fileExt;
+    for ($i=2; file_exists(KUNENA_PATH_UPLOADED .DS. "files" .DS. $newFileName); $i++) {
+    	$newFileName = $fileName . '-' . date('Ymd') . "-$i." . $fileExt;
+    }
 }
 
 if ($GLOBALS['KUNENA_rc'])
 {
     //Filename + proper path
-    $fileLocation = strtr(KUNENA_PATH_UPLOADED .DS. "files/$newFileName", "\\", "/");
-
+    $fileLocation = strtr(KUNENA_PATH_UPLOADED .DS. "files" .DS. $newFileName, "\\", "/");
+    $allowedArray = explode(',', strtolower($fbConfig->filetypes));
+    $maxImgSize = $fbConfig->filesize * 1024;
+    
     // Check for empty filename
-    if (empty($attachfile['name'])) {
+    if (!is_uploaded_file($attachfile['tmp_name']) || empty($attachfile['name'])) {
         fileUploadError(_FILE_ERROR_EMPTY);
     }
-
     // check for allowed file types
-    $allowedArray = explode(',', strtolower($fbConfig->filetypes));
-
-    if (!in_array($fileExt, $allowedArray)) {
+    else if (!in_array($fileExt, $allowedArray)) {
         fileUploadError(_FILE_ERROR_TYPE . " " . $fbConfig->filetypes);
     }
-
     // Check filesize
-    $maxImgSize = $fbConfig->filesize * 1024;
-
-    if ($fileSize > $maxImgSize) {
+    else if ($fileSize > $maxImgSize) {
         fileUploadError(_FILE_ERROR_SIZE . " (" . $fbConfig->filesize . "kb)");
     }
 }
 
 if ($GLOBALS['KUNENA_rc'])
 {
-    // file is OK, move it to the proper location
-    jimport('joomla.filesystem.file');
-    JFile::upload($attachfile['tmp_name'], $fileLocation);
-}
+	// file is OK, move it to the proper location
+	CKunenaFile::upload($attachfile['tmp_name'], $fileLocation);
 
-// Insert file code into message
-if ($GLOBALS['KUNENA_rc'])
-{
+	// Insert file code into message
     $code
         = '[file name='
         . $newFileName . ' size=' . $fileSize . ']' . KUNENA_LIVEUPLOADEDPATH . '/files/' . $newFileName . '[/file]';

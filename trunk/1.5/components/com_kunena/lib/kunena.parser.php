@@ -743,8 +743,8 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
             case 'img':
                 $task->autolink_disable--; # continue autolink conversion
                 // kunena_htmlspecialchars($tag->options['default'], ENT_QUOTES)
-                if(isset($tag->options['default'])) { $tag->options['name'] = $tag->options['default']; }
-                $tag_new = "<img class='c_img' BORDER='0' src='".kunena_htmlspecialchars($tag->options['default'], ENT_QUOTES)."'";
+                if(!isset($tag->options['name'])) break;
+                $tag_new = "<img class='c_img' BORDER='0' src='".kunena_htmlspecialchars($tag->options['name'], ENT_QUOTES)."'";
                 if(isset($tag->options['width'])) {
                     $tag->options['width'] = (int)$tag->options['width'];
                     $tag_new .= " width='".$tag->options['width']."'";

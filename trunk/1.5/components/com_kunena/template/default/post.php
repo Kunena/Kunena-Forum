@@ -714,6 +714,7 @@ $catName = $objCatInfo->name;
                         //first check if there is an uploaded image or file already for this post (no new ones allowed)
                         $no_file_upload = 0;
                         $no_image_upload = 0;
+                        /*
                         $kunena_db->setQuery("SELECT filelocation FROM #__fb_attachments WHERE mesid='$id'");
                         $attachments = $kunena_db->loadObjectList();
                         	check_dberror("Unable to load attachements.");
@@ -731,6 +732,7 @@ $catName = $objCatInfo->name;
                                 }
                             }
                         }
+                        */
 
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
                             include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
@@ -788,7 +790,7 @@ $catName = $objCatInfo->name;
                             include KUNENA_PATH_LIB .DS. 'kunena.file.upload.php';
                         }
 
-                        if (is_array($attachfile) && $attachfile['error'] != UPLOAD_ERR_NO_FILE) {
+                        if (is_array($attachimage) && $attachimage['error'] != UPLOAD_ERR_NO_FILE) {
                             include KUNENA_PATH_LIB .DS. 'kunena.image.upload.php';
                         }
 

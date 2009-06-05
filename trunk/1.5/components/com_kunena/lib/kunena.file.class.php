@@ -31,11 +31,14 @@ class CKunenaPath extends JPath
 		return $tmpdir;
 	}
 
-	function owner()
+	function _owner($getgroup = false)
 	{
 		static $owner=false;
-		if (!empty($owner)) return $owner;
-
+		static $group=false;
+		
+		if ($getgroup === false && !empty($owner)) return $owner;
+		if ($getgroup === true  && !empty($group)) return $group;
+		
 		jimport('joomla.user.helper');
 
 		$tmp = md5(JUserHelper::genRandomPassword(16));
@@ -48,16 +51,42 @@ class CKunenaPath extends JPath
 			JFile::write($test, '');
 			// Test ownership
 			$owner = fileowner($test);
+			$group = filegroup($test);
 			// Delete the test file
 			JFile::delete($test);
 		}
-		return $owner;
+		return ($getgroup ? $group : $owner);
+	}
+	
+	function owner()
+	{
+		return self::_owner();
+	}
+
+	function group()
+	{
+		return self::_owner(true);
 	}
 
 	function isOwner($path)
 	{
 		$owner = self::owner();
 		return ($owner == fileowner($path));
+	}
+	
+	function isWritable($path)
+	{
+		if (is_writable($path)) return true;
+		$owner = self::owner();
+		$group = self::group();
+		$perms = self::getPermissions($path);
+		if ($owner == fileowner($path)) {
+			if ($perms[1] == 'w') return true;
+		}
+		if ($group == filegroup($path)) {
+			if ($perms[4] == 'w') return true;
+		}
+		return false;
 	}
 }
 
@@ -114,6 +143,22 @@ class CKunenaFile extends JFile
 		return $ret;
 	}
 
+	function write($file, $buffer)
+	{
+		// Initialize variables
+		jimport('joomla.client.helper');
+		$FTPOptions = JClientHelper::getCredentials('ftp');
+		
+		if ($FTPOptions['enabled'] == 1) {
+			// Make sure that we can copy file in FTP mode
+			if (self::exists($dest) && !CKunenaPath::isOwner($dest)) @chmod($dest, 0777);
+		}
+		$ret = parent::write($file, $buffer);
+		if ($ret === false && $FTPOptions['enabled'] == 1) @chmod($dest, 0644);
+		
+		return $ret;
+	}
+	
 	function upload($src, $dest)
 	{
 		// Initialize variables

@@ -415,7 +415,7 @@ function editForum($uid, $option)
     else
     {
         // initialise new record
-        $categories[] = JHTML::_('select.option', '0', JText::_( _KUNENA_TOPLEVEL), 'value', 'text');
+        $categories[] = JHTML::_('select.option', '0', _KUNENA_TOPLEVEL, 'value', 'text');
         $row->parent = 0;
         $row->published = 0;
         $row->ordering = 9999;
@@ -876,9 +876,11 @@ function showInstructions($kunena_db, $option, $lang) {
 //===============================
 function showCss($option)
 {
-    $fbConfig =& CKunenaConfig::getInstance();
+	require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
+	
+	$fbConfig =& CKunenaConfig::getInstance();
     $file = KUNENA_PATH_TEMPLATE .DS. $fbConfig->template .DS. "kunena.forum.css";
-    $permission = is_writable($file);
+    $permission = CKunenaPath::isWritable($file);
 
     if (!$permission)
     {
@@ -892,24 +894,15 @@ function showCss($option)
 
 function saveCss($file, $csscontent, $option)
 {
+	require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
+	
 	$app =& JFactory::getApplication();
     $tmpstr = _KUNENA_CSS_SAVE;
     $tmpstr = str_replace("%file%", $file, $tmpstr);
     echo $tmpstr;
 
-    if (is_writable($file) == false)
+    if (CKunenaFile::write($file, stripslashes($csscontent)))
     {
-        echo "<script>alert('" . _KUNENA_TFINW . "')</script>";
-        echo "<script>document.location.href='index2.php?option=com_kunena&task=showCss'</script>\n";
-    }
-
-    echo "<script>alert('" . _KUNENA_FBCFS . "')</script>";
-    echo "<script>document.location.href='index2.php?option=com_kunena&task=showCss'</script>\n";
-
-    if ($fp = fopen($file, "w"))
-    {
-        fputs($fp, stripslashes($csscontent));
-        fclose ($fp);
         $app->redirect( JURI::base() ."index2.php?option=$option&task=showCss", _KUNENA_CFC_SAVED);
     }
     else {
@@ -1505,7 +1498,7 @@ function showCategories($cat, $cname, $extras = "", $levellimit = "4")
     $list = catTreeRecurse(0, '', array (), $children);
     // assemble menu items to the array
     $mitems = array ();
-    $mitems[] = JHTML::_('select.option', '0', JText::_(_KUNENA_NOPARENT), 'value', 'text');
+    $mitems[] = JHTML::_('select.option', '0', _KUNENA_NOPARENT, 'value', 'text');
     $this_treename = '';
 
     foreach ($list as $item)

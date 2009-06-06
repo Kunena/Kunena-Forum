@@ -310,17 +310,18 @@ class CKunenaSearch
 		$kunena_my = &JFactory::getUser();
 
         /* get allowed forums */
-        $allowed_forums = array();
-        $allowed_string = '';
-        if ($fbSession->allowed && $fbSession->allowed != 'na')
-        {
-            $allowed_string = "AND id IN ({$fbSession->allowed})";
-	}
-
-        $kunena_db->setQuery("SELECT id, parent FROM #__fb_categories WHERE pub_access='0' AND published='1' $allowed_string");
+		$allowed_string = '';
+		if ($fbSession->allowed && $fbSession->allowed != 'na')
+		{
+			$allowed_string = "id IN ({$fbSession->allowed})";
+		} else {
+			$allowed_string = "published='1' AND pub_access='0'";
+		}
+		$kunena_db->setQuery("SELECT id, parent FROM #__fb_categories WHERE $allowed_string");
         $allowed_forums = $kunena_db->loadAssocList('id');
         check_dberror("Unable to get public categories.");
 
+		$allow_list = array();
 	foreach ($allowed_forums as $forum)
 	{
 		// Children list: parent => array(child1, child2, ...)

@@ -12,7 +12,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-require_once (JPATH_ROOT . '/components/com_kunena/lib/kunena.config.class.php');
+require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
+require_once (KUNENA_PATH_LIB . DS . 'kunena.config.class.php');
 
 /**
 * Kunena Users Table Class

@@ -17,7 +17,8 @@
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
 
-require_once (JPATH_ROOT . '/components/com_kunena/lib/kunena.debug.php');
+require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
+require_once (KUNENA_PATH_LIB . DS . 'kunena.debug.php');
 
 // use default translations if none are available
 if (!defined('_KUNENA_INSTALLED_VERSION')) DEFINE('_KUNENA_INSTALLED_VERSION', 'Installed version');

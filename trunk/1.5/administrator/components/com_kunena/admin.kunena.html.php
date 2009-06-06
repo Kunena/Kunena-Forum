@@ -2431,7 +2431,6 @@ echo $pane->endPane();
 
     function showCss($file, $option)
     {
-        $file = stripslashes($file);
         $f = fopen($file, "r");
         $content = fread($f, filesize($file));
         $content = kunena_htmlspecialchars($content);

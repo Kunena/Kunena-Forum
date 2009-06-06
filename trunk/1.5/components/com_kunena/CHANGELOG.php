@@ -40,6 +40,7 @@ Kunena 1.5.2RC
 # [#16663] Fix broken kunenaforum.min.js (used in CB integration)
 # [#16526] Search: mb_substr() Unknown encoding warning, message bodies missing from results
 # [#16666] Search doesn't work reliably for registered only+ forums
+# [#16667] Administrator: Editing CSS does not work in Windows
  
 5-June-2009 Matias
 + [#16633] Allow many attachments in one message (no GUI yet, use edit instead)

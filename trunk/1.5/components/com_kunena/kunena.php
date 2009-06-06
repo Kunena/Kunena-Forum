@@ -497,13 +497,16 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
     //the only thing we can do with it is 'listcat' and nothing else
     if ($func == "showcat" || $func == "view" || $func == "post")
     {
-        $kunena_db->setQuery("SELECT parent FROM #__fb_categories WHERE id=$catid");
-	    $strCatParent = $kunena_db->loadResult();
+    	if ($catid != 0) {
+			$kunena_db->setQuery("SELECT parent FROM #__fb_categories WHERE id=$catid");
+			$strCatParent = $kunena_db->loadResult();
 			check_dberror('Unable to load categories.');
-
-        if ($strCatParent === '0')
-    		{
-            $func = 'listcat';
+    	}
+        if ($catid == 0 || $strCatParent === '0')
+    	{
+   			$strcatid = '';
+    		if ($catid) $strcatid = "&amp;catid={$catid}"; 
+            $app->redirect(htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=listcat'.$strcatid)));
         }
     }
 

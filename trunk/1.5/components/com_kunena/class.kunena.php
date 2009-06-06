@@ -1022,7 +1022,7 @@ function JJ_categoryParentList($catid, $action, $options = array ()) {
             }
         }
 
-    $parent = JHTML::_('select.genericlist', $options, 'catid', 'class="inputbox fbs" size="1"  onchange = "if(this.options[this.selectedIndex].value > 0){ forms[\'jumpto\'].submit() }"', 'value', 'text', $catid);
+    $parent = JHTML::_('select.genericlist', $options, 'catid', 'class="inputbox fbs" size="1"  onchange = "if(this.options[this.selectedIndex].value > 0){ this.form.submit() }"', 'value', 'text', $catid);
     return $parent;
     }
 

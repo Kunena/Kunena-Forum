@@ -253,7 +253,7 @@ class smile
 
         <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
             <td class = "fb_leftcolumn" valign = "top">
-                <strong><a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=faq').'#boardcode';?>"><?php @print(_COM_BOARDCODE); ?></a></strong>:
+                <strong><a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=faq').'#boardcode';?>" target="_new"><?php @print(_COM_BOARDCODE); ?></a></strong>:
             </td>
 
             <td>

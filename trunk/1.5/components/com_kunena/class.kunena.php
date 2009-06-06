@@ -1250,25 +1250,21 @@ function fbReturnDashed (&$string, $key) {
             $string = "_".$string."_";
 }
 
-function kn_mb_substr($str, $start, $lenght=NULL, $encoding=NULL) {
+function kn_mb_substr($str, $start, $length=NULL, $encoding=NULL) {
+	if ($length === NULL) $length = strlen($str);
+	if ($encoding === NULL) $encoding = KUNENA_CHARSET;
 	if (!function_exists('mb_substr'))
 	{
 		if (CKunenaTools::isJoomla15())
 		{
 			require_once(JPATH_LIBRARIES.DS.'phputf8'.DS.'utf8.php');
-
-			return mb_substr($str, $start, $lenght, $encoding);
 		}
 		else
 		{
-			if ($lenght===NULL) $lenght = strlen($str);
-			return substr($str, $start, $lenght);
+			return substr($str, $start, $length);
 		}
 	}
-	else
-	{
-		return mb_substr($str, $start, $lenght, $encoding);
-	}
+	return mb_substr($str, $start, $length, $encoding);
 }
 
 function kunena_htmlspecialchars($string, $quote_style=ENT_COMPAT, $charset=KUNENA_CHARSET) {

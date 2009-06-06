@@ -194,6 +194,15 @@ class CKunenaLink
     	}
     }
 
+	function GetUserlistURL($action='')
+	{
+		return JRoute::_(KUNENA_LIVEURLREL.'&amp;func=userlist'.$action);
+	}
+	
+	function GetUserlistLink($action, $name, $rel='nofollow', $class='')
+	{
+		return self::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=userlist'.$action, $name, '', $rel, $class);
+	}
 
     function GetViewLink($func, $id, $catid, $view, $name, $rel='nofollow')
     {

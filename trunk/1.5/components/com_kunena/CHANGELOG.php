@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.5.2RC
 
+6-June-2009 Matias
+# [#16641] The User List Is Limited To 10 (out of #) Registered Users
+ 
 5-June-2009 Matias
 + [#16633] Allow many attachments in one message (no GUI yet, use edit instead)
 # [#16636] Fix attachments to use Joomla! 1.5 API (add new CKunenaFile class)

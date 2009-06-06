@@ -22,14 +22,10 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $base_url;
-
 $fbConfig =& CKunenaConfig::getInstance();
 $document=& JFactory::getDocument();
 
 $document->setTitle(_KUNENA_USRL_USERLIST . ' - ' . stripslashes($fbConfig->board_title));
-
-$base_url = "index.php?option=com_kunena&amp;func=userlist" . KUNENA_COMPONENT_ITEMID_SUFFIX; // Base URL string
 
 list_users();
 
@@ -118,9 +114,7 @@ class HTML_userlist_content
 {
     function showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search = "")
     {
-        global $base_url;
-
-	$app =& JFactory::getApplication();
+		$app =& JFactory::getApplication();
         $fbConfig =& CKunenaConfig::getInstance();
         $kunena_db = &JFactory::getDBO();
 
@@ -173,7 +167,7 @@ class HTML_userlist_content
                                 </td>
 
                                 <td align = "right">
-                                    <form name = "usrlform" method = "post" action = "<?php echo JRoute::_("$base_url"); ?>" onsubmit = "return validate()">
+                                    <form name = "usrlform" method = "post" action = "<?php echo CKunenaLink::GetUserlistURL(); ?>" onsubmit = "return validate()">
                                         <input type = "text"
                                             name = "search"
                                             class = "inputbox"
@@ -230,11 +224,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-4 <?php echo $boardclass; ?>sectiontableheader" align="center">
-<?php echo _KUNENA_USRL_NAME; ?> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=name&amp;direction=ASC"); ?>">
-
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif'; ?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=name&amp;direction=DESC"); ?>">
-
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/up.gif';?>"  border = "0" alt = "<?php echo _KUNENA_USRL_DESC; ?>" /></a>
+<?php echo _KUNENA_USRL_NAME; ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=name&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=name&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
                                     </th>
 
                                 <?php
@@ -247,11 +239,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-5 <?php echo $boardclass; ?>sectiontableheader" align="center">
-<?php echo _KUNENA_USRL_USERNAME; ?> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=username&amp;direction=ASC"); ?>">
-
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ; ?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=username&amp;direction=DESC"); ?>">
-
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/up.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_DESC; ?>" /></a>
+<?php echo _KUNENA_USRL_USERNAME; ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=username&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=username&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
                                     </th>
 
                                 <?php
@@ -264,11 +254,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-6 <?php echo $boardclass; ?>sectiontableheader" align="center">
-<?php echo _KUNENA_USRL_GROUP; ?> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=group_id&amp;direction=ASC"); ?>">
-
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?> " border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=group_id&amp;direction=DESC"); ?>">
-
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/up.gif'; ?>" border = "0" alt = "<?php echo _KUNENA_USRL_DESC; ?>" /></a>
+<?php echo _KUNENA_USRL_GROUP; ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=group_id&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=group_id&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
                                     </th>
 
                                 <?php
@@ -281,11 +269,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-7 <?php echo $boardclass; ?>sectiontableheader" align="center">
-<?php echo _KUNENA_USRL_POSTS; ?> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=posts&amp;direction=ASC"); ?>">
-
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=posts&amp;direction=DESC"); ?>">
-
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/up.gif'; ?>" border = "0" alt = "<?php echo _KUNENA_USRL_DESC; ?>" /></a>
+<?php echo _KUNENA_USRL_POSTS; ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=posts&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=posts&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
                                     </th>
 
                                 <?php
@@ -298,11 +284,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-7 <?php echo $boardclass; ?>sectiontableheader" align="center">
-<?php echo _KUNENA_USRL_KARMA; ?> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=karma&amp;direction=ASC"); ?>">
-
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>"  border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=karma&amp;direction=DESC"); ?>">
-
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/up.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_DESC; ?>" /></a>
+<?php echo _KUNENA_USRL_KARMA; ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=karma&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=karma&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
                                     </th>
 
                                 <?php
@@ -315,11 +299,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-8 <?php echo $boardclass; ?>sectiontableheader" align="center">
-<?php echo _KUNENA_USRL_EMAIL; ?> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=email&amp;direction=ASC"); ?>">
-
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=email&amp;direction=DESC"); ?>">
-
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/up.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_DESC; ?>" /></a>
+<?php echo _KUNENA_USRL_EMAIL; ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=email&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=email&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
                                     </th>
 
                                 <?php
@@ -332,11 +314,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-9 <?php echo $boardclass; ?>sectiontableheader" align="center">
-<?php echo _KUNENA_USRL_USERTYPE; ?> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=usertype&amp;direction=ASC"); ?>">
-
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=usertype&amp;direction=DESC"); ?>">
-
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/up.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_DESC; ?>" /></a>
+<?php echo _KUNENA_USRL_USERTYPE; ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=usertype&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=usertype&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
                                     </th>
 
                                 <?php
@@ -349,12 +329,10 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-10 <?php echo $boardclass; ?>sectiontableheader" align="center">
-<?php echo _KUNENA_USRL_JOIN_DATE; ?> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=registerDate&amp;direction=ASC"); ?>">
-
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=registerDate&amp;direction=DESC"); ?>">
-
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/up.gif'; ?>" border = "0" alt = "<?php echo _KUNENA_USRL_DESC; ?>" /></a>
-                                    </th>
+<?php echo _KUNENA_USRL_JOIN_DATE; ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=registerDate&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=registerDate&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
+                                     </th>
 
                                 <?php
                                 }
@@ -366,32 +344,27 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-11  <?php echo $boardclass; ?>sectiontableheader" align="center">
-<?php echo _KUNENA_USRL_LAST_LOGIN; ?> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=lastvisitDate&amp;direction=ASC"); ?>">
-
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=lastvisitDate&amp;direction=DESC"); ?>">
-
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/up.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_DESC; ?>" /></a>
+<?php echo _KUNENA_USRL_LAST_LOGIN; ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=lastvisitDate&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=lastvisitDate&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
                                     </th>
 
                                 <?php
                                 }
                                 ?>
 
-								 <th class = "th-12 lst <?php echo $boardclass; ?>sectiontableheader" align="center">
 								  <?php
                                 if ($fbConfig->userlist_userhits)
                                 {
                                 ?>
-<?php echo _KUNENA_USRL_HITS; ?> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=uhits&amp;direction=ASC"); ?>">
-
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/down.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_ASC; ?>" /></a> <a href = "<?php echo JRoute::_("$base_url&amp;orderby=uhits&amp;direction=DESC"); ?>">
-
-    <img src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/up.gif' ;?>" border = "0" alt = "<?php echo _KUNENA_USRL_DESC; ?>" /></a>
-
+								<th class = "th-12 lst <?php echo $boardclass; ?>sectiontableheader" align="center">
+<?php echo _KUNENA_USRL_HITS; ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=uhits&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=uhits&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
+								</th>
                                 <?php
                                 }
                                 ?>
-								</th>
 
                             </tr>
 
@@ -591,13 +564,14 @@ class HTML_userlist_content
 
         </table>
 
+		<form name = "usrlform" method = "post" action = "<?php echo CKunenaLink::GetUserlistURL(); ?>" onsubmit = "return false;">
         <table width = "100%"  class="fb_userlist_pagenav" border = "0" cellspacing = "0" cellpadding = "0">
             <tr class = "fb_sth  fbs">
                 <th class = "th-1  fbm" align = "center" style = "text-align:center;">
 
                             <?php
                             // TODO: fxstein - Need to perform SEO cleanup
-                            echo $pageNav->getPagesLinks("$base_url$query_ext"); ?>
+                            echo $pageNav->getPagesLinks(CKunenaLink::GetUserlistURL($query_ext)); ?>
                 </th>
             </tr>
         </table>
@@ -607,10 +581,11 @@ class HTML_userlist_content
         <table class = "fb_blocktable" id="fb_userlist_bottom" style="border-bottom:0px;margin:0;" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
                 <tr>
                     <th  class = "th-right  fbs" align="right" style="text-align:right">
-                     <?php echo $pageNav->getPagesCounter(); ?> | <?php echo _KUNENA_USRL_DISPLAY_NR; ?> <?php echo $pageNav->getLimitBox("$base_url$query_ext"); ?>
+                     <?php echo $pageNav->getPagesCounter(); ?> | <?php echo _KUNENA_USRL_DISPLAY_NR; ?> <?php echo $pageNav->getLimitBox(CKunenaLink::GetUserlistURL($query_ext)); ?>
                 </th>
             </tr>
         </table>
+		</form>
 
         </td>
 	</tr>

@@ -136,50 +136,57 @@ $fbConfig =& CKunenaConfig::getInstance();
 
 					<br/>
 
-					<input type = "button" class = "button" accesskey = "b" name = "addbbcode0" value = " B " style = "font-weight:bold; width: 30px" onclick = "bbstyle(0)" onmouseover = "helpline('b')"/>
-
-					<input type = "button" class = "button" accesskey = "i" name = "addbbcode2" value = " i " style = "font-style:italic; width: 30px" onclick = "bbstyle(2)" onmouseover = "helpline('i')"/>
-
-					<input type = "button" class = "button" accesskey = "u" name = "addbbcode4" value = " u " style = "text-decoration: underline; width: 30px" onclick = "bbstyle(4)" onmouseover = "helpline('u')"/>
-
-					<input type = "button" class = "button" accesskey = "p" name = "addbbcode14" value = "Img" style = "width: 40px" onclick = "bbstyle(14)" onmouseover = "helpline('p')"/>
-
-					<input type = "button" class = "button" accesskey = "w" name = "addbbcode16" value = "URL" style = "text-decoration: underline; width: 40px" onclick = "bbstyle(16)" onmouseover = "helpline('w')"/>
-
-					<br/> <?php echo _SMILE_COLOUR; ?>:
-
-					<select name = "addbbcode20" onchange = "bbfontstyle('[color=' + this.form.addbbcode20.options[this.form.addbbcode20.selectedIndex].value + ']', '[/color]');this.selectedIndex=0;" onmouseover = "helpline('s')">
-						<option style = "color:black;  background-color: #FAFAFA" value = ""><?php echo _COLOUR_DEFAULT; ?></option>
-
-						<option style = "color:red;    background-color: #FAFAFA" value = "#FF0000"><?php echo _COLOUR_RED; ?></option>
-
-						<option style = "color:blue;   background-color: #FAFAFA" value = "#0000FF"><?php echo _COLOUR_BLUE; ?></option>
-
-						<option style = "color:green;  background-color: #FAFAFA" value = "#008000"><?php echo _COLOUR_GREEN; ?></option>
-
-						<option style = "color:yellow; background-color: #FAFAFA" value = "#FFFF00"><?php echo _COLOUR_YELLOW; ?></option>
-
-						<option style = "color:orange; background-color: #FAFAFA" value = "#FF6600"><?php echo _COLOUR_ORANGE; ?></option>
+					<input name="speicher" type="hidden" size="30" maxlength="100">
+					<img class = "fb-bbcode" title = "Bold" accesskey = "b" name = "addbbcode0" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_bold.png" alt="B" onclick = "bbfontstyle('[b]', '[/b]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_BOLD);?>')" />
+					<img class = "fb-bbcode" accesskey = "i" name = "addbbcode2" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_italic.png" alt="I" onclick = "bbfontstyle('[i]', '[/i]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ITALIC);?>')" />
+					<img class = "fb-bbcode" accesskey = "u" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_underline.png" alt="U" onclick = "bbfontstyle('[u]', '[/u]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_UNDERL);?>')" />
+					<img class = "fb-bbcode" name = "addbbcode62" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_smallcaps.png" alt="<?php @print(_SMILE_SIZE); ?>" onclick = "bbfontstyle('[size=' + document.postform.addbbcode22.options[document.postform.addbbcode22.selectedIndex].value + ']', '[/size]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FONTSIZE);?>')" />
+					<select id = "fb-bbcode_size" class = "<?php echo $boardclass;?>slcbox" name = "addbbcode22" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FONTSIZESELECTION);?>')">
+						<option value = "1"><?php @print(_SIZE_VSMALL); ?></option>
+						<option value = "2"><?php @print(_SIZE_SMALL); ?></option>
+						<option value = "3" selected = "selected"><?php @print(_SIZE_NORMAL); ?></option>
+						<option value = "4"><?php @print(_SIZE_BIG); ?></option>
+						<option value = "5"><?php @print(_SIZE_VBIG); ?></option>
 					</select>
-<?php echo _SMILE_SIZE; ?>:
+					<img id="ueberschrift" class = "fb-bbcode" name = "addbbcode20" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>color_swatch.png" alt="<?php @print(_SMILE_COLOUR); ?>" onclick = "javascript:change_palette();" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_COLOR);?>')" />
+					<img class = "fb-bbcode" accesskey = "p" name = "addbbcode14" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>picture_link.png" alt="Img" onclick = "javascript:dE('image');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINK);?>')" />
+					<img class = "fb-bbcode" accesskey = "w" name = "addbbcode16" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>link_url.png" alt="URL" onclick = "javascript:dE('link');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINK);?>')" />	
+					<br />
+					<div id="fb-color_palette" style="margin-top: 14px; border: 1px; display: none;">
+						<script type="text/javascript">
+							function change_palette() {dE('fb-color_palette');}
+							colorPalette('h', '4%', '15px');
+						</script>
+					</div>		
+								
+					<div id="link" style="margin-top: 14px; border: 1px; display: none;">
+						<?php @print(_KUNENA_EDITOR_LINK_URL); ?><input name="url" type="text" size="20" maxlength="100" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKURL);?>')"> 
+						<?php @print(_KUNENA_EDITOR_LINK_TEXT); ?><input name="text2" type="text" size="20" maxlength="100" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKTEXT);?>')"> 
+						<input type="button" name="Link" accesskey = "w" value="<?php @print(_KUNENA_EDITOR_LINK_INSERT); ?>""
+							onclick="bbfontstyle('[url=' + this.form.url.value + ']'+ this.form.text2.value,'[/url]')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKAPPLY);?>')">
+					</div>
 
-					<select name = "addbbcode22" onchange = "bbfontstyle('[size=' + this.form.addbbcode22.options[this.form.addbbcode22.selectedIndex].value + ']', '[/size]')" onmouseover = "helpline('f')">
-						<option value = "1"><?php echo _SIZE_VSMALL; ?></option>
+					<div id="image" style="margin-top: 14px; border: 1px; display: none;">
+						<?php @print(_KUNENA_EDITOR_IMAGE_SIZE); ?><input name="size" type="text" size="3" maxlength="10" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKSIZE);?>')"> 
+						<?php @print(_KUNENA_EDITOR_IMAGE_URL); ?><input name="url2" type="text" size="20" maxlength="100" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKURL);?>')"> 
+						<input type="button" name="Link" accesskey = "p" value="<?php @print(_KUNENA_EDITOR_IMAGE_INSERT); ?>" onclick="check_image()" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY);?>')">
+						<script type="text/javascript">
+							function check_image() {
+								if (document.postform.size.value == "") {
+									bbfontstyle('[img]'+ document.postform.url2.value,'[/img]');
+								} else {
+									bbfontstyle('[img size=' + document.postform.size.value + ']'+ document.postform.url2.value,'[/img]');
+								}
+							}
+						</script>
+					</div> 
 
-						<option value = "2"><?php echo _SIZE_SMALL; ?></option>
+					<br />
+					<div class="<?php echo $boardclass;?>posthint">
+						<input class = "fb-bbcode" type = "text" name = "helpbox" size = "45" class = "<?php echo $boardclass;?>inputbox" maxlength = "100" value = "<?php @print(_KUNENA_EDITOR_HELPLINE_HINT);?>" style="width: 99%;" />
+					</div>
 
-						<option value = "3" selected = "selected"><?php echo _SIZE_NORMAL; ?></option>
-
-						<option value = "4"><?php echo _SIZE_BIG; ?></option>
-
-						<option value = "5"><?php echo _SIZE_VBIG; ?></option>
-					</select>
-
-					<br/>
-
-					<input type = "text" name = "helpbox" size = "45" maxlength = "100" style = "width: <?php echo $fbConfig->rtewidth-150?>px; font-size:9px" class = "helpline" value = "<?php echo _BBCODE_HINT;?>"/>
-
-					<br/>
+					<br />
 
 					<input type = "checkbox" value = "1" name = "deleteSig"/>
 					<i> <?php echo _USER_DELETE; ?></i>

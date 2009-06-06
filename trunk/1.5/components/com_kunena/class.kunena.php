@@ -564,7 +564,7 @@ class CKunenaTools {
 		$kunena_db = &JFactory::getDBO();
 
         if (!CKunenaTools::isModOrAdmin() && !$isMod) {
-            $app->redirect( JURI::base() .$return, _POST_NOT_MODERATOR);
+            $app->redirect($return, _POST_NOT_MODERATOR);
             }
 
         $items = fbGetArrayInts("fbDelete");
@@ -703,7 +703,7 @@ class CKunenaTools {
 
         //isMod will stay until better group management comes in
         if (!$isAdmin && !$isMod) {
-            $app->redirect( JURI::base() .$return, _POST_NOT_MODERATOR);
+            $app->redirect($return, _POST_NOT_MODERATOR);
             }
 
 		$catid = (int)$catid;
@@ -746,7 +746,7 @@ class CKunenaTools {
 		}
         CKunenaTools::reCountBoards();
 
-        $app->redirect( JURI::base() .$return, $err);
+        $app->redirect($return, $err);
         }
 
 

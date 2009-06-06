@@ -243,7 +243,7 @@ if ($is_editor) {
         $kunena_db->setQuery($query1);
 
         $kunena_db->query() or trigger_dberror("Unable to insert announcement.");
-        $app->redirect( JURI::base() .CKunenaLink::GetAnnouncementURL($fbConfig, 'show'), _ANN_SUCCESS_ADD);
+        $app->redirect(CKunenaLink::GetAnnouncementURL($fbConfig, 'show'), _ANN_SUCCESS_ADD);
     }
 
     if ($do == "add") {
@@ -364,7 +364,7 @@ if ($is_editor) {
         $kunena_db->setQuery("UPDATE #__fb_announcement SET title='$title', description='$description', sdescription='$sdescription',  created=" . (($created <> '')?"'$created'":"NOW()") . ", published='$published', showdate='$showdate' WHERE id=$id");
 
         if ($kunena_db->query()) {
-            $app->redirect( JURI::base() .CKunenaLink::GetAnnouncementURL($fbConfig, 'show'), _ANN_SUCCESS_EDIT);
+            $app->redirect(CKunenaLink::GetAnnouncementURL($fbConfig, 'show'), _ANN_SUCCESS_EDIT);
             }
         }
 

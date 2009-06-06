@@ -402,7 +402,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 		$fbSession->save($fbSession);
 
 		if ($markaction == "allread") {
-		        $app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _GEN_ALL_MARKED);
+		        $app->redirect(htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _GEN_ALL_MARKED);
 		}
 
 		// Now lets get the view type for the forum
@@ -779,7 +779,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
             $kunena_db->query();
             	check_dberror('Unable to update readtopics in session table.');
 
-            $app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid)), _GEN_FORUM_MARKED);
+            $app->redirect(htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid)), _GEN_FORUM_MARKED);
             break;
 
         #########################################################################################
@@ -856,7 +856,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
                     }
             }
 
-            $app->redirect( JURI::base() .htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)));
+            $app->redirect(htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)));
             break;
 
         #########################################################################################

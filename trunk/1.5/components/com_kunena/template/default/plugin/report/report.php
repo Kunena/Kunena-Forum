@@ -205,12 +205,12 @@ function ReportForm($msg_id, $catid) {
 
     //$redirect = JRoute::_($redirect);
     if (!$kunena_my->id) {
-        $app->redirect( JURI::base() .$redirect);
+        $app->redirect($redirect);
         return;
         }
 
     if ($fbConfig->reportmsg == 0) {
-        $app->redirect( JURI::base() .$redirect);
+        $app->redirect($redirect);
         return;
         }
 ?>

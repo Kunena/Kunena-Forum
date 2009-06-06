@@ -41,6 +41,7 @@ Kunena 1.5.2RC
 # [#16635] Administrator: Hide index.php in Uploaded Files/Images Browser
 # [#16637] Administrator: Defaut_red/green/gray should not be shown in Image Set list as they contain no images
 # [#16638] Administrator: Editing CSS fails in FTP mode with strict permissions
+# [#16640] Fix broken redirects
 
 2-June-2009 Matias
 # [#16567] Warn/detect possible problems in Community Builder integration 

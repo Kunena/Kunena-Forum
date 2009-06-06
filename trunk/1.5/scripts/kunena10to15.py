@@ -8,7 +8,7 @@ dictionary = {
 'writePagesCounter':'getPagesCounter',
 '\$mosConfig_live_site':'JURI::root()',
 '\$mosConfig_lang':'$lang',
-'defined.*_VALID_MOS.*or die.*;':'defined( \'_JEXEC\' ) or die(\'Restricted access\');',
+'$defined.*_VALID_MOS.*or die.*;':'defined( \'_JEXEC\' ) or die(\'Restricted access\');',
 'global\s*\$kunena_db;':'$kunena_db = &JFactory::getDBO();',
 '(\s*)(global )\s*\$kunena_db,\s*(.*?;)':'\\1\\2\\3\n\\1$kunena_db = &JFactory::getDBO();',
 '(\s*)(global .*?),\s*\$kunena_db;':'\\1\\2;\n\\1$kunena_db = &JFactory::getDBO();',
@@ -23,7 +23,7 @@ dictionary = {
 '\$mainframe->getCfg\(.absolute_path.\)':'JPATH_ROOT',
 'mosHTML::makeOption\(':'JHTML::_(\'select.option\', ',
 'mosHTML::selectList\(':'JHTML::_(\'select.genericlist\', ',
-'mosRedirect\s*\(':'$mainframe->redirect( JURI::base() .',
+'mosRedirect\s*\(':'$mainframe->redirect(',
 'mosMenuBar':'JToolBarHelper',
 'mosUser\(':'JUser(',
 'mosDBTable':'JTable',
@@ -37,7 +37,7 @@ dictionary = {
 '\$pageNav(\w*)\s*=\s*new mosPageNav':'$pageNav\\1 = new JPagination',
 ', REQUEST':', \'REQUEST\'',
 ', COOKIE':', \'COOKIE\'',
-'JText::_\((\'.*\')\)':'\\1',
+#'JText::_\((\'.*\')\)':'\\1',
 #'JPATH_ROOT\s*\.\s*(["\']/)':'KUNENA_ROOT_PATH .DS. \\1',
 'JPATH_ADMINISTRATOR\s*\.\s*(["\']/)':'KUNENA_ROOT_PATH_ADMIN .DS. \\1',
 'KUNENA_ROOT_([A-Z]+)\s*\.\s*(["\'])/(\w+)':'KUNENA_ROOT_\\1 .DS. \\2\\3',
@@ -93,7 +93,7 @@ dictionary = {
 '(\s*)(global .*?),\s*\$acl;':'\\1\\2;\n\\1$acl = &JFactory::getACL();',
 'mosNotAuth\(\)':'JError::raiseError( 403, JText::_("ALERTNOTAUTH") );',
 'global\s*\$fbConfig;':'$fbConfig =& CKunenaConfig::getInstance();',
-'(\s*)(global )\s*\$fbConfig,\s*(.*?;)':'\\1\\2\\3\n\\1$fbConfig =& CKunenaConfig::getInstance();',
+#'(\s*)(global )\s*\$fbConfig,\s*(.*?;)':'\\1\\2\\3\n\\1$fbConfig =& CKunenaConfig::getInstance();',
 '(\s*)(global .*?),\s*\$fbConfig;':'\\1\\2;\n\\1$fbConfig =& CKunenaConfig::getInstance();',
 '\$acl':'$kunena_acl',
 '\$my(\W)':'$kunena_my\\1',
@@ -109,6 +109,8 @@ dictionary = {
 '\$mainframe':'$app',
 '(\s*)\$app->setPageTitle\((.*?)\);':'\n\\1$document=& JFactory::getDocument();\n\\1$document->setTitle(\\2);',
 '\$kunena_my([\w_])':'$my\\1',
+'\$app->redirect\( JURI::base\(\) \.':'$app->redirect(',
+
 }
 
 def string_replace(filename, text, dic):

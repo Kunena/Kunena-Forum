@@ -643,7 +643,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                         $kunena_db->query();
                     }
 
-                    $app->redirect( JURI::base() .'index.php?option=com_kunena&amp;func=myprofile' . KUNENA_COMPONENT_ITEMID_SUFFIX, _KUNENA_USER_DETAILS_SAVE);
+                    $app->redirect(JRoute::_('index.php?option=com_kunena&amp;func=myprofile'), _KUNENA_USER_DETAILS_SAVE);
                     break;
             }
             ?>

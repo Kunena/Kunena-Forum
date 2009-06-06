@@ -42,6 +42,7 @@ Kunena 1.5.2RC
 # [#16666] Search doesn't work reliably for registered only+ forums
 # [#16667] Administrator: Editing CSS does not work in Windows
 # [#16668] Small fixes for CB integration
+# [#16669] Internal: Spoiler tag broken
  
 5-June-2009 Matias
 + [#16633] Allow many attachments in one message (no GUI yet, use edit instead)

@@ -648,7 +648,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                     if ($this->spoilerid==0)
                     {
                     	// Only need the script for the first spoiler we find
-	                    $app =& JFactory::getApplication();
+	                    $document=& JFactory::getDocument();
 	                    $document->addCustomTag('<script language = "JavaScript" type = "text/javascript">'.
 	                    			'function fb_showDetail(srcElement) {'.
 										'var targetID, srcElement, targetElement, imgElementID, imgElement;'.

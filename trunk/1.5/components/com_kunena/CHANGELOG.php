@@ -37,6 +37,7 @@ Kunena 1.5.2RC
 # [#16642] Forum jump does not work if you go to Board Categories
 # [#16645] Broken BBCode editor in My Profile (use simple version of Rolands editor instead)
 # [#16662] Editor: Opening Boardcode link to the same window causes written message to disappear
+# [#16663] Fix broken kunenaforum.min.js (used in CB integration)
  
 5-June-2009 Matias
 + [#16633] Allow many attachments in one message (no GUI yet, use edit instead)

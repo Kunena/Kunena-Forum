@@ -765,7 +765,6 @@ function showConfig($option)
 	$ip_opt[] = JHTML::_('select.option', 'gd2', 'GD2');
 	$ip_opt[] = JHTML::_('select.option', 'gd1', 'GD1');
 	$ip_opt[] = JHTML::_('select.option', 'none', _KUNENA_IMAGE_PROCESSOR_NONE);
-    //$ip_opt[] = JHTML::_('select.option',  'none', _KUNENA_IMAGE_PROCESSOR_NONE );
 
     $lists['imageprocessor'] = JHTML::_('select.genericlist', $ip_opt, 'cfg_imageprocessor', 'class="inputbox"', 'value', 'text', $fbConfig->imageprocessor );
     $lists['showstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showstats);
@@ -1094,7 +1093,7 @@ function editUserProfile($uid)
     	check_dberror('Unable to load special ranks.');
 
     //build select list options
-    $yesnoRank[] = JHTML::_('select.option','0', 'No Rank Assigned');
+    $yesnoRank[] = JHTML::_('select.option','0', _KUNENA_RANK_NO_ASSIGNED);
     foreach ($specialRanks as $ranks)
     {
     	$yesnoRank[] = JHTML::_('select.option',$ranks->rank_id, $ranks->rank_title);

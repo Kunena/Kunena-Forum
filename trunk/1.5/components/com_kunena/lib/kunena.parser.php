@@ -510,7 +510,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				list($vid_type, $vid_width, $vid_height, $vid_addx, $vid_addy, $vid_source, $vid_match, $vid_par2) =
 					(isset($vid_providers[$vid["type"]]))?$vid_providers[$vid["type"]]:$vid_providers["_default"];
 				unset($vid_providers);
-				if ($vid_auto) {
+				if (!empty($vid_auto)) {
 					if ($vid_match and (preg_match("/$vid_match/i", $between, $vid_regs) > 0))
 						$between = $vid_regs[1];
 					else
@@ -519,7 +519,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				$vid_source = preg_replace('/%vcode%/', $between, $vid_source);
 				if (!is_array($vid_par2)) $vid_par2 = array();
 
-				$vid_size = intval($tag->options["size"]);
+				$vid_size = isset($tag->options["size"]) ? intval($tag->options["size"]) : 0;
 				if (($vid_size > 0) and ($vid_size < $vid_sizemax)) {
 					$vid_width = (int)($vid_width * $vid_size / 100);
 					$vid_height = (int)($vid_height * $vid_size / 100);

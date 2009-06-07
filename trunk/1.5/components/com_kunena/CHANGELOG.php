@@ -39,6 +39,7 @@ Kunena 1.5.2RC
 # [#16678] Announcements: Read more if there is nothing to be read
 # [#16679] Announcements: Calendar shows warning message in Add New
 # [#16680] Administrator: Add missing translation to Rank management
+# [#16664] Fix notices in BBCode parser, permissions handling and profile
 
 6-June-2009 Matias
 # [#16641] The User List Is Limited To 10 (out of #) Registered Users

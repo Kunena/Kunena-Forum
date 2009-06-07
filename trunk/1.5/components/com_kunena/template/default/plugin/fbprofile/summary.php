@@ -173,7 +173,7 @@ $lastvisitDate = strftime(_KUNENA_DT_DATETIME_FMT, strtotime($userinfo->lastvisi
       <td  class = "td-2 fbm"><a href="http://<?php echo kunena_htmlspecialchars(stripslashes($userinfo->websiteurl)); ?>" target="_blank"><?php echo kunena_htmlspecialchars(stripslashes($userinfo->websitename)); ?></a></td>
     </tr>
     <?php }?>
-    <?php  if ( $usr_signature !='' ) { ?>
+    <?php  if ( !empty($usr_signature) ) { ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_SIGNATURE; ?></b> </td>
       <td  class = "td-2 fbm"><?php echo $usr_signature; ?></td>

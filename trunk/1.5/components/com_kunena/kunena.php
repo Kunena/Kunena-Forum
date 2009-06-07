@@ -66,6 +66,7 @@ $topic_emoticon = JRequest::getVar('topic_emoticon', '');
 $userid 		= JRequest::getInt('userid', 0);
 $view 			= JRequest::getVar('view', '');
 $msgpreview 	= JRequest::getVar('msgpreview', '');
+$no_html		= JRequest::getBool('no_html', 0);
 
 // Redirect Forum Jump
 if (isset($_POST['func']) && $func == "showcat")
@@ -169,6 +170,19 @@ else
 	require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'smile.class.php');
 }
 
+//intercept the RSS request; we should stop afterwards
+if ($func == 'fb_rss')
+{
+    include (KUNENA_PATH_LIB .DS. 'kunena.rss.php');
+    $app->close();
+}
+
+if ($func == 'fb_pdf')
+{
+    include (KUNENA_PATH_LIB .DS. 'kunena.pdf.php');
+    $app->close();
+}
+
 // Include Clexus PM class file
 if ($fbConfig->pm_component == "clexuspm")
 {
@@ -222,6 +236,7 @@ if ($func == "getpreview")
     $app->close();
 }
 
+if ($no_html == 0) {
 $document =& JFactory::getDocument();
 
 // inline jscript with image location
@@ -266,6 +281,7 @@ else
 {
 	$document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_DIRECTURL . '/template/default/joomla.css" />');
 }
+} // no_html == 0
 
 // WHOIS ONLINE IN FORUM
 if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/who/who.class.php')) {
@@ -298,19 +314,6 @@ $KunenaTemplate->readTemplatesFromFile("header.html");
 $KunenaTemplate->readTemplatesFromFile("footer.html");
 
 $is_Moderator = fb_has_moderator_permission($kunena_db, $thisCat, $kunena_my->id, $is_admin);
-
-//intercept the RSS request; we should stop afterwards
-if ($func == 'fb_rss')
-{
-    include (KUNENA_PATH_LIB .DS. 'kunena.rss.php');
-    $app->close();
-}
-
-if ($func == 'fb_pdf')
-{
-    include (KUNENA_PATH_LIB .DS. 'kunena.pdf.php');
-    $app->close();
-}
 
 if ($func == '') // Set default start page as per config settings
 {

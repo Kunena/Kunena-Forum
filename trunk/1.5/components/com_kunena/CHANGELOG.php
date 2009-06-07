@@ -34,6 +34,7 @@ Kunena 1.5.2RC
 
 7-June-2009 Matias
 # [#16671] Board Categories have &nbsp; showing in them (PHP <5.2.3 issue?)
+# [#16672] RSS Feed was broken: JDocumentRAW::addCustomTag() missing
 
 6-June-2009 Matias
 # [#16641] The User List Is Limited To 10 (out of #) Registered Users

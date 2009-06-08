@@ -42,7 +42,7 @@ $fbConfig =& CKunenaConfig::getInstance();
         <tr>
             <td class = "fb_myprofile_menu_staff">
                 <span class = "fb_myprofile_menu_title"><?php echo _KUNENA_MYPROFILE_PERSONAL_INFO; ?></span>
-                <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'); ?>"> <?php echo _KUNENA_MYPROFILE_SUMMARY; ?> </a>
+                <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile'); ?>"> <?php echo _KUNENA_MYPROFILE_SUMMARY; ?> </a>
 <?php
  	// Only show userdetails link if we are in charge of the profile
     if ($fbConfig->fb_profile == 'fb')
@@ -56,7 +56,7 @@ $fbConfig =& CKunenaConfig::getInstance();
     if ($fbConfig->allowavatar && $fbConfig->avatar_src == 'fb')
     {
 ?>
-            	<a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=uploadavatar'); ?>"> <?php echo _KUNENA_MYPROFILE_MYAVATAR; ?></a>
+            	<a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=avatar'); ?>"> <?php echo _KUNENA_MYPROFILE_MYAVATAR; ?></a>
 <?php
     }
 ?>

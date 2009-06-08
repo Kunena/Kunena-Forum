@@ -40,6 +40,8 @@ Kunena 1.5.2RC
 # [#16679] Announcements: Calendar shows warning message in Add New
 # [#16680] Administrator: Add missing translation to Rank management
 # [#16664] Fix notices in BBCode parser, permissions handling and profile
+# [#16689] My Profile: Fix urls for avatar upload
+# [#16690] My Profile: Use redirect with message instead of extra page with timeout
 
 6-June-2009 Matias
 # [#16641] The User List Is Limited To 10 (out of #) Registered Users

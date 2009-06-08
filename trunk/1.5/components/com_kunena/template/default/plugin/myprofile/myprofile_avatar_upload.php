@@ -144,49 +144,211 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 {
 
 $fbConfig =& CKunenaConfig::getInstance();
-$do = '';
-$do = JRequest::getVar('do', 'init');
+$task = JRequest::getVar('action', 'default');
 $gallery  = JRequest::getVar('gallery', '');
 
-if ($do == 'init')
+switch ($task) {
+	case "delete":
+		$rowItemid = JRequest::getVar('Itemid');
+
+		$deleteAvatar = JRequest::getInt('deleteAvatar', 0);
+		$avatar = JRequest::getVar('avatar', '');
+
+		if ($deleteAvatar == 1)
+		{
+			$avatar = "";
+		}
+
+		$kunena_db->setQuery("UPDATE #__fb_users set   avatar='$avatar'  where userid=$kunena_my->id");
+
+		if (!$kunena_db->query())
+		{
+			$app->enqueueMessage(_USER_PROFILE_NOT_A._USER_PROFILE_NOT_B._USER_PROFILE_NOT_C, 'notice');
+		}
+		else
+		{
+			$app->enqueueMessage(_USER_PROFILE_UPDATED);
+		}
+
+		$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+		break;
+
+	case 'upload':
+		$app =& JFactory::getApplication();
+
+		//numExtensions= people tend to upload malicious files using mutliple extensions like: virus.txt.vbs; we'll want to have the last extension to validate against..
+		$filename = split("\.", $_FILES['avatar']['name']);
+		$numExtensions = (count($filename)) - 1;
+		$avatarName = $filename[0];
+		$avatarExt = $filename[$numExtensions];
+		$newFileName = $kunena_my->id . "." . $avatarExt;
+		$imageType = array( 1 => 'GIF', 2 => 'JPG', 3 => 'PNG', 4 => 'SWF', 5 => 'PSD', 6 => 'BMP', 7 => 'TIFF', 8 => 'TIFF', 9 => 'JPC', 10 => 'JP2', 11 => 'JPX', 12 => 'JB2', 13 => 'SWC', 14 => 'IFF');
+
+		//move it to the proper location
+		//if (!move_uploaded_file($_FILES['avatar']['tmp_name'], KUNENA_PATH_UPLOADED .DS. "avatars/$newFileName"))
+		//echo _UPLOAD_ERROR_GENERAL;
+
+		//Filename Medium + proper path
+		$fileLocation = KUNENA_PATH_UPLOADED .DS. "avatars/$newFileName";
+		//Filename Small + proper path
+		$fileLocation_s = KUNENA_PATH_UPLOADED .DS. "avatars/s_$newFileName";
+		//Filename Large + proper path
+		$fileLocation_l = KUNENA_PATH_UPLOADED .DS. "avatars/l_$newFileName";
+		echo '<table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">';
+		echo '<tr><td><div><div><div><div><table><tbody><tr><td>';
+		//Avatar Size
+		$avatarSize = $_FILES['avatar']['size'];
+		$src_file = $_FILES['avatar']['tmp_name'];
+
+		//check for empty file
+		if (!is_uploaded_file($src_file) || empty($_FILES['avatar']['name']))
+		{
+			$app->enqueueMessage(_UPLOAD_ERROR_EMPTY, 'notice');
+			$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+		}
+
+		//check for allowed file type (jpeg, gif, png)
+		if (!($imgtype = KUNENA_check_image_type($avatarExt)))
+		{
+			$app->enqueueMessage(_UPLOAD_ERROR_TYPE, 'notice');
+			$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+		}
+
+		//check file name characteristics
+		if (eregi("[^0-9a-zA-Z_]", $avatarExt))
+		{
+			$app->enqueueMessage(_UPLOAD_ERROR_NAME, 'notice');
+			$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+		}
+
+		//check filesize
+		$maxAvSize = $fbConfig->avatarsize * 1024;
+
+		if ($avatarSize > $maxAvSize)
+		{
+			$app->enqueueMessage(_UPLOAD_ERROR_SIZE . " (" . $fbConfig->avatarsize . " KiloBytes)", 'notice');
+			$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+		}
+
+		$imgInfo = false;
+		if (function_exists('getimagesize')) {
+			$imgInfo = @getimagesize($_FILES['avatar']['tmp_name']);
+			if ($imgInfo !== false) {
+				$imgInfo[2] = $imageType[$imgInfo[2]];
+				$srcWidth = $imgInfo[0];
+				$srcHeight = $imgInfo[1];
+			}
+		} else {
+			$fbConfig->imageprocessor = 'none';
+		}
+
+		//$gdversion = ereg_replace('[[:alpha:][:space:]()]+', '', $GDArray['GD Version']); // just FYI for detection from gd_info()
+    
+		switch ($fbConfig->imageprocessor) {
+		case 'gd1' :
+			if ( !function_exists('imagecreatefromjpeg' )) {
+				$app->enqueueMessage(_KUNENA_AVATAR_GDIMAGE_NOT, 'error');
+				$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+			}
+			if ( $imgInfo[2] == 'JPG' ) {
+				$src_img = imagecreatefromjpeg($src_file);
+			} elseif ( $imgInfo[2] == 'PNG' ) {
+				$src_img = imagecreatefrompng($src_file);
+			} else {
+				$src_img = imagecreatefromgif($src_file);
+			}
+
+			// Create Large Image
+			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarlargewidth, 
+			$fbConfig->avatarlargeheight, $fbConfig->avatarquality, $fileLocation_l);
+			// Create Medium Image
+			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarwidth, 
+			$fbConfig->avatarheight, $fbConfig->avatarquality, $fileLocation);
+			// Create Small Image
+			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarsmallwidth, 
+			$fbConfig->avatarsmallheight, $fbConfig->avatarquality, $fileLocation_s);
+			// Destroy source Image
+			imagedestroy($src_img);
+			break;
+
+		case 'gd2' :
+
+			if ( !function_exists('imagecreatefromjpeg') ) {
+				$app->enqueueMessage(_KUNENA_AVATAR_GDIMAGE_NOT, 'error');
+				$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+			}
+			if ( !function_exists('imagecreatetruecolor') ) {
+				$app->enqueueMessage(_KUNENA_AVATAR_GD2IMAGE_NOT, 'error');
+				$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+			}
+			if ( $imgInfo[2] == 'JPG' ) {
+				$src_img = imagecreatefromjpeg($src_file);
+			} elseif ($imgInfo[2] == 'PNG'){
+				$src_img = imagecreatefrompng($src_file);
+			} else {
+				$src_img = imagecreatefromgif($src_file);
+			}
+
+			// Create Large Image
+			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarlargewidth, 
+			$fbConfig->avatarlargeheight, $fbConfig->avatarquality, $fileLocation_l);
+			// Create Medium Image
+			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarwidth, 
+			$fbConfig->avatarheight, $fbConfig->avatarquality, $fileLocation);
+			// Create Small Image
+			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarsmallwidth, 
+			$fbConfig->avatarsmallheight, $fbConfig->avatarquality, $fileLocation_s);
+			// Destroy source Image
+			imagedestroy($src_img);
+			break;
+    
+		default:
+			if (isset($srcWidth) && ($srcWidth > $fbConfig->avatarlargewidth || $srcHeight > $fbConfig->avatarlargeheight)) {
+				$app->enqueueMessage(_UPLOAD_ERROR_SIZE . " (" . $fbConfig->avatarlargewidth . " x ". $fbConfig->avatarlargeheight .")", 'notice');
+				$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+			}
+			// Make sure that we do not use wrong avatar image
+			if (file_exists($fileLocation_s)) CKunenaFile::delete($fileLocation_s);
+			if (file_exists($fileLocation_l)) CKunenaFile::delete($fileLocation_l);
+			CKunenaFile::copy($src_file, $fileLocation);
+			break;
+		}
+
+		// delete original file
+		unlink($src_file);
+	
+		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newFileName}' WHERE userid={$kunena_my->id}");
+		$kunena_db->query() or trigger_dberror("Unable to update avatar.");
+
+		$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile'),_UPLOAD_UPLOADED);
+
+	case 'gallery':
+		require_once(KUNENA_PATH_LIB .DS. 'kunena.helpers.php');
+		$newAvatar = JRequest::getVar('newAvatar', '');
+
+		$newAvatar = CKunenaTools::fbRemoveXSS($newAvatar);
+		if ($newAvatar == '') {
+			$app->enqueueMessage(_UPLOAD_ERROR_CHOOSE, 'notice');
+			$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&do=avatar'));
+		}
+
+		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newAvatar}' WHERE userid={$kunena_my->id}");
+		$kunena_db->query() or trigger_dberror("Unable to update user avatar.");
+
+		$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile'),_UPLOAD_UPLOADED);
+		break;
+}
+
+
+if ($task == 'default')
 {
     if ($fbConfig->allowavatar)
     {
 ?>
-
-<!-- B:My Profile -->
-<table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
-    <tr>
-        <td class = "fb_myprofile_left" valign = "top">
-        <!-- B:My Profile Left -->
-            <?php
-            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_menu.php'))
-            {
-                include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_menu.php');
-            }
-            else
-            {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_menu.php');
-            }
-            ?>
-
-        <!-- F:My Profile Left -->
-        </td>
-
-        <td class = "fb_myprofile_mid" valign = "top">&nbsp;
-
-        </td>
-
         <td class = "fb_myprofile_right" valign = "top">
             <!-- B:My Profile Right -->
             <!-- B: My AVATAR -->
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
-            <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=updateavatar'); ?>" method = "post" name = "postform">
-    <input type = "hidden" name = "do" value = "updateavatar"/>
+            <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&func=myprofile&do=avatar&action=delete'); ?>" method = "post" name = "postform">
     <table class = "fb_blocktable" id = "fb_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>
             <tr>
@@ -265,7 +427,7 @@ if ($do == 'init')
                                 echo _NON_SELECTED;
                     ?>
 
-                            <br /> <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=uploadavatar');?>"> <?php echo _SET_NEW_AVATAR; ?></a>
+                            <br /> <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&func=myprofile&do=avatar');?>"> <?php echo _SET_NEW_AVATAR; ?></a>
 
                     <?php
                             }
@@ -286,11 +448,6 @@ if ($do == 'init')
         </tbody>
     </table>
 </form>
-</div>
-</div>
-</div>
-</div>
-</div>
             <!-- F: My AVATAR -->
 
 <?php
@@ -299,12 +456,6 @@ if ($fbConfig->allowavatarupload)
 ?>
 
             <!-- B: Upload -->
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
-
 <table class = "fb_blocktable" id ="fb_forumua" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
@@ -321,8 +472,7 @@ if ($fbConfig->allowavatarupload)
             <td class="fb_uadesc">
 <?php
 
-        echo '<form action="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=uploadavatar&amp;do=validate') . '" method="post" name="adminForm" enctype="multipart/form-data">';
-        echo "<input type='hidden' value='do' name='validate'/>";
+        echo '<form action="' . JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar&action=upload') . '" method="post" name="adminForm" enctype="multipart/form-data">';
         echo "<table width='100%' border='0' cellpadding='4' cellspacing='2'>";
         echo "<tr align='center' valign='middle'><td align='center' valign='top'>";
         $uplabel = _UPLOAD_UPLOAD;
@@ -336,11 +486,6 @@ if ($fbConfig->allowavatarupload)
         </tr>
     </tbody>
 </table>
-</div>
-</div>
-</div>
-</div>
-</div>
             <!-- B: Upload -->
 <?PHP
     }
@@ -351,11 +496,6 @@ if ($fbConfig->allowavatarupload)
     {
 ?>
             <!-- B: Gallery -->
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
 <table class = "fb_blocktable" id ="fb_forumua_gal" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
@@ -377,7 +517,7 @@ if ($fbConfig->allowavatarupload)
                 if (gallery == "")
                     return;
 
-                location.href = "<?php echo KUNENA_LIVEURLREL . '&func=uploadavatar&gallery=';?>"+gallery;
+                location.href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar&gallery=');?>"+gallery;
             }
                     //-->
         </script>
@@ -385,15 +525,14 @@ if ($fbConfig->allowavatarupload)
 <?php
         echo "<p align=\"center\">";
         get_dirs(KUNENA_PATH_UPLOADED .DS. 'avatars/gallery', "categoryid", $gallery);
-        echo '<input type="button" value="'. _KUNENA_GO .'" class="button" onclick="switch_avatar_category(this.options[this.selectedIndex].value)" />'."\n";
+        echo '<input type="button" value="'. _KUNENA_GO .'" class="button" onclick="switch_avatar_category(jQuery(\'#avatar_category_select\').val())" />'."\n";
         echo "</p>";
         echo "<br />\n";
-        echo '<form action="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=uploadavatar&amp;do=fromgallery') . '" method="post" name="adminForm">';
+        echo '<form action="' . JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar&action=gallery') . '" method="post" name="adminForm">';
         echo "<table width='100%' border='0' cellpadding='4' cellspacing='2'>";
         echo "<tr align='center' valign='middle'>";
 
-        if ($gallery == "default")
-            unset($gallery);
+        if ($gallery == "default") $gallery='';
 
 	$gallery1 = $gallery2 = '';
         if ($gallery)
@@ -438,185 +577,12 @@ if ($fbConfig->allowavatarupload)
         </tr>
     </tbody>
 </table>
-</div>
-</div>
-</div>
-</div>
-</div>
             <!-- F: Gallery -->
 <?php
     }
 }
-else if ($do == 'validate')
-{
-	$app =& JFactory::getApplication();
-
-    //numExtensions= people tend to upload malicious files using mutliple extensions like: virus.txt.vbs; we'll want to have the last extension to validate against..
-    $filename = split("\.", $_FILES['avatar']['name']);
-    $numExtensions = (count($filename)) - 1;
-    $avatarName = $filename[0];
-    $avatarExt = $filename[$numExtensions];
-    $newFileName = $kunena_my->id . "." . $avatarExt;
-    $imageType = array( 1 => 'GIF', 2 => 'JPG', 3 => 'PNG', 4 => 'SWF', 5 => 'PSD', 6 => 'BMP', 7 => 'TIFF', 8 => 'TIFF', 9 => 'JPC', 10 => 'JP2', 11 => 'JPX', 12 => 'JB2', 13 => 'SWC', 14 => 'IFF');
-
-    //move it to the proper location
-    //if (!move_uploaded_file($_FILES['avatar']['tmp_name'], KUNENA_PATH_UPLOADED .DS. "avatars/$newFileName"))
-    //echo _UPLOAD_ERROR_GENERAL;
-
-    //Filename Medium + proper path
-    $fileLocation = KUNENA_PATH_UPLOADED .DS. "avatars/$newFileName";
-    //Filename Small + proper path
-    $fileLocation_s = KUNENA_PATH_UPLOADED .DS. "avatars/s_$newFileName";
-    //Filename Large + proper path
-    $fileLocation_l = KUNENA_PATH_UPLOADED .DS. "avatars/l_$newFileName";
-    echo '<table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">';
-    echo '<tr><td><div><div><div><div><table><tbody><tr><td>';
-    //Avatar Size
-    $avatarSize = $_FILES['avatar']['size'];
-    $src_file = $_FILES['avatar']['tmp_name'];
-    
-    //check for empty file
-    if (!is_uploaded_file($src_file) || empty($_FILES['avatar']['name']))
-    {
-        $app->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_EMPTY);
-    }
-
-    //check for allowed file type (jpeg, gif, png)
-    if (!($imgtype = KUNENA_check_image_type($avatarExt)))
-    {
-        $app->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_TYPE);
-    }
-
-    //check file name characteristics
-    if (eregi("[^0-9a-zA-Z_]", $avatarExt))
-    {
-        $app->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_NAME);
-    }
-
-    //check filesize
-    $maxAvSize = $fbConfig->avatarsize * 1024;
-
-    if ($avatarSize > $maxAvSize)
-    {
-        $app->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_SIZE . " (" . $fbConfig->avatarsize . " KiloBytes)");
-    }
-
-	$imgInfo = false;
-    if (function_exists('getimagesize')) {
-    	$imgInfo = @getimagesize($_FILES['avatar']['tmp_name']);
-		if ($imgInfo !== false) {
-    		$imgInfo[2] = $imageType[$imgInfo[2]];
-    		$srcWidth = $imgInfo[0];
-    		$srcHeight = $imgInfo[1];
-		}
-    } else {
-		$fbConfig->imageprocessor = 'none';
-    }
-
-    //$gdversion = ereg_replace('[[:alpha:][:space:]()]+', '', $GDArray['GD Version']); // just FYI for detection from gd_info()
-    
-    switch ($fbConfig->imageprocessor) {
-    case 'gd1' :
-      if ( !function_exists('imagecreatefromjpeg' )) {
-        die(_KUNENA_AVATAR_GDIMAGE_NOT);
-      }
-      if ( $imgInfo[2] == 'JPG' ) {
-        $src_img = imagecreatefromjpeg($src_file);
-      } elseif ( $imgInfo[2] == 'PNG' ) {
-        $src_img = imagecreatefrompng($src_file);
-      } else {
-        $src_img = imagecreatefromgif($src_file);
-      }
-
-	// Create Large Image
-	generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarlargewidth, 
-		$fbConfig->avatarlargeheight, $fbConfig->avatarquality, $fileLocation_l);
-	// Create Medium Image
-	generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarwidth, 
-		$fbConfig->avatarheight, $fbConfig->avatarquality, $fileLocation);
-	// Create Small Image
-	generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarsmallwidth, 
-		$fbConfig->avatarsmallheight, $fbConfig->avatarquality, $fileLocation_s);
-	// Destroy source Image
-	imagedestroy($src_img);
-
-    break;
-
-
-    case 'gd2' :
-
-      if ( !function_exists('imagecreatefromjpeg') ) {
-        die(_KUNENA_AVATAR_GDIMAGE_NOT);
-      }
-      if ( !function_exists('imagecreatetruecolor') ) {
-        die(_KUNENA_AVATAR_GD2IMAGE_NOT);
-      }
-      if ( $imgInfo[2] == 'JPG' ) {
-        $src_img = imagecreatefromjpeg($src_file);
-      } elseif ($imgInfo[2] == 'PNG'){
-        $src_img = imagecreatefrompng($src_file);
-      } else {
-        $src_img = imagecreatefromgif($src_file);
-      }
-
-	// Create Large Image
-	generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarlargewidth, 
-		$fbConfig->avatarlargeheight, $fbConfig->avatarquality, $fileLocation_l);
-	// Create Medium Image
-	generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarwidth, 
-		$fbConfig->avatarheight, $fbConfig->avatarquality, $fileLocation);
-	// Create Small Image
-	generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarsmallwidth, 
-		$fbConfig->avatarsmallheight, $fbConfig->avatarquality, $fileLocation_s);
-	// Destroy source Image
-	imagedestroy($src_img);
-
-	break;
-    
-	default:
-		if (isset($srcWidth) && ($srcWidth > $fbConfig->avatarlargewidth || $srcHeight > $fbConfig->avatarlargeheight))
-			$app->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_SIZE . " (" . $fbConfig->avatarlargewidth . " x ". $fbConfig->avatarlargeheight .")");
-		// Make sure that we do not use wrong avatar image
-		if (file_exists($fileLocation_s)) CKunenaFile::delete($fileLocation_s);
-		if (file_exists($fileLocation_l)) CKunenaFile::delete($fileLocation_l);
-		CKunenaFile::copy($src_file, $fileLocation);
-		break;
-	}
-
-	// delete original file
-	unlink($src_file);
-	
-    $kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newFileName}' WHERE userid={$kunena_my->id}");
-    $kunena_db->query() or trigger_dberror("Unable to update avatar.");
-    echo " <strong>" . _UPLOAD_UPLOADED . "</strong>...<br /><br />";
-    echo  _USER_RETURN_A . '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '">' . _USER_RETURN_B . ".</a>";
-    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'), 3500);
-}
-else if ($do == 'fromgallery')
-{
-    require_once(KUNENA_PATH_LIB .DS. 'kunena.helpers.php');
-    $newAvatar = JRequest::getVar('newAvatar', '');
-
-    $newAvatar = CKunenaTools::fbRemoveXSS($newAvatar);
-    if ($newAvatar == '') {
-        $app->redirect(KUNENA_LIVEURL . '&amp;func=uploadavatar', _UPLOAD_ERROR_CHOOSE);
-    }
-
-    $kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newAvatar}' WHERE userid={$kunena_my->id}");
-    $kunena_db->query() or trigger_dberror("Unable to update user avatar.");
-
-    echo _USER_PROFILE_UPDATED . "<br /><br />";
-
-    echo _USER_RETURN_A . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show') . '">' . _USER_RETURN_B . '</a><br /><br />';
-    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURL . '&amp;func=myprofile&amp;do=show'), 3500);
-}
-
 ?>
  <!-- F:My Profile Right -->
-        </td>
-    </tr>
-</table>
-<!-- F:My Profile -->
 
 <?php
 }
@@ -626,31 +592,3 @@ else
    echo _FORUM_UNAUTHORIZIED2 ;
 }
 ?>
-<!-- Begin: Forum Jump -->
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable" id = "fb_bottomarea" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
-    <thead>
-        <tr>
-            <th class = "th-right">
-                <?php
-                //(JJ) FINISH: CAT LIST BOTTOM
-                if ($fbConfig->enableforumjump)
-                {
-                    require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
-                }
-                ?>
-            </th>
-        </tr>
-    </thead>
-	<tbody><tr><td></td></tr></tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Finish: Forum Jump -->

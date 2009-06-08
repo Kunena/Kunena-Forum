@@ -160,51 +160,23 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     // F: Show Posts
                     break;
 
-                case "showavatar":
-
-                    // B: Settings
+                case "avatar":
+                    // B: Avatar
                     if ($fbConfig->fb_profile != 'cb' && $fbConfig->fb_profile != 'jomsocial')
                     {
-                        if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar.php'))
+                        if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar_upload.php'))
                         {
-                            include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar.php');
+                            include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar_upload.php');
                         }
                         else
                         {
-                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_avatar.php');
+                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_avatar_upload.php');
                         }
                     }
 
-                    // F: Settings
-                    break;
-
-                case "updateavatar":
-                    $rowItemid = JRequest::getVar('Itemid');
-
-                    $deleteAvatar = JRequest::getInt('deleteAvatar', 0);
-                    $avatar = JRequest::getVar('avatar', '');
-
-                    if ($deleteAvatar == 1)
-                    {
-                        $avatar = "";
-                    }
-
-                    $kunena_db->setQuery("UPDATE #__fb_users set   avatar='$avatar'  where userid=$kunena_my->id");
-
-                    if (!$kunena_db->query())
-                    {
-                        echo _USER_PROFILE_NOT_A . " <strong><font color=\"red\">" . _USER_PROFILE_NOT_B . "</font></strong> " . _USER_PROFILE_NOT_C . ".<br /><br />";
-                    }
-                    else
-                    {
-                        echo _USER_PROFILE_UPDATED . "<br /><br />";
-                    }
-
-                    echo _USER_RETURN_A . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . "&amp;func=uploadavatar") . '">' . _USER_RETURN_B . "</a><br /><br />";
-
-                    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=uploadavatar'), 3500);
-                break;
-
+                    // F: Avatar
+                	break;
+                    
                 case "showset":
                     // B: Settings
                 	if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_set.php'))
@@ -233,16 +205,14 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                     if (!$kunena_db->query())
                     {
-                        echo _USER_PROFILE_NOT_A . " <strong><font color=\"red\">" . _USER_PROFILE_NOT_B . "</font></strong> " . _USER_PROFILE_NOT_C . ".<br /><br />";
+						$app->enqueueMessage(_USER_PROFILE_NOT_A._USER_PROFILE_NOT_B._USER_PROFILE_NOT_C, 'notice');
                     }
                     else
                     {
-                        echo _USER_PROFILE_UPDATED . "<br /><br />";
+						$app->enqueueMessage(_USER_PROFILE_UPDATED);
                     }
 
-                    echo _USER_RETURN_A . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . "&amp;func=myprofile&amp;do=showset") . '">' . _USER_RETURN_B . "</a><br /><br />";
-
-                    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showset'), 3500);
+                    $app->redirect(JRoute::_(KUNENA_LIVEURLREL . "&amp;func=myprofile"));
                 break;
 
                 case "profileinfo":
@@ -326,9 +296,8 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
         $app->close();
     }
 
-                        echo _USER_RETURN_A . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . "&amp;func=myprofile&amp;do=showsig") . '">' . _USER_RETURN_B . "</a><br /><br />";
-
-                        echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=profileinfo'), 3500);
+						$app->enqueueMessage(_USER_PROFILE_UPDATED);
+						$app->redirect(JRoute::_(KUNENA_LIVEURLREL . "&amp;func=myprofile"));
                 break;
 
                 case "showsub":
@@ -431,25 +400,21 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                     if (!$kunena_db->query())
                     {
-                        echo _USER_UNSUBSCRIBE_A . " <strong><font color=\"red\">" . _USER_UNSUBSCRIBE_B . "</font></strong> " . _USER_UNSUBSCRIBE_C . ".<br /><br />";
+						$app->enqueueMessage(_USER_UNSUBSCRIBE_A._USER_UNSUBSCRIBE_B._USER_UNSUBSCRIBE_C, 'notice');
                     }
                     else
                     {
-                        echo _USER_UNSUBSCRIBE_YES . ".<br /><br />";
+						$app->enqueueMessage(_USER_UNSUBSCRIBE_YES);
                     }
-
+                    
                     if ($fbConfig->fb_profile == 'cb')
                     {
-					$forumtab_url = CKunenaCBProfile::getForumTabURL();
-                        echo _USER_RETURN_A . ' <a href="'. $forumtab_url . '">' . _USER_RETURN_B . "</a><br /><br />";
-
-                        echo CKunenaLink::GetAutoRedirectHTML($forumtab_url, 3500);
+						$forumtab_url = CKunenaCBProfile::getForumTabURL();
+						$app->redirect(JRoute::_($forumtab_url));
                     }
                     else
                     {
-                        echo _USER_RETURN_A . " <a href=\"" . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub') . "\">" . _USER_RETURN_B . "</a><br /><br />";
-
-                        echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub'), 3500);
+                    	$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub'));
                     }
 
                     break;
@@ -460,25 +425,19 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                    $kunena_db->setQuery("DELETE from #__fb_subscriptions where userid=$kunena_my->id and thread=$thread");
 
 						if (!$kunena_db->query()) {
-							echo _USER_UNSUBSCRIBE_A . " <strong><font color=\"red\">" . _USER_UNSUBSCRIBE_B . "</font></strong> " . _USER_UNSUBSCRIBE_C . ".<br /><br />";
+							$app->enqueueMessage(_USER_UNSUBSCRIBE_A._USER_UNSUBSCRIBE_B._USER_UNSUBSCRIBE_C, 'notice');
 						}
 						else {
-							echo _USER_UNSUBSCRIBE_YES . ".<br /><br />";
+							$app->enqueueMessage(_USER_UNSUBSCRIBE_YES);
 						}
 
 						if ($fbConfig->fb_profile == 'cb') {
 							$forumtab_url = CKunenaCBProfile::getForumTabURL();
-				                        echo _USER_RETURN_A . ' <a href="'. $forumtab_url . '">' . _USER_RETURN_B . "</a><br /><br />";
-
-				                        echo CKunenaLink::GetAutoRedirectHTML($forumtab_url, 3500);
-							echo '<a href="javascript:history.go(-1)">'._BACK.'</a>';
+							$app->redirect(JRoute::_($forumtab_url));
 
 						}
 						else {
-							echo _USER_RETURN_A . " <a href=\"". JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show')."\">" . _USER_RETURN_B . "</a><br /><br />";
-
-							echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'), 3500);
-							echo '<a href="javascript:history.go(-1)">'._BACK.'</a>';
+							$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub'));
                     }
 
                     break;
@@ -497,25 +456,21 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                     if (!$kunena_db->query())
                     {
-                        echo _USER_UNFAVORITE_A . " <strong><font color=\"red\">" . _USER_UNFAVORITE_B . "</font></strong> " . _USER_UNFAVORITE_C . ".<br /><br />";
+                    	$app->enqueueMessage(_USER_UNFAVORITE_A._USER_UNFAVORITE_B._USER_UNFAVORITE_C, 'notice');
                     }
                     else
                     {
-                        echo _USER_UNFAVORITE_YES . ".<br /><br />";
+                    	$app->enqueueMessage(_USER_UNFAVORITE_YES);
                     }
 
                     if ($fbConfig->fb_profile == 'cb')
                     {
-			$forumtab_url = CKunenaCBProfile::getForumTabURL();
-                        echo _USER_RETURN_A . ' <a href="'. $forumtab_url . '">' . _USER_RETURN_B . "</a><br /><br />";
-
-                        echo CKunenaLink::GetAutoRedirectHTML($forumtab_url, 3500);
+						$forumtab_url = CKunenaCBProfile::getForumTabURL();
+						$app->redirect(JRoute::_($forumtab_url));
                     }
                     else
                     {
-                        echo _USER_RETURN_A . " <a href=\"" . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav') . "\">" . _USER_RETURN_B . "</a><br /><br />";
-
-                        echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav'), 3500);
+                    	$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav'));
                     }
 
                     break;
@@ -525,24 +480,18 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 						$kunena_db->setQuery("DELETE from #__fb_favorites where userid=$kunena_my->id and thread=$thread");
 
 						if (!$kunena_db->query()) {
-							echo _USER_UNFAVORITE_A . " <strong><font color=\"red\">" . _USER_UNFAVORITE_B . "</font></strong> " . _USER_UNFAVORITE_C . ".<br /><br />";
+                    		$app->enqueueMessage(_USER_UNFAVORITE_A._USER_UNFAVORITE_B._USER_UNFAVORITE_C, 'notice');
 						}
 						else {
-							echo _USER_UNFAVORITE_YES . ".<br /><br />";
+							$app->enqueueMessage(_USER_UNFAVORITE_YES);
 						}
 
 						if ($fbConfig->fb_profile == 'cb') {
 							$forumtab_url = CKunenaCBProfile::getForumTabURL();
-				                        echo _USER_RETURN_A . ' <a href="'. $forumtab_url . '">' . _USER_RETURN_B . "</a><br /><br />";
-
-				                        echo CKunenaLink::GetAutoRedirectHTML($forumtab_url, 3500);
-							echo '<a href="javascript:history.go(-1)">'. _BACK .'</a>';
+							$app->redirect(JRoute::_($forumtab_url));
 						}
 						else {
-							echo _USER_RETURN_A . " <a href=\"index.php?option=com_kunena&amp;Itemid=$Itemid&amp;func=myprofile&amp;do=show\">" . _USER_RETURN_B . "</a><br /><br />";
-
-							echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=show'), 3500);
-							echo '<a href="javascript:history.go(-1)">'. _BACK .'</a>';
+							$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav'));
 						}
 
                     break;
@@ -649,25 +598,8 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
             ?>
 
         <!-- F:My Profile Right -->
-        </td>
-    </tr>
-</table>
-<!-- F:My Profile -->
-
-<?php
-}
-else
-{
- echo '<b>'. _COM_A_REGISTERED_ONLY.'</b><br />';
-   echo _FORUM_UNAUTHORIZIED2 ;
-}
-?>
+        
 <!-- Begin: Forum Jump -->
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
 <table class = "fb_blocktable" id = "fb_bottomarea" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
@@ -684,10 +616,18 @@ else
     </thead>
 	<tbody><tr><td></td></tr></tbody>
 </table>
-</div>
-</div>
-</div>
-</div>
-</div>
 <!-- Finish: Forum Jump -->
 
+        </td>
+    </tr>
+</table>
+<!-- F:My Profile -->
+
+<?php
+}
+else
+{
+ echo '<b>'. _COM_A_REGISTERED_ONLY.'</b><br />';
+   echo _FORUM_UNAUTHORIZIED2 ;
+}
+?>

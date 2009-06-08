@@ -728,17 +728,6 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
             break;
 
         #########################################################################################
-        case 'uploadavatar':
-            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar_upload.php')) {
-                include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar_upload.php');
-                }
-            else {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile_avatar_upload.php');
-                }
-
-            break;
-
-        #########################################################################################
         case 'latest':
         case 'mylatest':
             if (file_exists(KUNENA_ABSTMPLTPATH . '/latestx.php')) {

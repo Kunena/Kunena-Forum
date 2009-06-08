@@ -163,7 +163,7 @@ class CKunenaLink
     	}
     	else
     	{
-    		return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=show', $name, '', $rel);
+    		return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=myprofile', $name, '', $rel);
     	}
     }
 

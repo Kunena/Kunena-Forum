@@ -22,9 +22,10 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$msg_id = JRequest::getVar('msg_id');
+$id = JRequest::getInt('id', 0);
+if (!$id) $id = JRequest::getInt('msg_id');
 $catid = JRequest::getInt('catid', 0);
-$reporter = JRequest::getVar('reporter');
+$reporter = JRequest::getInt('reporter', 0);
 $reason = strval(JRequest::getVar('reason'));
 $text = strval(JRequest::getVar('text'));
 $type = JRequest::getInt('type', 0); // 0 = send e-mail, 1 = send pm
@@ -32,17 +33,17 @@ $type = JRequest::getInt('type', 0); // 0 = send e-mail, 1 = send pm
 switch ($do)
 {
     case 'report':
-        ReportMessage((int)$msg_id, $catid, (int)$reporter, $reason, $text, (int)$type);
+        ReportMessage($id, $catid, $reporter, $reason, $text, (int)$type);
 
         break;
 
     default:
-        ReportForm($msg_id, $catid);
+        ReportForm($id, $catid);
 
         break;
 }
 
-function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) 
+function ReportMessage($id, $catid, $reporter, $reason, $text, $type) 
 {
     $kunena_my = &JFactory::getUser();
     $kunena_db = &JFactory::getDBO();
@@ -58,7 +59,7 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type)
         
     $kunena_db->setQuery("SELECT a.*, b.message AS msg_text FROM #__fb_messages AS a"
     . "\n LEFT JOIN #__fb_messages_text AS b ON b.mesid = a.id"
-    . "\n WHERE a.id={$msg_id}");
+    . "\n WHERE a.id={$id}");
 
     $row = $kunena_db->loadObject();
 
@@ -118,7 +119,7 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type)
     }
     
     echo '<div align="center">' . _KUNENA_REPORT_SUCCESS;
-    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&amp;id='.$msg_id).'#'.$msg_id, 3500);
+    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&amp;id='.$id).'#'.$id, 3500);
     
 	}
     else
@@ -129,7 +130,7 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type)
     	
     }
     echo '<br /><br />';
-    echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id) . '#' . $msg_id . '">' . _POST_SUCCESS_VIEW . '</a><br />';
+    echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $id) . '#' . $id . '">' . _POST_SUCCESS_VIEW . '</a><br />';
     echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $catid) . '">' . _POST_SUCCESS_FORUM . '</a><br />';
     echo '</div>';
 }
@@ -196,12 +197,12 @@ function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
     }
     }
 
-function ReportForm($msg_id, $catid) {
+function ReportForm($id, $catid) {
     $app =& JFactory::getApplication();
     $fbConfig =& CKunenaConfig::getInstance();
     $kunena_my = &JFactory::getUser();
 
-    $redirect = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id . '&amp;Itemid=' . KUNENA_COMPONENT_ITEMID) . '#' . $msg_id;
+    $redirect = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $id . '&amp;Itemid=' . KUNENA_COMPONENT_ITEMID) . '#' . $id;
 
     //$redirect = JRoute::_($redirect);
     if (!$kunena_my->id) {
@@ -259,7 +260,7 @@ function ReportForm($msg_id, $catid) {
                                         </table>
 
                                         <input type = "hidden" name = "do" value = "report"/>
-                                        <input type = "hidden" name = "msg_id" value = "<?php echo $msg_id;?>"/>
+                                        <input type = "hidden" name = "id" value = "<?php echo $id;?>"/>
                                         <input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
                                         <input type = "hidden" name = "reporter" value = "<?php echo $kunena_my->id;?>"/>
                                         <input type = "submit" name = "Submit" value = "<?php echo _KUNENA_REPORT_SEND ?>"/>

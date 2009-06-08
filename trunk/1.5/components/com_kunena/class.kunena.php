@@ -144,8 +144,8 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
         define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_mypms&amp;task=showprofile&amp;Itemid=" . KUNENA_CPM_ITEMID . "&amp;user=");
         }
     else {
-        $profilelink = 'index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;userid=';
-        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_kunena&amp;func=fbprofile&amp;task=showprf&amp;Itemid=" . KUNENA_COMPONENT_ITEMID . "&amp;userid=");
+        $profilelink = 'index.php?option=com_kunena&amp;func=fbprofile&amp;userid=';
+        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_kunena&amp;func=fbprofile&amp;Itemid=" . KUNENA_COMPONENT_ITEMID . "&amp;userid=");
         }
     }
 

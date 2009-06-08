@@ -32,6 +32,10 @@ Legend:
 
 Kunena 1.5.2RC
 
+8-June-2009 Matias
+# [#16695] Change URL query parameter in reply / quote from 'replyto' to 'id' for better SEF (accept also old one)
++ [#16696] SEF: use Joomla! 1.5 Router
+
 7-June-2009 Matias
 # [#16671] Board Categories have &nbsp; showing in them (PHP <5.2.3 issue?)
 # [#16672] RSS Feed was broken: JDocumentRAW::addCustomTag() missing

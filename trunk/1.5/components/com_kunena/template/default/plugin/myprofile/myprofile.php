@@ -31,6 +31,8 @@ $document->setTitle(_GEN_MYPROFILE . ' - ' . stripslashes($fbConfig->board_title
 
 if ($kunena_my->id != "" && $kunena_my->id != 0)
 {
+	$do = JRequest::getVar('do', 'show');
+	
 	//Get joomla userinfo needed later on, this limits the amount of queries
     $juserinfo = new JUser($kunena_my->id);
 

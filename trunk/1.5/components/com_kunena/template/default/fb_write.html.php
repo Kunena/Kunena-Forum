@@ -120,7 +120,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
             ?>
 
             <?php
-            if ($setFocus == 0 && $replyto == 0 && !$fromBot)
+            if ($setFocus == 0 && $id == 0 && !$fromBot)
             {
                 echo "<script type=\"text/javascript\">document.postform.subject.focus();</script>";
                 $setFocus = 1;
@@ -166,19 +166,19 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
         //check if this user is already subscribed to this topic but only if subscriptions are allowed
         if ($fbConfig->allowsubscriptions == 1)
         {
-            if ($replyto == 0) {
+            if ($id == 0) {
                 $fb_thread = -1;
             }
             else
             {
-                $kunena_db->setQuery("select thread from #__fb_messages where id=$replyto");
+                $kunena_db->setQuery("select thread from #__fb_messages where id=$id");
                 $fb_thread = $kunena_db->loadResult();
             }
 
             $kunena_db->setQuery("SELECT thread from #__fb_subscriptions where userid=$kunena_my->id and thread='$fb_thread'");
             $fb_subscribed = $kunena_db->loadResult();
 
-            if ($fb_subscribed == "" || $replyto == 0) {
+            if ($fb_subscribed == "" || $id == 0) {
                 $fb_cansubscribe = 1;
             }
             else {
@@ -327,6 +327,6 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
     $no_upload = "0"; //reset the value.. you just never know..
 
     if ($fbConfig->showhistory == 1) {
-        listThreadHistory($replyto, $fbConfig, $kunena_db);
+        listThreadHistory($id, $fbConfig, $kunena_db);
     }
 ?>

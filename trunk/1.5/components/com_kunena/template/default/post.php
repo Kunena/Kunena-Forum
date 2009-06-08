@@ -29,10 +29,15 @@ global $is_Moderator;
 
 //
 //ob_start();
-$catid = (int)$catid;
 $pubwrite = (int)$fbConfig->pubwrite;
 //ip for floodprotection, post logging, subscriptions, etcetera
 $ip = $_SERVER["REMOTE_ADDR"];
+
+$catid = JRequest::getInt('catid', 0);
+$id = JRequest::getInt('id', 0);
+// Support for old $replyto variable in post reply/quote
+if (!$id) $id = JRequest::getInt('replyto', 0);
+
 //reset variables used
 // ERROR: mixed global $editmode
 global $editmode;
@@ -493,14 +498,14 @@ $catName = $objCatInfo->name;
             }
             else
             {
-                if ($do == "quote" && (hasPostPermission($kunena_db, $catid, $replyto, $kunena_my->id, $fbConfig->pubwrite, $is_Moderator)))
+                if ($do == "quote" && (hasPostPermission($kunena_db, $catid, $id, $kunena_my->id, $fbConfig->pubwrite, $is_Moderator)))
                 { //reply do quote
                     $parentid = 0;
-                    $replyto = (int)$replyto;
+                    $id = (int)$id;
 
-                    if ($replyto > 0)
+                    if ($id > 0)
                     {
-                        $kunena_db->setQuery("SELECT #__fb_messages.*,#__fb_messages_text.message FROM #__fb_messages,#__fb_messages_text WHERE id={$replyto} AND mesid={$replyto}");
+                        $kunena_db->setQuery("SELECT #__fb_messages.*,#__fb_messages_text.message FROM #__fb_messages,#__fb_messages_text WHERE id={$id} AND mesid={$id}");
                         $kunena_db->query();
 
                         if ($kunena_db->getNumRows() > 0)
@@ -551,17 +556,17 @@ $catName = $objCatInfo->name;
                         //--
                         //echo "</form>";
                 }
-                else if ($do == "reply" && (hasPostPermission($kunena_db, $catid, $replyto, $kunena_my->id, $fbConfig->pubwrite, $is_Moderator)))
+                else if ($do == "reply" && (hasPostPermission($kunena_db, $catid, $id, $kunena_my->id, $fbConfig->pubwrite, $is_Moderator)))
                 { // reply no quote
                     $parentid = 0;
-                    $replyto = (int)$replyto;
+                    $id = (int)$id;
                     $setFocus = 0;
 
-                    if ($replyto > 0)
+                    if ($id > 0)
                     {
                         $kunena_db->setQuery('SELECT #__fb_messages.*,#__fb_messages_text.message'
                         . "\n" . 'FROM #__fb_messages,#__fb_messages_text'
-                        . "\n" . 'WHERE id=' . $replyto . ' AND mesid=' . $replyto);
+                        . "\n" . 'WHERE id=' . $id . ' AND mesid=' . $id);
                         $kunena_db->query();
 
                         if ($kunena_db->getNumRows() > 0)
@@ -599,10 +604,10 @@ $catName = $objCatInfo->name;
                         //--
                         //echo "</form>";
                 }
-                else if ($do == "newFromBot" && (hasPostPermission($kunena_db, $catid, $replyto, $kunena_my->id, $fbConfig->pubwrite, $is_Moderator)))
+                else if ($do == "newFromBot" && (hasPostPermission($kunena_db, $catid, $id, $kunena_my->id, $fbConfig->pubwrite, $is_Moderator)))
                 { // The Mosbot "discuss on forums" has detected an unexisting thread and wants to create one
                     $parentid = 0;
-                    $replyto = (int)$replyto;
+                    $id = (int)$id;
                     $setFocus = 0;
                     //                $resubject = base64_decode($resubject); //per mf#6100  -- jdg 16/07/2005
                     $resubject = base64_decode(strtr($resubject, "()", "+/"));
@@ -1707,14 +1712,14 @@ $catName = $objCatInfo->name;
  * @param boolean
  * @param boolean
  */
-function hasPostPermission($kunena_db, $catid, $replyto, $userid, $pubwrite, $ismod)
+function hasPostPermission($kunena_db, $catid, $id, $userid, $pubwrite, $ismod)
 {
     $fbConfig =& CKunenaConfig::getInstance();
 
     $topicLock = 0;
-    if ($replyto != 0)
+    if ($id != 0)
     {
-        $kunena_db->setQuery("select thread from #__fb_messages where id='$replyto'");
+        $kunena_db->setQuery("select thread from #__fb_messages where id='$id'");
         $topicID = $kunena_db->loadResult();
         $lockedWhat = _GEN_TOPIC;
 
@@ -1723,7 +1728,7 @@ function hasPostPermission($kunena_db, $catid, $replyto, $userid, $pubwrite, $is
             $sql = 'select locked from #__fb_messages where id=' . $topicID;
         }
         else {
-            $sql = 'select locked from #__fb_messages where id=' . $replyto;
+            $sql = 'select locked from #__fb_messages where id=' . $id;
         }
 
         $kunena_db->setQuery($sql);

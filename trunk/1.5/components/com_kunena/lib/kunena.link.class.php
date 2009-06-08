@@ -134,9 +134,9 @@ class CKunenaLink
         return CKunenaLink::GetSefHrefLink(htmlspecialchars(JRoute::_('index.php?'.$_SERVER['QUERY_STRING'])), $name, '', $rel, '', $anker);
     }
 
-    function GetReportMessageLink($catid, $msg_id, $name, $rel='nofollow')
+    function GetReportMessageLink($catid, $id, $name, $rel='nofollow')
     {
-        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=report&amp;catid='.$catid.'&amp;msg_id='.$msg_id, $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=report&amp;catid='.$catid.'&amp;id='.$id, $name, '', $rel);
     }
 
     function GetMessageIPLink($msg_ip, $rel='nofollow')
@@ -253,7 +253,7 @@ class CKunenaLink
 
     function GetTopicPostReplyLink($do, $catid, $id, $name, $rel='nofollow')
     {
-        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=post&amp;do='.$do.'&amp;catid='.$catid.'&amp;replyto='.$id, $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=post&amp;do='.$do.'&amp;catid='.$catid.'&amp;id='.$id, $name, '', $rel);
     }
 
     function GetEmailLink($email, $name)

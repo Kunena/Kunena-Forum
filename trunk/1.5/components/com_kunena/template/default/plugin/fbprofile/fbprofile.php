@@ -36,7 +36,7 @@ if ($kunena_my->id) //registered only
     require_once(KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
     require_once(KUNENA_PATH_LIB .DS. 'kunena.statsbar.php');
 
-    $task = JRequest::getVar('task', "");
+    $task = JRequest::getVar('task', 'showprf');
 
     switch ($task)
     {

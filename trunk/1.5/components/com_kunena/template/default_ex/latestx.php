@@ -167,10 +167,12 @@ $total = (int)$kunena_db->loadResult();
 
 $query = 			"SELECT
                         a.*,
+                        t.mesid AS mesid,
                         t.message AS messagetext,
                         m.mesid AS attachmesid,
                         (f.thread>0) AS myfavorite,
                         u.avatar,
+                        c.id AS catid,
                         c.name AS catname,
                         b.lastpost
                     FROM
@@ -182,21 +184,21 @@ if ($func == "mylatest")
                                 FROM #__fb_messages AS mm
                                 JOIN ( SELECT thread
                                 		FROM #__fb_messages
-                                		WHERE userid=$kunena_my->id
+                                		WHERE userid='{$kunena_my->id}'
                                 		GROUP BY 1
                                 		UNION ALL
                                 		SELECT thread
                                 		FROM #__fb_favorites
-                                		WHERE userid=$kunena_my->id) AS tt ON mm.thread = tt.thread
-                                WHERE hold=0 AND moved=0 AND catid IN ($fbSession->allowed)
+                                		WHERE userid='{$kunena_my->id}') AS tt ON mm.thread = tt.thread
+                                WHERE hold='0' AND moved='0' AND catid IN ({$fbSession->allowed})
                                 GROUP BY 1) AS b ON b.thread = a.thread ";
 }
 else
 {
 	$query .=			"JOIN (  SELECT thread, MAX(time) AS lastpost
                                 FROM #__fb_messages
-                                WHERE time >'$querytime'
-                                AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)" .
+                                WHERE time>'{$querytime}'
+                                AND hold='0' AND moved='0' AND catid IN ($fbSession->allowed)" .
                                 $latestcats .
                                 " GROUP BY 1) AS b ON b.thread = a.thread ";
 }
@@ -204,19 +206,18 @@ else
 $query .=				"JOIN #__fb_messages_text AS t ON a.thread = t.mesid
                         LEFT JOIN #__fb_categories  AS c ON c.id = a.catid
                         LEFT JOIN #__fb_attachments AS m ON m.mesid = a.id
-                        LEFT JOIN #__fb_favorites AS f ON  f.thread = a.id && f.userid = $kunena_my->id"
+                        LEFT JOIN #__fb_favorites AS f ON  f.thread = a.id && f.userid = '{$kunena_my->id}'"
                         .(($fbConfig->avatar_src == "cb")?
                     " LEFT JOIN #__comprofiler AS u ON u.user_id = a.userid ":
                     " LEFT JOIN #__fb_users AS u ON u.userid = a.userid ")."
                     WHERE
-                        a.parent=0
-                        AND a.moved=0
-                        AND a.hold=0
+                        a.parent='0'
+                        AND a.moved='0'
+                        AND a.hold='0'
                     GROUP BY a.id
-                    ORDER BY ". ($func=="mylatest"?"f.thread DESC, ":"") ."lastpost DESC
-                    LIMIT $offset,$threads_per_page";
+                    ORDER BY ". ($func=="mylatest"?"f.thread DESC, ":"") ."lastpost DESC";
 
-$kunena_db->setQuery($query);
+$kunena_db->setQuery($query, $offset, $threads_per_page);
 $msglist = $kunena_db->loadObjectList();
 	check_dberror("Unable to load messages.");
 
@@ -245,7 +246,7 @@ if (count($threadids) > 0)
         					thread AS id,
         					count(thread) AS favcount
 					FROM #__fb_favorites
-       					WHERE thread IN ('$idstr') GROUP BY thread");
+       					WHERE thread IN ('{$idstr}') GROUP BY thread");
         $favlist = $kunena_db->loadObjectList();
         check_dberror("Unable to load messages.");
 
@@ -273,9 +274,9 @@ if (count($threadids) > 0)
 					.(($fbConfig->avatar_src == "cb")?
     				"LEFT  JOIN #__comprofiler AS u ON u.user_id = a.userid"
     				:"LEFT  JOIN #__fb_users AS u ON u.userid = a.userid")."
-    			WHERE a.thread IN ('$idstr')
-     				AND a.id NOT IN ('$idstr')
-     				AND a.hold=0";
+    			WHERE a.thread IN ('{$idstr}')
+     				AND a.id NOT IN ('{$idstr}')
+     				AND a.hold='0'";
 
     $kunena_db->setQuery($query);
     $msglist = $kunena_db->loadObjectList();
@@ -289,7 +290,7 @@ if (count($threadids) > 0)
     }
 
     $kunena_db->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages "
-                       ."WHERE thread IN ('$idstr') AND time>'$prevCheck' GROUP BY thread");
+                       ."WHERE thread IN ('{$idstr}') AND time>'{$prevCheck}' GROUP BY thread");
     $msgidlist = $kunena_db->loadObjectList();
     check_dberror("Unable to get unread messages count and first id.");
 
@@ -387,7 +388,7 @@ if (count($threadids) > 0)
 
 				//get all readTopics in an array
 				$readTopics = "";
-				$kunena_db->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid=$kunena_my->id");
+				$kunena_db->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid='{$kunena_my->id}'");
 				$readTopics = $kunena_db->loadResult();
 					check_dberror('Unable to load read topics.');
 				if (count($readTopics) == 0)

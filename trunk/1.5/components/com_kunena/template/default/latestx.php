@@ -49,6 +49,7 @@ else
 // get all the threads with posts in the specified timeframe
 $kunena_db->setQuery(
     "SELECT
+    	a.id,
         a.thread,
         a.subject,
         b.lastpost
@@ -56,12 +57,12 @@ $kunena_db->setQuery(
         #__fb_messages AS a
         JOIN (  SELECT thread, MAX(time) AS lastpost
                 FROM #__fb_messages
-                WHERE time >'$querytime' AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)
+                WHERE time >'{$querytime}' AND hold='0' AND moved='0' AND catid IN ($fbSession->allowed)
                 GROUP BY 1) AS b ON b.thread = a.thread
      WHERE
-        a.parent=0
-        AND a.moved=0
-        AND a.hold=0
+        a.parent='0'
+        AND a.moved='0'
+        AND a.hold='0'
      GROUP BY a.thread
      ORDER BY b.lastpost DESC LIMIT 100");
 $resultSet = $kunena_db->loadObjectList();
@@ -145,13 +146,13 @@ if ($sel == "0")
             {
                 //get the latest post time for this thread
                 unset($thisThread);
-                $kunena_db->setQuery("SELECT max(time) AS maxtime, count(*) AS totalmessages FROM #__fb_messages where thread={$rs->thread}");
+                $kunena_db->setQuery("SELECT MAX(time) AS maxtime, COUNT(*) AS totalmessages FROM #__fb_messages WHERE thread='{$rs->thread}'");
                 $thisThread = $kunena_db->loadObject();
                 $latestPostTime = $thisThread->maxtime;
 
                 //get the latest post itself
                 unset($result);
-                $kunena_db->setQuery("SELECT a.id,a.name,a.userid,a.catid,b.name as catname from #__fb_messages as a LEFT JOIN #__fb_categories as b on a.catid=b.id where a.time={$latestPostTime}");
+                $kunena_db->setQuery("SELECT a.id, a.name, a.userid, a.catid, c.id AS catid, c.name as catname FROM #__fb_messages AS a LEFT JOIN #__fb_categories AS c ON a.catid=c.id WHERE a.time='{$latestPostTime}'");
                 $result = $kunena_db->loadObject();
 
                 $latestPostId = $result->id;
@@ -159,7 +160,7 @@ if ($sel == "0")
 				$latestPostUserid = $result->userid;
                 $latestPostCatid = $result->catid;
                 $catname = kunena_htmlspecialchars(stripslashes($result->catname));
-                $kunena_db->setQuery("SELECT count(*) from #__fb_messages where time>'{$querytime}' and thread={$rs->thread}");
+                $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE time>'{$querytime}' AND thread={$rs->thread}");
                 $numberOfPosts = $kunena_db->loadResult();
                 $k = 1 - $k;
                 echo '<tr  class="' . $boardclass . '' . $tabclass[$k] . '" >';

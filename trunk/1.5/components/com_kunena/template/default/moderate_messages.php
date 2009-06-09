@@ -80,7 +80,7 @@ switch ($action)
     case 'list':
         echo '<p class="sectionname"><?php echo _MESSAGE_ADMINISTRATION; ?></p>';
 
-        $kunena_db->setQuery("SELECT m.id,m.time,m.name,m.subject,m.hold,t.message FROM #__fb_messages AS m JOIN #__fb_messages_text as t ON m.id=t.mesid WHERE hold='1' AND catid=$catid ORDER BY id ASC");
+        $kunena_db->setQuery("SELECT m.id, m.time, m.name, m.subject, m.hold, t.message FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE hold='1' AND catid='{$catid}' ORDER BY id ASC");
 
         if (!$kunena_db->query())
             echo $kunena_db->getErrorMsg();
@@ -221,13 +221,13 @@ function jbApprovePosts($kunena_db, $cid)
     reset($cid);
     foreach($cid as $id) {
     	$id = (int)$id;
-        $newQuery = "SELECT * FROM #__fb_messages WHERE id = " . $id . " LIMIT 1";
-        $kunena_db->setQuery($newQuery);
+        $newQuery = "SELECT * FROM #__fb_messages WHERE id='{$id}'";
+        $kunena_db->setQuery($newQuery, 0, 1);
         $msg = null;
         $msg = $kunena_db->loadObject();
         if(!$msg) { continue; }
         // continue stats
-        $kunena_db->setQuery("UPDATE `#__fb_messages` SET `hold`=0 WHERE `id`=".$id);
+        $kunena_db->setQuery("UPDATE `#__fb_messages` SET hold='0' WHERE id='{$id}'");
         if(!$kunena_db->query()) {
         	$ret = 0; // mark error
         }

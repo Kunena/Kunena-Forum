@@ -34,6 +34,9 @@ Kunena 1.5.2RC
 
 9-June-2009 Matias
 # [#16721] Use always UTF8 while creating database tables
+# [#16722] User Profile shows messages in categories where user has no permissions
+# [#16723] Add support for JoomFish
+# [#16724] Fatal database error in default_ex/listcat.php:269
 
 8-June-2009 Matias
 # [#16695] Change URL query parameter in reply / quote from 'replyto' to 'id' for better SEF (accept also old one)

@@ -322,11 +322,11 @@ class CKunenaLink
         // First determine the thread, latest post and number of posts for the post supplied
         $where = '';
 		if ($catid > 0) $where .= " AND a.catid = {$catid} ";
-		$kunena_db->setQuery('SELECT a.thread AS thread, max(a.id) AS latest_id, max(a.catid) AS catid, count(*) AS totalmessages
+		$kunena_db->setQuery("SELECT a.thread AS thread, MAX(a.id) AS latest_id, MAX(a.catid) AS catid, COUNT(*) AS totalmessages
                              FROM #__fb_messages AS a,
-                                (SELECT max(thread) AS thread FROM #__fb_messages WHERE id='.$pid.') AS b
-                             WHERE a.thread = b.thread AND a.hold = 0 '.$where.'
-                             GROUP BY a.thread');
+                                (SELECT MAX(thread) AS thread FROM #__fb_messages WHERE id='{$pid}') AS b
+                             WHERE a.thread = b.thread AND a.hold='0' {$where}
+                             GROUP BY a.thread");
         $result = $kunena_db->loadObject();
         	check_dberror("Unable to retrieve latest post.");
 
@@ -355,11 +355,11 @@ class CKunenaLink
         // First determine the thread, latest post and number of posts for the post supplied
         $where = '';
 		if ($catid > 0) $where .= " AND a.catid = {$catid} ";
-        $kunena_db->setQuery('SELECT a.thread AS thread, max(a.id) AS latest_id, max(a.catid) AS catid, count(*) AS totalmessages
+        $kunena_db->setQuery("SELECT a.thread AS thread, MAX(a.id) AS latest_id, MAX(a.catid) AS catid, COUNT(*) AS totalmessages
                              FROM #__fb_messages AS a,
-                                (SELECT max(thread) AS thread FROM #__fb_messages WHERE id='.$pid.') AS b
-                             WHERE a.thread = b.thread AND a.hold = 0 '.$where.'
-                             GROUP BY a.thread');
+                                (SELECT MAX(thread) AS thread FROM #__fb_messages WHERE id='{$pid}') AS b
+                             WHERE a.thread = b.thread AND a.hold='0' {$where}
+                             GROUP BY a.thread");
         $result = $kunena_db->loadObject();
         	check_dberror("Unable to retrieve latest post.");
         if (!is_object($result)) return htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid));

@@ -57,9 +57,9 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
 	if (!empty($reason) && !empty($text))
 	{
         
-    $kunena_db->setQuery("SELECT a.*, b.message AS msg_text FROM #__fb_messages AS a"
-    . "\n LEFT JOIN #__fb_messages_text AS b ON b.mesid = a.id"
-    . "\n WHERE a.id={$id}");
+    $kunena_db->setQuery("SELECT a.*, b.id, b.message AS msg_text FROM #__fb_messages AS a"
+    . " LEFT JOIN #__fb_messages_text AS b ON b.mesid = a.id"
+    . " WHERE a.id='{$id}'");
 
     $row = $kunena_db->loadObject();
 

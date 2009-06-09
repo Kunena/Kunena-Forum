@@ -171,11 +171,11 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
             }
             else
             {
-                $kunena_db->setQuery("select thread from #__fb_messages where id=$id");
+                $kunena_db->setQuery("SELECT thread FROM #__fb_messages WHERE id='{$id}'");
                 $fb_thread = $kunena_db->loadResult();
             }
 
-            $kunena_db->setQuery("SELECT thread from #__fb_subscriptions where userid=$kunena_my->id and thread='$fb_thread'");
+            $kunena_db->setQuery("SELECT thread FROM #__fb_subscriptions WHERE userid='{$kunena_my->id}' AND thread='{$fb_thread}'");
             $fb_subscribed = $kunena_db->loadResult();
 
             if ($fb_subscribed == "" || $id == 0) {

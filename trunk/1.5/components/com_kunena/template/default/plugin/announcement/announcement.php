@@ -43,7 +43,7 @@ $is_user = (strtolower($kunena_my->usertype) <> '');
 
 // BEGIN: READ ANN
 if ($do == "read") {
-    $kunena_db->setQuery("SELECT id,title,description,created ,published,showdate  FROM #__fb_announcement  WHERE id=$id AND published = 1 ");
+    $kunena_db->setQuery("SELECT id, title, description, created, published, showdate FROM #__fb_announcement WHERE id='{$id}' AND published='1'");
     $anns_ = $kunena_db->loadObjectList();
     	check_dberror("Unable to load announcements.");
 
@@ -163,7 +163,7 @@ if ($is_editor) {
                     </tr>
 
                     <?php
-                    $query = "SELECT id, title, created, published FROM #__fb_announcement" . "\n ORDER BY created DESC ";
+                    $query = "SELECT id, title, created, published FROM #__fb_announcement ORDER BY created DESC";
                     $kunena_db->setQuery($query);
                     $rows = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load announcements.");
@@ -367,7 +367,7 @@ if ($is_editor) {
         }
 
     if ($do == "edit") {
-        $kunena_db->setQuery("SELECT * FROM #__fb_announcement WHERE id=$id");
+        $kunena_db->setQuery("SELECT * FROM #__fb_announcement WHERE id='{$id}'");
         $anns = $kunena_db->loadObjectList();
         check_dberror("Unable to load announcements.");
 

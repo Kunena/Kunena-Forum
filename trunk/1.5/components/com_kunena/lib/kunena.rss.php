@@ -47,6 +47,7 @@ if ($fbConfig->rsstype == 'thread')
 	$query = 		"SELECT
 						tmp.thread,
 						tmp.catid,
+						m.id,
 						m.subject,
 						tmp.lastpostid,
 						tmp.lastposttime,
@@ -57,20 +58,20 @@ if ($fbConfig->rsstype == 'thread')
 						(SELECT
 	                        a.thread,
 	                        a.catid,
-	                        max(a.id) AS lastpostid,
-	                        max(a.time) AS lastposttime,
-	                        count(*) AS numberposts
+	                        MAX(a.id) AS lastpostid,
+	                        MAX(a.time) AS lastposttime,
+	                        COUNT(*) AS numberposts
 	                    FROM
 	                        #__fb_messages AS a
 	                        JOIN (  SELECT aa.thread
 	                                FROM #__fb_messages AS aa
 	                                	JOIN #__fb_categories AS bb ON aa.catid = bb.id
-	                                WHERE aa.time >'$querytime'
-	                                AND aa.hold=0 AND aa.moved=0 AND bb.published = 1 AND bb.pub_access = 0
+	                                WHERE aa.time >'{$querytime}'
+	                                AND aa.hold='0' AND aa.moved='0' AND bb.published='1' AND bb.pub_access='0'
 	                                GROUP BY 1) AS b ON b.thread = a.thread
 	                    WHERE
-	                        a.moved=0
-	                        AND a.hold=0
+	                        a.moved='0'
+	                        AND a.hold='0'
 	                    GROUP BY a.thread, a.catid) AS tmp
 	                    JOIN #__fb_messages_text AS t ON tmp.lastpostid = t.mesid
 	                    JOIN #__fb_messages AS m ON tmp.thread = m.thread
@@ -109,18 +110,18 @@ else
 							#__fb_categories AS c,
 							#__fb_messages_text as t
 						WHERE
-							m.id = t.mesid
-							AND m.catid = c.id
-							AND c.published = 1
-							AND c.pub_access = 0
-							AND m.hold = 0
-							AND m.moved = 0
-							AND m.time >'$querytime') AS l
+							m.id=t.mesid
+							AND m.catid=c.id
+							AND c.published='1'
+							AND c.pub_access='0'
+							AND m.hold='0'
+							AND m.moved='0'
+							AND m.time >'{$querytime}') AS l
 					WHERE
 						l.time >= m.time
 						AND l.thread=m.thread
-						AND m.hold = 0
-						AND m.moved = 0
+						AND m.hold='0'
+						AND m.moved='0'
 					GROUP BY l.id
 					ORDER BY l.time DESC";
 }

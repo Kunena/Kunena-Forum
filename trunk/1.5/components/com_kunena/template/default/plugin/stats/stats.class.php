@@ -30,21 +30,20 @@ if ($fbConfig->showgenstats)
 $kunena_db->setQuery("SELECT COUNT(*) FROM #__users");
 $totalmembers = $kunena_db->loadResult();
 
-$kunena_db->setQuery("SELECT SUM(numTopics) AS titles, SUM(numPosts) AS msgs FROM #__fb_categories WHERE parent=0");
+$kunena_db->setQuery("SELECT SUM(numTopics) AS titles, SUM(numPosts) AS msgs FROM #__fb_categories WHERE parent='0'");
 $totaltmp = $kunena_db->loadObject();
 $totaltitles = !empty($totaltmp->titles)?$totaltmp->titles:0;
 $totalmsgs = !empty($totaltmp->msgs)?$totaltmp->msgs + $totaltitles:$totaltitles;
 unset($totaltmp);
 
-$kunena_db->setQuery("SELECT SUM(parent=0) AS totalcats, SUM(parent>0) AS totalsections
-FROM #__fb_categories");
+$kunena_db->setQuery("SELECT SUM(parent='0') AS totalcats, SUM(parent>'0') AS totalsections FROM #__fb_categories");
 $totaltmp = $kunena_db->loadObject();
 $totalsections = !empty($totaltmp->totalsections)?$totaltmp->totalsections:0;
 $totalcats = !empty($totaltmp->totalcats)?$totaltmp->totalcats:0;
 unset($totaltmp);
 
 $fb_queryName = $fbConfig->username ? "username" : "name";
-$kunena_db->setQuery("SELECT id, $fb_queryName as username FROM #__users WHERE block=0 AND activation='' ORDER BY id DESC LIMIT 0,1");
+$kunena_db->setQuery("SELECT id, {$fb_queryName} AS username FROM #__users WHERE block='0' AND activation='' ORDER BY id DESC", 0, 1);
 $_lastestmember = $kunena_db->loadObject();
 $lastestmember = $_lastestmember->username;
 $lastestmemberid =$_lastestmember->id;
@@ -52,11 +51,11 @@ unset($_lastestmember);
 
 $todaystart = strtotime(date('Y-m-d'));
 $yesterdaystart = $todaystart - (1 * 24 * 60 * 60);
-$kunena_db->setQuery("SELECT SUM(time >= $todaystart AND parent=0) AS todayopen, "
-                   ."SUM(time >= $yesterdaystart AND time < $todaystart AND parent=0) AS yesterdayopen, "
-                   ."SUM(time >= $todaystart AND parent>0) AS todayanswer, "
-                   ."SUM(time >= $yesterdaystart AND time < $todaystart AND parent>0) AS yesterdayanswer "
-                   ."FROM #__fb_messages WHERE time >= $yesterdaystart AND hold=0");
+$kunena_db->setQuery("SELECT SUM(time >= '{$todaystart}' AND parent='0') AS todayopen, "
+                   ." SUM(time >= '{$yesterdaystart}' AND time < '{$todaystart}' AND parent='0') AS yesterdayopen, "
+                   ." SUM(time >= '{$todaystart}' AND parent>'0') AS todayanswer, "
+                   ." SUM(time >= '{$yesterdaystart}' AND time < '{$todaystart}' AND parent>'0') AS yesterdayanswer "
+                   ." FROM #__fb_messages WHERE time >= '{$yesterdaystart}' AND hold='0'");
 
 $totaltmp = $kunena_db->loadObject();
 $todayopen = !empty($totaltmp->todayopen)?$totaltmp->todayopen:0;
@@ -70,14 +69,14 @@ unset($totaltmp);
 $PopUserCount = $fbConfig->popusercount;
 if ($fbConfig->showpopuserstats)
 {
-	$kunena_db->setQuery("SELECT p.userid, p.posts, u.$fb_queryName as username FROM #__fb_users AS p" . "\n INNER JOIN #__users AS u ON u.id = p.userid" . "\n WHERE p.posts > 0 ORDER BY p.posts DESC LIMIT $PopUserCount");
+	$kunena_db->setQuery("SELECT p.userid, p.posts, u.id, u.{$fb_queryName} AS username FROM #__fb_users AS p INNER JOIN #__users AS u ON u.id = p.userid WHERE p.posts > '0' ORDER BY p.posts DESC", 0, $PopUserCount);
 	$topposters = $kunena_db->loadObjectList();
 
 	$topmessage = !empty($topposters[0]->posts)?$topposters[0]->posts:0;
 
-	$kunena_db->setQuery("SELECT u.uhits AS hits, u.userid AS user_id, j.$fb_queryName AS user  FROM #__fb_users AS u"
-	. "\n INNER JOIN #__users AS j ON j.id = u.userid"
-	. "\n WHERE u.uhits > 0 ORDER BY u.uhits DESC LIMIT $PopUserCount");
+	$kunena_db->setQuery("SELECT u.uhits AS hits, u.userid AS user_id, j.id, j.{$fb_queryName} AS user FROM #__fb_users AS u"
+	. " INNER JOIN #__users AS j ON j.id = u.userid"
+	. " WHERE u.uhits>'0' ORDER BY u.uhits DESC", 0, $PopUserCount);
 	$topprofiles = $kunena_db->loadObjectList();
 
 	$topprofil = !empty($topprofiles[0]->hits)?$topprofiles[0]->hits:0;
@@ -87,7 +86,7 @@ $PopSubjectCount = $fbConfig->popsubjectcount;
 if ($fbConfig->showpopsubjectstats)
 {
 
-$kunena_db->setQuery("SELECT * FROM #__fb_messages WHERE moved=0 AND hold=0 AND parent=0 ORDER BY hits DESC LIMIT $PopSubjectCount");
+$kunena_db->setQuery("SELECT * FROM #__fb_messages WHERE moved='0' AND hold='0' AND parent='0' ORDER BY hits DESC", 0, $PopSubjectCount);
 $toptitles = $kunena_db->loadObjectList();
 
 $toptitlehits = !empty($toptitles[0]->hits)?$toptitles[0]->hits:0;

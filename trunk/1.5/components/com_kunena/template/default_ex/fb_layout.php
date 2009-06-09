@@ -46,11 +46,11 @@ function KUNENA_get_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_post
 	$document=& JFactory::getDocument();
 	$fbConfig =& CKunenaConfig::getInstance();
     //Get the Category's parent category name for breadcrumb
-    $kunena_db->setQuery('SELECT name,id FROM #__fb_categories WHERE id=' . $obj_fb_cat->getParent());
+    $kunena_db->setQuery("SELECT name, id FROM #__fb_categories WHERE id='" . $obj_fb_cat->getParent() ."'");
     $objCatParentInfo = $kunena_db->loadObject();
     	check_dberror("Unable to load category.");
     //get the Moderator list for display
-    $kunena_db->setQuery('SELECT * FROM #__fb_moderation LEFT JOIN #__users ON #__users.id=#__fb_moderation.userid WHERE #__fb_moderation.catid=' . $obj_fb_cat->getId());
+    $kunena_db->setQuery("SELECT * FROM #__fb_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid='" . $obj_fb_cat->getId() . "'");
     $modslist = $kunena_db->loadObjectList();
     	check_dberror("Unable to load moderators.");
     //    echo '<div class="fb_pathway">';

@@ -90,10 +90,9 @@ $allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):arr
 $forumLocked = 0;
 $topicLocked = 0;
 
-$kunena_db->setQuery("SELECT * FROM #__fb_messages AS a LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.id={$id} and a.hold=0");
-unset($this_message);
+$kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_messages AS a LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.id='{$id}' AND a.hold='0'");
 $this_message = $kunena_db->loadObject();
-check_dberror('Unable to load message.');
+check_dberror('Unable to load current message.');
 
 if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array($this_message->catid, $allow_forum)))
 {
@@ -111,18 +110,15 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         $thread = $this_message->parent == 0 ? $this_message->id : $this_message->thread;
 
         // Test if this is a valid SEO URL if not we should redirect using a 301 - permanent redirect
-        if ($view == "flat" && ($thread != $this_message->id || $catid != $this_message->catid))
+        if ($thread != $this_message->id || $catid != $this_message->catid)
         {
         	// Invalid SEO URL detected!
         	// Create permanent re-direct and quit
         	// This query to calculate the page this reply is sitting on within this thread
-        	$query = "SELECT count(*)
-        				FROM #__fb_messages AS a
-        				WHERE a.thread=$thread
-        					AND a.id<=$this_message->id";
+        	$query = "SELECT COUNT(*) FROM #__fb_messages AS a WHERE a.thread='{$thread}' AND hold='0' AND a.id<='{$id}'";
         	$kunena_db->setQuery($query);
         	$replyCount = $kunena_db->loadResult();
-        		check_dberror('Unable to calculate replyCount.');
+        		check_dberror('Unable to calculate location of current message.');
 
         	$replyPage = $replyCount > $fbConfig->messages_per_page ? ceil($replyCount / $fbConfig->messages_per_page) : 1;
 
@@ -135,7 +131,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         if ($kunena_my->id)
         {
             //mark this topic as read
-            $kunena_db->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid={$kunena_my->id}");
+            $kunena_db->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid='{$kunena_my->id}'");
             $readTopics = $kunena_db->loadResult();
 
             if ($readTopics == "")
@@ -152,78 +148,50 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                 }
             }
 
-            $kunena_db->setQuery("UPDATE #__fb_sessions set readtopics='{$readTopics}' WHERE userid={$kunena_my->id}");
+            $kunena_db->setQuery("UPDATE #__fb_sessions SET readtopics='{$readTopics}' WHERE userid='{$kunena_my->id}'");
             $kunena_db->query();
         }
 
         //update the hits counter for this topic & exclude the owner
         if ($this_message->userid != $kunena_my->id) {
-            $kunena_db->setQuery("UPDATE #__fb_messages SET hits=hits+1 WHERE id=$thread AND parent=0");
+            $kunena_db->setQuery("UPDATE #__fb_messages SET hits=hits+1 WHERE id='{$thread}' AND parent='0'");
             $kunena_db->query();
         }
-        // changed to 0 to fix the missing post when the thread splits over multiple pages
-        $i = 0;
 
+		//prepare paging
+		$limit = JRequest::getInt('limit', $fbConfig->messages_per_page);
+		$limitstart = JRequest::getInt('limitstart', 0);
+
+		$replylimit = $limitstart ? $limit : $limit-1; // If first page, load $limit-1 messages
+		$replystart = $limitstart ? $limitstart-1 : $limitstart; // If not first page, start on $limitstart-1
+		// Get replies of current thread
         $ordering = ($fbConfig->default_sort == 'desc' ? 'desc' : 'asc'); // Just to make sure only valid options make it
-
-        // Get messages of current thread
-        $kunena_db->setQuery("(SELECT * FROM #__fb_messages AS a "
-           ."\n LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.id='$thread' AND a.hold=0 AND a.catid='$catid') UNION (SELECT * FROM #__fb_messages AS a "
-           ."\n LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.thread='$thread' AND a.hold=0 AND a.catid='$catid') ORDER BY time $ordering");
+        $query = "SELECT a.*, b.* FROM #__fb_messages AS a LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid "
+        	."WHERE a.thread='{$thread}' AND a.id!='{$id}' AND a.hold='0' AND a.catid='{$catid}' ORDER BY id {$ordering}";
+		$kunena_db->setQuery($query, $replystart, $replylimit);
+		$replies = $kunena_db->loadObjectList();
+		check_dberror('Unable to load replies');
 
 		$flat_messages = array();
-        if ($view != "flat") $flat_messages[] = $this_message;
-
-        foreach ($kunena_db->loadObjectList() as $message)
-        {
-            if (1) // if ($view == "flat")
-            {
-                $flat_messages[] = $message;
-
-                if ($id == $message->id) {
-                    $idmatch = $i;
-                }
-
-                $i++;
-            }
-            else {
-                $messages[$message->parent][] = $message;
-            }
-        }
-
-        if ($ordering=='desc')
-        {
-            $idmatch = $i - $idmatch;
-        }
-
-        if (1) // if ($view == "flat")
-        {
-            //prepare threading
-            $limit = $fbConfig->messages_per_page;
-
-            if ($idmatch > $limit) {
-                $limitstart = (floor($idmatch / $limit)) * $limit;
-            }
-            else {
-                $limitstart = 0;
-            }
-
-            $limitstart = JRequest::getInt('limitstart', $limitstart);
-            $total = count($flat_messages);
+        if (!$limitstart) $flat_messages[] = $this_message; // Add first message
+        foreach ($replies as $message) $flat_messages[] = $message;
+		unset($replies);
+        
+		$query = "SELECT COUNT(*) FROM #__fb_messages AS a WHERE a.thread='{$thread}' AND hold='0'";
+		$kunena_db->setQuery($query);
+		$total = $kunena_db->loadResult();
+		check_dberror('Unable to calculate message count.');
 
 	    $maxpages = 9 - 2; // odd number here (show - 2)
 	    $page = floor($limitstart / $limit)+1;
 	    $totalpages = ceil($total / $limit);
 	    $pagination = KunenaViewPagination($catid, $thread, $page, $totalpages, $maxpages);
-            $flat_messages = array_slice($flat_messages, ($page-1)*$limit, $limit);
-        }
 
         //Get the category name for breadcrumb
-        unset($objCatInfo, $objCatParentInfo);
-        $kunena_db->setQuery("SELECT * from #__fb_categories where id='$catid'");
+        $kunena_db->setQuery("SELECT * FROM #__fb_categories WHERE id='{$catid}'");
         $objCatInfo = $kunena_db->loadObject();
         //Get Parent's cat.name for breadcrumb
-        $kunena_db->setQuery("SELECT name,id from #__fb_categories WHERE id='$objCatInfo->parent'");
+        $kunena_db->setQuery("SELECT id, name FROM #__fb_categories WHERE id='{$objCatInfo->parent}'");
         $objCatParentInfo = $kunena_db->loadObject();
 
         $forumLocked = $objCatInfo->locked;
@@ -232,7 +200,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         $fb_cansubscribe = 0;
         if ($fbConfig->allowsubscriptions && ("" != $kunena_my->id || 0 != $kunena_my->id))
         {
-            $kunena_db->setQuery("SELECT thread from #__fb_subscriptions where userid=$kunena_my->id and thread='$thread'");
+            $kunena_db->setQuery("SELECT thread FROM #__fb_subscriptions WHERE userid='{$kunena_my->id}' AND thread='{$thread}'");
             $fb_subscribed = $kunena_db->loadResult();
 
             if ($fb_subscribed == "") {
@@ -243,7 +211,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         $fb_canfavorite = 0;
         if ($fbConfig->allowfavorites && ("" != $kunena_my->id || 0 != $kunena_my->id))
         {
-            $kunena_db->setQuery("SELECT thread from #__fb_favorites where userid=$kunena_my->id and thread='$thread'");
+            $kunena_db->setQuery("SELECT thread FROM #__fb_favorites WHERE userid='{$kunena_my->id}' AND thread='{$thread}'");
             $fb_favorited = $kunena_db->loadResult();
 
             if ($fb_favorited == "") {
@@ -445,7 +413,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 			    <!-- F: FORUM TOOLS -->
         	            <!-- Begin: Total Favorite -->
 	                    <?php
-        	            $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_favorites where thread='$thread'");
+        	            $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_favorites WHERE thread='{$thread}'");
         	            $fb_totalfavorited = $kunena_db->loadResult();
 
 	                    echo '<div class="fb_totalfavorite">';
@@ -478,7 +446,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                         $mmm = 0;
                         $k = 0;
                         // Set up a list of moderators for this category (limits amount of queries)
-                        $kunena_db->setQuery("SELECT a.userid FROM #__fb_users AS a" . "\n LEFT JOIN #__fb_moderation AS b" . "\n ON b.userid=a.userid" . "\n WHERE b.catid='$catid'");
+                        $kunena_db->setQuery("SELECT a.userid FROM #__fb_users AS a LEFT JOIN #__fb_moderation AS b ON b.userid=a.userid WHERE b.catid='{$catid}'");
                         $catModerators = $kunena_db->loadResultArray();
 
 
@@ -497,7 +465,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 
                         else
                         { //topic not locked; check if forum is locked
-                            $kunena_db->setQuery("select locked from #__fb_categories where id={$this_message->catid}");
+                            $kunena_db->setQuery("SELECT locked FROM #__fb_categories WHERE id='{$this_message->catid}'");
                             $topicLocked = $kunena_db->loadResult();
                             $lockedWhat = _FORUM_NOT_ALLOWED; // UNUSED
                         }
@@ -536,7 +504,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 
                                 //Get userinfo needed later on, this limits the amount of queries
                                 unset($userinfo);
-                                $kunena_db->setQuery("SELECT  a.*,b.name,b.username,b.gid FROM #__fb_users as a LEFT JOIN #__users as b on b.id=a.userid where a.userid='$fmessage->userid'");
+                                $kunena_db->setQuery("SELECT  a.*, b.id, b.name, b.username, b.gid FROM #__fb_users AS a LEFT JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$fmessage->userid}'");
                                 $userinfo = $kunena_db->loadObject();
 				if ($userinfo == NULL) {
 					$userinfo = new stdClass();
@@ -668,10 +636,10 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                             if ($showSpRank = $userinfo->rank != '0')
                                             {
                                                 //special rank
-                                                $kunena_db->setQuery("SELECT * FROM #__fb_ranks WHERE rank_id = '$userinfo->rank'");
+                                                $kunena_db->setQuery("SELECT * FROM #__fb_ranks WHERE rank_id='{$userinfo->rank}'");
                                             } else {
                                                 //post count rank
-                                                $kunena_db->setQuery("SELECT * FROM #__fb_ranks WHERE ((rank_min <= $numPosts) AND (rank_special = 0))  ORDER BY rank_min DESC LIMIT 1");
+                                                $kunena_db->setQuery("SELECT * FROM #__fb_ranks WHERE ((rank_min <= '{$numPosts}') AND (rank_special = '0')) ORDER BY rank_min DESC", 0, 1);
                                             }
                                             $rank = $kunena_db->loadObject();
                                             $rText = $rank->rank_title;
@@ -815,7 +783,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 // online - ofline status
                                 if ($userinfo->userid > 0)
                                 {
-                                    $sql = "SELECT count(userid) FROM #__session WHERE userid=" . $userinfo->userid;
+                                    $sql = "SELECT COUNT(userid) FROM #__session WHERE userid='{$userinfo->userid}'";
                                     $kunena_db->setQuery($sql);
                                     $isonline = $kunena_db->loadResult();
 
@@ -882,7 +850,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     }
 
                                     $msg_buddy .= "\" alt=\"" . _VIEW_ADDBUDDY . "\" border=\"0\" title=\"" . _VIEW_ADDBUDDY . "\" /></a>";
-                                    $kunena_db->setQuery("SELECT icq,ym,msn,aim,website,location FROM #__mypms_profiles WHERE user='" . $PMSName . "'");
+                                    $kunena_db->setQuery("SELECT icq, ym, msn, aim, website, location FROM #__mypms_profiles WHERE user='{$PMSName}'");
                                     $profileitems = $kunena_db->loadObjectList();
                                     	check_dberror("Unable to load mypms profile.");
 
@@ -1271,7 +1239,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 
                         <?php
                         //get the Moderator list for display
-                        $kunena_db->setQuery("select * from #__fb_moderation left join #__users on #__users.id=#__fb_moderation.userid where #__fb_moderation.catid=$catid");
+                        $kunena_db->setQuery("SELECT m.*, u.* FROM #__fb_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid={$catid}");
                         $modslist = $kunena_db->loadObjectList();
                         	check_dberror("Unable to load moderators.");
                         ?>

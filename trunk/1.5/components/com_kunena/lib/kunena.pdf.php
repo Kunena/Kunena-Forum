@@ -73,7 +73,7 @@ function dofreePDF($kunena_db)
 
     if (!$is_admin)
     {
-        $kunena_db->setQuery("SELECT userid FROM #__fb_moderation WHERE catid=$catid and userid=$kunena_my->id");
+        $kunena_db->setQuery("SELECT userid FROM #__fb_moderation WHERE catid='{$catid}' AND userid='{$kunena_my->id}'");
 
         if ($kunena_db->loadResult()) {
             $is_Mod = 1;
@@ -86,7 +86,7 @@ function dofreePDF($kunena_db)
     if (!$is_Mod)
     {
         //get all the info on this forum:
-        $kunena_db->setQuery("SELECT id,pub_access,pub_recurse,admin_access,admin_recurse FROM #__fb_categories where id=$catid");
+        $kunena_db->setQuery("SELECT id, pub_access, pub_recurse, admin_access, admin_recurse FROM #__fb_categories WHERE id='{$catid}'");
         $row = $kunena_db->loadObjectList();
                 check_dberror("Unable to load category detail.");
 
@@ -99,10 +99,10 @@ function dofreePDF($kunena_db)
         $id = JRequest::getInt('id', 1);
         $catid = JRequest::getInt('catid', 2);
         //first get the thread id for the current post to later on determine the parent post
-        $kunena_db->setQuery("SELECT `thread` FROM #__fb_messages WHERE id='$id' AND catid='$catid'");
+        $kunena_db->setQuery("SELECT thread FROM #__fb_messages WHERE id='{$id}' AND catid='{$catid}'");
         $threadid = $kunena_db->loadResult();
         //load topic post and details
-        $kunena_db->setQuery("SELECT a.*, b.message FROM #__fb_messages AS a, #__fb_messages_text AS b WHERE a.thread = $threadid AND a.catid=$catid AND a.parent=0 AND a.id=b.mesid");
+        $kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_messages AS a, #__fb_messages_text AS b WHERE a.thread='{$threadid}' AND a.catid='{$catid}' AND a.parent='0' AND a.id=b.mesid");
         $row = $kunena_db->loadObjectList();
                 check_dberror("Unable to load message details.");
 
@@ -153,7 +153,7 @@ function dofreePDF($kunena_db)
         $pdf->ezText($txt3, 10);
         $pdf->ezText("\n============================================================================\n\n", 8);
         //now let's try to see if there's more...
-        $kunena_db->setQuery("SELECT a.*, b.message FROM #__fb_messages AS a, #__fb_messages_text AS b WHERE a.catid=$catid AND a.thread=$threadid AND a.id=b.mesid AND a.parent != 0 ORDER BY a.time ASC");
+        $kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_messages AS a, #__fb_messages_text AS b WHERE a.catid='{$catid}' AND a.thread='{$threadid}' AND a.id=b.mesid AND a.parent!='0' ORDER BY a.time ASC");
         $replies = $kunena_db->loadObjectList();
                 check_dberror("Unable to load messages & detail.");
 

@@ -41,7 +41,7 @@ function KunenaBuildRoute(&$query)
 		$catfound = true;
 		if($query['catid'] != (int) 0)
 		{
-			$quesql = 'SELECT name FROM #__fb_categories WHERE id='.(int) $query['catid'];
+			$quesql = 'SELECT name, id FROM #__fb_categories WHERE id='.(int) $query['catid'];
 			$db->setQuery($quesql);
 			$name = $db->loadResult();
 			$suf = '-'.JFilterOutput::stringURLSafe($name);
@@ -52,7 +52,7 @@ function KunenaBuildRoute(&$query)
 
 	if($catfound && isset($query['id']))
 	{
-		$quesql = 'SELECT subject FROM #__fb_messages WHERE id='.(int) $query['id'];
+		$quesql = 'SELECT subject, id FROM #__fb_messages WHERE id='.(int) $query['id'];
 		$db->setQuery($quesql);
 		$subject = $db->loadResult();
 		$suf = JFilterOutput::stringURLSafe($subject);

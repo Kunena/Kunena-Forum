@@ -307,8 +307,7 @@ if (count($messages[0]) > 0)
 				$threadPages = 0;
 				$unreadPage = 0;
                                 //this thread has been moved, get the new location
-                                $newURL = ""; //init
-                                $kunena_db->setQuery("SELECT `message` FROM #__fb_messages_text WHERE `mesid`='" . $leaf->id . "'");
+                                $kunena_db->setQuery("SELECT message FROM #__fb_messages_text WHERE mesid='{$leaf->id}'");
                                 $newURL = $kunena_db->loadResult();
                                 // split the string and separate catid and id for proper link assembly
                                 parse_str($newURL, $newURLParams);

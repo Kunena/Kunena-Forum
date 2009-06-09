@@ -220,7 +220,7 @@ class CKunenaUser
 		if ($this->id == 0) return FALSE;
 		if ($this->kunenaProperties == NULL)
 		{
-			$kunena_db->setQuery("SELECT * FROM #__fb_users WHERE userid='{$this->id}' LIMIT 1");
+			$kunena_db->setQuery("SELECT * FROM #__fb_users WHERE userid='{$this->id}'", 0, 1);
 			$this->kunenaProperties = $kunena_db->loadAssoc();
 			check_dberror("Unable to load Kunena user information.");
 		}

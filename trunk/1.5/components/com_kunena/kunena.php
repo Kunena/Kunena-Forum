@@ -409,7 +409,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 		}
 
 		// Now lets get the view type for the forum
-		$kunena_db->setQuery("select view from #__fb_users where userid=$kunena_my->id");
+		$kunena_db->setQuery("SELECT view FROM #__fb_users WHERE userid='{$kunena_my->id}'");
 		$prefview = $kunena_db->loadResult();
 			check_dberror('Unable load default view type for user.');
 
@@ -419,7 +419,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 		{
 			$prefview = $fbConfig->default_view;
 
-			$kunena_db->setQuery("SELECT count(*) FROM #__fb_users WHERE userid=$kunena_my->id");
+			$kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_users WHERE userid='{$kunena_my->id}'");
 			$userexists = $kunena_db->loadResult();
 			check_dberror('Unable load default view type for user.');
 			if (!$userexists)
@@ -446,7 +446,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 	else
 	{
 		// collect accessaible categories for guest user
-		$kunena_db->setQuery("SELECT id FROM #__fb_categories WHERE pub_access=0 AND published=1");
+		$kunena_db->setQuery("SELECT id FROM #__fb_categories WHERE pub_access='0' AND published='1'");
 		$fbSession->allowed =
 			($arr_pubcats = $kunena_db->loadResultArray())?implode(',', $arr_pubcats):'';
 			check_dberror('Unable load accessible categories for user.');
@@ -479,7 +479,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
     $view = "flat";
 
     //Get the max# of posts for any one user
-    $kunena_db->setQuery("SELECT max(posts) from #__fb_users");
+    $kunena_db->setQuery("SELECT MAX(posts) FROM #__fb_users");
     $maxPosts = $kunena_db->loadResult();
     	check_dberror('Unable load max(posts) for user.');
 
@@ -501,7 +501,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
     if ($func == "showcat" || $func == "view" || $func == "post")
     {
     	if ($catid != 0) {
-			$kunena_db->setQuery("SELECT parent FROM #__fb_categories WHERE id=$catid");
+			$kunena_db->setQuery("SELECT parent FROM #__fb_categories WHERE id='{$catid}'");
 			$strCatParent = $kunena_db->loadResult();
 			check_dberror('Unable to load categories.');
     	}
@@ -522,7 +522,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
         case 'showcat':
             //get number of pending messages
-            $kunena_db->setQuery("SELECT count(*) FROM #__fb_messages WHERE catid=$catid and hold=1");
+            $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE catid='$catid' AND hold='1'");
             $numPending = $kunena_db->loadResult();
             	check_dberror('Unable load pending messages.');
 
@@ -751,11 +751,11 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
         #########################################################################################
         case 'markthisread':
             // get all already read topics
-            $kunena_db->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid=$kunena_my->id");
+            $kunena_db->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid='{$kunena_my->id}'");
             $allreadyRead = $kunena_db->loadResult();
             	check_dberror("Unable to load read topics.");
             /* Mark all these topics read */
-            $kunena_db->setQuery("SELECT thread FROM #__fb_messages WHERE catid=$catid and thread not in ('$allreadyRead') GROUP BY THREAD");
+            $kunena_db->setQuery("SELECT thread FROM #__fb_messages WHERE catid='{$catid}' AND thread NOT IN ('{$allreadyRead}') GROUP BY thread");
             $readForum = $kunena_db->loadObjectList();
             	check_dberror("Unable to load messages.");
             $readTopics = '--';

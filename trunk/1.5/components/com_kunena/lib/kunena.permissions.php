@@ -37,19 +37,19 @@ function fb_has_post_permission(&$kunena_db,$catid,$replyto,$userid,$pubwrite,$i
     if ($ismod)
         return 1; // moderators always have post permission
     if($replyto != 0) {
-        $kunena_db->setQuery("select thread from #__fb_messages where id='$replyto'");
+        $kunena_db->setQuery("SELECT thread FROM #__fb_messages WHERE id='{$replyto}'");
         $topicID=$kunena_db->loadResult();
         if ($topicID != 0) //message replied to is not the topic post; check if the topic post itself is locked
-            $sql='select locked from #__fb_messages where id='.$topicID;
+            $sql="SELECT locked FROM #__fb_messages WHERE id='{$topicID}'";
         else
-            $sql='select locked from #__fb_messages where id='.$replyto;
+            $sql="SELECT locked FROM #__fb_messages WHERE id='{$replyto}'";
         $kunena_db->setQuery($sql);
         if ($kunena_db->loadResult()==1)
         return -1; // topic locked
     }
 
     //topic not locked; check if forum is locked
-    $kunena_db->setQuery("select locked from #__fb_categories where id=$catid");
+    $kunena_db->setQuery("SELECT locked FROM #__fb_categories WHERE id='{$catid}'");
     if ($kunena_db->loadResult()==1)
         return -2; // forum locked
 
@@ -71,16 +71,16 @@ function fb_has_moderator_permission(&$kunena_db,&$obj_fb_cat,$int_fb_uid,$bool_
     if ($bool_fb_isadmin)
         return 1;
     if (is_object($obj_fb_cat) && $obj_fb_cat->getModerated()) {
-        $kunena_db->setQuery('SELECT userid FROM #__fb_moderation WHERE catid='.$obj_fb_cat->getId().' AND userid='.$int_fb_uid);
+        $kunena_db->setQuery("SELECT userid FROM #__fb_moderation WHERE catid='".$obj_fb_cat->getId()."' AND userid='{$int_fb_uid}'");
         
         if ($kunena_db->loadResult()!='')
             return 1;
      }
 // Check if we have forum wide moderators - not limited to particular categories 
-    $kunena_db->setQuery('SELECT moderator FROM #__fb_users WHERE userid='.$int_fb_uid);
+    $kunena_db->setQuery("SELECT moderator FROM #__fb_users WHERE userid='{$int_fb_uid}'");
     if ($kunena_db->loadResult()==1) // moderator YES
     {
-        $kunena_db->setQuery('SELECT userid FROM #__fb_moderation WHERE userid='.$int_fb_uid);
+        $kunena_db->setQuery("SELECT userid FROM #__fb_moderation WHERE userid='{$int_fb_uid}'");
         if ($kunena_db->loadResult()=='') // not limited to a specific category - as we checked for those above
         {
             return 1;

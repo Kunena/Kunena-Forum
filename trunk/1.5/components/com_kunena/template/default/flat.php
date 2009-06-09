@@ -134,7 +134,7 @@ if (count($messages[0]) > 0)
 
                 <?php
                     //(JJ) ATTACHMENTS
-                    $kunena_db->setQuery("SELECT mesid FROM #__fb_attachments WHERE mesid=$leaf->id");
+                    $kunena_db->setQuery("SELECT mesid FROM #__fb_attachments WHERE mesid='{$leaf->id}'");
                     $attachmentsicon = $kunena_db->loadResult();
 
                     //(JJ) AVATAR
@@ -152,8 +152,7 @@ if (count($messages[0]) > 0)
 						} else {
 							//first we gather some information about this person
 							unset($CatUser);
-							$kunena_db->setQuery("SELECT * FROM #__fb_users as su"
-								. "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$leaf->userid}");
+							$kunena_db->setQuery("SELECT * FROM #__fb_users AS su LEFT JOIN #__users AS u on u.id=su.userid WHERE su.userid='{$leaf->userid}'");
 
 							$CatUser = $kunena_db->loadObject();
 							if (is_object($CatUser)) $javatar = $CatUser->avatar;
@@ -269,7 +268,7 @@ if (count($messages[0]) > 0)
                                     <?php
                                     if ($fbConfig->allowfavorites)
                                     {
-                                        $kunena_db->setQuery("select count(*) from #__fb_favorites where thread = $leaf->id && userid = $kunena_my->id");
+                                        $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_favorites WHERE thread='{$leaf->id}' && userid='{$kunena_my->id}'");
 
                                         if (intval($kunena_db->loadResult()) > 0) {
                                             echo isset($fbIcons['favoritestar']) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $fbIcons['favoritestar']
@@ -344,7 +343,7 @@ if (count($messages[0]) > 0)
                             {
                                 //this thread has been moved, get the new location
                                 $newURL = ""; //init
-                                $kunena_db->setQuery("SELECT `message` FROM #__fb_messages_text WHERE `mesid`='" . $leaf->id . "'");
+                                $kunena_db->setQuery("SELECT message, mesid FROM #__fb_messages_text WHERE mesid='{$leaf->id}'");
                                 $newURL = $kunena_db->loadResult();
                                 // split the string and separate catid and id for proper link assembly
                                 parse_str($newURL, $newURLParams);

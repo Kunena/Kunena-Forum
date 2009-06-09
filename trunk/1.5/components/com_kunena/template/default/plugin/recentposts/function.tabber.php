@@ -41,7 +41,7 @@ class my_tabs
         }
 
         if ($xhtml) {
-            $document->addCustomHeadTag("
+            $document->addCustomTag("
         <link rel='stylesheet' href='$link/components/com_kunena/template/default/plugin/recentposts/tabber.css' type='text/css' />
 
         <script type='text/javascript'>

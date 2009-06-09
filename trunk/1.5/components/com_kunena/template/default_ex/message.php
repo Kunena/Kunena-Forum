@@ -26,7 +26,7 @@ $kunena_my = &JFactory::getUser();
 $fbConfig =& CKunenaConfig::getInstance();
 unset($user);
 $kunena_db = &JFactory::getDBO();
-$kunena_db->setQuery("SELECT email, name from #__users WHERE `id`={$kunena_my->id}");
+$kunena_db->setQuery("SELECT id, email, name FROM #__users WHERE `id`='{$kunena_my->id}'");
 $user = $kunena_db->loadObject();
 if ($fbConfig->fb_profile == 'cb')
 {

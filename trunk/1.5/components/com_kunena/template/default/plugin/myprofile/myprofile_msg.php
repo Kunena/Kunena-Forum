@@ -77,7 +77,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 		$limit              = intval(trim(JRequest::getVar('limit', $pageperlistlm)));
 		$limitstart         = intval(trim(JRequest::getVar('limitstart', 0)));
 
-		$query              = "select gid from #__users where id=$kunena_my->id";
+		$query              = "SELECT gid FROM #__users WHERE id={$kunena_my->id}";
 		$kunena_db->setQuery($query);
 		$dse_groupid = $kunena_db->loadObjectList();
 			check_dberror("Unable to load usergroups.");
@@ -91,8 +91,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 			$group_id = 0;
 		}
 
-		$query = "SELECT a.* , b.id as category, b.name as catname, c.hits AS 'threadhits' FROM #__fb_messages AS a, " . "\n #__fb_categories AS b, #__fb_messages AS c, #__fb_messages_text AS d" . "\n WHERE a.catid = b.id" . "\n AND a.thread = c.id"
-			. "\n AND a.id = d.mesid" . "\n AND a.hold = 0 AND b.published = 1" . "\n AND a.userid=$kunena_my->id" . "\n AND (b.pub_access<='$group_id') ";
+        $query = "SELECT COUNT(*) FROM #__fb_messages WHERE hold='0' AND userid='{$kunena_my->id}' AND catid IN ($fbSession->allowed)";
 		$kunena_db->setQuery($query);
 
 		$total = count($kunena_db->loadObjectList());
@@ -103,10 +102,10 @@ defined( '_JEXEC' ) or die('Restricted access');
 			$limitstart = 0;
 		}
 
-		$query
-		= "SELECT a.* , b.id as category, b.name as catname, c.hits AS 'threadhits'" . "\n FROM #__fb_messages AS a, " . "\n #__fb_categories AS b, #__fb_messages AS c, #__fb_messages_text AS d" . "\n WHERE a.catid = b.id" . "\n AND a.thread = c.id"
-			. "\n AND a.id = d.mesid" . "\n AND a.hold = 0 AND b.published = 1" . "\n AND a.userid=$kunena_my->id" . "\n AND (b.pub_access<='$group_id') " . "\n ORDER BY time DESC" . "\n LIMIT $limitstart, $limit";
-		$kunena_db->setQuery($query);
+        $query
+            = "SELECT a.*, b.id AS category, b.name AS catname, c.hits AS threadhits FROM #__fb_messages AS a, #__fb_categories AS b, #__fb_messages AS c, #__fb_messages_text AS d"
+            ." WHERE a.catid=b.id AND a.thread=c.id AND a.id=d.mesid AND a.hold='0' AND a.userid='{$kunena_my->id}' AND a.catid IN ($fbSession->allowed) ORDER BY time DESC";
+        $kunena_db->setQuery($query, $limitstart, $limit);
 
 		$items   = $kunena_db->loadObjectList();
 			check_dberror("Unable to load messages.");

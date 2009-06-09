@@ -99,12 +99,11 @@ class smile
     {
         $kunena_db = &JFactory::getDBO();
         $grayscale == 1 ? $column = "greylocation" : $column = "location";
-        $sql = "SELECT `code` , `$column` FROM `#__fb_smileys`";
+        $sql = "SELECT code, `$column` FROM #__fb_smileys";
 
         if ($emoticonbar == 1)
-        $sql .= " where `emoticonbar` = 1";
+        $sql .= " WHERE emoticonbar='1'";
 
-        $sql .= ";";
         $kunena_db->setQuery($sql);
         $smilies = $kunena_db->loadObjectList();
         	check_dberror("Unable to load smilies.");

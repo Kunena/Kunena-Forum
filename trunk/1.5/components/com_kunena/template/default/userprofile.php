@@ -32,8 +32,7 @@ if ($kunena_my->id)
     { //show it is..
         //first we gather some information about this person - bypass if (s)he is a guest
         unset($user);
-        $kunena_db->setQuery("SELECT * FROM #__fb_users as su "
-        	    . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$kunena_my->id}");
+        $kunena_db->setQuery("SELECT * FROM #__fb_users AS su LEFT JOIN #__users AS u ON u.id=su.userid WHERE su.userid='{$kunena_my->id}'");
 
         $user = $kunena_db->loadObject();
 
@@ -49,12 +48,12 @@ if ($kunena_my->id)
         //use integration avatar if configured
         if ($fbConfig->avatar_src == "pmspro")
         {
-            $kunena_db->setQuery("SELECT picture FROM #__mypms_profiles WHERE name='$username'");
+            $kunena_db->setQuery("SELECT picture FROM #__mypms_profiles WHERE name='{$username}'");
             $avatar = $kunena_db->loadResult();
         }
         elseif ($fbConfig->avatar_src == "cb")
         {
-        	$kunena_db->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$kunena_my->id'");
+        	$kunena_db->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='{$kunena_my->id}'");
         	$avatar = $kunena_db->loadResult();
         		check_dberror("Unable to load CB avatar.");
         }
@@ -64,13 +63,13 @@ if ($kunena_my->id)
         }
 
         //get all subscriptions for this user
-        $kunena_db->setQuery("select thread from #__fb_subscriptions where userid=$kunena_my->id");
+        $kunena_db->setQuery("SELECT thread FROM #__fb_subscriptions WHERE userid='{$kunena_my->id}'");
         $subslist = $kunena_db->loadObjectList();
         	check_dberror("Unable to load subscriptions.");
         $csubslist = count($subslist);
 
         //get all favorites for this user
-        $kunena_db->setQuery("select thread from #__fb_favorites where userid=$kunena_my->id");
+        $kunena_db->setQuery("SELECT thread FROM #__fb_favorites WHERE userid='{$kunena_my->id}'");
         $favslist = $kunena_db->loadObjectList();
         	check_dberror("Unable to load favorites.");
         $cfavslist = count($favslist);
@@ -79,7 +78,7 @@ if ($kunena_my->id)
         //since these are moderators for all forums (regardless if a forum is set to be moderated)
         if (!$is_admin)
         {
-            $kunena_db->setQuery("select #__fb_moderation.catid,#__fb_categories.name from #__fb_moderation left join #__fb_categories on #__fb_categories.id=#__fb_moderation.catid where #__fb_moderation.userid=$kunena_my->id");
+            $kunena_db->setQuery("SELECT c.id, c.name FROM #__fb_moderation AS m LEFT JOIN #__fb_categories AS c ON c.id=m.catid WHERE m.userid='{$kunena_my->id}'");
             $modslist = $kunena_db->loadObjectList();
             	check_dberror("Unable to load moderators.");
             $cmodslist = count($modslist);
@@ -389,7 +388,7 @@ if ($kunena_my->id)
                         {
                             foreach ($subslist as $subs)
                             { //get all message details for each subscription
-                                $kunena_db->setQuery("select * from #__fb_messages where id=$subs->thread");
+                                $kunena_db->setQuery("SELECT * FROM #__fb_messages WHERE id='{$subs->thread}'");
                                 $subdet = $kunena_db->loadObjectList();
                                 	check_dberror("Unable to load messages.");
 
@@ -446,7 +445,7 @@ if ($kunena_my->id)
                 {
                     foreach ($favslist as $favs)
                     { //get all message details for each favorite
-                        $kunena_db->setQuery("select * from #__fb_messages where id=$favs->thread");
+                        $kunena_db->setQuery("SELECT * FROM #__fb_messages WHERE id='{$favs->thread}'");
                         $favdet = $kunena_db->loadObjectList();
                         	check_dberror("Unable to load messages.");
 

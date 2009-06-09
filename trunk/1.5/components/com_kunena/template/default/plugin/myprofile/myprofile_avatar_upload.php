@@ -159,7 +159,7 @@ switch ($task) {
 			$avatar = "";
 		}
 
-		$kunena_db->setQuery("UPDATE #__fb_users set   avatar='$avatar'  where userid=$kunena_my->id");
+		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$avatar}' WHERE userid='{$kunena_my->id}'");
 
 		if (!$kunena_db->query())
 		{
@@ -378,7 +378,7 @@ if ($task == 'default')
                         }
                         elseif ($fbConfig->avatar_src == "cb")
                         {
-                            $kunena_db->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$kunena_my->id'");
+                            $kunena_db->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='{$kunena_my->id}'");
                             $avatar = $kunena_db->loadResult();
                             check_dberror("Unable to load CB Avatar.");
                             if ($avatar != "")
@@ -403,7 +403,7 @@ if ($task == 'default')
                         }
                         else
                         {
-                            $kunena_db->setQuery("SELECT avatar FROM #__fb_users WHERE userid={$kunena_my->id}");
+                            $kunena_db->setQuery("SELECT avatar FROM #__fb_users WHERE userid='{$kunena_my->id}'");
                             $avatar = $kunena_db->loadResult();
                             check_dberror("Unable to load Kunena Avatar.");
                             if ($avatar != "")

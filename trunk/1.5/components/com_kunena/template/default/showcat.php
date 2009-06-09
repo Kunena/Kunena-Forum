@@ -58,11 +58,11 @@ if (in_array($catid, $allow_forum))
     $page = $page < 1 ? 1 : $page;
     $offset = ($page - 1) * $threads_per_page;
     $row_count = $page * $threads_per_page;
-    $kunena_db->setQuery("Select count(*) FROM #__fb_messages WHERE parent = '0' AND catid= '$catid' AND hold = '0' ");
+    $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE parent='0' AND catid='{$catid}' AND hold='0'");
     $total = (int)$kunena_db->loadResult();
     	check_dberror("Unable to load messages.");
     $kunena_db->setQuery(
-        "SELECT a. * , MAX( b.time )  AS lastpost FROM  #__fb_messages  AS a LEFT  JOIN #__fb_messages  AS b ON b.thread = a.thread WHERE a.parent =  '0' AND a.catid =  $catid AND a.hold =  '0' GROUP  BY id ORDER  BY ordering DESC , lastpost DESC  LIMIT $offset,$threads_per_page");
+        "SELECT a.*, MAX(b.time) AS lastpost FROM  #__fb_messages AS a LEFT JOIN #__fb_messages AS b ON b.thread = a.thread WHERE a.parent='0' AND a.catid='{$catid}' AND a.hold='0' GROUP BY id ORDER BY ordering DESC, lastpost DESC", $offset, $threads_per_page);
 
     $threadids = array();
     $messages = array();
@@ -80,7 +80,7 @@ if (in_array($catid, $allow_forum))
     if (count($threadids) > 0)
     {
         $idstr = @join("','", $threadids);
-        $kunena_db->setQuery("SELECT a.* FROM #__fb_messages AS a WHERE thread IN ('$idstr') AND id NOT IN ('$idstr') and hold=0");
+        $kunena_db->setQuery("SELECT a.* FROM #__fb_messages AS a WHERE thread IN ('$idstr') AND id NOT IN ('$idstr') and hold='0'");
 
         foreach ($kunena_db->loadObjectList()as $message)
         {
@@ -91,17 +91,17 @@ if (in_array($catid, $allow_forum))
     }
 
     //get number of pending messages
-    $kunena_db->setQuery("select count(*) from #__fb_messages where catid='$catid' and hold=1");
+    $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE catid='{$catid}' AND hold='1'");
     $numPending = $kunena_db->loadResult();
     	check_dberror("Unable to load messages.");
     //@rsort($messages[0]);
 
     //Get the category name for breadcrumb
     unset($objCatInfo, $objCatParentInfo);
-    $kunena_db->setQuery("SELECT * from #__fb_categories where id = {$catid}");
+    $kunena_db->setQuery("SELECT * FROM #__fb_categories WHERE id='{$catid}'");
     $objCatInfo = $kunena_db->loadObject();
     //Get the Category's parent category name for breadcrumb
-    $kunena_db->setQuery("SELECT name,id FROM #__fb_categories WHERE id = {$objCatInfo->parent}");
+    $kunena_db->setQuery("SELECT name, id FROM #__fb_categories WHERE id='{$objCatInfo->parent}'");
     $objCatParentInfo = $kunena_db->loadObject();
     //check if this forum is locked
     $forumLocked = $objCatInfo->locked;
@@ -194,7 +194,7 @@ if (in_array($catid, $allow_forum))
     <?php
     //get all readTopics in an array
     $readTopics = "";
-    $kunena_db->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid=$kunena_my->id");
+    $kunena_db->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid='{$kunena_my->id}'");
     $readTopics = $kunena_db->loadResult();
 
     if (count($readTopics) == 0) {
@@ -301,7 +301,7 @@ if (in_array($catid, $allow_forum))
                         <?php
                         //get the Moderator list for display
                         $fb_queryName = $fbConfig->username ? "username" : "name";
-                        $kunena_db->setQuery("select m.userid, u.$fb_queryName AS username from #__fb_moderation AS m left join #__users AS u ON u.id=m.userid where m.catid=$catid");
+                        $kunena_db->setQuery("select m.userid, u.{$fb_queryName} AS username FROM #__fb_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid='{$catid}'");
                         $modslist = $kunena_db->loadObjectList();
                         	check_dberror("Unable to load moderators.");
                         ?>
@@ -452,7 +452,7 @@ else
 function showChildren($category, $prefix = "", &$allow_forum)
 {
     $kunena_db = &JFactory::getDBO();
-    $kunena_db->setQuery("SELECT id, name, parent FROM #__fb_categories WHERE parent='$category'  and published='1' order by ordering");
+    $kunena_db->setQuery("SELECT id, name, parent FROM #__fb_categories WHERE parent='{$category}' AND published='1' ORDER BY ordering");
     $forums = $kunena_db->loadObjectList();
     	check_dberror("Unable to load categories.");
 

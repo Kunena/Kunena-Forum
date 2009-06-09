@@ -97,22 +97,22 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 				$sq1 = ($category)?"AND msg2.catid in ($category)":"";
 				if ($fbConfig->latestsinglesubject) {
 					$sq2 = "SELECT msg1.* FROM (SELECT msg2.* FROM #__fb_messages msg2"
-						. " WHERE msg2.hold = 0 AND moved=0 AND msg2.catid IN ($fbSession->allowed) $sq1 ORDER BY msg2.time"
+						. " WHERE msg2.hold='0' AND moved='0' AND msg2.catid IN ($fbSession->allowed) $sq1 ORDER BY msg2.time"
 						. (($fbConfig->latestreplysubject)?" DESC":"") . ") msg1"
 						. " GROUP BY msg1.thread";
 				} else {
 					$sq2 = "SELECT msg2.* FROM #__fb_messages msg2"
-						. " WHERE msg2.hold = 0 AND moved=0 AND msg2.catid IN ($fbSession->allowed) $sq1";
+						. " WHERE msg2.hold='0' AND moved='0' AND msg2.catid IN ($fbSession->allowed) $sq1";
 				}
 				$query = " SELECT u.id, IFNULL(u.username, '"._KUNENA_GUEST."') AS username, IFNULL(u.name,'"._KUNENA_GUEST."') AS name,"
 					. " msg.subject, msg.id AS fbid, msg.catid, from_unixtime(msg.time) AS date,"
-					. " thread.hits AS hits, msg.locked, msg.topic_emoticon, msg.parent, cat.name AS catname"
+					. " thread.hits AS hits, msg.locked, msg.topic_emoticon, msg.parent, cat.id AS catid, cat.name AS catname"
 					. " FROM ($sq2) msg"
 					. " LEFT JOIN #__users u ON u.id = msg.userid"
 					. " LEFT JOIN #__fb_categories cat ON cat.id = msg.catid"
 					. " LEFT JOIN #__fb_messages thread ON thread.id = msg.thread"
-					. " ORDER BY msg.time DESC LIMIT $count";
-				$kunena_db->setQuery($query);
+					. " ORDER BY msg.time DESC";
+				$kunena_db->setQuery($query, 0, $count);
                 $rows = $kunena_db->loadObjectList();
                 	check_dberror("Unable to load recent messages.");
 

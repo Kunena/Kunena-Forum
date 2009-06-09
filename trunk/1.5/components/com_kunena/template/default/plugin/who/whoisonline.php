@@ -33,22 +33,22 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
     $whoislink = JRoute::_('index.php?option=com_kunena&amp;func=who');
     $fb_queryName = $fbConfig->username ? "username" : "name";
     $query
-        = "SELECT w.userip, w.time, w.what, u.$fb_queryName AS username, u.id, k.moderator, k.showOnline "
-        . "\n FROM #__fb_whoisonline AS w"
-        . "\n LEFT JOIN #__users AS u ON u.id=w.userid "
-        . "\n LEFT JOIN #__fb_users AS k ON k.userid=w.userid "
+        = "SELECT w.userip, w.time, w.what, u.{$fb_queryName} AS username, u.id, k.moderator, k.showOnline "
+        . " FROM #__fb_whoisonline AS w"
+        . " LEFT JOIN #__users AS u ON u.id=w.userid "
+        . " LEFT JOIN #__fb_users AS k ON k.userid=w.userid "
 	# filter real public session logouts
-        . "\n INNER JOIN #__session AS s "
-	. "\n  ON s.guest=0 AND s.userid=w.userid "
-        . "\n WHERE w.userid!=0 "
-        . "\n GROUP BY u.id "
-        . "\n  ORDER BY username ASC";
+        . " INNER JOIN #__session AS s "
+		. " ON s.guest='0' AND s.userid=w.userid "
+        . " WHERE w.userid!='0' "
+        . " GROUP BY u.id "
+        . " ORDER BY username ASC";
     $kunena_db->setQuery($query);
     $users = $kunena_db->loadObjectList();
     $totaluser = count($users);
 
 
-    $query = "SELECT COUNT(*) FROM #__fb_whoisonline WHERE user = 0";
+    $query = "SELECT COUNT(*) FROM #__fb_whoisonline WHERE user='0'";
     $kunena_db->setQuery($query);
     $totalguests = $kunena_db->loadResult();
 ?>
@@ -129,7 +129,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
                     <!--               groups     -->
 
                     <?php
-                    $kunena_db->setQuery("select id, title from #__fb_groups");
+                    $kunena_db->setQuery("SELECT id, title FROM #__fb_groups");
                     $gr_row = $kunena_db->loadObjectList();
 
                     if (count($gr_row) > 1) {

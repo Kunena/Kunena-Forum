@@ -39,7 +39,7 @@ $is_user = (strtolower($kunena_my->usertype) <> '');
 
 <?php
 // BEGIN: BOX ANN
-$kunena_db->setQuery("SELECT id,title,sdescription,description, created ,published,showdate" . "\n FROM #__fb_announcement  WHERE  published = 1 ORDER BY created DESC LIMIT 1");
+$kunena_db->setQuery("SELECT id, title, sdescription, description, created, published, showdate FROM #__fb_announcement WHERE published='1' ORDER BY created DESC", 0, 1);
 
 $anns = $kunena_db->loadObjectList();
 check_dberror("Unable to load announcements.");

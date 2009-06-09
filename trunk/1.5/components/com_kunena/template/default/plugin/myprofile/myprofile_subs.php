@@ -72,7 +72,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 			{
 				foreach ($subslist as $subs)
 				{ //get all message details for each subscription
-					$kunena_db->setQuery("select * from #__fb_messages where id=$subs->thread ");
+					$kunena_db->setQuery("SELECT * FROM #__fb_messages WHERE id='{$subs->thread}'");
 					$subdet = $kunena_db->loadObjectList();
 						check_dberror("Unable to load messages.");
 

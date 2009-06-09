@@ -46,11 +46,11 @@ function list_users()
     $limit = JRequest::getInt('limit', $fbConfig->userlist_rows);
 
     // Total
-    $kunena_db->setQuery("SELECT count(*) FROM #__users");
+    $kunena_db->setQuery("SELECT COUNT(*) FROM #__users");
     $total_results = $kunena_db->loadResult();
 
     // Search total
-    $query = "SELECT count(*) FROM #__users AS u INNER JOIN #__fb_users AS fu ON u.id=fu.userid";
+    $query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__fb_users AS fu ON u.id=fu.userid";
 
     if ($search != "") {
         $query .= " WHERE (u.name LIKE '%$search%' OR u.username LIKE '%$search%')";
@@ -66,8 +66,8 @@ function list_users()
     $query_ext = "";
     // Select query
     $query
-        = "SELECT u.id, u.name, u.username , u.usertype , u.email , u.registerDate, u.lastvisitDate ,fu.showOnline, fu.group_id, fu.posts ,fu.karma , fu.uhits , g.title  "
-        . "\nFROM #__users AS u " . "\nINNER JOIN #__fb_users AS fu ON fu.userid = u.id" . "\nINNER JOIN #__fb_groups AS g ON g.id = fu.group_id ";
+        = "SELECT u.id, u.name, u.username, u.usertype, u.email, u.registerDate, u.lastvisitDate, fu.userid, fu.showOnline, fu.group_id, fu.posts, fu.karma, fu.uhits, g.id AS gid, g.title "
+        ." FROM #__users AS u INNER JOIN #__fb_users AS fu ON fu.userid = u.id INNER JOIN #__fb_groups AS g ON g.id = fu.group_id ";
 
     if ($search != "")
     {
@@ -396,7 +396,7 @@ class HTML_userlist_content
                                 }
                                 else
                                 {
-                                    $kunena_db->setQuery("SELECT avatar FROM #__fb_users WHERE userid='$ulrow->id'");
+                                    $kunena_db->setQuery("SELECT avatar FROM #__fb_users WHERE userid='{$ulrow->id}'");
                                     $avatar = $kunena_db->loadResult();
 
                                     if ($avatar != '') {
@@ -424,7 +424,7 @@ class HTML_userlist_content
 
                                         <td class = "td-2">
                                             <?php // online - ofline status
-                                            $sql = "SELECT count(userid) FROM #__session WHERE userid=" . $ulrow->id;
+                                            $sql = "SELECT COUNT(userid) FROM #__session WHERE userid='{$ulrow->id}'";
                                             $kunena_db->setQuery($sql);
                                             $isonline = $kunena_db->loadResult();
 

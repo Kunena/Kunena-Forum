@@ -164,9 +164,9 @@ class CKunenaSearch
 
             if($titleonly=='0')
             {
-                $querystrings[] = '(t.message ' . $not . ' LIKE \'%' . $searchword . '%\' ' . $operator . ' m.subject ' . $not . ' LIKE \'%' . $searchword . '%\')';
+                $querystrings[] = "(t.message {$not} LIKE '%{$searchword}%' {$operator} m.subject {$not} LIKE '%{$searchword}%')";
             } else {
-                $querystrings[] = '(m.subject ' . $not . ' LIKE \'%' . $searchword . '%\')';
+                $querystrings[] = "(m.subject {$not} LIKE '%{$searchword}%')";
             }
         }
 
@@ -183,7 +183,7 @@ class CKunenaSearch
 	$time = 0;
 	switch($searchdate) {
 		case 'lastvisit':
-			$kunena_db->setQuery('SELECT lasttime FROM #__fb_sessions WHERE userid = '. $kunena_my->id);
+			$kunena_db->setQuery("SELECT lasttime FROM #__fb_sessions WHERE userid='{$kunena_my->id}'");
 			$time = $kunena_db->loadResult();
 			break;
 		case 'all':
@@ -204,16 +204,16 @@ class CKunenaSearch
 
 	if ($time) {
 		if($beforeafter == 'after') {
-			$querystrings[] = 'm.time > \''.$time.'\'';
+			$querystrings[] = "m.time > '{$time}'";
 		} else {
-			$querystrings[] = 'm.time <= \''.$time.'\'';
+			$querystrings[] = "m.time <= '{$time}'";
 		}
 	}
 
         /* build query */
-        $querystrings[] = 'm.moved=0';
-        $querystrings[] = 'm.hold=0';
-        $querystrings[] = "m.catid IN ($search_forums)";
+        $querystrings[] = "m.moved='0'";
+        $querystrings[] = "m.hold='0'";
+        $querystrings[] = "m.catid IN ({$search_forums})";
         $where = implode(' AND ', $querystrings);
 
 	$groupby = array();
@@ -221,18 +221,18 @@ class CKunenaSearch
         else $order1 = 'ASC';
         switch ($sortby) {
         case 'title':
-		$orderby = 'm.subject '. $order1. 'm.time '.$order1;
+		$orderby = "m.subject {$order1}, m.time {$order1}";
 		break;
         case 'views':
-		$orderby = 'm.hits '. $order1 .', m.time '.$order1;
+		$orderby = "m.hits {$order1}, m.time {$order1}";
         break;
 /*
         case 'threadstart':
-		$orderby = 'm.time '.$order1.', m.ordering '.$order1.', m.hits '.$order1;
+		$orderby = "m.time {$order1}, m.ordering {$order1}, m.hits {$order1}";
         break;
 */
         case 'forum':
-		$orderby = 'm.catid '.$order1.', m.time '.$order1.', m.ordering '.$order1;
+		$orderby = "m.catid {$order1}, m.time {$order1}, m.ordering {$order1}";
 		break;
 /*
         case 'replycount':
@@ -240,7 +240,7 @@ class CKunenaSearch
 */
         case 'lastpost':
         default:
-		$orderby = 'm.time '.$order1.', m.ordering '.$order1.', m.catid '.$order1;
+		$orderby = "m.time {$order1}, m.ordering {$order1}, m.catid {$order1}";
         }
 
         if (count($groupby) > 0)
@@ -249,7 +249,7 @@ class CKunenaSearch
             $groupby = '';
 
         /* get total */
-        $kunena_db->setQuery('SELECT count(*) FROM #__fb_messages as m JOIN #__fb_messages_text as t ON m.id=t.mesid WHERE ' . $where . $groupby);
+        $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE {$where} {$groupby}");
         $this->total = $kunena_db->loadResult();
         check_dberror("Unable to count messages.");
 
@@ -263,8 +263,8 @@ class CKunenaSearch
 	if ($this->total < $this->limitstart) $this->limitstart = $limitstart = (int)($this->total / $this->limit);
 
         /* get results */
-        $sql = 'SELECT m.id,m.subject,m.catid,m.thread,m.name,m.time,t.message FROM #__fb_messages_text as t JOIN #__fb_messages as m ON m.id=t.mesid WHERE ' . $where . $groupby . ' ORDER BY ' . $orderby . ' LIMIT ' . $limitstart . ',' . $limit;
-        $kunena_db->setQuery($sql);
+        $sql = "SELECT m.id, m.subject, m.catid, m.thread, m.name, m.time, t.mesid, t.message FROM #__fb_messages_text AS t JOIN #__fb_messages AS m ON m.id=t.mesid WHERE {$where} {$groupby} ORDER BY {$orderby}";
+        $kunena_db->setQuery($sql, $limitstart, $limit);
         $rows = $kunena_db->loadObjectList();
         check_dberror("Unable to load messages.");
 
@@ -317,7 +317,7 @@ class CKunenaSearch
 		} else {
 			$allowed_string = "published='1' AND pub_access='0'";
 		}
-		$kunena_db->setQuery("SELECT id, parent FROM #__fb_categories WHERE $allowed_string");
+		$kunena_db->setQuery("SELECT id, parent FROM #__fb_categories WHERE {$allowed_string}");
         $allowed_forums = $kunena_db->loadAssocList('id');
         check_dberror("Unable to get public categories.");
 

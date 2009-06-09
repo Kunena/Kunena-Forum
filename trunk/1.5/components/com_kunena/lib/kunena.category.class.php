@@ -43,7 +43,7 @@ class jbCategory {
 
     function jbCategory(&$kunena_db,$id) {
         $this->database=$kunena_db;
-        $kunena_db->setQuery('SELECT id,pub_access,pub_recurse,admin_access,admin_recurse,parent,name,locked,moderated,published,description,review FROM #__fb_categories WHERE id='.$id);
+        $kunena_db->setQuery("SELECT id,pub_access,pub_recurse,admin_access,admin_recurse,parent,name,locked,moderated,published,description,review FROM #__fb_categories WHERE id='{$id}'");
         $cat = $kunena_db->loadObject();
         if ($cat)
 		{

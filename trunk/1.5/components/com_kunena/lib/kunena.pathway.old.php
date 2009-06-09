@@ -39,7 +39,7 @@ $fbConfig =& CKunenaConfig::getInstance();
 
                 while ($parent_ids)
                 {
-                    $query = "select * from #__fb_categories where id=$catids and published=1";
+                    $query = "SELECT * FROM #__fb_categories WHERE id='{$catids}' AND published='1'";
                     $kunena_db->setQuery($query);
                     $results = $kunena_db->query() or trigger_dberror("Unable to read categories.");
                     ;
@@ -64,10 +64,10 @@ $fbConfig =& CKunenaConfig::getInstance();
                 echo $pathNames;
 
                 //Get the category name for breadcrumb
-                $kunena_db->setQuery("SELECT name,locked,review,id, description, parent from #__fb_categories where id='$catid'");
+                $kunena_db->setQuery("SELECT id, name, locked, review, description, parent FROM #__fb_categories WHERE id='{$catid}'");
                 $objCatInfo = $kunena_db->loadObject() or trigger_dberror("Unable to read from categories.");
                 //Get the Category's parent category name for breadcrumb
-                $kunena_db->setQuery("SELECT name,id FROM #__fb_categories WHERE id='$objCatInfo->parent'");
+                $kunena_db->setQuery("SELECT name, id FROM #__fb_categories WHERE id='{$objCatInfo->parent}'");
                 $objCatParentInfo = $kunena_db->loadObject() or trigger_dberror("Unable to read from categories.");
                 // set page title
 		$document=& JFactory::getDocument();

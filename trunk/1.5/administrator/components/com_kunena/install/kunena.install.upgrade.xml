@@ -10,11 +10,11 @@
                     `published` tinyint(1) NOT NULL default '0',
                     `ordering` tinyint(4) NOT NULL default '0',
                     `showdate` tinyint(1) NOT NULL default '1',
-                PRIMARY KEY  (`id`) )</query>
+                PRIMARY KEY  (`id`) ) DEFAULT CHARSET=utf8</query>
         <query>CREATE TABLE `#__fb_attachments` (
                     `mesid` int(11) NOT NULL default '0',
                     `filelocation` text NOT NULL,
-                KEY `mesid` (`mesid`) )</query>
+                KEY `mesid` (`mesid`) ) DEFAULT CHARSET=utf8</query>
        <query>CREATE TABLE `#__fb_categories` (
                     `id` int(11) NOT NULL auto_increment,
                     `parent` int(11) default '0',
@@ -45,16 +45,16 @@
                 PRIMARY KEY  (`id`),
                 KEY `parent` (`parent`),
                 KEY `published_pubaccess_id` (`published`,`pub_access`,`id`),
-                KEY `msg_id` (`id_last_msg`) )</query>
+                KEY `msg_id` (`id_last_msg`) ) DEFAULT CHARSET=utf8</query>
        <query>CREATE TABLE `#__fb_favorites` (
                     `thread` int(11) NOT NULL default '0',
                     `userid` int(11) NOT NULL default '0',
                 UNIQUE KEY `thread` (`thread`,`userid`),
-                KEY `userid` (`userid`) )</query>
+                KEY `userid` (`userid`) ) DEFAULT CHARSET=utf8</query>
        <query>CREATE TABLE `#__fb_groups` (
                     `id` int(4) NOT NULL auto_increment,
                     `title` varchar(255) default NULL,
-                PRIMARY KEY  (`id`) )</query>
+                PRIMARY KEY  (`id`) ) DEFAULT CHARSET=utf8</query>
        <query>INSERT INTO `#__fb_groups`(`id`,`title`) values (1,'"._KUNENA_REGISTERED."')</query>
        <query>CREATE TABLE `#__fb_messages` (
                     `id` int(11) NOT NULL auto_increment,
@@ -85,31 +85,31 @@
                 KEY `time` (`time`),
                 KEY `locked` (`locked`),
                 KEY `hold_time` (`hold`,`time`),
-                KEY `parent_hits` (`parent`,`hits`) )</query>
+                KEY `parent_hits` (`parent`,`hits`) ) DEFAULT CHARSET=utf8</query>
 		<query>CREATE TABLE `#__fb_messages_text` (
                     `mesid` int(11) NOT NULL default '0',
                     `message` text NOT NULL,
-                PRIMARY KEY  (`mesid`) )</query>
+                PRIMARY KEY  (`mesid`) ) DEFAULT CHARSET=utf8</query>
 		<query>CREATE TABLE `#__fb_moderation` (
                     `catid` int(11) NOT NULL default '0',
                     `userid` int(11) NOT NULL default '0',
                     `future1` tinyint(4) default '0',
                     `future2` int(11) default '0',
-                PRIMARY KEY  (`catid`,`userid`) )</query>
+                PRIMARY KEY  (`catid`,`userid`) ) DEFAULT CHARSET=utf8</query>
 		<query>CREATE TABLE `#__fb_sessions` (
                     `userid` int(11) NOT NULL default '0',
                     `allowed` text,
                     `lasttime` int(11) NOT NULL default '0',
                     `readtopics` text,
                     `currvisit` int(11) NOT NULL default '0',
-                PRIMARY KEY  (`userid`) )</query>
+                PRIMARY KEY  (`userid`) ) DEFAULT CHARSET=utf8</query>
 		<query>CREATE TABLE `#__fb_smileys` (
                     `id` int(4) NOT NULL auto_increment,
                     `code` varchar(12) NOT NULL default '',
                     `location` varchar(50) NOT NULL default '',
                     `greylocation` varchar(60) NOT NULL default '',
                     `emoticonbar` tinyint(4) NOT NULL default '0',
-                PRIMARY KEY  (`id`) )</query>
+                PRIMARY KEY  (`id`) ) DEFAULT CHARSET=utf8</query>
 		<query>INSERT INTO `#__fb_smileys`(`id`,`code`,`location`,`greylocation`,`emoticonbar`) 
 		            VALUES  (1,'B)','cool.png','cool-grey.png',1),
 		                    (2,':(','sad.png','sad-grey.png',1),
@@ -152,7 +152,7 @@
                     `userid` int(11) NOT NULL default '0',
                     `future1` int(11) default '0',
                 UNIQUE KEY `thread` (`thread`,`userid`),
-                KEY `userid` (`userid`) )</query>
+                KEY `userid` (`userid`) ) DEFAULT CHARSET=utf8</query>
 		<query>CREATE TABLE `#__fb_users` (
                     `userid` int(11) NOT NULL default '0',
                     `view` varchar(8) NOT NULL default 'flat',
@@ -183,7 +183,7 @@
                 PRIMARY KEY  (`userid`),
                 KEY `group_id` (`group_id`),
                 KEY `posts` (`posts`),
-                KEY `uhits` (`uhits`) )</query>
+                KEY `uhits` (`uhits`) ) DEFAULT CHARSET=utf8</query>
 		<query>CREATE TABLE `#__fb_whoisonline` (
                     `id` int(6) NOT NULL auto_increment,
                     `userid` int(7) NOT NULL default '0',
@@ -197,14 +197,14 @@
                     `userip` varchar(20) NOT NULL default '',
                     `user` tinyint(2) NOT NULL default '0',
                 PRIMARY KEY  (`id`),
-                KEY `userid` (`userid`) )</query>
+                KEY `userid` (`userid`) ) DEFAULT CHARSET=utf8</query>
 		<query>CREATE TABLE `#__fb_ranks` (
                     `rank_id` mediumint(8) unsigned NOT NULL auto_increment,
                     `rank_title` varchar(255) NOT NULL default '',
                     `rank_min` mediumint(8) unsigned NOT NULL default '0',
                     `rank_special` tinyint(1) unsigned NOT NULL default '0',
                     `rank_image` varchar(255) NOT NULL default '',
-                PRIMARY KEY  (`rank_id`) )</query>
+                PRIMARY KEY  (`rank_id`) ) DEFAULT CHARSET=utf8</query>
 		<query>INSERT INTO `#__fb_ranks` (
 		            `rank_id`, `rank_title`, `rank_min`, `rank_special`, `rank_image`) VALUES
                     (1, 'Fresh Boarder', 0, 0, 'rank1.gif'),
@@ -215,7 +215,7 @@
                     (6, 'Platinum Boarder', 320, 0, 'rank6.gif'),
                     (7, 'Administrator', 0, 1, 'rankadmin.gif'),
                     (8, 'Moderator', 0, 1, 'rankmod.gif'),
-                    (9, 'Spammer', 0, 1, 'rankspammer.gif')</query>
+                    (9, 'Spammer', 0, 1, 'rankspammer.gif') DEFAULT CHARSET=utf8</query>
 		<phpfile name="kunena.special.install.php" />
    	</install>
 	<upgrade>

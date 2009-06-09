@@ -51,7 +51,7 @@ class fx_Upgrade {
 								`installdate` DATE NOT NULL,
 								`build` VARCHAR(20) NOT NULL,
 								`versionname` VARCHAR(40) NULL,
-								PRIMARY KEY(`id`));" );
+								PRIMARY KEY(`id`)) DEFAULT CHARSET=utf8;" );
 		// Let the install handle the error
 		return $kunena_db->query();
 	}

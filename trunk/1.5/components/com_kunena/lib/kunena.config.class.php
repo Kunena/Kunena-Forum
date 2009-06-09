@@ -138,12 +138,13 @@ abstract class CKunenaConfigBase
             }
         }
 
-        $this->_db->setQuery("CREATE TABLE ".$this->GetConfigTableName()." (" . implode(', ', $fields) . " )");
+        $this->_db->setQuery("CREATE TABLE ".$this->GetConfigTableName()." (" . implode(', ', $fields) . ", PRIMARY KEY (`id`) ) DEFAULT CHARSET=utf8");
         $this->_db->query();
         	check_dberror("Unable to create configuration table.");
 
         // Insert current Settings
         $vars = get_object_vars($this); // for the actual values we must not use the class vars funtion
+		$vars['id'] = 1;
         $fields = array ();
 
         foreach ($vars as $name => $value)
@@ -226,6 +227,8 @@ abstract class CKunenaConfigBase
 class CKunenaConfig extends CKunenaConfigBase
 {
 	// All vars MUST BE LOWER CASE!
+	// New in Kunena 1.5.2: $id for JoomFish support 
+	var $id                      = 0;
     var $board_title             = 'Kunena';
     var $email                   = 'change@me.com';
     var $board_offline           = 0;

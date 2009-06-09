@@ -63,15 +63,13 @@ function showprf($userid, $page)
 
     //Get userinfo needed later on, this limits the amount of queries
     unset($userinfo);
-    $kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_users as a"
-                        . "\n LEFT JOIN #__users as b on b.id=a.userid"
-                        . "\n where a.userid=$userid");
+    $kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_users AS a LEFT JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$userid}'");
 
     $userinfo = $kunena_db->loadObject();
     check_dberror('Unable to get user profile info.');
 
     if (!$userinfo) {
-	$kunena_db->setQuery("SELECT * FROM #__users WHERE id=$userid");
+	$kunena_db->setQuery("SELECT * FROM #__users WHERE id='{$userid}'");
 	$userinfo = $kunena_db->loadObject();
 	check_dberror('Unable to get user profile info.');
 
@@ -88,9 +86,7 @@ function showprf($userid, $page)
 		$kunena_db->query();
 		check_dberror('Unable to create user profile.');
 
-		$kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_users as a"
-			. "\n LEFT JOIN #__users as b on b.id=a.userid"
-			. "\n where a.userid=$userid");
+		$kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_users AS a LEFT JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$userid}'");
 
 		$userinfo = $kunena_db->loadObject();
 		check_dberror('Unable to get user profile info.');
@@ -196,7 +192,7 @@ function showprf($userid, $page)
         //done usertype determination, phew...
 
         //Get the max# of posts for any one user
-        $kunena_db->setQuery("SELECT max(posts) from #__fb_users");
+        $kunena_db->setQuery("SELECT MAX(posts) FROM #__fb_users");
         $maxPosts = $kunena_db->loadResult();
 
         //# of post for this user and ranking
@@ -210,7 +206,7 @@ function showprf($userid, $page)
 								if ($userinfo->rank != '0')
 								{
 												//special rank
-												$kunena_db->setQuery("SELECT * FROM #__fb_ranks WHERE rank_id = '$userinfo->rank'");
+												$kunena_db->setQuery("SELECT * FROM #__fb_ranks WHERE rank_id='{$userinfo->rank}'");
 												$getRank = $kunena_db->loadObjectList();
 													check_dberror("Unable to load ranks.");
 												$rank=$getRank[0];
@@ -220,7 +216,7 @@ function showprf($userid, $page)
 									if ($userinfo->rank == '0')
 									{
 											//post count rank
-												$kunena_db->setQuery("SELECT * FROM #__fb_ranks WHERE ((rank_min <= $numPosts) AND (rank_special = 0))  ORDER BY rank_min DESC LIMIT 1");
+												$kunena_db->setQuery("SELECT * FROM #__fb_ranks WHERE ((rank_min <= '{$numPosts}') AND (rank_special = '0')) ORDER BY rank_min DESC", 0, 1);
 												$getRank = $kunena_db->loadObjectList();
 													check_dberror("Unable to load ranks.");
 												$rank=$getRank[0];
@@ -351,7 +347,7 @@ function showprf($userid, $page)
 
     if ($userid > 0)
     {
-        $sql = "SELECT count(userid) FROM #__session WHERE userid=" . $userid;
+        $sql = "SELECT COUNT(userid) FROM #__session WHERE userid='{$userid}'";
 
         $kunena_db->setQuery($sql);
 
@@ -410,7 +406,7 @@ function showprf($userid, $page)
 
         $msg_buddy .= "\" alt=\"" . _VIEW_ADDBUDDY . "\" border=\"0\" title=\"" . _VIEW_ADDBUDDY . "\" /></a>";
 
-        $kunena_db->setQuery("SELECT icq,ym,msn,aim,website,location FROM #__mypms_profiles WHERE user='" . $PMSName . "'");
+        $kunena_db->setQuery("SELECT icq, ym, msn, aim, website, location FROM #__mypms_profiles WHERE user='{$PMSName}'");
         $profileitems = $kunena_db->loadObjectList();
         	check_dberror("Unable to load mypms_profiles.");
 

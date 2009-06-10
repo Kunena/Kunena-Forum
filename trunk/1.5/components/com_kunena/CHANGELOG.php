@@ -32,10 +32,13 @@ Legend:
 
 Kunena 1.5.2RC
 
+10-June-2009 Matias
+# [#16728] Path missing in include (kunena.parser.php)
+
 9-June-2009 Matias
 # [#16721] Use always UTF8 while creating database tables
 # [#16722] User Profile shows messages in categories where user has no permissions
-# [#16723] Add support for JoomFish
++ [#16723] Add support for JoomFish
 # [#16724] Fatal database error in default_ex/listcat.php:269
 
 8-June-2009 Matias

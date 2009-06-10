@@ -33,7 +33,7 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-include_once("kunena.parser.bbcode.php");
+include_once(KUNENA_PATH_LIB .DS. "kunena.parser.bbcode.php");
 
 class KunenaBBCodeInterpreter extends BBCodeInterpreter {
     # these are samples... we used the parser to refer to files!

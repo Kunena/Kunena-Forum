@@ -359,6 +359,7 @@
 	width:100%;
 }
 #Kunena .fb_list_moderators {
+	clear: left;
 	height:28px;
 	padding-left:5px;
 	padding-right:10px;
@@ -568,11 +569,13 @@
 	font-family:Lucida Grande, Arial, helvetica, sans serif;
 	font-size:95%;
 	display:inline-block;
+	float:left;
 	padding-bottom:0;
 	margin-bottom:3px;
 	font-weight: bold;
 }
 #Kunena div.fb_thead-desc {
+	clear: left;
 }
 #Kunena div.fb_thead-child {
 	border-top: 1px dotted #D4C9AD;
@@ -608,8 +611,10 @@ span.newchar {
 	font-weight: bold;
 	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size:xx-small;
+	margin-left:3px;
 }
 #Kunena div.fb_cc-subcat {
+	float:left;
 	display:inline-block;
 	vertical-align:top;
 }

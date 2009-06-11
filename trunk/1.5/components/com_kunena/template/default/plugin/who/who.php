@@ -78,7 +78,7 @@ if ($fbConfig->showwhoisonline > 0)
                     $user->username = _KUNENA_GUEST;
                 }
 
-                $time = date("H:i:s", $user->time);
+                $time = date("H:i:s", $user->time + $fbConfig->board_ofset*3600);
             ?>
 
                 <tr class = "<?php echo $boardclass.''.$tabclass[$k] ;?>">

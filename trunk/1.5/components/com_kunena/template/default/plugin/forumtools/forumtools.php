@@ -58,7 +58,7 @@ $fbConfig =& CKunenaConfig::getInstance();
 
                         <li>
                         <?php
-                        echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;id=' . $id . '&amp;catid=' . $catid . '&amp;func=fb_pdf') . '">' . _GEN_PDF . '</a>';
+                        echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;id=' . $id . '&amp;catid=' . $catid . '&amp;func=fb_pdf') . '" rel="nofollow">' . _GEN_PDF . '</a>';
                         ?>
 
                         </li>

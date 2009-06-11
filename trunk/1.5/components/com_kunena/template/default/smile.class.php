@@ -363,7 +363,7 @@ class smile
 									if (document.postform.videosize.value != "") {video = " size=" + document.postform.videosize.value;}
 									else {video=""}
 									if (document.postform.videowidth.value != "") {video = video + " width=" + document.postform.videowidth.value;}
-									if (document.postform.videoheight.value != "") {video = video + " heigth=" + document.postform.videoheight.value;}
+									if (document.postform.videoheight.value != "") {video = video + " height=" + document.postform.videoheight.value;}
 									if (art=='video1'){
 									if (document.postform.fb_vid_code1.value != "") {video = video + " type=" + document.postform.fb_vid_code1.options[document.postform.fb_vid_code1.selectedIndex].value;}
 									bbfontstyle('[video' + video + ']'+ document.postform.videoid.value,'[/video]');}

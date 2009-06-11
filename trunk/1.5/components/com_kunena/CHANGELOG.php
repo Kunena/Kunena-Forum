@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.5.2RC
 
+11-June-2009 Matias
+# [#16745] Collection of small bugs/typos
+
 10-June-2009 Matias
 # [#16728] Path missing in include (kunena.parser.php)
 # [#16670] Category / Subcategory layout is slightly broken in IE

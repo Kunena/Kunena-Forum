@@ -53,7 +53,7 @@ else
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-        <table  class = "fb_blocktable" id ="fb_morestat " border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+        <table  class = "fb_blocktable" id ="fb_morestat" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
                     <th>

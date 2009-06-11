@@ -62,7 +62,7 @@ if ($do == "read") {
     if ($annpublished > 0) {
 ?>
 
-        <table class = "fb_blocktable" id = "fb_announcement " border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+        <table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
                     <th>
@@ -130,7 +130,7 @@ if ($is_editor) {
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-            <table class = "fb_blocktable" id = "fb_announcement " border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+            <table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
                 <thead>
                     <tr>
                         <th colspan = "6">
@@ -257,7 +257,7 @@ if ($is_editor) {
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable" id = "fb_announcement " border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
             <th>
@@ -410,7 +410,7 @@ if ($is_editor) {
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable" id = "fb_announcement " border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
             <th>

@@ -23,6 +23,7 @@
 defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.5.2
+DEFINE('_KUNENA_PAGE', 'Page');
 DEFINE('_KUNENA_RANK_NO_ASSIGNED', 'No Rank Assigned');
 DEFINE('_KUNENA_INTEGRATION_CB_WARN_GENERAL', 'Detected problems in Community Builder integration:');
 DEFINE('_KUNENA_INTEGRATION_CB_WARN_INSTALL', 'CB integration works only if you have Community Builder version %s or higher installed.');

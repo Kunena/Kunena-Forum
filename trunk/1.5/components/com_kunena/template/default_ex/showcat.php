@@ -106,6 +106,7 @@ if (in_array($catid, $allow_forum))
     $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE parent='0' AND catid='{$catid}' AND hold='0'");
     $total = (int)$kunena_db->loadResult();
     	check_dberror('Unable to get message count.');
+    $totalpages = ceil($total / $threads_per_page);
     $kunena_db->setQuery("SELECT
     							a.*,
     							t.mesid,
@@ -211,8 +212,8 @@ if (in_array($catid, $allow_forum))
     $forumReviewed = $objCatInfo->review;
 
 	//meta description and keywords
-	$metaKeys=(_KUNENA_CATEGORIES . ', ' . kunena_htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) . ', ' . stripslashes($fbConfig->board_title) . ', ' . $app->getCfg('sitename'));
-	$metaDesc=(kunena_htmlspecialchars(stripslashes($objCatParentInfo->name)) . ' - ' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) .' - ' . stripslashes($fbConfig->board_title));
+	$metaKeys=kunena_htmlspecialchars(stripslashes(_KUNENA_CATEGORIES . ", {$objCatParentInfo->name}, {$objCatInfo->name}, {$fbConfig->board_title}, " . $app->getCfg('sitename')));
+	$metaDesc=kunena_htmlspecialchars(stripslashes("{$objCatParentInfo->name} ({$page}/{$totalpages}) - {$objCatInfo->name} - {$fbConfig->board_title}"));
 
 	$document =& JFactory::getDocument();
 	$cur = $document->get( 'description' );

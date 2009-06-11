@@ -196,6 +196,16 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 
         $forumLocked = $objCatInfo->locked;
         
+		//meta description and keywords
+		$metaKeys=kunena_htmlspecialchars(stripslashes("{$this_message->subject}, {$objCatParentInfo->name}, {$fbConfig->board_title}, " ._GEN_FORUM. ', ' .$app->getCfg('sitename')));
+		$metaDesc=kunena_htmlspecialchars(stripslashes("{$this_message->subject} ({$page}/{$totalpages}) - {$objCatParentInfo->name} - {$objCatInfo->name} - {$fbConfig->board_title} " ._GEN_FORUM));
+
+	    $document =& JFactory::getDocument();
+	    $cur = $document->get( 'description' );
+	    $metaDesc = $cur .'. ' . $metaDesc;
+	    $document->setMetadata( 'keywords', $metaKeys );
+	    $document->setDescription($metaDesc);
+        
         //Perform subscriptions check only once
         $fb_cansubscribe = 0;
         if ($fbConfig->allowsubscriptions && ("" != $kunena_my->id || 0 != $kunena_my->id))
@@ -485,17 +495,6 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 else {
                                     $fb_thread = $fmessage->thread;
                                 }
-
-                                //meta description and keywords
-								$metaKeys=(kunena_htmlspecialchars(stripslashes($fmessage->subject)). ', ' .kunena_htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . kunena_htmlspecialchars(stripslashes($fbConfig->board_title)) . ', ' . kunena_htmlspecialchars($app->getCfg('sitename')));
-								$metaDesc=(kunena_htmlspecialchars(stripslashes($fmessage->subject)) . ' - ' .kunena_htmlspecialchars(stripslashes($objCatParentInfo->name)) . ' - ' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) .' - ' . kunena_htmlspecialchars(stripslashes($fbConfig->board_title)));
-
-							    $document =& JFactory::getDocument();
-							    $cur = $document->get( 'description' );
-							    $metaDesc = $cur .'. ' . $metaDesc;
-							    $document =& JFactory::getDocument();
-							    $document->setMetadata( 'keywords', $metaKeys );
-							    $document->setDescription($metaDesc);
 
                                 //filter out clear html
                                 $fmessage->name = kunena_htmlspecialchars($fmessage->name);

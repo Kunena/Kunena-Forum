@@ -37,6 +37,7 @@ Kunena 1.5.2RC
 # [#16078] Remove broken Bad Words component support
 ^ [#16475] Upgrade jQuery to version 1.3.2
 # [#16748] Add page number in meta description (For better Google results)
+# [#16755] No images are shown in Windows server (backslashes in URL)
 
 10-June-2009 Matias
 # [#16728] Path missing in include (kunena.parser.php)

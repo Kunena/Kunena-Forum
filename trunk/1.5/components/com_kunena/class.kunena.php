@@ -162,19 +162,19 @@ define('KUNENA_CLEANLIVEURL', KUNENA_JLIVEURL . 'index2.php?option=com_kunena&am
 define('KUNENA_LIVEURLREL', 'index.php?option=com_kunena' . KUNENA_COMPONENT_ITEMID_SUFFIX);
 
 // Kunena souces absolute path
-define('KUNENA_DIRECTURL', KUNENA_JLIVEURL . 'components/com_kunena');
+define('KUNENA_DIRECTURL', KUNENA_JLIVEURL . 'components/com_kunena/');
 
 // Kunena direct url
-define('KUNENA_URLSOURCESPATH', KUNENA_DIRECTURL . '/lib/');
+define('KUNENA_URLSOURCESPATH', KUNENA_DIRECTURL . 'lib/');
 
 if (!defined("KUNENA_JCSSURL")) {
     $kunena_db->setQuery("SELECT template FROM #__templates_menu WHERE client_id='0'");
     $current_stylesheet = $kunena_db->loadResult();
-    define('KUNENA_JCSSURL', KUNENA_JLIVEURL . '/templates/' . $current_stylesheet . '/css/template_css.css');
+    define('KUNENA_JCSSURL', KUNENA_JLIVEURL . 'templates/' . $current_stylesheet . '/css/template_css.css');
 }
 
 // Kunena uploaded files directory
-define('KUNENA_LIVEUPLOADEDPATH', KUNENA_JLIVEURL . 'images/fbfiles');
+define('KUNENA_LIVEUPLOADEDPATH', KUNENA_JLIVEURL . 'images/fbfiles/');
 
 
 // now continue with other paths
@@ -198,11 +198,11 @@ else
     $fb_cur_template = 'default_ex';
     }
 
-if (strlen($fb_user_img_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_template . '/images'))
+if (strlen($fb_user_img_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_template .DS. 'images'))
 {
     $fb_cur_img_template = $fb_user_img_template;
     }
-else if (file_exists(KUNENA_PATH_TEMPLATE .DS. $fbConfig->templateimagepath . '/images'))
+else if (file_exists(KUNENA_PATH_TEMPLATE .DS. $fbConfig->templateimagepath .DS. 'images'))
 {
     $fb_cur_img_template = $fbConfig->templateimagepath;
     }
@@ -218,7 +218,7 @@ define('KUNENA_ABSTMPLTMAINIMGPATH', KUNENA_PATH_TEMPLATE .DS. $fb_cur_img_templ
 
 // IMAGES ABSOLUTE PATH
 if (is_dir(KUNENA_ABSTMPLTMAINIMGPATH .DS. 'images' .DS. KUNENA_LANGUAGE) .DS) {
-    define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH .DS. 'images' .DS. KUNENA_LANGUAGE  .DS. DS);
+    define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH .DS. 'images' .DS. KUNENA_LANGUAGE  .DS);
     }
 else {
     define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH .DS. 'images' .DS. 'english' .DS);
@@ -239,17 +239,17 @@ define('KUNENA_ABSRANKSPATH', KUNENA_ABSIMAGESPATH . 'ranks/');
 // absolute ranks path
 define('KUNENA_ABSCATIMAGESPATH', KUNENA_PATH_UPLOADED .DS. $fbConfig->catimagepath); // Kunena category images absolute path
 
-define('KUNENA_TMPLTURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_template);
-define('KUNENA_TMPLTMAINIMGURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_img_template);
+define('KUNENA_TMPLTURL', KUNENA_DIRECTURL . "template/{$fb_cur_template}/");
+define('KUNENA_TMPLTMAINIMGURL', KUNENA_DIRECTURL . "template/{$fb_cur_img_template}/");
 
 // IMAGES URL PATH
-define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . '/kunena.forum.css');
+define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . 'kunena.forum.css');
 
 if (is_dir(KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANGUAGE)) {
-    define('KUNENA_URLIMAGESPATH', KUNENA_TMPLTMAINIMGURL .DS. 'images' .DS. KUNENA_LANGUAGE .DS);
+    define('KUNENA_URLIMAGESPATH', KUNENA_TMPLTMAINIMGURL . 'images/' .KUNENA_LANGUAGE. '/');
     }
 else {
-    define('KUNENA_URLIMAGESPATH', KUNENA_TMPLTMAINIMGURL . '/images/english/');
+    define('KUNENA_URLIMAGESPATH', KUNENA_TMPLTMAINIMGURL . 'images/english/');
     }
 
 // url images path
@@ -265,26 +265,26 @@ define('KUNENA_URLGRAPHPATH', KUNENA_URLIMAGESPATH . 'graph/');
 define('KUNENA_URLRANKSPATH', KUNENA_URLIMAGESPATH . 'ranks/');
 
 // url ranks path
-define('KUNENA_URLCATIMAGES', KUNENA_LIVEUPLOADEDPATH .DS . $fbConfig->catimagepath); // Kunena category images direct url
+define('KUNENA_URLCATIMAGES', KUNENA_LIVEUPLOADEDPATH ."/{$fbConfig->catimagepath}/"); // Kunena category images direct url
 
-if (file_exists(KUNENA_ABSTMPLTPATH . '/js/jquery-1.3.2.min.js'))
+if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'js' .DS. 'jquery-1.3.2.min.js'))
 {
-    define('KUNENA_JQURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_template . '/js/jquery-1.3.2.min.js');
+    define('KUNENA_JQURL', KUNENA_DIRECTURL . 'template/' . $fb_cur_template . '/js/jquery-1.3.2.min.js');
 }
 else
 {
-    define('KUNENA_JQURL', KUNENA_DIRECTURL . '/template/default/js/jquery-1.3.2.min.js');
+    define('KUNENA_JQURL', KUNENA_DIRECTURL . 'template/default/js/jquery-1.3.2.min.js');
 }
 
-if (file_exists(KUNENA_ABSTMPLTPATH . '/js/kunenaforum.js'))
+if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'js' .DS. 'kunenaforum.js'))
 {
 	define('KUNENA_COREJSPATH', '/components/com_kunena/template/' . $fb_cur_template . '/js/kunenaforum.js');
-	define('KUNENA_COREJSURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_template . '/js/kunenaforum.js');
+	define('KUNENA_COREJSURL', KUNENA_DIRECTURL . "template/{$fb_cur_template}/js/kunenaforum.js");
 }
 else
 {
 	define('KUNENA_COREJSPATH', '/components/com_kunena/template/default/js/kunenaforum.js');
-	define('KUNENA_COREJSURL', KUNENA_DIRECTURL . '/template/default/js/kunenaforum.js');
+	define('KUNENA_COREJSURL', KUNENA_DIRECTURL . 'template/default/js/kunenaforum.js');
 }
 
 function KUNENA_fmodReplace($x, $y) { //function provided for older PHP versions which do not have an fmod function yet

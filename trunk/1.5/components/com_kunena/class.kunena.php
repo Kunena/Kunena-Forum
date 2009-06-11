@@ -267,13 +267,13 @@ define('KUNENA_URLRANKSPATH', KUNENA_URLIMAGESPATH . 'ranks/');
 // url ranks path
 define('KUNENA_URLCATIMAGES', KUNENA_LIVEUPLOADEDPATH .DS . $fbConfig->catimagepath); // Kunena category images direct url
 
-if (file_exists(KUNENA_ABSTMPLTPATH . '/js/jquery-1.3.1.min.js'))
+if (file_exists(KUNENA_ABSTMPLTPATH . '/js/jquery-1.3.2.min.js'))
 {
-    define('KUNENA_JQURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_template . '/js/jquery-1.3.1.min.js');
+    define('KUNENA_JQURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_template . '/js/jquery-1.3.2.min.js');
 }
 else
 {
-    define('KUNENA_JQURL', KUNENA_DIRECTURL . '/template/default/js/jquery-1.3.1.min.js');
+    define('KUNENA_JQURL', KUNENA_DIRECTURL . '/template/default/js/jquery-1.3.2.min.js');
 }
 
 if (file_exists(KUNENA_ABSTMPLTPATH . '/js/kunenaforum.js'))

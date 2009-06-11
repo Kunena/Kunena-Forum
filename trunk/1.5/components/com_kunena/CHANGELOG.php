@@ -40,6 +40,7 @@ Kunena 1.5.2RC
 # [#16755] No images are shown in Windows server (backslashes in URL)
 # [#16757] Forum stats: Popular 5 Threads shows threads where you don't have access to
 # [#16775] Use better URL detection in BBCode parser
+# [#16778] Internal: Preferred Message Ordering = Last post first didn't work
 
 10-June-2009 Matias
 # [#16728] Path missing in include (kunena.parser.php)

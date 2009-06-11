@@ -158,14 +158,24 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
             $kunena_db->query();
         }
 
-		//prepare paging
-		$limit = JRequest::getInt('limit', $fbConfig->messages_per_page);
-		$limitstart = JRequest::getInt('limitstart', 0);
+		$query = "SELECT COUNT(*) FROM #__fb_messages AS a WHERE a.thread='{$thread}' AND hold='0'";
+		$kunena_db->setQuery($query);
+		$total = $kunena_db->loadResult();
+		check_dberror('Unable to calculate message count.');
 
-		$replylimit = $limitstart ? $limit : $limit-1; // If first page, load $limit-1 messages
-		$replystart = $limitstart ? $limitstart-1 : $limitstart; // If not first page, start on $limitstart-1
-		// Get replies of current thread
+        //prepare paging
+        $limit = JRequest::getInt('limit', $fbConfig->messages_per_page);
+		$limitstart = JRequest::getInt('limitstart', 0);
         $ordering = ($fbConfig->default_sort == 'desc' ? 'desc' : 'asc'); // Just to make sure only valid options make it
+		$maxpages = 9 - 2; // odd number here (show - 2)
+		$totalpages = ceil($total / $limit);
+		$page = floor($limitstart / $limit)+1;
+		$firstpage = 1;
+		if ($ordering == 'desc') $firstpage = $totalpages;
+		
+		$replylimit = $page == $firstpage ? $limit-1 : $limit; // If page contains first message, load $limit-1 messages
+		$replystart = $limitstart && $ordering == 'asc' ? $limitstart-1 : $limitstart; // If not first page and order=asc, start on $limitstart-1
+		// Get replies of current thread
         $query = "SELECT a.*, b.* FROM #__fb_messages AS a LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid "
         	."WHERE a.thread='{$thread}' AND a.id!='{$id}' AND a.hold='0' AND a.catid='{$catid}' ORDER BY id {$ordering}";
 		$kunena_db->setQuery($query, $replystart, $replylimit);
@@ -173,18 +183,11 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 		check_dberror('Unable to load replies');
 
 		$flat_messages = array();
-        if (!$limitstart) $flat_messages[] = $this_message; // Add first message
+        if ($page == 1 && $ordering == 'asc') $flat_messages[] = $this_message; // ASC: first message is the first one
         foreach ($replies as $message) $flat_messages[] = $message;
-		unset($replies);
+        if ($page == $totalpages && $ordering == 'desc') $flat_messages[] = $this_message; // DESC: first message is the last one
+        unset($replies);
         
-		$query = "SELECT COUNT(*) FROM #__fb_messages AS a WHERE a.thread='{$thread}' AND hold='0'";
-		$kunena_db->setQuery($query);
-		$total = $kunena_db->loadResult();
-		check_dberror('Unable to calculate message count.');
-
-	    $maxpages = 9 - 2; // odd number here (show - 2)
-	    $page = floor($limitstart / $limit)+1;
-	    $totalpages = ceil($total / $limit);
 	    $pagination = KunenaViewPagination($catid, $thread, $page, $totalpages, $maxpages);
 
         //Get the category name for breadcrumb

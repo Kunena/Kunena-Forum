@@ -34,6 +34,7 @@ Kunena 1.5.2RC
 
 11-June-2009 Matias
 # [#16745] Collection of small bugs/typos
+# [#16078] Remove broken Bad Words component support
 
 10-June-2009 Matias
 # [#16728] Path missing in include (kunena.parser.php)

@@ -1357,14 +1357,6 @@ $catName = $objCatInfo->name;
                         //Long Words Wrap:
                         $fb_message_txt = smile::htmlwrap($fb_message_txt, $fbConfig->wrap);
 
-                        if ($fbConfig->badwords && class_exists('Badword') && Badword::filter($fb_message_txt, $kunena_my)) {
-                           	if (method_exists('Badword','flush')) {
-                           		$fb_message_txt = Badword::flush($fb_message_txt, $kunena_my);
-                           	} else {
-                        		$fb_message_txt = _COM_A_BADWORDS_NOTICE;
-                           	}
-                        }
-
                         echo $fb_message_txt;
                         ?>
                     </td>
@@ -1961,14 +1953,6 @@ function listThreadHistory($id, $fbConfig, $kunena_db)
 
 						$fb_message_txt = CKunenaTools::prepareContent($fb_message_txt);
                         
-                        if ($fbConfig->badwords && class_exists('Badword') && Badword::filter($fb_message_txt, $kunena_my)) {
-                           	if (method_exists('Badword','flush')) {
-                           		$fb_message_txt = Badword::flush($fb_message_txt, $kunena_my);
-                           	} else {
-                        		$fb_message_txt = _COM_A_BADWORDS_NOTICE;
-                           	}
-                        }
-
                         echo $fb_message_txt;
                         ?>
                     </td>

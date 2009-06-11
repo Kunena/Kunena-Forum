@@ -252,7 +252,7 @@ class CKunenaConfig extends CKunenaConfigBase
     var $showannouncement        = 1;
     var $avataroncat             = 0;
     var $catimagepath            = 'category_images/';
-    var $numchildcolumn          = 2;
+    var $numchildcolumn          = 0;
     var $showchildcaticon        = 1;
     var $annmodid                = '62';
     var $rtewidth                = 450;
@@ -312,7 +312,6 @@ class CKunenaConfig extends CKunenaConfigBase
     var $fb_profile              = 'fb';
     var $pm_component            = 'no';
     var $cb_profile              = 0;  // Depreciated legacy CB integration - Now controlled via avatar, profile and pm settings
-    var $badwords                = 0;
     var $discussbot              = 0;
     var $userlist_rows           = 30;
     var $userlist_online         = 1;

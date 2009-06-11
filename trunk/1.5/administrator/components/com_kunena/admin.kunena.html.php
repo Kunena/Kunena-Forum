@@ -1964,23 +1964,6 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 </table>
 </fieldset>
 <fieldset>
-			<legend> <?php echo _COM_A_BADWORDS_TITLE ?></legend>
-   <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
-
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _COM_A_BADWORDS ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['badwords']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_BADWORDS_DESC ?>
-                    </td>
-                </tr>
-</table>
-</fieldset>
-<fieldset>
 			<legend> <?php echo _COM_A_MOSBOT_TITLE ?></legend>
    <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
 

@@ -725,7 +725,6 @@ function showConfig($option)
 		$imagesetlistitems[] = JHTML::_('select.option',  $val, $val);
     }
     
-	$lists['badwords'] = JHTML::_('select.genericlist', $yesno, 'cfg_badwords', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->badwords);
 	$lists['jmambot'] = JHTML::_('select.genericlist', $yesno, 'cfg_jmambot', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->jmambot);
     $lists['disemoticons'] = JHTML::_('select.genericlist', $yesno, 'cfg_disemoticons', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->disemoticons);
     $lists['template'] = JHTML::_('select.genericlist', $templatelistitems, 'cfg_template', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->template);

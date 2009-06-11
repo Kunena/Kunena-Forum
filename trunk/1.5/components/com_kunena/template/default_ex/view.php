@@ -1000,15 +1000,6 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 //$fb_message_txt = str_replace("</P><br />","</P>",$fb_message_txt);
                                 //$fb_message_txt = str_replace("<P><br />","<P>",$fb_message_txt);
 
-                                //filter bad words
-                                if ($fbConfig->badwords && class_exists('Badword') && Badword::filter($fb_message_txt, $kunena_my)) {
-                                	if (method_exists('Badword','flush')) {
-                                		$fb_message_txt = Badword::flush($fb_message_txt, $kunena_my);
-                                	} else {
-                               			$fb_message_txt = _COM_A_BADWORDS_NOTICE;
-                                	}
-                                }
-
                                 // Code tag: restore TABS as we had to 'hide' them from the rest of the logic
                                 $fb_message_txt = str_replace("__FBTAB__", "&#009;", $fb_message_txt);
 

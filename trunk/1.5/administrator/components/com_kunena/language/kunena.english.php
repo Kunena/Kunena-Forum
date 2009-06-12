@@ -23,6 +23,20 @@
 defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.5.2
+DEFINE('_KUNENA_VERSION_SVN', 'SVN Revision');
+DEFINE('_KUNENA_VERSION_DEV', 'Development Snapshot');
+DEFINE('_KUNENA_VERSION_ALPHA', 'Alpha Release');
+DEFINE('_KUNENA_VERSION_BETA', 'Beta Release');
+DEFINE('_KUNENA_VERSION_RC', 'Release Candidate');
+DEFINE('_KUNENA_VERSION_INSTALLED', 'You have installed Kunena %s (%s).');
+DEFINE('_KUNENA_VERSION_SVN_WARNING', 'Never use SVN revision to anything else than for software development!');
+DEFINE('_KUNENA_VERSION_DEV_WARNING', 'This internal release should be used only by developers and testers!');
+DEFINE('_KUNENA_VERSION_ALPHA_WARNING', 'This release should not be used in live production sites.');
+DEFINE('_KUNENA_VERSION_BETA_WARNING', 'This release is not recommended to be used in live production sites.');	
+DEFINE('_KUNENA_VERSION_RC_WARNING', 'This release may contain bugs which will be fixed for the final version.');	
+DEFINE('_KUNENA_ERROR_UPGRADE', 'Upgrading Kunena to version %s has failed!');
+DEFINE('_KUNENA_ERROR_UPGRADE_WARN', 'Your forum may be missing some important fixes and some features may be broken.');
+DEFINE('_KUNENA_ERROR_UPGRADE_AGAIN', 'Please try to upgrade again. If you cannot upgrade to Kunena %s, you can easily downgrade to last working version.');
 DEFINE('_KUNENA_PAGE', 'Page');
 DEFINE('_KUNENA_RANK_NO_ASSIGNED', 'No Rank Assigned');
 DEFINE('_KUNENA_INTEGRATION_CB_WARN_GENERAL', 'Detected problems in Community Builder integration:');

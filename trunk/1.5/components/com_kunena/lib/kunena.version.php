@@ -27,6 +27,19 @@ if (!defined('_KUNENA_LICENSE')) DEFINE('_KUNENA_LICENSE', 'License');
 
 class CKunenaVersion {
 	/**
+	* Retrieve Kunena version from manifest.xml
+	*
+	* @return string version
+	*/	
+	function versionXML()
+	{
+		if ($data = JApplicationHelper::parseXMLInstallFile(KUNENA_FILE_INSTALL)) {
+			return $data['version'];
+		}
+		return 'ERROR';
+	}
+	
+	/**
 	* Retrieve installed Kunena version as array.
 	*
 	* @return array Contains fields: version, versiondate, build, versionname
@@ -43,12 +56,18 @@ class CKunenaVersion {
 			$kunenaversion = $kunena_db->loadObject();
 			if(!$kunenaversion) {
 				$kunenaversion = new StdClass();
-				$kunenaversion->version = '1.0.x';
-				$kunenaversion->versiondate = 'NOT INSTALLED';
-				$kunenaversion->installdate = 'Not installed';
-				$kunenaversion->build = '';
-				$kunenaversion->versionname = 'Unknown';
+				$kunenaversion->version = CKunenaVersion::versionXML();
+				$kunenaversion->versiondate = 'UNKNOWN';
+				$kunenaversion->installdate = '0000-00-00';
+				$kunenaversion->build = '0000';
+				$kunenaversion->versionname = 'NOT INSTALLED';
 			}
+			$xmlversion = CKunenaVersion::versionXML();
+			if($kunenaversion->version != $xmlversion) {
+				$kunenaversion->version = CKunenaVersion::versionXML();
+				$kunenaversion->versionname = 'NOT UPGRADED';
+			}
+			$kunenaversion->version = strtoupper($kunenaversion->version);
 		}
 		return $kunenaversion;
 	}

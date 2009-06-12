@@ -31,11 +31,11 @@ $defaultlangfile = KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.english.php';
 // Now that we have the global defines we can use shortcut defines
 require_once (KUNENA_PATH_LIB .DS. 'kunena.debug.php');
 require_once (KUNENA_PATH_LIB .DS. 'kunena.config.class.php');
+require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 
 global $fbConfig, $kunenaProfile;
 
 $app =& JFactory::getApplication();
-//$app->enqueueMessage('Kunena 1.5.2 Beta Release is meant only for testing. Please use Kunena 1.0 in production servers.', 'notice');
 
 $kunena_db = JFactory::getDBO();
 
@@ -55,9 +55,36 @@ if ($kn_tables->installed() === false) {
 	$app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_2);
 	$app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_3);
 	$app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_SUPPORT.' <a href="http://www.kunena.com">www.kunena.com</a>');
+	html_Kunena::showFbFooter();
+	return;
 }
-else
+
+$kn_version = CKunenaVersion::versionArray();
+if ($kn_version->versiondate == '@fbversiondate@') {
+	$kn_version_name = _KUNENA_VERSION_SVN;	
+	$kn_version_warning = _KUNENA_VERSION_SVN_WARNING;	
+} else if ($kn_version->versionname == 'NOT UPGRADED') {
+	$app->enqueueMessage(sprintf(_KUNENA_ERROR_UPGRADE, $kn_version->version), 'notice');
+	$app->enqueueMessage(_KUNENA_ERROR_UPGRADE_WARN);
+	$app->enqueueMessage(sprintf(_KUNENA_ERROR_UPGRADE_AGAIN, $kn_version->version));
+	$app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_SUPPORT.' <a href="http://www.kunena.com">www.kunena.com</a>');
+} else if (strpos($kn_version->version, 'RC') !== false) {
+	$kn_version_name = _KUNENA_VERSION_RC;	
+	$kn_version_warning = _KUNENA_VERSION_RC_WARNING;	
+} else if (strpos($kn_version->version, 'BETA') !== false) {
+	$kn_version_name = _KUNENA_VERSION_BETA;	
+	$kn_version_warning = _KUNENA_VERSION_BETA_WARNING;	
+} else if (strpos($kn_version->version, 'ALPHA') !== false) {
+	$kn_version_name = _KUNENA_VERSION_ALPHA;	
+	$kn_version_warning = _KUNENA_VERSION_ALPHA_WARNING;	
+} else if (strpos($kn_version->version, 'DEV') !== false) {
+	$kn_version_name = _KUNENA_VERSION_DEV;	
+	$kn_version_warning = _KUNENA_VERSION_DEV_WARNING;	
+}
+if (!empty($kn_version_warning))
 {
+	$app->enqueueMessage(sprintf(_KUNENA_VERSION_INSTALLED, $kn_version->version, $kn_version_name).' '.$kn_version_warning, 'notice');	
+}
 
 $cid = JRequest::getVar('cid', array ( 0 ));
 
@@ -334,8 +361,6 @@ if (is_object($kunenaProfile))
 	$kunenaProfile->enqueueErrors();
 	//$kunenaProfile->close();
 }
-
-} // ENDIF: is installed
 
 html_Kunena::showFbFooter();
 

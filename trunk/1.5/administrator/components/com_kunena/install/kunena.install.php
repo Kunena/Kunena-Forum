@@ -24,8 +24,31 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 // Help get past php timeouts if we made it that far
 // Joomla 1.5 installer can be very slow and this helps avoid timeouts
-set_time_limit(300);
-ini_set("memory_limit", "32M");
+@set_time_limit(300);
+$kn_maxTime = @ini_get('max_execution_time');
+
+$maxMem = trim(@ini_get('memory_limit'));
+if ($maxMem) {
+	$unit = strtolower($maxMem{strlen($maxMem) - 1});
+	switch($unit) {
+		case 'g':
+			$maxMem	*=	1024;
+		case 'm':
+			$maxMem	*=	1024;
+		case 'k':
+			$maxMem	*=	1024;
+	}
+	if ($maxMem < 16000000) {
+		@ini_set('memory_limit', '16M');
+	}
+	if ($maxMem < 32000000) {
+		@ini_set('memory_limit', '32M');
+	}
+	if ($maxMem < 48000000) {
+		@ini_set('memory_limit', '48M');
+	}
+}
+ignore_user_abort(true);
 
 // Kunena wide defines
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');

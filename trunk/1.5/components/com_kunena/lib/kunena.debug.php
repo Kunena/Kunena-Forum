@@ -79,7 +79,7 @@ function check_dbwarning($text='')
 function trigger_dbwarning($text = '')
 {
 	$kunena_db = &JFactory::getDBO();
-	trigger_error($text.'\n'.$kunena_db->stderr(true), E_USER_WARNING);
+	trigger_error($text.'<br />'.$kunena_db->stderr(true), E_USER_WARNING);
 }
 
 // Little helper to created a formated output of variables

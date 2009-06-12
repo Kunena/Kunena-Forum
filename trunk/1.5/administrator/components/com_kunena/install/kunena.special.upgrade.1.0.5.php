@@ -23,15 +23,16 @@ defined( '_JEXEC' ) or die('Restricted access');
 // Most or all sql statements should be covered within comupgrade.xml
 $kunena_db =& JFactory::getDBO();
 
+$root = strtr(JPATH_ROOT, "\\", "/");
 // now lets do some checks and upgrades to 1.0.2 version of attachment table
-$kunena_db->setQuery("select from #__fb_attachments where filelocation like '%" . JPATH_ROOT . "%'");
+$kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_attachments WHERE filelocation LIKE '%com_fireboard/uploaded%'", 0, 1);
 
 // if >0 then it means we are on fb version below 1.0.2
 $is_101_version = $kunena_db->loadResult();
 
 if ($is_101_version) {
     // now do the upgrade
-    $kunena_db->setQuery("update #__fb_attachments set filelocation = replace(filelocation,'" . JPATH_ROOT . "/components/com_fireboard/uploaded','/images/fbfiles');");
+    $kunena_db->setQuery("update #__fb_attachments set filelocation = replace(filelocation,'{$root}/components/com_fireboard/uploaded','/images/fbfiles');");
     if ($kunena_db->query()) print '<li class="fbscslist">Attachment table successfully upgraded to 1.0.2+ version schema!</li>';
     else
     {

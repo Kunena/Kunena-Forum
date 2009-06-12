@@ -17,6 +17,9 @@
 // ensure this file is being included by a parent file
 defined( '_JEXEC' ) or die('Restricted access');
 
+// Kunena wide defines
+require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
+
 include_once (KUNENA_PATH_LIB .DS. 'kunena.debug.php');
 
 class fx_Upgrade {
@@ -98,7 +101,7 @@ class fx_Upgrade {
 
 	function insertDummyVersion()
 	{
-		$this->insertVersionData('1.0.0','20070101',0,'Placeholder for unknown prior version');
+		$this->insertVersionData('0.0.1','2007-01-01',0,'Placeholder for unknown prior version');
 	}
 
 	function backupVersionTable()
@@ -327,14 +330,20 @@ class fx_Upgrade {
 					$include = $this->_upgradeDir .DS . $fileName;
 					$fileCheck = file_exists($include);
 					if($fileCheck) {
+						ob_start();
 						require( $include );
 						$img = "tick.png";
-						$this->_error = "";
-					} else {
-						$img = "publish_x.png";
+						$this->_error = ob_get_contents();
+						ob_end_clean();
+					}
+					else {
 						$this->_error = "<font color=\"red\">File not found!</font>";
+					}
+					if (!$fileCheck || $this->_error) {
+						$img = "publish_x.png";
 						$this->_return = false;
 					}
+					
 					if(!$this->silent) {
 						?>
 						<tr>

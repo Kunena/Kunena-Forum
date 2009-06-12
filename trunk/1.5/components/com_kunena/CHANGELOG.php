@@ -35,6 +35,7 @@ Kunena 1.5.2RC
 12-June-2009 Matias
 # [#16120] Detect failed upgrades
 ^ [#16782] Add warning to the backend if installed version is SVN, DEV, APLHA, BETA, RC
+# [#16790] Make installation more robust when there are errors
 
 11-June-2009 Matias
 # [#16745] Collection of small bugs/typos

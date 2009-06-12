@@ -60,7 +60,7 @@ if ($kn_tables->installed() === false) {
 }
 
 $kn_version = CKunenaVersion::versionArray();
-if ($kn_version->versiondate == '@fbversiondate@') {
+if ($kn_version->versionname == '@fbversionname@') {
 	$kn_version_name = _KUNENA_VERSION_SVN;	
 	$kn_version_warning = _KUNENA_VERSION_SVN_WARNING;	
 } else if ($kn_version->versionname == 'NOT UPGRADED') {

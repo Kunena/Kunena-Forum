@@ -32,11 +32,11 @@
 <project name="Kunena" default="dist" basedir=".">
 	<description>Ant Build File for Kunena</description>
 	<property file="kunena.build.config.ini" />
-	<property name="fb.frontend" value="${project_dir}/components/com_kunena/" />
-	<property name="fb.frontend.list" value="" />
-	<property name="fb.backend" value="${project_dir}/administrator/components/com_kunena/" />
-	<property name="fb.backend.list" value="" />
-	<property name="fb.customfrontend" value="${custom_dir}/components/com_kunena/" />
+	<property name="kunena.frontend" value="${project_dir}/components/com_kunena/" />
+	<property name="kunena.frontend.list" value="" />
+	<property name="kunena.backend" value="${project_dir}/administrator/components/com_kunena/" />
+	<property name="kunena.backend.list" value="" />
+	<property name="kunena.customfrontend" value="${custom_dir}/components/com_kunena/" />
 
 	<target name="dist" depends="mkdir,archive,copy,init,package,zip,gzip,bz2,customcopy,custompackage,customzip,customgzip,custombz2,info,cleanup" />
 
@@ -56,10 +56,10 @@
 
 	<target name="copy" depends="mkdir">
 		<copy todir="${tmp_dir}">
-			<fileset dir="${fb.frontend}" />
+			<fileset dir="${kunena.frontend}" />
 		</copy>
 		<copy todir="${tmp_dir}">
-			<fileset dir="${fb.backend}" />
+			<fileset dir="${kunena.backend}" />
 		</copy>
 	</target>
 
@@ -119,17 +119,17 @@
 		<condition property="version.date" value="${str.datefmt}" else="">
 			<istrue value="${cfg.adddate}" />
 		</condition>
-		<filter token="fbversion" value="${xml.version}" />
-		<filter token="fbversiondate" value="${version.date}" />		
-		<filter token="fbbuild" value="${build.number}" />		
-		<filter token="fbversionname" value="${xml.versionname}" />		
+		<filter token="kunenaversion" value="${xml.version}" />
+		<filter token="kunenaversiondate" value="${version.date}" />		
+		<filter token="kunenaversionbuild" value="${build.number}" />		
+		<filter token="kunenaversionname" value="${xml.versionname}" />		
 
 		<script language="javascript" manager="bsf">
 			<![CDATA[
 		    // Create file list for Joomla xml install file
 		    importClass(java.io.File);
 		
-		    frontend = project.getProperty("fb.frontend");
+		    frontend = project.getProperty("kunena.frontend");
 			fs = project.createDataType("fileset");
 		    fs.setDir( new File(frontend) );
 
@@ -143,9 +143,9 @@
 			{
 				filelist += "\n\r\t\t<filename>" + srcFiles[i] + "</filename>";
 			}
-			project.setProperty("fb.frontend.list", filelist);
+			project.setProperty("kunena.frontend.list", filelist);
 
-		    backend = project.getProperty("fb.backend");
+		    backend = project.getProperty("kunena.backend");
 			fs = project.createDataType("fileset");
 		    fs.setDir( new File(backend) );
 
@@ -159,14 +159,15 @@
 			{
 				filelist += "\n\r\t\t<filename>" + srcFiles[i] + "</filename>";
 			}
-			project.setProperty("fb.backend.list", filelist);
+			project.setProperty("kunena.backend.list", filelist);
 			]]>
 		</script>
-		<filter token="fbfrontendlist" value="${fb.frontend.list}" />		
-		<filter token="fbbackendlist" value="${fb.backend.list}" />		
+		<filter token="kunenafrontendlist" value="${kunena.frontend.list}" />		
+		<filter token="kunenabackendlist" value="${kunena.backend.list}" />		
 		<copy file="${project_dir}/administrator/components/com_kunena/manifest.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/administrator/components/com_kunena/install/kunena.install.upgrade.xml" todir="${tmp_dir}/install" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/components/com_kunena/lib/kunena.config.class.php" todir="${tmp_dir}/lib" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/components/com_kunena/lib/kunena.defines.php" todir="${tmp_dir}/lib" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/components/com_kunena/lib/kunena.rss.php" todir="${tmp_dir}/lib" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/README.txt" todir="${tmp_dir}" overwrite="true" filtering="true" />
 	</target>
@@ -197,17 +198,17 @@
 		<condition property="version.date" value="${str.datefmt}" else="">
 			<istrue value="${cfg.adddate}" />
 		</condition>
-		<filter token="fbversion" value="${xml.version}" />
-		<filter token="fbversiondate" value="${version.date}" />		
-		<filter token="fbbuild" value="${build.number}" />		
-		<filter token="fbversionname" value="${xml.versionname}" />		
+		<filter token="kunenaversion" value="${xml.version}" />
+		<filter token="kunenaversiondate" value="${version.date}" />		
+		<filter token="kunenaversionbuild" value="${build.number}" />		
+		<filter token="kunenaversionname" value="${xml.versionname}" />		
 
 		<script language="javascript" manager="bsf">
 			<![CDATA[
 		    // Create file list for Joomla xml install file
 		    importClass(java.io.File);
 		
-		    frontend = project.getProperty("fb.frontend");
+		    frontend = project.getProperty("kunena.frontend");
 			fs = project.createDataType("fileset");
 		    fs.setDir( new File(frontend) );
 
@@ -226,7 +227,7 @@
 			}
 			
 			// Now do it again for the custom additions/overrides
-			frontend = project.getProperty("fb.customfrontend");
+			frontend = project.getProperty("kunena.customfrontend");
 			fs = project.createDataType("fileset");
 		    fs.setDir( new File(frontend) );
 
@@ -242,9 +243,9 @@
 				filelist += "\n\r\t\t<filename>" + srcFiles[i] + "</filename>";
 			}
 			
-			project.setProperty("fb.frontend.list", filelist);
+			project.setProperty("kunena.frontend.list", filelist);
 
-		    backend = project.getProperty("fb.backend");
+		    backend = project.getProperty("kunena.backend");
 			fs = project.createDataType("fileset");
 		    fs.setDir( new File(backend) );
 
@@ -259,11 +260,11 @@
 				filelist += "\n\r\t\t<filename>" + srcFiles[i] + "</filename>";
 			}
 
-			project.setProperty("fb.backend.list", filelist);
+			project.setProperty("kunena.backend.list", filelist);
 			]]>
 		</script>
-		<filter token="fbfrontendlist" value="${fb.frontend.list}" />		
-		<filter token="fbbackendlist" value="${fb.backend.list}" />		
+		<filter token="kunenafrontendlist" value="${kunena.frontend.list}" />		
+		<filter token="kunenabackendlist" value="${kunena.backend.list}" />		
 		<copy file="${project_dir}/administrator/components/com_kunena/manifest.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/administrator/components/com_kunena/install/kunena.install.upgrade.xml" todir="${tmp_dir}/install" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/components/com_kunena/lib/kunena.config.class.php" todir="${tmp_dir}/lib" overwrite="true" filtering="true" />

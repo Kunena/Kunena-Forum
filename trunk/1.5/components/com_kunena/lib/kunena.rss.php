@@ -21,6 +21,9 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
+// Kunena wide defines
+require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
+
 global $kunena_my;
 
 $app =& JFactory::getApplication();
@@ -133,14 +136,14 @@ $rows = $kunena_db->loadObjectList();
 header ('Content-type: application/xml');
 echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 ?>
-<!-- generator="Kunena @fbversion@"> -->
+<!-- generator="Kunena @kunenaversion@"> -->
 <rss version="0.91">
     <channel>
         <title><?php echo stripslashes(kunena_htmlspecialchars($app->getCfg('sitename'))); ?> - Forum</title>
         <description>Kunena Site Syndication</description>
         <link><?php echo JURI::root(); ?></link>
         <lastBuildDate><?php echo date("r");?></lastBuildDate>
-        <generator>Kunena @fbversion@</generator>
+        <generator>Kunena @kunenaversion@</generator>
         <image>
 	        <url><?php echo KUNENA_URLEMOTIONSPATH; ?>rss.gif</url>
 	        <title>Powered by Kunena</title>

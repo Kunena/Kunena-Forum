@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <comupgrade version="1.0">
-	<install version="@fbversion@" versiondate="@fbversiondate@" build="@fbbuild@" versionname="@fbversionname@">
+	<install version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
 		<query>CREATE TABLE IF NOT EXISTS `#__fb_announcement` (
                     `id` int(3) NOT NULL auto_increment,
                     `title` tinytext NOT NULL,
@@ -338,7 +338,7 @@
 		<version version="1.0.10" versiondate="2009-05-21" build="1344" versionname="Parier!">
 			<query mode="silenterror">UPDATE `#__fb_config` SET `jmambot`='0'</query>
 		</version>
-		<version version="@fbversion@" versiondate="@fbversiondate@" build="@fbbuild@" versionname="@fbversionname@">
+		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
 		</version>
 	</upgrade>
 </comupgrade>

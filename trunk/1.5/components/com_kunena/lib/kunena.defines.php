@@ -8,6 +8,12 @@
 * @link http://www.kunena.com
 **/
 
+// Version information
+define ('KUNENA_VERSION', '@kunenaversion@');
+define ('KUNENA_VERSION_DATE', '@kunenaversiondate@');
+define ('KUNENA_VERSION_NAME', '@kunenaversionname@');
+define ('KUNENA_VERSION_BUILD', '@kunenaversionbuild@');
+
 // Default values
 define('KUNENA_COMPONENT_NAME', 'com_kunena');
 define('KUNENA_LANGUAGE_DEFAULT', 'english');

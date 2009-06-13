@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.5.2RC
 
+13-June-2009 fxstein
+# [#16793] Fix regression in manifest.xml that prevents successful installs
+
 12-June-2009 Matias
 # [#16120] Detect failed upgrades
 ^ [#16782] Add warning to the backend if installed version is SVN, DEV, APLHA, BETA, RC
@@ -84,7 +87,7 @@ Kunena 1.5.2RC
 # [#16667] Administrator: Editing CSS does not work in Windows
 # [#16668] Small fixes for CB integration
 # [#16669] Internal: Spoiler tag broken
- 
+
 5-June-2009 Matias
 + [#16633] Allow many attachments in one message (no GUI yet, use edit instead)
 # [#16636] Fix attachments to use Joomla! 1.5 API (add new CKunenaFile class)
@@ -97,7 +100,7 @@ Kunena 1.5.2RC
 # [#16640] Fix broken redirects
 
 2-June-2009 Matias
-# [#16567] Warn/detect possible problems in Community Builder integration 
+# [#16567] Warn/detect possible problems in Community Builder integration
 # [#16588] Avatar upload fails in FTP mode with strict permissions
 # [#16590] If imageprocessor=none, large avatar can break layout
 # [#16591] Configuration options for allowing avatars and upload do not work

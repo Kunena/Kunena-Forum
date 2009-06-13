@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <install type="component" version="1.5.0" method="upgrade">
-	<name>Kunena Forum</name>
+	<name>Kunena</name>
 	<version>1.5.2rc</version>
 	<versionname>話すため</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>

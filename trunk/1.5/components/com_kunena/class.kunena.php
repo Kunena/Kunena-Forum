@@ -61,7 +61,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     	// Only proceed if jomSocial is really installed
 	    if ( file_exists( KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/core.php' ) )
 	    {
-	        $kunena_db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_community' AND published='1'");
+	        $kunena_db->setQuery("SELECT id FROM #__menu WHERE link LIKE 'index.php?option=com_community%' AND published='1' LIMIT 1");
 	        $JOMSOCIAL_Itemid = $kunena_db->loadResult();
 	        	check_dberror('Unable to load jomSocial item id');
 
@@ -788,7 +788,7 @@ $row, & $params, 0));
 		}
 		return $content;
 	}
-        
+
 	function getAllowedForums($uid = 0, $gid = 0, &$kunena_acl) {
         	$kunena_db = &JFactory::getDBO();
 

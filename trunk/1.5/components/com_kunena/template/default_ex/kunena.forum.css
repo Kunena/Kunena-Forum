@@ -577,6 +577,9 @@
 #Kunena div.fb_thead-desc {
 	clear: left;
 }
+#Kunena div.fb_thead-moderators {
+	clear: left;
+}
 #Kunena div.fb_thead-child {
 	border-top: 1px dotted #D4C9AD;
 	margin-top: 4px;

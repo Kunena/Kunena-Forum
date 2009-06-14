@@ -33,6 +33,7 @@ Legend:
 Kunena 1.5.2RC
 
 13-June-2009 fxstein
++ [#16803] Update credits page
 ^ [#16501] Allow for menu link variations for JomSocial to get correct item id
 # [#16793] Fix regression in manifest.xml that prevents successful installs
 ^ [#16260] Version info updated: New version name: Hable (Spanish for speak)

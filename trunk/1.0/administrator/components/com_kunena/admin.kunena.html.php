@@ -2454,7 +2454,6 @@ require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/
 
     function showCss($file, $option)
     {
-        $file = stripslashes($file);
         $f = fopen($file, "r");
         $content = fread($f, filesize($file));
         $content = kunena_htmlspecialchars($content);

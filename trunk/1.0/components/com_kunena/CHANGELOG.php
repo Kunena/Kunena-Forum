@@ -35,6 +35,11 @@ Kunena 1.0.11
 6-June-2009 Matias
 # [#16642] Forum jump does not work if you go to Board Categories
 # [#16645] Broken BBCode editor in My Profile (use simple version of Rolands editor instead)
+# [#16662] Editor: Opening Boardcode link to the same window causes written message to disappear
+# [#16663] Fix broken kunenaforum.min.js (used in CB integration)
+# [#16526] Search: mb_substr() Unknown encoding warning, message bodies missing from results
+# [#16666] Search doesn't work reliably for registered only+ forums
+# [#16667] Administrator: Editing CSS does not work in Windows
  
 5-June-2009 Matias
 # [#16637] Administrator: Defaut_red/green/gray should not be shown in Image Set list as they contain no images

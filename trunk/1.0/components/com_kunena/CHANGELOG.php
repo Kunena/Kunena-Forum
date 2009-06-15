@@ -37,6 +37,8 @@ Kunena 1.0.11
 # [#16078] Remove broken Bad Words component support
 ^ [#16475] Upgrade jQuery to version 1.3.2
 # [#16748] Add page number in meta description (For better Google results)
+# [#16757] Forum stats: Popular 5 Threads shows threads where you don't have access to
+# [#16775] Use better URL detection in BBCode parser
 
 10-June-2009 Matias
 # [#16728] Path missing in include (kunena.parser.php)

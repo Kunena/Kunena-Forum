@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
-// 1.5.2RC
+// 1.5.2
 DEFINE('_KUNENA_INTEGRATION_CB_WARN_GENERAL', 'Detected problems in Community Builder integration:');
 DEFINE('_KUNENA_INTEGRATION_CB_WARN_INSTALL', 'CB integration works only if you have Community Builder version %s or higher installed.');
 DEFINE('_KUNENA_INTEGRATION_CB_WARN_PUBLISH', 'CB Profile integration works only if Community Builder User profile has been published.');

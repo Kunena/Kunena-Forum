@@ -32,6 +32,13 @@ Legend:
 
 Kunena 1.0.11
 
+11-June-2009 Matias
+# [#16745] Collection of small bugs/typos
+
+10-June-2009 Matias
+# [#16728] Path missing in include (kunena.parser.php)
+# [#16670] Category / Subcategory layout is slightly broken in IE
+
 9-June-2009 Matias
 # [#16722] User Profile shows messages in categories where user has no permissions
 # [#16724] Fatal database error in default_ex/listcat.php:269

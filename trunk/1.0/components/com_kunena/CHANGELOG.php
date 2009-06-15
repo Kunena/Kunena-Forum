@@ -34,6 +34,7 @@ Kunena 1.0.11
 
 6-June-2009 Matias
 # [#16642] Forum jump does not work if you go to Board Categories
+# [#16645] Broken BBCode editor in My Profile (use simple version of Rolands editor instead)
  
 5-June-2009 Matias
 # [#16637] Administrator: Defaut_red/green/gray should not be shown in Image Set list as they contain no images

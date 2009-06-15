@@ -57,7 +57,7 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
 	if (!empty($reason) && !empty($text))
 	{
         
-    $kunena_db->setQuery("SELECT a.*, b.id, b.message AS msg_text FROM #__fb_messages AS a"
+    $kunena_db->setQuery("SELECT a.*, b.mesid, b.message AS msg_text FROM #__fb_messages AS a"
     . " LEFT JOIN #__fb_messages_text AS b ON b.mesid = a.id"
     . " WHERE a.id='{$id}'");
 
@@ -76,7 +76,9 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
         $subject = "[".stripslashes($fbConfig->board_title)." "._GEN_FORUM."] "._KUNENA_REPORT_MSG . ": " . stripslashes($row->subject);
         }
 
-    $msglink = str_replace('&amp;', '&', JRoute::_(KUNENA_LIVEURLREL . "&amp;func=view&amp;catid=" . $row->catid . "&amp;id=" . $row->id) . '#' . $row->id);
+	jimport('joomla.environment.uri');
+	$uri =& JURI::getInstance(JURI::base());
+	$msglink = $uri->toString(array('scheme', 'host', 'port')) . str_replace('&amp;', '&', JRoute::_(KUNENA_LIVEURLREL . "&amp;func=view&amp;catid=" . $row->catid . "&amp;id=" . $row->id) . '#' . $row->id);
 
     $message  = "" . _KUNENA_REPORT_RSENDER . " " . $sender;
     $message .= "\n";

@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.5.3
 
+15-June-2009 Matias
+# [#16811] Kunena 1.5.1b: Broken URL in emails (subscriptions, moderators, report message)
+
 14-June-2009 fxstein
 ^ [#16807] Update version info to reflect 1.5.3 stable
 

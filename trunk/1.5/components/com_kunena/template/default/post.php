@@ -312,7 +312,9 @@ $catName = $objCatInfo->name;
                                         	check_dberror("Unable to load messages.");
                                         $threadPages = ceil($result->totalmessages / $fbConfig->messages_per_page);
                                         //construct a useable URL (for plaintext - so no &amp; encoding!)
-                                        $LastPostUrl = str_replace('&amp;', '&', CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $querythread, $threadPages, $fbConfig->messages_per_page, $pid));
+                                        jimport('joomla.environment.uri');
+                                        $uri =& JURI::getInstance(JURI::base());
+                                        $LastPostUrl = $uri->toString(array('scheme', 'host', 'port')) . str_replace('&amp;', '&', CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $querythread, $threadPages, $fbConfig->messages_per_page, $pid));
 
                                         //Now manage the subscriptions (only if subscriptions are allowed)
                                         if ($fbConfig->allowsubscriptions == 1 && $holdPost == 0)

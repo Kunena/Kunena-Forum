@@ -1003,13 +1003,13 @@ function fbTreeRecurse( $id, $indent, $list, &$children, $maxlevel=9999, $level=
             }
 
             if ( $v->parent == 0 ) {
-                $txt     = $v->name;
+                $txt     = kunena_htmlspecialchars(stripslashes($v->name));
             } else {
-                $txt     = $pre . $v->name;
+                $txt     = $pre . kunena_htmlspecialchars(stripslashes($v->name));
             }
             $pt = $v->parent;
             $list[$id] = $v;
-            $list[$id]->treename = stripslashes("$indent$txt");
+            $list[$id]->treename = $indent . $txt;
             $list[$id]->children = count( @$children[$id] );
 
             $list = fbTreeRecurse( $id, $indent . $spacer, $list, $children, $maxlevel, $level+1, $type );
@@ -1027,12 +1027,12 @@ function JJ_categoryParentList($catid, $action, $options = array ()) {
     foreach ($list as $item) {
         if ($this_treename) {
             if ($item->id != $catid && strpos($item->treename, $this_treename) === false) {
-                $options[] = mosHTML::makeOption($item->id, kunena_htmlspecialchars($item->treename));
+                $options[] = mosHTML::makeOption($item->id, $item->treename);
                 }
             }
         else {
             if ($item->id != $catid) {
-                $options[] = mosHTML::makeOption($item->id, kunena_htmlspecialchars($item->treename));
+                $options[] = mosHTML::makeOption($item->id, $item->treename);
                 }
             else {
                 $this_treename = "$item->treename/";

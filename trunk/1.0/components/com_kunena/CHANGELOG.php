@@ -30,6 +30,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.0.11
+
+2-June-2009 Matias
+# [#16567] Warn/detect possible problems in Community Builder integration 
+
 Kunena 1.0.10
 
 21-May-2009 fxstein

@@ -13,7 +13,7 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
 *
-* Based on Joomlaboard Componentsho
+* Based on Joomlaboard Component
 * @copyright (C) 2000 - 2004 TSMF / Jan de Graaff / All Rights Reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @author TSMF & Jan de Graaff
@@ -34,18 +34,6 @@ defined ('_VALID_MOS') or die('Kunena Forum cannot be run without Joomla!');
 error_reporting (E_ALL ^ E_NOTICE);
 
 global $mainframe;
-include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.debug.php");
-
-// get Kunenas configuration params in
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.config.class.php");
-
-global $fbConfig;
-$fbConfig =& CKunenaConfig::getInstance();
-$fbConfig->load();
-
-// Class structure should be used after this and all the common task should be moved to this class
-require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/class.kunena.php");
-require_once ($mainframe->getPath('admin_html'));
 
 //Get right Language file
 if (file_exists($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.' . $mainframe->getCfg('lang') . '.php')) {
@@ -54,6 +42,17 @@ if (file_exists($mainframe->getCfg('absolute_path') . '/administrator/components
 else {
     include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.english.php');
 }
+
+require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.debug.php");
+require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.config.class.php");
+
+global $fbConfig, $kunenaProfile;
+$fbConfig =& CKunenaConfig::getInstance();
+$fbConfig->load();
+
+// Class structure should be used after this and all the common task should be moved to this class
+require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/class.kunena.php");
+require_once ($mainframe->getPath('admin_html'));
 
 $kn_tables = CKunenaTables::getInstance();
 if ($kn_tables->installed() === false) {
@@ -74,12 +73,19 @@ if ($kn_tables->installed() === false) {
 			.'<p>'._KUNENA_ERROR_INCOMPLETE_1.'</p>'
 			.'<p>'._KUNENA_ERROR_INCOMPLETE_2.'</p>'
 			.'<p>'._KUNENA_ERROR_INCOMPLETE_3.'</p>'
-			.'<p>'._KUNENA_ERROR_INCOMPLETE_SUPPORT.' <a href="http://www.kunena.com">www.kunena.com</a></p></div>';
+			.'<p>'._KUNENA_ERROR_INCOMPLETE_SUPPORT.' <a href="http://www.kunena.com">www.kunena.com</a></p></div><br />';
 	}
 }
 else
 {
 
+// Detect errors in CB integration
+if (is_object($kunenaProfile)) 
+{
+	$kunenaProfile->enqueueErrors();
+	//$kunenaProfile->close();
+}
+	
 $cid = mosGetParam($_REQUEST, 'cid', array ( 0 ));
 
 if (!is_array($cid)) {

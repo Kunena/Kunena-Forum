@@ -413,7 +413,7 @@ class HTML_userlist_content
                                 }
                                 else if ($fbConfig->avatar_src == "cb")
                                 {
-                                	$kunenaProfile = CKunenaCBProfile::getInstance();
+                                	$kunenaProfile =& CKunenaCBProfile::getInstance();
 									$uslavatar = $kunenaProfile->showAvatar($ulrow->id);
                                 }
                                 else

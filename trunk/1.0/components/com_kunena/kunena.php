@@ -99,7 +99,7 @@ require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/
 // Get CKunanaUser and CKunenaUsers
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.user.class.php");
 
-global $kunenaProfile, $fbConfig;
+global $fbConfig, $kunenaProfile;
 
 // Load configuration and personal settings for current user
 $fbConfig =& CKunenaConfig::getInstance();
@@ -241,20 +241,14 @@ if ($func == "getpreview") {
     die();
 }
 
-if (is_object($kunenaProfile))
-{
-	$params = array();
-	$kunenaProfile->trigger('onStart', &$params);
-}
-
 // inline jscript with image location
 $mainframe->addCustomHeadTag('<script type="text/javascript">jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";</script>');
 
-global $_CB_framework;
-if (is_object($_CB_framework)) 
+if (is_object($kunenaProfile) && $kunenaProfile->useProfileIntegration()) 
 {
 	if (defined('KUNENA_COREJSURL'))
 	{
+		global $_CB_framework;
 		$_CB_framework->addJQueryPlugin( 'kunena_tmpl', KUNENA_COREJSPATH );
 		$_CB_framework->outputCbJQuery( '', 'kunena_tmpl' );
 	}
@@ -940,11 +934,7 @@ require_once (KUNENA_ABSSOURCESPATH . 'kunena.session.class.php');
     $obj_KUNENA_tmpl->displayParsedTemplate('fb-footer');
 } //else
 
-if (is_object($kunenaProfile))
-{
-	$params = array();
-	$kunenaProfile->trigger('onEnd', &$params);
-}
+if (is_object($kunenaProfile)) $kunenaProfile->close();
 
 // Just for debugging and performance analysis
 $mtime = explode(" ", microtime());

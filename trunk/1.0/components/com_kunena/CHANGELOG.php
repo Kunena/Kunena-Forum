@@ -34,6 +34,7 @@ Kunena 1.0.11
 
 7-June-2009 Matias
 # [#16671] Board Categories have &nbsp; showing in them
+# [#16677] BBCode parser bug crashes Kunena
 
 6-June-2009 Matias
 # [#16642] Forum jump does not work if you go to Board Categories

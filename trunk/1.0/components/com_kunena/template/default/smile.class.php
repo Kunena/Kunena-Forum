@@ -70,7 +70,7 @@ class smile
         $parser = new TagParser();
         $interpreter = new KunenaBBCodeInterpreter($parser);
         $task = $interpreter->NewTask();
-        $task->SetText($fb_message_txt.' ');
+        $task->SetText($fb_message_txt.' _EOP_');
         $task->dry = FALSE;
         $task->drop_errtag = FALSE;
 	    $task->history = $history;
@@ -80,7 +80,7 @@ class smile
 	    // Show Parse errors for debug
 	    //$task->ErrorShow();
 
-        return $task->text;
+        return substr($task->text,0,-6);
     }
     /**
     * function to retrieve the emoticons out of the database

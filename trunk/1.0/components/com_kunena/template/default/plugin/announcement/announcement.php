@@ -250,7 +250,7 @@ if ($is_editor) {
             die ("Hacking attempt");
             }
 
-        mosCommonHTML::loadCalendar();
+        $calendar = mosCommonHTML::loadCalendar();
             ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
@@ -300,9 +300,7 @@ if ($is_editor) {
 
                     <strong><?php echo _ANN_DATE; ?>:</strong>
 
-                    <input type = "text" name = "created" id = "anncreated" size = "40" maxlength = "150" value = "<?php echo (!empty($anncreated)?$anncreated:'') ;?>"/>
-
-                    <input type = "reset" class = "button" value = "..." onclick = "return showCalendar('anncreated', '%Y-%m-%d');"/>
+					<?php echo $calendar; ?>
 
                     <br/>
 

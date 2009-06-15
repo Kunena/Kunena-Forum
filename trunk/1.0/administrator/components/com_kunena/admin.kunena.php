@@ -767,8 +767,6 @@ function showConfig($option)
     $lists['enablerss'] = mosHTML::selectList($yesno, 'cfg_enablerss', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enablerss);
     $lists['poststats'] = mosHTML::selectList($yesno, 'cfg_poststats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->poststats);
     $lists['showkarma'] = mosHTML::selectList($yesno, 'cfg_showkarma', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showkarma);
-// Depreciated old CB integration setting - now controlled via avatar, profile and pm settings
-//    $lists['cb_profile'] = mosHTML::selectList($yesno, 'cfg_cb_profile', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->cb_profile);
     $lists['enablepdf'] = mosHTML::selectList($yesno, 'cfg_enablepdf', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enablepdf);
     $lists['enablerulespage'] = mosHTML::selectList($yesno, 'cfg_enablerulespage', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enablerulespage);
 	$lists['rules_infb'] = mosHTML::selectList($yesno, 'cfg_rules_infb', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rules_infb);

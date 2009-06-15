@@ -70,7 +70,7 @@ function fb_has_moderator_permission(&$database,&$obj_fb_cat,$int_fb_uid,$bool_f
 	return 0; // Anonymous never has moderator permission
     if ($bool_fb_isadmin)
         return 1;
-    if ($obj_fb_cat!='' && $obj_fb_cat->getModerated()) {
+    if (is_object($obj_fb_cat) && $obj_fb_cat->getModerated()) {
         $database->setQuery('SELECT userid FROM #__fb_moderation WHERE catid='.$obj_fb_cat->getId().' AND userid='.$int_fb_uid);
         
         if ($database->loadResult()!='')

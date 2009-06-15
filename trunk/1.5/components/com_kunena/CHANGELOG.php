@@ -33,6 +33,7 @@ Legend:
 Kunena 1.5.3
 
 15-June-2009 Matias
+# [#16812] Kunena 1.5.2RC: SEF: Broken anchor links when viewing messages
 # [#16811] Kunena 1.5.1b: Broken URL in emails (subscriptions, moderators, report message)
 
 14-June-2009 fxstein

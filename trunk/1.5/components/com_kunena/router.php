@@ -38,9 +38,9 @@ function KunenaBuildRoute(&$query)
 	$catfound = false;
 	if(isset($query['catid']))
 	{
-		$catfound = true;
 		if($query['catid'] != (int) 0)
 		{
+			$catfound = true;
 			$quesql = 'SELECT name, id FROM #__fb_categories WHERE id='.(int) $query['catid'];
 			$db->setQuery($quesql);
 			$name = $db->loadResult();

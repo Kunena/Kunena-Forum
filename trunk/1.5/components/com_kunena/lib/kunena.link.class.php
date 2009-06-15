@@ -131,7 +131,8 @@ class CKunenaLink
 
     function GetSamePageAnkerLink($anker, $name, $rel='nofollow')
     {
-        return CKunenaLink::GetSefHrefLink(htmlspecialchars(JRoute::_('index.php?'.$_SERVER['QUERY_STRING'])), $name, '', $rel, '', $anker);
+    	jimport('joomla.environment.request');
+        return CKunenaLink::GetSefHrefLink(JRequest::getURI(), $name, '', $rel, '', $anker);
     }
 
     function GetReportMessageLink($catid, $id, $name, $rel='nofollow')

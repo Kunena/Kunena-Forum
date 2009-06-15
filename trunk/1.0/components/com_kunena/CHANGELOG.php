@@ -32,6 +32,10 @@ Legend:
 
 Kunena 1.0.11
 
+9-June-2009 Matias
+# [#16722] User Profile shows messages in categories where user has no permissions
+# [#16724] Fatal database error in default_ex/listcat.php:269
+
 7-June-2009 Matias
 # [#16671] Board Categories have &nbsp; showing in them
 # [#16677] BBCode parser bug crashes Kunena

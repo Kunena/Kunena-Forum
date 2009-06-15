@@ -19,6 +19,8 @@
 * @author TSMF & Jan de Graaff
 **/
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+
+$fbSession =& CKunenaSession::getInstance();
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
@@ -79,7 +81,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
         $limit = intval(trim(mosGetParam($_REQUEST, 'limit', $pageperlistlm)));
         $limitstart = intval(trim(mosGetParam($_REQUEST, 'limitstart', 0)));
 
-        $query = "select gid from #__users where id=$my->id";
+        $query = "SELECT gid FROM #__users WHERE id='{$my->id}'";
         $database->setQuery($query);
         $dse_groupid = $database->loadObjectList();
         	check_dberror("Unable to load usergroup ids.");
@@ -91,11 +93,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
             $group_id = 0;
         }
 
-        $query
-            = "SELECT a.* , b.id as category, b.name as catname, c.hits AS 'threadhits' FROM #__fb_messages AS a, "
-            . "\n #__fb_categories AS b, #__fb_messages AS c, #__fb_messages_text AS d"
-            . "\n WHERE a.catid = b.id" . "\n AND a.thread = c.id"
-            . "\n AND a.id = d.mesid" . "\n AND a.hold = 0 AND b.published = 1" . "\n AND a.userid=$userid" . "\n AND (b.pub_access<='$group_id') ";
+        $query = "SELECT COUNT(*) FROM #__fb_messages WHERE hold='0' AND userid='{$userid}' AND catid IN ($fbSession->allowed)";
         $database->setQuery($query);
         $total = count($database->loadObjectList());
         	check_dberror("Unable to load messages.");
@@ -105,8 +103,8 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
         }
 
         $query
-            = "SELECT a.* , b.id as category, b.name as catname, c.hits AS 'threadhits'" . "\n FROM #__fb_messages AS a, " . "\n #__fb_categories AS b, #__fb_messages AS c, #__fb_messages_text AS d" . "\n WHERE a.catid = b.id"
-            . "\n AND a.thread = c.id" . "\n AND a.id = d.mesid" . "\n AND a.hold = 0 AND b.published = 1" . "\n AND a.userid=$userid" . "\n AND (b.pub_access<='$group_id') " . "\n ORDER BY time DESC" . "\n LIMIT $limitstart, $limit";
+            = "SELECT a.*, b.id AS category, b.name AS catname, c.hits AS threadhits FROM #__fb_messages AS a, #__fb_categories AS b, #__fb_messages AS c, #__fb_messages_text AS d"
+            ." WHERE a.catid=b.id AND a.thread=c.id AND a.id=d.mesid AND a.hold='0' AND a.userid='{$userid}' AND a.catid IN ($fbSession->allowed) ORDER BY time DESC LIMIT $limitstart, $limit";
         $database->setQuery($query);
         $items = $database->loadObjectList();
         	check_dberror("Unable to load messages.");

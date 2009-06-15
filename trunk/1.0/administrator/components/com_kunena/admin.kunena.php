@@ -686,10 +686,13 @@ function showConfig($option)
         {
             if ($file != ".." && $file != ".")
             {
-                if (is_dir($mainframe->getCfg('absolute_path') . "/components/com_kunena/template" . "/" . $file))
+                if (is_dir($mainframe->getCfg('absolute_path') . "/components/com_kunena/template/" . $file))
                 {
-                    if (!($file[0] == '.')) {
-                        $filelist[] = $file;
+                    if (!($file[0] == '.') && is_file($mainframe->getCfg('absolute_path') . "/components/com_kunena/template/$file/kunena.forum.css")) {
+                        $templatelist[] = $file;
+                    }
+                    if (!($file[0] == '.') && is_dir($mainframe->getCfg('absolute_path') . "/components/com_kunena/template/$file/images/english")) {
+                        $imagesetlist[] = $file;
                     }
                 }
             }
@@ -698,22 +701,21 @@ function showConfig($option)
         closedir ($dir);
     }
 
-    asort ($filelist);
-
-    while (list($key, $val) = each($filelist)) {
-        //echo "<option value=\"$val\"";
-        //if ($selected == $val) {
-        //    echo " selected";
-        //}
-        //echo ">$val Gallery</option>\n";
-        $listitems[] = mosHTML::makeOption($val, $val);
+    asort ($templatelist);
+    asort ($imagesetlist);
+    
+    while (list($key, $val) = each($templatelist)) {
+		$templatelistitems[] = mosHTML::makeOption($val, $val);
+    }
+    while (list($key, $val) = each($imagesetlist)) {
+		$imagesetlistitems[] = mosHTML::makeOption($val, $val);
     }
 
     $lists['badwords'] = mosHTML::selectList($yesno, 'cfg_badwords', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->badwords);
 	$lists['jmambot'] = mosHTML::selectList($yesno, 'cfg_jmambot', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->jmambot);
     $lists['disemoticons'] = mosHTML::selectList($yesno, 'cfg_disemoticons', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->disemoticons);
-    $lists['template'] = mosHTML::selectList($listitems, 'cfg_template', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->template);
-    $lists['templateimagepath'] = mosHTML::selectList($listitems, 'cfg_templateimagepath', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->templateimagepath);
+    $lists['template'] = mosHTML::selectList($templatelistitems, 'cfg_template', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->template);
+    $lists['templateimagepath'] = mosHTML::selectList($imagesetlistitems, 'cfg_templateimagepath', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->templateimagepath);
     $lists['regonly'] = mosHTML::selectList($yesno, 'cfg_regonly', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->regonly);
     $lists['board_offline'] = mosHTML::selectList($yesno, 'cfg_board_offline', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->board_offline);
     $lists['pubwrite'] = mosHTML::selectList($yesno, 'cfg_pubwrite', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pubwrite);

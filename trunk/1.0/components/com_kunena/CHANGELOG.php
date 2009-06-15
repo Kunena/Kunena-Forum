@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.11
 
+5-June-2009 Matias
+# [#16637] Administrator: Defaut_red/green/gray should not be shown in Image Set list as they contain no images
+
 2-June-2009 Matias
 # [#16567] Warn/detect possible problems in Community Builder integration 
 

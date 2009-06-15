@@ -32,6 +32,12 @@ Legend:
 
 Kunena 1.0.11
 
+15-June-2009 Matias
+# [#16815] Internal: Sub categories title floats on the right side (IE8)
+
+14-June-2009 Matias
+# [#16805] Internal: Minor layout issue in categories view
+
 13-June-2009 fxstein
 + [#16803] Update credits page
 ^ [#16501] Allow for menu link variations for JomSocial to get correct item id

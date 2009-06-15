@@ -33,6 +33,7 @@ Legend:
 Kunena 1.5.3
 
 15-June-2009 Matias
+# [#16815] Kunena 1.5.2RC: Sub categories title floats on the right side (IE8)
 # [#16814] Kunena 1.5.2RC: Editor: Multiple attachments not working
 # [#16812] Kunena 1.5.2RC: SEF: Broken anchor links when viewing messages
 # [#16811] Kunena 1.5.1b: Broken URL in emails (subscriptions, moderators, report message)

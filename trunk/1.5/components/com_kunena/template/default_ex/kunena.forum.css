@@ -588,6 +588,7 @@
 	border: 0px solid #FFFFFF;
 }
 #Kunena div.fb_cc-childcat-title {
+	width: 100%;
 	vertical-align:top;
 }
 #Kunena div.fb_cc-table {

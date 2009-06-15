@@ -33,6 +33,8 @@ Legend:
 Kunena 1.0.11
 
 15-June-2009 Matias
+^ [#16326] Change minumum MySQL requirement to 4.1.20 (fix problem in the check)
+^ [#16390] Update English language file for K1.0.11 and K1.5.3
 # [#16815] Internal: Sub categories title floats on the right side (IE8)
 
 14-June-2009 Matias

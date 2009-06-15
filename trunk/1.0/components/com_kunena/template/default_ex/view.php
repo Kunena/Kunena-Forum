@@ -227,6 +227,25 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 
         $forumLocked = $objCatInfo->locked;
         
+		//meta description and keywords
+		$metaKeys=kunena_htmlspecialchars(stripslashes("{$this_message->subject}, {$objCatParentInfo->name}, {$fbConfig->board_title}, " ._GEN_FORUM. ', ' .$GLOBALS['mosConfig_sitename']));
+		$metaDesc=kunena_htmlspecialchars(stripslashes("{$this_message->subject} ({$page}/{$totalpages}) - {$objCatParentInfo->name} - {$objCatInfo->name} - {$fbConfig->board_title} " ._GEN_FORUM));
+
+    	if( CKunenaTools::isJoomla15() )
+		{
+			$document =& JFactory::getDocument();
+			$cur = $document->get( 'description' );
+			$metaDesc = $cur .'. ' . $metaDesc;
+			$document =& JFactory::getDocument();
+			$document->setMetadata( 'keywords', $metaKeys );
+			$document->setDescription($metaDesc);
+		}
+		else
+		{
+		    $mainframe->appendMetaTag( 'keywords',$metaKeys );
+			$mainframe->appendMetaTag( 'description' ,$metaDesc );
+		}		
+        
         //Perform subscriptions check only once
         $fb_cansubscribe = 0;
         if ($fbConfig->allowsubscriptions && ("" != $my_id || 0 != $my_id))
@@ -516,25 +535,6 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 else {
                                     $fb_thread = $fmessage->thread;
                                 }
-
-                                //meta description and keywords
-								$metaKeys=(kunena_htmlspecialchars(stripslashes($fmessage->subject)). ', ' .kunena_htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . kunena_htmlspecialchars(stripslashes($fbConfig->board_title)) . ', ' . kunena_htmlspecialchars($GLOBALS['mosConfig_sitename']));
-								$metaDesc=(kunena_htmlspecialchars(stripslashes($fmessage->subject)) . ' - ' .kunena_htmlspecialchars(stripslashes($objCatParentInfo->name)) . ' - ' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) .' - ' . kunena_htmlspecialchars(stripslashes($fbConfig->board_title)));
-
-								if( CKunenaTools::isJoomla15() )
-								{
-								    $document =& JFactory::getDocument();
-								    $cur = $document->get( 'description' );
-								    $metaDesc = $cur .'. ' . $metaDesc;
-								    $document =& JFactory::getDocument();
-								    $document->setMetadata( 'keywords', $metaKeys );
-								    $document->setDescription($metaDesc);
-								}
-								else
-								{
-								    $mainframe->appendMetaTag( 'keywords', $metaKeys );
-								    $mainframe->appendMetaTag( 'description', $metaDesc );
-								}
 
                                 //filter out clear html
                                 $fmessage->name = kunena_htmlspecialchars($fmessage->name);
@@ -1032,15 +1032,6 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 //$fb_message_txt = str_replace("<P>&nbsp;</P><br />","",$fb_message_txt);
                                 //$fb_message_txt = str_replace("</P><br />","</P>",$fb_message_txt);
                                 //$fb_message_txt = str_replace("<P><br />","<P>",$fb_message_txt);
-
-                                //filter bad words
-                                if ($fbConfig->badwords && class_exists('Badword') && Badword::filter($fb_message_txt, $my)) {
-                                	if (method_exists('Badword','flush')) {
-                                		$fb_message_txt = Badword::flush($fb_message_txt, $my);
-                                	} else {
-                               			$fb_message_txt = _COM_A_BADWORDS_NOTICE;
-                                	}
-                                }
 
                                 // Code tag: restore TABS as we had to 'hide' them from the rest of the logic
                                 $fb_message_txt = str_replace("__FBTAB__", "&#009;", $fb_message_txt);

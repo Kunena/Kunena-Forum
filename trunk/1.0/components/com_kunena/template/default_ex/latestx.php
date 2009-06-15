@@ -78,25 +78,6 @@ if (!$my->id && $func == "mylatest")
 
 require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
 
-//meta description and keywords
-$metaKeys=(_KUNENA_ALL_DISCUSSIONS . ', ' . stripslashes($fbConfig->board_title) . ', ' . $GLOBALS['mosConfig_sitename']);
-$metaDesc=(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
-
-if( CKunenaTools::isJoomla15() )
-{
-	$document =& JFactory::getDocument();
-	$cur = $document->get( 'description' );
-	$metaDesc = $cur .'. ' . $metaDesc;
-	$document =& JFactory::getDocument();
-	$document->setMetadata( 'keywords', $metaKeys );
-	$document->setDescription($metaDesc);
-}
-else
-{
-    $mainframe->appendMetaTag( 'keywords',$metaKeys );
-	$mainframe->appendMetaTag( 'description' ,$metaDesc );
-}
-
 //resetting some things:
 $lockedForum = 0;
 $lockedTopic = 0;
@@ -167,10 +148,31 @@ else
 	$query = "Select count(distinct thread) FROM #__fb_messages WHERE time >'$querytime'".
 			" AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)" . $latestcats; // if categories are limited apply filter
 }
-
 $database->setQuery($query);
 $total = (int)$database->loadResult();
 	check_dberror('Unable to count total threads');
+$totalpages = ceil($total / $threads_per_page);
+	
+//meta description and keywords
+$metaKeys=kunena_htmlspecialchars(stripslashes(_KUNENA_ALL_DISCUSSIONS . ", {$fbConfig->board_title}, " . $GLOBALS['mosConfig_sitename']));
+$metaDesc=kunena_htmlspecialchars(stripslashes(_KUNENA_ALL_DISCUSSIONS . " ({$page}/{$totalpages}) - {$fbConfig->board_title}"));
+
+if( CKunenaTools::isJoomla15() )
+{
+	$document =& JFactory::getDocument();
+	$cur = $document->get( 'description' );
+	$metaDesc = $cur .'. ' . $metaDesc;
+	$document =& JFactory::getDocument();
+	$document->setMetadata( 'robots', 'noindex, follow' );
+	$document->setMetadata( 'keywords', $metaKeys );
+	$document->setDescription($metaDesc);
+}
+else
+{
+    $mainframe->appendMetaTag( 'robots', 'noindex, follow' );
+    $mainframe->appendMetaTag( 'keywords',$metaKeys );
+	$mainframe->appendMetaTag( 'description' ,$metaDesc );
+}
 
 $query = 			"SELECT
                         a.*,

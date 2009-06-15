@@ -212,17 +212,6 @@ if ($fbConfig->joomlastyle < 1) {
     $boardclass = "fb_";
     }
 
-// Include Badword class file
-if ($fbConfig->badwords and !class_exists('Badword')) {
-	foreach (array('badwords2','badword') as $com_bw) {
-		$com_bw = $mosConfig_absolute_path.'/components/com_'.$com_bw.'/class.'.$com_bw.'.php';
-		if (is_file($com_bw)) {
-			require_once ($com_bw);
-			break;
-		}
-	}
-}
-
 // Include preview here before inclusion of other files
 if ($func == "getpreview") {
 

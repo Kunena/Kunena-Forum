@@ -30,10 +30,15 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.5.2RC
+Kunena 1.5.3
+
+14-June-2009 fxstein
+^ [#16807] Update version info to reflect 1.5.3 stable
 
 14-June-2009 Matias
 # [#16805] Internal: Minor layout issue in categories view
+
+Kunena 1.5.2RC
 
 13-June-2009 fxstein
 + [#16803] Update credits page

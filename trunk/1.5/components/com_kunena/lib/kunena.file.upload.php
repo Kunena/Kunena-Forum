@@ -32,7 +32,7 @@ function fileUploadError($msg)
 {
     global $message;
     $GLOBALS['KUNENA_rc'] = 0;
-    $message = str_replace("[file]", "", $message);
+    $message = str_replace("[file/]", "", $message);
     $app =& JFactory::getApplication();
     $app->enqueueMessage(_FILE_NOT_UPLOADED .' ('. $msg .')', 'notice');
 }
@@ -90,8 +90,8 @@ if ($GLOBALS['KUNENA_rc'])
         = '[file name='
         . $newFileName . ' size=' . $fileSize . ']' . KUNENA_LIVEUPLOADEDPATH . '/files/' . $newFileName . '[/file]';
 
-    if (preg_match("/\[file\]/si", $message)) {
-        $message = str_replace("[file]", $code, $message);
+    if (preg_match("/\[file\/\]/si", $message)) {
+        $message = str_replace("[file/]", $code, $message);
     }
     else {
         $message = $message . ' ' . $code;

@@ -33,7 +33,7 @@ function imageUploadError($msg)
 {
     global $message;
     $GLOBALS['KUNENA_rc'] = 0;
-    $message = str_replace("[img]", "", $message);
+    $message = str_replace("[img/]", "", $message);
     $app =& JFactory::getApplication();
     $app->enqueueMessage(_IMAGE_NOT_UPLOADED .' ('. $msg .')', 'notice');
 }
@@ -100,8 +100,8 @@ if ($GLOBALS['KUNENA_rc'])
 	// echo '<span class="contentheading">'._IMAGE_UPLOADED."...</span>";
     $code = '[img]' . KUNENA_LIVEUPLOADEDPATH. '/images/' . $newFileName . '[/img]';
 
-    if (preg_match("/\[img\]/si", $message)) {
-        $message = str_replace("[img]", $code, $message);
+    if (preg_match("/\[img\/\]/si", $message)) {
+        $message = str_replace("[img/]", $code, $message);
     }
     else {
         $message = $message . ' ' . $code;

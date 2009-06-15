@@ -209,7 +209,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 
                 <td>
                     <input type = 'file' class = 'fb_button' name = 'attachimage' onmouseover = "javascript:kunenaShowHelp('<?php @print(_IMAGE_DIMENSIONS).": ".$fbConfig->imagewidth."x".$fbConfig->imageheight." - ".$fbConfig->imagesize." KB";?>')" />
-                    <input type = "button" class = "fb_button" name = "addImagePH" value = "<?php @print(_POST_ATTACH_IMAGE);?>" style = "cursor:auto; width: 4em" onclick = "bbfontstyle(' [img] ','');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMGPH);?>')" />
+                    <input type = "button" class = "fb_button" name = "addImagePH" value = "<?php @print(_POST_ATTACH_IMAGE);?>" style = "cursor:auto; width: 4em" onclick = "bbfontstyle(' [img/] ','');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMGPH);?>')" />
                 </td>
             </tr>
 
@@ -229,7 +229,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 
                 <td>
                     <input type = 'file' class = 'fb_button' name = 'attachfile' onmouseover = "javascript:kunenaShowHelp('<?php @print(_FILE_TYPES).": ".$fbConfig->filetypes." - ".$fbConfig->filesize." KB";?>')" style = "cursor:auto" />
-                    <input type = "button" class = "fb_button" name = "addFilePH" value = "<?php @print(_POST_ATTACH_FILE);?>" style = "cursor:auto; width: 4em" onclick = "bbfontstyle(' [file] ','');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FILEPH);?>')" />
+                    <input type = "button" class = "fb_button" name = "addFilePH" value = "<?php @print(_POST_ATTACH_FILE);?>" style = "cursor:auto; width: 4em" onclick = "bbfontstyle(' [file/] ','');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FILEPH);?>')" />
                 </td>
             </tr>
 

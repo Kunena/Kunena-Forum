@@ -62,7 +62,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     	// Only proceed if jomSocial is really installed
 	    if ( file_exists( $mainframe->getCfg( 'absolute_path' ) . '/components/com_community/libraries/core.php' ) )
 	    {
-	        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_community' AND published=1");
+	        $database->setQuery("SELECT id FROM #__menu WHERE link LIKE 'index.php?option=com_community%' AND published='1' LIMIT 1");
 	        $JOMSOCIAL_Itemid = $database->loadResult();
 	        	check_dberror('Unable to load jomSocial item id');
 

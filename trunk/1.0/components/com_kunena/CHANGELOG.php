@@ -32,6 +32,10 @@ Legend:
 
 Kunena 1.0.11
 
+13-June-2009 fxstein
++ [#16803] Update credits page
+^ [#16501] Allow for menu link variations for JomSocial to get correct item id
+
 11-June-2009 Matias
 # [#16745] Collection of small bugs/typos
 # [#16078] Remove broken Bad Words component support

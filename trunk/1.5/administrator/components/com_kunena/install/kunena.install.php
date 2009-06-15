@@ -72,7 +72,7 @@ function com_install()
 	$mysqlversion = $kunena_db->loadResult();
 
 	//before we do anything else we want to check for minimum system requirements
-	if (version_compare(phpversion(), KUNENA_MIN_PHP, ">=") && version_compare($mysqlversion, KUNENA_MIN_MYSQL, ">="))
+	if (version_compare(phpversion(), KUNENA_MIN_PHP, ">=") && version_compare($mysqlversion, KUNENA_MIN_MYSQL, ">"))
 	{
 		//change fb menu icon
 		$kunena_db->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena'");
@@ -201,7 +201,7 @@ function com_install()
 		<br />
 		<strong>php version: <font color="green"><?php echo phpversion(); ?></font> (Required &gt;= <?php echo KUNENA_MIN_PHP; ?>)</strong>
 		<br />
-		<strong>mysql version: <font color="green"><?php echo $mysqlversion; ?></font> (Required &gt;= <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
+		<strong>mysql version: <font color="green"><?php echo $mysqlversion; ?></font> (Required &gt; <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
 		</div>
 
 		<?php
@@ -259,7 +259,7 @@ function com_install()
 		<br />
 		<strong>php version: <font color="<?php echo version_compare(phpversion(), KUNENA_MIN_PHP, '>=')?'green':'red'; ?>"><?php echo phpversion(); ?></font> (Required &gt;= <?php echo KUNENA_MIN_PHP; ?>)</strong>
 		<br />
-		<strong>mysql version: <font color="<?php echo version_compare($mysqlversion, KUNENA_MIN_MYSQL, '>=')?'green':'red'; ?>"><?php echo $mysqlversion; ?></font> (Required &gt;= <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
+		<strong>mysql version: <font color="<?php echo version_compare($mysqlversion, KUNENA_MIN_MYSQL, '>')?'green':'red'; ?>"><?php echo $mysqlversion; ?></font> (Required &gt; <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
 		</div>
 
 		<?php

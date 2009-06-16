@@ -35,7 +35,7 @@ defined( '_JEXEC' ) or die('Restricted access');
     <tbody>
         <tr>
             <td class = "<?php echo $boardclass; ?>profileinfo" align="center">
-                <div class = "fb-usrprofile-misc">
+                <div class = "kunena_usrprofile-misc">
                     <span class = "view-username"> <?php echo $msg_username; ?></span> <?php  if ( $fbConfig->userlist_usertype ) { ?><span class = "msgusertype">(<?php echo $msg_usertype; ?>)</span><?php } ?>
 
                     <br/> <?php echo $msg_avatar; ?>

@@ -232,8 +232,8 @@ if (count($messages[0]) > 0)
                                     }
                                 ?>
 
-                                <div class = "fb-topic-title-cover">
-                                    <?php echo CKunenaLink::GetThreadLink('view', $leaf->catid, $leaf->id, kunena_htmlspecialchars(stripslashes($leaf->subject)), kunena_htmlspecialchars(stripslashes($messagetext[$leaf->id])) , 'follow', 'fb-topic-title fbm');?>
+                                <div class = "kunena_topic-title-cover">
+                                    <?php echo CKunenaLink::GetThreadLink('view', $leaf->catid, $leaf->id, kunena_htmlspecialchars(stripslashes($leaf->subject)), kunena_htmlspecialchars(stripslashes($messagetext[$leaf->id])) , 'follow', 'kunena_topic-title fbm');?>
                                     <!--            Favourite       -->
 
                                     <?php
@@ -320,8 +320,8 @@ if (count($messages[0]) > 0)
                             </td>
 
                             <td class = "td-3">
-                                <div class = "fb-topic-title-cover">
-                                    <?php echo CKunenaLink::GetThreadLink('view', $newURLParams['catid'], $newURLParams['id'], kunena_htmlspecialchars(stripslashes($leaf->subject)), kunena_htmlspecialchars(stripslashes($leaf->subject)), 'follow', 'fb-topic-title fbm');?>
+                                <div class = "kunena_topic-title-cover">
+                                    <?php echo CKunenaLink::GetThreadLink('view', $newURLParams['catid'], $newURLParams['id'], kunena_htmlspecialchars(stripslashes($leaf->subject)), kunena_htmlspecialchars(stripslashes($leaf->subject)), 'follow', 'kunena_topic-title fbm');?>
                                 </div>
 
 

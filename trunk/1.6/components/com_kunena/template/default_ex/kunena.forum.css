@@ -87,7 +87,7 @@
 #Kunena .topic_date {
 	font-size:x-small;
 }
-#Kunena a.fb-topic-title {
+#Kunena a.kunena_topic-title {
 	font-weight:bold;
 	font-size:medium;
 }
@@ -628,7 +628,7 @@ span.newchar {
 /* SHOW CATEGORY 
 ----------------------------------------------------------------------------------------------- */
 /*
-#Kunena  a.fb-topic-title { font-weight:bold;}
+#Kunena  a.kunena_topic-title { font-weight:bold;}
 */
 #Kunena img.stickyicon, 
 #Kunena img.attachicon {
@@ -692,7 +692,7 @@ VIEW PAGE
 }
 #Kunena th.kunena_sectiontableheader {
 }
-#Kunena td.fb-msgview-left {
+#Kunena td.kunena_msgview-left {
 	background:#EFF0F4;
 	vertical-align: top;
 	width:170px;
@@ -700,13 +700,13 @@ VIEW PAGE
 	border-bottom:  0px solid #BFC3C6;
 	border-right:1px solid #BFC3C6;
 }
-#Kunena td.fb-msgview-right {
+#Kunena td.kunena_msgview-right {
 	border-right:1px solid #BFC3C6;
 	padding:5px 10px 5px 10px;
 	vertical-align: top;
 	border-left:1px solid #BFC3C6;
 }
-#Kunena div.fb-msgview-l-cover {
+#Kunena div.kunena_msgview-l-cover {
 	overflow:auto;
 	text-align: center;
 	padding:5px;
@@ -813,7 +813,7 @@ VIEW PAGE
 	font-size:x-small;
 	font-family:Arial, Helvetica, sans-serif;
 }
-#Kunena td.fb-msgview-right-c div.kunena_smalltext {
+#Kunena td.kunena_msgview-right-c div.kunena_smalltext {
 	padding:5px;
 	text-align:right;
 }
@@ -863,14 +863,14 @@ VIEW PAGE
 	line-height: 14px;
 	white-space: nowrap;
 }
-#Kunena td.fb-msgview-left-b {
+#Kunena td.kunena_msgview-left-b {
 	background:#EFF0F4;
 	vertical-align: top;
 	width:170px;
 	border-bottom:1px solid #BFC3C6;
 	border-right:  1px solid #BFC3C6;
 }
-#Kunena td.fb-msgview-right-b {
+#Kunena td.kunena_msgview-right-b {
 	border-bottom: 1px solid #BFC3C6;
 	padding:1px 5px 1px 5px;
 	vertical-align: top;
@@ -940,16 +940,16 @@ POST PAGE
 	border: 1px solid #ccc;
 	padding: 3px 5px;
 }
-#Kunena #kunena_postmessage tr.kunena_sectiontableentry2 td.fb-topicicons table {
+#Kunena #kunena_postmessage tr.kunena_sectiontableentry2 td.kunena_topicicons table {
 	width: 95%;
 }
-#Kunena #kunena_postmessage tr.kunena_sectiontableentry2 td.fb-topicicons td {
+#Kunena #kunena_postmessage tr.kunena_sectiontableentry2 td.kunena_topicicons td {
 	background: #FFFFFF;
 	color: #000000;
 	border: 1px solid #ccc;
 	width: 99%;
 }
-#Kunena #kunena_postmessage tr.kunena_sectiontableentry1 .fb-postbuttonset td.kunena_posthint {
+#Kunena #kunena_postmessage tr.kunena_sectiontableentry1 .kunena_postbuttonset td.kunena_posthint {
 	background: #FFFFCC;
 	border: 1px solid #CFC1A9;
 	padding: 2px 5px;
@@ -959,11 +959,11 @@ POST PAGE
 	border: 0px solid #FFFFCC;
 	width:  99%;
 }
-#Kunena .fb-postbuttonset {
+#Kunena .kunena_postbuttonset {
 	width: 95%;
 	margin: 2px;
 }
-#Kunena tr.kunena_sectiontableentry1 .fb-postbuttons {
+#Kunena tr.kunena_sectiontableentry1 .kunena_postbuttons {
 	border: 1px solid #CCC;
 }
 #Kunena table#kunena_postmessage .kunena_txtarea {
@@ -976,8 +976,8 @@ POST PAGE
 	height: 300px;
 	width: 95%;
 }
-#Kunena #kunena_postmessage tr.kunena_sectiontableentry1 .fb-postbuttonset td, 
-#Kunena #kunena_postmessage tr.kunena_sectiontableentry2 .fb-postbuttonset td {
+#Kunena #kunena_postmessage tr.kunena_sectiontableentry1 .kunena_postbuttonset td, 
+#Kunena #kunena_postmessage tr.kunena_sectiontableentry2 .kunena_postbuttonset td {
 	border-bottom: 0px solid #BFC3C6;
 }
 #Kunena .kunena_leftcolumn {
@@ -999,26 +999,26 @@ POST PAGE
 /*
 BBCODE BUTTONS
 -------------------------------------------------------------------- */
-img.fb-bbcode {
+img.kunena_bbcode {
 cursor: pointer;
 margin-top: 4px;
 margin-right: 1px;
 padding: 0px;
 }
-img.fb-bbcode:hover {
+img.kunena_bbcode:hover {
 background-color: #e4e4e4;
 cursor: pointer;
 margin-top: 4px;
 margin-right: 1px;
 padding: 0px;
 }
-.fb-color_table {
+.kunena_color_table {
 cursor: pointer;
 width:100%;
 margin-left:auto;
 margin-right:auto;
 }
-#Kunena table.fb-postbuttonset tr td.fb-postbuttons select.kunena_slcbox {
+#Kunena table.kunena_postbuttonset tr td.kunena_postbuttons select.kunena_slcbox {
 position:relative;
 bottom:5px;
 }
@@ -1304,7 +1304,7 @@ USER PROFILE
 	border-left: 1px solid #BFC3C6;
 	border-right: 1px solid #BFC3C6;
 }
-#Kunena .fb-usrprofile-misc {
+#Kunena .kunena_usrprofile-misc {
 	text-align: center;
 	margin: 0 auto;
 }

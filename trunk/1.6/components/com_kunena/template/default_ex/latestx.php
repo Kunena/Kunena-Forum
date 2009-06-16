@@ -323,7 +323,7 @@ if (JDocumentHTML::countModules('kunena_announcement'))
 {
 ?>
 
-    <div class = "fb-kunena_2">
+    <div class = "kunena_kunena_2">
         <?php
         	$document	= &JFactory::getDocument();
         	$renderer	= $document->loadRenderer('modules');

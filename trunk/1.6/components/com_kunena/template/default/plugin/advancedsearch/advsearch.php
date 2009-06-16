@@ -42,11 +42,11 @@ $options[] = JHTML::_('select.option', '0', 'All Categories');
 $lists['parent'] = kunena_categoryList(split(',', $catids), $options);
 if(isset($kunena_advsearch_hide) && $kunena_advsearch_hide==1) 
 {
-    $kunena_advsearch_class = ' class="fb-hidden"';
+    $kunena_advsearch_class = ' class="kunena_hidden"';
     $kunena_advsearch_style = ' style="display: none;"';
     $kunena_advsearch_img = KUNENA_URLIMAGESPATH . 'expand.gif';
 } else {
-    $kunena_advsearch_class = ' class="fb-visible"';
+    $kunena_advsearch_class = ' class="kunena_visible"';
     $kunena_advsearch_style = '';
     $kunena_advsearch_img = KUNENA_URLIMAGESPATH . 'shrink.gif';
 }

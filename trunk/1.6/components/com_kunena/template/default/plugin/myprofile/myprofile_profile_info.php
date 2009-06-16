@@ -137,24 +137,24 @@ $fbConfig =& CKunenaConfig::getInstance();
 					<br/>
 
 					<input name="speicher" type="hidden" size="30" maxlength="100">
-					<img class = "fb-bbcode" title = "Bold" accesskey = "b" name = "addbbcode0" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_bold.png" alt="B" onclick = "bbfontstyle('[b]', '[/b]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_BOLD);?>')" />
-					<img class = "fb-bbcode" accesskey = "i" name = "addbbcode2" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_italic.png" alt="I" onclick = "bbfontstyle('[i]', '[/i]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ITALIC);?>')" />
-					<img class = "fb-bbcode" accesskey = "u" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_underline.png" alt="U" onclick = "bbfontstyle('[u]', '[/u]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_UNDERL);?>')" />
-					<img class = "fb-bbcode" name = "addbbcode62" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_smallcaps.png" alt="<?php @print(_SMILE_SIZE); ?>" onclick = "bbfontstyle('[size=' + document.postform.addbbcode22.options[document.postform.addbbcode22.selectedIndex].value + ']', '[/size]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FONTSIZE);?>')" />
-					<select id = "fb-bbcode_size" class = "<?php echo $boardclass;?>slcbox" name = "addbbcode22" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FONTSIZESELECTION);?>')">
+					<img class = "kunena_bbcode" title = "Bold" accesskey = "b" name = "addbbcode0" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_bold.png" alt="B" onclick = "bbfontstyle('[b]', '[/b]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_BOLD);?>')" />
+					<img class = "kunena_bbcode" accesskey = "i" name = "addbbcode2" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_italic.png" alt="I" onclick = "bbfontstyle('[i]', '[/i]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ITALIC);?>')" />
+					<img class = "kunena_bbcode" accesskey = "u" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_underline.png" alt="U" onclick = "bbfontstyle('[u]', '[/u]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_UNDERL);?>')" />
+					<img class = "kunena_bbcode" name = "addbbcode62" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_smallcaps.png" alt="<?php @print(_SMILE_SIZE); ?>" onclick = "bbfontstyle('[size=' + document.postform.addbbcode22.options[document.postform.addbbcode22.selectedIndex].value + ']', '[/size]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FONTSIZE);?>')" />
+					<select id = "kunena_bbcode_size" class = "<?php echo $boardclass;?>slcbox" name = "addbbcode22" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FONTSIZESELECTION);?>')">
 						<option value = "1"><?php @print(_SIZE_VSMALL); ?></option>
 						<option value = "2"><?php @print(_SIZE_SMALL); ?></option>
 						<option value = "3" selected = "selected"><?php @print(_SIZE_NORMAL); ?></option>
 						<option value = "4"><?php @print(_SIZE_BIG); ?></option>
 						<option value = "5"><?php @print(_SIZE_VBIG); ?></option>
 					</select>
-					<img id="ueberschrift" class = "fb-bbcode" name = "addbbcode20" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>color_swatch.png" alt="<?php @print(_SMILE_COLOUR); ?>" onclick = "javascript:change_palette();" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_COLOR);?>')" />
-					<img class = "fb-bbcode" accesskey = "p" name = "addbbcode14" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>picture_link.png" alt="Img" onclick = "javascript:dE('image');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINK);?>')" />
-					<img class = "fb-bbcode" accesskey = "w" name = "addbbcode16" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>link_url.png" alt="URL" onclick = "javascript:dE('link');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINK);?>')" />	
+					<img id="ueberschrift" class = "kunena_bbcode" name = "addbbcode20" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>color_swatch.png" alt="<?php @print(_SMILE_COLOUR); ?>" onclick = "javascript:change_palette();" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_COLOR);?>')" />
+					<img class = "kunena_bbcode" accesskey = "p" name = "addbbcode14" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>picture_link.png" alt="Img" onclick = "javascript:dE('image');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINK);?>')" />
+					<img class = "kunena_bbcode" accesskey = "w" name = "addbbcode16" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>link_url.png" alt="URL" onclick = "javascript:dE('link');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINK);?>')" />	
 					<br />
-					<div id="fb-color_palette" style="margin-top: 14px; border: 1px; display: none;">
+					<div id="kunena_color_palette" style="margin-top: 14px; border: 1px; display: none;">
 						<script type="text/javascript">
-							function change_palette() {dE('fb-color_palette');}
+							function change_palette() {dE('kunena_color_palette');}
 							colorPalette('h', '4%', '15px');
 						</script>
 					</div>		
@@ -183,7 +183,7 @@ $fbConfig =& CKunenaConfig::getInstance();
 
 					<br />
 					<div class="<?php echo $boardclass;?>posthint">
-						<input class = "fb-bbcode" type = "text" name = "helpbox" size = "45" class = "<?php echo $boardclass;?>inputbox" maxlength = "100" value = "<?php @print(_KUNENA_EDITOR_HELPLINE_HINT);?>" style="width: 99%;" />
+						<input class = "kunena_bbcode" type = "text" name = "helpbox" size = "45" class = "<?php echo $boardclass;?>inputbox" maxlength = "100" value = "<?php @print(_KUNENA_EDITOR_HELPLINE_HINT);?>" style="width: 99%;" />
 					</div>
 
 					<br />

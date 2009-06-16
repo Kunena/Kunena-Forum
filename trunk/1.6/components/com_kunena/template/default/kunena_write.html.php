@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id$
+* @version $Id:kunena_write.html.php 884 2009-06-16 03:48:56Z fxstein $
 * Kunena Component
 * @package Kunena
 *
@@ -137,7 +137,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
                 <strong><?php echo _GEN_TOPIC_ICON; ?></strong>:
             </td>
 
-            <td class = "fb-topicicons">
+            <td class = "kunena_topicicons">
                 <?php
                 $topicToolbar = smile::topicToolbar(0, $fbConfig->rtewidth);
                 echo $topicToolbar;

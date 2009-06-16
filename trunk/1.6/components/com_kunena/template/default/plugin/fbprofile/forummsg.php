@@ -140,13 +140,13 @@ $fbSession =& CKunenaSession::getInstance();
 
                 <td class = "td-2  fbm"  align="left">
 
-                        <a  class="fb-topic-title fbm"  href = "<?php echo $fbURL; ?>"> <?php echo kunena_htmlspecialchars(stripslashes ($item->subject)); ?> </a>
+                        <a  class="kunena_topic-title fbm"  href = "<?php echo $fbURL; ?>"> <?php echo kunena_htmlspecialchars(stripslashes ($item->subject)); ?> </a>
 
                 </td>
 
                 <td class = "td-3 fbm" align="left">
 
-                        <a  class="fb-topic-cat fbm" href = "<?php echo $fbCatURL; ?>"> <?php echo kunena_htmlspecialchars(stripslashes($item->catname)); ?></a>
+                        <a  class="kunena_topic-cat fbm" href = "<?php echo $fbCatURL; ?>"> <?php echo kunena_htmlspecialchars(stripslashes($item->catname)); ?></a>
 
                 </td>
 
@@ -154,7 +154,7 @@ $fbSession =& CKunenaSession::getInstance();
                 </td>
 
                 <td class = "td-5  fbs" align="left">
-                  <div class="fb-latest-subject-date fbs">
+                  <div class="kunena_latest-subject-date fbs">
 <?php echo '' . date(_DATETIME, $item->time) . ''; ?>
                   </div>
                 </td>

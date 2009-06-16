@@ -256,45 +256,45 @@ class smile
             </td>
 
             <td>
-                <table border = "0" cellspacing = "0" cellpadding = "0" class = "fb-postbuttonset">
+                <table border = "0" cellspacing = "0" cellpadding = "0" class = "kunena_postbuttonset">
                     <tr>
-                        <td class = "fb-postbuttons">
+                        <td class = "kunena_postbuttons">
 							<input name="speicher" type="hidden" size="30" maxlength="100">
 							<input name="previewspeicher" type="hidden" size="30" maxlength="100">
-							<img class = "fb-bbcode" title = "Bold" accesskey = "b" name = "addbbcode0" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_bold.png" alt="B" onclick = "bbfontstyle('[b]', '[/b]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_BOLD);?>')" />
-							<img class = "fb-bbcode" accesskey = "i" name = "addbbcode2" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_italic.png" alt="I" onclick = "bbfontstyle('[i]', '[/i]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ITALIC);?>')" />
-							<img class = "fb-bbcode" accesskey = "u" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_underline.png" alt="U" onclick = "bbfontstyle('[u]', '[/u]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_UNDERL);?>')" />
-							<img class = "fb-bbcode" accesskey = "st" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_strike.png" alt="S" onclick = "bbfontstyle('[strike]', '[/strike]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_STRIKE);?>')" />
-							<img class = "fb-bbcode" accesskey = "sub" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_sub.png" alt="Sub" onclick = "bbfontstyle('[sub]', '[/sub]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_SUB);?>')" />
-							<img class = "fb-bbcode" accesskey = "sup" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_sup.png" alt="Sup" onclick = "bbfontstyle('[sup]', '[/sup]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_SUP);?>')" />
-							<img class = "fb-bbcode" name = "addbbcode62" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_smallcaps.png" alt="<?php @print(_SMILE_SIZE); ?>" onclick = "bbfontstyle('[size=' + document.postform.addbbcode22.options[document.postform.addbbcode22.selectedIndex].value + ']', '[/size]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FONTSIZE);?>')" />
-							<select id = "fb-bbcode_size" class = "<?php echo $boardclass;?>slcbox" name = "addbbcode22" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FONTSIZESELECTION);?>')">
+							<img class = "kunena_bbcode" title = "Bold" accesskey = "b" name = "addbbcode0" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_bold.png" alt="B" onclick = "bbfontstyle('[b]', '[/b]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_BOLD);?>')" />
+							<img class = "kunena_bbcode" accesskey = "i" name = "addbbcode2" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_italic.png" alt="I" onclick = "bbfontstyle('[i]', '[/i]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ITALIC);?>')" />
+							<img class = "kunena_bbcode" accesskey = "u" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_underline.png" alt="U" onclick = "bbfontstyle('[u]', '[/u]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_UNDERL);?>')" />
+							<img class = "kunena_bbcode" accesskey = "st" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_strike.png" alt="S" onclick = "bbfontstyle('[strike]', '[/strike]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_STRIKE);?>')" />
+							<img class = "kunena_bbcode" accesskey = "sub" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_sub.png" alt="Sub" onclick = "bbfontstyle('[sub]', '[/sub]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_SUB);?>')" />
+							<img class = "kunena_bbcode" accesskey = "sup" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_sup.png" alt="Sup" onclick = "bbfontstyle('[sup]', '[/sup]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_SUP);?>')" />
+							<img class = "kunena_bbcode" name = "addbbcode62" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_smallcaps.png" alt="<?php @print(_SMILE_SIZE); ?>" onclick = "bbfontstyle('[size=' + document.postform.addbbcode22.options[document.postform.addbbcode22.selectedIndex].value + ']', '[/size]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FONTSIZE);?>')" />
+							<select id = "kunena_bbcode_size" class = "<?php echo $boardclass;?>slcbox" name = "addbbcode22" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FONTSIZESELECTION);?>')">
 								<option value = "1"><?php @print(_SIZE_VSMALL); ?></option>
 								<option value = "2"><?php @print(_SIZE_SMALL); ?></option>
 								<option value = "3" selected = "selected"><?php @print(_SIZE_NORMAL); ?></option>
 								<option value = "4"><?php @print(_SIZE_BIG); ?></option>
 								<option value = "5"><?php @print(_SIZE_VBIG); ?></option>
 							</select>
-							<img id="ueberschrift" class = "fb-bbcode" name = "addbbcode20" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>color_swatch.png" alt="<?php @print(_SMILE_COLOUR); ?>" onclick = "javascript:change_palette();" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_COLOR);?>')" />
+							<img id="ueberschrift" class = "kunena_bbcode" name = "addbbcode20" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>color_swatch.png" alt="<?php @print(_SMILE_COLOUR); ?>" onclick = "javascript:change_palette();" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_COLOR);?>')" />
 							<?php if ($fbConfig->showspoilertag) {?>
-							<img class = "fb-bbcode" accesskey = "s" name = "addbbcode40" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spoiler.png" alt="Spoiler" onclick = "bbfontstyle('[spoiler]', '[/spoiler]')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_SPOILER);?>')" />
+							<img class = "kunena_bbcode" accesskey = "s" name = "addbbcode40" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spoiler.png" alt="Spoiler" onclick = "bbfontstyle('[spoiler]', '[/spoiler]')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_SPOILER);?>')" />
 							<?php } ?>
-							<img class = "fb-bbcode" accesskey = "h" name = "addbbcode24" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>group_key.png" alt="Hide" onclick = "bbfontstyle('[hide]', '[/hide]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_HIDE);?>')" />
-							<img class = "fb-bbcode" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.png" style="cursor: auto;" />
-							<img class = "fb-bbcode" accesskey = "k" name = "addbbcode10" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_list_bullets.png" alt="ul" onclick = "bbfontstyle('[ul]', '[/ul]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_UL);?>')" />
-							<img class = "fb-bbcode" accesskey = "o" name = "addbbcode12" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_list_numbers.png" alt="ol" onclick = "bbfontstyle('[ol]', '[/ol]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_OL);?>')" />
-							<img class = "fb-bbcode" accesskey = "l" name = "addbbcode18" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_list_none.png" alt="li" onclick = "bbfontstyle('[li]', '[/li]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LI);?>')" />
-							<img class = "fb-bbcode" accesskey = "left" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_align_left.png" alt="left" onclick = "bbfontstyle('[left]', '[/left]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ALIGN_LEFT);?>')" />
-							<img class = "fb-bbcode" accesskey = "center" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_align_center.png" alt="center" onclick = "bbfontstyle('[center]', '[/center]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ALIGN_CENTER);?>')" />
-							<img class = "fb-bbcode" accesskey = "right" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_align_right.png" alt="right" onclick = "bbfontstyle('[right]', '[/right]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ALIGN_RIGHT);?>')" />
-							<img class = "fb-bbcode" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.png" style="cursor: auto;" />
-							<img class = "fb-bbcode" accesskey = "q" name = "addbbcode6" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>comment.png" alt="Quote" onclick = "bbfontstyle('[quote]', '[/quote]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_QUOTE);?>')" />
-							<img class = "fb-bbcode" accesskey = "c" name = "addbbcode8" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>code.png" alt="Code" onclick = "bbfontstyle('[code]', '[/code]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_CODE);?>')" />                            
-							<img class = "fb-bbcode" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.png" style="cursor: auto;" />
-							<img class = "fb-bbcode" accesskey = "p" name = "addbbcode14" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>picture_link.png" alt="Img" onclick = "javascript:dE('image');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINK);?>')" />
-							<img class = "fb-bbcode" accesskey = "w" name = "addbbcode16" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>link_url.png" alt="URL" onclick = "javascript:dE('link');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINK);?>')" />	
+							<img class = "kunena_bbcode" accesskey = "h" name = "addbbcode24" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>group_key.png" alt="Hide" onclick = "bbfontstyle('[hide]', '[/hide]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_HIDE);?>')" />
+							<img class = "kunena_bbcode" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.png" style="cursor: auto;" />
+							<img class = "kunena_bbcode" accesskey = "k" name = "addbbcode10" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_list_bullets.png" alt="ul" onclick = "bbfontstyle('[ul]', '[/ul]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_UL);?>')" />
+							<img class = "kunena_bbcode" accesskey = "o" name = "addbbcode12" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_list_numbers.png" alt="ol" onclick = "bbfontstyle('[ol]', '[/ol]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_OL);?>')" />
+							<img class = "kunena_bbcode" accesskey = "l" name = "addbbcode18" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_list_none.png" alt="li" onclick = "bbfontstyle('[li]', '[/li]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LI);?>')" />
+							<img class = "kunena_bbcode" accesskey = "left" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_align_left.png" alt="left" onclick = "bbfontstyle('[left]', '[/left]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ALIGN_LEFT);?>')" />
+							<img class = "kunena_bbcode" accesskey = "center" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_align_center.png" alt="center" onclick = "bbfontstyle('[center]', '[/center]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ALIGN_CENTER);?>')" />
+							<img class = "kunena_bbcode" accesskey = "right" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_align_right.png" alt="right" onclick = "bbfontstyle('[right]', '[/right]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ALIGN_RIGHT);?>')" />
+							<img class = "kunena_bbcode" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.png" style="cursor: auto;" />
+							<img class = "kunena_bbcode" accesskey = "q" name = "addbbcode6" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>comment.png" alt="Quote" onclick = "bbfontstyle('[quote]', '[/quote]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_QUOTE);?>')" />
+							<img class = "kunena_bbcode" accesskey = "c" name = "addbbcode8" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>code.png" alt="Code" onclick = "bbfontstyle('[code]', '[/code]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_CODE);?>')" />                            
+							<img class = "kunena_bbcode" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.png" style="cursor: auto;" />
+							<img class = "kunena_bbcode" accesskey = "p" name = "addbbcode14" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>picture_link.png" alt="Img" onclick = "javascript:dE('image');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINK);?>')" />
+							<img class = "kunena_bbcode" accesskey = "w" name = "addbbcode16" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>link_url.png" alt="URL" onclick = "javascript:dE('link');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINK);?>')" />	
 							<?php if ($fbConfig->showebaytag) {?>
-							<img class = "fb-bbcode" accesskey = "e" name = "addbbcode20" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>ebay.png" alt="Ebay" onclick = "bbfontstyle('[ebay]', '[/ebay]')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_EBAY);?>')" />
+							<img class = "kunena_bbcode" accesskey = "e" name = "addbbcode20" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>ebay.png" alt="Ebay" onclick = "bbfontstyle('[ebay]', '[/ebay]')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_EBAY);?>')" />
 							<?php } ?>
 							<?php if ($fbConfig->showvideotag) {?>
 								&nbsp;<span style="white-space:nowrap;">
@@ -304,10 +304,10 @@ class smile
                         </td>
                     </tr>
 <!-- start of extendable fiels -->
-					<tr><td class = "fb-postbuttons">
-						<div id="fb-color_palette" style="display: none;">
+					<tr><td class = "kunena_postbuttons">
+						<div id="kunena_color_palette" style="display: none;">
 							<script type="text/javascript">
-								function change_palette() {dE('fb-color_palette');}
+								function change_palette() {dE('kunena_color_palette');}
 								colorPalette('h', '4%', '15px');
 							</script>
 						</div>

@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id$
+* @version $Id:kunena_category_list_bottom.php 884 2009-06-16 03:48:56Z fxstein $
 * Kunena Component
 * @package Kunena
 *
@@ -62,7 +62,7 @@ $fbConfig =& CKunenaConfig::getInstance();
         </tr>
     </thead>
 
-    <tbody id = "fb-bottomarea_tbody">
+    <tbody id = "kunena_bottomarea_tbody">
         <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
             <td class = "td-1 fbs">
                 <?php

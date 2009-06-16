@@ -185,7 +185,7 @@ class HTML_userlist_content
 
             <tbody>
                 <tr>
-                    <td class = "<?php echo $boardclass; ?>fb-userlistinfo">
+                    <td class = "<?php echo $boardclass; ?>kunena_userlistinfo">
                         <!-- Begin: Listing -->
                         <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
                             <tr class = "kunena_sth  fbs">

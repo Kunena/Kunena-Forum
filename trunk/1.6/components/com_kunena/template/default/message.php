@@ -60,8 +60,8 @@ if ($fbConfig->kunena_profile == 'cb')
         </tr>
 
         <tr>
-              <td class = "fb-msgview-left">
-                <div class = "fb-msgview-l-cover">
+              <td class = "kunena_msgview-left">
+                <div class = "kunena_msgview-l-cover">
 <?php 
 					if ($profileHtml)
 					{
@@ -216,7 +216,7 @@ if ($fbConfig->kunena_profile == 'cb')
                 </div>
             </td>
 
-            <td class = "fb-msgview-right">
+            <td class = "kunena_msgview-right">
                 <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
                     <tr>
                         <td align = "left">
@@ -321,9 +321,9 @@ if ($fbConfig->kunena_profile == 'cb')
         </tr>
 
   <tr>
-            <td class = "fb-msgview-left-c">&nbsp;
+            <td class = "kunena_msgview-left-c">&nbsp;
             </td>
-            <td class = "fb-msgview-right-c" >
+            <td class = "kunena_msgview-right-c" >
                          <div class="kunena_smalltext" >
                    <?php
                             if ($fbConfig->reportmsg && $kunena_my->id > 1)
@@ -343,9 +343,9 @@ if ($fbConfig->kunena_profile == 'cb')
 if ($fmessage->modified_by) {
   ?>
         <tr>
-            <td class = "fb-msgview-left-c">&nbsp;
+            <td class = "kunena_msgview-left-c">&nbsp;
             </td>
-            <td class = "fb-msgview-right-c" >
+            <td class = "kunena_msgview-right-c" >
                     <div class="kunena_message_editMarkUp_cover">
                     <span class="kunena_message_editMarkUp" ><?php echo _KUNENA_EDITING_LASTEDIT;?>: <?php echo date(_DATETIME, $fmessage->modified_time);?> <?php echo _KUNENA_BY; ?> <?php echo CKunenaTools::whoisID($fmessage->modified_by)?>.
                     <?php
@@ -364,9 +364,9 @@ if ($fmessage->modified_by) {
 if (isset($msg_signature)) {
   ?>
         <tr>
-            <td class = "fb-msgview-left-c">&nbsp;
+            <td class = "kunena_msgview-left-c">&nbsp;
             </td>
-            <td class = "fb-msgview-right-c" >
+            <td class = "kunena_msgview-right-c" >
 
 				   <div class="msgsignature" >
 					<?php   echo $msg_signature; ?>
@@ -378,11 +378,11 @@ if (isset($msg_signature)) {
 ?>
 
         <tr>
-            <td class = "fb-msgview-left-b">&nbsp;
+            <td class = "kunena_msgview-left-b">&nbsp;
 
             </td>
 
-            <td class = "fb-msgview-right-b" align = "right">
+            <td class = "kunena_msgview-right-b" align = "right">
                 <span id = "kunena_qr_sc__<?php echo $msg_id;?>" class = "kunena_qr_fire" style = "cursor:hand; cursor:pointer">
 
                 <?php

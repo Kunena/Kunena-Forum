@@ -89,7 +89,7 @@ function colorPalette(dir, width, height)
 	numberList[2] = '80';
 	numberList[3] = 'BF';
 	numberList[4] = 'FF';
-	document.writeln('<table class="fb-color_table" cellspacing="1" cellpadding="0" border="0" style="width: 100%;">');
+	document.writeln('<table class="kunena_color_table" cellspacing="1" cellpadding="0" border="0" style="width: 100%;">');
 	for (r = 0; r < 5; r++)
 	{
 		if (dir == 'h')	{document.writeln('<tr>');}
@@ -110,13 +110,13 @@ function colorPalette(dir, width, height)
 
 jQuery(document).ready(function()
 {
-	jQuery('table.fb-color_table td').click( function() 
+	jQuery('table.kunena_color_table td').click( function() 
 	{ 
 //		var color = jQuery(this).css('background-color');
 		var color = jQuery(this).attr('id');
 		bbfontstyle('[color=#' + color + ']', '[/color]'); return false; 
 	} );
-	jQuery('select#fb-bbcode_size').change( function() 
+	jQuery('select#kunena_bbcode_size').change( function() 
 	{ 
 		var size = jQuery(this).val();
 		bbfontstyle('[size=' + size + ']', '[/size]'); return false; 

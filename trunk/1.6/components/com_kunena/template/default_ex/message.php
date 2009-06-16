@@ -60,7 +60,7 @@ if ($fbConfig->kunena_profile == 'cb')
 
         <tr> <!-- -->
 
-        <td class = "fb-msgview-right">
+        <td class = "kunena_msgview-right">
                 <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
                     <tr>
                         <td align = "left">
@@ -163,8 +163,8 @@ if ($fbConfig->kunena_profile == 'cb')
                 </table>
             </td>
 
-              <td class = "fb-msgview-left">
-                <div class = "fb-msgview-l-cover">
+              <td class = "kunena_msgview-left">
+                <div class = "kunena_msgview-l-cover">
 <?php 
 					if ($profileHtml)
 					{
@@ -322,7 +322,7 @@ if ($fbConfig->kunena_profile == 'cb')
 
         </tr>
 
-	<tr><td class = "fb-msgview-right-b" >
+	<tr><td class = "kunena_msgview-right-b" >
 		<div class="kunena_message_editMarkUp_cover">
 <?php
 	if ($fmessage->modified_by) {
@@ -435,7 +435,7 @@ if (isset($msg_signature)) {
 ?>
 
             </td>
-            <td class = "fb-msgview-left-b">&nbsp;
+            <td class = "kunena_msgview-left-b">&nbsp;
 
             </td>
 

@@ -334,7 +334,7 @@ if (in_array($catid, $allow_forum))
             </tr>
         </thead>
         <!-- /bottom nav -->
-        <tbody id = "fb-bottomarea_tbody">
+        <tbody id = "kunena_bottomarea_tbody">
             <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
                 <td class = "td-1 fbs" align="left">
                     <?php

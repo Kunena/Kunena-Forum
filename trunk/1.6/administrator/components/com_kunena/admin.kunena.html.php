@@ -27,42 +27,42 @@ class html_Kunena
 function showFbHeader () {
 ?>
 <style>
-#fbadmin {
+#kunenaadmin {
 text-align:left;
 }
-#fbheader {
+#kunenaheader {
 clear:both;
 }
-#fbmenu {
+#kunenamenu {
 margin-top:15px;
 border-top:1px solid #ccc;
 }
-#fbmenu a{
+#kunenamenu a{
 display:block;
 font-size:11px;
 border-left:1px solid #ccc;
 border-bottom:1px solid #ccc;
 
 }
-.fbmainmenu {
+.kunenamainmenu {
 background:#FBFBFB;
 padding:5px;
 }
-.fbactivemenu {
+.kunenaactivemenu {
 background:#fff;
 padding:5px;
 }
-.fbsubmenu {
+.kunenasubmenu {
 background:#fff;
 padding-left:10px;
 padding:5px 5px 5px 15px;
 }
-.fbright {
+.kunenaright {
 border:1px solid #ccc;
 background:#fff;
 padding:5px;
 }
-.fbfooter {
+.kunenafooter {
 font-size:10px;
 text-align: right;
 padding:5px;
@@ -71,7 +71,7 @@ border-bottom:1px solid #CCC;
 border-left:1px solid #CCC;
 border-right:1px solid #CCC;
 }
-.fbfunctitle {
+.kunenafunctitle {
 font-size:16px;
 text-align: left;
 padding:5px;
@@ -81,7 +81,7 @@ font-weight:bold;
 margin-bottom:10px;
 clear:both;
 }
-.fbfuncsubtitle {
+.kunenafuncsubtitle {
 font-size:14px;
 text-align: left;
 padding:5px;
@@ -90,74 +90,74 @@ font-weight:bold;
 color:#7F9DB9;
 margin:10px 0 10px 0;
 }
-.fbrow0 td {
+.kunenarow0 td {
 padding:8px 5px;
 text-align:left;
 border-bottom:1px  dotted #ccc;
 }
-.fbrow1 td {
+.kunenarow1 td {
 padding:8px 5px;
 text-align:left;
 border-bottom:1px dotted #ccc;
 }
-td.fbtdtitle {
+td.kunenatdtitle {
 font-weight:bold;
 padding-left:10px;
 color:#666;
 }
-#fbcongifcover fieldset {
+#kunenacongifcover fieldset {
 border: 1px solid #CFDCEB;
 }
-#fbcongifcover fieldset legend{
+#kunenacongifcover fieldset legend{
 color:#666;
 }
 </style>
 
-<div id="fbadmin">
+<div id="kunenaadmin">
  <!-- Header -->
  <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td width="170" valign="top">
     <!-- Begin: AdminLeft -->
-        <div id="fbheader">
+        <div id="kunenaheader">
         <a href = "index2.php?option=com_kunena"><img src = "components/com_kunena/images/kunena.logo.png"  border="0" alt = "<?php echo _COM_C_BACK; ?>"/></a>
         </div>
         <!-- Begin : Kunena Left Menu -->
-        <div id="fbmenu">
+        <div id="kunenamenu">
 
         <?php $stask=JRequest::getVar('task', null);?>
-        <a class="fbmainmenu" href = "index2.php?option=com_kunena"><?php echo _KUNENA_CP; ?></a>
+        <a class="kunenamainmenu" href = "index2.php?option=com_kunena"><?php echo _KUNENA_CP; ?></a>
 
-           <a class="fbmainmenu" href = "index2.php?option=com_kunena&task=showconfig"><?php echo _COM_C_FBCONFIG; ?></a>
+           <a class="kunenamainmenu" href = "index2.php?option=com_kunena&task=showconfig"><?php echo _COM_C_FBCONFIG; ?></a>
            <?php if ( $stask == 'showconfig' ) { ; ?>
-           		<a class="fbsubmenu" href = "#basics"><?php echo _COM_A_BASICS; ?></a>
-                <a class="fbsubmenu" href = "#frontend"><?php echo _COM_A_FRONTEND; ?></a>
-                <a class="fbsubmenu" href = "#security"><?php echo _COM_A_SECURITY; ?></a>
-                <a class="fbsubmenu" href = "#avatars"><?php echo _COM_A_AVATARS; ?></a>
-                <a class="fbsubmenu" href = "#uploads"><?php echo _COM_A_UPLOADS; ?></a>
-                <a class="fbsubmenu" href = "#ranking"><?php echo _COM_A_RANKING; ?></a>
-                <a class="fbsubmenu" href = "#bbcode"><?php echo _COM_A_BBCODE; ?></a>
-                <a class="fbsubmenu" href = "#integration"><?php echo _COM_A_INTEGRATION; ?></a>
-                <a class="fbsubmenu" href = "#plugins"><?php echo _KUNENA_ADMIN_CONFIG_PLUGINS; ?></a>
+           		<a class="kunenasubmenu" href = "#basics"><?php echo _COM_A_BASICS; ?></a>
+                <a class="kunenasubmenu" href = "#frontend"><?php echo _COM_A_FRONTEND; ?></a>
+                <a class="kunenasubmenu" href = "#security"><?php echo _COM_A_SECURITY; ?></a>
+                <a class="kunenasubmenu" href = "#avatars"><?php echo _COM_A_AVATARS; ?></a>
+                <a class="kunenasubmenu" href = "#uploads"><?php echo _COM_A_UPLOADS; ?></a>
+                <a class="kunenasubmenu" href = "#ranking"><?php echo _COM_A_RANKING; ?></a>
+                <a class="kunenasubmenu" href = "#bbcode"><?php echo _COM_A_BBCODE; ?></a>
+                <a class="kunenasubmenu" href = "#integration"><?php echo _COM_A_INTEGRATION; ?></a>
+                <a class="kunenasubmenu" href = "#plugins"><?php echo _KUNENA_ADMIN_CONFIG_PLUGINS; ?></a>
             <?php } ?>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=showAdministration"><?php echo _COM_C_FORUM; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=showprofiles"><?php echo _COM_C_USER; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=showsmilies"><?php echo _KUNENA_EMOTICONS_EDIT_SMILIES;?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=ranks"><?php echo _KUNENA_RANKS_MANAGE; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=browseFiles"><?php echo _COM_C_FILES; ?> </a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=browseImages"><?php echo _COM_C_IMAGES; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=showCss"><?php echo _COM_C_CSS; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=pruneforum"><?php echo _COM_C_PRUNETAB; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=syncusers"><?php echo _KUNENA_SYNC_USERS; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=recount"><?php echo _KUNENA_RECOUNTFORUMS; ?></a>
-           <a class="fbmainmenu"  href = "http://www.Kunena.com" target = "_blank" ><?php echo _COM_C_SUPPORT; ?></a>
+           <a class="kunenamainmenu"  href = "index2.php?option=com_kunena&task=showAdministration"><?php echo _COM_C_FORUM; ?></a>
+           <a class="kunenamainmenu"  href = "index2.php?option=com_kunena&task=showprofiles"><?php echo _COM_C_USER; ?></a>
+           <a class="kunenamainmenu"  href = "index2.php?option=com_kunena&task=showsmilies"><?php echo _KUNENA_EMOTICONS_EDIT_SMILIES;?></a>
+           <a class="kunenamainmenu"  href = "index2.php?option=com_kunena&task=ranks"><?php echo _KUNENA_RANKS_MANAGE; ?></a>
+           <a class="kunenamainmenu"  href = "index2.php?option=com_kunena&task=browseFiles"><?php echo _COM_C_FILES; ?> </a>
+           <a class="kunenamainmenu"  href = "index2.php?option=com_kunena&task=browseImages"><?php echo _COM_C_IMAGES; ?></a>
+           <a class="kunenamainmenu"  href = "index2.php?option=com_kunena&task=showCss"><?php echo _COM_C_CSS; ?></a>
+           <a class="kunenamainmenu"  href = "index2.php?option=com_kunena&task=pruneforum"><?php echo _COM_C_PRUNETAB; ?></a>
+           <a class="kunenamainmenu"  href = "index2.php?option=com_kunena&task=syncusers"><?php echo _KUNENA_SYNC_USERS; ?></a>
+           <a class="kunenamainmenu"  href = "index2.php?option=com_kunena&task=recount"><?php echo _KUNENA_RECOUNTFORUMS; ?></a>
+           <a class="kunenamainmenu"  href = "http://www.Kunena.com" target = "_blank" ><?php echo _COM_C_SUPPORT; ?></a>
 
         </div>
         <!-- Finish : Kunena Left Menu -->
 
     <!-- Finish: AdminLeft -->
     </td>
-    <td  valign="top" class="fbright">
+    <td  valign="top" class="kunenaright">
     <!-- Begin: AdminRight -->
 
 
@@ -167,7 +167,7 @@ color:#666;
 
 // Begin: FOOTER FUNC
 function showFbFooter () {
-$fbConfig =& CKunenaConfig::getInstance();
+$kunenaConfig =& CKunenaConfig::getInstance();
 
 require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 ?>
@@ -178,12 +178,12 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
   </tr>
   <tr><td></td><td>
  <!-- Footer -->
-<div class="fbfooter"><?php echo CKunenaVersion::versionHTML(); ?></div>
+<div class="kunenafooter"><?php echo CKunenaVersion::versionHTML(); ?></div>
 <!-- /Footer -->
   </td></tr>
 </table>
 
-</div><!-- Close div.fbadmin -->
+</div><!-- Close div.kunenaadmin -->
 <?php } // Finish: FOOTER FUNC
 
 
@@ -191,7 +191,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
     {
 ?>
 
-        <div class="fbfunctitle"><?php echo _KUNENA_CP; ?></div>
+        <div class="kunenafunctitle"><?php echo _KUNENA_CP; ?></div>
 
 
         <?php
@@ -209,7 +209,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
     function showAdministration($rows, $children, $pageNav, $option)
     {
         ?>
-<div class="fbfunctitle"><?php echo _KUNENA_ADMIN; ?></div>
+<div class="kunenafunctitle"><?php echo _KUNENA_ADMIN; ?></div>
         <form action = "index2.php" method = "post" name = "adminForm">
             <table  cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
                 <tr>
@@ -441,10 +441,10 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
             }
         </script>
 
-        <div class="fbfunctitle"><?php echo $row->id ? _KUNENA_EDIT : _KUNENA_ADD; ?> <?php echo _KUNENA_CATFOR; ?></div>
+        <div class="kunenafunctitle"><?php echo $row->id ? _KUNENA_EDIT : _KUNENA_ADD; ?> <?php echo _KUNENA_CATFOR; ?></div>
 
         <form action = "index2.php" method = "POST" name = "adminForm">
-           <div class="fbfuncsubtitle"><?php echo _KUNENA_BASICSFORUM; ?></div>
+           <div class="kunenafuncsubtitle"><?php echo _KUNENA_BASICSFORUM; ?></div>
            <fieldset>
            <legend> <?php echo _KUNENA_BASICSFORUMINFO; ?></legend>
             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" >
@@ -489,7 +489,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </tr>
             </table>
 </fieldset>
-           <div class="fbfuncsubtitle"><?php echo _KUNENA_ADVANCEDDESC; ?></div>
+           <div class="kunenafuncsubtitle"><?php echo _KUNENA_ADVANCEDDESC; ?></div>
            <fieldset>
            <legend> <?php echo _KUNENA_ADVANCEDDESCINFO; ?></legend>
 
@@ -584,7 +584,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
             </table>
            </fieldset>
 
-           <div class="fbfuncsubtitle"><?php echo _KUNENA_MODNEWDESC; ?></div>
+           <div class="kunenafuncsubtitle"><?php echo _KUNENA_MODNEWDESC; ?></div>
            <fieldset>
            <legend> <?php echo _KUNENA_MODHEADER; ?></legend>
 
@@ -609,7 +609,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
             ?>
 
 
-<div class="fbfuncsubtitle"><?php echo _KUNENA_MODSASSIGNED; ?></div>
+<div class="kunenafuncsubtitle"><?php echo _KUNENA_MODSASSIGNED; ?></div>
 
                 <table class = "adminlist" border = "0" cellspacing = "0" cellpadding = "3" width = "100%">
                     <tr>
@@ -697,7 +697,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
         <?php
     }
 
-    function showConfig(&$fbConfig, &$lists, $option)
+    function showConfig(&$kunenaConfig, &$lists, $option)
     {
         jimport('joomla.html.pane');
         $pane =& JPane::getInstance('tabs', array('startOffset'=>0));
@@ -705,22 +705,22 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 		echo $pane->startPane( 'pane' );
 		echo $pane->startPanel( 'Config', 'panel1' );
         ?>
-<div id="fbcongifcover">
-<div class="fbfunctitle"><?php echo _COM_A_CONFIG ?></div>
+<div id="kunenacongifcover">
+<div class="kunenafunctitle"><?php echo _COM_A_CONFIG ?></div>
         <form action = "index2.php" method = "post" name = "adminForm">
-		<div class="fbfuncsubtitle"><?php echo _COM_A_BASICS ?><a name="basics" id="basics" > </a></div>
+		<div class="kunenafuncsubtitle"><?php echo _COM_A_BASICS ?><a name="basics" id="basics" > </a></div>
 
         <fieldset>
 			<legend> <?php echo _COM_A_BASIC_SETTINGS ?></legend>
 
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
 
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top"   width="25%"><?php echo _COM_A_BOARD_TITLE ?>
                     </td>
 
                     <td align = "left" valign = "top"  width="25%" >
-                        <input type = "text" name = "cfg_board_title" value = "<?php echo stripslashes($fbConfig->board_title); ?>"/>
+                        <input type = "text" name = "cfg_board_title" value = "<?php echo stripslashes($kunenaConfig->board_title); ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_BOARD_TITLE_DESC ?>
@@ -732,7 +732,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_email" value = "<?php echo $fbConfig->email; ?>"/>
+                        <input type = "text" name = "cfg_email" value = "<?php echo $kunenaConfig->email; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_EMAIL_DESC ?>
@@ -755,7 +755,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_board_ofset" value = "<?php echo $fbConfig->board_ofset; ?>"/>
+                        <input type = "text" name = "cfg_board_ofset" value = "<?php echo $kunenaConfig->board_ofset; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_BOARD_OFSET_DESC ?>
@@ -767,7 +767,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_fbsessiontimeout" value = "<?php echo $fbConfig->fbsessiontimeout; ?>"/>
+                        <input type = "text" name = "cfg_kunenasessiontimeout" value = "<?php echo $kunenaConfig->kunenasessiontimeout; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_KUNENA_SESSION_TIMEOUT_DESC ?>
@@ -779,7 +779,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top" colspan = "2">
-                        <textarea name = "cfg_offline_message" rows = "3" cols = "50"><?php echo stripslashes($fbConfig->offline_message); ?></textarea>
+                        <textarea name = "cfg_offline_message" rows = "3" cols = "50"><?php echo stripslashes($kunenaConfig->offline_message); ?></textarea>
                     </td>
                 </tr>
 
@@ -831,18 +831,18 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
             </table>
 		</fieldset>
 
-		<div class="fbfuncsubtitle"><?php echo _COM_A_FRONTEND ?> <a name="frontend" id="frontend" > </a></div>
+		<div class="kunenafuncsubtitle"><?php echo _COM_A_FRONTEND ?> <a name="frontend" id="frontend" > </a></div>
 
           <fieldset>
 			<legend> <?php echo _COM_A_LOOKS ?></legend>
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
 
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top" width="25%"><?php echo _COM_A_THREADS ?>
                     </td>
 
                     <td align = "left" valign = "top" width="25%">
-                        <input type = "text" name = "cfg_threads_per_page" value = "<?php echo $fbConfig->threads_per_page; ?>"/>
+                        <input type = "text" name = "cfg_threads_per_page" value = "<?php echo $kunenaConfig->threads_per_page; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_THREADS_DESC ?>
@@ -854,7 +854,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_messages_per_page" value = "<?php echo $fbConfig->messages_per_page; ?>"/>
+                        <input type = "text" name = "cfg_messages_per_page" value = "<?php echo $kunenaConfig->messages_per_page; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_MESSAGES_DESC ?>
@@ -866,7 +866,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_messages_per_page_search" value = "<?php echo $fbConfig->messages_per_page_search; ?>"/>
+                        <input type = "text" name = "cfg_messages_per_page_search" value = "<?php echo $kunenaConfig->messages_per_page_search; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_MESSAGES_DESC_SEARCH ?>
@@ -889,7 +889,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_historylimit" value = "<?php echo $fbConfig->historylimit;?>"/>
+                        <input type = "text" name = "cfg_historylimit" value = "<?php echo $kunenaConfig->historylimit;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_HISTLIM_DESC ?>
@@ -912,7 +912,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_newchar" value = "<?php echo stripslashes($fbConfig->newchar);?>"/>
+                        <input type = "text" name = "cfg_newchar" value = "<?php echo stripslashes($kunenaConfig->newchar);?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_NEWCHAR_DESC ?>
@@ -967,7 +967,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"  ><?php echo _COM_A_FBDEFAULT_PAGE ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo $lists['fbdefaultpage']; ?>
+                    <td align = "left" valign = "top"><?php echo $lists['kunenadefaultpage']; ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_FBDEFAULT_PAGE_DESC ?>
@@ -1011,7 +1011,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_catimagepath" value = "<?php echo $fbConfig->catimagepath;?>"/>
+                        <input type = "text" name = "cfg_catimagepath" value = "<?php echo $kunenaConfig->catimagepath;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_CATIMAGEPATH_DESC ?>
@@ -1021,7 +1021,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_CHILD_CATEGORY_COLON ?>
                     </td>
 					 <td align = "left" valign = "top">
-                    <input type = "text" name = "cfg_numchildcolumn" value = "<?php echo $fbConfig->numchildcolumn;?>"/>
+                    <input type = "text" name = "cfg_numchildcolumn" value = "<?php echo $kunenaConfig->numchildcolumn;?>"/>
                     </td>
                     <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_CHILD_CATEGORY_COLONDESC ?>
                     </td>
@@ -1042,7 +1042,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_annmodid" value = "<?php echo $fbConfig->annmodid;?>"/>
+                        <input type = "text" name = "cfg_annmodid" value = "<?php echo $kunenaConfig->annmodid;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_ANN_MODID_DESC ?>
@@ -1054,7 +1054,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_rtewidth" value = "<?php echo $fbConfig->rtewidth;?>"/>
+                        <input type = "text" name = "cfg_rtewidth" value = "<?php echo $kunenaConfig->rtewidth;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_TAWIDTH_DESC ?>
@@ -1066,7 +1066,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_rteheight" value = "<?php echo $fbConfig->rteheight;?>"/>
+                        <input type = "text" name = "cfg_rteheight" value = "<?php echo $kunenaConfig->rteheight;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_TAHEIGHT_DESC ?>
@@ -1087,7 +1087,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE_IN_FB ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo $lists['rules_infb']; ?>
+                    <td align = "left" valign = "top"><?php echo $lists['rules_inkunena']; ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE_IN_KUNENA_DESC ?>
@@ -1097,7 +1097,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE_CID ?>
                     </td>
 
-                    <td align = "left" valign = "top"><input type = "text" name = "cfg_rules_cid" value = "<?php echo $fbConfig->rules_cid;?>"/>
+                    <td align = "left" valign = "top"><input type = "text" name = "cfg_rules_cid" value = "<?php echo $kunenaConfig->rules_cid;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE_CID_DESC ?>
@@ -1107,7 +1107,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE_LINK ?>
                     </td>
 
-                    <td align = "left" valign = "top"><input type = "text" name = "cfg_rules_link" value = "<?php echo $fbConfig->rules_link;?>"/>
+                    <td align = "left" valign = "top"><input type = "text" name = "cfg_rules_link" value = "<?php echo $kunenaConfig->rules_link;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE_LINK_DESC ?>
@@ -1127,7 +1127,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE_IN_FB ?>
                     </td>
 
-                    <td align = "left" valign = "top"><?php echo $lists['help_infb']; ?>
+                    <td align = "left" valign = "top"><?php echo $lists['help_inkunena']; ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE_IN_KUNENA_DESC ?>
@@ -1137,7 +1137,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE_CID ?>
                     </td>
 
-                    <td align = "left" valign = "top"><input type = "text" name = "cfg_help_cid" value = "<?php echo $fbConfig->help_cid;?>"/>
+                    <td align = "left" valign = "top"><input type = "text" name = "cfg_help_cid" value = "<?php echo $kunenaConfig->help_cid;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE_CID_DESC ?>
@@ -1147,7 +1147,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE_LINK ?>
                     </td>
 
-                    <td align = "left" valign = "top"><input type = "text" name = "cfg_help_link" value = "<?php echo $fbConfig->help_link;?>"/>
+                    <td align = "left" valign = "top"><input type = "text" name = "cfg_help_link" value = "<?php echo $kunenaConfig->help_link;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE_LINK_DESC ?>
@@ -1178,7 +1178,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 
           <fieldset>
 			<legend> <?php echo _COM_A_USERS ?></legend>
-             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
 
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top" width="25%"><?php echo _COM_A_USERNAME ?>
@@ -1240,7 +1240,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_statscolor" value = "<?php echo $fbConfig->statscolor;?>"/>
+                        <input type = "text" name = "cfg_statscolor" value = "<?php echo $kunenaConfig->statscolor;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_POSTSTATSCOLOR_DESC ?>
@@ -1256,43 +1256,43 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                         <table size = 100%>
                             <tr>
                               <td>
-                                1: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col1m.png" width = "15" height = "4">
+                                1: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col1m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                2: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col2m.png" width = "15" height = "4">
+                                2: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col2m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                3: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col3m.png" width = "15" height = "4">
+                                3: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col3m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                4: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col4m.png" width = "15" height = "4">
+                                4: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col4m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                5: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col5m.png" width = "15" height = "4">
+                                5: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col5m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                6: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col6m.png" width = "15" height = "4">
+                                6: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col6m.png" width = "15" height = "4">
                               </td>
                             </tr>
 
                             <tr>
                               <td>
-                                7: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col7m.png" width = "15" height = "4">
+                                7: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col7m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                8: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col8m.png" width = "15" height = "4">
+                                8: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col8m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                9: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col9m.png" width = "15" height = "4">
+                                9: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col9m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                10: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col10m.png" width = "15" height = "4">
+                                10: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col10m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                11: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col11m.png" width = "15" height = "4">
+                                11: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col11m.png" width = "15" height = "4">
                               </td>
                               <td>
-                                12: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col12m.png" width = "15" height = "4">
+                                12: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col12m.png" width = "15" height = "4">
                               </td>
                             </tr>
                         </table>
@@ -1327,7 +1327,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_useredittime" value = "<?php echo $fbConfig->useredittime;?>"/>
+                        <input type = "text" name = "cfg_useredittime" value = "<?php echo $kunenaConfig->useredittime;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_USER_EDIT_TIME_DESC ?>
@@ -1339,7 +1339,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_useredittimegrace" value = "<?php echo $fbConfig->useredittimegrace;?>"/>
+                        <input type = "text" name = "cfg_useredittimegrace" value = "<?php echo $kunenaConfig->useredittimegrace;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_USER_EDIT_TIMEGRACE_DESC ?>
@@ -1392,14 +1392,14 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 
           <fieldset>
 			<legend> <?php echo _COM_A_LENGTHS ?></legend>
-             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
 
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top"  width="25%"><?php echo _COM_A_WRAP ?>
                     </td>
 
                     <td align = "left" valign = "top" width="25%">
-                        <input type = "text" name = "cfg_wrap" value = "<?php echo $fbConfig->wrap;?>"/>
+                        <input type = "text" name = "cfg_wrap" value = "<?php echo $kunenaConfig->wrap;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_WRAP_DESC ?>
@@ -1411,7 +1411,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_maxsubject" value = "<?php echo $fbConfig->maxsubject;?>"/>
+                        <input type = "text" name = "cfg_maxsubject" value = "<?php echo $kunenaConfig->maxsubject;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_SUBJECTLENGTH_DESC ?>
@@ -1423,7 +1423,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_maxsig" value = "<?php echo $fbConfig->maxsig;?>"/>
+                        <input type = "text" name = "cfg_maxsig" value = "<?php echo $kunenaConfig->maxsig;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_SIGNATURE_DESC ?>
@@ -1431,10 +1431,10 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                 </tr>
             </table>
 	</fieldset>
-			<div class="fbfuncsubtitle"><?php echo _COM_A_SECURITY ?>  <a name="security" id="security" > </a></div>
+			<div class="kunenafuncsubtitle"><?php echo _COM_A_SECURITY ?>  <a name="security" id="security" > </a></div>
             <fieldset>
 			<legend> <?php echo _COM_A_SECURITY_SETTINGS ?></legend>
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
 
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top" width="25%"><?php echo _COM_A_REGISTERED_ONLY ?>
@@ -1474,7 +1474,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_floodprotection" value = "<?php echo $fbConfig->floodprotection;?>"/>
+                        <input type = "text" name = "cfg_floodprotection" value = "<?php echo $kunenaConfig->floodprotection;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_FLOOD_DESC ?>
@@ -1521,10 +1521,10 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                 </tr>
             </table>
           </fieldset>
-			<div class="fbfuncsubtitle"><?php echo _COM_A_AVATARS ?><a name="avatars" id="avatars" > </a></div>
+			<div class="kunenafuncsubtitle"><?php echo _COM_A_AVATARS ?><a name="avatars" id="avatars" > </a></div>
             <fieldset>
 			<legend> <?php echo _COM_A_AVATAR_SETTINGS ?></legend>
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
 
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top" width="25%"><?php echo _COM_A_AVATAR ?>
@@ -1570,14 +1570,14 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 
 				$kunena_gd = intval(KUNENA_gdVersion());
 				if ($kunena_gd > 0) {
-				   $fbmsg = _KUNENA_GD_INSTALLED .  $kunena_gd ;
+				   $kunenamsg = _KUNENA_GD_INSTALLED .  $kunena_gd ;
   				} elseif ($gdver == -1) {
-  				   $fbmsg = _KUNENA_GD_NO_VERSION;
+  				   $kunenamsg = _KUNENA_GD_NO_VERSION;
   			    } else {
-   				   $fbmsg = _KUNENA_GD_NOT_INSTALLED . '<a href="http://www.php.net/gd" target="_blank">http://www.php.net/gd</a>';
+   				   $kunenamsg = _KUNENA_GD_NOT_INSTALLED . '<a href="http://www.php.net/gd" target="_blank">http://www.php.net/gd</a>';
  			    }
 
-				    echo $fbmsg;
+				    echo $kunenamsg;
 
                     ?>
                     </td>
@@ -1587,7 +1587,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_avatarsmallheight" value = "<?php echo $fbConfig->avatarsmallheight;?>"/>
+                        <input type = "text" name = "cfg_avatarsmallheight" value = "<?php echo $kunenaConfig->avatarsmallheight;?>"/>
                     </td>
                 </tr>
 
@@ -1596,7 +1596,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_avatarsmallwidth" value = "<?php echo $fbConfig->avatarsmallwidth;?>"/>
+                        <input type = "text" name = "cfg_avatarsmallwidth" value = "<?php echo $kunenaConfig->avatarsmallwidth;?>"/>
                     </td>
                 </tr>
                 <tr align = "center" valign = "middle">
@@ -1604,7 +1604,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_avatarheight" value = "<?php echo $fbConfig->avatarheight;?>"/>
+                        <input type = "text" name = "cfg_avatarheight" value = "<?php echo $kunenaConfig->avatarheight;?>"/>
                     </td>
                 </tr>
 
@@ -1613,7 +1613,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_avatarwidth" value = "<?php echo $fbConfig->avatarwidth;?>"/>
+                        <input type = "text" name = "cfg_avatarwidth" value = "<?php echo $kunenaConfig->avatarwidth;?>"/>
                     </td>
                 </tr>
                 <tr align = "center" valign = "middle">
@@ -1621,7 +1621,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_avatarlargeheight" value = "<?php echo $fbConfig->avatarlargeheight;?>"/>
+                        <input type = "text" name = "cfg_avatarlargeheight" value = "<?php echo $kunenaConfig->avatarlargeheight;?>"/>
                     </td>
                 </tr>
 
@@ -1630,7 +1630,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_avatarlargewidth" value = "<?php echo $fbConfig->avatarlargewidth;?>"/>
+                        <input type = "text" name = "cfg_avatarlargewidth" value = "<?php echo $kunenaConfig->avatarlargewidth;?>"/>
                     </td>
                 </tr>
 
@@ -1639,7 +1639,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_avatarsize" value = "<?php echo $fbConfig->avatarsize;?>"/>
+                        <input type = "text" name = "cfg_avatarsize" value = "<?php echo $kunenaConfig->avatarsize;?>"/>
                     </td>
                 </tr>
                 <tr align = "center" valign = "middle">
@@ -1647,15 +1647,15 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_avatarquality" value = "<?php echo $fbConfig->avatarquality;?>"/> %
+                        <input type = "text" name = "cfg_avatarquality" value = "<?php echo $kunenaConfig->avatarquality;?>"/> %
                     </td>
                 </tr>
             </table>
  			</fieldset>
-			<div class="fbfuncsubtitle"><?php echo _COM_A_UPLOADS ?><a name="uploads" id="uploads" > </a></div>
+			<div class="kunenafuncsubtitle"><?php echo _COM_A_UPLOADS ?><a name="uploads" id="uploads" > </a></div>
             <fieldset>
 			<legend> <?php echo _COM_A_IMAGE ?></legend>
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
 
 
                 <tr align = "center" valign = "middle">
@@ -1685,7 +1685,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_imageheight" value = "<?php echo $fbConfig->imageheight;?>"/>
+                        <input type = "text" name = "cfg_imageheight" value = "<?php echo $kunenaConfig->imageheight;?>"/>
                     </td>
                 </tr>
 
@@ -1694,7 +1694,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_imagewidth" value = "<?php echo $fbConfig->imagewidth;?>"/>
+                        <input type = "text" name = "cfg_imagewidth" value = "<?php echo $kunenaConfig->imagewidth;?>"/>
                     </td>
                 </tr>
 
@@ -1703,14 +1703,14 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_imagesize" value = "<?php echo $fbConfig->imagesize;?>"/>
+                        <input type = "text" name = "cfg_imagesize" value = "<?php echo $kunenaConfig->imagesize;?>"/>
                     </td>
                 </tr>
                 </table>
                 </fieldset>
  <fieldset>
 			<legend> <?php echo _COM_A_FILE ?></legend>
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
 
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top" width="25%"><?php echo _COM_A_FILEUPLOAD ?>
@@ -1739,7 +1739,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_filetypes" value = "<?php echo $fbConfig->filetypes;?>"/>
+                        <input type = "text" name = "cfg_filetypes" value = "<?php echo $kunenaConfig->filetypes;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_FILEALLOWEDTYPES_DESC ?>
@@ -1751,18 +1751,18 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_filesize" value = "<?php echo $fbConfig->filesize;?>"/>
+                        <input type = "text" name = "cfg_filesize" value = "<?php echo $kunenaConfig->filesize;?>"/>
                     </td>
                 </tr>
             </table>
 
                 </fieldset>
 
-			<div class="fbfuncsubtitle"><?php echo _COM_A_RANKING ?><a name="ranking" id="ranking" > </a></div>
+			<div class="kunenafuncsubtitle"><?php echo _COM_A_RANKING ?><a name="ranking" id="ranking" > </a></div>
 
           <fieldset>
 			<legend> <?php echo _COM_A_RANKING_SETTINGS ?></legend>
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top" width="25%"><?php echo _COM_A_RANKING ?>
                     </td>
@@ -1789,11 +1789,11 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 
 
 
-		<div class="fbfuncsubtitle"><?php echo _COM_A_BBCODE ?><a name="bbcode" id="bbcode" > </a></div>
+		<div class="kunenafuncsubtitle"><?php echo _COM_A_BBCODE ?><a name="bbcode" id="bbcode" > </a></div>
 
           <fieldset>
 			<legend> <?php echo _COM_A_BBCODE_SETTINGS ?></legend>
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top" width="25%"><?php echo _COM_A_SHOWSPOILERTAG ?>
                     </td>
@@ -1832,7 +1832,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_ebaylanguagecode" value = "<?php echo $fbConfig->ebaylanguagecode;?>"/>
+                        <input type = "text" name = "cfg_ebaylanguagecode" value = "<?php echo $kunenaConfig->ebaylanguagecode;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_EBAYLANGUAGECODE_DESC ?>
@@ -1855,7 +1855,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_trimlongurlsfront" value = "<?php echo $fbConfig->trimlongurlsfront;?>"/>
+                        <input type = "text" name = "cfg_trimlongurlsfront" value = "<?php echo $kunenaConfig->trimlongurlsfront;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_TRIMLONGURLSFRONT_DESC ?>
@@ -1867,7 +1867,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_trimlongurlsback" value = "<?php echo $fbConfig->trimlongurlsback;?>"/>
+                        <input type = "text" name = "cfg_trimlongurlsback" value = "<?php echo $kunenaConfig->trimlongurlsback;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_TRIMLONGURLSBACK_DESC ?>
@@ -1910,10 +1910,10 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
             </table>
 		</fieldset>
 
-			<div class="fbfuncsubtitle"><?php echo _COM_A_INTEGRATION ?><a name="integration" id="integration" > </a></div>
+			<div class="kunenafuncsubtitle"><?php echo _COM_A_INTEGRATION ?><a name="integration" id="integration" > </a></div>
          <fieldset>
 			<legend> <?php echo _COM_A_AVATAR_INTEGRATION ?></legend>
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
 
 
                 <tr align = "center" valign = "middle">
@@ -1930,7 +1930,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 			</fieldset>
 			<fieldset>
 			<legend> <?php echo _KUNENA_FORUMPRF_TITLE ?></legend>
-     		<table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+     		<table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
 
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_FORUMPRF ?>
@@ -1948,7 +1948,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 			</fieldset>
 			<fieldset>
 			<legend> <?php echo _COM_A_PMS_TITLE ?></legend>
-   			<table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+   			<table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
 
 
                 <tr align = "center" valign = "middle">
@@ -1965,7 +1965,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 </fieldset>
 <fieldset>
 			<legend> <?php echo _COM_A_MOSBOT_TITLE ?></legend>
-   <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+   <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
 
 
                 <tr align = "center" valign = "middle">
@@ -1983,10 +1983,10 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 </fieldset>
 
 
-            <div class="fbfuncsubtitle"><?php echo _KUNENA_ADMIN_CONFIG_PLUGINS ?><a name="plugins" id="plugins"> </a></div>
+            <div class="kunenafuncsubtitle"><?php echo _KUNENA_ADMIN_CONFIG_PLUGINS ?><a name="plugins" id="plugins"> </a></div>
 <fieldset>
 			<legend> <?php echo _KUNENA_ADMIN_CONFIG_USERLIST ?></legend>
-   <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+   <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
 
 
                 <tr align = "center" valign = "middle">
@@ -1994,7 +1994,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top" width="25%">
-                        <input type = "text" name = "cfg_userlist_rows" value = "<?php echo $fbConfig->userlist_rows;?>"/>
+                        <input type = "text" name = "cfg_userlist_rows" value = "<?php echo $kunenaConfig->userlist_rows;?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_ROWS_DESC ?>
@@ -2136,7 +2136,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
         </fieldset>
         <fieldset>
 			<legend> <?php echo _KUNENA_RECENT_POSTS ?></legend>
-   <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+   <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
 
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_SHOW_LATEST_MESSAGES ?>
@@ -2154,7 +2154,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_latestcount" value = "<?php echo $fbConfig->latestcount; ?>"/>
+                        <input type = "text" name = "cfg_latestcount" value = "<?php echo $kunenaConfig->latestcount; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_NUMBER_OF_LATEST_MESSAGES_DESC ?>
@@ -2166,7 +2166,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_latestcountperpage" value = "<?php echo $fbConfig->latestcountperpage; ?>"/>
+                        <input type = "text" name = "cfg_latestcountperpage" value = "<?php echo $kunenaConfig->latestcountperpage; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_COUNT_PER_PAGE_LATEST_MESSAGES_DESC ?>
@@ -2178,7 +2178,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_latestcategory" value = "<?php echo $fbConfig->latestcategory; ?>"/>
+                        <input type = "text" name = "cfg_latestcategory" value = "<?php echo $kunenaConfig->latestcategory; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_LATEST_CATEGORY_DESC ?>
@@ -2212,7 +2212,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_latestsubjectlength" value = "<?php echo $fbConfig->latestsubjectlength; ?>"/>
+                        <input type = "text" name = "cfg_latestsubjectlength" value = "<?php echo $kunenaConfig->latestsubjectlength; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_LATEST_SUBJECT_LENGTH_DESC ?>
@@ -2246,7 +2246,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_latestshowauthor" value = "<?php echo $fbConfig->latestshowauthor; ?>" size = "1"/>
+                        <input type = "text" name = "cfg_latestshowauthor" value = "<?php echo $kunenaConfig->latestshowauthor; ?>" size = "1"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_AUTHOR_DESC ?>
@@ -2257,7 +2257,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 
                <fieldset>
 			<legend> <?php echo _KUNENA_STATS ?></legend>
-   <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+   <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
 
 
                 <tr align = "center" valign = "middle">
@@ -2309,7 +2309,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_popusercount" value = "<?php echo $fbConfig->popusercount; ?>"/>
+                        <input type = "text" name = "cfg_popusercount" value = "<?php echo $kunenaConfig->popusercount; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_USERNUM; ?>
@@ -2332,7 +2332,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_popsubjectcount" value = "<?php echo $fbConfig->popsubjectcount; ?>"/>
+                        <input type = "text" name = "cfg_popsubjectcount" value = "<?php echo $kunenaConfig->popsubjectcount; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_NUMPOP; ?>
@@ -2343,7 +2343,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 
                <fieldset>
 			<legend> <?php echo _KUNENA_MYPROFILE_PLUGIN_SETTINGS ?></legend>
-   <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+   <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
 
 
                 <tr align = "center" valign = "middle">
@@ -2418,7 +2418,7 @@ echo $pane->endPane();
         $content = fread($f, filesize($file));
         $content = kunena_htmlspecialchars($content);
 ?>
-<div class="fbfunctitle"><?php echo _KUNENA_CSSEDITOR; ?></div>
+<div class="kunenafunctitle"><?php echo _KUNENA_CSSEDITOR; ?></div>
     <form action = "index2.php?" method = "post" name = "adminForm" class = "adminForm" id = "adminForm">
 
 
@@ -2452,7 +2452,7 @@ echo $pane->endPane();
     function showProfiles($option, $lang, &$profileList, $countPL, $pageNavSP, $order, $search)
     {
 ?>
-<div class="fbfunctitle"><?php echo _KUNENA_FUM; ?></div>
+<div class="kunenafunctitle"><?php echo _KUNENA_FUM; ?></div>
         <form action = "index2.php" method = "POST" name = "adminForm">
             <table  cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
                 <tr>
@@ -2739,7 +2739,7 @@ echo $pane->endPane();
     //   }
     function editUserProfile($user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid , $modCats)
     {
-        $fbConfig =& CKunenaConfig::getInstance();
+        $kunenaConfig =& CKunenaConfig::getInstance();
 		$kunena_db = &JFactory::getDBO();
         //fill the variables needed later
             $signature = $user->signature;
@@ -2801,7 +2801,7 @@ echo $pane->endPane();
 <?php /*
 // FIXME: bbcode broken
 
-        <br/> <?php echo $fbConfig->maxsig; ?>
+        <br/> <?php echo $kunenaConfig->maxsig; ?>
 
         <input readonly type = text name = rem size = 3 maxlength = 3 value = "" class = "inputbox"> <?php echo _CHARS; ?><br/>
 <?php echo _HTML_YES; ?>
@@ -2811,10 +2811,10 @@ echo $pane->endPane();
                             <td align = "left" valign = "top" class = "contentpane">
                                 <textarea rows = "6"
                                     class = "inputbox"
-                                    onMouseOver = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);"
-                                    onClick = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);"
-                                    onKeyDown = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);"
-                                    onKeyUp = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);" cols = "50" type = "text" name = "message"><?php echo html_entity_decode_utf8(stripslashes($signature)); ?></textarea>
+                                    onMouseOver = "textCounter(this.form.message,this.form.rem,<?php echo $kunenaConfig->maxsig;?>);"
+                                    onClick = "textCounter(this.form.message,this.form.rem,<?php echo $kunenaConfig->maxsig;?>);"
+                                    onKeyDown = "textCounter(this.form.message,this.form.rem,<?php echo $kunenaConfig->maxsig;?>);"
+                                    onKeyUp = "textCounter(this.form.message,this.form.rem,<?php echo $kunenaConfig->maxsig;?>);" cols = "50" type = "text" name = "message"><?php echo html_entity_decode_utf8(stripslashes($signature)); ?></textarea>
 
 <?php /*
 // FIXME: bbcode broken
@@ -2869,7 +2869,7 @@ echo $pane->endPane();
                             </td>
 
                             <?php
-                            if ($fbConfig->allowavatar)
+                            if ($kunenaConfig->allowavatar)
                             {
                             ?>
 
@@ -2906,7 +2906,7 @@ else
                             </td>
 
                             <?php
-                            if ($fbConfig->allowavatar)
+                            if ($kunenaConfig->allowavatar)
                             {
                             ?>
 
@@ -3013,7 +3013,7 @@ else
     //**************************
     function pruneforum($option, $forumList) {
             ?>
-<div class="fbfunctitle"><?php echo _COM_A_PRUNE; ?></div>
+<div class="kunenafunctitle"><?php echo _COM_A_PRUNE; ?></div>
     <form action = "index2.php" method = "post" name = "adminForm">
 
 
@@ -3060,7 +3060,7 @@ else
     //**************************
     function syncusers($option) {
 ?>
-<div class="fbfunctitle"><?php echo _KUNENA_SYNC_USERS; ?></div>
+<div class="kunenafunctitle"><?php echo _KUNENA_SYNC_USERS; ?></div>
     <form action = "index2.php" method = "post" name = "adminForm">
 
 
@@ -3105,7 +3105,7 @@ else
         </SCRIPT>
 
             <?php
-            echo ' <div class="fbfunctitle">';
+            echo ' <div class="kunenafunctitle">';
             echo $type ? _COM_A_IMGB_IMG_BROWSE : _COM_A_IMGB_FILE_BROWSE;
             echo '</div>';
             echo '<table class="adminform"><tr><td>';
@@ -3132,7 +3132,7 @@ else
                 echo '<table style="border: 1px solid #ccc;"><tr><td height="90" width="130" style="text-align: center">';
                 echo $type ? '<a href="' . KUNENA_LIVEUPLOADEDPATH . '/images/' . $uploaded[$i] . '" target="_blank" title="' . _COM_A_IMGB_ENLARGE . '" alt="' . _COM_A_IMGB_ENLARGE . '"><img src="' . KUNENA_LIVEUPLOADEDPATH . '/images/' . $uploaded[$i]
                          . '" width="80" heigth="80" border="0"></a>' : '<a href="'
-                         . KUNENA_LIVEUPLOADEDPATH . '/files/' . $uploaded[$i] . '" title="' . _COM_A_IMGB_DOWNLOAD . '" alt="' . _COM_A_IMGB_DOWNLOAD . '"><img src="../administrator/components/com_kunena/images/fbfile.png"   border="0"></a>';
+                         . KUNENA_LIVEUPLOADEDPATH . '/files/' . $uploaded[$i] . '" title="' . _COM_A_IMGB_DOWNLOAD . '" alt="' . _COM_A_IMGB_DOWNLOAD . '"><img src="../administrator/components/com_kunena/images/kunenafile.png"   border="0"></a>';
                 echo '</td></tr><tr><td style="text-align: center">';
                 //echo '<input type="radio" name="newAvatar" value="gallery/'.$uploaded[$i].'">';
                 echo '<br /><small>';
@@ -3181,7 +3181,7 @@ else
 function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
         {
 ?>
-<div class="fbfunctitle"><?php echo _KUNENA_EMOTICONS; ?></div>
+<div class="kunenafunctitle"><?php echo _KUNENA_EMOTICONS; ?></div>
         <form action = "index2.php" method = "POST" name = "adminForm">
             <table class = "adminheading" cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
                 <tr>
@@ -3284,7 +3284,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
 		}
 		//-->
 		</script>
-        <div class="fbfunctitle"><?php echo _KUNENA_EMOTICONS_EDIT_SMILEY; ?></div>
+        <div class="kunenafunctitle"><?php echo _KUNENA_EMOTICONS_EDIT_SMILEY; ?></div>
         <form action = "index2.php" method = "POST" name = "adminForm">
             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "adminform">
 
@@ -3328,7 +3328,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
 		}
 		//-->
 		</script>
-         <div class="fbfunctitle"><?php echo _KUNENA_EMOTICONS_NEW_SMILEY; ?></div>
+         <div class="kunenafunctitle"><?php echo _KUNENA_EMOTICONS_NEW_SMILEY; ?></div>
         <form action = "index2.php" method = "POST" name = "adminForm">
             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "adminform">
 
@@ -3361,7 +3361,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
 		 {
    $kunena_db = &JFactory::getDBO();
    ?>
-  <div class="fbfunctitle"><?php echo _KUNENA_RANKS_MANAGE; ?></div>
+  <div class="kunenafunctitle"><?php echo _KUNENA_RANKS_MANAGE; ?></div>
   <form action="index2.php" method="POST" name="adminForm">
   <table class="adminheading" cellpadding="4" cellspacing="0" border="0" width="100%">
     <tr>
@@ -3423,7 +3423,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
 		}
 		//-->
 		</script>
-        <div class="fbfunctitle"><?php echo _KUNENA_NEW_RANK; ?></div>
+        <div class="kunenafunctitle"><?php echo _KUNENA_NEW_RANK; ?></div>
   <form action="index2.php" method="POST" name="adminForm">
   <table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
 
@@ -3462,7 +3462,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
 		}
 		//-->
 		</script>
-          <div class="fbfunctitle"><?php echo _KUNENA_RANKS_EDIT; ?></div>
+          <div class="kunenafunctitle"><?php echo _KUNENA_RANKS_EDIT; ?></div>
   <form action = "index2.php" method = "POST" name = "adminForm">
   <table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
 

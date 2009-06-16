@@ -906,7 +906,7 @@ DEFINE('_KUNENA_SHOW_AUTHOR', 'Show Author');
 DEFINE('_KUNENA_SHOW_AUTHOR_DESC', '1=username, 2=realname, 0=none');
 DEFINE('_KUNENA_STATS', 'Stats Plugin Settings&#32;');
 DEFINE('_KUNENA_CATIMAGEPATH', 'Category Image Path&#32;');
-DEFINE('_KUNENA_CATIMAGEPATH_DESC', 'Category Image path. If you set the path as &quot;category_images,&quot; the full path will be "your_html_rootfolder/images/fbfiles/category_images/');
+DEFINE('_KUNENA_CATIMAGEPATH_DESC', 'Category Image path. If you set the path as &quot;category_images,&quot; the full path will be "your_html_rootfolder/images/kunenafiles/category_images/');
 DEFINE('_KUNENA_ANN_MODID', 'Announcement Moderator IDs&#32;');
 DEFINE('_KUNENA_ANN_MODID_DESC', 'Add user IDs for announcement moderators (e.g. 62,63,73). Announcement moderators can add, edit, and delete the announcements.');
 //

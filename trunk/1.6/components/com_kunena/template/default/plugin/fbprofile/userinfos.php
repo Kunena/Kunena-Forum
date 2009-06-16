@@ -25,8 +25,8 @@ defined( '_JEXEC' ) or die('Restricted access');
     <thead>
         <tr>
             <th>
-                <div class = "kunena_title_cover fbm">
-                    <span class="kunena_title fbl"> <?php echo $msg_username; ?>  <?php echo _KUNENA_USERPROFILE_PROFILE; ?></span>
+                <div class = "kunena_title_cover kunenam">
+                    <span class="kunena_title kunenal"> <?php echo $msg_username; ?>  <?php echo _KUNENA_USERPROFILE_PROFILE; ?></span>
                 </div>
             </th>
         </tr>
@@ -36,7 +36,7 @@ defined( '_JEXEC' ) or die('Restricted access');
         <tr>
             <td class = "<?php echo $boardclass; ?>profileinfo" align="center">
                 <div class = "kunena_usrprofile-misc">
-                    <span class = "view-username"> <?php echo $msg_username; ?></span> <?php  if ( $fbConfig->userlist_usertype ) { ?><span class = "msgusertype">(<?php echo $msg_usertype; ?>)</span><?php } ?>
+                    <span class = "view-username"> <?php echo $msg_username; ?></span> <?php  if ( $kunenaConfig->userlist_usertype ) { ?><span class = "msgusertype">(<?php echo $msg_usertype; ?>)</span><?php } ?>
 
                     <br/> <?php echo $msg_avatar; ?>
 

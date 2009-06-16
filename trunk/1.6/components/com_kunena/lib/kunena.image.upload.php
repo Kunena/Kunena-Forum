@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$fbConfig =& CKunenaConfig::getInstance();
+$kunenaConfig =& CKunenaConfig::getInstance();
 require_once(KUNENA_PATH_LIB .DS. 'kunena.helpers.php');
 require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
 
@@ -64,7 +64,7 @@ if ($GLOBALS['KUNENA_rc'])
 {
     //Filename + proper path
     $imageLocation = strtr(KUNENA_PATH_UPLOADED .DS. "images" .DS. $newFileName, "\\", "/");
-    $maxImgSize = $fbConfig->imagesize * 1024;
+    $maxImgSize = $kunenaConfig->imagesize * 1024;
 
     // Check for empty filename
     if (!is_uploaded_file($attachimage['tmp_name']) || empty($attachimage['name'])) {
@@ -76,18 +76,18 @@ if ($GLOBALS['KUNENA_rc'])
     }
     // Check filesize
     else if ($imageSize > $maxImgSize) {
-        imageUploadError(_IMAGE_ERROR_SIZE . " (" . $fbConfig->imagesize . "kb)");
+        imageUploadError(_IMAGE_ERROR_SIZE . " (" . $kunenaConfig->imagesize . "kb)");
     }
 	else {
     list($width, $height) = @getimagesize($attachimage['tmp_name']);
 
     // Check image width
-    if ($width > $fbConfig->imagewidth) {
-        imageUploadError(_IMAGE_ERROR_WIDTH . " (" . $fbConfig->imagewidth . " pixels");
+    if ($width > $kunenaConfig->imagewidth) {
+        imageUploadError(_IMAGE_ERROR_WIDTH . " (" . $kunenaConfig->imagewidth . " pixels");
     }
     // Check image height
-    else if ($height > $fbConfig->imageheight) {
-        imageUploadError(_IMAGE_ERROR_HEIGHT . " (" . $fbConfig->imageheight . " pixels");
+    else if ($height > $kunenaConfig->imageheight) {
+        imageUploadError(_IMAGE_ERROR_HEIGHT . " (" . $kunenaConfig->imageheight . " pixels");
     }
 	}
 }

@@ -22,14 +22,14 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $app =& JFactory::getApplication();
-$fbConfig =& CKunenaConfig::getInstance();
-$fbSession =& CKunenaSession::getInstance();
+$kunenaConfig =& CKunenaConfig::getInstance();
+$kunenaSession =& CKunenaSession::getInstance();
 
 global $is_Moderator;
 
 //
 //ob_start();
-$pubwrite = (int)$fbConfig->pubwrite;
+$pubwrite = (int)$kunenaConfig->pubwrite;
 //ip for floodprotection, post logging, subscriptions, etcetera
 $ip = $_SERVER["REMOTE_ADDR"];
 
@@ -51,7 +51,7 @@ $attachfile 	= JRequest::getVar('attachfile', NULL, 'FILES', 'array');
 $attachimage 	= JRequest::getVar('attachimage', NULL, 'FILES', 'array');
 
 // Begin captcha
-if ($fbConfig->captcha == 1 && $kunena_my->id < 1) {
+if ($kunenaConfig->captcha == 1 && $kunena_my->id < 1) {
     $number = $_POST['txtNumber'];
 
     if ($message != NULL)
@@ -74,21 +74,21 @@ if ($fbConfig->captcha == 1 && $kunena_my->id < 1) {
 // Finish captcha
 
 //flood protection
-$fbConfig->floodprotection = (int)$fbConfig->floodprotection;
+$kunenaConfig->floodprotection = (int)$kunenaConfig->floodprotection;
 
-if ($fbConfig->floodprotection != 0)
+if ($kunenaConfig->floodprotection != 0)
 {
     $kunena_db->setQuery("SELECT MAX(time) FROM #__kunena_messages WHERE ip='{$ip}'");
     $kunena_db->query() or trigger_dberror("Unable to load max time for current request from IP: $ip");
     $lastPostTime = $kunena_db->loadResult();
 }
 
-if (($fbConfig->floodprotection != 0 && ((($lastPostTime + $fbConfig->floodprotection) < $systime) || $do == "edit" || $is_admin)) || $fbConfig->floodprotection == 0)
+if (($kunenaConfig->floodprotection != 0 && ((($lastPostTime + $kunenaConfig->floodprotection) < $systime) || $do == "edit" || $is_admin)) || $kunenaConfig->floodprotection == 0)
 {
     //Let's find out who we're dealing with if a registered user wants to make a post
     if ($kunena_my->id)
     {
-        $my_name = $fbConfig->username ? $kunena_my->username : $kunena_my->name;
+        $my_name = $kunenaConfig->username ? $kunena_my->username : $kunena_my->name;
         $my_email = $kunena_my->email;
         $registeredUser = 1;
 	if ($is_Moderator) {
@@ -104,7 +104,7 @@ if (($fbConfig->floodprotection != 0 && ((($lastPostTime + $fbConfig->floodprote
 else
 {
     echo _POST_TOPIC_FLOOD1;
-    echo $fbConfig->floodprotection . " " . _POST_TOPIC_FLOOD2 . "<br />";
+    echo $kunenaConfig->floodprotection . " " . _POST_TOPIC_FLOOD2 . "<br />";
     echo _POST_TOPIC_FLOOD3;
     return;
 }
@@ -129,7 +129,7 @@ $catName = $objCatInfo->name;
                 require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'kunena_pathway.php');
             }
 
-            if ($action == "post" && (hasPostPermission($kunena_db, $catid, $parentid, $kunena_my->id, $fbConfig->pubwrite, $is_Moderator)))
+            if ($action == "post" && (hasPostPermission($kunena_db, $catid, $parentid, $kunena_my->id, $kunenaConfig->pubwrite, $is_Moderator)))
             {
             ?>
 
@@ -142,7 +142,7 @@ $catName = $objCatInfo->name;
                             if (empty($my_name)) {
                                 echo _POST_FORGOT_NAME;
                             }
-                            else if ($fbConfig->askemail && empty($my_email)) {
+                            else if ($kunenaConfig->askemail && empty($my_email)) {
                                 echo _POST_FORGOT_EMAIL;
                             }
                             else if (empty($subject)) {
@@ -201,7 +201,7 @@ $catName = $objCatInfo->name;
                                 $email = trim(addslashes($my_email));
                                 $topic_emoticon = (int)$topic_emoticon;
                                 $topic_emoticon = ($topic_emoticon < 0 || $topic_emoticon > 7) ? 0 : $topic_emoticon;
-                                $posttime = CKunenaTools::fbGetInternalTime();
+                                $posttime = CKunenaTools::kunenaGetInternalTime();
                                 //check if the post must be reviewed by a Moderator prior to showing
                                 //doesn't apply to admin/moderator posts ;-)
                                 $holdPost = 0;
@@ -217,7 +217,7 @@ $catName = $objCatInfo->name;
                                 // Final chance to check whether or not to proceed
                                 // DO NOT PROCEED if there is an exact copy of the message already in the db
                                 //
-                                $duplicatetimewindow = $posttime - $fbConfig->fbsessiontimeout;
+                                $duplicatetimewindow = $posttime - $kunenaConfig->kunenasessiontimeout;
                                 unset($existingPost);
                                 $kunena_db->setQuery("SELECT m.id FROM #__kunena_messages AS m JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.userid='{$kunena_my->id}' AND m.name='{$kunena_authorname}' AND m.email='{$email}' AND m.subject='{$subject}' AND m.ip='{$ip}' AND t.message='{$message}' AND m.time>='{$duplicatetimewindow}'");
                                 $kunena_db->query() or trigger_dberror('Unable to load post.');
@@ -310,14 +310,14 @@ $catName = $objCatInfo->name;
                                         $kunena_db->setQuery("SELECT COUNT(*) AS totalmessages FROM #__kunena_messages WHERE thread='{$querythread}'");
                                         $result = $kunena_db->loadObject();
                                         	check_dberror("Unable to load messages.");
-                                        $threadPages = ceil($result->totalmessages / $fbConfig->messages_per_page);
+                                        $threadPages = ceil($result->totalmessages / $kunenaConfig->messages_per_page);
                                         //construct a useable URL (for plaintext - so no &amp; encoding!)
                                         jimport('joomla.environment.uri');
                                         $uri =& JURI::getInstance(JURI::base());
-                                        $LastPostUrl = $uri->toString(array('scheme', 'host', 'port')) . str_replace('&amp;', '&', CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $querythread, $threadPages, $fbConfig->messages_per_page, $pid));
+                                        $LastPostUrl = $uri->toString(array('scheme', 'host', 'port')) . str_replace('&amp;', '&', CKunenaLink::GetThreadPageURL($kunenaConfig, 'view', $catid, $querythread, $threadPages, $kunenaConfig->messages_per_page, $pid));
 
                                         //Now manage the subscriptions (only if subscriptions are allowed)
-                                        if ($fbConfig->allowsubscriptions == 1 && $holdPost == 0)
+                                        if ($kunenaConfig->allowsubscriptions == 1 && $holdPost == 0)
                                         { //they're allowed
                                             //get the proper user credentials for each subscription to this topic
 
@@ -332,7 +332,7 @@ $catName = $objCatInfo->name;
 
                                             if (count($subsList) > 0)
                                             {                                                     //we got more than 0 subscriptions
-                                                require_once (KUNENA_PATH_LIB .DS. 'kunena.mail.php'); // include fbMail class for mailing
+                                                require_once (KUNENA_PATH_LIB .DS. 'kunena.mail.php'); // include kunenaMail class for mailing
 
 												$_catobj = new jbCategory($kunena_db, $catid);
                                                 foreach ($subsList as $subs)
@@ -362,7 +362,7 @@ $catName = $objCatInfo->name;
                                                     $msg .= _VIEW_POSTED.": " . stripslashes($kunena_authorname) . "\n\n";
                                                     $msg .= "$_COM_A_NOTIFICATION2\n";
                                                     $msg .= "URL: $LastPostUrl\n\n";
-                                                    if ($fbConfig->mailfull == 1) {
+                                                    if ($kunenaConfig->mailfull == 1) {
                                                         $msg .= _GEN_MESSAGE.":\n-----\n";
                                                         $msg .= stripslashes($mailmessage);
                                                         $msg .= "\n-----";
@@ -373,7 +373,7 @@ $catName = $objCatInfo->name;
                                                     $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
 
                                                     if ($ip != "127.0.0.1" && $kunena_my->id != $subs->id) { //don't mail yourself
-                                                        JUtility::sendMail($fbConfig->email, $mailsender, $subs->email, $mailsubject, $msg);
+                                                        JUtility::sendMail($kunenaConfig->email, $mailsender, $subs->email, $mailsubject, $msg);
                                                     }
                                                 }
                                                 unset($_catobj);
@@ -381,12 +381,12 @@ $catName = $objCatInfo->name;
                                         }
 
                                         //Now manage the mail for moderator or admins (only if configured)
-                                        if($fbConfig->mailmod=='1'
-                                        || $fbConfig->mailadmin=='1')
+                                        if($kunenaConfig->mailmod=='1'
+                                        || $kunenaConfig->mailadmin=='1')
                                         { //they're configured
                                             //get the proper user credentials for each moderator for this forum
                                             $sql = "SELECT * FROM #__users AS u";
-                                            if($fbConfig->mailmod==1) {
+                                            if($kunenaConfig->mailmod==1) {
                                                 $sql .= " LEFT JOIN #__kunena_moderation AS a";
                                                 $sql .= " ON a.userid=u.id";
                                                 $sql .= "  AND a.catid='{$catid}'";
@@ -395,10 +395,10 @@ $catName = $objCatInfo->name;
                                             $sql .= " AND (";
                                             // helper for OR condition
                                             $sql2 = '';
-                                            if($fbConfig->mailmod==1) {
+                                            if($kunenaConfig->mailmod==1) {
                                                 $sql2 .= " a.userid IS NOT NULL";
                                             }
-                                            if($fbConfig->mailadmin==1) {
+                                            if($kunenaConfig->mailadmin==1) {
                                                 if(strlen($sql2)) { $sql2 .= " OR "; }
                                                 $sql2 .= " u.sendEmail='1'";
                                             }
@@ -410,7 +410,7 @@ $catName = $objCatInfo->name;
 
                                             if (count($modsList) > 0)
                                             {                                                     //we got more than 0 moderators eligible for email
-                                                require_once (KUNENA_PATH_LIB .DS. 'kunena.mail.php'); // include fbMail class for mailing
+                                                require_once (KUNENA_PATH_LIB .DS. 'kunena.mail.php'); // include kunenaMail class for mailing
 
                                                 foreach ($modsList as $mods)
                                                 {
@@ -425,7 +425,7 @@ $catName = $objCatInfo->name;
                                                     $msg .= _VIEW_POSTED.": " . stripslashes($kunena_authorname) . "\n\n";
                                                     $msg .= "$_COM_A_NOT_MOD2\n";
                                                     $msg .= "URL: $LastPostUrl\n\n";
-                                                    if ($fbConfig->mailfull == 1) {
+                                                    if ($kunenaConfig->mailfull == 1) {
                                                         $msg .= _GEN_MESSAGE.":\n-----\n";
                                                         $msg .= stripslashes($mailmessage);
                                                         $msg .= "\n-----";
@@ -436,7 +436,7 @@ $catName = $objCatInfo->name;
                                                     $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
 
                                                     if ($ip != "127.0.0.1" && $kunena_my->id != $mods->id) { //don't mail yourself
-                                                        JUtility::sendMail($fbConfig->email, $mailsender, $mods->email, $mailsubject, $msg);
+                                                        JUtility::sendMail($kunenaConfig->email, $mailsender, $mods->email, $mailsubject, $msg);
                                                     }
                                                 }
                                             }
@@ -464,13 +464,13 @@ $catName = $objCatInfo->name;
                                         if ($holdPost == 1)
                                         {
                                             echo '<br /><br /><div align="center">' . _POST_SUCCES_REVIEW . '</div><br /><br />';
-                                           	echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $pid, $fbConfig->messages_per_page, $catid);
+                                           	echo CKunenaLink::GetLatestPostAutoRedirectHTML($kunenaConfig, $pid, $kunenaConfig->messages_per_page, $catid);
 
                                         }
                                         else
                                         {
                                             echo '<br /><br /><div align="center">' . _POST_SUCCESS_POSTED . '</div><br /><br />';
-                                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $pid, $fbConfig->messages_per_page, $catid);
+                                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($kunenaConfig, $pid, $kunenaConfig->messages_per_page, $catid);
                                         }
                                     }
                                     else {
@@ -482,7 +482,7 @@ $catName = $objCatInfo->name;
                                 // We did not do any further processing and just display the success message
                                 {
                                     echo '<br /><br /><div align="center">' . _POST_DUPLICATE_IGNORED . '</div><br /><br />';
-                                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $pid, $fbConfig->messages_per_page, $catid);
+                                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($kunenaConfig, $pid, $kunenaConfig->messages_per_page, $catid);
                                 }
                             }
                             ?>
@@ -495,11 +495,11 @@ $catName = $objCatInfo->name;
             else if ($action == "cancel")
             {
                 echo '<br /><br /><div align="center">' . _SUBMIT_CANCEL . "</div><br />";
-                echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $pid, $fbConfig->messages_per_page, $catid);
+                echo CKunenaLink::GetLatestPostAutoRedirectHTML($kunenaConfig, $pid, $kunenaConfig->messages_per_page, $catid);
             }
             else
             {
-                if ($do == "quote" && (hasPostPermission($kunena_db, $catid, $id, $kunena_my->id, $fbConfig->pubwrite, $is_Moderator)))
+                if ($do == "quote" && (hasPostPermission($kunena_db, $catid, $id, $kunena_my->id, $kunenaConfig->pubwrite, $is_Moderator)))
                 { //reply do quote
                     $parentid = 0;
                     $id = (int)$id;
@@ -522,13 +522,13 @@ $catName = $objCatInfo->name;
 
                             $htmlText = "[b]" . stripslashes($message->name) . " " . _POST_WROTE . ":[/b]\n";
                             $htmlText .= '[quote]' . $quote . "[/quote]";
-                            //$quote = smile::fbStripHtmlTags($quote);
+                            //$quote = smile::kunenaStripHtmlTags($quote);
                             $resubject = strtr($message->subject, $table);
 
                             $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? stripslashes($resubject) : _POST_RE . stripslashes($resubject);
                             //$resubject = kunena_htmlspecialchars($resubject);
-                            $resubject = smile::fbStripHtmlTags($resubject);
-                            //$resubject = smile::fbStripHtmlTags($resubject);
+                            $resubject = smile::kunenaStripHtmlTags($resubject);
+                            //$resubject = smile::kunenaStripHtmlTags($resubject);
                             $parentid = $message->id;
                             $authorName = $my_name;
                         }
@@ -557,7 +557,7 @@ $catName = $objCatInfo->name;
                         //--
                         //echo "</form>";
                 }
-                else if ($do == "reply" && (hasPostPermission($kunena_db, $catid, $id, $kunena_my->id, $fbConfig->pubwrite, $is_Moderator)))
+                else if ($do == "reply" && (hasPostPermission($kunena_db, $catid, $id, $kunena_my->id, $kunenaConfig->pubwrite, $is_Moderator)))
                 { // reply no quote
                     $parentid = 0;
                     $id = (int)$id;
@@ -603,7 +603,7 @@ $catName = $objCatInfo->name;
                         //--
                         //echo "</form>";
                 }
-                else if ($do == "newFromBot" && (hasPostPermission($kunena_db, $catid, $id, $kunena_my->id, $fbConfig->pubwrite, $is_Moderator)))
+                else if ($do == "newFromBot" && (hasPostPermission($kunena_db, $catid, $id, $kunena_my->id, $kunenaConfig->pubwrite, $is_Moderator)))
                 { // The Mosbot "discuss on forums" has detected an unexisting thread and wants to create one
                     $parentid = 0;
                     $id = (int)$id;
@@ -668,11 +668,11 @@ $catName = $objCatInfo->name;
                         $allowEdit = 1;
                     }
 
-                    if ($fbConfig->useredit == 1 && $kunena_my->id != "")
+                    if ($kunenaConfig->useredit == 1 && $kunena_my->id != "")
                     {
                         //Now, if the author==viewer and the viewer is allowed to edit his/her own post the let them edit
                         if ($kunena_my->id == $userID) {
-                            if(((int)$fbConfig->useredittime)==0) {
+                            if(((int)$kunenaConfig->useredittime)==0) {
                                 $allowEdit = 1;
                             }
                             else {
@@ -681,7 +681,7 @@ $catName = $objCatInfo->name;
                                 if(!$modtime) {
                                     $modtime = $mes->time;
                                 }
-                                if(($modtime + ((int)$fbConfig->useredittime)) >= CKunenaTools::fbGetInternalTime()) {
+                                if(($modtime + ((int)$kunenaConfig->useredittime)) >= CKunenaTools::kunenaGetInternalTime()) {
                                     $allowEdit = 1;
                                 }
                             }
@@ -696,13 +696,13 @@ $catName = $objCatInfo->name;
                         /*foreach ($message1 as $mes)
                         {*/
 
-                        //$htmlText = smile::fbStripHtmlTags($mes->message);
+                        //$htmlText = smile::kunenaStripHtmlTags($mes->message);
                         $htmlText = stripslashes($mes->message);
                         $table = array_flip(get_html_translation_table(HTML_ENTITIES));
 
                         //$htmlText = strtr($htmlText, $table);
 
-                        //$htmlText = smile::fbHtmlSafe($htmlText);
+                        //$htmlText = smile::kunenaHtmlSafe($htmlText);
                         $resubject = kunena_htmlspecialchars(stripslashes($mes->subject));
                         $authorName = kunena_htmlspecialchars($mes->name);
                         ?>
@@ -727,11 +727,11 @@ $catName = $objCatInfo->name;
                         {
                             foreach ($attachments as $att)
                             {
-                                if (preg_match("&/fbfiles/files/&si", $att->filelocation)) {
+                                if (preg_match("&/kunenafiles/files/&si", $att->filelocation)) {
                                     $no_file_upload = "1";
                                 }
 
-                                if (preg_match("&/fbfiles/images/&si", $att->filelocation)) {
+                                if (preg_match("&/kunenafiles/images/&si", $att->filelocation)) {
                                     $no_image_upload = "1";
                                 }
                             }
@@ -755,7 +755,7 @@ $catName = $objCatInfo->name;
                 {
                     $modified_reason = addslashes(JRequest::getVar("modified_reason", null));
                     $modified_by = $kunena_my->id;
-                    $modified_time = CKunenaTools::fbGetInternalTime();
+                    $modified_time = CKunenaTools::kunenaGetInternalTime();
                     $id  = (int) $id;
 
                     $kunena_db->setQuery("SELECT * FROM #__kunena_messages AS m LEFT JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.id='{$id}'");
@@ -769,11 +769,11 @@ $catName = $objCatInfo->name;
                         $allowEdit = 1;
                     }
 
-                    if ($fbConfig->useredit == 1 && $kunena_my->id != "")
+                    if ($kunenaConfig->useredit == 1 && $kunena_my->id != "")
                     {
                         //Now, if the author==viewer and the viewer is allowed to edit his/her own post the let them edit
                         if ($kunena_my->id == $userid) {
-                            if(((int)$fbConfig->useredittime)==0) {
+                            if(((int)$kunenaConfig->useredittime)==0) {
                                 $allowEdit = 1;
                             }
                             else {
@@ -781,7 +781,7 @@ $catName = $objCatInfo->name;
                                 if(!$modtime) {
                                     $modtime = $mes->time;
                                 }
-                                if(($modtime + ((int)$fbConfig->useredittime) + ((int)$fbConfig->useredittimegrace)) >= CKunenaTools::fbGetInternalTime()) {
+                                if(($modtime + ((int)$kunenaConfig->useredittime) + ((int)$kunenaConfig->useredittimegrace)) >= CKunenaTools::kunenaGetInternalTime()) {
                                     $allowEdit = 1;
                                 }
                             }
@@ -821,7 +821,7 @@ $catName = $objCatInfo->name;
 
                             $kunena_db->setQuery(
                             "UPDATE #__kunena_messages SET name='$kunena_authorname', email='" . addslashes($email)
-                            . (($fbConfig->editmarkup) ? "' ,modified_by='" . $modified_by
+                            . (($kunenaConfig->editmarkup) ? "' ,modified_by='" . $modified_by
                             . "' ,modified_time='" . $modified_time . "' ,modified_reason='" . $modified_reason : "") . "', subject='" . addslashes($subject) . "', topic_emoticon='" . ((int)$topic_emoticon) .  "', hold='" . ((int)$holdPost) . "' WHERE id={$id}");
 
                             $dbr_nameset = $kunena_db->query();
@@ -852,7 +852,7 @@ $catName = $objCatInfo->name;
                                 }
 
                                 echo '<br /><br /><div align="center">' . _POST_SUCCESS_EDIT . "</div><br />";
-                                echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page, $catid);
+                                echo CKunenaLink::GetLatestPostAutoRedirectHTML($kunenaConfig, $id, $kunenaConfig->messages_per_page, $catid);
                             }
                             else {
                                 echo _POST_ERROR_MESSAGE_OCCURED;
@@ -968,7 +968,7 @@ $catName = $objCatInfo->name;
                     $id = (int)$id;
                     //get list of available forums
                     //$kunena_db->setQuery("SELECT id, name FROM #__kunena_categories WHERE parent != '0'");
-                    $kunena_db->setQuery("SELECT a.*, b.id AS catid, b.name AS category FROM #__kunena_categories AS a LEFT JOIN #__kunena_categories AS b ON b.id = a.parent WHERE a.parent!='0' AND a.id IN ($fbSession->allowed) ORDER BY parent, ordering");
+                    $kunena_db->setQuery("SELECT a.*, b.id AS catid, b.name AS category FROM #__kunena_categories AS a LEFT JOIN #__kunena_categories AS b ON b.id = a.parent WHERE a.parent!='0' AND a.id IN ($kunenaSession->allowed) ORDER BY parent, ordering");
                     $catlist = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load categories.");
                     // get topic subject:
@@ -1064,7 +1064,7 @@ $catName = $objCatInfo->name;
                     CKunenaTools::reCountBoards();
 
                     echo '<br /><br /><div align="center">' . _POST_SUCCESS_MOVE . "</div><br />";
-                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page, $catid);
+                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($kunenaConfig, $id, $kunenaConfig->messages_per_page, $catid);
                 }
                 //begin merge function
                 else if ($do == "merge")
@@ -1223,7 +1223,7 @@ $catName = $objCatInfo->name;
                             CKunenaTools::reCountBoards();
 
                             echo '<br /><br /><div align="center">' . _POST_SUCCESS_MERGE . "</div><br />";
-                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $targetid, $fbConfig->messages_per_page, $catid);
+                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($kunenaConfig, $targetid, $kunenaConfig->messages_per_page, $catid);
                         }
                         else
                         {
@@ -1236,7 +1236,7 @@ $catName = $objCatInfo->name;
                     else
                     {
                         echo '<br /><br /><div align="center">' . _POST_TOPIC_NOT_MERGED . "</div><br />";
-                        echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page);
+                        echo CKunenaLink::GetLatestPostAutoRedirectHTML($kunenaConfig, $id, $kunenaConfig->messages_per_page);
                     }
 
 		        }
@@ -1253,7 +1253,7 @@ $catName = $objCatInfo->name;
                     $catid = (int)$catid;
 
 					// TODO: Enable split when it's fixed
-                    $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page, $catid), 'Split has been disabled');
+                    $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($kunenaConfig, $id, $kunenaConfig->messages_per_page, $catid), 'Split has been disabled');
                     
                     //get list of posts in thread
                     $kunena_db->setQuery("SELECT * FROM #__kunena_messages AS a "
@@ -1313,7 +1313,7 @@ $catName = $objCatInfo->name;
                         $k = 1 - $k;
                         $mes->name = kunena_htmlspecialchars($mes->name);
                         $mes->subject = kunena_htmlspecialchars($mes->subject);
-                        $mes->message = smile::smileReplace($mes->message, 1, $fbConfig->disemoticons, $smileyList);
+                        $mes->message = smile::smileReplace($mes->message, 1, $kunenaConfig->disemoticons, $smileyList);
             ?>
 
                 <tr>
@@ -1357,7 +1357,7 @@ $catName = $objCatInfo->name;
                         $kunena_message_txt = stripslashes(nl2br($mes->message));
                         $kunena_message_txt = str_replace("</P><br />", "</P>", $kunena_message_txt);
                         //Long Words Wrap:
-                        $kunena_message_txt = smile::htmlwrap($kunena_message_txt, $fbConfig->wrap);
+                        $kunena_message_txt = smile::htmlwrap($kunena_message_txt, $kunenaConfig->wrap);
 
                         echo $kunena_message_txt;
                         ?>
@@ -1391,7 +1391,7 @@ $catName = $objCatInfo->name;
                     $topic_change = 0;
 
 					// TODO: Enable split when it's fixed
-                    $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page, $catid), 'Split has been disabled');
+                    $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($kunenaConfig, $id, $kunenaConfig->messages_per_page, $catid), 'Split has been disabled');
 
                     if (!$to_split)
                     {
@@ -1451,14 +1451,14 @@ $catName = $objCatInfo->name;
                             $kunena_db->query();
 
                             echo '<br /><br /><div align="center">' . _POST_SUCCESS_SPLIT_TOPIC_CHANGED . "</div><br />";
-                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $new_topic, $fbConfig->messages_per_page, $catid);
+                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($kunenaConfig, $new_topic, $kunenaConfig->messages_per_page, $catid);
 
                             return;
                         }
                         else
                         {
                             echo '<br /><br /><div align="center">' . _POST_SPLIT_TOPIC_NOT_CHANGED . "</div><br />";
-                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page);
+                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($kunenaConfig, $id, $kunenaConfig->messages_per_page);
 
                             echo '<div align="center"><br />Topic change failed.</br></div>';
                             return;
@@ -1542,7 +1542,7 @@ $catName = $objCatInfo->name;
                     CKunenaTools::reCountBoards();
 
                     echo '<br /><br /><div align="center">' . _POST_SUCCESS_SPLIT . "</div><br />";
-                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $new_topic, $fbConfig->messages_per_page, $catid);
+                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($kunenaConfig, $new_topic, $kunenaConfig->messages_per_page, $catid);
 		        }
 // end split function
                 else if ($do == "subscribe")
@@ -1557,8 +1557,8 @@ $catName = $objCatInfo->name;
 
 						//check for permission
 						if (!$is_Moderator) {
-							if ($fbSession->allowed != "na")
-								$allow_forum = explode(',', $fbSession->allowed);
+							if ($kunenaSession->allowed != "na")
+								$allow_forum = explode(',', $kunenaSession->allowed);
 							else
 								$allow_forum = array ();
 
@@ -1576,7 +1576,7 @@ $catName = $objCatInfo->name;
                             $success_msg = _POST_SUBSCRIBED_TOPIC;
                         }
                     }
-                    $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($kunenaConfig, $id, $kunenaConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "unsubscribe")
                 {
@@ -1594,7 +1594,7 @@ $catName = $objCatInfo->name;
                             $success_msg = _POST_UNSUBSCRIBED_TOPIC;
                         }
                     }
-                    $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($kunenaConfig, $id, $kunenaConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "favorite")
                 {
@@ -1612,7 +1612,7 @@ $catName = $objCatInfo->name;
                              $success_msg = _POST_FAVORITED_TOPIC;
                         }
                     }
-                    $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($kunenaConfig, $id, $kunenaConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "unfavorite")
                 {
@@ -1630,7 +1630,7 @@ $catName = $objCatInfo->name;
                             $success_msg = _POST_UNFAVORITED_TOPIC;
                         }
                     }
-                    $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($kunenaConfig, $id, $kunenaConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "sticky")
                 {
@@ -1644,7 +1644,7 @@ $catName = $objCatInfo->name;
                     if ($id && $kunena_db->query() && $kunena_db->getAffectedRows()==1) {
                         $success_msg = _POST_STICKY_SET;
                     }
-                    $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($kunenaConfig, $id, $kunenaConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "unsticky")
                 {
@@ -1658,7 +1658,7 @@ $catName = $objCatInfo->name;
                     if ($id && $kunena_db->query() && $kunena_db->getAffectedRows()==1) {
                         $success_msg = _POST_STICKY_UNSET;
                     }
-                    $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($kunenaConfig, $id, $kunenaConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "lock")
                 {
@@ -1672,7 +1672,7 @@ $catName = $objCatInfo->name;
                     if ($id && $kunena_db->query() && $kunena_db->getAffectedRows()==1) {
                         $success_msg = _POST_LOCK_SET;
                     }
-                    $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($kunenaConfig, $id, $kunenaConfig->messages_per_page), $success_msg);
                 }
                 else if ($do == "unlock")
                 {
@@ -1686,7 +1686,7 @@ $catName = $objCatInfo->name;
                     if ($id && $kunena_db->query() && $kunena_db->getAffectedRows()==1) {
                         $success_msg = _POST_LOCK_UNSET;
                     }
-                    $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page), $success_msg);
+                    $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($kunenaConfig, $id, $kunenaConfig->messages_per_page), $success_msg);
                 }
             }
             ?>
@@ -1705,7 +1705,7 @@ $catName = $objCatInfo->name;
  */
 function hasPostPermission($kunena_db, $catid, $id, $userid, $pubwrite, $ismod)
 {
-    $fbConfig =& CKunenaConfig::getInstance();
+    $kunenaConfig =& CKunenaConfig::getInstance();
 
     $topicLock = 0;
     if ($id != 0)
@@ -1750,7 +1750,7 @@ function hasPostPermission($kunena_db, $catid, $id, $userid, $pubwrite, $ismod)
             echo _POST_NO_PUBACCESS1 . "<br />";
             echo _POST_NO_PUBACCESS2 . "<br /><br />";
 
-            if ($fbConfig->kunena_profile == 'cb') {
+            if ($kunenaConfig->kunena_profile == 'cb') {
                 echo '<a href="' . CKunenaCBProfile::getRegisterURL() . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
             }
             else {
@@ -1882,7 +1882,7 @@ function kunena_delete_post(&$kunena_db, $id, $dellattach)
     return $thread; // all went well :-)
 }
 
-function listThreadHistory($id, $fbConfig, $kunena_db)
+function listThreadHistory($id, $kunenaConfig, $kunena_db)
 {
     if ($id != 0)
     {
@@ -1902,14 +1902,14 @@ function listThreadHistory($id, $fbConfig, $kunena_db)
         }
 
         //get all the messages for this thread
-        $kunena_db->setQuery("SELECT * FROM #__kunena_messages AS m LEFT JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE (thread='{$thread}' OR id='{$thread}') AND hold='0' ORDER BY time DESC LIMIT " . $fbConfig->historylimit);
+        $kunena_db->setQuery("SELECT * FROM #__kunena_messages AS m LEFT JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE (thread='{$thread}' OR id='{$thread}') AND hold='0' ORDER BY time DESC LIMIT " . $kunenaConfig->historylimit);
         $messages = $kunena_db->loadObjectList();
         	check_dberror("Unable to load messages.");
         //and the subject of the first thread (for reference)
         $kunena_db->setQuery("SELECT subject FROM #__kunena_messages WHERE id='{$thread}' and parent='0'");
         $this_message_subject = $kunena_db->loadResult();
         	check_dberror("Unable to load messages.");
-        echo "<b>" . _POST_TOPIC_HISTORY . ":</b> " . kunena_htmlspecialchars(stripslashes($this_message_subject)) . " <br />" . _POST_TOPIC_HISTORY_MAX . " $fbConfig->historylimit " . _POST_TOPIC_HISTORY_LAST . "<br />";
+        echo "<b>" . _POST_TOPIC_HISTORY . ":</b> " . kunena_htmlspecialchars(stripslashes($this_message_subject)) . " <br />" . _POST_TOPIC_HISTORY_MAX . " $kunenaConfig->historylimit " . _POST_TOPIC_HISTORY_LAST . "<br />";
 ?>
 
         <table border = "0" cellspacing = "1" cellpadding = "3" width = "100%" class = "kunena_review_table">
@@ -1936,7 +1936,7 @@ function listThreadHistory($id, $fbConfig, $kunena_db)
 
 
                 $kunena_message_txt = stripslashes(($mes->message));
-                $kunena_message_txt = smile::smileReplace($kunena_message_txt, 1, $fbConfig->disemoticons, $smileyList);
+                $kunena_message_txt = smile::smileReplace($kunena_message_txt, 1, $kunenaConfig->disemoticons, $smileyList);
                 $kunena_message_txt = nl2br($kunena_message_txt);
                 $kunena_message_txt = str_replace("__FBTAB__", "\t", $kunena_message_txt);
 
@@ -1951,7 +1951,7 @@ function listThreadHistory($id, $fbConfig, $kunena_db)
                         <?php
                         $kunena_message_txt = str_replace("</P><br />", "</P>", $kunena_message_txt);
                         //Long Words Wrap:
-                        $kunena_message_txt = smile::htmlwrap($kunena_message_txt, $fbConfig->wrap);
+                        $kunena_message_txt = smile::htmlwrap($kunena_message_txt, $kunenaConfig->wrap);
 
 						$kunena_message_txt = CKunenaTools::prepareContent($kunena_message_txt);
                         
@@ -1981,7 +1981,7 @@ function listThreadHistory($id, $fbConfig, $kunena_db)
             <th class = "th-right">
                 <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
-                if ($fbConfig->enableforumjump) {
+                if ($kunenaConfig->enableforumjump) {
                     require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 }
                 ?>

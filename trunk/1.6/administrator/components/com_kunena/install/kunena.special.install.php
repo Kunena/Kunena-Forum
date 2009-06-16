@@ -34,7 +34,7 @@ include_once (KUNENA_PATH .DS. "class.kunena.php");
 
 // Install sample data on initial install (this will not get executed for upgrades)
 
-$posttime = CKunenaTools::fbGetInternalTime();
+$posttime = CKunenaTools::kunenaGetInternalTime();
 
 $query="INSERT INTO `#__kunena_categories` VALUES (1, 0, '".addslashes(_KUNENA_SAMPLE_MAIN_CATEGORY_TITLE)."', 0, 0, 0, 1, NULL, 0, 0, 0, 0, 1, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, '".addslashes(_KUNENA_SAMPLE_MAIN_CATEGORY_DESC)."', '".addslashes(_KUNENA_SAMPLE_MAIN_CATEGORY_HEADER)."', '', 0, 0, 0, NULL);";
 $kunena_db->setQuery($query);

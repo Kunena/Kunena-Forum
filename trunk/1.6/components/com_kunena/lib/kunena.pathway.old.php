@@ -23,7 +23,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $app =& JFactory::getApplication();
-$fbConfig =& CKunenaConfig::getInstance();
+$kunenaConfig =& CKunenaConfig::getInstance();
 
 ?>
 <!-- Pathway -->
@@ -71,13 +71,13 @@ $fbConfig =& CKunenaConfig::getInstance();
                 $objCatParentInfo = $kunena_db->loadObject() or trigger_dberror("Unable to read from categories.");
                 // set page title
 		$document=& JFactory::getDocument();
-                $document->setTitle(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($objCatInfo->name) . ' - ' . stripslashes($fbConfig->board_title));
+                $document->setTitle(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($objCatInfo->name) . ' - ' . stripslashes($kunenaConfig->board_title));
                 //check if this forum is locked
                 $forumLocked = $objCatInfo->locked;
                 //check if this forum is subject to review
                 $forumReviewed = $objCatInfo->review;
                 /*      echo '<a href="'.JRoute::_(KUNENA_LIVEURLREL).'">';
-                      echo isset($fbIcons['forumlist']) ? '<img src="' . KUNENA_TMPLTURL . '/images/icons/'.$fbIcons['forumlist'].'" border="0" alt="'._GEN_FORUMLIST.'" > > ' : _GEN_FORUMLIST;
+                      echo isset($kunenaIcons['forumlist']) ? '<img src="' . KUNENA_TMPLTURL . '/images/icons/'.$kunenaIcons['forumlist'].'" border="0" alt="'._GEN_FORUMLIST.'" > > ' : _GEN_FORUMLIST;
                       echo '</a> ';
                       if (file_exists(KUNENA_ROOT_PATH .DS. 'templates/'.$app->getTemplate().'/images/arrow.png')) {
                       echo '<img src="'.KUNENA_JLIVEURL.'/templates/'.$app->getTemplate().'/images/arrow.png" alt="" />';
@@ -93,7 +93,7 @@ $fbConfig =& CKunenaConfig::getInstance();
                 // echo '<strong> '.$objCatInfo->name.'</strong>  ';
                 if ($forumLocked)
                 {
-                    echo isset($fbIcons['forumlocked']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['forumlocked']
+                    echo isset($kunenaIcons['forumlocked']) ? '<img src="' . KUNENA_URLICONSPATH . $kunenaIcons['forumlocked']
                              . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"   alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
                     $lockedForum = 1;
                 }
@@ -103,7 +103,7 @@ $fbConfig =& CKunenaConfig::getInstance();
 
                 if ($forumReviewed)
                 {
-                    echo isset($fbIcons['forummoderated']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['forummoderated']
+                    echo isset($kunenaIcons['forummoderated']) ? '<img src="' . KUNENA_URLICONSPATH . $kunenaIcons['forummoderated']
                              . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '">';
                     $moderatedForum = 1;
                 }

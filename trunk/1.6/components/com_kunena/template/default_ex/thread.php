@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$fbConfig =& CKunenaConfig::getInstance();
+$kunenaConfig =& CKunenaConfig::getInstance();
 // arrows and lines
 $join = '<img src="' . KUNENA_URLIMAGESPATH . 'tree-join.gif" width="12" height="18" alt="thread link" />';
 $end = '<img src="' . KUNENA_URLIMAGESPATH . 'tree-end.gif" width="12" height="18" alt="thread link" />';
@@ -67,9 +67,9 @@ $tree = thread_flat($tree, $messages);
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
 <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0" class = "kunena_blocktable" >
     <thead>
-        <tr  class = "kunena_sth fbs ">
+        <tr  class = "kunena_sth kunenas ">
         <?php
-        if ($fbConfig->shownew && $kunena_my->id != 0) { ?>
+        if ($kunenaConfig->shownew && $kunena_my->id != 0) { ?>
 
        <th width="10" class = "th-1 <?php echo $boardclass ?>sectiontableheader">&nbsp;</th>
             <?php
@@ -100,20 +100,20 @@ $tree = thread_flat($tree, $messages);
 
         <tr class="kunena_threadview_row">
             <?php
-            if ($fbConfig->shownew && $kunena_my->id != 0 && !$leaf->moved)
+            if ($kunenaConfig->shownew && $kunena_my->id != 0 && !$leaf->moved)
             {
                 if (($prevCheck < ($leaf->time)) && (sizeof($read_topics) == 0) || !in_array($leaf->thread, $read_topics))
                 {
                     //new post
                     echo '<td width="1%" class="kunena_new">';
-                   // echo isset($fbIcons['unreadmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '"/>' : $fbConfig->newchar;
+                   // echo isset($kunenaIcons['unreadmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $kunenaIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '"/>' : $kunenaConfig->newchar;
                     echo '</td>';
                 }
                 else
                 {
                     //not new posts
                     echo '<td width="1%" class="kunena_notnew">';
-                   // echo isset($fbIcons['readmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $fbConfig->newchar;
+                   // echo isset($kunenaIcons['readmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $kunenaIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $kunenaConfig->newchar;
                     echo '</td>';
                 }
             }
@@ -131,13 +131,13 @@ $tree = thread_flat($tree, $messages);
                      }
                      else
                      {
-                      //  echo isset($fbIcons['topiclocked']) ? '<img src="' . KUNENA_URLICONSPATH.$fbIcons['topiclocked'].'" border="0" alt="'._GEN_LOCKED_TOPIC.'" title="'._GEN_LOCKED_TOPIC.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'lock.gif" width="15" height="15" alt="'._GEN_LOCKED_TOPIC.'" />';
+                      //  echo isset($kunenaIcons['topiclocked']) ? '<img src="' . KUNENA_URLICONSPATH.$kunenaIcons['topiclocked'].'" border="0" alt="'._GEN_LOCKED_TOPIC.'" title="'._GEN_LOCKED_TOPIC.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'lock.gif" width="15" height="15" alt="'._GEN_LOCKED_TOPIC.'" />';
                         $topicLocked=1;
                      }
                   }
                   else
                   {
-                   //  echo isset($fbIcons['topicsticky']) ? '<img src="' . KUNENA_URLICONSPATH.$fbIcons['topicsticky'].'" border="0" alt="'._GEN_ISSTICKY.'" title="'._GEN_ISSTICKY.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'pushpin.gif" width="15" height="15" alt="'._GEN_ISSTICKY.'" />';
+                   //  echo isset($kunenaIcons['topicsticky']) ? '<img src="' . KUNENA_URLICONSPATH.$kunenaIcons['topicsticky'].'" border="0" alt="'._GEN_ISSTICKY.'" title="'._GEN_ISSTICKY.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'pushpin.gif" width="15" height="15" alt="'._GEN_ISSTICKY.'" />';
                      $topicSticky=1;
                   }
                   ?></td>
@@ -189,12 +189,12 @@ $tree = thread_flat($tree, $messages);
     <a class="kunena_threadview_link"  href = "<?php echo $newURL; ?>"><?php echo stripslashes($leaf->subject); ?>
 <!--            Favourite       -->
 <?php
-if ($fbConfig->allowfavorites)
+if ($kunenaConfig->allowfavorites)
 {
     $kunena_db->setQuery("select count(*) from #__kunena_favorites where thread = $leaf->id && userid = $kunena_my->id");
 
     if (intval($kunena_db->loadResult()) > 0) {
-        echo isset($fbIcons['favoritestar']) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $fbIcons['favoritestar'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
+        echo isset($kunenaIcons['favoritestar']) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $kunenaIcons['favoritestar'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
     }
 }
 ?>
@@ -208,7 +208,7 @@ if ($fbConfig->allowfavorites)
     </td>
 
     <td align = "center" <?php echo $leaf->id==$id?' class="'.$boardclass.'sectiontableentry2"':'';?>>
-        <small><?php echo $leaf->email != "" && $kunena_my->id > 0 && $fbConfig->showemail ? '<a href="mailto:' . stripslashes($leaf->email) . '">' . stripslashes($leaf->name) . '</a>' : stripslashes($leaf->name); ?></small>
+        <small><?php echo $leaf->email != "" && $kunena_my->id > 0 && $kunenaConfig->showemail ? '<a href="mailto:' . stripslashes($leaf->email) . '">' . stripslashes($leaf->name) . '</a>' : stripslashes($leaf->name); ?></small>
     </td>
 
     <td align = "center" <?php echo $leaf->id==$id?' class=""'.$boardclass.'sectiontableentry2"':'';?>>

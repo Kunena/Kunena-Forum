@@ -20,12 +20,12 @@
 **/
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
-$fbConfig =& CKunenaConfig::getInstance();
+$kunenaConfig =& CKunenaConfig::getInstance();
 
-if ($fbConfig->showstats)
+if ($kunenaConfig->showstats)
 {
 
-if ($fbConfig->showgenstats)
+if ($kunenaConfig->showgenstats)
 {
 $kunena_db->setQuery("SELECT COUNT(*) FROM #__users");
 $totalmembers = $kunena_db->loadResult();
@@ -42,7 +42,7 @@ $totalsections = !empty($totaltmp->totalsections)?$totaltmp->totalsections:0;
 $totalcats = !empty($totaltmp->totalcats)?$totaltmp->totalcats:0;
 unset($totaltmp);
 
-$kunena_queryName = $fbConfig->username ? "username" : "name";
+$kunena_queryName = $kunenaConfig->username ? "username" : "name";
 $kunena_db->setQuery("SELECT id, {$kunena_queryName} AS username FROM #__users WHERE block='0' AND activation='' ORDER BY id DESC", 0, 1);
 $_lastestmember = $kunena_db->loadObject();
 $lastestmember = $_lastestmember->username;
@@ -66,8 +66,8 @@ unset($totaltmp);
 
 } // ENDIF: showgenstats
 
-$PopUserCount = $fbConfig->popusercount;
-if ($fbConfig->showpopuserstats)
+$PopUserCount = $kunenaConfig->popusercount;
+if ($kunenaConfig->showpopuserstats)
 {
 	$kunena_db->setQuery("SELECT p.userid, p.posts, u.id, u.{$kunena_queryName} AS username FROM #__kunena_users AS p INNER JOIN #__users AS u ON u.id = p.userid WHERE p.posts > '0' ORDER BY p.posts DESC", 0, $PopUserCount);
 	$topposters = $kunena_db->loadObjectList();
@@ -82,11 +82,11 @@ if ($fbConfig->showpopuserstats)
 	$topprofil = !empty($topprofiles[0]->hits)?$topprofiles[0]->hits:0;
 } // ENDIF: showpopuserstats
 
-$PopSubjectCount = $fbConfig->popsubjectcount;
-if ($fbConfig->showpopsubjectstats)
+$PopSubjectCount = $kunenaConfig->popsubjectcount;
+if ($kunenaConfig->showpopsubjectstats)
 {
-	$fbSession =& CKunenaSession::getInstance();
-	$kunena_db->setQuery("SELECT * FROM #__kunena_messages WHERE moved='0' AND hold='0' AND parent='0' AND catid IN ($fbSession->allowed) ORDER BY hits DESC", 0, $PopSubjectCount);
+	$kunenaSession =& CKunenaSession::getInstance();
+	$kunena_db->setQuery("SELECT * FROM #__kunena_messages WHERE moved='0' AND hold='0' AND parent='0' AND catid IN ($kunenaSession->allowed) ORDER BY hits DESC", 0, $PopSubjectCount);
 	$toptitles = $kunena_db->loadObjectList();
 	
 	$toptitlehits = !empty($toptitles[0]->hits)?$toptitles[0]->hits:0;

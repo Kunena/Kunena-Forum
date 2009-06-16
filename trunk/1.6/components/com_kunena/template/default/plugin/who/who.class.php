@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$fbConfig =& CKunenaConfig::getInstance();
+$kunenaConfig =& CKunenaConfig::getInstance();
 
 //Get some variables
 $id = intval(JRequest::getVar('id'));
@@ -33,7 +33,7 @@ $replyto = intval(JRequest::getVar('replyto'));
 $do = JRequest::getVar('do');
 
 $now = time();
-$past = $now - $fbConfig->fbsessiontimeout;
+$past = $now - $kunenaConfig->kunenasessiontimeout;
 $myip = getenv('REMOTE_ADDR');
 
 if ($kunena_my->id > 0) {

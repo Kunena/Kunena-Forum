@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id$
+* @version $Id:kunena_pathway.php 884 2009-06-16 03:48:56Z fxstein $
 * Kunena Component
 * @package Kunena
 *
@@ -21,7 +21,7 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
-$fbConfig =& CKunenaConfig::getInstance();
+$kunenaConfig =& CKunenaConfig::getInstance();
 ?>
 <!-- Pathway -->
 <?php
@@ -35,7 +35,7 @@ if ($func != "")
         <?php
         $catids = intval($catid);
         $jr_path_menu = array ();
-        echo '<div class="path-element-first">' . CKunenaLink::GetKunenaLink( kunena_htmlspecialchars(stripslashes($fbConfig->board_title)) ) . '</div>';
+        echo '<div class="path-element-first">' . CKunenaLink::GetKunenaLink( kunena_htmlspecialchars(stripslashes($kunenaConfig->board_title)) ) . '</div>';
 
         while ($catids > 0)
         {
@@ -89,14 +89,14 @@ if ($func != "")
 		$fireinfo = '';
         if (!empty($forumLocked))
         {
-            $fireinfo = isset($fbIcons['forumlocked']) ? ' <img src="' . KUNENA_URLICONSPATH . $fbIcons['forumlocked']
+            $fireinfo = isset($kunenaIcons['forumlocked']) ? ' <img src="' . KUNENA_URLICONSPATH . $kunenaIcons['forumlocked']
                      . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"  alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
             $lockedForum = 1;
         }
 
         if (!empty($forumReviewed))
         {
-            $fireinfo = isset($fbIcons['forummoderated']) ? ' <img src="' . KUNENA_URLICONSPATH . $fbIcons['forummoderated']
+            $fireinfo = isset($kunenaIcons['forummoderated']) ? ' <img src="' . KUNENA_URLICONSPATH . $kunenaIcons['forummoderated']
                      . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '">';
             $moderatedForum = 1;
         }
@@ -112,7 +112,7 @@ if ($func != "")
         }
 
          //get viewing
-        $kunena_queryName = $fbConfig->username ? "username" : "name";
+        $kunena_queryName = $kunenaConfig->username ? "username" : "name";
 		$query= "SELECT w.userid, u.id, u.{$kunena_queryName} AS username, k.showOnline FROM #__kunena_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__kunena_users AS k ON k.userid=w.userid WHERE w.link like '%" . addslashes($_SERVER['REQUEST_URI']) . "%' GROUP BY w.userid ORDER BY u.{$kunena_queryName} ASC";
 		$kunena_db->setQuery($query);
 		$users = $kunena_db->loadObjectList();
@@ -136,7 +136,7 @@ if ($func != "")
 					$divider = '';
 					}
 					if ( $user->showOnline > 0 ){
-					echo CKunenaLink::GetProfileLink($fbConfig,  $user->userid, $user->username) . $divider.' ';
+					echo CKunenaLink::GetProfileLink($kunenaConfig,  $user->userid, $user->username) . $divider.' ';
 					}
 				}
 				else
@@ -154,7 +154,7 @@ if ($func != "")
 
 		$document=& JFactory::getDocument();
 
-		$document->setTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($fbConfig->board_title));
+		$document->setTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($kunenaConfig->board_title));
         ?>
 		</div>
     </div>

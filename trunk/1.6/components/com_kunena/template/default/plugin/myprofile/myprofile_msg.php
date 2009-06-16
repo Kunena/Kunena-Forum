@@ -33,12 +33,12 @@ defined( '_JEXEC' ) or die('Restricted access');
 					<span class = "kunena_title"><?php echo _KUNENA_USERPROFILE_MESSAGES; ?></span>
 				</div>
 
-				<img id = "BoxSwitch_fbuserprofile__<?php echo $boardclass ;?>fbuserprofile_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = "" />
+				<img id = "BoxSwitch_kunenauserprofile__<?php echo $boardclass ;?>kunenauserprofile_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = "" />
                         </th>
 		</tr>
 	</thead>
 
-	<tbody id = "<?php echo $boardclass ;?>fbuserprofile_tbody">
+	<tbody id = "<?php echo $boardclass ;?>kunenauserprofile_tbody">
 		<tr class = "kunena_sth">
 			<th class = "th-1 <?php echo $boardclass ;?>sectiontableheader">&nbsp;
 			</th>
@@ -91,7 +91,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 			$group_id = 0;
 		}
 
-        $query = "SELECT COUNT(*) FROM #__kunena_messages WHERE hold='0' AND userid='{$kunena_my->id}' AND catid IN ($fbSession->allowed)";
+        $query = "SELECT COUNT(*) FROM #__kunena_messages WHERE hold='0' AND userid='{$kunena_my->id}' AND catid IN ($kunenaSession->allowed)";
 		$kunena_db->setQuery($query);
 
 		$total = count($kunena_db->loadObjectList());
@@ -104,7 +104,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
         $query
             = "SELECT a.*, b.id AS category, b.name AS catname, c.hits AS threadhits FROM #__kunena_messages AS a, #__kunena_categories AS b, #__kunena_messages AS c, #__kunena_messages_text AS d"
-            ." WHERE a.catid=b.id AND a.thread=c.id AND a.id=d.mesid AND a.hold='0' AND a.userid='{$kunena_my->id}' AND a.catid IN ($fbSession->allowed) ORDER BY time DESC";
+            ." WHERE a.catid=b.id AND a.thread=c.id AND a.id=d.mesid AND a.hold='0' AND a.userid='{$kunena_my->id}' AND a.catid IN ($kunenaSession->allowed) ORDER BY time DESC";
         $kunena_db->setQuery($query, $limitstart, $limit);
 
 		$items   = $kunena_db->loadObjectList();
@@ -132,9 +132,9 @@ defined( '_JEXEC' ) or die('Restricted access');
 					$item->created = "";
 				}
 
-				$fbURL    = JRoute::_("index.php?option=com_kunena&amp;func=view" . KUNENA_COMPONENT_ITEMID_SUFFIX . "&amp;catid=" . $item->catid . "&amp;id=" . $item->id . "#" . $item->id);
+				$kunenaURL    = JRoute::_("index.php?option=com_kunena&amp;func=view" . KUNENA_COMPONENT_ITEMID_SUFFIX . "&amp;catid=" . $item->catid . "&amp;id=" . $item->id . "#" . $item->id);
 
-				$fbCatURL = JRoute::_("index.php?option=com_kunena" . KUNENA_COMPONENT_ITEMID_SUFFIX . "&amp;func=showcat&amp;catid=" . $item->catid);
+				$kunenaCatURL = JRoute::_("index.php?option=com_kunena" . KUNENA_COMPONENT_ITEMID_SUFFIX . "&amp;func=showcat&amp;catid=" . $item->catid);
 		?>
 
 			<tr class = "<?php echo ''.$boardclass.''. $tabclass[$k] . ''; ?>">
@@ -143,13 +143,13 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 				<td class = "td-2">
 					<div class = "jr-topic-title">
-						<a href = "<?php echo $fbURL; ?>"> <?php echo kunena_htmlspecialchars(stripslashes($item->subject)); ?> </a>
+						<a href = "<?php echo $kunenaURL; ?>"> <?php echo kunena_htmlspecialchars(stripslashes($item->subject)); ?> </a>
 					</div>
 				</td>
 
 				<td class = "td-3">
 					<div class = "jr-topic-cat">
-						<a href = "<?php echo $fbCatURL; ?>"> <?php echo kunena_htmlspecialchars(stripslashes($item->catname)); ?></a>
+						<a href = "<?php echo $kunenaCatURL; ?>"> <?php echo kunena_htmlspecialchars(stripslashes($item->catname)); ?></a>
 					</div>
 				</td>
 
@@ -163,7 +163,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 				</td>
 
 				<td class = "td-6">
-					<a href = "<?php echo $fbURL; ?>"> <?php echo isset($fbIcons['latestpost']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />'
+					<a href = "<?php echo $kunenaURL; ?>"> <?php echo isset($kunenaIcons['latestpost']) ? '<img src="' . KUNENA_URLICONSPATH . $kunenaIcons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />'
 																	  : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'; ?> </a>
 				</td>
 			</tr>

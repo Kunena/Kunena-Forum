@@ -20,7 +20,7 @@
 **/
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
-$fbConfig =& CKunenaConfig::getInstance();
+$kunenaConfig =& CKunenaConfig::getInstance();
 ?>
 
 <script type = "text/javascript">
@@ -52,7 +52,7 @@ $fbConfig =& CKunenaConfig::getInstance();
                 <?php
                 if ($func == "view")
                 {
-                    if ($fbConfig->enablepdf)
+                    if ($kunenaConfig->enablepdf)
                     {
                 ?>
 
@@ -107,30 +107,30 @@ $fbConfig =& CKunenaConfig::getInstance();
                 </li>
 
                 <?php
-                if ($fbConfig->enablerulespage)
+                if ($kunenaConfig->enablerulespage)
                 {
-				 if ($fbConfig->rules_infb) {
+				 if ($kunenaConfig->rules_inkunena) {
                     echo '<li>';
                     echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=rules') . '" >';
                     echo _GEN_RULES;
                     echo '</a></li>';
 					} else {
 					echo '<li>';
-                    echo '<a href="' . $fbConfig->rules_link . '" >';
+                    echo '<a href="' . $kunenaConfig->rules_link . '" >';
                     echo _GEN_RULES;
                     echo '</a></li>';
 					}
                 }
-                if ($fbConfig->enablehelppage)
+                if ($kunenaConfig->enablehelppage)
                 {
-				 if ($fbConfig->help_infb) {
+				 if ($kunenaConfig->help_inkunena) {
 					echo '<li>';
 					echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=faq') . '" >';
 					echo _GEN_HELP;
 					echo '</a></li>';
 					} else {
 					echo '<li>';
-					echo '<a href="' . $fbConfig->help_link . '" >';
+					echo '<a href="' . $kunenaConfig->help_link . '" >';
 					echo _GEN_HELP;
 					echo '</a></li>';
 					}

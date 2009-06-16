@@ -49,7 +49,7 @@ function trigger_dberror($text = '')
 	$kunenaMySQLVersion = CKunenaVersion::MySQLVersion();
 ?>
  <!-- Version Info -->
-<div class="fbfooter">
+<div class="kunenafooter">
 Installed version:  <?php echo $kunenaVersion; ?> | php <?php echo $kunenaPHPVersion; ?> | mysql <?php echo $kunenaMySQLVersion; ?>
 </div>
 <!-- /Version Info -->

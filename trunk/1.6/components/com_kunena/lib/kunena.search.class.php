@@ -70,7 +70,7 @@ class CKunenaSearch
 
 	$app =& JFactory::getApplication();
         $kunena_db = &JFactory::getDBO();
-        $fbConfig =& CKunenaConfig::getInstance();
+        $kunenaConfig =& CKunenaConfig::getInstance();
 
         // TODO: started_by
         // TODO: active_in
@@ -102,14 +102,14 @@ class CKunenaSearch
 	$this->params['childforums'] = intval(JRequest::getVar('childforums', $this->defaults['childforums']));
 	$this->params['catids'] = strtr(JRequest::getVar('catids', '0', 'get'), KUNENA_URL_LIST_SEPARATOR, ',');
 	$limitstart = $this->limitstart = intval(JRequest::getVar('limitstart', 0));
-	$limit = $this->limit = intval(JRequest::getVar('limit', $fbConfig->messages_per_page_search));
+	$limit = $this->limit = intval(JRequest::getVar('limit', $kunenaConfig->messages_per_page_search));
 	extract($this->params);
 
-	if ($limit<1 || $limit>40) $limit = $this->limit = $fbConfig->messages_per_page_search;
+	if ($limit<1 || $limit>40) $limit = $this->limit = $kunenaConfig->messages_per_page_search;
 
 	if (isset($_POST['q']) || isset($_POST['searchword'])) {
 		$this->params['catids'] = implode(',', JRequest::getVar('catids', array(0), 'post', 'array'));
-		$url = CKunenaLink::GetSearchURL($fbConfig, $this->func, $q, $limitstart, $limit, $this->getUrlParams());
+		$url = CKunenaLink::GetSearchURL($kunenaConfig, $this->func, $q, $limitstart, $limit, $this->getUrlParams());
         	header("HTTP/1.1 303 See Other");
         	header("Location: " . htmlspecialchars_decode($url));
         	$app->close();
@@ -305,15 +305,15 @@ class CKunenaSearch
 	return $url_params;
     }
     function get_search_forums(&$catids, $childforums = 1) {
-		$fbSession =& CKunenaSession::getInstance();
+		$kunenaSession =& CKunenaSession::getInstance();
         $kunena_db = &JFactory::getDBO();
 		$kunena_my = &JFactory::getUser();
 
         /* get allowed forums */
 		$allowed_string = '';
-		if ($fbSession->allowed && $fbSession->allowed != 'na')
+		if ($kunenaSession->allowed && $kunenaSession->allowed != 'na')
 		{
-			$allowed_string = "id IN ({$fbSession->allowed})";
+			$allowed_string = "id IN ({$kunenaSession->allowed})";
 		} else {
 			$allowed_string = "published='1' AND pub_access='0'";
 		}
@@ -355,7 +355,7 @@ class CKunenaSearch
      */
     function show()
     {
-	$fbConfig =& CKunenaConfig::getInstance();
+	$kunenaConfig =& CKunenaConfig::getInstance();
 
 	extract($this->params);
         $q = implode(" ", $this->get_searchstrings());
@@ -404,7 +404,7 @@ class CKunenaSearch
                 <tr>
                     <th colspan = "3">
                         <div class = "kunena_title_cover">
-                            <span class="kunena_title fbl"><?php echo _KUNENA_SEARCH_RESULTS; ?></span>
+                            <span class="kunena_title kunenal"><?php echo _KUNENA_SEARCH_RESULTS; ?></span>
                             <b><?php printf(_FORUM_SEARCH, $q); ?></b>
                         </div>
                     </th>
@@ -514,7 +514,7 @@ class CKunenaSearch
 }
 
 function KunenaSearchPagination($function, $q, $urlparams, $page, $limit, $totalpages, $maxpages) {
-    $fbConfig =& CKunenaConfig::getInstance();
+    $kunenaConfig =& CKunenaConfig::getInstance();
     if ($page==0) $page++;
     $startpage = ($page - floor($maxpages/2) < 1) ? 1 : $page - floor($maxpages/2);
     $endpage = $startpage + $maxpages;
@@ -527,7 +527,7 @@ function KunenaSearchPagination($function, $q, $urlparams, $page, $limit, $total
     if ($startpage > 1)
     {
 	if ($endpage < $totalpages) $endpage--;
-	$output .= CKunenaLink::GetSearchLink($fbConfig, $function, $q, 0, $limit, 1, $urlparams, $rel='nofollow');
+	$output .= CKunenaLink::GetSearchLink($kunenaConfig, $function, $q, 0, $limit, 1, $urlparams, $rel='nofollow');
 
 	if ($startpage > 2)
         {
@@ -541,7 +541,7 @@ function KunenaSearchPagination($function, $q, $urlparams, $page, $limit, $total
             $output .= "<strong>$i</strong>";
         }
         else {
-	    $output .= CKunenaLink::GetSearchLink($fbConfig, $function, $q, ($i-1)*$limit, $limit, $i, $urlparams, $rel='nofollow');
+	    $output .= CKunenaLink::GetSearchLink($kunenaConfig, $function, $q, ($i-1)*$limit, $limit, $i, $urlparams, $rel='nofollow');
         }
     }
 
@@ -552,7 +552,7 @@ function KunenaSearchPagination($function, $q, $urlparams, $page, $limit, $total
 	    $output .= "...";
 	}
 
-	$output .= CKunenaLink::GetSearchLink($fbConfig, $function, $q, ($totalpages-1)*$limit, $limit, $totalpages, $urlparams, $rel='nofollow');
+	$output .= CKunenaLink::GetSearchLink($kunenaConfig, $function, $q, ($totalpages-1)*$limit, $limit, $totalpages, $urlparams, $rel='nofollow');
     }
 
     $output .= '</div>';

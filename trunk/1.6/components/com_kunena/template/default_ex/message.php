@@ -23,12 +23,12 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $kunena_my = &JFactory::getUser();
-$fbConfig =& CKunenaConfig::getInstance();
+$kunenaConfig =& CKunenaConfig::getInstance();
 unset($user);
 $kunena_db = &JFactory::getDBO();
 $kunena_db->setQuery("SELECT id, email, name FROM #__users WHERE `id`='{$kunena_my->id}'");
 $user = $kunena_db->loadObject();
-if ($fbConfig->kunena_profile == 'cb')
+if ($kunenaConfig->kunena_profile == 'cb')
 {
 	$msg_params = array(
 		'username' => &$msg_username, 
@@ -66,7 +66,7 @@ if ($fbConfig->kunena_profile == 'cb')
                         <td align = "left">
                             <?php
                             $msg_time_since = _KUNENA_TIME_SINCE;
-                            $msg_time_since = str_replace('%time%', time_since($fmessage->time, CKunenaTools::fbGetInternalTime()), $msg_time_since);
+                            $msg_time_since = str_replace('%time%', time_since($fmessage->time, CKunenaTools::kunenaGetInternalTime()), $msg_time_since);
 
                             if ($prevCheck < $fmessage->time && !in_array($fmessage->thread, $read_topics)) {
                                 $msgtitle = 'msgtitle_new';
@@ -108,7 +108,7 @@ if ($fbConfig->kunena_profile == 'cb')
                                     <!-- make this div distinct from others on this page -->
                                     <?php
                                     //see if we need the users realname or his loginname
-                                    if ($fbConfig->username) {
+                                    if ($kunenaConfig->username) {
                                         $authorName = $kunena_my->username;
                                     }
                                     else {
@@ -128,13 +128,13 @@ if ($fbConfig->kunena_profile == 'cb')
 
                                 <input type = "hidden" name = "contentURL" value = "empty"/>
 
-                                <input type = "text" name = "subject" size = "35" class = "inputbox" maxlength = "<?php echo $fbConfig->maxsubject;?>" value = "<?php echo $resubject;?>"/>
+                                <input type = "text" name = "subject" size = "35" class = "inputbox" maxlength = "<?php echo $kunenaConfig->maxsubject;?>" value = "<?php echo $resubject;?>"/>
 
                                 <textarea class = "inputbox" name = "message" rows = "6" cols = "60" style = "height: 100px; width: 100%; overflow:auto;"></textarea>
 
                                  <?php
 								// Begin captcha . Thanks Adeptus
-								if ($fbConfig->captcha && $kunena_my->id < 1) { ?>
+								if ($kunenaConfig->captcha && $kunena_my->id < 1) { ?>
 								<?php echo _KUNENA_CAPDESC.'&nbsp;'?>
 								<input name="txtNumber" type="text" id="txtNumber" value="" style="vertical-align:middle" size="10">&nbsp;
 								<img src="index2.php?option=com_kunena&func=showcaptcha" alt="" /><br />
@@ -177,7 +177,7 @@ if ($fbConfig->kunena_profile == 'cb')
 <?php
                         if ($fmessage->userid > 0)
                         {
-                        	echo CKunenaLink::GetProfileLink($fbConfig, $fmessage->userid, $msg_username);
+                        	echo CKunenaLink::GetProfileLink($kunenaConfig, $fmessage->userid, $msg_username);
                         }
                         else
                         {
@@ -186,13 +186,13 @@ if ($fbConfig->kunena_profile == 'cb')
 ?>
                     </span>
 <?php
-					if ( $fbConfig->userlist_usertype ) echo '<span class = "msgusertype">('.$msg_usertype.')</span>';
+					if ( $kunenaConfig->userlist_usertype ) echo '<span class = "msgusertype">('.$msg_usertype.')</span>';
 ?>
                     <br/>
 <?php
                         if ($fmessage->userid > 0)
                         {
-                        	echo CKunenaLink::GetProfileLink($fbConfig, $fmessage->userid, $msg_avatar);
+                        	echo CKunenaLink::GetProfileLink($kunenaConfig, $fmessage->userid, $msg_avatar);
                         }
                         else
                         {
@@ -333,7 +333,7 @@ if ($fbConfig->kunena_profile == 'cb')
 		echo '</span>';
 	}
 
-                            if ($fbConfig->reportmsg && $kunena_my->id > 1)
+                            if ($kunenaConfig->reportmsg && $kunena_my->id > 1)
                             {
                                 echo '<span class="kunena_message_informMarkUp">'.CKunenaLink::GetReportMessageLink($catid, $msg_id, _KUNENA_REPORT).'</span>';
                             }
@@ -351,14 +351,14 @@ if ($fbConfig->kunena_profile == 'cb')
                 ?>
                 <span id = "kunena_qr_sc__<?php echo $msg_id;?>" class = "kunena_qr_fire" style = "cursor:hand; cursor:pointer">
                 <?php echo
-                    isset($fbIcons['quickmsg']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['quickmsg'] . '" border="0" alt="' . _KUNENA_QUICKMSG . '" />' . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _KUNENA_QUICKMSG . '" />'; ?>
+                    isset($kunenaIcons['quickmsg']) ? '<img src="' . KUNENA_URLICONSPATH . $kunenaIcons['quickmsg'] . '" border="0" alt="' . _KUNENA_QUICKMSG . '" />' . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _KUNENA_QUICKMSG . '" />'; ?>
                 </span>
                 <?php
                 endif;
                 ?>
 
                 <?php
-                if ($fbIcons['reply'])
+                if ($kunenaIcons['reply'])
                 {
                     if (!isset($msg_closed))
                     {

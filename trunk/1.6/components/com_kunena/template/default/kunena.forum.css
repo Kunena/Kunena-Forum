@@ -10,22 +10,22 @@
 #Kunena a { text-decoration:none; font-weight:normal;}
 #Kunena a:link , #Kunena a:visited{ color:#006699;}
 #Kunena a:hover { color: #00CCCC;}
-#Kunena .fbxs {
+#Kunena .kunenaxs {
 	font-size: 8px;
 }
-#Kunena .fbs {
+#Kunena .kunenas {
 	font-size: 10px;
 }
-#Kunena .fbm {
+#Kunena .kunenam {
 	font-size: 11px;
 }
-#Kunena .fbl {
+#Kunena .kunenal {
 	font-size: 14px;
 }
-#Kunena .fbxl {
+#Kunena .kunenaxl {
 	font-size: 18px;
 }
-#Kunena .fbxxl {
+#Kunena .kunenaxxl {
 	font-size: 28px;
 }
 /* HEADER
@@ -112,7 +112,7 @@ span.msgtitle_new{background: url(images/msgtitlenew.gif) no-repeat left center;
 span.msgdate{font-weight:     normal;text-decoration: none;padding-left:10px;}
 span.msgkarma{font-weight: bold;color: #333333;text-decoration: none;padding-right: 10px;}
 div.msgtext{overflow:hidden; max-width: 100%}
-div.fbcode{overflow:auto;}
+div.kunenacode{overflow:auto;}
 div.msgtext pre, div.msgtext .code{border-left: 5px solid #F4A94F;border-right: 1px solid #CCC; border-top: 1px solid #CCC; border-bottom: 1px solid #CCC;font-family: "Courier News", monospace;font-size-adjust: none;font-stretch: normal;font-style: normal;font-variant: normal;font-weight: normal;line-height: 1.0;margin: 5px 0pt 15px;padding: 10px 15px;width: 90%; overflow:auto;}
 div.kunena_file_attachment{background:#CFDCEB;border: 1px dotted #7F9DB9;padding:10px;margin-bottom:10px;}
 span.contentheading {}
@@ -131,7 +131,7 @@ td.kunena_msgview-right-b{border-right:  1px solid #CCCCCC;border-bottom: 1px so
 span.kunena_qr_fire{}
 .switchcontent{display:none;}
 span.kunena_quote{display: block;border: 1px dotted #CCC;margin: 5px 0pt;padding: 5px;font-family: Arial, Helvetica, sans-serif;font-style: italic;background: #F7F7F7;}
-#Kunena div.fbhide {background:#FFF8F2 url(images/bullet-tips.gif) no-repeat scroll 5px center;border:1px dotted #F2CAB7;font-size:12px;padding:10px 10px 10px 25px;}
+#Kunena div.kunenahide {background:#FFF8F2 url(images/bullet-tips.gif) no-repeat scroll 5px center;border:1px dotted #F2CAB7;font-size:12px;padding:10px 10px 10px 25px;}
 
 /*
 THREAD VIEW
@@ -265,11 +265,11 @@ MY PROFILE
 
 /* RECENT POSTS
 ----------------------------------------------------------------------------------------------- */
-#Kunena a.fbrecent { font-weight:bold; }
+#Kunena a.kunenarecent { font-weight:bold; }
 
 /* WHOIS ONLINE 
 ----------------------------------------------------------------------------------------------- */
-#Kunena .fbgrouplist { padding:5px;}
+#Kunena .kunenagrouplist { padding:5px;}
 
 /* FOOTER
 ----------------------------------------------------------------------------------------------- */

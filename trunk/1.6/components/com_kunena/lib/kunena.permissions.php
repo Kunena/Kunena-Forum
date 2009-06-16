@@ -33,7 +33,7 @@ defined( '_JEXEC' ) or die('Restricted access');
  * @pre: kunena_has_read_permission()
  */
 function kunena_has_post_permission(&$kunena_db,$catid,$replyto,$userid,$pubwrite,$ismod) {
-    $fbConfig =& CKunenaConfig::getInstance();
+    $kunenaConfig =& CKunenaConfig::getInstance();
     if ($ismod)
         return 1; // moderators always have post permission
     if($replyto != 0) {
@@ -97,18 +97,18 @@ function kunena_has_moderator_permission(&$kunena_db,&$obj_kunena_cat,$int_kunen
  * @param int
  * @param obj
  */
-function kunena_has_read_permission(&$obj_fbcat,&$allow_forum,$groupid,&$kunena_acl) {
+function kunena_has_read_permission(&$obj_kunenacat,&$allow_forum,$groupid,&$kunena_acl) {
     $kunena_acl = &JFactory::getACL();
-    if ($obj_fbcat->getPubRecurse())
+    if ($obj_kunenacat->getPubRecurse())
         $pub_recurse="RECURSE";
     else
         $pub_recurse="NO_RECURSE";
 
-    if ($obj_fbcat->getAdminRecurse())
+    if ($obj_kunenacat->getAdminRecurse())
         $admin_recurse="RECURSE";
     else
         $admin_recurse="NO_RECURSE";
-      if ($obj_fbcat->getPubAccess() == 0 || ($obj_fbcat->getPubAccess() == -1 && $groupid > 0) || (sizeof($allow_forum)> 0 && in_array($obj_fbcat->getId(),$allow_forum))) {
+      if ($obj_kunenacat->getPubAccess() == 0 || ($obj_kunenacat->getPubAccess() == -1 && $groupid > 0) || (sizeof($allow_forum)> 0 && in_array($obj_kunenacat->getId(),$allow_forum))) {
       //this is a public forum; let 'Everybody' pass
       //or this forum is for all registered users and this is a registered user
       //or this forum->id is already in the cookie with allowed forums
@@ -117,7 +117,7 @@ function kunena_has_read_permission(&$obj_fbcat,&$allow_forum,$groupid,&$kunena_
       else {
           //access restrictions apply; need to check
 
-        if( $groupid == $obj_fbcat->getPubAccess()) {
+        if( $groupid == $obj_kunenacat->getPubAccess()) {
             //the user has the same groupid as the access level requires; let pass
             return 1;
         }
@@ -125,7 +125,7 @@ function kunena_has_read_permission(&$obj_fbcat,&$allow_forum,$groupid,&$kunena_
             if ($pub_recurse=='RECURSE') {
                 //check if there are child groups for the Access Level
                 $group_childs=array();
-                $group_childs=$kunena_acl->get_group_children( $obj_fbcat->getPubAccess(), 'ARO', $pub_recurse );
+                $group_childs=$kunena_acl->get_group_children( $obj_kunenacat->getPubAccess(), 'ARO', $pub_recurse );
 
                 if ( is_array( $group_childs ) && count( $group_childs ) > 0) {
                     //there are child groups. See if user is in any ot them
@@ -138,7 +138,7 @@ function kunena_has_read_permission(&$obj_fbcat,&$allow_forum,$groupid,&$kunena_
         }//esle
         //no valid frontend users found to let pass; check if this is an Admin that should be let passed:
 
-        if( $groupid == $obj_fbcat->getAdminAccess() ) {
+        if( $groupid == $obj_kunenacat->getAdminAccess() ) {
             //the user has the same groupid as the access level requires; let pass
             return 1;
         }
@@ -146,7 +146,7 @@ function kunena_has_read_permission(&$obj_fbcat,&$allow_forum,$groupid,&$kunena_
             if ($admin_recurse=='RECURSE') {
                 //check if there are child groups for the Access Level
                 $group_childs=array();
-                $group_childs=$kunena_acl->get_group_children( $obj_fbcat->getAdminAccess(), 'ARO', $admin_recurse );
+                $group_childs=$kunena_acl->get_group_children( $obj_kunenacat->getAdminAccess(), 'ARO', $admin_recurse );
 
                 if (is_array( $group_childs ) && count( $group_childs ) > 0) {
                     //there are child groups. See if user is in any ot them

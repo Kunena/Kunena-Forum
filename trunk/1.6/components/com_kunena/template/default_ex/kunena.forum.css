@@ -343,7 +343,7 @@
 	line-height:28px;
 	white-space:nowrap;
 }
-#Kunena td.kunena_list_jump_all input.fbjumpgo {
+#Kunena td.kunena_list_jump_all input.kunenajumpgo {
 	display:none;
 }
 #Kunena .kunena_list_top {
@@ -423,22 +423,22 @@
 #Kunena a:hover {
 	color: #FF0000;
 }
-#Kunena .fbxs {
+#Kunena .kunenaxs {
 	font-size:xx-small;
 }
-#Kunena .fbs {
+#Kunena .kunenas {
 	font-size:x-small;
 }
-#Kunena .fbm {
+#Kunena .kunenam {
 	font-size:small;
 }
-#Kunena .fbl {
+#Kunena .kunenal {
 	font-size:medium;
 }
-#Kunena .fbxl {
+#Kunena .kunenaxl {
 	font-size:medium;
 }
-#Kunena .fbxxl {
+#Kunena .kunenaxxl {
 	font-size:large;
 }
 /* HEADER
@@ -778,7 +778,7 @@ VIEW PAGE
 	padding:10px 0 0 0;
 	margin-top:5px;
 }
-#Kunena div.fbcode {
+#Kunena div.kunenacode {
 	overflow:auto; 
 }
 #Kunena div.msgtext pre, 
@@ -897,7 +897,7 @@ VIEW PAGE
 	font-style: italic;
 	background: #F7F7F7;
 }
-#Kunena div.fbhide {
+#Kunena div.kunenahide {
 	background:#FFF8F2 url(images/bullet-tips.gif) no-repeat scroll 5px center;
 	border:1px dotted #F2CAB7;
 	font-size:medium;
@@ -1345,12 +1345,12 @@ MY PROFILE
 }
 /* RECENT POSTS
 ----------------------------------------------------------------------------------------------- */
-#Kunena a.fbrecent {
+#Kunena a.kunenarecent {
 	font-weight:bold;
 }
 /* WHOIS ONLINE 
 ----------------------------------------------------------------------------------------------- */
-#Kunena .fbgrouplist {
+#Kunena .kunenagrouplist {
 	padding:5px;
 }
 /* FOOTER

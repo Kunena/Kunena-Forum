@@ -22,16 +22,16 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$fbConfig =& CKunenaConfig::getInstance();
+$kunenaConfig =& CKunenaConfig::getInstance();
 $kunena_my = &JFactory::getUser();
 
-if ($fbConfig->showstats && $fbConfig->showwhoisonline)
+if ($kunenaConfig->showstats && $kunenaConfig->showwhoisonline)
 {
 ?>
 <!-- WHOIS ONLINE -->
 <?php
     $whoislink = JRoute::_('index.php?option=com_kunena&amp;func=who');
-    $kunena_queryName = $fbConfig->username ? "username" : "name";
+    $kunena_queryName = $kunenaConfig->username ? "username" : "name";
     $query
         = "SELECT w.userip, w.time, w.what, u.{$kunena_queryName} AS username, u.id, k.moderator, k.showOnline "
         . " FROM #__kunena_whoisonline AS w"
@@ -61,8 +61,8 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
         <thead>
             <tr>
                 <th align="left">
-                    <div class = "kunena_title_cover fbm">
-                        <a class = "kunena_title fbl" href = "<?php echo $whoislink;?>">
+                    <div class = "kunena_title_cover kunenam">
+                        <a class = "kunena_title kunenal" href = "<?php echo $whoislink;?>">
 						<?php echo _WHO_ONLINE_NOW; ?>
                         <b><?php echo $totaluser; ?></b>
 						<?php if($totaluser==1) { echo _WHO_ONLINE_MEMBER; } else { echo _WHO_ONLINE_MEMBERS; } ?>
@@ -78,7 +78,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
 
         <tbody id = "whoisonline_tbody">
             <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
-                <td class = "td-1 fbm" align="left">
+                <td class = "td-1 kunenam" align="left">
                     <?php
                     foreach ($users as $user)
                     {
@@ -100,7 +100,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
 
 					 ?>
 
-                    <br /><span class="fbs"><b><?php echo _KUNENA_HIDDEN_USERS; ?>: </b></span>
+                    <br /><span class="kunenas"><b><?php echo _KUNENA_HIDDEN_USERS; ?>: </b></span>
 
                     <?php
 
@@ -134,7 +134,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
 
                     if (count($gr_row) > 1) {
 					?>
-                    <div class="fbgrouplist  fbs">
+                    <div class="kunenagrouplist  kunenas">
                     <?php
 
                     foreach ($gr_row as $gr)

@@ -98,11 +98,11 @@ switch ($action)
 /**
  * Lists messages to be moderated
  * @param array    allMes list of object
- * @param string fbs action string
+ * @param string kunenas action string
  */
 function jbListMessages($allMes, $catid)
 {
-    $fbConfig =& CKunenaConfig::getInstance();
+    $kunenaConfig =& CKunenaConfig::getInstance();
     echo '<form action="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=review') . '" name="moderation" method="post">';
 ?>
 
@@ -154,7 +154,7 @@ function jbListMessages($allMes, $catid)
 
 
             $kunena_message_txt = stripslashes($message->message);
-            echo '<td valign="top">' . smile::smileReplace($kunena_message_txt, 0, $fbConfig->disemoticons, $smileyList) . '</td>';
+            echo '<td valign="top">' . smile::smileReplace($kunena_message_txt, 0, $kunenaConfig->disemoticons, $smileyList) . '</td>';
             echo '<td valign="top"><input type="checkbox" name="cid[]" value="' . $message->id . '" /></td>';
             echo '</tr>';
         }
@@ -185,7 +185,7 @@ function jbListMessages($allMes, $catid)
  * delete selected messages
  * @param object database
  * @param array    cid post ids
- * @param string fbs action string
+ * @param string kunenas action string
  */
 function jbDeletePosts($kunena_db, $cid)
 {

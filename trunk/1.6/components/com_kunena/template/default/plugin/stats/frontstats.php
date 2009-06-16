@@ -22,15 +22,15 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$fbConfig =& CKunenaConfig::getInstance();
+$kunenaConfig =& CKunenaConfig::getInstance();
 $forumurl = JRoute::_(KUNENA_LIVEURLREL);
 $statslink = JRoute::_(KUNENA_LIVEURLREL.'&amp;func=stats');
 
-if ($fbConfig->kunena_profile == "jomsocial")
+if ($kunenaConfig->kunena_profile == "jomsocial")
 {
 	$userlist = JRoute::_('index.php?option=com_community&amp;view=search&amp;task=browse');
 }
-else if ($fbConfig->kunena_profile == 'cb')
+else if ($kunenaConfig->kunena_profile == 'cb')
 {
     $userlist = CKunenaCBProfile::getUserListURL();
 }
@@ -39,9 +39,9 @@ else
     $userlist = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userlist');
 }
 
-if ($fbConfig->showstats > 0)
+if ($kunenaConfig->showstats > 0)
 {
-    if ($fbConfig->showgenstats > 0)
+    if ($kunenaConfig->showgenstats > 0)
     {
 ?>
         <!-- BEGIN: GENERAL STATS -->
@@ -54,8 +54,8 @@ if ($fbConfig->showstats > 0)
             <thead>
                 <tr>
                     <th align="left">
-                        <div class = "kunena_title_cover fbm">
-                            <a class="kunena_title fbl" href = "<?php echo $statslink;?>"><?php echo stripslashes($fbConfig->board_title); ?> <?php echo _STAT_FORUMSTATS; ?></a>
+                        <div class = "kunena_title_cover kunenam">
+                            <a class="kunena_title kunenal" href = "<?php echo $statslink;?>"><?php echo stripslashes($kunenaConfig->board_title); ?> <?php echo _STAT_FORUMSTATS; ?></a>
                         </div>
                         <img id = "BoxSwitch_frontstats__frontstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
                     </th>
@@ -64,9 +64,9 @@ if ($fbConfig->showstats > 0)
 
             <tbody id = "frontstats_tbody">
                 <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
-                    <td class = "td-1  fbm" align="left">
+                    <td class = "td-1  kunenam" align="left">
 <?php echo _STAT_TOTAL_USERS; ?>:<b> <a href = "<?php echo $userlist;?>"><?php echo $totalmembers; ?></a> </b>
-                    &nbsp; <?php echo _STAT_LATEST_MEMBERS; ?>:<b> <?php echo CKunenaLink::GetProfileLink($fbConfig, $lastestmemberid, $lastestmember, $rel='nofollow'); ?></b>
+                    &nbsp; <?php echo _STAT_LATEST_MEMBERS; ?>:<b> <?php echo CKunenaLink::GetProfileLink($kunenaConfig, $lastestmemberid, $lastestmember, $rel='nofollow'); ?></b>
 
                 <br/> <?php echo _STAT_TOTAL_MESSAGES; ?>: <b> <?php echo $totalmsgs; ?></b> &nbsp;
     <?php echo _STAT_TOTAL_SUBJECTS; ?>: <b> <?php echo $totaltitles; ?></b> &nbsp; <?php echo _STAT_TOTAL_SECTIONS; ?>: <b> <?php echo $totalcats; ?></b> &nbsp; <?php echo _STAT_TOTAL_CATEGORIES; ?>: <b> <?php echo $totalsections; ?></b>
@@ -76,7 +76,7 @@ if ($fbConfig->showstats > 0)
 
                 <br/>
 
-                &raquo; <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL .'&amp;func=latest');?>"><?php echo _STAT_VIEW_RECENT_POSTS_ON_FORUM; ?></a> <?php if ($fbConfig->showpopuserstats || $fbConfig->showpopsubjectstats) echo '&raquo; <a href = "'.$statslink.'">'. _STAT_MORE_ABOUT_STATS.'</a>'; ?>  &raquo; <a href="<?php echo $userlist;?>"><?php echo _STAT_USERLIST; ?></a>
+                &raquo; <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL .'&amp;func=latest');?>"><?php echo _STAT_VIEW_RECENT_POSTS_ON_FORUM; ?></a> <?php if ($kunenaConfig->showpopuserstats || $kunenaConfig->showpopsubjectstats) echo '&raquo; <a href = "'.$statslink.'">'. _STAT_MORE_ABOUT_STATS.'</a>'; ?>  &raquo; <a href="<?php echo $userlist;?>"><?php echo _STAT_USERLIST; ?></a>
                     </td>
                 </tr>
             </tbody>

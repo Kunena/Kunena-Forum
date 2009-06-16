@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<fbconverter version="1.0">
+<kunenaconverter version="1.0">
 	<import version="1.0">
 		<query>INSERT INTO #__kunena_messages SELECT * FROM #__sb_messages</query>
 		<query>INSERT INTO #__kunena_attachments SELECT * FROM #__sb_attachments</query>
@@ -13,4 +13,4 @@
 		<query>UPDATE #__kunena_users  SET `rank`=8 WHERE `moderator`=1 AND `rank`=0</query>
 		<phpfile name="joomlaboard.php" />
    	</import>
-</fbconverter>
+</kunenaconverter>

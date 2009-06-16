@@ -25,9 +25,9 @@ require_once (KUNENA_PATH_LIB .DS. "kunena.user.class.php");
 
 $app =& JFactory::getApplication();
 $document =& JFactory::getDocument();
-$fbConfig =& CKunenaConfig::getInstance();
+$kunenaConfig =& CKunenaConfig::getInstance();
 
-$document->setTitle(_GEN_MYPROFILE . ' - ' . stripslashes($fbConfig->board_title));
+$document->setTitle(_GEN_MYPROFILE . ' - ' . stripslashes($kunenaConfig->board_title));
 
 if ($kunena_my->id != "" && $kunena_my->id != 0)
 {
@@ -40,19 +40,19 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
     $userinfo = new CKunenaUserprofile();
 
     //use ClexusPM avatar if configured
-    if ($fbConfig->avatar_src == "clexuspm")
+    if ($kunenaConfig->avatar_src == "clexuspm")
     {
         $kunena_db->setQuery("SELECT picture FROM #__mypms_profiles WHERE userid='{$kunena_my->id}");
         $avatar = $kunena_db->loadResult();
     }
-    elseif ($fbConfig->avatar_src == "cb")
+    elseif ($kunenaConfig->avatar_src == "cb")
     {
         $kunena_db->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='{$kunena_my->id}'");
         $avatar = $kunena_db->loadResult();
     }
     else
     {
-        $avatar = $fbavatar;
+        $avatar = $kunenaavatar;
     }
 
     //user type determination
@@ -164,7 +164,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                 case "avatar":
                     // B: Avatar
-                    if ($fbConfig->kunena_profile != 'cb' && $fbConfig->kunena_profile != 'jomsocial')
+                    if ($kunenaConfig->kunena_profile != 'cb' && $kunenaConfig->kunena_profile != 'jomsocial')
                     {
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar_upload.php'))
                         {
@@ -203,7 +203,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 					(int)$newshowOnline = JRequest::getInt('newshowOnline', 1);
 
                     $kunena_db->setQuery("UPDATE #__kunena_users SET view='$newview', ordering='$neworder', hideEmail='$newhideEmail', showOnline='$newshowOnline' WHERE userid='$kunena_my->id'");
-                    setcookie("fboard_settings[current_view]", $newview);
+                    setcookie("kunenaoard_settings[current_view]", $newview);
 
                     if (!$kunena_db->query())
                     {
@@ -233,7 +233,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     $ulists["gender"] = JHTML::_('select.genericlist',  $genders, 'gender', 'class="inputbox"', 'value', 'text', $userinfo->gender );
 
 
-                    if ($fbConfig->kunena_profile != 'cb' && $fbConfig->kunena_profile != 'jomSocial')
+                    if ($kunenaConfig->kunena_profile != 'cb' && $kunenaConfig->kunena_profile != 'jomSocial')
                     {
                         include (KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 
@@ -409,7 +409,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 						$app->enqueueMessage(_USER_UNSUBSCRIBE_YES);
                     }
                     
-                    if ($fbConfig->kunena_profile == 'cb')
+                    if ($kunenaConfig->kunena_profile == 'cb')
                     {
 						$forumtab_url = CKunenaCBProfile::getForumTabURL();
 						$app->redirect(JRoute::_($forumtab_url));
@@ -433,7 +433,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 							$app->enqueueMessage(_USER_UNSUBSCRIBE_YES);
 						}
 
-						if ($fbConfig->kunena_profile == 'cb') {
+						if ($kunenaConfig->kunena_profile == 'cb') {
 							$forumtab_url = CKunenaCBProfile::getForumTabURL();
 							$app->redirect(JRoute::_($forumtab_url));
 
@@ -465,7 +465,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     	$app->enqueueMessage(_USER_UNFAVORITE_YES);
                     }
 
-                    if ($fbConfig->kunena_profile == 'cb')
+                    if ($kunenaConfig->kunena_profile == 'cb')
                     {
 						$forumtab_url = CKunenaCBProfile::getForumTabURL();
 						$app->redirect(JRoute::_($forumtab_url));
@@ -488,7 +488,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 							$app->enqueueMessage(_USER_UNFAVORITE_YES);
 						}
 
-						if ($fbConfig->kunena_profile == 'cb') {
+						if ($kunenaConfig->kunena_profile == 'cb') {
 							$forumtab_url = CKunenaCBProfile::getForumTabURL();
 							$app->redirect(JRoute::_($forumtab_url));
 						}
@@ -608,7 +608,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
             <th class = "th-right">
                 <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
-                if ($fbConfig->enableforumjump)
+                if ($kunenaConfig->enableforumjump)
                 {
                     require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 }

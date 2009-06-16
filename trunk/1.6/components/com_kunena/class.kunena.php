@@ -34,7 +34,7 @@ global $kunena_my;
 require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 
 $document =& JFactory::getDocument();
-$fbConfig =& CKunenaConfig::getInstance();
+$kunenaConfig =& CKunenaConfig::getInstance();
 $kunena_db = &JFactory::getDBO();
 $kunena_my = &JFactory::getUser();
 
@@ -56,7 +56,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     define("KUNENA_COMPONENT_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_COMPONENT_ITEMID);
 
     //JomSocial
-    if ($fbConfig->pm_component == 'jomsocial' || $fbConfig->kunena_profile == 'jomsocial' || $fbConfig->avatar_src == 'jomsocial')
+    if ($kunenaConfig->pm_component == 'jomsocial' || $kunenaConfig->kunena_profile == 'jomsocial' || $kunenaConfig->avatar_src == 'jomsocial')
     {
     	// Only proceed if jomSocial is really installed
 	    if ( file_exists( KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/core.php' ) )
@@ -82,9 +82,9 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 	    else
 	    {
 	    	// JomSocial not present reset config settings to avoid problems
-	    	$fbConfig->pm_component = $fbConfig->pm_component == 'jomsocial' ? 'none' : $fbConfig->pm_component;
-	    	$fbConfig->kunena_profile = $fbConfig->kunena_profile == 'jomsocial' ? 'kunena' : $fbConfig->kunena_profile;
-	    	$fbConfig->avatar_src = $fbConfig->avatar_src == 'jomsocial' ? 'kunena' : $fbConfig->avatar_src;
+	    	$kunenaConfig->pm_component = $kunenaConfig->pm_component == 'jomsocial' ? 'none' : $kunenaConfig->pm_component;
+	    	$kunenaConfig->kunena_profile = $kunenaConfig->kunena_profile == 'jomsocial' ? 'kunena' : $kunenaConfig->kunena_profile;
+	    	$kunenaConfig->avatar_src = $kunenaConfig->avatar_src == 'jomsocial' ? 'kunena' : $kunenaConfig->avatar_src;
 
 	    	// Do not save new config - thats a task for the backend
 	    	// This is just a catch all in case it is not present
@@ -92,7 +92,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     }
 
     //Community Builder 1.2 integration
-	if ($fbConfig->pm_component == 'cb' || $fbConfig->kunena_profile == 'cb' || $fbConfig->avatar_src == 'cb')
+	if ($kunenaConfig->pm_component == 'cb' || $kunenaConfig->kunena_profile == 'cb' || $kunenaConfig->avatar_src == 'cb')
     {
 		// Get Community Builder compability
 		require_once (KUNENA_PATH_LIB .DS. "kunena.communitybuilder.php");
@@ -101,7 +101,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     }
 
     //Clexus PM
-    if ($fbConfig->pm_component == 'clexuspm' || $fbConfig->kunena_profile == 'clexuspm') {
+    if ($kunenaConfig->pm_component == 'clexuspm' || $kunenaConfig->kunena_profile == 'clexuspm') {
         $kunena_db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_mypms' AND published='1'");
         $CPM_Itemid = $kunena_db->loadResult();
         	check_dberror('Unable to load Clexus item id');
@@ -111,7 +111,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
         }
 
     // UddeIM
-    if ($fbConfig->pm_component == 'uddeim') {
+    if ($kunenaConfig->pm_component == 'uddeim') {
         $kunena_db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_uddeim' AND published='1'");
         $UIM_itemid = $kunena_db->loadResult();
                 	check_dberror('Unable to load uddeim item id');
@@ -121,7 +121,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
         }
 
     // MISSUS
-    if ($fbConfig->pm_component == 'missus') {
+    if ($kunenaConfig->pm_component == 'missus') {
         $kunena_db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_missus' AND published='1'");
         $MISSUS_itemid = $kunena_db->loadResult();
                 	check_dberror('Unable to load missus item id');
@@ -131,21 +131,21 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
         }
 
     // PROFILE LINK
-    if ($fbConfig->kunena_profile == "jomsocial") {
+    if ($kunenaConfig->kunena_profile == "jomsocial") {
         $profilelink = 'index.php?option=com_community&amp;view=profile&amp;userid=';
         define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_community&amp;view=profile&amp;Itemid=" . KUNENA_JOMSOCIAL_ITEMID . "&amp;userid=");
         }
-    else if ($fbConfig->kunena_profile == "cb") {
+    else if ($kunenaConfig->kunena_profile == "cb") {
         $profilelink = 'index.php?option=com_comprofiler&amp;task=userProfile&amp;user=';
         define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_comprofiler&amp;task=userProfile" . KUNENA_CB_ITEMID_SUFFIX . "&amp;user=");
         }
-    else if ($fbConfig->kunena_profile == "clexuspm") {
+    else if ($kunenaConfig->kunena_profile == "clexuspm") {
         $profilelink = 'index.php?option=com_mypms&amp;task=showprofile&amp;user=';
         define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_mypms&amp;task=showprofile&amp;Itemid=" . KUNENA_CPM_ITEMID . "&amp;user=");
         }
     else {
-        $profilelink = 'index.php?option=com_kunena&amp;func=fbprofile&amp;userid=';
-        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_kunena&amp;func=fbprofile&amp;Itemid=" . KUNENA_COMPONENT_ITEMID . "&amp;userid=");
+        $profilelink = 'index.php?option=com_kunena&amp;func=kunenaprofile&amp;userid=';
+        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_kunena&amp;func=kunenaprofile&amp;Itemid=" . KUNENA_COMPONENT_ITEMID . "&amp;userid=");
         }
     }
 
@@ -174,7 +174,7 @@ if (!defined("KUNENA_JCSSURL")) {
 }
 
 // Kunena uploaded files directory
-define('KUNENA_LIVEUPLOADEDPATH', KUNENA_JLIVEURL . 'images/fbfiles/');
+define('KUNENA_LIVEUPLOADEDPATH', KUNENA_JLIVEURL . 'images/kunenafiles/');
 
 
 // now continue with other paths
@@ -189,9 +189,9 @@ if (strlen($kunena_user_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $
 {
     $kunena_cur_template = $kunena_user_template;
     }
-else if (file_exists(KUNENA_PATH_TEMPLATE .DS. $fbConfig->template))
+else if (file_exists(KUNENA_PATH_TEMPLATE .DS. $kunenaConfig->template))
 {
-    $kunena_cur_template = $fbConfig->template;
+    $kunena_cur_template = $kunenaConfig->template;
     }
 else
 {
@@ -202,9 +202,9 @@ if (strlen($kunena_user_img_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .D
 {
     $kunena_cur_img_template = $kunena_user_img_template;
     }
-else if (file_exists(KUNENA_PATH_TEMPLATE .DS. $fbConfig->templateimagepath .DS. 'images'))
+else if (file_exists(KUNENA_PATH_TEMPLATE .DS. $kunenaConfig->templateimagepath .DS. 'images'))
 {
-    $kunena_cur_img_template = $fbConfig->templateimagepath;
+    $kunena_cur_img_template = $kunenaConfig->templateimagepath;
     }
 else
 {
@@ -237,7 +237,7 @@ define('KUNENA_ABSGRAPHPATH', KUNENA_ABSIMAGESPATH . 'graph/');
 define('KUNENA_ABSRANKSPATH', KUNENA_ABSIMAGESPATH . 'ranks/');
 
 // absolute ranks path
-define('KUNENA_ABSCATIMAGESPATH', KUNENA_PATH_UPLOADED .DS. $fbConfig->catimagepath); // Kunena category images absolute path
+define('KUNENA_ABSCATIMAGESPATH', KUNENA_PATH_UPLOADED .DS. $kunenaConfig->catimagepath); // Kunena category images absolute path
 
 define('KUNENA_TMPLTURL', KUNENA_DIRECTURL . "template/{$kunena_cur_template}/");
 define('KUNENA_TMPLTMAINIMGURL', KUNENA_DIRECTURL . "template/{$kunena_cur_img_template}/");
@@ -265,7 +265,7 @@ define('KUNENA_URLGRAPHPATH', KUNENA_URLIMAGESPATH . 'graph/');
 define('KUNENA_URLRANKSPATH', KUNENA_URLIMAGESPATH . 'ranks/');
 
 // url ranks path
-define('KUNENA_URLCATIMAGES', KUNENA_LIVEUPLOADEDPATH ."/{$fbConfig->catimagepath}/"); // Kunena category images direct url
+define('KUNENA_URLCATIMAGES', KUNENA_LIVEUPLOADEDPATH ."/{$kunenaConfig->catimagepath}/"); // Kunena category images direct url
 
 if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'js' .DS. 'jquery-1.3.2.min.js'))
 {
@@ -340,15 +340,15 @@ class CKunenaTools {
     var $id = null;
 
 /*
-    function fbGetCurrentTime () {
+    function kunenaGetCurrentTime () {
     	// tells current FB internal representing time
-        $fbConfig =& CKunenaConfig::getInstance();
-        return time() + ($fbConfig->board_ofset * 3600);
+        $kunenaConfig =& CKunenaConfig::getInstance();
+        return time() + ($kunenaConfig->board_ofset * 3600);
     }
 */
-    function fbGetInternalTime ($time=null) {
+    function kunenaGetInternalTime ($time=null) {
     	// tells internal FB representing time from UTC $time
-        $fbConfig =& CKunenaConfig::getInstance();
+        $kunenaConfig =& CKunenaConfig::getInstance();
         // Prevent zeroes
         if($time===0) {
           return 0;
@@ -356,24 +356,24 @@ class CKunenaTools {
         if($time===null) {
           $time = time();
         }
-        return $time + ($fbConfig->board_ofset * 3600);
+        return $time + ($kunenaConfig->board_ofset * 3600);
     }
 
-    function fbGetShowTime ($time=null, $space='FB') {
+    function kunenaGetShowTime ($time=null, $space='FB') {
     	// converts internal (FB)|UTC representing time to display time
     	// could consider user properties (zones) for future
 		$kunena_db = &JFactory::getDBO();
-        $fbConfig =& CKunenaConfig::getInstance();
+        $kunenaConfig =& CKunenaConfig::getInstance();
         // Prevent zeroes
         if($time===0) {
           return 0;
         }
         if($time===null) {
-          $time = CKunenaTools::fbGetInternalTime();
+          $time = CKunenaTools::kunenaGetInternalTime();
           $space = 'FB';
         }
         if($space=='UTC') {
-          return $time + ($fbConfig->board_ofset * 3600);
+          return $time + ($kunenaConfig->board_ofset * 3600);
         }
         return $time;
     }
@@ -440,9 +440,9 @@ class CKunenaTools {
     function updateNameInfo()
     {
         $kunena_db = &JFactory::getDBO();
-        $fbConfig =& CKunenaConfig::getInstance();
+        $kunenaConfig =& CKunenaConfig::getInstance();
 
-        $kunena_queryName = $fbConfig->username ? "username" : "name";
+        $kunena_queryName = $kunenaConfig->username ? "username" : "name";
 
 	    $query = "UPDATE #__kunena_messages AS m, #__users AS u
 	    			SET m.name = u.$kunena_queryName
@@ -558,7 +558,7 @@ class CKunenaTools {
         echo $lists['parent'];
         }
 
-    function fbDeletePosts($isMod, $return) {
+    function kunenaDeletePosts($isMod, $return) {
     	$app =& JFactory::getApplication();
         $kunena_my = &JFactory::getUser();
 		$kunena_db = &JFactory::getDBO();
@@ -567,7 +567,7 @@ class CKunenaTools {
             $app->redirect($return, _POST_NOT_MODERATOR);
             }
 
-        $items = fbGetArrayInts("fbDelete");
+        $items = kunenaGetArrayInts("kunenaDelete");
         $dellattach = 1;
 
         // start iterating here
@@ -687,7 +687,7 @@ class CKunenaTools {
             return false;
         }
 
-    function fbMovePosts($catid, $isMod, $return) {
+    function kunenaMovePosts($catid, $isMod, $return) {
     	$app =& JFactory::getApplication();
         $kunena_db = &JFactory::getDBO();
 		$kunena_my = &JFactory::getUser();
@@ -708,7 +708,7 @@ class CKunenaTools {
 
 		$catid = (int)$catid;
 		if ($catid > 0) {
-	        $items = fbGetArrayInts("fbDelete");
+	        $items = kunenaGetArrayInts("kunenaDelete");
 
 	        // start iterating here
 
@@ -750,7 +750,7 @@ class CKunenaTools {
         }
 
 
-        function fbRemoveXSS($val, $reverse = 0) {
+        function kunenaRemoveXSS($val, $reverse = 0) {
 
            // now the only remaining whitespace attacks are \t, \n, and \r
            $ra1 = Array('javascript', 'vbscript', 'expression', 'applet', 'meta', 'xml', 'blink', 'link', 'style', 'script', 'embed', 'object', 'iframe', 'frame', 'frameset', 'ilayer', 'layer', 'bgsound', 'title', 'base');
@@ -758,7 +758,7 @@ class CKunenaTools {
            $ra = array_merge($ra1, $ra2);
 
            $ra2 = $ra;
-           array_walk($ra2, "fbReturnDashed");
+           array_walk($ra2, "kunenaReturnDashed");
 
            if ($reverse) {
                 $val = str_ireplace($ra2, $ra, $val);
@@ -772,10 +772,10 @@ class CKunenaTools {
 
 	function &prepareContent(&$content)
 	{
-		$fbConfig =& CKunenaConfig::getInstance();
+		$kunenaConfig =& CKunenaConfig::getInstance();
 
 		// Joomla Mambot Support, Thanks hacksider
-		if ($fbConfig->jmambot)
+		if ($kunenaConfig->jmambot)
 		{
 			$row =& new stdClass();
 			$row->text =& $content;
@@ -828,7 +828,7 @@ $row, & $params, 0));
 *
 * Provides access to the #__kunena_moderator table
 */
-class fbModeration
+class kunenaModeration
     extends JTable {
     /** @var int Unique id*/
     var $catid = null;
@@ -846,7 +846,7 @@ class fbModeration
         }
     }
 
-class fbForum
+class kunenaForum
     extends JTable {
     /** @var int Unique id*/
     var $id = null;
@@ -926,7 +926,7 @@ class fbForum
 
 	function store($updateNulls=false) {
 		if ($ret = parent::store($updateNulls)) {
-			// we must reset fbSession (allowed), when forum record was changed
+			// we must reset kunenaSession (allowed), when forum record was changed
 
 			$this->_db->setQuery("UPDATE #__kunena_sessions SET allowed='na'");
 			$this->_db->query() or trigger_dberror("Unable to update sessions.");
@@ -943,9 +943,9 @@ function JJ_categoryArray($admin=0) {
     // get a list of the menu items
 	$query = "SELECT * FROM #__kunena_categories";
 	if(!$admin) {
-		$fbSession =& CKunenaSession::getInstance();
-		if ($fbSession && $fbSession->allowed != 'na') {
-			$query .= " WHERE id IN ($fbSession->allowed)";
+		$kunenaSession =& CKunenaSession::getInstance();
+		if ($kunenaSession && $kunenaSession->allowed != 'na') {
+			$query .= " WHERE id IN ($kunenaSession->allowed)";
 		} else {
 			$query .= " WHERE pub_access='0' AND published='1'";
 		}
@@ -966,11 +966,11 @@ function JJ_categoryArray($admin=0) {
         }
 
     // second pass - get an indent list of the items
-    $array = fbTreeRecurse(0, '', array (), $children, 10, 0, 1);
+    $array = kunenaTreeRecurse(0, '', array (), $children, 10, 0, 1);
     return $array;
     }
 
-function fbTreeRecurse( $id, $indent, $list, &$children, $maxlevel=9999, $level=0, $type=1 ) {
+function kunenaTreeRecurse( $id, $indent, $list, &$children, $maxlevel=9999, $level=0, $type=1 ) {
 
     if (@$children[$id] && $level <= $maxlevel) {
         foreach ($children[$id] as $v) {
@@ -993,7 +993,7 @@ function fbTreeRecurse( $id, $indent, $list, &$children, $maxlevel=9999, $level=
             $list[$id]->treename = $indent . $txt;
             $list[$id]->children = count( @$children[$id] );
 
-            $list = fbTreeRecurse( $id, $indent . $spacer, $list, $children, $maxlevel, $level+1, $type );
+            $list = kunenaTreeRecurse( $id, $indent . $spacer, $list, $children, $maxlevel, $level+1, $type );
         }
     }
     return $list;
@@ -1021,7 +1021,7 @@ function JJ_categoryParentList($catid, $action, $options = array ()) {
             }
         }
 
-    $parent = JHTML::_('select.genericlist', $options, 'catid', 'class="inputbox fbs" size="1"  onchange = "if(this.options[this.selectedIndex].value > 0){ this.form.submit() }"', 'value', 'text', $catid);
+    $parent = JHTML::_('select.genericlist', $options, 'catid', 'class="inputbox kunenas" size="1"  onchange = "if(this.options[this.selectedIndex].value > 0){ this.form.submit() }"', 'value', 'text', $catid);
     return $parent;
     }
 
@@ -1046,7 +1046,7 @@ function KUNENA_GetAvailableForums($catid, $action, $options = array (), $disabl
             }
         }
 
-	$tag_attribs = 'class="inputbox fbs" '.($multiple?' size="5" MULTIPLE ':' size="1" ') . ($disabled ? " disabled " : "");
+	$tag_attribs = 'class="inputbox kunenas" '.($multiple?' size="5" MULTIPLE ':' size="1" ') . ($disabled ? " disabled " : "");
 
     	$parent = JHTML::_('select.genericlist', $options, 'catid', $tag_attribs , 'value', 'text', $catid, 'KUNENA_AvailableForums');
 
@@ -1143,7 +1143,7 @@ function generate_smilies() {
         }
     }
 
-function fbGetArrayInts($name) {
+function kunenaGetArrayInts($name) {
     $array = JRequest::getVar($name, array ( 0 ), 'post', 'array');
 print_r($array);
     foreach ($array as $item=>$value) {
@@ -1173,7 +1173,7 @@ print_r($array);
 
     // $newer_date will equal false if we want to know the time elapsed between a date and the current time
     // $newer_date will have a value if we want to work out time elapsed between two known dates
-    //$newer_date = ($newer_date == false) ? CKunenaTools::fbGetInternalTime() : $newer_date;
+    //$newer_date = ($newer_date == false) ? CKunenaTools::kunenaGetInternalTime() : $newer_date;
 
     // difference in seconds
     $since = $newer_date - $older_date;
@@ -1245,7 +1245,7 @@ return preg_replace($search, $replace, $subject);
 }
 }
 
-function fbReturnDashed (&$string, $key) {
+function kunenaReturnDashed (&$string, $key) {
             $string = "_".$string."_";
 }
 

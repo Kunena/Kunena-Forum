@@ -22,8 +22,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$fbConfig =& CKunenaConfig::getInstance();
-$fbSession =& CKunenaSession::getInstance();
+$kunenaConfig =& CKunenaConfig::getInstance();
+$kunenaSession =& CKunenaSession::getInstance();
 //Start with determining which forums the user can see
 
 require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
@@ -34,7 +34,7 @@ $topicSticky = 0;
 
 //start the latest x
 if ($sel == "0") {
-    $querytime = ($prevCheck - $fbConfig->fbsessiontimeout); //move 30 minutes back to compensate for expired sessions
+    $querytime = ($prevCheck - $kunenaConfig->kunenasessiontimeout); //move 30 minutes back to compensate for expired sessions
 }
 else
 {
@@ -57,7 +57,7 @@ $kunena_db->setQuery(
         #__kunena_messages AS a
         JOIN (  SELECT thread, MAX(time) AS lastpost
                 FROM #__kunena_messages
-                WHERE time >'{$querytime}' AND hold='0' AND moved='0' AND catid IN ($fbSession->allowed)
+                WHERE time >'{$querytime}' AND hold='0' AND moved='0' AND catid IN ($kunenaSession->allowed)
                 GROUP BY 1) AS b ON b.thread = a.thread
      WHERE
         a.parent='0'
@@ -117,7 +117,7 @@ if ($sel == "0")
     </thead>
 
     <tbody id = "<?php echo $boardclass; ?>latestx_tbody">
-        <tr class = "kunena_sth fbs">
+        <tr class = "kunena_sth kunenas">
             <th class = "th-1 <?php echo $boardclass; ?>sectiontableheader" width="60%" align="left"><?php echo _LATEST_THREADFORUM; ?>
             </th>
 
@@ -168,11 +168,11 @@ if ($sel == "0")
                 echo CKunenaLink::GetThreadLink('view', $latestPostCatid, $rs->thread, kunena_htmlspecialchars(stripslashes($rs->subject)), kunena_htmlspecialchars(stripslashes($rs->subject))).' ';
 
                 $threadPages = 1;
-                if ($thisThread->totalmessages > $fbConfig->messages_per_page)
+                if ($thisThread->totalmessages > $kunenaConfig->messages_per_page)
                 {
-                    $threadPages = ceil($thisThread->totalmessages / $fbConfig->messages_per_page);
+                    $threadPages = ceil($thisThread->totalmessages / $kunenaConfig->messages_per_page);
                     echo ("<span class=\"jr-showcat-perpage\">[");
-                    echo _PAGE.' '.CKunenaLink::GetThreadPageLink($fbConfig, 'view', $latestPostCatid, $rs->thread, 1, $fbConfig->messages_per_page, 1);
+                    echo _PAGE.' '.CKunenaLink::GetThreadPageLink($kunenaConfig, 'view', $latestPostCatid, $rs->thread, 1, $kunenaConfig->messages_per_page, 1);
 
                     if ($threadPages > 3)
                     {
@@ -196,20 +196,20 @@ if ($sel == "0")
                             echo (",");
                             }
 
-                        echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $latestPostCatid, $rs->thread, $hopPage, $fbConfig->messages_per_page, $hopPage);
+                        echo CKunenaLink::GetThreadPageLink($kunenaConfig, 'view', $latestPostCatid, $rs->thread, $hopPage, $kunenaConfig->messages_per_page, $hopPage);
                     }
 
                     echo ']</span> ';
                 }
 
-                $tmpicon = isset($fbIcons['latestpost']) ? '<img src="'
-                     .KUNENA_URLICONSPATH.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />':'  <img src="'.KUNENA_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />';
-                echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $latestPostCatid, $rs->thread, $threadPages, $fbConfig->messages_per_page, $tmpicon, $latestPostId);
+                $tmpicon = isset($kunenaIcons['latestpost']) ? '<img src="'
+                     .KUNENA_URLICONSPATH.$kunenaIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />':'  <img src="'.KUNENA_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />';
+                echo CKunenaLink::GetThreadPageLink($kunenaConfig, 'view', $latestPostCatid, $rs->thread, $threadPages, $kunenaConfig->messages_per_page, $tmpicon, $latestPostId);
 
                 echo '<br />' . _GEN_FORUM . ' : ' . $catname . '</td>';
                 echo '<td class="td-2" align="center">' . $numberOfPosts . '</td>';
                 echo '<td class="td-3" align="center">';
-                echo CKunenaLink::GetProfileLink($fbConfig, $latestPostUserid, kunena_htmlspecialchars($latestPostName));
+                echo CKunenaLink::GetProfileLink($kunenaConfig, $latestPostUserid, kunena_htmlspecialchars($latestPostName));
                 echo '</td>';
                 echo '<td class="td-4" align="left">' . date(_DATETIME, $latestPostTime) . '</td>';
                 echo '</tr>';
@@ -235,7 +235,7 @@ if ($sel == "0")
                         <?php
 
                         //(JJ) FINISH: CAT LIST BOTTOM
-                        if ($fbConfig->enableforumjump)
+                        if ($kunenaConfig->enableforumjump)
                             require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                         ?>
                     </th>

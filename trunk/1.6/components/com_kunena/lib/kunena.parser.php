@@ -66,15 +66,15 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 	function PostProcessing(&$task)
 	{
-		$fbConfig =& CKunenaConfig::getInstance();
-		if ($fbConfig->trimlongurls)
+		$kunenaConfig =& CKunenaConfig::getInstance();
+		if ($kunenaConfig->trimlongurls)
 		{
 		    // shorten URL text if they are too long (>65chars)
-		    $task->text = preg_replace('/<a href=(\"|\')((http(s?):\/\/)?(([^\'\"]{'.$fbConfig->trimlongurlsfront.'})([^\'\"]{4,})([^\'\"]{'.
-		    							$fbConfig->trimlongurlsback.'})))\1(.*)>\3?\5<\/a>/', '<a href="\2" \9>\6...\8</a>', $task->text);
+		    $task->text = preg_replace('/<a href=(\"|\')((http(s?):\/\/)?(([^\'\"]{'.$kunenaConfig->trimlongurlsfront.'})([^\'\"]{4,})([^\'\"]{'.
+		    							$kunenaConfig->trimlongurlsback.'})))\1(.*)>\3?\5<\/a>/', '<a href="\2" \9>\6...\8</a>', $task->text);
 		}
 
-		if ($fbConfig->autoembedyoutube)
+		if ($kunenaConfig->autoembedyoutube)
 		{
 			// convert youtube links to embedded player
 			$task->text = preg_replace('/<a href=[^>]+youtube.([^>\/]+)\/watch\?[^>]*v=([^>"&]+)[^>]+>[^<]+<\/a>/',
@@ -86,24 +86,24 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 										$task->text);
 		}
 
-		if ($fbConfig->autoembedebay)
+		if ($kunenaConfig->autoembedebay)
 		{
 			// convert ebay item to embedded widget
 			$task->text = preg_replace('/<a href=[^>]+ebay.([^>\/]+)\/[^>]*QQitemZ([0-9]+)[^>]+>[^<]+<\/a>/',
-										'<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang='.$fbConfig->ebaylanguagecode.'&mode=normal&itemid=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang='.$fbConfig->ebaylanguagecode.'&mode=normal&itemid=$2&campid=5336042350"></embed></object>',
+										'<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang='.$kunenaConfig->ebaylanguagecode.'&mode=normal&itemid=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang='.$kunenaConfig->ebaylanguagecode.'&mode=normal&itemid=$2&campid=5336042350"></embed></object>',
 										$task->text);
 			$task->text = preg_replace('/<a href=[^>]+ebay.([^>\/]+)\/[^>]*ViewItem[^>"]+Item=([0-9]+)[^>]*>[^<]+<\/a>/',
-										'<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang='.$fbConfig->ebaylanguagecode.'&mode=normal&itemid=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang='.$fbConfig->ebaylanguagecode.'&mode=normal&itemid=$2&campid=5336042350"></embed></object>',
+										'<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang='.$kunenaConfig->ebaylanguagecode.'&mode=normal&itemid=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang='.$kunenaConfig->ebaylanguagecode.'&mode=normal&itemid=$2&campid=5336042350"></embed></object>',
 										$task->text);
 
 			// convert ebay search to embedded widget
 			$task->text = preg_replace('/<a href=[^>]+ebay.([^>\/]+)\/[^>]*satitle=([^>&"]+)[^>]+>[^<]+<\/a>/',
-										'<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang='.$fbConfig->ebaylanguagecode.'&mode=search&query=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang='.$fbConfig->ebaylanguagecode.'&mode=search&query=$2&campid=5336042350"></embed></object>',
+										'<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang='.$kunenaConfig->ebaylanguagecode.'&mode=search&query=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang='.$kunenaConfig->ebaylanguagecode.'&mode=search&query=$2&campid=5336042350"></embed></object>',
 										$task->text);
 
 			// convert seller listing to embedded widget
 			$task->text = preg_replace('/<a href=[^>]+ebay.([^>\/]+)\/[^>]*QQsassZ([^>&"]+)[^>]*>[^<]+<\/a>/',
-										'<object width="355" height="355"><param name="movie" value="http://togo.ebay.$1/togo/seller.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang='.$fbConfig->ebaylanguagecode.'&seller=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/seller.swf?2008013100" type="application/x-shockwave-flash" width="355" height="355" flashvars="base=http://togo.ebay.$1/togo/&lang='.$fbConfig->ebaylanguagecode.'&seller=$2&campid=5336042350"></embed></object>',
+										'<object width="355" height="355"><param name="movie" value="http://togo.ebay.$1/togo/seller.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang='.$kunenaConfig->ebaylanguagecode.'&seller=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/seller.swf?2008013100" type="application/x-shockwave-flash" width="355" height="355" flashvars="base=http://togo.ebay.$1/togo/&lang='.$kunenaConfig->ebaylanguagecode.'&seller=$2&campid=5336042350"></embed></object>',
 										$task->text);
 		}
 	}
@@ -193,7 +193,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 || strlen($tag->options['default'])==0) {
                     return TAGPARSER_RET_NOTHING;
                 }
-                $size_css = array(1 => 'fbxs', 'fbs', 'fbm', 'fbl', 'fbxl', 'fbxxl');
+                $size_css = array(1 => 'kunenaxs', 'kunenas', 'kunenam', 'kunenal', 'kunenaxl', 'kunenaxxl');
                 if (isset($size_css[$tag->options['default']])) {
                     $tns = '<span class="'.$size_css[$tag->options['default']].'">'; $tne = '</span>';
                     return TAGPARSER_RET_REPLACED;
@@ -274,16 +274,16 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
     function TagExtended(&$tag_new, &$task, $tag, $between) {
         # Function replaces TAGs with corresponding
         # Encode was already been called for between
-	$fbConfig =& CKunenaConfig::getInstance();
+	$kunenaConfig =& CKunenaConfig::getInstance();
         $kunena_my = &JFactory::getUser();
         if($task->in_code) {
             switch(strtolower($tag->name)) {
-                case 'code:1': // fb ancient compatibility
+                case 'code:1': // kunena ancient compatibility
                 case 'code':
 
                     $types = array ("php", "mysql", "html", "js", "javascript");
 
-                    $code_start_html = '<div class="fbcode" style="width:'. $fbConfig->rtewidth .'px;"><table cellspacing="1" cellpadding="3" border="0"><tr><td><b>'._KUNENA_MSG_CODE.'</b></td></tr><tr><td><hr />';
+                    $code_start_html = '<div class="kunenacode" style="width:'. $kunenaConfig->rtewidth .'px;"><table cellspacing="1" cellpadding="3" border="0"><tr><td><b>'._KUNENA_MSG_CODE.'</b></td></tr><tr><td><hr />';
 
                     if (!empty($tag->options["type"]) && in_array($tag->options["type"], $types)) {
                         $t_type = $tag->options["type"];
@@ -345,7 +345,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                     // for formating but to limit the size of uploads, which can
                     // be larger than the available post area to support super-
                     // sized popups.
-                    $imgmaxsize = (int)(($fbConfig->rtewidth * 9) / 10); // 90% of text width
+                    $imgmaxsize = (int)(($kunenaConfig->rtewidth * 9) / 10); // 90% of text width
                     $imgtagsize = isset($tag->options["size"]) ? (int)kunena_htmlspecialchars($tag->options["size"]) : 0;
 
                     if($imgtagsize>0 && $imgtagsize<$imgmaxsize)
@@ -404,7 +404,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				// --- config start ------------
 				$vid_minwidth = 20; $vid_minheight = 20; // min. display size
 				//$vid_maxwidth = 640; $vid_maxheight = 480; // max. display size
-				$vid_maxwidth = (int)(($fbConfig->rtewidth * 9) / 10); // Max 90% of text width
+				$vid_maxwidth = (int)(($kunenaConfig->rtewidth * 9) / 10); // Max 90% of text width
 				$vid_maxheight = 480; // max. display size
 				$vid_sizemax = 100; // max. display zoom in percent
 				// --- config end --------------
@@ -612,12 +612,12 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                     if (is_numeric($between))
                     {
                     	// Numeric: we have to assume this is an item id
-                    	$tag_new .= '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang='.$fbConfig->ebaylanguagecode.'&mode=normal&itemid='.$between.'&campid=5336042350" /><embed src="http://togo.ebay.com/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='.$fbConfig->ebaylanguagecode.'&mode=normal&itemid='.$between.'&campid=5336042350"></embed></object>';
+                    	$tag_new .= '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang='.$kunenaConfig->ebaylanguagecode.'&mode=normal&itemid='.$between.'&campid=5336042350" /><embed src="http://togo.ebay.com/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='.$kunenaConfig->ebaylanguagecode.'&mode=normal&itemid='.$between.'&campid=5336042350"></embed></object>';
                     }
                     else
                     {
                     	// Non numeric: we have to assume this is a search
-                    	$tag_new .= '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang='.$fbConfig->ebaylanguagecode.'&mode=search&query='.$between.'&campid=5336042350" /><embed src="http://togo.ebay.com/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='.$fbConfig->ebaylanguagecode.'&mode=search&query='.$between.'&campid=5336042350"></embed></object>';
+                    	$tag_new .= '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang='.$kunenaConfig->ebaylanguagecode.'&mode=search&query='.$between.'&campid=5336042350" /><embed src="http://togo.ebay.com/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang='.$kunenaConfig->ebaylanguagecode.'&mode=search&query='.$between.'&campid=5336042350"></embed></object>';
                     }
 
                     return TAGPARSER_RET_REPLACED;
@@ -697,7 +697,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
             return TAGPARSER_RET_NOTHING;
         }
         switch (strtolower($tag->name)) {
-            case 'code:1': // fb ancient compatibility
+            case 'code:1': // kunena ancient compatibility
             case 'code':
                 $task->in_code = TRUE;
                 return TAGPARSER_RET_NOTHING; # treat it as unprocessed (to push on stack)!

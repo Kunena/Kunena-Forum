@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id$
+* @version $Id:kunena_category_list_bottom.php 884 2009-06-16 03:48:56Z fxstein $
 * Kunena Component
 * @package Kunena
 *
@@ -21,7 +21,7 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
-$fbConfig =& CKunenaConfig::getInstance();
+$kunenaConfig =& CKunenaConfig::getInstance();
 ?>
 	<tr>
 		<td class="kunena_list_markallcatsread">
@@ -32,7 +32,7 @@ $fbConfig =& CKunenaConfig::getInstance();
 
                     <form action = "<?php echo KUNENA_LIVEURLREL; ?>" name = "markAllForumsRead" method = "post">
                         <input type = "hidden" name = "markaction" value = "allread"/>
-                        <input type = "submit" class = "kunena_button button<?php echo $boardclass ;?> fbs" value = "<?php echo _GEN_MARK_ALL_FORUMS_READ ;?>"/>
+                        <input type = "submit" class = "kunena_button button<?php echo $boardclass ;?> kunenas" value = "<?php echo _GEN_MARK_ALL_FORUMS_READ ;?>"/>
                     </form>
 
                 <?php
@@ -41,7 +41,7 @@ $fbConfig =& CKunenaConfig::getInstance();
 		</td>
 		<td class="kunena_list_categories">
                 <?php
-                if ($fbConfig->enableforumjump)
+                if ($kunenaConfig->enableforumjump)
                     require (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 ?>
 		</td>

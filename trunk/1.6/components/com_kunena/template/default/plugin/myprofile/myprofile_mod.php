@@ -29,8 +29,8 @@ defined( '_JEXEC' ) or die('Restricted access');
 	<thead>
 		<tr>
 			<th>
-				<div class = "kunena_title_cover fbm">
-					<span class = "kunena_title fbl"><?php echo _USER_MODERATOR; ?>:</span>
+				<div class = "kunena_title_cover kunenam">
+					<span class = "kunena_title kunenal"><?php echo _USER_MODERATOR; ?>:</span>
 				</div>
 			</th>
 		</tr>

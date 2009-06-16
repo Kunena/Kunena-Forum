@@ -22,7 +22,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 ?>
 <style>
-.fbwelcome {
+.kunenawelcome {
 	clear:both;
 	margin-bottom:10px;
 	padding:10px;
@@ -31,7 +31,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 	line-height:140%;
 	border:1px solid #ddd;
 }
-.fbwelcome h3 {
+.kunenawelcome h3 {
 	margin:0;
 	padding:0;
 }
@@ -64,16 +64,16 @@ table.thisform td {
 	padding: 3px;
 	text-align: left;
 }
-.fbstatscover {
+.kunenastatscover {
 	padding:0px;
 }
-table.fbstat {
+table.kunenastat {
 	background-color:#FFFFFF;
 	border:1px solid #ddd;
 	padding:1px;
 	width:100%;
 }
-table.fbstat th {
+table.kunenastat th {
 	background:#EEE;
 	border-bottom:1px solid #CCC;
 	border-top:1px solid #EEE;
@@ -82,13 +82,13 @@ table.fbstat th {
 	padding:3px 4px;
 	text-align:left;
 }
-table.fbstat td {
+table.kunenastat td {
 	font-size:11px;
 	line-height:140%;
 	padding:4px;
 	text-align:left;
 }
-table.fbstat caption {
+table.kunenastat caption {
 	clear:both;
 	font-size:14px;
 	font-weight:bold;
@@ -96,14 +96,14 @@ table.fbstat caption {
 	padding:2px;
 	text-align:left;
 }
-table.fbstat .col1 {
+table.kunenastat .col1 {
 	background-color:#F1F3F5;
 }
-table.fbstat .col2 {
+table.kunenastat .col2 {
 	background-color: #FBFBFB;
 }
 </style>
-<div class="fbwelcome">
+<div class="kunenawelcome">
   <h3><?php echo _KUNENA_WELCOME;?></h3>
   <p><?php echo _KUNENA_WELCOME_DESC;?></p>
 </div>
@@ -112,52 +112,52 @@ table.fbstat .col2 {
     <tr class = "thisform">
       <td width = "100%" valign = "top" class = "thisform"><div id = "cpanel">
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=showconfig" style = "text-decoration:none;" title = "<?php echo _COM_C_FBCONFIGDESC;?>"> <img src = "components/com_kunena/images/fbconfig.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_FBCONFIG; ?> </span></a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=showconfig" style = "text-decoration:none;" title = "<?php echo _COM_C_FBCONFIGDESC;?>"> <img src = "components/com_kunena/images/kunenaconfig.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_FBCONFIG; ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=showAdministration" style = "text-decoration:none;" title = "<?php echo _COM_C_FORUMDESC;?>"> <img src = "components/com_kunena/images/fbforumadm.png" align = "middle" border = "0"/> <span> <?php echo _COM_C_FORUM; ?> </span></a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=showAdministration" style = "text-decoration:none;" title = "<?php echo _COM_C_FORUMDESC;?>"> <img src = "components/com_kunena/images/kunenaforumadm.png" align = "middle" border = "0"/> <span> <?php echo _COM_C_FORUM; ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=showprofiles" style = "text-decoration:none;" title = "<?php echo _COM_C_USERDESC;?>"> <img src = "components/com_kunena/images/fbuser.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_USER; ?> </span> </a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=showprofiles" style = "text-decoration:none;" title = "<?php echo _COM_C_USERDESC;?>"> <img src = "components/com_kunena/images/kunenauser.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_USER; ?> </span> </a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=browseFiles" style = "text-decoration:none;" title = "<?php echo _COM_C_FILESDESC;?>"> <img src = "components/com_kunena/images/fbfiles.png" align = "middle" border = "0"/> <span> <?php echo _COM_C_FILES; ?> </span></a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=browseFiles" style = "text-decoration:none;" title = "<?php echo _COM_C_FILESDESC;?>"> <img src = "components/com_kunena/images/kunenafiles.png" align = "middle" border = "0"/> <span> <?php echo _COM_C_FILES; ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=browseImages" style = "text-decoration:none;" title = "<?php echo _COM_C_IMAGESDESC;?>"> <img src = "components/com_kunena/images/fbimages.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_IMAGES; ?> </span></a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=browseImages" style = "text-decoration:none;" title = "<?php echo _COM_C_IMAGESDESC;?>"> <img src = "components/com_kunena/images/kunenaimages.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_IMAGES; ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=showCss" style = "text-decoration:none;" title = "<?php echo _COM_C_CSSDESC;?>"> <img src = "components/com_kunena/images/fbcss.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_CSS; ?> </span></a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=showCss" style = "text-decoration:none;" title = "<?php echo _COM_C_CSSDESC;?>"> <img src = "components/com_kunena/images/kunenacss.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_CSS; ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=pruneforum" style = "text-decoration:none;" title = "<?php echo _COM_C_PRUNETABDESC;?>"> <img src = "components/com_kunena/images/fbtable.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_PRUNETAB; ?> </a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=pruneforum" style = "text-decoration:none;" title = "<?php echo _COM_C_PRUNETABDESC;?>"> <img src = "components/com_kunena/images/kunenatable.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_PRUNETAB; ?> </a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=syncusers" style = "text-decoration:none;" title = "<?php echo _COM_C_SYNCEUSERSDESC;?>"> <img src = "components/com_kunena/images/fbusers.png"  align = "middle" border = "0"/> <span> <?php echo _KUNENA_SYNC_USERS; ?> </a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=syncusers" style = "text-decoration:none;" title = "<?php echo _COM_C_SYNCEUSERSDESC;?>"> <img src = "components/com_kunena/images/kunenausers.png"  align = "middle" border = "0"/> <span> <?php echo _KUNENA_SYNC_USERS; ?> </a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "http://www.kunena.com" target = "_blank" style = "text-decoration:none;" title = "<?php echo _COM_C_SUPPORTDESC;?>"> <img src = "components/com_kunena/images/fbtechsupport.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_SUPPORT; ?> </span></a> </div>
+            <div class = "icon"> <a href = "http://www.kunena.com" target = "_blank" style = "text-decoration:none;" title = "<?php echo _COM_C_SUPPORTDESC;?>"> <img src = "components/com_kunena/images/kunenatechsupport.png"  align = "middle" border = "0"/> <span> <?php echo _COM_C_SUPPORT; ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=showsmilies" style = "text-decoration:none;" title = "<?php echo _KUNENA_EMOTICONS_EDIT_SMILIES;?>"> <img src = "components/com_kunena/images/fbsmiley.png"  align = "middle" border = "0"/> <span> <?php echo _KUNENA_EMOTICONS_EDIT_SMILIES;?> </a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=showsmilies" style = "text-decoration:none;" title = "<?php echo _KUNENA_EMOTICONS_EDIT_SMILIES;?>"> <img src = "components/com_kunena/images/kunenasmiley.png"  align = "middle" border = "0"/> <span> <?php echo _KUNENA_EMOTICONS_EDIT_SMILIES;?> </a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index3.php?option=com_kunena&amp;task=recount&no_html=1" style = "text-decoration:none;" title = "<?php echo _KUNENA_RECOUNTFORUMS;?>"> <img src = "components/com_kunena/images/fbupgrade.png" align = "middle" border = "0"/> <span> <?php echo _KUNENA_RECOUNTFORUMS; ?> </a> </div>
+            <div class = "icon"> <a href = "index3.php?option=com_kunena&amp;task=recount&no_html=1" style = "text-decoration:none;" title = "<?php echo _KUNENA_RECOUNTFORUMS;?>"> <img src = "components/com_kunena/images/kunenaupgrade.png" align = "middle" border = "0"/> <span> <?php echo _KUNENA_RECOUNTFORUMS; ?> </a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=ranks" style = "text-decoration:none;" title = "<?php echo _KUNENA_RANKS_MANAGE;?>"> <img src = "components/com_kunena/images/fbranks.png"  align = "middle" border = "0"/> <span> <?php echo _KUNENA_RANKS_MANAGE; ?> </a> </div>
+            <div class = "icon"> <a href = "index2.php?option=com_kunena&amp;task=ranks" style = "text-decoration:none;" title = "<?php echo _KUNENA_RANKS_MANAGE;?>"> <img src = "components/com_kunena/images/kunenaranks.png"  align = "middle" border = "0"/> <span> <?php echo _KUNENA_RANKS_MANAGE; ?> </a> </div>
           </div>
         </div></td>
     </tr>
   </table>
 </div>
 <!-- BEGIN: STATS -->
-<div class="fbstatscover">
+<div class="kunenastatscover">
   <?php 
    
    include_once (JPATH_COMPONENT_ADMINISTRATOR .'/lib/kunena.stats.class.php');
     ?>
-  <table cellspacing="1"  border="0" width="100%" class="fbstat">
+  <table cellspacing="1"  border="0" width="100%" class="kunenastat">
     <caption>
     <?php echo _STATS_GEN_STATS; ?>
     </caption>
@@ -217,7 +217,7 @@ table.fbstat .col2 {
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td width="49%" valign="top"><!-- -->
-        <table cellspacing="1"  border="0" width="100%" class="fbstat">
+        <table cellspacing="1"  border="0" width="100%" class="kunenastat">
           <caption>
           <?php echo _STATS_TOP_POSTERS; ?>
           </caption>
@@ -256,7 +256,7 @@ table.fbstat .col2 {
       </td>
       <td width="1%">&nbsp;</td>
       <td width="49%" valign="top"><!--  -->
-        <table cellspacing="1"  border="0" width="100%" class="fbstat">
+        <table cellspacing="1"  border="0" width="100%" class="kunenastat">
           <caption>
           <?php echo  _STATS_POPULAR_PROFILE; ?>
           </caption>
@@ -295,7 +295,7 @@ table.fbstat .col2 {
   </table>
   <!-- F: UserStat -->
   <!-- Begin : Top popular topics -->
-  <table cellspacing="1"  border="0" width="100%" class="fbstat">
+  <table cellspacing="1"  border="0" width="100%" class="kunenastat">
     <caption>
     <?php echo _STATS_POPULAR_TOPICS; ?>
     </caption>

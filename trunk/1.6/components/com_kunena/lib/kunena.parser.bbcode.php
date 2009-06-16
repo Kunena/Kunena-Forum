@@ -32,7 +32,7 @@
 # parser interpreter task -interaction
 # check interfaces & description (strip in implementation, extend interface decl)
 # test execution
-# update all tags to fb standard
+# update all tags to kunena standard
 ## quote
 ## username
 ## call missingtag replacement on close (IMG)

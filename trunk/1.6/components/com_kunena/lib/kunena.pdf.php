@@ -21,7 +21,7 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-class fbpdfwrapper {
+class kunenapdfwrapper {
 	// small wrapper class for J1.5 to emulate Cezpdf-class
 	var $_title = '';
 	var $_header = '';
@@ -64,7 +64,7 @@ function dofreePDF($kunena_db)
 
     $kunena_acl = &JFactory::getACL();
     $kunena_my = &JFactory::getUser();
-    $fbConfig =& CKunenaConfig::getInstance();
+    $kunenaConfig =& CKunenaConfig::getInstance();
 
     require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
     $is_Mod = 0;
@@ -113,7 +113,7 @@ function dofreePDF($kunena_db)
 			include (KUNENA_ROOT_PATH .DS. 'includes/class.ezpdf.php');
 			$pdf = &new Cezpdf('a4', 'P'); //A4 Portrait
 		} elseif (class_exists('JDocument')) {
-        	$pdf = &new fbpdfwrapper();
+        	$pdf = &new kunenapdfwrapper();
 		} else {
 			echo 'strange... no supported pdf class found!';
 			exit;
@@ -128,13 +128,13 @@ function dofreePDF($kunena_db)
         // footer
         $pdf->line(10, 40, 578, 40);
         $pdf->line(10, 822, 578, 822);
-        $pdf->addText(30, 34, 6, $fbConfig->board_title . ' - ' . $app->getCfg('sitename'));
+        $pdf->addText(30, 34, 6, $kunenaConfig->board_title . ' - ' . $app->getCfg('sitename'));
 
         $strtmp = _KUNENA_PDF_VERSION;
-        $strtmp = str_replace('%version%', "NEW VERSION GOES HERE" /*$fbConfig->version*/, $strtmp); // TODO: fxstein - Need to change version handling
+        $strtmp = str_replace('%version%', "NEW VERSION GOES HERE" /*$kunenaConfig->version*/, $strtmp); // TODO: fxstein - Need to change version handling
         $pdf->addText(250, 34, 6, $strtmp);
         $strtmp = _KUNENA_PDF_DATE;
-        $strtmp = str_replace('%date%', date('j F, Y, H:i', CKunenaTools::fbGetShowTime()), $strtmp);
+        $strtmp = str_replace('%date%', date('j F, Y, H:i', CKunenaTools::kunenaGetShowTime()), $strtmp);
         $pdf->addText(450, 34, 6, $strtmp);
 
         $pdf->restoreState();

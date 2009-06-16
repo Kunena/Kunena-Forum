@@ -24,7 +24,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 
 
-function fbJsEscape($msg)
+function kunenaJsEscape($msg)
 {
     // escape javascript quotes and backslashes, newlines, etc.
     static $convertions = array
@@ -40,35 +40,35 @@ function fbJsEscape($msg)
     return strtr($msg, $convertions);
 }
 
-function fbAlert($msg)
+function kunenaAlert($msg)
 {
-    $msg = fbJsEscape($msg);
+    $msg = kunenaJsEscape($msg);
     echo "<script> alert('$msg'); </script>\n";
 }
 
-function fbAssertOrGoBack($predicate, $msg)
+function kunenaAssertOrGoBack($predicate, $msg)
 {
     $app =& JFactory::getApplication();
     if (!$predicate)
     {
-        $msg = fbJsEscape($msg);
+        $msg = kunenaJsEscape($msg);
         echo "<script> alert('$msg'); window.history.go(-1); </script>\n";
         $app->close();
     }
 }
 
-function fbAssertOrGoTo($predicate, $msg, $url)
+function kunenaAssertOrGoTo($predicate, $msg, $url)
 {
     if (!$predicate)
     {
-        $msg = fbJsEscape($msg);
+        $msg = kunenaJsEscape($msg);
         $url = JRoute::_($url);
         echo "<script> alert('$msg'); window.location=$url'; </script>\n";
     }
 }
 
 // FIXME: deprecated
-function fbSetTimeout($url, $time, $script = 1)
+function kunenaSetTimeout($url, $time, $script = 1)
 {
     $url = JRoute::_($url);
 
@@ -78,11 +78,11 @@ function fbSetTimeout($url, $time, $script = 1)
         echo 'setTimeout("location=\'' . $url . '\'",$time)';
 }
 
-function fbRedirect($url, $time, $msg)
+function kunenaRedirect($url, $time, $msg)
 {
     echo '<script language="javascript">';
-    echo 'alert(\'' . fbJsEscape($msg) . '\')';
-    fbSetTimeout($url, $time, 0);
+    echo 'alert(\'' . kunenaJsEscape($msg) . '\')';
+    kunenaSetTimeout($url, $time, 0);
     echo '</script>';
 }
 ?>

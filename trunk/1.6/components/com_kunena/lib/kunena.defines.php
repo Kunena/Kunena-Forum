@@ -42,7 +42,7 @@ define('KUNENA_PATH_ADMIN_INSTALL', KUNENA_PATH_ADMIN .DS. 'install');
 define('KUNENA_PATH_ADMIN_IMAGES', KUNENA_PATH_ADMIN .DS. 'images');
 
 // Kunena uploaded files directory
-define('KUNENA_PATH_UPLOADED', KUNENA_ROOT_PATH . '/images/fbfiles');
+define('KUNENA_PATH_UPLOADED', KUNENA_ROOT_PATH . '/images/kunenafiles');
 
 // Files
 define('KUNENA_FILE_LANGUAGE_DEFAULT', KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.' . KUNENA_LANGUAGE_DEFAULT . '.php');

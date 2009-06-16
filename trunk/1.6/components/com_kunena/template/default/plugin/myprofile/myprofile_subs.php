@@ -37,7 +37,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 			</tr>
 		</thead>
 
-		<tbody id = "<?php echo $boardclass ;?>fbuserprofile_tbody">
+		<tbody id = "<?php echo $boardclass ;?>kunenauserprofile_tbody">
 			<tr class = "kunena_sth">
 				<th class = "th-1 <?php echo $boardclass ;?>sectiontableheader"><?php echo _GEN_TOPICS; ?>
 				</th>

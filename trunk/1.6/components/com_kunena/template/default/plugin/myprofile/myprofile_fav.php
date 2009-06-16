@@ -31,14 +31,14 @@ defined( '_JEXEC' ) or die('Restricted access');
 		<thead>
 			<tr>
 				<th colspan = "3">
-					<div class = "kunena_title_cover fbm">
-						<span class = "kunena_title fbl"><?php echo _USER_FAVORITES; ?></span>
+					<div class = "kunena_title_cover kunenam">
+						<span class = "kunena_title kunenal"><?php echo _USER_FAVORITES; ?></span>
 					</div>
 				</th>
 			</tr>
 		</thead>
 
-		<tbody id = "<?php echo $boardclass ;?>fbuserprofile_tbody">
+		<tbody id = "<?php echo $boardclass ;?>kunenauserprofile_tbody">
 			<tr class = "kunena_sth">
 				<th class = "th-1 <?php echo $boardclass ;?>sectiontableheader"><?php echo _GEN_TOPICS; ?></th>
 				<th class = "th-2 <?php echo $boardclass ;?>sectiontableheader" style = "text-align:center; width:25%"><?php echo _GEN_AUTHOR; ?></th>

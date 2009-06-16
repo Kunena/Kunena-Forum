@@ -21,7 +21,7 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-class fbMail
+class kunenaMail
 {
     /**
     * function to send mails (uses JUtility::sendMail in mambo 4.5.1 and later, falls back to phpmail if JUtility::sendMail doesn't exist

@@ -16,7 +16,7 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-$fbConfig =& CKunenaConfig::getInstance();
+$kunenaConfig =& CKunenaConfig::getInstance();
 global $is_Moderator;
 
 // Team credits page is not translated
@@ -80,7 +80,7 @@ global $is_Moderator;
 require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 ?>
  <!-- Version Info -->
-<div class="fbfooter"><?php echo CKunenaVersion::versionHTML(); ?></div>
+<div class="kunenafooter"><?php echo CKunenaVersion::versionHTML(); ?></div>
 <!-- /Version Info -->
 
 <!-- Begin: Forum Jump -->
@@ -94,7 +94,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
               <tr>
                 <th class = "th-right"> <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
-                if ($fbConfig->enableforumjump)
+                if ($kunenaConfig->enableforumjump)
                     require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 ?>
                 </th>

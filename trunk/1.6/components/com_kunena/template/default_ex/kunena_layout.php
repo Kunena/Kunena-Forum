@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id$
+* @version $Id:kunena_layout.php 884 2009-06-16 03:48:56Z fxstein $
 * Kunena Component
 * @package Kunena
 *
@@ -41,10 +41,10 @@ function KUNENA_print_pathway(&$kunena_db, $obj_kunena_cat, $bool_set_title, $ob
  */
 function KUNENA_get_pathway(&$kunena_db, $obj_kunena_cat, $bool_set_title, $obj_post = 0)
 {
-    global $fbIcons;
+    global $kunenaIcons;
 
 	$document=& JFactory::getDocument();
-	$fbConfig =& CKunenaConfig::getInstance();
+	$kunenaConfig =& CKunenaConfig::getInstance();
     //Get the Category's parent category name for breadcrumb
     $kunena_db->setQuery("SELECT name, id FROM #__kunena_categories WHERE id='" . $obj_kunena_cat->getParent() ."'");
     $objCatParentInfo = $kunena_db->loadObject();
@@ -65,7 +65,7 @@ function KUNENA_get_pathway(&$kunena_db, $obj_kunena_cat, $bool_set_title, $obj_
     {
 		if ($bool_set_title) 
 		{
-			$document->setTitle(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($obj_kunena_cat->getName()) . ' - ' . stripslashes($fbConfig->board_title));
+			$document->setTitle(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($obj_kunena_cat->getName()) . ' - ' . stripslashes($kunenaConfig->board_title));
 		}
 
         // show lines
@@ -79,7 +79,7 @@ function KUNENA_get_pathway(&$kunena_db, $obj_kunena_cat, $bool_set_title, $obj_
     {
 		if ($bool_set_title)
 		{
-			$document->setTitle(stripslashes($obj_kunena_cat->getName()) . ' - ' . stripslashes($fbConfig->board_title));
+			$document->setTitle(stripslashes($obj_kunena_cat->getName()) . ' - ' . stripslashes($kunenaConfig->board_title));
 		}
     }
 
@@ -92,20 +92,20 @@ function KUNENA_get_pathway(&$kunena_db, $obj_kunena_cat, $bool_set_title, $obj_
 
     //check if this forum is locked
     if ($obj_kunena_cat->getLocked()) {
-        $return .= isset($fbIcons['forumlocked']) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . $fbIcons['forumlocked'] . '" border="0" alt="'
+        $return .= isset($kunenaIcons['forumlocked']) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . $kunenaIcons['forumlocked'] . '" border="0" alt="'
             . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : '    <img src="' . KUNENA_URLIMAGESPATH . 'lock.gif"    border="0" width="13" height="13" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
     }
 
     // check if this forum is reviewed
     if ($obj_kunena_cat->getReview()) {
-        $return .= isset($fbIcons['forumreviewed']) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . $fbIcons['forumreviewed']
+        $return .= isset($kunenaIcons['forumreviewed']) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . $kunenaIcons['forumreviewed']
             . '" border="0" alt="' . _GEN_REVIEWED . '" title="' . _GEN_REVIEWED . '"/>' : '    <img src="' . KUNENA_URLIMAGESPATH . 'review.gif" border="0" width="15" height="15" alt="' . _GEN_REVIEWED . '" title="' . _GEN_REVIEWED . '">';
     }
 
     //check if this forum is moderated
     if ($obj_kunena_cat->getModerated())
     {
-        $return .= isset($fbIcons['forummoderated']) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . $fbIcons['forummoderated']
+        $return .= isset($kunenaIcons['forummoderated']) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . $kunenaIcons['forummoderated']
             . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : '    <img src="' . KUNENA_URLEMOTIONSPATH . 'moderate.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>';
         $text = '';
 
@@ -123,7 +123,7 @@ function KUNENA_get_pathway(&$kunena_db, $obj_kunena_cat, $bool_set_title, $obj_
     {
 		if ($bool_set_title)
 		{
-			$document->setTitle($obj_post->subject . ' - ' . stripslashes($fbConfig->board_title));
+			$document->setTitle($obj_post->subject . ' - ' . stripslashes($kunenaConfig->board_title));
 		}
 
         // Topic
@@ -145,8 +145,8 @@ function KUNENA_get_pathway(&$kunena_db, $obj_kunena_cat, $bool_set_title, $obj_
 }
 /**
  * Function  that get the menu used in the header of our board
- * @param array $fbConfig
- * @param array $fbIcons
+ * @param array $kunenaConfig
+ * @param array $kunenaIcons
  * @param int $my_id
  *             The user id
  * @param int $type
@@ -167,12 +167,12 @@ function KUNENA_get_pathway(&$kunena_db, $obj_kunena_cat, $bool_set_title, $obj_
  *             The menu :-)
  */
 
-function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = "", $catid = 0, $id = 0, $thread = 0, $is_moderator = false, $numPending = 0)
+function KUNENA_get_menu($cbitemid, $kunenaConfig, $kunenaIcons, $my_id, $type, $view = "", $catid = 0, $id = 0, $thread = 0, $is_moderator = false, $numPending = 0)
 {
 	$func = strtolower(JRequest::getVar('func', ''));
 	if ($func == '') // Set default as per config settings
 	{
-		switch ($fbConfig->fbdefaultpage)
+		switch ($kunenaConfig->kunenadefaultpage)
 		{
 			case 'recent':
 				$func = 'latest';
@@ -189,27 +189,27 @@ function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = 
 
     $header .= ' <li ';
     if ($func == 'latest' || $func == '') $header .= ' class="Kunena_item_active" ';
-    $header .=' >'.CKunenaLink::GetShowLatestLink('<span>'.(array_key_exists('showlatest', $fbIcons) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['showlatest'] . '" border="0" alt="' . _KUNENA_ALL_DISCUSSIONS . '" title="' . _KUNENA_ALL_DISCUSSIONS . '"/>' : _KUNENA_ALL_DISCUSSIONS).'</span>');
+    $header .=' >'.CKunenaLink::GetShowLatestLink('<span>'.(array_key_exists('showlatest', $kunenaIcons) ? '<img src="' . KUNENA_URLICONSPATH . $kunenaIcons['showlatest'] . '" border="0" alt="' . _KUNENA_ALL_DISCUSSIONS . '" title="' . _KUNENA_ALL_DISCUSSIONS . '"/>' : _KUNENA_ALL_DISCUSSIONS).'</span>');
     $header .= '</li>';
 
     if ($my_id != 0)
     {
 	    $header .= ' <li ';
 	    if ($func == 'mylatest') $header .= ' class="Kunena_item_active" ';
-	    $header .=' >'.CKunenaLink::GetShowMyLatestLink('<span>'.(array_key_exists('showmylatest', $fbIcons) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['showmylatest'] . '" border="0" alt="' . _KUNENA_MY_DISCUSSIONS . '" title="' . _KUNENA_MY_DISCUSSIONS . '"/>' : _KUNENA_MY_DISCUSSIONS).'</span>');
+	    $header .=' >'.CKunenaLink::GetShowMyLatestLink('<span>'.(array_key_exists('showmylatest', $kunenaIcons) ? '<img src="' . KUNENA_URLICONSPATH . $kunenaIcons['showmylatest'] . '" border="0" alt="' . _KUNENA_MY_DISCUSSIONS . '" title="' . _KUNENA_MY_DISCUSSIONS . '"/>' : _KUNENA_MY_DISCUSSIONS).'</span>');
 	    $header .= '</li>';
     }
 
     $header .= '<li ';
 	 if ($func == 'listcat' ) $header .= ' class="Kunena_item_active" ';
-	$header .=' >'.CKunenaLink::GetCategoryListLink('<span>'.(array_key_exists('home', $fbIcons) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['home'] . '" border="0" alt="' . _KUNENA_CATEGORIES . '"  title="' . _KUNENA_CATEGORIES . '" />' : _KUNENA_CATEGORIES).'</span>');
+	$header .=' >'.CKunenaLink::GetCategoryListLink('<span>'.(array_key_exists('home', $kunenaIcons) ? '<img src="' . KUNENA_URLICONSPATH . $kunenaIcons['home'] . '" border="0" alt="' . _KUNENA_CATEGORIES . '"  title="' . _KUNENA_CATEGORIES . '" />' : _KUNENA_CATEGORIES).'</span>');
     $header .= '</li>';
 
     if ($my_id != 0)
     {
         $header .= ' <li ';
 	    if ($func == 'myprofile' ) $header .= ' class="Kunena_item_active" ';
-        $header .=' >'.CKunenaLink::GetMyProfileLink($fbConfig, $my_id, '<span>'.(array_key_exists('profile', $fbIcons) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['profile'] . '" border="0" alt="' . _GEN_MYPROFILE . '" title="' . _GEN_MYPROFILE . '"/>' : _GEN_MYPROFILE).'</span>');
+        $header .=' >'.CKunenaLink::GetMyProfileLink($kunenaConfig, $my_id, '<span>'.(array_key_exists('profile', $kunenaIcons) ? '<img src="' . KUNENA_URLICONSPATH . $kunenaIcons['profile'] . '" border="0" alt="' . _GEN_MYPROFILE . '" title="' . _GEN_MYPROFILE . '"/>' : _GEN_MYPROFILE).'</span>');
         $header .= '</li>';
     }
 
@@ -251,8 +251,8 @@ function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = 
                 {
                     $numcolor = '<font color="red">';
                     $header .= '<li>';
-                    $header .= CKunenaLink::GetPendingMessagesLink( $catid, '<span>'.(array_key_exists('pendingmessages', $fbIcons)
-                        ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['pendingmessages'] . '" border="0" alt="' . $numPending . ' ' . _SHOWCAT_PENDING . '" />' : $numcolor . '' . $numPending . '</font> ' . _SHOWCAT_PENDING).'</span>');
+                    $header .= CKunenaLink::GetPendingMessagesLink( $catid, '<span>'.(array_key_exists('pendingmessages', $kunenaIcons)
+                        ? '<img src="' . KUNENA_URLICONSPATH . $kunenaIcons['pendingmessages'] . '" border="0" alt="' . $numPending . ' ' . _SHOWCAT_PENDING . '" />' : $numcolor . '' . $numPending . '</font> ' . _SHOWCAT_PENDING).'</span>');
                     $header .= '</li>';
                 }
             }
@@ -264,18 +264,18 @@ function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = 
             break;
     }
 
-    if ($fbConfig->enablerulespage)
+    if ($kunenaConfig->enablerulespage)
     {
         $header .= ' <li ';
         if ($func == 'rules' ) $header .= ' class="Kunena_item_active" ';
-        $header .= ' >'.CKunenaLink::GetRulesLink($fbConfig, '<span>'.(array_key_exists('rules', $fbIcons) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['rules'] . '" border="0" alt="' . _GEN_RULES . '" title="' . _GEN_RULES . '"/>' : _GEN_RULES).'</span>');
+        $header .= ' >'.CKunenaLink::GetRulesLink($kunenaConfig, '<span>'.(array_key_exists('rules', $kunenaIcons) ? '<img src="' . KUNENA_URLICONSPATH . $kunenaIcons['rules'] . '" border="0" alt="' . _GEN_RULES . '" title="' . _GEN_RULES . '"/>' : _GEN_RULES).'</span>');
         $header .= '</li>';
     }
-	if ($fbConfig->enablehelppage)
+	if ($kunenaConfig->enablehelppage)
     {
         $header .= ' <li ';
         if ($func == 'faq' ) $header .= ' class="Kunena_item_active" ';
-        $header .= ' >'.CKunenaLink::GetHelpLink($fbConfig, '<span>'.(array_key_exists('help', $fbIcons) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['help'] . '" border="0" alt="' . _GEN_HELP . '" title="' . _GEN_HELP . '"/>' : _GEN_HELP).'</span>');
+        $header .= ' >'.CKunenaLink::GetHelpLink($kunenaConfig, '<span>'.(array_key_exists('help', $kunenaIcons) ? '<img src="' . KUNENA_URLICONSPATH . $kunenaIcons['help'] . '" border="0" alt="' . _GEN_HELP . '" title="' . _GEN_HELP . '"/>' : _GEN_HELP).'</span>');
         $header .= '</li>';
 	}
     $header .= '</ul></div></div>';
@@ -290,8 +290,8 @@ function getSearchBox()
     if ($boxsize <= 15)
         $boxsize = 15;
 
-   $return .= '<input class="kunena_search_inputbox fbs" type="text" name="q" size="'. $boxsize . '" value="' . _GEN_SEARCH_BOX . '" onblur="if(this.value==\'\') this.value=\'' . _GEN_SEARCH_BOX . '\';" onfocus="if(this.value==\'' . _GEN_SEARCH_BOX . '\') this.value=\'\';" />';
-	$return .= ' <input type="submit" value="'._KUNENA_GO.'" name="submit" class="kunena_button fbs"/>';
+   $return .= '<input class="kunena_search_inputbox kunenas" type="text" name="q" size="'. $boxsize . '" value="' . _GEN_SEARCH_BOX . '" onblur="if(this.value==\'\') this.value=\'' . _GEN_SEARCH_BOX . '\';" onfocus="if(this.value==\'' . _GEN_SEARCH_BOX . '\') this.value=\'\';" />';
+	$return .= ' <input type="submit" value="'._KUNENA_GO.'" name="submit" class="kunena_button kunenas"/>';
     $return .= '</form></div>';
     return $return;
 }

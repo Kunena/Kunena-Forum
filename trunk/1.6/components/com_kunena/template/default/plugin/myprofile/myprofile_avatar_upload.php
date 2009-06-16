@@ -143,7 +143,7 @@ $kunena_my = &JFactory::getUser();
 if ($kunena_my->id != "" && $kunena_my->id != 0)
 {
 
-$fbConfig =& CKunenaConfig::getInstance();
+$kunenaConfig =& CKunenaConfig::getInstance();
 $task = JRequest::getVar('action', 'default');
 $gallery  = JRequest::getVar('gallery', '');
 
@@ -222,11 +222,11 @@ switch ($task) {
 		}
 
 		//check filesize
-		$maxAvSize = $fbConfig->avatarsize * 1024;
+		$maxAvSize = $kunenaConfig->avatarsize * 1024;
 
 		if ($avatarSize > $maxAvSize)
 		{
-			$app->enqueueMessage(_UPLOAD_ERROR_SIZE . " (" . $fbConfig->avatarsize . " KiloBytes)", 'notice');
+			$app->enqueueMessage(_UPLOAD_ERROR_SIZE . " (" . $kunenaConfig->avatarsize . " KiloBytes)", 'notice');
 			$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
 		}
 
@@ -239,12 +239,12 @@ switch ($task) {
 				$srcHeight = $imgInfo[1];
 			}
 		} else {
-			$fbConfig->imageprocessor = 'none';
+			$kunenaConfig->imageprocessor = 'none';
 		}
 
 		//$gdversion = ereg_replace('[[:alpha:][:space:]()]+', '', $GDArray['GD Version']); // just FYI for detection from gd_info()
     
-		switch ($fbConfig->imageprocessor) {
+		switch ($kunenaConfig->imageprocessor) {
 		case 'gd1' :
 			if ( !function_exists('imagecreatefromjpeg' )) {
 				$app->enqueueMessage(_KUNENA_AVATAR_GDIMAGE_NOT, 'error');
@@ -259,14 +259,14 @@ switch ($task) {
 			}
 
 			// Create Large Image
-			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarlargewidth, 
-			$fbConfig->avatarlargeheight, $fbConfig->avatarquality, $fileLocation_l);
+			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $kunenaConfig->avatarlargewidth, 
+			$kunenaConfig->avatarlargeheight, $kunenaConfig->avatarquality, $fileLocation_l);
 			// Create Medium Image
-			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarwidth, 
-			$fbConfig->avatarheight, $fbConfig->avatarquality, $fileLocation);
+			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $kunenaConfig->avatarwidth, 
+			$kunenaConfig->avatarheight, $kunenaConfig->avatarquality, $fileLocation);
 			// Create Small Image
-			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarsmallwidth, 
-			$fbConfig->avatarsmallheight, $fbConfig->avatarquality, $fileLocation_s);
+			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $kunenaConfig->avatarsmallwidth, 
+			$kunenaConfig->avatarsmallheight, $kunenaConfig->avatarquality, $fileLocation_s);
 			// Destroy source Image
 			imagedestroy($src_img);
 			break;
@@ -290,21 +290,21 @@ switch ($task) {
 			}
 
 			// Create Large Image
-			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarlargewidth, 
-			$fbConfig->avatarlargeheight, $fbConfig->avatarquality, $fileLocation_l);
+			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $kunenaConfig->avatarlargewidth, 
+			$kunenaConfig->avatarlargeheight, $kunenaConfig->avatarquality, $fileLocation_l);
 			// Create Medium Image
-			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarwidth, 
-			$fbConfig->avatarheight, $fbConfig->avatarquality, $fileLocation);
+			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $kunenaConfig->avatarwidth, 
+			$kunenaConfig->avatarheight, $kunenaConfig->avatarquality, $fileLocation);
 			// Create Small Image
-			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarsmallwidth, 
-			$fbConfig->avatarsmallheight, $fbConfig->avatarquality, $fileLocation_s);
+			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $kunenaConfig->avatarsmallwidth, 
+			$kunenaConfig->avatarsmallheight, $kunenaConfig->avatarquality, $fileLocation_s);
 			// Destroy source Image
 			imagedestroy($src_img);
 			break;
     
 		default:
-			if (isset($srcWidth) && ($srcWidth > $fbConfig->avatarlargewidth || $srcHeight > $fbConfig->avatarlargeheight)) {
-				$app->enqueueMessage(_UPLOAD_ERROR_SIZE . " (" . $fbConfig->avatarlargewidth . " x ". $fbConfig->avatarlargeheight .")", 'notice');
+			if (isset($srcWidth) && ($srcWidth > $kunenaConfig->avatarlargewidth || $srcHeight > $kunenaConfig->avatarlargeheight)) {
+				$app->enqueueMessage(_UPLOAD_ERROR_SIZE . " (" . $kunenaConfig->avatarlargewidth . " x ". $kunenaConfig->avatarlargeheight .")", 'notice');
 				$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
 			}
 			// Make sure that we do not use wrong avatar image
@@ -326,7 +326,7 @@ switch ($task) {
 		require_once(KUNENA_PATH_LIB .DS. 'kunena.helpers.php');
 		$newAvatar = JRequest::getVar('newAvatar', '');
 
-		$newAvatar = CKunenaTools::fbRemoveXSS($newAvatar);
+		$newAvatar = CKunenaTools::kunenaRemoveXSS($newAvatar);
 		if ($newAvatar == '') {
 			$app->enqueueMessage(_UPLOAD_ERROR_CHOOSE, 'notice');
 			$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&do=avatar'));
@@ -342,7 +342,7 @@ switch ($task) {
 
 if ($task == 'default')
 {
-    if ($fbConfig->allowavatar)
+    if ($kunenaConfig->allowavatar)
     {
 ?>
         <td class = "kunena_myprofile_right" valign = "top">
@@ -366,7 +366,7 @@ if ($task == 'default')
                     <?php
                         echo _YOUR_AVATAR . "</td><td >";
 
-                        if ($fbConfig->avatar_src == "clexuspm")
+                        if ($kunenaConfig->avatar_src == "clexuspm")
                         {
                     ?>
 
@@ -376,7 +376,7 @@ if ($task == 'default')
 
                     <?php
                         }
-                        elseif ($fbConfig->avatar_src == "cb")
+                        elseif ($kunenaConfig->avatar_src == "cb")
                         {
                             $kunena_db->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='{$kunena_my->id}'");
                             $avatar = $kunena_db->loadResult();
@@ -409,7 +409,7 @@ if ($task == 'default')
                             if ($avatar != "")
                             {
 								if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/l_' . $avatar)) {
-									$msg_avatar = '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: '.$fbConfig->avatarlargewidth.'px; max-height: '.$fbConfig->avatarlargeheight.'px;" />';
+									$msg_avatar = '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: '.$kunenaConfig->avatarlargewidth.'px; max-height: '.$kunenaConfig->avatarlargeheight.'px;" />';
 								} else {
 									$msg_avatar = '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/l_' . $avatar . '" alt="" />';
 								}
@@ -451,7 +451,7 @@ if ($task == 'default')
             <!-- F: My AVATAR -->
 
 <?php
-if ($fbConfig->allowavatarupload)
+if ($kunenaConfig->allowavatarupload)
 {
 ?>
 
@@ -462,7 +462,7 @@ if ($fbConfig->allowavatarupload)
                     <th>
                         <div class = "kunena_title_cover">
                         <span class="kunena_title" ><?php echo _UPLOAD_SUBMIT; ?></span>
-                        <?php // echo _UPLOAD_DIMENSIONS . ": " . $fbConfig->avatarwidth . "x" . $fbConfig->avatarheight . " - " . $fbConfig->avatarsize . " KB"; ?>
+                        <?php // echo _UPLOAD_DIMENSIONS . ": " . $kunenaConfig->avatarwidth . "x" . $kunenaConfig->avatarheight . " - " . $kunenaConfig->avatarsize . " KB"; ?>
                         </div>
 					</th>
                 </tr>
@@ -492,7 +492,7 @@ if ($fbConfig->allowavatarupload)
 
 	} // allow avatar upload
     
-    if ($fbConfig->allowavatargallery)
+    if ($kunenaConfig->allowavatargallery)
     {
 ?>
             <!-- B: Gallery -->

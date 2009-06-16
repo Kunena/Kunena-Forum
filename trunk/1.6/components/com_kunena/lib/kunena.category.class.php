@@ -24,7 +24,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 // ################################################################
 
 /**
- * A fbCategory Object
+ * A kunenaCategory Object
  */
 class jbCategory {
     var $name;

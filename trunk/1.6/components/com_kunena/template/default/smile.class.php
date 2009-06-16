@@ -181,7 +181,7 @@ class smile
      * Strips all known HTML tags and replaces them with bbcode
      * Removes all unknown tags
      */
-    function fbStripHtmlTags($text)
+    function kunenaStripHtmlTags($text)
     {
         $kunena_message_txt = $text;
         $kunena_message_txt = preg_replace("/<p>/si", "", $kunena_message_txt);
@@ -223,29 +223,29 @@ class smile
         }
 
         return $kunena_message_txt;
-    } // fbStripHtmlTags()
+    } // kunenaStripHtmlTags()
     /**
      * This will convert all remaining HTML tags to innocent tags able to be displayed in full
      */
-    function fbHtmlSafe($text)
+    function kunenaHtmlSafe($text)
     {
         $kunena_message_txt = $text;
         $kunena_message_txt = str_replace("<", "&lt;", $kunena_message_txt);
         $kunena_message_txt = str_replace(">", "&gt;", $kunena_message_txt);
         return $kunena_message_txt;
-    } // fbHtmlSafe()
+    } // kunenaHtmlSafe()
     /**
      * This function will write the TextArea
      */
-    function fbWriteTextarea($areaname, $html, $width, $height, $useRte, $emoticons)
+    function kunenaWriteTextarea($areaname, $html, $width, $height, $useRte, $emoticons)
     {
         // well $html is the $message to edit, generally it means in PLAINTEXT @Kunena!
         global $editmode;
         // ERROR: mixed global $editmode
-        $fbConfig =& CKunenaConfig::getInstance();
+        $kunenaConfig =& CKunenaConfig::getInstance();
 
         // (JJ) JOOMLA STYLE CHECK
-        if ($fbConfig->joomlastyle < 1) {
+        if ($kunenaConfig->joomlastyle < 1) {
             $boardclass = "kunena_";
         }
         ?>
@@ -276,7 +276,7 @@ class smile
 								<option value = "5"><?php @print(_SIZE_VBIG); ?></option>
 							</select>
 							<img id="ueberschrift" class = "kunena_bbcode" name = "addbbcode20" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>color_swatch.png" alt="<?php @print(_SMILE_COLOUR); ?>" onclick = "javascript:change_palette();" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_COLOR);?>')" />
-							<?php if ($fbConfig->showspoilertag) {?>
+							<?php if ($kunenaConfig->showspoilertag) {?>
 							<img class = "kunena_bbcode" accesskey = "s" name = "addbbcode40" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spoiler.png" alt="Spoiler" onclick = "bbfontstyle('[spoiler]', '[/spoiler]')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_SPOILER);?>')" />
 							<?php } ?>
 							<img class = "kunena_bbcode" accesskey = "h" name = "addbbcode24" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>group_key.png" alt="Hide" onclick = "bbfontstyle('[hide]', '[/hide]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_HIDE);?>')" />
@@ -293,10 +293,10 @@ class smile
 							<img class = "kunena_bbcode" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.png" style="cursor: auto;" />
 							<img class = "kunena_bbcode" accesskey = "p" name = "addbbcode14" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>picture_link.png" alt="Img" onclick = "javascript:dE('image');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINK);?>')" />
 							<img class = "kunena_bbcode" accesskey = "w" name = "addbbcode16" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>link_url.png" alt="URL" onclick = "javascript:dE('link');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINK);?>')" />	
-							<?php if ($fbConfig->showebaytag) {?>
+							<?php if ($kunenaConfig->showebaytag) {?>
 							<img class = "kunena_bbcode" accesskey = "e" name = "addbbcode20" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>ebay.png" alt="Ebay" onclick = "bbfontstyle('[ebay]', '[/ebay]')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_EBAY);?>')" />
 							<?php } ?>
-							<?php if ($fbConfig->showvideotag) {?>
+							<?php if ($kunenaConfig->showvideotag) {?>
 								&nbsp;<span style="white-space:nowrap;">
 								<a href = "javascript:dE('video');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEO);?>')"><img  src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>film.png"  /></a>
                               </span>
@@ -461,7 +461,7 @@ if ($editmode) {
         </tr>
 
 <?php
-    } // fbWriteTextarea()
+    } // kunenaWriteTextarea()
 
     function purify($text)
     {

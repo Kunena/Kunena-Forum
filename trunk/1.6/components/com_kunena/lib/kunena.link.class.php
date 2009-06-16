@@ -93,9 +93,9 @@ class CKunenaLink
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;catid='.$catid.'&amp;id='.$threadid, $threadname, $title, $rel, $class);
     }
 
-    function GetThreadPageLink($fbConfig, $func, $catid, $threadid, $page, $limit, $name, $anker='', $rel='follow', $class='')
+    function GetThreadPageLink($kunenaConfig, $func, $catid, $threadid, $page, $limit, $name, $anker='', $rel='follow', $class='')
     {
-    	$fbConfig =& CKunenaConfig::getInstance();
+    	$kunenaConfig =& CKunenaConfig::getInstance();
         if ($page == 1 || !is_numeric($page) || !is_numeric($limit))
         {
             // page 1 is identical to a link to the top of the thread
@@ -113,7 +113,7 @@ class CKunenaLink
 
     // GetThreadPageURL is basically identically to the prior function except that it returns a clear text
     // non-encoded URL. This functions is used by the email function to notify users about new posts.
-    function GetThreadPageURL($fbConfig, $func, $catid, $threadid, $page, $limit, $anker='')
+    function GetThreadPageURL($kunenaConfig, $func, $catid, $threadid, $page, $limit, $anker='')
     {
         if ($page == 1 || !is_numeric($page) || !is_numeric($limit))
         {
@@ -155,12 +155,12 @@ class CKunenaLink
         return $iplink;
     }
 
-    function GetMyProfileLink($fbConfig, $userid, $name, $rel='nofollow')
+    function GetMyProfileLink($kunenaConfig, $userid, $name, $rel='nofollow')
     {
-    	$fbConfig =& CKunenaConfig::getInstance();
-    	if($fbConfig->kunena_profile == 'jomsocial' || $fbConfig->kunena_profile == 'cb')
+    	$kunenaConfig =& CKunenaConfig::getInstance();
+    	if($kunenaConfig->kunena_profile == 'jomsocial' || $kunenaConfig->kunena_profile == 'cb')
     	{
-    		return CKunenaLink::GetProfileLink($fbConfig, $userid, $name, $rel);
+    		return CKunenaLink::GetProfileLink($kunenaConfig, $userid, $name, $rel);
     	}
     	else
     	{
@@ -168,13 +168,13 @@ class CKunenaLink
     	}
     }
 
-    function GetProfileLink($fbConfig, $userid, $name, $rel='nofollow', $class='')
+    function GetProfileLink($kunenaConfig, $userid, $name, $rel='nofollow', $class='')
     {
-    	$fbConfig =& CKunenaConfig::getInstance();
+    	$kunenaConfig =& CKunenaConfig::getInstance();
     	// Only create links for valid users
     	if ($userid > 0)
     	{
-    		if($fbConfig->kunena_profile == 'cb') 
+    		if($kunenaConfig->kunena_profile == 'cb') 
     		{
     			$kunenaProfile =& CKunenaCBProfile::getInstance();
     			if ($link = $kunenaProfile->getProfileURL($userid))
@@ -267,41 +267,41 @@ class CKunenaLink
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=karma&amp;do='.$do.'&amp;userid='.$userid.'&amp;pid='.$pid.'&amp;catid='.$catid, $name, '', $rel);
     }
 
-    function GetRulesLink($fbConfig, $name, $rel='nofollow')
+    function GetRulesLink($kunenaConfig, $name, $rel='nofollow')
     {
-		$fbConfig =& CKunenaConfig::getInstance();
-        $ruleslink = $fbConfig->rules_infb ? KUNENA_LIVEURLREL.'&amp;func=rules' : $fbConfig->rules_link;
+		$kunenaConfig =& CKunenaConfig::getInstance();
+        $ruleslink = $kunenaConfig->rules_inkunena ? KUNENA_LIVEURLREL.'&amp;func=rules' : $kunenaConfig->rules_link;
         return CKunenaLink::GetSefHrefLink($ruleslink, $name, '', $rel);
     }
 
-    function GetHelpLink($fbConfig, $name, $rel='nofollow')
+    function GetHelpLink($kunenaConfig, $name, $rel='nofollow')
     {
-    	$fbConfig =& CKunenaConfig::getInstance();
-        $helplink = $fbConfig->help_infb ? KUNENA_LIVEURLREL.'&amp;func=faq' : $fbConfig->help_link;
+    	$kunenaConfig =& CKunenaConfig::getInstance();
+        $helplink = $kunenaConfig->help_inkunena ? KUNENA_LIVEURLREL.'&amp;func=faq' : $kunenaConfig->help_link;
         return CKunenaLink::GetSefHrefLink($helplink, $name, '', $rel);
     }
 
-    function GetSearchURL($fbConfig, $func, $searchword, $limitstart, $limit, $params='')
+    function GetSearchURL($kunenaConfig, $func, $searchword, $limitstart, $limit, $params='')
     {
-    	$fbConfig =& CKunenaConfig::getInstance();
+    	$kunenaConfig =& CKunenaConfig::getInstance();
 		$limitstr = "";
     	if ($limitstart > 0) $limitstr .= "&amp;limitstart=$limitstart";
-		if ($limit > 0 && $limit != $fbConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
+		if ($limit > 0 && $limit != $kunenaConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
 		if ($searchword) $searchword = '&amp;q=' . urlencode($searchword);
         return JRoute::_(KUNENA_LIVEURLREL."&amp;func={$func}&amp;q={$searchword}{$params}{$limitstr}");
     }
 
-    function GetSearchLink($fbConfig, $func, $searchword, $limitstart, $limit, $name, $params='', $rel='nofollow')
+    function GetSearchLink($kunenaConfig, $func, $searchword, $limitstart, $limit, $name, $params='', $rel='nofollow')
     {
-    	$fbConfig =& CKunenaConfig::getInstance();
+    	$kunenaConfig =& CKunenaConfig::getInstance();
 		$limitstr = "";
     	if ($limitstart > 0) $limitstr .= "&amp;limitstart=$limitstart";
-		if ($limit > 0 && $limit != $fbConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
+		if ($limit > 0 && $limit != $kunenaConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
 		if ($searchword) $searchword = '&amp;q=' . urlencode($searchword);
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL."&amp;func={$func}{$searchword}{$params}{$limitstr}", $name, '', $rel);
     }
 
-    function GetAnnouncementURL($fbConfig, $do, $id=NULL)
+    function GetAnnouncementURL($kunenaConfig, $do, $id=NULL)
     {
 		$idstring = '';
 		if ($id !== NULL) $idstring .= "&amp;id=$id";
@@ -317,7 +317,7 @@ class CKunenaLink
     // It is used for various operations. Input parameter is any post id. It will determine the thread,
     // latest post of that thread and number of pages based on the supplied page limit.
     //
-    function GetLatestPostAutoRedirectHTML($fbConfig, $pid, $limit, $catid=0)
+    function GetLatestPostAutoRedirectHTML($kunenaConfig, $pid, $limit, $catid=0)
     {
         $kunena_db = &JFactory::getDBO();
         // First determine the thread, latest post and number of posts for the post supplied
@@ -341,16 +341,16 @@ class CKunenaLink
         // Finally build output block
 
         $Output  = '<div align="center">';
-        if (is_object($result)) $Output .= CKunenaLink::GetThreadPageLink($fbConfig, 'view', $catid, $result->thread, $threadPages, $limit, _POST_SUCCESS_VIEW, $result->latest_id) .'<br />';
+        if (is_object($result)) $Output .= CKunenaLink::GetThreadPageLink($kunenaConfig, 'view', $catid, $result->thread, $threadPages, $limit, _POST_SUCCESS_VIEW, $result->latest_id) .'<br />';
         $Output .= CKunenaLink::GetCategoryLink('showcat', $catid, _POST_SUCCESS_FORUM).'<br />';
         $Output .= '</div>';
-        if (is_object($result)) $Output .= CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $result->thread, $threadPages, $limit, $result->latest_id), 3500);
+        if (is_object($result)) $Output .= CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetThreadPageURL($kunenaConfig, 'view', $catid, $result->thread, $threadPages, $limit, $result->latest_id), 3500);
         else $Output .= CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid), 3500);
         
         return $Output;
     }
 
-    function GetLatestPageAutoRedirectURL($fbConfig, $pid, $limit, $catid=0)
+    function GetLatestPageAutoRedirectURL($kunenaConfig, $pid, $limit, $catid=0)
     {
         $kunena_db = &JFactory::getDBO();
         // First determine the thread, latest post and number of posts for the post supplied
@@ -370,7 +370,7 @@ class CKunenaLink
         $threadPages = ceil($result->totalmessages / $limit);
 
 		// Finally build output block
-        return htmlspecialchars_decode(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $result->thread, $threadPages, $limit));
+        return htmlspecialchars_decode(CKunenaLink::GetThreadPageURL($kunenaConfig, 'view', $catid, $result->thread, $threadPages, $limit));
     }
 
     function GetLatestCategoryAutoRedirectHTML($catid)

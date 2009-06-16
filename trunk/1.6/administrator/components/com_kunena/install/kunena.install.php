@@ -74,7 +74,7 @@ function com_install()
 	//before we do anything else we want to check for minimum system requirements
 	if (version_compare(phpversion(), KUNENA_MIN_PHP, ">=") && version_compare($mysqlversion, KUNENA_MIN_MYSQL, ">"))
 	{
-		//change fb menu icon
+		//change kunena menu icon
 		$kunena_db->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena'");
 		$id = $kunena_db->loadResult();
 
@@ -83,7 +83,7 @@ function com_install()
 		$kunena_db->query() or trigger_dbwarning("Unable to set admin menu image.");
 
 		//install & upgrade class
-		$fbupgrade = new fx_Upgrade("com_kunena", "kunena.install.upgrade.xml", "kunena_", "install", false);
+		$kunenaupgrade = new fx_Upgrade("com_kunena", "kunena.install.upgrade.xml", "kunena_", "install", false);
 
 		// Legacy enabler
 		// Versions prior to 1.0.5 did not came with a version table inside the database
@@ -95,30 +95,30 @@ function com_install()
 		$kunena_db->query() or trigger_dbwarning("Unable to search for messages table.");
 
 		if($kunena_db->getNumRows()) {
-			// fb tables exist, now lets see if we have a version table
+			// kunena tables exist, now lets see if we have a version table
 			$kunena_db->setQuery( "SHOW TABLES LIKE '%kunena_version'" );
 			$kunena_db->query() or trigger_dbwarning("Unable to search for version table.");;
 			if(!$kunena_db->getNumRows()) {
 				//version table does not exist - this is a pre 1.0.5 install - lets create
-				$fbupgrade->createVersionTable();
+				$kunenaupgrade->createVersionTable();
 				// insert dummy version entry to force upgrade
-				$fbupgrade->insertDummyVersion();
+				$kunenaupgrade->insertDummyVersion();
 			}
 		}
 		// Start Installation/Upgrade
-		$fbupgrade->doUpgrade();
+		$kunenaupgrade->doUpgrade();
 
 		// THIS PROCEDURE IS UNTRANSLATED!
 	?>
 
 <style>
-.fbscs {
+.kunenascs {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
 
-.fbscslist {
+.kunenascslist {
 	list-style: none;
 	padding: 5px 10px;
 	margin: 3px 0;
@@ -130,7 +130,7 @@ function com_install()
 	color: #333;
 }
 
-.fbscslisterror {
+.kunenascslisterror {
 	list-style: none;
 	padding: 5px 10px;
 	margin: 3px 0;
@@ -153,7 +153,7 @@ function com_install()
 
 		<td width="80%" valign="top" style="padding: 10px;">
 		<div style="clear: both; text-align: left; padding: 0 20px;">
-		<ul class="fbscs">
+		<ul class="kunenascs">
 		<?php
 
 			//
@@ -162,23 +162,23 @@ function com_install()
 
 			jimport('joomla.filesystem.folder');
 		    $ret = JFolder::copy(JPATH_ROOT .DS. "components" .DS. "com_kunena" .DS. "kunena.files.distribution",
-		    				JPATH_ROOT .DS. "images" .DS. "fbfiles", '', true);
+		    				JPATH_ROOT .DS. "images" .DS. "kunenafiles", '', true);
 
 			if ($ret !== true)
 			{
 			?>
 
-			<li class="fbscslisterror">
+			<li class="kunenascslisterror">
 			<div
 				style="border: 1px solid #FF6666; background: #FFCC99; padding: 10px; text-align: left; margin: 10px 0;">
 			<img src='images/publish_x.png' align='absmiddle' />
 			Creation/permission setting of the following directories failed: <br />
-			<pre> <?php echo JPATH_ROOT; ?>/images/fbfiles/
-			<?php echo JPATH_ROOT;?>/images/fbfiles/avatars
-			<?php echo JPATH_ROOT;?>/images/fbfiles/avatars/gallery (you have to put avatars inside if you want to use it)
-			<?php echo JPATH_ROOT;?>/images/fbfiles/category_images
-			<?php echo JPATH_ROOT;?>/images/fbfiles/files
-			<?php echo JPATH_ROOT;?>/images/fbfiles/images
+			<pre> <?php echo JPATH_ROOT; ?>/images/kunenafiles/
+			<?php echo JPATH_ROOT;?>/images/kunenafiles/avatars
+			<?php echo JPATH_ROOT;?>/images/kunenafiles/avatars/gallery (you have to put avatars inside if you want to use it)
+			<?php echo JPATH_ROOT;?>/images/kunenafiles/category_images
+			<?php echo JPATH_ROOT;?>/images/kunenafiles/files
+			<?php echo JPATH_ROOT;?>/images/kunenafiles/images
 </pre> a) You can copy the contents of _kunena.files.distribution under
 			components/com_kunena to your Joomla root, under images/ folder.
 
@@ -211,13 +211,13 @@ function com_install()
 		// Minimum version requirements not satisfied
 		?>
 <style>
-.fbscs {
+.kunenascs {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
 
-.fbscslist {
+.kunenascslist {
 	list-style: none;
 	padding: 5px 10px;
 	margin: 3px 0;
@@ -229,7 +229,7 @@ function com_install()
 	color: #333;
 }
 
-.fbscslisterror {
+.kunenascslisterror {
 	list-style: none;
 	padding: 5px 10px;
 	margin: 3px 0;

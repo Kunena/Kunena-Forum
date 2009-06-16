@@ -21,7 +21,7 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-$fbConfig =& CKunenaConfig::getInstance();
+$kunenaConfig =& CKunenaConfig::getInstance();
 global $is_Moderator;
 //Modify this to change the minimum time between karma modifications from the same user
 $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
@@ -42,9 +42,9 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                 // - if a registered user submits the modify request
                 // - if he specifies an action related to the karma change
                 // - if he specifies the user that will have the karma modified
-                if ($fbConfig->showkarma && $kunena_my->id != "" && $kunena_my->id != 0 && $do != '' && $userid != '')
+                if ($kunenaConfig->showkarma && $kunena_my->id != "" && $kunena_my->id != 0 && $do != '' && $userid != '')
                 {
-                    $time = CKunenaTools::fbGetInternalTime();
+                    $time = CKunenaTools::kunenaGetInternalTime();
 
                     if ($kunena_my->id != $userid)
                     {
@@ -88,7 +88,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                             { //you got me there... don't know what to $do
                                 echo _USER_ERROR_A;
                                 echo _USER_ERROR_B . "<br /><br />";
-                                echo _USER_ERROR_C . "<br /><br />" . _USER_ERROR_D . ": <code>fb001-karma-02NoDO</code><br /><br />";
+                                echo _USER_ERROR_C . "<br /><br />" . _USER_ERROR_D . ": <code>kunena001-karma-02NoDO</code><br /><br />";
                             }
                         }
                         else
@@ -115,7 +115,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                 { //get outa here, you fraud!
                     echo _USER_ERROR_A;
                     echo _USER_ERROR_B . "<br /><br />";
-                    echo _USER_ERROR_C . "<br /><br />" . _USER_ERROR_D . ": <code>fb001-karma-01NLO</code><br /><br />";
+                    echo _USER_ERROR_C . "<br /><br />" . _USER_ERROR_D . ": <code>kunena001-karma-01NLO</code><br /><br />";
                 //that should scare 'em off enough... ;-)
                 }
                 ?>

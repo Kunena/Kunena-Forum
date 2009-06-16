@@ -23,8 +23,8 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 global $lang;
 
-$fbConfig =& CKunenaConfig::getInstance();
-$fbSession =& CKunenaSession::getInstance();
+$kunenaConfig =& CKunenaConfig::getInstance();
+$kunenaSession =& CKunenaSession::getInstance();
 
 $Kunena_adm_path = KUNENA_PATH_ADMIN;
 //Get right Language file
@@ -48,17 +48,17 @@ $source_file = KUNENA_PATH_TEMPLATE_DEFAULT .DS. "plugin/recentposts/tabber.js";
 $source_file = KUNENA_PATH_TEMPLATE_DEFAULT .DS. "plugin/recentposts/tabber-minimized.js";
 $source_file = KUNENA_PATH_TEMPLATE_DEFAULT .DS. "plugin/recentposts/function.tabber.php";
 //
-$category = trim($fbConfig->latestcategory); // 2,3,4
-$count = $fbConfig->latestcount;
-$count_per_page = intval($fbConfig->latestcountperpage);
-$show_author = $fbConfig->latestshowauthor; // 0 = none, 1= username, 2= realname
-$singlesubject = $fbConfig->latestsinglesubject;
-$replysubject = $fbConfig->latestreplysubject;
-$subject_length = intval($fbConfig->latestsubjectlength);
-$show_date = $fbConfig->latestshowdate;
+$category = trim($kunenaConfig->latestcategory); // 2,3,4
+$count = $kunenaConfig->latestcount;
+$count_per_page = intval($kunenaConfig->latestcountperpage);
+$show_author = $kunenaConfig->latestshowauthor; // 0 = none, 1= username, 2= realname
+$singlesubject = $kunenaConfig->latestsinglesubject;
+$replysubject = $kunenaConfig->latestreplysubject;
+$subject_length = intval($kunenaConfig->latestsubjectlength);
+$show_date = $kunenaConfig->latestshowdate;
 $show_order_number = "1";
 $tooltips_enable = "1";
-$show_hits = $fbConfig->latestshowhits;
+$show_hits = $kunenaConfig->latestshowhits;
 
 $topic_emoticons = array ();
 $topic_emoticons[0] = KUNENA_URLEMOTIONSPATH . 'default.gif';
@@ -79,8 +79,8 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
     <thead>
         <tr>
             <th colspan = "5">
-                <div class = "kunena_title_cover fbm">
-                    <span class = "kunena_title fbl"><?php echo _RECENT_RECENT_POSTS; ?></span>
+                <div class = "kunena_title_cover kunenam">
+                    <span class = "kunena_title kunenal"><?php echo _RECENT_RECENT_POSTS; ?></span>
                 </div>
 
                 <img id = "BoxSwitch_recentposts__recentposts_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
@@ -95,17 +95,17 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 
 				// find messages
 				$sq1 = ($category)?"AND msg2.catid in ($category)":"";
-				if ($fbConfig->latestsinglesubject) {
+				if ($kunenaConfig->latestsinglesubject) {
 					$sq2 = "SELECT msg1.* FROM (SELECT msg2.* FROM #__kunena_messages msg2"
-						. " WHERE msg2.hold='0' AND moved='0' AND msg2.catid IN ($fbSession->allowed) $sq1 ORDER BY msg2.time"
-						. (($fbConfig->latestreplysubject)?" DESC":"") . ") msg1"
+						. " WHERE msg2.hold='0' AND moved='0' AND msg2.catid IN ($kunenaSession->allowed) $sq1 ORDER BY msg2.time"
+						. (($kunenaConfig->latestreplysubject)?" DESC":"") . ") msg1"
 						. " GROUP BY msg1.thread";
 				} else {
 					$sq2 = "SELECT msg2.* FROM #__kunena_messages msg2"
-						. " WHERE msg2.hold='0' AND moved='0' AND msg2.catid IN ($fbSession->allowed) $sq1";
+						. " WHERE msg2.hold='0' AND moved='0' AND msg2.catid IN ($kunenaSession->allowed) $sq1";
 				}
 				$query = " SELECT u.id, IFNULL(u.username, '"._KUNENA_GUEST."') AS username, IFNULL(u.name,'"._KUNENA_GUEST."') AS name,"
-					. " msg.subject, msg.id AS fbid, msg.catid, from_unixtime(msg.time) AS date,"
+					. " msg.subject, msg.id AS kunenaid, msg.catid, from_unixtime(msg.time) AS date,"
 					. " thread.hits AS hits, msg.locked, msg.topic_emoticon, msg.parent, cat.id AS catid, cat.name AS catname"
 					. " FROM ($sq2) msg"
 					. " LEFT JOIN #__users u ON u.id = msg.userid"
@@ -133,32 +133,32 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                 $k = 2;
                 echo "<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">";
                 echo "<tr  class = \"kunena_sth\" >";
-                echo "<th class=\"th-1  " . $boardclass . "sectiontableheader  fbs\" width=\"1%\" align=\"center\" > </th>";
-                echo "<th class=\"th-2  " . $boardclass . "sectiontableheader fbs\" align=\"left\" >" . _RECENT_TOPICS . "</th>";
+                echo "<th class=\"th-1  " . $boardclass . "sectiontableheader  kunenas\" width=\"1%\" align=\"center\" > </th>";
+                echo "<th class=\"th-2  " . $boardclass . "sectiontableheader kunenas\" align=\"left\" >" . _RECENT_TOPICS . "</th>";
 
                 switch ($show_author)
                 {
                     case '0': break;
 
                     case '1':
-                        echo "<th class=\"th-3  " . $boardclass . "sectiontableheader fbs\" width=\"10%\"  align=\"center\" >" . _RECENT_AUTHOR . "</th>";
+                        echo "<th class=\"th-3  " . $boardclass . "sectiontableheader kunenas\" width=\"10%\"  align=\"center\" >" . _RECENT_AUTHOR . "</th>";
 
                         break;
 
                     case '2':
-                        echo "<th class=\"th-3  " . $boardclass . "sectiontableheader fbs\" width=\"10%\" align=\"center\" >" . _RECENT_AUTHOR . "</th>";
+                        echo "<th class=\"th-3  " . $boardclass . "sectiontableheader kunenas\" width=\"10%\" align=\"center\" >" . _RECENT_AUTHOR . "</th>";
 
                         break;
                 }
 
-                echo "<th class=\"th-4  " . $boardclass . "sectiontableheader fbs\"   width=\"20%\" align=\"left\" >" . _RECENT_CATEGORIES . "</th>";
+                echo "<th class=\"th-4  " . $boardclass . "sectiontableheader kunenas\"   width=\"20%\" align=\"left\" >" . _RECENT_CATEGORIES . "</th>";
 
                 if ($show_date) {
-                    echo "<th class=\"th-5  " . $boardclass . "sectiontableheader fbs\"  width=\"20%\" align=\"left\" >" . _RECENT_DATE . "</th>";
+                    echo "<th class=\"th-5  " . $boardclass . "sectiontableheader kunenas\"  width=\"20%\" align=\"left\" >" . _RECENT_DATE . "</th>";
                     }
 
                 if ($show_hits) {
-                    echo "<th  class=\"th-6  " . $boardclass . "sectiontableheader fbs\"  width=\"5%\" align=\"center\" >" . _RECENT_HITS . "</th></tr>";
+                    echo "<th  class=\"th-6  " . $boardclass . "sectiontableheader kunenas\"  width=\"5%\" align=\"center\" >" . _RECENT_HITS . "</th></tr>";
                     }
 
                 if ($rows) foreach ($rows as $row) {
@@ -180,7 +180,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 
                     $overlib .= "<tr><td valign=top>" . ucfirst(_GEN_LOCK) . "</td><td>$row_lock</td></tr>";
                     $overlib .= "</table>";
-                    $link = JRoute::_(KUNENA_LIVEURLREL . "&amp;func=view&amp;id=$row->fbid" . "&amp;catid=$row->catid#$row->fbid");
+                    $link = JRoute::_(KUNENA_LIVEURLREL . "&amp;func=view&amp;id=$row->kunenaid" . "&amp;catid=$row->catid#$row->kunenaid");
 
                     $tooltips = '';
 
@@ -198,8 +198,8 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                         //echo '<img src="' . KUNENA_URLEMOTIONSPATH  . 'resultset_next.gif"  border="0"   alt=" " />';
                         echo "<img src=\"" . $topic_emoticons[$row->topic_emoticon] . "\" alt=\"emo\" />";
                         echo "</td>";
-                        echo "<td class=\"td-2 fbm\"  align=\"left\" >";
-                        echo " <a class=\"fbrecent fbm\" href='$link' >";
+                        echo "<td class=\"td-2 kunenam\"  align=\"left\" >";
+                        echo " <a class=\"kunenarecent kunenam\" href='$link' >";
                         echo substr(html_entity_decode_utf8(stripslashes($row->subject)), 0, $subject_length);
                         echo "</a>";
                         echo "</td>";
@@ -209,31 +209,31 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                             case '0': break;
 
                             case '1':
-                                echo "<td  class=\"td-3 fbm\"  align=\"center\"  >";
-				echo CKunenaLink::GetProfileLink($fbConfig, $row->id, $row->username);
+                                echo "<td  class=\"td-3 kunenam\"  align=\"center\"  >";
+				echo CKunenaLink::GetProfileLink($kunenaConfig, $row->id, $row->username);
                                 echo "</td>";
                                 break;
 
                             case '2':
-                                echo "<td  class=\"td-3 fbm\"  align=\"center\"  >";
-				echo CKunenaLink::GetProfileLink($fbConfig, $row->id, $row->name);
+                                echo "<td  class=\"td-3 kunenam\"  align=\"center\"  >";
+				echo CKunenaLink::GetProfileLink($kunenaConfig, $row->id, $row->name);
                                 echo "</td>";
                                 break;
                         }
 
-                        echo "<td class=\"td-4 fbm\"  align=\"left\" >";
+                        echo "<td class=\"td-4 kunenam\"  align=\"left\" >";
                         echo $row_catname;
                         echo "</td>";
 
                         if ($show_date) {
-                            echo "<td  class=\"td-5 fbm\"  align=\"left\" >";
+                            echo "<td  class=\"td-5 kunenam\"  align=\"left\" >";
                             if (empty($date_format)) $date_format = _KUNENA_DT_DATETIME_FMT;
                             echo JHTML::_('date', $row->date, $date_format);
                             echo "</td>";
                             }
 
                         if ($show_hits) {
-                            echo "<td  class=\"td-6 fbm\"  align=\"center\"  >";
+                            echo "<td  class=\"td-6 kunenam\"  align=\"center\"  >";
                             echo $row->hits;
                             echo "</td>";
                             }
@@ -248,7 +248,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                                 $tabs->my_tab_start($tabid, $tabid);
                                 $order_start = $i + 1;
                                 echo(
-                                    $show_order_number ? "<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr  class = \"kunena_sth\" ><th width=\"1%\"  align=\"center\" class=\"th-1 " . $boardclass . "sectiontableheader fbs\"> </th><th class=\"th-2 " . $boardclass . "sectiontableheader fbs\"  align=\"left\" >" . _RECENT_TOPICS. "</th><th width=\"10%\"  class=\"th-3 " . $boardclass . "sectiontableheader fbs\"   align=\"center\" >" . _RECENT_AUTHOR . "</th><th   align=\"left\"  width=\"20%\"  class=\"th-4 " . $boardclass . "sectiontableheader fbs\">" . _RECENT_CATEGORIES . "</th><th class=\"th-5 " . $boardclass . "sectiontableheader fbs\" width=\"20%\"  align=\"left\"  >" . _RECENT_DATE . "</th><th  class=\"th-6 " . $boardclass . "sectiontableheader fbs\" width=\"5%\"   align=\"center\" >" . _RECENT_HITS . "</th></tr>" : "<ul>");
+                                    $show_order_number ? "<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr  class = \"kunena_sth\" ><th width=\"1%\"  align=\"center\" class=\"th-1 " . $boardclass . "sectiontableheader kunenas\"> </th><th class=\"th-2 " . $boardclass . "sectiontableheader kunenas\"  align=\"left\" >" . _RECENT_TOPICS. "</th><th width=\"10%\"  class=\"th-3 " . $boardclass . "sectiontableheader kunenas\"   align=\"center\" >" . _RECENT_AUTHOR . "</th><th   align=\"left\"  width=\"20%\"  class=\"th-4 " . $boardclass . "sectiontableheader kunenas\">" . _RECENT_CATEGORIES . "</th><th class=\"th-5 " . $boardclass . "sectiontableheader kunenas\" width=\"20%\"  align=\"left\"  >" . _RECENT_DATE . "</th><th  class=\"th-6 " . $boardclass . "sectiontableheader kunenas\" width=\"5%\"   align=\"center\" >" . _RECENT_HITS . "</th></tr>" : "<ul>");
                                 }
                             }
                     }

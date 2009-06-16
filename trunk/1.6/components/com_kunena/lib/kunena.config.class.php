@@ -308,8 +308,8 @@ class CKunenaConfig extends CKunenaConfigBase
     var $filesize                = 120;
     var $showranking             = 1;
     var $rankimages              = 1;
-    var $avatar_src              = 'fb';
-    var $kunena_profile              = 'fb';
+    var $avatar_src              = 'kunena';
+    var $kunena_profile              = 'kunena';
     var $pm_component            = 'no';
     var $cb_profile              = 0;  // Depreciated legacy CB integration - Now controlled via avatar, profile and pm settings
     var $discussbot              = 0;
@@ -344,11 +344,11 @@ class CKunenaConfig extends CKunenaConfigBase
     var $showpopsubjectstats     = 1;
     var $popsubjectcount         = 5;
     var $usernamechange          = 0;
-    var $rules_infb              = 1;
+    var $rules_inkunena              = 1;
     var $rules_cid               = 1;
     var $rules_link              = 'http://www.kunena.com/';
     var $enablehelppage          = 1;
-    var $help_infb               = 1;
+    var $help_inkunena               = 1;
     var $help_cid                = 1;
     var $help_link               = 'http://www.kunena.com/';
     // New 1.0.5 config variables
@@ -362,12 +362,12 @@ class CKunenaConfig extends CKunenaConfigBase
     var $autoembedyoutube		 = 1;
     var $autoembedebay			 = 1;
     var $ebaylanguagecode		 = 'en-us';
-    var $fbsessiontimeout		 = 1800; // in seconds
+    var $kunenasessiontimeout		 = 1800; // in seconds
     // New 1.0.5RC2 config variables
     var $highlightcode			 = 0;
     var $rsstype				 = 'thread';
     var $rsshistory				 = 'month';
-    var $fbdefaultpage			 = 'recent';
+    var $kunenadefaultpage			 = 'recent';
     // New 1.0.8 config variables
     var $default_sort            = 'asc'; // 'desc' for latest post first
 

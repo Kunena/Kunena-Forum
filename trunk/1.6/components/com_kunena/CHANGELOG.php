@@ -33,7 +33,7 @@ Legend:
 Kunena 1.6.0a
 
 15-June-2009
-^ [#16823] Global replace of fb_/fb- with kunena_
+^ [#16823] Global replace of fb/fb_/fb- with kunena/kunena_
 ^ [#16824] Change MySQL minimum version to 5.0.0 for 1.6 release
 ^ [#16822] Update version info for new 1.6 branch
 
@@ -267,7 +267,7 @@ Kunena 1.5.1b
 
 30-April-2009 Matias
 # [#16168] Remove HTML entities in the subjects of replies
-# [#16185] Fix global $fbConfigs
+# [#16185] Fix global $kunenaConfigs
 
 28-April-2009 Matias
 # [#16053] Remove PHP Notices from the frontend (part 2)
@@ -411,7 +411,7 @@ Kunena 1.0.9
 
 1-April-2009 Matias
 ^ [#15671] CB integration: Changed CB Migration API
-^ [#15671] CB integration: If internal fbprofile page is accessed, forward request to CB
+^ [#15671] CB integration: If internal kunenaprofile page is accessed, forward request to CB
 + [#15671] CB integration: New class CKunenaVersion, make lib/kunena.version.php safe to be included by external components
 ! New translations: make version string localized
 + [#15671] CB integration: make lib/kunena.user.class.php and lib/kunena.config.class.php self-contained
@@ -464,7 +464,7 @@ Kunena 1.0.9
 26-March-2009 Matias
 # [#15567] Fix pagination in search
 + [#15671] Add API for changing user settings in CB (part 1)
-! Renamed fbUserprofile to CKunenaUserprofile. It can be found from lib/kunena.user.class.php
+! Renamed kunenaUserprofile to CKunenaUserprofile. It can be found from lib/kunena.user.class.php
 # [#15667] Missing argument 3 for mb_convert_encoding
 # [#15154] Auto linked email addresses contain two slashes in front of the address
 
@@ -487,7 +487,7 @@ Kunena 1.0.9
 # [#15163] Fetch Kunena template from Joomla theme fails with warnings
 
 20-Februray-2009 fxstein
-# [#15151] Ensure fbConfig is array during legacy config file write - Thx JoniJnm!
+# [#15151] Ensure kunenaConfig is array during legacy config file write - Thx JoniJnm!
 
 20-February-2009 Matias
 # [#15148] Post emails for moderators: name missing
@@ -682,7 +682,7 @@ Kunena 1.0.8
 
 6-February-2009 fxstein
 + additional jomSocial CSS integration for better looking PM windows
-^ $fbversion is now $KunenaDbVersion
+^ $kunenaversion is now $KunenaDbVersion
 + additional db check in class.kunena.php
 + basic version info on credits page
 + enhanced version info including php and mysql on debug screen

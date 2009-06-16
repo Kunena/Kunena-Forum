@@ -64,10 +64,7 @@ class CKunenaSession extends JTable
 		}
 		if( !$ret )
 		{
-			if (CKunenaTools::isJoomla15())
-				$this->setError(get_class( $this ).'::store failed - '.$this->_db->getErrorMsg());
-			else
-				$this->_error = strtolower(get_class($this))."::store failed <br />" . $this->_db->getErrorMsg();
+			$this->setError(get_class( $this ).'::store failed - '.$this->_db->getErrorMsg());
 			return false;
 		}
 		else

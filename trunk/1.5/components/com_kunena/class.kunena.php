@@ -1254,14 +1254,7 @@ function kn_mb_substr($str, $start, $length=NULL, $encoding=NULL) {
 	if ($encoding === NULL) $encoding = KUNENA_CHARSET;
 	if (!function_exists('mb_substr'))
 	{
-		if (CKunenaTools::isJoomla15())
-		{
-			require_once(JPATH_LIBRARIES.DS.'phputf8'.DS.'utf8.php');
-		}
-		else
-		{
-			return substr($str, $start, $length);
-		}
+		require_once(JPATH_LIBRARIES.DS.'phputf8'.DS.'utf8.php');
 	}
 	return mb_substr($str, $start, $length, $encoding);
 }

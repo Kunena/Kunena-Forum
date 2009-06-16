@@ -34,6 +34,7 @@ Kunena 1.5.4
 
 16-June-2009 Matias
 # [#16829] Announcements: Description with some special characters does not work
+# [#16833] Call to undefined method CKunenaTools::isjoomla15()
 
 Kunena 1.5.3
 

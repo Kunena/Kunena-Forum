@@ -30,6 +30,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.5.4
+
+16-June-2009 Matias
+# [#16829] Announcements: Description with some special characters does not work
+
 Kunena 1.5.3
 
 15-June-2009 Matias

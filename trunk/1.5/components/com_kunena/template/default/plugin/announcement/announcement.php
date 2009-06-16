@@ -43,7 +43,7 @@ $is_user = (strtolower($kunena_my->usertype) <> '');
 
 // BEGIN: READ ANN
 if ($do == "read") {
-    $kunena_db->setQuery("SELECT id, title, description, created, published, showdate FROM #__fb_announcement WHERE id='{$id}' AND published='1'");
+    $kunena_db->setQuery("SELECT id, title, sdescription, description, created, published, showdate FROM #__fb_announcement WHERE id='{$id}' AND published='1'");
     $anns_ = $kunena_db->loadObjectList();
     	check_dberror("Unable to load announcements.");
 
@@ -51,6 +51,10 @@ if ($do == "read") {
     $annID = $ann->id;
     $anntitle = stripslashes($ann->title);
     $smileyList = smile::getEmoticons(0);
+	$annsdescription = stripslashes(smile::smileReplace($ann->sdescription, 0, $fbConfig->disemoticons, $smileyList));
+	$annsdescription = nl2br($annsdescription);
+	$annsdescription = smile::htmlwrap($annsdescription, $fbConfig->wrap);
+    
 	$anndescription = stripslashes(smile::smileReplace($ann->description, 0, $fbConfig->disemoticons, $smileyList));
 	$anndescription = nl2br($anndescription);
 	$anndescription = smile::htmlwrap($anndescription, $fbConfig->wrap);
@@ -106,7 +110,7 @@ if ($do == "read") {
                         ?>
 
     <div class = "anndesc">
-<?php echo $anndescription; ?>
+<?php echo !empty($anndescription) ? $anndescription : $annsdescription; ?>
     </div>
                     </td>
                 </tr>
@@ -232,12 +236,12 @@ if ($is_editor) {
     // BEGIN: ADD ANN
     if ($do == "doadd") {
         JFilterOutput::objectHTMLSafe ($_POST);
-        $title = JRequest::getVar("title", "");
-        $description = JRequest::getVar('description', '', 'string', JREQUEST_ALLOWRAW);
-        $sdescription = JRequest::getVar('sdescription', '', 'string', JREQUEST_ALLOWRAW);
-        $created = JRequest::getVar("created", "");
-        $published = JRequest::getVar("published", 0);
-        $showdate = JRequest::getVar("showdate", "");
+        $title = addslashes(JRequest::getVar("title", ""));
+        $description = addslashes(JRequest::getVar('description', '', 'string', JREQUEST_ALLOWRAW));
+        $sdescription = addslashes(JRequest::getVar('sdescription', '', 'string', JREQUEST_ALLOWRAW));
+        $created = addslashes(JRequest::getVar("created", ""));
+        $published = JRequest::getInt("published", 0);
+        $showdate = addslashes(JRequest::getVar("showdate", ""));
         # Clear any HTML
         $query1 = "INSERT INTO #__fb_announcement VALUES ('', '$title', '$sdescription', '$description', " . (($created <> '')?"'$created'":"NOW()") . ", '$published', '$ordering','$showdate')";
         $kunena_db->setQuery($query1);

@@ -25,14 +25,14 @@ dircopy(KUNENA_ROOT_PATH .DS. "components/com_joomlaboard/avatars", KUNENA_PATH_
 
 $kunena_db = &JFactory::getDBO();
 
-$kunena_db->setQuery("update #__fb_attachments set filelocation = replace(filelocation,'com_joomlaboard','com_kunena');");
+$kunena_db->setQuery("update #__kunena_attachments set filelocation = replace(filelocation,'com_joomlaboard','com_kunena');");
 $kunena_db->query();
 
-$kunena_db->setQuery("update #__fb_attachments set filelocation = replace(filelocation,'".KUNENA_PATH .DS. "uploaded','/images/fbfiles');");
+$kunena_db->setQuery("update #__kunena_attachments set filelocation = replace(filelocation,'".KUNENA_PATH .DS. "uploaded','/images/fbfiles');");
 if ($kunena_db->query()) {
 //    echo "<img src='images/tick.png' align='absmiddle'>"._KUNENA_UP_ATT_10."<br />";
 }
-$kunena_db->setQuery("update #__fb_messages_text set message = replace(message,'/components/com_kunena/uploaded','/images/fbfiles');");
+$kunena_db->setQuery("update #__kunena_messages_text set message = replace(message,'/components/com_kunena/uploaded','/images/fbfiles');");
 if ($kunena_db->query()) {
 //    echo "<img src='images/tick.png' align='absmiddle'>"._KUNENA_UP_ATT_10_MSG."<br />";
 }

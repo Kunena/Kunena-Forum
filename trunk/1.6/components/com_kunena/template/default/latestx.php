@@ -54,9 +54,9 @@ $kunena_db->setQuery(
         a.subject,
         b.lastpost
      FROM
-        #__fb_messages AS a
+        #__kunena_messages AS a
         JOIN (  SELECT thread, MAX(time) AS lastpost
-                FROM #__fb_messages
+                FROM #__kunena_messages
                 WHERE time >'{$querytime}' AND hold='0' AND moved='0' AND catid IN ($fbSession->allowed)
                 GROUP BY 1) AS b ON b.thread = a.thread
      WHERE
@@ -84,12 +84,12 @@ if ($sel == "0")
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable" id ="fb_latestx"   border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "kunena_blocktable" id ="kunena_latestx"   border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
             <th colspan = "4">
-                <div class = "fb_title_cover" style = "text-align:center; display:block; width:100%;">
-                    <span class="fb_title">
+                <div class = "kunena_title_cover" style = "text-align:center; display:block; width:100%;">
+                    <span class="kunena_title">
 
                     <?php
                     if (!$since) {
@@ -117,7 +117,7 @@ if ($sel == "0")
     </thead>
 
     <tbody id = "<?php echo $boardclass; ?>latestx_tbody">
-        <tr class = "fb_sth fbs">
+        <tr class = "kunena_sth fbs">
             <th class = "th-1 <?php echo $boardclass; ?>sectiontableheader" width="60%" align="left"><?php echo _LATEST_THREADFORUM; ?>
             </th>
 
@@ -146,13 +146,13 @@ if ($sel == "0")
             {
                 //get the latest post time for this thread
                 unset($thisThread);
-                $kunena_db->setQuery("SELECT MAX(time) AS maxtime, COUNT(*) AS totalmessages FROM #__fb_messages WHERE thread='{$rs->thread}'");
+                $kunena_db->setQuery("SELECT MAX(time) AS maxtime, COUNT(*) AS totalmessages FROM #__kunena_messages WHERE thread='{$rs->thread}'");
                 $thisThread = $kunena_db->loadObject();
                 $latestPostTime = $thisThread->maxtime;
 
                 //get the latest post itself
                 unset($result);
-                $kunena_db->setQuery("SELECT a.id, a.name, a.userid, a.catid, c.id AS catid, c.name as catname FROM #__fb_messages AS a LEFT JOIN #__fb_categories AS c ON a.catid=c.id WHERE a.time='{$latestPostTime}'");
+                $kunena_db->setQuery("SELECT a.id, a.name, a.userid, a.catid, c.id AS catid, c.name as catname FROM #__kunena_messages AS a LEFT JOIN #__kunena_categories AS c ON a.catid=c.id WHERE a.time='{$latestPostTime}'");
                 $result = $kunena_db->loadObject();
 
                 $latestPostId = $result->id;
@@ -160,7 +160,7 @@ if ($sel == "0")
 				$latestPostUserid = $result->userid;
                 $latestPostCatid = $result->catid;
                 $catname = kunena_htmlspecialchars(stripslashes($result->catname));
-                $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE time>'{$querytime}' AND thread={$rs->thread}");
+                $kunena_db->setQuery("SELECT COUNT(*) FROM #__kunena_messages WHERE time>'{$querytime}' AND thread={$rs->thread}");
                 $numberOfPosts = $kunena_db->loadResult();
                 $k = 1 - $k;
                 echo '<tr  class="' . $boardclass . '' . $tabclass[$k] . '" >';
@@ -228,7 +228,7 @@ if ($sel == "0")
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-        <table class = "fb_blocktable" id="fb_bottomarea" border = "0" cellspacing = "0" cellpadding = "0">
+        <table class = "kunena_blocktable" id="kunena_bottomarea" border = "0" cellspacing = "0" cellpadding = "0">
             <thead>
                 <tr>
                     <th  class = "th-right">

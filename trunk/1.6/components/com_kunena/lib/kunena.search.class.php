@@ -183,7 +183,7 @@ class CKunenaSearch
 	$time = 0;
 	switch($searchdate) {
 		case 'lastvisit':
-			$kunena_db->setQuery("SELECT lasttime FROM #__fb_sessions WHERE userid='{$kunena_my->id}'");
+			$kunena_db->setQuery("SELECT lasttime FROM #__kunena_sessions WHERE userid='{$kunena_my->id}'");
 			$time = $kunena_db->loadResult();
 			break;
 		case 'all':
@@ -249,7 +249,7 @@ class CKunenaSearch
             $groupby = '';
 
         /* get total */
-        $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE {$where} {$groupby}");
+        $kunena_db->setQuery("SELECT COUNT(*) FROM #__kunena_messages AS m JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE {$where} {$groupby}");
         $this->total = $kunena_db->loadResult();
         check_dberror("Unable to count messages.");
 
@@ -263,7 +263,7 @@ class CKunenaSearch
 	if ($this->total < $this->limitstart) $this->limitstart = $limitstart = (int)($this->total / $this->limit);
 
         /* get results */
-        $sql = "SELECT m.id, m.subject, m.catid, m.thread, m.name, m.time, t.mesid, t.message FROM #__fb_messages_text AS t JOIN #__fb_messages AS m ON m.id=t.mesid WHERE {$where} {$groupby} ORDER BY {$orderby}";
+        $sql = "SELECT m.id, m.subject, m.catid, m.thread, m.name, m.time, t.mesid, t.message FROM #__kunena_messages_text AS t JOIN #__kunena_messages AS m ON m.id=t.mesid WHERE {$where} {$groupby} ORDER BY {$orderby}";
         $kunena_db->setQuery($sql, $limitstart, $limit);
         $rows = $kunena_db->loadObjectList();
         check_dberror("Unable to load messages.");
@@ -317,7 +317,7 @@ class CKunenaSearch
 		} else {
 			$allowed_string = "published='1' AND pub_access='0'";
 		}
-		$kunena_db->setQuery("SELECT id, parent FROM #__fb_categories WHERE {$allowed_string}");
+		$kunena_db->setQuery("SELECT id, parent FROM #__kunena_categories WHERE {$allowed_string}");
         $allowed_forums = $kunena_db->loadAssocList('id');
         check_dberror("Unable to get public categories.");
 
@@ -365,10 +365,10 @@ class CKunenaSearch
 
 	$selected = ' selected="selected"';
 	$checked = ' checked="checked"';
-	$fb_advsearch_hide = 1;
+	$kunena_advsearch_hide = 1;
 	if ($this->int_kunena_errornr) {
 	        $q = $this->searchword;
-		$fb_advsearch_hide = 0;
+		$kunena_advsearch_hide = 0;
 	}
         if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php')) {
         	include (KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php');
@@ -392,19 +392,19 @@ class CKunenaSearch
 		return;
 	}
 
-        $boardclass = 'fb_';
+        $boardclass = 'kunena_';
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-        <table  class = "fb_blocktable" id ="fb_forumsearch"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+        <table  class = "kunena_blocktable" id ="kunena_forumsearch"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
                     <th colspan = "3">
-                        <div class = "fb_title_cover">
-                            <span class="fb_title fbl"><?php echo _KUNENA_SEARCH_RESULTS; ?></span>
+                        <div class = "kunena_title_cover">
+                            <span class="kunena_title fbl"><?php echo _KUNENA_SEARCH_RESULTS; ?></span>
                             <b><?php printf(_FORUM_SEARCH, $q); ?></b>
                         </div>
                     </th>
@@ -412,7 +412,7 @@ class CKunenaSearch
             </thead>
 
             <tbody>
-                <tr class = "fb_sth">
+                <tr class = "kunena_sth">
                     <th class = "th-1 <?php echo $boardclass; ?>sectiontableheader">
 <?php echo _GEN_SUBJECT; ?>
                     </th>
@@ -479,7 +479,7 @@ class CKunenaSearch
                 {
                 ?>
 
-                    <tr  class = "fb_sth" >
+                    <tr  class = "kunena_sth" >
                         <th colspan = "3" style = "text-align:center" class = "th-1 <?php echo $boardclass; ?>sectiontableheader">
                             <?php
                             echo $pagination;
@@ -491,7 +491,7 @@ class CKunenaSearch
                 }
                 ?>
 
-                <tr  class = "fb_sth" >
+                <tr  class = "kunena_sth" >
                    <th colspan = "3" style = "text-align:center" class = "th-1 <?php echo $boardclass; ?>sectiontableheader">
                         <?php
 			$resStart = $limitstart+1;
@@ -523,7 +523,7 @@ function KunenaSearchPagination($function, $q, $urlparams, $page, $limit, $total
 	$endpage = $totalpages;
     }
 
-    $output = '<div class="fb_pagination">'._PAGE;
+    $output = '<div class="kunena_pagination">'._PAGE;
     if ($startpage > 1)
     {
 	if ($endpage < $totalpages) $endpage--;

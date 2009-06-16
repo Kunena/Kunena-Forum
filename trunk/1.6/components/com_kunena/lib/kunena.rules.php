@@ -34,12 +34,12 @@ $document->setTitle(_GEN_RULES . ' - ' . stripslashes($fbConfig->board_title));
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable" id ="fb_forumrules" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "kunena_blocktable" id ="kunena_forumrules" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
             <th>
-                <div class = "fb_title_cover">
-                        <span class="fb_title" ><?php echo _COM_FORUM_RULES; ?></span>
+                <div class = "kunena_title_cover">
+                        <span class="kunena_title" ><?php echo _COM_FORUM_RULES; ?></span>
                 </div>
         </tr>
     </thead>
@@ -70,7 +70,7 @@ $document->setTitle(_GEN_RULES . ' - ' . stripslashes($fbConfig->board_title));
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table  class = "fb_blocktable" id="fb_bottomarea"  border = "0" cellspacing = "0" cellpadding = "0">
+<table  class = "kunena_blocktable" id="kunena_bottomarea"  border = "0" cellspacing = "0" cellpadding = "0">
     <thead>
         <tr>
             <th class = "th-right">

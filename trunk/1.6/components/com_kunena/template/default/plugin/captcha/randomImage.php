@@ -6,12 +6,12 @@ $rand = rand(10000, 99999);
 if (class_exists('JFactory')) {
 	// J1.5
 	$session =& JFactory::getSession();
-	$session->set('fb_image_random_value', md5($rand));
+	$session->set('kunena_image_random_value', md5($rand));
 	unset($session);
 } else {
 	// J1.0
 	session_start();
-	$_SESSION['fb_image_random_value'] = md5($rand);
+	$_SESSION['kunena_image_random_value'] = md5($rand);
 }
 
 // create the image

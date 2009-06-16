@@ -30,18 +30,18 @@ $fbConfig =& CKunenaConfig::getInstance();
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
 <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=saveprofileinfo'); ?>" method = "post" name = "postform">
 	<input type = "hidden" name = "do" value = "saveprofileinfo"/>
-	<table class = "fb_blocktable" id = "fb_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+	<table class = "kunena_blocktable" id = "kunena_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
 		<thead>
 			<tr>
 				<th colspan = "2">
-					<div class = "fb_title_cover">
-						<span class = "fb_title"><?php echo _GEN_SIGNATURE; ?></span>
+					<div class = "kunena_title_cover">
+						<span class = "kunena_title"><?php echo _GEN_SIGNATURE; ?></span>
 					</div>
 				</th>
 			</tr>
 		</thead>
 
-		<tbody class = "fb_myprofile_general">
+		<tbody class = "kunena_myprofile_general">
 
 		<tr>
                                 <td colspan="2">&nbsp;</td>

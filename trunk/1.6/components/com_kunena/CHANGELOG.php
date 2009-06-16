@@ -33,6 +33,7 @@ Legend:
 Kunena 1.6.0a
 
 15-June-2009
+^ [#16823] Global replace of fb_ with kunena_
 ^ [#16824] Change MySQL minimum version to 5.0.0 for 1.6 release
 ^ [#16822] Update version info for new 1.6 branch
 
@@ -246,7 +247,7 @@ Kunena 1.5.1b
 # [#16250] Fix slightly broken session handling
 ! Internal: Broken search fixed
 ! Added new class CKunenaSession
-# [#16258] Internal: Missing stripslashes() in fb_write.html.php form
+# [#16258] Internal: Missing stripslashes() in kunena_write.html.php form
 ^ [#15784] Merge 1.0.10 fixes from revision 658 to 680
 # [#15784] Internal: Fix few broken features after merge
 
@@ -662,7 +663,7 @@ Kunena 1.0.8
 ^ changed $obj_KUNENA_search to $KunenaSearch to match new naming convention
 ^ clickable images and lightboxes only on non nested images; images within URL
   codes link to the URL specified
-^ fb_1 module position renamed to kunena_profilebox to match new module position naming
+^ kunena_1 module position renamed to kunena_profilebox to match new module position naming
 # Avoid forum crash when JomSocial is selected in config but not installed on system
 
 8-February-2009 Matias
@@ -746,7 +747,7 @@ Kunena 1.0.8
 2-February-2009 fxstein
 ^ Removed addition left over HTML tags and text for prior threaded view support in profile
 # htmlspecialchars_decode on 301 redirects to remove &amps from getting into the browser URL
-^ fb_Config class changed to CKunenaConfig, boj_Config class changed to CKunenaConfigBase
+^ kunena_Config class changed to CKunenaConfig, boj_Config class changed to CKunenaConfigBase
 + new CKunenaConfig class functionality to support user specific settings
 ^ kunena_authetication changed to CKunenaAuthentication
 
@@ -790,10 +791,10 @@ Kunena 1.0.8
 + PHP and MYSQL version checks during install
 
 28-January-2009 Matias
-# Replace all occurences of jos_fb_ with #__fb_
+# Replace all occurences of jos_kunena_ with #__kunena_
 # Don't allow anonymous users to subscribe/favorite
 # Do not send email on new post if the category is moderated
-# Fix broken tables fb_favorites and fb_subscriptions
+# Fix broken tables kunena_favorites and kunena_subscriptions
 # Regression from Kunena 1.0.7b: avatar upload page internal error
 # Avatar upload was broken if you didn't use profile integration
 # default_ex: My Profile internal link was wrong
@@ -819,7 +820,7 @@ Kunena 1.0.7 beta
 25-January-2009 fxstein
 + Basic JomSocial Integration
 ^ updated jquery to latest 1.3.1 minimized
-^ fb_link class changes to CKunenaLinks
+^ kunena_link class changes to CKunenaLinks
 # Minor typo in include paths fixed
 ^ kunena.credits.php: Updated credits page
 ^ Various links updated
@@ -832,7 +833,7 @@ Kunena 1.0.7 beta
 # Stats: Today/yesterday stats didn't include messages between 23:59
   and 00:01.
 ^ Stats: Optimized SQL queries for speed and saved 11-20 queries
-! DATABASE UPDATED: new keys added to fb_messages and fb_users
+! DATABASE UPDATED: new keys added to kunena_messages and kunena_users
 # Emoticons: Broken "more emoticons" pop up in IE7.
 # Forum Tools: Fixed CSS rules in default_ex
 ^ Anonymous user cannot be admin, saves many SQL queries

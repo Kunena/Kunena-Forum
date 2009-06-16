@@ -75,12 +75,12 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable" id = "fb_recentposts" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "kunena_blocktable" id = "kunena_recentposts" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
             <th colspan = "5">
-                <div class = "fb_title_cover fbm">
-                    <span class = "fb_title fbl"><?php echo _RECENT_RECENT_POSTS; ?></span>
+                <div class = "kunena_title_cover fbm">
+                    <span class = "kunena_title fbl"><?php echo _RECENT_RECENT_POSTS; ?></span>
                 </div>
 
                 <img id = "BoxSwitch_recentposts__recentposts_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
@@ -96,12 +96,12 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 				// find messages
 				$sq1 = ($category)?"AND msg2.catid in ($category)":"";
 				if ($fbConfig->latestsinglesubject) {
-					$sq2 = "SELECT msg1.* FROM (SELECT msg2.* FROM #__fb_messages msg2"
+					$sq2 = "SELECT msg1.* FROM (SELECT msg2.* FROM #__kunena_messages msg2"
 						. " WHERE msg2.hold='0' AND moved='0' AND msg2.catid IN ($fbSession->allowed) $sq1 ORDER BY msg2.time"
 						. (($fbConfig->latestreplysubject)?" DESC":"") . ") msg1"
 						. " GROUP BY msg1.thread";
 				} else {
-					$sq2 = "SELECT msg2.* FROM #__fb_messages msg2"
+					$sq2 = "SELECT msg2.* FROM #__kunena_messages msg2"
 						. " WHERE msg2.hold='0' AND moved='0' AND msg2.catid IN ($fbSession->allowed) $sq1";
 				}
 				$query = " SELECT u.id, IFNULL(u.username, '"._KUNENA_GUEST."') AS username, IFNULL(u.name,'"._KUNENA_GUEST."') AS name,"
@@ -109,8 +109,8 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 					. " thread.hits AS hits, msg.locked, msg.topic_emoticon, msg.parent, cat.id AS catid, cat.name AS catname"
 					. " FROM ($sq2) msg"
 					. " LEFT JOIN #__users u ON u.id = msg.userid"
-					. " LEFT JOIN #__fb_categories cat ON cat.id = msg.catid"
-					. " LEFT JOIN #__fb_messages thread ON thread.id = msg.thread"
+					. " LEFT JOIN #__kunena_categories cat ON cat.id = msg.catid"
+					. " LEFT JOIN #__kunena_messages thread ON thread.id = msg.thread"
 					. " ORDER BY msg.time DESC";
 				$kunena_db->setQuery($query, 0, $count);
                 $rows = $kunena_db->loadObjectList();
@@ -124,7 +124,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                 if ($numitems > $count_per_page) {
                     include_once(KUNENA_PATH_TEMPLATE_DEFAULT .DS. "plugin/recentposts/function.tabber.php");
                     $tabs = new my_tabs(1, 1);
-                    $tabs->my_pane_start('mod_fb_last_subjects-pane');
+                    $tabs->my_pane_start('mod_kunena_last_subjects-pane');
                     $tabs->my_tab_start(1, 1);
                     }
 
@@ -132,7 +132,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                 $tabid = 1;
                 $k = 2;
                 echo "<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">";
-                echo "<tr  class = \"fb_sth\" >";
+                echo "<tr  class = \"kunena_sth\" >";
                 echo "<th class=\"th-1  " . $boardclass . "sectiontableheader  fbs\" width=\"1%\" align=\"center\" > </th>";
                 echo "<th class=\"th-2  " . $boardclass . "sectiontableheader fbs\" align=\"left\" >" . _RECENT_TOPICS . "</th>";
 
@@ -248,7 +248,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                                 $tabs->my_tab_start($tabid, $tabid);
                                 $order_start = $i + 1;
                                 echo(
-                                    $show_order_number ? "<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr  class = \"fb_sth\" ><th width=\"1%\"  align=\"center\" class=\"th-1 " . $boardclass . "sectiontableheader fbs\"> </th><th class=\"th-2 " . $boardclass . "sectiontableheader fbs\"  align=\"left\" >" . _RECENT_TOPICS. "</th><th width=\"10%\"  class=\"th-3 " . $boardclass . "sectiontableheader fbs\"   align=\"center\" >" . _RECENT_AUTHOR . "</th><th   align=\"left\"  width=\"20%\"  class=\"th-4 " . $boardclass . "sectiontableheader fbs\">" . _RECENT_CATEGORIES . "</th><th class=\"th-5 " . $boardclass . "sectiontableheader fbs\" width=\"20%\"  align=\"left\"  >" . _RECENT_DATE . "</th><th  class=\"th-6 " . $boardclass . "sectiontableheader fbs\" width=\"5%\"   align=\"center\" >" . _RECENT_HITS . "</th></tr>" : "<ul>");
+                                    $show_order_number ? "<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr  class = \"kunena_sth\" ><th width=\"1%\"  align=\"center\" class=\"th-1 " . $boardclass . "sectiontableheader fbs\"> </th><th class=\"th-2 " . $boardclass . "sectiontableheader fbs\"  align=\"left\" >" . _RECENT_TOPICS. "</th><th width=\"10%\"  class=\"th-3 " . $boardclass . "sectiontableheader fbs\"   align=\"center\" >" . _RECENT_AUTHOR . "</th><th   align=\"left\"  width=\"20%\"  class=\"th-4 " . $boardclass . "sectiontableheader fbs\">" . _RECENT_CATEGORIES . "</th><th class=\"th-5 " . $boardclass . "sectiontableheader fbs\" width=\"20%\"  align=\"left\"  >" . _RECENT_DATE . "</th><th  class=\"th-6 " . $boardclass . "sectiontableheader fbs\" width=\"5%\"   align=\"center\" >" . _RECENT_HITS . "</th></tr>" : "<ul>");
                                 }
                             }
                     }

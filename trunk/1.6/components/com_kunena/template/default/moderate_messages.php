@@ -41,7 +41,7 @@ switch ($action)
         switch (jbDeletePosts($kunena_db, $cid))
         {
             case -1:
-                $app->redirect(KUNENA_LIVEURL . 'func=review&amp;catid=' . $catid, "ERROR: The post has been deleted but the text could not be deleted\n Check the #__fb_messages_text table for mesid IN " . explode(',', $cid));
+                $app->redirect(KUNENA_LIVEURL . 'func=review&amp;catid=' . $catid, "ERROR: The post has been deleted but the text could not be deleted\n Check the #__kunena_messages_text table for mesid IN " . explode(',', $cid));
 
                 break;
 
@@ -80,7 +80,7 @@ switch ($action)
     case 'list':
         echo '<p class="sectionname"><?php echo _MESSAGE_ADMINISTRATION; ?></p>';
 
-        $kunena_db->setQuery("SELECT m.id, m.time, m.name, m.subject, m.hold, t.message FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE hold='1' AND catid='{$catid}' ORDER BY id ASC");
+        $kunena_db->setQuery("SELECT m.id, m.time, m.name, m.subject, m.hold, t.message FROM #__kunena_messages AS m JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE hold='1' AND catid='{$catid}' ORDER BY id ASC");
 
         if (!$kunena_db->query())
             echo $kunena_db->getErrorMsg();
@@ -117,7 +117,7 @@ function jbListMessages($allMes, $catid)
     </script>
 
     <table width = "100%" border = 0 cellspacing = 1 cellpadding = 3>
-        <tr height = "10" class = "fb_table_header">
+        <tr height = "10" class = "kunena_table_header">
             <th align = "center">
                 <b><?php echo _GEN_DATE; ?></b>
             </th>
@@ -147,14 +147,14 @@ function jbListMessages($allMes, $catid)
         foreach ($allMes as $message)
         {
             $i = 1 - $i;
-            echo '<tr class="fb_message' . $i . '">';
+            echo '<tr class="kunena_message' . $i . '">';
             echo '<td valign="top">' . date(_DATETIME, $message->time) . '</td>';
             echo '<td valign="top">' . $message->name . '</td>';
             echo '<td valign="top"><b>' . $message->subject . '<b></td>';
 
 
-            $fb_message_txt = stripslashes($message->message);
-            echo '<td valign="top">' . smile::smileReplace($fb_message_txt, 0, $fbConfig->disemoticons, $smileyList) . '</td>';
+            $kunena_message_txt = stripslashes($message->message);
+            echo '<td valign="top">' . smile::smileReplace($kunena_message_txt, 0, $fbConfig->disemoticons, $smileyList) . '</td>';
             echo '<td valign="top"><input type="checkbox" name="cid[]" value="' . $message->id . '" /></td>';
             echo '</tr>';
         }
@@ -193,11 +193,11 @@ function jbDeletePosts($kunena_db, $cid)
         return 0;
 
     $ids = implode(',', $cid);
-    $kunena_db->setQuery('DELETE FROM `#__fb_messages` WHERE `id` IN (' . $ids . ')');
+    $kunena_db->setQuery('DELETE FROM `#__kunena_messages` WHERE `id` IN (' . $ids . ')');
 
     if ($kunena_db->query())
     {
-        $kunena_db->setQuery('DELETE FROM `#__fb_messages_text` WHERE `mesid` IN (' . $ids . ')');
+        $kunena_db->setQuery('DELETE FROM `#__kunena_messages_text` WHERE `mesid` IN (' . $ids . ')');
 
         if ($kunena_db->query())
             return 1;
@@ -221,13 +221,13 @@ function jbApprovePosts($kunena_db, $cid)
     reset($cid);
     foreach($cid as $id) {
     	$id = (int)$id;
-        $newQuery = "SELECT * FROM #__fb_messages WHERE id='{$id}'";
+        $newQuery = "SELECT * FROM #__kunena_messages WHERE id='{$id}'";
         $kunena_db->setQuery($newQuery, 0, 1);
         $msg = null;
         $msg = $kunena_db->loadObject();
         if(!$msg) { continue; }
         // continue stats
-        $kunena_db->setQuery("UPDATE `#__fb_messages` SET hold='0' WHERE id='{$id}'");
+        $kunena_db->setQuery("UPDATE `#__kunena_messages` SET hold='0' WHERE id='{$id}'");
         if(!$kunena_db->query()) {
         	$ret = 0; // mark error
         }

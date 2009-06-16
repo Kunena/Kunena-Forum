@@ -30,7 +30,7 @@ unset($user);
 $kunena_db->setQuery("SELECT email, name FROM #__users WHERE id='{$kunena_my->id}'");
 $user = $kunena_db->loadObject();
 
-if ($fbConfig->fb_profile == 'cb')
+if ($fbConfig->kunena_profile == 'cb')
 {
 	$msg_params = array(
 		'username' => &$msg_username, 
@@ -50,7 +50,7 @@ if ($fbConfig->fb_profile == 'cb')
 
 <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
     <tbody>
-        <tr class = "fb_sth">
+        <tr class = "kunena_sth">
             <th colspan = "2" class = "view-th <?php echo $boardclass; ?>sectiontableheader">
         	<a name = "<?php echo $msg_id; ?>"></a>
 <?php
@@ -299,9 +299,9 @@ if ($fbConfig->fb_profile == 'cb')
 								// Finish captcha
 								?>
 
-                                <input type = "submit" class = "fb_qm_btn" name = "submit" value = "<?php @print(_GEN_CONTINUE);?>"/>
+                                <input type = "submit" class = "kunena_qm_btn" name = "submit" value = "<?php @print(_GEN_CONTINUE);?>"/>
 
-                                <input type = "button" class = "fb_qm_btn fb_qm_cncl_btn" id = "cancel__<?php echo $msg_id; ?>" name = "cancel" value = "<?php @print(_KUNENA_CANCEL);?>"/>
+                                <input type = "button" class = "kunena_qm_btn kunena_qm_cncl_btn" id = "cancel__<?php echo $msg_id; ?>" name = "cancel" value = "<?php @print(_KUNENA_CANCEL);?>"/>
 
                                 <small><em><?php echo _KUNENA_QMESSAGE_NOTE?></em></small>
                             </form>
@@ -324,7 +324,7 @@ if ($fbConfig->fb_profile == 'cb')
             <td class = "fb-msgview-left-c">&nbsp;
             </td>
             <td class = "fb-msgview-right-c" >
-                         <div class="fb_smalltext" >
+                         <div class="kunena_smalltext" >
                    <?php
                             if ($fbConfig->reportmsg && $kunena_my->id > 1)
                             {
@@ -332,7 +332,7 @@ if ($fbConfig->fb_profile == 'cb')
                             } ?>
 
                             <?php echo isset($fbIcons['msgip']) ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['msgip'] .'" border="0" alt="'._KUNENA_REPORT_LOGGED.'" />' : ' <img src="'.KUNENA_URLEMOTIONSPATH.'ip.gif" border="0" alt="'. _KUNENA_REPORT_LOGGED.'" />';
-                            ?> <span class="fb_smalltext"> <?php echo _KUNENA_REPORT_LOGGED;?></span>
+                            ?> <span class="kunena_smalltext"> <?php echo _KUNENA_REPORT_LOGGED;?></span>
                             <?php
                             if(!empty($msg_ip)) echo CKunenaLink::GetMessageIPLink($msg_ip);
                             ?>
@@ -346,8 +346,8 @@ if ($fmessage->modified_by) {
             <td class = "fb-msgview-left-c">&nbsp;
             </td>
             <td class = "fb-msgview-right-c" >
-                    <div class="fb_message_editMarkUp_cover">
-                    <span class="fb_message_editMarkUp" ><?php echo _KUNENA_EDITING_LASTEDIT;?>: <?php echo date(_DATETIME, $fmessage->modified_time);?> <?php echo _KUNENA_BY; ?> <?php echo CKunenaTools::whoisID($fmessage->modified_by)?>.
+                    <div class="kunena_message_editMarkUp_cover">
+                    <span class="kunena_message_editMarkUp" ><?php echo _KUNENA_EDITING_LASTEDIT;?>: <?php echo date(_DATETIME, $fmessage->modified_time);?> <?php echo _KUNENA_BY; ?> <?php echo CKunenaTools::whoisID($fmessage->modified_by)?>.
                     <?php
                     if ($fmessage->modified_reason) {
                     echo _KUNENA_REASON.": ".kunena_htmlspecialchars(stripslashes($fmessage->modified_reason));
@@ -383,7 +383,7 @@ if (isset($msg_signature)) {
             </td>
 
             <td class = "fb-msgview-right-b" align = "right">
-                <span id = "fb_qr_sc__<?php echo $msg_id;?>" class = "fb_qr_fire" style = "cursor:hand; cursor:pointer">
+                <span id = "kunena_qr_sc__<?php echo $msg_id;?>" class = "kunena_qr_fire" style = "cursor:hand; cursor:pointer">
 
                 <?php
                 //we should only show the Quick Reply section to registered users. otherwise we are missing too much information!!
@@ -536,6 +536,6 @@ if (JDocumentHTML::countModules('kunena_msg_'.$mmm))
 // $msg_loc         = User's Location
 // $msg_regdate     = User's Registration Date
 // $tabclass[$k]    = CSS Class for TD (use to alternate colors)
-// fb_messagebody   = CSS Class for post text
-// fb_signature     = CSS Class for signature
+// kunena_messagebody   = CSS Class for post text
+// kunena_signature     = CSS Class for signature
 ?>

@@ -27,12 +27,12 @@ require_once (JPATH_ROOT . '/components/com_kunena/lib/kunena.user.class.php');
 class CKunenaTables
 {
 	var $tables = array();
-	var $_tables = array ( '#__fb_announcement', '#__fb_attachments', '#__fb_categories', '#__fb_favorites', '#__fb_groups', '#__fb_messages', '#__fb_messages_text', '#__fb_moderation', '#__fb_ranks', '#__fb_sessions', '#__fb_smileys', '#__fb_subscriptions', '#__fb_users', '#__fb_version', '#__fb_whoisonline');
+	var $_tables = array ( '#__kunena_announcement', '#__kunena_attachments', '#__kunena_categories', '#__kunena_favorites', '#__kunena_groups', '#__kunena_messages', '#__kunena_messages_text', '#__kunena_moderation', '#__kunena_ranks', '#__kunena_sessions', '#__kunena_smileys', '#__kunena_subscriptions', '#__kunena_users', '#__kunena_version', '#__kunena_whoisonline');
 
 	function __construct()
 	{
        		$kunena_db = &JFactory::getDBO();
-		$kunena_db->setQuery( "SHOW TABLES LIKE '" .$kunena_db->getPrefix(). "fb_%'");
+		$kunena_db->setQuery( "SHOW TABLES LIKE '" .$kunena_db->getPrefix(). "kunena_%'");
 		$tables = $kunena_db->loadResultArray();
 		$prelen = strlen($kunena_db->getPrefix());
 		foreach	($tables as $table) $this->tables['#__'.substr($table,$prelen)] = 1;
@@ -309,7 +309,7 @@ class CKunenaConfig extends CKunenaConfigBase
     var $showranking             = 1;
     var $rankimages              = 1;
     var $avatar_src              = 'fb';
-    var $fb_profile              = 'fb';
+    var $kunena_profile              = 'fb';
     var $pm_component            = 'no';
     var $cb_profile              = 0;  // Depreciated legacy CB integration - Now controlled via avatar, profile and pm settings
     var $discussbot              = 0;
@@ -398,7 +398,7 @@ class CKunenaConfig extends CKunenaConfigBase
 
     protected function GetConfigTableName()
     {
-        return "#__fb_config";
+        return "#__kunena_config";
     }
 
     public function DoUserOverrides($KunenaUser)

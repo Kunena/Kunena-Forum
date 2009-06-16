@@ -31,12 +31,12 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
 <!-- WHOIS ONLINE -->
 <?php
     $whoislink = JRoute::_('index.php?option=com_kunena&amp;func=who');
-    $fb_queryName = $fbConfig->username ? "username" : "name";
+    $kunena_queryName = $fbConfig->username ? "username" : "name";
     $query
-        = "SELECT w.userip, w.time, w.what, u.{$fb_queryName} AS username, u.id, k.moderator, k.showOnline "
-        . " FROM #__fb_whoisonline AS w"
+        = "SELECT w.userip, w.time, w.what, u.{$kunena_queryName} AS username, u.id, k.moderator, k.showOnline "
+        . " FROM #__kunena_whoisonline AS w"
         . " LEFT JOIN #__users AS u ON u.id=w.userid "
-        . " LEFT JOIN #__fb_users AS k ON k.userid=w.userid "
+        . " LEFT JOIN #__kunena_users AS k ON k.userid=w.userid "
 	# filter real public session logouts
         . " INNER JOIN #__session AS s "
 		. " ON s.guest='0' AND s.userid=w.userid "
@@ -48,7 +48,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
     $totaluser = count($users);
 
 
-    $query = "SELECT COUNT(*) FROM #__fb_whoisonline WHERE user='0'";
+    $query = "SELECT COUNT(*) FROM #__kunena_whoisonline WHERE user='0'";
     $kunena_db->setQuery($query);
     $totalguests = $kunena_db->loadResult();
 ?>
@@ -57,12 +57,12 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-    <table class = "fb_blocktable" id ="fb_whoisonline"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+    <table class = "kunena_blocktable" id ="kunena_whoisonline"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>
             <tr>
                 <th align="left">
-                    <div class = "fb_title_cover fbm">
-                        <a class = "fb_title fbl" href = "<?php echo $whoislink;?>">
+                    <div class = "kunena_title_cover fbm">
+                        <a class = "kunena_title fbl" href = "<?php echo $whoislink;?>">
 						<?php echo _WHO_ONLINE_NOW; ?>
                         <b><?php echo $totaluser; ?></b>
 						<?php if($totaluser==1) { echo _WHO_ONLINE_MEMBER; } else { echo _WHO_ONLINE_MEMBERS; } ?>
@@ -89,7 +89,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
 
                   		 <?php if ( $user->showOnline > 0 ){ ?>
 
-                            <a class = "whois<?php echo $user->moderator;?>  <?php echo "fb_group_".$grp->id;?>" href = "<?php echo JRoute::_(KUNENA_PROFILE_LINK_SUFFIX.$user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
+                            <a class = "whois<?php echo $user->moderator;?>  <?php echo "kunena_group_".$grp->id;?>" href = "<?php echo JRoute::_(KUNENA_PROFILE_LINK_SUFFIX.$user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
 
                 		  <?php  } ?>
 
@@ -115,7 +115,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
 
                   		 <?php if ( $user->showOnline < 1 && $kunena_my->gid > 1 ){ ?>
 
-                            <a class = "whois<?php echo $user->moderator;?>  <?php echo "fb_group_".$grp->id;?>" href = "<?php echo JRoute::_(KUNENA_PROFILE_LINK_SUFFIX.$user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
+                            <a class = "whois<?php echo $user->moderator;?>  <?php echo "kunena_group_".$grp->id;?>" href = "<?php echo JRoute::_(KUNENA_PROFILE_LINK_SUFFIX.$user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
 
                 		  <?php   } ?>
 
@@ -129,7 +129,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
                     <!--               groups     -->
 
                     <?php
-                    $kunena_db->setQuery("SELECT id, title FROM #__fb_groups");
+                    $kunena_db->setQuery("SELECT id, title FROM #__kunena_groups");
                     $gr_row = $kunena_db->loadObjectList();
 
                     if (count($gr_row) > 1) {
@@ -141,7 +141,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
                     {
                     ?>
 
-                        &nbsp; [ <span class = "<?php if ($gr->id > 1) {echo "fb_group_".$gr->id;}?>" title = "<?php echo $gr->title;?>"> <?php echo $gr->title; ?></span>]
+                        &nbsp; [ <span class = "<?php if ($gr->id > 1) {echo "kunena_group_".$gr->id;}?>" title = "<?php echo $gr->title;?>"> <?php echo $gr->title; ?></span>]
 
                     <?php
                     } ?>

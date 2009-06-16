@@ -50,7 +50,7 @@ function list_users()
     $total_results = $kunena_db->loadResult();
 
     // Search total
-    $query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__fb_users AS fu ON u.id=fu.userid";
+    $query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__kunena_users AS fu ON u.id=fu.userid";
 
     if ($search != "") {
         $query .= " WHERE (u.name LIKE '%$search%' OR u.username LIKE '%$search%')";
@@ -67,7 +67,7 @@ function list_users()
     // Select query
     $query
         = "SELECT u.id, u.name, u.username, u.usertype, u.email, u.registerDate, u.lastvisitDate, fu.userid, fu.showOnline, fu.group_id, fu.posts, fu.karma, fu.uhits, g.id AS gid, g.title "
-        ." FROM #__users AS u INNER JOIN #__fb_users AS fu ON fu.userid = u.id INNER JOIN #__fb_groups AS g ON g.id = fu.group_id ";
+        ." FROM #__users AS u INNER JOIN #__kunena_users AS fu ON fu.userid = u.id INNER JOIN #__kunena_groups AS g ON g.id = fu.group_id ";
 
     if ($search != "")
     {
@@ -142,7 +142,7 @@ class HTML_userlist_content
 
         <?php
         if ($fbConfig->joomlastyle < 1) {
-            $boardclass = "fb_";
+            $boardclass = "kunena_";
         }
         ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
@@ -150,15 +150,15 @@ class HTML_userlist_content
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-        <table class = "fb_blocktable" id ="fb_userlist" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+        <table class = "kunena_blocktable" id ="kunena_userlist" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
                     <th>
                         <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
                             <tr>
                                 <td align = "left">
-                                    <div class = "fb_title_cover  fbm">
-                                        <span class="fb_title fbl"> <?php echo _KUNENA_USRL_USERLIST; ?></span>
+                                    <div class = "kunena_title_cover  fbm">
+                                        <span class="kunena_title fbl"> <?php echo _KUNENA_USRL_USERLIST; ?></span>
 
                                         <?php
                                         printf(_KUNENA_USRL_REGISTERED_USERS, $app->getCfg('sitename'), $total_results);
@@ -188,7 +188,7 @@ class HTML_userlist_content
                     <td class = "<?php echo $boardclass; ?>fb-userlistinfo">
                         <!-- Begin: Listing -->
                         <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
-                            <tr class = "fb_sth  fbs">
+                            <tr class = "kunena_sth  fbs">
                                 <th class = "th-1 frst <?php echo $boardclass; ?>sectiontableheader" align="center">
                                 </th>
 
@@ -396,7 +396,7 @@ class HTML_userlist_content
                                 }
                                 else
                                 {
-                                    $kunena_db->setQuery("SELECT avatar FROM #__fb_users WHERE userid='{$ulrow->id}'");
+                                    $kunena_db->setQuery("SELECT avatar FROM #__kunena_users WHERE userid='{$ulrow->id}'");
                                     $avatar = $kunena_db->loadResult();
 
                                     if ($avatar != '') {
@@ -565,8 +565,8 @@ class HTML_userlist_content
         </table>
 
 		<form name = "usrlform" method = "post" action = "<?php echo CKunenaLink::GetUserlistURL(); ?>" onsubmit = "return false;">
-        <table width = "100%"  class="fb_userlist_pagenav" border = "0" cellspacing = "0" cellpadding = "0">
-            <tr class = "fb_sth  fbs">
+        <table width = "100%"  class="kunena_userlist_pagenav" border = "0" cellspacing = "0" cellpadding = "0">
+            <tr class = "kunena_sth  fbs">
                 <th class = "th-1  fbm" align = "center" style = "text-align:center;">
 
                             <?php
@@ -578,7 +578,7 @@ class HTML_userlist_content
 
 
 
-        <table class = "fb_blocktable" id="fb_userlist_bottom" style="border-bottom:0px;margin:0;" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+        <table class = "kunena_blocktable" id="kunena_userlist_bottom" style="border-bottom:0px;margin:0;" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
                 <tr>
                     <th  class = "th-right  fbs" align="right" style="text-align:right">
                      <?php echo $pageNav->getPagesCounter(); ?> | <?php echo _KUNENA_USRL_DISPLAY_NR; ?> <?php echo $pageNav->getLimitBox(CKunenaLink::GetUserlistURL($query_ext)); ?>
@@ -614,7 +614,7 @@ class HTML_userlist_content
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-        <table class = "fb_blocktable" id="fb_bottomarea"   border = "0" cellspacing = "0" cellpadding = "0">
+        <table class = "kunena_blocktable" id="kunena_bottomarea"   border = "0" cellspacing = "0" cellpadding = "0">
             <thead>
                 <tr>
                     <th  class = "th-right">

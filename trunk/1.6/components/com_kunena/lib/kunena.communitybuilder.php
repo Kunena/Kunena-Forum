@@ -32,7 +32,7 @@ class CKunenaCBProfile {
 			cbimport('language.front');
 			cbimport('cb.tabs');
 			define("KUNENA_CB_ITEMID_SUFFIX", getCBprofileItemid());
-			if ($fbConfig->fb_profile == 'cb') {
+			if ($fbConfig->kunena_profile == 'cb') {
 				$params = array();
 				$this->trigger('onStart', $params);
 			}
@@ -40,16 +40,16 @@ class CKunenaCBProfile {
 		if ($this->_detectIntegration() === false) {
 			$fbConfig->pm_component = $fbConfig->pm_component == 'cb' ? 'none' : $fbConfig->pm_component;
 			$fbConfig->avatar_src = $fbConfig->avatar_src == 'cb' ? 'kunena' : $fbConfig->avatar_src;
-			$fbConfig->fb_profile = $fbConfig->fb_profile == 'cb' ? 'kunena' : $fbConfig->fb_profile;
+			$fbConfig->kunena_profile = $fbConfig->kunena_profile == 'cb' ? 'kunena' : $fbConfig->kunena_profile;
 		}
 		else if ($this->useProfileIntegration() === false) {
-			$fbConfig->fb_profile = $fbConfig->fb_profile == 'cb' ? 'kunena' : $fbConfig->fb_profile;
+			$fbConfig->kunena_profile = $fbConfig->kunena_profile == 'cb' ? 'kunena' : $fbConfig->kunena_profile;
 		}
 	}
 	
 	function close() {
 		$fbConfig =& CKunenaConfig::getInstance();
-		if ($fbConfig->fb_profile == 'cb') {
+		if ($fbConfig->kunena_profile == 'cb') {
 			$params = array();
 			$this->trigger('onEnd', $params);
 		}
@@ -82,7 +82,7 @@ function enqueueErrors() {
 			$this->error = 1;
 			return false;
 		}
-		if ($fbConfig->fb_profile != 'cb') return true;
+		if ($fbConfig->kunena_profile != 'cb') return true;
 		if (!getCBprofileItemid()) {
 			$this->errormsg = _KUNENA_INTEGRATION_CB_WARN_PUBLISH;
 			$this->error = 2;
@@ -104,7 +104,7 @@ function enqueueErrors() {
 
 	function useProfileIntegration() {
 		$fbConfig =& CKunenaConfig::getInstance();
-		return ($fbConfig->fb_profile == 'cb' && !$this->error);
+		return ($fbConfig->kunena_profile == 'cb' && !$this->error);
 	}
 	
 	function getLoginURL() {

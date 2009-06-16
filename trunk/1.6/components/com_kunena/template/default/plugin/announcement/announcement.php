@@ -43,7 +43,7 @@ $is_user = (strtolower($kunena_my->usertype) <> '');
 
 // BEGIN: READ ANN
 if ($do == "read") {
-    $kunena_db->setQuery("SELECT id, title, description, created, published, showdate FROM #__fb_announcement WHERE id='{$id}' AND published='1'");
+    $kunena_db->setQuery("SELECT id, title, description, created, published, showdate FROM #__kunena_announcement WHERE id='{$id}' AND published='1'");
     $anns_ = $kunena_db->loadObjectList();
     	check_dberror("Unable to load announcements.");
 
@@ -62,19 +62,19 @@ if ($do == "read") {
     if ($annpublished > 0) {
 ?>
 
-        <table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+        <table class = "kunena_blocktable" id = "kunena_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
                     <th>
-                        <div class = "fb_title_cover fbm">
-                            <span class = "fb_title fbl"> <?php echo $app->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?></span>
+                        <div class = "kunena_title_cover fbm">
+                            <span class = "kunena_title fbl"> <?php echo $app->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?></span>
                         </div>
                     </th>
                 </tr>
             </thead>
 
             <tbody id = "announcement_tbody">
-                <tr class = "fb_sth fbs">
+                <tr class = "kunena_sth fbs">
                     <th class = "th-1 <?php echo $boardclass; ?>sectiontableheader" align="left" >
                         <?php
                         if ($is_editor) {
@@ -90,7 +90,7 @@ if ($do == "read") {
                 </tr>
 
                 <tr>
-                    <td class = "fb_anndesc" valign="top">
+                    <td class = "kunena_anndesc" valign="top">
                         <h3> <?php echo $anntitle; ?> </h3>
 
                         <?php
@@ -130,19 +130,19 @@ if ($is_editor) {
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-            <table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+            <table class = "kunena_blocktable" id = "kunena_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
                 <thead>
                     <tr>
                         <th colspan = "6">
-                            <div class = "fb_title_cover fbm">
-                                <span class = "fb_title fbl"> <?php echo $app->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'add');?>"><?php echo _ANN_ADD; ?></a></span>
+                            <div class = "kunena_title_cover fbm">
+                                <span class = "kunena_title fbl"> <?php echo $app->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'add');?>"><?php echo _ANN_ADD; ?></a></span>
                             </div>
                         </th>
                     </tr>
                 </thead>
 
                 <tbody id = "announcement_tbody">
-                    <tr class = "fb_sth fbs">
+                    <tr class = "kunena_sth fbs">
                         <th class = "th-1 <?php echo $boardclass; ?>sectiontableheader"  width="1%" align="center"> <?php echo _ANN_ID; ?>
                         </th>
 
@@ -163,7 +163,7 @@ if ($is_editor) {
                     </tr>
 
                     <?php
-                    $query = "SELECT id, title, created, published FROM #__fb_announcement ORDER BY created DESC";
+                    $query = "SELECT id, title, created, published FROM #__kunena_announcement ORDER BY created DESC";
                     $kunena_db->setQuery($query);
                     $rows = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load announcements.");
@@ -239,7 +239,7 @@ if ($is_editor) {
         $published = JRequest::getVar("published", 0);
         $showdate = JRequest::getVar("showdate", "");
         # Clear any HTML
-        $query1 = "INSERT INTO #__fb_announcement VALUES ('', '$title', '$sdescription', '$description', " . (($created <> '')?"'$created'":"NOW()") . ", '$published', '$ordering','$showdate')";
+        $query1 = "INSERT INTO #__kunena_announcement VALUES ('', '$title', '$sdescription', '$description', " . (($created <> '')?"'$created'":"NOW()") . ", '$published', '$ordering','$showdate')";
         $kunena_db->setQuery($query1);
 
         $kunena_db->query() or trigger_dberror("Unable to insert announcement.");
@@ -257,12 +257,12 @@ if ($is_editor) {
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "kunena_blocktable" id = "kunena_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
             <th>
-                <div class = "fb_title_cover fbm">
-                    <span class = "fb_title fbl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_ADD; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'show');?>"><?php echo _ANN_CPANEL; ?></a></span>
+                <div class = "kunena_title_cover fbm">
+                    <span class = "kunena_title fbl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_ADD; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'show');?>"><?php echo _ANN_CPANEL; ?></a></span>
                 </div>
             </th>
         </tr>
@@ -270,7 +270,7 @@ if ($is_editor) {
 
     <tbody id = "announcement_tbody">
         <tr>
-            <td class = "fb_anndesc" valign="top">
+            <td class = "kunena_anndesc" valign="top">
                 <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=announcement&amp;do=doadd'); ?>" method = "post" name = "addform">
                     <strong><?php echo _ANN_TITLE; ?>:</strong>
 
@@ -359,7 +359,7 @@ if ($is_editor) {
         $published = JRequest::getVar("published", 0);
         $showdate = JRequest::getVar("showdate", "");
 
-        $kunena_db->setQuery("UPDATE #__fb_announcement SET title='$title', description='$description', sdescription='$sdescription',  created=" . (($created <> '')?"'$created'":"NOW()") . ", published='$published', showdate='$showdate' WHERE id=$id");
+        $kunena_db->setQuery("UPDATE #__kunena_announcement SET title='$title', description='$description', sdescription='$sdescription',  created=" . (($created <> '')?"'$created'":"NOW()") . ", published='$published', showdate='$showdate' WHERE id=$id");
 
         if ($kunena_db->query()) {
             $app->redirect(CKunenaLink::GetAnnouncementURL($fbConfig, 'show'), _ANN_SUCCESS_EDIT);
@@ -367,7 +367,7 @@ if ($is_editor) {
         }
 
     if ($do == "edit") {
-        $kunena_db->setQuery("SELECT * FROM #__fb_announcement WHERE id='{$id}'");
+        $kunena_db->setQuery("SELECT * FROM #__kunena_announcement WHERE id='{$id}'");
         $anns = $kunena_db->loadObjectList();
         check_dberror("Unable to load announcements.");
 
@@ -410,12 +410,12 @@ if ($is_editor) {
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "kunena_blocktable" id = "kunena_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
             <th>
-                <div class = "fb_title_cover fbm">
-                    <span class = "fb_title fbl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_EDIT; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'show');?>"><?php echo _ANN_CPANEL; ?></a></span>
+                <div class = "kunena_title_cover fbm">
+                    <span class = "kunena_title fbl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_EDIT; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'show');?>"><?php echo _ANN_CPANEL; ?></a></span>
                 </div>
             </th>
         </tr>
@@ -423,7 +423,7 @@ if ($is_editor) {
 
     <tbody id = "announcement_tbody">
         <tr>
-            <td class = "fb_anndesc" valign="top">
+            <td class = "kunena_anndesc" valign="top">
                 <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=announcement&amp;do=doedit'); ?>" method = "post" name = "editform" onSubmit = "return validate_form ( );">
                     <strong>#<?php echo $annID; ?> : <?php echo $anntitle; ?></strong>
 
@@ -509,7 +509,7 @@ if ($is_editor) {
     // BEGIN: delete ANN
     if ($do == "delete")
     {
-        $query1 = "DELETE FROM #__fb_announcement WHERE id=$id ";
+        $query1 = "DELETE FROM #__kunena_announcement WHERE id=$id ";
         $kunena_db->setQuery($query1);
         $kunena_db->query() or trigger_dberror("Unable to delete announcement.");
 

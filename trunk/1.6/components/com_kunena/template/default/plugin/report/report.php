@@ -57,8 +57,8 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
 	if (!empty($reason) && !empty($text))
 	{
         
-    $kunena_db->setQuery("SELECT a.*, b.mesid, b.message AS msg_text FROM #__fb_messages AS a"
-    . " LEFT JOIN #__fb_messages_text AS b ON b.mesid = a.id"
+    $kunena_db->setQuery("SELECT a.*, b.mesid, b.message AS msg_text FROM #__kunena_messages AS a"
+    . " LEFT JOIN #__kunena_messages_text AS b ON b.mesid = a.id"
     . " WHERE a.id='{$id}'");
 
     $row = $kunena_db->loadObject();
@@ -97,7 +97,7 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
     $message = strtr($message, array('&#32;'=>''));
 
     //get category moderators
-    $kunena_db->setQuery("SELECT userid FROM #__fb_moderation WHERE catid={$row->catid}");
+    $kunena_db->setQuery("SELECT userid FROM #__kunena_moderation WHERE catid={$row->catid}");
     $mods = $kunena_db->loadObjectList();
     	check_dberror("Unable to load moderators.");
 
@@ -223,19 +223,19 @@ function ReportForm($id, $catid) {
         <div class = "<?php echo $boardclass; ?>_bt_cvr3">
             <div class = "<?php echo $boardclass; ?>_bt_cvr4">
                 <div class = "<?php echo $boardclass; ?>_bt_cvr5">
-                    <table class = "fb_blocktable" id = "fb_forumfaq" border = "0" cellspacing = "0" cellpadding = "0" width = "100%">
+                    <table class = "kunena_blocktable" id = "kunena_forumfaq" border = "0" cellspacing = "0" cellpadding = "0" width = "100%">
                         <thead>
                             <tr>
                                 <th>
-                                    <div class = "fb_title_cover">
-                                        <span class = "fb_title"><?php echo _KUNENA_COM_A_REPORT ?></span>
+                                    <div class = "kunena_title_cover">
+                                        <span class = "kunena_title"><?php echo _KUNENA_COM_A_REPORT ?></span>
                                     </div>
                             </tr>
                         </thead>
 
                         <tbody>
                             <tr>
-                                <td class = "fb_faqdesc">
+                                <td class = "kunena_faqdesc">
                                     <form method = "post" action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=report'); ?>">
                                         <table width = "100%" border = "0">
                                             <tr>

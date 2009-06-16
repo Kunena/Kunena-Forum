@@ -55,7 +55,7 @@ class CKunenaLink
 
     function GetRSSLink($name , $rel='follow')
     {
-        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=fb_rss&amp;no_html=1', $name, '', $rel, '', '', 'target="_blank"');
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=kunena_rss&amp;no_html=1', $name, '', $rel, '', '', 'target="_blank"');
     }
 
     function GetCategoryLink($func, $catid, $catname, $rel='follow', $class='')
@@ -158,7 +158,7 @@ class CKunenaLink
     function GetMyProfileLink($fbConfig, $userid, $name, $rel='nofollow')
     {
     	$fbConfig =& CKunenaConfig::getInstance();
-    	if($fbConfig->fb_profile == 'jomsocial' || $fbConfig->fb_profile == 'cb')
+    	if($fbConfig->kunena_profile == 'jomsocial' || $fbConfig->kunena_profile == 'cb')
     	{
     		return CKunenaLink::GetProfileLink($fbConfig, $userid, $name, $rel);
     	}
@@ -174,7 +174,7 @@ class CKunenaLink
     	// Only create links for valid users
     	if ($userid > 0)
     	{
-    		if($fbConfig->fb_profile == 'cb') 
+    		if($fbConfig->kunena_profile == 'cb') 
     		{
     			$kunenaProfile =& CKunenaCBProfile::getInstance();
     			if ($link = $kunenaProfile->getProfileURL($userid))
@@ -324,8 +324,8 @@ class CKunenaLink
         $where = '';
 		if ($catid > 0) $where .= " AND a.catid = {$catid} ";
 		$kunena_db->setQuery("SELECT a.thread AS thread, MAX(a.id) AS latest_id, MAX(a.catid) AS catid, COUNT(*) AS totalmessages
-                             FROM #__fb_messages AS a,
-                                (SELECT MAX(thread) AS thread FROM #__fb_messages WHERE id='{$pid}') AS b
+                             FROM #__kunena_messages AS a,
+                                (SELECT MAX(thread) AS thread FROM #__kunena_messages WHERE id='{$pid}') AS b
                              WHERE a.thread = b.thread AND a.hold='0' {$where}
                              GROUP BY a.thread");
         $result = $kunena_db->loadObject();
@@ -357,8 +357,8 @@ class CKunenaLink
         $where = '';
 		if ($catid > 0) $where .= " AND a.catid = {$catid} ";
         $kunena_db->setQuery("SELECT a.thread AS thread, MAX(a.id) AS latest_id, MAX(a.catid) AS catid, COUNT(*) AS totalmessages
-                             FROM #__fb_messages AS a,
-                                (SELECT MAX(thread) AS thread FROM #__fb_messages WHERE id='{$pid}') AS b
+                             FROM #__kunena_messages AS a,
+                                (SELECT MAX(thread) AS thread FROM #__kunena_messages WHERE id='{$pid}') AS b
                              WHERE a.thread = b.thread AND a.hold='0' {$where}
                              GROUP BY a.thread");
         $result = $kunena_db->loadObject();

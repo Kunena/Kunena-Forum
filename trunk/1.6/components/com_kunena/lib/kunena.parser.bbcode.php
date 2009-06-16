@@ -55,7 +55,7 @@ define('BBCODE_PARSE_VAL',        'val');
 define('BBCODE_PARSE_VALQUOT',    'valquot');
 
 // For backward compatibility with pre-PHP5
-function fb_stripos($haystack , $needle , $offset=0) {
+function kunena_stripos($haystack , $needle , $offset=0) {
     if(function_exists('stripos')) { #PHP5
         return stripos($haystack, $needle, $offset);
     }
@@ -97,12 +97,12 @@ class BBCodeInterpreter extends TagInterpreter {
             // seek [/code] only
             // ERROR: code NOT caseinsensitive! Correct core logic!
             // throw this into interpreter part!
-            $checkpos = fb_stripos($text, '[/code]', $pos_act);
+            $checkpos = kunena_stripos($text, '[/code]', $pos_act);
             if($checkpos!==FALSE) {
                 $pos_act = $checkpos;
                 return TAGPARSER_RET_OK;
             }
-            $checkpos = fb_stripos($text, '[/code:1]', $pos_act);
+            $checkpos = kunena_stripos($text, '[/code:1]', $pos_act);
             if($checkpos!==FALSE) {
                 $pos_act = $checkpos;
                 return TAGPARSER_RET_OK;
@@ -114,7 +114,7 @@ class BBCodeInterpreter extends TagInterpreter {
         // in_noparse state
         if($task->in_noparse) {
             // seek [/noparse] only
-            $checkpos = fb_stripos($text, '[/noparse]', $pos_act);
+            $checkpos = kunena_stripos($text, '[/noparse]', $pos_act);
             // ERROR: noparse NOT caseinsensitive! Correct core logic!
             // throw this into interpreter part!
             if($checkpos!==FALSE) {
@@ -125,7 +125,7 @@ class BBCodeInterpreter extends TagInterpreter {
         }
         // parse tag_start in regular case
         // need text, pos_act, [length]
-        $checkpos = fb_stripos($text, $this->tag_start, $pos_act);
+        $checkpos = kunena_stripos($text, $this->tag_start, $pos_act);
         if($checkpos!==FALSE) {
             $pos_act = $checkpos;
             return TAGPARSER_RET_OK;

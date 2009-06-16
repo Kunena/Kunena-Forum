@@ -22,7 +22,7 @@
 // ensure this file is being included by a parent file
 defined( '_JEXEC' ) or die('Restricted access');
 
-class fb_Converter {
+class kunena_Converter {
 	var $xmlFileName=null;
 	var $subdir=null;
 	var $silent=null;
@@ -30,7 +30,7 @@ class fb_Converter {
 	var $_return=true;
 	var $_converterDir=null;
 
-	function fb_Converter( $xmlFileName = "joomlaboard.xml", $subdir = "plugin/converter", $silent = false ) {
+	function kunena_Converter( $xmlFileName = "joomlaboard.xml", $subdir = "plugin/converter", $silent = false ) {
 	    $this->xmlFileName = $xmlFileName;
 	    $this->subdir = $subdir;
 		$this->silent = $silent;

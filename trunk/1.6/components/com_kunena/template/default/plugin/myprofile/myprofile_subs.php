@@ -27,18 +27,18 @@ defined( '_JEXEC' ) or die('Restricted access');
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
 <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=unsubscribe'); ?>" method = "post" name = "postform">
 	<input type = "hidden" name = "do" value = "unsubscribe"/>
-	<table class = "fb_blocktable" id = "fb_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+	<table class = "kunena_blocktable" id = "kunena_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
 		<thead>
 			<tr>
 				<th colspan = "5">
-					<div class = "fb_title_cover">
-						<span class = "fb_title"><?php echo _USER_SUBSCRIPTIONS; ?></span>
+					<div class = "kunena_title_cover">
+						<span class = "kunena_title"><?php echo _USER_SUBSCRIPTIONS; ?></span>
 					</div></th>
 			</tr>
 		</thead>
 
 		<tbody id = "<?php echo $boardclass ;?>fbuserprofile_tbody">
-			<tr class = "fb_sth">
+			<tr class = "kunena_sth">
 				<th class = "th-1 <?php echo $boardclass ;?>sectiontableheader"><?php echo _GEN_TOPICS; ?>
 				</th>
 
@@ -72,7 +72,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 			{
 				foreach ($subslist as $subs)
 				{ //get all message details for each subscription
-					$kunena_db->setQuery("SELECT * FROM #__fb_messages WHERE id='{$subs->thread}'");
+					$kunena_db->setQuery("SELECT * FROM #__kunena_messages WHERE id='{$subs->thread}'");
 					$subdet = $kunena_db->loadObjectList();
 						check_dberror("Unable to load messages.");
 
@@ -107,7 +107,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 			?>
 
 				<tr>
-					<td colspan = "5" class = "fb_profile-bottomnav" style = "text-align:right">
+					<td colspan = "5" class = "kunena_profile-bottomnav" style = "text-align:right">
 <?php echo _KUNENA_USRL_DISPLAY_NR; ?>
 
 <?php
@@ -126,7 +126,7 @@ echo $pageNav->getLimitBox("index.php?option=com_kunena&amp;func=myprofile&amp;d
 			}
 			?>
 
-			<tr><td colspan = "5" class = "fb_profile-bottomnav">
+			<tr><td colspan = "5" class = "kunena_profile-bottomnav">
 					<?php
 					// TODO: fxstein - Need to perform SEO cleanup
 					echo $pageNav->getPagesLinks("index.php?option=com_kunena&amp;func=myprofile&amp;do=showsub" . KUNENA_COMPONENT_ITEMID_SUFFIX);

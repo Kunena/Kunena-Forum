@@ -42,8 +42,8 @@ $contentURL 	= JRequest::getVar('contentURL', '');
 $do 			= JRequest::getVar('do', '');
 $email 			= JRequest::getVar('email', '');
 $favoriteMe 	= JRequest::getVar('favoriteMe', '');
-$fb_authorname 	= JRequest::getVar('fb_authorname', '');
-$fb_thread 		= JRequest::getInt('fb_thread', 0);
+$kunena_authorname 	= JRequest::getVar('kunena_authorname', '');
+$kunena_thread 		= JRequest::getInt('kunena_thread', 0);
 $func 			= strtolower(JRequest::getVar('func', ''));
 $id 			= JRequest::getVar('id', '');
 $limit 			= JRequest::getInt('limit', 0);
@@ -171,13 +171,13 @@ else
 }
 
 //intercept the RSS request; we should stop afterwards
-if ($func == 'fb_rss')
+if ($func == 'kunena_rss')
 {
     include (KUNENA_PATH_LIB .DS. 'kunena.rss.php');
     $app->close();
 }
 
-if ($func == 'fb_pdf')
+if ($func == 'kunena_pdf')
 {
     include (KUNENA_PATH_LIB .DS. 'kunena.pdf.php');
     $app->close();
@@ -204,7 +204,7 @@ $prefview = $fbConfig->default_view;
 
 // JOOMLA STYLE CHECK
 if ($fbConfig->joomlastyle < 1) {
-    $boardclass = "fb_";
+    $boardclass = "kunena_";
     }
 
 // Include preview here before inclusion of other files
@@ -281,11 +281,11 @@ else {
     }
 
 // include required libraries
-if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_layout.php')) {
-    require_once (KUNENA_ABSTMPLTPATH . '/fb_layout.php');
+if (file_exists(KUNENA_ABSTMPLTPATH . '/kunena_layout.php')) {
+    require_once (KUNENA_ABSTMPLTPATH . '/kunena_layout.php');
     }
 else {
-    require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_layout.php');
+    require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'kunena_layout.php');
     }
 
 require_once (KUNENA_PATH_LIB .DS. 'kunena.permissions.php');
@@ -302,7 +302,7 @@ $KunenaTemplate->setRoot( KUNENA_ABSTMPLTPATH );
 $KunenaTemplate->readTemplatesFromFile("header.html");
 $KunenaTemplate->readTemplatesFromFile("footer.html");
 
-$is_Moderator = fb_has_moderator_permission($kunena_db, $thisCat, $kunena_my->id, $is_admin);
+$is_Moderator = kunena_has_moderator_permission($kunena_db, $thisCat, $kunena_my->id, $is_admin);
 
 if ($func == '') // Set default start page as per config settings
 {
@@ -359,12 +359,12 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 		setcookie("fboard_settings[member_id]", $kunena_my->id, time() + KUNENA_SECONDS_IN_YEAR, '/');
 
 		// We assume that this is a new user and that we don't know about a previous visit
-		$new_fb_user = 0;
+		$new_kunena_user = 0;
 		$resetView = 0;
 
 		// If userid is empty/null no prior record did exist -> new session and first time around
 		if ($fbSession->_exists === false) {
-			$new_fb_user = 1;
+			$new_kunena_user = 1;
 			$resetView = 1;
 		}
 
@@ -398,7 +398,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 		}
 
 		// Now lets get the view type for the forum
-		$kunena_db->setQuery("SELECT view FROM #__fb_users WHERE userid='{$kunena_my->id}'");
+		$kunena_db->setQuery("SELECT view FROM #__kunena_users WHERE userid='{$kunena_my->id}'");
 		$prefview = $kunena_db->loadResult();
 			check_dberror('Unable load default view type for user.');
 
@@ -408,13 +408,13 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 		{
 			$prefview = $fbConfig->default_view;
 
-			$kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_users WHERE userid='{$kunena_my->id}'");
+			$kunena_db->setQuery("SELECT COUNT(*) FROM #__kunena_users WHERE userid='{$kunena_my->id}'");
 			$userexists = $kunena_db->loadResult();
 			check_dberror('Unable load default view type for user.');
 			if (!$userexists)
 			{
 				// there's no profile; set userid and the default view type as preferred view type.
-				$kunena_db->setQuery("insert into #__fb_users (userid,view,moderator) values ('$kunena_my->id','$prefview','$is_admin')");
+				$kunena_db->setQuery("insert into #__kunena_users (userid,view,moderator) values ('$kunena_my->id','$prefview','$is_admin')");
 				$kunena_db->query();
 					check_dberror('Unable to create user profile.');
 			}
@@ -435,14 +435,14 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 	else
 	{
 		// collect accessaible categories for guest user
-		$kunena_db->setQuery("SELECT id FROM #__fb_categories WHERE pub_access='0' AND published='1'");
+		$kunena_db->setQuery("SELECT id FROM #__kunena_categories WHERE pub_access='0' AND published='1'");
 		$fbSession->allowed =
 			($arr_pubcats = $kunena_db->loadResultArray())?implode(',', $arr_pubcats):'';
 			check_dberror('Unable load accessible categories for user.');
 
 		// For guests we don't show new posts
 		$prevCheck = $systime;
-		$new_fb_user = 0;
+		$new_kunena_user = 0;
 		$fbSession->readtopics = '';
 	}
 
@@ -468,11 +468,11 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
     $view = "flat";
 
     //Get the max# of posts for any one user
-    $kunena_db->setQuery("SELECT MAX(posts) FROM #__fb_users");
+    $kunena_db->setQuery("SELECT MAX(posts) FROM #__kunena_users");
     $maxPosts = $kunena_db->loadResult();
     	check_dberror('Unable load max(posts) for user.');
 
-    //Get the topics this user has already read this session from #__fb_sessions
+    //Get the topics this user has already read this session from #__kunena_sessions
     $readTopics=$fbSession->readtopics;
     $read_topics = explode(',', $readTopics);
 
@@ -490,7 +490,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
     if ($func == "showcat" || $func == "view" || $func == "post")
     {
     	if ($catid != 0) {
-			$kunena_db->setQuery("SELECT parent FROM #__fb_categories WHERE id='{$catid}'");
+			$kunena_db->setQuery("SELECT parent FROM #__kunena_categories WHERE id='{$catid}'");
 			$strCatParent = $kunena_db->loadResult();
 			check_dberror('Unable to load categories.');
     	}
@@ -511,7 +511,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
         case 'showcat':
             //get number of pending messages
-            $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE catid='$catid' AND hold='1'");
+            $kunena_db->setQuery("SELECT COUNT(*) FROM #__kunena_messages WHERE catid='$catid' AND hold='1'");
             $numPending = $kunena_db->loadResult();
             	check_dberror('Unable load pending messages.');
 
@@ -740,11 +740,11 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
         #########################################################################################
         case 'markthisread':
             // get all already read topics
-            $kunena_db->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid='{$kunena_my->id}'");
+            $kunena_db->setQuery("SELECT readtopics FROM #__kunena_sessions WHERE userid='{$kunena_my->id}'");
             $allreadyRead = $kunena_db->loadResult();
             	check_dberror("Unable to load read topics.");
             /* Mark all these topics read */
-            $kunena_db->setQuery("SELECT thread FROM #__fb_messages WHERE catid='{$catid}' AND thread NOT IN ('{$allreadyRead}') GROUP BY thread");
+            $kunena_db->setQuery("SELECT thread FROM #__kunena_messages WHERE catid='{$catid}' AND thread NOT IN ('{$allreadyRead}') GROUP BY thread");
             $readForum = $kunena_db->loadObjectList();
             	check_dberror("Unable to load messages.");
             $readTopics = '--';
@@ -759,7 +759,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
                 $readTopics = $readTopics . ',' . $allreadyRead;
                 }
 
-            $kunena_db->setQuery("UPDATE #__fb_sessions set readtopics='$readTopics' WHERE userid=$kunena_my->id");
+            $kunena_db->setQuery("UPDATE #__kunena_sessions set readtopics='$readTopics' WHERE userid=$kunena_my->id");
             $kunena_db->query();
             	check_dberror('Unable to update readtopics in session table.');
 
@@ -792,51 +792,51 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
         /*    template chooser    */
         case "templatechooser":
-            $fb_user_template = strval(JRequest::getVar('fb_user_template', '','COOKIE'));
+            $kunena_user_template = strval(JRequest::getVar('kunena_user_template', '','COOKIE'));
 
-            $fb_user_img_template = strval(JRequest::getVar('fb_user_img_template', $fb_user_img_template));
-            $fb_change_template = strval(JRequest::getVar('fb_change_template', $fb_user_template));
-            $fb_change_img_template = strval(JRequest::getVar('fb_change_img_template', $fb_user_img_template));
+            $kunena_user_img_template = strval(JRequest::getVar('kunena_user_img_template', $kunena_user_img_template));
+            $kunena_change_template = strval(JRequest::getVar('kunena_change_template', $kunena_user_template));
+            $kunena_change_img_template = strval(JRequest::getVar('kunena_change_img_template', $kunena_user_img_template));
 
-            if ($fb_change_template)
+            if ($kunena_change_template)
             {
                 // clean template name
-                $fb_change_template = preg_replace('#\W#', '', $fb_change_template);
+                $kunena_change_template = preg_replace('#\W#', '', $kunena_change_template);
 
-                if (strlen($fb_change_template) >= 40) {
-                    $fb_change_template = substr($fb_change_template, 0, 39);
+                if (strlen($kunena_change_template) >= 40) {
+                    $kunena_change_template = substr($kunena_change_template, 0, 39);
                     }
 
                 // check that template exists in case it was deleted
-                if (file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_change_template . '/kunena.forum.css'))
+                if (file_exists(KUNENA_PATH_TEMPLATE .DS. $kunena_change_template . '/kunena.forum.css'))
                 {
                     $lifetime = 60 * 10;
-                    $fb_current_template = $fb_change_template;
-                    setcookie('fb_user_template', "$fb_change_template", time() + $lifetime);
+                    $kunena_current_template = $kunena_change_template;
+                    setcookie('kunena_user_template', "$kunena_change_template", time() + $lifetime);
                 }
                 else {
-                    setcookie('fb_user_template', '', time() - 3600);
+                    setcookie('kunena_user_template', '', time() - 3600);
                     }
             }
 
-            if ($fb_change_img_template)
+            if ($kunena_change_img_template)
             {
                 // clean template name
-                $fb_change_img_template = preg_replace('#\W#', '', $fb_change_img_template);
+                $kunena_change_img_template = preg_replace('#\W#', '', $kunena_change_img_template);
 
-                if (strlen($fb_change_img_template) >= 40) {
-                    $fb_change_img_template = substr($fb_change_img_template, 0, 39);
+                if (strlen($kunena_change_img_template) >= 40) {
+                    $kunena_change_img_template = substr($kunena_change_img_template, 0, 39);
                     }
 
                 // check that template exists in case it was deleted
-                if (file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_change_img_template . '/kunena.forum.css'))
+                if (file_exists(KUNENA_PATH_TEMPLATE .DS. $kunena_change_img_template . '/kunena.forum.css'))
                 {
                     $lifetime = 60 * 10;
-                    $fb_current_img_template = $fb_change_img_template;
-                    setcookie('fb_user_img_template', "$fb_change_img_template", time() + $lifetime);
+                    $kunena_current_img_template = $kunena_change_img_template;
+                    setcookie('kunena_user_img_template', "$kunena_change_img_template", time() + $lifetime);
                 }
                 else {
-                    setcookie('fb_user_img_template', '', time() - 3600);
+                    setcookie('kunena_user_img_template', '', time() - 3600);
                     }
             }
 
@@ -881,10 +881,10 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
     }
 
     // Credits
-    echo '<div class="fb_credits"> ' . CKunenaLink::GetTeamCreditsLink($catid, _KUNENA_POWEREDBY) . ' ' . CKunenaLink::GetCreditsLink();
+    echo '<div class="kunena_credits"> ' . CKunenaLink::GetTeamCreditsLink($catid, _KUNENA_POWEREDBY) . ' ' . CKunenaLink::GetCreditsLink();
     if ($fbConfig->enablerss)
     {
-    	$document->addCustomTag('<link rel="alternate" type="application/rss+xml" title="'._LISTCAT_RSS.'" href="'.JRoute::_(KUNENA_LIVEURLREL.'&amp;func=fb_rss&amp;no_html=1').'" />');
+    	$document->addCustomTag('<link rel="alternate" type="application/rss+xml" title="'._LISTCAT_RSS.'" href="'.JRoute::_(KUNENA_LIVEURLREL.'&amp;func=kunena_rss&amp;no_html=1').'" />');
         echo CKunenaLink::GetRSSLink('<img class="rsslink" src="' . KUNENA_URLEMOTIONSPATH . 'rss.gif" border="0" alt="' . _LISTCAT_RSS . '" title="' . _LISTCAT_RSS . '" />');
     }
     echo '</div>';

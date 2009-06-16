@@ -35,18 +35,18 @@ if ($fbConfig->showwhoisonline > 0)
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-    <table class = "fb_blocktable " id="fb_whoispage" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+    <table class = "kunena_blocktable " id="kunena_whoispage" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>
             <tr>
                 <th colspan = "4">
-                   <div class = "fb_title_cover">
-                        <span class="fb_title"><?php echo $app->getCfg('sitename'); ?> - <?php echo _WHO_WHOIS_ONLINE; ?></span>
+                   <div class = "kunena_title_cover">
+                        <span class="kunena_title"><?php echo $app->getCfg('sitename'); ?> - <?php echo _WHO_WHOIS_ONLINE; ?></span>
                     </div>
             </tr>
         </thead>
 
         <tbody>
-            <tr class = "fb_sth">
+            <tr class = "kunena_sth">
                 <th class = "th-1 <?php echo $boardclass; ?>sectiontableheader">
 <?php echo _WHO_ONLINE_USER; ?>
 
@@ -60,7 +60,7 @@ if ($fbConfig->showwhoisonline > 0)
             </tr>
 
             <?php
-            $query = "SELECT w.*, u.id, u.username FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid ORDER BY w.time DESC";
+            $query = "SELECT w.*, u.id, u.username FROM #__kunena_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid ORDER BY w.time DESC";
             $kunena_db->setQuery($query);
             $users = $kunena_db->loadObjectList();
             $k = 0; //for alternating rows

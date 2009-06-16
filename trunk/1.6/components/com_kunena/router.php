@@ -41,7 +41,7 @@ function KunenaBuildRoute(&$query)
 		if($query['catid'] != (int) 0)
 		{
 			$catfound = true;
-			$quesql = 'SELECT name, id FROM #__fb_categories WHERE id='.(int) $query['catid'];
+			$quesql = 'SELECT name, id FROM #__kunena_categories WHERE id='.(int) $query['catid'];
 			$db->setQuery($quesql);
 			$name = $db->loadResult();
 			$suf = '-'.JFilterOutput::stringURLSafe($name);
@@ -52,7 +52,7 @@ function KunenaBuildRoute(&$query)
 
 	if($catfound && isset($query['id']))
 	{
-		$quesql = 'SELECT subject, id FROM #__fb_messages WHERE id='.(int) $query['id'];
+		$quesql = 'SELECT subject, id FROM #__kunena_messages WHERE id='.(int) $query['id'];
 		$db->setQuery($quesql);
 		$subject = $db->loadResult();
 		$suf = JFilterOutput::stringURLSafe($subject);
@@ -126,7 +126,7 @@ function KunenaParseRoute($segments)
 		else
 		{
 			$db =& JFactory::getDBO();
-			$quesql = 'SELECT parent FROM #__fb_categories WHERE id='.(int) $vars['catid'];
+			$quesql = 'SELECT parent FROM #__kunena_categories WHERE id='.(int) $vars['catid'];
 			$db->setQuery($quesql);
 			$parent = $db->loadResult();
 		}

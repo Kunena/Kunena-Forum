@@ -29,7 +29,7 @@ $kunena_db = &JFactory::getDBO();
 <!--  sub cat -->
 <?php
 //    show forums within the categories
-$kunena_db->setQuery("SELECT id, name, locked,review, pub_access, pub_recurse, admin_access, admin_recurse FROM #__fb_categories WHERE parent='{$catid}' AND published='1' ORDER BY ordering");
+$kunena_db->setQuery("SELECT id, name, locked,review, pub_access, pub_recurse, admin_access, admin_recurse FROM #__kunena_categories WHERE parent='{$catid}' AND published='1' ORDER BY ordering");
 $rows = $kunena_db->loadObjectList();
 check_dberror("Unable to load categories.");
 
@@ -60,13 +60,13 @@ else
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-    <table class = "fb_blocktable<?php echo $objCatInfo->class_sfx; ?>"  width="100%" id = "fb_cat<?php echo $objCatInfo->id ; ?>"  border = "0" cellspacing = "0" cellpadding = "0">
+    <table class = "kunena_blocktable<?php echo $objCatInfo->class_sfx; ?>"  width="100%" id = "kunena_cat<?php echo $objCatInfo->id ; ?>"  border = "0" cellspacing = "0" cellpadding = "0">
         <thead>
             <tr>
                 <th colspan = "5" align="left">
-                    <div class = "fb_title_cover fbm" >
+                    <div class = "kunena_title_cover fbm" >
                         <?php
-                        echo CKunenaLink::GetCategoryLink('showcat', $objCatInfo->id, stripslashes($objCatInfo->name), $rel='follow', $class='fb_title fbl');
+                        echo CKunenaLink::GetCategoryLink('showcat', $objCatInfo->id, stripslashes($objCatInfo->name), $rel='follow', $class='kunena_title fbl');
                         ?>
 
                         <?php
@@ -85,7 +85,7 @@ else
         </thead>
 
         <tbody id = "catid_<?php echo $objCatInfo->id ; ?>">
-           <tr class = "fb_sth fbs ">
+           <tr class = "kunena_sth fbs ">
                         <th class = "th-1 <?php echo $boardclass; ?>sectiontableheader" width="1%">&nbsp;</th>
                         <th class = "th-2 <?php echo $boardclass; ?>sectiontableheader" align="left"><?php echo _GEN_FORUM; ?></th>
                         <th class = "th-3 <?php echo $boardclass; ?>sectiontableheader" align="center" width="5%"><?php echo _GEN_TOPICS; ?></th>
@@ -109,17 +109,17 @@ else
                     //    $k=for alternating row colours:
                     $k = 1 - $k;
                     //count the number of topics posted in each forum
-                    $kunena_db->setQuery("SELECT id FROM #__fb_messages WHERE catid='{$singlerow->id}' AND parent='0' AND hold='0'");
+                    $kunena_db->setQuery("SELECT id FROM #__kunena_messages WHERE catid='{$singlerow->id}' AND parent='0' AND hold='0'");
                     $num = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load messages.");
                     $numtopics = count($num);
                     //count the number of replies posted in each forum
-                    $kunena_db->setQuery("SELECT id FROM #__fb_messages WHERE catid='{$singlerow->id}' AND parent!='0' AND hold='0'");
+                    $kunena_db->setQuery("SELECT id FROM #__kunena_messages WHERE catid='{$singlerow->id}' AND parent!='0' AND hold='0'");
                     $num = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load messages.");
                     $numreplies = count($num);
                     //Get the last post from each forum
-                    $kunena_db->setQuery("SELECT MAX(time) FROM #__fb_messages WHERE catid='{$singlerow->id}' AND hold='0' AND moved!='1'");
+                    $kunena_db->setQuery("SELECT MAX(time) FROM #__kunena_messages WHERE catid='{$singlerow->id}' AND hold='0' AND moved!='1'");
                     $lastPosttime = $kunena_db->loadResult();
                     	check_dberror("Unable to get max time.");
                     //changed lastPosttime to lastptime
@@ -129,16 +129,16 @@ else
                     if ($kunena_my->id != 0)
                     {
                         //    get all threads with posts after the users last visit; don't bother for guests
-                        $kunena_db->setQuery("SELECT thread FROM #__fb_messages WHERE catid='{$singlerow->id}' AND hold='0' AND time>'{$prevCheck}' GROUP BY thread");
+                        $kunena_db->setQuery("SELECT thread FROM #__kunena_messages WHERE catid='{$singlerow->id}' AND hold='0' AND time>'{$prevCheck}' GROUP BY thread");
                         $newThreadsAll = $kunena_db->loadObjectList();
                         	check_dberror("Unable to load messages.");
 
                         if (count($newThreadsAll) == 0)
                             $newThreadsAll = array ();
 
-                        //Get the topics this user has already read this session from #__fb_sessions
+                        //Get the topics this user has already read this session from #__kunena_sessions
                         $readTopics = "";
-                        $kunena_db->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid='{$kunena_my->id}'");
+                        $kunena_db->setQuery("SELECT readtopics FROM #__kunena_sessions WHERE userid='{$kunena_my->id}'");
                         $readTopics = $kunena_db->loadResult();
                         	check_dberror("Unable to load read topics.");
                         //make it into an array
@@ -146,15 +146,15 @@ else
                     }
 
                     //    Get the forumdescription
-                    $kunena_db->setQuery("SELECT description, id FROM #__fb_categories WHERE id='{$singlerow->id}'");
+                    $kunena_db->setQuery("SELECT description, id FROM #__kunena_categories WHERE id='{$singlerow->id}'");
                     $forumDesc = $kunena_db->loadResult();
                     	check_dberror("Unable to load categories.");
                     //    Get the forumsubparent categories
-                    $kunena_db->setQuery("SELECT id, name FROM #__fb_categories WHERE parent='{$singlerow->id}' AND published='1'");
+                    $kunena_db->setQuery("SELECT id, name FROM #__kunena_categories WHERE parent='{$singlerow->id}' AND published='1'");
                     $forumparents = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load categories.");
                     //    get pending messages if user is a Moderator for that forum
-                    $kunena_db->setQuery("SELECT userid FROM #__fb_moderation WHERE catid='{$singlerow->id}'");
+                    $kunena_db->setQuery("SELECT userid FROM #__kunena_moderation WHERE catid='{$singlerow->id}'");
                     $moderatorList = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load moderators.");
                     $modIDs[] = array ();
@@ -172,7 +172,7 @@ else
 
                     if ((in_array($kunena_my->id, $modIDs)) || $is_admin == 1)
                     {
-                        $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE catid='{$singlerow->id}' AND hold='1'");
+                        $kunena_db->setQuery("SELECT COUNT(*) FROM #__kunena_messages WHERE catid='{$singlerow->id}' AND hold='1'");
                         $numPending = $kunena_db->loadResult();
                         $is_Mod = 1;
                     }
@@ -186,7 +186,7 @@ else
                     if ($lastPosttime != 0)
                     {
                         unset($obj_lp);
-                        $kunena_db->setQuery("SELECT id, thread, catid,name, subject, userid FROM #__fb_messages WHERE time='{$lastPosttime}' AND hold='0' AND moved!='1'", 0, 1);
+                        $kunena_db->setQuery("SELECT id, thread, catid,name, subject, userid FROM #__kunena_messages WHERE time='{$lastPosttime}' AND hold='0' AND moved!='1'", 0, 1);
                         $obj_lp = $kunena_db->loadObject();
                         $latestname = $obj_lp->name;
                         $latestcatid = $obj_lp->catid;
@@ -195,12 +195,12 @@ else
                         $latestuserid = $obj_lp->userid;
                         $latestthread = $obj_lp->thread;
                         // count messages in thread
-                        $kunena_db->setQuery("SELECT COUNT(id) FROM #__fb_messages WHERE thread='{$latestthread}' AND hold='0'");
+                        $kunena_db->setQuery("SELECT COUNT(id) FROM #__kunena_messages WHERE thread='{$latestthread}' AND hold='0'");
                         $latestcount = $kunena_db->loadResult();
                         $latestpage = ceil($latestcount / $fbConfig->messages_per_page);
                     }
 
-                    echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" id="fb_cat'.$singlerow->id.'" >';
+                    echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" id="kunena_cat'.$singlerow->id.'" >';
 					echo '<td class="td-1 " align="center">';
 
 					$categoryicon = '';
@@ -306,7 +306,7 @@ else
                                 if ($fbConfig->shownew && $kunena_my->id != 0)
                                 {
                                     //    get all threads with posts after the users last visit; don't bother for guests
-                                    $kunena_db->setQuery("SELECT thread FROM #__fb_messages WHERE catid='{$forumparent->id}' AND hold='0' and time>'{$prevCheck}' GROUP BY thread");
+                                    $kunena_db->setQuery("SELECT thread FROM #__kunena_messages WHERE catid='{$forumparent->id}' AND hold='0' and time>'{$prevCheck}' GROUP BY thread");
                                     $newPThreadsAll = $kunena_db->loadObjectList();
                                     	check_dberror("Unable to load messages.");
 
@@ -375,7 +375,7 @@ else
                     }
 
                     //get the Moderator list for display
-                    $kunena_db->setQuery("SELECT * FROM #__fb_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid='{$singlerow->id}'");
+                    $kunena_db->setQuery("SELECT * FROM #__kunena_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid='{$singlerow->id}'");
                     $modslist = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load moderators.");
 

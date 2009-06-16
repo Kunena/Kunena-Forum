@@ -26,7 +26,7 @@ $fbConfig =& CKunenaConfig::getInstance();
 $kunena_my = &JFactory::getUser();
 $kunena_db = &JFactory::getDBO();
 //first we gather some information about this person
-$kunena_db->setQuery("SELECT su.view, u.name, su.moderator, su.avatar FROM #__fb_users AS su"
+$kunena_db->setQuery("SELECT su.view, u.name, su.moderator, su.avatar FROM #__kunena_users AS su"
                     . " LEFT JOIN #__users AS u on u.id=su.userid WHERE su.userid={$kunena_my->id}", 0, 1);
 
 $_user = $kunena_db->loadObject();
@@ -35,7 +35,7 @@ $fbavatar = NULL;
 if ($_user != NULL)
 {
 	$prefview = $_user->view;
-	$username = $_user->name; // externally used  by fb_pathway, myprofile_menu
+	$username = $_user->name; // externally used  by kunena_pathway, myprofile_menu
 	$moderator = $_user->moderator;
 	$fbavatar = $_user->avatar;
 	$jr_username = $_user->name;
@@ -72,11 +72,11 @@ else
 
 }
 
-if ($fbConfig->fb_profile == "cb" || $fbConfig->fb_profile == "jomsocial")
+if ($fbConfig->kunena_profile == "cb" || $fbConfig->kunena_profile == "jomsocial")
 {
     $jr_profilelink = CKunenaLink::GetProfileLink($fbConfig, $kunena_my->id, _PROFILEBOX_MYPROFILE);
 }
-else if ($fbConfig->fb_profile == "clexuspm") {
+else if ($fbConfig->kunena_profile == "clexuspm") {
     $jr_profilelink = '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
 }
 else
@@ -89,7 +89,7 @@ $jr_latestpost = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=latest');
 ?>
 
 <?php // AFTER LOGIN AREA
-if ($fbConfig->fb_profile == 'cb')
+if ($fbConfig->kunena_profile == 'cb')
 {
 	$loginlink = CKunenaCBProfile::getLoginURL();
 	$logoutlink = CKunenaCBProfile::getLogoutURL();
@@ -108,14 +108,14 @@ if ($kunena_my->id)
 {
 ?>
 
-    <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0" class = "fb_profilebox" >
+    <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0" class = "kunena_profilebox" >
         <tbody id = "topprofilebox_tbody">
             <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
                 <td  class = "td-1  fbm" align="left" width="5%">
 <?php echo CKunenaLink::GetProfileLink($fbConfig, $kunena_my->id, $jr_avatar);?>
                 </td>
 
-                <td valign = "top" class = "td-2  fbm fb_profileboxcnt" align="left">
+                <td valign = "top" class = "td-2  fbm kunena_profileboxcnt" align="left">
 <?php echo _PROFILEBOX_WELCOME; ?>, <b><?php echo $jr_username; ?></b>
 
                 <br />
@@ -145,7 +145,7 @@ if ($is_editor) {
 			?>
 
 			<td>
-				<div class = "fb_profilebox_modul">
+				<div class = "kunena_profilebox_modul">
 				<?php
 					$document	= &JFactory::getDocument();
 					$renderer	= $document->loadRenderer('modules');
@@ -170,10 +170,10 @@ else
     // LOGOUT AREA
     ?>
 
-    <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0"  class = "fb_profilebox">
+    <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0"  class = "kunena_profilebox">
         <tbody id = "topprofilebox_tbody">
             <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
-                <td valign = "top" class = "td-1  fbm fb_profileboxcnt" align="left">
+                <td valign = "top" class = "td-1  fbm kunena_profileboxcnt" align="left">
 <?php echo _PROFILEBOX_WELCOME; ?>, <b><?php echo _PROFILEBOX_GUEST; ?></b>
 
                 <br/> <?php echo _PROFILEBOX_PLEASE; ?>
@@ -191,7 +191,7 @@ else
 			?>
 
 			<td>
-				<div class = "fb_profilebox_modul">
+				<div class = "kunena_profilebox_modul">
 				<?php
 					$document	= &JFactory::getDocument();
 					$renderer	= $document->loadRenderer('modules');

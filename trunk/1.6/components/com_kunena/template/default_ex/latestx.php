@@ -34,7 +34,7 @@ function KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages) {
 	$endpage = $totalpages;
     }
 
-    $output = '<span class="fb_pagination">'._PAGE;
+    $output = '<span class="kunena_pagination">'._PAGE;
 
     if (($startpage) > 1)
     {
@@ -135,18 +135,18 @@ if ($func == "mylatest")
 	$document->setTitle(_KUNENA_MY_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
 	$query = "SELECT count(distinct tmp.thread) FROM
 				(SELECT thread
-					FROM #__fb_messages
+					FROM #__kunena_messages
 					WHERE userid=$kunena_my->id AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)
 				UNION ALL
 				 SELECT m.thread As thread
-					FROM #__fb_messages AS m
-					JOIN #__fb_favorites AS f ON m.thread = f.thread
+					FROM #__kunena_messages AS m
+					JOIN #__kunena_favorites AS f ON m.thread = f.thread
 					WHERE f.userid=$kunena_my->id AND m.parent = 0 AND hold=0 and moved=0 AND catid IN ($fbSession->allowed)) AS tmp";
 }
 else
 {
 	$document->setTitle(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
-	$query = "Select count(distinct thread) FROM #__fb_messages WHERE time >'$querytime'".
+	$query = "Select count(distinct thread) FROM #__kunena_messages WHERE time >'$querytime'".
 			" AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)" . $latestcats; // if categories are limited apply filter
 }
 $kunena_db->setQuery($query);
@@ -177,19 +177,19 @@ $query = 			"SELECT
                         c.name AS catname,
                         b.lastpost
                     FROM
-                        #__fb_messages AS a ";
+                        #__kunena_messages AS a ";
 
 if ($func == "mylatest")
 {
 	$query .=			"JOIN (  SELECT mm.thread, MAX(mm.time) AS lastpost
-                                FROM #__fb_messages AS mm
+                                FROM #__kunena_messages AS mm
                                 JOIN ( SELECT thread
-                                		FROM #__fb_messages
+                                		FROM #__kunena_messages
                                 		WHERE userid='{$kunena_my->id}'
                                 		GROUP BY 1
                                 		UNION ALL
                                 		SELECT thread
-                                		FROM #__fb_favorites
+                                		FROM #__kunena_favorites
                                 		WHERE userid='{$kunena_my->id}') AS tt ON mm.thread = tt.thread
                                 WHERE hold='0' AND moved='0' AND catid IN ({$fbSession->allowed})
                                 GROUP BY 1) AS b ON b.thread = a.thread ";
@@ -197,20 +197,20 @@ if ($func == "mylatest")
 else
 {
 	$query .=			"JOIN (  SELECT thread, MAX(time) AS lastpost
-                                FROM #__fb_messages
+                                FROM #__kunena_messages
                                 WHERE time>'{$querytime}'
                                 AND hold='0' AND moved='0' AND catid IN ($fbSession->allowed)" .
                                 $latestcats .
                                 " GROUP BY 1) AS b ON b.thread = a.thread ";
 }
 
-$query .=				"JOIN #__fb_messages_text AS t ON a.thread = t.mesid
-                        LEFT JOIN #__fb_categories  AS c ON c.id = a.catid
-                        LEFT JOIN #__fb_attachments AS m ON m.mesid = a.id
-                        LEFT JOIN #__fb_favorites AS f ON  f.thread = a.id && f.userid = '{$kunena_my->id}'"
+$query .=				"JOIN #__kunena_messages_text AS t ON a.thread = t.mesid
+                        LEFT JOIN #__kunena_categories  AS c ON c.id = a.catid
+                        LEFT JOIN #__kunena_attachments AS m ON m.mesid = a.id
+                        LEFT JOIN #__kunena_favorites AS f ON  f.thread = a.id && f.userid = '{$kunena_my->id}'"
                         .(($fbConfig->avatar_src == "cb")?
                     " LEFT JOIN #__comprofiler AS u ON u.user_id = a.userid ":
-                    " LEFT JOIN #__fb_users AS u ON u.userid = a.userid ")."
+                    " LEFT JOIN #__kunena_users AS u ON u.userid = a.userid ")."
                     WHERE
                         a.parent='0'
                         AND a.moved='0'
@@ -246,7 +246,7 @@ if (count($threadids) > 0)
         $kunena_db->setQuery("SELECT
         					thread AS id,
         					count(thread) AS favcount
-					FROM #__fb_favorites
+					FROM #__kunena_favorites
        					WHERE thread IN ('{$idstr}') GROUP BY thread");
         $favlist = $kunena_db->loadObjectList();
         check_dberror("Unable to load messages.");
@@ -271,10 +271,10 @@ if (count($threadids) > 0)
 					a.userid ,
 					a.moved,
 					u.avatar
-				FROM #__fb_messages AS a "
+				FROM #__kunena_messages AS a "
 					.(($fbConfig->avatar_src == "cb")?
     				"LEFT  JOIN #__comprofiler AS u ON u.user_id = a.userid"
-    				:"LEFT  JOIN #__fb_users AS u ON u.userid = a.userid")."
+    				:"LEFT  JOIN #__kunena_users AS u ON u.userid = a.userid")."
     			WHERE a.thread IN ('{$idstr}')
      				AND a.id NOT IN ('{$idstr}')
      				AND a.hold='0'";
@@ -290,7 +290,7 @@ if (count($threadids) > 0)
 	$last_read[$message->id]->lastread = $last_reply[$message->thread];
     }
 
-    $kunena_db->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages "
+    $kunena_db->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__kunena_messages "
                        ."WHERE thread IN ('{$idstr}') AND time>'{$prevCheck}' GROUP BY thread");
     $msgidlist = $kunena_db->loadObjectList();
     check_dberror("Unable to get unread messages count and first id.");
@@ -323,7 +323,7 @@ if (JDocumentHTML::countModules('kunena_announcement'))
 {
 ?>
 
-    <div class = "fb-fb_2">
+    <div class = "fb-kunena_2">
         <?php
         	$document	= &JFactory::getDocument();
         	$renderer	= $document->loadRenderer('modules');
@@ -337,13 +337,13 @@ if (JDocumentHTML::countModules('kunena_announcement'))
 }
 ?>
 <!-- B: List Actions -->
-	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0">
+	<table class="kunena_list_actions" border="0" cellpadding="0" cellspacing="0">
 		<tr>
-			<td class="fb_list_actions_info_all">
+			<td class="kunena_list_actions_info_all">
     <strong><?php echo $total; ?></strong> <?php echo _KUNENA_DISCUSSIONS; ?>
 								</td>
 									<?php if ($func!='mylatest') {?>
-                                    <td class="fb_list_times_all">
+                                    <td class="kunena_list_times_all">
 
 									<?php  $show_list_time = JRequest::getInt('sel', 720);  ?>
 									<select class="inputboxusl" onchange="document.location.href=this.options[this.selectedIndex].value;" size="1" name="select">
@@ -360,7 +360,7 @@ if (JDocumentHTML::countModules('kunena_announcement'))
 
                                   </td>
                                   	<?php } ?>
-                                    <td class="fb_list_jump_all">
+                                    <td class="kunena_list_jump_all">
 
                                     <?php if ($fbConfig->enableforumjump)
  									 require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
@@ -372,7 +372,7 @@ if (JDocumentHTML::countModules('kunena_announcement'))
                                 //pagination 1
 					if (count($messages[0]) > 0)
 					{
-					    echo '<td class="fb_list_pages_all">';
+					    echo '<td class="kunena_list_pages_all">';
 					    $maxpages = 5 - 2; // odd number here (show - 2)
 					    $totalpages = ceil($total / $threads_per_page);
 					    echo $pagination = KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages);
@@ -389,7 +389,7 @@ if (count($threadids) > 0)
 
 				//get all readTopics in an array
 				$readTopics = "";
-				$kunena_db->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid='{$kunena_my->id}'");
+				$kunena_db->setQuery("SELECT readtopics FROM #__kunena_sessions WHERE userid='{$kunena_my->id}'");
 				$readTopics = $kunena_db->loadResult();
 					check_dberror('Unable to load read topics.');
 				if (count($readTopics) == 0)
@@ -408,9 +408,9 @@ if (count($threadids) > 0)
 				}
 				?>
 <!-- B: List Actions -->
-	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0" width="100%">
+	<table class="kunena_list_actions" border="0" cellpadding="0" cellspacing="0" width="100%">
 		<tr>
-			<td   class="fb_list_actions_info_all" width="100%">
+			<td   class="kunena_list_actions_info_all" width="100%">
 				<strong><?php echo $total; ?></strong> <?php echo _KUNENA_DISCUSSIONS; ?>
 			</td>
 
@@ -418,7 +418,7 @@ if (count($threadids) > 0)
 				//pagination 1
 				if (count($messages[0]) > 0)
 				{
-					echo '<td class="fb_list_pages_all" nowrap="nowrap">';
+					echo '<td class="kunena_list_pages_all" nowrap="nowrap">';
 					echo $pagination;
 					echo '</td>';
 				}

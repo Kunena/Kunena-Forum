@@ -20,7 +20,7 @@
 **/
 
 defined( '_JEXEC' ) or die('Restricted access');
-class fb_DB_Iterator {
+class kunena_DB_Iterator {
     /**
     * iterator class to iterate on db results
     * currently supporting optimized: mysql, mysqli
@@ -37,7 +37,7 @@ class fb_DB_Iterator {
     * @param string $db
     *             the joomla database connection
     */
-    function fb_DB_Iterator($db) {
+    function kunena_DB_Iterator($db) {
         $this->db = $db;
         # decide connector... pretty ugly in joomla since there's nothing like related config
         if(function_exists('mysql_ping')) {

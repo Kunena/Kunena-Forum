@@ -40,33 +40,33 @@ function kunena_categoryList($catids, $options = array ())
 $options = array ();
 $options[] = JHTML::_('select.option', '0', 'All Categories');
 $lists['parent'] = kunena_categoryList(split(',', $catids), $options);
-if(isset($fb_advsearch_hide) && $fb_advsearch_hide==1) 
+if(isset($kunena_advsearch_hide) && $kunena_advsearch_hide==1) 
 {
-    $fb_advsearch_class = ' class="fb-hidden"';
-    $fb_advsearch_style = ' style="display: none;"';
-    $fb_advsearch_img = KUNENA_URLIMAGESPATH . 'expand.gif';
+    $kunena_advsearch_class = ' class="fb-hidden"';
+    $kunena_advsearch_style = ' style="display: none;"';
+    $kunena_advsearch_img = KUNENA_URLIMAGESPATH . 'expand.gif';
 } else {
-    $fb_advsearch_class = ' class="fb-visible"';
-    $fb_advsearch_style = '';
-    $fb_advsearch_img = KUNENA_URLIMAGESPATH . 'shrink.gif';
+    $kunena_advsearch_class = ' class="fb-visible"';
+    $kunena_advsearch_style = '';
+    $kunena_advsearch_img = KUNENA_URLIMAGESPATH . 'shrink.gif';
 }
 ?>
 
 <form action="<?php echo JRoute::_(KUNENA_LIVEURLREL. '&amp;func=advsearch'); ?>" method="post" id="searchform" name="adminForm">    
-    <table id="fb_forumsearch" class="fb_blocktable" border="0" cellspacing="0" cellpadding="0">
+    <table id="kunena_forumsearch" class="kunena_blocktable" border="0" cellspacing="0" cellpadding="0">
         <thead>
             <tr>
                 <th align="left" colspan="2">
-                    <div class="fb_title_cover fbm">
-                        <span class="fb_title fbl"><?php echo _KUNENA_SEARCH_ADVSEARCH; ?></span>
+                    <div class="kunena_title_cover fbm">
+                        <span class="kunena_title fbl"><?php echo _KUNENA_SEARCH_ADVSEARCH; ?></span>
                     </div>
-                    <img id="BoxSwitch__advsearch_main" class="hideshow" src="<?php echo $fb_advsearch_img ?>" alt=""/>
+                    <img id="BoxSwitch__advsearch_main" class="hideshow" src="<?php echo $kunena_advsearch_img ?>" alt=""/>
                 </th>
             </tr>
         </thead>
 
-        <tbody id="advsearch_main"<?php echo $fb_advsearch_class.$fb_advsearch_style; ?>>
-            <tr class="fb_sectiontableentry1">
+        <tbody id="advsearch_main"<?php echo $kunena_advsearch_class.$kunena_advsearch_style; ?>>
+            <tr class="kunena_sectiontableentry1">
                 <td class="td-1" width="50%">
                     <fieldset class="fieldset">
                         <legend style="padding:0px">
@@ -112,12 +112,12 @@ if(isset($fb_advsearch_hide) && $fb_advsearch_hide==1)
 	<tr>
 	<td colspan="2">
 
-    <table id="fb_forumsearch_adv" class="fb_blocktable" border="0" cellspacing="0" cellpadding="0">
+    <table id="kunena_forumsearch_adv" class="kunena_blocktable" border="0" cellspacing="0" cellpadding="0">
         <thead>
             <tr>
                 <th align="left" colspan="2">
-				    <div class="fb_title_cover fbm">
-					    <span class="fb_title fbl"><?php echo _KUNENA_SEARCH_OPTIONS; ?></span>
+				    <div class="kunena_title_cover fbm">
+					    <span class="kunena_title fbl"><?php echo _KUNENA_SEARCH_OPTIONS; ?></span>
                     </div>
                     <img id="BoxSwitch__advsearch_options" class="hideshow" src="<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt=""/>
                 </th>
@@ -125,7 +125,7 @@ if(isset($fb_advsearch_hide) && $fb_advsearch_hide==1)
         </thead>
 
         <tbody id="advsearch_options">
-            <tr class="fb_sectiontableentry1">
+            <tr class="kunena_sectiontableentry1">
                 <td class="td-1" width="50%" style="vertical-align:top;">
 <?php /*
                     <fieldset class="fieldset">
@@ -240,7 +240,7 @@ if(isset($fb_advsearch_hide) && $fb_advsearch_hide==1)
         </tbody>
     </table>
 
-    <table class="fb_list_bottom" width="100%" cellspacing="0" cellpadding="0" border="0">
+    <table class="kunena_list_bottom" width="100%" cellspacing="0" cellpadding="0" border="0">
 		<tbody>
 			<tr>
 				<td style="padding: 0 5px; height: 28px; line-height: 28px;">

@@ -21,12 +21,12 @@ defined( '_JEXEC' ) or die('Restricted access');
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable " id="fb_userinfo" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "kunena_blocktable " id="kunena_userinfo" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
             <th>
-                <div class = "fb_title_cover fbm">
-                    <span class="fb_title fbl"> <?php echo $msg_username; ?>  <?php echo _KUNENA_USERPROFILE_PROFILE; ?></span>
+                <div class = "kunena_title_cover fbm">
+                    <span class="kunena_title fbl"> <?php echo $msg_username; ?>  <?php echo _KUNENA_USERPROFILE_PROFILE; ?></span>
                 </div>
             </th>
         </tr>

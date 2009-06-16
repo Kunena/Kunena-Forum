@@ -97,14 +97,14 @@ if (count($messages[0]) > 0)
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
     <form action = "index.php" method = "post" name = "fbBulkActionForm">
 
-        <table class = "fb_blocktable<?php echo $objCatInfo->class_sfx; ?>" id = "fb_flattable" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+        <table class = "kunena_blocktable<?php echo $objCatInfo->class_sfx; ?>" id = "kunena_flattable" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
 
         <?php  if ($funclatest || $funcmylatest){ } else {  ?>
             <thead>
                 <tr>
                     <th colspan = "<?php echo ($is_Moderator?"5":"4");?>">
-                        <div class = "fb_title_cover fbm">
-                            <span class = "fb_title fbl"><b><?php echo _KUNENA_THREADS_IN_FORUM; ?>:</b> <?php echo '' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) . ''; ?></span>
+                        <div class = "kunena_title_cover fbm">
+                            <span class = "kunena_title fbl"><b><?php echo _KUNENA_THREADS_IN_FORUM; ?>:</b> <?php echo '' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) . ''; ?></span>
                         </div>
                         <!-- FORUM TOOLS -->
 
@@ -126,7 +126,7 @@ if (count($messages[0]) > 0)
           <?php } ?>
 
             <tbody>
-                <tr  class = "fb_sth fbs ">
+                <tr  class = "kunena_sth fbs ">
                  <th class = "th-0 <?php echo $boardclass ?>sectiontableheader" width="5%" align="center"><?php echo _GEN_REPLIES; ?></th>
 
                     <th class = "th-2 <?php echo $boardclass ?>sectiontableheader" width="1%">&nbsp;</th>
@@ -162,7 +162,7 @@ if (count($messages[0]) > 0)
                 ?>
 
                         <tr>
-                            <td class = "<?php echo $boardclass ?>contentheading fbm" id = "fb_spot" colspan = "<?php echo ($is_Moderator?"5":"4");?>" align="left">
+                            <td class = "<?php echo $boardclass ?>contentheading fbm" id = "kunena_spot" colspan = "<?php echo ($is_Moderator?"5":"4");?>" align="left">
                                 <span><?php if(!$funcmylatest) {echo _KUNENA_SPOTS;} else {echo _USER_FAVORITES;} ?></span>
                             </td>
                         </tr>
@@ -177,7 +177,7 @@ if (count($messages[0]) > 0)
                 ?>
 
                     <tr>
-                        <td class = "<?php echo $boardclass ?>contentheading fbm" id = "fb_fspot" colspan = "<?php echo ($is_Moderator?"5":"4");?>" align="left">
+                        <td class = "<?php echo $boardclass ?>contentheading fbm" id = "kunena_fspot" colspan = "<?php echo ($is_Moderator?"5":"4");?>" align="left">
                             <span><?php if(!$funcmylatest) {echo _KUNENA_FORUM;} else {echo _KUNENA_MY_DISCUSSIONS_DETAIL;} ?></span>
                         </td>
                     </tr>
@@ -307,7 +307,7 @@ if (count($messages[0]) > 0)
 				$threadPages = 0;
 				$unreadPage = 0;
                                 //this thread has been moved, get the new location
-                                $kunena_db->setQuery("SELECT message FROM #__fb_messages_text WHERE mesid='{$leaf->id}'");
+                                $kunena_db->setQuery("SELECT message FROM #__kunena_messages_text WHERE mesid='{$leaf->id}'");
                                 $newURL = $kunena_db->loadResult();
                                 // split the string and separate catid and id for proper link assembly
                                 parse_str($newURL, $newURLParams);
@@ -403,19 +403,19 @@ if (count($messages[0]) > 0)
 		{
 			// Get CUser object
 			$user =& CFactory::getUser($last_reply[$leaf->id]->userid);
-		    $useravatar = '<img class="fb_list_avatar" src="' . $user->getThumbAvatar() . '" alt=" " />';
+		    $useravatar = '<img class="kunena_list_avatar" src="' . $user->getThumbAvatar() . '" alt=" " />';
 		   	echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, $useravatar);
 		}
 		else if ($fbConfig->avatar_src == "cb")
 		{
-			$useravatar = $kunenaProfile->showAvatar($last_reply[$leaf->id]->userid, 'fb_list_avatar');
+			$useravatar = $kunenaProfile->showAvatar($last_reply[$leaf->id]->userid, 'kunena_list_avatar');
   		    echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, $useravatar);
 		} else {
 		  	$javatar =  $last_reply[$leaf->id]->avatar;
 		   	if ($javatar!='') {
-				echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $javatar)?KUNENA_LIVEUPLOADEDPATH.'/avatars/'.$javatar:KUNENA_LIVEUPLOADEDPATH.'/avatars/s_'.$javatar) .'" alt="" />');
+				echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, '<img class="kunena_list_avatar" src="'.(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $javatar)?KUNENA_LIVEUPLOADEDPATH.'/avatars/'.$javatar:KUNENA_LIVEUPLOADEDPATH.'/avatars/s_'.$javatar) .'" alt="" />');
 	        }  else {
-		   		echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_nophoto.jpg" alt="" />');
+		   		echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, '<img class="kunena_list_avatar" src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_nophoto.jpg" alt="" />');
 	        }
          }?>
   </span>
@@ -506,7 +506,7 @@ if (count($messages[0]) > 0)
                             CKunenaTools::showBulkActionCats();
                             ?>
 
-            <input type = "submit" name = "fbBulkActionsGo" class = "fb_button fbs" value = "<?php echo _KUNENA_GO ; ?>"/>
+            <input type = "submit" name = "fbBulkActionsGo" class = "kunena_button fbs" value = "<?php echo _KUNENA_GO ; ?>"/>
                         </td>
 
                         </tr>

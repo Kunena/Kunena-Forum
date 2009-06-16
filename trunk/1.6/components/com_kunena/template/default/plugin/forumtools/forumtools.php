@@ -34,7 +34,7 @@ $fbConfig =& CKunenaConfig::getInstance();
     });
 </script>
 
-<div id = "fb_ft-cover">
+<div id = "kunena_ft-cover">
     <div id = "forumtools_control">
         <a href = "#" id = "jrftsw" class = "forumtools"><?php echo _KUNENA_FORUMTOOLS;?></a>
     </div>
@@ -58,7 +58,7 @@ $fbConfig =& CKunenaConfig::getInstance();
 
                         <li>
                         <?php
-                        echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;id=' . $id . '&amp;catid=' . $catid . '&amp;func=fb_pdf') . '" rel="nofollow">' . _GEN_PDF . '</a>';
+                        echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;id=' . $id . '&amp;catid=' . $catid . '&amp;func=kunena_pdf') . '" rel="nofollow">' . _GEN_PDF . '</a>';
                         ?>
 
                         </li>

@@ -27,12 +27,12 @@ $fbSession =& CKunenaSession::getInstance();
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable " id="fb_userprfmsg" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "kunena_blocktable " id="kunena_userprfmsg" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
             <th colspan = "6" align="left">
-                <div class = "fb_title_cover  fbm">
-                    <span class="fb_title fbl"><?php echo _KUNENA_USERPROFILE_MESSAGES; ?></span>
+                <div class = "kunena_title_cover  fbm">
+                    <span class="kunena_title fbl"><?php echo _KUNENA_USERPROFILE_MESSAGES; ?></span>
                 </div>
 
                 <img id = "BoxSwitch_fbuserprofile__<?php echo $boardclass ;?>fbuserprofile_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
@@ -41,7 +41,7 @@ $fbSession =& CKunenaSession::getInstance();
     </thead>
 
     <tbody id = "<?php echo $boardclass ;?>fbuserprofile_tbody">
-        <tr  class = "fb_sth fbs">
+        <tr  class = "kunena_sth fbs">
             <th class = "th-1 <?php echo $boardclass ;?>sectiontableheader" align="center" width="1%">&nbsp;
 
             </th>
@@ -93,7 +93,7 @@ $fbSession =& CKunenaSession::getInstance();
             $group_id = 0;
         }
 
-        $query = "SELECT COUNT(*) FROM #__fb_messages WHERE hold='0' AND userid='{$userid}' AND catid IN ($fbSession->allowed)";
+        $query = "SELECT COUNT(*) FROM #__kunena_messages WHERE hold='0' AND userid='{$userid}' AND catid IN ($fbSession->allowed)";
         $kunena_db->setQuery($query);
         $total = count($kunena_db->loadObjectList());
         	check_dberror("Unable to load messages.");
@@ -103,7 +103,7 @@ $fbSession =& CKunenaSession::getInstance();
         }
 
         $query
-            = "SELECT a.*, b.id AS category, b.name AS catname, c.hits AS threadhits FROM #__fb_messages AS a, #__fb_categories AS b, #__fb_messages AS c, #__fb_messages_text AS d"
+            = "SELECT a.*, b.id AS category, b.name AS catname, c.hits AS threadhits FROM #__kunena_messages AS a, #__kunena_categories AS b, #__kunena_messages AS c, #__kunena_messages_text AS d"
             ." WHERE a.catid=b.id AND a.thread=c.id AND a.id=d.mesid AND a.hold='0' AND a.userid='{$userid}' AND a.catid IN ($fbSession->allowed) ORDER BY time DESC";
         $kunena_db->setQuery($query, $limitstart, $limit);
         $items = $kunena_db->loadObjectList();

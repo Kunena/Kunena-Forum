@@ -27,7 +27,7 @@ class CKunenaSession extends JTable
 	function __construct(&$kunena_db)
 	{
 		$fbConfig =& CKunenaConfig::getInstance();
-		parent::__construct('#__fb_sessions', 'userid', $kunena_db);
+		parent::__construct('#__kunena_sessions', 'userid', $kunena_db);
 		$this->lasttime = time() + $fbConfig->board_ofset - KUNENA_SECONDS_IN_YEAR;
 		$this->currvisit = time() + $fbConfig->board_ofset;
 	}

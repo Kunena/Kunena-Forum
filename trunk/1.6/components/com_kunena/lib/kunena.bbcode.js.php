@@ -325,7 +325,7 @@ function textCounter(field, countfield, maxlimit) {
 
 function submitForm() {
  submitme=1;
- formname=document.postform.fb_authorname.value;
+ formname=document.postform.kunena_authorname.value;
  if ((formname.length<1)) {
     alert("<?php @print( _POST_FORGOT_NAME_ALERT); ?>");
     submitme=0;

@@ -1,27 +1,27 @@
 /* HEADER
 ----------------------------------------------------------------------------------------------- */
-#fb_header_msg { } /* offline message */
+#kunena_header_msg { } /* offline message */
 
-.fb_header { /* header table */
+.kunena_header { /* header table */
 height:30px;
 } 
 
-td.fb_header_td_1 { /* header table hideshow switch img td */
+td.kunena_header_td_1 { /* header table hideshow switch img td */
 text-align:left;
 width:1%;
 padding-left:4px;
 }
-.fb_header .fb_header_td_2 { /* header table board title td */
+.kunena_header .kunena_header_td_2 { /* header table board title td */
 text-align:left;
 padding-left:5px;
 font-weight:bold;
 font-family: Tahoma,Verdana,Arial,Helvetica,sans-serif;
 font-size:13px;
 }
-td.fb_header_td_3 { /* header table menu td */
+td.kunena_header_td_3 { /* header table menu td */
 text-align:center;
 }
-td.fb_header_td_4 { /* header table searchbox td */
+td.kunena_header_td_4 { /* header table searchbox td */
 text-align:right;
 }
 img.hideshow { /* header table hideshow switch img */
@@ -34,9 +34,9 @@ cursor: pointer;
 /* TOPMENU
 ----------------------------------------------------------------------------------------------- */
 
-#fb_topmenu { /* topmenu div */
+#kunena_topmenu { /* topmenu div */
 }
-#fb_topmenu a{ /* topmenu link items */
+#kunena_topmenu a{ /* topmenu link items */
 padding: 0 8px;
 display: block;
 text-decoration: none;
@@ -45,14 +45,14 @@ float: left;
 font-family: Tahoma,Verdana,Arial,Helvetica,sans-serif;
 font-size:11px;
 }
-#fb_topmenu a:hover{
+#kunena_topmenu a:hover{
 
 }
 /* SEARCHBOX
 ----------------------------------------------------------------------------------------------- */
-#fb_searchbox { /* searchbox div */ 
+#kunena_searchbox { /* searchbox div */ 
 }
-#fb_searchbox form { /* searchbox form */
+#kunena_searchbox form { /* searchbox form */
 margin:0;
 padding:0;
 }
@@ -60,22 +60,22 @@ padding:0;
 /*
 PROFILE BOX
 ----------------------------------------------------------------------------------------------- */
-.fb_profilebox { /* header profilebox table */
+.kunena_profilebox { /* header profilebox table */
 
 }
-table.fb_profilebox .fb_profilebox_left {
+table.kunena_profilebox .kunena_profilebox_left {
 padding: 5px;
 width: 1%;
 }
-table.fb_profilebox .fb_profilebox_mid {
+table.kunena_profilebox .kunena_profilebox_mid {
 padding: 5px;
 width: 49%;
 text-align: left;
 }
-table.fb_profilebox .fb_profilebox_right {
+table.kunena_profilebox .kunena_profilebox_right {
 padding: 5px;
 }
-table.fb_profilebox .fb_profilebox_modul .moduletable { /* header profilebox kunena_profilebox module position */
+table.kunena_profilebox .kunena_profilebox_modul .moduletable { /* header profilebox kunena_profilebox module position */
 margin:  0;
 padding: 0;
 }
@@ -83,16 +83,16 @@ padding: 0;
 /*
 LISTING CATEGORY
 ----------------------------------------------------------------------------------------------- */
-.fb_blocktable {
+.kunena_blocktable {
 width:  100%;
 margin: 5px 0;
 }
 
-.fb_blocktable thead tr th {
+.kunena_blocktable thead tr th {
 padding:3px 2px 2px 5px;
 }
-tr.fb_sth {  }
-th.fb_sectiontableheader {
+tr.kunena_sth {  }
+th.kunena_sectiontableheader {
 font-size-adjust:none;
 font-stretch:normal;
 font-style:normal;
@@ -103,23 +103,23 @@ line-height:normal;
 padding:0px 3px;
 vertical-align:middle;
 }
-#fb_title {
+#kunena_title {
 float: left;
 text-align: left;
 font-weight: normal;
 line-height: normal;
 padding: 2px;
 }
-.fb_title,
-a.fb_title:link,
-a.fb_title:visited {
+.kunena_title,
+a.kunena_title:link,
+a.kunena_title:visited {
 font-family:Tahoma,Verdana,Arial,Helvetica,sans-serif;
 font-size:12px;
 font-weight:bold;
 display:block;
 text-decoration:none;
 }
-a.fb_title:hover {
+a.kunena_title:hover {
 }
 /*
 GENERAL TD's and TH's
@@ -154,11 +154,11 @@ td.td-5 {
 text-align: left;
 }
 	
-tbody tr.fb_sectiontableentry1 td,
-tbody tr.fb_sectiontableentry2 td {
+tbody tr.kunena_sectiontableentry1 td,
+tbody tr.kunena_sectiontableentry2 td {
 padding:3px;
 }
-tbody tr.fb_sectiontableentry1 td.td-1,
-tbody tr.fb_sectiontableentry2 td.td-1 {
+tbody tr.kunena_sectiontableentry1 td.td-1,
+tbody tr.kunena_sectiontableentry2 td.td-1 {
 
 }

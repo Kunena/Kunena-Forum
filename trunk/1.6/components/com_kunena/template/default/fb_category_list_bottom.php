@@ -29,7 +29,7 @@ $fbConfig =& CKunenaConfig::getInstance();
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable"  width="100%" id="fb_bottomarea" border = "0" cellspacing = "0" cellpadding = "0">
+<table class = "kunena_blocktable"  width="100%" id="kunena_bottomarea" border = "0" cellspacing = "0" cellpadding = "0">
     <thead>
         <tr>
             <th class = "th-left fbs" align="left">

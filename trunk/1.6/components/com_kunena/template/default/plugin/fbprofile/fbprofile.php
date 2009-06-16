@@ -20,7 +20,7 @@ $app =& JFactory::getApplication();
 $kunena_acl = &JFactory::getACL();
 $fbConfig =& CKunenaConfig::getInstance();
 
-if ($fbConfig->fb_profile == 'cb') {
+if ($fbConfig->kunena_profile == 'cb') {
         $userid = JRequest::getVar('userid', null);
 	$url = CKunenaCBProfile::getProfileURL($userid);
 	header("HTTP/1.1 307 Temporary Redirect");
@@ -63,7 +63,7 @@ function showprf($userid, $page)
 
     //Get userinfo needed later on, this limits the amount of queries
     unset($userinfo);
-    $kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_users AS a LEFT JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$userid}'");
+    $kunena_db->setQuery("SELECT a.*, b.* FROM #__kunena_users AS a LEFT JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$userid}'");
 
     $userinfo = $kunena_db->loadObject();
     check_dberror('Unable to get user profile info.');
@@ -82,11 +82,11 @@ function showprf($userid, $page)
 		$is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
 
 		// there's no profile; set userid and moderator status.
-		$kunena_db->setQuery("INSERT INTO #__fb_users (userid,moderator) VALUES ('$userid','$is_admin')");
+		$kunena_db->setQuery("INSERT INTO #__kunena_users (userid,moderator) VALUES ('$userid','$is_admin')");
 		$kunena_db->query();
 		check_dberror('Unable to create user profile.');
 
-		$kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_users AS a LEFT JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$userid}'");
+		$kunena_db->setQuery("SELECT a.*, b.* FROM #__kunena_users AS a LEFT JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$userid}'");
 
 		$userinfo = $kunena_db->loadObject();
 		check_dberror('Unable to get user profile info.');
@@ -99,28 +99,28 @@ function showprf($userid, $page)
     }
 
 	// User Hits
-	$kunena_db->setQuery('UPDATE #__fb_users SET uhits=uhits+1 WHERE userid='.$userid);
+	$kunena_db->setQuery('UPDATE #__kunena_users SET uhits=uhits+1 WHERE userid='.$userid);
 	$kunena_db->query() or trigger_dberror("Unable to update user hits.");
 
 	// get userprofile hits
 	$msg_userhits = $userinfo->uhits;
 
     //get the username:
-    $fb_username = "";
+    $kunena_username = "";
 
     if ($fbConfig->username) {
-        $fb_queryName = "username";
+        $kunena_queryName = "username";
     }
     else {
-        $fb_queryName = "name";
+        $kunena_queryName = "name";
     }
 
-    $fb_username = $userinfo->{$fb_queryName};
+    $kunena_username = $userinfo->{$kunena_queryName};
 
     $lists["userid"] = $userid;
 
-	$msg_username = $fb_username;
-    // $msg_username = ($fmessage->email != "" && $kunena_my->id > 0 && $fbConfig->showemail == '1') ? "<a href=\"mailto:" . $fmessage->email . "\">" . $fb_username . "</a>" : $fb_username;
+	$msg_username = $kunena_username;
+    // $msg_username = ($fmessage->email != "" && $kunena_my->id > 0 && $fbConfig->showemail == '1') ? "<a href=\"mailto:" . $fmessage->email . "\">" . $kunena_username . "</a>" : $kunena_username;
 
     if ($fbConfig->allowavatar)
     {
@@ -130,15 +130,15 @@ function showprf($userid, $page)
 		{
 			// Get CUser object
 			$user =& CFactory::getUser($userid);
-		    $msg_avatar = '<span class="fb_avatar"><img src="' . $user->getAvatar() . '" alt="" /></span>';
+		    $msg_avatar = '<span class="kunena_avatar"><img src="' . $user->getAvatar() . '" alt="" /></span>';
 		}
         else if ($fbConfig->avatar_src == "clexuspm") {
-            $msg_avatar = '<span class="fb_avatar"><img src="' . MyPMSTools::getAvatarLinkWithID($userid, "b") . '" alt="" /></span>';
+            $msg_avatar = '<span class="kunena_avatar"><img src="' . MyPMSTools::getAvatarLinkWithID($userid, "b") . '" alt="" /></span>';
         }
         else if ($fbConfig->avatar_src == "cb")
         {
             $kunenaProfile = CKunenaCBProfile::getInstance();
-			$msg_avatar = '<span class="fb_avatar">' . $kunenaProfile->showAvatar($userid, '', 0) . '</span>';
+			$msg_avatar = '<span class="kunena_avatar">' . $kunenaProfile->showAvatar($userid, '', 0) . '</span>';
         }
         else
         {
@@ -148,15 +148,15 @@ function showprf($userid, $page)
         	{
         		if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/l_' . $avatar))
         		{
-        			$msg_avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '"  alt="" style="max-width: '.$fbConfig->avatarwidth.'px; max-height: '.$fbConfig->avatarheight.'px;" /></span>';
+        			$msg_avatar = '<span class="kunena_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '"  alt="" style="max-width: '.$fbConfig->avatarwidth.'px; max-height: '.$fbConfig->avatarheight.'px;" /></span>';
 				}
 				else
 				{
-					$msg_avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '"  alt="" /></span>';
+					$msg_avatar = '<span class="kunena_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '"  alt="" /></span>';
 				}
         	}
 
-        	else {$msg_avatar = '<span class="fb_avatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/nophoto.jpg"  alt="" /></span>'; }
+        	else {$msg_avatar = '<span class="kunena_avatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/nophoto.jpg"  alt="" /></span>'; }
         }
     }
 
@@ -192,7 +192,7 @@ function showprf($userid, $page)
         //done usertype determination, phew...
 
         //Get the max# of posts for any one user
-        $kunena_db->setQuery("SELECT MAX(posts) FROM #__fb_users");
+        $kunena_db->setQuery("SELECT MAX(posts) FROM #__kunena_users");
         $maxPosts = $kunena_db->loadResult();
 
         //# of post for this user and ranking
@@ -206,7 +206,7 @@ function showprf($userid, $page)
 								if ($userinfo->rank != '0')
 								{
 												//special rank
-												$kunena_db->setQuery("SELECT * FROM #__fb_ranks WHERE rank_id='{$userinfo->rank}'");
+												$kunena_db->setQuery("SELECT * FROM #__kunena_ranks WHERE rank_id='{$userinfo->rank}'");
 												$getRank = $kunena_db->loadObjectList();
 													check_dberror("Unable to load ranks.");
 												$rank=$getRank[0];
@@ -216,7 +216,7 @@ function showprf($userid, $page)
 									if ($userinfo->rank == '0')
 									{
 											//post count rank
-												$kunena_db->setQuery("SELECT * FROM #__fb_ranks WHERE ((rank_min <= '{$numPosts}') AND (rank_special = '0')) ORDER BY rank_min DESC", 0, 1);
+												$kunena_db->setQuery("SELECT * FROM #__kunena_ranks WHERE ((rank_min <= '{$numPosts}') AND (rank_special = '0')) ORDER BY rank_min DESC", 0, 1);
 												$getRank = $kunena_db->loadObjectList();
 													check_dberror("Unable to load ranks.");
 												$rank=$getRank[0];
@@ -435,11 +435,11 @@ function showprf($userid, $page)
 
     // (JJ) JOOMLA STYLE CHECK
     if ($fbConfig->joomlastyle < 1) {
-        $boardclass = "fb_";
+        $boardclass = "kunena_";
     }
 ?>
 
-    <table class="fb_profile_cover" width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
+    <table class="kunena_profile_cover" width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
         <tr>
             <td class = "<?php echo $boardclass; ?>profile-left" align="center" valign="top" width="25%">
             <!-- Kunena Profile -->
@@ -494,7 +494,7 @@ function showprf($userid, $page)
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable" id="fb_bottomarea"   border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "kunena_blocktable" id="kunena_bottomarea"   border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
             <th class = "th-right">

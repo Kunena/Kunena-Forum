@@ -90,7 +90,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
     //Get the max# of posts for any one user
 
-    $kunena_db->setQuery("SELECT MAX(posts) FROM #__fb_users");
+    $kunena_db->setQuery("SELECT MAX(posts) FROM #__kunena_users");
     $maxPosts = $kunena_db->loadResult();
 
     //# of post for this user and ranking
@@ -104,7 +104,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
 <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
     <tr>
-        <td class = "fb_myprofile_left" valign = "top"  width="20%">
+        <td class = "kunena_myprofile_left" valign = "top"  width="20%">
         <!-- B:My Profile Left -->
             <?php
             if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_menu.php'))
@@ -120,11 +120,11 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
         <!-- F:My Profile Left -->
         </td>
 
-        <td class = "fb_myprofile_mid" valign = "top" width="5">&nbsp;
+        <td class = "kunena_myprofile_mid" valign = "top" width="5">&nbsp;
 
         </td>
 
-        <td class = "fb_myprofile_right" valign = "top">
+        <td class = "kunena_myprofile_right" valign = "top">
             <!-- B:My Profile Right -->
 
             <?php
@@ -164,7 +164,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                 case "avatar":
                     // B: Avatar
-                    if ($fbConfig->fb_profile != 'cb' && $fbConfig->fb_profile != 'jomsocial')
+                    if ($fbConfig->kunena_profile != 'cb' && $fbConfig->kunena_profile != 'jomsocial')
                     {
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar_upload.php'))
                         {
@@ -202,7 +202,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 					(int)$newhideEmail = JRequest::getInt('newhideEmail', 1);
 					(int)$newshowOnline = JRequest::getInt('newshowOnline', 1);
 
-                    $kunena_db->setQuery("UPDATE #__fb_users SET view='$newview', ordering='$neworder', hideEmail='$newhideEmail', showOnline='$newshowOnline' WHERE userid='$kunena_my->id'");
+                    $kunena_db->setQuery("UPDATE #__kunena_users SET view='$newview', ordering='$neworder', hideEmail='$newhideEmail', showOnline='$newshowOnline' WHERE userid='$kunena_my->id'");
                     setcookie("fboard_settings[current_view]", $newview);
 
                     if (!$kunena_db->query())
@@ -233,7 +233,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     $ulists["gender"] = JHTML::_('select.genericlist',  $genders, 'gender', 'class="inputbox"', 'value', 'text', $userinfo->gender );
 
 
-                    if ($fbConfig->fb_profile != 'cb' && $fbConfig->fb_profile != 'jomSocial')
+                    if ($fbConfig->kunena_profile != 'cb' && $fbConfig->kunena_profile != 'jomSocial')
                     {
                         include (KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 
@@ -308,7 +308,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     $limit = JRequest::getInt('limit', $pageperlistlm);
                     $limitstart = JRequest::getInt('limitstart', 0);
 
-                    $query = "SELECT thread FROM #__fb_subscriptions WHERE userid='{$kunena_my->id}'";
+                    $query = "SELECT thread FROM #__kunena_subscriptions WHERE userid='{$kunena_my->id}'";
                     $kunena_db->setQuery($query);
 
                     $total = count($kunena_db->loadObjectList());
@@ -320,7 +320,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     }
 
                     //get all subscriptions for this user
-                    $kunena_db->setQuery("SELECT thread FROM #__fb_subscriptions WHERE userid='{$kunena_my->id}' ORDER BY thread DESC", $limitstart, $limit);
+                    $kunena_db->setQuery("SELECT thread FROM #__kunena_subscriptions WHERE userid='{$kunena_my->id}' ORDER BY thread DESC", $limitstart, $limit);
                     $subslist = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load subscriptions.");
                     $csubslist = count($subslist);
@@ -342,7 +342,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     $limit = JRequest::getInt('limit', $pageperlistlm);
                     $limitstart = JRequest::getInt('limitstart', 0);
 
-                    $query = "SELECT thread FROM #__fb_favorites WHERE userid='{$kunena_my->id}'";
+                    $query = "SELECT thread FROM #__kunena_favorites WHERE userid='{$kunena_my->id}'";
                     $kunena_db->setQuery($query);
 
                     $total = count($kunena_db->loadObjectList());
@@ -354,7 +354,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     }
 
                     //get all favorites for this user
-                    $kunena_db->setQuery("SELECT thread FROM #__fb_favorites WHERE userid='{$kunena_my->id}' ORDER BY thread DESC", $limitstart, $limit);
+                    $kunena_db->setQuery("SELECT thread FROM #__kunena_favorites WHERE userid='{$kunena_my->id}' ORDER BY thread DESC", $limitstart, $limit);
                     $favslist = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load favorites.");
                     $cfavslist = count($favslist);
@@ -375,7 +375,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     //since these are moderators for all forums (regardless if a forum is set to be moderated)
                     if (!$is_admin)
                     {
-                        $kunena_db->setQuery("SELECT m.catid, c.id, c.name FROM #__fb_moderation AS m LEFT JOIN #__fb_categories AS c ON c.id=m.catid WHERE m.userid='{$kunena_my->id}'");
+                        $kunena_db->setQuery("SELECT m.catid, c.id, c.name FROM #__kunena_moderation AS m LEFT JOIN #__kunena_categories AS c ON c.id=m.catid WHERE m.userid='{$kunena_my->id}'");
                         $modslist = $kunena_db->loadObjectList();
                         	check_dberror("Unable to load moderators.");
                         $cmodslist = count($modslist);
@@ -398,7 +398,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     @array_walk($cid, "intval");
                     $cids = @implode(',', $cid);
 
-                    $kunena_db->setQuery("DELETE FROM #__fb_subscriptions WHERE userid=$kunena_my->id  AND thread in ($cids) ");
+                    $kunena_db->setQuery("DELETE FROM #__kunena_subscriptions WHERE userid=$kunena_my->id  AND thread in ($cids) ");
 
                     if (!$kunena_db->query())
                     {
@@ -409,7 +409,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 						$app->enqueueMessage(_USER_UNSUBSCRIBE_YES);
                     }
                     
-                    if ($fbConfig->fb_profile == 'cb')
+                    if ($fbConfig->kunena_profile == 'cb')
                     {
 						$forumtab_url = CKunenaCBProfile::getForumTabURL();
 						$app->redirect(JRoute::_($forumtab_url));
@@ -424,7 +424,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
 					/////
 					case "unsubscribeitem":
-                   $kunena_db->setQuery("DELETE from #__fb_subscriptions where userid=$kunena_my->id and thread=$thread");
+                   $kunena_db->setQuery("DELETE from #__kunena_subscriptions where userid=$kunena_my->id and thread=$thread");
 
 						if (!$kunena_db->query()) {
 							$app->enqueueMessage(_USER_UNSUBSCRIBE_A._USER_UNSUBSCRIBE_B._USER_UNSUBSCRIBE_C, 'notice');
@@ -433,7 +433,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 							$app->enqueueMessage(_USER_UNSUBSCRIBE_YES);
 						}
 
-						if ($fbConfig->fb_profile == 'cb') {
+						if ($fbConfig->kunena_profile == 'cb') {
 							$forumtab_url = CKunenaCBProfile::getForumTabURL();
 							$app->redirect(JRoute::_($forumtab_url));
 
@@ -454,7 +454,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     @array_walk($cid, "intval");
                     $cids = @implode(',', $cid);
 
-                    $kunena_db->setQuery("DELETE from #__fb_favorites where userid=$kunena_my->id  AND thread in ($cids)");
+                    $kunena_db->setQuery("DELETE from #__kunena_favorites where userid=$kunena_my->id  AND thread in ($cids)");
 
                     if (!$kunena_db->query())
                     {
@@ -465,7 +465,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     	$app->enqueueMessage(_USER_UNFAVORITE_YES);
                     }
 
-                    if ($fbConfig->fb_profile == 'cb')
+                    if ($fbConfig->kunena_profile == 'cb')
                     {
 						$forumtab_url = CKunenaCBProfile::getForumTabURL();
 						$app->redirect(JRoute::_($forumtab_url));
@@ -479,7 +479,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
 					 case "unfavoriteitem":
 
-						$kunena_db->setQuery("DELETE from #__fb_favorites where userid=$kunena_my->id and thread=$thread");
+						$kunena_db->setQuery("DELETE from #__kunena_favorites where userid=$kunena_my->id and thread=$thread");
 
 						if (!$kunena_db->query()) {
                     		$app->enqueueMessage(_USER_UNFAVORITE_A._USER_UNFAVORITE_B._USER_UNFAVORITE_C, 'notice');
@@ -488,7 +488,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 							$app->enqueueMessage(_USER_UNFAVORITE_YES);
 						}
 
-						if ($fbConfig->fb_profile == 'cb') {
+						if ($fbConfig->kunena_profile == 'cb') {
 							$forumtab_url = CKunenaCBProfile::getForumTabURL();
 							$app->redirect(JRoute::_($forumtab_url));
 						}
@@ -602,7 +602,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
         <!-- F:My Profile Right -->
         
 <!-- Begin: Forum Jump -->
-<table class = "fb_blocktable" id = "fb_bottomarea" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "kunena_blocktable" id = "kunena_bottomarea" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
             <th class = "th-right">

@@ -29,7 +29,7 @@ include_once(KUNENA_PATH_LIB .DS. "kunena.parser.php");
 
 class smile
 {
-    function smileParserCallback($fb_message, $history, $emoticons, $iconList = null)
+    function smileParserCallback($kunena_message, $history, $emoticons, $iconList = null)
     {
         // from context HTML into HTML
 
@@ -43,7 +43,7 @@ class smile
         $message_emoticons = array();
         $message_emoticons = $iconList? $iconList : smile::getEmoticons($history);
         // now the text is parsed, next are the emoticons
-	    $fb_message_txt = $fb_message;
+	    $kunena_message_txt = $kunena_message;
 
         if ($emoticons != 1)
         {
@@ -52,25 +52,25 @@ class smile
             while (list($emo_txt, $emo_src) = each($message_emoticons)) {
 		$emo_txt = strtr($emo_txt, $regexp_trans);
 		// Check that smileys are not part of text like:soon (:s)
-                $fb_message_txt = preg_replace('/(\W|\A)'.$emo_txt.'(\W|\Z)/'.$utf8, '\1<img src="' . $emo_src . '" alt="" style="vertical-align: middle;border:0px;" />\2', $fb_message_txt);
+                $kunena_message_txt = preg_replace('/(\W|\A)'.$emo_txt.'(\W|\Z)/'.$utf8, '\1<img src="' . $emo_src . '" alt="" style="vertical-align: middle;border:0px;" />\2', $kunena_message_txt);
 		// Previous check causes :) :) not to work, workaround is to run the same regexp twice
-                $fb_message_txt = preg_replace('/(\W|\A)'.$emo_txt.'(\W|\Z)/'.$utf8, '\1<img src="' . $emo_src . '" alt="" style="vertical-align: middle;border:0px;" />\2', $fb_message_txt);
+                $kunena_message_txt = preg_replace('/(\W|\A)'.$emo_txt.'(\W|\Z)/'.$utf8, '\1<img src="' . $emo_src . '" alt="" style="vertical-align: middle;border:0px;" />\2', $kunena_message_txt);
             }
         }
 
-        return $fb_message_txt;
+        return $kunena_message_txt;
     }
 
-    function smileReplace($fb_message, $history, $emoticons, $iconList = null)
+    function smileReplace($kunena_message, $history, $emoticons, $iconList = null)
     {
 
-        $fb_message_txt = $fb_message;
+        $kunena_message_txt = $kunena_message;
 
         //implement the new parser
         $parser = new TagParser();
         $interpreter = new KunenaBBCodeInterpreter($parser);
         $task = $interpreter->NewTask();
-        $task->SetText($fb_message_txt.' _EOP_');
+        $task->SetText($kunena_message_txt.' _EOP_');
         $task->dry = FALSE;
         $task->drop_errtag = FALSE;
 	    $task->history = $history;
@@ -99,7 +99,7 @@ class smile
     {
         $kunena_db = &JFactory::getDBO();
         $grayscale == 1 ? $column = "greylocation" : $column = "location";
-        $sql = "SELECT code, `$column` FROM #__fb_smileys";
+        $sql = "SELECT code, `$column` FROM #__kunena_smileys";
 
         if ($emoticonbar == 1)
         $sql .= " WHERE emoticonbar='1'";
@@ -132,7 +132,7 @@ class smile
         $selected = (int)$selected;
 ?>
 
-        <table border = "0" cellspacing = "0" cellpadding = "0" class = "fb_flat">
+        <table border = "0" cellspacing = "0" cellpadding = "0" class = "kunena_flat">
             <tr>
                 <td>
                     <input type = "radio" name = "topic_emoticon" value = "0"<?php echo $selected==0?" checked=\"checked\" ":"";?>/><?php @print(_NO_SMILIE); ?>
@@ -183,56 +183,56 @@ class smile
      */
     function fbStripHtmlTags($text)
     {
-        $fb_message_txt = $text;
-        $fb_message_txt = preg_replace("/<p>/si", "", $fb_message_txt);
-        $fb_message_txt = preg_replace("%</p>%si", "\n", $fb_message_txt);
-        $fb_message_txt = preg_replace("/<br>/si", "\n", $fb_message_txt);
-        $fb_message_txt = preg_replace("%<br />%si", "\n", $fb_message_txt);
-        $fb_message_txt = preg_replace("%<br />%si", "\n", $fb_message_txt);
-        $fb_message_txt = preg_replace("/&nbsp;/si", " ", $fb_message_txt);
-        $fb_message_txt = preg_replace("/<OL>/si", "[ol]", $fb_message_txt);
-        $fb_message_txt = preg_replace("%</OL>%si", "[/ol]", $fb_message_txt);
-        $fb_message_txt = preg_replace("/<ul>/si", "[ul]", $fb_message_txt);
-        $fb_message_txt = preg_replace("%</ul>%si", "[/ul]", $fb_message_txt);
-        $fb_message_txt = preg_replace("/<LI>/si", "[li]", $fb_message_txt);
-        $fb_message_txt = preg_replace("%</LI>%si", "[/li]", $fb_message_txt);
-        $fb_message_txt = preg_replace("/<div class=\\\"fb_quote\\\">/si", "[quote]", $fb_message_txt);
-        $fb_message_txt = preg_replace("%</div>%si", "[/quote]", $fb_message_txt);
-        $fb_message_txt = preg_replace("/<b>/si", "[b]", $fb_message_txt);
-        $fb_message_txt = preg_replace("%</b>%si", "[/b]", $fb_message_txt);
-        $fb_message_txt = preg_replace("/<i>/si", "[i]", $fb_message_txt);
-        $fb_message_txt = preg_replace("%</i>%si", "[/i]", $fb_message_txt);
-        $fb_message_txt = preg_replace("/<u>/si", "[u]", $fb_message_txt);
-        $fb_message_txt = preg_replace("%</u>%si", "[/u]", $fb_message_txt);
-        $fb_message_txt = preg_replace("/<strike>/si", "[strike]", $fb_message_txt);
-        $fb_message_txt = preg_replace("/<sub>/si", "[sub]", $fb_message_txt);
-        $fb_message_txt = preg_replace("/<sup>/si", "[sup]", $fb_message_txt);
-		$fb_message_txt = preg_replace("/<right>/si", "[left]", $fb_message_txt);
-        $fb_message_txt = preg_replace("/<center>/si", "[center]", $fb_message_txt);
-        $fb_message_txt = preg_replace("/<right>/si", "[right]", $fb_message_txt);
-        $fb_message_txt = preg_replace("/<s>/si", "[s]", $fb_message_txt);
-        $fb_message_txt = preg_replace("%</s>%si", "[/s]", $fb_message_txt);
-        $fb_message_txt = preg_replace("/<strong>/si", "[b]", $fb_message_txt);
-        $fb_message_txt = preg_replace("%</strong>%si", "[/b]", $fb_message_txt);
-        $fb_message_txt = preg_replace("/<em>/si", "[i]", $fb_message_txt);
-        $fb_message_txt = preg_replace("%</em>%si", "[/i]", $fb_message_txt);
+        $kunena_message_txt = $text;
+        $kunena_message_txt = preg_replace("/<p>/si", "", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("%</p>%si", "\n", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("/<br>/si", "\n", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("%<br />%si", "\n", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("%<br />%si", "\n", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("/&nbsp;/si", " ", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("/<OL>/si", "[ol]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("%</OL>%si", "[/ol]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("/<ul>/si", "[ul]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("%</ul>%si", "[/ul]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("/<LI>/si", "[li]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("%</LI>%si", "[/li]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("/<div class=\\\"kunena_quote\\\">/si", "[quote]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("%</div>%si", "[/quote]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("/<b>/si", "[b]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("%</b>%si", "[/b]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("/<i>/si", "[i]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("%</i>%si", "[/i]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("/<u>/si", "[u]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("%</u>%si", "[/u]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("/<strike>/si", "[strike]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("/<sub>/si", "[sub]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("/<sup>/si", "[sup]", $kunena_message_txt);
+		$kunena_message_txt = preg_replace("/<right>/si", "[left]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("/<center>/si", "[center]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("/<right>/si", "[right]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("/<s>/si", "[s]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("%</s>%si", "[/s]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("/<strong>/si", "[b]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("%</strong>%si", "[/b]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("/<em>/si", "[i]", $kunena_message_txt);
+        $kunena_message_txt = preg_replace("%</em>%si", "[/i]", $kunena_message_txt);
 
         //okay, now we've converted all HTML to known boardcode, nuke everything remaining itteratively:
-        while ($fb_message_txt != strip_tags($fb_message_txt)) {
-            $fb_message_txt = strip_tags($fb_message_txt);
+        while ($kunena_message_txt != strip_tags($kunena_message_txt)) {
+            $kunena_message_txt = strip_tags($kunena_message_txt);
         }
 
-        return $fb_message_txt;
+        return $kunena_message_txt;
     } // fbStripHtmlTags()
     /**
      * This will convert all remaining HTML tags to innocent tags able to be displayed in full
      */
     function fbHtmlSafe($text)
     {
-        $fb_message_txt = $text;
-        $fb_message_txt = str_replace("<", "&lt;", $fb_message_txt);
-        $fb_message_txt = str_replace(">", "&gt;", $fb_message_txt);
-        return $fb_message_txt;
+        $kunena_message_txt = $text;
+        $kunena_message_txt = str_replace("<", "&lt;", $kunena_message_txt);
+        $kunena_message_txt = str_replace(">", "&gt;", $kunena_message_txt);
+        return $kunena_message_txt;
     } // fbHtmlSafe()
     /**
      * This function will write the TextArea
@@ -246,12 +246,12 @@ class smile
 
         // (JJ) JOOMLA STYLE CHECK
         if ($fbConfig->joomlastyle < 1) {
-            $boardclass = "fb_";
+            $boardclass = "kunena_";
         }
         ?>
 
         <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
-            <td class = "fb_leftcolumn" valign = "top">
+            <td class = "kunena_leftcolumn" valign = "top">
                 <strong><a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=faq').'#boardcode';?>" target="_new"><?php @print(_COM_BOARDCODE); ?></a></strong>:
             </td>
 
@@ -339,7 +339,7 @@ class smile
 							<?php @print(_KUNENA_EDITOR_VIDEO_WIDTH); ?><input name="videowidth" type="text" size="5" maxlength="5" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOWIDTH);?>')"> 
 							<?php @print(_KUNENA_EDITOR_VIDEO_HEIGHT); ?><input name="videoheight" type="text" size="5" maxlength="5" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOHEIGHT);?>')"> <br>
 							<?php @print(_KUNENA_EDITOR_VIDEO_PROVIDER); ?>
-							<select name = "fb_vid_code1" class = "<?php echo $boardclass;?>button" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOPROVIDER);?>')">
+							<select name = "kunena_vid_code1" class = "<?php echo $boardclass;?>button" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOPROVIDER);?>')">
 								<?php
 								$vid_provider = array('','AnimeEpisodes','Biku','Bofunk','Break','Clip.vn','Clipfish','Clipshack','Collegehumor','Current',
 									'DailyMotion','DivX,divx]http://','DownloadFestival','Flash,flash]http://','FlashVars,flashvars param=]http://','Fliptrack',
@@ -365,7 +365,7 @@ class smile
 									if (document.postform.videowidth.value != "") {video = video + " width=" + document.postform.videowidth.value;}
 									if (document.postform.videoheight.value != "") {video = video + " height=" + document.postform.videoheight.value;}
 									if (art=='video1'){
-									if (document.postform.fb_vid_code1.value != "") {video = video + " type=" + document.postform.fb_vid_code1.options[document.postform.fb_vid_code1.selectedIndex].value;}
+									if (document.postform.kunena_vid_code1.value != "") {video = video + " type=" + document.postform.kunena_vid_code1.options[document.postform.kunena_vid_code1.selectedIndex].value;}
 									bbfontstyle('[video' + video + ']'+ document.postform.videoid.value,'[/video]');}
 									else {bbfontstyle('[video' + video + ']'+ document.postform.videourl.value,'[/video]');}
 								}
@@ -375,7 +375,7 @@ class smile
 						<div id="smilie" style="display: none;">
 							<?php  
 							$kunena_db = &JFactory::getDBO();
-							$kunena_db->setQuery("SELECT code, location, emoticonbar FROM #__fb_smileys ORDER BY id");
+							$kunena_db->setQuery("SELECT code, location, emoticonbar FROM #__kunena_smileys ORDER BY id");
 							if ($kunena_db->query()) {
 								$rowset = array ();
 								$set = $kunena_db->loadAssocList();
@@ -412,7 +412,7 @@ class smile
         </tr>
 
         <tr class = "<?php echo $boardclass; ?>sectiontableentry2">
-            <td valign = "top" class = "fb_leftcolumn">
+            <td valign = "top" class = "kunena_leftcolumn">
                 <strong><?php @print(_MESSAGE); ?></strong>:<br>
                <b onclick = "size_messagebox(100);" style="cursor:pointer">(+)</b><b> / </b><b onclick = "size_messagebox(-100);" style="cursor:pointer">(-)</b>
                 <?php

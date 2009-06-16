@@ -39,7 +39,7 @@ $is_user = (strtolower($kunena_my->usertype) <> '');
 
 <?php
 // BEGIN: BOX ANN
-$kunena_db->setQuery("SELECT id, title, sdescription, description, created, published, showdate FROM #__fb_announcement WHERE published='1' ORDER BY created DESC", 0, 1);
+$kunena_db->setQuery("SELECT id, title, sdescription, description, created, published, showdate FROM #__kunena_announcement WHERE published='1' ORDER BY created DESC", 0, 1);
 
 $anns = $kunena_db->loadObjectList();
 check_dberror("Unable to load announcements.");
@@ -69,12 +69,12 @@ if ($annID > 0) {
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-    <table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+    <table class = "kunena_blocktable" id = "kunena_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>
             <tr>
                 <th align="left">
-                    <div class = "fb_title_cover fbm">
-                        <span class = "fb_title fbl"><?php echo $anntitle; ?></span>
+                    <div class = "kunena_title_cover fbm">
+                        <span class = "kunena_title fbl"><?php echo $anntitle; ?></span>
                     </div>
 
                     <img id = "BoxSwitch_announcements__announcements_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
@@ -87,7 +87,7 @@ if ($annID > 0) {
             if ($is_editor) {
             ?>
 
-                    <tr class = "fb_sth">
+                    <tr class = "kunena_sth">
                         <th class = "th-1 <?php echo $boardclass ;?>sectiontableheader fbm" align="left">
                             <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'edit', $annID); ?>"><?php echo _ANN_EDIT; ?> </a> |
                         <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'delete', $annID); ?>"><?php echo _ANN_DELETE; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'add');?>"><?php echo _ANN_ADD; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'show');?>"><?php echo _ANN_CPANEL; ?> </a>

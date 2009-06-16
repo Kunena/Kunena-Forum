@@ -272,17 +272,17 @@ table.fbstat .col2 {
           </thead>
           <tbody>
             <?php
-		$fb_top_profiles=jbStats::get_top_profiles();
-		foreach ($fb_top_profiles as $fb_profile) {
-			if ($fb_profile->uhits == $fb_top_profiles[0]->uhits)
+		$kunena_top_profiles=jbStats::get_top_profiles();
+		foreach ($kunena_top_profiles as $kunena_profile) {
+			if ($kunena_profile->uhits == $kunena_top_profiles[0]->uhits)
 				$barwidth = 100;
 			else
-				$barwidth = round(($fb_profile->uhits * 100) / $fb_top_profiles[0]->uhits);
+				$barwidth = round(($kunena_profile->uhits * 100) / $kunena_top_profiles[0]->uhits);
 	?>
             <tr>
-              <td><?php echo $fb_profile->username; ?></td>
+              <td><?php echo $kunena_profile->username; ?></td>
               <td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'/template/default/images/bar.gif'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
-              <td ><?php echo $fb_profile->uhits;?></td>
+              <td ><?php echo $kunena_profile->uhits;?></td>
             </tr>
             <?php
 		}

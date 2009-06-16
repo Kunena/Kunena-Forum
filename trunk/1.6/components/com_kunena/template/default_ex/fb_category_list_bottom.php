@@ -24,7 +24,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 $fbConfig =& CKunenaConfig::getInstance();
 ?>
 	<tr>
-		<td class="fb_list_markallcatsread">
+		<td class="kunena_list_markallcatsread">
                 <?php
                 if ($kunena_my->id != 0)
                 {
@@ -32,14 +32,14 @@ $fbConfig =& CKunenaConfig::getInstance();
 
                     <form action = "<?php echo KUNENA_LIVEURLREL; ?>" name = "markAllForumsRead" method = "post">
                         <input type = "hidden" name = "markaction" value = "allread"/>
-                        <input type = "submit" class = "fb_button button<?php echo $boardclass ;?> fbs" value = "<?php echo _GEN_MARK_ALL_FORUMS_READ ;?>"/>
+                        <input type = "submit" class = "kunena_button button<?php echo $boardclass ;?> fbs" value = "<?php echo _GEN_MARK_ALL_FORUMS_READ ;?>"/>
                     </form>
 
                 <?php
                 }
                 ?>
 		</td>
-		<td class="fb_list_categories">
+		<td class="kunena_list_categories">
                 <?php
                 if ($fbConfig->enableforumjump)
                     require (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');

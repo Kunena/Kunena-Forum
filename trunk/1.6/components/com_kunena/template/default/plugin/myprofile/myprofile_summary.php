@@ -46,14 +46,14 @@ if ($signature)
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable" id = "fb_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "kunena_blocktable" id = "kunena_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
   <thead>
     <tr>
-      <th colspan = "2"> <div class = "fb_title_cover"> <span class = "fb_title"><?php echo _KUNENA_MYPROFILE_SUMMARY; ?></span> </div></th>
+      <th colspan = "2"> <div class = "kunena_title_cover"> <span class = "kunena_title"><?php echo _KUNENA_MYPROFILE_SUMMARY; ?></span> </div></th>
     </tr>
   </thead>
-  <tbody  class = "fb_myprofile_general">
-    <tr class="fb_sth">
+  <tbody  class = "kunena_myprofile_general">
+    <tr class="kunena_sth">
       <th colspan="2" > <center>
           <?php echo _KUNENA_MYPROFILE_PERSONAL_INFO; ?>
         </center></th>
@@ -90,7 +90,7 @@ if ($signature)
       <td><b><?php echo _KUNENA_MYPROFILE_PROFILEVIEW; ?></b> </td>
       <td><?php echo $userinfo->uhits; ?></td>
     </tr>
-    <tr class="fb_sth">
+    <tr class="kunena_sth">
       <th colspan="2" > <center>
           <?php echo _KUNENA_MYPROFILE_ADDITIONAL_INFO; ?>
         </center></th>

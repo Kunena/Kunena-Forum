@@ -51,7 +51,7 @@ class CKunenaVersion {
 		if (!$kunenaversion)
 		{
 			$kunena_db = &JFactory::getDBO();
-			$versionTable = '#__fb_version';
+			$versionTable = '#__kunena_version';
 			$kunena_db->setQuery("SELECT version, versiondate, installdate, build, versionname FROM `{$versionTable}` ORDER BY id DESC", 0, 1);
 			$kunenaversion = $kunena_db->loadObject();
 			if(!$kunenaversion) {

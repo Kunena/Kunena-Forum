@@ -57,7 +57,7 @@ if ($fbConfig->captcha == 1 && $kunena_my->id < 1) {
     if ($message != NULL)
     {
 	$session =& JFactory::getSession();
-	$rand = $session->get('fb_image_random_value');
+	$rand = $session->get('kunena_image_random_value');
 	unset($session);
     	if (md5($number) != $rand)
         {
@@ -78,7 +78,7 @@ $fbConfig->floodprotection = (int)$fbConfig->floodprotection;
 
 if ($fbConfig->floodprotection != 0)
 {
-    $kunena_db->setQuery("SELECT MAX(time) FROM #__fb_messages WHERE ip='{$ip}'");
+    $kunena_db->setQuery("SELECT MAX(time) FROM #__kunena_messages WHERE ip='{$ip}'");
     $kunena_db->query() or trigger_dberror("Unable to load max time for current request from IP: $ip");
     $lastPostTime = $kunena_db->loadResult();
 }
@@ -92,11 +92,11 @@ if (($fbConfig->floodprotection != 0 && ((($lastPostTime + $fbConfig->floodprote
         $my_email = $kunena_my->email;
         $registeredUser = 1;
 	if ($is_Moderator) {
-		if (!empty($fb_authorname)) $my_name = $fb_authorname;
+		if (!empty($kunena_authorname)) $my_name = $kunena_authorname;
 		if(isset($email) && !empty($email)) $my_email = $email;
 	}
     } else {
-        $my_name = $fb_authorname;
+        $my_name = $kunena_authorname;
 	$my_email = (isset($email) && !empty($email))? $email:'';
 	$registeredUser = 0;
     }
@@ -111,7 +111,7 @@ else
 
 //Now find out the forumname to which the user wants to post (for reference only)
 unset($objCatInfo);
-$kunena_db->setQuery("SELECT * FROM #__fb_categories WHERE id='{$catid}'");
+$kunena_db->setQuery("SELECT * FROM #__kunena_categories WHERE id='{$catid}'");
 $kunena_db->query() or trigger_dberror('Unable to load category.');
 
 $objCatInfo = $kunena_db->loadObject();
@@ -122,11 +122,11 @@ $catName = $objCatInfo->name;
     <tr>
         <td>
             <?php
-            if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
-                require_once (KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/kunena_pathway.php')) {
+                require_once (KUNENA_ABSTMPLTPATH . '/kunena_pathway.php');
             }
             else {
-                require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_pathway.php');
+                require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'kunena_pathway.php');
             }
 
             if ($action == "post" && (hasPostPermission($kunena_db, $catid, $parentid, $kunena_my->id, $fbConfig->pubwrite, $is_Moderator)))
@@ -157,7 +157,7 @@ $catName = $objCatInfo->name;
                                     $thread = $parent = 0;
                                 }
 
-                                $kunena_db->setQuery("SELECT id, thread, parent FROM #__fb_messages WHERE id='{$parent}'");
+                                $kunena_db->setQuery("SELECT id, thread, parent FROM #__kunena_messages WHERE id='{$parent}'");
                                 $kunena_db->query() or trigger_dberror('Unable to load parent post.');
                                 unset($m);
                                 $m = $kunena_db->loadObject();
@@ -189,7 +189,7 @@ $catName = $objCatInfo->name;
 
                                 $messagesubject = $subject; //before we add slashes and all... used later in mail
 
-                                $fb_authorname = trim(addslashes($my_name));
+                                $kunena_authorname = trim(addslashes($my_name));
                                 $subject = trim(addslashes($subject));
                                 $message = trim(addslashes($message));
 
@@ -208,7 +208,7 @@ $catName = $objCatInfo->name;
 
                                 if (!$is_Moderator)
                                 {
-                                    $kunena_db->setQuery("SELECT review FROM #__fb_categories WHERE id='{$catid}'");
+                                    $kunena_db->setQuery("SELECT review FROM #__kunena_categories WHERE id='{$catid}'");
                                     $kunena_db->query() or trigger_dberror('Unable to load review flag from categories.');
                                     $holdPost = $kunena_db->loadResult();
                                 }
@@ -219,7 +219,7 @@ $catName = $objCatInfo->name;
                                 //
                                 $duplicatetimewindow = $posttime - $fbConfig->fbsessiontimeout;
                                 unset($existingPost);
-                                $kunena_db->setQuery("SELECT m.id FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE m.userid='{$kunena_my->id}' AND m.name='{$fb_authorname}' AND m.email='{$email}' AND m.subject='{$subject}' AND m.ip='{$ip}' AND t.message='{$message}' AND m.time>='{$duplicatetimewindow}'");
+                                $kunena_db->setQuery("SELECT m.id FROM #__kunena_messages AS m JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.userid='{$kunena_my->id}' AND m.name='{$kunena_authorname}' AND m.email='{$email}' AND m.subject='{$subject}' AND m.ip='{$ip}' AND t.message='{$message}' AND m.time>='{$duplicatetimewindow}'");
                                 $kunena_db->query() or trigger_dberror('Unable to load post.');
 
                                 $existingPost = $kunena_db->loadObject();
@@ -228,9 +228,9 @@ $catName = $objCatInfo->name;
 
                                 if (!isset($pid))
                                 {
-                                    $kunena_db->setQuery("INSERT INTO #__fb_messages
+                                    $kunena_db->setQuery("INSERT INTO #__kunena_messages
                                     						(parent,thread,catid,name,userid,email,subject,time,ip,topic_emoticon,hold)
-                                    						VALUES('$parent','$thread','$catid','$fb_authorname','{$kunena_my->id}','$email','$subject','$posttime','$ip','$topic_emoticon','$holdPost')");
+                                    						VALUES('$parent','$thread','$catid','$kunena_authorname','{$kunena_my->id}','$email','$subject','$posttime','$ip','$topic_emoticon','$holdPost')");
 
     			                    if ($kunena_db->query())
                                     {
@@ -241,27 +241,27 @@ $catName = $objCatInfo->name;
                                           CKunenaTools::modifyCategoryStats($pid, $parent, $posttime, $catid);
                                         }
 
-                                        $kunena_db->setQuery("INSERT INTO #__fb_messages_text (mesid,message) VALUES('$pid','$message')");
+                                        $kunena_db->setQuery("INSERT INTO #__kunena_messages_text (mesid,message) VALUES('$pid','$message')");
                                         $kunena_db->query();
 
                                         if ($thread == 0)
                                         {
                                             //if thread was zero, we now know to which id it belongs, so we can determine the thread and update it
-                                            $kunena_db->setQuery("UPDATE #__fb_messages SET thread='$pid' WHERE id='$pid'");
+                                            $kunena_db->setQuery("UPDATE #__kunena_messages SET thread='$pid' WHERE id='$pid'");
                                             $kunena_db->query();
                                         }
 
                                         //update the user posts count
                                         if ($kunena_my->id)
                                         {
-                                            $kunena_db->setQuery("UPDATE #__fb_users SET posts=posts+1 WHERE userid={$kunena_my->id}");
+                                            $kunena_db->setQuery("UPDATE #__kunena_users SET posts=posts+1 WHERE userid={$kunena_my->id}");
                                             $kunena_db->query();
                                         }
 
                                         //Update the attachments table if an image has been attached
                                         if (!empty($imageLocation) && file_exists($imageLocation))
                                         {
-                                            $kunena_db->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid','{$attachimage['tmp_name']}')");
+                                            $kunena_db->setQuery("INSERT INTO #__kunena_attachments (mesid, filelocation) values ('$pid','{$attachimage['tmp_name']}')");
 
                                             if (!$kunena_db->query()) {
                                                 echo "<script> alert('Storing image failed: " . $kunena_db->getErrorMsg() . "'); </script>\n";
@@ -271,7 +271,7 @@ $catName = $objCatInfo->name;
                                         //Update the attachments table if an file has been attached
                                         if (!empty($fileLocation) && file_exists($fileLocation))
                                         {
-                                            $kunena_db->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid','{$attachfile['tmp_name']}')");
+                                            $kunena_db->setQuery("INSERT INTO #__kunena_attachments (mesid, filelocation) values ('$pid','{$attachfile['tmp_name']}')");
 
                                             if (!$kunena_db->query()) {
                                                 echo "<script> alert('Storing file failed: " . $kunena_db->getErrorMsg() . "'); </script>\n";
@@ -287,7 +287,7 @@ $catName = $objCatInfo->name;
                                             $querythread = $thread;
                                         }
 
-                                        $kunena_db->setQuery("SELECT * FROM #__fb_sessions WHERE readtopics LIKE '%$thread%'");
+                                        $kunena_db->setQuery("SELECT * FROM #__kunena_sessions WHERE readtopics LIKE '%$thread%'");
                                         $sessions = $kunena_db->loadObjectList();
                                         	check_dberror("Unable to load sessions.");
                                         foreach ($sessions as $session)
@@ -300,14 +300,14 @@ $catName = $objCatInfo->name;
                                             {
                                                 unset($rt[$key]);
                                                 $readtopics = implode(",", $rt);
-                                                $kunena_db->setQuery("UPDATE #__fb_sessions SET readtopics='$readtopics' WHERE userid=$userid");
+                                                $kunena_db->setQuery("UPDATE #__kunena_sessions SET readtopics='$readtopics' WHERE userid=$userid");
                                                 $kunena_db->query();
                                                 	check_dberror("Unable to update sessions.");
                                             }
                                         }
 
                                         unset($result);
-                                        $kunena_db->setQuery("SELECT COUNT(*) AS totalmessages FROM #__fb_messages WHERE thread='{$querythread}'");
+                                        $kunena_db->setQuery("SELECT COUNT(*) AS totalmessages FROM #__kunena_messages WHERE thread='{$querythread}'");
                                         $result = $kunena_db->loadObject();
                                         	check_dberror("Unable to load messages.");
                                         $threadPages = ceil($result->totalmessages / $fbConfig->messages_per_page);
@@ -323,7 +323,7 @@ $catName = $objCatInfo->name;
 
                                             //clean up the message
                                             $mailmessage = smile::purify($message);
-                                            $kunena_db->setQuery("SELECT * FROM #__fb_subscriptions AS a"
+                                            $kunena_db->setQuery("SELECT * FROM #__kunena_subscriptions AS a"
                                             . " LEFT JOIN #__users AS u ON a.userid=u.id "
                                             . " WHERE u.block='0' AND a.thread='{$querythread}'");
 
@@ -343,9 +343,9 @@ $catName = $objCatInfo->name;
 								$_arogrp->group_id = $_arogrp->id;
 								$_isadm = (strtolower($_arogrp->name) == 'super administrator' || strtolower($_arogrp->name) == 'administrator');
 							}
-								if (!fb_has_moderator_permission($kunena_db, $_catobj, $subs->id, $_isadm)) {
+								if (!kunena_has_moderator_permission($kunena_db, $_catobj, $subs->id, $_isadm)) {
 									$allow_forum = array();
-									if (!fb_has_read_permission($_catobj, $allow_forum, $_arogrp->group_id, $kunena_acl)) {
+									if (!kunena_has_read_permission($_catobj, $allow_forum, $_arogrp->group_id, $kunena_acl)) {
 										//maybe remove record from subscription list?
 										continue;
 								}
@@ -359,7 +359,7 @@ $catName = $objCatInfo->name;
                                                     $msg .= trim($_COM_A_NOTIFICATION1)." ".stripslashes($board_title)." "._GEN_FORUM."\n\n";
                                                     $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
 						    $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
-                                                    $msg .= _VIEW_POSTED.": " . stripslashes($fb_authorname) . "\n\n";
+                                                    $msg .= _VIEW_POSTED.": " . stripslashes($kunena_authorname) . "\n\n";
                                                     $msg .= "$_COM_A_NOTIFICATION2\n";
                                                     $msg .= "URL: $LastPostUrl\n\n";
                                                     if ($fbConfig->mailfull == 1) {
@@ -387,7 +387,7 @@ $catName = $objCatInfo->name;
                                             //get the proper user credentials for each moderator for this forum
                                             $sql = "SELECT * FROM #__users AS u";
                                             if($fbConfig->mailmod==1) {
-                                                $sql .= " LEFT JOIN #__fb_moderation AS a";
+                                                $sql .= " LEFT JOIN #__kunena_moderation AS a";
                                                 $sql .= " ON a.userid=u.id";
                                                 $sql .= "  AND a.catid='{$catid}'";
                                             }
@@ -422,7 +422,7 @@ $catName = $objCatInfo->name;
                                                     $msg .= trim($_COM_A_NOT_MOD1)." ".stripslashes($board_title)." ".trim(_GEN_FORUM)."\n\n";
                                                     $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
 						    $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
-                                                    $msg .= _VIEW_POSTED.": " . stripslashes($fb_authorname) . "\n\n";
+                                                    $msg .= _VIEW_POSTED.": " . stripslashes($kunena_authorname) . "\n\n";
                                                     $msg .= "$_COM_A_NOT_MOD2\n";
                                                     $msg .= "URL: $LastPostUrl\n\n";
                                                     if ($fbConfig->mailfull == 1) {
@@ -445,13 +445,13 @@ $catName = $objCatInfo->name;
                                         if ($subscribeMe == 1)
                                         {
                                             if ($thread == 0) {
-                                                $fb_thread = $pid;
+                                                $kunena_thread = $pid;
                                             }
                                             else {
-                                                $fb_thread = $thread;
+                                                $kunena_thread = $thread;
                                             }
 
-                                            $kunena_db->setQuery("INSERT INTO #__fb_subscriptions (thread,userid) VALUES ('$fb_thread','{$kunena_my->id}')");
+                                            $kunena_db->setQuery("INSERT INTO #__kunena_subscriptions (thread,userid) VALUES ('$kunena_thread','{$kunena_my->id}')");
 
                                             if (@$kunena_db->query()) {
                                                 echo '<br /><br /><div align="center">' . _POST_SUBSCRIBED_TOPIC . '</div><br /><br />';
@@ -506,7 +506,7 @@ $catName = $objCatInfo->name;
 
                     if ($id > 0)
                     {
-                        $kunena_db->setQuery("SELECT m.*, t.mesid, t.message FROM #__fb_messages AS m, #__fb_messages_text AS t WHERE m.id='{$id}' AND t.mesid='{$id}'");
+                        $kunena_db->setQuery("SELECT m.*, t.mesid, t.message FROM #__kunena_messages AS m, #__kunena_messages_text AS t WHERE m.id='{$id}' AND t.mesid='{$id}'");
                         $kunena_db->query();
 
                         if ($kunena_db->getNumRows() > 0)
@@ -548,11 +548,11 @@ $catName = $objCatInfo->name;
                         //get the writing stuff in:
                         $no_upload = "0"; //only edit mode should disallow this
 
-                        if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
-                            include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
+                        if (file_exists(KUNENA_ABSTMPLTPATH . '/kunena_write.html.php')) {
+                            include (KUNENA_ABSTMPLTPATH . '/kunena_write.html.php');
                         }
                         else {
-                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_write.html.php');
+                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'kunena_write.html.php');
                         }
                         //--
                         //echo "</form>";
@@ -565,7 +565,7 @@ $catName = $objCatInfo->name;
 
                     if ($id > 0)
                     {
-                        $kunena_db->setQuery("SELECT m.*, t.mesid, t.message FROM #__fb_messages AS m, #__fb_messages_text AS t WHERE m.id='{$id}' AND t.mesid='{$id}'");
+                        $kunena_db->setQuery("SELECT m.*, t.mesid, t.message FROM #__kunena_messages AS m, #__kunena_messages_text AS t WHERE m.id='{$id}' AND t.mesid='{$id}'");
                         $kunena_db->query();
 
                         if ($kunena_db->getNumRows() > 0)
@@ -594,11 +594,11 @@ $catName = $objCatInfo->name;
 
                         <?php
                         //get the writing stuff in:
-                        if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
-                            include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
+                        if (file_exists(KUNENA_ABSTMPLTPATH . '/kunena_write.html.php')) {
+                            include (KUNENA_ABSTMPLTPATH . '/kunena_write.html.php');
                         }
                         else {
-                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_write.html.php');
+                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'kunena_write.html.php');
                         }
                         //--
                         //echo "</form>";
@@ -643,11 +643,11 @@ $catName = $objCatInfo->name;
 
                         <?php
                         //get the writing stuff in:
-                        if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
-                            include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
+                        if (file_exists(KUNENA_ABSTMPLTPATH . '/kunena_write.html.php')) {
+                            include (KUNENA_ABSTMPLTPATH . '/kunena_write.html.php');
                         }
                         else {
-                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_write.html.php');
+                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'kunena_write.html.php');
                         }
                         //--
                         //echo "</form>";
@@ -656,7 +656,7 @@ $catName = $objCatInfo->name;
                 {
                     $allowEdit = 0;
                     $id = (int)$id;
-                    $kunena_db->setQuery("SELECT * FROM #__fb_messages AS m LEFT JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE m.id='{$id}'");
+                    $kunena_db->setQuery("SELECT * FROM #__kunena_messages AS m LEFT JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.id='{$id}'");
                     $message1 = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load message.");
                     $mes = $message1[0];
@@ -719,7 +719,7 @@ $catName = $objCatInfo->name;
                         $no_file_upload = 0;
                         $no_image_upload = 0;
                         /*
-                        $kunena_db->setQuery("SELECT filelocation FROM #__fb_attachments WHERE mesid='{$id}'");
+                        $kunena_db->setQuery("SELECT filelocation FROM #__kunena_attachments WHERE mesid='{$id}'");
                         $attachments = $kunena_db->loadObjectList();
                         	check_dberror("Unable to load attachements.");
 
@@ -738,11 +738,11 @@ $catName = $objCatInfo->name;
                         }
                         */
 
-                        if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
-                            include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
+                        if (file_exists(KUNENA_ABSTMPLTPATH . '/kunena_write.html.php')) {
+                            include (KUNENA_ABSTMPLTPATH . '/kunena_write.html.php');
                         }
                         else {
-                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_write.html.php');
+                            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'kunena_write.html.php');
                         }
                         //echo "</form>";
                         //}
@@ -758,7 +758,7 @@ $catName = $objCatInfo->name;
                     $modified_time = CKunenaTools::fbGetInternalTime();
                     $id  = (int) $id;
 
-                    $kunena_db->setQuery("SELECT * FROM #__fb_messages AS m LEFT JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE m.id='{$id}'");
+                    $kunena_db->setQuery("SELECT * FROM #__kunena_messages AS m LEFT JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.id='{$id}'");
                     $message1 = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load messages.");
                     $mes = $message1[0];
@@ -814,18 +814,18 @@ $catName = $objCatInfo->name;
 
                         	if (!$is_Moderator)
                         	{
-                        		$kunena_db->setQuery("SELECT review FROM #__fb_categories WHERE id='{$catid}'");
+                        		$kunena_db->setQuery("SELECT review FROM #__kunena_categories WHERE id='{$catid}'");
                         		$kunena_db->query() or trigger_dberror('Unable to load review flag from categories.');
                         		$holdPost = $kunena_db->loadResult();
                         	}
 
                             $kunena_db->setQuery(
-                            "UPDATE #__fb_messages SET name='$fb_authorname', email='" . addslashes($email)
+                            "UPDATE #__kunena_messages SET name='$kunena_authorname', email='" . addslashes($email)
                             . (($fbConfig->editmarkup) ? "' ,modified_by='" . $modified_by
                             . "' ,modified_time='" . $modified_time . "' ,modified_reason='" . $modified_reason : "") . "', subject='" . addslashes($subject) . "', topic_emoticon='" . ((int)$topic_emoticon) .  "', hold='" . ((int)$holdPost) . "' WHERE id={$id}");
 
                             $dbr_nameset = $kunena_db->query();
-                            $kunena_db->setQuery("UPDATE #__fb_messages_text SET message='{$message}' WHERE mesid='{$id}'");
+                            $kunena_db->setQuery("UPDATE #__kunena_messages_text SET message='{$message}' WHERE mesid='{$id}'");
 
                             if ($kunena_db->query() && $dbr_nameset)
                             {
@@ -833,7 +833,7 @@ $catName = $objCatInfo->name;
                                 if (!empty($imageLocation) && file_exists($imageLocation))
                                 {
                                     $imageLocation = addslashes($imageLocation);
-                                    $kunena_db->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$id','$imageLocation')");
+                                    $kunena_db->setQuery("INSERT INTO #__kunena_attachments (mesid, filelocation) values ('$id','$imageLocation')");
 
                                     if (!$kunena_db->query()) {
                                         echo "<script> alert('Storing image failed: " . $kunena_db->getErrorMsg() . "'); </script>\n";
@@ -844,7 +844,7 @@ $catName = $objCatInfo->name;
                                 if (!empty($fileLocation) && file_exists($fileLocation))
                                 {
                                     $fileLocation = addslashes($fileLocation);
-                                    $kunena_db->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$id','$fileLocation')");
+                                    $kunena_db->setQuery("INSERT INTO #__kunena_attachments (mesid, filelocation) values ('$id','$fileLocation')");
 
                                     if (!$kunena_db->query()) {
                                         echo "<script> alert('Storing file failed: " . $kunena_db->getErrorMsg() . "'); </script>\n";
@@ -873,7 +873,7 @@ $catName = $objCatInfo->name;
                     }
 
                     $id = (int)$id;
-                    $kunena_db->setQuery("SELECT * FROM #__fb_messages WHERE id='{$id}'");
+                    $kunena_db->setQuery("SELECT * FROM #__kunena_messages WHERE id='{$id}'");
                     $message = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load messages.");
 
@@ -912,7 +912,7 @@ $catName = $objCatInfo->name;
 
                     $id = JRequest::getInt('id', 0);
                     $dellattach = JRequest::getVar('delAttachments', '') == 'delAtt' ? 1 : 0;
-                    $thread = fb_delete_post($kunena_db, $id, $dellattach);
+                    $thread = kunena_delete_post($kunena_db, $id, $dellattach);
 
                     CKunenaTools::reCountBoards();
 
@@ -967,12 +967,12 @@ $catName = $objCatInfo->name;
                     $catid = (int)$catid;
                     $id = (int)$id;
                     //get list of available forums
-                    //$kunena_db->setQuery("SELECT id, name FROM #__fb_categories WHERE parent != '0'");
-                    $kunena_db->setQuery("SELECT a.*, b.id AS catid, b.name AS category FROM #__fb_categories AS a LEFT JOIN #__fb_categories AS b ON b.id = a.parent WHERE a.parent!='0' AND a.id IN ($fbSession->allowed) ORDER BY parent, ordering");
+                    //$kunena_db->setQuery("SELECT id, name FROM #__kunena_categories WHERE parent != '0'");
+                    $kunena_db->setQuery("SELECT a.*, b.id AS catid, b.name AS category FROM #__kunena_categories AS a LEFT JOIN #__kunena_categories AS b ON b.id = a.parent WHERE a.parent!='0' AND a.id IN ($fbSession->allowed) ORDER BY parent, ordering");
                     $catlist = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load categories.");
                     // get topic subject:
-                    $kunena_db->setQuery("SELECT subject, id FROM #__fb_messages WHERE id='{$id}'");
+                    $kunena_db->setQuery("SELECT subject, id FROM #__kunena_messages WHERE id='{$id}'");
                     $topicSubject = $kunena_db->loadResult();
                     	check_dberror("Unable to load messages.");
             ?>
@@ -991,7 +991,7 @@ $catName = $objCatInfo->name;
 
     <br/>
 
-    <select name = "catid" size = "15" class = "fb_move_selectbox">
+    <select name = "catid" size = "15" class = "kunena_move_selectbox">
         <?php
         foreach ($catlist as $cat) {
             echo "<OPTION value=\"$cat->id\" > $cat->category/$cat->name </OPTION>";
@@ -1016,18 +1016,18 @@ $catName = $objCatInfo->name;
                     $id = (int)$id;
                     $bool_leaveGhost = JRequest::getInt('leaveGhost', 0);
                     //get the some details from the original post for later
-                    $kunena_db->setQuery("SELECT id, subject, catid, time AS timestamp FROM #__fb_messages WHERE id='{$id}'");
+                    $kunena_db->setQuery("SELECT id, subject, catid, time AS timestamp FROM #__kunena_messages WHERE id='{$id}'");
                     $oldRecord = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load messages.");
 
                     $newCatObj = new jbCategory($kunena_db, $oldRecord[0]->catid);
-		    if (!fb_has_moderator_permission($kunena_db, $newCatObj, $kunena_my->id, $is_admin)) {
+		    if (!kunena_has_moderator_permission($kunena_db, $newCatObj, $kunena_my->id, $is_admin)) {
 			$app->redirect(htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $newSubject = _MOVED_TOPIC . " " . $oldRecord[0]->subject;
 
-                    $kunena_db->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE thread='{$id}'");
+                    $kunena_db->setQuery("SELECT MAX(time) AS timestamp FROM #__kunena_messages WHERE thread='{$id}'");
                     $lastTimestamp = $kunena_db->loadResult();
                     	check_dberror("Unable to load last timestamp.");
 
@@ -1037,27 +1037,27 @@ $catName = $objCatInfo->name;
 
                     //perform the actual move
                     //Move topic post first
-                    $kunena_db->setQuery("UPDATE #__fb_messages SET `catid`='$catid' WHERE `id`='$id'");
+                    $kunena_db->setQuery("UPDATE #__kunena_messages SET `catid`='$catid' WHERE `id`='$id'");
                     $kunena_db->query() or trigger_dberror('Unable to move thread.');
 
-                    $kunena_db->setQuery("UPDATE #__fb_messages set `catid`='$catid' WHERE `thread`='$id'");
+                    $kunena_db->setQuery("UPDATE #__kunena_messages set `catid`='$catid' WHERE `thread`='$id'");
                     $kunena_db->query() or trigger_dberror('Unable to move thread.');
 
                     // insert 'moved topic' notification in old forum if needed
                     if ($bool_leaveGhost)
                     {
-                    	$kunena_db->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','$newSubject','$lastTimestamp','{$oldRecord[0]->catid}','1', '{$kunena_my->id}', '".trim(addslashes($my_name))."')");
+                    	$kunena_db->setQuery("INSERT INTO #__kunena_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','$newSubject','$lastTimestamp','{$oldRecord[0]->catid}','1', '{$kunena_my->id}', '".trim(addslashes($my_name))."')");
                     	$kunena_db->query() or trigger_dberror('Unable to insert ghost message.');
 
                     	//determine the new location for link composition
                     	$newId = $kunena_db->insertid();
 
                     	$newURL = "catid=" . $catid . "&id=" . $id;
-                    	$kunena_db->setQuery("INSERT INTO #__fb_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')");
+                    	$kunena_db->setQuery("INSERT INTO #__kunena_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')");
                     	$kunena_db->query() or trigger_dberror('Unable to insert ghost message.');
 
                     	//and update the thread id on the 'moved' post for the right ordering when viewing the forum..
-                    	$kunena_db->setQuery("UPDATE #__fb_messages SET `thread`='$newId' WHERE `id`='$newId'");
+                    	$kunena_db->setQuery("UPDATE #__kunena_messages SET `thread`='$newId' WHERE `id`='$newId'");
                     	$kunena_db->query() or trigger_dberror('Unable to move thread.');
                     }
                     //move succeeded
@@ -1077,12 +1077,12 @@ $catName = $objCatInfo->name;
                     $catid = (int)$catid;
                     $id = (int)$id;
                     //get list of available threads in same forum
-                    $kunena_db->setQuery("SELECT id, subject FROM #__fb_messages WHERE parent='0' AND catid='{$catid}' AND id!='{$id}'");
-                    //$kunena_db->setQuery("SELECT a.*, b.name AS category" . "\nFROM #__fb_categories AS a" . "\nLEFT JOIN #__fb_categories AS b ON b.id = a.parent" . "\nWHERE a.parent != '0'" . "\nORDER BY parent, ordering");
+                    $kunena_db->setQuery("SELECT id, subject FROM #__kunena_messages WHERE parent='0' AND catid='{$catid}' AND id!='{$id}'");
+                    //$kunena_db->setQuery("SELECT a.*, b.name AS category" . "\nFROM #__kunena_categories AS a" . "\nLEFT JOIN #__kunena_categories AS b ON b.id = a.parent" . "\nWHERE a.parent != '0'" . "\nORDER BY parent, ordering");
                     $threadlist = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load categories.");
                     // get topic subject:
-                    $kunena_db->setQuery("SELECT subject, id FROM #__fb_messages WHERE id='{$id}'");
+                    $kunena_db->setQuery("SELECT subject, id FROM #__kunena_messages WHERE id='{$id}'");
                     $topicSubject = $kunena_db->loadResult();
                     	check_dberror("Unable to load messages.");
             ?>
@@ -1107,7 +1107,7 @@ $catName = $objCatInfo->name;
 
     <br/>
 
-    <select name = "threadid" size = "15" class = "fb_move_selectbox">
+    <select name = "threadid" size = "15" class = "kunena_move_selectbox">
         <?php
                     foreach ($threadlist as $thread)
                     {
@@ -1156,14 +1156,14 @@ $catName = $objCatInfo->name;
                     }
 
                     //get the some details from the original post for later
-                    $kunena_db->setQuery("SELECT subject, catid, ordering, time AS timestamp FROM #__fb_messages WHERE id='{$sourceid}'");
+                    $kunena_db->setQuery("SELECT subject, catid, ordering, time AS timestamp FROM #__kunena_messages WHERE id='{$sourceid}'");
                     $oldRecord = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load messages.");
                     $newSubject = _MOVED_TOPIC . " " . $oldRecord[0]->subject;
-                    $kunena_db->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE thread='{$sourceid}'");
+                    $kunena_db->setQuery("SELECT MAX(time) AS timestamp FROM #__kunena_messages WHERE thread='{$sourceid}'");
                     $lastTimestamp = $kunena_db->loadResult();
                     	check_dberror("Unable to load messages.");
-                    $kunena_db->setQuery("SELECT MAX(ordering) AS timestamp FROM #__fb_messages WHERE thread='{$targetid}'");
+                    $kunena_db->setQuery("SELECT MAX(ordering) AS timestamp FROM #__kunena_messages WHERE thread='{$targetid}'");
                     $maxordering = $kunena_db->loadResult();
                     	check_dberror("Unable to get max(ordering) from messages.");
 
@@ -1174,32 +1174,32 @@ $catName = $objCatInfo->name;
 
                     //perform the actual merge
                     //see if you can attach
-                    $kunena_db->setQuery("UPDATE #__fb_messages set `parent`='$attachid' WHERE `id`='$sourceid'");
+                    $kunena_db->setQuery("UPDATE #__kunena_messages set `parent`='$attachid' WHERE `id`='$sourceid'");
                     if ($kunena_db->query())
                     { //succeeded; start moving posts
                         //make sure default merged threads get sorted correcty
-                        $kunena_db->setQuery("UPDATE #__fb_messages set ordering='$maxordering' WHERE thread='$sourceid'");
+                        $kunena_db->setQuery("UPDATE #__kunena_messages set ordering='$maxordering' WHERE thread='$sourceid'");
                         $kunena_db->query();
 
                         //Now move first post
-                        $kunena_db->setQuery("UPDATE #__fb_messages SET `thread`='$targetid' WHERE `id`='$sourceid'");
+                        $kunena_db->setQuery("UPDATE #__kunena_messages SET `thread`='$targetid' WHERE `id`='$sourceid'");
                         if ($kunena_db->query())
                         {
                             //Move the rest of the messages
-                            $kunena_db->setQuery("UPDATE #__fb_messages set `thread`='$targetid' WHERE `thread`='$sourceid'");
+                            $kunena_db->setQuery("UPDATE #__kunena_messages set `thread`='$targetid' WHERE `thread`='$sourceid'");
                             $kunena_db->query();
 
                             // insert 'moved topic' notification in old forum if needed
                             if ($bool_leaveGhost)
                             {
-                                $kunena_db->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`) VALUES ('0','$newSubject','" . $lastTimestamp . "','" . $oldRecord[0]->catid . "','1')");
+                                $kunena_db->setQuery("INSERT INTO #__kunena_messages (`parent`, `subject`, `time`, `catid`, `moved`) VALUES ('0','$newSubject','" . $lastTimestamp . "','" . $oldRecord[0]->catid . "','1')");
 
                                 if ($kunena_db->query())
                                 {
                                     //determine the new location for link composition
                                     $newId = $kunena_db->insertid();
                                     $newURL = "catid=" . $catid . "&id=" . $sourceid;
-                                    $kunena_db->setQuery("INSERT INTO #__fb_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')");
+                                    $kunena_db->setQuery("INSERT INTO #__kunena_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')");
 
                                     if (!$kunena_db->query())
                                     {
@@ -1207,7 +1207,7 @@ $catName = $objCatInfo->name;
                                     }
 
                                     //and update the thread id on the 'moved' post for the right ordering when viewing the forum..
-                                    $kunena_db->setQuery("UPDATE #__fb_messages SET `thread`='$newId' WHERE `id`='$newId'");
+                                    $kunena_db->setQuery("UPDATE #__kunena_messages SET `thread`='$newId' WHERE `id`='$newId'");
 
                                     if (!$kunena_db->query())
                                     {
@@ -1256,12 +1256,12 @@ $catName = $objCatInfo->name;
                     $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page, $catid), 'Split has been disabled');
                     
                     //get list of posts in thread
-                    $kunena_db->setQuery("SELECT * FROM #__fb_messages AS a "
-                    ." LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE (a.thread='{$id}' OR a.id='{$id}') AND a.hold='0' AND a.catid='{$catid}' ORDER BY a.parent ASC, a.ordering, a.time");
+                    $kunena_db->setQuery("SELECT * FROM #__kunena_messages AS a "
+                    ." LEFT JOIN #__kunena_messages_text AS b ON a.id=b.mesid WHERE (a.thread='{$id}' OR a.id='{$id}') AND a.hold='0' AND a.catid='{$catid}' ORDER BY a.parent ASC, a.ordering, a.time");
                     $postlist = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load messages.");
                     // get topic id:
-                    $kunena_db->setQuery("SELECT id FROM #__fb_messages WHERE id='{$id}' AND parent='0'");
+                    $kunena_db->setQuery("SELECT id FROM #__kunena_messages WHERE id='{$id}' AND parent='0'");
                     $id = (int)$kunena_db->loadResult();
                     	check_dberror("Unable to load messages.");
 
@@ -1285,21 +1285,21 @@ $catName = $objCatInfo->name;
 
     <input type = "submit" class = "button" value = "<?php echo _GEN_DOSPLIT; ?>"/>
 
-        <table border = "0" cellspacing = "1" cellpadding = "3" width = "100%" class = "fb_review_table">
+        <table border = "0" cellspacing = "1" cellpadding = "3" width = "100%" class = "kunena_review_table">
             <tr>
-                <td class = "fb_review_header" width = "26px" align = "center">
+                <td class = "kunena_review_header" width = "26px" align = "center">
                     <strong><?php echo _GEN_SPLIT; ?></strong>
                 </td>
-                <td class = "fb_review_header" width = "34px" align = "center">
+                <td class = "kunena_review_header" width = "34px" align = "center">
                     <strong><?php echo _GEN_TOPIC; ?></strong>
                 </td>
-                <td class = "fb_review_header" width = "15%" align = "center">
+                <td class = "kunena_review_header" width = "15%" align = "center">
                     <strong><?php echo _GEN_AUTHOR; ?></strong>
                 </td>
-                <td class = "fb_review_header" width = "20%" align = "center">
+                <td class = "kunena_review_header" width = "20%" align = "center">
                     <strong><?php echo _GEN_SUBJECT; ?></strong>
                 </td>
-                <td class = "fb_review_header" align = "center">
+                <td class = "kunena_review_header" align = "center">
                     <strong><?php echo _GEN_MESSAGE; ?></strong>
                 </td>
             </tr>
@@ -1317,7 +1317,7 @@ $catName = $objCatInfo->name;
             ?>
 
                 <tr>
-                    <td class = "fb_review_body<?php echo $k;?>" valign = "top">
+                    <td class = "kunena_review_body<?php echo $k;?>" valign = "top">
 <?php
                         if ($mes->id==$id)
                         {
@@ -1332,7 +1332,7 @@ $catName = $objCatInfo->name;
 ?>
                     </td>
 
-                    <td class = "fb_review_body<?php echo $k;?>" valign = "top">
+                    <td class = "kunena_review_body<?php echo $k;?>" valign = "top">
 <?php
                         if ($mes->id==$id)
                         {
@@ -1347,19 +1347,19 @@ $catName = $objCatInfo->name;
 ?>
                     </td>
 
-                    <td class = "fb_review_body<?php echo $k;?>" valign = "top"><?php echo stripslashes($mes->name); ?>
+                    <td class = "kunena_review_body<?php echo $k;?>" valign = "top"><?php echo stripslashes($mes->name); ?>
                     </td>
-                    <td class = "fb_review_body<?php echo $k;?>" valign = "top"><?php echo stripslashes($mes->subject); ?>
+                    <td class = "kunena_review_body<?php echo $k;?>" valign = "top"><?php echo stripslashes($mes->subject); ?>
                     </td>
 
-                    <td class = "fb_review_body<?php echo $k;?>">
+                    <td class = "kunena_review_body<?php echo $k;?>">
                         <?php
-                        $fb_message_txt = stripslashes(nl2br($mes->message));
-                        $fb_message_txt = str_replace("</P><br />", "</P>", $fb_message_txt);
+                        $kunena_message_txt = stripslashes(nl2br($mes->message));
+                        $kunena_message_txt = str_replace("</P><br />", "</P>", $kunena_message_txt);
                         //Long Words Wrap:
-                        $fb_message_txt = smile::htmlwrap($fb_message_txt, $fbConfig->wrap);
+                        $kunena_message_txt = smile::htmlwrap($kunena_message_txt, $fbConfig->wrap);
 
-                        echo $fb_message_txt;
+                        echo $kunena_message_txt;
                         ?>
                     </td>
                 </tr>
@@ -1409,7 +1409,7 @@ $catName = $objCatInfo->name;
                     }
 
                     //store sticky bit from old topic
-                    $kunena_db->setQuery("SELECT ordering FROM #__fb_messages WHERE id='{$id}'");
+                    $kunena_db->setQuery("SELECT ordering FROM #__kunena_messages WHERE id='{$id}'");
                     $sticky_bit = (int)$kunena_db->loadResult();
 
                     //enter topic change only sequence
@@ -1419,35 +1419,35 @@ $catName = $objCatInfo->name;
                         if ($new_topic != 0 && $id != $new_topic)
                         {
                             //select all posts in thread regardless of earlier selection
-                            $kunena_db->setQuery("SELECT id FROM #__fb_messages WHERE thread='{$id}'");
+                            $kunena_db->setQuery("SELECT id FROM #__kunena_messages WHERE thread='{$id}'");
                             $to_split = $kunena_db->loadResultArray();
 
                             $split_string=implode(",",$to_split);
 
                             //old topic id adopted by new one: the new parent will appear after child unless sorting var added in view.php
-                            $kunena_db->setQuery("UPDATE #__fb_messages set parent=$new_topic WHERE id=$id");
+                            $kunena_db->setQuery("UPDATE #__kunena_messages set parent=$new_topic WHERE id=$id");
                             $kunena_db->query();
 
                             //assign new thread ids
-                            $kunena_db->setQuery("UPDATE #__fb_messages set thread=$new_topic WHERE id IN ($split_string)");
+                            $kunena_db->setQuery("UPDATE #__kunena_messages set thread=$new_topic WHERE id IN ($split_string)");
                             $kunena_db->query();
 
                             //set new topic
-                            $kunena_db->setQuery("UPDATE #__fb_messages set parent=0 WHERE id=$new_topic");
+                            $kunena_db->setQuery("UPDATE #__kunena_messages set parent=0 WHERE id=$new_topic");
                             $kunena_db->query();
 
                             //copy over hits from old topic
-                            $kunena_db->setQuery("SELECT hits FROM #__fb_messages WHERE id='{$id}'");
+                            $kunena_db->setQuery("SELECT hits FROM #__kunena_messages WHERE id='{$id}'");
                             $hits = (int)$kunena_db->loadResult();
-                            $kunena_db->setQuery("UPDATE #__fb_messages set hits=$hits WHERE id=$new_topic");
+                            $kunena_db->setQuery("UPDATE #__kunena_messages set hits=$hits WHERE id=$new_topic");
                             $kunena_db->query();
 
 
-                            $kunena_db->setQuery("UPDATE #__fb_messages set ordering='2' WHERE id=$id");
+                            $kunena_db->setQuery("UPDATE #__kunena_messages set ordering='2' WHERE id=$id");
                             $kunena_db->query();
 
                             //move new topic to top regardless of viewing preferences and set sticky
-                            $kunena_db->setQuery("UPDATE #__fb_messages set ordering='$sticky_bit' WHERE id=$new_topic AND parent=0");
+                            $kunena_db->setQuery("UPDATE #__kunena_messages set ordering='$sticky_bit' WHERE id=$new_topic AND parent=0");
                             $kunena_db->query();
 
                             echo '<br /><br /><div align="center">' . _POST_SUCCESS_SPLIT_TOPIC_CHANGED . "</div><br />";
@@ -1490,12 +1490,12 @@ $catName = $objCatInfo->name;
                     $split_string=implode(",",$to_split);
 
                     //assign new thread ids
-                    $kunena_db->setQuery("UPDATE #__fb_messages set thread='$new_topic' WHERE id IN ($split_string)");
+                    $kunena_db->setQuery("UPDATE #__kunena_messages set thread='$new_topic' WHERE id IN ($split_string)");
                     $kunena_db->query();
 
                     foreach ($to_split as $split_id)
                     { //assign new parents to topic and orphaned posts
-                        $kunena_db->setQuery("SELECT parent FROM #__fb_messages WHERE id='{$split_id}'");
+                        $kunena_db->setQuery("SELECT parent FROM #__kunena_messages WHERE id='{$split_id}'");
                         $parent = (int)$kunena_db->loadResult();
 
                         if ($split_id == $new_topic)
@@ -1519,23 +1519,23 @@ $catName = $objCatInfo->name;
                         else //reset existing parent
                         $linkup=$parent;
 
-                        $kunena_db->setQuery("UPDATE #__fb_messages set parent='$linkup' WHERE id=$split_id");
+                        $kunena_db->setQuery("UPDATE #__kunena_messages set parent='$linkup' WHERE id=$split_id");
                         $kunena_db->query();
                     } //end parenting foreach loop
 
 
                     //inherit hits from old topic
-                    $kunena_db->setQuery("SELECT hits FROM #__fb_messages WHERE id='{$id}'");
+                    $kunena_db->setQuery("SELECT hits FROM #__kunena_messages WHERE id='{$id}'");
                     $hits = (int)$kunena_db->loadResult();
-                    $kunena_db->setQuery("UPDATE #__fb_messages set hits=$hits WHERE id=$new_topic");
+                    $kunena_db->setQuery("UPDATE #__kunena_messages set hits=$hits WHERE id=$new_topic");
                     $kunena_db->query();
 
                     //set the highest sorting for old topic
-                    $kunena_db->setQuery("UPDATE #__fb_messages set ordering='2' WHERE id=$id");
+                    $kunena_db->setQuery("UPDATE #__kunena_messages set ordering='2' WHERE id=$id");
                     $kunena_db->query();
 
                     //copy over sticky bit to new topic
-                    $kunena_db->setQuery("UPDATE #__fb_messages set ordering='$sticky_bit' WHERE id=$new_topic AND parent=0");
+                    $kunena_db->setQuery("UPDATE #__kunena_messages set ordering='$sticky_bit' WHERE id=$new_topic AND parent=0");
                     $kunena_db->query();
 
                     //split succeeded
@@ -1550,7 +1550,7 @@ $catName = $objCatInfo->name;
                     $catid = (int)$catid;
                     $id = (int)$id;
                     $success_msg = _POST_NO_SUBSCRIBED_TOPIC;
-                    $kunena_db->setQuery("SELECT thread, catid from #__fb_messages WHERE id='{$id}'");
+                    $kunena_db->setQuery("SELECT thread, catid from #__kunena_messages WHERE id='{$id}'");
                     if ($id && $kunena_my->id && $kunena_db->query())
                     {
 						$row = $kunena_db->loadObject();
@@ -1562,15 +1562,15 @@ $catName = $objCatInfo->name;
 							else
 								$allow_forum = array ();
 
-								$obj_fb_cat = new jbCategory($kunena_db, $row->catid);
-								if (!fb_has_read_permission($obj_fb_cat, $allow_forum, $aro_group->id, $kunena_acl)) {
+								$obj_kunena_cat = new jbCategory($kunena_db, $row->catid);
+								if (!kunena_has_read_permission($obj_kunena_cat, $allow_forum, $aro_group->id, $kunena_acl)) {
 									$app->redirect(htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
 								return;
 							}
 						}
 
                         $thread = $row->thread;
-                        $kunena_db->setQuery("INSERT INTO #__fb_subscriptions (thread,userid) VALUES ('$thread','$kunena_my->id')");
+                        $kunena_db->setQuery("INSERT INTO #__kunena_subscriptions (thread,userid) VALUES ('$thread','$kunena_my->id')");
 
                         if (@$kunena_db->query() && $kunena_db->getAffectedRows()==1) {
                             $success_msg = _POST_SUBSCRIBED_TOPIC;
@@ -1583,11 +1583,11 @@ $catName = $objCatInfo->name;
                     $catid = (int)$catid;
                     $id = (int)$id;
                     $success_msg = _POST_NO_UNSUBSCRIBED_TOPIC;
-                    $kunena_db->setQuery("SELECT MAX(thread) AS thread FROM #__fb_messages WHERE id='{$id}'");
+                    $kunena_db->setQuery("SELECT MAX(thread) AS thread FROM #__kunena_messages WHERE id='{$id}'");
                     if ($id && $kunena_my->id && $kunena_db->query())
                     {
                         $thread = $kunena_db->loadResult();
-                        $kunena_db->setQuery("DELETE FROM #__fb_subscriptions WHERE thread=$thread AND userid=$kunena_my->id");
+                        $kunena_db->setQuery("DELETE FROM #__kunena_subscriptions WHERE thread=$thread AND userid=$kunena_my->id");
 
                         if ($kunena_db->query() && $kunena_db->getAffectedRows()==1)
                         {
@@ -1601,11 +1601,11 @@ $catName = $objCatInfo->name;
                     $catid = (int)$catid;
                     $id = (int)$id;
                     $success_msg = _POST_NO_FAVORITED_TOPIC;
-                    $kunena_db->setQuery("SELECT MAX(thread) AS thread FROM #__fb_messages WHERE id='{$id}'");
+                    $kunena_db->setQuery("SELECT MAX(thread) AS thread FROM #__kunena_messages WHERE id='{$id}'");
                     if ($id && $kunena_my->id && $kunena_db->query())
                     {
                         $thread = $kunena_db->loadResult();
-                        $kunena_db->setQuery("INSERT INTO #__fb_favorites (thread,userid) VALUES ('$thread','$kunena_my->id')");
+                        $kunena_db->setQuery("INSERT INTO #__kunena_favorites (thread,userid) VALUES ('$thread','$kunena_my->id')");
 
                         if (@$kunena_db->query() && $kunena_db->getAffectedRows()==1)
                         {
@@ -1619,11 +1619,11 @@ $catName = $objCatInfo->name;
                     $catid = (int)$catid;
                     $id = (int)$id;
                     $success_msg = _POST_NO_UNFAVORITED_TOPIC;
-                    $kunena_db->setQuery("SELECT MAX(thread) AS thread FROM #__fb_messages WHERE id='{$id}'");
+                    $kunena_db->setQuery("SELECT MAX(thread) AS thread FROM #__kunena_messages WHERE id='{$id}'");
                     if ($id && $kunena_my->id && $kunena_db->query())
                     {
                         $thread = $kunena_db->loadResult();
-                        $kunena_db->setQuery("DELETE FROM #__fb_favorites WHERE thread=$thread AND userid=$kunena_my->id");
+                        $kunena_db->setQuery("DELETE FROM #__kunena_favorites WHERE thread=$thread AND userid=$kunena_my->id");
 
                         if ($kunena_db->query() && $kunena_db->getAffectedRows()==1)
                         {
@@ -1640,7 +1640,7 @@ $catName = $objCatInfo->name;
 
                     $id = (int)$id;
                     $success_msg = _POST_STICKY_NOT_SET;
-                    $kunena_db->setQuery("update #__fb_messages set ordering=1 where id=$id");
+                    $kunena_db->setQuery("update #__kunena_messages set ordering=1 where id=$id");
                     if ($id && $kunena_db->query() && $kunena_db->getAffectedRows()==1) {
                         $success_msg = _POST_STICKY_SET;
                     }
@@ -1654,7 +1654,7 @@ $catName = $objCatInfo->name;
 
                     $id = (int)$id;
                     $success_msg = _POST_STICKY_NOT_UNSET;
-                    $kunena_db->setQuery("update #__fb_messages set ordering=0 where id=$id");
+                    $kunena_db->setQuery("update #__kunena_messages set ordering=0 where id=$id");
                     if ($id && $kunena_db->query() && $kunena_db->getAffectedRows()==1) {
                         $success_msg = _POST_STICKY_UNSET;
                     }
@@ -1668,7 +1668,7 @@ $catName = $objCatInfo->name;
 
                     $id = (int)$id;
                     $success_msg = _POST_LOCK_NOT_SET;
-                    $kunena_db->setQuery("update #__fb_messages set locked=1 where id=$id");
+                    $kunena_db->setQuery("update #__kunena_messages set locked=1 where id=$id");
                     if ($id && $kunena_db->query() && $kunena_db->getAffectedRows()==1) {
                         $success_msg = _POST_LOCK_SET;
                     }
@@ -1682,7 +1682,7 @@ $catName = $objCatInfo->name;
 
                     $id = (int)$id;
                     $success_msg = _POST_LOCK_NOT_UNSET;
-                    $kunena_db->setQuery("update #__fb_messages set locked=0 where id=$id");
+                    $kunena_db->setQuery("update #__kunena_messages set locked=0 where id=$id");
                     if ($id && $kunena_db->query() && $kunena_db->getAffectedRows()==1) {
                         $success_msg = _POST_LOCK_UNSET;
                     }
@@ -1710,16 +1710,16 @@ function hasPostPermission($kunena_db, $catid, $id, $userid, $pubwrite, $ismod)
     $topicLock = 0;
     if ($id != 0)
     {
-        $kunena_db->setQuery("SELECT thread FROM #__fb_messages WHERE id='{$id}'");
+        $kunena_db->setQuery("SELECT thread FROM #__kunena_messages WHERE id='{$id}'");
         $topicID = $kunena_db->loadResult();
         $lockedWhat = _GEN_TOPIC;
 
         if ($topicID != 0) //message replied to is not the topic post; check if the topic post itself is locked
         {
-            $sql = "SELECT locked FROM #__fb_messages WHERE id='{$topicID}'";
+            $sql = "SELECT locked FROM #__kunena_messages WHERE id='{$topicID}'";
         }
         else {
-            $sql = "SELECT locked FROM #__fb_messages WHERE id='{$id}'";
+            $sql = "SELECT locked FROM #__kunena_messages WHERE id='{$id}'";
         }
 
         $kunena_db->setQuery($sql);
@@ -1728,7 +1728,7 @@ function hasPostPermission($kunena_db, $catid, $id, $userid, $pubwrite, $ismod)
 
     if ($topicLock == 0)
     { //topic not locked; check if forum is locked
-        $kunena_db->setQuery("SELECT locked FROM #__fb_categories WHERE id='{$catid}'");
+        $kunena_db->setQuery("SELECT locked FROM #__kunena_categories WHERE id='{$catid}'");
         $topicLock = $kunena_db->loadResult();
         $lockedWhat = _GEN_FORUM;
     }
@@ -1750,7 +1750,7 @@ function hasPostPermission($kunena_db, $catid, $id, $userid, $pubwrite, $ismod)
             echo _POST_NO_PUBACCESS1 . "<br />";
             echo _POST_NO_PUBACCESS2 . "<br /><br />";
 
-            if ($fbConfig->fb_profile == 'cb') {
+            if ($fbConfig->kunena_profile == 'cb') {
                 echo '<a href="' . CKunenaCBProfile::getRegisterURL() . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
             }
             else {
@@ -1770,9 +1770,9 @@ function hasPostPermission($kunena_db, $catid, $id, $userid, $pubwrite, $ismod)
  *
  * @return int returns thread id if all went well, -1 to -4 are error numbers
 **/
-function fb_delete_post(&$kunena_db, $id, $dellattach)
+function kunena_delete_post(&$kunena_db, $id, $dellattach)
 {
-    $kunena_db->setQuery("SELECT id, catid, parent, thread, subject, userid FROM #__fb_messages WHERE id='{$id}'");
+    $kunena_db->setQuery("SELECT id, catid, parent, thread, subject, userid FROM #__kunena_messages WHERE id='{$id}'");
 
     if (!$kunena_db->query()) {
         return -2;
@@ -1787,7 +1787,7 @@ function fb_delete_post(&$kunena_db, $id, $dellattach)
     {
         // this is the forum topic; if removed, all children must be removed as well.
         $children = array ();
-        $kunena_db->setQuery("SELECT userid, id, catid FROM #__fb_messages WHERE thread='{$id}' OR id='{$id}'");
+        $kunena_db->setQuery("SELECT userid, id, catid FROM #__kunena_messages WHERE thread='{$id}' OR id='{$id}'");
 
         foreach ($kunena_db->loadObjectList() as $line)
         {
@@ -1804,7 +1804,7 @@ function fb_delete_post(&$kunena_db, $id, $dellattach)
     else
     {
         //this is not the forum topic, so delete it and promote the direct children one level up in the hierarchy
-        $kunena_db->setQuery('UPDATE #__fb_messages SET parent=\'' . $mes->parent . '\' WHERE parent=\'' . $id . '\'');
+        $kunena_db->setQuery('UPDATE #__kunena_messages SET parent=\'' . $mes->parent . '\' WHERE parent=\'' . $id . '\'');
 
         if (!$kunena_db->query()) {
             return -1;
@@ -1815,14 +1815,14 @@ function fb_delete_post(&$kunena_db, $id, $dellattach)
     }
 
     //Delete the post (and it's children when it's the first post)
-    $kunena_db->setQuery('DELETE FROM #__fb_messages WHERE id=' . $id . ' OR thread=' . $id);
+    $kunena_db->setQuery('DELETE FROM #__kunena_messages WHERE id=' . $id . ' OR thread=' . $id);
 
     if (!$kunena_db->query()) {
         return -2;
     }
 
     //Delete message text(s)
-    $kunena_db->setQuery('DELETE FROM #__fb_messages_text WHERE mesid IN (' . $children . ')');
+    $kunena_db->setQuery('DELETE FROM #__kunena_messages_text WHERE mesid IN (' . $children . ')');
 
     if (!$kunena_db->query()) {
         return -3;
@@ -1831,7 +1831,7 @@ function fb_delete_post(&$kunena_db, $id, $dellattach)
     //Update user post stats
     if (count($userid_array) > 0)
     {
-        $kunena_db->setQuery('UPDATE #__fb_users SET posts=posts-1 WHERE userid IN (' . $userids . ')');
+        $kunena_db->setQuery('UPDATE #__kunena_users SET posts=posts-1 WHERE userid IN (' . $userids . ')');
 
         if (!$kunena_db->query()) {
             return -4;
@@ -1839,14 +1839,14 @@ function fb_delete_post(&$kunena_db, $id, $dellattach)
     }
 
     //Delete (possible) ghost post
-    $kunena_db->setQuery("SELECT mesid FROM #__fb_messages_text WHERE message='catid={$mes->catid}&amp;id={$id}'");
+    $kunena_db->setQuery("SELECT mesid FROM #__kunena_messages_text WHERE message='catid={$mes->catid}&amp;id={$id}'");
     $int_ghost_id = $kunena_db->loadResult();
 
     if ($int_ghost_id > 0)
     {
-        $kunena_db->setQuery('DELETE FROM #__fb_messages WHERE id=' . $int_ghost_id);
+        $kunena_db->setQuery('DELETE FROM #__kunena_messages WHERE id=' . $int_ghost_id);
         $kunena_db->query();
-        $kunena_db->setQuery('DELETE FROM #__fb_messages_text WHERE mesid=' . $int_ghost_id);
+        $kunena_db->setQuery('DELETE FROM #__kunena_messages_text WHERE mesid=' . $int_ghost_id);
         $kunena_db->query();
     }
 
@@ -1854,7 +1854,7 @@ function fb_delete_post(&$kunena_db, $id, $dellattach)
     if ($dellattach)
     {
         $errorcode = 0;
-        $kunena_db->setQuery('SELECT filelocation FROM #__fb_attachments WHERE mesid IN (' . $children . ')');
+        $kunena_db->setQuery('SELECT filelocation FROM #__kunena_attachments WHERE mesid IN (' . $children . ')');
         $fileList = $kunena_db->loadObjectList();
         	check_dberror("Unable to load attachments.");
 
@@ -1869,7 +1869,7 @@ function fb_delete_post(&$kunena_db, $id, $dellattach)
 		}
             }
 
-            $kunena_db->setQuery('DELETE FROM #__fb_attachments WHERE mesid IN (' . $children . ')');
+            $kunena_db->setQuery('DELETE FROM #__kunena_attachments WHERE mesid IN (' . $children . ')');
             $kunena_db->query();
        	    check_dberror("Unable to delete attachements.");
 	    if ($errorcode) return $errorcode;
@@ -1887,10 +1887,10 @@ function listThreadHistory($id, $fbConfig, $kunena_db)
     if ($id != 0)
     {
         //get the parent# for the post on which 'reply' or 'quote' is chosen
-        $kunena_db->setQuery("SELECT parent FROM #__fb_messages WHERE id='{$id}'");
+        $kunena_db->setQuery("SELECT parent FROM #__kunena_messages WHERE id='{$id}'");
         $this_message_parent = $kunena_db->loadResult();
         //Get the thread# for the same post
-        $kunena_db->setQuery("SELECT thread FROM #__fb_messages WHERE id='{$id}'");
+        $kunena_db->setQuery("SELECT thread FROM #__kunena_messages WHERE id='{$id}'");
         $this_message_thread = $kunena_db->loadResult();
 
         //determine the correct thread# for the entire thread
@@ -1902,23 +1902,23 @@ function listThreadHistory($id, $fbConfig, $kunena_db)
         }
 
         //get all the messages for this thread
-        $kunena_db->setQuery("SELECT * FROM #__fb_messages AS m LEFT JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE (thread='{$thread}' OR id='{$thread}') AND hold='0' ORDER BY time DESC LIMIT " . $fbConfig->historylimit);
+        $kunena_db->setQuery("SELECT * FROM #__kunena_messages AS m LEFT JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE (thread='{$thread}' OR id='{$thread}') AND hold='0' ORDER BY time DESC LIMIT " . $fbConfig->historylimit);
         $messages = $kunena_db->loadObjectList();
         	check_dberror("Unable to load messages.");
         //and the subject of the first thread (for reference)
-        $kunena_db->setQuery("SELECT subject FROM #__fb_messages WHERE id='{$thread}' and parent='0'");
+        $kunena_db->setQuery("SELECT subject FROM #__kunena_messages WHERE id='{$thread}' and parent='0'");
         $this_message_subject = $kunena_db->loadResult();
         	check_dberror("Unable to load messages.");
         echo "<b>" . _POST_TOPIC_HISTORY . ":</b> " . kunena_htmlspecialchars(stripslashes($this_message_subject)) . " <br />" . _POST_TOPIC_HISTORY_MAX . " $fbConfig->historylimit " . _POST_TOPIC_HISTORY_LAST . "<br />";
 ?>
 
-        <table border = "0" cellspacing = "1" cellpadding = "3" width = "100%" class = "fb_review_table">
+        <table border = "0" cellspacing = "1" cellpadding = "3" width = "100%" class = "kunena_review_table">
             <tr>
-                <td class = "fb_review_header" width = "20%" align = "center">
+                <td class = "kunena_review_header" width = "20%" align = "center">
                     <strong><?php echo _GEN_AUTHOR; ?></strong>
                 </td>
 
-                <td class = "fb_review_header" align = "center">
+                <td class = "kunena_review_header" align = "center">
                     <strong><?php echo _GEN_MESSAGE; ?></strong>
                 </td>
             </tr>
@@ -1935,27 +1935,27 @@ function listThreadHistory($id, $fbConfig, $kunena_db)
                 $mes->subject = kunena_htmlspecialchars($mes->subject);
 
 
-                $fb_message_txt = stripslashes(($mes->message));
-                $fb_message_txt = smile::smileReplace($fb_message_txt, 1, $fbConfig->disemoticons, $smileyList);
-                $fb_message_txt = nl2br($fb_message_txt);
-                $fb_message_txt = str_replace("__FBTAB__", "\t", $fb_message_txt);
+                $kunena_message_txt = stripslashes(($mes->message));
+                $kunena_message_txt = smile::smileReplace($kunena_message_txt, 1, $fbConfig->disemoticons, $smileyList);
+                $kunena_message_txt = nl2br($kunena_message_txt);
+                $kunena_message_txt = str_replace("__FBTAB__", "\t", $kunena_message_txt);
 
             ?>
 
                 <tr>
-                    <td class = "fb_review_body<?php echo $k;?>" valign = "top">
+                    <td class = "kunena_review_body<?php echo $k;?>" valign = "top">
                         <?php echo stripslashes($mes->name); ?>
                     </td>
 
-                    <td class = "fb_review_body<?php echo $k;?>">
+                    <td class = "kunena_review_body<?php echo $k;?>">
                         <?php
-                        $fb_message_txt = str_replace("</P><br />", "</P>", $fb_message_txt);
+                        $kunena_message_txt = str_replace("</P><br />", "</P>", $kunena_message_txt);
                         //Long Words Wrap:
-                        $fb_message_txt = smile::htmlwrap($fb_message_txt, $fbConfig->wrap);
+                        $kunena_message_txt = smile::htmlwrap($kunena_message_txt, $fbConfig->wrap);
 
-						$fb_message_txt = CKunenaTools::prepareContent($fb_message_txt);
+						$kunena_message_txt = CKunenaTools::prepareContent($kunena_message_txt);
                         
-                        echo $fb_message_txt;
+                        echo $kunena_message_txt;
                         ?>
                     </td>
                 </tr>
@@ -1975,7 +1975,7 @@ function listThreadHistory($id, $fbConfig, $kunena_db)
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable" id = "fb_bottomarea" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "kunena_blocktable" id = "kunena_bottomarea" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
             <th class = "th-right">

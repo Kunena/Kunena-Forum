@@ -26,11 +26,11 @@ $fbConfig =& CKunenaConfig::getInstance();
 $forumurl = JRoute::_(KUNENA_LIVEURLREL);
 $statslink = JRoute::_(KUNENA_LIVEURLREL.'&amp;func=stats');
 
-if ($fbConfig->fb_profile == "jomsocial")
+if ($fbConfig->kunena_profile == "jomsocial")
 {
 	$userlist = JRoute::_('index.php?option=com_community&amp;view=search&amp;task=browse');
 }
-else if ($fbConfig->fb_profile == 'cb')
+else if ($fbConfig->kunena_profile == 'cb')
 {
     $userlist = CKunenaCBProfile::getUserListURL();
 }
@@ -50,12 +50,12 @@ if ($fbConfig->showstats > 0)
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-        <table  class = "fb_blocktable" id ="fb_frontstats" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+        <table  class = "kunena_blocktable" id ="kunena_frontstats" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
                     <th align="left">
-                        <div class = "fb_title_cover fbm">
-                            <a class="fb_title fbl" href = "<?php echo $statslink;?>"><?php echo stripslashes($fbConfig->board_title); ?> <?php echo _STAT_FORUMSTATS; ?></a>
+                        <div class = "kunena_title_cover fbm">
+                            <a class="kunena_title fbl" href = "<?php echo $statslink;?>"><?php echo stripslashes($fbConfig->board_title); ?> <?php echo _STAT_FORUMSTATS; ?></a>
                         </div>
                         <img id = "BoxSwitch_frontstats__frontstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
                     </th>

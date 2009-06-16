@@ -1568,9 +1568,9 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 
                     <td align = "left" valign = "top"><?php
 
-				$fb_gd = intval(KUNENA_gdVersion());
-				if ($fb_gd > 0) {
-				   $fbmsg = _KUNENA_GD_INSTALLED .  $fb_gd ;
+				$kunena_gd = intval(KUNENA_gdVersion());
+				if ($kunena_gd > 0) {
+				   $fbmsg = _KUNENA_GD_INSTALLED .  $kunena_gd ;
   				} elseif ($gdver == -1) {
   				   $fbmsg = _KUNENA_GD_NO_VERSION;
   			    } else {
@@ -1936,7 +1936,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_FORUMPRF ?>
                     </td>
 
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['fb_profile']; ?>
+                    <td align = "left" valign = "top" width="25%"><?php echo $lists['kunena_profile']; ?>
                     </td>
 
 
@@ -2986,7 +2986,7 @@ else
             {
                 foreach ($subslist as $subs)
                 { //get all message details for each subscription
-                    $kunena_db->setQuery("select * from #__fb_messages where id=$subs->thread");
+                    $kunena_db->setQuery("select * from #__kunena_messages where id=$subs->thread");
                     $subdet = $kunena_db->loadObjectList();
                         check_dberror("Unable to load subscription messages.");
 
@@ -3122,11 +3122,11 @@ else
             {
                 $j = $i + 1;
                 //get the corresponding posting
-                $query = "SELECT mesid FROM #__fb_attachments where filelocation='".KUNENA_PATH_UPLOADED."/".($type?'images':'files')."/$uploaded[$i]'";
+                $query = "SELECT mesid FROM #__kunena_attachments where filelocation='".KUNENA_PATH_UPLOADED."/".($type?'images':'files')."/$uploaded[$i]'";
                 $kunena_db->setQuery($query);
                 $mesid = $kunena_db->loadResult();
                 //get the catid for the posting
-                $kunena_db->setQuery("SELECT catid FROM #__fb_messages where id='$mesid'");
+                $kunena_db->setQuery("SELECT catid FROM #__kunena_messages where id='$mesid'");
                 $catid = $kunena_db->loadResult();
                 echo $mesid == '' ? '<td>' : '<td>';
                 echo '<table style="border: 1px solid #ccc;"><tr><td height="90" width="130" style="text-align: center">';

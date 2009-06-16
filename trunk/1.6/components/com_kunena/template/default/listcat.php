@@ -29,7 +29,7 @@ $catid = (int)$catid;
 $moderatedForum = 0;
 $lockedForum = 0;
 // Start getting the categories
-$kunena_db->setQuery("SELECT * FROM #__fb_categories WHERE parent='0' and published='1' ORDER BY ordering");
+$kunena_db->setQuery("SELECT * FROM #__kunena_categories WHERE parent='0' and published='1' ORDER BY ordering");
 $allCat = $kunena_db->loadObjectList();
 	check_dberror("Unable to load categories.");
 
@@ -59,7 +59,7 @@ if (in_array($catid, $threadids))
     $threadids[] = $catid;
     //get new categories list for this category only:
     unset ($categories);
-    $kunena_db->setQuery("SELECT * FROM #__fb_categories WHERE parent='0' AND published='1' and id='{$catid}' ORDER BY ordering");
+    $kunena_db->setQuery("SELECT * FROM #__kunena_categories WHERE parent='0' AND published='1' and id='{$catid}' ORDER BY ordering");
     $categories[$category->parent] = $kunena_db->loadObjectList();
     	check_dberror("Unable to load category.");
 }
@@ -91,7 +91,7 @@ if (JDocumentHTML::countModules('kunena_announcement'))
 {
 ?>
 
-    <div class = "fb-fb_2">
+    <div class = "fb-kunena_2">
         <?php
         	$document	= &JFactory::getDocument();
         	$renderer	= $document->loadRenderer('modules');
@@ -106,11 +106,11 @@ if (JDocumentHTML::countModules('kunena_announcement'))
 ?>
 <!-- B: Pathway -->
 <?php
-if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
-    require_once (KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
+if (file_exists(KUNENA_ABSTMPLTPATH . '/kunena_pathway.php')) {
+    require_once (KUNENA_ABSTMPLTPATH . '/kunena_pathway.php');
 }
 else {
-    require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_pathway.php');
+    require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'kunena_pathway.php');
 }
 ?>
 <!-- F: Pathway -->
@@ -119,26 +119,26 @@ if (count($categories[0]) > 0)
 {
     foreach ($categories[0] as $cat)
     {
-        $obj_fb_cat = new jbCategory($kunena_db, $cat->id);
+        $obj_kunena_cat = new jbCategory($kunena_db, $cat->id);
 
-        $is_Mod = fb_has_moderator_permission($kunena_db, $obj_fb_cat, $kunena_my->id, $is_admin);
+        $is_Mod = kunena_has_moderator_permission($kunena_db, $obj_kunena_cat, $kunena_my->id, $is_admin);
 
         if (in_array($cat->id, $allow_forum))
         {
 ?>
             <!-- B: List Cat -->
-<div class="<?php echo $boardclass; ?>_bt_cvr1" id="fb_block<?php echo $cat->id ; ?>">
+<div class="<?php echo $boardclass; ?>_bt_cvr1" id="kunena_block<?php echo $cat->id ; ?>">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-            <table class = "fb_blocktable<?php echo $cat->class_sfx; ?>"  width="100%" id = "fb_cat<?php echo $cat->id ; ?>" border = "0" cellspacing = "0" cellpadding = "0">
+            <table class = "kunena_blocktable<?php echo $cat->class_sfx; ?>"  width="100%" id = "kunena_cat<?php echo $cat->id ; ?>" border = "0" cellspacing = "0" cellpadding = "0">
                 <thead>
                     <tr>
                         <th colspan = "5">
-                            <div class = "fb_title_cover fbm" >
+                            <div class = "kunena_title_cover fbm" >
                                 <?php
-                                echo CKunenaLink::GetCategoryLink('listcat', $cat->id, kunena_htmlspecialchars(stripslashes($cat->name)), 'follow', $class='fb_title fbl');
+                                echo CKunenaLink::GetCategoryLink('listcat', $cat->id, kunena_htmlspecialchars(stripslashes($cat->name)), 'follow', $class='kunena_title fbl');
 
                                 if ($cat->description != "") {
                                     $tmpforumdesc = stripslashes(smile::smileReplace($cat->description, 0, $fbConfig->disemoticons, $smileyList));
@@ -153,7 +153,7 @@ if (count($categories[0]) > 0)
                     </tr>
                 </thead>
                 <tbody id = "catid_<?php echo $cat->id ; ?>">
-                    <tr class = "fb_sth fbs ">
+                    <tr class = "kunena_sth fbs ">
                         <th class = "th-1 <?php echo $boardclass; ?>sectiontableheader" width="1%">&nbsp;</th>
                         <th class = "th-2 <?php echo $boardclass; ?>sectiontableheader" align="left"><?php echo _GEN_FORUM; ?></th>
                         <th class = "th-3 <?php echo $boardclass; ?>sectiontableheader" align="center" width="5%"><?php echo _GEN_TOPICS; ?></th>
@@ -171,8 +171,8 @@ if (count($categories[0]) > 0)
                     //    show forums within the categories
                     $kunena_db->setQuery(
                     "SELECT c.*, m.id AS mesid, m.subject, m.catid, m.name AS mname, m.userid, u.id AS uid, u.username, u.name AS uname
-                    FROM #__fb_categories AS c
-                    LEFT JOIN #__fb_messages AS m ON c.id_last_msg = m.id
+                    FROM #__kunena_categories AS c
+                    LEFT JOIN #__kunena_messages AS m ON c.id_last_msg = m.id
                     LEFT JOIN #__users AS u ON u.id = m.userid
                     WHERE c.parent='{$cat->id}' AND c.published='1'
                     ORDER BY ordering");
@@ -195,8 +195,8 @@ if (count($categories[0]) > 0)
                         foreach ($rows as $singlerow)
                         {
 
-                            $obj_fb_cat = new jbCategory($kunena_db, $singlerow->id);
-                            $is_Mod = fb_has_moderator_permission($kunena_db, $obj_fb_cat, $kunena_my->id, $is_admin);
+                            $obj_kunena_cat = new jbCategory($kunena_db, $singlerow->id);
+                            $is_Mod = kunena_has_moderator_permission($kunena_db, $obj_kunena_cat, $kunena_my->id, $is_admin);
 
                             if (in_array($singlerow->id, $allow_forum))
                             {
@@ -213,7 +213,7 @@ if (count($categories[0]) > 0)
 						        $forumDesc = smile::htmlwrap($forumDesc, $fbConfig->wrap);
 
                                 //    Get the forumsubparent categories :: get the subcategories here
-                                $kunena_db->setQuery("SELECT id, name, numTopics, numPosts FROM #__fb_categories WHERE parent='{$singlerow->id}' AND published='1' ORDER BY ordering");
+                                $kunena_db->setQuery("SELECT id, name, numTopics, numPosts FROM #__kunena_categories WHERE parent='{$singlerow->id}' AND published='1' ORDER BY ordering");
                                 $forumparents = $kunena_db->loadObjectList();
                                 	check_dberror("Unable to load categories.");
 
@@ -226,7 +226,7 @@ if (count($categories[0]) > 0)
                                 if ($kunena_my->id)
                                 {
                                     //    get all threads with posts after the users last visit; don't bother for guests
-                                    $kunena_db->setQuery("SELECT DISTINCT thread FROM #__fb_messages WHERE catid='{$singlerow->id}' AND hold='0' AND time>'{$prevCheck}' GROUP BY thread");
+                                    $kunena_db->setQuery("SELECT DISTINCT thread FROM #__kunena_messages WHERE catid='{$singlerow->id}' AND hold='0' AND time>'{$prevCheck}' GROUP BY thread");
                                     $newThreadsAll = $kunena_db->loadObjectList();
                                     	check_dberror("Unable to load message threads.");
 
@@ -236,7 +236,7 @@ if (count($categories[0]) > 0)
                                 }
 
                                 // get pending messages if user is a Moderator for that forum
-                                $kunena_db->setQuery("SELECT userid FROM #__fb_moderation WHERE catid='{$singlerow->id}'");
+                                $kunena_db->setQuery("SELECT userid FROM #__kunena_moderation WHERE catid='{$singlerow->id}'");
                                 $moderatorList = $kunena_db->loadObjectList();
                                 	check_dberror("Unable to load moderators.");
                                 $modIDs[] = array ();
@@ -255,7 +255,7 @@ if (count($categories[0]) > 0)
 
                                 if ((in_array($kunena_my->id, $modIDs)) || $is_admin == 1)
                                 {
-                                    $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE catid='{$singlerow->id}' AND hold='1'");
+                                    $kunena_db->setQuery("SELECT COUNT(*) FROM #__kunena_messages WHERE catid='{$singlerow->id}' AND hold='1'");
                                     $numPending = $kunena_db->loadResult();
                                     $is_Mod = 1;
                                 }
@@ -265,8 +265,8 @@ if (count($categories[0]) > 0)
                                 unset($thisThread);
                                 $kunena_db->setQuery(
                                 "SELECT m.thread, COUNT(*) AS totalmessages
-                                FROM #__fb_messages AS m
-                                LEFT JOIN #__fb_messages AS mm ON m.thread=mm.thread
+                                FROM #__kunena_messages AS m
+                                LEFT JOIN #__kunena_messages AS mm ON m.thread=mm.thread
                                 WHERE m.id='{$singlerow->id_last_msg}'
                                 GROUP BY m.thread");
                                 $thisThread = $kunena_db->loadObject();
@@ -285,7 +285,7 @@ if (count($categories[0]) > 0)
                                 $latestuserid = $singlerow->userid;
                     ?>
 
-                                <tr class = "<?php echo ''.$boardclass.'' . $tabclass[$k] . ''; ?>" id="fb_cat<?php echo $singlerow->id ?>">
+                                <tr class = "<?php echo ''.$boardclass.'' . $tabclass[$k] . ''; ?>" id="kunena_cat<?php echo $singlerow->id ?>">
                                     <td class = "td-1" align="center">
                                         <?php
                                         $tmpIcon = '';
@@ -422,7 +422,7 @@ if (count($categories[0]) > 0)
                                                                     if ($fbConfig->shownew && $kunena_my->id != 0)
                                                                     {
                                                                         //    get all threads with posts after the users last visit; don't bother for guests
-                                                                        $kunena_db->setQuery("SELECT thread FROM #__fb_messages WHERE catid='{$forumparent->id}' AND hold='0' AND time>'{$prevCheck}' GROUP BY thread");
+                                                                        $kunena_db->setQuery("SELECT thread FROM #__kunena_messages WHERE catid='{$forumparent->id}' AND hold='0' AND time>'{$prevCheck}' GROUP BY thread");
                                                                         $newPThreadsAll = $kunena_db->loadObjectList();
                                                                         	check_dberror("Unable to load messages.");
 
@@ -483,7 +483,7 @@ if (count($categories[0]) > 0)
 
                                                     <?php
                                                                 echo CKunenaLink::GetCategoryLink('showcat', $forumparent->id, kunena_htmlspecialchars(stripslashes($forumparent->name)));
-                                                                echo '<span class="fb_childcount fbs">('.$forumparent->numTopics."/".$forumparent->numPosts.')</span>';
+                                                                echo '<span class="kunena_childcount fbs">('.$forumparent->numTopics."/".$forumparent->numPosts.')</span>';
                                                             }
                                                             echo "</td>";
                                                             $ir9++;
@@ -499,7 +499,7 @@ if (count($categories[0]) > 0)
                                         }
 
                                         //get the Moderator list for display
-                                        $kunena_db->setQuery("SELECT * FROM #__fb_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid='{$singlerow->id}'");
+                                        $kunena_db->setQuery("SELECT * FROM #__kunena_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid='{$singlerow->id}'");
                                         $modslist = $kunena_db->loadObjectList();
                                         	check_dberror("Unable to load moderators.");
 
@@ -651,11 +651,11 @@ if (count($categories[0]) > 0)
 	}
 
     //(JJ) FINISH: CAT LIST BOTTOM
-    if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php')) {
-        include (KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php');
+    if (file_exists(KUNENA_ABSTMPLTPATH . '/kunena_category_list_bottom.php')) {
+        include (KUNENA_ABSTMPLTPATH . '/kunena_category_list_bottom.php');
     }
     else {
-        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_category_list_bottom.php');
+        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'kunena_category_list_bottom.php');
     }
 ?>
 

@@ -65,10 +65,10 @@ if ($fbConfig->rsstype == 'thread')
 	                        MAX(a.time) AS lastposttime,
 	                        COUNT(*) AS numberposts
 	                    FROM
-	                        #__fb_messages AS a
+	                        #__kunena_messages AS a
 	                        JOIN (  SELECT aa.thread
-	                                FROM #__fb_messages AS aa
-	                                	JOIN #__fb_categories AS bb ON aa.catid = bb.id
+	                                FROM #__kunena_messages AS aa
+	                                	JOIN #__kunena_categories AS bb ON aa.catid = bb.id
 	                                WHERE aa.time >'{$querytime}'
 	                                AND aa.hold='0' AND aa.moved='0' AND bb.published='1' AND bb.pub_access='0'
 	                                GROUP BY 1) AS b ON b.thread = a.thread
@@ -76,9 +76,9 @@ if ($fbConfig->rsstype == 'thread')
 	                        a.moved='0'
 	                        AND a.hold='0'
 	                    GROUP BY a.thread, a.catid) AS tmp
-	                    JOIN #__fb_messages_text AS t ON tmp.lastpostid = t.mesid
-	                    JOIN #__fb_messages AS m ON tmp.thread = m.thread
-	                    JOIN #__fb_messages AS u ON tmp.lastpostid = u.id
+	                    JOIN #__kunena_messages_text AS t ON tmp.lastpostid = t.mesid
+	                    JOIN #__kunena_messages AS m ON tmp.thread = m.thread
+	                    JOIN #__kunena_messages AS u ON tmp.lastpostid = u.id
 	                WHERE
 	                	m.parent = 0
                     ORDER BY lastposttime DESC";
@@ -97,7 +97,7 @@ else
 						l.catname,
 						l.message AS lastpostmessage
 					FROM
-						#__fb_messages AS m,
+						#__kunena_messages AS m,
 						(SELECT
 							m.time,
 							m.thread,
@@ -109,9 +109,9 @@ else
 							c.name AS catname,
 							t.message AS message
 						FROM
-							#__fb_messages AS m,
-							#__fb_categories AS c,
-							#__fb_messages_text as t
+							#__kunena_messages AS m,
+							#__kunena_categories AS c,
+							#__kunena_messages_text as t
 						WHERE
 							m.id=t.mesid
 							AND m.catid=c.id

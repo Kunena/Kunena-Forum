@@ -33,19 +33,19 @@ $document->setTitle(_GEN_HELP . ' - ' . stripslashes($fbConfig->board_title));
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable" id ="fb_forumfaq" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "kunena_blocktable" id ="kunena_forumfaq" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
                     <th>
-                        <div class = "fb_title_cover fbm">
-                        <span class="fb_title fbl" ><?php echo _COM_FORUM_HELP; ?></span>
+                        <div class = "kunena_title_cover fbm">
+                        <span class="kunena_title fbl" ><?php echo _COM_FORUM_HELP; ?></span>
                         </div>
                     </th>
                 </tr>
             </thead>
             <tbody>
             <tr>
-            <td class="fb_faqdesc" valign="top">
+            <td class="kunena_faqdesc" valign="top">
 
         <?php
           $kunena_db->setQuery("SELECT introtext, id FROM #__content WHERE id='{$fbConfig->help_cid}'");
@@ -70,7 +70,7 @@ $document->setTitle(_GEN_HELP . ' - ' . stripslashes($fbConfig->board_title));
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable" id="fb_bottomarea"  border="0" cellspacing="0" cellpadding="0" width="100%">
+<table class = "kunena_blocktable" id="kunena_bottomarea"  border="0" cellspacing="0" cellpadding="0" width="100%">
   <thead>
     <tr>
        <th class="th-right">

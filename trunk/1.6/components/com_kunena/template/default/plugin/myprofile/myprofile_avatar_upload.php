@@ -159,7 +159,7 @@ switch ($task) {
 			$avatar = "";
 		}
 
-		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$avatar}' WHERE userid='{$kunena_my->id}'");
+		$kunena_db->setQuery("UPDATE #__kunena_users SET avatar='{$avatar}' WHERE userid='{$kunena_my->id}'");
 
 		if (!$kunena_db->query())
 		{
@@ -317,7 +317,7 @@ switch ($task) {
 		// delete original file
 		unlink($src_file);
 	
-		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newFileName}' WHERE userid={$kunena_my->id}");
+		$kunena_db->setQuery("UPDATE #__kunena_users SET avatar='{$newFileName}' WHERE userid={$kunena_my->id}");
 		$kunena_db->query() or trigger_dberror("Unable to update avatar.");
 
 		$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile'),_UPLOAD_UPLOADED);
@@ -332,7 +332,7 @@ switch ($task) {
 			$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&do=avatar'));
 		}
 
-		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newAvatar}' WHERE userid={$kunena_my->id}");
+		$kunena_db->setQuery("UPDATE #__kunena_users SET avatar='{$newAvatar}' WHERE userid={$kunena_my->id}");
 		$kunena_db->query() or trigger_dberror("Unable to update user avatar.");
 
 		$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile'),_UPLOAD_UPLOADED);
@@ -345,22 +345,22 @@ if ($task == 'default')
     if ($fbConfig->allowavatar)
     {
 ?>
-        <td class = "fb_myprofile_right" valign = "top">
+        <td class = "kunena_myprofile_right" valign = "top">
             <!-- B:My Profile Right -->
             <!-- B: My AVATAR -->
             <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&func=myprofile&do=avatar&action=delete'); ?>" method = "post" name = "postform">
-    <table class = "fb_blocktable" id = "fb_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+    <table class = "kunena_blocktable" id = "kunena_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>
             <tr>
                 <th colspan = "2">
-                    <div class = "fb_title_cover">
-                        <span class = "fb_title"><?php echo _YOUR_AVATAR; ?></span>
+                    <div class = "kunena_title_cover">
+                        <span class = "kunena_title"><?php echo _YOUR_AVATAR; ?></span>
                     </div>
                 </th>
             </tr>
         </thead>
 
-        <tbody  class = "fb_myprofile_general">
+        <tbody  class = "kunena_myprofile_general">
             <tr>
                 <td >
                     <?php
@@ -403,7 +403,7 @@ if ($task == 'default')
                         }
                         else
                         {
-                            $kunena_db->setQuery("SELECT avatar FROM #__fb_users WHERE userid='{$kunena_my->id}'");
+                            $kunena_db->setQuery("SELECT avatar FROM #__kunena_users WHERE userid='{$kunena_my->id}'");
                             $avatar = $kunena_db->loadResult();
                             check_dberror("Unable to load Kunena Avatar.");
                             if ($avatar != "")
@@ -456,12 +456,12 @@ if ($fbConfig->allowavatarupload)
 ?>
 
             <!-- B: Upload -->
-<table class = "fb_blocktable" id ="fb_forumua" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "kunena_blocktable" id ="kunena_forumua" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
                     <th>
-                        <div class = "fb_title_cover">
-                        <span class="fb_title" ><?php echo _UPLOAD_SUBMIT; ?></span>
+                        <div class = "kunena_title_cover">
+                        <span class="kunena_title" ><?php echo _UPLOAD_SUBMIT; ?></span>
                         <?php // echo _UPLOAD_DIMENSIONS . ": " . $fbConfig->avatarwidth . "x" . $fbConfig->avatarheight . " - " . $fbConfig->avatarsize . " KB"; ?>
                         </div>
 					</th>
@@ -469,7 +469,7 @@ if ($fbConfig->allowavatarupload)
             </thead>
             <tbody>
             <tr>
-            <td class="fb_uadesc">
+            <td class="kunena_uadesc">
 <?php
 
         echo '<form action="' . JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar&action=upload') . '" method="post" name="adminForm" enctype="multipart/form-data">';
@@ -496,19 +496,19 @@ if ($fbConfig->allowavatarupload)
     {
 ?>
             <!-- B: Gallery -->
-<table class = "fb_blocktable" id ="fb_forumua_gal" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "kunena_blocktable" id ="kunena_forumua_gal" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
                     <th>
-                        <div class = "fb_title_cover">
-                        <span class="fb_title" ><?php echo _UPLOAD_GALLERY; ?></span>
+                        <div class = "kunena_title_cover">
+                        <span class="kunena_title" ><?php echo _UPLOAD_GALLERY; ?></span>
                         </div>
 					</th>
                 </tr>
             </thead>
             <tbody>
             <tr>
-            <td class="fb_uadesc">
+            <td class="kunena_uadesc">
 
         <script type = "text/javascript">
             <!--

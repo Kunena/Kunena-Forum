@@ -75,12 +75,12 @@ if (count($messages[0]) > 0)
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
     <form action = "index.php" method = "post" name = "fbBulkActionForm">
 
-        <table class = "fb_blocktable<?php echo $objCatInfo->class_sfx; ?>" id = "fb_flattable" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+        <table class = "kunena_blocktable<?php echo $objCatInfo->class_sfx; ?>" id = "kunena_flattable" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
                     <th colspan = "<?php echo ($is_Moderator?"7":"6");?>">
-                        <div class = "fb_title_cover fbm">
-                            <span class = "fb_title fbl"><b><?php echo _KUNENA_THREADS_IN_FORUM; ?>:</b> <?php echo '' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) . ''; ?></span>
+                        <div class = "kunena_title_cover fbm">
+                            <span class = "kunena_title fbl"><b><?php echo _KUNENA_THREADS_IN_FORUM; ?>:</b> <?php echo '' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) . ''; ?></span>
                         </div>
                         <!-- FORUM TOOLS -->
 
@@ -100,7 +100,7 @@ if (count($messages[0]) > 0)
             </thead>
 
             <tbody>
-                <tr  class = "fb_sth fbs ">
+                <tr  class = "kunena_sth fbs ">
                     <th class = "th-1 <?php echo $boardclass ?>sectiontableheader" width="1%">&nbsp;</th>
                     <th class = "th-2 <?php echo $boardclass ?>sectiontableheader" width="1%">&nbsp;</th>
                     <th class = "th-3 <?php echo $boardclass ?>sectiontableheader" align="left"><?php echo _GEN_TOPICS; ?></th>
@@ -134,7 +134,7 @@ if (count($messages[0]) > 0)
 
                 <?php
                     //(JJ) ATTACHMENTS
-                    $kunena_db->setQuery("SELECT mesid FROM #__fb_attachments WHERE mesid='{$leaf->id}'");
+                    $kunena_db->setQuery("SELECT mesid FROM #__kunena_attachments WHERE mesid='{$leaf->id}'");
                     $attachmentsicon = $kunena_db->loadResult();
 
                     //(JJ) AVATAR
@@ -152,7 +152,7 @@ if (count($messages[0]) > 0)
 						} else {
 							//first we gather some information about this person
 							unset($CatUser);
-							$kunena_db->setQuery("SELECT * FROM #__fb_users AS su LEFT JOIN #__users AS u on u.id=su.userid WHERE su.userid='{$leaf->userid}'");
+							$kunena_db->setQuery("SELECT * FROM #__kunena_users AS su LEFT JOIN #__users AS u on u.id=su.userid WHERE su.userid='{$leaf->userid}'");
 
 							$CatUser = $kunena_db->loadObject();
 							if (is_object($CatUser)) $javatar = $CatUser->avatar;
@@ -170,7 +170,7 @@ if (count($messages[0]) > 0)
                 ?>
 
                         <tr>
-                            <td class = "<?php echo $boardclass ?>contentheading fbm" id = "fb_spot" colspan = "<?php echo ($is_Moderator?"7":"6");?>" align="left">
+                            <td class = "<?php echo $boardclass ?>contentheading fbm" id = "kunena_spot" colspan = "<?php echo ($is_Moderator?"7":"6");?>" align="left">
                                 <span><?php echo _KUNENA_SPOTS; ?></span>
                             </td>
                         </tr>
@@ -185,7 +185,7 @@ if (count($messages[0]) > 0)
                 ?>
 
                     <tr>
-                        <td class = "<?php echo $boardclass ?>contentheading fbm" id = "fb_fspot" colspan = "<?php echo ($is_Moderator?"7":"6");?>" align="left">
+                        <td class = "<?php echo $boardclass ?>contentheading fbm" id = "kunena_fspot" colspan = "<?php echo ($is_Moderator?"7":"6");?>" align="left">
                             <span><?php echo _KUNENA_FORUM; ?></span>
                         </td>
                     </tr>
@@ -268,7 +268,7 @@ if (count($messages[0]) > 0)
                                     <?php
                                     if ($fbConfig->allowfavorites)
                                     {
-                                        $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_favorites WHERE thread='{$leaf->id}' && userid='{$kunena_my->id}'");
+                                        $kunena_db->setQuery("SELECT COUNT(*) FROM #__kunena_favorites WHERE thread='{$leaf->id}' && userid='{$kunena_my->id}'");
 
                                         if (intval($kunena_db->loadResult()) > 0) {
                                             echo isset($fbIcons['favoritestar']) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $fbIcons['favoritestar']
@@ -343,7 +343,7 @@ if (count($messages[0]) > 0)
                             {
                                 //this thread has been moved, get the new location
                                 $newURL = ""; //init
-                                $kunena_db->setQuery("SELECT message, mesid FROM #__fb_messages_text WHERE mesid='{$leaf->id}'");
+                                $kunena_db->setQuery("SELECT message, mesid FROM #__kunena_messages_text WHERE mesid='{$leaf->id}'");
                                 $newURL = $kunena_db->loadResult();
                                 // split the string and separate catid and id for proper link assembly
                                 parse_str($newURL, $newURLParams);

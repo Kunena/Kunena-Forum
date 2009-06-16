@@ -34,7 +34,7 @@ function KunenaShowcatPagination($catid, $page, $totalpages, $maxpages) {
 	$endpage = $totalpages;
     }
 
-    $output = '<span class="fb_pagination">'._PAGE;
+    $output = '<span class="kunena_pagination">'._PAGE;
 
     if (($startpage) > 1)
     {
@@ -103,7 +103,7 @@ if (in_array($catid, $allow_forum))
     $page = $page < 1 ? 1 : $page;
     $offset = ($page - 1) * $threads_per_page;
     $row_count = $page * $threads_per_page;
-    $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE parent='0' AND catid='{$catid}' AND hold='0'");
+    $kunena_db->setQuery("SELECT COUNT(*) FROM #__kunena_messages WHERE parent='0' AND catid='{$catid}' AND hold='0'");
     $total = (int)$kunena_db->loadResult();
     	check_dberror('Unable to get message count.');
     $totalpages = ceil($total / $threads_per_page);
@@ -115,14 +115,14 @@ if (in_array($catid, $allow_forum))
     							(f.thread>0) AS myfavorite,
     							u.avatar,
     							MAX(b.time) AS lastpost
-    						FROM  #__fb_messages  AS a
-    							JOIN #__fb_messages_text AS t ON a.thread = t.mesid
-    							LEFT  JOIN #__fb_messages AS b ON b.thread = a.thread
-    							LEFT  JOIN #__fb_attachments AS m ON m.mesid = a.id
-    							LEFT  JOIN #__fb_favorites AS f ON  f.thread = a.id && f.userid='{$kunena_my->id}'
+    						FROM  #__kunena_messages  AS a
+    							JOIN #__kunena_messages_text AS t ON a.thread = t.mesid
+    							LEFT  JOIN #__kunena_messages AS b ON b.thread = a.thread
+    							LEFT  JOIN #__kunena_attachments AS m ON m.mesid = a.id
+    							LEFT  JOIN #__kunena_favorites AS f ON  f.thread = a.id && f.userid='{$kunena_my->id}'
         						" .(($fbConfig->avatar_src == "cb")?
 	                    		"LEFT JOIN #__comprofiler AS u ON u.user_id = a.userid ":
-	                    		"LEFT JOIN #__fb_users AS u ON u.userid = a.userid ")."
+	                    		"LEFT JOIN #__kunena_users AS u ON u.userid = a.userid ")."
     						WHERE a.parent =  '0'
     						AND a.catid = '{$catid}'
     						AND a.hold = '0'
@@ -152,7 +152,7 @@ if (in_array($catid, $allow_forum))
     {
         $idstr = @join("','", $threadids);
 
-        $kunena_db->setQuery("SELECT thread AS id, count(thread) AS favcount FROM #__fb_favorites
+        $kunena_db->setQuery("SELECT thread AS id, count(thread) AS favcount FROM #__kunena_favorites
        					WHERE thread IN ('$idstr') GROUP BY thread");
         $favlist = $kunena_db->loadObjectList();
         check_dberror("Unable to load messages.");
@@ -163,10 +163,10 @@ if (in_array($catid, $allow_forum))
 	}
 	unset($favlist, $fthread);
 
-        $kunena_db->setQuery("SELECT a.*, u.avatar FROM #__fb_messages AS a
+        $kunena_db->setQuery("SELECT a.*, u.avatar FROM #__kunena_messages AS a
         						" .(($fbConfig->avatar_src == "cb")?
 	                    		"LEFT JOIN #__comprofiler AS u ON u.user_id = a.userid ":
-	                    		"LEFT JOIN #__fb_users AS u ON u.userid = a.userid ")
+	                    		"LEFT JOIN #__kunena_users AS u ON u.userid = a.userid ")
         						."WHERE a.thread IN ('{$idstr}') AND a.id NOT IN ('{$idstr}') AND a.hold='0'");
         $messagelist = $kunena_db->loadObjectList();
         	check_dberror("Unable to load messages.");
@@ -179,7 +179,7 @@ if (in_array($catid, $allow_forum))
             $last_read[$message->id]->lastread = $last_reply[$message->thread];
         }
 
-        $kunena_db->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages "
+        $kunena_db->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__kunena_messages "
                            ."WHERE thread IN ('{$idstr}') AND time>'{$prevCheck}' GROUP BY thread");
         $msgidlist = $kunena_db->loadObjectList();
         check_dberror("Unable to get unread messages count and first id.");
@@ -191,7 +191,7 @@ if (in_array($catid, $allow_forum))
     }
 
     //get number of pending messages
-    $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE catid='{$catid}' AND hold='1'");
+    $kunena_db->setQuery("SELECT COUNT(*) FROM #__kunena_messages WHERE catid='{$catid}' AND hold='1'");
     $numPending = $kunena_db->loadResult();
     	check_dberror('Unable to get number of pending messages.');
     //@rsort($messages[0]);
@@ -199,11 +199,11 @@ if (in_array($catid, $allow_forum))
 <?php
     //Get the category name for breadcrumb
     unset($objCatInfo, $objCatParentInfo);
-    $kunena_db->setQuery("SELECT * FROM #__fb_categories WHERE id='{$catid}'");
+    $kunena_db->setQuery("SELECT * FROM #__kunena_categories WHERE id='{$catid}'");
     $objCatInfo = $kunena_db->loadObject();
     	check_dberror('Unable to get categories.');
     //Get the Category's parent category name for breadcrumb
-    $kunena_db->setQuery("SELECT name, id FROM #__fb_categories WHERE id='{$objCatInfo->parent}'");
+    $kunena_db->setQuery("SELECT name, id FROM #__kunena_categories WHERE id='{$objCatInfo->parent}'");
     $objCatParentInfo = $kunena_db->loadObject();
     	check_dberror('Unable to get parent category.');;
     //check if this forum is locked
@@ -224,16 +224,16 @@ if (in_array($catid, $allow_forum))
 ?>
 <!-- Pathway -->
 <?php
-    if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
-        require_once(KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
+    if (file_exists(KUNENA_ABSTMPLTPATH . '/kunena_pathway.php')) {
+        require_once(KUNENA_ABSTMPLTPATH . '/kunena_pathway.php');
     }
     else {
-        require_once(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_pathway.php');
+        require_once(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'kunena_pathway.php');
     }
 ?>
 <!-- / Pathway -->
 <?php if($objCatInfo->headerdesc) { ?>
-<table class="fb_forum-headerdesc" border="0" cellpadding="0" cellspacing="0" width="100%">
+<table class="kunena_forum-headerdesc" border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tr>
 		<td>
 		<?php
@@ -251,16 +251,16 @@ if (in_array($catid, $allow_forum))
 
 <!-- B: List Actions -->
 
-	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0" width="100%">
+	<table class="kunena_list_actions" border="0" cellpadding="0" cellspacing="0" width="100%">
 		<tr>
-			<td class="fb_list_actions_goto">
+			<td class="kunena_list_actions_goto">
                 <?php
                 //go to bottom
                 echo '<a name="forumtop" /> ';
                 echo CKunenaLink::GetSamePageAnkerLink('forumbottom', isset($fbIcons['bottomarrow']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM);
                 ?>
 
-		</td><td class="fb_list_actions_forum" width="100%">
+		</td><td class="kunena_list_actions_forum" width="100%">
 
 
                 <?php
@@ -276,14 +276,14 @@ if (in_array($catid, $allow_forum))
 
 		if (isset($forum_new) || isset($forum_markread))
 		{
-	        echo '<div class="fb_message_buttons_row" style="text-align: left;">';
+	        echo '<div class="kunena_message_buttons_row" style="text-align: left;">';
 	        if (isset($forum_new)) echo $forum_new;
 	        if (isset($forum_markread)) echo ' '.$forum_markread;
 	        echo '</div>';
 		}
 		?>
 
-		</td><td class="fb_list_pages_all" nowrap="nowrap">
+		</td><td class="kunena_list_pages_all" nowrap="nowrap">
 
 		<?php
                 //pagination 1
@@ -302,18 +302,18 @@ if (in_array($catid, $allow_forum))
 
 <?php
     //(JJ)
-    if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_sub_category_list.php')) {
-        include(KUNENA_ABSTMPLTPATH . '/fb_sub_category_list.php');
+    if (file_exists(KUNENA_ABSTMPLTPATH . '/kunena_sub_category_list.php')) {
+        include(KUNENA_ABSTMPLTPATH . '/kunena_sub_category_list.php');
     }
     else {
-        include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_sub_category_list.php');
+        include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'kunena_sub_category_list.php');
     }
 ?>
 
     <?php
     //get all readTopics in an array
     $readTopics = "";
-    $kunena_db->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid='{$kunena_my->id}'");
+    $kunena_db->setQuery("SELECT readtopics FROM #__kunena_sessions WHERE userid='{$kunena_my->id}'");
     $readTopics = $kunena_db->loadResult();
     	check_dberror('Unable to get read topics.');
 
@@ -349,28 +349,28 @@ if (in_array($catid, $allow_forum))
 
 <!-- B: List Actions Bottom -->
 
-	<table class="fb_list_actions_bottom" border="0" cellpadding="0" cellspacing="0" width="100%">
+	<table class="kunena_list_actions_bottom" border="0" cellpadding="0" cellspacing="0" width="100%">
 		<tr>
-		<td class="fb_list_actions_goto">
+		<td class="kunena_list_actions_goto">
                 <?php
                 //go to top
                 echo '<a name="forumbottom" />';
                 echo CKunenaLink::GetSamePageAnkerLink('forumtop', isset($fbIcons['toparrow']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP);
                 ?>
 
-		</td><td class="fb_list_actions_forum" width="100%">
+		</td><td class="kunena_list_actions_forum" width="100%">
 
                 <?php
 		if (isset($forum_new) || isset($forum_markread))
 		{
-	        echo '<div class="fb_message_buttons_row" style="text-align: left;">';
+	        echo '<div class="kunena_message_buttons_row" style="text-align: left;">';
 	        if (isset($forum_new)) echo $forum_new;
 	        if (isset($forum_markread)) echo ' '.$forum_markread;
 	        echo '</div>';
 		}
 		?>
 
-		</td><td class="fb_list_pages_all" nowrap="nowrap">
+		</td><td class="kunena_list_pages_all" nowrap="nowrap">
 
 		<?php
 		//pagination 2
@@ -392,15 +392,15 @@ if (in_array($catid, $allow_forum))
 
 <!-- B: Category List Bottom -->
 
-<table class="fb_list_bottom" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class="kunena_list_bottom" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
 	<tr>
-		<td class="fb_list_moderators">
+		<td class="kunena_list_moderators">
 
 			<!-- Mod List -->
 
 			<?php
 			//get the Moderator list for display
-			$kunena_db->setQuery("SELECT * FROM #__fb_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid='{$catid}'");
+			$kunena_db->setQuery("SELECT * FROM #__kunena_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid='{$catid}'");
 			$modslist = $kunena_db->loadObjectList();
 			check_dberror("Unable to load moderators.");
 
@@ -418,7 +418,7 @@ if (in_array($catid, $allow_forum))
 	<?php endif; ?>
 	<!-- /Mod List -->
       </td>
-      <td class="fb_list_categories"> <?php
+      <td class="kunena_list_categories"> <?php
 
                     //(JJ) FINISH: CAT LIST BOTTOM
 
@@ -444,7 +444,7 @@ else
 function showChildren($category, $prefix = "", &$allow_forum)
 {
     $kunena_db =& JFactory::getDBO();
-    $kunena_db->setQuery("SELECT id, name, parent FROM #__fb_categories WHERE parent='{$category}' AND published='1' ORDER BY ordering");
+    $kunena_db->setQuery("SELECT id, name, parent FROM #__kunena_categories WHERE parent='{$category}' AND published='1' ORDER BY ordering");
     $forums = $kunena_db->loadObjectList();
     	check_dberror("Unable to load categories.");
 

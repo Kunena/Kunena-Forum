@@ -83,14 +83,14 @@ $validate = JUtility::getToken();
         ?>
     </div>
 
-  <table class = "fb_blocktable" id = "fb_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+  <table class = "kunena_blocktable" id = "kunena_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
       <tr>
-        <th colspan = "2"> <div class = "fb_title_cover"> <span class = "fb_title"><?php echo _KUNENA_EDIT_TITLE; ?></span> </div></th>
+        <th colspan = "2"> <div class = "kunena_title_cover"> <span class = "kunena_title"><?php echo _KUNENA_EDIT_TITLE; ?></span> </div></th>
       </tr>
     </thead>
-    <tbody  class = "fb_myprofile_general">
-      <tr class="fb_sth">
+    <tbody  class = "kunena_myprofile_general">
+      <tr class="kunena_sth">
         <th colspan="2" > <center>
             <?php echo _KUNENA_MYPROFILE_PERSONAL_INFO; ?>
           </center></th>

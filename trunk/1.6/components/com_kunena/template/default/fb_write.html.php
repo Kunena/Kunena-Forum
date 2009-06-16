@@ -36,36 +36,36 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable<?php echo $objCatInfo->class_sfx; ?>" id="fb_postmessage"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "kunena_blocktable<?php echo $objCatInfo->class_sfx; ?>" id="kunena_postmessage"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
             <th colspan = "2">
-                <div class = "fb_title_cover fbm">
-                    <span class = "fb_title fbl"> <?php echo _POST_MESSAGE; ?>"<?php echo kunena_htmlspecialchars(stripslashes($objCatInfo->name)); ?>"</span>
+                <div class = "kunena_title_cover fbm">
+                    <span class = "kunena_title fbl"> <?php echo _POST_MESSAGE; ?>"<?php echo kunena_htmlspecialchars(stripslashes($objCatInfo->name)); ?>"</span>
                 </div>
             </th>
         </tr>
     </thead>
 
-    <tbody id = "fb_post_message">
+    <tbody id = "kunena_post_message">
         <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
-            <td class = "fb_leftcolumn">
+            <td class = "kunena_leftcolumn">
                 <strong><?php echo _GEN_NAME; ?></strong>:
             </td>
 
             <?php
             if (($fbConfig->regonly == "1" || $fbConfig->changename == '0') && $kunena_my->id != "" && !$is_Moderator) {
-                echo "<td><input type=\"hidden\" name=\"fb_authorname\" size=\"35\" class=\"" . $boardclass . "inputbox postinput\"  maxlength=\"35\" value=\"$authorName\" /><b>$authorName</b></td>";
+                echo "<td><input type=\"hidden\" name=\"kunena_authorname\" size=\"35\" class=\"" . $boardclass . "inputbox postinput\"  maxlength=\"35\" value=\"$authorName\" /><b>$authorName</b></td>";
             }
             else
             {
                 if ($registeredUser == 1) {
-                    echo "<td><input type=\"text\" name=\"fb_authorname\" size=\"35\"  class=\"" . $boardclass . "inputbox postinput\"  maxlength=\"35\" value=\"$authorName\" /></td>";
+                    echo "<td><input type=\"text\" name=\"kunena_authorname\" size=\"35\"  class=\"" . $boardclass . "inputbox postinput\"  maxlength=\"35\" value=\"$authorName\" /></td>";
                 }
                 else
                 {
-                    echo "<td><input type=\"text\" name=\"fb_authorname\" size=\"35\"  class=\"" . $boardclass . "inputbox postinput\"  maxlength=\"35\" value=\"\" />";
-                    echo "<script type=\"text/javascript\">document.postform.fb_authorname.focus();</script></td>";
+                    echo "<td><input type=\"text\" name=\"kunena_authorname\" size=\"35\"  class=\"" . $boardclass . "inputbox postinput\"  maxlength=\"35\" value=\"\" />";
+                    echo "<script type=\"text/javascript\">document.postform.kunena_authorname.focus();</script></td>";
                     $setFocus = 1;
                 }
             }
@@ -75,7 +75,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
         <?php
         if ($fbConfig->askemail)
         {
-            echo '<tr class = "'. $boardclass . 'sectiontableentry2"><td class = "fb_leftcolumn"><strong>' . _GEN_EMAIL . ' *</strong>:</td>';
+            echo '<tr class = "'. $boardclass . 'sectiontableentry2"><td class = "kunena_leftcolumn"><strong>' . _GEN_EMAIL . ' *</strong>:</td>';
             if (($fbConfig->regonly == "1" || $fbConfig->changename == '0') && $kunena_my->id != "" && !$is_Moderator) {
                 echo "<td>$my_email</td>";
             }
@@ -93,7 +93,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
             {
             ?>
 
-                <td class = "fb_leftcolumn">
+                <td class = "kunena_leftcolumn">
                     <strong><?php echo _GEN_SUBJECT; ?></strong>:
                 </td>
 
@@ -107,7 +107,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
             {
             ?>
 
-                <td class = "fb_leftcolumn">
+                <td class = "kunena_leftcolumn">
                     <strong><?php echo _GEN_SUBJECT; ?></strong>:
                 </td>
 
@@ -133,7 +133,7 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
             {
 ?>
         <tr class = "<?php echo $boardclass; ?>sectiontableentry2">
-            <td class = "fb_leftcolumn">
+            <td class = "kunena_leftcolumn">
                 <strong><?php echo _GEN_TOPIC_ICON; ?></strong>:
             </td>
 
@@ -167,29 +167,29 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
         if ($fbConfig->allowsubscriptions == 1)
         {
             if ($id == 0) {
-                $fb_thread = -1;
+                $kunena_thread = -1;
             }
             else
             {
-                $kunena_db->setQuery("SELECT thread FROM #__fb_messages WHERE id='{$id}'");
-                $fb_thread = $kunena_db->loadResult();
+                $kunena_db->setQuery("SELECT thread FROM #__kunena_messages WHERE id='{$id}'");
+                $kunena_thread = $kunena_db->loadResult();
             }
 
-            $kunena_db->setQuery("SELECT thread FROM #__fb_subscriptions WHERE userid='{$kunena_my->id}' AND thread='{$fb_thread}'");
-            $fb_subscribed = $kunena_db->loadResult();
+            $kunena_db->setQuery("SELECT thread FROM #__kunena_subscriptions WHERE userid='{$kunena_my->id}' AND thread='{$kunena_thread}'");
+            $kunena_subscribed = $kunena_db->loadResult();
 
-            if ($fb_subscribed == "" || $id == 0) {
-                $fb_cansubscribe = 1;
+            if ($kunena_subscribed == "" || $id == 0) {
+                $kunena_cansubscribe = 1;
             }
             else {
-                $fb_cansubscribe = 0;
+                $kunena_cansubscribe = 0;
             }
         }
 ?>
 
                <!-- preview -->
         <tr class = "<?php echo $boardclass; ?>sectiontableentry2" id="previewContainer" style="display:none;">
-           <td class = "fb_leftcolumn">
+           <td class = "kunena_leftcolumn">
                 <strong><?php echo _PREVIEW; ?></strong>:
             </td>
            <td>
@@ -203,13 +203,13 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
         ?>
 
             <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
-                <td class = "fb_leftcolumn">
+                <td class = "kunena_leftcolumn">
                     <strong><?php echo _IMAGE_SELECT_FILE; ?></strong>
                 </td>
 
                 <td>
-                    <input type = 'file' class = 'fb_button' name = 'attachimage' onmouseover = "javascript:kunenaShowHelp('<?php @print(_IMAGE_DIMENSIONS).": ".$fbConfig->imagewidth."x".$fbConfig->imageheight." - ".$fbConfig->imagesize." KB";?>')" />
-                    <input type = "button" class = "fb_button" name = "addImagePH" value = "<?php @print(_POST_ATTACH_IMAGE);?>" style = "cursor:auto; width: 4em" onclick = "bbfontstyle(' [img/] ','');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMGPH);?>')" />
+                    <input type = 'file' class = 'kunena_button' name = 'attachimage' onmouseover = "javascript:kunenaShowHelp('<?php @print(_IMAGE_DIMENSIONS).": ".$fbConfig->imagewidth."x".$fbConfig->imageheight." - ".$fbConfig->imagesize." KB";?>')" />
+                    <input type = "button" class = "kunena_button" name = "addImagePH" value = "<?php @print(_POST_ATTACH_IMAGE);?>" style = "cursor:auto; width: 4em" onclick = "bbfontstyle(' [img/] ','');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMGPH);?>')" />
                 </td>
             </tr>
 
@@ -223,25 +223,25 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
         ?>
 
             <tr class = "<?php echo $boardclass; ?>sectiontableentry2">
-                <td class = "fb_leftcolumn">
+                <td class = "kunena_leftcolumn">
                     <strong><?php echo _FILE_SELECT_FILE; ?></strong>
                 </td>
 
                 <td>
-                    <input type = 'file' class = 'fb_button' name = 'attachfile' onmouseover = "javascript:kunenaShowHelp('<?php @print(_FILE_TYPES).": ".$fbConfig->filetypes." - ".$fbConfig->filesize." KB";?>')" style = "cursor:auto" />
-                    <input type = "button" class = "fb_button" name = "addFilePH" value = "<?php @print(_POST_ATTACH_FILE);?>" style = "cursor:auto; width: 4em" onclick = "bbfontstyle(' [file/] ','');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FILEPH);?>')" />
+                    <input type = 'file' class = 'kunena_button' name = 'attachfile' onmouseover = "javascript:kunenaShowHelp('<?php @print(_FILE_TYPES).": ".$fbConfig->filetypes." - ".$fbConfig->filesize." KB";?>')" style = "cursor:auto" />
+                    <input type = "button" class = "kunena_button" name = "addFilePH" value = "<?php @print(_POST_ATTACH_FILE);?>" style = "cursor:auto; width: 4em" onclick = "bbfontstyle(' [file/] ','');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FILEPH);?>')" />
                 </td>
             </tr>
 
         <?php
         }
 
-        if ($kunena_my->id != 0 && $fbConfig->allowsubscriptions == 1 && $fb_cansubscribe == 1 && !$editmode)
+        if ($kunena_my->id != 0 && $fbConfig->allowsubscriptions == 1 && $kunena_cansubscribe == 1 && !$editmode)
         {
         ?>
 
             <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
-                <td class = "fb_leftcolumn">
+                <td class = "kunena_leftcolumn">
                     <strong><?php echo _POST_SUBSCRIBE; ?></strong>:
                 </td>
 
@@ -278,8 +278,8 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 		// Begin captcha . Thanks Adeptus
 		if ($fbConfig->captcha == 1 && $kunena_my->id < 1) { ?>
         <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
-            <td class = "fb_leftcolumn">&nbsp;<strong><?php echo _KUNENA_CAPDESC; ?></strong>&nbsp;</td>
-            <td align="left" valign="middle" height="35px">&nbsp;<input name="txtNumber" type="text" id="txtNumber" value="" class="fb_button" style="vertical-align:top" size="15">
+            <td class = "kunena_leftcolumn">&nbsp;<strong><?php echo _KUNENA_CAPDESC; ?></strong>&nbsp;</td>
+            <td align="left" valign="middle" height="35px">&nbsp;<input name="txtNumber" type="text" id="txtNumber" value="" class="kunena_button" style="vertical-align:top" size="15">
 			<img src="index2.php?option=com_kunena&func=showcaptcha" alt="" />
 		 </td>
          </tr>
@@ -288,10 +288,10 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 		// Finish captcha
 		?>
         <tr>
-            <td id="fb_post_buttons" colspan = "2" style = "text-align: center;">
-                <input type="submit" name="submit"  class="fb_button" value="<?php @print(' '._GEN_CONTINUE.' ');?>" onclick="return submitForm()" onmouseover = "javascript:jQuery('input[name=helpbox]').val('<?php @print(_KUNENA_EDITOR_HELPLINE_SUBMIT);?>')" />
-                <input type="button" name="preview" class="fb_button" value="<?php @print(' '._PREVIEW.' ');?>"      onClick="fbGetPreview(document.postform.message.value,<?php echo KUNENA_COMPONENT_ITEMID?>);" onmouseover = "javascript:jQuery('input[name=helpbox]').val('<?php @print(_KUNENA_EDITOR_HELPLINE_PREVIEW);?>')" />
-                <input type="button" name="cancel"  class="fb_button" value="<?php @print(' '._GEN_CANCEL.' ');?>"   onclick="javascript:window.history.back();" onmouseover = "javascript:jQuery('input[name=helpbox]').val('<?php @print(_KUNENA_EDITOR_HELPLINE_CANCEL);?>')" />
+            <td id="kunena_post_buttons" colspan = "2" style = "text-align: center;">
+                <input type="submit" name="submit"  class="kunena_button" value="<?php @print(' '._GEN_CONTINUE.' ');?>" onclick="return submitForm()" onmouseover = "javascript:jQuery('input[name=helpbox]').val('<?php @print(_KUNENA_EDITOR_HELPLINE_SUBMIT);?>')" />
+                <input type="button" name="preview" class="kunena_button" value="<?php @print(' '._PREVIEW.' ');?>"      onClick="fbGetPreview(document.postform.message.value,<?php echo KUNENA_COMPONENT_ITEMID?>);" onmouseover = "javascript:jQuery('input[name=helpbox]').val('<?php @print(_KUNENA_EDITOR_HELPLINE_PREVIEW);?>')" />
+                <input type="button" name="cancel"  class="kunena_button" value="<?php @print(' '._GEN_CANCEL.' ');?>"   onclick="javascript:window.history.back();" onmouseover = "javascript:jQuery('input[name=helpbox]').val('<?php @print(_KUNENA_EDITOR_HELPLINE_CANCEL);?>')" />
             </td>
         </tr>
     </tbody>

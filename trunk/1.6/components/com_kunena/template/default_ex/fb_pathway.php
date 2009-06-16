@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: fb_pathway.php 362 2009-02-11 00:30:24Z mahagr $
+* @version $Id: kunena_pathway.php 362 2009-02-11 00:30:24Z mahagr $
 * Kunena Component
 * @package Kunena
 *
@@ -35,7 +35,7 @@ if ($func != "")
 		$fr_title_name = _KUNENA_CATEGORIES;
 		while ($catids > 0)
         {
-            $query = "SELECT * FROM #__fb_categories WHERE id='{$catids}' AND published='1'";
+            $query = "SELECT * FROM #__kunena_categories WHERE id='{$catids}' AND published='1'";
             $kunena_db->setQuery($query);
             $results = $kunena_db->loadObject();
             if (!$results) break;
@@ -63,7 +63,7 @@ if ($func != "")
 	$jr_topic_title = '';
         if ($sfunc == "view" and $id)
         {
-            $sql = "SELECT subject, id FROM #__fb_messages WHERE id='{$id}'";
+            $sql = "SELECT subject, id FROM #__kunena_messages WHERE id='{$id}'";
             $kunena_db->setQuery($sql);
             $jr_topic_title = stripslashes(html_entity_decode_utf8($kunena_db->loadResult()));
             $jr_path_menu[] = $jr_topic_title;
@@ -102,8 +102,8 @@ if ($func != "")
         }
 
          //get viewing
-        $fb_queryName = $fbConfig->username ? "username" : "name";
-		$query= "SELECT w.userid, u.$fb_queryName AS username, k.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS k ON k.userid=w.userid WHERE w.link LIKE '%" . addslashes($_SERVER['REQUEST_URI']) . "%' GROUP BY w.userid ORDER BY u.{$fb_queryName} ASC";
+        $kunena_queryName = $fbConfig->username ? "username" : "name";
+		$query= "SELECT w.userid, u.$kunena_queryName AS username, k.showOnline FROM #__kunena_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__kunena_users AS k ON k.userid=w.userid WHERE w.link LIKE '%" . addslashes($_SERVER['REQUEST_URI']) . "%' GROUP BY w.userid ORDER BY u.{$kunena_queryName} ASC";
 		$kunena_db->setQuery($query);
 		$users = $kunena_db->loadObjectList();
 			check_dberror("Unable to load who is online.");

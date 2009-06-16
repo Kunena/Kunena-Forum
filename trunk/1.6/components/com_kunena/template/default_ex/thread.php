@@ -59,15 +59,15 @@ function thread_flat(&$tree, &$leaves, $branchid = 0, $level = 0)
 $GLOBALS['KUNENA_c'] = 0;
 $tree = thread_flat($tree, $messages);
 ?>
-<div id="fb_threadview">
+<div id="kunena_threadview">
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table width = "100%" border = "0" cellspacing = "0" cellpadding = "0" class = "fb_blocktable" >
+<table width = "100%" border = "0" cellspacing = "0" cellpadding = "0" class = "kunena_blocktable" >
     <thead>
-        <tr  class = "fb_sth fbs ">
+        <tr  class = "kunena_sth fbs ">
         <?php
         if ($fbConfig->shownew && $kunena_my->id != 0) { ?>
 
@@ -98,21 +98,21 @@ $tree = thread_flat($tree, $messages);
         //get all html out of the subject & email & name before posting:
     ?>
 
-        <tr class="fb_threadview_row">
+        <tr class="kunena_threadview_row">
             <?php
             if ($fbConfig->shownew && $kunena_my->id != 0 && !$leaf->moved)
             {
                 if (($prevCheck < ($leaf->time)) && (sizeof($read_topics) == 0) || !in_array($leaf->thread, $read_topics))
                 {
                     //new post
-                    echo '<td width="1%" class="fb_new">';
+                    echo '<td width="1%" class="kunena_new">';
                    // echo isset($fbIcons['unreadmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '"/>' : $fbConfig->newchar;
                     echo '</td>';
                 }
                 else
                 {
                     //not new posts
-                    echo '<td width="1%" class="fb_notnew">';
+                    echo '<td width="1%" class="kunena_notnew">';
                    // echo isset($fbIcons['readmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $fbConfig->newchar;
                     echo '</td>';
                 }
@@ -176,7 +176,7 @@ $tree = thread_flat($tree, $messages);
 
                     if ($leaf->moved)
                     {
-                        $kunena_db->setQuery("SELECT `mesid` FROM #__fb_messages_text WHERE `mesid`=" . $leaf->id);
+                        $kunena_db->setQuery("SELECT `mesid` FROM #__kunena_messages_text WHERE `mesid`=" . $leaf->id);
                         $newURL .= $kunena_db->loadResult();
                     }
                     else
@@ -186,12 +186,12 @@ $tree = thread_flat($tree, $messages);
                     ?>
 
                     <td<?php echo $leaf->id == $id ? " class=\"".$boardclass."sectiontableentry2\"" : ""; ?>>
-    <a class="fb_threadview_link"  href = "<?php echo $newURL; ?>"><?php echo stripslashes($leaf->subject); ?>
+    <a class="kunena_threadview_link"  href = "<?php echo $newURL; ?>"><?php echo stripslashes($leaf->subject); ?>
 <!--            Favourite       -->
 <?php
 if ($fbConfig->allowfavorites)
 {
-    $kunena_db->setQuery("select count(*) from #__fb_favorites where thread = $leaf->id && userid = $kunena_my->id");
+    $kunena_db->setQuery("select count(*) from #__kunena_favorites where thread = $leaf->id && userid = $kunena_my->id");
 
     if (intval($kunena_db->loadResult()) > 0) {
         echo isset($fbIcons['favoritestar']) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $fbIcons['favoritestar'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';

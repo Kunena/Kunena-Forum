@@ -108,7 +108,7 @@ DEFINE('_KUNENA_EDITOR_VIDEO_HEIGHT', 'Height:');
 DEFINE('_KUNENA_EDITOR_VIDEO_URL', 'URL: ');
 DEFINE('_KUNENA_EDITOR_VIDEO_ID', 'ID: ');
 DEFINE('_KUNENA_EDITOR_VIDEO_PROVIDER', 'Provider: ');
-DEFINE('_KUNENA_BBCODE_HIDDENTEXT', '<span class="fb_quote">Something is hidden for guests. Please log in or register to see it.</span>');
+DEFINE('_KUNENA_BBCODE_HIDDENTEXT', '<span class="kunena_quote">Something is hidden for guests. Please log in or register to see it.</span>');
 
 DEFINE('_KUNENA_PROFILE_BIRTHDAY', 'Birthday');
 DEFINE('_KUNENA_DT_MONTHDAY_FMT','%m/%d');
@@ -1060,9 +1060,9 @@ DEFINE('_PREVIEW', 'Preview');
 DEFINE('_COM_A_MOSBOT_TITLE', 'Discussbot');
 DEFINE('_COM_A_MOSBOT_DESC', 'The discuss bot enables your users to discuss articles in the forums. The article title is used as the topic subject.'
            . '<br />If a topic does not exist, a new one is created. If the topic already exists, the user is shown the thread and where to reply.' . '<br /><strong>You will need to download and install the bot separately.</strong>'
-           . '<br />check the <a href="http://www.Kunena.com">Kunena Web Site</a> for more information.' . '<br />When installed, you will need to add the following bot lines to your articles:' . '<br />{mos_fb_discuss:<em>catid</em>}'
+           . '<br />check the <a href="http://www.Kunena.com">Kunena Web Site</a> for more information.' . '<br />When installed, you will need to add the following bot lines to your articles:' . '<br />{mos_kunena_discuss:<em>catid</em>}'
            . '<br />The <em>catid</em> is the category in which the article can be discussed. To find the proper catid, look into the forums ' . 'and check the category ID from the URL in your browser.'
-           . '<br />Example: if you want the article discussed in forum with the category ID 26, the bot should look like: {mos_fb_discuss:26}'
+           . '<br />Example: if you want the article discussed in forum with the category ID 26, the bot should look like: {mos_kunena_discuss:26}'
            . '<br />This seems a bit difficult, but it does allow you to have each article to be discussed in a matching forum.');
 //new in 1.1.4 stable
 // search.class.php

@@ -27,19 +27,19 @@ defined( '_JEXEC' ) or die('Restricted access');
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
 <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=unfavorite'); ?>" method = "post" name = "postform">
 	<input type = "hidden" name = "do" value = "unfavorite"/>
-	<table class = "fb_blocktable" id = "fb_forumprofile_fav" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+	<table class = "kunena_blocktable" id = "kunena_forumprofile_fav" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
 		<thead>
 			<tr>
 				<th colspan = "3">
-					<div class = "fb_title_cover fbm">
-						<span class = "fb_title fbl"><?php echo _USER_FAVORITES; ?></span>
+					<div class = "kunena_title_cover fbm">
+						<span class = "kunena_title fbl"><?php echo _USER_FAVORITES; ?></span>
 					</div>
 				</th>
 			</tr>
 		</thead>
 
 		<tbody id = "<?php echo $boardclass ;?>fbuserprofile_tbody">
-			<tr class = "fb_sth">
+			<tr class = "kunena_sth">
 				<th class = "th-1 <?php echo $boardclass ;?>sectiontableheader"><?php echo _GEN_TOPICS; ?></th>
 				<th class = "th-2 <?php echo $boardclass ;?>sectiontableheader" style = "text-align:center; width:25%"><?php echo _GEN_AUTHOR; ?></th>
 				<th class = "th-3 <?php echo $boardclass ;?>sectiontableheader"><?php echo _GEN_DELETE; ?></th>
@@ -62,7 +62,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 			{
 				foreach ($favslist as $favs)
 				{ //get all message details for each favorite
-					$kunena_db->setQuery("SELECT * FROM #__fb_messages WHERE id='{$favs->thread}'");
+					$kunena_db->setQuery("SELECT * FROM #__kunena_messages WHERE id='{$favs->thread}'");
 					$favdet = $kunena_db->loadObjectList();
 						check_dberror("Unable to load messages.");
 
@@ -92,7 +92,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 			?>
 
 				<tr>
-					<td colspan = "3" class = "fb_profile-bottomnav" style = "text-align:right">
+					<td colspan = "3" class = "kunena_profile-bottomnav" style = "text-align:right">
 <?php echo _KUNENA_USRL_DISPLAY_NR; ?>
 
 <?php
@@ -111,7 +111,7 @@ echo $pageNav->getLimitBox("index.php?option=com_kunena&amp;func=myprofile&amp;d
 			}
 			?>
 
-			<tr><td colspan = "3" class = "fb_profile-bottomnav">
+			<tr><td colspan = "3" class = "kunena_profile-bottomnav">
 					<?php
 					// TODO: fxstein - Need to perform SEO cleanup
 					echo $pageNav->getPagesLinks("index.php?option=com_kunena&amp;func=myprofile&amp;do=showfav" . KUNENA_COMPONENT_ITEMID_SUFFIX);

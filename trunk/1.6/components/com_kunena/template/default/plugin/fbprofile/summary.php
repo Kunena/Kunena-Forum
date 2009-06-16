@@ -48,16 +48,16 @@ $lastvisitDate = strftime(_KUNENA_DT_DATETIME_FMT, strtotime($userinfo->lastvisi
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable" id = "fb_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "kunena_blocktable" id = "kunena_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
   <thead>
     <tr>
-      <th colspan = "2"> <div class = "fb_title_cover fbm"> <span class = "fb_title fbl"><?php echo _KUNENA_MYPROFILE_SUMMARY; ?></span> </div>
+      <th colspan = "2"> <div class = "kunena_title_cover fbm"> <span class = "kunena_title fbl"><?php echo _KUNENA_MYPROFILE_SUMMARY; ?></span> </div>
        <img id = "BoxSwitch_fbusersummary__<?php echo $boardclass ;?>fbusersummary_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
       </th>
     </tr>
   </thead>
-  <tbody  class = "fb_myprofile_general" id = "<?php echo $boardclass ;?>fbusersummary_tbody">
-    <tr class="fb_sth fbs">
+  <tbody  class = "kunena_myprofile_general" id = "<?php echo $boardclass ;?>fbusersummary_tbody">
+    <tr class="kunena_sth fbs">
       <th colspan="2" > <center>
           <?php echo _KUNENA_MYPROFILE_PERSONAL_INFO; ?>
         </center></th>
@@ -100,7 +100,7 @@ $lastvisitDate = strftime(_KUNENA_DT_DATETIME_FMT, strtotime($userinfo->lastvisi
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_PROFILEVIEW; ?></b> </td>
       <td  class = "td-2 fbm"><?php echo $userinfo->uhits; ?></td>
     </tr>
-    <tr class="fb_sth fbs">
+    <tr class="kunena_sth fbs">
       <th colspan="2" > <center>
           <?php echo _KUNENA_MYPROFILE_ADDITIONAL_INFO; ?>
         </center></th>

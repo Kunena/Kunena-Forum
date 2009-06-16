@@ -32,7 +32,7 @@ if ($kunena_my->id)
     { //show it is..
         //first we gather some information about this person - bypass if (s)he is a guest
         unset($user);
-        $kunena_db->setQuery("SELECT * FROM #__fb_users AS su LEFT JOIN #__users AS u ON u.id=su.userid WHERE su.userid='{$kunena_my->id}'");
+        $kunena_db->setQuery("SELECT * FROM #__kunena_users AS su LEFT JOIN #__users AS u ON u.id=su.userid WHERE su.userid='{$kunena_my->id}'");
 
         $user = $kunena_db->loadObject();
 
@@ -63,13 +63,13 @@ if ($kunena_my->id)
         }
 
         //get all subscriptions for this user
-        $kunena_db->setQuery("SELECT thread FROM #__fb_subscriptions WHERE userid='{$kunena_my->id}'");
+        $kunena_db->setQuery("SELECT thread FROM #__kunena_subscriptions WHERE userid='{$kunena_my->id}'");
         $subslist = $kunena_db->loadObjectList();
         	check_dberror("Unable to load subscriptions.");
         $csubslist = count($subslist);
 
         //get all favorites for this user
-        $kunena_db->setQuery("SELECT thread FROM #__fb_favorites WHERE userid='{$kunena_my->id}'");
+        $kunena_db->setQuery("SELECT thread FROM #__kunena_favorites WHERE userid='{$kunena_my->id}'");
         $favslist = $kunena_db->loadObjectList();
         	check_dberror("Unable to load favorites.");
         $cfavslist = count($favslist);
@@ -78,7 +78,7 @@ if ($kunena_my->id)
         //since these are moderators for all forums (regardless if a forum is set to be moderated)
         if (!$is_admin)
         {
-            $kunena_db->setQuery("SELECT c.id, c.name FROM #__fb_moderation AS m LEFT JOIN #__fb_categories AS c ON c.id=m.catid WHERE m.userid='{$kunena_my->id}'");
+            $kunena_db->setQuery("SELECT c.id, c.name FROM #__kunena_moderation AS m LEFT JOIN #__kunena_categories AS c ON c.id=m.catid WHERE m.userid='{$kunena_my->id}'");
             $modslist = $kunena_db->loadObjectList();
             	check_dberror("Unable to load moderators.");
             $cmodslist = count($modslist);
@@ -87,11 +87,11 @@ if ($kunena_my->id)
         //here we go:
         include(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 
-        if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
-            require_once(KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
+        if (file_exists(KUNENA_ABSTMPLTPATH . '/kunena_pathway.php')) {
+            require_once(KUNENA_ABSTMPLTPATH . '/kunena_pathway.php');
         }
         else {
-            require_once(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_pathway.php');
+            require_once(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'kunena_pathway.php');
         }
 ?>
 
@@ -103,17 +103,17 @@ if ($kunena_my->id)
             <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=userprofile&amp;do=update'); ?>" method = "post" name = "postform">
                 <input type = "hidden" name = "do" value = "update">
 
-                <table class = "fb_blocktable" id ="fb_forumprofile"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+                <table class = "kunena_blocktable" id ="kunena_forumprofile"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
                     <thead>
                         <tr>
                             <th colspan = "3">
-                                <div class = "fb_title_cover">
-                        <span class="fb_title" ><?php echo _USER_PROFILE; ?> <?php echo $username; ?></span>
+                                <div class = "kunena_title_cover">
+                        <span class="kunena_title" ><?php echo _USER_PROFILE; ?> <?php echo $username; ?></span>
                                 </div>
                     </thead>
 
                     <tbody>
-                        <tr class = "fb_sth">
+                        <tr class = "kunena_sth">
                             <th colspan = "3" class = "th-1 <?php echo $boardclass; ?>sectiontableheader"><?php echo _USER_GENERAL; ?>
                             </th>
                         </tr>
@@ -362,12 +362,12 @@ if ($kunena_my->id)
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-        <table class = "fb_blocktable" id ="fb_forumprofile_sub"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+        <table class = "kunena_blocktable" id ="kunena_forumprofile_sub"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
                     <th colspan = "2">
-                        <div class = "fb_title_cover">
-                            <span class="fb_title"><?php echo _USER_SUBSCRIPTIONS; ?></span>
+                        <div class = "kunena_title_cover">
+                            <span class="kunena_title"><?php echo _USER_SUBSCRIPTIONS; ?></span>
                         </div>
                     </th>
                 </tr>
@@ -388,7 +388,7 @@ if ($kunena_my->id)
                         {
                             foreach ($subslist as $subs)
                             { //get all message details for each subscription
-                                $kunena_db->setQuery("SELECT * FROM #__fb_messages WHERE id='{$subs->thread}'");
+                                $kunena_db->setQuery("SELECT * FROM #__kunena_messages WHERE id='{$subs->thread}'");
                                 $subdet = $kunena_db->loadObjectList();
                                 	check_dberror("Unable to load messages.");
 
@@ -419,12 +419,12 @@ if ($kunena_my->id)
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-        <table class = "fb_blocktable" id ="fb_forumprofile_fav" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+        <table class = "kunena_blocktable" id ="kunena_forumprofile_fav" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
                     <th colspan = "2">
-                        <div class = "fb_title_cover">
-                            <span class="fb_title"><?php echo _USER_FAVORITES; ?></span>
+                        <div class = "kunena_title_cover">
+                            <span class="kunena_title"><?php echo _USER_FAVORITES; ?></span>
                         </div>
                       </th>
                 </tr>
@@ -445,7 +445,7 @@ if ($kunena_my->id)
                 {
                     foreach ($favslist as $favs)
                     { //get all message details for each favorite
-                        $kunena_db->setQuery("SELECT * FROM #__fb_messages WHERE id='{$favs->thread}'");
+                        $kunena_db->setQuery("SELECT * FROM #__kunena_messages WHERE id='{$favs->thread}'");
                         $favdet = $kunena_db->loadObjectList();
                         	check_dberror("Unable to load messages.");
 
@@ -471,12 +471,12 @@ if ($kunena_my->id)
 </div>
 </div>
 </div>
-        <table class = "fb_blocktable" id ="fb_forumprofile_mod" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+        <table class = "kunena_blocktable" id ="kunena_forumprofile_mod" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
                     <th >
-                        <div class = "fb_title_cover">
-                            <span class="fb_title"><?php echo _USER_MODERATOR; ?>:</span>
+                        <div class = "kunena_title_cover">
+                            <span class="kunena_title"><?php echo _USER_MODERATOR; ?>:</span>
                         </div>
                        </th>
                 </tr>
@@ -540,7 +540,7 @@ if ($kunena_my->id)
             $avatar = "";
         }
 
-        $kunena_db->setQuery("UPDATE #__fb_users set signature='$signature', view='$newview', avatar='$avatar', ordering='$neworder'  where userid=$kunena_my->id");
+        $kunena_db->setQuery("UPDATE #__kunena_users set signature='$signature', view='$newview', avatar='$avatar', ordering='$neworder'  where userid=$kunena_my->id");
         setcookie("fboard_settings[current_view]", $newview);
 
         if (!$kunena_db->query()) {
@@ -554,13 +554,13 @@ if ($kunena_my->id)
 
         if ($unsubscribeAll)
         {
-            $kunena_db->setQuery("DELETE FROM #__fb_subscriptions WHERE userid=$kunena_my->id");
+            $kunena_db->setQuery("DELETE FROM #__kunena_subscriptions WHERE userid=$kunena_my->id");
             $kunena_db->query();
         }
 
         if ($unfavoriteAll)
         {
-            $kunena_db->setQuery("DELETE FROM #__fb_favorites WHERE userid='$kunena_my->id'");
+            $kunena_db->setQuery("DELETE FROM #__kunena_favorites WHERE userid='$kunena_my->id'");
             $kunena_db->query();
         }
 
@@ -568,7 +568,7 @@ if ($kunena_my->id)
     }
     else if ($do == "unsubscribe")
     { //ergo, ergo delete
-        $kunena_db->setQuery("DELETE from #__fb_subscriptions where userid=$kunena_my->id and thread=$thread");
+        $kunena_db->setQuery("DELETE from #__kunena_subscriptions where userid=$kunena_my->id and thread=$thread");
 
         if (!$kunena_db->query()) {
             echo _USER_UNSUBSCRIBE_A . " <strong><font color=\"red\">" . _USER_UNSUBSCRIBE_B . "</font></strong> " . _USER_UNSUBSCRIBE_C . ".<br /><br />";
@@ -577,7 +577,7 @@ if ($kunena_my->id)
             echo _USER_UNSUBSCRIBE_YES . ".<br /><br />";
         }
 
-        if ($fbConfig->fb_profile == 'cb') {
+        if ($fbConfig->kunena_profile == 'cb') {
             echo _USER_RETURN_A . ' <a href="'.CKunenaCBProfile::getForumTabURL().'">' . _USER_RETURN_B . "</a><br /><br />";
 	    echo CKunenaLink::GetAutoRedirectHTML(CKunenaCBProfile::getForumTabURL(), 3500);
         }
@@ -588,7 +588,7 @@ if ($kunena_my->id)
     }
     else if ($do == "unfavorite")
     { //ergo, ergo delete
-        $kunena_db->setQuery("DELETE from #__fb_favorites where userid=$kunena_my->id and thread=$thread");
+        $kunena_db->setQuery("DELETE from #__kunena_favorites where userid=$kunena_my->id and thread=$thread");
 
         if (!$kunena_db->query()) {
             echo _USER_UNFAVORITE_A . " <strong><font color=\"red\">" . _USER_UNFAVORITE_B . "</font></strong> " . _USER_UNFAVORITE_C . ".<br /><br />";
@@ -597,7 +597,7 @@ if ($kunena_my->id)
             echo _USER_UNFAVORITE_YES . ".<br /><br />";
         }
 
-        if ($fbConfig->fb_profile == 'cb') {
+        if ($fbConfig->kunena_profile == 'cb') {
             echo _USER_RETURN_A . ' <a href="'.CKunenaCBProfile::getForumTabURL().'">' . _USER_RETURN_B . "</a><br /><br />";
 	    echo CKunenaLink::GetAutoRedirectHTML(CKunenaCBProfile::getForumTabURL(), 3500);
         }
@@ -627,7 +627,7 @@ else
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable" id="fb_bottomarea"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "kunena_blocktable" id="kunena_bottomarea"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
             <th  class = "th-right">

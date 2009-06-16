@@ -17,7 +17,7 @@ require_once (KUNENA_PATH_LIB . DS . 'kunena.config.class.php');
 
 /**
 * Kunena Users Table Class
-* Provides access to the #__fb_users table
+* Provides access to the #__kunena_users table
 */
 class CKunenaUserprofile extends JTable
 {
@@ -144,7 +144,7 @@ class CKunenaUserprofile extends JTable
 	function CKunenaUserprofile($userid=null) 
 	{
 		$kunena_db = &JFactory::getDBO();
-		parent::__construct('#__fb_users', 'userid', $kunena_db);
+		parent::__construct('#__kunena_users', 'userid', $kunena_db);
 		if ($userid === null) {
 			$user =& JFactory::getUser();
 			$userid = $user->get('id');
@@ -220,7 +220,7 @@ class CKunenaUser
 		if ($this->id == 0) return FALSE;
 		if ($this->kunenaProperties == NULL)
 		{
-			$kunena_db->setQuery("SELECT * FROM #__fb_users WHERE userid='{$this->id}'", 0, 1);
+			$kunena_db->setQuery("SELECT * FROM #__kunena_users WHERE userid='{$this->id}'", 0, 1);
 			$this->kunenaProperties = $kunena_db->loadAssoc();
 			check_dberror("Unable to load Kunena user information.");
 		}

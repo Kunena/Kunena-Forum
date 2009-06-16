@@ -30,6 +30,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.0a
+
+15-June-2009
+^ [#16822] Update version info for new 1.6 branch
+
 Kunena 1.5.3
 
 15-June-2009 Matias

@@ -33,6 +33,7 @@ Legend:
 Kunena 1.6.0a
 
 15-June-2009
+^ [#16824] Change MySQL minimum version to 5.0.0 for 1.6 release
 ^ [#16822] Update version info for new 1.6 branch
 
 Kunena 1.5.3

@@ -56,7 +56,7 @@ define('KUNENA_FILE_INSTALL', KUNENA_PATH_ADMIN .DS. 'manifest.xml');
 
 // Minimum version requirements
 DEFINE('KUNENA_MIN_PHP',   '5.0.3');
-DEFINE('KUNENA_MIN_MYSQL', '4.1.19');
+DEFINE('KUNENA_MIN_MYSQL', '5.0.0');
 
 // Time related
 define ('KUNENA_SECONDS_IN_HOUR', 3600);

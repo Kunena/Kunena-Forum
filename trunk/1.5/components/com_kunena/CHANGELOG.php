@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.5.4
 
+16-June-2009 fxstein
+^ [#16835] Update package version info; new version name:Fale - portuguese for Speak
+
 16-June-2009 Matias
 # [#16829] Announcements: Description with some special characters does not work
 # [#16833] Call to undefined method CKunenaTools::isjoomla15()

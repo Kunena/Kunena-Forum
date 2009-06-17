@@ -32,6 +32,10 @@ Legend:
 
 Kunena 1.0.11
 
+17-June-2009 fxstein
+# [#16877] Regression in K1.0.10 caused NEW indicator handling to break
+ - migrated rest of session logic into CKunenaSession class for additional cleanup
+
 16-June-2009 fxstein
 ^ [#16837] Update version info for 1.0.11 service release; new version name: Gemeinschaft
   - german for community

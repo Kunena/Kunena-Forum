@@ -22,6 +22,7 @@ class CKunenaSession extends mosDBTable
 	var $readtopics = '';
 	var $currvisit = 0;
 	var $_exists = false;
+	var $_sessiontimeout = false;
 
 	function CKunenaSession($database)
 	{
@@ -30,13 +31,14 @@ class CKunenaSession extends mosDBTable
 		$this->currvisit = time() + KUNENA_OFFSET_BOARD;
 	}
 
-	function &getInstance()
+	function &getInstance( $updateSessionInfo=false )
 	{
 		global $database, $my;
 		static $instance;
 		if (!$instance) {
 			$instance = new CKunenaSession($database);
 			$instance->load($my->id);
+			if ($updateSessionInfo) $instance->updateSessionInfo();
 		}
 		return $instance;
 	}
@@ -45,13 +47,18 @@ class CKunenaSession extends mosDBTable
 	{
 		$ret = parent::load($oid);
 		if ($ret === true) $this->_exists = true;
+		$this->userid = (int)$oid;
+
 		return $ret;
 	}
 
 	function store( $updateNulls=false )
 	{
+		// Finally update current visit timestamp before saving
+		$this->currvisit = time() + KUNENA_OFFSET_BOARD;
+
 		$k = $this->_tbl_key;
-		
+
 		if( $this->$k && $this->_exists === true )
 		{
 			$ret = $this->_db->updateObject( $this->_tbl, $this, $this->_tbl_key, $updateNulls );
@@ -71,6 +78,70 @@ class CKunenaSession extends mosDBTable
 		else
 		{
 			return true;
+		}
+	}
+
+	function save( $obj )
+	{
+		if(CKunenaTools::isJoomla15())
+		{
+			$ret = parent::save($obj);
+		}
+		else
+		{
+			$ret = $obj->store();
+		}
+		return $ret;
+	}
+
+	function isNewUser()
+	{
+		return !$this->_exists;
+	}
+
+	function isNewSession()
+	{
+		return $this->_sessiontimeout;
+	}
+
+	function markAllCategoriesRead()
+	{
+		$this->lasttime = time() + KUNENA_OFFSET_BOARD;
+		$this->readtopics = '';
+	}
+
+	function updateSessionInfo()
+	{
+		$fbConfig =& CKunenaConfig::getInstance();
+
+		// perform session timeout check
+		$this->_sessiontimeout = ($this->currvisit + $fbConfig->fbsessiontimeout) < time() + KUNENA_OFFSET_BOARD;
+
+		// If this is a new session, reset the lasttime colum with the timestamp
+		// of the last saved currvisit - only after that can we reset currvisit to now before the store
+		if ($this->isNewSession())
+		{
+			$this->lasttime = $this->currvisit;
+			$this->readtopics = '';
+		}
+	}
+
+	function updateAllowedForums($my_id, $aro_group, $acl)
+	{
+		// check to see if we need to refresh the allowed forums cache
+		// get all accessaible forums if needed (eg on forum modification, new session)
+		if (!$this->allowed or $this->allowed == 'na' or $this->isNewSession()) {
+			$allow_forums = CKunenaTools::getAllowedForums($my_id, $aro_group->group_id, $acl);
+
+			if (!$allow_forums)
+			{
+				$allow_forums = '0';
+			}
+
+			if ($allow_forums != $this->allowed)
+			{
+				$this->allowed = $allow_forums;
+			}
 		}
 	}
 }

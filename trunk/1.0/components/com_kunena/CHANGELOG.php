@@ -32,6 +32,10 @@ Legend:
 
 Kunena 1.0.11
 
+16-June-2009 fxstein
+^ [#16837] Update version info for 1.0.11 service release; new version name: Gemeinschaft
+  - german for community
+
 15-June-2009 Matias
 ^ [#16326] Change minumum MySQL requirement to 4.1.20 (fix problem in the check)
 ^ [#16390] Update English language file for K1.0.11 and K1.5.3
@@ -75,12 +79,12 @@ Kunena 1.0.11
 # [#16526] Search: mb_substr() Unknown encoding warning, message bodies missing from results
 # [#16666] Search doesn't work reliably for registered only+ forums
 # [#16667] Administrator: Editing CSS does not work in Windows
- 
+
 5-June-2009 Matias
 # [#16637] Administrator: Defaut_red/green/gray should not be shown in Image Set list as they contain no images
 
 2-June-2009 Matias
-# [#16567] Warn/detect possible problems in Community Builder integration 
+# [#16567] Warn/detect possible problems in Community Builder integration
 
 Kunena 1.0.10
 

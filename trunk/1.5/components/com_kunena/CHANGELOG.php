@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.5.4
 
+28-June-2009 Matias
+# [#16994] Default_red/green/gray: pat-Warning and no styling
+
 16-June-2009 fxstein
 ^ [#16835] Update package version info; new version name:Fale - portuguese for Speak
 

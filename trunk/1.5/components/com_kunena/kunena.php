@@ -229,7 +229,7 @@ if ($no_html == 0) {
 $document =& JFactory::getDocument();
 
 // inline jscript with image location
-$document->addCustomTag('<script type="text/javascript">jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";</script>');
+$document->addScriptDeclaration('jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";');
 
 if (is_object($kunenaProfile) && $kunenaProfile->useProfileIntegration()) 
 {
@@ -247,28 +247,28 @@ else
 	{
 		define('J_JQUERY_LOADED', 1);
 		if (!defined('C_ASSET_JQUERY')) define('C_ASSET_JQUERY', 1);
-		$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
+		$document->addScript(KUNENA_JQURL);
 	}
 
 	if (defined('KUNENA_COREJSURL'))
 	{
-		$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_COREJSURL . '"></script>');
+		$document->addScript(KUNENA_COREJSURL);
 	}
 }
 
 if ($fbConfig->joomlastyle < 1) {
 	if (file_exists(KUNENA_JTEMPLATEPATH.'/css/kunena.forum.css')) 
 	{
-		$document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_JTEMPLATEURL . '/css/kunena.forum.css" />');
+		$document->addStyleSheet(KUNENA_JTEMPLATEURL . '/css/kunena.forum.css');
 	}
 	else 
 	{
-		$document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_TMPLTCSSURL . '" />');
+		$document->addStyleSheet(KUNENA_TMPLTCSSURL);
 	}
 }
 else 
 {
-	$document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_DIRECTURL . '/template/default/joomla.css" />');
+	$document->addStyleSheet(KUNENA_DIRECTURL . '/template/default/joomla.css');
 }
 } // no_html == 0
 

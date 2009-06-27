@@ -37,6 +37,7 @@ Kunena 1.5.4
 # [#16997] RSS Feed: all links are broken in K1.5
 # [#16999] Registration link in profile box not working
 # [#17001] Fix a set of small bugs reported in Kunena forums
+# [#17002] JQuery loaded too late for JomSocial integration
 
 16-June-2009 fxstein
 ^ [#16835] Update package version info; new version name:Fale - portuguese for Speak

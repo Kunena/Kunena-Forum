@@ -94,7 +94,7 @@ defined( '_JEXEC' ) or die('Restricted access');
         $query = "SELECT COUNT(*) FROM #__fb_messages WHERE hold='0' AND userid='{$kunena_my->id}' AND catid IN ($fbSession->allowed)";
 		$kunena_db->setQuery($query);
 
-		$total = count($kunena_db->loadObjectList());
+		$total = $kunena_db->loadResult();
 			check_dberror("Unable to load messages.");
 
 		if ($total <= $limit)

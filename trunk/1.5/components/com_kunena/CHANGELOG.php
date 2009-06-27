@@ -39,6 +39,7 @@ Kunena 1.5.4
 # [#17001] Fix a set of small bugs reported in Kunena forums
 # [#17002] JQuery loaded too late for JomSocial integration
 # [#17003] Fix notice: Undefined variable: rImg
+# [#17004] Pagination doesn't work on My Messages (My Profile)
 
 16-June-2009 fxstein
 ^ [#16835] Update package version info; new version name:Fale - portuguese for Speak

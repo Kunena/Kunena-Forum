@@ -660,7 +660,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                             $rImg = KUNENA_URLRANKSPATH . 'rankadmin.gif';
                                         }
 
-                                        if ($fbConfig->rankimages) {
+                                        if ($fbConfig->rankimages && isset($rImg)) {
                                             $msg_userrankimg = '<img src="' . $rImg . '" alt="" />';
                                         }
 

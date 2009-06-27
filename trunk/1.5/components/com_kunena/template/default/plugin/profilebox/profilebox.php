@@ -100,7 +100,7 @@ else
 {
 	$loginlink = JRoute::_('index.php?option=com_user&amp;view=login');
 	$logoutlink = JRoute::_('index.php?option=com_user&amp;view=login');
-	$registerlink = JRoute::_('index.php?option=com_user&amp;task=register&amp;Itemid=' . $Itemid);
+	$registerlink = JRoute::_('index.php?option=com_user&amp;view=register&amp;Itemid=' . $Itemid);
 	$lostpasslink = JRoute::_('index.php?option=com_user&amp;view=reset&amp;Itemid=' . $Itemid);
 }
 

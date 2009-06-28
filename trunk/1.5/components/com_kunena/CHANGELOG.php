@@ -41,8 +41,11 @@ Kunena 1.5.4
 # [#17003] Fix notice: Undefined variable: rImg
 # [#17004] Pagination doesn't work on My Messages (My Profile)
 
+17-June-2009 fxstein
+# [#16877] Migrated rest of session logic into CKunenaSession class for additional cleanup (Merge from /trunk/1.0)
+
 16-June-2009 fxstein
-^ [#16835] Update package version info; new version name:Fale - portuguese for Speak
+^ [#16835] Update package version info; new version name: Fale - portuguese for Speak
 
 16-June-2009 Matias
 # [#16829] Announcements: Description with some special characters does not work

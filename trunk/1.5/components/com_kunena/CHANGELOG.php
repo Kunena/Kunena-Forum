@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.5.4
 
+7-July-2009 Matias
+# [#17114] Extra backslash is not saved into database (missing \ in messages)
+
 28-June-2009 Matias
 # [#16994] Default_red/green/gray: pat-Warning and no styling
 # [#16997] RSS Feed: all links are broken in K1.5

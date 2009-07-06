@@ -230,7 +230,7 @@ $catName = $objCatInfo->name;
                                 {
                                     $kunena_db->setQuery("INSERT INTO #__fb_messages
                                     						(parent,thread,catid,name,userid,email,subject,time,ip,topic_emoticon,hold)
-                                    						VALUES('$parent','$thread','$catid','$fb_authorname','{$kunena_my->id}','$email','$subject','$posttime','$ip','$topic_emoticon','$holdPost')");
+                                    						VALUES('$parent','$thread','$catid',".$kunena_db->quote($fb_authorname).",'{$kunena_my->id}',".$kunena_db->quote($email).",".$kunena_db->quote($subject).",'$posttime','$ip','$topic_emoticon','$holdPost')");
 
     			                    if ($kunena_db->query())
                                     {
@@ -241,9 +241,9 @@ $catName = $objCatInfo->name;
                                           CKunenaTools::modifyCategoryStats($pid, $parent, $posttime, $catid);
                                         }
 
-                                        $kunena_db->setQuery("INSERT INTO #__fb_messages_text (mesid,message) VALUES('$pid','$message')");
+                                        $kunena_db->setQuery("INSERT INTO #__fb_messages_text (mesid,message) VALUES('$pid',".$kunena_db->quote($message).")");
                                         $kunena_db->query();
-
+                                        
                                         if ($thread == 0)
                                         {
                                             //if thread was zero, we now know to which id it belongs, so we can determine the thread and update it
@@ -261,7 +261,7 @@ $catName = $objCatInfo->name;
                                         //Update the attachments table if an image has been attached
                                         if (!empty($imageLocation) && file_exists($imageLocation))
                                         {
-                                            $kunena_db->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid','{$attachimage['tmp_name']}')");
+                                            $kunena_db->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid',".$kunena_db->quote($attachimage['tmp_name']).")");
 
                                             if (!$kunena_db->query()) {
                                                 echo "<script> alert('Storing image failed: " . $kunena_db->getErrorMsg() . "'); </script>\n";
@@ -271,7 +271,7 @@ $catName = $objCatInfo->name;
                                         //Update the attachments table if an file has been attached
                                         if (!empty($fileLocation) && file_exists($fileLocation))
                                         {
-                                            $kunena_db->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid','{$attachfile['tmp_name']}')");
+                                            $kunena_db->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid',".$kunena_db->quote($attachfile['tmp_name']).")");
 
                                             if (!$kunena_db->query()) {
                                                 echo "<script> alert('Storing file failed: " . $kunena_db->getErrorMsg() . "'); </script>\n";
@@ -820,12 +820,12 @@ $catName = $objCatInfo->name;
                         	}
 
                             $kunena_db->setQuery(
-                            "UPDATE #__fb_messages SET name='$fb_authorname', email='" . addslashes($email)
-                            . (($fbConfig->editmarkup) ? "' ,modified_by='" . $modified_by
-                            . "' ,modified_time='" . $modified_time . "' ,modified_reason='" . $modified_reason : "") . "', subject='" . addslashes($subject) . "', topic_emoticon='" . ((int)$topic_emoticon) .  "', hold='" . ((int)$holdPost) . "' WHERE id={$id}");
+                            "UPDATE #__fb_messages SET name=".$kunena_db->quote($fb_authorname).", email=".$kunena_db->quote(addslashes($email))
+                            . (($fbConfig->editmarkup) ? " ,modified_by='" . $modified_by
+                            . "' ,modified_time='" . $modified_time . "' ,modified_reason=" . $kunena_db->quote($modified_reason) : "") . ", subject=" . $kunena_db->quote(addslashes($subject)) . ", topic_emoticon='" . ((int)$topic_emoticon) .  "', hold='" . ((int)$holdPost) . "' WHERE id={$id}");
 
                             $dbr_nameset = $kunena_db->query();
-                            $kunena_db->setQuery("UPDATE #__fb_messages_text SET message='{$message}' WHERE mesid='{$id}'");
+                            $kunena_db->setQuery("UPDATE #__fb_messages_text SET message=".$kunena_db->quote($message)." WHERE mesid='{$id}'");
 
                             if ($kunena_db->query() && $dbr_nameset)
                             {
@@ -833,7 +833,7 @@ $catName = $objCatInfo->name;
                                 if (!empty($imageLocation) && file_exists($imageLocation))
                                 {
                                     $imageLocation = addslashes($imageLocation);
-                                    $kunena_db->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$id','$imageLocation')");
+                                    $kunena_db->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) VALUES ('$id',".$kunena_db->quote($imageLocation).")");
 
                                     if (!$kunena_db->query()) {
                                         echo "<script> alert('Storing image failed: " . $kunena_db->getErrorMsg() . "'); </script>\n";
@@ -844,7 +844,7 @@ $catName = $objCatInfo->name;
                                 if (!empty($fileLocation) && file_exists($fileLocation))
                                 {
                                     $fileLocation = addslashes($fileLocation);
-                                    $kunena_db->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$id','$fileLocation')");
+                                    $kunena_db->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) VALUES ('$id',".$kunena_db->quote($fileLocation).")");
 
                                     if (!$kunena_db->query()) {
                                         echo "<script> alert('Storing file failed: " . $kunena_db->getErrorMsg() . "'); </script>\n";
@@ -1046,14 +1046,14 @@ $catName = $objCatInfo->name;
                     // insert 'moved topic' notification in old forum if needed
                     if ($bool_leaveGhost)
                     {
-                    	$kunena_db->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','$newSubject','$lastTimestamp','{$oldRecord[0]->catid}','1', '{$kunena_my->id}', '".trim(addslashes($my_name))."')");
+                    	$kunena_db->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0',".$kunena_db->quote($newSubject).",'$lastTimestamp','{$oldRecord[0]->catid}','1', '{$kunena_my->id}', '".$kunena_db->quote(trim(addslashes($my_name)))."')");
                     	$kunena_db->query() or trigger_dberror('Unable to insert ghost message.');
 
                     	//determine the new location for link composition
                     	$newId = $kunena_db->insertid();
 
                     	$newURL = "catid=" . $catid . "&id=" . $id;
-                    	$kunena_db->setQuery("INSERT INTO #__fb_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')");
+                    	$kunena_db->setQuery("INSERT INTO #__fb_messages_text (`mesid`, `message`) VALUES ('$newId', ".$kunena_db->quote($newURL).")");
                     	$kunena_db->query() or trigger_dberror('Unable to insert ghost message.');
 
                     	//and update the thread id on the 'moved' post for the right ordering when viewing the forum..
@@ -1192,14 +1192,14 @@ $catName = $objCatInfo->name;
                             // insert 'moved topic' notification in old forum if needed
                             if ($bool_leaveGhost)
                             {
-                                $kunena_db->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`) VALUES ('0','$newSubject','" . $lastTimestamp . "','" . $oldRecord[0]->catid . "','1')");
+                                $kunena_db->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`) VALUES ('0',".$kunena_db->quote($newSubject).",'" . $lastTimestamp . "','" . $oldRecord[0]->catid . "','1')");
 
                                 if ($kunena_db->query())
                                 {
                                     //determine the new location for link composition
                                     $newId = $kunena_db->insertid();
                                     $newURL = "catid=" . $catid . "&id=" . $sourceid;
-                                    $kunena_db->setQuery("INSERT INTO #__fb_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')");
+                                    $kunena_db->setQuery("INSERT INTO #__fb_messages_text (`mesid`, `message`) VALUES ('$newId', ".$kunena_db->quote($newURL).")");
 
                                     if (!$kunena_db->query())
                                     {

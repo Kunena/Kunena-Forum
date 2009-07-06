@@ -41,15 +41,18 @@ $is_user = (strtolower($my->usertype) <> '');
 
 // BEGIN: READ ANN
 if ($do == "read") {
-    $database->setQuery("SELECT id,title,description,created ,published,showdate  FROM #__fb_announcement  WHERE id=$id AND published = 1 ");
+    $database->setQuery("SELECT id, title, sdescription, description, created, published, showdate FROM #__fb_announcement WHERE id='{$id}' AND published='1'");
     $anns_ = $database->loadObjectList();
     	check_dberror("Unable to load announcements.");
 
     $ann = $anns_[0];
     $annID = $ann->id;
     $anntitle = stripslashes($ann->title);
-
     $smileyList = smile::getEmoticons(0);
+	$annsdescription = stripslashes(smile::smileReplace($ann->sdescription, 0, $fbConfig->disemoticons, $smileyList));
+	$annsdescription = nl2br($annsdescription);
+	$annsdescription = smile::htmlwrap($annsdescription, $fbConfig->wrap);
+    
 	$anndescription = stripslashes(smile::smileReplace($ann->description, 0, $fbConfig->disemoticons, $smileyList));
 	$anndescription = nl2br($anndescription);
 	$anndescription = smile::htmlwrap($anndescription, $fbConfig->wrap);
@@ -105,7 +108,7 @@ if ($do == "read") {
                         ?>
 
     <div class = "anndesc">
-<?php echo $anndescription; ?>
+<?php echo !empty($anndescription) ? $anndescription : $annsdescription; ?>
     </div>
                     </td>
                 </tr>
@@ -234,9 +237,9 @@ if ($is_editor) {
         $title = addslashes(mosGetParam($_REQUEST, "title", ""));
         $description = addslashes(mosGetParam($_REQUEST, "description", "", _MOS_ALLOWRAW));
         $sdescription = addslashes(mosGetParam($_REQUEST, "sdescription", "", _MOS_ALLOWRAW));
-        $created = mosGetParam($_REQUEST, "created", "");
-        $published = mosGetParam($_REQUEST, "published", 0);
-        $showdate = mosGetParam($_REQUEST, "showdate", "");
+        $created = addslashes(mosGetParam($_REQUEST, "created", ""));
+        $published = addslashes(mosGetParam($_REQUEST, "published", 0));
+        $showdate = addslashes(mosGetParam($_REQUEST, "showdate", ""));
         # Clear any HTML
         $query1 = "INSERT INTO #__fb_announcement VALUES ('', '$title', '$sdescription', '$description', " . (($created <> '')?"'$created'":"NOW()") . ", '$published', '$ordering','$showdate')";
         $database->setQuery($query1);

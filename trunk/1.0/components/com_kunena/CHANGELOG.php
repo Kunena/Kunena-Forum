@@ -32,6 +32,15 @@ Legend:
 
 Kunena 1.0.11
 
+7-July-2009 Matias
+# [#17117] Merge important fixes from /trunk/1.5 (Rev 887-905)
+# [#17116] Latest post link in moved message does not work
+^ [#15798] Update credits page
+
+28-June-2009 Matias
+# [#17001] Fix small bugs reported in Kunena forums
+# [#17003] Fix notice: Undefined variable: rImg
+
 17-June-2009 fxstein
 # [#16877] Regression in K1.0.10 caused NEW indicator handling to break
  - migrated rest of session logic into CKunenaSession class for additional cleanup
@@ -39,6 +48,9 @@ Kunena 1.0.11
 16-June-2009 fxstein
 ^ [#16837] Update version info for 1.0.11 service release; new version name: Gemeinschaft
   - german for community
+
+16-June-2009 Matias
+# [#16829] Announcements: Description with some special characters does not work (merged from /trunk/1.5)
 
 15-June-2009 Matias
 ^ [#16326] Change minumum MySQL requirement to 4.1.20 (fix problem in the check)

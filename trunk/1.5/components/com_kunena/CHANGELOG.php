@@ -34,6 +34,7 @@ Kunena 1.5.4
 
 7-July-2009 Matias
 # [#17114] Extra backslash is not saved into database (missing \ in messages)
+# [#17116] Latest post link in moved message does not work
 
 28-June-2009 Matias
 # [#16994] Default_red/green/gray: pat-Warning and no styling

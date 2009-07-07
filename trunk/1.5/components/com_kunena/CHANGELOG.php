@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.5.4
 
+7-July-2009 fxstein
+^ [#17127] Update backend error messages for failed installs and add link to wiki
+
 7-July-2009 Matias
 # [#17114] Extra backslash is not saved into database (missing \ in messages)
 # [#17116] Latest post link in moved message does not work

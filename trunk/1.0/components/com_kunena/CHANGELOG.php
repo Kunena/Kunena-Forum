@@ -32,6 +32,13 @@ Legend:
 
 Kunena 1.0.11
 
+8-July-2009 Matias
+# [#17117] Merge [#17139] and [#17127] from /trunk/1.5 (Rev 907-910)
+* [#17139] XSS vulnerability in BBCode parser
+
+7-July-2009 fxstein
+^ [#17127] Update backend error messages for failed installs and add link to wiki
+
 7-July-2009 Matias
 # [#17117] Merge important fixes from /trunk/1.5 (Rev 887-905)
 # [#17116] Latest post link in moved message does not work

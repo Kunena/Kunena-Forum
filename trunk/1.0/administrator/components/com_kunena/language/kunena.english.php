@@ -35,8 +35,8 @@ DEFINE('_KUNENA_VERSION_INSTALLED', 'You have installed Kunena %s (%s).');
 DEFINE('_KUNENA_VERSION_SVN_WARNING', 'Never use an SVN revision for anything else other than software development!');
 DEFINE('_KUNENA_VERSION_DEV_WARNING', 'This internal release should be used only by developers and testers!');
 DEFINE('_KUNENA_VERSION_ALPHA_WARNING', 'This release should not be used on live production sites.');
-DEFINE('_KUNENA_VERSION_BETA_WARNING', 'This release is not recommended to be used on live production sites.');	
-DEFINE('_KUNENA_VERSION_RC_WARNING', 'This release may contain bugs, which will be fixed in the final version.');	
+DEFINE('_KUNENA_VERSION_BETA_WARNING', 'This release is not recommended to be used on live production sites.');
+DEFINE('_KUNENA_VERSION_RC_WARNING', 'This release may contain bugs, which will be fixed in the final version.');
 DEFINE('_KUNENA_ERROR_UPGRADE', 'Upgrading Kunena to version %s has failed!');
 DEFINE('_KUNENA_ERROR_UPGRADE_WARN', 'Your forum may be missing some important fixes and some features may be broken.');
 DEFINE('_KUNENA_ERROR_UPGRADE_AGAIN', 'Please try to upgrade again. If you cannot upgrade to Kunena %s, you can easily downgrade to the latest working version.');
@@ -49,7 +49,7 @@ DEFINE('_KUNENA_INTEGRATION_CB_WARN_UPDATE', 'Community Builder Profile integrat
 DEFINE('_KUNENA_INTEGRATION_CB_WARN_XHTML', 'Community Builder Profile integration only works if Community Builder is in W3C XHTML 1.0 Trans. compliance mode.');
 DEFINE('_KUNENA_INTEGRATION_CB_WARN_INTEGRATION', 'Community Builder Profile integration only works if the forum integration plugin has been enabled in Community Builder.');
 DEFINE('_KUNENA_INTEGRATION_CB_WARN_HIDE', 'Saving the Kunena configuration will disable integration and hide this warning.');
-			
+
 // 1.0.10
 DEFINE('_KUNENA_BACK', 'Back');
 DEFINE('_KUNENA_SYNC', 'Sync');
@@ -132,8 +132,8 @@ DEFINE('_KUNENA_ERROR_INCOMPLETE_ERROR', 'Your Kunena installation is incomplete
 DEFINE('_KUNENA_ERROR_INCOMPLETE_OFFLINE', 'Because of the above errors your Forum is now Offline and Forum Administration has been disabled.');
 DEFINE('_KUNENA_ERROR_INCOMPLETE_REASONS', 'Possible reasons for this error:');
 DEFINE('_KUNENA_ERROR_INCOMPLETE_1', '1) Kunena installation process has failed or timed out (try to install it again)');
-DEFINE('_KUNENA_ERROR_INCOMPLETE_2', '2) You have removed some of the Kunena tables from your database');
-DEFINE('_KUNENA_ERROR_INCOMPLETE_3', '3) Your database has been corrupted');
+DEFINE('_KUNENA_ERROR_INCOMPLETE_2', '2) You have manually modified or removed some of the Kunena tables from your database');
+DEFINE('_KUNENA_ERROR_INCOMPLETE_3', 'You can find solutions to the most common issues on our community documentation wiki: <a href="http://docs.kunena.com/index.php/Installation_Issues">Kunena Documentation Wiki</a>');
 DEFINE('_KUNENA_ERROR_INCOMPLETE_SUPPORT', 'Our support forum can be found from:');
 
 // 1.0.9

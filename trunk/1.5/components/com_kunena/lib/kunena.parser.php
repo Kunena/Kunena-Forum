@@ -317,7 +317,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
             # call html_entity_decode_utf8 if Encode() did not already!!!
             # in general $between was already Encoded (if not explicitly suppressed!)
             case 'email':
-                $tempstr = $between;
+                $tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
                 if(substr($tempstr, 0, 7)=='mailto:') {
                   $between = substr($tempstr, 7);
                 }
@@ -328,7 +328,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 return TAGPARSER_RET_REPLACED;
                 break;
             case 'url':
-                $tempstr = $between;
+                $tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
                 if(substr($tempstr, 0, 7)!='http://') {
                   $tempstr = 'http://'.$tempstr;
                 }
@@ -337,6 +337,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 break;
             case 'img':
                 if($between) {
+                	$tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
                     $task->autolink_disable--; # continue autolink conversion
                     // Make sure we add image size if specified and while we are
                     // at it also set maximum image width from text width config.
@@ -356,11 +357,11 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                     // Need to check if we are nested inside a URL code
 					if($task->autolink_disable == 0)
 					{
-						$tag_new = "<a href='".$between."' rel=\"lightbox\"><img src='".$between.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' /></a>";
+						$tag_new = "<a href='".$tempstr."' rel=\"lightbox\"><img src='".$tempstr.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' /></a>";
 					}
 					else
 					{
-						$tag_new = "<img src='".$between.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' />";
+						$tag_new = "<img src='".$tempstr.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' />";
 					}
 
 
@@ -370,9 +371,10 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 break;
             case 'file':
                 if($between) {
-                    $task->autolink_disable--; # continue autolink conversion
+                	$tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
+                	$task->autolink_disable--; # continue autolink conversion
                     $tag_new = "<div class=\"fb_file_attachment\"><span class=\"contentheading\">"._KUNENA_FILEATTACH."</span><br>"._KUNENA_FILENAME
-                    ."<a href='".$between."' target=\"_blank\" rel=\"nofollow\">".(($tag->options["name"])?kunena_htmlspecialchars($tag->options["name"]):$between)."</a><br>"._KUNENA_FILESIZE.kunena_htmlspecialchars($tag->options["size"], ENT_QUOTES)."</div>";
+                    ."<a href='".$tempstr."' target=\"_blank\" rel=\"nofollow\">".(($tag->options["name"])?kunena_htmlspecialchars($tag->options["name"]):$tempstr)."</a><br>"._KUNENA_FILESIZE.kunena_htmlspecialchars($tag->options["size"], ENT_QUOTES)."</div>";
                     return TAGPARSER_RET_REPLACED;
                 }
                 return TAGPARSER_RET_NOTHING;

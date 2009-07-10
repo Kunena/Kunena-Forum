@@ -30,14 +30,15 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.6.0a
+Kunena 1.6.0dev
 
 10-July-2009 fxstein
 ^ [#16827] Update Changelog entires
+^ [#16827] Rename version to 1.6.0dev to reflect pre-alpha status
 
 9-July-2009 fxstein
 + [#16414] New CKunenaModeration class to encapsulate all moderation logic
-! First working Kunena 1.6.0a (Alpha) build
+! First working Kunena 1.6.0dev (dev) build
 ^ [#16825] New upgrade logic to convert pre 1.6 database during
   automatic upgrade
 ^ [#17165] Rename backend graphics files from fb* to kunena*

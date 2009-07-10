@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>
-	<version>1.6.0a</version>
+	<version>1.6.0dev</version>
 	<versionname>Parli</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>

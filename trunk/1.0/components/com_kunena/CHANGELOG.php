@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.11
 
+10-July-2009 Matias
+^ [#15798] Update credits page
+
 8-July-2009 Matias
 # [#17117] Merge [#17139] and [#17127] from /trunk/1.5 (Rev 907-910)
 * [#17139] XSS vulnerability in BBCode parser

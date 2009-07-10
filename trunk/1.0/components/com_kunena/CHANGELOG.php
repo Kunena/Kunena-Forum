@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.11
 
+10-July-2009 fxstein
+^ [#16838] Update Readme file with latest URLs
+
 10-July-2009 Matias
 ^ [#15798] Update credits page
 

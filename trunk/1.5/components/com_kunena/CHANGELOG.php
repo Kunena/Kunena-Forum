@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.5.4
 
+10-July-2009 Matias
+^ [#15798] Update credits page
+
 8-July-2009 Matias
 * [#17139] XSS vulnerability in BBCode parser
 

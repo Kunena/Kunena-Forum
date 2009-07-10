@@ -32,6 +32,13 @@ Legend:
 
 Kunena 1.6.0a
 
+9-July-2009
++ [#16414] New CKunenaModeration class to encapsulate all moderation logic
+! First working Kunena 1.6.0a (Alpha) build
+^ [#16825] New upgrade logic to convert pre 1.6 database during
+  automatic upgrade
+^ [#17165] Rename backend graphics files from fb* to kunena*
+
 15-June-2009
 ^ [#16823] Global replace of fb/fb_/fb- with kunena/kunena_
 ^ [#16824] Change MySQL minimum version to 5.0.0 for 1.6 release

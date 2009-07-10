@@ -91,12 +91,12 @@ function com_install()
 		// a 'manual' check if this is going to be an upgrade and if so create that table
 		// and write a dummy version entry to force an upgrade.
 
-		$kunena_db->setQuery( "SHOW TABLES LIKE '%kunena_messages'" );
+		$kunena_db->setQuery( "SHOW TABLES LIKE '%fb_messages'" );
 		$kunena_db->query() or trigger_dbwarning("Unable to search for messages table.");
 
 		if($kunena_db->getNumRows()) {
 			// kunena tables exist, now lets see if we have a version table
-			$kunena_db->setQuery( "SHOW TABLES LIKE '%kunena_version'" );
+			$kunena_db->setQuery( "SHOW TABLES LIKE '%fb_version'" );
 			$kunena_db->query() or trigger_dbwarning("Unable to search for version table.");;
 			if(!$kunena_db->getNumRows()) {
 				//version table does not exist - this is a pre 1.0.5 install - lets create
@@ -105,6 +105,20 @@ function com_install()
 				$kunenaupgrade->insertDummyVersion();
 			}
 		}
+
+		// Legacy enabler part 2 for Kunena 1.6 and above
+		// name of version table has changed from 1.5 and before to 1.6
+		$kunena_db->setQuery( "SHOW TABLES LIKE '%fb_version'" );
+		$kunena_db->query() or trigger_dbwarning("Unable to search for version table.");;
+		if($kunena_db->getNumRows())
+		{
+		    // old version table found
+		    // rename to new naming standard to enable upgrade
+		    $kunena_db->setQuery( "RENAME TABLE `#__fb_version` TO `#__kunena_version`" );
+		    $kunena_db->query();
+		        check_dberror("Unable to rename version table.");;
+		}
+
 		// Start Installation/Upgrade
 		$kunenaupgrade->doUpgrade();
 

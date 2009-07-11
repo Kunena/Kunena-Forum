@@ -33,6 +33,7 @@ Legend:
 Kunena 1.5.4
 
 10-July-2009 Matias
+# [#17168] My Profile: Uploading avatar does not work in PHP < 5.2.1
 ^ [#15798] Update credits page
 
 8-July-2009 Matias

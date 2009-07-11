@@ -44,7 +44,7 @@ function generateAvatarGD($gdversion, $src_img, $srcWidth, $srcHeight, $dstWidth
 		$dst_img = imagecreatetruecolor($dstWidth, $dstHeight);
 		imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0, (int)$dstWidth, (int)$dstHeight, $srcWidth, $srcHeight);
 	}
-	$tmpfile = tempnam(sys_get_temp_dir(), "kn_");
+	$tmpfile = tempnam(CKunenaPath::tmpdir(), "kn_");
 	imagejpeg($dst_img, $tmpfile, $quality);
 	CKunenaFile::copy($tmpfile, $location);
 	unlink($tmpfile);

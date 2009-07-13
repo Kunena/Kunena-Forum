@@ -38,77 +38,13 @@ $fbConfig =& CKunenaConfig::getInstance();
 $kunena_db = &JFactory::getDBO();
 $kunena_my = &JFactory::getUser();
 
+require_once (KUNENA_PATH_LIB .DS. "kunena.profile.php");
+$kunenaProfile =& CKunenaProfile::getInstance();
+
 /**
 *@desc Getting the correct Itemids, for components required
 */
 $Itemid = JRequest::getInt('Itemid', 0, 'REQUEST');
-
-//check if we have all the itemid sets. if so, then no need for DB call
-if (!defined("KUNENA_COMPONENT_ITEMID")) {
-        $kunena_db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_kunena' AND published='1'");
-        $Itemid = $kunena_db->loadResult();
-
-        if ($Itemid < 1) {
-            $Itemid = 0;
-            }
-
-    define("KUNENA_COMPONENT_ITEMID", (int)$Itemid);
-    define("KUNENA_COMPONENT_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_COMPONENT_ITEMID);
-
-    //JomSocial
-    if ($fbConfig->pm_component == 'jomsocial' || $fbConfig->fb_profile == 'jomsocial' || $fbConfig->avatar_src == 'jomsocial')
-    {
-    	// Only proceed if jomSocial is really installed
-	    if ( file_exists( KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/core.php' ) )
-	    {
-	        $kunena_db->setQuery("SELECT id FROM #__menu WHERE link LIKE 'index.php?option=com_community%' AND published='1' LIMIT 1");
-	        $JOMSOCIAL_Itemid = $kunena_db->loadResult();
-	        	check_dberror('Unable to load jomSocial item id');
-
-	        define("KUNENA_JOMSOCIAL_ITEMID", (int)$JOMSOCIAL_Itemid);
-	        define("KUNENA_JOMSOCIAL_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_JOMSOCIAL_ITEMID);
-
-	        // Prevent JomSocial from loading their jquery library - we got one loaded already
-	        define( 'C_ASSET_JQUERY', 1 );
-
-			include_once(KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/core.php');
-			include_once(KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/messaging.php');
-
-			//PM popup requires JomSocial css to be loaded from selected template
-			$config =& CFactory::getConfig();
-			$document->addStyleSheet(KUNENA_JLIVEURL.'components/com_community/assets/window.css');
-			$document->addStyleSheet(KUNENA_JLIVEURL.'components/com_community/templates/'.$config->get('template').'/css/style.css');
-	    }
-	    else
-	    {
-	    	// JomSocial not present reset config settings to avoid problems
-	    	$fbConfig->pm_component = $fbConfig->pm_component == 'jomsocial' ? 'none' : $fbConfig->pm_component;
-	    	$fbConfig->fb_profile = $fbConfig->fb_profile == 'jomsocial' ? 'kunena' : $fbConfig->fb_profile;
-	    	$fbConfig->avatar_src = $fbConfig->avatar_src == 'jomsocial' ? 'kunena' : $fbConfig->avatar_src;
-
-	    	// Do not save new config - thats a task for the backend
-	    	// This is just a catch all in case it is not present
-	    }
-    }
-
-    //Community Builder 1.2 integration
-	if ($fbConfig->pm_component == 'cb' || $fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
-    {
-		// Get Community Builder compability
-		require_once (KUNENA_PATH_LIB .DS. "kunena.communitybuilder.php");
-		global $kunenaProfile;
-		$kunenaProfile =& CkunenaCBProfile::getInstance();
-    }
-
-    //Clexus PM
-    if ($fbConfig->pm_component == 'clexuspm' || $fbConfig->fb_profile == 'clexuspm') {
-        $kunena_db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_mypms' AND published='1'");
-        $CPM_Itemid = $kunena_db->loadResult();
-        	check_dberror('Unable to load Clexus item id');
-
-        define("KUNENA_CPM_ITEMID", (int)$CPM_Itemid);
-        define("KUNENA_CPM_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_CPM_ITEMID);
-        }
 
     // UddeIM
     if ($fbConfig->pm_component == 'uddeim') {
@@ -130,25 +66,6 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
         define("KUNENA_MISSUS_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_MISSUS_ITEMID);
         }
 
-    // PROFILE LINK
-    if ($fbConfig->fb_profile == "jomsocial") {
-        $profilelink = 'index.php?option=com_community&amp;view=profile&amp;userid=';
-        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_community&amp;view=profile&amp;Itemid=" . KUNENA_JOMSOCIAL_ITEMID . "&amp;userid=");
-        }
-    else if ($fbConfig->fb_profile == "cb") {
-        $profilelink = 'index.php?option=com_comprofiler&amp;task=userProfile&amp;user=';
-        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_comprofiler&amp;task=userProfile" . KUNENA_CB_ITEMID_SUFFIX . "&amp;user=");
-        }
-    else if ($fbConfig->fb_profile == "clexuspm") {
-        $profilelink = 'index.php?option=com_mypms&amp;task=showprofile&amp;user=';
-        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_mypms&amp;task=showprofile&amp;Itemid=" . KUNENA_CPM_ITEMID . "&amp;user=");
-        }
-    else {
-        $profilelink = 'index.php?option=com_kunena&amp;func=fbprofile&amp;userid=';
-        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_kunena&amp;func=fbprofile&amp;Itemid=" . KUNENA_COMPONENT_ITEMID . "&amp;userid=");
-        }
-    }
-
 /*       _\|/_
          (o o)
  +----oOO-{_}-OOo--------------------------------+
@@ -157,9 +74,9 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
  +----------------------------------------------*/
 
 // Kunena live url
-define('KUNENA_LIVEURL', KUNENA_JLIVEURL . 'index.php?option=com_kunena' . KUNENA_COMPONENT_ITEMID_SUFFIX);
-define('KUNENA_CLEANLIVEURL', KUNENA_JLIVEURL . 'index2.php?option=com_kunena&amp;no_html=1' . KUNENA_COMPONENT_ITEMID_SUFFIX);
-define('KUNENA_LIVEURLREL', 'index.php?option=com_kunena' . KUNENA_COMPONENT_ITEMID_SUFFIX);
+define('KUNENA_LIVEURL', KUNENA_JLIVEURL . 'index.php?option=com_kunena');
+define('KUNENA_CLEANLIVEURL', KUNENA_JLIVEURL . 'index2.php?option=com_kunena&amp;no_html=1');
+define('KUNENA_LIVEURLREL', 'index.php?option=com_kunena');
 
 // Kunena souces absolute path
 define('KUNENA_DIRECTURL', KUNENA_JLIVEURL . 'components/com_kunena/');

@@ -158,7 +158,7 @@ class CKunenaLink
     function GetMyProfileLink($fbConfig, $userid, $name, $rel='nofollow')
     {
     	$fbConfig =& CKunenaConfig::getInstance();
-    	if($fbConfig->fb_profile == 'jomsocial' || $fbConfig->fb_profile == 'cb')
+    	if($fbConfig->fb_profile != 'fb')
     	{
     		return CKunenaLink::GetProfileLink($fbConfig, $userid, $name, $rel);
     	}
@@ -170,29 +170,15 @@ class CKunenaLink
 
     function GetProfileLink($fbConfig, $userid, $name, $rel='nofollow', $class='')
     {
-    	$fbConfig =& CKunenaConfig::getInstance();
-    	// Only create links for valid users
-    	if ($userid > 0)
-    	{
-    		if($fbConfig->fb_profile == 'cb') 
-    		{
-    			$kunenaProfile =& CKunenaCBProfile::getInstance();
-    			if ($link = $kunenaProfile->getProfileURL($userid))
-    			{
-    				return CKunenaLink::GetSefHrefLink($link, $name, '', $rel, $class);
-    			}
-    			else 
-    			{
-    				return $name;
-    			}
-    		} else {
-   				return CKunenaLink::GetSefHrefLink(KUNENA_PROFILE_LINK_SUFFIX.$userid, $name, '', $rel, $class);
-    		}
-    	}
-    	else // supress links for guests
-    	{
-    		return $name;
-    	}
+    	$kunenaProfile = CKunenaProfile::getInstance();
+		if ($link = $kunenaProfile->getProfileURL($userid))
+		{
+			return CKunenaLink::GetSefHrefLink($link, $name, '', $rel, $class);
+		}
+		else 
+		{
+			return $name;
+		}
     }
 
 	function GetUserlistURL($action='')

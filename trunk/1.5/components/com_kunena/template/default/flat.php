@@ -140,26 +140,7 @@ if (count($messages[0]) > 0)
                     //(JJ) AVATAR
                     if ($fbConfig->avataroncat)
                     {
-						if ($fbConfig->avatar_src == "jomsocial" && $leaf->userid)
-						{
-							// Get CUser object
-							$user =& CFactory::getUser($last_reply[$leaf->id]->userid);
-							$bof_avatar = '<img class="catavatar" src="' . $user->getThumbAvatar() . '" alt=" " />';
-						}
-						else if ($fbConfig->avatar_src == "cb")
-						{
 							$bof_avatar = $kunenaProfile->showAvatar($last_reply[$leaf->id]->userid, 'catavatar');
-						} else {
-							//first we gather some information about this person
-							unset($CatUser);
-							$kunena_db->setQuery("SELECT * FROM #__fb_users AS su LEFT JOIN #__users AS u on u.id=su.userid WHERE su.userid='{$leaf->userid}'");
-
-							$CatUser = $kunena_db->loadObject();
-							if (is_object($CatUser)) $javatar = $CatUser->avatar;
-							if (isset($javatar)) {
-								$bof_avatar = '<img class="catavatar" src="'.(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $javatar)?KUNENA_LIVEUPLOADEDPATH.'/avatars/'.$javatar:KUNENA_LIVEUPLOADEDPATH.'/avatars/s_'.$javatar) .'" alt="" />';
-							}
-						}
 					}
 				?>
 
@@ -473,7 +454,7 @@ if (count($messages[0]) > 0)
             </tbody>
         </table>
 
-        <input type = "hidden" name = "Itemid" value = "<?php echo KUNENA_COMPONENT_ITEMID;?>"/>
+        <input type = "hidden" name = "Itemid" value = "<?php echo getKunenaItemid();?>"/>
         <input type = "hidden" name = "option" value = "com_kunena"/>
         <input type = "hidden" name = "func" value = "bulkactions" />
         <input type = "hidden" name = "return" value = "<?php echo JRoute::_( $Breturn ); ?>" />

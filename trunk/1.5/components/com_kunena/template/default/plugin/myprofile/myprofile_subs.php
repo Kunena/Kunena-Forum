@@ -111,7 +111,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 <?php echo _KUNENA_USRL_DISPLAY_NR; ?>
 
 <?php
-echo $pageNav->getLimitBox("index.php?option=com_kunena&amp;func=myprofile&amp;do=showsub" . KUNENA_COMPONENT_ITEMID_SUFFIX);
+echo $pageNav->getLimitBox(JRoute::_("index.php?option=com_kunena&amp;func=myprofile&amp;do=showsub"));
 ?>
 
 			<input type = "submit" class = "button" value = "<?php echo _GEN_DELETE;?>"/>
@@ -129,7 +129,7 @@ echo $pageNav->getLimitBox("index.php?option=com_kunena&amp;func=myprofile&amp;d
 			<tr><td colspan = "5" class = "fb_profile-bottomnav">
 					<?php
 					// TODO: fxstein - Need to perform SEO cleanup
-					echo $pageNav->getPagesLinks("index.php?option=com_kunena&amp;func=myprofile&amp;do=showsub" . KUNENA_COMPONENT_ITEMID_SUFFIX);
+					echo $pageNav->getPagesLinks(JRoute::_("index.php?option=com_kunena&amp;func=myprofile&amp;do=showsub"));
 					?>
 
 					<br/>

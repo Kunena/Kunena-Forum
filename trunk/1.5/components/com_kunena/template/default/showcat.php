@@ -425,7 +425,7 @@ else
 
             <form id = "jumpto" name = "jumpto" method = "post" target = "_self" action = "index.php" onsubmit = "if(document.jumpto.catid.value &lt; 2){return false;}">
                 <div style = "width: 100%" align = "right">
-                    <input type = "hidden" name = "Itemid" value = "<?php echo KUNENA_COMPONENT_ITEMID;?>"/>
+                    <input type = "hidden" name = "Itemid" value = "<?php echo getKunenaItemidSuffix();?>"/>
 
                     <input type = "hidden" name = "option" value = "com_kunena"/>
 

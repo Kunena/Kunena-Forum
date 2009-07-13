@@ -94,11 +94,11 @@ require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 // Get CKunanaUser and CKunenaUsers
 require_once (KUNENA_PATH_LIB .DS. "kunena.user.class.php");
 
-global $fbConfig, $kunenaProfile;
+global $fbConfig;
 
 // Get data about the current user - its ok to not have a userid = guest
 $kunena_my = &JFactory::getUser();
-$KunenaUser = new CKunenaUser($kunena_my->id);
+$KunenaUser =& new CKunenaUser($kunena_my->id);
 // Load configuration and personal settings for current user
 $fbConfig =& CKunenaConfig::getInstance();
 
@@ -183,13 +183,6 @@ if ($func == 'fb_pdf')
     $app->close();
 }
 
-// Include Clexus PM class file
-if ($fbConfig->pm_component == "clexuspm")
-{
-    require_once (KUNENA_ROOT_PATH .DS. 'components/com_mypms/class.mypms.php');
-    $ClexusPMconfig = new ClexusPMConfig();
-}
-
 //time format
 include_once (KUNENA_PATH_LIB .DS. 'kunena.timeformat.class.php');
 
@@ -231,7 +224,8 @@ $document =& JFactory::getDocument();
 // inline jscript with image location
 $document->addScriptDeclaration('jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";');
 
-if (is_object($kunenaProfile) && $kunenaProfile->useProfileIntegration())
+$kunenaProfile =& CKunenaProfile::getInstance();
+if ($fbConfig->fb_profile == 'cb' && $kunenaProfile->useProfileIntegration())
 {
 	if (defined('KUNENA_COREJSURL'))
 	{
@@ -848,7 +842,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
     $KunenaTemplate->displayParsedTemplate('kunena-footer');
 } //else
 
-if (is_object($kunenaProfile)) $kunenaProfile->close();
+$kunenaProfile->close();
 
 // Just for debugging and performance analysis
 $mtime = explode(" ", microtime());

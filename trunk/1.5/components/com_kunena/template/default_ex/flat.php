@@ -399,25 +399,9 @@ if (count($messages[0]) > 0)
 
   <span class="topic_latest_post_avatar">
   <?php
-  		if ($fbConfig->avatar_src == "jomsocial" && $leaf->userid)
-		{
-			// Get CUser object
-			$user =& CFactory::getUser($last_reply[$leaf->id]->userid);
-		    $useravatar = '<img class="fb_list_avatar" src="' . $user->getThumbAvatar() . '" alt=" " />';
-		   	echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, $useravatar);
-		}
-		else if ($fbConfig->avatar_src == "cb")
-		{
-			$useravatar = $kunenaProfile->showAvatar($last_reply[$leaf->id]->userid, 'fb_list_avatar');
-  		    echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, $useravatar);
-		} else {
-		  	$javatar =  $last_reply[$leaf->id]->avatar;
-		   	if ($javatar!='') {
-				echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $javatar)?KUNENA_LIVEUPLOADEDPATH.'/avatars/'.$javatar:KUNENA_LIVEUPLOADEDPATH.'/avatars/s_'.$javatar) .'" alt="" />');
-	        }  else {
-		   		echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_nophoto.jpg" alt="" />');
-	        }
-         }?>
+		$useravatar = $kunenaProfile->showAvatar($last_reply[$leaf->id]->userid, 'fb_list_avatar');
+		echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, $useravatar);
+  ?>
   </span>
     <?php } ?>
   <!-- /Avatar -->
@@ -521,7 +505,7 @@ if (count($messages[0]) > 0)
             </tbody>
         </table>
 
-        <input type = "hidden" name = "Itemid" value = "<?php echo KUNENA_COMPONENT_ITEMID;?>"/>
+        <input type = "hidden" name = "Itemid" value = "<?php echo getKunenaItemidSuffix();?>"/>
         <input type = "hidden" name = "option" value = "com_kunena"/>
         <input type = "hidden" name = "func" value = "bulkactions" />
         <input type = "hidden" name = "return" value = "<?php echo JRoute::_( $Breturn ); ?>" />

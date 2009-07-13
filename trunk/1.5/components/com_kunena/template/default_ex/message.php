@@ -28,22 +28,19 @@ unset($user);
 $kunena_db = &JFactory::getDBO();
 $kunena_db->setQuery("SELECT id, email, name FROM #__users WHERE `id`='{$kunena_my->id}'");
 $user = $kunena_db->loadObject();
-if ($fbConfig->fb_profile == 'cb')
-{
-	$msg_params = array(
-		'username' => &$msg_username, 
-		'messageobject' => &$fmessage, 
-		'subject' => &$msg_subject, 
-		'messagetext' => &$msg_text, 
-		'signature' => &$msg_signature, 
-		'karma' => &$msg_karma, 
-		'karmaplus' => &$msg_karmaplus, 
-		'karmaminus' => &$msg_karmaminus
-	);
-	$profileHtml = $kunenaProfile->showProfile($fmessage->userid, $msg_params);
-} else {
-	$profileHtml = null;
-}
+
+$kunenaProfile =& CKunenaProfile::getInstance();
+$msg_params = array(
+	'username' => &$msg_username, 
+	'messageobject' => &$fmessage, 
+	'subject' => &$msg_subject, 
+	'messagetext' => &$msg_text, 
+	'signature' => &$msg_signature, 
+	'karma' => &$msg_karma, 
+	'karmaplus' => &$msg_karmaplus, 
+	'karmaminus' => &$msg_karmaminus
+);
+$profileHtml = $kunenaProfile->showProfile($fmessage->userid, $msg_params);
 
 ?>
 

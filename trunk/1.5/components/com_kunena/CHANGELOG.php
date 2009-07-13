@@ -30,6 +30,12 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.5.5
+
+11-July-2009 Matias
+^ [#17183] Finish integration API and make templates to use it
+^ [#17184] Convert JomSocial integration to implement the new API
+
 Kunena 1.5.4
 
 10-July-2009 Matias
@@ -38,6 +44,10 @@ Kunena 1.5.4
 
 8-July-2009 Matias
 * [#17139] XSS vulnerability in BBCode parser
+
+8-July-2009 Matias
+# Remove ClexusPM integration
+# Update JomSocial integration to the same level as CB
 
 7-July-2009 fxstein
 ^ [#17127] Update backend error messages for failed installs and add link to wiki

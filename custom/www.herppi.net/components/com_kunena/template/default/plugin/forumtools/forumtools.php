@@ -60,7 +60,7 @@ if ($fbConfig->forumtools == TRUE):
 
                         <li>
                         <?php
-                        echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;id=' . $id . '&amp;catid=' . $catid . '&amp;func=fb_pdf') . '">' . _GEN_PDF . '</a>';
+                        echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;id=' . $id . '&amp;catid=' . $catid . '&amp;func=fb_pdf') . '" rel="nofollow">' . _GEN_PDF . '</a>';
                         ?>
 
                         </li>

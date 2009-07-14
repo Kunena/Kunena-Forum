@@ -70,7 +70,7 @@ class smile
         $parser = new TagParser();
         $interpreter = new KunenaBBCodeInterpreter($parser);
         $task = $interpreter->NewTask();
-        $task->SetText($fb_message_txt.' ');
+        $task->SetText($fb_message_txt.' _EOP_');
         $task->dry = FALSE;
         $task->drop_errtag = FALSE;
 	    $task->history = $history;
@@ -80,7 +80,7 @@ class smile
 	    // Show Parse errors for debug
 	    //$task->ErrorShow();
 
-        return $task->text;
+        return substr($task->text,0,-6);
     }
     /**
     * function to retrieve the emoticons out of the database
@@ -253,7 +253,7 @@ class smile
 
         <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
             <td class = "fb_leftcolumn" valign = "top">
-                <strong><a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=faq').'#boardcode';?>"><?php @print(_COM_BOARDCODE); ?></a></strong>:
+                <strong><a href = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=faq').'#boardcode';?>" target="_new"><?php @print(_COM_BOARDCODE); ?></a></strong>:
             </td>
 
             <td>
@@ -364,7 +364,7 @@ class smile
 									if (document.postform.videosize.value != "") {video = " size=" + document.postform.videosize.value;}
 									else {video=""}
 									if (document.postform.videowidth.value != "") {video = video + " width=" + document.postform.videowidth.value;}
-									if (document.postform.videoheight.value != "") {video = video + " heigth=" + document.postform.videoheight.value;}
+									if (document.postform.videoheight.value != "") {video = video + " height=" + document.postform.videoheight.value;}
 									if (art=='video1'){
 									if (document.postform.fb_vid_code1.value != "") {video = video + " type=" + document.postform.fb_vid_code1.options[document.postform.fb_vid_code1.selectedIndex].value;}
 									bbfontstyle('[video' + video + ']'+ document.postform.videoid.value,'[/video]');}

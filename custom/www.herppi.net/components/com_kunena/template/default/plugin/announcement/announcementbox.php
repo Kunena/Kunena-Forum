@@ -116,7 +116,7 @@ if ($annID > 0) {
 <?php echo $annsdescription; ?>
 
 <?php
-if ($anndescription != "") {
+if (!empty($anndescription)) {
 ?>
 
     &nbsp;&nbsp;&nbsp;<a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'read', $annID);?>"> <?php echo _ANN_READMORE; ?></a>

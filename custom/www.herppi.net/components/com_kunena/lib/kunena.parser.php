@@ -35,7 +35,7 @@ defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $mainframe;
 
-include_once("kunena.parser.bbcode.php");
+include_once(KUNENA_ABSSOURCESPATH . "kunena.parser.bbcode.php");
 
 class KunenaBBCodeInterpreter extends BBCodeInterpreter {
     # these are samples... we used the parser to refer to files!
@@ -58,7 +58,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 		// match protocol://address/path/file.extension?some=variable&another=asf%
 	    // match www.something.domain:port/path/file.extension?some=variable&another=asf%
 	    // match www.something.domain/path/file.extension?some=variable&another=asf%
-	    $text = preg_replace('/(?<!S)((http(s?):\/\/)|(www.))+([a-zA-Z0-9\/*+-_?&;:%=.,#]+)/', '<a href="http$3://$4$5" target="_blank" rel="nofollow">$4$5</a>', $text);
+	    $text = preg_replace('/(?<!S)((http(s?):\/\/)|(www\.[a-zA-Z0-9-_]+\.))+([a-zA-Z0-9\/*+-_?&;:%=.,#]+)/', '<a href="http$3://$4$5" target="_blank" rel="nofollow">$4$5</a>', $text);
 
 	    // match name@address
 	    $text = preg_replace('/(?<!S)([a-zA-Z0-9_.\-]+\@[a-zA-Z][a-zA-Z0-9_.\-]+[a-zA-Z]{2,6})/', '<a href="mailto:$1">$1</a>', $text);
@@ -319,7 +319,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
             # call html_entity_decode_utf8 if Encode() did not already!!!
             # in general $between was already Encoded (if not explicitly suppressed!)
             case 'email':
-                $tempstr = $between;
+                $tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
                 if(substr($tempstr, 0, 7)=='mailto:') {
                   $between = substr($tempstr, 7);
                 }
@@ -330,7 +330,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 return TAGPARSER_RET_REPLACED;
                 break;
             case 'url':
-                $tempstr = $between;
+                $tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
                 if(substr($tempstr, 0, 7)!='http://') {
                   $tempstr = 'http://'.$tempstr;
                 }
@@ -339,6 +339,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 break;
             case 'img':
                 if($between) {
+                	$tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
                     $task->autolink_disable--; # continue autolink conversion
                     // Make sure we add image size if specified and while we are
                     // at it also set maximum image width from text width config.
@@ -358,11 +359,11 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                     // Need to check if we are nested inside a URL code
 					if($task->autolink_disable == 0)
 					{
-						$tag_new = "<a href='".$between."' rel=\"lightbox\"><img src='".$between.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' /></a>";
+						$tag_new = "<a href='".$tempstr."' rel=\"lightbox\"><img src='".$tempstr.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' /></a>";
 					}
 					else
 					{
-						$tag_new = "<img src='".$between.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' />";
+						$tag_new = "<img src='".$tempstr.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' />";
 					}
 
 
@@ -372,9 +373,10 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 break;
             case 'file':
                 if($between) {
-                    $task->autolink_disable--; # continue autolink conversion
+                	$tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
+                	$task->autolink_disable--; # continue autolink conversion
                     $tag_new = "<div class=\"fb_file_attachment\"><span class=\"contentheading\">"._KUNENA_FILEATTACH."</span><br>"._KUNENA_FILENAME
-                    ."<a href='".$between."' target=\"_blank\" rel=\"nofollow\">".(($tag->options["name"])?kunena_htmlspecialchars($tag->options["name"]):$between)."</a><br>"._KUNENA_FILESIZE.kunena_htmlspecialchars($tag->options["size"], ENT_QUOTES)."</div>";
+                    ."<a href='".$tempstr."' target=\"_blank\" rel=\"nofollow\">".(($tag->options["name"])?kunena_htmlspecialchars($tag->options["name"]):$tempstr)."</a><br>"._KUNENA_FILESIZE.kunena_htmlspecialchars($tag->options["size"], ENT_QUOTES)."</div>";
                     return TAGPARSER_RET_REPLACED;
                 }
                 return TAGPARSER_RET_NOTHING;
@@ -512,7 +514,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				list($vid_type, $vid_width, $vid_height, $vid_addx, $vid_addy, $vid_source, $vid_match, $vid_par2) =
 					(isset($vid_providers[$vid["type"]]))?$vid_providers[$vid["type"]]:$vid_providers["_default"];
 				unset($vid_providers);
-				if ($vid_auto) {
+				if (!empty($vid_auto)) {
 					if ($vid_match and (preg_match("/$vid_match/i", $between, $vid_regs) > 0))
 						$between = $vid_regs[1];
 					else
@@ -521,7 +523,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				$vid_source = preg_replace('/%vcode%/', $between, $vid_source);
 				if (!is_array($vid_par2)) $vid_par2 = array();
 
-				$vid_size = intval($tag->options["size"]);
+				$vid_size = isset($tag->options["size"]) ? intval($tag->options["size"]) : 0;
 				if (($vid_size > 0) and ($vid_size < $vid_sizemax)) {
 					$vid_width = (int)($vid_width * $vid_size / 100);
 					$vid_height = (int)($vid_height * $vid_size / 100);

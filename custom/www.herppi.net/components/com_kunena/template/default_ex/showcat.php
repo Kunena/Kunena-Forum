@@ -104,6 +104,7 @@ if (in_array($catid, $allow_forum))
     $database->setQuery("Select count(*) FROM #__fb_messages WHERE parent = '0' AND catid= '$catid' AND hold = '0' ");
     $total = (int)$database->loadResult();
     	check_dberror('Unable to get message count.');
+    $totalpages = ceil($total / $threads_per_page);
     $database->setQuery("SELECT
     							a.*,
     							t.message AS messagetext,
@@ -138,7 +139,7 @@ if (in_array($catid, $allow_forum))
         $threadids[] = $message->id;
         $messages[$message->parent][] = $message;
         $last_reply[$message->id] = $message;
-	$last_read[$message->id]->lastread = $last_reply[$message->thread]->id;
+	$last_read[$message->id]->lastread = $last_reply[$message->thread];
 	$last_read[$message->id]->unread = 0;
         $hits[$message->id] = $message->hits;
         $thread_counts[$message->id] = 0;
@@ -181,7 +182,7 @@ if (in_array($catid, $allow_forum))
             $messages[$message->parent][] = $message;
             $thread_counts[$message->thread]++;
             $last_reply[$message->thread] = ($last_reply[$message->thread]->time < $message->time) ? $message : $last_reply[$message->thread];
-            $last_read[$message->thread]->lastread = $last_reply[$message->thread]->id;
+            $last_read[$message->id]->lastread = $last_reply[$message->thread];
         }
 
         $database->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages "
@@ -217,8 +218,8 @@ if (in_array($catid, $allow_forum))
     $forumReviewed = $objCatInfo->review;
 
 	//meta description and keywords
-	$metaKeys=(_KUNENA_CATEGORIES . ', ' . kunena_htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) . ', ' . stripslashes($fbConfig->board_title) . ', ' . $GLOBALS['mosConfig_sitename']);
-	$metaDesc=(kunena_htmlspecialchars(stripslashes($objCatParentInfo->name)) . ' - ' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) .' - ' . stripslashes($fbConfig->board_title));
+	$metaKeys=kunena_htmlspecialchars(stripslashes(_KUNENA_CATEGORIES . ", {$objCatParentInfo->name}, {$objCatInfo->name}, {$fbConfig->board_title}, " . $GLOBALS['mosConfig_sitename']));
+	$metaDesc=kunena_htmlspecialchars(stripslashes("{$objCatParentInfo->name} ({$page}/{$totalpages}) - {$objCatInfo->name} - {$fbConfig->board_title}"));
 
 	if( CKunenaTools::isJoomla15() )
 	{

@@ -29,7 +29,7 @@ ini_set("memory_limit", "32M");
 
 // Minimum version requirements
 DEFINE('KUNENA_MIN_PHP', '4.3.9');
-DEFINE('KUNENA_MIN_MYSQL', '4.1.20');
+DEFINE('KUNENA_MIN_MYSQL', '4.1.19');
 
 global $mainframe;
 //Get right Language file
@@ -50,7 +50,7 @@ function com_install() {
 	$mysqlversion = $database->loadResult();
 
 	//before we do anything else we want to check for minimum system requirements
-	if (version_compare(phpversion(), KUNENA_MIN_PHP, ">=") && version_compare($mysqlversion, KUNENA_MIN_MYSQL, ">="))
+	if (version_compare(phpversion(), KUNENA_MIN_PHP, ">=") && version_compare($mysqlversion, KUNENA_MIN_MYSQL, ">"))
 	{
 		// we're on 4.3.0 or later
 
@@ -190,7 +190,7 @@ function com_install() {
 		<br />
 		<strong>php version: <font color="green"><?php echo phpversion(); ?></font> (Required &gt;= <?php echo KUNENA_MIN_PHP; ?>)</strong>
 		<br />
-		<strong>mysql version: <font color="green"><?php echo $mysqlversion; ?></font> (Required &gt;= <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
+		<strong>mysql version: <font color="green"><?php echo $mysqlversion; ?></font> (Required &gt; <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
 		</div>
 
 		<?php
@@ -248,7 +248,7 @@ function com_install() {
 		<br />
 		<strong>php version: <font color="<?php echo version_compare(phpversion(), KUNENA_MIN_PHP, '>=')?'green':'red'; ?>"><?php echo phpversion(); ?></font> (Required &gt;= <?php echo KUNENA_MIN_PHP; ?>)</strong>
 		<br />
-		<strong>mysql version: <font color="<?php echo version_compare($mysqlversion, KUNENA_MIN_MYSQL, '>=')?'green':'red'; ?>"><?php echo $mysqlversion; ?></font> (Required &gt;= <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
+		<strong>mysql version: <font color="<?php echo version_compare($mysqlversion, KUNENA_MIN_MYSQL, '>')?'green':'red'; ?>"><?php echo $mysqlversion; ?></font> (Required &gt; <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
 		</div>
 
 		<?php

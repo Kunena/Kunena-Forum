@@ -99,7 +99,7 @@ require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/
 // Get CKunanaUser and CKunenaUsers
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.user.class.php");
 
-global $kunenaProfile, $fbConfig;
+global $fbConfig, $kunenaProfile;
 
 // Load configuration and personal settings for current user
 $fbConfig =& CKunenaConfig::getInstance();
@@ -212,17 +212,6 @@ if ($fbConfig->joomlastyle < 1) {
     $boardclass = "fb_";
     }
 
-// Include Badword class file
-if ($fbConfig->badwords and !class_exists('Badword')) {
-	foreach (array('badwords2','badword') as $com_bw) {
-		$com_bw = $mosConfig_absolute_path.'/components/com_'.$com_bw.'/class.'.$com_bw.'.php';
-		if (is_file($com_bw)) {
-			require_once ($com_bw);
-			break;
-		}
-	}
-}
-
 // Include preview here before inclusion of other files
 if ($func == "getpreview") {
 
@@ -241,20 +230,14 @@ if ($func == "getpreview") {
     die();
 }
 
-if (is_object($kunenaProfile))
-{
-	$params = array();
-	$kunenaProfile->trigger('onStart', &$params);
-}
-
 // inline jscript with image location
 $mainframe->addCustomHeadTag('<script type="text/javascript">jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";</script>');
 
-global $_CB_framework;
-if (is_object($_CB_framework)) 
+if (is_object($kunenaProfile) && $kunenaProfile->useProfileIntegration())
 {
 	if (defined('KUNENA_COREJSURL'))
 	{
+		global $_CB_framework;
 		$_CB_framework->addJQueryPlugin( 'kunena_tmpl', KUNENA_COREJSPATH );
 		$_CB_framework->outputCbJQuery( '', 'kunena_tmpl' );
 	}
@@ -367,21 +350,10 @@ else
 
 require_once (KUNENA_ABSSOURCESPATH . 'kunena.session.class.php');
 
-//
-// This is the main session handling section. We rely both on cookie as well as our own
-// Kunena session table inside the database. We are leveraging the cookie to keep track
-// of an individual session and its various refreshes. As we will never know what the last
-// pageview of a session will be (as defined by a commonly used 30min break/pause) we
-// keep updateing the cookie until we detect a 30+min break. That break tells us to reset
-// the last visit timestamp inside the database.
-// We also redo the security checks with every new session to minimize the risk of exposed
-// access rights though someone 'leeching' on to another session. This resets the cached
-// priviliges after every 30 min of inactivity
-//
 	// We only do the session handling for registered users
 	// No point in keeping track of whats new for guests
 	global $fbSession;
-	$fbSession =& CKunenaSession::getInstance();
+	$fbSession =& CKunenaSession::getInstance(true);
 	if ($my_id > 0)
 	{
 		// First we drop an updated cookie, good for 1 year
@@ -389,39 +361,14 @@ require_once (KUNENA_ABSSOURCESPATH . 'kunena.session.class.php');
 		// NOT SURE IF WE STILL NEED THIS ONE after session management got dbtized
 		setcookie("fboard_settings[member_id]", $my_id, time() + KUNENA_SECONDS_IN_YEAR, '/');
 
-		// We assume that this is a new user and that we don't know about a previous visit
-		$new_fb_user = 0;
-		$resetView = 0;
-
-		// If userid is empty/null no prior record did exist -> new session and first time around
-		if ($fbSession->_exists === false) {
-			$new_fb_user = 1;
-			$resetView = 1;
-		}
-
-		// detect fbsession timeout (default: after 30 minutes inactivity)
-		$fbSessionTimeOut = ($fbSession->currvisit + $fbConfig->fbsessiontimeout) < $systime;
-
 		// new indicator handling
 		if ($markaction == "allread") {
-			$fbSession->lasttime = $systime;
-			$fbSession->readtopics = '';
-		} elseif ($fbSessionTimeOut) {
-			$fbSession->lasttime = $fbSession->currvisit;
-			$fbSession->readtopics = '';
+			$fbSession->markAllCategoriesRead();
 		}
 
-		// get all accessaible forums if needed (eg on forum modification, new session)
-		if (!$fbSession->allowed or $fbSession->allowed == 'na' or $fbSessionTimeOut) {
-			$allow_forums = CKunenaTools::getAllowedForums($my_id, $aro_group->group_id, $acl);
-			if (!$allow_forums) $allow_forums = '0';
-			if ($allow_forums != $fbSession->allowed)
-				$fbSession->allowed = $allow_forums;
-			unset($allow_forums);
-		}
+		$fbSession->updateAllowedForums($my_id, $aro_group, $acl);
 
 		// save fbsession
-		$fbSession->currvisit = $systime;
 		$fbSession->save($fbSession);
 
 		if ($markaction == "allread") {
@@ -450,14 +397,6 @@ require_once (KUNENA_ABSSOURCESPATH . 'kunena.session.class.php');
 					check_dberror('Unable to create user profile.');
 			}
 		}
-		// Only reset the view if we have determined above that we need to
-		// Without that test the user would not be able to make intra session
-		// view changes by clicking on the threaded vs flat view link
-		if ($resetView == 1)
-		{
-    		setcookie("fboard_settings[current_view]", $prefview, time() + KUNENA_SECONDS_IN_YEAR, '/');
-	    	$view = $prefview;
-	    }
 
 	    // Assign previous visit without user offset to variable for templates to decide
 		// whether or not to use the NEW indicator on forums and posts
@@ -473,7 +412,6 @@ require_once (KUNENA_ABSSOURCESPATH . 'kunena.session.class.php');
 
 		// For guests we don't show new posts
 		$prevCheck = $systime;
-		$new_fb_user = 0;
 		$fbSession->readtopics = '';
 	}
 
@@ -520,13 +458,16 @@ require_once (KUNENA_ABSSOURCESPATH . 'kunena.session.class.php');
     //the only thing we can do with it is 'listcat' and nothing else
     if ($func == "showcat" || $func == "view" || $func == "post")
     {
-        $database->setQuery("SELECT parent FROM #__fb_categories WHERE id=$catid");
-	    $strCatParent = $database->loadResult();
+		if ($catid != 0) {
+	        $database->setQuery("SELECT parent FROM #__fb_categories WHERE id=$catid");
+		    $strCatParent = $database->loadResult();
 			check_dberror('Unable to load categories.');
-
-        if ($strCatParent === '0')
-    		{
-            $func = 'listcat';
+    	}
+        if ($catid == 0 || $strCatParent === '0')
+    	{
+   			$strcatid = '';
+    		if ($catid) $strcatid = "&amp;catid={$catid}";
+            mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=listcat'.$strcatid)));
         }
     }
 
@@ -940,11 +881,7 @@ require_once (KUNENA_ABSSOURCESPATH . 'kunena.session.class.php');
     $obj_KUNENA_tmpl->displayParsedTemplate('fb-footer');
 } //else
 
-if (is_object($kunenaProfile))
-{
-	$params = array();
-	$kunenaProfile->trigger('onEnd', &$params);
-}
+if (is_object($kunenaProfile)) $kunenaProfile->close();
 
 // Just for debugging and performance analysis
 $mtime = explode(" ", microtime());

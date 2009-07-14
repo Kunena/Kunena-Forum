@@ -104,11 +104,11 @@ if ($fbConfig->showpopuserstats)
 $PopSubjectCount = $fbConfig->popsubjectcount;
 if ($fbConfig->showpopsubjectstats)
 {
-
-$database->setQuery("SELECT * FROM #__fb_messages WHERE moved=0 AND hold=0 AND parent=0 ORDER BY hits DESC LIMIT $PopSubjectCount");
-$toptitles = $database->loadObjectList();
-
-$toptitlehits = !empty($toptitles[0]->hits)?$toptitles[0]->hits:0;
+	$fbSession =& CKunenaSession::getInstance();
+	$database->setQuery("SELECT * FROM #__fb_messages WHERE moved='0' AND hold='0' AND parent='0' AND catid IN ($fbSession->allowed) ORDER BY hits DESC LIMIT $PopSubjectCount");
+	$toptitles = $database->loadObjectList();
+	
+	$toptitlehits = !empty($toptitles[0]->hits)?$toptitles[0]->hits:0;
 } // ENDIF: showpopsubjectstats
 
 } // ENDIF: showstats

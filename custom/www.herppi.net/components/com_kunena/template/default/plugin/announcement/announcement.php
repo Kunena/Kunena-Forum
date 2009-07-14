@@ -41,15 +41,18 @@ $is_user = (strtolower($my->usertype) <> '');
 
 // BEGIN: READ ANN
 if ($do == "read") {
-    $database->setQuery("SELECT id,title,description,created ,published,showdate  FROM #__fb_announcement  WHERE id=$id AND published = 1 ");
+    $database->setQuery("SELECT id, title, sdescription, description, created, published, showdate FROM #__fb_announcement WHERE id='{$id}' AND published='1'");
     $anns_ = $database->loadObjectList();
     	check_dberror("Unable to load announcements.");
 
     $ann = $anns_[0];
     $annID = $ann->id;
     $anntitle = stripslashes($ann->title);
-
     $smileyList = smile::getEmoticons(0);
+	$annsdescription = stripslashes(smile::smileReplace($ann->sdescription, 0, $fbConfig->disemoticons, $smileyList));
+	$annsdescription = nl2br($annsdescription);
+	$annsdescription = smile::htmlwrap($annsdescription, $fbConfig->wrap);
+    
 	$anndescription = stripslashes(smile::smileReplace($ann->description, 0, $fbConfig->disemoticons, $smileyList));
 	$anndescription = nl2br($anndescription);
 	$anndescription = smile::htmlwrap($anndescription, $fbConfig->wrap);
@@ -61,7 +64,7 @@ if ($do == "read") {
     if ($annpublished > 0) {
 ?>
 
-        <table class = "fb_blocktable" id = "fb_announcement " border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+        <table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
                     <th>
@@ -105,7 +108,7 @@ if ($do == "read") {
                         ?>
 
     <div class = "anndesc">
-<?php echo $anndescription; ?>
+<?php echo !empty($anndescription) ? $anndescription : $annsdescription; ?>
     </div>
                     </td>
                 </tr>
@@ -129,7 +132,7 @@ if ($is_editor) {
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-            <table class = "fb_blocktable" id = "fb_announcement " border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+            <table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
                 <thead>
                     <tr>
                         <th colspan = "6">
@@ -234,9 +237,9 @@ if ($is_editor) {
         $title = addslashes(mosGetParam($_REQUEST, "title", ""));
         $description = addslashes(mosGetParam($_REQUEST, "description", "", _MOS_ALLOWRAW));
         $sdescription = addslashes(mosGetParam($_REQUEST, "sdescription", "", _MOS_ALLOWRAW));
-        $created = mosGetParam($_REQUEST, "created", "");
-        $published = mosGetParam($_REQUEST, "published", 0);
-        $showdate = mosGetParam($_REQUEST, "showdate", "");
+        $created = addslashes(mosGetParam($_REQUEST, "created", ""));
+        $published = addslashes(mosGetParam($_REQUEST, "published", 0));
+        $showdate = addslashes(mosGetParam($_REQUEST, "showdate", ""));
         # Clear any HTML
         $query1 = "INSERT INTO #__fb_announcement VALUES ('', '$title', '$sdescription', '$description', " . (($created <> '')?"'$created'":"NOW()") . ", '$published', '$ordering','$showdate')";
         $database->setQuery($query1);
@@ -250,14 +253,14 @@ if ($is_editor) {
             die ("Hacking attempt");
             }
 
-        mosCommonHTML::loadCalendar();
+        $calendar = mosCommonHTML::loadCalendar();
             ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable" id = "fb_announcement " border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
             <th>
@@ -300,9 +303,7 @@ if ($is_editor) {
 
                     <strong><?php echo _ANN_DATE; ?>:</strong>
 
-                    <input type = "text" name = "created" id = "anncreated" size = "40" maxlength = "150" value = "<?php echo (!empty($anncreated)?$anncreated:'') ;?>"/>
-
-                    <input type = "reset" class = "button" value = "..." onclick = "return showCalendar('anncreated', '%Y-%m-%d');"/>
+					<?php echo $calendar; ?>
 
                     <br/>
 
@@ -412,7 +413,7 @@ if ($is_editor) {
 <div class="<?php echo $boardclass; ?>_bt_cvr3">
 <div class="<?php echo $boardclass; ?>_bt_cvr4">
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable" id = "fb_announcement " border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
             <th>

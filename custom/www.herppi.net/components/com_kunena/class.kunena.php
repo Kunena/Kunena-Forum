@@ -62,7 +62,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     	// Only proceed if jomSocial is really installed
 	    if ( file_exists( $mainframe->getCfg( 'absolute_path' ) . '/components/com_community/libraries/core.php' ) )
 	    {
-	        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_community' AND published=1");
+	        $database->setQuery("SELECT id FROM #__menu WHERE link LIKE 'index.php?option=com_community%' AND published='1' LIMIT 1");
 	        $JOMSOCIAL_Itemid = $database->loadResult();
 	        	check_dberror('Unable to load jomSocial item id');
 
@@ -92,13 +92,13 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 	    }
     }
 
-	global $kunenaProfile;
     //Community Builder 1.2 - older 1.1 integration no longer supported
 	if ($fbConfig->pm_component == 'cb' || $fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
     {
 		// Get Community Builder compability
 		require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.communitybuilder.php");
-		$kunenaProfile =& new CkunenaCBProfile();
+		global $kunenaProfile;
+		$kunenaProfile =& CkunenaCBProfile::getInstance();
     }
 
     //Clexus PM
@@ -277,13 +277,13 @@ define('KUNENA_URLRANKSPATH', KUNENA_URLIMAGESPATH . 'ranks/');
 // url ranks path
 define('KUNENA_URLCATIMAGES', KUNENA_LIVEUPLOADEDPATH . '/' . $fbConfig->catimagepath); // Kunena category images direct url
 
-if (file_exists(KUNENA_ABSTMPLTPATH . '/js/jquery-1.3.1.min.js'))
+if (file_exists(KUNENA_ABSTMPLTPATH . '/js/jquery-1.3.2.min.js'))
 {
-    define('KUNENA_JQURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_template . '/js/jquery-1.3.1.min.js');
+    define('KUNENA_JQURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_template . '/js/jquery-1.3.2.min.js');
 }
 else
 {
-    define('KUNENA_JQURL', KUNENA_DIRECTURL . '/template/default/js/jquery-1.3.1.min.js');
+    define('KUNENA_JQURL', KUNENA_DIRECTURL . '/template/default/js/jquery-1.3.2.min.js');
 }
 
 if (file_exists(KUNENA_ABSTMPLTPATH . '/js/kunenaforum.js'))
@@ -348,6 +348,48 @@ function getFBGroupName($id) {
 
 class CKunenaTools {
     var $id = null;
+
+    // TODO: DEPRECATED, remove this function:
+    /*
+    function fbGetCurrentTime () {
+    	// tells current FB internal representing time
+        $fbConfig =& CKunenaConfig::getInstance();
+        return time() + ($fbConfig->board_ofset * 3600);
+    }
+*/
+
+	// TODO: DEPRECATED, remove this function:
+    function fbGetInternalTime ($time=null) {
+    	// tells internal FB representing time from UTC $time
+        $fbConfig =& CKunenaConfig::getInstance();
+        // Prevent zeroes
+        if($time===0) {
+          return 0;
+        }
+        if($time===null) {
+          $time = time();
+        }
+        return $time + ($fbConfig->board_ofset * 3600);
+    }
+
+    // TODO: DEPRICATED, remove this function:
+    function fbGetShowTime ($time=null, $space='FB') {
+    	// converts internal (FB)|UTC representing time to display time
+    	// could consider user properties (zones) for future
+        $fbConfig =& CKunenaConfig::getInstance();
+        // Prevent zeroes
+        if($time===0) {
+          return 0;
+        }
+        if($time===null) {
+          $time = CKunenaTools::fbGetInternalTime();
+          $space = 'FB';
+        }
+        if($space=='UTC') {
+          return $time + ($fbConfig->board_ofset * 3600);
+        }
+        return $time;
+    }
 
     function whoisID($id) {
         global $database, $mosConfig_live_site;
@@ -965,13 +1007,13 @@ function fbTreeRecurse( $id, $indent, $list, &$children, $maxlevel=9999, $level=
             }
 
             if ( $v->parent == 0 ) {
-                $txt     = $v->name;
+                $txt     = kunena_htmlspecialchars(stripslashes($v->name));
             } else {
-                $txt     = $pre . $v->name;
+                $txt     = $pre . kunena_htmlspecialchars(stripslashes($v->name));
             }
             $pt = $v->parent;
             $list[$id] = $v;
-            $list[$id]->treename = stripslashes("$indent$txt");
+            $list[$id]->treename = $indent . $txt;
             $list[$id]->children = count( @$children[$id] );
 
             $list = fbTreeRecurse( $id, $indent . $spacer, $list, $children, $maxlevel, $level+1, $type );
@@ -989,12 +1031,12 @@ function JJ_categoryParentList($catid, $action, $options = array ()) {
     foreach ($list as $item) {
         if ($this_treename) {
             if ($item->id != $catid && strpos($item->treename, $this_treename) === false) {
-                $options[] = mosHTML::makeOption($item->id, kunena_htmlspecialchars($item->treename));
+                $options[] = mosHTML::makeOption($item->id, $item->treename);
                 }
             }
         else {
             if ($item->id != $catid) {
-                $options[] = mosHTML::makeOption($item->id, kunena_htmlspecialchars($item->treename));
+                $options[] = mosHTML::makeOption($item->id, $item->treename);
                 }
             else {
                 $this_treename = "$item->treename/";
@@ -1002,7 +1044,7 @@ function JJ_categoryParentList($catid, $action, $options = array ()) {
             }
         }
 
-    $parent = mosHTML::selectList($options, 'catid', 'class="inputbox fbs" size="1"  onchange = "if(this.options[this.selectedIndex].value > 0){ forms[\'jumpto\'].submit() }"', 'value', 'text', $catid);
+    $parent = mosHTML::selectList($options, 'catid', 'class="inputbox fbs" size="1"  onchange = "if(this.options[this.selectedIndex].value > 0){ this.form.submit() }"', 'value', 'text', $catid);
     return $parent;
     }
 
@@ -1143,6 +1185,71 @@ function fbGetArrayInts($name, $type = NULL) {
     return $array;
     }
 
+    // TODO: DEPRECATED, remove this function:
+    function time_since($older_date, $newer_date)
+    {
+    // ToDo: return code plus string to decide concatenation.
+    // array of time period chunks
+    $chunks = array(
+    array(60 * 60 * 24 * 365 , _KUNENA_DATE_YEAR, _KUNENA_DATE_YEARS),
+    array(60 * 60 * 24 * 30 , _KUNENA_DATE_MONTH, _KUNENA_DATE_MONTHS),
+    array(60 * 60 * 24 * 7, _KUNENA_DATE_WEEK, _KUNENA_DATE_WEEKS),
+    array(60 * 60 * 24 , _KUNENA_DATE_DAY, _KUNENA_DATE_DAYS),
+    array(60 * 60 , _KUNENA_DATE_HOUR, _KUNENA_DATE_HOURS),
+    array(60 , _KUNENA_DATE_MINUTE, _KUNENA_DATE_MINUTES),
+    );
+
+    // $newer_date will equal false if we want to know the time elapsed between a date and the current time
+    // $newer_date will have a value if we want to work out time elapsed between two known dates
+    //$newer_date = ($newer_date == false) ? CKunenaTools::fbGetInternalTime() : $newer_date;
+
+    // difference in seconds
+    $since = $newer_date - $older_date;
+
+    // no negatives!
+    if($since<=0) {
+      return '?';
+    }
+
+    // we only want to output two chunks of time here, eg:
+    // x years, xx months
+    // x days, xx hours
+    // so there's only two bits of calculation below:
+
+    // step one: the first chunk
+    for ($i = 0, $j = count($chunks); $i < $j; $i++)
+        {
+        $seconds = $chunks[$i][0];
+        $name = $chunks[$i][1];
+        $names = $chunks[$i][2];
+
+        // finding the biggest chunk (if the chunk fits, break)
+        if (($count = floor($since / $seconds)) != 0)
+            {
+            break;
+            }
+        }
+
+    // set output var
+    $output = ($count == 1) ? '1 '.$name : $count.' '.$names ;
+
+    // step two: the second chunk
+    if ($i + 1 < $j)
+        {
+        $seconds2 = $chunks[$i + 1][0];
+        $name2 = $chunks[$i + 1][1];
+        $names2 = $chunks[$i + 1][2];
+
+        if (($count2 = floor(($since - ($seconds * $count)) / $seconds2)) != 0)
+            {
+            // add to output var
+            $output .= ($count2 == 1) ? ', 1 '.$name2 : ', '.$count2.' '.$names2;
+            }
+        }
+
+    return $output;
+    }
+
 function make_pattern(&$pat, $key) {
   $pat = '/'.preg_quote($pat, '/').'/i';
 }
@@ -1170,25 +1277,21 @@ function fbReturnDashed (&$string, $key) {
             $string = "_".$string."_";
 }
 
-function kn_mb_substr($str, $start, $lenght=NULL, $encoding=NULL) {
+function kn_mb_substr($str, $start, $length=NULL, $encoding=NULL) {
+	if ($length === NULL) $length = strlen($str);
+	if ($encoding === NULL) $encoding = KUNENA_CHARSET;
 	if (!function_exists('mb_substr'))
 	{
 		if (CKunenaTools::isJoomla15())
 		{
 			require_once(JPATH_LIBRARIES.DS.'phputf8'.DS.'utf8.php');
-
-			return mb_substr($str, $start, $lenght, $encoding);
 		}
 		else
 		{
-			if ($lenght===NULL) $lenght = strlen($str);
-			return substr($str, $start, $lenght);
+			return substr($str, $start, $length);
 		}
 	}
-	else
-	{
-		return mb_substr($str, $start, $lenght, $encoding);
-	}
+	return mb_substr($str, $start, $length, $encoding);
 }
 
 function kunena_htmlspecialchars($string, $quote_style=ENT_COMPAT, $charset=KUNENA_CHARSET) {

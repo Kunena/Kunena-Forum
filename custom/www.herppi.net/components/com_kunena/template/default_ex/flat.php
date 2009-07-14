@@ -323,8 +323,8 @@ if (count($messages[0]) > 0)
                             }
                             else
                             {
-				$threadPages = 0;
-				$unreadPage = 0;
+								$threadPages = 0;
+								$unreadPage = 0;
                                 //this thread has been moved, get the new location
                                 $newURL = ""; //init
                                 $database->setQuery("SELECT `message` FROM #__fb_messages_text WHERE `mesid`='" . $leaf->id . "'");
@@ -446,7 +446,10 @@ if (count($messages[0]) > 0)
         <?php
         if ($fbConfig->default_sort == 'asc')
         {
-        	echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->id, $threadPages, $fbConfig->messages_per_page, _GEN_LAST_POST, $last_reply[$leaf->id]->id);
+        	if ($leaf->moved == 0)
+        		echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->thread, $threadPages, $fbConfig->messages_per_page, _GEN_LAST_POST, $last_reply[$leaf->id]->id);
+        	else
+        		echo _KUNENA_MOVED . ' ';
         }
         else
         {

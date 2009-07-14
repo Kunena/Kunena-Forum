@@ -56,6 +56,91 @@ CUSTOM BRANCH
 + [#15554] Custom branch: Make date format configurable for latestx, showcat and view
 + [#15554] Custom branch: Make user count algorithm configurable in Stats and Userlist
 
+Kunena 1.0.11
+
+10-July-2009 fxstein
+^ [#16838] Update Readme file with latest URLs
+
+10-July-2009 Matias
+^ [#15798] Update credits page
+
+8-July-2009 Matias
+# [#17117] Merge [#17139] and [#17127] from /trunk/1.5 (Rev 907-910)
+* [#17139] XSS vulnerability in BBCode parser
+
+7-July-2009 fxstein
+^ [#17127] Update backend error messages for failed installs and add link to wiki
+
+7-July-2009 Matias
+# [#17117] Merge important fixes from /trunk/1.5 (Rev 887-905)
+# [#17116] Latest post link in moved message does not work
+^ [#15798] Update credits page
+
+28-June-2009 Matias
+# [#17001] Fix small bugs reported in Kunena forums
+# [#17003] Fix notice: Undefined variable: rImg
+
+17-June-2009 fxstein
+# [#16877] Regression in K1.0.10 caused NEW indicator handling to break
+ - migrated rest of session logic into CKunenaSession class for additional cleanup
+
+16-June-2009 fxstein
+^ [#16837] Update version info for 1.0.11 service release; new version name: Gemeinschaft
+  - german for community
+
+16-June-2009 Matias
+# [#16829] Announcements: Description with some special characters does not work (merged from /trunk/1.5)
+
+15-June-2009 Matias
+^ [#16326] Change minumum MySQL requirement to 4.1.20 (fix problem in the check)
+^ [#16390] Update English language file for K1.0.11 and K1.5.3
+# [#16815] Internal: Sub categories title floats on the right side (IE8)
+
+14-June-2009 Matias
+# [#16805] Internal: Minor layout issue in categories view
+
+13-June-2009 fxstein
++ [#16803] Update credits page
+^ [#16501] Allow for menu link variations for JomSocial to get correct item id
+
+11-June-2009 Matias
+# [#16745] Collection of small bugs/typos
+# [#16078] Remove broken Bad Words component support
+^ [#16475] Upgrade jQuery to version 1.3.2
+# [#16748] Add page number in meta description (For better Google results)
+# [#16757] Forum stats: Popular 5 Threads shows threads where you don't have access to
+# [#16775] Use better URL detection in BBCode parser
+
+10-June-2009 Matias
+# [#16728] Path missing in include (kunena.parser.php)
+# [#16670] Category / Subcategory layout is slightly broken in IE
+
+9-June-2009 Matias
+# [#16722] User Profile shows messages in categories where user has no permissions
+# [#16724] Fatal database error in default_ex/listcat.php:269
+
+7-June-2009 Matias
+# [#16671] Board Categories have &nbsp; showing in them
+# [#16677] BBCode parser bug crashes Kunena
+# [#16678] Announcements: Read more if there is nothing to be read
+# [#16679] Announcements: Calendar shows warning message in Add New
+# [#16664] Fix notices in BBCode parser, permissions handling and profile
+
+6-June-2009 Matias
+# [#16642] Forum jump does not work if you go to Board Categories
+# [#16645] Broken BBCode editor in My Profile (use simple version of Rolands editor instead)
+# [#16662] Editor: Opening Boardcode link to the same window causes written message to disappear
+# [#16663] Fix broken kunenaforum.min.js (used in CB integration)
+# [#16526] Search: mb_substr() Unknown encoding warning, message bodies missing from results
+# [#16666] Search doesn't work reliably for registered only+ forums
+# [#16667] Administrator: Editing CSS does not work in Windows
+
+5-June-2009 Matias
+# [#16637] Administrator: Defaut_red/green/gray should not be shown in Image Set list as they contain no images
+
+2-June-2009 Matias
+# [#16567] Warn/detect possible problems in Community Builder integration
+
 Kunena 1.0.10
 
 21-May-2009 fxstein

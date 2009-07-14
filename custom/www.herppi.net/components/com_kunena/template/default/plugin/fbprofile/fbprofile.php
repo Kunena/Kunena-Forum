@@ -62,15 +62,13 @@ function showprf($userid, $page)
 
     //Get userinfo needed later on, this limits the amount of queries
     unset($userinfo);
-    $database->setQuery("SELECT a.*, b.* FROM #__fb_users as a"
-                        . "\n LEFT JOIN #__users as b on b.id=a.userid"
-                        . "\n where a.userid=$userid");
+    $database->setQuery("SELECT a.*, b.* FROM #__fb_users AS a LEFT JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$userid}'");
 
     $database->loadObject($userinfo);
     check_dberror('Unable to get user profile info.');
 
     if (!$userinfo) {
-	$database->setQuery("SELECT * FROM #__users WHERE id=$userid");
+	$database->setQuery("SELECT * FROM #__users WHERE id='{$userid}'");
 	$database->loadObject($userinfo);
 	check_dberror('Unable to get user profile info.');
 
@@ -89,9 +87,7 @@ function showprf($userid, $page)
 		$database->query();
 		check_dberror('Unable to create user profile.');
 
-		$database->setQuery("SELECT a.*, b.* FROM #__fb_users as a"
-			. "\n LEFT JOIN #__users as b on b.id=a.userid"
-			. "\n where a.userid=$userid");
+		$database->setQuery("SELECT a.*, b.* FROM #__fb_users AS a LEFT JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$userid}'");
 
 		$database->loadObject($userinfo);
 		check_dberror('Unable to get user profile info.');
@@ -197,7 +193,7 @@ function showprf($userid, $page)
         //done usertype determination, phew...
 
         //Get the max# of posts for any one user
-        $database->setQuery("SELECT max(posts) from #__fb_users");
+        $database->setQuery("SELECT MAX(posts) FROM #__fb_users");
         $maxPosts = $database->loadResult();
 
         //# of post for this user and ranking
@@ -211,7 +207,7 @@ function showprf($userid, $page)
 								if ($userinfo->rank != '0')
 								{
 												//special rank
-												$database->setQuery("SELECT * FROM #__fb_ranks WHERE rank_id = '$userinfo->rank'");
+												$database->setQuery("SELECT * FROM #__fb_ranks WHERE rank_id='{$userinfo->rank}'");
 												$getRank = $database->loadObjectList();
 													check_dberror("Unable to load ranks.");
 												$rank=$getRank[0];
@@ -221,7 +217,7 @@ function showprf($userid, $page)
 									if ($userinfo->rank == '0')
 									{
 											//post count rank
-												$database->setQuery("SELECT * FROM #__fb_ranks WHERE ((rank_min <= $numPosts) AND (rank_special = 0))  ORDER BY rank_min DESC LIMIT 1");
+												$database->setQuery("SELECT * FROM #__fb_ranks WHERE ((rank_min <= '{$numPosts}') AND (rank_special = '0')) ORDER BY rank_min DESC LIMIT 1");
 												$getRank = $database->loadObjectList();
 													check_dberror("Unable to load ranks.");
 												$rank=$getRank[0];

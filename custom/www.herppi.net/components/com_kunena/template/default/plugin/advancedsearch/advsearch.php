@@ -29,24 +29,10 @@ function kunena_categoryParentList($catids, $action, $options = array ())
 
     foreach ($list as $item)
     {
-        if ($this_treename)
-        {
-            if ($item->id != $catid && strpos($item->treename, $this_treename) === false) {
-                $options[] = mosHTML::makeOption($item->id, $item->treename);
-            }
-        }
-        else
-        {
-            if ($item->id != $catid) {
-                $options[] = mosHTML::makeOption($item->id, $item->treename);
-            }
-            else {
-                $this_treename = "$item->treename/";
-            }
-        }
+	$options[] = mosHTML::makeOption($item->id, $item->treename);
     }
 
-    $parent = mosHTML::selectList($options, 'catid[]', 'class="inputbox" size="13" multiple="multiple"', 'value', 'text', $catids);
+    $parent = mosHTML::selectList($options, 'catids[]', 'class="inputbox" size="13" multiple="multiple"', 'value', 'text', $catids);
     return $parent;
 }
 
@@ -91,7 +77,7 @@ if(isset($fb_advsearch_hide) && $fb_advsearch_hide==1)
                             <?php echo _KUNENA_SEARCH_KEYWORDS; ?>:
                         </div>
                         <div style="line-height: 28px">
-                            <input type="text" class="inputbox" name="q" size="35" value="<?php echo $q; ?>" style="width:250px"/>
+                            <input type="text" class="fbs input" name="q" size="35" value="<?php echo html_entity_decode_utf8($q); ?>" style="width:250px"/>
 
                             <select class="fbs" name="titleonly">
                                 <option value="0"<?php if ($titleonly==0) echo $selected;?>><?php echo _KUNENA_SEARCH_SEARCH_POSTS; ?></option>
@@ -112,7 +98,7 @@ if(isset($fb_advsearch_hide) && $fb_advsearch_hide==1)
                             <?php echo _KUNENA_SEARCH_EXACT; ?></label>
                         </div>
                         <div id="userfield" style="line-height: 28px">
-                            <input class="fbs input" type="text" name="searchuser" value="<?php echo $searchuser; ?>" style="width:250px"/>
+                            <input class="fbs input" type="text" name="searchuser" value="<?php echo html_entity_decode_utf8($searchuser); ?>" style="width:250px"/>
 
                             <select class="fbs" name="starteronly">
                                 <option value="0"<?php if ($starteronly==0) echo $selected;?>><?php echo _KUNENA_SEARCH_USER_POSTED; ?></option>

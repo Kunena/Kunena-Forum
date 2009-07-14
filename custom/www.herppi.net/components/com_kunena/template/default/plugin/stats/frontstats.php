@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 $forumurl = sefReltoAbs(KUNENA_LIVEURLREL);
 $statslink = sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=stats');
 
@@ -32,7 +32,7 @@ if ($fbConfig->fb_profile == "jomsocial")
 }
 else if ($fbConfig->fb_profile == 'cb')
 {
-    $userlist = sefReltoAbs('index.php?option=com_comprofiler&amp;task=usersList');
+    $userlist = CKunenaCBProfile::getUserListURL();
 }
 else
 {
@@ -66,7 +66,7 @@ if ($fbConfig->showstats > 0)
                 <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
                     <td class = "td-1  fbm" align="left">
 <?php echo _STAT_TOTAL_USERS; ?>:<b> <a href = "<?php echo $userlist;?>"><?php echo $totalmembers; ?></a> </b>
-                    &nbsp; <?php echo _STAT_LATEST_MEMBERS; ?>:<b> <a href = "<?php echo sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX.''.$lastestmemberid)?>" title = "<?php echo _STAT_PROFILE_INFO; ?> <?php echo $lastestmember;?>"><?php echo $lastestmember; ?></a> </b>
+                    &nbsp; <?php echo _STAT_LATEST_MEMBERS; ?>:<b> <?php echo CKunenaLink::GetProfileLink($fbConfig, $lastestmemberid, $lastestmember, $rel='nofollow'); ?></b>
 
                 <br/> <?php echo _STAT_TOTAL_MESSAGES; ?>: <b> <?php echo $totalmsgs; ?></b> &nbsp;
     <?php echo _STAT_TOTAL_SUBJECTS; ?>: <b> <?php echo $totaltitles; ?></b> &nbsp; <?php echo _STAT_TOTAL_SECTIONS; ?>: <b> <?php echo $totalcats; ?></b> &nbsp; <?php echo _STAT_TOTAL_CATEGORIES; ?>: <b> <?php echo $totalsections; ?></b>

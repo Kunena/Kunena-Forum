@@ -169,7 +169,7 @@ color:#666;
 // Begin: FOOTER FUNC
 function showFbFooter () {
 global $mainframe;
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.version.php');
 ?>
@@ -2534,7 +2534,7 @@ require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/
         $file = stripslashes($file);
         $f = fopen($file, "r");
         $content = fread($f, filesize($file));
-        $content = htmlspecialchars($content);
+        $content = kunena_htmlspecialchars($content);
 ?>
 <div class="fbfunctitle"><?php echo _KUNENA_CSSEDITOR; ?></div>
     <form action = "index2.php?" method = "post" name = "adminForm" class = "adminForm" id = "adminForm">
@@ -2857,7 +2857,9 @@ require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/
     //   }
     function editUserProfile($user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid , $modCats)
     {
-        global $fbConfig, $database;
+        global $database;
+
+        $fbConfig =& CKunenaConfig::getInstance();
         //fill the variables needed later
             $signature = $user->signature;
             $username = $user->name;

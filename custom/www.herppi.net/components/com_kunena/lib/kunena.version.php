@@ -17,6 +17,7 @@
 // no direct access
 defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
+global $mainframe, $database;
 require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.debug.php');
 
 // use default translations if none are available
@@ -46,7 +47,15 @@ class CKunenaVersion {
 							`versionname`
 						FROM `$versionTable`
 						ORDER BY `id` DESC LIMIT 1;" );
-			$database->loadObject($kunenaversion) or trigger_dbwarning('Could not load latest Version record.');
+			$database->loadObject($kunenaversion);
+			if(!$kunenaversion) {
+				$kunenaversion = new StdClass();
+				$kunenaversion->version = '1.0.x';
+				$kunenaversion->versiondate = 'NOT INSTALLED';
+				$kunenaversion->installdate = 'Not installed';
+				$kunenaversion->build = '';
+				$kunenaversion->versionname = 'Unknown';
+			}
 		}
 		return $kunenaversion;
 	}
@@ -80,11 +89,13 @@ class CKunenaVersion {
 	*/
 	function MySQLVersion()
 	{
+		global $database;
 		static $mysqlversion;
 		if (!$mysqlversion)
 		{
 			$database->setQuery("SELECT VERSION() as mysql_version");
 			$mysqlversion = $database->loadResult();
+			if (!$mysqlversion) $mysqlversion = 'unknown';
 		}
 		return $mysqlversion;
 	}

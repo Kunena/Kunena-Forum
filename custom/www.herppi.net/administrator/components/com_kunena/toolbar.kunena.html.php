@@ -85,7 +85,7 @@ class CKunenaToolbar
         mosMenuBar::spacer();
         mosMenuBar::save('saveuserprofile');
         mosMenuBar::spacer();
-        mosMenuBar::cancel('showprofiles', 'Back');
+        mosMenuBar::cancel('showprofiles', _KUNENA_BACK);
         mosMenuBar::spacer();
         mosMenuBar::endTable();
     }
@@ -94,7 +94,7 @@ class CKunenaToolbar
     {
         mosMenuBar::startTable();
         mosMenuBar::spacer();
-        mosMenuBar::custom('userprofile', 'edit.png', 'edit_f2.png', 'Edit');
+        mosMenuBar::custom('userprofile', 'edit.png', 'edit_f2.png', _KUNENA_EDIT);
         mosMenuBar::spacer();
         mosMenuBar::cancel();
         mosMenuBar::spacer();
@@ -119,7 +119,7 @@ class CKunenaToolbar
         mosMenuBar::startTable();
         mosMenuBar::spacer();
         mosMenuBar::spacer();
-        mosMenuBar::custom('doprune', 'delete.png', 'delete_f2.png', 'Prune', false);
+        mosMenuBar::custom('doprune', 'delete.png', 'delete_f2.png', _KUNENA_PRUNE, false);
         mosMenuBar::spacer();
         mosMenuBar::cancel();
         mosMenuBar::spacer();
@@ -130,7 +130,7 @@ class CKunenaToolbar
     {
         mosMenuBar::startTable();
         mosMenuBar::spacer();
-        mosMenuBar::custom('dousersync', 'delete.png', 'delete_f2.png', 'Sync', false);
+        mosMenuBar::custom('dousersync', 'delete.png', 'delete_f2.png', _KUNENA_SYNC, false);
         mosMenuBar::spacer();
         mosMenuBar::cancel();
         mosMenuBar::spacer();
@@ -156,11 +156,11 @@ class CKunenaToolbar
     {
         mosMenuBar::startTable();
         mosMenuBar::spacer();
-        mosMenuBar::addNew('newsmiley', 'New Smilie');
+        mosMenuBar::addNew('newsmiley', _KUNENA_NEW_SMILIE);
         mosMenuBar::spacer();
-        mosMenuBar::custom('editsmiley', 'edit.png', 'edit_f2.png', 'Edit');
+        mosMenuBar::custom('editsmiley', 'edit.png', 'edit_f2.png', _KUNENA_EDIT);
         mosMenuBar::spacer();
-        mosMenuBar::custom('deletesmiley', 'delete.png', 'delete_f2.png', 'Delete');
+        mosMenuBar::custom('deletesmiley', 'delete.png', 'delete_f2.png', _GEN_DELETE);
         mosMenuBar::spacer();
         mosMenuBar::back();
         mosMenuBar::endTable();
@@ -190,11 +190,11 @@ class CKunenaToolbar
     {
         mosMenuBar::startTable();
         mosMenuBar::spacer();
-        mosMenuBar::addNew('newRank', 'New Rank');
+        mosMenuBar::addNew('newRank', _KUNENA_NEW_RANK);
         mosMenuBar::spacer();
-        mosMenuBar::custom('editRank', 'edit.png', 'edit_f2.png', 'Edit');
+        mosMenuBar::custom('editRank', 'edit.png', 'edit_f2.png', _KUNENA_EDIT);
         mosMenuBar::spacer();
-        mosMenuBar::custom('deleteRank', 'delete.png', 'delete_f2.png', 'Delete');
+        mosMenuBar::custom('deleteRank', 'delete.png', 'delete_f2.png', _GEN_DELETE);
         mosMenuBar::spacer();
         mosMenuBar::back();
         mosMenuBar::endTable();

@@ -19,17 +19,28 @@
 * @author TSMF & Jan de Graaff
 **/
 
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+// Show error message if J!1.5 Legacy Mode is not turned on
+if (!defined ('_VALID_MOS') && defined ('_JEXEC'))
+{
+	$mainframe->enqueueMessage('Legacy Mode has been switched off!', 'error');
+	$mainframe->enqueueMessage('Because of the above errors your Forum is now Offline and Forum Administration has been disabled.', 'notice');
+	$mainframe->enqueueMessage('Please enable Legacy Mode from Extensions / Plugin Manager / System - Legacy.');
+	return;
+}
+// Dont allow direct linking
+defined ('_VALID_MOS') or die('Kunena Forum cannot be run without Joomla!');
 
 // Kill notices (we have many..)
 error_reporting (E_ALL ^ E_NOTICE);
 
+global $mainframe;
 include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.debug.php");
 
 // get Kunenas configuration params in
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.config.class.php");
+
 global $fbConfig;
-$fbConfig = new CKunenaConfig();
+$fbConfig =& CKunenaConfig::getInstance();
 $fbConfig->load();
 
 // Class structure should be used after this and all the common task should be moved to this class
@@ -43,6 +54,31 @@ if (file_exists($mainframe->getCfg('absolute_path') . '/administrator/components
 else {
     include ($mainframe->getCfg('absolute_path') . '/administrator/components/com_kunena/language/kunena.english.php');
 }
+
+$kn_tables = CKunenaTables::getInstance();
+if ($kn_tables->installed() === false) {
+	if (CKunenaTools::isJoomla15()) {
+		$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_ERROR, 'error');
+		$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_OFFLINE, 'notice');
+		$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_REASONS);
+		$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_1);
+		$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_2);
+		$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_3);
+		$mainframe->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_SUPPORT.' <a href="http://www.kunena.com">www.kunena.com</a>');
+	}
+	else
+	{
+		echo '<div style="background: #E6C0C0; border: #DE7A7B 3px solid;"><h2>'._KUNENA_ERROR_INCOMPLETE_ERROR.'</h2>'
+			.'<p style="font-weight: bold; color: #CC0000;">'._KUNENA_ERROR_INCOMPLETE_OFFLINE.'</p>'
+			.'<p>'._KUNENA_ERROR_INCOMPLETE_REASONS.'</p>'
+			.'<p>'._KUNENA_ERROR_INCOMPLETE_1.'</p>'
+			.'<p>'._KUNENA_ERROR_INCOMPLETE_2.'</p>'
+			.'<p>'._KUNENA_ERROR_INCOMPLETE_3.'</p>'
+			.'<p>'._KUNENA_ERROR_INCOMPLETE_SUPPORT.' <a href="http://www.kunena.com">www.kunena.com</a></p></div>';
+	}
+}
+else
+{
 
 $cid = mosGetParam($_REQUEST, 'cid', array ( 0 ));
 
@@ -310,6 +346,8 @@ switch ($task)
         break;
 }
 
+} // ENDIF: is installed
+
 html_Kunena::showFbFooter();
 //function showAdministration( $option,$joomla1_5 ) {
 function showAdministration($option)
@@ -454,7 +492,11 @@ function saveForum($option)
 
     $row->checkin();
     $row->updateOrder("parent='$row->parent'");
-    mosRedirect ("index2.php?option=$option&task=showAdministration");
+
+    $database->setQuery("UPDATE #__fb_sessions SET allowed='na'");
+	$database->query() or trigger_dberror("Unable to update sessions.");
+    
+	mosRedirect ("index2.php?option=$option&task=showAdministration");
 }
 
 function publishForum($cid = null, $publish = 1, $option)
@@ -523,7 +565,10 @@ function deleteForum($cid = null, $option)
     	}
     }
 
-    mosRedirect ("index2.php?option=$option&task=showAdministration");
+	$database->setQuery("UPDATE #__fb_sessions SET allowed='na'");
+	$database->query() or trigger_dberror("Unable to update sessions.");
+    
+	mosRedirect ("index2.php?option=$option&task=showAdministration");
 }
 
 function cancelForum($option)
@@ -553,7 +598,7 @@ function showConfig($option)
     global $mosConfig_lang;
     global $mosConfig_admin_template;
     global $mainframe;
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
 
     $lists = array ();
 
@@ -779,10 +824,8 @@ function showConfig($option)
 
 function saveConfig($option)
 {
-	global $fbConfig;
-
-	$fbConfig->backup();
-	$fbConfig->remove();
+	global $database;
+	$fbConfig =& CKunenaConfig::getInstance();
 
 	foreach ($_POST as $postsetting => $postvalue)
     {
@@ -817,30 +860,17 @@ function saveConfig($option)
         }
     }
 
-    $fbConfig->create();
+	$fbConfig->backup();
+	$fbConfig->remove();
+	$fbConfig->create();
 
     // Legacy support
     // To enable legacy 3rd party modules to 'see' our config
-    // we also write an old style config file
 	global $mainframe;
     $configfile = $mainframe->getCfg('absolute_path') . "/administrator/components/com_kunena/Kunena_config.php";
 
-	$ref = array();
-	$array = array(
-		'enableRSS','enablePDF','showHistory','historyLimit','showNew','newChar','joomlaStyle','showAnnouncement',
-		'avatarOnCat','CatImagePath','showChildCatIcon','AnnModId','enableRulesPage','enableForumJump',
-		'postStats','statsColor','usereditTime','usereditTimeGrace','editMarkUp','maxSubject','maxSig',
-		'allowAvatar','allowAvatarUpload','allowAvatarGallery','imageProcessor','avatarSmallHeight',
-		'avatarSmallWidth','avatarHeight','avatarWidth','avatarLargeHeight','avatarLargeWidth','avatarQuality',
-		'avatarSize','allowImageUpload','allowImageRegUpload','imageHeight','imageWidth','imageSize',
-		'allowFileUpload','allowFileRegUpload','fileTypes','fileSize','showLatest','latestCount','latestCountPerPage',
-		'latestCategory','latestSingleSubject','latestReplySubject','latestSubjectLength','latestShowDate',
-		'latestShowHits','latestShowAuthor','showWhoisOnline','showGenStats','showPopUserStats',
-		'PopUserCount','showPopSubjectStats','PopSubjectCount','enableHelpPage');
-	foreach ($array as $value) $ref[strtolower($value)] = $value;
-	unset($array);
-
     $txt = "<?php\n";
+    $txt .= "require_once (\$mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.config.class.php');\n";
     $txt .= "global \$fbConfig;\n";
     $txt .= "if (!is_array(\$fbConfig)) { \$fbConfig = array(); }\n"; // Thx JoniJnm
 
@@ -861,14 +891,25 @@ function saveConfig($option)
 
     $txt .= "?>";
 
-    if ($fp = fopen($configfile, "w"))
-    {
-        fputs($fp, $txt, strlen($txt));
-        fclose ($fp);
-    }
+	if (CKunenaTools::isJoomla15())
+	{
+		jimport('joomla.filesystem.file');
+		JFile::write($configfile, $txt);
+	}
+	else
+	{
+		if ($fp = fopen($configfile, "w"))
+		{
+			fputs($fp, $txt, strlen($txt));
+			fclose ($fp);
+		}
+	}
     // end legacy support
 
-    mosRedirect("index2.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED);
+	$database->setQuery("UPDATE #__fb_sessions SET allowed='na'");
+	$database->query() or trigger_dberror("Unable to update sessions.");
+	
+	mosRedirect("index2.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED);
 }
 
 function showInstructions($database, $option, $mosConfig_lang) {
@@ -880,15 +921,16 @@ function showInstructions($database, $option, $mosConfig_lang) {
 //===============================
 function showCss($option)
 {
-    global $fbConfig;
-    $file = "../components/com_kunena/template/" . $fbConfig->template . "/kunena.forum.css";
+	global $mainframe;
+    $fbConfig =& CKunenaConfig::getInstance();
+    $file = $mainframe->getCfg('absolute_path') . "/components/com_kunena/template/" . $fbConfig->template . "/kunena.forum.css";
     $permission = is_writable($file);
 
     if (!$permission)
     {
-        echo "<center><h1><font color=red>" . _KUNENA_WARNING . "</FONT></h1><BR>";
-        echo "<B>Your css file is <#__root>/components/com_kunena/template/" . $fbConfig->template . "/kunena.forum.css</b><BR>";
-        echo "<B>" . _KUNENA_CHMOD1 . "</B></center><BR><BR>";
+        echo "<center><h1><font color=red>" . _KUNENA_WARNING . "</font></h1><br />";
+        echo "<b>" . _KUNENA_CFC_FILENAME . ": " . $file . "</b><br />";
+        echo "<b>" . _KUNENA_CHMOD1 . "</b></center><br /><br />";
     }
 
     html_Kunena::showCss($file, $option);
@@ -913,10 +955,10 @@ function saveCss($file, $csscontent, $option)
     {
         fputs($fp, stripslashes($csscontent));
         fclose ($fp);
-        mosRedirect("index2.php?option=$option&task=showCss", _KUNENA_CFS);
+        mosRedirect("index2.php?option=$option&task=showCss", _KUNENA_CFC_SAVED);
     }
     else {
-        mosRedirect("index2.php?option=$option", _KUNENA_CFCNBO);
+        mosRedirect("index2.php?option=$option&task=showCss", _KUNENA_CFC_NOTSAVED);
     }
 }
 
@@ -1015,6 +1057,10 @@ function addModerator($option, $id, $cid = null, $publish = 1)
 
     $row = new fbForum($database);
     $row->checkin($id);
+    
+    $database->setQuery("UPDATE #__fb_sessions SET allowed='na'");
+	$database->query() or trigger_dberror("Unable to update sessions.");
+    
     mosRedirect ("index2.php?option=$option&task=edit2&uid=" . $id);
 }
 
@@ -1181,7 +1227,10 @@ function saveUserProfile($option)
     	}
     }
 
-    mosRedirect ("index2.php?option=com_kunena&task=showprofiles");
+	$database->setQuery("UPDATE #__fb_sessions SET allowed='na' WHERE userid='$uid'");
+	$database->query() or trigger_dberror("Unable to update sessions.");
+
+	mosRedirect ("index2.php?option=com_kunena&task=showprofiles");
 }
 
 //===============================
@@ -1665,6 +1714,8 @@ function newsmiley($option)
     $smileypath = smileypath();
     $smileypath = $smileypath['live'].'/';
 
+	$smiley_edit_img = '';
+
     $filename_list = "";
 	for( $i = 0; $i < count($smiley_images); $i++ )
 	{
@@ -1732,7 +1783,7 @@ function deletesmiley($option, $cid)
 function smileypath()
 {
     global $mainframe, $mosConfig_lang;
-	global $fbConfig;
+	$fbConfig =& CKunenaConfig::getInstance();
 
     if (is_dir($mainframe->getCfg('absolute_path') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/emoticons')) {
         $smiley_live_path = $mainframe->getCfg('live_site') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/emoticons';
@@ -1754,6 +1805,7 @@ function smileypath()
 function collect_smilies()
 {
 	$smileypath = smileypath();
+	$smiley_images = array();
 
     $dir = @opendir($smileypath['abs']);
 
@@ -1811,8 +1863,9 @@ function showRanks($option)
 
 function rankpath()
 {
+/*
     global $mainframe, $mosConfig_lang;
-	global $fbConfig;
+	$fbConfig =& CKunenaConfig::getInstance();
 
     if (is_dir($mainframe->getCfg('absolute_path') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/ranks')) {
         $rank_live_path = $mainframe->getCfg('live_site') . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.$mosConfig_lang.'/ranks';
@@ -1825,6 +1878,9 @@ function rankpath()
 
     $rankpath['live'] = $rank_live_path;
     $rankpath['abs'] = $rank_abs_path;
+*/
+    $rankpath['live'] = KUNENA_URLRANKSPATH;
+    $rankpath['abs'] = KUNENA_ABSRANKSPATH;
 
     return $rankpath;
 
@@ -1834,12 +1890,12 @@ function collectRanks()
 {
 	$rankpath = rankpath();
 
-    $dir = @opendir($rankpath['abs']);
+	$dir = @opendir($rankpath['abs']);
 
 	$rank_images = array();
 	while($file = @readdir($dir))
 	{
-		if( !@is_dir($rank_abs_path . '/' . $file) )
+		if( !@is_dir($rankpath['abs'] . '/' . $file) )
 		{
 			$img_size = @getimagesize($rankpath['abs'] . '/' . $file);
 
@@ -1965,7 +2021,7 @@ function editRank($option, $id)
 				continue;
 			}
 
-			$filename_list .= '<option value="' . htmlspecialchars($img) . '"' . $selected . '>' . $img . '</option>';
+			$filename_list .= '<option value="' . kunena_htmlspecialchars($img) . '"' . $selected . '>' . $img . '</option>';
 		}
 	}
 

@@ -21,6 +21,8 @@
 
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+global $database, $my;
+
 class fbpdfwrapper {
 	// small wrapper class for J1.5 to emulate Cezpdf-class
 	var $_title = '';
@@ -58,8 +60,9 @@ class fbpdfwrapper {
 
 function dofreePDF($database)
 {
-    global $mosConfig_sitename, $my, $aro_group, $acl;
-    global $fbConfig, $fbSession;
+    global $mosConfig_sitename, $my, $aro_group, $acl, $is_admin;
+
+    $fbConfig =& CKunenaConfig::getInstance();
     require_once (KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
     $is_Mod = 0;
 
@@ -82,17 +85,12 @@ function dofreePDF($database)
         //get all the info on this forum:
         $database->setQuery("SELECT id,pub_access,pub_recurse,admin_access,admin_recurse FROM #__fb_categories where id=$catid");
         $row = $database->loadObjectList();
-                check_dberror("Unable to load category detail.");
+		check_dberror("Unable to load category detail.");
 
-
-        $allow_forum = explode(',', CKunenaTools::getAllowedForums($my->id, $aro_group->group_id, $acl));
-
-        //Do user identification based upon the ACL
-        $letPass = 0;
-        $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $acl);
+		$allow_forum = explode(',', CKunenaTools::getAllowedForums($my->id, $aro_group->group_id, $acl));
     }
 
-    if ($letPass || $is_Mod)
+	if ($is_Mod || in_array($catid, $allow_forum))
     {
         $id = intval(mosGetParam($_REQUEST, 'id', 1));
         $catid = intval(mosGetParam($_REQUEST, 'catid', 2));
@@ -178,7 +176,7 @@ function dofreePDF($database)
         $pdf->ezStream();
     }
     else {
-        echo "You don't have access to this resource. Your IP address has been logged and the System Admininstrator of this Web Site has been sent an email with these error details.";
+        echo "You don't have access to this resource.";
     }
 } //function dofreepdf
 

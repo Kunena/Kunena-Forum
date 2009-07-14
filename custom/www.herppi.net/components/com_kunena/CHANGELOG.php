@@ -58,6 +58,158 @@ CUSTOM BRANCH
 
 Kunena 1.0.10
 
+21-May-2009 fxstein
+# [#16490] mb_string related Joomla error on certain Joomla 1.5 installs
+
+21-May-2009 Matias
+# [#16487] Internal: Trunk is missing branches/1.0.9 Rev 465 (Incorrect permissions handling fixed)
+
+20-May-2009 fxstein
+- [#16413] Remove empty version record logic
+# [#16387] Remove notices from undefined variables in install class
+
+20-May-2009 Matias
+# [#16455] Editor does not work with notices turned on (and if translations are missing)
+# [#16387] Remove many notices from undefined variables
+# [#16477] If attachment upload fails (wrong filetype), you cannot add another attachment to your message
+# [#16478] Font size in new editor does not work
+
+19-May-2009 Matias
+# [#16456] Quick reply: Empty subject if topic contains: "
+# [#16460] Extra slashes in username for anonymous users or if Allow Name Change = yes
+# [#16458] Search: Searching 'foo' is broken -- Result: \\\'foo\\\'
+- [#16459] Moderator tools: Disable broken split
+! Split will be enabled after it has been fixed. It didn't work and could break threads.
+# [#16438] Session: allowed forums should be updated when user or category has been modified in backend
+! All other cases should be covered except of changing user group in Joomla User Manager
+# [#16457] Warnings during install if there is no permissions to copy files
++ [#16437] Show link to advanced search
+# [#16466] Better ISO/UTF8 handling in many places in the code, many missing htmlspecialchars() added
+
+18-May-2009 Matias
+# [#16436] Internal: Default: Fix sub forums in category view, PHP error and CB integration in view.php
+# [#16439] Missing translations in Kunena admin toolbar
+
+17-May-2009 Matias
+# [#16431] Wordwrap breaks Spoiler BBCode
+^ [#16061] Roland's BBCode Editor
+# [#16432] More smileys button on post message does not work
+# [#16433] Posting message without name/email/subject: warning, but still load page
+# [#15812] bbcode parser bug crashes server
+
+16-May-2009 Matias
+# [#16415] Deleted users show up in Forum Stats without a name
+# [#16416] Do not allow users to send empty reports to moderators
+# [#16418] Welcome message contains broken link to the documentation
+# [#16419] Format birthday, register date and last login time
+# [#16420] Changing karma from user profile redirects to invalid URL
+# [#16387] Remove many notices from undefined variables
+# [#16421] A few Kunena CSS rules gets overridden by the template
+
+15-May-2009 Matias
+# [#16409] Internal: Fix compatibility problems with CKunenaLink::GetLatestPageAutoRedirectURL() / HTML()
+# [#16387] Remove many notices from undefined variables
+# [#16411] PDF: Fix broken permission check
+# [#16378] Community Builder integration: solve jQuery conflict (try 2)
+
+14-May-2009 Matias
+# [#16395] If you are not logged in, there are icons "New thread" and "Reply topic" in a locked forum
+# [#16399] Pathway does not show locked forums as it should
+# [#16400] Post new thread into moderated forum: do not forward into front page!
+# [#16402] Internal: viewcat: small layout fix of subforums, warning in default theme
+
+13-May-2009 Matias
+# [#16378] Community Builder integration: solve jQuery conflict and small bug in profile links
+# [#16379] Breadcrumb has no style in default green, gray and red templates
+# [#16382] Internal: Translation is not working for unauthorized message if Registered Users Only = Yes
+# [#16387] Remove many notices from undefined variables
+# [#16388] Internal: Forum Jump forwards you to front page if SEF is turned off
++ [#16389] Community Builder integration: add profile integration to default theme
+
+12-May-2009 Matias
+# [#16373] Internal: Joomla! 1.5 Native call in legacy code
+
+10-May-2009 Matias
+^ [#16326] Change minumum PHP and MySQL requirements
+! Minimum PHP version up to 4.3.9 (RHEL4) instead of 4.3.0
+! Minimum MySQL version down to 4.1.20 (RHEL4) instead of 5.0.0
+# [#16335] Internal: Moderator tools in Forum view do not work for global moderators
+
+9-May-2009 Matias
+# [#16268] Wrong redirect in Backend: Saving CSS failed
+# [#16277] CSS issue: Large empty area with some Joomla themes
+# [#16282] Internal: Auto overflow in messages broken in IE on some environments
+# [#16281] Internal: Every thread contains word "Categories" in the title
+# [#16289] Category with moved topic contains 1 NEW! message in Category View
+# [#16321] Topic icons can be set in replies, but they have no effect
+# [#16323] Internal: Category is missing from pathway in default_ex
+# [#16324] External link to old location does not work if category has been removed but thread exists
+# [#16325] Small changes to the English language file
+^ [#16251] Disable content plugins by default (also if updating Kunena)
+# [#16267] Upgrade thinks that 1.0.10 is older than 1.0.9
+
+6-May-2009 Matias
+# [#16283] Internal: Editing user in Kunena Backend Fails
+
+5-May-2009 Matias
++ [#16249] Community Builder integration: add trigger to modify userinfo
+# [#16239] Missing argument 5 for KUNENA_get_menu()
+# [#16237] Fix broken profile links
+# [#16250] Fix slightly broken session handling
+! Internal: Broken search fixed
+! Added new class CKunenaSession
+# [#16258] Internal: Missing stripslashes() in fb_write.html.php form
+
+4-May-2009 Matias
+# [#16247] Internal: Sticky favorite thread in mylatest does not have styling
+# [#16238] Internal: New installation fails on fatal error
+
+3-May-2009 Matias
++ [#16227] Feature: Highlight sticky message in Recent Discussions
+# [#16231] Fix Broken URLs for moved threads
++ [#16089] Community Builder integration improvements
+# [#16107] Rank images not showing in backend
+
+2-May-2009 Matias
+# [#16221] Internal: fix crash in message.php, remove some PHP notices
+# [#15953] Delete the Display Moderator, Guest etc above Avatar
+# [#16163] Give error message when Legacy is not turned on
+
+1-May-2009 Matias
+# [#16187] Fix many bugs from undefined variables (merge r656-657 from trunk/1.5)
+# [#15952] Delete a user and he gets the rank of admin or moderator (merge r658 from trunk/1.5)
+
+30-April-2009 Matias
+# [#16168] Remove HTML entities in the subjects of replies
+# [#16185] Fix global $fbConfig's and legacy configuration file support
+
+26-April-2009 Matias
+# [#16117] Search: html_entity_decode() throws warning in some environments
+# [#16074] Display real names in list of moderators when Username = no
+# [#16096] Subcategories in Forum View do not obey ACL rules
+# [#15640] Typos and misspellings in admin panel
+# [#16140] Subforum list in Category View takes too much space
+! Changes needed for default_ex CSS
+# [#15956] Fix missing /div tags in post.php
+# [#16069] Editor Preview does not work with sh404SEF
+# [#16085] Fix mambot support in Joomla! 1.5
+# [#15955] Partial fix for oversized words and linked images in signature
+! Changes needed for default_ex CSS
+# [#16105] Check if installation has failed and have better error messages
+
+22-April-2009 Matias
+# [#16082] Search: umlauts and other special chars in redirects and URL's are broken
+# [#16080] Advanced Search: when there are selected cats, childforums will not be searched
+# [#16090] BBCode is not working for subforum descriptions
+
+21-April-2009 Matias
+# [#15945] Updating My Profile does not work
+# [#16068] Announcements: links are broken in sh404SEF
+# [#16070] Forum Jump: links are broken in sh404SEF
+# [#16092] File upload does not work in some servers
+# [#16084] Search: Call to undefined function mb_substr()
+# [#16081] Fatal error in kunena.config.class.php
+
 5-April-2009 fxstein
 ^ [#15799] Prpepare version information for 1.0.10 builds
 ^ [#15798] Updated credits page

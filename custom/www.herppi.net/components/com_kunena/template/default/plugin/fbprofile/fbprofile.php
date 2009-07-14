@@ -16,7 +16,10 @@
 
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $fbConfig, $acl;
+global $acl;
+
+
+$fbConfig =& CKunenaConfig::getInstance();
 
 if ($fbConfig->fb_profile == 'cb') {
         $userid = mosGetParam($_GET, 'userid', null);
@@ -51,9 +54,11 @@ else {
 
 function showprf($userid, $page)
 {
-    global $database, $fbConfig, $acl, $my, $mosConfig_absolute_path;
+    global $database, $acl, $my, $mosConfig_absolute_path;
     // ERROR: mixed global $fbIcons
     global $fbIcons;
+
+	$fbConfig =& CKunenaConfig::getInstance();
 
     //Get userinfo needed later on, this limits the amount of queries
     unset($userinfo);
@@ -117,13 +122,10 @@ function showprf($userid, $page)
 
     $fb_username = $userinfo->{$fb_queryName};
 
-    if ($fb_username == "" || $fbConfig->changename) {
-        $fb_username = html_entity_decode_utf8(stripslashes($fmessage->name));
-    }
-
-    $msg_id = $fmessage->id;
     $lists["userid"] = $userid;
-    $msg_username = ($fmessage->email != "" && $my->id > 0 && $fbConfig->showemail == '1') ? "<a href=\"mailto:" . $fmessage->email . "\">" . $fb_username . "</a>" : $fb_username;
+
+	$msg_username = $fb_username;
+    // $msg_username = ($fmessage->email != "" && $my->id > 0 && $fbConfig->showemail == '1') ? "<a href=\"mailto:" . $fmessage->email . "\">" . $fb_username . "</a>" : $fb_username;
 
     if ($fbConfig->allowavatar)
     {
@@ -281,11 +283,13 @@ function showprf($userid, $page)
         $karmaPoints = (int)$karmaPoints;
         $msg_karma = "<strong>" . _KARMA . ":</strong> $karmaPoints";
 
+	$msg_karmaminus = '';
+	$msg_karmaplus = '';
         if ($my->id != '0' && $my->id != $userid)
         {
-            $msg_karmaminus = "<a href=\"" . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=decrease&amp;userid=' . $userid . '&amp;pid=' . $fmessage->id . '&amp;catid=' . $catid . '') . "\"><img src=\"";
+            $msg_karmaminus .= "<a href=\"" . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=decrease&amp;userid=' . $userid) . "\"><img src=\"";
 
-            if ($fbIcons['karmaminus']) {
+            if (isset($fbIcons['karmaminus'])) {
                 $msg_karmaminus .= KUNENA_URLICONSPATH . "" . $fbIcons['karmaminus'];
             }
             else {
@@ -293,9 +297,9 @@ function showprf($userid, $page)
             }
 
             $msg_karmaminus .= "\" alt=\"Karma-\" border=\"0\" title=\"" . _KARMA_SMITE . "\" align=\"middle\" /></a>";
-            $msg_karmaplus = "<a href=\"" . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=increase&amp;userid=' . $userid . '&amp;pid=' . $fmessage->id . '&amp;catid=' . $catid . '') . "\"><img src=\"";
+            $msg_karmaplus .= "<a href=\"" . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=increase&amp;userid=' . $userid) . "\"><img src=\"";
 
-            if ($fbIcons['karmaplus']) {
+            if (isset($fbIcons['karmaplus'])) {
                 $msg_karmaplus .= KUNENA_URLICONSPATH . "" . $fbIcons['karmaplus'];
             }
             else {
@@ -355,11 +359,11 @@ function showprf($userid, $page)
         $isonline = $database->loadResult();
 
         if ($isonline && $userinfo->showOnline ==1 ) {
-            $msg_online .= $fbIcons['onlineicon']
+            $msg_online = isset($fbIcons['onlineicon'])
                 ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';
         }
         else {
-            $msg_online .= $fbIcons['offlineicon']
+            $msg_online = isset($fbIcons['offlineicon'])
                 ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
         }
     }
@@ -432,24 +436,7 @@ function showprf($userid, $page)
         unset($mostables);
     }
 
-    //Check if the Community Builder settings are on, and set the variables accordingly.
-    if ($fbConfig->fb_profile == 'cb' && $userid > 0)
-    {
-        $msg_profile = "<a href=\"" . sefRelToAbs('index.php?option=com_comprofiler&amp;task=userProfile&amp;user=' . $userid . '&amp;Itemid=1') . "\"><img src=\"";
-
-        if ($fbIcons['userprofile']) {
-            $msg_profile .= KUNENA_URLICONSPATH . "" . $fbIcons['userprofile'];
-        }
-        else {
-            $msg_profile .= KUNENA_JLIVEURL . "/components/com_comprofiler/images/profiles.gif";
-        }
-
-        $msg_profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
-    }
-
-    /* */
-
-    $jr_username = $user->name;
+    $jr_username = $userinfo->name;
 
     // (JJ) JOOMLA STYLE CHECK
     if ($fbConfig->joomlastyle < 1) {

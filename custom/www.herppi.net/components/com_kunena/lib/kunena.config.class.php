@@ -17,8 +17,48 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+global $mainframe, $database;
 require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.debug.php');
 require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.user.class.php');
+
+class CKunenaTables
+{
+	var $tables = array();
+	var $_tables = array ( '#__fb_announcement', '#__fb_attachments', '#__fb_categories', '#__fb_favorites', '#__fb_groups', '#__fb_messages', '#__fb_messages_text', '#__fb_moderation', '#__fb_ranks', '#__fb_sessions', '#__fb_smileys', '#__fb_subscriptions', '#__fb_users', '#__fb_version', '#__fb_whoisonline');
+
+	function CKunenaTables()
+	{
+        	global $database;
+
+		$database->setQuery( "SHOW TABLES LIKE '" .$database->getPrefix(). "fb_%'");
+		$tables = $database->loadResultArray();
+		$prelen = strlen($database->getPrefix());
+		foreach	($tables as $table) $this->tables['#__'.substr($table,$prelen)] = 1;
+		check_dberror('Unable to check for existing tables.');
+	}
+
+	function &getInstance()
+	{
+		static $instance;
+		if (!$instance) {
+			$instance = new CKunenaTables();
+		}
+		return $instance;
+	}
+
+	function check($table)
+	{
+		return isset($this->tables[$table]);
+	}
+
+	function installed()
+	{
+		foreach ($this->_tables as $table) {
+			if (!isset($this->tables[$table])) return false;
+		}
+		return true;
+	}
+}
 
 class CKunenaConfigBase
 {
@@ -102,7 +142,7 @@ class CKunenaConfigBase
             }
         }
 
-        $database->setQuery("CREATE TABLE #__".$this->GetConfigTableName()." (" . implode(', ', $fields) . ")");
+        $database->setQuery("CREATE TABLE ".$this->GetConfigTableName()." (" . implode(', ', $fields) . " )");
         $database->query();
         	check_dberror("Unable to create configuration table.");
 
@@ -120,7 +160,7 @@ class CKunenaConfigBase
             }
         }
 
-        $database->setQuery("INSERT INTO #__".$this->GetConfigTableName()." SET " . implode(', ', $fields));
+        $database->setQuery("INSERT INTO ".$this->GetConfigTableName()." SET " . implode(', ', $fields));
         $database->query();
         	check_dberror("Unable to insert configuration data.");
     }
@@ -132,18 +172,16 @@ class CKunenaConfigBase
     {
         global $database;
         // remove old backup if one exists
-        $database->setQuery("DROP TABLE IF EXISTS #__".$this->GetConfigTableName()."_backup");
+        $database->setQuery("DROP TABLE IF EXISTS ".$this->GetConfigTableName()."_backup");
         $database->query();
         	check_dberror("Unable to drop old configuration backup table.");
 
         // Only create backup if config table already exists
-        $database->setQuery( "SHOW TABLES LIKE '%".$this->GetConfigTableName()."'" );
-		$database->query();
-			check_dberror('Unable to check for existing config table.');
-		if($database->loadResult())
+        $tables = CKunenaTables::getInstance();
+        if ($tables->check($this->GetConfigTableName()))
 		{
 			// backup current settings
-			$database->setQuery("CREATE TABLE #__".$this->GetConfigTableName()."_backup SELECT * FROM #__".$this->GetConfigTableName());
+			$database->setQuery("CREATE TABLE ".$this->GetConfigTableName()."_backup SELECT * FROM ".$this->GetConfigTableName());
 			$database->query();
 				check_dberror("Unable to create new configuration backup table.");
 		}
@@ -155,7 +193,7 @@ class CKunenaConfigBase
     function remove()
     {
         global $database;
-        $database->setQuery("DROP TABLE IF EXISTS #__".$this->GetConfigTableName());
+        $database->setQuery("DROP TABLE IF EXISTS ".$this->GetConfigTableName());
         $database->query();
         	check_dberror("Unable to drop existing configuration table.");
     }
@@ -167,21 +205,15 @@ class CKunenaConfigBase
     {
         global $database;
 
-        $database->setQuery("SELECT * FROM #__".$this->GetConfigTableName());
+        $tables = CKunenaTables::getInstance();
+        if ($tables->check($this->GetConfigTableName())) 
+	{
+        	$database->setQuery("SELECT * FROM ".$this->GetConfigTableName());
 
-        // Special error handling!
-        // This query might actually fail on new installs or upgrades when
-        // no configuration table is present. That is ok. It only tells us to
-        // create the table and populate it with default settings.
-        // DO NOT THROW an error
-        $database->loadObject($this);
-
-        if($database->_errorNum != 0)
-        {
-        	// If no configuration is present, save default values
-        	$this->create(); //create has its own error handling
+        	$database->loadObject($this);
+       		check_dberror("Unable to load configuration table.");
         }
-
+        
         // Check for user specific overrides
         if(is_object($KunenaUser))
         {
@@ -202,8 +234,7 @@ class CKunenaConfig extends CKunenaConfigBase
     var $email                   = 'change@me.com';
     var $board_offline           = 0;
     var $board_ofset             = 0;
-    var $offline_message         = '<h2>The Forum is currently offline for maintenance.</h2>
-    Check back soon!                        ';
+    var $offline_message         = "<h2>The Forum is currently offline for maintenance.</h2>\n<div>Check back soon!</div>";
     var $default_view            = 'flat';
     var $enablerss               = 1;
     var $enablepdf               = 1;
@@ -214,7 +245,7 @@ class CKunenaConfig extends CKunenaConfigBase
     var $historylimit            = 6;
     var $shownew                 = 1;
     var $newchar                 = 'NEW!';
-    var $jmambot                 = 1;
+    var $jmambot                 = 0;
     var $disemoticons            = 0;
     var $template                = 'default_ex';
     var $templateimagepath       = 'default_ex';
@@ -352,7 +383,6 @@ class CKunenaConfig extends CKunenaConfigBase
 
     function CKunenaConfig($KunenaUser=null)
 	{
-		if (!is_object($KunenaUser)) return;
 		$this->load($KunenaUser);
 	}
 
@@ -377,7 +407,7 @@ class CKunenaConfig extends CKunenaConfigBase
 
     function GetConfigTableName()
     {
-        return "fb_config"; // w/o joomla prefix - is being added by based class
+        return "#__fb_config";
     }
 
     function DoUserOverrides($KunenaUser)

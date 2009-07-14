@@ -19,7 +19,7 @@
 * @author TSMF & Jan de Graaff
 **/
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 require_once ($mosConfig_absolute_path . '/includes/HTML_toolbar.php');
 
@@ -36,27 +36,27 @@ $validate = josSpoofValue();
         // do field validation
         if (form.name.value == "")
         {
-            alert("<?php echo addslashes( _REGWARN_NAME );?>");
+            alert("<?php echo addslashes( _KUNENA_JS_WARN_NAME_MISSING );?>");
         }
         else if (form.username.value == "")
         {
-            alert("<?php echo addslashes( _REGWARN_UNAME );?>");
+            alert("<?php echo addslashes( _KUNENA_JS_WARN_UNAME_MISSING );?>");
         }
         else if (r.exec(form.username.value) || form.username.value.length < 3)
         {
-            alert("<?php printf( addslashes( _VALID_AZ09 ), addslashes( _PROMPT_UNAME ), 4 );?>");
+            alert("<?php printf( addslashes( _KUNENA_JS_WARN_VALID_AZ09 ), addslashes( _KUNENA_JS_PROMPT_UNAME ), 4 );?>");
         }
         else if (form.email.value == "")
         {
-            alert("<?php echo addslashes( _REGWARN_MAIL );?>");
+            alert("<?php echo addslashes( _KUNENA_JS_WARN_MAIL_MISSING );?>");
         }
         else if ((form.password.value != "") && (form.password.value != form.verifyPass.value))
         {
-            alert("<?php echo addslashes( _REGWARN_VPASS2 );?>");
+            alert("<?php echo addslashes( _KUNENA_JS_WARN_PASSWORD2 );?>");
         }
         else if (r.exec(form.password.value))
         {
-            alert("<?php printf( addslashes( _VALID_AZ09 ), addslashes( _REGISTER_PASS ), 4 );?>");
+            alert("<?php printf( addslashes( _KUNENA_JS_WARN_VALID_AZ09 ), addslashes( _KUNENA_JS_PROMPT_PASS ), 4 );?>");
         }
         else
         {
@@ -96,18 +96,18 @@ $validate = josSpoofValue();
       <tr>
         <td><?php echo _KUNENA_UNAME; ?> </td>
         <?php if ($fbConfig->usernamechange) { ?>
-        <td><input class = "inputbox" type = "text" name = "username" value = "<?php echo $row->username;?>" size = "40"/></td>
+        <td><input class = "inputbox" type = "text" name = "username" value = "<?php echo kunena_htmlspecialchars($row->username);?>" size = "40"/></td>
       <?php } else { ?>
-      <td><input class = "inputbox" type = "hidden" name = "username" value = "<?php echo $row->username;?>" size = "40"/><?php echo $row->username;?></td>
+      <td><input class = "inputbox" type = "hidden" name = "username" value = "<?php echo kunena_htmlspecialchars($row->username);?>" size = "40"/><?php echo kunena_htmlspecialchars($row->username);?></td>
       <?php } ?>
       </tr>
       <tr>
         <td><?php echo _KUNENA_YOUR_NAME; ?> </td>
-        <td><input class = "inputbox" type = "text" name = "name" value = "<?php echo $row->name;?>" size = "40"/></td>
+        <td><input class = "inputbox" type = "text" name = "name" value = "<?php echo kunena_htmlspecialchars($row->name);?>" size = "40"/></td>
       </tr>
       <tr>
         <td><?php echo _KUNENA_EMAIL; ?> </td>
-        <td><input class = "inputbox" type = "text" name = "email" value = "<?php echo $row->email;?>" size = "40"/></td>
+        <td><input class = "inputbox" type = "text" name = "email" value = "<?php echo kunena_htmlspecialchars($row->email);?>" size = "40"/></td>
       </tr>
       <tr>
         <td><?php echo _KUNENA_PASS; ?> </td>

@@ -16,7 +16,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
  * CB framework
  * @global CBframework $_CB_framework
  */
-global $_CB_framework, $_CB_database, $ueConfig, $mainframe;
+global $_CB_framework, $_CB_database, $ueConfig, $mainframe, $database;
 $tmp_db =& $database;
 
 if ( defined( 'JPATH_ADMINISTRATOR' ) ) {
@@ -26,7 +26,10 @@ if ( defined( 'JPATH_ADMINISTRATOR' ) ) {
 }
 if ( ! file_exists( $cbpath ) ) 
 {
-	$fbConfig->fb_profile = 'fb';
+	$fbConfig->pm_component = $fbConfig->pm_component == 'cb' ? 'none' : $fbConfig->pm_component;
+	$fbConfig->fb_profile = $fbConfig->fb_profile == 'cb' ? 'kunena' : $fbConfig->fb_profile;
+	$fbConfig->avatar_src = $fbConfig->avatar_src == 'cb' ? 'kunena' : $fbConfig->avatar_src;
+	
 	return;
 }
 include_once( $cbpath );
@@ -37,6 +40,8 @@ cbimport( 'cb.tabs' );
 
 $database =& $tmp_db;
 unset ($tmp_db);
+
+define("KUNENA_CB_ITEMID_SUFFIX", getCBprofileItemid());
 
 class CKunenaCBProfile {
 	var $sidebarText;
@@ -50,10 +55,38 @@ class CKunenaCBProfile {
 		return $instance;
 	}
 
+	function getLoginURL() {
+		return cbSef( 'index.php?option=com_comprofiler&amp;task=login' );
+	}
+
+	function getLogoutURL() {
+		return cbSef( 'index.php?option=com_comprofiler&amp;task=logout' );
+	}
+
+	function getRegisterURL() {
+		return cbSef( 'index.php?option=com_comprofiler&amp;task=registers' );
+	}
+
+	function getLostPasswordURL() {
+		return cbSef( 'index.php?option=com_comprofiler&amp;task=lostPassword' );
+	}
+
+	function getForumTabURL() {
+		return cbSef( 'index.php?option=com_comprofiler&amp;tab=getForumTab' . getCBprofileItemid() );
+	}
+
+	function getUserListURL() {
+		return cbSef( 'index.php?option=com_comprofiler&amp;task=usersList' );
+	}
+
+	function getAvatarURL() {
+		return cbSef( 'index.php?option=com_comprofiler&amp;task=userAvatar' . getCBprofileItemid() );
+	}
+
 	function getProfileURL($userid) {
 		$cbUser =& CBuser::getInstance( (int) $userid );
 		if($cbUser === null) return;
-		return cbSef( 'index.php?option=com_comprofiler&user=' .$userid. getCBprofileItemid() );
+		return cbSef( 'index.php?option=com_comprofiler&task=userProfile&user=' .$userid. getCBprofileItemid() );
 	}
 	
 	function showAvatar($userid, $class='', $thumb=true) {
@@ -68,7 +101,9 @@ class CKunenaCBProfile {
 	
 	function showProfile($userid, &$msg_params) 
 	{
-		global $_PLUGINS, $fbConfig;
+		global $_PLUGINS;
+
+		$fbConfig =& CKunenaConfig::getInstance();
 		$userprofile = new CKunenaUserprofile($userid);
 		$_PLUGINS->loadPluginGroup('user');		
 		return implode( '', $_PLUGINS->trigger( 'forumSideProfile', array( 'kunena', null, $userid, 
@@ -82,7 +117,9 @@ class CKunenaCBProfile {
 	**/
 	function trigger($event, &$params)
 	{
-		global $_PLUGINS, $fbConfig;
+		global $_PLUGINS;
+
+		$fbConfig =& CKunenaConfig::getInstance();
 		$params['config'] =& $fbConfig;
 		$_PLUGINS->loadPluginGroup('user');
 		$_PLUGINS->trigger( 'kunenaIntegration', array( $event, &$fbConfig, &$params ));

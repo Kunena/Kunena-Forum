@@ -22,7 +22,10 @@
 // Dont allow direct linking
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $base_url, $fbConfig;
+global $base_url;
+
+
+$fbConfig =& CKunenaConfig::getInstance();
 
 $mainframe->setPageTitle(_KUNENA_USRL_USERLIST . ' - ' . stripslashes($fbConfig->board_title));
 
@@ -32,7 +35,9 @@ list_users();
 
 function list_users()
 {
-    global $database, $mosConfig_lang, $fbConfig;
+    global $database, $mosConfig_lang;
+
+    $fbConfig =& CKunenaConfig::getInstance();
 
     require_once("includes/pageNavigation.php");
 
@@ -122,7 +127,8 @@ class HTML_userlist_content
 {
     function showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search = "")
     {
-        global $base_url, $mosConfig_sitename, $fbConfig, $database;
+        global $base_url, $mosConfig_sitename, $database;
+	$fbConfig =& CKunenaConfig::getInstance();
 
         if ($search == "") {
             $search = _KUNENA_USRL_SEARCH;
@@ -411,9 +417,6 @@ class HTML_userlist_content
 
                                 $nr = $i + $limitstart;
 
-                                // Profile Link
-                                $profilelink =  sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX."".$ulrow->id);
-
                                 // Avatar
                                 $uslavatar = '';
                                 if ($fbConfig->avatar_src == "clexuspm") {
@@ -461,11 +464,11 @@ class HTML_userlist_content
 
 
                                             if ($isonline && $ulrow->showOnline ==1 ) {
-                                                echo $fbIcons['onlineicon'] ? '<img src="' . KUNENA_URLICONSPATH
+                                                echo isset($fbIcons['onlineicon']) ? '<img src="' . KUNENA_URLICONSPATH
                                                          . '' . $fbIcons['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';
                                             }
                                             else {
-                                                echo $fbIcons['offlineicon'] ? '<img src="' . KUNENA_URLICONSPATH
+                                                echo isset($fbIcons['offlineicon']) ? '<img src="' . KUNENA_URLICONSPATH
                                                          . '' . $fbIcons['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
                                             }
                                             ?>
@@ -483,9 +486,7 @@ class HTML_userlist_content
                                         <td class = "td-3" align="center">
                                       <?php
                                       if(strlen($uslavatar)) {
-                                      ?>
-                                            <a href = "<?php echo $profilelink ;?>"> <?php echo $uslavatar; ?></a>
-                                      <?php
+						echo CKunenaLink::GetProfileLink($fbConfig, $ulrow->id, $uslavatar);
                                       }
                                       else { echo '&nbsp;'; }
                                       ?>
@@ -501,7 +502,7 @@ class HTML_userlist_content
                                     ?>
 
                                         <td class = "td-4  fbm" align="center">
-                                            <a href = "<?php echo $profilelink ;?>"> <?php echo $ulrow->name; ?></a>
+						<?php echo CKunenaLink::GetProfileLink($fbConfig, $ulrow->id, $ulrow->name); ?>
                                         </td>
 
                                     <?php
@@ -514,7 +515,7 @@ class HTML_userlist_content
                                     ?>
 
                                         <td class = "td-5  fbm" align="center">
-                                            <a href = "<?php echo $profilelink ;?>"> <?php echo $ulrow->username; ?></a>
+						<?php echo CKunenaLink::GetProfileLink($fbConfig, $ulrow->id, $ulrow->username); ?>
                                         </td>
 
                                     <?php

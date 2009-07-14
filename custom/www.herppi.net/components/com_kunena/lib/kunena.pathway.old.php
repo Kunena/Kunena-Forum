@@ -21,7 +21,10 @@
 
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
-global $fbConfig;
+
+global $mainframe, $database;
+
+$fbConfig =& CKunenaConfig::getInstance();
 ?>
 <!-- Pathway -->
 
@@ -49,7 +52,7 @@ global $fbConfig;
                         $spath = $sname;
                     }
                     else {
-                        $spath = $sname . ' » ' . $spath;
+                        $spath = $sname . ' ï¿½ ' . $spath;
                     }
 
                     // next looping
@@ -57,7 +60,7 @@ global $fbConfig;
                 }
 
                 $shome = '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL) . '">' . _GEN_FORUMLIST . '</a> ';
-                $pathNames = $shome . ' » ' . $spath . " ";
+                $pathNames = $shome . ' ï¿½ ' . $spath . " ";
                 echo $pathNames;
 
                 //Get the category name for breadcrumb
@@ -73,7 +76,7 @@ global $fbConfig;
                 //check if this forum is subject to review
                 $forumReviewed = $objCatInfo->review;
                 /*      echo '<a href="'.sefRelToAbs(KUNENA_LIVEURLREL).'">';
-                      echo $fbIcons['forumlist'] ? '<img src="' . KUNENA_TMPLTURL . '/images/icons/'.$fbIcons['forumlist'].'" border="0" alt="'._GEN_FORUMLIST.'" > > ' : _GEN_FORUMLIST;
+                      echo isset($fbIcons['forumlist']) ? '<img src="' . KUNENA_TMPLTURL . '/images/icons/'.$fbIcons['forumlist'].'" border="0" alt="'._GEN_FORUMLIST.'" > > ' : _GEN_FORUMLIST;
                       echo '</a> ';
                       if (file_exists($mosConfig_absolute_path.'/templates/'.$mainframe->getTemplate().'/images/arrow.png')) {
                       echo '<img src="'.KUNENA_JLIVEURL.'/templates/'.$mainframe->getTemplate().'/images/arrow.png" alt="" />';
@@ -89,7 +92,7 @@ global $fbConfig;
                 // echo '<strong> '.$objCatInfo->name.'</strong>  ';
                 if ($forumLocked)
                 {
-                    echo $fbIcons['forumlocked'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forumlocked']
+                    echo isset($fbIcons['forumlocked']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forumlocked']
                              . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"   alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
                     $lockedForum = 1;
                 }
@@ -99,7 +102,7 @@ global $fbConfig;
 
                 if ($forumReviewed)
                 {
-                    echo $fbIcons['forummoderated'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forummoderated']
+                    echo isset($fbIcons['forummoderated']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forummoderated']
                              . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '">';
                     $moderatedForum = 1;
                 }

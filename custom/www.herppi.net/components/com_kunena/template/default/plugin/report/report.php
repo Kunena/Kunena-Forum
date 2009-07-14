@@ -32,7 +32,7 @@ $type = mosGetParam($_REQUEST, 'type', 0); // 0 = send e-mail, 1 = send pm
 switch ($do)
 {
     case 'report':
-        ReportMessage((int)$msg_id, $catid, (int)$reporter, $reason, $text, (int)$type, $redirect);
+        ReportMessage((int)$msg_id, $catid, (int)$reporter, $reason, $text, (int)$type);
 
         break;
 
@@ -44,13 +44,16 @@ switch ($do)
 
 function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
     global $database, $my;
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
 
     if (!$my->id) {
         mosNotAuth();
         return;
         }
 
+	if (!empty($reason) && !empty($text))
+	{
+        
     $database->setQuery("SELECT a.*, b.message AS msg_text FROM #__fb_messages AS a"
     . "\n LEFT JOIN #__fb_messages_text AS b ON b.mesid = a.id"
     . "\n WHERE a.id={$msg_id}");
@@ -72,7 +75,7 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
 
     $msglink = str_replace('&amp;', '&', sefRelToAbs(KUNENA_LIVEURLREL . "&amp;func=view&amp;catid=" . $row->catid . "&amp;id=" . $row->id) . '#' . $row->id);
 
-    $message .= "" . _KUNENA_REPORT_RSENDER . " " . $sender;
+    $message  = "" . _KUNENA_REPORT_RSENDER . " " . $sender;
     $message .= "\n";
     $message .= "" . _KUNENA_REPORT_RREASON . " " . $reason;
     $message .= "\n";
@@ -111,17 +114,28 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
 
             break;
     }
-
-    echo '<div align="center">' . _KUNENA_REPORT_SUCCESS . '<br /><br />';
+    
+    echo '<div align="center">' . _KUNENA_REPORT_SUCCESS;
+    echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&amp;id='.$msg_id).'#'.$msg_id, 3500);
+    
+	}
+    else
+    {
+    	echo '<div align="center">';
+    	if (empty($reason)) echo _POST_FORGOT_SUBJECT; 
+    	else if (empty($text)) echo _POST_FORGOT_MESSAGE;
+    	
+    }
+    echo '<br /><br />';
     echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id) . '#' . $msg_id . '">' . _POST_SUCCESS_VIEW . '</a><br />';
     echo '<a href="' . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $catid) . '">' . _POST_SUCCESS_FORUM . '</a><br />';
     echo '</div>';
-
-     echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&amp;id='.$msg_id).'#'.$msg_id, 3500);
 }
 
 function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins) {
-    global $database, $mainframe, $fbConfig;
+    global $database, $mainframe;
+
+    $fbConfig =& CKunenaConfig::getInstance();
 
     //send report to category moderators
     if (count($mods)>0) {
@@ -137,13 +151,14 @@ function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins)
     foreach ($admins as $admin) {
         $database->setQuery("SELECT email FROM #__users WHERE id={$admin->id}");
         $email = $database->loadResult();
-
-        mosMail($fbConfig->email, stripslashes($board_title)." ".trim(_GEN_FORUM), $email, $subject, $message);
+        mosMail($fbConfig->email, stripslashes($fbConfig->board_title)." ".trim(_GEN_FORUM), $email, $subject, $message);
         }
     }
 
 function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
-    global $database, $fbConfig;
+    global $database;
+
+    $fbConfig =& CKunenaConfig::getInstance();
 
     switch ($fbConfig->pm_component)
     {
@@ -181,7 +196,9 @@ function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
     }
 
 function ReportForm($msg_id, $catid) {
-    global $my, $fbConfig;
+    global $my;
+
+    $fbConfig =& CKunenaConfig::getInstance();
 
     $redirect = sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $msg_id . '&amp;Itemid=' . KUNENA_COMPONENT_ITEMID) . '#' . $msg_id;
 

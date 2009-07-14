@@ -21,7 +21,7 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 $mainframe->setPageTitle(_ANN_ANNOUNCEMENTS . ' - ' . stripslashes($fbConfig->board_title));
 
@@ -39,12 +39,6 @@ else {
 
 $is_user = (strtolower($my->usertype) <> '');
 
-$showlink = sefRelToAbs('index.php?option=com_kunena&amp;func=announcement' . KUNENA_COMPONENT_ITEMID_SUFFIX . '&amp;do=show');
-$addlink = sefRelToAbs('index.php?option=com_kunena&amp;func=announcement' . KUNENA_COMPONENT_ITEMID_SUFFIX . '&amp;do=add');
-$readlink = 'index.php?option=com_kunena&amp;func=announcement' . KUNENA_COMPONENT_ITEMID_SUFFIX . '&amp;do=read&amp;id=';
-$editlink = 'index.php?option=com_kunena&amp;func=announcement' . KUNENA_COMPONENT_ITEMID_SUFFIX . '&amp;do=edit&amp;id=';
-$deletelink = 'index.php?option=com_kunena&amp;func=announcement' . KUNENA_COMPONENT_ITEMID_SUFFIX . '&amp;do=delete&amp;id=';
-
 // BEGIN: READ ANN
 if ($do == "read") {
     $database->setQuery("SELECT id,title,description,created ,published,showdate  FROM #__fb_announcement  WHERE id=$id AND published = 1 ");
@@ -55,12 +49,13 @@ if ($do == "read") {
     $annID = $ann->id;
     $anntitle = stripslashes($ann->title);
 
+    $smileyList = smile::getEmoticons(0);
 	$anndescription = stripslashes(smile::smileReplace($ann->description, 0, $fbConfig->disemoticons, $smileyList));
 	$anndescription = nl2br($anndescription);
 	$anndescription = smile::htmlwrap($anndescription, $fbConfig->wrap);
 
     $anncreated = CKunenaTimeformat::showDate($ann->created, 'date_today');
-    $annpublished = $ann->published;
+	$annpublished = $ann->published;
     $annshowdate = $ann->showdate;
 
     if ($annpublished > 0) {
@@ -84,8 +79,8 @@ if ($do == "read") {
                         if ($is_editor) {
                         ?>
 
-                                <a href = "<?php echo $editlink;?><?php echo $annID; ?>"><?php echo _ANN_EDIT; ?> </a> |
-                    <a href = "<?php echo $deletelink;?><?php echo $annID; ?>"><?php echo _ANN_DELETE; ?> </a> | <a href = "<?php echo $addlink;?>"><?php echo _ANN_ADD; ?> </a> | <a href = "<?php echo $showlink;?>"><?php echo _ANN_CPANEL; ?> </a>
+                                <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'edit', $annID); ?>"><?php echo _ANN_EDIT; ?> </a> |
+                    <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'delete', $annID); ?>"><?php echo _ANN_DELETE; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'add');?>"><?php echo _ANN_ADD; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'show');?>"><?php echo _ANN_CPANEL; ?> </a>
 
                         <?php
                             }
@@ -128,8 +123,6 @@ if ($is_editor) {
         <?php
     // BEGIN: SHOW ANN
     if ($do == "show") {
-        $deletelink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=delete&amp;id=';
-        $editlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=edit&amp;id=';
         ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
@@ -141,7 +134,7 @@ if ($is_editor) {
                     <tr>
                         <th colspan = "6">
                             <div class = "fb_title_cover fbm">
-                                <span class = "fb_title fbl"> <?php echo $mosConfig_sitename; ?> <?php echo _ANN_ANNOUNCEMENTS; ?> | <a href = "<?php echo $addlink;?>"><?php echo _ANN_ADD; ?></a></span>
+                                <span class = "fb_title fbl"> <?php echo $mosConfig_sitename; ?> <?php echo _ANN_ANNOUNCEMENTS; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'add');?>"><?php echo _ANN_ADD; ?></a></span>
                             </div>
                         </th>
                     </tr>
@@ -197,7 +190,7 @@ if ($is_editor) {
                                 </td>
 
                                 <td class = "td-3"  align="left">
-                                    <a href = "<?php echo $readlink;?><?php echo $row->id; ?>"><?php echo stripslashes($row->title); ?></a>
+                                    <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'read', $row->id); ?>"><?php echo stripslashes($row->title); ?></a>
                                 </td>
 
                                 <td class = "td-4"  align="center">
@@ -212,11 +205,11 @@ if ($is_editor) {
                                 </td>
 
                                 <td class = "td-5"  align="center">
-                                    <a href = "<?php echo sefRelToAbs($editlink.$row->id); ?>"><?php echo _ANN_EDIT; ?> </a>
+                                    <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'edit', $row->id); ?>"><?php echo _ANN_EDIT; ?> </a>
                                 </td>
 
                                 <td class = "td-6"  align="center">
-                                    <a href = "<?php echo sefRelToAbs($deletelink.$row->id); ?>"><?php echo _ANN_DELETE; ?></a>
+                                    <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'delete', $row->id); ?>"><?php echo _ANN_DELETE; ?></a>
                                 </td>
                             </tr>
 
@@ -249,7 +242,7 @@ if ($is_editor) {
         $database->setQuery($query1);
 
         $database->query() or trigger_dberror("Unable to insert announcement.");
-        mosRedirect($showlink, _ANN_SUCCESS_ADD);
+        mosRedirect(CKunenaLink::GetAnnouncementURL($fbConfig, 'show'), _ANN_SUCCESS_ADD);
     }
 
     if ($do == "add") {
@@ -269,7 +262,7 @@ if ($is_editor) {
         <tr>
             <th>
                 <div class = "fb_title_cover fbm">
-                    <span class = "fb_title fbl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_ADD; ?> | <a href = "<?php echo $showlink;?>"><?php echo _ANN_CPANEL; ?></a></span>
+                    <span class = "fb_title fbl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_ADD; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'show');?>"><?php echo _ANN_CPANEL; ?></a></span>
                 </div>
             </th>
         </tr>
@@ -307,7 +300,7 @@ if ($is_editor) {
 
                     <strong><?php echo _ANN_DATE; ?>:</strong>
 
-                    <input type = "text" name = "created" id = "anncreated" size = "40" maxlength = "150" value = "<?php echo $anncreated ;?>"/>
+                    <input type = "text" name = "created" id = "anncreated" size = "40" maxlength = "150" value = "<?php echo (!empty($anncreated)?$anncreated:'') ;?>"/>
 
                     <input type = "reset" class = "button" value = "..." onclick = "return showCalendar('anncreated', '%Y-%m-%d');"/>
 
@@ -371,7 +364,7 @@ if ($is_editor) {
         $database->setQuery("UPDATE #__fb_announcement SET title='$title', description='$description', sdescription='$sdescription',  created=" . (($created <> '')?"'$created'":"NOW()") . ", published='$published', showdate='$showdate' WHERE id=$id");
 
         if ($database->query()) {
-            mosRedirect($showlink, _ANN_SUCCESS_EDIT);
+            mosRedirect(CKunenaLink::GetAnnouncementURL($fbConfig, 'show'), _ANN_SUCCESS_EDIT);
             }
         }
 
@@ -382,9 +375,9 @@ if ($is_editor) {
 
         $ann = $anns[0];
         $annID = $ann->id;
-        $anntitle = stripslashes($ann->title);
-        $annsdescription = stripslashes($ann->sdescription);
-        $anndescription = stripslashes($ann->description);
+        $anntitle = kunena_htmlspecialchars(stripslashes($ann->title));
+        $annsdescription = kunena_htmlspecialchars(stripslashes($ann->sdescription));
+        $anndescription = kunena_htmlspecialchars(stripslashes($ann->description));
         $anncreated = $ann->created;
         $annpublished = $ann->published;
         $annordering = $ann->ordering;
@@ -424,7 +417,7 @@ if ($is_editor) {
         <tr>
             <th>
                 <div class = "fb_title_cover fbm">
-                    <span class = "fb_title fbl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_EDIT; ?> | <a href = "<?php echo $showlink;?>"><?php echo _ANN_CPANEL; ?></a></span>
+                    <span class = "fb_title fbl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_EDIT; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'show');?>"><?php echo _ANN_CPANEL; ?></a></span>
                 </div>
             </th>
         </tr>
@@ -524,7 +517,7 @@ if ($is_editor) {
         $database->setQuery($query1);
         $database->query() or trigger_dberror("Unable to delete announcement.");
 
-        mosRedirect($showlink, _ANN_DELETED);
+        mosRedirect(CKunenaLink::GetAnnouncementURL($fbConfig, 'show'), _ANN_DELETED);
     }
     // FINISH: delete ANN
 ?>

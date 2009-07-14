@@ -22,18 +22,22 @@
 // Dont allow direct linking
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 //first we gather some information about this person
 $database->setQuery("SELECT su.view, u.name, su.moderator,su.avatar FROM #__fb_users as su"
                     . "\nLEFT JOIN #__users as u on u.id=su.userid WHERE su.userid={$my->id}");
 
 $database->loadObject($_user);
 
-$prefview = $_user->view;
-$username = $_user->name; // externally used  by fb_pathway, myprofile_menu
-$moderator = $_user->moderator;
-$fbavatar = $_user->avatar;
-$jr_username = $_user->name;
+$fbavatar = NULL;
+if ($_user != NULL)
+{
+	$prefview = $_user->view;
+	$username = $_user->name; // externally used  by fb_pathway, myprofile_menu
+	$moderator = $_user->moderator;
+	$fbavatar = $_user->avatar;
+	$jr_username = $_user->name;
+}
 
 $jr_avatar = '';
 if ($fbConfig->avatar_src == "jomsocial")
@@ -86,10 +90,10 @@ $jr_latestpost = sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=latest');
 $j15 = CKunenaTools::isJoomla15();
 if ($fbConfig->fb_profile == 'cb')
 {
-    $loginlink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=login');
-    $logoutlink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=logout');
-    $registerlink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=registers');//.KUNENA_CB_ITEMID_SUFFIX);
-    $lostpasslink = sefRelToAbs('index.php?option=com_comprofiler&amp;task=lostPassword');//.KUNENA_CB_ITEMID_SUFFIX);
+	$loginlink = CKunenaCBProfile::getLoginURL();
+	$logoutlink = CKunenaCBProfile::getLogoutURL();
+	$registerlink = CKunenaCBProfile::getRegisterURL();
+	$lostpasslink = CKunenaCBProfile::getLostPasswordURL();
 }
 else
 {
@@ -134,11 +138,10 @@ else {
 }
 
 if ($is_editor) {
-$annlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show'.KUNENA_COMPONENT_ITEMID_SUFFIX;
-
 ?>
-| <a href = "<?php echo $annlink;?>"><?php echo _ANN_ANNOUNCEMENTS; ?> </a>
+| <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'show');?>"><?php echo _ANN_ANNOUNCEMENTS; ?> </a>
 <?php } ?>
+| <?php echo CKunenaLink::GetSearchLink($fbConfig, 'search', '', 0, 0, _KUNENA_SEARCH_ADVSEARCH);?>
 
 </td>
                 <?php

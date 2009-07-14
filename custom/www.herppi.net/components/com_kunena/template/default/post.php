@@ -20,22 +20,14 @@
 **/
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
+$fbSession =& CKunenaSession::getInstance();
 global $is_Moderator;
-
-// For joomla mambot support
-if ($fbConfig->jmambot)
-{
-    class t
-    {
-        var $text = "";
-    }
-}
 
 //
 //ob_start();
 $catid = (int)$catid;
-$pubwrite = (int)$pubwrite;
+$pubwrite = (int)$fbConfig->pubwrite;
 //ip for floodprotection, post logging, subscriptions, etcetera
 $ip = $_SERVER["REMOTE_ADDR"];
 //reset variables used
@@ -184,24 +176,11 @@ $catName = $objCatInfo->name;
 
                                 if ($attachfile != '')
                                 {
-                                    $noFileUpload = 0;
-                                    $GLOBALS['KUNENA_rc'] = 1;
                                     include (KUNENA_ABSSOURCESPATH . 'kunena.file.upload.php');
-
-                                    if ($GLOBALS['KUNENA_rc'] == 0) {
-                                        $noFileUpload = 1;
-                                    }
                                 }
-
                                 if ($attachimage != '')
                                 {
-                                    $noImgUpload = 0;
-                                    $GLOBALS['KUNENA_rc'] = 1;
                                     include (KUNENA_ABSSOURCESPATH . 'kunena.image.upload.php');
-
-                                    if ($GLOBALS['KUNENA_rc'] == 0) {
-                                        $noImgUpload = 1;
-                                    }
                                 }
 
                                 $messagesubject = $subject; //before we add slashes and all... used later in mail
@@ -240,12 +219,10 @@ $catName = $objCatInfo->name;
                                 $database->query() or trigger_dberror('Unable to load post.');
 
                                 $database->loadObject($existingPost);
-                                $pid = $existingPost->id;
+				unset($pid);
+                                if ($existingPost !== null) $pid = $existingPost->id;
 
-                                // echo 'pid: '.$pid;
-                                // echo ' query: '.$database->GetQuery();
-
-                                if ($pid=='')
+                                if (!isset($pid))
                                 {
                                     $database->setQuery("INSERT INTO #__fb_messages
                                     						(parent,thread,catid,name,userid,email,subject,time,ip,topic_emoticon,hold)
@@ -278,7 +255,7 @@ $catName = $objCatInfo->name;
                                         }
 
                                         //Update the attachments table if an image has been attached
-                                        if ($imageLocation != "" && !$noImgUpload)
+                                        if (!empty($imageLocation) && file_exists($imageLocation))
                                         {
                                             $database->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid','$imageLocation')");
 
@@ -288,7 +265,7 @@ $catName = $objCatInfo->name;
                                         }
 
                                         //Update the attachments table if an file has been attached
-                                        if ($fileLocation != "" && !$noFileUpload)
+                                        if (!empty($fileLocation) && file_exists($fileLocation))
                                         {
                                             $database->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid','$fileLocation')");
 
@@ -473,23 +450,24 @@ $catName = $objCatInfo->name;
 
                                             $database->setQuery("INSERT INTO #__fb_subscriptions (thread,userid) VALUES ('$fb_thread','{$my->id}')");
 
-                                            if ($database->query()) {
-                                                echo '<br /><br /><div align="center">' . _POST_SUBSCRIBED_TOPIC . '<br /><br />';
+                                            if (@$database->query()) {
+                                                echo '<br /><br /><div align="center">' . _POST_SUBSCRIBED_TOPIC . '</div><br /><br />';
                                             }
                                             else {
-                                                echo '<br /><br /><div align="center">' . _POST_NO_SUBSCRIBED_TOPIC . '<br /><br />';
+                                                echo '<br /><br /><div align="center">' . _POST_NO_SUBSCRIBED_TOPIC . '</div><br /><br />';
                                             }
                                         }
 
                                         if ($holdPost == 1)
                                         {
-                                            echo '<br /><br /><div align="center">' . _POST_SUCCES_REVIEW . '<br /><br />';
-                                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $pid, $fbConfig->messages_per_page);
+                                            echo '<br /><br /><div align="center">' . _POST_SUCCES_REVIEW . '</div><br /><br />';
+                                           	echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $pid, $fbConfig->messages_per_page, $catid);
+
                                         }
                                         else
                                         {
-                                            echo '<br /><br /><div align="center">' . _POST_SUCCESS_POSTED . '<br /><br />';
-                                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $pid, $fbConfig->messages_per_page);
+                                            echo '<br /><br /><div align="center">' . _POST_SUCCESS_POSTED . '</div><br /><br />';
+                                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $pid, $fbConfig->messages_per_page, $catid);
                                         }
                                     }
                                     else {
@@ -500,8 +478,8 @@ $catName = $objCatInfo->name;
                                 // We get here in case we have detected a double post
                                 // We did not do any further processing and just display the success message
                                 {
-                                    echo '<br /><br /><div align="center">' . _POST_DUPLICATE_IGNORED . '<br /><br />';
-                                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $pid, $fbConfig->messages_per_page);
+                                    echo '<br /><br /><div align="center">' . _POST_DUPLICATE_IGNORED . '</div><br /><br />';
+                                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $pid, $fbConfig->messages_per_page, $catid);
                                 }
                             }
                             ?>
@@ -514,7 +492,7 @@ $catName = $objCatInfo->name;
             else if ($action == "cancel")
             {
                 echo '<br /><br /><div align="center">' . _SUBMIT_CANCEL . "</div><br />";
-                echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $pid, $fbConfig->messages_per_page);
+                echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $pid, $fbConfig->messages_per_page, $catid);
             }
             else
             {
@@ -537,7 +515,7 @@ $catName = $objCatInfo->name;
                             //$message->message=smile::smileReplace($message->message,0);
                             $table = array_flip(get_html_translation_table(HTML_ENTITIES, ENT_QUOTES));
                             //$quote = strtr($message->message, $table);
-                            $quote = $message->message;
+                            $quote = stripslashes($message->message);
 
                             $htmlText = "[b]" . stripslashes($message->name) . " " . _POST_WROTE . ":[/b]\n";
                             $htmlText .= '[quote]' . $quote . "[/quote]";
@@ -545,7 +523,7 @@ $catName = $objCatInfo->name;
                             $resubject = strtr($message->subject, $table);
 
                             $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? stripslashes($resubject) : _POST_RE . stripslashes($resubject);
-                            //$resubject = htmlspecialchars($resubject);
+                            //$resubject = kunena_htmlspecialchars($resubject);
                             $resubject = smile::fbStripHtmlTags($resubject);
                             //$resubject = smile::fbStripHtmlTags($resubject);
                             $parentid = $message->id;
@@ -565,8 +543,6 @@ $catName = $objCatInfo->name;
 
                         <?php
                         //get the writing stuff in:
-                        $no_upload = "0"; //only edit mode should disallow this
-
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
                             include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
@@ -594,7 +570,7 @@ $catName = $objCatInfo->name;
                             unset($message);
                             $database->loadObject($message);
                             $table = array_flip(get_html_translation_table(HTML_ENTITIES));
-                            $resubject = htmlspecialchars(strtr($message->subject, $table));
+                            $resubject = kunena_htmlspecialchars(strtr($message->subject, $table));
                             $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? stripslashes($resubject) : _POST_RE . stripslashes($resubject);
                             $parentid = $message->id;
                             $htmlText = "";
@@ -615,8 +591,6 @@ $catName = $objCatInfo->name;
 
                         <?php
                         //get the writing stuff in:
-                        $no_upload = "0"; //only edit mode should disallow this
-
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
                             include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
@@ -641,7 +615,7 @@ $catName = $objCatInfo->name;
                     //$table = array_flip(get_html_translation_table(HTML_ENTITIES));
                     //$resubject = strtr($resubject, $table);
                     $fromBot = 1; //this new topic comes from the discuss mambot
-                    $authorName = htmlspecialchars($my_name);
+                    $authorName = kunena_htmlspecialchars($my_name);
                     $rowid = mosGetParam($_REQUEST, 'rowid', 0);
                     $rowItemid = mosGetParam($_REQUEST, 'rowItemid', 0);
 
@@ -666,8 +640,6 @@ $catName = $objCatInfo->name;
 
                         <?php
                         //get the writing stuff in:
-                        $no_upload = "0"; //only edit mode should disallow this
-
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
                             include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
@@ -722,14 +694,14 @@ $catName = $objCatInfo->name;
                         {*/
 
                         //$htmlText = smile::fbStripHtmlTags($mes->message);
-                        $htmlText = $mes->message;
+                        $htmlText = stripslashes($mes->message);
                         $table = array_flip(get_html_translation_table(HTML_ENTITIES));
 
                         //$htmlText = strtr($htmlText, $table);
 
                         //$htmlText = smile::fbHtmlSafe($htmlText);
-                        $resubject = htmlspecialchars(stripslashes($mes->subject));
-                        $authorName = htmlspecialchars($mes->name);
+                        $resubject = kunena_htmlspecialchars(stripslashes($mes->subject));
+                        $authorName = kunena_htmlspecialchars($mes->name);
                         ?>
 
                         <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL."&amp;catid=$catid&amp;func=post"); ?>" method = "post" name = "postform" enctype = "multipart/form-data"/>
@@ -759,9 +731,6 @@ $catName = $objCatInfo->name;
                                     $no_image_upload = "1";
                                 }
                             }
-                        }
-                        else {
-                            $no_upload = "0";
                         }
 
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
@@ -824,7 +793,7 @@ $catName = $objCatInfo->name;
                             include KUNENA_ABSSOURCESPATH . 'kunena.image.upload.php';
                         }
 
-                        //$message = trim(htmlspecialchars(addslashes($message)));
+                        //$message = trim(kunena_htmlspecialchars(addslashes($message)));
                         $message = trim(addslashes($message));
 
                         //parse the message for some preliminary bbcode and stripping of HTML
@@ -856,7 +825,7 @@ $catName = $objCatInfo->name;
                             if ($database->query() && $dbr_nameset)
                             {
                                 //Update the attachments table if an image has been attached
-                                if ($imageLocation != "")
+                                if (!empty($imageLocation) && file_exists($imageLocation))
                                 {
                                     $imageLocation = addslashes($imageLocation);
                                     $database->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$id','$imageLocation')");
@@ -867,7 +836,7 @@ $catName = $objCatInfo->name;
                                 }
 
                                 //Update the attachments table if an file has been attached
-                                if ($fileLocation != "")
+                                if (!empty($fileLocation) && file_exists($fileLocation))
                                 {
                                     $fileLocation = addslashes($fileLocation);
                                     $database->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$id','$fileLocation')");
@@ -878,7 +847,7 @@ $catName = $objCatInfo->name;
                                 }
 
                                 echo '<br /><br /><div align="center">' . _POST_SUCCESS_EDIT . "</div><br />";
-                                echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page);
+                                echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page, $catid);
                             }
                             else {
                                 echo _POST_ERROR_MESSAGE_OCCURED;
@@ -910,7 +879,7 @@ $catName = $objCatInfo->name;
                         <form action = "<?php echo sefRelToAbs(KUNENA_LIVEURLREL."&amp;catid=$catid&amp;func=post"); ?>" method = "post" name = "myform">
                             <input type = "hidden" name = "do" value = "deletepostnow"/>
 
-                            <input type = "hidden" name = "id" value = "<?php echo $mes->id;?>"/> <?php echo _POST_ABOUT_TO_DELETE; ?>: <strong><?php echo stripslashes(htmlspecialchars($mes->subject)); ?></strong>.
+                            <input type = "hidden" name = "id" value = "<?php echo $mes->id;?>"/> <?php echo _POST_ABOUT_TO_DELETE; ?>: <strong><?php echo stripslashes(kunena_htmlspecialchars($mes->subject)); ?></strong>.
 
     <br/>
 
@@ -1090,7 +1059,7 @@ $catName = $objCatInfo->name;
                     CKunenaTools::reCountBoards();
 
                     echo '<br /><br /><div align="center">' . _POST_SUCCESS_MOVE . "</div><br />";
-                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page);
+                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $id, $fbConfig->messages_per_page, $catid);
                 }
                 //begin merge function
                 else if ($do == "merge")
@@ -1249,7 +1218,7 @@ $catName = $objCatInfo->name;
                             CKunenaTools::reCountBoards();
 
                             echo '<br /><br /><div align="center">' . _POST_SUCCESS_MERGE . "</div><br />";
-                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $targetid, $fbConfig->messages_per_page);
+                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $targetid, $fbConfig->messages_per_page, $catid);
                         }
                         else
                         {
@@ -1277,6 +1246,10 @@ $catName = $objCatInfo->name;
                     $error = mosGetParam($_POST, 'error', 0);
                     $id = (int)$id;
                     $catid = (int)$catid;
+
+					// TODO: Enable split when it's fixed
+                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page, $catid), 'Split has been disabled');
+                    
                     //get list of posts in thread
                     $database->setQuery("SELECT * FROM #__fb_messages AS a "
                     ."\n LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE (a.thread='$id' OR a.id='$id') AND a.hold=0 AND a.catid='$catid' ORDER BY a.parent ASC, a.ordering, a.time");
@@ -1328,12 +1301,13 @@ $catName = $objCatInfo->name;
 
             <?php
                     $k = 0;
-
+                    $smileyList = smile::getEmoticons(1);
+                    
                     foreach ($postlist as $mes)
                     {
                         $k = 1 - $k;
-                        $mes->name = htmlspecialchars($mes->name);
-                        $mes->subject = htmlspecialchars($mes->subject);
+                        $mes->name = kunena_htmlspecialchars($mes->name);
+                        $mes->subject = kunena_htmlspecialchars($mes->subject);
                         $mes->message = smile::smileReplace($mes->message, 1, $fbConfig->disemoticons, $smileyList);
             ?>
 
@@ -1419,6 +1393,9 @@ $catName = $objCatInfo->name;
                     $new_topic = (int)mosGetParam($_POST, 'to_topic', 0);
                     $topic_change = 0;
 
+					// TODO: Enable split when it's fixed
+                    mosRedirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page, $catid), 'Split has been disabled');
+
                     if (!$to_split)
                     {
                         if ($new_topic != 0 && $id != $new_topic)
@@ -1477,7 +1454,7 @@ $catName = $objCatInfo->name;
                             $database->query();
 
                             echo '<br /><br /><div align="center">' . _POST_SUCCESS_SPLIT_TOPIC_CHANGED . "</div><br />";
-                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $new_topic, $fbConfig->messages_per_page);
+                            echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $new_topic, $fbConfig->messages_per_page, $catid);
 
                             return;
                         }
@@ -1568,7 +1545,7 @@ $catName = $objCatInfo->name;
                     CKunenaTools::reCountBoards();
 
                     echo '<br /><br /><div align="center">' . _POST_SUCCESS_SPLIT . "</div><br />";
-                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $new_topic, $fbConfig->messages_per_page);
+                    echo CKunenaLink::GetLatestPostAutoRedirectHTML($fbConfig, $new_topic, $fbConfig->messages_per_page, $catid);
 		        }
 // end split function
                 else if ($do == "subscribe")
@@ -1598,7 +1575,7 @@ $catName = $objCatInfo->name;
                         $thread = $row->thread;
                         $database->setQuery("INSERT INTO #__fb_subscriptions (thread,userid) VALUES ('$thread','$my->id')");
 
-                        if ($database->query() && $database->getAffectedRows()==1) {
+                        if (@$database->query() && $database->getAffectedRows()==1) {
                             $success_msg = _POST_SUBSCRIBED_TOPIC;
                         }
                     }
@@ -1633,7 +1610,7 @@ $catName = $objCatInfo->name;
                         $thread = $database->loadResult();
                         $database->setQuery("INSERT INTO #__fb_favorites (thread,userid) VALUES ('$thread','$my->id')");
 
-                        if ($database->query() && $database->getAffectedRows()==1)
+                        if (@$database->query() && $database->getAffectedRows()==1)
                         {
                              $success_msg = _POST_FAVORITED_TOPIC;
                         }
@@ -1731,8 +1708,9 @@ $catName = $objCatInfo->name;
  */
 function hasPostPermission($database, $catid, $replyto, $userid, $pubwrite, $ismod)
 {
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
 
+    $topicLock = 0;
     if ($replyto != 0)
     {
         $database->setQuery("select thread from #__fb_messages where id='$replyto'");
@@ -1776,7 +1754,7 @@ function hasPostPermission($database, $catid, $replyto, $userid, $pubwrite, $ism
             echo _POST_NO_PUBACCESS2 . "<br /><br />";
 
             if ($fbConfig->fb_profile == 'cb') {
-                echo '<a href="' . sefRelToAbs('index.php?option=com_comprofiler&amp;task=registers') . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
+                echo '<a href="' . CKunenaCBProfile::getRegisterURL() . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
             }
             else {
                 echo '<a href="' . sefRelToAbs('index.php?option=com_registration&amp;task=register') . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
@@ -1934,7 +1912,7 @@ function listThreadHistory($id, $fbConfig, $database)
         $database->setQuery("SELECT subject FROM #__fb_messages WHERE id='$thread' and parent=0");
         $this_message_subject = $database->loadResult();
         	check_dberror("Unable to load messages.");
-        echo "<b>" . _POST_TOPIC_HISTORY . ":</b> " . htmlspecialchars($this_message_subject) . " <br />" . _POST_TOPIC_HISTORY_MAX . " $historylimit " . _POST_TOPIC_HISTORY_LAST . "<br />";
+        echo "<b>" . _POST_TOPIC_HISTORY . ":</b> " . kunena_htmlspecialchars(stripslashes($this_message_subject)) . " <br />" . _POST_TOPIC_HISTORY_MAX . " $fbConfig->historylimit " . _POST_TOPIC_HISTORY_LAST . "<br />";
 ?>
 
         <table border = "0" cellspacing = "1" cellpadding = "3" width = "100%" class = "fb_review_table">
@@ -1955,9 +1933,9 @@ function listThreadHistory($id, $fbConfig, $database)
             foreach ($messages as $mes)
             {
                 $k = 1 - $k;
-                $mes->name = htmlspecialchars($mes->name);
-                $mes->email = htmlspecialchars($mes->email);
-                $mes->subject = htmlspecialchars($mes->subject);
+                $mes->name = kunena_htmlspecialchars($mes->name);
+                $mes->email = kunena_htmlspecialchars($mes->email);
+                $mes->subject = kunena_htmlspecialchars($mes->subject);
 
 
                 $fb_message_txt = stripslashes(($mes->message));
@@ -1978,25 +1956,8 @@ function listThreadHistory($id, $fbConfig, $database)
                         //Long Words Wrap:
                         $fb_message_txt = smile::htmlwrap($fb_message_txt, $fbConfig->wrap);
 
-                        // Joomla Mambot Support
-                        if ($fbConfig->jmambot)
-                        {
-                            global $_MAMBOTS;
-                            $row = new t();
-                            $row->text = $fb_message_txt;
-                            $_MAMBOTS->loadBotGroup('content');
-                            $params = &new mosParameters('');
-                            $results = $_MAMBOTS->trigger('onPrepareContent', array
-                            (
-                            &$row,
-                            &$params,
-                            0
-                            ), true);
-
-                            $fb_message_txt = $row->text;
-                        }
-                        // Finish Joomla Mambot Support
-
+						$fb_message_txt = CKunenaTools::prepareContent($fb_message_txt);
+                        
                         if ($fbConfig->badwords && class_exists('Badword') && Badword::filter($fb_message_txt, $my)) {
                            	if (method_exists('Badword','flush')) {
                            		$fb_message_txt = Badword::flush($fb_message_txt, $my);

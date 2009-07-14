@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 # Check for Editor rights  $fbConfig->annmodid
 $user_fields = @explode(',', $fbConfig->annmodid);
@@ -35,25 +35,20 @@ else {
     }
 
 $is_user = (strtolower($my->usertype) <> '');
-$showlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=show';
-$addlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=add';
-$readlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=read&amp;id=';
-$editlink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=edit&amp;id=';
-$deletelink = 'index.php?option=com_kunena&amp;func=announcement&amp;do=delete&amp;id=';
 ?>
 
 <?php
 // BEGIN: BOX ANN
 $database->setQuery("SELECT id, title, sdescription, description, created, published, showdate FROM #__fb_announcement WHERE published=1 ORDER BY created DESC LIMIT 1");
 
-$database->loadObject($ann);
+$anns = $database->loadObjectList();
 check_dberror("Unable to load announcements.");
-
-if ($ann->id > 0) {
-
+if (count($anns) == 0) return;
+$ann = $anns[0];
 $annID = $ann->id;
 $anntitle = stripslashes($ann->title);
 
+$smileyList = smile::getEmoticons(0);
 $annsdescription = stripslashes(smile::smileReplace($ann->sdescription, 0, $fbConfig->disemoticons, $smileyList));
 $annsdescription = nl2br($annsdescription);
 $annsdescription = smile::htmlwrap($annsdescription, $fbConfig->wrap);
@@ -66,6 +61,7 @@ $anncreated = CKunenaTimeformat::showDate($ann->created, 'date_today');
 $annpublished = $ann->published;
 $annshowdate = $ann->showdate;
 
+if ($annID > 0) {
 ?>
     <!-- ANNOUNCEMENTS BOX -->
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
@@ -93,8 +89,8 @@ $annshowdate = $ann->showdate;
 
                     <tr class = "fb_sth">
                         <th class = "th-1 <?php echo $boardclass ;?>sectiontableheader fbm" align="left">
-                            <a href = "<?php echo $editlink;?><?php echo $annID; ?>"><?php echo _ANN_EDIT; ?> </a> |
-                        <a href = "<?php echo $deletelink;?><?php echo $annID; ?>"><?php echo _ANN_DELETE; ?> </a> | <a href = "<?php echo $addlink;?>"><?php echo _ANN_ADD; ?> </a> | <a href = "<?php echo $showlink;?>"><?php echo _ANN_CPANEL; ?> </a>
+                            <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'edit', $annID); ?>"><?php echo _ANN_EDIT; ?> </a> |
+                        <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'delete', $annID); ?>"><?php echo _ANN_DELETE; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'add');?>"><?php echo _ANN_ADD; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'show');?>"><?php echo _ANN_CPANEL; ?> </a>
                         </th>
                     </tr>
 
@@ -123,7 +119,7 @@ $annshowdate = $ann->showdate;
 if ($anndescription != "") {
 ?>
 
-    &nbsp;&nbsp;&nbsp;<a href = "<?php echo $readlink;?><?php echo $annID;?>"> <?php echo _ANN_READMORE; ?></a>
+    &nbsp;&nbsp;&nbsp;<a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'read', $annID);?>"> <?php echo _ANN_READMORE; ?></a>
 
 <?php
     }

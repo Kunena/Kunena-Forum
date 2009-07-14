@@ -23,7 +23,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 require_once (KUNENA_ABSSOURCESPATH . 'kunena.user.class.php');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 $mainframe->setPageTitle(_GEN_MYPROFILE . ' - ' . stripslashes($fbConfig->board_title));
 
@@ -53,7 +53,7 @@ if ($my->id != "" && $my->id != 0)
     }
 
     //user type determination
-    $ugid = $userinfo->gid;
+    $ugid = $juserinfo->gid;
     $uIsMod = 0;
     $uIsAdm = 0;
 
@@ -290,8 +290,7 @@ if ($my->id != "" && $my->id != 0)
         // simple spoof check security
     josSpoofCheck();
 
-        $rowu = new CKunenaUserprofile( $database );
-        $rowu->load( (int)$user_id );
+        $rowu = new CKunenaUserprofile();
 
                     $deleteSig = mosGetParam($_POST, 'deleteSig', 0);
                     $signature = mosGetParam($_POST, 'message', null, _MOS_ALLOWRAW);
@@ -443,9 +442,10 @@ if ($my->id != "" && $my->id != 0)
 
                     if ($fbConfig->fb_profile == 'cb')
                     {
-                        echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='" . KUNENA_CB_ITEMID . "'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
+			$forumtab_url = CKunenaCBProfile::getForumTabURL();
+                        echo _USER_RETURN_A . ' <a href="'. $forumtab_url . '">' . _USER_RETURN_B . "</a><br /><br />";
 
-                        echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs('index.php?option=com_comprofiler'. KUNENA_CB_ITEMID_SUFFIX .'&amp;tab=getForumTab'), 3500);
+                        echo CKunenaLink::GetAutoRedirectHTML($forumtab_url, 3500);
                     }
                     else
                     {
@@ -469,9 +469,10 @@ if ($my->id != "" && $my->id != 0)
 						}
 
 						if ($fbConfig->fb_profile == 'cb') {
-							echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler&amp;Itemid='".KUNENA_CB_ITEMID."'&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
+							$forumtab_url = CKunenaCBProfile::getForumTabURL();
+				                        echo _USER_RETURN_A . ' <a href="'. $forumtab_url . '">' . _USER_RETURN_B . "</a><br /><br />";
 
-							echo CKunenaLink::GetAutoRedirectHTML('index.php?option=com_comprofiler'. KUNENA_CB_ITEMID_SUFFIX .'&amp;tab=getForumTab', 3500);
+				                        echo CKunenaLink::GetAutoRedirectHTML($forumtab_url, 3500);
 							echo '<a href="javascript:history.go(-1)">'._BACK.'</a>';
 
 						}
@@ -507,9 +508,10 @@ if ($my->id != "" && $my->id != 0)
 
                     if ($fbConfig->fb_profile == 'cb')
                     {
-                        echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler" . KUNENA_CB_ITEMID_SUFFIX . "&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
+			$forumtab_url = CKunenaCBProfile::getForumTabURL();
+                        echo _USER_RETURN_A . ' <a href="'. $forumtab_url . '">' . _USER_RETURN_B . "</a><br /><br />";
 
-                        echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs("index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab"), 3500);
+                        echo CKunenaLink::GetAutoRedirectHTML($forumtab_url, 3500);
                     }
                     else
                     {
@@ -532,9 +534,10 @@ if ($my->id != "" && $my->id != 0)
 						}
 
 						if ($fbConfig->fb_profile == 'cb') {
-							echo _USER_RETURN_A . " <a href=\"index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab\">" . _USER_RETURN_B . "</a><br /><br />";
+							$forumtab_url = CKunenaCBProfile::getForumTabURL();
+				                        echo _USER_RETURN_A . ' <a href="'. $forumtab_url . '">' . _USER_RETURN_B . "</a><br /><br />";
 
-							echo CKunenaLink::GetAutoRedirectHTML(sefRelToAbs("index.php?option=com_comprofiler".KUNENA_CB_ITEMID_SUFFIX."&amp;tab=getForumTab"), 3500);
+				                        echo CKunenaLink::GetAutoRedirectHTML($forumtab_url, 3500);
 							echo '<a href="javascript:history.go(-1)">'. _BACK .'</a>';
 						}
 						else {

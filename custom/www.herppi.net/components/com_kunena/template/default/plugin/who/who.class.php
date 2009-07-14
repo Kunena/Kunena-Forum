@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 //Get some variables
 $id = intval(mosGetParam($_REQUEST, 'id'));
@@ -57,7 +57,7 @@ if ($task == 'listcat' || $func == 'showcat') {
     $what = $database->loadResult();
     }
 else if ($func == 'latest') {
-    $what = _KUNENA_LATEST_POSTS;
+    $what = _KUNENA_ALL_DISCUSSIONS;
     }
 else if ($id) {
     $database->setQuery("SELECT subject FROM #__fb_messages WHERE id = {$id}");

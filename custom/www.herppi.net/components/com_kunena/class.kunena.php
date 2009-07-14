@@ -21,6 +21,10 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 *@desc Getting the correct Itemids, for components required
 */
 
+// Detect charset
+if (defined('JPATH_ADMINISTRATOR')) define('KUNENA_CHARSET', 'UTF-8');
+else define('KUNENA_CHARSET',  ( defined( '_ISO' ) ? strtoupper( str_replace( "charset=", "", _ISO ) ) : 'ISO-8859-1' ) );
+
 // Shortcuts to all the path we have:
 define('KUNENA_JABSPATH', $mainframe->getCfg('absolute_path'));
 
@@ -36,8 +40,10 @@ $Itemid = intval(mosGetParam($_REQUEST, 'Itemid'));
 
 //check if we have all the itemid sets. if so, then no need for DB call
 
-global $fbSession;
-global $fbConfig;
+// get kunena configuration class
+require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.config.class.php");
+
+$fbConfig =& CKunenaConfig::getInstance();
 
 if (!defined("KUNENA_COMPONENT_ITEMID")) {
         $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_kunena' AND published = 1");
@@ -86,33 +92,13 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 	    }
     }
 
+	global $kunenaProfile;
     //Community Builder 1.2 - older 1.1 integration no longer supported
-    if ($fbConfig->pm_component == 'cb' || $fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
+	if ($fbConfig->pm_component == 'cb' || $fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
     {
-    	// Only proceed if Community Builder is really installed
-	    if ( file_exists( $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php' ) )
-	    {
-	    	global $_CB_framework, $_CB_database, $ueConfig, $mainframe;
-
-	        $database->setQuery("SELECT id FROM #__menu WHERE link = 'index.php?option=com_comprofiler' AND published=1");
-	        $CB_Itemid = $database->loadResult();
-	        	check_dberror('Unable to load CB item id');
-
-	        define("KUNENA_CB_ITEMID", (int)$CB_Itemid);
-	        define("KUNENA_CB_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_CB_ITEMID);
-
-	        // include_once( $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php' );
-	    }
-	    else
-	    {
-	    	// Community Builder not present reset config settings to avoid problems
-	    	$fbConfig->pm_component = $fbConfig->pm_component == 'cb' ? 'none' : $fbConfig->pm_component;
-	    	$fbConfig->fb_profile = $fbConfig->fb_profile == 'cb' ? 'kunena' : $fbConfig->fb_profile;
-	    	$fbConfig->avatar_src = $fbConfig->avatar_src == 'cb' ? 'kunena' : $fbConfig->avatar_src;
-
-	    	// Do not save new config - thats a task for the backend
-	    	// This is just a catch all in case it is not present
-	    }
+		// Get Community Builder compability
+		require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.communitybuilder.php");
+		$kunenaProfile =& new CkunenaCBProfile();
     }
 
     //Clexus PM
@@ -152,7 +138,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
         }
     else if ($fbConfig->fb_profile == "cb") {
         $profilelink = 'index.php?option=com_comprofiler&amp;task=userProfile&amp;user=';
-        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_comprofiler&amp;task=userProfile&amp;Itemid=" . KUNENA_CB_ITEMID . "&amp;user=");
+        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_comprofiler&amp;task=userProfile" . KUNENA_CB_ITEMID_SUFFIX . "&amp;user=");
         }
     else if ($fbConfig->fb_profile == "clexuspm") {
         $profilelink = 'index.php?option=com_mypms&amp;task=showprofile&amp;user=';
@@ -194,7 +180,7 @@ if (!defined("KUNENA_JCSSURL")) {
     $database->setQuery("SELECT template FROM #__templates_menu where client_id ='0'");
     $current_stylesheet = $database->loadResult();
     define('KUNENA_JCSSURL', KUNENA_JLIVEURL . '/templates/' . $current_stylesheet . '/css/template_css.css');
-    }
+}
 
 // Kunena uploaded files directory
 define('KUNENA_ABSUPLOADEDPATH', KUNENA_JABSPATH . '/images/fbfiles');
@@ -241,7 +227,12 @@ define('KUNENA_ABSTMPLTPATH', KUNENA_ABSPATH . '/template/' . $fb_cur_template);
 define('KUNENA_ABSTMPLTMAINIMGPATH', KUNENA_ABSPATH . '/template/' . $fb_cur_img_template);
 
 // IMAGES ABSOLUTE PATH
-define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANG . '/');
+if (is_dir(KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANG . '')) {
+    define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANG . '/');
+    }
+else {
+    define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH . '/images/english/');
+    }
 
 // absolute images path
 define('KUNENA_ABSICONSPATH', KUNENA_ABSIMAGESPATH . 'icons/');
@@ -297,11 +288,13 @@ else
 
 if (file_exists(KUNENA_ABSTMPLTPATH . '/js/kunenaforum.js'))
 {
-    define('KUNENA_COREJSURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_template . '/js/kunenaforum.js');
+	define('KUNENA_COREJSPATH', '/components/com_kunena/template/' . $fb_cur_template . '/js/kunenaforum.js');
+	define('KUNENA_COREJSURL', KUNENA_DIRECTURL . '/template/' . $fb_cur_template . '/js/kunenaforum.js');
 }
 else
 {
-    define('KUNENA_COREJSURL', KUNENA_DIRECTURL . '/template/default/js/kunenaforum.js');
+	define('KUNENA_COREJSPATH', '/components/com_kunena/template/default/js/kunenaforum.js');
+	define('KUNENA_COREJSURL', KUNENA_DIRECTURL . '/template/default/js/kunenaforum.js');
 }
 
 function KUNENA_fmodReplace($x, $y) { //function provided for older PHP versions which do not have an fmod function yet
@@ -342,13 +335,16 @@ function KUNENA_check_image_type(&$type) {
 function getFBGroupName($id) {
     global $database;
     $gr = '';
-    $database->setQuery("select id, title from #__fb_groups as g, #__fb_users as u where u.group_id = g.id and u.userid= $id");
+    $database->setQuery("select id, title from #__fb_groups as g, #__fb_users as u where u.group_id = g.id and u.userid=".(int)$id);
     $database->loadObject($gr);
 
-    if ($gr->id > 1) {
-        return $gr;
-        }
+    if ($gr == NULL) {
+	$gr = new stdClass();
+	$gr->id = 0;
+	$gr->title = _VIEW_VISITOR;
     }
+    return $gr;
+}
 
 class CKunenaTools {
     var $id = null;
@@ -416,7 +412,7 @@ class CKunenaTools {
     function updateNameInfo()
     {
         global $database;
-        global $fbConfig;
+        $fbConfig =& CKunenaConfig::getInstance();
 
         $fb_queryName = $fbConfig->username ? "username" : "name";
 
@@ -666,9 +662,13 @@ class CKunenaTools {
         global $my, $database;
 	$err = "ERROR!";
 
-	$database->setQuery('SELECT userid FROM #__fb_moderation WHERE userid='.$my->id);
-	$isMod = $database->loadResult();
-	check_dberror("Unable to load moderation info.");
+	// $isMod if user is moderator in the current category
+	if (!$isMod) {
+		// Test also if user is a moderator in some other category
+		$database->setQuery('SELECT userid FROM #__fb_moderation WHERE userid='.$my->id);
+		$isMod = $database->loadResult();
+		check_dberror("Unable to load moderation info.");
+	}
 	$isAdmin = CKunenaTools::isModOrAdmin();
 
         //isMod will stay until better group management comes in
@@ -744,6 +744,31 @@ class CKunenaTools {
            }
            return $val;
         }
+
+	function &prepareContent(&$content)
+	{
+		$fbConfig =& CKunenaConfig::getInstance();
+
+		// Joomla Mambot Support, Thanks hacksider
+		if ($fbConfig->jmambot)
+		{
+			$row =& new stdClass();
+			$row->text =& $content;
+			$params =& new mosParameters( '' );
+			if (CKunenaTools::isJoomla15()) {
+				$dispatcher	=& JDispatcher::getInstance();
+				JPluginHelper::importPlugin('content');
+				$results = $dispatcher->trigger('onPrepareContent', array (&
+$row, & $params, 0));
+			} else {
+				global $_MAMBOTS;
+				$_MAMBOTS->loadBotGroup( 'content' );
+				$results = $_MAMBOTS->trigger( 'onPrepareContent', array( &$row, &$params, 0 ), true );
+			}
+			$content =& $row->text;
+		}
+		return $content;
+	}
 
 	function getAllowedForums($uid = 0, $gid = 0, &$acl) {
         	global $database;
@@ -894,13 +919,12 @@ class fbForum
 
 function JJ_categoryArray($admin=0) {
     global $database;
-    // ERROR: mixed global $fbSession
-    global $fbSession;
     global $aro_group;
 
     // get a list of the menu items
 	$query = "SELECT * FROM #__fb_categories";
 	if(!$admin) {
+		$fbSession =& CKunenaSession::getInstance();
 		if ($fbSession && $fbSession->allowed != 'na') {
 			$query .= " WHERE id IN ($fbSession->allowed)";
 		} else {
@@ -965,12 +989,12 @@ function JJ_categoryParentList($catid, $action, $options = array ()) {
     foreach ($list as $item) {
         if ($this_treename) {
             if ($item->id != $catid && strpos($item->treename, $this_treename) === false) {
-                $options[] = mosHTML::makeOption($item->id, $item->treename);
+                $options[] = mosHTML::makeOption($item->id, kunena_htmlspecialchars($item->treename));
                 }
             }
         else {
             if ($item->id != $catid) {
-                $options[] = mosHTML::makeOption($item->id, $item->treename);
+                $options[] = mosHTML::makeOption($item->id, kunena_htmlspecialchars($item->treename));
                 }
             else {
                 $this_treename = "$item->treename/";
@@ -990,12 +1014,12 @@ function KUNENA_GetAvailableForums($catid, $action, $options = array (), $disabl
     foreach ($list as $item) {
         if ($this_treename) {
             if ($item->id != $catid && strpos($item->treename, $this_treename) === false) {
-                $options[] = mosHTML::makeOption($item->id, $item->treename);
+                $options[] = mosHTML::makeOption($item->id, kunena_htmlspecialchars($item->treename));
                 }
             }
         else {
             if ($item->id != $catid) {
-                $options[] = mosHTML::makeOption($item->id, $item->treename);
+                $options[] = mosHTML::makeOption($item->id, kunena_htmlspecialchars($item->treename));
                 }
             else {
                 $this_treename = "$item->treename/";
@@ -1065,16 +1089,6 @@ function generate_smilies() {
             $col = 0;
             reset ($rowset);
 
-            if (file_exists(KUNENA_ABSPATH . '/template/default/plugin/emoticons/emoticons.js.php')) {
-                echo '<tr><td style="display:none;">';
-                include (KUNENA_ABSPATH . '/template/default/plugin/emoticons/emoticons.js.php');
-                echo '</td></tr>';
-                reset ($rowset);
-                }
-            else {
-                die ("file is missing: " . KUNENA_ABSPATH . '/template/default/plugin/emoticons/emoticons.js.php');
-                }
-
             $cur = 0;
 
             foreach ($rowset as $data) {
@@ -1086,8 +1100,8 @@ function generate_smilies() {
                             echo '<tr align="center" valign="middle">' . "\n";
                             }
 
-                        echo '<td onclick="javascript:emo(\''
-                                 . $data['code'] . ' \')" style="cursor:pointer"><img class="btnImage" src="' . KUNENA_URLEMOTIONSPATH . $data['location'] . '" border="0" alt="' . $data['code'] . ' " title="' . $data['code'] . ' " /></td>' . "\n";
+                        echo '<td onclick="bbfontstyle(\' '
+                                 . $data['code'] . ' \',\'\')" style="cursor:pointer"><img class="btnImage" src="' . KUNENA_URLEMOTIONSPATH . $data['location'] . '" border="0" alt="' . $data['code'] . ' " title="' . $data['code'] . ' " /></td>' . "\n";
 
                         $s_colspan = max($s_colspan, $col + 1);
 
@@ -1107,7 +1121,7 @@ function generate_smilies() {
                 }
 
             if ($num_smilies > $inline_rows * $inline_columns) {
-                echo "<tr><td class=\"moresmilies\" colspan=\"" . $inline_columns . "\" onclick=\"javascript:moreForumSmileys();\" style=\"cursor:pointer\"><b>" . _KUNENA_EMOTICONS_MORE_SMILIES . "</b></td></tr>";
+                echo "<tr><td class=\"moresmilies\" colspan=\"" . $inline_columns . "\" onclick=\"javascript:dE('smilie');\" style=\"cursor:pointer\"><b>" . _KUNENA_EMOTICONS_MORE_SMILIES . "</b></td></tr>";
                 }
             }
         }
@@ -1156,39 +1170,29 @@ function fbReturnDashed (&$string, $key) {
             $string = "_".$string."_";
 }
 
-if (!function_exists('mb_detect_encoding')) {
-  function mb_detect_encoding($text) {
-	$c=0; $b=0;
-	$bits=0;
-	$len=strlen($text);
-	for($i=0; $i<$len; $i++){
-		$c=ord($text[$i]);
-		if($c > 128){
-			if(($c >= 254)) return 'ISO-8859-1';
-			elseif($c >= 252) $bits=6;
-			elseif($c >= 248) $bits=5;
-			elseif($c >= 240) $bits=4;
-			elseif($c >= 224) $bits=3;
-			elseif($c >= 192) $bits=2;
-			else return 'ISO-8859-1';
-			if(($i+$bits) > $len) return 'ISO-8859-1';
-			while($bits > 1){
-				$i++;
-				$b=ord($text[$i]);
-				if($b < 128 || $b > 191) return 'ISO-8859-1';
-				$bits--;
-			}
+function kn_mb_substr($str, $start, $lenght=NULL, $encoding=NULL) {
+	if (!function_exists('mb_substr'))
+	{
+		if (CKunenaTools::isJoomla15())
+		{
+			require_once(JPATH_LIBRARIES.DS.'phputf8'.DS.'utf8.php');
+
+			return mb_substr($str, $start, $lenght, $encoding);
+		}
+		else
+		{
+			if ($lenght===NULL) $lenght = strlen($str);
+			return substr($str, $start, $lenght);
 		}
 	}
-	return 'UTF-8';
-  }
-  function mb_convert_encoding($text,$target_encoding,$source_encoding=NULL) {
-	return $text;
-  }
-  function mb_substr($str, $start, $lenght=NULL, $encoding=NULL) {
-	if ($lenght===NULL) $lenght = strlen($str);
-	return substr($str, $start, $lenght);
-  }
+	else
+	{
+		return mb_substr($str, $start, $lenght, $encoding);
+	}
+}
+
+function kunena_htmlspecialchars($string, $quote_style=ENT_COMPAT, $charset=KUNENA_CHARSET) {
+	return htmlspecialchars($string, $quote_style, $charset);
 }
 
 function utf8_urldecode($str) {

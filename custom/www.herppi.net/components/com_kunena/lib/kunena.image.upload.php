@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 require_once(KUNENA_ABSSOURCESPATH . 'kunena.helpers.php');
 
 function imageUploadError($msg)
@@ -90,8 +90,13 @@ if ($GLOBALS['KUNENA_rc'])
 
 if ($GLOBALS['KUNENA_rc'])
 {
-    // file is OK, move it to the proper location
-    move_uploaded_file($_FILES['attachimage']['tmp_name'], $imageLocation);
+	// file is OK, move it to the proper location
+	if( CKunenaTools::isJoomla15() ) {
+		jimport('joomla.filesystem.file');
+		JFile::upload($_FILES['attachimage']['tmp_name'], $imageLocation);
+	} else {
+		move_uploaded_file($_FILES['attachimage']['tmp_name'], $imageLocation);
+	}
 }
 
 if ($GLOBALS['KUNENA_rc'])

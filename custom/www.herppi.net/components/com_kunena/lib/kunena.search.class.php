@@ -21,7 +21,9 @@
 // Dont allow direct linking
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-DEFINE('KUNENA_URL_LIST_SEPARATOR', 'x');
+global $database, $my;
+
+DEFINE('KUNENA_URL_LIST_SEPARATOR', ' ');
 
 class CKunenaSearch
 {
@@ -41,6 +43,8 @@ class CKunenaSearch
     var $str_kunena_errormsg;
     /** params **/
     var $params = array();
+    /** total **/
+    var $total = 0;
     /** limitstart **/
     var $limitstart;
     /** limit **/
@@ -64,7 +68,9 @@ class CKunenaSearch
      */
     function CKunenaSearch()
     {
-        global $fbConfig, $database, $my;
+        global $database, $my;
+
+        $fbConfig =& CKunenaConfig::getInstance();
 
         // TODO: started_by
         // TODO: active_in
@@ -82,8 +88,9 @@ class CKunenaSearch
 	if (empty($q) && isset($_REQUEST['searchword'])) {
 		$q = mosGetParam($_REQUEST, 'searchword', '');
 	}
+	$q = stripslashes($q);
 	$this->params['titleonly'] = intval(mosGetParam($_REQUEST, 'titleonly', $this->defaults['titleonly']));
-	$this->params['searchuser'] = mosGetParam($_REQUEST, 'searchuser', $this->defaults['searchuser']);
+	$this->params['searchuser'] = stripslashes(mosGetParam($_REQUEST, 'searchuser', $this->defaults['searchuser']));
 	$this->params['starteronly'] = intval(mosGetParam($_REQUEST, 'starteronly', $this->defaults['starteronly']));
 	$this->params['exactname'] = intval(mosGetParam($_REQUEST, 'exactname', $this->defaults['exactname']));
 	$this->params['replyless'] = intval(mosGetParam($_REQUEST, 'replyless', $this->defaults['replyless']));
@@ -101,18 +108,16 @@ class CKunenaSearch
 	if ($limit<1 || $limit>40) $limit = $this->limit = $fbConfig->messages_per_page_search;
 
 	if (isset($_POST['q']) || isset($_POST['searchword'])) {
-		$this->params['catids'] = implode(',', mosGetParam($_POST, 'catid', array(0)));
+		$this->params['catids'] = implode(',', mosGetParam($_POST, 'catids', array(0)));
 		$url = CKunenaLink::GetSearchURL($fbConfig, $this->func, $q, $limitstart, $limit, $this->getUrlParams());
         	header("HTTP/1.1 303 See Other");
         	header("Location: " . htmlspecialchars_decode($url));
         	die();
 	}
 
-        $q = $this->utf8_urldecode($q);
 	if ($q == _GEN_SEARCH_BOX) $q = '';
 	$this->searchword = $q;
-	$q = $database->getEscaped($q);
-        $arr_searchwords = split(' ', $q);
+    $arr_searchwords = split(' ', $q);
 	$do_search = FALSE;
 	$this->arr_kunena_searchstrings = array();
 	foreach ($arr_searchwords as $q)
@@ -144,7 +149,7 @@ class CKunenaSearch
         for ($x = 0; $x < count($arr_searchwords); $x++)
         {
             $searchword = $arr_searchwords[$x];
-            $searchword = $database->getEscaped(trim(strtolower($searchword)));
+            $searchword = $database->getEscaped(addslashes(trim(strtolower($searchword))));
             if (empty($searchword)) continue;
             $matches = array ();
             $not = '';
@@ -169,9 +174,9 @@ class CKunenaSearch
         if(strlen($searchuser)>0)
         {
             if($exactname=='1') {
-                $querystrings[] = 'm.name LIKE \'' . $searchuser . '\'';
+                $querystrings[] = "m.name LIKE '" . $database->getEscaped(addslashes($searchuser)) . "'";
             } else {
-                $querystrings[] = 'm.name LIKE \'%' . $searchuser . '%\'';
+                $querystrings[] = "m.name LIKE '%" . $database->getEscaped(addslashes($searchuser)) . "%'";
             }
         }
 
@@ -211,6 +216,7 @@ class CKunenaSearch
         $querystrings[] = "m.catid IN ($search_forums)";
         $where = implode(' AND ', $querystrings);
 
+	$groupby = array();
         if($order =='dec') $order1 = 'DESC';
         else $order1 = 'ASC';
         switch ($sortby) {
@@ -243,7 +249,7 @@ class CKunenaSearch
             $groupby = '';
 
         /* get total */
-        $database->setQuery('SELECT count(m.id) FROM #__fb_messages as m JOIN #__fb_messages_text as t ON m.id=t.mesid WHERE ' . $where . $groupby);
+        $database->setQuery('SELECT count(*) FROM #__fb_messages as m JOIN #__fb_messages_text as t ON m.id=t.mesid WHERE ' . $where . $groupby);
         $this->total = $database->loadResult();
         check_dberror("Unable to count messages.");
 
@@ -278,10 +284,6 @@ class CKunenaSearch
     function get_searchusername() {
         return $this->str_kunena_username;
     }
-    function utf8_urldecode($str) {
-        $str = preg_replace("/%u([0-9a-f]{3,4})/i","\1;",urldecode($str));
-        return html_entity_decode($str,ENT_NOQUOTES,'UTF-8' );
-    }
     /** get limit (int) **/
     function get_limit() {
         return $this->limit;
@@ -298,35 +300,51 @@ class CKunenaSearch
 	$url_params = '';
 	foreach ($this->params as $param => $value) {
 		if ($param == 'catids') $value = strtr($value, ',', KUNENA_URL_LIST_SEPARATOR);
-		if ($value != $this->defaults[$param]) $url_params .= "&amp;$param=$value";
+		if ($value != $this->defaults[$param]) $url_params .= "&amp;$param=".urlencode($value);
 	}
 	return $url_params;
     }
     function get_search_forums(&$catids, $childforums = 1) {
-        global $database, $my, $fbSession;
+        global $database, $my;
+
+	$fbSession =& CKunenaSession::getInstance();
 
         /* get allowed forums */
         $allowed_forums = array();
-        if ($fbSession->allowed != 'na')
-            $allowed_forums = split(',', $fbSession->allowed);
-
-        /* non registered users can only search in public forums */
-        if (count($allowed_forums) == 0)
+        $allowed_string = '';
+        if ($fbSession->allowed && $fbSession->allowed != 'na')
         {
-            $database->setQuery("SELECT id, parent, published FROM #__fb_categories WHERE pub_access='0' AND published='1'");
-            $allowed_forums = $database->loadAssocList('id');
-            check_dberror("Unable to get public categories.");
-        }
+            $allowed_string = "AND id IN ({$fbSession->allowed})";
+	}
+
+        $database->setQuery("SELECT id, parent FROM #__fb_categories WHERE pub_access='0' AND published='1' $allowed_string");
+        $allowed_forums = $database->loadAssocList('id');
+        check_dberror("Unable to get public categories.");
+
+	foreach ($allowed_forums as $forum)
+	{
+		// Children list: parent => array(child1, child2, ...)
+		$allow_list[$forum['parent']][] = $forum['id'];
+	}
 
 	$catids = split(',', $catids);
+	$result = array();
 	if (count($catids) > 0 && !in_array(0, $catids)) {
-		foreach ($allowed_forums as $forum)
+		// Algorithm:
+		// Start with selected categories and pop them from the catlist one by one
+		// Every popped item in the catlist will be added into result list
+		// For every category: push all its children into the catlist
+		while ($cur = array_pop($catids))
 		{
-			if (in_array($forum['parent'], $catids)) $catids[] = $forum['id'];
+			$result[$cur] = $cur;
+			if (array_key_exists($cur, $allow_list))
+				foreach ($allow_list[$cur] as $forum)
+					if (!in_array($forum, $catids))
+						array_push($catids, $forum);
 		}
-		$search_forums = implode(",", array_intersect($allowed_forums, $catids));
+		$search_forums = implode(",", $result);
 	} else {
-		$search_forums = implode(",", $allowed_forums);
+		$search_forums = implode(",", array_keys($allowed_forums));
 	}
 	return $search_forums;
     }
@@ -336,7 +354,7 @@ class CKunenaSearch
      */
     function show()
     {
-	global $fbConfig;
+	$fbConfig =& CKunenaConfig::getInstance();
 
 	extract($this->params);
         $q = implode(" ", $this->get_searchstrings());
@@ -359,8 +377,7 @@ class CKunenaSearch
         }
 
         $results = $this->get_results();
-        $totalRows = (int)($this->total);
-        $actionstring = $this->str_kunena_actionstring;
+        $totalRows = $this->total;
 
 	$pagination = KunenaSearchPagination($this->func, $q, $this->getUrlParams(), floor($limitstart/$limit)+1, $limit, floor($totalRows/$limit)+1, 7);
 
@@ -436,9 +453,11 @@ class CKunenaSearch
                     $ressubject = stripslashes(smile::purify($ressubject));
                     $resmessage = stripslashes($result->message);
                     // Strip smiles and bbcode out of search results; they look ugly
+                    $resmessage = CKunenaTools::prepareContent($resmessage);
                     $resmessage = smile::purify($resmessage);
-                    $resmessage = mb_substr(html_entity_decode_utf8($resmessage), 0, 300);
-                    $utf8 = (mb_detect_encoding($ressubject . $resmessage . 'a', 'UTF-8,ISO-8859-1') == 'UTF-8') ? "u" : "";
+                    $resmessage = kn_mb_substr(kunena_htmlspecialchars($resmessage), 0, 300);
+                    $utf8 = (KUNENA_CHARSET == 'UTF-8') ? "u" : "";
+
                     foreach ($searchlist as $searchword)
                     {
                         if (empty($searchword)) continue;
@@ -448,8 +467,8 @@ class CKunenaSearch
                     echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '">';
                     echo '<td  class = "td-1" ><a href="'
                              . sefRelToAbs(KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $result->id . '&amp;catid=' . $result->catid) . '#' . $result->id . '" >' . $ressubject . '</a><br />' . $resmessage . '<br /><br /></td>';
-                    echo '<td class = "td-2" >' . html_entity_decode_utf8(stripslashes($result->name)) . '</td>';
-                    echo '<td class = "td-3" >' . CKunenaTimeformat::showDate($result->time) . '</td></tr>';
+                    echo '<td class = "td-2" >' . kunena_htmlspecialchars(stripslashes($result->name)) . '</td>';
+                    echo '<td class = "td-3" >' . date(_DATETIME, $result->time) . '</td></tr>';
                     echo "\n";
                 }
                 ?>
@@ -494,7 +513,7 @@ class CKunenaSearch
 }
 
 function KunenaSearchPagination($function, $q, $urlparams, $page, $limit, $totalpages, $maxpages) {
-    global $fbConfig;
+    $fbConfig =& CKunenaConfig::getInstance();
     if ($page==0) $page++;
     $startpage = ($page - floor($maxpages/2) < 1) ? 1 : $page - floor($maxpages/2);
     $endpage = $startpage + $maxpages;

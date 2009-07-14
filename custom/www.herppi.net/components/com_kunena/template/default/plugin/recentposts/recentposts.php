@@ -22,7 +22,8 @@
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 global $mosConfig_absolute_path, $mosConfig_lang, $mosConfig_live_site, $mainframe;
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
+$fbSession =& CKunenaSession::getInstance();
 
 $Kunena_adm_path = "$mosConfig_absolute_path/administrator/components/com_kunena";
 //Get right Language file
@@ -164,16 +165,16 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                     $overlib = "<table>";
                     //$row->subject = html_entity_decode_utf8($row->subject, ENT_QUOTES);
                     $overlib .= "<tr><td valign=top>" . _GEN_TOPIC . "</td><td>$row->subject</td></tr>";
-                    $row_catname = stripslashes($row->catname);
+                    $row_catname = kunena_htmlspecialchars(stripslashes($row->catname));
                     $row_username = stripslashes($row->username);
                     $row_date = mosFormatDate($row->date);
-                    $row_lock = ($row->locked ? _CMN_YES : _CMN_NO);
+                    $row_lock = ($row->locked ? _KUNENA_LOCKED : '');
                     $overlib .= "<tr><td valign=top>" . _GEN_CATEGORY . "</td><td>$row_catname</td></tr>";
                     $overlib .= "<tr><td valign=top>" . ucfirst(_GEN_BY) . "</td><td>$row_username</td></tr>";
                     $overlib .= "<tr><td valign=top>" . _GEN_DATE . "</td><td>$row_date</td></tr>";
 
                     if (!$row->parent) {
-                        $overlib .= "<tr><td valign=top>" . _GEN_VIEWS . "</td><td>$row->hits</td></tr>";
+                        $overlib .= "<tr><td valign=top>" . _GEN_HITS . "</td><td>$row->hits</td></tr>";
                         }
 
                     $overlib .= "<tr><td valign=top>" . ucfirst(_GEN_LOCK) . "</td><td>$row_lock</td></tr>";
@@ -183,8 +184,8 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                     $tooltips = '';
 
                     if ($tooltips_enable == 1) {
-                        $title = _GEN_POSTS_DISPLAY;
-                        $tooltips = " onmouseout='return nd();'" . " onmouseover=\"return overlib('$overlib',CAPTION,'$title',BELOW,RIGHT);\"";
+                        //$title = _GEN_POSTS_DISPLAY;
+                        //$tooltips = " onmouseout='return nd();'" . " onmouseover=\"return overlib('$overlib',CAPTION,'$title',BELOW,RIGHT);\"";
                         }
 
                     $k = 3 - $k;
@@ -207,21 +208,15 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                             case '0': break;
 
                             case '1':
-                                echo "<td  class=\"td-3 fbm\"  align=\"center\"  ><a href=\"";
-
-                                echo sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX . "" . $row->id);
-                                echo "\">";
-                                echo $row->username;
-                                echo "</a></td>";
+                                echo "<td  class=\"td-3 fbm\"  align=\"center\"  >";
+				echo CKunenaLink::GetProfileLink($fbConfig, $row->id, $row->username);
+                                echo "</td>";
                                 break;
 
                             case '2':
-                                echo "<td  class=\"td-3 fbm\"  align=\"center\"  ><a href=\"";
-
-                                echo sefRelToAbs(KUNENA_PROFILE_LINK_SUFFIX . "" . $row->id);
-                                echo "\">";
-                                echo $row->name;
-                                echo "</a></td>";
+                                echo "<td  class=\"td-3 fbm\"  align=\"center\"  >";
+				echo CKunenaLink::GetProfileLink($fbConfig, $row->id, $row->name);
+                                echo "</td>";
                                 break;
                         }
 
@@ -231,6 +226,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 
                         if ($show_date) {
                             echo "<td  class=\"td-5 fbm\"  align=\"left\" >";
+                            if (empty($date_format)) $date_format = _KUNENA_DT_DATETIME_FMT;
                             echo mosFormatDate(date($row->date), $date_format);
                             echo "</td>";
                             }

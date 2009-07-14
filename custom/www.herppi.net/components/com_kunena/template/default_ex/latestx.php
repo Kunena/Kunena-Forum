@@ -22,7 +22,8 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
+$fbSession =& CKunenaSession::getInstance();
 
 function KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages) {
     $startpage = ($page - floor($maxpages/2) < 1) ? 1 : $page - floor($maxpages/2);
@@ -227,6 +228,10 @@ $msglist = $database->loadObjectList();
 	check_dberror("Unable to load messages.");
 
 $favthread = array();
+$thread_counts = array();
+$threadids = array();
+$messages = array();
+$messages[0] = array();
 if ($msglist) foreach ($msglist as $message)
 {
 	$threadids[]                  = $message->id;
@@ -235,6 +240,7 @@ if ($msglist) foreach ($msglist as $message)
 	$last_read[$message->id]->lastread = $last_reply[$message->thread]->id;
 	$last_read[$message->id]->unread = 0;
 	$hits[$message->id]           = $message->hits;
+        $thread_counts[$message->thread] = 0;
 	// Message text for tooltips
 	$messagetext[$message->id]	  = substr(smile::purify($message->messagetext), 0, 500);
 }

@@ -160,6 +160,14 @@ table#fb_postmessage .button{border: 1px solid #999;color: #333;font-weight: bol
 .fb_leftcolumn{width:160px;text-align: right;}
 
 /*
+BBCODE BUTTONS
+-------------------------------------------------------------------- */
+img.fb-bbcode {cursor: pointer;margin-top: 4px;margin-right: 1px;padding: 0px;}
+img.fb-bbcode:hover {background-color: #e4e4e4;cursor: pointer;margin-top: 4px;margin-right: 1px;padding: 0px;}
+.fb-color_table {cursor: pointer;width:100%;margin-left:auto;margin-right:auto;}
+#Kunena table.fb-postbuttonset tr td.fb-postbuttons select.fb_slcbox {position:relative;bottom:5px;}
+
+/*
 POST HISTORY
 -------------------------------------------------------------------- */
 .fb_review_table{text-align:left;border-spacing: 1px;background:#CCCCCC;}

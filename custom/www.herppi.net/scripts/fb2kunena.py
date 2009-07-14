@@ -20,10 +20,11 @@ dictionary = {	'JB_':'KUNENA_',
 		'FBTools':'CKunenaTools',
 		'htmlentities':'html_entity_decode_utf8',
 		'fbUserprofile':'CKunenaUserprofile',
-		'KUNENA_timeformat':'CKunenaTimeformat::showDate',
-		'CKunenaTools::fbGetInternalTime':'CKunenaTimeformat::internalTime',
-		'date\(_DATETIME,\s*':'CKunenaTimeformat::showDate(',
-		'time_since\(':'CKunenaTimeformat::showTimeSince(',
+#		'global\s*\$fbConfig;':'$fbConfig =& CKunenaConfig::getInstance();',
+#		'(\s*)(global )\s*\$fbConfig,\s*(.*?;)':'\\1\\2\\3\n\\1$fbConfig =& CKunenaConfig::getInstance();',
+#		'(\s*)(global .*?),\s*\$fbConfig;':'\\1\\2;\n\\1$fbConfig =& CKunenaConfig::getInstance();',
+		'\$([\w_]+)\[(.*?)\]\s*\?\s*([\'\"])':'isset($\\1[\\2]) ? \\3',
+		'if\s*\(\s*(\$msg_[\w_]+)\s*\)':'if (isset(\\1))',
 }
 
 

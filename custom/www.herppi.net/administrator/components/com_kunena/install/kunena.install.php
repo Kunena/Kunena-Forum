@@ -28,8 +28,8 @@ set_time_limit(300);
 ini_set("memory_limit", "32M");
 
 // Minimum version requirements
-DEFINE('KUNENA_MIN_PHP', '4.3.0');
-DEFINE('KUNENA_MIN_MYSQL', '5.0.0');
+DEFINE('KUNENA_MIN_PHP', '4.3.9');
+DEFINE('KUNENA_MIN_MYSQL', '4.1.20');
 
 global $mainframe;
 //Get right Language file
@@ -132,8 +132,7 @@ function com_install() {
 }
 </style>
 
-<div
-	style="border: 1px solid #ccc; background: #FBFBFB; padding: 10px; text-align: left; margin: 10px 0;">
+<div style="border: 1px solid #ccc; background: #FBFBFB; padding: 10px; text-align: left; margin: 10px 0;">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td width="20%" valign="top" style="padding: 10px;"><a
@@ -149,19 +148,20 @@ function com_install() {
 			//
 			// We might want to make the file copy below part of the install as well
 			//
+			$success = false;
 			if (is_writable($mainframe->getCfg("absolute_path")."/images" ))
 			{
 				//ok now it is installed, just copy the fbfiles directory, and apply 0777
-				dircopy($mainframe->getCfg("absolute_path") . "/components/com_kunena/kunena.files.distribution", $mainframe->getCfg("absolute_path") . "/images/fbfiles", false);
+				$success = dircopy($mainframe->getCfg("absolute_path") . "/components/com_kunena/kunena.files.distribution", $mainframe->getCfg("absolute_path") . "/images/fbfiles", false);
 			}
-			else {
+			if ($success === false) {
 			?>
 
 			<li class="fbscslisterror">
 			<div
 				style="border: 1px solid #FF6666; background: #FFCC99; padding: 10px; text-align: left; margin: 10px 0;">
-			<img src='images/publish_x.png' align='absmiddle'>
-			Creation/permission setting of the following directories failed: <br>
+			<img src='images/publish_x.png' align='absmiddle' />
+			Creation or permission setting of the following directories failed: <br />
 			<pre> <?php echo $mainframe->getCfg("absolute_path"); ?>/images/fbfiles/
 			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/avatars
 			<?php echo $mainframe->getCfg("absolute_path");?>/images/fbfiles/avatars/gallery (you have to put avatars inside if you want to use it)
@@ -188,9 +188,9 @@ function com_install() {
 		<strong>I N S T A L L : <font color="green">Successful</font> </strong>
 		<br />
 		<br />
-		<strong>php version: <font color="green"><? echo phpversion(); ?> Required >= <? echo KUNENA_MIN_PHP; ?> </font> </strong>
+		<strong>php version: <font color="green"><?php echo phpversion(); ?></font> (Required &gt;= <?php echo KUNENA_MIN_PHP; ?>)</strong>
 		<br />
-		<strong>mysql version: <font color="green"><? echo $mysqlversion; ?> Required >= <? echo KUNENA_MIN_MYSQL; ?> </font> </strong>
+		<strong>mysql version: <font color="green"><?php echo $mysqlversion; ?></font> (Required &gt;= <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
 		</div>
 
 		<?php
@@ -231,8 +231,7 @@ function com_install() {
 }
 </style>
 
-<div
-	style="border: 1px solid #ccc; background: #FBFBFB; padding: 10px; text-align: left; margin: 10px 0;">
+<div style="border: 1px solid #ccc; background: #FBFBFB; padding: 10px; text-align: left; margin: 10px 0;">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td width="20%" valign="top" style="padding: 10px;"><a
@@ -247,9 +246,9 @@ function com_install() {
 		<strong>I N S T A L L : <font color="red">F A I L E D - Minimum Version Requirements not satisfied</font> </strong>
 		<br />
 		<br />
-		<strong>php version: <font color="red"><? echo phpversion(); ?> Required >= <? echo KUNENA_MIN_PHP; ?> </font> </strong>
+		<strong>php version: <font color="<?php echo version_compare(phpversion(), KUNENA_MIN_PHP, '>=')?'green':'red'; ?>"><?php echo phpversion(); ?></font> (Required &gt;= <?php echo KUNENA_MIN_PHP; ?>)</strong>
 		<br />
-		<strong>mysql version: <font color="red"><? echo $mysqlversion; ?> Required >= <? echo KUNENA_MIN_MYSQL; ?> </font> </strong>
+		<strong>mysql version: <font color="<?php echo version_compare($mysqlversion, KUNENA_MIN_MYSQL, '>=')?'green':'red'; ?>"><?php echo $mysqlversion; ?></font> (Required &gt;= <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
 		</div>
 
 		<?php
@@ -273,7 +272,8 @@ function com_install() {
 }
 
 function dircopy($srcdir, $dstdir, $verbose = true) {
-	$num = 0;
+	$success = true;
+	$num=0;
 
 	if (!is_dir($dstdir)) {
 		mkdir ($dstdir);
@@ -301,7 +301,7 @@ function dircopy($srcdir, $dstdir, $verbose = true) {
 							echo "<li class=\"fbscslist\">".$tmpstr;
 						}
 
-						if (copy($srcfile, $dstfile)) {
+						if (@copy($srcfile, $dstfile)) {
 							touch($dstfile, filemtime($srcfile));
 							$num++;
 
@@ -311,11 +311,13 @@ function dircopy($srcdir, $dstdir, $verbose = true) {
 						}
 						else {
 							echo "<li class=\"fbscslisterror\">"._KUNENA_DIRCOPERR . " '$srcfile' " . _KUNENA_DIRCOPERR1."</li>";
+							$success = false;
 						}
 					}
 				}
 				else if (is_dir($srcfile)) {
-					$num += dircopy($srcfile, $dstfile, $verbose);
+					$tmpret = dircopy($srcfile, $dstfile, $verbose);
+					if ($tmpret === false) $success = false;
 				}
 			}
 		}
@@ -323,6 +325,6 @@ function dircopy($srcdir, $dstdir, $verbose = true) {
 		closedir ($curdir);
 	}
 
-	return $num;
+	return $success;
 }
 ?>

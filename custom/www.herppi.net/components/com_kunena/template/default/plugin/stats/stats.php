@@ -22,14 +22,26 @@
 // Dont allow direct linking
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 $mainframe->setPageTitle(_STAT_FORUMSTATS . ' - ' . stripslashes($fbConfig->board_title));
 
 if($fbConfig->showstats):
 
 $forumurl = 'index.php?option=com_kunena';
-$userlist = 'index.php?option=com_comprofiler&amp;task=usersList';
+
+if ($fbConfig->fb_profile == "jomsocial")
+{
+	$userlist = sefReltoAbs('index.php?option=com_community&amp;view=search&amp;task=browse');
+}
+else if ($fbConfig->fb_profile == 'cb')
+{
+    $userlist = CKunenaCBProfile::getUserListURL();
+}
+else
+{
+    $userlist = sefReltoAbs(KUNENA_LIVEURLREL . '&amp;func=userlist');
+}
 
 ?>
 
@@ -61,14 +73,13 @@ $userlist = 'index.php?option=com_comprofiler&amp;task=usersList';
                 <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
                     <td class = "td-1" align="left">
 <?php echo _STAT_TOTAL_USERS; ?>:<b> <a href = "<?php echo $userlist;?>"><?php echo $totalmembers; ?></a> </b>
-                    &nbsp; <?php echo _STAT_LATEST_MEMBERS; ?>:<b><?php echo CKunenaLink::GetProfileLink($fbConfig, $lastestmemberid, $lastestmember); ?></b>
+                    &nbsp; <?php echo _STAT_LATEST_MEMBERS; ?>:<b> <?php echo CKunenaLink::GetProfileLink($fbConfig, $lastestmemberid, $lastestmember); ?></b>
 
                 <br/> <?php echo _STAT_TOTAL_MESSAGES; ?>: <b> <?php echo $totalmsgs; ?></b> &nbsp;
     <?php echo _STAT_TOTAL_SUBJECTS; ?>: <b> <?php echo $totaltitles; ?></b> &nbsp; <?php echo _STAT_TOTAL_SECTIONS; ?>: <b> <?php echo $totalcats; ?></b> &nbsp; <?php echo _STAT_TOTAL_CATEGORIES; ?>: <b> <?php echo $totalsections; ?></b>
 
                 <br/> <?php echo _STAT_TODAY_OPEN_THREAD; ?>: <b> <?php echo $todayopen; ?></b> &nbsp; <?php echo
     _STAT_YESTERDAY_OPEN_THREAD; ?>: <b> <?php echo $yesterdayopen; ?></b> &nbsp; <?php echo _STAT_TODAY_TOTAL_ANSWER; ?>: <b> <?php echo $todayanswer; ?></b> &nbsp; <?php echo _STAT_YESTERDAY_TOTAL_ANSWER; ?>: <b> <?php echo $yesterdayanswer; ?></b>
-
 
                     </td>
                 </tr>
@@ -133,7 +144,7 @@ $k = 0;
 
     <tr class = "<?php echo ''.$boardclass.''. $tabclass[$k] . ''; ?>">
       <td class="td-1" align="left">
-       <a href = "<?php echo $link;?>"><?php echo htmlspecialchars(stripslashes($toptitle->subject)); ?></a>
+       <a href = "<?php echo $link;?>"><?php echo kunena_htmlspecialchars(stripslashes($toptitle->subject)); ?></a>
       </td>
       <td  class="td-2">
        <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
@@ -236,7 +247,7 @@ $k = 0;
   <thead>
     <tr>
       <th colspan="3">
-      <div class = "fb_title_cover"> <span class="fb_title"> <?php echo _STAT_POPULAR; ?> <b><?php echo $fbConfig->popusercount; ?></b> <?php echo _STAT_POPULAR_USER_GSG; ?></span> </div>
+      <div class = "fb_title_cover fbm"> <span class="fb_title fbl"> <?php echo _STAT_POPULAR; ?> <b><?php echo $fbConfig->popusercount; ?></b> <?php echo _STAT_POPULAR_USER_GSG; ?></span> </div>
       <img id = "BoxSwitch__<?php echo $boardclass ;?>popuserhitstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
       </th>
     </tr>

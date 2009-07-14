@@ -16,6 +16,8 @@
 
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
+global $mainframe, $database;
+
 // Debugging helpers
 
 // First lets set some assertion settings for the code
@@ -39,6 +41,7 @@ function debug_assert_callback($script, $line, $message) {
 function trigger_dberror($text = '')
 {
 	global $mainframe;
+	global $database;
 	echo debug_callstackinfo();
 
 	require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/kunena.version.php');

@@ -20,7 +20,7 @@
 **/
 // Dont allow direct linking
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 if ($fbConfig->showstats)
 {
@@ -50,18 +50,19 @@ $totalmembers = $database->loadResult();
 
 $database->setQuery("SELECT SUM(numTopics) AS titles, SUM(numPosts) AS msgs FROM #__fb_categories WHERE parent=0");
 $database->loadObject($totaltmp);
-$totaltitles = $totaltmp->titles;
-$totalmsgs = $totaltmp->msgs + $totaltitles;
+$totaltitles = !empty($totaltmp->titles)?$totaltmp->titles:0;
+$totalmsgs = !empty($totaltmp->msgs)?$totaltmp->msgs + $totaltitles:$totaltitles;
 unset($totaltmp);
 
 $database->setQuery("SELECT SUM(parent=0) AS totalcats, SUM(parent>0) AS totalsections
 FROM #__fb_categories");
 $database->loadObject($totaltmp);
-$totalsections = $totaltmp->totalsections;
-$totalcats = $totaltmp->totalcats;
+$totalsections = !empty($totaltmp->totalsections)?$totaltmp->totalsections:0;
+$totalcats = !empty($totaltmp->totalcats)?$totaltmp->totalcats:0;
 unset($totaltmp);
 
-$database->setQuery($query_latestmember);
+$fb_queryName = $fbConfig->username ? "username" : "name";
+$database->setQuery("SELECT id, $fb_queryName as username FROM #__users WHERE block=0 AND activation='' ORDER BY id DESC LIMIT 0,1");
 $database->loadObject($_lastestmember);
 $lastestmember = $_lastestmember->username;
 $lastestmemberid =$_lastestmember->id;
@@ -76,10 +77,10 @@ $database->setQuery("SELECT SUM(time >= $todaystart AND parent=0) AS todayopen, 
                    ."FROM #__fb_messages WHERE time >= $yesterdaystart AND hold=0");
 
 $database->loadObject($totaltmp);
-$todayopen = $totaltmp->todayopen?$totaltmp->todayopen:0;
-$yesterdayopen = $totaltmp->yesterdayopen?$totaltmp->yesterdayopen:0;
-$todayanswer = $totaltmp->todayanswer?$totaltmp->todayanswer:0;
-$yesterdayanswer = $totaltmp->yesterdayanswer?$totaltmp->yesterdayanswer:0;
+$todayopen = !empty($totaltmp->todayopen)?$totaltmp->todayopen:0;
+$yesterdayopen = !empty($totaltmp->yesterdayopen)?$totaltmp->yesterdayopen:0;
+$todayanswer = !empty($totaltmp->todayanswer)?$totaltmp->todayanswer:0;
+$yesterdayanswer = !empty($totaltmp->yesterdayanswer)?$totaltmp->yesterdayanswer:0;
 unset($totaltmp);
 
 } // ENDIF: showgenstats
@@ -87,17 +88,17 @@ unset($totaltmp);
 $PopUserCount = $fbConfig->popusercount;
 if ($fbConfig->showpopuserstats)
 {
-	$database->setQuery("SELECT p.userid, p.posts, u.$fb_queryName as username FROM #__fb_users AS p" . "\n LEFT JOIN #__users AS u ON u.id = p.userid" . "\n WHERE p.posts > 0 ORDER BY p.posts DESC LIMIT $PopUserCount");
+	$database->setQuery("SELECT p.userid, p.posts, u.$fb_queryName as username FROM #__fb_users AS p" . "\n INNER JOIN #__users AS u ON u.id = p.userid" . "\n WHERE p.posts > 0 ORDER BY p.posts DESC LIMIT $PopUserCount");
 	$topposters = $database->loadObjectList();
 
-	$topmessage = $topposters[0]->posts;
+	$topmessage = !empty($topposters[0]->posts)?$topposters[0]->posts:0;
 
 	$database->setQuery("SELECT u.uhits AS hits, u.userid AS user_id, j.$fb_queryName AS user  FROM #__fb_users AS u"
-	. "\n LEFT JOIN #__users AS j ON j.id = u.userid"
+	. "\n INNER JOIN #__users AS j ON j.id = u.userid"
 	. "\n WHERE u.uhits > 0 ORDER BY u.uhits DESC LIMIT $PopUserCount");
 	$topprofiles = $database->loadObjectList();
 
-	$topprofil = $topprofiles[0]->hits;
+	$topprofil = !empty($topprofiles[0]->hits)?$topprofiles[0]->hits:0;
 } // ENDIF: showpopuserstats
 
 $PopSubjectCount = $fbConfig->popsubjectcount;
@@ -107,7 +108,7 @@ if ($fbConfig->showpopsubjectstats)
 $database->setQuery("SELECT * FROM #__fb_messages WHERE moved=0 AND hold=0 AND parent=0 ORDER BY hits DESC LIMIT $PopSubjectCount");
 $toptitles = $database->loadObjectList();
 
-$toptitlehits = $toptitles[0]->hits;
+$toptitlehits = !empty($toptitles[0]->hits)?$toptitles[0]->hits:0;
 } // ENDIF: showpopsubjectstats
 
 } // ENDIF: showstats

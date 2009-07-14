@@ -19,12 +19,14 @@
 * @author TSMF & Jan de Graaff
 **/
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 
 $signature = $userinfo->signature;
 
+$usr_signature = '';
 if ($signature)
 {
+	$smileyList = smile::getEmoticons(0);
 	$signature = stripslashes(smile::smileReplace($signature, 0, $fbConfig->disemoticons, $smileyList));
 	$signature = str_replace("\n", "<br />", $signature);
 	$signature = str_replace("<P>&nbsp;</P><br />", "", $signature);
@@ -95,7 +97,7 @@ if ($signature)
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_PERSONALTEXT; ?></b> </td>
-      <td><?php echo html_entity_decode_utf8(stripslashes($userinfo->personalText)); ?></td>
+      <td><?php echo kunena_htmlspecialchars(stripslashes($userinfo->personalText)); ?></td>
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_GENDER; ?></b> </td>
@@ -107,39 +109,39 @@ if ($signature)
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_LOCATION; ?></b> </td>
-      <td><?php echo html_entity_decode_utf8(stripslashes($userinfo->location)); ?></td>
+      <td><?php echo kunena_htmlspecialchars(stripslashes($userinfo->location)); ?></td>
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_ICQ; ?></b> </td>
-      <td><?php echo $userinfo->ICQ; ?></td>
+      <td><?php echo kunena_htmlspecialchars(stripslashes($userinfo->ICQ)); ?></td>
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_AIM; ?></b> </td>
-      <td><?php echo $userinfo->AIM; ?></td>
+      <td><?php echo kunena_htmlspecialchars(stripslashes($userinfo->AIM)); ?></td>
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_YIM; ?></b> </td>
-      <td><?php echo $userinfo->YIM; ?></td>
+      <td><?php echo kunena_htmlspecialchars(stripslashes($userinfo->YIM)); ?></td>
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_MSN; ?></b> </td>
-      <td><?php echo $userinfo->MSN; ?></td>
+      <td><?php echo kunena_htmlspecialchars(stripslashes($userinfo->MSN)); ?></td>
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_SKYPE; ?></b> </td>
-      <td><?php echo $userinfo->SKYPE; ?></td>
+      <td><?php echo kunena_htmlspecialchars(stripslashes($userinfo->SKYPE)); ?></td>
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_GTALK; ?></b> </td>
-      <td><?php echo $userinfo->GTALK; ?></td>
+      <td><?php echo kunena_htmlspecialchars(stripslashes($userinfo->GTALK)); ?></td>
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_WEBSITE_NAME; ?></b> </td>
-      <td><?php echo $userinfo->websitename; ?></td>
+      <td><?php echo kunena_htmlspecialchars(stripslashes($userinfo->websitename)); ?></td>
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_WEBSITE_URL; ?></b> </td>
-      <td><?php echo $userinfo->websiteurl; ?></td>
+      <td><?php echo kunena_htmlspecialchars(stripslashes($userinfo->websiteurl)); ?></td>
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_SIGNATURE; ?></b> </td>

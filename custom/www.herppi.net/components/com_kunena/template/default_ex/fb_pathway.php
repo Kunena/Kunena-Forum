@@ -21,7 +21,7 @@
 
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 ?>
 <!-- Pathway -->
 <?php
@@ -30,21 +30,20 @@ $sfunc = mosGetParam($_REQUEST, "func", null);
 if ($func != "")
 {
         $catids = intval($catid);
-        $parent_ids = 1000;
-        $jr_it = 1;
         $jr_path_menu = array ();
 
-        while ($parent_ids)
+	$fr_title_name = _KUNENA_CATEGORIES;
+        while ($catids > 0)
         {
             $query = "select * from #__fb_categories where id=$catids and published=1";
             $database->setQuery($query);
             $database->loadObject($results);
+			if (!$results) break;
 			$parent_ids = $results->parent;
-			$fr_name = htmlspecialchars(trim(stripslashes($results->name)));
-            //$cids=@mysql_result( $results, 0, 'id' );
+			$fr_name = kunena_htmlspecialchars(trim(stripslashes($results->name)));
             $sname = CKunenaLink::GetCategoryLink( 'showcat', $catids, $fr_name);
 
-            if ($jr_it == 1 && $sfunc != "view")
+            if ($catid == $catids && $sfunc != "view")
             {
                 $fr_title_name = $fr_name;
                 $jr_path_menu[] = $fr_name;
@@ -55,52 +54,51 @@ if ($func != "")
 
             // next looping
             $catids = $parent_ids;
-            $jr_it++;
         }
 
-        $jr_path_menu[] = $shome;
         //reverse the array
         $jr_path_menu = array_reverse($jr_path_menu);
 
         //attach topic name
+	$jr_topic_title = '';
         if ($sfunc == "view" and $id)
         {
             $sql = "select subject from #__fb_messages where id = $id";
             $database->setQuery($sql);
             $jr_topic_title = stripslashes(html_entity_decode_utf8($database->loadResult()));
             $jr_path_menu[] = $jr_topic_title;
-        //     echo " " . $jr_arrow .$jr_arrow ." ". $jr_topic_title;
         }
 
         // print the list
+	if (count($jr_path_menu) == 0) $jr_path_menu[] = '';
         $jr_forum_count = count($jr_path_menu);
 
-	$firepath = '<div class="path-element-first">'. CKunenaLink::GetKunenaLink( htmlspecialchars(stripslashes($fbConfig->board_title)) ) . '</div>';
-	$filelast = '';
-        for ($i = 1; $i <= (count($jr_path_menu) - 1); $i++)
+		$fireinfo = '';
+        if (!empty($forumLocked))
         {
-            if ($i == $jr_forum_count - 1 && $fbConfig->pathway == TRUE) {
-                $firelast .= '<br />';
-                $firelast .= '<div class="path-element-last">' . $jr_path_menu[$i] . '</div>';
-            }
-            else if (!empty($jr_path_menu[$i])) {
-                $firepath .= '<div class="path-element">' . $jr_path_menu[$i] . '</div>';
-            }
-        }
-
-	$fireinfo = '';
-        if ($forumLocked)
-        {
-            $fireinfo = $fbIcons['forumlocked'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forumlocked']
-                     . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"  alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
+            $fireinfo = isset($fbIcons['forumlocked']) ? ' <img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forumlocked']
+                     . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"  alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
             $lockedForum = 1;
         }
 
-        if ($forumReviewed)
+        if (!empty($forumReviewed))
         {
-            $fireinfo = $fbIcons['forummoderated'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forummoderated']
-                     . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '">';
+            $fireinfo = isset($fbIcons['forummoderated']) ? ' <img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['forummoderated']
+                     . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '">';
             $moderatedForum = 1;
+        }
+
+        $firepath = '<div class="path-element-first">'. CKunenaLink::GetKunenaLink( kunena_htmlspecialchars(stripslashes($fbConfig->board_title)) ) . '</div>';
+
+        $firelast = '';
+        for ($i = 0; $i < $jr_forum_count; $i++)
+        {
+            if ($i == $jr_forum_count-1) {
+                $firelast .= '<br /><div class="path-element-last">' . $jr_path_menu[$i] . $fireinfo . '</div>';
+            }
+            else {
+                $firepath .= '<div class="path-element">' . $jr_path_menu[$i] . '</div>';
+            }
         }
 
          //get viewing
@@ -117,7 +115,7 @@ if ($func != "")
             $fireonline .= _USER_PROFILE;
             $fireonline .= $username;
         }
-        else if ($fbConfig->pathway == TRUE) {
+        else if ($fbConfig->pathway == true) {
 			$fireonline .= "<div class=\"path-element-users\">($total_viewing " . _KUNENA_PATHWAY_VIEWING . ")&nbsp;";
 			$totalguest = 0;
                         $divider = ', ';
@@ -147,12 +145,11 @@ if ($func != "")
 			$fireonline .= '</div>';
        }
 
-	$fr_title = $fr_title_name . $jr_topic_title;
-        $mainframe->setPageTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($fbConfig->board_title));
+        $mainframe->setPageTitle(($jr_topic_title ?  $jr_topic_title : $fr_title_name) . ' - ' . stripslashes($fbConfig->board_title));
 
-	$pathway1 = $firepath . $fireinfo;
-	$pathway2 .= $firelast . $fireonline;
-        unset($shome, $spath, $parent_ids, $catids, $results, $sname);
+	$pathway1 = $firepath;
+	$pathway2 = $firelast . $fireonline;
+	unset($spath, $parent_ids, $catids, $results, $sname);
 
       echo '<div class = "'. $boardclass .'forum-pathway">';
       echo $pathway1.$pathway2;

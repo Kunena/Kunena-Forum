@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-function check_filesize($file, $maxSize)
+function kn_myprofile_kn_myprofile_check_filesize($file, $maxSize)
 {
     $size = filesize($file);
 
@@ -33,7 +33,7 @@ function check_filesize($file, $maxSize)
     return false;
 }
 
-function display_avatar_gallery($avatar_gallery_path)
+function kn_myprofile_display_avatar_gallery($avatar_gallery_path)
 {
     $dir = @opendir($avatar_gallery_path);
     $avatar_images = array ();
@@ -114,7 +114,7 @@ if ($my->id != "" && $my->id != 0)
 {
 
 global $my;
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 $do = '';
 $do = mosGetParam($_REQUEST, 'do', 'init');
 $gallery  = mosGetParam($_REQUEST, 'gallery', '');
@@ -369,6 +369,7 @@ if ($do == 'init')
         if ($gallery == "default")
             unset($gallery);
 
+	$gallery1 = $gallery2 = '';
         if ($gallery)
         {
             $gallery1 = "/" . str_replace("%20", " ", $gallery);
@@ -377,7 +378,7 @@ if ($do == 'init')
 
         $avatar_gallery_path = KUNENA_ABSUPLOADEDPATH . '/avatars/gallery' . $gallery1;
         $avatar_images = array ();
-        $avatar_images = display_avatar_gallery($avatar_gallery_path);
+        $avatar_images = kn_myprofile_display_avatar_gallery($avatar_gallery_path);
 
         for ($i = 0; $i < count($avatar_images); $i++)
         {
@@ -491,6 +492,8 @@ else if ($do == 'validate')
         $src_img = imagecreatefromgif($src_file);
       }
 
+	$moved = false;
+
 	  // Create Medium Image
 	  if(($srcWidth > $fbConfig->avatarwidth) || ($srcHeight > $fbConfig->avatarheight)) {
       $dst_img = imagecreate($fbConfig->avatarwidth, $fbConfig->avatarheight);
@@ -557,6 +560,8 @@ else if ($do == 'validate')
       } else {
         $src_img = imagecreatefromgif($src_file);
       }
+
+	$moved = false;
 
 	  // Create Medium Image
 	  if(($srcWidth > $fbConfig->avatarwidth) || ($srcHeight > $fbConfig->avatarheight)) {

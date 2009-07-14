@@ -159,6 +159,14 @@ table#fb_postmessage .button{border: 1px solid #999;color: #333;font-weight: bol
 .fb_leftcolumn{width:160px;text-align: right;}
 
 /*
+BBCODE BUTTONS
+-------------------------------------------------------------------- */
+img.fb-bbcode {cursor: pointer;margin-top: 4px;margin-right: 1px;padding: 0px;}
+img.fb-bbcode:hover {background-color: #e4e4e4;cursor: pointer;margin-top: 4px;margin-right: 1px;padding: 0px;}
+.fb-color_table {cursor: pointer;width:100%;margin-left:auto;margin-right:auto;}
+#Kunena table.fb-postbuttonset tr td.fb-postbuttons select.fb_slcbox {position:relative;bottom:5px;}
+
+/*
 POST HISTORY
 -------------------------------------------------------------------- */
 .fb_review_table{text-align:left;border-spacing: 1px;background:#CCCCCC;}
@@ -170,12 +178,14 @@ POST HISTORY
 /* PATHWAY 
 ----------------------------------------------------------------------------------------------- */
 .fb_forum-pathway{padding: 3px;margin: 5px 0 5px 0;border: 1px solid #CCCCCC; background:#F7F7F7;}
-.forum-pathway-1{font-weight: normal;height: 18px;line-height: 18px;padding-left: 22px;background: url(images/pathway_start.gif) no-repeat left center;padding-top: 2px !important;padding-top: 4px; }
-.forum-pathway-2{height: 18px;line-height: 18px;background:  url(images/pathway_finallink.gif) no-repeat left center; padding-left: 30px;}
-.forum-pathway-1 a:link, 
-.forum-pathway-1 a:visited{font-weight:normal;text-decoration: none;background:none;}
-.forum-pathway-2, 
-.forum-pathway-2 a:link{font-weight:bold;text-decoration: none;text-indent:5px;}
+.path-element-first {font-weight: normal;height: 18px;line-height: 18px;padding-left: 22px;background: url(images/pathway_start.gif) no-repeat left center; float:left;padding-right:3px; }
+.path-element-first a:link, 
+.path-element-first a:visited{font-weight:normal;text-decoration: none;background:none;}
+.path-element-last, 
+.path-element-last a:link{font-weight:bold;text-decoration: none;text-indent:5px;clear:left;float:left;}
+.fb_forum-pathway .path-element {background: url(images/arrow.png) no-repeat left center;padding-left: 12px;float:left;font-weight: normal;height: 18px;line-height: 18px;padding-right:3px;}
+.fb_forum-pathway .path-element-last {height: 18px;line-height: 18px;background:  url(images/pathway_finallink.gif) no-repeat left center; padding-left: 30px; padding-right:5px;}
+.path-element-users {margin-top:21px;}
 
 /*
 PAGENAV

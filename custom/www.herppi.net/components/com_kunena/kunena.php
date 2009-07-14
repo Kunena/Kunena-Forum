@@ -19,15 +19,27 @@
 * @author TSMF & Jan de Graaff
 **/
 
+// Show offline message if J!1.5 Legacy Mode is not turned on
+if (!defined ('_VALID_MOS') && defined ('_JEXEC'))
+{
+	// Joomla 1.5 Native Mode! Legacy is turned off
+	$kunena_db = &JFactory::getDBO();
+	$kunena_db->setQuery("SELECT offline_message FROM #__fb_config");
+	$offline_message = $kunena_db->loadResult();
+	if (empty($offline_message))
+		$offline_message = "<h2>The Forum is currently offline for maintenance.</h2>\n<div>Check back soon!</div>";
+	echo $offline_message;
+	return;
+}
 // Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined ('_VALID_MOS') or die('Kunena Forum cannot be run without Joomla!');
 
 // Just for debugging and performance analysis
 $mtime = explode(" ", microtime());
 $tstart = $mtime[1] + $mtime[0];
 
 // TODO: Get rid of THIS!!! - Kill notices (we have many..)
-error_reporting (E_ALL ^ E_NOTICE);
+//error_reporting (E_ALL ^ E_NOTICE);
 
 // Get all the variables we need and strip them in case
 $action 		= mosGetParam($_REQUEST, 'action', '');
@@ -63,6 +75,21 @@ $userid 		= intval(mosGetParam($_REQUEST, 'userid', 0));
 $view 			= mosGetParam($_REQUEST, 'view', '');
 $msgpreview 	= mosGetParam($_REQUEST, 'msgpreview', '');
 
+// Redirect Forum Jump
+if (isset($_POST['func']) && $func == "showcat")
+{
+	global $Itemid;
+	header("HTTP/1.1 303 See Other");
+	header("Location: " . htmlspecialchars_decode(sefRelToAbs('index.php?option=com_kunena&amp;Itemid=' . $Itemid . '&amp;func=showcat&amp;catid=' . $catid)));
+	die();
+}
+
+// Image does not work if there are included files (extra characters), so we will do it now:
+if ($func == "showcaptcha") {
+   include ($mainframe->getCfg("absolute_path") . '/components/com_kunena/template/default/plugin/captcha/randomImage.php');
+   die();
+}
+
 // Debug helpers
 include_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.debug.php");
 
@@ -72,17 +99,60 @@ require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/
 // Get CKunanaUser and CKunenaUsers
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.user.class.php");
 
-global $fbConfig, $kunenaProfile;
+global $kunenaProfile, $fbConfig;
 
 // Load configuration and personal settings for current user
-$fbConfig = CKunenaConfig::getInstance();
+$fbConfig =& CKunenaConfig::getInstance();
 
-if ($fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
+// get right Language file
+if (file_exists($mainframe->getCfg("absolute_path") . '/administrator/components/com_kunena/language/kunena.' . $mainframe->getCfg('lang') . '.php'))
 {
-	// Get Community Builder compability
-	require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.communitybuilder.php");
-	$kunenaProfile =& new CkunenaCBProfile();
+    include_once ($mainframe->getCfg("absolute_path") . '/administrator/components/com_kunena/language/kunena.' . $mainframe->getCfg('lang') . '.php');
 }
+else
+{
+    include_once ($mainframe->getCfg("absolute_path") . '/administrator/components/com_kunena/language/kunena.english.php');
+}
+
+$kn_tables =& CKunenaTables::getInstance();
+if ($kn_tables->installed() === false) {
+	$fbConfig->board_offline = 1;
+}
+
+// Permissions: Check for administrators and moderators
+global $aro_group;
+if ($my->id != 0)
+{
+    $aro_group = $acl->getAroGroup($my->id);
+    if ($aro_group && defined('_JEXEC') && class_exists('JApplication'))
+    	$aro_group->group_id = $aro_group->id;  // changed fieldname in Joomla 1.5: "group_id" -> "id"
+    $is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
+}
+else
+{
+    $aro_group = new StdClass();
+    $aro_group->group_id = 0;
+    $is_admin = 0;
+}
+
+//Get the userid; sometimes the new var works whilst $my->id doesn't..?!?
+$my_id = $my->id;
+
+// Check if we only allow registered users
+if ($fbConfig->regonly && !$my_id)
+{
+    echo '<div>' . _FORUM_UNAUTHORIZIED . '</div>';
+    echo '<div>' . _FORUM_UNAUTHORIZIED2 . '</div>';
+}
+// or if the board is offline
+else if ($fbConfig->board_offline && !$is_admin)
+{
+    echo stripslashes($fbConfig->offline_message);
+}
+else
+{
+// =======================================================================================
+// Forum is online:
 
 global $mosConfig_lang, $fbIcons;
 global $is_Moderator;
@@ -95,16 +165,6 @@ require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/
 
 // Class structure should be used after this and all the common task should be moved to this class
 require_once ($mainframe->getCfg("absolute_path") . "/components/com_kunena/class.kunena.php");
-
-// get right Language file
-if (file_exists(KUNENA_ABSADMPATH . '/language/kunena.' . KUNENA_LANG . '.php'))
-{
-    include_once (KUNENA_ABSADMPATH . '/language/kunena.' . KUNENA_LANG . '.php');
-}
-else
-{
-    include_once (KUNENA_ABSADMPATH . '/language/kunena.english.php');
-}
 
 // bbcode and smilie support
 if (file_exists(KUNENA_ABSTMPLTPATH . '/smile.class.php'))
@@ -141,7 +201,7 @@ $systime = time() + KUNENA_OFFSET_BOARD;
 define ('KUNENA_DB_MISSING_COLUMN', 1054);
 
 // Retrieve current cookie data for session handling
-$settings = $_COOKIE['fboard_settings'];
+$settings = !empty($_COOKIE['fboard_settings'])?$_COOKIE['fboard_settings']:'';
 
 $board_title = $fbConfig->board_title;
 $fromBot = 0;
@@ -168,9 +228,11 @@ if ($func == "getpreview") {
 
     $message = utf8_urldecode(utf8_decode(stripslashes($msgpreview)));
 
+    $smileyList = smile::getEmoticons(1);
     $msgbody = smile::smileReplace( $message , 0, $fbConfig->disemoticons, $smileyList);
     $msgbody = nl2br($msgbody);
     $msgbody = str_replace("__FBTAB__", "\t", $msgbody);
+	$msgbody = CKunenaTools::prepareContent($msgbody);
     // $msgbody = ereg_replace('%u0([[:alnum:]]{3})', '&#x1;',$msgbody);
 
     $msgbody = smile::htmlwrap($msgbody, $fbConfig->wrap);
@@ -179,24 +241,38 @@ if ($func == "getpreview") {
     die();
 }
 
-if ($func == "showcaptcha") {
-   include (KUNENA_ABSPATH . '/template/default/plugin/captcha/randomImage.php');
-   die();
-}
-
-// Add required header tags
-if (defined('KUNENA_JQURL'))
+if (is_object($kunenaProfile))
 {
-	$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
+	$params = array();
+	$kunenaProfile->trigger('onStart', &$params);
 }
 
 // inline jscript with image location
-$mainframe->addCustomHeadTag('<script type="text/javascript">
-jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";</script>');
+$mainframe->addCustomHeadTag('<script type="text/javascript">jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";</script>');
 
-if (defined('KUNENA_COREJSURL'))
+global $_CB_framework;
+if (is_object($_CB_framework)) 
 {
-	$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_COREJSURL . '"></script>');
+	if (defined('KUNENA_COREJSURL'))
+	{
+		$_CB_framework->addJQueryPlugin( 'kunena_tmpl', KUNENA_COREJSPATH );
+		$_CB_framework->outputCbJQuery( '', 'kunena_tmpl' );
+	}
+}
+else
+{
+	// Add required header tags
+	if (defined('KUNENA_JQURL') && !defined('J_JQUERY_LOADED'))
+	{
+		define('J_JQUERY_LOADED', 1);
+		if (!defined('C_ASSET_JQUERY')) define('C_ASSET_JQUERY', 1);
+		$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
+	}
+
+	if (defined('KUNENA_COREJSURL'))
+	{
+		$mainframe->addCustomHeadTag('<script type="text/javascript" src="' . KUNENA_COREJSURL . '"></script>');
+	}
 }
 
 if ($fbConfig->joomlastyle < 1) {
@@ -244,20 +320,6 @@ else {
 $obj_KUNENA_tmpl = new patTemplate();
 $obj_KUNENA_tmpl->setBasedir(KUNENA_ABSTMPLTPATH);
 
-// Permissions: Check for administrators and moderators
-if ($my->id != 0)
-{
-    $aro_group = $acl->getAroGroup($my->id);
-    if ($aro_group and CKunenaTools::isJoomla15())
-    	$aro_group->group_id = $aro_group->id;  // changed fieldname in Joomla 1.5: "group_id" -> "id"
-    $is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
-}
-else
-{
-    $aro_group = 0;
-    $is_admin = 0;
-}
-
 $is_Moderator = fb_has_moderator_permission($database, $thisCat, $my->id, $is_admin);
 
 //intercept the RSS request; we should stop afterwards
@@ -288,22 +350,6 @@ if ($func == '') // Set default start page as per config settings
 	}
 }
 
-// Include the Community Builder language file if necessary and set CB itemid value
-$cbitemid = 0;
-
-if ($fbConfig->fb_profile == 'cb')
-{
-    // Include CB language files
-    $UElanguagePath = $mainframe->getCfg('absolute_path') . '/components/com_comprofiler/plugin/language';
-    $UElanguage = $mainframe->getCfg('lang');
-
-    if (!file_exists($UElanguagePath . '/' . $mosConfig_lang . '/' . $mosConfig_lang . '.php')) {
-        $UElanguage = 'default_language';
-        }
-
-    include_once ($UElanguagePath . '/' . $UElanguage . '/' . $UElanguage . '.php');
-}
-
 // Kunena Current Template Icons Pack
 // See if there's an icon pack installed
 $useIcons = 0; //init
@@ -319,22 +365,8 @@ else
     include_once (KUNENA_ABSPATH . '/template/default/icons.php');
 }
 
-//Get the userid; sometimes the new var works whilst $my->id doesn't..?!?
-$my_id = $my->id;
+require_once (KUNENA_ABSSOURCESPATH . 'kunena.session.class.php');
 
-// Check if we only allow registered users
-if ($fbConfig->regonly && !$my_id)
-{
-    echo _FORUM_UNAUTHORIZIED . "<br />";
-    echo _FORUM_UNAUTHORIZIED2;
-}
-// or if the board is offline
-else if ($fbConfig->board_offline && !$is_admin)
-{
-    echo stripslashes($fbConfig->offline_message);
-}
-else
-{
 //
 // This is the main session handling section. We rely both on cookie as well as our own
 // Kunena session table inside the database. We are leveraging the cookie to keep track
@@ -348,6 +380,8 @@ else
 //
 	// We only do the session handling for registered users
 	// No point in keeping track of whats new for guests
+	global $fbSession;
+	$fbSession =& CKunenaSession::getInstance();
 	if ($my_id > 0)
 	{
 		// First we drop an updated cookie, good for 1 year
@@ -359,23 +393,10 @@ else
 		$new_fb_user = 0;
 		$resetView = 0;
 
-		// Lookup existing session sored in db. If none exists this is a first time visitor
-		$database->setQuery("SELECT * from #__fb_sessions where userid=" . $my_id);
-		$fbSessionArray = $database->loadObjectList();
-			check_dberror("Unable to load sessions.");
-		$fbSession = $fbSessionArray[0];
-		$fbSessionUpd = null;
-
 		// If userid is empty/null no prior record did exist -> new session and first time around
-		if ($fbSession->userid == "" ) {
+		if ($fbSession->_exists === false) {
 			$new_fb_user = 1;
 			$resetView = 1;
-			// Init new sessions for first time user
-			$fbSession->userid = $my_id;
-			$fbSession->allowed = '';
-			$fbSession->lasttime = $systime - KUNENA_SECONDS_IN_YEAR;  // show threads up to 1 year back as new
-			$fbSession->readtopics = '';
-			$fbSession->currvisit = $systime;
 		}
 
 		// detect fbsession timeout (default: after 30 minutes inactivity)
@@ -383,33 +404,25 @@ else
 
 		// new indicator handling
 		if ($markaction == "allread") {
-			$fbSession->lasttime = $fbSessionUpd->lasttime = $systime;
-			$fbSession->readtopics = $fbSessionUpd->readtopics = '';
+			$fbSession->lasttime = $systime;
+			$fbSession->readtopics = '';
 		} elseif ($fbSessionTimeOut) {
-			$fbSession->lasttime = $fbSessionUpd->lasttime = $fbSession->currvisit;
-			$fbSession->readtopics = $fbSessionUpd->readtopics = '';
+			$fbSession->lasttime = $fbSession->currvisit;
+			$fbSession->readtopics = '';
 		}
 
 		// get all accessaible forums if needed (eg on forum modification, new session)
 		if (!$fbSession->allowed or $fbSession->allowed == 'na' or $fbSessionTimeOut) {
 			$allow_forums = CKunenaTools::getAllowedForums($my_id, $aro_group->group_id, $acl);
 			if (!$allow_forums) $allow_forums = '0';
-			if ($allow_forums <> $fbSession->allowed)
-				$fbSession->allowed = $fbSessionUpd->allowed = $allow_forums;
+			if ($allow_forums != $fbSession->allowed)
+				$fbSession->allowed = $allow_forums;
 			unset($allow_forums);
 		}
 
 		// save fbsession
-		if ($new_fb_user) {
-			$database->insertObject('#__fb_sessions', $fbSession);
-				check_dberror('Unable to insert new session record for user.');
-		} else {
-			$fbSessionUpd->userid = $fbSession->userid;
-			$fbSession->currvisit = $fbSessionUpd->currvisit = $systime;
-			$database->updateObject('#__fb_sessions', $fbSessionUpd, 'userid');
-				check_dberror('Unable to update session record for user.');
-		}
-		unset($fbSessionUpd);
+		$fbSession->currvisit = $systime;
+		$fbSession->save($fbSession);
 
 		if ($markaction == "allread") {
 		        mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _GEN_ALL_MARKED);
@@ -460,6 +473,8 @@ else
 
 		// For guests we don't show new posts
 		$prevCheck = $systime;
+		$new_fb_user = 0;
+		$fbSession->readtopics = '';
 	}
 
 	// no access to categories?
@@ -509,7 +524,7 @@ else
 	    $strCatParent = $database->loadResult();
 			check_dberror('Unable to load categories.');
 
-        if ($catid == '' || $strCatParent == 0)
+        if ($strCatParent === '0')
     		{
             $func = 'listcat';
         }
@@ -518,7 +533,7 @@ else
     switch ($func)
     {
         case 'view':
-            $fbMenu = KUNENA_get_menu(KUNENA_CB_ITEMID, $fbConfig, $fbIcons, $my_id, 3, $view, $catid, $id, $thread);
+            $fbMenu = KUNENA_get_menu(NULL, $fbConfig, $fbIcons, $my_id, 3, $view, $catid, $id, $thread);
 
             break;
 
@@ -528,11 +543,11 @@ else
             $numPending = $database->loadResult();
             	check_dberror('Unable load pending messages.');
 
-            $fbMenu = KUNENA_get_menu(KUNENA_CB_ITEMID, $fbConfig, $fbIcons, $my_id, 2, $view, $catid, $id, $thread, $is_Moderator, $numPending);
+            $fbMenu = KUNENA_get_menu(NULL, $fbConfig, $fbIcons, $my_id, 2, $view, $catid, $id, $thread, $is_Moderator, $numPending);
             break;
 
         default:
-            $fbMenu = KUNENA_get_menu(KUNENA_CB_ITEMID, $fbConfig, $fbIcons, $my_id, 1);
+            $fbMenu = KUNENA_get_menu(NULL, $fbConfig, $fbIcons, $my_id, 1, $view);
 
             break;
     }
@@ -924,6 +939,12 @@ else
     $obj_KUNENA_tmpl->readTemplatesFromFile("footer.html");
     $obj_KUNENA_tmpl->displayParsedTemplate('fb-footer');
 } //else
+
+if (is_object($kunenaProfile))
+{
+	$params = array();
+	$kunenaProfile->trigger('onEnd', &$params);
+}
 
 // Just for debugging and performance analysis
 $mtime = explode(" ", microtime());

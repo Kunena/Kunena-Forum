@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
 global $is_Moderator;
 
 // Func Check
@@ -80,7 +80,7 @@ if (count($messages[0]) > 0)
     foreach ($messages[0] as $leafa)
     {
 
-        if (($leafa->ordering > 0 && !$funcmylatest) || ($leafa->favthread && $funcmylatest))
+        if (($leafa->ordering > 0 && !$funcmylatest) || ($leafa->myfavorite && $funcmylatest))
         {
             $st_count++;
         }
@@ -104,7 +104,7 @@ if (count($messages[0]) > 0)
                 <tr>
                     <th colspan = "<?php echo ($is_Moderator?"5":"4");?>">
                         <div class = "fb_title_cover fbm">
-                            <span class = "fb_title fbl"><b><?php echo _KUNENA_THREADS_IN_FORUM; ?>:</b> <?php echo '' . stripslashes($objCatInfo->name) . ''; ?></span>
+                            <span class = "fb_title fbl"><b><?php echo _KUNENA_THREADS_IN_FORUM; ?>:</b> <?php echo '' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) . ''; ?></span>
                         </div>
                         <!-- FORUM TOOLS -->
 
@@ -148,17 +148,17 @@ if (count($messages[0]) > 0)
                 $k = 0;
                 $st_c = 0;
 
+				$st_occured = 0;
                 foreach ($messages[0] as $leaf)
                 {
                     $k = 1 - $k; //used for alternating colours
-                    $leaf->name = htmlspecialchars(stripslashes($leaf->name));
-                    $leaf->email = htmlspecialchars(stripslashes($leaf->email));
+                    $leaf->name = kunena_htmlspecialchars(stripslashes($leaf->name));
+                    $leaf->email = kunena_htmlspecialchars(stripslashes($leaf->email));
                 ?>
 
                 <?php
                     if ($st_c == 0 && $st_occured != 1 && $st_count != 0 && $funclatest == 0)
                     {
-                    //$st_occured = 1;
                 ?>
 
                         <tr>
@@ -188,11 +188,7 @@ if (count($messages[0]) > 0)
 
                     <tr class = "<?php
                     echo $boardclass.$tabclass[$k];
-                    if ($leaf->ordering==0  || $funclatest == 1 || $funcmylatest == 1)
-                    { }
-                    else
-                    {echo '_stickymsg'; $topicSticky=1; }
-                    if ($leaf->myfavorite && $funcmylatest)
+                    if ($leaf->ordering != 0 || ($leaf->myfavorite && $funcmylatest))
                     {echo '_stickymsg'; $topicSticky=1; }
                     ?>">
                     <td class = "td-0 fbm" align="center">
@@ -250,24 +246,24 @@ if (count($messages[0]) > 0)
                                 <?php
                                 //(JJ) ATTACHMENTS ICON
                                 if ($leaf->attachmesid > 0) {
-                                    echo $fbIcons['topicattach'] ? '<img  class="attachicon" src="' . KUNENA_URLICONSPATH . ''
+                                    echo isset($fbIcons['topicattach']) ? '<img  class="attachicon" src="' . KUNENA_URLICONSPATH . ''
                                              . $fbIcons['topicattach'] . '" border="0" alt="' . _KUNENA_ATTACH . '" />' : '<img class="attachicon" src="' . KUNENA_URLEMOTIONSPATH . 'attachment.gif"  alt="' . _KUNENA_ATTACH . '" title="' . _KUNENA_ATTACH . '" />';
                                     }
                                 ?>
 
                                 <div class = "fb-topic-title-cover">
-                                    <?php echo CKunenaLink::GetThreadLink('view', $leaf->catid, $leaf->id, htmlspecialchars(stripslashes($leaf->subject)), htmlspecialchars(stripslashes($messagetext[$leaf->id])) , 'follow', 'fb-topic-title fbm');?>
+                                    <?php echo CKunenaLink::GetThreadLink('view', $leaf->catid, $leaf->id, kunena_htmlspecialchars(stripslashes($leaf->subject)), kunena_htmlspecialchars(stripslashes($messagetext[$leaf->id])) , 'follow', 'fb-topic-title fbm');?>
                                     <!--            Favourite       -->
 
                                     <?php
                                     if ($fbConfig->allowfavorites && array_key_exists($leaf->id, $favthread))
                                     {
                                         if ($leaf->myfavorite) {
-                                    	    echo $fbIcons['favoritestar'] ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . '' . $fbIcons['favoritestar']
+                                    	    echo isset($fbIcons['favoritestar']) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . '' . $fbIcons['favoritestar']
                                     		. '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
 					} else if (array_key_exists('favoritestar_grey', $fbIcons))
 					{
-                                    	    echo $fbIcons['favoritestar_grey'] ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . '' . $fbIcons['favoritestar_grey']
+                                    	    echo isset($fbIcons['favoritestar_grey']) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . '' . $fbIcons['favoritestar_grey']
                                     		. '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
 					}
                                     }
@@ -327,6 +323,8 @@ if (count($messages[0]) > 0)
                             }
                             else
                             {
+				$threadPages = 0;
+				$unreadPage = 0;
                                 //this thread has been moved, get the new location
                                 $newURL = ""; //init
                                 $database->setQuery("SELECT `message` FROM #__fb_messages_text WHERE `mesid`='" . $leaf->id . "'");
@@ -342,7 +340,7 @@ if (count($messages[0]) > 0)
 
                             <td class = "td-3">
                                 <div class = "fb-topic-title-cover">
-                                    <?php echo CKunenaLink::GetThreadLink('view', $newURLParams['catid'], $newURLParams['id'], htmlspecialchars(stripslashes($leaf->subject)), htmlspecialchars(stripslashes($leaf->subject)), 'follow', 'fb-topic-title fbm');?>
+                                    <?php echo CKunenaLink::GetThreadLink('view', $newURLParams['catid'], $newURLParams['id'], kunena_htmlspecialchars(stripslashes($leaf->subject)), kunena_htmlspecialchars(stripslashes($leaf->subject)), 'follow', 'fb-topic-title fbm');?>
                                 </div>
 
 
@@ -370,7 +368,7 @@ if (count($messages[0]) > 0)
          <?php if (strtolower($func) != 'showcat' ){ ?>
         <!-- Category -->
         <span class="topic_category">
-        <?php echo _KUNENA_CATEGORY.' '.CKunenaLink::GetCategoryLink('showcat', $leaf->catid, stripslashes($leaf->catname)); ?>
+        <?php echo _KUNENA_CATEGORY.' '.CKunenaLink::GetCategoryLink('showcat', $leaf->catid, kunena_htmlspecialchars(stripslashes($leaf->catname))); ?>
         </span>
         <!-- /Category -->
         <?php } ?>
@@ -385,7 +383,7 @@ if (count($messages[0]) > 0)
         <?php if ($leaf->locked != 0) {?>
         <!-- Locked -->
         <span class="topic_locked">
-        <?php echo $fbIcons['topiclocked'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['topiclocked'] . '" border="0" alt="' . _GEN_LOCKED_TOPIC . '" />'  : '<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  alt="' . _GEN_LOCKED_TOPIC . '" title="' . _GEN_LOCKED_TOPIC . '" />';
+        <?php echo isset($fbIcons['topiclocked']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['topiclocked'] . '" border="0" alt="' . _GEN_LOCKED_TOPIC . '" />'  : '<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  alt="' . _GEN_LOCKED_TOPIC . '" title="' . _GEN_LOCKED_TOPIC . '" />';
         $topicLocked = 1; ?>
         </span>
         <!-- /Locked -->
@@ -405,9 +403,9 @@ if (count($messages[0]) > 0)
                             <div style="position:relative">
 
                               <!--  Sticky   -->
-        <?php if ($leaf->ordering != 0 &&  $funclatest == 0 && $funcmylatest == 0) { ?>
+        <?php if ($leaf->ordering != 0) { ?>
         <span class="topic_sticky">
-        <?php echo $fbIcons['topicsticky'] ? '<img  src="' . KUNENA_URLICONSPATH . '' . $fbIcons['topicsticky'] . '" border="0" alt="' . _GEN_ISSTICKY . '" />': '<img class="stickyicon" src="' . KUNENA_URLEMOTIONSPATH . 'pushpin.gif"  alt="' . _GEN_ISSTICKY . '" title="' . _GEN_ISSTICKY . '" />';
+        <?php echo isset($fbIcons['topicsticky']) ? '<img  src="' . KUNENA_URLICONSPATH . '' . $fbIcons['topicsticky'] . '" border="0" alt="' . _GEN_ISSTICKY . '" />': '<img class="stickyicon" src="' . KUNENA_URLEMOTIONSPATH . 'pushpin.gif"  alt="' . _GEN_ISSTICKY . '" title="' . _GEN_ISSTICKY . '" />';
         $topicSticky = 1; ?>
         </span>
         <?php }?>
@@ -420,9 +418,7 @@ if (count($messages[0]) > 0)
 
   <span class="topic_latest_post_avatar">
   <?php
-		if ($leaf->userid) 
-		{
-  		if ($fbConfig->avatar_src == "jomsocial")
+  		if ($fbConfig->avatar_src == "jomsocial" && $leaf->userid)
 		{
 			// Get CUser object
 			$user =& CFactory::getUser($last_reply[$leaf->id]->userid);
@@ -440,7 +436,6 @@ if (count($messages[0]) > 0)
 	        }  else {
 		   		echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_nophoto.jpg" alt="" />');
 	        }
-		}
          }?>
   </span>
     <?php } ?>
@@ -459,7 +454,7 @@ if (count($messages[0]) > 0)
         }
 
         if ($leaf->name) 
-		echo ' '._GEN_BY. ' '.CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, $last_reply[$leaf->id]->name, 'nofollow', 'topic_latest_post_user'); ?>
+		echo ' '._GEN_BY. ' '.CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, stripslashes($last_reply[$leaf->id]->name), 'nofollow', 'topic_latest_post_user'); ?>
         </span>
         <!-- /Latest Post -->
         <br />

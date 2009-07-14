@@ -20,7 +20,8 @@
 **/
 // Dont allow direct linking
 defined('_VALID_MOS') or die('Direct Access to this location is not allowed.');
-global $fbConfig;
+$fbConfig =& CKunenaConfig::getInstance();
+$fbSession =& CKunenaSession::getInstance();
 global $is_Moderator;
 
 function KunenaShowcatPagination($catid, $page, $totalpages, $maxpages) {
@@ -75,8 +76,8 @@ $catid = (int)$catid;
 
 //resetting some things:
 $moderatedForum = 0;
-$lockedForum = 0;
-$lockedTopic = 0;
+$forumLocked = 0;
+$topicLocked = 0;
 $topicSticky = 0;
 
 unset($allow_forum);
@@ -84,19 +85,7 @@ unset($allow_forum);
 //get the allowed forums and turn it into an array
 $allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):array();
 
-if (!$is_Moderator)
-{
-    //check Access Level Restrictions but don't bother for Moderators
-    //get all the info on this forum:
-    $database->setQuery("SELECT id,pub_access,pub_recurse,admin_access,admin_recurse FROM #__fb_categories where id='$catid'");
-    $row = $database->loadObjectList();
-    	check_dberror("Unable to load category detail.");
-    //Do user identification based upon the ACL
-    $letPass = 0;
-    $letPass = CKunenaAuthentication::validate_user($row[0], $allow_forum, $aro_group->group_id, $acl);
-}
-
-if ($letPass || $is_Moderator)
+if (in_array($catid, $allow_forum))
 {
     $threads_per_page = $fbConfig->threads_per_page;
 
@@ -140,6 +129,10 @@ if ($letPass || $is_Moderator)
     	check_dberror("Unable to load messages.");
 
     $favthread = array();
+    $threadids = array();
+    $messages = array();
+    $messages[0] = array();
+    $thread_counts = array();
     foreach ($messagelist as $message)
     {
         $threadids[] = $message->id;
@@ -148,6 +141,7 @@ if ($letPass || $is_Moderator)
 	$last_read[$message->id]->lastread = $last_reply[$message->thread]->id;
 	$last_read[$message->id]->unread = 0;
         $hits[$message->id] = $message->hits;
+        $thread_counts[$message->id] = 0;
         $messagetext[$message->id] = substr(smile::purify($message->messagetext), 0, 500);
     }
 
@@ -207,16 +201,6 @@ if ($letPass || $is_Moderator)
     	check_dberror('Unable to get number of pending messages.');
     //@rsort($messages[0]);
 ?>
-<!-- Pathway -->
-<?php
-    if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
-        require_once(KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
-    }
-    else {
-        require_once(KUNENA_ABSPATH . '/template/default/fb_pathway.php');
-    }
-?>
-<!-- / Pathway -->
 <?php
     //Get the category name for breadcrumb
     unset($objCatInfo, $objCatParentInfo);
@@ -233,8 +217,8 @@ if ($letPass || $is_Moderator)
     $forumReviewed = $objCatInfo->review;
 
 	//meta description and keywords
-	$metaKeys=(_KUNENA_CATEGORIES . ', ' . stripslashes($objCatParentInfo->name) . ', ' . stripslashes($objCatInfo->name) . ', ' . stripslashes($fbConfig->board_title) . ', ' . $GLOBALS['mosConfig_sitename']);
-	$metaDesc=(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($objCatInfo->name) .' - ' . stripslashes($fbConfig->board_title));
+	$metaKeys=(_KUNENA_CATEGORIES . ', ' . kunena_htmlspecialchars(stripslashes($objCatParentInfo->name)) . ', ' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) . ', ' . stripslashes($fbConfig->board_title) . ', ' . $GLOBALS['mosConfig_sitename']);
+	$metaDesc=(kunena_htmlspecialchars(stripslashes($objCatParentInfo->name)) . ' - ' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) .' - ' . stripslashes($fbConfig->board_title));
 
 	if( CKunenaTools::isJoomla15() )
 	{
@@ -251,11 +235,22 @@ if ($letPass || $is_Moderator)
 		$mainframe->appendMetaTag( 'description' ,$metaDesc );
 	}
 ?>
+<!-- Pathway -->
+<?php
+    if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
+        require_once(KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
+    }
+    else {
+        require_once(KUNENA_ABSPATH . '/template/default/fb_pathway.php');
+    }
+?>
+<!-- / Pathway -->
 <?php if($objCatInfo->headerdesc) { ?>
 <table class="fb_forum-headerdesc" border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tr>
 		<td>
 		<?php
+		$smileyList = smile::getEmoticons(0);
 		$headerdesc = stripslashes(smile::smileReplace($objCatInfo->headerdesc, 0, $fbConfig->disemoticons, $smileyList));
         $headerdesc = nl2br($headerdesc);
         //wordwrap:
@@ -275,28 +270,28 @@ if ($letPass || $is_Moderator)
                 <?php
                 //go to bottom
                 echo '<a name="forumtop" /> ';
-                echo CKunenaLink::GetSamePageAnkerLink('forumbottom', $fbIcons['bottomarrow'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM);
+                echo CKunenaLink::GetSamePageAnkerLink('forumbottom', isset($fbIcons['bottomarrow']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM);
                 ?>
 
 		</td><td class="fb_list_actions_forum" width="100%">
 
 
                 <?php
-                if ((($fbConfig->pubwrite == 0 && $my_id != 0) || $fbConfig->pubwrite) && ($topicLock == 0 || ($topicLock == 1 && $is_Moderator)))
+                if ($is_Moderator || ($forumLocked == 0 && ($my->id > 0 || $fbConfig->pubwrite)))
                 {
                     //this user is allowed to post a new topic:
-                    $forum_new = CKunenaLink::GetPostNewTopicLink($catid, $fbIcons['new_topic'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
+                    $forum_new = CKunenaLink::GetPostNewTopicLink($catid, isset($fbIcons['new_topic']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
                 }
                 if ($my->id != 0)
                 {
-                    $forum_markread = CKunenaLink::GetCategoryLink('markThisRead', $catid, $fbIcons['markThisForumRead'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['markThisForumRead'] . '" alt="' . _GEN_MARK_THIS_FORUM_READ . '" title="' . _GEN_MARK_THIS_FORUM_READ . '" border="0" />' : _GEN_MARK_THIS_FORUM_READ, $rel='nofollow');
+                    $forum_markread = CKunenaLink::GetCategoryLink('markThisRead', $catid, isset($fbIcons['markThisForumRead']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['markThisForumRead'] . '" alt="' . _GEN_MARK_THIS_FORUM_READ . '" title="' . _GEN_MARK_THIS_FORUM_READ . '" border="0" />' : _GEN_MARK_THIS_FORUM_READ, $rel='nofollow');
                 }
 
 		if (isset($forum_new) || isset($forum_markread))
 		{
-	        echo '<div class="fb_message_buttons_cover" style="text-align: left;">';
-	        echo $forum_new;
-	        echo ' '.$forum_markread;
+	        echo '<div class="fb_message_buttons_row" style="text-align: left;">';
+	        if (isset($forum_new)) echo $forum_new;
+	        if (isset($forum_markread)) echo ' '.$forum_markread;
 	        echo '</div>';
 		}
 		?>
@@ -373,7 +368,7 @@ if ($letPass || $is_Moderator)
                 <?php
                 //go to top
                 echo '<a name="forumbottom" />';
-                echo CKunenaLink::GetSamePageAnkerLink('forumtop', $fbIcons['toparrow'] ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP);
+                echo CKunenaLink::GetSamePageAnkerLink('forumtop', isset($fbIcons['toparrow']) ? '<img src="' . KUNENA_URLICONSPATH . '' . $fbIcons['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP);
                 ?>
 
 		</td><td class="fb_list_actions_forum" width="100%">
@@ -381,9 +376,9 @@ if ($letPass || $is_Moderator)
                 <?php
 		if (isset($forum_new) || isset($forum_markread))
 		{
-	        echo '<div class="fb_message_buttons_cover" style="text-align: left;">';
-	        echo $forum_new;
-	        echo ' '.$forum_markread;
+	        echo '<div class="fb_message_buttons_row" style="text-align: left;">';
+	        if (isset($forum_new)) echo $forum_new;
+	        if (isset($forum_markread)) echo ' '.$forum_markread;
 	        echo '</div>';
 		}
 		?>
@@ -469,7 +464,7 @@ function showChildren($category, $prefix = "", &$allow_forum)
     foreach ($forums as $forum)
     {
         if (in_array($forum->id, $allow_forum)) {
-            echo("<option value=\"{$forum->id}\">$prefix {$forum->name}</option>");
+            echo("<option value=\"{$forum->id}\">$prefix ".kunena_htmlspecialchars($forum->name)."</option>");
         }
 
         showChildren($forum->id, $prefix . "---", $allow_forum);

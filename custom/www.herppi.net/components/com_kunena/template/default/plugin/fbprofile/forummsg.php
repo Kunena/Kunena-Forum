@@ -155,7 +155,7 @@ $fbSession =& CKunenaSession::getInstance();
 
                 <td class = "td-5  fbs" align="left">
                   <div class="fb-latest-subject-date fbs">
-<?php echo '' . date(_DATETIME, $item->time) . ''; ?>
+					<?php echo '' . CKunenaTimeformat::showDate($item->time) . ''; ?>
                   </div>
                 </td>
 

@@ -76,67 +76,157 @@ $GLOBALS['KUNENA_DT_txt']['months_short'] = array
     _KUNENA_DT_MON_DEC,
 );
 
-// Format a time to make it look purdy.
-function KUNENA_timeformat($logTime, $show_today = true)
+class CKunenaTimeformat
 {
-	// formatts a time in Display space! Don't pass internal times!
-	// ToDo: Pass format!
-   $usertime_format = _KUNENA_DT_DATETIME_FMT;
 
-    global $mosConfig_locale;
-    $time = $logTime;
-    $todayMod = 2;
-
-    // We can't have a negative date (on Windows, at least.)
-    if ($time < 0) {
-        $time = 0;
-    }
-
-    // Today and Yesterday?
-    if ($show_today === true)
-    {
-        // Get the current time.
-        $nowtime = CKunenaTools::fbGetShowTime();
-        $then = @getdate($time);
-        $now = @getdate($nowtime);
-        // Try to make something of a time format string...
-        $s = strpos($usertime_format, '%S') === false ? '' : ':%S';
-
-        if (strpos($usertime_format, '%H') === false && strpos($usertime_format, '%T') === false) {
-            $today_fmt = '%I:%M' . $s . ' %p';
+    function internalTime($time=null) {
+    	// tells internal FB representing time from UTC $time
+        $fbConfig =& CKunenaConfig::getInstance();
+        // Prevent zeroes
+        if($time===0) {
+          return 0;
         }
-        else {
-            $today_fmt = '%H:%M' . $s;
+        if($time===null) {
+          $time = time();
+        }
+        return $time + ($fbConfig->board_ofset * 3600);
+    }
+
+    function showTimeSince($older_date, $newer_date=false)
+    {
+        // ToDo: return code plus string to decide concatenation.
+        // array of time period chunks
+        $chunks = array(
+            array(60 * 60 * 24 * 365 , _KUNENA_DATE_YEAR, _KUNENA_DATE_YEARS),
+            array(60 * 60 * 24 * 30 , _KUNENA_DATE_MONTH, _KUNENA_DATE_MONTHS),
+            array(60 * 60 * 24 * 7, _KUNENA_DATE_WEEK, _KUNENA_DATE_WEEKS),
+            array(60 * 60 * 24 , _KUNENA_DATE_DAY, _KUNENA_DATE_DAYS),
+            array(60 * 60 , _KUNENA_DATE_HOUR, _KUNENA_DATE_HOURS),
+            array(60 , _KUNENA_DATE_MINUTE, _KUNENA_DATE_MINUTES),
+        );
+
+        // $newer_date is false if we want to know the time elapsed between a date and the current time
+        // $newer_date has a value if we want to work out time elapsed between two known dates
+        $newer_date = ($newer_date === false) ? CKunenaTimeformat::internalTime() : $newer_date;
+
+        // difference in seconds
+        $since = $newer_date - $older_date;
+
+        // no negatives!
+        if($since<=0) {
+          return '?';
         }
 
-        // Same day of the year, same year.... Today!
-        if ($then['yday'] == $now['yday'] && $then['year'] == $now['year'])
-            return '' . _TIME_TODAY . '' . KUNENA_timeformat($logTime, $today_fmt);
+        // we only want to output two chunks of time here, eg:
+        // x years, xx months
+        // x days, xx hours
+        // so there's only two bits of calculation below:
 
-        // Day-of-year is one less and same year, or it's the first of the year and that's the last of the year...
-        if ($todayMod == '2' && (($then['yday'] == $now['yday'] - 1 && $then['year'] == $now['year']) || ($now['yday'] == 0 && $then['year'] == $now['year'] - 1) && $then['mon'] == 12 && $then['mday'] == 31))
-            return '' . _TIME_YESTERDAY . '' . KUNENA_timeformat($logTime, $today_fmt);
+        // step one: the first chunk
+        for ($i = 0, $j = count($chunks); $i < $j; $i++)
+            {
+            $seconds = $chunks[$i][0];
+            $name = $chunks[$i][1];
+            $names = $chunks[$i][2];
+
+            // finding the biggest chunk (if the chunk fits, break)
+            if (($count = floor($since / $seconds)) != 0)
+            {
+                break;
+            }
+        }
+
+        // set output var
+        $output = ($count == 1) ? '1 '.$name : $count.' '.$names ;
+
+        // step two: the second chunk
+        if ($i + 1 < $j)
+        {
+            $seconds2 = $chunks[$i + 1][0];
+            $name2 = $chunks[$i + 1][1];
+            $names2 = $chunks[$i + 1][2];
+
+            if (($count2 = floor(($since - ($seconds * $count)) / $seconds2)) != 0)
+            {
+                // add to output var
+                $output .= ($count2 == 1) ? ', 1 '.$name2 : ', '.$count2.' '.$names2;
+            }
+        }
+
+        return str_replace('%time%', $output, _KUNENA_TIME_SINCE);
     }
 
-    $str = !is_bool($show_today) ? $show_today : $usertime_format;
+    // Format a time to make it look purdy.
+    function showDate($time, $mode='datetime_today', $tz='internal')
+    {
+        global $mosConfig_offset;
+        $fbConfig =& CKunenaConfig::getInstance();
 
-    /*
-    // setlocale issues known in multithreaded server env. this affects many shared hostings!
-    if (setlocale(LC_TIME, $mosConfig_locale))
-    {
-        foreach (array
-        (
-            '%a',
-            '%A',
-            '%b',
-            '%B'
-        )as $token)
-            if (strpos($str, $token) !== false)
-                $str = str_replace($token, ucwords((strftime($token, $time))), $str);
-    }
-    else
-    */
-    {
+		$site_offset = $mosConfig_offset;
+        if (!is_numeric($time)) $time = strtotime($time);
+        switch (strtolower($tz)) {
+            case 'utc':
+                $time = $time + $site_offset * 3600;
+                break;
+            case 'internal':
+                break;
+            default:
+		$time = $time + ($site_offset - (float)$tz + $fbConfig->board_ofset) * 3600;
+                break;
+        }
+        if (preg_match('/^config_/', $mode) == 1) {
+            $option = substr($mode, 7);
+            $mode = $fbConfig->$option;
+        }
+        $mode = split('_', $mode);
+        switch (strtolower($mode[0])) {
+            case 'none':
+                return '';
+            case 'time':
+                $usertime_format = _KUNENA_DT_TIME_FMT;
+                $today_format = _KUNENA_DT_TIME_FMT;
+                $yesterday_format = _KUNENA_DT_TIME_FMT;
+                break;
+            case 'date':
+                $usertime_format = _KUNENA_DT_DATE_FMT;
+                $today_format = _KUNENA_DT_DATE_TODAY_FMT;
+                $yesterday_format = _KUNENA_DT_DATE_YESTERDAY_FMT;
+                break;
+            case 'ago':
+                return CKunenaTimeformat::showTimeSince($time);
+                break;
+            default:
+                $usertime_format = _KUNENA_DT_DATETIME_FMT;
+                $today_format = _KUNENA_DT_DATETIME_TODAY_FMT;
+                $yesterday_format = _KUNENA_DT_DATETIME_YESTERDAY_FMT;
+                break;
+        }
+        $todayMod = 2;
+
+        // We can't have a negative date (on Windows, at least.)
+        if ($time < 0) {
+            $time = 0;
+        }
+
+        // Today and Yesterday?
+        if ($mode[count($mode)-1] == 'today')
+        {
+            // Get the current time.
+            $nowtime = CKunenaTimeformat::InternalTime();
+            $then = @getdate($time);
+            $now = @getdate($nowtime);
+
+            // Same day of the year, same year.... Today!
+            if ($then['yday'] == $now['yday'] && $then['year'] == $now['year'])
+                $usertime_format = $today_format;
+
+            // Day-of-year is one less and same year, or it's the first of the year and that's the last of the year...
+            if ($todayMod == '2' && (($then['yday'] == $now['yday'] - 1 && $then['year'] == $now['year']) || ($now['yday'] == 0 && $then['year'] == $now['year'] - 1) && $then['mon'] == 12 && $then['mday'] == 31))
+                $usertime_format = $yesterday_format;
+        }
+
+        $str = $usertime_format;
+
         // Do-it-yourself time localization.  Fun.
         foreach (array
         (
@@ -150,10 +240,9 @@ function KUNENA_timeformat($logTime, $show_today = true)
 
         if (strpos($str, '%p'))
             $str = str_replace('%p', (strftime('%H', $time) < 12 ? 'am' : 'pm'), $str);
+
+        // Format any other characters..
+        return strftime($str, $time);
     }
 
-    // Format any other characters..
-    return strftime($str, $time);
 }
-
-?>

@@ -45,7 +45,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 				<th class = "th-2 <?php echo $boardclass ;?>sectiontableheader" style = "text-align:center; width:25%"><?php echo _GEN_AUTHOR; ?>
 				</th>
 
-				<th class = "th-3 <?php echo $boardclass ;?>sectiontableheader" style = "text-align:center; width:25%"><?php echo _GEN_DATE; ?>
+				<th class = "th-3 <?php echo $boardclass ;?>sectiontableheader" style = "text-align:center; width:25%"><?php echo _KUNENA_USERPROFILE_DATE; ?>
 				</th>
 
 				<th class = "th-3 <?php echo $boardclass ;?>sectiontableheader" style = "text-align:center; width:5%"><?php echo _GEN_HITS; ?>
@@ -90,7 +90,7 @@ defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
 
 						<td class = "td-2" style = "text-align:center; width:15%"> <?php echo kunena_htmlspecialchars(stripslashes($sub->name)); ?></td>
 
-						<td class = "td-3" style = "text-align:center; width:25%"> <?php echo '' . date(_DATETIME, $sub->time) . ''; ?></td>
+						<td class = "td-3" style = "text-align:center; width:25%"> <?php echo '' . CKunenaTimeformat::showDate($sub->time) . ''; ?></td>
 
 						<td class = "td-4" style = "text-align:center; width:5%"> <?php echo $sub->hits; ?></td>
 

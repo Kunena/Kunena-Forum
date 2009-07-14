@@ -985,8 +985,9 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     $msg_location = isset($fbIcons['msglocation']) ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msglocation'] . '" border="0" alt="'._KUNENA_MYPROFILE_LOCATION.': '.kunena_htmlspecialchars(stripslashes($userinfo->location)).'" title="'._KUNENA_MYPROFILE_LOCATION.': '.kunena_htmlspecialchars(stripslashes($userinfo->location)).'" />' : ' '._KUNENA_MYPROFILE_LOCATION.': '.kunena_htmlspecialchars(stripslashes($userinfo->location)).'';
                                 }
                                 if ($userinfo->birthdate !='0001-01-01' AND $userinfo->birthdate !='0000-00-00' and $userinfo->birthdate !='') {
-                                	$birthday = strftime(_KUNENA_DT_MONTHDAY_FMT, strtotime($userinfo->birthdate));
-                                    $msg_birthdate = isset($fbIcons['msgbirthdate']) ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msgbirthdate'] . '" border="0" alt="'._KUNENA_PROFILE_BIRTHDAY.': '.$birthday.'" title="'._KUNENA_PROFILE_BIRTHDAY.': '.$birthday.'" />' : ' '._KUNENA_PROFILE_BIRTHDAY.': '.$birthday.'';                                }
+                                    $birthday = CKunenaTimeformat::showDate($userinfo->birthdate, 'date');
+									$msg_birthdate = isset($fbIcons['msgbirthdate']) ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msgbirthdate'] . '" border="0" alt="'._KUNENA_PROFILE_BIRTHDAY.': '.$birthday.'" title="'._KUNENA_PROFILE_BIRTHDAY.': '.$birthday.'" />' : ' '._KUNENA_PROFILE_BIRTHDAY.': '.$birthday.'';
+                                }
 
                                 if ($userinfo->AIM != '') {
                                     $msg_aim = isset($fbIcons['msgaim']) ? '<img src="'. KUNENA_URLICONSPATH . '' . $fbIcons['msgaim'] . '" border="0" alt="'.kunena_htmlspecialchars(stripslashes($userinfo->AIM)).'" title="AIM: '.kunena_htmlspecialchars(stripslashes($userinfo->AIM)).'" />' : 'AIM: '.kunena_htmlspecialchars(stripslashes($userinfo->AIM)).'';
@@ -1024,7 +1025,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 $fb_subject_txt = stripslashes($fb_subject_txt);
                                 $msg_subject = smile::fbHtmlSafe($fb_subject_txt);
 
-                                $msg_date = date(_DATETIME, $fmessage->time);
+                                $msg_date = CKunenaTimeformat::showDate($fmessage->time);
                                 $fb_message_txt = stripslashes($fmessage->message);
 
                                 $fb_message_txt = smile::smileReplace($fb_message_txt, 0, $fbConfig->disemoticons, $smileyList);
@@ -1095,7 +1096,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                             {
                                                 $modtime = $fmessage->time;
                                             }
-                                            if(($modtime + ((int)$fbConfig->useredittime)) >= CKunenaTools::fbGetInternalTime())
+                                            if(($modtime + ((int)$fbConfig->useredittime)) >= CKunenaTimeformat::internalTime())
                                             {
                                                 $allowEdit = 1;
                                             }

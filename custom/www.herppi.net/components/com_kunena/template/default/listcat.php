@@ -211,7 +211,7 @@ if (count($categories[0]) > 0)
                                 $numtopics = $singlerow->numTopics;
                                 $numreplies = $singlerow->numPosts;
                                 $lastPosttime = $singlerow->time_last_msg;
-                                $lastptime = KUNENA_timeformat(CKunenaTools::fbGetShowTime($singlerow->time_last_msg));
+                                $lastptime = CKunenaTimeformat::showDate($singlerow->time_last_msg);
 
                                 $forumDesc = stripslashes(smile::smileReplace($singlerow->description, 0, $fbConfig->disemoticons, $smileyList));
 						        $forumDesc = nl2br($forumDesc);

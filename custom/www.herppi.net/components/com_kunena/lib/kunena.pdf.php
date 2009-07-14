@@ -130,7 +130,7 @@ function dofreePDF($database)
         $strtmp = str_replace('%version%', "NEW VERSION GOES HERE" /*$fbConfig->version*/, $strtmp); // TODO: fxstein - Need to change version handling
         $pdf->addText(250, 34, 6, $strtmp);
         $strtmp = _KUNENA_PDF_DATE;
-        $strtmp = str_replace('%date%', date('j F, Y, H:i', CKunenaTools::fbGetShowTime()), $strtmp);
+        $strtmp = str_replace('%date%', date('j F, Y, H:i', CKunenaTimeformat::internalTime()), $strtmp);
         $pdf->addText(450, 34, 6, $strtmp);
 
         $pdf->restoreState();
@@ -140,7 +140,7 @@ function dofreePDF($database)
 
         $txt0 = $row[0]->subject;
         $pdf->ezText($txt0, 14);
-        $pdf->ezText(_VIEW_POSTED . " " . $row[0]->name . " - " . date(_DATETIME, $row[0]->time), 8);
+        $pdf->ezText(_VIEW_POSTED . " " . $row[0]->name . " - " . CKunenaTimeformat::showDate($row[0]->time), 8);
         $pdf->ezText("_____________________________________", 8);
         //$pdf->line( 10, 780, 578, 780 );
 
@@ -164,7 +164,7 @@ function dofreePDF($database)
 
                 $txt0 = $reply->subject;
                 $pdf->ezText($txt0, 14);
-                $pdf->ezText(_VIEW_POSTED . " " . $reply->name . " - " . date(_DATETIME, $reply->time), 8);
+                $pdf->ezText(_VIEW_POSTED . " " . $reply->name . " - " . CKunenaTimeformat::showDate($reply->time), 8);
                 $pdf->ezText("_____________________________________", 8);
                 $txt3 = "\n";
                 $txt3 .= stripslashes($mes_text);

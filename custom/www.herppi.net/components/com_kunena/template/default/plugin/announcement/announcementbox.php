@@ -39,7 +39,7 @@ $is_user = (strtolower($my->usertype) <> '');
 
 <?php
 // BEGIN: BOX ANN
-$database->setQuery("SELECT id,title,sdescription,description, created ,published,showdate" . "\n FROM #__fb_announcement  WHERE  published = 1 ORDER BY created DESC LIMIT 1");
+$database->setQuery("SELECT id, title, sdescription, description, created, published, showdate FROM #__fb_announcement WHERE published=1 ORDER BY created DESC LIMIT 1");
 
 $anns = $database->loadObjectList();
 check_dberror("Unable to load announcements.");
@@ -57,7 +57,7 @@ $anndescription = stripslashes(smile::smileReplace($ann->description, 0, $fbConf
 $anndescription = nl2br($anndescription);
 $anndescription = smile::htmlwrap($anndescription, $fbConfig->wrap);
 
-$anncreated = KUNENA_timeformat(strtotime($ann->created));
+$anncreated = CKunenaTimeformat::showDate($ann->created, 'date_today');
 $annpublished = $ann->published;
 $annshowdate = $ann->showdate;
 

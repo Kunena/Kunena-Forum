@@ -32,7 +32,7 @@ if ($func != "")
         $catids = intval($catid);
         $jr_path_menu = array ();
 
-	$fr_title_name = _KUNENA_CATEGORIES;
+		$fr_title_name = _KUNENA_CATEGORIES;
         while ($catids > 0)
         {
             $query = "select * from #__fb_categories where id=$catids and published=1";
@@ -41,16 +41,13 @@ if ($func != "")
 			if (!$results) break;
 			$parent_ids = $results->parent;
 			$fr_name = kunena_htmlspecialchars(trim(stripslashes($results->name)));
-            $sname = CKunenaLink::GetCategoryLink( 'showcat', $catids, $fr_name);
+			$sname = CKunenaLink::GetCategoryLink( 'showcat', $catids, $fr_name);
 
             if ($catid == $catids && $sfunc != "view")
             {
                 $fr_title_name = $fr_name;
-                $jr_path_menu[] = $fr_name;
             }
-            else {
-                $jr_path_menu[] = $sname;
-            }
+			$jr_path_menu[] = $sname;
 
             // next looping
             $catids = $parent_ids;
@@ -93,39 +90,39 @@ if ($func != "")
         $firelast = '';
         for ($i = 0; $i < $jr_forum_count; $i++)
         {
-            if ($i == $jr_forum_count-1) {
+            if ($fbConfig->pathway == true && $i == $jr_forum_count-1) {
                 $firelast .= '<br /><div class="path-element-last">' . $jr_path_menu[$i] . $fireinfo . '</div>';
             }
             else {
-                $firepath .= '<div class="path-element">' . $jr_path_menu[$i] . '</div>';
+                if (!empty($jr_path_menu[$i])) $firepath .= '<div class="path-element">' . $jr_path_menu[$i] . '</div>';
             }
         }
 
-         //get viewing
-        $fb_queryName = $fbConfig->username ? "username" : "name";
-		$query= "SELECT w.userid, u.$fb_queryName AS username , k.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS k ON k.userid=w.userid  WHERE w.link like '%" . addslashes($_SERVER['REQUEST_URI']) . "%' GROUP BY w.userid ORDER BY u.$fb_queryName ASC";
-		$database->setQuery($query);
-		$users = $database->loadObjectList();
-			check_dberror("Unable to load who is online.");
-		$total_viewing = count($users);
-
-	$fireonline = '';
+		$fireonline = '';
         if ($sfunc == "userprofile")
         {
             $fireonline .= _USER_PROFILE;
             $fireonline .= $username;
         }
-        else {
-			$fireonline .= "<div class=\"path-element-users\">($total_viewing " . _KUNENA_PATHWAY_VIEWING . ")&nbsp;";
+        else if ($fbConfig->pathway == true) {
+			// get viewing
+			$fb_queryName = $fbConfig->username ? "username" : "name";
+			$query= "SELECT w.userid, u.$fb_queryName AS username , k.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS k ON k.userid=w.userid  WHERE w.link like '%" . addslashes($_SERVER['REQUEST_URI']) . "%' GROUP BY w.userid ORDER BY u.$fb_queryName ASC";
+			$database->setQuery($query);
+			$users = $database->loadObjectList();
+			check_dberror("Unable to load who is online.");
+			$total_viewing = count($users);
+        	
+        	$fireonline .= "<div class=\"path-element-users\">($total_viewing " . _KUNENA_PATHWAY_VIEWING . ")&nbsp;";
 			$totalguest = 0;
-                        $divider = ', ';
+			$divider = ', ';
 			$lastone = end($users);
 			foreach ($users as $user) {
 				if ($user->userid != 0)
 				{
-                                        if($user==$lastone && !$totalguest){
-                                            $divider = '';
-                                        }
+					if($user==$lastone && !$totalguest){
+						$divider = '';
+					}
 					if ( $user->showOnline > 0 ){
 					$fireonline .= CKunenaLink::GetProfileLink($fbConfig,  $user->userid, $user->username) . $divider;
 					}
@@ -147,13 +144,13 @@ if ($func != "")
 
         $mainframe->setPageTitle(($jr_topic_title ?  $jr_topic_title : $fr_title_name) . ' - ' . stripslashes($fbConfig->board_title));
 
-	$pathway1 = $firepath;
-	$pathway2 = $firelast . $fireonline;
-	unset($spath, $parent_ids, $catids, $results, $sname);
+		$pathway1 = $firepath;
+		$pathway2 = $firelast . $fireonline;
+		unset($spath, $parent_ids, $catids, $results, $sname);
 
-      echo '<div class = "'. $boardclass .'forum-pathway">';
-      echo $pathway1.$pathway2;
-      echo '</div>';
+		echo '<div class = "'. $boardclass .'forum-pathway">';
+		echo $pathway1.$pathway2;
+		echo '</div>';
 }
 ?>
 <!-- / Pathway -->

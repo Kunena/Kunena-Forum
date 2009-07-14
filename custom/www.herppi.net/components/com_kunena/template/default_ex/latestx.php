@@ -125,7 +125,7 @@ if ($func != "mylatest") {
 $since = false;
 if ($sel == "0")
 {
-	$lastvisit = date(_DATETIME, $querytime);
+	$lastvisit = CKunenaTimeformat::showDate($querytime);
 	$since = true;
 }
 
@@ -239,7 +239,7 @@ if ($msglist) foreach ($msglist as $message)
 	$threadids[]                  = $message->id;
 	$messages[$message->parent][] = $message;
 	$last_reply[$message->id]     = $message;
-	$last_read[$message->id]->lastread = $last_reply[$message->thread];
+	$last_read[$message->id]->lastread = $last_reply[$message->thread]->id;
 	$last_read[$message->id]->unread = 0;
 	$hits[$message->id]           = $message->hits;
         $thread_counts[$message->thread] = 0;
@@ -294,7 +294,7 @@ if (count($threadids) > 0)
 	$messages[$message->parent][] = $message;
 	$thread_counts[$message->thread]++;
 	$last_reply[$message->thread] = $last_reply[$message->thread]->time < $message->time ? $message : $last_reply[$message->thread];
-	$last_read[$message->id]->lastread = $last_reply[$message->thread];
+	$last_read[$message->thread]->lastread = $last_reply[$message->thread]->id;
     }
 
     $database->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages "

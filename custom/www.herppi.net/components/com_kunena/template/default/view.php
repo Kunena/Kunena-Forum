@@ -926,7 +926,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 $fb_subject_txt = stripslashes($fb_subject_txt);
                                 $msg_subject = smile::fbHtmlSafe($fb_subject_txt);
 
-                                $msg_date = date(_DATETIME, $fmessage->time);
+                                $msg_date = CKunenaTimeformat::showDate($fmessage->time);
                                 $fb_message_txt = stripslashes($fmessage->message);
 
                                 $fb_message_txt = smile::smileReplace($fb_message_txt, 0, $fbConfig->disemoticons, $smileyList);
@@ -997,7 +997,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                             {
                                                 $modtime = $fmessage->time;
                                             }
-                                            if(($modtime + ((int)$fbConfig->useredittime)) >= CKunenaTools::fbGetInternalTime())
+                                            if(($modtime + ((int)$fbConfig->useredittime)) >= CKunenaTimeformat::internalTime())
                                             {
                                                 $allowEdit = 1;
                                             }

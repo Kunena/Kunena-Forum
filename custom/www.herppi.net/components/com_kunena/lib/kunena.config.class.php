@@ -371,6 +371,14 @@ class CKunenaConfig extends CKunenaConfigBase
     var $fbdefaultpage			 = 'recent';
     // New 1.0.8 config variables
     var $default_sort            = 'asc'; // 'desc' for latest post first
+    // New custom branch config variables
+    var $post_dateformat         = 'ago'; // See CKunenaTimeformat::showDate()
+    var $post_dateformat_hover   = 'datetime'; // See CKunenaTimeformat::showDate()
+    var $stats_countusers        = 'all'; // 'all', 'registered' or 'forum'
+    var $forumtools              = 1; 
+    var $pathway                 = 1; 
+    var $listcat_moderators      = 1; 
+    var $usertopicicons          = 1; 
 
     function CKunenaConfig($KunenaUser=null)
 	{

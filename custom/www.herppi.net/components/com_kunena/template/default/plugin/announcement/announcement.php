@@ -57,8 +57,8 @@ if ($do == "read") {
 	$anndescription = nl2br($anndescription);
 	$anndescription = smile::htmlwrap($anndescription, $fbConfig->wrap);
 
-    $anncreated = KUNENA_timeformat(strtotime($ann->created));
-    $annpublished = $ann->published;
+    $anncreated = CKunenaTimeformat::showDate($ann->created, 'date_today');
+	$annpublished = $ann->published;
     $annshowdate = $ann->showdate;
 
     if ($annpublished > 0) {
@@ -189,7 +189,7 @@ if ($is_editor) {
                                 </td>
 
                                 <td class = "td-2" align="left">
-<?php echo KUNENA_timeformat(strtotime($row->created)); ?>
+									<?php echo CKunenaTimeformat::showDate($row->created, 'date_today'); ?>
                                 </td>
 
                                 <td class = "td-3"  align="left">

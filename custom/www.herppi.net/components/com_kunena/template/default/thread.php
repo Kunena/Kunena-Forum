@@ -214,7 +214,7 @@ if ($fbConfig->allowfavorites)
     </td>
 
     <td align = "center" <?php echo $leaf->id==$id?' class=""'.$boardclass.'sectiontableentry2"':'';?>>
-        <small><?php echo $leaf->moved ? date(_DATETIME, $leaf->time) : date(_DATETIME, $leaf->time); ?></small>
+        <small><?php echo $leaf->moved ? CKunenaTimeformat::showDate($leaf->time) : CKunenaTimeformat::showDate($leaf->time); ?></small>
     </td>
         </tr>
 

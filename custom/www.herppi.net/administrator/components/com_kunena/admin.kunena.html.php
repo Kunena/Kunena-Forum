@@ -918,6 +918,28 @@ require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/
                 </tr>
 
                 <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_POST_DATEFORMAT ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo $lists['post_dateformat']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_POST_DATEFORMAT_DESC ?>
+                    </td>
+                </tr>
+
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_POST_DATEFORMAT_HOVER ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo $lists['post_dateformat_hover']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_POST_DATEFORMAT_HOVER_DESC ?>
+                    </td>
+                </tr>
+
+                <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top"><?php echo _COM_A_SHOWNEW ?>
                     </td>
 
@@ -940,7 +962,40 @@ require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/
                     </td>
                 </tr>
 
-				<tr align = "center" valign = "middle">
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_PATHWAY ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo $lists['pathway']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_PATHWAY_DESC ?>
+                    </td>
+                </tr>
+
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_FORUMTOOLS ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo $lists['forumtools']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_FORUMTOOLS_DESC ?>
+                    </td>
+                </tr>
+
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_LISTCAT_MODERATORS ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo $lists['listcat_moderators']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_LISTCAT_MODERATORS_DESC ?>
+                    </td>
+                </tr>
+
+		<tr align = "center" valign = "middle">
                     <td align = "left" valign = "top"><?php echo _KUNENA_MAMBOT_SUPPORT ?>
                     </td>
 
@@ -948,6 +1003,17 @@ require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_MAMBOT_SUPPORT_DESC ?>
+                    </td>
+                </tr>
+
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_USERTOPICICONS ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo $lists['usertopicicons']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_USERTOPICICONS_DESC ?>
                     </td>
                 </tr>
 
@@ -2304,6 +2370,17 @@ require_once ($mainframe->getCfg('absolute_path') . '/components/com_kunena/lib/
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_SHOWSTATSDESC; ?>
+                    </td>
+                </tr>
+
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_STATS_COUNTUSERS; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo $lists['stats_countusers']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_CFG_STATS_COUNTUSERS_DESC; ?>
                     </td>
                 </tr>
 

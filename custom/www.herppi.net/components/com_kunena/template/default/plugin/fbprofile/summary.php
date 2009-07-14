@@ -85,11 +85,11 @@ $lastvisitDate = strftime(_KUNENA_DT_DATETIME_FMT, strtotime($userinfo->lastvisi
     <?php } ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_REGISTERDATE; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo $registerDate; ?></td>
+      <td  class = "td-2 fbm"><?php echo CKunenaTimeformat::showDate($userinfo->registerDate, 'date_today', 'utc'); ?></td>
     </tr>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_LASTVISITDATE; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo $lastvisitDate; ?></td>
+      <td  class = "td-2 fbm"><?php echo CKunenaTimeformat::showDate($userinfo->lastvisitDate, 'datetime_today', 'utc'); ?></td>
     </tr>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_POSTS; ?></b> </td>
@@ -121,7 +121,7 @@ $lastvisitDate = strftime(_KUNENA_DT_DATETIME_FMT, strtotime($userinfo->lastvisi
     ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_PROFILE_BIRTHDAY; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo $birthday; ?></td>
+      <td  class = "td-2 fbm"><?php echo CKunenaTimeformat::showDate($userinfo->birthdate, 'date'); ?></td>
     </tr>
     <?php }?>
     <?php  if ( $userinfo->location !='' ) { ?>

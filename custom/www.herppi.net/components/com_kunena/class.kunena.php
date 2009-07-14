@@ -349,13 +349,16 @@ function getFBGroupName($id) {
 class CKunenaTools {
     var $id = null;
 
-/*
+    // TODO: DEPRECATED, remove this function:
+    /*
     function fbGetCurrentTime () {
     	// tells current FB internal representing time
         $fbConfig =& CKunenaConfig::getInstance();
         return time() + ($fbConfig->board_ofset * 3600);
     }
 */
+
+	// TODO: DEPRECATED, remove this function:
     function fbGetInternalTime ($time=null) {
     	// tells internal FB representing time from UTC $time
         $fbConfig =& CKunenaConfig::getInstance();
@@ -369,6 +372,7 @@ class CKunenaTools {
         return $time + ($fbConfig->board_ofset * 3600);
     }
 
+    // TODO: DEPRECATED, remove this function:
     function fbGetShowTime ($time=null, $space='FB') {
     	// converts internal (FB)|UTC representing time to display time
     	// could consider user properties (zones) for future
@@ -1181,6 +1185,7 @@ function fbGetArrayInts($name, $type = NULL) {
     return $array;
     }
 
+    // TODO: DEPRECATED, remove this function:
     function time_since($older_date, $newer_date)
     {
     // ToDo: return code plus string to decide concatenation.

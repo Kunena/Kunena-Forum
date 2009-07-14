@@ -48,7 +48,20 @@ function list_users()
     $limit = (int) mosGetParam($_REQUEST, 'limit', $fbConfig->userlist_rows);
 
     // Total
-    $database->setQuery("SELECT count(*) FROM #__users");
+    if ($fbConfig->stats_countusers == 'forum')
+    {
+        $query_countusers = "SELECT COUNT(*) FROM #__fb_users";
+    } 
+    else if ($fbConfig->stats_countusers == 'all') 
+    {
+        $query_countusers = "SELECT COUNT(*) FROM #__users";
+    }
+    else // registered
+    {
+        $query_countusers = "SELECT COUNT(*) FROM #__users WHERE lastvisitDate!='0000-00-00 00:00:00' OR block=0";
+    }
+
+    $database->setQuery($query_countusers);    
     $total_results = $database->loadResult();
 
     // Search total
@@ -96,12 +109,10 @@ function list_users()
 function convertDate($date)
 {
 	// used for non-FB dates only!
-    $format = _KUNENA_USRL_DATE_FORMAT;
-
     if ($date != "0000-00-00 00:00:00" && ereg("([0-9]{4})-([0-9]{2})-([0-9]{2})[ ]([0-9]{2}):([0-9]{2}):([0-9]{2})", $date, $regs))
     {
         $date = mktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
-        $date = $date > -1 ? strftime($format, CKunenaTools::fbGetShowTime($date, 'UTC')) : '-';
+        $date = $date > -1 ?  CKunenaTimeformat::showDate($date, 'datetime_today', 'utc') : '-';
     }
     else {
         $date = _KUNENA_USRL_NEVER;
@@ -162,7 +173,7 @@ class HTML_userlist_content
                                         <span class="fb_title fbl"> <?php echo _KUNENA_USRL_USERLIST; ?></span>
 
                                         <?php
-                                        printf(_KUNENA_USRL_REGISTERED_USERS, $mosConfig_sitename, $total_results);
+                                        printf(_KUNENA_USRL_TOTAL_USERS, $mosConfig_sitename, $total_results);
                                         ?>
                                     </div>
                                 </td>
@@ -560,11 +571,11 @@ class HTML_userlist_content
                                     }
 
                                     if ($fbConfig->userlist_joindate) {
-                                        echo "\t\t<td  class=\"td-10 fbs\"  align=\"center\">" . convertDate($ulrow->registerDate) . "</td>\n";
+                                        echo "\t\t<td  class=\"td-10 fbs\"  align=\"center\">" . CKunenaTimeformat::showDate($ulrow->registerDate, 'date_today', 'utc') . "</td>\n";
                                     }
 
                                     if ($fbConfig->userlist_lastvisitdate) {
-                                        echo "\t\t<td  class=\"td-11 fbs\"  align=\"center\">" . convertDate($ulrow->lastvisitDate) . "</td>\n";
+                                        echo "\t\t<td  class=\"td-11 fbs\"  align=\"center\">" . CKunenaTimeformat::showDate($ulrow->lastvisitDate, 'date_today', 'utc') . "</td>\n";
                                     }
                                     ?>
 

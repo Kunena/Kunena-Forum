@@ -139,8 +139,8 @@ if (in_array($catid, $allow_forum))
         $threadids[] = $message->id;
         $messages[$message->parent][] = $message;
         $last_reply[$message->id] = $message;
-	$last_read[$message->id]->lastread = $last_reply[$message->thread];
-	$last_read[$message->id]->unread = 0;
+		$last_read[$message->id]->lastread = $last_reply[$message->thread]->id;
+		$last_read[$message->id]->unread = 0;
         $hits[$message->id] = $message->hits;
         $thread_counts[$message->id] = 0;
         $messagetext[$message->id] = substr(smile::purify($message->messagetext), 0, 500);
@@ -182,7 +182,7 @@ if (in_array($catid, $allow_forum))
             $messages[$message->parent][] = $message;
             $thread_counts[$message->thread]++;
             $last_reply[$message->thread] = ($last_reply[$message->thread]->time < $message->time) ? $message : $last_reply[$message->thread];
-            $last_read[$message->id]->lastread = $last_reply[$message->thread];
+            $last_read[$message->thread]->lastread = $last_reply[$message->thread]->id;
         }
 
         $database->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages "

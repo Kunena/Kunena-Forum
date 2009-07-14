@@ -797,6 +797,31 @@ function showConfig($option)
 	$lists['autoembedebay'] = mosHTML::selectList($yesno, 'cfg_autoembedebay', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->autoembedebay);
 	$lists['highlightcode'] = mosHTML::selectList($yesno, 'cfg_highlightcode', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->highlightcode);
 
+	require_once($mainframe->getCfg("absolute_path") . "/components/com_kunena/lib/kunena.timeformat.class.php");
+	// Date formats for the site
+	$dateformatlist = array ();
+	$time = CKunenaTimeformat::internalTime() - 80000;
+	$dateformatlist[] = mosHTML::makeOption('none', _KUNENA_OPTION_DATEFORMAT_NONE);
+	$dateformatlist[] = mosHTML::makeOption('ago', CKunenaTimeformat::showDate($time, 'ago'));
+	$dateformatlist[] = mosHTML::makeOption('datetime_today', CKunenaTimeformat::showDate($time, 'datetime_today'));
+	$dateformatlist[] = mosHTML::makeOption('datetime', CKunenaTimeformat::showDate($time, 'datetime'));
+	// build the html select list
+	$lists['post_dateformat'] = mosHTML::selectList($dateformatlist, 'cfg_post_dateformat', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->post_dateformat);
+	$lists['post_dateformat_hover'] = mosHTML::selectList($dateformatlist, 'cfg_post_dateformat_hover', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->post_dateformat_hover);
+
+	// Stats user count
+        $stats_countuserslist = array ();
+        $stats_countuserslist[] = mosHTML::makeOption('all', _KUNENA_OPTION_STATS_COUNTUSERS_ALL);
+        $stats_countuserslist[] = mosHTML::makeOption('registered', _KUNENA_OPTION_STATS_COUNTUSERS_REGISTERED);
+        $stats_countuserslist[] = mosHTML::makeOption('forum', _KUNENA_OPTION_STATS_COUNTUSERS_FORUM);
+        // build the html select list
+        $lists['stats_countusers'] = mosHTML::selectList($stats_countuserslist, 'cfg_stats_countusers', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->stats_countusers);
+
+	$lists['forumtools'] = mosHTML::selectList($yesno, 'cfg_forumtools', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->forumtools);
+	$lists['pathway'] = mosHTML::selectList($yesno, 'cfg_pathway', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pathway);
+	$lists['listcat_moderators'] = mosHTML::selectList($yesno, 'cfg_listcat_moderators', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->listcat_moderators);
+	$lists['usertopicicons'] = mosHTML::selectList($yesno, 'cfg_usertopicicons', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->usertopicicons);
+
     html_Kunena::showConfig($fbConfig, $lists, $option);
 }
 
@@ -1229,7 +1254,7 @@ function doprune($database, $option)
         check_dberror("Unable to load thread list.");
 
     // Convert days to seconds for timestamp functions...
-    $prune_date = CKunenaTools::fbGetInternalTime() - ($prune_days * 86400);
+    $prune_date = CKunenaTimeformat::internalTime() - ($prune_days * 86400);
 
     if (count($threadlist) > 0)
     {

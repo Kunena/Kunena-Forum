@@ -129,7 +129,7 @@ include_once(KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
         </tr>
 
             <?php
-            if ($parentid == 0)
+            if ($parentid == 0 && $fbConfig->usertopicicons == true)
             {
 ?>
         <tr class = "<?php echo $boardclass; ?>sectiontableentry2">

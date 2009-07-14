@@ -199,6 +199,25 @@ if (count($messages[0]) > 0)
 
 
                         <?php
+				if ($fbConfig->usertopicicons) 
+				{
+					$topic_icon = $topic_emoticons[$leaf->topic_emoticon];
+				}
+				else
+				{
+					$topic_icon_dir = KUNENA_TMPLTMAINIMGURL ."/images/topicicons/";
+					if ($fbConfig->shownew && ($my->id != 0 && ($prevCheck < $last_reply[$leaf->id]->time) && !in_array($last_reply[$leaf->id]->thread, $read_topics))) {
+						$topic_icon_dir .= 'green/';
+					} else {
+						$topic_icon_dir .= 'golden/';
+					}
+
+					$topic_icon = $topic_icon_dir ."message.gif";
+					if ($leaf->ordering) $topic_icon = $topic_icon_dir ."sticky.gif";
+					if ($leaf->myfavorite) $topic_icon = $topic_icon_dir ."favorite.gif";
+					if ($leaf->locked) $topic_icon = $topic_icon_dir ."locked.gif";
+					if ($leaf->moved) $topic_icon = $topic_icon_dir ."moved.gif";
+				}
                             if ($leaf->moved == 0)
                             {
                                 // Need to add +1 as we only have the replies in the buffer
@@ -210,7 +229,7 @@ if (count($messages[0]) > 0)
 
                                 <td class = "td-2"  align="center">
                                     <?php echo CKunenaLink::GetSimpleLink($id);
-                                    	echo $leaf->topic_emoticon == 0 ? '<img src="' . KUNENA_URLEMOTIONSPATH . 'default.gif" border="0"  alt="" />' : "<img src=\"" . $topic_emoticons[$leaf->topic_emoticon] . "\" alt=\"emo\" border=\"0\" />"; ?>
+					echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->id, $unreadPage, $fbConfig->messages_per_page, "<img src=\"" . $topic_icon . "\" alt=\"emo\" border=\"0\" />", $last_read[$leaf->id]->lastread); ?>
                                 </td>
 
                                 <?php
@@ -316,8 +335,7 @@ if (count($messages[0]) > 0)
 
                             <td class = "td-2">
                                 <?php echo CKunenaLink::GetSimpleLink($id);?>
-
-                                <img src = "<?php echo KUNENA_URLEMOTIONSPATH ;?>arrow.gif" alt = "emo"/>
+                                <?php echo CKunenaLink::GetThreadLink('view', $newURLParams['catid'], $newURLParams['id'], '<img src = "'.$topic_icon.'" alt = "moved"/>', '', 'follow'); ?>
                             </td>
 
                             <td class = "td-3">
@@ -335,7 +353,7 @@ if (count($messages[0]) > 0)
                         <div class="fbs">
                         <!-- By -->
 
-        <span class="topic_posted_time"><?php echo _KUNENA_POSTED_AT ?> <?php echo time_since($leaf->time , time() + ($fbConfig->board_ofset * 3600)); ?> <?php echo _KUNENA_AGO ?>
+        <span class="topic_posted_time" title="<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat_hover'); ?>"><?php echo _KUNENA_POSTED_AT ?> <?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat'); ?>
         </span>
 <?php
 	if ($leaf->name) 
@@ -444,8 +462,8 @@ if (count($messages[0]) > 0)
         <!-- /Latest Post -->
         <br />
                                 <!-- Latest Post Date -->
-        <span class="topic_date">
-        <?php echo time_since($last_reply[$leaf->id]->time , time() + ($fbConfig->board_ofset * 3600)); ?> <?php echo _KUNENA_AGO ?>
+        <span class="topic_date" title="<?php echo CKunenaTimeformat::showDate($last_reply[$leaf->id]->time, 'config_post_dateformat_hover'); ?>">
+        <?php echo CKunenaTimeformat::showDate($last_reply[$leaf->id]->time, 'config_post_dateformat'); ?>
         </span>
         <!-- /Latest Post Date -->
         </div>

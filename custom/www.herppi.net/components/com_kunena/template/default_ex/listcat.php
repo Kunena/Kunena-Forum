@@ -245,7 +245,7 @@ if (count($categories[0]) > 0)
                                 $numtopics = $singlerow->numTopics;
                                 $numreplies = $singlerow->numPosts;
                                 $lastPosttime = $singlerow->time_last_msg;
-                                $lastptime = KUNENA_timeformat(CKunenaTools::fbGetShowTime($singlerow->time_last_msg));
+                                $lastptime = CKunenaTimeformat::showDate($singlerow->time_last_msg);
 
                                 $forumDesc = stripslashes(smile::smileReplace($singlerow->description, 0, $fbConfig->disemoticons, $smileyList));
 						        $forumDesc = nl2br($forumDesc);
@@ -350,9 +350,13 @@ if (count($categories[0]) > 0)
                                                 {
                                                     $tmpIcon = '<img src="'.KUNENA_URLCATIMAGES.$singlerow->id.'_on.gif" border="0" class="forum-cat-image"alt=" " />';
                                                 }
-                                                else
+                                                else if ($fbConfig->usertopicicons == true)
                                                 {
                                                     $tmpIcon = isset($fbIcons['unreadforum']) ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['unreadforum'].'" border="0" alt="'._GEN_FORUM_NEWPOST.'" title="'._GEN_FORUM_NEWPOST.'" />' : stripslashes($fbConfig->newchar);
+                                                }
+                                                else
+                                                {
+                                                	$tmpIcon = '<img src="'.KUNENA_TMPLTMAINIMGURL .'/images/topicicons/green/forum.gif" border="0" alt="'._GEN_FORUM_NEWPOST.'" title="'._GEN_FORUM_NEWPOST.'" />';
                                                 }
                                             }
                                             else
@@ -362,11 +366,14 @@ if (count($categories[0]) > 0)
                                                 {
                                                     $tmpIcon = '<img src="'.KUNENA_URLCATIMAGES.$singlerow->id.'_off.gif" border="0" class="forum-cat-image" alt=" " />';
                                                 }
-                                                else
+                                                else if ($fbConfig->usertopicicons == true)
                                                 {
                                                     $tmpIcon = isset($fbIcons['readforum']) ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['readforum'].'" border="0" alt="'._GEN_FORUM_NOTNEW.'" title="'._GEN_FORUM_NOTNEW.'" />' : stripslashes($fbConfig->newchar);
                                                 }
-                                            }
+                                                else
+                                                {
+                                                	$tmpIcon = '<img src="'.KUNENA_TMPLTMAINIMGURL .'/images/topicicons/golden/forum.gif" border="0" alt="'._GEN_FORUM_NEWPOST.'" title="'._GEN_FORUM_NEWPOST.'" />';
+                                                }                                            }
                                         }
                                         // Not Login Cat Images
                                         else
@@ -374,9 +381,14 @@ if (count($categories[0]) > 0)
                                             if (is_file(KUNENA_ABSCATIMAGESPATH . "" . $singlerow->id . "_notlogin.gif")) {
                                                 $tmpIcon = '<img src="'.KUNENA_URLCATIMAGES.$singlerow->id.'_notlogin.gif" border="0" class="forum-cat-image" alt=" " />';
                                             }
-                                            else {
+                                            else if ($fbConfig->usertopicicons == true)
+                                            {
                                                 $tmpIcon = isset($fbIcons['notloginforum']) ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['notloginforum'].'" border="0" alt="'._GEN_FORUM_NOTNEW.'" title="'._GEN_FORUM_NOTNEW.'" />' : stripslashes($fbConfig->newchar);
                                             }
+                                            else
+                                            {
+                                            	$tmpIcon = '<img src="'.KUNENA_TMPLTMAINIMGURL .'/images/topicicons/golden/forum.gif" border="0" alt="'._GEN_FORUM_NEWPOST.'" title="'._GEN_FORUM_NEWPOST.'" />';
+                                            }  
                                         }
                                         echo CKunenaLink::GetCategoryLink('showcat', $singlerow->id, $tmpIcon);
                                         ?>
@@ -536,14 +548,15 @@ if (count($categories[0]) > 0)
                                         <?php
                                         }
 
-                                        //get the Moderator list for display
-                                        $database->setQuery("select * from #__fb_moderation left join #__users on #__users.id=#__fb_moderation.userid where #__fb_moderation.catid=$singlerow->id");
-                                        $modslist = $database->loadObjectList();
-                                        	check_dberror("Unable to load moderators.");
+                                        if ($fbConfig->listcat_moderators == TRUE) {
+                                            //get the Moderator list for display
+                                            $database->setQuery("select * from #__fb_moderation left join #__users on #__users.id=#__fb_moderation.userid where #__fb_moderation.catid=$singlerow->id");
+                                            $modslist = $database->loadObjectList();
+                                            check_dberror("Unable to load moderators.");
 
-                                        // moderator list
-                                        if (count($modslist) > 0)
-                                        {
+                                            // moderator list
+                                            if (count($modslist) > 0)
+                                            {
                                         ?>
 
                                             <div class = "<?php echo $boardclass ;?>thead-moderators fbs">
@@ -560,6 +573,7 @@ if (count($categories[0]) > 0)
                                             </div>
 
                                         <?php
+                                            }
                                         }
 
                                         if ($is_Mod)

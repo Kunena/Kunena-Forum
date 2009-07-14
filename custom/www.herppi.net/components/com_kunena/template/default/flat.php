@@ -377,7 +377,7 @@ if (count($messages[0]) > 0)
 
                             <td class = "td-6">
                                 <div class = "fb-latest-subject-date fbs">
-<?php echo $leaf->moved ? _KUNENA_TOPIC_MOVED_LONG : date(_DATETIME, $last_reply[$leaf->id]->time); ?>
+<?php echo $leaf->moved ? _KUNENA_TOPIC_MOVED_LONG : CKunenaTimeformat::showDate($last_reply[$leaf->id]->time); ?>
 
 <?php
     if ($leaf->moved) {

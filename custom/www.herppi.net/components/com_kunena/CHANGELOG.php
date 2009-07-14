@@ -30,6 +30,23 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+CUSTOM BRANCH
+
+14-July-2009 Matias
++ [#15554] Custom branch: In forum view make topic icon clickable, link points to first unread message
++ [#15554] Custom branch: Add configuration option for user defined topic icons
++ [#15554] Custom branch: Add default icon set when user defined topic icons is set to 'No'
++ [#15554] Custom branch: Add configuration option for enabling / disabling Forum Tools
++ [#15554] Custom branch: Add configuration option for showing users in the Pathway
++ [#15554] Custom branch: Add configuration option for showing moderators in Category View
+^ [#15554] Custom branch: Moved time related functions to CKunenaTimeformat:
+  KUNENA_timeformat -> CKunenaTimeformat::showDate
+  CKunenaTools::fbGetInternalTime -> CKunenaTimeformat::internalTime
+# [#15554] Custom branch: Use always localized time formating by using new class
++ [#15554] Custom branch: Add titles for times in flat.php just like in message.php
++ [#15554] Custom branch: Make date format configurable for latestx, showcat and view
++ [#15554] Custom branch: Make user count algorithm configurable in Stats and Userlist
+
 Kunena 1.0.11
 
 10-July-2009 fxstein

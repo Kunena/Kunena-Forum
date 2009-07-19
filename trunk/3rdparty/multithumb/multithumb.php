@@ -168,8 +168,9 @@ table.multithumb {
    if($botMtGlobals['clear_cache']) {
 	  $par = mysql_real_escape_string(str_replace('clear_cache=1','clear_cache=0',$botparam->_raw));
 	  $query = "update #__mambots set params = '$par' WHERE id=$id";
-	  $database->setQuery( $query );
-	  $database->query();
+	  $mthumb_db = &JFactory::getDBO();
+	  $mthumb_db->setQuery( $query );
+	  $mthumb_db->query();
 	  foreach(glob("$jpath_site/plugins/content/multithumb/thumbs/{*.gif,*.jpg,*.png,*.GIF,*.JPG,*.PNG}", GLOB_BRACE) as $fn) unlink($fn);
       foreach(glob("$jpath_site/plugins/content/multithumb/images/{*.gif,*.jpg,*.png,*.GIF,*.JPG,*.PNG}", GLOB_BRACE) as $fn) unlink($fn);
    }
@@ -806,7 +807,6 @@ function bot_mt_image_replacer(&$matches) {
                    }
                    break;
 	           case 'rokzoom': // rokZoom
-//	              $this->botAddMultiThumbHeader($popup_type=="lightbox"?'lb':'sb');
 	              $imgtemp = '<a target="_blank" href="'.$imgurl.'" rel="rokzoom['.$alt.']" title="'.$caption.'">';
 	              if($max_thumbnails) {
 	                 if(!isset($mt_thumbnail_count[$alt])) $mt_thumbnail_count[$alt] = 0;
@@ -814,7 +814,15 @@ function bot_mt_image_replacer(&$matches) {
 	                 if($mt_thumbnail_count[$alt]>$max_thumbnails) return $imgtemp."</a>\n";
 	              }
 	              break;
-	                   case 'none': // No popup, just thumbnail
+	           case 'rokbox': // rokBox
+	              $imgtemp = '<a target="_blank" href="'.$imgurl.'" rel="rokbox ('.$alt.')" title="'.$caption.'">';
+	              if($max_thumbnails) {
+	                 if(!isset($mt_thumbnail_count[$alt])) $mt_thumbnail_count[$alt] = 0;
+	                 $mt_thumbnail_count[$alt]+=1;
+	                 if($mt_thumbnail_count[$alt]>$max_thumbnails) return $imgtemp."</a>\n";
+	              }
+	              break;
+	              case 'none': // No popup, just thumbnail
              default:
               $imgtemp = '';
         }

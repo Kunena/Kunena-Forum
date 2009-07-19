@@ -1,0 +1,148 @@
+/* Last-Modified: 28/06/06 00:08:22 */
+#GB_overlay {
+    background-color: #000;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+#GB_window {
+    left: 0;
+    top: 0;
+    font-size: 1px;
+    position: absolute;
+    overflow: visible;
+    z-index: 150;
+}
+
+#GB_window .content {
+    width: auto;
+    margin: 0;
+    padding: 0;
+}
+
+#GB_frame {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+
+.GB_Gallery {
+    margin: 0 22px 0 22px;
+}
+
+.GB_Gallery .content {
+    background-color: #fff;
+    border: 3px solid #ddd;
+}
+
+.GB_header {
+    top: 10px;
+    left: 0;
+    margin: 0;
+    z-index: 500;
+    position: absolute;
+    border-bottom: 2px solid #555;
+    border-top: 2px solid #555;
+}
+
+.GB_header .inner {
+    background-color: #333;
+    font-family: Arial, Verdana, sans-serif;
+    padding: 2px 20px 2px 20px;
+}
+
+.GB_header table {
+    margin: 0;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.GB_header .caption {
+    text-align: left;
+    color: #eee;
+    white-space: nowrap;
+    font-size: 20px;
+}
+
+.GB_header .close {
+    text-align: right;
+}
+
+.GB_header .close img {
+    z-index: 500;
+    cursor: pointer;
+}
+
+.GB_header .middle {
+    white-space: nowrap;
+    text-align: center;
+}
+
+
+#GB_middle {
+    color: #eee;
+}
+
+#GB_middle img {
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+#GB_middle .disabled {
+    cursor: default;
+}
+
+#GB_middle .left {
+    padding-right: 10px;
+}
+
+#GB_middle .right {
+    padding-left: 10px;
+}
+
+
+.GB_Window .content {
+    background-color: #fff;
+    border: 3px solid #ccc;
+    border-top: none;
+}
+
+.GB_Window .header {
+    border-bottom: 1px solid #aaa;
+    border-top: 1px solid #999;
+    border-left: 3px solid #ccc;
+    border-right: 3px solid #ccc;
+    margin: 0;
+
+    height: 22px;
+    font-size: 12px;
+    padding: 3px 0;
+    color: #333;
+}
+
+.GB_Window .caption {
+    font-size: 12px;
+    text-align: left;
+    font-weight: bold;
+    white-space: nowrap;
+    padding-right: 20px;
+}
+
+.GB_Window .close { text-align: right; }
+.GB_Window .close span { 
+    font-size: 12px;
+    cursor: pointer; 
+}
+.GB_Window .close img {
+    cursor: pointer;
+    padding: 0 3px 0 0;
+}
+
+.GB_Window .on { border-bottom: 1px solid #333; }
+.GB_Window .click { border-bottom: 1px solid red; }

@@ -15,19 +15,19 @@ jimport('joomla.event.plugin');
 jimport('joomla.document.document');
 
 class plgContentMultithumb extends JPlugin {
- 
+
  function plgContentMultithumb ( &$subject ) {
 	 global $plgContentMultithumb_live_site;
      $plgContentMultithumb_live_site = JURI :: base();
      if(substr($plgContentMultithumb_live_site, -1, 1)=='/')
         $plgContentMultithumb_live_site = substr($plgContentMultithumb_live_site, 0, -1);
-     
- 	 parent::__construct( $subject );  
+
+ 	 parent::__construct( $subject );
 	 $this->_plugin = JPluginHelper::getPlugin( 'content', 'multithumb' );
 	 $this->_params = new JParameter( $this->_plugin->params );
      $this->_live_site = $plgContentMultithumb_live_site;
   }
-  
+
   function onPrepareContent ( &$row, &$params, $page=0 ) {
 	$published	= JPluginHelper::isEnabled('content','multithumb');
     if (!$published ) {
@@ -38,16 +38,16 @@ class plgContentMultithumb extends JPlugin {
 	global $mainframe;
 	global $multithumbMessage;
 	global $multithumbVersion;
-	
+
 	$document 	= &JFactory::getDocument();
-	
+
 	$multithumbMessage = '';
-   	$multithumbVersion = 'Multithumb 2.0  alpha 1.0 for Joomla 1.5';
+   	$multithumbVersion = 'Multithumb 2.1 for Joomla 1.5';
 	$jpath_site=JPATH_SITE;
 
    global $regex;
 	global $mosConfig_lang;
-   
+
    global $mt_thumbnail_count;
    global $mt_gallery_count;
    global $botmtversion, $multithumb_msg, $isfirstimage;
@@ -55,18 +55,18 @@ class plgContentMultithumb extends JPlugin {
    $mt_thumbnail_count = array();
    $mt_gallery_count = 0;
    static $bot_mt_screenres_header_added = 0;
-   
-   $isfirstimage = true;   
-   $botmtversion = 'Multithumb 2.1 alpha 3';
+
+   $isfirstimage = true;
+   $botmtversion = 'Multithumb 2.1';
    #$botMtLinkText = @$row->link_text;
    #$botMtLinkOn = @$row->link_on;
    $botMtLinkText = 'Read more';
    $botMtLinkOn = "$this->_live_site/index.php?option=com_content&view=article&id=$row->slug&catid=$row->catslug";
-   
+
    $multithumb_msg = '';
 
    $botparam=$this->_params;
-   
+
    $only_cats = $botparam->get('only_cats', '');
    $ignore_cats = $botparam->get('ignore_cats', '');
    @$preg_cat = '/(;|^) *' . preg_quote(trim($row->category)) . ' *(;|$)/i';
@@ -83,8 +83,8 @@ class plgContentMultithumb extends JPlugin {
          return true;
    else
         $botMtGlobals['blog_mode'] = 'popup';
-        
-   
+
+
    $botMtGlobals['only_classes'] = $botparam->get('only_classes', '');
    $botMtGlobals['thumbclass'] = $botparam->get('thumbclass', 'multithumb');
    $botMtGlobals['only_tagged'] = $botparam->get('only_tagged', 0);
@@ -104,7 +104,7 @@ class plgContentMultithumb extends JPlugin {
         $header = '<script type="text/javascript" language="javascript">document.cookie= "botmtscreenres=" + screen.width+"x"+screen.height;</script>';
         $document->addCustomTag($header);
     }
-   }    
+   }
    $botMtGlobals['popup_type'] = $botparam->get('popup_type', 'lightbox');
    $botMtGlobals['max_thumbnails'] = $botparam->get('max_thumbnails', 0);
    $botMtGlobals['thumb_bg'] = $botparam->get('thumb_bg', '#FFFFFF');
@@ -146,7 +146,7 @@ div.mtImgBoxStyle {
  margin:5px;
 }
 
-/* 
+/*
 Styles for the caption box below/above the image.
 Change font family and text color etc. here.
 */
@@ -158,7 +158,7 @@ div.mtCapStyle {
  text-align:center;
  overflow:hidden;
 }
-/* 
+/*
 Styles for the table based Multithumb gallery
 */
 table.multithumb {
@@ -184,7 +184,7 @@ table.multithumb {
 	  $regex = '#<img[^>]*src=(["\'])([^"\']*)\1[^>]*>';
     $regex .= '|{multithumb([^}]*)}#is';
    $row->text = preg_replace_callback($regex, array($this,'bot_mt_image_replacer'), $row->text);
-   
+
    if($multithumb_msg)
       switch($botMtGlobals['error_msg']) {
          case 'popup':
@@ -201,7 +201,7 @@ table.multithumb {
 function create_watermark($sourcefile_id, $watermarkfile, $x, $y, $transcol = false, $transparency = 100) {
     global $multithumb_msg;
     static $disable_wm_ext_warning, $disable_wm_load_warning, $disable_alpha_warning;
-    
+
     //Get the resource ids of the pictures
     $fileType = strtolower(substr($watermarkfile, strlen($watermarkfile)-3));
     switch($fileType) {
@@ -225,7 +225,7 @@ function create_watermark($sourcefile_id, $watermarkfile, $x, $y, $transcol = fa
         $disable_wm_load_warning = true;
         return false;
     }
-    
+
     @imageAlphaBlending($watermarkfile_id, false);
     $result = @imageSaveAlpha($watermarkfile_id, true);
     if(!$result) {
@@ -235,7 +235,7 @@ function create_watermark($sourcefile_id, $watermarkfile, $x, $y, $transcol = fa
         return false;
     }
 
-    //Get the sizes of both pix  
+    //Get the sizes of both pix
   $sourcefile_width=imageSX($sourcefile_id);
   $sourcefile_height=imageSY($sourcefile_id);
   $watermarkfile_width=imageSX($watermarkfile_id);
@@ -246,23 +246,23 @@ function create_watermark($sourcefile_id, $watermarkfile, $x, $y, $transcol = fa
     $dest_x = $x;
   else
     $dest_x = $sourcefile_width - $watermarkfile_width + $x;
-    
+
   if(!$y)
     $dest_y = ( $sourcefile_height / 2 ) - ( $watermarkfile_height / 2 );
   elseif($y>0)
     $dest_y = $y;
   else
-    $dest_y = $sourcefile_height - $watermarkfile_height + $y;      
-    
-   
+    $dest_y = $sourcefile_height - $watermarkfile_height + $y;
+
+
     // if a gif, we have to upsample it to a truecolor image
     if($fileType == 'gif') {
         // create an empty truecolor container
         $tempimage = imagecreatetruecolor($sourcefile_width, $sourcefile_height);
-       
+
         // copy the 8-bit gif into the truecolor image
         imagecopy($tempimage, $sourcefile_id, 0, 0, 0, 0, $sourcefile_width, $sourcefile_height);
-       
+
         // copy the source_id int
         $sourcefile_id = $tempimage;
     }
@@ -275,7 +275,7 @@ function create_watermark($sourcefile_id, $watermarkfile, $x, $y, $transcol = fa
         imagecopy($sourcefile_id, $watermarkfile_id, $dest_x, $dest_y, 0, 0, $watermarkfile_width, $watermarkfile_height); // True alphablend
 
     imagedestroy($watermarkfile_id);
-   
+
 }
 
 function botmt_thumbnail($filename, $dest_folder, &$width, &$height, $proportion='bestfit', $bgcolor = 0xFFFFFF, $watermarkfile = '') {
@@ -290,7 +290,7 @@ function botmt_thumbnail($filename, $dest_folder, &$width, &$height, $proportion
       if(file_exists($alt_filename))
          $filename = $alt_filename;
     }
-    
+
    $size = @getimagesize($filename);
    if(!$size) {
        $multithumb_msg .= "There was a problem loading image $filename\\n";
@@ -303,7 +303,7 @@ function botmt_thumbnail($filename, $dest_folder, &$width, &$height, $proportion
       $height = $origh;
    }
    if($origw<$width && $origh<$height) return false;
-   
+
     $watermark = $watermarkfile?1:0;
     if($width || $height)
         $prefix = substr($proportion,0,1) . ".$width.$height.$bgcolor.$watermark.";
@@ -400,7 +400,7 @@ function botmt_thumbnail($filename, $dest_folder, &$width, &$height, $proportion
         $dst_img = ImageCreateTrueColor($width, $height);
         imagefill( $dst_img, 0,0, $bgcolor);
         imagecopyresampled($dst_img,$src_img, $dst_x, $dst_y, $src_x, $src_y, $newwidth,$newheight,$origw, $origh);
-        
+
         if($watermarkfile) {
             if($botMtGlobals['transparency_type'] == 'alpha')
                 $transcolor = FALSE;
@@ -412,7 +412,7 @@ function botmt_thumbnail($filename, $dest_folder, &$width, &$height, $proportion
             $result = @$imagefunction($dst_img, $thumbname, $botMtGlobals['quality']);
         else
             $result = @$imagefunction($dst_img, $thumbname);
-            
+
         imagedestroy($src_img);
         if(!$result) {
             if(!$disablepermissionwarning) $multithumb_msg .= "Could not create image:\\n$thumbname.\\nCheck if you have write permissions in /plugins/content/multihumb/$dest_folder/\\n";
@@ -422,7 +422,7 @@ function botmt_thumbnail($filename, $dest_folder, &$width, &$height, $proportion
             imagedestroy($dst_img);
     }
 	return $this->_live_site."/plugins/content/multithumb/$dest_folder/" . basename($thumbname);
-} 
+}
 // Old code ends here
 
 // New code starts here
@@ -432,18 +432,18 @@ function botmt_thumbnail($filename, $dest_folder, &$width, &$height, $proportion
 *		// remove (no-) multithumb-tags and do nothing
 *		  	$row->text = preg_replace('#{(no)?multithumb}#i', '', $row->text);
 *		  	$row->text = preg_replace('#{mosimage}#i', '', $row->text);
-*		break;	
+*		break;
 *		case 1:
-*		//plugin is published 
-*			// retrieve images from $row->text(per article!), 
-*			// store them in 
+*		//plugin is published
+*			// retrieve images from $row->text(per article!),
+*			// store them in
 *			// global array
 *			$countImages = 0;
 */
 //			$imgRegex='#<img[^>]*/>#i';
 /*
 *			$countImages=preg_match_all($imgRegex, $row->text, $multithumbImages);
-*		
+*
 *			//foreach ($multithumbImages[0] as $image) {
 *			//	$document->addCustomTag("<!-- ".$image." -->");
 *			//}
@@ -476,7 +476,7 @@ function botmt_thumbnail($filename, $dest_folder, &$width, &$height, $proportion
 *		break;
 *		default:
 *		;;
-*		}	
+*		}
 *	return 0;
 *       }
 **/
@@ -516,7 +516,7 @@ function botAddMultiThumbHeader($headertype) {
 	//$mainframe->addCustomHeadTag($header);
 	$document->addCustomTag($header);
    }
-   
+
    if($headertype=='lb' && !$bot_mt_lightbox_header_added && !$bot_mt_slimbox_header_added) {
     $bot_mt_lightbox_header_added=1;
     if(!in_array('prototype', $libs))
@@ -526,24 +526,24 @@ function botAddMultiThumbHeader($headertype) {
     if(!in_array('lightbox', $libs)) {
       $header .= '<script type="text/javascript" src="'.$this->_live_site.'/plugins/content/multithumb/lightbox/js/lightbox.js"></script>'."\n";
       $fileLoadingImage = $this->_live_site.'/plugins/content/multithumb/lightbox/images/loading.gif';
-      
+
       if(file_exists($jpath_site.'/plugins/content/multithumb_languages/lightbox/'.$botMtGlobals['language'].'/closelabel.gif'))
          $fileBottomNavCloseImage = $this->_live_site.'/plugins/content/multithumb_languages/lightbox/'.$botMtGlobals['language'].'/closelabel.gif';
       else
          $fileBottomNavCloseImage =  $this->_live_site.'/plugins/content/multithumb/lightbox/images/closelabel.gif';
-         
+
       if(file_exists($jpath_site.'/plugins/content/multithumb_languages/lightbox/'.$botMtGlobals['language'].'/prevlabel.gif'))
          $prevLinkImage = $this->_live_site.'/plugins/content/multithumb_languages/lightbox/'.$botMtGlobals['language'].'/prevlabel.gif';
       else
          $prevLinkImage =  $this->_live_site.'/plugins/content/multithumb/lightbox/images/prevlabel.gif';
-         
+
       if(file_exists($jpath_site.'/plugins/content/multithumb_languages/lightbox/'.$botMtGlobals['language'].'/nextlabel.gif'))
          $nextLinkImage = $this->_live_site.'/plugins/content/multithumb_languages/lightbox/'.$botMtGlobals['language'].'/nextlabel.gif';
       else
          $nextLinkImage =  $this->_live_site.'/plugins/content/multithumb/lightbox/images/nextlabel.gif';
-      
+
       $keynav = @file_get_contents($jpath_site.'/plugins/content/multithumb_languages/lightbox/'.$botMtGlobals['language'].'/lang.js');
-         
+
       $header .= "<script type='text/javascript' language='javascript'>
 var fileLoadingImage = '$fileLoadingImage';
 var fileBottomNavCloseImage = '$fileBottomNavCloseImage';
@@ -612,7 +612,7 @@ function bot_mt_image_replacer(&$matches) {
         $botMtParamStr = str_replace(array('<br />', '&nbsp'), '', $matches[3]);
         if(preg_match_all('/\bdefault\b|[^=\s]+ *=[^=]*(?:\s+|$)(?!=)/is', $botMtParamStr, $botParams)) {
              foreach($botParams[0] as $param) {
-               $param = trim(trim($param, ';')); 
+               $param = trim(trim($param, ';'));
                if($param == 'default') {
                     $botMtGlobals = $botMtGlobalsDef;
                }
@@ -638,7 +638,7 @@ function bot_mt_image_replacer(&$matches) {
       if(preg_match('#float\s*:\s*(\w+)#i', $imgraw, $temp)) $align = $temp[1];
 	  if(preg_match('#class=(["\'])(.*?)\\1#i', $imgraw, $temp)) $class = $temp[2];
    }
-   
+
    if(is_numeric($time_limit)) {
     set_time_limit($time_limit);
     $botMtGlobals['time_limit'] = $botMtGlobalsDef['time_limit'] = '';
@@ -647,7 +647,7 @@ function bot_mt_image_replacer(&$matches) {
     ini_set("memory_limit", $memory_limit);
     $botMtGlobals['memory_limit'] = $botMtGlobalsDef['memory_limit'] = 'default';
    }
-      
+
     $temp = explode(':', $alt, 2);
     $popupmethods = array('none'=>'mt_none', 'normal'=>'mt_popup', 'lightbox'=>'mt_lightbox', 'expansion'=>'mt_expand', 'gallery'=>'mt_gallery', 'ignore'=>'mt_ignore', 'greybox'=>'mt_greybox', 'slimbox'=>'mt_slimbox', 'thickbox'=>'mt_thickbox');
     $new_popup_style = array_search(strtolower($temp[0]), $popupmethods);
@@ -679,14 +679,14 @@ function bot_mt_image_replacer(&$matches) {
 	  $gallery = '<table class="'.$thumbclass.'" width="100%" cellspacing="0" cellpadding="3" border="0">' . "\n";
       $style = in_array($align, array('left', 'right')) ? ' style="float:'.$align.';"' : '';
 	  $gallery = '<table class="'.$thumbclass.'" '.$style.' cellspacing="0" cellpadding="3" border="0">' . "\n";
-    
+
 	  $n = 0; $lblinks = '';
       if(file_exists("$imgloc.txt")) {
         $imglist = file_get_contents("$imgloc.txt");
         preg_match_all('/(\S+\.(?:jpg|png|gif))\s(.*)/i', $imglist, $files, PREG_SET_ORDER);
         $dir = dirname($imgloc);
         $alt = basename($imgloc);
-        
+
       }
       else {
         $files = glob($filepatt, GLOB_BRACE);
@@ -734,10 +734,10 @@ function bot_mt_image_replacer(&$matches) {
         $watermark_file = '';
     elseif(!$resize) // Watermark but no resize
         $full_width = $full_height = 0;
-    
+
    if($resize || $watermark) {
       $imgtemp = $this->botmt_thumbnail($imgloc, 'images', $full_width, $full_height, $image_proportions, hexdec($image_bg), $watermark_file);
-      
+
       if($imgtemp) $imgurl = $imgtemp;
    }
    if($resize && $imgtemp) { // only resize if a thumbnail was created ($imgtemp not false)
@@ -805,7 +805,16 @@ function bot_mt_image_replacer(&$matches) {
                           if($mt_thumbnail_count[$alt]>$max_thumbnails) return $imgtemp."</a>\n";
                    }
                    break;
-             case 'none': // No popup, just thumbnail
+	           case 'rokzoom': // rokZoom
+//	              $this->botAddMultiThumbHeader($popup_type=="lightbox"?'lb':'sb');
+	              $imgtemp = '<a target="_blank" href="'.$imgurl.'" rel="rokzoom['.$alt.']" title="'.$caption.'">';
+	              if($max_thumbnails) {
+	                 if(!isset($mt_thumbnail_count[$alt])) $mt_thumbnail_count[$alt] = 0;
+	                 $mt_thumbnail_count[$alt]+=1;
+	                 if($mt_thumbnail_count[$alt]>$max_thumbnails) return $imgtemp."</a>\n";
+	              }
+	              break;
+	                   case 'none': // No popup, just thumbnail
              default:
               $imgtemp = '';
         }
@@ -859,7 +868,7 @@ function bot_mt_image_replacer(&$matches) {
               $img .= '  alt="'.$alt.'" title="'.$title.'" border="'.$border.'" />';
               if ($popup_type!='none') $img .='</a>';
               $img .= "$captionbelow</div>";
-        
+
               break;
         }
     }

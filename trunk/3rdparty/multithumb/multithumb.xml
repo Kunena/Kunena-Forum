@@ -68,6 +68,7 @@
 			<option value="slimbox">Slimbox</option>
 			<option value="greybox">Greybox</option>
 			<option value="thickbox">Thickbox</option>
+			<option value="rokzoom">rokZoom</option>
 			<option value="expansion">Thumbnail Expansion</option>
 			</param>
 		<param name="@spacer" type="spacer" default="" label="&lt;p/&gt;Thumbnail options" description="Options for changing the style and behaviour of thumbnail." />

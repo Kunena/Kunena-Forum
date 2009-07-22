@@ -32,6 +32,13 @@ Legend:
 
 Kunena 1.5.5
 
+22-July-2009 fxstein
+^ [#17303] Update version info to 1.5.5
+
+21-July-2009 fxstein
+# [#17184] jomSocial profile integration bug defaults back to Kunena
+^ [#17184] Better compatibility with jquery loads. Test if already loaded by JomSocial.
+
 11-July-2009 Matias
 ^ [#17183] Finish integration API and make templates to use it
 ^ [#17184] Convert JomSocial integration to implement the new API

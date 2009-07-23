@@ -13,18 +13,17 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 include_once(KUNENA_PATH_LIB.DS.'kunena.profile.php');
+include_once(KUNENA_PATH_LIB.DS.'kunena.integration.class.php');
 
-class CKunenaJomSocialIntegration {
-	protected static $loaded = false;
-	protected static $enabled = false;
-	protected static $error = 0;
-	protected static $errormsg = '';
+class CKunenaJomSocialIntegration extends CKunenaIntegration
+{
+	function __construct() { }
 
-	private function __construct() { }
+	public function start()
+	{
+		if (self::isLoaded() === true) return self::IsEnabled();
 
-	public function start() {
-		if (self::$loaded === true) return self::$enabled;
-		$fbConfig =& CKunenaConfig::getInstance();
+		$kunenaConfig =& CKunenaConfig::getInstance();
 
 		$jspath = JPATH_BASE.DS.'components'.DS.'com_community'.DS.'libraries'.DS.'core.php';
 		if (file_exists($jspath))
@@ -33,7 +32,7 @@ class CKunenaJomSocialIntegration {
 			// define( 'C_ASSET_JQUERY', 1 ); --> moved to kunena.php as part of the jquery load
 
 			include_once($jspath);
-			if ($fbConfig->pm_component == 'jomsocial')
+			if ($kunenaConfig->pm_component == 'jomsocial')
 			{
 				include_once(KUNENA_ROOT_PATH .DS. 'components'.DS.'com_community'.DS.'libraries'.DS.'messaging.php');
 				//PM popup requires JomSocial css to be loaded from selected template
@@ -42,28 +41,25 @@ class CKunenaJomSocialIntegration {
 				$document->addStyleSheet(KUNENA_JLIVEURL.'/components/com_community/assets/window.css');
 				$document->addStyleSheet(KUNENA_JLIVEURL.'/components/com_community/templates/'.$config->get('template').'/css/style.css');
 			}
-			if ($fbConfig->fb_profile == 'jomsocial') {
+			if ($kunenaConfig->fb_profile == 'jomsocial') {
 				$params = array();
 				self::trigger('onStart', $params);
 			}
-			self::$loaded = true;
+			self::loaded();
 		}
 		if (self::detectIntegration() === false) {
-			$fbConfig->pm_component = $fbConfig->pm_component == 'jomsocial' ? 'none' : $fbConfig->pm_component;
-			$fbConfig->fb_profile = $fbConfig->fb_profile == 'jomsocial' ? 'kunena' : $fbConfig->fb_profile;
-			$fbConfig->avatar_src = $fbConfig->avatar_src == 'jomsocial' ? 'kunena' : $fbConfig->avatar_src;
-			return self::$enabled;
+			$kunenaConfig->pm_component = $kunenaConfig->pm_component == 'jomsocial' ? 'none' : $kunenaConfig->pm_component;
+			$kunenaConfig->fb_profile = $kunenaConfig->fb_profile == 'jomsocial' ? 'kunena' : $kunenaConfig->fb_profile;
+			$kunenaConfig->avatar_src = $kunenaConfig->avatar_src == 'jomsocial' ? 'kunena' : $kunenaConfig->avatar_src;
+			return self::IsEnabled();
 		}
-		self::$enabled = true;
+		self::enable();
+
 		if (self::useProfileIntegration() === false) {
-			$fbConfig->fb_profile = $fbConfig->fb_profile == 'jomsocial' ? 'kunena' : $fbConfig->fb_profile;
+			$kunenaConfig->fb_profile = $kunenaConfig->fb_profile == 'jomsocial' ? 'kunena' : $kunenaConfig->fb_profile;
 		}
 
-		return self::$enabled;
-	}
-
-	public function status() {
-		return self::$enabled;
+		return self::IsEnabled();
 	}
 
 	public function close() {
@@ -71,11 +67,11 @@ class CKunenaJomSocialIntegration {
 			$params = array();
 			self::trigger('onEnd', $params);
 		}
-		self::$enabled = false;
+		self::enable(false);
 	}
 
 	public function enqueueErrors() {
-		if (self::$error) {
+		if (self::GetError()) {
 			$app =& JFactory::getApplication();
 			$app->enqueueMessage(_KUNENA_INTEGRATION_JOMSOCIAL_WARN_GENERAL, 'notice');
 			$app->enqueueMessage(self::$errormsg, 'notice');
@@ -84,14 +80,14 @@ class CKunenaJomSocialIntegration {
 	}
 
 	protected function detectIntegration() {
-		$fbConfig =& CKunenaConfig::getInstance();
+		$kunenaConfig =& CKunenaConfig::getInstance();
 /* TODO:
 		if (!isset($ueConfig['version'])) {
 			self::$errormsg = sprintf(_KUNENA_INTEGRATION_CB_WARN_INSTALL, '1.2');
 			self::$error = 1;
 			return false;
 		}
-		if ($fbConfig->fb_profile != 'cb') return true;
+		if ($kunenaConfig->fb_profile != 'cb') return true;
 		if (!getCBprofileItemid()) {
 			self::$errormsg = _KUNENA_INTEGRATION_CB_WARN_PUBLISH;
 			self::$error = 2;
@@ -113,18 +109,18 @@ class CKunenaJomSocialIntegration {
 	}
 
 	function useAvatarIntegration() {
-		$fbConfig =& CKunenaConfig::getInstance();
-		return ($fbConfig->avatar_src == 'jomsocial' && self::$enabled);
+		$kunenaConfig =& CKunenaConfig::getInstance();
+		return ($kunenaConfig->avatar_src == 'jomsocial' && self::IsEnabled());
 	}
 
 	function useProfileIntegration() {
-		$fbConfig =& CKunenaConfig::getInstance();
-		return ($fbConfig->fb_profile == 'jomsocial' && self::$enabled && !self::$error);
+		$kunenaConfig =& CKunenaConfig::getInstance();
+		return ($kunenaConfig->fb_profile == 'jomsocial' && self::IsEnabled() && !self::GetError());
 	}
 
 	function usePMSIntegration() {
-		$fbConfig =& CKunenaConfig::getInstance();
-		return ($fbConfig->pm_component == 'jomsocial' && self::$enabled);
+		$kunenaConfig =& CKunenaConfig::getInstance();
+		return ($kunenaConfig->pm_component == 'jomsocial' && self::IsEnabled());
 	}
 
 	/**
@@ -134,9 +130,9 @@ class CKunenaJomSocialIntegration {
 	**/
 	public function trigger($event, &$params)
 	{
-		$fbConfig =& CKunenaConfig::getInstance();
-		$params['config'] =& $fbConfig;
-		// TODO: jomsocial trigger( 'kunenaIntegration', array( $event, &$fbConfig, &$params ));
+		$kunenaConfig =& CKunenaConfig::getInstance();
+		$params['config'] =& $kunenaConfig;
+		// TODO: jomsocial trigger( 'kunenaIntegration', array( $event, &$kunenaConfig, &$params ));
 	}
 }
 

@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.5.5
 
+23-July-2009 fxstein
++ [#17321] Initial JomSocial Activity Stream Prototype
+
 22-July-2009 fxstein
 ^ [#17303] Update version info to 1.5.5
 

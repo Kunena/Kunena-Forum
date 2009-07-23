@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install version="1.5" type="plugin" group="community">
-	<name>MyKunena</name>
-	<version>1.0.0</version>
-	<author>www.kunena.com</author>
-	<creationDate>@kunenaversiondate@</creationDate>
-	<build>@kunenabuild@</build>
-	<copyright>Copyright (C) 2008. All rights reserved.</copyright>
-	<license></license>
-	<authorEmail>info@kunena.com</authorEmail>
+	<name>My Kunena Updates</name>
+	<author>Kunena</author>
+	<creationDate>15 July 2009</creationDate>
+	<copyright>Copyright (C) 2009. All rights reserved.</copyright>
+	<license>http://www.kunena.com</license>
+	<authorEmail>support@kunena.com</authorEmail>
 	<authorUrl>www.kunena.com</authorUrl>
+	<version>1.5</version>
 	<isapplication>true</isapplication>
 	<isbrowseable>true</isbrowseable>
-	
 	<description>
-		MyKunena plugin for JomSocial
+	Show your forum replies on your community profile page
 	</description>
+	<languages>
+	    <language tag="en-GB">en-GB.plg_kunena.ini</language>
+	</languages>
 	<files>
-		<file plugin="MyKunena">kunena.php</file>
-		<file>kunena/favicon.png</file>
-		<file>kunena/no-post.gif</file>
-		<file>kunena/style.css</file>
+		<file plugin="mykunena">mykunena.php</file>
+		<folder>mykunena</folder>
 	</files>
 	
 	<menuitem>
@@ -29,7 +28,7 @@
 	</menuitem>
 	
 	<params>
-		<param name="count" type="text" default="5" label="Updates count" description="How many updates to display" />	
+		<param name="count" type="text" default="5" label="Post count" description="How many forum posts to display" />	
 		<param name="coreapp" type="list" default="0" label="Core Application" description="Causes this application to not appearin the users applications list but it will allow this application to appear in the user profile automatically if selected.">
 			<option value="0">No</option>
 			<option value="1">Yes</option>

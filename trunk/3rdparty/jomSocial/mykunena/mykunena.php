@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @copyright (C) 2008 by Slashes & Dots Sdn Bhd - All rights reserved!
+ * @license http://www.azrul.com Copyrighted Commercial Software
+ */
+
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
@@ -7,8 +12,8 @@ require_once( JPATH_BASE .DS.'components' .DS.'com_community' .DS.'libraries' .D
 
 class plgCommunityKunena extends CApplications
 {
-	var $name 		= "My on Kunena";
-	var $_name		= 'Kunena';
+	var $name 		= "My Kunena Application";
+	var $_name		= 'MyKunena';
 	var $_path		= '';
 	var $_user		= '';
 	var $_my		= '';
@@ -16,11 +21,13 @@ class plgCommunityKunena extends CApplications
 
 	function onProfileDisplay()
 	{
+		JPlugin::loadLanguage( 'plg_mykunena', JPATH_ADMINISTRATOR );
+
 		$config	=& CFactory::getConfig();
 
 		if( !$config->get('enablegroups') )
 		{
-			return JText::_('Groups are disabled by site administrator');
+			return JText::_('PLG_KUNENA GROUP DISABLED');
 		}
 
 
@@ -28,7 +35,7 @@ class plgCommunityKunena extends CApplications
 
 		$document	=& JFactory::getDocument();
 		// Attach CSS
-		$css		= JURI::base() . 'plugins/community/kunena/style.css';
+		$css		= JURI::base() . 'plugins/community/mykunena/style.css';
 		$document->addStyleSheet($css);
 
 		$groupsModel		=& CFactory::getModel( 'groups' );
@@ -40,17 +47,6 @@ class plgCommunityKunena extends CApplications
 		$groups		= $groupsModel->getGroups( $user->id );
 
 		$my	=& JFactory::getUser();
-
-		$username = $this->params->get('username');
-		$password = $this->params->get('password');
-
-		$db =& JFactory::getDBO();
-		// Get forum user info:
-		$db->setQuery("SELECT  a.*, b.* FROM #__fb_users as a"
-                        . "\n LEFT JOIN #__users as b on b.id=a.userid"
-                        . "\n where a.userid=" . $user->id);
-
-    	$userinfo = $db->loadObject();
 
 		$db =& JFactory::getDBO();
 		// Get forum user info:
@@ -153,20 +149,20 @@ class plgCommunityKunena extends CApplications
 			} else {
 				?>
 				<div class="icon-nopost">
-		            <img src="<?php echo JURI::base(); ?>plugins/community/kunena/no-post.gif" alt="" />
+		            <img src="<?php echo JURI::base(); ?>plugins/community/mykunena/no-post.gif" alt="" />
 		        </div>
 		        <div class="content-nopost">
-		            <?php echo $userName . ' ' . JText::_('hasn\'t join any discussion yet'); ?>
+		            <?php echo $userName . ' ' . JText::_('PLG_KUNENA NO DISCUSSION JOIN'); ?>
 		        </div>
 				<?php
 			}
  		}else{
 		 	?>
 	        <div class="icon-nopost">
-	            <img src="<?php echo JURI::base(); ?>plugins/community/kunena/no-post.gif" alt="" />
+	            <img src="<?php echo JURI::base(); ?>plugins/community/mykunena/no-post.gif" alt="" />
 	        </div>
 	        <div class="content-nopost">
-	            <?php echo JText::_('No forum posts by the user yet'); ?>
+	            <?php echo JText::_('PLG_KUNENA NO FORUM POST'); ?>
 	        </div>
 			<?php
 		 }

@@ -304,8 +304,8 @@ if (count($messages[0]) > 0)
                             }
                             else
                             {
-				$threadPages = 0;
-				$unreadPage = 0;
+								$threadPages = 0;
+								$unreadPage = 0;
                                 //this thread has been moved, get the new location
                                 $kunena_db->setQuery("SELECT message FROM #__kunena_messages_text WHERE mesid='{$leaf->id}'");
                                 $newURL = $kunena_db->loadResult();
@@ -399,25 +399,9 @@ if (count($messages[0]) > 0)
 
   <span class="topic_latest_post_avatar">
   <?php
-  		if ($kunenaConfig->avatar_src == "jomsocial" && $leaf->userid)
-		{
-			// Get CUser object
-			$user =& CFactory::getUser($last_reply[$leaf->id]->userid);
-		    $useravatar = '<img class="kunena_list_avatar" src="' . $user->getThumbAvatar() . '" alt=" " />';
-		   	echo CKunenaLink::GetProfileLink($kunenaConfig, $last_reply[$leaf->id]->userid, $useravatar);
-		}
-		else if ($kunenaConfig->avatar_src == "cb")
-		{
-			$useravatar = $kunenaProfile->showAvatar($last_reply[$leaf->id]->userid, 'kunena_list_avatar');
-  		    echo CKunenaLink::GetProfileLink($kunenaConfig, $last_reply[$leaf->id]->userid, $useravatar);
-		} else {
-		  	$javatar =  $last_reply[$leaf->id]->avatar;
-		   	if ($javatar!='') {
-				echo CKunenaLink::GetProfileLink($kunenaConfig, $last_reply[$leaf->id]->userid, '<img class="kunena_list_avatar" src="'.(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $javatar)?KUNENA_LIVEUPLOADEDPATH.'/avatars/'.$javatar:KUNENA_LIVEUPLOADEDPATH.'/avatars/s_'.$javatar) .'" alt="" />');
-	        }  else {
-		   		echo CKunenaLink::GetProfileLink($kunenaConfig, $last_reply[$leaf->id]->userid, '<img class="kunena_list_avatar" src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_nophoto.jpg" alt="" />');
-	        }
-         }?>
+		$useravatar = $kunenaProfile->showAvatar($last_reply[$leaf->id]->userid, 'kunena_list_avatar');
+		echo CKunenaLink::GetProfileLink($kunenaConfig, $last_reply[$leaf->id]->userid, $useravatar);
+  ?>
   </span>
     <?php } ?>
   <!-- /Avatar -->
@@ -427,7 +411,10 @@ if (count($messages[0]) > 0)
         <?php
         if ($kunenaConfig->default_sort == 'asc')
         {
-        	echo CKunenaLink::GetThreadPageLink($kunenaConfig, 'view', $leaf->catid, $leaf->thread, $threadPages, $kunenaConfig->messages_per_page, _GEN_LAST_POST, $last_reply[$leaf->id]->id);
+        	if ($leaf->moved == 0)
+        		echo CKunenaLink::GetThreadPageLink($kunenaConfig, 'view', $leaf->catid, $leaf->thread, $threadPages, $kunenaConfig->messages_per_page, _GEN_LAST_POST, $last_reply[$leaf->id]->id);
+        	else
+        		echo _KUNENA_MOVED . ' ';
         }
         else
         {
@@ -518,7 +505,7 @@ if (count($messages[0]) > 0)
             </tbody>
         </table>
 
-        <input type = "hidden" name = "Itemid" value = "<?php echo KUNENA_COMPONENT_ITEMID;?>"/>
+        <input type = "hidden" name = "Itemid" value = "<?php echo getKunenaItemidSuffix();?>"/>
         <input type = "hidden" name = "option" value = "com_kunena"/>
         <input type = "hidden" name = "func" value = "bulkactions" />
         <input type = "hidden" name = "return" value = "<?php echo JRoute::_( $Breturn ); ?>" />

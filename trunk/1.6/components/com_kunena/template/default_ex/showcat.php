@@ -113,16 +113,12 @@ if (in_array($catid, $allow_forum))
     							t.message AS messagetext,
     							m.mesid AS attachmesid,
     							(f.thread>0) AS myfavorite,
-    							u.avatar,
     							MAX(b.time) AS lastpost
     						FROM  #__kunena_messages  AS a
     							JOIN #__kunena_messages_text AS t ON a.thread = t.mesid
     							LEFT  JOIN #__kunena_messages AS b ON b.thread = a.thread
     							LEFT  JOIN #__kunena_attachments AS m ON m.mesid = a.id
     							LEFT  JOIN #__kunena_favorites AS f ON  f.thread = a.id && f.userid='{$kunena_my->id}'
-        						" .(($kunenaConfig->avatar_src == "cb")?
-	                    		"LEFT JOIN #__comprofiler AS u ON u.user_id = a.userid ":
-	                    		"LEFT JOIN #__kunena_users AS u ON u.userid = a.userid ")."
     						WHERE a.parent =  '0'
     						AND a.catid = '{$catid}'
     						AND a.hold = '0'
@@ -163,11 +159,7 @@ if (in_array($catid, $allow_forum))
 	}
 	unset($favlist, $fthread);
 
-        $kunena_db->setQuery("SELECT a.*, u.avatar FROM #__kunena_messages AS a
-        						" .(($kunenaConfig->avatar_src == "cb")?
-	                    		"LEFT JOIN #__comprofiler AS u ON u.user_id = a.userid ":
-	                    		"LEFT JOIN #__kunena_users AS u ON u.userid = a.userid ")
-        						."WHERE a.thread IN ('{$idstr}') AND a.id NOT IN ('{$idstr}') AND a.hold='0'");
+        $kunena_db->setQuery("SELECT a.*, u.avatar FROM #__kunena_messages AS a WHERE a.thread IN ('{$idstr}') AND a.id NOT IN ('{$idstr}') AND a.hold='0'");
         $messagelist = $kunena_db->loadObjectList();
         	check_dberror("Unable to load messages.");
 

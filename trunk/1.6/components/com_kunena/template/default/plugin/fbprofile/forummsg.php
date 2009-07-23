@@ -129,9 +129,9 @@ $kunenaSession =& CKunenaSession::getInstance();
                 if (!ISSET($item->created))
                     $item->created = "";
 
-                $kunenaURL = JRoute::_("index.php?option=com_kunena&amp;func=view".KUNENA_COMPONENT_ITEMID_SUFFIX."&amp;catid=" . $item->catid . "&amp;id=" . $item->id . "#" . $item->id);
+                $kunenaURL = JRoute::_("index.php?option=com_kunena&amp;func=view&amp;catid=" . $item->catid . "&amp;id=" . $item->id . "#" . $item->id);
 
-                $kunenaCatURL = JRoute::_("index.php?option=com_kunena".KUNENA_COMPONENT_ITEMID_SUFFIX."&amp;func=showcat&amp;catid=" . $item->catid);
+                $kunenaCatURL = JRoute::_("index.php?option=com_kunena&amp;func=showcat&amp;catid=" . $item->catid);
         ?>
 
             <tr class = "<?php echo ''.$boardclass.''. $tabclass[$k] . ''; ?> ">
@@ -194,10 +194,10 @@ $kunenaSession =& CKunenaSession::getInstance();
 
                 <?php
                 // TODO: fxstein - Need to perform SEO cleanup
-                echo $pageNav->getPagesLinks("index.php?option=com_kunena&amp;func=kunenaprofile&amp;task=showprf&amp;userid=$userid".KUNENA_COMPONENT_ITEMID_SUFFIX);
+                echo $pageNav->getPagesLinks(JRoute::_("index.php?option=com_kunena&amp;func=kunenaprofile&amp;task=showprf&amp;userid=$userid"));
                 ?>
 <?php
-echo $pageNav->getLimitBox("index.php?option=com_kunena&amp;func=kunenaprofile&amp;task=showprf&amp;userid=$userid" . KUNENA_COMPONENT_ITEMID_SUFFIX);
+echo $pageNav->getLimitBox(JRoute::_("index.php?option=com_kunena&amp;func=kunenaprofile&amp;task=showprf&amp;userid=$userid"));
 ?>
                 <br/>
 <?php echo $pageNav->getPagesCounter(); ?>

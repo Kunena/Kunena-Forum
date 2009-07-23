@@ -44,7 +44,7 @@ function generateAvatarGD($gdversion, $src_img, $srcWidth, $srcHeight, $dstWidth
 		$dst_img = imagecreatetruecolor($dstWidth, $dstHeight);
 		imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0, (int)$dstWidth, (int)$dstHeight, $srcWidth, $srcHeight);
 	}
-	$tmpfile = tempnam(sys_get_temp_dir(), "kn_");
+	$tmpfile = tempnam(CKunenaPath::tmpdir(), "kn_");
 	imagejpeg($dst_img, $tmpfile, $quality);
 	CKunenaFile::copy($tmpfile, $location);
 	unlink($tmpfile);
@@ -366,77 +366,24 @@ if ($task == 'default')
                     <?php
                         echo _YOUR_AVATAR . "</td><td >";
 
-                        if ($kunenaConfig->avatar_src == "clexuspm")
-                        {
+                        $kunenaProfile =& CKunenaProfile::getInstance();
+                        $avatar = $kunenaProfile->getAvatar($kunena_my->id);
+						$msg_avatar = $kunenaProfile->showAvatar($kunena_my->id, '', false);
+						echo $msg_avatar;
+						if ($avatar != "")
+						{
                     ?>
-
-                            <img src = "<?php echo MyPMSTools::getAvatarLinkWithID($kunena_my->id)?>" alt="" />
-
-                            <br /> <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=upload&amp;Itemid='._CLEXUSPM_ITEMID);?>"><?php echo _SET_NEW_AVATAR; ?></a>
-
-                    <?php
-                        }
-                        elseif ($kunenaConfig->avatar_src == "cb")
-                        {
-                            $kunena_db->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='{$kunena_my->id}'");
-                            $avatar = $kunena_db->loadResult();
-                            check_dberror("Unable to load CB Avatar.");
-                            if ($avatar != "")
-                            {
-                    ?>
-
-                                <img src = "components/com_comprofiler/images/<?php echo $avatar;?>" alt="" />
-
-                                <br /> <a href = "<?php echo JRoute::_('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar');?>"><?php echo _SET_NEW_AVATAR; ?></a>
-
-                    <?php
-                            }
-                            else
-                            {
-                                echo _NON_SELECTED;
-                    ?>
-
-                            <br /> <a href = "<?php echo JRoute::_('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar');?>"><?php echo _SET_NEW_AVATAR; ?></a>
-
-                    <?php
-                            }
-                        }
-                        else
-                        {
-                            $kunena_db->setQuery("SELECT avatar FROM #__kunena_users WHERE userid='{$kunena_my->id}'");
-                            $avatar = $kunena_db->loadResult();
-                            check_dberror("Unable to load Kunena Avatar.");
-                            if ($avatar != "")
-                            {
-								if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/l_' . $avatar)) {
-									$msg_avatar = '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: '.$kunenaConfig->avatarlargewidth.'px; max-height: '.$kunenaConfig->avatarlargeheight.'px;" />';
-								} else {
-									$msg_avatar = '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/l_' . $avatar . '" alt="" />';
-								}
-								echo $msg_avatar;
-                    ?>
-
                                 <br />
 
                                 <input type = "checkbox" value = "1" name = "deleteAvatar"/><i> <?php echo _USER_DELETEAV; ?></i>
-
-                    <?php
-                            }
-                            else
-                            {
-                                echo _NON_SELECTED;
-                    ?>
-
-                            <br /> <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&func=myprofile&do=avatar');?>"> <?php echo _SET_NEW_AVATAR; ?></a>
-
-                    <?php
-                            }
-                    ?>
-
-                        <input type = "hidden" value = "<?php echo $avatar;?>" name = "avatar"/>
-                    <?php
-                        }
-                    ?>
+		                        <input type = "hidden" value = "<?php echo $avatar;?>" name = "avatar"/>
+					<?php 
+						}
+						else
+						{
+							echo '<br /><br />'._NON_SELECTED;
+						}
+					?>
                 </td>
 
             </tr>

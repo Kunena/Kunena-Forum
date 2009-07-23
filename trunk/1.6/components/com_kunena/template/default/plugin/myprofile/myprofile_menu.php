@@ -71,24 +71,6 @@ $kunenaConfig =& CKunenaConfig::getInstance();
         </tr>
 
 <?php
- //Clexus PM
-    if ($kunenaConfig->pm_component == 'clexuspm' || $kunenaConfig->kunena_profile == "clexuspm")
-    {
-       ?>
-       <tr>
-            <td class = "kunena_myprofile_menu_staff">
-                <span class = "kunena_myprofile_menu_title"><?php echo _KUNENA_MYPROFILE_PRIVATE_MESSAGING; ?></span>
-            <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;Itemid=' . KUNENA_CPM_ITEMID); ?>"><?php echo _KUNENA_MYPROFILE_INBOX; ?> </a>
-            <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=compose&amp;Itemid=' . KUNENA_CPM_ITEMID); ?>"><?php echo _KUNENA_MYPROFILE_NEW_MESSAGE; ?></a>
-            <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=sent&amp;Itemid=' . KUNENA_CPM_ITEMID); ?>"><?php echo _KUNENA_MYPROFILE_OUTBOX; ?></a>
-            <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=trash&amp;Itemid=' . KUNENA_CPM_ITEMID); ?>"><?php echo _KUNENA_MYPROFILE_TRASH; ?></a>
-            <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=viewblocked&amp;Itemid=' . KUNENA_CPM_ITEMID); ?>"><?php echo _KUNENA_MYPROFILE_BLOCKEDLIST; ?></a>
-            <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=contacts&amp;Itemid=' . KUNENA_CPM_ITEMID); ?>"><?php echo _KUNENA_MYPROFILE_CONTACTS; ?></a>
-            <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=preferences&amp;Itemid=' . KUNENA_CPM_ITEMID); ?>"><?php echo _KUNENA_MYPROFILE_SETTINGS; ?></a>
-            </td>
-        </tr>
-<?php
-    }
 
     // UddeIM
     if ($kunenaConfig->pm_component == 'uddeim')

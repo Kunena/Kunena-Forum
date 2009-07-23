@@ -94,11 +94,11 @@ require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 // Get CKunanaUser and CKunenaUsers
 require_once (KUNENA_PATH_LIB .DS. "kunena.user.class.php");
 
-global $kunenaConfig, $kunenaProfile;
+global $kunenaConfig;
 
 // Get data about the current user - its ok to not have a userid = guest
 $kunena_my = &JFactory::getUser();
-$KunenaUser = new CKunenaUser($kunena_my->id);
+$KunenaUser =& new CKunenaUser($kunena_my->id);
 // Load configuration and personal settings for current user
 $kunenaConfig =& CKunenaConfig::getInstance();
 
@@ -183,13 +183,6 @@ if ($func == 'kunena_pdf')
     $app->close();
 }
 
-// Include Clexus PM class file
-if ($kunenaConfig->pm_component == "clexuspm")
-{
-    require_once (KUNENA_ROOT_PATH .DS. 'components/com_mypms/class.mypms.php');
-    $ClexusPMconfig = new ClexusPMConfig();
-}
-
 //time format
 include_once (KUNENA_PATH_LIB .DS. 'kunena.timeformat.class.php');
 
@@ -229,9 +222,10 @@ if ($no_html == 0) {
 $document =& JFactory::getDocument();
 
 // inline jscript with image location
-$document->addCustomTag('<script type="text/javascript">jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";</script>');
+$document->addScriptDeclaration('jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";');
 
-if (is_object($kunenaProfile) && $kunenaProfile->useProfileIntegration()) 
+$kunenaProfile =& CKunenaProfile::getInstance();
+if ($kunenaConfig->kunena_profile == 'cb' && $kunenaProfile->useProfileIntegration())
 {
 	if (defined('KUNENA_COREJSURL'))
 	{
@@ -243,32 +237,32 @@ if (is_object($kunenaProfile) && $kunenaProfile->useProfileIntegration())
 else
 {
 	// Add required header tags
-	if (defined('KUNENA_JQURL') && !defined('J_JQUERY_LOADED'))
+	if (defined('KUNENA_JQURL') && !defined('J_JQUERY_LOADED') && !defined('C_ASSET_JQUERY'))
 	{
 		define('J_JQUERY_LOADED', 1);
 		if (!defined('C_ASSET_JQUERY')) define('C_ASSET_JQUERY', 1);
-		$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_JQURL . '"></script>');
+		$document->addScript(KUNENA_JQURL);
 	}
 
 	if (defined('KUNENA_COREJSURL'))
 	{
-		$document->addCustomTag('<script type="text/javascript" src="' . KUNENA_COREJSURL . '"></script>');
+		$document->addScript(KUNENA_COREJSURL);
 	}
 }
 
 if ($kunenaConfig->joomlastyle < 1) {
-	if (file_exists(KUNENA_JTEMPLATEPATH.'/css/kunena.forum.css')) 
+	if (file_exists(KUNENA_JTEMPLATEPATH.'/css/kunena.forum.css'))
 	{
-		$document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_JTEMPLATEURL . '/css/kunena.forum.css" />');
+		$document->addStyleSheet(KUNENA_JTEMPLATEURL . '/css/kunena.forum.css');
 	}
-	else 
+	else
 	{
-		$document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_TMPLTCSSURL . '" />');
+		$document->addStyleSheet(KUNENA_TMPLTCSSURL);
 	}
 }
-else 
+else
 {
-	$document->addCustomTag('<link type="text/css" rel="stylesheet" href="' . KUNENA_DIRECTURL . '/template/default/joomla.css" />');
+	$document->addStyleSheet(KUNENA_DIRECTURL . '/template/default/joomla.css');
 }
 } // no_html == 0
 
@@ -336,21 +330,10 @@ else
 
 require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
-//
-// This is the main session handling section. We rely both on cookie as well as our own
-// Kunena session table inside the database. We are leveraging the cookie to keep track
-// of an individual session and its various refreshes. As we will never know what the last
-// pageview of a session will be (as defined by a commonly used 30min break/pause) we
-// keep updateing the cookie until we detect a 30+min break. That break tells us to reset
-// the last visit timestamp inside the database.
-// We also redo the security checks with every new session to minimize the risk of exposed
-// access rights though someone 'leeching' on to another session. This resets the cached
-// priviliges after every 30 min of inactivity
-//
 	// We only do the session handling for registered users
 	// No point in keeping track of whats new for guests
 	global $kunenaSession;
-	$kunenaSession =& CKunenaSession::getInstance();
+	$kunenaSession =& CKunenaSession::getInstance(true);
 	if ($kunena_my->id > 0)
 	{
 		// First we drop an updated cookie, good for 1 year
@@ -358,39 +341,14 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 		// NOT SURE IF WE STILL NEED THIS ONE after session management got dbtized
 		setcookie("kunenaoard_settings[member_id]", $kunena_my->id, time() + KUNENA_SECONDS_IN_YEAR, '/');
 
-		// We assume that this is a new user and that we don't know about a previous visit
-		$new_kunena_user = 0;
-		$resetView = 0;
-
-		// If userid is empty/null no prior record did exist -> new session and first time around
-		if ($kunenaSession->_exists === false) {
-			$new_kunena_user = 1;
-			$resetView = 1;
-		}
-
-		// detect kunenasession timeout (default: after 30 minutes inactivity)
-		$kunenaSessionTimeOut = ($kunenaSession->currvisit + $kunenaConfig->kunenasessiontimeout) < $systime;
-
 		// new indicator handling
 		if ($markaction == "allread") {
-			$kunenaSession->lasttime = $systime;
-			$kunenaSession->readtopics = '';
-		} elseif ($kunenaSessionTimeOut) {
-			$kunenaSession->lasttime = $kunenaSession->currvisit;
-			$kunenaSession->readtopics = '';
+			$kunenaSession->markAllCategoriesRead();
 		}
 
-		// get all accessaible forums if needed (eg on forum modification, new session)
-		if (!$kunenaSession->allowed or $kunenaSession->allowed == 'na' or $kunenaSessionTimeOut) {
-			$allow_forums = CKunenaTools::getAllowedForums($kunena_my->id, $aro_group->id, $kunena_acl);
-			if (!$allow_forums) $allow_forums = '0';
-			if ($allow_forums != $kunenaSession->allowed)
-				$kunenaSession->allowed = $allow_forums;
-			unset($allow_forums);
-		}
+		$kunenaSession->updateAllowedForums($kunena_my->id, $aro_group, $kunena_acl);
 
 		// save kunenasession
-		$kunenaSession->currvisit = $systime;
 		$kunenaSession->save($kunenaSession);
 
 		if ($markaction == "allread") {
@@ -419,14 +377,6 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 					check_dberror('Unable to create user profile.');
 			}
 		}
-		// Only reset the view if we have determined above that we need to
-		// Without that test the user would not be able to make intra session
-		// view changes by clicking on the threaded vs flat view link
-		if ($resetView == 1)
-		{
-    		setcookie("kunenaoard_settings[current_view]", $prefview, time() + KUNENA_SECONDS_IN_YEAR, '/');
-	    	$view = $prefview;
-	    }
 
 	    // Assign previous visit without user offset to variable for templates to decide
 		// whether or not to use the NEW indicator on forums and posts
@@ -442,7 +392,6 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
 		// For guests we don't show new posts
 		$prevCheck = $systime;
-		$new_kunena_user = 0;
 		$kunenaSession->readtopics = '';
 	}
 
@@ -497,7 +446,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
         if ($catid == 0 || $strCatParent === '0')
     	{
    			$strcatid = '';
-    		if ($catid) $strcatid = "&amp;catid={$catid}"; 
+    		if ($catid) $strcatid = "&amp;catid={$catid}";
             $app->redirect(htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=listcat'.$strcatid)));
         }
     }
@@ -893,7 +842,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
     $KunenaTemplate->displayParsedTemplate('kunena-footer');
 } //else
 
-if (is_object($kunenaProfile)) $kunenaProfile->close();
+$kunenaProfile->close();
 
 // Just for debugging and performance analysis
 $mtime = explode(" ", microtime());

@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.6.0dev
 
+24-July-2009
+^ [#15784] Merge 1.5.3 and 1.5.4 fixes from revision 878 to 936
+
 10-July-2009 fxstein
 ^ [#16827] Update Changelog entires
 ^ [#16827] Rename version to 1.6.0dev to reflect pre-alpha status
@@ -47,6 +50,62 @@ Kunena 1.6.0dev
 ^ [#16823] Global replace of fb/fb_/fb- with kunena/kunena_
 ^ [#16824] Change MySQL minimum version to 5.0.0 for 1.6 release
 ^ [#16822] Update version info for new 1.6 branch
+
+Kunena 1.5.5
+
+23-July-2009 fxstein
++ [#17321] Initial JomSocial Activity Stream Prototype
+
+22-July-2009 fxstein
+^ [#17303] Update version info to 1.5.5
+
+21-July-2009 fxstein
+# [#17184] jomSocial profile integration bug defaults back to Kunena
+^ [#17184] Better compatibility with jquery loads. Test if already loaded by JomSocial.
+
+11-July-2009 Matias
+^ [#17183] Finish integration API and make templates to use it
+^ [#17184] Convert JomSocial integration to implement the new API
+
+Kunena 1.5.4
+
+10-July-2009 Matias
+# [#17168] My Profile: Uploading avatar does not work in PHP < 5.2.1
+^ [#15798] Update credits page
+
+8-July-2009 Matias
+* [#17139] XSS vulnerability in BBCode parser
+
+8-July-2009 Matias
+# Remove ClexusPM integration
+# Update JomSocial integration to the same level as CB
+
+7-July-2009 fxstein
+^ [#17127] Update backend error messages for failed installs and add link to wiki
+
+7-July-2009 Matias
+# [#17114] Extra backslash is not saved into database (missing \ in messages)
+# [#17116] Latest post link in moved message does not work
+^ [#15798] Update credits page
+
+28-June-2009 Matias
+# [#16994] Default_red/green/gray: pat-Warning and no styling
+# [#16997] RSS Feed: all links are broken in K1.5
+# [#16999] Registration link in profile box not working
+# [#17001] Fix a set of small bugs reported in Kunena forums
+# [#17002] JQuery loaded too late for JomSocial integration
+# [#17003] Fix notice: Undefined variable: rImg
+# [#17004] Pagination doesn't work on My Messages (My Profile)
+
+17-June-2009 fxstein
+# [#16877] Migrated rest of session logic into CKunenaSession class for additional cleanup (Merge from /trunk/1.0)
+
+16-June-2009 fxstein
+^ [#16835] Update package version info; new version name: Fale - portuguese for Speak
+
+16-June-2009 Matias
+# [#16829] Announcements: Description with some special characters does not work
+# [#16833] Call to undefined method CKunenaTools::isjoomla15()
 
 Kunena 1.5.3
 

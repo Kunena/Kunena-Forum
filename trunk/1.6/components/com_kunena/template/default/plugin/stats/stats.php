@@ -31,18 +31,8 @@ if($kunenaConfig->showstats):
 
 $forumurl = 'index.php?option=com_kunena';
 
-if ($kunenaConfig->kunena_profile == "jomsocial")
-{
-	$userlist = JRoute::_('index.php?option=com_community&amp;view=search&amp;task=browse');
-}
-else if ($kunenaConfig->kunena_profile == 'cb')
-{
-    $userlist = CKunenaCBProfile::getUserListURL();
-}
-else
-{
-    $userlist = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userlist');
-}
+$kunenaProfile =& CKunenaProfile::getInstance();
+$userlist = $kunenaProfile->getUserListURL();
 
 ?>
 

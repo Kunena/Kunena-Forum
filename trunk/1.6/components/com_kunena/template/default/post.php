@@ -241,15 +241,73 @@ $catName = $objCatInfo->name;
                                           CKunenaTools::modifyCategoryStats($pid, $parent, $posttime, $catid);
                                         }
 
-                                        $kunena_db->setQuery("INSERT INTO #__kunena_messages_text (mesid,message) VALUES('$pid','$message')");
+                                        $kunena_db->setQuery("INSERT INTO #__kunena_messages_text (mesid,message) VALUES('$pid',".$kunena_db->quote($message).")");
                                         $kunena_db->query();
-
-                                        if ($thread == 0)
+										/*    ORIGINAL CODE
+// TODO: Remove                                        if ($thread == 0)
                                         {
                                             //if thread was zero, we now know to which id it belongs, so we can determine the thread and update it
                                             $kunena_db->setQuery("UPDATE #__kunena_messages SET thread='$pid' WHERE id='$pid'");
                                             $kunena_db->query();
                                         }
+										*/
+// TODO: Move to integration class										// Modify for activity stream
+										if ($thread == 0) {
+                                            //if thread was zero, we now know to which id it belongs, so we can determine the thread and update it
+                                            $kunena_db->setQuery("UPDATE #__kunena_messages SET thread='$pid' WHERE id='$pid'");
+                                            $kunena_db->query();
+
+											// JomSocial Rule - give points for new thread
+											$JomSocialCheck = JPATH_BASE . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'userpoints.php';
+											if ( file_exists($JomSocialCheck)) {
+											include_once( JPATH_BASE . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'userpoints.php');
+																			 CuserPoints::assignPoint('com_kunena.thread.new');
+											}
+											// End JomSocial Rule
+
+											//activity stream  - new post
+
+											$JSPostLink = CKunenaLink::GetThreadPageURL($kunenaConfig, 'view', $catid, $pid, $page, $anker='');
+
+											$act = new stdClass();
+											$act->cmd    = 'wall.write';
+											$act->actor    = $kunena_my->id;
+											$act->target    = 0; // no target
+											$act->title    = JText::_('{actor} created a new topic <a href="'.$JSPostLink.'">'.stripslashes($subject).'</a> in the forums.');
+											$act->content    = '';
+											$act->app    = 'wall';
+											$act->cid    = 0;
+
+											CFactory::load('libraries', 'activities');
+											CActivityStream::add($act);
+
+											} else {
+
+											// JomSocial Rule - give points for reply to thread
+											$JomSocialCheck = JPATH_BASE . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'userpoints.php';
+											if ( file_exists($JomSocialCheck)) {
+											include_once( JPATH_BASE . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'userpoints.php');
+																			 CuserPoints::assignPoint('com_kunena.thread.reply');
+											}
+											// End JomSocial Rule
+
+											//activity stream - reply post
+
+											$JSPostLink = CKunenaLink::GetThreadPageURL($kunenaConfig, 'view', $catid, $pid, $page, $anker='');
+
+											$act = new stdClass();
+											$act->cmd    = 'wall.write';
+											$act->actor    = $kunena_my->id;
+											$act->target    = 0; // no target
+											$act->title    = JText::_('{actor} replied to the topic <a href="'.$JSPostLink.'">'.stripslashes($subject).'</a> in the forums.');
+											$act->content    = '';
+											$act->app    = 'wall';
+											$act->cid    = 0;
+
+											CFactory::load('libraries', 'activities');
+											CActivityStream::add($act);
+											}
+										// End Modify for activities stream
 
                                         //update the user posts count
                                         if ($kunena_my->id)
@@ -261,7 +319,7 @@ $catName = $objCatInfo->name;
                                         //Update the attachments table if an image has been attached
                                         if (!empty($imageLocation) && file_exists($imageLocation))
                                         {
-                                            $kunena_db->setQuery("INSERT INTO #__kunena_attachments (mesid, filelocation) values ('$pid','{$attachimage['tmp_name']}')");
+                                            $kunena_db->setQuery("INSERT INTO #__kunena_attachments (mesid, filelocation) values ('$pid',".$kunena_db->quote($attachimage['tmp_name']).")");
 
                                             if (!$kunena_db->query()) {
                                                 echo "<script> alert('Storing image failed: " . $kunena_db->getErrorMsg() . "'); </script>\n";
@@ -271,7 +329,7 @@ $catName = $objCatInfo->name;
                                         //Update the attachments table if an file has been attached
                                         if (!empty($fileLocation) && file_exists($fileLocation))
                                         {
-                                            $kunena_db->setQuery("INSERT INTO #__kunena_attachments (mesid, filelocation) values ('$pid','{$attachfile['tmp_name']}')");
+                                            $kunena_db->setQuery("INSERT INTO #__kunena_attachments (mesid, filelocation) values ('$pid',".$kunena_db->quote($attachfile['tmp_name']).")");
 
                                             if (!$kunena_db->query()) {
                                                 echo "<script> alert('Storing file failed: " . $kunena_db->getErrorMsg() . "'); </script>\n";
@@ -820,12 +878,12 @@ $catName = $objCatInfo->name;
                         	}
 
                             $kunena_db->setQuery(
-                            "UPDATE #__kunena_messages SET name='$kunena_authorname', email='" . addslashes($email)
-                            . (($kunenaConfig->editmarkup) ? "' ,modified_by='" . $modified_by
-                            . "' ,modified_time='" . $modified_time . "' ,modified_reason='" . $modified_reason : "") . "', subject='" . addslashes($subject) . "', topic_emoticon='" . ((int)$topic_emoticon) .  "', hold='" . ((int)$holdPost) . "' WHERE id={$id}");
+                            "UPDATE #__kunena_messages SET name=".$kunena_db->quote($kunena_authorname).", email=".$kunena_db->quote(addslashes($email))
+                            . (($kunenaConfig->editmarkup) ? " ,modified_by='" . $modified_by
+                            . "' ,modified_time='" . $modified_time . "' ,modified_reason=" . $kunena_db->quote($modified_reason) : "") . ", subject=" . $kunena_db->quote(addslashes($subject)) . ", topic_emoticon='" . ((int)$topic_emoticon) .  "', hold='" . ((int)$holdPost) . "' WHERE id={$id}");
 
                             $dbr_nameset = $kunena_db->query();
-                            $kunena_db->setQuery("UPDATE #__kunena_messages_text SET message='{$message}' WHERE mesid='{$id}'");
+                            $kunena_db->setQuery("UPDATE #__kunena_messages_text SET message=".$kunena_db->quote($message)." WHERE mesid='{$id}'");
 
                             if ($kunena_db->query() && $dbr_nameset)
                             {
@@ -833,7 +891,7 @@ $catName = $objCatInfo->name;
                                 if (!empty($imageLocation) && file_exists($imageLocation))
                                 {
                                     $imageLocation = addslashes($imageLocation);
-                                    $kunena_db->setQuery("INSERT INTO #__kunena_attachments (mesid, filelocation) values ('$id','$imageLocation')");
+                                    $kunena_db->setQuery("INSERT INTO #__kunena_attachments (mesid, filelocation) VALUES ('$id',".$kunena_db->quote($imageLocation).")");
 
                                     if (!$kunena_db->query()) {
                                         echo "<script> alert('Storing image failed: " . $kunena_db->getErrorMsg() . "'); </script>\n";
@@ -844,7 +902,7 @@ $catName = $objCatInfo->name;
                                 if (!empty($fileLocation) && file_exists($fileLocation))
                                 {
                                     $fileLocation = addslashes($fileLocation);
-                                    $kunena_db->setQuery("INSERT INTO #__kunena_attachments (mesid, filelocation) values ('$id','$fileLocation')");
+                                    $kunena_db->setQuery("INSERT INTO #__kunena_attachments (mesid, filelocation) VALUES ('$id',".$kunena_db->quote($fileLocation).")");
 
                                     if (!$kunena_db->query()) {
                                         echo "<script> alert('Storing file failed: " . $kunena_db->getErrorMsg() . "'); </script>\n";
@@ -1046,14 +1104,14 @@ $catName = $objCatInfo->name;
                     // insert 'moved topic' notification in old forum if needed
                     if ($bool_leaveGhost)
                     {
-                    	$kunena_db->setQuery("INSERT INTO #__kunena_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','$newSubject','$lastTimestamp','{$oldRecord[0]->catid}','1', '{$kunena_my->id}', '".trim(addslashes($my_name))."')");
+                    	$kunena_db->setQuery("INSERT INTO #__kunena_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0',".$kunena_db->quote($newSubject).",'$lastTimestamp','{$oldRecord[0]->catid}','1', '{$kunena_my->id}', '".$kunena_db->quote(trim(addslashes($my_name)))."')");
                     	$kunena_db->query() or trigger_dberror('Unable to insert ghost message.');
 
                     	//determine the new location for link composition
                     	$newId = $kunena_db->insertid();
 
                     	$newURL = "catid=" . $catid . "&id=" . $id;
-                    	$kunena_db->setQuery("INSERT INTO #__kunena_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')");
+                    	$kunena_db->setQuery("INSERT INTO #__kunena_messages_text (`mesid`, `message`) VALUES ('$newId', ".$kunena_db->quote($newURL).")");
                     	$kunena_db->query() or trigger_dberror('Unable to insert ghost message.');
 
                     	//and update the thread id on the 'moved' post for the right ordering when viewing the forum..
@@ -1192,14 +1250,14 @@ $catName = $objCatInfo->name;
                             // insert 'moved topic' notification in old forum if needed
                             if ($bool_leaveGhost)
                             {
-                                $kunena_db->setQuery("INSERT INTO #__kunena_messages (`parent`, `subject`, `time`, `catid`, `moved`) VALUES ('0','$newSubject','" . $lastTimestamp . "','" . $oldRecord[0]->catid . "','1')");
+                                $kunena_db->setQuery("INSERT INTO #__kunena_messages (`parent`, `subject`, `time`, `catid`, `moved`) VALUES ('0',".$kunena_db->quote($newSubject).",'" . $lastTimestamp . "','" . $oldRecord[0]->catid . "','1')");
 
                                 if ($kunena_db->query())
                                 {
                                     //determine the new location for link composition
                                     $newId = $kunena_db->insertid();
                                     $newURL = "catid=" . $catid . "&id=" . $sourceid;
-                                    $kunena_db->setQuery("INSERT INTO #__kunena_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')");
+                                    $kunena_db->setQuery("INSERT INTO #__kunena_messages_text (`mesid`, `message`) VALUES ('$newId', ".$kunena_db->quote($newURL).")");
 
                                     if (!$kunena_db->query())
                                     {
@@ -1254,7 +1312,7 @@ $catName = $objCatInfo->name;
 
 					// TODO: Enable split when it's fixed
                     $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($kunenaConfig, $id, $kunenaConfig->messages_per_page, $catid), 'Split has been disabled');
-                    
+
                     //get list of posts in thread
                     $kunena_db->setQuery("SELECT * FROM #__kunena_messages AS a "
                     ." LEFT JOIN #__kunena_messages_text AS b ON a.id=b.mesid WHERE (a.thread='{$id}' OR a.id='{$id}') AND a.hold='0' AND a.catid='{$catid}' ORDER BY a.parent ASC, a.ordering, a.time");
@@ -1307,7 +1365,7 @@ $catName = $objCatInfo->name;
             <?php
                     $k = 0;
                     $smileyList = smile::getEmoticons(1);
-                    
+
                     foreach ($postlist as $mes)
                     {
                         $k = 1 - $k;
@@ -1750,12 +1808,8 @@ function hasPostPermission($kunena_db, $catid, $id, $userid, $pubwrite, $ismod)
             echo _POST_NO_PUBACCESS1 . "<br />";
             echo _POST_NO_PUBACCESS2 . "<br /><br />";
 
-            if ($kunenaConfig->kunena_profile == 'cb') {
-                echo '<a href="' . CKunenaCBProfile::getRegisterURL() . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
-            }
-            else {
-                echo '<a href="' . JRoute::_('index.php?option=com_registration&amp;task=register') . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
-            }
+            $kunenaProfile =& CKunenaProfile::getInstance();
+			echo '<a href="' . $kunenaProfile->getRegisterURL() . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
         }
 
         return 0;
@@ -1954,7 +2008,7 @@ function listThreadHistory($id, $kunenaConfig, $kunena_db)
                         $kunena_message_txt = smile::htmlwrap($kunena_message_txt, $kunenaConfig->wrap);
 
 						$kunena_message_txt = CKunenaTools::prepareContent($kunena_message_txt);
-                        
+
                         echo $kunena_message_txt;
                         ?>
                     </td>

@@ -83,7 +83,7 @@ class CKunenaModeration
 		// Test parameters to see if they are valid selecions or abord
 
 		// Check if message to move exists (also covers thread test)
-		$this->_db->setQuery("SELECT `id`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__fb_messages WHERE `id`='$MessageID'");
+		$this->_db->setQuery("SELECT `id`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__kunena_messages WHERE `id`='$MessageID'");
 		$currentMessage = $this->db->loadObjectList();
 			check_dberror("Unable to load message.");
 
@@ -103,7 +103,7 @@ class CKunenaModeration
 
 		if ($TargetCatID != 0)
 		{
-			$this->_db->setQuery("SELECT `id`, `name` FROM #__fb_categories WHERE `id`='$TargetCatID'");
+			$this->_db->setQuery("SELECT `id`, `name` FROM #__kunena_categories WHERE `id`='$TargetCatID'");
 			$targetCategory = $this->db->loadObjectList();
 				check_dberror("Unable to load message.");
 
@@ -123,7 +123,7 @@ class CKunenaModeration
 
 		if ($TargetMessageID != 0)
 		{
-			$this->_db->setQuery("SELECT `id`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__fb_messages WHERE `id`='$TargetMessageID'");
+			$this->_db->setQuery("SELECT `id`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__kunena_messages WHERE `id`='$TargetMessageID'");
 			$targetMessage = $this->db->loadObjectList();
 				check_dberror("Unable to load message.");
 
@@ -159,11 +159,11 @@ class CKunenaModeration
 			case KN_MOVE_MESSAGE: // Move Single message only
 				if ($TargetMessageID==0)
 				{
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$MessageID' `parent`=0 $subjectupdatesql WHERE `id`='$MessageID';";
+					$sql = "UPDATE #__kunena_messages SET `catid`='$TargetCatID' `thread`='$MessageID' `parent`=0 $subjectupdatesql WHERE `id`='$MessageID';";
 				}
 				else
 				{
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$TargetMessageID' `parent`='$TargetMessageID' $subjectupdatesql WHERE `id`='$MessageID';";
+					$sql = "UPDATE #__kunena_messages SET `catid`='$TargetCatID' `thread`='$TargetMessageID' `parent`='$TargetMessageID' $subjectupdatesql WHERE `id`='$MessageID';";
 				}
 
 				// TODO: If we are moving the first message of a thread only - make the second post the new thread header
@@ -179,11 +179,11 @@ class CKunenaModeration
 			case KN_MOVE_THREAD: // Move entire Thread
 				if ($TargetMessageID==0)
 				{
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='$currentMessage->thread';";
+					$sql = "UPDATE #__kunena_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='$currentMessage->thread';";
 				}
 				else
 				{
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$targetMessage->thread' $subjectupdatesql WHERE `thread`='$currentMessage->thread';";
+					$sql = "UPDATE #__kunena_messages SET `catid`='$TargetCatID' `thread`='$targetMessage->thread' $subjectupdatesql WHERE `thread`='$currentMessage->thread';";
 				}
 
 				// Create ghost thread if requested
@@ -191,7 +191,7 @@ class CKunenaModeration
 				if ($GhostThread==true)
 				{
                     // Post time in ghost message is the same as in the last message of the thread
-					$database->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE `thread`='$id'");
+					$database->setQuery("SELECT MAX(time) AS timestamp FROM #__kunena_messages WHERE `thread`='$id'");
 					$lastTimestamp = $database->loadResult();
 						check_dberror("Unable to load last timestamp.");
 					if ($lastTimestamp == "") {
@@ -203,7 +203,7 @@ class CKunenaModeration
 					// TODO: obey configuration setting username vs realname
                     // TODO: what do we do with ghost message title? _MOVED_TOPIC was used before
                     // @Oliver: I'd like to get rid of it and add it while rendering..
-					$this->_db->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','$currentMessage->subject','$lastTimestamp','$currentMessage->catid','1', '$my->id', '".trim(addslashes($my_name))."')");
+					$this->_db->setQuery("INSERT INTO #__kunena_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','$currentMessage->subject','$lastTimestamp','$currentMessage->catid','1', '$my->id', '".trim(addslashes($my_name))."')");
                     $this->_db->query();
                     	check_dberror('Unable to insert ghost message.');
 
@@ -211,13 +211,13 @@ class CKunenaModeration
                     $newId = $this->_db->insertid();
 
 					// and update the thread id on the 'moved' post for the right ordering when viewing the forum..
-					$this->_db->setQuery("UPDATE #__fb_messages SET `thread`='$newId' WHERE `id`='$newId'");
+					$this->_db->setQuery("UPDATE #__kunena_messages SET `thread`='$newId' WHERE `id`='$newId'");
 					$this->_db->query();
 						check_dberror('Unable to update thread id of ghost thread.');
 
 					// TODO: we need to fix all old ghost messages and change behaviour of them
 					$newURL = "id=" . $currentMessage->id;
-					$this->_db->setQuery("INSERT INTO #__fb_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')");
+					$this->_db->setQuery("INSERT INTO #__kunena_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')");
 					$this->_db->query();
 						check_dberror('Unable to insert ghost message.');
 				}
@@ -226,26 +226,26 @@ class CKunenaModeration
 			case KN_MOVE_NEWER: // Move message and all newer messages of thread
 				if ($TargetMessageID==0)
 				{
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `parent`=0 $subjectupdatesql WHERE id`='$MessageID';";
-					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='$currentMessage->thread' AND `id`>'$MessageID';";
+					$sql = "UPDATE #__kunena_messages SET `catid`='$TargetCatID' `parent`=0 $subjectupdatesql WHERE id`='$MessageID';";
+					$sql .= "UPDATE #__kunena_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='$currentMessage->thread' AND `id`>'$MessageID';";
 				}
 				else
 				{
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `parent`='$TargetMessageID' $subjectupdatesql WHERE id`='$MessageID';";
-					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$TargetMessageID' $subjectupdatesql WHERE `thread`='$currentMessage->thread' AND `id`>'$MessageID';";
+					$sql = "UPDATE #__kunena_messages SET `catid`='$TargetCatID' `parent`='$TargetMessageID' $subjectupdatesql WHERE id`='$MessageID';";
+					$sql .= "UPDATE #__kunena_messages SET `catid`='$TargetCatID' `thread`='$TargetMessageID' $subjectupdatesql WHERE `thread`='$currentMessage->thread' AND `id`>'$MessageID';";
 				}
 
 				break;
 			case KN_MOVE_REPLIES: // Move message and all replies and quotes - 1 level deep for now
 				if ($TargetMessageID==0)
 				{
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `parent`=0 $subjectupdatesql WHERE id`='$MessageID';";
-					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='$currentMessage->thread' AND `id`>'$MessageID' AND `parent`='$MessageID';";
+					$sql = "UPDATE #__kunena_messages SET `catid`='$TargetCatID' `parent`=0 $subjectupdatesql WHERE id`='$MessageID';";
+					$sql .= "UPDATE #__kunena_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='$currentMessage->thread' AND `id`>'$MessageID' AND `parent`='$MessageID';";
 				}
 				else
 				{
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' `parent`='$TargetMessageID' $subjectupdatesql WHERE id`='$MessageID';";
-					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID' `thread`='$TargetMessageID' $subjectupdatesql WHERE `thread`='$currentMessage->thread' AND `id`>'$MessageID' AND `parent`='$MessageID';";
+					$sql = "UPDATE #__kunena_messages SET `catid`='$TargetCatID' `parent`='$TargetMessageID' $subjectupdatesql WHERE id`='$MessageID';";
+					$sql .= "UPDATE #__kunena_messages SET `catid`='$TargetCatID' `thread`='$TargetMessageID' $subjectupdatesql WHERE `thread`='$currentMessage->thread' AND `id`>'$MessageID' AND `parent`='$MessageID';";
 				}
 
 				break;

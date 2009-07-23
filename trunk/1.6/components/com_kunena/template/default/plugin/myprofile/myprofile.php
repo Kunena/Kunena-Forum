@@ -39,22 +39,6 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
     //Get userinfo needed later on, this limits the amount of queries
     $userinfo = new CKunenaUserprofile();
 
-    //use ClexusPM avatar if configured
-    if ($kunenaConfig->avatar_src == "clexuspm")
-    {
-        $kunena_db->setQuery("SELECT picture FROM #__mypms_profiles WHERE userid='{$kunena_my->id}");
-        $avatar = $kunena_db->loadResult();
-    }
-    elseif ($kunenaConfig->avatar_src == "cb")
-    {
-        $kunena_db->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='{$kunena_my->id}'");
-        $avatar = $kunena_db->loadResult();
-    }
-    else
-    {
-        $avatar = $kunenaavatar;
-    }
-
     //user type determination
     $ugid = $juserinfo->gid;
     $uIsMod = 0;
@@ -164,7 +148,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                 case "avatar":
                     // B: Avatar
-                    if ($kunenaConfig->kunena_profile != 'cb' && $kunenaConfig->kunena_profile != 'jomsocial')
+                    if ($kunenaConfig->kunena_profile == 'kunena')
                     {
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar_upload.php'))
                         {
@@ -233,7 +217,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     $ulists["gender"] = JHTML::_('select.genericlist',  $genders, 'gender', 'class="inputbox"', 'value', 'text', $userinfo->gender );
 
 
-                    if ($kunenaConfig->kunena_profile != 'cb' && $kunenaConfig->kunena_profile != 'jomSocial')
+                    if ($kunenaConfig->kunena_profile == 'kunena')
                     {
                         include (KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 
@@ -409,10 +393,10 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 						$app->enqueueMessage(_USER_UNSUBSCRIBE_YES);
                     }
                     
-                    if ($kunenaConfig->kunena_profile == 'cb')
+                    if ($kunenaConfig->kunena_profile != 'kunena')
                     {
-						$forumtab_url = CKunenaCBProfile::getForumTabURL();
-						$app->redirect(JRoute::_($forumtab_url));
+                    	$kunenaProfile =& CKunenaProfile::getInstance();
+						$app->redirect($kunenaProfile->getForumTabURL());
                     }
                     else
                     {
@@ -433,10 +417,9 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 							$app->enqueueMessage(_USER_UNSUBSCRIBE_YES);
 						}
 
-						if ($kunenaConfig->kunena_profile == 'cb') {
-							$forumtab_url = CKunenaCBProfile::getForumTabURL();
-							$app->redirect(JRoute::_($forumtab_url));
-
+                    	if ($kunenaConfig->kunena_profile != 'kunena')
+							$kunenaProfile =& CKunenaProfile::getInstance();
+							$app->redirect($kunenaProfile->getForumTabURL());
 						}
 						else {
 							$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub'));
@@ -465,10 +448,10 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     	$app->enqueueMessage(_USER_UNFAVORITE_YES);
                     }
 
-                    if ($kunenaConfig->kunena_profile == 'cb')
+                   	if ($kunenaConfig->kunena_profile != 'kunena')
                     {
-						$forumtab_url = CKunenaCBProfile::getForumTabURL();
-						$app->redirect(JRoute::_($forumtab_url));
+                    	$kunenaProfile =& CKunenaProfile::getInstance();
+						$app->redirect($kunenaProfile->getForumTabURL());
                     }
                     else
                     {
@@ -488,9 +471,9 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 							$app->enqueueMessage(_USER_UNFAVORITE_YES);
 						}
 
-						if ($kunenaConfig->kunena_profile == 'cb') {
-							$forumtab_url = CKunenaCBProfile::getForumTabURL();
-							$app->redirect(JRoute::_($forumtab_url));
+	                   	if ($kunenaConfig->kunena_profile != 'kunena')
+                    		$kunenaProfile =& CKunenaProfile::getInstance();
+							$app->redirect($kunenaProfile->getForumTabURL());
 						}
 						else {
 							$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav'));

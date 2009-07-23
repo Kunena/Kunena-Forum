@@ -3238,7 +3238,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
                                 </td>
 
                                 <td width = "200">
-                                    <a href = "#edit" onclick = "return listItemTask('cb<?php echo $i; ?>','editsmiley')"><img src="<?php echo ($smileypath['live'] .DS. $s->location); ?>" alt="<?php echo $s->location; ?>"  border="0" /></a>
+                                    <a href = "#edit" onclick = "return listItemTask('cb<?php echo $i; ?>','editsmiley')"><img src="<?php echo ($smileypath['live'] .'/'. $s->location); ?>" alt="<?php echo $s->location; ?>"  border="0" /></a>
                                 </td>
 
                                 <td width = "100">

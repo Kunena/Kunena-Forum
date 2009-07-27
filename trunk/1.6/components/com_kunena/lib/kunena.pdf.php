@@ -102,7 +102,7 @@ function dofreePDF($kunena_db)
         $kunena_db->setQuery("SELECT thread FROM #__kunena_messages WHERE id='{$id}' AND catid='{$catid}'");
         $threadid = $kunena_db->loadResult();
         //load topic post and details
-        $kunena_db->setQuery("SELECT a.*, b.* FROM #__kunena_messages AS a, #__kunena_messages_text AS b WHERE a.thread='{$threadid}' AND a.catid='{$catid}' AND a.parent='0' AND a.id=b.mesid");
+        $kunena_db->setQuery("SELECT a.* FROM #__kunena_messages AS a WHERE a.thread='{$threadid}' AND a.catid='{$catid}' AND a.parent='0'");
         $row = $kunena_db->loadObjectList();
                 check_dberror("Unable to load message details.");
 
@@ -153,7 +153,7 @@ function dofreePDF($kunena_db)
         $pdf->ezText($txt3, 10);
         $pdf->ezText("\n============================================================================\n\n", 8);
         //now let's try to see if there's more...
-        $kunena_db->setQuery("SELECT a.*, b.* FROM #__kunena_messages AS a, #__kunena_messages_text AS b WHERE a.catid='{$catid}' AND a.thread='{$threadid}' AND a.id=b.mesid AND a.parent!='0' ORDER BY a.time ASC");
+        $kunena_db->setQuery("SELECT a.*, b.* FROM #__kunena_messages AS a WHERE a.catid='{$catid}' AND a.thread='{$threadid}' AND a.parent!='0' ORDER BY a.time ASC");
         $replies = $kunena_db->loadObjectList();
                 check_dberror("Unable to load messages & detail.");
 

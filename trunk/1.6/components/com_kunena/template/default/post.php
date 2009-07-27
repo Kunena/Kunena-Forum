@@ -219,7 +219,7 @@ $catName = $objCatInfo->name;
                                 //
                                 $duplicatetimewindow = $posttime - $kunenaConfig->kunenasessiontimeout;
                                 unset($existingPost);
-                                $kunena_db->setQuery("SELECT m.id FROM #__kunena_messages AS m JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.userid='{$kunena_my->id}' AND m.name='{$kunena_authorname}' AND m.email='{$email}' AND m.subject='{$subject}' AND m.ip='{$ip}' AND t.message='{$message}' AND m.time>='{$duplicatetimewindow}'");
+                                $kunena_db->setQuery("SELECT m.id FROM #__kunena_messages AS m WHERE m.userid='{$kunena_my->id}' AND m.name='{$kunena_authorname}' AND m.email='{$email}' AND m.subject='{$subject}' AND m.ip='{$ip}' AND m.message='{$message}' AND m.time>='{$duplicatetimewindow}'");
                                 $kunena_db->query() or trigger_dberror('Unable to load post.');
 
                                 $existingPost = $kunena_db->loadObject();
@@ -229,8 +229,8 @@ $catName = $objCatInfo->name;
                                 if (!isset($pid))
                                 {
                                     $kunena_db->setQuery("INSERT INTO #__kunena_messages
-                                    						(parent,thread,catid,name,userid,email,subject,time,ip,topic_emoticon,hold)
-                                    						VALUES('$parent','$thread','$catid','$kunena_authorname','{$kunena_my->id}','$email','$subject','$posttime','$ip','$topic_emoticon','$holdPost')");
+                                    						(parent,thread,catid,name,userid,email,subject,time,ip,topic_emoticon,hold,message)
+                                    						VALUES('$parent','$thread','$catid','$kunena_authorname','{$kunena_my->id}','$email','$subject','$posttime','$ip','$topic_emoticon','$holdPost','.$kunena_db->quote($message).')");
 
     			                    if ($kunena_db->query())
                                     {
@@ -241,8 +241,6 @@ $catName = $objCatInfo->name;
                                           CKunenaTools::modifyCategoryStats($pid, $parent, $posttime, $catid);
                                         }
 
-                                        $kunena_db->setQuery("INSERT INTO #__kunena_messages_text (mesid,message) VALUES('$pid',".$kunena_db->quote($message).")");
-                                        $kunena_db->query();
 										/*    ORIGINAL CODE
 // TODO: Remove                                        if ($thread == 0)
                                         {
@@ -564,7 +562,7 @@ $catName = $objCatInfo->name;
 
                     if ($id > 0)
                     {
-                        $kunena_db->setQuery("SELECT m.*, t.mesid, t.message FROM #__kunena_messages AS m, #__kunena_messages_text AS t WHERE m.id='{$id}' AND t.mesid='{$id}'");
+                        $kunena_db->setQuery("SELECT m.* FROM #__kunena_messages AS m WHERE m.id='{$id}'");
                         $kunena_db->query();
 
                         if ($kunena_db->getNumRows() > 0)
@@ -623,7 +621,7 @@ $catName = $objCatInfo->name;
 
                     if ($id > 0)
                     {
-                        $kunena_db->setQuery("SELECT m.*, t.mesid, t.message FROM #__kunena_messages AS m, #__kunena_messages_text AS t WHERE m.id='{$id}' AND t.mesid='{$id}'");
+                        $kunena_db->setQuery("SELECT m.* FROM #__kunena_messages AS m WHERE m.id='{$id}'");
                         $kunena_db->query();
 
                         if ($kunena_db->getNumRows() > 0)
@@ -714,7 +712,7 @@ $catName = $objCatInfo->name;
                 {
                     $allowEdit = 0;
                     $id = (int)$id;
-                    $kunena_db->setQuery("SELECT * FROM #__kunena_messages AS m LEFT JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.id='{$id}'");
+                    $kunena_db->setQuery("SELECT * FROM #__kunena_messages AS m WHERE m.id='{$id}'");
                     $message1 = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load message.");
                     $mes = $message1[0];
@@ -816,7 +814,7 @@ $catName = $objCatInfo->name;
                     $modified_time = CKunenaTools::kunenaGetInternalTime();
                     $id  = (int) $id;
 
-                    $kunena_db->setQuery("SELECT * FROM #__kunena_messages AS m LEFT JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.id='{$id}'");
+                    $kunena_db->setQuery("SELECT * FROM #__kunena_messages AS m WHERE m.id='{$id}'");
                     $message1 = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load messages.");
                     $mes = $message1[0];
@@ -880,12 +878,9 @@ $catName = $objCatInfo->name;
                             $kunena_db->setQuery(
                             "UPDATE #__kunena_messages SET name=".$kunena_db->quote($kunena_authorname).", email=".$kunena_db->quote(addslashes($email))
                             . (($kunenaConfig->editmarkup) ? " ,modified_by='" . $modified_by
-                            . "' ,modified_time='" . $modified_time . "' ,modified_reason=" . $kunena_db->quote($modified_reason) : "") . ", subject=" . $kunena_db->quote(addslashes($subject)) . ", topic_emoticon='" . ((int)$topic_emoticon) .  "', hold='" . ((int)$holdPost) . "' WHERE id={$id}");
+                            . "' ,modified_time='" . $modified_time . "' ,modified_reason=" . $kunena_db->quote($modified_reason) : "") . ", subject=" . $kunena_db->quote(addslashes($subject)) . ", topic_emoticon='" . ((int)$topic_emoticon) .  "', hold='" . ((int)$holdPost) . "', message='".$kunena_db->quote($message)."' WHERE id={$id}");
 
-                            $dbr_nameset = $kunena_db->query();
-                            $kunena_db->setQuery("UPDATE #__kunena_messages_text SET message=".$kunena_db->quote($message)." WHERE mesid='{$id}'");
-
-                            if ($kunena_db->query() && $dbr_nameset)
+                            if ($kunena_db->query())
                             {
                                 //Update the attachments table if an image has been attached
                                 if (!empty($imageLocation) && file_exists($imageLocation))
@@ -1111,11 +1106,9 @@ $catName = $objCatInfo->name;
                     	$newId = $kunena_db->insertid();
 
                     	$newURL = "catid=" . $catid . "&id=" . $id;
-                    	$kunena_db->setQuery("INSERT INTO #__kunena_messages_text (`mesid`, `message`) VALUES ('$newId', ".$kunena_db->quote($newURL).")");
-                    	$kunena_db->query() or trigger_dberror('Unable to insert ghost message.');
 
                     	//and update the thread id on the 'moved' post for the right ordering when viewing the forum..
-                    	$kunena_db->setQuery("UPDATE #__kunena_messages SET `thread`='$newId' WHERE `id`='$newId'");
+                    	$kunena_db->setQuery("UPDATE #__kunena_messages SET `thread`='$newId', `message`='".$kunena_db->quote($newURL)."'' WHERE `id`='$newId'");
                     	$kunena_db->query() or trigger_dberror('Unable to move thread.');
                     }
                     //move succeeded
@@ -1257,15 +1250,9 @@ $catName = $objCatInfo->name;
                                     //determine the new location for link composition
                                     $newId = $kunena_db->insertid();
                                     $newURL = "catid=" . $catid . "&id=" . $sourceid;
-                                    $kunena_db->setQuery("INSERT INTO #__kunena_messages_text (`mesid`, `message`) VALUES ('$newId', ".$kunena_db->quote($newURL).")");
-
-                                    if (!$kunena_db->query())
-                                    {
-                                        $kunena_db->stderr(true);
-                                    }
 
                                     //and update the thread id on the 'moved' post for the right ordering when viewing the forum..
-                                    $kunena_db->setQuery("UPDATE #__kunena_messages SET `thread`='$newId' WHERE `id`='$newId'");
+                                    $kunena_db->setQuery("UPDATE #__kunena_messages SET `thread`='$newId', `message`='".$kunena_db->quote($newURL)."' WHERE `id`='$newId'");
 
                                     if (!$kunena_db->query())
                                     {
@@ -1315,7 +1302,7 @@ $catName = $objCatInfo->name;
 
                     //get list of posts in thread
                     $kunena_db->setQuery("SELECT * FROM #__kunena_messages AS a "
-                    ." LEFT JOIN #__kunena_messages_text AS b ON a.id=b.mesid WHERE (a.thread='{$id}' OR a.id='{$id}') AND a.hold='0' AND a.catid='{$catid}' ORDER BY a.parent ASC, a.ordering, a.time");
+                    ." WHERE (a.thread='{$id}' OR a.id='{$id}') AND a.hold='0' AND a.catid='{$catid}' ORDER BY a.parent ASC, a.ordering, a.time");
                     $postlist = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load messages.");
                     // get topic id:
@@ -1875,13 +1862,6 @@ function kunena_delete_post(&$kunena_db, $id, $dellattach)
         return -2;
     }
 
-    //Delete message text(s)
-    $kunena_db->setQuery('DELETE FROM #__kunena_messages_text WHERE mesid IN (' . $children . ')');
-
-    if (!$kunena_db->query()) {
-        return -3;
-    }
-
     //Update user post stats
     if (count($userid_array) > 0)
     {
@@ -1893,14 +1873,12 @@ function kunena_delete_post(&$kunena_db, $id, $dellattach)
     }
 
     //Delete (possible) ghost post
-    $kunena_db->setQuery("SELECT mesid FROM #__kunena_messages_text WHERE message='catid={$mes->catid}&amp;id={$id}'");
+    $kunena_db->setQuery("SELECT id FROM #__kunena_messages WHERE message='catid={$mes->catid}&amp;id={$id}'");
     $int_ghost_id = $kunena_db->loadResult();
 
     if ($int_ghost_id > 0)
     {
         $kunena_db->setQuery('DELETE FROM #__kunena_messages WHERE id=' . $int_ghost_id);
-        $kunena_db->query();
-        $kunena_db->setQuery('DELETE FROM #__kunena_messages_text WHERE mesid=' . $int_ghost_id);
         $kunena_db->query();
     }
 
@@ -1956,7 +1934,7 @@ function listThreadHistory($id, $kunenaConfig, $kunena_db)
         }
 
         //get all the messages for this thread
-        $kunena_db->setQuery("SELECT * FROM #__kunena_messages AS m LEFT JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE (thread='{$thread}' OR id='{$thread}') AND hold='0' ORDER BY time DESC LIMIT " . $kunenaConfig->historylimit);
+        $kunena_db->setQuery("SELECT * FROM #__kunena_messages AS m WHERE (thread='{$thread}' OR id='{$thread}') AND hold='0' ORDER BY time DESC LIMIT " . $kunenaConfig->historylimit);
         $messages = $kunena_db->loadObjectList();
         	check_dberror("Unable to load messages.");
         //and the subject of the first thread (for reference)

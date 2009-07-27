@@ -41,7 +41,8 @@ switch ($action)
         switch (jbDeletePosts($kunena_db, $cid))
         {
             case -1:
-                $app->redirect(KUNENA_LIVEURL . 'func=review&amp;catid=' . $catid, "ERROR: The post has been deleted but the text could not be deleted\n Check the #__kunena_messages_text table for mesid IN " . explode(',', $cid));
+                // $app->redirect(KUNENA_LIVEURL . 'func=review&amp;catid=' . $catid, "ERROR: The post has been deleted but the text could not be deleted\n Check the #__kunena_messages_text table for mesid IN " . explode(',', $cid));
+            	// no longer needed as message text sits inside of message table
 
                 break;
 
@@ -80,7 +81,7 @@ switch ($action)
     case 'list':
         echo '<p class="sectionname"><?php echo _MESSAGE_ADMINISTRATION; ?></p>';
 
-        $kunena_db->setQuery("SELECT m.id, m.time, m.name, m.subject, m.hold, t.message FROM #__kunena_messages AS m JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE hold='1' AND catid='{$catid}' ORDER BY id ASC");
+        $kunena_db->setQuery("SELECT m.id, m.time, m.name, m.subject, m.hold, m.message FROM #__kunena_messages AS m WHERE hold='1' AND catid='{$catid}' ORDER BY id ASC");
 
         if (!$kunena_db->query())
             echo $kunena_db->getErrorMsg();
@@ -196,14 +197,7 @@ function jbDeletePosts($kunena_db, $cid)
     $kunena_db->setQuery('DELETE FROM `#__kunena_messages` WHERE `id` IN (' . $ids . ')');
 
     if ($kunena_db->query())
-    {
-        $kunena_db->setQuery('DELETE FROM `#__kunena_messages_text` WHERE `mesid` IN (' . $ids . ')');
-
-        if ($kunena_db->query())
-            return 1;
-        else
-            return -1;
-    }
+    	return 1;
 
     return 0;
 }

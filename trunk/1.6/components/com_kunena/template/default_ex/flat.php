@@ -307,7 +307,7 @@ if (count($messages[0]) > 0)
 								$threadPages = 0;
 								$unreadPage = 0;
                                 //this thread has been moved, get the new location
-                                $kunena_db->setQuery("SELECT message FROM #__kunena_messages_text WHERE mesid='{$leaf->id}'");
+                                $kunena_db->setQuery("SELECT message FROM #__kunena_messages WHERE `id`='{$leaf->id}'");
                                 $newURL = $kunena_db->loadResult();
                                 // split the string and separate catid and id for proper link assembly
                                 parse_str($newURL, $newURLParams);
@@ -337,7 +337,7 @@ if (count($messages[0]) > 0)
         <span class="topic_posted_time"><?php echo _KUNENA_POSTED_AT ?> <?php echo time_since($leaf->time , time() + ($kunenaConfig->board_ofset * 3600)); ?> <?php echo _KUNENA_AGO ?>
         </span>
 <?php
-	if ($leaf->name) 
+	if ($leaf->name)
 	{
         	echo '<span class="topic_by">';
 	        echo _GEN_BY.' '.CKunenaLink::GetProfileLink($kunenaConfig, $leaf->userid, $leaf->name);
@@ -421,7 +421,7 @@ if (count($messages[0]) > 0)
         	echo CKunenaLink::GetThreadPageLink($kunenaConfig, 'view', $leaf->catid, $leaf->thread, 1, $kunenaConfig->messages_per_page, _GEN_LAST_POST, $last_reply[$leaf->id]->id);
         }
 
-        if ($leaf->name) 
+        if ($leaf->name)
 		echo ' '._GEN_BY. ' '.CKunenaLink::GetProfileLink($kunenaConfig, $last_reply[$leaf->id]->userid, stripslashes($last_reply[$leaf->id]->name), 'nofollow', 'topic_latest_post_user'); ?>
         </span>
         <!-- /Latest Post -->

@@ -168,7 +168,7 @@ $document->setDescription($metaDesc);
 
 $query = 			"SELECT
                         a.*,
-                        t.mesid AS mesid,
+                        t.id AS mesid,
                         t.message AS messagetext,
                         m.mesid AS attachmesid,
                         (f.thread>0) AS myfavorite,
@@ -203,10 +203,10 @@ else
                                 " GROUP BY 1) AS b ON b.thread = a.thread ";
 }
 
-$query .=				"JOIN #__kunena_messages_text AS t ON a.thread = t.mesid
+$query .=				"JOIN #__kunena_messages AS t ON a.thread = t.id
                         LEFT JOIN #__kunena_categories  AS c ON c.id = a.catid
                         LEFT JOIN #__kunena_attachments AS m ON m.mesid = a.id
-                        LEFT JOIN #__kunena_favorites AS f ON  f.thread = a.id && f.userid = '{$kunena_my->id}'"
+                        LEFT JOIN #__kunena_favorites AS f ON  f.thread = a.id && f.userid = '{$kunena_my->id}'
 						LEFT JOIN #__kunena_users AS u ON u.userid = a.userid
                     WHERE
                         a.parent='0'

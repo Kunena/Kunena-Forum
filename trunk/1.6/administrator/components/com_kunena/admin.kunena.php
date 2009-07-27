@@ -61,29 +61,29 @@ if ($kn_tables->installed() === false) {
 
 $kn_version = CKunenaVersion::versionArray();
 if ($kn_version->versionname == '@kunenaversionname@') {
-	$kn_version_name = _KUNENA_VERSION_SVN;	
-	$kn_version_warning = _KUNENA_VERSION_SVN_WARNING;	
+	$kn_version_name = _KUNENA_VERSION_SVN;
+	$kn_version_warning = _KUNENA_VERSION_SVN_WARNING;
 } else if ($kn_version->versionname == 'NOT UPGRADED') {
 	$app->enqueueMessage(sprintf(_KUNENA_ERROR_UPGRADE, $kn_version->version), 'notice');
 	$app->enqueueMessage(_KUNENA_ERROR_UPGRADE_WARN);
 	$app->enqueueMessage(sprintf(_KUNENA_ERROR_UPGRADE_AGAIN, $kn_version->version));
 	$app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_SUPPORT.' <a href="http://www.kunena.com">www.kunena.com</a>');
 } else if (strpos($kn_version->version, 'RC') !== false) {
-	$kn_version_name = _KUNENA_VERSION_RC;	
-	$kn_version_warning = _KUNENA_VERSION_RC_WARNING;	
+	$kn_version_name = _KUNENA_VERSION_RC;
+	$kn_version_warning = _KUNENA_VERSION_RC_WARNING;
 } else if (strpos($kn_version->version, 'BETA') !== false) {
-	$kn_version_name = _KUNENA_VERSION_BETA;	
-	$kn_version_warning = _KUNENA_VERSION_BETA_WARNING;	
+	$kn_version_name = _KUNENA_VERSION_BETA;
+	$kn_version_warning = _KUNENA_VERSION_BETA_WARNING;
 } else if (strpos($kn_version->version, 'ALPHA') !== false) {
-	$kn_version_name = _KUNENA_VERSION_ALPHA;	
-	$kn_version_warning = _KUNENA_VERSION_ALPHA_WARNING;	
+	$kn_version_name = _KUNENA_VERSION_ALPHA;
+	$kn_version_warning = _KUNENA_VERSION_ALPHA_WARNING;
 } else if (strpos($kn_version->version, 'DEV') !== false) {
-	$kn_version_name = _KUNENA_VERSION_DEV;	
-	$kn_version_warning = _KUNENA_VERSION_DEV_WARNING;	
+	$kn_version_name = _KUNENA_VERSION_DEV;
+	$kn_version_warning = _KUNENA_VERSION_DEV_WARNING;
 }
 if (!empty($kn_version_warning))
 {
-	$app->enqueueMessage(sprintf(_KUNENA_VERSION_INSTALLED, $kn_version->version, $kn_version_name).' '.$kn_version_warning, 'notice');	
+	$app->enqueueMessage(sprintf(_KUNENA_VERSION_INSTALLED, $kn_version->version, $kn_version_name).' '.$kn_version_warning, 'notice');
 }
 
 $cid = JRequest::getVar('cid', array ( 0 ));
@@ -356,7 +356,7 @@ switch ($task)
 }
 
 // Detect errors in CB integration
-if (is_object($kunenaProfile)) 
+if (is_object($kunenaProfile))
 {
 	$kunenaProfile->enqueueErrors();
 	//$kunenaProfile->close();
@@ -529,7 +529,7 @@ $kunena_db = &JFactory::getDBO();
 
     $kunena_db->setQuery("UPDATE #__kunena_sessions SET allowed='na'");
 	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
-    
+
     $app->redirect( JURI::base() ."index2.php?option=$option&task=showAdministration");
 }
 
@@ -589,9 +589,6 @@ function deleteForum($cid = null, $option)
     		$kunena_db->setQuery("DELETE FROM #__kunena_messages WHERE id = $ml->id");
     		$kunena_db->query() or trigger_dberror("Unable to delete messages.");
 
-    		$kunena_db->setQuery("DELETE FROM #__kunena_messages_text WHERE mesid=$ml->id");
-    		$kunena_db->query() or trigger_dberror("Unable to delete message text.");
-
     		//and clear up all subscriptions as well
     		if ($ml->parent == 0)
     		{ //this was a topic message to which could have been subscribed
@@ -603,7 +600,7 @@ function deleteForum($cid = null, $option)
 
 	$kunena_db->setQuery("UPDATE #__kunena_sessions SET allowed='na'");
 	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
-    
+
     $app->redirect( JURI::base() ."index2.php?option=$option&task=showAdministration");
 }
 
@@ -738,14 +735,14 @@ function showConfig($option)
 
     asort ($templatelist);
     asort ($imagesetlist);
-    
+
     while (list($key, $val) = each($templatelist)) {
 		$templatelistitems[] = JHTML::_('select.option',  $val, $val);
     }
     while (list($key, $val) = each($imagesetlist)) {
 		$imagesetlistitems[] = JHTML::_('select.option',  $val, $val);
     }
-    
+
 	$lists['jmambot'] = JHTML::_('select.genericlist', $yesno, 'cfg_jmambot', 'class="inputbox" size="1"', 'value', 'text', $kunenaConfig->jmambot);
     $lists['disemoticons'] = JHTML::_('select.genericlist', $yesno, 'cfg_disemoticons', 'class="inputbox" size="1"', 'value', 'text', $kunenaConfig->disemoticons);
     $lists['template'] = JHTML::_('select.genericlist', $templatelistitems, 'cfg_template', 'class="inputbox" size="1"', 'value', 'text', $kunenaConfig->template);
@@ -881,7 +878,7 @@ function saveConfig($option)
 
 	$kunena_db->setQuery("UPDATE #__kunena_sessions SET allowed='na'");
 	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
-	
+
 	$app->redirect( JURI::base() . "index2.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED);
 }
 
@@ -896,7 +893,7 @@ function showInstructions($kunena_db, $option, $lang) {
 function showCss($option)
 {
 	require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
-	
+
 	$kunenaConfig =& CKunenaConfig::getInstance();
     $file = KUNENA_PATH_TEMPLATE .DS. $kunenaConfig->template .DS. "kunena.forum.css";
     $permission = CKunenaPath::isWritable($file);
@@ -914,7 +911,7 @@ function showCss($option)
 function saveCss($file, $csscontent, $option)
 {
 	require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
-	
+
 	$app =& JFactory::getApplication();
     $tmpstr = _KUNENA_CSS_SAVE;
     $tmpstr = str_replace("%file%", $file, $tmpstr);
@@ -947,7 +944,7 @@ function newModerator($option, $id = null)
     $total = $kunena_db->loadResult();
 	if ($limitstart >= $total) $limitstart = 0;
     if ($limit == 0 || $limit > 100) $limit = 100;
-	
+
     $kunena_db->setQuery("SELECT * FROM #__users AS a" . "\n LEFT JOIN #__kunena_users AS b" . "\n ON a.id=b.userid" . "\n WHERE b.moderator=1", $limitstart, $limit);
     $userList = $kunena_db->loadObjectList();
     	check_dberror('Unable to load moderators.');
@@ -1027,10 +1024,10 @@ function addModerator($option, $id, $cid = null, $publish = 1)
 
     $row = new kunenaForum($kunena_db);
     $row->checkin($id);
-    
+
     $kunena_db->setQuery("UPDATE #__kunena_sessions SET allowed='na'");
 	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
-	
+
     $app->redirect( JURI::base() ."index2.php?option=$option&task=edit2&uid=" . $id);
 }
 
@@ -1060,7 +1057,7 @@ function showProfiles($kunena_db, $option, $lang, $order)
 
     if ($limitstart >= $total) $limitstart = 0;
     if ($limit == 0 || $limit > 100) $limit = 100;
-    
+
     if ($order == 1)
     {
         $kunena_db->setQuery(
@@ -1267,9 +1264,6 @@ function doprune($kunena_db, $option)
                         $kunena_db->setQuery("DELETE FROM #__kunena_messages WHERE id=$id->id");
                         $kunena_db->query() or trigger_dberror("Unable to delete messages.");
 
-                        $kunena_db->setQuery("DELETE FROM #__kunena_messages_text WHERE mesid=$id->id");
-                        $kunena_db->query() or trigger_dberror("Unable to delete message texts.");
-
                         //delete all attachments
                         $kunena_db->setQuery("SELECT filelocation FROM #__kunena_attachments WHERE mesid=$id->id");
                         $fileList = $kunena_db->loadObjectList();
@@ -1455,7 +1449,7 @@ function deleteFile($kunena_db, $option, $fileName)
     }
 
 	require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
-    
+
 	// step 1: Remove file
     $ret = CKunenaFile::delete(KUNENA_PATH_UPLOADED .DS. 'files' .DS. $fileName);
     //step 2: remove the database link to the file
@@ -1651,7 +1645,7 @@ $kunena_db = &JFactory::getDBO();
 	$total = $kunena_db->loadResult();
 	if ($limitstart >= $total) $limitstart = 0;
     if ($limit == 0 || $limit > 100) $limit = 100;
-	
+
     $kunena_db->setQuery("SELECT * FROM #__kunena_smileys", $limitstart, $limit);
     $smileytmp = $kunena_db->loadObjectList();
             check_dberror("Unable to load smileys.");

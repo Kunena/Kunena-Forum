@@ -55,7 +55,7 @@ if ($kunenaConfig->rsstype == 'thread')
 						tmp.lastpostid,
 						tmp.lastposttime,
 						u.name AS lastpostname,
-						t.message AS lastpostmessage,
+						u.message AS lastpostmessage,
 						tmp.numberposts
 					FROM
 						(SELECT
@@ -76,7 +76,6 @@ if ($kunenaConfig->rsstype == 'thread')
 	                        a.moved='0'
 	                        AND a.hold='0'
 	                    GROUP BY a.thread, a.catid) AS tmp
-	                    JOIN #__kunena_messages_text AS t ON tmp.lastpostid = t.mesid
 	                    JOIN #__kunena_messages AS m ON tmp.thread = m.thread
 	                    JOIN #__kunena_messages AS u ON tmp.lastpostid = u.id
 	                WHERE
@@ -107,14 +106,12 @@ else
 							m.name,
 							m.subject,
 							c.name AS catname,
-							t.message AS message
+							m.message AS message
 						FROM
 							#__kunena_messages AS m,
 							#__kunena_categories AS c,
-							#__kunena_messages_text as t
 						WHERE
-							m.id=t.mesid
-							AND m.catid=c.id
+							m.catid=c.id
 							AND c.published='1'
 							AND c.pub_access='0'
 							AND m.hold='0'

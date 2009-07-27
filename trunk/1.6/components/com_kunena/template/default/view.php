@@ -50,7 +50,7 @@ $allow_forum = ($kunenaSession->allowed <> '')?explode(',', $kunenaSession->allo
 $forumLocked = 0;
 $topicLocked = 0;
 
-$kunena_db->setQuery("SELECT * FROM #__kunena_messages AS a LEFT JOIN #__kunena_messages_text AS b ON a.id=b.mesid WHERE a.id='{$id}' AND a.hold='0'");
+$kunena_db->setQuery("SELECT * FROM #__kunena_messages AS a WHERE a.id='{$id}' AND a.hold='0'");
 unset($this_message);
 $this_message = $kunena_db->loadObject();
 check_dberror('Unable to load message.');
@@ -126,7 +126,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         $ordering = ($kunenaConfig->default_sort == 'desc' ? 'desc' : 'asc'); // Just to make sure only valid options make it
 
         // Get messages of current thread
-        $kunena_db->setQuery("SELECT * FROM #__kunena_messages AS a LEFT JOIN #__kunena_messages_text AS b ON a.id=b.mesid WHERE (a.id='{$thread}' OR a.thread='{$thread}') AND a.hold='0' AND a.catid='{$catid}'");
+        $kunena_db->setQuery("SELECT * FROM #__kunena_messages AS a WHERE (a.id='{$thread}' OR a.thread='{$thread}') AND a.hold='0' AND a.catid='{$catid}'");
 
         if ($view != "flat") $flat_messages[] = $this_message;
 
@@ -189,7 +189,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         $objCatParentInfo = $kunena_db->loadObject();
 
         $forumLocked = $objCatInfo->locked;
-        
+
         //Perform subscriptions check only once
         $kunena_cansubscribe = 0;
         if ($kunenaConfig->allowsubscriptions && ("" != $kunena_my->id || 0 != $kunena_my->id))
@@ -469,7 +469,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 								$triggerParams = array( 'userid'=> $fmessage->userid,
 									'userinfo'=> &$userinfo );
 								$kunenaProfile->trigger( 'profileIntegration', $triggerParams );
-				
+
                                 if ($kunenaConfig->username) {
                                     $kunena_queryName = "username";
                                 }
@@ -616,7 +616,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 
                                 /* PM integration */
 								$msg_pms = CKunenaPMS::showPMIcon($userinfo);
-                                
+
                                 // online - ofline status
                                 if ($fmessage->userid > 0)
                                 {
@@ -644,10 +644,10 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     else {
                                         $msg_profileicon = KUNENA_URLICONSPATH . "profile.gif";
                                     }
-                                	
+
                                     $msg_profile = '<a href="' . $msg_prflink . '"><img src="' . $msg_profileicon . '" alt="' . _VIEW_PROFILE . '" border="0" title="' . _VIEW_PROFILE . '" /></a>';
                                 }
-                                
+
                                 // Begin: Additional Info //
                                 if ($userinfo->gender != '') {
                                     $gender = _KUNENA_NOGENDER;

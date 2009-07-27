@@ -211,15 +211,11 @@ class CKunenaModeration
                     $newId = $this->_db->insertid();
 
 					// and update the thread id on the 'moved' post for the right ordering when viewing the forum..
-					$this->_db->setQuery("UPDATE #__kunena_messages SET `thread`='$newId' WHERE `id`='$newId'");
-					$this->_db->query();
-						check_dberror('Unable to update thread id of ghost thread.');
-
 					// TODO: we need to fix all old ghost messages and change behaviour of them
 					$newURL = "id=" . $currentMessage->id;
-					$this->_db->setQuery("INSERT INTO #__kunena_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')");
+                    $this->_db->setQuery("UPDATE #__kunena_messages SET `thread`='$newId', `message`='$newURL' WHERE `id`='$newId'");
 					$this->_db->query();
-						check_dberror('Unable to insert ghost message.');
+						check_dberror('Unable to update thread id of ghost thread.');
 				}
 
 				break;

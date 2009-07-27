@@ -46,19 +46,15 @@
                 KEY `parent` (`parent`),
                 KEY `published_pubaccess_id` (`published`,`pub_access`,`id`),
                 KEY `msg_id` (`id_last_msg`) ) DEFAULT CHARSET=utf8</query>
-       <query>CREATE TABLE IF NOT EXISTS `#__kunena_favorites` (
+       	<query>CREATE TABLE IF NOT EXISTS `#__kunena_favorites` (
                     `thread` int(11) NOT NULL default '0',
                     `userid` int(11) NOT NULL default '0',
                 UNIQUE KEY `thread` (`thread`,`userid`),
                 KEY `userid` (`userid`) ) DEFAULT CHARSET=utf8</query>
-       <query>CREATE TABLE IF NOT EXISTS `#__kunena_groups` (
+       	<query>CREATE TABLE IF NOT EXISTS `#__kunena_groups` (
                     `id` int(4) NOT NULL auto_increment,
                     `title` varchar(255) default NULL,
                 PRIMARY KEY  (`id`) ) DEFAULT CHARSET=utf8</query>
-		<query>CREATE TABLE IF NOT EXISTS `#__kunena_messages_text` (
-                    `mesid` int(11) NOT NULL default '0',
-                    `message` text NOT NULL,
-                PRIMARY KEY  (`mesid`) ) DEFAULT CHARSET=utf8</query>
 		<query>CREATE TABLE IF NOT EXISTS `#__kunena_moderation` (
                     `catid` int(11) NOT NULL default '0',
                     `userid` int(11) NOT NULL default '0',
@@ -206,6 +202,7 @@
                     `modified_by` int(7) default NULL,
                     `modified_time` int(11) default NULL,
                     `modified_reason` tinytext,
+                    `message` text NULL,
                 PRIMARY KEY  (`id`),
                 KEY `thread` (`thread`),
                 KEY `parent` (`parent`),
@@ -354,7 +351,11 @@
 			<query mode="silenterror">RENAME TABLE `#__fb_users` TO `#__kunena_users`</query>
 			<query mode="silenterror">RENAME TABLE `#__fb_whoisonline` TO `#__kunena_whoisonline`</query>
 			<query mode="silenterror">RENAME TABLE `#__fb_ranks` TO `#__kunena_ranks`</query>
-			<query mode="silenterror">RENAME TABLE `#__fb_messages` TO `#__kunena_messages`</query>		
+			<query mode="silenterror">RENAME TABLE `#__fb_messages` TO `#__kunena_messages`</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD COLUMN `message` text NULL AFTER `modified_reason`, COMMENT=''</query>			
+			<query>UPDATE `#__kunena_messages` as A, `#__kunena_messages_text` as B 
+					SET A.`message` = B.`message` WHERE A.`id` = B.`mesid`</query>		
+			<query mode="silenterror">RENAME TABLE `#__kunena_messages_text` TO `#__kunena_messages_text_backup`</query>
 		</version>
 	</upgrade>
 </comupgrade>

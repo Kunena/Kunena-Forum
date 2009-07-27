@@ -91,7 +91,7 @@ $allow_forum = ($kunenaSession->allowed <> '')?explode(',', $kunenaSession->allo
 $forumLocked = 0;
 $topicLocked = 0;
 
-$kunena_db->setQuery("SELECT a.*, b.* FROM #__kunena_messages AS a LEFT JOIN #__kunena_messages_text AS b ON a.id=b.mesid WHERE a.id='{$id}' AND a.hold='0'");
+$kunena_db->setQuery("SELECT * FROM #__kunena_messages AS a WHERE a.id='{$id}' AND a.hold='0'");
 $this_message = $kunena_db->loadObject();
 check_dberror('Unable to load current message.');
 
@@ -173,11 +173,11 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 		$page = floor($limitstart / $limit)+1;
 		$firstpage = 1;
 		if ($ordering == 'desc') $firstpage = $totalpages;
-		
+
 		$replylimit = $page == $firstpage ? $limit-1 : $limit; // If page contains first message, load $limit-1 messages
 		$replystart = $limitstart && $ordering == 'asc' ? $limitstart-1 : $limitstart; // If not first page and order=asc, start on $limitstart-1
 		// Get replies of current thread
-        $query = "SELECT a.*, b.* FROM #__kunena_messages AS a LEFT JOIN #__kunena_messages_text AS b ON a.id=b.mesid "
+        $query = "SELECT * FROM #__kunena_messages AS a "
         	."WHERE a.thread='{$thread}' AND a.id!='{$id}' AND a.hold='0' AND a.catid='{$catid}' ORDER BY id {$ordering}";
 		$kunena_db->setQuery($query, $replystart, $replylimit);
 		$replies = $kunena_db->loadObjectList();
@@ -188,7 +188,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         foreach ($replies as $message) $flat_messages[] = $message;
         if ($page == $totalpages && $ordering == 'desc') $flat_messages[] = $this_message; // DESC: first message is the last one
         unset($replies);
-        
+
 	    $pagination = KunenaViewPagination($catid, $thread, $page, $totalpages, $maxpages);
 
         //Get the category name for breadcrumb
@@ -199,7 +199,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         $objCatParentInfo = $kunena_db->loadObject();
 
         $forumLocked = $objCatInfo->locked;
-        
+
 		//meta description and keywords
 		$metaKeys=kunena_htmlspecialchars(stripslashes("{$this_message->subject}, {$objCatParentInfo->name}, {$kunenaConfig->board_title}, " ._GEN_FORUM. ', ' .$app->getCfg('sitename')));
 		$metaDesc=kunena_htmlspecialchars(stripslashes("{$this_message->subject} ({$page}/{$totalpages}) - {$objCatParentInfo->name} - {$objCatInfo->name} - {$kunenaConfig->board_title} " ._GEN_FORUM));
@@ -209,7 +209,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 	    $metaDesc = $cur .'. ' . $metaDesc;
 	    $document->setMetadata( 'keywords', $metaKeys );
 	    $document->setDescription($metaDesc);
-        
+
         //Perform subscriptions check only once
         $kunena_cansubscribe = 0;
         if ($kunenaConfig->allowsubscriptions && ("" != $kunena_my->id || 0 != $kunena_my->id))
@@ -683,7 +683,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 
 								/* PM integration */
 								$msg_pms = CKunenaPMS::showPMIcon($userinfo);
-                                
+
                                 // online - ofline status
                                 if ($userinfo->userid > 0)
                                 {
@@ -1033,7 +1033,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 
                           	$mod_cnt = 0;
                            	foreach ($modslist as $mod) {
-				            	if ($mod_cnt) echo ', '; 
+				            	if ($mod_cnt) echo ', ';
 			                	$mod_cnt++;
                                 echo CKunenaLink::GetProfileLink($kunenaConfig, $mod->userid, ($kunenaConfig->username ? $mod->username : $mod->name));
                             } ?>

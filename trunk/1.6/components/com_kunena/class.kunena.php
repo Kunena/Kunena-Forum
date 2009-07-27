@@ -536,13 +536,6 @@ class CKunenaTools {
             // now update stats
             CKunenaTools::decreaseCategoryStats($id, $mes->catid);
 
-            //Delete message text(s)
-            $kunena_db->setQuery('DELETE FROM #__kunena_messages_text WHERE mesid IN (' . $children . ')');
-
-            if (!$kunena_db->query()) {
-                return -3;
-                }
-
             //Update user post stats
             if (count($userids) > 0) {
                 $userids = implode(',', $userids);
@@ -554,13 +547,11 @@ class CKunenaTools {
                 }
 
             //Delete (possible) ghost post
-            $kunena_db->setQuery("SELECT mesid FROM #__kunena_messages_text WHERE message='catid={$mes->catid}&amp;id={$id}'");
+            $kunena_db->setQuery("SELECT id FROM #__kunena_messages WHERE message='catid={$mes->catid}&amp;id={$id}'");
             $int_ghost_id = $kunena_db->loadResult();
 
             if ($int_ghost_id > 0) {
                 $kunena_db->setQuery('DELETE FROM #__kunena_messages WHERE id=' . $int_ghost_id);
-                $kunena_db->query();
-                $kunena_db->setQuery('DELETE FROM #__kunena_messages_text WHERE mesid=' . $int_ghost_id);
                 $kunena_db->query();
                 }
 

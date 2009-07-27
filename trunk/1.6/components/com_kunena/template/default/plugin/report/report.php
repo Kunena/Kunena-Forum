@@ -43,7 +43,7 @@ switch ($do)
         break;
 }
 
-function ReportMessage($id, $catid, $reporter, $reason, $text, $type) 
+function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
 {
     $kunena_my = &JFactory::getUser();
     $kunena_db = &JFactory::getDBO();
@@ -56,9 +56,8 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
 
 	if (!empty($reason) && !empty($text))
 	{
-        
-    $kunena_db->setQuery("SELECT a.*, b.mesid, b.message AS msg_text FROM #__kunena_messages AS a"
-    . " LEFT JOIN #__kunena_messages_text AS b ON b.mesid = a.id"
+
+    $kunena_db->setQuery("SELECT a.*, a.message AS msg_text FROM #__kunena_messages AS a"
     . " WHERE a.id='{$id}'");
 
     $row = $kunena_db->loadObject();
@@ -119,17 +118,17 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
 
             break;
     }
-    
+
     echo '<div align="center">' . _KUNENA_REPORT_SUCCESS;
     echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&amp;id='.$id).'#'.$id, 3500);
-    
+
 	}
     else
     {
     	echo '<div align="center">';
-    	if (empty($reason)) echo _POST_FORGOT_SUBJECT; 
+    	if (empty($reason)) echo _POST_FORGOT_SUBJECT;
     	else if (empty($text)) echo _POST_FORGOT_MESSAGE;
-    	
+
     }
     echo '<br /><br />';
     echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $id) . '#' . $id . '">' . _POST_SUCCESS_VIEW . '</a><br />';

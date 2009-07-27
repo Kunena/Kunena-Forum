@@ -109,13 +109,13 @@ if (in_array($catid, $allow_forum))
     $totalpages = ceil($total / $threads_per_page);
     $kunena_db->setQuery("SELECT
     							a.*,
-    							t.mesid,
+    							t.id AS mesid,
     							t.message AS messagetext,
     							m.mesid AS attachmesid,
     							(f.thread>0) AS myfavorite,
     							MAX(b.time) AS lastpost
     						FROM  #__kunena_messages  AS a
-    							JOIN #__kunena_messages_text AS t ON a.thread = t.mesid
+    							JOIN #__kunena_messages AS t ON a.thread = t.mesid
     							LEFT  JOIN #__kunena_messages AS b ON b.thread = a.thread
     							LEFT  JOIN #__kunena_attachments AS m ON m.mesid = a.id
     							LEFT  JOIN #__kunena_favorites AS f ON  f.thread = a.id && f.userid='{$kunena_my->id}'

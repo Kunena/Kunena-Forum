@@ -32,7 +32,7 @@ $document->setTitle(_GEN_MYPROFILE . ' - ' . stripslashes($kunenaConfig->board_t
 if ($kunena_my->id != "" && $kunena_my->id != 0)
 {
 	$do = JRequest::getVar('do', 'show');
-	
+
 	//Get joomla userinfo needed later on, this limits the amount of queries
     $juserinfo = new JUser($kunena_my->id);
 
@@ -162,7 +162,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                     // F: Avatar
                 	break;
-                    
+
                 case "showset":
                     // B: Settings
                 	if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_set.php'))
@@ -392,7 +392,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     {
 						$app->enqueueMessage(_USER_UNSUBSCRIBE_YES);
                     }
-                    
+
                     if ($kunenaConfig->kunena_profile != 'kunena')
                     {
                     	$kunenaProfile =& CKunenaProfile::getInstance();
@@ -417,7 +417,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 							$app->enqueueMessage(_USER_UNSUBSCRIBE_YES);
 						}
 
-                    	if ($kunenaConfig->kunena_profile != 'kunena')
+                    	if ($kunenaConfig->kunena_profile != 'kunena') {
 							$kunenaProfile =& CKunenaProfile::getInstance();
 							$app->redirect($kunenaProfile->getForumTabURL());
 						}
@@ -471,7 +471,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 							$app->enqueueMessage(_USER_UNFAVORITE_YES);
 						}
 
-	                   	if ($kunenaConfig->kunena_profile != 'kunena')
+	                   	if ($kunenaConfig->kunena_profile != 'kunena'){
                     		$kunenaProfile =& CKunenaProfile::getInstance();
 							$app->redirect($kunenaProfile->getForumTabURL());
 						}
@@ -583,7 +583,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
             ?>
 
         <!-- F:My Profile Right -->
-        
+
 <!-- Begin: Forum Jump -->
 <table class = "kunena_blocktable" id = "kunena_bottomarea" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>

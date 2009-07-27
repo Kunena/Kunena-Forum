@@ -27,7 +27,7 @@ require_once (JPATH_ROOT . '/components/com_kunena/lib/kunena.user.class.php');
 class CKunenaTables
 {
 	var $tables = array();
-	var $_tables = array ( '#__kunena_announcement', '#__kunena_attachments', '#__kunena_categories', '#__kunena_favorites', '#__kunena_groups', '#__kunena_messages', '#__kunena_messages_text', '#__kunena_moderation', '#__kunena_ranks', '#__kunena_sessions', '#__kunena_smileys', '#__kunena_subscriptions', '#__kunena_users', '#__kunena_version', '#__kunena_whoisonline');
+	var $_tables = array ( '#__kunena_announcement', '#__kunena_attachments', '#__kunena_categories', '#__kunena_favorites', '#__kunena_groups', '#__kunena_messages', '#__kunena_moderation', '#__kunena_ranks', '#__kunena_sessions', '#__kunena_smileys', '#__kunena_subscriptions', '#__kunena_users', '#__kunena_version', '#__kunena_whoisonline');
 
 	function __construct()
 	{
@@ -75,7 +75,7 @@ abstract class CKunenaConfigBase
     abstract public function &getInstance();
     abstract public function GetClassVars();
     abstract protected function GetConfigTableName();
-    
+
     // This function allows for the overload of user specific settings.
     // All settings can now be user specific. No further code changes
     // are required inside of Kunena.
@@ -199,7 +199,7 @@ abstract class CKunenaConfigBase
     public function load($KunenaUser=null)
     {
         $tables = CKunenaTables::getInstance();
-        if ($tables->check($this->GetConfigTableName())) 
+        if ($tables->check($this->GetConfigTableName()))
 	{
         	$this->_db->setQuery("SELECT * FROM ".$this->GetConfigTableName());
 		$config = $this->_db->loadAssoc();
@@ -210,7 +210,7 @@ abstract class CKunenaConfigBase
 			$this->bind($config);
 		}
         }
-        
+
         // Check for user specific overrides
         if(is_object($KunenaUser))
         {
@@ -227,7 +227,7 @@ abstract class CKunenaConfigBase
 class CKunenaConfig extends CKunenaConfigBase
 {
 	// All vars MUST BE LOWER CASE!
-	// New in Kunena 1.5.2: $id for JoomFish support 
+	// New in Kunena 1.5.2: $id for JoomFish support
 	var $id                      = 0;
     var $board_title             = 'Kunena';
     var $email                   = 'change@me.com';

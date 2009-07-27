@@ -176,7 +176,7 @@ $tree = thread_flat($tree, $messages);
 
                     if ($leaf->moved)
                     {
-                        $kunena_db->setQuery("SELECT `mesid` FROM #__kunena_messages_text WHERE `mesid`=" . $leaf->id);
+                        $kunena_db->setQuery("SELECT `id` FROM #__kunena_messages WHERE `id`=" . $leaf->id);
                         $newURL .= $kunena_db->loadResult();
                     }
                     else

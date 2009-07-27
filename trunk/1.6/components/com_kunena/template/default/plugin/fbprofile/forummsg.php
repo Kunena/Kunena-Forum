@@ -103,8 +103,8 @@ $kunenaSession =& CKunenaSession::getInstance();
         }
 
         $query
-            = "SELECT a.*, b.id AS category, b.name AS catname, c.hits AS threadhits FROM #__kunena_messages AS a, #__kunena_categories AS b, #__kunena_messages AS c, #__kunena_messages_text AS d"
-            ." WHERE a.catid=b.id AND a.thread=c.id AND a.id=d.mesid AND a.hold='0' AND a.userid='{$userid}' AND a.catid IN ($kunenaSession->allowed) ORDER BY time DESC";
+            = "SELECT a.*, b.id AS category, b.name AS catname, c.hits AS threadhits FROM #__kunena_messages AS a, #__kunena_categories AS b, #__kunena_messages AS c"
+            ." WHERE a.catid=b.id AND a.thread=c.id AND a.hold='0' AND a.userid='{$userid}' AND a.catid IN ($kunenaSession->allowed) ORDER BY time DESC";
         $kunena_db->setQuery($query, $limitstart, $limit);
         $items = $kunena_db->loadObjectList();
         	check_dberror("Unable to load messages.");

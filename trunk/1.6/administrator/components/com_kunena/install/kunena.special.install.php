@@ -48,13 +48,9 @@ $query="INSERT INTO `#__kunena_categories` VALUES (3, 1, '".addslashes(_KUNENA_S
 $kunena_db->setQuery($query);
 $kunena_db->query() or trigger_dbwarning('Unable to insert sample Forum 2');
 
-$query="INSERT INTO `#__kunena_messages` VALUES (1, 0, 1, 2, 'Kunena', 62, 'info@kunena.com', '".addslashes(_KUNENA_SAMPLE_POST1_SUBJECT)."', $posttime, '127.0.0.1', 0, 0, 0, 0, 0, 0, NULL, NULL, NULL);";
+$query="INSERT INTO `#__kunena_messages` VALUES (1, 0, 1, 2, 'Kunena', 62, 'info@kunena.com', '".addslashes(_KUNENA_SAMPLE_POST1_SUBJECT)."', $posttime, '127.0.0.1', 0, 0, 0, 0, 0, 0, NULL, NULL, NULL,'".addslashes(_KUNENA_SAMPLE_POST1_TEXT)."');";
 $kunena_db->setQuery($query);
 $kunena_db->query() or trigger_dbwarning('Unable to insert sample post');
-
-$query="INSERT INTO `#__kunena_messages_text` VALUES (1, '".addslashes(_KUNENA_SAMPLE_POST1_TEXT)."');";
-$kunena_db->setQuery($query);
-$kunena_db->query() or trigger_dbwarning('Unable to insert sample post text');
 
 CKunenaTools::reCountBoards();
 

@@ -249,7 +249,7 @@ class CKunenaSearch
             $groupby = '';
 
         /* get total */
-        $kunena_db->setQuery("SELECT COUNT(*) FROM #__kunena_messages AS m JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE {$where} {$groupby}");
+        $kunena_db->setQuery("SELECT COUNT(*) FROM #__kunena_messages AS m WHERE {$where} {$groupby}");
         $this->total = $kunena_db->loadResult();
         check_dberror("Unable to count messages.");
 
@@ -263,7 +263,7 @@ class CKunenaSearch
 	if ($this->total < $this->limitstart) $this->limitstart = $limitstart = (int)($this->total / $this->limit);
 
         /* get results */
-        $sql = "SELECT m.id, m.subject, m.catid, m.thread, m.name, m.time, t.mesid, t.message FROM #__kunena_messages_text AS t JOIN #__kunena_messages AS m ON m.id=t.mesid WHERE {$where} {$groupby} ORDER BY {$orderby}";
+        $sql = "SELECT m.id, m.subject, m.catid, m.thread, m.name, m.time, m.message FROM #__kunena_messages AS m WHERE {$where} {$groupby} ORDER BY {$orderby}";
         $kunena_db->setQuery($sql, $limitstart, $limit);
         $rows = $kunena_db->loadObjectList();
         check_dberror("Unable to load messages.");

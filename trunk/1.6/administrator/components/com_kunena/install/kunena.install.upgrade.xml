@@ -213,6 +213,32 @@
                 KEY `locked` (`locked`),
                 KEY `hold_time` (`hold`,`time`),
                 KEY `parent_hits` (`parent`,`hits`) ) DEFAULT CHARSET=utf8</query>
+       <query>CREATE TABLE IF NOT EXISTS `#__kunena_threads` (
+                    `id` int(11) NOT NULL auto_increment,
+                    `catid` int(11) NOT NULL default '0',
+                    `subject` tinytext,
+                    `topic_emoticon` int(11) NOT NULL default '0',
+                    `locked` tinyint(4) NOT NULL default '0',
+                    `hold` tinyint(4) NOT NULL default '0',
+                    `ordering` int(11) default '0',
+                    `posts` int(11) NOT NULL default '0',
+                    `hits` int(11) default '0',
+                    `moved` tinyint(4) default '0',
+                    `first-post-id` int(11) NOT NULL default '0',
+                    `first-post-time` int(11) NOT NULL default '0',
+                    `first-post-userid` int(11) NOT NULL default '0',
+                    `first-message` text NULL,
+                    `last-post-id` int(11) NOT NULL default '0',
+                    `last-post-time` int(11) NOT NULL default '0',
+                    `last-post-userid` int(11) NOT NULL default '0',
+                    `last-message` text NULL,
+                PRIMARY KEY  (`id`),
+                KEY `catid` (`catid`),
+                KEY `first-post-userid` (`first-post-userid`),
+                KEY `last-post-userid` (`last-post-userid`),
+                KEY `first-post-time` (`first-post-time`),
+                KEY `last-post-time` (`last-post-time`),
+                KEY `locked` (`locked`) DEFAULT CHARSET=utf8</query>
 		<phpfile name="kunena.special.install.php" />
    	</install>
 	<upgrade>
@@ -353,9 +379,35 @@
 			<query mode="silenterror">RENAME TABLE `#__fb_ranks` TO `#__kunena_ranks`</query>
 			<query mode="silenterror">RENAME TABLE `#__fb_messages` TO `#__kunena_messages`</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD COLUMN `message` text NULL AFTER `modified_reason`, COMMENT=''</query>			
-			<query>UPDATE `#__kunena_messages` as A, `#__kunena_messages_text` as B 
+			<query mode="silenterror">UPDATE `#__kunena_messages` as A, `#__kunena_messages_text` as B 
 					SET A.`message` = B.`message` WHERE A.`id` = B.`mesid`</query>		
 			<query mode="silenterror">RENAME TABLE `#__kunena_messages_text` TO `#__kunena_messages_text_backup`</query>
+			<query>CREATE TABLE IF NOT EXISTS `#__kunena_threads` (
+                    `id` int(11) NOT NULL auto_increment,
+                    `catid` int(11) NOT NULL default '0',
+                    `subject` tinytext,
+                    `topic_emoticon` int(11) NOT NULL default '0',
+                    `locked` tinyint(4) NOT NULL default '0',
+                    `hold` tinyint(4) NOT NULL default '0',
+                    `ordering` int(11) default '0',
+                    `posts` int(11) NOT NULL default '0',
+                    `hits` int(11) default '0',
+                    `moved` tinyint(4) default '0',
+                    `first-post-id` int(11) NOT NULL default '0',
+                    `first-post-time` int(11) NOT NULL default '0',
+                    `first-post-userid` int(11) NOT NULL default '0',
+                    `first-message` text NULL,
+                    `last-post-id` int(11) NOT NULL default '0',
+                    `last-post-time` int(11) NOT NULL default '0',
+                    `last-post-userid` int(11) NOT NULL default '0',
+                    `last-message` text NULL,
+                PRIMARY KEY  (`id`),
+                KEY `catid` (`catid`),
+                KEY `first-post-userid` (`first-post-userid`),
+                KEY `last-post-userid` (`last-post-userid`),
+                KEY `first-post-time` (`first-post-time`),
+                KEY `last-post-time` (`last-post-time`),
+                KEY `locked` (`locked`) DEFAULT CHARSET=utf8</query>
 		</version>
 	</upgrade>
 </comupgrade>

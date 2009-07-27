@@ -34,6 +34,7 @@ Kunena 1.6.0dev
 
 27-July-2009 fxstein
 ^ [#16825] First draft of merged messages_text into messages, all fb tables converted
+^ [#17375] Initial draft of kunena_threads table - currently only in installer
 
 24-July-2009
 ^ [#15784] Merge 1.5.3 and 1.5.4 fixes from revision 878 to 936

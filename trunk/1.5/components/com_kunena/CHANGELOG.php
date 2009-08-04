@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.5.5
 
+4-Aug-2009 Matias
++ [#17482] Add basic support for GroupJive permission handling
+
 23-July-2009 fxstein
 + [#17321] Initial JomSocial Activity Stream Prototype
 

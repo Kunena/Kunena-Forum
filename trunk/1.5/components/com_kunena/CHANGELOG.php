@@ -33,6 +33,7 @@ Legend:
 Kunena 1.5.5
 
 4-Aug-2009 Matias
+# [#17484] Administrator: Fix broken smiley / rank images in Edit Smilies / Rank Management
 + [#17482] Add basic support for GroupJive permission handling
 
 23-July-2009 fxstein

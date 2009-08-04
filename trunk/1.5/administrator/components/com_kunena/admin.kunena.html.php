@@ -3387,7 +3387,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
     <tr class="row<?php echo $k;?>">
       <td width="20" align="center"><?php echo ($id+$pageNavSP->limitstart+1);?></td>
       <td width="20" align="center"><input type="checkbox" id="cb<?php echo $id;?>" name="cid[]" value="<?php echo $row->rank_id; ?>" onClick="isChecked(this.checked);"></td>
-      <td><a href = "#edit" onclick = "return listItemTask('cb<?php echo $id; ?>','editRank')"><img src="<?php echo ($rankpath['live'] .DS. $row->rank_image); ?>" alt="<?php echo $row->rank_image; ?>"  border="0" /></a></td>
+      <td><a href = "#edit" onclick = "return listItemTask('cb<?php echo $id; ?>','editRank')"><img src="<?php echo ($rankpath['live'] .'/'. $row->rank_image); ?>" alt="<?php echo $row->rank_image; ?>"  border="0" /></a></td>
       <td nowrap="nowrap"><a href = "#edit" onclick = "return listItemTask('cb<?php echo $id; ?>','editRank')"><?php echo $row->rank_title; ?></a></td>
       <td><?php if ($row->rank_special == 1 ) { echo _ANN_YES; } else { echo _ANN_NO; } ?></td>
       <td align="center"><?php echo $row->rank_min; ?></td>

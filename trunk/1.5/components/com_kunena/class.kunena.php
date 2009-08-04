@@ -26,7 +26,7 @@ define('KUNENA_JLIVEURL', JURI::root());
 $app =& JFactory::getApplication();
 
 // Joomla template dir
-define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH .DS. "templates".DS . $app->getTemplate());
+define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH .DS. "templates" .DS. $app->getTemplate());
 define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "templates/".$app->getTemplate());
 
 global $kunena_my;
@@ -1171,7 +1171,7 @@ function kn_mb_substr($str, $start, $length=NULL, $encoding=NULL) {
 	if ($encoding === NULL) $encoding = KUNENA_CHARSET;
 	if (!function_exists('mb_substr'))
 	{
-		require_once(JPATH_LIBRARIES.DS.'phputf8'.DS.'utf8.php');
+		require_once(JPATH_LIBRARIES .DS. 'phputf8' .DS. 'utf8.php');
 	}
 	return mb_substr($str, $start, $length, $encoding);
 }

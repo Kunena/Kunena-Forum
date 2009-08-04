@@ -122,8 +122,8 @@ $catName = $objCatInfo->name;
     <tr>
         <td>
             <?php
-            if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
-                require_once (KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'fb_pathway.php')) {
+                require_once (KUNENA_ABSTMPLTPATH .DS. 'fb_pathway.php');
             }
             else {
                 require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_pathway.php');
@@ -606,8 +606,8 @@ $catName = $objCatInfo->name;
                         //get the writing stuff in:
                         $no_upload = "0"; //only edit mode should disallow this
 
-                        if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
-                            include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
+                        if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'fb_write.html.php')) {
+                            include (KUNENA_ABSTMPLTPATH .DS. 'fb_write.html.php');
                         }
                         else {
                             include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_write.html.php');
@@ -652,8 +652,8 @@ $catName = $objCatInfo->name;
 
                         <?php
                         //get the writing stuff in:
-                        if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
-                            include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
+                        if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'fb_write.html.php')) {
+                            include (KUNENA_ABSTMPLTPATH .DS. 'fb_write.html.php');
                         }
                         else {
                             include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_write.html.php');
@@ -701,8 +701,8 @@ $catName = $objCatInfo->name;
 
                         <?php
                         //get the writing stuff in:
-                        if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
-                            include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
+                        if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'fb_write.html.php')) {
+                            include (KUNENA_ABSTMPLTPATH .DS. 'fb_write.html.php');
                         }
                         else {
                             include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_write.html.php');
@@ -796,8 +796,8 @@ $catName = $objCatInfo->name;
                         }
                         */
 
-                        if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
-                            include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
+                        if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'fb_write.html.php')) {
+                            include (KUNENA_ABSTMPLTPATH .DS. 'fb_write.html.php');
                         }
                         else {
                             include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_write.html.php');

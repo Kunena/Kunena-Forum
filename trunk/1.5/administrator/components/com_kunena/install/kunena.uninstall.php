@@ -33,7 +33,7 @@ else {
     include (KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.english.php');
 }
 
-include_once(JPATH_ROOT."/administrator/components/com_kunena/lib/fx.upgrade.class.php");
+include_once(KUNENA_PATH_ADMIN_LIB .DS. "fx.upgrade.class.php");
 
 function com_uninstall()
 {

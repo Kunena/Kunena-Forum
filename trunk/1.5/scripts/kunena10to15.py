@@ -1,44 +1,9 @@
 import os,sys,re
 
 dictionary = {
-'sef[Rr]el[Tt]o[Aa]bs':'JRoute::_', 
-'mosGetParam\(\s*\$_[A-Z]*, ':'JRequest::getVar(',
-'writeLimitBox':'getLimitBox',
-'writePagesLinks':'getPagesLinks',
-'writePagesCounter':'getPagesCounter',
-'\$mosConfig_live_site':'JURI::root()',
-'\$mosConfig_lang':'$lang',
-'$defined.*_VALID_MOS.*or die.*;':'defined( \'_JEXEC\' ) or die(\'Restricted access\');',
-'global\s*\$kunena_db;':'$kunena_db = &JFactory::getDBO();',
-'(\s*)(global )\s*\$kunena_db,\s*(.*?;)':'\\1\\2\\3\n\\1$kunena_db = &JFactory::getDBO();',
-'(\s*)(global .*?),\s*\$kunena_db;':'\\1\\2;\n\\1$kunena_db = &JFactory::getDBO();',
-'\$mosConfig_absolute_path':'JPATH_ROOT',
-'\$mosConfig_live_site':'JURI::root()',
-'\$mainframe->getCfg\(\'live_site\'\)':'JURI::root()',
-'\$mainframe->addCustomHeadTag':'$document->addCustomTag',
-'\$kunena_db->loadObject\(\$(\w*)\);':'$\\1 = $kunena_db->loadObject();',
-#'\$(\w+)\s*=\s*\$kunena_db->loadObject\(\);':'$kunena_db->loadObject($\\1);',
-'\$mainframe->getCfg\(.absolute_path.\)\s*\.\s*(.)\/components\/com_fireboard':'JPATH_COMPONENT . \\1',
-'\$mainframe->getCfg\(.absolute_path.\)\s*\.\s*(.)\/administrator\/components\/com_fireboard':'JPATH_COMPONENT_ADMINISTRATOR . \\1',
-'\$mainframe->getCfg\(.absolute_path.\)':'JPATH_ROOT',
-'mosHTML::makeOption\(':'JHTML::_(\'select.option\', ',
-'mosHTML::selectList\(':'JHTML::_(\'select.genericlist\', ',
-'mosRedirect\s*\(':'$mainframe->redirect(',
-'mosMenuBar':'JToolBarHelper',
-'mosUser\(':'JUser(',
-'mosDBTable':'JTable',
-#'\$my_id\s*=\s*\$my->id;':'$my = &JFactory::getUser();\n$my_id = $my->id;',
-'\$mainframe->getCfg\(\'lang\'\)':'$lang',
-'\$GLOBALS\[\'mosConfig_absolute_path\'\] \. \'\/administrator\/':'JPATH_COMPONENT_ADMINISTRATOR .DS. \'',
-'mosHTML::integerSelectList\(':'JHTML::_(\'select.integerList\', ',
-'(global .*),\sJPATH_ROOT(.*;)':'\\1\\2',
-'(global .*),\sJURI::root\(\)(.*;)':'\\1\\2',
-'require.*pageNavigation.php.*;':'jimport(\'joomla.html.pagination\');',
-'\$pageNav(\w*)\s*=\s*new mosPageNav':'$pageNav\\1 = new JPagination',
-', REQUEST':', \'REQUEST\'',
-', COOKIE':', \'COOKIE\'',
-#'JText::_\((\'.*\')\)':'\\1',
-#'JPATH_ROOT\s*\.\s*(["\']/)':'KUNENA_ROOT_PATH .DS. \\1',
+
+# Kunena 1.5 Defines
+'JPATH_ROOT\s*\.\s*(["\']/)':'KUNENA_ROOT_PATH .DS. \\1',
 'JPATH_ADMINISTRATOR\s*\.\s*(["\']/)':'KUNENA_ROOT_PATH_ADMIN .DS. \\1',
 'KUNENA_ROOT_([A-Z]+)\s*\.\s*(["\'])/(\w+)':'KUNENA_ROOT_\\1 .DS. \\2\\3',
 'KUNENA_PATH\s*\.\s*(["\'])/(\w+)':'KUNENA_PATH .DS. \\1\\2',
@@ -62,61 +27,126 @@ dictionary = {
 'KUNENA_([A-Z_]+)\s*\.DS.\s*""\s*':'KUNENA_\\1 .DS',
 'KUNENA_([A-Z_]+)\s*\.DS.\s*\'\'\s*':'KUNENA_\\1 .DS',
 'KUNENA_PATH_([A-Z_]+)\s*\.\s*(["\']\w)':'KUNENA_PATH_\\1 .DS. \\2',
-'\s*\.\s*\'/\'':' .DS',
-'DS\s*\.\s*(["\'])/':'DS. \\1',
-'DS\s*\.\s*DS\s*\.\s*':'DS. ',
-#'\s*\.\s*DS\s*\.':' .DS.',
 'KUNENA_JABSPATH\s*':'KUNENA_ROOT_PATH .DS',
 'KUNENA_ABSPATH\s*':'KUNENA_PATH .DS',
 'KUNENA_ABSSOURCESPATH\s*':'KUNENA_PATH_LIB .DS',
 'KUNENA_LANG(\W)\s*':'KUNENA_LANGUAGE\\1 .DS',
 'KUNENA_ABSADMPATH\s*':'KUNENA_PATH_ADMIN .DS',
 'KUNENA_ABSUPLOADEDPATH\s*':'KUNENA_PATH_UPLOADED .DS',
-'components/Kunena':'components/com_kunena',
-'\$GLOBALS\[\'mosConfig_sitename\'\]':'$mainframe->getCfg(\'sitename\')',
-'\$mosConfig_sitename':'$mainframe->getCfg(\'sitename\')',
-'\$mosConfig_locale':'$mainframe->getCfg(\'locale\')',
-'\$mostables':'$profileitems',
-'mos[Mm]ail':'JUtility::sendMail',
-'josSpoofValue':'JUtility::getToken',
-'JUserParameters':'mosUserParameters',
-'mosMakeHtmlSafe':'JFilterOutput::objectHTMLSafe',
-'die\(\);':'$mainframe->close();',
-'exit\(\);':'$mainframe->close();',
-', _MOS_ALLOWRAW':'',
-#'\$my_id':'$my->id',
-#'global \$my;':'$my = &JFactory::getUser();',
-#'(\s*)(global )\s*\$my,\s*(.*?;)':'\\1\\2\\3\n\\1$my = &JFactory::getUser();',
-#'(\s*)(global .*?),\s*\$my;':'\\1\\2;\n\\1$my = &JFactory::getUser();',
-'global \$acl;':'$acl = &JFactory::getACL();',
-'(\s*)(global )\s*\$acl,\s*(.*?;)':'\\1\\2\\3\n\\1$acl = &JFactory::getACL();',
-'(\s*)(global .*?),\s*\$acl;':'\\1\\2;\n\\1$acl = &JFactory::getACL();',
-'mosNotAuth\(\)':'JError::raiseError( 403, JText::_("ALERTNOTAUTH") );',
+
+# Kunena 1.5 Template Header Files
+'jb-header':'kunena-header',
+'fb-footer':'kunena-footer',
+
+# Kunena 1.5 Deprecated Functions
+'CKunenaTools::isJoomla15\(\)':'true ',
+
+# Kunena 1.5 Configuration
 'global\s*\$fbConfig;':'$fbConfig =& CKunenaConfig::getInstance();',
 #'(\s*)(global )\s*\$fbConfig,\s*(.*?;)':'\\1\\2\\3\n\\1$fbConfig =& CKunenaConfig::getInstance();',
 '(\s*)(global .*?),\s*\$fbConfig;':'\\1\\2;\n\\1$fbConfig =& CKunenaConfig::getInstance();',
-'\$acl':'$kunena_acl',
-'\$my(\W)':'$kunena_my\\1',
-'\$database':'$kunena_db',
-'mosCountModules\(':'JDocumentHTML::countModules(',
 '\$GLOBALS\[\"fbConfig\"\]':'$fbConfig',
-'mosParameters':'JParameter',
-'\$aro_group->group_id':'$aro_group->id',
-'\$kunena_myGraph':'$myGraph',
-'global\s*\$mainframe;':'$app =& JFactory::getApplication();',
-'(\s*)(global )\s*\$mainframe,\s*(.*?;)':'\\1\\2\\3\n\\1$app =& JFactory::getApplication();',
-'(\s*)(global .*?),\s*\$mainframe\s*;':'\\1\\2;\n\\1$app =& JFactory::getApplication();',
-'\$mainframe':'$app',
-'(\s*)\$app->setPageTitle\((.*?)\);':'\n\\1$document=& JFactory::getDocument();\n\\1$document->setTitle(\\2);',
-'\$kunena_my([\w_])':'$my\\1',
-'\$app->redirect\( JURI::base\(\) \.':'$app->redirect(',
 
+# Kunena 1.5 Variables
+'\$mostables':'$profileitems',
+'\$aro_group->group_id':'$aro_group->id',
+
+# Joomla! 1.5 Database Access
+'\$database':'$kunena_db',
+'global\s*\$kunena_db;':'$kunena_db = &JFactory::getDBO();',
+'(\s*)(global )\s*\$kunena_db,\s*(.*?;)':'\\1\\2\\3\n\\1$kunena_db = &JFactory::getDBO();',
+'(\s*)(global .*?),\s*\$kunena_db;':'\\1\\2;\n\\1$kunena_db = &JFactory::getDBO();',
+'\$kunena_db->loadObject\(\$(\w*)\);':'$\\1 = $kunena_db->loadObject();',
+
+# Joomla! 1.5 ACL
+'\$acl':'$kunena_acl',
+'global \$kunena_acl;':'$kunena_acl = &JFactory::getACL();',
+'(\s*)(global )\s*\$kunena_acl,\s*(.*?;)':'\\1\\2\\3\n\\1$kunena_acl = &JFactory::getACL();',
+'(\s*)(global .*?),\s*\$kunena_acl;':'\\1\\2;\n\\1$kunena_acl = &JFactory::getACL();',
+
+# Joomla! 1.5 Configuration
+'\$GLOBALS\[\'mosConfig_absolute_path\'\] \. \'\/administrator\/':'JPATH_COMPONENT_ADMINISTRATOR .DS. \'',
+'\$GLOBALS\[\'mosConfig_sitename\'\]':'$mainframe->getCfg(\'sitename\')',
+'\$mainframe->getCfg\(\'live_site\'\)':'JURI::root()',
+'\$mainframe->getCfg\(.absolute_path.\)\s*\.\s*(.)\/components\/com_fireboard':'JPATH_COMPONENT . \\1',
+'\$mainframe->getCfg\(.absolute_path.\)\s*\.\s*(.)\/administrator\/components\/com_fireboard':'JPATH_COMPONENT_ADMINISTRATOR . \\1',
+'\$mainframe->getCfg\(.absolute_path.\)':'JPATH_ROOT',
+'\$mainframe->getCfg\(\'lang\'\)':'$lang',
+'\$mosConfig_live_site':'JURI::root()',
+'\$mosConfig_lang':'$lang',
+'\$mosConfig_absolute_path':'JPATH_ROOT',
+'\$mosConfig_live_site':'JURI::root()',
+'\$mosConfig_sitename':'$mainframe->getCfg(\'sitename\')',
+'\$mosConfig_locale':'$mainframe->getCfg(\'locale\')',
+
+# Joomla! 1.5 Application
+'\$mainframe':'$app',
+'global\s*\$app;':'$app =& JFactory::getApplication();',
+'(\s*)(global )\s*\$app,\s*(.*?;)':'\\1\\2\\3\n\\1$app =& JFactory::getApplication();',
+'(\s*)(global .*?),\s*\$app\s*;':'\\1\\2;\n\\1$app =& JFactory::getApplication();',
+'\$app->addCustomHeadTag':'$document->addCustomTag',
+'(\s*)\$app->setPageTitle\((.*?)\);':'\n\\1$document=& JFactory::getDocument();\n\\1$document->setTitle(\\2);',
+
+# Joomla! 1.5 User
+'\$my(\W)':'$kunena_my\\1',
+#'\$my_id\s*=\s*\$kunena_my->id;':'$kunena_my = &JFactory::getUser();\n$my_id = $kunena_my->id;',
+'global \$kunena_my;':'$kunena_my = &JFactory::getUser();',
+'(\s*)(global )\s*\$kunena_my,\s*(.*?;)':'\\1\\2\\3\n\\1$kunena_my = &JFactory::getUser();',
+'(\s*)(global .*?),\s*\$kunena_my;':'\\1\\2;\n\\1$kunena_my = &JFactory::getUser();',
+##'\$my_id':'$my->id',
+
+# Joomla! 1.5 Page Navigation
+'require.*pageNavigation.php.*;':'jimport(\'joomla.html.pagination\');',
+'\$pageNav(\w*)\s*=\s*new mosPageNav':'$pageNav\\1 = new JPagination',
+
+# Joomla 1.5 Misc Legacy Functions
+'writeLimitBox':'getLimitBox',
+'writePagesLinks':'getPagesLinks',
+'writePagesCounter':'getPagesCounter',
+'mosNotAuth\(\)':'JError::raiseError( 403, JText::_("ALERTNOTAUTH") );',
+'mosRedirect\s*\(':'$mainframe->redirect(',
+'mosMenuBar':'JToolBarHelper',
+'mosUser\(':'JUser(',
+'mosDBTable':'JTable',
+'mos[Mm]ail':'JUtility::sendMail',
+'mosCountModules\(':'JDocumentHTML::countModules(',
+'mosParameters':'JParameter',
+'mosMakeHtmlSafe':'JFilterOutput::objectHTMLSafe',
+'mosHTML::makeOption\(':'JHTML::_(\'select.option\', ',
+'mosHTML::selectList\(':'JHTML::_(\'select.genericlist\', ',
+'mosHTML::integerSelectList\(':'JHTML::_(\'select.integerList\', ',
+'sef[Rr]el[Tt]o[Aa]bs':'JRoute::_', 
+'josSpoofValue':'JUtility::getToken',
+'JUserParameters':'mosUserParameters',
+'die\(\);':'$mainframe->close();',
+'exit\(\);':'$mainframe->close();',
+#'\$app->redirect\( JURI::base\(\) \.':'$app->redirect(',
+
+# Joomla! 1.5 getVar()
+'mosGetParam\(\s*\$_[A-Z]*, ':'JRequest::getVar(',
+#', REQUEST':', \'REQUEST\'',
+#', COOKIE':', \'COOKIE\'',
+#', _MOS_ALLOWRAW':'',
+
+'(global .*),\sJPATH_ROOT(.*;)':'\\1\\2',
+'(global .*),\sJURI::root\(\)(.*;)':'\\1\\2',
+
+'$defined.*_VALID_MOS.*or die.*;':'defined( \'_JEXEC\' ) or die(\'Restricted access\');',
+
+#'\s*\.\s*\'/\'':' .DS',
+'DS\s*\.\s*(["\'])/':'DS. \\1',
+#'DS\s*\.\s*DS\s*\.\s*':'DS. ',
+##'\s*\.\s*DS\s*\.':' .DS.',
 }
 
 def string_replace(filename, text, dic):
-    for i, j in dic.iteritems():
-        (text, count) = re.subn(i, j, text)
-	if count:
+    go = 1;
+    while (go == 1):
+        go = 0;
+        for i, j in dic.iteritems():
+            (text, count) = re.subn(i, j, text)
+	    if count:
+                go = 1
 		print "%s: replaced %dx '%s' with '%s'" % (filename, count, i.replace('\n','\\n').replace('\r','\\r'), j.replace('\n','\\n'.replace('\r','\\r')))
     return text
 
@@ -140,10 +170,11 @@ dir = sys.argv[1]
 
 for root, dirs, files in os.walk(dir):
 	for name in files:
-		if name[-4:] != '.php':
+		if name[-4:] != '.php' and name[-5:] != '.html':
 			continue
 		if name == 'CHANGELOG.php':
 			continue
 		if name == 'kunena.defines.php':
 			continue
 		file_replace(root+'/'+name, dictionary)
+

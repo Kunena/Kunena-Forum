@@ -24,11 +24,10 @@ defined( '_JEXEC' ) or die('Restricted access');
 // Kunena wide defines
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 
-global $kunena_my;
-
 $app =& JFactory::getApplication();
 $fbConfig =& CKunenaConfig::getInstance();
-$kunena_db = &JFactory::getDBO();
+$kunena_db =& JFactory::getDBO();
+$kunena_my =& JFactory::getUser();
 
 $hours = 0;
 

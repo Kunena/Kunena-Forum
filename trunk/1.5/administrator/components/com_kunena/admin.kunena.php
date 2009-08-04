@@ -1395,7 +1395,7 @@ function browseUploaded($kunena_db, $option, $type)
 
     while ($file = @readdir($dir))
     {
-        if ($file != '.' && $file != '..' && $file != 'index.php' && is_file($uploaded_path .DS . $file) && !is_link($uploaded_path .DS . $file))
+        if ($file != '.' && $file != '..' && $file != 'index.php' && is_file($uploaded_path .DS. $file) && !is_link($uploaded_path .DS. $file))
         {
             //if( preg_match('/(\.gif$|\.png$|\.jpg|\.jpeg)$/is', $file) )
             //{
@@ -1675,7 +1675,7 @@ function editsmiley($option, $id)
     $smiley_images = collect_smilies();
 
     $smileypath = smileypath();
-    $smileypath = $smileypath['live'] .DS;
+    $smileypath = $smileypath['live'] .'/';
 
 	$smiley_edit_img = '';
 
@@ -1703,7 +1703,7 @@ function newsmiley($option)
 
 	$smiley_images = collect_smilies();
     $smileypath = smileypath();
-    $smileypath = $smileypath['live'] .DS;
+    $smileypath = $smileypath['live'] .'/';
 
     $filename_list = "";
 	for( $i = 0; $i < count($smiley_images); $i++ )
@@ -1775,13 +1775,21 @@ function smileypath()
 {
 	$fbConfig =& CKunenaConfig::getInstance();
 
-	if (is_dir(KUNENA_PATH_TEMPLATE .DS. $fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/emoticons')) {
+	if (is_dir(KUNENA_PATH_TEMPLATE .DS. $fbConfig->template .DS. 'images' .DS. KUNENA_LANGUAGE .DS. 'emoticons')) {
         $smiley_live_path = JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/emoticons';
-        $smiley_abs_path = KUNENA_PATH_TEMPLATE .DS. $fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/emoticons';
+        $smiley_abs_path = KUNENA_PATH_TEMPLATE .DS. $fbConfig->template .DS. 'images' .DS. KUNENA_LANGUAGE .DS. 'emoticons';
     }
-    else {
-        $smiley_live_path = KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'images/'.KUNENA_LANGUAGE.'/emoticons';
-        $smiley_abs_path = KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'images/'.KUNENA_LANGUAGE.'/emoticons';
+	else if (is_dir(KUNENA_PATH_TEMPLATE .DS. $fbConfig->template .DS. 'images' .DS. 'english' .DS. 'emoticons')) {
+        $smiley_live_path = JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/english/emoticons';
+        $smiley_abs_path = KUNENA_PATH_TEMPLATE .DS. $fbConfig->template .DS. 'images' .DS. 'english' .DS. 'emoticons';
+	}
+    else if (is_dir(KUNENA_PATH_TEMPLATE_DEFAULT .DS. $fbConfig->template .DS. 'images' .DS. KUNENA_LANGUAGE .DS. 'emoticons')) {
+        $smiley_live_path = JURI::root() . '/components/com_kunena/template/default/images/'.KUNENA_LANGUAGE.'/emoticons';
+        $smiley_abs_path = KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'images' .DS. KUNENA_LANGUAGE .DS. 'emoticons';
+	}
+	else {
+        $smiley_live_path = JURI::root() . '/components/com_kunena/template/default/images/english/emoticons';
+        $smiley_abs_path = KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'images' .DS. 'english' .DS. 'emoticons';
     }
 
     $smileypath['live'] = $smiley_live_path;
@@ -1854,21 +1862,6 @@ function showRanks($option)
 
 function rankpath()
 {
-/*
-	$fbConfig =& CKunenaConfig::getInstance();
-
-    if (is_dir(JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/ranks')) {
-        $rank_live_path = JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/ranks';
-        $rank_abs_path = 	KUNENA_PATH_TEMPLATE .DS. $fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/ranks';
-    }
-    else {
-        $rank_live_path = JURI::root() . '/components/com_kunena/template/default/images/'.KUNENA_LANGUAGE.'/ranks';
-        $rank_abs_path = 	KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'images/'.KUNENA_LANGUAGE.'/ranks';
-    }
-
-    $rankpath['live'] = $rank_live_path;
-    $rankpath['abs'] = $rank_abs_path;
-*/
     $rankpath['live'] = KUNENA_URLRANKSPATH;
     $rankpath['abs'] = KUNENA_ABSRANKSPATH;
 
@@ -1906,7 +1899,7 @@ function newRank($option)
 
 	$rank_images = collectRanks();
 	$rankpath = rankpath();
-	$rankpath = $rankpath['live'] .DS;
+	$rankpath = $rankpath['live'] .'/';
 
 	$filename_list = "";
 	$i = 0;
@@ -1988,7 +1981,7 @@ function editRank($option, $id)
     $rank_images = collectRanks();
 
     $path = rankpath();
-    $path = $path['live'] .DS;
+    $path = $path['live'] .'/';
 
     $edit_img = $filename_list = '';
 

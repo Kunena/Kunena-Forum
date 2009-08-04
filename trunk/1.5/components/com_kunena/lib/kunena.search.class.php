@@ -66,9 +66,8 @@ class CKunenaSearch
      */
     function CKunenaSearch()
     {
-        global $kunena_my;
-
-	$app =& JFactory::getApplication();
+        $kunena_my = &JFactory::getUser();
+		$app =& JFactory::getApplication();
         $kunena_db = &JFactory::getDBO();
         $fbConfig =& CKunenaConfig::getInstance();
 
@@ -370,11 +369,11 @@ class CKunenaSearch
 	        $q = $this->searchword;
 		$fb_advsearch_hide = 0;
 	}
-        if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php')) {
-        	include (KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php');
+        if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'advancedsearch' .DS. 'advsearch.php')) {
+        	include (KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'advancedsearch' .DS. 'advsearch.php');
         }
         else {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/advancedsearch/advsearch.php');
+                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin' .DS. 'advancedsearch' .DS. 'advsearch.php');
         }
 
         $results = $this->get_results();

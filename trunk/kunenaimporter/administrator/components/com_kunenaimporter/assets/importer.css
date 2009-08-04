@@ -1,0 +1,36 @@
+table.kunenaimporter {
+}
+div.header {
+	padding-left:146px !important;
+}
+div.icon-48-kunenaimporter {
+	background-image:url(kunena-48.png);
+}
+td.config {
+	width: 50%;
+}
+td.info {
+	width: 50%;
+}
+td.title {
+}
+td.status {
+	text-align: center;
+}
+td.action {
+	text-align: center;
+}
+td.notes {
+}
+.fail {
+	color: red;
+}
+.success {
+	color: green;
+}
+div.info {
+	background:#FFFFDD; color:#333 ;padding:10px;
+}
+div.info h2 {
+	margin-top: 2px;
+}

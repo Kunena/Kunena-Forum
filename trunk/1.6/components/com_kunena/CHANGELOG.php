@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.6.0dev
 
+12-Aug-2009 Matias
++ [#17588] Add classes for all tables
+
 28-July-2009 fxstein
 ^ [#17375] Additional changes to kunena_threads table - currently only in installer
 

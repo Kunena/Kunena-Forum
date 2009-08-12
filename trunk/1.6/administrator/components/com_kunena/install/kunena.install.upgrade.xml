@@ -227,18 +227,18 @@
                     `first_post_id` int(11) NOT NULL default '0',
                     `first_post_time` int(11) NOT NULL default '0',
                     `first_post_userid` int(11) NOT NULL default '0',
-                    `first_message` text NULL,
+                    `first_post_message` text NULL,
                     `last_post_id` int(11) NOT NULL default '0',
                     `last_post_time` int(11) NOT NULL default '0',
                     `last_post_userid` int(11) NOT NULL default '0',
-                    `last_message` text NULL,
+                    `last_post_message` text NULL,
                 PRIMARY KEY  (`id`),
                 KEY `catid` (`catid`),
-                KEY `first-post-userid` (`first-post-userid`),
-                KEY `last-post-userid` (`last-post-userid`),
-                KEY `first-post-time` (`first-post-time`),
-                KEY `last-post-time` (`last-post-time`),
-                KEY `locked` (`locked`) DEFAULT CHARSET=utf8</query>
+                KEY `first_post_userid` (`first_post_userid`),
+                KEY `last_post_userid` (`last_post_userid`),
+                KEY `first_post_time` (`first_post_time`),
+                KEY `last_post_time` (`last_post_time`),
+                KEY `locked` (`locked`) ) DEFAULT CHARSET=utf8</query>
 		<phpfile name="kunena.special.install.php" />
    	</install>
 	<upgrade>
@@ -396,18 +396,37 @@
                     `first_post_id` int(11) NOT NULL default '0',
                     `first_post_time` int(11) NOT NULL default '0',
                     `first_post_userid` int(11) NOT NULL default '0',
-                    `first_message` text NULL,
+                    `first_post_message` text NULL,
                     `last_post_id` int(11) NOT NULL default '0',
                     `last_post_time` int(11) NOT NULL default '0',
                     `last_post_userid` int(11) NOT NULL default '0',
-                    `last_message` text NULL,
+                    `last_post_message` text NULL,
                 PRIMARY KEY  (`id`),
                 KEY `catid` (`catid`),
-                KEY `first-post-userid` (`first-post-userid`),
-                KEY `last-post-userid` (`last-post-userid`),
-                KEY `first-post-time` (`first-post-time`),
-                KEY `last-post-time` (`last-post-time`),
-                KEY `locked` (`locked`) DEFAULT CHARSET=utf8</query>
+                KEY `first_post_userid` (`first_post_userid`),
+                KEY `last_post_userid` (`last_post_userid`),
+                KEY `first_post_time` (`first_post_time`),
+                KEY `last_post_time` (`last_post_time`),
+                KEY `locked` (`locked`) ) DEFAULT CHARSET=utf8</query>
+			<query>INSERT INTO `#__kunena_threads`
+					(id, catid, subject, topic_emoticon, locked, hold, ordering, posts, hits, moved_id,
+						first_post_id, first_post_time, first_post_userid, first_post_message,
+						last_post_id, last_post_time, last_post_userid, last_post_message)
+					SELECT a.id, a.catid, a.subject, a.topic_emoticon, a.locked, a.hold, a.ordering, count(a.id) as posts, sum(a.hits) as hits,
+						0 as moved_id, min(b.id) as first_post_id, 0 as first_post_time, 0 as first_post_userid, '' as first_post_message,
+						max(b.id) as last_post_id, 0 as last_post_time, 0 as last_post_userid, '' as last_post_message
+					FROM #__kunena_messages as a, #__kunena_messages as b
+					WHERE a.parent = 0
+					AND b.thread = a.id
+					GROUP BY a.id;</query>
+			<query>UPDATE `#__kunena_threads` AS t, `#__kunena_messages` AS a, `#__kunena_messages` AS b
+					SET t.first_post_time = a.time, 
+						t.first_post_userid = a.userid,
+						t.first_post_message = a.message,
+						t.last_post_time = b.time, 
+						t.last_post_userid = b.userid,
+						t.last_post_message = b.message
+					WHERE t.first_post_id = a.id AND t.last_post_id = b.id;</query>
 		</version>
 	</upgrade>
 </comupgrade>

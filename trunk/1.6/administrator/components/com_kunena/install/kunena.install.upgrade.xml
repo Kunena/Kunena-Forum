@@ -220,10 +220,11 @@
                     `topic_emoticon` int(11) NOT NULL default '0',
                     `locked` tinyint(4) NOT NULL default '0',
                     `hold` tinyint(4) NOT NULL default '0',
-                    `ordering` int(11) default '0',
+                    `ordering` int(11) NOT NULL default '0',
                     `posts` int(11) NOT NULL default '0',
-                    `hits` int(11) default '0',
-                    `moved_id` int(11) default '0',
+                    `hits` int(11) NOT NULL default '0',
+                    `attachements` NOT NULL int(11) default '0',
+                    `moved_id` int(11) NOT NULL default '0',
                     `first_post_id` int(11) NOT NULL default '0',
                     `first_post_time` int(11) NOT NULL default '0',
                     `first_post_userid` int(11) NOT NULL default '0',
@@ -393,10 +394,11 @@
                     `topic_emoticon` int(11) NOT NULL default '0',
                     `locked` tinyint(4) NOT NULL default '0',
                     `hold` tinyint(4) NOT NULL default '0',
-                    `ordering` int(11) default '0',
+                    `ordering` int(11) NOT NULL default '0',
                     `posts` int(11) NOT NULL default '0',
-                    `hits` int(11) default '0',
-                    `moved_id` int(11) default '0',
+                    `hits` int(11) NOT NULL default '0',
+                    `attachements` NOT NULL int(11) default '0',
+                    `moved_id` int(11) NOT NULL default '0',
                     `first_post_id` int(11) NOT NULL default '0',
                     `first_post_time` int(11) NOT NULL default '0',
                     `first_post_userid` int(11) NOT NULL default '0',
@@ -417,15 +419,16 @@
                 KEY `last_post_time` (`last_post_time`),
                 KEY `locked` (`locked`) ) DEFAULT CHARSET=utf8</query>
 			<query>INSERT INTO `#__kunena_threads`
-					(id, catid, subject, topic_emoticon, locked, hold, ordering, posts, hits, moved_id,
+					(id, catid, subject, topic_emoticon, locked, hold, ordering, posts, hits, attachements, moved_id,
 						first_post_id, first_post_time, first_post_userid, first_post_name, first_post_email, first_post_message,
 						last_post_id, last_post_time, last_post_userid, last_post_name, last_post_email, last_post_message)
-					SELECT a.id, a.catid, a.subject, a.topic_emoticon, a.locked, a.hold, a.ordering, count(a.id) as posts, sum(a.hits) as hits,
+					SELECT a.id, a.catid, a.subject, a.topic_emoticon, a.locked, a.hold, a.ordering, count(a.id) as posts, sum(a.hits) as hits, count(t.mesid) as attachements,
 						0 as moved_id, min(b.id) as first_post_id, 0 as first_post_time, 0 as first_post_userid, '' as first_post_name, '' as first_post_email, '' as first_post_message,
 						max(b.id) as last_post_id, 0 as last_post_time, 0 as last_post_userid, '' as last_post_name, '' as last_post_email, '' as last_post_message
-					FROM #__kunena_messages as a, #__kunena_messages as b
+					FROM #__kunena_messages AS a
+					JOIN #__kunena_messages AS b ON b.thread = a.id
+					LEFT OUTER JOIN #__kunena_attachments AS t ON b.id = t.mesid
 					WHERE a.parent = 0
-					AND b.thread = a.id
 					GROUP BY a.id;</query>
 			<query>UPDATE `#__kunena_threads` AS t, `#__kunena_messages` AS a, `#__kunena_messages` AS b
 					SET t.first_post_time = a.time, 

@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.6.0dev
 
+13-Aug-2009 fxstein
++ [#17375] Added name and email to thread table and upgrade logic
+
 12-Aug-2009 fxstein
 + [#17375] Initial upgrade logic for kunena_threads table
 

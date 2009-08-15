@@ -18,49 +18,57 @@ kimport('database.query');
  *
  * @package		Kunena
  * @subpackage	com_kunena
- * @since		1.0
+ * @since		1.6
  */
 class KunenaModelRecent extends JModel
 {
 	/**
 	 * Flag to indicate model state initialization.
 	 *
-	 * @access	private
 	 * @var		boolean
+	 * @since	1.6
 	 */
-	var $__state_set	= false;
+	private $__state_set = false;
 
 	/**
 	 * An array of totals for the lists.
 	 *
-	 * @access	protected
 	 * @var		array
+	 * @since	1.6
 	 */
-	var $_totals		= array();
+	protected $_totals = array();
 
 	/**
 	 * Array of lists containing items.
 	 *
-	 * @access	protected
 	 * @var		array
+	 * @since	1.6
 	 */
-	var $_lists			= array();
+	protected $_lists = array();
+
+	/**
+	 * The model context for caching.
+	 * 
+	 * @var		string
+	 * @since	1.6
+	 */
+	protected $_context = 'com_kunena.recent';
 
 	/**
 	 * Overridden method to get model state variables.
 	 *
-	 * @access	public
-	 * @param	string	$property	Optional parameter name.
-	 * @return	object	The property where specified, the state object where omitted.
-	 * @since	1.0
+	 * @param	string	Optional parameter name.
+	 * @param	mixed	Optional default value.
+	 * @return	mixed	The property where specified, the state object where omitted.
+	 * @since	1.6
 	 */
-	function getState($property = null)
+	public function getState($property = null)
 	{
 		if (!$this->__state_set)
 		{
-			$app		= JFactory::getApplication();
-			$params		= $app->getParams('com_kunena');
-			$context	= 'com_kunena.recent.';
+			// Get the application object and component options.
+			$app	= JFactory::getApplication();
+			$params	= $app->getParams('com_kunena');
 
 			// If the limit is set to -1, use the global config list_limit value.
 			$limit	= JRequest::getInt('limit', $params->get('list_limit', 0));
@@ -92,17 +100,16 @@ class KunenaModelRecent extends JModel
 	/**
 	 * Method to get a list of items.
 	 *
-	 * @access	public
 	 * @return	mixed	An array of objects on success, false on failure.
-	 * @since	1.0
+	 * @since	1.6
 	 */
-	function getItems()
+	public function getItems()
 	{
 		// Get a unique key for the current list state.
-		$key = $this->_getStoreId('kunena.categories');
+		$key = $this->_getStoreId($this->_context);
 
 		// Try to load the value from internal storage.
-		if (!empty ($this->_lists[$key])) {
+		if (!empty($this->_lists[$key])) {
 			return $this->_lists[$key];
 		}
 
@@ -121,28 +128,6 @@ class KunenaModelRecent extends JModel
 		$query	= $this->_getListQuery();
 		$rows	= $this->_getList($query->toString(), $this->getState('list.start'), $this->getState('list.limit'));
 
-		// Setup some variables to check if the user has appropriate access rights.
-		$access = $this->getState('access');
-		if ($access === true) {
-			$aids = KunenaHelperAccess::getAccessLevelsArray($this->getState('user.id'));
-			if (JError::isError($aids)) {
-				// TODO: we should throw an error
-				$aids = array(0);
-			}
-		} else {
-			$aid = (int)$this->getState('user.aid', 0);
-		}
-
-		// Handle parameters based fields.
-		for ($i=0, $n=count($rows); $i < $n; $i++)
-		{
-			if ($access === true) {
-				$rows[$i]->authorized = (in_array($rows[$i]->access, $aids)) ? true : false;
-			} else {
-				$rows[$i]->authorized = ($rows[$i]->access <= $aid) ? true : false;
-			}
-		}
-
 		// Push the value into cache.
 		//$cache->store(serialize($rows), $store);
 
@@ -155,11 +140,10 @@ class KunenaModelRecent extends JModel
 	/**
 	 * Method to get a list pagination object.
 	 *
-	 * @access	public
 	 * @return	object	A JPagination object.
-	 * @since	1.0
+	 * @since	1.6
 	 */
-	function &getPagination()
+	public function getPagination()
 	{
 		jimport('joomla.html.pagination');
 
@@ -172,14 +156,13 @@ class KunenaModelRecent extends JModel
 	/**
 	 * Method to get the total number of published items.
 	 *
-	 * @access	public
-	 * @return	int		The number of published items.
-	 * @since	1.0
+	 * @return	integer	The number of published items.
+	 * @since	1.6
 	 */
-	function getTotal()
+	public function getTotal()
 	{
 		// Get a unique key for the current list state.
-		$key = $this->_getStoreId('kunena.categories');
+		$key = $this->_getStoreId($this->_context);
 
 		// Try to load the value from internal storage.
 		if (!empty ($this->_totals[$key])) {
@@ -199,7 +182,7 @@ class KunenaModelRecent extends JModel
 
 		// Load the total.
 		$query = $this->_getListQuery();
-		$return = (int)$this->_getListCount($query->toString());
+		$return = (int) $this->_getListCount($query->toString());
 
 		// Check for a database error.
 		if ($this->_db->getErrorNum()) {
@@ -217,29 +200,12 @@ class KunenaModelRecent extends JModel
 	}
 
 	/**
-	 * Gets the parent issue
-	 * @return	object
-	 */
-	function &getCategory()
-	{
-		$result = null;
-		if ($id = (int) $this->getState('filter.category_id'))
-		{
-			$model	= &JModel::getInstance('Category', 'KunenaModel');
-			$model->setState('category_id', $id);
-			$result	= $model->getItem();
-		}
-		return $result;
-	}
-
-	/**
 	 * Method to build an SQL query to load the list data.
 	 *
-	 * @access	protected
-	 * @return	string		An SQL query
-	 * @since	1.0
+	 * @return	string	An SQL query.
+	 * @since	1.6
 	 */
-	function _getListQuery()
+	protected function _getListQuery()
 	{
 		$query = new KQuery();
 
@@ -258,37 +224,6 @@ class KunenaModelRecent extends JModel
 		$query->select('c.username, c.name AS uname');
 		$query->join('LEFT', '`#__users` AS c ON b.user_id = c.id');
 
-		// If the model is set to check item access, add to the query.
-		if ($this->getState('check.access', true))
-		{
-			// Get the ACL system configuration.
-			if ($this->getState('access') === true)
-			{
-				// Check access using extended ACL.
-				//$levels = KunenaHelperAccess::getAccessLevelsString($this->getState('user.id'));
-
-				jximport('jxtended.access.access');
-				$access = new JXAccess();
-				$levels = $access->getAuthorizedAccessLevels($this->getState('user.id'));
-
-				if (JError::isError($levels)) {
-					// TODO: we should throw an error
-					$levels = false;
-				}
-				if ($levels) {
-					$levels = implode(',', $levels);
-					$query->where('a.access IN ('.$levels.')');
-				}
-				else {
-					$query->where('a.access = 1');
-				}
-			}
-			else
-			{
-				// Check access using base ACL.
-				$query->where('a.access <= '.(int)$this->getState('user.aid', 0));
-			}
-		}
 
 		// If the model is set to check publication state, add to the query.
 		if ($this->getState('check.state', true)) {
@@ -315,19 +250,17 @@ class KunenaModelRecent extends JModel
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @access	protected
-	 * @param	string		$id		A prefix for the store id.
-	 * @return	string		A store id.
-	 * @since	1.0
+	 * @param	string	A prefix for the store id.
+	 * @return	string	A store id.
+	 * @since	1.6
 	 */
-	function _getStoreId($id = '')
+	protected function _getStoreId($id = '')
 	{
 		// Compile the store id.
 		$id	.= ':'.$this->getState('list.start');
 		$id	.= ':'.$this->getState('list.limit');
 		$id	.= ':'.$this->getState('list.state');
 		$id	.= ':'.$this->getState('list.ordering');
-		$id	.= ':'.$this->getState('check.access');
 		$id	.= ':'.$this->getState('check.state');
 		$id	.= ':'.$this->getState('user.aid');
 		$id	.= ':'.$this->getState('filter.parent_id');

@@ -12,6 +12,12 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-
-
-?>
+// If we are doing things the new way use the MVC.
+if (false)
+{
+	// Do the New MVC Way.
+}
+// Load the legacy entry point.
+else {
+	require (dirname(__FILE__)).'/legacy.kunena.php';
+}

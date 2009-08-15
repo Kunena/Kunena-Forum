@@ -76,7 +76,7 @@ class CKunenaSearch
         // TODO: active_in
 
 	// Default values for checkboxes depends on function
-	$this->func = JRequest::getVar('func');
+	$this->func = strtolower(JRequest::getCmd('func'));
 	if($this->func == 'search') {
 		$this->defaults['exactname'] = $this->defaults['childforums'] = 1;
 	} else {
@@ -89,20 +89,20 @@ class CKunenaSearch
 		$q = JRequest::getVar('searchword', '');
 	}
 	$q = stripslashes($q);
-	$this->params['titleonly'] = intval(JRequest::getVar('titleonly', $this->defaults['titleonly']));
+	$this->params['titleonly'] = JRequest::getInt('titleonly', $this->defaults['titleonly']);
 	$this->params['searchuser'] = stripslashes(JRequest::getVar('searchuser', $this->defaults['searchuser']));
-	$this->params['starteronly'] = intval(JRequest::getVar('starteronly', $this->defaults['starteronly']));
-	$this->params['exactname'] = intval(JRequest::getVar('exactname', $this->defaults['exactname']));
-	$this->params['replyless'] = intval(JRequest::getVar('replyless', $this->defaults['replyless']));
-	$this->params['replylimit'] = intval(JRequest::getVar('replylimit', $this->defaults['replylimit']));
+	$this->params['starteronly'] = JRequest::getInt('starteronly', $this->defaults['starteronly']);
+	$this->params['exactname'] = JRequest::getInt('exactname', $this->defaults['exactname']);
+	$this->params['replyless'] = JRequest::getInt('replyless', $this->defaults['replyless']);
+	$this->params['replylimit'] = JRequest::getInt('replylimit', $this->defaults['replylimit']);
 	$this->params['searchdate'] = JRequest::getVar('searchdate', $this->defaults['searchdate']);
 	$this->params['beforeafter'] = JRequest::getVar('beforeafter', $this->defaults['beforeafter']);
 	$this->params['sortby'] = JRequest::getVar('sortby', $this->defaults['sortby']);
 	$this->params['order'] = JRequest::getVar('order', $this->defaults['order']);
-	$this->params['childforums'] = intval(JRequest::getVar('childforums', $this->defaults['childforums']));
+	$this->params['childforums'] = JRequest::getInt('childforums', $this->defaults['childforums']);
 	$this->params['catids'] = strtr(JRequest::getVar('catids', '0', 'get'), KUNENA_URL_LIST_SEPARATOR, ',');
-	$limitstart = $this->limitstart = intval(JRequest::getVar('limitstart', 0));
-	$limit = $this->limit = intval(JRequest::getVar('limit', $fbConfig->messages_per_page_search));
+	$limitstart = $this->limitstart = JRequest::getInt('limitstart', 0);
+	$limit = $this->limit = JRequest::getInt('limit', $fbConfig->messages_per_page_search);
 	extract($this->params);
 
 	if ($limit<1 || $limit>40) $limit = $this->limit = $fbConfig->messages_per_page_search;

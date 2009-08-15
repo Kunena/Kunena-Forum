@@ -337,6 +337,16 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 break;
             case 'img':
                 if($between) {
+                	static $file_ext = null;
+
+                	if (empty($file_ext)) {
+	                	$matches = null;
+    	            	$params = &JComponentHelper::getParams( 'com_media' );
+        	        	$file_ext = explode(',', $params->get('upload_extensions'));
+            	    	preg_match('/\.([\w\d]+)$/', $between, $matches);
+                	}
+                	if (!in_array(strtolower($matches[1]), $file_ext)) break;
+                	
                 	$tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
                     $task->autolink_disable--; # continue autolink conversion
                     // Make sure we add image size if specified and while we are

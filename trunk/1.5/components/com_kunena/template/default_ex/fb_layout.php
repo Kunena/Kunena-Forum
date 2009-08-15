@@ -169,7 +169,7 @@ function KUNENA_get_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_post
 
 function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = "", $catid = 0, $id = 0, $thread = 0, $is_moderator = false, $numPending = 0)
 {
-	$func = strtolower(JRequest::getVar('func', ''));
+	$func = strtolower(JRequest::getCmd('func', ''));
 	if ($func == '') // Set default as per config settings
 	{
 		switch ($fbConfig->fbdefaultpage)

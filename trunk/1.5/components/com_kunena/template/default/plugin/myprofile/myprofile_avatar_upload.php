@@ -144,12 +144,12 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 {
 
 $fbConfig =& CKunenaConfig::getInstance();
-$task = JRequest::getVar('action', 'default');
+$task = JRequest::getCmd('action', 'default');
 $gallery  = JRequest::getVar('gallery', '');
 
 switch ($task) {
 	case "delete":
-		$rowItemid = JRequest::getVar('Itemid');
+		$rowItemid = JRequest::getInt('Itemid');
 
 		$deleteAvatar = JRequest::getInt('deleteAvatar', 0);
 		$avatar = JRequest::getVar('avatar', '');

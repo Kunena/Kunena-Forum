@@ -36,16 +36,16 @@ global $is_Moderator;
 global $message;
 
 // Get all the variables we need and strip them in case
-$action 		= JRequest::getVar('action', '');
+$action 		= JRequest::getCmd('action', '');
 $catid 			= JRequest::getInt('catid', 0);
 $contentURL 	= JRequest::getVar('contentURL', '');
-$do 			= JRequest::getVar('do', '');
+$do 			= JRequest::getCmd('do', '');
 $email 			= JRequest::getVar('email', '');
 $favoriteMe 	= JRequest::getVar('favoriteMe', '');
 $fb_authorname 	= JRequest::getVar('fb_authorname', '');
 $fb_thread 		= JRequest::getInt('fb_thread', 0);
-$func 			= strtolower(JRequest::getVar('func', ''));
-$id 			= JRequest::getVar('id', '');
+$func 			= strtolower(JRequest::getCmd('func', ''));
+$id 			= JRequest::getInt('id', 0);
 $limit 			= JRequest::getInt('limit', 0);
 $limitstart 	= JRequest::getInt('limitstart', 0);
 $markaction 	= JRequest::getVar('markaction', '');
@@ -406,7 +406,8 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 	
 	// Integration with GroupJive, Jomsocial:
 	$params = array($kunena_my->id, &$fbSession->allowed);
-	$kunenaProfile->trigger('getAllowedForumsRead', $params);
+	if (is_object($kunenaProfile))
+		$kunenaProfile->trigger('getAllowedForumsRead', $params);
 	
 //Disabled threaded view option for Kunena
 //    //Initial:: determining what kind of view to use... from profile, cookie or default settings.

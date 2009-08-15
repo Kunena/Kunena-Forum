@@ -32,6 +32,10 @@ Legend:
 
 Kunena 1.5.5
 
+16-Aug-2009 Matias
+* [#17635] Fix Blind SQL Injection Exploit
+* [#17636] Check that img tags contain allowed file extension
+
 4-Aug-2009 Matias
 + [#17482] Add basic support for GroupJive permission handling
 

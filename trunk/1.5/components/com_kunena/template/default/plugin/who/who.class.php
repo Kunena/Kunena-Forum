@@ -25,12 +25,12 @@ defined( '_JEXEC' ) or die('Restricted access');
 $fbConfig =& CKunenaConfig::getInstance();
 
 //Get some variables
-$id = intval(JRequest::getVar('id'));
-$catid = intval(JRequest::getVar('catid'));
-//$func = JRequest::getVar('func');
-$task = JRequest::getVar('task');
+$id = JRequest::getInt('id');
+$catid = JRequest::getInt('catid');
+$func = JRequest::getCmd('func');
+$task = JRequest::getCmd('task');
 $replyto = intval(JRequest::getVar('replyto'));
-$do = JRequest::getVar('do');
+$do = JRequest::getCmd('do');
 
 $now = time();
 $past = $now - $fbConfig->fbsessiontimeout;
@@ -87,13 +87,29 @@ $what = addslashes($what);
 $link = addslashes($link);
 
 if ($online == 1) {
-    $sql = "UPDATE #__fb_whoisonline SET time='{$now}', what='{$what}', do= '{$do}', task= '{$task}', link= '{$link}', func= '{$func}'"
-            . " WHERE userid={$kunena_my->id} AND userip='{$myip}'";
+    $sql = "UPDATE #__fb_whoisonline SET ".
+    		" time=".$kunena_db->quote($now).", ".
+    		" what=".$kunena_db->quote($what).", ".
+    		" do=".$kunena_db->quote($do).", ".
+    		" task=".$kunena_db->quote($task).", ".
+    		" link=".$kunena_db->quote($link).", ".
+    		" func=".$kunena_db->quote($func).
+            " WHERE userid=".$kunena_db->quote($kunena_my->id).
+            " AND userip=".$kunena_db->quote($myip);
     $kunena_db->setQuery($sql);
     }
 else {
     $sql = "INSERT INTO #__fb_whoisonline (`userid` , `time`, `what`, `task`, `do`, `func`,`link`, `userip`, `user`) "
-            . " VALUES ('{$kunena_my->id}', '{$now}', '{$what}','{$task}','{$do}','{$func}','{$link}', '{$myip}', '{$isuser}')";
+            . " VALUES (".
+            $kunena_db->quote($kunena_my->id).",".
+            $kunena_db->quote($now).",".
+            $kunena_db->quote($what).",".
+            $kunena_db->quote($task).",".
+            $kunena_db->quote($do).",".
+            $kunena_db->quote($func).",".
+            $kunena_db->quote($link).",".
+            $kunena_db->quote($myip).",".
+            $kunena_db->quote($isuser).")";
 
     $kunena_db->setQuery($sql);
     }

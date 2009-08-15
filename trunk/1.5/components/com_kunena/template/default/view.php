@@ -162,7 +162,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                 $limitstart = 0;
             }
 
-            $limitstart = intval(JRequest::getVar('limitstart', $limitstart, $HASH = "REQUEST"));
+            $limitstart = JRequest::getInt('limitstart', $limitstart, $HASH = "REQUEST");
             $total = count($flat_messages);
 
             if ($total > $limit)

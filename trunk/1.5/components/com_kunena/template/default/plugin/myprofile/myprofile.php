@@ -31,7 +31,7 @@ $document->setTitle(_GEN_MYPROFILE . ' - ' . stripslashes($fbConfig->board_title
 
 if ($kunena_my->id != "" && $kunena_my->id != 0)
 {
-	$do = JRequest::getVar('do', 'show');
+	$do = JRequest::getCmd('do', 'show');
 	
 	//Get joomla userinfo needed later on, this limits the amount of queries
     $juserinfo = new JUser($kunena_my->id);
@@ -252,7 +252,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                 case "saveprofileinfo":
 
-                    $user_id = intval( JRequest::getVar('id', 0 ));
+                    $user_id = JRequest::getInt('id', 0 );
 
     // do some security checks
     if ($kunena_my->id == 0 || $user_id == 0 || $user_id != $kunena_my->id) {
@@ -262,7 +262,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
         $rowu = new CKunenaUserprofile();
 
-                    $deleteSig = JRequest::getVar('deleteSig', 0);
+                    $deleteSig = JRequest::getInt('deleteSig', 0);
                     $signature = JRequest::getVar('message', null, 'REQUEST', 'string', JREQUEST_ALLOWRAW);
                     $bday1 = JRequest::getVar('bday1', '0000');
                     $bday2 = JRequest::getVar('bday2', '00');

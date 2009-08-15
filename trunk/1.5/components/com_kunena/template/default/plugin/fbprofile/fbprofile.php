@@ -21,7 +21,7 @@ $kunena_acl = &JFactory::getACL();
 $fbConfig =& CKunenaConfig::getInstance();
 
 if ($fbConfig->fb_profile == 'cb') {
-        $userid = JRequest::getVar('userid', null);
+        $userid = JRequest::getInt('userid', 0);
 	$url = CKunenaCBProfile::getProfileURL($userid);
 	header("HTTP/1.1 307 Temporary Redirect");
 	header("Location: " . htmlspecialchars_decode($url));
@@ -36,12 +36,12 @@ if ($kunena_my->id) //registered only
     require_once(KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
     require_once(KUNENA_PATH_LIB .DS. 'kunena.statsbar.php');
 
-    $task = JRequest::getVar('task', 'showprf');
+    $task = JRequest::getCmd('task', 'showprf');
 
     switch ($task)
     {
         case "showprf":
-            $userid = JRequest::getVar('userid', null);
+            $userid = JRequest::getInt('userid', 0);
 
             $page = 0;
             showprf((int)$userid, $page);

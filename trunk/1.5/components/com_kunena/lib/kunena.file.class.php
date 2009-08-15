@@ -22,7 +22,8 @@ class CKunenaPath extends JPath
 
 		if (function_exists('sys_get_temp_dir')) {
 			$tmpdir  = sys_get_temp_dir();
-		} else {
+		}
+		if (empty($tmpdir)) {
 			$file = tempnam(false,false);
 			if ($file === false) return false;
 			unlink($file);

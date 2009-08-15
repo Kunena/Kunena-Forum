@@ -8,7 +8,7 @@
  * @link		http://www.kunena.com
  */
 
-defined('JPATH_BASE') or die;
+defined('_JEXEC') or die;
 
 // Define the Kunena Libraries path constant.
 if (!defined('KPATH_LIBRARIES')) {

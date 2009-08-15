@@ -41,12 +41,15 @@ function debug_assert_callback($script, $line, $message) {
 function trigger_dberror($text = '')
 {
 	$kunena_db = &JFactory::getDBO();
+
+	echo $text.'<br />'.$kunena_db->getQuery().'<br />'.$kunena_db->getErrorMsg().'<br />';
 	echo debug_callstackinfo();
 
 	require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 	$kunenaVersion = CKunenaVersion::version();
 	$kunenaPHPVersion = CKunenaVersion::PHPVersion();
 	$kunenaMySQLVersion = CKunenaVersion::MySQLVersion();
+
 ?>
  <!-- Version Info -->
 <div class="kunenafooter">
@@ -55,13 +58,13 @@ Installed version:  <?php echo $kunenaVersion; ?> | php <?php echo $kunenaPHPVer
 <!-- /Version Info -->
 <?php
 
-	trigger_error($text.'\n'.$kunena_db->stderr(true), E_USER_ERROR);
+	trigger_error($text, E_USER_ERROR);
 }
 
 function check_dberror($text='')
 {
 	$kunena_db = &JFactory::getDBO();
-	if ($kunena_db->_errorNum != 0)
+	if ($kunena_db->getErrorNum() != 0)
 	{
 		trigger_dberror($text);
 	}

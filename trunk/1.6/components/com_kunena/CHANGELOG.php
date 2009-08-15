@@ -32,12 +32,16 @@ Legend:
 
 Kunena 1.6.0dev
 
+15-Aug-2009 fxstein
+# [#17375] fixed broken debug output on failed queries
+
 14-Aug-2009 Louis
 + [#17628] Added scaffolding for recent activity view and base library importer.
 
 14-Aug-2009 fxstein
 ^ [#17628] Initial file systems changes for MVC next gen layout
 ^ [#17375] Changed attachement count logic for thread table during upgrade
+# [#17375] Fixed broken threads table ddl
 
 13-Aug-2009 fxstein
 + [#17375] Added name and email to thread table and upgrade logic

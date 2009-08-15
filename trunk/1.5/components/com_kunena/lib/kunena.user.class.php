@@ -161,6 +161,7 @@ class CKunenaUser
 	var $id = 0;
 	var $joomlaProperties = NULL;
 	var $kunenaProperties = NULL;
+	var $CBProperties = NULL;
 
 	function CKunenaUser($userid)
 	{
@@ -205,8 +206,9 @@ class CKunenaUser
 			$this->joomlaProperties->load($this->id);
 		}
 
-		if (isset($this->joomlaProperties->$field)) {
-			return $this->joomlaProperties->$field;
+		$vars = get_object_vars($this->joomlaProperties);
+		if (array_key_exists($field, $vars)) {
+			return $vars[$field];
 		} else {
 			return FALSE;
 		}
@@ -218,11 +220,13 @@ class CKunenaUser
 		if ($this->id == 0) return FALSE;
 		if ($this->kunenaProperties == NULL)
 		{
-			$this->kunenaProperties = new CKunenaUserprofile($this->id);
+			$kunena_db->setQuery("SELECT * FROM #__fb_users WHERE userid='{$this->id}'", 0, 1);
+			$this->kunenaProperties = $kunena_db->loadAssoc();
+			check_dberror("Unable to load Kunena user information.");
 		}
 
-		if (isset($this->kunenaProperties->$field)) {
-			return $this->kunenaProperties->$field;
+		if (array_key_exists($field, $this->kunenaProperties)) {
+			return $this->kunenaProperties[$field];
 		} else {
 			return FALSE;
 		}

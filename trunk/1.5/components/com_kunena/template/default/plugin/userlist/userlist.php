@@ -385,8 +385,31 @@ class HTML_userlist_content
                                 $nr = $i + $limitstart;
 
                                 // Avatar
-                               	$kunenaProfile =& CKunenaProfile::getInstance();
-								$uslavatar = $kunenaProfile->showAvatar($ulrow->id, 'usl_avatar');
+                                $uslavatar = '';
+                                if ($fbConfig->avatar_src == "clexuspm") {
+                                    $uslavatar = '<img  border="0" class="usl_avatar" src="' . MyPMSTools::getAvatarLinkWithID($ulrow->id, "s") . '" alt="" />';
+                                }
+                                else if ($fbConfig->avatar_src == "cb")
+                                {
+                                	$kunenaProfile =& CKunenaCBProfile::getInstance();
+									$uslavatar = $kunenaProfile->showAvatar($ulrow->id);
+                                }
+                                else
+                                {
+                                    $kunena_db->setQuery("SELECT avatar FROM #__fb_users WHERE userid='{$ulrow->id}'");
+                                    $avatar = $kunena_db->loadResult();
+
+                                    if ($avatar != '') {
+
+									if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $avatar)) {
+										$uslavatar = '<img  border="0" class="usl_avatar" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" />';
+										}else {
+                                        $uslavatar = '<img  border="0" class="usl_avatar" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_' . $avatar . '" alt="" />';
+										}
+                                    }
+                                    else {$uslavatar = '<img  border="0" class="usl_avatar" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_nophoto.jpg" alt="" />'; }
+                                }
+                                //
                             ?>
 
                                 <tr class = "<?php echo $boardclass; ?><?php echo $usrl_class ;?>  fbm">

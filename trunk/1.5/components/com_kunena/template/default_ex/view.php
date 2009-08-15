@@ -25,7 +25,6 @@ defined( '_JEXEC' ) or die('Restricted access');
 $app =& JFactory::getApplication();
 $fbConfig =& CKunenaConfig::getInstance();
 $fbSession =& CKunenaSession::getInstance();
-$kunenaProfile =& CKunenaProfile::getInstance();
 
 function KunenaViewPagination($catid, $threadid, $page, $totalpages, $maxpages) {
     $fbConfig =& CKunenaConfig::getInstance();
@@ -533,9 +532,12 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 					$userinfo->signature = '';
 				}
 
-				$triggerParams = array( 'userid'=> $fmessage->userid,
-					'userinfo'=> &$userinfo );
-				$kunenaProfile->trigger( 'profileIntegration', $triggerParams );
+				if ($fbConfig->fb_profile == 'cb')
+				{
+					$triggerParams = array( 'userid'=> $fmessage->userid,
+						'userinfo'=> &$userinfo );
+					$kunenaProfile->trigger( 'profileIntegration', $triggerParams );
+				}
 
                                 //get the username:
                                 if ($fbConfig->username) {
@@ -559,12 +561,41 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 if ($fbConfig->allowavatar)
                                 {
                                     $Avatarname = $userinfo->username;
-                                   	$msg_avatar = '<span class="fb_avatar">'.$kunenaProfile->showAvatar($userinfo->userid, '', false).'</span>';
+
+                                    if ($fbConfig->avatar_src == "jomsocial")
+									{
+										// Get CUser object
+										$jsuser =& CFactory::getUser($userinfo->userid);
+									    $msg_avatar = '<span class="fb_avatar"><img src="' . $jsuser->getThumbAvatar() . '" alt=" " /></span>';
+									}
+                                    else if ($fbConfig->avatar_src == "clexuspm") {
+                                        $msg_avatar = '<span class="fb_avatar"><img src="' . MyPMSTools::getAvatarLinkWithID($userinfo->userid) . '" /></span>';
+                                    }
+                                    else if ($fbConfig->avatar_src == "cb")
+                                    {
+                                    	$msg_avatar = '<span class="fb_avatar">'.$kunenaProfile->showAvatar($userinfo->userid).'</span>';
+                                    }
+                                    else
+                                    {
+                                        $avatar = $userinfo->avatar;
+
+                                        if (!empty($avatar)) {
+                                        	if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $avatar)) {
+                                            	$msg_avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: '.$fbConfig->avatarwidth.'px; max-height: '.$fbConfig->avatarheight.'px;" /></span>';
+                                        	} else {
+                                        		$msg_avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" /></span>';
+                                        	}
+                                        }
+                                        else
+                                        {
+                                        	$msg_avatar = '<span class="fb_avatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/nophoto.jpg" alt="" /></span>'; 
+                                        }
+                                    }
                                 }
 
                                 if ($fbConfig->showuserstats)
                                 {
-								    $kunena_acl =& JFactory::getACL();
+				    $kunena_acl =& JFactory::getACL();
                                     //user type determination
                                     $ugid = $userinfo->gid;
                                     $uIsMod = 0;
@@ -680,10 +711,77 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                         $msg_karmaplus  = CKunenaLink::GetKarmaLink('increase', $catid, $fmessage->id, $userinfo->userid, '<img src="'.(isset($fbIcons['karmaplus'])?(KUNENA_URLICONSPATH . $fbIcons['karmaplus']):(KUNENA_URLEMOTIONSPATH . "karmaplus.gif")).'" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" align="middle" />' );
                                     }
                                 }
+                                /*let's see if we should use Missus integration */
+                                if ($fbConfig->pm_component == "missus" && $userinfo->userid && $kunena_my->id)
+                                {
+                                    //we should offer the user a Missus link
+                                    //first get the username of the user to contact
+                                    $PMSName = $userinfo->username;
+                                    $msg_pms
+                                    = "<a href=\"" . JRoute::_('index.php?option=com_missus&amp;func=newmsg&amp;user=' . $userinfo->userid . '&amp;subject=' . _GEN_FORUM . ': ' . urlencode(utf8_encode($fmessage->subject))) . "\"><img src='";
 
-								/* PM integration */
-								$msg_pms = CKunenaPMS::showPMIcon($userinfo);
-                                
+                                    if ($fbIcons['pms']) {
+                                        $msg_pms .= KUNENA_URLICONSPATH . $fbIcons['pms'];
+                                    }
+                                    else {
+                                        $msg_pms .= KUNENA_URLICONSPATH  . $fbIcons['pms'];;
+                                    }
+
+                                    $msg_pms .= "' alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
+                                }
+
+                                /*let's see if we should use JIM integration */
+                                if ($fbConfig->pm_component == "jim" && $userinfo->userid && $kunena_my->id)
+                                {
+                                    //we should offer the user a JIM link
+                                    //first get the username of the user to contact
+                                    $PMSName = $userinfo->username;
+                                    $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_jim&amp;page=new&amp;id=' . $PMSName . '&title=' . $fmessage->subject) . "\"><img src='";
+
+                                    if ($fbIcons['pms']) {
+                                        $msg_pms .= KUNENA_URLICONSPATH . $fbIcons['pms'];
+                                    }
+                                    else {
+                                        $msg_pms .= KUNENA_URLICONSPATH  .  $fbIcons['pms'];;
+                                    }
+
+                                    $msg_pms .= "' alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
+                                }
+                                /*let's see if we should use uddeIM integration */
+                                if ($fbConfig->pm_component == "uddeim" && $userinfo->userid && $kunena_my->id)
+                                {
+                                    //we should offer the user a PMS link
+                                    //first get the username of the user to contact
+                                    $PMSName = $userinfo->username;
+                                    $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_uddeim&amp;task=new&recip=' . $userinfo->userid) . "\"><img src=\"";
+
+                                    if ($fbIcons['pms']) {
+                                        $msg_pms .= KUNENA_URLICONSPATH . $fbIcons['pms'];
+                                    }
+                                    else {
+                                        $msg_pms .= KUNENA_URLEMOTIONSPATH . "sendpm.gif";
+                                    }
+
+                                    $msg_pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
+                                }
+                                /*let's see if we should use myPMS2 integration */
+                                if ($fbConfig->pm_component == "pms" && $userinfo->userid && $kunena_my->id)
+                                {
+                                    //we should offer the user a PMS link
+                                    //first get the username of the user to contact
+                                    $PMSName = $userinfo->username;
+                                    $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_pms&amp;page=new&amp;id=' . $PMSName . '&title=' . $fmessage->subject) . "\"><img src=\"";
+
+                                    if ($fbIcons['pms']) {
+                                        $msg_pms .= KUNENA_URLICONSPATH . $fbIcons['pms'];
+                                    }
+                                    else {
+                                        $msg_pms .= KUNENA_URLEMOTIONSPATH . "sendpm.gif";
+                                    }
+
+                                    $msg_pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
+                                }
+
                                 // online - ofline status
                                 if ($userinfo->userid > 0)
                                 {
@@ -700,18 +798,133 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                         . KUNENA_URLICONSPATH . $fbIcons['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
                                     }
                                 }
-
-                                if ($userinfo->gid > 0)
+                                /* PM integration */
+                                if ($fbConfig->pm_component == "jomsocial" && $userinfo->userid && $kunena_my->id)
                                 {
-                                    $msg_prflink = $kunenaProfile->getProfileURL($userinfo->userid);
-                                	if ($fbIcons['userprofile']) {
-                                        $msg_profileicon = KUNENA_URLICONSPATH . $fbIcons['userprofile'];
+                                	$onclick = CMessaging::getPopup($userinfo->userid);
+                                	$msg_pms = '<a href="javascript:void(0)" onclick="'. $onclick . "\">";
+
+                                    if ($fbIcons['pms']) {
+                                        $msg_pms .= "<img src=\"".KUNENA_URLICONSPATH.$fbIcons['pms']."\" alt=\""._VIEW_PMS."\" border=\"0\" title=\""._VIEW_PMS."\" />";
+                                    }
+                                    else
+                                    {
+                                    	$msg_pms .= _VIEW_PMS;
+                                    }
+
+                                    $msg_pms .= "</a>";
+                                	//$msg_pms = '<a href="javascript:void(0)" onclick="'. $onclick .'">Send message</a>';
+                                }
+                                else if ($fbConfig->pm_component == "clexuspm" && $userinfo->userid && $kunena_my->id)
+                                {
+                                    //we should offer the user a PMS link
+                                    //first get the username of the user to contact
+                                    $PMSName = $userinfo->aid;
+                                    $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=new&amp;to=' . $userinfo->userid . '&title=' . $fmessage->subject) . "\"><img src=\"";
+
+                                    if ($fbIcons['pms']) {
+                                        $msg_pms .= KUNENA_URLICONSPATH . $fbIcons['pms'];
                                     }
                                     else {
-                                        $msg_profileicon = KUNENA_URLICONSPATH . "profile.gif";
+                                        $msg_pms .= KUNENA_JLIVEURL . "/components/com_mypms/images/icons/message_12px.gif";
                                     }
-                                	
-                                    $msg_profile = '<a href="' . $msg_prflink . '"><img src="' . $msg_profileicon . '" alt="' . _VIEW_PROFILE . '" border="0" title="' . _VIEW_PROFILE . '" /></a>';
+
+                                    $msg_pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
+                                    //mypms pro profile link
+                                    $msg_profile = "<a href=\"" . MyPMSTools::getProfileLink($userinfo->userid) . "\"><img src=\"";
+
+                                    if ($fbIcons['userprofile']) {
+                                        $msg_profile .= KUNENA_URLICONSPATH . $fbIcons['userprofile'];
+                                    }
+                                    else {
+                                        $msg_profile .= KUNENA_JLIVEURL . "/components/com_mypms/images/managecontact_icon.gif";
+                                    }
+
+                                    $msg_profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
+                                    //mypms add buddy link
+                                    $msg_buddy = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;user=' . $PMSName . '&amp;task=addbuddy') . "\"><img src=\"";
+
+                                    if ($fbIcons['pms2buddy']) {
+                                        $msg_buddy .= KUNENA_URLICONSPATH . $fbIcons['pms2buddy'];
+                                    }
+                                    else {
+                                        $msg_buddy .= KUNENA_JLIVEURL . "/components/com_mypms/images/messages/addbuddy.gif";
+                                    }
+
+                                    $msg_buddy .= "\" alt=\"" . _VIEW_ADDBUDDY . "\" border=\"0\" title=\"" . _VIEW_ADDBUDDY . "\" /></a>";
+                                    $kunena_db->setQuery("SELECT icq, ym, msn, aim, website, location FROM #__mypms_profiles WHERE user='{$PMSName}'");
+                                    $profileitems = $kunena_db->loadObjectList();
+                                    	check_dberror("Unable to load mypms profile.");
+
+                                    foreach ($profileitems as $profileitems)
+                                    {
+                                        if ($profileitems->aim)
+                                        $msg_aim = "<a href=\"aim:goim?screenname=" . str_replace(" ", "+", kunena_htmlspecialchars($profileitems->aim)) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "aim.png\" border=0 alt=\"\" /></a>";
+
+                                        if ($profileitems->icq)
+                                        $msg_icq = "<a href=\"http://www.icq.com/whitepages/wwp.php?uin=" . kunena_htmlspecialchars($profileitems->icq) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "icq.png\" border=0 alt=\"\" /></a>";
+
+                                        if ($profileitems->msn)
+                                        $msg_msn = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=showprofile&amp;user=' . $PMSName) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "msn.png\" border=0 alt=\"\" /></a>";
+
+                                        if ($profileitems->ym)
+                                        $msg_yahoo = "<a href=\"http://edit.yahoo.com/config/send_webmesg?.target=" . kunena_htmlspecialchars($profileitems->ym) . "&.src=pg\"><img src=\"http://opi.yahoo.com/online?u=" . kunena_htmlspecialchars($profileitems->ym) . "&m=g&t=0\" border=0 alt=\"\" /></a>";
+
+                                        if ($profileitems->location)
+                                        $msg_loc = kunena_htmlspecialchars($profileitems->location);
+                                    }
+
+                                    unset ($profileitems);
+                                }
+
+                                //Check if the Integration settings are on, and set the variables accordingly.
+                                if ($fbConfig->fb_profile == "cb")
+                                {
+                                    if ($fbConfig->fb_profile == 'cb' && $userinfo->userid > 0)
+                                    {
+                                        $msg_prflink = CKunenaCBProfile::getProfileURL($userinfo->userid);
+                                        $msg_profile = "<a href=\"" . $msg_prflink . "\">                                              <img src=\"";
+
+                                        if ($fbIcons['userprofile']) {
+                                            $msg_profile .= KUNENA_URLICONSPATH . $fbIcons['userprofile'];
+                                        }
+                                        else {
+                                            $msg_profile .= KUNENA_JLIVEURL . "/components/com_comprofiler/images/profiles.gif";
+                                        }
+
+                                        $msg_profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
+                                    }
+                                }
+                                else if ($fbConfig->fb_profile == "clexuspm")
+                                {
+                                    //mypms pro profile link
+                                    $msg_prflink = MyPMSTools::getProfileLink($userinfo->userid);
+                                    $msg_profile = "<a href=\"" . MyPMSTools::getProfileLink($userinfo->userid) . "\"><img src=\"";
+
+                                    if ($fbIcons['userprofile']) {
+                                        $msg_profile .= KUNENA_URLICONSPATH . $fbIcons['userprofile'];
+                                    }
+                                    else {
+                                        $msg_profile .= KUNENA_JLIVEURL . "/components/com_mypms/images/managecontact_icon.gif";
+                                    }
+
+                                    $msg_profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
+                                }
+                                else if ($userinfo->gid > 0)
+                                {
+                                    //Kunena Profile link.
+                                    $msg_prflink = JRoute::_(KUNENA_LIVEURLREL.'&amp;func=fbprofile&amp;task=showprf&amp;userid=' . $userinfo->userid);
+                                    $msg_profileicon = "<img src=\"";
+
+                                    if ($fbIcons['userprofile']) {
+                                        $msg_profileicon .= KUNENA_URLICONSPATH . $fbIcons['userprofile'];
+                                    }
+                                    else {
+                                        $msg_profileicon .= KUNENA_URLICONSPATH . "profile.gif";
+                                    }
+
+                                    $msg_profileicon .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" />";
+                                    $msg_profile = CKunenaLink::GetProfileLink($fbConfig, $userinfo->userid, $msg_profileicon);
                                 }
 
                                 // Begin: Additional Info //

@@ -20,10 +20,9 @@ $app =& JFactory::getApplication();
 $kunena_acl = &JFactory::getACL();
 $fbConfig =& CKunenaConfig::getInstance();
 
-if ($fbConfig->fb_profile != 'fb') {
-    $userid = JRequest::getVar('userid', null);
-	$kunenaProfile =& CKunenaProfile::getInstance();
-    $url = $kunenaProfile->getProfileURL($userid);
+if ($fbConfig->fb_profile == 'cb') {
+        $userid = JRequest::getVar('userid', null);
+	$url = CKunenaCBProfile::getProfileURL($userid);
 	header("HTTP/1.1 307 Temporary Redirect");
 	header("Location: " . htmlspecialchars_decode($url));
 	$app->close();
@@ -127,8 +126,38 @@ function showprf($userid, $page)
     {
         $Avatarname = $userinfo->username;
 
-		$kunenaProfile = CKunenaProfile::getInstance();
-		$msg_avatar = '<span class="fb_avatar">' . $kunenaProfile->showAvatar($userid, '', 0) . '</span>';
+        if ($fbConfig->avatar_src == "jomsocial")
+		{
+			// Get CUser object
+			$user =& CFactory::getUser($userid);
+		    $msg_avatar = '<span class="fb_avatar"><img src="' . $user->getAvatar() . '" alt="" /></span>';
+		}
+        else if ($fbConfig->avatar_src == "clexuspm") {
+            $msg_avatar = '<span class="fb_avatar"><img src="' . MyPMSTools::getAvatarLinkWithID($userid, "b") . '" alt="" /></span>';
+        }
+        else if ($fbConfig->avatar_src == "cb")
+        {
+            $kunenaProfile = CKunenaCBProfile::getInstance();
+			$msg_avatar = '<span class="fb_avatar">' . $kunenaProfile->showAvatar($userid, '', 0) . '</span>';
+        }
+        else
+        {
+        	$avatar = $userinfo->avatar;
+
+        	if ($avatar != '')
+        	{
+        		if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/l_' . $avatar))
+        		{
+        			$msg_avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '"  alt="" style="max-width: '.$fbConfig->avatarwidth.'px; max-height: '.$fbConfig->avatarheight.'px;" /></span>';
+				}
+				else
+				{
+					$msg_avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '"  alt="" /></span>';
+				}
+        	}
+
+        	else {$msg_avatar = '<span class="fb_avatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/nophoto.jpg"  alt="" /></span>'; }
+        }
     }
 
     if ($fbConfig->showuserstats)
@@ -332,6 +361,74 @@ function showprf($userid, $page)
             $msg_online = isset($fbIcons['offlineicon'])
                 ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
         }
+    }
+
+    /* ClexusPM integration */
+
+    if ($fbConfig->pm_component == "clexuspm")
+    {
+
+        //we should offer the user a PMS link
+
+        //first get the username of the user to contact
+
+        $PMSName = $userinfo->aid;
+        $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=new&amp;to=' . $userid . '' . $fmessage->subject) . "\"><img src=\"";
+
+        if ($fbIcons['pms']) {
+            $msg_pms .= KUNENA_URLICONSPATH . $fbIcons['pms'];
+        }
+        else {
+            $msg_pms .= KUNENA_JLIVEURL . "/components/com_mypms/images/icons/message_12px.gif";
+        }
+
+        $msg_pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
+        //mypms pro profile link
+        $msg_profile = "<a href=\"" . MyPMSTools::getProfileLink($userid) . "\"><img src=\"";
+
+        if ($fbIcons['userprofile']) {
+            $msg_profile .= KUNENA_URLICONSPATH . $fbIcons['userprofile'];
+        }
+        else {
+            $msg_profile .= KUNENA_JLIVEURL . "/components/com_mypms/images/managecontact_icon.gif";
+        }
+
+        $msg_profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
+        //mypms add buddy link
+        $msg_buddy = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;user=' . $PMSName . '&amp;task=addbuddy') . "\"><img src=\"";
+
+        if ($fbIcons['pms2buddy']) {
+            $msg_buddy .= KUNENA_URLICONSPATH . $fbIcons['pms2buddy'];
+        }
+        else {
+            $msg_buddy .= KUNENA_JLIVEURL . "/components/com_mypms/images/messages/addbuddy.gif";
+        }
+
+        $msg_buddy .= "\" alt=\"" . _VIEW_ADDBUDDY . "\" border=\"0\" title=\"" . _VIEW_ADDBUDDY . "\" /></a>";
+
+        $kunena_db->setQuery("SELECT icq, ym, msn, aim, website, location FROM #__mypms_profiles WHERE user='{$PMSName}'");
+        $profileitems = $kunena_db->loadObjectList();
+        	check_dberror("Unable to load mypms_profiles.");
+
+        foreach ($profileitems as $profileitems)
+        {
+            if ($profileitems->aim)
+                $msg_aim = "<a href=\"aim:goim?screenname=" . str_replace(" ", "+", $profileitems->aim) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "aim.png\" border=0 alt=\"\" /></a>";
+
+            if ($profileitems->icq)
+                $msg_icq = "<a href=\"http://www.icq.com/whitepages/wwp.php?uin=" . $profileitems->icq . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "icq.png\" border=0 alt=\"\" /></a>";
+
+            if ($profileitems->msn)
+                $msg_msn = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=showprofile&amp;user=' . $PMSName) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "msn.png\" border=0 alt=\"\" /></a>";
+
+            if ($profileitems->ym)
+                $msg_yahoo = "<a href=\"http://edit.yahoo.com/config/send_webmesg?.target=" . $profileitems->ym . "&.src=pg\"><img src=\"http://opi.yahoo.com/online?u=" . $profileitems->ym . "&m=g&t=0\" border=0 alt=\"\" /></a>";
+
+            if ($profileitems->location)
+                $msg_loc = $profileitems->location;
+        }
+
+        unset($profileitems);
     }
 
     $jr_username = $userinfo->name;

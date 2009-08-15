@@ -184,12 +184,16 @@ switch ($task) {
 		$newFileName = $kunena_my->id . "." . $avatarExt;
 		$imageType = array( 1 => 'GIF', 2 => 'JPG', 3 => 'PNG', 4 => 'SWF', 5 => 'PSD', 6 => 'BMP', 7 => 'TIFF', 8 => 'TIFF', 9 => 'JPC', 10 => 'JP2', 11 => 'JPX', 12 => 'JB2', 13 => 'SWC', 14 => 'IFF');
 
+		//move it to the proper location
+		//if (!move_uploaded_file($_FILES['avatar']['tmp_name'], KUNENA_PATH_UPLOADED .DS. "avatars/$newFileName"))
+		//echo _UPLOAD_ERROR_GENERAL;
+
 		//Filename Medium + proper path
-		$fileLocation = KUNENA_PATH_UPLOADED .DS. 'avatars' .DS. $newFileName;
+		$fileLocation = KUNENA_PATH_UPLOADED .DS. "avatars/$newFileName";
 		//Filename Small + proper path
-		$fileLocation_s = KUNENA_PATH_UPLOADED .DS. 'avatars' .DS. "s_$newFileName";
+		$fileLocation_s = KUNENA_PATH_UPLOADED .DS. "avatars/s_$newFileName";
 		//Filename Large + proper path
-		$fileLocation_l = KUNENA_PATH_UPLOADED .DS. 'avatars' .DS. "l_$newFileName";
+		$fileLocation_l = KUNENA_PATH_UPLOADED .DS. "avatars/l_$newFileName";
 		echo '<table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">';
 		echo '<tr><td><div><div><div><div><table><tbody><tr><td>';
 		//Avatar Size
@@ -362,24 +366,77 @@ if ($task == 'default')
                     <?php
                         echo _YOUR_AVATAR . "</td><td >";
 
-                        $kunenaProfile =& CKunenaProfile::getInstance();
-                        $avatar = $kunenaProfile->getAvatar($kunena_my->id);
-						$msg_avatar = $kunenaProfile->showAvatar($kunena_my->id, '', false);
-						echo $msg_avatar;
-						if ($avatar != "")
-						{
+                        if ($fbConfig->avatar_src == "clexuspm")
+                        {
                     ?>
+
+                            <img src = "<?php echo MyPMSTools::getAvatarLinkWithID($kunena_my->id)?>" alt="" />
+
+                            <br /> <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=upload&amp;Itemid='._CLEXUSPM_ITEMID);?>"><?php echo _SET_NEW_AVATAR; ?></a>
+
+                    <?php
+                        }
+                        elseif ($fbConfig->avatar_src == "cb")
+                        {
+                            $kunena_db->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='{$kunena_my->id}'");
+                            $avatar = $kunena_db->loadResult();
+                            check_dberror("Unable to load CB Avatar.");
+                            if ($avatar != "")
+                            {
+                    ?>
+
+                                <img src = "components/com_comprofiler/images/<?php echo $avatar;?>" alt="" />
+
+                                <br /> <a href = "<?php echo JRoute::_('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar');?>"><?php echo _SET_NEW_AVATAR; ?></a>
+
+                    <?php
+                            }
+                            else
+                            {
+                                echo _NON_SELECTED;
+                    ?>
+
+                            <br /> <a href = "<?php echo JRoute::_('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar');?>"><?php echo _SET_NEW_AVATAR; ?></a>
+
+                    <?php
+                            }
+                        }
+                        else
+                        {
+                            $kunena_db->setQuery("SELECT avatar FROM #__fb_users WHERE userid='{$kunena_my->id}'");
+                            $avatar = $kunena_db->loadResult();
+                            check_dberror("Unable to load Kunena Avatar.");
+                            if ($avatar != "")
+                            {
+								if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/l_' . $avatar)) {
+									$msg_avatar = '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: '.$fbConfig->avatarlargewidth.'px; max-height: '.$fbConfig->avatarlargeheight.'px;" />';
+								} else {
+									$msg_avatar = '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/l_' . $avatar . '" alt="" />';
+								}
+								echo $msg_avatar;
+                    ?>
+
                                 <br />
 
                                 <input type = "checkbox" value = "1" name = "deleteAvatar"/><i> <?php echo _USER_DELETEAV; ?></i>
-		                        <input type = "hidden" value = "<?php echo $avatar;?>" name = "avatar"/>
-					<?php 
-						}
-						else
-						{
-							echo '<br /><br />'._NON_SELECTED;
-						}
-					?>
+
+                    <?php
+                            }
+                            else
+                            {
+                                echo _NON_SELECTED;
+                    ?>
+
+                            <br /> <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&func=myprofile&do=avatar');?>"> <?php echo _SET_NEW_AVATAR; ?></a>
+
+                    <?php
+                            }
+                    ?>
+
+                        <input type = "hidden" value = "<?php echo $avatar;?>" name = "avatar"/>
+                    <?php
+                        }
+                    ?>
                 </td>
 
             </tr>
@@ -467,7 +524,7 @@ if ($fbConfig->allowavatarupload)
 
 <?php
         echo "<p align=\"center\">";
-        get_dirs(KUNENA_PATH_UPLOADED .DS. 'avatars' .DS. 'gallery', "categoryid", $gallery);
+        get_dirs(KUNENA_PATH_UPLOADED .DS. 'avatars/gallery', "categoryid", $gallery);
         echo '<input type="button" value="'. _KUNENA_GO .'" class="button" onclick="switch_avatar_category(jQuery(\'#avatar_category_select\').val())" />'."\n";
         echo "</p>";
         echo "<br />\n";
@@ -484,7 +541,7 @@ if ($fbConfig->allowavatarupload)
             $gallery2 = str_replace("%20", " ", $gallery) . "/";
         }
 
-        $avatar_gallery_path = KUNENA_PATH_UPLOADED .DS. 'avatars' .DS. 'gallery' . $gallery1;
+        $avatar_gallery_path = KUNENA_PATH_UPLOADED .DS. 'avatars/gallery' . $gallery1;
         $avatar_images = array ();
         $avatar_images = kn_myprofile_display_avatar_gallery($avatar_gallery_path);
 
@@ -492,6 +549,7 @@ if ($fbConfig->allowavatarupload)
         {
             $j = $i + 1;
             echo '<td>';
+            //echo '<img src="'.$avatar_gallery_path .DS. $avatar_images[$i].'">';
             echo '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/gallery/' . $gallery2 . $avatar_images[$i] . '" alt="" />';
             echo '<input type="radio" name="newAvatar" value="gallery/' . $gallery2 . $avatar_images[$i] . '"/>';
             echo "</td>\n";

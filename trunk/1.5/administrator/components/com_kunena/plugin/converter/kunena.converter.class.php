@@ -41,7 +41,7 @@ class fb_Converter {
 	 */
 	function doConversion() {
 		$kunena_db = &JFactory::getDBO();
-		require_once( KUNENA_ROOT_PATH .DS. 'includes' .DS. 'domit' .DS. 'xml_domit_lite_include.php' );
+		require_once( KUNENA_ROOT_PATH .DS. 'includes/domit/xml_domit_lite_include.php' );
 		if(!$this->silent) {
 ?>
 			<script language=JavaScript>

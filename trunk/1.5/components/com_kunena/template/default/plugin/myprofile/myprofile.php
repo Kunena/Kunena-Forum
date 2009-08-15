@@ -39,6 +39,22 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
     //Get userinfo needed later on, this limits the amount of queries
     $userinfo = new CKunenaUserprofile();
 
+    //use ClexusPM avatar if configured
+    if ($fbConfig->avatar_src == "clexuspm")
+    {
+        $kunena_db->setQuery("SELECT picture FROM #__mypms_profiles WHERE userid='{$kunena_my->id}");
+        $avatar = $kunena_db->loadResult();
+    }
+    elseif ($fbConfig->avatar_src == "cb")
+    {
+        $kunena_db->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='{$kunena_my->id}'");
+        $avatar = $kunena_db->loadResult();
+    }
+    else
+    {
+        $avatar = $fbavatar;
+    }
+
     //user type determination
     $ugid = $juserinfo->gid;
     $uIsMod = 0;
@@ -148,7 +164,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                 case "avatar":
                     // B: Avatar
-                    if ($fbConfig->fb_profile == 'fb')
+                    if ($fbConfig->fb_profile != 'cb' && $fbConfig->fb_profile != 'jomsocial')
                     {
                         if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar_upload.php'))
                         {
@@ -217,7 +233,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     $ulists["gender"] = JHTML::_('select.genericlist',  $genders, 'gender', 'class="inputbox"', 'value', 'text', $userinfo->gender );
 
 
-                    if ($fbConfig->fb_profile == 'fb')
+                    if ($fbConfig->fb_profile != 'cb' && $fbConfig->fb_profile != 'jomSocial')
                     {
                         include (KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 
@@ -393,10 +409,10 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 						$app->enqueueMessage(_USER_UNSUBSCRIBE_YES);
                     }
                     
-                    if ($fbConfig->fb_profile != 'fb')
+                    if ($fbConfig->fb_profile == 'cb')
                     {
-                    	$kunenaProfile =& CKunenaProfile::getInstance();
-						$app->redirect($kunenaProfile->getForumTabURL());
+						$forumtab_url = CKunenaCBProfile::getForumTabURL();
+						$app->redirect(JRoute::_($forumtab_url));
                     }
                     else
                     {
@@ -417,9 +433,10 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 							$app->enqueueMessage(_USER_UNSUBSCRIBE_YES);
 						}
 
-						if ($fbConfig->fb_profile != 'fb') {
-                    		$kunenaProfile =& CKunenaProfile::getInstance();
-							$app->redirect($kunenaProfile->getForumTabURL());
+						if ($fbConfig->fb_profile == 'cb') {
+							$forumtab_url = CKunenaCBProfile::getForumTabURL();
+							$app->redirect(JRoute::_($forumtab_url));
+
 						}
 						else {
 							$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub'));
@@ -448,10 +465,10 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     	$app->enqueueMessage(_USER_UNFAVORITE_YES);
                     }
 
-                    if ($fbConfig->fb_profile != 'fb')
+                    if ($fbConfig->fb_profile == 'cb')
                     {
-                    	$kunenaProfile =& CKunenaProfile::getInstance();
-						$app->redirect($kunenaProfile->getForumTabURL());
+						$forumtab_url = CKunenaCBProfile::getForumTabURL();
+						$app->redirect(JRoute::_($forumtab_url));
                     }
                     else
                     {
@@ -471,9 +488,9 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 							$app->enqueueMessage(_USER_UNFAVORITE_YES);
 						}
 
-						if ($fbConfig->fb_profile != 'fb') {
-                    		$kunenaProfile =& CKunenaProfile::getInstance();
-							$app->redirect($kunenaProfile->getForumTabURL());
+						if ($fbConfig->fb_profile == 'cb') {
+							$forumtab_url = CKunenaCBProfile::getForumTabURL();
+							$app->redirect(JRoute::_($forumtab_url));
 						}
 						else {
 							$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav'));

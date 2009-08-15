@@ -210,13 +210,13 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 
                             case '1':
                                 echo "<td  class=\"td-3 fbm\"  align=\"center\"  >";
-								echo CKunenaLink::GetProfileLink($fbConfig, $row->id, $row->username);
+				echo CKunenaLink::GetProfileLink($fbConfig, $row->id, $row->username);
                                 echo "</td>";
                                 break;
 
                             case '2':
                                 echo "<td  class=\"td-3 fbm\"  align=\"center\"  >";
-								echo CKunenaLink::GetProfileLink($fbConfig, $row->id, $row->name);
+				echo CKunenaLink::GetProfileLink($fbConfig, $row->id, $row->name);
                                 echo "</td>";
                                 break;
                         }

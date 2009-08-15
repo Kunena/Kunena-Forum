@@ -113,12 +113,16 @@ if (in_array($catid, $allow_forum))
     							t.message AS messagetext,
     							m.mesid AS attachmesid,
     							(f.thread>0) AS myfavorite,
+    							u.avatar,
     							MAX(b.time) AS lastpost
     						FROM  #__fb_messages  AS a
     							JOIN #__fb_messages_text AS t ON a.thread = t.mesid
     							LEFT  JOIN #__fb_messages AS b ON b.thread = a.thread
     							LEFT  JOIN #__fb_attachments AS m ON m.mesid = a.id
     							LEFT  JOIN #__fb_favorites AS f ON  f.thread = a.id && f.userid='{$kunena_my->id}'
+        						" .(($fbConfig->avatar_src == "cb")?
+	                    		"LEFT JOIN #__comprofiler AS u ON u.user_id = a.userid ":
+	                    		"LEFT JOIN #__fb_users AS u ON u.userid = a.userid ")."
     						WHERE a.parent =  '0'
     						AND a.catid = '{$catid}'
     						AND a.hold = '0'
@@ -159,7 +163,11 @@ if (in_array($catid, $allow_forum))
 	}
 	unset($favlist, $fthread);
 
-        $kunena_db->setQuery("SELECT a.* FROM #__fb_messages AS a WHERE a.thread IN ('{$idstr}') AND a.id NOT IN ('{$idstr}') AND a.hold='0'");
+        $kunena_db->setQuery("SELECT a.*, u.avatar FROM #__fb_messages AS a
+        						" .(($fbConfig->avatar_src == "cb")?
+	                    		"LEFT JOIN #__comprofiler AS u ON u.user_id = a.userid ":
+	                    		"LEFT JOIN #__fb_users AS u ON u.userid = a.userid ")
+        						."WHERE a.thread IN ('{$idstr}') AND a.id NOT IN ('{$idstr}') AND a.hold='0'");
         $messagelist = $kunena_db->loadObjectList();
         	check_dberror("Unable to load messages.");
 

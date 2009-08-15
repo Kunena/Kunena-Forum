@@ -18,10 +18,11 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
+require_once (KUNENA_PATH_LIB . DS . 'kunena.debug.php');
 
 $app =& JFactory::getApplication();
-require_once (KUNENA_PATH_LIB .DS. 'kunena.debug.php');
-require_once (KUNENA_PATH_LIB .DS. 'kunena.user.class.php');
+require_once (JPATH_ROOT . '/components/com_kunena/lib/kunena.debug.php');
+require_once (JPATH_ROOT . '/components/com_kunena/lib/kunena.user.class.php');
 
 class CKunenaTables
 {

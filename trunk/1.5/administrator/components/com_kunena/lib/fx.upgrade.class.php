@@ -118,7 +118,7 @@ class fx_Upgrade {
 	 * Main upgrade function. Processes XML file
 	 */
 	function doUpgrade() {
-		require_once( KUNENA_ROOT_PATH .DS. 'includes' .DS. 'domit' .DS. 'xml_domit_lite_include.php' );
+		require_once( KUNENA_ROOT_PATH .DS. 'includes/domit/xml_domit_lite_include.php' );
 		if(!$this->silent) {
 			?>
 			<script language=JavaScript>
@@ -150,7 +150,7 @@ class fx_Upgrade {
 			<?php
 		}
 
-		$componentBaseDir = KUNENA_ROOT_PATH_ADMIN .DS. 'components' .DS;
+		$componentBaseDir = KUNENA_ROOT_PATH_ADMIN .DS. 'components/';
 		$this->_upgradeDir = $componentBaseDir . $this->component .DS . $this->subdir;
 		$versionTableNoPrefix = $this->versionTablePrefix . "version";
 

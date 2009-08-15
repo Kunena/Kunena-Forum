@@ -30,26 +30,6 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.5.5
-
-4-Aug-2009 Matias
-# [#17484] Administrator: Fix broken smiley / rank images in Edit Smilies / Rank Management
-+ [#17482] Add basic support for GroupJive permission handling
-
-23-July-2009 fxstein
-+ [#17321] Initial JomSocial Activity Stream Prototype
-
-22-July-2009 fxstein
-^ [#17303] Update version info to 1.5.5
-
-21-July-2009 fxstein
-# [#17184] jomSocial profile integration bug defaults back to Kunena
-^ [#17184] Better compatibility with jquery loads. Test if already loaded by JomSocial.
-
-11-July-2009 Matias
-^ [#17183] Finish integration API and make templates to use it
-^ [#17184] Convert JomSocial integration to implement the new API
-
 Kunena 1.5.4
 
 10-July-2009 Matias
@@ -58,10 +38,6 @@ Kunena 1.5.4
 
 8-July-2009 Matias
 * [#17139] XSS vulnerability in BBCode parser
-
-8-July-2009 Matias
-# Remove ClexusPM integration
-# Update JomSocial integration to the same level as CB
 
 7-July-2009 fxstein
 ^ [#17127] Update backend error messages for failed installs and add link to wiki

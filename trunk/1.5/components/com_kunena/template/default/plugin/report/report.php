@@ -174,6 +174,12 @@ function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
 
             break;
 
+        //Clexus PM
+        case 'clexuspm':
+            SendClexusPM($reporter, $subject, $message, $msglink, $mods, $admins);
+
+            break;
+
         //uddeIM
         case 'uddeim':
             SendUddeIM();
@@ -198,7 +204,7 @@ function ReportForm($id, $catid) {
     $fbConfig =& CKunenaConfig::getInstance();
     $kunena_my = &JFactory::getUser();
 
-    $redirect = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $id) . '#' . $id;
+    $redirect = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $id . '&amp;Itemid=' . KUNENA_COMPONENT_ITEMID) . '#' . $id;
 
     //$redirect = JRoute::_($redirect);
     if (!$kunena_my->id) {
@@ -274,4 +280,20 @@ function ReportForm($id, $catid) {
 <?php
     }
 
+function SendClexusPM($reporter, $subject, $message, $msglink, $mods, $admins) {
+    $kunena_db = &JFactory::getDBO();
+    $time = JHTML::_('date', CKunenaTools::fbGetInternalTime(), '%Y-%m-%d %H:%M:%S');
+
+    foreach ($admins as $admin) {
+        $kunena_db->setQuery("INSERT INTO #__mypms" . "\n ( `userid` , `whofrom` , `time` , `readstate` , `subject` , `message` , `owner` , `folder` , `sent_id` , `replyid` , `ip` , `alert` , `flag` , `pm_notify` , `email_notify` )"
+                                . "\n VALUES ('$admin->id', '$reporter', '$time', '0', '$subject', '$message', '$admin->id', NULL , '0', '0', NULL , '0', '0', '0', '1'");
+        $kunena_db->query();
+        }
+
+    foreach ($mods as $mod) {
+        $kunena_db->setQuery("INSERT INTO #__mypms" . "\n ( `userid` , `whofrom` , `time` , `readstate` , `subject` , `message` , `owner` , `folder` , `sent_id` , `replyid` , `ip` , `alert` , `flag` , `pm_notify` , `email_notify` )"
+                                . "\n VALUES ('$mod->id', '$reporter', '$time', '0', '$subject', '$message', '$mod->id', NULL , '0', '0', NULL , '0', '0', '0', '1'");
+        $kunena_db->query();
+        }
+    }
 ?>

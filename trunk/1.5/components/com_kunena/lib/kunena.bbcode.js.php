@@ -174,7 +174,7 @@ function bbfontstyle(bbopen, bbclose) {
 			document.selection.createRange().text = bbopen + theSelection + bbclose;
 			document.postform.message.focus();
 			theSelection = '';
-			if (document.postform.previewspeicher.value == "preview") {fbGetPreview(document.postform.message.value,<?php echo getKunenaItemid(); ?>);}
+			if (document.postform.previewspeicher.value == "preview") {fbGetPreview(document.postform.message.value,<?php echo KUNENA_COMPONENT_ITEMID?>);}
 			return;
 		}
   }
@@ -184,7 +184,7 @@ function bbfontstyle(bbopen, bbclose) {
 		mozWrap(document.postform.message, bbopen, bbclose);
 		document.postform.message.focus();
 		theSelection = '';
-			if (document.postform.previewspeicher.value == "preview") {fbGetPreview(document.postform.message.value,<?php echo getKunenaItemid(); ?>);}
+			if (document.postform.previewspeicher.value == "preview") {fbGetPreview(document.postform.message.value,<?php echo KUNENA_COMPONENT_ITEMID?>);}
 		return;
 	}
 	//The new position for the cursor after adding the bbcode
@@ -211,7 +211,7 @@ function bbfontstyle(bbopen, bbclose) {
 	}
 
 	txtarea.focus();
-			if (document.postform.previewspeicher.value == "preview") {fbGetPreview(document.postform.message.value,<?php echo getKunenaItemid(); ?>);}
+			if (document.postform.previewspeicher.value == "preview") {fbGetPreview(document.postform.message.value,<?php echo KUNENA_COMPONENT_ITEMID?>);}
 	return;
 }
 

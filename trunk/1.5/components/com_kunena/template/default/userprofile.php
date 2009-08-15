@@ -40,11 +40,28 @@ if ($kunena_my->id)
         $signature = $user->signature;
         $username = $user->name;
         $moderator = $user->moderator;
+        $fbavatar = $user->avatar;
         $ordering = $user->ordering;
 
-		$avatar = $kunenaProfile->showAvatar($userinfo->userid, '', false);
         list($avWidth, $avHeight) = @getimagesize($avatar);
-		
+
+        //use integration avatar if configured
+        if ($fbConfig->avatar_src == "pmspro")
+        {
+            $kunena_db->setQuery("SELECT picture FROM #__mypms_profiles WHERE name='{$username}'");
+            $avatar = $kunena_db->loadResult();
+        }
+        elseif ($fbConfig->avatar_src == "cb")
+        {
+        	$kunena_db->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='{$kunena_my->id}'");
+        	$avatar = $kunena_db->loadResult();
+        		check_dberror("Unable to load CB avatar.");
+        }
+        else
+        {
+        	$avatar = $fbavatar;
+        }
+
         //get all subscriptions for this user
         $kunena_db->setQuery("SELECT thread FROM #__fb_subscriptions WHERE userid='{$kunena_my->id}'");
         $subslist = $kunena_db->loadObjectList();
@@ -231,7 +248,17 @@ if ($kunena_my->id)
                                 <?php
                                     echo _YOUR_AVATAR . "</td><td class=\"td-2\">";
 
-                                    if ($fbConfig->avatar_src == "cb")
+                                    if ($fbConfig->avatar_src == "clexuspm")
+                                    {
+                                ?>
+
+                                        <img src = "<?php echo MyPMSTools::getAvatarLinkWithID($kunena_my->id)?>" alt="" />
+
+                                        <br/> <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=upload&amp;Itemid='._CLEXUSPM_ITEMID);?>"><?php echo _SET_NEW_AVATAR; ?></a>
+
+                                <?php
+                                    }
+                                    elseif ($fbConfig->avatar_src == "cb")
                                     {
                                         if ($avatar != "")
                                         {
@@ -550,9 +577,14 @@ if ($kunena_my->id)
             echo _USER_UNSUBSCRIBE_YES . ".<br /><br />";
         }
 
-        $kunenaProfile =& CKunenaProfile::getInstance();
-        echo _USER_RETURN_A . ' <a href="'.$kunenaProfile->getForumTabURL().'">' . _USER_RETURN_B . "</a><br /><br />";
-	    echo CKunenaLink::GetAutoRedirectHTML($kunenaProfile->getForumTabURL(), 3500);
+        if ($fbConfig->fb_profile == 'cb') {
+            echo _USER_RETURN_A . ' <a href="'.CKunenaCBProfile::getForumTabURL().'">' . _USER_RETURN_B . "</a><br /><br />";
+	    echo CKunenaLink::GetAutoRedirectHTML(CKunenaCBProfile::getForumTabURL(), 3500);
+        }
+        else {
+            echo _USER_RETURN_A . " <a href=\"". JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show')."\">" . _USER_RETURN_B . "</a><br /><br />";
+	    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show'), 3500);
+        }
     }
     else if ($do == "unfavorite")
     { //ergo, ergo delete
@@ -565,9 +597,14 @@ if ($kunena_my->id)
             echo _USER_UNFAVORITE_YES . ".<br /><br />";
         }
 
-        $kunenaProfile =& CKunenaProfile::getInstance();
-        echo _USER_RETURN_A . ' <a href="'.$kunenaProfile->getForumTabURL().'">' . _USER_RETURN_B . "</a><br /><br />";
-	    echo CKunenaLink::GetAutoRedirectHTML($kunenaProfile->getForumTabURL(), 3500);
+        if ($fbConfig->fb_profile == 'cb') {
+            echo _USER_RETURN_A . ' <a href="'.CKunenaCBProfile::getForumTabURL().'">' . _USER_RETURN_B . "</a><br /><br />";
+	    echo CKunenaLink::GetAutoRedirectHTML(CKunenaCBProfile::getForumTabURL(), 3500);
+        }
+        else {
+            echo _USER_RETURN_A . " <a href=\"index.php?option=com_kunena&amp;Itemid=$Itemid&amp;func=userprofile&amp;do=show\">" . _USER_RETURN_B . "</a><br /><br />";
+	    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userprofile&amp;do=show'), 3500);
+        }
     }
     else
     { //you got me there... don't know what to $do

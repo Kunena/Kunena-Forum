@@ -81,7 +81,7 @@ $app =& JFactory::getApplication();
 
 // Image does not work if there are included files (extra characters), so we will do it now:
 if ($func == "showcaptcha") {
-   include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin' .DS. 'captcha' .DS. 'randomImage.php');
+   include (JPATH_ROOT . '/components/com_kunena/template/default/plugin/captcha/randomImage.php');
    $app->close();
 }
 
@@ -94,11 +94,11 @@ require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 // Get CKunanaUser and CKunenaUsers
 require_once (KUNENA_PATH_LIB .DS. "kunena.user.class.php");
 
-global $fbConfig;
+global $fbConfig, $kunenaProfile;
 
 // Get data about the current user - its ok to not have a userid = guest
 $kunena_my = &JFactory::getUser();
-$KunenaUser =& new CKunenaUser($kunena_my->id);
+$KunenaUser = new CKunenaUser($kunena_my->id);
 // Load configuration and personal settings for current user
 $fbConfig =& CKunenaConfig::getInstance();
 
@@ -183,6 +183,13 @@ if ($func == 'fb_pdf')
     $app->close();
 }
 
+// Include Clexus PM class file
+if ($fbConfig->pm_component == "clexuspm")
+{
+    require_once (KUNENA_ROOT_PATH .DS. 'components/com_mypms/class.mypms.php');
+    $ClexusPMconfig = new ClexusPMConfig();
+}
+
 //time format
 include_once (KUNENA_PATH_LIB .DS. 'kunena.timeformat.class.php');
 
@@ -224,8 +231,7 @@ $document =& JFactory::getDocument();
 // inline jscript with image location
 $document->addScriptDeclaration('jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";');
 
-$kunenaProfile =& CKunenaProfile::getInstance();
-if ($fbConfig->fb_profile == 'cb' && $kunenaProfile->useProfileIntegration())
+if (is_object($kunenaProfile) && $kunenaProfile->useProfileIntegration())
 {
 	if (defined('KUNENA_COREJSURL'))
 	{
@@ -237,7 +243,7 @@ if ($fbConfig->fb_profile == 'cb' && $kunenaProfile->useProfileIntegration())
 else
 {
 	// Add required header tags
-	if (defined('KUNENA_JQURL') && !defined('J_JQUERY_LOADED') && !defined('C_ASSET_JQUERY'))
+	if (defined('KUNENA_JQURL') && !defined('J_JQUERY_LOADED'))
 	{
 		define('J_JQUERY_LOADED', 1);
 		if (!defined('C_ASSET_JQUERY')) define('C_ASSET_JQUERY', 1);
@@ -251,32 +257,32 @@ else
 }
 
 if ($fbConfig->joomlastyle < 1) {
-	if (file_exists(KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum.css'))
+	if (file_exists(KUNENA_JTEMPLATEPATH.'/css/kunena.forum.css')) 
 	{
 		$document->addStyleSheet(KUNENA_JTEMPLATEURL . '/css/kunena.forum.css');
 	}
-	else
+	else 
 	{
 		$document->addStyleSheet(KUNENA_TMPLTCSSURL);
 	}
 }
-else
+else 
 {
 	$document->addStyleSheet(KUNENA_DIRECTURL . '/template/default/joomla.css');
 }
 } // no_html == 0
 
 // WHOIS ONLINE IN FORUM
-if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'who' .DS. 'who.class.php')) {
-    include (KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'who' .DS. 'who.class.php');
+if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/who/who.class.php')) {
+    include (KUNENA_ABSTMPLTPATH . '/plugin/who/who.class.php');
     }
 else {
-    include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin' .DS. 'who' .DS. 'who.class.php');
+    include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/who/who.class.php');
     }
 
 // include required libraries
-if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'fb_layout.php')) {
-    require_once (KUNENA_ABSTMPLTPATH .DS. 'fb_layout.php');
+if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_layout.php')) {
+    require_once (KUNENA_ABSTMPLTPATH . '/fb_layout.php');
     }
 else {
     require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_layout.php');
@@ -284,7 +290,7 @@ else {
 
 require_once (KUNENA_PATH_LIB .DS. 'kunena.permissions.php');
 require_once (KUNENA_PATH_LIB .DS. 'kunena.category.class.php');
-require_once (JPATH_BASE .DS. 'libraries/joomla/template/template.php');
+require_once (JPATH_BASE.'/libraries/joomla/template/template.php');
 
 if ($catid != '') {
     $thisCat = new jbCategory($kunena_db, $catid);
@@ -325,7 +331,7 @@ if (file_exists(KUNENA_ABSTMPLTPATH . '/icons.php'))
 }
 else
 {
-    include_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'icons.php');
+    include_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS.  'icons.php');
 }
 
 require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
@@ -397,11 +403,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
 	// no access to categories?
 	if (!$fbSession->allowed) $fbSession->allowed = '0';
-	
-	// Integration with GroupJive, Jomsocial:
-	$params = array($kunena_my->id, &$fbSession->allowed);
-	$kunenaProfile->trigger('getAllowedForumsRead', $params);
-	
+
 //Disabled threaded view option for Kunena
 //    //Initial:: determining what kind of view to use... from profile, cookie or default settings.
 //    //pseudo: if (no view is set and the cookie_view is not set)
@@ -492,81 +494,81 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
     $KunenaTemplate->displayParsedTemplate('kunena-header');
 
     //BEGIN: PROFILEBOX
-    if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'profilebox' .DS. 'profilebox.php')) {
-        include (KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'profilebox' .DS. 'profilebox.php');
+    if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/profilebox/profilebox.php')) {
+        include (KUNENA_ABSTMPLTPATH . '/plugin/profilebox/profilebox.php');
         }
     else {
-        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin' .DS. 'profilebox' .DS. 'profilebox.php');
+        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/profilebox/profilebox.php');
         }
     //FINISH: PROFILEBOX
 
     switch ($func)
     {
         case 'who':
-            if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'who' .DS. 'who.php')) {
-                include (KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'who' .DS. 'who.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/who/who.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/who/who.php');
                 }
             else {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin' .DS. 'who' .DS. 'who.php');
+                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/who/who.php');
                 }
 
             break;
 
         #########################################################################################
         case 'announcement':
-            if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'announcement' .DS. 'announcement.php')) {
-                include (KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'announcement' .DS. 'announcement.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcement.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcement.php');
                 }
             else {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin' .DS. 'announcement' .DS. 'announcement.php');
+                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/announcement/announcement.php');
                 }
 
             break;
 
         #########################################################################################
         case 'stats':
-            if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'stats' .DS. 'stats.class.php')) {
-                include (KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'stats' .DS. 'stats.class.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php');
                 }
             else {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin' .DS. 'stats' .DS. 'stats.class.php');
+                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/stats.class.php');
                 }
 
-            if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'stats' .DS. 'stats.php')) {
-                include (KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'stats' .DS. 'stats.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.php');
                 }
             else {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin' .DS. 'stats' .DS. 'stats.php');
+                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/stats.php');
                 }
 
             break;
 
         #########################################################################################
         case 'fbprofile':
-            if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'fbprofile' .DS. 'fbprofile.php')) {
-                include (KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'fbprofile' .DS. 'fbprofile.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/fbprofile.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/fbprofile.php');
                 }
             else {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin' .DS. 'fbprofile' .DS. 'fbprofile.php');
+                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/fbprofile/fbprofile.php');
                 }
 
             break;
 
         #########################################################################################
         case 'userlist':
-            if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'userlist' .DS. 'userlist.php')) {
-                include (KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'userlist' .DS. 'userlist.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/userlist/userlist.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/userlist/userlist.php');
                 }
             else {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin' .DS. 'userlist' .DS. 'userlist.php');
+                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/userlist/userlist.php');
                 }
 
             break;
 
         #########################################################################################
         case 'post':
-            if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'post.php')) {
-                include (KUNENA_ABSTMPLTPATH .DS. 'post.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/post.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/post.php');
                 }
             else {
                 include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'post.php');
@@ -576,8 +578,8 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
         #########################################################################################
         case 'view':
-            if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'view.php')) {
-                include (KUNENA_ABSTMPLTPATH .DS. 'view.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/view.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/view.php');
                 }
             else {
                 include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'view.php');
@@ -587,8 +589,8 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
         #########################################################################################
         case 'faq':
-            if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'faq.php')) {
-                include (KUNENA_ABSTMPLTPATH .DS. 'faq.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/faq.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/faq.php');
                 }
             else {
                 include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'faq.php');
@@ -598,8 +600,8 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
         #########################################################################################
         case 'showcat':
-            if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'showcat.php')) {
-                include (KUNENA_ABSTMPLTPATH .DS. 'showcat.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/showcat.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/showcat.php');
                 }
             else {
                 include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'showcat.php');
@@ -609,8 +611,8 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
         #########################################################################################
         case 'listcat':
-            if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'listcat.php')) {
-                include (KUNENA_ABSTMPLTPATH .DS. 'listcat.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/listcat.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/listcat.php');
                 }
             else {
                 include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'listcat.php');
@@ -620,8 +622,8 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
         #########################################################################################
         case 'review':
-            if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'moderate_messages.php')) {
-                include (KUNENA_ABSTMPLTPATH .DS. 'moderate_messages.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/moderate_messages.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/moderate_messages.php');
                 }
             else {
                 include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'moderate_messages.php');
@@ -636,24 +638,35 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
             break;
 
         #########################################################################################
+
         case 'userprofile':
-        case 'myprofile':
-            if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'myprofile' .DS. 'myprofile.php')) {
-                include (KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'myprofile' .DS. 'myprofile.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php');
                 }
             else {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin' .DS. 'myprofile' .DS. 'myprofile.php');
+                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile.php');
+                }
+
+            break;
+
+        #########################################################################################
+        case 'myprofile':
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php');
+                }
+            else {
+                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/myprofile/myprofile.php');
                 }
 
             break;
 
         #########################################################################################
         case 'report':
-            if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'report' .DS. 'report.php')) {
-                include (KUNENA_ABSTMPLTPATH .DS. 'plugin' .DS. 'report' .DS. 'report.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/report/report.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/report/report.php');
                 }
             else {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin' .DS. 'report' .DS. 'report.php');
+                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/report/report.php');
                 }
 
             break;
@@ -661,8 +674,8 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
         #########################################################################################
         case 'latest':
         case 'mylatest':
-            if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'latestx.php')) {
-                include (KUNENA_ABSTMPLTPATH .DS. 'latestx.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/latestx.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/latestx.php');
                 }
             else {
                 include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'latestx.php');
@@ -750,7 +763,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
                     }
 
                 // check that template exists in case it was deleted
-                if (file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_change_template .DS. 'kunena.forum.css'))
+                if (file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_change_template . '/kunena.forum.css'))
                 {
                     $lifetime = 60 * 10;
                     $fb_current_template = $fb_change_template;
@@ -771,7 +784,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
                     }
 
                 // check that template exists in case it was deleted
-                if (file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_change_img_template .DS. 'kunena.forum.css'))
+                if (file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_change_img_template . '/kunena.forum.css'))
                 {
                     $lifetime = 60 * 10;
                     $fb_current_img_template = $fb_change_img_template;
@@ -793,8 +806,8 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
         #########################################################################################
         default:
-            if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'listcat.php')) {
-                include (KUNENA_ABSTMPLTPATH .DS. 'listcat.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/listcat.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/listcat.php');
                 }
             else {
                 include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'listcat.php');
@@ -835,7 +848,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
     $KunenaTemplate->displayParsedTemplate('kunena-footer');
 } //else
 
-$kunenaProfile->close();
+if (is_object($kunenaProfile)) $kunenaProfile->close();
 
 // Just for debugging and performance analysis
 $mtime = explode(" ", microtime());

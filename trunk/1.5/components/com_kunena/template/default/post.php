@@ -122,8 +122,8 @@ $catName = $objCatInfo->name;
     <tr>
         <td>
             <?php
-            if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'fb_pathway.php')) {
-                require_once (KUNENA_ABSTMPLTPATH .DS. 'fb_pathway.php');
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_pathway.php')) {
+                require_once (KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
             }
             else {
                 require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_pathway.php');
@@ -243,71 +243,13 @@ $catName = $objCatInfo->name;
 
                                         $kunena_db->setQuery("INSERT INTO #__fb_messages_text (mesid,message) VALUES('$pid',".$kunena_db->quote($message).")");
                                         $kunena_db->query();
-										/*    ORIGINAL CODE
-// TODO: Remove                                        if ($thread == 0)
+                                        
+                                        if ($thread == 0)
                                         {
                                             //if thread was zero, we now know to which id it belongs, so we can determine the thread and update it
                                             $kunena_db->setQuery("UPDATE #__fb_messages SET thread='$pid' WHERE id='$pid'");
                                             $kunena_db->query();
                                         }
-										*/
-// TODO: Move to integration class										// Modify for activity stream
-										if ($thread == 0) {
-                                            //if thread was zero, we now know to which id it belongs, so we can determine the thread and update it
-                                            $kunena_db->setQuery("UPDATE #__fb_messages SET thread='$pid' WHERE id='$pid'");
-                                            $kunena_db->query();
-
-											// JomSocial Rule - give points for new thread
-											$JomSocialCheck = JPATH_BASE . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'userpoints.php';
-											if ( file_exists($JomSocialCheck)) {
-											include_once( JPATH_BASE . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'userpoints.php');
-																			 CuserPoints::assignPoint('com_kunena.thread.new');
-											}
-											// End JomSocial Rule
-
-											//activity stream  - new post
-
-											$JSPostLink = CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $pid, $page, $anker='');
-
-											$act = new stdClass();
-											$act->cmd    = 'wall.write';
-											$act->actor    = $kunena_my->id;
-											$act->target    = 0; // no target
-											$act->title    = JText::_('{actor} created a new topic <a href="'.$JSPostLink.'">'.stripslashes($subject).'</a> in the forums.');
-											$act->content    = '';
-											$act->app    = 'wall';
-											$act->cid    = 0;
-
-											CFactory::load('libraries', 'activities');
-											CActivityStream::add($act);
-
-											} else {
-
-											// JomSocial Rule - give points for reply to thread
-											$JomSocialCheck = JPATH_BASE . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'userpoints.php';
-											if ( file_exists($JomSocialCheck)) {
-											include_once( JPATH_BASE . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'userpoints.php');
-																			 CuserPoints::assignPoint('com_kunena.thread.reply');
-											}
-											// End JomSocial Rule
-
-											//activity stream - reply post
-
-											$JSPostLink = CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $pid, $page, $anker='');
-
-											$act = new stdClass();
-											$act->cmd    = 'wall.write';
-											$act->actor    = $kunena_my->id;
-											$act->target    = 0; // no target
-											$act->title    = JText::_('{actor} replied to the topic <a href="'.$JSPostLink.'">'.stripslashes($subject).'</a> in the forums.');
-											$act->content    = '';
-											$act->app    = 'wall';
-											$act->cid    = 0;
-
-											CFactory::load('libraries', 'activities');
-											CActivityStream::add($act);
-											}
-										// End Modify for activities stream
 
                                         //update the user posts count
                                         if ($kunena_my->id)
@@ -606,8 +548,8 @@ $catName = $objCatInfo->name;
                         //get the writing stuff in:
                         $no_upload = "0"; //only edit mode should disallow this
 
-                        if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'fb_write.html.php')) {
-                            include (KUNENA_ABSTMPLTPATH .DS. 'fb_write.html.php');
+                        if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
+                            include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
                         else {
                             include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_write.html.php');
@@ -652,8 +594,8 @@ $catName = $objCatInfo->name;
 
                         <?php
                         //get the writing stuff in:
-                        if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'fb_write.html.php')) {
-                            include (KUNENA_ABSTMPLTPATH .DS. 'fb_write.html.php');
+                        if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
+                            include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
                         else {
                             include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_write.html.php');
@@ -701,8 +643,8 @@ $catName = $objCatInfo->name;
 
                         <?php
                         //get the writing stuff in:
-                        if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'fb_write.html.php')) {
-                            include (KUNENA_ABSTMPLTPATH .DS. 'fb_write.html.php');
+                        if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
+                            include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
                         else {
                             include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_write.html.php');
@@ -796,8 +738,8 @@ $catName = $objCatInfo->name;
                         }
                         */
 
-                        if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'fb_write.html.php')) {
-                            include (KUNENA_ABSTMPLTPATH .DS. 'fb_write.html.php');
+                        if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_write.html.php')) {
+                            include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
                         }
                         else {
                             include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_write.html.php');
@@ -1312,7 +1254,7 @@ $catName = $objCatInfo->name;
 
 					// TODO: Enable split when it's fixed
                     $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page, $catid), 'Split has been disabled');
-
+                    
                     //get list of posts in thread
                     $kunena_db->setQuery("SELECT * FROM #__fb_messages AS a "
                     ." LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE (a.thread='{$id}' OR a.id='{$id}') AND a.hold='0' AND a.catid='{$catid}' ORDER BY a.parent ASC, a.ordering, a.time");
@@ -1365,7 +1307,7 @@ $catName = $objCatInfo->name;
             <?php
                     $k = 0;
                     $smileyList = smile::getEmoticons(1);
-
+                    
                     foreach ($postlist as $mes)
                     {
                         $k = 1 - $k;
@@ -1808,8 +1750,12 @@ function hasPostPermission($kunena_db, $catid, $id, $userid, $pubwrite, $ismod)
             echo _POST_NO_PUBACCESS1 . "<br />";
             echo _POST_NO_PUBACCESS2 . "<br /><br />";
 
-            $kunenaProfile =& CKunenaProfile::getInstance();
-			echo '<a href="' . $kunenaProfile->getRegisterURL() . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
+            if ($fbConfig->fb_profile == 'cb') {
+                echo '<a href="' . CKunenaCBProfile::getRegisterURL() . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
+            }
+            else {
+                echo '<a href="' . JRoute::_('index.php?option=com_registration&amp;task=register') . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
+            }
         }
 
         return 0;
@@ -2008,7 +1954,7 @@ function listThreadHistory($id, $fbConfig, $kunena_db)
                         $fb_message_txt = smile::htmlwrap($fb_message_txt, $fbConfig->wrap);
 
 						$fb_message_txt = CKunenaTools::prepareContent($fb_message_txt);
-
+                        
                         echo $fb_message_txt;
                         ?>
                     </td>

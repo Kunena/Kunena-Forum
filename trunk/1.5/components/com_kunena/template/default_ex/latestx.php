@@ -172,6 +172,7 @@ $query = 			"SELECT
                         t.message AS messagetext,
                         m.mesid AS attachmesid,
                         (f.thread>0) AS myfavorite,
+                        u.avatar,
                         c.id AS catid,
                         c.name AS catname,
                         b.lastpost
@@ -206,8 +207,10 @@ else
 $query .=				"JOIN #__fb_messages_text AS t ON a.thread = t.mesid
                         LEFT JOIN #__fb_categories  AS c ON c.id = a.catid
                         LEFT JOIN #__fb_attachments AS m ON m.mesid = a.id
-                        LEFT JOIN #__fb_favorites AS f ON  f.thread = a.id && f.userid = '{$kunena_my->id}'
-                    	LEFT JOIN #__fb_users AS u ON u.userid = a.userid 
+                        LEFT JOIN #__fb_favorites AS f ON  f.thread = a.id && f.userid = '{$kunena_my->id}'"
+                        .(($fbConfig->avatar_src == "cb")?
+                    " LEFT JOIN #__comprofiler AS u ON u.user_id = a.userid ":
+                    " LEFT JOIN #__fb_users AS u ON u.userid = a.userid ")."
                     WHERE
                         a.parent='0'
                         AND a.moved='0'
@@ -266,8 +269,12 @@ if (count($threadids) > 0)
 					a.locked,
 					a.ordering,
 					a.userid ,
-					a.moved
-				FROM #__fb_messages AS a 
+					a.moved,
+					u.avatar
+				FROM #__fb_messages AS a "
+					.(($fbConfig->avatar_src == "cb")?
+    				"LEFT  JOIN #__comprofiler AS u ON u.user_id = a.userid"
+    				:"LEFT  JOIN #__fb_users AS u ON u.userid = a.userid")."
     			WHERE a.thread IN ('{$idstr}')
      				AND a.id NOT IN ('{$idstr}')
      				AND a.hold='0'";

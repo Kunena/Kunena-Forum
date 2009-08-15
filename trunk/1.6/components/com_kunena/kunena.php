@@ -12,10 +12,21 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+$view = JRequest::getCmd('view', false);
+
 // If we are doing things the new way use the MVC.
-if (false)
+if ($view)
 {
-	// Do the New MVC Way.
+	// Import the Kunena library loader.
+	require_once (JPATH_COMPONENT.'/libraries/import.php');
+
+	// Import the Kunena controller class.
+	require_once (JPATH_COMPONENT.'/controller.php');
+
+	// Execute the task.
+	$controller	= KunenaController::getInstance();
+	$controller->execute(JRequest::getVar('task'));
+	$controller->redirect();
 }
 // Load the legacy entry point.
 else {

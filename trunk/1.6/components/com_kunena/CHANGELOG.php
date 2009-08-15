@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.6.0dev
 
+14-Aug-2009 Louis
++ [#17628] Added scaffolding for recent activity view and base library importer.
+
 14-Aug-2009 fxstein
 ^ [#17628] Initial file systems changes for MVC next gen layout
 ^ [#17375] Changed attachement count logic for thread table during upgrade

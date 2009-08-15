@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 // Define the Kunena Libraries path constant.
 if (!defined('KPATH_LIBRARIES')) {
-	define('KPATH_LIBRARIES', realpath(dirname(dirname(__FILE__))));
+	define('KPATH_LIBRARIES', realpath(dirname(__FILE__)));
 }
 
 /**
@@ -24,10 +24,5 @@ if (!defined('KPATH_LIBRARIES')) {
  */
 function kimport($path)
 {
-	if (strpos($path, 'kunena') === 0) {
-		return JLoader::import($path, KPATH_LIBRARIES, '');
-	}
-	else {
-		return JLoader::import($path, null, 'libraries.');
-	}
+	return JLoader::import($path, KPATH_LIBRARIES);
 }

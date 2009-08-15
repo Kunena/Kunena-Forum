@@ -134,24 +134,26 @@ if ($func == "mylatest")
 {
 	$document->setTitle(_KUNENA_MY_DISCUSSIONS . ' - ' . stripslashes($kunenaConfig->board_title));
 	$query = "SELECT count(distinct tmp.thread) FROM
-				(SELECT thread
-					FROM #__kunena_messages
-					WHERE userid=$kunena_my->id AND hold=0 AND moved=0 AND catid IN ($kunenaSession->allowed)
-				UNION ALL
-				 SELECT m.thread As thread
+				(SELECT m.thread As thread
 					FROM #__kunena_messages AS m
-					JOIN #__kunena_favorites AS f ON m.thread = f.thread
-					WHERE f.userid=$kunena_my->id AND m.parent = 0 AND hold=0 and moved=0 AND catid IN ($kunenaSession->allowed)) AS tmp";
+					JOIN #__kunena_treads AS t ON t.id = m.thread
+					WHERE m.userid=$kunena_my->id AND t.hold=0 AND t.moved_id=0 AND t.catid IN ($kunenaSession->allowed)
+				UNION ALL
+				 SELECT m.id As thread
+					FROM #__kunena_threads AS t
+					JOIN #__kunena_favorites AS f ON t.id = f.thread
+					WHERE f.userid=$kunena_my->id AND t.hold=0 and t.moved_id=0 AND t.catid IN ($kunenaSession->allowed)) AS tmp";
 }
 else
 {
 	$document->setTitle(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($kunenaConfig->board_title));
-	$query = "Select count(distinct thread) FROM #__kunena_messages WHERE time >'$querytime'".
-			" AND hold=0 AND moved=0 AND catid IN ($kunenaSession->allowed)" . $latestcats; // if categories are limited apply filter
+	$query = "SELECT count(*) FROM #__kunena_threads WHERE last_post_time >'$querytime'".
+			" AND hold=0 AND moved_id=0 AND catid IN ($kunenaSession->allowed)" . $latestcats; // if categories are limited apply filter
 }
 $kunena_db->setQuery($query);
 $total = (int)$kunena_db->loadResult();
 	check_dberror('Unable to count total threads');
+
 $totalpages = ceil($total / $threads_per_page);
 
 //meta description and keywords

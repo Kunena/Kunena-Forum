@@ -35,6 +35,7 @@ Kunena 1.6.0dev
 15-Aug-2009 fxstein
 # [#17375] fixed broken debug output on failed queries
 ^ [#17375] additional installer changes for new data model and mvc
+^ [#17375] latestx.php partially converted to new threads table design
 
 14-Aug-2009 Louis
 + [#17628] Added scaffolding for recent activity view and base library importer.

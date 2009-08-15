@@ -422,12 +422,17 @@
 					(id, catid, subject, topic_emoticon, locked, hold, ordering, posts, hits, attachements, moved_id,
 						first_post_id, first_post_time, first_post_userid, first_post_name, first_post_email, first_post_message,
 						last_post_id, last_post_time, last_post_userid, last_post_name, last_post_email, last_post_message)
-					SELECT a.id, a.catid, a.subject, a.topic_emoticon, a.locked, a.hold, a.ordering, count(a.id) as posts, sum(a.hits) as hits, count(t.mesid) as attachements,
+					SELECT a.id, a.catid, a.subject, a.topic_emoticon, a.locked, a.hold, a.ordering, count(a.id) as posts, sum(a.hits) as hits, t.attachements as attachements,
 						0 as moved_id, min(b.id) as first_post_id, 0 as first_post_time, 0 as first_post_userid, '' as first_post_name, '' as first_post_email, '' as first_post_message,
 						max(b.id) as last_post_id, 0 as last_post_time, 0 as last_post_userid, '' as last_post_name, '' as last_post_email, '' as last_post_message
 					FROM #__kunena_messages AS a
 					JOIN #__kunena_messages AS b ON b.thread = a.id
-					LEFT OUTER JOIN #__kunena_attachments AS t ON b.id = t.mesid
+					LEFT OUTER JOIN (
+						SELECT m.thread, count(*) as attachments
+						FROM #__kunena_messages AS m
+						JOIN #__kunena_attachments AS n ON m.id = n.mesid
+						GROUP BY 1
+						) AS t on t.thread = a.id
 					WHERE a.parent = 0
 					GROUP BY a.id;</query>
 			<query>UPDATE `#__kunena_threads` AS t, `#__kunena_messages` AS a, `#__kunena_messages` AS b

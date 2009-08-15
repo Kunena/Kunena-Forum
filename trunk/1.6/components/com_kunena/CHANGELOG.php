@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.6.0dev
 
+14-Aug-2009 fxstein
+^ [#17628] Initial file systems changes for MVC next gen layout
+
 13-Aug-2009 fxstein
 + [#17375] Added name and email to thread table and upgrade logic
 + [#17375] Added attachement count to thread table and upgrade logic

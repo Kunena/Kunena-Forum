@@ -243,7 +243,7 @@ if (is_object($kunenaProfile) && $kunenaProfile->useProfileIntegration())
 else
 {
 	// Add required header tags
-	if (defined('KUNENA_JQURL') && !defined('J_JQUERY_LOADED'))
+	if (defined('KUNENA_JQURL') && !defined('J_JQUERY_LOADED') && !defined('C_ASSET_JQUERY'))
 	{
 		define('J_JQUERY_LOADED', 1);
 		if (!defined('C_ASSET_JQUERY')) define('C_ASSET_JQUERY', 1);
@@ -257,16 +257,16 @@ else
 }
 
 if ($fbConfig->joomlastyle < 1) {
-	if (file_exists(KUNENA_JTEMPLATEPATH.'/css/kunena.forum.css')) 
+	if (file_exists(KUNENA_JTEMPLATEPATH.'/css/kunena.forum.css'))
 	{
 		$document->addStyleSheet(KUNENA_JTEMPLATEURL . '/css/kunena.forum.css');
 	}
-	else 
+	else
 	{
 		$document->addStyleSheet(KUNENA_TMPLTCSSURL);
 	}
 }
-else 
+else
 {
 	$document->addStyleSheet(KUNENA_DIRECTURL . '/template/default/joomla.css');
 }

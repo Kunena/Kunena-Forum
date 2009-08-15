@@ -13,29 +13,22 @@ defined('_JEXEC') or die;
 jimport('joomla.application.component.controller');
 jimport('joomla.application.component.helper');
 
-/*
- * SOME TIME-BASED DEFINED CONSTANTS
- */
-define('KUNENA_SECONDS_IN_HOUR', 3600);
-define('KUNENA_SECONDS_IN_YEAR', 31536000);
-
 /**
  * Base controller class for Kunena.
  *
  * @package		Kunena
  * @subpackage	com_kunena
- * @version		1.0
+ * @since		1.6
  */
 class KunenaController extends JController
 {
 	/**
 	 * Method to get the appropriate controller.
 	 *
-	 * @access	public
 	 * @return	object	Kunena Controller
-	 * @since	1.0
+	 * @since	1.6
 	 */
-	function &getInstance()
+	public static function getInstance()
 	{
 		static $instance;
 
@@ -85,38 +78,40 @@ class KunenaController extends JController
 	/**
 	 * Method to display a view.
 	 *
-	 * @access	public
 	 * @return	void
-	 * @since	1.0
+	 * @since	1.6
 	 */
-	function display()
+	public function display()
 	{
 		// Get the document object.
 		$document = JFactory::getDocument();
 
 		// Set the default view name and format from the Request.
 		$vName	 = JRequest::getWord('view', 'recent');
-		$vFormat = $document->getType();
 		$lName	 = JRequest::getWord('layout', 'default');
+		$vFormat = $document->getType();
 
-		if ($view = & $this->getView($vName, $vFormat))
+		if ($view = $this->getView($vName, $vFormat))
 		{
 			// Do any specific processing for the view.
 			switch ($vName)
 			{
 				default:
 					// Get the appropriate model for the view.
-					$model = & $this->getModel($vName);
+					$model = $this->getModel($vName);
 					break;
 			}
 
 			// Push the model into the view (as default).
 			$view->setModel($model, true);
+
+			// Set the view layout.
 			$view->setLayout($lName);
 
 			// Push document object into the view.
 			$view->assignRef('document', $document);
 
+			// Render the view.
 			$view->display();
 		}
 	}

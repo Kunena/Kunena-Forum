@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.5.5
 
+4-Aug-2009 Matias
++ [#17482] Add basic support for GroupJive permission handling
+
 22-July-2009 fxstein 
 ^ [#17303] Update version info to 1.5.5
 ^ [#17629] JomSocial: Better compatibility with JQuery loads

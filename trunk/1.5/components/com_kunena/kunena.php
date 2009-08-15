@@ -403,7 +403,11 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
 	// no access to categories?
 	if (!$fbSession->allowed) $fbSession->allowed = '0';
-
+	
+	// Integration with GroupJive, Jomsocial:
+	$params = array($kunena_my->id, &$fbSession->allowed);
+	$kunenaProfile->trigger('getAllowedForumsRead', $params);
+	
 //Disabled threaded view option for Kunena
 //    //Initial:: determining what kind of view to use... from profile, cookie or default settings.
 //    //pseudo: if (no view is set and the cookie_view is not set)

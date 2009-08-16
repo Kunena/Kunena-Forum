@@ -38,7 +38,7 @@ defined('_JEXEC') or die;
 										<td class="col2"><a href="/0"></a><img src="images/emoticons/question.gif" alt="emoticon" border="0" /></td>
 										<td class="col3">
 											<h4>
-												<a class="fb-topic-title fbm" href="/forum/138-support/26548-white-page-when-posting" title="Hey guys. Any idea how I can narrow down (and solve) this issue?! Thanks,Paul">White Page When Posting</a>
+												<a href="/forum/138-support/26548-white-page-when-posting" title="Hey guys. Any idea how I can narrow down (and solve) this issue?! Thanks,Paul">White Page When Posting</a>
 											</h4>
 											<div class="post_info">
 												<span class="topic_posted_time">Posted 3 Hours, 43 Minutes ago</span>
@@ -48,11 +48,9 @@ defined('_JEXEC') or die;
 											</div>
 										</td>
 										<td class="col4">
-											
 												<span class="topic_latest_post_avatar"><a href="/community/profile?userid=6606" title=""><img src="images/no_photo_sm.jpg" alt="MartinRuthenberg" /></a></span>
 												<span class="topic_latest_post"><a href="/forum/138-support/26548-white-page-when-posting#26548" title="Last Post">Last Post</a> by <a class="topic_latest_post_user" href="/community/profile?userid=6606" title="Jazzi">Jazzi</a>
 												</span>
 												<span class="topic_date">3 Hours, 43 Minutes ago</span>
-											
 										</td>
 									</tr>

@@ -22,10 +22,10 @@ defined('_JEXEC') or die;
 							<table class="forum_body">
 								<thead>
 									<tr>
-										<td>Replies</td>
-										<td>&nbsp;</td>
-										<td>Topics</td>
-										<td>Last Post</th>
+										<td class="head-col1">Replies</td>
+										<td class="head-col2">&nbsp;</td>
+										<td class="head-col3">Topics</td>
+										<td class="head-col4">Last Post</td>
 									</tr>
 								</thead>
 								<tbody>

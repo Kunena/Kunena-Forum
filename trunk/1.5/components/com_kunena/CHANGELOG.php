@@ -33,6 +33,7 @@ Legend:
 Kunena 1.5.5
 
 16-Aug-2009 Matias
+^ [#15798] Update credits page
 * [#17635] Fix Blind SQL Injection Exploit
 * [#17636] Check that img tags contain allowed file extension
 

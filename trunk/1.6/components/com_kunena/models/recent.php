@@ -72,13 +72,12 @@ class KunenaModelRecent extends JModel
 			$params	= $app->getParams('com_kunena');
 
 			// If the limit is set to -1, use the global config list_limit value.
-			$limit	= JRequest::getInt('limit', $params->get('list_limit', 0));
+			$limit	= JRequest::getInt('limit', $params->get('list_limit', 20));
 			$limit	= ($limit === -1) ? $app->getCfg('list_limit', 20) : $limit;
 
 			// Load the list state.
 			$this->setState('list.start', JRequest::getInt('limitstart'));
 			$this->setState('list.limit', $limit);
-			$this->setState('list.state', 1);
 
 			// Load model type
 			// all = recent topics accross all allowd categories

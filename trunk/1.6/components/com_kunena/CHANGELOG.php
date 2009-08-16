@@ -33,6 +33,7 @@ Legend:
 Kunena 1.6.0dev
 
 15-Aug-2009 Matias
++ [#17628] Add css file for recent discussions
 + [#17628] Add some html for recent discussions
 
 15-Aug-2009 fxstein

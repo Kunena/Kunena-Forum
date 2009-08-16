@@ -9,6 +9,7 @@
  */
 
 defined('_JEXEC') or die;
+JHtml::stylesheet('default.css', JURI::root().'components/com_kunena/media/css/');
 ?>
 <?php echo $this->loadCommonTemplate('header'); ?>
 

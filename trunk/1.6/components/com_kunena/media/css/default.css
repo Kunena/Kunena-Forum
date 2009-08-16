@@ -137,6 +137,7 @@ thead {
 	background-color: #FC8F30;
 	color: #ffffff;
 	font-size: 14px;
+	text-align: center;
 }
 
 tbody {
@@ -163,22 +164,29 @@ tr.even_row {
 td.col1 {
 	width: 80px;
 	text-align:center;
+	padding: 5px;
+}
+
+td.col1 span {
+	font-size: 22px;
+	color: #4f7ba4;
 }
 
 td.col2 {
 	width: 50px;
 	text-align:center;
-	}
+	padding: 5px;
+}
 
 td.col3 {
 	width: auto;
+	padding: 5px;
 	}
 
 td.col4 {
 	width: 150px;
+	padding: 5px;
 }
-
-td.col5 {}
 
 
 /* ------------------------- ANNOUNCEMENTS ------------------------- */

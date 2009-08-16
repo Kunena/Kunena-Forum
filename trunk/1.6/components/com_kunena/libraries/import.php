@@ -42,10 +42,9 @@ define('KUNENA_COMPONENT_NAME', 'com_kunena');
 define('KUNENA_LANGUAGE_DEFAULT', 'english');
 define('KUNENA_TEMPLATE_DEFAULT', 'default');
 
-$language =& JFactory::getLanguage();
-$lang = $language->getBackwardLang();
-
-define('KUNENA_LANGUAGE', $lang);
+// Set the legacy language constant.
+$language = JFactory::getLanguage();
+define('KUNENA_LANGUAGE', $language->getBackwardLang());
 
 // File system paths
 define('KUNENA_COMPONENT_RELPATH', 'components' .DS. KUNENA_COMPONENT_NAME);

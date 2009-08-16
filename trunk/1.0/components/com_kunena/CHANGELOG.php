@@ -30,6 +30,14 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.0.12
+
+16-Aug-2009 Matias
+^ [#15798] Update credits page
+* [#17635] Fix Blind SQL Injection Exploit
+* [#17636] Check that img tags contain allowed file extension
+^ [#17303] Update version info to 1.0.12
+
 Kunena 1.0.11
 
 10-July-2009 fxstein

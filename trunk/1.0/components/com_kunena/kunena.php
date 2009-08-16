@@ -41,18 +41,24 @@ $tstart = $mtime[1] + $mtime[0];
 // TODO: Get rid of THIS!!! - Kill notices (we have many..)
 //error_reporting (E_ALL ^ E_NOTICE);
 
+function kGetCmd($cmd)
+{
+	preg_match('/^[\w\d]+/', $cmd, $matches);
+	return $cmd;
+}
+
 // Get all the variables we need and strip them in case
-$action 		= mosGetParam($_REQUEST, 'action', '');
+$action 		= kGetCmd(mosGetParam($_REQUEST, 'action', ''));
 $attachfile 	= mosGetParam($_FILES['attachfile'], 'name', '');
 $attachimage 	= mosGetParam($_FILES['attachimage'], 'name', '');
 $catid 			= intval(mosGetParam($_REQUEST, 'catid', 0));
 $contentURL 	= mosGetParam($_REQUEST, 'contentURL', '');
-$do 			= mosGetParam($_REQUEST, 'do', '');
+$do 			= kGetCmd(mosGetParam($_REQUEST, 'do', ''));
 $email 			= mosGetParam($_REQUEST, 'email', '');
 $favoriteMe 	= mosGetParam($_REQUEST, 'favoriteMe', '');
 $fb_authorname 	= mosGetParam($_REQUEST, 'fb_authorname', '');
 $fb_thread 		= intval(mosGetParam($_REQUEST, 'fb_thread', 0));
-$func 			= strtolower(mosGetParam($_REQUEST, 'func', ''));
+$func 			= strtolower(kGetCmd(mosGetParam($_REQUEST, 'func', '')));
 $id 			= intval(mosGetParam($_REQUEST, 'id', ''));
 $limit 			= intval(mosGetParam($_REQUEST, 'limit', 0));
 $limitstart 	= intval(mosGetParam($_REQUEST, 'limitstart', 0));
@@ -245,7 +251,7 @@ if (is_object($kunenaProfile) && $kunenaProfile->useProfileIntegration())
 else
 {
 	// Add required header tags
-	if (defined('KUNENA_JQURL') && !defined('J_JQUERY_LOADED'))
+	if (defined('KUNENA_JQURL') && !defined('J_JQUERY_LOADED') && !defined('C_ASSET_JQUERY'))
 	{
 		define('J_JQUERY_LOADED', 1);
 		if (!defined('C_ASSET_JQUERY')) define('C_ASSET_JQUERY', 1);
@@ -418,6 +424,11 @@ require_once (KUNENA_ABSSOURCESPATH . 'kunena.session.class.php');
 	// no access to categories?
 	if (!$fbSession->allowed) $fbSession->allowed = '0';
 
+	// Integration with GroupJive:
+	$params = array($my_id, &$fbSession->allowed);
+	if (is_object($kunenaProfile))
+		$kunenaProfile->trigger('getAllowedForumsRead', $params);	
+	
 //Disabled threaded view option for Kunena
 //    //Initial:: determining what kind of view to use... from profile, cookie or default settings.
 //    //pseudo: if (no view is set and the cookie_view is not set)

@@ -23,10 +23,10 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 							<table class="forum_body">
 								<thead>
 									<tr>
-										<td class="head-col1">Replies</td>
+										<td class="head-col1"><?php echo JText::_('K_REPLIES'); ?></td>
 										<td class="head-col2">&nbsp;</td>
-										<td class="head-col3">Topics</td>
-										<td class="head-col4">Last Post</td>
+										<td class="head-col3"><?php echo JText::_('K_TOPICS'); ?></td>
+										<td class="head-col4"><?php echo JText::_('K_LAST_POST'); ?></td>
 									</tr>
 								</thead>
 								<tbody>

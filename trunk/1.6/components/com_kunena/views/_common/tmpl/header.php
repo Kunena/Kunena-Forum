@@ -13,35 +13,35 @@ defined('_JEXEC') or die;
 	<div id="kunena">
 		<div class="topnav">
 			<ul>
-				<li class="active"><a href="/forum/latest" title="Recent Discussions"><span>Recent Discussions</span></a></li>
-				<li><a href="/forum/listcat" title="Categories"><span>Categories</span></a></li>
-				<li><a href="/forum/faq" title="Help"><span>Help</span></a></li>
+				<li class="active"><a href="/forum/latest" title="<?php echo JText::_('K_RECENT_DISCUSSIONS'); ?>"><span><?php echo JText::_('K_RECENT_DISCUSSIONS'); ?></span></a></li>
+				<li><a href="/forum/listcat" title="<?php echo JText::_('K_CATEGORIES'); ?>"><span><?php echo JText::_('K_CATEGORIES'); ?></span></a></li>
+				<li><a href="/forum/faq" title="<?php echo JText::_('K_HELP'); ?>"><span><?php echo JText::_('K_HELP'); ?></span></a></li>
 			</ul>
 		</div>
 		<div class="search">
 			<form action="/forum/search" name="Search" method="post">
-				<input class="inputbox" type="text" name="q" size="15" value="Search Forum" onblur="if(this.value=='') this.value='Search Forum';" onfocus="if(this.value=='Search Forum') this.value='';" />
-				<input type="submit" value="Go" name="submit" class="submit_btn"/>
+				<input class="inputbox" type="text" name="q" size="15" value="<?php echo JText::_('K_SEARCH_FORUM'); ?>" />" onblur="if(this.value=='') this.value='<?php echo JText::_('K_SEARCH_FORUM'); ?>';" onfocus="if(this.value=='<?php echo JText::_('K_SEARCH_FORUM'); ?>') this.value='';" />
+				<input type="submit" value="<?php echo JText::_('K_GO'); ?>" name="submit" class="submit_btn"/>
 			</form>
 		</div>
 		<div class="show_hide">
-			<img class="show_hide" src="images/icons/shrink.gif" alt="Show/Hide" />
+			<img class="show_hide" src="images/icons/shrink.gif" alt="<?php echo JText::_('K_SHOW_HIDE'); ?>" />
 		</div>
 					
 		<div class="profile_box">
-			<p class="welcome">Welcome, <span>Guest</span></p>
-			<p class="register_login">Please <a href="/component/user/login">Log in</a> or <a href="/component/user/register">Register</a>. <a href="/component/user/reset">Lost Password?</a></p>												
+			<p class="welcome"><?php echo JText::_('K_WELCOME'); ?>, <span><?php echo JText::_('K_GUEST'); ?></span></p>
+			<p class="register_login"><?php echo JText::_('K_PLEASE'); ?> <a href="/component/user/login"><?php echo JText::_('K_LOG_IN'); ?></a> <?php echo JText::_('K_OR'); ?> <a href="/component/user/register"><?php echo JText::_('K_REGISTER'); ?></a>. <a href="/component/user/reset"><?php echo JText::_('K_LOST_PASSWORD'); ?></a></p>												
 		</div>								
 											
 		<div class="corner1">
 			<div class="corner2">
 				<div class="corner3">
 					<div class="corner4">
-						<table class="announcements" summary="Announcements">
+						<table class="announcements" summary="<?php echo JText::_('K_ANNOUNCEMENTS_TABLE_SUMMARY'); ?>">
 							<thead>
 								<tr>
 									<h3>Kunena 1.0.11 & 1.5.4 Released</h3>	
-									<div><img class="show_hide" src="images/icons/shrink.gif" alt="Show/Hide"/></div>
+									<div><img class="show_hide" src="images/icons/shrink.gif" alt="<?php echo JText::_('K_SHOW_HIDE'); ?>"/></div>
 								</tr>
 							</thead>
 							<tbody>
@@ -50,7 +50,7 @@ defined('_JEXEC') or die;
 										<div class="announce_create">07/11/2009 00:45</div>
 										<div class="announce_summary">The Kunena Team announces the immediate availability of Kunena 1.5.4 and 1.0.11. These are important
 														security releases and users are urged to update immediately. These releases also fix a number of other minor and major issues.
-														<a href="/forum/announcement/read/id-8">Read More...</a></div>
+														<a href="/forum/announcement/read/id-8"><?php echo JText::_('K_READ_MORE'); ?></a></div>
 									</td>
 								</tr>
 							</tbody>

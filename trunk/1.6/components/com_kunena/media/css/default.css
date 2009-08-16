@@ -19,6 +19,9 @@ Orange color: 				#FC8F30		RGB: 252/143/48
 Medium Grey color:			#606060		RGB: 96/96/96
 Dark Grey color:			#2c2c2c		RGB: 44/44/44
 
+
+
+
 ----------------------------------------*/
 
 
@@ -44,7 +47,7 @@ img {
 }
 
 #kunena,
-table,
+#kunena table,
 div.topnav,
 table.announcements {
 	width: 960px;
@@ -124,7 +127,7 @@ div.credits {
 	
 /* ------------------------- TABLES ------------------------- */
 
-table {
+#kunena table {
 	border: 1px solid #4f7ba4;
 	clear:both;
 	border-collapse: collapse;

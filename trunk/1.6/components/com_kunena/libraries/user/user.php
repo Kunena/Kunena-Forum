@@ -12,7 +12,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-kimport('application.conifg');
+kimport('application.config');
 
 class KUser extends JTable
 {
@@ -128,6 +128,8 @@ class KUser extends JTable
 
 		$this->last_visit_time = time() + $config->board_ofset * KUNENA_SECONDS_IN_HOUR;
 		$this->read_topics = '';
+
+		$this->store();
 	}
 
 	protected function _updateSessionInfo()

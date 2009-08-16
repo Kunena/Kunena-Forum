@@ -67,6 +67,7 @@ div.profile_box {
 	padding: 0 10px ;
 	clear:both;
 	font-size: 11px;
+	margin-bottom: 10px;
 }
 div.profile_box p {
 	font-size: 12px;
@@ -88,10 +89,12 @@ div.jump_box {
 
 div.pagination_box {
 	float:right;
+	width: auto;
 }
 
 div.discussions {
-
+	margin: 15px 0;
+	width: 150px;
 }
 
 div.corner1 {

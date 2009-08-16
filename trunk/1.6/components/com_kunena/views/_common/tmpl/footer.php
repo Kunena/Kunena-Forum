@@ -39,4 +39,4 @@ defined('_JEXEC') or die;
 										<a href="/forum/fb_rss?no_html=1" title="" target="_blank"><img class="rsslink" src="http://www.kunena.com/components/com_kunena/template/default_ex/images/english/emoticons/rss.gif" alt="Subscribe" title="Subscribe" /></a>
 									</div>
 								</div>
-								
+							</div>

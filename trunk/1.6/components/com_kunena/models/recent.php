@@ -86,7 +86,7 @@ class KunenaModelRecent extends JModel
 			$this->setState('type', JRequest::getCmd('type', 'all'));
 
 			// If recent request is for a category, we also get a category id
-			$this->setState('category', JRequest::getInt('category', 0));
+			$this->setState('category.id', JRequest::getInt('category', 0));
 
 			// Load filter
 			$this->setState('filter.time', JRequest::getInt('filter_time', 720));
@@ -221,10 +221,10 @@ class KunenaModelRecent extends JModel
 	protected function _getTotalQuery()
 	{
 		$query = new KQuery();
-		$user = KUser::getInstance(true);
 
 		// Build base query
 		$time = JFactory::getDate('-'.$this->getState('filter.time').' hours');
+		$user = KUser::getInstance(true);
 
 		$query->select('count(*)');
 
@@ -246,7 +246,7 @@ class KunenaModelRecent extends JModel
 				$query1->where('t1.id = m.thread');
 		        $query1->where('t1.hold=0 AND t1.moved_id=0 AND t1.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
 		        $query1->where('t1.last_post_time >'.$time->toUnix());
-		        $query1->where('m.userid = '.intval($user->userid));
+		        $query1->where('m.userid = '.intval($this->getState('user.id')));
 
 				$query2->select('f.thread As thread');
 		        $query2->from('#__kunena_favorites AS f');
@@ -254,12 +254,15 @@ class KunenaModelRecent extends JModel
 				$query2->where('t2.id = f.thread');
 		        $query2->where('t2.hold=0 AND t2.moved_id=0 AND t2.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
 		        $query2->where('t2.last_post_time >'.$time->toUnix());
-		        $query2->where('f.userid = '.intval($user->userid));
+		        $query2->where('f.userid = '.intval($this->getState('user.id')));
 
 				$query->from('('.$query1->toString().' UNION '.$query2->toString().' ) AS t');
 
 				break;
 		    case 'category':
+		        $query->from('#__kunena_threads AS t');
+		        $query->where('t.hold=0 AND t.moved_id=0 AND t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
+		        $query->where('t.catid = '.intval($this->getState('category.id')));
 
 		        break;
 		    default:
@@ -324,6 +327,9 @@ class KunenaModelRecent extends JModel
 
 				break;
 		    case 'category':
+		        $query->from('#__kunena_threads AS t');
+		        $query->where('t.hold=0 AND t.moved_id=0 AND t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
+		        $query->where('t.catid = '.intval($this->getState('category.id')));
 
 		        break;
 		    default:

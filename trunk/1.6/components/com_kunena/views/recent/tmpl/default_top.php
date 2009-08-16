@@ -12,8 +12,8 @@ defined('_JEXEC') or die;
 ?>
 
 		<div class="top_info_box">
-			<div class="choose_hours">
-				<select class="input_hours" onchange="document.location.href=this.options[this.selectedIndex].value;" name="select">
+			<div class="choose_time">
+				<select class="input_time" onchange="document.location.href=this.options[this.selectedIndex].value;" name="select">
 					<option value="/forum/latest/show/sel-4">4 <?php echo JText::_('K_HOURS'); ?></option>
 					<option value="/forum/latest/show/sel-8">8 <?php echo JText::_('K_HOURS'); ?></option>
 					<option value="/forum/latest/show/sel-12">12 <?php echo JText::_('K_HOURS'); ?></option>
@@ -25,16 +25,16 @@ defined('_JEXEC') or die;
 				</select>
 			</div>
 			<div class="jump_box">
-				<form id="jump_forum" name="jumpto" method="post" target="_self" action="/forum">
+				<form name="choose_forum" method="post" target="_self" action="/forum">
 					<input type="hidden" name="func" value="showcat"/>
-					<select name="catid" class="choose_forum" onchange="if(this.options[this.selectedIndex].value> 0){ this.form.submit() }">
+					<select name="catid" class="input_forum" onchange="if(this.options[this.selectedIndex].value> 0){ this.form.submit() }">
 						<option value="0" selected="selected"><?php echo JText::_('K_BOARD_CATEGORIES'); ?></option>
 						<option value="94">Kunena - To Speak!</option>
 						<option value="77">...&nbsp;General Talk about Kunena</option>
 						<option value="119">...&nbsp;Feature Requests</option>
 						<option value="136">...&nbsp;Templates and Design</option>
 					</select>
-					<input type="submit" name="<?php echo JText::_('K_GO'); ?>" class="go_forum" value="<?php echo JText::_('K_GO'); ?>"/>
+					<input type="submit" name="<?php echo JText::_('K_GO'); ?>" class="go_btn" value="<?php echo JText::_('K_GO'); ?>"/>
 				</form>
 			</div>
 			<div class="pagination_box">
@@ -44,5 +44,12 @@ defined('_JEXEC') or die;
 				<a href="/forum/latest/page-4/sel-720" title="<?php echo JText::_('K_PAGE'); ?> 4">4</a>...
 				<a href="/forum/latest/page-22/sel-720" title="<?php echo JText::_('K_PAGE'); ?> 22">22</a>
 			</div>
-			<div class="discussions"><span>647</span> <?php echo JText::_('K_DISCUSSIONS'); ?> <p><a href="/forum/fb_rss?no_html=1" title="" target="_blank"><img class="rsslink" src="images/emoticons/rss.gif" alt="<?php echo JText::_('K_SUBSCRIBE'); ?>" title="<?php echo JText::_('K_SUBSCRIBE'); ?>" /></a></p></div>
+			<div class="discussions">
+				<span>647</span> <?php echo JText::_('K_DISCUSSIONS'); ?>
+			</div>
+			<div class="rsslink" >
+				<a href="/forum/fb_rss?no_html=1" title="" target="_blank">
+				<img class="rsslink" src="images/emoticons/rss.gif" alt="<?php echo JText::_('K_SUBSCRIBE'); ?>" title="<?php echo JText::_('K_SUBSCRIBE'); ?>" /></a>
+			</div>
+			
 		</div>

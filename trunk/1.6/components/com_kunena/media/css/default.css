@@ -19,11 +19,7 @@ Orange color: 				#FC8F30		RGB: 252/143/48
 Medium Grey color:			#606060		RGB: 96/96/96
 Dark Grey color:			#2c2c2c		RGB: 44/44/44
 
-
-
-
 ----------------------------------------*/
-
 
 /* ------------------------- GLOBAL ------------------------- */
 
@@ -40,23 +36,35 @@ img {
 
 #kunena {
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 100%;
 	color: #2C2C2C;
 	margin: 0;
 	padding: 0;
+	line-height: 120%;
 }
 
 #kunena,
 #kunena table,
-div.topnav,
-table.announcements {
+div.topnav {
 	width: 960px;
 	margin: 0 auto;
 }
 
+a:link,
+a:visited,
+a:active {
+	color: #0B3768;
+	text-decoration: none;
+	border: 0;
+}
+
+a:hover {
+	color: #0B3768;
+	text-decoration: underline;
+}
+
 h1 { font-size: 18px; }
 h2 { font-size: 17px; }
-h3 { font-size: 16px; }
+h3 { font-size: 16px;  }
 h4 { font-size: 15px; margin: 2px;}
 
 #kunena div.topnav li {
@@ -75,19 +83,18 @@ div.search {
 }
 
 div.profile_box {
-	border: 1px solid #4f7ba4;
-	padding: 0 10px ;
+	border: 1px solid #83afda;
+	padding: 10px ;
 	clear:both;
 	font-size: 11px;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
+
 div.profile_box p {
 	font-size: 12px;
 }
 
-div.show_hide {
 
-}
 
 div.top_info_box,
 div.bottom_info_box {
@@ -95,8 +102,24 @@ div.bottom_info_box {
 	margin: 0 auto;
 }
 
+
+div.top_info_box {
+	
+}
+
+
+div.choose_time {
+	float:left;
+	margin-right: 15px;
+}
+
 div.jump_box {
 
+}
+
+div.announcements {
+	width: 930px;
+	margin: 0 auto;
 }
 
 div.pagination_box {
@@ -105,35 +128,39 @@ div.pagination_box {
 }
 
 div.pagination_box span {
-	border: 1px solid #606060;
+	border: 1px solid #83afda;
 	padding: 2px;
 }
 
-input.submit_btn {
-	width: 30px!important;
+#kunena input.input_search {
+	margin: 0;
 }
 
-
+#kunena input.go_btn {
+	margin: 0;
+	border: 0;
+	width: 30px;
+}
 
 div.discussions {
 	margin: 15px 0;
 	width: 150px;
 }
 
-div.corner1 {
+div.corner_tl {
 	width: 960px;
 	margin: 0 auto;
 }
 
-div.corner2 {
+div.corner_tr {
 
 }
 
-div.corner3 {
+div.corner_br {
 
 }
 
-div.corner4 {
+div.corner_bl {
 
 }
 
@@ -152,7 +179,7 @@ div.credits p {
 /* ------------------------- TABLES ------------------------- */
 
 #kunena table {
-	border: 1px solid #4f7ba4;
+	border: 1px solid #83afda;
 	clear:both;
 	border-collapse: collapse;
 }
@@ -160,8 +187,13 @@ div.credits p {
 thead {
 	background-color: #FC8F30;
 	color: #ffffff;
-	font-size: 14px;
+	font-size: 12px;
 	text-align: center;
+	height: 25px;
+	text-transform:uppercase;
+}
+
+thead col1 {
 }
 
 tbody {
@@ -171,18 +203,31 @@ tbody {
 tfoot {
 
 }
+
+div.announcements {
+	padding: 15px;
+	background-color: #F7F7F7;
+	margin-bottom: 15px;
+	border: 1px solid #d6d6d6;
+}
+
+
+div.announcements h3 {
+	text-align: center;
+}
 	
 table.forum_body {
 
 }
 
 
-tr.odd_row {
+tr.row_odd {
 
 }
 
-tr.even_row {
-	background-color: #e2e9f0;
+tr.row_even {
+	background-color: #F7F7F7;
+	border-top: 1px solid #e5e5e5;
 }
 
 td.col1 {
@@ -197,7 +242,7 @@ td.col1 span {
 }
 
 td.col2 {
-	width: 50px;
+	width: 60px;
 	text-align:center;
 	padding: 5px;
 }
@@ -210,22 +255,20 @@ td.col3 {
 td.col4 {
 	width: 150px;
 	padding: 5px;
+	vertical-align: center;
 }
 
 
 /* ------------------------- ANNOUNCEMENTS ------------------------- */
 
-table.announcements,
-table.announcements td {
-		text-align: left;
+p.announce_summary {
+	font-size: 13px;
+	line-height: 150%;
 }
 
-div.announce_create {
-
-}
-
-div.announce_summary {
-
+p.announce_summary span {
+	font-weight: bold;
+	padding-right: 5px;
 }
 
 					

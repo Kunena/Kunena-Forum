@@ -15,10 +15,10 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 
 <?php echo $this->loadTemplate('top'); ?>
 		
-		<div class="corner1">
-			<div class="corner2">
-				<div class="corner3">
-					<div class="corner4">
+		<div class="corner_tl">
+			<div class="corner_tr">
+				<div class="corner_br">
+					<div class="corner_bl">
 						<form action="index.php" method="post" name="">
 							<table class="forum_body">
 								<thead>

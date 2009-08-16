@@ -24,9 +24,138 @@ Dark Grey color:			#2c2c2c		RGB: 44/44/44
 
 /* ------------------------- GLOBAL ------------------------- */
 
+body {
+	background-color: #ffffff;
+	font-family: Ariel, Helvetiva, sans-serif;
+	font-size: 100%;
+	color: #2C2C2C;
+}
+
+img {
+	border: none 0;
+}
+
+#kunena {
+	
+}
+
+#kunena,
+table,
+div.topnav,
+table.announcements {
+	width: 960px;
+	margin: 0 auto;
+}
+
+h1 {}
+h2 {}
+h3 {}
+h4 {}
+
+div.search {
+
+}
+
+div.profile_box {
+
+}
+
+div.show_hide {
+
+}
+
+div.top_info_box,
+div.bottom_info_box {
+	width: 960px;
+	margin: 0 auto;
+	}
+
+div.jump_box {
+
+}
+
+div.pagination_box {
+
+}
+
+div.discussions {
+
+}
+
+div.corner1 {
+	width: 960px;
+	margin: 0 auto;
+}
+
+div.corner2 {
+
+}
+
+div.corner3 {
+
+}
+
+div.corner4 {
+
+}
+
+div.credits {
+	width: 960px;
+	margin: 0 auto;
+}
+
+
+	
+/* ------------------------- TABLES ------------------------- */
+
+thead {
+
+}
+
+tbody {
+
+}
+
+tfoot {
+
+}
+	
+table.forum_body {
+
+}
+
+
+tr.odd_row {
+
+}
+tr.even_row {
+
+}
+
+td.col1 {}
+
+td.col2 {}
+
+td.col3 {}
+
+td.col4 {}
+
+td.col5 {}
+
+
+/* ------------------------- ANNOUNCEMENTS ------------------------- */
+
+div.announce_create {
+
+}
+
+div.announce_summary {
+
+}
 
 
 
+					
 /* ------------------------- RECENT ------------------------- */
 
 

@@ -209,35 +209,71 @@ class KunenaModelRecent extends JModel
 	{
 		$query = new KQuery();
 
-		// Select all fields from the articles table.
+		// Select fields.
 		$query->select('a.*');
-		$query->from('`#__kunena_categories` AS a');
-		$query->select('COUNT(DISTINCT parent.id) AS level');
-		$query->join('LEFT OUTER', '`#__kunena_categories` AS parent ON a.left_id > parent.left_id AND a.right_id < parent.right_id');
+		$query->select('t.id AS mesid, t.message AS messagetext');
+		$query->select('m.mesid AS attachmesid');
+		$query->select('(f.thread > 0) AS myfavorite');
+		$query->select('c.id AS catid, c.name AS catname');
+		$query->select('b.lastpost');
+
+		$query->from('#__kunena_messages AS a');
+
+		if ($this->getState('filter.mylatest', true)) {
+			$query->join('', '(SELECT mm.thread, MAX(mm.time) AS lastpost' .
+					' FROM #__kunena_messages AS mm' .
+					' JOIN (SELECT thread' .
+						' FROM #__kunena_messages' .
+						' WHERE userid='.(int) $kunena_my->id .
+						' GROUP BY 1' .
+							' UNION ALL' .
+						' SELECT thread' .
+						' FROM #__kunena_favorites' .
+						' WHERE userid='.(int) $kunena_my->id.') AS tt ON mm.thread = tt.thread' .
+						' WHERE hold=0' .
+						' AND moved=0' .
+						' AND catid IN ('.$kunenaSession->allowed.')' .
+						' GROUP BY 1) AS b ON b.thread = a.thread');
+		}
+		else {
+			$query->join('', '(SELECT thread, MAX(time) AS lastpost' .
+					' FROM #__kunena_messages' .
+					' WHERE time > '.$querytime.
+					' AND hold=0' .
+					' AND moved=0' .
+					' AND catid IN ($kunenaSession->allowed)' .
+					$latestcats .
+					' GROUP BY 1) AS b ON b.thread = a.thread');
+		}
+
+
+		$query->join('', '#__kunena_messages AS t ON a.thread = t.id');
+
+		// Resolve foriegn keys with the categories table.
+		$query->join('LEFT', '#__kunena_categories AS c ON c.id = a.catid');
+
+		// Resolve foriegn keys with the attachments table.
+		$query->join('LEFT', '#__kunena_attachments AS m ON m.mesid = a.id');
+
+		// Resolve foriegn keys with the favorites table.
+		$query->join('LEFT', '#__kunena_favorites AS f ON  f.thread = a.id && f.userid = '.(int) $kunena_my->id);
+
+		// Resolve foriegn keys with the users table.
+		$query->join('LEFT', '#__kunena_users AS u ON u.userid = a.userid');
+
+
+		$query->where('a.parent = 0');
+		$query->where('a.moved = 0');
+		$query->where('a.hold = 0');
+
+
 		$query->group('a.id');
 
-		// Resolve foriegn keys with the messages_text table.
-		$query->select('b.subject, b.name AS mname, b.user_id, b.category_id AS lastcat');
-		$query->join('LEFT', '`#__kunena_posts` AS b ON a.last_post_id = b.id');
-
-		// Resolve foriegn keys with the messages_text table.
-		$query->select('c.username, c.name AS uname');
-		$query->join('LEFT', '`#__users` AS c ON b.user_id = c.id');
-
-
-		// If the model is set to check publication state, add to the query.
-		if ($this->getState('check.state', true)) {
-			$query->where('a.published = 1');
+		if ($this->getState('filter.mylatest', true)) {
+			$query->order('f.thread DESC');
 		}
 
-		// Filter the categories over the parent if set.
-		$parent_id = $this->getState('filter.parent_id');
-		if ($parent_id !== null) {
-			$query->where('parent.id = '.(int)$parent_id);
-		}
-
-		// Add the list ordering clause.
-		$query->order($this->_db->getEscaped($this->getState('list.ordering')));
+		$query->order('lastpost DESC');
 
 		//echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
 		return $query;

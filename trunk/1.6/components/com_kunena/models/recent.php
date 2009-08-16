@@ -48,7 +48,7 @@ class KunenaModelRecent extends JModel
 
 	/**
 	 * The model context for caching.
-	 * 
+	 *
 	 * @var		string
 	 * @since	1.6
 	 */
@@ -78,6 +78,18 @@ class KunenaModelRecent extends JModel
 			$this->setState('list.start', JRequest::getInt('limitstart'));
 			$this->setState('list.limit', $limit);
 			$this->setState('list.state', 1);
+
+			// Load model type
+			// all = recent topics accross all allowd categories
+			// my = my recent topics
+			// category = recent topics with a select category
+			$this->setState('type', JRequest::getCmd('type', 'all'));
+
+			// If recent request is for a category, we also get a category id
+			$this->setState('category', JRequest::getInt('category', 0));
+
+			// Load filter
+			$this->setState('filter.time', JRequest::getInt('filter_time', 720));
 
 			// Load the user parameters.
 			$user = JFactory::getUser();

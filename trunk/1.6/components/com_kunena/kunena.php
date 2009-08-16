@@ -17,6 +17,10 @@ $view = JRequest::getCmd('view', false);
 // If we are doing things the new way use the MVC.
 if ($view)
 {
+	// Import the languages.
+	$language =& JFactory::getLanguage();
+	$language->load('com_kunena');
+	
 	// Import the Kunena library loader.
 	require_once (JPATH_COMPONENT.'/libraries/import.php');
 

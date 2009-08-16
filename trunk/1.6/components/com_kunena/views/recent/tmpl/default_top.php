@@ -44,5 +44,5 @@ defined('_JEXEC') or die;
 				<a href="/forum/latest/page-4/sel-720" title="<?php echo JText::_('K_PAGE'); ?> 4">4</a>...
 				<a href="/forum/latest/page-22/sel-720" title="<?php echo JText::_('K_PAGE'); ?> 22">22</a>
 			</div>
-			<div class="discussions"><span>647</span> <?php echo JText::_('K_DISCUSSIONS'); ?></div>
+			<div class="discussions"><span>647</span> <?php echo JText::_('K_DISCUSSIONS'); ?> <p><a href="/forum/fb_rss?no_html=1" title="" target="_blank"><img class="rsslink" src="images/emoticons/rss.gif" alt="<?php echo JText::_('K_SUBSCRIBE'); ?>" title="<?php echo JText::_('K_SUBSCRIBE'); ?>" /></a></p></div>
 		</div>

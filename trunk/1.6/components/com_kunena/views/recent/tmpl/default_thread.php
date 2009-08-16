@@ -18,10 +18,10 @@ defined('_JEXEC') or die;
 												<a class="" href="/forum/77-general-talk-about-kunena/26536-another-user-is-bothering-me" title="As I don't know where to post this I do it here.">Another user is bothering me!!!</a>
 											</h4>
 											<div class="post_info">
-												<span class="topic_post_time"><?php echo JText::_('K_POSTED'); ?> 9 <?php echo JText::_('K_HOURS'); ?>, 33 <?php echo JText::_('K_MINUTES'); ?> <?php echo JText::_('K_AGO'); ?></span>
-												<span class="topic_author"><?php echo JText::_('K_BY'); ?> <a href="/community/profile?userid=1515" title="MartinRuthenberg">MartinRuthenberg</a></span>
-												<span class="topic_category"><?php echo JText::_('K_CATEGORY'); ?>: <a href="/forum/77-general-talk-about-kunena" title="General Talk about Kunena">General Talk about Kunena</a> </span>
-												<span class="topic_views"><?php echo JText::_('K_VIEWS'); ?>: 28</span>
+												<div class="topic_post_time"><?php echo JText::_('K_POSTED'); ?> 9 <?php echo JText::_('K_HOURS'); ?>, 33 <?php echo JText::_('K_MINUTES'); ?> <?php echo JText::_('K_AGO'); ?></div>
+												<div class="topic_author"><?php echo JText::_('K_BY'); ?> <a href="/community/profile?userid=1515" title="MartinRuthenberg">MartinRuthenberg</a></div>
+												<div class="topic_category"><?php echo JText::_('K_CATEGORY'); ?>: <a href="/forum/77-general-talk-about-kunena" title="General Talk about Kunena">General Talk about Kunena</a></div>
+												<div class="topic_views">(<?php echo JText::_('K_VIEWS'); ?>: 28)</div>
 											</div>
 										</td>
 										<td class="col4">
@@ -49,7 +49,7 @@ defined('_JEXEC') or die;
 										</td>
 										<td class="col4">
 												<span class="topic_latest_post_avatar"><a href="/community/profile?userid=6606" title=""><img src="images/no_photo_sm.jpg" alt="MartinRuthenberg" /></a></span>
-												<span class="topic_latest_post"><a href="/forum/138-support/26548-white-page-when-posting#26548" title="<?php echo JText::_('K_LAST_POST'); ?>"><?php echo JText::_('K_LAST_POST'); ?></a> <?php echo JText::_('K_BY'); ?>" /> <a class="topic_latest_post_user" href="/community/profile?userid=6606" title="Jazzi">Jazzi</a>
+												<span class="topic_latest_post"><a href="/forum/138-support/26548-white-page-when-posting#26548" title="<?php echo JText::_('K_LAST_POST'); ?>" /><?php echo JText::_('K_LAST_POST'); ?></a> <?php echo JText::_('K_BY'); ?>" <a class="topic_latest_post_user" href="/community/profile?userid=6606" title="Jazzi" />Jazzi</a>
 												</span>
 												<span class="topic_date">3 <?php echo JText::_('K_HOURS'); ?>, 43 <?php echo JText::_('K_MINUTES'); ?> <?php echo JText::_('K_AGO'); ?></span>
 										</td>

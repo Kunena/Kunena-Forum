@@ -18,11 +18,10 @@ defined('_JEXEC') or die;
 					<div class="corner4">
 						<div class="stats_box">
 								<h3><a href="/forum/stats"><?php echo JText::_('K_KUNENA_FORUM_STATS'); ?></a></h3>
-								<img class="show_hide" src="images/icons/shrink.gif" alt="<?php echo JText::_('K_SHOW_HIDE'); ?>"/> 
 								<div class="">	
 									<p><?php echo JText::_('K_TOTAL_USERS'); ?>: <span><a href="/component/community/search/browse">6545</a></span> <?php echo JText::_('K_NEWEST_MEMBER'); ?>: <span><a href="/community/profile?userid=6611" title="tennshadow">tennshadow</a></span></p>
 									<p><?php echo JText::_('K_TOTAL_MESSAGES'); ?>: <span>26093</span> <?php echo JText::_('K_TOTAL_SUBJECTS'); ?>: <span>4466</span> <?php echo JText::_('K_TOTAL_SECTIONS'); ?>: <span>8</span> <?php echo JText::_('K_TOTAL_CATEGORIES'); ?>: <span>109</span></p>
-									<p><?php echo JText::_('K_TODAY_OPEN'); ?>: <span>13</span> Yesterday Open: <span>22</span> <?php echo JText::_('K_TODAY_TOTAL_ANSWER'); ?>: <span>15</span> <?php echo JText::_('K_YESTERDAY_TOTAL_ANSWERED'); ?>: <span>47</span></p>
+									<p><?php echo JText::_('K_TODAY_OPEN'); ?>: <span>13</span> Yesterday Open: <span>22</span> <?php echo JText::_('K_TODAY_TOTAL_ANSWERED'); ?>: <span>15</span> <?php echo JText::_('K_YESTERDAY_TOTAL_ANSWERED'); ?>: <span>47</span></p>
 									<p><a href="/forum/latest"><?php echo JText::_('K_VIEW_RECENT_POSTS'); ?></a> <a href="/forum/stats"><?php echo JText::_('K_MORE_ABOUT_STATS'); ?></a> <a href="/component/community/search/browse"><?php echo JText::_('K_USER_LIST'); ?></a></p>
 								</div>
 						</div>
@@ -30,8 +29,8 @@ defined('_JEXEC') or die;
 				</div>
 			</div>
 		</div>
-		<div class="credits"><?php echo JText::_('K_POWERED_BY'); ?> <a href="http://www.kunena.com" title="Kunena" target="_blank">Kunena</a>
-			<a href="/forum/fb_rss?no_html=1" title="" target="_blank"><img class="rsslink" src="images/emoticons/rss.gif" alt="<?php echo JText::_('K_SUBSCRIBE'); ?>" title="<?php echo JText::_('K_SUBSCRIBE'); ?>" /></a>
+		<div class="credits">
+			<p><?php echo JText::_('K_POWERED_BY'); ?> <a href="http://www.kunena.com" title="Kunena" target="_blank">Kunena</a></p>
 		</div>
 	</div>
 </div>

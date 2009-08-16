@@ -20,12 +20,9 @@ defined('_JEXEC') or die;
 		</div>
 		<div class="search">
 			<form action="/forum/search" name="Search" method="post">
-				<input class="inputbox" type="text" name="q" size="15" value="<?php echo JText::_('K_SEARCH_FORUM'); ?>" />" onblur="if(this.value=='') this.value='<?php echo JText::_('K_SEARCH_FORUM'); ?>';" onfocus="if(this.value=='<?php echo JText::_('K_SEARCH_FORUM'); ?>') this.value='';" />
+				<input class="inputbox" type="text" name="q" size="15" value="<?php echo JText::_('K_SEARCH_FORUM'); ?>"  onblur="if(this.value=='') this.value='<?php echo JText::_('K_SEARCH_FORUM'); ?>';" onfocus="if(this.value=='<?php echo JText::_('K_SEARCH_FORUM'); ?>') this.value='';" />
 				<input type="submit" value="<?php echo JText::_('K_GO'); ?>" name="submit" class="submit_btn"/>
 			</form>
-		</div>
-		<div class="show_hide">
-			<img class="show_hide" src="images/icons/shrink.gif" alt="<?php echo JText::_('K_SHOW_HIDE'); ?>" />
 		</div>
 					
 		<div class="profile_box">
@@ -41,7 +38,6 @@ defined('_JEXEC') or die;
 							<thead>
 								<tr>
 									<h3>Kunena 1.0.11 & 1.5.4 Released</h3>	
-									<div><img class="show_hide" src="images/icons/shrink.gif" alt="<?php echo JText::_('K_SHOW_HIDE'); ?>"/></div>
 								</tr>
 							</thead>
 							<tbody>

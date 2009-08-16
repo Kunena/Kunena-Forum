@@ -59,6 +59,15 @@ h2 { font-size: 17px; }
 h3 { font-size: 16px; }
 h4 { font-size: 15px; margin: 2px;}
 
+#kunena div.topnav li {
+	list-style: none;
+	display: block;
+	width: 130px;
+	float:left;
+}
+
+
+
 div.search {
 	display:block;
 	float:right;
@@ -95,6 +104,17 @@ div.pagination_box {
 	width: auto;
 }
 
+div.pagination_box span {
+	border: 1px solid #606060;
+	padding: 2px;
+}
+
+input.submit_btn {
+	width: 30px!important;
+}
+
+
+
 div.discussions {
 	margin: 15px 0;
 	width: 150px;
@@ -120,9 +140,13 @@ div.corner4 {
 div.credits {
 	width: 960px;
 	margin: 0 auto;
-	font-size: 10px;
 }
 
+div.credits p {
+	font-size: 10px;
+	text-align:center;
+}
+	
 
 	
 /* ------------------------- TABLES ------------------------- */
@@ -168,7 +192,7 @@ td.col1 {
 }
 
 td.col1 span {
-	font-size: 22px;
+	font-size: 24px;
 	color: #4f7ba4;
 }
 
@@ -208,29 +232,31 @@ div.announce_summary {
 /* ------------------------- RECENT ------------------------- */
 
 div.post_info {
-
+	display:block;
 }
 
-span.topic_post_time {
+div.topic_post_time {
+	display:block;
+	float:left;
+	margin-right: 5px;
+}
+
+div.topic_author {
+	display:block;
+	float:left;
+}
+
+div.topic_category {
+	display:block;
+	clear:both;
+}
+
+div.topic_category a {
 	
 }
 
-
-span.topic_author {
-	
-}
-
-
-span.topic_category {
-	
-}
-
-span.topic_category a {
-	
-}
-
-span.topic_views {
-	
+div.topic_views {
+	display:block;
 }
 
 

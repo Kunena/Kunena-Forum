@@ -11,7 +11,6 @@
 defined('_JEXEC') or die;
 ?>			
 		<div class="bottom_info_box">
-			<div class="discussions"><span>647</span> Discussions</div>
 			<div class="pagination_box">
 				Page: <span>1</span>
 				<a href="/forum/latest/page-2/sel-720" title="Page 2">2</a>
@@ -19,4 +18,5 @@ defined('_JEXEC') or die;
 				<a href="/forum/latest/page-4/sel-720" title="Page 4">4</a>...
 				<a href="/forum/latest/page-22/sel-720" title="Page 22">22</a>
 			</div>
+			<div class="discussions"><span>647</span> Discussions</div>
 		</div>

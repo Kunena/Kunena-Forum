@@ -13,7 +13,7 @@ JHtml::stylesheet('default.css', JURI::root().'components/com_kunena/media/css/'
 ?>
 <?php echo $this->loadCommonTemplate('header'); ?>
 
-<?php echo $this->loadTemplate('header'); ?>
+<?php echo $this->loadTemplate('top'); ?>
 		
 		<div class="corner1">
 			<div class="corner2">
@@ -46,6 +46,6 @@ JHtml::stylesheet('default.css', JURI::root().'components/com_kunena/media/css/'
 										</div>
 									</div>
 
-<?php echo $this->loadTemplate('footer'); ?>
+<?php echo $this->loadTemplate('bottom'); ?>
 
 <?php echo $this->loadCommonTemplate('footer'); ?>

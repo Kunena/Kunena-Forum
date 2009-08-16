@@ -12,7 +12,6 @@ defined('_JEXEC') or die;
 ?>
 
 		<div class="top_info_box">
-			<div class="discussions"><span>647</span> Discussions</div>
 			<div class="choose_hours">
 				<select class="input_hours" onchange="document.location.href=this.options[this.selectedIndex].value;" name="select">
 					<option value="/forum/latest/show/sel-4">4 Hours</option>
@@ -45,4 +44,5 @@ defined('_JEXEC') or die;
 				<a href="/forum/latest/page-4/sel-720" title="Page 4">4</a>...
 				<a href="/forum/latest/page-22/sel-720" title="Page 22">22</a>
 			</div>
+			<div class="discussions"><span>647</span> Discussions</div>
 		</div>

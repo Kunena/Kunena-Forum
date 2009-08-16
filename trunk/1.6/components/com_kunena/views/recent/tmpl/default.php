@@ -19,14 +19,14 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 			<div class="corner_tr">
 				<div class="corner_br">
 					<div class="corner_bl">
-						<form action="index.php" method="post" name="">
+						<form action="index.php" method="post" name="bodyform">
 							<table class="forum_body">
 								<thead>
 									<tr>
-										<td class="head-col1"><?php echo JText::_('K_REPLIES'); ?></td>
-										<td class="head-col2">&nbsp;</td>
-										<td class="head-col3"><?php echo JText::_('K_TOPICS'); ?></td>
-										<td class="head-col4"><?php echo JText::_('K_LAST_POST'); ?></td>
+										<td class="col1"><?php echo JText::_('K_REPLIES'); ?></td>
+										<td class="col2">&nbsp;</td>
+										<td class="col3"><?php echo JText::_('K_TOPICS'); ?></td>
+										<td class="col4"><?php echo JText::_('K_LAST_POST'); ?></td>
 									</tr>
 								</thead>
 								<tbody>
@@ -40,7 +40,7 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 															<input type="hidden" name="func" value="bulkactions" />
 															<input type="hidden" name="return" value="/forum" />
 														</form>
-													</div>
+													
 												</div>
 											</div>
 										</div>

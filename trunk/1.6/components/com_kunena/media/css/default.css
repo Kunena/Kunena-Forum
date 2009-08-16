@@ -45,8 +45,9 @@ img {
 #kunena,
 #kunena table,
 div.topnav {
-	width: 960px;
-	margin: 0 auto;
+	width: 100%;
+	/* width: 960px;*/
+	margin: 0 auto;  
 }
 
 a:link,
@@ -98,7 +99,8 @@ div.profile_box p {
 
 div.top_info_box,
 div.bottom_info_box {
-	width: 960px;
+	width: 100%;
+	/* width: 960px; */
 	margin: 0 auto;
 }
 
@@ -118,8 +120,17 @@ div.jump_box {
 }
 
 div.announcements {
-	width: 930px;
-	margin: 0 auto;
+	width: 100%;
+	/* width: 960px; */
+	/* margin: 0 auto; */
+	padding: 15px;
+	background-color: #F7F7F7;
+	margin-bottom: 15px;
+	border: 1px solid #d6d6d6;
+}
+
+div.announcements h3 {
+	text-align: center;
 }
 
 div.pagination_box {
@@ -148,7 +159,8 @@ div.discussions {
 }
 
 div.corner_tl {
-	width: 960px;
+	width: 100%;
+	/* width: 960px; */
 	margin: 0 auto;
 }
 
@@ -165,7 +177,8 @@ div.corner_bl {
 }
 
 div.credits {
-	width: 960px;
+	width: 100%;
+	/* width: 960px; */
 	margin: 0 auto;
 }
 
@@ -204,17 +217,7 @@ tfoot {
 
 }
 
-div.announcements {
-	padding: 15px;
-	background-color: #F7F7F7;
-	margin-bottom: 15px;
-	border: 1px solid #d6d6d6;
-}
 
-
-div.announcements h3 {
-	text-align: center;
-}
 	
 table.forum_body {
 
@@ -317,6 +320,11 @@ div.topic_views {
 
 /* ------------------------- MISC ------------------------- */
 
+.clr {
+	line-height: 1;
+	font-size: 1;
+	clear:both;
+}
 
 
 

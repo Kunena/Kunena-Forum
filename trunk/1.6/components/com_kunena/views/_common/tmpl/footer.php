@@ -10,7 +10,3 @@
 
 defined('_JEXEC') or die;
 ?>
-
-
-this is my header
-<?php echo $this->loadCommonTemplate('header'); ?>

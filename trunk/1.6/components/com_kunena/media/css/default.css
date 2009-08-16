@@ -26,8 +26,8 @@ Dark Grey color:			#2c2c2c		RGB: 44/44/44
 
 body {
 	background-color: #ffffff;
-	font-family: Ariel, Helvetiva, sans-serif;
-	font-size: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
 	color: #2C2C2C;
 }
 
@@ -36,7 +36,11 @@ img {
 }
 
 #kunena {
-	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 100%;
+	color: #2C2C2C;
+	margin: 0;
+	padding: 0;
 }
 
 #kunena,
@@ -47,17 +51,25 @@ table.announcements {
 	margin: 0 auto;
 }
 
-h1 {}
-h2 {}
-h3 {}
-h4 {}
+h1 { font-size: 18px; }
+h2 { font-size: 17px; }
+h3 { font-size: 16px; }
+h4 { font-size: 15px; margin: 2px;}
 
 div.search {
-
+	display:block;
+	float:right;
+	margin-bottom: 10px;
 }
 
 div.profile_box {
-
+	border: 1px solid #4f7ba4;
+	padding: 0 10px ;
+	clear:both;
+	font-size: 11px;
+}
+div.profile_box p {
+	font-size: 12px;
 }
 
 div.show_hide {
@@ -68,14 +80,14 @@ div.top_info_box,
 div.bottom_info_box {
 	width: 960px;
 	margin: 0 auto;
-	}
+}
 
 div.jump_box {
 
 }
 
 div.pagination_box {
-
+	float:right;
 }
 
 div.discussions {
@@ -102,14 +114,23 @@ div.corner4 {
 div.credits {
 	width: 960px;
 	margin: 0 auto;
+	font-size: 10px;
 }
 
 
 	
 /* ------------------------- TABLES ------------------------- */
 
-thead {
+table {
+	border: 1px solid #4f7ba4;
+	clear:both;
+	border-collapse: collapse;
+}
 
+thead {
+	background-color: #FC8F30;
+	color: #ffffff;
+	font-size: 14px;
 }
 
 tbody {
@@ -128,22 +149,38 @@ table.forum_body {
 tr.odd_row {
 
 }
-tr.even_row {
 
+tr.even_row {
+	background-color: #e2e9f0;
 }
 
-td.col1 {}
+td.col1 {
+	width: 80px;
+	text-align:center;
+}
 
-td.col2 {}
+td.col2 {
+	width: 50px;
+	text-align:center;
+	}
 
-td.col3 {}
+td.col3 {
+	width: auto;
+	}
 
-td.col4 {}
+td.col4 {
+	width: 150px;
+}
 
 td.col5 {}
 
 
 /* ------------------------- ANNOUNCEMENTS ------------------------- */
+
+table.announcements,
+table.announcements td {
+		text-align: left;
+}
 
 div.announce_create {
 
@@ -153,10 +190,34 @@ div.announce_summary {
 
 }
 
-
-
 					
 /* ------------------------- RECENT ------------------------- */
+
+div.post_info {
+
+}
+
+span.topic_post_time {
+	
+}
+
+
+span.topic_author {
+	
+}
+
+
+span.topic_category {
+	
+}
+
+span.topic_category a {
+	
+}
+
+span.topic_views {
+	
+}
 
 
 
@@ -172,4 +233,16 @@ div.announce_summary {
 
 
 /* ------------------------- MISC ------------------------- */
+
+
+
+
+
+
+
+
+
+
+
+
 

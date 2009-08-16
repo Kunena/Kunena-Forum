@@ -227,34 +227,37 @@ class KunenaModelRecent extends JModel
 		// Build base query
 		$time = JFactory::getDate('-'.$this->getState('filter.time').' hours');
 
+		$query->select('count(*)');
+
 		switch ($this->getState('type'))
 		{
 		    case 'all':
-		        $query->select('count(*)');
 		        $query->from('#__kunena_threads AS t');
 		        $query->where('t.hold=0 AND t.moved_id=0 AND t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
 		        $query->where('last_post_time >'.$time->toUnix());
 
 		        break;
 		    case 'my':
-				$query->select('count(distinct tmp.thread)');
-
 				$query1 = new KQuery();
 				$query2 = new KQuery();
 
 				$query1->select('m.thread As thread');
 		        $query1->from('#__kunena_messages AS m');
-				$query1->from('#__kunena_threads AS t');
-				$query1->where('t.id = m.thread');
-		        $query1->where('t.hold=0 AND t.moved_id=0 AND t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
+				$query1->from('#__kunena_threads AS t1');
+				$query1->where('t1.id = m.thread');
+		        $query1->where('t1.hold=0 AND t1.moved_id=0 AND t1.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
+		        $query1->where('t1.last_post_time >'.$time->toUnix());
+		        $query1->where('m.userid = '.intval($user->userid));
 
 				$query2->select('f.thread As thread');
 		        $query2->from('#__kunena_favorites AS f');
-				$query2->from('#__kunena_threads AS t');
-				$query2->where('t.id = f.thread');
-		        $query2->where('t.hold=0 AND t.moved_id=0 AND t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
+				$query2->from('#__kunena_threads AS t2');
+				$query2->where('t2.id = f.thread');
+		        $query2->where('t2.hold=0 AND t2.moved_id=0 AND t2.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
+		        $query2->where('t2.last_post_time >'.$time->toUnix());
+		        $query2->where('f.userid = '.intval($user->userid));
 
-				$query->from('('.$query1->toString().' UNION ALL '.$query2->toString().' ) AS tmp');
+				$query->from('('.$query1->toString().' UNION '.$query2->toString().' ) AS t');
 
 				break;
 		    case 'category':
@@ -277,75 +280,72 @@ class KunenaModelRecent extends JModel
 	 */
 	protected function _getListQuery()
 	{
-		$query = new KQuery();
+	    $query = new KQuery();
+		$user = KUser::getInstance(true);
 
-		// Select fields.
-		$query->select('a.*');
-		$query->select('t.id AS mesid, t.message AS messagetext');
-		$query->select('m.mesid AS attachmesid');
+		// Build base query
+		$time = JFactory::getDate('-'.$this->getState('filter.time').' hours');
+
+		$query->select('t.*');
 		$query->select('(f.thread > 0) AS myfavorite');
-		$query->select('c.id AS catid, c.name AS catname');
-		$query->select('b.lastpost');
+		$query->select('c.name AS catname');
 
-		$query->from('#__kunena_messages AS a');
 
-		if ($this->getState('filter.mylatest', true)) {
-			$query->join('', '(SELECT mm.thread, MAX(mm.time) AS lastpost' .
-					' FROM #__kunena_messages AS mm' .
-					' JOIN (SELECT thread' .
-						' FROM #__kunena_messages' .
-						' WHERE userid='.(int) $kunena_my->id .
-						' GROUP BY 1' .
-							' UNION ALL' .
-						' SELECT thread' .
-						' FROM #__kunena_favorites' .
-						' WHERE userid='.(int) $kunena_my->id.') AS tt ON mm.thread = tt.thread' .
-						' WHERE hold=0' .
-						' AND moved=0' .
-						' AND catid IN ('.$kunenaSession->allowed.')' .
-						' GROUP BY 1) AS b ON b.thread = a.thread');
+		switch ($this->getState('type'))
+		{
+		    case 'all':
+		        $query->from('#__kunena_threads AS t');
+		        $query->where('t.hold=0 AND t.moved_id=0 AND t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
+		        $query->where('t.last_post_time >'.$time->toUnix());
+
+		        break;
+		    case 'my':
+		        $query->from('#__kunena_threads AS t');
+
+				$query1 = new KQuery();
+				$query2 = new KQuery();
+
+				$query1->select('m.thread As thread');
+		        $query1->from('#__kunena_messages AS m');
+				$query1->from('#__kunena_threads AS t1');
+				$query1->where('t1.id = m.thread');
+		        $query1->where('t1.hold=0 AND t1.moved_id=0 AND t1.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
+		        $query1->where('t1.last_post_time >'.$time->toUnix());
+		        $query1->where('m.userid = '.intval($user->userid));
+
+				$query2->select('f.thread As thread');
+		        $query2->from('#__kunena_favorites AS f');
+				$query2->from('#__kunena_threads AS t2');
+				$query2->where('t2.id = f.thread');
+		        $query2->where('t2.hold=0 AND t2.moved_id=0 AND t2.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
+		        $query2->where('t2.last_post_time >'.$time->toUnix());
+		        $query2->where('f.userid = '.intval($user->userid));
+
+				$query->join('', '('.$query1->toString().' UNION '.$query2->toString().' ) AS tmp ON t.id = tmp.thread');
+
+				break;
+		    case 'category':
+
+		        break;
+		    default:
+		        // Invalid view type specified
 		}
-		else {
-			$query->join('', '(SELECT thread, MAX(time) AS lastpost' .
-					' FROM #__kunena_messages' .
-					' WHERE time > '.$querytime.
-					' AND hold=0' .
-					' AND moved=0' .
-					' AND catid IN ($kunenaSession->allowed)' .
-					$latestcats .
-					' GROUP BY 1) AS b ON b.thread = a.thread');
-		}
 
+		$query->join('LEFT', '#__kunena_favorites AS f ON f.thread = t.id AND f.userid = '.intval($user->userid));
+		$query->join('LEFT', '#__kunena_categories AS c ON c.id = t.catid');
 
-		$query->join('', '#__kunena_messages AS t ON a.thread = t.id');
+		// Redundant: $query->where('t.moved_id = 0 and t.hold = 0');
 
-		// Resolve foriegn keys with the categories table.
-		$query->join('LEFT', '#__kunena_categories AS c ON c.id = a.catid');
+		$query->group('t.id');
 
-		// Resolve foriegn keys with the attachments table.
-		$query->join('LEFT', '#__kunena_attachments AS m ON m.mesid = a.id');
-
-		// Resolve foriegn keys with the favorites table.
-		$query->join('LEFT', '#__kunena_favorites AS f ON  f.thread = a.id && f.userid = '.(int) $kunena_my->id);
-
-		// Resolve foriegn keys with the users table.
-		$query->join('LEFT', '#__kunena_users AS u ON u.userid = a.userid');
-
-
-		$query->where('a.parent = 0');
-		$query->where('a.moved = 0');
-		$query->where('a.hold = 0');
-
-
-		$query->group('a.id');
-
-		if ($this->getState('filter.mylatest', true)) {
+		if ($this->getState('type')=='my') {
 			$query->order('f.thread DESC');
 		}
 
-		$query->order('lastpost DESC');
+		$query->order('t.last_post_time DESC');
 
-		//echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
+		// echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
+
 		return $query;
 	}
 

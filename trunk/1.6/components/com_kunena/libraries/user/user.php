@@ -70,7 +70,7 @@ class KUser extends JTable
 			if ($kunena_my->id) self::$_instance->load($kunena_my->id);
 			if ($updateSessionInfo) {
 			    self::$_instance->_updateSessionInfo();
-			    self::$_instance->_updateAllowedForums();
+			    self::$_instance->_updateAllowedCategories();
 			    self::$_instance->store();
 			}
 		}
@@ -145,12 +145,12 @@ class KUser extends JTable
 		// of the last saved currvisit - only after that can we reset currvisit to now before the store
 		if ($this->isNewSession())
 		{
-			$this->last_visit_time = $this->currvisit;
+			$this->last_visit_time = $this->curr_visit_time;
 			$this->read_topics = '';
 		}
 	}
 
-	protected function _updateAllowedForums()
+	protected function _updateAllowedCategories()
 	{
 		// check to see if we need to refresh the allowed forums cache
 		// get all accessaible forums if needed (eg on forum modification, new session)
@@ -166,7 +166,7 @@ class KUser extends JTable
 		}
 	}
 
-	private function _has_rights(&$kunena_acl, $gid, $access, $recurse)
+	private function _hasRights(&$kunena_acl, $gid, $access, $recurse)
 	{
 		if ($gid == $access) return 1;
 		if ($recurse) {
@@ -185,10 +185,11 @@ class KUser extends JTable
 		$query->select('c.id, c.pub_access, c.pub_recurse, c.admin_access, c.admin_recurse, c.moderated');
 		$query->select('(m.userid IS NOT NULL) AS ismod');
 		$query->from('#__kunena_categories AS c');
-		$query->leftJoin('#__kunena_moderation AS m ON c.id=m.catid AND m.userid='.$this->userid);
+		$query->leftJoin('#__kunena_moderation AS m ON c.id=m.catid AND m.userid='.intval($this->userid));
 		$query->where('c.published=1');
 
 		$this->_db->setQuery($query->toString());
+		// echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
 		$rows = $this->_db->loadObjectList();
 
 		// Check for a database error.
@@ -199,7 +200,8 @@ class KUser extends JTable
 
 		if ($rows)
 		{
-			$acl = &JFactory::getACL();
+			$acl = JFactory::getACL();
+			$user = JFactory::getUser();
 
 			if ($this->userid != 0)
 			{
@@ -215,9 +217,9 @@ class KUser extends JTable
 		    {
 					if (($row->moderated and $row->ismod) or
 						($row->pub_access == 0) or
-						($row->pub_access == -1 and $uid > 0) or
-						($row->pub_access > 0 and _has_rights($acl, $gid, $row->pub_access, $row->pub_recurse)) or
-						($row->admin_access > 0 and _has_rights($acl, $gid, $row->admin_access, $row->admin_recurse))
+						($row->pub_access == -1 and $this->userid > 0) or
+						($row->pub_access > 0 and $this->_hasRights($acl, $user->gid, $row->pub_access, $row->pub_recurse)) or
+						($row->admin_access > 0 and $this->_hasRights($acl, $user->gid, $row->admin_access, $row->admin_recurse))
 					) $catlist .= (($catlist == '')?'':',').$row->id;
 			}
 		}

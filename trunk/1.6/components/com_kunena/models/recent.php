@@ -225,43 +225,48 @@ class KunenaModelRecent extends JModel
 		$user = KUser::getInstance(true);
 
 		// Build base query
-		$query->select('count(*)');
-		$query->from('#__kunena_threads AS t');
-		$query->where('t.hold=0 AND t.moved_id=0 AND t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
+		$time = JFactory::getDate('-'.$this->getState('filter.time').' hours');
 
-		$query->from('#__kunena_messages AS m');
-		$query->where('m.thread = t.id');
-		$query->where('m.userid='.intval($user->userid));
+		switch ($this->getState('type'))
+		{
+		    case 'all':
+		        $query->select('count(*)');
+		        $query->from('#__kunena_threads AS t');
+		        $query->where('t.hold=0 AND t.moved_id=0 AND t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
+		        $query->where('last_post_time >'.$time->toUnix());
 
+		        break;
+		    case 'my':
+				$query->select('count(distinct tmp.thread)');
 
+				$query1 = new KQuery();
+				$query2 = new KQuery();
 
-	//	$query->where('t.id IN (SELECT )', 'OR');
+				$query1->select('m.thread As thread');
+		        $query1->from('#__kunena_messages AS m');
+				$query1->from('#__kunena_threads AS t');
+				$query1->where('t.id = m.thread');
+		        $query1->where('t.hold=0 AND t.moved_id=0 AND t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
 
+				$query2->select('f.thread As thread');
+		        $query2->from('#__kunena_favorites AS f');
+				$query2->from('#__kunena_threads AS t');
+				$query2->where('t.id = f.thread');
+		        $query2->where('t.hold=0 AND t.moved_id=0 AND t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
+
+				$query->from('('.$query1->toString().' UNION ALL '.$query2->toString().' ) AS tmp');
+
+				break;
+		    case 'category':
+
+		        break;
+		    default:
+		        // Invalid view type specified
+		}
+
+		// echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
 
 		return $query;
-
-//if ($func == "mylatest")
-//{
-//	$document->setTitle(_KUNENA_MY_DISCUSSIONS . ' - ' . stripslashes($kunenaConfig->board_title));
-//	$query = "SELECT count(distinct tmp.thread) FROM
-//				(SELECT m.thread As thread
-//					FROM #__kunena_messages AS m
-//					JOIN #__kunena_treads AS t ON t.id = m.thread
-//					WHERE m.userid=$kunena_my->id AND t.hold=0 AND t.moved_id=0 AND t.catid IN ($kunenaSession->allowed)
-//				UNION ALL
-//				 SELECT m.id As thread
-//					FROM #__kunena_threads AS t
-//					JOIN #__kunena_favorites AS f ON t.id = f.thread
-//					WHERE f.userid=$kunena_my->id AND t.hold=0 and t.moved_id=0 AND t.catid IN ($kunenaSession->allowed)) AS tmp";
-//}
-//else
-//{
-//	$document->setTitle(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($kunenaConfig->board_title));
-//	$query = "SELECT count(*) FROM #__kunena_threads WHERE last_post_time >'$querytime'".
-//			" AND hold=0 AND moved_id=0 AND catid IN ($kunenaSession->allowed)" . $latestcats; // if categories are limited apply filter
-//}
-
-
 	}
 
 	/**

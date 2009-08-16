@@ -45,7 +45,7 @@ defined('_JEXEC') or die;
 				<a href="/forum/latest/page-22/sel-720" title="<?php echo JText::_('K_PAGE'); ?> 22">22</a>
 			</div>
 			<div class="discussions">
-				<span>647</span> <?php echo JText::_('K_DISCUSSIONS'); ?>
+				<span><?php echo $this->total; ?></span> <?php echo JText::_('K_DISCUSSIONS'); ?>
 			</div>
 			<div class="rsslink" >
 				<a href="/forum/fb_rss?no_html=1" title="" target="_blank">

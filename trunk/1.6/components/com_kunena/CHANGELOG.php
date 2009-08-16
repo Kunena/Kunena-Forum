@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.6.0dev
 
+16-Aug-2009 Matias
++ [#17628] Add basic logic for recent discussions
+
 16-Aug-2009 fxstein
 + [#17628] KUser class created after merging user and session tables
 + [#17628] Initial implementation of recent model

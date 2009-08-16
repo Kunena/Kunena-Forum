@@ -51,12 +51,9 @@ class KUser extends JTable
 	protected $_sessiontimeout = false;
 	private static $_instance;
 
-	function __construct($db)
+	function __construct()
 	{
-		$config =& KConfig::getInstance();
-		parent::__construct('#__kunena_users', 'userid', $db);
-		$this->last_visit_time = time() + $config->board_ofset - KUNENA_SECONDS_IN_YEAR;
-		$this->curr_visit_time = time() + $config->board_ofset;
+		parent::__construct('#__kunena_users', 'userid', JFactory::getDBO());
 	}
 
 	function &getInstance( $updateSessionInfo=false )
@@ -65,6 +62,11 @@ class KUser extends JTable
 			$kunena_my = &JFactory::getUser();
 			$kunena_db = &JFactory::getDBO();
 			self::$_instance =& new KUser($kunena_db);
+
+			$config =& KConfig::getInstance();
+			self::$_instance->last_visit_time = time() + $config->board_ofset - KUNENA_SECONDS_IN_YEAR;
+			self::$_instance->curr_visit_time = time() + $config->board_ofset;
+
 			if ($kunena_my->id) self::$_instance->load($kunena_my->id);
 			if ($updateSessionInfo) {
 			    self::$_instance->_updateSessionInfo();

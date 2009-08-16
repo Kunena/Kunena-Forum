@@ -155,7 +155,7 @@ class KUser extends JTable
 		// check to see if we need to refresh the allowed forums cache
 		// get all accessaible forums if needed (eg on forum modification, new session)
 		if (!$this->allowed_categories or $this->allowed_categories == 'na' or $this->isNewSession()) {
-			$allow_categories = $this->getAllowedForums();
+			$allow_categories = $this->getAllowedCategories();
 
 			if (!$allow_categories)
 			{

@@ -152,15 +152,15 @@ abstract class KConfigBase
     {
         $tables = KDatabaseMaintenance::getInstance();
         if ($tables->check($this->GetConfigTableName()))
-	{
+        {
         	$this->_db->setQuery("SELECT * FROM ".$this->GetConfigTableName());
-		$config = $this->_db->loadAssoc();
-       		check_dberror("Unable to load configuration table.");
+        	$config = $this->_db->loadAssoc();
+//       		check_dberror("Unable to load configuration table.");
 
-		if ($config!=null)
-		{
-			$this->bind($config);
-		}
+			if ($config!=null)
+			{
+				$this->bind($config);
+			}
         }
 
         // Check for user specific overrides
@@ -335,7 +335,7 @@ class KConfig extends KConfigBase
     {
         static $instance;
         if (!$instance) {
-            $userinfo = new KUser();
+            $userinfo = new KUser($this->_db);
 	    $instance = new KConfig($userinfo);
 	}
         return $instance;

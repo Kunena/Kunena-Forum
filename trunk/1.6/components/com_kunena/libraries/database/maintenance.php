@@ -19,12 +19,11 @@ class KDatabaseMaintenance
 
 	function __construct()
 	{
-       		$kunena_db = &JFactory::getDBO();
-		$kunena_db->setQuery( "SHOW TABLES LIKE '" .$kunena_db->getPrefix(). "kunena_%'");
-		$tables = $kunena_db->loadResultArray();
-		$prelen = strlen($kunena_db->getPrefix());
+       	$db = &JFactory::getDBO();
+		$db->setQuery( "SHOW TABLES LIKE '" .$db->getPrefix(). "kunena_%'");
+		$tables = $db->loadResultArray();
+		$prelen = strlen($db->getPrefix());
 		foreach	($tables as $table) $this->tables['#__'.substr($table,$prelen)] = 1;
-		check_dberror('Unable to check for existing tables.');
 	}
 
 	function &getInstance()

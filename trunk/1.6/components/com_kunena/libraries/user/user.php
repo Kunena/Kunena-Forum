@@ -174,7 +174,7 @@ class KUser extends JTable
 		return 0;
 	}
 
-	function getAllowedForums()
+	function getAllowedCategories()
 	{
 		$catlist = '';
 

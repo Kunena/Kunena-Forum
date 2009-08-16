@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
 kimport('database.query');
+kimport('user.user');
 
 /**
  * Categories model for the Kunena package.
@@ -193,8 +194,9 @@ class KunenaModelRecent extends JModel
 		//}
 
 		// Load the total.
-		$query = $this->_getListQuery();
-		$return = (int) $this->_getListCount($query->toString());
+		$query = $this->_getTotalQuery();
+		$this->_db->setQuery($query->toString());
+		$return = (int) $this->_db->loadResult();
 
 		// Check for a database error.
 		if ($this->_db->getErrorNum()) {
@@ -209,6 +211,57 @@ class KunenaModelRecent extends JModel
 		//$cache->store($total, $store);
 
 		return $this->_totals[$key];
+	}
+
+	/**
+	 * Method to build an SQL query to get the total count of item
+	 *
+	 * @return	string	An SQL query.
+	 * @since	1.6
+	 */
+	protected function _getTotalQuery()
+	{
+		$query = new KQuery();
+		$user = KUser::getInstance(true);
+
+		// Build base query
+		$query->select('count(*)');
+		$query->from('#__kunena_threads AS t');
+		$query->where('t.hold=0 AND t.moved_id=0 AND t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
+
+		$query->from('#__kunena_messages AS m');
+		$query->where('m.thread = t.id');
+		$query->where('m.userid='.intval($user->userid));
+
+
+
+	//	$query->where('t.id IN (SELECT )', 'OR');
+
+
+		return $query;
+
+//if ($func == "mylatest")
+//{
+//	$document->setTitle(_KUNENA_MY_DISCUSSIONS . ' - ' . stripslashes($kunenaConfig->board_title));
+//	$query = "SELECT count(distinct tmp.thread) FROM
+//				(SELECT m.thread As thread
+//					FROM #__kunena_messages AS m
+//					JOIN #__kunena_treads AS t ON t.id = m.thread
+//					WHERE m.userid=$kunena_my->id AND t.hold=0 AND t.moved_id=0 AND t.catid IN ($kunenaSession->allowed)
+//				UNION ALL
+//				 SELECT m.id As thread
+//					FROM #__kunena_threads AS t
+//					JOIN #__kunena_favorites AS f ON t.id = f.thread
+//					WHERE f.userid=$kunena_my->id AND t.hold=0 and t.moved_id=0 AND t.catid IN ($kunenaSession->allowed)) AS tmp";
+//}
+//else
+//{
+//	$document->setTitle(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($kunenaConfig->board_title));
+//	$query = "SELECT count(*) FROM #__kunena_threads WHERE last_post_time >'$querytime'".
+//			" AND hold=0 AND moved_id=0 AND catid IN ($kunenaSession->allowed)" . $latestcats; // if categories are limited apply filter
+//}
+
+
 	}
 
 	/**

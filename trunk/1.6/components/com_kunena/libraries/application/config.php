@@ -335,7 +335,7 @@ class KConfig extends KConfigBase
     {
         static $instance;
         if (!$instance) {
-            $userinfo = new CKunenaUserprofile();
+            $userinfo = new KUser();
 	    $instance = new KConfig($userinfo);
 	}
         return $instance;

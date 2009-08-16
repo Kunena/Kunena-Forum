@@ -29,6 +29,8 @@ class KunenaViewRecent extends KView
 	 */
 	public function display($tpl = null)
 	{
-		var_dump($this->get('Items'));
+		var_dump($this->get('Total'));
+
+	    var_dump($this->get('Items'));
 	}
 }

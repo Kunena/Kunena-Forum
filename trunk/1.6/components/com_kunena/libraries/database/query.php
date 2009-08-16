@@ -94,6 +94,43 @@ class KQuery
 	{
 	}
 
+	function clear($clause = null)
+	{
+		switch ($clause)
+		{
+			case 'select':
+				$this->_select = null;
+				break;
+			case 'from':
+				$this->_from = null;
+				break;
+			case 'join':
+				$this->_join = null;
+				break;
+			case 'where':
+				$this->_where = null;
+				break;
+			case 'group':
+				$this->_group = null;
+				break;
+			case 'having':
+				$this->_having = null;
+				break;
+			case 'order':
+				$this->_order = null;
+				break;
+			default:
+				$this->_select = null;
+				$this->_from = null;
+				$this->_join = null;
+				$this->_where = null;
+				$this->_group = null;
+				$this->_having = null;
+				$this->_order = null;
+				break;
+		}
+	}
+
 	/**
 	 * @param	mixed	A string or an array of field names
 	 */

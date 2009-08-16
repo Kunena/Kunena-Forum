@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.6.0dev
 
+15-Aug-2009 Matias
++ [#17628] Add some html for recent discussions
+
 15-Aug-2009 fxstein
 # [#17375] fixed broken debug output on failed queries
 ^ [#17375] additional installer changes for new data model and mvc

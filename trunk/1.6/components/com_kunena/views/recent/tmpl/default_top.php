@@ -10,7 +10,6 @@
 
 defined('_JEXEC') or die;
 ?>
-
 		<div class="top_info_box">
 			<div class="choose_time">
 				<select class="input_time" onchange="document.location.href=this.options[this.selectedIndex].value;" name="select">
@@ -24,7 +23,7 @@ defined('_JEXEC') or die;
 					<option value="/forum/latest/show/sel-8760"><?php echo JText::_('K_YEAR'); ?></option>
 				</select>
 			</div>
-			<div class="jump_box">
+			<div class="choose_forumcat">
 				<form name="choose_forum" method="post" target="_self" action="/forum">
 					<input type="hidden" name="func" value="showcat"/>
 					<select name="catid" class="input_forum" onchange="if(this.options[this.selectedIndex].value> 0){ this.form.submit() }">
@@ -47,9 +46,6 @@ defined('_JEXEC') or die;
 			<div class="discussions">
 				<span><?php echo $this->total; ?></span> <?php echo JText::_('K_DISCUSSIONS'); ?>
 			</div>
-			<div class="rsslink" >
-				<a href="/forum/fb_rss?no_html=1" title="" target="_blank">
-				<img class="rsslink" src="images/emoticons/rss.gif" alt="<?php echo JText::_('K_SUBSCRIBE'); ?>" title="<?php echo JText::_('K_SUBSCRIBE'); ?>" /></a>
-			</div>
 			
 		</div>
+		<div class="clr"></div>

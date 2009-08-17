@@ -38,16 +38,16 @@ img {
 	font-family: Arial, Helvetica, sans-serif;
 	color: #2C2C2C;
 	margin: 0;
-	padding: 0;
+	padding:0;
 	line-height: 120%;
+	width: 95%;
+	margin: 0 auto; 
 }
 
-#kunena,
 #kunena table,
 div.topnav {
 	width: 100%;
-	/* width: 960px;*/
-	margin: 0 auto;  
+	margin: 0 auto; 
 }
 
 a:link,
@@ -68,14 +68,38 @@ h2 { font-size: 17px; }
 h3 { font-size: 16px;  }
 h4 { font-size: 15px; margin: 2px;}
 
+
+/* ------ TOP NAV ---- */
+#kunena div.topnav {
+
+}
+
 #kunena div.topnav li {
+	margin: 0 60px 0 -40px ;
+	padding: 0;
 	list-style: none;
 	display: block;
-	width: 130px;
+	width: auto;
 	float:left;
+	font-size: 16px;
+	font-weight:bold;
+	background: #0B3768 url('../images/menubg.gif') repeat left;
+
+}
+#kunena div.topnav li:hover {
+	background: #000000 url('../images/menubgover.gif') repeat left;
+
+}
+#kunena div.topnav li a {
+	color: #ffffff;
+}
+
+#kunena div.topnav li a:hover {
+	color: #ffffff;
 }
 
 
+/* ----------- */
 
 div.search {
 	display:block;
@@ -95,35 +119,32 @@ div.profile_box p {
 	font-size: 12px;
 }
 
-
-
 div.top_info_box,
 div.bottom_info_box {
 	width: 100%;
-	/* width: 960px; */
 	margin: 0 auto;
 }
 
-
-div.top_info_box {
-	
+div.bottom_info_box {
+	margin-top: 15px;
 }
-
 
 div.choose_time {
 	float:left;
 	margin-right: 15px;
 }
 
-div.jump_box {
+div.choose_time {
+	width:auto;
+}
 
+div.choose_forumcat {
+	width: 50%;
 }
 
 div.announcements {
 	width: 100%;
-	/* width: 960px; */
-	/* margin: 0 auto; */
-	padding: 15px;
+	padding: 0;
 	background-color: #F7F7F7;
 	margin-bottom: 15px;
 	border: 1px solid #d6d6d6;
@@ -131,10 +152,19 @@ div.announcements {
 
 div.announcements h3 {
 	text-align: center;
+	margin-top:15px;
+}
+
+div.announcements p {
+	margin: 0 15px 15px 15px;
+}
+
+p.announce_summary a:link {
+
 }
 
 div.pagination_box {
-	float:right;
+	float: right;
 	width: auto;
 }
 
@@ -154,13 +184,13 @@ div.pagination_box span {
 }
 
 div.discussions {
-	margin: 15px 0;
-	width: 150px;
+	width: auto;
+	float: right;
+	margin-right: 30px;
 }
 
 div.corner_tl {
 	width: 100%;
-	/* width: 960px; */
 	margin: 0 auto;
 }
 
@@ -178,7 +208,6 @@ div.corner_bl {
 
 div.credits {
 	width: 100%;
-	/* width: 960px; */
 	margin: 0 auto;
 }
 
@@ -186,13 +215,21 @@ div.credits p {
 	font-size: 10px;
 	text-align:center;
 }
-	
+
+div.rsslink {
+	width: 100%;
+	margin: 0 auto;
+}
+div.rsslink img {
+	text-align:center;
+}
+
 
 	
 /* ------------------------- TABLES ------------------------- */
 
 #kunena table {
-	border: 1px solid #83afda;
+	border: 1px solid #ffd978;
 	clear:both;
 	border-collapse: collapse;
 }
@@ -216,13 +253,10 @@ tbody {
 tfoot {
 
 }
-
-
 	
 table.forum_body {
 
 }
-
 
 tr.row_odd {
 

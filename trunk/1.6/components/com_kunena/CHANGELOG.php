@@ -43,6 +43,7 @@ Kunena 1.6.0dev
 + [#17628] Allow for stickies and complex sorting in recent model
 + [#17628] Initial implementation of messages model
 + [#17628] Initial implementation of categories model (flat only)
++ [#17654] Add new bbcode parser: nbbc
 
 15-Aug-2009 Matias
 + [#17628] Add css file for recent discussions

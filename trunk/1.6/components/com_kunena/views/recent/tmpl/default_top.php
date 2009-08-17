@@ -9,19 +9,27 @@
  */
 
 defined('_JEXEC') or die;
+$this->filter_time_options = array(
+	4=>'4 '.JText::_('K_HOURS'),
+	8=>'8 '.JText::_('K_HOURS'),
+	12=>'12 '.JText::_('K_HOURS'),
+	24=>'24 '.JText::_('K_HOURS'),
+	48=>'48 '.JText::_('K_HOURS'),
+	168=>JText::_('K_WEEK'),
+	720=>JText::_('K_MONTH'),
+	8760=>JText::_('K_YEAR')
+);
+$filter_time = JRequest::getVar('filter_time');
 ?>
 		<div class="top_info_box">
 			<div class="choose_time">
-				<select class="input_time" onchange="document.location.href=this.options[this.selectedIndex].value;" name="select">
-					<option value="/forum/latest/show/sel-4">4 <?php echo JText::_('K_HOURS'); ?></option>
-					<option value="/forum/latest/show/sel-8">8 <?php echo JText::_('K_HOURS'); ?></option>
-					<option value="/forum/latest/show/sel-12">12 <?php echo JText::_('K_HOURS'); ?></option>
-					<option value="/forum/latest/show/sel-24">24 <?php echo JText::_('K_HOURS'); ?></option>
-					<option value="/forum/latest/show/sel-48">48 <?php echo JText::_('K_HOURS'); ?></option>
-					<option value="/forum/latest/show/sel-168"><?php echo JText::_('K_WEEK'); ?></option>
-					<option selected="selected" value="/forum/latest/show/sel-720"><?php echo JText::_('K_MONTH'); ?></option>
-					<option value="/forum/latest/show/sel-8760"><?php echo JText::_('K_YEAR'); ?></option>
+				<form name="choose_timeline" method="post" target="_self" action="<?php JRequest::getURI(); ?>">
+				<select class="input_time" onchange="this.form.submit();" name="filter_time">
+<?php foreach ($this->filter_time_options as $key=>$time): ?>
+					<option value="<?php echo $key; ?>"<?php if ($filter_time == $key) echo ' selected="selected"'; ?>><?php echo $time; ?></option>
+<?php endforeach; ?>
 				</select>
+				</form>
 			</div>
 			<div class="choose_forumcat">
 				<form name="choose_forum" method="post" target="_self" action="/forum">

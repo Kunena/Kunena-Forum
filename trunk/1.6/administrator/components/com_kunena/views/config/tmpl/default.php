@@ -46,21 +46,15 @@ JHTML::_('behavior.tooltip');
 	<form action="index.php?option=com_kunena" method="post" name="adminForm" autocomplete="off">
 		<div id="config-document">
 			<div id="page-setup">
-				<fieldset>
-					<legend><?php echo JText::_('Setup'); ?></legend>
-				</fieldset>
+				<?php echo $this->loadTemplate('setup'); ?>
 			</div>
 
 			<div id="page-security">
-				<fieldset>
-					<legend><?php echo JText::_('Security'); ?></legend>
-				</fieldset>
+				<?php echo $this->loadTemplate('security'); ?>
 			</div>
 
 			<div id="page-integration">
-				<fieldset>
-					<legend><?php echo JText::_('Integration'); ?></legend>
-				</fieldset>
+				<?php echo $this->loadTemplate('integration'); ?>
 			</div>
 		</div>
 		<input type="hidden" name="task" value="" />

@@ -31,7 +31,9 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 								</thead>
 								<tbody>
 
+<!--
 <pre><?php print_r($this->threads[0]); ?></pre> 
+-->
 <?php
 foreach ($this->threads as $this->current=>$this->thread):
 	echo $this->loadTemplate('thread'); 

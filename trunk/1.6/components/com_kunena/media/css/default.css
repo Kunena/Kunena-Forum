@@ -259,7 +259,7 @@ table.forum_body {
 }
 
 tr.row_odd {
-
+	border-top: 1px solid #e5e5e5;
 }
 
 tr.row_even {
@@ -271,27 +271,39 @@ td.col1 {
 	width: 80px;
 	text-align:center;
 	padding: 5px;
+	border-right: 1px solid #D6D6D6;
+}
+
+td.col1 div.post_number {
+	font-size: 26px;
+	/* color: #4f7ba4; */
+	color: #999999;
+	text-align:center!important;
+	margin-bottom: 5px;
 }
 
 td.col1 span {
-	font-size: 24px;
-	color: #4f7ba4;
+	font-size: 11px;
+	color: #999999;
+	text-transform:uppercase;
 }
 
 td.col2 {
-	width: 60px;
+	width: 70px;
 	text-align:center;
 	padding: 5px;
+	border-right: 1px solid #D6D6D6;
 }
 
 td.col3 {
 	width: auto;
-	padding: 5px;
+	padding: 10px 15px;
+	border-right: 1px solid #D6D6D6;
 	}
 
 td.col4 {
 	width: 150px;
-	padding: 5px;
+	padding: 10px 15px;
 	vertical-align: center;
 }
 
@@ -339,6 +351,17 @@ div.topic_views {
 	display:block;
 }
 
+div.topic_latest_post_avatar {
+	text-align:center;
+}
+
+div.topic_latest_post {
+	text-align:center;
+}
+
+div.topic_time {
+	text-align:center;
+}
 
 
 

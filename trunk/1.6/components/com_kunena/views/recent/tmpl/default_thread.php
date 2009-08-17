@@ -12,8 +12,8 @@ defined('_JEXEC') or die;
 jimport('joomla.utilities.string');
 ?>
 									<tr class="<?php echo ($this->current%2) ? 'row_even' : 'row_odd'; ?>">
-										<td class="col1"><span><?php echo $this->escape($this->thread->posts); ?></span> <?php echo JText::_('K_REPLIES'); ?></td>
-										<td class="col2"><a href="#" ><img src="images/emoticons/default.gif" alt="Smiles" /></a></td>
+										<td class="col1"><div class="post_number"><?php echo $this->escape($this->thread->posts); ?></div><span><?php echo JText::_('K_REPLIES'); ?></span></td>
+										<td class="col2"><a href="#" ><img src="components/com_kunena/media/images/emoticons/default.gif" alt="Smiles" /></a></td>
 										<td class="col3">
 											<h4>
 												<a href="/forum/77-general-talk-about-kunena/26536-another-user-is-bothering-me" title="<?php echo $this->escape(JString::substr($this->thread->first_post_message, 0, 300)); ?>"><?php echo $this->escape($this->thread->subject); ?></a>
@@ -26,11 +26,11 @@ jimport('joomla.utilities.string');
 											</div>
 										</td>
 										<td class="col4">
-												<span class="topic_latest_post_avatar"><a href="/community/profile?userid=634" title="<?php echo $this->escape($this->thread->last_post_name); ?>"><img class="avatar" src="images/no_photo_sm.jpg" alt="<?php echo JText::_('K_NO_PHOTO'); ?>" /></a>
-												</span>
-												<span class="topic_latest_post">
+												<div class="topic_latest_post_avatar"><a href="/community/profile?userid=634" title="<?php echo $this->escape($this->thread->last_post_name); ?>"><img class="avatar" src="components/com_kunena/media/images/no_photo_sm.jpg" alt="<?php echo JText::_('K_NO_PHOTO'); ?>" /></a>
+												</div>
+												<div class="topic_latest_post">
 													<?php echo JText::_('K_LAST_POST_BY'); ?> <a class="topic_latest_post_user" href="/community/profile?userid=<?php echo $this->escape($this->thread->first_post_userid); ?>" title="<?php echo JText::_('K_POST'); ?> <?php echo $this->escape($this->thread->last_post_name); ?>"><?php echo $this->escape($this->thread->last_post_name); ?></a>
-												</span>
-												<span class="topic_time"><?php echo JHTML::_('date', $this->thread->last_post_time); ?></span>
+												</div>
+												<div class="topic_time"><?php echo JHTML::_('date', $this->thread->last_post_time); ?></div>
 										</td>
 									</tr>

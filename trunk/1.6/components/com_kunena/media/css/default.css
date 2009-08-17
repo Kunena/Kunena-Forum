@@ -66,7 +66,7 @@ a:hover {
 h1 { font-size: 18px; }
 h2 { font-size: 17px; }
 h3 { font-size: 16px;  }
-h4 { font-size: 15px; margin: 2px;}
+h4 { font-size: 15px; margin: 0 0 2px 0;}
 
 
 /* ------ TOP NAV ---- */
@@ -166,6 +166,7 @@ p.announce_summary a:link {
 div.pagination_box {
 	float: right;
 	width: auto;
+	margin-bottom: 15px;
 }
 
 div.pagination_box span {
@@ -206,9 +207,14 @@ div.corner_bl {
 
 }
 
+div.stats_box {
+	margin-top: 60px;
+}
+
 div.credits {
 	width: 100%;
 	margin: 0 auto;
+	margin-top: 30px;
 }
 
 div.credits p {
@@ -239,7 +245,7 @@ thead {
 	color: #ffffff;
 	font-size: 12px;
 	text-align: center;
-	height: 25px;
+	height: 15px;
 	text-transform:uppercase;
 }
 
@@ -268,7 +274,7 @@ tr.row_even {
 }
 
 td.col1 {
-	width: 80px;
+	width: 70px;
 	text-align:center;
 	padding: 5px;
 	border-right: 1px solid #D6D6D6;
@@ -289,7 +295,7 @@ td.col1 span {
 }
 
 td.col2 {
-	width: 70px;
+	width: 60px;
 	text-align:center;
 	padding: 5px;
 	border-right: 1px solid #D6D6D6;
@@ -302,7 +308,7 @@ td.col3 {
 	}
 
 td.col4 {
-	width: 150px;
+	width: 165px;
 	padding: 10px 15px;
 	vertical-align: center;
 }
@@ -352,15 +358,17 @@ div.topic_views {
 }
 
 div.topic_latest_post_avatar {
-	text-align:center;
+	width: 48px;
+	height: 48px;
+	float:left;
+	margin-right: 15px;
 }
 
-div.topic_latest_post {
-	text-align:center;
-}
-
-div.topic_time {
-	text-align:center;
+p.topic_latest_post,
+p.topic_time {
+	font-size: 10px;
+	line-height: 110%;
+	margin-bottom: 1px;
 }
 
 

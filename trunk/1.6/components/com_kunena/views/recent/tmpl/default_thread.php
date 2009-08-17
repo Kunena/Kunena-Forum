@@ -19,7 +19,7 @@ jimport('joomla.utilities.string');
 												<a href="/forum/77-general-talk-about-kunena/26536-another-user-is-bothering-me" title="<?php echo $this->escape(JString::substr($this->thread->first_post_message, 0, 300)); ?>"><?php echo $this->escape($this->thread->subject); ?></a>
 											</h4>
 											<div class="post_info">
-												<div class="topic_post_time"><?php echo JText::_('K_POSTED'); ?> <?php echo JHTML::_('date', $this->thread->first_post_time); ?></div>
+												<div class="topic_post_time"><?php echo JText::_('K_POSTED_ON'); ?> <?php echo JHTML::_('date', $this->thread->first_post_time); ?></div>
 												<div class="topic_author"><?php echo JText::_('K_BY'); ?> <a href="/community/profile?userid=<?php echo $this->escape($this->thread->first_post_userid); ?>" title="<?php echo $this->escape($this->thread->first_post_name); ?>"><?php echo $this->escape($this->thread->first_post_name); ?></a></div>
 												<div class="topic_category"><?php echo JText::_('K_CATEGORY'); ?>: <a href="/forum/77-general-talk-about-kunena" title="<?php echo $this->escape($this->thread->catname); ?>"><?php echo $this->escape($this->thread->catname); ?></a></div>
 												<div class="topic_views">(<?php echo JText::_('K_VIEWS'); ?>: <?php echo $this->escape($this->thread->hits); ?>)</div>
@@ -28,9 +28,9 @@ jimport('joomla.utilities.string');
 										<td class="col4">
 												<div class="topic_latest_post_avatar"><a href="/community/profile?userid=634" title="<?php echo $this->escape($this->thread->last_post_name); ?>"><img class="avatar" src="components/com_kunena/media/images/no_photo_sm.jpg" alt="<?php echo JText::_('K_NO_PHOTO'); ?>" /></a>
 												</div>
-												<div class="topic_latest_post">
-													<?php echo JText::_('K_LAST_POST_BY'); ?> <a class="topic_latest_post_user" href="/community/profile?userid=<?php echo $this->escape($this->thread->first_post_userid); ?>" title="<?php echo JText::_('K_POST'); ?> <?php echo $this->escape($this->thread->last_post_name); ?>"><?php echo $this->escape($this->thread->last_post_name); ?></a>
-												</div>
-												<div class="topic_time"><?php echo JHTML::_('date', $this->thread->last_post_time); ?></div>
+												<p class="topic_latest_post">
+													<?php echo JText::_('K_LAST_POST_BY'); ?> <a class="topic_latest_post_user" href="/community/profile?userid=<?php echo $this->escape($this->thread->first_post_userid); ?>" title="<?php echo JText::_('K_POST'); ?> <?php echo $this->escape($this->thread->last_post_name); ?>"><?php echo $this->escape($this->thread->last_post_name); ?></a> on
+												</p>
+												<p class="topic_time"><?php echo JHTML::_('date', $this->thread->last_post_time); ?></p>
 										</td>
 									</tr>

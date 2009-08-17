@@ -40,6 +40,7 @@ Kunena 1.6.0dev
 + [#17628] Initial implementation of recent model
 + [#17628] Initial data population for recent and my recent view in model
 + [#17628] category view added to recent view in model
++ [#17628] Allow for stickies and complex sorting in recent model
 + [#17628] Initial implementation of messages model
 
 15-Aug-2009 Matias

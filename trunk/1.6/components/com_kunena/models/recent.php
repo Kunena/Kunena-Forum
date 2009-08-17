@@ -97,9 +97,6 @@ class KunenaModelRecent extends JModel
 			$this->setState('user.id', (int)$user->id);
 			$this->setState('user.aid', (int)$user->get('aid'));
 
-			// Load the check parameters.
-			$this->setState('check.state', true);
-
 			// Load the parameters.
 			$this->setState('params', $params);
 
@@ -330,6 +327,7 @@ class KunenaModelRecent extends JModel
 		        $query->from('#__kunena_threads AS t');
 		        $query->where('t.hold=0 AND t.moved_id=0 AND t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
 		        $query->where('t.catid = '.intval($this->getState('category.id')));
+		        $query->order('t.ordering');
 
 		        break;
 		    default:

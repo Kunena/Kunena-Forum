@@ -12,7 +12,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-kimport('html.bbcode.nbbcode');
+kimport('html.bbcode.nbbc');
+kimport('database.query');
 
 /**
  * The Kunena bbcode parser
@@ -34,6 +35,23 @@ class KBBCode extends BBCode
 	{
 		parent::__construct();
 
+		$db = JFactory::getDBO();
+		$query = new KQuery();
+
+		$query->select('s.code, s.location');
+		$query->from('#__kunena_smileys AS s');
+
+		$db->setQuery($query->toString());
+		$smileys = $db->loadObjectList();
+
+		// echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
+	    // var_dump($smileys);
+
+	    foreach ($smileys as $smiley)
+	    {
+	        $this->AddSmiley($smiley->code, $smiley->location);
+	    }
+
 	}
 
 	/**
@@ -48,8 +66,12 @@ class KBBCode extends BBCode
         static $instance;
         if (!$instance)
         {
-            $userinfo = new KBBCode();
+            $instance = new KBBCode();
         }
+
+        $instance->SetSmileyDir(JURI::root().'components/com_kunena/template/default_ex/images/english/emoticons');
+
+
         return $instance;
     }
 

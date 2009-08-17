@@ -289,7 +289,7 @@ class KunenaModelMessages extends JModel
 			$query->order('m.id');
 		}
 
-		echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
+		// echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
 
 		return $query;
 	}

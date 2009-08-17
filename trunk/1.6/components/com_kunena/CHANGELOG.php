@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.6.0dev
 
+17-Aug-2009 fxstein
+- [#17628] Reverting revisions 1018 & 1017
+
 16-Aug-2009 Louis
 + [#17628] Add scaffolding for administrator MVC structures and skeleton for config view.
 

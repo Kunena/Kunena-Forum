@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.6.0dev
 
+16-Aug-2009 Louis
++ [#17628] Add scaffolding for administrator MVC structures and skeleton for config view.
+
 16-Aug-2009 Matias
 + [#17628] Add basic logic for recent discussions (content, pagination)
 

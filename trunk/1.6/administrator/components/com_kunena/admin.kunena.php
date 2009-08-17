@@ -21,6 +21,24 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
+// Allow for the new MVC subsystem where applicable.
+$view = JRequest::getCmd('view', false);
+$task = JRequest::getVar('task');
+if ($view || strpos($task, '.'))
+{
+	// Import the Kunena library loader.
+	require_once (JPATH_COMPONENT_SITE.'/libraries/import.php');
+
+	// Import the Kunena controller class.
+	require_once (JPATH_COMPONENT.'/controller.php');
+
+	// Execute the task.
+	$controller	= KunenaController::getInstance();
+	$controller->execute(JRequest::getVar('task'));
+	$controller->redirect();
+	return;
+}
+
 // Kunena wide defines
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 

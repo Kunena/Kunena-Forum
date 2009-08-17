@@ -23,6 +23,13 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 // ################################################################
+
+// Allow for the new MVC subsystem where applicable.
+$view = JRequest::getCmd('view', false);
+if ($view)
+{
+	return;
+}
 require_once( JApplicationHelper::getPath( 'toolbar_html' ) );
 
 switch ($task)

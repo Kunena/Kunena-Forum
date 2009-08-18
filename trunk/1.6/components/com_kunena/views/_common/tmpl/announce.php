@@ -10,9 +10,8 @@
 
 defined('_JEXEC') or die;
 ?>
-							<h3><a href="3">Kunena 1.0.11 &amp; 1.5.4 Released</a></h3>	
-							<p class="announce_summary"><span>07/11/2009 00:45</span>The Kunena Team announces the immediate availability of Kunena 1.5.4 and 1.0.11. These are important
-											security releases and users are urged to update immediately. These releases also fix a number of other minor and major issues.
+							<h3><a href="3"><?php echo $this->escape($this->announcement->title); ?></a></h3>	
+							<p class="announce_summary"><span><?php echo JHTML::_('date', $this->announcement->created); ?></span><?php echo $this->escape($this->announcement->sdescription); ?>
 											<a href="/forum/announcement/read/id-8"><?php echo JText::_('K_READ_MORE'); ?></a></p>
 							
 							<div class="clr"></div>

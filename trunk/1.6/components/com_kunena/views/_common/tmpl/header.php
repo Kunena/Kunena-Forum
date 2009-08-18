@@ -37,7 +37,7 @@ defined('_JEXEC') or die;
 				</div>
 			</div>
 									
-											
+<?php foreach ($this->announcements as $this->current=>$this->announcement): ?>									
 		<div class="corner_tl">
 			<div class="corner_tr">
 				<div class="corner_br">
@@ -49,3 +49,4 @@ defined('_JEXEC') or die;
 				</div>
 			</div>
 		</div>
+<?php endforeach; ?>

@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.6.0dev
 
+18-Aug-2009 Matias
++ [#17628] Add models and logic to statistics and announcements
+
 17-Aug-2009 Louis
 + [#17628] Add example fields for configuration options.
 

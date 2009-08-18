@@ -32,6 +32,8 @@ class KunenaViewRecent extends KView
 		$this->assign('total', $this->get('Total'));
 	    $this->assignRef('threads', $this->get('Items'));
 	    $this->assignRef('pagination', $this->get('Pagination'));
+	    $this->assignRef('announcements', $this->get('Announcement'));
+	    $this->assignRef('statistics', $this->get('Statistics'));
 	    
 		parent::display($tpl);
 	}

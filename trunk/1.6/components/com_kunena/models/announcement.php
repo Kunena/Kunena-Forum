@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: recent.php 998 2009-08-16 09:55:21Z fxstein $
+ * @version		$Id:  $
  * @package		Kunena
  * @subpackage	com_kunena
  * @copyright	Copyright (C) 2008 - 2009 Kunena Team. All rights reserved.
@@ -80,14 +80,10 @@ class KunenaModelAnnouncement extends JModel
 			$this->setState('list.state', 1);
 
 			// Load model type
-			// all = recent topics accross all allowd categories
-			// my = my recent topics
-			// category = recent topics with a select category
-			$this->setState('type', JRequest::getCmd('type', 'all'));
-
-			// If recent request is for a category, we also get a category id
-			$this->setState('category', JRequest::getInt('category', 0));
-
+			// all = all announcements
+			// published = published announcements
+			$this->setState('type', JRequest::getCmd('type', 'published'));
+			
 			// Load the check parameters.
 			$this->setState('check.state', true);
 
@@ -214,44 +210,17 @@ class KunenaModelAnnouncement extends JModel
 		$query = new KQuery();
 		$user = KUser::getInstance(true);
 
-		// Build base query
-		$time = JFactory::getDate('-'.$this->getState('filter.time').' hours');
+		$query->select('count(*)');
+		$query->from('#__kunena_announcement');
 
 		switch ($this->getState('type'))
 		{
-		    case 'all':
-		        $query->select('count(*)');
-		        $query->from('#__kunena_threads AS t');
-		        $query->where('t.hold=0 AND t.moved_id=0 AND t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
-		        $query->where('last_post_time >'.$time->toUnix());
-
+			case 'all':
 		        break;
-		    case 'my':
-				$query->select('count(distinct tmp.thread)');
-
-				$query1 = new KQuery();
-				$query2 = new KQuery();
-
-				$query1->select('m.thread As thread');
-		        $query1->from('#__kunena_messages AS m');
-				$query1->from('#__kunena_threads AS t');
-				$query1->where('t.id = m.thread');
-		        $query1->where('t.hold=0 AND t.moved_id=0 AND t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
-
-				$query2->select('f.thread As thread');
-		        $query2->from('#__kunena_favorites AS f');
-				$query2->from('#__kunena_threads AS t');
-				$query2->where('t.id = f.thread');
-		        $query2->where('t.hold=0 AND t.moved_id=0 AND t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
-
-				$query->from('('.$query1->toString().' UNION ALL '.$query2->toString().' ) AS tmp');
-
-				break;
-		    case 'category':
-
-		        break;
+			case 'published':
 		    default:
-		        // Invalid view type specified
+				$query->where('published = 1');
+		        break;
 		}
 
 		// echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
@@ -270,72 +239,21 @@ class KunenaModelAnnouncement extends JModel
 		$query = new KQuery();
 
 		// Select fields.
-		$query->select('a.*');
-		$query->select('t.id AS mesid, t.message AS messagetext');
-		$query->select('m.mesid AS attachmesid');
-		$query->select('(f.thread > 0) AS myfavorite');
-		$query->select('c.id AS catid, c.name AS catname');
-		$query->select('b.lastpost');
-
-		$query->from('#__kunena_messages AS a');
-
-		if ($this->getState('filter.mylatest', true)) {
-			$query->join('', '(SELECT mm.thread, MAX(mm.time) AS lastpost' .
-					' FROM #__kunena_messages AS mm' .
-					' JOIN (SELECT thread' .
-						' FROM #__kunena_messages' .
-						' WHERE userid='.(int) $kunena_my->id .
-						' GROUP BY 1' .
-							' UNION ALL' .
-						' SELECT thread' .
-						' FROM #__kunena_favorites' .
-						' WHERE userid='.(int) $kunena_my->id.') AS tt ON mm.thread = tt.thread' .
-						' WHERE hold=0' .
-						' AND moved=0' .
-						' AND catid IN ('.$kunenaSession->allowed.')' .
-						' GROUP BY 1) AS b ON b.thread = a.thread');
+		$query->select('*');
+		$query->from('#__kunena_announcement');
+		switch ($this->getState('type'))
+		{
+			case 'all':
+		        break;
+			case 'published':
+		    default:
+				$query->where('published = 1');
+		        break;
 		}
-		else {
-			$query->join('', '(SELECT thread, MAX(time) AS lastpost' .
-					' FROM #__kunena_messages' .
-					' WHERE time > '.$querytime.
-					' AND hold=0' .
-					' AND moved=0' .
-					' AND catid IN ($kunenaSession->allowed)' .
-					$latestcats .
-					' GROUP BY 1) AS b ON b.thread = a.thread');
-		}
+		$query->order('ordering DESC, created DESC');
 
-
-		$query->join('', '#__kunena_messages AS t ON a.thread = t.id');
-
-		// Resolve foriegn keys with the categories table.
-		$query->join('LEFT', '#__kunena_categories AS c ON c.id = a.catid');
-
-		// Resolve foriegn keys with the attachments table.
-		$query->join('LEFT', '#__kunena_attachments AS m ON m.mesid = a.id');
-
-		// Resolve foriegn keys with the favorites table.
-		$query->join('LEFT', '#__kunena_favorites AS f ON  f.thread = a.id && f.userid = '.(int) $kunena_my->id);
-
-		// Resolve foriegn keys with the users table.
-		$query->join('LEFT', '#__kunena_users AS u ON u.userid = a.userid');
-
-
-		$query->where('a.parent = 0');
-		$query->where('a.moved = 0');
-		$query->where('a.hold = 0');
-
-
-		$query->group('a.id');
-
-		if ($this->getState('filter.mylatest', true)) {
-			$query->order('f.thread DESC');
-		}
-
-		$query->order('lastpost DESC');
-
-		//echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
+		// echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
+		
 		return $query;
 	}
 
@@ -356,10 +274,7 @@ class KunenaModelAnnouncement extends JModel
 		$id	.= ':'.$this->getState('list.start');
 		$id	.= ':'.$this->getState('list.limit');
 		$id	.= ':'.$this->getState('list.state');
-		$id	.= ':'.$this->getState('list.ordering');
 		$id	.= ':'.$this->getState('check.state');
-		$id	.= ':'.$this->getState('user.aid');
-		$id	.= ':'.$this->getState('filter.parent_id');
 
 		return md5($id);
 	}

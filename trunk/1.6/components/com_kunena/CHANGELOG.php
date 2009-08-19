@@ -35,6 +35,7 @@ Kunena 1.6.0dev
 18-Aug-2009 fxstein
 # [#17654] Various bugfixes in new bbcode parser class
 # [#17628] Various bugfixes for new MVC structures
+^ [#17628] header and footer cleanup in recent
 
 18-Aug-2009 Matias
 + [#17628] Add models and logic to statistics and announcements

@@ -10,7 +10,6 @@
 
 defined('_JEXEC') or die;
 ?>
-	<div id="kunena">
 		<div class="topnav">
 			<ul>
 				<li class="active"><a href="/forum/latest" title="<?php echo JText::_('K_RECENT_DISCUSSIONS'); ?>"><span><?php echo JText::_('K_RECENT_DISCUSSIONS'); ?></span></a></li>

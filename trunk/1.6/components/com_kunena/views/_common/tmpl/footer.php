@@ -36,4 +36,3 @@ defined('_JEXEC') or die;
 				<a href="/forum/fb_rss?no_html=1" title="" target="_blank">
 				<img src="components/com_kunena/media/images/icons/rss.gif" alt="<?php echo JText::_('K_SUBSCRIBE'); ?>" title="<?php echo JText::_('K_SUBSCRIBE'); ?>" /></a>
 		</div>
-</div>

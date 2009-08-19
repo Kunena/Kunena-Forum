@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 ?>
+	<div id="kunena">
 <?php echo $this->loadCommonTemplate('header'); ?>
 
 <?php echo $this->loadTemplate('top'); ?>
@@ -56,3 +57,4 @@ endforeach;
 <?php echo $this->loadTemplate('bottom'); ?>
 
 <?php echo $this->loadCommonTemplate('footer'); ?>
+	</div>

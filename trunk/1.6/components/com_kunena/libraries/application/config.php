@@ -333,11 +333,12 @@ class KConfig extends KConfigBase
 
     public function &getInstance()
     {
-        static $instance;
-        if (!$instance) {
+        static $instance = null;
+        if (!$instance) 
+        {
             $userinfo = new KUser($this->_db);
-	    $instance = new KConfig($userinfo);
-	}
+	    	$instance = new KConfig($userinfo);
+		}
         return $instance;
     }
 

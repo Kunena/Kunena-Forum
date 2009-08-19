@@ -30,7 +30,7 @@ class KunenaController extends JController
 	 */
 	public static function getInstance()
 	{
-		static $instance;
+		static $instance = null;
 
 		if (!empty($instance)) {
 			return $instance;
@@ -91,7 +91,9 @@ class KunenaController extends JController
 		$lName	 = JRequest::getWord('layout', 'default');
 		$vFormat = $document->getType();
 
-		if ($view = $this->getView($vName, $vFormat))
+		$view = $this->getView($vName, $vFormat);
+		
+		if ($view)
 		{
 			// Do any specific processing for the view.
 			switch ($vName)

@@ -63,7 +63,7 @@ class KBBCode extends BBCode
 	 */
 	public function &getInstance()
     {
-        static $instance;
+        static $instance = false;
         if (!$instance)
         {
             $instance = new KBBCode();

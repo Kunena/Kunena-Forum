@@ -29,7 +29,7 @@ class KunenaModelMessages extends JModel
 	 * @var		boolean
 	 * @since	1.6
 	 */
-	private $__state_set = false;
+	protected $__state_set = false;
 
 	/**
 	 * An array of totals for the lists.

@@ -49,7 +49,7 @@ class KUser extends JTable
 
 	protected $_exists = false;
 	protected $_sessiontimeout = false;
-	private static $_instance;
+	private static $_instance = null;
 
 	function __construct()
 	{

@@ -28,7 +28,7 @@ class KDatabaseMaintenance
 
 	function &getInstance()
 	{
-		static $instance;
+		static $instance = null;
 		if (!$instance) {
 			$instance = new KDatabaseMaintenance();
 		}

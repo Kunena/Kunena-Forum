@@ -12,7 +12,8 @@
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
 ?>
-
+<!--
+  
 Changelog
 ------------
 This is a non-exhaustive (but still near complete) changelog for
@@ -36,6 +37,7 @@ Kunena 1.6.0dev
 # [#17654] Various bugfixes in new bbcode parser class
 # [#17628] Various bugfixes for new MVC structures
 ^ [#17628] header and footer cleanup in recent
+^ [#17628] Changelog content converted to comment to avoid warnings
 
 18-Aug-2009 Matias
 + [#17628] Add models and logic to statistics and announcements
@@ -993,3 +995,4 @@ Kunena 1.0.7 beta
 01-January-2009 fxstein
 + Initial fork from FireBoard 1.0.5RC3
 
+-->

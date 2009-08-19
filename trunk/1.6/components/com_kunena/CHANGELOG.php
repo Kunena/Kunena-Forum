@@ -38,6 +38,7 @@ Kunena 1.6.0dev
 # [#17628] Various bugfixes for new MVC structures
 ^ [#17628] header and footer cleanup in recent
 ^ [#17628] Changelog content converted to comment to avoid warnings
+^ [#17628] Updated COPYRIGHT.php
 
 18-Aug-2009 Matias
 + [#17628] Add models and logic to statistics and announcements

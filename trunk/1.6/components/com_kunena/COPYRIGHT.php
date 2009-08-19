@@ -18,6 +18,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 ?>
 
+<!-- 
 Kunena derives from copyrighted works licensed under the GNU General
 Public License.  This version has been modified pursuant to the
 GNU General Public License as of September 15, 2005, and as distributed,
@@ -27,6 +28,11 @@ works copyrighted by any or all of the following, from 2000 through 2005:
 TSMF & Jan de Graaff
 
 Kunena includes or is derivative of works distributed under the following copyright notices:
+
+NBBC
+---
+Copyright:  Phantom Inker
+License:	BSD Open-Source License
 
 patTemplate, patError
 ---
@@ -47,3 +53,5 @@ jQuery
 ----
 Copyright:    John Resig
 License:    Dual licensed under the MIT (MIT-LICENSE.txt) and GPL (GPL-LICENSE.txt) licenses.
+ 
+-->

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0dev
 
+19-Aug-2009 fxstein
+^ [#17628] Minor K1.5 legacy cleanup
+
 18-Aug-2009 fxstein
 # [#17654] Various bugfixes in new bbcode parser class
 # [#17628] Various bugfixes for new MVC structures

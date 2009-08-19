@@ -325,6 +325,7 @@ class CKunenaTools {
             }
 
         $i=0;
+        $l=null;
         while ($messages_iter->loadNextObject($l)) {
         	$i++;
             $cat_l = $l->catid;
@@ -439,9 +440,8 @@ class CKunenaTools {
                 }
             }
 
-        while ($msg_cat) {
-
-            unset($lastMsgInCat);
+        while ($msg_cat) 
+        {
             $kunena_db->setQuery("SELECT id, time FROM #__kunena_messages WHERE catid='{$msg_cat}' AND (thread!='{$msg_id}' AND id!='{$msg_id}') ORDER BY time DESC LIMIT 1;");
             $lastMsgInCat = $kunena_db->loadObject();
             	check_dberror("Unable to load messages.");
@@ -453,7 +453,8 @@ class CKunenaTools {
             $ctg[$msg_cat]->time_last_msg = $lastMsgInCat->time;
 
             $msg_cat = $ctg[$msg_cat]->parent;
-            }
+            unset($lastMsgInCat);
+        }
 
         // now back to db
         foreach ($ctg as $cc) {
@@ -832,8 +833,10 @@ class kunenaForum
 		$this->_error = ($msg <> '')?$msg:'error';
 	}
 
-	function store($updateNulls=false) {
-		if ($ret = parent::store($updateNulls)) {
+	function store($updateNulls=false)
+	{
+		$ret = parent::store($updateNulls);
+		if ($ret) {
 			// we must reset kunenaSession (allowed), when forum record was changed
 
 			$this->_db->setQuery("UPDATE #__kunena_sessions SET allowed='na'");
@@ -1178,7 +1181,7 @@ function utf8_urldecode($str) {
 
 function html_entity_decode_utf8($string)
 {
-    static $trans_tbl;
+    static $trans_tbl=null;
 
     // replace numeric entities
     $string = preg_replace('~&#x([0-9a-f]+);~ei', 'code2utf(hexdec("\\1"))', $string);

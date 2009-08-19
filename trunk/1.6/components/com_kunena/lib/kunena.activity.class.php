@@ -23,35 +23,30 @@ class CKunenaActivity
 	{
 		// construct params based on this event type
 
-		act($params);
 	}
 
 	public function replyThread($userid, $threadid, $postid, $catid, $catname, $subject)
 	{
 		// construct params based on this event type
 
-		act($params);
 	}
 
 	public function editPost($userid, $threadid, $postid, $catid, $catname, $subject)
 	{
 		// construct params based on this event type
 
-		act($params);
 	}
 
 	public function attachImage($userid, $threadid, $postid, $catid, $catname)
 	{
 		// construct params based on this event type
 
-		act($params);
 	}
 
 	public function attachFile($userid, $threadid, $postid, $catid, $catname)
 	{
 		// construct params based on this event type
 
-		act($params);
 	}
 
 // More ....

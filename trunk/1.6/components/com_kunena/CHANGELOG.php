@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.6.0dev
 
+18-Aug-2009 fxstein
+# [#17654] Various bugfixes in new bbcode parser class
+
 18-Aug-2009 Matias
 + [#17628] Add models and logic to statistics and announcements
 

@@ -1054,11 +1054,11 @@ function ClearRules() { $this->tag_rules = Array(); }
 function GetDefaultRule($name) { return isset($this->defaults->default_tag_rules[$name])
 ? $this->defaults->default_tag_rules[$name] : false; }
 function SetDefaultRule($name) { if (isset($this->defaults->default_tag_rules[$name]))
-AddRule($name, $this->defaults->default_tag_rules[$name]);
-else RemoveRule($name); }
+$this->AddRule($name, $this->defaults->default_tag_rules[$name]);
+else $this->RemoveRule($name); }
 function GetDefaultRules() { return $this->defaults->default_tag_rules; }
 function SetDefaultRules() { $this->tag_rules = $this->defaults->default_tag_rules; }
-function SetWikiURL($url) { $this->wiki_url = $func; }
+function SetWikiURL($url) { $this->wiki_url = $url; }
 function GetWikiURL($url) { return $this->wiki_url; }
 function GetDefaultWikiURL() { return '/?page='; }
 function SetLocalImgDir($path) { $this->local_img_dir = $path; }

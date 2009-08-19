@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 kimport('application.view');
+kimport('html.bbcode');
 
 /**
  * The Raw Kunena recent view.
@@ -31,6 +32,15 @@ class KunenaViewMessages extends KView
 	{
 		var_dump($this->get('Total'));
 
-	    var_dump($this->get('Items'));
+		$items = $this->get('Items');
+	    // var_dump($items);
+
+		$bbcode = KBBCode::getInstance();
+
+	    foreach($items as $item)
+	    {
+	        echo '<br />'.$bbcode->Parse(stripslashes($item->message)).'<br />';
+
+	    }
 	}
 }

@@ -67,10 +67,13 @@ class KBBCode extends BBCode
         if (!$instance)
         {
             $instance = new KBBCode();
+
+            // TODO: Make smilie path configurable or define
+            $instance->SetSmileyURL(JURI::root().'components/com_kunena/template/default_ex/images/english/emoticons');
+            $instance->SetDetectURLs(true);
         }
 
-        $instance->SetSmileyDir(JURI::root().'components/com_kunena/template/default_ex/images/english/emoticons');
-
+		//echo nl2br($instance->GetSmileyDir()).'<hr/>';
 
         return $instance;
     }

@@ -13,7 +13,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 ?>
 <!--
-  
+
 Changelog
 ------------
 This is a non-exhaustive (but still near complete) changelog for
@@ -35,6 +35,8 @@ Kunena 1.6.0dev
 
 19-Aug-2009 fxstein
 ^ [#17628] Minor K1.5 legacy cleanup
++ [#17654] Initial configuration for bbcode parser and usage sample
+		   in messages/view.raw.php
 
 18-Aug-2009 fxstein
 # [#17654] Various bugfixes in new bbcode parser class

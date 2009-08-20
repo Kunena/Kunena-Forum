@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0dev
 
+19-Aug-2009 Louis
++ [#17628] Added JHtmlKLink class.
+
 19-Aug-2009 fxstein
 ^ [#17628] Minor K1.5 legacy cleanup
 + [#17654] Initial configuration for bbcode parser and usage sample

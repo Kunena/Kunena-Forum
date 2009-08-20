@@ -52,7 +52,7 @@ abstract class JHtmlKLink
 			default:
 				$link = '<a '.($class ? 'class="'.$class.'" ' : '').'href="'.JRoute::_($url).($anker?('#'.$anker):'').($title ? ' title="'.$title.'"' : '').($rel ? ' rel="'.$rel.'"' : '').($attr ? ' '.$attr : '').'>'.$text.'</a>';
 				break;
-				
+
 		}
 		return $link;
 	}
@@ -83,7 +83,7 @@ abstract class JHtmlKLink
     }
 
 	/**
-	 * Method to generate an (X)HTML search engine friendly link to a Kunena view. This method is used by 
+	 * Method to generate an (X)HTML search engine friendly link to a Kunena view. This method is used by
 	 * various specialized view link helpers to return the <a> tag for particular links.
 	 *
 	 * <code>
@@ -94,7 +94,7 @@ abstract class JHtmlKLink
 	 * @param $view		string	name of the view itself. e.g recent, thread, category, ...
 	 * @param $param	string	param - the additional parameter required for that view
 	 * @param $name		string	text for the link to be displayed to the user
-	 * @param $title	string	link title 
+	 * @param $title	string	link title
 	 * @param $page		integer	optional page number; 1 will surpress limit and limitstart parameters
      * @param $limit	integer optional limit of items per page; model will set this as per backend config settings for the view
      * @param $type		string	optional type override for view if not default
@@ -111,7 +111,7 @@ abstract class JHtmlKLink
     {
         return self::link($linktype, KUNENA_LIVEURLREL.'&amp;view='.$view.($type?'&amp;format='.$type:'').($format?'&amp;format='.$format:'').'&amp;'.$param, $name, $title, $rel, $class, $anker);
     }
-    
+
 	/**
 	 * Method to generate an (X)HTML search engine friendly link as an <a> tag.
 	 * Specialized helper for category views.
@@ -123,7 +123,7 @@ abstract class JHtmlKLink
 	 * @param $linktype	string	type of link: 'atag' for <a> tag, 'url' for plaintext url
 	 * @param $catid	integer	category id to be displayed by the view. catid = 0 returns top level category overview
 	 * @param $name		string	text for the link to be displayed to the user
-	 * @param $title	string	link title 
+	 * @param $title	string	link title
 	 * @param $page		integer	optional page number; 1 will surpress limit and limitstart parameters
      * @param $limit	integer optional limit of items per page; model will set this as per backend config settings for the view
      * @param $type		string	optional type override for view if not default
@@ -159,9 +159,9 @@ abstract class JHtmlKLink
 	 * </code>
 	 *
 	 * @param $linktype	string	type of link: 'atag' for <a> tag, 'url' for plaintext url
-	 * @param $threadid	integer	thread id to be displayed by the view. 
+	 * @param $threadid	integer	thread id to be displayed by the view.
 	 * @param $name		string	text for the link to be displayed to the user
-	 * @param $title	string	link title 
+	 * @param $title	string	link title
 	 * @param $page		integer	optional page number; 1 will surpress limit and limitstart parameters
      * @param $limit	integer optional limit of items per page; model will set this as per backend config settings for the view
      * @param $type		string	optional type override for view if not default
@@ -198,7 +198,7 @@ abstract class JHtmlKLink
 	 *
 	 * @param $linktype	string	type of link: 'atag' for <a> tag, 'url' for plaintext url
 	 * @param $name		string	text for the link to be displayed to the user
-	 * @param $title	string	link title 
+	 * @param $title	string	link title
 	 * @param $page		integer	optional page number; 1 will surpress limit and limitstart parameters
      * @param $limit	integer optional limit of items per page; model will set this as per backend config settings for the view
      * @param $type		string	optional type override for view if not default
@@ -224,7 +224,34 @@ abstract class JHtmlKLink
 
         return $pagelink;
     }
-    
+
+    /**
+	 * Method to generate an (X)HTML search engine friendly link as an <a> tag.
+	 * Specialized helper for link to user profile.
+	 *
+	 * <code>
+	 *	<?php echo JHtml::_('klink.user', 'atag', $name, $title, ...); ?>
+	 * </code>
+	 *
+	 * @param $linktype	string	type of link: 'atag' for <a> tag, 'url' for plaintext url
+	 * @param $name		string	text for the link to be displayed to the user
+	 * @param $title	string	link title
+     * @param $type		string	optional type override for view if not default
+     * @param $format	string	optional format override for view if not default
+     * @param $rel		string	optional <a> rel modifier; default is 'follow'
+     * @param $class	string 	optional css class for <a> tag
+     * @param $anker	string	optional page anker for <a> tag
+	 *
+	 * @return	string	The link as an <a> tag.
+	 *
+	 * @since	1.6
+	 */
+    public function user($linktype, $name, $title, $type='', $format='', $rel='follow', $class='', $anker='')
+    {
+        //TODO: Insert user profile link define into function call
+        return self::link($linktype, 'insert-link-to-user-profile-here', $name, $title, $type, $format, $rel, $class, $anker);
+    }
+
 //
 //    function GetSamePageAnkerLink($anker, $name, $rel='nofollow')
 //    {

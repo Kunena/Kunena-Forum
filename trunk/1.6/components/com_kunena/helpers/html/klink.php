@@ -79,11 +79,21 @@ abstract class JHtmlKLink
         return self::sef(KUNENA_LIVEURLREL, $name, NULL, $rel);
     }
 
-    public function rss($name , $rel='follow')
-    {
-        return self::sef(KUNENA_LIVEURLREL.'&amp;func=rss', $name, NULL, $rel, NULL, NULL, 'target="_blank"');
-    }
+//
+// We no longer need a stand alone RSS link. RSS is now a format for all view types and allows 
+// us to public RSS feeds on categories, threads, recent and other publci views.
+// Look for the format parameter in various link helper. format=rss for rss feeds.
+//    
+//    public function rss($name , $rel='follow')
+//    {
+//        return self::sef(KUNENA_LIVEURLREL.'&amp;func=rss', $name, NULL, $rel, NULL, NULL, 'target="_blank"');
+//    }
 
+    public static function view($view, $param, $paramname, $title, $type='', $format='', $rel='follow', $class='', $anker='')
+    {
+        return self::sef(KUNENA_LIVEURLREL.'&amp;view='.$view.'&amp;type='.$type.($format?'&amp;format='.$format:'').'&amp;'.$param, $paramname, $title, $rel, $class, $anker);
+    }
+    
 	/**
 	 * Method to generate an (X)HTML search engine friendly link as an <a> tag.
 	 *
@@ -97,54 +107,50 @@ abstract class JHtmlKLink
 	 * 	 * @return	string	The link as an <a> tag.
 	 * @since	1.6
 	 */
-    public static function category($type, $catid, $catname, $rel='follow', $class='')
-    {
-        return self::sef(KUNENA_LIVEURLREL.'&amp;view=category&amp;type='.$type.'&amp;catid='.$catid, $catname, '', $rel, $class);
-    }
-
-    public function categoryPage($type, $catid, $page, $pagename, $rel='follow', $class='')
+    public function category($catid, $name, $title, $page=1, $limit=20, $type='', $format='', $rel='follow', $class='', $anker='')
     {
         if ($page == 1 || !is_numeric($page))
         {
-            // page 1 is identical to a link to the regular category link
-            $pagelink  = self::category($type, $catid, $pagename, $rel, $class);
+    		$pagelink = self::view('category', 'category='.$catid, $name, $title, $type, $format, $rel, $class, $anker);
         }
         else
         {
-            $pagelink  = self::sef(KUNENA_LIVEURLREL.'&amp;view=category&amp;type='.$type.'&amp;catid='.$catid.'&amp;page='.$page, $pagename, '', $rel, $class);
+    		$pagelink = self::view('category', 'category='.$catid.'&amp;limit='.$limit.'&amp;limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
         }
 
         return $pagelink;
     }
 
-//    function GetCategoryReviewListLink($catid, $catname, $rel='nofollow', $class='')
-//    {
-//        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=review&amp;action=list&amp;catid='.$catid, $catname, '', $rel, $class);
-//    }
-//
-//    function GetThreadLink($func, $catid, $threadid, $threadname, $title, $rel='follow', $class='')
-//    {
-//        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;catid='.$catid.'&amp;id='.$threadid, $threadname, $title, $rel, $class);
-//    }
-//
-//    function GetThreadPageLink($kunenaConfig, $func, $catid, $threadid, $page, $limit, $name, $anker='', $rel='follow', $class='')
-//    {
-//    	$kunenaConfig =& CKunenaConfig::getInstance();
-//        if ($page == 1 || !is_numeric($page) || !is_numeric($limit))
-//        {
-//            // page 1 is identical to a link to the top of the thread
-//            $pagelink  = CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;catid='.$catid.'&amp;id='.$threadid,
-//            										$name, '', $rel, $class, $anker);
-//        }
-//        else
-//        {
-//            $pagelink  = CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;catid='.$catid.'&amp;id='.$threadid
-//                          .'&amp;limit='.$limit.'&amp;limitstart='.(($page-1)*$limit), $name, '', $rel, $class, $anker);
-//        }
-//
-//        return $pagelink;
-//    }
-//
+    public function thread($threadid, $name, $title, $page=1, $limit=20, $type='', $format='', $rel='follow', $class='', $anker='')
+    {
+        if ($page == 1 || !is_numeric($page))
+        {
+    		$pagelink = self::view('thread', 'thread='.$threadid, $name, $title, $type, $format, $rel, $class, $anker);
+        }
+        else
+        {
+    		$pagelink = self::view('thread', 'thread='.$threadid.'&amp;limit='.$limit.'&amp;limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
+        }
+
+        return $pagelink;
+    }
+
+    public function recent($name, $title, $page=1, $limit=20, $type='', $format='', $rel='follow', $class='', $anker='')
+    {
+        if ($page == 1 || !is_numeric($page))
+        {
+    		$pagelink = self::view('recent', $name, $title, $type, $format, $rel, $class, $anker);
+        }
+        else
+        {
+    		$pagelink = self::view('recent', 'limit='.$limit.'&amp;limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
+        }
+
+        return $pagelink;
+    }
+    
+    
+    //
 //    // GetThreadPageURL is basically identically to the prior function except that it returns a clear text
 //    // non-encoded URL. This functions is used by the email function to notify users about new posts.
 //    function GetThreadPageURL($kunenaConfig, $func, $catid, $threadid, $page, $limit, $anker='')

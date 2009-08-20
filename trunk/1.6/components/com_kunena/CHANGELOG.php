@@ -40,6 +40,7 @@ Kunena 1.6.0dev
 ^ [#17628] Minor K1.5 legacy cleanup
 + [#17654] Initial configuration for bbcode parser and usage sample
 		   in messages/view.raw.php
++ [#17628] Additional JHtmlKLink methods
 
 18-Aug-2009 fxstein
 # [#17654] Various bugfixes in new bbcode parser class

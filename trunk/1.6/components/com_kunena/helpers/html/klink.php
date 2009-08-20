@@ -74,9 +74,9 @@ abstract class JHtmlKLink
         return self::sef(KUNENA_LIVEURLREL.'&amp;func=credits&amp;catid='.$catid, $name, NULL, 'follow');
     }
 
-    public function kunena($name , $rel='follow')
+    public function kunena($name)
     {
-        return self::sef(KUNENA_LIVEURLREL, $name, NULL, $rel);
+        return self::sef(KUNENA_LIVEURLREL, $name, NULL, 'follow');
     }
 
 //
@@ -89,22 +89,56 @@ abstract class JHtmlKLink
 //        return self::sef(KUNENA_LIVEURLREL.'&amp;func=rss', $name, NULL, $rel, NULL, NULL, 'target="_blank"');
 //    }
 
-    public static function view($view, $param, $paramname, $title, $type='', $format='', $rel='follow', $class='', $anker='')
+	/**
+	 * Method to generate an (X)HTML search engine friendly link to a Kunena view. This method is used by 
+	 * various specialized view link helpers to return the <a> tag for particular links.
+	 *
+	 * <code>
+	 *	<?php echo JHtml::_('klink.view', $view, $param, $name, $title, ...); ?>
+	 * </code>
+	 *
+	 * @param $view		string	name of the view itself. e.g recent, thread, category, ...
+	 * @param $param	string	param - the additional parameter required for that view
+	 * @param $name		string	text for the link to be displayed to the user
+	 * @param $title	string	link title 
+	 * @param $page		integer	optional page number; 1 will surpress limit and limitstart parameters
+     * @param $limit	integer optional limit of items per page; model will set this as per backend config settings for the view
+     * @param $type		string	optional type override for view if not default
+     * @param $format	string	optional format override for view if not default
+     * @param $rel		string	optional <a> rel modifier; default is 'follow'
+     * @param $class	string 	optional css class for <a> tag
+     * @param $anker	string	optional page anker for <a> tag
+	 *
+	 * @return	string	The link as an <a> tag.
+	 *
+	 * @since	1.6
+	 */
+    public static function view($view, $param, $name, $title, $type='', $format='', $rel='follow', $class='', $anker='')
     {
-        return self::sef(KUNENA_LIVEURLREL.'&amp;view='.$view.'&amp;type='.$type.($format?'&amp;format='.$format:'').'&amp;'.$param, $paramname, $title, $rel, $class, $anker);
+        return self::sef(KUNENA_LIVEURLREL.'&amp;view='.$view.($type?'&amp;format='.$type:'').($format?'&amp;format='.$format:'').'&amp;'.$param, $name, $title, $rel, $class, $anker);
     }
     
 	/**
 	 * Method to generate an (X)HTML search engine friendly link as an <a> tag.
+	 * Specialized helper for category views.
 	 *
 	 * <code>
-	 *	<?php echo JHtml::_('klink.category', $type, $catid, $catname ...); ?>
+	 *	<?php echo JHtml::_('klink.category', $catid, $name, $title, ...); ?>
 	 * </code>
 	 *
-	 * @param	string	the view type of the category view. Anay available view type inside the category view
-	 * @param	string	...
-	 * @param	string	...
-	 * 	 * @return	string	The link as an <a> tag.
+	 * @param $catid	integer	category id to be displayed by the view. catid = 0 returns top level category overview
+	 * @param $name		string	text for the link to be displayed to the user
+	 * @param $title	string	link title 
+	 * @param $page		integer	optional page number; 1 will surpress limit and limitstart parameters
+     * @param $limit	integer optional limit of items per page; model will set this as per backend config settings for the view
+     * @param $type		string	optional type override for view if not default
+     * @param $format	string	optional format override for view if not default
+     * @param $rel		string	optional <a> rel modifier; default is 'follow'
+     * @param $class	string 	optional css class for <a> tag
+     * @param $anker	string	optional page anker for <a> tag
+	 *
+	 * @return	string	The link as an <a> tag.
+	 *
 	 * @since	1.6
 	 */
     public function category($catid, $name, $title, $page=1, $limit=20, $type='', $format='', $rel='follow', $class='', $anker='')
@@ -121,7 +155,30 @@ abstract class JHtmlKLink
         return $pagelink;
     }
 
-    public function thread($threadid, $name, $title, $page=1, $limit=20, $type='', $format='', $rel='follow', $class='', $anker='')
+	/**
+	 * Method to generate an (X)HTML search engine friendly link as an <a> tag.
+	 * Specialized helper for thread views.
+	 *
+	 * <code>
+	 *	<?php echo JHtml::_('klink.thread', $threadid, $name, $title, ...); ?>
+	 * </code>
+	 *
+	 * @param $threadid	integer	thread id to be displayed by the view. 
+	 * @param $name		string	text for the link to be displayed to the user
+	 * @param $title	string	link title 
+	 * @param $page		integer	optional page number; 1 will surpress limit and limitstart parameters
+     * @param $limit	integer optional limit of items per page; model will set this as per backend config settings for the view
+     * @param $type		string	optional type override for view if not default
+     * @param $format	string	optional format override for view if not default
+     * @param $rel		string	optional <a> rel modifier; default is 'follow'
+     * @param $class	string 	optional css class for <a> tag
+     * @param $anker	string	optional page anker for <a> tag
+	 *
+	 * @return	string	The link as an <a> tag.
+	 *
+	 * @since	1.6
+	 */
+	public function thread($threadid, $name, $title, $page=1, $limit=20, $type='', $format='', $rel='follow', $class='', $anker='')
     {
         if ($page == 1 || !is_numeric($page))
         {
@@ -135,6 +192,48 @@ abstract class JHtmlKLink
         return $pagelink;
     }
 
+//    // GetThreadPageURL is basically identically to the prior function except that it returns a clear text
+//    // non-encoded URL. This functions is used by the email function to notify users about new posts.
+//    function threadURL($threadid, $name, $title, $page=1, $limit=20, $type='', $format='', $anker='')
+//    {
+//        if ($page == 1 || !is_numeric($page) || !is_numeric($limit))
+//        {
+//            // page 1 is identical to a link to the top of the thread
+//            $pageURL = htmlspecialchars_decode(KUNENA_LIVEURLREL).'&func='.$func.'&catid='.$catid.'&id='.$threadid;
+//        }
+//        else
+//        {
+//            $pageURL = htmlspecialchars_decode(KUNENA_LIVEURLREL).'&func='.$func.'&catid='.$catid.'&id='.$threadid
+//                          .'&limit='.$limit.'&limitstart='.(($page-1)*$limit);
+//        }
+//
+//        return JRoute::_($pageURL).($anker?('#'.$anker):'');
+//    }
+    
+    
+    
+    /**
+	 * Method to generate an (X)HTML search engine friendly link as an <a> tag.
+	 * Specialized helper for recent views.
+	 *
+	 * <code>
+	 *	<?php echo JHtml::_('klink.recent', $name, $title, ...); ?>
+	 * </code>
+	 *
+	 * @param $name		string	text for the link to be displayed to the user
+	 * @param $title	string	link title 
+	 * @param $page		integer	optional page number; 1 will surpress limit and limitstart parameters
+     * @param $limit	integer optional limit of items per page; model will set this as per backend config settings for the view
+     * @param $type		string	optional type override for view if not default
+     * @param $format	string	optional format override for view if not default
+     * @param $rel		string	optional <a> rel modifier; default is 'follow'
+     * @param $class	string 	optional css class for <a> tag
+     * @param $anker	string	optional page anker for <a> tag
+	 *
+	 * @return	string	The link as an <a> tag.
+	 *
+	 * @since	1.6
+	 */
     public function recent($name, $title, $page=1, $limit=20, $type='', $format='', $rel='follow', $class='', $anker='')
     {
         if ($page == 1 || !is_numeric($page))
@@ -150,24 +249,26 @@ abstract class JHtmlKLink
     }
     
     
-    //
-//    // GetThreadPageURL is basically identically to the prior function except that it returns a clear text
-//    // non-encoded URL. This functions is used by the email function to notify users about new posts.
-//    function GetThreadPageURL($kunenaConfig, $func, $catid, $threadid, $page, $limit, $anker='')
-//    {
-//        if ($page == 1 || !is_numeric($page) || !is_numeric($limit))
-//        {
-//            // page 1 is identical to a link to the top of the thread
-//            $pageURL = htmlspecialchars_decode(KUNENA_LIVEURLREL).'&func='.$func.'&catid='.$catid.'&id='.$threadid;
-//        }
-//        else
-//        {
-//            $pageURL = htmlspecialchars_decode(KUNENA_LIVEURLREL).'&func='.$func.'&catid='.$catid.'&id='.$threadid
-//                          .'&limit='.$limit.'&limitstart='.(($page-1)*$limit);
-//        }
-//
-//        return JRoute::_($pageURL).($anker?('#'.$anker):'');
-//    }
+    
+    // GetThreadPageURL is basically identically to the prior function except that it returns a clear text
+    // non-encoded URL. This functions is used by the email function to notify users about new posts.
+    function threadURL($func, $catid, $threadid, $page, $limit, $anker='')
+    {
+        if ($page == 1 || !is_numeric($page) || !is_numeric($limit))
+        {
+            // page 1 is identical to a link to the top of the thread
+            $pageURL = htmlspecialchars_decode(KUNENA_LIVEURLREL).'&func='.$func.'&catid='.$catid.'&id='.$threadid;
+        }
+        else
+        {
+            $pageURL = htmlspecialchars_decode(KUNENA_LIVEURLREL).'&func='.$func.'&catid='.$catid.'&id='.$threadid
+                          .'&limit='.$limit.'&limitstart='.(($page-1)*$limit);
+        }
+
+        return JRoute::_($pageURL).($anker?('#'.$anker):'');
+    }
+    
+    
 //
 //    function GetSamePageAnkerLink($anker, $name, $rel='nofollow')
 //    {

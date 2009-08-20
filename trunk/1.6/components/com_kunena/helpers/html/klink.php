@@ -14,6 +14,7 @@ defined('_JEXEC') or die('Invalid Request.');
 /**
  * HTML helper class for handling Kunena link rendering.
  *
+ * @author 		Louis, fxstein
  * @package 	Kunena
  * @subpackage	com_kunena
  * @since		1.6
@@ -21,37 +22,39 @@ defined('_JEXEC') or die('Invalid Request.');
 abstract class JHtmlKLink
 {
 	/**
-	 * Method to generate an simple (X)HTML link as an <a> tag.
+	 * Method to generate an (X)HTML search engine friendly link as an <a> tag or plain text url.
 	 *
 	 * <code>
-	 *	<?php echo JHtml::_('klink.simple', $url, $text); ?>
+	 *	<?php echo JHtml::_('klink.link', 'atag', $url, $text, ...); ?>
 	 * </code>
 	 *
-	 * @param	string	The URL for the href attribute of the <a> tag.
-	 * @param	string	The text for the contents of the <a> tag.
-	 * @return	string	The link as an <a> tag.
+	 * @param $linktype	string	type of link: 'atag' for <a> tag, 'url' for plaintext url
+	 * @param $url		string	The URL string
+	 * @param $text		string	optional text for the contents of the <a> tag.
+	 * @param $title	string	optional title for the contents of the <a> tag.
+	 * @param $rel		string 	optional rel tag
+	 * @param $class	string 	optional css class
+	 * @param $anker	string  optional page anker: #anker
+	 * @param $attr		string 	optional attr for <a> tag
+	 * @return	string	The link as an <a> tag or plain text url.
 	 * @since	1.6
 	 */
-	public static function simple($url, $text = '')
+	public static function link($linktype, $url, $text='', $title='', $rel='', $class ='', $anker='', $attr='')
 	{
-		return'<a href="'.$url.'">'.$text.'</a>';
-	}
-
-	/**
-	 * Method to generate an (X)HTML search engine friendly link as an <a> tag.
-	 *
-	 * <code>
-	 *	<?php echo JHtml::_('klink.sef', $url, $text, ...); ?>
-	 * </code>
-	 *
-	 * @param	string	The URL for the href attribute of the <a> tag.
-	 * @param	string	The text for the contents of the <a> tag.
-	 * @return	string	The link as an <a> tag.
-	 * @since	1.6
-	 */
-	public static function sef($url, $text, $title, $rel, $class ='', $anker='', $attr='')
-	{
-		return '<a '.($class ? 'class="'.$class.'" ' : '').'href="'.JRoute::_($url).($anker?('#'.$anker):'').'" title="'.$title.'"'.($rel ? ' rel="'.$rel.'"' : '').($attr ? ' '.$attr : '').'>'.$text.'</a>';
+		$link = '';
+		switch ($linktype)
+		{
+			case 'url':
+				// JRoute::_($url, false) to supress encoding of & - only for palin text url
+				$link = JRoute::_($url,false).($anker?('#'.$anker):'');
+				break;
+			case 'atag':
+			default:
+				$link = '<a '.($class ? 'class="'.$class.'" ' : '').'href="'.JRoute::_($url).($anker?('#'.$anker):'').($title ? ' title="'.$title.'"' : '').($rel ? ' rel="'.$rel.'"' : '').($attr ? ' '.$attr : '').'>'.$text.'</a>';
+				break;
+				
+		}
+		return $link;
 	}
 
 	/**
@@ -66,37 +69,28 @@ abstract class JHtmlKLink
 	 */
     public function credits()
     {
-        return self::sef('http://www.kunena.com', 'Kunena', 'Kunena', 'follow', NULL, NULL, 'target="_blank"');
+        return self::link('atag', 'http://www.kunena.com', 'Kunena', 'Kunena', 'follow', NULL, NULL, 'target="_blank"');
     }
 
     public function teamCredits($catid, $name='')
     {
-        return self::sef(KUNENA_LIVEURLREL.'&amp;func=credits&amp;catid='.$catid, $name, NULL, 'follow');
+        return self::link('atag', KUNENA_LIVEURLREL.'&amp;func=credits&amp;catid='.$catid, $name, NULL, 'follow');
     }
 
     public function kunena($name)
     {
-        return self::sef(KUNENA_LIVEURLREL, $name, NULL, 'follow');
+        return self::link('atag', KUNENA_LIVEURLREL, $name, NULL, 'follow');
     }
-
-//
-// We no longer need a stand alone RSS link. RSS is now a format for all view types and allows 
-// us to public RSS feeds on categories, threads, recent and other publci views.
-// Look for the format parameter in various link helper. format=rss for rss feeds.
-//    
-//    public function rss($name , $rel='follow')
-//    {
-//        return self::sef(KUNENA_LIVEURLREL.'&amp;func=rss', $name, NULL, $rel, NULL, NULL, 'target="_blank"');
-//    }
 
 	/**
 	 * Method to generate an (X)HTML search engine friendly link to a Kunena view. This method is used by 
 	 * various specialized view link helpers to return the <a> tag for particular links.
 	 *
 	 * <code>
-	 *	<?php echo JHtml::_('klink.view', $view, $param, $name, $title, ...); ?>
+	 *	<?php echo JHtml::_('klink.view', $linktype, $view, $param, $name, $title, ...); ?>
 	 * </code>
 	 *
+	 * @param $linktype	string	type of link: 'atag' for <a> tag, 'url' for plaintext url
 	 * @param $view		string	name of the view itself. e.g recent, thread, category, ...
 	 * @param $param	string	param - the additional parameter required for that view
 	 * @param $name		string	text for the link to be displayed to the user
@@ -113,9 +107,9 @@ abstract class JHtmlKLink
 	 *
 	 * @since	1.6
 	 */
-    public static function view($view, $param, $name, $title, $type='', $format='', $rel='follow', $class='', $anker='')
+    public static function view($linktype, $view, $param, $name, $title, $type='', $format='', $rel='follow', $class='', $anker='')
     {
-        return self::sef(KUNENA_LIVEURLREL.'&amp;view='.$view.($type?'&amp;format='.$type:'').($format?'&amp;format='.$format:'').'&amp;'.$param, $name, $title, $rel, $class, $anker);
+        return self::link($linktype, KUNENA_LIVEURLREL.'&amp;view='.$view.($type?'&amp;format='.$type:'').($format?'&amp;format='.$format:'').'&amp;'.$param, $name, $title, $rel, $class, $anker);
     }
     
 	/**
@@ -123,9 +117,10 @@ abstract class JHtmlKLink
 	 * Specialized helper for category views.
 	 *
 	 * <code>
-	 *	<?php echo JHtml::_('klink.category', $catid, $name, $title, ...); ?>
+	 *	<?php echo JHtml::_('klink.category', 'atag', $catid, $name, $title, ...); ?>
 	 * </code>
 	 *
+	 * @param $linktype	string	type of link: 'atag' for <a> tag, 'url' for plaintext url
 	 * @param $catid	integer	category id to be displayed by the view. catid = 0 returns top level category overview
 	 * @param $name		string	text for the link to be displayed to the user
 	 * @param $title	string	link title 
@@ -141,15 +136,15 @@ abstract class JHtmlKLink
 	 *
 	 * @since	1.6
 	 */
-    public function category($catid, $name, $title, $page=1, $limit=20, $type='', $format='', $rel='follow', $class='', $anker='')
+    public function category($linktype, $catid, $name, $title, $page=1, $limit=20, $type='', $format='', $rel='follow', $class='', $anker='')
     {
         if ($page == 1 || !is_numeric($page))
         {
-    		$pagelink = self::view('category', 'category='.$catid, $name, $title, $type, $format, $rel, $class, $anker);
+    		$pagelink = self::view($linktype, 'category', 'category='.$catid, $name, $title, $type, $format, $rel, $class, $anker);
         }
         else
         {
-    		$pagelink = self::view('category', 'category='.$catid.'&amp;limit='.$limit.'&amp;limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
+    		$pagelink = self::view($linktype, 'category', 'category='.$catid.'&amp;limit='.$limit.'&amp;limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
         }
 
         return $pagelink;
@@ -160,9 +155,10 @@ abstract class JHtmlKLink
 	 * Specialized helper for thread views.
 	 *
 	 * <code>
-	 *	<?php echo JHtml::_('klink.thread', $threadid, $name, $title, ...); ?>
+	 *	<?php echo JHtml::_('klink.thread', 'atag', $threadid, $name, $title, ...); ?>
 	 * </code>
 	 *
+	 * @param $linktype	string	type of link: 'atag' for <a> tag, 'url' for plaintext url
 	 * @param $threadid	integer	thread id to be displayed by the view. 
 	 * @param $name		string	text for the link to be displayed to the user
 	 * @param $title	string	link title 
@@ -178,48 +174,29 @@ abstract class JHtmlKLink
 	 *
 	 * @since	1.6
 	 */
-	public function thread($threadid, $name, $title, $page=1, $limit=20, $type='', $format='', $rel='follow', $class='', $anker='')
+	public function thread($linktype, $threadid, $name, $title, $page=1, $limit=20, $type='', $format='', $rel='follow', $class='', $anker='')
     {
         if ($page == 1 || !is_numeric($page))
         {
-    		$pagelink = self::view('thread', 'thread='.$threadid, $name, $title, $type, $format, $rel, $class, $anker);
+    		$pagelink = self::view($linktype, 'thread', 'thread='.$threadid, $name, $title, $type, $format, $rel, $class, $anker);
         }
         else
         {
-    		$pagelink = self::view('thread', 'thread='.$threadid.'&amp;limit='.$limit.'&amp;limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
+    		$pagelink = self::view($linktype, 'thread', 'thread='.$threadid.'&amp;limit='.$limit.'&amp;limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
         }
 
         return $pagelink;
     }
 
-//    // GetThreadPageURL is basically identically to the prior function except that it returns a clear text
-//    // non-encoded URL. This functions is used by the email function to notify users about new posts.
-//    function threadURL($threadid, $name, $title, $page=1, $limit=20, $type='', $format='', $anker='')
-//    {
-//        if ($page == 1 || !is_numeric($page) || !is_numeric($limit))
-//        {
-//            // page 1 is identical to a link to the top of the thread
-//            $pageURL = htmlspecialchars_decode(KUNENA_LIVEURLREL).'&func='.$func.'&catid='.$catid.'&id='.$threadid;
-//        }
-//        else
-//        {
-//            $pageURL = htmlspecialchars_decode(KUNENA_LIVEURLREL).'&func='.$func.'&catid='.$catid.'&id='.$threadid
-//                          .'&limit='.$limit.'&limitstart='.(($page-1)*$limit);
-//        }
-//
-//        return JRoute::_($pageURL).($anker?('#'.$anker):'');
-//    }
-    
-    
-    
     /**
 	 * Method to generate an (X)HTML search engine friendly link as an <a> tag.
 	 * Specialized helper for recent views.
 	 *
 	 * <code>
-	 *	<?php echo JHtml::_('klink.recent', $name, $title, ...); ?>
+	 *	<?php echo JHtml::_('klink.recent', 'atag', $name, $title, ...); ?>
 	 * </code>
 	 *
+	 * @param $linktype	string	type of link: 'atag' for <a> tag, 'url' for plaintext url
 	 * @param $name		string	text for the link to be displayed to the user
 	 * @param $title	string	link title 
 	 * @param $page		integer	optional page number; 1 will surpress limit and limitstart parameters
@@ -234,40 +211,19 @@ abstract class JHtmlKLink
 	 *
 	 * @since	1.6
 	 */
-    public function recent($name, $title, $page=1, $limit=20, $type='', $format='', $rel='follow', $class='', $anker='')
+    public function recent($linktype, $name, $title, $page=1, $limit=20, $type='', $format='', $rel='follow', $class='', $anker='')
     {
         if ($page == 1 || !is_numeric($page))
         {
-    		$pagelink = self::view('recent', $name, $title, $type, $format, $rel, $class, $anker);
+    		$pagelink = self::view($linktype, 'recent', $name, $title, $type, $format, $rel, $class, $anker);
         }
         else
         {
-    		$pagelink = self::view('recent', 'limit='.$limit.'&amp;limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
+    		$pagelink = self::view($linktype, 'recent', 'limit='.$limit.'&amp;limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
         }
 
         return $pagelink;
     }
-    
-    
-    
-    // GetThreadPageURL is basically identically to the prior function except that it returns a clear text
-    // non-encoded URL. This functions is used by the email function to notify users about new posts.
-    function threadURL($func, $catid, $threadid, $page, $limit, $anker='')
-    {
-        if ($page == 1 || !is_numeric($page) || !is_numeric($limit))
-        {
-            // page 1 is identical to a link to the top of the thread
-            $pageURL = htmlspecialchars_decode(KUNENA_LIVEURLREL).'&func='.$func.'&catid='.$catid.'&id='.$threadid;
-        }
-        else
-        {
-            $pageURL = htmlspecialchars_decode(KUNENA_LIVEURLREL).'&func='.$func.'&catid='.$catid.'&id='.$threadid
-                          .'&limit='.$limit.'&limitstart='.(($page-1)*$limit);
-        }
-
-        return JRoute::_($pageURL).($anker?('#'.$anker):'');
-    }
-    
     
 //
 //    function GetSamePageAnkerLink($anker, $name, $rel='nofollow')

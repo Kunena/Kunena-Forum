@@ -36,6 +36,7 @@ Kunena 1.6.0dev
 20-Aug-2009 fxstein
 + [#17628] Additional JHtmlKLink methods
 ^ [#17628] converted default_thread.php to use new JHtmlKlink methods
++ [#17628] Initial backend configuration settings
 
 19-Aug-2009 Louis
 + [#17628] Added JHtmlKLink class.

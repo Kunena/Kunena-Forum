@@ -74,7 +74,7 @@ abstract class JHtmlKLink
 
     public function teamCredits($catid, $name='')
     {
-        return self::link('atag', KUNENA_LIVEURLREL.'&amp;func=credits&amp;catid='.$catid, $name, NULL, 'follow');
+        return self::link('atag', KUNENA_LIVEURLREL.'&func=credits&catid='.$catid, $name, NULL, 'follow');
     }
 
     public function kunena($name)
@@ -109,7 +109,7 @@ abstract class JHtmlKLink
 	 */
     public static function view($linktype, $view, $param, $name, $title, $type='', $format='', $rel='follow', $class='', $anker='')
     {
-        return self::link($linktype, KUNENA_LIVEURLREL.'&amp;view='.$view.($type?'&amp;format='.$type:'').($format?'&amp;format='.$format:'').'&amp;'.$param, $name, $title, $rel, $class, $anker);
+        return self::link($linktype, KUNENA_LIVEURLREL.'&view='.$view.($type?'&type='.$type:'').($format?'&format='.$format:'').$param, $name, $title, $rel, $class, $anker);
     }
 
 	/**
@@ -140,11 +140,11 @@ abstract class JHtmlKLink
     {
         if ($page == 1 || !is_numeric($page))
         {
-    		$pagelink = self::view($linktype, 'category', 'category='.$catid, $name, $title, $type, $format, $rel, $class, $anker);
+    		$pagelink = self::view($linktype, 'category', '&category='.$catid, $name, $title, $type, $format, $rel, $class, $anker);
         }
         else
         {
-    		$pagelink = self::view($linktype, 'category', 'category='.$catid.'&amp;limit='.$limit.'&amp;limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
+    		$pagelink = self::view($linktype, 'category', '&category='.$catid.'&limit='.$limit.'&limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
         }
 
         return $pagelink;
@@ -178,11 +178,11 @@ abstract class JHtmlKLink
     {
         if ($page == 1 || !is_numeric($page))
         {
-    		$pagelink = self::view($linktype, 'thread', 'thread='.$threadid, $name, $title, $type, $format, $rel, $class, $anker);
+    		$pagelink = self::view($linktype, 'thread', '&thread='.$threadid, $name, $title, $type, $format, $rel, $class, $anker);
         }
         else
         {
-    		$pagelink = self::view($linktype, 'thread', 'thread='.$threadid.'&amp;limit='.$limit.'&amp;limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
+    		$pagelink = self::view($linktype, 'thread', '&thread='.$threadid.'&limit='.$limit.'&limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
         }
 
         return $pagelink;
@@ -219,7 +219,7 @@ abstract class JHtmlKLink
         }
         else
         {
-    		$pagelink = self::view($linktype, 'recent', 'limit='.$limit.'&amp;limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
+    		$pagelink = self::view($linktype, 'recent', '&limit='.$limit.'&limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
         }
 
         return $pagelink;
@@ -252,33 +252,32 @@ abstract class JHtmlKLink
         return self::link($linktype, 'insert-link-to-user-profile-here', $name, $title, $type, $format, $rel, $class, $anker);
     }
 
-//
-//    function GetSamePageAnkerLink($anker, $name, $rel='nofollow')
-//    {
-//    	jimport('joomla.environment.request');
-//        return CKunenaLink::GetSefHrefLink(JRequest::getURI(), $name, '', $rel, '', $anker);
-//    }
-//
-//    function GetReportMessageLink($catid, $id, $name, $rel='nofollow')
-//    {
-//        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=report&amp;catid='.$catid.'&amp;id='.$id, $name, '', $rel);
-//    }
-//
-//    function GetMessageIPLink($msg_ip, $rel='nofollow')
-//    {
-//        if (!empty($msg_ip))
-//        {
-//            $iplink = '<a href="http://whois.domaintools.com/'.$msg_ip.'" target="_blank">';
-//            $iplink .= 'IP: '.$msg_ip.'</a>';
-//        }
-//        else
-//        {
-//            $iplink = '&nbsp;';
-//        }
-//
-//        return $iplink;
-//    }
-//
+    public function pageAnker($anker, $name, $rel='nofollow')
+    {
+    	jimport('joomla.environment.request');
+        return self::link('atag', JRequest::getURI(), $name, NULL, $rel, NULL, $anker);
+    }
+
+    function reportMessage($messageid, $name, $rel='nofollow')
+    {
+        return self::link('atag', KUNENA_LIVEURLREL.'&view=report&messageid='.$messageid, $name, '', $rel);
+    }
+
+    function messageIP($msg_ip, $rel='nofollow')
+    {
+        if (!empty($msg_ip))
+        {
+            $iplink = '<a href="http://whois.domaintools.com/'.$msg_ip.'" target="_blank">';
+            $iplink .= 'IP: '.$msg_ip.'</a>';
+        }
+        else
+        {
+            $iplink = '&nbsp;';
+        }
+
+        return $iplink;
+    }
+
 //    function GetMyProfileLink($kunenaConfig, $userid, $name, $rel='nofollow')
 //    {
 //    	$kunenaConfig =& CKunenaConfig::getInstance();
@@ -304,59 +303,27 @@ abstract class JHtmlKLink
 //			return $name;
 //		}
 //    }
-//
-//	function GetUserlistURL($action='')
-//	{
-//		return JRoute::_(KUNENA_LIVEURLREL.'&amp;func=userlist'.$action);
-//	}
-//
-//	function GetUserlistLink($action, $name, $rel='nofollow', $class='')
-//	{
-//		return self::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=userlist'.$action, $name, '', $rel, $class);
-//	}
-//
-//    function GetViewLink($func, $id, $catid, $view, $name, $rel='nofollow')
-//    {
-//        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;id='.$id.'&amp;view='.$view.'&amp;catid='.$catid, $name, '', $rel);
-//    }
-//
-//    function GetPendingMessagesLink($catid, $name, $rel='nofollow')
-//    {
-//        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=review&action=list&amp;catid='.$catid, $name, '', $rel);
-//    }
-//
-//    function GetShowLatestLink($name, $rel='follow')
-//    {
-//        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=latest', $name, '', $rel);
-//    }
-//
-//    function GetShowLatestURL()
-//    {
-//        return JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest');
-//    }
-//
-//    function GetShowMyLatestLink($name, $rel='nofollow')
-//    {
-//        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=mylatest', $name, '', $rel);
-//    }
-//
-//    function GetShowLatestThreadsLink($period, $name, $rel='nofollow')
-//    {
-//        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel='.$period, $name, '', $rel);
-//    }
-//
-//    // Function required to support default_ex template
-//    function GetLatestPageLink($func, $page, $rel='follow', $class='', $sel='')
-//    {
-//    	// if ($func=='') $func = 'latest';
-//        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;page='.$page.(($sel)?'&amp;sel='.$sel:''), $page, '', $rel, $class);
-//    }
-//
-//    function GetPostNewTopicLink($catid, $name, $rel='nofollow')
-//    {
-//        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=post&amp;do=reply&amp;catid='.$catid, $name, '', $rel);
-//    }
-//
+
+	public function userList($linktype, $action, $name, $rel='nofollow', $class='')
+	{
+		return self::link($linktype, KUNENA_LIVEURLREL.'&view=userlist'.$action, $name, '', $rel, $class);
+	}
+
+    public function pendingMessages($linktype, $catid, $name, $rel='nofollow')
+    {
+        return self::link($linktype, KUNENA_LIVEURLREL.'&view=pending&category='.$catid, $name, '', $rel);
+    }
+
+    public function postNewThread($linktype, $catid, $name, $rel='nofollow')
+    {
+        return self::link($linktype, KUNENA_LIVEURLREL.'&view=post&type=newthread&category='.$catid, $name, '', $rel);
+    }
+
+    public function postRely($linktype, $messageid, $name, $rel='nofollow')
+    {
+        return self::link($linktype, KUNENA_LIVEURLREL.'&view=post&type=reply&message='.$messageid, $name, '', $rel);
+    }
+    
 //    function GetTopicPostLink($do, $catid, $id, $name, $rel='nofollow')
 //    {
 //        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=post&amp;do='.$do.'&amp;catid='.$catid.'&amp;id='.$id, $name, '', $rel);

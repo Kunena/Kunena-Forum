@@ -243,7 +243,7 @@ if (is_object($kunenaProfile) && $kunenaProfile->useProfileIntegration())
 else
 {
 	// Add required header tags
-	if (defined('KUNENA_JQURL') && !defined('J_JQUERY_LOADED') && !defined('C_ASSET_JQUERY'))
+	if (defined('KUNENA_JQURL') && !defined('J_JQUERY_LOADED'))
 	{
 		define('J_JQUERY_LOADED', 1);
 		if (!defined('C_ASSET_JQUERY')) define('C_ASSET_JQUERY', 1);

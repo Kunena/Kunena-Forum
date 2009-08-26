@@ -30,6 +30,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.5.6
+
+26-Aug-2009 Matias
+# [#17785] JQuery is not loaded if JomSocial integration is enabled
+
 Kunena 1.5.5
 
 16-Aug-2009 Matias

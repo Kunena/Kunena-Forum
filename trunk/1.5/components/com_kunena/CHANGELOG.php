@@ -35,6 +35,7 @@ Kunena 1.5.6
 26-Aug-2009 Matias
 # [#17785] JQuery is not loaded if JomSocial integration is enabled
 # [#17786] Fix broken img tags in messages
+# [#17787] Redirect in Bulk delete is not working
 
 Kunena 1.5.5
 

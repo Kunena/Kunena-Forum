@@ -665,7 +665,7 @@ class CKunenaTools {
             } //end foreach
             CKunenaTools::reCountBoards();
 
-            $app->redirect(JURI::base() . $return, _KUNENA_BULKMSG_DELETED);
+            $app->redirect($return, _KUNENA_BULKMSG_DELETED);
         }
 
     function isModOrAdmin($id = 0) {

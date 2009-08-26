@@ -338,13 +338,13 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
             case 'img':
                 if($between) {
                 	static $file_ext = null;
-
+	              	$matches = null;
+                	
                 	if (empty($file_ext)) {
-	                	$matches = null;
     	            	$params = &JComponentHelper::getParams( 'com_media' );
         	        	$file_ext = explode(',', $params->get('upload_extensions'));
-            	    	preg_match('/\.([\w\d]+)$/', $between, $matches);
                 	}
+            	    preg_match('/\.([\w\d]+)$/', $between, $matches);
                 	if (!in_array(strtolower($matches[1]), $file_ext)) break;
                 	
                 	$tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);

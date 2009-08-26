@@ -26,7 +26,7 @@ class CKunenaPath extends JPath
 		if (empty($tmpdir)) {
 			$file = tempnam(false,false);
 			if ($file === false) return false;
-			unlink($file);
+			@unlink($file);
 			$tmpdir = realpath(dirname($file));
 		}
 		return $tmpdir;
@@ -174,7 +174,7 @@ class CKunenaFile extends JFile
 					jimport('joomla.client.ftp');
 					$ftp = & JFTP::getInstance($FTPOptions['host'], $FTPOptions['port'], null, $FTPOptions['user'], $FTPOptions['pass']);
 					$ftp->chmod($dest, 0644);
-					unlink($src);
+					@unlink($src);
 					$ret = true;
 				} else {
 					@chmod($src, 0644);

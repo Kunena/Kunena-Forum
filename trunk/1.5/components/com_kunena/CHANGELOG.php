@@ -36,6 +36,7 @@ Kunena 1.5.6
 # [#17785] JQuery is not loaded if JomSocial integration is enabled
 # [#17786] Fix broken img tags in messages
 # [#17787] Redirect in Bulk delete is not working
+# [#17788] Warning in avatar uploads (conflicting fix in Joomla 1.5.14)
 
 Kunena 1.5.5
 

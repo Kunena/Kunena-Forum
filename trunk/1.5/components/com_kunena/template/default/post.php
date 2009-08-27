@@ -1046,7 +1046,7 @@ $catName = $objCatInfo->name;
                     // insert 'moved topic' notification in old forum if needed
                     if ($bool_leaveGhost)
                     {
-                    	$kunena_db->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0',".$kunena_db->quote($newSubject).",'$lastTimestamp','{$oldRecord[0]->catid}','1', '{$kunena_my->id}', '".$kunena_db->quote(trim(addslashes($my_name)))."')");
+                    	$kunena_db->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0',".$kunena_db->quote($newSubject).",'$lastTimestamp','{$oldRecord[0]->catid}','1', '{$kunena_my->id}', ".$kunena_db->quote(trim(addslashes($my_name))).")");
                     	$kunena_db->query() or trigger_dberror('Unable to insert ghost message.');
 
                     	//determine the new location for link composition

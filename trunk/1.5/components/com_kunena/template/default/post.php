@@ -261,7 +261,7 @@ $catName = $objCatInfo->name;
                                         //Update the attachments table if an image has been attached
                                         if (!empty($imageLocation) && file_exists($imageLocation))
                                         {
-                                            $kunena_db->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid',".$kunena_db->quote($attachimage['tmp_name']).")");
+                                            $kunena_db->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid',".$kunena_db->quote($imageLocation).")");
 
                                             if (!$kunena_db->query()) {
                                                 echo "<script> alert('Storing image failed: " . $kunena_db->getErrorMsg() . "'); </script>\n";
@@ -271,7 +271,7 @@ $catName = $objCatInfo->name;
                                         //Update the attachments table if an file has been attached
                                         if (!empty($fileLocation) && file_exists($fileLocation))
                                         {
-                                            $kunena_db->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid',".$kunena_db->quote($attachfile['tmp_name']).")");
+                                            $kunena_db->setQuery("INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid',".$kunena_db->quote($fileLocation).")");
 
                                             if (!$kunena_db->query()) {
                                                 echo "<script> alert('Storing file failed: " . $kunena_db->getErrorMsg() . "'); </script>\n";

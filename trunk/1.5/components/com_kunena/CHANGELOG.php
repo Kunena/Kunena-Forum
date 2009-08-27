@@ -42,6 +42,7 @@ Kunena 1.5.6
 * [#17802] Who is online shows hidden users and IP address
 # [#17807] Topic title contains backslash in title when moving/merging thread
 # [#17808] Add word wrap to the message body
+# [#17809] RSS feed fixed to a week
 
 26-Aug-2009 Matias
 # [#17785] JQuery is not loaded if JomSocial integration is enabled

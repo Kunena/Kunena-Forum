@@ -1571,7 +1571,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 				$fb_gd = intval(KUNENA_gdVersion());
 				if ($fb_gd > 0) {
 				   $fbmsg = _KUNENA_GD_INSTALLED .  $fb_gd ;
-  				} elseif ($gdver == -1) {
+  				} elseif ($fb_gd == -1) {
   				   $fbmsg = _KUNENA_GD_NO_VERSION;
   			    } else {
    				   $fbmsg = _KUNENA_GD_NOT_INSTALLED . '<a href="http://www.php.net/gd" target="_blank">http://www.php.net/gd</a>';

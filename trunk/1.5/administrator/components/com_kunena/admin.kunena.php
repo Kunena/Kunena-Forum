@@ -665,9 +665,9 @@ function showConfig($option)
 	$lists['rsstype'] = JHTML::_('select.genericlist', $rsslist ,'cfg_rsstype', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rsstype);
 
     $rsshistorylist = array ();
-	$rsshistorylist[] =JHTML::_('select.option', 'Week',_COM_A_RSS_HISTORY_WEEK);
-	$rsshistorylist[] =JHTML::_('select.option', 'Month',_COM_A_RSS_HISTORY_MONTH);
-	$rsshistorylist[] =JHTML::_('select.option', 'Year',_COM_A_RSS_HISTORY_YEAR);
+	$rsshistorylist[] =JHTML::_('select.option', 'week',_COM_A_RSS_HISTORY_WEEK);
+	$rsshistorylist[] =JHTML::_('select.option', 'month',_COM_A_RSS_HISTORY_MONTH);
+	$rsshistorylist[] =JHTML::_('select.option', 'year',_COM_A_RSS_HISTORY_YEAR);
 
     // build the html select list
     $lists['rsshistory'] = JHTML::_('select.genericlist', $rsshistorylist ,'cfg_rsshistory', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rsshistory);

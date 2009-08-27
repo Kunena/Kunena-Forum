@@ -983,7 +983,7 @@ $catName = $objCatInfo->name;
                         <input type = "hidden" name = "id" value = "<?php echo $id;?>"/>
 
                         <p>
-<?php echo _GEN_TOPIC; ?>: <strong><?php echo $topicSubject; ?></strong>
+<?php echo _GEN_TOPIC; ?>: <strong><?php echo kunena_htmlspecialchars(stripslashes($topicSubject)); ?></strong>
 
     <br/>
 
@@ -1094,7 +1094,7 @@ $catName = $objCatInfo->name;
 			   <input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
 
                         <p>
-<?php echo _GEN_TOPIC; ?>: <strong><?php echo $topicSubject; ?></strong>
+<?php echo _GEN_TOPIC; ?>: <strong><?php echo kunena_htmlspecialchars(stripslashes($topicSubject)); ?></strong>
 
     <br/>
 			<span title="<?php echo _POST_MERGE_TITLE; ?>"><input type = "radio" name = "how" value = "0" CHECKED ><?php echo _POST_MERGE; ?></span>

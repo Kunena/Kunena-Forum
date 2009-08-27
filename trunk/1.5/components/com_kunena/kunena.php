@@ -507,7 +507,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
         }
     //FINISH: PROFILEBOX
 
-    switch ($func)
+    switch (strtolower($func))
     {
         case 'who':
             if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/who/who.php')) {

@@ -34,6 +34,7 @@ Kunena 1.5.6
 
 27-Aug-2009 Matias
 + [#17797] Keep session alive while posting a message
+# [#17798] Mark this forum read no longer works
 
 26-Aug-2009 Matias
 # [#17785] JQuery is not loaded if JomSocial integration is enabled

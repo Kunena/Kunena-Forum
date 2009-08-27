@@ -30,6 +30,9 @@ if (!isset($no_file_upload)) $no_file_upload = 0;
 $authorName = stripslashes($authorName);
 
 include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
+
+//keep session alive while editing
+JHTML::_('behavior.keepalive');
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">

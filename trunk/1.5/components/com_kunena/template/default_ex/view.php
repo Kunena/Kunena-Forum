@@ -591,6 +591,8 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                         	$msg_avatar = '<span class="fb_avatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/nophoto.jpg" alt="" /></span>'; 
                                         }
                                     }
+                                } else {
+                                	$msg_avatar = '';
                                 }
 
                                 if ($fbConfig->showuserstats)
@@ -991,11 +993,11 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 
                                 $fb_subject_txt = strtr($fb_subject_txt, $table);
                                 $fb_subject_txt = stripslashes($fb_subject_txt);
+                                $fb_subject_txt = smile::htmlwrap($fb_subject_txt, $fbConfig->wrap);
                                 $msg_subject = smile::fbHtmlSafe($fb_subject_txt);
 
                                 $msg_date = date(_DATETIME, $fmessage->time);
                                 $fb_message_txt = stripslashes($fmessage->message);
-
                                 $fb_message_txt = smile::smileReplace($fb_message_txt, 0, $fbConfig->disemoticons, $smileyList);
                                 $fb_message_txt = nl2br($fb_message_txt);
                                 //$fb_message_txt = str_replace("<P>&nbsp;</P><br />","",$fb_message_txt);
@@ -1004,9 +1006,10 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 
                                 // Code tag: restore TABS as we had to 'hide' them from the rest of the logic
                                 $fb_message_txt = str_replace("__FBTAB__", "&#009;", $fb_message_txt);
-
+								$fb_message_txt = smile::htmlwrap($fb_message_txt, $fbConfig->wrap);
+                                
                                 $msg_text = CKunenaTools::prepareContent($fb_message_txt);
-
+                                
                                 $signature = $userinfo->signature;
                                 if ($signature)
                                 {

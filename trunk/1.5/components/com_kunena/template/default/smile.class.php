@@ -353,7 +353,7 @@ class smile
 								}
 								?>
 							</select>
-							<?php @print(_KUNENA_EDITOR_VIDEO_ID); ?><input name="videoid" type="text" size="10" maxlength="10" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOID);?>')"> 
+							<?php @print(_KUNENA_EDITOR_VIDEO_ID); ?><input name="videoid" type="text" size="11" maxlength="11" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOID);?>')"> 
 							<input type="button" name="Video" accesskey = "p" value="<?php @print(_KUNENA_EDITOR_IMAGE_INSERT); ?>" onclick="check_video('video1')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY1);?>')"><br>
 							<?php @print(_KUNENA_EDITOR_VIDEO_URL); ?><input name="videourl" type="text" size="30" maxlength="100" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOURL);?>')">
 							<input type="button" name="Video" accesskey = "p" value="<?php @print(_KUNENA_EDITOR_IMAGE_INSERT); ?>" onclick="check_video('video2')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY2);?>')">

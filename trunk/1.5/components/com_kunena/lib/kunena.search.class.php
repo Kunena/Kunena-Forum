@@ -467,7 +467,7 @@ class CKunenaSearch
                     }
                     echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '">';
                     echo '<td  class = "td-1" ><a href="'
-                             . JRoute::_(KUNENA_LIVEURL . '&amp;func=view&amp;id=' . $result->id . '&amp;catid=' . $result->catid) . '#' . $result->id . '" >' . $ressubject . '</a><br />' . $resmessage . '<br /><br /></td>';
+                             . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $result->id . '&amp;catid=' . $result->catid) . '#' . $result->id . '" >' . $ressubject . '</a><br />' . $resmessage . '<br /><br /></td>';
                     echo '<td class = "td-2" >' . kunena_htmlspecialchars(stripslashes($result->name)) . '</td>';
                     echo '<td class = "td-3" >' . date(_DATETIME, $result->time) . '</td></tr>';
                     echo "\n";

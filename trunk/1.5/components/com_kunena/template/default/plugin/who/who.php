@@ -60,7 +60,7 @@ if ($fbConfig->showwhoisonline > 0)
             </tr>
 
             <?php
-            $query = "SELECT w.*, u.id, u.username FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid ORDER BY w.time DESC";
+            $query = "SELECT w.*, u.id, u.username, f.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS f ON u.id=f.userid ORDER BY w.time DESC";
             $kunena_db->setQuery($query);
             $users = $kunena_db->loadObjectList();
             $k = 0; //for alternating rows
@@ -76,6 +76,8 @@ if ($fbConfig->showwhoisonline > 0)
 
                 if ($user->userid == 0) {
                     $user->username = _KUNENA_GUEST;
+                } else if ($user->showOnline < 1 && !$is_Moderator) {
+                	continue;
                 }
 
                 $time = date("H:i:s", $user->time + $fbConfig->board_ofset*3600);
@@ -101,7 +103,7 @@ if ($fbConfig->showwhoisonline > 0)
                         </span>
 
                         <?php
-                        if ($kunena_my->gid > 1)
+                        if ($is_Moderator)
                         {
                         ?>
 

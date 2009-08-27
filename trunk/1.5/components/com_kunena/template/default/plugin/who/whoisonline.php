@@ -96,7 +96,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
                     <?php
                     }
                     ?>
-                     <?php if ( $kunena_my->gid > 1 ){
+                     <?php if ($is_Moderator){
 
 					 ?>
 

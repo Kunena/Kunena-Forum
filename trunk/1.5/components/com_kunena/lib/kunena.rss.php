@@ -32,7 +32,7 @@ $kunena_db = &JFactory::getDBO();
 
 $hours = 0;
 
-switch ($fbConfig->rsshistory)
+switch (strtolower($fbConfig->rsshistory))
 {
 	case 'month':
 		$hours = 720;

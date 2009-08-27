@@ -37,6 +37,7 @@ Kunena 1.5.6
 # [#17798] Mark this forum read no longer works
 # [#17318] Joomla SEO URLs wrong after clicking on thread from search result
 # [#17799] Fatal error on moving post with box checked leave ghost message
+# [#17800] Post message without permissions: Error 404 on registration process
 
 26-Aug-2009 Matias
 # [#17785] JQuery is not loaded if JomSocial integration is enabled

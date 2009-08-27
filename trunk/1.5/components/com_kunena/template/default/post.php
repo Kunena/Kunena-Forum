@@ -1754,7 +1754,7 @@ function hasPostPermission($kunena_db, $catid, $id, $userid, $pubwrite, $ismod)
                 echo '<a href="' . CKunenaCBProfile::getRegisterURL() . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
             }
             else {
-                echo '<a href="' . JRoute::_('index.php?option=com_registration&amp;task=register') . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
+                echo '<a href="' . JRoute::_('index.php?option=com_registration&amp;view=register') . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
             }
         }
 

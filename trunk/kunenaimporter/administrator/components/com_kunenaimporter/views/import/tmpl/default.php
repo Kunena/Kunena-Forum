@@ -19,7 +19,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 ?>
-<form action="index.php" method="post" name="adminForm" autocomplete="off">
+<form action="index.php" method="post" name="adminForm">
     <input type="hidden" name="option" value="com_kunenaimporter" />
     <input type="hidden" name="task" value="" />
 
@@ -44,10 +44,10 @@ defined('_JEXEC') or die('Restricted access');
 	<tbody>
 <?php if (isset($this->options)): ?>
 
-<?php 
+<?php
 $disabled = '';
 if (!empty($this->errormsg)) $disabled = ' disabled="disabled"';
-foreach($this->options as $option): 
+foreach($this->options as $option):
 
 	if (JRequest::getBool($option['name'], 0)) $checked = ' checked="checked"';
 	else $checked = '';
@@ -56,7 +56,7 @@ foreach($this->options as $option):
 	else if ($option['status'] < $option['total']) $statusmsg = '<font color="#b0b000">'.(int)(100*$option['status']/$option['total']).' %</font>';
 	else $statusmsg = '<font color="green">100 %</font>';
 ?>
-	   <tr> 
+	   <tr>
 		<td class="x"><input type="checkbox" name="<?php echo $option['name']; ?>" <?php echo $disabled.$checked; ?> /></td>
 	        <td class="title"><?php echo JText::_($option['task']); ?></td>
 	        <td class="action"><?php echo $statusmsg; ?></td>

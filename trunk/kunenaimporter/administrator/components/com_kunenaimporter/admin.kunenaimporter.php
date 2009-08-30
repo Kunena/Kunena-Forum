@@ -52,7 +52,7 @@ $controller->redirect();
 
 function getKunenaImporterParams($component="com_kunenaimporter") 
 {
-	static $instance;
+	static $instance = null;
 	if ($instance == null)
 	{
 		$table =& JTable::getInstance('component');

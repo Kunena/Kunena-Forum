@@ -50,7 +50,7 @@ class KunenaimporterController extends JController {
 	}
 
 	function checkTimeout() {
-		static $start;
+		static $start = null;
 
         list( $usec, $sec ) = explode( ' ', microtime() );
         $time = ((float)$usec + (float)$sec);
@@ -132,6 +132,7 @@ class KunenaimporterController extends JController {
 		foreach ($options as $option) {
 			$start = (int)$app->getUserState('com_knimporter.'.$option);
 			if (isset($state[$option])) {
+				$count = 0;
 				do {
 					$data =& $exporter->exportData($option, $start, $limit);					$importer->importData($option, $data);
 					$count = count($data);

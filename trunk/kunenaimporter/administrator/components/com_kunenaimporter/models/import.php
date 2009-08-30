@@ -151,7 +151,7 @@ class KunenaimporterModelImport extends JModel {
 			if ($extuser->userid === NULL) {
 				$extuserdata = array ('userid'=>abs($uid), 'extuserid'=>$userdata->extuserid, 'extname'=>$userdata->extname, 'conflict'=>$conflict, 'error'=>$error);
 				if ($extuser->save($extuserdata) === false) {
-					echo "ERROR: Saving external data for $userdata->username failed: ". $user->getError() ."<br />";
+					echo "ERROR: Saving external data for $userdata->username failed: ". $extuser->getError() ."<br />";
 				}
 			}
 		}
@@ -259,8 +259,8 @@ class KunenaimporterModelImport extends JModel {
 			if (empty($message->email)) $message->email = $user->email;
 			if (empty($message->name)) $message->name = $user->username;
 
-			if ($msgtable->save($message) === false) die("ERROR: ". $table->getError());
-			if ($txttable->save($message) === false) die("ERROR: ". $table->getError());
+			if ($msgtable->save($message) === false) die("ERROR: ". $msgtable->getError());
+			if ($txttable->save($message) === false) die("ERROR: ". $txttable->getError());
 		}
 		$this->commitEnd();
 

@@ -1,4 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!DOCTYPE config [
+<!ELEMENT config (params)>
+]>
 <config>
     <params>
 	<param name='extforum' type='list' default='localhost' label='Forum Type' description='' size='30'>

@@ -12,13 +12,13 @@
 // no access
 die('Restricted access');
 ?>
+<!--
 
 Changelog
 ------------
 This is a non-exhaustive (but still near complete) changelog for
-the Kunena 1.x, including beta and release candidate versions.
-The Kunena 1.x is based on the FireBoard releases but includes some
-drastic technical changes.
+the Kunena Importer, including beta and release candidate versions.
+
 Legend:
 
 * -> Security Fix
@@ -30,6 +30,10 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+30-Aug-2009 Matias
+# [#17875] Fix all errors and warnings found in Eclipse
+
 4-Aug-2009 Matias
 + [#17485] Initial version of Kunena Importer
 
+ -->

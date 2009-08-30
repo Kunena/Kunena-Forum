@@ -142,7 +142,7 @@ class KunenaimporterModelExport extends JModel {
 			$query = "SELECT " . $info['select'] . " FROM " . $info['from'];
 			if (!empty($info['where'])) $query .= ' WHERE ' . $info['where'];
 			if (!empty($info['orderby'])) $query .= ' ORDER BY ' . $info['orderby'];
-			$result = getExportData($query, $start, $limit);
+			$result = $this->getExportData($query, $start, $limit);
 		}
 		else if (!empty($info['export'])) $result = $this->$info['export']($start, $limit);
 		return $result;

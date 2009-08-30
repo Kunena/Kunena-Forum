@@ -21,7 +21,7 @@ defined('_JEXEC') or die('Restricted access');
 $disabled = '';
 if (!empty($this->errormsg)) $disabled = ' disabled="disabled"';
 ?>
-<form action="index.php" method="post" name="adminForm" autocomplete="off">
+<form action="index.php" method="post" name="adminForm">
     <input type="hidden" name="option" value="com_kunenaimporter" />
     <input type="hidden" name="task" value="" />
     <input type="hidden" name="form" value="1" />
@@ -66,10 +66,10 @@ if (!empty($this->errormsg)) $disabled = ' disabled="disabled"';
 	<tbody>
 <?php if (isset($this->options)): ?>
 
-<?php 
+<?php
 $rowNum = 0;
 $state = JRequest::getVar('cid', array(), 'post', 'array');
-foreach($this->options as $item=>$option): 
+foreach($this->options as $item=>$option):
 
 	if (isset($state[$option['name']])) echo $option['name'],$checked = 'checked="checked"';
 	else $checked = '';
@@ -80,7 +80,7 @@ foreach($this->options as $item=>$option):
 
 	$id = '<input type="checkbox" id="cb'.$rowNum.'" name="cid[]" value="'.$option['name'].'" onclick="isChecked(this.checked);" $checked />';
 ?>
-	   <tr class="row<?php echo $rowNum++ % 2; ?>"> 
+	   <tr class="row<?php echo $rowNum++ % 2; ?>">
 		<td class="x"><?php echo $id; ?></td>
 	        <td class="title"><?php echo JText::_($option['task']); ?></td>
 	        <td class="action"><?php echo $statusmsg; ?></td>

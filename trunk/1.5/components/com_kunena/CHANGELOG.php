@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.6
 
+31-Aug-2009 Matias
+# [#17892] Installation fails if there are many joomla installations in the same database
+
 30-Aug-2009 Matias
 * [#17888] Posting allowed to unauthorized forums by using URL manipulation
 

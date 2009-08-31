@@ -159,7 +159,7 @@ class fx_Upgrade {
 		$upgrade=null;
 
 		$kunena_db =& JFactory::getDBO();
-		$kunena_db->setQuery( "SHOW TABLES LIKE '%".$versionTableNoPrefix."'" );
+		$kunena_db->setQuery( "SHOW TABLES LIKE '#__".$versionTableNoPrefix."'" );
 		$kunena_db->query() or trigger_dberror('Unable to check for existing version table.');
 		if($kunena_db->loadResult()) {
 			//table already exists, so do not create a new table

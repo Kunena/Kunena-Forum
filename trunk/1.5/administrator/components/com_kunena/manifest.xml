@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>
-	<version>1.5.5</version>
-	<versionname>Hovorit</versionname>
+	<version>1.5.6</version>
+	<versionname>Speaker</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
 	<author>www.Kunena.com</author>

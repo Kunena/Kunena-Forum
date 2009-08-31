@@ -27,22 +27,32 @@ $fbSession =& CKunenaSession::getInstance();
 
 global $is_Moderator;
 
+$catid = JRequest::getInt('catid', 0);
+$id = JRequest::getInt('id', 0);
+// Support for old $replyto variable in post reply/quote
+if (!$id) $id = JRequest::getInt('replyto', 0);
+
+//get the allowed forums and turn it into an array
+$allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):array();
+
+if (!in_array($catid, $allow_forum))
+{
+	echo _KUNENA_NO_ACCESS;
+	return;
+}
+	
 //
 //ob_start();
 $pubwrite = (int)$fbConfig->pubwrite;
 //ip for floodprotection, post logging, subscriptions, etcetera
 $ip = $_SERVER["REMOTE_ADDR"];
 
-$catid = JRequest::getInt('catid', 0);
-$id = JRequest::getInt('id', 0);
-// Support for old $replyto variable in post reply/quote
-if (!$id) $id = JRequest::getInt('replyto', 0);
-
 //reset variables used
 // ERROR: mixed global $editmode
 global $editmode;
 $kunena_my = &JFactory::getUser();
 $kunena_acl = &JFactory::getACL();
+$kunena_db = &JFactory::getDBO();
 $editmode = 0;
 $message = JRequest::getVar('message', '', 'REQUEST', 'string', JREQUEST_ALLOWRAW);
 $resubject = JRequest::getVar('resubject', '', 'REQUEST', 'string');
@@ -110,7 +120,6 @@ else
 }
 
 //Now find out the forumname to which the user wants to post (for reference only)
-unset($objCatInfo);
 $kunena_db->setQuery("SELECT * FROM #__fb_categories WHERE id='{$catid}'");
 $kunena_db->query() or trigger_dberror('Unable to load category.');
 

@@ -12,6 +12,7 @@
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
 ?>
+<!-- 
 
 Changelog
 ------------
@@ -31,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.5.6
+
+30-Aug-2009 Matias
+* [#17888] Posting allowed to unauthorized forums by using URL manipulation
 
 30-Aug-2009 fxstein
 ^ [#17783] Update version info
@@ -922,3 +926,4 @@ Kunena 1.0.7 beta
 01-January-2009 fxstein
 + Initial fork from FireBoard 1.0.5RC3
 
+-->

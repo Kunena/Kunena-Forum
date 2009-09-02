@@ -37,6 +37,7 @@ Kunena 1.6.0dev
 + [#17628] Added html views for Categories and Messages
 + [#17628] Added configuration for all existing views
 # [#17628] Minor bug fixes
++ [#17628] Added static legacy content to categories and messages views
 
 20-Aug-2009 fxstein
 + [#17628] Additional JHtmlKLink methods

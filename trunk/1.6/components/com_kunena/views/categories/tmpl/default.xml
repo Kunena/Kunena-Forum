@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-	<layout title="Show categories list">
+	<layout title="Show Categories List">
 		<message>
 			<![CDATA[Show categories list]]>
 		</message>
 	</layout>
 	<state>
-		<name>Kunena Forum: Show categories list</name>
+		<name>Kunena Forum: Show Categories List</name>
 		<description>Show categories list</description>
 		<params>
 			<param name="filter_categories_which" type="radio" default="0" label="Selected categories">

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-	<layout title="Show messages in a thread">
+	<layout title="Show Messages in a Thread">
 		<message>
 			<![CDATA[Show messages in a thread]]>
 		</message>
 	</layout>
 	<state>
-		<name>Kunena forum: Show messages in a thread</name>
+		<name>Kunena forum: Show Messages in a Thread</name>
 		<description>Show messages in a thread</description>
 		<params>
 			<param name="category" type="text" default="" label="Category ID" />

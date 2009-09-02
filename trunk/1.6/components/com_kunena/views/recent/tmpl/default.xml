@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-	<layout title="Show recent threads">
+	<layout title="Show Recent Threads">
 		<message>
 			<![CDATA[Show recent threads]]>
 		</message>
 	</layout>
 	<state>
-		<name>Kunena Forum: Show recent threads</name>
+		<name>Kunena Forum: Show Recent Threads</name>
 		<description>Show recent threads</description>
 		<params>
 			<param name="filter_time" type="list" default="168" label="Show messages">

@@ -12,8 +12,8 @@ defined('_JEXEC') or die;
 ?>
 		<div class="topnav">
 			<ul>
-				<li class="active"><a href="/forum/latest" title="<?php echo JText::_('K_RECENT_DISCUSSIONS'); ?>"><span><?php echo JText::_('K_RECENT_DISCUSSIONS'); ?></span></a></li>
-				<li><a href="/forum/listcat" title="<?php echo JText::_('K_CATEGORIES'); ?>"><span><?php echo JText::_('K_CATEGORIES'); ?></span></a></li>
+				<li class="active"><?php echo JHtml::_('klink.recent', 'atag', JText::_('K_RECENT_DISCUSSIONS'), '<span>'.JText::_('K_RECENT_DISCUSSIONS').'</span>'); ?></li>
+				<li><?php echo JHtml::_('klink.category', 'atag', 0, JText::_('K_CATEGORIES'), JText::_('K_CATEGORIES'));?></li>
 				<li><a href="/forum/faq" title="<?php echo JText::_('K_HELP'); ?>"><span><?php echo JText::_('K_HELP'); ?></span></a></li>
 			</ul>
 		</div>

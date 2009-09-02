@@ -1,4 +1,5 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"  encoding="utf-8"?>
+<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
 <install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>
 	<version>1.6.0dev</version>
@@ -24,7 +25,14 @@
 @kunenabackendlist@    
 
 		</files>
-	<menu>Kunena Forum</menu>
+		<menu>Kunena Forum</menu>
+		<submenu>
+			<menu view="config">Configuration</menu>
+			<menu task="showAdministration">Forum Administration</menu>
+			<menu task="showprofiles">User Administration</menu>
+			<menu task="showsmilies">Edit Smilies</menu>
+			<menu task="ranks">Edit Ranks</menu>
+		</submenu>
 	</administration>
 	<params />
 </install>

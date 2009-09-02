@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+	<layout title="Show categories list">
+		<message>
+			<![CDATA[Show categories list]]>
+		</message>
+	</layout>
+	<state>
+		<name>Kunena Forum: Show categories list</name>
+		<description>Show categories list</description>
+		<params>
+			<param name="filter_categories_which" type="radio" default="0" label="Selected categories">
+				<option value="0">Exclude list</option>
+				<option value="1">Include list</option>
+			</param>			
+			<param name="filter_categories" type="text" default="" label="Comma separated list of category IDs" />
+			<param name="filter_categories_override" type="radio" default="0" label="Allow user override">
+				<option value="0">No</option>
+				<option value="1">Yes</option>
+			</param>			
+		</params>
+	</state>
+</metadata>

@@ -75,6 +75,7 @@ define('KUNENA_FILE_INSTALL', KUNENA_PATH_ADMIN .DS. 'manifest.xml');
 
 // URLs
 
+define('KUNENA_RELURL', 'index.php?option=com_kunena');
 
 // Constants
 

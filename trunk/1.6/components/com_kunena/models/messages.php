@@ -209,6 +209,53 @@ class KunenaModelMessages extends JModel
 	}
 
 	/**
+	 * Method to get announcement
+	 *
+	 * @return	array	Announcements (currently limited to one).
+	 * @since	1.6
+	 */
+	public function getAnnouncement()
+	{
+		if (empty($this->_models['announcement'])) {
+			$this->_models['announcement'] = &JModel::getInstance('Announcement', 'KunenaModel');
+		}
+
+		if (empty($this->_models['announcement'])) {
+			$null = null;
+			return $null;
+		}
+		$this->_models['announcement']->getState();
+		$this->_models['announcement']->setState('list.start', 0);
+		$this->_models['announcement']->setState('list.limit', 1);
+		$this->_models['announcement']->setState('type', 'published');
+		return $this->_models['announcement']->getItems();
+	}
+
+	/**
+	 * Method to get forum statistics
+	 *
+	 * @return	array	Statistics object.
+	 * @since	1.6
+	 */
+	public function getStatistics()
+	{
+		if (empty($this->_models['statistics'])) {
+			$this->_models['statistics'] = &JModel::getInstance('Statistics', 'KunenaModel');
+		}
+
+		if (empty($this->_models['statistics'])) {
+			$null = null;
+			return $null;
+		}
+		$this->_models['statistics']->getState();
+		$this->_models['statistics']->setState('type', 'all');
+		$stats['users'] = $this->_models['statistics']->getUserStats();
+		$stats['forum'] = $this->_models['statistics']->getForumStats();
+		$stats['recent'] = $this->_models['statistics']->getRecentStats();
+		return $stats;
+	}
+
+	/**
 	 * Method to build an SQL query to get the total count of item
 	 *
 	 * @return	string	An SQL query.

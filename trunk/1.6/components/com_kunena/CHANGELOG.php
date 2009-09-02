@@ -33,6 +33,11 @@ Legend:
 
 Kunena 1.6.0dev
 
+2-Sep-2009 Matias
++ [#17628] Added html views for Categories and Messages
++ [#17628] Added configuration for all existing views
+# [#17628] Minor bug fixes
+
 20-Aug-2009 fxstein
 + [#17628] Additional JHtmlKLink methods
 ^ [#17628] converted default_thread.php to use new JHtmlKlink methods

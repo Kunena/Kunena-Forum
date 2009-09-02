@@ -50,7 +50,7 @@ abstract class JHtmlKLink
 				break;
 			case 'atag':
 			default:
-				$link = '<a '.($class ? 'class="'.$class.'" ' : '').'href="'.JRoute::_($url).($anker?('#'.$anker):'').($title ? ' title="'.$title.'"' : '').($rel ? ' rel="'.$rel.'"' : '').($attr ? ' '.$attr : '').'>'.$text.'</a>';
+				$link = '<a '.($class ? 'class="'.$class.'" ' : '').'href="'.JRoute::_($url).($anker?('#'.$anker):'').'" '.($title ? ' title="'.$title.'"' : '').($rel ? ' rel="'.$rel.'"' : '').($attr ? ' '.$attr : '').'>'.$text.'</a>';
 				break;
 
 		}
@@ -74,12 +74,12 @@ abstract class JHtmlKLink
 
     public function teamCredits($catid, $name='')
     {
-        return self::link('atag', KUNENA_LIVEURLREL.'&func=credits&catid='.$catid, $name, NULL, 'follow');
+        return self::link('atag', KUNENA_RELURL.'&func=credits&catid='.$catid, $name, NULL, 'follow');
     }
 
     public function kunena($name)
     {
-        return self::link('atag', KUNENA_LIVEURLREL, $name, NULL, 'follow');
+        return self::link('atag', KUNENA_RELURL, $name, NULL, 'follow');
     }
 
 	/**
@@ -109,10 +109,10 @@ abstract class JHtmlKLink
 	 */
     public static function view($linktype, $view, $param, $name, $title, $type='', $format='', $rel='follow', $class='', $anker='')
     {
-        return self::link($linktype, KUNENA_LIVEURLREL.'&view='.$view.($type?'&type='.$type:'').($format?'&format='.$format:'').$param, $name, $title, $rel, $class, $anker);
+        return self::link($linktype, KUNENA_RELURL.'&view='.$view.($type?'&type='.$type:'').($format?'&format='.$format:'').$param, $name, $title, $rel, $class, $anker);
     }
-
-	/**
+    
+    /**
 	 * Method to generate an (X)HTML search engine friendly link as an <a> tag.
 	 * Specialized helper for category views.
 	 *
@@ -246,7 +246,7 @@ abstract class JHtmlKLink
 	 *
 	 * @since	1.6
 	 */
-    public function user($linktype, $name, $title, $type='', $format='', $rel='follow', $class='', $anker='')
+    public function user($linktype, $userid, $name, $title, $type='', $format='', $rel='follow', $class='', $anker='')
     {
         //TODO: Insert user profile link define into function call
         return self::link($linktype, 'insert-link-to-user-profile-here', $name, $title, $type, $format, $rel, $class, $anker);
@@ -260,7 +260,7 @@ abstract class JHtmlKLink
 
     function reportMessage($messageid, $name, $rel='nofollow')
     {
-        return self::link('atag', KUNENA_LIVEURLREL.'&view=report&messageid='.$messageid, $name, '', $rel);
+        return self::link('atag', KUNENA_RELURL.'&view=report&messageid='.$messageid, $name, '', $rel);
     }
 
     function messageIP($msg_ip, $rel='nofollow')
@@ -306,22 +306,22 @@ abstract class JHtmlKLink
 
 	public function userList($linktype, $action, $name, $rel='nofollow', $class='')
 	{
-		return self::link($linktype, KUNENA_LIVEURLREL.'&view=userlist'.$action, $name, '', $rel, $class);
+		return self::link($linktype, KUNENA_RELURL.'&view=userlist'.$action, $name, '', $rel, $class);
 	}
 
     public function pendingMessages($linktype, $catid, $name, $rel='nofollow')
     {
-        return self::link($linktype, KUNENA_LIVEURLREL.'&view=pending&category='.$catid, $name, '', $rel);
+        return self::link($linktype, KUNENA_RELURL.'&view=pending&category='.$catid, $name, '', $rel);
     }
 
     public function postNewThread($linktype, $catid, $name, $rel='nofollow')
     {
-        return self::link($linktype, KUNENA_LIVEURLREL.'&view=post&type=newthread&category='.$catid, $name, '', $rel);
+        return self::link($linktype, KUNENA_RELURL.'&view=post&type=newthread&category='.$catid, $name, '', $rel);
     }
 
     public function postRely($linktype, $messageid, $name, $rel='nofollow')
     {
-        return self::link($linktype, KUNENA_LIVEURLREL.'&view=post&type=reply&message='.$messageid, $name, '', $rel);
+        return self::link($linktype, KUNENA_RELURL.'&view=post&type=reply&message='.$messageid, $name, '', $rel);
     }
     
 //    function GetTopicPostLink($do, $catid, $id, $name, $rel='nofollow')

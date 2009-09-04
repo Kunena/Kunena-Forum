@@ -27,15 +27,25 @@ class KunenaViewRecent extends KView
 	 * @return	void
 	 * @since	1.6
 	 */
-	public function display($tpl = null)
-	{
-		$this->assign('total', $this->get('Total'));
-	    $this->assignRef('threads', $this->get('Items'));
-	    $this->assignRef('pagination', $this->get('Pagination'));
-
-	    $this->assignRef('announcements', $this->get('Announcement'));
-	    $this->assignRef('statistics', $this->get('Statistics'));
-	    
-	    parent::display($tpl);
+	public function display($tpl = null) {
+		$this->assign ( 'total', $this->get ( 'Total' ) );
+		$this->assignRef ( 'threads', $this->get ( 'Items' ) );
+		$this->assignRef ( 'pagination', $this->get ( 'Pagination' ) );
+		
+		$this->assignRef ( 'announcements', $this->get ( 'Announcement' ) );
+		$this->assignRef ( 'statistics', $this->get ( 'Statistics' ) );
+		
+		$this->assign ( 'filter_time_options', array (
+			4 => '4 ' . JText::_ ( 'K_HOURS' ), 
+			8 => '8 ' . JText::_ ( 'K_HOURS' ), 
+			12 => '12 ' . JText::_ ( 'K_HOURS' ), 
+			24 => '24 ' . JText::_ ( 'K_HOURS' ), 
+			48 => '48 ' . JText::_ ( 'K_HOURS' ), 
+			168 => JText::_ ( 'K_WEEK' ), 
+			720 => JText::_ ( 'K_MONTH' ), 
+			8760 => JText::_ ( 'K_YEAR' ) ) );
+		$this->assign ( 'filter_time', JRequest::getVar ( 'filter_time' ) );
+		
+		parent::display ( $tpl );
 	}
 }

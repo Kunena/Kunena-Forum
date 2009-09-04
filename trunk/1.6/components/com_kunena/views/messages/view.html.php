@@ -41,11 +41,12 @@ class KunenaViewMessages extends KView
 	        $item->message = $bbcode->Parse(stripslashes($item->message));
 
 	    }
-	    $this->assignRef('pagination', $items);
+	    $this->assignRef('messages', $items);
 
 	    $this->assignRef('announcements', $this->get('Announcement'));
 	    $this->assignRef('statistics', $this->get('Statistics'));
 	    
 	    parent::display($tpl);
+	    //echo "<code>"; print_r($items); echo "</code>";
 	}
 }

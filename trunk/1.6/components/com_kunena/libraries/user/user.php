@@ -44,8 +44,8 @@ class KUser extends JTable
 	var $showOnline = null;
    	var $allowed_categories = 'na';
 	var $read_topics = '';
-   	var $last_visit_time = 0;
-	var $curr_visit_time = 0;
+   	var $last_visit_time = null;
+	var $curr_visit_time = null;
 
 	protected $_exists = false;
 	protected $_sessiontimeout = false;
@@ -59,19 +59,20 @@ class KUser extends JTable
 	function &getInstance( $updateSessionInfo=false )
 	{
 		if (!self::$_instance) {
-			$kunena_my = &JFactory::getUser();
-			$kunena_db = &JFactory::getDBO();
-			self::$_instance =& new KUser($kunena_db);
+			$my = &JFactory::getUser();
+			self::$_instance =& new KUser();
 
 			$config =& KConfig::getInstance();
-			self::$_instance->last_visit_time = time() + $config->board_ofset - KUNENA_SECONDS_IN_YEAR;
-			self::$_instance->curr_visit_time = time() + $config->board_ofset;
+			self::$_instance->last_visit_time = time() + ($config->board_ofset * KUNENA_SECONDS_IN_HOUR) - KUNENA_SECONDS_IN_YEAR;
+			self::$_instance->curr_visit_time = time() + ($config->board_ofset * KUNENA_SECONDS_IN_HOUR);
 
-			if ($kunena_my->id) self::$_instance->load($kunena_my->id);
-			if ($updateSessionInfo) {
-			    self::$_instance->_updateSessionInfo();
-			    self::$_instance->_updateAllowedCategories();
-			    self::$_instance->store();
+			if ($my->id) {
+				self::$_instance->load($my->id);
+				if ($updateSessionInfo) {
+				    self::$_instance->_updateSessionInfo();
+				    self::$_instance->_updateAllowedCategories();
+				    self::$_instance->store();
+				}
 			}
 		}
 		return self::$_instance;
@@ -79,11 +80,11 @@ class KUser extends JTable
 
 	function load( $oid=null )
 	{
-		$ret = parent::load($oid);
-		if ($ret === true) $this->_exists = true;
+		if (!(int)$oid) return false;
+		$this->_exists = parent::load($oid);
 		$this->userid = (int)$oid;
 
-		return $ret;
+		return $this->_exists;
 	}
 
 	function store( $updateNulls=false )
@@ -91,7 +92,7 @@ class KUser extends JTable
 		$config =& KConfig::getInstance();
 
 		// Finally update current visit timestamp before saving
-		$this->currvisit = time() + $config->board_ofset * KUNENA_SECONDS_IN_HOUR;
+		$this->curr_visit_time = time() + $config->board_ofset * KUNENA_SECONDS_IN_HOUR;
 
 		$k = $this->_tbl_key;
 

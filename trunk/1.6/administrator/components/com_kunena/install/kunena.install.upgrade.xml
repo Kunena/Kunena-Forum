@@ -190,19 +190,19 @@
                     `id` int(11) NOT NULL auto_increment,
                     `parent` int(11) default '0',
                     `thread` int(11) default '0',
-                    `catid` int(11) NOT NULL default '0',
+                    `catid` int(11) NOT NULL default '0',			// TODO: DEPRECATED, moved to kunena_threads
                     `name` tinytext,
                     `userid` int(11) NOT NULL default '0',
                     `email` tinytext,
                     `subject` tinytext,
                     `time` int(11) NOT NULL default '0',
                     `ip` varchar(15) default NULL,
-                    `topic_emoticon` int(11) NOT NULL default '0',
-                    `locked` tinyint(4) NOT NULL default '0',
+                    `topic_emoticon` int(11) NOT NULL default '0',	// TODO: DEPRECATED, moved to kunena_threads
+                    `locked` tinyint(4) NOT NULL default '0',		// TODO: DEPRECATED, moved to kunena_threads
                     `hold` tinyint(4) NOT NULL default '0',
                     `ordering` int(11) default '0',
-                    `hits` int(11) default '0',
-                    `moved` tinyint(4) default '0',
+                    `hits` int(11) default '0',						// TODO: DEPRECATED, moved to kunena_threads
+                    `moved` tinyint(4) default '0',					// TODO: DEPRECATED, moved to kunena_threads
                     `modified_by` int(7) default NULL,
                     `modified_time` int(11) default NULL,
                     `modified_reason` tinytext,
@@ -220,7 +220,7 @@
        <query>CREATE TABLE IF NOT EXISTS `#__kunena_threads` (
                     `id` int(11) NOT NULL auto_increment,
                     `catid` int(11) NOT NULL default '0',
-                    `subject` tinytext,
+                    `topic_subject` tinytext,
                     `topic_emoticon` int(11) NOT NULL default '0',
                     `locked` tinyint(4) NOT NULL default '0',
                     `hold` tinyint(4) NOT NULL default '0',
@@ -461,6 +461,7 @@
 						u.`last_visit_time` = s.`lasttime`,
 						u.`curr_visit_time` = s.`currvisit`
 					WHERE u.userid = s.userid</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_threads` CHANGE `subject` `topic_subject` tinytext</query>
 			<query>-- TODO: Drop old sessions table after conversion of main code is complete</query>
 		</version>
 	</upgrade>

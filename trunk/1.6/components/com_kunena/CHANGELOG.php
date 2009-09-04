@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0dev
 
+3-Sep-2009 Matias
++ [#17628] Implementing Recent, Categories and Messages views
+
 2-Sep-2009 Matias
 + [#17628] Added html views for Categories and Messages
 + [#17628] Added configuration for all existing views

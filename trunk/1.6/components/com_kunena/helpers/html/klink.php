@@ -252,10 +252,10 @@ abstract class JHtmlKLink
         return self::link($linktype, 'insert-link-to-user-profile-here', $name, $title, $type, $format, $rel, $class, $anker);
     }
 
-    public function pageAnker($anker, $name, $rel='nofollow')
+    public function pageAnker($linktype, $anker, $name, $rel='nofollow')
     {
     	jimport('joomla.environment.request');
-        return self::link('atag', JRequest::getURI(), $name, NULL, $rel, NULL, $anker);
+        return self::link($linktype, JRequest::getURI(), $name, NULL, $rel, NULL, $anker);
     }
 
     function reportMessage($messageid, $name, $rel='nofollow')

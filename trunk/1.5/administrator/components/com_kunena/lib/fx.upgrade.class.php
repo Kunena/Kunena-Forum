@@ -26,7 +26,6 @@ class fx_Upgrade {
 	var $component=null;
 	var $xmlFileName=null;
 	var $subdir=null;
-	var $versionTablePrefix=null;
 	var $versionTable=null;
 	var $silent=null;
 	var $_error=null;
@@ -35,11 +34,11 @@ class fx_Upgrade {
 
 	// helper function to create version table
 	function fx_Upgrade( $component, $xmlFileName = "fx_upgrade.xml", $versionTablePrefix = "fx_", $subdir = "", $silent = false ) {
+		$db =& JFactory::getDBO();
 		$this->component = $component;
 	    $this->xmlFileName = $xmlFileName;
 	    $this->subdir = $subdir;
-	    $this->versionTablePrefix = $versionTablePrefix;
-	    $this->versionTable = "#__" . $this->versionTablePrefix . "version";
+	    $this->versionTable = $db->getPrefix() . $versionTablePrefix . "version";
 		$this->silent = $silent;
 	}
 
@@ -152,14 +151,13 @@ class fx_Upgrade {
 
 		$componentBaseDir = KUNENA_ROOT_PATH_ADMIN .DS. 'components/';
 		$this->_upgradeDir = $componentBaseDir . $this->component .DS . $this->subdir;
-		$versionTableNoPrefix = $this->versionTablePrefix . "version";
 
 		//get current version, check if version table exists
 		$createVersionTable = 1;
 		$upgrade=null;
 
 		$kunena_db =& JFactory::getDBO();
-		$kunena_db->setQuery( "SHOW TABLES LIKE '#__".$versionTableNoPrefix."'" );
+		$kunena_db->setQuery( "SHOW TABLES LIKE ".$kunena_db->quote($this->versionTable) );
 		$kunena_db->query() or trigger_dberror('Unable to check for existing version table.');
 		if($kunena_db->loadResult()) {
 			//table already exists, so do not create a new table

@@ -91,13 +91,14 @@ function com_install()
 		// a 'manual' check if this is going to be an upgrade and if so create that table
 		// and write a dummy version entry to force an upgrade.
 
-		$kunena_db->setQuery( "SHOW TABLES LIKE '#__fb_messages'" );
+		$kunena_db->setQuery( "SHOW TABLES LIKE ".$kunena_db->quote($kunena_db->getPrefix().'fb_messages') );
 		$kunena_db->query() or trigger_dbwarning("Unable to search for messages table.");
 
 		if($kunena_db->getNumRows()) {
 			// fb tables exist, now lets see if we have a version table
-			$kunena_db->setQuery( "SHOW TABLES LIKE '#__fb_version'" );
-			$kunena_db->query() or trigger_dbwarning("Unable to search for version table.");;
+			$kunena_db->setQuery( "SHOW TABLES LIKE ".$kunena_db->quote($kunena_db->getPrefix().'fb_version') );
+			$kunena_db->query() or trigger_dbwarning("Unable to search for version table.");
+
 			if(!$kunena_db->getNumRows()) {
 				//version table does not exist - this is a pre 1.0.5 install - lets create
 				$fbupgrade->createVersionTable();

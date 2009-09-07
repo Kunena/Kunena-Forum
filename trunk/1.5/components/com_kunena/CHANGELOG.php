@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.6
 
+7-Aug-2009 Matias
+# [#17892] Internal Regression: Fix bug in installer
+
 31-Aug-2009 Matias
 # [#17892] Installation fails if there are many joomla installations in the same database
 

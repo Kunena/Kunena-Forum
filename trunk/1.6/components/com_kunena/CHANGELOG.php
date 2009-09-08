@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0dev
 
+8-Sep-2009 Matias
++ [#17628] Working categories logic in nested view of Categories
+
 3-Sep-2009 Matias
 + [#17628] Implementing Recent, Categories and Messages views
 

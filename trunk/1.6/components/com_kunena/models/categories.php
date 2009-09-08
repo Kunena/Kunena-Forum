@@ -139,8 +139,27 @@ class KunenaModelCategories extends JModel
 		// Push the value into cache.
 		//$cache->store(serialize($rows), $store);
 
-		// Add the rows to the internal storage.
-		$this->_lists[$key] = $rows;
+		switch ($this->getState('type'))
+		{
+		    case 'nested':
+		    	$nested = array();
+		    	foreach ($rows as $row) {
+		    		if ($row->parent)
+		    			$nested['category_'.$row->parent][] = $row;
+		    		else
+		    			$nested['sections'][] = $row;
+		    	}
+		    	$this->_lists[$key] = $nested;
+				break;
+				
+		    case 'flat':
+				// Add the rows to the internal storage.
+				$this->_lists[$key] = $rows;
+		    	break;
+		    	
+		    default:
+		        // Invalid view type specified
+		}
 
 		return $this->_lists[$key];
 	}
@@ -273,9 +292,6 @@ class KunenaModelCategories extends JModel
 		switch ($this->getState('type'))
 		{
 		    case 'nested':
-		        //TODO: Not yet implemented default view -> flat
-
-		        // break;
 		    case 'flat':
 		        $query->from('#__kunena_categories AS c');
 		        $query->where('c.id IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
@@ -304,19 +320,25 @@ class KunenaModelCategories extends JModel
 
 		// Build base query
 
-		$query->select('c.*');
-
+		$query->select('c.*, m.subject, m.name AS username, m.userid');
+	    $query->from('#__kunena_categories AS c');
+	    $query->leftJoin('#__kunena_messages AS m ON c.id_last_msg = m.id');
+	    $query->where('c.id IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
+	    $query->where('c.published=1');
+		
 		switch ($this->getState('type'))
 		{
-		    case 'nested':
-		        //TODO: Not yet implemented default view
-
-		        break;
+			case 'nested':
+		   		if (strtolower($this->getState('order'))=='desc')
+				{
+					$query->order('c.parent DESC, c.ordering DESC');
+				}
+				else
+				{
+					$query->order('c.parent, c.ordering');
+				}
+				break;
 		    case 'flat':
-		        $query->from('#__kunena_categories AS c');
-		        $query->where('c.id IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
-		        $query->where('c.published=1');
-
 		   		if (strtolower($this->getState('order'))=='desc')
 				{
 					$query->order('c.name DESC');
@@ -358,6 +380,7 @@ class KunenaModelCategories extends JModel
 		$id	.= ':'.$this->getState('check.state');
 		$id	.= ':'.$this->getState('user.aid');
 		$id	.= ':'.$this->getState('filter.parent_id');
+		$id	.= ':'.$this->getState('type');
 
 		return md5($id);
 	}

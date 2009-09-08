@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 kimport('application.view');
+kimport('html.bbcode');
 
 /**
  * The Raw Kunena recent view.
@@ -30,12 +31,23 @@ class KunenaViewCategories extends KView
 	public function display($tpl = null)
 	{
 		$this->assign('total', $this->get('Total'));
-	    //$this->assignRef('categories', $this->get('Items'));
+	    $this->assignRef('categories', $this->get('Items'));
 	    $this->assignRef('pagination', $this->get('Pagination'));
 
+	    $bbcode = KBBCode::getInstance();
+		foreach ($this->categories as &$category)
+	    {
+	    	foreach ($category as &$item)
+	    	{
+	    		$item->description = $bbcode->Parse(stripslashes($item->description));
+	    		$item->headerdesc = $bbcode->Parse(stripslashes($item->headerdesc));
+	    	}
+	    }
+	    
 	    $this->assignRef('announcements', $this->get('Announcement'));
 	    $this->assignRef('statistics', $this->get('Statistics'));
 	    
 	    parent::display($tpl);
+	    //echo "<pre>"; print_r($this->categories); echo "</pre>";
 	}
 }

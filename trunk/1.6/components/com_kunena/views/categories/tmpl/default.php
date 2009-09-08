@@ -22,14 +22,17 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 </div>
 <!-- F: Cat list Top -->
 
-
+<?php 
+foreach ($this->categories['sections'] as $section): 
+	if (empty($this->categories['category_'.$section->id])) continue;
+?>
 <!-- B: List Cat -->
 <table class="fb_blocktable">
 	<thead>
 		<tr>
 			<th colspan="5">
-				<h1><a class="fb_title" href="/index.php/kunena/1-main-forum" title="" rel="follow">Main Forum</a></h1>
-				<div>This is the main forum category. As a level one category it serves as a container for individual boards or forums. It is also referred to as a level 1 category and is a must have for any Kunena Forum setup.</div>
+				<h1><a class="fb_title" href="/index.php/kunena/1-main-forum" title="" rel="follow"><?php echo $this->escape($section->name); ?></a></h1>
+				<div><?php echo $section->description; ?></div>
 				<img id="BoxSwitch_1__catid_1" class="hideshow" src="http://kunena15/components/com_kunena/template/default_ex/images/english/shrink.gif" alt="" />
 			</th>
 		</tr>
@@ -39,50 +42,40 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 			<th class="th-1 fb_sectiontableheader">&nbsp;</th>
 			<th class="th-2 fb_sectiontableheader">Forum</th>
 			<th class="th-3 fb_sectiontableheader">Topics</th>
-			<th class="th-4 fb_sectiontableheader">Replies</th>
+			<th class="th-4 fb_sectiontableheader">Posts</th>
 			<th class="th-5 fb_sectiontableheader">Last Post</th>
 		</tr>
-		
+<?php foreach ($this->categories['category_'.$section->id] as $category): ?>
 		<tr class="fb_sectiontableentry2" id="fb_cat2">
 			<td class="td-1">
 				<a href="/index.php/kunena/2-welcome-mat" title="" rel="follow"><img src="http://kunena15/components/com_kunena/template/default_ex/images/english/icons/folder_nonew.gif" border="0" alt="No New Posts" title="No New Posts" /></a>
 			</td>
 			<td class="td-2">
-				<h2><a href="/index.php/kunena/2-welcome-mat" title="" rel="follow">Welcome Mat</a></h2>
+				<h2><a href="/index.php/kunena/2-welcome-mat" title="" rel="follow"><?php echo $this->escape($category->name); ?></a></h2>
 				<div class = "fb_thead-desc">
-					We encourage new members to post a short introduction of themselves in this forum category. Get to know each other and share you common interests.
+					<?php echo $category->description; ?>
 				</div>
 			</td>
-			<td class="td-3">1</td>
-			<td class="td-4">0</td>
+			<td class="td-3"><?php echo $category->numTopics; ?></td>
+			<td class="td-4"><?php echo $category->numPosts; ?></td>
 			<td class="td-5">
+<?php if ($category->id_last_msg): ?>
 				<div class="fb_latest-subject">
-					<a href="/index.php/kunena/2-welcome-mat/1-welcome-to-kunena#1" title="" rel="follow">Welcome to Kunena!</a>
+					<a href="/index.php/kunena/2-welcome-mat/1-welcome-to-kunena#1" title="" rel="follow"><?php echo $this->escape($category->subject); ?></a>
 				</div>
 				<div class="fb_latest-subject-by">
-					by <a href="/index.php/kunena/fbprofile/userid-62" title="" rel="nofollow">Kunena</a> | <b>Yesterday</b>&#32;08:12 <a href="/index.php/kunena/2-welcome-mat/1-welcome-to-kunena#1" title="" rel="follow"><img src="http://kunena15/components/com_kunena/template/default_ex/images/english/icons/tlatest.gif" border="0" alt="Show most recent message" title="Show most recent message"/></a>
+					by <a href="/index.php/kunena/fbprofile/userid-<?php echo $category->userid; ?>" title="" rel="nofollow"><?php echo $this->escape($category->username); ?></a> | <?php echo JHTML::_('date', $category->time_last_msg); ?> <a href="/index.php/kunena/2-welcome-mat/1-welcome-to-kunena#1" title="" rel="follow"><img src="http://kunena15/components/com_kunena/template/default_ex/images/english/icons/tlatest.gif" border="0" alt="Show most recent message" title="Show most recent message"/></a>
 				</div>
+<?php else: ?>
+				<div>No posts</div>
+<?php endif; ?>
 			</td>
 		</tr>
-		
-		<tr class = "fb_sectiontableentry1" id="fb_cat3">
-			<td class="td-1">
-				<a href="/index.php/kunena/3-suggestion-box" title="" rel="follow"><img src="http://kunena15/components/com_kunena/template/default_ex/images/english/icons/folder_nonew.gif" border="0" alt="No New Posts" title="No New Posts" /></a>
-			</td>
-			<td class="td-2">
-				<h2><a href="/index.php/kunena/3-suggestion-box" title="" rel="follow">Suggestion Box</a></h2>
-				<div class="fb_thead-desc">
-					Have some feedback and input to share?<br />
-					Don&#039;t be shy and drop us a note. We want to hear from you and strive to make our site better and more user friendly for our guests and members a like.
-				</div>
-			</td>
-			<td class="td-3">0</td>
-			<td class="td-4">0</td>
-			<td class="td-5">No Posts</td>
-		</tr>
+<?php endforeach; ?>
 	</tbody>
 </table>
 <!-- F: List Cat -->
+<?php endforeach; ?>
 
 <!-- B: Cat list Bottom -->
 <div>

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0dev
 
+9-Sep-2009 Matias
++ [#17628] Added most links to categories view
+
 8-Sep-2009 Matias
 + [#17628] Working categories logic in nested view of Categories
 

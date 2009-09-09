@@ -22,36 +22,48 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 </div>
 <!-- F: Cat list Top -->
 
-<?php 
-foreach ($this->categories['sections'] as $section): 
-	if (empty($this->categories['category_'.$section->id])) continue;
-?>
+<?php foreach ($this->categories['root'] as $section): ?>
 <!-- B: List Cat -->
 <table class="fb_blocktable">
 	<thead>
 		<tr>
 			<th colspan="5">
-				<h1><a class="fb_title" href="/index.php/kunena/1-main-forum" title="" rel="follow"><?php echo $this->escape($section->name); ?></a></h1>
+				<h1><?php echo JHtml::_('klink.categories', 'atag', $section->id, $this->escape($section->name), $this->escape($section->name)); ?></h1>
 				<div><?php echo $section->description; ?></div>
-				<img id="BoxSwitch_1__catid_1" class="hideshow" src="http://kunena15/components/com_kunena/template/default_ex/images/english/shrink.gif" alt="" />
+				<img id="BoxSwitch__catid_<?php echo $section->id; ?>" class="hideshow" src="http://kunena15/components/com_kunena/template/default_ex/images/english/shrink.gif" alt="" />
 			</th>
 		</tr>
 	</thead>
-	<tbody id="catid_1">
-		<tr class = "fb_sth">
+	<tbody id="catid_<?php echo $section->id; ?>">
+<?php 
+if (empty($this->categories[$section->id])):
+?>
+		<tr class="row_odd" id="fb_cat0">
+			<td class="td-1" colspan="4">
+				<b>There are no forums in this section.</b>
+			</td>
+		</tr>
+<?php 	
+else:
+?>
+		<tr  class="row_even">
 			<th class="th-1 fb_sectiontableheader">&nbsp;</th>
 			<th class="th-2 fb_sectiontableheader">Forum</th>
 			<th class="th-3 fb_sectiontableheader">Topics</th>
 			<th class="th-4 fb_sectiontableheader">Posts</th>
 			<th class="th-5 fb_sectiontableheader">Last Post</th>
 		</tr>
-<?php foreach ($this->categories['category_'.$section->id] as $category): ?>
-		<tr class="fb_sectiontableentry2" id="fb_cat2">
+<?php 	
+foreach ($this->categories[$section->id] as $current=>$category): 
+?>
+		<tr class="<?php echo ($current%2) ? 'row_even' : 'row_odd'; ?>" id="fb_cat<?php echo $category->id; ?>">
 			<td class="td-1">
-				<a href="/index.php/kunena/2-welcome-mat" title="" rel="follow"><img src="http://kunena15/components/com_kunena/template/default_ex/images/english/icons/folder_nonew.gif" border="0" alt="No New Posts" title="No New Posts" /></a>
+				<?php echo JHtml::_('klink.categories', 'atag', $category->id, '<img src="http://kunena15/components/com_kunena/template/default_ex/images/english/icons/folder_nonew.gif" border="0" alt="No New Posts" title="No New Posts" />', 'No New Posts'); ?>
 			</td>
 			<td class="td-2">
-				<h2><a href="/index.php/kunena/2-welcome-mat" title="" rel="follow"><?php echo $this->escape($category->name); ?></a></h2>
+				<h2>
+					<?php echo JHtml::_('klink.categories', 'atag', $category->id, $this->escape($category->name), $this->escape($category->name)); ?>
+				</h2>
 				<div class = "fb_thead-desc">
 					<?php echo $category->description; ?>
 				</div>
@@ -61,17 +73,22 @@ foreach ($this->categories['sections'] as $section):
 			<td class="td-5">
 <?php if ($category->id_last_msg): ?>
 				<div class="fb_latest-subject">
-					<a href="/index.php/kunena/2-welcome-mat/1-welcome-to-kunena#1" title="" rel="follow"><?php echo $this->escape($category->subject); ?></a>
+					<?php echo JHtml::_('klink.thread', 'atag', $category->thread, $this->escape($category->subject), $this->escape($category->subject)); ?>
 				</div>
 				<div class="fb_latest-subject-by">
-					by <a href="/index.php/kunena/fbprofile/userid-<?php echo $category->userid; ?>" title="" rel="nofollow"><?php echo $this->escape($category->username); ?></a> | <?php echo JHTML::_('date', $category->time_last_msg); ?> <a href="/index.php/kunena/2-welcome-mat/1-welcome-to-kunena#1" title="" rel="follow"><img src="http://kunena15/components/com_kunena/template/default_ex/images/english/icons/tlatest.gif" border="0" alt="Show most recent message" title="Show most recent message"/></a>
+					by 
+					<?php echo JHtml::_('klink.user', 'atag', $category->userid, $this->escape($category->username), 'Show User: '.$this->escape($category->username)); ?> | 
+					<?php echo JHTML::_('date', $category->time_last_msg); ?> <a href="/index.php/kunena/2-welcome-mat/1-welcome-to-kunena#1" title="" rel="follow"><img src="http://kunena15/components/com_kunena/template/default_ex/images/english/icons/tlatest.gif" border="0" alt="Show most recent message" title="Show most recent message"/></a>
 				</div>
 <?php else: ?>
 				<div>No posts</div>
 <?php endif; ?>
 			</td>
 		</tr>
-<?php endforeach; ?>
+<?php
+endforeach; 
+endif;
+?>
 	</tbody>
 </table>
 <!-- F: List Cat -->

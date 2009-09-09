@@ -28,9 +28,12 @@
  * @return segments
  */
 function KunenaBuildRoute(&$query)
-{
+{	
 	$parsevars = array('task', 'id', 'userid', 'page', 'sel');
 	$segments = array();
+	
+	// Do not route new URLs -- for now
+	if(isset($query['view'])) return $segments;
 	
 	$db =& JFactory::getDBO();
 	jimport('joomla.filter.output');

@@ -136,6 +136,37 @@ abstract class JHtmlKLink
 	 *
 	 * @since	1.6
 	 */
+    public function categories($linktype, $catid, $name, $title, $type='', $format='', $rel='follow', $class='', $anker='')
+    {
+   		$pagelink = self::view($linktype, 'categories', '&category='.$catid, $name, $title, $type, $format, $rel, $class, $anker);
+
+        return $pagelink;
+    }
+    
+    /**
+	 * Method to generate an (X)HTML search engine friendly link as an <a> tag.
+	 * Specialized helper for category views.
+	 *
+	 * <code>
+	 *	<?php echo JHtml::_('klink.category', 'atag', $catid, $name, $title, ...); ?>
+	 * </code>
+	 *
+	 * @param $linktype	string	type of link: 'atag' for <a> tag, 'url' for plaintext url
+	 * @param $catid	integer	category id to be displayed by the view. catid = 0 returns top level category overview
+	 * @param $name		string	text for the link to be displayed to the user
+	 * @param $title	string	link title
+	 * @param $page		integer	optional page number; 1 will surpress limit and limitstart parameters
+     * @param $limit	integer optional limit of items per page; model will set this as per backend config settings for the view
+     * @param $type		string	optional type override for view if not default
+     * @param $format	string	optional format override for view if not default
+     * @param $rel		string	optional <a> rel modifier; default is 'follow'
+     * @param $class	string 	optional css class for <a> tag
+     * @param $anker	string	optional page anker for <a> tag
+	 *
+	 * @return	string	The link as an <a> tag.
+	 *
+	 * @since	1.6
+	 */
     public function category($linktype, $catid, $name, $title, $page=1, $limit=20, $type='', $format='', $rel='follow', $class='', $anker='')
     {
         if ($page == 1 || !is_numeric($page))
@@ -178,11 +209,11 @@ abstract class JHtmlKLink
     {
         if ($page == 1 || !is_numeric($page))
         {
-    		$pagelink = self::view($linktype, 'thread', '&thread='.$threadid, $name, $title, $type, $format, $rel, $class, $anker);
+    		$pagelink = self::view($linktype, 'messages', '&thread='.$threadid, $name, $title, $type, $format, $rel, $class, $anker);
         }
         else
         {
-    		$pagelink = self::view($linktype, 'thread', '&thread='.$threadid.'&limit='.$limit.'&limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
+    		$pagelink = self::view($linktype, 'messages', '&thread='.$threadid.'&limit='.$limit.'&limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
         }
 
         return $pagelink;
@@ -249,7 +280,7 @@ abstract class JHtmlKLink
     public function user($linktype, $userid, $name, $title, $type='', $format='', $rel='follow', $class='', $anker='')
     {
         //TODO: Insert user profile link define into function call
-        return self::link($linktype, 'insert-link-to-user-profile-here', $name, $title, $type, $format, $rel, $class, $anker);
+        return self::view($linktype, 'user', '&userid='.$userid, $name, $title, $type, $format, $rel, $class, $anker);
     }
 
     public function pageAnker($linktype, $anker, $name, $rel='nofollow')

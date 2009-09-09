@@ -142,13 +142,14 @@ class KunenaModelCategories extends JModel
 		switch ($this->getState('type'))
 		{
 		    case 'nested':
+		    	$root = $this->getState('category.id');
 		    	$nested = array();
 		    	foreach ($rows as $row) {
-		    		if ($row->parent)
-		    			$nested['category_'.$row->parent][] = $row;
-		    		else
-		    			$nested['sections'][] = $row;
+    				$nested[$row->parent][] = $row;
+    				if ($row->id == $root) $rootitem = $row;
 		    	}
+		    	if (isset($rootitem)) $nested['root'] = array($rootitem);
+		    	else $nested['root'] = $nested[0];
 		    	$this->_lists[$key] = $nested;
 				break;
 				
@@ -320,7 +321,7 @@ class KunenaModelCategories extends JModel
 
 		// Build base query
 
-		$query->select('c.*, m.subject, m.name AS username, m.userid');
+		$query->select('c.*, m.subject, m.name AS username, m.userid, m.thread');
 	    $query->from('#__kunena_categories AS c');
 	    $query->leftJoin('#__kunena_messages AS m ON c.id_last_msg = m.id');
 	    $query->where('c.id IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');

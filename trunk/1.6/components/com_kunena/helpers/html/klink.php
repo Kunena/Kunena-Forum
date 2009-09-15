@@ -77,9 +77,9 @@ abstract class JHtmlKLink
         return self::link('atag', KUNENA_RELURL.'&func=credits&catid='.$catid, $name, NULL, 'follow');
     }
 
-    public function kunena($name)
+    public function kunena($linktype, $name)
     {
-        return self::link('atag', KUNENA_RELURL, $name, NULL, 'follow');
+        return self::link($linktype, KUNENA_RELURL, $name, NULL, 'follow');
     }
 
 	/**

@@ -58,6 +58,6 @@ class KunenaViewMessages extends KView
 		$this->assign('description', $bbcode->Parse(stripslashes($category->headerdesc)));
 		
 	    parent::display($tpl);
-	    echo "<code>"; print_r($this->path); echo "</code>";
+	    //echo "<code>"; print_r($this->path); echo "</code>";
 	}
 }

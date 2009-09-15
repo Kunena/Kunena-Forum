@@ -46,7 +46,18 @@ class KunenaViewMessages extends KView
 	    $this->assignRef('announcements', $this->get('Announcement'));
 	    $this->assignRef('statistics', $this->get('Statistics'));
 	    
+	    $catmodel =& $this->getModel('categories');
+	    $this->assignRef('path', $catmodel->getPath($this->messages[0]->catid));
+	    
+		$app = JFactory::getApplication();
+		$pathway = $app->getPathway();
+		foreach ($this->path as &$category) $pathway->addItem($this->escape($category->name), JHtml::_('klink.categories', 'url', $category->id, '', ''));
+		$pathway->addItem($this->escape($this->messages[0]->subject));
+		
+		$category = end($this->path); 
+		$this->assign('description', $bbcode->Parse(stripslashes($category->headerdesc)));
+		
 	    parent::display($tpl);
-	    //echo "<code>"; print_r($items); echo "</code>";
+	    echo "<code>"; print_r($this->path); echo "</code>";
 	}
 }

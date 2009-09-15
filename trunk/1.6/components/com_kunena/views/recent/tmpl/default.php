@@ -67,7 +67,7 @@ foreach ($this->threads as $this->current=>$this->thread):
 											<div class="post_info">
 												<div class="topic_post_time"><?php echo JText::_('K_POSTED_ON'); ?> <?php echo JHTML::_('date', $this->thread->first_post_time); ?></div>
 												<div class="topic_author"><?php echo JText::_('K_BY').' '; echo JHtml::_('klink.user', 'atag', $this->thread->first_post_userid, $this->escape($this->thread->first_post_name), $this->escape($this->thread->first_post_name));?></div>
-												<div class="topic_category"><?php echo JText::_('K_CATEGORY').' '; echo JHtml::_('klink.category', 'atag', $this->thread->catid, $this->escape($this->thread->catname), $this->escape($this->thread->catname));?></div>
+												<div class="topic_category"><?php echo JText::_('K_CATEGORY').' '; echo JHtml::_('klink.categories', 'atag', $this->thread->catid, $this->escape($this->thread->catname), $this->escape($this->thread->catname));?></div>
 												<div class="topic_views">(<?php echo JText::_('K_VIEWS'); ?>: <?php echo $this->escape($this->thread->hits); ?>)</div>
 											</div>
 										</td>

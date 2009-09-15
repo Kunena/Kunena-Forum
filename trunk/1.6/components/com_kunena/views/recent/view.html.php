@@ -44,7 +44,11 @@ class KunenaViewRecent extends KView
 			168 => JText::_ ( 'K_WEEK' ), 
 			720 => JText::_ ( 'K_MONTH' ), 
 			8760 => JText::_ ( 'K_YEAR' ) ) );
-		$this->assign ( 'filter_time', JRequest::getVar ( 'filter_time' ) );
+		$this->assign ( 'filter_time', JRequest::getVar ( 'filter_time', 168) );
+		
+		$app = JFactory::getApplication();
+		$pathway = $app->getPathway();
+		$pathway->addItem($this->escape($this->filter_time_options[$this->filter_time]));
 		
 		parent::display ( $tpl );
 	}

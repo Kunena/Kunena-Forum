@@ -166,6 +166,25 @@ class KunenaModelCategories extends JModel
 	}
 
 	/**
+	 * Method to get a path to current item.
+	 *
+	 * @return	object	A JPagination object.
+	 * @since	1.6
+	 */
+	public function getPath($current = 0)
+	{
+		if (!$current) $current = $this->getState('category.id');
+		$path = array();
+		for (; $current>0; $current = $rows[0]->parent) {
+			// Load the category.
+			$query	= $this->_getItemQuery($current);
+			$rows	= $this->_getList($query->toString(), $this->getState('list.start'), $this->getState('list.limit'));			
+			$path[] = $rows[0];
+		}
+		return array_reverse($path);
+	}	
+	
+	/**
 	 * Method to get a list pagination object.
 	 *
 	 * @return	object	A JPagination object.
@@ -359,6 +378,31 @@ class KunenaModelCategories extends JModel
 		return $query;
 	}
 
+	/**
+	 * Method to build an SQL query to load the item data.
+	 *
+	 * @return	string	An SQL query.
+	 * @since	1.6
+	 */
+	protected function _getItemQuery($id)
+	{
+	    $query = new KQuery();
+		$user = KUser::getInstance(true);
+
+		// Build base query
+
+		$query->select('c.*, m.subject, m.name AS username, m.userid, m.thread');
+	    $query->from('#__kunena_categories AS c');
+	    $query->leftJoin('#__kunena_messages AS m ON c.id_last_msg = m.id');
+	    $query->where('c.id IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
+	    $query->where('c.published=1');
+		$query->where('c.id='.$id);
+	    
+		// echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
+
+		return $query;
+	}
+	
 	/**
 	 * Method to get a store id based on model configuration state.
 	 *

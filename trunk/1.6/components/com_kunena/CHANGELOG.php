@@ -35,6 +35,7 @@ Kunena 1.6.0dev
 
 15-Sep-2009 Matias
 + [#17628] Working category list implementation
++ [#17628] Partial pathway implementation
 
 9-Sep-2009 Matias
 + [#17628] Added most links to categories view

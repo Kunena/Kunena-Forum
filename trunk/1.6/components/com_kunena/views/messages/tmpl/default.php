@@ -16,7 +16,7 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 <?php echo $this->loadCommonTemplate('pathway'); ?>
 
 <div class="fb_forum-headerdesc">
-	<b>TODO: ADD LOGIC FOR HEADERDESC</b>
+<?php echo $this->description; ?>
 </div>
 
 <!-- B: List Actions -->
@@ -66,7 +66,10 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 			</td>
 
 			<td class="fb-msgview-left">
-<?php echo $this->loadCommonTemplate('profilebox'); ?>
+<?php 
+$this->profile =& $message;
+echo $this->loadCommonTemplate('profilebox'); 
+?>
 			</td>
 		</tr>
 

@@ -33,6 +33,7 @@ class KunenaViewCategories extends KView
 		$this->assign('total', $this->get('Total'));
 	    $this->assignRef('categories', $this->get('Items'));
 	    $this->assignRef('pagination', $this->get('Pagination'));
+	    $this->assignRef('path', $this->get('Path'));
 
 	    $bbcode = KBBCode::getInstance();
 		foreach ($this->categories as &$category)
@@ -47,7 +48,11 @@ class KunenaViewCategories extends KView
 	    $this->assignRef('announcements', $this->get('Announcement'));
 	    $this->assignRef('statistics', $this->get('Statistics'));
 	    
+   		$app = JFactory::getApplication();
+		$pathway = $app->getPathway();
+		foreach ($this->path as &$category) $pathway->addItem($this->escape($category->name), JHtml::_('klink.categories', 'url', $category->id, '', ''));
+	    
 	    parent::display($tpl);
-	    //echo "<pre>"; print_r($this->categories); echo "</pre>";
+	    // echo "<pre>"; print_r($this->path); echo "</pre>";
 	}
 }

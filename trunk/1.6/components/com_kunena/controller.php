@@ -98,6 +98,11 @@ class KunenaController extends JController
 			// Do any specific processing for the view.
 			switch ($vName)
 			{
+				case 'recent':
+				case 'messages':
+					$view->setModel( $this->getModel( 'categories' ), false );
+					$model = $this->getModel($vName);
+					break;
 				default:
 					// Get the appropriate model for the view.
 					$model = $this->getModel($vName);

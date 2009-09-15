@@ -12,11 +12,12 @@ defined('_JEXEC') or die;
 ?>
 <!-- Pathway -->
 <div class="fb_forum-pathway">
-<div class="path-element-first"><a href="/index.php/kunena" title="" rel="follow">Kunena</a></div>
-<div class="path-element"><a href="/index.php/kunena/1-main-forum" title="" rel="follow">Main Forum</a></div>
-<div class="path-element"><a href="/index.php/kunena/2-welcome-mat" title="" rel="follow">Welcome Mat</a></div>
+<div class="path-element-first"><a href="" title="" rel="follow">Kunena</a></div>
+<?php foreach ($this->path as &$category): ?>
+<div class="path-element"><?php echo JHtml::_('klink.categories', 'atag', $category->id, $this->escape($category->name), $this->escape($category->name)); ?></div>
+<?php endforeach; ?>
 <br />
-<div class="path-element-last">Welcome to Kunena!</div>
-<div class="path-element-users">(1 viewing)&nbsp;(1) Guest</div>
+<div class="path-element-last"><?php if (isset($this->messages[0])) echo $this->escape($this->messages[0]->subject); ?></div>
+<div class="path-element-users">(X viewing)&nbsp;(X) Guest</div>
 </div>
 <!-- / Pathway -->

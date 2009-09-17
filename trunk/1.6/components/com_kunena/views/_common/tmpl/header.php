@@ -12,9 +12,9 @@ defined('_JEXEC') or die;
 ?>
 		<div class="topnav">
 			<ul>
-				<li class="active"><?php echo JHtml::_('klink.recent', 'atag', JText::_('K_RECENT_DISCUSSIONS'), '<span>'.JText::_('K_RECENT_DISCUSSIONS').'</span>'); ?></li>
-				<li><?php echo JHtml::_('klink.category', 'atag', 0, JText::_('K_CATEGORIES'), JText::_('K_CATEGORIES'));?></li>
-				<li><a href="/forum/faq" title="<?php echo JText::_('K_HELP'); ?>"><span><?php echo JText::_('K_HELP'); ?></span></a></li>
+				<li class="active"><?php echo JHtml::_('klink.recent', 'atag', '<span>'.JText::_('K_RECENT_DISCUSSIONS').'</span>', JText::_('K_RECENT_DISCUSSIONS')); ?></li>
+				<li><?php echo JHtml::_('klink.category', 'atag', 0, '<span>'.JText::_('K_CATEGORIES').'</span>', JText::_('K_CATEGORIES'));?></li>
+				<?php // <li><a href="/forum/faq" title="<?php echo JText::_('K_HELP'); ?/>"><span><?php echo JText::_('K_HELP'); ?/></span></a></li> ?>
 			</ul>
 		</div>
 		<div class="search">
@@ -23,6 +23,8 @@ defined('_JEXEC') or die;
 				<input type="submit" value="<?php echo JText::_('K_GO'); ?>" name="submit" class="go_btn"/>
 			</form>
 		</div>
+
+		<div class="topline"></div>
 		<div class="corner_tl">
 			<div class="corner_tr">
 				<div class="corner_br">

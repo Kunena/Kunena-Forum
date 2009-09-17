@@ -246,7 +246,7 @@ abstract class JHtmlKLink
     {
         if ($page == 1 || !is_numeric($page))
         {
-    		$pagelink = self::view($linktype, 'recent', $name, $title, $type, $format, $rel, $class, $anker);
+    		$pagelink = self::view($linktype, 'recent', '', $name, $title, $type, $format, $rel, $class, $anker);
         }
         else
         {

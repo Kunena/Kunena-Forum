@@ -15,29 +15,23 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 <?php echo $this->loadCommonTemplate('header'); ?>
 <?php echo $this->loadCommonTemplate('pathway'); ?>
 
-<div class="fb_forum-headerdesc">
+<div class="forum-description">
 <?php echo $this->description; ?>
 </div>
 
-<!-- B: List Actions -->
-<div class="fb_list_actions">
-	<div class="fb_list_actions_goto">
+<!-- B: Actions Box -->
+<div class="top_actions_box">
+	<div class="jump">
 		<a name="forumtop"></a>
 		<?php echo JHtml::_('klink.pageAnker', 'atag', 'forumbottom', '<img src="http://kunena15/components/com_kunena/template/default_ex/images/english/icons/bottom_arrow.gif" border="0" alt="Go to bottom" title="Go to bottom" /></a>'); ?>
 	</div>
-
-	<div class="fb_list_actions_forum"></div>
-
-	<div class="pagination_box">
-		<?php echo JText::_('K_PAGE'); ?>: <?php echo $this->pagination->getPagesLinks(); ?>
-	</div>
-	<div class="discussions">
-		<?php echo $this->pagination->getResultsCounter(); ?>
-	</div>
+	<div class="actions"></div>
+	<div class="counter"><?php echo $this->pagination->getResultsCounter(); ?></div>
+	<div class="pagination"><?php echo JText::_('K_PAGE'); ?>: <?php echo $this->pagination->getPagesLinks(); ?></div>
 </div>
-<!-- F: List Actions -->
+<!-- F: Actions Box -->
 
-<table class="fb_blocktable">
+<table class="forum_body">
 	<thead>
 		<tr>
 			<th colspan="2">
@@ -86,29 +80,25 @@ echo $this->loadCommonTemplate('profilebox');
 </table>
 
 
-<!-- B: List Actions Bottom -->
-<div class="fb_list_actions_bottom">
-	<div class="fb_list_actions_goto">
-	<a name="forumbottom"></a> 
-	<?php echo JHtml::_('klink.pageAnker', 'atag', 'forumtop', '<img src="http://kunena15/components/com_kunena/template/default_ex/images/english/icons/top_arrow.gif" border="0" alt="Go to top" title="Go to top" />'); ?>
+<!-- B: Actions Box -->
+<div class="bottom_actions_box">
+	<div class="jump">
+		<a name="forumtop"></a>
+		<?php echo JHtml::_('klink.pageAnker', 'atag', 'forumbottom', '<img src="http://kunena15/components/com_kunena/template/default_ex/images/english/icons/bottom_arrow.gif" border="0" alt="Go to bottom" title="Go to bottom" /></a>'); ?>
 	</div>
-	<div class="fb_list_actions_forum"></div>
-	<div class="fb_list_pages_all">
-		<div class="pagination_box">
-			<?php echo JText::_('K_PAGE'); ?>: <?php echo $this->pagination->getPagesLinks(); ?>
-		</div>
-		<div class="discussions">
-			<span><?php echo $this->pagination->getResultsCounter(); ?></span>
-		</div>
-	</div>
+	<div class="actions"></div>
+	<div class="counter"><?php echo $this->pagination->getResultsCounter(); ?></div>
+	<div class="pagination"><?php echo JText::_('K_PAGE'); ?>: <?php echo $this->pagination->getPagesLinks(); ?></div>
 </div>
+<!-- F: Actions Box -->
+
 <?php echo $this->loadCommonTemplate('pathway'); ?>
 <!-- F: List Actions Bottom -->
 
 <!-- B: Category List Bottom -->
-<div class="fb_list_bottom">
-	<span class="fb_list_moderators"><!-- Mod List --> <!-- /Mod List --></span>
-<?php echo $this->loadCommonTemplate('forumcat'); ?>
+<div class="bottom_info_box">
+	<div class="moderators">Moderators:</div>
+	<?php echo $this->loadCommonTemplate('forumcat'); ?>
 </div>
 <!-- F: Category List Bottom -->
 

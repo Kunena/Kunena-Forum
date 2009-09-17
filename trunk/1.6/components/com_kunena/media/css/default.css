@@ -23,25 +23,28 @@ Dark Grey color:			#2c2c2c		RGB: 44/44/44
 
 /* ------------------------- GLOBAL ------------------------- */
 
+/*
 body {
 	background-color: #ffffff;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #2C2C2C;
 }
+*/
 
 img {
 	border: none 0;
 }
 
 #kunena {
-	font-family: Arial, Helvetica, sans-serif;
+/*	font-family: Arial, Helvetica, sans-serif;*/
 	color: #2C2C2C;
 	margin: 0;
 	padding:0;
 	line-height: 120%;
-	width: 95%;
-	margin: 0 auto; 
+/*	width: 95%;*/
+	margin: 0 auto;
+	font-size: 12px;
 }
 
 #kunena table,
@@ -71,67 +74,105 @@ h4 { font-size: 15px; margin: 0 0 2px 0;}
 
 /* ------ TOP NAV ---- */
 #kunena div.topnav {
+}
 
+#kunena div.topnav ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
 #kunena div.topnav li {
-	margin: 0 60px 0 -40px ;
-	padding: 0;
+	margin-right: 1px;
 	list-style: none;
 	display: block;
 	width: auto;
 	float:left;
-	font-size: 16px;
-	font-weight:bold;
-	background: #0B3768 url('../images/menubg.gif') repeat left;
-
+	padding:5px 0;
+	margin: 5px 1px 0px 1px;
+	background: #777777;
 }
+
 #kunena div.topnav li:hover {
-	background: #000000 url('../images/menubgover.gif') repeat left;
-
+	background: #5388B4;
+	padding:9px 0 5px;
+	margin-top: 1px;
 }
+
 #kunena div.topnav li a {
+	background: url('../images/menubg.png') no-repeat scroll right top;
+	padding:10px 1px 5px 0px;
+	font-weight:bold;
 	color: #ffffff;
 }
 
 #kunena div.topnav li a:hover {
+	font-weight:bold;
+	text-decoration:none;
 	color: #ffffff;
+	background: url('../images/menubg.png') no-repeat scroll right -35px;
 }
 
+#kunena div.topnav li a span {
+	background: url('../images/menubg.png') no-repeat scroll left top;
+	color: #ffffff;
+	margin-left: -1px;
+	padding:10px 8px 5px 8px;
+}
+
+#kunena div.topnav li a:hover span {
+	background: url('../images/menubg.png') no-repeat scroll left -35px;
+	color: #ffffff;
+	margin-left: -1px;
+}
 
 /* ----------- */
 
-div.search {
+#kunena div.search {
 	display:block;
-	float:right;
-	margin-bottom: 10px;
+	text-align:right;
+	padding-top:2px;
 }
 
+#kunena select,
+#kunena input {
+	font-size: 12px;
+	background:#F7F7F7;
+	border:1px solid #999999;
+	margin: 0;
+	padding: 0;
+}
+
+#kunena input:hover {
+	background:#609FBF;
+	border:1px solid #006699;
+	color:#FFFFFF;
+}
 div.profile_box {
-	border: 1px solid #83afda;
-	padding: 10px ;
+	background:#EEEEEE;
+	border: 1px solid #BFC3C6;
+	padding: 6px;
 	clear:both;
-	font-size: 11px;
-	margin-bottom: 20px;
+	margin-bottom: 6px;
 }
 
 div.profile_box p {
-	font-size: 12px;
 }
 
-div.top_info_box,
-div.bottom_info_box {
-	width: 100%;
+#kunena div.top_info_box,
+#kunena div.bottom_info_box {
+/*	width: 100%; */
 	margin: 0 auto;
+	text-align:right;
 }
 
 div.bottom_info_box {
-	margin-top: 15px;
+	margin-top: 6px;
 }
 
 div.choose_time {
 	float:left;
-	margin-right: 15px;
+	margin-right: 12px;
 }
 
 div.choose_time {
@@ -139,55 +180,60 @@ div.choose_time {
 }
 
 div.choose_forumcat {
-	width: 50%;
+/*	float: left;*/
+	width: auto;
 }
 
 div.announcements {
 	width: 100%;
 	padding: 0;
 	background-color: #F7F7F7;
-	margin-bottom: 15px;
+	margin-bottom: 12px;
 	border: 1px solid #d6d6d6;
 }
 
 div.announcements h3 {
 	text-align: center;
-	margin-top:15px;
+	margin-top:12px;
 }
 
 div.announcements p {
-	margin: 0 15px 15px 15px;
+	margin: 0 12px 12px 12px;
 }
 
 p.announce_summary a:link {
 
 }
 
-div.pagination_box {
-	float: right;
-	width: auto;
-	margin-bottom: 15px;
+div.pagination {
+	display: inline;
+/*	float: right;*/
+/*	width: auto;*/
+	margin-right: 12px;
 }
 
-div.pagination_box span {
+div.pagination span {
 	border: 1px solid #83afda;
 	padding: 2px;
 }
 
 #kunena input.input_search {
-	margin: 0;
+	background: url(../images/search_icon.png) no-repeat scroll 5px center;
+	font-weight:normal;
+	padding:1px 5px 1px 20px;
+	width:auto;
 }
 
 #kunena input.go_btn {
-	margin: 0;
-	border: 0;
-	width: 30px;
+	padding:0 4px;
+	width:auto;
 }
 
-div.discussions {
-	width: auto;
-	float: right;
-	margin-right: 30px;
+div.counter {
+/*	width: auto;*/
+/*	float: right;*/
+	display: inline;
+	margin-right: 12px;
 }
 
 div.corner_tl {
@@ -208,7 +254,7 @@ div.corner_bl {
 }
 
 div.stats_box {
-	margin-top: 60px;
+	margin-top: 36px;
 }
 
 div.credits {
@@ -260,8 +306,8 @@ tfoot {
 
 }
 	
-table.forum_body {
-
+#kunena table.forum_body {
+	margin-bottom: 6px;
 }
 
 tr.row_odd {
@@ -361,7 +407,7 @@ div.topic_latest_post_avatar {
 	width: 48px;
 	height: 48px;
 	float:left;
-	margin-right: 15px;
+	margin-right: 12px;
 }
 
 p.topic_latest_post,
@@ -391,14 +437,88 @@ p.topic_time {
 	clear:both;
 }
 
+/* ADDED BY MATIAS */
+/* ------------------------- PATHWAY ------------------------- */
 
+div.pathway {
+	background:#F7F7F7 none repeat scroll 0 0;
+	border:1px solid #CCCCCC;
+	clear:both;
+	margin-bottom:-1px;
+	padding:6px;
+}
 
+span.path-element-first {
+	background:transparent url(../images/pathway_start.gif) no-repeat scroll left center;
+	font-weight:normal;
+	padding-left:22px;
+}
 
+span.path-element,
+span.path-element-last {
+	background:transparent url(../images/arrow.png) no-repeat scroll left center;
+	font-weight:normal;
+	padding-left:12px;
+}
 
+div.forum-description {
+	background:#F7F7F7 none repeat scroll 0 0;
+	border:1px solid #CCCCCC;
+	clear:both;
+	margin-bottom:-1px;
+	padding:6px;
+}
 
+div.stats_box {
+	background:#F7F7F7 none repeat scroll 0 0;
+	border:1px solid #CCCCCC;
+	clear:both;
+	margin-bottom:6px;
+	padding:6px;
+}
 
+#kunena div.top_info_box,
+#kunena div.bottom_info_box,
+#kunena div.top_actions_box,
+#kunena div.bottom_actions_box {
+	border:1px solid #CCCCCC;
+	clear:both;
+	padding:6px;
+	text-align: right;
+	line-height: 19px;
+}
 
+#kunena div.top_info_box,
+#kunena div.top_actions_box {
+	margin-bottom:6px;
+}
 
+#kunena div.bottom_info_box,
+#kunena div.bottom_actions_box {
+	margin-bottom:-1px;
+}
 
+#kunena div.top_info_box div,
+#kunena div.bottom_info_box div,
+#kunena div.top_actions_box div,
+#kunena div.bottom_actions_box div {
+	display: inline;
+	text-align: right;
+}
 
+#kunena div.jump,
+#kunena div.actions,
+#kunena div.moderators {
+	float: left;
+}
 
+div.topline {
+	clear:both;
+	background:#5388b4 none repeat scroll 0 0;
+	border:1px solid #5182a4;
+	padding:1px 0 0 0;
+}
+
+p.welcome span {
+	font-weight: bold;
+}

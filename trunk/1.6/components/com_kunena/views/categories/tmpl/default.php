@@ -16,7 +16,7 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 <?php echo $this->loadCommonTemplate('pathway'); ?>
 
 <!-- B: Cat list Top -->
-<div class="fb_list_top">
+<div class="top_info_box">
 	<span class="fb_list_markallcatsread"></span>
 <?php echo $this->loadCommonTemplate('forumcat'); ?>
 </div>
@@ -95,7 +95,7 @@ endif;
 <?php endforeach; ?>
 
 <!-- B: Cat list Bottom -->
-<div>
+<div class="bottom_info_box">
 	<span class="fb_list_markallcatsread"></span>
 <?php echo $this->loadCommonTemplate('forumcat'); ?>
 </div>

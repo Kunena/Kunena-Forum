@@ -24,12 +24,12 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 				</select>
 				</form>
 			</div>
-<?php echo $this->loadCommonTemplate('forumcat'); ?>
-			<div class="pagination_box">
-				<?php echo JText::_('K_PAGE'); ?>: <?php echo $this->pagination->getPagesLinks(); ?>
+<?php // echo $this->loadCommonTemplate('forumcat'); ?>
+			<div class="counter">
+				<span><?php echo $this->pagination->getResultsCounter(); ?></span> <?php // echo JText::_('K_DISCUSSIONS'); ?>
 			</div>
-			<div class="discussions">
-				<span><?php echo $this->pagination->getResultsCounter(); ?></span> <?php echo JText::_('K_DISCUSSIONS'); ?>
+			<div class="pagination">
+				<?php echo JText::_('K_PAGE'); ?>: <?php echo $this->pagination->getPagesLinks(); ?>
 			</div>
 			
 		</div>
@@ -97,11 +97,11 @@ endforeach;
 									</div>
 
 		<div class="bottom_info_box">
-			<div class="pagination_box">
-				<?php echo JText::_('K_PAGE'); ?>: <?php echo $this->pagination->getPagesLinks(); ?>
+			<div class="counter">
+				<span><?php echo $this->pagination->getResultsCounter(); ?></span> <?php // echo JText::_('K_DISCUSSIONS'); ?> 
 			</div>
-			<div class="discussions">
-				<span><?php echo $this->pagination->getResultsCounter(); ?></span> <?php echo JText::_('K_DISCUSSIONS'); ?> 
+			<div class="pagination">
+				<?php echo JText::_('K_PAGE'); ?>: <?php echo $this->pagination->getPagesLinks(); ?>
 			</div>
 		</div>
 

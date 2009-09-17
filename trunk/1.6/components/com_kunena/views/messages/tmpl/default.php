@@ -37,15 +37,15 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 			<th colspan="2">
 			<h1>TOPIC: <?php echo $this->escape($this->messages[0]->subject); ?></h1>
 			<!-- Begin: Total Favorite -->
-			<div class="fb_totalfavorite"></div>
+			<div class="favorites"></div>
 			<!-- Finish: Total Favorite --></th>
 		</tr>
 	</thead>
 	<tbody>
 
 <?php foreach ($this->messages as $current=>$message): ?>
-		<tr class="fb_sth">
-			<th colspan="2" class="view-th fb_sectiontableheader">					
+		<tr>
+			<th colspan="2" class="msgheader">					
 				<a name="<?php echo $message->id; ?>"></a>
 				<?php echo JHtml::_('klink.pageAnker', 'atag', $message->id, '#'.$message->id); ?>
 			</th>

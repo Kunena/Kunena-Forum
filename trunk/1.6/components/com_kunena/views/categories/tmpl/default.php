@@ -24,13 +24,13 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 
 <?php foreach ($this->categories['root'] as $section): ?>
 <!-- B: List Cat -->
-<table class="fb_blocktable">
+<table class="forum_body">
 	<thead>
 		<tr>
 			<th colspan="5">
 				<h1><?php echo JHtml::_('klink.categories', 'atag', $section->id, $this->escape($section->name), $this->escape($section->name)); ?></h1>
 				<div><?php echo $section->description; ?></div>
-				<img id="BoxSwitch__catid_<?php echo $section->id; ?>" class="hideshow" src="http://kunena15/components/com_kunena/template/default_ex/images/english/shrink.gif" alt="" />
+<?php //				<img id="BoxSwitch__catid_<?php echo $section->id; ?/>" class="hideshow" src="http://kunena15/components/com_kunena/template/default_ex/images/english/shrink.gif" alt="" /> ?>
 			</th>
 		</tr>
 	</thead>
@@ -100,31 +100,6 @@ endif;
 <?php echo $this->loadCommonTemplate('forumcat'); ?>
 </div>
 <!-- F: Cat list Bottom -->
-
-<!-- WHOIS ONLINE -->
-<table class="fb_whoisonline">
-	<thead>
-		<tr>
-			<th>
-				<div>
-					<a class="fb_title fbl" href = "/index.php/kunena/who">
-						Online <b>0</b> Members and <b>1</b> Guest</a>
-				</div>
-				<img id = "BoxSwitch_whoisonline__whoisonline_tbody" class = "hideshow" src = "http://kunena15/components/com_kunena/template/default_ex/images/english/shrink.gif" alt = ""/>
-			</th>
-		</tr>
-	</thead>
-
-	<tbody>
-		<tr>
-			<td class = "td-1 fbm" align="left">
-				<!-- groups -->
-			</td>
-		</tr>
-	</tbody>
-</table>
-<!-- /WHOIS ONLINE -->
-
 
 <?php echo $this->loadCommonTemplate('footer'); ?>
 	</div>

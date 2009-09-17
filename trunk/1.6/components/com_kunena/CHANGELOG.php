@@ -35,6 +35,7 @@ Kunena 1.6.0dev
 
 17-Sep-2009 Matias
 + [#17628] Add default_ex look to top menu, search, profile box, pathway...
++ [#17628] Add default_ex look to categories, recent, stats... 
 
 15-Sep-2009 Matias
 + [#17628] Working category list implementation

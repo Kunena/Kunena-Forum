@@ -31,7 +31,6 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 			<div class="pagination">
 				<?php echo JText::_('K_PAGE'); ?>: <?php echo $this->pagination->getPagesLinks(); ?>
 			</div>
-			
 		</div>
 		<div class="clr"></div>
 		
@@ -43,13 +42,16 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 							<table class="forum_body">
 								<thead>
 									<tr>
-										<td class="col1"><?php echo JText::_('K_REPLIES'); ?></td>
-										<td class="col2">&nbsp;</td>
-										<td class="col3"><?php echo JText::_('K_TOPICS'); ?></td>
-										<td class="col4"><?php echo JText::_('K_LAST_POST'); ?></td>
+										<th colspan="4"><h1>Recent Discussions</h1></th>
 									</tr>
 								</thead>
 								<tbody>
+									<tr>
+										<th class="col1"><?php echo JText::_('K_REPLIES'); ?></th>
+										<th class="col2">&nbsp;</th>
+										<th class="col3"><?php echo JText::_('K_TOPICS'); ?></th>
+										<th class="col4"><?php echo JText::_('K_LAST_POST'); ?></th>
+									</tr>
 
 <!--
 <pre><?php print_r($this->threads[0]); ?></pre> 

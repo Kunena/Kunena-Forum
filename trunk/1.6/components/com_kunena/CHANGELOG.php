@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0dev
 
+18-Sep-2009 Matias
++ [#17628] Continue making default template for Recent and Categories views
+
 17-Sep-2009 Matias
 + [#17628] Add default_ex look to top menu, search, profile box, pathway...
 + [#17628] Add default_ex look to categories, recent, stats... 

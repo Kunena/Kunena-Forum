@@ -52,14 +52,14 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 		</tr>
 
 		<tr>
-			<td class="fb-msgview-right">
+			<td class="lcol">
 				<h2><?php echo $this->escape($this->messages[$current]->subject); ?></h2>
 				<span class="msgdate" title="<?php echo JHTML::_('date', $this->messages[$current]->time); ?>"><?php echo JHTML::_('date', $this->messages[$current]->time); ?></span>
 				<span class="msgkarma"> <strong>Karma:</strong> 0</span>
 				<div class="message_text"><?php echo $this->messages[$current]->message; ?></div>
 			</td>
 
-			<td class="fb-msgview-left">
+			<td class="rcol">
 <?php 
 $this->profile =& $message;
 echo $this->loadCommonTemplate('profilebox'); 
@@ -68,11 +68,11 @@ echo $this->loadCommonTemplate('profilebox');
 		</tr>
 
 		<tr>
-			<td class="fb-msgview-right-b">
+			<td class="lcol">
 				<div class="fb_message_buttons">The administrator has disabled public write access.</div>
 			</td>
 
-			<td class="fb-msgview-left-b">&nbsp;</td>
+			<td class="mcol">&nbsp;</td>
 		</tr>
 <?php endforeach; ?>
 

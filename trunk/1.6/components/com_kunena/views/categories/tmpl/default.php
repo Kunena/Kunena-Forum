@@ -39,28 +39,28 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 if (empty($this->categories[$section->id])):
 ?>
 		<tr class="row_odd" id="fb_cat0">
-			<td class="td-1" colspan="4">
+			<td class="fcol" colspan="4">
 				<b>There are no forums in this section.</b>
 			</td>
 		</tr>
 <?php 	
 else:
 ?>
-		<tr  class="row_even">
-			<th class="th-1 fb_sectiontableheader">&nbsp;</th>
-			<th class="th-2 fb_sectiontableheader">Forum</th>
-			<th class="th-3 fb_sectiontableheader">Topics</th>
-			<th class="th-4 fb_sectiontableheader">Posts</th>
-			<th class="th-5 fb_sectiontableheader">Last Post</th>
+		<tr>
+			<th class="lcol col_emoticon">&nbsp;</th>
+			<th class="mcol col_content">Forum</th>
+			<th class="mcol col_topics">Topics</th>
+			<th class="mcol col_posts">Posts</th>
+			<th class="lcol col_last">Last Post</th>
 		</tr>
 <?php 	
 foreach ($this->categories[$section->id] as $current=>$category): 
 ?>
 		<tr class="<?php echo ($current%2) ? 'row_even' : 'row_odd'; ?>" id="fb_cat<?php echo $category->id; ?>">
-			<td class="td-1">
+			<td class="lcol col_emoticon">
 				<?php echo JHtml::_('klink.categories', 'atag', $category->id, '<img src="http://kunena15/components/com_kunena/template/default_ex/images/english/icons/folder_nonew.gif" border="0" alt="No New Posts" title="No New Posts" />', 'No New Posts'); ?>
 			</td>
-			<td class="td-2">
+			<td class="mcol col_content">
 				<h2>
 					<?php echo JHtml::_('klink.categories', 'atag', $category->id, $this->escape($category->name), $this->escape($category->name)); ?>
 				</h2>
@@ -68,9 +68,9 @@ foreach ($this->categories[$section->id] as $current=>$category):
 					<?php echo $category->description; ?>
 				</div>
 			</td>
-			<td class="td-3"><?php echo $category->numTopics; ?></td>
-			<td class="td-4"><?php echo $category->numPosts; ?></td>
-			<td class="td-5">
+			<td class="mcol col_topics"><?php echo $category->numTopics; ?></td>
+			<td class="mcol col_posts"><?php echo $category->numPosts; ?></td>
+			<td class="rcol col_last">
 <?php if ($category->id_last_msg): ?>
 				<div class="fb_latest-subject">
 					<?php echo JHtml::_('klink.thread', 'atag', $category->thread, $this->escape($category->subject), $this->escape($category->subject)); ?>

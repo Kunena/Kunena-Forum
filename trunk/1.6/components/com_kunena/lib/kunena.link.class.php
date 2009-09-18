@@ -175,7 +175,7 @@ class CKunenaLink
 		{
 			return CKunenaLink::GetSefHrefLink($link, $name, '', $rel, $class);
 		}
-		else 
+		else
 		{
 			return $name;
 		}
@@ -185,7 +185,7 @@ class CKunenaLink
 	{
 		return JRoute::_(KUNENA_LIVEURLREL.'&amp;func=userlist'.$action);
 	}
-	
+
 	function GetUserlistLink($action, $name, $rel='nofollow', $class='')
 	{
 		return self::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=userlist'.$action, $name, '', $rel, $class);
@@ -309,16 +309,15 @@ class CKunenaLink
         // First determine the thread, latest post and number of posts for the post supplied
         $where = '';
 		if ($catid > 0) $where .= " AND a.catid = {$catid} ";
-		$kunena_db->setQuery("SELECT a.thread AS thread, MAX(a.id) AS latest_id, MAX(a.catid) AS catid, COUNT(*) AS totalmessages
-                             FROM #__kunena_messages AS a,
-                                (SELECT MAX(thread) AS thread FROM #__kunena_messages WHERE id='{$pid}') AS b
-                             WHERE a.thread = b.thread AND a.hold='0' {$where}
-                             GROUP BY a.thread");
+		$kunena_db->setQuery("SELECT a.id AS thread, a.latest_post_id AS latest_id, a.catid AS catid, a.posts AS totalmessages
+                             FROM #__kunena_threads AS a, #__kunena_messages AS b
+                             WHERE b.id='{$pid}' AND a.id = b.thread AND a.hold='0' {$where}");
+
         $result = $kunena_db->loadObject();
         	check_dberror("Unable to retrieve latest post.");
 
         // Now Calculate the number of pages for this particular thread
-        if (is_object($result)) 
+        if (is_object($result))
         {
         	$catid = $result->catid;
         	$threadPages = ceil($result->totalmessages / $limit);
@@ -332,7 +331,7 @@ class CKunenaLink
         $Output .= '</div>';
         if (is_object($result)) $Output .= CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetThreadPageURL($kunenaConfig, 'view', $catid, $result->thread, $threadPages, $limit, $result->latest_id), 3500);
         else $Output .= CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid), 3500);
-        
+
         return $Output;
     }
 
@@ -342,11 +341,9 @@ class CKunenaLink
         // First determine the thread, latest post and number of posts for the post supplied
         $where = '';
 		if ($catid > 0) $where .= " AND a.catid = {$catid} ";
-        $kunena_db->setQuery("SELECT a.thread AS thread, MAX(a.id) AS latest_id, MAX(a.catid) AS catid, COUNT(*) AS totalmessages
-                             FROM #__kunena_messages AS a,
-                                (SELECT MAX(thread) AS thread FROM #__kunena_messages WHERE id='{$pid}') AS b
-                             WHERE a.thread = b.thread AND a.hold='0' {$where}
-                             GROUP BY a.thread");
+        $kunena_db->setQuery("SELECT a.id AS thread, a.latest_post_id AS latest_id, a.catid AS catid, a.posts AS totalmessages
+                             FROM #__kunena_threads AS a, #__kunena_messages AS b
+                             WHERE b.id='{$pid}' AND a.id = b.thread AND a.hold='0' {$where}");
         $result = $kunena_db->loadObject();
         	check_dberror("Unable to retrieve latest post.");
         if (!is_object($result)) return htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid));

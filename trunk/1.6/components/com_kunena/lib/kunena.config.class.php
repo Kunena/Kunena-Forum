@@ -27,7 +27,7 @@ require_once (JPATH_ROOT . '/components/com_kunena/lib/kunena.user.class.php');
 class CKunenaTables
 {
 	var $tables = array();
-	var $_tables = array ( '#__kunena_announcement', '#__kunena_attachments', '#__kunena_categories', '#__kunena_favorites', '#__kunena_groups', '#__kunena_messages', '#__kunena_moderation', '#__kunena_ranks', '#__kunena_sessions', '#__kunena_smileys', '#__kunena_subscriptions', '#__kunena_users', '#__kunena_version', '#__kunena_whoisonline');
+	var $_tables = array ( '#__kunena_announcement', '#__kunena_attachments', '#__kunena_categories', '#__kunena_favorites', '#__kunena_groups', '#__kunena_messages', '#__kunena_moderation', '#__kunena_ranks', '#__kunena_sessions', '#__kunena_smileys', '#__kunena_subscriptions', '#__kunena_threads', '#__kunena_users', '#__kunena_version', '#__kunena_whoisonline');
 
 	function __construct()
 	{

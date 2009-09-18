@@ -83,6 +83,7 @@ class CKunenaModeration
 		// Test parameters to see if they are valid selecions or abord
 
 		// Check if message to move exists (also covers thread test)
+		// TODO: Implement new database changes around #__kunena_threads
 		$this->_db->setQuery("SELECT `id`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__kunena_messages WHERE `id`='$MessageID'");
 		$currentMessage = $this->db->loadObjectList();
 			check_dberror("Unable to load message.");
@@ -123,6 +124,7 @@ class CKunenaModeration
 
 		if ($TargetMessageID != 0)
 		{
+			// TODO: Implement database changes around #__kunena_threads
 			$this->_db->setQuery("SELECT `id`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__kunena_messages WHERE `id`='$TargetMessageID'");
 			$targetMessage = $this->db->loadObjectList();
 				check_dberror("Unable to load message.");
@@ -157,6 +159,7 @@ class CKunenaModeration
 		switch ($mode)
 		{
 			case KN_MOVE_MESSAGE: // Move Single message only
+				// TODO: kunena_threads
 				if ($TargetMessageID==0)
 				{
 					$sql = "UPDATE #__kunena_messages SET `catid`='$TargetCatID' `thread`='$MessageID' `parent`=0 $subjectupdatesql WHERE `id`='$MessageID';";
@@ -177,6 +180,8 @@ class CKunenaModeration
 
 				break;
 			case KN_MOVE_THREAD: // Move entire Thread
+				// TODO: kunena_threads
+
 				if ($TargetMessageID==0)
 				{
 					$sql = "UPDATE #__kunena_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='$currentMessage->thread';";
@@ -191,6 +196,9 @@ class CKunenaModeration
 				if ($GhostThread==true)
 				{
                     // Post time in ghost message is the same as in the last message of the thread
+
+					// TODO: kunena_threads
+
 					$database->setQuery("SELECT MAX(time) AS timestamp FROM #__kunena_messages WHERE `thread`='$id'");
 					$lastTimestamp = $database->loadResult();
 						check_dberror("Unable to load last timestamp.");
@@ -203,6 +211,9 @@ class CKunenaModeration
 					// TODO: obey configuration setting username vs realname
                     // TODO: what do we do with ghost message title? _MOVED_TOPIC was used before
                     // @Oliver: I'd like to get rid of it and add it while rendering..
+
+					// TODO: kunena_threads
+
 					$this->_db->setQuery("INSERT INTO #__kunena_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','$currentMessage->subject','$lastTimestamp','$currentMessage->catid','1', '$my->id', '".trim(addslashes($my_name))."')");
                     $this->_db->query();
                     	check_dberror('Unable to insert ghost message.');
@@ -220,6 +231,10 @@ class CKunenaModeration
 
 				break;
 			case KN_MOVE_NEWER: // Move message and all newer messages of thread
+
+				// TODO: kunena_threads
+
+
 				if ($TargetMessageID==0)
 				{
 					$sql = "UPDATE #__kunena_messages SET `catid`='$TargetCatID' `parent`=0 $subjectupdatesql WHERE id`='$MessageID';";
@@ -233,6 +248,8 @@ class CKunenaModeration
 
 				break;
 			case KN_MOVE_REPLIES: // Move message and all replies and quotes - 1 level deep for now
+				// TODO: kunena_threads
+
 				if ($TargetMessageID==0)
 				{
 					$sql = "UPDATE #__kunena_messages SET `catid`='$TargetCatID' `parent`=0 $subjectupdatesql WHERE id`='$MessageID';";

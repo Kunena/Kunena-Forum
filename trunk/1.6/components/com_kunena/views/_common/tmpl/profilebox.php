@@ -15,23 +15,19 @@ defined('_JEXEC') or die;
 		<?php echo JHtml::_('klink.user', 'atag', $this->profile->userid, $this->escape($this->profile->name), $this->escape($this->profile->name)); ?>
 	</div>
 	<div>
-		<?php echo JHtml::_('klink.user', 'atag', $this->profile->userid, '<img src="http://kunena15/images/fbfiles/avatars/nophoto.jpg" alt="" />', $this->escape($this->profile->name)); ?>
+		<?php echo JHtml::_('klink.user', 'atag', $this->profile->userid, '<img  class="avatar" src="http://kunena15/images/fbfiles/avatars/nophoto.jpg" alt="" />', $this->escape($this->profile->name)); ?>
 	</div>
-	<div>Admin</div>
+	<div class="cover">Admin</div>
 
-	<div>
+	<div class="cover">
 		<img src="http://kunena15/components/com_kunena/template/default_ex/images/english/ranks/rankadmin.gif" alt="" />
 	</div>
-	<div>Posts: <?php echo $this->profile->posts; ?></div>
-	<div>
-		<table>
-			<tr>
-				<td width="64">
-					<img src="http://kunena15/components/com_kunena/template/default_ex/images/english/graph/col9m.png" height="4" width="0" alt="graph" />
-					<img src="http://kunena15/components/com_kunena/template/default_ex/images/english/emoticons/graph.gif" height="4" width="60" alt="graph" />
-				</td>
-			</tr>
-		</table>
+	<div class="cover">Posts: <?php echo $this->profile->posts; ?></div>
+	<div class="cover">
+		<div width="64">
+			<img src="http://kunena15/components/com_kunena/template/default_ex/images/english/graph/col9m.png" height="4" width="0" alt="graph" />
+			<img src="http://kunena15/components/com_kunena/template/default_ex/images/english/emoticons/graph.gif" height="4" width="60" alt="graph" />
+		</div>
 	</div>
 	<div>
 		<img src="http://kunena15/components/com_kunena/template/default_ex/images/english/icons/offline.gif" alt="User Offline" />

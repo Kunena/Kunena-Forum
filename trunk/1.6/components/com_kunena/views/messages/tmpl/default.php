@@ -45,21 +45,23 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 
 <?php foreach ($this->messages as $current=>$message): ?>
 		<tr>
-			<th colspan="2" class="msgheader">					
+			<th class="fcol msgheader" colspan="2">					
 				<a name="<?php echo $message->id; ?>"></a>
 				<?php echo JHtml::_('klink.pageAnker', 'atag', $message->id, '#'.$message->id); ?>
 			</th>
 		</tr>
 
 		<tr>
-			<td class="lcol">
-				<h2><?php echo $this->escape($this->messages[$current]->subject); ?></h2>
-				<span class="msgdate" title="<?php echo JHTML::_('date', $this->messages[$current]->time); ?>"><?php echo JHTML::_('date', $this->messages[$current]->time); ?></span>
-				<span class="msgkarma"> <strong>Karma:</strong> 0</span>
+			<td class="lcol message">
+				<div class="message_header">
+					<h2 class="msgsubject"><?php echo $this->escape($this->messages[$current]->subject); ?></h2>
+					<span class="msgdate" title="<?php echo JHTML::_('date', $this->messages[$current]->time); ?>"><?php echo JHTML::_('date', $this->messages[$current]->time); ?></span>
+					<span class="msgkarma"> <strong>Karma:</strong> 0</span>
+				</div>
 				<div class="message_text"><?php echo $this->messages[$current]->message; ?></div>
 			</td>
 
-			<td class="rcol">
+			<td class="rcol profile" rowspan="2">
 <?php 
 $this->profile =& $message;
 echo $this->loadCommonTemplate('profilebox'); 
@@ -68,11 +70,9 @@ echo $this->loadCommonTemplate('profilebox');
 		</tr>
 
 		<tr>
-			<td class="lcol">
+			<td class="lcol message">
 				<div class="fb_message_buttons">The administrator has disabled public write access.</div>
 			</td>
-
-			<td class="mcol">&nbsp;</td>
 		</tr>
 <?php endforeach; ?>
 

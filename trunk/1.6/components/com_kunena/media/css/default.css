@@ -315,7 +315,6 @@ div.rsslink img {
 	font-size: 12px;
 	text-align: center;
 	height: 15px;
-	text-transform:uppercase;
 }
 
 #kunena thead a:link,
@@ -363,7 +362,7 @@ tfoot {
 #kunena table.forum_body thead h3 {
 	color: #ffffff;
 	line-height:20px;
-	font-size:16px;
+	font-size:17px;
 	padding: 4px 0px 3px;
 	margin: 0px;
 }
@@ -371,9 +370,8 @@ tfoot {
 #kunena table.forum_body tbody h1,
 #kunena table.forum_body tbody h2,
 #kunena table.forum_body tbody h3 {
-	line-height:15px;
-	font-size:15px;
-	padding: 0 0 3px 0;
+	font-size:17px;
+	line-height:1em;
 	margin: 0px;
 	font-weight: bold;
 }
@@ -624,4 +622,67 @@ div.topline {
 
 p.welcome span {
 	font-weight: bold;
+}
+
+#kunena div.message_header {
+	position: relative;
+	text-align: right;
+	padding: 6px 0 12px 0;
+	line-height: 17px;
+}
+
+#kunena table.forum_body tbody h2.msgsubject,
+#kunena table.forum_body tbody h2.msgsubject_new {
+	background:transparent url(../images/msgtitle.png) no-repeat scroll left top;
+	padding-left:22px;
+	display: inline;
+	width: auto;
+	float: left;
+}
+
+#kunena th.msgheader {
+	text-align:right;
+}
+
+#kunena span.msgdate {
+	padding-left:22px;
+	white-space:nowrap;
+	float: left;
+}
+
+#kunena span.msgkarma {
+	white-space:nowrap;
+}
+
+#kunena div.message_text {
+	border-top:1px solid #CCCCCC;
+	padding: 6px 0;
+}
+
+#kunena td.message {
+	vertical-align: top;
+}
+
+#kunena td.profile {
+	background:#F7F7F7 none repeat scroll 0 0;
+	vertical-align: top;
+	min-width:170px;
+	width:170px;
+}
+
+#kunena div.profilebox div {
+	margin:2px 5px;
+	text-align: center;
+}
+
+#kunena div.profilebox div.cover {
+	background:#DDDDDD none repeat scroll 0 0;
+	border:1px solid #BFC3C6;
+	color:#333333;
+}
+
+#kunena div.profilebox img.avatar {
+	border:1px solid #BFC3C6;
+	margin:5px;
+	padding:1px;
 }

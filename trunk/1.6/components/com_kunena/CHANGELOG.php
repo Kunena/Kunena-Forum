@@ -33,8 +33,12 @@ Legend:
 
 Kunena 1.6.0dev
 
+22-Sep-2009 Matias
++ [#17628] Add two new views: user and userlist
+
 18-Sep-2009 Matias
 + [#17628] Continue making default template for Recent and Categories views
++ [#17628] Continue making default template for Messages view
 
 17-Sep-2009 Matias
 + [#17628] Add default_ex look to top menu, search, profile box, pathway...

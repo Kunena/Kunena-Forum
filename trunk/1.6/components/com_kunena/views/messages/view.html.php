@@ -30,6 +30,7 @@ class KunenaViewMessages extends KView
 	 */
 	public function display($tpl = null)
 	{
+		$this->assignRef ( 'state', $this->get ( 'State' ) );
 		$this->assign('total', $this->get('Total'));
 	    $this->assignRef('pagination', $this->get('Pagination'));
 
@@ -57,7 +58,13 @@ class KunenaViewMessages extends KView
 		$category = end($this->path); 
 		$this->assign('description', $bbcode->Parse(stripslashes($category->headerdesc)));
 		
-	    parent::display($tpl);
+		
+		// Create shortcut to parameters.
+		$params = $this->state->get('params');
+		$this->assign ( 'title', ($params->get('show_page_title') ? 
+			$params->get('page_title') : $this->messages[0]->subject));
+		
+		parent::display($tpl);
 	    //echo "<code>"; print_r($this->path); echo "</code>";
 	}
 }

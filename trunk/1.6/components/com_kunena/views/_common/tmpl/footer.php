@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 ?>
 		
-		
+<?php if (isset($this->announcements)): ?>	
 <table class="forum_body stats_box">
 	<thead>
 		<tr>
@@ -33,7 +33,9 @@ defined('_JEXEC') or die;
 		</tr>
 	</tbody>
 </table>
+<?php endif; ?>
 
+<?php if (isset($this->whoisonline)): ?>	
 <!-- WHOIS ONLINE -->
 <table class="forum_body whoisonline">
 	<thead>
@@ -56,6 +58,7 @@ defined('_JEXEC') or die;
 	</tbody>
 </table>
 <!-- /WHOIS ONLINE -->
+<?php endif; ?>
 
 <div id="kunena_footer">
 <div class="credits">

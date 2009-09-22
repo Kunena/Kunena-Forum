@@ -35,7 +35,7 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 	<thead>
 		<tr>
 			<th colspan="2">
-			<h1>TOPIC: <?php echo $this->escape($this->messages[0]->subject); ?></h1>
+			<h1>TOPIC: <?php echo $this->escape($this->title); ?></h1>
 			<!-- Begin: Total Favorite -->
 			<div class="favorites"></div>
 			<!-- Finish: Total Favorite --></th>

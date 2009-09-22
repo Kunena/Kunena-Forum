@@ -35,6 +35,7 @@ Kunena 1.6.0dev
 
 22-Sep-2009 Matias
 + [#17628] Add two new views: user and userlist
+^ [#17628] Continue working on looks and logic for views
 
 18-Sep-2009 Matias
 + [#17628] Continue making default template for Recent and Categories views

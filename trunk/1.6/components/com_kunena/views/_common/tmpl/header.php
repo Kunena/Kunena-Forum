@@ -26,30 +26,11 @@ defined('_JEXEC') or die;
 		</div>
 	</div>
 
-		<div class="topline"></div>
-		<div class="corner_tl">
-			<div class="corner_tr">
-				<div class="corner_br">
-					<div class="corner_bl">		
-						<div class="profile_box">
-							<p class="welcome"><?php echo JText::_('K_WELCOME'); ?>, <span><?php echo JText::_('K_GUEST'); ?></span></p>
-							<p class="register_login"><?php echo JText::_('K_PLEASE'); ?> <a href="/component/user/login"><?php echo JText::_('K_LOG_IN'); ?></a> <?php echo JText::_('K_OR'); ?> <a href="/component/user/register"><?php echo JText::_('K_REGISTER'); ?></a>. <a href="/component/user/reset"><?php echo JText::_('K_LOST_PASSWORD'); ?></a></p>												
-						</div>	
-					</div>
-				</div>
-			</div>
-		</div>
+	<div class="topline"></div>
+
+	<div class="profile_box">
+		<p class="welcome"><?php echo JText::_('K_WELCOME'); ?>, <span><?php echo JText::_('K_GUEST'); ?></span></p>
+		<p class="register_login"><?php echo JText::_('K_PLEASE'); ?> <a href="/component/user/login"><?php echo JText::_('K_LOG_IN'); ?></a> <?php echo JText::_('K_OR'); ?> <a href="/component/user/register"><?php echo JText::_('K_REGISTER'); ?></a>. <a href="/component/user/reset"><?php echo JText::_('K_LOST_PASSWORD'); ?></a></p>												
+	</div>	
 									
-<?php foreach ($this->announcements as $this->current=>$this->announcement): ?>									
-		<div class="corner_tl">
-			<div class="corner_tr">
-				<div class="corner_br">
-					<div class="corner_bl">
-						<div class="announcements">
-							<?php echo $this->loadCommonTemplate('announce'); ?>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-<?php endforeach; ?>
+<?php if (isset($this->announcements)) echo $this->loadCommonTemplate('announce'); ?>

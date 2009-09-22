@@ -28,6 +28,7 @@ class KunenaViewRecent extends KView
 	 * @since	1.6
 	 */
 	public function display($tpl = null) {
+		$this->assignRef ( 'state', $this->get ( 'State' ) );
 		$this->assign ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'threads', $this->get ( 'Items' ) );
 		$this->assignRef ( 'pagination', $this->get ( 'Pagination' ) );
@@ -45,6 +46,11 @@ class KunenaViewRecent extends KView
 			720 => JText::_ ( 'K_MONTH' ), 
 			8760 => JText::_ ( 'K_YEAR' ) ) );
 		$this->assign ( 'filter_time', JRequest::getVar ( 'filter_time', 168) );
+
+		// Create shortcut to parameters.
+		$params = $this->state->get('params');
+		$this->assign ( 'title', ($params->get('show_page_title') ? 
+			$params->get('page_title') : 'Recent Discussions'));
 		
 		$app = JFactory::getApplication();
 		$pathway = $app->getPathway();

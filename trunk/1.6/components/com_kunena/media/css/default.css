@@ -101,6 +101,7 @@ h4 a:link, h4 a:visited, h4 a:active {
 	background: #777777;
 }
 
+#kunena div.topnav li.active,
 #kunena div.topnav li:hover {
 	background: #5388B4;
 	padding:9px 0 5px;
@@ -114,6 +115,7 @@ h4 a:link, h4 a:visited, h4 a:active {
 	color: #ffffff;
 }
 
+#kunena div.topnav li.active a,
 #kunena div.topnav li a:hover {
 	font-weight:bold;
 	text-decoration:none;
@@ -128,6 +130,7 @@ h4 a:link, h4 a:visited, h4 a:active {
 	padding:10px 8px 5px 8px;
 }
 
+#kunena div.topnav li.active a span,
 #kunena div.topnav li a:hover span {
 	background: url('../images/menubg.png') no-repeat scroll left -35px;
 	color: #ffffff;
@@ -195,24 +198,18 @@ div.choose_forumcat {
 	width: auto;
 }
 
-div.announcements {
-	width: 100%;
-	padding: 0;
-	background-color: #F7F7F7;
-	margin-bottom: 12px;
-	border: 1px solid #d6d6d6;
+table.announcements {
+	padding-bottom: 6px;
 }
 
-div.announcements h3 {
-	text-align: center;
-	margin-top:12px;
+table.announcements h3 {
 }
 
-div.announcements p {
+table.announcements td {
 	margin: 0 12px 12px 12px;
 }
 
-p.announce_summary a:link {
+td.announce_summary a:link {
 
 }
 
@@ -442,11 +439,11 @@ td.col_replies span {
 }
 
 #kunena .col_content {
-	width: auto;
+	width: 60%;
 }
 
 #kunena .col_last {
-	width: 165px;
+	width: 35%;
 }
 
 
@@ -462,12 +459,12 @@ td.col_replies span {
 
 /* ------------------------- ANNOUNCEMENTS ------------------------- */
 
-p.announce_summary {
+td.announce_summary {
 	font-size: 13px;
 	line-height: 150%;
 }
 
-p.announce_summary span {
+td.announce_summary span {
 	font-weight: bold;
 	padding-right: 5px;
 }
@@ -511,13 +508,11 @@ div.topic_latest_post_avatar {
 	width: 48px;
 	height: 48px;
 	float:left;
-	margin-right: 12px;
+	margin-right: 6px;
 }
 
 p.topic_latest_post,
 p.topic_time {
-	font-size: 11px;
-/*	line-height: 110%;*/
 	margin-bottom: 1px;
 }
 
@@ -664,7 +659,7 @@ p.welcome span {
 }
 
 #kunena td.profile {
-	background:#F7F7F7 none repeat scroll 0 0;
+	background:#EFF0F4 none repeat scroll 0 0;
 	vertical-align: top;
 	min-width:170px;
 	width:170px;

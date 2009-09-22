@@ -10,8 +10,27 @@
 
 defined('_JEXEC') or die;
 ?>
-							<h3><a href="3"><?php echo $this->escape($this->announcement->title); ?></a></h3>	
-							<p class="announce_summary"><span><?php echo JHTML::_('date', $this->announcement->created); ?></span><?php echo $this->escape($this->announcement->sdescription); ?>
-											<a href="/forum/announcement/read/id-8"><?php echo JText::_('K_READ_MORE'); ?></a></p>
-							
-							<div class="clr"></div>
+<?php if (isset($this->announcements)) foreach ($this->announcements as $this->current=>$this->announcement): ?>									
+<table class="forum_body announcements">
+	<thead>
+		<tr>
+			<th>
+				<h3>
+					<a href=""><?php echo $this->escape($this->announcement->title); ?></a>
+				</h3>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="fcol announce_summary">
+				<span><?php echo JHTML::_('date', $this->announcement->created); ?></span>
+				<?php echo $this->escape($this->announcement->sdescription); ?>
+				<a href=""><?php echo JText::_('K_READ_MORE'); ?></a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<?php endforeach; ?>
+
+<div class="clr"></div>

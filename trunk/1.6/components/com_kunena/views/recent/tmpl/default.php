@@ -10,6 +10,7 @@
 
 defined('_JEXEC') or die;
 JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
+
 ?>
 	<div id="kunena">
 <?php echo $this->loadCommonTemplate('header'); ?>
@@ -42,7 +43,9 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 							<table class="forum_body">
 								<thead>
 									<tr>
-										<th colspan="4"><h1>Recent Discussions</h1></th>
+										<th colspan="4"><h1>
+											<?php echo $this->escape($this->title); ?>
+										</h1></th>
 									</tr>
 								</thead>
 								<tbody>

@@ -72,24 +72,28 @@ class KunenaModelRecent extends JModel
 			$params	= $app->getParams('com_kunena');
 
 			// If the limit is set to -1, use the global config list_limit value.
-			$limit	= JRequest::getInt('limit', $params->get('list_limit', 20));
-			$limit	= ($limit === -1) ? $app->getCfg('list_limit', 20) : $limit;
+			if ($params->get('filter_limit_override', 1))
+				$limit = JRequest::getInt('limit', $params->get('limit', 20));
+			else
+				$limit = $params->get('limit', 20);
+			$limit = ($limit < 1) ? $app->getCfg('list_limit', 20) : $limit;
 
 			// Load the list state.
-			$this->setState('list.start', JRequest::getInt('limitstart'));
+			if ($params->get('filter_limitstart_allow', 1))
+				$this->setState('list.start', JRequest::getInt('limitstart'));
+			else
+				$this->setState('list.start', 0);
 			$this->setState('list.limit', $limit);
 
 			// Load model type
 			// all = recent topics accross all allowd categories
 			// my = my recent topics
 			// category = recent topics with a select category
-			$this->setState('type', JRequest::getCmd('type', 'all'));
+			$this->setState('type', $type = JRequest::getCmd('type', 'all'));
+			$this->setState('order', $params->get('order', 'desc'));
 
 			// If recent request is for a category, we also get a category id
 			$this->setState('category.id', JRequest::getInt('category', 0));
-
-			// Load filter
-			$this->setState('filter.time', JRequest::getInt('filter_time', 720));
 
 			// Load the user parameters.
 			$user = JFactory::getUser();
@@ -97,6 +101,15 @@ class KunenaModelRecent extends JModel
 			$this->setState('user.id', (int)$user->id);
 			$this->setState('user.aid', (int)$user->get('aid'));
 
+			// Load filter
+			if ($params->get('filter_time_override', 1))
+				$this->setState('filter.time', $app->getUserStateFromRequest('com_kunena.recent.'.$type.'.filter.time', 'filter_time', $params->get('filter_time', 720)));
+			else
+				$this->setState('filter.time', $params->get('filter_time', 720));
+				
+			$this->setState('filter.categories', $params->get('filter_categories', ''));
+			$this->setState('filter.categories.which', $params->get('filter_categories_which', 0));
+			
 			// Load the parameters.
 			$this->setState('params', $params);
 
@@ -265,10 +278,20 @@ class KunenaModelRecent extends JModel
 	protected function _getTotalQuery()
 	{
 		$query = new KQuery();
+		$user = KUser::getInstance(true);
 
 		// Build base query
-		$time = JFactory::getDate('-'.$this->getState('filter.time').' hours');
-		$user = KUser::getInstance(true);
+		$filter_time = $this->getState('filter.time');
+		switch ($filter_time) {
+			//case 'new':
+			case 'session':
+				$time = JFactory::getDate($user->last_visit_time);
+				break;	
+			case 'all':
+				break;
+			default:
+				$time = JFactory::getDate('-'.(int)$filter_time.' hours');
+		}
 
 		$query->select('count(*)');
 
@@ -277,7 +300,7 @@ class KunenaModelRecent extends JModel
 		    case 'all':
 		        $query->from('#__kunena_threads AS t');
 		        $query->where('t.hold=0 AND t.moved_id=0 AND t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
-		        $query->where('last_post_time >'.$time->toUnix());
+		        if (isset($time)) $query->where('last_post_time >'.$time->toUnix());
 
 		        break;
 		    case 'my':
@@ -289,7 +312,7 @@ class KunenaModelRecent extends JModel
 				$query1->from('#__kunena_threads AS t1');
 				$query1->where('t1.id = m.thread');
 		        $query1->where('t1.hold=0 AND t1.moved_id=0 AND t1.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
-		        $query1->where('t1.last_post_time >'.$time->toUnix());
+		        if (isset($time)) $query1->where('t1.last_post_time >'.$time->toUnix());
 		        $query1->where('m.userid = '.intval($this->getState('user.id')));
 
 				$query2->select('f.thread As thread');
@@ -297,7 +320,7 @@ class KunenaModelRecent extends JModel
 				$query2->from('#__kunena_threads AS t2');
 				$query2->where('t2.id = f.thread');
 		        $query2->where('t2.hold=0 AND t2.moved_id=0 AND t2.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
-		        $query2->where('t2.last_post_time >'.$time->toUnix());
+		        if (isset($time)) $query2->where('t2.last_post_time >'.$time->toUnix());
 		        $query2->where('f.userid = '.intval($this->getState('user.id')));
 
 				$query->from('('.$query1->toString().' UNION '.$query2->toString().' ) AS t');
@@ -311,6 +334,14 @@ class KunenaModelRecent extends JModel
 		        break;
 		    default:
 		        // Invalid view type specified
+		}
+		
+		$catlist = trim($this->getState('filter.categories'));
+		if ($catlist != '')
+		{
+			$not = $this->getState('filter.categories.which') ? '' : 'NOT ';
+			// FIXME: instead of escape, clean the list
+			$query->where('t.catid '.$not.'IN ('.$this->_db->getEscaped($catlist).')');	
 		}
 
 		// echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
@@ -330,7 +361,17 @@ class KunenaModelRecent extends JModel
 		$user = KUser::getInstance(true);
 
 		// Build base query
-		$time = JFactory::getDate('-'.$this->getState('filter.time').' hours');
+		$filter_time = $this->getState('filter.time');
+		switch ($filter_time) {
+			//case 'new':
+			case 'session':
+				$time = JFactory::getDate($user->last_visit_time);
+				break;	
+			case 'all':
+				break;
+			default:
+				$time = JFactory::getDate('-'.(int)$filter_time.' hours');
+		}
 
 		$query->select('t.*');
 		$query->select('(f.thread > 0) AS myfavorite');
@@ -342,7 +383,7 @@ class KunenaModelRecent extends JModel
 		    case 'all':
 		        $query->from('#__kunena_threads AS t');
 		        $query->where('t.hold=0 AND t.moved_id=0 AND t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
-		        $query->where('t.last_post_time >'.$time->toUnix());
+		        if (isset($time)) $query->where('t.last_post_time >'.$time->toUnix());
 
 		        break;
 		    case 'my':
@@ -356,7 +397,7 @@ class KunenaModelRecent extends JModel
 				$query1->from('#__kunena_threads AS t1');
 				$query1->where('t1.id = m.thread');
 		        $query1->where('t1.hold=0 AND t1.moved_id=0 AND t1.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
-		        $query1->where('t1.last_post_time >'.$time->toUnix());
+		        if (isset($time)) $query1->where('t1.last_post_time >'.$time->toUnix());
 		        $query1->where('m.userid = '.intval($user->userid));
 
 				$query2->select('f.thread As thread');
@@ -364,7 +405,7 @@ class KunenaModelRecent extends JModel
 				$query2->from('#__kunena_threads AS t2');
 				$query2->where('t2.id = f.thread');
 		        $query2->where('t2.hold=0 AND t2.moved_id=0 AND t2.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
-		        $query2->where('t2.last_post_time >'.$time->toUnix());
+		        if (isset($time)) $query2->where('t2.last_post_time >'.$time->toUnix());
 		        $query2->where('f.userid = '.intval($user->userid));
 
 				$query->join('', '('.$query1->toString().' UNION '.$query2->toString().' ) AS tmp ON t.id = tmp.thread');
@@ -386,13 +427,22 @@ class KunenaModelRecent extends JModel
 
 		// Redundant: $query->where('t.moved_id = 0 and t.hold = 0');
 
+		$catlist = trim($this->getState('filter.categories'));
+		if ($catlist != '')
+		{
+			$not = $this->getState('filter.categories.which') ? '' : 'NOT ';
+			// FIXME: instead of escape, clean the list
+			$query->where('t.catid '.$not.'IN ('.$this->_db->getEscaped($catlist).')');	
+		}
+		
 		$query->group('t.id');
 
+		$order = strtoupper($this->getState('order'));
 		if ($this->getState('type')=='my') {
-			$query->order('f.thread DESC');
+			$query->order('f.thread '.$order);
 		}
 
-		$query->order('t.last_post_time DESC');
+		$query->order('t.last_post_time '.$order);
 
 		// echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
 

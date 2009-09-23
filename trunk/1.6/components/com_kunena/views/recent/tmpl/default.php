@@ -16,6 +16,7 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 <?php echo $this->loadCommonTemplate('header'); ?>
 
 		<div class="top_info_box">
+<?php if (isset($this->filter_time_options)): ?>
 			<div class="choose_time">
 				<form name="choose_timeline" method="post" target="_self" action="<?php JRequest::getURI(); ?>">
 				<select class="input_time" onchange="this.form.submit();" name="filter_time">
@@ -25,13 +26,16 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 				</select>
 				</form>
 			</div>
-<?php // echo $this->loadCommonTemplate('forumcat'); ?>
+<?php endif;
+// echo $this->loadCommonTemplate('forumcat'); ?>
 			<div class="counter">
 				<span><?php echo $this->pagination->getResultsCounter(); ?></span> <?php // echo JText::_('K_DISCUSSIONS'); ?>
 			</div>
+<?php if ($this->state->params->get('filter_limitstart_allow', 1)): ?>
 			<div class="pagination">
 				<?php echo JText::_('K_PAGE'); ?>: <?php echo $this->pagination->getPagesLinks(); ?>
 			</div>
+<?php endif; ?>	
 		</div>
 		<div class="clr"></div>
 		
@@ -105,9 +109,11 @@ endforeach;
 			<div class="counter">
 				<span><?php echo $this->pagination->getResultsCounter(); ?></span> <?php // echo JText::_('K_DISCUSSIONS'); ?> 
 			</div>
+<?php if ($this->state->params->get('filter_limitstart_allow', 1)): ?>
 			<div class="pagination">
 				<?php echo JText::_('K_PAGE'); ?>: <?php echo $this->pagination->getPagesLinks(); ?>
 			</div>
+<?php endif; ?>
 		</div>
 
 <?php echo $this->loadCommonTemplate('footer'); ?>

@@ -15,15 +15,15 @@
 				<option value="my">My Threads</option>
 				<option value="category">Category</option>
 			</param>
+		</url>
+		<params>
 			<param name="order" type="list" default="desc" label="Message Order">
 				<option value="asc">Ascending</option>
 				<option value="desc">Descending</option>			
 			</param>
-		</url>
-		<params>
 			<param type="spacer" />
 			<param name="filter_time" type="list" default="168" label="Show Messages">
-				<option value="new">Only new messages</option>
+				<!-- <option value="new">Only new messages</option>  -->
 				<option value="session">Since last visit</option>
 				<option value="all">All messages</option>
 				<option value="4">4 hours</option>
@@ -55,10 +55,10 @@
 				<option value="1">Include list</option>
 			</param>			
 			<param name="filter_categories" type="text" default="" label="Comma Separated List of Category IDs" />
-			<param name="filter_categories_override" type="radio" default="0" label="Allow User Override">
+			<!-- <param name="filter_categories_override" type="radio" default="0" label="Allow User Override">
 				<option value="0">No</option>
 				<option value="1">Yes</option>
-			</param>			
+			</param>  -->			
 		</params>
 	</state>
 </metadata>

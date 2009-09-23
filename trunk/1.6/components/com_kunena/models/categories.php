@@ -72,8 +72,8 @@ class KunenaModelCategories extends JModel
 			$params	= $app->getParams('com_kunena');
 
 			// If the limit is set to -1, use the global config list_limit value.
-			$limit	= JRequest::getInt('limit', $params->get('list_limit', 20));
-			$limit	= ($limit === -1) ? $app->getCfg('list_limit', 20) : $limit;
+			$limit	= JRequest::getInt('limit', $params->get('list_limit', 50));
+			$limit	= ($limit === -1) ? $app->getCfg('list_limit', 50) : $limit;
 
 			// Load the list state.
 			$this->setState('list.start', JRequest::getInt('limitstart'));
@@ -134,6 +134,8 @@ class KunenaModelCategories extends JModel
 
 		// Load the list.
 		$query	= $this->_getListQuery();
+		
+		// FIXME: Limit has unexpected results
 		$rows	= $this->_getList($query->toString(), $this->getState('list.start'), $this->getState('list.limit'));
 
 		// Push the value into cache.

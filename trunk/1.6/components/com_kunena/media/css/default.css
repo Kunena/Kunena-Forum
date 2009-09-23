@@ -198,8 +198,8 @@ div.choose_forumcat {
 	width: auto;
 }
 
-table.announcements {
-	padding-bottom: 6px;
+#kunena table.announcements {
+	margin-bottom: 6px;
 }
 
 table.announcements h3 {
@@ -244,23 +244,6 @@ div.counter {
 /*	float: right;*/
 	display: inline;
 	margin-right: 12px;
-}
-
-div.corner_tl {
-	width: 100%;
-	margin: 0 auto;
-}
-
-div.corner_tr {
-
-}
-
-div.corner_br {
-
-}
-
-div.corner_bl {
-
 }
 
 div.stats_box {
@@ -371,6 +354,7 @@ tfoot {
 	line-height:1em;
 	margin: 0px;
 	font-weight: bold;
+	padding-bottom: 4px;
 }
 
 #kunena table.forum_body thead div {

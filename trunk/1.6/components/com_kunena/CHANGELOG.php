@@ -35,6 +35,7 @@ Kunena 1.6.0dev
 
 24-Sep-2009 Matias
 + [#17628] Recent view: add logic for new, sticky, favorite
++ [#17628] Messages view: handle non-existing threads 
 
 23-Sep-2009 Matias
 + [#17628] Make Recent view to obey all configuration options in menu

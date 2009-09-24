@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 <!-- Pathway -->
 <div class="pathway">
 <span class="path-element-first"><?php echo JHtml::_('klink.kunena', 'atag', 'Kunena'); ?></span>
-<?php foreach ($this->path as &$category): ?>
+<?php if (isset($this->path)) foreach ($this->path as &$category): ?>
 <span class="path-element"><?php echo JHtml::_('klink.categories', 'atag', $category->id, $this->escape($category->name), $this->escape($category->name)); ?></span>
 <?php endforeach; ?>
 <?php // <br /> ?>

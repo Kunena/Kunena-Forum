@@ -30,8 +30,16 @@ class KunenaViewMessages extends KView
 	 */
 	public function display($tpl = null)
 	{
-		$this->assignRef ( 'state', $this->get ( 'State' ) );
+		$this->assignRef ('state', $this->get ('State'));
+	    $this->assignRef('announcements', $this->get('Announcement'));
+	    $this->assignRef('statistics', $this->get('Statistics'));
 		$this->assign('total', $this->get('Total'));
+		
+		if (!$this->total) {
+			parent::display('empty');
+			return;
+		}
+		
 	    $this->assignRef('pagination', $this->get('Pagination'));
 
 		$bbcode = KBBCode::getInstance();
@@ -44,9 +52,6 @@ class KunenaViewMessages extends KView
 	    }
 	    $this->assignRef('messages', $items);
 
-	    $this->assignRef('announcements', $this->get('Announcement'));
-	    $this->assignRef('statistics', $this->get('Statistics'));
-	    
 	    $catmodel =& $this->getModel('categories');
 	    $this->assignRef('path', $catmodel->getPath($this->messages[0]->catid));
 	    

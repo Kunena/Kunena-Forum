@@ -372,9 +372,12 @@ class KunenaModelRecent extends JModel
 			default:
 				$time = JFactory::getDate('-'.(int)$filter_time.' hours');
 		}
+		if (!$user->userid) $new = '0';
+		else $new = '(t.last_post_time > '.(int)$user->last_visit_time.')';
 
 		$query->select('t.*');
 		$query->select('(f.thread > 0) AS myfavorite');
+		$query->select($new.' AS new');
 		$query->select('c.name AS catname');
 
 

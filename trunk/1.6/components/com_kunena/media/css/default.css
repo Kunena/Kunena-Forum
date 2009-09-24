@@ -320,6 +320,13 @@ tfoot {
 #kunena table.forum_body tbody td {
 	border-bottom: 1px solid #CCCCCC;
 }
+
+#kunena table.forum_body tbody tr.thread_sticky,
+#kunena table.forum_body tbody tr.thread_favorite,
+#kunena table.forum_body tbody tr.thread_sticky_favorite {
+	background:#FEFECC;
+}
+
 #kunena table.forum_body thead th {
 	background:#516c81 url(../images/categorybg.png) repeat-x scroll left top;
 	border-left: 1px solid #7f9fba;
@@ -355,6 +362,13 @@ tfoot {
 	margin: 0px;
 	font-weight: bold;
 	padding-bottom: 4px;
+}
+
+#kunena table.forum_body tbody .new_posts {
+	color:#009900;
+	font-size:9px;
+	font-weight:bold;
+	margin-left:3px;
 }
 
 #kunena table.forum_body thead div {

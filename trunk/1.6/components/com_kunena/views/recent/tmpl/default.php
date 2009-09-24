@@ -65,14 +65,18 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 -->
 <?php
 foreach ($this->threads as $this->current=>$this->thread):
+	$class = 'thread';
+	if ($this->thread->ordering) $class .= '_sticky';
+	if ($this->thread->myfavorite) $class .= '_favorite';
 ?>
-									<tr class="<?php echo ($this->current%2) ? 'row_even' : 'row_odd'; ?>">
+									<tr class="<?php echo ($this->current%2) ? 'row_even' : 'row_odd'; ?> <?php echo $class; ?>">
 										<td class="lcol col_replies"><div class="post_number"><?php echo $this->escape($this->thread->posts); ?></div><span><?php echo JText::_('K_REPLIES'); ?></span></td>
 										<td class="mcol col_emoticon"><a href="#" ><img src="components/com_kunena/media/images/emoticons/default.gif" alt="Smiles" /></a></td>
 										<td class="mcol col_content">
 											<div class="post_info">
 												<h2>
 											    	<?php echo JHtml::_('klink.thread', 'atag', $this->thread->id, $this->escape($this->thread->topic_subject), $this->escape(JString::substr($this->thread->first_post_message, 0, 300))); ?>
+											    	<?php if ($this->thread->new): ?><sup class="new_posts">(NEW!)</sup><?php endif; ?>
 												</h2>
 												<div class="topic_views"><?php echo JText::_('K_VIEWS'); ?>: <?php echo $this->escape($this->thread->hits); ?></div>
 												<div class="topic_post_time"><?php echo JText::_('K_POSTED_ON'); ?> <?php echo JHTML::_('date', $this->thread->first_post_time); ?></div>

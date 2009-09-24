@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0dev
 
+24-Sep-2009 Matias
++ [#17628] Recent view: add logic for new, sticky, favorite
+
 23-Sep-2009 Matias
 + [#17628] Make Recent view to obey all configuration options in menu
 

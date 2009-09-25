@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 ?>
 		
-<?php if (isset($this->announcements)): ?>	
+<?php if (isset($this->statistics)): ?>	
 <table class="forum_body stats_box">
 	<thead>
 		<tr>

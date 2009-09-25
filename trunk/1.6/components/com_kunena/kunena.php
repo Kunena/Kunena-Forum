@@ -27,6 +27,8 @@ if ($view)
 	// Import the Kunena controller class.
 	require_once (JPATH_COMPONENT.'/controller.php');
 
+	kimport('factory');
+	
 	// Execute the task.
 	$controller	= KunenaController::getInstance();
 	$controller->execute(JRequest::getVar('task'));

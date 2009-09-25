@@ -9,6 +9,9 @@
  */
 
 defined('_JEXEC') or die;
+$login = KFactory::getLogin();
+$userParams = &JComponentHelper::getParams('com_users');
+$allowregistration = $userParams->get('allowUserRegistration');
 ?>
 	<div id="kunena_top">
 		<div class="topnav">
@@ -30,7 +33,11 @@ defined('_JEXEC') or die;
 
 	<div class="profile_box">
 		<p class="welcome"><?php echo JText::_('K_WELCOME'); ?>, <span><?php echo JText::_('K_GUEST'); ?></span></p>
-		<p class="register_login"><?php echo JText::_('K_PLEASE'); ?> <a href="/component/user/login"><?php echo JText::_('K_LOG_IN'); ?></a> <?php echo JText::_('K_OR'); ?> <a href="/component/user/register"><?php echo JText::_('K_REGISTER'); ?></a>. <a href="/component/user/reset"><?php echo JText::_('K_LOST_PASSWORD'); ?></a></p>												
+		<p class="register_login"><?php echo JText::_('K_PLEASE'); ?> <a href="<?php echo $login->getLoginURL(); ?>"><?php echo JText::_('K_LOG_IN'); ?></a>
+<?php if ($allowregistration): ?>
+		<?php echo JText::_('K_OR'); ?> <a href="<?php echo $login->getRegisterURL(); ?>"><?php echo JText::_('K_REGISTER'); ?></a>
+<?php endif; ?>.
+		<a href="<?php echo $login->getLostPasswordURL(); ?>"><?php echo JText::_('K_LOST_PASSWORD'); ?></a></p>												
 	</div>	
 									
 <?php if (isset($this->announcements)) echo $this->loadCommonTemplate('announce'); ?>

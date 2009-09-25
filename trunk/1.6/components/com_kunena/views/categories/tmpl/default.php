@@ -10,6 +10,7 @@
 
 defined('_JEXEC') or die;
 JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
+$profile = KFactory::getProfile();
 ?>
 	<div id="kunena">
 <?php echo $this->loadCommonTemplate('header'); ?>
@@ -71,17 +72,23 @@ foreach ($this->categories[$section->id] as $current=>$category):
 			<td class="mcol col_topics"><?php echo $category->numTopics; ?></td>
 			<td class="mcol col_posts"><?php echo $category->numPosts; ?></td>
 			<td class="rcol col_last">
+				<div class="topic_latest_post_avatar">
+<?php 
+// echo JHtml::_('klink.user', 'atag', $this->thread->last_post_userid, '<img class="avatar" src="components/com_kunena/media/images/no_photo_sm.jpg" alt="'.$this->escape($this->thread->last_post_name).'" />', $this->escape($this->thread->last_post_name));
+echo $profile->showAvatar($category->userid, 'avatar');
+?>
+				</div>
 <?php if ($category->id_last_msg): ?>
 				<div class="fb_latest-subject">
 					<?php echo JHtml::_('klink.thread', 'atag', $category->thread, $this->escape($category->subject), $this->escape($category->subject)); ?>
 				</div>
-				<div class="fb_latest-subject-by">
-					by 
-					<?php echo JHtml::_('klink.user', 'atag', $category->userid, $this->escape($category->username), 'Show User: '.$this->escape($category->username)); ?> | 
-					<?php echo JHTML::_('date', $category->time_last_msg); ?> <a href="/index.php/kunena/2-welcome-mat/1-welcome-to-kunena#1" title="" rel="follow"><img src="http://kunena15/components/com_kunena/template/default_ex/images/english/icons/tlatest.gif" border="0" alt="Show most recent message" title="Show most recent message"/></a>
-				</div>
+				<p class="topic_latest_post">
+					<?php echo JText::_('K_LAST_POST_BY').' '; echo JHtml::_('klink.user', 'atag', $category->userid, $this->escape($category->username), $this->escape($category->username));?>
+				</p>
+				<p class="topic_time"><?php echo JHTML::_('date', $category->time_last_msg); ?></p>
+			</td>
 <?php else: ?>
-				<div>No posts</div>
+				<div class="fb_latest-subject">No posts</div>
 <?php endif; ?>
 			</td>
 		</tr>

@@ -10,7 +10,7 @@
 
 defined('_JEXEC') or die;
 JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
-
+$profile = KFactory::getProfile();
 ?>
 	<div id="kunena">
 <?php echo $this->loadCommonTemplate('header'); ?>
@@ -85,7 +85,12 @@ foreach ($this->threads as $this->current=>$this->thread):
 											</div>
 										</td>
 										<td class="rcol col_last">
-												<div class="topic_latest_post_avatar"><?php echo JHtml::_('klink.user', 'atag', $this->thread->last_post_userid, '<img class="avatar" src="components/com_kunena/media/images/no_photo_sm.jpg" alt="'.$this->escape($this->thread->last_post_name).'" />', $this->escape($this->thread->last_post_name));?></div>
+												<div class="topic_latest_post_avatar">
+<?php 
+// echo JHtml::_('klink.user', 'atag', $this->thread->last_post_userid, '<img class="avatar" src="components/com_kunena/media/images/no_photo_sm.jpg" alt="'.$this->escape($this->thread->last_post_name).'" />', $this->escape($this->thread->last_post_name));
+echo $profile->showAvatar($this->thread->last_post_userid, 'avatar');
+?>
+												</div>
 												<p class="topic_latest_post">
 													<?php echo JText::_('K_LAST_POST_BY').' '; echo JHtml::_('klink.user', 'atag', $this->thread->last_post_userid, $this->escape($this->thread->last_post_name), $this->escape($this->thread->last_post_name));?>
 												</p>

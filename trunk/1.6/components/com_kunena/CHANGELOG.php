@@ -37,6 +37,7 @@ Kunena 1.6.0dev
 + [#17628] Add integration classes for CB, JomSocial and UddeIM
 + [#17628] Add KFactory to get global objects in Kunena
 # [#16823] Fix installer: kunena_messages table creation failed, Welcome thread missing
++ [#17628] Make login box, avatars and PM to work
 
 24-Sep-2009 Matias
 + [#17628] Recent view: add logic for new, sticky, favorite

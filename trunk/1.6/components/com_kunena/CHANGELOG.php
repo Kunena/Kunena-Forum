@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0dev
 
+25-Sep-2009 Matias
++ [#17628] Add integration classes for CB, JomSocial and UddeIM
++ [#17628] Add KFactory to get global objects in Kunena
+
 24-Sep-2009 Matias
 + [#17628] Recent view: add logic for new, sticky, favorite
 + [#17628] Messages view: handle non-existing threads 

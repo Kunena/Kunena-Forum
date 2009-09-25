@@ -49,40 +49,49 @@ class KUser extends JTable
 
 	protected $_exists = false;
 	protected $_sessiontimeout = false;
-	private static $_instance = null;
+	private static $_instances = array();
 
 	function __construct()
 	{
 		parent::__construct('#__kunena_users', 'userid', JFactory::getDBO());
 	}
 
-	function &getInstance( $updateSessionInfo=false )
+	function &getInstance( $userid=null )
 	{
-		if (!self::$_instance) {
+		if ($userid === null) {
 			$my = &JFactory::getUser();
-			self::$_instance =& new KUser();
+			$userid = $my->id;	
+		}
+		
+		if (isset(self::$_instances[$userid]) && self::$_instances[$userid]->userid != $userid) {
+			trigger_error('KUser internal storage problem, reloading index '.$userid, E_USER_NOTICE);
+			unset(self::$_instances[$userid]);
+		}
+		if (!isset(self::$_instances[$userid])) {
+			self::$_instances[$userid] =& new KUser();
 
 			$config =& KConfig::getInstance();
-			self::$_instance->last_visit_time = time() + ($config->board_ofset * KUNENA_SECONDS_IN_HOUR) - KUNENA_SECONDS_IN_YEAR;
-			self::$_instance->curr_visit_time = time() + ($config->board_ofset * KUNENA_SECONDS_IN_HOUR);
+			self::$_instances[$userid]->last_visit_time = time() + ($config->board_ofset * KUNENA_SECONDS_IN_HOUR) - KUNENA_SECONDS_IN_YEAR;
+			self::$_instances[$userid]->curr_visit_time = time() + ($config->board_ofset * KUNENA_SECONDS_IN_HOUR);
 
-			if ($my->id) {
-				self::$_instance->load($my->id);
-				if ($updateSessionInfo) {
-				    self::$_instance->_updateSessionInfo();
-				    self::$_instance->_updateAllowedCategories();
-				    self::$_instance->store();
-				}
-			}
+			if ($userid) self::$_instances[$userid]->load($userid);
 		}
-		return self::$_instance;
+		return self::$_instances[$userid];
+	}
+	
+	function update()
+	{
+		if (!$this->userid) return;
+	    $this->_updateSessionInfo();
+	    $this->_updateAllowedCategories();
+	    $this->store();
 	}
 
-	function load( $oid=null )
+	function load( $userid=null )
 	{
-		if (!(int)$oid) return false;
-		$this->_exists = parent::load($oid);
-		$this->userid = (int)$oid;
+		if (!(int)$userid) return false;
+		$this->_exists = parent::load($userid);
+		$this->userid = (int)$userid;
 
 		return $this->_exists;
 	}
@@ -169,10 +178,14 @@ class KUser extends JTable
 
 	private function _hasRights(&$kunena_acl, $gid, $access, $recurse)
 	{
+		// cache results to save db queries
+		static $childs = array();
+		
 		if ($gid == $access) return 1;
 		if ($recurse) {
-			$childs = $kunena_acl->get_group_children($access, 'ARO', 'RECURSE');
-			return (is_array($childs) and in_array($gid, $childs));
+			if (!isset($childs[$access]))
+				$childs[$access] = $kunena_acl->get_group_children($access, 'ARO', 'RECURSE');
+			return (is_array($childs[$access]) && in_array($gid, $childs[$access]));
 		}
 		return 0;
 	}

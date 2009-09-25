@@ -336,7 +336,7 @@ class KConfig extends KConfigBase
         static $instance = null;
         if (!$instance) 
         {
-            $userinfo = new KUser($this->_db);
+            $userinfo = new KUser();
 	    	$instance = new KConfig($userinfo);
 		}
         return $instance;

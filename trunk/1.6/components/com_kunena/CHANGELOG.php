@@ -38,6 +38,8 @@ Kunena 1.6.0dev
 + [#17628] Add KFactory to get global objects in Kunena
 # [#16823] Fix installer: kunena_messages table creation failed, Welcome thread missing
 + [#17628] Make login box, avatars and PM to work
++ [#17628] Make KUser class general (for all users)
+^ [#17628] Save some SQL queries by caching results (users, acl) inside KUser class
 
 24-Sep-2009 Matias
 + [#17628] Recent view: add logic for new, sticky, favorite

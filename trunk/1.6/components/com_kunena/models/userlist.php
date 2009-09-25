@@ -208,7 +208,7 @@ class KunenaModelUserList extends JModel
 	protected function _getTotalQuery()
 	{
 		$query = new KQuery();
-		$user = KUser::getInstance(true);
+		$user = KUser::getInstance();
 
 		$query->select('count(*)');
 		$query->from('#__kunena_users');

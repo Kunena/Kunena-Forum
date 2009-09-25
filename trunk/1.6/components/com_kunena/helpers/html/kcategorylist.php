@@ -51,7 +51,7 @@ abstract class JHtmlKCategoryList
 	    	if (!isset($config['filter.id']) || !is_array($config['filter.id']))
 	    	{
 				kimport('user.user');
-	    		$user = KUser::getInstance(false);
+	    		$user = KUser::getInstance();
 	    		$config['filter.id'] = explode(',', $user->getAllowedCategories());
 	    	}
 	    	JArrayHelper::toInteger($config['filter.id']);

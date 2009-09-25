@@ -89,16 +89,14 @@ class KProfile
 	public function getProfileURL($userid) 
 	{
 		if ($userid == 0) return false;
-		$user = KUser::getInstance(false);
-		$user->load($userid);
+		$user = KUser::getInstance($userid);
 		if ($user === false) return false;
 		return JRoute::_("index.php?option=com_kunena&amp;func=kunenaprofile&amp;userid={$userid}" . getKunenaItemidSuffix());
 	}
 
 	public function getAvatarImgURL($userid, $thumb=true) 
 	{
-		$user = KUser::getInstance(false);
-		$user->load($userid);
+		$user = KUser::getInstance($userid);
 		$avatar = $user->avatar;
 		if ($avatar == '') {
 			$avatar = 'nophoto.jpg';

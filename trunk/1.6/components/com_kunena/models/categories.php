@@ -307,7 +307,7 @@ class KunenaModelCategories extends JModel
 		$query = new KQuery();
 
 		// Build base query
-		$user = KUser::getInstance(true);
+		$user = KUser::getInstance();
 
 		$query->select('count(*)');
 
@@ -338,7 +338,7 @@ class KunenaModelCategories extends JModel
 	protected function _getListQuery()
 	{
 	    $query = new KQuery();
-		$user = KUser::getInstance(true);
+		$user = KUser::getInstance();
 
 		// Build base query
 
@@ -389,7 +389,7 @@ class KunenaModelCategories extends JModel
 	protected function _getItemQuery($id)
 	{
 	    $query = new KQuery();
-		$user = KUser::getInstance(true);
+		$user = KUser::getInstance();
 
 		// Build base query
 

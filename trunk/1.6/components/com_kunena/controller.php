@@ -117,6 +117,10 @@ class KunenaController extends JController
 
 			// Push document object into the view.
 			$view->assignRef('document', $document);
+			
+			// Update user information
+			$user = KUser::getInstance();
+			$user->update();
 
 			// Render the view.
 			$view->display();

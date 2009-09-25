@@ -278,7 +278,7 @@ class KunenaModelRecent extends JModel
 	protected function _getTotalQuery()
 	{
 		$query = new KQuery();
-		$user = KUser::getInstance(true);
+		$user = KUser::getInstance();
 
 		// Build base query
 		$filter_time = $this->getState('filter.time');
@@ -358,7 +358,7 @@ class KunenaModelRecent extends JModel
 	protected function _getListQuery()
 	{
 	    $query = new KQuery();
-		$user = KUser::getInstance(true);
+		$user = KUser::getInstance();
 
 		// Build base query
 		$filter_time = $this->getState('filter.time');

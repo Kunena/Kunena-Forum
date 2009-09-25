@@ -21,7 +21,7 @@ class KIntegrationUddeIM extends KIntegration
 		$kunenaConfig =& KConfig::getInstance();
 		$path = JPATH_BASE .DS. 'components' .DS. 'com_uddeim' .DS. 'uddeim.php';
 		if (file_exists($path)) { 
-			self::$loaded = true; echo "LOADED";
+			self::$loaded = true;
 		}
 		if (self::detectIntegration() === false) {
 			$kunenaConfig->pm_component = $kunenaConfig->pm_component == 'uddeim' ? 'none' : $kunenaConfig->pm_component;

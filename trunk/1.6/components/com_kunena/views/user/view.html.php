@@ -32,7 +32,12 @@ class KunenaViewUser extends KView
 		
 		// Create shortcut to parameters.
 		$params = $this->state->get('params');
-		$this->assign ( 'title', ($params->get('show_page_title') ? 
+
+		jimport( 'joomla.application.menu' );
+		$menu = JSite::getMenu();
+		$menuitem = $menu->getActive();
+		
+		$this->assign ( 'title', ($params->get('show_page_title') && $menuitem->query['view'] == 'user' ? 
 			$params->get('page_title') : 'User Profile'));
 		
 		parent::display ( $tpl );

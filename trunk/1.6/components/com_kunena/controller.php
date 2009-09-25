@@ -119,6 +119,7 @@ class KunenaController extends JController
 			$view->assignRef('document', $document);
 			
 			// Update user information
+			kimport('user.user');
 			$user = KUser::getInstance();
 			$user->update();
 

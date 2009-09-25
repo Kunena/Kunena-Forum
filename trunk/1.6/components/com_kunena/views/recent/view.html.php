@@ -57,7 +57,11 @@ class KunenaViewRecent extends KView
 			$this->assign ( 'filter_time', $this->state->get('filter.time') );
 		}
 		
-		$this->assign ( 'title', ($params->get('show_page_title') ? 
+		jimport( 'joomla.application.menu' );
+		$menu = JSite::getMenu();
+		$menuitem = $menu->getActive();
+		
+		$this->assign ( 'title', ($params->get('show_page_title') && $menuitem->query['view'] == 'recent' && $menuitem->query['type'] == $this->state->type ? 
 			$params->get('page_title') : 'Recent Discussions'));
 		
 		$app = JFactory::getApplication();

@@ -41,6 +41,7 @@ Kunena 1.6.0dev
 + [#17628] Make KUser class general (for all users)
 ^ [#17628] Save some SQL queries by caching results (users, acl) inside KUser class
 + [#17628] Add very basic templates to the new views: user and userlist
+# [#17628] Fix title in recent, messages view
 
 24-Sep-2009 Matias
 + [#17628] Recent view: add logic for new, sticky, favorite

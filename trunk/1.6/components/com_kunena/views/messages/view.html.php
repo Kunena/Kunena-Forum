@@ -31,7 +31,11 @@ class KunenaViewMessages extends KView
 	public function display($tpl = null)
 	{
 		$this->assignRef ('state', $this->get ('State'));
-	    $this->assignRef('announcements', $this->get('Announcement'));
+		
+		// Create shortcut to parameters.
+		$params = $this->state->get('params');
+
+		$this->assignRef('announcements', $this->get('Announcement'));
 	    $this->assignRef('statistics', $this->get('Statistics'));
 		$this->assign('total', $this->get('Total'));
 		
@@ -63,11 +67,12 @@ class KunenaViewMessages extends KView
 		$category = end($this->path); 
 		$this->assign('description', $bbcode->Parse(stripslashes($category->headerdesc)));
 		
+		jimport( 'joomla.application.menu' );
+		$menu = JSite::getMenu();
+		$menuitem = $menu->getActive();
 		
-		// Create shortcut to parameters.
-		$params = $this->state->get('params');
-		$this->assign ( 'title', ($params->get('show_page_title') ? 
-			$params->get('page_title') : $this->messages[0]->subject));
+		$this->assign ( 'title', ($params->get('show_page_title') && $menuitem->query['view'] == 'messages' && $menuitem->query['thread'] == $this->state->thread ? 
+		$params->get('page_title') : $this->messages[0]->subject));
 		
 		parent::display($tpl);
 	    //echo "<code>"; print_r($this->path); echo "</code>";

@@ -190,19 +190,19 @@
                     `id` int(11) NOT NULL auto_increment,
                     `parent` int(11) default '0',
                     `thread` int(11) default '0',
-                    `catid` int(11) NOT NULL default '0',			// TODO: DEPRECATED, moved to kunena_threads
+                    `catid` int(11) NOT NULL default '0',
                     `name` tinytext,
                     `userid` int(11) NOT NULL default '0',
                     `email` tinytext,
                     `subject` tinytext,
                     `time` int(11) NOT NULL default '0',
                     `ip` varchar(15) default NULL,
-                    `topic_emoticon` int(11) NOT NULL default '0',	// TODO: DEPRECATED, moved to kunena_threads
-                    `locked` tinyint(4) NOT NULL default '0',		// TODO: DEPRECATED, moved to kunena_threads
+                    `topic_emoticon` int(11) NOT NULL default '0',
+                    `locked` tinyint(4) NOT NULL default '0',
                     `hold` tinyint(4) NOT NULL default '0',
                     `ordering` int(11) default '0',
-                    `hits` int(11) default '0',						// TODO: DEPRECATED, moved to kunena_threads
-                    `moved` tinyint(4) default '0',					// TODO: DEPRECATED, moved to kunena_threads
+                    `hits` int(11) default '0',
+                    `moved` tinyint(4) default '0',
                     `modified_by` int(7) default NULL,
                     `modified_time` int(11) default NULL,
                     `modified_reason` tinytext,

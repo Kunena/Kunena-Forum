@@ -52,6 +52,15 @@ $query="INSERT INTO `#__kunena_messages` VALUES (1, 0, 1, 2, 'Kunena', 62, 'info
 $kunena_db->setQuery($query);
 $kunena_db->query() or trigger_dbwarning('Unable to insert sample post');
 
+$query="INSERT INTO `#__kunena_threads` (`id`, `catid`, `topic_subject`, `posts`,"
+." `first_post_id`, `first_post_time`, `first_post_userid`, `first_post_name`, `first_post_email`, `first_post_message`," 
+." `last_post_id`, `last_post_time`, `last_post_userid`, `last_post_name`, `last_post_email`, `last_post_message`)"
+." VALUES ('1', '2', '".addslashes(_KUNENA_SAMPLE_POST1_SUBJECT)."', '1'," 
+." '1', '".$posttime."', '62', 'Kunena', 'info@kunena.com', '".addslashes(_KUNENA_SAMPLE_POST1_TEXT)."', "
+." '1', '".$posttime."', '62', 'Kunena', 'info@kunena.com', '".addslashes(_KUNENA_SAMPLE_POST1_TEXT)."')";
+$kunena_db->setQuery($query);
+$kunena_db->query() or trigger_dbwarning('Unable to insert sample thread');
+
 CKunenaTools::reCountBoards();
 
 ?>

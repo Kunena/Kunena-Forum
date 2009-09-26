@@ -36,6 +36,7 @@ Kunena 1.6.0dev
 26-Sep-2009 Matias
 ^ [#17628] Improve Announcements and Statistics models
 + [#17628] Add basic views for Announcements and Statistics
++ [#17628] Improve both profile boxes, show logged in user
 
 25-Sep-2009 Matias
 + [#17628] Add integration classes for CB, JomSocial and UddeIM

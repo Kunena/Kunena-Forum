@@ -10,8 +10,10 @@
 
 defined('_JEXEC') or die;
 $login = KFactory::getLogin();
+$profile = KFactory::getProfile();
 $userParams = &JComponentHelper::getParams('com_users');
 $allowregistration = $userParams->get('allowUserRegistration');
+$user = JFactory::getUser();
 ?>
 	<div id="kunena_top">
 		<div class="topnav">
@@ -31,13 +33,33 @@ $allowregistration = $userParams->get('allowUserRegistration');
 
 	<div class="topline"></div>
 
-	<div class="profile_box">
-		<p class="welcome"><?php echo JText::_('K_WELCOME'); ?>, <span><?php echo JText::_('K_GUEST'); ?></span></p>
-		<p class="register_login"><?php echo JText::_('K_PLEASE'); ?> <a href="<?php echo $login->getLoginURL(); ?>"><?php echo JText::_('K_LOG_IN'); ?></a>
+<table class="profile_box" >
+	<tr>
+<?php if (!$user->id): ?>
+		<td class="fcol">
+			<p class="welcome"><?php echo JText::_('K_WELCOME'); ?>, <span><?php echo JText::_('K_GUEST'); ?></span></p>
+			<p class="register_login"><?php echo JText::_('K_PLEASE'); ?> <a href="<?php echo $login->getLoginURL(); ?>"><?php echo JText::_('K_LOG_IN'); ?></a>
 <?php if ($allowregistration): ?>
-		<?php echo JText::_('K_OR'); ?> <a href="<?php echo $login->getRegisterURL(); ?>"><?php echo JText::_('K_REGISTER'); ?></a>
+			<?php echo JText::_('K_OR'); ?> <a href="<?php echo $login->getRegisterURL(); ?>"><?php echo JText::_('K_REGISTER'); ?></a>
 <?php endif; ?>.
-		<a href="<?php echo $login->getLostPasswordURL(); ?>"><?php echo JText::_('K_LOST_PASSWORD'); ?></a></p>												
-	</div>	
+			<a href="<?php echo $login->getLostPasswordURL(); ?>"><?php echo JText::_('K_LOST_PASSWORD'); ?></a></p>
+		</td>
+<?php else: ?>
+		<td class="lcol">
+			<a href="" title="" rel="nofollow"><?php echo $profile->showAvatar($user->id, 'avatar', true); ?></a>
+		</td>
+		<td class="rcol">
+			<p class="welcome">Welcome, <b><?php echo $this->escape($user->name); ?></b></p>
+			<p class="register_login">
+<!-- 				<a href="" title="" rel="nofollow">Show Latest Posts</a> 
+				| <a href="" title="" rel="nofollow">My Profile</a>  
+				| --> <a href="<?php echo $login->getLoginURL(); ?>">Logout</a>
+<!-- 				| <a href="">Announcements </a>
+				| <a href="" title="" rel="nofollow">Advanced Search</a> -->
+			</p>
+		</td>
+<?php endif; ?>												
+	</tr>
+</table>
 									
 <?php if (isset($this->announcements)) echo $this->loadCommonTemplate('announce'); ?>

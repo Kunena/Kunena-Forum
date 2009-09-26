@@ -221,7 +221,7 @@ div.pagination {
 }
 
 div.pagination span {
-	border: 1px solid #83afda;
+/*	border: 1px solid #83afda;*/
 	padding: 2px;
 }
 
@@ -313,7 +313,11 @@ tbody {
 tfoot {
 
 }
-	
+
+#kunena table.profile_box td.lcol {
+	width: 1%;
+}
+
 #kunena table.forum_body {
 }
 

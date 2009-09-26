@@ -54,6 +54,7 @@ class KUser extends JTable
 	function __construct()
 	{
 		parent::__construct('#__kunena_users', 'userid', JFactory::getDBO());
+		$this->userid = 0;
 	}
 
 	function &getInstance( $userid=null )

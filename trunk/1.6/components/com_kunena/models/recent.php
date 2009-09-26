@@ -84,7 +84,8 @@ class KunenaModelRecent extends JModel
 			else
 				$this->setState('list.start', 0);
 			$this->setState('list.limit', $limit);
-
+			$this->setState('list.state', 1);
+			
 			// Load model type
 			// all = recent topics accross all allowd categories
 			// my = my recent topics
@@ -231,7 +232,7 @@ class KunenaModelRecent extends JModel
 	public function getAnnouncement()
 	{
 		if (empty($this->_models['announcement'])) {
-			$this->_models['announcement'] = &JModel::getInstance('Announcement', 'KunenaModel');
+			$this->_models['announcement'] = &JModel::getInstance('Announcements', 'KunenaModel');
 		}
 
 		if (empty($this->_models['announcement'])) {
@@ -263,9 +264,7 @@ class KunenaModelRecent extends JModel
 		}
 		$this->_models['statistics']->getState();
 		$this->_models['statistics']->setState('type', 'all');
-		$stats['users'] = $this->_models['statistics']->getUserStats();
-		$stats['forum'] = $this->_models['statistics']->getForumStats();
-		$stats['recent'] = $this->_models['statistics']->getRecentStats();
+		$stats = $this->_models['statistics']->getSummary();
 		return $stats;
 	}
 	

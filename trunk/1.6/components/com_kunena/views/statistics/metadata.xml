@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-	<view title="User Profile">
+	<view title="Statistics">
 		<message>
-			<![CDATA[Show user profile]]>
+			<![CDATA[Show forum statistics]]>
 		</message>
 	</view>
 </metadata>

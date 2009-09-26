@@ -106,6 +106,27 @@ class KunenaModelStatistics extends JModel
 	}
 
 	/**
+	 * Method to get forum statistics
+	 *
+	 * @return	array	Statistics object.
+	 * @since	1.6
+	 */
+	public function getSummary()
+	{
+		$key = $this->_getStoreId($this->_context);
+		
+		// Try to load the value from internal storage.
+		if (!empty ($this->_statistics[$key])) {
+			return $this->_statistics[$key];
+		}
+		
+		$this->_statistics[$key]['users'] = $this->getUserStats();
+		$this->_statistics[$key]['forum'] = $this->getForumStats();
+		$this->_statistics[$key]['recent'] = $this->getRecentStats();
+		return $this->_statistics[$key];
+	}
+	
+	/**
 	 * Method to get the general forum stats.
 	 *
 	 * @return	integer	The number of published items.

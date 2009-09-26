@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-	<view title="User Profile">
+	<view title="Announcements">
 		<message>
-			<![CDATA[Show user profile]]>
+			<![CDATA[Show announcements]]>
 		</message>
 	</view>
 </metadata>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-	<layout title="User List">
+	<layout title="Show User List">
 		<message>
-			<![CDATA[User list]]>
+			<![CDATA[Show user list]]>
 		</message>
 	</layout>
 	<state>

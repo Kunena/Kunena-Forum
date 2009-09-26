@@ -258,7 +258,7 @@ class KunenaModelCategories extends JModel
 	public function getAnnouncement()
 	{
 		if (empty($this->_models['announcement'])) {
-			$this->_models['announcement'] = &JModel::getInstance('Announcement', 'KunenaModel');
+			$this->_models['announcement'] = &JModel::getInstance('Announcements', 'KunenaModel');
 		}
 
 		if (empty($this->_models['announcement'])) {
@@ -290,9 +290,7 @@ class KunenaModelCategories extends JModel
 		}
 		$this->_models['statistics']->getState();
 		$this->_models['statistics']->setState('type', 'all');
-		$stats['users'] = $this->_models['statistics']->getUserStats();
-		$stats['forum'] = $this->_models['statistics']->getForumStats();
-		$stats['recent'] = $this->_models['statistics']->getRecentStats();
+		$stats = $this->_models['statistics']->getSummary();
 		return $stats;
 	}
 

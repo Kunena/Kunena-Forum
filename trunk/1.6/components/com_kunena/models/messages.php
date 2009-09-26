@@ -217,7 +217,7 @@ class KunenaModelMessages extends JModel
 	public function getAnnouncement()
 	{
 		if (empty($this->_models['announcement'])) {
-			$this->_models['announcement'] = &JModel::getInstance('Announcement', 'KunenaModel');
+			$this->_models['announcement'] = &JModel::getInstance('Announcements', 'KunenaModel');
 		}
 
 		if (empty($this->_models['announcement'])) {
@@ -249,9 +249,7 @@ class KunenaModelMessages extends JModel
 		}
 		$this->_models['statistics']->getState();
 		$this->_models['statistics']->setState('type', 'all');
-		$stats['users'] = $this->_models['statistics']->getUserStats();
-		$stats['forum'] = $this->_models['statistics']->getForumStats();
-		$stats['recent'] = $this->_models['statistics']->getRecentStats();
+		$stats = $this->_models['statistics']->getSummary();
 		return $stats;
 	}
 
@@ -307,7 +305,7 @@ class KunenaModelMessages extends JModel
 		$query->select('t.*, m.*');
 		$query->select('(f.thread > 0) AS myfavorite');
 		$query->select('c.name AS catname');
-
+		//$query->select('r.rank_image, r.rank_title');
 
 		switch ($this->getState('type'))
 		{
@@ -325,6 +323,8 @@ class KunenaModelMessages extends JModel
 		}
 
 		$query->join('LEFT', '#__kunena_favorites AS f ON f.thread = t.id AND f.userid = '.intval($user->userid));
+		//$query->join('LEFT', '#__kunena_users AS u ON u.userid = userid');
+		//$query->join('LEFT', '#__kunena_ranks AS r ON r.rank_id = u.rank');
 		$query->join('LEFT', '#__kunena_categories AS c ON c.id = t.catid');
 
 		if (strtolower($this->getState('order'))=='desc')

@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
-<mosinstall type="component">
- <name>Kunena</name>
-    <version>1.0.12</version>
+<install type="component" version="1.5.0" method="upgrade">
+	<name>Kunena</name>
+    <version>1.0.12-1herppi</version>
     <versionname>Rikat</versionname>
     <creationDate>@fbversiondate@</creationDate>
 	<build>@fbbuild@</build>
@@ -12,19 +12,33 @@
     <license>GNU/GPL</license>
     <description>Kunena Forum</description>
     <files>
-    
-@fbfrontendlist@    
-    
+		<filename>CHANGELOG.php</filename>
+		<filename>COPYRIGHT.php</filename>
+		<filename>class.kunena.php</filename>
+		<filename>index.php</filename>
+		<filename>kunena.php</filename>
+		<folder>lib</folder>
+		<folder>template</folder>
+		<folder>kunena.files.distribution</folder>
     </files>
     <installfile>install/kunena.install.php</installfile>
     <uninstallfile>install/kunena.uninstall.php</uninstallfile>
     <administration>
         <files>
-
-@fbbackendlist@    
-
+			<filename>admin.kunena.html.php</filename>
+			<filename>admin.kunena.php</filename>
+			<filename>kunena.cpanel.php</filename>
+			<filename>kunena.mosbot.help.php</filename>
+			<filename>kunena.xml</filename>
+			<filename>toolbar.kunena.html.php</filename>
+			<filename>toolbar.kunena.php</filename>    
+			<folder>images</folder>
+			<folder>install</folder>
+			<folder>language</folder>
+			<folder>lib</folder>
+			<folder>plugin</folder>
         </files>
         <menu link="">Kunena Forum</menu>
     </administration>
     <params />
-</mosinstall>
+</install>

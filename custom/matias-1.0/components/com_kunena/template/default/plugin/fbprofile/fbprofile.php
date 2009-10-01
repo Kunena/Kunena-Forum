@@ -22,7 +22,7 @@ global $acl;
 $fbConfig =& CKunenaConfig::getInstance();
 
 if ($fbConfig->fb_profile == 'cb') {
-        $userid = mosGetParam($_GET, 'userid', null);
+    $userid = intval(mosGetParam($_GET, 'userid', 0));
 	$url = CKunenaCBProfile::getProfileURL($userid);
 	header("HTTP/1.1 307 Temporary Redirect");
 	header("Location: " . htmlspecialchars_decode($url));
@@ -36,12 +36,12 @@ if ($my->id) //registered only
     require_once(KUNENA_ABSSOURCESPATH . 'kunena.authentication.php');
     require_once(KUNENA_ABSSOURCESPATH . 'kunena.statsbar.php');
 
-    $task = mosGetParam($_GET, 'task', "");
+    $task = kGetCmd(mosGetParam($_GET, 'task', ""));
 
     switch ($task)
     {
         case "showprf":
-            $userid = mosGetParam($_GET, 'userid', null);
+            $userid = intval(mosGetParam($_GET, 'userid', 0));
 
             $page = 0;
             showprf((int)$userid, $page);

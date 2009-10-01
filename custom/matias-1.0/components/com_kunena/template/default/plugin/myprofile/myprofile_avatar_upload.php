@@ -116,7 +116,7 @@ if ($my->id != "" && $my->id != 0)
 global $my;
 $fbConfig =& CKunenaConfig::getInstance();
 $do = '';
-$do = mosGetParam($_REQUEST, 'do', 'init');
+$do = kGetCmd(mosGetParam($_REQUEST, 'do', 'init'));
 $gallery  = mosGetParam($_REQUEST, 'gallery', '');
 
 if ($do == 'init')

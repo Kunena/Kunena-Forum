@@ -32,6 +32,10 @@ Legend:
 
 CUSTOM BRANCH
 
+1-Oct-2009 Matias
++ [#15554] Custom branch: Merge [#15798] [#17635] [#17636] [#17303] from /trunk/1.0 (Rev 988)
++ [#15554] Custom branch: Minor fix for JomSocial, allowed img tag
+
 14-July-2009 Matias
 + [#15554] Custom branch: In forum view make topic icon clickable, link points to first unread message
 + [#15554] Custom branch: Add configuration option for user defined topic icons
@@ -46,6 +50,14 @@ CUSTOM BRANCH
 + [#15554] Custom branch: Add titles for times in flat.php just like in message.php
 + [#15554] Custom branch: Make date format configurable for latestx, showcat and view
 + [#15554] Custom branch: Make user count algorithm configurable in Stats and Userlist
+
+Kunena 1.0.12
+
+16-Aug-2009 Matias
+^ [#15798] Update credits page
+* [#17635] Fix Blind SQL Injection Exploit
+* [#17636] Check that img tags contain allowed file extension
+^ [#17303] Update version info to 1.0.12
 
 Kunena 1.0.11
 

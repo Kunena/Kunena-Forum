@@ -76,7 +76,7 @@ class CKunenaSearch
         // TODO: active_in
 
 	// Default values for checkboxes depends on function
-	$this->func = mosGetParam($_REQUEST, 'func');
+	$this->func = kGetCmd(mosGetParam($_REQUEST, 'func'));
 	if($this->func == 'search') {
 		$this->defaults['exactname'] = $this->defaults['childforums'] = 1;
 	} else {

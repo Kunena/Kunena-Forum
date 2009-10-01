@@ -27,10 +27,10 @@ $fbConfig =& CKunenaConfig::getInstance();
 //Get some variables
 $id = intval(mosGetParam($_REQUEST, 'id'));
 $catid = intval(mosGetParam($_REQUEST, 'catid'));
-//$func = mosGetParam($_REQUEST, 'func');
-$task = mosGetParam($_REQUEST, 'task');
+//$func = kGetCmd(mosGetParam($_REQUEST, 'func'));
+$task = kGetCmd(mosGetParam($_REQUEST, 'task'));
 $replyto = intval(mosGetParam($_REQUEST, 'replyto'));
-$do = mosGetParam($_REQUEST, 'do');
+$do = kGetCmd(mosGetParam($_REQUEST, 'do'));
 
 $now = time();
 $past = $now - $fbConfig->fbsessiontimeout;

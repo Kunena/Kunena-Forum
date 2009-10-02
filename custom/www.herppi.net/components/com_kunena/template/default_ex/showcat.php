@@ -105,6 +105,10 @@ if (in_array($catid, $allow_forum))
     $total = (int)$database->loadResult();
     	check_dberror('Unable to get message count.');
     $totalpages = ceil($total / $threads_per_page);
+	if ($catid == 28)
+		$ordering = 'ordering DESC, a.subject ASC';
+	else
+    	$ordering = 'ordering DESC, lastpost DESC';
     $database->setQuery("SELECT
     							a.*,
     							t.message AS messagetext,
@@ -124,7 +128,7 @@ if (in_array($catid, $allow_forum))
     						AND a.catid = $catid
     						AND a.hold = '0'
     						GROUP BY id
-    						ORDER BY ordering DESC , lastpost DESC
+    						ORDER BY $ordering
     						LIMIT $offset,$threads_per_page");
     $messagelist = $database->loadObjectList();
     	check_dberror("Unable to load messages.");

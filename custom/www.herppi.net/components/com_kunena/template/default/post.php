@@ -682,6 +682,12 @@ $catName = $objCatInfo->name;
                                     $allowEdit = 1;
                                 }
                             }
+							/* HACK-> */
+							// Osto- ja myyntipalsta!
+							if (($mes->catid == 6 || $mes->catid == 21) && $mes->ordering == 0) {
+								$allowEdit = 1;
+							}
+							/* <-HACK */
                         }
                     }
 
@@ -780,6 +786,12 @@ $catName = $objCatInfo->name;
                                     $allowEdit = 1;
                                 }
                             }
+							/* HACK-> */
+							// Osto- ja myyntipalsta!
+							if (($mes->catid == 6 || $mes->catid == 21) && $mes->ordering == 0) {
+								$allowEdit = 1;
+							}
+							/* <-HACK */
                         }
                     }
 
@@ -863,14 +875,21 @@ $catName = $objCatInfo->name;
                 }
                 else if ($do == "delete")
                 {
-                    if (!$is_Moderator) {
-			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
-                    }
-
                     $id = (int)$id;
                     $database->setQuery("SELECT * FROM #__fb_messages WHERE id=$id");
                     $message = $database->loadObjectList();
                     	check_dberror("Unable to load messages.");
+
+                    /* HACK-> */
+					// Osto- ja myyntipalsta!
+					$mes = $message[0];
+					$userID = $mes->userid;
+					if (($mes->catid == 6 || $mes->catid == 21) && $mes->ordering == 0 && $my_id > 0 && $userID == $my->id) 
+					{
+					} else if (!$is_Moderator) {
+						mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+					}
+					/* <-HACK */
 
                     foreach ($message as $mes)
                     {
@@ -883,7 +902,7 @@ $catName = $objCatInfo->name;
 
     <br/>
 
-    <br/> <?php echo _POST_ABOUT_DELETE; ?><br/>
+    <br/> <?php if ($is_Moderator) echo _POST_ABOUT_DELETE; ?><br/>
 
     <br/>
 
@@ -901,8 +920,19 @@ $catName = $objCatInfo->name;
                 }
                 else if ($do == "deletepostnow")
                 {
-                    if (!$is_Moderator) {
-			mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+                	/* HACK > */
+					$id = (int)$id;
+					$database->setQuery("SELECT * FROM #__fb_messages WHERE id=$id");
+					$message = $database->loadObjectList();
+						check_dberror("Unable to load messages.");
+
+					// Osto- ja myyntipalsta!
+					$mes = $message[0];
+					if (($mes->catid == 6 || $mes->catid == 21) && $mes->ordering == 0 && $my_id > 0 && $mes->userid == $my->id) 
+					{
+					} else if (!$is_Moderator) {
+					/* < HACK */
+						mosRedirect(htmlspecialchars_decode(sefRelToAbs(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $id = (int)mosGetParam($_POST, 'id', '');

@@ -32,9 +32,13 @@ Legend:
 
 CUSTOM BRANCH
 
+2-Oct-2009 Matias
++ [#15554] Custom branch: Add custom hacks for Herppi.net
+
 1-Oct-2009 Matias
 + [#15554] Custom branch: Merge [#15798] [#17635] [#17636] [#17303] from /trunk/1.0 (Rev 988)
 + [#15554] Custom branch: Minor fix for JomSocial, allowed img tag
+# [#15554] Custom branch: Fix build scripts, use J1.5 installer to allow upgrade 
 
 14-July-2009 Matias
 + [#15554] Custom branch: In forum view make topic icon clickable, link points to first unread message

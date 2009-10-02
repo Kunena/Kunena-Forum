@@ -36,7 +36,7 @@
 			<isset property="project_dir" />
 		</not>
 	</condition>
-	<condition property="package_dir" value="../packages">
+	<condition property="package_dir" value="../../packages">
 		<not>
 			<isset property="package_dir" />
 		</not>

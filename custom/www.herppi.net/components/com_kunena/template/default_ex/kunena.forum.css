@@ -15,13 +15,20 @@
 
 /* ======= */
 
+#Kunena {
+/*
+	font-size:16px; 
+	line-height:1.125em; 
+*/
+}
+
 #Kunena td, 
 #Kunena table, 
 #Kunena th, 
 #Kunena div, 
 #Kunena p, 
 #Kunena span {
-	font-family:Arial, Helvetica, sans-serif;
+/*	font-family:Arial, Helvetica, sans-serif;*/
 }
 #Kunena .fb_header {
 	background: #3B3B3B url(images/cat_title_bg.gif) repeat-x top left;
@@ -37,18 +44,18 @@
 	background: #8CABC8 url(images/cat_title_head_bg.gif) repeat-x top left;
 	color:#000000;
 	font-size:small;
-	font-family:Arial, Helvetica, sans-serif;
+/*	font-family:Arial, Helvetica, sans-serif;*/
 }
 #Kunena th.fb_sectiontableheader {
 	padding:3px 5px;
 	font-weight:normal;
 	font-size:small;
-	font-family:Arial, Helvetica, sans-serif;
+/*	font-family:Arial, Helvetica, sans-serif;*/
 }
 #Kunena tr.fb_sectiontableentry1 td {
 	background: #FFFFFF;
 	color: #000000;
-	padding:5px;
+	padding:3px 5px;
 	border-bottom:1px solid #BFC3C6;
 	border-left:1px solid #FFFFFF;
 	border-right:1px solid #BFC3C6;
@@ -56,7 +63,7 @@
 #Kunena tr.fb_sectiontableentry2 td {
 	background: #F2F1EE;
 	color: #000000;
-	padding:5px;
+	padding:3px 5px;
 	border-bottom:1px solid #BFC3C6;
 	border-left:1px solid #FFFFFF;
 	border-right:1px solid #BFC3C6;
@@ -80,8 +87,8 @@
 	display:block;
 	font-size:x-large;
 	font-weight:normal;
-	margin:5px 0;
-	line-height:21px;
+	margin: 0;
+	line-height:0.75em;
 }
 #Kunena .topic_latest_post, 
 #Kunena .topic_date {
@@ -167,11 +174,11 @@
 #Kunena #Kunena_tab a span {
 	display:block;
 	background:url("images/tabmenuleft.gif") no-repeat left top;
-	padding:0 10px 0 10px;
-	font-family:Arial, Helvetica, sans-serif;
+	padding:0 8px 0 8px;
+/*	font-family:Arial, Helvetica, sans-serif;*/
 	font-size:small;
 	color:#FFFFFF;
-	font-weight:bold;
+/*	font-weight:bold;*/
 	line-height:35px;
 }
 #Kunena #Kunena_tab a:hover, 
@@ -182,7 +189,7 @@
 #Kunena #Kunena_tab li.Kunena_item_active a span {
 	background-position:left bottom;
 	color:#FFFFFF;
-	font-weight:bold;
+/*	font-weight:bold;*/
 	font-style:normal;
 	text-decoration:none;
 }
@@ -251,7 +258,7 @@
 	border-left:1px solid #D1D1D1;
 	color:#666666;
 	float:right;
-	font-family:Arial, Helvetica, sans-serif;
+/*	font-family:Arial, Helvetica, sans-serif;*/
 	font-size:medium;
 	font-weight:bold;
 	height:28px;
@@ -296,7 +303,7 @@
 	width: 1%;
 	border-left:1px solid #D1D1D1;
 	color:#666666;
-	font-family:Arial, Helvetica, sans-serif;
+/*	font-family:Arial, Helvetica, sans-serif;*/
 	font-size:medium;
 	font-weight:bold;
 	height:28px;
@@ -531,14 +538,14 @@
 }
 #Kunena .fb_title, 
 #Kunena a.fb_title {
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+/*	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;*/
 	font-weight:bold;
 	display:block;
 	color:#FFFFFF;
 	text-decoration: none;
 }
 #Kunena .fb_title a {
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+/*	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;*/
 	font-weight:bold;
 	color:#FFFFFF;
 	text-decoration: none;
@@ -566,7 +573,7 @@
 	border-left:1px solid #BFC3C6;
 }
 #Kunena div.fb_thead-title a {
-	font-family:Lucida Grande, Arial, helvetica, sans serif;
+/*	font-family:Lucida Grande, Arial, helvetica, sans serif;*/
 	font-size:95%;
 	display:inline-block;
 	float:left;
@@ -614,7 +621,7 @@
 #Kunena span.newchar {
 	color: #009900;
 	font-weight: bold;
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+/*	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;*/
 	font-size:xx-small;
 	margin-left:3px;
 }
@@ -761,7 +768,7 @@ VIEW PAGE
 	text-decoration: none;
 	padding-left:10px;
 	font-size:x-small;
-	font-family:Arial, Helvetica, sans-serif;
+/*	font-family:Arial, Helvetica, sans-serif;*/
 	white-space: nowrap;
 }
 #Kunena span.msgkarma {
@@ -788,7 +795,7 @@ VIEW PAGE
 	border-right: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 	border-bottom: 1px solid #CCC;
-	font-family: "Courier News", monospace;
+	font-family: monospace;
 	font-size-adjust: none;
 	font-stretch: normal;
 	font-style: normal;
@@ -812,7 +819,7 @@ VIEW PAGE
 }
 #Kunena div.fb_smalltext {
 	font-size:x-small;
-	font-family:Arial, Helvetica, sans-serif;
+/*	font-family:Arial, Helvetica, sans-serif;*/
 }
 #Kunena td.fb-msgview-right-c div.fb_smalltext {
 	padding:5px;
@@ -894,7 +901,7 @@ VIEW PAGE
 	border: 1px dotted #CCC;
 	margin: 5px 0pt;
 	padding: 5px;
-	font-family: Arial, Helvetica, sans-serif;
+/*	font-family: Arial, Helvetica, sans-serif;*/
 	font-style: italic;
 	background: #F7F7F7;
 }
@@ -1061,6 +1068,7 @@ POST HISTORY
 	margin: 5px 0 0 0;
 	border: 1px solid #CCCCCC; 
 	color: #000000;
+	font-size: small;
 	background:#F7F7F7;
 }
 #Kunena .fb_forum-pathway-bottom {

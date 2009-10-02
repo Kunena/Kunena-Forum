@@ -90,27 +90,30 @@ $forumLocked = 0;
 $topicLocked = 0;
 
 $database->setQuery("SELECT * FROM #__fb_messages AS a LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.id={$id} and a.hold=0");
-unset($this_message);
-$database->loadObject($this_message);
+unset($first_message);
+$database->loadObject($first_message);
 check_dberror('Unable to load message.');
 
-if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array($this_message->catid, $allow_forum)))
+if ((in_array($catid, $allow_forum)) || (isset($first_message->catid) && in_array($first_message->catid, $allow_forum)))
 {
     $view = $view == "" ? $settings[current_view] : $view;
     setcookie("fboard_settings[current_view]", $view, time() + 31536000, '/');
 
-    $topicLocked = $this_message->locked;
-    $topicSticky = $this_message->ordering;
+    $topicLocked = $first_message->locked;
+    /* HACK-> */
+    if (($first_message->catid == 6 || $first_message->catid == 21) && !$first_message->ordering) $topicLocked = 1;
+    /* <-HACK */
+    $topicSticky = $first_message->ordering;
 
-    if (count($this_message) < 1) {
+    if (count($first_message) < 1) {
         echo '<p align="center">' . _MODERATION_INVALID_ID . '</p>';
     }
     else
     {
-        $thread = $this_message->parent == 0 ? $this_message->id : $this_message->thread;
+        $thread = $first_message->parent == 0 ? $first_message->id : $first_message->thread;
 
         // Test if this is a valid SEO URL if not we should redirect using a 301 - permanent redirect
-        if ($view == "flat" && ($thread != $this_message->id || $catid != $this_message->catid))
+        if ($view == "flat" && ($thread != $first_message->id || $catid != $first_message->catid))
         {
         	// Invalid SEO URL detected!
         	// Create permanent re-direct and quit
@@ -118,7 +121,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         	$query = "SELECT count(*)
         				FROM #__fb_messages AS a
         				WHERE a.thread=$thread
-        					AND a.id<=$this_message->id";
+        					AND a.id<=$first_message->id";
         	$database->setQuery($query);
         	$replyCount = $database->loadResult();
         		check_dberror('Unable to calculate replyCount.');
@@ -126,7 +129,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         	$replyPage = $replyCount > $fbConfig->messages_per_page ? ceil($replyCount / $fbConfig->messages_per_page) : 1;
 
         	header("HTTP/1.1 301 Moved Permanently");
-        	header("Location: " . htmlspecialchars_decode(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $this_message->catid, $thread, $replyPage, $fbConfig->messages_per_page, $this_message->id)));
+        	header("Location: " . htmlspecialchars_decode(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $first_message->catid, $thread, $replyPage, $fbConfig->messages_per_page, $first_message->id)));
 
         	die();
         }
@@ -156,7 +159,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         }
 
         //update the hits counter for this topic & exclude the owner
-        if ($this_message->userid != $my->id) {
+        if ($first_message->userid != $my->id) {
             $database->setQuery("UPDATE #__fb_messages SET hits=hits+1 WHERE id=$thread AND parent=0");
             $database->query();
         }
@@ -171,7 +174,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
            ."\n LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.thread='$thread' AND a.hold=0 AND a.catid='$catid') ORDER BY time $ordering");
 
 	$flat_messages = array();
-        if ($view != "flat") $flat_messages[] = $this_message;
+        if ($view != "flat") $flat_messages[] = $first_message;
 
         foreach ($database->loadObjectList()as $message)
         {
@@ -228,8 +231,8 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         $forumLocked = $objCatInfo->locked;
         
 		//meta description and keywords
-		$metaKeys=kunena_htmlspecialchars(stripslashes("{$this_message->subject}, {$objCatParentInfo->name}, {$fbConfig->board_title}, " ._GEN_FORUM. ', ' .$GLOBALS['mosConfig_sitename']));
-		$metaDesc=kunena_htmlspecialchars(stripslashes("{$this_message->subject} ({$page}/{$totalpages}) - {$objCatParentInfo->name} - {$objCatInfo->name} - {$fbConfig->board_title} " ._GEN_FORUM));
+		$metaKeys=kunena_htmlspecialchars(stripslashes("{$first_message->subject}, {$objCatParentInfo->name}, {$fbConfig->board_title}, " ._GEN_FORUM. ', ' .$GLOBALS['mosConfig_sitename']));
+		$metaDesc=kunena_htmlspecialchars(stripslashes("{$first_message->subject} ({$page}/{$totalpages}) - {$objCatParentInfo->name} - {$objCatInfo->name} - {$fbConfig->board_title} " ._GEN_FORUM));
 
     	if( CKunenaTools::isJoomla15() )
 		{
@@ -338,6 +341,14 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
             $thread_delete = CKunenaLink::GetTopicPostLink('delete', $catid, $id, isset($fbIcons['delete']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />':_GEN_DELETE);
             $thread_merge = CKunenaLink::GetTopicPostLink('merge', $catid, $id, isset($fbIcons['merge']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['merge'] . '" alt="Merge" border="0" title="' . _VIEW_MERGE . '" />':_GEN_MERGE);
         }
+
+	/* HACK-> */
+	// Osto- ja myyntipalstat:
+	if (($first_message->catid == 6 || $first_message->catid == 21) && $first_message->ordering == 0 && $my->id > 0 && $my->id == $first_message->userid) {
+		$thread_delete = CKunenaLink::GetTopicPostLink('delete', $catid, $id, isset($fbIcons['delete'])?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />':_GEN_DELETE);
+	}
+	/* <-HACK */
+
 ?>
 
         <script type = "text/javascript">
@@ -396,6 +407,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 	{
 	    echo '<td class="fb_list_actions_forum">';
 	    echo '<div class="fb_message_buttons_row" style="text-align: center;">';
+	    if (isset($thread_delete) && !$is_Moderator) echo $thread_delete;
 	    if (isset($thread_reply)) echo $thread_reply;
 	    if (isset($thread_subscribe)) echo ' '.$thread_subscribe;
 	    if (isset($thread_favorite)) echo ' '.$thread_favorite;
@@ -505,8 +517,8 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                         */
 
                         //check if topic is locked
-                        $_lockTopicID = $this_message->thread;
-                        $topicLocked = $this_message->locked;
+                        $_lockTopicID = $first_message->thread;
+                        $topicLocked = $first_message->locked;
 
                         if ($_lockTopicID) // prev UNDEFINED $topicID!!
                         {
@@ -515,7 +527,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 
                         else
                         { //topic not locked; check if forum is locked
-                            $database->setQuery("select locked from #__fb_categories where id={$this_message->catid}");
+                            $database->setQuery("select locked from #__fb_categories where id={$first_message->catid}");
                             $topicLocked = $database->loadResult();
                             $lockedWhat = _FORUM_NOT_ALLOWED; // UNUSED
                         }
@@ -1107,6 +1119,13 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                         $msg_edit = CKunenaLink::GetTopicPostLink('edit', $catid, $fmessage->id , isset($fbIcons['edit']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />':_GEN_EDIT);
                                         $showedEdit = 1;
                                     }
+									/* HACK-> */
+									// Osto- ja myyntipalstat:
+									if (($first_message->catid == 6 || $first_message->catid == 21) && $first_message->ordering == 0 && $my->id > 0 && $my->id == $first_message->userid) {
+										$msg_delete = CKunenaLink::GetTopicPostLink('delete', $catid, $fmessage->id, isset($fbIcons['delete'])?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />':_GEN_DELETE);
+										$msg_edit = CKunenaLink::GetTopicPostLink('edit', $catid, $fmessage->id, isset($fbIcons['edit'])?'<img src="' . KUNENA_URLICONSPATH . $fbIcons['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />':_GEN_EDIT);
+									}
+									/* <-HACK */
                                 }
 
                                 if ($is_Moderator && $showedEdit != 1)
@@ -1214,6 +1233,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 	{
 	    echo '<td class="fb_list_actions_forum">';
 	    echo '<div class="fb_message_buttons_row" style="text-align: center;">';
+	    if (isset($thread_delete) && !$is_Moderator) echo $thread_delete;
 	    if (isset($thread_reply)) echo $thread_reply;
 	    if (isset($thread_subscribe)) echo ' '.$thread_subscribe;
 	    if (isset($thread_favorite)) echo ' '.$thread_favorite;

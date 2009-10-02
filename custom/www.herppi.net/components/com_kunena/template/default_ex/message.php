@@ -343,6 +343,14 @@ if ($fbConfig->fb_profile == 'cb')
 		<div class="fb_message_buttons_cover">
 			<div class="fb_message_buttons_row">
                 <?php
+				/* HACK-> */
+				if (($first_message->catid == 6 || $first_message->catid == 21) && $first_message->ordering == 0 && $my->id > 0 && $my->id == $fmessage->userid) $msg_buysell = 1;
+				else {
+					if ($first_message->catid == 6 && $first_message->ordering == 0 && !$is_Moderator) $msg_closed = 'Myynti-ilmoitukseen ei voi vastata. Katso viestistä yhteystiedot.';
+					if ($first_message->catid == 21 && $first_message->ordering == 0 && !$is_Moderator) $msg_closed = 'Ostoilmoitukseen ei voi vastata. Katso viestistä yhteystiedot.';
+				}
+				/* <-HACK */
+
                 //we should only show the Quick Reply section to registered users. otherwise we are missing too much information!!
                 /*    onClick="expandcontent(this, 'sc<?php echo $msg_id;?>')" */
                 if ($my->id > 0 && !isset($msg_closed)):

@@ -353,8 +353,8 @@ if (count($messages[0]) > 0)
                         <div class="fbs">
                         <!-- By -->
 
-        <span class="topic_posted_time" title="<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat_hover'); ?>"><?php echo _KUNENA_POSTED_AT ?> <?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat'); ?>
-        </span>
+<!--        <span class="topic_posted_time" title="<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat_hover'); ?>"><?php echo _KUNENA_POSTED_AT ?> <?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat'); ?>
+        </span>-->
 <?php
 	if ($leaf->name) 
 	{
@@ -403,12 +403,12 @@ if (count($messages[0]) > 0)
                             <div style="position:relative">
 
                               <!--  Sticky   -->
-        <?php if ($leaf->ordering != 0) { ?>
+<!--         <?php if ($leaf->ordering != 0) { ?>
         <span class="topic_sticky">
         <?php echo isset($fbIcons['topicsticky']) ? '<img  src="' . KUNENA_URLICONSPATH . '' . $fbIcons['topicsticky'] . '" border="0" alt="' . _GEN_ISSTICKY . '" />': '<img class="stickyicon" src="' . KUNENA_URLEMOTIONSPATH . 'pushpin.gif"  alt="' . _GEN_ISSTICKY . '" title="' . _GEN_ISSTICKY . '" />';
         $topicSticky = 1; ?>
         </span>
-        <?php }?>
+        <?php }?>-->
         <!--  /Sticky   -->
 
                              <!-- Avatar -->

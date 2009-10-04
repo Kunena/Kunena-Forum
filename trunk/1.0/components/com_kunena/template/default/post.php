@@ -27,6 +27,16 @@ global $is_Moderator;
 //
 //ob_start();
 $catid = (int)$catid;
+
+//get the allowed forums and turn it into an array
+$allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):array();
+
+if (!in_array($catid, $allow_forum))
+{
+	echo _KUNENA_NO_ACCESS;
+	return;
+}
+
 $pubwrite = (int)$fbConfig->pubwrite;
 //ip for floodprotection, post logging, subscriptions, etcetera
 $ip = $_SERVER["REMOTE_ADDR"];
@@ -34,7 +44,6 @@ $ip = $_SERVER["REMOTE_ADDR"];
 // ERROR: mixed global $editmode
 global $editmode;
 $editmode = 0;
-// $message=mosGetParam($_POST, 'message','',1); // For some reason this just doesn't work like it should
 $message = mosGetParam($_REQUEST, "message", null, _MOS_ALLOWRAW);
 $resubject = mosGetParam($_REQUEST, "resubject", null);
 

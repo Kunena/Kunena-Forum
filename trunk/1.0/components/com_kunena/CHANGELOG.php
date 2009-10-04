@@ -34,6 +34,8 @@ Kunena 1.0.12
 
 4-Oct-2009 Matias
 # [#17785] Internal: JQuery is not loaded if JomSocial integration is enabled
+* [#17802] Who is online shows hidden users and IP address
+* [#17888] Posting allowed to unauthorized forums by using URL manipulation
 
 16-Aug-2009 Matias
 ^ [#15798] Update credits page

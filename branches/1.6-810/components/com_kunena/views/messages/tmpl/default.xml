@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+	<layout title="Show Messages in a Thread">
+		<message>
+			<![CDATA[Show messages in a thread]]>
+		</message>
+	</layout>
+	<state>
+		<name>Kunena forum: Show Messages in a Thread</name>
+		<description>Show messages in a thread</description>
+		<url>
+			<!-- <param name="category" type="text" default="0" label="Category ID" /> -->
+			<param name="thread" type="text" default="0" label="Thread ID" />
+			<param name="type" type="list" default="flat" label="Type">
+				<option value="flat">Flat</option>
+				<option value="nested">Nested</option>
+			</param>
+			<param name="order" type="list" default="asc" label="Message Order">
+				<option value="asc">Ascending</option>
+				<option value="desc">Descending</option>			
+			</param>
+		</url>
+		<params>
+			<param type="spacer" />
+			<param name="limit" type="text" default="10" label="Threads in a Page" />
+			<param name="filter_limit_override" type="radio" default="0" label="Allow User Override">
+				<option value="0">No</option>
+				<option value="1">Yes</option>
+			</param>
+			<param name="filter_limitstart_allow" type="radio" default="1" label="Enable Pagination">
+				<option value="0">No</option>
+				<option value="1">Yes</option>
+			</param>
+		</params>
+	</state>
+</metadata>

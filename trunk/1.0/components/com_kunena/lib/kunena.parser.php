@@ -340,7 +340,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
             case 'img':
                 if($between) {
 	               	$matches = null;
-      	        	$file_ext = array('bmp','gif','ico','jpg','png','xcf');
+      	        	$file_ext = array('bmp','gif','ico','jpg','jpeg','png','xcf');
           	    	preg_match('/\.([\w\d]+)$/', $between, $matches);
                 	if (!in_array(strtolower($matches[1]), $file_ext)) break;
                 	

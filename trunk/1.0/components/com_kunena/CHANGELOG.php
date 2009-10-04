@@ -32,6 +32,9 @@ Legend:
 
 Kunena 1.0.12
 
+4-Oct-2009 Matias
+# [#17785] Internal: JQuery is not loaded if JomSocial integration is enabled
+
 16-Aug-2009 Matias
 ^ [#15798] Update credits page
 * [#17635] Fix Blind SQL Injection Exploit

@@ -32,6 +32,9 @@ Legend:
 
 CUSTOM BRANCH
 
+4-Oct-2009 Matias
+* [#15554] Custom branch: Merge [#17802] [#17888] from /trunk/1.0 (Rev 1099)
+
 2-Oct-2009 Matias
 + [#15554] Custom branch: Add custom hacks for Herppi.net
 
@@ -56,6 +59,10 @@ CUSTOM BRANCH
 + [#15554] Custom branch: Make user count algorithm configurable in Stats and Userlist
 
 Kunena 1.0.12
+
+4-Oct-2009 Matias
+* [#17802] Who is online shows hidden users and IP address
+* [#17888] Posting allowed to unauthorized forums by using URL manipulation
 
 16-Aug-2009 Matias
 ^ [#15798] Update credits page

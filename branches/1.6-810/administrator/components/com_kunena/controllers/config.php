@@ -114,7 +114,27 @@ class KunenaControllerConfig extends JController
 			$this->setRedirect('index.php?option=com_kunena&view=config', $message, 'notice');
 		}
 		else {
-			$this->setRedirect('index.php?option=com_kunena');
+			$this->setRedirect('index.php?option=com_kunena', JText::_('Saved'));
 		}
 	}
+	
+	public function apply()
+	{
+		// Check for request forgeries.
+		JRequest::checkToken() or jexit(JText::_('K_Invalid_Token'));
+
+		// Save the configuration.
+		$model	= $this->getModel('Config');
+		$return	= $model->save();
+
+		if ($return === false)
+		{
+			$message = JText::sprintf('K_Config_Save_Failed', $model->getError());
+			$this->setRedirect('index.php?option=com_kunena&view=config', $message, 'notice');
+		}
+		else {
+			$this->setRedirect('index.php?option=com_kunena&view=config', JText::_('Saved'));
+		}
+	}
+	
 }

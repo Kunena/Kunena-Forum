@@ -27,11 +27,13 @@
 		</files>
 		<menu>Kunena Forum</menu>
 		<submenu>
+			<menu view="home">home</menu>
 			<menu view="config">Configuration</menu>
 			<menu task="showAdministration">Forum Administration</menu>
 			<menu task="showprofiles">User Administration</menu>
 			<menu task="showsmilies">Edit Smilies</menu>
 			<menu task="ranks">Edit Ranks</menu>
+			<menu task="info">Information</menu>
 		</submenu>
 	</administration>
 	<params />

@@ -60,7 +60,6 @@ class KunenaViewConfig extends JView
 		JToolBarHelper::save('config.save');
 		JToolBarHelper::apply('config.apply');
 		JToolBarHelper::cancel('config.cancel');
-
 		JToolBarHelper::divider();
 
 		// We can't use the toolbar helper here because there is no generic link button.

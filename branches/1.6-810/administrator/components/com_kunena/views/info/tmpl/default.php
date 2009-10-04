@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id$
+ * @version		$Id: default.php 1020 2009-08-17 18:45:26Z louis $
  * @package		Kunena
  * @subpackage	com_kunena
  * @copyright	Copyright (C) 2008 - 2009 Kunena Team. All rights reserved.
@@ -21,14 +21,3 @@ JHTML::_('behavior.switcher');
 JHTML::_('behavior.tooltip');
 ?>
 
-
-
-	<form action="index.php?option=com_kunena" method="post" name="adminForm" autocomplete="off">
-			<div>
-				<?php echo $this->loadTemplate('setup'); ?>
-			</div>
-		</div>
-		<input type="hidden" name="task" value="" />
-		<?php echo JHTML::_('form.token'); ?>
-	</form>
-</div>

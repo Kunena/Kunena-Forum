@@ -335,8 +335,10 @@
 			<query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "com_fireboard", "com_kunena")</query>
             <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "com_fireboard", "com_kunena")</query>
 		</version>
-		<version version="@fbversion@" versiondate="@fbversiondate@" build="@fbbuild@" versionname="@fbversionname@">
+		<version version="1.0.10" versiondate="2009-05-21" build="1344" versionname="Parier!">
 			<query>UPDATE `#__fb_config` SET `jmambot`='0'</query>
+		</version>
+		<version version="@fbversion@" versiondate="@fbversiondate@" build="@fbbuild@" versionname="@fbversionname@">
 		</version>
 	</upgrade>
 </comupgrade>

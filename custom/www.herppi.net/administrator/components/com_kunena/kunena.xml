@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>
-    <version>1.0.12-1herppi</version>
+    <version>1.0.12-2herppi</version>
     <versionname>Rikat</versionname>
     <creationDate>@fbversiondate@</creationDate>
 	<build>@fbbuild@</build>

@@ -63,40 +63,43 @@ function showprf($userid, $page)
     //Get userinfo needed later on, this limits the amount of queries
     unset($userinfo);
     $database->setQuery("SELECT a.*, b.* FROM #__fb_users AS a LEFT JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$userid}'");
-
     $database->loadObject($userinfo);
     check_dberror('Unable to get user profile info.');
 
+	// Profile not found, try if user exists
     if (!$userinfo) {
-	$database->setQuery("SELECT * FROM #__users WHERE id='{$userid}'");
-	$database->loadObject($userinfo);
-	check_dberror('Unable to get user profile info.');
-
-	if (!$userinfo) {
-		echo '<h3>' . _KUNENA_PROFILE_NO_USER . '</h3>';
-		return;
-	} else {
-		// Check moderator status (admin is moderator)
-		$aro_group = $acl->getAroGroup($userid);
-		if ($aro_group and CKunenaTools::isJoomla15())
-		$aro_group->group_id = $aro_group->id;  // changed fieldname in Joomla 1.5: "group_id" -> "id"
-		$is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
-
-		// there's no profile; set userid and moderator status.
-		$database->setQuery("INSERT INTO #__fb_users (userid,moderator) VALUES ('$userid','$is_admin')");
-		$database->query();
-		check_dberror('Unable to create user profile.');
-
-		$database->setQuery("SELECT a.*, b.* FROM #__fb_users AS a LEFT JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$userid}'");
-
+		$database->setQuery("SELECT * FROM #__users WHERE id='{$userid}'");
 		$database->loadObject($userinfo);
 		check_dberror('Unable to get user profile info.');
+	
+		// User exists, create profile
+		if ($userinfo) {
+			// Check moderator status (admin is moderator)
+			$aro_group = $acl->getAroGroup($userid);
+			if ($aro_group and CKunenaTools::isJoomla15())
+			$aro_group->group_id = $aro_group->id;  // changed fieldname in Joomla 1.5: "group_id" -> "id"
+			$is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
 
-		// TODO: For future use
-		// echo '<h3>' . _KUNENA_PROFILE_NOT_FOUND . '</h3>';
-		// return;
+			// there's no profile; set userid and moderator status.
+			$database->setQuery("INSERT INTO #__fb_users (userid,moderator) VALUES ('$userid','$is_admin')");
+			$database->query();
+			check_dberror('Unable to create user profile.');
+
+			$database->setQuery("SELECT a.*, b.* FROM #__fb_users AS a LEFT JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$userid}'");
+
+			$database->loadObject($userinfo);
+			check_dberror('Unable to get user profile info.');
+
+			// TODO: For future use
+			// echo '<h3>' . _KUNENA_PROFILE_NOT_FOUND . '</h3>';
+			// return;
+		}
 	}
 
+	// Do not show user if it does not exist or it is hidden
+	if (!$userinfo || $userinfo->hideUser==1) {
+		echo '<h3>' . _KUNENA_PROFILE_NO_USER . '</h3>';
+		return;
     }
 
 	// User Hits

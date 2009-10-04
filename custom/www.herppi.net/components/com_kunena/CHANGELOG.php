@@ -34,6 +34,7 @@ CUSTOM BRANCH
 
 4-Oct-2009 Matias
 * [#15554] Custom branch: Merge [#17802] [#17888] from /trunk/1.0 (Rev 1099)
++ [#15554] Custom branch: Hack to hide user profile
 
 2-Oct-2009 Matias
 + [#15554] Custom branch: Add custom hacks for Herppi.net

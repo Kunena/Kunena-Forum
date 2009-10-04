@@ -180,6 +180,7 @@
                     `rank` tinyint(4) NOT NULL default '0',
                     `hideEmail` tinyint(1) NOT NULL default '1',
                     `showOnline` tinyint(1) NOT NULL default '1',
+                    `hideUser` tinyint(1) NOT NULL default '0',
                 PRIMARY KEY  (`userid`),
                 KEY `group_id` (`group_id`),
                 KEY `posts` (`posts`),
@@ -335,8 +336,11 @@
 			<query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "com_fireboard", "com_kunena")</query>
             <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "com_fireboard", "com_kunena")</query>
 		</version>
-		<version version="@fbversion@" versiondate="@fbversiondate@" build="@fbbuild@" versionname="@fbversionname@">
+		<version version="1.0.10" versiondate="2009-05-21" build="1344" versionname="Parier!">
 			<query>UPDATE `#__fb_config` SET `jmambot`='0'</query>
+		</version>
+		<version version="@fbversion@" versiondate="@fbversiondate@" build="@fbbuild@" versionname="@fbversionname@">
+			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `hideUser` tinyint(1) NOT NULL DEFAULT '0' AFTER `hideEmail`, COMMENT=''</query>			
 		</version>
 	</upgrade>
 </comupgrade>

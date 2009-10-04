@@ -557,7 +557,7 @@ if ((in_array($catid, $allow_forum)) || (isset($first_message->catid) && in_arra
                                 unset($userinfo);
                                 $database->setQuery("SELECT  a.*,b.name,b.username,b.gid FROM #__fb_users as a LEFT JOIN #__users as b on b.id=a.userid where a.userid='$fmessage->userid'");
                                 $database->loadObject($userinfo);
-				if ($userinfo == NULL) {
+				if ($userinfo == NULL || $userinfo->hideUser==1) {
 					$userinfo = new stdClass();
 					$userinfo->userid = 0;
 					$userinfo->name = '';

@@ -35,6 +35,7 @@ Kunena 1.5.7
 
 5-Oct-2009 Matias
 # [#18289] Smiley and Rank admin: Images broken in Windows
+# [#18290] Whoisonline does not work in IIS
 
 Kunena 1.5.6
 

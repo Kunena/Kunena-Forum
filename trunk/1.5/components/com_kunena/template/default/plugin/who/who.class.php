@@ -82,7 +82,7 @@ else {
     $what = _KUNENA_WHO_MAINPAGE;
     }
 
-$link = $_SERVER['REQUEST_URI'];
+$link = JURI::current();
 $what = addslashes($what);
 $link = addslashes($link);
 

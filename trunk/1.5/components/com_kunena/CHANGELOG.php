@@ -31,6 +31,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.5.7
+
+5-Oct-2009 Matias
+# [#18289] Smiley and Rank admin: Images broken in Windows
+
 Kunena 1.5.6
 
 7-Aug-2009 Matias

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0dev
 
+5-Oct-2009 Matias
+- [#17628] Integration class cleanup
+
 26-Sep-2009 Matias
 ^ [#17628] Improve Announcements and Statistics models
 + [#17628] Add basic views for Announcements and Statistics
@@ -172,7 +175,7 @@ Kunena 1.6.0dev
 ^ [#16825] First draft of merged messages_text into messages, all fb tables converted
 + [#17375] Initial draft of kunena_threads table - currently only in installer
 
-24-July-2009
+24-July-2009 Matias
 ^ [#15784] Merge 1.5.3 and 1.5.4 fixes from revision 878 to 936
 
 10-July-2009 fxstein

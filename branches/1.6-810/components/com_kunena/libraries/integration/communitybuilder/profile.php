@@ -54,30 +54,6 @@ class KProfileCommunityBuilder extends KProfile
 	{
 		return KIntegrationCommunityBuilder::useProfileIntegration();
 	}
-	
-	public function getLoginURL() 
-	{
-		if (!KIntegrationCommunityBuilder::useProfileIntegration()) return parent::getLoginURL();
-		return cbSef( 'index.php?option=com_comprofiler&amp;task=login' );
-	}
-
-	public function getLogoutURL() 
-	{
-		if (!KIntegrationCommunityBuilder::useProfileIntegration()) return parent::getLogoutURL();
-		return cbSef( 'index.php?option=com_comprofiler&amp;task=logout' );
-	}
-
-	public function getRegisterURL() 
-	{
-		if (!KIntegrationCommunityBuilder::useProfileIntegration()) return parent::getRegisterURL();
-		return cbSef( 'index.php?option=com_comprofiler&amp;task=registers' );
-	}
-
-	public function getLostPasswordURL() 
-	{
-		if (!KIntegrationCommunityBuilder::useProfileIntegration()) return parent::getLostPasswordURL();
-		return cbSef( 'index.php?option=com_comprofiler&amp;task=lostPassword' );
-	}
 
 	public function getForumTabURL() 
 	{

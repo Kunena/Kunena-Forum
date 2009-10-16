@@ -49,28 +49,6 @@ class KProfileJomSocial extends KProfile
 		return KIntegrationJomSocial::useProfileIntegration();
 	}
 
-	/*
-	public function getLoginURL() 
-	{
-		return parent::getLoginURL();
-	}
-
-	public function getLogoutURL() 
-	{
-		return parent::getLogoutURL();
-	}
-
-	public function getRegisterURL() 
-	{
-		return parent::getRegisterURL();
-	}
-
-	public function getLostPasswordURL() 
-	{
-		return parent::getLostPasswordURL();
-	}
-	*/
-
 	public function getForumTabURL() 
 	{
 		if (!KIntegrationJomSocial::useProfileIntegration()) return parent::getForumTabURL();

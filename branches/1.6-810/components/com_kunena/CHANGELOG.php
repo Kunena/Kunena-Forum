@@ -30,11 +30,26 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Custom Branch 810:
-16-okt-2009 810
+
+Custom Branch 810
+
+16-Oct-2009 810
 ^ [#18267] Improve default_setup.php
 
+16-Oct-2009 Matias
+^ [#15784] Merge trunk/1.6 from revision 1106 to 1113
+
 Kunena 1.6.0dev
+
+16-Oct-2009 Matias
++ [#17628] Add missing index.html files
+^ [#17628] New entry file in both frontend and backend: api.php
+^ [#17628] Move some legacy code into legacy files
++ [#17628] New installer classes (not yet fully functional)
+^ [#17628] New build scripts
+
+5-Oct-2009 Matias
+- [#17628] Integration class cleanup
 
 26-Sep-2009 Matias
 ^ [#17628] Improve Announcements and Statistics models
@@ -53,7 +68,7 @@ Kunena 1.6.0dev
 
 24-Sep-2009 Matias
 + [#17628] Recent view: add logic for new, sticky, favorite
-+ [#17628] Messages view: handle non-existing threads 
++ [#17628] Messages view: handle non-existing threads
 
 23-Sep-2009 Matias
 + [#17628] Make Recent view to obey all configuration options in menu
@@ -69,7 +84,7 @@ Kunena 1.6.0dev
 
 17-Sep-2009 Matias
 + [#17628] Add default_ex look to top menu, search, profile box, pathway...
-+ [#17628] Add default_ex look to categories, recent, stats... 
++ [#17628] Add default_ex look to categories, recent, stats...
 
 15-Sep-2009 Matias
 + [#17628] Working category list implementation

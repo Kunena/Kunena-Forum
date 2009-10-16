@@ -35,6 +35,7 @@ Kunena 1.6.0dev
 
 16-Oct-2009 Matias
 + [#17628] Add missing index.html files
+^ [#17628] New entry file in both frontend and backend: api.php
 
 5-Oct-2009 Matias
 - [#17628] Integration class cleanup

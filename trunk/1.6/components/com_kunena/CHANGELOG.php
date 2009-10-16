@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0dev
 
+16-Oct-2009 Matias
++ [#17628] Add missing index.html files
+
 5-Oct-2009 Matias
 - [#17628] Integration class cleanup
 
@@ -53,7 +56,7 @@ Kunena 1.6.0dev
 
 24-Sep-2009 Matias
 + [#17628] Recent view: add logic for new, sticky, favorite
-+ [#17628] Messages view: handle non-existing threads 
++ [#17628] Messages view: handle non-existing threads
 
 23-Sep-2009 Matias
 + [#17628] Make Recent view to obey all configuration options in menu
@@ -69,7 +72,7 @@ Kunena 1.6.0dev
 
 17-Sep-2009 Matias
 + [#17628] Add default_ex look to top menu, search, profile box, pathway...
-+ [#17628] Add default_ex look to categories, recent, stats... 
++ [#17628] Add default_ex look to categories, recent, stats...
 
 15-Sep-2009 Matias
 + [#17628] Working category list implementation
@@ -175,7 +178,7 @@ Kunena 1.6.0dev
 ^ [#16825] First draft of merged messages_text into messages, all fb tables converted
 + [#17375] Initial draft of kunena_threads table - currently only in installer
 
-24-July-2009 Matias
+24-July-2009
 ^ [#15784] Merge 1.5.3 and 1.5.4 fixes from revision 878 to 936
 
 10-July-2009 fxstein

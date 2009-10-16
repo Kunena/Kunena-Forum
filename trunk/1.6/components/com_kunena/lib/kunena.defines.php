@@ -49,7 +49,7 @@ define('KUNENA_PATH_UPLOADED', KUNENA_ROOT_PATH . '/images/kunenafiles');
 // Files
 define('KUNENA_FILE_LANGUAGE_DEFAULT', KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.' . KUNENA_LANGUAGE_DEFAULT . '.php');
 define('KUNENA_FILE_LANGUAGE', KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.' . KUNENA_LANGUAGE . '.php');
-define('KUNENA_FILE_INSTALL', KUNENA_PATH_ADMIN .DS. 'manifest.xml');
+define('KUNENA_FILE_INSTALL', KUNENA_PATH_ADMIN .DS. 'kunena.xml');
 
 // URLs
 

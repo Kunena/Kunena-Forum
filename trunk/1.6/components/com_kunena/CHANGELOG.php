@@ -38,6 +38,7 @@ Kunena 1.6.0dev
 ^ [#17628] New entry file in both frontend and backend: api.php
 ^ [#17628] Move some legacy code into legacy files
 + [#17628] New installer classes (not yet fully functional)
+^ [#17628] New build scripts
 
 5-Oct-2009 Matias
 - [#17628] Integration class cleanup

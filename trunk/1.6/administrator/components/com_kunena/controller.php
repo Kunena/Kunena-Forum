@@ -91,7 +91,7 @@ class KunenaController extends JController
 		$lName	 = JRequest::getWord('layout', 'default');
 		$vFormat = $document->getType();
 
-		if ($view = $this->getView($vName, $vFormat))
+		if ($view = $this->getView($vName, $vFormat, '', array( 'base_path'=>$this->_basePath)))
 		{
 			// Do any specific processing for the view.
 			switch ($vName)

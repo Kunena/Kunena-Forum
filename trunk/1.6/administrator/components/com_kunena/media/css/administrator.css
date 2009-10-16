@@ -1,0 +1,20 @@
+/**
+* @version $Id: $
+* Kunena Component
+* @package Kunena
+
+**/
+
+@CHARSET "UTF-8";
+
+div.header {
+	padding-left:146px !important;
+	font-size:28px !important;
+}
+div.header span {
+	color:#334B6A !important;
+	font-size:28px !important;
+}
+div.icon-48-generic {
+	background-image:url(../images/kunena-48.png) !important;
+}

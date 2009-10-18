@@ -33,6 +33,9 @@ Legend:
 
 Custom Branch 810
 
+18-Oct-2009 810
++ [#18267] Added all options in default_setup.php
+
 17-Oct-2009 810
 - [#18267] Delete default_integration.php
 - [#18267] Delete default_security.php

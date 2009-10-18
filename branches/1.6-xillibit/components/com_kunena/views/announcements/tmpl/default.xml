@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+	<layout title="Show Announcements">
+		<message>
+			<![CDATA[Show announcements]]>
+		</message>
+	</layout>
+	<state>
+		<name>Kunena Forum: Show Announcements</name>
+		<description>Show announcements</description>
+		<params>
+			<param name="limit" type="text" default="10" label="Announcements in a Page" />
+			<param name="filter_limit_override" type="radio" default="0" label="Allow User Override">
+				<option value="0">No</option>
+				<option value="1">Yes</option>
+			</param>
+			<param name="filter_limitstart_allow" type="radio" default="1" label="Enable Pagination">
+				<option value="0">No</option>
+				<option value="1">Yes</option>
+			</param>
+		</params>
+	</state>
+</metadata>

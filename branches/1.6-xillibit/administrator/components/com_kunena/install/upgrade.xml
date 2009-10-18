@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<upgrade>
+	<version version="1.0.5" versiondate="2008-12-1" build="855" versionname="Redwood">
+		<phpfile name="kunena.special.upgrade.1.0.5.php" />
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_attachments` ADD KEY `mesid`(`mesid`), COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_categories` ADD COLUMN `headerdesc` text NOT NULL AFTER `description`, COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_categories` ADD COLUMN `class_sfx` varchar(20) NOT NULL AFTER `headerdesc`, COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_categories` ADD COLUMN `id_last_msg` int(10) NOT NULL DEFAULT '0' AFTER `class_sfx`, COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_categories` ADD COLUMN `numTopics` mediumint(8) NOT NULL DEFAULT '0' AFTER `id_last_msg`, COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_categories` ADD COLUMN `numPosts` mediumint(8) NOT NULL DEFAULT '0' AFTER `numTopics`, COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_categories` ADD COLUMN `time_last_msg` int(11) NULL  AFTER `numPosts`, COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_categories` DROP KEY `catid`, COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_categories` DROP KEY `catparent`, COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_categories` ADD KEY `msg_id`(`id_last_msg`), COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_categories` ADD KEY `parent`(`parent`), COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_categories` ADD PRIMARY KEY(`id`), COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_categories` ADD KEY `published_pubaccess_id`(`published`,`pub_access`,`id`), COMMENT=''</query>
+		<query>CREATE TABLE IF NOT EXISTS `#__fb_groups`(
+			`id` int(4) NOT NULL  auto_increment  , 
+			`title` varchar(255) NULL   , 
+			PRIMARY KEY (`id`) )</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_messages` ADD COLUMN `modified_by` int(7) NULL AFTER `moved`, COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_messages` ADD COLUMN `modified_time` int(11) NULL AFTER `modified_by`, COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_messages` ADD COLUMN `modified_reason` tinytext NULL AFTER `modified_time`, COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_messages` ADD KEY `hold_time`(`hold`,`time`), COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_messages` DROP KEY `id`, COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_messages` ADD KEY `locked`(`locked`), COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_messages` ADD KEY `time`(`time`), COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_messages_text` DROP KEY `mesid`, COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_messages_text` ADD PRIMARY KEY(`mesid`), COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_moderation` DROP KEY `catid`, COMMENT=''</query>			
+		<query>CREATE TABLE IF NOT EXISTS `#__fb_ranks`(
+			`rank_id` mediumint(8) unsigned NOT NULL  auto_increment  , 
+			`rank_title` varchar(255) NOT NULL   , 
+			`rank_min` mediumint(8) unsigned NOT NULL  DEFAULT '0'  , 
+			`rank_special` tinyint(1) unsigned NOT NULL  DEFAULT '0'  , 
+			`rank_image` varchar(255) NOT NULL   , 
+			PRIMARY KEY (`rank_id`) )</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD COLUMN `group_id` int(4) NULL DEFAULT '1' AFTER `karma_time`, COMMENT=''</query>			
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD COLUMN `uhits` int(11) NULL  DEFAULT '0' AFTER `group_id`, COMMENT=''</query>			
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD COLUMN `personalText` tinytext NULL AFTER `uhits`, COMMENT=''</query>			
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD COLUMN `gender` tinyint(4) NOT NULL DEFAULT '0' AFTER `personalText`, COMMENT=''</query>			
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD COLUMN `birthdate` date NOT NULL DEFAULT '0000-00-00' AFTER `gender`, COMMENT=''</query>			
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD COLUMN `location` varchar(50) NULL AFTER `birthdate`, COMMENT=''</query>			
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD COLUMN `ICQ` varchar(50) NULL AFTER `location`, COMMENT=''</query>			
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD COLUMN `AIM` varchar(50) NULL AFTER `ICQ`, COMMENT=''</query>			
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD COLUMN `YIM` varchar(50) NULL AFTER `AIM`, COMMENT=''</query>			
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD COLUMN `MSN` varchar(50) NULL AFTER `YIM`, COMMENT=''</query>			
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD COLUMN `SKYPE` varchar(50) NULL AFTER `MSN`, COMMENT=''</query>			
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD COLUMN `hideEmail` tinyint(1) NOT NULL DEFAULT '1' AFTER `SKYPE`, COMMENT=''</query>			
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD COLUMN `showOnline` tinyint(1) NOT NULL DEFAULT '1' AFTER `hideEmail`, COMMENT=''</query>			
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD COLUMN `rank` tinyint(4) NOT NULL DEFAULT '0' AFTER `showOnline`, COMMENT=''</query>			
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD COLUMN `GTALK` varchar(50) NULL AFTER `rank`, COMMENT=''</query>			
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD COLUMN `websitename` varchar(50) NULL AFTER `GTALK`, COMMENT=''</query>			
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD COLUMN `websiteurl` varchar(50) NULL AFTER `websitename`, COMMENT=''</query>			
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD KEY `group_id`(`group_id`), COMMENT=''</query>			
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_whoisonline` ADD KEY `userid`(`userid`), COMMENT=''</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_sessions` ADD COLUMN `currvisit` int(11) NOT NULL default '0' AFTER `readtopics`, COMMENT=''</query>
+		<query>UPDATE `#__fb_sessions` SET `allowed`='na'</query>
+		<query>UPDATE `#__fb_users` SET `rank`=8 WHERE `moderator`=1 AND `rank`=0</query>
+		<query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;#039;", "'")</query>
+        <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;quot;", '"')</query>
+        <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;nbsp;", " ")</query>
+        <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "&amp;lt;br />", "\n")</query>
+        <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "&amp;lt;br>", "\n")</query>
+        <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;lt;", "&lt;")</query>
+        <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;gt;", "&gt;")</query>
+        <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;amp;", "&amp;")</query>
+        <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "[IMG", "[img")</query>
+        <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "[/IMG]", "[/img]")</query>
+        <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "[URL", "[url")</query>
+        <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "[/URL]", "[/url]")</query>
+        <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "[QUOTE", "[quote")</query>
+        <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "[/QUOTE]", "[/quote]")</query>
+        <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "[CODE", "[code")</query>
+        <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "[/CODE", "[/code")</query>
+        <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "&amp;amp;#039;", "'")</query>
+        <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "&amp;amp;quot;", '"')</query>
+        <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "&amp;amp;nbsp;", " ")</query>
+        <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "&amp;lt;br />", "\n")</query>
+        <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "&amp;lt;br>", "\n")</query>
+        <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "&amp;amp;lt;", "&lt;")</query>
+        <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "&amp;amp;gt;", "&gt;")</query>
+        <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "&amp;amp;amp;", "&amp;")</query>
+        <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[IMG", "[img")</query>
+        <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[/IMG]", "[/img]")</query>
+        <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[URL", "[url")</query>
+        <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[/URL]", "[/url]")</query>
+        <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[QUOTE", "[quote")</query>
+        <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[/QUOTE]", "[/quote]")</query>
+        <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[CODE", "[code")</query>
+        <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[/CODE", "[/code")</query>
+	</version>
+	<version version="1.0.6" versiondate="2009-01-10" build="870" versionname="Communicate">
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_messages` ADD KEY `parent_hits`(`parent`,`hits`)</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD KEY `posts` ( `posts` )</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD KEY `uhits` ( `uhits` )</query>
+	</version>
+	<version version="1.0.8" versiondate="2009-02-17" build="1166" versionname="Speakup!">
+		<phpfile name="kunena.special.upgrade.1.0.8.php" />
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_config` CHANGE `annmodid` `annmodid` TEXT NULL DEFAULT NULL</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_config` CHANGE `latestcategory` `latestcategory` TEXT NULL DEFAULT NULL</query>
+		<query>UPDATE `#__fb_config` SET `latestcategory`=''</query>
+		<query>UPDATE `#__fb_users` SET `view`='flat'</query>
+		<query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "com_fireboard", "com_kunena")</query>
+		<query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "com_fireboard", "com_kunena")</query>
+	</version>
+	<version version="1.0.10" versiondate="2009-05-21" build="1344" versionname="Parier!">
+		<query>UPDATE `#__fb_config` SET `jmambot`='0'</query>
+	</version>
+	<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
+		<query mode="silenterror">RENAME TABLE `#__fb_config` TO `#__kunena_config`</query>
+		<query mode="silenterror">RENAME TABLE `#__fb_config_backup` TO `#__kunena_config_backup`</query>
+		<query mode="silenterror">RENAME TABLE `#__fb_announcement` TO `#__kunena_announcement`</query>
+		<query mode="silenterror">RENAME TABLE `#__fb_attachments` TO `#__kunena_attachments`</query>
+		<query mode="silenterror">RENAME TABLE `#__fb_categories` TO `#__kunena_categories`</query>
+		<query mode="silenterror">RENAME TABLE `#__fb_favorites` TO `#__kunena_favorites`</query>
+		<query mode="silenterror">RENAME TABLE `#__fb_groups` TO `#__kunena_groups`</query>
+		<query mode="silenterror">RENAME TABLE `#__fb_messages_text` TO `#__kunena_messages_text`</query>
+		<query mode="silenterror">RENAME TABLE `#__fb_moderation` TO `#__kunena_moderation`</query>
+		<query mode="silenterror">RENAME TABLE `#__fb_sessions` TO `#__kunena_sessions`</query>
+		<query mode="silenterror">RENAME TABLE `#__fb_smileys` TO `#__kunena_smileys`</query>
+		<query mode="silenterror">RENAME TABLE `#__fb_subscriptions` TO `#__kunena_subscriptions`</query>
+		<query mode="silenterror">RENAME TABLE `#__fb_users` TO `#__kunena_users`</query>
+		<query mode="silenterror">RENAME TABLE `#__fb_whoisonline` TO `#__kunena_whoisonline`</query>
+		<query mode="silenterror">RENAME TABLE `#__fb_ranks` TO `#__kunena_ranks`</query>
+		<query mode="silenterror">RENAME TABLE `#__fb_messages` TO `#__kunena_messages`</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__kunena_messages` ADD COLUMN `message` text NULL AFTER `modified_reason`, COMMENT=''</query>			
+		<query mode="silenterror">UPDATE `#__kunena_messages` as A, `#__kunena_messages_text` as B 
+			SET A.`message` = B.`message` WHERE A.`id` = B.`mesid`</query>		
+		<query mode="silenterror">RENAME TABLE `#__kunena_messages_text` TO `#__kunena_messages_text_backup`</query>
+		<query>CREATE TABLE IF NOT EXISTS `#__kunena_threads` (
+			`id` int(11) NOT NULL auto_increment,
+			`catid` int(11) NOT NULL default '0',
+			`subject` tinytext,
+			`topic_emoticon` int(11) NOT NULL default '0',
+			`locked` tinyint(4) NOT NULL default '0',
+			`hold` tinyint(4) NOT NULL default '0',
+			`ordering` int(11) NOT NULL default '0',
+			`posts` int(11) NOT NULL default '0',
+			`hits` int(11) NOT NULL default '0',
+			`attachments` int(11) NOT NULL default '0',
+			`moved_id` int(11) NOT NULL default '0',
+			`first_post_id` int(11) NOT NULL default '0',
+			`first_post_time` int(11) NOT NULL default '0',
+			`first_post_userid` int(11) NOT NULL default '0',
+			`first_post_name` tinytext NULL,
+			`first_post_email` tinytext NULL,
+			`first_post_message` text NULL,
+			`last_post_id` int(11) NOT NULL default '0',
+			`last_post_time` int(11) NOT NULL default '0',
+			`last_post_userid` int(11) NOT NULL default '0',
+			`last_post_name` tinytext NULL,
+			`last_post_email` tinytext NULL,
+			`last_post_message` text NULL,
+			PRIMARY KEY  (`id`),
+			KEY `catid` (`catid`),
+			KEY `first_post_userid` (`first_post_userid`),
+			KEY `last_post_userid` (`last_post_userid`),
+			KEY `first_post_time` (`first_post_time`),
+			KEY `last_post_time` (`last_post_time`),
+			KEY `locked` (`locked`) ) DEFAULT CHARSET=utf8</query>
+		<query>INSERT IGNORE INTO `#__kunena_threads`
+				(id, catid, subject, topic_emoticon, locked, hold, ordering, posts, hits, attachments, moved_id,
+					first_post_id, first_post_time, first_post_userid, first_post_name, first_post_email, first_post_message,
+					last_post_id, last_post_time, last_post_userid, last_post_name, last_post_email, last_post_message)
+				SELECT a.id, a.catid, a.subject, a.topic_emoticon, a.locked, a.hold, a.ordering, count(a.id) as posts, sum(a.hits) as hits, t.attachments as attachments,
+					0 as moved_id, min(b.id) as first_post_id, 0 as first_post_time, 0 as first_post_userid, '' as first_post_name, '' as first_post_email, '' as first_post_message,
+					max(b.id) as last_post_id, 0 as last_post_time, 0 as last_post_userid, '' as last_post_name, '' as last_post_email, '' as last_post_message
+				FROM #__kunena_messages AS a
+				JOIN #__kunena_messages AS b ON b.thread = a.id
+				LEFT OUTER JOIN (
+					SELECT m.thread, count(*) as attachments
+					FROM #__kunena_messages AS m
+					JOIN #__kunena_attachments AS n ON m.id = n.mesid
+					GROUP BY 1
+					) AS t on t.thread = a.id
+				WHERE a.parent = 0
+				GROUP BY a.id</query>
+		<query>UPDATE `#__kunena_threads` AS t, `#__kunena_messages` AS a, `#__kunena_messages` AS b
+				SET t.first_post_time = a.time, 
+					t.first_post_userid = a.userid,
+					t.first_post_name = a.name,
+					t.first_post_email = a.email,
+					t.first_post_message = a.message,
+					t.last_post_time = b.time, 
+					t.last_post_userid = b.userid,
+					t.last_post_name = b.name,
+					t.last_post_email = b.email,
+					t.last_post_message = b.message
+				WHERE t.first_post_id = a.id AND t.last_post_id = b.id</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__kunena_users` ADD COLUMN `allowed_categories` text default NULL AFTER showOnline</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__kunena_users` ADD COLUMN `read_topics` text default NULL AFTER allowed_categories</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__kunena_users` ADD COLUMN `last_visit_time` int(11) NOT NULL default '0' AFTER read_topics</query>
+		<query mode="silenterror">ALTER IGNORE TABLE `#__kunena_users` ADD COLUMN `curr_visit_time` int(11) NOT NULL default '0' AFTER last_visit_time</query>
+		<query>UPDATE `#__kunena_users` AS u, `#__kunena_sessions` AS s
+				SET u.`allowed_categories` = s.`allowed`,
+					u.`read_topics` = s.`readtopics`,
+					u.`last_visit_time` = s.`lasttime`,
+					u.`curr_visit_time` = s.`currvisit`
+				WHERE u.userid = s.userid</query>
+		<query mode="silenterror">ALTER TABLE `#__kunena_threads` CHANGE `subject` `topic_subject` tinytext</query>
+		<query>-- TODO: Drop old sessions table after conversion of main code is complete</query>
+	</version>
+</upgrade>

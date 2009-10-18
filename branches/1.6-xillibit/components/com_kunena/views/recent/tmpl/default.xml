@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+	<layout title="Show Recent Threads">
+		<message>
+			<![CDATA[Show recent threads]]>
+		</message>
+	</layout>
+	<state>
+		<name>Kunena Forum: Show Recent Threads</name>
+		<description>Show recent threads</description>
+		<url>
+			<param name="category" type="text" default="0" label="Root Category" />
+			<param name="type" type="list" default="nested" label="Type">
+				<option value="all">All Threads</option>
+				<option value="my">My Threads</option>
+				<option value="category">Category</option>
+			</param>
+		</url>
+		<params>
+			<param name="order" type="list" default="desc" label="Message Order">
+				<option value="asc">Ascending</option>
+				<option value="desc">Descending</option>			
+			</param>
+			<param type="spacer" />
+			<param name="filter_time" type="list" default="168" label="Show Messages">
+				<!-- <option value="new">Only new messages</option>  -->
+				<option value="session">Since last visit</option>
+				<option value="all">All messages</option>
+				<option value="4">4 hours</option>
+				<option value="8">8 hours</option>
+				<option value="12">12 hours</option>
+				<option value="24">24 hours</option>
+				<option value="48">48 hours</option>
+				<option value="168">Week</option>
+				<option value="720">Month</option>
+				<option value="8760">Year</option>
+			</param>
+			<param name="filter_time_override" type="radio" default="1" label="Allow User Override">
+				<option value="0">No</option>
+				<option value="1">Yes</option>
+			</param>
+			<param type="spacer" />
+			<param name="limit" type="text" default="10" label="Threads in a Page" />
+			<param name="filter_limit_override" type="radio" default="0" label="Allow User Override">
+				<option value="0">No</option>
+				<option value="1">Yes</option>
+			</param>
+			<param name="filter_limitstart_allow" type="radio" default="1" label="Enable Pagination">
+				<option value="0">No</option>
+				<option value="1">Yes</option>
+			</param>
+			<param type="spacer" />
+			<param name="filter_categories_which" type="radio" default="0" label="Selected Categories">
+				<option value="0">Exclude list</option>
+				<option value="1">Include list</option>
+			</param>			
+			<param name="filter_categories" type="text" default="" label="Comma Separated List of Category IDs" />
+			<!-- <param name="filter_categories_override" type="radio" default="0" label="Allow User Override">
+				<option value="0">No</option>
+				<option value="1">Yes</option>
+			</param>  -->			
+		</params>
+	</state>
+</metadata>

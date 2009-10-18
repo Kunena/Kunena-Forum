@@ -13,10 +13,9 @@
     <key name="PRIMARY" unique="1" columns="id"/>
   </table>
   <table name="kunena_attachments">
-    <field primary_key="yes" name="mesid" type="int(11)" null="0" default="0"/>
+    <field name="mesid" type="int(11)" null="0" default="0"/>
     <field name="filelocation" type="text" null="0"/>
-    <field name="foo" type="int(11)" null="0"/>
-    <key name="mesid" unique="1" columns="mesid"/>
+    <key name="mesid" columns="mesid"/>
   </table>
   <table name="kunena_categories">
     <field primary_key="yes" name="id" type="int(11)" null="0" extra="auto_increment"/>
@@ -47,15 +46,20 @@
     <field name="time_last_msg" type="int(11)" null="1"/>
     <key name="PRIMARY" unique="1" columns="id"/>
     <key name="parent" columns="parent"/>
-    <key name="published_pubaccess_id" columns="published, pub_access, id"/>
+    <key name="published_pubaccess_id" columns="published,pub_access,id"/>
     <key name="msg_id" columns="id_last_msg"/>
   </table>
   <table name="kunena_config">
     <field primary_key="yes" name="id" type="int(11)" null="0" default="0"/>
     <field name="board_title" type="text" null="1"/>
+    <field name="email" type="text" null="1"/>
+    <field name="board_offline" type="int(11)" null="1"/>
+    <field name="board_ofset" type="int(11)" null="1"/>
+    <field name="offline_message" type="text" null="1"/>
+    <field name="default_view" type="text" null="1"/>
     <field name="enablerss" type="int(11)" null="1"/>
     <field name="enablepdf" type="int(11)" null="1"/>
-    <field name="threads_page" type="int(11)" null="1"/>
+    <field name="threads_per_page" type="int(11)" null="1"/>
     <field name="messages_per_page" type="int(11)" null="1"/>
     <field name="messages_per_page_search" type="int(11)" null="1"/>
     <field name="showhistory" type="int(11)" null="1"/>
@@ -107,7 +111,7 @@
     <field name="allowavatarupload" type="int(11)" null="1"/>
     <field name="allowavatargallery" type="int(11)" null="1"/>
     <field name="imageprocessor" type="text" null="1"/>
-    <field name="avatarsmalheight" type="int(11)" null="1"/>
+    <field name="avatarsmallheight" type="int(11)" null="1"/>
     <field name="avatarsmallwidth" type="int(11)" null="1"/>
     <field name="avatarheight" type="int(11)" null="1"/>
     <field name="avatarwidth" type="int(11)" null="1"/>
@@ -179,6 +183,22 @@
     <field name="autoembedebay" type="int(11)" null="1"/>
     <field name="ebaylanguagecode" type="text" null="1"/>
     <field name="kunenasessiontimeout" type="int(11)" null="1"/>
+    <field name="highlightcode" type="int(11)" null="1"/>
+    <field name="rsstype" type="text" null="1"/>
+    <field name="rsshistory" type="text" null="1"/>
+    <field name="kunenadefaultpage" type="text" null="1"/>
+    <field name="default_sort" type="text" null="1"/>
+    <key name="PRIMARY" unique="1" columns="id"/>
+  </table>
+  <table name="kunena_favorites">
+    <field primary_key="yes" name="thread" type="int(11)" null="0" default="0"/>
+    <field primary_key="yes" name="userid" type="int(11)" null="0" default="0"/>
+    <key name="thread" unique="1" columns="thread,userid"/>
+    <key name="userid" columns="userid"/>
+  </table>
+  <table name="kunena_groups">
+    <field primary_key="yes" name="id" type="int(4)" null="0" extra="auto_increment"/>
+    <field name="title" type="varchar(255)" null="1"/>
     <key name="PRIMARY" unique="1" columns="id"/>
   </table>
   <table name="kunena_messages">
@@ -197,27 +217,28 @@
     <field name="hold" type="tinyint(4)" null="0" default="0"/>
     <field name="ordering" type="int(11)" null="1" default="0"/>
     <field name="hits" type="int(11)" null="1" default="0"/>
-    <field name="moved" type="int(11)" null="0" default="0"/>
+    <field name="moved" type="tinyint(4)" null="1" default="0"/>
     <field name="modified_by" type="int(7)" null="1"/>
     <field name="modified_time" type="int(11)" null="1"/>
     <field name="modified_reason" type="tinytext" null="1"/>
     <field name="message" type="text" null="1"/>
     <key name="PRIMARY" unique="1" columns="id"/>
     <key name="thread" columns="thread"/>
-    <key name="ip" columns="ip,catid"/>
-    <key name="userad" columns="userid, ip"/>
-    <key name="locked" columns="locked"/>
-    <key name="parent_hits" columns="parent, hits"/>
-    <key name="time_catid" columns="time, catid"/>
-    <key name="hold_time" columns="hold, time"/>
+    <key name="parent" columns="parent"/>
+    <key name="catid" columns="catid"/>
+    <key name="ip" columns="ip"/>
+    <key name="userid" columns="userid"/>
     <key name="time" columns="time"/>
+    <key name="locked" columns="locked"/>
+    <key name="hold_time" columns="hold,time"/>
+    <key name="parent_hits" columns="parent,hits"/>
   </table>
-  <table name="kunena_moderation_a">
+  <table name="kunena_moderation">
     <field primary_key="yes" name="catid" type="int(11)" null="0" default="0"/>
     <field primary_key="yes" name="userid" type="int(11)" null="0" default="0"/>
     <field name="future1" type="tinyint(4)" null="1" default="0"/>
     <field name="future2" type="int(11)" null="1" default="0"/>
-    <key name="PRIMARY" unique="1" columns="catid, userid"/>
+    <key name="PRIMARY" unique="1" columns="catid,userid"/>
   </table>
   <table name="kunena_ranks">
     <field primary_key="yes" name="rank_id" type="mediumint(8) unsigned" null="0" extra="auto_increment"/>
@@ -247,7 +268,7 @@
     <field primary_key="yes" name="thread" type="int(11)" null="0" default="0"/>
     <field primary_key="yes" name="userid" type="int(11)" null="0" default="0"/>
     <field name="future1" type="int(11)" null="1" default="0"/>
-    <key name="thread" unique="1" columns="thread, userid"/>
+    <key name="thread" unique="1" columns="thread,userid"/>
     <key name="userid" columns="userid"/>
   </table>
   <table name="kunena_threads">
@@ -325,6 +346,7 @@
     <field name="installdate" type="date" null="0"/>
     <field name="build" type="varchar(20)" null="0"/>
     <field name="versionname" type="varchar(40)" null="1"/>
+    <field name="status" type="varchar(32)" null="1"/>
     <key name="PRIMARY" unique="1" columns="id"/>
   </table>
   <table name="kunena_whoisonline">
@@ -343,4 +365,3 @@
     <key name="userid" columns="userid"/>
   </table>
 </schema>
-

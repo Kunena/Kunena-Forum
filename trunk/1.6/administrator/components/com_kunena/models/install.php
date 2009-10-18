@@ -449,6 +449,7 @@ class KunenaModelInstall extends JModel
 		$new->validate();
 		$schema = $this->getSchemaNew();
 		$schemaNode = $schema->documentElement;
+		$schemaNode->setAttribute('type', 'diff');
 
 		$nodes = $this->listAllNodes(array('old'=>$old->documentElement->childNodes, 'new'=>$new->documentElement->childNodes));
 		foreach ($nodes as $nodeTag => $nodeList)
@@ -470,7 +471,6 @@ class KunenaModelInstall extends JModel
 			if (is_a($n, 'DOMAttr')) $list[$n->name][$k] = $n;
 			else if (is_a($n, 'DOMElement')) $list[$n->tagName][$n->getAttribute('name')][$k] = $n;
 		}
-		//echo '<pre>',print_r($list),'</pre>';
 		return $list;
 	}
 
@@ -508,8 +508,9 @@ class KunenaModelInstall extends JModel
 		$attrAll = $this->listAllNodes(array('old'=>$loc['old']->attributes, 'new'=>$loc['new']->attributes));
 		foreach ($attrAll as $attrName => $attrLoc)
 		{
-			if ($attrName == 'action') continue;
-			if (str_replace(' ', '', $attrLoc['old']->value) != str_replace(' ', '', $attrLoc['new']->value)) $action = 'alter';
+			if ($attrName == 'primary_key' || $attrName == 'action') continue;
+			if (!isset($attrLoc['old']->value) || !isset($attrLoc['new']->value) || str_replace(' ', '', $attrLoc['old']->value) != str_replace(' ', '', $attrLoc['new']->value))
+				$action = 'alter';
 		}
 
 		if (count($childNodes) || $action)
@@ -525,7 +526,6 @@ class KunenaModelInstall extends JModel
 	protected function getDOMDocument($input)
 	{
 		if (is_a($input, 'DOMNode')) $schema = $input;
-		else if (is_a($input, 'SimpleXMLElement')) $schema = dom_import_simplexml($input);
 		else if ($input === KUNENA_INPUT_DATABASE) $schema = $this->getSchemaFromDatabase();
 		else if (is_string($input) && file_exists($input)) $schema = $this->getSchemaFromFile($input);
 		else if (is_string($input)) { $schema = new DOMDocument('1.0', 'utf-8'); $schema->loadXML($input); }
@@ -536,66 +536,93 @@ class KunenaModelInstall extends JModel
 		return $schema;
 	}
 
-	protected function getSimpleXMLElement($input)
+	public function getSchemaSQL($schema)
 	{
-		if (is_a($input, 'SimpleXMLElement')) $schema = $input;
-		else if (is_a($input, 'DOMNode')) $schema = simplexml_import_dom($input);
-		else if ($input === KUNENA_INPUT_DATABASE) $schema = simplexml_import_dom($this->getSchemaFromDatabase());
-		else if (is_string($input) && file_exists($input)) $schema = simplexml_load_file($input);
-		else if (is_string($input)) $schema = simplexml_load_string($input);
-		if (!isset($schema)  || $schema == false) return;
-		return $schema;
+		$db =& JFactory::getDBO();
+		$tables = array();
+		foreach ($schema->getElementsByTagName('table') as $table)
+		{
+			$str = '';
+			$tablename = $db->getPrefix() . $table->getAttribute('name');
+			$fields = array();
+			switch ($action = $table->getAttribute('action'))
+			{
+				case 'drop':
+					$str .= 'DROP TABLE '.$db->nameQuote($tablename).';';
+					break;
+				case 'alter':
+					$str .= 'ALTER TABLE '.$db->nameQuote($tablename).' '."\n";
+					foreach ($table->childNodes as $field)
+					{
+						switch ($action = $field->getAttribute('action'))
+						{
+							case 'drop':
+								$fields[] = '	DROP '.$this->getSchemaSQLField($field);
+								break;
+							case 'alter':
+								if ($field->tagName == 'key') {
+									$fields[] = '	DROP KEY '.$db->nameQuote($field->getAttribute('name'));
+									$fields[] = '	ADD '.$this->getSchemaSQLField($field);
+								} else
+									$fields[] = '	MODIFY '.$this->getSchemaSQLField($field);
+								break;
+							case 'create':
+								$fields[] = '	ADD '.$this->getSchemaSQLField($field);
+							case '':
+								break;
+							default:
+								echo("Kunena Installer: Unknown action $tablename.$action on xml file<br />");
+						}
+					}
+					$str .= implode(",\n", $fields) . ';';
+					break;
+				case 'create':
+				case '':
+					$str .= 'CREATE TABLE '.$db->nameQuote($tablename).' ('."\n";
+					foreach ($table->childNodes as $field)
+					{
+						$fields[] = '	'.$this->getSchemaSQLField($field);
+					}
+					$str .= implode(",\n", $fields) . ' ) DEFAULT CHARSET=utf8;';
+					break;
+				default:
+					echo("Kunena Installer: Unknown action $tablename.$action on xml file<br />");
+			}
+			$tables[$table->getAttribute('name')] = $str;
+		}
+		return $tables;
 	}
 
-	public function createMissingTables($input)
+	protected function getSchemaSQLField($field)
 	{
-		$schema = $this->getSimpleXMLElement($input);
-		if ($schema == false) return;
-
 		$db =& JFactory::getDBO();
-		$db->setQuery("SHOW TABLES LIKE ".$db->quote($db->getPrefix().'kunena_%'));
-		$tables = $db->loadResultArray();
-		if ($db->getErrorNum()) throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
 
 		$str = '';
-		foreach ($schema->table as $table)
+		if ($field->tagName == 'field')
 		{
-			$tablename = str_replace('#__', $db->getPrefix(), $table['name']);
-			//if (in_array($tablename, $tables)) continue;
-			$str .= 'CREATE TABLE '.$db->nameQuote($table['id']).' ('."<br />";
-			$fields = array();
-			foreach ($table->field as $field)
+			$str .= $db->nameQuote($field->getAttribute('name'));
+			if ($field->getAttribute('action') != 'drop')
 			{
-				$fld = '	';
-				$fld .= $db->nameQuote($field['name']);
-				$fld .= ' '.$field['type'];
-				$fld .= (isset($field['null']) && $field['null'] == 1) ? ' NULL' : ' NOT NULL';
-				$fld .= (isset($field['default'])) ? ' default '.$db->quote($field['default']) : '';
-				$fld .= (isset($field['extra'])) ? ' '.$field['extra'] : '';
-				$fields[] = $fld;
+				$str .= ' '.$field->getAttribute('type');
+				$str .= ($field->getAttribute('null') == 1) ? ' NULL' : ' NOT NULL';
+				$str .= ($field->hasAttribute('default')) ? ' default '.$db->quote($field->getAttribute('default')) : '';
+				$str .= ($field->hasAttribute('extra')) ? ' '.$field->getAttribute('extra') : '';
 			}
-			foreach ($table->key as $key)
-			{
-				$fld = '	';
-				if ($key['name'] == 'PRIMARY') $fld .= 'PRIMARY KEY';
-				else if ($key['unique'] == 1) $fld .= 'UNIQUE KEY '.$db->nameQuote($key['name']);
-				else $fld .= 'KEY '.$db->nameQuote($key['name']);
-				$fld .= (isset($key['type'])) ? ' USING '.$key['type'] : '';
-
-				$keys = array();
-				foreach ($key->column as $column) {
-					$len = (isset($column['len'])) ? ' ('.$column['len'].')' : '';
-					$keys[] = $db->nameQuote($column['name']).$len;
-				}
-				$fld .= ' ('.implode(",", $keys).')';
-				$fields[] = $fld;
-			}
-
-			$str .= implode(",\n", $fields)."\n";
-			$str .= ') DEFAULT CHARSET=utf8;'."\n\n";
 		}
-		echo '<pre>',$str,'</pre>';
+		else if ($field->tagName == 'key')
+		{
+			if ($field->getAttribute('name') == 'PRIMARY') $str .= 'PRIMARY KEY';
+			else if ($field->getAttribute('unique') == 1) $str .= 'UNIQUE KEY '.$db->nameQuote($field->getAttribute('name'));
+			else $str .= 'KEY '.$db->nameQuote($field->getAttribute('name'));
+			if ($field->getAttribute('action') != 'drop')
+			{
+				$str .= ($field->hasAttribute('type')) ? ' USING '.$field->getAttribute('type') : '';
+				$str .= ' ('.$field->getAttribute('columns').')';
+			}
+		}
+		return $str;
 	}
+
 }
 
 class KunenaInstallerException extends Exception {}

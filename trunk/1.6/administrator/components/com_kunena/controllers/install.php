@@ -37,21 +37,33 @@ class KunenaControllerInstall extends JController
 	public function install()
 	{
 		$model	= $this->getModel('Install');
+
+		// Check requirements
+		$reqs = $model->getRequirements();
+		if (!empty($reqs->fail))
+		{
+			// If requirements are not met, do nothing
+			$this->setRedirect('index.php?option=com_kunena&view=install');
+			return;
+		}
+
+
 		$schema = $model->getSchemaFromDatabase();
 		//echo "<pre>",htmlentities($schema->saveXML()),"</pre>";
 		$diff = $model->getSchemaDiff($schema, KUNENA_INSTALL_SCHEMA_FILE);
 		echo "<pre>",htmlentities($diff->saveXML()),"</pre>";
 
+		$sql = $model->getSchemaSQL($diff);
+		echo "<pre>",print_r($sql),"</pre>";
+
+		if (isset($sql['kunena_version'])) echo "UPDATE VERSION TABLE";
 		return;
+
+
 		$model->initialize();
 
-		// Check requirements
-		$reqs	= $model->getRequirements();
-		if (!empty($reqs->fail))
-		{
-			$this->setRedirect('index.php?option=com_kunena&view=install');
-			return;
-		}
+
+
 		// Start installation
 		$model->insertVersion();
 	}

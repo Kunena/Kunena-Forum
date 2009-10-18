@@ -31,7 +31,10 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.6.0dev
+Kunena 1.6.0-DEV
+
+17-Oct-2009 Matias
++ [#17628] Installer: Add logic to create SQL queries from XML schema
 
 16-Oct-2009 Matias
 + [#17628] Add missing index.html files

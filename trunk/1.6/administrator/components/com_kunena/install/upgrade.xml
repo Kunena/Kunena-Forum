@@ -55,17 +55,6 @@
 		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD COLUMN `websiteurl` varchar(50) NULL AFTER `websitename`, COMMENT=''</query>			
 		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_users` ADD KEY `group_id`(`group_id`), COMMENT=''</query>			
 		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_whoisonline` ADD KEY `userid`(`userid`), COMMENT=''</query>
-		<query>INSERT IGNORE INTO `#__fb_groups` VALUES ('1', 'Registered User')</query>
-		<query>INSERT IGNORE INTO `#__fb_ranks` (`rank_id`, `rank_title`, `rank_min`, `rank_special`, `rank_image`) VALUES
-			(1, 'Fresh Boarder', 0, 0, 'rank1.gif'),
-			(2, 'Junior Boarder', 20, 0, 'rank2.gif'),
-			(3, 'Senior Boarder', 40, 0, 'rank3.gif'),
-			(4, 'Expert Boarder', 80, 0, 'rank4.gif'),
-			(5, 'Gold Boarder', 160, 0, 'rank5.gif'),
-			(6, 'Platinum Boarder', 320, 0, 'rank6.gif'),
-			(7, 'Administrator', 0, 1, 'rankadmin.gif'),
-			(8, 'Moderator', 0, 1, 'rankmod.gif'),
-			(9, 'Spammer', 0, 1, 'rankspammer.gif')</query>
 		<query mode="silenterror">ALTER IGNORE TABLE `#__fb_sessions` ADD COLUMN `currvisit` int(11) NOT NULL default '0' AFTER `readtopics`, COMMENT=''</query>
 		<query>UPDATE `#__fb_sessions` SET `allowed`='na'</query>
 		<query>UPDATE `#__fb_users` SET `rank`=8 WHERE `moderator`=1 AND `rank`=0</query>

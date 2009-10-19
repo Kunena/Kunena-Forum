@@ -120,6 +120,8 @@ class KunenaModelStatistics extends JModel
 			return $this->_statistics[$key];
 		}
 		
+		$this->_statistics[$key]['birthdayname'] = $this->getUsersNameBirthday();
+		$this->_statistics[$key]['birthdaynb'] = $this->getNumberBirthdaytoday();
 		$this->_statistics[$key]['users'] = $this->getUserStats();
 		$this->_statistics[$key]['forum'] = $this->getForumStats();
 		$this->_statistics[$key]['recent'] = $this->getRecentStats();
@@ -357,7 +359,125 @@ class KunenaModelStatistics extends JModel
 
 		return $query;
 	}
+	
+	/**
+	 * Method to get datas from table kunena users and table joomla users.
+	 *
+	 * @return	
+	 * @since	1.6
+	 */
+	protected function _getDatasBirthday()
+	{
+		$query = new KQuery();	
+		$query->select('id, username, name, birthdate, CURDATE(), (YEAR(CURDATE())-YEAR(birthdate)) - (RIGHT(CURDATE(),5)<RIGHT(birthdate,5)) AS age');
+		$query->from('#__kunena_users AS a');	
+    $query->join('INNER', '#__users AS b ON a.userid=b.id');	
+		return $query;
+	}	
+	/**
+	 * Method to check if an user have a birthday today.
+	 *
+	 * @return	Boolean
+	 * @since	1.6
+	 */
+	protected function _checkbirthday($userbirthdate)
+	{
+		$todaydate = strftime("%Y-%m-%d" , time());
+    $todaydate1 = explode("-",$todaydate);
+    $userbirthdate1 = explode("-",$userbirthdate);
+    if($userbirthdate1[1] == $todaydate1[1] && $userbirthdate1[2] == $todaydate1[2]){
+      return true;
+    } else {
+      return false;
+    }
+	}		
+	/**
+	 * Method to get the number of the birthdays today.
+	 *
+	 * @return Integer	
+	 * @since	1.6
+	 */
+	public function getNumberBirthdaytoday()
+	{	
+	 // Get a unique key for the current list state.
+		$key = $this->_getStoreId($this->_context);
+     
+		$query = $this->_getDatasBirthday();
+		$this->_db->setQuery($query->toString());
+		$datas = $this->_db->loadObjectList();
+		
+		// Check for a database error.
+		if ($this->_db->getErrorNum()) {
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}   
+			
+		$j="0";
+		foreach($datas as $row) {
+		  if($this->_checkbirthday($row->birthdate)) {
+        $j++;
+      }		  			
+		}		
+    
+		if(!empty($j)) {
+			$return = $j;
+		}else {
+			$return = "K_NO_BIRTHDAYS_TODAY";
+		}	
+		
+		// Push the value into internal storage.
+		$this->_birthdaynb[$key] = $return;
 
+		// Push the value into cache.
+		//$cache->store($total, $store);
+    return $this->_birthdaynb[$key];	
+	}
+	/**
+	 * Method to get the name for the users which have a birthday today.
+	 *
+	 * @return String	
+	 * @since	1.6
+	 */
+	public function getUsersNameBirthday()
+	{
+	  // Get a unique key for the current list state.
+		$key = $this->_getStoreId($this->_context);	
+    
+    $query = $this->_getDatasBirthday();
+		$this->_db->setQuery($query->toString());
+		$datas = $this->_db->loadObjectList();
+		
+		// Check for a database error.
+		if ($this->_db->getErrorNum()) {
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}			
+    
+    $icon = "<img src=\"components/com_kunena/media/images/user.png\" />";		
+		foreach($datas as $row) {
+      if($this->_checkbirthday($row->birthdate)) {		  
+			 if(empty($birthname)){
+        $birthname = $icon. JHtml::_('klink.user', 'atag', $row->id, $row->name, $row->name) ."  (".$row->age.") ";
+       } else {
+        $birthname .= $icon. JHtml::_('klink.user', 'atag', $row->id, $row->name, $row->name) ."  (".$row->age.") ";
+       }			       			
+			}
+		}		
+		
+		if(!empty($birthname)){
+      $return = $birthname;
+    } else {
+      $return = "K_NO_USERS_CELEBRATE_BIRTHDAY";
+    }
+		
+    // Push the value into internal storage.
+		$this->_birthdayname[$key] = $return;
+
+		// Push the value into cache.
+		//$cache->store($total, $store);
+    return $this->_birthdayname[$key];	
+	}		
+	
 	/**
 	 * Method to get a store id based on model configuration state.
 	 *

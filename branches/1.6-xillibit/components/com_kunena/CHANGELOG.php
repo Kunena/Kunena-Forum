@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+19-Oct-2009 Xillibit
++ [#17628] Add kunena birthday feature in statistics
+
 17-Oct-2009 Matias
 + [#17628] Installer: Add logic to create SQL queries from XML schema
 

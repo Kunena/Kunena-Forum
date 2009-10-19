@@ -34,6 +34,7 @@ Legend:
 Kunena 1.6.0-DEV
 
 19-Oct-2009 Xillibit
++ [#17628] Add view and model for credits page
 + [#17628] Add kunena birthday feature in statistics
 
 17-Oct-2009 Matias

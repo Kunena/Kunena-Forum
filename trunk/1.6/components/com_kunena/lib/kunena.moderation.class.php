@@ -115,7 +115,7 @@ class CKunenaModeration
 				return false;
 			}
 
-			if ($TargetCatID = $currentMessage->catid AND $TargetMessageID == 0)
+			if ($TargetCatID == $currentMessage->catid AND $TargetMessageID == 0)
 			{
 				// Category identical and no append. Nothing to do here
 				return true;

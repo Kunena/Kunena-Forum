@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+20-Oct-2009 Matias
++ [#17628] Basic model for post, reply, edit, subscribe and favorite
+
 17-Oct-2009 Matias
 + [#17628] Installer: Add logic to create SQL queries from XML schema
 

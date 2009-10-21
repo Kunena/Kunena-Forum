@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-	<view title="Team credits">
+	<view title="Team Credits" hidden="true">
 		<message>
-			<![CDATA[Show user list]]>
+			<![CDATA[Show team credits]]>
 		</message>
 	</view>
 </metadata>

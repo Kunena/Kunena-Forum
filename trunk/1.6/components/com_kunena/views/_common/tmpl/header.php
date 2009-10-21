@@ -24,7 +24,7 @@ $user = JFactory::getUser();
 			</ul>
 		</div>
 		<div class="search">
-			<form action="/forum/search" name="Search" method="post">
+			<form action="" name="Search" method="post">
 				<input class="input_search" type="text" name="q" size="10" value="<?php echo JText::_('K_SEARCH_FORUM'); ?>" onblur="if(this.value=='') this.value='<?php echo JText::_('K_SEARCH_FORUM'); ?>';" onfocus="if(this.value=='<?php echo JText::_('K_SEARCH_FORUM'); ?>') this.value='';" />
 				<input type="submit" value="<?php echo JText::_('K_GO'); ?>" name="submit" class="go_btn"/>
 			</form>

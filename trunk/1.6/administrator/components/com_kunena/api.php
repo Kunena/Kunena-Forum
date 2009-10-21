@@ -22,7 +22,13 @@ define ('KUNENA_COMPONENT_LOCATION', basename(dirname(dirname(__FILE__))));
 define ('KPATH_COMPONENT_RELATIVE', KUNENA_COMPONENT_LOCATION .DS. KUNENA_COMPONENT_NAME);
 define ('KPATH_SITE', JPATH_ROOT .DS. KPATH_COMPONENT_RELATIVE);
 define ('KPATH_ADMIN', JPATH_ADMINISTRATOR .DS. KPATH_COMPONENT_RELATIVE);
+define ('KPATH_COMPONENT_MEDIA', KPATH_SITE .DS. 'media');
 define ('KPATH_MEDIA', JPATH_ROOT .DS. 'media' .DS. KUNENA_COMPONENT_NAME);
+
+// URLs
+define('KURL_SITE', 'index.php?option=com_kunena');
+define('KURL_COMPONENT_MEDIA', JURI::Base().KUNENA_COMPONENT_LOCATION.'/'.KUNENA_COMPONENT_NAME.'/media/');
+define('KURL_MEDIA', JURI::Base().'media/'.KUNENA_COMPONENT_NAME.'/');
 
 // Version information
 define ('KUNENA_VERSION', ('@kunenaversion@' == '@'.'kunenaversion'.'@') ? '1.6.0-SVN' : strtoupper('@kunenaversion@'));

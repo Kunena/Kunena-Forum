@@ -10,7 +10,7 @@
 
 defined('_JEXEC') or die;
 ?>
-<?php if (isset($this->announcements)) foreach ($this->announcements as $this->current=>$this->announcement): ?>									
+<?php if (isset($this->announcements)) foreach ($this->announcements as $this->current=>$this->announcement): ?>
 <table class="forum_body announcements">
 	<thead>
 		<tr>
@@ -26,7 +26,7 @@ defined('_JEXEC') or die;
 			<td class="fcol announce_summary">
 				<span><?php echo JHTML::_('date', $this->announcement->created); ?></span>
 				<?php echo $this->escape($this->announcement->sdescription); ?>
-				<a href=""><?php echo JText::_('K_READ_MORE'); ?></a>
+				<?php echo JHTML::_('klink.announcement', 'atag', $this->announcement->id, JText::_('K_READ_MORE')); ?>
 			</td>
 		</tr>
 	</tbody>

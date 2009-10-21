@@ -69,7 +69,7 @@ foreach ($this->threads as $this->current=>$this->thread):
 ?>
 									<tr class="<?php echo ($this->current%2) ? 'row_even' : 'row_odd'; ?> <?php echo $class; ?>">
 										<td class="lcol col_replies"><div class="post_number"><?php echo $this->escape($this->thread->posts); ?></div><span><?php echo JText::_('K_REPLIES'); ?></span></td>
-										<td class="mcol col_emoticon"><a href="#" ><img src="components/com_kunena/media/images/emoticons/default.gif" alt="Smiles" /></a></td>
+										<td class="mcol col_emoticon"><a href="#" ><img src="<?php echo KURL_COMPONENT_MEDIA; ?>images/topic_icons/default.gif" alt="Smiles" /></a></td>
 										<td class="mcol col_content">
 											<div class="post_info">
 												<h2>

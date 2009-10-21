@@ -59,7 +59,7 @@ foreach ($this->categories[$section->id] as $current=>$category):
 ?>
 		<tr class="<?php echo ($current%2) ? 'row_even' : 'row_odd'; ?>" id="fb_cat<?php echo $category->id; ?>">
 			<td class="lcol col_emoticon">
-				<?php echo JHtml::_('klink.category', 'atag', $category->id, '<img src="/images/english/icons/folder_nonew.gif" border="0" alt="No New Posts" title="No New Posts" />', 'No New Posts'); ?>
+				<?php echo JHtml::_('klink.category', 'atag', $category->id, '<img src="'.KURL_COMPONENT_MEDIA.'images/category_icons/default.gif" border="0" alt="No New Posts" title="No New Posts" />', 'No New Posts'); ?>
 			</td>
 			<td class="mcol col_content">
 				<h2>

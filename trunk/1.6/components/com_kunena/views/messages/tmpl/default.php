@@ -23,7 +23,7 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 <div class="top_actions_box">
 	<div class="jump">
 		<a name="forumtop"></a>
-		<?php echo JHtml::_('klink.pageAnker', 'atag', 'forumbottom', '<img src="http://kunena15/components/com_kunena/template/default_ex/images/english/icons/bottom_arrow.gif" border="0" alt="Go to bottom" title="Go to bottom" /></a>'); ?>
+		<?php echo JHtml::_('klink.pageAnker', 'atag', 'forumbottom', '<img src="'.KURL_COMPONENT_MEDIA.'images/bottom_arrow.gif" border="0" alt="Go to bottom" title="Go to bottom" /></a>'); ?>
 	</div>
 	<div class="actions"></div>
 	<div class="counter"><?php echo $this->pagination->getResultsCounter(); ?></div>
@@ -45,7 +45,7 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 
 <?php foreach ($this->messages as $current=>$message): ?>
 		<tr>
-			<th class="fcol msgheader" colspan="2">					
+			<th class="fcol msgheader" colspan="2">
 				<a name="<?php echo $message->id; ?>"></a>
 				<?php echo JHtml::_('klink.pageAnker', 'atag', $message->id, '#'.$message->id); ?>
 			</th>
@@ -62,9 +62,9 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 			</td>
 
 			<td class="rcol profile" rowspan="2">
-<?php 
+<?php
 $this->profile =& $message;
-echo $this->loadCommonTemplate('profilebox'); 
+echo $this->loadCommonTemplate('profilebox');
 ?>
 			</td>
 		</tr>
@@ -84,7 +84,7 @@ echo $this->loadCommonTemplate('profilebox');
 <div class="bottom_actions_box">
 	<div class="jump">
 		<a name="forumtop"></a>
-		<?php echo JHtml::_('klink.pageAnker', 'atag', 'forumbottom', '<img src="http://kunena15/components/com_kunena/template/default_ex/images/english/icons/bottom_arrow.gif" border="0" alt="Go to bottom" title="Go to bottom" /></a>'); ?>
+		<?php echo JHtml::_('klink.pageAnker', 'atag', 'forumbottom', '<img src="'.KURL_COMPONENT_MEDIA.'images/bottom_arrow.gif" border="0" alt="Go to bottom" title="Go to bottom" /></a>'); ?>
 	</div>
 	<div class="actions"></div>
 	<div class="counter"><?php echo $this->pagination->getResultsCounter(); ?></div>

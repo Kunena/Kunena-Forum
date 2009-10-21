@@ -35,6 +35,7 @@ Kunena 1.6.0-DEV
 
 21-Oct-2009 Matias
 + [#17628] Category view (recent.category)
+# [#17628] Fix most broken links and images
 
 20-Oct-2009 Matias
 + [#17628] Basic model for post, reply, edit, subscribe and favorite

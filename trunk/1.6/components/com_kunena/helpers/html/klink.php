@@ -72,9 +72,9 @@ abstract class JHtmlKLink
         return self::link('atag', 'http://www.kunena.com', 'Kunena', 'Kunena', 'follow', NULL, NULL, 'target="_blank"');
     }
 
-    public function teamCredits($catid, $name='')
+    public function teamCredits($linktype, $name='')
     {
-        return self::link('atag', KURL_SITE.'&func=credits&catid='.$catid, $name, NULL, 'follow');
+        return self::link('atag', KURL_SITE.'&view=credits', $name, NULL, 'follow');
     }
 
     public function kunena($linktype, $name)

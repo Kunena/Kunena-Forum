@@ -62,10 +62,10 @@ defined('_JEXEC') or die;
 
 <div id="kunena_footer">
 <div class="credits">
-	<p><?php echo JText::_('K_POWERED_BY'); ?> <a href="http://www.kunena.com" title="Visit Kunena.com" target="_blank">Kunena</a></p>
+	<p><?php echo JHtml::_('klink.teamCredits', 'atag', JText::_('K_POWERED_BY')); ?> <?php echo JHtml::_('klink.credits', 'atag', JText::_('Visit Kunena.com'), 'Kunena'); ?></p>
 </div>
 <div class="rsslink" >
 	<a href="/forum/fb_rss?no_html=1" title="" target="_blank">
-	<img src="<?php echo JURI::Base(); ?>components/com_kunena/media/images/rss.png" alt="<?php echo JText::_('K_SUBSCRIBE'); ?>" title="<?php echo JText::_('K_SUBSCRIBE'); ?>" /></a>
+	<img src="<?php echo KURL_COMPONENT_MEDIA ?>images/rss.png" alt="<?php echo JText::_('K_SUBSCRIBE'); ?>" title="<?php echo JText::_('K_SUBSCRIBE'); ?>" /></a>
 </div>
 </div>

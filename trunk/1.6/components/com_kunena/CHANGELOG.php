@@ -36,9 +36,13 @@ Kunena 1.6.0-DEV
 21-Oct-2009 Matias
 + [#17628] Category view (recent.category)
 # [#17628] Fix most broken links and images
+^ [#17628] Update credits page
 
 20-Oct-2009 Matias
 + [#17628] Basic model for post, reply, edit, subscribe and favorite
+
+19-Oct-2009 Xillibit
++ [#17628] Add view and model for credits page
 
 17-Oct-2009 Matias
 + [#17628] Installer: Add logic to create SQL queries from XML schema
@@ -192,7 +196,7 @@ Kunena 1.6.0-DEV
 ^ [#16825] First draft of merged messages_text into messages, all fb tables converted
 + [#17375] Initial draft of kunena_threads table - currently only in installer
 
-24-July-2009
+24-July-2009 Matias
 ^ [#15784] Merge 1.5.3 and 1.5.4 fixes from revision 878 to 936
 
 10-July-2009 fxstein

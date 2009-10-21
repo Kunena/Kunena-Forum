@@ -134,7 +134,7 @@ class KunenaModelCategories extends JModel
 
 		// Load the list.
 		$query	= $this->_getListQuery();
-		
+
 		// FIXME: Limit has unexpected results
 		$rows	= $this->_getList($query->toString(), $this->getState('list.start'), $this->getState('list.limit'));
 
@@ -154,12 +154,12 @@ class KunenaModelCategories extends JModel
 		    	else $nested['root'] = $nested[0];
 		    	$this->_lists[$key] = $nested;
 				break;
-				
+
 		    case 'flat':
 				// Add the rows to the internal storage.
 				$this->_lists[$key] = $rows;
 		    	break;
-		    	
+
 		    default:
 		        // Invalid view type specified
 		}
@@ -173,19 +173,19 @@ class KunenaModelCategories extends JModel
 	 * @return	object	A JPagination object.
 	 * @since	1.6
 	 */
-	public function getPath($current = 0)
+	public function getPath($current = false)
 	{
-		if (!$current) $current = $this->getState('category.id');
+		if ($current === false) $current = $this->getState('category.id');
 		$path = array();
 		for (; $current>0; $current = $rows[0]->parent) {
 			// Load the category.
 			$query	= $this->_getItemQuery($current);
-			$rows	= $this->_getList($query->toString(), $this->getState('list.start'), $this->getState('list.limit'));			
+			$rows	= $this->_getList($query->toString(), $this->getState('list.start'), $this->getState('list.limit'));
 			$path[] = $rows[0];
 		}
 		return array_reverse($path);
-	}	
-	
+	}
+
 	/**
 	 * Method to get a list pagination object.
 	 *
@@ -345,7 +345,7 @@ class KunenaModelCategories extends JModel
 	    $query->leftJoin('#__kunena_messages AS m ON c.id_last_msg = m.id');
 	    $query->where('c.id IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
 	    $query->where('c.published=1');
-		
+
 		switch ($this->getState('type'))
 		{
 			case 'nested':
@@ -397,12 +397,12 @@ class KunenaModelCategories extends JModel
 	    $query->where('c.id IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
 	    $query->where('c.published=1');
 		$query->where('c.id='.$id);
-	    
+
 		// echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
 
 		return $query;
 	}
-	
+
 	/**
 	 * Method to get a store id based on model configuration state.
 	 *

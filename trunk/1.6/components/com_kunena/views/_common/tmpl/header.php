@@ -19,7 +19,7 @@ $user = JFactory::getUser();
 		<div class="topnav">
 			<ul>
 				<li class="active"><?php echo JHtml::_('klink.recent', 'atag', '<span>'.JText::_('K_RECENT_DISCUSSIONS').'</span>', JText::_('K_RECENT_DISCUSSIONS')); ?></li>
-				<li><?php echo JHtml::_('klink.category', 'atag', 0, '<span>'.JText::_('K_CATEGORIES').'</span>', JText::_('K_CATEGORIES'));?></li>
+				<li><?php echo JHtml::_('klink.categories', 'atag', 0, '<span>'.JText::_('K_CATEGORIES').'</span>', JText::_('K_CATEGORIES'));?></li>
 				<?php // <li><a href="/forum/faq" title="<?php echo JText::_('K_HELP'); ?/>"><span><?php echo JText::_('K_HELP'); ?/></span></a></li> ?>
 			</ul>
 		</div>
@@ -51,15 +51,15 @@ $user = JFactory::getUser();
 		<td class="rcol">
 			<p class="welcome">Welcome, <b><?php echo $this->escape($user->name); ?></b></p>
 			<p class="register_login">
-<!-- 				<a href="" title="" rel="nofollow">Show Latest Posts</a> 
-				| <a href="" title="" rel="nofollow">My Profile</a>  
+<!-- 				<a href="" title="" rel="nofollow">Show Latest Posts</a>
+				| <a href="" title="" rel="nofollow">My Profile</a>
 				| --> <a href="<?php echo $login->getLoginURL(); ?>">Logout</a>
 <!-- 				| <a href="">Announcements </a>
 				| <a href="" title="" rel="nofollow">Advanced Search</a> -->
 			</p>
 		</td>
-<?php endif; ?>												
+<?php endif; ?>
 	</tr>
 </table>
-									
+
 <?php if (isset($this->announcements)) echo $this->loadCommonTemplate('announce'); ?>

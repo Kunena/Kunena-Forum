@@ -36,7 +36,7 @@ $profile = KFactory::getProfile();
 		</tr>
 	</thead>
 	<tbody id="catid_<?php echo $section->id; ?>">
-<?php 
+<?php
 if (empty($this->categories[$section->id])):
 ?>
 		<tr class="row_odd" id="fb_cat0">
@@ -44,7 +44,7 @@ if (empty($this->categories[$section->id])):
 				<b>There are no forums in this section.</b>
 			</td>
 		</tr>
-<?php 	
+<?php
 else:
 ?>
 		<tr>
@@ -54,16 +54,16 @@ else:
 			<th class="mcol col_posts">Posts</th>
 			<th class="lcol col_last">Last Post</th>
 		</tr>
-<?php 	
-foreach ($this->categories[$section->id] as $current=>$category): 
+<?php
+foreach ($this->categories[$section->id] as $current=>$category):
 ?>
 		<tr class="<?php echo ($current%2) ? 'row_even' : 'row_odd'; ?>" id="fb_cat<?php echo $category->id; ?>">
 			<td class="lcol col_emoticon">
-				<?php echo JHtml::_('klink.categories', 'atag', $category->id, '<img src="http://kunena15/components/com_kunena/template/default_ex/images/english/icons/folder_nonew.gif" border="0" alt="No New Posts" title="No New Posts" />', 'No New Posts'); ?>
+				<?php echo JHtml::_('klink.category', 'atag', $category->id, '<img src="/images/english/icons/folder_nonew.gif" border="0" alt="No New Posts" title="No New Posts" />', 'No New Posts'); ?>
 			</td>
 			<td class="mcol col_content">
 				<h2>
-					<?php echo JHtml::_('klink.categories', 'atag', $category->id, $this->escape($category->name), $this->escape($category->name)); ?>
+					<?php echo JHtml::_('klink.category', 'atag', $category->id, $this->escape($category->name), $this->escape($category->name)); ?>
 				</h2>
 				<div class = "fb_thead-desc">
 					<?php echo $category->description; ?>
@@ -73,7 +73,7 @@ foreach ($this->categories[$section->id] as $current=>$category):
 			<td class="mcol col_posts"><?php echo $category->numPosts; ?></td>
 			<td class="rcol col_last">
 				<div class="topic_latest_post_avatar">
-<?php 
+<?php
 // echo JHtml::_('klink.user', 'atag', $this->thread->last_post_userid, '<img class="avatar" src="components/com_kunena/media/images/no_photo_sm.jpg" alt="'.$this->escape($this->thread->last_post_name).'" />', $this->escape($this->thread->last_post_name));
 echo $profile->showAvatar($category->userid, 'avatar');
 ?>
@@ -93,7 +93,7 @@ echo $profile->showAvatar($category->userid, 'avatar');
 			</td>
 		</tr>
 <?php
-endforeach; 
+endforeach;
 endif;
 ?>
 	</tbody>

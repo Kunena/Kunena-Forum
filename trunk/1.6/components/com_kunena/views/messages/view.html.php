@@ -31,19 +31,19 @@ class KunenaViewMessages extends KView
 	public function display($tpl = null)
 	{
 		$this->assignRef ('state', $this->get ('State'));
-		
+
 		// Create shortcut to parameters.
 		$params = $this->state->get('params');
 
 		$this->assignRef('announcements', $this->get('Announcement'));
 	    $this->assignRef('statistics', $this->get('Statistics'));
 		$this->assign('total', $this->get('Total'));
-		
+
 		if (!$this->total) {
 			parent::display('empty');
 			return;
 		}
-		
+
 	    $this->assignRef('pagination', $this->get('Pagination'));
 
 		$bbcode = KBBCode::getInstance();
@@ -58,22 +58,26 @@ class KunenaViewMessages extends KView
 
 	    $catmodel =& $this->getModel('categories');
 	    $this->assignRef('path', $catmodel->getPath($this->messages[0]->catid));
-	    
+
 		$app = JFactory::getApplication();
 		$pathway = $app->getPathway();
-		foreach ($this->path as &$category) $pathway->addItem($this->escape($category->name), JHtml::_('klink.categories', 'url', $category->id, '', ''));
+		foreach ($this->path as &$category)
+		{
+			if (!$category->parent) $pathway->addItem($this->escape($category->name), JHtml::_('klink.categories', 'url', $category->id, '', ''));
+			else $pathway->addItem($this->escape($category->name), JHtml::_('klink.category', 'url', $category->id, '', ''));
+		}
 		$pathway->addItem($this->escape($this->messages[0]->subject));
-		
-		$category = end($this->path); 
+
+		$category = end($this->path);
 		$this->assign('description', $bbcode->Parse(stripslashes($category->headerdesc)));
-		
+
 		jimport( 'joomla.application.menu' );
 		$menu = JSite::getMenu();
 		$menuitem = $menu->getActive();
-		
-		$this->assign ( 'title', ($params->get('show_page_title') && $menuitem->query['view'] == 'messages' && $menuitem->query['thread'] == $this->state->thread ? 
+
+		$this->assign ( 'title', ($params->get('show_page_title') && $menuitem->query['view'] == 'messages' && $menuitem->query['thread'] == $this->state->thread ?
 		$params->get('page_title') : $this->messages[0]->subject));
-		
+
 		parent::display($tpl);
 	    //echo "<code>"; print_r($this->path); echo "</code>";
 	}

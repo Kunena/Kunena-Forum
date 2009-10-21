@@ -14,6 +14,7 @@ $profile = KFactory::getProfile();
 ?>
 	<div id="kunena">
 <?php echo $this->loadCommonTemplate('header'); ?>
+<?php echo $this->loadCommonTemplate('pathway'); ?>
 
 		<div class="top_info_box">
 <?php if (isset($this->filter_time_options)): ?>
@@ -35,10 +36,10 @@ $profile = KFactory::getProfile();
 			<div class="pagination">
 				<?php echo JText::_('K_PAGE'); ?>: <?php echo $this->pagination->getPagesLinks(); ?>
 			</div>
-<?php endif; ?>	
+<?php endif; ?>
 		</div>
 		<div class="clr"></div>
-		
+
 		<div class="corner_tl">
 			<div class="corner_tr">
 				<div class="corner_br">
@@ -60,9 +61,6 @@ $profile = KFactory::getProfile();
 										<th class="rcol col_last"><?php echo JText::_('K_LAST_POST'); ?></th>
 									</tr>
 
-<!--
-<pre><?php print_r($this->threads[0]); ?></pre> 
--->
 <?php
 foreach ($this->threads as $this->current=>$this->thread):
 	$class = 'thread';
@@ -81,12 +79,14 @@ foreach ($this->threads as $this->current=>$this->thread):
 												<div class="topic_views"><?php echo JText::_('K_VIEWS'); ?>: <?php echo $this->escape($this->thread->hits); ?></div>
 												<div class="topic_post_time"><?php echo JText::_('K_POSTED_ON'); ?> <?php echo JHTML::_('date', $this->thread->first_post_time); ?></div>
 												<div class="topic_author"><?php echo JText::_('K_BY').' '; echo JHtml::_('klink.user', 'atag', $this->thread->first_post_userid, $this->escape($this->thread->first_post_name), $this->escape($this->thread->first_post_name));?></div>
-												<div class="topic_category"><?php echo JText::_('K_CATEGORY').' '; echo JHtml::_('klink.categories', 'atag', $this->thread->catid, $this->escape($this->thread->catname), $this->escape($this->thread->catname));?></div>
+<?php if (!$this->state->{'category.id'}): ?>
+												<div class="topic_category"><?php echo JText::_('K_CATEGORY').' '; echo JHtml::_('klink.category', 'atag', $this->thread->catid, $this->escape($this->thread->catname), $this->escape($this->thread->catname));?></div>
+<?php endif; ?>
 											</div>
 										</td>
 										<td class="rcol col_last">
 												<div class="topic_latest_post_avatar">
-<?php 
+<?php
 // echo JHtml::_('klink.user', 'atag', $this->thread->last_post_userid, '<img class="avatar" src="components/com_kunena/media/images/no_photo_sm.jpg" alt="'.$this->escape($this->thread->last_post_name).'" />', $this->escape($this->thread->last_post_name));
 echo $profile->showAvatar($this->thread->last_post_userid, 'avatar');
 ?>
@@ -97,7 +97,7 @@ echo $profile->showAvatar($this->thread->last_post_userid, 'avatar');
 												<p class="topic_time"><?php echo JHTML::_('date', $this->thread->last_post_time); ?></p>
 										</td>
 									</tr>
-<?php 
+<?php
 endforeach;
 ?>
 
@@ -108,7 +108,7 @@ endforeach;
 															<input type="hidden" name="func" value="bulkactions" />
 															<input type="hidden" name="return" value="/forum" />
 														</form>
-													
+
 												</div>
 											</div>
 										</div>
@@ -116,7 +116,7 @@ endforeach;
 
 		<div class="bottom_info_box">
 			<div class="counter">
-				<span><?php echo $this->pagination->getResultsCounter(); ?></span> <?php // echo JText::_('K_DISCUSSIONS'); ?> 
+				<span><?php echo $this->pagination->getResultsCounter(); ?></span> <?php // echo JText::_('K_DISCUSSIONS'); ?>
 			</div>
 <?php if ($this->state->params->get('filter_limitstart_allow', 1)): ?>
 			<div class="pagination">

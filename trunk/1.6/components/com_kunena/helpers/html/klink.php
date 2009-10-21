@@ -111,7 +111,7 @@ abstract class JHtmlKLink
     {
         return self::link($linktype, KUNENA_RELURL.'&view='.$view.($type?'&type='.$type:'').($format?'&format='.$format:'').$param, $name, $title, $rel, $class, $anker);
     }
-    
+
     /**
 	 * Method to generate an (X)HTML search engine friendly link as an <a> tag.
 	 * Specialized helper for category views.
@@ -142,7 +142,7 @@ abstract class JHtmlKLink
 
         return $pagelink;
     }
-    
+
     /**
 	 * Method to generate an (X)HTML search engine friendly link as an <a> tag.
 	 * Specialized helper for category views.
@@ -171,11 +171,11 @@ abstract class JHtmlKLink
     {
         if ($page == 1 || !is_numeric($page))
         {
-    		$pagelink = self::view($linktype, 'category', '&category='.$catid, $name, $title, $type, $format, $rel, $class, $anker);
+    		$pagelink = self::view($linktype, 'recent', '&type=category&category='.$catid, $name, $title, $type, $format, $rel, $class, $anker);
         }
         else
         {
-    		$pagelink = self::view($linktype, 'category', '&category='.$catid.'&limit='.$limit.'&limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
+    		$pagelink = self::view($linktype, 'recent', '&type=category&category='.$catid.'&limit='.$limit.'&limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
         }
 
         return $pagelink;
@@ -354,7 +354,7 @@ abstract class JHtmlKLink
     {
         return self::link($linktype, KUNENA_RELURL.'&view=post&type=reply&message='.$messageid, $name, '', $rel);
     }
-    
+
 //    function GetTopicPostLink($do, $catid, $id, $name, $rel='nofollow')
 //    {
 //        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=post&amp;do='.$do.'&amp;catid='.$catid.'&amp;id='.$id, $name, '', $rel);

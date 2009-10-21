@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+	<layout title="Post Message">
+		<message>
+			<![CDATA[Post a new message]]>
+		</message>
+	</layout>
+	<state>
+		<name>Kunena forum: Post a new message</name>
+		<description>Post a new message</description>
+		<url>
+			<param name="category" type="text" default="0" label="Category ID" />
+			<param name="thread" type="text" default="0" label="Thread ID" />
+		</url>
+	</state>
+</metadata>

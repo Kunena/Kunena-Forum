@@ -15,7 +15,7 @@ kimport('database.query');
 kimport('user.user');
 
 /**
- * Categories model for the Kunena package.
+ * Post model for the Kunena package.
  *
  * @package		Kunena
  * @subpackage	com_kunena

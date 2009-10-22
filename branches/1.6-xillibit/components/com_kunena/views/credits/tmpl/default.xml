@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-	<layout title="Show User List">
+	<layout title="Show Credits Page">
 		<message>
-			<![CDATA[Show user list]]>
+			<![CDATA[Show credits page]]>
 		</message>
 	</layout>
 	<state>
-		<name>Kunena Forum: Show User List</name>
-		<description>Show user list</description>
+		<name>Kunena Forum: Show Credits Page</name>
+		<description>Show credits page</description>
 		<url>
 		</url>
 		<params>

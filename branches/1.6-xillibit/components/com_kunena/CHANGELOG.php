@@ -31,11 +31,27 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Custom Branch:
+
+22-Oct-2009 Matias
+^ [#17628] Merge from /trunk/1.6 revisions 1121 to 1127
+
+19-Oct-2009 Xillibit
++ [#17628] Add kunena birthday feature in statistics
+
 Kunena 1.6.0-DEV
+
+21-Oct-2009 Matias
++ [#17628] Category view (recent.category)
+# [#17628] Fix most broken links and images
+^ [#17628] Update credits page
++ [#17628] Add files for post view (nothing to see in there)
+
+20-Oct-2009 Matias
++ [#17628] Basic model for post, reply, edit, subscribe and favorite
 
 19-Oct-2009 Xillibit
 + [#17628] Add view and model for credits page
-+ [#17628] Add kunena birthday feature in statistics
 
 17-Oct-2009 Matias
 + [#17628] Installer: Add logic to create SQL queries from XML schema

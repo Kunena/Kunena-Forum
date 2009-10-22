@@ -85,7 +85,7 @@ class KunenaModelRecent extends JModel
 				$this->setState('list.start', 0);
 			$this->setState('list.limit', $limit);
 			$this->setState('list.state', 1);
-			
+
 			// Load model type
 			// all = recent topics accross all allowd categories
 			// my = my recent topics
@@ -107,10 +107,10 @@ class KunenaModelRecent extends JModel
 				$this->setState('filter.time', $app->getUserStateFromRequest('com_kunena.recent.'.$type.'.filter.time', 'filter_time', $params->get('filter_time', 720)));
 			else
 				$this->setState('filter.time', $params->get('filter_time', 720));
-				
+
 			$this->setState('filter.categories', $params->get('filter_categories', ''));
 			$this->setState('filter.categories.which', $params->get('filter_categories_which', 0));
-			
+
 			// Load the parameters.
 			$this->setState('params', $params);
 
@@ -267,7 +267,7 @@ class KunenaModelRecent extends JModel
 		$stats = $this->_models['statistics']->getSummary();
 		return $stats;
 	}
-	
+
 	/**
 	 * Method to build an SQL query to get the total count of item
 	 *
@@ -285,7 +285,7 @@ class KunenaModelRecent extends JModel
 			//case 'new':
 			case 'session':
 				$time = JFactory::getDate($user->last_visit_time);
-				break;	
+				break;
 			case 'all':
 				break;
 			default:
@@ -297,7 +297,8 @@ class KunenaModelRecent extends JModel
 		switch ($this->getState('type'))
 		{
 		    case 'all':
-		        $query->from('#__kunena_threads AS t');
+		    case 'category':
+		    	$query->from('#__kunena_threads AS t');
 		        $query->where('t.hold=0 AND t.moved_id=0 AND t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
 		        if (isset($time)) $query->where('last_post_time >'.$time->toUnix());
 
@@ -325,22 +326,24 @@ class KunenaModelRecent extends JModel
 				$query->from('('.$query1->toString().' UNION '.$query2->toString().' ) AS t');
 
 				break;
-		    case 'category':
-		        $query->from('#__kunena_threads AS t');
-		        $query->where('t.hold=0 AND t.moved_id=0 AND t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
-		        $query->where('t.catid = '.intval($this->getState('category.id')));
-
-		        break;
 		    default:
 		        // Invalid view type specified
 		}
-		
-		$catlist = trim($this->getState('filter.categories'));
-		if ($catlist != '')
+
+		$categoryid = $this->getState('category.id');
+		if ($categoryid)
 		{
-			$not = $this->getState('filter.categories.which') ? '' : 'NOT ';
-			// FIXME: instead of escape, clean the list
-			$query->where('t.catid '.$not.'IN ('.$this->_db->getEscaped($catlist).')');	
+			$query->where('t.catid = '.intval($categoryid));
+		}
+		else
+		{
+			$catlist = trim($this->getState('filter.categories'));
+			if ($catlist != '')
+			{
+				$not = $this->getState('filter.categories.which') ? '' : 'NOT ';
+				// FIXME: instead of escape, clean the list
+				$query->where('t.catid '.$not.'IN ('.$this->_db->getEscaped($catlist).')');
+			}
 		}
 
 		// echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
@@ -365,7 +368,7 @@ class KunenaModelRecent extends JModel
 			//case 'new':
 			case 'session':
 				$time = JFactory::getDate($user->last_visit_time);
-				break;	
+				break;
 			case 'all':
 				break;
 			default:
@@ -416,8 +419,8 @@ class KunenaModelRecent extends JModel
 		    case 'category':
 		        $query->from('#__kunena_threads AS t');
 		        $query->where('t.hold=0 AND t.moved_id=0 AND t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
-		        $query->where('t.catid = '.intval($this->getState('category.id')));
-		        $query->order('t.ordering');
+		        if (isset($time)) $query->where('t.last_post_time >'.$time->toUnix());
+		        $query->order('t.ordering DESC');
 
 		        break;
 		    default:
@@ -429,14 +432,22 @@ class KunenaModelRecent extends JModel
 
 		// Redundant: $query->where('t.moved_id = 0 and t.hold = 0');
 
-		$catlist = trim($this->getState('filter.categories'));
-		if ($catlist != '')
+		$categoryid = $this->getState('category.id');
+		if ($categoryid)
 		{
-			$not = $this->getState('filter.categories.which') ? '' : 'NOT ';
-			// FIXME: instead of escape, clean the list
-			$query->where('t.catid '.$not.'IN ('.$this->_db->getEscaped($catlist).')');	
+			$query->where('t.catid = '.intval($categoryid));
 		}
-		
+		else
+		{
+			$catlist = trim($this->getState('filter.categories'));
+			if ($catlist != '')
+			{
+				$not = $this->getState('filter.categories.which') ? '' : 'NOT ';
+				// FIXME: instead of escape, clean the list
+				$query->where('t.catid '.$not.'IN ('.$this->_db->getEscaped($catlist).')');
+			}
+		}
+
 		$query->group('t.id');
 
 		$order = strtoupper($this->getState('order'));

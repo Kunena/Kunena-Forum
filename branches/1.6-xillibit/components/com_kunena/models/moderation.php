@@ -1,16 +1,18 @@
 <?php
 /**
-* @version $Id$
-* Kunena Component
-* @package Kunena
-*
-* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.com
-**/
+ * @version		$Id: moderation.php 1122 2009-10-20 21:37:33Z mahagr $
+ * @package		Kunena
+ * @subpackage	com_kunena
+ * @copyright	Copyright (C) 2008 - 2009 Kunena Team. All rights reserved.
+ * @license		GNU General Public License <http://www.gnu.org/copyleft/gpl.html>
+ * @link		http://www.kunena.com
+ */
 
-// Dont allow direct linking
-defined ('_VALID_MOS') or die('Direct Access to this location is not allowed.');
+defined('_JEXEC') or die;
+
+jimport('joomla.application.component.model');
+kimport('database.query');
+kimport('user.user');
 
 // Defines for moves
 define (KN_MOVE_MESSAGE, 0);
@@ -23,34 +25,234 @@ define (KN_DEL_MESSAGE, 0);
 define (KN_DEL_THREAD, 1);
 define (KN_DEL_ATTACH, 2);
 
-class CKunenaModeration
+/**
+ * Moderation model for the Kunena package.
+ *
+ * @package		Kunena
+ * @subpackage	com_kunena
+ * @since		1.6
+ */
+class KunenaModelModeration extends JModel
 {
 	// Private data and functions
-	var $_db = '';
 	var $_errormsg = '';
 
-	function CKunenaModeration($db)
-	{
-		$this->_db = $db;
-		$this->_ResetErrorMessage();
-	}
+	/**
+	 * Flag to indicate model state initialization.
+	 *
+	 * @var		boolean
+	 * @since	1.6
+	 */
+	protected $__state_set = false;
 
-	function &getInstance()
+	/**
+	 * The model context for caching.
+	 *
+	 * @var		string
+	 * @since	1.6
+	 */
+	protected $_context = 'com_kunena.post';
+
+	/**
+	 * Overridden method to get model state variables.
+	 *
+	 * @param	string	Optional parameter name.
+	 * @param	mixed	Optional default value.
+	 * @return	mixed	The property where specified, the state object where omitted.
+	 * @since	1.6
+	 */
+	public function getState($property = null)
 	{
-		global $kunena_db;
-		static $instance;
-		if (!$instance) {
-			$instance = new CKunenaModeration($kunena_db);
+		if (!$this->__state_set)
+		{
+			// Get the application object and component options.
+			$app	= JFactory::getApplication();
+			$params	= $app->getParams('com_kunena');
+
+			// If recent request is for a category, we also get a category id
+			$this->setState('category.id', JRequest::getInt('category', 0));
+
+			// Load the user parameters.
+			$user = JFactory::getUser();
+			$this->setState('user',	$user);
+			$this->setState('user.id', (int)$user->id);
+			$this->setState('user.aid', (int)$user->get('aid'));
+			$this->setState('user.name', $user->get('username'));
+			$this->setState('user.email', $user->get('email'));
+
+			// Load the parameters.
+			$this->setState('params', $params);
+
+			$this->__state_set = true;
 		}
-		return $instance;
+
+		return parent::getState($property);
 	}
 
-	function _ResetErrorMessage()
+	// Public interface
+
+	/**
+	 * Method to sticky a thread
+	 *
+	 * @return	?
+	 * @since	1.6
+	 */
+	public function sticky($threadid)
+	{
+		if (intval($threadid) < 1) return false;
+
+		$this->_db->setQuery("SELECT id, catid, locked, hold, moved_id FROM #__kunena_threads WHERE id=".intval($threadid));
+		$thread = $this->_db->loadObject();
+		if ($this->_db->getErrorNum()) throw new KunenaPostException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
+		if ($thread == null) return false;
+
+		$userid = $this->getState('user.id');
+		if (!$userid) return false;
+
+		$user = KUser::getInstance($userid);
+		$allowed = explode(',', $user->getAllowedCategories());
+		if (!in_array($thread->catid, $allowed)) return false;
+
+		$kunena_db->setQuery("UPDATE #__kunena_threads SET ordering=1 WHERE id=".intval($threadid));
+		$this->_db->query();
+		if ($this->_db->getErrorNum()) throw new KunenaPostException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
+
+		return $this->_db->getAffectedRows();
+	}
+
+	/**
+	 * Method to unsticky a thread
+	 *
+	 * @return	?
+	 * @since	1.6
+	 */
+	public function unsticky($threadid)
+	{
+		if (intval($threadid) < 1) return false;
+
+		$userid = $this->getState('user.id');
+		if (!$userid) return false;
+
+		$kunena_db->setQuery("UPDATE #__kunena_threads SET ordering=0 WHERE id=".intval($threadid));
+		$this->_db->query();
+		if ($this->_db->getErrorNum()) throw new KunenaPostException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
+
+		return $this->_db->getAffectedRows();
+	}
+
+	/**
+	 * Method to lock a thread
+	 *
+	 * @return	?
+	 * @since	1.6
+	 */
+	public function lock($threadid)
+	{
+		if (intval($threadid) < 1) return false;
+
+		$this->_db->setQuery("SELECT id, catid, locked, hold, moved_id FROM #__kunena_threads WHERE id=".intval($threadid));
+		$thread = $this->_db->loadObject();
+		if ($this->_db->getErrorNum()) throw new KunenaPostException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
+		if ($thread == null) return false;
+
+		$userid = $this->getState('user.id');
+		if (!$userid) return false;
+
+		$user = KUser::getInstance($userid);
+		$allowed = explode(',', $user->getAllowedCategories());
+		if (!in_array($thread->catid, $allowed)) return false;
+
+		$kunena_db->setQuery("UPDATE #__kunena_threads SET locked=1 WHERE id=".intval($threadid));
+		$this->_db->query();
+		if ($this->_db->getErrorNum()) throw new KunenaPostException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
+
+		return $this->_db->getAffectedRows();
+	}
+
+	/**
+	 * Method to unlock a thread
+	 *
+	 * @return	?
+	 * @since	1.6
+	 */
+	public function unlock($threadid)
+	{
+		if (intval($threadid) < 1) return false;
+
+		$userid = $this->getState('user.id');
+		if (!$userid) return false;
+
+		$kunena_db->setQuery("UPDATE #__kunena_threads SET locked=0 WHERE id=".intval($threadid));
+		$this->_db->query();
+		if ($this->_db->getErrorNum()) throw new KunenaPostException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
+
+		return $this->_db->getAffectedRows();
+	}
+
+	public function moveThread($ThreadID, $TargetCatID, $GhostThread=false)
+	{
+		return $this->_Move($ThreadID, $TargetCatID, '', 0, KN_MOVE_THREAD, $GhostThread);
+	}
+
+	public function moveMessage($ThreadID, $TargetCatID, $TargetSubject = '', $TargetThreadID = 0)
+	{
+		return $this->_Move($ThreadID, $TargetCatID, $TargetSubject, $TargetThreadID, KN_MOVE_MESSAGE);
+	}
+
+	public function moveMessageAndNewer($ThreadID, $TargetCatID, $TargetSubject = '', $TargetThreadID = 0)
+	{
+		return $this->_Move($ThreadID, $TargetCatID, $TargetSubject, $TargetThreadID, KN_MOVE_NEWER);
+	}
+
+	public function moveMessageAndReplies($ThreadID, $TargetCatID, $TargetSubject = '', $TargetThreadID = 0)
+	{
+		return $this->_Move($ThreadID, $TargetCatID, $TargetSubject, $TargetThreadID, KN_MOVE_REPLIES);
+	}
+
+	public function deleteThread($ThreadID, $DeleteAttachments = false)
+	{
+		return $this->_Delete($ThreadID, $DeleteAttachments, KN_DEL_THREAD);
+	}
+
+	public function deleteMessage($MessageID, $DeleteAttachments = false)
+	{
+		return $this->_Delete($MessageID, $DeleteAttachments, KN_DEL_MESSAGE);
+	}
+
+	public function deleteAttachments($MessageID)
+	{
+		return $this->_Delete($MessageID, true, KN_DEL_ATTACH);
+	}
+
+	public function disableUserAccount($UserID)
+	{
+		// Future functionality
+		$this->_errormsg = 'Future feature. Logic not implemented.';
+
+		return false;
+	}
+
+	public function enableUserAccount($UserID)
+	{
+		// Future functionality
+		$this->_errormsg = 'Future feature. Logic not implemented.';
+
+		return false;
+	}
+
+	// If a function failed - a detailed error message can be requested
+	public function getErrorMessage()
+	{
+		return $this->_errormsg;
+	}
+
+	// Private functions
+	protected function _ResetErrorMessage()
 	{
 		$this->_errormsg = '';
 	}
 
-	function _Move($MessageID, $TargetCatID, $TargetSubject = '', $TargetMessageID = 0, $mode = KN_MOVE_MESSAGE, $GhostThread = false)
+	protected function _Move($MessageID, $TargetCatID, $TargetSubject = '', $TargetMessageID = 0, $mode = KN_MOVE_MESSAGE, $GhostThread = false)
 	{
 		// Private move function
 		// $mode
@@ -283,7 +485,7 @@ class CKunenaModeration
 		return true;
 	}
 
-	function _Delete($MessageID, $DeleteAttachments=false, $mode = KN_DEL_MESSAGE)
+	protected function _Delete($MessageID, $DeleteAttachments=false, $mode = KN_DEL_MESSAGE)
 	{
 		// Private delete function
 		// $mode
@@ -322,69 +524,9 @@ class CKunenaModeration
 		return true;
 	}
 
-	function _Log($Task, $MessageID = 0, $TargetCatID = 0, $TargetSubject = '', $TargetMessageID = 0, $mode = 0)
+	protected function _Log($Task, $MessageID = 0, $TargetCatID = 0, $TargetSubject = '', $TargetMessageID = 0, $mode = 0)
 	{
 		// Implement logging utilizing CKunenaLogger class
-	}
-
-
-	// Public interface
-
-	function moveThread($ThreadID, $TargetCatID, $GhostThread=false)
-	{
-		return $this->_Move($ThreadID, $TargetCatID, '', 0, KN_MOVE_THREAD, $GhostThread);
-	}
-
-	function moveMessage($ThreadID, $TargetCatID, $TargetSubject = '', $TargetThreadID = 0)
-	{
-		return $this->_Move($ThreadID, $TargetCatID, $TargetSubject, $TargetThreadID, KN_MOVE_MESSAGE);
-	}
-
-	function moveMessageAndNewer($ThreadID, $TargetCatID, $TargetSubject = '', $TargetThreadID = 0)
-	{
-		return $this->_Move($ThreadID, $TargetCatID, $TargetSubject, $TargetThreadID, KN_MOVE_NEWER);
-	}
-
-	function moveMessageAndReplies($ThreadID, $TargetCatID, $TargetSubject = '', $TargetThreadID = 0)
-	{
-		return $this->_Move($ThreadID, $TargetCatID, $TargetSubject, $TargetThreadID, KN_MOVE_REPLIES);
-	}
-
-	function deleteThread($ThreadID, $DeleteAttachments = false)
-	{
-		return $this->_Delete($ThreadID, $DeleteAttachments, KN_DEL_THREAD);
-	}
-
-	function deleteMessage($MessageID, $DeleteAttachments = false)
-	{
-		return $this->_Delete($MessageID, $DeleteAttachments, KN_DEL_MESSAGE);
-	}
-
-	function deleteAttachments($MessageID)
-	{
-		return $this->_Delete($MessageID, true, KN_DEL_ATTACH);
-	}
-
-	function disableUserAccount($UserID)
-	{
-		// Future functionality
-		$this->_errormsg = 'Future feature. Logic not implemented.';
-
-		return false;
-	}
-
-	function enableUserAccount($UserID)
-	{
-		// Future functionality
-		$this->_errormsg = 'Future feature. Logic not implemented.';
-
-		return false;
-	}
-
-	// If a function failed - a detailed error message can be requested
-	function getErrorMessage()
-	{
-		return $this->_errormsg;
 	}
 }
 ?>

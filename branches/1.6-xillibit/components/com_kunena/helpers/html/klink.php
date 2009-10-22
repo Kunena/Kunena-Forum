@@ -72,14 +72,14 @@ abstract class JHtmlKLink
         return self::link('atag', 'http://www.kunena.com', 'Kunena', 'Kunena', 'follow', NULL, NULL, 'target="_blank"');
     }
 
-    public function teamCredits($catid, $name='')
+    public function teamCredits($linktype, $name='')
     {
-        return self::link('atag', KUNENA_RELURL.'&func=credits&catid='.$catid, $name, NULL, 'follow');
+        return self::link('atag', KURL_SITE.'&view=credits', $name, NULL, 'follow');
     }
 
     public function kunena($linktype, $name)
     {
-        return self::link($linktype, KUNENA_RELURL, $name, NULL, 'follow');
+        return self::link($linktype, KURL_SITE, $name, NULL, 'follow');
     }
 
 	/**
@@ -109,9 +109,9 @@ abstract class JHtmlKLink
 	 */
     public static function view($linktype, $view, $param, $name, $title, $type='', $format='', $rel='follow', $class='', $anker='')
     {
-        return self::link($linktype, KUNENA_RELURL.'&view='.$view.($type?'&type='.$type:'').($format?'&format='.$format:'').$param, $name, $title, $rel, $class, $anker);
+        return self::link($linktype, KURL_SITE.'&view='.$view.($type?'&type='.$type:'').($format?'&format='.$format:'').$param, $name, $title, $rel, $class, $anker);
     }
-    
+
     /**
 	 * Method to generate an (X)HTML search engine friendly link as an <a> tag.
 	 * Specialized helper for category views.
@@ -142,7 +142,7 @@ abstract class JHtmlKLink
 
         return $pagelink;
     }
-    
+
     /**
 	 * Method to generate an (X)HTML search engine friendly link as an <a> tag.
 	 * Specialized helper for category views.
@@ -171,11 +171,11 @@ abstract class JHtmlKLink
     {
         if ($page == 1 || !is_numeric($page))
         {
-    		$pagelink = self::view($linktype, 'category', '&category='.$catid, $name, $title, $type, $format, $rel, $class, $anker);
+    		$pagelink = self::view($linktype, 'recent', '&type=category&category='.$catid, $name, $title, $type, $format, $rel, $class, $anker);
         }
         else
         {
-    		$pagelink = self::view($linktype, 'category', '&category='.$catid.'&limit='.$limit.'&limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
+    		$pagelink = self::view($linktype, 'recent', '&type=category&category='.$catid.'&limit='.$limit.'&limitstart='.(($page-1)*$limit), $name, $title, $type, $format, $rel, $class, $anker);
         }
 
         return $pagelink;
@@ -283,6 +283,33 @@ abstract class JHtmlKLink
         return self::view($linktype, 'user', '&userid='.$userid, $name, $title, $type, $format, $rel, $class, $anker);
     }
 
+    /**
+	 * Method to generate an (X)HTML search engine friendly link as an <a> tag.
+	 * Specialized helper for link to statistics page.
+	 *
+	 * <code>
+	 *	<?php echo JHtml::_('klink.statistics', 'atag', $name, $title, ...); ?>
+	 * </code>
+	 *
+	 * @param $linktype	string	type of link: 'atag' for <a> tag, 'url' for plaintext url
+	 * @param $name		string	text for the link to be displayed to the user
+	 * @param $title	string	link title
+     * @param $type		string	optional type override for view if not default
+     * @param $format	string	optional format override for view if not default
+     * @param $rel		string	optional <a> rel modifier; default is 'follow'
+     * @param $class	string 	optional css class for <a> tag
+     * @param $anker	string	optional page anker for <a> tag
+	 *
+	 * @return	string	The link as an <a> tag.
+	 *
+	 * @since	1.6
+	 */
+    public function statistics($linktype, $name, $title, $type='', $format='', $rel='follow', $class='', $anker='')
+    {
+        //TODO: Insert user profile link define into function call
+        return self::view($linktype, 'statistics', '', $name, $title, $type, $format, $rel, $class, $anker);
+    }
+
     public function pageAnker($linktype, $anker, $name, $rel='nofollow')
     {
     	jimport('joomla.environment.request');
@@ -291,7 +318,7 @@ abstract class JHtmlKLink
 
     function reportMessage($messageid, $name, $rel='nofollow')
     {
-        return self::link('atag', KUNENA_RELURL.'&view=report&messageid='.$messageid, $name, '', $rel);
+        return self::link('atag', KURL_SITE.'&view=report&messageid='.$messageid, $name, '', $rel);
     }
 
     function messageIP($msg_ip, $rel='nofollow')
@@ -335,34 +362,39 @@ abstract class JHtmlKLink
 //		}
 //    }
 
-	public function userList($linktype, $action, $name, $rel='nofollow', $class='')
+	public function userList($linktype, $name, $rel='nofollow', $class='')
 	{
-		return self::link($linktype, KUNENA_RELURL.'&view=userlist'.$action, $name, '', $rel, $class);
+		return self::link($linktype, KURL_SITE.'&view=userlist', $name, '', $rel, $class);
 	}
 
     public function pendingMessages($linktype, $catid, $name, $rel='nofollow')
     {
-        return self::link($linktype, KUNENA_RELURL.'&view=pending&category='.$catid, $name, '', $rel);
+        return self::link($linktype, KURL_SITE.'&view=pending&category='.$catid, $name, '', $rel);
     }
 
     public function postNewThread($linktype, $catid, $name, $rel='nofollow')
     {
-        return self::link($linktype, KUNENA_RELURL.'&view=post&type=newthread&category='.$catid, $name, '', $rel);
+        return self::link($linktype, KURL_SITE.'&view=post&type=newthread&category='.$catid, $name, '', $rel);
     }
 
     public function postRely($linktype, $messageid, $name, $rel='nofollow')
     {
-        return self::link($linktype, KUNENA_RELURL.'&view=post&type=reply&message='.$messageid, $name, '', $rel);
+        return self::link($linktype, KURL_SITE.'&view=post&type=reply&message='.$messageid, $name, '', $rel);
     }
-    
+
+    public function announcement($linktype, $annid, $name, $rel='nofollow', $class='')
+    {
+		return self::link($linktype, KURL_SITE.'&view=announcements', $name, '', $rel, $class);
+    }
+
 //    function GetTopicPostLink($do, $catid, $id, $name, $rel='nofollow')
 //    {
-//        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=post&amp;do='.$do.'&amp;catid='.$catid.'&amp;id='.$id, $name, '', $rel);
+//        return CKunenaLink::GetSefHrefLink(KURL_SITE.'&amp;func=post&amp;do='.$do.'&amp;catid='.$catid.'&amp;id='.$id, $name, '', $rel);
 //    }
 //
 //    function GetTopicPostReplyLink($do, $catid, $id, $name, $rel='nofollow')
 //    {
-//        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=post&amp;do='.$do.'&amp;catid='.$catid.'&amp;id='.$id, $name, '', $rel);
+//        return CKunenaLink::GetSefHrefLink(KURL_SITE.'&amp;func=post&amp;do='.$do.'&amp;catid='.$catid.'&amp;id='.$id, $name, '', $rel);
 //    }
 //
 //    function GetEmailLink($email, $name)
@@ -372,20 +404,20 @@ abstract class JHtmlKLink
 //
 //    function GetKarmaLink($do, $catid, $pid, $userid, $name, $rel='nofollow')
 //    {
-//        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=karma&amp;do='.$do.'&amp;userid='.$userid.'&amp;pid='.$pid.'&amp;catid='.$catid, $name, '', $rel);
+//        return CKunenaLink::GetSefHrefLink(KURL_SITE.'&amp;func=karma&amp;do='.$do.'&amp;userid='.$userid.'&amp;pid='.$pid.'&amp;catid='.$catid, $name, '', $rel);
 //    }
 //
 //    function GetRulesLink($kunenaConfig, $name, $rel='nofollow')
 //    {
 //		$kunenaConfig =& CKunenaConfig::getInstance();
-//        $ruleslink = $kunenaConfig->rules_inkunena ? KUNENA_LIVEURLREL.'&amp;func=rules' : $kunenaConfig->rules_link;
+//        $ruleslink = $kunenaConfig->rules_inkunena ? KURL_SITE.'&amp;func=rules' : $kunenaConfig->rules_link;
 //        return CKunenaLink::GetSefHrefLink($ruleslink, $name, '', $rel);
 //    }
 //
 //    function GetHelpLink($kunenaConfig, $name, $rel='nofollow')
 //    {
 //    	$kunenaConfig =& CKunenaConfig::getInstance();
-//        $helplink = $kunenaConfig->help_inkunena ? KUNENA_LIVEURLREL.'&amp;func=faq' : $kunenaConfig->help_link;
+//        $helplink = $kunenaConfig->help_inkunena ? KURL_SITE.'&amp;func=faq' : $kunenaConfig->help_link;
 //        return CKunenaLink::GetSefHrefLink($helplink, $name, '', $rel);
 //    }
 //
@@ -396,7 +428,7 @@ abstract class JHtmlKLink
 //    	if ($limitstart > 0) $limitstr .= "&amp;limitstart=$limitstart";
 //		if ($limit > 0 && $limit != $kunenaConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
 //		if ($searchword) $searchword = '&amp;q=' . urlencode($searchword);
-//        return JRoute::_(KUNENA_LIVEURLREL."&amp;func={$func}&amp;q={$searchword}{$params}{$limitstr}");
+//        return JRoute::_(KURL_SITE."&amp;func={$func}&amp;q={$searchword}{$params}{$limitstr}");
 //    }
 //
 //    function GetSearchLink($kunenaConfig, $func, $searchword, $limitstart, $limit, $name, $params='', $rel='nofollow')
@@ -406,14 +438,7 @@ abstract class JHtmlKLink
 //    	if ($limitstart > 0) $limitstr .= "&amp;limitstart=$limitstart";
 //		if ($limit > 0 && $limit != $kunenaConfig->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
 //		if ($searchword) $searchword = '&amp;q=' . urlencode($searchword);
-//        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL."&amp;func={$func}{$searchword}{$params}{$limitstr}", $name, '', $rel);
-//    }
-//
-//    function GetAnnouncementURL($kunenaConfig, $do, $id=NULL)
-//    {
-//		$idstring = '';
-//		if ($id !== NULL) $idstring .= "&amp;id=$id";
-//		return JRoute::_(KUNENA_LIVEURLREL."&amp;func=announcement&amp;do={$do}{$idstring}");
+//        return CKunenaLink::GetSefHrefLink(KURL_SITE."&amp;func={$func}{$searchword}{$params}{$limitstr}", $name, '', $rel);
 //    }
 //
 //    //
@@ -452,7 +477,7 @@ abstract class JHtmlKLink
 //        $Output .= CKunenaLink::GetCategoryLink('showcat', $catid, _POST_SUCCESS_FORUM).'<br />';
 //        $Output .= '</div>';
 //        if (is_object($result)) $Output .= CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetThreadPageURL($kunenaConfig, 'view', $catid, $result->thread, $threadPages, $limit, $result->latest_id), 3500);
-//        else $Output .= CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid), 3500);
+//        else $Output .= CKunenaLink::GetAutoRedirectHTML(JRoute::_(KURL_SITE.'&amp;func=showcat&amp;catid='.$catid), 3500);
 //
 //        return $Output;
 //    }
@@ -468,7 +493,7 @@ abstract class JHtmlKLink
 //                             WHERE b.id='{$pid}' AND a.id = b.thread AND a.hold='0' {$where}");
 //        $result = $kunena_db->loadObject();
 //        	check_dberror("Unable to retrieve latest post.");
-//        if (!is_object($result)) return htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid));
+//        if (!is_object($result)) return htmlspecialchars_decode(JRoute::_(KURL_SITE.'&amp;func=showcat&amp;catid='.$catid));
 //
 //        // Now Calculate the number of pages for this particular thread
 //		$catid = $result->catid;
@@ -483,7 +508,7 @@ abstract class JHtmlKLink
 //        $Output  = '<div id="Kunena_post_result" align="center">';
 //        $Output .= CKunenaLink::GetCategoryLink('showcat', $catid, _POST_SUCCESS_FORUM).'<br />';
 //        $Output .= '</div>';
-//        $Output .= CKunenaLink::GetAutoRedirectHTML(KUNENA_LIVEURLREL . '&func=showcat&catid=' . $catid, 3500);
+//        $Output .= CKunenaLink::GetAutoRedirectHTML(KURL_SITE . '&func=showcat&catid=' . $catid, 3500);
 //
 //        return $Output;
 //    }

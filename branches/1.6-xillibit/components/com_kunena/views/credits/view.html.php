@@ -29,19 +29,19 @@ class KunenaViewCredits extends KView
 	 */
 	public function display($tpl = null) {
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
-		
+
 		// Create shortcut to parameters.
 		$params = $this->state->get('params');
-		
-		$this->assignRef ( 'credits', $this->get ( 'VersionItems' ) );
-		
+
+		$this->assignRef ( 'contributors', $this->get ( 'Contributors' ) );
+
 		jimport( 'joomla.application.menu' );
 		$menu = JSite::getMenu();
 		$menuitem = $menu->getActive();
-		
-		$this->assign ( 'title', ($params->get('show_page_title') && $menuitem->query['view'] == 'credits' ? 
+
+		$this->assign ( 'title', ($params->get('show_page_title') && $menuitem->query['view'] == 'credits' ?
 			$params->get('page_title') : 'Team Credits'));
-		
+
 		parent::display ( $tpl );
 	}
 }

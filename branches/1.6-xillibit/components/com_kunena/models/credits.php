@@ -83,7 +83,7 @@ class KunenaModelCredits extends JModel
 			// all = all announcements
 			// published = published announcements
 			$this->setState('type', JRequest::getCmd('type', 'published'));
-			
+
 			// Load the check parameters.
 			$this->setState('check.state', true);
 
@@ -102,115 +102,25 @@ class KunenaModelCredits extends JModel
 	 * @return	mixed	An array of objects on success, false on failure.
 	 * @since	1.6
 	 */
-	public function getVersionItems()
+	public function getContributors()
 	{
-		// Get a unique key for the current list state.
-		$key = $this->_getStoreId($this->_context);
+		$array = array(
+			array ('name'=>'fxstein', 'title'=>'Kunena developer', 'url'=>'http://www.starvmax.com/'),
+//			array ('name'=>'johnnydement', 'title'=>'Kunena moderator', 'url'=>'http://www.kunena.com/community/profile?userid=66'),
+//			array ('name'=>'LDA', 'title'=>'Kunena moderator', 'url'=>'http://www.kunena.com/community/profile?userid=2171'),
+			array ('name'=>'Matias', 'title'=>'Kunena developer', 'url'=>'http://www.herppi.net/'),
+//			array ('name'=>'Noel Hunter', 'title'=>'Kunena developer', 'url'=>'http://www.camelcity.com/'),
+//			array ('name'=>'Roland76', 'title'=>'Kunena developer', 'url'=>'http://www.kunena.com/community/profile?userid=122'),
+			array ('name'=>'severdia', 'title'=>'Kunena developer', 'url'=>'http://www.kunena.com/community/profile?userid=114'),
+//			array ('name'=>'Spock', 'title'=>'Kunena moderator', 'url'=>'http://www.kunena.com/community/profile?userid=314'),
+//			array ('name'=>'whouse', 'title'=>'Kunena developer', 'url'=>'http://www.kunena.com/community/profile?userid=148'),
+			array ('name'=>'xillibit', 'title'=>'Kunena developer', 'url'=>'http://www.kunena.com/community/profile?userid=1288'),
+//			array ('name'=>'@quila', 'title'=>'Kunena moderator', 'url'=>'http://www.kunena.com/community/profile?userid=447'),
+		);
 
-		// Try to load the value from internal storage.
-		if (!empty($this->_credits[$key])) {
-			return $this->_credits[$key];
-		}
-
-		// Try to load the value from cache.
-		//$cache = &JFactory::getCache('com_kunena', 'output');
-		//$store = $this->_getStoreId('categories_list');
-		//$data  = $cache->get($store);
-
-		// Check the cache data.
-		//if ($data !== false) {
-		//	$this->_lists[$key] = unserialize($data);
-		//	return $data;
-		//}
-
-		// Push the value into cache.
-		//$cache->store(serialize($rows), $store);
-
-		// Add the rows to the internal storage.
-		$this->_credits[$key]['version'] = $this->getLastestVersion();
-
-		return $this->_credits[$key];
+		return $array;
 	}
 
-	/**
-	 * Method to get a list pagination object.
-	 *
-	 * @return	object	A JPagination object.
-	 * @since	1.6
-	 */
-	public function getPagination()
-	{
-		jimport('joomla.html.pagination');
-
-		// Create the pagination object.
-		$instance = new JPagination($this->getTotal(), (int)$this->getState('list.start'), (int)$this->getState('list.limit'));
-
-		return $instance;
-	}
-
-	/**
-	 * Method to build an SQL query to get the lastest kunena version
-	 *
-	 * @return	string	An SQL query.
-	 * @since	1.6
-	 */
-	protected function _getLastestVersionQuery()
-	{
-		$query = new KQuery();		
-
-		$query->select('*');
-		$query->from('#__kunena_version');	
-    $query->where('id=(SELECT MAX(ID) FROM #__kunena_version)');	
-
-		return $query;
-	}
-
-    /**
-	 * Method to get the latest kunena version.
-	 *
-	 * @return	object	The number of published items.
-	 * @since	1.6
-	 */
-	public function getLastestVersion()
-	{
-		// Get a unique key for the current list state.
-		$key = $this->_getStoreId($this->_context);
-
-		// Try to load the value from internal storage.
-		if (!empty ($this->_version[$key])) {
-			return $this->_version[$key];
-		}
-
-		// Try to load the value from cache.
-		//$cache = &JFactory::getCache('com_kunena', 'output');
-		//$store = $this->_getStoreId('categories_total');
-		//$total = $cache->get($store);
-
-		// Check the cache data.
-		//if ($total !== false) {
-		//	$this->_totals[$key] = (int)$total;
-		//	return $total;
-		//}
-
-		// Load the total messages, threads, categories and sections.
-		$query = $this->_getLastestVersionQuery();
-		$this->_db->setQuery($query->toString());
-		$return = $this->_db->loadObject();
-
-		// Check for a database error.
-		if ($this->_db->getErrorNum()) {
-			$this->setError($this->_db->getErrorMsg());
-			return false;
-		}
-		
-		// Push the value into internal storage.
-		$this->_version[$key] = $return;
-
-		// Push the value into cache.
-		//$cache->store($total, $store);
-
-		return $this->_version[$key];
-	}
 	/**
 	 * Method to get a store id based on model configuration state.
 	 *

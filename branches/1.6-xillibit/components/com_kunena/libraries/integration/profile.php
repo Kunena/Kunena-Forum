@@ -32,16 +32,16 @@ function getKunenaItemidSuffix() {
 	return "&amp;Itemid=".getKunenaItemid();
 }
 
-class KProfile 
+class KProfile
 {
 	protected static $instance = null;
-	
+
 	var $error = 0;
 	var $errormsg = '';
 
 	protected function __construct() {}
 
-	public function &getInstance() 
+	public function &getInstance()
 	{
 		if (!self::$instance) {
 			self::$instance =& new KProfile();
@@ -51,7 +51,7 @@ class KProfile
 
 	public function close() {}
 
-	public function enqueueErrors() 
+	public function enqueueErrors()
 	{
 		if ($this->error) {
 			$app =& JFactory::getApplication();
@@ -61,32 +61,32 @@ class KProfile
 		}
 	}
 
-	public function _detectIntegration() 
+	public function _detectIntegration()
 	{
 		return true;
 	}
 
-	public function useProfileIntegration() 
+	public function useProfileIntegration()
 	{
 		return false;
 	}
 
-	public function getForumTabURL() 
+	public function getForumTabURL()
 	{
 		return JRoute::_(KUNENA_LIVEURLREL . '&amp;view=user');
 	}
 
-	public function getUserListURL() 
+	public function getUserListURL()
 	{
 		return JRoute::_(KUNENA_LIVEURLREL.'&amp;view=userlist');
 	}
 
-	public function getAvatarURL() 
+	public function getAvatarURL()
 	{
 		return JRoute::_( 'index.php?option=com_comprofiler&amp;task=userAvatar' . getKunenaItemidSuffix() );
 	}
 
-	public function getProfileURL($userid) 
+	public function getProfileURL($userid)
 	{
 		if ($userid == 0) return false;
 		$user = KUser::getInstance($userid);
@@ -94,7 +94,7 @@ class KProfile
 		return JRoute::_("index.php?option=com_kunena&amp;func=kunenaprofile&amp;userid={$userid}" . getKunenaItemidSuffix());
 	}
 
-	public function getAvatarImgURL($userid, $thumb=true) 
+	public function getAvatarImgURL($userid, $thumb=true)
 	{
 		$user = KUser::getInstance($userid);
 		$avatar = $user->avatar;
@@ -102,17 +102,17 @@ class KProfile
 			$avatar = 'nophoto.jpg';
 		}
 
-		if ($thumb && file_exists( KUNENA_PATH_UPLOADED .DS. 'avatars' .DS. 's_' . $avatar )) $avatar = 's_' . $avatar;
-		else if (!file_exists( KUNENA_PATH_UPLOADED .DS. 'avatars' .DS. $avatar )) {
+		if ($thumb && file_exists( KPATH_COMPONENT_MEDIA .DS. 'images' .DS. 'avatars' .DS. 's_' . $avatar )) $avatar = 's_' . $avatar;
+		else if (!file_exists( KPATH_COMPONENT_MEDIA .DS. 'images' .DS. 'avatars' .DS. $avatar )) {
 			// If avatar does not exist use default image
 			if ($thumb) $avatar = 's_nophoto.jpg';
 			else $avatar = 'nophoto.jpg';
 		}
-		$avatar = JURI::root() . "images/kunenafiles/avatars/{$avatar}";
-		return $avatar;		
+		$avatar = KURL_COMPONENT_MEDIA . "images/avatars/{$avatar}";
+		return $avatar;
 	}
 
-	public function showAvatar($userid, $class='', $thumb=true) 
+	public function showAvatar($userid, $class='', $thumb=true)
 	{
 		$avatar = $this->getAvatarImgURL($userid, $thumb);
 		$kunenaConfig =& KConfig::getInstance();

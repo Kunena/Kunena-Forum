@@ -20,7 +20,7 @@ kimport('html.bbcode');
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaViewMessages extends KView
+class KunenaViewPost extends KView
 {
 	/**
 	 * Display the view.
@@ -35,37 +35,11 @@ class KunenaViewMessages extends KView
 		// Create shortcut to parameters.
 		$params = $this->state->get('params');
 
-		$this->assignRef('announcements', $this->get('Announcement'));
-	    $this->assignRef('statistics', $this->get('Statistics'));
-		$this->assign('total', $this->get('Total'));
-
-		if (!$this->total) {
-			parent::display('empty');
-			return;
-		}
-
-	    $this->assignRef('pagination', $this->get('Pagination'));
-
 		$bbcode = KBBCode::getInstance();
-
-	    $items = $this->get('Items');
-		foreach($items as &$item)
-	    {
-	        $item->message = $bbcode->Parse(stripslashes($item->message));
-
-	    }
-	    $this->assignRef('messages', $items);
-
-	    $catmodel =& $this->getModel('categories');
-	    $this->assignRef('path', $catmodel->getPath($this->messages[0]->catid));
-
+/*
 		$app = JFactory::getApplication();
 		$pathway = $app->getPathway();
-		foreach ($this->path as &$category)
-		{
-			if (!$category->parent) $pathway->addItem($this->escape($category->name), JHtml::_('klink.categories', 'url', $category->id, '', ''));
-			else $pathway->addItem($this->escape($category->name), JHtml::_('klink.category', 'url', $category->id, '', ''));
-		}
+		foreach ($this->path as &$category) $pathway->addItem($this->escape($category->name), JHtml::_('klink.categories', 'url', $category->id, '', ''));
 		$pathway->addItem($this->escape($this->messages[0]->subject));
 
 		$category = end($this->path);
@@ -77,8 +51,7 @@ class KunenaViewMessages extends KView
 
 		$this->assign ( 'title', ($params->get('show_page_title') && $menuitem->query['view'] == 'messages' && $menuitem->query['thread'] == $this->state->thread ?
 		$params->get('page_title') : $this->messages[0]->subject));
-
+*/
 		parent::display($tpl);
-	    //echo "<code>"; print_r($this->path); echo "</code>";
 	}
 }

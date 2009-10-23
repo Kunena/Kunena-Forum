@@ -39,6 +39,7 @@ Kunena 1.5.7
 * [#18443] Report to moderator believes that all users in custom groups should get email
 # [#18444] Do not show your own message as NEW!
 # [#18446] Administrator: Accept 0.5 hour timezones
+# [#18447] Fatal Error in Recent Discussions (out of memory)
 
 5-Oct-2009 Matias
 # [#18289] Smiley and Rank admin: Images broken in Windows

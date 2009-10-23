@@ -257,38 +257,24 @@ if (count($threadids) > 0)
 	}
 	unset($favlist, $fthread);
 
- 	$query = "	SELECT
-					a.id,
-					a.parent,
-					a.thread,
-					a.catid,
-					a.subject,
-					a.name,
-					a.time,
-					a.topic_emoticon,
-					a.locked,
-					a.ordering,
-					a.userid ,
-					a.moved,
-					u.avatar
-				FROM #__fb_messages AS a "
-					.(($fbConfig->avatar_src == "cb")?
-    				"LEFT  JOIN #__comprofiler AS u ON u.user_id = a.userid"
-    				:"LEFT  JOIN #__fb_users AS u ON u.userid = a.userid")."
-    			WHERE a.thread IN ('{$idstr}')
-     				AND a.id NOT IN ('{$idstr}')
-     				AND a.hold='0'";
+	$query = "SELECT l.*, u.id AS userid, u.name, u.username
+     FROM #__users AS u, #__fb_messages AS m, (
+       SELECT COUNT(*) AS cnt, a.thread, 0 as unread, max(id) AS id, max(id) AS lastread, max(time) AS time
+       FROM #__fb_messages AS a
+       WHERE a.thread IN ('$idstr')
+       AND a.id NOT IN ('$idstr')
+       AND a.hold=0
+       GROUP BY a.thread) AS l
+     WHERE u.id = m.userid
+     AND l.id = m.id";
 
-    $kunena_db->setQuery($query);
-    $msglist = $kunena_db->loadObjectList();
-    check_dberror("Unable to load messages.");
-    if ($msglist) foreach ($msglist as $message)
-    {
-	$messages[$message->parent][] = $message;
-	$thread_counts[$message->thread]++;
-	$last_reply[$message->thread] = $last_reply[$message->thread]->time < $message->time ? $message : $last_reply[$message->thread];
-	$last_read[$message->id]->lastread = $last_reply[$message->thread];
-    }
+	$database->setQuery($query);
+	$msglist = $database->loadObjectList();
+	foreach ($msglist as $message) {
+		$thread_counts[$message->thread] = $message->cnt;
+		$last_reply[$message->thread] = $message;
+		$last_read[$message->thread] = $message;
+	}
 
     $kunena_db->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages "
                        ."WHERE thread IN ('{$idstr}') AND time>'{$prevCheck}' GROUP BY thread");

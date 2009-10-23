@@ -224,13 +224,13 @@ function showprf($userid, $page)
 												$rImg = KUNENA_URLRANKSPATH . $rank->rank_image;
 									}
 
-									if ($uIsMod)
+									if ($userinfo->rank == '0' && $uIsMod)
 									{
 													$rText = _RANK_MODERATOR;
 													$rImg = KUNENA_URLRANKSPATH . 'rankmod.gif';
 									}
 
-									if ($uIsAdm)
+									if ($userinfo->rank == '0' && $uIsAdm)
 									{
 													$rText = _RANK_ADMINISTRATOR;
 													$rImg = KUNENA_URLRANKSPATH . 'rankadmin.gif';

@@ -402,8 +402,8 @@ if (count($messages[0]) > 0)
   		if ($fbConfig->avatar_src == "jomsocial" && $leaf->userid)
 		{
 			// Get CUser object
-			$user =& CFactory::getUser($last_reply[$leaf->id]->userid);
-		    $useravatar = '<img class="fb_list_avatar" src="' . $user->getThumbAvatar() . '" alt=" " />';
+			$jsuser =& CFactory::getUser($last_reply[$leaf->id]->userid);
+		    $useravatar = '<img class="fb_list_avatar" src="' . $jsuser->getThumbAvatar() . '" alt=" " />';
 		   	echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, $useravatar);
 		}
 		else if ($fbConfig->avatar_src == "cb")

@@ -727,10 +727,10 @@ function showConfig($option)
             {
                 if (is_dir(KUNENA_PATH_TEMPLATE .DS. $file))
                 {
-                    if (!($file[0] == '.') && is_file(KUNENA_PATH_TEMPLATE .DS. $file .DS. 'kunena.forum.css')) {
+                    if (!($file[0] == '.') && ($file != 'default' || $fbConfig->template == 'default') && is_file(KUNENA_PATH_TEMPLATE .DS. $file .DS. 'kunena.forum.css')) {
                         $templatelist[] = $file;
                     }
-                    if (!($file[0] == '.') && is_dir(KUNENA_PATH_TEMPLATE .DS. $file .DS. 'images' .DS. 'english')) {
+                    if (!($file[0] == '.') && ($file != 'default' || $fbConfig->templateimagepath == 'default') && is_dir(KUNENA_PATH_TEMPLATE .DS. $file .DS. 'images' .DS. 'english')) {
                         $imagesetlist[] = $file;
                     }
                 }

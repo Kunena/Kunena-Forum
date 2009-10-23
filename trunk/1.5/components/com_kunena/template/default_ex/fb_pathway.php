@@ -146,8 +146,8 @@ if ($func != "")
        }
 
 	$document=& JFactory::getDocument();
-        $document->setTitle(($jr_topic_title ?  $jr_topic_title : $fr_title_name) . ' - ' . stripslashes($fbConfig->board_title));
-
+        $document->setTitle(htmlspecialchars_decode($jr_topic_title ?  $jr_topic_title : $fr_title_name) . ' - ' . stripslashes($fbConfig->board_title));
+	
 	$pathway1 = $firepath . $fireinfo;
 	$pathway2 = $firelast . $fireonline;
         unset($spath, $parent_ids, $catids, $results, $sname);

@@ -40,6 +40,7 @@ Kunena 1.5.7
 # [#18444] Do not show your own message as NEW!
 # [#18446] Administrator: Accept 0.5 hour timezones
 # [#18447] Fatal Error in Recent Discussions (out of memory)
+# [#18448] Do not encode special characters in page title
 
 5-Oct-2009 Matias
 # [#18289] Smiley and Rank admin: Images broken in Windows

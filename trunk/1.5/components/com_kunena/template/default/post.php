@@ -32,6 +32,15 @@ $id = JRequest::getInt('id', 0);
 // Support for old $replyto variable in post reply/quote
 if (!$id) $id = JRequest::getInt('replyto', 0);
 
+if ($id)
+{
+	// If message exists, override catid to be sure that user can post there
+	$kunena_db->setQuery("SELECT catid FROM #__fb_messages WHERE id='{$id}'");
+	$msgcat = $kunena_db->loadResult();
+	check_dberror('Unable to check message.');
+	if ($msgcat) $catid = $msgcat;
+}
+
 //get the allowed forums and turn it into an array
 $allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):array();
 

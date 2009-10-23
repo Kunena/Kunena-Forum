@@ -55,6 +55,7 @@ Kunena 1.5.7
 * [#18465] Online statistics reveals hidden users to registered users
 ^ [#18466] Cache some repeating queries
 # [#18467] Increase hit counter if visitor views a thread written by visitor
+* [#18468] Check category id when user is posting to existing thread
 
 5-Oct-2009 Matias
 # [#18289] Smiley and Rank admin: Images broken in Windows

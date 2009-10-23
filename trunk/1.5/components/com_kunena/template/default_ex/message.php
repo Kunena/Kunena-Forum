@@ -24,10 +24,8 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 $kunena_my = &JFactory::getUser();
 $fbConfig =& CKunenaConfig::getInstance();
-unset($user);
 $kunena_db = &JFactory::getDBO();
-$kunena_db->setQuery("SELECT id, email, name FROM #__users WHERE `id`='{$kunena_my->id}'");
-$user = $kunena_db->loadObject();
+
 if ($fbConfig->fb_profile == 'cb')
 {
 	$msg_params = array(
@@ -112,7 +110,7 @@ if ($fbConfig->fb_profile == 'cb')
                                         $authorName = $kunena_my->username;
                                     }
                                     else {
-                                        $authorName = $user->name;
+                                        $authorName = $kunena_my->name;
                                     }
 
                                     //contruct the reply subject
@@ -349,7 +347,7 @@ if ($fbConfig->fb_profile == 'cb')
                 /*    onClick="expandcontent(this, 'sc<?php echo $msg_id;?>')" */
                 if ($kunena_my->id > 0 && !isset($msg_closed)):
                 ?>
-                <span id = "fb_qr_sc__<?php echo $msg_id;?>" class = "fb_qr_fire" style = "cursor:hand; cursor:pointer">
+                <span id = "fb_qr_sc__<?php echo $msg_id;?>" class = "fb_qr_fire" style = "cursor:pointer">
                 <?php echo
                     isset($fbIcons['quickmsg']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['quickmsg'] . '" border="0" alt="' . _KUNENA_QUICKMSG . '" />' . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _KUNENA_QUICKMSG . '" />'; ?>
                 </span>

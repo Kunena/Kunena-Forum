@@ -43,7 +43,7 @@ Kunena 1.5.7
 # [#18448] Do not encode special characters in page title
 # [#18449] Fix broken pages with some JomSocial modules (mod_hellome etc)
 # [#18450] Obey username configuration option in welcome message (top profile box)
-
+# [#18451] Undefined variable in Recent Discussions
 
 5-Oct-2009 Matias
 # [#18289] Smiley and Rank admin: Images broken in Windows

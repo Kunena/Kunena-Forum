@@ -97,7 +97,7 @@ if (count($messages[0]) > 0)
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
     <form action = "index.php" method = "post" name = "fbBulkActionForm">
 
-        <table class = "fb_blocktable<?php echo $objCatInfo->class_sfx; ?>" id = "fb_flattable" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+        <table class = "fb_blocktable<?php echo isset($objCatInfo->class_sfx) ? $objCatInfo->class_sfx : ''; ?>" id = "fb_flattable" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
 
         <?php  if ($funclatest || $funcmylatest){ } else {  ?>
             <thead>

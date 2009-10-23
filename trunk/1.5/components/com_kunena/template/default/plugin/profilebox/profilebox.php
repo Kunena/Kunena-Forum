@@ -26,7 +26,7 @@ $fbConfig =& CKunenaConfig::getInstance();
 $kunena_my = &JFactory::getUser();
 $kunena_db = &JFactory::getDBO();
 //first we gather some information about this person
-$kunena_db->setQuery("SELECT su.view, u.name, su.moderator, su.avatar FROM #__fb_users AS su"
+$kunena_db->setQuery("SELECT su.view, u.name, u.username, su.moderator, su.avatar FROM #__fb_users AS su"
                     . " LEFT JOIN #__users AS u on u.id=su.userid WHERE su.userid={$kunena_my->id}", 0, 1);
 
 $_user = $kunena_db->loadObject();
@@ -35,10 +35,10 @@ $fbavatar = NULL;
 if ($_user != NULL)
 {
 	$prefview = $_user->view;
-	$username = $_user->name; // externally used  by fb_pathway, myprofile_menu
+	if ($fbConfig->username) $username = $_user->username; // externally used  by fb_pathway, myprofile_menu
+	else $username = $_user->name;
 	$moderator = $_user->moderator;
 	$fbavatar = $_user->avatar;
-	$jr_username = $_user->name;
 }
 
 $jr_avatar = '';
@@ -116,7 +116,7 @@ if ($kunena_my->id)
                 </td>
 
                 <td valign = "top" class = "td-2  fbm fb_profileboxcnt" align="left">
-<?php echo _PROFILEBOX_WELCOME; ?>, <b><?php echo $jr_username; ?></b>
+<?php echo _PROFILEBOX_WELCOME; ?>, <b><?php echo $username; ?></b>
 
                 <br />
 

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.7
 
+24-Oct-2009 Matias
+^ [#18263] Update version info for 1.5.7
+
 23-Oct-2009 Matias
 # [#18441] Administrator: Avatar source shows wrong configuration variable
 # [#18442] Debug function does not show MySQL error or where the error occured

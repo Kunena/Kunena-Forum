@@ -296,7 +296,7 @@ $catName = $objCatInfo->name;
                                             $querythread = $thread;
                                         }
 
-                                        $kunena_db->setQuery("SELECT * FROM #__fb_sessions WHERE readtopics LIKE '%$thread%'");
+                                        $kunena_db->setQuery("SELECT * FROM #__fb_sessions WHERE readtopics LIKE '%$thread%' AND userid!={$kunena_my->id}");
                                         $sessions = $kunena_db->loadObjectList();
                                         	check_dberror("Unable to load sessions.");
                                         foreach ($sessions as $session)

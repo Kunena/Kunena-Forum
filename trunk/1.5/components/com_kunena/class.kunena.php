@@ -61,7 +61,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     	// Only proceed if jomSocial is really installed
 	    if ( file_exists( KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/core.php' ) )
 	    {
-	        $kunena_db->setQuery("SELECT id FROM #__menu WHERE link LIKE 'index.php?option=com_community%' AND published='1' LIMIT 1");
+	        $kunena_db->setQuery("SELECT id FROM #__menu WHERE link LIKE 'index.php?option=com_community%' AND published='1' ORDER BY id ASC LIMIT 1");
 	        $JOMSOCIAL_Itemid = $kunena_db->loadResult();
 	        	check_dberror('Unable to load jomSocial item id');
 
@@ -69,7 +69,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 	        define("KUNENA_JOMSOCIAL_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_JOMSOCIAL_ITEMID);
 
 	        // Prevent JomSocial from loading their jquery library - we got one loaded already
-	        define( 'C_ASSET_JQUERY', 1 );
+	        if (!defined('C_ASSET_JQUERY')) define( 'C_ASSET_JQUERY', 1 );
 
 			include_once(KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/core.php');
 			include_once(KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/messaging.php');

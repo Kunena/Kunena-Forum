@@ -38,10 +38,11 @@ function debug_assert_callback($script, $line, $message) {
 }
 
 // Production error handling
-function trigger_dberror($text = '')
+function trigger_dberror($text = '', $back=0)
 {
 	$kunena_db = &JFactory::getDBO();
-	echo debug_callstackinfo();
+	$dberror = $kunena_db->stderr(true);
+	echo debug_callstackinfo($back+1);
 
 	require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 	$kunenaVersion = CKunenaVersion::version();
@@ -55,22 +56,22 @@ Installed version:  <?php echo $kunenaVersion; ?> | php <?php echo $kunenaPHPVer
 <!-- /Version Info -->
 <?php
 
-	trigger_error($text.'\n'.$kunena_db->stderr(true), E_USER_ERROR);
+	kunena_error($text.'<br /><br />'.$dberror, E_USER_ERROR, $back+1);
 }
 
-function check_dberror($text='')
+function check_dberror($text='', $back=0)
 {
 	$kunena_db = &JFactory::getDBO();
-	if ($kunena_db->_errorNum != 0)
+	if ($kunena_db->getErrorNum() != 0)
 	{
-		trigger_dberror($text);
+		trigger_dberror($text, $back+1);
 	}
 }
 
 function check_dbwarning($text='')
 {
 	$kunena_db = &JFactory::getDBO();
-	if ($kunena_db->_errorNum != 0)
+	if ($kunena_db->getErrorNum() != 0)
 	{
 		trigger_dbwarning($text);
 	}
@@ -79,7 +80,7 @@ function check_dbwarning($text='')
 function trigger_dbwarning($text = '')
 {
 	$kunena_db = &JFactory::getDBO();
-	trigger_error($text.'<br />'.$kunena_db->stderr(true), E_USER_WARNING);
+	kunena_error($text.'<br />'.$kunena_db->stderr(true), E_USER_WARNING);
 }
 
 // Little helper to created a formated output of variables
@@ -139,8 +140,15 @@ function debug_vars($varlist)
 }
 
 // Show the callstack to this point in a decent format
-function debug_callstackinfo()
+function debug_callstackinfo($back=1)
 {
-	return debug_vars(debug_backtrace());
+	$trace = array_slice(debug_backtrace(), $back);
+	return debug_vars($trace);
+}
+
+function kunena_error($message, $level=E_USER_NOTICE, $back=1) {
+	$trace = debug_backtrace();
+	$caller = $trace[$back];
+	trigger_error($message.' in <strong>'.$caller['function'].'()</strong> called from <strong>'.$caller['file'].'</strong> on line <strong>'.$caller['line'].'</strong>'."\n<br /><br />Error reported", $level);
 }
 ?>

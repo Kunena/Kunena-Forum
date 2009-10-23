@@ -54,6 +54,7 @@ Kunena 1.5.7
 # [#18463] Typo in English language file (on Prune)
 * [#18465] Online statistics reveals hidden users to registered users
 ^ [#18466] Cache some repeating queries
+# [#18467] Increase hit counter if visitor views a thread written by visitor
 
 5-Oct-2009 Matias
 # [#18289] Smiley and Rank admin: Images broken in Windows

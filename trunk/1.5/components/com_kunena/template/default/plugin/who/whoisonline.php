@@ -38,8 +38,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
         . " LEFT JOIN #__users AS u ON u.id=w.userid "
         . " LEFT JOIN #__fb_users AS k ON k.userid=w.userid "
 	# filter real public session logouts
-        . " INNER JOIN #__session AS s "
-		. " ON s.guest='0' AND s.userid=w.userid "
+        . " INNER JOIN #__session AS s ON s.guest='0' AND s.userid=w.userid "
         . " WHERE w.userid!='0' "
         . " GROUP BY u.id "
         . " ORDER BY username ASC";
@@ -113,7 +112,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
                         $time = date("H:i:s", $user->time);
                     ?>
 
-                  		 <?php if ( $user->showOnline < 1 && $kunena_my->gid > 1 ){ ?>
+                  		 <?php if ( $is_Moderator && $user->showOnline < 1 ){ ?>
 
                             <a class = "whois<?php echo $user->moderator;?>  <?php echo "fb_group_".$grp->id;?>" href = "<?php echo JRoute::_(KUNENA_PROFILE_LINK_SUFFIX.$user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
 

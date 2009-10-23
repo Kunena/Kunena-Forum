@@ -52,6 +52,7 @@ Kunena 1.5.7
 # [#18461] Remove notice if C_ASSET_JQUERY is already defined
 # [#18462] JomSocial Profile links: Use the first menu item id (added by JomSocial during installation)
 # [#18463] Typo in English language file (on Prune)
+* [#18465] Online statistics reveals hidden users to registered users
 
 5-Oct-2009 Matias
 # [#18289] Smiley and Rank admin: Images broken in Windows

@@ -679,7 +679,7 @@ function showConfig($option)
 	$avlist[] = JHTML::_('select.option', 'jomsocial',_KUNENA_JOMSOCIAL);
 	$avlist[] = JHTML::_('select.option', 'clexuspm',_KUNENA_CLEXUS);
     // build the html select list
-    $lists['avatar_src'] = JHTML::_('select.genericlist', $avlist,'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rsshistory);
+    $lists['avatar_src'] = JHTML::_('select.genericlist', $avlist,'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->avatar_src);
 
     // private messaging system to use
     $pmlist = array ();

@@ -17,6 +17,7 @@
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
 ?>
+<!-- 
 
 Kunena derives from copyrighted works licensed under the GNU General
 Public License.  This version has been modified pursuant to the
@@ -47,3 +48,5 @@ jQuery
 ----
 Copyright:    John Resig
 License:    Dual licensed under the MIT (MIT-LICENSE.txt) and GPL (GPL-LICENSE.txt) licenses.
+
+ -->

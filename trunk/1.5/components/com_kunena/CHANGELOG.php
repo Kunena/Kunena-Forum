@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.7
 
+23-Oct-2009 Matias
+# [#18441] Administrator: Avatar source shows wrong configuration variable
+
 5-Oct-2009 Matias
 # [#18289] Smiley and Rank admin: Images broken in Windows
 # [#18290] Whoisonline does not work in IIS

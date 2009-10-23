@@ -36,6 +36,7 @@ Kunena 1.5.7
 23-Oct-2009 Matias
 # [#18441] Administrator: Avatar source shows wrong configuration variable
 # [#18442] Debug function does not show MySQL error or where the error occured
+* [#18443] Report to moderator believes that all users in custom groups should get email
 
 5-Oct-2009 Matias
 # [#18289] Smiley and Rank admin: Images broken in Windows

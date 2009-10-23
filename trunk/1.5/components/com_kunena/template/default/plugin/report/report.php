@@ -102,7 +102,7 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
     	check_dberror("Unable to load moderators.");
 
     //get admins
-    $kunena_db->setQuery("SELECT id FROM #__users WHERE gid >= 24");
+    $kunena_db->setQuery("SELECT id FROM #__users WHERE gid IN (24, 25)");
     $admins = $kunena_db->loadObjectList();
     	check_dberror("Unable to load admin.");
 

@@ -209,8 +209,7 @@ if (count($messages[0]) > 0)
                         ?>
 
                                 <td class = "td-2"  align="center">
-                                    <?php echo CKunenaLink::GetSimpleLink($id);
-                                    	echo $leaf->topic_emoticon == 0 ? '<img src="' . KUNENA_URLEMOTIONSPATH . 'default.gif" border="0"  alt="" />' : "<img src=\"" . $topic_emoticons[$leaf->topic_emoticon] . "\" alt=\"emo\" border=\"0\" />"; ?>
+                                    <?php echo $leaf->topic_emoticon == 0 ? '<img src="' . KUNENA_URLEMOTIONSPATH . 'default.gif" border="0"  alt="" />' : "<img src=\"" . $topic_emoticons[$leaf->topic_emoticon] . "\" alt=\"emo\" border=\"0\" />"; ?>
                                 </td>
 
                                 <?php

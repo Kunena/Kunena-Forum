@@ -48,6 +48,7 @@ Kunena 1.5.7
 - [#18453] Remove broken default_gray, default_green and default_red templates
 - [#18454] Do not show deprecated default template if it wasn't selected before upgrade
 # [#18455] Fix CSS error in message.php
+# [#18456] Remove broken link in Recent Discussions, My Discussions and Show Category
 
 5-Oct-2009 Matias
 # [#18289] Smiley and Rank admin: Images broken in Windows

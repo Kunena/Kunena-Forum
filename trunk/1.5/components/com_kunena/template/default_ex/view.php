@@ -164,7 +164,8 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 		check_dberror('Unable to calculate message count.');
 
         //prepare paging
-        $limit = JRequest::getInt('limit', $fbConfig->messages_per_page);
+        $limit = JRequest::getInt('limit', 0);
+        if ($limit < 1) $limit = $fbConfig->messages_per_page;
 		$limitstart = JRequest::getInt('limitstart', 0);
         $ordering = ($fbConfig->default_sort == 'desc' ? 'desc' : 'asc'); // Just to make sure only valid options make it
 		$maxpages = 9 - 2; // odd number here (show - 2)
@@ -505,32 +506,36 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 $fmessage->subject = kunena_htmlspecialchars($fmessage->subject);
 
                                 //Get userinfo needed later on, this limits the amount of queries
-                                unset($userinfo);
-                                $kunena_db->setQuery("SELECT  a.*, b.id, b.name, b.username, b.gid FROM #__fb_users AS a LEFT JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$fmessage->userid}'");
-                                $userinfo = $kunena_db->loadObject();
-				if ($userinfo == NULL) {
-					$userinfo = new stdClass();
-					$userinfo->userid = 0;
-					$userinfo->name = '';
-					$userinfo->username = '';
-					$userinfo->avatar = '';
-					$userinfo->gid = 0;
-					$userinfo->rank = 0;
-					$userinfo->posts = 0;
-					$userinfo->karma = 0;
-					$userinfo->gender = _KUNENA_NOGENDER;
-					$userinfo->personalText = '';
-					$userinfo->ICQ = '';
-					$userinfo->location = '';
-					$userinfo->birthdate = '';
-					$userinfo->AIM = '';
-					$userinfo->MSN = '';
-					$userinfo->YIM = '';
-					$userinfo->SKYPE = '';
-					$userinfo->GTALK = '';
-					$userinfo->websiteurl = '';
-					$userinfo->signature = '';
-				}
+                                static $uinfocache = array();
+                                if (!isset($uinfocache[$fmessage->userid]))
+                                {
+                                	$kunena_db->setQuery("SELECT  a.*, b.id, b.name, b.username, b.gid FROM #__fb_users AS a LEFT JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$fmessage->userid}'");
+                                	$userinfo = $kunena_db->loadObject();
+                                	if ($userinfo == NULL) {
+                                		$userinfo = new stdClass();
+                                		$userinfo->userid = 0;
+                                		$userinfo->name = '';
+                                		$userinfo->username = '';
+                                		$userinfo->avatar = '';
+                                		$userinfo->gid = 0;
+                                		$userinfo->rank = 0;
+                                		$userinfo->posts = 0;
+                                		$userinfo->karma = 0;
+                                		$userinfo->gender = _KUNENA_NOGENDER;
+                                		$userinfo->personalText = '';
+                                		$userinfo->ICQ = '';
+                                		$userinfo->location = '';
+                                		$userinfo->birthdate = '';
+                                		$userinfo->AIM = '';
+                                		$userinfo->MSN = '';
+                                		$userinfo->YIM = '';
+                                		$userinfo->SKYPE = '';
+                                		$userinfo->GTALK = '';
+                                		$userinfo->websiteurl = '';
+                                		$userinfo->signature = '';
+                                	}
+                                	$uinfocache[$fmessage->userid] = $userinfo;
+                                } else $userinfo = $uinfocache[$fmessage->userid];
 
 				if ($fbConfig->fb_profile == 'cb')
 				{
@@ -605,7 +610,9 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     $uIsMod = in_array($userinfo->userid, $catModerators);
 
                                     if ($ugid > 0) { //only get the groupname from the ACL if we're sure there is one
-                                        $agrp = strtolower($kunena_acl->get_group_name($ugid, 'ARO'));
+                                    	static $ugidcache = array();
+                                    	if (!isset($ugidcache[$ugid])) $agrp = $ugidcache[$ugid] = strtolower($kunena_acl->get_group_name($ugid, 'ARO'));
+                                    	else $agrp = $ugidcache[$ugid];
                                     }
 
                                     if ($ugid == 0) {
@@ -787,9 +794,14 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 // online - ofline status
                                 if ($userinfo->userid > 0)
                                 {
-                                    $sql = "SELECT COUNT(userid) FROM #__session WHERE userid='{$userinfo->userid}'";
-                                    $kunena_db->setQuery($sql);
-                                    $isonline = $kunena_db->loadResult();
+                                	static $onlinecache = array();
+                                	if (!isset($onlinecache[$userinfo->userid]))
+                                	{
+                                		$sql = "SELECT COUNT(userid) FROM #__session WHERE userid='{$userinfo->userid}'";
+                                		$kunena_db->setQuery($sql);
+                                		$onlinecache[$userinfo->userid] = $kunena_db->loadResult();
+                                	}
+                                	$isonline = $onlinecache[$userinfo->userid];
 
                                     if ($isonline && $userinfo->showOnline ==1 ) {
                                         $msg_online = isset($fbIcons['onlineicon']) ? '<img src="'

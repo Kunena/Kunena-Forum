@@ -53,6 +53,7 @@ Kunena 1.5.7
 # [#18462] JomSocial Profile links: Use the first menu item id (added by JomSocial during installation)
 # [#18463] Typo in English language file (on Prune)
 * [#18465] Online statistics reveals hidden users to registered users
+^ [#18466] Cache some repeating queries
 
 5-Oct-2009 Matias
 # [#18289] Smiley and Rank admin: Images broken in Windows

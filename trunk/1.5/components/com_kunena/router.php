@@ -29,6 +29,8 @@
  */
 function KunenaBuildRoute(&$query)
 {
+	static $catcache = array();
+	static $msgcache = array();
 	$parsevars = array('task', 'id', 'userid', 'page', 'sel');
 	$segments = array();
 	
@@ -38,13 +40,17 @@ function KunenaBuildRoute(&$query)
 	$catfound = false;
 	if(isset($query['catid']))
 	{
-		if($query['catid'] != (int) 0)
+		$catid = (int) $query['catid'];
+		if($catid != 0)
 		{
 			$catfound = true;
-			$quesql = 'SELECT name, id FROM #__fb_categories WHERE id='.(int) $query['catid'];
-			$db->setQuery($quesql);
-			$name = $db->loadResult();
-			$suf = '-'.JFilterOutput::stringURLSafe($name);
+			if (!isset($catcache[$catid]))
+			{
+				$quesql = 'SELECT name, id FROM #__fb_categories WHERE id='.(int) $catid;
+				$db->setQuery($quesql);
+				$catcache[$catid] = $db->loadResult();
+			}
+			$suf = '-'.JFilterOutput::stringURLSafe($catcache[$catid]);
 			$segments[] = $query['catid'].$suf;
 		}
 		unset($query['catid']);
@@ -52,10 +58,14 @@ function KunenaBuildRoute(&$query)
 
 	if($catfound && isset($query['id']))
 	{
-		$quesql = 'SELECT subject, id FROM #__fb_messages WHERE id='.(int) $query['id'];
-		$db->setQuery($quesql);
-		$subject = $db->loadResult();
-		$suf = JFilterOutput::stringURLSafe($subject);
+		$id = $query['id'];
+		if (!isset($msgcache[$id]))
+		{
+			$quesql = 'SELECT subject, id FROM #__fb_messages WHERE id='.(int) $id;
+			$db->setQuery($quesql);
+			$msgcache[$id] = $db->loadResult();
+		}
+		$suf = JFilterOutput::stringURLSafe($msgcache[$id]);
 		$segments[] = $query['id'].'-'.$suf;
 		unset($query['id']);
 	}

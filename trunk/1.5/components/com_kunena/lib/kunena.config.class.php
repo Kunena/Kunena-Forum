@@ -232,7 +232,7 @@ class CKunenaConfig extends CKunenaConfigBase
     var $board_title             = 'Kunena';
     var $email                   = 'change@me.com';
     var $board_offline           = 0;
-    var $board_ofset             = 0;
+    var $board_ofset             = '0';
     var $offline_message         = "<h2>The Forum is currently offline for maintenance.</h2>\n<div>Check back soon!</div>";
     var $default_view            = 'flat';
     var $enablerss               = 1;

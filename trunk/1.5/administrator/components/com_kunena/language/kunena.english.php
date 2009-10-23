@@ -1372,7 +1372,7 @@ DEFINE('_COM_A_BOARD_OFFLINE_MES', 'Forum Offline Message');
 DEFINE('_COM_A_PRUNE', 'Prune Forums');
 DEFINE('_COM_A_PRUNE_NAME', 'Forum to prune:');
 DEFINE('_COM_A_PRUNE_DESC',
-    'The Prune Forums function allows you to prune threads where there have not been any new posts during the specified number of days. This does not remove stickies or locked topics and hese must be removed manually. Threads in locked forums can not be pruned.');
+    'The Prune Forums function allows you to prune threads where there have not been any new posts during the specified number of days. This does not remove stickies or locked topics and these must be removed manually. Threads in locked forums can not be pruned.');
 DEFINE('_COM_A_PRUNE_NOPOSTS', 'Prune threads with no posts for the past&#32;');
 DEFINE('_COM_A_PRUNE_DAYS', 'days');
 DEFINE('_COM_A_PRUNE_USERS', 'Prune Users'); // <=FB 1.0.3

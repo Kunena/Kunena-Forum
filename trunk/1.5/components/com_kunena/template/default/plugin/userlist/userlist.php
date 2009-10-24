@@ -114,6 +114,7 @@ class HTML_userlist_content
 {
     function showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search = "")
     {
+    	global $is_Moderator;
 		$app =& JFactory::getApplication();
         $fbConfig =& CKunenaConfig::getInstance();
         $kunena_db = &JFactory::getDBO();

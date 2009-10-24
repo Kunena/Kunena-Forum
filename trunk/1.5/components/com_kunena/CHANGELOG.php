@@ -37,6 +37,7 @@ Kunena 1.5.7
 ^ [#18263] Update version info to 1.5.7RC1
 # [#18476] Make installation process more robust
 # [#18477] Improve build scripts
+# [#18478] Administrator: Better version warnings
 
 23-Oct-2009 Matias
 # [#18441] Administrator: Avatar source shows wrong configuration variable

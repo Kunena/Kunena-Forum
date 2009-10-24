@@ -59,33 +59,6 @@ if ($kn_tables->installed() === false) {
 	return;
 }
 
-$kn_version = CKunenaVersion::versionArray();
-if ($kn_version->versionname == '@kunenaversionname@') {
-	$kn_version_name = _KUNENA_VERSION_SVN;	
-	$kn_version_warning = _KUNENA_VERSION_SVN_WARNING;	
-} else if ($kn_version->versionname == 'NOT UPGRADED') {
-	$app->enqueueMessage(sprintf(_KUNENA_ERROR_UPGRADE, $kn_version->version), 'notice');
-	$app->enqueueMessage(_KUNENA_ERROR_UPGRADE_WARN);
-	$app->enqueueMessage(sprintf(_KUNENA_ERROR_UPGRADE_AGAIN, $kn_version->version));
-	$app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_SUPPORT.' <a href="http://www.kunena.com">www.kunena.com</a>');
-} else if (strpos($kn_version->version, 'RC') !== false) {
-	$kn_version_name = _KUNENA_VERSION_RC;	
-	$kn_version_warning = _KUNENA_VERSION_RC_WARNING;	
-} else if (strpos($kn_version->version, 'BETA') !== false) {
-	$kn_version_name = _KUNENA_VERSION_BETA;	
-	$kn_version_warning = _KUNENA_VERSION_BETA_WARNING;	
-} else if (strpos($kn_version->version, 'ALPHA') !== false) {
-	$kn_version_name = _KUNENA_VERSION_ALPHA;	
-	$kn_version_warning = _KUNENA_VERSION_ALPHA_WARNING;	
-} else if (strpos($kn_version->version, 'DEV') !== false) {
-	$kn_version_name = _KUNENA_VERSION_DEV;	
-	$kn_version_warning = _KUNENA_VERSION_DEV_WARNING;	
-}
-if (!empty($kn_version_warning))
-{
-	$app->enqueueMessage(sprintf(_KUNENA_VERSION_INSTALLED, $kn_version->version, $kn_version_name).' '.$kn_version_warning, 'notice');	
-}
-
 $cid = JRequest::getVar('cid', array ( 0 ));
 
 if (!is_array($cid)) {
@@ -353,6 +326,34 @@ switch ($task)
     default:
         html_Kunena::controlPanel();
         break;
+}
+
+$kn_version = CKunenaVersion::versionArray();
+if ($kn_version->versionname == '@kunenaversionname@') {
+	$kn_version_name = _KUNENA_VERSION_SVN;	
+	$kn_version_warning = _KUNENA_VERSION_SVN_WARNING;	
+} else if ($kn_version->versionname == 'NOT UPGRADED') {
+	$app->enqueueMessage(sprintf(_KUNENA_ERROR_UPGRADE, $kn_version->version), 'notice');
+	$app->enqueueMessage(_KUNENA_ERROR_UPGRADE_WARN);
+	$app->enqueueMessage(sprintf(_KUNENA_ERROR_UPGRADE_AGAIN, $kn_version->version));
+	$app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_SUPPORT.' <a href="http://www.kunena.com">www.kunena.com</a>');
+}
+if (strpos($kn_version->version, 'RC') !== false) {
+	$kn_version_name = _KUNENA_VERSION_RC;	
+	$kn_version_warning = _KUNENA_VERSION_RC_WARNING;	
+} else if (strpos($kn_version->version, 'BETA') !== false) {
+	$kn_version_name = _KUNENA_VERSION_BETA;	
+	$kn_version_warning = _KUNENA_VERSION_BETA_WARNING;	
+} else if (strpos($kn_version->version, 'ALPHA') !== false) {
+	$kn_version_name = _KUNENA_VERSION_ALPHA;	
+	$kn_version_warning = _KUNENA_VERSION_ALPHA_WARNING;	
+} else if (strpos($kn_version->version, 'DEV') !== false) {
+	$kn_version_name = _KUNENA_VERSION_DEV;	
+	$kn_version_warning = _KUNENA_VERSION_DEV_WARNING;	
+}
+if (!empty($kn_version_warning))
+{
+	$app->enqueueMessage(sprintf(_KUNENA_VERSION_INSTALLED, $kn_version->version, $kn_version_name).' '.$kn_version_warning, 'notice');	
 }
 
 // Detect errors in CB integration

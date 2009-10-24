@@ -2,7 +2,7 @@
 <!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
 <install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>
-	<version>1.5.7</version>
+	<version>1.5.7RC1</version>
 	<versionname>Kuiskaus</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
@@ -13,19 +13,33 @@
 	<license>GNU/GPL</license>
 	<description>Kunena Forum</description>
 	<files>
-    
-@kunenafrontendlist@    
-    
+		<filename>CHANGELOG.php</filename>
+		<filename>COPYRIGHT.php</filename>
+		<filename>class.kunena.php</filename>
+		<filename>index.php</filename>
+		<filename>kunena.php</filename>
+		<filename>router.php</filename>
+		<folder>lib</folder>
+		<folder>template</folder>
+		<folder>kunena.files.distribution</folder>
 	</files>
 	<installfile>install/kunena.install.php</installfile>
 	<uninstallfile>install/kunena.uninstall.php</uninstallfile>
 	<administration>
-		<files>
-
-@kunenabackendlist@    
-
-		</files>
-	<menu>Kunena Forum</menu>
+        <files>
+			<filename>admin.kunena.html.php</filename>
+			<filename>admin.kunena.php</filename>
+			<filename>kunena.cpanel.php</filename>
+			<filename>manifest.xml</filename>
+			<filename>toolbar.kunena.html.php</filename>
+			<filename>toolbar.kunena.php</filename>    
+			<folder>images</folder>
+			<folder>install</folder>
+			<folder>language</folder>
+			<folder>lib</folder>
+			<folder>plugin</folder>
+        </files>
+    <menu>Kunena Forum</menu>
 	</administration>
 	<params />
 </install>

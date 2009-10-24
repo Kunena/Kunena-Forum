@@ -77,35 +77,16 @@ function com_install()
 		//change fb menu icon
 		$kunena_db->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena'");
 		$id = $kunena_db->loadResult();
+		check_dberror("Unable to find component.");
 
 		//add new admin menu images
 		$kunena_db->setQuery("UPDATE #__components SET admin_menu_img  = 'components/com_kunena/images/kunenafavicon.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
-		$kunena_db->query() or trigger_dbwarning("Unable to set admin menu image.");
+		$kunena_db->query();
+		check_dbwarning("Unable to set admin menu image.");
 
 		//install & upgrade class
 		$fbupgrade = new fx_Upgrade("com_kunena", "kunena.install.upgrade.xml", "fb_", "install", false);
 
-		// Legacy enabler
-		// Versions prior to 1.0.5 did not came with a version table inside the database
-		// this would make the installer believe this is a fresh install. We need to perform
-		// a 'manual' check if this is going to be an upgrade and if so create that table
-		// and write a dummy version entry to force an upgrade.
-
-		$kunena_db->setQuery( "SHOW TABLES LIKE ".$kunena_db->quote($kunena_db->getPrefix().'fb_messages') );
-		$kunena_db->query() or trigger_dbwarning("Unable to search for messages table.");
-
-		if($kunena_db->getNumRows()) {
-			// fb tables exist, now lets see if we have a version table
-			$kunena_db->setQuery( "SHOW TABLES LIKE ".$kunena_db->quote($kunena_db->getPrefix().'fb_version') );
-			$kunena_db->query() or trigger_dbwarning("Unable to search for version table.");
-
-			if(!$kunena_db->getNumRows()) {
-				//version table does not exist - this is a pre 1.0.5 install - lets create
-				$fbupgrade->createVersionTable();
-				// insert dummy version entry to force upgrade
-				$fbupgrade->insertDummyVersion();
-			}
-		}
 		// Start Installation/Upgrade
 		$fbupgrade->doUpgrade();
 

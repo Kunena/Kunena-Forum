@@ -12,7 +12,7 @@
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
 ?>
-<!-- 
+<!--
 
 Changelog
 ------------
@@ -35,6 +35,7 @@ Kunena 1.5.7
 
 24-Oct-2009 Matias
 ^ [#18263] Update version info for 1.5.7
+# [#18476] Make installation process more robust
 
 23-Oct-2009 Matias
 # [#18441] Administrator: Avatar source shows wrong configuration variable

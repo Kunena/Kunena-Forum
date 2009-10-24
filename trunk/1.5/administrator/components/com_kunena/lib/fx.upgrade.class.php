@@ -46,7 +46,7 @@ class fx_Upgrade {
 	function createVersionTable()
 	{
 		$kunena_db =& JFactory::getDBO();
-	    $kunena_db->setQuery( "CREATE TABLE `$this->versionTable`
+	    $kunena_db->setQuery( "CREATE TABLE IF NOT EXISTS `$this->versionTable`
 								(`id` INTEGER NOT NULL AUTO_INCREMENT,
 								`version` VARCHAR(20) NOT NULL,
 								`versiondate` DATE NOT NULL,
@@ -56,6 +56,7 @@ class fx_Upgrade {
 								PRIMARY KEY(`id`)) DEFAULT CHARSET=utf8;" );
 		// Let the install handle the error
 		return $kunena_db->query();
+		check_dberror("Version table creation failed.");
 	}
 
 	// helper function to drop existing version table
@@ -63,7 +64,8 @@ class fx_Upgrade {
 	{
 		$kunena_db =& JFactory::getDBO();
 	    $kunena_db->setQuery("DROP TABLE IF EXISTS `$this->versionTable`;");
-		$kunena_db->query() or trigger_dberror('Unable to drop version table.');
+		$kunena_db->query();
+		check_dbwarning('Unable to drop version table.');
    	}
 
 	// helper function retrieve latest version from version table
@@ -81,7 +83,8 @@ class fx_Upgrade {
 		            ORDER BY `id` DESC";
 
 	    $kunena_db->setQuery($query,0,1);// LIMIT 1
-		$currentVersion = $kunena_db->loadObject() or trigger_dbwarning('Could not load latest Version record.');
+		$currentVersion = $kunena_db->loadObject();
+		check_dberror('Could not load latest Version record.');
 		return $currentVersion;
 	}
 
@@ -95,7 +98,8 @@ class fx_Upgrade {
 								`build` = '".$build."',
 								`versionname` = '".$versionname."';"
 								);
-		$kunena_db->query() or trigger_dberror('Unable to insert version record.');
+		$kunena_db->query();
+		check_dberror('Unable to insert version record.');
 	}
 
 	function insertDummyVersion()
@@ -107,10 +111,12 @@ class fx_Upgrade {
 	{
 		$kunena_db =& JFactory::getDBO();
 	    $kunena_db->setQuery("DROP TABLE IF EXISTS `".$this->versionTable."_backup`;");
-        $kunena_db->query() or trigger_dberror('Unable to drop previous backup version table.');
+        $kunena_db->query();
+        check_dberror('Unable to drop previous backup version table.');
 
         $kunena_db->setQuery("CREATE TABLE `".$this->versionTable."_backup` SELECT * FROM `".$this->versionTable."`;");
-        $kunena_db->query() or trigger_dberror('Unable to backup version table.');
+        $kunena_db->query();
+        check_dberror('Unable to backup version table.');
 	}
 
 	/**
@@ -156,13 +162,35 @@ class fx_Upgrade {
 		$createVersionTable = 1;
 		$upgrade=null;
 
-		$kunena_db =& JFactory::getDBO();
-		$kunena_db->setQuery( "SHOW TABLES LIKE ".$kunena_db->quote($this->versionTable) );
-		$kunena_db->query() or trigger_dberror('Unable to check for existing version table.');
-		if($kunena_db->loadResult()) {
-			//table already exists, so do not create a new table
-			$createVersionTable = 0;
+		// Legacy enabler
+		// Versions prior to 1.0.5 did not came with a version table inside the database
+		// this would make the installer believe this is a fresh install. We need to perform
+		// a 'manual' check if this is going to be an upgrade and if so create that table
+		// and write a dummy version entry to force an upgrade.
 
+		$kunena_db =& JFactory::getDBO();
+		$kunena_db->setQuery( "SHOW TABLES LIKE ".$kunena_db->quote($kunena_db->getPrefix().'fb_messages') );
+		$kunena_db->query();
+		check_dberror("Unable to search for messages table.");
+
+		if($kunena_db->getNumRows()) {
+			// fb tables exist, now lets see if we have a version table
+			$kunena_db->setQuery( "SHOW TABLES LIKE ".$kunena_db->quote($this->versionTable) );
+			$createVersionTable = $kunena_db->loadResult();
+			$createVersionTable = empty($createVersionTable);
+
+			check_dberror("Unable to search for version table.");
+
+			if($createVersionTable) {
+				//version table does not exist - this is a pre 1.0.5 install - lets create
+				$fbupgrade->createVersionTable();
+				// insert dummy version entry to force upgrade
+				$fbupgrade->insertDummyVersion();
+				$createVersionTable = 0;
+			}
+		}
+
+		if(!$createVersionTable) {
 			// lets see if we need to update the version table layout from it original
 			$currentVersion = $this->getLatestVersion($this->versionTable);
 			if(!is_object($currentVersion))
@@ -229,9 +257,6 @@ class fx_Upgrade {
 			$build = $installElement->getAttribute( "build" );
 			$versionname = $installElement->getAttribute( "versionname" );
 
-			//Store version info and date in database
-			$this->insertVersionData( $version, $versiondate, $build, $versionname);
-
 			if(!$this->silent)
 			{
 				?>
@@ -254,6 +279,10 @@ class fx_Upgrade {
 				</table>
 				<?php
 			}
+
+			//Store version info and date in database
+			$this->insertVersionData( $version, $versiondate, $build, $versionname);
+
 		} else {
 			if(!$this->silent) {
 				?>
@@ -295,10 +324,12 @@ class fx_Upgrade {
 						}
 						//Store version info and date in database
 						$this->insertVersionData( $version, $versiondate, $build, $versionname);
+						$added_version=1;
 
 						$this->processNode($versionElement,$k);
 					} //end if version newer check
 				} //end version element loop
+				if (!isset($added_version)) $this->insertVersionData( $version, $versiondate, $build, $versionname);
 			} //end if !is_null($upgradeElement)
 			if(!$this->silent) {
 				?>
@@ -362,9 +393,10 @@ class fx_Upgrade {
 					$kunena_db =& JFactory::getDBO();
 
 					$kunena_db->setQuery($query);
-					if (!@$kunena_db->query())
+					$kunena_db->query();
+					if ($kunena_db->getErrorNum() != 0)
 					{
-						$this->_error = "DB function failed with error number $kunena_db->_errorNum<br /><font color=\"red\">";
+						$this->_error = "DB function failed with error number ".$kunena_db->getErrorNum()."<br /><font color=\"red\">";
 						$this->_error .= $kunena_db->stderr(true);
 						$this->_error .= "</font>";
 						$img = "publish_x.png";

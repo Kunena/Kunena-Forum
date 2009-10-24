@@ -136,14 +136,14 @@ $rows = $kunena_db->loadObjectList();
 header ('Content-type: application/xml');
 echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 ?>
-<!-- generator="Kunena @kunenaversion@"> -->
+<!-- generator="Kunena <?php echo KUNENA_VERSION; ?>"> -->
 <rss version="0.91">
     <channel>
         <title><?php echo stripslashes(kunena_htmlspecialchars($app->getCfg('sitename'))); ?> - Forum</title>
         <description>Kunena Site Syndication</description>
         <link><?php echo JURI::root(); ?></link>
         <lastBuildDate><?php echo date("r");?></lastBuildDate>
-        <generator>Kunena @kunenaversion@</generator>
+        <generator>Kunena <?php echo KUNENA_VERSION; ?></generator>
         <image>
 	        <url><?php echo KUNENA_URLEMOTIONSPATH; ?>rss.gif</url>
 	        <title>Powered by Kunena</title>

@@ -268,8 +268,8 @@ if (count($threadids) > 0)
      WHERE u.id = m.userid
      AND l.id = m.id";
 
-	$database->setQuery($query);
-	$msglist = $database->loadObjectList();
+	$kunena_db->setQuery($query);
+	$msglist = $kunena_db->loadObjectList();
 	foreach ($msglist as $message) {
 		$thread_counts[$message->thread] = $message->cnt;
 		$last_reply[$message->thread] = $message;

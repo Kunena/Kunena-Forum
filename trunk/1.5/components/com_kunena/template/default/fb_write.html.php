@@ -304,8 +304,8 @@ JHTML::_('behavior.keepalive');
 </div>
 </div>
 </div>
-<input type="hidden" value="<?php echo KUNENA_DIRECTURL . '/template/default';?>" name="templatePath" />
-<input type="hidden" value="<?php echo JRoute::_(KUNENA_LIVEURLREL);?>" name="kunenaPath" />
+<input type="hidden" value="<?php echo JURI::base(true).'/components/com_kunena/template/default';?>" name="templatePath" />
+<input type="hidden" value="<?php echo JURI::base(true);?>/" name="kunenaPath" />
 </form>
 
 </td>

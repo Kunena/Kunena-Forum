@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.7
 
+25-Oct-2009 Matias
+* [#18495] Preview/posting message does not work (Firewall detects attack)
+
 24-Oct-2009 Matias
 ^ [#18263] Update version info to 1.5.7RC1
 # [#18476] Make installation process more robust

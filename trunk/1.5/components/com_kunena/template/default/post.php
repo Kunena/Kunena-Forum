@@ -418,7 +418,7 @@ $catName = $objCatInfo->name;
                                             }
                                             if($fbConfig->mailadmin==1) {
                                                 if(strlen($sql2)) { $sql2 .= " OR "; }
-                                                $sql2 .= " u.sendEmail='1'";
+                                                $sql2 .= " u.gid IN (24, 25)";
                                             }
                                             $sql .= "".$sql2.")";
 

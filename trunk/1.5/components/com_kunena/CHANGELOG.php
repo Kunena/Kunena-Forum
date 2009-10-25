@@ -35,6 +35,7 @@ Kunena 1.5.7
 
 25-Oct-2009 Matias
 * [#18495] Preview/posting message does not work (Firewall detects attack)
+# [#18494] Optimize queries in Recent Discussions, My Discussions, Category page
 
 24-Oct-2009 Matias
 ^ [#18263] Update version info to 1.5.7RC1

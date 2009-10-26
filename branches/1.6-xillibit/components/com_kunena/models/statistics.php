@@ -360,6 +360,55 @@ class KunenaModelStatistics extends JModel
 		return $query;
 	}
 	
+/**
+	 * Method to build an SQL query to get the five popular threads
+	 *
+	 * @return	string	An SQL query.
+	 * @since	1.6
+	 */
+	protected function _getPopularThreadsQuery()
+	{
+		$query = new KQuery();
+			
+		$query->select("*");
+		$query->from('#__kunena_messages');
+    $query->where('parent=0 ORDER BY hits DESC LIMIT 5');		
+		
+		return $query;
+	}
+	
+		/**
+	 * Method to build an SQL query to get the five popular users
+	 *
+	 * @return	string	An SQL query.
+	 * @since	1.6
+	 */
+	protected function _getPopularUsersQuery()
+	{
+		$query = new KQuery();
+			
+	  $query->select("*");
+		$query->from('#__kunena_users ORDER BY posts DESC LIMIT 5');	
+		
+		return $query;
+	}
+	
+		/**
+	 * Method to build an SQL query to get the five popular users profile
+	 *
+	 * @return	string	An SQL query.
+	 * @since	1.6
+	 */
+	protected function _getPopularProfileUsersQuery()
+	{
+		$query = new KQuery();
+			
+		$query->select("*");
+		$query->from('#__kunena_users ORDER BY uhits DESC LIMIT 5');    		
+		
+		return $query;
+	}
+	
 	/**
 	 * Method to get datas from table kunena users and table joomla users.
 	 *

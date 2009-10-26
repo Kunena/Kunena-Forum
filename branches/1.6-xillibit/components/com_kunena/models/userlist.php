@@ -132,6 +132,7 @@ class KunenaModelUserList extends JModel
 
 		// Add the rows to the internal storage.
 		$this->_lists[$key] = $rows;
+		$this->_lists[$key]['userlist'] = $this->getUserListData();
 
 		return $this->_lists[$key];
 	}
@@ -247,6 +248,51 @@ class KunenaModelUserList extends JModel
 		
 		return $query;
 	}
+	
+	/**
+	 * Method to build an SQL query to load the user list data.
+	 *
+	 * @return	string	An SQL query.
+	 * @since	1.6
+	 */
+	protected function _getUserListQuery()
+	{
+		$query = new KQuery();
+
+		// Select fields.
+		$query->select('userid, name, username, avatar, posts, karma, registerDate, lastvisitDate, uhits');
+		$query->from('#__kunena_users AS a');
+		$query->join('INNER', '#__users AS b ON a.userid=b.id');
+		
+		return $query;
+	}
+	 
+  	/**
+	 * Method to return the userlist data.
+	 *
+	 * @return	string	An SQL query.
+	 * @since	1.6
+	 */
+  public function getUserListData()
+  {
+    // Get a unique key for the current list state.
+		$key = $this->_getStoreId($this->_context);	
+  
+		$query = $this->_getUserListQuery();
+		$this->_db->setQuery($query->toString());
+		$return = $this->_db->loadObjectList();
+
+		// Check for a database error.
+		if ($this->_db->getErrorNum()) {
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+		
+		$this->_userlist[$key] = $return;
+
+		return $this->_userlist[$key];
+	}	
+  
 
 	/**
 	 * Method to get a store id based on model configuration state.

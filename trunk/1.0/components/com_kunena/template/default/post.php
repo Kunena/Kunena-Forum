@@ -28,6 +28,15 @@ global $is_Moderator;
 //ob_start();
 $catid = (int)$catid;
 
+if ($id)
+{
+	// If message exists, override catid to be sure that user can post there
+	$database->setQuery("SELECT catid FROM #__fb_messages WHERE id='{$id}'");
+	$msgcat = $database->loadResult();
+	check_dberror('Unable to check message.');
+	if ($msgcat) $catid = $msgcat;
+}
+
 //get the allowed forums and turn it into an array
 $allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):array();
 
@@ -292,7 +301,7 @@ $catName = $objCatInfo->name;
                                             $querythread = $thread;
                                         }
 
-                                        $database->setQuery("SELECT * FROM #__fb_sessions WHERE readtopics LIKE '%$thread%'");
+                                        $database->setQuery("SELECT * FROM #__fb_sessions WHERE readtopics LIKE '%$thread%' AND userid!={$my->id}");
                                         $sessions = $database->loadObjectList();
                                         	check_dberror("Unable to load sessions.");
                                         foreach ($sessions as $session)
@@ -403,8 +412,8 @@ $catName = $objCatInfo->name;
                                                 $sql2 .= " a.userid IS NOT NULL";
                                             }
                                             if($fbConfig->mailadmin==1) {
-                                                if(strlen($sql2)) { $sql2 .= "\n  OR "; }
-                                                $sql2 .= " u.sendEmail=1";
+                                                if(strlen($sql2)) { $sql2 .= " OR "; }
+                                                $sql2 .= " u.gid IN (24, 25)";
                                             }
                                             $sql .= "\n".$sql2;
                                             $sql .= "\n)";

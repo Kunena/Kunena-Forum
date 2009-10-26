@@ -2,7 +2,7 @@
 <mosinstall type="component">
  <name>Kunena</name>
     <version>1.0.12</version>
-    <versionname>Rikat</versionname>
+    <versionname>Endings</versionname>
     <creationDate>@fbversiondate@</creationDate>
 	<build>@fbbuild@</build>
     <author>www.Kunena.com</author>

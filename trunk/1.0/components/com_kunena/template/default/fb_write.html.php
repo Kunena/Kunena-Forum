@@ -301,8 +301,8 @@ include_once(KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
 </div>
 </div>
 </div>
-<input type="hidden" value="<?php echo KUNENA_DIRECTURL . '/template/default';?>" name="templatePath" />
-<input type="hidden" value="<?php echo sefRelToAbs(KUNENA_LIVEURLREL);?>" name="kunenaPath" />
+<input type="hidden" value="<?php echo $mosConfig_live_site.'/components/com_kunena/template/default';?>" name="templatePath" />
+<input type="hidden" value="<?php echo $mosConfig_live_site;?>/" name="kunenaPath" />
 </form>
 
 </td>

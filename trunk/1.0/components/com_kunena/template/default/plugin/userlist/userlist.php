@@ -116,7 +116,7 @@ class HTML_userlist_content
 {
     function showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search = "")
     {
-        global $base_url, $mosConfig_sitename, $database;
+        global $is_Moderator, $base_url, $mosConfig_sitename, $database;
 	$fbConfig =& CKunenaConfig::getInstance();
 
         if ($search == "") {

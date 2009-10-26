@@ -33,6 +33,9 @@ Legend:
 
 Custom Branch:
 
+26-Oct-2009 Xillibit
++ [#18627] Add model for userlist and for more about stats
+
 22-Oct-2009 Matias
 ^ [#17628] Merge from /trunk/1.6 revisions 1121 to 1127
 

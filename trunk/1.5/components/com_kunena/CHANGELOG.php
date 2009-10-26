@@ -34,7 +34,7 @@ Legend:
 Kunena 1.5.7
 
 25-Oct-2009 Matias
-^ [#18263] Update version info to 1.5.7RC2
+^ [#18263] Update version info to 1.5.7RC2 
 * [#18495] Preview/posting message does not work (Firewall detects attack)
 # [#18494] Optimize queries in Recent Discussions, My Discussions, Category page
 * [#18496] E-mail Administrators option should not send messages to users which receive system messages

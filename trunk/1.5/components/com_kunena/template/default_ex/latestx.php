@@ -191,7 +191,7 @@ else
 	SELECT m.thread, (f.userid>0) AS myfavorite, COUNT(m.thread) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime
 	FROM jos_fb_messages AS m
 	LEFT JOIN jos_fb_favorites AS f ON f.thread=m.thread AND f.userid = '{$kunena_my->id}'
-	WHERE m.hold='0' AND m.moved='0' AND m.catid IN ({$fbSession->allowed}) {$latestcats}
+	WHERE m.time>'{$querytime}' AND m.hold='0' AND m.moved='0' AND m.catid IN ({$fbSession->allowed}) {$latestcats}
 	GROUP BY m.thread
 	ORDER BY lastid DESC
 	LIMIT {$offset}, {$threads_per_page}) AS l";
@@ -203,8 +203,6 @@ $query .= " INNER JOIN jos_fb_messages AS a  ON a.thread = l.thread
 	LEFT JOIN jos_fb_attachments AS m ON m.mesid = a.id
 	LEFT JOIN jos_fb_users AS u ON u.userid = a.userid
 	WHERE (a.parent='0' OR a.id=l.lastid)";
-
-if ($func != "mylatest") $query .= " AND l.lasttime>'{$querytime}'";
 
 $kunena_db->setQuery($query);
 $messagelist = $kunena_db->loadObjectList();
@@ -249,13 +247,25 @@ if ($messagelist) foreach ($messagelist as $message)
 	unset($favlist, $fthread);
 
     $kunena_db->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages "
-                       ."WHERE thread IN ('{$idstr}') AND time>'{$prevCheck}' GROUP BY thread");
+                       ."WHERE hold='0' AND moved='0' AND thread IN ('{$idstr}') AND time>'{$prevCheck}' GROUP BY thread");
     $msgidlist = $kunena_db->loadObjectList();
     check_dberror("Unable to get unread messages count and first id.");
 
     foreach ($msgidlist as $msgid)
     {
         if (!in_array($msgid->thread, $read_topics)) $last_read[$msgid->thread] = $msgid;
+    }
+    
+    if ($func != "mylatest") {
+    	$kunena_db->setQuery("SELECT thread, COUNT(thread) AS msgcount FROM #__fb_messages "
+    					."WHERE hold='0' AND moved='0' AND thread IN ('{$idstr}') GROUP BY thread");
+    	$msgidlist = $kunena_db->loadObjectList();
+    	check_dberror("Unable to get unread messages count and first id.");
+
+    	foreach ($msgidlist as $msgid)
+    	{
+    		$thread_counts[$msgid->thread] = $msgid->msgcount-1;
+    	}
     }
 }
 // (JJ) BEGIN: ANNOUNCEMENT BOX

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.7
 
+26-Oct-2009 Matias
+# [#18494] Optimize queries in Recent Discussions (well, try harder)
+
 25-Oct-2009 Matias
 ^ [#18263] Update version info to 1.5.7RC2 
 * [#18495] Preview/posting message does not work (Firewall detects attack)

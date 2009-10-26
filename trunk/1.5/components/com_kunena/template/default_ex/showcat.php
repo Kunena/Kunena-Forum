@@ -109,7 +109,7 @@ if (in_array($catid, $allow_forum))
     $totalpages = ceil($total / $threads_per_page);
     $kunena_db->setQuery("SELECT a.*, t.mesid, t.message AS messagetext, m.mesid AS attachmesid, (f.thread>0) AS myfavorite, u.avatar, l.msgcount, l.lastid
 		FROM (
-			SELECT thread, IF(parent=0,ordering,0) AS ordering, COUNT(thread) as msgcount, MAX(id) AS lastid, MAX(m.time) AS lasttime
+			SELECT thread, IF(parent=0,ordering,0) AS ordering, COUNT(thread) as msgcount, MAX(id) AS lastid, MAX(time) AS lasttime
 			FROM jos_fb_messages WHERE hold='0' AND catid='{$catid}' 
 			GROUP BY thread 
 			ORDER BY ordering DESC, lastid DESC 

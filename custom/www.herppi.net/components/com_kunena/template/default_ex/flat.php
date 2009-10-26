@@ -228,8 +228,7 @@ if (count($messages[0]) > 0)
                         ?>
 
                                 <td class = "td-2"  align="center">
-                                    <?php echo CKunenaLink::GetSimpleLink($id);
-					echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->id, $unreadPage, $fbConfig->messages_per_page, "<img src=\"" . $topic_icon . "\" alt=\"emo\" border=\"0\" />", $last_read[$leaf->id]->lastread); ?>
+                                    <?php echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->id, $unreadPage, $fbConfig->messages_per_page, "<img src=\"" . $topic_icon . "\" alt=\"emo\" border=\"0\" />", $last_read[$leaf->id]->lastread); ?>
                                 </td>
 
                                 <?php

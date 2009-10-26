@@ -97,7 +97,7 @@ function ReportMessage($msg_id, $catid, $reporter, $reason, $text, $type) {
     	check_dberror("Unable to load moderators.");
 
     //get admins
-    $database->setQuery("SELECT id FROM #__users WHERE gid >= 24");
+    $database->setQuery("SELECT id FROM #__users WHERE gid IN (24, 25)");
     $admins = $database->loadObjectList();
     	check_dberror("Unable to load admin.");
 

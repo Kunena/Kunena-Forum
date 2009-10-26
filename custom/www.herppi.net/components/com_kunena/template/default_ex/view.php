@@ -159,7 +159,7 @@ if ((in_array($catid, $allow_forum)) || (isset($first_message->catid) && in_arra
         }
 
         //update the hits counter for this topic & exclude the owner
-        if ($first_message->userid != $my->id) {
+        if ($my->id > 0 && $first_message->userid != $my->id) {
             $database->setQuery("UPDATE #__fb_messages SET hits=hits+1 WHERE id=$thread AND parent=0");
             $database->query();
         }

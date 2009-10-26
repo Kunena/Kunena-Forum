@@ -42,7 +42,7 @@ CUSTOM BRANCH
 1-Oct-2009 Matias
 + [#15554] Custom branch: Merge [#15798] [#17635] [#17636] [#17303] from /trunk/1.0 (Rev 988)
 + [#15554] Custom branch: Minor fix for JomSocial, allowed img tag
-# [#15554] Custom branch: Fix build scripts, use J1.5 installer to allow upgrade 
+# [#15554] Custom branch: Fix build scripts, use J1.5 installer to allow upgrade
 
 14-July-2009 Matias
 + [#15554] Custom branch: In forum view make topic icon clickable, link points to first unread message
@@ -60,6 +60,43 @@ CUSTOM BRANCH
 + [#15554] Custom branch: Make user count algorithm configurable in Stats and Userlist
 
 Kunena 1.0.12
+
+26-Oct-2009 Matias
+^ [#17117] Merge some fixes (23-Oct-2009) from /trunk/1.5 (Revs 1131, 1132, 1134, 1143, 1146, 1148, 1149, 1155)
+^ [#17117] Merge some fixes (25-Oct-2009) from /trunk/1.5 (Revs 1157, 1158, 1159, 1160)
+# [#18494] Optimize queries in Recent Discussions (well, try harder)
+
+25-Oct-2009 Matias
+* [#18495] Preview/posting message does not work (Firewall detects attack)
+# [#18494] Optimize queries in Recent Discussions, My Discussions, Category page
+* [#18496] E-mail Administrators option should not send messages to users which receive system messages
+
+23-Oct-2009 Matias
+* [#18443] Report to moderator believes that all users in custom groups should get email
+# [#18444] Do not show your own message as NEW!
+# [#18447] Fatal Error in Recent Discussions (out of memory)
+# [#18456] Remove broken link in Recent Discussions, My Discussions and Show Category
+* [#18465] Online statistics reveals hidden users to registered users
+# [#18467] Increase hit counter if visitor views a thread written by visitor
+* [#18468] Check category id when user is posting to existing thread
+
+6-Oct-2009 Matias
+^ [#17117] Merge some fixes (23-Oct-2009) from /trunk/1.5 (Revs 1131, 1132, 1134, 1143, 1146, 1148, 1149, 1155)
+^ [#17117] Merge some fixes (25-Oct-2009) from /trunk/1.5 (Revs 1157, 1158, 1159, 1160)
+
+25-Oct-2009 Matias
+* [#18495] Preview/posting message does not work (Firewall detects attack)
+# [#18494] Optimize queries in Recent Discussions, My Discussions, Category page
+* [#18496] E-mail Administrators option should not send messages to users which receive system messages
+
+23-Oct-2009 Matias
+* [#18443] Report to moderator believes that all users in custom groups should get email
+# [#18444] Do not show your own message as NEW!
+# [#18447] Fatal Error in Recent Discussions (out of memory)
+# [#18456] Remove broken link in Recent Discussions, My Discussions and Show Category
+* [#18465] Online statistics reveals hidden users to registered users
+# [#18467] Increase hit counter if visitor views a thread written by visitor
+* [#18468] Check category id when user is posting to existing thread
 
 4-Oct-2009 Matias
 * [#17802] Who is online shows hidden users and IP address

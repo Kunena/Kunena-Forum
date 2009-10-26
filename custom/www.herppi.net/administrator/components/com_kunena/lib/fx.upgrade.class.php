@@ -291,10 +291,12 @@ class fx_Upgrade {
 						}
 						//Store version info and date in database
 						$this->insertVersionData( $version, $versiondate, $build, $versionname);
+						$added_version=1;
 
 						$this->processNode($versionElement,$k);
 					} //end if version newer check
 				} //end version element loop
+				if (!isset($added_version)) $this->insertVersionData( $version, $versiondate, $build, $versionname);
 			} //end if !is_null($upgradeElement)
 			if(!$this->silent) {
 				?>

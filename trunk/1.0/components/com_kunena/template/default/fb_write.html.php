@@ -301,8 +301,9 @@ include_once(KUNENA_ABSSOURCESPATH . 'kunena.bbcode.js.php');
 </div>
 </div>
 </div>
-<input type="hidden" value="<?php echo $mosConfig_live_site.'/components/com_kunena/template/default';?>" name="templatePath" />
-<input type="hidden" value="<?php echo $mosConfig_live_site;?>/" name="kunenaPath" />
+<?php $kurl = parse_url($mosConfig_live_site); $kpath = !empty($kurl['path']) ? $kurl['path'] : ''; ?>
+<input type="hidden" value="<?php echo $kpath.'/components/com_kunena/template/default/';?>" name="templatePath" />
+<input type="hidden" value="<?php echo $kpath;?>/" name="kunenaPath" />
 </form>
 
 </td>

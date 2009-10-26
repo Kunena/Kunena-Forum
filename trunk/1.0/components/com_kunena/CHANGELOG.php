@@ -35,6 +35,7 @@ Kunena 1.0.12
 26-Oct-2009 Matias
 ^ [#17117] Merge some fixes (23-Oct-2009) from /trunk/1.5 (Revs 1131, 1132, 1134, 1143, 1146, 1148, 1149, 1155)
 ^ [#17117] Merge some fixes (25-Oct-2009) from /trunk/1.5 (Revs 1157, 1158, 1159, 1160)
+# [#18494] Optimize queries in Recent Discussions (well, try harder)
 
 25-Oct-2009 Matias
 * [#18495] Preview/posting message does not work (Firewall detects attack)

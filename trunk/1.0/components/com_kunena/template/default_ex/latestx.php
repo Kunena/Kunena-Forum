@@ -152,7 +152,7 @@ $database->setQuery($query);
 $total = (int)$database->loadResult();
 	check_dberror('Unable to count total threads');
 $totalpages = ceil($total / $threads_per_page);
-	
+
 //meta description and keywords
 $metaKeys=kunena_htmlspecialchars(stripslashes(_KUNENA_ALL_DISCUSSIONS . ", {$fbConfig->board_title}, " . $GLOBALS['mosConfig_sitename']));
 $metaDesc=kunena_htmlspecialchars(stripslashes(_KUNENA_ALL_DISCUSSIONS . " ({$page}/{$totalpages}) - {$fbConfig->board_title}"));
@@ -199,7 +199,7 @@ else
 	SELECT m.thread, (f.userid>0) AS myfavorite, COUNT(m.thread) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime
 	FROM jos_fb_messages AS m
 	LEFT JOIN jos_fb_favorites AS f ON f.thread=m.thread AND f.userid = '{$my->id}'
-	WHERE m.hold='0' AND m.moved='0' AND m.catid IN ({$fbSession->allowed}) {$latestcats}
+	WHERE m.time>'{$querytime}' AND m.hold='0' AND m.moved='0' AND m.catid IN ({$fbSession->allowed}) {$latestcats}
 	GROUP BY m.thread
 	ORDER BY lastid DESC
 	LIMIT {$offset}, {$threads_per_page}) AS l";
@@ -232,7 +232,7 @@ if ($messagelist) foreach ($messagelist as $message)
 		$threadids[] = $message->thread;
 		$hits[$message->thread] = $message->hits;
 		$thread_counts[$message->thread] = $message->msgcount-1;
-		$last_read[$message->thread]->unread = 0;    		
+		$last_read[$message->thread]->unread = 0;
 		if ($message->id == $message->lastid) $last_read[$message->thread]->lastread = $last_reply[$message->thread] = $message;
 	}
 	else
@@ -257,13 +257,26 @@ if ($messagelist) foreach ($messagelist as $message)
 	unset($favlist, $fthread);
 
     $database->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages "
-                       ."WHERE thread IN ('{$idstr}') AND time>'{$prevCheck}' GROUP BY thread");
+                       ."WHERE hold='0' AND moved='0' AND thread IN ('{$idstr}') AND time>'{$prevCheck}' GROUP BY thread");
     $msgidlist = $database->loadObjectList();
     check_dberror("Unable to get unread messages count and first id.");
 
     foreach ($msgidlist as $msgid)
     {
         if (!in_array($msgid->thread, $read_topics)) $last_read[$msgid->thread] = $msgid;
+    }
+
+    if ($func != "mylatest")
+    {
+    	$database->setQuery("SELECT thread, COUNT(thread) AS msgcount FROM #__fb_messages "
+    					."WHERE hold='0' AND moved='0' AND thread IN ('{$idstr}') GROUP BY thread");
+    	$msgidlist = $database->loadObjectList();
+    	check_dberror("Unable to get unread messages count and first id.");
+
+    	foreach ($msgidlist as $msgid)
+    	{
+    		$thread_counts[$msgid->thread] = $msgid->msgcount-1;
+    	}
     }
 }
 // (JJ) BEGIN: ANNOUNCEMENT BOX

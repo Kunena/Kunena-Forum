@@ -395,6 +395,14 @@ class HTML_userlist_content
                                 	$kunenaProfile =& CKunenaCBProfile::getInstance();
 									$uslavatar = $kunenaProfile->showAvatar($ulrow->id);
                                 }
+                                else if ($fbConfig->avatar_src == "aup") // integration AlphaUserPoints
+                                {
+                                	$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
+                                	if ( file_exists($api_AUP)) {
+                                		( $fbConfig->fb_profile=='aup' ) ? $showlink=1 : $showlink=0;
+                                		 $uslavatar = AlphaUserPointsHelper::getAupAvatar( $ulrow->id, $showlink, $fbConfig->avatarsmallwidth, $fbConfig->avatarsmallheight );
+                                	} // end integration AlphaUserPoints
+                                }           
                                 else
                                 {
                                     $kunena_db->setQuery("SELECT avatar FROM #__fb_users WHERE userid='{$ulrow->id}'");

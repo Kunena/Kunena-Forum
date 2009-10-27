@@ -1945,8 +1945,8 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                 </tr>
 
 			</table>
-			</fieldset>
-			<fieldset>
+		</fieldset>
+		<fieldset>
 			<legend> <?php echo _COM_A_PMS_TITLE ?></legend>
    			<table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
 
@@ -1961,9 +1961,50 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"><?php echo _COM_A_PMS_DESC ?>
                     </td>
                 </tr>
-</table>
-</fieldset>
-<fieldset>
+			</table>
+		</fieldset>
+		<fieldset>
+			<legend> <?php echo _KUNENA_AUP_ALPHAUSERPOINTS; ?></legend>
+     		<table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_AUP_ENABLED_POINTS_IN_PROFILE; ?>
+                    </td>
+
+                    <td align = "left" valign = "top" width="25%"><?php echo $lists['alphauserpoints']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_AUP_ENABLED_POINTS_IN_PROFILE_DESC; ?>
+                    </td>
+                </tr>
+				
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_AUP_ENABLED_RULES; ?>
+                    </td>
+
+                    <td align = "left" valign = "top" width="25%"><?php echo $lists['alphauserpointsrules'] ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_AUP_ENABLED_RULES_DESC; ?>
+                    </td>
+                </tr>
+                
+	            <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_AUP_MINIMUM_POINTS_ON_REPLY; ?>
+                    </td>
+
+                    <td align = "left" valign = "top" width="25%">
+					<input type = "text" name = "cfg_alphauserpointsnumchars" value = "<?php echo $fbConfig->alphauserpointsnumchars;?>"/>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_AUP_MINIMUM_POINTS_ON_REPLY_DESC; ?>
+                    </td>
+                </tr>
+
+			</table>
+			</fieldset>
+			<fieldset>
+
 			<legend> <?php echo _COM_A_MOSBOT_TITLE ?></legend>
    <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
 

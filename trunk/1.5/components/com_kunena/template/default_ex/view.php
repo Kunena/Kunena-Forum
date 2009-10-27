@@ -580,6 +580,14 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     {
                                     	$msg_avatar = '<span class="fb_avatar">'.$kunenaProfile->showAvatar($userinfo->userid).'</span>';
                                     }
+                                    else if ($fbConfig->avatar_src == "aup")
+                                    {
+										$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
+										if ( file_exists($api_AUP)) {
+											( $fbConfig->fb_profile=='aup' ) ? $showlink=1 : $showlink=0;
+											$msg_avatar = '<span class="fb_avatar">'.AlphaUserPointsHelper::getAupAvatar( $userinfo->userid, $showlink ).'</span>';
+										}										
+                                    }
                                     else
                                     {
                                         $avatar = $userinfo->avatar;
@@ -706,6 +714,38 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                         }
                                     }
                                 }
+								// Start Integration AlphaUserPoints
+								// ****************************
+								$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php'; 	
+								if ( $fbConfig->alphauserpoints && file_exists($api_AUP)) {
+									static  $maxPoints = false;
+									
+									if ($maxPoints == false)
+									{
+										//Get the max# of points for any one user
+										$kunena_db->setQuery("SELECT MAX(points) FROM #__alpha_userpoints");
+										$maxPoints = $kunena_db->loadResult();
+										check_dberror("Unable to load AUP max points.");
+									}
+									
+									$kunena_db->setQuery("SELECT points FROM #__alpha_userpoints WHERE `userid`='".(int)$fmessage->userid."'");
+									$numPoints = $kunena_db->loadResult();
+									check_dberror("Unable to load AUP points.");
+								
+									$myGraphAUP = new phpGraph;
+									$myGraphAUP->AddValue(_KUNENA_AUP_POINTS, $numPoints);
+									$myGraphAUP->SetRowSortMode(0);
+									$myGraphAUP->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $fbConfig->statscolor . "m.png");
+									$myGraphAUP->SetBarImg2(KUNENA_URLEMOTIONSPATH . "graph.gif");
+									$myGraphAUP->SetMaxVal($maxPoints);
+									$myGraphAUP->SetShowCountsMode(2);
+									$myGraphAUP->SetBarWidth(4); //height of the bar
+									$myGraphAUP->SetBorderColor("#333333");
+									$myGraphAUP->SetBarBorderWidth(0);
+									$myGraphAUP->SetGraphWidth(64); //should match column width in the <TD> above -5 pixels
+									$useGraph = 1;
+								}
+								// End Integration AlphaUserPoints
 
                                 //karma points and buttons
                                 if ($fbConfig->showkarma && $userinfo->userid != '0')

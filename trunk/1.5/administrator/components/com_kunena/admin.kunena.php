@@ -679,7 +679,8 @@ function showConfig($option)
 	$avlist[] = JHTML::_('select.option', 'cb',_KUNENA_CB);
 	$avlist[] = JHTML::_('select.option', 'jomsocial',_KUNENA_JOMSOCIAL);
 	$avlist[] = JHTML::_('select.option', 'clexuspm',_KUNENA_CLEXUS);
-    // build the html select list
+	$avlist[] = JHTML::_('select.option', 'aup', _KUNENA_AUP_ALPHAUSERPOINTS); // INTEGRATION ALPHAUSERPOINTS
+	// build the html select list
     $lists['avatar_src'] = JHTML::_('select.genericlist', $avlist,'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->avatar_src);
 
     // private messaging system to use
@@ -704,6 +705,7 @@ function showConfig($option)
 	$prflist[] = JHTML::_('select.option', 'cb',_KUNENA_CB);
 	$prflist[] = JHTML::_('select.option', 'jomsocial',_KUNENA_JOMSOCIAL);
 	$prflist[] = JHTML::_('select.option', 'clexuspm',_KUNENA_CLEXUS);
+	$prflist[] = JHTML::_('select.option', 'aup', _KUNENA_AUP_ALPHAUSERPOINTS); // INTEGRATION ALPHAUSERPOINTS
 
     $lists['fb_profile'] = JHTML::_('select.genericlist', $prflist, 'cfg_fb_profile', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->fb_profile);
 
@@ -837,6 +839,9 @@ function showConfig($option)
 	$lists['autoembedyoutube'] = JHTML::_('select.genericlist', $yesno, 'cfg_autoembedyoutube', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->autoembedyoutube);
 	$lists['autoembedebay'] = JHTML::_('select.genericlist', $yesno, 'cfg_autoembedebay', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->autoembedebay);
 	$lists['highlightcode'] = JHTML::_('select.genericlist', $yesno, 'cfg_highlightcode', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->highlightcode);
+	// New for 1.5.7 -> integration AlphaUserPoints
+	$lists['alphauserpoints'] = JHTML::_('select.genericlist', $yesno, 'cfg_alphauserpoints', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->alphauserpoints);
+	$lists['alphauserpointsrules'] = JHTML::_('select.genericlist', $yesno, 'cfg_alphauserpointsrules', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->alphauserpointsrules);
 
     html_Kunena::showConfig($fbConfig, $lists, $option);
 }

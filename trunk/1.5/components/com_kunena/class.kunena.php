@@ -139,7 +139,17 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
         $profilelink = 'index.php?option=com_comprofiler&amp;task=userProfile&amp;user=';
         define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_comprofiler&amp;task=userProfile" . KUNENA_CB_ITEMID_SUFFIX . "&amp;user=");
         }
-    else if ($fbConfig->fb_profile == "clexuspm") {
+    else if ($fbConfig->fb_profile == "aup") { // integration AlphaUserPoints
+		$db	   =& JFactory::getDBO();
+		$query = "SELECT id FROM #__menu WHERE `link`='index.php?option=com_alphauserpoints&view=account' AND `type`='component' AND `published`='1'";
+		$db->setQuery( $query );		
+		$AUP_itemid = $db->loadResult();
+		define("KUNENA_AUP_ITEMID", (int)$AUP_itemid);
+		define("KUNENA_AUP_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_AUP_ITEMID);
+		$profilelink = 'index.php?option=com_alphauserpoints&amp;view=account&amp;userid=';
+        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_alphauserpoints&amp;view=account&amp;Itemid=" . KUNENA_AUP_ITEMID . "&amp;userid=");
+        }
+     else if ($fbConfig->fb_profile == "clexuspm") {
         $profilelink = 'index.php?option=com_mypms&amp;task=showprofile&amp;user=';
         define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_mypms&amp;task=showprofile&amp;Itemid=" . KUNENA_CPM_ITEMID . "&amp;user=");
         }

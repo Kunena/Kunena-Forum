@@ -158,7 +158,7 @@ class CKunenaLink
     function GetMyProfileLink($fbConfig, $userid, $name, $rel='nofollow')
     {
     	$fbConfig =& CKunenaConfig::getInstance();
-    	if($fbConfig->fb_profile == 'jomsocial' || $fbConfig->fb_profile == 'cb')
+    	if($fbConfig->fb_profile == 'jomsocial' || $fbConfig->fb_profile == 'cb' || $fbConfig->fb_profile == 'aup')
     	{
     		return CKunenaLink::GetProfileLink($fbConfig, $userid, $name, $rel);
     	}
@@ -185,7 +185,13 @@ class CKunenaLink
     			{
     				return $name;
     			}
-    		} else {
+    		} elseif ($fbConfig->fb_profile == 'aup') {
+				$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
+				if ( file_exists($api_AUP)) {				
+					$useridAUP = AlphaUserPointsHelper::getAnyUserReferreID( $userid );
+					return CKunenaLink::GetSefHrefLink(KUNENA_PROFILE_LINK_SUFFIX.$useridAUP, $name, '', $rel, $class);
+				} 
+			} else {
    				return CKunenaLink::GetSefHrefLink(KUNENA_PROFILE_LINK_SUFFIX.$userid, $name, '', $rel, $class);
     		}
     	}

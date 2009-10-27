@@ -22,6 +22,18 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
+// 1.5.7
+
+define('_KUNENA_AUP_ALPHAUSERPOINTS', 'AlphaUserPoints');
+define('_KUNENA_AUP_ENABLED_POINTS_IN_PROFILE', 'Enabled Points in profile');
+define('_KUNENA_AUP_ENABLED_POINTS_IN_PROFILE_DESC', 'If you have AlphaUserPoints installed, you can configure Kunena to show current points in their profiles.');
+define('_KUNENA_AUP_ENABLED_RULES', 'Enabled Rules for points');
+define('_KUNENA_AUP_ENABLED_RULES_DESC', 'You can use the pre-installed rules in AlphaUserPoints to attribs points on new topic and reply. You must have AlphaUserPoints 1.5.3 or later installed. If you have an older version, you must install manually the rules (See AlphaUserPoints documentation).');
+define('_KUNENA_AUP_MINIMUM_POINTS_ON_REPLY', 'Minimum characters on reply');
+define('_KUNENA_AUP_MINIMUM_POINTS_ON_REPLY_DESC', 'Minimum characters in reply text to earn points on reply topic.');
+define('_KUNENA_AUP_MESSAGE_TOO_SHORT', 'Your response was too short to get new points.');
+define('_KUNENA_AUP_POINTS', 'Points:');
+
 // 1.0.11 and 1.5.4
 DEFINE('_KUNENA_MOVED', 'Moved');
 

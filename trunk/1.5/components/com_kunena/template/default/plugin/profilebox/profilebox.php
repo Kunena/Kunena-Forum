@@ -56,6 +56,14 @@ else if ($fbConfig->avatar_src == "cb")
 {
 	$jr_avatar = $kunenaProfile->showAvatar($kunena_my->id);
 }
+else if ($fbConfig->avatar_src == "aup") // integration AlphaUserPoints
+{
+	$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
+	if ( file_exists($api_AUP)) {
+		( $fbConfig->fb_profile=='aup' ) ? $showlink=1 : $showlink=0;
+		$jr_avatar = AlphaUserPointsHelper::getAupAvatar( $kunena_my->id, $showlink, $fbConfig->avatarsmallwidth, $fbConfig->avatarsmallheight );
+	} // end integration AlphaUserPointselse
+}
 else
 {
     if ($fbavatar != "") {

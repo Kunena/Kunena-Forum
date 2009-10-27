@@ -245,6 +245,12 @@ if ($fbConfig->fb_profile == 'cb')
                     ?>
 
                     <?php
+                    if (isset($myGraphAUP)) {
+                        $myGraphAUP->BarGraphHoriz();
+                    }
+                    ?>
+
+                    <?php
                     if (isset($msg_online)) {
                         echo $msg_online;
                     }

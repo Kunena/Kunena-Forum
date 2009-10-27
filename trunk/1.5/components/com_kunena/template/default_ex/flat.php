@@ -403,6 +403,14 @@ if (count($messages[0]) > 0)
 		{
 			$useravatar = $kunenaProfile->showAvatar($last_reply[$leaf->id]->userid, 'fb_list_avatar');
   		    echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, $useravatar);
+		}
+		else if ($fbConfig->avatar_src == "aup") // integration AlphaUserPoints
+		{
+			$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
+			if ( file_exists($api_AUP)) {
+				( $fbConfig->fb_profile=='aup' ) ? $showlink=1 : $showlink=0;
+				echo AlphaUserPointsHelper::getAupAvatar( $last_reply[$leaf->id]->userid, $showlink, 40, 40 );
+			} // end integration AlphaUserPoints
 		} else {
 		  	$javatar =  $last_reply[$leaf->id]->avatar;
 		   	if ($javatar!='') {

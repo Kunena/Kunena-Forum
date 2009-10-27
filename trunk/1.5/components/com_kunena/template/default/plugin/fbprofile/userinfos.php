@@ -81,11 +81,16 @@ defined( '_JEXEC' ) or die('Restricted access');
                     ?>
 
                     <?php
+                        if (isset($myGraphAUP))
+                            $myGraphAUP->BarGraphHoriz();
+                    ?>
+
+                    <?php
                         if (isset($msg_icq))
                             echo $msg_icq;
                     ?>
 
-                        <?php echo $msg_online; ?>
+                    <?php echo $msg_online; ?>
 
                     <?php
                         if (isset($msg_pms))

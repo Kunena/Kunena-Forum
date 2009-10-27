@@ -77,7 +77,8 @@ if ($fbConfig->captcha == 1 && $kunena_my->id < 1) {
     {
 	$session =& JFactory::getSession();
 	$rand = $session->get('fb_image_random_value');
-	unset($session);
+	unset($session);
+
     	if (md5($number) != $rand)
         {
             $mess = _KUNENA_CAPERR;
@@ -334,6 +335,37 @@ $catName = $objCatInfo->name;
                                         $uri =& JURI::getInstance(JURI::base());
                                         $LastPostUrl = $uri->toString(array('scheme', 'host', 'port')) . str_replace('&amp;', '&', CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $querythread, $threadPages, $fbConfig->messages_per_page, $pid));
 
+										// start integration alphauserpoints component
+										if ( $fbConfig->alphauserpointsrules ) {
+											// Insert AlphaUserPoints rules
+											$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php'; 
+											$datareference = '<a href="' . $LastPostUrl . '">' . $subject . '</a>';
+											if ( file_exists($api_AUP)) 
+											{ 
+											  require_once ($api_AUP);
+											  if ( $thread == 0 )
+											  {
+												// rule for post a new topic
+												AlphaUserPointsHelper::newpoints( 'plgaup_newtopic_kunena', '', $pid,  $datareference );
+											  } 
+											  else 
+											  {
+											  	// rule for post a reply to a topic
+												if ( $fbConfig->alphauserpointsnumchars>0 ) {
+													// use if limit chars for a response
+													if ( strlen($message)>$fbConfig->alphauserpointsnumchars ) {														
+														AlphaUserPointsHelper::newpoints( 'plgaup_reply_kunena', '', $pid, $datareference );
+													} else {
+														$app->enqueueMessage( _KUNENA_AUP_MESSAGE_TOO_SHORT ); 
+													}
+												} else {
+													AlphaUserPointsHelper::newpoints( 'plgaup_reply_kunena', '', $pid, $datareference );
+												}																							
+											  }
+											}												
+										}
+										// end insertion AlphaUserPoints
+                                        
                                         //Now manage the subscriptions (only if subscriptions are allowed)
                                         if ($fbConfig->allowsubscriptions == 1 && $holdPost == 0)
                                         { //they're allowed

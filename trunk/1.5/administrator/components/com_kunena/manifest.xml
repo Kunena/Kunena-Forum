@@ -2,7 +2,7 @@
 <!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
 <install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>
-	<version>1.5.7RC2</version>
+	<version>1.5.7RC3</version>
 	<versionname>Kuiskaus</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.7
 
+28-Oct-2009 Matias
+^ [#18263] Update version info to 1.5.7RC3 
+
 27-Oct-2009 Matias
 # [#18494] Optimize queries: fix bugs and simplify code
 # [#18527] Bulk move/delete should return back into the same page

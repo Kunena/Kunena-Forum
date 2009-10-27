@@ -36,6 +36,7 @@ Kunena 1.5.7
 27-Oct-2009 Matias
 # [#18494] Optimize queries: fix bugs and simplify code
 # [#18527] Bulk move/delete should return back into the same page
+# [#18468] Regresion: Do not check category id when moving post
 
 26-Oct-2009 Matias
 # [#18494] Optimize queries in Recent Discussions (well, try harder)

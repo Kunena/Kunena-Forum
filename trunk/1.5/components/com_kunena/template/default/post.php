@@ -32,7 +32,7 @@ $id = JRequest::getInt('id', 0);
 // Support for old $replyto variable in post reply/quote
 if (!$id) $id = JRequest::getInt('replyto', 0);
 
-if ($id)
+if ($id && $do != 'domovepost' && $do != 'domergepost' && $do != 'dosplit')
 {
 	// If message exists, override catid to be sure that user can post there
 	$kunena_db->setQuery("SELECT catid FROM #__fb_messages WHERE id='{$id}'");

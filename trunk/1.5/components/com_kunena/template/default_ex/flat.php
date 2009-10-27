@@ -57,15 +57,9 @@ $topic_emoticons[5] = KUNENA_URLEMOTIONSPATH . 'grin.gif';
 $topic_emoticons[6] = KUNENA_URLEMOTIONSPATH . 'shock.gif';
 $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 
-// url of current page that user will be returned to after login
-if ($query_string = JRequest::getVar('QUERY_STRING', '')) {
-    $Breturn = 'index.php?' . $query_string;
-    }
-else {
-    $Breturn = 'index.php';
-    }
-
-$Breturn = str_replace('&', '&amp;', $Breturn);
+// url of current page that user will be returned to after bulk operation
+$kuri = JURI::getInstance();
+$Breturn = $kuri->toString( array('path'));
 
 $tabclass = array
 (

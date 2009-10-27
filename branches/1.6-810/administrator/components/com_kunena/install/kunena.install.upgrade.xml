@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <comupgrade version="1.0">
-	<install version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
+	<install version="1.6.0-DEV" versiondate="2009-10-17" build="1853" versionname="Parli">
 		<query>CREATE TABLE IF NOT EXISTS `#__kunena_announcement` (
                     `id` int(3) NOT NULL auto_increment,
                     `title` tinytext NOT NULL,
@@ -370,7 +370,7 @@
 		<version version="1.0.10" versiondate="2009-05-21" build="1344" versionname="Parier!">
 			<query>UPDATE `#__fb_config` SET `jmambot`='0'</query>
 		</version>
-		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
+		<version version="1.6.0-DEV" versiondate="2009-10-17" build="1853" versionname="Parli">
 			<query mode="silenterror">RENAME TABLE `#__fb_config` TO `#__kunena_config`</query>
 			<query mode="silenterror">RENAME TABLE `#__fb_config_backup` TO `#__kunena_config_backup`</query>
 			<query mode="silenterror">RENAME TABLE `#__fb_announcement` TO `#__kunena_announcement`</query>

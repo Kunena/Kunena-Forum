@@ -55,7 +55,7 @@ class KunenaViewConfig extends JView
 	
 	protected function _displayMainToolbar()
 	{
-		JToolBarHelper::title('Kunena: '.JText::_('Config'), 'generic');
+		JToolBarHelper::title(': '.JText::_('Config'), 'generic');
 
 		JToolBarHelper::save('config.save');
 		JToolBarHelper::apply('config.apply');

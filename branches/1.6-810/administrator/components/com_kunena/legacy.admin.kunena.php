@@ -110,7 +110,11 @@ $pt_stop = "0";
 
 if (!$no_html)
 {
-	html_Kunena::showFbHeader();
+	 	html_Kunena::showKunenaHeader();
+		
+		JToolBarHelper::title(': '.JText::_('Control'), 'cpanel');
+		JToolBarHelper::divider();
+
 }
 
 $option = JRequest::getCmd('option');

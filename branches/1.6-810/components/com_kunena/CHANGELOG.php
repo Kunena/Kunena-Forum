@@ -32,6 +32,12 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Custom Branch 810
+27-Oct-2009 810
++ [#18267] checksystem added (not finished)
+^ [#18267] Config language added. Now Config is finished
++ [#18267] Mainpage
+^ [#18267] Language change
+^ [#18267] Install file change
 
 18-Oct-2009 810
 + [#18267] Added all options in default_setup.php

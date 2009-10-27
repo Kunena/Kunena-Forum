@@ -23,10 +23,19 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 class html_Kunena
 {
+	protected function _displayMainToolbar()
+	{
+		JToolBarHelper::title(': '.JText::_('test'), 'generic');
+		JToolBarHelper::divider();
+
+	}
+	
 // Begin: HEADER FUNC
-function showFbHeader () {
+function showKunenaHeader () {
+
 ?>
 <style>
+.icon-32-logo       { background-image: url(../../../administrator/component/com_kunena/images/logo.png)!important; }
 #kunenaadmin {
 text-align:left;
 }

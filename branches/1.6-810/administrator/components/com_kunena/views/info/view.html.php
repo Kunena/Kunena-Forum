@@ -40,7 +40,7 @@ class KunenaViewInfo extends JView
 	
 	protected function _displayMainToolbar()
 	{
-		JToolBarHelper::title('Kunena: '.JText::_('info'), 'generic');
+		JToolBarHelper::title(': '.JText::_('Info'), 'generic');
 		JToolBarHelper::divider();
 
 	}

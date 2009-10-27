@@ -25,10 +25,10 @@ define ('KPATH_ADMIN', JPATH_ADMINISTRATOR .DS. KPATH_COMPONENT_RELATIVE);
 define ('KPATH_MEDIA', JPATH_ROOT .DS. 'media' .DS. KUNENA_COMPONENT_NAME);
 
 // Version information
-define ('KUNENA_VERSION', ('@kunenaversion@' == '@'.'kunenaversion'.'@') ? '1.6.0-SVN' : strtoupper('@kunenaversion@'));
-define ('KUNENA_VERSION_DATE', ('@kunenaversiondate@' == '@'.'kunenaversiondate'.'@') ? date('Y-m-d', filemtime(KPATH_SITE .DS. 'CHANGELOG.php')) : '@kunenaversiondate@');
-define ('KUNENA_VERSION_NAME', ('@kunenaversionname@' == '@'.'kunenaversionname'.'@') ? 'SVN Revision' : '@kunenaversionname@');
-define ('KUNENA_VERSION_BUILD', ('@kunenaversionbuild@' == '@'.'kunenaversionbuild'.'@') ? '0' : '@kunenaversionbuild@');
+define ('KUNENA_VERSION', ('1.6.0-DEV' == '@'.'kunenaversion'.'@') ? '1.6.0-SVN' : strtoupper('1.6.0-DEV'));
+define ('KUNENA_VERSION_DATE', ('2009-10-17' == '@'.'kunenaversiondate'.'@') ? date('Y-m-d', filemtime(KPATH_SITE .DS. 'CHANGELOG.php')) : '2009-10-17');
+define ('KUNENA_VERSION_NAME', ('Parli' == '@'.'kunenaversionname'.'@') ? 'SVN Revision' : 'Parli');
+define ('KUNENA_VERSION_BUILD', ('1853' == '@'.'kunenaversionbuild'.'@') ? '0' : '1853');
 
 /**
  * Kunena Libraries intelligent file importer.

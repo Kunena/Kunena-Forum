@@ -107,71 +107,72 @@ if (in_array($catid, $allow_forum))
     $total = (int)$kunena_db->loadResult();
     	check_dberror('Unable to get message count.');
     $totalpages = ceil($total / $threads_per_page);
-    $kunena_db->setQuery("SELECT a.*, t.mesid, t.message AS messagetext, m.mesid AS attachmesid, (f.thread>0) AS myfavorite, u.avatar, l.msgcount, l.lastid
-		FROM (
-			SELECT thread, IF(parent=0,ordering,0) AS ordering, COUNT(thread) as msgcount, MAX(id) AS lastid, MAX(time) AS lasttime
-			FROM jos_fb_messages WHERE hold='0' AND catid='{$catid}' 
-			GROUP BY thread 
-			ORDER BY ordering DESC, lastid DESC 
-			LIMIT {$offset}, {$threads_per_page}) AS l
-		INNER JOIN jos_fb_messages AS a ON a.thread=l.thread
-		INNER JOIN jos_fb_messages_text AS t ON a.id = t.mesid
-		LEFT JOIN jos_fb_attachments AS m ON m.mesid = a.id
-		LEFT JOIN jos_fb_favorites AS f ON f.thread = a.id && f.userid='{$kunena_my->id}'
-		LEFT JOIN jos_fb_users AS u ON u.userid = a.userid
-		WHERE (a.parent='0' or a.id=l.lastid) AND a.hold='0'");
-    $messagelist = $kunena_db->loadObjectList();
-    	check_dberror("Unable to load messages.");
+  
+$query = "SELECT t.id, MAX(m.id) AS lastid FROM #__fb_messages AS t  
+	INNER JOIN #__fb_messages AS m ON t.id = m.thread 
+	WHERE t.parent='0' AND t.hold='0' AND t.catid='{$catid}' AND m.hold='0' AND m.catid='{$catid}'
+	GROUP BY m.thread ORDER BY t.ordering DESC, lastid DESC";
+$kunena_db->setQuery($query, $offset, $threads_per_page);
+$threadids = $kunena_db->loadResultArray();
+	check_dberror("Unable to load thread list.");
+$idstr = @join(",", $threadids);
 
-    $favthread = array();
-    $threadids = array();
-    $messages = array();
-    $messages[0] = array();
-    $thread_counts = array();
-    foreach ($messagelist as $message)
-    {
-    	$messages[$message->parent][] = $message;
-        $messagetext[$message->id] = substr(smile::purify($message->messagetext), 0, 500);
-    	if ($message->parent==0)
-    	{
-    		$threadids[] = $message->thread;
-        	$hits[$message->thread] = $message->hits;
-        	$thread_counts[$message->thread] = $message->msgcount-1;
-    		$last_read[$message->thread]->unread = 0;    		
-        	if ($message->id == $message->lastid) $last_read[$message->thread]->lastread = $last_reply[$message->thread] = $message;
-    	}
-    	else
-    	{
-    		$last_read[$message->thread]->lastread = $last_reply[$message->thread] = $message;
-    	}
-    }
+$favthread = array();
+$thread_counts = array();
+$messages = array();
+$messages[0] = array();
+if (count($threadids) > 0)
+{
+$query = "SELECT a.*, t.message AS messagetext, l.myfavorite, l.favcount, l.attachmesid, l.msgcount, l.lastid, u.avatar, c.id AS catid, c.name AS catname
+	FROM (
+		SELECT m.thread, (f.userid='{$kunena_my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachmesid, 
+			COUNT(DISTINCT m.id) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime
+		FROM #__fb_messages AS m
+		LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread
+		LEFT JOIN #__fb_attachments AS a ON a.mesid = m.thread
+		WHERE m.hold='0' AND m.thread IN ({$idstr})
+		GROUP BY thread
+	) AS l
+	INNER JOIN #__fb_messages AS a ON a.thread = l.thread
+	INNER JOIN #__fb_messages_text AS t ON a.thread = t.mesid
+	LEFT JOIN #__fb_users AS u ON u.userid = a.userid
+	LEFT JOIN #__fb_categories AS c ON c.id = a.catid
+	WHERE (a.parent='0' OR a.id=l.lastid)
+	ORDER BY ordering DESC, lastid DESC";
 
-    if (count($threadids) > 0)
-    {
-        $idstr = @join("','", $threadids);
+$kunena_db->setQuery($query);
+$messagelist = $kunena_db->loadObjectList();
+	check_dberror("Unable to load messages.");
 
-        $kunena_db->setQuery("SELECT thread, count(thread) AS favcount FROM #__fb_favorites
-       					WHERE thread IN ('$idstr') GROUP BY thread");
-        $favlist = $kunena_db->loadObjectList();
-        check_dberror("Unable to load messages.");
-
-	foreach($favlist AS $fthread)
+foreach ($messagelist as $message)
+{
+	$messages[$message->parent][] = $message;
+	$messagetext[$message->id] = substr(smile::purify($message->messagetext), 0, 500);
+	if ($message->parent==0)
 	{
-		$favthread[$fthread->thread] = $fthread->favcount;
+		$hits[$message->id] = $message->hits;
+		$thread_counts[$message->id] = $message->msgcount-1;
+		$last_read[$message->id]->unread = 0;
+		if ($message->favcount) $favthread[$message->id] = $message->favcount;
+		if ($message->id == $message->lastid) $last_read[$message->id]->lastread = $last_reply[$message->id] = $message;
 	}
-	unset($favlist, $fthread);
+	else
+	{
+		$last_read[$message->thread]->lastread = $last_reply[$message->thread] = $message;
+	}
+}
 
-        $kunena_db->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages "
-                           ."WHERE thread IN ('{$idstr}') AND time>'{$prevCheck}' GROUP BY thread");
-        $msgidlist = $kunena_db->loadObjectList();
-        check_dberror("Unable to get unread messages count and first id.");
+    $kunena_db->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages "
+                       ."WHERE hold='0' AND moved='0' AND thread IN ({$idstr}) AND time>'{$prevCheck}' GROUP BY thread");
+    $msgidlist = $kunena_db->loadObjectList();
+    check_dberror("Unable to get unread messages count and first id.");
 
-        foreach ($msgidlist as $msgid)
-        {
-            if (!in_array($msgid->thread, $read_topics)) $last_read[$msgid->thread] = $msgid;
-        }
+    foreach ($msgidlist as $msgid)
+    {
+        if (!in_array($msgid->thread, $read_topics)) $last_read[$msgid->thread] = $msgid;
     }
-
+}
+    
     //get number of pending messages
     $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE catid='{$catid}' AND hold='1'");
     $numPending = $kunena_db->loadResult();

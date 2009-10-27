@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.7
 
+27-Oct-2009 Matias
+# [#18494] Optimize queries: fix bugs and simplify code
+
 26-Oct-2009 Matias
 # [#18494] Optimize queries in Recent Discussions (well, try harder)
 

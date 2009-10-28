@@ -169,11 +169,16 @@ $document->setDescription($metaDesc);
 if ($func == "mylatest")
 {
 	$order = "myfavorite DESC, lastid DESC";
-	$query = "SELECT thread, MAX(id) as lastid, SUM(fav) AS myfavorite FROM (
-		SELECT thread, id, 0 AS fav FROM #__fb_messages WHERE userid='{$kunena_my->id}' AND moved='0' AND hold='0' AND catid IN ({$fbSession->allowed})
+	$query = "SELECT m.thread, MAX(m.id) as lastid, MAX(t.fav) AS myfavorite FROM (
+			SELECT thread, 0 AS fav 
+			FROM #__fb_messages 
+			WHERE userid='{$kunena_my->id}' AND moved='0' AND hold='0' AND catid IN ({$fbSession->allowed}) 
+			GROUP BY thread 
 		UNION ALL
-		SELECT thread, thread AS id, 1 AS fav FROM #__fb_favorites WHERE userid='{$kunena_my->id}'
+			SELECT thread, 1 AS fav FROM #__fb_favorites WHERE userid='{$kunena_my->id}'
 		) AS t
+		INNER JOIN #__fb_messages AS m ON m.thread=t.thread
+		WHERE m.moved='0' AND m.hold='0' AND m.catid IN ({$fbSession->allowed})
 		GROUP BY thread
 		ORDER BY {$order}
 	";
@@ -200,7 +205,7 @@ if (count($threadids) > 0)
 {
 $query = "SELECT a.*, t.message AS messagetext, l.myfavorite, l.favcount, l.attachmesid, l.msgcount, l.lastid, u.avatar, c.id AS catid, c.name AS catname
 	FROM (
-		SELECT m.thread, (f.userid='{$kunena_my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachmesid, 
+		SELECT m.thread, (f.userid IS NOT null AND f.userid='{$kunena_my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachmesid, 
 			COUNT(DISTINCT m.id) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime
 		FROM #__fb_messages AS m
 		LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread

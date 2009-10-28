@@ -35,6 +35,7 @@ Kunena 1.5.7
 
 28-Oct-2009 Matias
 ^ [#18263] Update version info to 1.5.7RC3 
+# [#18494] Optimize queries: My Favorites ordered messages into wrong order
 
 27-Oct-2009 Matias
 # [#18494] Optimize queries: fix bugs and simplify code

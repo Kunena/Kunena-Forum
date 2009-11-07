@@ -66,7 +66,6 @@ defined('_JEXEC') or die;
 	<p><?php echo JHtml::_('klink.teamCredits', 'atag', JText::_('K_POWERED_BY')); ?> <?php echo JHtml::_('klink.credits', 'atag', JText::_('Visit Kunena.com'), 'Kunena'); ?></p>
 </div>
 <div class="rsslink" >
-	<a href="/forum/fb_rss?no_html=1" title="" target="_blank">
-	<img src="<?php echo KURL_COMPONENT_MEDIA ?>images/rss.png" alt="<?php echo JText::_('K_SUBSCRIBE'); ?>" title="<?php echo JText::_('K_SUBSCRIBE'); ?>" /></a>
+	<?php echo JHtml::_('klink.rssfeed', 'atag', '<img src="' . KURL_COMPONENT_MEDIA . 'images/rss.png" alt="'.JText::_('K_SUBSCRIBE').'" title="'. JText::_('K_SUBSCRIBE').'" />' ); ?>
 </div>
 </div>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+	<layout title="Show Rss Feed">
+		<message><![CDATA[Show rss feed]]></message>
+  </layout>
+	<state>
+		<name>Kunena Forum: Show Rss Feed</name>
+		<description>Show rss feed</description>
+		<url>
+		</url>
+		<params>
+		</params>
+	</state>
+</metadata>

@@ -77,6 +77,11 @@ abstract class JHtmlKLink
         return self::link('atag', KURL_SITE.'&view=credits', $name, NULL, 'follow');
     }
 
+	public function rssfeed($linktype, $name)
+    {
+        return self::link('atag', KURL_SITE.'&view=rssfeed', $name, NULL, 'follow',NULL, NULL, 'target="_blank"');
+    }
+    
     public function kunena($linktype, $name)
     {
         return self::link($linktype, KURL_SITE, $name, NULL, 'follow');

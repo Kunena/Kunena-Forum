@@ -33,6 +33,9 @@ Legend:
 
 Custom Branch:
 
+07-Nov-2009 Xillibit
++ [#18627] Add model and view for rss feed page
+
 26-Oct-2009 Xillibit
 + [#18627] Add model for userlist and for more about stats
 

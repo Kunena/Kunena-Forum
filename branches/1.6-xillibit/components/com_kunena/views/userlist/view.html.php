@@ -33,6 +33,8 @@ class KunenaViewUserList extends KView
 		// Create shortcut to parameters.
 		$params = $this->state->get('params');
 		
+		$this->assignRef ( 'lists', $this->get ( 'Items' ) );
+		
 		jimport( 'joomla.application.menu' );
 		$menu = JSite::getMenu();
 		$menuitem = $menu->getActive();

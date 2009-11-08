@@ -34,6 +34,7 @@ Legend:
 Custom Branch:
 
 08-Nov-2009 Xillibit
+^ [#18627] Update view for more about stats page
 + [#18627] Add view for more about stats page
 
 07-Nov-2009 Xillibit

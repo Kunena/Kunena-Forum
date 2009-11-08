@@ -42,7 +42,7 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 <table class="forum_body stats_box">
 	<thead>
 		<tr>
-			<th>
+			<th colspan="3">
 				<h3><?php echo JText::_('K_KUNENA_FORUM_STATS_POPULAR_FIVE_THREADS'); ?></h3>
 			</th>
 		</tr>
@@ -73,7 +73,7 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 <table class="forum_body stats_box">
 	<thead>
 		<tr>
-			<th>
+			<th colspan="3">
 				<h3><?php echo JText::_('K_KUNENA_FORUM_STATS_POPULAR_FIVE_USERS_MES'); ?></h3>
 			</th>
 		</tr>
@@ -103,7 +103,7 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 <table class="forum_body stats_box">
 	<thead>
 		<tr>
-			<th>
+			<th colspan="3">
 				<h3><?php echo JText::_('K_KUNENA_FORUM_STATS_POPULAR_IVE_USERS_PROF'); ?></h3>
 			</th>
 		</tr>

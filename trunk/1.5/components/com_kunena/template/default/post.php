@@ -49,7 +49,7 @@ if (!in_array($catid, $allow_forum))
 	echo _KUNENA_NO_ACCESS;
 	return;
 }
-	
+
 //
 //ob_start();
 $pubwrite = (int)$fbConfig->pubwrite;
@@ -262,13 +262,66 @@ $catName = $objCatInfo->name;
 
                                         $kunena_db->setQuery("INSERT INTO #__fb_messages_text (mesid,message) VALUES('$pid',".$kunena_db->quote($message).")");
                                         $kunena_db->query();
-                                        
-                                        if ($thread == 0)
+										/*    ORIGINAL CODE
+// TODO: Remove                                        if ($thread == 0)
                                         {
                                             //if thread was zero, we now know to which id it belongs, so we can determine the thread and update it
                                             $kunena_db->setQuery("UPDATE #__fb_messages SET thread='$pid' WHERE id='$pid'");
                                             $kunena_db->query();
                                         }
+										*/
+// TODO: Move to integration class										// Modify for activity stream
+										if ($thread == 0) {
+                                            //if thread was zero, we now know to which id it belongs, so we can determine the thread and update it
+                                            $kunena_db->setQuery("UPDATE #__fb_messages SET thread='$pid' WHERE id='$pid'");
+                                            $kunena_db->query();
+
+                                            // if JomScoial integration is active integrate user points and activity stream
+                                            if ($fbConfig->pm_component == 'jomsocial' || $fbConfig->fb_profile == 'jomsocial' || $fbConfig->avatar_src == 'jomsocial')
+                                            {
+												CuserPoints::assignPoint('com_kunena.thread.new');
+
+												//activity stream  - new post
+												$JSPostLink = CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $pid, 1);
+
+												$act = new stdClass();
+												$act->cmd    = 'wall.write';
+												$act->actor    = $kunena_my->id;
+												$act->target    = 0; // no target
+												$act->title    = JText::_('{actor} created a new topic <a href="'.$JSPostLink.'">'.stripslashes($subject).'</a> in the forums.');
+												$act->content    = '';
+												$act->app    = 'wall';
+												$act->cid    = 0;
+
+												CFactory::load('libraries', 'activities');
+												CActivityStream::add($act);
+                                            }
+
+										}
+										else
+										{
+                                            // if JomScoial integration is active integrate user points and activity stream
+                                            if ($fbConfig->pm_component == 'jomsocial' || $fbConfig->fb_profile == 'jomsocial' || $fbConfig->avatar_src == 'jomsocial')
+                                            {
+												CuserPoints::assignPoint('com_kunena.thread.reply');
+
+												//activity stream - reply post
+												$JSPostLink = CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $thread, 1);
+
+												$act = new stdClass();
+												$act->cmd    = 'wall.write';
+												$act->actor    = $kunena_my->id;
+												$act->target    = 0; // no target
+												$act->title    = JText::_('{single}{actor}{/single}{multiple}{actors}{/multiple} replied to the topic <a href="'.$JSPostLink.'">'.stripslashes($subject).'</a> in the forums.');
+												$act->content    = '';
+												$act->app    = 'wall';
+												$act->cid    = 0;
+
+												CFactory::load('libraries', 'activities');
+												CActivityStream::add($act);
+                                            }
+										}
+										// End Modify for activities stream
 
                                         //update the user posts count
                                         if ($kunena_my->id)
@@ -338,34 +391,34 @@ $catName = $objCatInfo->name;
 										// start integration alphauserpoints component
 										if ( $fbConfig->alphauserpointsrules ) {
 											// Insert AlphaUserPoints rules
-											$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php'; 
+											$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
 											$datareference = '<a href="' . $LastPostUrl . '">' . $subject . '</a>';
-											if ( file_exists($api_AUP)) 
-											{ 
+											if ( file_exists($api_AUP))
+											{
 											  require_once ($api_AUP);
 											  if ( $thread == 0 )
 											  {
 												// rule for post a new topic
 												AlphaUserPointsHelper::newpoints( 'plgaup_newtopic_kunena', '', $pid,  $datareference );
-											  } 
-											  else 
+											  }
+											  else
 											  {
 											  	// rule for post a reply to a topic
 												if ( $fbConfig->alphauserpointsnumchars>0 ) {
 													// use if limit chars for a response
-													if ( strlen($message)>$fbConfig->alphauserpointsnumchars ) {														
+													if ( strlen($message)>$fbConfig->alphauserpointsnumchars ) {
 														AlphaUserPointsHelper::newpoints( 'plgaup_reply_kunena', '', $pid, $datareference );
 													} else {
-														$app->enqueueMessage( _KUNENA_AUP_MESSAGE_TOO_SHORT ); 
+														$app->enqueueMessage( _KUNENA_AUP_MESSAGE_TOO_SHORT );
 													}
 												} else {
 													AlphaUserPointsHelper::newpoints( 'plgaup_reply_kunena', '', $pid, $datareference );
-												}																							
+												}
 											  }
-											}												
+											}
 										}
 										// end insertion AlphaUserPoints
-                                        
+
                                         //Now manage the subscriptions (only if subscriptions are allowed)
                                         if ($fbConfig->allowsubscriptions == 1 && $holdPost == 0)
                                         { //they're allowed
@@ -1304,7 +1357,7 @@ $catName = $objCatInfo->name;
 
 					// TODO: Enable split when it's fixed
                     $app->redirect(CKunenaLink::GetLatestPageAutoRedirectURL($fbConfig, $id, $fbConfig->messages_per_page, $catid), 'Split has been disabled');
-                    
+
                     //get list of posts in thread
                     $kunena_db->setQuery("SELECT * FROM #__fb_messages AS a "
                     ." LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE (a.thread='{$id}' OR a.id='{$id}') AND a.hold='0' AND a.catid='{$catid}' ORDER BY a.parent ASC, a.ordering, a.time");
@@ -1357,7 +1410,7 @@ $catName = $objCatInfo->name;
             <?php
                     $k = 0;
                     $smileyList = smile::getEmoticons(1);
-                    
+
                     foreach ($postlist as $mes)
                     {
                         $k = 1 - $k;
@@ -2004,7 +2057,7 @@ function listThreadHistory($id, $fbConfig, $kunena_db)
                         $fb_message_txt = smile::htmlwrap($fb_message_txt, $fbConfig->wrap);
 
 						$fb_message_txt = CKunenaTools::prepareContent($fb_message_txt);
-                        
+
                         echo $fb_message_txt;
                         ?>
                     </td>

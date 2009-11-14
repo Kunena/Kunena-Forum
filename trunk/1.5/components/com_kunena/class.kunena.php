@@ -73,6 +73,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 
 			include_once(KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/core.php');
 			include_once(KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/messaging.php');
+			include_once(KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/userpoints.php');
 
 			//PM popup requires JomSocial css to be loaded from selected template
 			$config =& CFactory::getConfig();
@@ -142,7 +143,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     else if ($fbConfig->fb_profile == "aup") { // integration AlphaUserPoints
 		$db	   =& JFactory::getDBO();
 		$query = "SELECT id FROM #__menu WHERE `link`='index.php?option=com_alphauserpoints&view=account' AND `type`='component' AND `published`='1'";
-		$db->setQuery( $query );		
+		$db->setQuery( $query );
 		$AUP_itemid = $db->loadResult();
 		define("KUNENA_AUP_ITEMID", (int)$AUP_itemid);
 		define("KUNENA_AUP_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_AUP_ITEMID);

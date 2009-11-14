@@ -33,8 +33,12 @@ Legend:
 
 Kunena 1.5.7
 
+14-Nov-2009 fxstein
++ [#18702] Add suppport for JomSocial user points
++ [#18702] Add suppport for JomSocial activity stream
+
 28-Oct-2009 Matias
-^ [#18263] Update version info to 1.5.7RC3 
+^ [#18263] Update version info to 1.5.7RC3
 # [#18494] Optimize queries: My Favorites ordered messages into wrong order
 
 27-Oct-2009 Matias
@@ -47,7 +51,7 @@ Kunena 1.5.7
 # [#18494] Optimize queries in Recent Discussions (well, try harder)
 
 25-Oct-2009 Matias
-^ [#18263] Update version info to 1.5.7RC2 
+^ [#18263] Update version info to 1.5.7RC2
 * [#18495] Preview/posting message does not work (Firewall detects attack)
 # [#18494] Optimize queries in Recent Discussions, My Discussions, Category page
 * [#18496] E-mail Administrators option should not send messages to users which receive system messages

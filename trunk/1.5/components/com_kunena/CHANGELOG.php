@@ -34,6 +34,7 @@ Legend:
 Kunena 1.5.7
 
 17-Nov-2009 Matias
+^ [#18263] Update version info to 1.5.7
 # [#18742] Remove broken limit box from My Profile messages/threads
 
 17-Nov-2009 fxstein

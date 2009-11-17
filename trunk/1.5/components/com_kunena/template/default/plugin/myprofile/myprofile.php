@@ -308,10 +308,10 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     $limit = JRequest::getInt('limit', $pageperlistlm);
                     $limitstart = JRequest::getInt('limitstart', 0);
 
-                    $query = "SELECT thread FROM #__fb_subscriptions WHERE userid='{$kunena_my->id}'";
+                    $query = "SELECT COUNT(*) FROM #__fb_subscriptions WHERE userid='{$kunena_my->id}'";
                     $kunena_db->setQuery($query);
 
-                    $total = count($kunena_db->loadObjectList());
+                    $total = $kunena_db->loadResult();
                     	check_dberror("Unable to load subscriptions for user.");
 
                     if ($total <= $limit)
@@ -342,10 +342,10 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     $limit = JRequest::getInt('limit', $pageperlistlm);
                     $limitstart = JRequest::getInt('limitstart', 0);
 
-                    $query = "SELECT thread FROM #__fb_favorites WHERE userid='{$kunena_my->id}'";
+                    $query = "SELECT COUNT(*) FROM #__fb_favorites WHERE userid='{$kunena_my->id}'";
                     $kunena_db->setQuery($query);
 
-                    $total = count($kunena_db->loadObjectList());
+                    $total = $kunena_db->loadResult();
                     	check_dberror("Unable to load favorites.");
 
                     if ($total <= $limit)

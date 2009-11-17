@@ -96,7 +96,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 <?php echo _KUNENA_USRL_DISPLAY_NR; ?>
 
 <?php
-echo $pageNav->getLimitBox("index.php?option=com_kunena&amp;func=myprofile&amp;do=showfav" . KUNENA_COMPONENT_ITEMID_SUFFIX);
+// echo $pageNav->getLimitBox("index.php?option=com_kunena&amp;func=myprofile&amp;do=showfav" . KUNENA_COMPONENT_ITEMID_SUFFIX);
 ?>
 
 			<input type = "submit" class = "button" value = "<?php echo _GEN_DELETE;?>"/>

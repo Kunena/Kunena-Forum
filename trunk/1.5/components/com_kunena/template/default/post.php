@@ -280,7 +280,8 @@ $catName = $objCatInfo->name;
 													//activity stream  - new post
 													$JSPostLink = CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $pid, 1);
 
-													$content = smile::smileReplace($message, 0, $fbConfig->disemoticons, $smileyList);
+													$content = stripslashes($message);
+													$content = smile::smileReplace($content, 0, $fbConfig->disemoticons, $smileyList);
 													$content = nl2br($content);
 
 													$act = new stdClass();
@@ -311,7 +312,8 @@ $catName = $objCatInfo->name;
 													//activity stream - reply post
 													$JSPostLink = CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $thread, 1);
 
-													$content = smile::smileReplace($message, 0, $fbConfig->disemoticons, $smileyList);
+													$content = stripslashes($message);
+													$content = smile::smileReplace($content, 0, $fbConfig->disemoticons, $smileyList);
 													$content = nl2br($content);
 
 													$act = new stdClass();

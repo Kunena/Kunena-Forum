@@ -104,6 +104,13 @@ if ($fbConfig->fb_profile == 'cb')
 	$registerlink = CKunenaCBProfile::getRegisterURL();
 	$lostpasslink = CKunenaCBProfile::getLostPasswordURL();
 }
+else if ($fbConfig->fb_profile == 'jomsocial')
+{
+	$loginlink = JRoute::_('index.php?option=com_community&amp;view=frontpage');
+	$logoutlink = JRoute::_('index.php?option=com_community&amp;view=frontpage');
+	$registerlink = JRoute::_('index.php?option=com_community&amp;view=register');
+	$lostpasslink = JRoute::_('index.php?option=com_community&amp;view=frontpage');
+}
 else
 {
 	$loginlink = JRoute::_('index.php?option=com_user&amp;view=login');

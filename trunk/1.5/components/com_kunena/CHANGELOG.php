@@ -34,6 +34,7 @@ Legend:
 Kunena 1.5.7
 
 17-Nov-2009 fxstein
++ [#18702] JomSocial login and registration link integration
 ^ [#18702] Strip slashes from Activity Stream content
 ^ [#18702] Added security check for JomSocial activity stream integration
            - only public categories will be added to stream

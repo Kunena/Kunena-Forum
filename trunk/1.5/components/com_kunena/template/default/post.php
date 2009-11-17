@@ -242,7 +242,7 @@ $catName = $objCatInfo->name;
                                 $kunena_db->query() or trigger_dberror('Unable to load post.');
 
                                 $existingPost = $kunena_db->loadObject();
-				unset($pid);
+                                unset($pid);
                                 if ($existingPost !== null) $pid = $existingPost->id;
 
                                 if (!isset($pid))
@@ -262,16 +262,9 @@ $catName = $objCatInfo->name;
 
                                         $kunena_db->setQuery("INSERT INTO #__fb_messages_text (mesid,message) VALUES('$pid',".$kunena_db->quote($message).")");
                                         $kunena_db->query();
-										/*    ORIGINAL CODE
-// TODO: Remove                                        if ($thread == 0)
-                                        {
-                                            //if thread was zero, we now know to which id it belongs, so we can determine the thread and update it
-                                            $kunena_db->setQuery("UPDATE #__fb_messages SET thread='$pid' WHERE id='$pid'");
-                                            $kunena_db->query();
-                                        }
-										*/
-// TODO: Move to integration class										// Modify for activity stream
-										if ($thread == 0) {
+
+                                        // A couple more tasks required...
+                                        if ($thread == 0) {
                                             //if thread was zero, we now know to which id it belongs, so we can determine the thread and update it
                                             $kunena_db->setQuery("UPDATE #__fb_messages SET thread='$pid' WHERE id='$pid'");
                                             $kunena_db->query();
@@ -281,20 +274,27 @@ $catName = $objCatInfo->name;
                                             {
 												CuserPoints::assignPoint('com_kunena.thread.new');
 
-												//activity stream  - new post
-												$JSPostLink = CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $pid, 1);
+												// Check for permisions of the current category - activity only if public
+												if ($thisCat->getPubAccess() == 0)
+												{
+													//activity stream  - new post
+													$JSPostLink = CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $pid, 1);
 
-												$act = new stdClass();
-												$act->cmd    = 'wall.write';
-												$act->actor    = $kunena_my->id;
-												$act->target    = 0; // no target
-												$act->title    = JText::_('{actor} created a new topic <a href="'.$JSPostLink.'">'.stripslashes($subject).'</a> in the forums.');
-												$act->content    = '';
-												$act->app    = 'wall';
-												$act->cid    = 0;
+													$content = smile::smileReplace($message, 0, $fbConfig->disemoticons, $smileyList);
+													$content = nl2br($content);
 
-												CFactory::load('libraries', 'activities');
-												CActivityStream::add($act);
+													$act = new stdClass();
+													$act->cmd    = 'wall.write';
+													$act->actor  = $kunena_my->id;
+													$act->target = 0; // no target
+													$act->title  = JText::_('{actor} '._KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG1.' <a href="'.$JSPostLink.'">'.stripslashes($subject).'</a> '._KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG2);
+													$act->content= $content;
+													$act->app    = 'wall';
+													$act->cid    = 0;
+
+													CFactory::load('libraries', 'activities');
+													CActivityStream::add($act);
+												}
                                             }
 
 										}
@@ -305,20 +305,27 @@ $catName = $objCatInfo->name;
                                             {
 												CuserPoints::assignPoint('com_kunena.thread.reply');
 
-												//activity stream - reply post
-												$JSPostLink = CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $thread, 1);
+												// Check for permisions of the current category - activity only if public
+												if ($thisCat->getPubAccess() == 0)
+												{
+													//activity stream - reply post
+													$JSPostLink = CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $thread, 1);
 
-												$act = new stdClass();
-												$act->cmd    = 'wall.write';
-												$act->actor    = $kunena_my->id;
-												$act->target    = 0; // no target
-												$act->title    = JText::_('{single}{actor}{/single}{multiple}{actors}{/multiple} replied to the topic <a href="'.$JSPostLink.'">'.stripslashes($subject).'</a> in the forums.');
-												$act->content    = '';
-												$act->app    = 'wall';
-												$act->cid    = 0;
+													$content = smile::smileReplace($message, 0, $fbConfig->disemoticons, $smileyList);
+													$content = nl2br($content);
 
-												CFactory::load('libraries', 'activities');
-												CActivityStream::add($act);
+													$act = new stdClass();
+													$act->cmd    = 'wall.write';
+													$act->actor  = $kunena_my->id;
+													$act->target = 0; // no target
+													$act->title  = JText::_('{single}{actor}{/single}{multiple}{actors}{/multiple} '._KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG1.' <a href="'.$JSPostLink.'">'.stripslashes($subject).'</a> '._KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2);
+													$act->content= $content;
+													$act->app    = 'wall';
+													$act->cid    = 0;
+
+													CFactory::load('libraries', 'activities');
+													CActivityStream::add($act);
+												}
                                             }
 										}
 										// End Modify for activities stream
@@ -440,19 +447,19 @@ $catName = $objCatInfo->name;
 												$_catobj = new jbCategory($kunena_db, $catid);
                                                 foreach ($subsList as $subs)
                                                 {
-							//check for permission
-							if ($subs->id) {
-								$_arogrp = $kunena_acl->getAroGroup($subs->id);
-								$_arogrp->group_id = $_arogrp->id;
-								$_isadm = (strtolower($_arogrp->name) == 'super administrator' || strtolower($_arogrp->name) == 'administrator');
-							}
-								if (!fb_has_moderator_permission($kunena_db, $_catobj, $subs->id, $_isadm)) {
-									$allow_forum = array();
-									if (!fb_has_read_permission($_catobj, $allow_forum, $_arogrp->group_id, $kunena_acl)) {
-										//maybe remove record from subscription list?
-										continue;
-								}
-							}
+													//check for permission
+													if ($subs->id) {
+														$_arogrp = $kunena_acl->getAroGroup($subs->id);
+														$_arogrp->group_id = $_arogrp->id;
+														$_isadm = (strtolower($_arogrp->name) == 'super administrator' || strtolower($_arogrp->name) == 'administrator');
+													}
+														if (!fb_has_moderator_permission($kunena_db, $_catobj, $subs->id, $_isadm)) {
+															$allow_forum = array();
+															if (!fb_has_read_permission($_catobj, $allow_forum, $_arogrp->group_id, $kunena_acl)) {
+																//maybe remove record from subscription list?
+																continue;
+														}
+													}
 
                                                     $mailsender = stripslashes($board_title)." "._GEN_FORUM;
 
@@ -461,7 +468,7 @@ $catName = $objCatInfo->name;
                                                     $msg = "$subs->name,\n\n";
                                                     $msg .= trim($_COM_A_NOTIFICATION1)." ".stripslashes($board_title)." "._GEN_FORUM."\n\n";
                                                     $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
-						    $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
+                                                    $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
                                                     $msg .= _VIEW_POSTED.": " . stripslashes($fb_authorname) . "\n\n";
                                                     $msg .= "$_COM_A_NOTIFICATION2\n";
                                                     $msg .= "URL: $LastPostUrl\n\n";
@@ -524,7 +531,7 @@ $catName = $objCatInfo->name;
                                                     $msg = "$mods->name,\n\n";
                                                     $msg .= trim($_COM_A_NOT_MOD1)." ".stripslashes($board_title)." ".trim(_GEN_FORUM)."\n\n";
                                                     $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
-						    $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
+                                                    $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
                                                     $msg .= _VIEW_POSTED.": " . stripslashes($fb_authorname) . "\n\n";
                                                     $msg .= "$_COM_A_NOT_MOD2\n";
                                                     $msg .= "URL: $LastPostUrl\n\n";

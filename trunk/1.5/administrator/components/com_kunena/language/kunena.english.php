@@ -24,6 +24,11 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.5.7
 
+define('_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG1', 'created a new topic');
+define('_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG2', 'in the forums.');
+define('_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG1', 'replied to the topic');
+define('_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2', 'in the forums.');
+
 define('_KUNENA_AUP_ALPHAUSERPOINTS', 'AlphaUserPoints');
 define('_KUNENA_AUP_ENABLED_POINTS_IN_PROFILE', 'Enabled Points in profile');
 define('_KUNENA_AUP_ENABLED_POINTS_IN_PROFILE_DESC', 'If you have AlphaUserPoints installed, you can configure Kunena to show current points in their profiles.');

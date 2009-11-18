@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.7
 
+18-Nov-2009 fxstein
+# [#18749] IE8 bug work around: max-width on images cause layout to break
+
 17-Nov-2009 Matias
 ^ [#18263] Update version info to 1.5.7
 # [#18742] Remove broken limit box from My Profile messages/threads

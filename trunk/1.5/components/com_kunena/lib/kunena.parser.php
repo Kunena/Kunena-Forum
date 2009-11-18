@@ -339,14 +339,14 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 if($between) {
                 	static $file_ext = null;
 	              	$matches = null;
-                	
+
                 	if (empty($file_ext)) {
     	            	$params = &JComponentHelper::getParams( 'com_media' );
         	        	$file_ext = explode(',', $params->get('upload_extensions'));
                 	}
             	    preg_match('/\.([\w\d]+)$/', $between, $matches);
                 	if (!in_array(strtolower($matches[1]), $file_ext)) break;
-                	
+
                 	$tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
                     $task->autolink_disable--; # continue autolink conversion
                     // Make sure we add image size if specified and while we are
@@ -367,11 +367,12 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                     // Need to check if we are nested inside a URL code
 					if($task->autolink_disable == 0)
 					{
-						$tag_new = "<a href='".$tempstr."' rel=\"lightbox\"><img src='".$tempstr.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' /></a>";
-					}
+						// This part: <div style=\"table-layout:fixed; display:table; width:100%\"> ... </div> compliments of IE8
+						$tag_new = "<div style=\"table-layout:fixed; display:table; width:100%\"><a href='".$tempstr."' rel=\"lightbox\"><img src='".$tempstr.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' /></a></div>";					}
 					else
 					{
-						$tag_new = "<img src='".$tempstr.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' />";
+						// This part: <div style=\"table-layout:fixed; display:table; width:100%\"> ... </div> compliments of IE8
+						$tag_new = "<div style=\"table-layout:fixed; display:table; width:100%\"><img src='".$tempstr.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' /></div>";
 					}
 
 

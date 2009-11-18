@@ -73,7 +73,10 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 
 			include_once(KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/core.php');
 			include_once(KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/messaging.php');
-			include_once(KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/userpoints.php');
+			// A bug in the JomSocial 1.6 pre-release is throwing a hard php error when this include is enabled
+			// for now I have moved it straight into post.php - the only place the userpoints classes
+			// are being used. We might want to change that back for future releases.
+			// include_once(KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/userpoints.php');
 
 			//PM popup requires JomSocial css to be loaded from selected template
 			$config =& CFactory::getConfig();

@@ -272,6 +272,8 @@ $catName = $objCatInfo->name;
                                             // if JomScoial integration is active integrate user points and activity stream
                                             if ($fbConfig->pm_component == 'jomsocial' || $fbConfig->fb_profile == 'jomsocial' || $fbConfig->avatar_src == 'jomsocial')
                                             {
+												include_once(KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/userpoints.php');
+
 												CuserPoints::assignPoint('com_kunena.thread.new');
 
 												// Check for permisions of the current category - activity only if public
@@ -304,6 +306,8 @@ $catName = $objCatInfo->name;
                                             // if JomScoial integration is active integrate user points and activity stream
                                             if ($fbConfig->pm_component == 'jomsocial' || $fbConfig->fb_profile == 'jomsocial' || $fbConfig->avatar_src == 'jomsocial')
                                             {
+                                            	include_once(KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/userpoints.php');
+
 												CuserPoints::assignPoint('com_kunena.thread.reply');
 
 												// Check for permisions of the current category - activity only if public

@@ -19,6 +19,7 @@
 		<filename>index.php</filename>
 		<filename>kunena.php</filename>
 		<filename>router.php</filename>
+		<filename>jomsocial_rule.xml</filename>
 		<folder>lib</folder>
 		<folder>template</folder>
 		<folder>kunena.files.distribution</folder>

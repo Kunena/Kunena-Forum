@@ -38,6 +38,9 @@ Kunena 1.5.7
 # [#18742] Remove broken limit box from My Profile messages/threads
 
 17-Nov-2009 fxstein
++ [#18702] Added JomSocial rules file and entry in manifest.xml
+# [#18702] Userpoints include throws hard php error in backend for latest JomSocial 1.6
+           test release. Workaround is to move include into post.php
 + [#18702] JomSocial login and registration link integration
 ^ [#18702] Strip slashes from Activity Stream content
 ^ [#18702] Added security check for JomSocial activity stream integration

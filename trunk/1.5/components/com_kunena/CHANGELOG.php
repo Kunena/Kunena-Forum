@@ -32,6 +32,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.5.7
+19-Nov-2009 fxstein
+# [#18782] Missing Argument Warning on Post
+
+Kunena 1.5.7
 
 18-Nov-2009 fxstein
 # [#18749] IE8 bug work around: max-width on images cause layout to break

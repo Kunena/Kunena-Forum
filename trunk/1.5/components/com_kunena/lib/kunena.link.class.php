@@ -113,7 +113,7 @@ class CKunenaLink
 
     // GetThreadPageURL is basically identically to the prior function except that it returns a clear text
     // non-encoded URL. This functions is used by the email function to notify users about new posts.
-    function GetThreadPageURL($fbConfig, $func, $catid, $threadid, $page, $limit, $anker='')
+    function GetThreadPageURL($fbConfig, $func, $catid, $threadid, $page, $limit='', $anker='')
     {
         if ($page == 1 || !is_numeric($page) || !is_numeric($limit))
         {
@@ -174,23 +174,23 @@ class CKunenaLink
     	// Only create links for valid users
     	if ($userid > 0)
     	{
-    		if($fbConfig->fb_profile == 'cb') 
+    		if($fbConfig->fb_profile == 'cb')
     		{
     			$kunenaProfile =& CKunenaCBProfile::getInstance();
     			if ($link = $kunenaProfile->getProfileURL($userid))
     			{
     				return CKunenaLink::GetSefHrefLink($link, $name, '', $rel, $class);
     			}
-    			else 
+    			else
     			{
     				return $name;
     			}
     		} elseif ($fbConfig->fb_profile == 'aup') {
 				$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
-				if ( file_exists($api_AUP)) {				
+				if ( file_exists($api_AUP)) {
 					$useridAUP = AlphaUserPointsHelper::getAnyUserReferreID( $userid );
 					return CKunenaLink::GetSefHrefLink(KUNENA_PROFILE_LINK_SUFFIX.$useridAUP, $name, '', $rel, $class);
-				} 
+				}
 			} else {
    				return CKunenaLink::GetSefHrefLink(KUNENA_PROFILE_LINK_SUFFIX.$userid, $name, '', $rel, $class);
     		}
@@ -205,7 +205,7 @@ class CKunenaLink
 	{
 		return JRoute::_(KUNENA_LIVEURLREL.'&amp;func=userlist'.$action);
 	}
-	
+
 	function GetUserlistLink($action, $name, $rel='nofollow', $class='')
 	{
 		return self::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=userlist'.$action, $name, '', $rel, $class);
@@ -338,7 +338,7 @@ class CKunenaLink
         	check_dberror("Unable to retrieve latest post.");
 
         // Now Calculate the number of pages for this particular thread
-        if (is_object($result)) 
+        if (is_object($result))
         {
         	$catid = $result->catid;
         	$threadPages = ceil($result->totalmessages / $limit);
@@ -352,7 +352,7 @@ class CKunenaLink
         $Output .= '</div>';
         if (is_object($result)) $Output .= CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $result->thread, $threadPages, $limit, $result->latest_id), 3500);
         else $Output .= CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid), 3500);
-        
+
         return $Output;
     }
 

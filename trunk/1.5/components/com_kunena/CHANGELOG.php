@@ -31,7 +31,7 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.5.7
+Kunena 1.5.8
 19-Nov-2009 fxstein
 # [#18782] Missing Argument Warning on Post
 

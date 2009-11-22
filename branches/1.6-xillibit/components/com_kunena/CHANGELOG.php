@@ -33,16 +33,14 @@ Legend:
 
 Custom Branch:
 
-08-Nov-2009 Xillibit
-+ [#18627] Add view for userlist page almost done (need online status)
-^ [#18627] Update view for more about stats page
-+ [#18627] Add view for more about stats page
+22-Nov-2009 Matias
+^ [#17628] Merge from /trunk/1.6 revisions 1193, 1196
 
 07-Nov-2009 Xillibit
 + [#18627] Add model and view for rss feed page
 
 26-Oct-2009 Xillibit
-+ [#18627] Add model for userlist and for more about stats
++ [#18628] Add model for userlist and for more about stats
 
 22-Oct-2009 Matias
 ^ [#17628] Merge from /trunk/1.6 revisions 1121 to 1127
@@ -51,6 +49,15 @@ Custom Branch:
 + [#17628] Add kunena birthday feature in statistics
 
 Kunena 1.6.0-DEV
+
+22-Nov-2009 Matias
++ [#17628] Make profile box to work in messages view
+# [#17628] Improve userlist
+
+08-Nov-2009 Xillibit
++ [#18627] Add view for userlist page almost done (need online status)
+^ [#18627] Update view for more about stats page
++ [#18627] Add view for more about stats page
 
 21-Oct-2009 Matias
 + [#17628] Category view (recent.category)

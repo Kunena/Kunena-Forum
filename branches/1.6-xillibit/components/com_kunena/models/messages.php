@@ -40,6 +40,14 @@ class KunenaModelMessages extends JModel
 	protected $_totals = array();
 
 	/**
+	 * Array of lists containing threads.
+	 *
+	 * @var		array
+	 * @since	1.6
+	 */
+	protected $_threads = array();
+
+	/**
 	 * Array of lists containing items.
 	 *
 	 * @var		array
@@ -103,6 +111,47 @@ class KunenaModelMessages extends JModel
 		}
 
 		return parent::getState($property);
+	}
+
+	/**
+	 * Method to get a thread.
+	 *
+	 * @return	mixed	Thread object on success, false on failure.
+	 * @since	1.6
+	 */
+	public function getThread()
+	{
+		// Get a unique key for the current list state.
+		$key = $this->_getStoreId($this->_context);
+
+		// Try to load the value from internal storage.
+		if (!empty($this->_threads[$key])) {
+			return $this->_threads[$key];
+		}
+
+		// Try to load the value from cache.
+		//$cache = &JFactory::getCache('com_kunena', 'output');
+		//$store = $this->_getStoreId('categories_list');
+		//$data  = $cache->get($store);
+
+		// Check the cache data.
+		//if ($data !== false) {
+		//	$this->_threads[$key] = unserialize($data);
+		//	return $data;
+		//}
+
+		// Load the thread.
+		$query	= $this->_getThreadQuery();
+		$this->_db->setQuery($query->toString());
+		$result = $this->_db->loadObject();
+
+		// Push the value into cache.
+		//$cache->store(serialize($result), $store);
+
+		// Add the rows to the internal storage.
+		$this->_threads[$key] = $result;
+
+		return $this->_threads[$key];
 	}
 
 	/**
@@ -272,10 +321,7 @@ class KunenaModelMessages extends JModel
 		{
 		    case 'flat':
 		        $query->from('#__kunena_messages AS m');
-		        $query->from('#__kunena_threads AS t');
-		        $query->where('t.id='.intval($this->getState('thread.id')));
-		        $query->where('t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
-		        $query->where('t.id=m.thread');
+		        $query->where('m.thread='.intval($this->getState('thread.id')));
 		        $query->where('m.hold=0');
 
 		        break;
@@ -294,28 +340,22 @@ class KunenaModelMessages extends JModel
 	 * @return	string	An SQL query.
 	 * @since	1.6
 	 */
-	protected function _getListQuery()
+	protected function _getThreadQuery()
 	{
 	    $query = new KQuery();
 		$user = KUser::getInstance();
 
 		// Build base query
-		$time = JFactory::getDate('-'.$this->getState('filter.time').' hours');
-
-		$query->select('t.*, m.*');
+		$query->select('t.*');
 		$query->select('(f.thread > 0) AS myfavorite');
-		$query->select('c.name AS catname');
-		//$query->select('r.rank_image, r.rank_title');
 
 		switch ($this->getState('type'))
 		{
 		    case 'flat':
-		        $query->from('#__kunena_messages AS m');
 		        $query->from('#__kunena_threads AS t');
 		        $query->where('t.id='.intval($this->getState('thread.id')));
 		        $query->where('t.catid IN ('.$this->_db->getEscaped($user->getAllowedCategories()).')');
-		        $query->where('t.id=m.thread');
-		        $query->where('m.hold=0');
+		        $query->where('t.hold=0');
 
 		        break;
 		    default:
@@ -323,9 +363,42 @@ class KunenaModelMessages extends JModel
 		}
 
 		$query->join('LEFT', '#__kunena_favorites AS f ON f.thread = t.id AND f.userid = '.intval($user->userid));
-		//$query->join('LEFT', '#__kunena_users AS u ON u.userid = userid');
-		//$query->join('LEFT', '#__kunena_ranks AS r ON r.rank_id = u.rank');
-		$query->join('LEFT', '#__kunena_categories AS c ON c.id = t.catid');
+		// echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
+
+		return $query;
+	}
+
+	/**
+	 * Method to build an SQL query to load the list data.
+	 *
+	 * @return	string	An SQL query.
+	 * @since	1.6
+	 */
+	protected function _getListQuery()
+	{
+	    $query = new KQuery();
+		$user = KUser::getInstance();
+
+		// Build base query
+		$query->select('m.*');
+		$query->select('u.*');
+		$query->select('r.rank_image, r.rank_title');
+
+		switch ($this->getState('type'))
+		{
+		    case 'flat':
+		        $query->from('#__kunena_messages AS m');
+		        $query->where('m.thread='.intval($this->getState('thread.id')));
+		        $query->where('m.hold=0');
+
+		        break;
+		    default:
+		        // Invalid view type specified
+		}
+
+		$query->join('LEFT', '#__kunena_users AS u ON u.userid = m.userid');
+		$query->join('LEFT', '#__kunena_ranks AS r ON IF(u.rank>0, r.rank_id = u.rank, r.rank_id=(SELECT rank_id FROM #__kunena_ranks WHERE (rank_min <= u.posts) AND (rank_special = 0) ORDER BY rank_min DESC LIMIT 1))');
+		//$query->group('m.id');
 
 		if (strtolower($this->getState('order'))=='desc')
 		{
@@ -333,7 +406,7 @@ class KunenaModelMessages extends JModel
 		}
 		else
 		{
-			$query->order('m.id');
+			$query->order('m.id ASC');
 		}
 
 		// echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';

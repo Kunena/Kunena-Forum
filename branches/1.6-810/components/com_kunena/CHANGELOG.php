@@ -32,6 +32,12 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Custom Branch 810
+
+22-Nov-2009 810
++ [#18267] base instead off legacy.kunena.admin
+- [#18267] deleted legacy.kunena.admin
+^ [#18267] Toolbar updated
+
 27-Oct-2009 810
 + [#18267] checksystem added (not finished)
 ^ [#18267] Config language added. Now Config is finished

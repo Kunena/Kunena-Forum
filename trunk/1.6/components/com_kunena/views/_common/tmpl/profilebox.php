@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 $profile = KFactory::getProfile();
 $pms = KFactory::getPMS();
+//print_r($this->profile);
 ?>
 <div class="profilebox">
 	<div>
@@ -23,10 +24,10 @@ echo $profile->showAvatar($this->profile->userid, 'avatar', false);
 ?>
 	</div>
 <?php if ($this->profile->userid): ?>
-	<div class="cover">TBD</div>
+	<div class="cover"><?php echo $this->profile->rank_title; ?></div>
 
 	<div class="cover">
-		<img src="<?php echo KURL_COMPONENT_MEDIA; ?>images/ranks/rank_admin.gif" alt="" />
+		<img src="<?php echo KURL_COMPONENT_MEDIA; ?>images/ranks/<?php echo $this->profile->rank_image; ?>" alt="" />
 	</div>
 	<div class="cover">Posts: <?php echo (int)$this->profile->posts; ?></div>
 <!-- 	<div class="cover">

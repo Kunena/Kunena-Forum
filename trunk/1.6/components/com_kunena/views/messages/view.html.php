@@ -35,11 +35,14 @@ class KunenaViewMessages extends KView
 		// Create shortcut to parameters.
 		$params = $this->state->get('params');
 
-		$this->assignRef('announcements', $this->get('Announcement'));
+	    $this->assignRef('thread', $this->get('Thread'));
+	    // TODO: check if thread exists etc..
+
+	    $this->assignRef('announcements', $this->get('Announcement'));
 	    $this->assignRef('statistics', $this->get('Statistics'));
 		$this->assign('total', $this->get('Total'));
 
-		if (!$this->total) {
+		if (!$this->thread || !$this->total) {
 			parent::display('empty');
 			return;
 		}
@@ -76,7 +79,7 @@ class KunenaViewMessages extends KView
 		$menuitem = $menu->getActive();
 
 		$this->assign ( 'title', ($params->get('show_page_title') && $menuitem->query['view'] == 'messages' && $menuitem->query['thread'] == $this->state->thread ?
-		$params->get('page_title') : $this->messages[0]->subject));
+		$params->get('page_title') : $this->thread->topic_subject));
 
 		parent::display($tpl);
 	    //echo "<code>"; print_r($this->path); echo "</code>";

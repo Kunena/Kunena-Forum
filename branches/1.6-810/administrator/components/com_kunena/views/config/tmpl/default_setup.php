@@ -82,10 +82,10 @@ echo $pane->startPanel('Basics', 'Basics');?>
 		<tr>
 	</tbody>
 	</table>
-	
-
-<table width="40%" class="admintable" cellspacing="1" align="right">
-<legend><?php echo JText::_('K_CONFIG_EXTRA_SETTINGS'); ?></legend>		<tr>
+<legend><?php echo JText::_('K_CONFIG_EXTRA_SETTINGS'); ?></legend>
+<table width="50%" class="admintable" cellspacing="1" align="right" style="padding-bottom:10px;">
+		<tbody>
+        <tr>
 			<td width="40%" class="key">
 				<label for="config_rss_enabled" class="hasTip" title="<?php echo JText::_('K_CONFIG_RSS_ENABLED_DESC'); ?>"><?php echo JText::_('K_CONFIG_RSS_ENABLED'); ?></label>
 			</td>
@@ -142,9 +142,10 @@ echo $pane->startPanel('Frontend', 'Frontend');?>
 <fieldset>
 	<legend><?php echo JText::_('K_CONFIG_FRONTEND'); ?>
     </legend>
-<table class="admintable" cellspacing="1" align="left" width="50%">
+    
+
 	<legend><?php echo JText::_('K_CONFIG_LOOK_AND_FEEL'); ?></legend>
-	
+	<table class="admintable" cellspacing="1" align="left" width="50%">
 	<tbody>
 		<tr>
 			<td width="40%" class="key">
@@ -429,9 +430,9 @@ echo $pane->startPanel('Frontend', 'Frontend');?>
 		</tr>
         </tbody>
 	</table>
-    <table width="50%" class="admintable" cellspacing="1" align="right" style="padding-bottom:10px;"> 
+     
         <legend><?php echo JText::_('K_CONFIG_USER_RELATED'); ?></legend>
-
+<table width="50%" class="admintable" cellspacing="1" align="right" style="padding-bottom:10px;">
 		<tr>
         <td width="40%" class="key">
 				<label for="config_username" class="hasTip" title="<?php echo JText::_('K_CONFIG_USERNAME_DESC'); ?>"><?php echo JText::_('K_CONFIG_USERNAME'); ?> </label>
@@ -567,10 +568,10 @@ echo $pane->startPanel('Frontend', 'Frontend');?>
         
         </tbody>
 	</table>
-    <table width="50%" class="admintable" cellspacing="1" align="right" style="padding-top:10px;">
+    
         <tr>
         <legend><?php echo JText::_('K_CONFIG_VARIOUS_LENGTH_SETTINGS'); ?></legend>
-        
+        <table width="50%" class="admintable" cellspacing="1" align="right" style="padding-top:10px;">
         <td width="40%" class="key">
 				<label for="config_wrap_words_longer_than" class="hasTip" title="<?php echo JText::_('K_CONFIG_WRAP_WORDS_LONGER_THAN_DESC'); ?>"><?php echo JText::_('K_CONFIG_WRAP_WORDS_LONGER_THAN'); ?> </label>
 			</td>
@@ -704,6 +705,7 @@ echo $pane->startPanel('Avatars', 'Avatars');?>
         
         </tbody>
 	</table> 
+    </fieldset>
 <?php
 echo $pane->endPanel();
 echo $pane->startPanel('Media', 'Media');?>
@@ -798,35 +800,8 @@ echo $pane->startPanel('Media', 'Media');?>
 		</tr>
           </tbody>
 	</table> 
-    <table class="admintable" cellspacing="1" align="right" width="50%">
-    <legend><?php echo JText::_('K_CONFIG_RANKING'); ?></legend>
-	
-	<tbody>
-		<tr>
-        <td width="40%" class="key">
-				<label for="config_enable_ranking" class="hasTip" title="<?php echo JText::_('K_CONFIG_ENABLE_RANKING_DESC'); ?>"><?php echo JText::_('K_CONFIG_ENABLE_RANKING'); ?> </label>
-			</td>
-			<td>
-				<select name="config[enable_ranking]" id="enable_ranking">
-					<option value="no"<?php echo (($this->options->get('enable_ranking', 'kunena') == 'no') ? ' selected="selected"' : ''); ?>><?php echo JText::_('K_CONFIG_NO'); ?></option>
-					<option value="yes"<?php echo (($this->options->get('enable_ranking', 'kunena') == 'yes') ? ' selected="selected"' : ''); ?>><?php echo JText::_('K_CONFIG_YES'); ?></option>
-				</select>
-			</td>
-		</tr>
-        <td width="40%" class="key">
-				<label for="config_use_ranking_images" class="hasTip" title="<?php echo JText::_('K_CONFIG_USE_RANKING_IMAGES_DESC'); ?>"><?php echo JText::_('K_CONFIG_USE_RANKING_IMAGES'); ?></label>
-			</td>
-			<td>
-				<select name="config[use_ranking_images]" id="use_ranking_images">
-					<option value="no"<?php echo (($this->options->get('use_ranking_images', 'kunena') == 'no') ? ' selected="selected"' : ''); ?>><?php echo JText::_('K_CONFIG_NO'); ?></option>
-					<option value="yes"<?php echo (($this->options->get('use_ranking_images', 'kunena') == 'yes') ? ' selected="selected"' : ''); ?>><?php echo JText::_('K_CONFIG_YES'); ?></option>
-				</select>
-			</td>
-		</tr>
-         </tbody>
-	</table> 
     <legend><?php echo JText::_('K_CONFIG_BBCODE'); ?></legend>
-	<table class="admintable" cellspacing="1">
+	<table class="admintable" cellspacing="1" align="left" width="50%" style="padding-bottom:60px;">
 	<tbody>
 		<tr>
         <td width="40%" class="key">
@@ -921,7 +896,35 @@ echo $pane->startPanel('Media', 'Media');?>
 			</td>
 		</tr>
         </tbody>
+        
 	</table> 
+    <legend><?php echo JText::_('K_CONFIG_RANKING'); ?></legend>
+	<table class="admintable" cellspacing="1" align="right" width="50%" style="padding-bottom:60px;">
+	<tbody>
+		<tr>
+        <td width="40%" class="key">
+				<label for="config_enable_ranking" class="hasTip" title="<?php echo JText::_('K_CONFIG_ENABLE_RANKING_DESC'); ?>"><?php echo JText::_('K_CONFIG_ENABLE_RANKING'); ?> </label>
+			</td>
+			<td>
+				<select name="config[enable_ranking]" id="enable_ranking">
+					<option value="no"<?php echo (($this->options->get('enable_ranking', 'kunena') == 'no') ? ' selected="selected"' : ''); ?>><?php echo JText::_('K_CONFIG_NO'); ?></option>
+					<option value="yes"<?php echo (($this->options->get('enable_ranking', 'kunena') == 'yes') ? ' selected="selected"' : ''); ?>><?php echo JText::_('K_CONFIG_YES'); ?></option>
+				</select>
+			</td>
+		</tr>
+        <td width="40%" class="key">
+				<label for="config_use_ranking_images" class="hasTip" title="<?php echo JText::_('K_CONFIG_USE_RANKING_IMAGES_DESC'); ?>"><?php echo JText::_('K_CONFIG_USE_RANKING_IMAGES'); ?></label>
+			</td>
+			<td>
+				<select name="config[use_ranking_images]" id="use_ranking_images">
+					<option value="no"<?php echo (($this->options->get('use_ranking_images', 'kunena') == 'no') ? ' selected="selected"' : ''); ?>><?php echo JText::_('K_CONFIG_NO'); ?></option>
+					<option value="yes"<?php echo (($this->options->get('use_ranking_images', 'kunena') == 'yes') ? ' selected="selected"' : ''); ?>><?php echo JText::_('K_CONFIG_YES'); ?></option>
+				</select>
+			</td>
+		</tr>
+         </tbody>
+	</table> 
+    </fieldset>
 <?php
 echo $pane->endPanel();
 echo $pane->startPanel('Security', 'Security');?>
@@ -1298,8 +1301,9 @@ echo $pane->startPanel('Plugins', 'Plugins');?>
 		<tr>
         </tbody>
 	</table>
-    <table width="50%" class="admintable" cellspacing="1" align="right" style="padding-bottom:10px;"> 
         <legend><?php echo JText::_('K_CONFIG_USER_RELATED'); ?></legend>
+        <table width="50%" class="admintable" cellspacing="1" align="right" style="padding-bottom:10px;"> 
+        <tbody>
         <td width="40%" class="key">
 				<label for="config_show_stats" class="hasTip" title="<?php echo JText::_('K_CONFIG_SHOW_STATS_DESC'); ?>"><?php echo JText::_('K_CONFIG_SHOW_STATS'); ?></label>
 			</td>
@@ -1369,8 +1373,8 @@ echo $pane->startPanel('Plugins', 'Plugins');?>
 		<tr>
         </tbody>
 	</table>
-    <table width="50%" class="admintable" cellspacing="1" align="right" style="padding-bottom:10px;"> 
-        <legend><?php echo JText::_('K_CONFIG_MY_PROFILE_PLUGIN_SETTINGS'); ?></legend>
+      <legend><?php echo JText::_('K_CONFIG_MY_PROFILE_PLUGIN_SETTINGS'); ?></legend>
+        <table width="50%" class="admintable" cellspacing="1" align="right" style="padding-bottom:10px;">
         <td width="40%" class="key">
 				<label for="config_allow_username_change" class="hasTip" title="<?php echo JText::_('K_CONFIG_ALLOW_USERNAME_CHANGE_DESC'); ?>"><?php echo JText::_('K_CONFIG_ALLOW_USERNAME_CHANGE'); ?> </label>
 			</td>

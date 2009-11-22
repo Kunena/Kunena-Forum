@@ -21,8 +21,11 @@ jimport('joomla.application.component.model');
  */
 class KunenaModelMainpage extends JModel
 {
+
+
 	
 }
+
 ?>
 <div id="wrapper">
       
@@ -30,7 +33,7 @@ class KunenaModelMainpage extends JModel
             <tbody>
                   <tr align="top">
                         <td width="60%"><div id="cpanel">
-                        <h3 style="clear: both; margin-left:180px; color: #03C"><?php echo JText::_('MANAGE FORUM'); ?></h3>
+                        <h3 style="clear: both; margin-top:10px; margin-left:180px; color: #03C"><?php echo JText::_('MANAGE FORUM'); ?></h3>
                                     <div style="float: left; margin-left: 5px;">
 
                                     
@@ -62,7 +65,7 @@ class KunenaModelMainpage extends JModel
                                                 <span><?php echo JText::_('Manage Ranks'); ?></span></a>
                                           </div>
                                     </div>
-                                    <h3 style="clear: both; margin-left:175px; color: #03C"><?php echo JText::_('KUNENA OPTIONS'); ?></h3>
+                                    <h3 style="clear: both;  margin-left:175px; color: #03C"><?php echo JText::_('KUNENA OPTIONS'); ?></h3>
                                     <div style="float: left; margin-left: 5px;">
                                           <div class="icon">
                                                 <a href="index2.php?option=com_kunena&view=config">

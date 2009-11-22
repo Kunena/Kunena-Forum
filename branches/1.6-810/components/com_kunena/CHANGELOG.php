@@ -33,6 +33,10 @@ Legend:
 
 Custom Branch 810
 
+23-Nov-2009 810
+^ [#18267] config fixed
+
+
 22-Nov-2009 810
 + [#18267] base instead off legacy.kunena.admin
 - [#18267] deleted legacy.kunena.admin

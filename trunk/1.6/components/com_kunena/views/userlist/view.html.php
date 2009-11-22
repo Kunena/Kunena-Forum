@@ -29,19 +29,20 @@ class KunenaViewUserList extends KView
 	 */
 	public function display($tpl = null) {
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
-		
+
 		// Create shortcut to parameters.
 		$params = $this->state->get('params');
-		
-		$this->assignRef ( 'lists', $this->get ( 'Items' ) );
+
+		$this->assign ( 'total', $this->get ( 'Total' ) );
+		$this->assignRef ( 'userlist', $this->get ( 'Items' ) );
 
 		jimport( 'joomla.application.menu' );
 		$menu = JSite::getMenu();
 		$menuitem = $menu->getActive();
-		
-		$this->assign ( 'title', ($params->get('show_page_title') && $menuitem->query['view'] == 'userlist' ? 
+
+		$this->assign ( 'title', ($params->get('show_page_title') && $menuitem->query['view'] == 'userlist' ?
 			$params->get('page_title') : 'User List'));
-		
+
 		parent::display ( $tpl );
 	}
 }

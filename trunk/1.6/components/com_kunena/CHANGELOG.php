@@ -35,14 +35,15 @@ Kunena 1.6.0-DEV
 
 22-Nov-2009 Matias
 + [#17628] Make profile box to work in messages view
+# [#17628] Improve userlist
 
 08-Nov-2009 Xillibit
-+ [#18627] Add view for userlist page almost done (need online status)
-^ [#18627] Update view for more about stats page
-+ [#18627] Add view for more about stats page
++ [#18628] Add view for userlist page almost done (need online status)
+^ [#18628] Update view for more about stats page
++ [#18628] Add view for more about stats page
 
 26-Oct-2009 Xillibit
-+ [#18627] Add model for userlist and for more about stats
++ [#18628] Add model for userlist and for more about stats
 
 21-Oct-2009 Matias
 + [#17628] Category view (recent.category)

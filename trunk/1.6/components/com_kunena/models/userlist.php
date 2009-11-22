@@ -71,7 +71,7 @@ class KunenaModelUserList extends JModel
 			$params	= $app->getParams('com_kunena');
 
 			// If the limit is set to -1, use the global config list_limit value.
-			$limit	= JRequest::getInt('limit', $params->get('list_limit', 0));
+			$limit	= JRequest::getInt('limit', $params->get('list_limit', -1));
 			$limit	= ($limit === -1) ? $app->getCfg('list_limit', 20) : $limit;
 
 			// Load the list state.
@@ -83,7 +83,7 @@ class KunenaModelUserList extends JModel
 			// all = all announcements
 			// published = published announcements
 			$this->setState('type', JRequest::getCmd('type', 'published'));
-			
+
 			// Load the check parameters.
 			$this->setState('check.state', true);
 
@@ -132,8 +132,6 @@ class KunenaModelUserList extends JModel
 
 		// Add the rows to the internal storage.
 		$this->_lists[$key] = $rows;
-		$this->_lists[$key]['totalusers'] = $this->getTotal();
-		$this->_lists[$key]['userlist'] = $this->getUserListData();
 
 		return $this->_lists[$key];
 	}
@@ -212,7 +210,7 @@ class KunenaModelUserList extends JModel
 		$query = new KQuery();
 		$user = KUser::getInstance();
 
-		$query->select('count(*)');
+		$query->select('COUNT(*)');
 		$query->from('#__kunena_users');
 
 		switch ($this->getState('type'))
@@ -238,7 +236,8 @@ class KunenaModelUserList extends JModel
 
 		// Select fields.
 		$query->select('*');
-		$query->from('#__kunena_users');
+		$query->from('#__kunena_users AS a');
+		$query->join('INNER', '#__users AS b ON a.userid=b.id');
 		switch ($this->getState('type'))
 		{
 			case 'all':
@@ -248,50 +247,6 @@ class KunenaModelUserList extends JModel
 		// echo nl2br(str_replace('#__','jos_',$query->toString())).'<hr/>';
 
 		return $query;
-	}
-
-	/**
-	 * Method to build an SQL query to load the user list data.
-	 *
-	 * @return	string	An SQL query.
-	 * @since	1.6
-	 */
-	protected function _getUserListQuery()
-	{
-		$query = new KQuery();
-
-		// Select fields.
-		$query->select('userid, name, username, avatar, posts, karma, registerDate, lastvisitDate, uhits');
-		$query->from('#__kunena_users AS a');
-		$query->join('INNER', '#__users AS b ON a.userid=b.id');
-		
-		return $query;
-	}
-	 
-  	/**
-	 * Method to return the userlist data.
-	 *
-	 * @return	string	An SQL query.
-	 * @since	1.6
-	 */
-  public function getUserListData()
-  {
-    // Get a unique key for the current list state.
-		$key = $this->_getStoreId($this->_context);
-
-		$query = $this->_getUserListQuery();
-		$this->_db->setQuery($query->toString());
-		$return = $this->_db->loadObjectList();
-
-		// Check for a database error.
-		if ($this->_db->getErrorNum()) {
-			$this->setError($this->_db->getErrorMsg());
-			return false;
-		}
-
-		$this->_userlist[$key] = $return;
-
-		return $this->_userlist[$key];
 	}
 
 	/**

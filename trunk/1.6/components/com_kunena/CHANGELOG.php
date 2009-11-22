@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 22-Nov-2009 Matias
 + [#17628] Make profile box to work in messages view
 # [#17628] Improve userlist
++ [#17628] Add RSS format for recent discussions
 
 08-Nov-2009 Xillibit
 + [#18628] Add view for userlist page almost done (need online status)

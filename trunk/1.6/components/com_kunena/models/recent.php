@@ -90,7 +90,7 @@ class KunenaModelRecent extends JModel
 			// all = recent topics accross all allowd categories
 			// my = my recent topics
 			// category = recent topics with a select category
-			$this->setState('type', $type = JRequest::getCmd('type', 'all'));
+			$this->setState('type', $type = JRequest::getCmd('mtype', 'all'));
 			$this->setState('order', $params->get('order', 'desc'));
 
 			// If recent request is for a category, we also get a category id
@@ -307,7 +307,7 @@ class KunenaModelRecent extends JModel
 				$query1 = new KQuery();
 				$query2 = new KQuery();
 
-				$query1->select('m.thread As thread');
+				$query1->select('m.thread As thread, t1.catid');
 		        $query1->from('#__kunena_messages AS m');
 				$query1->from('#__kunena_threads AS t1');
 				$query1->where('t1.id = m.thread');
@@ -315,7 +315,7 @@ class KunenaModelRecent extends JModel
 		        if (isset($time)) $query1->where('t1.last_post_time >'.$time->toUnix());
 		        $query1->where('m.userid = '.intval($this->getState('user.id')));
 
-				$query2->select('f.thread As thread');
+				$query2->select('f.thread As thread, t2.catid');
 		        $query2->from('#__kunena_favorites AS f');
 				$query2->from('#__kunena_threads AS t2');
 				$query2->where('t2.id = f.thread');

@@ -10,7 +10,7 @@
 		<description>Show recent threads</description>
 		<url>
 			<param name="category" type="text" default="0" label="Root Category" />
-			<param name="type" type="list" default="nested" label="Type">
+			<param name="mtype" type="list" default="nested" label="Type">
 				<option value="all">All Threads</option>
 				<option value="my">My Threads</option>
 				<option value="category">Category</option>

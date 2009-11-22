@@ -27,7 +27,7 @@ class CKunenaToolbar
 {
     function _ADMIN()
     {
-
+		
         JToolBarHelper::spacer();
         JToolBarHelper::publish();
         JToolBarHelper::spacer();
@@ -39,6 +39,7 @@ class CKunenaToolbar
         JToolBarHelper::spacer();
         JToolBarHelper::deleteList();
         JToolBarHelper::spacer();
+		
 
     }
 
@@ -81,7 +82,7 @@ class CKunenaToolbar
 
     function _EDITUSER_MENU()
     {
-
+		
         JToolBarHelper::spacer();
         JToolBarHelper::save('saveuserprofile');
         JToolBarHelper::spacer();
@@ -92,14 +93,16 @@ class CKunenaToolbar
 
     function _PROFILE_MENU()
     {
-
+		JToolBarHelper::spacer();
+        JToolBarHelper::custom('douserssync', 'refresh.png', 'refresh.png', _KUNENA_SYNC);
         JToolBarHelper::spacer();
         JToolBarHelper::custom('userprofile', 'edit.png', 'edit_f2.png', _KUNENA_EDIT);
         JToolBarHelper::spacer();
         JToolBarHelper::cancel();
         JToolBarHelper::spacer();
         JToolBarHelper::back();
-        JToolBarHelper::spacer();
+		JToolBarHelper::spacer();
+        JToolBarHelper::custom('removeUserProfile', 'delete.png', 'delete_f2.png', _KUNENA_REMOVE);
 
     }
 
@@ -220,5 +223,17 @@ class CKunenaToolbar
 
     }
 
+function _MAINPAGE_MENU()
+	{
+		JToolBarHelper::title( 'Kunena - '.JText::_('Mainpage' ) );
+		JToolBarHelper::custom( 'show_mainpage', 'frontpage.png', 'frontpage_f2.png', JText::_('Mainpage'), false, false );
+		JToolBarHelper::custom( 'forum', 'edit.png', 'edit_f2.png', JText::_('Manage Forum'), false, false );
+		JToolBarHelper::custom( 'users', 'users.png', 'users.png', JText::_('Users'), false, false );
+		JToolBarHelper::custom( 'option', 'config.png', 'config_f2.png', JText::_('Options'), false, false );
+		JToolBarHelper::custom( 'check_system', 'apply.png', 'apply_f2.png', JText::_('Check System'), false, false );
+		JToolBarHelper::custom( 'news', 'css.png', 'css_f2.png', JText::_('Kunena Ultimate News'), false, false );
+		JToolBarHelper::custom( 'info', 'help.png', 'help_f2.png', JText::_('Help'), false, false );	
+	}
 }
 ?>
+

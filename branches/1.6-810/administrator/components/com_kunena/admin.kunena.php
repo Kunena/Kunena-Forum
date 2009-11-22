@@ -14,7 +14,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 $view = JRequest::getCmd('view', false);
 $task = JRequest::getVar('task');
 
-$legacy = JPATH_COMPONENT_ADMINISTRATOR .DS. 'legacy.admin.kunena.php';
+$legacy = JPATH_COMPONENT_ADMINISTRATOR .DS. 'base.php';
 
 if (!is_file($legacy) || $view || strpos($task, '.'))
 {

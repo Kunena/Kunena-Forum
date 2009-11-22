@@ -82,6 +82,11 @@ switch ($task)
         CKunenaToolbar::_SYNCUSERS_MENU();
 
         break;
+		
+	case "mainpage":
+        CKunenaToolbar::mainpage();
+
+        break;
 
     case "showAdministration":
         CKunenaToolbar::_ADMIN();
@@ -124,7 +129,7 @@ switch ($task)
         break;
 
     default:
-        CKunenaToolbar::BACKONLY_MENU();
+        CKunenaToolbar::_MAINPAGE_MENU();
 
         break;
 								

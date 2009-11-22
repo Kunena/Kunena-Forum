@@ -123,6 +123,9 @@ class KunenaModelStatistics extends JModel
 		$this->_statistics[$key]['users'] = $this->getUserStats();
 		$this->_statistics[$key]['forum'] = $this->getForumStats();
 		$this->_statistics[$key]['recent'] = $this->getRecentStats();
+		$this->_statistics[$key]['popularthreads'] = $this->getPopularThreads();
+		$this->_statistics[$key]['popularusers'] = $this->getPopularUsers();
+		$this->_statistics[$key]['popularuserprofile'] = $this->getPopularUsersProfile();
 		return $this->_statistics[$key];
 	}
 	
@@ -357,6 +360,134 @@ class KunenaModelStatistics extends JModel
 
 		return $query;
 	}
+
+	/**
+	 * Method to build an SQL query to get the five popular threads
+	 *
+	 * @return	string	An SQL query.
+	 * @since	1.6
+	 */
+	protected function _getPopularThreadsQuery()
+	{
+		$query = new KQuery();
+
+		$query->select("*");
+		$query->from('#__kunena_messages');
+    $query->where('parent=0 ORDER BY hits DESC LIMIT 5');
+
+		return $query;
+	}
+
+	/**
+	 * Method to build an SQL query to get the five popular users
+	 *
+	 * @return	string	An SQL query.
+	 * @since	1.6
+	 */
+	protected function _getPopularUsersQuery()
+	{
+		$query = new KQuery();
+
+	  $query->select("*");
+		$query->from('#__kunena_users ORDER BY posts DESC LIMIT 5');
+
+		return $query;
+	}
+
+	/**
+	 * Method to build an SQL query to get the five popular users profile
+	 *
+	 * @return	string	An SQL query.
+	 * @since	1.6
+	 */
+	protected function _getPopularProfileUsersQuery()
+	{
+		$query = new KQuery();
+
+		$query->select("*");
+		$query->from('#__kunena_users ORDER BY uhits DESC LIMIT 5');
+
+		return $query;
+	}
+	/**
+	 * Method to get get the five popular threads.
+	 *
+	 * @return String
+	 * @since	1.6
+	 */
+	public function getPopularThreads()
+	{
+		// Get a unique key for the current list state.
+		$key = $this->_getStoreId($this->_context);
+
+		$query = $this->_getPopularThreadsQuery();
+		$this->_db->setQuery($query->toString());
+		$datas = $this->_db->loadObjectList();
+
+		// Check for a database error.
+		if ($this->_db->getErrorNum()) {
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+
+		// Push the value into internal storage.
+		$this->_popularthreads[$key] = $return;
+
+    	return $this->_popularthreads[$key];
+	}
+/**
+	 * Method to get get the five popular users.
+	 *
+	 * @return String
+	 * @since	1.6
+	 */
+	public function getPopularUsers()
+	{
+		// Get a unique key for the current list state.
+		$key = $this->_getStoreId($this->_context);
+
+		$query = $this->_getPopularUsersQuery();
+		$this->_db->setQuery($query->toString());
+		$datas = $this->_db->loadObjectList();
+
+		// Check for a database error.
+		if ($this->_db->getErrorNum()) {
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+
+		// Push the value into internal storage.
+		$this->_popularusers[$key] = $return;
+
+    	return $this->_popularusers[$key];
+	}
+/**
+	 * Method to get get the five popular users profile.
+	 *
+	 * @return String
+	 * @since	1.6
+	 */
+	public function getPopularUsersProfile()
+	{
+		// Get a unique key for the current list state.
+		$key = $this->_getStoreId($this->_context);
+
+		$query = $this->_getPopularProfileUsersQuery();
+		$this->_db->setQuery($query->toString());
+		$datas = $this->_db->loadObjectList();
+
+		// Check for a database error.
+		if ($this->_db->getErrorNum()) {
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+
+		// Push the value into internal storage.
+		$this->_popularuserprofile[$key] = $return;
+
+    	return $this->_popularuserprofile[$key];
+	}
+
 
 	/**
 	 * Method to get a store id based on model configuration state.

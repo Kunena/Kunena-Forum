@@ -261,7 +261,7 @@ abstract class JHtmlKLink
 	 * Specialized helper for link to user profile.
 	 *
 	 * <code>
-	 *	<?php echo JHtml::_('klink.user', 'atag', $name, $title, ...); ?>
+	 *	<?php echo JHtml::_('klink.user', 'atag', $userid, $name, $title, ...); ?>
 	 * </code>
 	 *
 	 * @param $linktype	string	type of link: 'atag' for <a> tag, 'url' for plaintext url

@@ -371,10 +371,9 @@ class KunenaModelStatistics extends JModel
 	{
 		$query = new KQuery();
 
-		$query->select("*");
+		$query->select("id, subject, thread, hits");
 		$query->from('#__kunena_messages');
-    $query->where('parent=0 ORDER BY hits DESC LIMIT 5');
-
+    	$query->where('parent=0 ORDER BY hits DESC LIMIT 5');		
 		return $query;
 	}
 
@@ -388,9 +387,9 @@ class KunenaModelStatistics extends JModel
 	{
 		$query = new KQuery();
 
-	  $query->select("*");
-		$query->from('#__kunena_users ORDER BY posts DESC LIMIT 5');
-
+	  	$query->select("userid, posts, username");
+		$query->from('#__kunena_users AS a');	
+		$query->join('INNER', '#__users AS b ON a.userid=b.id ORDER BY posts DESC LIMIT 5');		
 		return $query;
 	}
 
@@ -404,9 +403,9 @@ class KunenaModelStatistics extends JModel
 	{
 		$query = new KQuery();
 
-		$query->select("*");
-		$query->from('#__kunena_users ORDER BY uhits DESC LIMIT 5');
-
+		$query->select("userid, username, uhits");
+		$query->from('#__kunena_users AS a');    		
+		$query->join('INNER', '#__users AS b ON a.userid=b.id ORDER BY uhits DESC LIMIT 5');		
 		return $query;
 	}
 	/**
@@ -422,7 +421,7 @@ class KunenaModelStatistics extends JModel
 
 		$query = $this->_getPopularThreadsQuery();
 		$this->_db->setQuery($query->toString());
-		$datas = $this->_db->loadObjectList();
+		$return = $this->_db->loadObjectList();
 
 		// Check for a database error.
 		if ($this->_db->getErrorNum()) {
@@ -448,7 +447,7 @@ class KunenaModelStatistics extends JModel
 
 		$query = $this->_getPopularUsersQuery();
 		$this->_db->setQuery($query->toString());
-		$datas = $this->_db->loadObjectList();
+		$return = $this->_db->loadObjectList();
 
 		// Check for a database error.
 		if ($this->_db->getErrorNum()) {
@@ -474,7 +473,7 @@ class KunenaModelStatistics extends JModel
 
 		$query = $this->_getPopularProfileUsersQuery();
 		$this->_db->setQuery($query->toString());
-		$datas = $this->_db->loadObjectList();
+		$return = $this->_db->loadObjectList();
 
 		// Check for a database error.
 		if ($this->_db->getErrorNum()) {

@@ -23,6 +23,11 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 		</tr>
 	</thead>
 	<tbody>
+	<tr>
+			<th class="lcol col_last" colspan="2">
+				<?php echo JText::_('K_KUNENA_FORUM_STATS_GENERAL'); ?>
+			</th>
+		</tr>
 		<tr>
 			<td class="fcol">
 				<div class="stats_items">
@@ -32,6 +37,97 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 				</div>
 			</td>
 		</tr>
+	</tbody>
+</table>
+<table class="forum_body stats_box">
+	<thead>
+		<tr>
+			<th colspan="3">
+				<h3><?php echo JText::_('K_KUNENA_FORUM_STATS_POPULAR_FIVE_THREADS'); ?></h3>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+	<tr>			
+			<th class="mcol col_content">Forum</th>
+			<th class="lcol col_emoticon">&nbsp;</th>	
+      <th class="mcol col_topics">Hits</th>		
+		</tr>							
+					<?php $i="0";
+           foreach($this->summary['popularthreads'] as $row) 
+          { echo "<tr><td class=\"fcol\">
+					".JHtml::_('klink.thread', 'atag', $row->thread, $row->subject,$row->subject)."
+			</td>	<td class=\"fcol\">";
+					 if($i == "0") {
+              echo "<img src = \"".KURL_COMPONENT_MEDIA . "images/bar.gif\" alt = \"\" height = \"10\" width = \"100\"/>";
+              $maxvalue = $row->hits;
+            } else {
+              echo "<img src = \"".KURL_COMPONENT_MEDIA . "images/bar.gif\" alt = \"\" height = \"10\" width = \"".round(($row->hits * 100) / $maxvalue)."\"/>";
+            }
+            $i++;                                   
+			echo  "</td><td class=\"fcol\">
+					".$row->hits."
+			</td></tr>"; }   ?>
+			</tbody>
+</table>
+<table class="forum_body stats_box">
+	<thead>
+		<tr>
+			<th colspan="3">
+				<h3><?php echo JText::_('K_KUNENA_FORUM_STATS_POPULAR_FIVE_USERS_MES'); ?></h3>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+	<tr>			
+			<th class="mcol col_content">Username</th>
+			<th class="lcol col_emoticon">&nbsp;</th>	
+      <th class="mcol col_topics">Posts</th>		
+		</tr>		
+			<?php $i="0"; foreach($this->summary['popularusers'] as $row) 
+          { echo "<tr><td class=\"fcol\">
+					".JHtml::_('klink.user', 'atag', $row->userid, $row->username, $row->username)."
+			</td><td class=\"fcol\">";
+					if($i == "0") {
+              echo "<img src = \"".KURL_COMPONENT_MEDIA . "images/bar.gif\" alt = \"\" height = \"10\" width = \"100\"/>";
+              $maxvalue = $row->posts;
+            } else {
+              echo "<img src = \"".KURL_COMPONENT_MEDIA . "images/bar.gif\" alt = \"\" height = \"10\" width = \"".round(($row->posts * 100) / $maxvalue)."\"/>";
+            }
+            $i++; 
+			echo "</td><td class=\"fcol\">
+					".$row->posts."
+			</td>	</tr>"; }   ?>	
+	</tbody>
+</table>
+<table class="forum_body stats_box">
+	<thead>
+		<tr>
+			<th colspan="3">
+				<h3><?php echo JText::_('K_KUNENA_FORUM_STATS_POPULAR_IVE_USERS_PROF'); ?></h3>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+	<tr>			
+			<th class="mcol col_content">Username</th>
+			<th class="lcol col_emoticon">&nbsp;</th>	
+      <th class="mcol col_topics">Hits</th>		
+		</tr>		
+					<?php foreach($this->summary['popularuserprofile'] as $row) 
+          { echo "<tr><td class=\"fcol\">
+					".JHtml::_('klink.user', 'atag', $row->userid, $row->username, $row->username)."
+			</td><td class=\"fcol\">";
+					if($i == "0") {
+              echo "<img src = \"".KURL_COMPONENT_MEDIA . "images/bar.gif\" alt = \"\" height = \"10\" width = \"100\"/>";
+              $maxvalue = $row->uhits;
+            } else {
+              echo "<img src = \"".KURL_COMPONENT_MEDIA . "images/bar.gif\" alt = \"\" height = \"10\" width = \"".round(($row->uhits * 100) / $maxvalue)."\"/>";
+            }
+            $i++; 
+			echo "</td><td class=\"fcol\">
+					".$row->uhits."
+			</td>	</tr>"; }   ?>				
 	</tbody>
 </table>
 <?php endif; ?>

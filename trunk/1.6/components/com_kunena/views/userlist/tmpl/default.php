@@ -9,6 +9,7 @@
  */
 
 defined('_JEXEC') or die;
+$app =& JFactory::getApplication();
 JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 ?>
 <div id="kunena">
@@ -18,15 +19,50 @@ JHtml::stylesheet('default.css', 'components/com_kunena/media/css/');
 <table class="forum_body">
 	<thead>
 		<tr>
-			<th>
+			<th colspan="10">
 				<h1><?php echo $this->escape($this->title); ?></h1>
+				<div><?php echo $app->getCfg('sitename'); ?> has <?php echo $this->lists['totalusers']; ?> registered users.</div>
 			</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
-			<td class="fcol">This information is available only for registered users.</td>
-		</tr>
+		<tr>			
+			<th class="mcol col_content">&nbsp;</th>
+			<th class="lcol col_emoticon">Status</th>	
+			<th class="lcol col_emoticon">Avatar</th>	
+      <th class="mcol col_topics">Name</th>	
+      <th class="mcol col_topics">Username</th>
+      <th class="mcol col_topics">Posts</th>
+      <th class="mcol col_topics">Karma</th>
+      <th class="mcol col_topics">Join date</th>
+      <th class="mcol col_topics">Last login</th>
+      <th class="mcol col_topics">Hits</th>	
+		</tr>							
+			<?php $i ="1"; 			
+          foreach($this->lists['userlist'] as $row){ ?>
+         <tr><td class="fcol">
+					<?php echo $i++; ?>
+			</td>	<td>
+      <img src ="<?php echo KURL_COMPONENT_MEDIA; ?>/images/icons/offlineicon.gif" alt="" />					                                
+		  </td>
+      <td>
+      <?php if($row->avatar == null) { echo "<img src = \"".KURL_COMPONENT_MEDIA."images/avatars/s_nophoto.jpg\" alt=\"\" />"; } else { echo "avatar user"; } ?>					                                
+		  </td><td>
+					<?php echo JHtml::_('klink.user', 'atag', $row->userid, $row->name, $row->name); ?>
+			</td><td>
+					<?php echo JHtml::_('klink.user', 'atag', $row->userid, $row->username, $row->username); ?>
+			</td><td>
+				<?php echo $row->posts; ?>
+			</td><td>
+					<?php echo $row->karma; ?>
+			</td><td>
+					<?php echo $row->registerDate; ?>
+			</td><td>
+					<?php echo $row->lastvisitDate; ?>
+			</td><td>
+					<?php echo $row->uhits; ?>
+			</td></tr>
+            <?php }   ?>			
 	</tbody>
 </table>
 

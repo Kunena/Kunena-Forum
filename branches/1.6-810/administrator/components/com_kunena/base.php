@@ -44,7 +44,7 @@ $kunenaConfig->load();
 
 // Class structure should be used after this and all the common task should be moved to this class
 require_once (KUNENA_PATH .DS. 'class.kunena.php');
-require_once (KUNENA_PATH_ADMIN .DS. 'legacy.admin.kunena.html.php');
+require_once (KUNENA_PATH_ADMIN .DS. 'controllers' .DS. 'base.php');
 
 $kn_tables = CKunenaTables::getInstance();
 if ($kn_tables->installed() === false) {
@@ -110,7 +110,7 @@ $pt_stop = "0";
 
 if (!$no_html)
 {
-	 	html_Kunena::showKunenaHeader();
+	 	
 		
 		JToolBarHelper::title(': '.JText::_('Control'), 'cpanel');
 		JToolBarHelper::divider();
@@ -353,10 +353,7 @@ switch ($task)
 
         break;
 
-    case 'cpanel':
-    default:
-        html_Kunena::controlPanel();
-        break;
+    
 }
 
 // Detect errors in CB integration
@@ -419,6 +416,16 @@ function showAdministration($option)
     */
 
     html_Kunena::showAdministration($list, $children, $pageNav, $option);
+	 /**
+         * Return the pagination footer
+         *
+         * @access      public
+         * @return      string  Pagination footer
+         * @since       1.0
+         */
+        function getListFooter()
+{
+}
 }
 
 
@@ -1302,6 +1309,44 @@ function doprune($kunena_db, $option)
 //===============================
 function syncusers($kunena_db, $option) {
     html_Kunena::syncusers($option);
+}
+
+function removeUserProfile($cid) {
+  $kunena_db = &JFactory::getDBO();
+  $currentUser  =& JFactory::getUser();
+  $acl =& JFactory::getACL();   
+  
+  foreach($cid as $id){
+    $objectID  = $acl->get_object_id( 'users', $id, 'ARO' );
+$groups  = $acl->get_object_groups( $objectID, 'ARO' );
+    $this_group = strtolower( $acl->get_group_name( $groups[0], 'ARO' ) );
+    if ( $this_group == 'super administrator' ){
+$msg = JText::_( 'You cannot delete a Super Administrator' );
+  } else if ( $id == $currentUser->get( 'Userid' ) ) {
+$msg = JText::_( 'You cannot delete Yourself!' );
+  } else {
+    $user =& JUser::getInstance((int)$id);
+    $user->delete();
+      $kunena_db->setQuery('DELETE FROM #__kunena_users WHERE userid=' .$id );      
+     $kunena_db->query() or trigger_dberror('Unable to delete user profiles.');
+     $msg = JText::_( 'User(s) deleted' );
+    }
+    echo $msg; 
+  }  
+}
+
+
+function deleteUser($option, $cid)
+{
+	$app =& JFactory::getApplication();
+	$kunena_db = &JFactory::getDBO();
+
+	if ($cids = implode(',', $cid)) {
+		$kunena_db->setQuery("DELETE FROM #__kunena_users WHERE userid IN ($cids)");
+		$kunena_db->query() or trigger_dberror("Unable to delete user.");
+	}
+
+    $app->redirect( JURI::base() ."index2.php?option=$option&task=showprofiles", _KUNENA_USER_DELETED);
 }
 
 function douserssync($kunena_db, $option)

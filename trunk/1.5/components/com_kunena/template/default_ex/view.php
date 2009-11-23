@@ -153,7 +153,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         }
 
         //update the hits counter for this topic & exclude the owner
-        if ($kunena_my->id > 0 && $this_message->userid != $kunena_my->id) {
+        if ($kunena_my->id == 0 || $this_message->userid != $kunena_my->id) {
             $kunena_db->setQuery("UPDATE #__fb_messages SET hits=hits+1 WHERE id='{$thread}' AND parent='0'");
             $kunena_db->query();
         }

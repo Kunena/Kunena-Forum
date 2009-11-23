@@ -35,6 +35,7 @@ Kunena 1.5.8
 
 23-Nov-2009 Matias
 # [#18805] Fatal error during forum jump
+# [#18765] Hit count should be increased also if anonymous user is viewing topic
 
 19-Nov-2009 fxstein
 # [#18782] Missing Argument Warning on Post

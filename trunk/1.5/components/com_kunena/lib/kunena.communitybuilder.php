@@ -83,10 +83,6 @@ function enqueueErrors() {
 			return false;
 		}
 		if ($fbConfig->fb_profile != 'cb') return true;
-		if (!getCBprofileItemid()) {
-			$this->errormsg = _KUNENA_INTEGRATION_CB_WARN_PUBLISH;
-			$this->error = 2;
-		}
 		if (!class_exists('getForumModel') && version_compare($ueConfig['version'], '1.2.1') < 0) {
 			$this->errormsg = sprintf(_KUNENA_INTEGRATION_CB_WARN_UPDATE, '1.2.1');
 			$this->error = 3;
@@ -141,25 +137,38 @@ function enqueueErrors() {
 		return cbSef( 'index.php?option=com_comprofiler&task=userProfile&user=' .$userid. getCBprofileItemid() );
 	}
 
-	function showAvatar($userid, $class='', $thumb=true) {
-		$cbUser =& CBuser::getInstance( (int) $userid );
-		if ( $cbUser === null ) {
-			$cbUser =& CBuser::getInstance( null );
+	function showAvatar($userid, $class='', $thumb=true) 
+	{
+		static $instances = array();
+		
+		if (!isset($instances[$userid]))
+		{
+			$cbUser = CBuser::getInstance( (int) $userid );
+			if ( $cbUser === null ) {
+				$cbUser = CBuser::getInstance( null );
+			}
+			$instances[$userid]['large'] = $cbUser->getField( 'avatar' );
+			$instances[$userid]['thumb'] = $cbUser->avatarFilePath( 2 );
 		}
 		if ($class) $class=' class="'.$class.'"';
-		if ($thumb==0) return $cbUser->getField( 'avatar' );
-		else return '<img'.$class.' src="'.$cbUser->avatarFilePath( 2 ).'" alt="" />';
+		if (!$thumb) return $instances[$userid]['large'];
+		else return '<img'.$class.' src="'.$instances[$userid]['thumb'].'" alt="" />';
 	}
 
 	function showProfile($userid, &$msg_params)
 	{
-		global $_PLUGINS;
-
-		$fbConfig =& CKunenaConfig::getInstance();
-		$userprofile = new CKunenaUserprofile($userid);
-		$_PLUGINS->loadPluginGroup('user');
-		return implode( '', $_PLUGINS->trigger( 'forumSideProfile', array( 'kunena', null, $userid,
-			array( 'config'=> &$fbConfig, 'userprofile'=> &$userprofile, 'msg_params'=>&$msg_params) ) ) );
+		static $instances = array();
+		
+		if (!isset($instances[$userid]))
+		{
+			global $_PLUGINS;
+			$fbConfig = CKunenaConfig::getInstance();
+			$userprofile = new CKunenaUserprofile($userid);
+			$_PLUGINS->loadPluginGroup('user');
+			$instances[$userid] = implode( '', $_PLUGINS->trigger( 'forumSideProfile', array( 'kunena', null, $userid,
+				array( 'config'=> &$fbConfig, 'userprofile'=> &$userprofile, 'msg_params'=>&$msg_params) ) ) );
+		}
+		return $instances[$userid];
 	}
 
 	/**

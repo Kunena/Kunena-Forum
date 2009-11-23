@@ -40,6 +40,8 @@ Kunena 1.5.8
 # [#18807] Administrator: User profile page is broken if user has been deleted
 # [#18787] Administrator cannot access forums
 # [#18801] Use CRoute class for JomSocial routing
+# [#18789] CommunityBuilder integration fails if CB menu item is for registered only
+# [#18809] CommunityBuilder integration optimizations
 
 19-Nov-2009 fxstein
 # [#18782] Missing Argument Warning on Post

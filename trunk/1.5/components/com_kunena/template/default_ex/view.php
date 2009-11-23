@@ -578,7 +578,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     }
                                     else if ($fbConfig->avatar_src == "cb")
                                     {
-                                    	$msg_avatar = '<span class="fb_avatar">'.$kunenaProfile->showAvatar($userinfo->userid).'</span>';
+                                    	$msg_avatar = '<span class="fb_avatar">'.$kunenaProfile->showAvatar($userinfo->userid, '', false).'</span>';
                                     }
                                     else if ($fbConfig->avatar_src == "aup")
                                     {

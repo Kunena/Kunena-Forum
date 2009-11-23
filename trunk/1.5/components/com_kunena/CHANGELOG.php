@@ -37,6 +37,7 @@ Kunena 1.5.8
 # [#18805] Fatal error during forum jump
 # [#18765] Hit count should be increased also if anonymous user is viewing topic
 # [#18768] User profile can be seen after user has been deleted from Joomla
+# [#18807] Administrator: User profile page is broken if user has been deleted
 
 19-Nov-2009 fxstein
 # [#18782] Missing Argument Warning on Post

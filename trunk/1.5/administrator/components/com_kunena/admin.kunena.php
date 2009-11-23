@@ -1064,7 +1064,7 @@ function showProfiles($kunena_db, $option, $lang, $order)
         $where[] = "(u.username LIKE '%$search%' OR u.email LIKE '%$search%' OR u.name LIKE '%$search%')";
     }
 
-    $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_users AS sbu" . "\n LEFT JOIN #__users AS u" . "\n ON sbu.userid=u.id" . (count($where) ? "\nWHERE " . implode(' AND ', $where) : ""));
+    $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u" . "\n ON sbu.userid=u.id" . (count($where) ? "\nWHERE " . implode(' AND ', $where) : ""));
     $kunena_db->query() or trigger_dberror('Unable to load user profiles w/o limits.');
     $total = $kunena_db->loadResult();
 
@@ -1074,15 +1074,15 @@ function showProfiles($kunena_db, $option, $lang, $order)
     if ($order == 1)
     {
         $kunena_db->setQuery(
-            "select * from #__fb_users AS sbu" . "\n LEFT JOIN #__users AS u" . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY sbu.moderator DESC", $limitstart, $limit);
+            "SELECT * FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u" . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY sbu.moderator DESC", $limitstart, $limit);
     }
     else if ($order == 2)
     {
-        $kunena_db->setQuery("SELECT * FROM #__fb_users AS sbu" . "\n LEFT JOIN #__users AS u " . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY u.name ASC ", $limitstart, $limit);
+        $kunena_db->setQuery("SELECT * FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u " . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY u.name ASC ", $limitstart, $limit);
     }
     else if ($order < 1)
     {
-        $kunena_db->setQuery("SELECT * FROM #__fb_users AS sbu " . "\n LEFT JOIN #__users AS u" . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY sbu.userid", $limitstart, $limit);
+        $kunena_db->setQuery("SELECT * FROM #__fb_users AS sbu " . "\n INNER JOIN #__users AS u" . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY sbu.userid", $limitstart, $limit);
     }
 
     $profileList = $kunena_db->loadObjectList();
@@ -1097,6 +1097,11 @@ function showProfiles($kunena_db, $option, $lang, $order)
 
 function editUserProfile($uid)
 {
+	if (empty($uid[0])) {
+		echo _KUNENA_PROFILE_NO_USER;
+		return;
+	}
+	
 	$kunena_db = &JFactory::getDBO();
 	$kunena_acl = &JFactory::getACL();
 

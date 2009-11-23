@@ -68,6 +68,8 @@ $view 			= JRequest::getVar('view', '');
 $msgpreview 	= JRequest::getVar('msgpreview', '');
 $no_html		= JRequest::getBool('no_html', 0);
 
+$app = JFactory::getApplication();
+
 // Redirect Forum Jump
 if (isset($_POST['func']) && $func == "showcat")
 {
@@ -76,8 +78,6 @@ if (isset($_POST['func']) && $func == "showcat")
 	header("Location: " . htmlspecialchars_decode(JRoute::_('index.php?option=com_kunena&amp;Itemid=' . $Itemid . '&amp;func=showcat&amp;catid=' . $catid)));
 	$app->close();
 }
-
-$app =& JFactory::getApplication();
 
 // Image does not work if there are included files (extra characters), so we will do it now:
 if ($func == "showcaptcha") {

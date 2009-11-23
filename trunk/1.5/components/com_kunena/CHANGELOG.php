@@ -32,6 +32,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.5.8
+
+23-Nov-2009 Matias
+# [#18805] Fatal error during forum jump
+
 19-Nov-2009 fxstein
 # [#18782] Missing Argument Warning on Post
 

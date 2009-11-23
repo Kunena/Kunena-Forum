@@ -68,7 +68,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
 								if ($pid) {
                                 	echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&id='.$pid), 3500);
 								} else {
-                                	echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_PROFILE_LINK_SUFFIX.$userid), 3500);
+                                	echo CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetProfileURL($userid), 3500);
                                 }
                             }
                             else if ($do == "decrease")
@@ -81,7 +81,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
 								if ($pid) {
                                 	echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&id='.$pid), 3500);
 								} else {
-                                	echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_PROFILE_LINK_SUFFIX.$userid), 3500);
+                                	echo CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetProfileURL($userid), 3500);
                                 }
                             }
                             else

@@ -22,9 +22,16 @@ class CKunenaLink
     //
     // Basic universal href link
     //
+    function GetHrefLink($link, $name, $title, $rel, $class ='', $anker='', $attr='')
+    {
+        return '<a '.($class ? 'class="'.$class.'" ' : '').'href="'.$link.($anker?('#'.$anker):'').'" title="'.$title.'"'.($rel ? ' rel="'.$rel.'"' : '').($attr ? ' '.$attr : '').'>'.$name.'</a>';
+    }
+
+    //
+    // Basic universal href link
+    //
     function GetSefHrefLink($link, $name, $title, $rel, $class ='', $anker='', $attr='')
     {
-    	// For Joomla 1.0.x SEF compatibility we must add the anker after the SEF translation or it gets stripped
         return '<a '.($class ? 'class="'.$class.'" ' : '').'href="'.JRoute::_($link).($anker?('#'.$anker):'').'" title="'.$title.'"'.($rel ? ' rel="'.$rel.'"' : '').($attr ? ' '.$attr : '').'>'.$name.'</a>';
     }
 
@@ -170,6 +177,16 @@ class CKunenaLink
 
     function GetProfileLink($fbConfig, $userid, $name, $rel='nofollow', $class='')
     {
+    	if ($userid > 0)
+    	{
+    		$link = CKunenaLink::GetProfileURL($userid);
+    		if (!empty($link)) return CKunenaLink::GetHrefLink($link, $name, '', $rel, $class);
+    	}
+   		return $name;
+    }
+
+    function GetProfileURL($userid)
+    {
     	$fbConfig =& CKunenaConfig::getInstance();
     	// Only create links for valid users
     	if ($userid > 0)
@@ -177,31 +194,29 @@ class CKunenaLink
     		if($fbConfig->fb_profile == 'cb')
     		{
     			$kunenaProfile =& CKunenaCBProfile::getInstance();
-    			if ($link = $kunenaProfile->getProfileURL($userid))
-    			{
-    				return CKunenaLink::GetSefHrefLink($link, $name, '', $rel, $class);
-    			}
-    			else
-    			{
-    				return $name;
-    			}
-    		} elseif ($fbConfig->fb_profile == 'aup') {
+    			return $kunenaProfile->getProfileURL($userid);
+    		}
+    		elseif ($fbConfig->fb_profile == 'jomsocial') 
+    		{
+   				return CRoute::_('index.php?option=com_community&view=profile&userid='.$userid);
+    		}
+    		elseif ($fbConfig->fb_profile == 'aup') 
+    		{
 				$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
 				if ( file_exists($api_AUP)) {
 					$useridAUP = AlphaUserPointsHelper::getAnyUserReferreID( $userid );
-					return CKunenaLink::GetSefHrefLink(KUNENA_PROFILE_LINK_SUFFIX.$useridAUP, $name, '', $rel, $class);
+					return JRoute::_(KUNENA_PROFILE_LINK_SUFFIX.$useridAUP);
 				}
-			} else {
-   				return CKunenaLink::GetSefHrefLink(KUNENA_PROFILE_LINK_SUFFIX.$userid, $name, '', $rel, $class);
+			}
+			else
+			{
+   				return JRoute::_(KUNENA_PROFILE_LINK_SUFFIX.$userid);
     		}
     	}
-    	else // supress links for guests
-    	{
-    		return $name;
-    	}
+   		return '';
     }
 
-	function GetUserlistURL($action='')
+    function GetUserlistURL($action='')
 	{
 		return JRoute::_(KUNENA_LIVEURLREL.'&amp;func=userlist'.$action);
 	}

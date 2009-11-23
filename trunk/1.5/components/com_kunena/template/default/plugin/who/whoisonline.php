@@ -88,7 +88,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
 
                   		 <?php if ( $user->showOnline > 0 ){ ?>
 
-                            <a class = "whois<?php echo $user->moderator;?>  <?php echo "fb_group_".$grp->id;?>" href = "<?php echo JRoute::_(KUNENA_PROFILE_LINK_SUFFIX.$user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
+                            <a class = "whois<?php echo $user->moderator;?>  <?php echo "fb_group_".$grp->id;?>" href = "<?php echo CKunenaLink::GetProfileURL($user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
 
                 		  <?php  } ?>
 
@@ -114,7 +114,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
 
                   		 <?php if ( $is_Moderator && $user->showOnline < 1 ){ ?>
 
-                            <a class = "whois<?php echo $user->moderator;?>  <?php echo "fb_group_".$grp->id;?>" href = "<?php echo JRoute::_(KUNENA_PROFILE_LINK_SUFFIX.$user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
+                            <a class = "whois<?php echo $user->moderator;?>  <?php echo "fb_group_".$grp->id;?>" href = "<?php echo CKunenaLink::GetProfileURL($user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
 
                 		  <?php   } ?>
 

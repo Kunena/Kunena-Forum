@@ -824,7 +824,8 @@ $row, & $params, 0));
 					check_dberror("Unable to load category list.");
 			if ($rows) {
 				foreach($rows as $row) {
-					if (($row->moderated and $row->ismod) or
+					if (($gid == 24 || $gid == 25) or
+						($row->moderated and $row->ismod) or
 						($row->pub_access == 0) or
 						($row->pub_access == -1 and $uid > 0) or
 						($row->pub_access > 0 and _has_rights($kunena_acl, $gid, $row->pub_access, $row->pub_recurse)) or

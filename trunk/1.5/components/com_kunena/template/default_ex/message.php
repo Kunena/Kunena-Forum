@@ -173,7 +173,7 @@ if ($fbConfig->fb_profile == 'cb')
 ?>
                     <span class = "view-username">
 <?php
-                        if ($fmessage->userid > 0)
+                        if ($userinfo->userid)
                         {
                         	echo CKunenaLink::GetProfileLink($fbConfig, $fmessage->userid, $msg_username);
                         }

@@ -63,7 +63,7 @@ function showprf($userid, $page)
 
     //Get userinfo needed later on, this limits the amount of queries
     unset($userinfo);
-    $kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_users AS a LEFT JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$userid}'");
+    $kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_users AS a INNER JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$userid}'");
 
     $userinfo = $kunena_db->loadObject();
     check_dberror('Unable to get user profile info.');

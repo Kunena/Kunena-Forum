@@ -123,7 +123,7 @@ $messages = array();
 $messages[0] = array();
 if (count($threadids) > 0)
 {
-$query = "SELECT a.*, t.message AS messagetext, l.myfavorite, l.favcount, l.attachmesid, l.msgcount, l.lastid, u.avatar, c.id AS catid, c.name AS catname
+$query = "SELECT a.*, j.id AS userid, t.message AS messagetext, l.myfavorite, l.favcount, l.attachmesid, l.msgcount, l.lastid, u.avatar, c.id AS catid, c.name AS catname
 	FROM (
 		SELECT m.thread, (f.userid='{$kunena_my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachmesid, 
 			COUNT(DISTINCT m.id) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime
@@ -135,7 +135,8 @@ $query = "SELECT a.*, t.message AS messagetext, l.myfavorite, l.favcount, l.atta
 	) AS l
 	INNER JOIN #__fb_messages AS a ON a.thread = l.thread
 	INNER JOIN #__fb_messages_text AS t ON a.thread = t.mesid
-	LEFT JOIN #__fb_users AS u ON u.userid = a.userid
+	LEFT JOIN #__users AS j ON j.id = a.userid
+	LEFT JOIN #__fb_users AS u ON u.userid = j.id
 	LEFT JOIN #__fb_categories AS c ON c.id = a.catid
 	WHERE (a.parent='0' OR a.id=l.lastid)
 	ORDER BY ordering DESC, lastid DESC";

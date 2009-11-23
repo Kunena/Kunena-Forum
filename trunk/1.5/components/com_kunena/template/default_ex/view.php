@@ -509,7 +509,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 static $uinfocache = array();
                                 if (!isset($uinfocache[$fmessage->userid]))
                                 {
-                                	$kunena_db->setQuery("SELECT  a.*, b.id, b.name, b.username, b.gid FROM #__fb_users AS a LEFT JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$fmessage->userid}'");
+                                	$kunena_db->setQuery("SELECT  a.*, b.id, b.name, b.username, b.gid FROM #__fb_users AS a INNER JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$fmessage->userid}'");
                                 	$userinfo = $kunena_db->loadObject();
                                 	if ($userinfo == NULL) {
                                 		$userinfo = new stdClass();

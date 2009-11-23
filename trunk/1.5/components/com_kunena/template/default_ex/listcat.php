@@ -197,7 +197,7 @@ if (count($categories[0]) > 0)
 
                     <?php
                     //    show forums within the categories
-                    $kunena_db->setQuery("SELECT c.*, m.id AS mesid, m.subject, mm.catid, m.name AS mname, m.userid, u.username, u.name AS uname FROM #__fb_categories AS c
+                    $kunena_db->setQuery("SELECT c.*, m.id AS mesid, m.subject, mm.catid, m.name AS mname, u.id AS userid, u.username, u.name AS uname FROM #__fb_categories AS c
                     LEFT JOIN #__fb_messages AS m ON c.id_last_msg=m.id
                     LEFT JOIN #__users AS u ON u.id=m.userid
                     LEFT JOIN #__fb_messages AS mm ON mm.id=c.id_last_msg

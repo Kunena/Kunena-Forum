@@ -266,10 +266,11 @@ switch ($task)
         break;
 
     case 'recount':
+    	CKunenaTools::reCountUserPosts();
         CKunenaTools::reCountBoards();
         // Also reset the name info stored with messages
-        CKunenaTools::updateNameInfo();
-        $app->redirect( JURI::base() .'index2.php?option=com_kunena', _KUNENA_RECOUNTFORUMS_DONE);
+        //CKunenaTools::updateNameInfo();
+        $app->redirect( JURI::base() .'index.php?option=com_kunena', _KUNENA_RECOUNTFORUMS_DONE);
         break;
 
 	case "showsmilies":

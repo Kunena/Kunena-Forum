@@ -33,6 +33,11 @@ Legend:
 
 Kunena 1.5.8
 
+24-Nov-2009 Matias
+# [#18764] Forum Statistics (General Stats) counts unpublished sections
+# [#18828] Categories show 0 posts even if there are some
+# [#18829] Administrator: Recount Category Stats should not change usernames from the posts
+
 23-Nov-2009 Matias
 # [#18805] Fatal error during forum jump
 # [#18765] Hit count should be increased also if anonymous user is viewing topic

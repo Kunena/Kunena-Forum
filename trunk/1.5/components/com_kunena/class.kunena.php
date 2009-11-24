@@ -400,56 +400,91 @@ class CKunenaTools {
         return $kunena_db->loadResult();
         }
 
-    function reCountBoards() {
+    function reCountUserPosts() {
+    	$kunena_db = &JFactory::getDBO();
+    	
+        // Reset category counts as next query ignores users which have written no messages
+        $kunena_db->setQuery("UPDATE #__fb_users SET posts=0");
+        $kunena_db->query();
+          	check_dberror("Unable to reset category post counts.");       
+    	
+          	// Update user post count (ignore unpublished categories and hidden messages)
+    	$kunena_db->setQuery("INSERT INTO #__fb_users (userid, posts)"
+    		." SELECT m.userid, COUNT(m.userid) "
+    		." FROM #__fb_messages AS m"
+    		." INNER JOIN #__fb_users AS u ON u.userid = m.userid"
+    		." WHERE m.hold=0 and m.catid IN (SELECT id FROM #__fb_categories WHERE published=1)" 
+    		." GROUP BY m.userid"
+    		." ON DUPLICATE KEY UPDATE posts=VALUES(posts)");
+    	$kunena_db->query();
+        check_dberror("Unable to update user posts.");
+    }
+    
+    function reCountBoardsRecursion(&$array, $current)
+    {
+    	foreach ($array[$current]->children as $child)
+    	{
+    		if (!$array[$child]->published) continue;
+    		if (!empty($array[$child]->children)) CKunenaTools::reCountBoardsRecursion($array, $child);
+    		$array[$current]->numTopics += $array[$child]->numTopics;
+    		$array[$current]->numPosts += $array[$child]->numPosts;
+    		if (isset($array[$current]->id) && $array[$child]->id_last_msg > $array[$current]->id_last_msg) 
+    		{
+    			$array[$current]->id_last_msg = $array[$child]->id_last_msg;
+    			$array[$current]->time_last_msg = $array[$child]->time_last_msg;
+    		}
+    	}
+    	if (isset($array[$current]->id)) echo "C",$current,': ', $array[$current]->numTopics, '-', $array[$current]->numPosts;
+    }
+    
+    function reCountBoards() 
+    {
         $kunena_db = &JFactory::getDBO();
         include_once (KUNENA_PATH_LIB .DS. 'kunena.db.iterator.class.php');
 
-        //reset all stats to 0
-        $kunena_db->setQuery("UPDATE `#__fb_categories` SET `id_last_msg`='0',`time_last_msg`='0',`numTopics`='0',`numPosts`='0'");
+        // Reset category counts as next query ignores empty categories
+        $kunena_db->setQuery("UPDATE #__fb_categories SET numTopics=0, numPosts=0");
         $kunena_db->query();
-        	check_dberror("Unable to update categories.");
+          	check_dberror("Unable to reset category post counts.");       
+        
+        // Update category post count
+        $kunena_db->setQuery("INSERT INTO #__fb_categories (id, numTopics, numPosts, id_last_msg, time_last_msg)" 
+        	." SELECT c.id, SUM( m.parent=0 ), SUM( m.parent>0 ), MAX( m.id ), MAX( m.time )" 
+        	." FROM #__fb_messages as m"
+        	." INNER JOIN #__fb_categories AS c ON c.id=m.catid" 
+        	." WHERE m.catid>0 AND m.hold=0" 
+        	." GROUP BY catid "
+        	." ON DUPLICATE KEY UPDATE numTopics=VALUES(numTopics), numPosts=VALUES(numPosts), id_last_msg=VALUES(id_last_msg), time_last_msg=VALUES(time_last_msg)");
+    	$kunena_db->query();
+    		check_dberror("Unable to update categories post count.");
 
-        $kunena_db->setQuery("SELECT id, time, parent, catid FROM #__fb_messages WHERE hold='0' AND moved='0' ORDER BY id ASC");
-        $messages_iter = new fb_DB_Iterator($kunena_db);
-        	check_dberror("Unable to load messages.");
+    	// Load categories to be counted
+        $kunena_db->setQuery("SELECT id, parent, published, numTopics, numPosts, id_last_msg, time_last_msg FROM #__fb_categories");
+        $cats = $kunena_db->loadObjectList('id');
+        	check_dberror("Unable to load categories.");
 
-        $kunena_db->setQuery("SELECT id, parent, numTopics, numPosts,id_last_msg, time_last_msg FROM #__fb_categories ORDER BY id ASC");
-        $cats = $kunena_db->loadObjectList();
-        	check_dberror("Unable to load messages.");
-
-        foreach ($cats as $c) {
-            $ctg[$c->id] = $c;
-            }
-
-        $i=0;
-        while ($messages_iter->loadNextObject($l)) {
-        	$i++;
-            $cat_l = $l->catid;
-
-            while ($cat_l) {
-                if ($l->parent == 0) {
-                    $ctg[$cat_l]->numTopics++;
-                    }
-                else {
-                    $ctg[$cat_l]->numPosts++;
-                    }
-
-                $ctg[$cat_l]->id_last_msg = $l->id;
-                $ctg[$cat_l]->time_last_msg = $l->time;
-                $cat_l = $ctg[$cat_l]->parent;
-                }
-            }
+        foreach ($cats as $c)
+        {
+            if (isset($cats[$c->parent])) $cats[$c->parent]->children[] = $c->id;
+            else $cats[0]->children[] = $c->id;
+        }
+        
+        CKunenaTools::reCountBoardsRecursion($cats, 0);
 
         // now back to db
-        foreach ($ctg as $cc) {
-            $kunena_db->setQuery(
-                "UPDATE `#__fb_categories` SET `time_last_msg`='" . $cc->time_last_msg . "',`id_last_msg`='" . $cc->id_last_msg . "',`numTopics`='" . $cc->numTopics . "',`numPosts`='" . $cc->numPosts . "' WHERE (`id`='" . $cc->id . "') ");
+        foreach ($cats as $c) 
+        {
+        	if (!isset($c->id)) continue;
+            $kunena_db->setQuery("UPDATE #__fb_categories SET"
+            	."  numTopics=" . intval($c->numTopics) 
+            	.", numPosts=" . intval($c->numPosts)
+            	.", id_last_msg=" . intval($c->id_last_msg)
+            	.", time_last_msg=" . intval($c->time_last_msg) 
+            	." WHERE id=" . intval($c->id));
             $kunena_db->query();
-            echo $kunena_db->getErrorMsg();
-            }
-        $messages_iter->Free();
-
+            	check_dberror("Unable to update categories.");
         }
+    }
 
     function updateNameInfo()
     {

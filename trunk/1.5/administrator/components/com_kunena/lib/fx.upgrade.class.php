@@ -183,9 +183,9 @@ class fx_Upgrade {
 
 			if($createVersionTable) {
 				//version table does not exist - this is a pre 1.0.5 install - lets create
-				$fbupgrade->createVersionTable();
+				$this->createVersionTable();
 				// insert dummy version entry to force upgrade
-				$fbupgrade->insertDummyVersion();
+				$this->insertDummyVersion();
 				$createVersionTable = 0;
 			}
 		}

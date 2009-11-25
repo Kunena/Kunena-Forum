@@ -34,7 +34,7 @@ defined('_JEXEC') or die;
 		</tr>
 		<tr>
 			<td width="40%" class="key">
-				<label for="config_avatar_src" class="hasTip" title="Forum Offline::...">Forum Offline</label>
+				<label for="config_board_offline" class="hasTip" title="Forum Offline::...">Forum Offline</label>
 			</td>
 			<td>
 				<select name="config[board_offline]" id="config_board_offline">

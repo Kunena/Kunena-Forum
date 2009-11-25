@@ -34,6 +34,7 @@ Legend:
 Kunena 1.5.8
 
 25-Nov-2009 Matias
+^ [#18763] Update version info to 1.5.8-DEV
 ^ [#18833] Administrator: Split Synchronize Users to different tasks, add "Update user names in messages"
 
 24-Nov-2009 Matias

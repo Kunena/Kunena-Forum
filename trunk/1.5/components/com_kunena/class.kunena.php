@@ -499,6 +499,7 @@ class CKunenaTools {
         $kunena_db->setQuery($query);
         $kunena_db->query();
         	check_dberror ("Unable to update user name information");
+        return $kunena_db->getAffectedRows();
     }
 
     function modifyCategoryStats($msg_id, $msg_parent, $msg_time, $msg_cat) {

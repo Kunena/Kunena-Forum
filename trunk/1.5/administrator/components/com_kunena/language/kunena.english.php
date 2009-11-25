@@ -22,6 +22,22 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
+// 1.5.8
+
+define('_KUNENA_SYNC_USERS_OPTIONS', 'Options');
+define('_KUNENA_SYNC_USERS_CACHE', 'Clean user cache');
+define('_KUNENA_SYNC_USERS_CACHE_DESC', 'This function allows user to see hidden forums right away, if you change user group in Joomla (Registered, Author etc).');
+define('_KUNENA_SYNC_USERS_ADD', 'Add user profiles to everyone');
+define('_KUNENA_SYNC_USERS_ADD_DESC', 'Kunena adds new user profiles only if user enters to the forum. This function makes default profiles to all existing users.');
+define('_KUNENA_SYNC_USERS_DEL', 'Remove user profiles from deleted users');
+define('_KUNENA_SYNC_USERS_DEL_DESC', 'Kunena does not remove user profiles from deleted users, it just hides them. This option allows you to remove all deleted profiles.');
+define('_KUNENA_SYNC_USERS_RENAME', 'Update user names in messages');
+define('_KUNENA_SYNC_USERS_RENAME_DESC', 'This option will reset all author names in posts to username or real name depending on your Kunena configuration.');
+define('_KUNENA_SYNC_USERS_DO_CACHE', 'User cache cleaned');
+define('_KUNENA_SYNC_USERS_DO_ADD', 'User profiles added:');
+define('_KUNENA_SYNC_USERS_DO_DEL', 'User profiles removed:');
+define('_KUNENA_SYNC_USERS_DO_RENAME', 'Messages updated:');
+
 // 1.5.7
 
 define('_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG1', 'created a new topic');

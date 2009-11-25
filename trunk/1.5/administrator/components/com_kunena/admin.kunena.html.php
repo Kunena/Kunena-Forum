@@ -120,15 +120,15 @@ color:#666;
     <td width="170" valign="top">
     <!-- Begin: AdminLeft -->
         <div id="fbheader">
-        <a href = "index2.php?option=com_kunena"><img src = "components/com_kunena/images/kunena.logo.png"  border="0" alt = "<?php echo _COM_C_BACK; ?>"/></a>
+        <a href = "index.php?option=com_kunena"><img src = "components/com_kunena/images/kunena.logo.png"  border="0" alt = "<?php echo _COM_C_BACK; ?>"/></a>
         </div>
         <!-- Begin : Kunena Left Menu -->
         <div id="fbmenu">
 
         <?php $stask=JRequest::getVar('task', null);?>
-        <a class="fbmainmenu" href = "index2.php?option=com_kunena"><?php echo _KUNENA_CP; ?></a>
+        <a class="fbmainmenu" href = "index.php?option=com_kunena"><?php echo _KUNENA_CP; ?></a>
 
-           <a class="fbmainmenu" href = "index2.php?option=com_kunena&task=showconfig"><?php echo _COM_C_FBCONFIG; ?></a>
+           <a class="fbmainmenu" href = "index.php?option=com_kunena&task=showconfig"><?php echo _COM_C_FBCONFIG; ?></a>
            <?php if ( $stask == 'showconfig' ) { ; ?>
            		<a class="fbsubmenu" href = "#basics"><?php echo _COM_A_BASICS; ?></a>
                 <a class="fbsubmenu" href = "#frontend"><?php echo _COM_A_FRONTEND; ?></a>
@@ -140,16 +140,16 @@ color:#666;
                 <a class="fbsubmenu" href = "#integration"><?php echo _COM_A_INTEGRATION; ?></a>
                 <a class="fbsubmenu" href = "#plugins"><?php echo _KUNENA_ADMIN_CONFIG_PLUGINS; ?></a>
             <?php } ?>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=showAdministration"><?php echo _COM_C_FORUM; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=showprofiles"><?php echo _COM_C_USER; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=showsmilies"><?php echo _KUNENA_EMOTICONS_EDIT_SMILIES;?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=ranks"><?php echo _KUNENA_RANKS_MANAGE; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=browseFiles"><?php echo _COM_C_FILES; ?> </a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=browseImages"><?php echo _COM_C_IMAGES; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=showCss"><?php echo _COM_C_CSS; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=pruneforum"><?php echo _COM_C_PRUNETAB; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=syncusers"><?php echo _KUNENA_SYNC_USERS; ?></a>
-           <a class="fbmainmenu"  href = "index2.php?option=com_kunena&task=recount"><?php echo _KUNENA_RECOUNTFORUMS; ?></a>
+           <a class="fbmainmenu"  href = "index.php?option=com_kunena&task=showAdministration"><?php echo _COM_C_FORUM; ?></a>
+           <a class="fbmainmenu"  href = "index.php?option=com_kunena&task=showprofiles"><?php echo _COM_C_USER; ?></a>
+           <a class="fbmainmenu"  href = "index.php?option=com_kunena&task=showsmilies"><?php echo _KUNENA_EMOTICONS_EDIT_SMILIES;?></a>
+           <a class="fbmainmenu"  href = "index.php?option=com_kunena&task=ranks"><?php echo _KUNENA_RANKS_MANAGE; ?></a>
+           <a class="fbmainmenu"  href = "index.php?option=com_kunena&task=browseFiles"><?php echo _COM_C_FILES; ?> </a>
+           <a class="fbmainmenu"  href = "index.php?option=com_kunena&task=browseImages"><?php echo _COM_C_IMAGES; ?></a>
+           <a class="fbmainmenu"  href = "index.php?option=com_kunena&task=showCss"><?php echo _COM_C_CSS; ?></a>
+           <a class="fbmainmenu"  href = "index.php?option=com_kunena&task=pruneforum"><?php echo _COM_C_PRUNETAB; ?></a>
+           <a class="fbmainmenu"  href = "index.php?option=com_kunena&task=syncusers"><?php echo _KUNENA_SYNC_USERS; ?></a>
+           <a class="fbmainmenu"  href = "index.php?option=com_kunena&task=recount"><?php echo _KUNENA_RECOUNTFORUMS; ?></a>
            <a class="fbmainmenu"  href = "http://www.Kunena.com" target = "_blank" ><?php echo _COM_C_SUPPORT; ?></a>
 
         </div>
@@ -210,7 +210,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
     {
         ?>
 <div class="fbfunctitle"><?php echo _KUNENA_ADMIN; ?></div>
-        <form action = "index2.php" method = "post" name = "adminForm">
+        <form action = "index.php" method = "post" name = "adminForm">
             <table  cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
                 <tr>
                     <td  align="right">
@@ -443,7 +443,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 
         <div class="fbfunctitle"><?php echo $row->id ? _KUNENA_EDIT : _KUNENA_ADD; ?> <?php echo _KUNENA_CATFOR; ?></div>
 
-        <form action = "index2.php" method = "POST" name = "adminForm">
+        <form action = "index.php" method = "POST" name = "adminForm">
            <div class="fbfuncsubtitle"><?php echo _KUNENA_BASICSFORUM; ?></div>
            <fieldset>
            <legend> <?php echo _KUNENA_BASICSFORUMINFO; ?></legend>
@@ -707,7 +707,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
         ?>
 <div id="fbcongifcover">
 <div class="fbfunctitle"><?php echo _COM_A_CONFIG ?></div>
-        <form action = "index2.php" method = "post" name = "adminForm">
+        <form action = "index.php" method = "post" name = "adminForm">
 		<div class="fbfuncsubtitle"><?php echo _COM_A_BASICS ?><a name="basics" id="basics" > </a></div>
 
         <fieldset>
@@ -2460,7 +2460,7 @@ echo $pane->endPane();
         $content = kunena_htmlspecialchars($content);
 ?>
 <div class="fbfunctitle"><?php echo _KUNENA_CSSEDITOR; ?></div>
-    <form action = "index2.php?" method = "post" name = "adminForm" class = "adminForm" id = "adminForm">
+    <form action = "index.php?" method = "post" name = "adminForm" class = "adminForm" id = "adminForm">
 
 
         <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "adminform">
@@ -2494,7 +2494,7 @@ echo $pane->endPane();
     {
 ?>
 <div class="fbfunctitle"><?php echo _KUNENA_FUM; ?></div>
-        <form action = "index2.php" method = "POST" name = "adminForm">
+        <form action = "index.php" method = "POST" name = "adminForm">
             <table  cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
                 <tr>
 
@@ -2519,8 +2519,8 @@ echo $pane->endPane();
 
 
                     <td colspan = "4" nowrap>
-                        :: <a href = "index2.php?option=com_kunena&task=profiles&order=0"><?php
-    echo _KUNENA_SORTID; ?></a> :: <a href = "index2.php?option=com_kunena&task=profiles&order=1"><?php echo _KUNENA_SORTMOD; ?></a> :: <a href = "index2.php?option=com_kunena&task=profiles&order=2"><?php echo _KUNENA_SORTNAME; ?></a>
+                        :: <a href = "index.php?option=com_kunena&task=profiles&order=0"><?php
+    echo _KUNENA_SORTID; ?></a> :: <a href = "index.php?option=com_kunena&task=profiles&order=1"><?php echo _KUNENA_SORTMOD; ?></a> :: <a href = "index.php?option=com_kunena&task=profiles&order=2"><?php echo _KUNENA_SORTNAME; ?></a>
                     </td>
                 </tr>
             </table>
@@ -2636,7 +2636,7 @@ echo $pane->endPane();
     {
 ?>
 
-        <form action = "index2.php" method = "post" name = "adminForm">
+        <form action = "index.php" method = "post" name = "adminForm">
             <table cellpadding = "4" class = "adminheading" cellspacing = "0" border = "0" width = "100%">
                 <tr>
                     <th width = "100%" class = "user"><?php echo _KUNENA_ADDMOD; ?> <?php echo $forumName; ?>
@@ -2707,7 +2707,7 @@ echo $pane->endPane();
                                 </td>
 
                                 <td width = "20">
-                                    <a href = "index2.php?option=com_kunena&task=userprofile&do=show&user_id=<?php echo $pl->id;?>"><?php echo $pl->id; ?>&nbsp;
+                                    <a href = "index.php?option=com_kunena&task=userprofile&do=show&user_id=<?php echo $pl->id;?>"><?php echo $pl->id; ?>&nbsp;
                                 </td>
 
                                 <td>
@@ -2793,7 +2793,7 @@ echo $pane->endPane();
 //        include_once ('components/com_kunena/bb_adm.js');
 ?>
 
-        <form action = "index2.php?option=<?php echo $option;?>" method = "POST" name = "adminForm">
+        <form action = "index.php?option=<?php echo $option;?>" method = "POST" name = "adminForm">
             <table border = 0 cellspacing = 0 width = "100%" align = "center" class = "adminheading">
                 <tr>
                     <th colspan = "3" class = "user">
@@ -3055,7 +3055,7 @@ else
     function pruneforum($option, $forumList) {
             ?>
 <div class="fbfunctitle"><?php echo _COM_A_PRUNE; ?></div>
-    <form action = "index2.php" method = "post" name = "adminForm">
+    <form action = "index.php" method = "post" name = "adminForm">
 
 
         <table class = "adminform" cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
@@ -3101,28 +3101,44 @@ else
     //**************************
     function syncusers($option) {
 ?>
+<div id="fbcongifcover">
 <div class="fbfunctitle"><?php echo _KUNENA_SYNC_USERS; ?></div>
-    <form action = "index2.php" method = "post" name = "adminForm">
+    <form action = "index.php" method = "post" name = "adminForm">
 
+		<fieldset>
+		<legend><?php echo _KUNENA_SYNC_USERS_OPTIONS; ?></legend>
+        <table cellpadding = "4" class = "fbadminform" cellspacing = "0" border = "0" width = "100%">
+             <tr>
+                <td><?php echo _KUNENA_SYNC_USERS_CACHE; ?></td>
+                <td><input type="checkbox" name="usercache" value="1" checked="checked" /></td>
+                <td><?php echo _KUNENA_SYNC_USERS_CACHE_DESC; ?></td>
+            </tr>
 
-        <table cellpadding = "4" class = "adminform" cellspacing = "0" border = "0" width = "100%">
-            <tr>
-                <th width = "100%" colspan = "2">&nbsp;
-
-                </th>
+             <tr>
+                <td><?php echo _KUNENA_SYNC_USERS_ADD; ?></td>
+                <td><input type="checkbox" name="useradd" value="1" /></td>
+                <td><?php echo _KUNENA_SYNC_USERS_ADD_DESC; ?></td>
             </tr>
 
             <tr>
-                <td colspan = "2"><?php echo _KUNENA_SYNC_USERS_DESC ?>
-                </td>
+                <td><?php echo _KUNENA_SYNC_USERS_DEL; ?></td>
+                <td><input type="checkbox" name="userdel" value="1" /></td>
+                <td><?php echo _KUNENA_SYNC_USERS_DEL_DESC; ?></td>
+            </tr>
+
+            <tr>
+                <td><?php echo _KUNENA_SYNC_USERS_RENAME; ?></td>           
+                <td><input type="checkbox" name="userrename" value="1" /></td>
+                <td><?php echo _KUNENA_SYNC_USERS_RENAME_DESC; ?></td>
             </tr>
         </table>
+        </fieldset>
 
         <input type = "hidden" name = "task" value = ""/>
 
         <input type = "hidden" name = "option" value = "<?php echo $option; ?>"/>
     </form>
-
+</div>
 <?php
     }
 
@@ -3181,9 +3197,9 @@ else
                 echo '<strong>' . _COM_A_IMGB_SIZE . ': </strong> ' . filesize($uploaded_path .DS . $uploaded[$i]) . ' bytes<br />';
                 $type ? list($width, $height) = @getimagesize($uploaded_path .DS . $uploaded[$i]) : '';
                 echo $type ? '<strong>' . _COM_A_IMGB_DIMS . ': </strong> ' . $width . 'x' . $height . '<br />' : '';
-                echo $type ? '<a href="index2.php?option=' . $option . '&task=replaceImage&OxP=1&img=' . $uploaded[$i] . '">' . _COM_A_IMGB_REPLACE . '</a><br />' : '';
-                echo $type ? '<a href="javascript:decision(\'' . _COM_A_IMGB_CONFIRM . '\',\'index2.php?option=' . $option . '&task=replaceImage&OxP=2&img=' . $uploaded[$i] . '\')">'
-                         . _COM_A_IMGB_REMOVE . '</a><br />' : '<a href="javascript:decision(\'' . _COM_A_IMGB_CONFIRM . '\',\'index2.php?option=' . $option . '&task=deleteFile&fileName=' . $uploaded[$i] . '\')">' . _COM_A_IMGB_REMOVE . '</a><br />';
+                echo $type ? '<a href="index.php?option=' . $option . '&task=replaceImage&OxP=1&img=' . $uploaded[$i] . '">' . _COM_A_IMGB_REPLACE . '</a><br />' : '';
+                echo $type ? '<a href="javascript:decision(\'' . _COM_A_IMGB_CONFIRM . '\',\'index.php?option=' . $option . '&task=replaceImage&OxP=2&img=' . $uploaded[$i] . '\')">'
+                         . _COM_A_IMGB_REMOVE . '</a><br />' : '<a href="javascript:decision(\'' . _COM_A_IMGB_CONFIRM . '\',\'index.php?option=' . $option . '&task=deleteFile&fileName=' . $uploaded[$i] . '\')">' . _COM_A_IMGB_REMOVE . '</a><br />';
 
                 if ($mesid != '') {
                     echo '<a href="../index.php?option=' . $option . '&func=view&catid=' . $catid . '&id=' . $mesid . '#' . $mesid . '" target="_blank">' . _COM_A_IMGB_VIEW . '</a>';
@@ -3223,7 +3239,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
         {
 ?>
 <div class="fbfunctitle"><?php echo _KUNENA_EMOTICONS; ?></div>
-        <form action = "index2.php" method = "POST" name = "adminForm">
+        <form action = "index.php" method = "POST" name = "adminForm">
             <table class = "adminheading" cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
                 <tr>
 
@@ -3326,7 +3342,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
 		//-->
 		</script>
         <div class="fbfunctitle"><?php echo _KUNENA_EMOTICONS_EDIT_SMILEY; ?></div>
-        <form action = "index2.php" method = "POST" name = "adminForm">
+        <form action = "index.php" method = "POST" name = "adminForm">
             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "adminform">
 
 				<tr align="center">
@@ -3370,7 +3386,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
 		//-->
 		</script>
          <div class="fbfunctitle"><?php echo _KUNENA_EMOTICONS_NEW_SMILEY; ?></div>
-        <form action = "index2.php" method = "POST" name = "adminForm">
+        <form action = "index.php" method = "POST" name = "adminForm">
             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "adminform">
 
 				<tr align="center">
@@ -3403,7 +3419,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
    $kunena_db = &JFactory::getDBO();
    ?>
   <div class="fbfunctitle"><?php echo _KUNENA_RANKS_MANAGE; ?></div>
-  <form action="index2.php" method="POST" name="adminForm">
+  <form action="index.php" method="POST" name="adminForm">
   <table class="adminheading" cellpadding="4" cellspacing="0" border="0" width="100%">
     <tr>
       <td nowrap="nowrap" align="right"><?php echo _COM_A_DISPLAY;?></td>
@@ -3465,7 +3481,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
 		//-->
 		</script>
         <div class="fbfunctitle"><?php echo _KUNENA_NEW_RANK; ?></div>
-  <form action="index2.php" method="POST" name="adminForm">
+  <form action="index.php" method="POST" name="adminForm">
   <table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
 
 			<tr align="center">
@@ -3504,7 +3520,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
 		//-->
 		</script>
           <div class="fbfunctitle"><?php echo _KUNENA_RANKS_EDIT; ?></div>
-  <form action = "index2.php" method = "POST" name = "adminForm">
+  <form action = "index.php" method = "POST" name = "adminForm">
   <table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
 
 			<tr align="center">

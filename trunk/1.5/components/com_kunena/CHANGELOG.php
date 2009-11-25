@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.8
 
+25-Nov-2009 Matias
+^ [#18833] Administrator: Split Synchronize Users to different tasks, add "Update user names in messages"
+
 24-Nov-2009 Matias
 # [#18764] Forum Statistics (General Stats) counts unpublished sections
 # [#18828] Categories show 0 posts even if there are some

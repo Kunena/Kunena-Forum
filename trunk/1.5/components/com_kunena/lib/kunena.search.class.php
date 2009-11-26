@@ -149,7 +149,7 @@ class CKunenaSearch
         for ($x = 0; $x < count($arr_searchwords); $x++)
         {
             $searchword = $arr_searchwords[$x];
-            $searchword = $kunena_db->getEscaped(addslashes(trim(strtolower($searchword))));
+            $searchword = $kunena_db->getEscaped(addslashes(trim($searchword)));
             if (empty($searchword)) continue;
             $matches = array ();
             $not = '';

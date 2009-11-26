@@ -35,6 +35,7 @@ Kunena 1.5.8
 
 26-Nov-2009 Matias
 # [#18844] Messages view: no more empty last pages if messages get deteted
+# [#18845] Search does not work with Greek (and some other) characters
 
 25-Nov-2009 Matias
 ^ [#18763] Update version info to 1.5.8-DEV

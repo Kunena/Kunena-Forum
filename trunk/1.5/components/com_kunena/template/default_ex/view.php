@@ -167,6 +167,8 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         $limit = JRequest::getInt('limit', 0);
         if ($limit < 1) $limit = $fbConfig->messages_per_page;
 		$limitstart = JRequest::getInt('limitstart', 0);
+		if ($limitstart < 0) $limitstart = 0;
+		if ($limitstart > $total) $limitstart = intval($total/$limit)*$limit;
         $ordering = ($fbConfig->default_sort == 'desc' ? 'desc' : 'asc'); // Just to make sure only valid options make it
 		$maxpages = 9 - 2; // odd number here (show - 2)
 		$totalpages = ceil($total / $limit);

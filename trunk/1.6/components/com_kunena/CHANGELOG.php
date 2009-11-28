@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+28-Nov-2009 fxstein
+# [#18874] Minor fixes to klink html helper class
+
 28-Nov-2009 Matias
 - [#18869] Remove all legacy code - except libraries needed by old installer
 

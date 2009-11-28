@@ -45,7 +45,7 @@ abstract class JHtmlKLink
 		switch ($linktype)
 		{
 			case 'url':
-				// JRoute::_($url, false) to supress encoding of & - only for palin text url
+				// JRoute::_($url, false) to supress encoding of & - only for plain text url
 				$link = JRoute::_($url,false).($anker?('#'.$anker):'');
 				break;
 			case 'atag':
@@ -74,7 +74,7 @@ abstract class JHtmlKLink
 
     public function teamCredits($linktype, $name='')
     {
-        return self::link('atag', KURL_SITE.'&view=credits', $name, NULL, 'follow');
+        return self::link($linktype, KURL_SITE.'&view=credits', $name, NULL, 'follow');
     }
 
     public function kunena($linktype, $name)

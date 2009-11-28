@@ -24,6 +24,10 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.0.11 and 1.5.4
 DEFINE('_KUNENA_MOVED', 'Moved');
+DEFINE('_KUNENA_REMOVE', 'Delete');
+DEFINE('_KUNENA_CSS', 'CSS');
+
+ 
 DEFINE('_KUNENA_BOARD_TITLE', 'Board Title');
 
 // 1.0.11 and 1.5.3

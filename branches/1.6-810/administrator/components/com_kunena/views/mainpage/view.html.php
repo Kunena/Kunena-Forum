@@ -40,7 +40,7 @@ class KunenaViewMainpage extends JView
 	
 	protected function _displayMainToolbar()
 	{
-		JToolBarHelper::title(': '.JText::_('Mainpage'), 'generic');
+		JToolBarHelper::title(': '.JText::_('Mainpage'));
 		JToolBarHelper::divider();
 	}
 	

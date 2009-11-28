@@ -128,7 +128,7 @@
 			<exclude name="*.xml" />
 			<exclude name="*install*" />
 
-			<exclude name="kunena.cpanel.php" />
+			<exclude name="base.php" />
 			<exclude name="legacy.*" />
 			<exclude name="toolbar.*" />
 			<exclude name="images/" />
@@ -155,7 +155,7 @@
 
 		<!-- Legacy File Sets for Copy -->
 		<fileset id="legacy.admin" dir="${kunena.backend}">
-			<include name="kunena.cpanel.php" />
+			<include name="base.php" />
 			<include name="legacy.*" />
 			<include name="toolbar.*" />
 			<include name="images/**" />

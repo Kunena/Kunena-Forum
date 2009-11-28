@@ -111,8 +111,7 @@ $pt_stop = "0";
 if (!$no_html)
 {
 	 	
-		
-		JToolBarHelper::title(': '.JText::_('Control'), 'cpanel');
+		JToolBarHelper::title('&nbsp;'.JText::_(''));
 		JToolBarHelper::divider();
 
 }
@@ -367,6 +366,7 @@ html_Kunena::showFbFooter();
 
 function showAdministration($option)
 {
+	JToolBarHelper::title(': '.JText::_('Forum Administration'));
     $app =& JFactory::getApplication();
 	$kunena_db = &JFactory::getDBO();
 
@@ -435,6 +435,7 @@ function showAdministration($option)
 //---------------------------------------
 function editForum($uid, $option)
 {
+	JToolBarHelper::title(': '.JText::_('Edit Forum'));
     $kunena_db = &JFactory::getDBO();
     $kunena_acl = &JFactory::getACL();
 	$kunena_my = &JFactory::getUser();
@@ -731,7 +732,7 @@ function showConfig($option)
             {
                 if (is_dir(KUNENA_PATH_TEMPLATE .DS. $file))
                 {
-                    if (!($file[0] == '.') && is_file(KUNENA_PATH_TEMPLATE .DS. $file .DS. 'kunena.forum.css')) {
+                    if (!($file[0] == '.') && is_file(JPATH_COMPONENT_ADMINISTRATOR .DS. 'media' .DS. 'css'. DS. 'administrator.css')) {
                         $templatelist[] = $file;
                     }
                     if (!($file[0] == '.') && is_dir(KUNENA_PATH_TEMPLATE .DS. $file .DS. 'images' .DS. 'english')) {
@@ -1047,6 +1048,8 @@ function addModerator($option, $id, $cid = null, $publish = 1)
 //===============================
 function showProfiles($kunena_db, $option, $lang, $order)
 {
+	JToolBarHelper::title(': '.JText::_('User Administration'));
+		JToolBarHelper::divider();
     $app =& JFactory::getApplication();
     $kunena_db = &JFactory::getDBO();
     //$limit = intval(JRequest::getVar( 'limit', 10));
@@ -1685,6 +1688,7 @@ function dircopy($srcdir, $dstdir, $verbose = false) {
 //===============================
 function showsmilies($option)
 {
+	JToolBarHelper::title(': '.JText::_('Smilies'));
 $kunena_db = &JFactory::getDBO();
     $app =& JFactory::getApplication();
 
@@ -1871,7 +1875,7 @@ function collect_smilies()
 function showRanks($option)
 {
     global $order;
-
+JToolBarHelper::title(': '.JText::_('Ranks'));
     $app =& JFactory::getApplication();
     $kunena_db = &JFactory::getDBO();
 

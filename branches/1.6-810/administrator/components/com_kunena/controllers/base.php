@@ -30,7 +30,6 @@ function showKunenaHeader () {
 
 ?>
 <style>
-.icon-32-logo       { background-image: url(../../../administrator/component/com_kunena/images/logo.png)!important; }
 #kunenaadmin {
 text-align:left;
 }
@@ -66,6 +65,7 @@ border:1px solid #ccc;
 background:#fff;
 padding:5px;
 }
+
 .kunenafooter {
 font-size:10px;
 text-align: right;
@@ -151,7 +151,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
     function showAdministration($rows, $children, $pageNav, $option)
     {
         ?>
-        <form action = "index2.php" method = "post" name = "adminForm">
+        <form action = "index.php?option=com_kunena&task=editadministration" method = "post" name = "adminForm">
             <table  cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
                 <tr>
                     <td  align="right">
@@ -260,11 +260,12 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                             echo $row->id;
                         ?>
                     </td>
-
+					
                     <td align = "center">
                         <?php
                             echo (!$row->category ? "&nbsp;" : ($row->locked == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">"));
                         ?>
+                        
                     </td>
 
                     <td align = "center"><?php echo ($row->moderated == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">"); ?>
@@ -344,55 +345,23 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 
     function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $option)
     {
-        jimport('joomla.html.pane');
-        $pane =& JPane::getInstance('tabs', array('startOffset'=>0));
-?>
-
-        <style>
-            .hideable
-            {
-                position: relative;
-                visibility: hidden;
-            }
-        </style>
-
-        <script language = "javascript" type = "text/javascript">
-            function submitbutton(pressbutton)
-            {
-                var form = document.adminForm;
-
-                if (pressbutton == 'cancel')
-                {
-                    submitform(pressbutton);
-                    return;
-                }
-
-                // do field validation
-                try
-                {
-                    document.adminForm.onsubmit();
-                }
-                catch (e)
-                {
-                }
-
-                if (form.name.value == "")
-                {
-                    alert("<?php echo _KUNENA_ERROR1; ?>");
-                }
-                else
-                {
-                    submitform(pressbutton);
-                }
-            }
-        </script>
+		?><form action = "index.php?option=com_kunena&task=editadministration" method = "POST" name = "adminForm">
+        <?php
+       if(!class_exists('JPane')) {
+   jimport('joomla.html.pane');
+   $pane =& JPane::getInstance('sliders');
+}
 
 
-        <form action = "index2.php" method = "POST" name = "adminForm">
-           <div class="kunenafuncsubtitle"><?php echo _KUNENA_BASICSFORUM; ?></div>
+$pane =& JPane::getInstance('Tabs');
+echo $pane->startPane('EditForum');
+{
+	
+echo $pane->startPanel('Basics', 'Basics');?>
+
            <fieldset>
-           <legend> <?php echo _KUNENA_BASICSFORUMINFO; ?></legend>
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" >
+           <legend> <?php echo _KUNENA_BASICS; ?></legend>
+           <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" >
 
 
                     <tr>
@@ -405,8 +374,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                 <br/><?php echo _KUNENA_PARENTDESC; ?>
                         </td>
                     </tr>
-
-                    <tr>
+						<tr>
                         <td width = "200"><?php echo _KUNENA_NAMEADD; ?>
                         </td>
 
@@ -414,8 +382,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                             <input class = "inputbox" type = "text" name = "name" size = "25" maxlength = "100" value = "<?php echo stripslashes($row->name); ?>">
                         </td>
                     </tr>
-
-                    <tr>
+                      <tr>
                         <td valign = "top"><?php echo _KUNENA_DESCRIPTIONADD; ?>
                         </td>
 
@@ -433,9 +400,11 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                         </td>
                     </tr>
             </table>
-</fieldset>
-           <div class="kunenafuncsubtitle"><?php echo _KUNENA_ADVANCEDDESC; ?></div>
-           <fieldset>
+                    </fieldset>
+                    <?php
+echo $pane->endPanel();
+echo $pane->startPanel('Advanced', 'Advanced');?>
+<fieldset>
            <legend> <?php echo _KUNENA_ADVANCEDDESCINFO; ?></legend>
 
             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
@@ -509,10 +478,13 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
             </table>
 
            </fieldset>
-           <fieldset>
-           <legend> <?php echo _KUNENA_ADVANCEDDISPINFO; ?></legend>
+<?php
+echo $pane->endPanel();
+echo $pane->startPanel('CSS', 'CSS');?>
 
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
+<fieldset>
+<legend> <?php echo _KUNENA_CSS; ?></legend>
+<table cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
 
                 <tr>
                     <td><?php echo _KUNENA_CLASS_SFX; ?>
@@ -527,13 +499,14 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
                 </tr>
             </table>
-           </fieldset>
+</fieldset>
+<?php
+echo $pane->endPanel();
+echo $pane->startPanel('Moderation', 'Moderation');?>
 
-           <div class="kunenafuncsubtitle"><?php echo _KUNENA_MODNEWDESC; ?></div>
-           <fieldset>
-           <legend> <?php echo _KUNENA_MODHEADER; ?></legend>
-
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" >
+<fieldset>
+<legend> <?php echo _KUNENA_MOD_NEW; ?></legend>
+<table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" >
 
 
                 <tr>
@@ -627,8 +600,54 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
             <?php
             }
             ?>
+</fieldset>
+<?php
+echo $pane->endPanel();
+}
+echo $pane->endPane();
 
-           </fieldset>
+?>
+
+        <style>
+            .hideable
+            {
+                position: relative;
+                visibility: hidden;
+            }
+        </style>
+
+        <script language = "javascript" type = "text/javascript">
+            function submitbutton(pressbutton)
+            {
+                var form = document.adminForm;
+
+                if (pressbutton == 'cancel')
+                {
+                    submitform(pressbutton);
+                    return;
+                }
+
+                // do field validation
+                try
+                {
+                    document.adminForm.onsubmit();
+                }
+                catch (e)
+                {
+                }
+
+                if (form.name.value == "")
+                {
+                    alert("<?php echo _KUNENA_ERROR1; ?>");
+                }
+                else
+                {
+                    submitform(pressbutton);
+                }
+            }
+        </script>
+
+
 
             <input type = "hidden" name = "id" value = "<?php echo $row->id; ?>"> <input type = "hidden" name = "option" value = "<?php echo $option; ?>"> <input type = "hidden" name = "task" value = "showAdministration">
 
@@ -640,1693 +659,6 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
         </form>
 
         <?php
-    }
-
-    function showConfig(&$kunenaConfig, &$lists, $option)
-    {
-        jimport('joomla.html.pane');
-        $pane =& JPane::getInstance('tabs', array('startOffset'=>0));
-
-		echo $pane->startPane( 'pane' );
-		echo $pane->startPanel( 'Config', 'panel1' );
-        ?>
-<div id="kunenacongifcover">
-        <form action = "index2.php" method = "post" name = "adminForm">
-		<div class="kunenafuncsubtitle"><?php echo _COM_A_BASICS ?><a name="basics" id="basics" > </a></div>
-
-        <fieldset>
-			<legend> <?php echo _COM_A_BASIC_SETTINGS ?></legend>
-
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"   width="25%"><?php echo _COM_A_BOARD_TITLE ?>
-                    </td>
-
-                    <td align = "left" valign = "top"  width="25%" >
-                        <input type = "text" name = "cfg_board_title" value = "<?php echo stripslashes($kunenaConfig->board_title); ?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_BOARD_TITLE_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"  ><?php echo _COM_A_EMAIL ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_email" value = "<?php echo $kunenaConfig->email; ?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_EMAIL_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle" >
-                    <td align = "left" valign = "top"  ><?php echo _COM_A_BOARD_OFFLINE ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['board_offline']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_BOARD_OFFLINE_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"  ><?php echo _COM_A_BOARD_OFSET ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_board_ofset" value = "<?php echo $kunenaConfig->board_ofset; ?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_BOARD_OFSET_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"  ><?php echo _COM_A_KUNENA_SESSION_TIMEOUT ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_kunenasessiontimeout" value = "<?php echo $kunenaConfig->kunenasessiontimeout; ?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_KUNENA_SESSION_TIMEOUT_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle" >
-                    <td align = "left" valign = "top"  ><?php echo _COM_A_BOARD_OFFLINE_MES ?>
-                    </td>
-
-                    <td align = "left" valign = "top" colspan = "2">
-                        <textarea name = "cfg_offline_message" rows = "3" cols = "50"><?php echo stripslashes($kunenaConfig->offline_message); ?></textarea>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle" >
-                    <td align = "left" valign = "top"  ><?php echo _COM_A_RSS ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['enablerss']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <img src = "/images/M_images/livemarks.png"/> <?php echo _COM_A_RSS_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"  ><?php echo _COM_A_RSS_TYPE ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['rsstype']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_RSS_TYPE_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"  ><?php echo _COM_A_RSS_HISTORY ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['rsshistory']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_RSS_HISTORY_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"  ><?php echo _COM_A_PDF ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['enablepdf']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <img src = "<?php echo JURI::root();?>/images/M_images/pdf_button.png"/> <?php echo _COM_A_PDF_DESC ?>
-                    </td>
-                </tr>
-            </table>
-		</fieldset>
-
-		<div class="kunenafuncsubtitle"><?php echo _COM_A_FRONTEND ?> <a name="frontend" id="frontend" > </a></div>
-
-          <fieldset>
-			<legend> <?php echo _COM_A_LOOKS ?></legend>
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _COM_A_THREADS ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%">
-                        <input type = "text" name = "cfg_threads_per_page" value = "<?php echo $kunenaConfig->threads_per_page; ?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_THREADS_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_MESSAGES ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_messages_per_page" value = "<?php echo $kunenaConfig->messages_per_page; ?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_MESSAGES_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_MESSAGES_SEARCH ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_messages_per_page_search" value = "<?php echo $kunenaConfig->messages_per_page_search; ?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_MESSAGES_DESC_SEARCH ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_HISTORY ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['showhistory']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_HISTORY_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_HISTLIM ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_historylimit" value = "<?php echo $kunenaConfig->historylimit;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_HISTLIM_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_SHOWNEW ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['shownew']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_SHOWNEW_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_NEWCHAR ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_newchar" value = "<?php echo stripslashes($kunenaConfig->newchar);?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_NEWCHAR_DESC ?>
-                    </td>
-                </tr>
-
-				<tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_MAMBOT_SUPPORT ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['jmambot']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_MAMBOT_SUPPORT_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_DISEMOTICONS ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['disemoticons']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_DISEMOTICONS_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_TEMPLATE ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['template']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_TEMPLATE_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_TEMPLATE_IMAGE_PATH ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['templateimagepath']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_TEMPLATE_IMAGE_PATH_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"  ><?php echo _COM_A_FBDEFAULT_PAGE ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['kunenadefaultpage']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_FBDEFAULT_PAGE_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_USE_JOOMLA_STYLE ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['joomlastyle']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_USE_JOOMLA_STYLE_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_ANNOUNCEMENT ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['showannouncement']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_ANNOUNCEMENT_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_AVATAR_ON_CAT ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['avataroncat']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_AVATAR_ON_CAT_DESC ?>
-                    </td>
-                </tr>
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_CATIMAGEPATH ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_catimagepath" value = "<?php echo $kunenaConfig->catimagepath;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_CATIMAGEPATH_DESC ?>
-                    </td>
-                </tr>
-				<tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_CHILD_CATEGORY_COLON ?>
-                    </td>
-					 <td align = "left" valign = "top">
-                    <input type = "text" name = "cfg_numchildcolumn" value = "<?php echo $kunenaConfig->numchildcolumn;?>"/>
-                    </td>
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_CHILD_CATEGORY_COLONDESC ?>
-                    </td>
-                </tr>
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_CHILD_CATEGORY_ON_LIST ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['showchildcaticon']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_CHILD_CATEGORY_ON_LIST_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ANN_MODID ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_annmodid" value = "<?php echo $kunenaConfig->annmodid;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ANN_MODID_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_TAWIDTH ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_rtewidth" value = "<?php echo $kunenaConfig->rtewidth;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_TAWIDTH_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_TAHEIGHT ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_rteheight" value = "<?php echo $kunenaConfig->rteheight;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_TAHEIGHT_DESC ?>
-                    </td>
-                </tr>
-
-               <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['enablerulespage']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE_DESC ?>
-                    </td>
-                </tr>
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE_IN_FB ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['rules_inkunena']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE_IN_KUNENA_DESC ?>
-                    </td>
-                </tr>
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE_CID ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><input type = "text" name = "cfg_rules_cid" value = "<?php echo $kunenaConfig->rules_cid;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE_CID_DESC ?>
-                    </td>
-                </tr>
-                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE_LINK ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><input type = "text" name = "cfg_rules_link" value = "<?php echo $kunenaConfig->rules_link;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_RULESPAGE_LINK_DESC ?>
-                    </td>
-                </tr>
-     			<tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['enablehelppage']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE_DESC ?>
-                    </td>
-                </tr>
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE_IN_FB ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['help_inkunena']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE_IN_KUNENA_DESC ?>
-                    </td>
-                </tr>
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE_CID ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><input type = "text" name = "cfg_help_cid" value = "<?php echo $kunenaConfig->help_cid;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE_CID_DESC ?>
-                    </td>
-                </tr>
-                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE_LINK ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><input type = "text" name = "cfg_help_link" value = "<?php echo $kunenaConfig->help_link;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_HELPPAGE_LINK_DESC ?>
-                    </td>
-                </tr>
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_FORUM_JUMP ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['enableforumjump']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_FORUM_JUMP_DESC ?>
-                    </td>
-                </tr>
- 				<tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_COM_A_REPORT ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['reportmsg']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_COM_A_REPORT_DESC ?>
-                    </td>
-                </tr>
-            </table>
-		</fieldset>
-
-          <fieldset>
-			<legend> <?php echo _COM_A_USERS ?></legend>
-             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _COM_A_USERNAME ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['username']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_USERNAME_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_ASK_EMAIL ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['askemail']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_ASK_EMAIL_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_SHOWMAIL ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['showemail']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_SHOWMAIL_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_USERSTATS ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['showuserstats']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_USERSTATS_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_POSTSTATSBAR ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['poststats']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_POSTSTATSBAR_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_POSTSTATSCOLOR ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_statscolor" value = "<?php echo $kunenaConfig->statscolor;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_POSTSTATSCOLOR_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td colspan = 2>&nbsp;
-
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <table size = 100%>
-                            <tr>
-                              <td>
-                                1: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col1m.png" width = "15" height = "4">
-                              </td>
-                              <td>
-                                2: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col2m.png" width = "15" height = "4">
-                              </td>
-                              <td>
-                                3: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col3m.png" width = "15" height = "4">
-                              </td>
-                              <td>
-                                4: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col4m.png" width = "15" height = "4">
-                              </td>
-                              <td>
-                                5: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col5m.png" width = "15" height = "4">
-                              </td>
-                              <td>
-                                6: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col6m.png" width = "15" height = "4">
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td>
-                                7: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col7m.png" width = "15" height = "4">
-                              </td>
-                              <td>
-                                8: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col8m.png" width = "15" height = "4">
-                              </td>
-                              <td>
-                                9: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col9m.png" width = "15" height = "4">
-                              </td>
-                              <td>
-                                10: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col10m.png" width = "15" height = "4">
-                              </td>
-                              <td>
-                                11: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col11m.png" width = "15" height = "4">
-                              </td>
-                              <td>
-                                12: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $kunenaConfig->template ;?>/images/english/graph/col12m.png" width = "15" height = "4">
-                              </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_KARMA ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['showkarma']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_KARMA_DESC ?>
-
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_USER_EDIT ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['useredit']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_USER_EDIT_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_USER_EDIT_TIME ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_useredittime" value = "<?php echo $kunenaConfig->useredittime;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_USER_EDIT_TIME_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_USER_EDIT_TIMEGRACE ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_useredittimegrace" value = "<?php echo $kunenaConfig->useredittimegrace;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_USER_EDIT_TIMEGRACE_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_USER_MARKUP ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['editmarkup']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_USER_MARKUP_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_SUBSCRIPTIONS ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['allowsubscriptions']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_SUBSCRIPTIONS_DESC ?>
-                    </td>
-                </tr>
-				<tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SUBSCRIPTIONSCHECKED ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['subscriptionschecked']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SUBSCRIPTIONSCHECKED_DESC ?>
-                    </td>
-                </tr>
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_FAVORITES ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['allowfavorites']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_FAVORITES_DESC ?>
-                  </td>
-                </tr>
-            </table>
-		</fieldset>
-
-          <fieldset>
-			<legend> <?php echo _COM_A_LENGTHS ?></legend>
-             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"  width="25%"><?php echo _COM_A_WRAP ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%">
-                        <input type = "text" name = "cfg_wrap" value = "<?php echo $kunenaConfig->wrap;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_WRAP_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_SUBJECTLENGTH ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_maxsubject" value = "<?php echo $kunenaConfig->maxsubject;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_SUBJECTLENGTH_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_SIGNATURE ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_maxsig" value = "<?php echo $kunenaConfig->maxsig;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_SIGNATURE_DESC ?>
-                    </td>
-                </tr>
-            </table>
-	</fieldset>
-			<div class="kunenafuncsubtitle"><?php echo _COM_A_SECURITY ?>  <a name="security" id="security" > </a></div>
-            <fieldset>
-			<legend> <?php echo _COM_A_SECURITY_SETTINGS ?></legend>
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _COM_A_REGISTERED_ONLY ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['regonly']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_REG_ONLY_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_CHANGENAME ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['changename']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_CHANGENAME_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_PUBWRITE ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['pubwrite']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_PUBWRITE_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_FLOOD ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_floodprotection" value = "<?php echo $kunenaConfig->floodprotection;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_FLOOD_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_MODERATION ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['mailmod']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_MODERATION_DESC ?>
-                    </td>
-                </tr>
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_A_MAIL_ADMIN ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['mailadmin']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_A_MAIL_ADMIN_DESC ?>
-                    </td>
-                </tr>
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_CAPTCHA_ON ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['captcha']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_CAPTCHA_DESC ?>
-                    </td>
-                </tr>
-                 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_MAILFULL; ?>
-                    </td>
-                    <td align = "left" valign = "top"><?php echo $lists['mailfull']; ?>
-                    </td>
-                    <td align = "left" valign = "top"><?php echo _KUNENA_MAILFULL_DESC; ?>
-                    </td>
-                </tr>
-            </table>
-          </fieldset>
-			<div class="kunenafuncsubtitle"><?php echo _COM_A_AVATARS ?><a name="avatars" id="avatars" > </a></div>
-            <fieldset>
-			<legend> <?php echo _COM_A_AVATAR_SETTINGS ?></legend>
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _COM_A_AVATAR ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['allowavatar']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_AVATAR_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_AVATARUPLOAD ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['allowavatarupload']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_AVATARUPLOAD_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_AVATARGALLERY ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['allowavatargallery']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_AVATARGALLERY_DESC ?>
-                    </td>
-                </tr>
-				<tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_IMAGE_PROCESSOR ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <?php echo $lists['imageprocessor']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php
-
-				$kunena_gd = intval(KUNENA_gdVersion());
-				if ($kunena_gd > 0) {
-				   $kunenamsg = _KUNENA_GD_INSTALLED .  $kunena_gd ;
-  				} elseif ($gdver == -1) {
-  				   $kunenamsg = _KUNENA_GD_NO_VERSION;
-  			    } else {
-   				   $kunenamsg = _KUNENA_GD_NOT_INSTALLED . '<a href="http://www.php.net/gd" target="_blank">http://www.php.net/gd</a>';
- 			    }
-
-				    echo $kunenamsg;
-
-                    ?>
-                    </td>
-                </tr>
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_AVATAR_SMALL_HEIGHT ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_avatarsmallheight" value = "<?php echo $kunenaConfig->avatarsmallheight;?>"/>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_AVATAR_SMALL_WIDTH ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_avatarsmallwidth" value = "<?php echo $kunenaConfig->avatarsmallwidth;?>"/>
-                    </td>
-                </tr>
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_AVATAR_MEDIUM_HEIGHT ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_avatarheight" value = "<?php echo $kunenaConfig->avatarheight;?>"/>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_AVATAR_MEDIUM_WIDTH ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_avatarwidth" value = "<?php echo $kunenaConfig->avatarwidth;?>"/>
-                    </td>
-                </tr>
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_AVATAR_LARGE_HEIGHT ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_avatarlargeheight" value = "<?php echo $kunenaConfig->avatarlargeheight;?>"/>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_AVATAR_LARGE_WIDTH ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_avatarlargewidth" value = "<?php echo $kunenaConfig->avatarlargewidth;?>"/>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_AVSIZE ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_avatarsize" value = "<?php echo $kunenaConfig->avatarsize;?>"/>
-                    </td>
-                </tr>
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_AVATAR_QUALITY ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_avatarquality" value = "<?php echo $kunenaConfig->avatarquality;?>"/> %
-                    </td>
-                </tr>
-            </table>
- 			</fieldset>
-			<div class="kunenafuncsubtitle"><?php echo _COM_A_UPLOADS ?><a name="uploads" id="uploads" > </a></div>
-            <fieldset>
-			<legend> <?php echo _COM_A_IMAGE ?></legend>
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
-
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _COM_A_IMAGEUPLOAD ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['allowimageupload']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_IMAGEUPLOAD_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_IMAGEREGUPLOAD ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['allowimageregupload']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_IMAGEREGUPLOAD_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_IMGHEIGHT ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_imageheight" value = "<?php echo $kunenaConfig->imageheight;?>"/>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_IMGWIDTH ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_imagewidth" value = "<?php echo $kunenaConfig->imagewidth;?>"/>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_IMGSIZE ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_imagesize" value = "<?php echo $kunenaConfig->imagesize;?>"/>
-                    </td>
-                </tr>
-                </table>
-                </fieldset>
- <fieldset>
-			<legend> <?php echo _COM_A_FILE ?></legend>
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _COM_A_FILEUPLOAD ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['allowfileupload']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_FILEUPLOAD_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_FILEREGUPLOAD ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['allowfileregupload']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_FILEREGUPLOAD_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_FILEALLOWEDTYPES ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_filetypes" value = "<?php echo $kunenaConfig->filetypes;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_FILEALLOWEDTYPES_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_FILESIZE ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_filesize" value = "<?php echo $kunenaConfig->filesize;?>"/>
-                    </td>
-                </tr>
-            </table>
-
-                </fieldset>
-
-			<div class="kunenafuncsubtitle"><?php echo _COM_A_RANKING ?><a name="ranking" id="ranking" > </a></div>
-
-          <fieldset>
-			<legend> <?php echo _COM_A_RANKING_SETTINGS ?></legend>
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _COM_A_RANKING ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['showranking']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_RANKING_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_RANKINGIMAGES ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['rankimages']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_RANKINGIMAGES_DESC ?>
-                    </td>
-                </tr>
-            </table>
-		</fieldset>
-
-
-
-		<div class="kunenafuncsubtitle"><?php echo _COM_A_BBCODE ?><a name="bbcode" id="bbcode" > </a></div>
-
-          <fieldset>
-			<legend> <?php echo _COM_A_BBCODE_SETTINGS ?></legend>
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _COM_A_SHOWSPOILERTAG ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['showspoilertag']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_SHOWSPOILERTAG_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _COM_A_SHOWVIDEOTAG ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['showvideotag']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_SHOWVIDEOTAG_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _COM_A_SHOWEBAYTAG ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['showebaytag']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_SHOWEBAYTAG_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_EBAYLANGUAGECODE ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_ebaylanguagecode" value = "<?php echo $kunenaConfig->ebaylanguagecode;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_EBAYLANGUAGECODE_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _COM_A_TRIMLONGURLS ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['trimlongurls']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_TRIMLONGURLS_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_TRIMLONGURLSFRONT ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_trimlongurlsfront" value = "<?php echo $kunenaConfig->trimlongurlsfront;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_TRIMLONGURLSFRONT_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_TRIMLONGURLSBACK ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_trimlongurlsback" value = "<?php echo $kunenaConfig->trimlongurlsback;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_TRIMLONGURLSBACK_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_AUTOEMBEDYOUTUBE ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['autoembedyoutube']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_AUTOEMBEDYOUTUBE_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_AUTOEMBEDEBAY ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['autoembedebay']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_AUTOEMBEDEBAY_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _COM_A_HIGHLIGHTCODE ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['highlightcode']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_HIGHLIGHTCODE_DESC ?>
-                    </td>
-                </tr>
-
-            </table>
-		</fieldset>
-
-			<div class="kunenafuncsubtitle"><?php echo _COM_A_INTEGRATION ?><a name="integration" id="integration" > </a></div>
-         <fieldset>
-			<legend> <?php echo _COM_A_AVATAR_INTEGRATION ?></legend>
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
-
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _COM_A_AVATAR_SRC ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['avatar_src']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_AVATAR_SRC_DESC ?>
-                    </td>
-                </tr>
-			</table>
-			</fieldset>
-			<fieldset>
-			<legend> <?php echo _KUNENA_FORUMPRF_TITLE ?></legend>
-     		<table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_FORUMPRF ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['kunena_profile']; ?>
-                    </td>
-
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_FORUMPRRDESC ?>
-                    </td>
-                </tr>
-
-			</table>
-			</fieldset>
-			<fieldset>
-			<legend> <?php echo _COM_A_PMS_TITLE ?></legend>
-   			<table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
-
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _COM_A_PMS ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['pm_component']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _COM_A_PMS_DESC ?>
-                    </td>
-                </tr>
-</table>
-</fieldset>
-<fieldset>
-			<legend> <?php echo _COM_A_MOSBOT_TITLE ?></legend>
-   <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
-
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _COM_A_MOSBOT ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['discussbot']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-<?php echo _COM_A_MOSBOT_DESC ?>
-                    </td>
-                </tr>
-            </table>
-</fieldset>
-
-
-            <div class="kunenafuncsubtitle"><?php echo _KUNENA_ADMIN_CONFIG_PLUGINS ?><a name="plugins" id="plugins"> </a></div>
-<fieldset>
-			<legend> <?php echo _KUNENA_ADMIN_CONFIG_USERLIST ?></legend>
-   <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
-
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_ROWS ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%">
-                        <input type = "text" name = "cfg_userlist_rows" value = "<?php echo $kunenaConfig->userlist_rows;?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_ROWS_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_USERONLINE ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['userlist_online']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_USERONLINE_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_AVATAR ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['userlist_avatar']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_USERLIST_AVATAR_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_NAME ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['userlist_name']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_name_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_USERNAME ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['userlist_username']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_USERNAME_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_GROUP ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['userlist_group']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_GROUP_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_POSTS ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['userlist_posts']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_POSTS_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_KARMA ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['userlist_karma']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_KARMA_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_EMAIL ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['userlist_email']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_EMAIL_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_USERTYPE ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['userlist_usertype']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_USERTYPE_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_JOINDATE ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['userlist_joindate']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_JOINDATE_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_LASTVISITDATE ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['userlist_lastvisitdate']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_LASTVISITDATE_DESC ?>
-                    </td>
-                </tr>
-
-				 <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_HITS ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['userlist_userhits']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_HITS_DESC ?>
-                    </td>
-                </tr>
-		</table>
-        </fieldset>
-        <fieldset>
-			<legend> <?php echo _KUNENA_RECENT_POSTS ?></legend>
-   <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_SHOW_LATEST_MESSAGES ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['showlatest']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_LATEST_MESSAGES_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_NUMBER_OF_LATEST_MESSAGES ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_latestcount" value = "<?php echo $kunenaConfig->latestcount; ?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_NUMBER_OF_LATEST_MESSAGES_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_COUNT_PER_PAGE_LATEST_MESSAGES ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_latestcountperpage" value = "<?php echo $kunenaConfig->latestcountperpage; ?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_COUNT_PER_PAGE_LATEST_MESSAGES_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_LATEST_CATEGORY ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_latestcategory" value = "<?php echo $kunenaConfig->latestcategory; ?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_LATEST_CATEGORY_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_LATEST_SINGLE_SUBJECT ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['latestsinglesubject']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_LATEST_SINGLE_SUBJECT_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_LATEST_REPLY_SUBJECT ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['latestreplysubject']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_LATEST_REPLY_SUBJECT_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_LATEST_SUBJECT_LENGTH ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_latestsubjectlength" value = "<?php echo $kunenaConfig->latestsubjectlength; ?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_LATEST_SUBJECT_LENGTH_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_LATEST_DATE ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['latestshowdate']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_LATEST_DATE_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_LATEST_HITS ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['latestshowhits']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_LATEST_HITS_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_AUTHOR ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_latestshowauthor" value = "<?php echo $kunenaConfig->latestshowauthor; ?>" size = "1"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOW_AUTHOR_DESC ?>
-                    </td>
-                </tr>
-			</table>
-            </fieldset>
-
-               <fieldset>
-			<legend> <?php echo _KUNENA_STATS ?></legend>
-   <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
-
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_SHOWSTATS; ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['showstats']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOWSTATSDESC; ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOWWHOIS; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['showwhoisonline']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOWWHOISDESC; ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_STATSGENERAL; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['showgenstats']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_STATSGENERALDESC; ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_USERSTATS; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['showpopuserstats']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_USERSTATSDESC; ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_USERNUM; ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_popusercount" value = "<?php echo $kunenaConfig->popusercount; ?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_USERNUM; ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_USERPOPULAR; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['showpopsubjectstats']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_USERPOPULARDESC; ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_NUMPOP; ?>
-                    </td>
-
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_popsubjectcount" value = "<?php echo $kunenaConfig->popsubjectcount; ?>"/>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_NUMPOP; ?>
-                    </td>
-                </tr>
-                </table>
-                </fieldset>
-
-               <fieldset>
-			<legend> <?php echo _KUNENA_MYPROFILE_PLUGIN_SETTINGS ?></legend>
-   <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "kunenaadminform">
-
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_USERNAMECANCHANGE; ?>
-                    </td>
-
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['usernamechange']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_USERNAMECANCHANGE_DESC; ?>
-                    </td>
-                </tr>
-
-
-            </table>
-
-           </fieldset>
-
-
-
-    <input type = "hidden" name = "task" value = "showConfig"/>
-
-    <input type = "hidden" name = "option" value = "<?php echo $option; ?>"/>
-        </form>
-</div><!-- closed div#fnconfigcover -->
-<?php
-
-/*echo $pane->endPanel();
-echo $pane->startPanel( 'Show Instructions', 'panel2' );
-showInstructions($kunena_db, $option, $lang);
-echo $pane->endPanel();
-*/
-
-/*echo $pane->startPanel( 'Forum Administration', 'panel3' );
-showCss($file, $option);
-echo $pane->endPanel();
-echo $pane->endPane();
-
-*/
     }
 
    function showInstructions($kunena_db, $option, $lang) {
@@ -2395,7 +727,7 @@ echo $pane->endPane();
     function showProfiles($option, $lang, &$profileList, $countPL, $pageNavSP, $order, $search)
     {
 ?>
-        <form action = "index2.php" method = "POST" name = "adminForm">
+        <form action = "index.php?option=com_kunena&task=editprofiles" method = "POST" name = "adminForm">
             <table  cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
                
 <th align = "center" colspan = "12">
@@ -3189,24 +1521,12 @@ return $this->_data;
 function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
         {
 ?>
-        <form action = "index2.php" method = "POST" name = "adminForm">
-            <table class = "adminheading" cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
-              
+        <form action = "index.php?option=com_kunena&task=EditSmilie" method = "POST" name = "adminForm">
+            
+
+            <table class = "adminlist"  align="left" border = "0" cellspacing = "0" cellpadding = "3" width = "100%">
                 <tr>
-
-
-
-                    </td>
-
-                    
-                </tr>
-
-
-            </table>
-
-            <table class = "adminlist" border = "0" cellspacing = "0" cellpadding = "3" width = "100%">
-                <tr>
-                    <th algin = "center"  width = "6">
+                    <th algin = "left"  width = "1%">
                         <input type = "checkbox" name = "toggle" value = "" onclick = "checkAll(<?php echo count( $smileytmp ); ?>);"/>
                     </th>
 
@@ -3234,7 +1554,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
                         $s = &$smileytmp[$i];
                 	?>
                     <tr class = "row<?php echo $k;?>" >
-                                <td width = "20">
+                                <td width = "20" align="left">
                                     <input type = "checkbox" id = "cb<?php echo $i;?>" name = "cid[]" value = "<?php echo $s->id; ?>" onClick = "isChecked(this.checked);">
                                 </td>
                                 <td width = "10" align="center">
@@ -3252,8 +1572,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
                                 <td width = "200">
 									<?php echo $s->location; ?>
                                 </td>
-                                <td>
-                                </td>
+                                
 
                             </tr>
 
@@ -3262,7 +1581,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
                     }
                 ?>
             <tr>
-        		<th align = "center" colspan = "6" width="100%" >
+        		<th align = "center" colspan = "6" width="101%" >
         <?php echo  $pageNavSP->getLimitBox().$pageNavSP->getPagesLinks(); ?>&nbsp;
 &nbsp;&nbsp; &nbsp;
 		<?php echo $pageNavSP->getResultsCounter(); ?>
@@ -3364,7 +1683,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
 		 {
    $kunena_db = &JFactory::getDBO();
    ?>
-  <form action="index2.php" method="POST" name="adminForm">
+  <form action="index.php?option=com_kunena&task=EditRank" method="POST" name="adminForm">
   <table class="adminheading" cellpadding="4" cellspacing="0" border="0" width="100%">
   
   </table>
@@ -3401,7 +1720,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
    	<?php echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
 
     <tr>
-      <th align = "center" colspan = "12">
+      <th align = "center" colspan = "12" width="111%">
         <?php echo  $pageNavSP->getLimitBox().$pageNavSP->getPagesLinks(); ?>&nbsp;
 &nbsp;&nbsp; &nbsp;
 		<?php echo $pageNavSP->getResultsCounter(); ?>
@@ -3419,7 +1738,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
 		<!--
 		function update_rank(newimage)
 		{
-			document.rank_image.src = "<?php echo $rankpath; ?>" + newimage;
+			document.rank_image.src = "<?php echo $rankpath; ?>" +newimage;
 		}
 		//-->
 		</script>

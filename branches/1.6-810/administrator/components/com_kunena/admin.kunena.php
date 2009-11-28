@@ -9,7 +9,7 @@
  */
 
 defined( '_JEXEC' ) or die('Restricted access');
-
+JHTML::stylesheet('administrator.css', 'administrator/components/com_kunena/media/css/');
 // Allow for the new MVC subsystem where applicable.
 $view = JRequest::getCmd('view', false);
 $task = JRequest::getVar('task');
@@ -35,5 +35,6 @@ if (!is_file($legacy) || $view || strpos($task, '.'))
 }
 
 require_once($legacy);
+
 
 ?>

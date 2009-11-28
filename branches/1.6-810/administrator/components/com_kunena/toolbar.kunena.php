@@ -82,7 +82,7 @@ switch ($task)
         CKunenaToolbar::_SYNCUSERS_MENU();
 
         break;
-		
+
 	case "mainpage":
         CKunenaToolbar::mainpage();
 
@@ -97,7 +97,7 @@ switch ($task)
         CKunenaToolbar::_PROFILE_MENU();
 
         break;
-		
+
 				case "showsmilies":
         CKunenaToolbar::_SHOWSMILEY_MENU();
 
@@ -112,7 +112,7 @@ switch ($task)
         CKunenaToolbar::_NEWSMILEY_MENU();
 
         break;
-				
+
 				case "ranks":
         CKunenaToolbar::_SHOWRANKS_MENU();
 
@@ -132,6 +132,6 @@ switch ($task)
         CKunenaToolbar::_MAINPAGE_MENU();
 
         break;
-								
+
 }
 ?>

@@ -52,7 +52,7 @@ class KunenaViewConfig extends JView
 		// Render the layout.
 		parent::display($tpl);
 	}
-	
+
 	protected function _displayMainToolbar()
 	{
 		JToolBarHelper::title(': '.JText::_('Config'), 'generic');
@@ -66,7 +66,7 @@ class KunenaViewConfig extends JView
 		$bar = &JToolBar::getInstance('toolbar');
 		$bar->appendButton('Link', 'config', 'Import', 'index.php?option=com_kunena&view=config&layout=import');
 	}
-	
+
 	protected function _displayImportToolbar()
 	{
 		JToolBarHelper::title('Kunena: '.JText::_('Config Import/Export'), 'generic');

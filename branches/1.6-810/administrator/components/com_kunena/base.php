@@ -110,7 +110,7 @@ $pt_stop = "0";
 
 if (!$no_html)
 {
-	 	
+
 		JToolBarHelper::title('&nbsp;'.JText::_(''));
 		JToolBarHelper::divider();
 
@@ -352,7 +352,7 @@ switch ($task)
 
         break;
 
-    
+
 }
 
 // Detect errors in CB integration
@@ -1317,8 +1317,8 @@ function syncusers($kunena_db, $option) {
 function removeUserProfile($cid) {
   $kunena_db = &JFactory::getDBO();
   $currentUser  =& JFactory::getUser();
-  $acl =& JFactory::getACL();   
-  
+  $acl =& JFactory::getACL();
+
   foreach($cid as $id){
     $objectID  = $acl->get_object_id( 'users', $id, 'ARO' );
 $groups  = $acl->get_object_groups( $objectID, 'ARO' );
@@ -1330,12 +1330,12 @@ $msg = JText::_( 'You cannot delete Yourself!' );
   } else {
     $user =& JUser::getInstance((int)$id);
     $user->delete();
-      $kunena_db->setQuery('DELETE FROM #__kunena_users WHERE userid=' .$id );      
+      $kunena_db->setQuery('DELETE FROM #__kunena_users WHERE userid=' .$id );
      $kunena_db->query() or trigger_dberror('Unable to delete user profiles.');
      $msg = JText::_( 'User(s) deleted' );
     }
-    echo $msg; 
-  }  
+    echo $msg;
+  }
 }
 
 

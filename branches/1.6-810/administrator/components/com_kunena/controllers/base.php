@@ -23,8 +23,8 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 class html_Kunena
 {
-	
-	
+
+
 // Begin: HEADER FUNC
 function showKunenaHeader () {
 
@@ -146,7 +146,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 <?php } // Finish: FOOTER FUNC
 
 
-   
+
 
     function showAdministration($rows, $children, $pageNav, $option)
     {
@@ -161,7 +161,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 
             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "adminlist">
               <tr>
-                            
+
                         </tr>
                 <tr>
                     <th width = "20">
@@ -260,12 +260,12 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                             echo $row->id;
                         ?>
                     </td>
-					
+
                     <td align = "center">
                         <?php
                             echo (!$row->category ? "&nbsp;" : ($row->locked == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">"));
                         ?>
-                        
+
                     </td>
 
                     <td align = "center"><?php echo ($row->moderated == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">"); ?>
@@ -329,11 +329,11 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                             echo $pageNav->getResultsCounter(); ?>&nbsp;
 &nbsp;&nbsp; &nbsp;         <?php
                             echo $pageNav->getPagesLinks(); ?>
-                            
+
                             </th>
                         </tr>
 
-                       
+
             </table>
 
             <input type = "hidden" name = "option" value = "<?php echo $option; ?>"> <input type = "hidden" name = "task" value = "showAdministration"> <input type = "hidden" name = "boxchecked" value = "0">
@@ -356,7 +356,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 $pane =& JPane::getInstance('Tabs');
 echo $pane->startPane('EditForum');
 {
-	
+
 echo $pane->startPanel('Basics', 'Basics');?>
 
            <fieldset>
@@ -729,7 +729,7 @@ echo $pane->endPane();
 ?>
         <form action = "index.php?option=com_kunena&task=editprofiles" method = "POST" name = "adminForm">
             <table  cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
-               
+
 <th align = "center" colspan = "12">
         :: <a href = "index2.php?option=com_kunena&task=profiles&order=0"><?php
     echo _KUNENA_SORTID; ?></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :: <a href = "index2.php?option=com_kunena&task=profiles&order=1"><?php echo _KUNENA_SORTMOD; ?></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:: <a href = "index2.php?option=com_kunena&task=profiles&order=2"><?php echo _KUNENA_SORTNAME; ?></a>
@@ -738,13 +738,13 @@ echo $pane->endPane();
 
 
                     <td colspan = "4" nowrap>
-                       
+
                     </td>
                 </tr>
             </table>
 
             <table class = "adminlist" border = 0 cellspacing = 0 cellpadding = 3 width = "100%">
-              
+
                 <tr>
                     <th algin = "left" width = "20">
                         <input type = "checkbox" name = "toggle" value = "" onclick = "checkAll(<?php echo count( $profileList ); ?>);"/>
@@ -844,7 +844,7 @@ echo $pane->endPane();
     </tr>
 
     </table>
-            
+
         </form>
 
 <?php
@@ -976,7 +976,7 @@ echo $pane->endPane();
         </th>
     </tr>
 
-    
+
 
     <tr>
         <td colspan = "7"><?php echo _KUNENA_NOTEUS; ?>
@@ -1522,7 +1522,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
         {
 ?>
         <form action = "index.php?option=com_kunena&task=EditSmilie" method = "POST" name = "adminForm">
-            
+
 
             <table class = "adminlist"  align="left" border = "0" cellspacing = "0" cellpadding = "3" width = "100%">
                 <tr>
@@ -1541,7 +1541,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
 
                     <th algin = "left" width = "200"><?php echo _KUNENA_EMOTICONS_URL; ?>
                     </th>
-                    
+
                 </tr>
                 <?php
 
@@ -1572,7 +1572,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
                                 <td width = "200">
 									<?php echo $s->location; ?>
                                 </td>
-                                
+
 
                             </tr>
 
@@ -1588,7 +1588,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
         </th>
 		    </tr>
             <tr>
-        		
+
             </tr>
       	</table>
                 <input type = "hidden" name = "option" value = "<?php echo $option; ?>"><input type = "hidden" name = "task" value = "showsmilies"><input type = "hidden" name = "boxchecked" value = "0">
@@ -1685,7 +1685,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
    ?>
   <form action="index.php?option=com_kunena&task=EditRank" method="POST" name="adminForm">
   <table class="adminheading" cellpadding="4" cellspacing="0" border="0" width="100%">
-  
+
   </table>
   <table class="adminlist" border=0 cellspacing=0 cellpadding=3 width="100%" >
     <tr>
@@ -1711,7 +1711,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
       <td align="center"><?php echo $row->rank_min; ?></td>
       <td width="100%">&nbsp;</td>
     </tr>
-   
+
     <?php }  ?>
 
     <input type="hidden" name="option" value="<?php echo $option; ?>">
@@ -1725,7 +1725,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
 &nbsp;&nbsp; &nbsp;
 		<?php echo $pageNavSP->getResultsCounter(); ?>
         </th>
-    
+
   </table>
   </form>
 

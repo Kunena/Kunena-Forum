@@ -21,13 +21,13 @@ jimport('joomla.application.component.model');
  */
 class KunenaModelInfo extends JModel
 {
-	
+
 }
 ?>
 	<td width="90%">
-     
+
      <div id="cpanel">
-     
+
                   <tr align="top">
                         <td width="70%" class="cpanel"><h2><th> <div class = "fb_title_cover"> <span class="fb_title" >Team credits</span> </div>
               </tr>
@@ -36,7 +36,7 @@ class KunenaModelInfo extends JModel
               <tr>
                 <td class = "fb_creditsdesc"><table width="100%" border="0" cellspacing="0" cellpadding="0" style="font-size:12px">
                     <tr valign="top">
-                      <td width="170"><img src="../administrator/components/com_kunena/media/images/kunena.png" alt="Kunena"  align="left" hspace="5" vspace="5"/></td> 
+                      <td width="170"><img src="../administrator/components/com_kunena/media/images/kunena.png" alt="Kunena"  align="left" hspace="5" vspace="5"/></td>
                       <td>
                   <div  class="fb_credits_intro"> An open source project like Kunena requires the dedication and investment of personal time from various contributors.
                           This version of Kunena Forum has been made possible by the following contributors (in alphabetical ordering):</div></td>
@@ -65,5 +65,5 @@ class KunenaModelInfo extends JModel
                   </table></td>
 </h2>
 		</td>
-                    	
+
 </div>

@@ -23,12 +23,12 @@ class KunenaModelMainpage extends JModel
 {
 
 
-	
+
 }
 
 ?>
 <div id="wrapper">
-      
+
       <table style="width: 90%;" class="adminform" align="center">
             <tbody>
                   <tr align="top">
@@ -36,7 +36,7 @@ class KunenaModelMainpage extends JModel
                         <h3 style="clear: both; margin-top:10px; margin-left:180px; color: #03C"><?php echo JText::_('MANAGE FORUM'); ?></h3>
                                     <div style="float: left; margin-left: 5px;">
 
-                                    
+
                                           <div class="icon">
                                                 <a href="index2.php?option=com_kunena&task=showAdministration">
                                                 <img src="components/com_kunena/images/kunenaforumadm.png" alt="<?php echo JText::_('MANAGE FORUM'); ?>" /><br/>
@@ -87,7 +87,7 @@ class KunenaModelMainpage extends JModel
                                     </div>
                                     <div style="float: left; margin-left: 5px;margin-bottom: 20px;">
                                           <div class="icon">
-                                                <a href="index2.php?option=com_kunena&view=info"> 
+                                                <a href="index2.php?option=com_kunena&view=info">
                                                 <img src="components/com_kunena/images/icon-48-help_header.png" alt="<?php echo JText::_('INFO'); ?>" />
                                                 <br/>
                                                 <span><?php echo JText::_('INFO'); ?>
@@ -96,22 +96,22 @@ class KunenaModelMainpage extends JModel
                                           </div>
                                     </div>
                               </div></td>
-                        
+
                       		  <td width="40%" style="padding-right:90px;">
 								<div id="cpanel">
-                                
-                                    <img src="components/com_kunena/images/logo.png" style="display: block;margin: 0 auto;" alt="Kunena logo" /> 
-                                          <h3>An open source project like Kunena requires the dedication and investment of personal time from various contributors.  <a href="index2.php?option=com_kunena&view=info">Read More.</div> 
+
+                                    <img src="components/com_kunena/images/logo.png" style="display: block;margin: 0 auto;" alt="Kunena logo" />
+                                          <h3>An open source project like Kunena requires the dedication and investment of personal time from various contributors.  <a href="index2.php?option=com_kunena&view=info">Read More.</div>
                               	</div>
-  
+
                                     </div>
                               	</div>
 							  </td>
                   </tr>
             </tbody>
       </table>
-      
-      
+
+
 </div>
 <form action="index.php" method="get" name="adminForm">
       <input type="hidden" name="option" value="com_kunena" />

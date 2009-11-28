@@ -37,13 +37,13 @@ class KunenaViewInfo extends JView
 		// Render the layout.
 		parent::display($tpl);
 	}
-	
+
 	protected function _displayMainToolbar()
 	{
 		JToolBarHelper::title(': '.JText::_('Info'), 'generic');
 		JToolBarHelper::divider();
 
 	}
-	
-	
+
+
 }

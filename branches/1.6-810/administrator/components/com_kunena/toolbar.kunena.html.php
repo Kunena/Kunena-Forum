@@ -27,7 +27,7 @@ class CKunenaToolbar
 {
     function _ADMIN()
     {
-		
+
         JToolBarHelper::spacer();
         JToolBarHelper::publish();
         JToolBarHelper::spacer();
@@ -39,7 +39,7 @@ class CKunenaToolbar
         JToolBarHelper::spacer();
         JToolBarHelper::deleteList();
         JToolBarHelper::spacer();
-		
+
 
     }
 
@@ -82,7 +82,7 @@ class CKunenaToolbar
 
     function _EDITUSER_MENU()
     {
-		
+
         JToolBarHelper::spacer();
         JToolBarHelper::save('saveuserprofile');
         JToolBarHelper::spacer();
@@ -232,7 +232,7 @@ function _MAINPAGE_MENU()
 		JToolBarHelper::custom( 'option', 'config.png', 'config_f2.png', JText::_('Options'), false, false );
 		JToolBarHelper::custom( 'check_system', 'apply.png', 'apply_f2.png', JText::_('Check System'), false, false );
 		JToolBarHelper::custom( 'news', 'css.png', 'css_f2.png', JText::_('Kunena Ultimate News'), false, false );
-		JToolBarHelper::custom( 'info', 'help.png', 'help_f2.png', JText::_('Help'), false, false );	
+		JToolBarHelper::custom( 'info', 'help.png', 'help_f2.png', JText::_('Help'), false, false );
 	}
 }
 ?>

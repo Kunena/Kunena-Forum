@@ -37,12 +37,12 @@ class KunenaViewMainpage extends JView
 		// Render the layout.
 		parent::display($tpl);
 	}
-	
+
 	protected function _displayMainToolbar()
 	{
 		JToolBarHelper::title(': '.JText::_('Mainpage'));
 		JToolBarHelper::divider();
 	}
-	
-	
+
+
 }

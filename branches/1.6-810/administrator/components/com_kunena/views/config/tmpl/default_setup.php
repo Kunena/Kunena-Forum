@@ -33,7 +33,7 @@ echo $pane->startPanel('Basics', 'Basics');?>
 			</td>
 			<td>
 				<input type="text" name="config[board_title]" id="config_board_title" value="<?php echo $this->options->get('board_title'); ?>" size="30" />
- 
+
 			</td>
 		</tr>
 		<tr>
@@ -75,7 +75,7 @@ echo $pane->startPanel('Basics', 'Basics');?>
 				<label for="config_board_offlinemessage" class="hasTip" title="<?php echo JText::_('K_CONFIG_BOARD_OFFLINE_MESSAGE_DESC'); ?>"><?php echo JText::_('K_CONFIG_BOARD_OFFLINE_MESSAGE'); ?></label>
 			</td>
 			<td>
-				
+
                 <textarea name = "config[board_offlinemessage]" rows = "3" cols = "50"><?php echo $this->options->get('board_offlinemessage'); ?></textarea>
 			</td>
 		</tr>
@@ -107,7 +107,7 @@ echo $pane->startPanel('Basics', 'Basics');?>
 				</select>
 			</td>
 		</tr>
-     
+
 		<tr>
 			<td width="40%" class="key">
 				<label for="config_rss_history" class="hasTip" title="<?php echo JText::_('K_CONFIG_RSS_HISTORY_DESC'); ?>"><?php echo JText::_('K_CONFIG_RSS_HISTORY'); ?></label>
@@ -142,7 +142,7 @@ echo $pane->startPanel('Frontend', 'Frontend');?>
 <fieldset>
 	<legend><?php echo JText::_('K_CONFIG_FRONTEND'); ?>
     </legend>
-    
+
 
 	<legend><?php echo JText::_('K_CONFIG_LOOK_AND_FEEL'); ?></legend>
 	<table class="admintable" cellspacing="1" align="left" width="50%">
@@ -153,7 +153,7 @@ echo $pane->startPanel('Frontend', 'Frontend');?>
 			</td>
 			<td>
 				<input type="text" name="config[thread_by_page]" id="thread_by_page" value="<?php echo $this->options->get('thread_by_page'); ?>" size="30" />
- 
+
 			</td>
 		</tr>
 		<tr>
@@ -430,7 +430,7 @@ echo $pane->startPanel('Frontend', 'Frontend');?>
 		</tr>
         </tbody>
 	</table>
-     
+
         <legend><?php echo JText::_('K_CONFIG_USER_RELATED'); ?></legend>
 <table width="50%" class="admintable" cellspacing="1" align="right" style="padding-bottom:10px;">
 		<tr>
@@ -565,10 +565,10 @@ echo $pane->startPanel('Frontend', 'Frontend');?>
 				</select>
 			</td>
 		</tr>
-        
+
         </tbody>
 	</table>
-    
+
         <tr>
         <legend><?php echo JText::_('K_CONFIG_VARIOUS_LENGTH_SETTINGS'); ?></legend>
         <table width="50%" class="admintable" cellspacing="1" align="right" style="padding-top:10px;">
@@ -592,9 +592,9 @@ echo $pane->startPanel('Frontend', 'Frontend');?>
 			<td>
 				<input type="text" name="config[signature_lenght]" id="signature_lenght" value="<?php echo $this->options->get('signature_lenght'); ?>" size="30" />
 			</td>
-		</tr>        
+		</tr>
 	</tbody>
-	</table>       
+	</table>
 </fieldset>
 <?php
 echo $pane->endPanel();
@@ -652,35 +652,35 @@ echo $pane->startPanel('Avatars', 'Avatars');?>
 			<td>
 				<input type="text" name="config[small_image_height]" id="small_image_height" value="<?php echo $this->options->get('small_image_height'); ?>" size="30" />
 			</td>
-		</tr>  
+		</tr>
         <td width="40%" class="key">
 				<label for="config_small_image_width" class="hasTip" title="<?php echo JText::_('K_CONFIG_SMALL_IMAGE_WIDTH_DESC'); ?>"><?php echo JText::_('K_CONFIG_SMALL_IMAGE_WIDTH'); ?> </label>
 			</td>
 			<td>
 				<input type="text" name="config[small_image_width]" id="small_image_width" value="<?php echo $this->options->get('small_image_width'); ?>" size="30" />
 			</td>
-		</tr> 
+		</tr>
         <td width="40%" class="key">
 				<label for="config_medium_image_height" class="hasTip" title="<?php echo JText::_('K_CONFIG_MEDIUM_IMAGE_HEIGHT_DESC'); ?>"><?php echo JText::_('K_CONFIG_MEDIUM_IMAGE_HEIGHT'); ?></label>
 			</td>
 			<td>
 				<input type="text" name="config[medium_image_height]" id="medium_image_height" value="<?php echo $this->options->get('medium_image_height'); ?>" size="30" />
 			</td>
-		</tr> 
+		</tr>
         <td width="40%" class="key">
 				<label for="config_medium_image_width" class="hasTip" title="<?php echo JText::_('K_CONFIG_MEDIUM_IMAGE_WIDTH_DESC'); ?>"><?php echo JText::_('K_CONFIG_MEDIUM_IMAGE_WIDTH'); ?></label>
 			</td>
 			<td>
 				<input type="text" name="config[medium_image_width]" id="medium_image_width" value="<?php echo $this->options->get('medium_image_width'); ?>" size="30" />
 			</td>
-		</tr> 
+		</tr>
         <td width="40%" class="key">
 				<label for="config_large_image_height" class="hasTip" title="<?php echo JText::_('K_CONFIG_LARGE_IMAGE_HEIGHT_DESC'); ?>"><?php echo JText::_('K_CONFIG_LARGE_IMAGE_HEIGHT'); ?> </label>
 			</td>
 			<td>
 				<input type="text" name="config[large_image_height]" id="large_image_height" value="<?php echo $this->options->get('large_image_height'); ?>" size="30" />
 			</td>
-		</tr> 
+		</tr>
         <td width="40%" class="key">
 				<label for="config_large_image_width" class="hasTip" title="<?php echo JText::_('K_CONFIG_LARGE_IMAGE_WIDTH_DESC'); ?>"><?php echo JText::_('K_CONFIG_LARGE_IMAGE_WIDTH'); ?></label>
 			</td>
@@ -702,9 +702,9 @@ echo $pane->startPanel('Avatars', 'Avatars');?>
 				<input type="text" name="config[avatar_quality]" id="avatar_quality" value="<?php echo $this->options->get('avatar_quality'); ?>" size="30" />%
 			</td>
 		</tr>
-        
+
         </tbody>
-	</table> 
+	</table>
     </fieldset>
 <?php
 echo $pane->endPanel();
@@ -758,7 +758,7 @@ echo $pane->startPanel('Media', 'Media');?>
 			</td>
 		</tr>
         </tbody>
-	</table> 
+	</table>
     <legend><?php echo JText::_('K_CONFIG_UPLOADS_FILES'); ?></legend>
         <table class="admintable" cellspacing="1" align="left" width="50%" style="padding-bottom:60px;">
 
@@ -799,7 +799,7 @@ echo $pane->startPanel('Media', 'Media');?>
 			</td>
 		</tr>
           </tbody>
-	</table> 
+	</table>
     <legend><?php echo JText::_('K_CONFIG_BBCODE'); ?></legend>
 	<table class="admintable" cellspacing="1" align="left" width="50%" style="padding-bottom:60px;">
 	<tbody>
@@ -896,8 +896,8 @@ echo $pane->startPanel('Media', 'Media');?>
 			</td>
 		</tr>
         </tbody>
-        
-	</table> 
+
+	</table>
     <legend><?php echo JText::_('K_CONFIG_RANKING'); ?></legend>
 	<table class="admintable" cellspacing="1" align="right" width="50%" style="padding-bottom:60px;">
 	<tbody>
@@ -923,7 +923,7 @@ echo $pane->startPanel('Media', 'Media');?>
 			</td>
 		</tr>
          </tbody>
-	</table> 
+	</table>
     </fieldset>
 <?php
 echo $pane->endPanel();
@@ -1077,7 +1077,7 @@ echo $pane->startPanel('Integration', 'Integration');
 echo $pane->endPanel();
 echo $pane->startPanel('Plugins', 'Plugins');?>
 <fieldset>
-	
+
 
 	<legend><?php echo JText::_('K_CONFIG_PLUGINS_SETTINGS'); ?></legend>
 	<table width="50%" class="admintable" cellspacing="1" align="left">
@@ -1302,13 +1302,13 @@ echo $pane->startPanel('Plugins', 'Plugins');?>
         </tbody>
 	</table>
         <legend><?php echo JText::_('K_CONFIG_USER_RELATED'); ?></legend>
-        <table width="50%" class="admintable" cellspacing="1" align="right" style="padding-bottom:10px;"> 
+        <table width="50%" class="admintable" cellspacing="1" align="right" style="padding-bottom:10px;">
         <tbody>
         <td width="40%" class="key">
 				<label for="config_show_stats" class="hasTip" title="<?php echo JText::_('K_CONFIG_SHOW_STATS_DESC'); ?>"><?php echo JText::_('K_CONFIG_SHOW_STATS'); ?></label>
 			</td>
 			<td>
-            
+
 				<select name="config[show_stats]" id="show_stats">
 					<option value="no"<?php echo (($this->options->get('show_stats', 'kunena') == 'no') ? ' selected="selected"' : ''); ?>><?php echo JText::_('K_CONFIG_NO'); ?></option>
 					<option value="yes"<?php echo (($this->options->get('show_stats', 'kunena') == 'yes') ? ' selected="selected"' : ''); ?>><?php echo JText::_('K_CONFIG_YES'); ?></option>
@@ -1386,7 +1386,7 @@ echo $pane->startPanel('Plugins', 'Plugins');?>
 			</td>
 		</tr>
         </tbody>
-	</table> 
+	</table>
 </fieldset>
 <?php
 echo $pane->endPanel();

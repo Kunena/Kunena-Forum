@@ -117,7 +117,7 @@ class KunenaControllerConfig extends JController
 			$this->setRedirect('index.php?option=com_kunena', JText::_('Saved'));
 		}
 	}
-	
+
 	public function apply()
 	{
 		// Check for request forgeries.
@@ -136,5 +136,5 @@ class KunenaControllerConfig extends JController
 			$this->setRedirect('index.php?option=com_kunena&view=config', JText::_('Saved'));
 		}
 	}
-	
+
 }

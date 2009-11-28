@@ -33,9 +33,12 @@ Legend:
 
 Custom Branch 810
 
+29-Nov-2009 Matias
+
+^ [#18267] Change \r\n to \n
+
 23-Nov-2009 810
 ^ [#18267] config fixed
-
 
 22-Nov-2009 810
 + [#18267] base instead off legacy.kunena.admin

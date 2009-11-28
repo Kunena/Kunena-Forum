@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+28-Nov-2009 Matias
+- [#18869] Remove all legacy code - except libraries needed by old installer
+
 25-Nov-2009 fxstein
 + [#18840] Initial draft of Kconfig html helper class
 

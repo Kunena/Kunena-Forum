@@ -35,11 +35,7 @@
 		<folder>views</folder>
 	</files>
 	<files folder="legacy.site">
-		<filename>class.kunena.php</filename>
-		<filename>legacy.kunena.php</filename>
 		<folder>lib</folder>
-		<folder>template</folder>
-		<folder>kunena.files.distribution</folder>	
 	</files>
 	
 	<languages folder="languages/site">
@@ -71,15 +67,8 @@
 			<folder>views</folder>
 		</files>
 		<files folder="legacy.admin">
-			<filename>kunena.cpanel.php</filename>
-			<filename>legacy.admin.kunena.html.php</filename>
-			<filename>legacy.admin.kunena.php</filename>
-			<filename>toolbar.kunena.html.php</filename>
-			<filename>toolbar.kunena.php</filename>    
-			<folder>images</folder>
 			<folder>language</folder>
 			<folder>lib</folder>
-			<folder>plugin</folder>
 		</files>
 
 		<languages folder="languages/admin">

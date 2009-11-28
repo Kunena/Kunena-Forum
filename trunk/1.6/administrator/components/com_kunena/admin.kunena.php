@@ -14,26 +14,16 @@ defined( '_JEXEC' ) or die('Restricted access');
 $view = JRequest::getCmd('view', false);
 $task = JRequest::getVar('task');
 
-$legacy = JPATH_COMPONENT_ADMINISTRATOR .DS. 'legacy.admin.kunena.php';
+// Import the Kunena loader and defines.
+require_once (JPATH_COMPONENT_ADMINISTRATOR .DS. 'api.php');
 
-if (!is_file($legacy) || $view || strpos($task, '.'))
-{
-	// Import the Kunena loader and defines.
-	require_once (JPATH_COMPONENT_ADMINISTRATOR .DS. 'api.php');
+$document =& JFactory::getDocument();
+$document->addStyleSheet(KPATH_COMPONENT_RELATIVE .DS. 'media' .DS. 'css'. DS. 'administrator.css');
 
-	$document =& JFactory::getDocument();
-	$document->addStyleSheet(KPATH_COMPONENT_RELATIVE .DS. 'media' .DS. 'css'. DS. 'administrator.css');
+// Import the Kunena controller class.
+require_once (JPATH_COMPONENT .DS. 'controller.php');
 
-	// Import the Kunena controller class.
-	require_once (JPATH_COMPONENT .DS. 'controller.php');
-
-	// Execute the task.
-	$controller	= KunenaController::getInstance();
-	$controller->execute(JRequest::getVar('task'));
-	$controller->redirect();
-	return;
-}
-
-require_once($legacy);
-
-?>
+// Execute the task.
+$controller	= KunenaController::getInstance();
+$controller->execute(JRequest::getVar('task'));
+$controller->redirect();

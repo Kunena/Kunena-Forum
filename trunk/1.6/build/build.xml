@@ -42,7 +42,7 @@
 	<property name="kunena.backend" value="${project_dir}/administrator/components/com_kunena/" />
 	<property name="kunena.customfrontend" value="${custom_dir}/components/com_kunena/" />
 
-	<target name="dist" depends="mkdir,archive,init,copy,legacy_copy,package,legacy_package,tar,zip,gzip,bz2,info,cleanup" />
+	<target name="dist" depends="mkdir,archive,init,copy,legacy_copy,package,legacy_package,zip,gzip,bz2,info,cleanup" />
 
 	<target name="mkdir">
 		<mkdir dir="${tmp_dir}" />
@@ -83,9 +83,6 @@
 			<istrue value="${cfg.legacy}" />
 		</condition>
 
-		<condition property="do.tar">
-			<istrue value="${cfg.tar}" />
-		</condition>
 		<condition property="do.zip">
 			<istrue value="${cfg.zip}" />
 		</condition>
@@ -95,56 +92,22 @@
 		<condition property="do.bz2">
 			<istrue value="${cfg.bz2}" />
 		</condition>
-		<condition property="do.custom_build">
-			<istrue value="${custom_build}" />
-		</condition>
-		<condition property="do.customtar">
-			<and>
-				<istrue value="${cfg.tar}" />
-				<istrue value="${custom_build}" />
-			</and>
-		</condition>
-		<condition property="do.customzip">
-			<and>
-				<istrue value="${cfg.zip}" />
-				<istrue value="${custom_build}" />
-			</and>
-		</condition>
-		<condition property="do.customgzip">
-			<and>
-				<istrue value="${cfg.gzip}" />
-				<istrue value="${custom_build}" />
-			</and>
-		</condition>
-		<condition property="do.custombz2">
-			<and>
-				<istrue value="${cfg.bz2}" />
-				<istrue value="${custom_build}" />
-			</and>
-		</condition>
 
 		<!-- File Sets for Copy -->
 		<fileset id="admin" dir="${kunena.backend}">
 			<exclude name="*.xml" />
 			<exclude name="*install*" />
 
-			<exclude name="kunena.cpanel.php" />
-			<exclude name="legacy.*" />
-			<exclude name="toolbar.*" />
-			<exclude name="images/" />
+			<!-- Legacy -->
 			<exclude name="language/" />
 			<exclude name="lib/" />
-			<exclude name="plugin/" />
 		</fileset>
 		<fileset id="site" dir="${kunena.frontend}">
 			<exclude name="CHANGELOG.php" />
 			<exclude name="COPYRIGHT.php" />
 
-			<exclude name="class.kunena.php" />
-			<exclude name="legacy.*" />
-			<exclude name="kunena.files.distribution/" />
+			<!-- Legacy -->
 			<exclude name="lib/" />
-			<exclude name="template/" />
 		</fileset>
 		<fileset id="adminlang" dir="${project_dir}">
 			<include name="administrator/language/**" />
@@ -155,20 +118,11 @@
 
 		<!-- Legacy File Sets for Copy -->
 		<fileset id="legacy.admin" dir="${kunena.backend}">
-			<include name="kunena.cpanel.php" />
-			<include name="legacy.*" />
-			<include name="toolbar.*" />
-			<include name="images/**" />
 			<include name="language/**" />
 			<include name="lib/**" />
-			<include name="plugin/**" />
 		</fileset>
 		<fileset id="legacy.site" dir="${kunena.frontend}">
-			<include name="class.kunena.php" />
-			<include name="legacy.*" />
-			<include name="kunena.files.distribution/**" />
 			<include name="lib/**" />
-			<include name="template/**" />
 		</fileset>
 	</target>
 
@@ -223,9 +177,7 @@
 		<filter token="kunenaversionname" value="${xml.versionname}" />
 
 		<copy file="${project_dir}/administrator/components/com_kunena/legacy.${cfg.name}.xml" tofile="${tmp_dir}/${cfg.name}.xml" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/components/com_kunena/lib/kunena.config.class.php" todir="${tmp_dir}/legacy.site/lib" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/components/com_kunena/lib/kunena.defines.php" todir="${tmp_dir}/legacy.site/lib" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/components/com_kunena/lib/kunena.rss.php" todir="${tmp_dir}/legacy.site/lib" overwrite="true" filtering="true" />
 	</target>
 
 	<target name="tar" depends="package" if="do.tar">

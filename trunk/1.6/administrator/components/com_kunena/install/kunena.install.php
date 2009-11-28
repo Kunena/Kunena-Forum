@@ -161,52 +161,11 @@ function com_install()
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td width="20%" valign="top" style="padding: 10px;"><a
-			href="index2.php?option=com_kunena"><img
-			src="components/com_kunena/images/kunena.logo.png" alt="Kunena"
+			href="index.php?option=com_kunena"><img
+			src="components/com_kunena/media/images/kunena.png" alt="Kunena"
 			border="0"></a></td>
 
 		<td width="80%" valign="top" style="padding: 10px;">
-		<div style="clear: both; text-align: left; padding: 0 20px;">
-		<ul class="kunenascs">
-		<?php
-
-			//
-			// We might want to make the file copy below part of the install as well
-			//
-
-			jimport('joomla.filesystem.folder');
-		    $ret = JFolder::copy(JPATH_ROOT .DS. "components" .DS. "com_kunena" .DS. "kunena.files.distribution",
-		    				JPATH_ROOT .DS. "images" .DS. "kunenafiles", '', true);
-
-			if ($ret !== true)
-			{
-			?>
-
-			<li class="kunenascslisterror">
-			<div
-				style="border: 1px solid #FF6666; background: #FFCC99; padding: 10px; text-align: left; margin: 10px 0;">
-			<img src='images/publish_x.png' align='absmiddle' />
-			Creation/permission setting of the following directories failed: <br />
-			<pre> <?php echo JPATH_ROOT; ?>/images/kunenafiles/
-			<?php echo JPATH_ROOT;?>/images/kunenafiles/avatars
-			<?php echo JPATH_ROOT;?>/images/kunenafiles/avatars/gallery (you have to put avatars inside if you want to use it)
-			<?php echo JPATH_ROOT;?>/images/kunenafiles/category_images
-			<?php echo JPATH_ROOT;?>/images/kunenafiles/files
-			<?php echo JPATH_ROOT;?>/images/kunenafiles/images
-</pre> a) You can copy the contents of _kunena.files.distribution under
-			components/com_kunena to your Joomla root, under images/ folder.
-
-			<br />
-			b) If you already have the contents there, but Kunena installation
-			was not able to make them writable, then please do it manually.</div>
-
-			</li>
-
-			<?php
-			}
-		?>
-		</ul>
-		</div>
 
 		<div
 			style="border: 1px solid #FFCC99; background: #FFFFCC; padding: 20px; margin: 20px; clear: both;">
@@ -260,8 +219,8 @@ function com_install()
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td width="20%" valign="top" style="padding: 10px;"><a
-			href="index2.php?option=com_kunena"><img
-			src="components/com_kunena/images/kunena.logo.png" alt="Kunena"
+			href="index.php?option=com_kunena"><img
+			src="components/com_kunena/media/images/kunena.png" alt="Kunena"
 			border="0"></a></td>
 
 		<td width="80%" valign="top" style="padding: 10px;">

@@ -14,27 +14,19 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 $view = JRequest::getCmd('view', false);
 
-// If we are doing things the new way use the MVC.
-if ($view)
-{
-	// Import the languages.
-	$language =& JFactory::getLanguage();
-	$language->load('com_kunena');
-	
-	// Import the Kunena library loader.
-	require_once (JPATH_COMPONENT.'/libraries/import.php');
+// Import the languages.
+$language =& JFactory::getLanguage();
+$language->load('com_kunena');
 
-	// Import the Kunena controller class.
-	require_once (JPATH_COMPONENT.'/controller.php');
+// Import the Kunena library loader.
+require_once (JPATH_COMPONENT.'/libraries/import.php');
 
-	kimport('factory');
-	
-	// Execute the task.
-	$controller	= KunenaController::getInstance();
-	$controller->execute(JRequest::getVar('task'));
-	$controller->redirect();
-}
-// Load the legacy entry point.
-else {
-	require (dirname(__FILE__)).'/legacy.kunena.php';
-}
+// Import the Kunena controller class.
+require_once (JPATH_COMPONENT.'/controller.php');
+
+kimport('factory');
+
+// Execute the task.
+$controller	= KunenaController::getInstance();
+$controller->execute(JRequest::getVar('task'));
+$controller->redirect();

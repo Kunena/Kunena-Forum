@@ -75,7 +75,7 @@ function com_install()
 	if (version_compare(phpversion(), KUNENA_MIN_PHP, ">=") && version_compare($mysqlversion, KUNENA_MIN_MYSQL, ">"))
 	{
 		//change kunena menu icon
-		$kunena_db->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena&view=mainpage'");
+		$kunena_db->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena'");
 		$id = $kunena_db->loadResult();
 
 		//add new admin menu images

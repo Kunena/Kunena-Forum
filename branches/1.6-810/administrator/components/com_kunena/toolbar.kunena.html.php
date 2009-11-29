@@ -223,17 +223,6 @@ class CKunenaToolbar
 
     }
 
-function _MAINPAGE_MENU()
-	{
-		JToolBarHelper::title( 'Kunena - '.JText::_('Mainpage' ) );
-		JToolBarHelper::custom( 'show_mainpage', 'frontpage.png', 'frontpage_f2.png', JText::_('Mainpage'), false, false );
-		JToolBarHelper::custom( 'forum', 'edit.png', 'edit_f2.png', JText::_('Manage Forum'), false, false );
-		JToolBarHelper::custom( 'users', 'users.png', 'users.png', JText::_('Users'), false, false );
-		JToolBarHelper::custom( 'option', 'config.png', 'config_f2.png', JText::_('Options'), false, false );
-		JToolBarHelper::custom( 'check_system', 'apply.png', 'apply_f2.png', JText::_('Check System'), false, false );
-		JToolBarHelper::custom( 'news', 'css.png', 'css_f2.png', JText::_('Kunena Ultimate News'), false, false );
-		JToolBarHelper::custom( 'info', 'help.png', 'help_f2.png', JText::_('Help'), false, false );
-	}
 }
 ?>
 

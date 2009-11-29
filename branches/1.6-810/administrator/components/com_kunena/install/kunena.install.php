@@ -79,8 +79,9 @@ function com_install()
 		$id = $kunena_db->loadResult();
 
 		//add new admin menu images
-		$kunena_db->setQuery("UPDATE #__components SET admin_menu_img  = 'components/com_kunena/images/kunenafavicon.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
+		$kunena_db->setQuery("UPDATE #__components SET admin_menu_img  = 'components/com_kunena/images/kunenafavicon.png'" . ",   admin_menu_link = 'option=com_kunena&view=mainpage' " . "WHERE id='".$id."'");
 		$kunena_db->query() or trigger_dbwarning("Unable to set admin menu image.");
+
 
 		//install & upgrade class
 		$kunenaupgrade = new fx_Upgrade("com_kunena", "kunena.install.upgrade.xml", "kunena_", "install", false);

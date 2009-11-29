@@ -42,11 +42,13 @@
 	<administration>
 		<menu>Kunena Forum</menu>
 		<submenu>
+			<menu view="mainpage">Mainpage</menu>
 			<menu view="config">Configuration</menu>
 			<menu task="showAdministration">Forum Administration</menu>
 			<menu task="showprofiles">User Administration</menu>
 			<menu task="showsmilies">Edit Smilies</menu>
 			<menu task="ranks">Edit Ranks</menu>
+			<menu task="info">Info</menu>
 		</submenu>
 
 		<files>

@@ -74,12 +74,16 @@ function com_install()
 	//before we do anything else we want to check for minimum system requirements
 	if (version_compare(phpversion(), KUNENA_MIN_PHP, ">=") && version_compare($mysqlversion, KUNENA_MIN_MYSQL, ">"))
 	{
+			//add new admin menu link
+		$kunena_db->setQuery("UPDATE #__components SET admin_menu_link  = 'option=com_kunena&view=mainpage'" . "WHERE admin_menu_link  = 'option=com_kunena'");
+		$kunena_db->query() or trigger_dbwarning("Unable to set admin menu link.");
+		
 		//change kunena menu icon
-		$kunena_db->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena'");
+		$kunena_db->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena&view=mainpage'");
 		$id = $kunena_db->loadResult();
 
 		//add new admin menu images
-		$kunena_db->setQuery("UPDATE #__components SET admin_menu_img  = 'components/com_kunena/images/kunenafavicon.png'" . ",   admin_menu_link = 'option=com_kunena&view=mainpage' " . "WHERE id='".$id."'");
+		$kunena_db->setQuery("UPDATE #__components SET admin_menu_img  = 'components/com_kunena/images/kunenafavicon.png'"  . "WHERE id='".$id."'");
 		$kunena_db->query() or trigger_dbwarning("Unable to set admin menu image.");
 
 
@@ -124,6 +128,7 @@ function com_install()
 		$kunenaupgrade->doUpgrade();
 
 		// THIS PROCEDURE IS UNTRANSLATED!
+		
 	?>
 
 <style>

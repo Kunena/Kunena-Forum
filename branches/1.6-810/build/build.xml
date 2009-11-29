@@ -128,7 +128,6 @@
 			<exclude name="*.xml" />
 			<exclude name="*install*" />
 
-			<exclude name="base.php" />
 			<exclude name="legacy.*" />
 			<exclude name="toolbar.*" />
 			<exclude name="images/" />

@@ -36,6 +36,7 @@ Custom Branch 810
 29-Nov-2009 Matias
 
 ^ [#18267] Change \r\n to \n
+^ [#18267] Fixed build scripts
 
 23-Nov-2009 810
 ^ [#18267] config fixed

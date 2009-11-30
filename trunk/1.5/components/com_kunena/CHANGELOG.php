@@ -34,6 +34,7 @@ Legend:
 Kunena 1.5.8
 
 30-Nov-2009 Matias
+^ [#18763] Update version info to 1.5.8RC1
 + [#18891] Add support for few different SEF formats
 
 26-Nov-2009 Matias

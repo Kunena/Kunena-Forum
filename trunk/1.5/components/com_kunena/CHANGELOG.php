@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.8
 
+30-Nov-2009 Matias
++ [#18891] Add support for few different SEF formats
+
 26-Nov-2009 Matias
 # [#18844] Messages view: no more empty last pages if messages get deteted
 # [#18845] Search does not work with Greek (and some other) characters

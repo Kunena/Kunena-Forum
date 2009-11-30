@@ -34,6 +34,7 @@ global $is_Moderator;
 
 // ERROR: global scope mix
 global $message;
+global $Itemid;
 
 // Get all the variables we need and strip them in case
 $action 		= JRequest::getCmd('action', '');
@@ -73,7 +74,6 @@ $app = JFactory::getApplication();
 // Redirect Forum Jump
 if (isset($_POST['func']) && $func == "showcat")
 {
-	global $Itemid;
 	header("HTTP/1.1 303 See Other");
 	header("Location: " . htmlspecialchars_decode(JRoute::_('index.php?option=com_kunena&amp;Itemid=' . $Itemid . '&amp;func=showcat&amp;catid=' . $catid)));
 	$app->close();

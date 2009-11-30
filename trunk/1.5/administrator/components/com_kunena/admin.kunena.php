@@ -844,7 +844,11 @@ function showConfig($option)
 	// New for 1.5.7 -> integration AlphaUserPoints
 	$lists['alphauserpoints'] = JHTML::_('select.genericlist', $yesno, 'cfg_alphauserpoints', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->alphauserpoints);
 	$lists['alphauserpointsrules'] = JHTML::_('select.genericlist', $yesno, 'cfg_alphauserpointsrules', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->alphauserpointsrules);
-
+	// New for 1.5.8 -> SEF
+	$lists['sef'] = JHTML::_('select.genericlist', $yesno, 'cfg_sef', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->sef);
+	$lists['sefcats'] = JHTML::_('select.genericlist', $yesno, 'cfg_sefcats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->sefcats);
+	$lists['sefutf8'] = JHTML::_('select.genericlist', $yesno, 'cfg_sefutf8', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->sefutf8);
+	
     html_Kunena::showConfig($fbConfig, $lists, $option);
 }
 

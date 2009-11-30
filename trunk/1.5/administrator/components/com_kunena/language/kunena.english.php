@@ -24,6 +24,15 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.5.8
 
+define('_KUNENA_SEO_SETTINGS', 'SEO Settings');
+define('_KUNENA_SEF', 'Search Engine Friendly URLs');
+define('_KUNENA_SEF_DESC', 'Select whether or not URLs are optimized for Search Engines. NOTE: Kunena accepts SEF URLs even if this feature has been turned off.');
+define('_KUNENA_SEF_CATS', 'Do Not Use Category IDs');
+// Please use words from your own (or nearby) language in the next URL, but only using a-z:
+define('_KUNENA_SEF_CATS_DESC', 'Slightly better looking URLs: http://www.domain.com/forum/category/123-message . WARNING: If set to "No", Kunena will no longer accept these URLs!');
+define('_KUNENA_SEF_UTF8', 'Enable UTF8 Support');
+// Please use words from your own (or nearby) language in the next URL, but make sure that they contain UTF8 letters:
+define('_KUNENA_SEF_UTF8_DESC', 'Use this option if your SEF URLs are not readable. Result: http://www.domain.com/forum/2-Catégorie/123-Meßage . NOTE: Kunena accepts UTF8 URLs even if this feature has been turned off.');
 define('_KUNENA_SYNC_USERS_OPTIONS', 'Options');
 define('_KUNENA_SYNC_USERS_CACHE', 'Clean user cache');
 define('_KUNENA_SYNC_USERS_CACHE_DESC', 'This function allows user to see hidden forums right away, if you change user group in Joomla (Registered, Author etc).');

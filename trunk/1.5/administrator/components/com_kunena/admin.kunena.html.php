@@ -831,6 +831,44 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
             </table>
 		</fieldset>
 
+       <fieldset>
+			<legend> <?php echo _KUNENA_SEO_SETTINGS ?></legend>
+
+            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"   width="25%"><?php echo _KUNENA_SEF ?>
+                    </td>
+
+                    <td align = "left" valign = "top"  width="25%" ><?php echo $lists['sef']; ?></td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SEF_DESC ?>
+                    </td>
+                </tr>
+
+				<tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"   width="25%"><?php echo _KUNENA_SEF_CATS ?>
+                    </td>
+
+                    <td align = "left" valign = "top"  width="25%" ><?php echo $lists['sefcats']; ?></td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SEF_CATS_DESC ?>
+                    </td>
+                </tr>
+
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"   width="25%"><?php echo _KUNENA_SEF_UTF8 ?>
+                    </td>
+
+                    <td align = "left" valign = "top"  width="25%" ><?php echo $lists['sefutf8']; ?></td>
+ 
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SEF_UTF8_DESC ?>
+                    </td>
+                </tr>
+                
+			</table>
+		</fieldset>
+		
 		<div class="fbfuncsubtitle"><?php echo _COM_A_FRONTEND ?> <a name="frontend" id="frontend" > </a></div>
 
           <fieldset>

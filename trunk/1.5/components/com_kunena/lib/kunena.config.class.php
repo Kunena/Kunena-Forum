@@ -374,7 +374,11 @@ class CKunenaConfig extends CKunenaConfigBase
     var $alphauserpoints         = 0; // Integration AlphaUserPoints component
 	var $alphauserpointsrules    = 0; // Integration rules for AlphaUserPoints component
 	var $alphauserpointsnumchars = 0; // Integration feature for AlphaUserPoints component
-
+	// New 1.5.8 config variables
+	var $sef                     = 1;
+	var $sefcats                 = 0;
+	var $sefutf8                 = 0;
+	
     public function __construct($KunenaUser=null)
     {
         parent::__construct();

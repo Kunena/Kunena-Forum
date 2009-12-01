@@ -434,7 +434,6 @@ class CKunenaTools {
     			$array[$current]->time_last_msg = $array[$child]->time_last_msg;
     		}
     	}
-    	if (isset($array[$current]->id)) echo "C",$current,': ', $array[$current]->numTopics, '-', $array[$current]->numPosts;
     }
     
     function reCountBoards() 

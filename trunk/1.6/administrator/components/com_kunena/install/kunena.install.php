@@ -75,12 +75,12 @@ function com_install()
 	if (version_compare(phpversion(), KUNENA_MIN_PHP, ">=") && version_compare($mysqlversion, KUNENA_MIN_MYSQL, ">"))
 	{
 		//change kunena menu icon
-		$kunena_db->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena'");
-		$id = $kunena_db->loadResult();
+		//$kunena_db->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena'");
+		//$id = $kunena_db->loadResult();
 
 		//add new admin menu images
-		$kunena_db->setQuery("UPDATE #__components SET admin_menu_img  = 'components/com_kunena/images/kunenafavicon.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
-		$kunena_db->query() or trigger_dbwarning("Unable to set admin menu image.");
+		//$kunena_db->setQuery("UPDATE #__components SET admin_menu_img  = 'components/com_kunena/images/kunenafavicon.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
+		//$kunena_db->query() or trigger_dbwarning("Unable to set admin menu image.");
 
 		//install & upgrade class
 		$kunenaupgrade = new fx_Upgrade("com_kunena", "kunena.install.upgrade.xml", "kunena_", "install", false);

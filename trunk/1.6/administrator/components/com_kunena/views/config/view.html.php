@@ -48,29 +48,45 @@ class KunenaViewConfig extends JView
 		$this->assignRef('state',	$state);
 		$this->assignRef('options',	$form);
 
+		// Add submenu
+		$contents = '';
+		ob_start();
+		require_once( JPATH_ROOT . DS . 'administrator' . DS . 'components' . DS . 'com_kunena' . DS . 'views' . DS . 'config' . DS . 'tmpl' . DS . 'navigation.php' );
+
+		$contents = ob_get_contents();
+		ob_end_clean();
+
+		$document	=& JFactory::getDocument();
+
+		$document->setBuffer($contents, 'modules', 'submenu');
 
 		// Render the layout.
 		parent::display($tpl);
 	}
-	
+
+	public function setToolBar()
+	{
+	    self::_displayMainToolbar();
+	}
+
 	protected function _displayMainToolbar()
 	{
-		JToolBarHelper::title('Kunena: '.JText::_('Config'), 'generic');
+		JToolBarHelper::title('Kunena: '.JText::_('Configuration'), 'config');
+
+		// We can't use the toolbar helper here because there is no generic link button.
+		$bar = &JToolBar::getInstance('toolbar');
+		$bar->appendButton('Link', 'config', 'Import/Export', 'index.php?option=com_kunena&view=config&layout=import');
+
+		JToolBarHelper::divider();
 
 		JToolBarHelper::save('config.save');
 		JToolBarHelper::apply('config.apply');
 		JToolBarHelper::cancel('config.cancel');
-
-		JToolBarHelper::divider();
-
-		// We can't use the toolbar helper here because there is no generic link button.
-		$bar = &JToolBar::getInstance('toolbar');
-		$bar->appendButton('Link', 'config', 'Import', 'index.php?option=com_kunena&view=config&layout=import');
 	}
-	
+
 	protected function _displayImportToolbar()
 	{
-		JToolBarHelper::title('Kunena: '.JText::_('Config Import/Export'), 'generic');
+		JToolBarHelper::title('Kunena: '.JText::_('Configuration Import/Export'), 'config');
 
 		JToolBarHelper::custom('config.import', 'import', 'import', 'Import', false);
 		JToolBarHelper::custom('config.export', 'export', 'export', 'Export', false);

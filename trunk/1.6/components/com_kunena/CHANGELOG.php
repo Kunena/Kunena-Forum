@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+1-Dec-2009 fxstein
++ [#18906] Initial draft of new backend framework
+
 28-Nov-2009 fxstein
 # [#18874] Minor fixes to klink html helper class
 

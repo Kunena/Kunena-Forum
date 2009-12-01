@@ -76,6 +76,11 @@ abstract class JHtmlKconfig
 	            $output .= '      <input type="text" name="config['.$setting.']" id="config_'.$setting.'" value="'.$this->options->get($setting).'" size="5" />';
 
 	            break;
+	        case 'multiline':
+	            // TODO: Make multi line text input
+	            $output .= '      <input type="text" name="config['.$setting.']" id="config_'.$setting.'" value="'.$this->options->get($setting).'" size="5" />';
+
+	            break;
 	        case 'yes/no':
 	            $output .= '      <select name="config['.$setting.']" id="config_'.$setting.'">';
 	            $output .= '        <option value="no"'.(($this->options->get($setting, 'kunena') == 'no') ? ' selected="selected"' : '').'>No</option>';

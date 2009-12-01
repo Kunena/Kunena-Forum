@@ -22,6 +22,18 @@ jimport('joomla.application.component.helper');
  */
 class KunenaController extends JController
 {
+    function __construct()
+	{
+		parent::__construct();
+
+		$task	= JRequest::getCmd( 'task' , '' );
+
+		$document	=& JFactory::getDocument();
+
+		// Placeholder for additional CSS, JS or ajax
+
+	}
+
 	/**
 	 * Method to get the appropriate controller.
 	 *
@@ -87,7 +99,7 @@ class KunenaController extends JController
 		$document = JFactory::getDocument();
 
 		// Set the default view name and format from the Request.
-		$vName	 = JRequest::getWord('view', 'config');
+		$vName	 = JRequest::getWord('view', 'kunena');
 		$lName	 = JRequest::getWord('layout', 'default');
 		$vFormat = $document->getType();
 
@@ -113,6 +125,12 @@ class KunenaController extends JController
 
 			// Render the view.
 			$view->display();
+
+			// Display Toolbar. View must have setToolBar method
+			if( method_exists( $view , 'setToolBar') )
+			{
+				$view->setToolBar();
+			}
 		}
 	}
 }

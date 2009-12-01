@@ -11,7 +11,7 @@
 	<version>1.6.0-DEV</version>
 	<versionname>Parli</versionname>
 	<build>@kunenaversionbuild@</build>
-	<description>Kunena Forum</description>
+	<description>Kunena - The #1 Forum Component for Joomla</description>
 	
 	<installfile>install/kunena.install.php</installfile>
 	<uninstallfile>install/kunena.uninstall.php</uninstallfile>
@@ -34,19 +34,27 @@
 		<folder>models</folder>
 		<folder>views</folder>
 	</files>
+	<files folder="legacy.site">
+		<folder>lib</folder>
+	</files>
 	
 	<languages folder="languages/site">
 		<language tag="en-GB">en-GB.com_kunena.ini</language>
 	</languages>
 	
 	<administration>
-		<menu>Kunena Forum</menu>
+		<menu link="option=com_kunena" img="components/com_kunena/media/icons/kunena-favicon.png">Kunena Forum</menu>
 		<submenu>
-			<menu view="config">Configuration</menu>
-			<menu task="showAdministration">Forum Administration</menu>
-			<menu task="showprofiles">User Administration</menu>
-			<menu task="showsmilies">Edit Smilies</menu>
-			<menu task="ranks">Edit Ranks</menu>
+			<menu view="config" img="components/com_kunena/media/icons/config-favicon.png">Configuration</menu>
+			<menu view="forums" img="components/com_kunena/media/icons/forums-favicon.png">Forums</menu>
+			<menu view="users" img="components/com_kunena/media/icons/users-favicon.png">Users</menu>
+			<menu view="smilies" img="components/com_kunena/media/icons/smilies-favicon.png">Smilies</menu>
+			<menu view="ranks" img="components/com_kunena/media/icons/ranks-favicon.png">Ranks</menu>
+			<menu view="templates" img="components/com_kunena/media/icons/templates-favicon.png">Templates</menu>
+			<menu view="queue" img="components/com_kunena/media/icons/queue-favicon.png">Job Queue</menu>
+			<menu view="tools" img="components/com_kunena/media/icons/tools-favicon.png">Tools</menu>
+			<menu link="option=com_plugins&amp;filter_type=kunena" img="components/com_kunena/media/icons/plugins-favicon.png">Plugins</menu>
+			<menu view="about" img="components/com_kunena/media/icons/about-favicon.png">About</menu>
 		</submenu>
 
 		<files>
@@ -54,14 +62,17 @@
 			<folder>install</folder>
 		</files>
 		<files folder="admin">
-			<filename>index.html</filename>	
+			<filename>index.html</filename>
 			<filename>api.php</filename>
 			<filename>admin.kunena.php</filename>
-			<filename>controller.php</filename>
 			<folder>controllers</folder>
 			<folder>media</folder>
 			<folder>models</folder>
 			<folder>views</folder>
+		</files>
+		<files folder="legacy.admin">
+			<folder>language</folder>
+			<folder>lib</folder>
 		</files>
 
 		<languages folder="languages/admin">

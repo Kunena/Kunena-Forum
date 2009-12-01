@@ -95,8 +95,8 @@
 
 		<!-- File Sets for Copy -->
 		<fileset id="admin" dir="${kunena.backend}">
-			<exclude name="*.xml" />
 			<exclude name="*install*" />
+			<exclude name="*.xml" />
 
 			<!-- Legacy -->
 			<exclude name="language/" />
@@ -176,7 +176,6 @@
 		<filter token="kunenaversionbuild" value="${build.number}" />
 		<filter token="kunenaversionname" value="${xml.versionname}" />
 
-		<copy file="${project_dir}/administrator/components/com_kunena/legacy.${cfg.name}.xml" tofile="${tmp_dir}/${cfg.name}.xml" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/components/com_kunena/lib/kunena.defines.php" todir="${tmp_dir}/legacy.site/lib" overwrite="true" filtering="true" />
 	</target>
 

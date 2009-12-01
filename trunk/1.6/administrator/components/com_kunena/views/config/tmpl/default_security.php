@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 ?>
 <fieldset>
-	<legend><?php echo JText::_('Setup'); ?></legend>
+	<legend><?php echo JText::_('Security'); ?></legend>
 
 	<table width="100%" class="admintable" cellspacing="1">
 		<tr>

@@ -10,7 +10,7 @@
 
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.controller');
+// jimport('joomla.application.component.controller');
 
 /**
  * The Kunena Configuration Controller
@@ -19,8 +19,13 @@ jimport('joomla.application.component.controller');
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaControllerConfig extends JController
+class KunenaControllerConfig extends KunenaController
 {
+    function __construct()
+	{
+		parent::__construct();
+	}
+
 	/**
 	 * Method to import the configuration via string or upload.
 	 *

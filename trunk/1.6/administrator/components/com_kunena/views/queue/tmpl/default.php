@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: default.php 1020 2009-08-17 18:45:26Z louis $
+ * @version		$Id$
  * @package		Kunena
  * @subpackage	com_kunena
  * @copyright	Copyright (C) 2008 - 2009 Kunena Team. All rights reserved.

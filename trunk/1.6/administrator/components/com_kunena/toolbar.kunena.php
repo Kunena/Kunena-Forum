@@ -5,7 +5,7 @@
 
 <?php
 /**
- * @version		$Id: admin.kunena.php 1222 2009-11-28 04:09:05Z mahagr $
+ * @version		$Id$
  * @package		Kunena
  * @subpackage	com_kunena
  * @copyright	Copyright (C) 2008 - 2009 Kunena Team. All rights reserved.

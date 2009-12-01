@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: install.sample.php $
+ * @version		$Id$
  * @package		Kunena
  * @subpackage	com_kunena
  * @copyright	Copyright (C) 2008 - 2009 Kunena Team. All rights reserved.

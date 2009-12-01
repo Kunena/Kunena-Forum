@@ -378,14 +378,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                         </tr>
 
                         <tr>
-                            <th align = "center" colspan = "13"> <?php
-                            echo $pageNav->getLimitBox(); ?>
-                            </th>
-                        </tr>
-
-                        <tr>
-                            <td align = "center" colspan = "13"> <?php echo  $pageNav->getPagesLinks() ; ?>
-                            </td>
+                            <th align = "center" colspan = "13"><?php echo  $pageNav->getLimitBox().$pageNav->getResultsCounter().$pageNav->getPagesLinks(); ?>
                         </tr>
             </table>
 
@@ -2656,13 +2649,8 @@ echo $pane->endPane();
 
     <tr>
         <th align = "center" colspan = "7"> <?php
-        echo $pageNavSP->getLimitBox(); ?>
+        echo $pageNavSP->getLimitBox().$pageNavSP->getResultsCounter().$pageNavSP->getPagesLinks(); ?>
         </th>
-    </tr>
-
-    <tr>
-        <td align = "center" colspan = "7"> <?php echo $pageNavSP->getPagesCounter(); ?>
-        </td>
     </tr>
             </table>
         </form>
@@ -2791,15 +2779,11 @@ echo $pane->endPane();
     <?php echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
 
     <tr>
-        <th align = "center" colspan = "7"> <?php
-        echo $pageNav->getLimitBox(); ?>
+        <th align = "center" colspan = "7"> <?php echo  $pageNav->getLimitBox().$pageNav->getResultsCounter().$pageNav->getPagesLinks(); ?>
         </th>
     </tr>
 
-    <tr>
-        <td align = "center" colspan = "7"> <?php echo $pageNav->getPagesCounter(); ?>
-        </td>
-    </tr>
+    
 
     <tr>
         <td colspan = "7"><?php echo _KUNENA_NOTEUS; ?>
@@ -3353,14 +3337,10 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
                     }
                 ?>
             <tr>
-        		<th align = "center" colspan = "6"> <?php
-        		echo $pageNavSP->getLimitBox(); ?>
+        		<th align = "center" colspan = "6"> <?php echo  $pageNavSP->getLimitBox().$pageNavSP->getResultsCounter().$pageNavSP->getPagesLinks(); ?>
 		        </th>
 		    </tr>
-            <tr>
-        		<td align = "center" colspan = "6"> <?php echo $pageNavSP->getPagesCounter(); ?>
-		        </td>
-            </tr>
+            
       	</table>
                 <input type = "hidden" name = "option" value = "<?php echo $option; ?>"><input type = "hidden" name = "task" value = "showsmilies"><input type = "hidden" name = "boxchecked" value = "0">
                 <?php echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
@@ -3497,11 +3477,9 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
 
     <tr>
       <th align="center" colspan="7"><?php
-      echo $pageNavSP->getLimitBox(); ?></th>
+      echo $pageNavSP->getLimitBox().$pageNavSP->getResultsCounter().$pageNavSP->getPagesLinks(); ?></th>
     </tr>
-    <tr>
-      <td align="center" colspan="7"><?php echo $pageNavSP->getPagesCounter(); ?></td>
-	</tr>
+    
   </table>
   </form>
 

@@ -35,6 +35,7 @@ Kunena 1.5.8
 
 01-Dec-2009 810
 # [#18828] Regression: Fix for "Categories show 0 posts" shows extra characters
+# [#18908] Administrator: Cannot browse through userlist
 
 30-Nov-2009 Matias
 ^ [#18763] Update version info to 1.5.8RC1

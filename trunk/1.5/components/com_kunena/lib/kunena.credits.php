@@ -55,6 +55,7 @@ global $is_Moderator;
                           <li class="fb_teammember"><a href="http://www.kunena.com/community/profile?userid=148" target='_blank' rel='follow'>whouse</a> Kunena developer</li>
                           <li class="fb_teammember"><a href="http://www.kunena.com/community/profile?userid=1288" target='_blank' rel='follow'>xillibit</a> Kunena moderator</li>
                           <li class="fb_teammember"><a href="http://www.kunena.com/community/profile?userid=447" target='_blank' rel='follow'>@quila</a> Kunena moderator</li>
+                          <li class="fb_teammember"><a href="http://www.kunena.com/community/profile?userid=634" target='_blank' rel='follow'>810</a> Kunena moderator</li>
                         </ul></td>
                     </tr>
                     <tr valign="top">
@@ -78,14 +79,6 @@ global $is_Moderator;
     </div>
   </div>
 </div>
-
-<?php
-require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
-?>
- <!-- Version Info -->
-<div class="fbfooter"><?php echo CKunenaVersion::versionHTML(); ?></div>
-<!-- /Version Info -->
-
 <!-- Begin: Forum Jump -->
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
   <div class="<?php echo $boardclass; ?>_bt_cvr2">

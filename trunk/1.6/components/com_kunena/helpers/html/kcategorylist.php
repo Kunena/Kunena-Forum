@@ -13,6 +13,10 @@
 // no direct access
 defined('_JEXEC') or die;
 
+//
+// TODO: This should not be a HTML helper. Please remove.
+//
+
 /**
  * Utility class for Kunena categories
  *
@@ -41,7 +45,7 @@ abstract class JHtmlKCategoryList
 			$db		= &JFactory::getDbo();
 
 			// TODO: merge into categories model
-			
+
 			kimport('database.query');
 			$query	= new KQuery;
 
@@ -56,7 +60,7 @@ abstract class JHtmlKCategoryList
 	    	}
 	    	JArrayHelper::toInteger($config['filter.id']);
 	    	$query->where('c.id IN ('.implode(',', $config['filter.id']).')');
-		
+
 			// Filter on the published state
 			if (isset($config['filter.published']))
 			{
@@ -69,9 +73,9 @@ abstract class JHtmlKCategoryList
 					$query->where('c.published IN ('.implode(',', $config['filter.published']).')');
 				}
 			}
-	    	
+
 			$query->order('c.parent, c.ordering');
-			
+
 			$db->setQuery($query->toString());
 			$rows = $db->loadObjectList();
 
@@ -79,7 +83,7 @@ abstract class JHtmlKCategoryList
 		    foreach ($rows as $row) {
     			$nested[$row->parent][] = $row;
 		    }
-			
+
 			// Assemble the list options.
 			self::$items[$hash] = array();
 			self::_getItems($nested, $hash);
@@ -87,7 +91,7 @@ abstract class JHtmlKCategoryList
 
 		return self::$items[$hash];
 	}
-	
+
 	protected static function _getItems(&$nested, $hash, $parent=0, $level=0)
 	{
 		if (empty($nested[$parent])) return '';

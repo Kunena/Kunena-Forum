@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 ?>
 <table width="100%" border="0">
 	<tr>
-		<td width="55%" valign="top">
+		<td width="65%" valign="top">
 			<div id="cpanel">
 				<?php echo $this->addIcon('config.png','index.php?option=com_kunena&view=config', JText::_('Configuration'));?>
 				<?php echo $this->addIcon('forums.png','index.php?option=com_kunena&view=forums', JText::_('Forums'));?>
@@ -27,7 +27,7 @@ defined('_JEXEC') or die;
 				<?php echo $this->addIcon('help.png','http://docs.kunena.com', JText::_('Help'), true ); ?>
 			</div>
 		</td>
-		<td width="45%" valign="top">
+		<td width="35%" valign="top">
 			<?php
 				echo $this->pane->startPane( 'stat-pane' );
 				echo $this->pane->startPanel( JText::_('Welcome to Kunena') , 'welcome' );

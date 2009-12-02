@@ -33,5 +33,33 @@ defined('_JEXEC') or die;
 				<input type="text" name="config[flood_protection]" id="config_flood_protection" value="<?php echo $this->options->get('flood_protection', 10); ?>" size="5" />
 			</td>
 		</tr>
+		<tr>
+			<td width="40%" class="key">
+				<label for="config_flood_protection" class="hasTip" title="Flood Protection::The amount of seconds a user has to wait between two consecutive posts. Set to 0 (zero) to turn Flood Protection off. NOTE: Flood Protection can cause degradation of performance.">Flood Protection</label>
+			</td>
+			<td>
+				<input type="text" name="config[flood_protection]" id="config_flood_protection" value="<?php echo $this->options->get('flood_protection', 10); ?>" size="5" />
+			</td>
+		</tr>
 	</table>
 </fieldset>
+<fieldset>
+	<legend><?php echo JText::_('Setup'); ?></legend>
+
+	<table width="100%" class="admintable" cellspacing="1">
+		<tr>
+			<td width="40%" class="key">
+				<label for="config_avatar_src" class="hasTip" title="Avatars::...">Avatars</label>
+			</td>
+			<td>
+				<select name="config[avatar_src]" id="config_avatar_src">
+					<option value="kunena"<?php echo (($this->options->get('avatar_src', 'kunena') == 'kunena') ? ' selected="selected"' : ''); ?>>Kunena</option>
+					<option value="cb"<?php echo (($this->options->get('avatar_src', 'kunena') == 'cb') ? ' selected="selected"' : ''); ?>>Community Builder</option>
+					<option value="jomsocial"<?php echo (($this->options->get('avatar_src', 'kunena') == 'jomsocial') ? ' selected="selected"' : ''); ?>>JomSocial</option>
+					<option value="gravatar"<?php echo (($this->options->get('avatar_src', 'kunena') == 'gravatar') ? ' selected="selected"' : ''); ?>>Gravatar</option>
+				</select>
+			</td>
+		</tr>
+	</table>
+</fieldset>
+

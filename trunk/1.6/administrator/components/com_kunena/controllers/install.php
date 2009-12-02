@@ -24,8 +24,7 @@ class KunenaControllerInstall extends JController
 	public function __construct()
 	{
 		parent::__construct();
-		JRequest::setVar('hidemainmenu', 1);
-		JToolBarHelper::title('<span>'.KUNENA_VERSION.'</span> '.JText::_('Installer'));
+		JToolBarHelper::title('<span>KUNENA '.KUNENA_VERSION.'</span> '. JText::_( 'Installer' ), 'about' );
 	}
 
 	/**
@@ -42,29 +41,41 @@ class KunenaControllerInstall extends JController
 		$reqs = $model->getRequirements();
 		if (!empty($reqs->fail))
 		{
-			// If requirements are not met, do nothing
+			// If requirements are not met, do not install
 			$this->setRedirect('index.php?option=com_kunena&view=install');
 			return;
 		}
 
+		$version = $model->getLastVersion();
 
-		$schema = $model->getSchemaFromDatabase();
-		//echo "<pre>",htmlentities($schema->saveXML()),"</pre>";
-		$diff = $model->getSchemaDiff($schema, KUNENA_INSTALL_SCHEMA_FILE);
-		echo "<pre>",htmlentities($diff->saveXML()),"</pre>";
+		switch ($version->state)
+		{
+			case '':
+				$results = $model->beginInstall();
+				if (count($results)) break;
+			case 'migrateDatabase':
+				$results = $model->migrateDatabase();
+				if (count($results)) break;
+			case 'upgradeDatabase':
+				$results = $model->upgradeDatabase();
+				$stop = true;
+				break;
+			default:
+				$results = $model->beginInstall();
+		}
 
-		$sql = $model->getSchemaSQL($diff);
-		echo "<pre>",print_r($sql),"</pre>";
+		foreach ($results as $result)
+		{
+			if (empty($result['action'])) continue;
+			echo '<div>', $result['action'], ': ', $result['name'], '</div>';
+		}
 
-		if (isset($sql['kunena_version'])) echo "UPDATE VERSION TABLE";
-		return;
-
-
-		$model->initialize();
-
-
-
-		// Start installation
-		$model->insertVersion();
+		if (!isset($stop)) {
+			$document =& JFactory::getDocument();
+			$document->addScriptDeclaration("setTimeout(\"location='".JRoute::_('index.php?option=com_kunena&view=install&task=install', false)."'\", 500);");
+			JRequest::setVar('hidemainmenu', 1);
+		} else {
+			echo "Done!";
+		}
 	}
 }

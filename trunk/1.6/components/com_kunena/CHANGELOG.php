@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+2-Dec-2009 Matias
++ [#18912] Implement new installer: add most missing logic to upgrade database, field/table renaming and custom queries still missing
+
 1-Dec-2009 fxstein
 + [#18906] Initial draft of new backend framework
 

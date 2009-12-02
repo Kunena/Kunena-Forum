@@ -40,15 +40,17 @@ class KunenaViewInstall extends JView
 		$this->assignRef('requirements', $this->get('Requirements'));
 		$this->assign('installedVersion', $this->get('InstalledVersion'));
 		$this->assign('installAction', $this->get('InstallAction'));
-		
+
 		// Push out the view data.
 		$this->assignRef('state',	$state);
+
+		$this->assign('link', JURI::root().'administrator/index.php?option=com_kunena&view=install&task=install');
 
 		$search = array ('#COMPONENT_OLD#','#VERSION_OLD#','#BUILD_OLD#','#VERSION#','#BUILD#');
 		$replace = array ($this->installedVersion->component, $this->installedVersion->version, $this->installedVersion->build, KUNENA_VERSION, KUNENA_VERSION_BUILD);
 		$this->assign('txt_action', str_replace($search, $replace, JText::_('K_INSTALL_LONG_'.$this->installAction)));
 		$this->assign('txt_install', str_replace($search, $replace, JText::_('K_INSTALL_'.$this->installAction)));
-		
+
 		// Render the layout.
 		$app =& JFactory::getApplication();
 		if (!empty($this->requirements->fail)) $app->enqueueMessage('Kunena Forum Installation Failed!', 'error');
@@ -56,10 +58,18 @@ class KunenaViewInstall extends JView
 		JRequest::setVar('hidemainmenu', 1);
 		parent::display($tpl);
 	}
-	
-	protected function _displayMainToolbar()
-	{
-		JToolBarHelper::title('<span>'.KUNENA_VERSION.'</span> '.JText::_('Installer'));
-	}
 
+	/**
+	 * Private method to set the toolbar for this view
+	 *
+	 * @access private
+	 *
+	 * @return null
+	 **/
+	function setToolBar()
+	{
+		// Set the titlebar text
+		JToolBarHelper::title('<span>KUNENA '.KUNENA_VERSION.'</span> '. JText::_( 'Installer' ), 'about' );
+
+	}
 }

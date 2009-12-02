@@ -346,7 +346,7 @@
     <field name="installdate" type="date" null="0"/>
     <field name="build" type="varchar(20)" null="0"/>
     <field name="versionname" type="varchar(40)" null="1"/>
-    <field name="status" type="varchar(32)" null="1"/>
+    <field name="state" type="varchar(32)" null="0" default="unknown"/>
     <key name="PRIMARY" unique="1" columns="id"/>
   </table>
   <table name="kunena_whoisonline">

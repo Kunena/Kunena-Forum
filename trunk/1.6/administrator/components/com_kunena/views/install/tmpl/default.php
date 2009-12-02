@@ -10,11 +10,6 @@
 
 defined('_JEXEC') or die;
 
-// Display the main toolbar.
-$this->_displayMainToolbar();
-
-$link = JURI::root().'administrator/index.php?option=com_kunena&task=install.install';
-
 ?>
 <?php if (!empty($this->requirements->fail)): ?>
 <table style="border: 1px solid #FFCC99; background: #FFFFCC; padding: 5px; margin: 0 0 20px 20px; clear: both;">
@@ -44,7 +39,7 @@ $link = JURI::root().'administrator/index.php?option=com_kunena&task=install.ins
 	</tr>
 	<tr>
 		<td style="text-align: center;">
-			<input type="button" onclick="window.location='<?php echo $link; ?>'" value="<?php echo $this->txt_install; ?>" style="padding: 10px; text-align: center; font-weight: bold; background: #aadd44; border: solid 1px #669900; cursor: pointer;" />
+			<input type="button" onclick="window.location='<?php echo $this->link; ?>'" value="<?php echo $this->txt_install; ?>" style="padding: 10px; text-align: center; font-weight: bold; background: #aadd44; border: solid 1px #669900; cursor: pointer;" />
 		</td>
 	</tr>
 </table>

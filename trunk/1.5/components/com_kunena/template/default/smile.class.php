@@ -321,7 +321,7 @@ class smile
 
 						<div id="image" style="display: none;">
 							<?php @print(_KUNENA_EDITOR_IMAGE_SIZE); ?><input name="size" type="text" size="10" maxlength="10" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKSIZE);?>')"> 
-							<?php @print(_KUNENA_EDITOR_IMAGE_URL); ?><input name="url2" type="text" size="40" maxlength="100" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKURL);?>')"> 
+							<?php @print(_KUNENA_EDITOR_IMAGE_URL); ?><input name="url2" type="text" size="40" maxlength="250" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKURL);?>')"> 
 							<input type="button" name="Link" accesskey = "p" value="<?php @print(_KUNENA_EDITOR_IMAGE_INSERT); ?>" onclick="check_image()" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY);?>')">
 							<script type="text/javascript">
 								function check_image() {
@@ -355,7 +355,7 @@ class smile
 							</select>
 							<?php @print(_KUNENA_EDITOR_VIDEO_ID); ?><input name="videoid" type="text" size="11" maxlength="11" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOID);?>')"> 
 							<input type="button" name="Video" accesskey = "p" value="<?php @print(_KUNENA_EDITOR_IMAGE_INSERT); ?>" onclick="check_video('video1')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY1);?>')"><br>
-							<?php @print(_KUNENA_EDITOR_VIDEO_URL); ?><input name="videourl" type="text" size="30" maxlength="100" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOURL);?>')">
+							<?php @print(_KUNENA_EDITOR_VIDEO_URL); ?><input name="videourl" type="text" size="30" maxlength="250" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOURL);?>')">
 							<input type="button" name="Video" accesskey = "p" value="<?php @print(_KUNENA_EDITOR_IMAGE_INSERT); ?>" onclick="check_video('video2')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY2);?>')">
 							<script type="text/javascript">
 								function check_video(art) { 

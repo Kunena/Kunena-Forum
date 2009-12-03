@@ -19,12 +19,11 @@ jimport('joomla.application.component.controller');
  * @subpackage	com_kunena
  * @since		1.6
  */
-class KunenaControllerInstall extends JController
+class KunenaControllerInstall extends KunenaController
 {
 	public function __construct()
 	{
 		parent::__construct();
-		JToolBarHelper::title('<span>KUNENA '.KUNENA_VERSION.'</span> '. JText::_( 'Installer' ), 'about' );
 	}
 
 	/**
@@ -35,6 +34,8 @@ class KunenaControllerInstall extends JController
 	 */
 	public function install()
 	{
+		JToolBarHelper::title('<span>KUNENA '.KUNENA_VERSION.'</span> '. JText::_( 'Installer' ), 'about' );
+
 		$model	= $this->getModel('Install');
 
 		// Check requirements

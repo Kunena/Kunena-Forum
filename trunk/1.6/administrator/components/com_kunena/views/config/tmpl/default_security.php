@@ -9,29 +9,9 @@
  */
 
 defined('_JEXEC') or die;
-?>
-<fieldset>
-	<legend><?php echo JText::_('Security'); ?></legend>
 
-	<table width="100%" class="admintable" cellspacing="1">
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_regonly" class="hasTip" title="Registered Users Only::Set to 'Yes' to allow only registered users to use the Forum (view &amp; post). Set to 'No' to allow any visitor to use the Forum.">Registered Users Only</label>
-			</td>
-			<td>
-				<select name="config[regonly]" id="config_regonly">
-					<option value="0"<?php echo (($this->options->get('regonly', 1) == 0) ? ' selected="selected"' : ''); ?>>No</option>
-					<option value="1"<?php echo (($this->options->get('regonly', 1) == 1) ? ' selected="selected"' : ''); ?>>Yes</option>
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_flood_protection" class="hasTip" title="Flood Protection::The amount of seconds a user has to wait between two consecutive posts. Set to 0 (zero) to turn Flood Protection off. NOTE: Flood Protection can cause degradation of performance.">Flood Protection</label>
-			</td>
-			<td>
-				<input type="text" name="config[flood_protection]" id="config_flood_protection" value="<?php echo $this->options->get('flood_protection', 10); ?>" size="5" />
-			</td>
-		</tr>
-	</table>
-</fieldset>
+$settings  = JHtml::_('kconfig.setting', $this, 'enabl_guest_posts', 'Enable Guest Posts::Set to YES if you want to allow unregistered guests to post in the forum.', 'Enable Guest Posts', 'yes/no');
+$settings .= JHtml::_('kconfig.setting', $this, 'allow_user_edits', 'Allow User Edits::Set to YES to allow users to edit their own posts', 'Allow User Edits', 'yes/no');
+$settings .= JHtml::_('kconfig.setting', $this, 'user_edit_time', 'User Edit Time::Amount of seconds a user can edit their own posts. Set to 0 for unlimited time', 'User Edit Time', 'text', 5);
+
+echo JHtml::_('kconfig.section', JText::_('Permissions'), $settings );

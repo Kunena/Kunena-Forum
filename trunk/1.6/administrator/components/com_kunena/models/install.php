@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id$
+ * @version		$Id: install.php 1244 2009-12-02 04:10:31Z mahagr$
  * @package		Kunena
  * @subpackage	com_kunena
  * @copyright	Copyright (C) 2008 - 2009 Kunena Team. All rights reserved.
@@ -119,8 +119,11 @@ class KunenaModelInstall extends JModel
 		$results = array();
 
 		// Migrate version table from old installation (if available)
-		$result = $this->migrateTable($this->getVersionPrefix().'version', 'kunena_version');
-		if ($result) $results[] = $result;
+		$versionprefix = $this->getVersionPrefix();
+		if (!empty($versionprefix))	{
+			$result = $this->migrateTable($versionprefix.'version', 'kunena_version');
+			if ($result) $results[] = $result;
+		}
 
 		// Get changes in database
 		$schema = $this->getSchemaFromDatabase();
@@ -149,6 +152,8 @@ class KunenaModelInstall extends JModel
 
 		// Migrate rest of the tables from old installation (if available)
 		$version = $this->getInstalledVersion();
+		if (empty($version->prefix)) return $results;
+
 		$tables = $this->listTables($version->prefix);
 		foreach ($tables as $oldtable)
 		{
@@ -244,11 +249,14 @@ class KunenaModelInstall extends JModel
 
 	public function getLastVersion()
 	{
-		$db = JFactory::getDBO();
-		$db->setQuery("SELECT * FROM ".$db->nameQuote($db->getPrefix().$this->getVersionPrefix().'version')." ORDER BY `id` DESC", 0, 1);
-		$version = $db->loadObject();
-		if ($db->getErrorNum()) throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
-		if (!$version || !isset($version->state))
+		$versionprefix = $this->getVersionPrefix();
+		if ($versionprefix) {
+			$db = JFactory::getDBO();
+			$db->setQuery("SELECT * FROM ".$db->nameQuote($db->getPrefix().$this->getVersionPrefix().'version')." ORDER BY `id` DESC", 0, 1);
+			$version = $db->loadObject();
+			if ($db->getErrorNum()) throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+		}
+		if (!isset($version) || !is_object($version) || !isset($version->state))
 		{
 			$version->state = '';
 		}

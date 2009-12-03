@@ -9,43 +9,15 @@
  */
 
 defined('_JEXEC') or die;
+
+$settings  = JHtml::_('kconfig.setting', $this, 'forum_title', 'Forum Title::The name of your forum.', 'Forum Title', 'text', 30);
+$settings .= JHtml::_('kconfig.setting', $this, 'forum_offline', 'Forum eMail::The forum\'s email address. Make this a valid email address', 'Forum eMail', 'text', 30);
+$settings .= JHtml::_('kconfig.setting', $this, 'forum_email', 'Forum Offline::...', 'Forum Offline', 'yes/no');
+$settings .= JHtml::_('kconfig.setting', $this, 'forum_offline_msg', 'Forum Offline Message::The message displayed instead of the forum when it is set offline', 'Forum Offline Message', 'multiline', 30, 5);
+
+echo JHtml::_('kconfig.section', 'Global', $settings );
+
 ?>
-<fieldset>
-	<legend><?php echo JText::_('Board Settings'); ?></legend>
-
-	<table class="admintable" cellspacing="1">
-	<tbody>
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_board_title" class="hasTip" title="Board Title::The name of your board.">Board Title</label>
-			</td>
-			<td>
-				<input type="text" name="config[board_title]" id="config_board_title" value="<?php echo $this->options->get('board_title'); ?>" size="30" />
-			</td>
-		</tr>
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_board_email" class="hasTip" title="Board Email::This is the board's e-mail address. Make this a valid e-mail address.">Board Email</label>
-			</td>
-			<td>
-				<input type="text" name="config[board_email]" id="config_board_email" value="<?php echo $this->options->get('board_email'); ?>" size="30" />
-			</td>
-		</tr>
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_board_offline" class="hasTip" title="Forum Offline::...">Forum Offline</label>
-			</td>
-			<td>
-				<select name="config[board_offline]" id="config_board_offline">
-					<option value="no"<?php echo (($this->options->get('board_offline', 'kunena') == 'no') ? ' selected="selected"' : ''); ?>>No</option>
-					<option value="yes"<?php echo (($this->options->get('board_offline', 'kunena') == 'yes') ? ' selected="selected"' : ''); ?>>Yes</option>
-				</select>
-			</td>
-		</tr>
-
-	</tbody>
-	</table>
-</fieldset>
 <fieldset>
 	<legend><?php echo JText::_('Layout Settings'); ?></legend>
 	<table class="admintable" cellspacing="1">

@@ -19,7 +19,7 @@ defined('_JEXEC') or die('Invalid Request.');
  * @subpackage	com_kunena
  * @since		1.6
  */
-abstract class JHtmlKconfig
+abstract class JHtmlKConfig
 {
 	/**
 	 * Method to generate a section of the config screen. A table that embeds all settings of that section.
@@ -35,14 +35,14 @@ abstract class JHtmlKconfig
 	 * @return	string	The html output for the config section to be rendered.
 	 * @since	1.6
 	 */
-	public function section($title, $settings)
+	public static function section($title, $settings)
 	{
-	    $output =  '<legend>'.$title.'</legend>';
+	    $output =  '<fieldset><legend>'.$title.'</legend>';
 	    $output .= '<table class="admintable" cellspacing="1">';
 	    $output .= ' <tbody>';
 	    $output .= $settings;
 	    $output .= ' </tbody>';
-	    $output .= '</table>';
+	    $output .= '</table></fieldset>';
 
 	    return $output;
 	}
@@ -51,41 +51,38 @@ abstract class JHtmlKconfig
 	 * Method to generate an individual settings output for the settings screen.
 	 *
 	 * <code>
-	 *	<?php echo JHtml::_('kconfig.setting', $setting, $title, $name, $type); ?>
+	 *	<?php echo JHtml::_('kconfig.setting', context, $setting, $title, $name, $type, $cols, $rows); ?>
 	 * </code>
 	 *
+	 * @param $context	obj		usually $this
 	 * @param $setting	string	the unqiue code name of a setting
 	 * @param $title	string	the title of the setting as used oin the ToolTip
 	 * @param $name	    string	the public name of the setting as seen by the user
 	 * @param $type  	string	the type of setting, initially 'text', 'yes/no' and 'multiple'
-	 * @param $TBD
+	 * @param
 	 * @return	string	The html output for the config section to be rendered.
 	 * @since	1.6
 	 */
-	public function setting($setting, $title, $name, $type='text')
+	public static function setting($context, $setting, $title, $name, $type='text', $cols=5, $rows=1)
 	{
 	    $output =  '    <tr>';
 	    $output .= '      <td width="40%" class="key">';
 	    $output .= '        <label for="config_'.$setting.'" class="hasTip" title="'.$title.'">'.$name.'</label>';
 	    $output .= '      </td>';
-	    $output .= '      <td>';
+	    $output .= '      <td valign="top">';
 
 	    switch ($type)
 	    {
 	        case 'text':
-	            $output .= '      <input type="text" name="config['.$setting.']" id="config_'.$setting.'" value="'.$this->options->get($setting).'" size="5" />';
+	            $output .= '      <input type="text" name="config['.$setting.']" id="config_'.$setting.'" value="'.$context->options->get($setting).'" size="'.$cols.'" />';
 
 	            break;
-	        case 'multiline':
-	            // TODO: Make multi line text input
-	            $output .= '      <input type="text" name="config['.$setting.']" id="config_'.$setting.'" value="'.$this->options->get($setting).'" size="5" />';
+	        case 'textarea':
+				$output .= '      <textarea name="'.$setting.'" cols="'.$cols.'" rows="'.$rows.'">'.$context->options->get($setting).'</textarea>';
 
 	            break;
 	        case 'yes/no':
-	            $output .= '      <select name="config['.$setting.']" id="config_'.$setting.'">';
-	            $output .= '        <option value="no"'.(($this->options->get($setting, 'kunena') == 'no') ? ' selected="selected"' : '').'>No</option>';
-	            $output .= '        <option value="yes"'.(($this->options->get($setting, 'kunena') == 'yes') ? ' selected="selected"' : '').'>Yes</option>';
-	            $output .= '      </select>';
+				$output .= '      '.JHTML::_('select.booleanlist' , $setting , null , $context->options->get($setting) , JText::_('Yes') , JText::_('No') );
 
 	            break;
 	        case 'multiple':

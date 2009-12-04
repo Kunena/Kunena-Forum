@@ -38,7 +38,7 @@ class CKunenaSession extends JTable
 		if (!self::$_instance) {
 			$kunena_my = &JFactory::getUser();
 			$kunena_db = &JFactory::getDBO();
-			self::$_instance =& new CKunenaSession($kunena_db);
+			self::$_instance = new CKunenaSession($kunena_db);
 			if ($kunena_my->id) self::$_instance->load($kunena_my->id);
 			if ($updateSessionInfo) self::$_instance->updateSessionInfo();
 		}

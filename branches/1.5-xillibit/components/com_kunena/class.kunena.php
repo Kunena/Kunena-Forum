@@ -826,9 +826,9 @@ class CKunenaTools {
 		// Joomla Mambot Support, Thanks hacksider
 		if ($fbConfig->jmambot)
 		{
-			$row =& new stdClass();
+			$row = new stdClass();
 			$row->text =& $content;
-			$params =& new JParameter( '' );
+			$params = new JParameter( '' );
 			$dispatcher	=& JDispatcher::getInstance();
 			JPluginHelper::importPlugin('content');
 			$results = $dispatcher->trigger('onPrepareContent', array (&

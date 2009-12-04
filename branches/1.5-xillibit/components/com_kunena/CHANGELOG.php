@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.8
 
+04-dec-2009 Xillibit
+#^[#18902] Fixes for deprecated warning with PHP 5.3.x and deprecated usage of split() functions
+
 02-Dec-2009 810
 #^ [#18861] Remove version information from credits page
 # [#18918] textfield BBcode Image Link to short also for video url 

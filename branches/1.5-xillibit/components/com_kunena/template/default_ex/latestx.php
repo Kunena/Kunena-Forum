@@ -113,7 +113,7 @@ $offset           = ($page - 1) * $threads_per_page;
 $row_count        = $page * $threads_per_page;
 
 if ($func != "mylatest") {
-	$lookcats = split(',', $fbConfig->latestcategory);
+	$lookcats = explode(',', $fbConfig->latestcategory);
 	$catlist = array();
 	$latestcats = '';
 	foreach ($lookcats as $catnum) {

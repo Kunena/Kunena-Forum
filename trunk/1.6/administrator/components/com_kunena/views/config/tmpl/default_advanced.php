@@ -9,18 +9,27 @@
  */
 
 defined('_JEXEC') or die;
-?>
-<fieldset>
-	<legend><?php echo JText::_('Advanced'); ?></legend>
 
-	<table width="100%" class="admintable" cellspacing="1">
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_flood_protection" class="hasTip" title="Flood Protection::The amount of seconds a user has to wait between two consecutive posts. Set to 0 (zero) to turn Flood Protection off. NOTE: Flood Protection can cause degradation of performance.">Flood Protection</label>
-			</td>
-			<td>
-				<input type="text" name="config[flood_protection]" id="config_flood_protection" value="<?php echo $this->options->get('flood_protection', 10); ?>" size="5" />
-			</td>
-		</tr>
-	</table>
-</fieldset>
+$config = $this->options;
+
+$settings  = JHtml::_('kconfig.setting', $config->get('enable_cron'), 'enable_cron', 'Enable cron', 'Enable cron processing. Removes email, notifications and other processing from user inline processing. Cron function must be setup properly', 'yes/no');
+$settings .= JHtml::_('kconfig.setting', NULL, NULL, NULL, 'If enabled, please make sure that ==TODO: INSERT URL HERE== is setup with through cron.', 'info');
+
+echo JHtml::_('kconfig.section', 'Automation', $settings );
+
+$settings  = JHtml::_('kconfig.setting', $config->get('login_link'), 'login_link', 'Login Link', 'Login Link override.', 'text', 60);
+$settings .= JHtml::_('kconfig.setting', $config->get('logout_link'), 'logout_link', 'Logout Link', 'Logout Link override.', 'text', 60);
+$settings .= JHtml::_('kconfig.setting', $config->get('password_link'), 'password_link', 'Password Link', 'Password Link override', 'text', 60);
+$settings .= JHtml::_('kconfig.setting', $config->get('register_link'), 'register_link', 'Register Link', 'Register Link override', 'text', 60);
+$settings .= JHtml::_('kconfig.setting', NULL, NULL, NULL, 'Any non-empty settings override the default behavior of Kunena.', 'info');
+
+echo JHtml::_('kconfig.section', 'Links', $settings );
+
+$settings  = JHtml::_('kconfig.setting', $config->get('avatar_library_path'), 'avatar_library_path', 'Avatar Library Path', 'Avatar library path override.', 'text', 60);
+$settings .= JHtml::_('kconfig.setting', $config->get('avatar_upload_path'), 'avatar_upload_path', 'Avatar Upload Path', 'Avatar upload path override.', 'text', 60);
+$settings .= JHtml::_('kconfig.setting', $config->get('file_upload_path'), 'file_upload_path', 'File Upload Path', 'File upload path override.', 'text', 60);
+$settings .= JHtml::_('kconfig.setting', $config->get('image_upoad_path'), 'image_upoad_path', 'Image Upload Path', 'Image upload path override.', 'text', 60);
+$settings .= JHtml::_('kconfig.setting', $config->get('category_image_path'), 'category_image_path', 'Category Image Path', 'Category image path override.', 'text', 60);
+$settings .= JHtml::_('kconfig.setting', NULL, NULL, NULL, 'Any non-empty settings override the default behavior of Kunena.', 'info');
+
+echo JHtml::_('kconfig.section', 'Paths', $settings );

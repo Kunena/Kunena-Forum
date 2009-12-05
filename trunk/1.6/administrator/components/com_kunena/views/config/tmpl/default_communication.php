@@ -9,69 +9,22 @@
  */
 
 defined('_JEXEC') or die;
-?>
-<fieldset>
-	<legend><?php echo JText::_('Communication'); ?></legend>
 
-	<table width="100%" class="admintable" cellspacing="1">
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_regonly" class="hasTip" title="Registered Users Only::Set to 'Yes' to allow only registered users to use the Forum (view &amp; post). Set to 'No' to allow any visitor to use the Forum.">Registered Users Only</label>
-			</td>
-			<td>
-				<select name="config[regonly]" id="config_regonly">
-					<option value="0"<?php echo (($this->options->get('regonly', 1) == 0) ? ' selected="selected"' : ''); ?>>No</option>
-					<option value="1"<?php echo (($this->options->get('regonly', 1) == 1) ? ' selected="selected"' : ''); ?>>Yes</option>
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_flood_protection" class="hasTip" title="Flood Protection::The amount of seconds a user has to wait between two consecutive posts. Set to 0 (zero) to turn Flood Protection off. NOTE: Flood Protection can cause degradation of performance.">Flood Protection</label>
-			</td>
-			<td>
-				<input type="text" name="config[flood_protection]" id="config_flood_protection" value="<?php echo $this->options->get('flood_protection', 10); ?>" size="5" />
-			</td>
-		</tr>
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_flood_protection" class="hasTip" title="Flood Protection::The amount of seconds a user has to wait between two consecutive posts. Set to 0 (zero) to turn Flood Protection off. NOTE: Flood Protection can cause degradation of performance.">Flood Protection</label>
-			</td>
-			<td>
-				<input type="text" name="config[flood_protection]" id="config_flood_protection" value="<?php echo $this->options->get('flood_protection', 10); ?>" size="5" />
-			</td>
-		</tr>
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_flood_protection" class="hasTip" title="Flood Protection::The amount of seconds a user has to wait between two consecutive posts. Set to 0 (zero) to turn Flood Protection off. NOTE: Flood Protection can cause degradation of performance.">Flood Protection</label>
-			</td>
-			<td>
-				<input type="text" name="config[flood_protection]" id="config_flood_protection" value="<?php echo $this->options->get('flood_protection', 10); ?>" size="5" />
-			</td>
-		</tr>
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_flood_protection" class="hasTip" title="Flood Protection::The amount of seconds a user has to wait between two consecutive posts. Set to 0 (zero) to turn Flood Protection off. NOTE: Flood Protection can cause degradation of performance.">Flood Protection</label>
-			</td>
-			<td>
-				<input type="text" name="config[flood_protection]" id="config_flood_protection" value="<?php echo $this->options->get('flood_protection', 10); ?>" size="5" />
-			</td>
-		</tr>
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_flood_protection" class="hasTip" title="Flood Protection::The amount of seconds a user has to wait between two consecutive posts. Set to 0 (zero) to turn Flood Protection off. NOTE: Flood Protection can cause degradation of performance.">Flood Protection</label>
-			</td>
-			<td>
-				<input type="text" name="config[flood_protection]" id="config_flood_protection" value="<?php echo $this->options->get('flood_protection', 10); ?>" size="5" />
-			</td>
-		</tr>
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_flood_protection" class="hasTip" title="Flood Protection::The amount of seconds a user has to wait between two consecutive posts. Set to 0 (zero) to turn Flood Protection off. NOTE: Flood Protection can cause degradation of performance.">Flood Protection</label>
-			</td>
-			<td>
-				<input type="text" name="config[flood_protection]" id="config_flood_protection" value="<?php echo $this->options->get('flood_protection', 10); ?>" size="5" />
-			</td>
-		</tr>
-	</table>
-</fieldset>
+$config = $this->options;
+
+$settings  = JHtml::_('kconfig.setting', $config->get('communication_type'), 'communication_type', 'Communication Type', 'Select between plain text and HTML for the default communication type.', 'list');
+$settings .= JHtml::_('kconfig.setting', $config->get('reinvite_frequency'), 'reinvite_frequency', 'Re-Invite Frequency', 'Days without activity before a re-invitation message is sent. 0 to disable.', 'text', 4);
+
+echo JHtml::_('kconfig.section', 'General', $settings );
+
+$settings  = JHtml::_('kconfig.setting', $config->get('subscription_type'), 'subscription_type', 'Subscription Type', 'Select between individual, first individual, daily or weekly summary', 'list');
+$settings .= JHtml::_('kconfig.setting', $config->get('subscription_message_text'), 'subscription_message_text', 'Include Message Text', 'Enabl to include message text in subscription notification.', 'yes/no');
+$settings .= JHtml::_('kconfig.setting', $config->get('subscription_template'), 'subscription_template', 'Subscription Template', 'Format the template to your specific needs throught. Default Joomla editor.', 'editor', 40, 20);
+
+echo JHtml::_('kconfig.section', 'Subscriptions', $settings );
+
+$settings  = JHtml::_('kconfig.setting', $config->get('notify_adminstrators'), 'notify_adminstrators', 'Notify Adminstrators', 'Select actions that trigger a notification for Administrators', 'list');
+$settings .= JHtml::_('kconfig.setting', $config->get('notify_moderators'), 'notify_moderators', 'Notify Moderators', 'Select actions that trigger a notification for Moderators', 'list');
+$settings .= JHtml::_('kconfig.setting', $config->get('notification_type'), 'notification_type', 'Notification Type', 'Select between email and PM for admin and moderator notifications', 'list');
+
+echo JHtml::_('kconfig.section', 'Notifications', $settings );

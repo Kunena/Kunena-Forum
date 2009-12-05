@@ -37,12 +37,9 @@ abstract class JHtmlKConfig
 	 */
 	public static function section($title, $settings)
 	{
-	    $output =  '<fieldset><legend>'.$title.'</legend>';
-	    $output .= '<table class="admintable" cellspacing="1">';
-	    $output .= ' <tbody>';
+	    $output =  '<fieldset><legend>'.$title.'</legend><table class="admintable" cellspacing="1"><tbody>';
 	    $output .= $settings;
-	    $output .= ' </tbody>';
-	    $output .= '</table></fieldset>';
+	    $output .= '</tbody></table></fieldset>';
 
 	    return $output;
 	}
@@ -51,10 +48,10 @@ abstract class JHtmlKConfig
 	 * Method to generate an individual settings output for the settings screen.
 	 *
 	 * <code>
-	 *	<?php echo JHtml::_('kconfig.setting', context, $setting, $title, $name, $type, $cols, $rows); ?>
+	 *	<?php echo JHtml::_('kconfig.setting', $var, $setting, $title, $name, $type, $cols, $rows); ?>
 	 * </code>
 	 *
-	 * @param $context	obj		usually $this
+	 * @param $var	    string	content of the variable that hold this setting
 	 * @param $setting	string	the unqiue code name of a setting
 	 * @param $title	string	the title of the setting as used oin the ToolTip
 	 * @param $name	    string	the public name of the setting as seen by the user
@@ -63,36 +60,48 @@ abstract class JHtmlKConfig
 	 * @return	string	The html output for the config section to be rendered.
 	 * @since	1.6
 	 */
-	public static function setting($context, $setting, $title, $name, $type='text', $cols=5, $rows=1)
+	public static function setting($var, $setting, $name, $title, $type='text', $cols=5, $rows=1)
 	{
-	    $output =  '    <tr>';
-	    $output .= '      <td width="40%" class="key">';
-	    $output .= '        <label for="config_'.$setting.'" class="hasTip" title="'.$title.'">'.$name.'</label>';
-	    $output .= '      </td>';
-	    $output .= '      <td valign="top">';
+	    $output =  '<tr><td width="40%" class="key">';
+	    if ($type != 'info')
+	    {
+	        $output .= '<label for="config_'.$setting.'" class="hasTip" title="'.$name.'::'.$title.'">'.$name.'</label>';
+	    }
+	    $output .= '</td><td valign="top">';
 
 	    switch ($type)
 	    {
 	        case 'text':
-	            $output .= '      <input type="text" name="config['.$setting.']" id="config_'.$setting.'" value="'.$context->options->get($setting).'" size="'.$cols.'" />';
+	            $output .= '<input type="text" name="config['.$setting.']" id="config_'.$setting.'" value="'.$var.'" size="'.$cols.'" />';
 
 	            break;
 	        case 'textarea':
-				$output .= '      <textarea name="'.$setting.'" cols="'.$cols.'" rows="'.$rows.'">'.$context->options->get($setting).'</textarea>';
+				$output .= '<textarea name="'.$setting.'" cols="'.$cols.'" rows="'.$rows.'">'.$var.'</textarea>';
+
+	            break;
+	        case 'editor':
+	            $editor =& JFactory::getEditor();
+	            $output .= $editor->display( $setting,  htmlspecialchars($var, ENT_QUOTES), '100%', $rows * 8, $cols, $rows, false ) ;
 
 	            break;
 	        case 'yes/no':
-				$output .= '      '.JHTML::_('select.booleanlist' , $setting , null , $context->options->get($setting) , JText::_('Yes') , JText::_('No') );
+				$output .= JHTML::_('select.booleanlist' , $setting , null , $var , JText::_('Yes') , JText::_('No') );
 
 	            break;
-	        case 'multiple':
+	        case 'list':
 	            // TODO implement logic - will need an extra parameter after type that contains the array of choices
+	            //JError::raiseWarning( 0, 'TODO: JHtmlKConfig.setting() setting type: ' .$type. ' not yet implemented' );
 
 	            break;
+	        case 'info':
+	            $output .= $title;
+
+	            break;
+	        default:
+	            JError::raiseWarning( 0, 'JHtmlKConfig.setting() setting type: ' .$type. ' not supported' );
 	    }
 
-	    $output .= '      </td>';
-	    $output .= '    </tr>';
+	    $output .= '</td></tr>';
 
 	    return $output;
 	}

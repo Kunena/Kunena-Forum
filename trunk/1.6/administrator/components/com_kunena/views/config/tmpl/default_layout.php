@@ -9,45 +9,19 @@
  */
 
 defined('_JEXEC') or die;
-?>
-<fieldset>
-	<legend><?php echo JText::_('Layout'); ?></legend>
 
-	<table width="100%" class="admintable" cellspacing="1">
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_regonly" class="hasTip" title="Registered Users Only::Set to 'Yes' to allow only registered users to use the Forum (view &amp; post). Set to 'No' to allow any visitor to use the Forum.">Registered Users Only</label>
-			</td>
-			<td>
-				<select name="config[regonly]" id="config_regonly">
-					<option value="0"<?php echo (($this->options->get('regonly', 1) == 0) ? ' selected="selected"' : ''); ?>>No</option>
-					<option value="1"<?php echo (($this->options->get('regonly', 1) == 1) ? ' selected="selected"' : ''); ?>>Yes</option>
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_flood_protection" class="hasTip" title="Flood Protection::The amount of seconds a user has to wait between two consecutive posts. Set to 0 (zero) to turn Flood Protection off. NOTE: Flood Protection can cause degradation of performance.">Flood Protection</label>
-			</td>
-			<td>
-				<input type="text" name="config[flood_protection]" id="config_flood_protection" value="<?php echo $this->options->get('flood_protection', 10); ?>" size="5" />
-			</td>
-		</tr>
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_flood_protection" class="hasTip" title="Flood Protection::The amount of seconds a user has to wait between two consecutive posts. Set to 0 (zero) to turn Flood Protection off. NOTE: Flood Protection can cause degradation of performance.">Flood Protection</label>
-			</td>
-			<td>
-				<input type="text" name="config[flood_protection]" id="config_flood_protection" value="<?php echo $this->options->get('flood_protection', 10); ?>" size="5" />
-			</td>
-		</tr>
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_flood_protection" class="hasTip" title="Flood Protection::The amount of seconds a user has to wait between two consecutive posts. Set to 0 (zero) to turn Flood Protection off. NOTE: Flood Protection can cause degradation of performance.">Flood Protection</label>
-			</td>
-			<td>
-				<input type="text" name="config[flood_protection]" id="config_flood_protection" value="<?php echo $this->options->get('flood_protection', 10); ?>" size="5" />
-			</td>
-		</tr>
-	</table>
-</fieldset>
+$config = $this->options;
+
+$settings  = JHtml::_('kconfig.setting', $config->get('enable_announcements'), 'enable_announcements', 'Enable Announcements', 'Set to YES if you want to enable teh announcement feature.', 'yes/no');
+
+echo JHtml::_('kconfig.section', JText::_('Announcements'), $settings );
+
+$settings  = JHtml::_('kconfig.setting', $config->get('highlight_new'), 'highlight_new', 'Highlight New', 'Set to YES if you want to have new messages highlighted.', 'yes/no');
+$settings .= JHtml::_('kconfig.setting', $config->get('template'), 'template', 'Template', 'Select from the list of installed templates.', 'list');
+
+echo JHtml::_('kconfig.section', JText::_('Template'), $settings );
+
+$settings  = JHtml::_('kconfig.setting', $config->get('rules_article'), 'rules_article', 'Rules Article Link', 'Link to the rules article of the forum. If empty no rules link will be shown.', 'text', 30);
+$settings .= JHtml::_('kconfig.setting', $config->get('help_article'), 'help_article', 'Help Article Link', 'Link to the help article of the forum. If empty no help link will be shown.', 'text', 30);
+
+echo JHtml::_('kconfig.section', JText::_('Links'), $settings );

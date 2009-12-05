@@ -35,6 +35,8 @@ Kunena 1.6.0-DEV
 
 4-Dec-2009 fxstein
 ^ [#1193] Various data model changes
++ [#18840] Additional functionality for KConfig html helper class: html editor
++ [#18906] Additional config options layout in various views
 
 3-Dec-2009 Matias
 # [#18906] Backend framework: add missing file, some cleanup

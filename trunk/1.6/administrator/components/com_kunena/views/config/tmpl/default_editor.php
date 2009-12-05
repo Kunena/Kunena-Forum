@@ -9,53 +9,17 @@
  */
 
 defined('_JEXEC') or die;
-?>
-<fieldset>
-	<legend><?php echo JText::_('Editor'); ?></legend>
 
-	<table width="100%" class="admintable" cellspacing="1">
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_regonly" class="hasTip" title="Registered Users Only::Set to 'Yes' to allow only registered users to use the Forum (view &amp; post). Set to 'No' to allow any visitor to use the Forum.">Registered Users Only</label>
-			</td>
-			<td>
-				<select name="config[regonly]" id="config_regonly">
-					<option value="0"<?php echo (($this->options->get('regonly', 1) == 0) ? ' selected="selected"' : ''); ?>>No</option>
-					<option value="1"<?php echo (($this->options->get('regonly', 1) == 1) ? ' selected="selected"' : ''); ?>>Yes</option>
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_flood_protection" class="hasTip" title="Flood Protection::The amount of seconds a user has to wait between two consecutive posts. Set to 0 (zero) to turn Flood Protection off. NOTE: Flood Protection can cause degradation of performance.">Flood Protection</label>
-			</td>
-			<td>
-				<input type="text" name="config[flood_protection]" id="config_flood_protection" value="<?php echo $this->options->get('flood_protection', 10); ?>" size="5" />
-			</td>
-		</tr>
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_flood_protection" class="hasTip" title="Flood Protection::The amount of seconds a user has to wait between two consecutive posts. Set to 0 (zero) to turn Flood Protection off. NOTE: Flood Protection can cause degradation of performance.">Flood Protection</label>
-			</td>
-			<td>
-				<input type="text" name="config[flood_protection]" id="config_flood_protection" value="<?php echo $this->options->get('flood_protection', 10); ?>" size="5" />
-			</td>
-		</tr>
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_flood_protection" class="hasTip" title="Flood Protection::The amount of seconds a user has to wait between two consecutive posts. Set to 0 (zero) to turn Flood Protection off. NOTE: Flood Protection can cause degradation of performance.">Flood Protection</label>
-			</td>
-			<td>
-				<input type="text" name="config[flood_protection]" id="config_flood_protection" value="<?php echo $this->options->get('flood_protection', 10); ?>" size="5" />
-			</td>
-		</tr>
-		<tr>
-			<td width="40%" class="key">
-				<label for="config_flood_protection" class="hasTip" title="Flood Protection::The amount of seconds a user has to wait between two consecutive posts. Set to 0 (zero) to turn Flood Protection off. NOTE: Flood Protection can cause degradation of performance.">Flood Protection</label>
-			</td>
-			<td>
-				<input type="text" name="config[flood_protection]" id="config_flood_protection" value="<?php echo $this->options->get('flood_protection', 10); ?>" size="5" />
-			</td>
-		</tr>
-	</table>
-</fieldset>
+$config = $this->options;
+
+$settings  = JHtml::_('kconfig.setting', $config->get('enable_bbcode'), 'enable_bbcode', 'Enable BB-Code', 'Turns BB-Code on or off.', 'yes/no');
+$settings .= JHtml::_('kconfig.setting', $config->get('enable_emoticons'), 'enable_emoticons', 'Enable Emoticons', 'Turns Emoticons on or off.', 'yes/no');
+$settings .= JHtml::_('kconfig.setting', $config->get('trim_long_urls'), 'trim_long_urls', 'Trim Long URLs', 'Enable trimming of long URLs in text.', 'yes/no');
+$settings .= JHtml::_('kconfig.setting', $config->get('long_urls_front'), 'long_urls_front', 'Long URLs Front', 'Length of front portion for trimmed URLs.', 'text', 4);
+$settings .= JHtml::_('kconfig.setting', $config->get('long_urls_back'), 'long_urls_back', 'Long URLs Back', 'Length of back portion for trimmed URLs.', 'text', 4);
+$settings .= JHtml::_('kconfig.setting', $config->get('enable_code_highlight'), 'enable_code_highlight', 'Enable Code Highlighting', 'Enable code tag highlighting - this might cause formatting in code tag to change.', 'yes/no');
+$settings .= JHtml::_('kconfig.setting', $config->get('autoembed_youtube'), 'autoembed_youtube', 'Autoembed Youtube', 'Enable automatic embedding of Youtube videos.', 'yes/no');
+$settings .= JHtml::_('kconfig.setting', $config->get('autoembed_ebay'), 'autoembed_ebay', 'Autoembed eBay', 'Enable automatic embedding of eBay listings.', 'yes/no');
+$settings .= JHtml::_('kconfig.setting', $config->get('ebay_language_code'), 'ebay_language_code', 'eBay Language Code', 'Localization language code for embedded eBay items.', 'text', 5);
+
+echo JHtml::_('kconfig.section', 'BB-Code', $settings );

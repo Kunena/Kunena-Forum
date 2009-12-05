@@ -111,9 +111,9 @@ function dofreePDF($kunena_db)
 
 		if (file_exists(KUNENA_ROOT_PATH .DS. 'includes/class.ezpdf.php')) {
 			include (KUNENA_ROOT_PATH .DS. 'includes/class.ezpdf.php');
-			$pdf = &new Cezpdf('a4', 'P'); //A4 Portrait
+			$pdf = new Cezpdf('a4', 'P'); //A4 Portrait
 		} elseif (class_exists('JDocument')) {
-        	$pdf = &new fbpdfwrapper();
+        	$pdf = new fbpdfwrapper();
 		} else {
 			echo 'strange... no supported pdf class found!';
 			exit;

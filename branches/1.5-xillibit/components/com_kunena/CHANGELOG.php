@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.8
 
+05-dec-2009 Xillibit
+#^[#18902] Fixes for all remaining deprecated warning with PHP 5.3.x and remove split() and ereg() functions
+
 04-dec-2009 Xillibit
 #^[#18902] Fixes for deprecated warning with PHP 5.3.x and deprecated usage of split() functions
 

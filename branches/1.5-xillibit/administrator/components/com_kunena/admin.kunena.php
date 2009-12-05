@@ -183,7 +183,7 @@ switch ($task)
         break;
 
     case "userprofile":
-        editUserProfile($uid);
+        editUserProfile($option, $uid);
 
         break;
 
@@ -1101,7 +1101,7 @@ function showProfiles($kunena_db, $option, $lang, $order)
     html_Kunena::showProfiles($option, $lang, $profileList, $countPL, $pageNavSP, $order, $search);
 }
 
-function editUserProfile($uid)
+function editUserProfile($option, $uid)
 {
 	if (empty($uid[0])) {
 		echo _KUNENA_PROFILE_NO_USER;
@@ -1176,7 +1176,7 @@ function editUserProfile($uid)
 
     $modCats = KUNENA_GetAvailableModCats($__modCats);
 
-    html_Kunena::editUserProfile($user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid[0], $modCats);
+    html_Kunena::editUserProfile($option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid[0], $modCats);
 }
 
 function saveUserProfile($option)

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+4-Dec-2009 fxstein
+^ [#1193] Various data model changes
+
 3-Dec-2009 Matias
 # [#18906] Backend framework: add missing file, some cleanup
 # [#18912] Implement new installer: Fix bugs from installation

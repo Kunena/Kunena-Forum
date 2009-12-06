@@ -60,7 +60,7 @@ abstract class JHtmlKConfig
 	 * @return	string	The html output for the config section to be rendered.
 	 * @since	1.6
 	 */
-	public static function setting($var, $setting, $name, $title, $type='text', $cols=5, $rows=1)
+	public static function setting($var, $setting, $name, $title, $type='text', $cols=5, $rows=1, $info='')
 	{
 	    $output =  '<tr><td width="40%" class="key">';
 	    if ($type != 'info')
@@ -72,20 +72,20 @@ abstract class JHtmlKConfig
 	    switch ($type)
 	    {
 	        case 'text':
-	            $output .= '<input type="text" name="config['.$setting.']" id="config_'.$setting.'" value="'.$var.'" size="'.$cols.'" />';
+	            $output .= '<input type="text" name="config['.$setting.']" id="config_'.$setting.'" value="'.$var.'" size="'.$cols.'" /> '.$info;
 
 	            break;
 	        case 'textarea':
-				$output .= '<textarea name="'.$setting.'" cols="'.$cols.'" rows="'.$rows.'">'.$var.'</textarea>';
+				$output .= '<textarea name="'.$setting.'" cols="'.$cols.'" rows="'.$rows.'">'.$var.'</textarea> '.$info;
 
 	            break;
 	        case 'editor':
 	            $editor =& JFactory::getEditor();
-	            $output .= $editor->display( $setting,  htmlspecialchars($var, ENT_QUOTES), '100%', $rows * 8, $cols, $rows, false ) ;
+	            $output .= $editor->display( $setting,  htmlspecialchars($var, ENT_QUOTES), '100%', $rows * 10, $cols, $rows, false ).' '.$info ;
 
 	            break;
 	        case 'yes/no':
-				$output .= JHTML::_('select.booleanlist' , $setting , null , $var , JText::_('Yes') , JText::_('No') );
+				$output .= JHTML::_('select.booleanlist' , $setting , null , $var , JText::_('Yes') , JText::_('No') ).' '.$info;
 
 	            break;
 	        case 'list':

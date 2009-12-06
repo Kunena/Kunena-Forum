@@ -44,8 +44,16 @@ JHTML::_('behavior.tooltip');
 				<?php echo $this->loadTemplate('communication'); ?>
 			</div>
 
+			<div id="page-integration">
+				<?php echo $this->loadTemplate('integration'); ?>
+			</div>
+
 			<div id="page-security">
 				<?php echo $this->loadTemplate('security'); ?>
+			</div>
+
+			<div id="page-logging">
+				<?php echo $this->loadTemplate('logging'); ?>
 			</div>
 
 			<div id="page-advanced">

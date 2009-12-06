@@ -12,9 +12,9 @@ defined('_JEXEC') or die;
 
 $config = $this->options;
 
-$settings  = JHtml::_('kconfig.setting', $config->get('forum_title'), 'forum_title', 'Forum Title', 'The name of your forum.', 'text', 30);
-$settings .= JHtml::_('kconfig.setting', $config->get('forum_offline'), 'forum_offline', 'Forum eMail', 'The forum\'s email address. Make this a valid email address', 'text', 30);
-$settings .= JHtml::_('kconfig.setting', $config->get('forum_email'), 'forum_email', 'Forum Offline', '...', 'yes/no');
+$settings  = JHtml::_('kconfig.setting', $config->get('forum_offline'), 'forum_offline', 'Forum Offline', '...', 'yes/no');
+$settings .= JHtml::_('kconfig.setting', $config->get('forum_title'), 'forum_title', 'Forum Title', 'The name of your forum.', 'text', 30);
+$settings .= JHtml::_('kconfig.setting', $config->get('forum_email'), 'forum_email', 'Forum eMail', 'The forum\'s email address. Make this a valid email address', 'text', 30);
 $settings .= JHtml::_('kconfig.setting', $config->get('forum_offline_msg'), 'forum_offline_msg', 'Forum Offline Message', 'The message displayed instead of the forum when it is set offline', 'editor', 40, 20);
 
 echo JHtml::_('kconfig.section', 'Global', $settings );

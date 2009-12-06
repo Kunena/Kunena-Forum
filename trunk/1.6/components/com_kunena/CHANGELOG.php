@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+6-Dec-2009 fxstein
++ [#18906] Next iteration of config options - still missing selection lists
+
 4-Dec-2009 fxstein
 ^ [#1193] Various data model changes
 + [#18840] Additional functionality for KConfig html helper class: html editor

@@ -12,7 +12,9 @@ defined('_JEXEC') or die;
 
 $config = $this->options;
 
-$settings  = JHtml::_('kconfig.setting', $config->get('user_name_display'), 'user_name_display', 'User Name Display', 'Select how the username should be displayed', 'list');
+echo '<table><tr><td width="50%" valign="top">';
+
+$settings  = JHtml::_('kconfig.setting', $config->get('user_name_display'), 'user_name_display', 'User Name Display', 'Select how the username should be displayed', 'list', $this->option_lists['user_name_display'], 1);
 $settings .= JHtml::_('kconfig.setting', $config->get('enable_name_change'), 'enable_name_change', 'Enable Name Change', 'Set to YES to enable users to change their user name.', 'yes/no');
 $settings .= JHtml::_('kconfig.setting', $config->get('enable_signature'), 'enable_signature', 'Enable Signature', 'Set to YES to enable users to have a signature.', 'yes/no');
 $settings .= JHtml::_('kconfig.setting', $config->get('max_sig_length'), 'max_sig_length', 'Signature Length', 'Maximum length of the user signature.', 'text', 5, 0, 'characters <em><sub>(0 for unlimited)</sub></em>');
@@ -20,6 +22,8 @@ $settings .= JHtml::_('kconfig.setting', $config->get('max_sig_img_width'), 'max
 $settings .= JHtml::_('kconfig.setting', $config->get('max_sig_img_height'), 'max_sig_img_height', 'Signature Image Height', 'Maximum height of signature images.', 'text', 5, 0, 'px <em><sub>(0 for unlimited)</sub></em>');
 
 echo JHtml::_('kconfig.section', JText::_('Profile'), $settings );
+
+echo '</td><td valign="top">';
 
 $settings  = JHtml::_('kconfig.setting', $config->get('enable_favorites'), 'enable_favorites', 'Enable Favorites', 'Set to YES to enable users to set favorites', 'yes/no');
 $settings .= JHtml::_('kconfig.setting', $config->get('enable_subscriptions'), 'enable_subscriptions', 'Enable Subscriptions', 'Set to YES to enable users to subscribe to forums and threads', 'yes/no');
@@ -31,3 +35,5 @@ $settings  = JHtml::_('kconfig.setting', $config->get('enable_avatars'), 'enable
 $settings .= JHtml::_('kconfig.setting', $config->get('show_avatar_gallery'), 'show_avatar_gallery', 'Show Avatar Galery', 'Set to YES to show a gallery of avatars for users to choose from.', 'yes/no');
 
 echo JHtml::_('kconfig.section', JText::_('Avatars'), $settings );
+
+echo '</td></tr></table>';

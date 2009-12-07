@@ -12,7 +12,9 @@ defined('_JEXEC') or die;
 
 $config = $this->options;
 
-$settings  = JHtml::_('kconfig.setting', $config->get('default_encoding'), 'default_encoding', 'Default Encoding', 'Content encoding for the forum. Choose between BB-Code and HTML.', 'list');
+echo '<table><tr><td width="50%" valign="top">';
+
+$settings  = JHtml::_('kconfig.setting', $config->get('default_markup'), 'default_markup', 'Default Markup', 'Default markup style for the forum. Choose between BB-Code and HTML.', 'list', $this->option_lists['markup'], 1);
 $settings .= JHtml::_('kconfig.setting', $config->get('autoembed_youtube'), 'autoembed_youtube', 'Autoembed Youtube', 'Enable automatic embedding of Youtube videos.', 'yes/no');
 $settings .= JHtml::_('kconfig.setting', $config->get('autoembed_ebay'), 'autoembed_ebay', 'Autoembed eBay', 'Enable automatic embedding of eBay listings.', 'yes/no');
 $settings .= JHtml::_('kconfig.setting', $config->get('ebay_language_code'), 'ebay_language_code', 'eBay Language Code', 'Localization language code for embedded eBay items.', 'text', 5);
@@ -22,6 +24,8 @@ $settings .= JHtml::_('kconfig.setting', $config->get('long_urls_back'), 'long_u
 
 echo JHtml::_('kconfig.section', 'General', $settings );
 
+echo '</td><td valign="top">';
+
 $settings  = JHtml::_('kconfig.setting', $config->get('enable_bbcode'), 'enable_bbcode', 'Enable BB-Code', 'Enable BB-Code for the forum.', 'yes/no');
 $settings .= JHtml::_('kconfig.setting', $config->get('enable_emoticons'), 'enable_emoticons', 'Enable Emoticons', 'Turns Emoticons on or off.', 'yes/no');
 $settings .= JHtml::_('kconfig.setting', $config->get('enable_code_highlight'), 'enable_code_highlight', 'Enable Code Highlighting', 'Enable code tag highlighting - this might cause formatting in code tag to change.', 'yes/no');
@@ -29,6 +33,8 @@ $settings .= JHtml::_('kconfig.setting', $config->get('enable_code_highlight'), 
 echo JHtml::_('kconfig.section', 'BB-Code', $settings );
 
 $settings  = JHtml::_('kconfig.setting', $config->get('enable_html'), 'enable_html', 'Enable HTML', 'Enable HTML for the forum.', 'yes/no');
-$settings .= JHtml::_('kconfig.setting', $config->get('allowed_tags'), 'allowed_tags', 'Allowed Tages', 'Commma separated list of allowed html tags in messages.', 'text', 40);
+$settings .= JHtml::_('kconfig.setting', $config->get('allowed_tags'), 'allowed_tags', 'Allowed Tags', 'Commma separated list of allowed html tags in messages.', 'text', 40);
 
 echo JHtml::_('kconfig.section', 'HTML', $settings );
+
+echo '</td></tr></table>';

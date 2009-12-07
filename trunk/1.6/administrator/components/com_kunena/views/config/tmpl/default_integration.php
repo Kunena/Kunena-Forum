@@ -12,12 +12,14 @@ defined('_JEXEC') or die;
 
 $config = $this->options;
 
-$settings  = JHtml::_('kconfig.setting', $config->get('user_profile_integration'), 'user_profile_integration', 'User Profiles', 'Select from the list of possible integration options', 'list');
-$settings .= JHtml::_('kconfig.setting', $config->get('avatar_integration'), 'avatar_integration', 'Avatars', 'Select from the list of possible integration options', 'list');
-$settings .= JHtml::_('kconfig.setting', $config->get('pm_integration'), 'pm_integration', 'Private Messaging', 'Select from the list of possible integration options', 'list');
-$settings .= JHtml::_('kconfig.setting', $config->get('user_points_integration'), 'user_points_integration', 'User Points', 'Select from the list of possible integration options', 'list');
+echo '<table><tr><td width="50%" valign="top">';
+
+$settings  = JHtml::_('kconfig.setting', $config->get('user_profile_integration'), 'user_profile_integration', 'User Profiles', 'Select from the list of possible integration options', 'list', $this->option_lists['profile_integration'], 1);
+$settings .= JHtml::_('kconfig.setting', $config->get('avatar_integration'), 'avatar_integration', 'Avatars', 'Select from the list of possible integration options', 'list', $this->option_lists['avatar_integration'], 1);
+$settings .= JHtml::_('kconfig.setting', $config->get('pm_integration'), 'pm_integration', 'Private Messaging', 'Select from the list of possible integration options', 'list', $this->option_lists['pm_integration'], 1);
+$settings .= JHtml::_('kconfig.setting', $config->get('userpoints_integration'), 'userpoints_integration', 'User Points', 'Select from the list of possible integration options', 'list', $this->option_lists['userpoints_integration'], 1);
 $settings .= JHtml::_('kconfig.setting', NULL, NULL, NULL, 'In order to enable 3rd party component integration, additional components must be installed on your system. The integration options do not install these 3rd party packages and components for you.', 'info');
-$settings .= JHtml::_('kconfig.setting', $config->get('private_forums_root'), 'private_forums_root', 'Private Forums Root', 'Root category for private and group forums.', 'list');
+$settings .= JHtml::_('kconfig.setting', $config->get('private_forums_root'), 'private_forums_root', 'Private Forums Root', 'Root category for private and group forums.', 'list', $this->option_lists['private_forums_root'], 1);
 
 echo JHtml::_('kconfig.section', JText::_('General'), $settings );
 
@@ -31,6 +33,8 @@ $settings .= JHtml::_('kconfig.setting', $config->get('recaptha_private_key'), '
 $settings .= JHtml::_('kconfig.setting', NULL, NULL, NULL, 'For more information about reCAPTCHA please visit <a href="http://www.recaptcha.com" target="_blank">www.recaptcha.com</a>.', 'info');
 
 echo JHtml::_('kconfig.section', JText::_('reCAPTCHA'), $settings );
+
+echo '</td><td valign="top">';
 
 $settings  = JHtml::_('kconfig.setting', $config->get('jomsocial_activity_stream'), 'jomsocial_activity_stream', 'Activity Stream', 'Enable JomSocial activity stream integration', 'yes/no');
 $settings .= JHtml::_('kconfig.setting', $config->get('jomsocial_activity_create'), 'jomsocial_activity_create', 'Create Thread', 'Log New threads in JomSocial Activity Stream', 'yes/no');
@@ -47,3 +51,5 @@ echo JHtml::_('kconfig.section', JText::_('Community Builder'), $settings );
 $settings  = '';
 
 echo JHtml::_('kconfig.section', JText::_('Alpha Userpoints'), $settings );
+
+echo '</td></tr></table>';

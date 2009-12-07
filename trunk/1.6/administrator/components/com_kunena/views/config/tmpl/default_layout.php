@@ -12,12 +12,25 @@ defined('_JEXEC') or die;
 
 $config = $this->options;
 
-$settings  = JHtml::_('kconfig.setting', $config->get('template'), 'template', 'Template', 'Select from the list of installed templates.', 'list');
-$settings .= JHtml::_('kconfig.setting', $config->get('default_view'), 'default_view', 'Default View', 'Select the default view for the forums.', 'list');
+echo '<table><tr><td width="50%" valign="top">';
+
+$settings  = JHtml::_('kconfig.setting', $config->get('template'), 'template', 'Template', 'Select from the list of installed templates.', 'list', $this->option_lists['template'], 1);
+$settings .= JHtml::_('kconfig.setting', $config->get('default_view'), 'default_view', 'Default View', 'Select the default view for the forums.', 'list', $this->option_lists['default_view'], 1);
 
 echo JHtml::_('kconfig.section', JText::_('Template'), $settings );
 
-$settings  = JHtml::_('kconfig.setting', $config->get('date_format'), 'date_format', 'Date Format', 'Default date format for the forum.', 'text', 10, 0, 'e.g.: %m/%d/%Y <em><sub><a href="http://dev.mysql.com/doc/refman/5.1/en/date-and-time-functions.html#function_date-format" target="_blank">Available Date Formats</a></sub></em>');
+$settings  = JHtml::_('kconfig.setting', $config->get('enable_announcements'), 'enable_announcements', 'Enable Announcements', 'Set to YES if you want to enable teh announcement feature.', 'yes/no');
+
+echo JHtml::_('kconfig.section', JText::_('Announcements'), $settings );
+
+$settings  = JHtml::_('kconfig.setting', $config->get('rules_article'), 'rules_article', 'Rules Article Link', 'Link to the rules article of the forum. If empty no rules link will be shown.', 'text', 40);
+$settings .= JHtml::_('kconfig.setting', $config->get('help_article'), 'help_article', 'Help Article Link', 'Link to the help article of the forum. If empty no help link will be shown.', 'text', 40);
+
+echo JHtml::_('kconfig.section', JText::_('Links'), $settings );
+
+echo '</td><td valign="top">';
+
+$settings  = JHtml::_('kconfig.setting', $config->get('date_format'), 'date_format', 'Date Format', 'Default date format for the forum.', 'list', $this->option_lists['date_format'], 1);
 $settings .= JHtml::_('kconfig.setting', $config->get('enable_time_since'), 'enable_time_since', 'Time Since', 'Set to YES if you want main views use the time since display instead of dates and times.', 'yes/no');
 $settings .= JHtml::_('kconfig.setting', $config->get('highlight_new'), 'highlight_new', 'Highlight New', 'Set to YES if you want to have new messages highlighted.', 'yes/no');
 $settings .= JHtml::_('kconfig.setting', $config->get('enable_voting'), 'enable_voting', 'Enable Voting', 'Set to YES if you want to enable the voting functions.', 'yes/no');
@@ -30,11 +43,4 @@ $settings .= JHtml::_('kconfig.setting', $config->get('show_ip_tracking'), 'show
 
 echo JHtml::_('kconfig.section', JText::_('General'), $settings );
 
-$settings  = JHtml::_('kconfig.setting', $config->get('enable_announcements'), 'enable_announcements', 'Enable Announcements', 'Set to YES if you want to enable teh announcement feature.', 'yes/no');
-
-echo JHtml::_('kconfig.section', JText::_('Announcements'), $settings );
-
-$settings  = JHtml::_('kconfig.setting', $config->get('rules_article'), 'rules_article', 'Rules Article Link', 'Link to the rules article of the forum. If empty no rules link will be shown.', 'text', 30);
-$settings .= JHtml::_('kconfig.setting', $config->get('help_article'), 'help_article', 'Help Article Link', 'Link to the help article of the forum. If empty no help link will be shown.', 'text', 30);
-
-echo JHtml::_('kconfig.section', JText::_('Links'), $settings );
+echo '</td></tr></table>';

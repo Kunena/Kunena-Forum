@@ -48,7 +48,7 @@ abstract class JHtmlKConfig
 	 * Method to generate an individual settings output for the settings screen.
 	 *
 	 * <code>
-	 *	<?php echo JHtml::_('kconfig.setting', $var, $setting, $title, $name, $type, $cols, $rows); ?>
+	 *	<?php echo JHtml::_('kconfig.setting', $var, $setting, $title, $name, $type, $extra1, $extra2); ?>
 	 * </code>
 	 *
 	 * @param $var	    string	content of the variable that hold this setting
@@ -60,7 +60,7 @@ abstract class JHtmlKConfig
 	 * @return	string	The html output for the config section to be rendered.
 	 * @since	1.6
 	 */
-	public static function setting($var, $setting, $name, $title, $type='text', $cols=5, $rows=1, $info='')
+	public static function setting($var, $setting, $name, $title, $type='text', $extra1=5, $extra2=1, $info='')
 	{
 	    $output =  '<tr><td width="40%" class="key">';
 	    if ($type != 'info')
@@ -72,16 +72,16 @@ abstract class JHtmlKConfig
 	    switch ($type)
 	    {
 	        case 'text':
-	            $output .= '<input type="text" name="config['.$setting.']" id="config_'.$setting.'" value="'.$var.'" size="'.$cols.'" /> '.$info;
+	            $output .= '<input type="text" name="config['.$setting.']" id="config_'.$setting.'" value="'.$var.'" size="'.$extra1.'" /> '.$info;
 
 	            break;
 	        case 'textarea':
-				$output .= '<textarea name="'.$setting.'" cols="'.$cols.'" rows="'.$rows.'">'.$var.'</textarea> '.$info;
+				$output .= '<textarea name="'.$setting.'" cols="'.$extra1.'" rows="'.$extra2.'">'.$var.'</textarea> '.$info;
 
 	            break;
 	        case 'editor':
 	            $editor =& JFactory::getEditor();
-	            $output .= $editor->display( $setting,  htmlspecialchars($var, ENT_QUOTES), '100%', $rows * 10, $cols, $rows, false ).' '.$info ;
+	            $output .= $editor->display( $setting,  htmlspecialchars($var, ENT_QUOTES), '100%', $extra2 * 10, $extra1, $extra2, false ).' '.$info ;
 
 	            break;
 	        case 'yes/no':
@@ -89,8 +89,11 @@ abstract class JHtmlKConfig
 
 	            break;
 	        case 'list':
-	            // TODO implement logic - will need an extra parameter after type that contains the array of choices
-	            //JError::raiseWarning( 0, 'TODO: JHtmlKConfig.setting() setting type: ' .$type. ' not yet implemented' );
+	            $output .= JHTML::_('select.genericlist',  $extra1, $setting, 'class="inputbox" size="'.$extra2.'"', 'value', 'text', $var);
+
+	            break;
+	        case 'multiple':
+	            $output .= JHTML::_('select.genericlist',  $extra1, $setting, 'class="inputbox" size="'.($extra2==0?count($extra1):$extra2).'" multiple="multiple"', 'value', 'text', $var);
 
 	            break;
 	        case 'info':

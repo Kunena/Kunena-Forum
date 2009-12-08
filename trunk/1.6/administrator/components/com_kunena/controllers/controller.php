@@ -25,13 +25,6 @@ class KunenaController extends JController
     function __construct()
 	{
 		parent::__construct();
-
-		$task	= JRequest::getCmd( 'task' , '' );
-
-		$document	=& JFactory::getDocument();
-
-		// Placeholder for additional CSS, JS or ajax
-
 	}
 
 	/**

@@ -232,11 +232,6 @@ class KunenaViewConfig extends JView
 		parent::display($tpl);
 	}
 
-	public function setToolBar()
-	{
-	    self::_displayMainToolbar();
-	}
-
 	protected function _displayMainToolbar()
 	{
 		JToolBarHelper::title('Kunena: '.JText::_('Configuration'), 'config');

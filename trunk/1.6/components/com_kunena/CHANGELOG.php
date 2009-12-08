@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+7-Dec-2009 fxstein
++ [#18906] Next iteration of config options - modified wysiwyg editor and save function
+
 6-Dec-2009 fxstein
 + [#18906] Next iteration of config options - selection lists added
 + [#18906] Next iteration of config options - still missing selection lists

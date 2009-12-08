@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 
 // Display the main toolbar.
-//$this->_displayMainToolbar();
+$this->_displayMainToolbar();
 
 // Add the component HTML helper path.
 JHTML::addIncludePath(JPATH_COMPONENT.'/helpers/html');
@@ -60,6 +60,7 @@ JHTML::_('behavior.tooltip');
 				<?php echo $this->loadTemplate('advanced'); ?>
 			</div>
 		</div>
+		<input type="hidden" name="view" value="config" />
 		<input type="hidden" name="task" value="" />
 		<?php echo JHTML::_('form.token'); ?>
 	</form>

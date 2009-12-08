@@ -76,24 +76,29 @@ abstract class JHtmlKConfig
 
 	            break;
 	        case 'textarea':
-				$output .= '<textarea name="'.$setting.'" cols="'.$extra1.'" rows="'.$extra2.'">'.$var.'</textarea> '.$info;
+				$output .= '<textarea name="config['.$setting.']" cols="'.$extra1.'" rows="'.$extra2.'">'.$var.'</textarea> '.$info;
 
 	            break;
 	        case 'editor':
 	            $editor =& JFactory::getEditor();
-	            $output .= $editor->display( $setting,  htmlspecialchars($var, ENT_QUOTES), '100%', $extra2 * 10, $extra1, $extra2, false ).' '.$info ;
+	            $params = array( 	'mode'=> 'simple' ,
+                 					'layer'  => '0' ,
+                 					'table'  => '0' ,
+                 					'clear_entities'=>'0'
+	                        );
+	            $output .= $editor->display( 'config['.$setting.']',  htmlspecialchars($var, ENT_QUOTES), '100%', $extra2 * 10, $extra1, $extra2, false, $params ).' '.$info ;
 
 	            break;
 	        case 'yes/no':
-				$output .= JHTML::_('select.booleanlist' , $setting , null , $var , JText::_('Yes') , JText::_('No') ).' '.$info;
+				$output .= JHTML::_('select.booleanlist' , 'config['.$setting.']' , null , $var , JText::_('Yes') , JText::_('No') ).' '.$info;
 
 	            break;
 	        case 'list':
-	            $output .= JHTML::_('select.genericlist',  $extra1, $setting, 'class="inputbox" size="'.$extra2.'"', 'value', 'text', $var);
+	            $output .= JHTML::_('select.genericlist',  $extra1, 'config['.$setting.']', 'class="inputbox" size="'.$extra2.'"', 'value', 'text', $var);
 
 	            break;
 	        case 'multiple':
-	            $output .= JHTML::_('select.genericlist',  $extra1, $setting, 'class="inputbox" size="'.($extra2==0?count($extra1):$extra2).'" multiple="multiple"', 'value', 'text', $var);
+	            $output .= JHTML::_('select.genericlist',  $extra1, 'config['.$setting.']', 'class="inputbox" size="'.($extra2==0?count($extra1):$extra2).'" multiple="multiple"', 'value', 'text', $var);
 
 	            break;
 	        case 'info':

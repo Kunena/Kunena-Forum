@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+8-Dec-2009 Matias
+^ [#18912] Implement new installer: improvements, changed xml schema
+
 7-Dec-2009 fxstein
 + [#18906] Next iteration of config options - modified wysiwyg editor and save function
 

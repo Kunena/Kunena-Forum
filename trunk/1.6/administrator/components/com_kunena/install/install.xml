@@ -2,201 +2,209 @@
 <!DOCTYPE schema SYSTEM "kunena16.dtd">
 <schema>
   <table name="kunena_announcement">
-    <field primary_key="yes" name="ann_id" type="int(3)" null="0" extra="auto_increment"/>
-    <field name="ann_title" type="tinytext" null="0"/>
-    <field name="ann_sdescription" type="text" null="0"/>
-    <field name="ann_description" type="text" null="0"/>
-    <field name="ann_created" type="datetime" null="0" default="0000-00-00 00:00:00"/>
-    <field name="ann_published" type="tinyint(1)" null="0" default="0"/>
-    <field name="ann_ordering" type="tinyint(4)" null="0" default="0"/>
-    <field name="ann_showdate" type="tinyint(1)" null="0" default="1"/>
-    <key name="ann_id" unique="1" columns="ann_id"/>
+    <field name="id" type="int(3)" null="0" extra="auto_increment"/>
+    <field name="title" type="tinytext" null="0"/>
+    <field name="sdescription" type="text" null="0"/>
+    <field name="description" type="text" null="0"/>
+    <field name="created" type="datetime" null="0" default="0000-00-00 00:00:00"/>
+    <field name="published" type="tinyint(1)" null="0" default="0"/>
+    <field name="params" type="text" null="0"/>
+    <key name="PRIMARY" unique="1" columns="id"/>
   </table>
   <table name="kunena_attachments">
-    <field name="att_mesid" type="int(11)" null="0" default="0"/>
-    <field name="att_filelocation" type="text" null="0"/>
-    <key name="att_mesid" columns="att_mesid"/>
+    <field name="id" type="int(11)" null="0" extra="auto_increment"/>
+    <field name="msgid" type="int(11)" null="0" default="0"/>
+    <field name="filelocation" type="text" null="0"/>
+    <field name="params" type="text" null="0"/>
+    <key name="PRIMARY" unique="1" columns="id"/>
+    <key name="msgid" columns="msgid"/>
   </table>
   <table name="kunena_categories">
-    <field primary_key="yes" name="cat_id" type="int(11)" null="0" extra="auto_increment"/>
-    <field name="cat_parent" type="int(11)" null="1" default="0"/>
-    <field name="cat_name" type="tinytext" null="1"/>
-    <field name="cat_emoticon" type="tinyint(4)" null="0" default="0"/>
-    <field name="cat_locked" type="tinyint(4)" null="0" default="0"/>
-    <field name="cat_alert_admin" type="tinyint(4)" null="0" default="0"/>
-    <field name="cat_moderated" type="tinyint(4)" null="0" default="1"/>
-    <field name="cat_moderators" type="varchar(15)" null="1"/>
-    <field name="cat_pub_access" type="tinyint(4)" null="1" default="1"/>
-    <field name="cat_pub_recurse" type="tinyint(4)" null="1" default="1"/>
-    <field name="cat_admin_access" type="tinyint(4)" null="1" default="0"/>
-    <field name="cat_admin_recurse" type="tinyint(4)" null="1" default="1"/>
-    <field name="cat_ordering" type="tinyint(4)" null="0" default="0"/>
-    <field name="cat_published" type="tinyint(4)" null="0" default="0"/>
-    <field name="cat_checked_out" type="tinyint(4)" null="0" default="0"/>
-    <field name="cat_checked_out_time" type="datetime" null="0" default="0000-00-00 00:00:00"/>
-    <field name="cat_review" type="tinyint(4)" null="0" default="0"/>
-    <field name="cat_hits" type="int(11)" null="0" default="0"/>
-    <field name="cat_description" type="text" null="0"/>
-    <field name="cat_headerdesc" type="text" null="0"/>
-    <field name="cat_class_sfx" type="varchar(20)" null="0"/>
-    <field name="cat_id_last_msg" type="int(10)" null="0" default="0"/>
-    <field name="cat_threads" type="mediumint(8)" null="0" default="0"/>
-    <field name="cat_messages" type="mediumint(8)" null="0" default="0"/>
-    <field name="cat_time_last_msg" type="int(11)" null="1"/>
-    <key name="PRIMARY" unique="1" columns="cat_id"/>
-    <key name="cat_parent" columns="cat_parent"/>
-    <key name="cat_published_pubaccess_id" columns="cat_published,cat_pub_access,cat_id"/>
-    <key name="cat_msg_id" columns="cat_id_last_msg"/>
+    <field name="id" type="int(11)" null="0" extra="auto_increment"/>
+    <field name="parent" type="int(11)" null="1" default="0"/>
+    <field name="name" type="tinytext" null="1"/>
+    <field name="emoticon" type="tinyint(4)" null="0" default="0"/>
+    <field name="locked" type="tinyint(4)" null="0" default="0"/>
+    <field name="moderators" type="tinytext" null="1"/>
+    <field name="pub_access" type="tinyint(4)" null="1" default="1"/>
+    <field name="admin_access" type="tinyint(4)" null="1" default="0"/>
+    <field name="ordering" type="tinyint(4)" null="0" default="0"/>
+    <field name="published" type="tinyint(4)" null="0" default="0"/>
+    <field name="review" type="tinyint(4)" null="0" default="0"/>
+    <field name="description" type="text" null="0"/>
+    <field name="headerdesc" type="text" null="0"/>
+    <field name="thread_count" type="mediumint(8)" null="0" default="0"/>
+    <field name="message_count" type="mediumint(8)" null="0" default="0"/>
+    <field name="last_msgid" type="int(10)" null="0" default="0"/>
+    <field name="last_msgtime" type="int(11)" null="1"/>
+    <field name="params" type="text" null="0"/>
+    <key name="PRIMARY" unique="1" columns="id"/>
+    <key name="parent" columns="parent"/>
+    <key name="published_pubaccess_id" columns="published,pub_access,id"/>
+    <key name="last_msgid" columns="last_msgid"/>
+  </table>
+  <table name="kunena_threads">
+    <field name="id" type="int(11)" null="0" extra="auto_increment"/>
+    <field name="catid" type="int(11)" null="0" default="0"/>
+    <field name="subject" type="tinytext" null="1"/>
+    <field name="emoticon" type="int(11)" null="0" default="0"/>
+    <field name="locked" type="tinyint(4)" null="0" default="0"/>
+    <field name="hold" type="tinyint(4)" null="0" default="0"/>
+    <field name="ordering" type="int(11)" null="0" default="0"/>
+    <field name="posts" type="int(11)" null="0" default="0"/>
+    <field name="hits" type="int(11)" null="0" default="0"/>
+    <field name="attachments" type="int(11)" null="0" default="0"/>
+    <field name="moved_id" type="int(11)" null="0" default="0"/>
+    <field name="first_post_id" type="int(11)" null="0" default="0"/>
+    <field name="first_post_time" type="int(11)" null="0" default="0"/>
+    <field name="first_post_userid" type="int(11)" null="0" default="0"/>
+    <field name="first_post_message" type="text" null="1"/>
+    <field name="last_post_id" type="int(11)" null="0" default="0"/>
+    <field name="last_post_time" type="int(11)" null="0" default="0"/>
+    <field name="last_post_userid" type="int(11)" null="0" default="0"/>
+    <field name="last_post_message" type="text" null="1"/>
+    <field name="params" type="text" null="0"/>
+    <key name="PRIMARY" unique="1" columns="id"/>
+    <key name="catid" columns="catid"/>
+    <key name="first_post_userid" columns="first_post_userid"/>
+    <key name="last_post_userid" columns="last_post_userid"/>
+    <key name="first_post_time" columns="first_post_time"/>
+    <key name="last_post_time" columns="last_post_time"/>
+    <key name="locked" columns="locked"/>
   </table>
   <table name="kunena_user_threads">
-    <field primary_key="yes" name="uth_thread" type="int(11)" null="0" default="0"/>
-    <field primary_key="yes" name="uth_userid" type="int(11)" null="0" default="0"/>
-    <field name="uth_messages" type="mediumint(8)" null="0" default="0"/>
-    <field name="uth_id_last_msg" type="int(10)" null="0" default="0"/>
-    <field name="uth_favorite" type="tinyint(4)" null="0" default="0"/>
-    <field name="uth_subscription" type="tinyint(4)" null="0" default="0"/>
-    <key name="uth_thread" unique="1" columns="uth_thread,uth_userid"/>
-    <key name="uth_userid" columns="uth_userid"/>
+    <field name="thread" type="int(11)" null="0" default="0"/>
+    <field name="userid" type="int(11)" null="0" default="0"/>
+    <field name="messages" type="mediumint(8)" null="0" default="0"/>
+    <field name="id_last_msg" type="int(10)" null="0" default="0"/>
+    <field name="favorite" type="tinyint(4)" null="0" default="0"/>
+    <field name="subscription" type="tinyint(4)" null="0" default="0"/>
+    <field name="params" type="text" null="0"/>
+    <key name="thread" unique="1" columns="thread,userid"/>
+    <key name="userid" columns="userid"/>
   </table>
   <table name="kunena_messages">
-    <field primary_key="yes" name="msg_id" type="int(11)" null="0" extra="auto_increment"/>
-    <field name="msg_parent" type="int(11)" null="1" default="0"/>
-    <field name="msg_thread" type="int(11)" null="1" default="0"/>
-    <field name="msg_catid" type="int(11)" null="0" default="0"/>
-    <field name="msg_name" type="tinytext" null="1"/>
-    <field name="msg_userid" type="int(11)" null="0" default="0"/>
-    <field name="msg_email" type="tinytext" null="1"/>
-    <field name="msg_subject" type="tinytext" null="1"/>
-    <field name="msg_time" type="int(11)" null="0" default="0"/>
-    <field name="msg_ip" type="varchar(15)" null="1"/>
-    <field name="msg_hold" type="tinyint(4)" null="0" default="0"/>
-    <field name="msg_ordering" type="int(11)" null="1" default="0"/>
-    <field name="msg_modified_by" type="int(7)" null="1"/>
-    <field name="msg_modified_time" type="int(11)" null="1"/>
-    <field name="msg_modified_reason" type="tinytext" null="1"/>
-    <field name="msg_message" type="text" null="1"/>
-    <key name="msg_id" unique="1" columns="msg_id"/>
-    <key name="msg_thread" columns="msg_thread"/>
-    <key name="msg_parent" columns="msg_parent"/>
-    <key name="msg_catid" columns="msg_catid"/>
-    <key name="msg_ip" columns="msg_ip"/>
-    <key name="msg_userid" columns="msg_userid"/>
-    <key name="msg_time" columns="msg_time"/>
-    <key name="msg_hold_time" columns="msg_hold,msg_time"/>
-    <key name="msg_parent_hits" columns="msg_parent,msg_hits"/>
+    <field name="id" type="int(11)" null="0" extra="auto_increment"/>
+    <field name="parent" type="int(11)" null="1" default="0"/>
+    <field name="thread" type="int(11)" null="1" default="0"/>
+    <field name="userid" type="int(11)" null="0" default="0"/>
+    <field name="markup" type="tinyint(4)" null="0" default="0"/>
+    <field name="subject" type="tinytext" null="1"/>
+    <field name="message" type="text" null="1"/>
+    <field name="time" type="int(11)" null="0" default="0"/>
+    <field name="ip" type="varchar(15)" null="1"/>
+    <field name="hold" type="tinyint(4)" null="0" default="0"/>
+    <field name="ordering" type="int(11)" null="1" default="0"/>
+    <field name="modified_by" type="int(7)" null="1"/>
+    <field name="modified_time" type="int(11)" null="1"/>
+    <field name="modified_reason" type="tinytext" null="1"/>
+    <field name="params" type="text" null="0"/>
+    <key name="id" unique="1" columns="id"/>
+    <key name="thread" columns="thread"/>
+    <key name="parent" columns="parent"/>
+    <key name="ip" columns="ip"/>
+    <key name="userid" columns="userid"/>
+    <key name="time" columns="time"/>
+    <key name="hold_time" columns="hold,time"/>
   </table>
   <table name="kunena_moderation">
-    <field primary_key="yes" name="mod_catid" type="int(11)" null="0" default="0"/>
-    <field primary_key="yes" name="mod_userid" type="int(11)" null="0" default="0"/>
-    <key name="PRIMARY" unique="1" columns="mod_catid,mod_userid"/>
+    <field name="catid" type="int(11)" null="0" default="0"/>
+    <field name="userid" type="int(11)" null="0" default="0"/>
+    <key name="PRIMARY" unique="1" columns="catid,userid"/>
   </table>
-  <table name="kunena_ranks">
-    <field primary_key="yes" name="rank_id" type="mediumint(8) unsigned" null="0" extra="auto_increment"/>
+  <table name="kunena_ranks"> <!-- REMOVE? -->
+    <field name="rank_id" type="mediumint(8) unsigned" null="0" extra="auto_increment"/>
     <field name="rank_title" type="varchar(255)" null="0"/>
     <field name="rank_min" type="mediumint(8) unsigned" null="0" default="0"/>
     <field name="rank_special" type="tinyint(1) unsigned" null="0" default="0"/>
     <field name="rank_image" type="varchar(255)" null="0"/>
     <key name="PRIMARY" unique="1" columns="rank_id"/>
   </table>
-  <table name="kunena_smileys">
-    <field primary_key="yes" name="id" type="int(4)" null="0" extra="auto_increment"/>
+  <table name="kunena_smileys"> <!-- REMOVE? -->
+    <field name="id" type="int(4)" null="0" extra="auto_increment"/>
     <field name="code" type="varchar(12)" null="0"/>
     <field name="location" type="varchar(50)" null="0"/>
     <field name="greylocation" type="varchar(60)" null="0"/>
     <field name="emoticonbar" type="tinyint(4)" null="0" default="0"/>
     <key name="PRIMARY" unique="1" columns="id"/>
   </table>
- <table name="kunena_threads">
-    <field primary_key="yes" name="thr_id" type="int(11)" null="0" extra="auto_increment"/>
-    <field name="thr_catid" type="int(11)" null="0" default="0"/>
-    <field name="thr_topic_subject" type="tinytext" null="1"/>
-    <field name="thr_topic_emoticon" type="int(11)" null="0" default="0"/>
-    <field name="thr_locked" type="tinyint(4)" null="0" default="0"/>
-    <field name="thr_hold" type="tinyint(4)" null="0" default="0"/>
-    <field name="thr_ordering" type="int(11)" null="0" default="0"/>
-    <field name="thr_posts" type="int(11)" null="0" default="0"/>
-    <field name="thr_hits" type="int(11)" null="0" default="0"/>
-    <field name="thr_attachments" type="int(11)" null="0" default="0"/>
-    <field name="thr_moved_id" type="int(11)" null="0" default="0"/>
-    <field name="thr_first_post_id" type="int(11)" null="0" default="0"/>
-    <field name="thr_first_post_time" type="int(11)" null="0" default="0"/>
-    <field name="thr_first_post_userid" type="int(11)" null="0" default="0"/>
-    <field name="thr_first_post_name" type="tinytext" null="1"/>
-    <field name="thr_first_post_email" type="tinytext" null="1"/>
-    <field name="thr_first_post_message" type="text" null="1"/>
-    <field name="thr_last_post_id" type="int(11)" null="0" default="0"/>
-    <field name="thr_last_post_time" type="int(11)" null="0" default="0"/>
-    <field name="thr_last_post_userid" type="int(11)" null="0" default="0"/>
-    <field name="thr_last_post_name" type="tinytext" null="1"/>
-    <field name="thr_last_post_email" type="tinytext" null="1"/>
-    <field name="thr_last_post_message" type="text" null="1"/>
-    <key name="PRIMARY" unique="1" columns="thr_id"/>
-    <key name="catid" columns="thr_catid"/>
-    <key name="first_post_userid" columns="thr_first_post_userid"/>
-    <key name="last_post_userid" columns="thr_last_post_userid"/>
-    <key name="first_post_time" columns="thr_first_post_time"/>
-    <key name="last_post_time" columns="thr_last_post_time"/>
-    <key name="locked" columns="thr_locked"/>
-  </table>
   <table name="kunena_users">
-    <field primary_key="yes" name="usr_id" type="int(11)" null="0" default="0"/>
-    <field name="usr_view" type="varchar(8)" null="0" default="flat"/>
-    <field name="usr_signature" type="text" null="1"/>
-    <field name="usr_moderator" type="int(11)" null="1" default="0"/>
-    <field name="usr_ordering" type="int(11)" null="1" default="0"/>
-    <field name="usr_posts" type="int(11)" null="1" default="0"/>
-    <field name="usr_avatar" type="varchar(50)" null="1"/>
-    <field name="usr_karma" type="int(11)" null="1" default="0"/>
-    <field name="usr_karma_time" type="int(11)" null="1" default="0"/>
-    <field name="usr_group_id" type="int(4)" null="1" default="1"/>
-    <field name="usr_uhits" type="int(11)" null="1" default="0"/>
-    <field name="usr_personalText" type="tinytext" null="1"/>
-    <field name="usr_gender" type="tinyint(4)" null="0" default="0"/>
-    <field name="usr_birthdate" type="date" null="0" default="0001-01-01"/>
-    <field name="usr_location" type="varchar(50)" null="1"/>
-    <field name="usr_ICQ" type="varchar(50)" null="1"/>
-    <field name="usr_AIM" type="varchar(50)" null="1"/>
-    <field name="usr_YIM" type="varchar(50)" null="1"/>
-    <field name="usr_MSN" type="varchar(50)" null="1"/>
-    <field name="usr_SKYPE" type="varchar(50)" null="1"/>
-    <field name="usr_GTALK" type="varchar(50)" null="1"/>
-    <field name="usr_websitename" type="varchar(50)" null="1"/>
-    <field name="usr_websiteurl" type="varchar(50)" null="1"/>
-    <field name="usr_rank" type="tinyint(4)" null="0" default="0"/>
-    <field name="usr_hideEmail" type="tinyint(1)" null="0" default="1"/>
-    <field name="usr_showOnline" type="tinyint(1)" null="0" default="1"/>
-    <field name="usr_allowed_categories" type="text" null="1"/>
-    <field name="usr_read_topics" type="text" null="1"/>
-    <field name="usr_last_visit_time" type="int(11)" null="0" default="0"/>
-    <field name="usr_curr_visit_time" type="int(11)" null="0" default="0"/>
-    <key name="PRIMARY" unique="1" columns="usr_id"/>
-    <key name="group_id" columns="usr_group_id"/>
-    <key name="posts" columns="usr_posts"/>
-    <key name="uhits" columns="usr_uhits"/>
+    <field name="id" type="int(11)" null="0" default="0"/>
+    <field name="moderator" type="int(11)" null="1" default="0"/>
+    <field name="ordering" type="int(11)" null="1" default="0"/>
+    <field name="posts" type="int(11)" null="1" default="0"/>
+    <field name="hits" type="int(11)" null="1" default="0"/>
+    <field name="rank" type="tinyint(4)" null="0" default="0"/>
+    <field name="hide_email" type="tinyint(1)" null="0" default="1"/>
+    <field name="show_online" type="tinyint(1)" null="0" default="1"/>
+    <field name="allowed_categories" type="text" null="1"/> <!-- REMOVE? -->
+    <field name="read_topics" type="text" null="1"/> <!-- REMOVE? -->
+    <field name="last_visit_time" type="int(11)" null="0" default="0"/>
+    <field name="curr_visit_time" type="int(11)" null="0" default="0"/>
+    <field name="rating" type="int(11)" null="1" default="0"/>
+    <field name="params" type="text" null="0"/>
+    <key name="PRIMARY" unique="1" columns="id"/>
+    <key name="posts" columns="posts"/>
+    <key name="hits" columns="hits"/>
   </table>
   <table name="kunena_version">
-    <field primary_key="yes" name="vsn_id" type="int(11)" null="0" extra="auto_increment"/>
-    <field name="vsn_version" type="varchar(20)" null="0"/>
-    <field name="vsn_versiondate" type="date" null="0"/>
-    <field name="vsn_installdate" type="date" null="0"/>
-    <field name="vsn_build" type="varchar(20)" null="0"/>
-    <field name="vsn_versionname" type="varchar(40)" null="1"/>
-    <field name="vsn_state" type="varchar(32)" null="0" default="unknown"/>
-    <key name="PRIMARY" unique="1" columns="vsn_id"/>
+    <field name="id" type="int(11)" null="0" extra="auto_increment"/>
+    <field name="version" type="varchar(20)" null="0"/>
+    <field name="versiondate" type="date" null="0"/>
+    <field name="installdate" type="date" null="0"/>
+    <field name="build" type="varchar(20)" null="0"/>
+    <field name="versionname" type="varchar(40)" null="1"/>
+    <field name="state" type="varchar(32)" null="0" default="unknown"/>
+    <key name="PRIMARY" unique="1" columns="id"/>
   </table>
   <table name="kunena_whoisonline">
-    <field primary_key="yes" name="who_id" type="int(6)" null="0" extra="auto_increment"/>
-    <field name="who_userid" type="int(7)" null="0" default="0"/>
-    <field name="who_time" type="varchar(14)" null="0" default="0"/>
-    <field name="who_item" type="int(6)" null="1" default="0"/>
-    <field name="who_what" type="varchar(255)" null="1" default="0"/>
-    <field name="who_func" type="varchar(50)" null="1"/>
-    <field name="who_do" type="varchar(50)" null="1"/>
-    <field name="who_task" type="varchar(50)" null="1"/>
-    <field name="who_link" type="text" null="1"/>
-    <field name="who_userip" type="varchar(20)" null="0"/>
-    <field name="who_user" type="tinyint(2)" null="0" default="0"/>
-    <key name="PRIMARY" unique="1" columns="who_id"/>
-    <key name="userid" columns="who_userid"/>
+    <field name="id" type="int(6)" null="0" extra="auto_increment"/>
+    <field name="userid" type="int(7)" null="0" default="0"/>
+    <field name="time" type="varchar(14)" null="0" default="0"/>
+    <field name="item" type="int(6)" null="1" default="0"/>
+    <field name="what" type="varchar(255)" null="1" default="0"/>
+    <field name="func" type="varchar(50)" null="1"/>
+    <field name="do" type="varchar(50)" null="1"/>
+    <field name="task" type="varchar(50)" null="1"/>
+    <field name="link" type="text" null="1"/>
+    <field name="userip" type="varchar(20)" null="0"/>
+    <field name="user" type="tinyint(2)" null="0" default="0"/>
+    <key name="PRIMARY" unique="1" columns="id"/>
+    <key name="userid" columns="userid"/>
+  </table>
+  <table name="kunena_log">
+    <field name="id" type="int(11)" null="0" extra="auto_increment"/>
+    <field name="timestamp" type="datetime" null="0" default="0000-00-00 00:00:00"/>
+    <field name="userid" type="int(11)" null="0" default="0"/>
+    <field name="ip" type="varchar(40)" null="0"/>
+    <field name="cookie" type="varchar(40)" null="0"/>
+    <field name="action" type="int(6)" null="0" default="0"/>
+    <field name="catid" type="int(11)" null="0" default="0"/>
+    <field name="msgid" type="int(11)" null="0" default="0"/>
+    <field name="params" type="text" null="0"/>
+    <key name="PRIMARY" unique="1" columns="id"/>
+    <key name="timestamp" columns="timestamp"/>
+  </table>
+    <table name="kunena_userlog">
+    <field name="id" type="int(11)" null="0" extra="auto_increment"/>
+    <field name="timestamp" type="datetime" null="0" default="0000-00-00 00:00:00"/>
+    <field name="userid" type="int(11)" null="0" default="0"/>
+    <field name="ip" type="varchar(40)" null="0"/>
+    <field name="cookie" type="varchar(40)" null="0"/>
+    <field name="params" type="text" null="0"/>
+    <key name="PRIMARY" unique="1" columns="id"/>
+    <key name="timestamp" columns="timestamp"/>
+  </table>
+    <table name="kunena_queue">
+    <field name="id" type="int(11)" null="0" extra="auto_increment"/>
+    <field name="timestamp" type="datetime" null="0" default="0000-00-00 00:00:00"/>
+    <field name="executiontime" type="datetime" null="0" default="0000-00-00 00:00:00"/>
+    <field name="status" type="int(6)" null="0" default="0"/>
+    <field name="userid" type="int(11)" null="0" default="0"/>
+    <field name="action" type="int(6)" null="0" default="0"/>
+    <field name="params" type="text" null="0"/>
+    <key name="PRIMARY" unique="1" columns="id"/>
+    <key name="timestamp" columns="timestamp"/>
+    <key name="executiontime" columns="executiontime"/>
   </table>
 </schema>

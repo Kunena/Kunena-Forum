@@ -68,7 +68,7 @@ class KunenaControllerInstall extends KunenaController
 		foreach ($results as $result)
 		{
 			if (empty($result['action'])) continue;
-			echo '<div>', $result['action'], ': ', $result['name'], '</div>';
+			echo '<div>', $result['action'], ': ', $result['name'], '(', $result['sql'],')</div>';
 		}
 
 		if (!isset($stop)) {

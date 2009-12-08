@@ -20,6 +20,7 @@ DEFINE('KUNENA_MIN_JOOMLA',	'1.5.10');
 DEFINE('KUNENA_INPUT_DATABASE', 912357); // just contains random number
 
 DEFINE('KUNENA_INSTALL_SCHEMA_FILE', KPATH_ADMIN.'/install/install.xml');
+DEFINE('KUNENA_UPGRADE_SCHEMA_FILE', KPATH_ADMIN.'/install/upgrade.xml');
 DEFINE('KUNENA_INSTALL_SCHEMA_EMPTY', '<?xml version="1.0" encoding="utf-8"?><!DOCTYPE schema SYSTEM "'.KPATH_ADMIN.'/install/kunena16.dtd'.'"><schema></schema>');
 
 jimport('joomla.application.component.model');
@@ -172,11 +173,14 @@ class KunenaModelInstall extends JModel
 		$results = array();
 
 		$schema = $this->getSchemaFromDatabase(true);
+
+		$this->upgradeSchema($schema, KUNENA_UPGRADE_SCHEMA_FILE);
+
 		$diff = $this->getSchemaDiff($schema, KUNENA_INSTALL_SCHEMA_FILE);
 		$this->_sql = $this->getSchemaSQL($diff);
 
 		//echo "<pre>",htmlentities($schema->saveXML()),"</pre>";
-		//echo "<pre>",htmlentities($diff->saveXML()),"</pre>";
+		echo "<pre>",htmlentities($diff->saveXML()),"</pre>";
 		//echo "<pre>",print_r($this->_sql),"</pre>";
 
 		foreach ($this->_sql as $table)
@@ -609,13 +613,23 @@ class KunenaModelInstall extends JModel
 		{
 			$node = $schema->importNode($loc['new'], true);
 			$node->setAttribute('action', 'create');
+			$prev = $loc['new']->previousSibling;
+			if ($prev && $prev->tagName == 'field') $node->setAttribute('after', $prev->getAttribute('name'));
 			return $node;
 		}
 		// Delete
 		if (!isset($loc['new']))
 		{
-			$node = $schema->createElement($tag);
-			$node->setAttribute('name', $name);
+			if($loc['old']->getAttribute('extra') == 'auto_increment')
+			{
+				// Only one field can have auto_increment, so give enough info to fix it!
+				$node = $schema->importNode($loc['old'], false);
+			}
+			else
+			{
+				$node = $schema->createElement($tag);
+				$node->setAttribute('name', $name);
+			}
 			$node->setAttribute('action', 'drop');
 			return $node;
 		}
@@ -631,11 +645,18 @@ class KunenaModelInstall extends JModel
 				if ($childNode) $childNodes[] = $childNode;
 			}
 		}
+
+		// Primary key is always unique
+		if ($loc['new']->tagName == 'key' && $loc['new']->getAttribute('name') == 'PRIMARY') $loc['new']->setAttribute('unique','1');
+		// Remove default='' from a field
+		if ($loc['new']->tagName == 'field' && $loc['new']->getAttribute('default') == '') $loc['new']->removeAttribute('default');
+
 		$attributes = array();
 		$attrAll = $this->listAllNodes(array('old'=>$loc['old']->attributes, 'new'=>$loc['new']->attributes));
 		foreach ($attrAll as $attrName => $attrLoc)
 		{
-			if ($attrName == 'primary_key' || $attrName == 'action') continue;
+			if ($attrName == 'primary_key') continue;
+			if ($attrName == 'action') continue;
 			if (!isset($attrLoc['old']->value) || !isset($attrLoc['new']->value) || str_replace(' ', '', $attrLoc['old']->value) != str_replace(' ', '', $attrLoc['new']->value))
 				$action = 'alter';
 		}
@@ -645,6 +666,8 @@ class KunenaModelInstall extends JModel
 			$node = $schema->importNode($loc['new'], false);
 			$node->setAttribute('name', $name);
 			$node->setAttribute('action', 'alter');
+			$prev = $loc['new']->previousSibling;
+			if ($prev && $prev->tagName == 'field') $node->setAttribute('after', $prev->getAttribute('name'));
 			foreach ($childNodes as $childNode) $node->appendChild($childNode);
 		}
 		return $node;
@@ -682,21 +705,36 @@ class KunenaModelInstall extends JModel
 					$str .= 'ALTER TABLE '.$db->nameQuote($tablename).' '."\n";
 					foreach ($table->childNodes as $field)
 					{
+						if ($field->hasAttribute('after')) $after = ' AFTER '.$field->getAttribute('after');
+						else $after = ' FIRST';
+
 						switch ($action2 = $field->getAttribute('action'))
 						{
 							case 'drop':
-								if (!$drop) break;
-								$fields[] = '	DROP '.$this->getSchemaSQLField($field);
-								break;
+								if (!$drop)
+								{
+									if($field->getAttribute('extra') == 'auto_increment')
+									{
+										// Only one field can have auto_increment, so fix the old field!
+										$field->removeAttribute('extra');
+										$field->setAttribute('action', 'alter');
+									}
+									else break;
+								}
+								else
+								{
+									$fields[] = '	DROP '.$this->getSchemaSQLField($field);
+									break;
+								}
 							case 'alter':
 								if ($field->tagName == 'key') {
 									$fields[] = '	DROP KEY '.$db->nameQuote($field->getAttribute('name'));
 									$fields[] = '	ADD '.$this->getSchemaSQLField($field);
 								} else
-									$fields[] = '	MODIFY '.$this->getSchemaSQLField($field);
+									$fields[] = '	MODIFY '.$this->getSchemaSQLField($field).$after;
 								break;
 							case 'create':
-								$fields[] = '	ADD '.$this->getSchemaSQLField($field);
+								$fields[] = '	ADD '.$this->getSchemaSQLField($field).$after;
 							case '':
 								break;
 							default:
@@ -737,7 +775,7 @@ class KunenaModelInstall extends JModel
 			{
 				$str .= ' '.$field->getAttribute('type');
 				$str .= ($field->getAttribute('null') == 1) ? ' NULL' : ' NOT NULL';
-				$str .= ($field->hasAttribute('default')) ? ' default '.$db->quote($field->getAttribute('default')) : '';
+				$str .= ($field->hasAttribute('default')) ? ' default '.$db->quote($field->getAttribute('default')) : " default ''";
 				$str .= ($field->hasAttribute('extra')) ? ' '.$field->getAttribute('extra') : '';
 			}
 		}
@@ -753,6 +791,18 @@ class KunenaModelInstall extends JModel
 			}
 		}
 		return $str;
+	}
+
+	protected function upgradeSchema($db, $upgrade)
+	{
+		$db = $this->getDOMDocument($db);
+		$upgrade = $this->getDOMDocument($upgrade);
+		if (!$db || !$upgrade) return;
+
+		$db->validate();
+		//$upgrade->validate();
+
+
 	}
 
 }

@@ -12,15 +12,17 @@ defined('_JEXEC') or die;
 
 $config = $this->options;
 
-echo '<table><tr><td width="65%" valign="top">';
+echo '<table><tr><td width="50%" valign="top">';
 
 $settings  = JHtml::_('kconfig.setting', $config->get('forum_offline'), 'forum_offline', 'Forum Offline', '...', 'yes/no');
 $settings .= JHtml::_('kconfig.setting', $config->get('forum_title'), 'forum_title', 'Forum Title', 'The name of your forum.', 'text', 30);
 $settings .= JHtml::_('kconfig.setting', $config->get('forum_email'), 'forum_email', 'Forum eMail', 'The forum\'s email address. Make this a valid email address', 'text', 30);
-$settings .= JHtml::_('kconfig.setting', $config->get('forum_description'), 'forum_description', 'Forum Description', 'Content is displayed above the forum', 'editor', 40, 20);
-$settings .= JHtml::_('kconfig.setting', $config->get('forum_offline_msg'), 'forum_offline_msg', 'Forum Offline Message', 'The message displayed instead of the forum when it is set offline', 'editor', 40, 20);
 
 echo JHtml::_('kconfig.section', 'Global', $settings );
+
+$settings = JHtml::_('kconfig.setting', $config->get('forum_description'), 'forum_description', 'Forum Description', 'Content is displayed above the forum', 'editor', 40, 20);
+
+echo JHtml::_('kconfig.section', 'Description', $settings );
 
 echo '</td><td valign="top">';
 
@@ -29,5 +31,9 @@ $settings .= JHtml::_('kconfig.setting', $config->get('rss_feed_type'), 'rss_fee
 $settings .= JHtml::_('kconfig.setting', $config->get('rss_history'), 'rss_history', 'RSS History', 'Select between different amounts of history processed for RSS feeds', 'list', $this->option_lists['history'], 1);
 
 echo JHtml::_('kconfig.section', 'RSS', $settings );
+
+$settings = JHtml::_('kconfig.setting', $config->get('forum_offline_msg'), 'forum_offline_msg', 'Forum Offline Message', 'The message displayed instead of the forum when it is set offline', 'editor', 40, 20);
+
+echo JHtml::_('kconfig.section', 'Offline Message', $settings );
 
 echo '</td></tr></table>';

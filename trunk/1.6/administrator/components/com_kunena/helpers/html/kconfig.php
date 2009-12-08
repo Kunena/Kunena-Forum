@@ -98,7 +98,7 @@ abstract class JHtmlKConfig
 
 	            break;
 	        case 'multiple':
-	            $output .= JHTML::_('select.genericlist',  $extra1, 'config['.$setting.']', 'class="inputbox" size="'.($extra2==0?count($extra1):$extra2).'" multiple="multiple"', 'value', 'text', $var);
+	            $output .= JHTML::_('select.genericlist',  $extra1, 'config['.$setting.'][]', 'class="inputbox" size="'.($extra2==0?count($extra1):$extra2).'" multiple="multiple"', 'value', 'text', $var);
 
 	            break;
 	        case 'info':

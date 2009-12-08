@@ -242,17 +242,17 @@ class KunenaViewConfig extends JView
 
 		JToolBarHelper::divider();
 
-		JToolBarHelper::save('config.save');
-		JToolBarHelper::apply('config.apply');
-		JToolBarHelper::cancel('config.cancel');
+		JToolBarHelper::save('save');
+		JToolBarHelper::apply('apply');
+		JToolBarHelper::cancel('cancel');
 	}
 
 	protected function _displayImportToolbar()
 	{
 		JToolBarHelper::title('Kunena: '.JText::_('Configuration Import/Export'), 'config');
 
-		JToolBarHelper::custom('config.import', 'import', 'import', 'Import', false);
-		JToolBarHelper::custom('config.export', 'export', 'export', 'Export', false);
+		JToolBarHelper::custom('import', 'import', 'import', 'Import', false);
+		JToolBarHelper::custom('export', 'export', 'export', 'Export', false);
 
 		// We can't use the toolbar helper here because there is no generic link button.
 		$bar = &JToolBar::getInstance('toolbar');

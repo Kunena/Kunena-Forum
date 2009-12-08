@@ -24,7 +24,7 @@ echo JHtml::_('kconfig.section', 'Global', $settings );
 
 echo '</td><td valign="top">';
 
-$settings  = JHtml::_('kconfig.setting', $config->get('enable_rss_feed'), 'enable_rss_feeds', 'Enable RSS Feeds', 'Set to yes to enable RSS feeds for the forum.', 'yes/no');
+$settings  = JHtml::_('kconfig.setting', $config->get('enable_rss_feeds'), 'enable_rss_feeds', 'Enable RSS Feeds', 'Set to yes to enable RSS feeds for the forum.', 'yes/no');
 $settings .= JHtml::_('kconfig.setting', $config->get('rss_feed_type'), 'rss_feed_type', 'RSS Feed Type', 'Select between different feed types: By Thread or By Post.', 'list', $this->option_lists['rss_feed_type'], 1);
 $settings .= JHtml::_('kconfig.setting', $config->get('rss_history'), 'rss_history', 'RSS History', 'Select between different amounts of history processed for RSS feeds', 'list', $this->option_lists['history'], 1);
 

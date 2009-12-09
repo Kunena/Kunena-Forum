@@ -7,7 +7,7 @@
 * @Copyright (C) 2009 www.kunena.com All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.com
-*/
+**/
 
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.5.8
+
+09-dec-2009 Xillibit
++ [#18627] Integration of poll into kunena
 
 05-dec-2009 Xillibit
 #^[#18902] Fixes for all remaining deprecated warning with PHP 5.3.x and remove split() and ereg() functions

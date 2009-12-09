@@ -68,6 +68,9 @@ $userid 		= JRequest::getInt('userid', 0);
 $view 			= JRequest::getVar('view', '');
 $msgpreview 	= JRequest::getVar('msgpreview', '');
 $no_html		= JRequest::getBool('no_html', 0);
+$value_choosed	= JRequest::getVar('radio', '');
+$polltitle = JRequest::getVar('poll_title' , 0);
+$optionsnumbers = JRequest::getInt('number_total_options' , '');
 
 $app = JFactory::getApplication();
 
@@ -468,6 +471,67 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
             $fbMenu = KUNENA_get_menu(NULL, $fbConfig, $fbIcons, $my_id, 3, $view, $catid, $id, $thread);
 
             break;
+        case 'pollsave':          
+          $datasusers = array(); 
+          if($fbConfig->pollallowvoteone) {
+            $kunena_db->setQuery("SELECT * FROM #__fb_polls_users WHERE pollid=$id AND userid=$kunena_my->id");
+            $kunena_db->query() or trigger_dberror('Unable to load datas from poll users.');
+            $datasusers = $kunena_db->loadObjectList();            
+          }       
+          if(empty($datasusers)){
+            //Get the datas for know the right field to update with the id
+            $kunena_db->setQuery("SELECT * FROM #__fb_polls_datas AS a JOIN #__fb_polls AS b ON b.topicid=a.pollid WHERE a.pollid=$id");
+            $kunena_db->query() or trigger_dberror('Unable to load poll.');
+            $dataspoll = $kunena_db->loadObjectList();                        
+            $kunena_db->setQuery("SELECT * FROM #__fb_polls_datas WHERE pollid=$id");
+            $dataspoll2 = $kunena_db->loadObjectList();
+            if($fbConfig->pollallowvoteone) {
+              $kunena_db->setQuery("INSERT INTO  #__fb_polls_users (pollid,userid) VALUES('$id','{$kunena_my->id}')");
+              $kunena_db->query();
+            }
+            //We must save the option choosed by the user in the database              
+            foreach ( $dataspoll2 as $row ) {
+              if($row->text == $value_choosed){
+               $idaffected = $row->id; 
+                $hitsaffected = $row->hits;                          
+              }
+            }             
+           if(empty($hitsaffected) && empty($dataspoll[0]->voters)) {        
+            $kunena_db->setQuery("UPDATE #__fb_polls SET voters=1 WHERE topicid=$id"); 
+            $kunena_db->query();                          
+            $kunena_db->setQuery("UPDATE #__fb_polls_datas SET hits=1 WHERE id=$idaffected");
+            $kunena_db->query();
+          }
+          if(empty($hitsaffected) && !empty($dataspoll[0]->voters)){       
+           $kunena_db->setQuery("UPDATE #__fb_polls_datas SET hits=1 WHERE id=$idaffected");
+           $kunena_db->query();
+           $kunena_db->setQuery("UPDATE #__fb_polls SET voters=voters+1 WHERE topicid=$id"); 
+           $kunena_db->query();  
+          }
+          if(!empty($hitsaffected) && empty($dataspoll[0]->voters)) {        
+            $kunena_db->setQuery("UPDATE #__fb_polls SET voters=1 WHERE topicid=$id"); 
+            $kunena_db->query();
+            $kunena_db->setQuery("UPDATE #__fb_polls_datas SET hits=hits+1 WHERE id=$idaffected");
+            $kunena_db->query();
+          }
+          if(!empty($hitsaffected) && !empty($dataspoll[0]->voters)) {          
+           $kunena_db->setQuery("UPDATE #__fb_polls SET voters=voters+1 WHERE topicid=$id"); 
+           $kunena_db->query();                          
+           $kunena_db->setQuery("UPDATE #__fb_polls_datas SET hits=hits+1 WHERE id=$idaffected");
+           $kunena_db->query();
+         }
+                
+         if ($kunena_db->getErrorNum()) {
+          echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"0\";</script>";                   
+        }
+        else {
+         echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"1\";</script>";                  
+       }
+      } else {
+        echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"2\";</script>";
+      }                         
+          
+            break;    
 
         case 'showcat':
             //get number of pending messages
@@ -515,6 +579,16 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
                 }
             else {
                 include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/who/who.php');
+                }
+
+            break;
+        #########################################################################################
+        case 'poll':
+            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/poll/poll.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/poll/poll.php');
+                }
+            else {
+                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/poll/poll.php');
                 }
 
             break;

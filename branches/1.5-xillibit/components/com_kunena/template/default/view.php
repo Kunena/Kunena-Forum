@@ -248,7 +248,36 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 			        $headerdesc = smile::htmlwrap($headerdesc, $fbConfig->wrap);
 					echo $headerdesc;
         ?></div>
-        <?php } ?>
+        <?php } 
+if ($fbConfig->pollenabled == "1" && $this_message->poll_exist == "1")
+{
+
+    if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/poll/pollbox.php')) {
+        require_once (KUNENA_ABSTMPLTPATH . '/plugin/poll/pollbox.php');
+    }
+    else {
+        require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/poll/pollbox.php');
+    }
+
+} 
+// load module
+if (JDocumentHTML::countModules('kunena_poll'))
+{
+?>
+
+    <div class = "fb-fb_2">
+        <?php
+        	$document	= &JFactory::getDocument();
+        	$renderer	= $document->loadRenderer('modules');
+        	$options	= array('style' => 'xhtml');
+        	$position	= 'kunena_poll';
+        	echo $renderer->render($position, $options, null);
+	       ?>
+    </div>
+
+<?php
+}
+ ?>
         <table border = "0" cellspacing = "0" class = "jr-topnav" cellpadding = "0" width="100%">
             <tr>
                 <td class = "jr-topnav-left">

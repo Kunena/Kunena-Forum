@@ -328,6 +328,13 @@ class CKunenaLink
 		if ($id !== NULL) $idstring .= "&amp;id=$id";
 		return JRoute::_(KUNENA_LIVEURLREL."&amp;func=announcement&amp;do={$do}{$idstring}");
     }
+    
+	function GetPollURL($fbConfig, $do, $id=NULL, $catid){
+		  $idstring = '';
+		  if ($id !== NULL) $idstring .= "&amp;id=$id";
+		  $catidstr = "&amp;catid=$catid";
+		  return JRoute::_(KUNENA_LIVEURLREL."&amp;func=poll&amp;do={$do}{$idstring}{$catidstr}");
+    }
 
     //
     // Macro functions that build more complex html output with embedded links

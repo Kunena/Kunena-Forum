@@ -848,7 +848,18 @@ function showConfig($option)
 	$lists['sef'] = JHTML::_('select.genericlist', $yesno, 'cfg_sef', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->sef);
 	$lists['sefcats'] = JHTML::_('select.genericlist', $yesno, 'cfg_sefcats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->sefcats);
 	$lists['sefutf8'] = JHTML::_('select.genericlist', $yesno, 'cfg_sefutf8', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->sefutf8);
-	
+	//New -> Poll
+	$lists['pollallowvoteone'] = JHTML::_('select.genericlist', $yesno, 'cfg_pollallowvoteone', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pollallowvoteone);
+  $lists['pollenabled'] = JHTML::_('select.genericlist', $yesno, 'cfg_pollenabled', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pollenabled);
+	$kunena_db->setQuery("SELECT id,parent,name FROM #__fb_categories ORDER BY id");
+  $categoriesList = $kunena_db->loadObjectList();
+  foreach ($categoriesList as $catsallowed)
+  {
+    	if($catsallowed->parent != "0"){      
+        $yesnoCategories[] = JHTML::_('select.option',$catsallowed->id, $catsallowed->name." (id: ".$catsallowed->id.")");
+      }      
+  }
+  $lists['pollallowedcats'] = JHTML::_('select.genericlist', $yesnoCategories, 'cfg_pollallowedcats', 'class="inputbox" size="5"', 'value', 'text');
     html_Kunena::showConfig($fbConfig, $lists, $option);
 }
 

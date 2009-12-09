@@ -274,9 +274,38 @@ JHTML::_('behavior.keepalive');
                 </td>
             </tr>
 
+        <!-- Start of Poll -->
         <?php
         }
-        ?>
+        $catsallowed = explode(',',$fbConfig->pollallowedcategories);
+        foreach($catsallowed as $cats){
+          if($cats == $catid){
+        
+        
+        //Check if it's is a new thread and show the poll                                    
+         if($fbConfig->pollenabled == "1" && $id == "0" ) {                 
+         ?>     
+            <tr class = "<?php echo $boardclass; ?>sectiontableentry2">
+                <td class = "fb_leftcolumn">
+                    <strong><?php echo _KUNENA_POLL_ADD; ?></strong>
+                </td>        
+                <td>
+                    <?php echo _KUNENA_POLL_TITLE; ?> <input type = 'text' name = 'poll_title' value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" />           
+                    
+                    <!-- The field hidden allow to know the options number chooses by the user -->
+                    <?php if($editmode != "1"){ ?> 
+                    <input type="hidden" name="number_total_options" id="numbertotal">
+                    <?php } ?>
+                    <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $fbConfig->pollnboptions; ?>);">
+                     
+                    <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onclick = "javascript:delete_field();">                 
+                </td>
+            </tr>            
+           <?php } 
+           
+           }
+           }?>
+           <!-- End of Poll -->
 		<?php
 		// Begin captcha . Thanks Adeptus
 		if ($fbConfig->captcha == 1 && $kunena_my->id < 1) { ?>
@@ -290,7 +319,35 @@ JHTML::_('behavior.keepalive');
 		}
 		// Finish captcha
 		?>
-        <tr>
+		<!-- Start of Poll -->		
+		    <?php if(($editmode == "1") && $fbConfig->pollenabled == "1" && isparent($id)) { ?>
+        <tr id="fb_post_edit_poll">     
+        <input type="hidden" name="number_total_options" id="numbertotalr" value="<?php echo $nbpolloptions; ?>">  
+        <script type="text/javascript">var number_field="<?php echo $nbpolloptions+1; ?>";</script> 
+            <td id="fb_post_options" colspan = "2" style = "text-align: center;"> 
+            <tr class = "<?php echo $boardclass; ?>sectiontableentry2">
+                <td class = "fb_leftcolumn" >
+            <strong><?php echo _KUNENA_POLL_TITLE; ?></strong> 
+            </td> <td>
+            <input type = 'text' name = 'poll_title' value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" /><input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $fbConfig->pollnboptions; ?>);">
+                     
+                    <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onclick = "javascript:delete_field();"> 
+            </td> 
+            </tr>           
+                <?php
+                  if(isset($nbpolloptions)) { 
+                    $nboptions = "1"; 
+                    for($i=0;$i < $nbpolloptions;$i++){                                       
+                      echo "<tr class=\"".$boardclass."sectiontableentry2\" id=\"option".$nboptions."\"><td style=\"font-weight: bold\" class=\"fb_leftcolumn\">Option ".$nboptions."</td><td><input type=\"text\" name=\"field_option".$nboptions."\" value=\"".$polldatasedit[$i]->text."\" /></td></tr>";
+                      $nboptions++;                                        
+                    }
+                  }  
+                ?>
+            </td>
+          </tr>  
+          <?php } ?>  
+            <!-- End Poll -->
+        <tr id="fb_post_buttons_tr">
             <td id="fb_post_buttons" colspan = "2" style = "text-align: center;">
                 <input type="submit" name="submit"  class="fb_button" value="<?php @print(' '._GEN_CONTINUE.' ');?>" onclick="return submitForm()" onmouseover = "javascript:jQuery('input[name=helpbox]').val('<?php @print(_KUNENA_EDITOR_HELPLINE_SUBMIT);?>')" />
                 <input type="button" name="preview" class="fb_button" value="<?php @print(' '._PREVIEW.' ');?>"      onClick="fbGetPreview(document.postform.message.value,<?php echo KUNENA_COMPONENT_ITEMID?>);" onmouseover = "javascript:jQuery('input[name=helpbox]').val('<?php @print(_KUNENA_EDITOR_HELPLINE_PREVIEW);?>')" />

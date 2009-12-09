@@ -139,6 +139,7 @@ color:#666;
                 <a class="fbsubmenu" href = "#bbcode"><?php echo _COM_A_BBCODE; ?></a>
                 <a class="fbsubmenu" href = "#integration"><?php echo _COM_A_INTEGRATION; ?></a>
                 <a class="fbsubmenu" href = "#plugins"><?php echo _KUNENA_ADMIN_CONFIG_PLUGINS; ?></a>
+                <a class="fbsubmenu" href = "#polls"><?php echo _KUNENA_ADMIN_POLLS; ?></a>
             <?php } ?>
            <a class="fbmainmenu"  href = "index.php?option=com_kunena&task=showAdministration"><?php echo _COM_C_FORUM; ?></a>
            <a class="fbmainmenu"  href = "index.php?option=com_kunena&task=showprofiles"><?php echo _COM_C_USER; ?></a>
@@ -2434,7 +2435,70 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 
            </fieldset>
 
+<div class="fbfuncsubtitle"><?php echo _KUNENA_ADMIN_POLLS; ?><a name="polls" id="polls"> </a></div>
+           <fieldset>
+                        <legend> <?php echo _KUNENA_A_HACK_POLL_TITLE; ?></legend>
+   <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"  width="25%"><?php echo _KUNENA_A_POLL_ENABLED; ?>
+                    </td>
 
+                    <td align = "left" valign = "top" width="25%"><?php echo $lists['pollenabled'] ?>                        
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_A_ENABLED_DESC; ?>
+                    </td>
+                </tr>
+
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"  width="25%"><?php echo _KUNENA_A_POLL_NUMBER_OPTIONS; ?>
+                    </td>
+
+                    <td align = "left" valign = "top" width="25%">
+                        <input type = "text" name = "cfg_pollnboptions" value = "<?php echo $fbConfig->pollnboptions; ?>"/>                        
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_NUMBER_OPTIONS_DESC; ?>
+                    </td>
+                </tr>
+
+
+            </table>
+            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+
+
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"  width="25%"><?php echo _KUNENA_A_POLL_ALLOW_ONE_VOTE; ?>
+                    </td>
+
+                    <td align = "left" valign = "top" width="25%"><?php echo $lists['pollallowvoteone'] ?>                        
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_ALLOW_ONE_VOTE_DESC; ?>
+                    </td>
+                </tr>
+
+
+            </table>
+            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+
+
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"  width="25%"><?php echo _KUNENA_A_POLL_CATEGORIES_ALLOWED; ?>
+                    </td>
+
+                    <td align = "left" valign = "top" width="25%"><?php echo $lists['pollallowedcats'] ?>                
+                    <input type = "text" name = "cfg_pollallowedcategories" value = "<?php echo $fbConfig->pollallowedcategories; ?>"/>                        
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC; ?>
+                    </td>
+                </tr>
+
+
+            </table>
+
+           </fieldset>
 
     <input type = "hidden" name = "task" value = "showConfig"/>
 

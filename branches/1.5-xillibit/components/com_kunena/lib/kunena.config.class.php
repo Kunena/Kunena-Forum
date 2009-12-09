@@ -378,6 +378,11 @@ class CKunenaConfig extends CKunenaConfigBase
 	var $sef                     = 1;
 	var $sefcats                 = 0;
 	var $sefutf8                 = 0;
+	//New Poll variables
+	var $pollnboptions = '4'; //For poll integration, set the number maximum of options
+    var $pollallowvoteone = '1'; //For poll integration, set if yes or no the user can vote one or more time for a poll
+    var $pollenabled = "1"; //For poll integration, for disable the poll
+    var $pollallowedcategories = "1"; //For poll integration, set the allowed categories for poll
 	
     public function __construct($KunenaUser=null)
     {

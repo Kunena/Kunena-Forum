@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.8
 
+11-dec-2009 Xillibit
+* [#18983] Add missing files index.php to plugin/myprofile and plugin/chili to prevent list the files in the directory
+
 10-Dec-2009 Matias
 ^ [#18763] Update version info to 1.5.8RC2
 ^ [#18861] Credits page: add missing copyright information

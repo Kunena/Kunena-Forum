@@ -34,6 +34,7 @@ Legend:
 Kunena 1.5.8
 
 10-Dec-2009 Matias
+^ [#18763] Update version info to 1.5.8RC2
 ^ [#18861] Credits page: add missing copyright information
 
 02-Dec-2009 810

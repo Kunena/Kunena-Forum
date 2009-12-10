@@ -1289,7 +1289,7 @@ FAQ , RULES , UPLOAD AVATAR, ANNOUNCEMENT
 }
 #Kunena .fb_credits_intro {padding:10px 0 10px 0;}
 #Kunena .fb_team { margin:0; padding:0; border-top:1px solid #dddddd; }
-#Kunena .fb_teammember { padding:7px 10px 7px 10px; border-bottom:1px solid #dddddd; list-style: inside;margin:0;}
+#Kunena .fb_teammember { padding:7px 10px 7px 10px; border-bottom:1px solid #dddddd; list-style: inside;margin:0;background:transparent none;}
 #Kunena .fb_credits_more{padding:10px 0 10px 20px;}
 
 /*

@@ -33,9 +33,12 @@ Legend:
 
 Kunena 1.5.8
 
+10-Dec-2009 Matias
+^ [#18861] Credits page: add missing copyright information
+
 02-Dec-2009 810
-#^ [#18861] Remove version information from credits page
-# [#18918] textfield BBcode Image Link to short also for video url 
+^ [#18861] Remove version information from credits page
+# [#18918] textfield BBcode Image Link to short also for video url
 
 01-Dec-2009 810
 # [#18828] Regression: Fix for "Categories show 0 posts" shows extra characters

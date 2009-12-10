@@ -70,7 +70,13 @@ global $is_Moderator;
                 ?>
                         </div></td>
                     </tr>
-                  </table></td>
+                  </table>
+
+				<!-- Version Info -->
+				<div class="fbfooter"><?php echo _KUNENA_COPYRIGHT;?> &copy; 2008-2009 <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>, <?php echo _KUNENA_LICENSE;?>: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a></div>
+				<!-- /Version Info -->
+
+                  </td>
               </tr>
             </tbody>
           </table>
@@ -79,6 +85,7 @@ global $is_Moderator;
     </div>
   </div>
 </div>
+
 <!-- Begin: Forum Jump -->
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
   <div class="<?php echo $boardclass; ?>_bt_cvr2">

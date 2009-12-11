@@ -35,6 +35,7 @@ Kunena 1.6.0-DEV
 
 11-Dec-2009 Matias
 + [#18912] Implement new installer: allow renaming, deleting fields
++ [#18912] Implement new installer: code cleanup, install sample data
 
 8-Dec-2009 Matias
 ^ [#18912] Implement new installer: improvements, changed xml schema

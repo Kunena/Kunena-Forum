@@ -12,15 +12,15 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 // This file contains initial sample data for the forum
 
-function installSamples()
+function installSampleData()
 {
 	jimport('joomla.utilities.date');
 	$db = &JFactory::getDBO();
 	$posttime = new JDate();
 	$queries = array();
 
-	$query = "INSERT INTO `#__kunena_ranks` (
-	`rank_id`, `rank_title`, `rank_min`, `rank_special`, `rank_image`) VALUES
+	$query = "INSERT INTO `#__kunena_ranks`
+	(`rank_id`, `rank_title`, `rank_min`, `rank_special`, `rank_image`) VALUES
 	(1, 'Fresh Boarder', 0, 0, 'rank1.gif'),
 	(2, 'Junior Boarder', 20, 0, 'rank2.gif'),
 	(3, 'Senior Boarder', 40, 0, 'rank3.gif'),
@@ -31,9 +31,10 @@ function installSamples()
 	(8, 'Moderator', 0, 1, 'rankmod.gif'),
 	(9, 'Spammer', 0, 1, 'rankspammer.gif');";
 
-	$queries[] = array ('#__kunena_ranks', $query);
+	$queries[] = array ('kunena_ranks', $query);
 
-	$query = ">INSERT INTO `#__kunena_smileys`(`id`,`code`,`location`,`greylocation`,`emoticonbar`) VALUES
+	$query = "INSERT INTO `#__kunena_smileys`
+	(`id`,`code`,`location`,`greylocation`,`emoticonbar`) VALUES
 	(1,'B)','cool.png','cool-grey.png',1),
 	(2,':(','sad.png','sad-grey.png',1),
 	(3,':)','smile.png','smile-grey.png',1),
@@ -71,39 +72,41 @@ function installSamples()
 	(36,':p','tongue.png','tongue-grey.png',0),
 	(37,':D','laughing.png','laughing-grey.png',0);";
 
-	$queries[] = array ('#__kunena_smileys', $query);
+	$queries[] = array ('kunena_smileys', $query);
 
-	$query="INSERT INTO `#__kunena_categories` VALUES
-	(1, 0, '".addslashes(_KUNENA_SAMPLE_MAIN_CATEGORY_TITLE)."', 0, 0, 0, 1, NULL, 0, 0, 0, 0, 1, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, '".addslashes(_KUNENA_SAMPLE_MAIN_CATEGORY_DESC)."', '".addslashes(_KUNENA_SAMPLE_MAIN_CATEGORY_HEADER)."', '', 0, 0, 0, NULL),
-	(2, 1, '".addslashes(_KUNENA_SAMPLE_FORUM1_TITLE)."', 0, 0, 0, 1, NULL, 0, 0, 0, 0, 1, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, '".addslashes(_KUNENA_SAMPLE_FORUM1_DESC)."', '".addslashes(_KUNENA_SAMPLE_FORUM1_HEADER)."', '', 0, 0, 0, NULL),
-	(3, 1, '".addslashes(_KUNENA_SAMPLE_FORUM2_TITLE)."', 0, 0, 0, 1, NULL, 0, 0, 0, 0, 2, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, '".addslashes(_KUNENA_SAMPLE_FORUM2_DESC)."', '".addslashes(_KUNENA_SAMPLE_FORUM2_HEADER)."', '', 0, 0, 0, NULL);";
+	$query="INSERT INTO `#__kunena_categories`
+	(`id`, `parent`, `name`, `pub_access`, `ordering`, `published`, `description`, `headerdesc`, `thread_count`, `message_count`) VALUES
+	(1, 0, ".$db->quote(JText::_('_KUNENA_SAMPLE_MAIN_CATEGORY_TITLE')).", 1, 1, 1, ".$db->quote(JText::_('_KUNENA_SAMPLE_MAIN_CATEGORY_DESC')).", ".$db->quote(JText::_('_KUNENA_SAMPLE_MAIN_CATEGORY_HEADER')).", 0, 0),
+	(2, 1, ".$db->quote(JText::_('_KUNENA_SAMPLE_FORUM1_TITLE')).", 1, 1, 1, ".$db->quote(JText::_('_KUNENA_SAMPLE_FORUM1_DESC')).", ".$db->quote(JText::_('_KUNENA_SAMPLE_FORUM1_HEADER')).",1 ,1),
+	(3, 1, ".$db->quote(JText::_('_KUNENA_SAMPLE_FORUM2_TITLE')).", 1, 2, 1, ".$db->quote(JText::_('_KUNENA_SAMPLE_FORUM2_DESC')).", ".$db->quote(JText::_('_KUNENA_SAMPLE_FORUM2_HEADER')).",0 ,0);";
 
-	$queries[] = array ('#__kunena_categories', $query);
+	$queries[] = array ('kunena_categories', $query);
 
-	$query="INSERT INTO `#__kunena_messages` VALUES
-	(1, 0, 1, 2, 'Kunena', 62, 'info@kunena.com', '".addslashes(_KUNENA_SAMPLE_POST1_SUBJECT)."', ".$posttime->toUnix(true).", '127.0.0.1',
-			0, 0, 0, 0, 0, 0, NULL, NULL, NULL,'".addslashes(_KUNENA_SAMPLE_POST1_TEXT)."');";
+	$query="INSERT INTO `#__kunena_messages`
+	(`id`, `parent`, `thread`, `userid`, `subject`, `time`, `ip`, `message`) VALUES
+	(1, 0, 1, 62, ".$db->quote(JText::_('_KUNENA_SAMPLE_POST1_SUBJECT')).", ".$posttime->toUnix(true).", '127.0.0.1', ".$db->quote(JText::_('_KUNENA_SAMPLE_POST1_TEXT')).");";
 
-	$queries[] = array ('#__kunena_messages', $query);
+	$queries[] = array ('kunena_messages', $query);
 
-	$query="INSERT INTO `#__kunena_threads` (`id`, `catid`, `topic_subject`, `posts`,
-`first_post_id`, `first_post_time`, `first_post_userid`, `first_post_name`, `first_post_email`, `first_post_message`,
-`last_post_id`, `last_post_time`, `last_post_userid`, `last_post_name`, `last_post_email`, `last_post_message`) VALUES
-	('1', '2', '".addslashes(_KUNENA_SAMPLE_POST1_SUBJECT)."', '1',
-		'1', '".$posttime->toUnix(true)."', '62', 'Kunena', 'info@kunena.com', '".addslashes(_KUNENA_SAMPLE_POST1_TEXT)."',
-		'1', '".$posttime->toUnix(true)."', '62', 'Kunena', 'info@kunena.com', '".addslashes(_KUNENA_SAMPLE_POST1_TEXT)."');";
+	$query="INSERT INTO `#__kunena_threads` (`id`, `catid`, `subject`, `posts`,
+	`first_post_id`, `first_post_time`, `first_post_userid`, `first_post_message`,
+	`last_post_id`, `last_post_time`, `last_post_userid`, `last_post_message`) VALUES
+	('1', '2', ".$db->quote(JText::_('_KUNENA_SAMPLE_POST1_SUBJECT')).", '1',
+		'1', '".$posttime->toUnix(true)."', '62', ".$db->quote(JText::_('_KUNENA_SAMPLE_POST1_TEXT')).",
+		'1', '".$posttime->toUnix(true)."', '62', ".$db->quote(JText::_('_KUNENA_SAMPLE_POST1_TEXT')).");";
 
-	$queries[] = array ('#__kunena_threads', $query);
+	$queries[] = array ('kunena_threads', $query);
 
 	foreach ($queries as $query)
 	{
 		// Only insert sample/default data if table is empty
-		$db->setQuery("SELECT COUNT(*) FROM ".$db->nameQuote($query[0]));
+		$db->setQuery("SELECT COUNT(*) FROM ".$db->nameQuote($db->getPrefix().$query[0]));
 		$count = $db->loadResult();
 
 		if (!$count) {
 			$db->setQuery($query[1]);
 			$db->query();
+			if ($db->getErrorNum()) trigger_error('Sample data for '.$query[0].' could not be added: '.$db->getErrorMsg(), E_USER_WARNING);
 		}
 	}
 

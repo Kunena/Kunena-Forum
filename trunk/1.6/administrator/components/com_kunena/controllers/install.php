@@ -59,6 +59,9 @@ class KunenaControllerInstall extends KunenaController
 				if (count($results)) break;
 			case 'upgradeDatabase':
 				$results = $model->upgradeDatabase();
+				//if (count($results)) break;
+			case 'installSampleData':
+				$results = $model->installSampleData();
 				$stop = true;
 				break;
 			default:

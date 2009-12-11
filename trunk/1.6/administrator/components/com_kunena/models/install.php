@@ -17,12 +17,6 @@ DEFINE('KUNENA_MIN_PHP',	'5.0.3');
 DEFINE('KUNENA_MIN_MYSQL',	'5.0.3');
 DEFINE('KUNENA_MIN_JOOMLA',	'1.5.10');
 
-DEFINE('KUNENA_INPUT_DATABASE', 912357); // just contains random number
-
-DEFINE('KUNENA_INSTALL_SCHEMA_FILE', KPATH_ADMIN.'/install/install.xml');
-DEFINE('KUNENA_UPGRADE_SCHEMA_FILE', KPATH_ADMIN.'/install/upgrade.xml');
-DEFINE('KUNENA_INSTALL_SCHEMA_EMPTY', '<?xml version="1.0" encoding="utf-8"?><!DOCTYPE schema SYSTEM "'.KPATH_ADMIN.'/install/kunena16.dtd'.'"><schema></schema>');
-
 jimport('joomla.application.component.model');
 
 /**
@@ -52,13 +46,10 @@ class KunenaModelInstall extends JModel
 	protected $_versiontablearray = null;
 	protected $_versionarray = null;
 
-	protected $_sql = null;
-	protected $tables = array();
-
 	public function __construct()
 	{
 		parent::__construct();
-		$db = JFactory::getDBO();
+		$this->db = JFactory::getDBO();
 
 		ignore_user_abort(true);
 
@@ -118,25 +109,15 @@ class KunenaModelInstall extends JModel
 	public function beginInstall()
 	{
 		$results = array();
-
-		// Migrate version table from old installation (if available)
+		// Migrate version table from old installation
 		$versionprefix = $this->getVersionPrefix();
 		if (!empty($versionprefix))	{
-			$result = $this->migrateTable($versionprefix.'version', 'kunena_version');
-			if ($result) $results[] = $result;
+			$results[] = $this->migrateTable($versionprefix.'version', 'kunena_version');
 		}
 
-		// Get changes in database
-		$schema = $this->getSchemaFromDatabase();
-		$diff = $this->getSchemaDiff($schema, KUNENA_INSTALL_SCHEMA_FILE);
-		$this->_sql = $this->getSchemaSQL($diff);
-
-		//echo "<pre>",htmlentities($schema->saveXML()),"</pre>";
-		//echo "<pre>",htmlentities($diff->saveXML()),"</pre>";
-		//echo "<pre>",print_r($this->_sql),"</pre>";
-
-		$result = $this->updateTable('kunena_version');
-		if ($result) $results[] = $result;
+		kimport('models.schema', 'admin');
+		$schema = new KunenaModelSchema();
+		$results[] = $schema->updateSchemaTable('kunena_version');
 
 		// Insert data from the old version, if it does not exist in the version table
 		$version = $this->getInstalledVersion();
@@ -144,17 +125,17 @@ class KunenaModelInstall extends JModel
 			$this->insertVersionData($version->version, $version->versiondate, $version->build, $version->versionname, null);
 
 		$this->insertVersion('migrateDatabase');
+		foreach ($results as $i=>$r) if (!$r) unset($results[$i]);
 		return $results;
 	}
 
 	public function migrateDatabase()
 	{
 		$results = array();
-
-		// Migrate rest of the tables from old installation (if available)
 		$version = $this->getInstalledVersion();
 		if (empty($version->prefix)) return $results;
 
+		// Migrate all tables from old installation
 		$tables = $this->listTables($version->prefix);
 		foreach ($tables as $oldtable)
 		{
@@ -162,35 +143,27 @@ class KunenaModelInstall extends JModel
 			$result = $this->migrateTable($oldtable, $newtable);
 			if ($result) $results[] = $result;
 		}
-		$this->resetTables('kunena_');
-
 		$this->updateVersionState('upgradeDatabase');
+		foreach ($results as $i=>$r) if (!$r) unset($results[$i]);
 		return $results;
 	}
 
 	public function upgradeDatabase()
 	{
-		$results = array();
-
-		$schema = $this->getSchemaFromDatabase(true);
-
-		$this->upgradeSchema($schema, KUNENA_UPGRADE_SCHEMA_FILE);
-
-		$diff = $this->getSchemaDiff($schema, KUNENA_INSTALL_SCHEMA_FILE);
-		$this->_sql = $this->getSchemaSQL($diff);
-
-		//echo "<pre>",htmlentities($schema->saveXML()),"</pre>";
-		echo "<pre>",htmlentities($diff->saveXML()),"</pre>";
-		echo "<pre>",print_r($this->_sql),"</pre>";
-
-		foreach ($this->_sql as $table)
-		{
-			$result = $this->updateTable($table['name']);
-			if ($result) $results[] = $result;
-		}
-
-		$this->updateVersionState('');
+		kimport('models.schema', 'admin');
+		$schema = new KunenaModelSchema();
+		$results = $schema->updateSchema();
+		$this->updateVersionState('installSampleData');
+		foreach ($results as $i=>$r) if (!$r) unset($results[$i]);
 		return $results;
+	}
+
+	public function installSampleData()
+	{
+		kimport('install.sampledata', 'admin');
+		installSampleData();
+		$this->updateVersionState('');
+		return array();
 	}
 
 	public function getVersionWarning()
@@ -224,8 +197,7 @@ class KunenaModelInstall extends JModel
 		}
 
 		$req = new StdClass();
-		$db = JFactory::getDBO();
-		$req->mysql = $db->getVersion();
+		$req->mysql = $this->db->getVersion();
 		$req->php = phpversion();
 		$req->joomla = JVERSION;
 
@@ -255,10 +227,9 @@ class KunenaModelInstall extends JModel
 	{
 		$versionprefix = $this->getVersionPrefix();
 		if ($versionprefix) {
-			$db = JFactory::getDBO();
-			$db->setQuery("SELECT * FROM ".$db->nameQuote($db->getPrefix().$this->getVersionPrefix().'version')." ORDER BY `id` DESC", 0, 1);
-			$version = $db->loadObject();
-			if ($db->getErrorNum()) throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+			$this->db->setQuery("SELECT * FROM ".$this->db->nameQuote($this->db->getPrefix().$this->getVersionPrefix().'version')." ORDER BY `id` DESC", 0, 1);
+			$version = $this->db->loadObject();
+			if ($this->db->getErrorNum()) throw new KunenaInstallerException($this->db->getErrorMsg(), $this->db->getErrorNum());
 		}
 		if (!isset($version) || !is_object($version) || !isset($version->state))
 		{
@@ -277,22 +248,21 @@ class KunenaModelInstall extends JModel
 			return $this->_installed;
 		}
 
-		$db = JFactory::getDBO();
 		$versionprefix = $this->getVersionPrefix();
 
 		if ($versionprefix)
 		{
 			// Version table exists, try to get installed version
-			$db->setQuery("SELECT * FROM ".$db->nameQuote($db->getPrefix().$versionprefix.'version')." ORDER BY `id` DESC", 0, 1);
-			$version = $db->loadObject();
-			if ($db->getErrorNum()) throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+			$this->db->setQuery("SELECT * FROM ".$this->db->nameQuote($this->db->getPrefix().$versionprefix.'version')." ORDER BY `id` DESC", 0, 1);
+			$version = $this->db->loadObject();
+			if ($this->db->getErrorNum()) throw new KunenaInstallerException($this->db->getErrorMsg(), $this->db->getErrorNum());
 
 			if (isset($version->state) && $version->state != '')
 			{
 				// We have new version of the table and installation process running, so try again
-				$db->setQuery("SELECT * FROM ".$db->nameQuote($db->getPrefix().$versionprefix.'version')." WHERE `state`='' ORDER BY `id` DESC", 0, 1);
-				$version = $db->loadObject();
-				if ($db->getErrorNum()) throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+				$this->db->setQuery("SELECT * FROM ".$this->db->nameQuote($this->db->getPrefix().$versionprefix.'version')." WHERE `state`='' ORDER BY `id` DESC", 0, 1);
+				$version = $this->db->loadObject();
+				if ($this->db->getErrorNum()) throw new KunenaInstallerException($this->db->getErrorMsg(), $this->db->getErrorNum());
 			}
 			if ($version) {
 				$version->version = strtoupper($version->version);
@@ -336,11 +306,10 @@ class KunenaModelInstall extends JModel
 
 	protected function updateVersionState($state)
 	{
-		$db = JFactory::getDBO();
 		// Insert data from the new version
-		$db->setQuery("UPDATE ".$db->nameQuote($db->getPrefix().'kunena_version')." SET state = ".$db->Quote($state)." ORDER BY id DESC LIMIT 1");
-		$db->query();
-		if ($db->getErrorNum()) throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+		$this->db->setQuery("UPDATE ".$this->db->nameQuote($this->db->getPrefix().'kunena_version')." SET state = ".$this->db->Quote($state)." ORDER BY id DESC LIMIT 1");
+		$this->db->query();
+		if ($this->db->getErrorNum()) throw new KunenaInstallerException($this->db->getErrorMsg(), $this->db->getErrorNum());
 	}
 
 	public function getInstallAction()
@@ -368,22 +337,20 @@ class KunenaModelInstall extends JModel
 		static $tables = array();
 		static $fields = array();
 
-		$db = JFactory::getDBO();
-
 		$found = 0;
 		foreach ($detectlist as $detect)
 		{
 			// If no detection is needed, return current item
 			if (!isset($detect['table'])) return $detect;
 
-			$table = $db->getPrefix().$detect['table'];
+			$table = $this->db->getPrefix().$detect['table'];
 
 			// Match if table exists
 			if (!isset($tables[$table])) // Not cached
 			{
-				$db->setQuery("SHOW TABLES LIKE ".$db->quote($table));
-				$result = $db->loadResult();
-				if ($db->getErrorNum()) throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+				$this->db->setQuery("SHOW TABLES LIKE ".$this->db->quote($table));
+				$result = $this->db->loadResult();
+				if ($this->db->getErrorNum()) throw new KunenaInstallerException($this->db->getErrorMsg(), $this->db->getErrorNum());
 				$tables[$table] = $result;
 			}
 			if (!empty($tables[$table])) $found = 1;
@@ -393,9 +360,9 @@ class KunenaModelInstall extends JModel
 			{
 				if (!isset($fields[$table])) // Not cached
 				{
-					$db->setQuery("SHOW COLUMNS FROM ".$db->nameQuote($table));
-					$result = $db->loadObjectList('Field');
-					if ($db->getErrorNum()) throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+					$this->db->setQuery("SHOW COLUMNS FROM ".$this->db->nameQuote($table));
+					$result = $this->db->loadObjectList('Field');
+					if ($this->db->getErrorNum()) throw new KunenaInstallerException($this->db->getErrorMsg(), $this->db->getErrorNum());
 					$fields[$table] = $result;
 				}
 				if (!isset($fields[$table][$detect['column']])) $found = 0; // Sorry, no match
@@ -405,34 +372,17 @@ class KunenaModelInstall extends JModel
 		return array();
 	}
 
-	// helper function to update table
-	protected function updateTable($table)
-	{
-		if (!isset($this->_sql[$table])) return;
-
-		$db =& JFactory::getDBO();
-		$db->setQuery($this->_sql[$table]['sql']);
-		$db->query();
-		if ($db->getErrorNum()) throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
-		$result = $this->_sql[$table];
-		if ($this->_sql[$table]['action'] == 'create') $this->addToTables('kunena_', $table);
-		else if ($this->_sql[$table]['action'] == 'drop') $this->removeFromTables('kunena_', $table);
-		unset($this->_sql[$table]);
-		return $result;
-	}
-
 	// helper function to migrate table
 	protected function migrateTable($oldtable, $newtable)
 	{
 		$tables = $this->listTables('kunena_');
 		if ($oldtable==$newtable || empty($oldtable) || isset($tables[$newtable])) return; // Nothing to migrate
 
-		$db =& JFactory::getDBO();
-		$sql = "CREATE TABLE ".$db->nameQuote($db->getPrefix().$newtable)." SELECT * FROM ".$db->nameQuote($db->getPrefix().$oldtable);
-		$db->setQuery($sql);
-		$db->query();
-		if ($db->getErrorNum()) throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
-		if ($db->getAffectedRows())
+		$sql = "CREATE TABLE ".$this->db->nameQuote($this->db->getPrefix().$newtable)." SELECT * FROM ".$this->db->nameQuote($this->db->getPrefix().$oldtable);
+		$this->db->setQuery($sql);
+		$this->db->query();
+		if ($this->db->getErrorNum()) throw new KunenaInstallerException($this->db->getErrorMsg(), $this->db->getErrorNum());
+		if ($this->db->getAffectedRows())
 		{
 			$this->addToTables('kunena_', $newtable);
 			return array('name'=>$newtable, 'action'=>'migrate', 'sql'=>$sql);
@@ -443,31 +393,15 @@ class KunenaModelInstall extends JModel
 	// also insert old version if not in the table
 	protected function insertVersionData( $version, $versiondate, $build, $versionname, $state='')
 	{
-		$db =& JFactory::getDBO();
-		$db->setQuery("INSERT INTO  `#__kunena_version`"
-			."SET `version` = ".$db->quote($version).","
-			."`versiondate` = ".$db->quote($versiondate).","
+		$this->db->setQuery("INSERT INTO  `#__kunena_version`"
+			."SET `version` = ".$this->db->quote($version).","
+			."`versiondate` = ".$this->db->quote($versiondate).","
 			."`installdate` = CURDATE(),"
-			."`build` = ".$db->quote($build).","
-			."`versionname` = ".$db->quote($versionname).","
-			."`state` = ".$db->quote($state));
-		$db->query();
-		if ($db->getErrorNum()) throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
-	}
-
-	protected function resetTables($prefix)
-	{
-		unset($this->tables[$prefix]);
-	}
-
-	protected function addToTables($prefix, $table)
-	{
-		$this->tables[$prefix][$table] = $table;
-	}
-
-	protected function removeFromTables($prefix, $table)
-	{
-		unset($this->tables[$prefix][$table]);
+			."`build` = ".$this->db->quote($build).","
+			."`versionname` = ".$this->db->quote($versionname).","
+			."`state` = ".$this->db->quote($state));
+		$this->db->query();
+		if ($this->db->getErrorNum()) throw new KunenaInstallerException($this->db->getErrorMsg(), $this->db->getErrorNum());
 	}
 
 	protected function listTables($prefix, $reload = false)
@@ -475,472 +409,15 @@ class KunenaModelInstall extends JModel
 		if (isset($this->tables[$prefix]) && !$reload) {
 			return $this->tables[$prefix];
 		}
-		$db =& JFactory::getDBO();
-		$db->setQuery("SHOW TABLES LIKE ".$db->quote($db->getPrefix().$prefix.'%'));
-		$list = $db->loadResultArray();
-		if ($db->getErrorNum()) throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
+		$this->db->setQuery("SHOW TABLES LIKE ".$this->db->quote($this->db->getPrefix().$prefix.'%'));
+		$list = $this->db->loadResultArray();
+		if ($this->db->getErrorNum()) throw new KunenaInstallerException($this->db->getErrorMsg(), $this->db->getErrorNum());
 		$this->tables[$prefix] = array();
 		foreach ($list as $table) {
-			$table = preg_replace('/^'.$db->getPrefix().'/', '', $table);
-			$this->addToTables($prefix, $table);
+			$table = preg_replace('/^'.$this->db->getPrefix().'/', '', $table);
+			$this->tables[$prefix][] = $table;
 		}
 		return $this->tables[$prefix];
-	}
-
-	public function getSchemaNew()
-	{
-		$schema = new DOMDocument('1.0', 'utf-8');
-		$schema->formatOutput = true;
-		$schema->preserveWhiteSpace = false;
-		$schema->loadXML(KUNENA_INSTALL_SCHEMA_EMPTY);
-		return $schema;
-	}
-
-	public function getSchemaFromFile($filename, $reload = false)
-	{
-		static $schema = array();
-		if (isset($schema[$filename]) && !$reload) {
-			return $schema[$filename];
-		}
-		$schema[$filename] = new DOMDocument('1.0', 'utf-8');
-		$schema[$filename]->formatOutput = true;
-		$schema[$filename]->preserveWhiteSpace = false;
-		$dom->validateOnParse = true;
-		$schema[$filename]->load($filename);
-		return $schema[$filename];
-	}
-
-	public function getSchemaFromDatabase($reload = false)
-	{
-		static $schema = false;
-		if ($schema !== false && !$reload) {
-			return $schema;
-		}
-
-		$db =& JFactory::getDBO();
-		$tables = $this->listTables('kunena_');
-
-		$schema = $this->getSchemaNew();
-		$schemaNode = $schema->documentElement;
-		foreach ($tables as $table) {
-			if (strstr($table, 'backup')) continue;
-
-			$tableNode = $schema->createElement("table");
-			$schemaNode->appendChild($tableNode);
-
-			$tableNode->setAttribute("name", $table);
-
-			$db->setQuery( "SHOW FIELDS FROM ".$db->nameQuote($db->getPrefix().$table));
-			$fields = $db->loadObjectList();
-			if ($db->getErrorNum()) throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
-			foreach ($fields as $row) {
-				$fieldNode = $schema->createElement("field");
-				$tableNode->appendChild($fieldNode);
-
-				if ($row->Key == "PRI") $fieldNode->setAttribute("primary_key", "yes");
-				$fieldNode->setAttribute("name", $row->Field);
-				$fieldNode->setAttribute("type", $row->Type);
-				$fieldNode->setAttribute("null", (strtolower($row->Null)=='yes') ? '1' : '0');
-				if ($row->Default != '') $fieldNode->setAttribute("default", $row->Default);
-				if ($row->Extra != '') $fieldNode->setAttribute("extra", $row->Extra);
-			}
-
-			$db->setQuery( "SHOW KEYS FROM ".$db->nameQuote($db->getPrefix().$table));
-			$keys = $db->loadObjectList();
-			if ($db->getErrorNum()) throw new KunenaInstallerException($db->getErrorMsg(), $db->getErrorNum());
-
-			unset($keyNode);
-			foreach ($keys as $row) {
-				if (!isset($keyNode) || $keyNode->getAttribute('name') != $row->Key_name) {
-					$keyNode = $schema->createElement("key");
-					$tableNode->appendChild($keyNode);
-
-					$keyNode->setAttribute("name", $row->Key_name);
-					if (!$row->Non_unique) $keyNode->setAttribute("unique", (bool)!$row->Non_unique);
-					//if ($row->Comment != '') $keyNode->setAttribute("comment", $row->Comment);
-				}
-
-				$columns = $keyNode->getAttribute('columns');
-				if (!empty($columns)) $columns .= ',';
-				$columns .= $row->Column_name;
-				$columns .= ($row->Sub_part) ? '('.$row->Sub_part.')' : '';
-				$keyNode->setAttribute('columns', $columns);
-			}
-		}
-		return $schema;
-	}
-
-	public function getSchemaDiff($old, $new)
-	{
-		$old = $this->getDOMDocument($old);
-		$new = $this->getDOMDocument($new);
-		if (!$old || !$new) return;
-
-		$old->validate();
-		$new->validate();
-		$schema = $this->getSchemaNew();
-		$schemaNode = $schema->documentElement;
-		$schemaNode->setAttribute('type', 'diff');
-
-		$nodes = $this->listAllNodes(array('old'=>$old->documentElement->childNodes, 'new'=>$new->documentElement->childNodes));
-		foreach ($nodes as $nodeTag => $nodeList)
-		{
-			foreach ($nodeList as $nodeName => $nodeLoc)
-			{
-				$newNode = $this->getSchemaNodeDiff($schema, $nodeTag, $nodeName, $nodeLoc);
-				if ($newNode) {
-					$schemaNode->appendChild($newNode);
-					$dupNode = $this->getDuplicateSibling($newNode);
-					if ($dupNode) {
-						if ($dupNode->getAttribute('action') == 'leftover') $schemaNode->removeChild($dupNode);
-						if ($newNode->getAttribute('action') == 'leftover') $schemaNode->removeChild($newNode);
-					}
-				}
-			}
-		}
-		return $schema;
-	}
-
-	protected function listAllNodes($nodeLists)
-	{
-		$list = array();
-		foreach ($nodeLists as $k=>$nl) foreach ($nl as $n)
-		{
-			if (is_a($n, 'DOMAttr')) $list[$n->name][$k] = $n;
-			else if (is_a($n, 'DOMElement')) $list[$n->tagName][$n->getAttribute('name')][$k] = $n;
-		}
-		return $list;
-	}
-
-	public function getSchemaNodeDiff($schema, $tag, $name, $loc)
-	{
-		$node = null;
-		// Add
-		if (!isset($loc['old']))
-		{
-			$node = $schema->importNode($loc['new'], true);
-
-			$renamed = $this->getRenamedFrom($loc['new']);
-			if ($renamed === false) $node->setAttribute('action', 'create');
-			else if ($renamed == '') $node->setAttribute('action', 'replace');
-			else
-			{
-				$node->setAttribute('from', $renamed);
-				$node->setAttribute('action', 'rename');
-			}
-
-			$prev = $loc['new']->previousSibling;
-			if ($prev && $prev->tagName == 'field') $node->setAttribute('after', $prev->getAttribute('name'));
-			return $node;
-		}
-		// Delete
-		if (!isset($loc['new']))
-		{
-			if($loc['old']->getAttribute('extra') == 'auto_increment')
-			{
-				// Only one field can have auto_increment, so give enough info to fix it!
-				$node = $schema->importNode($loc['old'], false);
-			}
-			else
-			{
-				$node = $schema->createElement($tag);
-				$node->setAttribute('name', $name);
-			}
-			$renamed = $this->getRenamedTo($loc['old']);
-			if ($renamed === false) $node->setAttribute('action', 'deleted');
-			else if ($renamed == '') $node->setAttribute('action', 'drop');
-			else
-			{
-				$node->setAttribute('to', $renamed);
-				$node->setAttribute('action', 'leftover');
-			}
-			return $node;
-		}
-
-		$action = false;
-		$childNodes = array();
-		$childAll = $this->listAllNodes(array('old'=>$loc['old']->childNodes, 'new'=>$loc['new']->childNodes));
-		foreach ($childAll as $childTag => $childList)
-		{
-			foreach ($childList as $childName => $childLoc)
-			{
-				$childNode = $this->getSchemaNodeDiff($schema, $childTag, $childName, $childLoc);
-				if ($childNode) $childNodes[] = $childNode;
-			}
-		}
-
-		// Primary key is always unique
-		if ($loc['new']->tagName == 'key' && $loc['new']->getAttribute('name') == 'PRIMARY') $loc['new']->setAttribute('unique','1');
-		// Remove default='' from a field
-		if ($loc['new']->tagName == 'field' && $loc['new']->getAttribute('default') == '') $loc['new']->removeAttribute('default');
-
-		$attributes = array();
-		$attrAll = $this->listAllNodes(array('old'=>$loc['old']->attributes, 'new'=>$loc['new']->attributes));
-		foreach ($attrAll as $attrName => $attrLoc)
-		{
-			if ($attrName == 'primary_key') continue;
-			if ($attrName == 'action') continue;
-			if (!isset($attrLoc['old']->value) || !isset($attrLoc['new']->value) || str_replace(' ', '', $attrLoc['old']->value) != str_replace(' ', '', $attrLoc['new']->value))
-				$action = 'alter';
-		}
-
-		if (count($childNodes) || $action)
-		{
-			$node = $schema->importNode($loc['new'], false);
-			$node->setAttribute('name', $name);
-			$node->setAttribute('action', 'alter');
-			$prev = $loc['new']->previousSibling;
-			if ($prev && $prev->tagName == 'field') $node->setAttribute('after', $prev->getAttribute('name'));
-			foreach ($childNodes as $newNode) {
-				$node->appendChild($newNode);
-				$dupNode = $this->getDuplicateSibling($newNode);
-				if ($dupNode) {
-					if ($dupNode->getAttribute('action') == 'leftover') $node->removeChild($dupNode);
-					if ($newNode->getAttribute('action') == 'leftover') $node->removeChild($newNode);
-				}
-			}
-		}
-		return $node;
-	}
-
-	protected function getDuplicateSibling($node)
-	{
-		$parent = $node->parentNode;
-		$name = $node->getAttribute('name');
-		$from = $node->getAttribute('from');
-
-		foreach ($parent->getElementsByTagName($node->tagName) as $node2)
-		{
-			if ($from && $from == $node2->getAttribute('name') && !$node->isSameNode($node2)) return $node2;
-			if (!$from && $name == $node2->getAttribute('from') && !$node->isSameNode($node2)) return $node2;
-		}
-		return null;
-	}
-
-	protected function getDOMDocument($input)
-	{
-		if (is_a($input, 'DOMNode')) $schema = $input;
-		else if ($input === KUNENA_INPUT_DATABASE) $schema = $this->getSchemaFromDatabase();
-		else if (is_string($input) && file_exists($input)) $schema = $this->getSchemaFromFile($input);
-		else if (is_string($input)) { $schema = new DOMDocument('1.0', 'utf-8'); $schema->loadXML($input); }
-		if (!isset($schema)  || $schema == false) return;
-		$schema->formatOutput = true;
-		$schema->preserveWhiteSpace = false;
-
-		return $schema;
-	}
-
-	public function getSchemaSQL($schema, $drop=false)
-	{
-		$db =& JFactory::getDBO();
-		$tables = array();
-		foreach ($schema->getElementsByTagName('table') as $table)
-		{
-			$str = '';
-			$tablename = $db->getPrefix() . $table->getAttribute('name');
-			$fields = array();
-			switch ($action = $table->getAttribute('action'))
-			{
-				case 'deleted':
-					if (!$drop) break;
-				case 'drop':
-					$str .= 'DROP TABLE '.$db->nameQuote($tablename).';';
-					break;
-				case 'leftover':
-					break;
-//				case 'rename':
-				case 'alter':
-					if ($action == 'alter') $str .= 'ALTER TABLE '.$db->nameQuote($tablename).' '."\n";
-//					else $str .= 'ALTER TABLE '.$db->nameQuote($field->getAttribute('from')).' RENAME '.$db->nameQuote($tablename).' '."\n";
-					foreach ($table->childNodes as $field)
-					{
-						if ($field->hasAttribute('after')) $after = ' AFTER '.$field->getAttribute('after');
-						else $after = ' FIRST';
-
-						switch ($action2 = $field->getAttribute('action'))
-						{
-							case 'deleted':
-							case 'drop':
-								if ($action2 == 'deleted' && !$drop)
-								{
-									if($field->getAttribute('extra') == 'auto_increment')
-									{
-										// Only one field can have auto_increment, so fix the old field!
-										$field->removeAttribute('extra');
-										$field->setAttribute('action', 'alter');
-									}
-									else break;
-								}
-								else
-								{
-									$fields[] = '	DROP '.$this->getSchemaSQLField($field);
-									break;
-								}
-							case 'leftover':
-								break;
-							case 'rename':
-								if ($field->tagName == 'key') break;
-								$fields[] = '	CHANGE '.$db->nameQuote($field->getAttribute('from')).' '.$this->getSchemaSQLField($field, $after);
-								break;
-							case 'alter':
-								if ($field->tagName == 'key') {
-									$fields[] = '	DROP KEY '.$db->nameQuote($field->getAttribute('name'));
-									$fields[] = '	ADD '.$this->getSchemaSQLField($field);
-								} else
-									$fields[] = '	MODIFY '.$this->getSchemaSQLField($field, $after);
-								break;
-							case 'create':
-								$fields[] = '	ADD '.$this->getSchemaSQLField($field, $after);
-							case '':
-								break;
-							default:
-								echo("Kunena Installer: Unknown action $tablename.$action2 on xml file<br />");
-						}
-					}
-					if (count($fields)) $str .= implode(",\n", $fields) . ';';
-					else $str = '';
-					break;
-				case 'create':
-				case '':
-					$action = 'create';
-					$str .= 'CREATE TABLE '.$db->nameQuote($tablename).' ('."\n";
-					foreach ($table->childNodes as $field)
-					{
-						$sqlpart = $this->getSchemaSQLField($field);
-						if (!empty($sqlpart)) $fields[] = '	'.$sqlpart;
-					}
-					$str .= implode(",\n", $fields) . ' ) DEFAULT CHARSET=utf8;';
-					break;
-				default:
-					echo("Kunena Installer: Unknown action $tablename.$action on xml file<br />");
-			}
-			if (!empty($str))
-				$tables[$table->getAttribute('name')] = array('name'=>$table->getAttribute('name'), 'action'=>$action, 'sql'=>$str);
-		}
-		return $tables;
-	}
-
-	protected function getSchemaSQLField($field, $after='')
-	{
-		$db =& JFactory::getDBO();
-		if (!is_a($field, 'DOMElement')) return '';
-
-		$str = '';
-		if ($field->tagName == 'field')
-		{
-			$str .= $db->nameQuote($field->getAttribute('name'));
-			if ($field->getAttribute('action') != 'drop')
-			{
-				$str .= ' '.$field->getAttribute('type');
-				$str .= ($field->getAttribute('null') == 1) ? ' NULL' : ' NOT NULL';
-				$str .= ($field->hasAttribute('default')) ? ' default '.$db->quote($field->getAttribute('default')) : '';
-				$str .= ($field->hasAttribute('extra')) ? ' '.$field->getAttribute('extra') : '';
-				$str .= $after;
-			}
-		}
-		else if ($field->tagName == 'key')
-		{
-			if ($field->getAttribute('name') == 'PRIMARY') $str .= 'PRIMARY KEY';
-			else if ($field->getAttribute('unique') == 1) $str .= 'UNIQUE KEY '.$db->nameQuote($field->getAttribute('name'));
-			else $str .= 'KEY '.$db->nameQuote($field->getAttribute('name'));
-			if ($field->getAttribute('action') != 'drop')
-			{
-				$str .= ($field->hasAttribute('type')) ? ' USING '.$field->getAttribute('type') : '';
-				$str .= ' ('.$field->getAttribute('columns').')';
-			}
-		}
-		return $str;
-	}
-
-	protected function getRenamedFrom($node)
-	{
-		$tag = $node->tagName;
-		if ($tag == 'table')
-		{
-			$table = $node->getAttribute('name');
-			$field = '';
-		}
-		else
-		{
-			$table = $node->parentNode->getAttribute('name');
-			$field = $node->getAttribute('name');
-		}
-
-		if (!isset($this->_renamed_from[$tag][$table][$field])) $from = false;
-		else $from = $this->_renamed_from[$tag][$table][$field];
-		return $from;
-	}
-
-	protected function getRenamedTo($node)
-	{
-		$tag = $node->tagName;
-		if ($tag == 'table')
-		{
-			$table = $node->getAttribute('name');
-			$field = '';
-		}
-		else
-		{
-			$table = $node->parentNode->getAttribute('name');
-			$field = $node->getAttribute('name');
-		}
-
-		if (!isset($this->_renamed_to[$tag][$table][$field])) $to = false;
-		else $to = $this->_renamed_to[$tag][$table][$field];
-		return $to;
-	}
-
-	protected function upgradeSchema($db, $upgrade)
-	{
-		$db = $this->getDOMDocument($db);
-		$upgrade = $this->getDOMDocument($upgrade);
-		if (!$db || !$upgrade) return;
-
-		$db->validate();
-		//$upgrade->validate();
-
-		$schemaNode = $upgrade->documentElement;
-
-		foreach ($schemaNode->childNodes as $action)
-		{
-			if (!is_a($action, 'DOMElement')) continue;
-			if ($action->tagName == 'drop' || $action->tagName == 'rename') $this->upgradeAction($action);
-			else if ($action->tagName == 'table') $this->upgradeTableAction($action);
-		}
-	}
-
-	protected function upgradeTableAction($table)
-	{
-		foreach ($table->childNodes as $action)
-		{
-			if (!is_a($action, 'DOMElement')) continue;
-			if ($action->tagName == 'drop' || $action->tagName == 'rename') $this->upgradeAction($action, $table->getAttribute('name'));
-		}
-	}
-
-	protected function upgradeAction($action, $table='')
-	{
-		$tag = $action->tagName;
-		if (!$table) $table = $action->getAttribute('table');
-		if (!$table) return;
-		$column = $action->getAttribute('field');
-		$key = $action->getAttribute('key');
-		$to = $action->getAttribute('to');
-		if ($tag == 'drop') $to = '';
-
-		if ($column) {
-			$this->_renamed_from['field'][$table][$to] = $column;
-			$this->_renamed_to['field'][$table][$column] = $to;
-		}
-		if ($key) {
-			$this->_renamed_from['key'][$table][$to] = $key;
-			$this->_renamed_to['key'][$table][$key] = $to;
-		}
-		if (!$column && !$key) {
-			$this->_renamed_from['table'][$to][''] = $table;
-			$this->_renamed_to['table'][$table][''] = $to;
-		}
-		//echo "$tag $table: $column$key -> $to<br>";
 	}
 
 }

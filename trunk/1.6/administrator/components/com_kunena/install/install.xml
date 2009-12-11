@@ -33,6 +33,7 @@
     <field name="review" type="tinyint(4)" null="0" default="0"/>
     <field name="description" type="text" null="0"/>
     <field name="headerdesc" type="text" null="0"/>
+    <field name="keywords" type="tinytext" null="0"/>
     <field name="thread_count" type="mediumint(8)" null="0" default="0"/>
     <field name="message_count" type="mediumint(8)" null="0" default="0"/>
     <field name="last_msgid" type="int(10)" null="0" default="0"/>
@@ -99,7 +100,7 @@
     <field name="modified_time" type="int(11)" null="1"/>
     <field name="modified_reason" type="tinytext" null="1"/>
     <field name="params" type="text" null="0"/>
-    <key name="id" unique="1" columns="id"/>
+    <key name="PRIMARY" unique="1" columns="id"/>
     <key name="thread" columns="thread"/>
     <key name="parent" columns="parent"/>
     <key name="ip" columns="ip"/>

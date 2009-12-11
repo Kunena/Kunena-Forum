@@ -33,12 +33,6 @@ function installSamples()
 
 	$queries[] = array ('#__kunena_ranks', $query);
 
-	$query = "INSERT INTO `#__kunena_groups`
-	(`id`,`title`) VALUES
-	(1,'Registered User');";
-
-	$queries[] = array ('#__kunena_groups', $query);
-
 	$query = ">INSERT INTO `#__kunena_smileys`(`id`,`code`,`location`,`greylocation`,`emoticonbar`) VALUES
 	(1,'B)','cool.png','cool-grey.png',1),
 	(2,':(','sad.png','sad-grey.png',1),

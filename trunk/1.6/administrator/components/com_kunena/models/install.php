@@ -77,7 +77,7 @@ class KunenaModelInstall extends JModel
 			);
 	}
 
-    /**
+	/**
 	 * Installer object destructor
 	 *
 	 * @access public
@@ -86,7 +86,7 @@ class KunenaModelInstall extends JModel
 	public function __destruct() {
 	}
 
-    /**
+	/**
 	 * Installer cleanup after installation
 	 *
 	 * @access public
@@ -181,7 +181,7 @@ class KunenaModelInstall extends JModel
 
 		//echo "<pre>",htmlentities($schema->saveXML()),"</pre>";
 		echo "<pre>",htmlentities($diff->saveXML()),"</pre>";
-		//echo "<pre>",print_r($this->_sql),"</pre>";
+		echo "<pre>",print_r($this->_sql),"</pre>";
 
 		foreach ($this->_sql as $table)
 		{
@@ -588,7 +588,14 @@ class KunenaModelInstall extends JModel
 			foreach ($nodeList as $nodeName => $nodeLoc)
 			{
 				$newNode = $this->getSchemaNodeDiff($schema, $nodeTag, $nodeName, $nodeLoc);
-				if ($newNode) $schemaNode->appendChild($newNode);
+				if ($newNode) {
+					$schemaNode->appendChild($newNode);
+					$dupNode = $this->getDuplicateSibling($newNode);
+					if ($dupNode) {
+						if ($dupNode->getAttribute('action') == 'leftover') $schemaNode->removeChild($dupNode);
+						if ($newNode->getAttribute('action') == 'leftover') $schemaNode->removeChild($newNode);
+					}
+				}
 			}
 		}
 		return $schema;
@@ -612,7 +619,16 @@ class KunenaModelInstall extends JModel
 		if (!isset($loc['old']))
 		{
 			$node = $schema->importNode($loc['new'], true);
-			$node->setAttribute('action', 'create');
+
+			$renamed = $this->getRenamedFrom($loc['new']);
+			if ($renamed === false) $node->setAttribute('action', 'create');
+			else if ($renamed == '') $node->setAttribute('action', 'replace');
+			else
+			{
+				$node->setAttribute('from', $renamed);
+				$node->setAttribute('action', 'rename');
+			}
+
 			$prev = $loc['new']->previousSibling;
 			if ($prev && $prev->tagName == 'field') $node->setAttribute('after', $prev->getAttribute('name'));
 			return $node;
@@ -630,7 +646,14 @@ class KunenaModelInstall extends JModel
 				$node = $schema->createElement($tag);
 				$node->setAttribute('name', $name);
 			}
-			$node->setAttribute('action', 'drop');
+			$renamed = $this->getRenamedTo($loc['old']);
+			if ($renamed === false) $node->setAttribute('action', 'deleted');
+			else if ($renamed == '') $node->setAttribute('action', 'drop');
+			else
+			{
+				$node->setAttribute('to', $renamed);
+				$node->setAttribute('action', 'leftover');
+			}
 			return $node;
 		}
 
@@ -668,9 +691,30 @@ class KunenaModelInstall extends JModel
 			$node->setAttribute('action', 'alter');
 			$prev = $loc['new']->previousSibling;
 			if ($prev && $prev->tagName == 'field') $node->setAttribute('after', $prev->getAttribute('name'));
-			foreach ($childNodes as $childNode) $node->appendChild($childNode);
+			foreach ($childNodes as $newNode) {
+				$node->appendChild($newNode);
+				$dupNode = $this->getDuplicateSibling($newNode);
+				if ($dupNode) {
+					if ($dupNode->getAttribute('action') == 'leftover') $node->removeChild($dupNode);
+					if ($newNode->getAttribute('action') == 'leftover') $node->removeChild($newNode);
+				}
+			}
 		}
 		return $node;
+	}
+
+	protected function getDuplicateSibling($node)
+	{
+		$parent = $node->parentNode;
+		$name = $node->getAttribute('name');
+		$from = $node->getAttribute('from');
+
+		foreach ($parent->getElementsByTagName($node->tagName) as $node2)
+		{
+			if ($from && $from == $node2->getAttribute('name') && !$node->isSameNode($node2)) return $node2;
+			if (!$from && $name == $node2->getAttribute('from') && !$node->isSameNode($node2)) return $node2;
+		}
+		return null;
 	}
 
 	protected function getDOMDocument($input)
@@ -697,12 +741,17 @@ class KunenaModelInstall extends JModel
 			$fields = array();
 			switch ($action = $table->getAttribute('action'))
 			{
-				case 'drop':
+				case 'deleted':
 					if (!$drop) break;
+				case 'drop':
 					$str .= 'DROP TABLE '.$db->nameQuote($tablename).';';
 					break;
+				case 'leftover':
+					break;
+//				case 'rename':
 				case 'alter':
-					$str .= 'ALTER TABLE '.$db->nameQuote($tablename).' '."\n";
+					if ($action == 'alter') $str .= 'ALTER TABLE '.$db->nameQuote($tablename).' '."\n";
+//					else $str .= 'ALTER TABLE '.$db->nameQuote($field->getAttribute('from')).' RENAME '.$db->nameQuote($tablename).' '."\n";
 					foreach ($table->childNodes as $field)
 					{
 						if ($field->hasAttribute('after')) $after = ' AFTER '.$field->getAttribute('after');
@@ -710,8 +759,9 @@ class KunenaModelInstall extends JModel
 
 						switch ($action2 = $field->getAttribute('action'))
 						{
+							case 'deleted':
 							case 'drop':
-								if (!$drop)
+								if ($action2 == 'deleted' && !$drop)
 								{
 									if($field->getAttribute('extra') == 'auto_increment')
 									{
@@ -726,15 +776,21 @@ class KunenaModelInstall extends JModel
 									$fields[] = '	DROP '.$this->getSchemaSQLField($field);
 									break;
 								}
+							case 'leftover':
+								break;
+							case 'rename':
+								if ($field->tagName == 'key') break;
+								$fields[] = '	CHANGE '.$db->nameQuote($field->getAttribute('from')).' '.$this->getSchemaSQLField($field, $after);
+								break;
 							case 'alter':
 								if ($field->tagName == 'key') {
 									$fields[] = '	DROP KEY '.$db->nameQuote($field->getAttribute('name'));
 									$fields[] = '	ADD '.$this->getSchemaSQLField($field);
 								} else
-									$fields[] = '	MODIFY '.$this->getSchemaSQLField($field).$after;
+									$fields[] = '	MODIFY '.$this->getSchemaSQLField($field, $after);
 								break;
 							case 'create':
-								$fields[] = '	ADD '.$this->getSchemaSQLField($field).$after;
+								$fields[] = '	ADD '.$this->getSchemaSQLField($field, $after);
 							case '':
 								break;
 							default:
@@ -750,7 +806,8 @@ class KunenaModelInstall extends JModel
 					$str .= 'CREATE TABLE '.$db->nameQuote($tablename).' ('."\n";
 					foreach ($table->childNodes as $field)
 					{
-						$fields[] = '	'.$this->getSchemaSQLField($field);
+						$sqlpart = $this->getSchemaSQLField($field);
+						if (!empty($sqlpart)) $fields[] = '	'.$sqlpart;
 					}
 					$str .= implode(",\n", $fields) . ' ) DEFAULT CHARSET=utf8;';
 					break;
@@ -763,9 +820,10 @@ class KunenaModelInstall extends JModel
 		return $tables;
 	}
 
-	protected function getSchemaSQLField($field)
+	protected function getSchemaSQLField($field, $after='')
 	{
 		$db =& JFactory::getDBO();
+		if (!is_a($field, 'DOMElement')) return '';
 
 		$str = '';
 		if ($field->tagName == 'field')
@@ -775,8 +833,9 @@ class KunenaModelInstall extends JModel
 			{
 				$str .= ' '.$field->getAttribute('type');
 				$str .= ($field->getAttribute('null') == 1) ? ' NULL' : ' NOT NULL';
-				$str .= ($field->hasAttribute('default')) ? ' default '.$db->quote($field->getAttribute('default')) : " default ''";
+				$str .= ($field->hasAttribute('default')) ? ' default '.$db->quote($field->getAttribute('default')) : '';
 				$str .= ($field->hasAttribute('extra')) ? ' '.$field->getAttribute('extra') : '';
+				$str .= $after;
 			}
 		}
 		else if ($field->tagName == 'key')
@@ -793,6 +852,44 @@ class KunenaModelInstall extends JModel
 		return $str;
 	}
 
+	protected function getRenamedFrom($node)
+	{
+		$tag = $node->tagName;
+		if ($tag == 'table')
+		{
+			$table = $node->getAttribute('name');
+			$field = '';
+		}
+		else
+		{
+			$table = $node->parentNode->getAttribute('name');
+			$field = $node->getAttribute('name');
+		}
+
+		if (!isset($this->_renamed_from[$tag][$table][$field])) $from = false;
+		else $from = $this->_renamed_from[$tag][$table][$field];
+		return $from;
+	}
+
+	protected function getRenamedTo($node)
+	{
+		$tag = $node->tagName;
+		if ($tag == 'table')
+		{
+			$table = $node->getAttribute('name');
+			$field = '';
+		}
+		else
+		{
+			$table = $node->parentNode->getAttribute('name');
+			$field = $node->getAttribute('name');
+		}
+
+		if (!isset($this->_renamed_to[$tag][$table][$field])) $to = false;
+		else $to = $this->_renamed_to[$tag][$table][$field];
+		return $to;
+	}
+
 	protected function upgradeSchema($db, $upgrade)
 	{
 		$db = $this->getDOMDocument($db);
@@ -802,7 +899,48 @@ class KunenaModelInstall extends JModel
 		$db->validate();
 		//$upgrade->validate();
 
+		$schemaNode = $upgrade->documentElement;
 
+		foreach ($schemaNode->childNodes as $action)
+		{
+			if (!is_a($action, 'DOMElement')) continue;
+			if ($action->tagName == 'drop' || $action->tagName == 'rename') $this->upgradeAction($action);
+			else if ($action->tagName == 'table') $this->upgradeTableAction($action);
+		}
+	}
+
+	protected function upgradeTableAction($table)
+	{
+		foreach ($table->childNodes as $action)
+		{
+			if (!is_a($action, 'DOMElement')) continue;
+			if ($action->tagName == 'drop' || $action->tagName == 'rename') $this->upgradeAction($action, $table->getAttribute('name'));
+		}
+	}
+
+	protected function upgradeAction($action, $table='')
+	{
+		$tag = $action->tagName;
+		if (!$table) $table = $action->getAttribute('table');
+		if (!$table) return;
+		$column = $action->getAttribute('field');
+		$key = $action->getAttribute('key');
+		$to = $action->getAttribute('to');
+		if ($tag == 'drop') $to = '';
+
+		if ($column) {
+			$this->_renamed_from['field'][$table][$to] = $column;
+			$this->_renamed_to['field'][$table][$column] = $to;
+		}
+		if ($key) {
+			$this->_renamed_from['key'][$table][$to] = $key;
+			$this->_renamed_to['key'][$table][$key] = $to;
+		}
+		if (!$column && !$key) {
+			$this->_renamed_from['table'][$to][''] = $table;
+			$this->_renamed_to['table'][$table][''] = $to;
+		}
+		//echo "$tag $table: $column$key -> $to<br>";
 	}
 
 }

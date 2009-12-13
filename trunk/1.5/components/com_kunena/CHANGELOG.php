@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.8
 
+13-dec-2009 Xillibit
+# [#18993] Fix for conflict with RocketTheme AfterBurner Template
+
 11-dec-2009 Xillibit
 * [#18983] Add missing files index.php to plugin/myprofile and plugin/chili to prevent list the files in the directory
 

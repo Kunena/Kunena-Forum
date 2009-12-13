@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: install.php 1 2009-01-01 07:18:07Z mahagr $
+ * @version		$Id$
  * @package		Kunena
  * @subpackage	com_kunena
  * @copyright	Copyright (C) 2008 - 2009 Kunena Team. All rights reserved.
@@ -11,8 +11,10 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-function com_install()
+function com_uninstall()
 {
-	$app = JFactory::getApplication();
-	$app->redirect(JRoute::_('index.php?option=com_kunena&view=install', false));
+    // Really nothing to do as the database table stay as they are.
+    // Nothing to be removed from the database.
+    // If somebody wants to truly remove that data phpAdmin is required to drop all
+    // Kunena tables manually.
 }

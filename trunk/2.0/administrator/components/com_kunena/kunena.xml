@@ -14,8 +14,8 @@
 	<build>@kunenaversionbuild@</build>
 	<description>Kunena - The #1 Forum Component for Joomla</description>
 	
-	<installfile>install/kunena.install.php</installfile>
-	<uninstallfile>install/kunena.uninstall.php</uninstallfile>
+	<installfile>install/install.php</installfile>
+	<uninstallfile>install/uninstall.php</uninstallfile>
 	
 	<files>
 		<filename>CHANGELOG.php</filename>
@@ -34,9 +34,6 @@
 		<folder>media</folder>
 		<folder>models</folder>
 		<folder>views</folder>
-	</files>
-	<files folder="legacy.site">
-		<folder>lib</folder>
 	</files>
 	
 	<languages folder="languages/site">
@@ -70,10 +67,6 @@
 			<folder>media</folder>
 			<folder>models</folder>
 			<folder>views</folder>
-		</files>
-		<files folder="legacy.admin">
-			<folder>language</folder>
-			<folder>lib</folder>
 		</files>
 
 		<languages folder="languages/admin">

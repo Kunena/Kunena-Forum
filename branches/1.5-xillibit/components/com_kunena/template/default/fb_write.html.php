@@ -272,15 +272,10 @@ JHTML::_('behavior.keepalive');
                     }
                     ?>
                 </td>
-            </tr>
-
-        <!-- Start of Hack Poll by xillibit -->
-        <?php
-        }        
+            </tr>        
+        <?php }        
         $catsallowed = explode(',',$fbConfig->pollallowedcategories);
-        if (in_array($catid, $catsallowed)){
-        
-        
+        if (in_array($catid, $catsallowed)){      
         //Check if it's is a new thread and show the poll                                    
          if($fbConfig->pollenabled == "1" && $id == "0" ) {                 
          ?>     
@@ -296,14 +291,12 @@ JHTML::_('behavior.keepalive');
                     <input type="hidden" name="number_total_options" id="numbertotal">
                     <?php } ?>
                     <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $fbConfig->pollnboptions; ?>);">
-                     
                     <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onclick = "javascript:delete_field();">                 
                 </td>
             </tr>            
            <?php }         
-           }?>
-           <!-- End of Hack Poll by xillibit -->
-           <?php		// Begin captcha . Thanks Adeptus
+           }
+           // Begin captcha . Thanks Adeptus
 		if ($fbConfig->captcha == 1 && $kunena_my->id < 1) { ?>
         <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
             <td class = "fb_leftcolumn">&nbsp;<strong><?php echo _KUNENA_CAPDESC; ?></strong>&nbsp;</td>
@@ -314,9 +307,7 @@ JHTML::_('behavior.keepalive');
         <?php
 		}
 		// Finish captcha
-		?>
-		<!-- Start of Hack Poll by xillibit -->		
-		    <?php if(($editmode == "1") && $fbConfig->pollenabled == "1") { 
+		if(($editmode == "1") && $fbConfig->pollenabled == "1") { 
 		      $catsallowed = explode(',',$fbConfig->pollallowedcategories);
         if (in_array($catid, $catsallowed)){
 		      //This query is need because, in this part i haven't access to the variable $parent 
@@ -352,8 +343,7 @@ JHTML::_('behavior.keepalive');
           </tr>  
           <?php }
             }
-          } ?>  
-            <!-- End of Hack Poll by xillibit -->
+          } ?>            
         <tr id="fb_post_buttons_tr">
             <td id="fb_post_buttons" colspan = "2" style = "text-align: center;">
                 <input type="submit" name="submit"  class="fb_button" value="<?php @print(' '._GEN_CONTINUE.' ');?>" onclick="return submitForm()" onmouseover = "javascript:jQuery('input[name=helpbox]').val('<?php @print(_KUNENA_EDITOR_HELPLINE_SUBMIT);?>')" />

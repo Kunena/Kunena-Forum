@@ -9,8 +9,9 @@ if($do == "vote"){
 // BEGIN: BOX POLL
 include_once (KUNENA_PATH_LIB .DS. 'kunena.poll.js.php');
 //Load the query for get the informations for the poll
-$kunena_db->setQuery("SELECT title,text,options FROM #__fb_polls AS a LEFT JOIN #__fb_polls_datas AS b ON a.topicid=b.pollid WHERE a.topicid={$id}");
-$this_poll_data = $kunena_db->loadObjectlist();
+$kunena_db->setQuery("SELECT b.id,title,text FROM #__fb_polls AS a JOIN #__fb_polls_options AS b ON a.threadid=b.pollid WHERE a.threadid={$id}");
+$kunena_db->query();
+$this_poll_datas = $kunena_db->loadObjectList();
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
@@ -22,7 +23,7 @@ $this_poll_data = $kunena_db->loadObjectlist();
             <tr>
                 <th align="left">
                     <div class = "fb_title_cover fbm">
-                        <span class = "fb_title fbl"><?php echo _KUNENA_POLL_NAME; ?> <?php echo stripslashes($this_poll_data[0]->title); ?></span>
+                        <span class = "fb_title fbl"><?php echo _KUNENA_POLL_NAME; ?> <?php echo $this_poll_datas[0]->title; ?></span>
                     </div>
 
                     <img id = "BoxSwitch_announcements__announcements_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
@@ -34,13 +35,13 @@ $this_poll_data = $kunena_db->loadObjectlist();
                     <td class = "td-1 fbm" align="left">
                         <div class = "anndesc">
                        
-<?php
- echo "<fieldset><legend style=\"font-size: 14px;\">"._KUNENA_POLL_OPTIONS."</legend><ul>";
-                          for($i=0; $i < $this_poll_data[0]->options;$i++){               
-       echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$this_poll_data[$i]->text."\" />".stripslashes($this_poll_data[$i]->text)."</li>";
+<?php 
+ echo "<fieldset><legend style=\"font-size: 14px;\">"._KUNENA_POLL_OPTIONS."</legend><ul>"; 
+                          for($i=0; $i < sizeof($this_poll_datas);$i++){               
+       echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$this_poll_datas[$i]->id."\" />".$this_poll_datas[$i]->text."</li>";
       }
       echo "</ul></fieldset>";    
-        $button_vote = "<input type=\"button\" value=\""._KUNENA_POLL_BUTTON_VOTE."\" onClick=\"javascript:ajax(".$this_poll_data[0]->options.",".$id.");\" />";      
+        $button_vote = "<input type=\"button\" value=\""._KUNENA_POLL_BUTTON_VOTE."\" onClick=\"javascript:ajax(".sizeof($this_poll_datas).",".$id.");\" />";      
         echo "<div class=\"poll_center\" id=\"poll_buttons\">".$button_vote;
       
       ?>        
@@ -53,8 +54,7 @@ $this_poll_data = $kunena_db->loadObjectlist();
 </div>
 </div>
 </div>
-</div>        
-
+</div>
 <?php 
  }
 ?>

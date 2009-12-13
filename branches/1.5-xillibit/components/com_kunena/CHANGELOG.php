@@ -34,6 +34,7 @@ Legend:
 Kunena 1.5.8
 
 13-dec-2009 Xillibit
+^ [#18627] Modification of all the query of the poll to use the new database model
 ^ [#18627] Little change for the poll works on IE8.0, comestics changes and others little changes
 #^[#18902] Remove all remaining deprecated functions in PHP 5.3.x and remove split() and ereg() functions
 

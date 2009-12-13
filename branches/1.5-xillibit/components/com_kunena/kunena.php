@@ -68,7 +68,7 @@ $userid 		= JRequest::getInt('userid', 0);
 $view 			= JRequest::getVar('view', '');
 $msgpreview 	= JRequest::getVar('msgpreview', '');
 $no_html		= JRequest::getBool('no_html', 0);
-$value_choosed	= JRequest::getVar('radio', '');
+$value_choosed	= JRequest::getInt('radio', '');
 $polltitle = JRequest::getVar('poll_title' , 0);
 $optionsnumbers = JRequest::getInt('number_total_options' , '');
 
@@ -472,67 +472,38 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
             break;
         case 'pollsave':          
-          $datasusers = array(); 
-          if($fbConfig->pollallowvoteone) {
-            $kunena_db->setQuery("SELECT * FROM #__fb_polls_users WHERE pollid=$id AND userid=$kunena_my->id");
-            $kunena_db->query() or trigger_dberror('Unable to load datas from poll users.');
-            $datasusers = $kunena_db->loadObjectList();            
-          }       
-          if(empty($datasusers)){
-            //Get the datas for know the right field to update with the id
-            $kunena_db->setQuery("SELECT * FROM #__fb_polls_datas AS a JOIN #__fb_polls AS b ON b.topicid=a.pollid WHERE a.pollid=$id");
-            $kunena_db->query() or trigger_dberror('Unable to load poll.');
-            $dataspoll = $kunena_db->loadObjectList();                        
-            $kunena_db->setQuery("SELECT * FROM #__fb_polls_datas WHERE pollid=$id");
-            $dataspoll2 = $kunena_db->loadObjectList();
-            if($fbConfig->pollallowvoteone) {
-              $kunena_db->setQuery("INSERT INTO  #__fb_polls_users (pollid,userid) VALUES('$id','{$kunena_my->id}')");
+          $kunena_db->setQuery("SELECT * FROM #__fb_polls_options WHERE pollid=$id AND id=$value_choosed");
+          $kunena_db->query() or trigger_dberror('Unable to load poll.');
+          $polloption = $kunena_db->loadObject();
+          if (!$polloption) break; // OPTION DOES NOT EXIST
+                 
+          $kunena_db->setQuery("SELECT votes FROM #__fb_polls_users WHERE pollid=$id AND userid=$kunena_my->id");
+          $kunena_db->query() or trigger_dberror('Unable to load datas from poll users.');
+          $votes = $kunena_db->loadResult();
+          if(empty($votes)) {
+            $kunena_db->setQuery("INSERT INTO #__fb_polls_users (pollid,userid,votes) VALUES('$id','{$kunena_my->id}',1)");
+            $kunena_db->query();
+            if($votes == null){ //need this if because when the $votes is null the thing SET votes=votes+1 doesn't work
+              $kunena_db->setQuery("UPDATE #__fb_polls_options SET votes=1 WHERE id=$value_choosed");
+              $kunena_db->query();
+            }else { 
+              $kunena_db->setQuery("UPDATE #__fb_polls_options SET votes=votes+1 WHERE id=$value_choosed");
               $kunena_db->query();
             }
-            //We must save the option choosed by the user in the database              
-            foreach ( $dataspoll2 as $row ) {
-              if($row->text == $value_choosed){
-               $idaffected = $row->id; 
-                $hitsaffected = $row->hits;                          
-              }
-            }             
-           if(empty($hitsaffected) && empty($dataspoll[0]->voters)) {        
-            $kunena_db->setQuery("UPDATE #__fb_polls SET voters=1 WHERE topicid=$id"); 
-            $kunena_db->query();                          
-            $kunena_db->setQuery("UPDATE #__fb_polls_datas SET hits=1 WHERE id=$idaffected");
-            $kunena_db->query();
+            echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"1\";</script>";
           }
-          if(empty($hitsaffected) && !empty($dataspoll[0]->voters)){       
-           $kunena_db->setQuery("UPDATE #__fb_polls_datas SET hits=1 WHERE id=$idaffected");
-           $kunena_db->query();
-           $kunena_db->setQuery("UPDATE #__fb_polls SET voters=voters+1 WHERE topicid=$id"); 
-           $kunena_db->query();  
-          }
-          if(!empty($hitsaffected) && empty($dataspoll[0]->voters)) {        
-            $kunena_db->setQuery("UPDATE #__fb_polls SET voters=1 WHERE topicid=$id"); 
+          else if($votes = $fbConfig->pollallowvotes) {
+            $kunena_db->setQuery("UPDATE #__fb_polls_users SET votes=votes+1 WHERE pollid=$id AND userid={$kunena_my->id}");
             $kunena_db->query();
-            $kunena_db->setQuery("UPDATE #__fb_polls_datas SET hits=hits+1 WHERE id=$idaffected");
+            $kunena_db->setQuery("UPDATE #__fb_polls_options SET votes=votes+1 WHERE id=$value_choosed");
             $kunena_db->query();
-          }
-          if(!empty($hitsaffected) && !empty($dataspoll[0]->voters)) {          
-           $kunena_db->setQuery("UPDATE #__fb_polls SET voters=voters+1 WHERE topicid=$id"); 
-           $kunena_db->query();                          
-           $kunena_db->setQuery("UPDATE #__fb_polls_datas SET hits=hits+1 WHERE id=$idaffected");
-           $kunena_db->query();
+            echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"1\";</script>";
          }
                 
-         if ($kunena_db->getErrorNum()) {
+         if ($kunena_db->getErrorNum()) { //inform the user that an error has occured
           echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"0\";</script>";                   
-        }
-        else {
-         echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"1\";</script>";                  
-       }
-      } else {
-        echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"2\";</script>";
-      }                         
-          
-            break;    
-
+         }       
+           break;
         case 'showcat':
             //get number of pending messages
             $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE catid='$catid' AND hold='1'");

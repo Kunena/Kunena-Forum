@@ -31,11 +31,17 @@ define('KURL_SITE', 'index.php?option=com_kunena');
 define('KURL_COMPONENT_MEDIA', JURI::Base().KUNENA_COMPONENT_LOCATION.'/'.KUNENA_COMPONENT_NAME.'/media/');
 define('KURL_MEDIA', JURI::Base().'media/'.KUNENA_COMPONENT_NAME.'/');
 
+if ('@kunenaversion@' == '@'.'kunenaversion'.'@') {
+	$changelog = file_get_contents(KPATH_SITE.DS.'CHANGELOG.php', NULL, NULL, 0, 1000);
+	preg_match('|\$Id$changelog, $svn);
+	preg_match('|~~\s+Kunena\s(\d+\.\d+.\d+\S*)|', $changelog, $version);
+}
+
 // Version information
-define ('KUNENA_VERSION', ('@kunenaversion@' == '@'.'kunenaversion'.'@') ? '1.6.0-SVN' : strtoupper('@kunenaversion@'));
-define ('KUNENA_VERSION_DATE', ('@kunenaversiondate@' == '@'.'kunenaversiondate'.'@') ? date('Y-m-d', filemtime(KPATH_SITE .DS. 'CHANGELOG.php')) : '@kunenaversiondate@');
+define ('KUNENA_VERSION', ('@kunenaversion@' == '@'.'kunenaversion'.'@') ? strtoupper($version[1].'-SVN') : strtoupper('@kunenaversion@'));
+define ('KUNENA_VERSION_DATE', ('@kunenaversiondate@' == '@'.'kunenaversiondate'.'@') ? $svn[2] : '@kunenaversiondate@');
 define ('KUNENA_VERSION_NAME', ('@kunenaversionname@' == '@'.'kunenaversionname'.'@') ? 'SVN Revision' : '@kunenaversionname@');
-define ('KUNENA_VERSION_BUILD', ('@kunenaversionbuild@' == '@'.'kunenaversionbuild'.'@') ? '0' : '@kunenaversionbuild@');
+define ('KUNENA_VERSION_BUILD', ('@kunenaversionbuild@' == '@'.'kunenaversionbuild'.'@') ? $svn[1] : '@kunenaversionbuild@');
 
 /**
  * Kunena Libraries intelligent file importer.

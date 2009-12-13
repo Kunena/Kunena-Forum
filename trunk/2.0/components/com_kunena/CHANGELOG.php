@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+13-Dec-2009 Matias
+^ [#18912] Implement new installer: fetch SVN version and build info from CHANGELOG.php
+
 12-Dec-2009 fxstein
 ^ [#18906] Move 1.6 trunk to 2.0
 ^ [#18906] Update version info to 2.0.0DEV Converse

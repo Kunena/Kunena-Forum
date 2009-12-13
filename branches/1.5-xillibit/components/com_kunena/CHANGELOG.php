@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.8
 
+13-dec-2009 Xillibit
+#^[#18902] Remove all remaining deprecated functions in PHP 5.3.x and remove split() and ereg() functions
+
 09-dec-2009 Xillibit
 + [#18627] Integration of poll into kunena
 

@@ -1347,16 +1347,4 @@ function code2utf($num)
     if ($num < 2097152) return chr(($num >> 18) + 240) . chr((($num >> 12) & 63) + 128) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
     return '';
 }
-
-//Function for the polls : return if true or false if the post is a parent or no
-function isparent($idgived){
-  $kunena_db = &JFactory::getDBO();
-  $kunena_db->setQuery("SELECT parent FROM #__fb_messages WHERE id=$idgived");
-  $ItemResults = $kunena_db->loadObjectList();  
-  if($ItemResults[0]->parent == "0") {
-    return true;
-  } else {
-    return false;
-  }    
-}
 ?>

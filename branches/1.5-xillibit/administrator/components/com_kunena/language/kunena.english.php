@@ -22,6 +22,37 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
+//Poll
+DEFINE('_KUNENA_POLL_ADD', 'Add a new poll');
+DEFINE('_KUNENA_POLL_TITLE', 'Poll title');
+DEFINE('_KUNENA_POLL_ADD_OPTION', 'Add a new option');
+DEFINE('_KUNENA_POLL_REM_OPTION', 'Remove an option');
+DEFINE('_KUNENA_POLL_OPTION_NAME', 'Option');
+DEFINE('_KUNENA_POLL_BUTTON_VOTE', 'Vote');
+DEFINE('_KUNENA_POLL_BUTTON_RESULT', 'View results');
+DEFINE('_KUNENA_POLL_NO_VOTE', 'No vote');
+DEFINE('_KUNENA_POLL_VOTERS_TOTAL', 'Total number of voters: ');
+DEFINE('_KUNENA_POLL_HITS_OPTIONS', 'Number of people who voted for this poll');
+DEFINE('_KUNENA_A_HACK_POLL_TITLE', 'Hack poll');
+DEFINE('_KUNENA_A_POLL_NUMBER_OPTIONS', 'Number of options for the polls');
+DEFINE('_KUNENA_A_POLL_NUMBER_OPTIONS_DESC', 'Set the number maximum allowed for the field options for the polls when the users create a new post');
+DEFINE('_KUNENA_POLL_SAVE_ALERT_OK', 'Your vote has been saved with succes');
+DEFINE('_KUNENA_POLL_SAVE_ALERT_ERROR', 'A problem has prevented your vote from being saved');
+DEFINE('_KUNENA_POLL_SAVE_VOTE_ALREADY', 'You have already voted for this poll!');
+DEFINE('_KUNENA_A_POLL_ALLOW_ONE_VOTE', 'Allow user to vote one time for a poll');
+DEFINE('_KUNENA_A_POLL_ALLOW_ONE_VOTE_DESC', 'Allow user to vote only one time for a poll');
+DEFINE('_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW', 'The maximum numbers of options has been reached');
+DEFINE('_KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK', 'You must check a box for vote to this poll!');
+DEFINE('_KUNENA_A_POLL_ENABLED', 'Enabled');
+DEFINE('_KUNENA_A_ENABLED_DESC', 'Allow the hack poll to be enabled or disabled');
+DEFINE('_KUNENA_POLL_NAME', 'Poll: ');
+DEFINE('_KUNENA_POLL_OPTIONS', 'Poll options');
+DEFINE('_KUNENA_ADMIN_POLLS', 'Polls Settings');
+DEFINE('_KUNENA_POLL_NAME_URL_RESULT', 'Return to the topic');
+DEFINE('_KUNENA_A_POLL_CATEGORIES_ALLOWED', 'Set the allowed categories for the poll');
+DEFINE('_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC', 'Set the allowed categories for the poll, this can be a categories or more, add the allowed categories by filling the field below with numbers that you need(with coma between numbers, example: 1,2,3,4)');
+DEFINE('_KUNENA_POLL_NOT_LOGGED', 'You can not participate to this poll you are not logged');
+
 // 1.5.8
 
 define('_KUNENA_SEO_SETTINGS', 'SEO Settings');
@@ -1683,35 +1714,4 @@ define('_KUNENA_RANKS_SPECIAL', 'Special');
 define('_KUNENA_RANKSMIN', 'Minimum Post Count');
 define('_KUNENA_RANKS_ACTION', 'Actions');
 define('_KUNENA_NEW_RANK', 'New Rank');
-
-//Poll
-DEFINE('_KUNENA_POLL_ADD', 'Add a new poll');
-DEFINE('_KUNENA_POLL_TITLE', 'Poll title');
-DEFINE('_KUNENA_POLL_ADD_OPTION', 'Add a new option');
-DEFINE('_KUNENA_POLL_REM_OPTION', 'Remove an option');
-DEFINE('_KUNENA_POLL_OPTION_NAME', 'Option');
-DEFINE('_KUNENA_POLL_BUTTON_VOTE', 'Vote');
-DEFINE('_KUNENA_POLL_BUTTON_RESULT', 'View results');
-DEFINE('_KUNENA_POLL_NO_VOTE', 'No vote');
-DEFINE('_KUNENA_POLL_VOTERS_TOTAL', 'Total number of voters: ');
-DEFINE('_KUNENA_POLL_HITS_OPTIONS', 'Number of people who voted for this poll');
-DEFINE('_KUNENA_A_HACK_POLL_TITLE', 'Hack poll');
-DEFINE('_KUNENA_A_POLL_NUMBER_OPTIONS', 'Number of options for the polls');
-DEFINE('_KUNENA_A_POLL_NUMBER_OPTIONS_DESC', 'Set the number maximum allowed for the field options for the polls when the users create a new post');
-DEFINE('_KUNENA_POLL_SAVE_ALERT_OK', 'Your vote has been saved with succes');
-DEFINE('_KUNENA_POLL_SAVE_ALERT_ERROR', 'A problem has prevented your vote from being saved');
-DEFINE('_KUNENA_POLL_SAVE_VOTE_ALREADY', 'You have already voted for this poll!');
-DEFINE('_KUNENA_A_POLL_ALLOW_ONE_VOTE', 'Allow user to vote one time for a poll');
-DEFINE('_KUNENA_A_POLL_ALLOW_ONE_VOTE_DESC', 'Allow user to vote only one time for a poll');
-DEFINE('_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW', 'The maximum numbers of options has been reached');
-DEFINE('_KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK', 'You must check a box for vote to this poll!');
-DEFINE('_KUNENA_A_POLL_ENABLED', 'Enabled');
-DEFINE('_KUNENA_A_ENABLED_DESC', 'Allow the hack poll to be enabled or disabled');
-DEFINE('_KUNENA_POLL_NAME', 'Poll: ');
-DEFINE('_KUNENA_POLL_OPTIONS', 'Poll options');
-DEFINE('_KUNENA_ADMIN_POLLS', 'Polls Settings');
-DEFINE('_KUNENA_POLL_NAME_URL_RESULT', 'Return to the topic');
-DEFINE('_KUNENA_A_POLL_CATEGORIES_ALLOWED', 'Set the allowed categories for the poll');
-DEFINE('_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC', 'Set the allowed categories for the poll, this can be a categories or more, add the allowed categories by filling the field below with numbers that you need(with coma between numbers, example: 1,2,3,4)');
-DEFINE('_KUNENA_POLL_NOT_LOGGED', 'You can not participate to this poll you are not logged');
 ?>

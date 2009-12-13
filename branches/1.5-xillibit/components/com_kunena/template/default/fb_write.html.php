@@ -274,12 +274,11 @@ JHTML::_('behavior.keepalive');
                 </td>
             </tr>
 
-        <!-- Start of Poll -->
+        <!-- Start of Hack Poll by xillibit -->
         <?php
-        }
+        }        
         $catsallowed = explode(',',$fbConfig->pollallowedcategories);
-        foreach($catsallowed as $cats){
-          if($cats == $catid){
+        if (in_array($catid, $catsallowed)){
         
         
         //Check if it's is a new thread and show the poll                                    
@@ -301,13 +300,10 @@ JHTML::_('behavior.keepalive');
                     <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onclick = "javascript:delete_field();">                 
                 </td>
             </tr>            
-           <?php } 
-           
-           }
+           <?php }         
            }?>
-           <!-- End of Poll -->
-		<?php
-		// Begin captcha . Thanks Adeptus
+           <!-- End of Hack Poll by xillibit -->
+           <?php		// Begin captcha . Thanks Adeptus
 		if ($fbConfig->captcha == 1 && $kunena_my->id < 1) { ?>
         <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
             <td class = "fb_leftcolumn">&nbsp;<strong><?php echo _KUNENA_CAPDESC; ?></strong>&nbsp;</td>
@@ -319,8 +315,17 @@ JHTML::_('behavior.keepalive');
 		}
 		// Finish captcha
 		?>
-		<!-- Start of Poll -->		
-		    <?php if(($editmode == "1") && $fbConfig->pollenabled == "1" && isparent($id)) { ?>
+		<!-- Start of Hack Poll by xillibit -->		
+		    <?php if(($editmode == "1") && $fbConfig->pollenabled == "1") { 
+		      $catsallowed = explode(',',$fbConfig->pollallowedcategories);
+        if (in_array($catid, $catsallowed)){
+		      //This query is need because, in this part i haven't access to the variable $parent 
+		      //I need to determine if the post if a parent or not for display the form for the poll
+          $kunena_db->setQuery("SELECT parent FROM #__fb_messages WHERE id=$id");
+          $kunena_db->Query() or trigger_dberror('Unable to load messages.');
+          $mesparent = $kunena_db->loadObject();
+          if($mesparent->parent == "0"){      
+        ?>
         <tr id="fb_post_edit_poll">     
         <input type="hidden" name="number_total_options" id="numbertotalr" value="<?php echo $nbpolloptions; ?>">  
         <script type="text/javascript">var number_field="<?php echo $nbpolloptions+1; ?>";</script> 
@@ -345,8 +350,10 @@ JHTML::_('behavior.keepalive');
                 ?>
             </td>
           </tr>  
-          <?php } ?>  
-            <!-- End Poll -->
+          <?php }
+            }
+          } ?>  
+            <!-- End of Hack Poll by xillibit -->
         <tr id="fb_post_buttons_tr">
             <td id="fb_post_buttons" colspan = "2" style = "text-align: center;">
                 <input type="submit" name="submit"  class="fb_button" value="<?php @print(' '._GEN_CONTINUE.' ');?>" onclick="return submitForm()" onmouseover = "javascript:jQuery('input[name=helpbox]').val('<?php @print(_KUNENA_EDITOR_HELPLINE_SUBMIT);?>')" />

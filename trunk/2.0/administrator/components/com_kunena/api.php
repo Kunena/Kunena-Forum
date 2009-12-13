@@ -33,7 +33,7 @@ define('KURL_MEDIA', JURI::Base().'media/'.KUNENA_COMPONENT_NAME.'/');
 
 if ('@kunenaversion@' == '@'.'kunenaversion'.'@') {
 	$changelog = file_get_contents(KPATH_SITE.DS.'CHANGELOG.php', NULL, NULL, 0, 1000);
-	preg_match('|\$Id$changelog, $svn);
+	preg_match('|\$Id\: CHANGELOG.php (\d+) (\S+) (\S+) (\S+) \$|', $changelog, $svn);
 	preg_match('|~~\s+Kunena\s(\d+\.\d+.\d+\S*)|', $changelog, $version);
 }
 

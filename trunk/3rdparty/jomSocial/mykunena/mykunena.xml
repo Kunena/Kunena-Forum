@@ -16,7 +16,7 @@
 	Kunena forum plugin for JomSocial
 	</description>
 	<languages>
-	    <language tag="en-GB">en-GB.plg_mykunena.ini</language>
+	    <language tag="en-GB">en-GB.mykunena.ini</language>
 	</languages>
 	<files>
 		<file plugin="mykunena">mykunena.php</file>

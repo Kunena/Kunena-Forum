@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: COPYRIGHT.php 1026 2009-08-19 06:26:47Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: admin.kunena.php 1239 2009-12-01 10:29:17Z fxstein $
+ * @version		$Id$
  * @package		Kunena
  * @subpackage	com_kunena
  * @copyright	Copyright (C) 2008 - 2009 Kunena Team. All rights reserved.

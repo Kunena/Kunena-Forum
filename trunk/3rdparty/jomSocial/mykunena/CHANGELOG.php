@@ -16,9 +16,7 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 Changelog
 ------------
 This is a non-exhaustive (but still near complete) changelog for
-the Kunena 1.x, including beta and release candidate versions.
-The Kunena 1.x is based on the FireBoard releases but includes some
-drastic technical changes.
+the myKunena plugin for JomSocial, including beta and release candidate versions.
 Legend:
 
 * -> Security Fix
@@ -30,7 +28,13 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-MyKunena 1.0.0
+MyKunena 1.5.0
+
+14-December-2009 fxstein
++ [#19002] Initial plugin structure and build setup
+
+13-December-2009 fxstein
+^ Redo plugin code based on latest JomSocial release
 
 15-Februray-2009 fxstein
 + Initial plugin structure

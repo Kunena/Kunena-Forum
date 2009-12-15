@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.8
 
+15-dec-2009 Xillibit
+^ [#18627] Add new queries for the poll in the kunena xml install file
+
 13-dec-2009 Xillibit
 ^ [#18627] Modification of all the query of the poll to use the new database model
 ^ [#18627] Little change for the poll works on IE8.0, comestics changes and others little changes

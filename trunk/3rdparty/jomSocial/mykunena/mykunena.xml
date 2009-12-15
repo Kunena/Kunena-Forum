@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install version="1.5" type="plugin" group="community" method="upgrade">
-	<name>My Kunena Updates</name>
+	<name>My Kunena Forum Posts</name>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.com</authorEmail>

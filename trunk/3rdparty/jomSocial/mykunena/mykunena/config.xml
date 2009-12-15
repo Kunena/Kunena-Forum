@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install version="1.5" type="plugin" group="community">
+<params>
+		<param type="spacer" default="Forum Settings" />
+		<param name="modified" type="hidden" default="1" />
+		<param name="personaltext" type="text" default="" label="Personal Text" description="This text will be displayed on forum post below the avatar." />
+		<param name="location" type="text" default="" label="Location" description="Location information be displayed on forum post below the avatar." />
+		<param name="gender" type="list" default="0" label="Gender" description="Select your gender if you wish to share.">
+			<option value="0">Not telling</option>
+			<option value="1">Male</option>
+			<option value="2">Female</option>
+		</param>
+		<param type="spacer"/>
+		<param name="icq" type="text" default="" label="ICQ" description="This is your ICQ number." />
+		<param name="aim" type="text" default="" label="AIM" description="This is your AOL Instant Messenger nickname." />
+		<param name="msn" type="text" default="" label="MSN" description="Your MSN messenger e-mail address." />
+		<param name="yim" type="text" default="" label="YIM" description="This is your Yahoo! Instant Messenger nickname." />
+		<param name="skype" type="text" default="" label="Skype" description="This is your Skype handle." />
+		<param name="gtalk" type="text" default="" label="GTalk" description="This is your Gtalk nickname." />
+		<param type="spacer"/>
+		<param name="websitename" type="text" default="" label="Web site name" description="Example: Kunena" />
+		<param name="websiteurl" type="text" default="" label="Web site URL" description="Example: www.Kunena.com" />
+		<param type="spacer"/>
+		<param name="signature" type="textarea" default="" label="Signature" description="300 characters max  - BBCode enabled" rows="5" cols="60" />
+</params>
+</install>

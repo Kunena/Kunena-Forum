@@ -52,8 +52,8 @@ if(!class_exists('plgCommunityMyKunena'))
 	
 			$my	=& JFactory::getUser();
 			
-			$username = $this->params->get('username');
-			$password = $this->params->get('password');
+			//$username = $this->params->get('username');
+			//$password = $this->params->get('password');
 			
 			$db =& JFactory::getDBO();
 			// Get forum user info:
@@ -62,15 +62,7 @@ if(!class_exists('plgCommunityMyKunena'))
 	                        . "\n where a.userid=" . $user->id);
 	                        
 	    	$userinfo = $db->loadObject();		
-			
-			$db =& JFactory::getDBO();
-			// Get forum user info:
-			$db->setQuery("SELECT  a.*, b.* FROM #__fb_users as a"
-	                        . "\n LEFT JOIN #__users as b on b.id=a.userid"
-	                        . "\n where a.userid=" . $user->id);
-	                        
-	    	$userinfo = $db->loadObject();
-		
+					
 			ob_start();
 	 		if( $userinfo ){
 	 			$usr_info = 1;
@@ -224,7 +216,7 @@ if(!class_exists('plgCommunityMyKunena'))
 		{
 			$emoticonPath = '';
 			if( !defined('JB_URLEMOTIONSPATH' )) {
-				$emoticonPath = JURI::base() . 'components/com_kunena/template/default/images/english/emoticons/';
+				$emoticonPath = JURI::base() . 'components/com_kunena/template/default_ex/images/english/emoticons/';
 			} else {
 				$emoticonPath = JB_URLEMOTIONSPATH;
 			}

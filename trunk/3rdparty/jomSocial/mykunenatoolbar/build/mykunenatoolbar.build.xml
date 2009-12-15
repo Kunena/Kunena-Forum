@@ -19,8 +19,8 @@
   	-Dpackage_dir=../../packages	(= workspace/packages)
   	-Dtmp_dir=tmp					(= workspace/mykunena/build/tmp)
 -->
-<project name="mykunenamenu" default="dist" basedir=".">
-	<description>Ant Build File for myKunenamenu JomSocial plugin</description>
+<project name="mykunenatoolbar" default="dist" basedir=".">
+	<description>Ant Build File for mykunenatoolbar JomSocial plugin</description>
 	<condition property="project_dir" value="..">
 		<not>
 			<isset property="project_dir" />
@@ -37,8 +37,8 @@
 		</not>
 	</condition>
 
-	<property file="mykunenamenu.build.config.ini" />
-	<property name="mykunenamenu.assets" value="${project_dir}/mykunenamenu/" />
+	<property file="mykunenatoolbar.build.config.ini" />
+	<property name="mykunenatoolbar.assets" value="${project_dir}/mykunenatoolbar/" />
 
 	<target name="dist" depends="mkdir,archive,init,copy,package,zip,gzip,bz2,info,cleanup" />
 
@@ -88,7 +88,7 @@
 		</condition>
 
 		<!-- File Sets for Copy -->
-		<fileset id="assets" dir="${mykunenamenu.assets}">
+		<fileset id="assets" dir="${mykunenatoolbar.assets}">
 		</fileset>
 		<fileset id="plugin" dir="${project_dir}">
 			<exclude name="*.xml" />
@@ -98,7 +98,7 @@
 	</target>
 
 	<target name="copy" depends="init">
-		<copy todir="${tmp_dir}/mykunenamenu">
+		<copy todir="${tmp_dir}/mykunenatoolbar">
 			<fileset refid="assets" />
 		</copy>
 	</target>

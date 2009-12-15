@@ -9,7 +9,7 @@
 
 Kunena README
 
-PLEASE READ THIS ENTIRE FILE BEFORE INSTALLING myKunenamenu @kunenaversion@!
+PLEASE READ THIS ENTIRE FILE BEFORE INSTALLING mykunenatoolbar @kunenaversion@!
 
 KNOWN ISSUES
 ============

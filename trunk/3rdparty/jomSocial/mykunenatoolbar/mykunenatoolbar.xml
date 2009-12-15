@@ -16,10 +16,10 @@
 	Kunena menu plugin for JomSocial
 	</description>
 	<languages>
-	    <language tag="en-GB">en-GB.mykunenamenu.ini</language>
+	    <language tag="en-GB">en-GB.mykunenatoolbar.ini</language>
 	</languages>
 	<files>
-		<file plugin="mykunena">mykunenamenu.php</file>
+		<file plugin="mykunena">mykunenatoolbar.php</file>
 		<folder>mykunena</folder>
 	</files>
 	

@@ -38,8 +38,16 @@ if(!class_exists('plgCommunityMyKunena'))
 			$uri	= JURI::base();
 	
 			$document	=& JFactory::getDocument();
-			// Attach CSS
-			$css		= JURI::base() . 'plugins/community/mykunena/style.css';
+
+			// Attach Kunena CSS, local css is only a failsafe
+			$css = '';
+			if( file_exists(JURI::base() . 'components/com_kunena/template/default_ex/kunena.forum.css')) 
+			{
+				$css = JURI::base() . 'components/com_kunena/template/default_ex/kunena.forum.css';
+			} else {
+				$css = JURI::base() . 'plugins/community/mykunena/style.css';
+			}
+			
 			$document->addStyleSheet($css);
 					
 			$groupsModel		=& CFactory::getModel( 'groups' );
@@ -123,7 +131,8 @@ if(!class_exists('plgCommunityMyKunena'))
 					<div id="community-mykunena-wrap">
 					    <ul class="list">
 					<?php
-						foreach ($items as $item ){
+						foreach ($items as $item )
+						{
 							$fbURL 		= JRoute::_("index.php?option=com_kunena&amp;func=view".$fbItemid."&amp;catid=" . $item->catid . "&amp;id=" . $item->id . "#" . $item->id);
 							$fbCatURL 	= JRoute::_("index.php?option=com_kunena".$fbItemid."&amp;func=showcat&amp;catid=" . $item->catid);
 				            $postDate	= new JDate($item->time);

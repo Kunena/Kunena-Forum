@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.8
 
+16-dec-2009 Xillibit
+^ [#18627] Add in statistics popular five polls with configuation settings, little changes in code organisation
+
 15-dec-2009 Xillibit
 ^ [#18627] Add new queries for the poll in the kunena xml install file
 

@@ -64,7 +64,7 @@ if (in_array($catid, $catsallowed)){
                         <div class = "anndesc">
                           <table border = "0" cellspacing = "0" cellpadding = "0" width="100%">
                           <?php foreach($dataspollresult as $row){ ?>
-                            <tr><td><?php echo $row['text']; ?></td><td><img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_JLIVEURL."components/com_kunena/template/default_ex/images/bar.gif"; ?>" height = "10" width = "<?php if(isset($row['votes'])) { echo ($row['votes']*25)/5; } else { echo "0"; }?>"/></td><td><?php if(isset($row['votes'])) { echo $row['votes']; } else { echo _KUNENA_POLL_NO_VOTE; } ?></td><td><?php if(isset($row['votes'])) { echo round(($row['votes']*100)/$nbvoters,1)."%"; } else { echo "0%"; } ?></td></tr>
+                            <tr><td><?php echo $row['text']; ?></td><td><img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_JLIVEURL."components/com_kunena/template/default_ex/images/bar.gif"; ?>" height = "10" width = "<?php if(isset($row['votes'])) { echo ($row['votes']*25)/5; } else { echo "0"; }?>"/></td><td><?php if(isset($row['votes'])) { echo $row['votes']; } else { echo _KUNENA_POLL_NO_VOTE; } ?></td><td><?php if($row['votes'] != "0") { echo round(($row['votes']*100)/$nbvoters,1)."%"; } else { echo "0%"; } ?></td></tr>
                           <?php }?>
                             <tr><td colspan="4"><?php if(empty($nbvoters)){$nbvoters = "0";} echo _KUNENA_POLL_VOTERS_TOTAL."<b>".$nbvoters."</b>"; ?></td></tr>
                           

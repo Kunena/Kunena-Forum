@@ -117,7 +117,7 @@ function ajax(nb,id)
         }
 
         };
-        xhr.open("GET", jliveurl+"/index.php?option=com_kunena&func=pollsave&radio="+data+"&id="+id, true);
+        xhr.open("GET", jliveurl+"/index.php?option=com_kunena&func=poll&do=results&radio="+data+"&id="+id, true);
         xhr.send(null);
       }
 

@@ -2411,6 +2411,29 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"><?php echo _KUNENA_NUMPOP; ?>
                     </td>
                 </tr>
+                
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"><?php echo _KUNENA_POLLSSTATS; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo $lists['showpoppollstats']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_POLLSTATSDESC; ?>
+                    </td>
+                </tr>
+                
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"><?php echo _KUNENA_POLLSPOP; ?>
+                    </td>
+
+                    <td align = "left" valign = "top">
+                        <input type = "text" name = "cfg_popsubjectcount" value = "<?php echo $fbConfig->poppollscount; ?>"/>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_POLLSPOP; ?>
+                    </td>
+                </tr>
                 </table>
                 </fieldset>
 

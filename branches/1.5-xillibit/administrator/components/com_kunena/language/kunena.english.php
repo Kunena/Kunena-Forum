@@ -33,7 +33,6 @@ DEFINE('_KUNENA_POLL_BUTTON_RESULT', 'View results');
 DEFINE('_KUNENA_POLL_NO_VOTE', 'No vote');
 DEFINE('_KUNENA_POLL_VOTERS_TOTAL', 'Total number of voters: ');
 DEFINE('_KUNENA_POLL_HITS_OPTIONS', 'Number of people who voted for this poll');
-DEFINE('_KUNENA_A_HACK_POLL_TITLE', 'Hack poll');
 DEFINE('_KUNENA_A_POLL_NUMBER_OPTIONS', 'Number of options for the polls');
 DEFINE('_KUNENA_A_POLL_NUMBER_OPTIONS_DESC', 'Set the number maximum allowed for the field options for the polls when the users create a new post');
 DEFINE('_KUNENA_POLL_SAVE_ALERT_OK', 'Your vote has been saved with succes');
@@ -52,6 +51,11 @@ DEFINE('_KUNENA_POLL_NAME_URL_RESULT', 'Return to the topic');
 DEFINE('_KUNENA_A_POLL_CATEGORIES_ALLOWED', 'Set the allowed categories for the poll');
 DEFINE('_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC', 'Set the allowed categories for the poll, this can be a categories or more, add the allowed categories by filling the field below with numbers that you need(with coma between numbers, example: 1,2,3,4)');
 DEFINE('_KUNENA_POLL_NOT_LOGGED', 'You can not participate to this poll you are not logged');
+DEFINE('_KUNENA_USRL_VOTES', 'Votes');
+DEFINE('_KUNENA_POLLSPOP', 'Number of Popular Polls');
+DEFINE('_KUNENA_POLLSSTATS', 'Show Popular Poll Stats ');
+DEFINE('_KUNENA_POLLSTATSDESC', ' If you want to show the Popular Polls, select "Yes." ');
+DEFINE('_STAT_POPULAR_POLLS_KGSG', 'Polls');
 
 // 1.5.8
 

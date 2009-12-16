@@ -860,7 +860,9 @@ function showConfig($option)
       }      
   }
   $lists['pollallowedcats'] = JHTML::_('select.genericlist', $yesnoCategories, 'cfg_pollallowedcats', 'class="inputbox" size="5"', 'value', 'text');
-    html_Kunena::showConfig($fbConfig, $lists, $option);
+  $lists['showpoppollstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpoppollstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showpoppollstats);  
+  
+  html_Kunena::showConfig($fbConfig, $lists, $option);
 }
 
 function saveConfig($option)

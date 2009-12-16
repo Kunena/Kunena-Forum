@@ -1,4 +1,13 @@
 <?php
+/**
+* @version $Id: 
+* Kunena Component
+* @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+**/
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
@@ -56,5 +65,37 @@ $this_poll_datas = $kunena_db->loadObjectList();
 </div>
 </div>
 <?php 
+ } elseif($do == "results"){
+          $kunena_db->setQuery("SELECT * FROM #__fb_polls_options WHERE pollid=$id AND id=$value_choosed");
+          $kunena_db->query() or trigger_dberror('Unable to load poll.');
+          $polloption = $kunena_db->loadObject();
+          if (!$polloption) break; // OPTION DOES NOT EXIST
+                 
+          $kunena_db->setQuery("SELECT votes FROM #__fb_polls_users WHERE pollid=$id AND userid=$kunena_my->id");
+          $kunena_db->query() or trigger_dberror('Unable to load datas from poll users.');
+          $votes = $kunena_db->loadResult();
+          if(empty($votes)) {
+            $kunena_db->setQuery("INSERT INTO #__fb_polls_users (pollid,userid,votes) VALUES('$id','{$kunena_my->id}',1)");
+            $kunena_db->query();
+            if($votes == null){ //need this if because when the $votes is null the thing SET votes=votes+1 doesn't work
+              $kunena_db->setQuery("UPDATE #__fb_polls_options SET votes=1 WHERE id=$value_choosed");
+              $kunena_db->query();
+            }else { 
+              $kunena_db->setQuery("UPDATE #__fb_polls_options SET votes=votes+1 WHERE id=$value_choosed");
+              $kunena_db->query();
+            }
+            echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"1\";</script>";
+          }
+          else if($votes = $fbConfig->pollallowvotes) {
+            $kunena_db->setQuery("UPDATE #__fb_polls_users SET votes=votes+1 WHERE pollid=$id AND userid={$kunena_my->id}");
+            $kunena_db->query();
+            $kunena_db->setQuery("UPDATE #__fb_polls_options SET votes=votes+1 WHERE id=$value_choosed");
+            $kunena_db->query();
+            echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"1\";</script>";
+         }
+                
+         if ($kunena_db->getErrorNum()) { //inform the user that an error has occured
+          echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"0\";</script>";                   
+         }
  }
 ?>

@@ -18,35 +18,30 @@ if(!class_exists('plgCommunityMyKunenaToolbar'))
 	{
 		var $name 		= "My Kunena Toolbar";
 		var $_name		= 'mykunenatoolbar';
-		var $_user		= '';
-		var $_my		= '';
 	
 	    function plgCommunityMyKunenaToolbar(& $subject, $config)
 	    {
-			$this->_user	= CFactory::getRequestUser();
-			
 			parent::__construct($subject, $config);
 	    }
 		
 		function onSystemStart()
 		{
-			trigger_error ('Start');
+			//Load Language file.
+			JPlugin::loadLanguage( 'plg_mykunenatoolbar', JPATH_ADMINISTRATOR );
+			
 			if( !file_exists( JPATH_ROOT . DS . 'components' . DS . 'com_kunena' . DS . 'class.kunena.php' ) )
 			{
 				trigger_error (JText::_('PLG_MYKUNENA TOOLBAR ERROR'),E_USER_WARNING);
 				return;
 			}
 			
-			if(! class_exists('CFactory'))
+			if( !class_exists('CFactory'))
 			{
 				require_once( JPATH_ROOT . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'core.php');
 			}
 			
 			//initialize the toolbar object	
 			$toolbar = CFactory::getToolbar();		
-			
-			//Load Language file.
-			JPlugin::loadLanguage( 'plg_mykunenatoolbar', JPATH_ADMINISTRATOR );
 			
 			$db = &JFactory::getDBO();
 			// Get Kunena item id

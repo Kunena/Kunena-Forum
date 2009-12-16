@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: CHANGELOG.php 1281 2009-12-14 17:28:38Z fxstein $
+* @version $Id$
 * MyKunena Plugin
 * @package MyKunena
 *
@@ -28,13 +28,7 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-MyKunena 1.5.0
+MyKunenaToolBar 1.5.0
 
-14-December-2009 fxstein
-+ [#19002] Initial plugin structure and build setup
-
-13-December-2009 fxstein
-^ Redo plugin code based on latest JomSocial release
-
-15-Februray-2009 fxstein
-+ Initial plugin structure
+16-December-2009 fxstein
++ [#19002] Initial version

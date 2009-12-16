@@ -1,5 +1,5 @@
 /**
-* @version $Id: README.txt 1281 2009-12-14 17:28:38Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2008-2009 Kunena All rights reserved
@@ -11,10 +11,16 @@ Kunena README
 
 PLEASE READ THIS ENTIRE FILE BEFORE INSTALLING mykunenatoolbar @kunenaversion@!
 
-KNOWN ISSUES
+OVERVIEW
 ============
 
-TBD
+The plg_mykunenatoolbar plugin for jomSocial adds further integration between Kunena and jomSocial. 
+Install the package trhough the Joomla backend plugin installer. Once successfully installed, make sure 
+to enable and publish the plugin in the backend. 
+In addition it is recommended to set the backend parameter of this plugin to Core Application = Yes.
+That way all Kunena forum users will see the menu on the community pages toolbar.
+
+For feedback and support please visit the forums at http://www.kunena.com
 
 END OF README
 =============

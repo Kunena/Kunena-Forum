@@ -2,7 +2,7 @@
 <!--
   Kunena ant build file
 
-  @version      $Id: mykunena.build.xml 1281 2009-12-14 17:28:38Z fxstein $
+  @version      $Id$
   @package		Kunena
   @subpackage	plg_mykunena
   @copyright	Copyright (C) 2008 - 2009 Kunena Team. All rights reserved.
@@ -112,7 +112,7 @@
 
 		<copy file="${project_dir}/${cfg.name}.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/${cfg.name}.php" todir="${tmp_dir}" overwrite="true" filtering="false" />
-		<copy file="${project_dir}/en-GB.${cfg.name}.ini" todir="${tmp_dir}" overwrite="true" filtering="false" />
+		<copy file="${project_dir}/en-GB.plg_${cfg.name}.ini" todir="${tmp_dir}" overwrite="true" filtering="false" />
 		<copy file="${project_dir}/CHANGELOG.php" todir="${tmp_dir}" overwrite="true" filtering="false" />
 		<copy file="${project_dir}/COPYRIGHT.php" todir="${tmp_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/README.txt" todir="${tmp_dir}" overwrite="true" filtering="true" />

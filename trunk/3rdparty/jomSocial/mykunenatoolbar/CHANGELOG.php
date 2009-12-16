@@ -31,6 +31,7 @@ Legend:
 MyKunenaToolBar 1.5.0
 
 16-December-2009 fxstein
++ [#19002] Danish language file added
 ^ [#19002] Changed version to 1.5.0b Beta
 - [#19002] Removed jomSocial 1.6 specific call to enable use on older jomSocial installs
 - [#19002] Removed test notice one system startup

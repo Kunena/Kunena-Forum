@@ -7,7 +7,7 @@
 	<authorUrl>http://www.kunena.com</authorUrl>
 	<copyright>(c) 2009, 2010 Kunena Team, All rights reserved</copyright>
 	<license>GNU/GPL</license>
-	<version>1.5.0-DEV</version>
+	<version>1.5.0-Alpha</version>
 	<versionname>Chit Chat</versionname>
 	<build>@kunenaversionbuild@</build>
 	<isapplication>true</isapplication>

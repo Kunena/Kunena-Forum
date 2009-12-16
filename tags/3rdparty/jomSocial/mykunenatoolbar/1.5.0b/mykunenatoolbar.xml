@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install version="1.5" type="plugin" group="community" method="upgrade">
+	<name>My Kunena Forum Menu</name>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<author>Kunena Team</author>
+	<authorEmail>kunena@kunena.com</authorEmail>
+	<authorUrl>http://www.kunena.com</authorUrl>
+	<copyright>(c) 2009, 2010 Kunena Team, All rights reserved</copyright>
+	<license>GNU/GPL</license>
+	<version>1.5.0b</version>
+	<versionname>Chit Chat</versionname>
+	<build>@kunenaversionbuild@</build>
+	<isapplication>true</isapplication>
+	<isbrowseable>true</isbrowseable>
+	<description>
+	Kunena menu plugin for JomSocial
+	</description>
+	<languages>
+	    <language tag="en-GB">en-GB.plg_mykunenatoolbar.ini</language>
+	</languages>
+	<files>
+		<file plugin="mykunenatoolbar">mykunenatoolbar.php</file>
+		<folder>mykunenatoolbar</folder>
+	</files>
+	
+	<params>
+		<param name="coreapp" type="list" default="0" label="Core Application" description="Causes this application to not appearin the users applications list but it will allow this application to appear in the user profile automatically if selected.">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</param>
+	</params>
+</install>

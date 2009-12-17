@@ -34,6 +34,7 @@ Legend:
 Kunena 1.5.8
 
 17-dec-2009 Xillibit
+#^ [#18767] Conflict with sh404sef language strings
 # [#19027] Debug does not show MySQL error in trace
 # [#19025] Moderators list is always using username, regardless of configuration option
 # [#19026] Administration: wrong translations

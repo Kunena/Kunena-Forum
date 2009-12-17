@@ -1248,7 +1248,6 @@ DEFINE('_COM_A_TEMPLATE', 'Template');
 DEFINE('_COM_A_TEMPLATE_DESC', 'Choose the template to use.');
 DEFINE('_COM_A_TEMPLATE_IMAGE_PATH', 'Image Sets');
 DEFINE('_COM_A_TEMPLATE_IMAGE_PATH_DESC', 'Choose the images set template to use.');
-DEFINE('_PREVIEW_CLOSE', 'Close this window');
 //==========================================
 //new in 1.0 Stable
 DEFINE('_COM_A_POSTSTATSBAR', 'Use Posts Statistics Bar');

@@ -1,13 +1,4 @@
 <?php
-/**
-* @version $Id: 
-* Kunena Component
-* @package Kunena
-*
-* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.com
-**/
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
@@ -20,7 +11,7 @@ include_once (KUNENA_PATH_LIB .DS. 'kunena.poll.js.php');
 //Load the query for get the informations for the poll
 $kunena_db->setQuery("SELECT b.id,title,text FROM #__fb_polls AS a JOIN #__fb_polls_options AS b ON a.threadid=b.pollid WHERE a.threadid={$id}");
 $kunena_db->query();
-$this_poll_datas = $kunena_db->loadObjectList();
+$this_poll_datas = $kunena_db->loadObjectList();    
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
@@ -50,7 +41,7 @@ $this_poll_datas = $kunena_db->loadObjectList();
        echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$this_poll_datas[$i]->id."\" />".$this_poll_datas[$i]->text."</li>";
       }
       echo "</ul></fieldset>";    
-        $button_vote = "<input type=\"button\" value=\""._KUNENA_POLL_BUTTON_VOTE."\" onClick=\"javascript:ajax(".sizeof($this_poll_datas).",".$id.");\" />";      
+        $button_vote = "<input type=\"button\" value=\""._KUNENA_POLL_BUTTON_VOTE."\" onClick=\"javascript:ajax(".sizeof($this_poll_datas).",".$id.");\" />";
         echo "<div class=\"poll_center\" id=\"poll_buttons\">".$button_vote;
       
       ?>        
@@ -66,6 +57,13 @@ $this_poll_datas = $kunena_db->loadObjectList();
 </div>
 <?php 
  } elseif($do == "results"){
+    $fbConfig->pollallowvotes = "100";
+    //Prevent spam from users
+    $kunena_db->setQuery("SELECT TIMEDIFF(CURTIME(),DATE_FORMAT(lasttime, '%H:%i:%s')) AS timediff FROM #__fb_polls_users WHERE pollid=$id AND userid=$kunena_my->id");
+    $kunena_db->query() or trigger_dberror('Unable to load users poll.');
+    $pollusers = $kunena_db->loadResult();       
+    if($pollusers > $fbConfig->polltimebtvotes){ 
+               
           $kunena_db->setQuery("SELECT * FROM #__fb_polls_options WHERE pollid=$id AND id=$value_choosed");
           $kunena_db->query() or trigger_dberror('Unable to load poll.');
           $polloption = $kunena_db->loadObject();
@@ -92,10 +90,9 @@ $this_poll_datas = $kunena_db->loadObjectList();
             $kunena_db->setQuery("UPDATE #__fb_polls_options SET votes=votes+1 WHERE id=$value_choosed");
             $kunena_db->query();
             echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"1\";</script>";
-         }
-                
-         if ($kunena_db->getErrorNum()) { //inform the user that an error has occured
-          echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"0\";</script>";                   
-         }
+         }       
+       }else{
+        echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"2\";</script>";
+       }  
  }
 ?>

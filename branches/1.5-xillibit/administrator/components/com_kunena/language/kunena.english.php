@@ -43,19 +43,24 @@ DEFINE('_KUNENA_A_POLL_ALLOW_ONE_VOTE_DESC', 'Allow user to vote only one time f
 DEFINE('_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW', 'The maximum numbers of options has been reached');
 DEFINE('_KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK', 'You must check a box for vote to this poll!');
 DEFINE('_KUNENA_A_POLL_ENABLED', 'Enabled');
-DEFINE('_KUNENA_A_ENABLED_DESC', 'Allow the hack poll to be enabled or disabled');
+DEFINE('_KUNENA_A_ENABLED_DESC', 'Disable or enable the polls');
 DEFINE('_KUNENA_POLL_NAME', 'Poll: ');
 DEFINE('_KUNENA_POLL_OPTIONS', 'Poll options');
-DEFINE('_KUNENA_ADMIN_POLLS', 'Polls Settings');
+DEFINE('_KUNENA_A_POLL_TITLE', 'Polls Settings');
 DEFINE('_KUNENA_POLL_NAME_URL_RESULT', 'Return to the topic');
 DEFINE('_KUNENA_A_POLL_CATEGORIES_ALLOWED', 'Set the allowed categories for the poll');
 DEFINE('_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC', 'Set the allowed categories for the poll, this can be a categories or more, add the allowed categories by filling the field below with numbers that you need(with coma between numbers, example: 1,2,3,4)');
-DEFINE('_KUNENA_POLL_NOT_LOGGED', 'You can not participate to this poll you are not logged');
+DEFINE('_KUNENA_POLL_NOT_LOGGED', 'You can not participate to this poll you are not logged.');
 DEFINE('_KUNENA_USRL_VOTES', 'Votes');
 DEFINE('_KUNENA_POLLSPOP', 'Number of Popular Polls');
 DEFINE('_KUNENA_POLLSSTATS', 'Show Popular Poll Stats ');
 DEFINE('_KUNENA_POLLSTATSDESC', ' If you want to show the Popular Polls, select "Yes." ');
 DEFINE('_STAT_POPULAR_POLLS_KGSG', 'Polls');
+DEFINE('_KUNENA_A_POLL_TIME_VOTES', 'Set the time between two votes');
+DEFINE('_KUNENA_A_POLL_TIME_VOTES_DESC', 'For avoid overload of your server a set a time between two votes of the same user, example 00:15:00 means 15 minutes between two votes');
+DEFINE('_KUNENA_POLL_WAIT_BEFORE_VOTE', 'You need to wait before vote a new time');
+DEFINE('_KUNENA_A_POLL_NUMBER_VOTES_BY_USER', 'Set the maximum number for the votes allowed for one user');
+DEFINE('_KUNENA_A_POLL_NUMBER_VOTES_BY_DESC', 'Set the maximum number for the votes allowed for one user');
 
 // 1.5.8
 

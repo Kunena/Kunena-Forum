@@ -386,6 +386,8 @@ class CKunenaConfig extends CKunenaConfigBase
     var $pollallowedcategories = "1";
     var $poppollscount = "5";
     var $showpoppollstats = '1';
+    var $polltimebtvotes = "00:15:00";
+    var $pollnbvotesbyuser = "100";
 	
     public function __construct($KunenaUser=null)
     {

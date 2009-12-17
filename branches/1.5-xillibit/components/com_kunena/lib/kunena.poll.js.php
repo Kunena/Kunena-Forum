@@ -112,7 +112,7 @@ function ajax(nb,id)
             alert(<?php echo "\""._KUNENA_POLL_SAVE_ALERT_ERROR."\"";?>);
           }
           if(datasendfromserver.match("infoserver=\"2\"")){
-            alert(<?php echo "\""._KUNENA_POLL_SAVE_VOTE_ALREADY."\"";?>);
+            alert(<?php echo "\""._KUNENA_POLL_WAIT_BEFORE_VOTE."\"";?>);
           }
         }
 

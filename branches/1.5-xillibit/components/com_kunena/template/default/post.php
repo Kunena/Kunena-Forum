@@ -1299,7 +1299,7 @@ $catName = $objCatInfo->name;
         <?php
                     foreach ($threadlist as $thread)
                     {
-                        echo "<OPTION value=\"$thread->id\" > $thread->subject </OPTION>";
+                        echo "<OPTION value=\"$thread->id\" >".stripslashes($thread->subject)."</OPTION>";
                     }
         ?>
     </select>

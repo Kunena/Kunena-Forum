@@ -34,6 +34,7 @@ Legend:
 Kunena 1.5.8
 
 17-dec-2009 Xillibit
+# [#19026] Fix in Administration: wrong translations
 # [#19022] Fix for Moderation: Merge shows extra slashes in topic list
 # [#18973] Fix for wrong My profile link in AUP integration
 

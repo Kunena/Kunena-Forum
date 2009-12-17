@@ -38,7 +38,7 @@ function kunena_categoryList($catids, $options = array ())
 
 //category select list
 $options = array ();
-$options[] = JHTML::_('select.option', '0', 'All Categories');
+$options[] = JHTML::_('select.option', '0', _KUNENA_SEARCH_SEARCHIN_ALLCATS);
 $lists['parent'] = kunena_categoryList(explode(',', $catids), $options);
 if(isset($fb_advsearch_hide) && $fb_advsearch_hide==1) 
 {

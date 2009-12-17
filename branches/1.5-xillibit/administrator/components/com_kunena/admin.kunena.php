@@ -1525,7 +1525,7 @@ function showCategories($cat, $cname, $extras = "", $levellimit = "4")
     $list = catTreeRecurse(0, '', array (), $children);
     // assemble menu items to the array
     $mitems = array ();
-    $mitems[] = JHTML::_('select.option', '0', _KUNENA_NOPARENT, 'value', 'text');
+    $mitems[] = JHTML::_('select.option', '0', _KUNENA_TOPLEVEL, 'value', 'text');
     $this_treename = '';
 
     foreach ($list as $item)

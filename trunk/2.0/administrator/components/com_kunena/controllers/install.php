@@ -47,7 +47,15 @@ class KunenaControllerInstall extends KunenaController
 			return;
 		}
 
-		$version = $model->getLastVersion();
+		$prefix = $model->getVersionPrefix();
+		if ($prefix == 'kunena_')
+		{
+			kimport('models.version', 'admin');
+			$versionModel = new KunenaModelVersion();
+			$version = $versionModel->getDBVersion();
+		} else {
+			$version->state = '';
+		}
 
 		switch ($version->state)
 		{

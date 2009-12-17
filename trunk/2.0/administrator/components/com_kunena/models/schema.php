@@ -37,6 +37,7 @@ class KunenaModelSchema extends JModel
 
 	protected $schema = null;
 	protected $xmlschema = null;
+	protected $upgradeschema = null;
 	protected $diffschema = null;
 	protected $db = null;
 	protected $sql = null;
@@ -83,8 +84,14 @@ class KunenaModelSchema extends JModel
 
 	public function getXmlSchema($input=KUNENA_SCHEMA_FILE)
 	{
-		if ($this->xmlschema == null) $this->xmlschema = $schema = $this->getSchemaFromFile($input);
+		if ($this->xmlschema == null) $this->xmlschema = $this->getSchemaFromFile($input);
 		return $this->xmlschema;
+	}
+
+	public function getUpgradeSchema($input=KUNENA_UPGRADE_SCHEMA_FILE)
+	{
+		if ($this->upgradeschema == null) $this->upgradeschema = $this->getSchemaFromFile($input);
+		return $this->upgradeschema;
 	}
 
 	public function getDiffSchema($from=null, $to=null, $using=null)
@@ -93,8 +100,13 @@ class KunenaModelSchema extends JModel
 		{
 			if (!$from) $from = $this->getSchema();
 			if (!$to) $to = $this->getXmlSchema();
+			if (!$using) $using = $this->getUpgradeSchema();
 			$this->fromschema = $from;
 			$this->toschema = $to;
+			//echo "<pre>",htmlentities($this->fromschema->saveXML()),"</pre>";
+			//echo "<pre>",htmlentities($this->toschema->saveXML()),"</pre>";
+			$this->usingschema = $using;
+			$this->upgradeSchema($from, $using);
 			$this->diffschema = $this->getSchemaDiff($from, $to);
 			$this->sql = null;
 		}
@@ -107,6 +119,7 @@ class KunenaModelSchema extends JModel
 			$diff = $this->getDiffSchema();
 			echo "<pre>",htmlentities($diff->saveXML()),"</pre>";
 			$this->sql = $this->getSchemaSQL($diff);
+			echo "<pre>",print_r($this->sql),"</pre>";
 		}
 		return $this->sql;
 	}
@@ -249,20 +262,13 @@ class KunenaModelSchema extends JModel
 		$schemaNode = $schema->documentElement;
 		$schemaNode->setAttribute('type', 'diff');
 
-		$nodes = $this->listAllNodes(array('old'=>$old->documentElement->childNodes, 'new'=>$new->documentElement->childNodes));
+		$nodes = $this->listAllNodes(array('new'=>$new->documentElement->childNodes, 'old'=>$old->documentElement->childNodes));
 		foreach ($nodes as $nodeTag => $nodeList)
 		{
 			foreach ($nodeList as $nodeName => $nodeLoc)
 			{
 				$newNode = $this->getSchemaNodeDiff($schema, $nodeTag, $nodeName, $nodeLoc);
-				if ($newNode) {
-					$schemaNode->appendChild($newNode);
-					$dupNode = $this->getDuplicateSibling($newNode);
-					if ($dupNode) {
-						if ($dupNode->getAttribute('action') == 'leftover') $schemaNode->removeChild($dupNode);
-						if ($newNode->getAttribute('action') == 'leftover') $schemaNode->removeChild($newNode);
-					}
-				}
+				if ($newNode) $schemaNode->appendChild($newNode);
 			}
 		}
 		return $schema;
@@ -286,18 +292,14 @@ class KunenaModelSchema extends JModel
 		if (!isset($loc['old']))
 		{
 			$node = $schema->importNode($loc['new'], true);
-
-			$renamed = $this->getRenamedFrom($loc['new']);
-			if ($renamed === false) $node->setAttribute('action', 'create');
-			else if ($renamed == '') $node->setAttribute('action', 'replace');
-			else
-			{
-				$node->setAttribute('from', $renamed);
-				$node->setAttribute('action', 'rename');
-			}
+			$action = $loc['new']->getAttribute('action');
+			if (!$action) $node->setAttribute('action', 'create');
 
 			$prev = $loc['new']->previousSibling;
-			if ($prev && $prev->tagName == 'field') $node->setAttribute('after', $prev->getAttribute('name'));
+			while ($prev && !is_a($prev, 'DOMElement')) {
+				$prev = $prev->previousSibling;
+			}
+			if ($prev && $tag == 'field' && $prev->tagName == 'field') $node->setAttribute('after', $prev->getAttribute('name'));
 			return $node;
 		}
 		// Delete
@@ -313,20 +315,16 @@ class KunenaModelSchema extends JModel
 				$node = $schema->createElement($tag);
 				$node->setAttribute('name', $name);
 			}
-			$renamed = $this->getRenamedTo($loc['old']);
-			if ($renamed === false) $node->setAttribute('action', 'deleted');
-			else if ($renamed == '') $node->setAttribute('action', 'drop');
-			else
-			{
-				$node->setAttribute('to', $renamed);
-				$node->setAttribute('action', 'leftover');
-			}
+
+			$action = $loc['old']->getAttribute('action');
+			if (!$action) $action = 'unknown';
+			$node->setAttribute('action', $action);
 			return $node;
 		}
 
-		$action = false;
+		$action = $loc['old']->getAttribute('action');
 		$childNodes = array();
-		$childAll = $this->listAllNodes(array('old'=>$loc['old']->childNodes, 'new'=>$loc['new']->childNodes));
+		$childAll = $this->listAllNodes(array('new'=>$loc['new']->childNodes, 'old'=>$loc['old']->childNodes));
 		foreach ($childAll as $childTag => $childList)
 		{
 			foreach ($childList as $childName => $childLoc)
@@ -334,6 +332,7 @@ class KunenaModelSchema extends JModel
 				$childNode = $this->getSchemaNodeDiff($schema, $childTag, $childName, $childLoc);
 				if ($childNode) $childNodes[] = $childNode;
 			}
+			if (!$action && count($childNodes)) $action = 'alter';
 		}
 
 		// Primary key is always unique
@@ -342,8 +341,8 @@ class KunenaModelSchema extends JModel
 		if ($loc['new']->tagName == 'field' && $loc['new']->getAttribute('default') == '') $loc['new']->removeAttribute('default');
 
 		$attributes = array();
-		$attrAll = $this->listAllNodes(array('old'=>$loc['old']->attributes, 'new'=>$loc['new']->attributes));
-		foreach ($attrAll as $attrName => $attrLoc)
+		$attrAll = $this->listAllNodes(array('new'=>$loc['new']->attributes, 'old'=>$loc['old']->attributes));
+		if (!$action) foreach ($attrAll as $attrName => $attrLoc)
 		{
 			if ($attrName == 'primary_key') continue;
 			if ($attrName == 'action') continue;
@@ -355,33 +354,20 @@ class KunenaModelSchema extends JModel
 		{
 			$node = $schema->importNode($loc['new'], false);
 			$node->setAttribute('name', $name);
-			$node->setAttribute('action', 'alter');
+			if ($loc['old']->hasAttribute('from')) $node->setAttribute('from', $loc['old']->getAttribute('from'));
+			$node->setAttribute('action', $action);
+
 			$prev = $loc['new']->previousSibling;
-			if ($prev && $prev->tagName == 'field') $node->setAttribute('after', $prev->getAttribute('name'));
+			while ($prev && !is_a($prev, 'DOMElement')) {
+				$prev = $prev->previousSibling;
+			}
+			if ($prev && $tag == 'field' && $prev->tagName == 'field') $node->setAttribute('after', $prev->getAttribute('name'));
+
 			foreach ($childNodes as $newNode) {
 				$node->appendChild($newNode);
-				$dupNode = $this->getDuplicateSibling($newNode);
-				if ($dupNode) {
-					if ($dupNode->getAttribute('action') == 'leftover') $node->removeChild($dupNode);
-					if ($newNode->getAttribute('action') == 'leftover') $node->removeChild($newNode);
-				}
 			}
 		}
 		return $node;
-	}
-
-	protected function getDuplicateSibling($node)
-	{
-		$parent = $node->parentNode;
-		$name = $node->getAttribute('name');
-		$from = $node->getAttribute('from');
-
-		foreach ($parent->getElementsByTagName($node->tagName) as $node2)
-		{
-			if ($from && $from == $node2->getAttribute('name') && !$node->isSameNode($node2)) return $node2;
-			if (!$from && $name == $node2->getAttribute('from') && !$node->isSameNode($node2)) return $node2;
-		}
-		return null;
 	}
 
 	protected function getDOMDocument($input)
@@ -407,12 +393,10 @@ class KunenaModelSchema extends JModel
 			$fields = array();
 			switch ($action = $table->getAttribute('action'))
 			{
-				case 'deleted':
+				case 'unknown':
 					if (!$drop) break;
 				case 'drop':
 					$str .= 'DROP TABLE '.$this->db->nameQuote($tablename).';';
-					break;
-				case 'leftover':
 					break;
 //				case 'rename':
 				case 'alter':
@@ -425,9 +409,9 @@ class KunenaModelSchema extends JModel
 
 						switch ($action2 = $field->getAttribute('action'))
 						{
-							case 'deleted':
+							case 'unknown':
 							case 'drop':
-								if ($action2 == 'deleted' && !$drop)
+								if ($action2 == 'unknown' && !$drop)
 								{
 									if($field->getAttribute('extra') == 'auto_increment')
 									{
@@ -442,18 +426,21 @@ class KunenaModelSchema extends JModel
 									$fields[] = '	DROP '.$this->getSchemaSQLField($field);
 									break;
 								}
-							case 'leftover':
-								break;
 							case 'rename':
-								if ($field->tagName == 'key') break;
-								$fields[] = '	CHANGE '.$this->db->nameQuote($field->getAttribute('from')).' '.$this->getSchemaSQLField($field, $after);
+								if ($field->tagName == 'key') {
+									$fields[] = '	DROP KEY '.$this->db->nameQuote($field->getAttribute('from'));
+									$fields[] = '	ADD '.$this->getSchemaSQLField($field);
+								} else {
+									$fields[] = '	CHANGE '.$this->db->nameQuote($field->getAttribute('from')).' '.$this->getSchemaSQLField($field, $after);
+								}
 								break;
 							case 'alter':
 								if ($field->tagName == 'key') {
 									$fields[] = '	DROP KEY '.$this->db->nameQuote($field->getAttribute('name'));
 									$fields[] = '	ADD '.$this->getSchemaSQLField($field);
-								} else
+								} else {
 									$fields[] = '	MODIFY '.$this->getSchemaSQLField($field, $after);
+								}
 								break;
 							case 'create':
 								$fields[] = '	ADD '.$this->getSchemaSQLField($field, $after);
@@ -517,95 +504,93 @@ class KunenaModelSchema extends JModel
 		return $str;
 	}
 
-	protected function getRenamedFrom($node)
-	{
-		$tag = $node->tagName;
-		if ($tag == 'table')
-		{
-			$table = $node->getAttribute('name');
-			$field = '';
-		}
-		else
-		{
-			$table = $node->parentNode->getAttribute('name');
-			$field = $node->getAttribute('name');
-		}
-
-		if (!isset($this->_renamed_from[$tag][$table][$field])) $from = false;
-		else $from = $this->_renamed_from[$tag][$table][$field];
-		return $from;
-	}
-
-	protected function getRenamedTo($node)
-	{
-		$tag = $node->tagName;
-		if ($tag == 'table')
-		{
-			$table = $node->getAttribute('name');
-			$field = '';
-		}
-		else
-		{
-			$table = $node->parentNode->getAttribute('name');
-			$field = $node->getAttribute('name');
-		}
-
-		if (!isset($this->_renamed_to[$tag][$table][$field])) $to = false;
-		else $to = $this->_renamed_to[$tag][$table][$field];
-		return $to;
-	}
-
 	public function upgradeSchema($dbschema, $upgrade)
 	{
 		$dbschema = $this->getDOMDocument($dbschema);
 		$upgrade = $this->getDOMDocument($upgrade);
 		if (!$dbschema || !$upgrade) return;
 
-		$this->db->validate();
+		$dbschema->validate();
 		//$upgrade->validate();
 
-		$schemaNode = $upgrade->documentElement;
+		$upgradeNode = $upgrade->documentElement;
 
-		foreach ($schemaNode->childNodes as $action)
+		foreach ($upgradeNode->childNodes as $action)
 		{
 			if (!is_a($action, 'DOMElement')) continue;
-			if ($action->tagName == 'drop' || $action->tagName == 'rename') $this->upgradeAction($action);
-			else if ($action->tagName == 'table') $this->upgradeTableAction($action);
+			if ($action->tagName == 'drop' || $action->tagName == 'rename') $this->upgradeAction($dbschema, $action);
+			else if ($action->tagName == 'table') $this->upgradeTableAction($dbschema, $action);
 		}
 	}
 
-	protected function upgradeTableAction($table)
+	protected function upgradeTableAction($dbschema, $table)
 	{
 		foreach ($table->childNodes as $action)
 		{
 			if (!is_a($action, 'DOMElement')) continue;
-			if ($action->tagName == 'drop' || $action->tagName == 'rename') $this->upgradeAction($action, $table->getAttribute('name'));
+			if ($action->tagName == 'drop' || $action->tagName == 'rename') $this->upgradeAction($dbschema, $action, $table->getAttribute('name'));
 		}
 	}
 
-	protected function upgradeAction($action, $table='')
+	protected function findNode($schema, $type, $table, $field)
 	{
-		$tag = $action->tagName;
-		if (!$table) $table = $action->getAttribute('table');
-		if (!$table) return;
-		$column = $action->getAttribute('field');
-		$key = $action->getAttribute('key');
-		$to = $action->getAttribute('to');
-		if ($tag == 'drop') $to = '';
+		$rootNode = $schema->documentElement;
+		foreach ($rootNode->childNodes as $tableNode)
+		{
+			if (!is_a($tableNode, 'DOMElement')) continue;
+			if ($tableNode->tagName == 'table' && $table == $tableNode->getAttribute('name'))
+			{
+				if ($type == 'table') return $tableNode;
+				foreach ($tableNode->childNodes as $fieldNode)
+				{
+					if (!is_a($fieldNode, 'DOMElement')) continue;
+					if ($fieldNode->tagName == $type && $field == $fieldNode->getAttribute('name'))
+					{
+						return $fieldNode;
+					}
+				}
+			}
+		}
+		return null;
+	}
 
-		if ($column) {
-			$this->_renamed_from['field'][$table][$to] = $column;
-			$this->_renamed_to['field'][$table][$column] = $to;
+	protected function upgradeAction($dbschema, $node, $table='')
+	{
+		if (!$table) $table = $node->getAttribute('table');
+		if (!$table) return;
+		$tag = $node->tagName;
+
+		// Allow both formats: <drop key="id"/> and <key name="id" action="drop"/>
+		if ($tag != 'table' && $tag != 'field' && $tag != 'key')
+		{
+			$action = $tag;
+			$attributes = array('field', 'key', 'table');
+			foreach ($attributes as $attribute)
+			{
+				if ($node->hasAttribute($attribute))
+				{
+					$tag = $attribute;
+					$name = $node->getAttribute($attribute);
+					break;
+				}
+			}
+			if (!$name) return;
 		}
-		if ($key) {
-			$this->_renamed_from['key'][$table][$to] = $key;
-			$this->_renamed_to['key'][$table][$key] = $to;
+		else
+		{
+			$action = $node->getAttribute('action');
+			$name = $node->getAttribute('name');
 		}
-		if (!$column && !$key) {
-			$this->_renamed_from['table'][$to][''] = $table;
-			$this->_renamed_to['table'][$table][''] = $to;
+		$to = $node->getAttribute('to');
+
+		$dbnode = $this->findNode($dbschema, $tag, $table, $name);
+		if (!$dbnode) return;
+
+		if ($action) $dbnode->setAttribute('action', $action);
+		if ($to) {
+			if (!$dbnode->hasAttribute('from')) $dbnode->setAttribute('from', $dbnode->getAttribute('name'));
+			$dbnode->setAttribute('name', $to);
 		}
-		//echo "$tag $table: $column$key -> $to<br>";
 	}
 
 }

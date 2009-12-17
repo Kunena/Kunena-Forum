@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+17-Dec-2009 Matias
+^ [#18912] Implement new installer: major cleanup
+
 13-Dec-2009 Matias
 ^ [#18912] Implement new installer: fetch SVN version and build info from CHANGELOG.php
 # [#18912] Prevent SVN from updating regular expression for Id

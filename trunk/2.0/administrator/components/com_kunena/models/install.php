@@ -63,7 +63,8 @@ class KunenaModelInstall extends JModel
 			array('component'=>'FireBoard',	'prefix'=>'fb_', 'version'=>'1.0.2', 'date'=>'2007-08-03', 'table'=>'fb_users',      'column'=>'rank'),
 			array('component'=>'FireBoard',	'prefix'=>'fb_', 'version'=>'1.0.1', 'date'=>'2007-05-20', 'table'=>'fb_users',      'column'=>'uhits'),
 			array('component'=>'FireBoard',	'prefix'=>'fb_', 'version'=>'1.0.0', 'date'=>'2007-04-15', 'table'=>'fb_categories', 'column'=>'image'),
-			array('component'=>'FireBoard',	'prefix'=>'fb_', 'version'=>'0.9.x', 'date'=>'0000-00-00', 'table'=>'fb_messages'),
+			array('component'=>'FireBoard',	'prefix'=>'fb_', 'version'=>'0.9.9', 'date'=>'0000-00-00', 'table'=>'fb_messages'),
+			//array('component'=>'JoomlaBoard','prefix'=>'sb_', 'version'=>'v1.1', 'date'=>'0000-00-00', 'table'=>'sb_messages'),
 			array('component'=>null,		'prefix'=>null,	 'version'=>null,	 'date'=>null)
 			);
 	}
@@ -82,7 +83,8 @@ class KunenaModelInstall extends JModel
 	 *
 	 * @access public
 	 * @since 1.6
-	 */	public function cleanup()
+	 */
+	public function cleanup()
 	{
 	}
 
@@ -166,30 +168,6 @@ class KunenaModelInstall extends JModel
 		return array();
 	}
 
-	public function getVersionWarning()
-	{
-		if (strpos(KUNENA_VERSION, 'SVN') !== false) {
-			$kn_version_name = 'SVN Revision';
-			$kn_version_warning = 'Never use an SVN revision for anything else other than software development!';
-		} else if (strpos(KUNENA_VERSION, 'RC') !== false) {
-			$kn_version_name = 'Release Candidate';
-			$kn_version_warning = 'This release may contain bugs, which will be fixed in the final version.';
-		} else if (strpos(KUNENA_VERSION, 'BETA') !== false) {
-			$kn_version_name = 'Beta Release';
-			$kn_version_warning = 'This release is not recommended to be used on live production sites.';
-		} else if (strpos(KUNENA_VERSION, 'ALPHA') !== false) {
-			$kn_version_name = 'Alpha Release';
-			$kn_version_warning = 'This is a public preview and should never be used on live production sites.';
-		} else if (strpos(KUNENA_VERSION, 'DEV') !== false) {
-			$kn_version_name = 'Development Snapshot';
-			$kn_version_warning = 'This is an internal release which should be used only by developers and testers!';
-		}
-		if (!empty($kn_version_warning))
-		{
-			return sprintf('You are about to install Kunena %s (%s).', KUNENA_VERSION, KUNENA_VERSION_NAME).' '.$kn_version_warning;
-		}
-	}
-
 	public function getRequirements()
 	{
 		if ($this->_req !== false) {
@@ -221,25 +199,6 @@ class KunenaModelInstall extends JModel
 		else $this->_versionprefix = null;
 
 		return $this->_versionprefix;
-	}
-
-	public function getLastVersion()
-	{
-		$versionprefix = $this->getVersionPrefix();
-		if ($versionprefix) {
-			$this->db->setQuery("SELECT * FROM ".$this->db->nameQuote($this->db->getPrefix().$this->getVersionPrefix().'version')." ORDER BY `id` DESC", 0, 1);
-			$version = $this->db->loadObject();
-			if ($this->db->getErrorNum()) throw new KunenaInstallerException($this->db->getErrorMsg(), $this->db->getErrorNum());
-		}
-		if (!isset($version) || !is_object($version) || !isset($version->state))
-		{
-			$version->state = '';
-		}
-		else if (!empty($version->state))
-		{
-			if ($version->version != KUNENA_VERSION || $version->build != KUNENA_VERSION_BUILD) $version->state = '';
-		}
-		return $version;
 	}
 
 	public function getInstalledVersion()
@@ -320,8 +279,7 @@ class KunenaModelInstall extends JModel
 
 		$version = $this->getInstalledVersion();
 		if ($version->component === null) $this->_action = 'INSTALL';
-		else if (version_compare($version->version, '1.0.5', '<')) $this->_action = 'MIGRATE';
-		else if (version_compare($version->version, '1.5.999', '<')) $this->_action = 'MIGRATE';
+		else if (version_compare($version->version, '1.9.99', '<=')) $this->_action = 'MIGRATE';
 		else if (version_compare(KUNENA_VERSION, $version->version, '>')) $this->_action = 'UPGRADE';
 		else if (version_compare(KUNENA_VERSION, $version->version, '<')) $this->_action = 'DOWNGRADE';
 		else if (KUNENA_VERSION_BUILD && KUNENA_VERSION_BUILD > $version->build) $this->_action = 'UP_BUILD';
@@ -384,7 +342,7 @@ class KunenaModelInstall extends JModel
 		if ($this->db->getErrorNum()) throw new KunenaInstallerException($this->db->getErrorMsg(), $this->db->getErrorNum());
 		if ($this->db->getAffectedRows())
 		{
-			$this->addToTables('kunena_', $newtable);
+			$this->tables['kunena_'][] = $newtable;
 			return array('name'=>$newtable, 'action'=>'migrate', 'sql'=>$sql);
 		}
 		return array();
@@ -415,7 +373,7 @@ class KunenaModelInstall extends JModel
 		$this->tables[$prefix] = array();
 		foreach ($list as $table) {
 			$table = preg_replace('/^'.$this->db->getPrefix().'/', '', $table);
-			$this->tables[$prefix][] = $table;
+			$this->tables[$prefix][$table] = $table;
 		}
 		return $this->tables[$prefix];
 	}

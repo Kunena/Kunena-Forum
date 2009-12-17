@@ -15,7 +15,7 @@
 <!ELEMENT table (field*, key*)>
 <!ATTLIST table 
 name ID #REQUIRED
-action (none|create|alter|drop) #IMPLIED>
+action (none|create|alter|rename|drop) #IMPLIED>
 
 <!ELEMENT field EMPTY>
 <!ATTLIST field 
@@ -25,11 +25,16 @@ type CDATA #REQUIRED
 null (0|1) #REQUIRED
 default CDATA ""
 extra CDATA #IMPLIED
-action (none|create|alter|drop) #IMPLIED>
+from CDATA #IMPLIED
+action (none|create|alter|rename|drop) #IMPLIED
+after CDATA #IMPLIED
+>
 
 <!ELEMENT key EMPTY>
 <!ATTLIST key 
 name CDATA #REQUIRED
 unique (0|1) #IMPLIED
 columns CDATA #IMPLIED
-action (none|create|alter|drop) #IMPLIED>
+action (none|create|alter|rename|drop) #IMPLIED
+after CDATA #IMPLIED
+>

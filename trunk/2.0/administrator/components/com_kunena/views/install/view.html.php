@@ -36,10 +36,13 @@ class KunenaViewInstall extends JView
 
 		// Load the view data.
 		$this->assignRef('state', $this->get('State'));
-		$this->assignRef('versionWarning', $this->get('VersionWarning'));
 		$this->assignRef('requirements', $this->get('Requirements'));
 		$this->assign('installedVersion', $this->get('InstalledVersion'));
 		$this->assign('installAction', $this->get('InstallAction'));
+
+		kimport('models.version', 'admin');
+		$version = new KunenaModelVersion();
+		$this->assignRef('versionWarning', $version->getVersionWarning('COM_KUNENA_INSTALL_WARNING'));
 
 		// Push out the view data.
 		$this->assignRef('state',	$state);
@@ -48,8 +51,8 @@ class KunenaViewInstall extends JView
 
 		$search = array ('#COMPONENT_OLD#','#VERSION_OLD#','#BUILD_OLD#','#VERSION#','#BUILD#');
 		$replace = array ($this->installedVersion->component, $this->installedVersion->version, $this->installedVersion->build, KUNENA_VERSION, KUNENA_VERSION_BUILD);
-		$this->assign('txt_action', str_replace($search, $replace, JText::_('K_INSTALL_LONG_'.$this->installAction)));
-		$this->assign('txt_install', str_replace($search, $replace, JText::_('K_INSTALL_'.$this->installAction)));
+		$this->assign('txt_action', str_replace($search, $replace, JText::_('COM_KUNENA_INSTALL_LONG_'.$this->installAction)));
+		$this->assign('txt_install', str_replace($search, $replace, JText::_('COM_KUNENA_INSTALL_'.$this->installAction)));
 
 		// Render the layout.
 		$app =& JFactory::getApplication();

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.8
 
+17-dec-2009 Xillibit
+# [#18973] Fix for wrong My profile link in AUP integration
+
 16-dec-2009 Xillibit
 ^ [#18627] Update queries for the poll in the kunena xml install file
 ^+ [#18627] Add in statistics popular five polls with configuation settings, little changes in code organisation

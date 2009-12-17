@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.8
 
+17-dec-2009 810
+# [#19024] User administration should have field username, not just real name
+
 13-dec-2009 Xillibit
 # [#18993] Fix for conflict with RocketTheme AfterBurner Template
 

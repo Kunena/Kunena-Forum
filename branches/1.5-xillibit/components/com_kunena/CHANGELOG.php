@@ -34,9 +34,10 @@ Legend:
 Kunena 1.5.8
 
 17-dec-2009 Xillibit
-# [#19026] Fix in Administration: wrong translations
-# [#19022] Fix for Moderation: Merge shows extra slashes in topic list
-# [#18973] Fix for wrong My profile link in AUP integration
+# [#19025] Moderators list is always using username, regardless of configuration option
+# [#19026] Administration: wrong translations
+# [#19022] Moderation: Merge shows extra slashes in topic list
+# [#18973] Wrong My profile link in AUP integration
 
 16-dec-2009 Xillibit
 ^ [#18627] Update queries for the poll in the kunena xml install file

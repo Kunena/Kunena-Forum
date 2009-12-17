@@ -93,9 +93,10 @@ function debug_vars($varlist)
 	    if (is_array ($value) )
 	    {
 	        $output .= '<tr><td>$'.$key .'</td><td>';
-	        if ( sizeof($value)>0 )
+	    if ( sizeof($value)>0 )
 	        {
-		        $output .= '"<table border=1><tr> <th>key</th> <th>value</th> </tr>';
+		        $dberror = false;
+				$output .= '<table border=1><tr> <th>key</th> <th>value</th> </tr>';
 		        foreach ($value as $skey => $svalue)
 		        {
 		        	if (is_array ($svalue) )
@@ -105,16 +106,30 @@ function debug_vars($varlist)
 				    else if (is_object($svalue))
 				    {
 				    	$objvarlist = get_object_vars($svalue);
-
+ 
 				    	// recursive function call
 				    	debug_vars($objvarlist);
 				    }
 				    else
 				    {
-				    	$output .= '<tr><td>$' . $skey .'</td><td>"'. $svalue .'"</td></tr>';
+				    	$dberror = ($svalue == "trigger_dberror");
+						$output .= '<tr><td>$' . $skey .'</td><td>"'. $svalue .'"</td></tr>';
 				    }
 		        }
-		        $output .= '</table>"';
+				if ($dberror) {
+					$kunena_db = &JFactory::getDBO();
+					jimport('geshi.geshi');
+					$sql = $kunena_db->_sql;
+					if (file_exists(JPATH_ROOT.DS.'libraries'.DS.'geshi'.DS.'geshi'.DS."mysql.php")) {
+						$geshi = new GeSHi($sql, "mysql");
+						$geshi->enable_keyword_links(false);
+						$geshi->set_header_type(GESHI_HEADER_NONE);
+						$sql = $geshi->parse_code();
+					}
+					$output .= '<tr><td>Query</td><td>'. $sql.'</td></tr>';
+					$output .= '<tr><td>Db error</td><td>'. $kunena_db->getErrorMsg().'</td></tr>';
+				}
+		        $output .= '</table>';
 	        }
 	        else
 	        {

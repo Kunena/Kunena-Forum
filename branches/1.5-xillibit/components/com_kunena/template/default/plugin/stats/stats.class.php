@@ -74,11 +74,28 @@ if ($fbConfig->showpopuserstats)
 
 	$topmessage = !empty($topposters[0]->posts)?$topposters[0]->posts:0;
 
-	$kunena_db->setQuery("SELECT u.uhits AS hits, u.userid AS user_id, j.id, j.{$fb_queryName} AS user FROM #__fb_users AS u"
-	. " INNER JOIN #__users AS j ON j.id = u.userid"
-	. " WHERE u.uhits>'0' ORDER BY u.uhits DESC", 0, $PopUserCount);
-	$topprofiles = $kunena_db->loadObjectList();	
-  
+if ($fbConfig->fb_profile == "jomsocial") {
+		$kunena_db->setQuery("SELECT u.id AS user_id, c.view AS hits, u.{$fb_queryName} AS user FROM #__community_users as c"
+		. " LEFT JOIN #__users as u on u.id=c.userid "
+		. " WHERE c.view>'0' ORDER BY c.view DESC", 0, $PopUserCount);
+	}
+	elseif ($fbConfig->fb_profile == "cb") {
+		$kunena_db->setQuery("SELECT c.hits AS hits, u.id AS user_id, u.{$fb_queryName} AS user FROM #__comprofiler AS c"
+		. " INNER JOIN #__users AS u ON u.id = c.user_id"
+		. " WHERE c.hits>'0' ORDER BY c.hits DESC", 0, $PopUserCount);
+	}
+	elseif ($fbConfig->fb_profile == "aup") {
+		$kunena_db->setQuery("SELECT a.profileviews AS hits, u.id AS user_id, u.{$fb_queryName} AS user FROM #__alpha_userpoints AS a"
+		. " INNER JOIN #__users AS u ON u.id = a.userid"
+		. " WHERE u.profileviews>'0' ORDER BY u.profileviews DESC", 0, $PopUserCount);
+	}
+	else {
+		$kunena_db->setQuery("SELECT u.uhits AS hits, u.userid AS user_id, j.id, j.{$fb_queryName} AS user FROM #__fb_users AS u"
+		. " INNER JOIN #__users AS j ON j.id = u.userid"
+		. " WHERE u.uhits>'0' ORDER BY u.uhits DESC", 0, $PopUserCount);
+	}
+	$topprofiles = $kunena_db->loadObjectList();
+
 	$topprofil = !empty($topprofiles[0]->hits)?$topprofiles[0]->hits:0;
 } // ENDIF: showpopuserstats
 
@@ -88,7 +105,7 @@ if ($fbConfig->showpopsubjectstats)
 	$fbSession =& CKunenaSession::getInstance();
 	$kunena_db->setQuery("SELECT * FROM #__fb_messages WHERE moved='0' AND hold='0' AND parent='0' AND catid IN ($fbSession->allowed) ORDER BY hits DESC", 0, $PopSubjectCount);
 	$toptitles = $kunena_db->loadObjectList();
-	
+
 	$toptitlehits = !empty($toptitles[0]->hits)?$toptitles[0]->hits:0;
 } // ENDIF: showpopsubjectstats
 
@@ -100,7 +117,7 @@ if ($fbConfig->showpoppollstats)
   $toppolls = $kunena_db->loadObjectList();
   $kunena_db->setQuery("SELECT SUM(o.votes) AS total FROM #__fb_polls AS p LEFT JOIN #__fb_polls_options AS o ON p.threadid=o.pollid GROUP BY p.threadid ORDER BY total DESC LIMIT 1");
   $kunena_db->query();
-  $toppollvotes = $kunena_db->loadResult();    
+  $toppollvotes = $kunena_db->loadResult();
 } // ENDIF: showpoppollstats
 
 } // ENDIF: showstats

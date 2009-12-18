@@ -34,6 +34,7 @@ Legend:
 Kunena 1.5.8
 
 18-dec-2009 Xillibit
+^ [#19040] Most viewed profiles should use profile integration
 # [#19043] Deprecated links to index2.php
 
 17-dec-2009 Xillibit

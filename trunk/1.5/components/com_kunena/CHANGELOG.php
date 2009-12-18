@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.5.8
 
+18-Dec-2009 fxstein
+^ [#18861] Updated credits page
+^ [#18763] Update version info to 1.5.8 stable
+
 17-dec-2009 810
 # [#19024] User administration should have field username, not just real name
 

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.8
 
+18-dec-2009 Xillibit
+# [#19043] Deprecated links to index2.php
+
 17-dec-2009 Xillibit
 + [#18627] The users need to wait some time before vote a new once in a poll
 #^ [#18767] Conflict with sh404sef language strings
@@ -65,7 +68,7 @@ Kunena 1.5.8
 
 02-Dec-2009 810
 #^ [#18861] Remove version information from credits page
-# [#18918] textfield BBcode Image Link to short also for video url 
+# [#18918] textfield BBcode Image Link to short also for video url
 
 01-Dec-2009 810
 # [#18828] Regression: Fix for "Categories show 0 posts" shows extra characters

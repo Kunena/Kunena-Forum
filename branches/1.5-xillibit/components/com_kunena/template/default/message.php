@@ -33,13 +33,13 @@ $user = $kunena_db->loadObject();
 if ($fbConfig->fb_profile == 'cb')
 {
 	$msg_params = array(
-		'username' => &$msg_username, 
-		'messageobject' => &$fmessage, 
-		'subject' => &$msg_subject, 
-		'messagetext' => &$msg_text, 
-		'signature' => &$msg_signature, 
-		'karma' => &$msg_karma, 
-		'karmaplus' => &$msg_karmaplus, 
+		'username' => &$msg_username,
+		'messageobject' => &$fmessage,
+		'subject' => &$msg_subject,
+		'messagetext' => &$msg_text,
+		'signature' => &$msg_signature,
+		'karma' => &$msg_karma,
+		'karmaplus' => &$msg_karmaplus,
 		'karmaminus' => &$msg_karmaminus
 	);
 	$profileHtml = $kunenaProfile->showProfile($fmessage->userid, $msg_params);
@@ -62,14 +62,14 @@ if ($fbConfig->fb_profile == 'cb')
         <tr>
               <td class = "fb-msgview-left">
                 <div class = "fb-msgview-l-cover">
-<?php 
+<?php
 					if ($profileHtml)
 					{
 						echo $profileHtml;
 					}
 					else
 					{
-?>                
+?>
                     <span class = "view-username">
 <?php
                         if ($fmessage->userid > 0)
@@ -146,7 +146,7 @@ if ($fbConfig->fb_profile == 'cb')
                     <?php
                     if (isset($msg_online)) {
                     	echo $msg_online;
-                    } 
+                    }
                     ?>
 
                     <?php
@@ -239,7 +239,7 @@ if ($fbConfig->fb_profile == 'cb')
                             <?php
                             if (isset($msg_karma)) {
                                 echo $msg_karma;
-								if (isset($msg_karmaplus)) 
+								if (isset($msg_karmaplus))
 									echo '&nbsp;&nbsp;' . $msg_karmaplus . ' ' . $msg_karmaminus;
                             }
                             else {
@@ -293,7 +293,7 @@ if ($fbConfig->fb_profile == 'cb')
 								if ($fbConfig->captcha == 1 && $kunena_my->id < 1) { ?>
 								<?php echo _KUNENA_CAPDESC.'&nbsp;'?>
 								<input name="txtNumber" type="text" id="txtNumber" value="" style="vertical-align:middle" size="10">&nbsp;
-								<img src="index2.php?option=com_kunena&func=showcaptcha" alt="" /><br />
+								<img src="index.php?option=com_kunena&func=showcaptcha" alt="" /><br />
 								<?php
 								}
 								// Finish captcha

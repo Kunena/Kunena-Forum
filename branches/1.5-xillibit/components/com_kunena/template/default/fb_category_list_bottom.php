@@ -38,7 +38,7 @@ $fbConfig =& CKunenaConfig::getInstance();
                 {
                 ?>
 
-                    <form action = "<?php echo JRoute::_(JURI::root()."/index2.php");?>" name = "markAllForumsRead" method = "post">
+                    <form action = "<?php echo JRoute::_(JURI::root()."/index.php");?>" name = "markAllForumsRead" method = "post">
                         <input type = "hidden" name = "markaction" value = "allread"/>
                         <input type = "hidden" name = "Itemid" value = "<?php echo KUNENA_COMPONENT_ITEMID?>"/>
                         <input type = "hidden" name = "option" value = "com_kunena"/>

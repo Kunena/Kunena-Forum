@@ -69,7 +69,7 @@ unset($totaltmp);
 $PopUserCount = $fbConfig->popusercount;
 if ($fbConfig->showpopuserstats)
 {
-	$kunena_db->setQuery("SELECT p.userid, p.posts, u.id, u.{$fb_queryName} AS username FROM #__fb_users AS p INNER JOIN #__users AS u ON u.id = p.userid WHERE p.posts > '0' ORDER BY p.posts DESC", 0, $PopUserCount);
+	$kunena_db->setQuery("SELECT p.userid, p.posts, u.id, u.{$fb_queryName} AS username FROM #__fb_users AS p INNER JOIN #__users AS u ON u.id = p.userid WHERE p.posts > '0' AND u.block=0 ORDER BY p.posts DESC", 0, $PopUserCount);
 	$topposters = $kunena_db->loadObjectList();
 
 	$topmessage = !empty($topposters[0]->posts)?$topposters[0]->posts:0;
@@ -92,7 +92,7 @@ if ($fbConfig->fb_profile == "jomsocial") {
 	else {
 		$kunena_db->setQuery("SELECT u.uhits AS hits, u.userid AS user_id, j.id, j.{$fb_queryName} AS user FROM #__fb_users AS u"
 		. " INNER JOIN #__users AS j ON j.id = u.userid"
-		. " WHERE u.uhits>'0' ORDER BY u.uhits DESC", 0, $PopUserCount);
+		. " WHERE u.uhits>'0' AND j.block=0 ORDER BY u.uhits DESC", 0, $PopUserCount);
 	}
 	$topprofiles = $kunena_db->loadObjectList();
 

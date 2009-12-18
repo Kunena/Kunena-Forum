@@ -29,6 +29,19 @@ if (!isset($no_image_upload)) $no_image_upload = 0;
 if (!isset($no_file_upload)) $no_file_upload = 0;
 $authorName = stripslashes($authorName);
 
+$document =& JFactory::getDocument();
+$document->addScript(KUNENA_DIRECTURL . '/template/default/plugin/poll/js/kunena.poll.js');
+
+		JApplication::addCustomHeadTag('
+  <script type="text/javascript">
+	<!--
+	var boardclass = "'.$boardclass.'";
+	var KUNENA_POLL_OPTION_NAME = "'._KUNENA_POLL_OPTION_NAME.'";
+	var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "'._KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW.'";
+  //-->
+  </script>
+		');
+
 include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 
 //keep session alive while editing

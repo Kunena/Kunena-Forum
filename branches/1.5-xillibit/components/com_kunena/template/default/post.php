@@ -27,8 +27,6 @@ $fbSession =& CKunenaSession::getInstance();
 
 global $is_Moderator;
 
-require_once(KUNENA_PATH_LIB .DS. 'kunena.poll.js.php');
-
 $catid = JRequest::getInt('catid', 0);
 $id = JRequest::getInt('id', 0);
 // Support for old $replyto variable in post reply/quote
@@ -73,11 +71,11 @@ $attachimage 	= JRequest::getVar('attachimage', NULL, 'FILES', 'array');
 
 if(!empty($optionsnumbers) && !empty($polltitle))
 {
-  $poll_exist = "1";  
+  $poll_exist = "1";
   //Begin Poll management options
   for($ioptions = 1; $ioptions <= $optionsnumbers; $ioptions++){
-    $optionvalue[$ioptions] = JRequest::getString('field_option'.$ioptions , null);            
-  }    
+    $optionvalue[$ioptions] = JRequest::getString('field_option'.$ioptions , null);
+  }
 }
 else
 {
@@ -271,20 +269,20 @@ $catName = $objCatInfo->name;
                                     {
                                         $pid = $kunena_db->insertId();
 										//Insert in the database the informations for the poll and the options for the poll
-                                        if(!empty($polltitle) && !empty($optionsnumbers)){                                                                                 
+                                        if(!empty($polltitle) && !empty($optionsnumbers)){
                                           $kunena_db->setQuery("INSERT INTO #__fb_polls
                                     						(title,threadid,catid)
-                                    						VALUES(".$kunena_db->quote($polltitle).",'$pid','$catid')");  
-                                          $kunena_db->query() or trigger_dberror('Impossible to insert the element in the table fb_polls.'); 
+                                    						VALUES(".$kunena_db->quote($polltitle).",'$pid','$catid')");
+                                          $kunena_db->query() or trigger_dberror('Impossible to insert the element in the table fb_polls.');
                                           for($i = 1; $i <= sizeof($optionvalue); $i++){
                                             $kunena_db->setQuery("INSERT INTO #__fb_polls_options
                                     						(text,pollid,votes)
-                                    						VALUES(".$kunena_db->quote($optionvalue[$i]).",'$pid','0')"); 
-                                            $kunena_db->query() or trigger_dberror('Impossible to insert the element in the table fb_polls_datas.');                                         
+                                    						VALUES(".$kunena_db->quote($optionvalue[$i]).",'$pid','0')");
+                                            $kunena_db->query() or trigger_dberror('Impossible to insert the element in the table fb_polls_datas.');
                                           }
                                         }
                                         //******************************************************************************
-                                        
+
                                         // now increase the #s in categories only case approved
                                         if($holdPost==0) {
                                           CKunenaTools::modifyCategoryStats($pid, $parent, $posttime, $catid);
@@ -808,12 +806,12 @@ $catName = $objCatInfo->name;
                     $mes = $message1[0];
 
                     $userID = $mes->userid;
-                    //save the options for query after and load the text options, the number options is for create the fields in the form after                    
-                    if($message1[0]->poll_exist == "1") {                      
+                    //save the options for query after and load the text options, the number options is for create the fields in the form after
+                    if($message1[0]->poll_exist == "1") {
                       $kunena_db->setQuery("SELECT * FROM #__fb_polls_options AS a INNER JOIN #__fb_polls AS b ON a.pollid=b.threadid WHERE a.pollid=$id");
                       $kunena_db->query();
-                      $polldatasedit = $kunena_db->loadObjectList();                                                  
-                   } 
+                      $polldatasedit = $kunena_db->loadObjectList();
+                   }
                    //********************************************************************************************
 
                     //Check for a moderator or superadmin
@@ -971,40 +969,40 @@ $catName = $objCatInfo->name;
                         		$kunena_db->query() or trigger_dberror('Unable to load review flag from categories.');
                         		$holdPost = $kunena_db->loadResult();
                         	}
-                        	
+
                         	//**************************************************
-                             //update the poll when an user edit his post                                                                                 
+                             //update the poll when an user edit his post
                              if(!empty($polltitle) && !empty($optionsnumbers) && $fbConfig->pollenabled == "1"){
-                               //need to check if the poll exist, if it's not the case the poll is insered like new poll                               
-                               $kunena_db->setQuery("SELECT poll_exist FROM #__fb_messages WHERE id=$id"); 
-                               $kunena_db->query(); 
-                               $pollexist = $kunena_db->loadResult();                                                              
-                               if($pollexist == null) {                                 
+                               //need to check if the poll exist, if it's not the case the poll is insered like new poll
+                               $kunena_db->setQuery("SELECT poll_exist FROM #__fb_messages WHERE id=$id");
+                               $kunena_db->query();
+                               $pollexist = $kunena_db->loadResult();
+                               if($pollexist == null) {
                                 $kunena_db->setQuery("UPDATE #__fb_messages SET poll_exist=1 WHERE id=$id");
-                                $kunena_db->query(); 
+                                $kunena_db->query();
                                 $kunena_db->setQuery("INSERT INTO #__fb_polls
                                     						(title,threadid,catid)
-                                    						VALUES(".$kunena_db->quote($polltitle).",'$id','$catid')");  
-                                $kunena_db->query() or trigger_dberror('Impossible to insert the element in the table fb_polls.'); 
+                                    						VALUES(".$kunena_db->quote($polltitle).",'$id','$catid')");
+                                $kunena_db->query() or trigger_dberror('Impossible to insert the element in the table fb_polls.');
                                 for($i = 1; $i <= sizeof($optionvalue); $i++){
                                   $kunena_db->setQuery("INSERT INTO #__fb_polls_options
                                     						(text,pollid,votes)
-                                    						VALUES(".$kunena_db->quote($optionvalue[$i]).",'$id','0')"); 
-                                  $kunena_db->query() or trigger_dberror('Impossible to insert the element in the table fb_polls_options.');                                         
-                                }                                        
-                               } else { //a poll already exist for this thread, so we will remove the poll already in the database and insered a new one                              
+                                    						VALUES(".$kunena_db->quote($optionvalue[$i]).",'$id','0')");
+                                  $kunena_db->query() or trigger_dberror('Impossible to insert the element in the table fb_polls_options.');
+                                }
+                               } else { //a poll already exist for this thread, so we will remove the poll already in the database and insered a new one
                                   $kunena_db->setQuery("UPDATE #__fb_polls SET title=".$kunena_db->quote($polltitle)." WHERE threadid={$id}");
                                   $kunena_db->query();
-                                 for($i=0; $i <= sizeof($optionvalue);$i++) {                                                                                                    
+                                 for($i=0; $i <= sizeof($optionvalue);$i++) {
                                     $kunena_db->setQuery("DELETE FROM #__fb_polls_options WHERE pollid={$id}");
                                     $kunena_db->query();
-                                  }                                                                                              
-                                 for($i = 1; $i <= sizeof($optionvalue); $i++){                                                                                                             
-                                    $kunena_db->setQuery("INSERT INTO #__fb_polls_options (text,pollid,votes) VALUES(".$kunena_db->quote($optionvalue[$i]).",'$id','0')"); 
-                                    $kunena_db->query();                                 
-                                 }                                                              
-                               }                                             
-                              }                                      
+                                  }
+                                 for($i = 1; $i <= sizeof($optionvalue); $i++){
+                                    $kunena_db->setQuery("INSERT INTO #__fb_polls_options (text,pollid,votes) VALUES(".$kunena_db->quote($optionvalue[$i]).",'$id','0')");
+                                    $kunena_db->query();
+                                 }
+                               }
+                              }
                    			//**************************************************************************
 
                             $kunena_db->setQuery(

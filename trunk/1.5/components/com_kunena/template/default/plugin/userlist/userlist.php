@@ -46,7 +46,7 @@ function list_users()
     $limit = JRequest::getInt('limit', $fbConfig->userlist_rows);
 
     // Total
-    $kunena_db->setQuery("SELECT COUNT(*) FROM #__users");
+    $kunena_db->setQuery("SELECT COUNT(*) FROM #__users WHERE block =0");
     $total_results = $kunena_db->loadResult();
 
     // Search total
@@ -67,7 +67,7 @@ function list_users()
     // Select query
     $query
         = "SELECT u.id, u.name, u.username, u.usertype, u.email, u.registerDate, u.lastvisitDate, fu.userid, fu.showOnline, fu.group_id, fu.posts, fu.karma, fu.uhits, g.id AS gid, g.title "
-        ." FROM #__users AS u INNER JOIN #__fb_users AS fu ON fu.userid = u.id INNER JOIN #__fb_groups AS g ON g.id = fu.group_id ";
+        ." FROM #__users AS u INNER JOIN #__fb_users AS fu ON fu.userid = u.id INNER JOIN #__fb_groups AS g ON g.id = fu.group_id WHERE block =0";
 
     if ($search != "")
     {
@@ -96,7 +96,7 @@ function convertDate($date)
 	// used for non-FB dates only!
     $format = _KUNENA_USRL_DATE_FORMAT;
 
-    if ($date != "0000-00-00 00:00:00" && ereg("([0-9]{4})-([0-9]{2})-([0-9]{2})[ ]([0-9]{2}):([0-9]{2}):([0-9]{2})", $date, $regs))
+    if ($date != "0000-00-00 00:00:00" && preg_match('`(\d{4})-(\d{2})-(\d{2})[[:space:]](\d{2}):(\d{2}):(\d{2})`', $date, $regs))
     {
         $date = mktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
         $date = $date > -1 ? strftime($format, CKunenaTools::fbGetShowTime($date, 'UTC')) : '-';
@@ -402,7 +402,7 @@ class HTML_userlist_content
                                 		( $fbConfig->fb_profile=='aup' ) ? $showlink=1 : $showlink=0;
                                 		 $uslavatar = AlphaUserPointsHelper::getAupAvatar( $ulrow->id, $showlink, $fbConfig->avatarsmallwidth, $fbConfig->avatarsmallheight );
                                 	} // end integration AlphaUserPoints
-                                }           
+                                }
                                 else
                                 {
                                     $kunena_db->setQuery("SELECT avatar FROM #__fb_users WHERE userid='{$ulrow->id}'");

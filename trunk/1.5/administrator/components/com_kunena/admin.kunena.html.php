@@ -2807,7 +2807,7 @@ echo $pane->endPane();
     //
     //      include ('components/com_kunena/moderate_user.php');
     //   }
-    function editUserProfile($user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid , $modCats)
+    function editUserProfile($option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid , $modCats)
     {
         $fbConfig =& CKunenaConfig::getInstance();
 		$kunena_db = &JFactory::getDBO();

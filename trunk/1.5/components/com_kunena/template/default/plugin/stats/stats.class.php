@@ -69,14 +69,31 @@ unset($totaltmp);
 $PopUserCount = $fbConfig->popusercount;
 if ($fbConfig->showpopuserstats)
 {
-	$kunena_db->setQuery("SELECT p.userid, p.posts, u.id, u.{$fb_queryName} AS username FROM #__fb_users AS p INNER JOIN #__users AS u ON u.id = p.userid WHERE p.posts > '0' ORDER BY p.posts DESC", 0, $PopUserCount);
+	$kunena_db->setQuery("SELECT p.userid, p.posts, u.id, u.{$fb_queryName} AS username FROM #__fb_users AS p INNER JOIN #__users AS u ON u.id = p.userid WHERE p.posts > '0' AND u.block=0 ORDER BY p.posts DESC", 0, $PopUserCount);
 	$topposters = $kunena_db->loadObjectList();
 
 	$topmessage = !empty($topposters[0]->posts)?$topposters[0]->posts:0;
 
-	$kunena_db->setQuery("SELECT u.uhits AS hits, u.userid AS user_id, j.id, j.{$fb_queryName} AS user FROM #__fb_users AS u"
-	. " INNER JOIN #__users AS j ON j.id = u.userid"
-	. " WHERE u.uhits>'0' ORDER BY u.uhits DESC", 0, $PopUserCount);
+if ($fbConfig->fb_profile == "jomsocial") {
+		$kunena_db->setQuery("SELECT u.id AS user_id, c.view AS hits, u.{$fb_queryName} AS user FROM #__community_users as c"
+		. " LEFT JOIN #__users as u on u.id=c.userid "
+		. " WHERE c.view>'0' ORDER BY c.view DESC", 0, $PopUserCount);
+	}
+	elseif ($fbConfig->fb_profile == "cb") {
+		$kunena_db->setQuery("SELECT c.hits AS hits, u.id AS user_id, u.{$fb_queryName} AS user FROM #__comprofiler AS c"
+		. " INNER JOIN #__users AS u ON u.id = c.user_id"
+		. " WHERE c.hits>'0' ORDER BY c.hits DESC", 0, $PopUserCount);
+	}
+	elseif ($fbConfig->fb_profile == "aup") {
+		$kunena_db->setQuery("SELECT a.profileviews AS hits, u.id AS user_id, u.{$fb_queryName} AS user FROM #__alpha_userpoints AS a"
+		. " INNER JOIN #__users AS u ON u.id = a.userid"
+		. " WHERE u.profileviews>'0' ORDER BY u.profileviews DESC", 0, $PopUserCount);
+	}
+	else {
+		$kunena_db->setQuery("SELECT u.uhits AS hits, u.userid AS user_id, j.id, j.{$fb_queryName} AS user FROM #__fb_users AS u"
+		. " INNER JOIN #__users AS j ON j.id = u.userid"
+		. " WHERE u.uhits>'0' AND j.block=0 ORDER BY u.uhits DESC", 0, $PopUserCount);
+	}
 	$topprofiles = $kunena_db->loadObjectList();
 
 	$topprofil = !empty($topprofiles[0]->hits)?$topprofiles[0]->hits:0;

@@ -7,7 +7,7 @@
 * @Copyright (C) 2009 www.kunena.com All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.com
-*/
+**/
 
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
@@ -30,6 +30,30 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Kunena 1.5.9
+
+19-Dec-2009 Matias
+^ [#15886] Merge from /branches/1.5-xillibit:1254-1256,1303-1307,1312-1313
+
+18-Dec-2009 Xillibit
+^ [#19033] User list and count shows also disabled users
+^ [#19040] Most viewed profiles should use profile integration
+# [#19043] Deprecated links to index2.php
+
+17-Dec-2009 Xillibit
+^ [#18767] Conflict with sh404sef language strings
+# [#19027] Debug does not show MySQL error in trace
+# [#19025] Moderators list is always using username, regardless of configuration option
+# [#19026] Administration: wrong translations
+# [#19022] Moderation: Merge shows extra slashes in topic list
+# [#18973] Wrong My profile link in AUP integration
+
+05-Dec-2009 Xillibit
+# [#18902] Fixes for all remaining deprecated warning with PHP 5.3.x and remove split() and ereg() functions
+
+04-Dec-2009 Xillibit
+# [#18902] Fixes for deprecated warning with PHP 5.3.x and deprecated usage of split() functions
 
 Kunena 1.5.8
 

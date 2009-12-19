@@ -314,7 +314,7 @@ if (in_array($catid, $allow_forum))
                             echo '' . _GEN_MODERATORS . ": ";
 
                             foreach ($modslist as $mod) {
-                                echo '&nbsp;'.CKunenaLink::GetProfileLink($fbConfig, $mod->userid, $mod->username).'&nbsp; ';
+                                echo CKunenaLink::GetProfileLink($fbConfig, $mod->userid, ($fbConfig->username ? $mod->username : $mod->name)).'&nbsp; ';
                             } ?>
                              </div>
                             <?php

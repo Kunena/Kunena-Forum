@@ -183,7 +183,7 @@ switch ($task)
         break;
 
     case "userprofile":
-        editUserProfile($uid);
+        editUserProfile($option, $uid);
 
         break;
 
@@ -1101,7 +1101,7 @@ function showProfiles($kunena_db, $option, $lang, $order)
     html_Kunena::showProfiles($option, $lang, $profileList, $countPL, $pageNavSP, $order, $search);
 }
 
-function editUserProfile($uid)
+function editUserProfile($option, $uid)
 {
 	if (empty($uid[0])) {
 		echo _KUNENA_PROFILE_NO_USER;
@@ -1176,7 +1176,7 @@ function editUserProfile($uid)
 
     $modCats = KUNENA_GetAvailableModCats($__modCats);
 
-    html_Kunena::editUserProfile($user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid[0], $modCats);
+    html_Kunena::editUserProfile($option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid[0], $modCats);
 }
 
 function saveUserProfile($option)
@@ -1421,7 +1421,7 @@ function replaceImage($kunena_db, $option, $imageName, $OxP)
 
     if ($OxP == "1")
     {
-        $filename = split("\.", $imageName);
+        $filename = explode(".", $imageName);
         $fileName = $filename[0];
         $fileExt = $filename[1];
         $ret = CKunenaFile::copy(KUNENA_PATH_UPLOADED .DS. 'dummy.' . $fileExt, KUNENA_PATH_UPLOADED .DS. 'images' .DS. $imageName);
@@ -1512,7 +1512,7 @@ function showCategories($cat, $cname, $extras = "", $levellimit = "4")
     $list = catTreeRecurse(0, '', array (), $children);
     // assemble menu items to the array
     $mitems = array ();
-    $mitems[] = JHTML::_('select.option', '0', _KUNENA_NOPARENT, 'value', 'text');
+    $mitems[] = JHTML::_('select.option', '0', _KUNENA_TOPLEVEL, 'value', 'text');
     $this_treename = '';
 
     foreach ($list as $item)

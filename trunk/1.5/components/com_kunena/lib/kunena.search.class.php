@@ -117,7 +117,7 @@ class CKunenaSearch
 
 	if ($q == _GEN_SEARCH_BOX) $q = '';
 	$this->searchword = $q;
-    $arr_searchwords = split(' ', $q);
+    $arr_searchwords = explode(' ', $q);
 	$do_search = FALSE;
 	$this->arr_kunena_searchstrings = array();
 	foreach ($arr_searchwords as $q)
@@ -328,7 +328,7 @@ class CKunenaSearch
 		$allow_list[$forum['parent']][] = $forum['id'];
 	}
 
-	$catids = split(',', $catids);
+	$catids = explode(',', $catids);
 	$result = array();
 	if (count($catids) > 0 && !in_array(0, $catids)) {
 		// Algorithm:

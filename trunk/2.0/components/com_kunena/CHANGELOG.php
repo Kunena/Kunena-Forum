@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+19-Dec-2009 Matias
++ [#18912] Implement new installer: added partial support for migration
+
 17-Dec-2009 Matias
 ^ [#18912] Implement new installer: major cleanup
 

@@ -33,7 +33,7 @@ Possible actions:
 			<set field="moderated" value="1"/>
 		</table>
 	</version>
-	<version version="1.0.5" versiondate="2008-12-1" build="855" versionname="Redwood">
+	<version version="1.0.5">
 		<table name="kunena_messages_text">
 			<string_replace field="message" from="&amp;amp;#039;" to="'"/>
 			<string_replace field="message" from="&amp;amp;quot;" to='"'/>
@@ -71,7 +71,7 @@ Possible actions:
 			<string_replace field="signature" from="[/CODE" to="[/code"/>
 		</table>
 	</version>
-	<version version="1.0.8" versiondate="2009-02-17" build="1166" versionname="Speakup!">
+	<version version="1.0.8">
 		<phpfile name="kunena.special.upgrade.1.0.8.php" />
 		<table name="kunena_messages_text">
 			<string_replace field="message" from="com_fireboard" to="com_kunena"/>
@@ -80,7 +80,7 @@ Possible actions:
 			<string_replace field="signature" from="com_fireboard" to="com_kunena"/>
 		</table>
 	</version>
-	<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
+	<version version="@kunenaversion@" build="@kunenaversionbuild@">
 		<if table="kunena_messages_text">
 			<table name="kunena_messages">
 				<add field="message" type="text" null="1"/>
@@ -181,6 +181,7 @@ Possible actions:
 	
   <table name="kunena_announcement">
     <drop field="showdate"/>
+    <drop field="ordering"/>
   </table>
   <table name="kunena_attachments">
     <rename field="mesid"			to="msgid"/>

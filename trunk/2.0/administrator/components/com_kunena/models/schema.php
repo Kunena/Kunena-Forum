@@ -41,6 +41,7 @@ class KunenaModelSchema extends JModel
 	protected $diffschema = null;
 	protected $db = null;
 	protected $sql = null;
+	protected $version = null;
 
 	public function __construct()
 	{
@@ -74,6 +75,11 @@ class KunenaModelSchema extends JModel
 		}
 		$value = parent::getState($property);
 		return (is_null($value) ? $default : $value);
+	}
+
+	public function setVersion($version)
+	{
+		$this->version = $version;
 	}
 
 	public function getSchema()
@@ -513,26 +519,40 @@ class KunenaModelSchema extends JModel
 		$dbschema->validate();
 		//$upgrade->validate();
 
-		$upgradeNode = $upgrade->documentElement;
-
-		foreach ($upgradeNode->childNodes as $action)
-		{
-			if (!is_a($action, 'DOMElement')) continue;
-			if ($action->tagName == 'drop' || $action->tagName == 'rename') $this->upgradeAction($dbschema, $action);
-			else if ($action->tagName == 'table') $this->upgradeTableAction($dbschema, $action);
-		}
+		$this->upgradeNewAction($dbschema, $upgrade->documentElement);
 	}
 
-	protected function upgradeTableAction($dbschema, $table)
+	protected function upgradeNewAction($dbschema, $node, $table='')
 	{
-		foreach ($table->childNodes as $action)
+		foreach ($node->childNodes as $action)
 		{
 			if (!is_a($action, 'DOMElement')) continue;
-			if ($action->tagName == 'drop' || $action->tagName == 'rename') $this->upgradeAction($dbschema, $action, $table->getAttribute('name'));
+			switch ($action->tagName) {
+				case 'table':
+					$this->upgradeNewAction($dbschema, $action, $action->getAttribute('name'));
+					break;
+				case 'version':
+					if (!$this->version) break;
+					$version = $action->getAttribute('version');
+					$build = $action->getAttribute('build');
+					$date = $action->getAttribute('date');
+					$this->upgradeNewAction($dbschema, $action, $table);
+				case 'if':
+					$table = $action->getAttribute('table');
+					$field = $action->getAttribute('field');
+					$key = $action->getAttribute('key');
+					if (!$field && !$key && !$this->findNode($dbschema, 'table', $table)) break;
+					if ($field && !$this->findNode($dbschema, 'field', $table, $field)) break;
+					if ($key && !$this->findNode($dbschema, 'key', $table, $key)) break;
+					$this->upgradeNewAction($dbschema, $action, $table);
+					break;
+				default:
+					$this->upgradeAction($dbschema, $action, $table);
+			}
 		}
 	}
 
-	protected function findNode($schema, $type, $table, $field)
+	protected function findNode($schema, $type, $table, $field='')
 	{
 		$rootNode = $schema->documentElement;
 		foreach ($rootNode->childNodes as $tableNode)
@@ -574,7 +594,7 @@ class KunenaModelSchema extends JModel
 					break;
 				}
 			}
-			if (!$name) return;
+			if (!isset($name)) return;
 		}
 		else
 		{

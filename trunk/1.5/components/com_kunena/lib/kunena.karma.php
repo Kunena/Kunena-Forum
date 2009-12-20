@@ -22,7 +22,8 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $fbConfig =& CKunenaConfig::getInstance();
-global $is_Moderator;
+global $is_Moderator, $do, $kunena_db, $userid;
+
 //Modify this to change the minimum time between karma modifications from the same user
 $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
 ?>

@@ -29,6 +29,8 @@ require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
 $attachimage = JRequest::getVar('attachimage', NULL, 'FILES', 'array');
 $filename = CKunenaFile::makeSafe($attachimage['name']);
 
+global $message;
+
 function imageUploadError($msg)
 {
     global $message;
@@ -39,7 +41,7 @@ function imageUploadError($msg)
 }
 
 $GLOBALS['KUNENA_rc'] = 1; //reset return code
-$filename = split("\.", $filename);
+$filename = split('\.', $filename);
 //some transaltions for readability
 //numExtensions= people tend to upload malicious files using mutliple extensions like: virus.txt.vbs; we'll want to have the last extension to validate against..
 $numExtensions = (count($filename)) - 1;
@@ -100,7 +102,7 @@ if ($GLOBALS['KUNENA_rc'])
 	// echo '<span class="contentheading">'._IMAGE_UPLOADED."...</span>";
     $code = '[img]' . KUNENA_LIVEUPLOADEDPATH. '/images/' . $newFileName . '[/img]';
 
-    if (preg_match("/\[img\/\]/si", $message)) {
+    if (preg_match('/\[img\/\]/si', $message)) {
         $message = str_replace("[img/]", $code, $message);
     }
     else {

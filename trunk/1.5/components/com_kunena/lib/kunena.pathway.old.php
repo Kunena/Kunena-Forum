@@ -25,6 +25,8 @@ defined( '_JEXEC' ) or die('Restricted access');
 $app =& JFactory::getApplication();
 $fbConfig =& CKunenaConfig::getInstance();
 
+global $catid, $fbIcons, $kunena_db;
+
 ?>
 <!-- Pathway -->
 
@@ -36,6 +38,7 @@ $fbConfig =& CKunenaConfig::getInstance();
                 /*  danial */
                 $catids = intval($catid);
                 $parent_ids = 1000;
+                $spath = NULL;
 
                 while ($parent_ids)
                 {

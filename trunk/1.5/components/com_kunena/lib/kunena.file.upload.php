@@ -28,6 +28,8 @@ require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
 $attachfile = JRequest::getVar('attachfile', NULL, 'FILES', 'array');
 $filename = CKunenaFile::makeSafe($attachfile['name']);
 
+global $message;
+
 function fileUploadError($msg)
 {
     global $message;
@@ -38,7 +40,7 @@ function fileUploadError($msg)
 }
 
 $GLOBALS['KUNENA_rc'] = 1; //reset return code
-$filename = split("\.", $filename);
+$filename = split('\.', $filename);
 //some transaltions for readability
 //numExtensions= people tend to upload malicious files using mutliple extensions like: virus.txt.vbs; we'll want to have the last extension to validate against..
 $numExtensions = (count($filename)) - 1;
@@ -65,7 +67,7 @@ if ($GLOBALS['KUNENA_rc'])
     $fileLocation = strtr(KUNENA_PATH_UPLOADED .DS. "files" .DS. $newFileName, "\\", "/");
     $allowedArray = explode(',', strtolower($fbConfig->filetypes));
     $maxImgSize = $fbConfig->filesize * 1024;
-    
+
     // Check for empty filename
     if (!is_uploaded_file($attachfile['tmp_name']) || empty($attachfile['name'])) {
         fileUploadError(_FILE_ERROR_EMPTY);
@@ -90,7 +92,7 @@ if ($GLOBALS['KUNENA_rc'])
         = '[file name='
         . $newFileName . ' size=' . $fileSize . ']' . KUNENA_LIVEUPLOADEDPATH . '/files/' . $newFileName . '[/file]';
 
-    if (preg_match("/\[file\/\]/si", $message)) {
+    if (preg_match('/\[file\/\]/si', $message)) {
         $message = str_replace("[file/]", $code, $message);
     }
     else {

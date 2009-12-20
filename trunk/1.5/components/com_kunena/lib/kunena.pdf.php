@@ -21,6 +21,8 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
+global $kunena_db;
+
 class fbpdfwrapper {
 	// small wrapper class for J1.5 to emulate Cezpdf-class
 	var $_title = '';
@@ -58,7 +60,7 @@ class fbpdfwrapper {
 
 function dofreePDF($kunena_db)
 {
-    global $aro_group;
+    global $aro_group, $is_admin;
 
     $app =& JFactory::getApplication();
 
@@ -199,7 +201,7 @@ function filterHTML(&$string)
     $string = str_replace('{mosimage}', '', $string);
     $string = str_replace('{mospagebreak}', '', $string);
     // bbcode
-    $string = preg_replace("/\[(.*?)\]/si", "", $string);
+    $string = preg_replace('/\[(.*?)\]/si', "", $string);
     $string = decodeHTML($string);
 }
 

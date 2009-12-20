@@ -25,7 +25,7 @@ class CKunenaCBProfile {
 	function __construct() {
 		$fbConfig =& CKunenaConfig::getInstance();
 		$cbpath = KUNENA_ROOT_PATH_ADMIN .DS. 'components' .DS. 'com_comprofiler' .DS. 'plugin.foundation.php';
-		if (file_exists($cbpath)) { 
+		if (file_exists($cbpath)) {
 			include_once($cbpath);
 			cbimport('cb.database');
 			cbimport('cb.tables');
@@ -46,7 +46,7 @@ class CKunenaCBProfile {
 			$fbConfig->fb_profile = $fbConfig->fb_profile == 'cb' ? 'kunena' : $fbConfig->fb_profile;
 		}
 	}
-	
+
 	function close() {
 		$fbConfig =& CKunenaConfig::getInstance();
 		if ($fbConfig->fb_profile == 'cb') {
@@ -56,7 +56,7 @@ class CKunenaCBProfile {
 	}
 
 	function &getInstance() {
-		static $instance;
+		static $instance=NULL;
 		if (!$instance) {
 			$instance = new CKunenaCBProfile();
 		}
@@ -71,12 +71,12 @@ function enqueueErrors() {
 			$app->enqueueMessage(_KUNENA_INTEGRATION_CB_WARN_HIDE, 'notice');
 		}
 	}
-	
+
 	function _detectIntegration() {
 		global $ueConfig;
 		$fbConfig =& CKunenaConfig::getInstance();
 
-		// Detect 
+		// Detect
 		if (!isset($ueConfig['version'])) {
 			$this->errormsg = sprintf(_KUNENA_INTEGRATION_CB_WARN_INSTALL, '1.2');
 			$this->error = 1;
@@ -102,7 +102,7 @@ function enqueueErrors() {
 		$fbConfig =& CKunenaConfig::getInstance();
 		return ($fbConfig->fb_profile == 'cb' && !$this->error);
 	}
-	
+
 	function getLoginURL() {
 		return cbSef( 'index.php?option=com_comprofiler&amp;task=login' );
 	}
@@ -137,10 +137,10 @@ function enqueueErrors() {
 		return cbSef( 'index.php?option=com_comprofiler&task=userProfile&user=' .$userid. getCBprofileItemid() );
 	}
 
-	function showAvatar($userid, $class='', $thumb=true) 
+	function showAvatar($userid, $class='', $thumb=true)
 	{
 		static $instances = array();
-		
+
 		if (!isset($instances[$userid]))
 		{
 			$cbUser = CBuser::getInstance( (int) $userid );
@@ -158,7 +158,7 @@ function enqueueErrors() {
 	function showProfile($userid, &$msg_params)
 	{
 		static $instances = array();
-		
+
 		if (!isset($instances[$userid]))
 		{
 			global $_PLUGINS;

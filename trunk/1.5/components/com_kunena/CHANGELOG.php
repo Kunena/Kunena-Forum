@@ -31,10 +31,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.5.9
+Kunena 1.6.0
 
 20-Dec-2009 Matias
 # [#19079] Fix broken layout with too long strings
+^ [#18763] Update version info to 1.6.0-DEV
 
 20-Dec-2009 fxstein
 + [#19064] new bbcodes for table, th, tr & td as well as module

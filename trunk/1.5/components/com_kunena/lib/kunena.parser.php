@@ -242,6 +242,22 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 $tns = "<blockquote>"; $tne = '</blockquote>';
                 return TAGPARSER_RET_REPLACED;
                 break;
+            case 'table':
+                $tns = "<table>"; $tne = '</table>';
+                return TAGPARSER_RET_REPLACED;
+                break;
+            case 'tr':
+                $tns = "<tr>"; $tne = '</tr>';
+                return TAGPARSER_RET_REPLACED;
+                break;
+            case 'th':
+                $tns = "<th>"; $tne = '</th>';
+                return TAGPARSER_RET_REPLACED;
+                break;
+            case 'td':
+                $tns = "<td>"; $tne = '</td>';
+                return TAGPARSER_RET_REPLACED;
+                break;
             case 'email':
                 $task->autolink_disable--;
                 if(isset($tag->options['default'])) {
@@ -395,6 +411,28 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 $tag_new = '<span class="fb_quote">'.$between.'</span>';
                 return TAGPARSER_RET_REPLACED;
                 break;
+            case 'module':
+                if($between) {
+                	$tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
+
+                	if (JDocumentHTML::countModules($tempstr))
+                	{
+                		$document	= &JFactory::getDocument();
+						$renderer	= $document->loadRenderer('modules');
+						$options	= array('style' => 'xhtml');
+						$position	= '$tempstr';
+						echo $renderer->render($position, $options, null);
+                	}
+                	else 
+                	{
+               			trigger_error ('Joomla module: '.$tempstr.' does not exist.' ,E_USER_NOTICE);
+                	}
+
+                	return TAGPARSER_RET_REPLACED;
+                }
+                return TAGPARSER_RET_NOTHING;
+
+                break;
             case 'list':
                 $tag_new = '<ul>';
                 $tag_new .= "\n";
@@ -442,7 +480,8 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					unset($vid_players);
 				}
 				if (!$vid["type"]) {
-					if ($vid_auto = (preg_match('/^http:\/\/.*?([^.]*)\.[^.]*(\/|$)/', $between, $vid_regs) > 0)) {
+					$vid_auto = (preg_match('/^http:\/\/.*?([^.]*)\.[^.]*(\/|$)/', $between, $vid_regs) > 0);
+					if ($vid_auto) {
 						$vid["type"] = strtolower($vid_regs[1]);
 						switch($vid["type"]) {
 							case 'clip': $vid["type"] = 'clip.vn'; break;
@@ -798,13 +837,6 @@ class KunenaBBCodeParserTask extends BBCodeParserTask {
 class KunenaBBCodeInterpreterPlain extends BBCodeInterpreter {
     # This class uses standardinterpreter, but removes all formatting outputs!
     # directly derivated from KunenaBBCodeInterpreter after extensive testing
-
-    function MyTagInterpreterSearch($references) {
-        # Constructor
-        MyTagInterpreter::MyTagInterpreter();
-
-        # use params (references) to load your specific data, access to DB
-    }
 
     function Encode(&$text_new, &$task, $text_old, $context) {
         return TAGPARSER_RET_NOTHING;

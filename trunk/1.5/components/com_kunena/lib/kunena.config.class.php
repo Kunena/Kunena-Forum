@@ -41,7 +41,8 @@ class CKunenaTables
 
 	function &getInstance()
 	{
-		static $instance;
+		static $instance=NULL;
+
 		if (!$instance) {
 			$instance = new CKunenaTables();
 		}
@@ -75,7 +76,7 @@ abstract class CKunenaConfigBase
     abstract public function &getInstance();
     abstract public function GetClassVars();
     abstract protected function GetConfigTableName();
-    
+
     // This function allows for the overload of user specific settings.
     // All settings can now be user specific. No further code changes
     // are required inside of Kunena.
@@ -199,7 +200,7 @@ abstract class CKunenaConfigBase
     public function load($KunenaUser=null)
     {
         $tables = CKunenaTables::getInstance();
-        if ($tables->check($this->GetConfigTableName())) 
+        if ($tables->check($this->GetConfigTableName()))
 	{
         	$this->_db->setQuery("SELECT * FROM ".$this->GetConfigTableName());
 		$config = $this->_db->loadAssoc();
@@ -210,7 +211,7 @@ abstract class CKunenaConfigBase
 			$this->bind($config);
 		}
         }
-        
+
         // Check for user specific overrides
         if(is_object($KunenaUser))
         {
@@ -227,7 +228,7 @@ abstract class CKunenaConfigBase
 class CKunenaConfig extends CKunenaConfigBase
 {
 	// All vars MUST BE LOWER CASE!
-	// New in Kunena 1.5.2: $id for JoomFish support 
+	// New in Kunena 1.5.2: $id for JoomFish support
 	var $id                      = 0;
     var $board_title             = 'Kunena';
     var $email                   = 'change@me.com';
@@ -378,7 +379,7 @@ class CKunenaConfig extends CKunenaConfigBase
 	var $sef                     = 1;
 	var $sefcats                 = 0;
 	var $sefutf8                 = 0;
-	
+
     public function __construct($KunenaUser=null)
     {
         parent::__construct();
@@ -391,7 +392,7 @@ class CKunenaConfig extends CKunenaConfigBase
 
     public function &getInstance()
     {
-        static $instance;
+        static $instance=NULL;
         if (!$instance) {
             $userinfo = new CKunenaUserprofile();
 	    $instance = new CKunenaConfig($userinfo);

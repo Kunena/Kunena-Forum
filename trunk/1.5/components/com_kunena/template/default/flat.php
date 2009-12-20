@@ -23,7 +23,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $fbConfig =& CKunenaConfig::getInstance();
-global $is_Moderator;
+global $is_Moderator, $boardclass, $kunena_db, $fbIcons;
 
 // topic emoticons
 $topic_emoticons = array ();
@@ -38,7 +38,8 @@ $topic_emoticons[6] = KUNENA_URLEMOTIONSPATH . 'shock.gif';
 $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 
 // url of current page that user will be returned to after login
-if ($query_string = JRequest::getVar('QUERY_STRING', '', 'SERVER')) {
+$query_string = JRequest::getVar('QUERY_STRING', '', 'SERVER');
+if ($query_string) {
     $Breturn = 'index.php?' . $query_string;
     }
 else {
@@ -151,7 +152,6 @@ if (count($messages[0]) > 0)
 							$bof_avatar = $kunenaProfile->showAvatar($last_reply[$leaf->id]->userid, 'catavatar');
 						} else {
 							//first we gather some information about this person
-							unset($CatUser);
 							$kunena_db->setQuery("SELECT * FROM #__fb_users AS su LEFT JOIN #__users AS u on u.id=su.userid WHERE su.userid='{$leaf->userid}'");
 
 							$CatUser = $kunena_db->loadObject();

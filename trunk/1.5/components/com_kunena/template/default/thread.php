@@ -22,6 +22,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+global $boardclass, $prevCheck, $fbIcons, $read_topics, $id, $catid, $kunena_db;
+
 $fbConfig =& CKunenaConfig::getInstance();
 // arrows and lines
 $join = '<img src="' . KUNENA_URLIMAGESPATH . 'tree-join.gif" width="12" height="18" alt="thread link" />';
@@ -122,8 +124,8 @@ $tree = thread_flat($tree, $messages);
             }
             ?>
 
-            <td align = "center" width = "5"<?php echo $leaf->id==$id?" class=\"".$boardclass."sectiontableentry2\">":">";
-                  if ($leaf->ordering==0)
+            <td align = "center" width = "5"<?php echo $leaf->id==$id?" class=\"".$boardclass."sectiontableentry2\"":"";?>>
+                  <?php if ($leaf->ordering==0)
                   {
                      if($leaf->locked==0)
                      {

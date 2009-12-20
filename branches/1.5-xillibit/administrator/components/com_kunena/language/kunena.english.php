@@ -22,6 +22,13 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
+define('_COM_A_SHOWIMGFORGUEST', 'Show images for guests');
+define('_COM_A_SHOWIMGFORGUEST_DESC', 'Set to &quot;Yes&quot; if you want to show images for guests.');
+define('_KUNENA_BBCODE_HIDEIMG', 'This image is hidden for guests. Please login or register to see it.');
+define('_COM_A_SHOWFILEFORGUEST', 'Show attachments for guests');
+define('_COM_A_SHOWFILEFORGUEST_DESC', 'Set to &quot;Yes&quot; if you want to show attachments for guests.');
+define('_KUNENA_BBCODE_HIDEFILE', 'This attachment is hidden for guests. Please login or register to see it.');
+
 //Poll
 DEFINE('_KUNENA_POLL_ADD', 'Add a new poll');
 DEFINE('_KUNENA_POLL_TITLE', 'Poll title');

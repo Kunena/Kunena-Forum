@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.8
 
+20-dec-2009 Xillibit
++ [#18627] Integration of hack hide attachements for guests
+
 18-dec-2009 Xillibit
 ^ [#18627] Changes for javascript used in the polls
 ^ [#19033] User list and count shows also disabled users

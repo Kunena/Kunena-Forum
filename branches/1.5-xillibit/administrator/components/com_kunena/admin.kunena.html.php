@@ -855,14 +855,14 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top"  width="25%" ><?php echo $lists['sefutf8']; ?></td>
- 
+
                     <td align = "left" valign = "top"><?php echo _KUNENA_SEF_UTF8_DESC ?>
                     </td>
                 </tr>
-                
+
 			</table>
 		</fieldset>
-		
+
 		<div class="fbfuncsubtitle"><?php echo _COM_A_FRONTEND ?> <a name="frontend" id="frontend" > </a></div>
 
           <fieldset>
@@ -1712,6 +1712,17 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
                 </tr>
 
+				<tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top" width="25%"><?php echo _COM_A_SHOWIMGFORGUEST ?>
+                    </td>
+
+                    <td align = "left" valign = "top" width="25%"><?php echo $lists['showimgforguest']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _COM_A_SHOWIMGFORGUEST_DESC ?>
+                    </td>
+                </tr>
+
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top"><?php echo _COM_A_IMGHEIGHT ?>
                     </td>
@@ -1763,6 +1774,17 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_FILEREGUPLOAD_DESC ?>
+                    </td>
+                </tr>
+
+				<tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top" width="25%"><?php echo _COM_A_SHOWFILEFORGUEST ?>
+                    </td>
+
+                    <td align = "left" valign = "top" width="25%"><?php echo $lists['showfileforguest']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _COM_A_SHOWFILEFORGUEST_DESC ?>
                     </td>
                 </tr>
 
@@ -2009,7 +2031,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"><?php echo _KUNENA_AUP_ENABLED_POINTS_IN_PROFILE_DESC; ?>
                     </td>
                 </tr>
-				
+
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_AUP_ENABLED_RULES; ?>
                     </td>
@@ -2020,7 +2042,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"><?php echo _KUNENA_AUP_ENABLED_RULES_DESC; ?>
                     </td>
                 </tr>
-                
+
 	            <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_AUP_MINIMUM_POINTS_ON_REPLY; ?>
                     </td>
@@ -2411,7 +2433,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"><?php echo _KUNENA_NUMPOP; ?>
                     </td>
                 </tr>
-                
+
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top"><?php echo _KUNENA_POLLSSTATS; ?>
                     </td>
@@ -2422,7 +2444,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"><?php echo _KUNENA_POLLSTATSDESC; ?>
                     </td>
                 </tr>
-                
+
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top"><?php echo _KUNENA_POLLSPOP; ?>
                     </td>
@@ -2465,7 +2487,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"  width="25%"><?php echo _KUNENA_A_POLL_ENABLED; ?>
                     </td>
 
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['pollenabled'] ?>                        
+                    <td align = "left" valign = "top" width="25%"><?php echo $lists['pollenabled'] ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_A_ENABLED_DESC; ?>
@@ -2477,19 +2499,19 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top" width="25%">
-                        <input type = "text" name = "cfg_pollnboptions" value = "<?php echo $fbConfig->pollnboptions; ?>"/>                        
+                        <input type = "text" name = "cfg_pollnboptions" value = "<?php echo $fbConfig->pollnboptions; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_NUMBER_OPTIONS_DESC; ?>
                     </td>
                 </tr>
-                
+
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top"  width="25%"><?php echo _KUNENA_A_POLL_TIME_VOTES; ?>
                     </td>
 
                     <td align = "left" valign = "top" width="25%">
-                        <input type = "text" name = "cfg_polltimebtvotes" value = "<?php echo $fbConfig->polltimebtvotes; ?>"/>                        
+                        <input type = "text" name = "cfg_polltimebtvotes" value = "<?php echo $fbConfig->polltimebtvotes; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_TIME_VOTES_DESC; ?>
@@ -2501,7 +2523,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top" width="25%">
-                        <input type = "text" name = "cfg_pollnbvotesbyuser" value = "<?php echo $fbConfig->pollnbvotesbyuser; ?>"/>                        
+                        <input type = "text" name = "cfg_pollnbvotesbyuser" value = "<?php echo $fbConfig->pollnbvotesbyuser; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_NUMBER_VOTES_BY_DESC; ?>
@@ -2517,7 +2539,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"  width="25%"><?php echo _KUNENA_A_POLL_ALLOW_ONE_VOTE; ?>
                     </td>
 
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['pollallowvoteone'] ?>                        
+                    <td align = "left" valign = "top" width="25%"><?php echo $lists['pollallowvoteone'] ?>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_ALLOW_ONE_VOTE_DESC; ?>
@@ -2533,8 +2555,8 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"  width="25%"><?php echo _KUNENA_A_POLL_CATEGORIES_ALLOWED; ?>
                     </td>
 
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['pollallowedcats'] ?>                
-                    <input type = "text" name = "cfg_pollallowedcategories" value = "<?php echo $fbConfig->pollallowedcategories; ?>"/>                        
+                    <td align = "left" valign = "top" width="25%"><?php echo $lists['pollallowedcats'] ?>
+                    <input type = "text" name = "cfg_pollallowedcategories" value = "<?php echo $fbConfig->pollallowedcategories; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC; ?>
@@ -2893,7 +2915,7 @@ echo $pane->endPane();
         </th>
     </tr>
 
-    
+
 
     <tr>
         <td colspan = "7"><?php echo _KUNENA_NOTEUS; ?>
@@ -3259,7 +3281,7 @@ else
             </tr>
 
             <tr>
-                <td><?php echo _KUNENA_SYNC_USERS_RENAME; ?></td>           
+                <td><?php echo _KUNENA_SYNC_USERS_RENAME; ?></td>
                 <td><input type="checkbox" name="userrename" value="1" /></td>
                 <td><?php echo _KUNENA_SYNC_USERS_RENAME_DESC; ?></td>
             </tr>
@@ -3450,7 +3472,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
         		<th align = "center" colspan = "6"> <?php echo  $pageNavSP->getLimitBox().$pageNavSP->getResultsCounter().$pageNavSP->getPagesLinks(); ?>
 		        </th>
 		    </tr>
-            
+
       	</table>
                 <input type = "hidden" name = "option" value = "<?php echo $option; ?>"><input type = "hidden" name = "task" value = "showsmilies"><input type = "hidden" name = "boxchecked" value = "0">
                 <?php echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
@@ -3589,7 +3611,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
       <th align="center" colspan="7"><?php
       echo $pageNavSP->getLimitBox().$pageNavSP->getResultsCounter().$pageNavSP->getPagesLinks(); ?></th>
     </tr>
-    
+
   </table>
   </form>
 

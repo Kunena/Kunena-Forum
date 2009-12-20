@@ -2064,6 +2064,7 @@ function listThreadHistory($id, $fbConfig, $kunena_db)
                     </td>
 
                     <td class = "fb_review_body<?php echo $k;?>">
+                    	<div class="msgtext">
                         <?php
                         $fb_message_txt = str_replace("</P><br />", "</P>", $fb_message_txt);
                         //Long Words Wrap:
@@ -2073,6 +2074,7 @@ function listThreadHistory($id, $fbConfig, $kunena_db)
 
                         echo $fb_message_txt;
                         ?>
+                        </div>
                     </td>
                 </tr>
 

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.9
 
+20-Dec-2009 Matias
+# [#19079] Fix broken layout with too long strings
+
 20-Dec-2009 fxstein
 + [#19064] new bbcodes for table, th, tr & td as well as module
 # [#19065] fix various warnings and errors identified by zend studio code analysis

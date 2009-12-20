@@ -346,6 +346,13 @@ if ($fbConfig->fb_profile == 'cb')
 				echo '<span class="fb_message_informMarkUp">'.CKunenaLink::GetMessageIPLink($msg_ip).'</span>';
                             } ?>
 		</div>
+<?php
+if (isset($msg_signature)) {
+	echo '<div class="msgsignature"><div>';
+	echo $msg_signature;
+	echo '</div></div>';
+}
+?>
 		<div class="fb_message_buttons_cover">
 			<div class="fb_message_buttons_row">
                 <?php
@@ -430,13 +437,6 @@ if ($fbConfig->fb_profile == 'cb')
                 ?>
 			</div>
 		</div>
-<?php
-if (isset($msg_signature)) {
-	echo '<div class="msgsignature">';
-	echo $msg_signature;
-	echo '</div>';
-}
-?>
 
             </td>
             <td class = "fb-msgview-left-b">&nbsp;

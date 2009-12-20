@@ -34,6 +34,7 @@ Legend:
 Kunena 1.5.8
 
 20-dec-2009 Xillibit
+^ [#18975] Backend: Show Avatar on Categories list option misleading
 + [#18627] Integration of hack hide attachements for guests
 
 18-dec-2009 Xillibit

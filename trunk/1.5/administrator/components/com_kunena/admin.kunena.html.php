@@ -449,7 +449,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                         </td>
 
                         <td>
-                            <textarea class = "inputbox" cols = "50" rows = "3" name = "description" id = "description" style = "width:500px" width = "500"><?php echo stripslashes($row->description); ?></textarea>
+                            <textarea class = "inputbox" cols = "50" rows = "3" name = "description" id = "description" style = "width:500px"><?php echo stripslashes($row->description); ?></textarea>
                         </td>
                     </tr>
 
@@ -2620,9 +2620,6 @@ echo $pane->endPane();
                 }
                 ?>
 
-    <input type = "hidden"
-        name = "order" value = "<?php echo "$order";?>"> <input type = "hidden" name = "option" value = "<?php echo $option; ?>"> <input type = "hidden" name = "task" value = "showprofiles"> <input type = "hidden" name = "boxchecked" value = "0">
-    <?php echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
 
     <tr>
         <th align = "center" colspan = "7"> <?php
@@ -2630,8 +2627,12 @@ echo $pane->endPane();
         </th>
     </tr>
             </table>
+		    <input type = "hidden" name = "order" value = "<?php echo $order;?>">
+		    <input type = "hidden" name = "option" value = "<?php echo $option; ?>">
+		    <input type = "hidden" name = "task" value = "showprofiles">
+		    <input type = "hidden" name = "boxchecked" value = "0">
+		    <input type = "hidden" name = "limitstart" value = "0">
         </form>
-
 <?php
     } //end function showProfiles
 
@@ -2751,9 +2752,6 @@ echo $pane->endPane();
                 }
                 ?>
 
-    <input type = "hidden"
-        name = "option" value = "<?php echo $option; ?>"> <input type = "hidden" name = "id" value = "<?php echo $id; ?>"> <input type = "hidden" name = "boxchecked" value = "0"> <input type = "hidden" name = "task" value = "newmoderator">
-    <?php echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
 
     <tr>
         <th align = "center" colspan = "7"> <?php echo  $pageNav->getLimitBox().$pageNav->getResultsCounter().$pageNav->getPagesLinks(); ?>
@@ -2766,8 +2764,13 @@ echo $pane->endPane();
         <td colspan = "7"><?php echo _KUNENA_NOTEUS; ?>
         </td>
     </tr>
-            </table>
-        </form>
+    </table>
+    <input type = "hidden" name = "option" value = "<?php echo $option; ?>">
+    <input type = "hidden" name = "id" value = "<?php echo $id; ?>">
+    <input type = "hidden" name = "boxchecked" value = "0">
+    <input type = "hidden" name = "task" value = "newmoderator">
+    <input type = "hidden" name = "limitstart" value = "0">
+    </form>
 
 <?php
     }
@@ -2813,7 +2816,7 @@ echo $pane->endPane();
                     </td>
 
                     <td align = "left" valign = "top" class = "contentpane">
-<?php echo $selectOrder; ?>
+						<?php echo $selectOrder; ?>
                     </td>
 
                     <td>&nbsp;
@@ -2821,12 +2824,12 @@ echo $pane->endPane();
                     </td>
                 </tr>
 
-                         <tr>
+                <tr>
                     <td width = "150" class = "contentpane"><?php echo _KUNENA_RANKS; ?>
                     </td>
 
                     <td align = "left" valign = "top" class = "contentpane">
-<?php echo $selectRank; ?>
+						<?php echo $selectRank; ?>
                     </td>
 
                     <td>&nbsp;
@@ -2834,88 +2837,29 @@ echo $pane->endPane();
                     </td>
                 </tr>
 
+				<tr>
+					<td width = "150" valign = "top" class = "contentpane">
+						<?php echo _GEN_SIGNATURE; ?>:
+					</td>
 
-
-                            <td width = "150" valign = "top" class = "contentpane">
-<?php echo _GEN_SIGNATURE; ?>:
-<?php /*
-// FIXME: bbcode broken
-
-        <br/> <?php echo $fbConfig->maxsig; ?>
-
-        <input readonly type = text name = rem size = 3 maxlength = 3 value = "" class = "inputbox"> <?php echo _CHARS; ?><br/>
-<?php echo _HTML_YES; ?>
-*/ ?>
-                            </td>
-
-                            <td align = "left" valign = "top" class = "contentpane">
-                                <textarea rows = "6"
-                                    class = "inputbox"
+					<td align = "left" valign = "top" class = "contentpane">
+						<textarea 	rows = "6"
+                         			class = "inputbox"
                                     onMouseOver = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);"
                                     onClick = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);"
                                     onKeyDown = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);"
-                                    onKeyUp = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);" cols = "50" type = "text" name = "message"><?php echo html_entity_decode_utf8(stripslashes($signature)); ?></textarea>
-
-<?php /*
-// FIXME: bbcode broken
-                                <br/>
-
-                                <input type = "button" class = "button" accesskey = "b" name = "addbbcode0" value = " B " style = "font-weight:bold; width: 30px" onClick = "bbstyle(0)" onMouseOver = "helpline('b')"/>
-
-                                <input type = "button" class = "button" accesskey = "i" name = "addbbcode2" value = " i " style = "font-style:italic; width: 30px" onClick = "bbstyle(2)" onMouseOver = "helpline('i')"/>
-
-                                <input type = "button" class = "button" accesskey = "u" name = "addbbcode4" value = " u " style = "text-decoration: underline; width: 30px" onClick = "bbstyle(4)" onMouseOver = "helpline('u')"/>
-
-                                <input type = "button" class = "button" accesskey = "p" name = "addbbcode14" value = "Img" style = "width: 40px" onClick = "bbstyle(14)" onMouseOver = "helpline('p')"/>
-
-                                <input type = "button" class = "button" accesskey = "w" name = "addbbcode16" value = "URL" style = "text-decoration: underline; width: 40px" onClick = "bbstyle(16)" onMouseOver = "helpline('w')"/>
-
-                                <br/><?php echo _KUNENA_COLOR; ?>:
-
-        <select name = "addbbcode20" onChange = "bbfontstyle('[color=' + this.form.addbbcode20.options[this.form.addbbcode20.selectedIndex].value + ']', '[/color]');this.selectedIndex=0;" onMouseOver = "helpline('s')">
-            <option style = "color:black;  background-color: #FAFAFA" value = ""><?php echo _COLOUR_DEFAULT; ?></option>
-
-            <option style = "color:red;    background-color: #FAFAFA" value = "#FF0000"><?php echo _COLOUR_RED; ?></option>
-
-            <option style = "color:blue;   background-color: #FAFAFA" value = "#0000FF"><?php echo _COLOUR_BLUE; ?></option>
-
-            <option style = "color:green;  background-color: #FAFAFA" value = "#008000"><?php echo _COLOUR_GREEN; ?></option>
-
-            <option style = "color:yellow; background-color: #FAFAFA" value = "#FFFF00"><?php echo _COLOUR_YELLOW; ?></option>
-
-            <option style = "color:orange; background-color: #FAFAFA" value = "#FF6600"><?php echo _COLOUR_ORANGE; ?></option>
-        </select>
-<?php echo _SMILE_SIZE; ?>:
-
-        <select name = "addbbcode22" onChange = "bbfontstyle('[size=' + this.form.addbbcode22.options[this.form.addbbcode22.selectedIndex].value + ']', '[/size]')" onMouseOver = "helpline('f')">
-            <option value = "1"><?php echo _SIZE_VSMALL; ?></option>
-
-
-            <option value = "2"><?php echo _SIZE_SMALL; ?></option>
-
-            <option value = "3" selected><?php echo _SIZE_NORMAL; ?></option>
-
-            <option value = "4"><?php echo _SIZE_BIG; ?></option>
-
-            <option value = "5"><?php echo _SIZE_VBIG; ?></option>
-        </select>
-
-        <a href = "javascript: bbstyle(-1)"onMouseOver = "helpline('a')"><small><?php echo _BBCODE_CLOSA; ?></small></a>
-
-        <br/>
-
-        <input type = "text" name = "helpbox" size = "45" maxlength = "100" style = "width:400px; font-size:8px" class = "options" value = "<?php echo _BBCODE_HINT;?>"/>
-*/ ?>
-                            </td>
-
-                            <?php
-                            if ($fbConfig->allowavatar)
-                            {
-                            ?>
-
-                                <td class = "contentpane" align = "center">
-<?php echo _KUNENA_UAVATAR; ?><br/>
-
+                                    onKeyUp = "textCounter(this.form.message,this.form.rem,<?php echo $fbConfig->maxsig;?>);"
+                                    cols = "50"
+                                    name = "message">
+							<?php echo html_entity_decode_utf8(stripslashes($signature)); ?>
+						</textarea>
+					</td>
+<?php
+if ($fbConfig->allowavatar)
+{
+?>
+					<td class = "contentpane" align = "center">
+						<?php echo _KUNENA_UAVATAR; ?><br/>
 <?php
 if ($avatar != '')
 {
@@ -2928,94 +2872,75 @@ else
    echo '<input type="hidden" value="$avatar" name="avatar">';
 }
 ?>
-                                </td>
-
-                            <?php
-                            }
-                            else
-                            {
-                                echo "<td>&nbsp;</td>";
-                                echo '<input type="hidden" value="" name="avatar">';
-                            }
-                            ?>
-                        </tr>
-
-                        <tr>
-                            <td colspan = "2" class = "contentpane">
-                                <input type = "checkbox" value = "1" name = "deleteSig"><i><?php echo _KUNENA_DELSIG; ?></i>
-                            </td>
-
-                            <?php
-                            if ($fbConfig->allowavatar)
-                            {
-                            ?>
-
-                                <td class = "contentpane">
-                                    <input type = "checkbox" value = "1" name = "deleteAvatar"><i><?php echo _KUNENA_DELAV; ?></i>
-                                </td>
-
-                            <?php
-                            }
-                            else {
-                                echo "<td>&nbsp;</td>";
-                            }
-                            ?>
-                        </tr>
-
-                        <tr cellspacing = "3" colspan = "2">
-                            &nbsp;
-
-                            </td>
-                        </tr>
+					</td>
+<?php
+}
+else
+{
+	echo "<td>&nbsp;</td>";
+	echo '<input type="hidden" value="" name="avatar">';
+}
+?>
+				</tr>
+				<tr>
+					<td colspan = "2" class = "contentpane">
+						<input type = "checkbox" value = "1" name = "deleteSig">
+						<i><?php echo _KUNENA_DELSIG; ?></i>
+					</td>
+<?php
+if ($fbConfig->allowavatar)
+{
+?>
+					<td class = "contentpane">
+						<input type = "checkbox" value = "1" name = "deleteAvatar">
+						<i><?php echo _KUNENA_DELAV; ?></i>
+					</td>
+<?php
+}
+else {
+	echo "<td>&nbsp;</td>";
+}
+?>
+				</tr>
             </table>
 
-        <table border = 0 cellspacing = 0 width = "100%" align = "center" class = "adminform">
-            <tr>
-                <th colspan = "2" class = "title">
-<?php echo _KUNENA_MOD_NEW; ?>
-
-            </td>
-            </tr>
-                        </tr>
-
-                        <tr>
-
-
-    <td width = "150" class = "contentpane">
-    <?php echo _KUNENA_ISMOD; ?>
-
-                    <?php
-                    //admins are always moderators
-                    if (CKunenaTools::isModOrAdmin($uid))
-                    {
+	        <table border = 0 cellspacing = 0 width = "100%" align = "center" class = "adminform">
+    	        <tr>
+        	        <th colspan = "2" class = "title">
+						<?php echo _KUNENA_MOD_NEW; ?>
+		            </th>
+            	</tr>
+				<tr>
+					<td width = "150" class = "contentpane">
+						<?php echo _KUNENA_ISMOD; ?>
+<?php
+//admins are always moderators
+if (CKunenaTools::isModOrAdmin($uid))
+{
                     echo _KUNENA_ISADM; ?> <input type = "hidden" name = "moderator" value = "1">
-                    <?php
-                    }
-                    else
-                    {
-                            echo $selectMod;
-                    }
-                    ?>
-                        </td>
-                        <td>
-<?php echo $modCats;?>
-                        </td>
-                        </tr>
-
+<?php
+}
+else
+{
+	echo $selectMod;
+}
+?>
+					</td>
+					<td>
+						<?php echo $modCats;?>
+					</td>
+				</tr>
             </table>
             <input type = "hidden" name = "uid" value = "<?php echo $uid;?>">
-
             <input type = "hidden" name = "task" value = ""/>
-
             <input type = "hidden" name = "option" value = "com_kunena"/>
         </form>
 
         <table border = 0 cellspacing = 0 width = "100%" align = "center" class = "adminform">
             <tr>
                 <th colspan = "2" class = "title">
-<?php echo _KUNENA_SUBFOR; ?> <?php echo $username; ?>
-
-            </td>
+					<?php echo _KUNENA_SUBFOR; ?> <?php echo $username; ?>
+	            </th>
             </tr>
 
             <?php
@@ -3044,39 +2969,37 @@ else
             else {
                 echo "<tr><td class=\"message\">" . _KUNENA_NOSUBS . "</td></tr>";
             }
-
-            echo "</table>";
+?>
+</table>
+<?php
     }
 
     //**************************
     // Prune Forum
     //**************************
     function pruneforum($option, $forumList) {
-            ?>
+?>
 <div class="fbfunctitle"><?php echo _COM_A_PRUNE; ?></div>
     <form action = "index.php" method = "post" name = "adminForm">
-
-
         <table class = "adminform" cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
             <tr>
-                <th width = "100%" colspan = "2">&nbsp;
-
+                <th width = "100%" colspan = "2">
+                	&nbsp;
                 </th>
             </tr>
-
             <tr>
-                <td colspan = "2"><?php echo _COM_A_PRUNE_DESC ?>
+                <td colspan = "2">
+                	<?php echo _COM_A_PRUNE_DESC ?>
                 </td>
             </tr>
-
             <tr>
-                <td nowrap width = "10%"><?php echo _COM_A_PRUNE_NAME ?>
+                <td nowrap width = "10%">
+                	<?php echo _COM_A_PRUNE_NAME ?>
                 </td>
-
-                <td nowrap><?php echo $forumList['forum'] ?>
+                <td nowrap>
+                	<?php echo $forumList['forum'] ?>
                 </td>
             </tr>
-
             <tr>
                 <td nowrap width = "10%"><?php echo _COM_A_PRUNE_NOPOSTS ?>
                 </td>
@@ -3086,12 +3009,9 @@ else
                 </td>
             </tr>
         </table>
-
         <input type = "hidden" name = "task" value = ""/>
-
         <input type = "hidden" name = "option" value = "<?php echo $option; ?>"/>
     </form>
-
 <?php
     }
 
@@ -3103,38 +3023,57 @@ else
 <div id="fbcongifcover">
 <div class="fbfunctitle"><?php echo _KUNENA_SYNC_USERS; ?></div>
     <form action = "index.php" method = "post" name = "adminForm">
-
-		<fieldset>
+\		<fieldset>
 		<legend><?php echo _KUNENA_SYNC_USERS_OPTIONS; ?></legend>
         <table cellpadding = "4" class = "fbadminform" cellspacing = "0" border = "0" width = "100%">
-             <tr>
-                <td><?php echo _KUNENA_SYNC_USERS_CACHE; ?></td>
-                <td><input type="checkbox" name="usercache" value="1" checked="checked" /></td>
-                <td><?php echo _KUNENA_SYNC_USERS_CACHE_DESC; ?></td>
-            </tr>
+			<tr>
+                <td>
+                	<?php echo _KUNENA_SYNC_USERS_CACHE; ?>
+                </td>
+                <td>
+                	<input type="checkbox" name="usercache" value="1" checked="checked" />
+                </td>
+                <td>
+                	<?php echo _KUNENA_SYNC_USERS_CACHE_DESC; ?>
+                </td>
+			</tr>
 
-             <tr>
-                <td><?php echo _KUNENA_SYNC_USERS_ADD; ?></td>
-                <td><input type="checkbox" name="useradd" value="1" /></td>
-                <td><?php echo _KUNENA_SYNC_USERS_ADD_DESC; ?></td>
+			<tr>
+				<td>
+					<?php echo _KUNENA_SYNC_USERS_ADD; ?>
+				</td>
+                <td>
+                	<input type="checkbox" name="useradd" value="1" />
+                </td>
+                <td>
+                	<?php echo _KUNENA_SYNC_USERS_ADD_DESC; ?>
+                </td>
             </tr>
-
             <tr>
-                <td><?php echo _KUNENA_SYNC_USERS_DEL; ?></td>
-                <td><input type="checkbox" name="userdel" value="1" /></td>
-                <td><?php echo _KUNENA_SYNC_USERS_DEL_DESC; ?></td>
+                <td>
+                	<?php echo _KUNENA_SYNC_USERS_DEL; ?>
+                </td>
+                <td>
+                	<input type="checkbox" name="userdel" value="1" />
+                </td>
+                <td>
+                	<?php echo _KUNENA_SYNC_USERS_DEL_DESC; ?>
+                </td>
             </tr>
-
             <tr>
-                <td><?php echo _KUNENA_SYNC_USERS_RENAME; ?></td>
-                <td><input type="checkbox" name="userrename" value="1" /></td>
-                <td><?php echo _KUNENA_SYNC_USERS_RENAME_DESC; ?></td>
+                <td>
+                	<?php echo _KUNENA_SYNC_USERS_RENAME; ?>
+                </td>
+                <td>
+                	<input type="checkbox" name="userrename" value="1" />
+                </td>
+                <td>
+                	<?php echo _KUNENA_SYNC_USERS_RENAME_DESC; ?>
+                </td>
             </tr>
         </table>
         </fieldset>
-
         <input type = "hidden" name = "task" value = ""/>
-
         <input type = "hidden" name = "option" value = "<?php echo $option; ?>"/>
     </form>
 </div>
@@ -3157,7 +3096,7 @@ else
                 if (confirm(message))
                     location.href = url;
             }
-                    // --->
+			//--->
         </SCRIPT>
 
             <?php
@@ -3225,54 +3164,46 @@ else
             }
 
             echo '</tr></table>';
-            ?>
-
-<?php
-                }
+		}
 
 	//***************************************
     // show smilies
     //***************************************
 
-function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
+		function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
         {
 ?>
 <div class="fbfunctitle"><?php echo _KUNENA_EMOTICONS; ?></div>
         <form action = "index.php" method = "POST" name = "adminForm">
             <table class = "adminheading" cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
                 <tr>
-
-
-                    <td nowrap align = "right"><?php echo _COM_A_DISPLAY; ?>
-
-                    </td>
-
                     <td nowrap align = "right">
-					<?php echo $pageNavSP->getLimitBox(); ?>
+                    	<?php echo _COM_A_DISPLAY;?>
+                    </td>
+                    <td nowrap align = "right">
+						<?php echo $pageNavSP->getLimitBox(); ?>
                     </td>
                 </tr>
-
-
             </table>
-
             <table class = "adminlist" border = "0" cellspacing = "0" cellpadding = "3" width = "100%">
                 <tr>
-                    <th algin = "left" width = "20">
+                    <th align = "left" width = "20">
                         <input type = "checkbox" name = "toggle" value = "" onclick = "checkAll(<?php echo count( $smileytmp ); ?>);"/>
                     </th>
-
-                    <th algin = "right" width = "10"><?php echo _ANN_ID; ?>
+                    <th align = "right" width = "10">
+                    	<?php echo _ANN_ID; ?>
                     </th>
-
-                    <th algin = "center" width = "200"><?php echo _KUNENA_EMOTICONS_SMILEY; ?>
+                    <th align = "center" width = "200">
+                    	<?php echo _KUNENA_EMOTICONS_SMILEY; ?>
                     </th>
-
-                    <th algin = "center" width = "100"><?php echo _KUNENA_EMOTICONS_CODE; ?>
+                    <th align = "center" width = "100">
+                    	<?php echo _KUNENA_EMOTICONS_CODE; ?>
                     </th>
-
-                    <th algin = "right" width = "200"><?php echo _KUNENA_EMOTICONS_URL; ?>
+                    <th align = "right" width = "200">
+                    	<?php echo _KUNENA_EMOTICONS_URL; ?>
                     </th>
-                    <th width = "*">&nbsp;
+                    <th width = "*">
+                    	&nbsp;
                     </th>
                 </tr>
                 <?php
@@ -3286,42 +3217,36 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
                         $s = &$smileytmp[$i];
                 	?>
                     <tr class = "row<?php echo $k;?>">
-                                <td width = "20">
-                                    <input type = "checkbox" id = "cb<?php echo $i;?>" name = "cid[]" value = "<?php echo $s->id; ?>" onClick = "isChecked(this.checked);">
-                                </td>
-                                <td width = "10">
-                                    <a href = "#edit" onclick = "return listItemTask('cb<?php echo $i; ?>','editsmiley')"><?php echo $s->id; ?></a>
-                                </td>
-
-                                <td width = "200">
-                                    <a href = "#edit" onclick = "return listItemTask('cb<?php echo $i; ?>','editsmiley')"><img src="<?php echo ($smileypath['live'] . $s->location); ?>" alt="<?php echo $s->location; ?>"  border="0" /></a>
-                                </td>
-
-                                <td width = "100">
-								<?php echo $s->code; ?>&nbsp;
-                                </td>
-
-                                <td width = "200">
-									<?php echo $s->location; ?>&nbsp;
-                                </td>
-                                <td>&nbsp;
-                                </td>
-
-                            </tr>
-
-
+						<td width = "20">
+							<input type = "checkbox" id = "cb<?php echo $i;?>" name = "cid[]" value = "<?php echo $s->id; ?>" onClick = "isChecked(this.checked);">
+						</td>
+                        <td width = "10">
+                        	<a href = "#edit" onclick = "return listItemTask('cb<?php echo $i; ?>','editsmiley')"><?php echo $s->id; ?></a>
+						</td>
+						<td width = "200">
+                        	<a href = "#edit" onclick = "return listItemTask('cb<?php echo $i; ?>','editsmiley')"><img src="<?php echo ($smileypath['live'] . $s->location); ?>" alt="<?php echo $s->location; ?>"  border="0" /></a>
+						</td>
+						<td width = "100">
+							<?php echo $s->code; ?>&nbsp;
+						</td>
+						<td width = "200">
+							<?php echo $s->location; ?>&nbsp;
+						</td>
+                        <td>
+                        	&nbsp;
+						</td>
+					</tr>
                      <?php
                     }
                 ?>
-            <tr>
-        		<th align = "center" colspan = "6"> <?php echo  $pageNavSP->getLimitBox().$pageNavSP->getResultsCounter().$pageNavSP->getPagesLinks(); ?>
-		        </th>
-		    </tr>
-
-      	</table>
+		            <tr>
+		        		<th align = "center" colspan = "6"> <?php echo  $pageNavSP->getLimitBox().$pageNavSP->getResultsCounter().$pageNavSP->getPagesLinks(); ?>
+				        </th>
+				    </tr>
+		      	</table>
                 <input type = "hidden" name = "option" value = "<?php echo $option; ?>"><input type = "hidden" name = "task" value = "showsmilies"><input type = "hidden" name = "boxchecked" value = "0">
                 <?php echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
-        </form>
+        	</form>
 <?php
         }//end function showsmilies
 
@@ -3339,7 +3264,6 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
         <div class="fbfunctitle"><?php echo _KUNENA_EMOTICONS_EDIT_SMILEY; ?></div>
         <form action = "index.php" method = "POST" name = "adminForm">
             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "adminform">
-
 				<tr align="center">
 					<td width="100"><?php echo _KUNENA_EMOTICONS_CODE; ?></td>
 					<td width="200"><input class="post" type="text" name="smiley_code" value="<?php echo $smileycfg['code'];?>" /></td>
@@ -3353,13 +3277,10 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
                 <tr>
 					<td width="100"><?php echo _KUNENA_EMOTICONS_EMOTICONBAR; ?></td>
                     <td><input type="checkbox" name="smiley_emoticonbar" value="1"<?php if($smileycfg['emoticonbar'] == 1) { echo 'checked="checked"';} ?> /></td>
+				</tr>
 				<tr>
-				<!--<tr align="center">
-					<td width="100">Smiley emotion</td>
-					<td><input class="post" type="text" name="smiley_emotion" value="{SMILEY_EMOTICON}" /></td>
-				</tr>-->
-				<tr>
-					<td colspan="2" align="center"><input type = "hidden" name = "option" value = "<?php echo $option; ?>"> <input type = "hidden" name = "task" value = "showsmilies"> <input type = "hidden" name = "boxchecked" value = "0"><input type = "hidden" name = "id" value = "<?php echo $smileycfg['id']; ?>">
+					<td colspan="2" align="center"><input type = "hidden" name = "option" value = "<?php echo $option; ?>">
+						<input type = "hidden" name = "task" value = "showsmilies"> <input type = "hidden" name = "boxchecked" value = "0"><input type = "hidden" name = "id" value = "<?php echo $smileycfg['id']; ?>">
 					</td>
 				</tr>
 			</table>
@@ -3380,7 +3301,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
 		}
 		//-->
 		</script>
-         <div class="fbfunctitle"><?php echo _KUNENA_EMOTICONS_NEW_SMILEY; ?></div>
+        <div class="fbfunctitle"><?php echo _KUNENA_EMOTICONS_NEW_SMILEY; ?></div>
         <form action = "index.php" method = "POST" name = "adminForm">
             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "adminform">
 
@@ -3397,6 +3318,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
                 <tr>
 					<td width="100"><?php echo _KUNENA_EMOTICONS_EMOTICONBAR; ?></td>
                     <td><input type="checkbox" name="smiley_emoticonbar" value="1" /></td>
+				</tr>
 				<tr>
 					<td colspan="2" align="center"><input type = "hidden" name = "option" value = "<?php echo $option; ?>"> <input type = "hidden" name = "task" value = "showsmilies"> <input type = "hidden" name = "boxchecked" value = "0">
 					</td>
@@ -3428,7 +3350,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
       <th align="left" ><?php echo _KUNENA_RANKSIMAGE;?></th>
       <th align="left" nowrap="nowrap"><?php echo _KUNENA_RANKS;?></th>
       <th align="left" nowrap="nowrap"><?php echo _KUNENA_RANKS_SPECIAL;?></th>
-      <th algin="center" nowrap="nowrap"><?php echo _KUNENA_RANKSMIN;?></th>
+      <th align="center" nowrap="nowrap"><?php echo _KUNENA_RANKSMIN;?></th>
       <th width="100%">&nbsp;</th>
     </tr>
     <?php
@@ -3445,19 +3367,18 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
       <td align="center"><?php echo $row->rank_min; ?></td>
       <td width="100%">&nbsp;</td>
     </tr>
-    <?php }  ?>
-
-    <input type="hidden" name="option" value="<?php echo $option; ?>">
-   	<input type="hidden" name="boxchecked" value="0">
-   	<input type="hidden" name="task" value="ranks">
-   	<?php echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
-
+<?php
+}
+?>
     <tr>
       <th align="center" colspan="7"><?php
       echo $pageNavSP->getLimitBox().$pageNavSP->getResultsCounter().$pageNavSP->getPagesLinks(); ?></th>
     </tr>
-
   </table>
+    <input type="hidden" name="option" value="<?php echo $option; ?>">
+   	<input type="hidden" name="boxchecked" value="0">
+   	<input type="hidden" name="task" value="ranks">
+   	<input type = "hidden" name = "limitstart" value = "0">
   </form>
 
 <?php } //end function showRanks
@@ -3481,18 +3402,19 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
 				<td width="100"><?php echo _KUNENA_RANKS; ?></td>
 				<td width="200"><input class="post" type="text" name="rank_title" value="" /></td>
 			</tr>
-   <tr>
+   			<tr>
 				<td width="100"><?php echo _KUNENA_RANKSIMAGE; ?></td>
-    <td><select name="rank_image" onchange="update_rank(this.options[selectedIndex].value);"><?php echo $filename_list; ?></select> &nbsp; <img name="rank_image" src="" border="0" alt="" /></td>
-			<tr>
-   <tr>
+    			<td><select name="rank_image" onchange="update_rank(this.options[selectedIndex].value);"><?php echo $filename_list; ?></select> &nbsp; <img name="rank_image" src="" border="0" alt="" /></td>
+			</tr>
+   			<tr>
 				<td width="100"><?php echo _KUNENA_RANKSMIN; ?></td>
-    <td><input class="post" type="text" name="rank_min" value="1" /></td>
-			<tr>
+    			<td><input class="post" type="text" name="rank_min" value="1" /></td>
+			</tr>
 			<tr>
 				<td width="100"><?php echo _KUNENA_RANKS_SPECIAL; ?></td>
 				<td><input type="checkbox" name="rank_special" value="1" /></td>
 			</tr>
+			<tr>
 					<td colspan="2" align="center"><input type = "hidden" name = "option" value = "<?php echo $option; ?>"> <input type = "hidden" name = "task" value = "showRanks"> <input type = "hidden" name = "boxchecked" value = "0">
 					</td>
 			</tr>
@@ -3524,15 +3446,15 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
 				<td width="100"><?php echo _KUNENA_RANKSIMAGE; ?></td>
 				<td><select name="rank_image" onchange="update_rank(this.options[selectedIndex].value);"><?php echo $filename_list; ?></select> &nbsp; <img name="rank_image" src="<?php echo $edit_img; ?>" border="0" alt="" /></td>
 			</tr>
-   <tr>
+   			<tr>
 				<td width="100"><?php echo _KUNENA_RANKSMIN; ?></td>
-    <td><input class="post" type="text" name="rank_min" value="<?php echo $row->rank_min;?>" /></td>
-			<tr>
+    			<td><input class="post" type="text" name="rank_min" value="<?php echo $row->rank_min;?>" /></td>
+			</tr>
 			<tr>
 				<td width="100"><?php echo _KUNENA_RANKS_SPECIAL; ?></td>
 				<td><input type="checkbox" name="rank_special" value="1"<?php if($row->rank_special == 1) { echo 'checked="checked"';} ?> /></td>
 			</tr>
-			</tr>
+			<tr>
 					<td colspan="2" align="center"><input type = "hidden" name = "option" value = "<?php echo $option; ?>"> <input type = "hidden" name = "task" value = "showRanks"> <input type = "hidden" name = "boxchecked" value = "0"><input type = "hidden" name = "id" value = "<?php echo $row->rank_id; ?>">
 			</tr>
 		</table>
@@ -3541,4 +3463,3 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
         <?php
 		}//end function newrank
 } //end class
-?>

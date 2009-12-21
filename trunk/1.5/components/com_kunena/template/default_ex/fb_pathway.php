@@ -21,6 +21,9 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
+
+global $func, $catid, $kunena_db, $id;
+
 $fbConfig =& CKunenaConfig::getInstance();
 ?>
 <!-- Pathway -->
@@ -135,11 +138,11 @@ if ($func != "")
 					$totalguest = $totalguest + 1;
 				}
 			}
-			if ($totalguest > 0) { 
-				if ($totalguest==1) { 
-					$fireonline .= '('.$totalguest.') '._WHO_ONLINE_GUEST; 
-				} else { 
-					$fireonline .= '('.$totalguest.') '._WHO_ONLINE_GUESTS; 
+			if ($totalguest > 0) {
+				if ($totalguest==1) {
+					$fireonline .= '('.$totalguest.') '._WHO_ONLINE_GUEST;
+				} else {
+					$fireonline .= '('.$totalguest.') '._WHO_ONLINE_GUESTS;
 				}
 			}
 			$fireonline .= '</div>';
@@ -147,7 +150,7 @@ if ($func != "")
 
 	$document=& JFactory::getDocument();
         $document->setTitle(htmlspecialchars_decode($jr_topic_title ?  $jr_topic_title : $fr_title_name) . ' - ' . stripslashes($fbConfig->board_title));
-	
+
 	$pathway1 = $firepath . $fireinfo;
 	$pathway2 = $firelast . $fireonline;
         unset($spath, $parent_ids, $catids, $results, $sname);

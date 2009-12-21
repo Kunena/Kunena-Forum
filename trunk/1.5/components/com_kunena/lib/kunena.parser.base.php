@@ -608,17 +608,6 @@ class ParserTask {
         # Push err to tasks ErrorArray
         $this->errarr[] = $err;
     }
-
-    function ErrorShow() {
-        # Show all errors of this task
-        reset($this->errarr);
-        while(list($tempkey, $tempval) = each($this->errarr)) {
-            // check interface
-            echo $tempval->Show();
-            echo '<br />';
-            echo "\n";
-        }
-    }
 }
 
 class ParserRun {

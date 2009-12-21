@@ -21,6 +21,9 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
+
+global $boardclass;
+
 $fbConfig =& CKunenaConfig::getInstance();
 ?>
 	<tr>

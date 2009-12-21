@@ -21,119 +21,119 @@ require_once (KUNENA_PATH_LIB . DS . 'kunena.config.class.php');
 */
 class CKunenaUserprofile extends JTable
 {
-	/** 
+	/**
 	* User ID
 	* @var int
 	**/
-	var $userid = null; 
+	var $userid = null;
 	var $view = null;
-	/** 
+	/**
 	* Signature
 	* @var string
 	**/
 	var $signature = null;
-	/** 
+	/**
 	* Is moderator?
 	* @var int
 	**/
 	var $moderator = null;
-	/** 
+	/**
 	* Ordering of posts
 	* @var int
 	**/
 	var $ordering = null;
-	/** 
+	/**
 	* User post count
 	* @var int
 	**/
 	var $posts = null;
-	/** 
+	/**
 	* Avatar image file
 	* @var string
 	**/
 	var $avatar = null;
-	/** 
+	/**
 	* User karma
 	* @var int
 	**/
 	var $karma = null;
 	var $karma_time = null;
-	/** 
+	/**
 	* Kunena Group ID
 	* @var int
 	**/
 	var $group_id = null;
-	/** 
+	/**
 	* Kunena Profile hits
 	* @var int
 	**/
 	var $uhits = null;
-	/** 
+	/**
 	* Personal text
 	* @var string
 	**/
 	var $personalText = null;
-	/** 
+	/**
 	* Gender
 	* @var int
 	**/
 	var $gender = null;
-	/** 
+	/**
 	* Birthdate
 	* @var string
 	**/
 	var $birthdate = null;
-	/** 
+	/**
 	* User Location
 	* @var string
 	**/
 	var $location = null;
-	/** 
+	/**
 	* ICQ ID
 	* @var string
 	**/
 	var $ICQ = null;
-	/** 
+	/**
 	* AIM ID
 	* @var string
 	**/
 	var $AIM = null;
-	/** 
+	/**
 	* YIM ID
 	* @var string
 	**/
 	var $YIM = null;
-	/** 
+	/**
 	* MSN ID
 	* @var string
 	**/
 	var $MSN = null;
-	/** 
+	/**
 	* SKYPE ID
 	* @var string
 	**/
 	var $SKYPE = null;
-	/** 
+	/**
 	* GTALK ID
 	* @var string
 	**/
 	var $GTALK = null;
-	/** 
+	/**
 	* Name of web site
 	* @var string
 	**/
 	var $websitename = null;
-	/** 
+	/**
 	* URL to web site
 	* @var string
 	**/
 	var $websiteurl = null;
-	/** 
+	/**
 	* Hide Email address
 	* @var int
 	**/
 	var $hideEmail = null;
-	/** 
+	/**
 	* Show online
 	* @var int
 	**/
@@ -141,7 +141,7 @@ class CKunenaUserprofile extends JTable
 	/**
 	* @param userid NULL=current user
 	*/
-	function CKunenaUserprofile($userid=null) 
+	function CKunenaUserprofile($userid=null)
 	{
 		$kunena_db = &JFactory::getDBO();
 		parent::__construct('#__fb_users', 'userid', $kunena_db);
@@ -279,7 +279,7 @@ class CKunenaUsers
 	}
 
 	function &getInstance() {
-		static $instance;
+		static $instance = NULL;
 		if (!$instance) $instance = new CKunenaUsers();
 		return $instance;
 	}

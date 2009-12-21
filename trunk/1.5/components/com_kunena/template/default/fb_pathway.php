@@ -21,6 +21,9 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
+
+global $func, $boardclass, $id, $catid, $kunena_db;
+
 $fbConfig =& CKunenaConfig::getInstance();
 ?>
 <!-- Pathway -->
@@ -36,6 +39,8 @@ if ($func != "")
         $catids = intval($catid);
         $jr_path_menu = array ();
         echo '<div class="path-element-first">' . CKunenaLink::GetKunenaLink( kunena_htmlspecialchars(stripslashes($fbConfig->board_title)) ) . '</div>';
+
+        $spath = '';
 
         while ($catids > 0)
         {
@@ -132,7 +137,7 @@ if ($func != "")
 			foreach ($users as $user) {
 				if ($user->userid != 0)
 				{
-					if($user==$lastone && !$totalguest){ 
+					if($user==$lastone && !$totalguest){
 					$divider = '';
 					}
 					if ( $user->showOnline > 0 ){

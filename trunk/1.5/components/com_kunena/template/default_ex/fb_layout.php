@@ -30,7 +30,7 @@ defined( '_JEXEC' ) or die('Restricted access');
  *  @param boolean    set title
  */
 function KUNENA_print_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_post = 0) {
-    echo '<div class="fb_pathway">' . fb_get_pathway($kunena_db, $obj_fb_cat, $bool_set_title, $obj_post) . '</div>';
+    echo '<div class="fb_pathway">' . KUNENA_get_pathway($kunena_db, $obj_fb_cat, $bool_set_title, $obj_post) . '</div>';
 }
 /**
  *  Function to print the pathway
@@ -63,7 +63,7 @@ function KUNENA_get_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_post
     // List of    Categories
     if ($objCatParentInfo)
     {
-		if ($bool_set_title) 
+		if ($bool_set_title)
 		{
 			$document->setTitle(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($obj_fb_cat->getName()) . ' - ' . stripslashes($fbConfig->board_title));
 		}

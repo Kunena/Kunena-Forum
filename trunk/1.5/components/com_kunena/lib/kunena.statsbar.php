@@ -116,7 +116,7 @@ class phpGraph
 
     function SetShowLabels($lables)
     {
-        $this->_ShowLabels = $labels;
+        $this->_ShowLabels = $lables;
     }
 
     function SetGraphWidth($width)

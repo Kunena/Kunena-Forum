@@ -744,12 +744,16 @@ function showConfig($option)
     }
 
     asort ($templatelist);
-    asort ($imagesetlist);
 
-    while (list($key, $val) = each($templatelist)) {
+    foreach ($templatelist as $key=>$val)
+    {
 		$templatelistitems[] = JHTML::_('select.option',  $val, $val);
     }
-    while (list($key, $val) = each($imagesetlist)) {
+
+    asort ($imagesetlist);
+
+    foreach ($imagesetlist as $key=>$val)
+    {
 		$imagesetlistitems[] = JHTML::_('select.option',  $val, $val);
     }
 

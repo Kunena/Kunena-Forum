@@ -40,7 +40,7 @@ Kunena 1.6.0
 20-Dec-2009 fxstein
 + [#19064] new bbcodes for table, th, tr & td as well as module
 # [#19065] fix various warnings and errors identified by zend studio code analysis
-# [#19064] fix broken ftp write function as part of code cleanup
+- [#19065] remove unsued kunena.pathway.old.php as part of cleanup
 
 19-Dec-2009 Matias
 ^ [#15886] Merge from /branches/1.5-xillibit:1254-1256,1303-1307,1312-1313

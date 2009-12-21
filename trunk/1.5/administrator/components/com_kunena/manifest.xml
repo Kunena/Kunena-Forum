@@ -3,7 +3,7 @@
 <install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>
 	<version>1.6.0-DEV</version>
-	<versionname>Gespräch</versionname>
+	<versionname>Gespraech</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
 	<author>www.Kunena.com</author>
@@ -38,7 +38,6 @@
 			<folder>install</folder>
 			<folder>language</folder>
 			<folder>lib</folder>
-			<folder>plugin</folder>
         </files>
     <menu>Kunena Forum</menu>
 	</administration>

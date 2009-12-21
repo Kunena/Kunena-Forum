@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0
 
+21-Dec-2009 fxstein
+# [#19086] Fix language file regression from 1.5.8
+
 20-Dec-2009 Matias
 # [#19079] Fix broken layout with too long strings
 ^ [#18763] Update version info to 1.6.0-DEV

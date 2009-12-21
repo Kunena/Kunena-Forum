@@ -39,6 +39,7 @@ Kunena 1.6.0
 21-Dec-2009 fxstein
 # [#19086] Fix language file regression from 1.5.8
 # [#19065] Cleanup backend html based on code analysis - fixed various bugs
+# [#19065] Cleanup installer html based on code analysis - fixed various bugs
 
 20-Dec-2009 Matias
 # [#19079] Fix broken layout with too long strings

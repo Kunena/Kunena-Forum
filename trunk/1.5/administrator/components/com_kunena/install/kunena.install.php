@@ -129,7 +129,7 @@ function com_install()
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td width="20%" valign="top" style="padding: 10px;"><a
-			href="index2.php?option=com_kunena"><img
+			href="index.php?option=com_kunena"><img
 			src="components/com_kunena/images/kunena.logo.png" alt="Kunena"
 			border="0"></a></td>
 
@@ -151,22 +151,24 @@ function com_install()
 			?>
 
 			<li class="fbscslisterror">
-			<div
-				style="border: 1px solid #FF6666; background: #FFCC99; padding: 10px; text-align: left; margin: 10px 0;">
-			<img src='images/publish_x.png' align='absmiddle' />
+			<div style="border: 1px solid #FF6666; background: #FFCC99; padding: 10px; text-align: left; margin: 10px 0;">
+			<img src='images/publish_x.png' align='middle' />
 			Creation/permission setting of the following directories failed: <br />
-			<pre> <?php echo JPATH_ROOT; ?>/images/fbfiles/
+			<pre>
+			<?php echo JPATH_ROOT;?>/images/fbfiles/
 			<?php echo JPATH_ROOT;?>/images/fbfiles/avatars
 			<?php echo JPATH_ROOT;?>/images/fbfiles/avatars/gallery (you have to put avatars inside if you want to use it)
 			<?php echo JPATH_ROOT;?>/images/fbfiles/category_images
 			<?php echo JPATH_ROOT;?>/images/fbfiles/files
 			<?php echo JPATH_ROOT;?>/images/fbfiles/images
-</pre> a) You can copy the contents of _kunena.files.distribution under
+			</pre>
+			a) You can copy the contents of _kunena.files.distribution under
 			components/com_kunena to your Joomla root, under images/ folder.
 
 			<br />
 			b) If you already have the contents there, but Kunena installation
-			was not able to make them writable, then please do it manually.</div>
+			was not able to make them writable, then please do it manually.
+			</div>
 
 			</li>
 
@@ -192,38 +194,6 @@ function com_install()
 	{
 		// Minimum version requirements not satisfied
 		?>
-<style>
-.fbscs {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-.fbscslist {
-	list-style: none;
-	padding: 5px 10px;
-	margin: 3px 0;
-	border: 1px solid #66CC66;
-	background: #D6FEB8;
-	display: block;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	color: #333;
-}
-
-.fbscslisterror {
-	list-style: none;
-	padding: 5px 10px;
-	margin: 3px 0;
-	border: 1px solid #FF9999;
-	background: #FFCCCC;
-	display: block;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	color: #333;
-}
-</style>
-
 <div style="border: 1px solid #ccc; background: #FBFBFB; padding: 10px; text-align: left; margin: 10px 0;">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
@@ -243,16 +213,15 @@ function com_install()
 		<br />
 		<strong>mysql version: <font color="<?php echo version_compare($mysqlversion, KUNENA_MIN_MYSQL, '>')?'green':'red'; ?>"><?php echo $mysqlversion; ?></font> (Required &gt; <?php echo KUNENA_MIN_MYSQL; ?>)</strong>
 		</div>
-
-		<?php
+</table>
+</div>
+<?php
 	}
 
 	// Rest of footer
-	?>
-		<div
-			style="border: 1px solid #99CCFF; background: #D9D9FF; padding: 20px; margin: 20px; clear: both;">
+?>
+		<div style="border: 1px solid #99CCFF; background: #D9D9FF; padding: 20px; margin: 20px; clear: both;">
 		<strong>Thank you for using Kunena!</strong> <br />
-
 		Kunena Forum Component <em>for Joomla! </em> &copy; by <a
 			href="http://www.Kunena.com" target="_blank">www.Kunena.com</a>.
 		All rights reserved.</div>
@@ -261,6 +230,4 @@ function com_install()
 </table>
 </div>
 	<?php
-
 }
-?>

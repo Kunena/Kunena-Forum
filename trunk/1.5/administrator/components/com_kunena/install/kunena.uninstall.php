@@ -22,6 +22,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+global $lang;
+
 // Kunena wide defines
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 

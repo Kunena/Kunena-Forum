@@ -26,6 +26,8 @@ require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'k
 
 global $task, $lang;
 
+$task = JRequest::getCmd( 'task' );
+
 if ($task == 'install')
 {
 	require_once (KUNENA_PATH_ADMIN_INSTALL .DS. 'kunena.install.php');

@@ -278,21 +278,8 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                 {
                     $row = $rows[$i];
 
-                    if ($row->parent == 0)
-                    {
-                ?>
-
-                        <tr bgcolor = "#D4D4D4">
-                <?php
-                    }
-                    else
-                    {
-                ?>
-
-                        <tr class = "row<?php echo $k; ?>">
-                <?php
-                    }
-                ?>
+                    ?>
+                    <tr <?php echo ($row->parent == 0)? 'bgcolor = "#D4D4D4"': 'class = "row'. $k . '"'; ?>>
 
                     <td width = "20" align = "right"><?php echo $i + $pageNav->limitstart + 1; ?>
                     </td>
@@ -415,13 +402,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                 }
 
                 // do field validation
-                try
-                {
-                    document.adminForm.onsubmit();
-                }
-                catch (e)
-                {
-                }
+                document.adminForm.onsubmit();
 
                 if (form.name.value == "")
                 {
@@ -477,7 +458,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                         </td>
 
                         <td>
-                            <textarea class = "inputbox" cols = "50" rows = "3" name = "headerdesc" id = "headerdesc" style = "width:500px" width = "500"><?php echo stripslashes($row->headerdesc); ?></textarea>
+                            <textarea class = "inputbox" cols = "50" rows = "3" name = "headerdesc" id = "headerdesc" style = "width:500px"><?php echo stripslashes($row->headerdesc); ?></textarea>
                         </td>
                     </tr>
             </table>
@@ -1284,7 +1265,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <table size = 100%>
+                        <table width = 100%>
                             <tr>
                               <td>
                                 1: <img src = "<?php echo JURI::root();?>/components/com_kunena/template/<?php echo $fbConfig->template ;?>/images/english/graph/col1m.png" width = "15" height = "4">
@@ -2547,29 +2528,29 @@ echo $pane->endPane();
 
             <table class = "adminlist" border = 0 cellspacing = 0 cellpadding = 3 width = "100%">
                 <tr>
-                    <th algin = "left" width = "20">
+                    <th align = "left" width = "20">
                         <input type = "checkbox" name = "toggle" value = "" onclick = "checkAll(<?php echo count( $profileList ); ?>);"/>
                     </th>
 
-                    <th algin = "left" width = "10"><?php echo _ANN_ID; ?>
+                    <th align = "left" width = "10"><?php echo _ANN_ID; ?>
                     </th>
 
-                    <th algin = "left" width = "10"><?php echo _KUNENA_USRL_NAME; ?>
+                    <th align = "left" width = "10"><?php echo _KUNENA_USRL_NAME; ?>
                     </th>
 
-                    <th algin = "left" width = "10"><?php echo _KUNENA_USRL_REALNAME; ?>
+                    <th align = "left" width = "10"><?php echo _KUNENA_USRL_REALNAME; ?>
                     </th>
 
-                    <th algin = "left" width = "100"><?php echo _GEN_EMAIL; ?>
+                    <th align = "left" width = "100"><?php echo _GEN_EMAIL; ?>
                     </th>
 
-                    <th algin = "left" width = "15"><?php echo _VIEW_MODERATOR; ?>
+                    <th align = "left" width = "15"><?php echo _VIEW_MODERATOR; ?>
                     </th>
 
-                    <th algin = "left" width = "10"><?php echo _KUNENA_VIEW; ?>
+                    <th align = "left" width = "10"><?php echo _KUNENA_VIEW; ?>
                     </th>
 
-                    <th algin = "left" width = "*"><?php echo _GEN_SIGNATURE; ?>
+                    <th align = "left" width = "*"><?php echo _GEN_SIGNATURE; ?>
                     </th>
                 </tr>
 
@@ -2729,7 +2710,7 @@ echo $pane->endPane();
                                 </td>
 
                                 <td width = "20">
-                                    <a href = "index.php?option=com_kunena&task=userprofile&do=show&user_id=<?php echo $pl->id;?>"><?php echo $pl->id; ?>&nbsp;
+                                    <a href = "index.php?option=com_kunena&task=userprofile&do=show&user_id=<?php echo $pl->id;?>"><?php echo $pl->id; ?></a>&nbsp;
                                 </td>
 
                                 <td>

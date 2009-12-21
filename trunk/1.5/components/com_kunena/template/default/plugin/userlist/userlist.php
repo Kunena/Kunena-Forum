@@ -250,21 +250,6 @@ class HTML_userlist_content
                                 ?>
 
                                 <?php
-                                if ($fbConfig->userlist_group)
-                                {
-                                ?>
-
-                                    <th class = "th-6 <?php echo $boardclass; ?>sectiontableheader" align="center">
-<?php echo _KUNENA_USRL_GROUP; ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=group_id&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=group_id&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
-                                    </th>
-
-                                <?php
-                                }
-                                ?>
-
-                                <?php
                                 if ($fbConfig->userlist_posts)
                                 {
                                 ?>
@@ -490,19 +475,6 @@ class HTML_userlist_content
 
                                         <td class = "td-5  fbm" align="center">
 						<?php echo CKunenaLink::GetProfileLink($fbConfig, $ulrow->id, $ulrow->username); ?>
-                                        </td>
-
-                                    <?php
-                                    }
-                                    ?>
-
-                                    <?php
-                                    if ($fbConfig->userlist_group)
-                                    {
-                                    ?>
-
-                                        <td class = "td-6  fbs" align="center">
-                                            <span class = "view-group_<?php echo $ulrow->group_id; ?>"> <?php echo $ulrow->title; ?> </span>
                                         </td>
 
                                     <?php

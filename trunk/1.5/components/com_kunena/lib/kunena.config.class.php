@@ -319,7 +319,6 @@ class CKunenaConfig extends CKunenaConfigBase
     var $userlist_avatar         = 1;
     var $userlist_name           = 1;
     var $userlist_username       = 1;
-    var $userlist_group          = 0;
     var $userlist_posts          = 1;
     var $userlist_karma          = 1;
     var $userlist_email          = 0;

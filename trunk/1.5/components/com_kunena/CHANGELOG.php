@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0
 
+21-Dec-2009 Xillibit
+- [#19075] Remove group from userlist / user profile
+
 21-Dec-2009 fxstein
 # [#19086] Fix language file regression from 1.5.8
 

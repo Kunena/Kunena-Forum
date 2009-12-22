@@ -247,8 +247,8 @@ class CKunenaConfig extends CKunenaConfigBase
     var $newchar                 = 'NEW!';
     var $jmambot                 = 0;
     var $disemoticons            = 0;
-    var $template                = 'default_ex';
-    var $templateimagepath       = 'default_ex';
+    var $template                = 'default';
+    var $templateimagepath       = 'default';
     var $joomlastyle             = 0;
     var $showannouncement        = 1;
     var $avataroncat             = 0;
@@ -329,7 +329,7 @@ class CKunenaConfig extends CKunenaConfigBase
     var $showlatest              = 1;
     var $latestcount             = 10;
     var $latestcountperpage      = 5;
-    var $latestcategory          = ''; //Also used by default_ex recent topics
+    var $latestcategory          = ''; //Also used by default recent topics
     var $latestsinglesubject     = 1;
     var $latestreplysubject      = 1;
     var $latestsubjectlength     = 100;

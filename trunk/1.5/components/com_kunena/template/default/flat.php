@@ -23,7 +23,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $fbConfig =& CKunenaConfig::getInstance();
-global $is_Moderator;
+global $kunena_is_moderatorerator;
 $kunena_my = &JFactory::getUser();
 // Func Check
 if (strtolower($func) == 'latest' ||  strtolower($func) == '')
@@ -96,7 +96,7 @@ if (count($messages[0]) > 0)
         <?php  if ($funclatest || $funcmylatest){ } else {  ?>
             <thead>
                 <tr>
-                    <th colspan = "<?php echo ($is_Moderator?"5":"4");?>">
+                    <th colspan = "<?php echo ($kunena_is_moderatorerator?"5":"4");?>">
                         <div class = "fb_title_cover fbm">
                             <span class = "fb_title fbl"><b><?php echo _KUNENA_THREADS_IN_FORUM; ?>:</b> <?php echo '' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) . ''; ?></span>
                         </div>
@@ -129,7 +129,7 @@ if (count($messages[0]) > 0)
                     <th class = "th-6 <?php echo $boardclass ?>sectiontableheader" width="27.5%" align="left"><?php echo _GEN_LAST_POST; ?></th>
 
                     <?php
-                    if ($is_Moderator)
+                    if ($kunena_is_moderatorerator)
                     {
                     ?>
                         <th class = "th-7 <?php echo $boardclass ?>sectiontableheader" width="1%" align="center">[X]</th>
@@ -156,7 +156,7 @@ if (count($messages[0]) > 0)
                 ?>
 
                         <tr>
-                            <td class = "<?php echo $boardclass ?>contentheading fbm" id = "fb_spot" colspan = "<?php echo ($is_Moderator?"5":"4");?>" align="left">
+                            <td class = "<?php echo $boardclass ?>contentheading fbm" id = "fb_spot" colspan = "<?php echo ($kunena_is_moderatorerator?"5":"4");?>" align="left">
                                 <span><?php if(!$funcmylatest) {echo _KUNENA_SPOTS;} else {echo _USER_FAVORITES;} ?></span>
                             </td>
                         </tr>
@@ -171,7 +171,7 @@ if (count($messages[0]) > 0)
                 ?>
 
                     <tr>
-                        <td class = "<?php echo $boardclass ?>contentheading fbm" id = "fb_fspot" colspan = "<?php echo ($is_Moderator?"5":"4");?>" align="left">
+                        <td class = "<?php echo $boardclass ?>contentheading fbm" id = "fb_fspot" colspan = "<?php echo ($kunena_is_moderatorerator?"5":"4");?>" align="left">
                             <span><?php if(!$funcmylatest) {echo _KUNENA_FORUM;} else {echo _KUNENA_MY_DISCUSSIONS_DETAIL;} ?></span>
                         </td>
                     </tr>
@@ -453,7 +453,7 @@ if (count($messages[0]) > 0)
                             </td>
 
                             <?php
-                            if ($is_Moderator)
+                            if ($kunena_is_moderatorerator)
                             {
                             ?>
 
@@ -474,7 +474,7 @@ if (count($messages[0]) > 0)
 
             <?php
 
-            if ($is_Moderator)
+            if ($kunena_is_moderatorerator)
             {
             ?>
 

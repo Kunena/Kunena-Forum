@@ -149,7 +149,7 @@ if (count($categories[0]) > 0)
     {
         $obj_fb_cat = new jbCategory($kunena_db, $cat->id);
 
-        $is_Mod = fb_has_moderator_permission($kunena_db, $obj_fb_cat, $kunena_my->id, $is_admin);
+        $kunena_is_moderator = fb_has_moderator_permission($kunena_db, $obj_fb_cat, $kunena_my->id, $kunena_is_admin);
 
         if (in_array($cat->id, $allow_forum))
         {
@@ -222,7 +222,7 @@ if (count($categories[0]) > 0)
                         {
 
                             $obj_fb_cat = new jbCategory($kunena_db, $singlerow->id);
-                            $is_Mod = fb_has_moderator_permission($kunena_db, $obj_fb_cat, $kunena_my->id, $is_admin);
+                            $kunena_is_moderator = fb_has_moderator_permission($kunena_db, $obj_fb_cat, $kunena_my->id, $kunena_is_admin);
 
                             if (in_array($singlerow->id, $allow_forum))
                             {
@@ -279,11 +279,11 @@ if (count($categories[0]) > 0)
                                 $nummodIDs = count($modIDs);
                                 $numPending = 0;
 
-                                if ((in_array($kunena_my->id, $modIDs)) || $is_admin == 1)
+                                if ((in_array($kunena_my->id, $modIDs)) || $kunena_is_admin == 1)
                                 {
                                     $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE catid='{$singlerow->id}' AND hold='1'");
                                     $numPending = $kunena_db->loadResult();
-                                    $is_Mod = 1;
+                                    $kunena_is_moderator = 1;
                                 }
 
                                 $numPending = (int)$numPending;
@@ -546,7 +546,7 @@ if (count($categories[0]) > 0)
                                         <?php
                                         }
 
-                                        if ($is_Mod)
+                                        if ($kunena_is_moderator)
                                         {
                                             if ($numPending > 0)
                                             {

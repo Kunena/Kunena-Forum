@@ -303,7 +303,7 @@ DEFINE('_COM_A_RSS_HISTORY_WEEK', '1 Week');
 DEFINE('_COM_A_RSS_HISTORY_MONTH', '1 Month');
 DEFINE('_COM_A_RSS_HISTORY_YEAR', '1 Year');
 DEFINE('_COM_A_FBDEFAULT_PAGE', 'Default Kunena Page');
-DEFINE('_COM_A_FBDEFAULT_PAGE_DESC', 'Select the default Kunena page that is displayed when a forum link is clicked or the forum is initially entered. Default is Recent Discussions. Should be set to Categories for templates other than default_ex. If My Discussions is selected, guests will default to Recent Discussions.');
+DEFINE('_COM_A_FBDEFAULT_PAGE_DESC', 'Select the default Kunena page that is displayed when a forum link is clicked or the forum is initially entered. Default is Recent Discussions. Should be set to Categories for templates other than default. If My Discussions is selected, guests will default to Recent Discussions.');
 DEFINE('_COM_A_FBDEFAULT_PAGE_RECENT', 'Recent Discussions');
 DEFINE('_COM_A_FBDEFAULT_PAGE_MY', 'My Discussions');
 DEFINE('_COM_A_FBDEFAULT_PAGE_CATEGORIES', 'Categories');
@@ -380,7 +380,7 @@ DEFINE('_POST_UNSUBSCRIBED_TOPIC', 'This thread has been removed from your subsc
 DEFINE('_POST_NO_UNSUBSCRIBED_TOPIC', 'This thread has <b>NOT</b> been removed from your subscriptions.');
 DEFINE('_POST_SUCCESS_UNSUBSCRIBE', 'Your request to remove from subscriptions has been processed.');
 DEFINE('_POST_NO_DEST_CATEGORY', 'No destination category was selected. Nothing was moved.');
-// Default_EX template
+// default template
 DEFINE('_KUNENA_ALL_DISCUSSIONS', 'Recent Discussions');
 DEFINE('_KUNENA_MY_DISCUSSIONS', 'My Discussions');
 DEFINE('_KUNENA_MY_DISCUSSIONS_DETAIL', 'Discussions I have started or replied to');

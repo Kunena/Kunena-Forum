@@ -212,7 +212,7 @@ else if (file_exists(KUNENA_PATH_TEMPLATE .DS. $kunena_config->template))
     }
 else
 {
-    $fb_cur_template = 'default_ex';
+    $fb_cur_template = 'default';
     }
 
 if (strlen($fb_user_img_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_template .DS. 'images'))
@@ -225,7 +225,7 @@ else if (file_exists(KUNENA_PATH_TEMPLATE .DS. $kunena_config->templateimagepath
     }
 else
 {
-    $fb_cur_img_template = 'default_ex';
+    $fb_cur_img_template = 'default';
     }
 
 // only for preview module - maybe used later by users to change template

@@ -174,7 +174,7 @@ else
                     {
                         $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE catid='{$singlerow->id}' AND hold='1'");
                         $numPending = $kunena_db->loadResult();
-                        $is_Mod = 1;
+                        $kunena_is_moderator = 1;
                     }
 
                     $numPending = (int)$numPending;

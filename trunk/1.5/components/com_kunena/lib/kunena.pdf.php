@@ -69,7 +69,7 @@ function dofreePDF($kunena_db)
     $kunena_config =& CKunenaConfig::getInstance();
 
     require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
-    $is_Mod = 0;
+    $kunena_is_moderator = 0;
 
     $catid = JRequest::getInt('catid', 2);
 
@@ -78,14 +78,14 @@ function dofreePDF($kunena_db)
         $kunena_db->setQuery("SELECT userid FROM #__fb_moderation WHERE catid='{$catid}' AND userid='{$kunena_my->id}'");
 
         if ($kunena_db->loadResult()) {
-            $is_Mod = 1;
+            $kunena_is_moderator = 1;
         }
     }
     else {
-        $is_Mod = 1;
+        $kunena_is_moderator = 1;
     } //superadmins always are
 
-    if (!$is_Mod)
+    if (!$kunena_is_moderator)
     {
         //get all the info on this forum:
         $kunena_db->setQuery("SELECT id, pub_access, pub_recurse, admin_access, admin_recurse FROM #__fb_categories WHERE id='{$catid}'");
@@ -96,7 +96,7 @@ function dofreePDF($kunena_db)
         $allow_forum = explode(',', CKunenaTools::getAllowedForums($kunena_my->id, $aro_group->id, $kunena_acl));
     }
 
-	if ($is_Mod || in_array($catid, $allow_forum))
+	if ($kunena_is_moderator || in_array($catid, $allow_forum))
     {
         $id = JRequest::getInt('id', 1);
         $catid = JRequest::getInt('catid', 2);

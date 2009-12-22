@@ -369,7 +369,7 @@ if ($fbConfig->fb_profile == 'cb')
                         echo " " . $msg_reply;
                         echo " " . $msg_quote;
 
-			if ($is_Moderator) echo ' </div><div class="fb_message_buttons_row">';
+			if ($kunena_is_moderatorerator) echo ' </div><div class="fb_message_buttons_row">';
 
                         if (isset($msg_merge)) {
                              echo " " . $msg_merge;

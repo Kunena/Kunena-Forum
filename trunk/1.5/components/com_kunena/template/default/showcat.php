@@ -24,7 +24,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 $app =& JFactory::getApplication();
 $fbConfig =& CKunenaConfig::getInstance();
 $fbSession =& CKunenaSession::getInstance();
-global $is_Moderator;
+global $kunena_is_moderatorerator;
 
 function KunenaShowcatPagination($catid, $page, $totalpages, $maxpages) {
     $startpage = ($page - floor($maxpages/2) < 1) ? 1 : $page - floor($maxpages/2);
@@ -248,7 +248,7 @@ foreach ($messagelist as $message)
 
 
                 <?php
-                if ($is_Moderator || ($forumLocked == 0 && ($kunena_my->id > 0 || $fbConfig->pubwrite)))
+                if ($kunena_is_moderatorerator || ($forumLocked == 0 && ($kunena_my->id > 0 || $fbConfig->pubwrite)))
                 {
                     //this user is allowed to post a new topic:
                     $forum_new = CKunenaLink::GetPostNewTopicLink($catid, isset($fbIcons['new_topic']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);

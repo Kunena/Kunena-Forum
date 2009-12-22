@@ -159,7 +159,7 @@ function KUNENA_get_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_post
  *             Only needs to be passed when type==3 or type==2
  * @param int $thread
  *             Only needs to be passed when type==3 or type==2 (well actually just give 0 when type==2)
- * @param boolean $is_moderator
+ * @param boolean $kunena_is_moderatorerator
  *             Only needs to be passed when type==2
  * @param int $numPending
  *             Number of pending messages, only needs to be passed when type==2
@@ -167,7 +167,7 @@ function KUNENA_get_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_post
  *             The menu :-)
  */
 
-function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = "", $catid = 0, $id = 0, $thread = 0, $is_moderator = false, $numPending = 0)
+function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = "", $catid = 0, $id = 0, $thread = 0, $kunena_is_moderatorerator = false, $numPending = 0)
 {
 	$func = strtolower(JRequest::getCmd('func', ''));
 	if ($func == '') // Set default as per config settings
@@ -245,7 +245,7 @@ function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = 
 //                $header .= CKunenaLink::GetViewLink('showcat', $id, $catid, 'flat', '<span>'. _GEN_FLAT_VIEW .'</span>');
 //                $header .= '</li>';
 //			}
-            if ($is_moderator)
+            if ($kunena_is_moderatorerator)
             {
                 if ($numPending > 0)
                 {

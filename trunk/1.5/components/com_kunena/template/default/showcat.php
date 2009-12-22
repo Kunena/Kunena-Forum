@@ -23,6 +23,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 $fbConfig =& CKunenaConfig::getInstance();
 $fbSession =& CKunenaSession::getInstance();
 global $is_Moderator;
+global $messages;
 
 $kunena_db = &JFactory::getDBO();
 require_once(KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
@@ -36,8 +37,6 @@ $moderatedForum = 0;
 $forumLocked = 0;
 $topicLocked = 0;
 $topicSticky = 0;
-
-unset($allow_forum);
 
 //get the allowed forums and turn it into an array
 $allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):array();

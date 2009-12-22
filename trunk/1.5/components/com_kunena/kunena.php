@@ -31,10 +31,12 @@ require_once (JPATH_BASE  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'k
 
 global $fbIcons;
 global $is_Moderator;
+global $my_id;
 
 // ERROR: global scope mix
 global $message;
 global $Itemid;
+global $maxPosts;
 
 // Get all the variables we need and strip them in case
 $action 		= JRequest::getCmd('action', '');
@@ -149,11 +151,10 @@ else
 // =======================================================================================
 // Forum is online:
 
-global $lang, $fbIcons;
+global $lang, $fbIcons, $boardclass;
 global $is_Moderator;
 
-// ERROR: global scope mix
-global $message;
+global $message, $settings;
 
 // Central Location for all internal links
 require_once (KUNENA_PATH_LIB .DS. "kunena.link.class.php");
@@ -203,9 +204,10 @@ $fromBot = 0;
 $prefview = $fbConfig->default_view;
 
 // JOOMLA STYLE CHECK
-if ($fbConfig->joomlastyle < 1) {
+if ($fbConfig->joomlastyle < 1)
+{
     $boardclass = "fb_";
-    }
+}
 
 // Include preview here before inclusion of other files
 if ($func == "getpreview")

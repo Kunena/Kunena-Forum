@@ -23,6 +23,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $func, $catid, $kunena_db, $id;
+global $kunena_topic_tile, $kunena_pathway1;
 
 $fbConfig =& CKunenaConfig::getInstance();
 ?>
@@ -33,7 +34,7 @@ $sfunc = JRequest::getVar("func", null);
 if ($func != "")
 {
         $catids = intval($catid);
-        $jr_path_menu = array ();
+        $kunena_path_menu = array ();
 
 		$fr_title_name = _KUNENA_CATEGORIES;
 		while ($catids > 0)
@@ -49,10 +50,10 @@ if ($func != "")
             if ($catid == $catids && $sfunc != "view")
             {
                 $fr_title_name = $fr_name;
-                $jr_path_menu[] = $fr_name;
+                $kunena_path_menu[] = $fr_name;
             }
             else {
-                $jr_path_menu[] = $sname;
+                $kunena_path_menu[] = $sname;
             }
 
             // next looping
@@ -60,21 +61,21 @@ if ($func != "")
         }
 
         //reverse the array
-        $jr_path_menu = array_reverse($jr_path_menu);
+        $kunena_path_menu = array_reverse($kunena_path_menu);
 
         //attach topic name
-	$jr_topic_title = '';
+	$kunena_topic_tile = '';
         if ($sfunc == "view" and $id)
         {
             $sql = "SELECT subject, id FROM #__fb_messages WHERE id='{$id}'";
             $kunena_db->setQuery($sql);
-            $jr_topic_title = stripslashes(html_entity_decode_utf8($kunena_db->loadResult()));
-            $jr_path_menu[] = $jr_topic_title;
+            $kunena_topic_tile = stripslashes(html_entity_decode_utf8($kunena_db->loadResult()));
+            $kunena_path_menu[] = $kunena_topic_tile;
         }
 
         // print the list
-		if (count($jr_path_menu) == 0) $jr_path_menu[] = '';
-        $jr_forum_count = count($jr_path_menu);
+		if (count($kunena_path_menu) == 0) $kunena_path_menu[] = '';
+        $jr_forum_count = count($kunena_path_menu);
 
 		$fireinfo = '';
         if (!empty($forumLocked))
@@ -97,10 +98,10 @@ if ($func != "")
         for ($i = 0; $i < $jr_forum_count; $i++)
         {
             if ($i == $jr_forum_count-1) {
-                $firelast .= '<br /><div class="path-element-last">' . $jr_path_menu[$i] . $fireinfo . '</div>';
+                $firelast .= '<br /><div class="path-element-last">' . $kunena_path_menu[$i] . $fireinfo . '</div>';
             }
             else {
-                $firepath .= '<div class="path-element">' . $jr_path_menu[$i] . '</div>';
+                $firepath .= '<div class="path-element">' . $kunena_path_menu[$i] . '</div>';
             }
         }
 
@@ -149,14 +150,14 @@ if ($func != "")
        }
 
 	$document=& JFactory::getDocument();
-        $document->setTitle(htmlspecialchars_decode($jr_topic_title ?  $jr_topic_title : $fr_title_name) . ' - ' . stripslashes($fbConfig->board_title));
+        $document->setTitle(htmlspecialchars_decode($kunena_topic_tile ?  $kunena_topic_tile : $fr_title_name) . ' - ' . stripslashes($fbConfig->board_title));
 
-	$pathway1 = $firepath . $fireinfo;
-	$pathway2 = $firelast . $fireonline;
+	$kunena_pathway1 = $firepath . $fireinfo;
+	$kunena_pathway2 = $firelast . $fireonline;
         unset($spath, $parent_ids, $catids, $results, $sname);
 
       echo '<div class = "'. $boardclass .'forum-pathway">';
-      echo $pathway1.$pathway2;
+      echo $kunena_pathway1.$kunena_pathway2;
       echo '</div>';
 }
 ?>

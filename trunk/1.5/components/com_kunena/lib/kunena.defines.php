@@ -19,6 +19,7 @@ define('KUNENA_COMPONENT_NAME', 'com_kunena');
 define('KUNENA_LANGUAGE_DEFAULT', 'english');
 define('KUNENA_TEMPLATE_DEFAULT', 'default');
 
+global $lang;
 $language =& JFactory::getLanguage();
 $lang = $language->getBackwardLang();
 

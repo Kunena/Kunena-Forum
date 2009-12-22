@@ -28,7 +28,8 @@ $fbSession =& CKunenaSession::getInstance();
 $kunena_db = &JFactory::getDBO();
 $kunena_my = &JFactory::getUser();
 
-global $is_Moderator;
+global $is_Moderator, $boardclass, $fbIcons, $settings, $Itemid, $kunenaProfile;
+global $kunena_topic_tile, $maxPosts, $messages;
 
 $kunena_acl = &JFactory::getACL();
 //securing form elements
@@ -48,8 +49,7 @@ $allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):arr
 $forumLocked = 0;
 $topicLocked = 0;
 
-$kunena_db->setQuery("SELECT * FROM #__fb_messages AS a LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.id='{$id}' AND a.hold='0'");
-unset($this_message);
+$kunena_db->setQuery("SELECT * FROM #__fb_messages AS a LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.id='$id' AND a.hold='0'");
 $this_message = $kunena_db->loadObject();
 check_dberror('Unable to load message.');
 
@@ -179,7 +179,6 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         }
 
         //Get the category name for breadcrumb
-        unset($objCatInfo, $objCatParentInfo);
         $kunena_db->setQuery("SELECT * FROM #__fb_categories WHERE id='{$catid}'");
         $objCatInfo = $kunena_db->loadObject();
         //Get Parent's cat.name for breadcrumb
@@ -187,7 +186,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         $objCatParentInfo = $kunena_db->loadObject();
 
         $forumLocked = $objCatInfo->locked;
-        
+
         //Perform subscriptions check only once
         $fb_cansubscribe = 0;
         if ($fbConfig->allowsubscriptions && ("" != $kunena_my->id || 0 != $kunena_my->id))
@@ -346,7 +345,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                     <tr>
                         <th align="left">
                              <div class = "fb_title_cover  fbm">
-                                <span class = "fb_title fbl"><b><?php echo _KUNENA_TOPIC; ?></b> <?php echo $jr_topic_title; ?></span>
+                                <span class = "fb_title fbl"><b><?php echo _KUNENA_TOPIC; ?></b> <?php echo $kunena_topic_tile; ?></span>
                             </div>
                             <!-- FORUM TOOLS -->
 
@@ -437,7 +436,6 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 $fmessage->subject = kunena_htmlspecialchars($fmessage->subject);
 
                                 //Get userinfo needed later on, this limits the amount of queries
-                                unset($userinfo);
                                 $kunena_db->setQuery("SELECT a.*, b.id, b.name, b.username, b.gid FROM #__fb_users AS a LEFT JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$fmessage->userid}'");
                                 $userinfo = $kunena_db->loadObject();
 								if ($userinfo == NULL) {
@@ -470,7 +468,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 										'userinfo'=> &$userinfo );
 									$kunenaProfile->trigger( 'profileIntegration', $triggerParams );
 								}
-				
+
                                 if ($fbConfig->username) {
                                     $fb_queryName = "username";
                                 }
@@ -558,8 +556,8 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                         $rText = ''; $showSpRank = false;
                                         if ($fbConfig->showranking)
                                         {
-
-                                            if ($showSpRank = $userinfo->rank != '0')
+											$showSpRank = $userinfo->rank;
+                                            if ($showSpRank != '0')
                                             {
                                                 //special rank
                                                 $kunena_db->setQuery("SELECT * FROM #__fb_ranks WHERE rank_id='{$userinfo->rank}'");
@@ -1045,51 +1043,6 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'message.php');
                                 }
 
-                                unset(
-                                $msg_id,
-                                $msg_username,
-                                $msg_avatar,
-                                $msg_usertype,
-                                $msg_userrank,
-                                $msg_userrankimg,
-                                $msg_posts,
-                                $msg_move,
-                                $msg_karma,
-                                $msg_karmaplus,
-                                $msg_karmaminus,
-                                $msg_ip,
-                                $msg_ip_link,
-                                $msg_date,
-                                $msg_subject,
-                                $msg_text,
-                                $msg_signature,
-                                $msg_reply,
-                                $msg_birthdate,
-                                $msg_quote,
-                                $msg_edit,
-                                $msg_closed,
-                                $msg_delete,
-                                $msg_sticky,
-                                $msg_lock,
-                                $msg_aim,
-                                $msg_icq,
-                                $msg_msn,
-                                $msg_yim,
-                                $msg_skype,
-                                $msg_gtalk,
-                                $msg_website,
-                                $msg_yahoo,
-                                $msg_buddy,
-                                $msg_profile,
-                                $msg_online,
-                                $msg_pms,
-                                $msg_loc,
-                                $msg_regdate,
-                                $msg_prflink,
-                                $msg_location,
-                                $msg_gender,
-                                $msg_personal,
-                                $myGraph);
                                 $useGraph = 0;
                             } // end for
                         }
@@ -1238,10 +1191,10 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
             </table>
             <!-- Begin: Forum Jump -->
             <div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+			<div class="<?php echo $boardclass; ?>_bt_cvr2">
+			<div class="<?php echo $boardclass; ?>_bt_cvr3">
+			<div class="<?php echo $boardclass; ?>_bt_cvr4">
+			<div class="<?php echo $boardclass; ?>_bt_cvr5">
             <table class = "fb_blocktable" id="fb_bottomarea"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
                 <thead>
                     <tr>

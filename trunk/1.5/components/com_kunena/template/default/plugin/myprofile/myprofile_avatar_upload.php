@@ -22,6 +22,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+global $kunena_db;
+
 require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
 
 function generateAvatarGD($gdversion, $src_img, $srcWidth, $srcHeight, $dstWidth, $dstHeight, $quality, $location)
@@ -68,7 +70,9 @@ function kn_myprofile_display_avatar_gallery($avatar_gallery_path)
     $avatar_images = array ();
     $avatar_col_count = 0;
 
-    while ($file = @readdir($dir))
+    $file = @readdir($dir);
+
+    while ($file)
     {
         if ($file != '.' && $file != '..' && is_file($avatar_gallery_path .DS . $file) && !is_link($avatar_gallery_path .DS . $file))
         {
@@ -79,6 +83,7 @@ function kn_myprofile_display_avatar_gallery($avatar_gallery_path)
                 $avatar_col_count++;
             }
         }
+        $file = @readdir($dir);
     }
 
     @closedir($dir);
@@ -92,9 +97,13 @@ function kn_myprofile_display_avatar_gallery($avatar_gallery_path)
 function get_dirs($directory, $select_name, $selected = "")
 {
 	$filelist = array();
-	if ($dir = @opendir($directory))
+
+	$dir = @opendir($directory);
+	if ($dir)
     {
-        while (($file = readdir($dir)) !== false)
+    	$file = readdir($dir);
+
+        while ($file)
         {
             if ($file != ".." && $file != ".")
             {
@@ -105,6 +114,7 @@ function get_dirs($directory, $select_name, $selected = "")
                     }
                 }
             }
+            $file = readdir($dir);
         }
 
         closedir($dir);
@@ -124,7 +134,7 @@ function get_dirs($directory, $select_name, $selected = "")
 
     asort($filelist);
 
-    while (list($key, $val) = each($filelist))
+    foreach ($filelist as $key => $val)
     {
         echo '<option value="'.$val.'"';
 
@@ -146,6 +156,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 $fbConfig =& CKunenaConfig::getInstance();
 $task = JRequest::getCmd('action', 'default');
 $gallery  = JRequest::getVar('gallery', '');
+$app =& JFactory::getApplication();
 
 switch ($task) {
 	case "delete":
@@ -174,10 +185,8 @@ switch ($task) {
 		break;
 
 	case 'upload':
-		$app =& JFactory::getApplication();
-
 		//numExtensions= people tend to upload malicious files using mutliple extensions like: virus.txt.vbs; we'll want to have the last extension to validate against..
-		$filename = split("\.", $_FILES['avatar']['name']);
+		$filename = split('\.', $_FILES['avatar']['name']);
 		$numExtensions = (count($filename)) - 1;
 		$avatarName = $filename[0];
 		$avatarExt = $filename[$numExtensions];
@@ -243,7 +252,7 @@ switch ($task) {
 		}
 
 		//$gdversion = ereg_replace('[[:alpha:][:space:]()]+', '', $GDArray['GD Version']); // just FYI for detection from gd_info()
-    
+
 		switch ($fbConfig->imageprocessor) {
 		case 'gd1' :
 			if ( !function_exists('imagecreatefromjpeg' )) {
@@ -259,13 +268,13 @@ switch ($task) {
 			}
 
 			// Create Large Image
-			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarlargewidth, 
+			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarlargewidth,
 			$fbConfig->avatarlargeheight, $fbConfig->avatarquality, $fileLocation_l);
 			// Create Medium Image
-			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarwidth, 
+			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarwidth,
 			$fbConfig->avatarheight, $fbConfig->avatarquality, $fileLocation);
 			// Create Small Image
-			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarsmallwidth, 
+			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarsmallwidth,
 			$fbConfig->avatarsmallheight, $fbConfig->avatarquality, $fileLocation_s);
 			// Destroy source Image
 			imagedestroy($src_img);
@@ -290,18 +299,18 @@ switch ($task) {
 			}
 
 			// Create Large Image
-			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarlargewidth, 
+			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarlargewidth,
 			$fbConfig->avatarlargeheight, $fbConfig->avatarquality, $fileLocation_l);
 			// Create Medium Image
-			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarwidth, 
+			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarwidth,
 			$fbConfig->avatarheight, $fbConfig->avatarquality, $fileLocation);
 			// Create Small Image
-			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarsmallwidth, 
+			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarsmallwidth,
 			$fbConfig->avatarsmallheight, $fbConfig->avatarquality, $fileLocation_s);
 			// Destroy source Image
 			imagedestroy($src_img);
 			break;
-    
+
 		default:
 			if (isset($srcWidth) && ($srcWidth > $fbConfig->avatarlargewidth || $srcHeight > $fbConfig->avatarlargeheight)) {
 				$app->enqueueMessage(_UPLOAD_ERROR_SIZE . " (" . $fbConfig->avatarlargewidth . " x ". $fbConfig->avatarlargeheight .")", 'notice');
@@ -316,7 +325,7 @@ switch ($task) {
 
 		// delete original file
 		unlink($src_file);
-	
+
 		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newFileName}' WHERE userid={$kunena_my->id}");
 		$kunena_db->query() or trigger_dberror("Unable to update avatar.");
 
@@ -491,7 +500,7 @@ if ($fbConfig->allowavatarupload)
     }
 
 	} // allow avatar upload
-    
+
     if ($fbConfig->allowavatargallery)
     {
 ?>

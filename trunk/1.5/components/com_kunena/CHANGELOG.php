@@ -41,6 +41,7 @@ Kunena 1.6.0
 # [#19065] Cleanup backend html based on code analysis - fixed various bugs
 # [#19065] Cleanup installer html based on code analysis - fixed various bugs
 - [#19065] Removed backend plugin directory tree to remove warnings in unused code
+# [#19065] Cleanup frontend based on code analysis - fixed various bugs
 
 20-Dec-2009 Matias
 # [#19079] Fix broken layout with too long strings

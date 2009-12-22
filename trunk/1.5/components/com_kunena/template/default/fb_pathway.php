@@ -23,6 +23,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $func, $boardclass, $id, $catid, $kunena_db;
+global $kunena_topic_tile;
 
 $fbConfig =& CKunenaConfig::getInstance();
 ?>
@@ -37,7 +38,7 @@ if ($func != "")
     <div class = "<?php echo $boardclass ?>forum-pathway">
         <?php
         $catids = intval($catid);
-        $jr_path_menu = array ();
+        $kunena_path_menu = array ();
         echo '<div class="path-element-first">' . CKunenaLink::GetKunenaLink( kunena_htmlspecialchars(stripslashes($fbConfig->board_title)) ) . '</div>';
 
         $spath = '';
@@ -56,10 +57,10 @@ if ($func != "")
             if ($catid == $catids && $sfunc != "view")
             {
                 $fr_title_name = $fr_name;
-                $jr_path_menu[] = $fr_name;
+                $kunena_path_menu[] = $fr_name;
             }
             else {
-                $jr_path_menu[] = $sname;
+                $kunena_path_menu[] = $sname;
             }
 
             // write path
@@ -75,7 +76,7 @@ if ($func != "")
         }
 
         //reverse the array
-        $jr_path_menu = array_reverse($jr_path_menu);
+        $kunena_path_menu = array_reverse($kunena_path_menu);
 
         //  echo $shome." " . $jr_arrow .$jr_arrow ." ". $spath;
         //attach topic name
@@ -83,13 +84,13 @@ if ($func != "")
         {
             $sql = "SELECT subject, id FROM #__fb_messages WHERE id='{$id}'";
             $kunena_db->setQuery($sql);
-            $jr_topic_title = stripslashes(kunena_htmlspecialchars($kunena_db->loadResult()));
-            $jr_path_menu[] = $jr_topic_title;
-        //     echo " " . $jr_arrow .$jr_arrow ." ". $jr_topic_title;
+            $kunena_topic_tile = stripslashes(kunena_htmlspecialchars($kunena_db->loadResult()));
+            $kunena_path_menu[] = $kunena_topic_tile;
+        //     echo " " . $jr_arrow .$jr_arrow ." ". $kunena_topic_tile;
         }
 
         // print the list
-        $jr_forum_count = count($jr_path_menu);
+        $jr_forum_count = count($kunena_path_menu);
 
 		$fireinfo = '';
         if (!empty($forumLocked))
@@ -109,10 +110,10 @@ if ($func != "")
         for ($i = 0; $i < $jr_forum_count; $i++)
         {
             if ($i == $jr_forum_count-1) {
-                echo '<div class="path-element-last">' . $jr_path_menu[$i] . $fireinfo . '</div>';
+                echo '<div class="path-element-last">' . $kunena_path_menu[$i] . $fireinfo . '</div>';
             }
             else {
-                echo '<div class="path-element">' . $jr_path_menu[$i] . '</div>';
+                echo '<div class="path-element">' . $kunena_path_menu[$i] . '</div>';
             }
         }
 
@@ -155,7 +156,7 @@ if ($func != "")
         unset($shome, $spath, $parent_ids, $catids, $results, $sname);
         $fr_title = '';
 		if (!empty($fr_title_name)) $fr_title .= $fr_title_name;
-		if (!empty($jr_topic_title)) $fr_title .= $jr_topic_title;
+		if (!empty($kunena_topic_tile)) $fr_title .= $kunena_topic_tile;
 
 		$document=& JFactory::getDocument();
 

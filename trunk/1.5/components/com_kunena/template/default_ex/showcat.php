@@ -368,7 +368,7 @@ foreach ($messagelist as $message)
 	</table>
 	<?php
 	echo '<div class = "'. $boardclass .'forum-pathway-bottom">';
-	echo $pathway1;
+	echo $kunena_pathway1;
 	echo '</div>';
 	?>
 

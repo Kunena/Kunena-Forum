@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id$
+* @version $Id: fb_category_list_bottom.php 708 2009-05-11 09:09:49Z mahagr $
 * Kunena Component
 * @package Kunena
 *
@@ -21,10 +21,7 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
-
-global $boardclass;
-
-$kunena_config =& CKunenaConfig::getInstance();
+$fbConfig =& CKunenaConfig::getInstance();
 ?>
 	<tr>
 		<td class="fb_list_markallcatsread">
@@ -44,7 +41,7 @@ $kunena_config =& CKunenaConfig::getInstance();
 		</td>
 		<td class="fb_list_categories">
                 <?php
-                if ($kunena_config->enableforumjump)
+                if ($fbConfig->enableforumjump)
                     require (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 ?>
 		</td>

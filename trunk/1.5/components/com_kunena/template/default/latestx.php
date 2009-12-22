@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id$
+* @version $Id: latestx.php 1210 2009-11-23 06:51:41Z mahagr $
 * Kunena Component
 * @package Kunena
 *
@@ -23,7 +23,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $app =& JFactory::getApplication();
-$kunena_config =& CKunenaConfig::getInstance();
+$fbConfig =& CKunenaConfig::getInstance();
 $fbSession =& CKunenaSession::getInstance();
 
 function KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages) {
@@ -95,7 +95,7 @@ $show_list_time = $sel;
 
 //start the latest x
 if ($sel == 0) {
-    $querytime = ($prevCheck - $kunena_config->fbsessiontimeout); //move 30 minutes back to compensate for expired sessions
+    $querytime = ($prevCheck - $fbConfig->fbsessiontimeout); //move 30 minutes back to compensate for expired sessions
 }
 else
 {
@@ -105,7 +105,7 @@ else
 }
 
 //get the db data with allowed forums and turn it into an array
-$threads_per_page = $kunena_config->threads_per_page;
+$threads_per_page = $fbConfig->threads_per_page;
 /*//////////////// Start selecting messages, prepare them for threading, etc... /////////////////*/
 $page             = (int)$page;
 $page             = $page < 1 ? 1 : $page;
@@ -113,7 +113,7 @@ $offset           = ($page - 1) * $threads_per_page;
 $row_count        = $page * $threads_per_page;
 
 if ($func != "mylatest") {
-	$lookcats = split(',', $kunena_config->latestcategory);
+	$lookcats = split(',', $fbConfig->latestcategory);
 	$catlist = array();
 	$latestcats = '';
 	foreach ($lookcats as $catnum) {
@@ -132,7 +132,7 @@ if ($sel == "0")
 
 if ($func == "mylatest")
 {
-	$document->setTitle(_KUNENA_MY_DISCUSSIONS . ' - ' . stripslashes($kunena_config->board_title));
+	$document->setTitle(_KUNENA_MY_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
 	$query = "SELECT count(distinct tmp.thread) FROM
 				(SELECT thread
 					FROM #__fb_messages
@@ -145,7 +145,7 @@ if ($func == "mylatest")
 }
 else
 {
-	$document->setTitle(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($kunena_config->board_title));
+	$document->setTitle(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
 	$query = "Select count(distinct thread) FROM #__fb_messages WHERE time >'$querytime'".
 			" AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)" . $latestcats; // if categories are limited apply filter
 }
@@ -155,8 +155,8 @@ $total = (int)$kunena_db->loadResult();
 $totalpages = ceil($total / $threads_per_page);
 
 //meta description and keywords
-$metaKeys=kunena_htmlspecialchars(stripslashes(_KUNENA_ALL_DISCUSSIONS . ", {$kunena_config->board_title}, " . $app->getCfg('sitename')));
-$metaDesc=kunena_htmlspecialchars(stripslashes(_KUNENA_ALL_DISCUSSIONS . " ({$page}/{$totalpages}) - {$kunena_config->board_title}"));
+$metaKeys=kunena_htmlspecialchars(stripslashes(_KUNENA_ALL_DISCUSSIONS . ", {$fbConfig->board_title}, " . $app->getCfg('sitename')));
+$metaDesc=kunena_htmlspecialchars(stripslashes(_KUNENA_ALL_DISCUSSIONS . " ({$page}/{$totalpages}) - {$fbConfig->board_title}"));
 
 $document =& JFactory::getDocument();
 $cur = $document->get( 'description' );
@@ -254,7 +254,7 @@ foreach ($messagelist as $message)
     }
 }
 // (JJ) BEGIN: ANNOUNCEMENT BOX
-if ($kunena_config->showannouncement > 0)
+if ($fbConfig->showannouncement > 0)
 {
 ?>
 <!-- B: announcementBox -->
@@ -315,7 +315,7 @@ if (JDocumentHTML::countModules('kunena_announcement'))
                                   	<?php } ?>
                                     <td class="fb_list_jump_all">
 
-                                    <?php if ($kunena_config->enableforumjump)
+                                    <?php if ($fbConfig->enableforumjump)
  									 require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
  									 ?>
 
@@ -385,7 +385,7 @@ if (count($threadids) > 0)
 <div class="clr"></div>
 <?php
 
-	if ($kunena_config->showstats > 0)
+	if ($fbConfig->showstats > 0)
     {
 		//(JJ) BEGIN: STATS
 		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php')) {
@@ -404,7 +404,7 @@ if (count($threadids) > 0)
 	}
     //(JJ) FINISH: STATS
 
-	if ($kunena_config->showwhoisonline > 0)
+	if ($fbConfig->showwhoisonline > 0)
     {
 
 		//(JJ) BEGIN: WHOISONLINE

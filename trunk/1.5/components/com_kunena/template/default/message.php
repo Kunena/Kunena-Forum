@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id$
+* @version $Id: message.php 1210 2009-11-23 06:51:41Z mahagr $
 * Kunena Component
 * @package Kunena
 *
@@ -23,10 +23,10 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $kunena_my = &JFactory::getUser();
-$kunena_config =& CKunenaConfig::getInstance();
+$fbConfig =& CKunenaConfig::getInstance();
 $kunena_db = &JFactory::getDBO();
 
-if ($kunena_config->fb_profile == 'cb')
+if ($fbConfig->fb_profile == 'cb')
 {
 	$msg_params = array(
 		'username' => &$msg_username, 
@@ -106,7 +106,7 @@ if ($kunena_config->fb_profile == 'cb')
                                     <!-- make this div distinct from others on this page -->
                                     <?php
                                     //see if we need the users realname or his loginname
-                                    if ($kunena_config->username) {
+                                    if ($fbConfig->username) {
                                         $authorName = $kunena_my->username;
                                     }
                                     else {
@@ -126,13 +126,13 @@ if ($kunena_config->fb_profile == 'cb')
 
                                 <input type = "hidden" name = "contentURL" value = "empty"/>
 
-                                <input type = "text" name = "subject" size = "35" class = "inputbox" maxlength = "<?php echo $kunena_config->maxsubject;?>" value = "<?php echo $resubject;?>"/>
+                                <input type = "text" name = "subject" size = "35" class = "inputbox" maxlength = "<?php echo $fbConfig->maxsubject;?>" value = "<?php echo $resubject;?>"/>
 
                                 <textarea class = "inputbox" name = "message" rows = "6" cols = "60" style = "height: 100px; width: 100%; overflow:auto;"></textarea>
 
                                  <?php
 								// Begin captcha . Thanks Adeptus
-								if ($kunena_config->captcha && $kunena_my->id < 1) { ?>
+								if ($fbConfig->captcha && $kunena_my->id < 1) { ?>
 								<?php echo _KUNENA_CAPDESC.'&nbsp;'?>
 								<input name="txtNumber" type="text" id="txtNumber" value="" style="vertical-align:middle" size="10">&nbsp;
 								<img src="index2.php?option=com_kunena&func=showcaptcha" alt="" /><br />
@@ -175,7 +175,7 @@ if ($kunena_config->fb_profile == 'cb')
 <?php
                         if ($userinfo->userid)
                         {
-                        	echo CKunenaLink::GetProfileLink($kunena_config, $fmessage->userid, $msg_username);
+                        	echo CKunenaLink::GetProfileLink($fbConfig, $fmessage->userid, $msg_username);
                         }
                         else
                         {
@@ -184,13 +184,13 @@ if ($kunena_config->fb_profile == 'cb')
 ?>
                     </span>
 <?php
-					if ( $kunena_config->userlist_usertype ) echo '<span class = "msgusertype">('.$msg_usertype.')</span>';
+					if ( $fbConfig->userlist_usertype ) echo '<span class = "msgusertype">('.$msg_usertype.')</span>';
 ?>
                     <br/>
 <?php
                         if ($fmessage->userid > 0)
                         {
-                        	echo CKunenaLink::GetProfileLink($kunena_config, $fmessage->userid, $msg_avatar);
+                        	echo CKunenaLink::GetProfileLink($fbConfig, $fmessage->userid, $msg_avatar);
                         }
                         else
                         {
@@ -337,7 +337,7 @@ if ($kunena_config->fb_profile == 'cb')
 		echo '</span>';
 	}
 
-                            if ($kunena_config->reportmsg && $kunena_my->id > 1)
+                            if ($fbConfig->reportmsg && $kunena_my->id > 1)
                             {
                                 echo '<span class="fb_message_informMarkUp">'.CKunenaLink::GetReportMessageLink($catid, $msg_id, _KUNENA_REPORT).'</span>';
                             }
@@ -346,13 +346,6 @@ if ($kunena_config->fb_profile == 'cb')
 				echo '<span class="fb_message_informMarkUp">'.CKunenaLink::GetMessageIPLink($msg_ip).'</span>';
                             } ?>
 		</div>
-<?php
-if (isset($msg_signature)) {
-	echo '<div class="msgsignature"><div>';
-	echo $msg_signature;
-	echo '</div></div>';
-}
-?>
 		<div class="fb_message_buttons_cover">
 			<div class="fb_message_buttons_row">
                 <?php
@@ -376,7 +369,7 @@ if (isset($msg_signature)) {
                         echo " " . $msg_reply;
                         echo " " . $msg_quote;
 
-			if ($kunena_is_moderator) echo ' </div><div class="fb_message_buttons_row">';
+			if ($is_Moderator) echo ' </div><div class="fb_message_buttons_row">';
 
                         if (isset($msg_merge)) {
                              echo " " . $msg_merge;
@@ -437,6 +430,13 @@ if (isset($msg_signature)) {
                 ?>
 			</div>
 		</div>
+<?php
+if (isset($msg_signature)) {
+	echo '<div class="msgsignature">';
+	echo $msg_signature;
+	echo '</div>';
+}
+?>
 
             </td>
             <td class = "fb-msgview-left-b">&nbsp;

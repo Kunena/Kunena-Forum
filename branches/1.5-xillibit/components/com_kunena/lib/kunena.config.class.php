@@ -383,7 +383,6 @@ class CKunenaConfig extends CKunenaConfigBase
     var $pollallowvoteone = '1'; //For poll integration, set if yes or no the user can vote one or more time for a poll
     var $pollenabled = "1"; //For poll integration, for disable the poll
     var $pollallowedcategories = "1"; //For poll integration, set the allowed categories for poll
-    var $pollallowedcategories = "1";
     var $poppollscount = "5";
     var $showpoppollstats = '1';
     var $polltimebtvotes = "00:15:00";

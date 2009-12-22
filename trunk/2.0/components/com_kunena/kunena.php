@@ -19,12 +19,10 @@ $language =& JFactory::getLanguage();
 $language->load('com_kunena');
 
 // Import the Kunena library loader.
-require_once (JPATH_COMPONENT.'/libraries/import.php');
+require_once (JPATH_COMPONENT.'/api.php');
 
 // Import the Kunena controller class.
 require_once (JPATH_COMPONENT.'/controller.php');
-
-kimport('factory');
 
 // Execute the task.
 $controller	= KunenaController::getInstance();

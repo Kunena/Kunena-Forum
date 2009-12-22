@@ -18,6 +18,7 @@
   	-Dproject_dir=..				(= workspace/kunena)
   	-Dpackage_dir=../../packages	(= workspace/packages)
   	-Dtmp_dir=tmp					(= workspace/kunena/build/tmp)
+  	-Dbuild_dir=package				(= workspace/kunena/build/package)
 -->
 <project name="Kunena" default="dist" basedir=".">
 	<description>Ant Build File for Kunena</description>
@@ -36,16 +37,20 @@
 			<isset property="tmp_dir" />
 		</not>
 	</condition>
-
+	<condition property="build_dir" value="package">
+		<not>
+			<isset property="build_dir" />
+		</not>
+	</condition>
 	<property file="build.config.ini" />
-	<property name="kunena.frontend" value="${project_dir}/components/com_kunena/" />
-	<property name="kunena.backend" value="${project_dir}/administrator/components/com_kunena/" />
-	<property name="kunena.customfrontend" value="${custom_dir}/components/com_kunena/" />
+	<property name="kunena.frontend" value="components/com_kunena" />
+	<property name="kunena.backend" value="administrator/components/com_kunena" />
 
-	<target name="dist" depends="mkdir,archive,init,copy,package,zip,gzip,bz2,info,cleanup" />
+	<target name="dist" depends="mkdir,archive,init,build,copy,zip,gzip,bz2,info,cleanup" />
 
 	<target name="mkdir">
 		<mkdir dir="${tmp_dir}" />
+		<mkdir dir="${build_dir}" />
 		<mkdir dir="${package_dir}" />
 		<mkdir dir="${package_dir}/archive" />
 	</target>
@@ -59,7 +64,7 @@
 	</target>
 
 	<target name="init" depends="mkdir">
-		<xmlproperty file="${project_dir}/administrator/components/com_kunena/${cfg.name}.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
+		<xmlproperty file="${project_dir}/${kunena.backend}/${cfg.name}.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
 		<buildnumber />
 		<tstamp>
 			<format property="str.datefmt" pattern="${cfg.datefmt}" locale="$cfg.dateloc}" />
@@ -89,72 +94,78 @@
 			<istrue value="${cfg.bz2}" />
 		</condition>
 
-		<!-- File Sets for Copy -->
-		<fileset id="admin" dir="${kunena.backend}">
-			<exclude name="*install*" />
-			<exclude name="*.xml" />
-		</fileset>
-		<fileset id="site" dir="${kunena.frontend}">
-			<exclude name="CHANGELOG.php" />
-			<exclude name="COPYRIGHT.php" />
-		</fileset>
-		<fileset id="adminlang" dir="${project_dir}">
-			<include name="administrator/language/**" />
-		</fileset>
-		<fileset id="sitelang" dir="${project_dir}">
-			<include name="language/**" />
-		</fileset>
+		<copy todir="${tmp_dir}">
+			<fileset dir="${project_dir}" />
+		</copy>	
 	</target>
 
-	<target name="copy" depends="init">
-		<copy todir="${tmp_dir}/install">
-			<fileset dir="${kunena.backend}/install" />
-		</copy>
-		<copy todir="${tmp_dir}/admin">
-			<fileset refid="admin" />
-		</copy>
-		<copy todir="${tmp_dir}/site">
-			<fileset refid="site" />
-		</copy>
-		<copy todir="${tmp_dir}/languages/admin" flatten="yes" includeEmptyDirs="no">
-			<fileset refid="adminlang" />
-		</copy>
-		<copy todir="${tmp_dir}/languages/site" flatten="yes" includeEmptyDirs="no">
-			<fileset refid="sitelang" />
-		</copy>
-	</target>
-
-	<target name="package" depends="copy">
-		<!-- Copy files that contain version tags again and perform token replacement -->
+	<target name="build" depends="init">
+		<!-- Move files that contain version tags again and perform token replacement -->
 		<filter token="kunenaversion" value="${xml.version}" />
 		<filter token="kunenaversiondate" value="${version.date}" />
 		<filter token="kunenaversionbuild" value="${build.number}" />
 		<filter token="kunenaversionname" value="${xml.versionname}" />
 
-		<copy file="${kunena.backend}/${cfg.name}.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
-		<copy file="${kunena.backend}/api.php" todir="${tmp_dir}/admin" overwrite="true" filtering="true" />
-		<copy file="${kunena.frontend}/CHANGELOG.php" todir="${tmp_dir}" overwrite="true" filtering="false" />
-		<copy file="${kunena.frontend}/COPYRIGHT.php" todir="${tmp_dir}" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/README.txt" todir="${tmp_dir}" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/${kunena.backend}/${cfg.name}.xml" todir="${build_dir}" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/${kunena.frontend}/COPYRIGHT.php" todir="${build_dir}" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/${kunena.frontend}/README.txt" todir="${build_dir}" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/${kunena.frontend}/CHANGELOG.php" todir="${build_dir}" overwrite="true" filtering="false" />
+
+		<!-- Move files needed by the installer -->
+		<move file="${tmp_dir}/${kunena.backend}/api.php" todir="${build_dir}/installer" overwrite="true" filtering="true" />
+		<move todir="${build_dir}/installer">
+			<fileset dir="${tmp_dir}/${kunena.backend}">
+				<include name="install/**"/>
+				<include name="views/install/**"/>
+				<include name="**/*install*"/>
+				<include name="controllers/controller.php"/>
+				<include name="libraries/factory.php"/>
+				<include name="media/icons/about.png"/>
+				<include name="models/schema.php"/>
+				<include name="models/version.php"/>
+				<include name="admin.kunena.php"/>
+			</fileset>
+		</move>
 	</target>
 
-	<target name="tar" depends="package" if="do.tar">
-		<tar destfile="${str.destfile}.tar" basedir="${tmp_dir}" />
+	<target name="copy" depends="build">
+		<!-- File Sets for Copy -->
+		<fileset id="adminlang" dir="${tmp_dir}/administrator/language"/>
+		<fileset id="sitelang" dir="${tmp_dir}/language"/>
+
+		<mkdir dir="${build_dir}/archive" />
+
+		<zip destfile="${build_dir}/archive/admin.zip" basedir="${tmp_dir}">
+			<include name="${kunena.backend}/**"/>
+		</zip>
+		<zip destfile="${build_dir}/archive/site.zip" basedir="${tmp_dir}">
+			<include name="${kunena.frontend}/**"/>
+		</zip>
+		<copy todir="${build_dir}/languages/admin" flatten="yes" includeEmptyDirs="no">
+			<fileset refid="adminlang" />
+		</copy>
+		<copy todir="${build_dir}/languages/site" flatten="yes" includeEmptyDirs="no">
+			<fileset refid="sitelang" />
+		</copy>
 	</target>
 
-	<target name="zip" depends="package" if="do.zip">
-		<zip destfile="${str.destfile}.zip" basedir="${tmp_dir}" />
+	<target name="tar" depends="copy" if="do.tar">
+		<tar destfile="${str.destfile}.tar" basedir="${build_dir}" />
 	</target>
 
-	<target name="gzip" depends="package" if="do.gzip">
-		<tar destfile="${str.destfile}.tar.gz" basedir="${tmp_dir}" compression="gzip" />
+	<target name="zip" depends="copy" if="do.zip">
+		<zip destfile="${str.destfile}.zip" basedir="${build_dir}" />
 	</target>
 
-	<target name="bz2" depends="package" if="do.bz2">
-		<tar destfile="${str.destfile}.tar.bz2" basedir="${tmp_dir}" compression="bzip2" />
+	<target name="gzip" depends="copy" if="do.gzip">
+		<tar destfile="${str.destfile}.tar.gz" basedir="${build_dir}" compression="gzip" />
 	</target>
 
-	<target name="info" depends="package">
+	<target name="bz2" depends="copy" if="do.bz2">
+		<tar destfile="${str.destfile}.tar.bz2" basedir="${build_dir}" compression="bzip2" />
+	</target>
+
+	<target name="info" depends="copy">
 		<echo message="Ant Version:     ${ant.version}" />
 		<echo message="Project:         ${cfg.name}" />
 		<echo message="XML Name:        ${xml.name}" />
@@ -169,5 +180,6 @@
 
 	<target name="cleanup" depends="info">
 		<delete dir="${tmp_dir}" />
+		<delete dir="${build_dir}" />
 	</target>
 </project>

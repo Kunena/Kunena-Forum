@@ -11,7 +11,6 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 // Allow for the new MVC subsystem where applicable.
-$view = JRequest::getCmd('view', false);
 $task	= JRequest::getCmd( 'task' , 'display' );
 
 // Import the Kunena loader and defines.
@@ -25,6 +24,9 @@ require_once (JPATH_COMPONENT .DS. 'controllers' .DS. 'controller.php');
 
 // We treat the view as the controller. Load other controller if there is any.
 $controller	= JString::strtolower( JRequest::getWord( 'view' , 'kunena' ) );
+if (file_exists(JPATH_ADMINISTRATOR.DS."components".DS."com_kunena".DS."install.txt")) {
+	$controller = 'install';
+}
 $path		= JPATH_COMPONENT_ADMINISTRATOR . DS . 'controllers' . DS . $controller . '.php';
 
 // Test if the controller really exists
@@ -55,6 +57,3 @@ $controller->execute( $task );
 
 // Redirect if set by the controller
 $controller->redirect();
-
-
-

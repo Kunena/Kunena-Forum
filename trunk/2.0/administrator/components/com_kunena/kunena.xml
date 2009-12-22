@@ -22,19 +22,6 @@
 		<filename>COPYRIGHT.php</filename>
 		<filename>README.txt</filename>
 	</files>
-	<files folder="site">
-		<filename>index.html</filename>
-		<filename>api.php</filename>
-		<filename>controller.php</filename>
-		<filename>jomsocial_rule.xml</filename>
-		<filename>kunena.php</filename>
-		<filename>router.php</filename>
-		<folder>helpers</folder>
-		<folder>libraries</folder>
-		<folder>media</folder>
-		<folder>models</folder>
-		<folder>views</folder>
-	</files>
 	
 	<languages folder="languages/site">
 		<language tag="en-GB">en-GB.com_kunena.ini</language>
@@ -57,17 +44,18 @@
 
 		<files>
 			<filename>kunena.xml</filename>
-			<folder>install</folder>
+			<folder>archive</folder>
 		</files>
-		<files folder="admin">
-			<filename>index.html</filename>
+		<files folder="installer">
 			<filename>api.php</filename>
 			<filename>admin.kunena.php</filename>
+			<folder>install</folder>
 			<folder>controllers</folder>
+			<folder>libraries</folder>
 			<folder>media</folder>
 			<folder>models</folder>
 			<folder>views</folder>
-		</files>
+		</files>	
 
 		<languages folder="languages/admin">
 			<language tag="en-GB">en-GB.com_kunena.ini</language>

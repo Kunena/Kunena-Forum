@@ -36,6 +36,11 @@ class KunenaViewInstall extends JView
 
 		// Load the view data.
 		$this->assignRef('state', $this->get('State'));
+		$this->assign('step', $this->get('Step'));
+		$this->assignRef('steps', $this->get('Steps'));
+		$this->assignRef('status', $this->state->status);
+		$this->assign('error', $this->get('Error'));
+		
 		$this->assignRef('requirements', $this->get('Requirements'));
 		$this->assign('installedVersion', $this->get('InstalledVersion'));
 		$this->assign('installAction', $this->get('InstallAction'));
@@ -56,7 +61,7 @@ class KunenaViewInstall extends JView
 
 		// Render the layout.
 		$app =& JFactory::getApplication();
-		if (!empty($this->requirements->fail)) $app->enqueueMessage('Kunena Forum Installation Failed!', 'error');
+		if (!empty($this->requirements->fail)) $app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_FAILED'), 'error');
 		else if (!empty($this->versionWarning)) $app->enqueueMessage($this->versionWarning, 'notice');
 		JRequest::setVar('hidemainmenu', 1);
 		parent::display($tpl);
@@ -75,4 +80,21 @@ class KunenaViewInstall extends JView
 		JToolBarHelper::title('<span>KUNENA '.KUNENA_VERSION.'</span> '. JText::_( 'Installer' ), 'about' );
 
 	}
+	
+	function showSteps() {
+		foreach ($this->steps as $key=>$value) {
+			if (empty($value['step'])) continue;
+			echo '<div class="step'.($key <= $this->step ? "-on" : "-off").'">'.$key.'. '.$value['menu'].'</div>';
+		}
+	}
+	
+	function getAction() {
+		if (!$this->step) return "Install";
+		return $this->error ? "Retry" : ($this->step == count($this->steps)-1 ? "Finish" : "Next");
+	}
+	
+	function getActionURL() {
+		return "location.replace('index.php?option=com_kunena&view=install&task=install');";
+	}
+	
 }

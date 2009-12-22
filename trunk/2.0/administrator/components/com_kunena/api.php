@@ -58,7 +58,7 @@ function kimport($path, $location='libraries')
 }
 
 // Import Kunena Factory
-kimport('factory');
+kimport('libraries.factory', 'admin');
 
 // Kunena has been initialized
 define ('KUNENA_LOADED', 1);

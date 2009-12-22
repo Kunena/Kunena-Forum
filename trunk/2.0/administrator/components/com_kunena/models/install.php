@@ -101,6 +101,10 @@ class KunenaModelInstall extends JModel
 		// if the model state is uninitialized lets set some values we will need from the request.
 		if ($this->__state_set === false)
 		{
+			$app	= JFactory::getApplication();
+			$this->setState('step', $step = $app->getUserState('com_kunena.install.step'));
+			if($step == 0) $app->setUserState('com_kunena.install.status', array());
+			else $this->setState('status', $app->getUserState('com_kunena.install.status'));
 			$this->__state_set = true;
 		}
 
@@ -108,6 +112,70 @@ class KunenaModelInstall extends JModel
 		return (is_null($value) ? $default : $value);
 	}
 
+	public function getStep()
+	{
+		return $this->getState('step', 0);
+	}
+	
+	public function setStep($step)
+	{
+		$this->setState('step', (int)$step);
+		$app = JFactory::getApplication();
+		$app->setUserState('com_kunena.install.step', (int)$step); 
+	}
+	
+	public function addStatus($step, $result=false, $msg='')
+	{
+		$status = $this->getState('status');
+		$status[$step] = array('step'=>$step, 'success'=>$result, 'msg'=>$msg);
+		$this->setState('status', $status);
+		$app	= JFactory::getApplication();
+		$app->setUserState('com_kunena.install.status', $status); 
+	}
+	
+	function getError()
+	{
+		$status = $this->getState('status', array());
+		$error = 0;
+		foreach ($status as $cur) {
+			$error = !$cur['success'];
+			if ($error) break;
+		}
+		return $error;
+	}
+	
+	public function getSteps() {
+		$this->steps = array(
+		array('step'=>'', 'menu'=>'Install Kunena'),
+		array('step'=>'Prepare', 'menu'=>'Prepare Installation'),
+		array('step'=>'Backend', 'menu'=>'Install Backend'),
+		array('step'=>'Frontend', 'menu'=>'Install Frontend'),
+		array('step'=>'Database', 'menu'=>'Update Database'),
+		array('step'=>'Finish', 'menu'=>'Finish Installation'),
+		array('step'=>'', 'menu'=>'Installation completed'));
+		return $this->steps;
+	}
+	
+	public function extract($path, $filename, $dest=null) {
+		if (!$dest) $dest = $path;
+		$file = $path.DS.$filename;
+
+		$text = '';
+		
+		if (file_exists($file)) 
+		{
+			$error = JArchive::extract($file, $dest);
+			if (!$error) 
+				$text .= "The file '$file' could not be uncompressed";
+		}
+		else 
+		{
+			$error = true;
+			$text .= "The file '$file' does not exists";
+		}
+		$this->addStatus("Uncompress ".$filename, $error, $text);
+	}
+	
 	public function beginInstall()
 	{
 		$results = array();
@@ -126,8 +194,13 @@ class KunenaModelInstall extends JModel
 		if ($version->id == 0 && $version->component)
 			$this->insertVersionData($version->version, $version->versiondate, $version->build, $version->versionname, null);
 
+		foreach ($results as $i=>$r) {
+			if (!$r) unset($results[$i]);
+			else $this->addStatus($r['action'].' '.$r['name'], true);
+		}
+		
 		$this->insertVersion('migrateDatabase');
-		foreach ($results as $i=>$r) if (!$r) unset($results[$i]);
+		$this->addStatus("Prepare installation", true);
 		return $results;
 	}
 
@@ -343,6 +416,7 @@ class KunenaModelInstall extends JModel
 		if ($this->db->getAffectedRows())
 		{
 			$this->tables['kunena_'][] = $newtable;
+			$this->addStatus("Migrate $newtable", true);
 			return array('name'=>$newtable, 'action'=>'migrate', 'sql'=>$sql);
 		}
 		return array();

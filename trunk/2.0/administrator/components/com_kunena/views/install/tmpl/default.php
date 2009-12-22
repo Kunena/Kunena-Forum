@@ -7,40 +7,79 @@
  * @license		GNU General Public License <http://www.gnu.org/copyleft/gpl.html>
  * @link		http://www.kunena.com
  */
-
 defined('_JEXEC') or die;
-
+JHtml::stylesheet('install.css', 'administrator/components/com_kunena/media/css/');
+if (!$this->error && $this->step>0 && $this->step<count($this->steps)-1) {
+	$document =& JFactory::getDocument();
+	$document->addScriptDeclaration("window.addEvent('domready', function() {window.location='".JRoute::_('index.php?option=com_kunena&view=install&task=install', false)."';});");
+}
 ?>
-<?php if (!empty($this->requirements->fail)): ?>
-<table style="border: 1px solid #FFCC99; background: #FFFFCC; padding: 5px; margin: 0 0 20px 20px; clear: both;">
-	<tr>
-	<th colspan="3">INSTALLATION: <font color="red">FAILED</font> - <a href="http://docs.kunena.com/index.php/Technical_Requirements">Minimum Version Requirements not satisfied</a></th>
-	</tr>
-	<tr>
-	<td>PHP version:</td>
-	<td><font color="<?php echo isset($this->requirements->fail['php'])?'red':'green'; ?>"><?php echo $this->requirements->php; ?></font></td>
-	<td>(Required &gt;= <?php echo KUNENA_MIN_PHP; ?>)</td>
-	</tr>
-	<tr>
-	<td>MySQL version:</td>
-	<td><font color="<?php echo isset($this->requirements->fail['mysql'])?'red':'green'; ?>"><?php echo $this->requirements->mysql; ?></font></td>
-	<td>(Required &gt; <?php echo KUNENA_MIN_MYSQL; ?>)</td>
-	</tr>
-	<tr>
-	<td>Joomla version:</td>
-	<td><font color="<?php echo isset($this->requirements->fail['joomla'])?'red':'green'; ?>"><?php echo $this->requirements->joomla; ?></font></td>
-	<td>(Required &gt; <?php echo KUNENA_MIN_JOOMLA; ?>)</td>
-	</tr>
-</table>
-<?php else: ?>
-<table style="border: 1px solid #FFCC99; background: #FFFFCC; padding: 5px; margin: 0 0 20px 20px; clear: both;">
-	<tr>
-		<th style="text-align: center;"><?php echo $this->txt_action; ?></th>
-	</tr>
-	<tr>
-		<td style="text-align: center;">
-			<input type="button" onclick="window.location='<?php echo $this->link; ?>'" value="<?php echo $this->txt_install; ?>" style="padding: 10px; text-align: center; font-weight: bold; background: #aadd44; border: solid 1px #669900; cursor: pointer;" />
-		</td>
-	</tr>
-</table>
-<?php endif; ?>
+	<div id="stepbar">
+		<div class="u">
+			<div class="u">
+				<div class="u"></div>
+			</div>
+		</div>
+	<div class="n">
+			<h1>Steps</h1>
+			<?php $this->showSteps(); ?>
+  	</div>
+	<div class="c">
+		<div class="c">
+			<div class="c"></div>
+		</div>
+	</div>
+  </div>
+
+<div id="right">
+	<div id="rightpad">
+		<div id="step">
+			<div class="u">
+				<div class="u">
+					<div class="u"></div>
+				</div>
+			</div>
+			<div class="n">
+
+				<div class="far-right">
+					
+							<div class="button1-left"><div class="next"><a alt="<?php echo $this->getAction(); ?>" onclick="<?php echo $this->getActionURL(); ?>"><?php echo $this->getAction(); ?></a></div></div>
+						
+				</div>
+				<span class="step"><?php echo $this->steps[$this->step]['menu']; ?></span>
+
+			</div>
+			<div class="c">
+				<div class="c">
+					<div class="c"></div>
+				</div>
+			</div>
+		</div>
+
+		<div id="installer">
+			<div class="u">
+				<div class="u">
+					<div class="u"></div>
+				</div>
+			</div>
+			<div class="n">
+<?php 
+if (!empty($this->requirements->fail)): 
+	echo $this->loadTemplate('reqfail'); 
+elseif (!$this->step):
+	echo $this->loadTemplate('start');
+else: 
+	echo $this->loadTemplate('install'); 
+endif; 
+?>
+			</div>
+      <div class="c">
+        <div class="c">
+          <div class="c"></div>
+        </div>
+      </div>
+		</div>
+	</div>
+</div>
+
+<div class="clr"></div>

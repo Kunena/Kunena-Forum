@@ -109,11 +109,11 @@ class KunenaModelSchema extends JModel
 			if (!$using) $using = $this->getUpgradeSchema();
 			$this->fromschema = $from;
 			$this->toschema = $to;
-			//echo "<pre>",htmlentities($this->fromschema->saveXML()),"</pre>";
-			//echo "<pre>",htmlentities($this->toschema->saveXML()),"</pre>";
 			$this->usingschema = $using;
 			$this->upgradeSchema($from, $using);
 			$this->diffschema = $this->getSchemaDiff($from, $to);
+			//echo "<pre>",htmlentities($this->fromschema->saveXML()),"</pre>";
+			//echo "<pre>",htmlentities($this->toschema->saveXML()),"</pre>";
 			$this->sql = null;
 		}
 		return $this->diffschema;
@@ -359,7 +359,7 @@ class KunenaModelSchema extends JModel
 		if (count($childNodes) || $action)
 		{
 			$node = $schema->importNode($loc['new'], false);
-			$node->setAttribute('name', $name);
+			foreach ($loc['new']->attributes as $attribute) $node->setAttribute($attribute->name, $attribute->value);
 			if ($loc['old']->hasAttribute('from')) $node->setAttribute('from', $loc['old']->getAttribute('from'));
 			$node->setAttribute('action', $action);
 
@@ -410,7 +410,7 @@ class KunenaModelSchema extends JModel
 //					else $str .= 'ALTER TABLE '.$this->db->nameQuote($field->getAttribute('from')).' RENAME '.$this->db->nameQuote($tablename).' '."\n";
 					foreach ($table->childNodes as $field)
 					{
-						if ($field->hasAttribute('after')) $after = ' AFTER '.$field->getAttribute('after');
+						if ($field->hasAttribute('after')) $after = ' AFTER '.$this->db->nameQuote($field->getAttribute('after'));
 						else $after = ' FIRST';
 
 						switch ($action2 = $field->getAttribute('action'))

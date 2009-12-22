@@ -10,6 +10,10 @@
 
 defined('_JEXEC') or die;
 
+jimport( 'joomla.filesystem.folder' );
+jimport( 'joomla.filesystem.file' );
+jimport( 'joomla.filesystem.archive' );
+
 jimport('joomla.application.component.controller');
 
 /**
@@ -21,33 +25,77 @@ jimport('joomla.application.component.controller');
  */
 class KunenaControllerInstall extends KunenaController
 {
+	protected $step = null;
+	protected $steps = null;
+	protected $model = null;
+	
 	public function __construct()
 	{
 		parent::__construct();
+		$this->model = $this->getModel('Install');
+		$this->step = $this->model->getStep();
+		$this->steps = $this->model->getSteps();
 	}
 
-	/**
-	 * Method to install Kunena
-	 *
-	 * @return	void
-	 * @since	1.6
-	 */
 	public function install()
 	{
-		JToolBarHelper::title('<span>KUNENA '.KUNENA_VERSION.'</span> '. JText::_( 'Installer' ), 'about' );
-
-		$model	= $this->getModel('Install');
-
 		// Check requirements
-		$reqs = $model->getRequirements();
+		$reqs = $this->model->getRequirements();
 		if (!empty($reqs->fail))
 		{
 			// If requirements are not met, do not install
+			$this->model->setStep(0);
 			$this->setRedirect('index.php?option=com_kunena&view=install');
 			return;
 		}
+		if (!$this->step) $this->model->setStep(++$this->step);
+		if ($this->step >= count($this->steps)-1)
+		{
+			$this->model->setStep(0);
+			$this->setRedirect('index.php?option=com_kunena');
+			return;
+		}
+		
+		do
+		{
+			$error = $this->model->getError();
+			if (isset($this->steps[$this->step]))
+			{
+				$this->next();
+				$this->setRedirect('index.php?option=com_kunena&view=install');
+			}
+			$stop = ($this->checkTimeout() || $this->step<=2 || ($this->step >= count($this->steps)-1));
+		}
+		while (!$stop && !$error);
+	}
 
-		$prefix = $model->getVersionPrefix();
+	function next() {
+		if (empty($this->steps[$this->step]['step'])) return $this->model->setStep(++$this->step);
+		return call_user_func(array($this, "step".$this->steps[$this->step]['step']));
+	}
+	
+	function stepPrepare() {
+		$this->model->beginInstall();
+		$error = $this->model->getError();
+		if (!$error) $this->model->setStep(++$this->step);
+	}
+	
+	function stepBackend() {
+		$path = JPATH_ADMINISTRATOR.DS."components".DS."com_kunena".DS."archive";
+		if (file_exists($path.DS.$file)) $this->model->extract($path, "admin.zip", JPATH_ROOT);
+		$error = $this->model->getError();
+		if (!$error) $this->model->setStep(++$this->step);
+	}
+	
+	function stepFrontend() {
+		$path = JPATH_ADMINISTRATOR.DS."components".DS."com_kunena".DS."archive";
+		if (file_exists($path.DS.$file)) $this->model->extract($path, "site.zip", JPATH_ROOT);
+		$error = $this->model->getError();
+		if (!$error) $this->model->setStep(++$this->step);
+	}
+		
+	function stepDatabase() {
+		$prefix = $this->model->getVersionPrefix();
 		if ($prefix == 'kunena_')
 		{
 			kimport('models.version', 'admin');
@@ -59,35 +107,39 @@ class KunenaControllerInstall extends KunenaController
 
 		switch ($version->state)
 		{
-			case '':
-				$results = $model->beginInstall();
-				if (count($results)) break;
 			case 'migrateDatabase':
-				$results = $model->migrateDatabase();
-				if (count($results)) break;
-			case 'upgradeDatabase':
-				$results = $model->upgradeDatabase();
-				//if (count($results)) break;
-			case 'installSampleData':
-				$results = $model->installSampleData();
-				$stop = true;
+				$results = $this->model->migrateDatabase();
+				$this->model->addStatus('Update database:migrate', true, $html);
 				break;
-			default:
-				$results = $model->beginInstall();
+			case 'upgradeDatabase':
+				$results = $this->model->upgradeDatabase();
+				$this->model->addStatus('Update database:upgrade', true, $html);
+				break;
+			case 'installSampleData':
+				$results = $this->model->installSampleData();
+				$this->model->addStatus('Update database:sample', true, $html);
+				break;
+			case '':
+				$error = $this->model->getError();
+				if (!$error) $this->model->setStep(++$this->step);
 		}
+	}
+	
+	function stepFinish() {
+		$this->model->addStatus('Installation success!', true, '');
+		$error = $this->model->getError();
+		if (!$error) $this->model->setStep(++$this->step);
+	}
+	
+	function checkTimeout() {
+		static $start = null;
 
-		foreach ($results as $result)
-		{
-			if (empty($result['action'])) continue;
-			echo '<div>', $result['action'], ': ', $result['name'], '(', $result['sql'],')</div>';
-		}
+        list( $usec, $sec ) = explode( ' ', microtime() );
+        $time = ((float)$usec + (float)$sec);
 
-		if (!isset($stop)) {
-			$document =& JFactory::getDocument();
-			$document->addScriptDeclaration("setTimeout(\"location='".JRoute::_('index.php?option=com_kunena&view=install&task=install', false)."'\", 500);");
-			JRequest::setVar('hidemainmenu', 1);
-		} else {
-			echo "Done!";
-		}
+		if (empty($start)) $start = $time;
+
+		if ($time-$start < 2) return false;
+		return true;
 	}
 }

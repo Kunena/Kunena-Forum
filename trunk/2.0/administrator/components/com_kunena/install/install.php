@@ -14,5 +14,6 @@ defined( '_JEXEC' ) or die('Restricted access');
 function com_install()
 {
 	$app = JFactory::getApplication();
+	$app->setUserState('com_kunena.install.step', 0);
 	$app->redirect(JRoute::_('index.php?option=com_kunena&view=install', false));
 }

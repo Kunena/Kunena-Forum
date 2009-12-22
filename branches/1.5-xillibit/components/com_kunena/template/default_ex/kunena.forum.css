@@ -984,6 +984,7 @@ POST PAGE
 #Kunena .fb_leftcolumn {
 	width:160px;
 	text-align: right;
+	vertical-align: top;
 }
 #Kunena #Kunena_post_result div {
 	border: 1px solid #999;

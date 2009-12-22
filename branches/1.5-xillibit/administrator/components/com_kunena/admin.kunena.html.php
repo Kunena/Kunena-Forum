@@ -2697,7 +2697,10 @@ echo $pane->endPane();
                     <th algin = "left" width = "10"><?php echo _ANN_ID; ?>
                     </th>
 
-                    <th algin = "left" width = "10"><?php echo _USRL_NAME; ?>
+                    <th algin = "left" width = "10"><?php echo _KUNENA_USRL_NAME; ?>
+                    </th>
+                    
+                    <th algin = "left" width = "10"><?php echo _KUNENA_USRL_REALNAME; ?>
                     </th>
 
                     <th algin = "left" width = "100"><?php echo _GEN_EMAIL; ?>
@@ -2735,6 +2738,10 @@ echo $pane->endPane();
                                     <a href = "#edit" onclick = "return listItemTask('cb<?php echo $i; ?>','userprofile')"><?php echo $pl->userid; ?></a>
                                 </td>
 
+                                <td width = "100">
+                                    <a href = "#edit" onclick = "return listItemTask('cb<?php echo $i; ?>','userprofile')"><?php echo $pl->username; ?></a>
+                                </td>
+                                
                                 <td width = "100">
                                     <a href = "#edit" onclick = "return listItemTask('cb<?php echo $i; ?>','userprofile')"><?php echo $pl->name; ?></a>
                                 </td>

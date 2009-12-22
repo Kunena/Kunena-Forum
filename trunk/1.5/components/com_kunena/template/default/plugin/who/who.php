@@ -23,11 +23,11 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $app =& JFactory::getApplication();
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 ?>
 
 <?php
-if ($fbConfig->showwhoisonline > 0)
+if ($kunena_config->showwhoisonline > 0)
 {
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
@@ -76,11 +76,11 @@ if ($fbConfig->showwhoisonline > 0)
 
                 if ($user->userid == 0) {
                     $user->username = _KUNENA_GUEST;
-                } else if ($user->showOnline < 1 && !$is_Moderator) {
+                } else if ($user->showOnline < 1 && !$kunena_is_moderator) {
                 	continue;
                 }
 
-                $time = date("H:i:s", $user->time + $fbConfig->board_ofset*3600);
+                $time = date("H:i:s", $user->time + $kunena_config->board_ofset*3600);
             ?>
 
                 <tr class = "<?php echo $boardclass.''.$tabclass[$k] ;?>">
@@ -96,14 +96,14 @@ if ($fbConfig->showwhoisonline > 0)
                         }
                         else
                         {
-				echo CKunenaLink::GetProfileLink($fbConfig, $user->userid, $user->username);
+				echo CKunenaLink::GetProfileLink($kunena_config, $user->userid, $user->username);
                         }
                         ?>
 
                         </span>
 
                         <?php
-                        if ($is_Moderator)
+                        if ($kunena_is_moderator)
                         {
                         ?>
 

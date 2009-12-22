@@ -22,10 +22,10 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 $document=& JFactory::getDocument();
 
-$document->setTitle(_KUNENA_USRL_USERLIST . ' - ' . stripslashes($fbConfig->board_title));
+$document->setTitle(_KUNENA_USRL_USERLIST . ' - ' . stripslashes($kunena_config->board_title));
 
 list_users();
 
@@ -33,7 +33,7 @@ function list_users()
 {
     global $lang;
 
-    $fbConfig =& CKunenaConfig::getInstance();
+    $kunena_config =& CKunenaConfig::getInstance();
 
     $kunena_db = &JFactory::getDBO();
 
@@ -43,7 +43,7 @@ function list_users()
     $direction = JRequest::getVar('direction', 'ASC');
     $search = JRequest::getVar('search', '');
     $limitstart = JRequest::getInt('limitstart', 0);
-    $limit = JRequest::getInt('limit', $fbConfig->userlist_rows);
+    $limit = JRequest::getInt('limit', $kunena_config->userlist_rows);
 
     // Total
     $kunena_db->setQuery("SELECT COUNT(*) FROM #__users WHERE block =0");
@@ -114,9 +114,9 @@ class HTML_userlist_content
 {
     function showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search = "")
     {
-    	global $is_Moderator;
+    	global $kunena_is_moderator;
 		$app =& JFactory::getApplication();
-        $fbConfig =& CKunenaConfig::getInstance();
+        $kunena_config =& CKunenaConfig::getInstance();
         $kunena_db = &JFactory::getDBO();
 
         if ($search == "") {
@@ -142,7 +142,7 @@ class HTML_userlist_content
         </script>
 
         <?php
-        if ($fbConfig->joomlastyle < 1) {
+        if ($kunena_config->joomlastyle < 1) {
             $boardclass = "fb_";
         }
         ?>
@@ -194,7 +194,7 @@ class HTML_userlist_content
                                 </th>
 
                                 <?php
-                                if ($fbConfig->userlist_online)
+                                if ($kunena_config->userlist_online)
                                 {
                                 ?>
 
@@ -207,7 +207,7 @@ class HTML_userlist_content
                                 ?>
 
                                 <?php
-                                if ($fbConfig->userlist_avatar)
+                                if ($kunena_config->userlist_avatar)
                                 {
                                 ?>
 
@@ -220,7 +220,7 @@ class HTML_userlist_content
                                 ?>
 
                                 <?php
-                                if ($fbConfig->userlist_name)
+                                if ($kunena_config->userlist_name)
                                 {
                                 ?>
 
@@ -235,7 +235,7 @@ class HTML_userlist_content
                                 ?>
 
                                 <?php
-                                if ($fbConfig->userlist_username)
+                                if ($kunena_config->userlist_username)
                                 {
                                 ?>
 
@@ -250,7 +250,7 @@ class HTML_userlist_content
                                 ?>
 
                                 <?php
-                                if ($fbConfig->userlist_posts)
+                                if ($kunena_config->userlist_posts)
                                 {
                                 ?>
 
@@ -265,7 +265,7 @@ class HTML_userlist_content
                                 ?>
 
                                 <?php
-                                if ($fbConfig->userlist_karma)
+                                if ($kunena_config->userlist_karma)
                                 {
                                 ?>
 
@@ -280,7 +280,7 @@ class HTML_userlist_content
                                 ?>
 
                                 <?php
-                                if ($fbConfig->userlist_email)
+                                if ($kunena_config->userlist_email)
                                 {
                                 ?>
 
@@ -295,7 +295,7 @@ class HTML_userlist_content
                                 ?>
 
                                 <?php
-                                if ($fbConfig->userlist_usertype)
+                                if ($kunena_config->userlist_usertype)
                                 {
                                 ?>
 
@@ -310,7 +310,7 @@ class HTML_userlist_content
                                 ?>
 
                                 <?php
-                                if ($fbConfig->userlist_joindate)
+                                if ($kunena_config->userlist_joindate)
                                 {
                                 ?>
 
@@ -325,7 +325,7 @@ class HTML_userlist_content
                                 ?>
 
                                 <?php
-                                if ($fbConfig->userlist_lastvisitdate)
+                                if ($kunena_config->userlist_lastvisitdate)
                                 {
                                 ?>
 
@@ -340,7 +340,7 @@ class HTML_userlist_content
                                 ?>
 
 								  <?php
-                                if ($fbConfig->userlist_userhits)
+                                if ($kunena_config->userlist_userhits)
                                 {
                                 ?>
 								<th class = "th-12 lst <?php echo $boardclass; ?>sectiontableheader" align="center">
@@ -372,20 +372,20 @@ class HTML_userlist_content
 
                                 // Avatar
                                 $uslavatar = '';
-                                if ($fbConfig->avatar_src == "clexuspm") {
+                                if ($kunena_config->avatar_src == "clexuspm") {
                                     $uslavatar = '<img  border="0" class="usl_avatar" src="' . MyPMSTools::getAvatarLinkWithID($ulrow->id, "s") . '" alt="" />';
                                 }
-                                else if ($fbConfig->avatar_src == "cb")
+                                else if ($kunena_config->avatar_src == "cb")
                                 {
                                 	$kunenaProfile =& CKunenaCBProfile::getInstance();
 									$uslavatar = $kunenaProfile->showAvatar($ulrow->id);
                                 }
-                                else if ($fbConfig->avatar_src == "aup") // integration AlphaUserPoints
+                                else if ($kunena_config->avatar_src == "aup") // integration AlphaUserPoints
                                 {
                                 	$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
                                 	if ( file_exists($api_AUP)) {
-                                		( $fbConfig->fb_profile=='aup' ) ? $showlink=1 : $showlink=0;
-                                		 $uslavatar = AlphaUserPointsHelper::getAupAvatar( $ulrow->id, $showlink, $fbConfig->avatarsmallwidth, $fbConfig->avatarsmallheight );
+                                		( $kunena_config->fb_profile=='aup' ) ? $showlink=1 : $showlink=0;
+                                		 $uslavatar = AlphaUserPointsHelper::getAupAvatar( $ulrow->id, $showlink, $kunena_config->avatarsmallwidth, $kunena_config->avatarsmallheight );
                                 	} // end integration AlphaUserPoints
                                 }
                                 else
@@ -412,7 +412,7 @@ class HTML_userlist_content
                                     </td>
 
                                     <?php
-                                    if ($fbConfig->userlist_online)
+                                    if ($kunena_config->userlist_online)
                                     {
                                     ?>
 
@@ -438,14 +438,14 @@ class HTML_userlist_content
                                     ?>
 
                                     <?php
-                                    if ($fbConfig->userlist_avatar)
+                                    if ($kunena_config->userlist_avatar)
                                     {
                                     ?>
 
                                         <td class = "td-3" align="center">
                                       <?php
                                       if(strlen($uslavatar)) {
-						echo CKunenaLink::GetProfileLink($fbConfig, $ulrow->id, $uslavatar);
+						echo CKunenaLink::GetProfileLink($kunena_config, $ulrow->id, $uslavatar);
                                       }
                                       else { echo '&nbsp;'; }
                                       ?>
@@ -456,12 +456,12 @@ class HTML_userlist_content
                                     ?>
 
                                     <?php
-                                    if ($fbConfig->userlist_name)
+                                    if ($kunena_config->userlist_name)
                                     {
                                     ?>
 
                                         <td class = "td-4  fbm" align="center">
-						<?php echo CKunenaLink::GetProfileLink($fbConfig, $ulrow->id, $ulrow->name); ?>
+						<?php echo CKunenaLink::GetProfileLink($kunena_config, $ulrow->id, $ulrow->name); ?>
                                         </td>
 
                                     <?php
@@ -469,12 +469,12 @@ class HTML_userlist_content
                                     ?>
 
                                     <?php
-                                    if ($fbConfig->userlist_username)
+                                    if ($kunena_config->userlist_username)
                                     {
                                     ?>
 
                                         <td class = "td-5  fbm" align="center">
-						<?php echo CKunenaLink::GetProfileLink($fbConfig, $ulrow->id, $ulrow->username); ?>
+						<?php echo CKunenaLink::GetProfileLink($kunena_config, $ulrow->id, $ulrow->username); ?>
                                         </td>
 
                                     <?php
@@ -482,7 +482,7 @@ class HTML_userlist_content
                                     ?>
 
                                     <?php
-                                    if ($fbConfig->userlist_posts)
+                                    if ($kunena_config->userlist_posts)
                                     {
                                     ?>
 
@@ -495,7 +495,7 @@ class HTML_userlist_content
                                     ?>
 
                                     <?php
-                                    if ($fbConfig->userlist_karma)
+                                    if ($kunena_config->userlist_karma)
                                     {
                                     ?>
 
@@ -508,26 +508,26 @@ class HTML_userlist_content
                                     ?>
 
                                     <?php
-                                    if ($fbConfig->userlist_email) {
+                                    if ($kunena_config->userlist_email) {
                                         echo "\t\t<td class=\"td-8 fbs\"  align=\"center\"><a href=\"mailto:$ulrow->email\">$ulrow->email</a></td>\n";
                                     }
 
-                                    if ($fbConfig->userlist_usertype) {
+                                    if ($kunena_config->userlist_usertype) {
                                         echo "\t\t<td  class=\"td-9 fbs\"  align=\"center\">$ulrow->usertype</td>\n";
                                     }
 
-                                    if ($fbConfig->userlist_joindate) {
+                                    if ($kunena_config->userlist_joindate) {
                                         echo "\t\t<td  class=\"td-10 fbs\"  align=\"center\">" . convertDate($ulrow->registerDate) . "</td>\n";
                                     }
 
-                                    if ($fbConfig->userlist_lastvisitdate) {
+                                    if ($kunena_config->userlist_lastvisitdate) {
                                         echo "\t\t<td  class=\"td-11 fbs\"  align=\"center\">" . convertDate($ulrow->lastvisitDate) . "</td>\n";
                                     }
                                     ?>
 
                                     <td class = "td-12 lst fbs" align="center">
 									 <?php
-                                    if ($fbConfig->userlist_userhits)
+                                    if ($kunena_config->userlist_userhits)
                                     {
                                     ?>
 									<?php echo $ulrow->uhits; ?>
@@ -601,7 +601,7 @@ class HTML_userlist_content
                     <th  class = "th-right">
                         <?php
                         //(JJ) FINISH: CAT LIST BOTTOM
-                        if ($fbConfig->enableforumjump) {
+                        if ($kunena_config->enableforumjump) {
                             require_once(KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                         }
                         ?>

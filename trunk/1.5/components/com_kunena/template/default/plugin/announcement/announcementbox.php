@@ -22,10 +22,10 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 
-# Check for Editor rights  $fbConfig->annmodid
-$user_fields = @explode(',', $fbConfig->annmodid);
+# Check for Editor rights  $kunena_config->annmodid
+$user_fields = @explode(',', $kunena_config->annmodid);
 
 if (in_array($kunena_my->id, $user_fields) || $kunena_my->usertype == 'Administrator' || $kunena_my->usertype == 'Super Administrator') {
     $is_editor = true;
@@ -48,14 +48,14 @@ $ann = $anns[0];
 $annID = $ann->id;
 $anntitle = stripslashes($ann->title);
 
-$smileyList = smile::getEmoticons(0);
-$annsdescription = stripslashes(smile::smileReplace($ann->sdescription, 0, $fbConfig->disemoticons, $smileyList));
+$kunena_emoticons = smile::getEmoticons(0);
+$annsdescription = stripslashes(smile::smileReplace($ann->sdescription, 0, $kunena_config->disemoticons, $kunena_emoticons));
 $annsdescription = nl2br($annsdescription);
-$annsdescription = smile::htmlwrap($annsdescription, $fbConfig->wrap);
+$annsdescription = smile::htmlwrap($annsdescription, $kunena_config->wrap);
 
-$anndescription = stripslashes(smile::smileReplace($ann->description, 0, $fbConfig->disemoticons, $smileyList));
+$anndescription = stripslashes(smile::smileReplace($ann->description, 0, $kunena_config->disemoticons, $kunena_emoticons));
 $anndescription = nl2br($anndescription);
-$anndescription = smile::htmlwrap($anndescription, $fbConfig->wrap);
+$anndescription = smile::htmlwrap($anndescription, $kunena_config->wrap);
 
 $anncreated = KUNENA_timeformat(strtotime($ann->created));
 $annpublished = $ann->published;
@@ -89,8 +89,8 @@ if ($annID > 0) {
 
                     <tr class = "fb_sth">
                         <th class = "th-1 <?php echo $boardclass ;?>sectiontableheader fbm" align="left">
-                            <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'edit', $annID); ?>"><?php echo _ANN_EDIT; ?> </a> |
-                        <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'delete', $annID); ?>"><?php echo _ANN_DELETE; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'add');?>"><?php echo _ANN_ADD; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'show');?>"><?php echo _ANN_CPANEL; ?> </a>
+                            <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'edit', $annID); ?>"><?php echo _ANN_EDIT; ?> </a> |
+                        <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'delete', $annID); ?>"><?php echo _ANN_DELETE; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'add');?>"><?php echo _ANN_ADD; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'show');?>"><?php echo _ANN_CPANEL; ?> </a>
                         </th>
                     </tr>
 
@@ -119,7 +119,7 @@ if ($annID > 0) {
 if (!empty($anndescription)) {
 ?>
 
-    &nbsp;&nbsp;&nbsp;<a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'read', $annID);?>"> <?php echo _ANN_READMORE; ?></a>
+    &nbsp;&nbsp;&nbsp;<a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'read', $annID);?>"> <?php echo _ANN_READMORE; ?></a>
 
 <?php
     }

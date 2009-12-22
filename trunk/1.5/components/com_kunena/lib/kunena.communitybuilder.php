@@ -23,7 +23,7 @@ class CKunenaCBProfile {
 	var $errormsg = '';
 
 	function __construct() {
-		$fbConfig =& CKunenaConfig::getInstance();
+		$kunena_config =& CKunenaConfig::getInstance();
 		$cbpath = KUNENA_ROOT_PATH_ADMIN .DS. 'components' .DS. 'com_comprofiler' .DS. 'plugin.foundation.php';
 		if (file_exists($cbpath)) {
 			include_once($cbpath);
@@ -32,24 +32,24 @@ class CKunenaCBProfile {
 			cbimport('language.front');
 			cbimport('cb.tabs');
 			define("KUNENA_CB_ITEMID_SUFFIX", getCBprofileItemid());
-			if ($fbConfig->fb_profile == 'cb') {
+			if ($kunena_config->fb_profile == 'cb') {
 				$params = array();
 				$this->trigger('onStart', $params);
 			}
 		}
 		if ($this->_detectIntegration() === false) {
-			$fbConfig->pm_component = $fbConfig->pm_component == 'cb' ? 'none' : $fbConfig->pm_component;
-			$fbConfig->avatar_src = $fbConfig->avatar_src == 'cb' ? 'kunena' : $fbConfig->avatar_src;
-			$fbConfig->fb_profile = $fbConfig->fb_profile == 'cb' ? 'kunena' : $fbConfig->fb_profile;
+			$kunena_config->pm_component = $kunena_config->pm_component == 'cb' ? 'none' : $kunena_config->pm_component;
+			$kunena_config->avatar_src = $kunena_config->avatar_src == 'cb' ? 'kunena' : $kunena_config->avatar_src;
+			$kunena_config->fb_profile = $kunena_config->fb_profile == 'cb' ? 'kunena' : $kunena_config->fb_profile;
 		}
 		else if ($this->useProfileIntegration() === false) {
-			$fbConfig->fb_profile = $fbConfig->fb_profile == 'cb' ? 'kunena' : $fbConfig->fb_profile;
+			$kunena_config->fb_profile = $kunena_config->fb_profile == 'cb' ? 'kunena' : $kunena_config->fb_profile;
 		}
 	}
 
 	function close() {
-		$fbConfig =& CKunenaConfig::getInstance();
-		if ($fbConfig->fb_profile == 'cb') {
+		$kunena_config =& CKunenaConfig::getInstance();
+		if ($kunena_config->fb_profile == 'cb') {
 			$params = array();
 			$this->trigger('onEnd', $params);
 		}
@@ -74,7 +74,7 @@ function enqueueErrors() {
 
 	function _detectIntegration() {
 		global $ueConfig;
-		$fbConfig =& CKunenaConfig::getInstance();
+		$kunena_config =& CKunenaConfig::getInstance();
 
 		// Detect
 		if (!isset($ueConfig['version'])) {
@@ -82,7 +82,7 @@ function enqueueErrors() {
 			$this->error = 1;
 			return false;
 		}
-		if ($fbConfig->fb_profile != 'cb') return true;
+		if ($kunena_config->fb_profile != 'cb') return true;
 		if (!class_exists('getForumModel') && version_compare($ueConfig['version'], '1.2.1') < 0) {
 			$this->errormsg = sprintf(_KUNENA_INTEGRATION_CB_WARN_UPDATE, '1.2.1');
 			$this->error = 3;
@@ -99,8 +99,8 @@ function enqueueErrors() {
 	}
 
 	function useProfileIntegration() {
-		$fbConfig =& CKunenaConfig::getInstance();
-		return ($fbConfig->fb_profile == 'cb' && !$this->error);
+		$kunena_config =& CKunenaConfig::getInstance();
+		return ($kunena_config->fb_profile == 'cb' && !$this->error);
 	}
 
 	function getLoginURL() {
@@ -162,11 +162,11 @@ function enqueueErrors() {
 		if (!isset($instances[$userid]))
 		{
 			global $_PLUGINS;
-			$fbConfig = CKunenaConfig::getInstance();
+			$kunena_config = CKunenaConfig::getInstance();
 			$userprofile = new CKunenaUserprofile($userid);
 			$_PLUGINS->loadPluginGroup('user');
 			$instances[$userid] = implode( '', $_PLUGINS->trigger( 'forumSideProfile', array( 'kunena', null, $userid,
-				array( 'config'=> &$fbConfig, 'userprofile'=> &$userprofile, 'msg_params'=>&$msg_params) ) ) );
+				array( 'config'=> &$kunena_config, 'userprofile'=> &$userprofile, 'msg_params'=>&$msg_params) ) ) );
 		}
 		return $instances[$userid];
 	}
@@ -180,10 +180,10 @@ function enqueueErrors() {
 	{
 		global $_PLUGINS;
 
-		$fbConfig =& CKunenaConfig::getInstance();
-		$params['config'] =& $fbConfig;
+		$kunena_config =& CKunenaConfig::getInstance();
+		$params['config'] =& $kunena_config;
 		$_PLUGINS->loadPluginGroup('user');
-		$_PLUGINS->trigger( 'kunenaIntegration', array( $event, &$fbConfig, &$params ));
+		$_PLUGINS->trigger( 'kunenaIntegration', array( $event, &$kunena_config, &$params ));
 	}
 
 }

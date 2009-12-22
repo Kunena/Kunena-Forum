@@ -19,21 +19,21 @@
 * @author TSMF & Jan de Graaff
 **/
 defined( '_JEXEC' ) or die('Restricted access');
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 
 $signature = $userinfo->signature;
 
 $usr_signature = '';
 if ($signature)
 {
-	$smileyList = smile::getEmoticons(0);
-	$signature = stripslashes(smile::smileReplace($signature, 0, $fbConfig->disemoticons, $smileyList));
+	$kunena_emoticons = smile::getEmoticons(0);
+	$signature = stripslashes(smile::smileReplace($signature, 0, $kunena_config->disemoticons, $kunena_emoticons));
 	$signature = str_replace("\n", "<br />", $signature);
 	$signature = str_replace("<P>&nbsp;</P><br />", "", $signature);
 	$signature = str_replace("</P><br />", "</P>", $signature);
 	$signature = str_replace("<P><br />", "<P>", $signature);
 	//wordwrap:
-	$signature = smile::htmlwrap($signature, $fbConfig->wrap);
+	$signature = smile::htmlwrap($signature, $kunena_config->wrap);
 	$signature = nl2br($signature);
 	//restore the \n (were replaced with _CTRL_) occurences inside code tags, but only after we have striplslashes; otherwise they will be stripped again
 	//$signature = stripslashes($signature);

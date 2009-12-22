@@ -241,10 +241,10 @@ class smile
         // well $html is the $message to edit, generally it means in PLAINTEXT @Kunena!
         global $editmode;
         // ERROR: mixed global $editmode
-        $fbConfig =& CKunenaConfig::getInstance();
+        $kunena_config =& CKunenaConfig::getInstance();
 
         // (JJ) JOOMLA STYLE CHECK
-        if ($fbConfig->joomlastyle < 1) {
+        if ($kunena_config->joomlastyle < 1) {
             $boardclass = "fb_";
         }
         ?>
@@ -275,7 +275,7 @@ class smile
 								<option value = "5"><?php @print(_SIZE_VBIG); ?></option>
 							</select>
 							<img id="ueberschrift" class = "fb-bbcode" name = "addbbcode20" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>color_swatch.png" alt="<?php @print(_SMILE_COLOUR); ?>" onclick = "javascript:change_palette();" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_COLOR);?>')" />
-							<?php if ($fbConfig->showspoilertag) {?>
+							<?php if ($kunena_config->showspoilertag) {?>
 							<img class = "fb-bbcode" name = "addbbcode40" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spoiler.png" alt="Spoiler" onclick = "bbfontstyle('[spoiler]', '[/spoiler]')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_SPOILER);?>')" />
 							<?php } ?>
 							<img class = "fb-bbcode" name = "addbbcode24" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>group_key.png" alt="Hide" onclick = "bbfontstyle('[hide]', '[/hide]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_HIDE);?>')" />
@@ -292,10 +292,10 @@ class smile
 							<img class = "fb-bbcode" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.png" style="cursor: auto;" />
 							<img class = "fb-bbcode" name = "addbbcode14" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>picture_link.png" alt="Img" onclick = "javascript:dE('image');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINK);?>')" />
 							<img class = "fb-bbcode" name = "addbbcode16" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>link_url.png" alt="URL" onclick = "javascript:dE('link');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINK);?>')" />
-							<?php if ($fbConfig->showebaytag) {?>
+							<?php if ($kunena_config->showebaytag) {?>
 							<img class = "fb-bbcode" name = "addbbcode20" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>ebay.png" alt="Ebay" onclick = "bbfontstyle('[ebay]', '[/ebay]')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_EBAY);?>')" />
 							<?php } ?>
-							<?php if ($fbConfig->showvideotag) {?>
+							<?php if ($kunena_config->showvideotag) {?>
 								&nbsp;<span style="white-space:nowrap;">
 								<a href = "javascript:dE('video');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEO);?>')"><img  src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>film.png"  /></a>
                               </span>

@@ -20,22 +20,22 @@
 **/
 defined( '_JEXEC' ) or die('Restricted access');
 
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 
 $signature = $userinfo->signature;
 
 $usr_signature = '';
 if ($signature)
 {
-	$smileyList = smile::getEmoticons(0);
+	$kunena_emoticons = smile::getEmoticons(0);
 	$signature = stripslashes($signature);
-	$signature = smile::smileReplace($signature, 0, $fbConfig->disemoticons, $smileyList);
+	$signature = smile::smileReplace($signature, 0, $kunena_config->disemoticons, $kunena_emoticons);
 	$signature = nl2br($signature);
 	$signature = str_replace("<P>&nbsp;</P><br />", "", $signature);
 	$signature = str_replace("</P><br />", "</P>", $signature);
 	$signature = str_replace("<P><br />", "<P>", $signature);
 	//wordwrap:
-	$signature = smile::htmlwrap($signature, $fbConfig->wrap);
+	$signature = smile::htmlwrap($signature, $kunena_config->wrap);
 	//restore the \n (were replaced with _CTRL_) occurences inside code tags, but only after we have striplslashes; otherwise they will be stripped again
 	//$signature = str_replace("_CRLF_", "\\n", stripslashes($signature));
 	$usr_signature = $signature;
@@ -62,7 +62,7 @@ $lastvisitDate = strftime(_KUNENA_DT_DATETIME_FMT, strtotime($userinfo->lastvisi
           <?php echo _KUNENA_MYPROFILE_PERSONAL_INFO; ?>
         </center></th>
     </tr>
-    <?php  if ( $fbConfig->userlist_name ) { ?>
+    <?php  if ( $kunena_config->userlist_name ) { ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_NAME; ?></b> </td>
       <td  class = "td-2 fbm"><?php echo $userinfo->name; ?></td>
@@ -72,13 +72,13 @@ $lastvisitDate = strftime(_KUNENA_DT_DATETIME_FMT, strtotime($userinfo->lastvisi
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_USERNAME; ?></b> </td>
       <td  class = "td-2 fbm"><?php echo $userinfo->username; ?></td>
     </tr>
-    <?php  if ( $fbConfig->showemail && $userinfo->hideEmail==0 ) { ?>
+    <?php  if ( $kunena_config->showemail && $userinfo->hideEmail==0 ) { ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_EMAIL; ?></b> </td>
       <td  class = "td-2 fbm"><?php echo $userinfo->email; ?></td>
     </tr>
     <?php } ?>
-    <?php  if ( $fbConfig->userlist_usertype ) { ?>
+    <?php  if ( $kunena_config->userlist_usertype ) { ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_USERTYPE; ?></b> </td>
       <td  class = "td-2 fbm"><?php echo $userinfo->usertype; ?></td>

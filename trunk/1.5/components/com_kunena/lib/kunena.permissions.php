@@ -33,7 +33,7 @@ defined( '_JEXEC' ) or die('Restricted access');
  * @pre: fb_has_read_permission()
  */
 function fb_has_post_permission(&$kunena_db,$catid,$replyto,$userid,$pubwrite,$ismod) {
-    $fbConfig =& CKunenaConfig::getInstance();
+    $kunena_config =& CKunenaConfig::getInstance();
     if ($ismod)
         return 1; // moderators always have post permission
     if($replyto != 0) {

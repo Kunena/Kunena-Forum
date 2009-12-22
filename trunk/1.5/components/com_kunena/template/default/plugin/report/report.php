@@ -47,7 +47,7 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
 {
     $kunena_my = &JFactory::getUser();
     $kunena_db = &JFactory::getDBO();
-    $fbConfig =& CKunenaConfig::getInstance();
+    $kunena_config =& CKunenaConfig::getInstance();
 
     if (!$kunena_my->id) {
         JError::raiseError( 403, JText::_("ALERTNOTAUTH") );;
@@ -70,10 +70,10 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
     $sender = $kunena_db->loadResult();
 
     if ($reason) {
-        $subject = "[".stripslashes($fbConfig->board_title)." "._GEN_FORUM."] "._KUNENA_REPORT_MSG . ": " . $reason;
+        $subject = "[".stripslashes($kunena_config->board_title)." "._GEN_FORUM."] "._KUNENA_REPORT_MSG . ": " . $reason;
         }
     else {
-        $subject = "[".stripslashes($fbConfig->board_title)." "._GEN_FORUM."] "._KUNENA_REPORT_MSG . ": " . stripslashes($row->subject);
+        $subject = "[".stripslashes($kunena_config->board_title)." "._GEN_FORUM."] "._KUNENA_REPORT_MSG . ": " . stripslashes($row->subject);
         }
 
 	jimport('joomla.environment.uri');
@@ -138,7 +138,7 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
 }
 
 function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins) {
-    $fbConfig =& CKunenaConfig::getInstance();
+    $kunena_config =& CKunenaConfig::getInstance();
     $kunena_db =& JFactory::getDBO();
 
     //send report to category moderators
@@ -147,7 +147,7 @@ function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins)
             $kunena_db->setQuery("SELECT email FROM #__users WHERE id={$mod->userid}");
             $email = $kunena_db->loadResult();
 
-            JUtility::sendMail($fbConfig->email, $fbConfig->board_title, $email, $subject, $message);
+            JUtility::sendMail($kunena_config->email, $kunena_config->board_title, $email, $subject, $message);
             }
     }
 
@@ -155,16 +155,16 @@ function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins)
     foreach ($admins as $admin) {
         $kunena_db->setQuery("SELECT email FROM #__users WHERE id={$admin->id}");
         $email = $kunena_db->loadResult();
-        JUtility::sendMail($fbConfig->email, stripslashes($fbConfig->board_title)." ".trim(_GEN_FORUM), $email, $subject, $message);
+        JUtility::sendMail($kunena_config->email, stripslashes($kunena_config->board_title)." ".trim(_GEN_FORUM), $email, $subject, $message);
         }
     }
 
 function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
-    $fbConfig =& CKunenaConfig::getInstance();
+    $kunena_config =& CKunenaConfig::getInstance();
 
     $kunena_db = &JFactory::getDBO();
 
-    switch ($fbConfig->pm_component)
+    switch ($kunena_config->pm_component)
     {
         case 'no': break;
 
@@ -201,7 +201,7 @@ function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
 
 function ReportForm($id, $catid) {
     $app =& JFactory::getApplication();
-    $fbConfig =& CKunenaConfig::getInstance();
+    $kunena_config =& CKunenaConfig::getInstance();
     $kunena_my = &JFactory::getUser();
 
     $redirect = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $id . '&amp;Itemid=' . KUNENA_COMPONENT_ITEMID) . '#' . $id;
@@ -212,7 +212,7 @@ function ReportForm($id, $catid) {
         return;
         }
 
-    if ($fbConfig->reportmsg == 0) {
+    if ($kunena_config->reportmsg == 0) {
         $app->redirect($redirect);
         return;
         }

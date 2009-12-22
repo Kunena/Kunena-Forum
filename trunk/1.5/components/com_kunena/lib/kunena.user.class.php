@@ -274,8 +274,8 @@ class CKunenaUsers
 
 	function CKunenaUsers()
 	{
-		$fbConfig =& CKunenaConfig::getInstance();
-		if ($fbConfig->username == 1) $this->mapping['name'] = $this->mapping['username'];
+		$kunena_config =& CKunenaConfig::getInstance();
+		if ($kunena_config->username == 1) $this->mapping['name'] = $this->mapping['username'];
 	}
 
 	function &getInstance() {

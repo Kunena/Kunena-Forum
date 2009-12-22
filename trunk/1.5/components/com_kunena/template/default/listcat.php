@@ -21,7 +21,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 $kunena_my = &JFactory::getUser();
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 //securing passed form elements
 $catid = (int)$catid;
 
@@ -36,11 +36,11 @@ $allCat = $kunena_db->loadObjectList();
 $threadids = array ();
 $categories = array ();
 
-$smileyList = smile::getEmoticons(0);
+$kunena_emoticons = smile::getEmoticons(0);
 
 // set page title
 $document=& JFactory::getDocument();
-$document->setTitle(_GEN_FORUMLIST . ' - ' . stripslashes($fbConfig->board_title));
+$document->setTitle(_GEN_FORUMLIST . ' - ' . stripslashes($kunena_config->board_title));
 
 if (count($allCat) > 0)
 {
@@ -68,7 +68,7 @@ if (in_array($catid, $threadids))
 $allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):array();
 
 // (JJ) BEGIN: ANNOUNCEMENT BOX
-if ($fbConfig->showannouncement > 0)
+if ($kunena_config->showannouncement > 0)
 {
 ?>
 <!-- B: announcementBox -->
@@ -121,7 +121,7 @@ if (count($categories[0]) > 0)
     {
         $obj_fb_cat = new jbCategory($kunena_db, $cat->id);
 
-        $is_Mod = fb_has_moderator_permission($kunena_db, $obj_fb_cat, $kunena_my->id, $is_admin);
+        $is_Mod = fb_has_moderator_permission($kunena_db, $obj_fb_cat, $kunena_my->id, $kunena_is_admin);
 
         if (in_array($cat->id, $allow_forum))
         {
@@ -141,9 +141,9 @@ if (count($categories[0]) > 0)
                                 echo CKunenaLink::GetCategoryLink('listcat', $cat->id, kunena_htmlspecialchars(stripslashes($cat->name)), 'follow', $class='fb_title fbl');
 
                                 if ($cat->description != "") {
-                                    $tmpforumdesc = stripslashes(smile::smileReplace($cat->description, 0, $fbConfig->disemoticons, $smileyList));
+                                    $tmpforumdesc = stripslashes(smile::smileReplace($cat->description, 0, $kunena_config->disemoticons, $kunena_emoticons));
 							        $tmpforumdesc = nl2br($tmpforumdesc);
-							        $tmpforumdesc = smile::htmlwrap($tmpforumdesc, $fbConfig->wrap);
+							        $tmpforumdesc = smile::htmlwrap($tmpforumdesc, $kunena_config->wrap);
 									echo $tmpforumdesc;
                                 }
                                 ?>
@@ -196,7 +196,7 @@ if (count($categories[0]) > 0)
                         {
 
                             $obj_fb_cat = new jbCategory($kunena_db, $singlerow->id);
-                            $is_Mod = fb_has_moderator_permission($kunena_db, $obj_fb_cat, $kunena_my->id, $is_admin);
+                            $is_Mod = fb_has_moderator_permission($kunena_db, $obj_fb_cat, $kunena_my->id, $kunena_is_admin);
 
                             if (in_array($singlerow->id, $allow_forum))
                             {
@@ -208,9 +208,9 @@ if (count($categories[0]) > 0)
                                 $lastPosttime = $singlerow->time_last_msg;
                                 $lastptime = KUNENA_timeformat(CKunenaTools::fbGetShowTime($singlerow->time_last_msg));
 
-                                $forumDesc = stripslashes(smile::smileReplace($singlerow->description, 0, $fbConfig->disemoticons, $smileyList));
+                                $forumDesc = stripslashes(smile::smileReplace($singlerow->description, 0, $kunena_config->disemoticons, $kunena_emoticons));
 						        $forumDesc = nl2br($forumDesc);
-						        $forumDesc = smile::htmlwrap($forumDesc, $fbConfig->wrap);
+						        $forumDesc = smile::htmlwrap($forumDesc, $kunena_config->wrap);
 
                                 //    Get the forumsubparent categories :: get the subcategories here
                                 $kunena_db->setQuery("SELECT id, name, numTopics, numPosts FROM #__fb_categories WHERE parent='{$singlerow->id}' AND published='1' ORDER BY ordering");
@@ -253,7 +253,7 @@ if (count($categories[0]) > 0)
                                 $nummodIDs = count($modIDs);
                                 $numPending = 0;
 
-                                if ((in_array($kunena_my->id, $modIDs)) || $is_admin == 1)
+                                if ((in_array($kunena_my->id, $modIDs)) || $kunena_is_admin == 1)
                                 {
                                     $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE catid='{$singlerow->id}' AND hold='1'");
                                     $numPending = $kunena_db->loadResult();
@@ -276,7 +276,7 @@ if (count($categories[0]) > 0)
                                 	$thisThread->totalmessages = 0;
                                 	$thisThread->thread = 0;
                                 }
-                                $latestthreadpages = ceil($thisThread->totalmessages / $fbConfig->messages_per_page);
+                                $latestthreadpages = ceil($thisThread->totalmessages / $kunena_config->messages_per_page);
                                 $latestthread = $thisThread->thread;
                                 $latestname = $singlerow->mname;
                                 $latestcatid = stripslashes($singlerow->catid);
@@ -290,7 +290,7 @@ if (count($categories[0]) > 0)
                                         <?php
                                         $tmpIcon = '';
                                         $cxThereisNewInForum = 0;
-                                        if ($fbConfig->shownew && $kunena_my->id != 0)
+                                        if ($kunena_config->shownew && $kunena_my->id != 0)
                                         {
                                             //Check if unread threads are in any of the forums topics
                                             $newPostsAvailable = 0;
@@ -313,7 +313,7 @@ if (count($categories[0]) > 0)
                                                 }
                                                 else
                                                 {
-                                                    $tmpIcon = isset($fbIcons['unreadforum']) ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['unreadforum'].'" border="0" alt="'._GEN_FORUM_NEWPOST.'" title="'._GEN_FORUM_NEWPOST.'" />' : stripslashes($fbConfig->newchar);
+                                                    $tmpIcon = isset($fbIcons['unreadforum']) ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['unreadforum'].'" border="0" alt="'._GEN_FORUM_NEWPOST.'" title="'._GEN_FORUM_NEWPOST.'" />' : stripslashes($kunena_config->newchar);
                                                 }
                                             }
                                             else
@@ -325,7 +325,7 @@ if (count($categories[0]) > 0)
                                                 }
                                                 else
                                                 {
-                                                    $tmpIcon = isset($fbIcons['readforum']) ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['readforum'].'" border="0" alt="'._GEN_FORUM_NOTNEW.'" title="'._GEN_FORUM_NOTNEW.'" />' : stripslashes($fbConfig->newchar);
+                                                    $tmpIcon = isset($fbIcons['readforum']) ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['readforum'].'" border="0" alt="'._GEN_FORUM_NOTNEW.'" title="'._GEN_FORUM_NOTNEW.'" />' : stripslashes($kunena_config->newchar);
                                                 }
                                             }
                                         }
@@ -336,7 +336,7 @@ if (count($categories[0]) > 0)
                                                 $tmpIcon = '<img src="'.KUNENA_URLCATIMAGES.$singlerow->id.'_notlogin.gif" border="0" class="forum-cat-image" alt=" " />';
                                             }
                                             else {
-                                                $tmpIcon = isset($fbIcons['notloginforum']) ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['notloginforum'].'" border="0" alt="'._GEN_FORUM_NOTNEW.'" title="'._GEN_FORUM_NOTNEW.'" />' : stripslashes($fbConfig->newchar);
+                                                $tmpIcon = isset($fbIcons['notloginforum']) ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['notloginforum'].'" border="0" alt="'._GEN_FORUM_NOTNEW.'" title="'._GEN_FORUM_NOTNEW.'" />' : stripslashes($kunena_config->newchar);
                                             }
                                         }
                                         echo CKunenaLink::GetCategoryLink('showcat', $singlerow->id, $tmpIcon);
@@ -349,7 +349,7 @@ if (count($categories[0]) > 0)
                                             echo CKunenaLink::GetCategoryLink('showcat', $singlerow->id, kunena_htmlspecialchars(stripslashes($singlerow->name)));
 
                                             if ($cxThereisNewInForum == 1 && $kunena_my->id > 0) {
-                                                echo '<sup><span class="newchar">&nbsp;(' . $newPostsAvailable . ' ' . $fbConfig->newchar . ")</span></sup>";
+                                                echo '<sup><span class="newchar">&nbsp;(' . $newPostsAvailable . ' ' . $kunena_config->newchar . ")</span></sup>";
                                             }
 
                                             $cxThereisNewInForum = 0;
@@ -398,7 +398,7 @@ if (count($categories[0]) > 0)
                                                     <?php
                                                     //row index
                                                     $ir9 = 0;
-                                                    $cfg_numforums = $fbConfig->numchildcolumn>0 ? $fbConfig->numchildcolumn : 2;
+                                                    $cfg_numforums = $kunena_config->numchildcolumn>0 ? $kunena_config->numchildcolumn : 2;
                                                     $num_rows = ceil(count($forumparents) / $cfg_numforums);
 
                                                     //     foreach ($forumparents as $forumparent)
@@ -416,10 +416,10 @@ if (count($categories[0]) > 0)
                                                             {
 
                                                                 //Begin: parent read unread iconset
-                                                                if ($fbConfig->showchildcaticon)
+                                                                if ($kunena_config->showchildcaticon)
                                                                 {
                                                                     //
-                                                                    if ($fbConfig->shownew && $kunena_my->id != 0)
+                                                                    if ($kunena_config->shownew && $kunena_my->id != 0)
                                                                     {
                                                                         //    get all threads with posts after the users last visit; don't bother for guests
                                                                         $kunena_db->setQuery("SELECT thread FROM #__fb_messages WHERE catid='{$forumparent->id}' AND hold='0' AND time>'{$prevCheck}' GROUP BY thread");
@@ -449,7 +449,7 @@ if (count($categories[0]) > 0)
                                                                                 echo "<img src=\"" . KUNENA_URLCATIMAGES . $forumparent->id . "_on_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
                                                                             }
                                                                             else {
-                                                                                echo isset($fbIcons['unreadforum']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unreadforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '" />' : stripslashes($fbConfig->newchar);
+                                                                                echo isset($fbIcons['unreadforum']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unreadforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '" />' : stripslashes($kunena_config->newchar);
                                                                             }
                                                                         }
                                                                         else
@@ -459,7 +459,7 @@ if (count($categories[0]) > 0)
                                                                                 echo "<img src=\"" . KUNENA_URLCATIMAGES . $forumparent->id . "_off_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
                                                                             }
                                                                             else {
-                                                                                echo isset($fbIcons['readforum']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['readforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : stripslashes($fbConfig->newchar);
+                                                                                echo isset($fbIcons['readforum']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['readforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : stripslashes($kunena_config->newchar);
                                                                             }
                                                                         }
                                                                     }
@@ -470,7 +470,7 @@ if (count($categories[0]) > 0)
                                                                             echo "<img src=\"" . KUNENA_URLCATIMAGES . $forumparent->id . "_notlogin_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
                                                                         }
                                                                         else {
-                                                                            echo isset($fbIcons['notloginforum']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['notloginforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : stripslashes($fbConfig->newchar);
+                                                                            echo isset($fbIcons['notloginforum']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['notloginforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : stripslashes($kunena_config->newchar);
                                                                         }
                                                     ?>
 
@@ -516,7 +516,7 @@ if (count($categories[0]) > 0)
                                                 foreach ($modslist as $mod) {
 					                               	if ($mod_cnt) echo ', '; 
 					                               	$mod_cnt++;
-													echo CKunenaLink::GetProfileLink($fbConfig, $mod->userid, ($fbConfig->username ? $mod->username : $mod->name));
+													echo CKunenaLink::GetProfileLink($kunena_config, $mod->userid, ($kunena_config->username ? $mod->username : $mod->name));
                                                 }
                                                 ?>
                                             </div>
@@ -550,16 +550,16 @@ if (count($categories[0]) > 0)
                                         <td class = "td-5" align="left">
                                             <div class = "<?php echo $boardclass ?>latest-subject fbm">
 <?php
-                                               echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $singlerow->catid, $latestthread, $latestthreadpages, $fbConfig->messages_per_page, $latestsubject, $latestid);
+                                               echo CKunenaLink::GetThreadPageLink($kunena_config, 'view', $singlerow->catid, $latestthread, $latestthreadpages, $kunena_config->messages_per_page, $latestsubject, $latestid);
 ?>
                                             </div>
 
                                             <div class = "<?php echo $boardclass ?>latest-subject-by fbs">
 <?php
                                                 echo _GEN_BY.' ';
-                                                echo CKunenaLink::GetProfileLink($fbConfig, $latestuserid, $latestname);
+                                                echo CKunenaLink::GetProfileLink($kunena_config, $latestuserid, $latestname);
                                                 echo ' | '.$lastptime.' ';
-                                                echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $singlerow->catid, $latestthread, $latestthreadpages, $fbConfig->messages_per_page,
+                                                echo CKunenaLink::GetThreadPageLink($kunena_config, 'view', $singlerow->catid, $latestthread, $latestthreadpages, $kunena_config->messages_per_page,
                                                 isset($fbIcons['latestpost']) ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" title="'. _SHOW_LAST.'"/>' :
                                                                          '<img src="'.KUNENA_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'"/>', $latestid);
 ?>
@@ -603,7 +603,7 @@ if (count($categories[0]) > 0)
 
 <?php
     //(JJ) BEGIN: RECENT POSTS
-    if ($fbConfig->showlatest)
+    if ($kunena_config->showlatest)
     {
         if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/recentposts/recentposts.php')) {
             include (KUNENA_ABSTMPLTPATH . '/plugin/recentposts/recentposts.php');
@@ -615,7 +615,7 @@ if (count($categories[0]) > 0)
 
     //(JJ) FINISH: RECENT POSTS
 
-	if ($fbConfig->showstats)
+	if ($kunena_config->showstats)
     {
 
 		//(JJ) BEGIN: STATS
@@ -636,7 +636,7 @@ if (count($categories[0]) > 0)
 
     //(JJ) FINISH: STATS
 
-	if ($fbConfig->showwhoisonline)
+	if ($kunena_config->showwhoisonline)
     {
 
 		//(JJ) BEGIN: WHOISONLINE

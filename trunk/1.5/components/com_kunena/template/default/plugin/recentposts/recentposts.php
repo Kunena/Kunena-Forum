@@ -23,7 +23,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 global $lang;
 
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 $fbSession =& CKunenaSession::getInstance();
 
 $Kunena_adm_path = KUNENA_PATH_ADMIN;
@@ -48,17 +48,17 @@ $source_file = KUNENA_PATH_TEMPLATE_DEFAULT .DS. "plugin/recentposts/tabber.js";
 $source_file = KUNENA_PATH_TEMPLATE_DEFAULT .DS. "plugin/recentposts/tabber-minimized.js";
 $source_file = KUNENA_PATH_TEMPLATE_DEFAULT .DS. "plugin/recentposts/function.tabber.php";
 //
-$category = trim($fbConfig->latestcategory); // 2,3,4
-$count = $fbConfig->latestcount;
-$count_per_page = intval($fbConfig->latestcountperpage);
-$show_author = $fbConfig->latestshowauthor; // 0 = none, 1= username, 2= realname
-$singlesubject = $fbConfig->latestsinglesubject;
-$replysubject = $fbConfig->latestreplysubject;
-$subject_length = intval($fbConfig->latestsubjectlength);
-$show_date = $fbConfig->latestshowdate;
+$category = trim($kunena_config->latestcategory); // 2,3,4
+$count = $kunena_config->latestcount;
+$count_per_page = intval($kunena_config->latestcountperpage);
+$show_author = $kunena_config->latestshowauthor; // 0 = none, 1= username, 2= realname
+$singlesubject = $kunena_config->latestsinglesubject;
+$replysubject = $kunena_config->latestreplysubject;
+$subject_length = intval($kunena_config->latestsubjectlength);
+$show_date = $kunena_config->latestshowdate;
 $show_order_number = "1";
 $tooltips_enable = "1";
-$show_hits = $fbConfig->latestshowhits;
+$show_hits = $kunena_config->latestshowhits;
 
 $topic_emoticons = array ();
 $topic_emoticons[0] = KUNENA_URLEMOTIONSPATH . 'default.gif';
@@ -95,10 +95,10 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 
 				// find messages
 				$sq1 = ($category)?"AND msg2.catid in ($category)":"";
-				if ($fbConfig->latestsinglesubject) {
+				if ($kunena_config->latestsinglesubject) {
 					$sq2 = "SELECT msg1.* FROM (SELECT msg2.* FROM #__fb_messages msg2"
 						. " WHERE msg2.hold='0' AND moved='0' AND msg2.catid IN ($fbSession->allowed) $sq1 ORDER BY msg2.time"
-						. (($fbConfig->latestreplysubject)?" DESC":"") . ") msg1"
+						. (($kunena_config->latestreplysubject)?" DESC":"") . ") msg1"
 						. " GROUP BY msg1.thread";
 				} else {
 					$sq2 = "SELECT msg2.* FROM #__fb_messages msg2"
@@ -210,13 +210,13 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 
                             case '1':
                                 echo "<td  class=\"td-3 fbm\"  align=\"center\"  >";
-				echo CKunenaLink::GetProfileLink($fbConfig, $row->id, $row->username);
+				echo CKunenaLink::GetProfileLink($kunena_config, $row->id, $row->username);
                                 echo "</td>";
                                 break;
 
                             case '2':
                                 echo "<td  class=\"td-3 fbm\"  align=\"center\"  >";
-				echo CKunenaLink::GetProfileLink($fbConfig, $row->id, $row->name);
+				echo CKunenaLink::GetProfileLink($kunena_config, $row->id, $row->name);
                                 echo "</td>";
                                 break;
                         }

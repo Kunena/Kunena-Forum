@@ -21,8 +21,8 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-$fbConfig =& CKunenaConfig::getInstance();
-global $is_Moderator, $do, $kunena_db, $userid;
+$kunena_config =& CKunenaConfig::getInstance();
+global $kunena_is_moderator, $do, $kunena_db, $userid;
 
 //Modify this to change the minimum time between karma modifications from the same user
 $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
@@ -43,21 +43,21 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                 // - if a registered user submits the modify request
                 // - if he specifies an action related to the karma change
                 // - if he specifies the user that will have the karma modified
-                if ($fbConfig->showkarma && $kunena_my->id != "" && $kunena_my->id != 0 && $do != '' && $userid != '')
+                if ($kunena_config->showkarma && $kunena_my->id != "" && $kunena_my->id != 0 && $do != '' && $userid != '')
                 {
                     $time = CKunenaTools::fbGetInternalTime();
 
                     if ($kunena_my->id != $userid)
                     {
                         // This checkes to see if it's not too soon for a new karma change
-                        if (!$is_Moderator)
+                        if (!$kunena_is_moderator)
                         {
                             $kunena_db->setQuery("SELECT karma_time FROM #__fb_users WHERE userid='{$kunena_my->id}'");
                             $karma_time_old = $kunena_db->loadResult();
                             $karma_time_diff = $time - $karma_time_old;
                         }
 
-                        if ($is_Moderator || $karma_time_diff >= $karma_min_seconds)
+                        if ($kunena_is_moderator || $karma_time_diff >= $karma_min_seconds)
                         {
                             if ($do == "increase")
                             {

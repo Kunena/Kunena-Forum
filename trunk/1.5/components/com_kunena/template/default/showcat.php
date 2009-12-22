@@ -20,9 +20,9 @@
 **/
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 $fbSession =& CKunenaSession::getInstance();
-global $is_Moderator;
+global $kunena_is_moderator;
 global $messages;
 
 $kunena_db = &JFactory::getDBO();
@@ -43,7 +43,7 @@ $allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):arr
 
 if (in_array($catid, $allow_forum))
 {
-    $threads_per_page = $fbConfig->threads_per_page;
+    $threads_per_page = $kunena_config->threads_per_page;
 
     if ($catid <= 0) {
         //make sure we got a valid category id
@@ -119,11 +119,11 @@ if (in_array($catid, $allow_forum))
 <!-- / Pathway -->
 <?php if($objCatInfo->headerdesc) { ?>
 <div class="fb_forum-headerdesc"><?php
-		$smileyList = smile::getEmoticons(0);
-		$headerdesc = stripslashes(smile::smileReplace($objCatInfo->headerdesc, 0, $fbConfig->disemoticons, $smileyList));
+		$kunena_emoticons = smile::getEmoticons(0);
+		$headerdesc = stripslashes(smile::smileReplace($objCatInfo->headerdesc, 0, $kunena_config->disemoticons, $kunena_emoticons));
         $headerdesc = nl2br($headerdesc);
         //wordwrap:
-        $headerdesc = smile::htmlwrap($headerdesc, $fbConfig->wrap);
+        $headerdesc = smile::htmlwrap($headerdesc, $kunena_config->wrap);
 		echo $headerdesc;	?></div>
 <?php } ?>
 <?php
@@ -147,7 +147,7 @@ if (in_array($catid, $allow_forum))
                 ?>
 
                 <?php
-                if ($is_Moderator || ($forumLocked == 0 && ($kunena_my->id > 0 || $fbConfig->pubwrite)))
+                if ($kunena_is_moderator || ($forumLocked == 0 && ($kunena_my->id > 0 || $kunena_config->pubwrite)))
                 {
                     //this user is allowed to post a new topic:
                     echo CKunenaLink::GetPostNewTopicLink($catid, isset($fbIcons['new_topic']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
@@ -237,7 +237,7 @@ if (in_array($catid, $allow_forum))
                 ?>
 
                 <?php
-                if ($is_Moderator || ($forumLocked == 0 && ($kunena_my->id > 0 || $fbConfig->pubwrite)))
+                if ($kunena_is_moderator || ($forumLocked == 0 && ($kunena_my->id > 0 || $kunena_config->pubwrite)))
                 {
                     //this user is allowed to post a new topic:
                     echo CKunenaLink::GetPostNewTopicLink($catid, isset($fbIcons['new_topic']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
@@ -299,7 +299,7 @@ if (in_array($catid, $allow_forum))
 
                         <?php
                         //get the Moderator list for display
-                        $fb_queryName = $fbConfig->username ? "username" : "name";
+                        $fb_queryName = $kunena_config->username ? "username" : "name";
                         $kunena_db->setQuery("select m.userid, u.{$fb_queryName} AS username FROM #__fb_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid='{$catid}'");
                         $modslist = $kunena_db->loadObjectList();
                         	check_dberror("Unable to load moderators.");
@@ -313,7 +313,7 @@ if (in_array($catid, $allow_forum))
                             echo '' . _GEN_MODERATORS . ": ";
 
                             foreach ($modslist as $mod) {
-                                echo CKunenaLink::GetProfileLink($fbConfig, $mod->userid, ($fbConfig->username ? $mod->username : $mod->name)).'&nbsp; ';
+                                echo CKunenaLink::GetProfileLink($kunena_config, $mod->userid, ($kunena_config->username ? $mod->username : $mod->name)).'&nbsp; ';
                             } ?>
                              </div>
                             <?php
@@ -326,7 +326,7 @@ if (in_array($catid, $allow_forum))
                 <th  class = "th-right fbs" align="right">
                     <?php
                     //(JJ) FINISH: CAT LIST BOTTOM
-                    if ($fbConfig->enableforumjump)
+                    if ($kunena_config->enableforumjump)
                         require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                     ?>
                 </th>
@@ -339,7 +339,7 @@ if (in_array($catid, $allow_forum))
                     <?php
                     if ($kunena_my->id != 0)
                     {
-                        echo isset($fbIcons['unreadmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '" />' : $fbConfig->newchar;
+                        echo isset($fbIcons['unreadmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '" />' : $kunena_config->newchar;
                         echo ' - ' . _GEN_UNREAD . '';
                     }
                     ?>
@@ -349,7 +349,7 @@ if (in_array($catid, $allow_forum))
                     <?php
                     if ($kunena_my->id != 0)
                     {
-                        echo isset($fbIcons['readmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $fbConfig->newchar;
+                        echo isset($fbIcons['readmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $kunena_config->newchar;
                         echo ' - ' . _GEN_NOUNREAD . '';
                     }
                     ?>
@@ -418,7 +418,7 @@ else
         <?php
         echo _KUNENA_NO_ACCESS;
 
-        if ($fbConfig->enableforumjump)
+        if ($kunena_config->enableforumjump)
         {
         ?>
 

@@ -25,7 +25,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $func, $boardclass, $id, $catid, $kunena_db;
 global $kunena_topic_tile;
 
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 ?>
 <!-- Pathway -->
 <?php
@@ -39,7 +39,7 @@ if ($func != "")
         <?php
         $catids = intval($catid);
         $kunena_path_menu = array ();
-        echo '<div class="path-element-first">' . CKunenaLink::GetKunenaLink( kunena_htmlspecialchars(stripslashes($fbConfig->board_title)) ) . '</div>';
+        echo '<div class="path-element-first">' . CKunenaLink::GetKunenaLink( kunena_htmlspecialchars(stripslashes($kunena_config->board_title)) ) . '</div>';
 
         $spath = '';
 
@@ -118,7 +118,7 @@ if ($func != "")
         }
 
          //get viewing
-        $fb_queryName = $fbConfig->username ? "username" : "name";
+        $fb_queryName = $kunena_config->username ? "username" : "name";
 		$query= "SELECT w.userid, u.id, u.{$fb_queryName} AS username, k.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS k ON k.userid=w.userid WHERE w.link like '%" . addslashes($_SERVER['REQUEST_URI']) . "%' GROUP BY w.userid ORDER BY u.{$fb_queryName} ASC";
 		$kunena_db->setQuery($query);
 		$users = $kunena_db->loadObjectList();
@@ -142,7 +142,7 @@ if ($func != "")
 					$divider = '';
 					}
 					if ( $user->showOnline > 0 ){
-					echo CKunenaLink::GetProfileLink($fbConfig,  $user->userid, $user->username) . $divider.' ';
+					echo CKunenaLink::GetProfileLink($kunena_config,  $user->userid, $user->username) . $divider.' ';
 					}
 				}
 				else
@@ -160,7 +160,7 @@ if ($func != "")
 
 		$document=& JFactory::getDocument();
 
-		$document->setTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($fbConfig->board_title));
+		$document->setTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($kunena_config->board_title));
         ?>
 		</div>
     </div>

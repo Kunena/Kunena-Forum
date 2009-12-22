@@ -21,7 +21,7 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 ?>
 <!-- Cat List Bottom -->
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
@@ -55,7 +55,7 @@ $fbConfig =& CKunenaConfig::getInstance();
             <th class = "th-right fbs" align="right">
                 <?php
                 //(FB) FINISH: CAT LIST BOTTOM
-                if ($fbConfig->enableforumjump)
+                if ($kunena_config->enableforumjump)
                     require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 ?>
             </th>
@@ -66,14 +66,14 @@ $fbConfig =& CKunenaConfig::getInstance();
         <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
             <td class = "td-1 fbs">
                 <?php
-                echo isset($fbIcons['unreadforum_s']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unreadforum_s'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '"/>' : $fbConfig->newchar;
+                echo isset($fbIcons['unreadforum_s']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unreadforum_s'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '"/>' : $kunena_config->newchar;
                 echo '- ' . _GEN_FORUM_NEWPOST . '';
                 ?>
 
                 <br/>
 
 <?php
-echo isset($fbIcons['readforum_s']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['readforum_s'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : $fbConfig->newchar;
+echo isset($fbIcons['readforum_s']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['readforum_s'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : $kunena_config->newchar;
 echo ' - ' . _GEN_FORUM_NOTNEW . '';
 ?>
             </td>

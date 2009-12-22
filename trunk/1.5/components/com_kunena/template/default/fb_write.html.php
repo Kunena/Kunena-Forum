@@ -21,7 +21,7 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 //Some initial thingies needed anyway:
 if (!isset($htmlText)) $htmlText = '';
 if (!isset($setFocus)) $setFocus = 0;
@@ -57,7 +57,7 @@ JHTML::_('behavior.keepalive');
             </td>
 
             <?php
-            if (($fbConfig->regonly == "1" || $fbConfig->changename == '0') && $kunena_my->id != "" && !$is_Moderator) {
+            if (($kunena_config->regonly == "1" || $kunena_config->changename == '0') && $kunena_my->id != "" && !$kunena_is_moderator) {
                 echo "<td><input type=\"hidden\" name=\"fb_authorname\" size=\"35\" class=\"" . $boardclass . "inputbox postinput\"  maxlength=\"35\" value=\"$authorName\" /><b>$authorName</b></td>";
             }
             else
@@ -76,10 +76,10 @@ JHTML::_('behavior.keepalive');
         </tr>
 
         <?php
-        if ($fbConfig->askemail)
+        if ($kunena_config->askemail)
         {
             echo '<tr class = "'. $boardclass . 'sectiontableentry2"><td class = "fb_leftcolumn"><strong>' . _GEN_EMAIL . ' *</strong>:</td>';
-            if (($fbConfig->regonly == "1" || $fbConfig->changename == '0') && $kunena_my->id != "" && !$is_Moderator) {
+            if (($kunena_config->regonly == "1" || $kunena_config->changename == '0') && $kunena_my->id != "" && !$kunena_is_moderator) {
                 echo "<td>$my_email</td>";
             }
             else
@@ -101,7 +101,7 @@ JHTML::_('behavior.keepalive');
                 </td>
 
                 <td>
-                    <input type = "text" class = "<?php echo $boardclass; ?>inputbox postinput" name = "subject" size = "35" maxlength = "<?php echo $fbConfig->maxsubject;?>" value = "<?php echo $resubject;?>" />
+                    <input type = "text" class = "<?php echo $boardclass; ?>inputbox postinput" name = "subject" size = "35" maxlength = "<?php echo $kunena_config->maxsubject;?>" value = "<?php echo $resubject;?>" />
                 </td>
 
             <?php
@@ -115,7 +115,7 @@ JHTML::_('behavior.keepalive');
                 </td>
 
                 <td>
-                    <input type = "hidden" class = "inputbox" name = "subject" size = "35" maxlength = "<?php echo $fbConfig->maxsubject;?>" value = "<?php echo $resubject;?>" /><?php echo $resubject; ?>
+                    <input type = "hidden" class = "inputbox" name = "subject" size = "35" maxlength = "<?php echo $kunena_config->maxsubject;?>" value = "<?php echo $resubject;?>" /><?php echo $resubject; ?>
                 </td>
 
             <?php
@@ -142,7 +142,7 @@ JHTML::_('behavior.keepalive');
 
             <td class = "fb-topicicons">
                 <?php
-                $topicToolbar = smile::topicToolbar(0, $fbConfig->rtewidth);
+                $topicToolbar = smile::topicToolbar(0, $kunena_config->rtewidth);
                 echo $topicToolbar;
                 ?>
             </td>
@@ -152,14 +152,14 @@ JHTML::_('behavior.keepalive');
             ?>
 
         <?php
-        if ($fbConfig->rtewidth == 0) {
+        if ($kunena_config->rtewidth == 0) {
             $useRte = 0;
         }
         else {
             $useRte = 1;
         }
 
-        $fbTextArea = smile::fbWriteTextarea('message', $htmlText, $fbConfig->rtewidth, $fbConfig->rteheight, $useRte, $fbConfig->disemoticons);
+        $fbTextArea = smile::fbWriteTextarea('message', $htmlText, $kunena_config->rtewidth, $kunena_config->rteheight, $useRte, $kunena_config->disemoticons);
         echo $fbTextArea;
 
         if ($setFocus == 0) {
@@ -167,7 +167,7 @@ JHTML::_('behavior.keepalive');
         }
 
         //check if this user is already subscribed to this topic but only if subscriptions are allowed
-        if ($fbConfig->allowsubscriptions == 1)
+        if ($kunena_config->allowsubscriptions == 1)
         {
             if ($id == 0) {
                 $fb_thread = -1;
@@ -196,12 +196,12 @@ JHTML::_('behavior.keepalive');
                 <strong><?php echo _PREVIEW; ?></strong>:
             </td>
            <td>
-  <div class="previewMsg" id="previewMsg" style="height:<?php echo $fbConfig->rteheight;?>px;overflow:auto;"></div>
+  <div class="previewMsg" id="previewMsg" style="height:<?php echo $kunena_config->rteheight;?>px;overflow:auto;"></div>
             </td>
         </tr>
 <!-- /preview -->
 <?php
-        if (($fbConfig->allowimageupload || ($fbConfig->allowimageregupload && $kunena_my->id != 0) || $is_Moderator) && $no_image_upload == "0")
+        if (($kunena_config->allowimageupload || ($kunena_config->allowimageregupload && $kunena_my->id != 0) || $kunena_is_moderator) && $no_image_upload == "0")
         {
         ?>
 
@@ -211,7 +211,7 @@ JHTML::_('behavior.keepalive');
                 </td>
 
                 <td>
-                    <input type = 'file' class = 'fb_button' name = 'attachimage' onmouseover = "javascript:kunenaShowHelp('<?php @print(_IMAGE_DIMENSIONS).": ".$fbConfig->imagewidth."x".$fbConfig->imageheight." - ".$fbConfig->imagesize." KB";?>')" />
+                    <input type = 'file' class = 'fb_button' name = 'attachimage' onmouseover = "javascript:kunenaShowHelp('<?php @print(_IMAGE_DIMENSIONS).": ".$kunena_config->imagewidth."x".$kunena_config->imageheight." - ".$kunena_config->imagesize." KB";?>')" />
                     <input type = "button" class = "fb_button" name = "addImagePH" value = "<?php @print(_POST_ATTACH_IMAGE);?>" style = "cursor:auto; width: 4em" onclick = "bbfontstyle(' [img/] ','');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMGPH);?>')" />
                 </td>
             </tr>
@@ -221,7 +221,7 @@ JHTML::_('behavior.keepalive');
         ?>
 
         <?php
-        if (($fbConfig->allowfileupload || ($fbConfig->allowfileregupload && $kunena_my->id != 0) || $is_Moderator) && $no_file_upload == "0")
+        if (($kunena_config->allowfileupload || ($kunena_config->allowfileregupload && $kunena_my->id != 0) || $kunena_is_moderator) && $no_file_upload == "0")
         {
         ?>
 
@@ -231,7 +231,7 @@ JHTML::_('behavior.keepalive');
                 </td>
 
                 <td>
-                    <input type = 'file' class = 'fb_button' name = 'attachfile' onmouseover = "javascript:kunenaShowHelp('<?php @print(_FILE_TYPES).": ".$fbConfig->filetypes." - ".$fbConfig->filesize." KB";?>')" style = "cursor:auto" />
+                    <input type = 'file' class = 'fb_button' name = 'attachfile' onmouseover = "javascript:kunenaShowHelp('<?php @print(_FILE_TYPES).": ".$kunena_config->filetypes." - ".$kunena_config->filesize." KB";?>')" style = "cursor:auto" />
                     <input type = "button" class = "fb_button" name = "addFilePH" value = "<?php @print(_POST_ATTACH_FILE);?>" style = "cursor:auto; width: 4em" onclick = "bbfontstyle(' [file/] ','');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FILEPH);?>')" />
                 </td>
             </tr>
@@ -239,7 +239,7 @@ JHTML::_('behavior.keepalive');
         <?php
         }
 
-        if ($kunena_my->id != 0 && $fbConfig->allowsubscriptions == 1 && $fb_cansubscribe == 1 && !$editmode)
+        if ($kunena_my->id != 0 && $kunena_config->allowsubscriptions == 1 && $fb_cansubscribe == 1 && !$editmode)
         {
         ?>
 
@@ -250,7 +250,7 @@ JHTML::_('behavior.keepalive');
 
                 <td>
                     <?php
-                    if ($fbConfig->subscriptionschecked == 1)
+                    if ($kunena_config->subscriptionschecked == 1)
                     {
                     ?>
 
@@ -279,7 +279,7 @@ JHTML::_('behavior.keepalive');
         ?>
 		<?php
 		// Begin captcha . Thanks Adeptus
-		if ($fbConfig->captcha == 1 && $kunena_my->id < 1) { ?>
+		if ($kunena_config->captcha == 1 && $kunena_my->id < 1) { ?>
         <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
             <td class = "fb_leftcolumn">&nbsp;<strong><?php echo _KUNENA_CAPDESC; ?></strong>&nbsp;</td>
             <td align="left" valign="middle" height="35px">&nbsp;<input name="txtNumber" type="text" id="txtNumber" value="" class="fb_button" style="vertical-align:top" size="15">
@@ -315,8 +315,8 @@ JHTML::_('behavior.keepalive');
 <tr>
     <td>
         <?php
-        if ($fbConfig->askemail) {
-            echo $fbConfig->showemail == '0' ? "<em>* - " . _POST_EMAIL_NEVER . "</em>" : "<em>* - " . _POST_EMAIL_REGISTERED . "</em>";
+        if ($kunena_config->askemail) {
+            echo $kunena_config->showemail == '0' ? "<em>* - " . _POST_EMAIL_NEVER . "</em>" : "<em>* - " . _POST_EMAIL_REGISTERED . "</em>";
         }
         ?>
     </td>
@@ -329,7 +329,7 @@ JHTML::_('behavior.keepalive');
     <?php
     $no_upload = "0"; //reset the value.. you just never know..
 
-    if ($fbConfig->showhistory == 1) {
-        listThreadHistory($id, $fbConfig, $kunena_db);
+    if ($kunena_config->showhistory == 1) {
+        listThreadHistory($id, $kunena_config, $kunena_db);
     }
 ?>

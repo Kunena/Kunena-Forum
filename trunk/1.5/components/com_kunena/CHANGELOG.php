@@ -42,6 +42,7 @@ Kunena 1.6.0
 # [#19065] Cleanup installer html based on code analysis - fixed various bugs
 - [#19065] Removed backend plugin directory tree to remove warnings in unused code
 # [#19065] Cleanup frontend based on code analysis - fixed various bugs
+- [#19065] Removed old & unused split and merge code
 
 20-Dec-2009 Matias
 # [#19079] Fix broken layout with too long strings
@@ -523,7 +524,7 @@ Kunena 1.5.1b
 
 30-April-2009 Matias
 # [#16168] Remove HTML entities in the subjects of replies
-# [#16185] Fix global $fbConfigs
+# [#16185] Fix global $kunena_configs
 
 28-April-2009 Matias
 # [#16053] Remove PHP Notices from the frontend (part 2)

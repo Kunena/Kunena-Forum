@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 $kunena_my = &JFactory::getUser();
 $kunena_db = &JFactory::getDBO();
 //first we gather some information about this person
@@ -35,40 +35,40 @@ $fbavatar = NULL;
 if ($_user != NULL)
 {
 	$prefview = $_user->view;
-	if ($fbConfig->username) $username = $_user->username; // externally used  by fb_pathway, myprofile_menu
+	if ($kunena_config->username) $username = $_user->username; // externally used  by fb_pathway, myprofile_menu
 	else $username = $_user->name;
 	$moderator = $_user->moderator;
 	$fbavatar = $_user->avatar;
 }
 
 $jr_avatar = '';
-if ($fbConfig->avatar_src == "jomsocial")
+if ($kunena_config->avatar_src == "jomsocial")
 {
 	// Get CUser object
 	$jsuser =& CFactory::getUser($kunena_my->id);
     $jr_avatar = '<img src="' . $jsuser->getThumbAvatar() . '" alt=" " />';
 }
-else if ($fbConfig->avatar_src == "clexuspm")
+else if ($kunena_config->avatar_src == "clexuspm")
 {
     $jr_avatar = '<img src="' . MyPMSTools::getAvatarLinkWithID($kunena_my->id) . '" alt=" " />';
 }
-else if ($fbConfig->avatar_src == "cb")
+else if ($kunena_config->avatar_src == "cb")
 {
 	$jr_avatar = $kunenaProfile->showAvatar($kunena_my->id);
 }
-else if ($fbConfig->avatar_src == "aup") // integration AlphaUserPoints
+else if ($kunena_config->avatar_src == "aup") // integration AlphaUserPoints
 {
 	$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
 	if ( file_exists($api_AUP)) {
-		( $fbConfig->fb_profile=='aup' ) ? $showlink=1 : $showlink=0;
-		$jr_avatar = AlphaUserPointsHelper::getAupAvatar( $kunena_my->id, $showlink, $fbConfig->avatarsmallwidth, $fbConfig->avatarsmallheight );
+		( $kunena_config->fb_profile=='aup' ) ? $showlink=1 : $showlink=0;
+		$jr_avatar = AlphaUserPointsHelper::getAupAvatar( $kunena_my->id, $showlink, $kunena_config->avatarsmallwidth, $kunena_config->avatarsmallheight );
 	} // end integration AlphaUserPointselse
 }
 else
 {
     if ($fbavatar != "") {
 		if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $fbavatar)) {
-            $jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/' . $fbavatar . '" alt=" " style="max-width: '.$fbConfig->avatarsmallwidth.'px; max-height: '.$fbConfig->avatarsmallheight.'px;" />';
+            $jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/' . $fbavatar . '" alt=" " style="max-width: '.$kunena_config->avatarsmallwidth.'px; max-height: '.$kunena_config->avatarsmallheight.'px;" />';
 		} else {
 		  $jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_' . $fbavatar . '" alt=" " />';
 		}
@@ -80,11 +80,11 @@ else
 
 }
 
-if ($fbConfig->fb_profile == "cb" || $fbConfig->fb_profile == "jomsocial")
+if ($kunena_config->fb_profile == "cb" || $kunena_config->fb_profile == "jomsocial")
 {
-    $jr_profilelink = CKunenaLink::GetProfileLink($fbConfig, $kunena_my->id, _PROFILEBOX_MYPROFILE);
+    $jr_profilelink = CKunenaLink::GetProfileLink($kunena_config, $kunena_my->id, _PROFILEBOX_MYPROFILE);
 }
-else if ($fbConfig->fb_profile == "clexuspm") {
+else if ($kunena_config->fb_profile == "clexuspm") {
     $jr_profilelink = '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
 }
 else
@@ -97,14 +97,14 @@ $jr_latestpost = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=latest');
 ?>
 
 <?php // AFTER LOGIN AREA
-if ($fbConfig->fb_profile == 'cb')
+if ($kunena_config->fb_profile == 'cb')
 {
 	$loginlink = CKunenaCBProfile::getLoginURL();
 	$logoutlink = CKunenaCBProfile::getLogoutURL();
 	$registerlink = CKunenaCBProfile::getRegisterURL();
 	$lostpasslink = CKunenaCBProfile::getLostPasswordURL();
 }
-else if ($fbConfig->fb_profile == 'jomsocial')
+else if ($kunena_config->fb_profile == 'jomsocial')
 {
 	$loginlink = JRoute::_('index.php?option=com_community&amp;view=frontpage');
 	$logoutlink = JRoute::_('index.php?option=com_community&amp;view=frontpage');
@@ -127,7 +127,7 @@ if ($kunena_my->id)
         <tbody id = "topprofilebox_tbody">
             <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
                 <td  class = "td-1  fbm" align="left" width="5%">
-<?php echo CKunenaLink::GetProfileLink($fbConfig, $kunena_my->id, $jr_avatar);?>
+<?php echo CKunenaLink::GetProfileLink($kunena_config, $kunena_my->id, $jr_avatar);?>
                 </td>
 
                 <td valign = "top" class = "td-2  fbm fb_profileboxcnt" align="left">
@@ -138,7 +138,7 @@ if ($kunena_my->id)
                 <a href = "<?php echo $jr_latestpost ; ?>"><?php
     echo _PROFILEBOX_SHOW_LATEST_POSTS; ?> </a> | <?php echo $jr_profilelink; ?> |  <a href = "<?php echo $logoutlink;?>"><?php echo _PROFILEBOX_LOGOUT; ?></a>
 <?php
-$user_fields = @explode(',', $fbConfig->annmodid);
+$user_fields = @explode(',', $kunena_config->annmodid);
 
 if (in_array($kunena_my->id, $user_fields) || $kunena_my->usertype == 'Administrator' || $kunena_my->usertype == 'Super Administrator') {
     $is_editor = true;
@@ -149,9 +149,9 @@ else {
 
 if ($is_editor) {
 ?>
-| <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'show');?>"><?php echo _ANN_ANNOUNCEMENTS; ?> </a>
+| <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'show');?>"><?php echo _ANN_ANNOUNCEMENTS; ?> </a>
 <?php } ?>
-| <?php echo CKunenaLink::GetSearchLink($fbConfig, 'search', '', 0, 0, _KUNENA_SEARCH_ADVSEARCH);?>
+| <?php echo CKunenaLink::GetSearchLink($kunena_config, 'search', '', 0, 0, _KUNENA_SEARCH_ADVSEARCH);?>
 
 </td>
 			<?php

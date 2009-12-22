@@ -22,10 +22,10 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 $document=& JFactory::getDocument();
 
-$document->setTitle(_GEN_HELP . ' - ' . stripslashes($fbConfig->board_title));
+$document->setTitle(_GEN_HELP . ' - ' . stripslashes($kunena_config->board_title));
 
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
@@ -48,7 +48,7 @@ $document->setTitle(_GEN_HELP . ' - ' . stripslashes($fbConfig->board_title));
             <td class="fb_faqdesc" valign="top">
 
         <?php
-          $kunena_db->setQuery("SELECT introtext, id FROM #__content WHERE id='{$fbConfig->help_cid}'");
+          $kunena_db->setQuery("SELECT introtext, id FROM #__content WHERE id='{$kunena_config->help_cid}'");
 		  $j_introtext = $kunena_db->loadResult();
 
            ?>
@@ -76,7 +76,7 @@ $document->setTitle(_GEN_HELP . ' - ' . stripslashes($fbConfig->board_title));
        <th class="th-right">
        <?php
 //(JJ) FINISH: CAT LIST BOTTOM
-if ($fbConfig->enableforumjump)
+if ($kunena_config->enableforumjump)
 require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
 ?></th>
     </tr>

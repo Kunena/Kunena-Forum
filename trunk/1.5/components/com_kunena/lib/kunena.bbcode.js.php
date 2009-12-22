@@ -22,7 +22,7 @@
 
 <script language = "JavaScript" type = "text/javascript">
 <?php
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 ?>
 <!--
 // bbCode control by
@@ -330,7 +330,7 @@ function submitForm() {
     alert("<?php @print( _POST_FORGOT_NAME_ALERT); ?>");
     submitme=0;
  }
-<?php if ($fbConfig->askemail) { ?>
+<?php if ($kunena_config->askemail) { ?>
  formmail=document.postform.email.value;
  if ((formmail.length<1)) {
     alert("<?php @print( _POST_FORGOT_EMAIL_ALERT); ?>");

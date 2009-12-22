@@ -24,10 +24,10 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 global $boardclass, $kunena_db;
 
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 $document=& JFactory::getDocument();
 
-$document->setTitle(_GEN_RULES . ' - ' . stripslashes($fbConfig->board_title));
+$document->setTitle(_GEN_RULES . ' - ' . stripslashes($kunena_config->board_title));
 
 ?>
 <!-- INSERT YOUR RULES IN HTML BEGINNING HERE -->
@@ -50,7 +50,7 @@ $document->setTitle(_GEN_RULES . ' - ' . stripslashes($fbConfig->board_title));
         <tr>
             <td class = "<?php echo $boardclass; ?>rulesdesc">
 <?php
-          $kunena_db->setQuery("SELECT introtext, id FROM #__content WHERE id='{$fbConfig->rules_cid}'");
+          $kunena_db->setQuery("SELECT introtext, id FROM #__content WHERE id='{$kunena_config->rules_cid}'");
 		  $j_introtext = $kunena_db->loadResult();
 
            ?>
@@ -78,7 +78,7 @@ $document->setTitle(_GEN_RULES . ' - ' . stripslashes($fbConfig->board_title));
             <th class = "th-right">
                 <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
-                if ($fbConfig->enableforumjump)
+                if ($kunena_config->enableforumjump)
                     require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 ?>
             </th>

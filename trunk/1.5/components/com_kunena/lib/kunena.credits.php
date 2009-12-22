@@ -16,8 +16,8 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-$fbConfig =& CKunenaConfig::getInstance();
-global $is_Moderator;
+$kunena_config =& CKunenaConfig::getInstance();
+global $kunena_is_moderator;
 global $boardclass;
 
 // Team credits page is not translated
@@ -98,7 +98,7 @@ global $boardclass;
               <tr>
                 <th class = "th-right"> <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
-                if ($fbConfig->enableforumjump)
+                if ($kunena_config->enableforumjump)
                     require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 ?>
                 </th>

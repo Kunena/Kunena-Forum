@@ -25,12 +25,12 @@ defined( '_JEXEC' ) or die('Restricted access');
 $kunena_my = &JFactory::getUser();
 
 $kunena_db = &JFactory::getDBO();
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 unset($user);
 $kunena_db->setQuery("SELECT email, name FROM #__users WHERE id='{$kunena_my->id}'");
 $user = $kunena_db->loadObject();
 
-if ($fbConfig->fb_profile == 'cb')
+if ($kunena_config->fb_profile == 'cb')
 {
 	$msg_params = array(
 		'username' => &$msg_username, 
@@ -74,7 +74,7 @@ if ($fbConfig->fb_profile == 'cb')
 <?php
                         if ($fmessage->userid > 0)
                         {
-                        	echo CKunenaLink::GetProfileLink($fbConfig, $fmessage->userid, $msg_username);
+                        	echo CKunenaLink::GetProfileLink($kunena_config, $fmessage->userid, $msg_username);
                         }
                         else
                         {
@@ -83,13 +83,13 @@ if ($fbConfig->fb_profile == 'cb')
 ?>
                     </span>
 <?php
-					if ( $fbConfig->userlist_usertype ) echo '<span class = "msgusertype">('.$msg_usertype.')</span>';
+					if ( $kunena_config->userlist_usertype ) echo '<span class = "msgusertype">('.$msg_usertype.')</span>';
 ?>
                     <br/>
 <?php
                         if ($fmessage->userid > 0)
                         {
-                        	echo CKunenaLink::GetProfileLink($fbConfig, $fmessage->userid, $msg_avatar);
+                        	echo CKunenaLink::GetProfileLink($kunena_config, $fmessage->userid, $msg_avatar);
                         }
                         else
                         {
@@ -264,7 +264,7 @@ if ($fbConfig->fb_profile == 'cb')
                                     <!-- make this div distinct from others on this page -->
                                     <?php
                                     //see if we need the users realname or his loginname
-                                    if ($fbConfig->username) {
+                                    if ($kunena_config->username) {
                                         $authorName = $kunena_my->username;
                                     }
                                     else {
@@ -284,13 +284,13 @@ if ($fbConfig->fb_profile == 'cb')
 
                                 <input type = "hidden" name = "contentURL" value = "empty"/>
 
-                                <input type = "text" name = "subject" size = "35" class = "inputbox" maxlength = "<?php echo $fbConfig->maxsubject;?>" value = "<?php echo $resubject;?>"/>
+                                <input type = "text" name = "subject" size = "35" class = "inputbox" maxlength = "<?php echo $kunena_config->maxsubject;?>" value = "<?php echo $resubject;?>"/>
 
                                 <textarea class = "inputbox" name = "message" rows = "6" cols = "60" style = "height: 100px; width: 100%; overflow:auto;"></textarea>
 
                                  <?php
 								// Begin captcha . Thanks Adeptus
-								if ($fbConfig->captcha == 1 && $kunena_my->id < 1) { ?>
+								if ($kunena_config->captcha == 1 && $kunena_my->id < 1) { ?>
 								<?php echo _KUNENA_CAPDESC.'&nbsp;'?>
 								<input name="txtNumber" type="text" id="txtNumber" value="" style="vertical-align:middle" size="10">&nbsp;
 								<img src="index2.php?option=com_kunena&func=showcaptcha" alt="" /><br />
@@ -326,7 +326,7 @@ if ($fbConfig->fb_profile == 'cb')
             <td class = "fb-msgview-right-c" >
                          <div class="fb_smalltext" >
                    <?php
-                            if ($fbConfig->reportmsg && $kunena_my->id > 1)
+                            if ($kunena_config->reportmsg && $kunena_my->id > 1)
                             {
                                 echo CKunenaLink::GetReportMessageLink($catid, $msg_id, _KUNENA_REPORT);
                             } ?>

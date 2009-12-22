@@ -27,10 +27,10 @@ class CKunenaSession extends JTable
 
 	function __construct(&$kunena_db)
 	{
-		$fbConfig =& CKunenaConfig::getInstance();
+		$kunena_config =& CKunenaConfig::getInstance();
 		parent::__construct('#__fb_sessions', 'userid', $kunena_db);
-		$this->lasttime = time() + $fbConfig->board_ofset - KUNENA_SECONDS_IN_YEAR;
-		$this->currvisit = time() + $fbConfig->board_ofset;
+		$this->lasttime = time() + $kunena_config->board_ofset - KUNENA_SECONDS_IN_YEAR;
+		$this->currvisit = time() + $kunena_config->board_ofset;
 	}
 
 	function &getInstance( $updateSessionInfo=false )
@@ -56,10 +56,10 @@ class CKunenaSession extends JTable
 
 	function store( $updateNulls=false )
 	{
-		$fbConfig =& CKunenaConfig::getInstance();
+		$kunena_config =& CKunenaConfig::getInstance();
 
 		// Finally update current visit timestamp before saving
-		$this->currvisit = time() + $fbConfig->board_ofset * KUNENA_SECONDS_IN_HOUR;
+		$this->currvisit = time() + $kunena_config->board_ofset * KUNENA_SECONDS_IN_HOUR;
 
 		$k = $this->_tbl_key;
 
@@ -94,18 +94,18 @@ class CKunenaSession extends JTable
 
 	function markAllCategoriesRead()
 	{
-		$fbConfig =& CKunenaConfig::getInstance();
+		$kunena_config =& CKunenaConfig::getInstance();
 		
-		$this->lasttime = time() + $fbConfig->board_ofset * KUNENA_SECONDS_IN_HOUR;
+		$this->lasttime = time() + $kunena_config->board_ofset * KUNENA_SECONDS_IN_HOUR;
 		$this->readtopics = '';
 	}
 
 	function updateSessionInfo()
 	{
-		$fbConfig =& CKunenaConfig::getInstance();
+		$kunena_config =& CKunenaConfig::getInstance();
 
 		// perform session timeout check
-		$this->_sessiontimeout = ($this->currvisit + $fbConfig->fbsessiontimeout) < time() + $fbConfig->board_ofset * KUNENA_SECONDS_IN_HOUR;
+		$this->_sessiontimeout = ($this->currvisit + $kunena_config->fbsessiontimeout) < time() + $kunena_config->board_ofset * KUNENA_SECONDS_IN_HOUR;
 
 		// If this is a new session, reset the lasttime colum with the timestamp
 		// of the last saved currvisit - only after that can we reset currvisit to now before the store

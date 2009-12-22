@@ -38,6 +38,7 @@ Kunena 1.6.0
 
 22-Dec-2009 fxstein
 ^ [#19090] Combine default and default_ex
+# [#19065] Fix regression in uploaded files and images browser
 
 21-Dec-2009 Xillibit
 - [#19075] Remove group from userlist / user profile

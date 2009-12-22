@@ -1400,8 +1400,9 @@ function browseUploaded($kunena_db, $option, $type)
             $uploaded[$uploaded_col_count] = $file;
             $uploaded_name[$uploaded_col_count] = ucfirst(str_replace("_", " ", preg_replace('/^(.*)\..*$/', '\1', $file)));
             $uploaded_col_count++;
-        //}
+  			//}
         }
+		$file = @readdir($dir);
     }
 
     @closedir ($dir);

@@ -43,6 +43,7 @@ Kunena 1.6.0
 - [#19065] Removed backend plugin directory tree to remove warnings in unused code
 # [#19065] Cleanup frontend based on code analysis - fixed various bugs
 - [#19065] Removed old & unused split and merge code
+- [#19065] Removed old & unused code in fb_layout.php
 
 20-Dec-2009 Matias
 # [#19079] Fix broken layout with too long strings
@@ -499,7 +500,7 @@ Kunena 1.5.1b
 
 5-May-2009 Matias
 + [#16249] Community Builder integration: add trigger to modify userinfo
-# [#16239] Missing argument 5 for KUNENA_get_menu()
+# [#16239] Missing argument 5 for kunena_get_menu()
 # [#16237] Fix broken profile links
 # [#16250] Fix slightly broken session handling
 ! Internal: Broken search fixed

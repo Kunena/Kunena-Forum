@@ -29,7 +29,7 @@ $kunena_db = &JFactory::getDBO();
 $kunena_my = &JFactory::getUser();
 
 global $kunena_is_moderator, $boardclass, $fbIcons, $settings, $Itemid, $kunenaProfile;
-global $kunena_topic_tile, $maxPosts, $messages;
+global $kunena_topic_tile, $maxPosts, $messages, $forumLocked;
 
 $kunena_acl = &JFactory::getACL();
 //securing form elements

@@ -23,7 +23,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 $kunena_config =& CKunenaConfig::getInstance();
 $fbSession =& CKunenaSession::getInstance();
 global $kunena_is_moderator;
-global $messages;
+global $messages, $forumLocked;
 
 $kunena_db = &JFactory::getDBO();
 require_once(KUNENA_PATH_LIB .DS. 'kunena.authentication.php');

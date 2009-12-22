@@ -23,7 +23,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $func, $boardclass, $id, $catid, $kunena_db;
-global $kunena_topic_tile;
+global $kunena_topic_tile, $forumLocked;
 
 $kunena_config =& CKunenaConfig::getInstance();
 ?>

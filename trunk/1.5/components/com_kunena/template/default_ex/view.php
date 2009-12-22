@@ -23,7 +23,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $kunena_is_moderator, $boardclass, $fbIcons, $settings, $Itemid, $kunenaProfile;
-global $kunena_db, $kunena_topic_tile, $maxPosts, $messages, $my_id;
+global $kunena_db, $kunena_topic_tile, $maxPosts, $messages, $my_id, $forumLocked;
 
 $app =& JFactory::getApplication();
 $kunena_config =& CKunenaConfig::getInstance();

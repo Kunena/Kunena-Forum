@@ -21,6 +21,9 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
+
+global $boardclass, $kunena_db, $fbIcons, $lockedForum, $moderatedForum;
+
 $kunena_config =& CKunenaConfig::getInstance();
 ?>
 <!-- Cat List Bottom -->

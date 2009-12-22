@@ -22,230 +22,400 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+$app =& JFactory::getApplication();
 $kunena_config =& CKunenaConfig::getInstance();
 $fbSession =& CKunenaSession::getInstance();
-//Start with determining which forums the user can see
+
+function KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages) {
+    $startpage = ($page - floor($maxpages/2) < 1) ? 1 : $page - floor($maxpages/2);
+    $endpage = $startpage + $maxpages;
+    if ($endpage > $totalpages) {
+	$startpage = ($totalpages-$maxpages) < 1 ? 1 : $totalpages-$maxpages;
+	$endpage = $totalpages;
+    }
+
+    $output = '<span class="fb_pagination">'._PAGE;
+
+    if (($startpage) > 1)
+    {
+	if ($endpage < $totalpages) $endpage--;
+        $output .= CKunenaLink::GetLatestPageLink($func, 1, 'follow', '',$sel);
+	if (($startpage) > 2)
+        {
+	    $output .= "...";
+	}
+    }
+
+    for ($i = $startpage; $i <= $endpage && $i <= $totalpages; $i++)
+    {
+        if ($page == $i) {
+            $output .= "<strong>$i</strong>";
+        }
+        else {
+            $output .= CKunenaLink::GetLatestPageLink($func, $i, 'follow', '',$sel);
+        }
+    }
+
+    if ($endpage < $totalpages)
+    {
+	if ($endpage < $totalpages-1)
+        {
+	    $output .= "...";
+	}
+
+        $output .= CKunenaLink::GetLatestPageLink($func, $totalpages, 'follow', '',$sel);
+    }
+
+    $output .= '</span>';
+    return $output;
+}
+
+if (!$kunena_my->id && $func == "mylatest")
+{
+        	header("HTTP/1.1 307 Temporary Redirect");
+        	header("Location: " . htmlspecialchars_decode(CKunenaLink::GetShowLatestURL()));
+        	$app->close();
+}
 
 require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
+
 //resetting some things:
 $lockedForum = 0;
 $lockedTopic = 0;
 $topicSticky = 0;
 
+if ('' == $sel || (!$kunena_my->id && $sel == 0)) {
+/*
+    if($kunena_my->id != 0) { $sel="0"; }	// Users: show messages after last visit
+    else { $sel="720"; }		// Others: show 1 month as default
+*/
+    $sel="720";
+}
+$show_list_time = $sel;
+
 //start the latest x
-if ($sel == "0") {
+if ($sel == 0) {
     $querytime = ($prevCheck - $kunena_config->fbsessiontimeout); //move 30 minutes back to compensate for expired sessions
 }
 else
 {
-    if ("" == $sel) {
-        $sel = 720;
-    } //take 720 hours ~ 1 month as default
     //Time translation
     $back_time = $sel * 3600; //hours*(mins*secs)
     $querytime = time() - $back_time;
 }
 
-// get all the threads with posts in the specified timeframe
-$kunena_db->setQuery(
-    "SELECT
-    	a.id,
-        a.thread,
-        a.subject,
-        b.lastpost
-     FROM
-        #__fb_messages AS a
-        JOIN (  SELECT thread, MAX(time) AS lastpost
-                FROM #__fb_messages
-                WHERE time >'{$querytime}' AND hold='0' AND moved='0' AND catid IN ($fbSession->allowed)
-                GROUP BY 1) AS b ON b.thread = a.thread
-     WHERE
-        a.parent='0'
-        AND a.moved='0'
-        AND a.hold='0'
-     GROUP BY a.thread
-     ORDER BY b.lastpost DESC LIMIT 100");
-$resultSet = $kunena_db->loadObjectList();
-	check_dberror("Unable to load messages.");
-$countRS = count($resultSet);
+//get the db data with allowed forums and turn it into an array
+$threads_per_page = $kunena_config->threads_per_page;
+/*//////////////// Start selecting messages, prepare them for threading, etc... /////////////////*/
+$page             = (int)$page;
+$page             = $page < 1 ? 1 : $page;
+$offset           = ($page - 1) * $threads_per_page;
+$row_count        = $page * $threads_per_page;
 
-//check if $sel has a reasonable value and not a Unix timestamp:
+if ($func != "mylatest") {
+	$lookcats = split(',', $kunena_config->latestcategory);
+	$catlist = array();
+	$latestcats = '';
+	foreach ($lookcats as $catnum) {
+		if ((int)$catnum && (int)$catnum>0) $catlist[] = (int)$catnum;
+	}
+	if (count($catlist)) $latestcats = " AND catid IN (". implode(',', $catlist) .") ";
+}
+
+ //check if $sel has a reasonable value and not a Unix timestamp:
 $since = false;
-
-$lastvisit = '';
 if ($sel == "0")
 {
-    $lastvisit = date(_DATETIME, $querytime);
-    $since = true;
+	$lastvisit = date(_DATETIME, $querytime);
+	$since = true;
+}
+
+if ($func == "mylatest")
+{
+	$document->setTitle(_KUNENA_MY_DISCUSSIONS . ' - ' . stripslashes($kunena_config->board_title));
+	$query = "SELECT count(distinct tmp.thread) FROM
+				(SELECT thread
+					FROM #__fb_messages
+					WHERE userid=$kunena_my->id AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)
+				UNION ALL
+				 SELECT m.thread As thread
+					FROM #__fb_messages AS m
+					JOIN #__fb_favorites AS f ON m.thread = f.thread
+					WHERE f.userid=$kunena_my->id AND m.parent = 0 AND hold=0 and moved=0 AND catid IN ($fbSession->allowed)) AS tmp";
+}
+else
+{
+	$document->setTitle(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($kunena_config->board_title));
+	$query = "Select count(distinct thread) FROM #__fb_messages WHERE time >'$querytime'".
+			" AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)" . $latestcats; // if categories are limited apply filter
+}
+$kunena_db->setQuery($query);
+$total = (int)$kunena_db->loadResult();
+	check_dberror('Unable to count total threads');
+$totalpages = ceil($total / $threads_per_page);
+
+//meta description and keywords
+$metaKeys=kunena_htmlspecialchars(stripslashes(_KUNENA_ALL_DISCUSSIONS . ", {$kunena_config->board_title}, " . $app->getCfg('sitename')));
+$metaDesc=kunena_htmlspecialchars(stripslashes(_KUNENA_ALL_DISCUSSIONS . " ({$page}/{$totalpages}) - {$kunena_config->board_title}"));
+
+$document =& JFactory::getDocument();
+$cur = $document->get( 'description' );
+$metaDesc = $cur .'. ' . $metaDesc;
+$document =& JFactory::getDocument();
+$document->setMetadata( 'robots', 'noindex, follow' );
+$document->setMetadata( 'keywords', $metaKeys );
+$document->setDescription($metaDesc);
+
+if ($func == "mylatest")
+{
+	$order = "myfavorite DESC, lastid DESC";
+	$query = "SELECT m.thread, MAX(m.id) as lastid, MAX(t.fav) AS myfavorite FROM (
+			SELECT thread, 0 AS fav 
+			FROM #__fb_messages 
+			WHERE userid='{$kunena_my->id}' AND moved='0' AND hold='0' AND catid IN ({$fbSession->allowed}) 
+			GROUP BY thread 
+		UNION ALL
+			SELECT thread, 1 AS fav FROM #__fb_favorites WHERE userid='{$kunena_my->id}'
+		) AS t
+		INNER JOIN #__fb_messages AS m ON m.thread=t.thread
+		WHERE m.moved='0' AND m.hold='0' AND m.catid IN ({$fbSession->allowed})
+		GROUP BY thread
+		ORDER BY {$order}
+	";
+}
+else
+{
+	$order = "lastid DESC";
+	$query = "SELECT thread, MAX(id) AS lastid FROM #__fb_messages WHERE time>'{$querytime}' AND hold='0' AND moved='0' AND catid IN ({$fbSession->allowed}) 
+		GROUP BY thread 
+		ORDER BY {$order}
+	";
+}
+
+$kunena_db->setQuery($query, $offset, $threads_per_page);
+$threadids = $kunena_db->loadResultArray();
+	check_dberror("Unable to load thread list.");
+$idstr = @join(",", $threadids);
+
+$favthread = array();
+$thread_counts = array();
+$messages = array();
+$messages[0] = array();
+if (count($threadids) > 0)
+{
+$query = "SELECT a.*, j.id AS userid, t.message AS messagetext, l.myfavorite, l.favcount, l.attachmesid, l.msgcount, l.lastid, u.avatar, c.id AS catid, c.name AS catname
+	FROM (
+		SELECT m.thread, (f.userid IS NOT null AND f.userid='{$kunena_my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachmesid, 
+			COUNT(DISTINCT m.id) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime
+		FROM #__fb_messages AS m
+		LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread
+		LEFT JOIN #__fb_attachments AS a ON a.mesid = m.thread
+		WHERE m.hold='0' AND m.moved='0' AND m.thread IN ({$idstr})
+		GROUP BY thread
+	) AS l
+	INNER JOIN #__fb_messages AS a ON a.thread = l.thread
+	INNER JOIN #__fb_messages_text AS t ON a.thread = t.mesid
+	LEFT JOIN #__users AS j ON j.id = a.userid
+	LEFT JOIN #__fb_users AS u ON u.userid = j.id
+	LEFT JOIN #__fb_categories AS c ON c.id = a.catid
+	WHERE (a.parent='0' OR a.id=l.lastid)
+	ORDER BY $order";
+
+$kunena_db->setQuery($query);
+$messagelist = $kunena_db->loadObjectList();
+	check_dberror("Unable to load messages.");
+
+foreach ($messagelist as $message)
+{
+	$messages[$message->parent][] = $message;
+	$messagetext[$message->id] = substr(smile::purify($message->messagetext), 0, 500);
+	if ($message->parent==0)
+	{
+		$hits[$message->id] = $message->hits;
+		$thread_counts[$message->id] = $message->msgcount-1;
+		$last_read[$message->id]->unread = 0;
+		if ($message->favcount) $favthread[$message->id] = $message->favcount;
+		if ($message->id == $message->lastid) $last_read[$message->id]->lastread = $last_reply[$message->id] = $message;
+	}
+	else
+	{
+		$last_read[$message->thread]->lastread = $last_reply[$message->thread] = $message;
+	}
+}
+
+    $kunena_db->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages "
+                       ."WHERE hold='0' AND moved='0' AND thread IN ({$idstr}) AND time>'{$prevCheck}' GROUP BY thread");
+    $msgidlist = $kunena_db->loadObjectList();
+    check_dberror("Unable to get unread messages count and first id.");
+
+    foreach ($msgidlist as $msgid)
+    {
+        if (!in_array($msgid->thread, $read_topics)) $last_read[$msgid->thread] = $msgid;
+    }
+}
+// (JJ) BEGIN: ANNOUNCEMENT BOX
+if ($kunena_config->showannouncement > 0)
+{
+?>
+<!-- B: announcementBox -->
+<?php
+    if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcementbox.php')) {
+        require_once (KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcementbox.php');
+    }
+    else {
+        require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/announcement/announcementbox.php');
+    }
+?>
+<!-- F: announcementBox -->
+<?php
+}
+// (JJ) FINISH: ANNOUNCEMENT BOX
+
+// load module
+if (JDocumentHTML::countModules('kunena_announcement'))
+{
+?>
+
+    <div class = "fb-fb_2">
+        <?php
+        	$document	= &JFactory::getDocument();
+        	$renderer	= $document->loadRenderer('modules');
+        	$options	= array('style' => 'xhtml');
+        	$position	= 'kunena_announcement';
+        	echo $renderer->render($position, $options, null);
+	?>
+    </div>
+
+<?php
 }
 ?>
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
-<table class = "fb_blocktable" id ="fb_latestx"   border = "0" cellspacing = "0" cellpadding = "0" width="100%">
-    <thead>
-        <tr>
-            <th colspan = "4">
-                <div class = "fb_title_cover" style = "text-align:center; display:block; width:100%;">
-                    <span class="fb_title">
+<!-- B: List Actions -->
+	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="fb_list_actions_info_all">
+    <strong><?php echo $total; ?></strong> <?php echo _KUNENA_DISCUSSIONS; ?>
+								</td>
+									<?php if ($func!='mylatest') {?>
+                                    <td class="fb_list_times_all">
 
-                    <?php
-                    if (!$since) {
-                        echo _SHOW_LAST_POSTS . " $sel";
-                    }
-                    else {
-                        echo _SHOW_LAST_SINCE;
-                    }
-                    ?>
+									<?php  $show_list_time = JRequest::getInt('sel', 720);  ?>
+									<select class="inputboxusl" onchange="document.location.href=this.options[this.selectedIndex].value;" size="1" name="select">
+<?php if ($kunena_my->id): ?>									  <option <?php if ($show_list_time =='0') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=0'); ?>"><?php echo _SHOW_LASTVISIT; ?></option><?php endif; ?>
+									  <option <?php if ($show_list_time =='4') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=4'); ?>"><?php echo _SHOW_4_HOURS; ?></option>
+									  <option <?php if ($show_list_time =='8') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=8'); ?>"><?php echo _SHOW_8_HOURS; ?></option>
+									  <option <?php if ($show_list_time =='12') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=12'); ?>"><?php echo _SHOW_12_HOURS; ?></option>
+									  <option <?php if ($show_list_time =='24') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=24'); ?>"><?php echo _SHOW_24_HOURS; ?></option>
+									  <option <?php if ($show_list_time =='48') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=48'); ?>"><?php echo _SHOW_48_HOURS; ?></option>
+									  <option <?php if ($show_list_time =='168') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=168'); ?>"><?php echo _SHOW_WEEK; ?></option>
+									  <option <?php if ($show_list_time =='720') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=720'); ?>"><?php echo _SHOW_MONTH ; ?></option>
+									  <option <?php if ($show_list_time =='8760') {?> selected="selected"  <?php }?> value="<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel=8760'); ?>"><?php echo _SHOW_YEAR; ?></option>
+									</select>
 
-                    <?php echo $lastvisit; ?> <?php echo _SHOW_HOURS; ?> (<?php echo _SHOW_POSTS; ?><?php echo $countRS; ?>)</span> <?php echo _DESCRIPTION_POSTS; ?><br/>
+                                  </td>
+                                  	<?php } ?>
+                                    <td class="fb_list_jump_all">
 
-                    <?php echo CKunenaLink::GetShowLatestThreadsLink(4, _SHOW_4_HOURS) . ' | ';
-                          echo CKunenaLink::GetShowLatestThreadsLink(8, _SHOW_8_HOURS) . ' | ';
-                          echo CKunenaLink::GetShowLatestThreadsLink(12, _SHOW_12_HOURS) . ' | ';
-                          echo CKunenaLink::GetShowLatestThreadsLink(24, _SHOW_24_HOURS) . ' | ';
-                          echo CKunenaLink::GetShowLatestThreadsLink(48, _SHOW_48_HOURS) . ' | ';
-                          echo CKunenaLink::GetShowLatestThreadsLink(168, _SHOW_WEEK) . ' | ';
-                          echo CKunenaLink::GetShowLatestThreadsLink(0, _SHOW_LASTVISIT) ;
-                    ?>
+                                    <?php if ($kunena_config->enableforumjump)
+ 									 require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
+ 									 ?>
 
-                </div>
-			</th>
-        </tr>
-    </thead>
+                                   </td>
 
-    <tbody id = "<?php echo $boardclass; ?>latestx_tbody">
-        <tr class = "fb_sth fbs">
-            <th class = "th-1 <?php echo $boardclass; ?>sectiontableheader" width="60%" align="left"><?php echo _LATEST_THREADFORUM; ?>
-            </th>
+				<?php
+                                //pagination 1
+					if (count($messages[0]) > 0)
+					{
+					    echo '<td class="fb_list_pages_all">';
+					    $maxpages = 5 - 2; // odd number here (show - 2)
+					    $totalpages = ceil($total / $threads_per_page);
+					    echo $pagination = KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages);
+					    echo '</td>';
+					}
+				?>
 
-            <th class = "th-2 <?php echo $boardclass; ?>sectiontableheader"  width="10%" align="center"><?php echo _LATEST_NUMBER; ?>
-            </th>
+		</tr>
+	</table>
+  <!-- F: List Actions -->
+<?php
+if (count($threadids) > 0)
+{
 
-            <th class = "th-3 <?php echo $boardclass; ?>sectiontableheader" width="15%" align="center"><?php echo _LATEST_AUTHOR; ?>
-            </th>
+				//get all readTopics in an array
+				$readTopics = "";
+				$kunena_db->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid='{$kunena_my->id}'");
+				$readTopics = $kunena_db->loadResult();
+					check_dberror('Unable to load read topics.');
+				if (count($readTopics) == 0)
+				{
+					$readTopics = "0";
+				} //make sure at least something is in there..
+				//make it into an array
+				$read_topics = explode(',', $readTopics);
+				if (file_exists(KUNENA_ABSTMPLTPATH . '/flat.php'))
+				{
+					include (KUNENA_ABSTMPLTPATH . '/flat.php');
+				}
+				else
+				{
+					include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'flat.php');
+				}
+				?>
+<!-- B: List Actions -->
+	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0" width="100%">
+		<tr>
+			<td   class="fb_list_actions_info_all" width="100%">
+				<strong><?php echo $total; ?></strong> <?php echo _KUNENA_DISCUSSIONS; ?>
+			</td>
 
-            <th class = "th-4 <?php echo $boardclass; ?>sectiontableheader"  width="15%" align="left"><?php echo _POSTED_AT; ?>
-            </th>
-        </tr>
+			<?php
+				//pagination 1
+				if (count($messages[0]) > 0)
+				{
+					echo '<td class="fb_list_pages_all" nowrap="nowrap">';
+					echo $pagination;
+					echo '</td>';
+				}
+			?>
+		</tr>
+	</table>
+  <!-- F: List Actions -->
+<?php
+}
+?>
+<div class="clr"></div>
+<?php
 
-        <?php
-        if (0 < $countRS)
-        {
-            $tabclass = array
-            (
-                "sectiontableentry1",
-                "sectiontableentry2"
-            );
+	if ($kunena_config->showstats > 0)
+    {
+		//(JJ) BEGIN: STATS
+		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php')) {
+			include_once (KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php');
+		}
+		else {
+			include_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/stats.class.php');
+		}
 
-            $k = 0; //for alternating rows
+		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php')) {
+			include (KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php');
+		}
+		else {
+			include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/frontstats.php');
+		}
+	}
+    //(JJ) FINISH: STATS
 
-            foreach ($resultSet as $rs)
-            {
-                //get the latest post time for this thread
-                unset($thisThread);
-                $kunena_db->setQuery("SELECT MAX(time) AS maxtime, COUNT(*) AS totalmessages FROM #__fb_messages WHERE thread='{$rs->thread}'");
-                $thisThread = $kunena_db->loadObject();
-                $latestPostTime = $thisThread->maxtime;
+	if ($kunena_config->showwhoisonline > 0)
+    {
 
-                //get the latest post itself
-                unset($result);
-                $kunena_db->setQuery("SELECT a.id, a.name, a.userid, a.catid, c.id AS catid, c.name as catname FROM #__fb_messages AS a LEFT JOIN #__fb_categories AS c ON a.catid=c.id WHERE a.time='{$latestPostTime}'");
-                $result = $kunena_db->loadObject();
+		//(JJ) BEGIN: WHOISONLINE
+		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php')) {
+			include (KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php');
+		}
+		else {
+			include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/who/whoisonline.php');
+		}
+		//(JJ) FINISH: WHOISONLINE
 
-                $latestPostId = $result->id;
-                $latestPostName = html_entity_decode_utf8(stripslashes($result->name));
-				$latestPostUserid = $result->userid;
-                $latestPostCatid = $result->catid;
-                $catname = kunena_htmlspecialchars(stripslashes($result->catname));
-                $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE time>'{$querytime}' AND thread={$rs->thread}");
-                $numberOfPosts = $kunena_db->loadResult();
-                $k = 1 - $k;
-                echo '<tr  class="' . $boardclass . '' . $tabclass[$k] . '" >';
-                echo '<td  class="td-1"  align="left" >';
-                echo CKunenaLink::GetThreadLink('view', $latestPostCatid, $rs->thread, kunena_htmlspecialchars(stripslashes($rs->subject)), kunena_htmlspecialchars(stripslashes($rs->subject))).' ';
+	}
 
-                $threadPages = 1;
-                if ($thisThread->totalmessages > $kunena_config->messages_per_page)
-                {
-                    $threadPages = ceil($thisThread->totalmessages / $kunena_config->messages_per_page);
-                    echo ("<span class=\"jr-showcat-perpage\">[");
-                    echo _PAGE.' '.CKunenaLink::GetThreadPageLink($kunena_config, 'view', $latestPostCatid, $rs->thread, 1, $kunena_config->messages_per_page, 1);
-
-                    if ($threadPages > 3)
-                    {
-                        echo ("...");
-                        $startPage = $threadPages - 2;
-                    }
-                    else
-                    {
-                        echo (",");
-                        $startPage = 2;
-                    }
-
-                    $noComma = true;
-
-                    for ($hopPage = $startPage; $hopPage <= $threadPages; $hopPage++)
-                    {
-                        if ($noComma) {
-                            $noComma = false;
-                            }
-                        else {
-                            echo (",");
-                            }
-
-                        echo CKunenaLink::GetThreadPageLink($kunena_config, 'view', $latestPostCatid, $rs->thread, $hopPage, $kunena_config->messages_per_page, $hopPage);
-                    }
-
-                    echo ']</span> ';
-                }
-
-                $tmpicon = isset($fbIcons['latestpost']) ? '<img src="'
-                     .KUNENA_URLICONSPATH.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />':'  <img src="'.KUNENA_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />';
-                echo CKunenaLink::GetThreadPageLink($kunena_config, 'view', $latestPostCatid, $rs->thread, $threadPages, $kunena_config->messages_per_page, $tmpicon, $latestPostId);
-
-                echo '<br />' . _GEN_FORUM . ' : ' . $catname . '</td>';
-                echo '<td class="td-2" align="center">' . $numberOfPosts . '</td>';
-                echo '<td class="td-3" align="center">';
-                echo CKunenaLink::GetProfileLink($kunena_config, $latestPostUserid, kunena_htmlspecialchars($latestPostName));
-                echo '</td>';
-                echo '<td class="td-4" align="left">' . date(_DATETIME, $latestPostTime) . '</td>';
-                echo '</tr>';
-            }
-        }
-        else {
-            echo "<tr><td colspan=\"4\" align=\"left\"> " . _NO_TIMEFRAME_POSTS . " </td></tr>";
-        }
-
-        echo "</tbody></table></div></div></div></div></div>";
-        ?>
-
-        <!-- Begin: Forum Jump -->
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
-        <table class = "fb_blocktable" id="fb_bottomarea" border = "0" cellspacing = "0" cellpadding = "0">
-            <thead>
-                <tr>
-                    <th  class = "th-right">
-                        <?php
-
-                        //(JJ) FINISH: CAT LIST BOTTOM
-                        if ($kunena_config->enableforumjump)
-                            require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
-                        ?>
-                    </th>
-                </tr>
-            </thead>
-			<tbody><tr><td></td></tr></tbody>
-        </table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Finish: Forum Jump -->
+?>

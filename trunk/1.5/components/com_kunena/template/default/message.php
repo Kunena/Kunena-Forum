@@ -23,12 +23,8 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $kunena_my = &JFactory::getUser();
-
-$kunena_db = &JFactory::getDBO();
 $kunena_config =& CKunenaConfig::getInstance();
-unset($user);
-$kunena_db->setQuery("SELECT email, name FROM #__users WHERE id='{$kunena_my->id}'");
-$user = $kunena_db->loadObject();
+$kunena_db = &JFactory::getDBO();
 
 if ($kunena_config->fb_profile == 'cb')
 {
@@ -46,6 +42,7 @@ if ($kunena_config->fb_profile == 'cb')
 } else {
 	$profileHtml = null;
 }
+
 ?>
 
 <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
@@ -59,7 +56,111 @@ if ($kunena_config->fb_profile == 'cb')
             </th>
         </tr>
 
-        <tr>
+        <tr> <!-- -->
+
+        <td class = "fb-msgview-right">
+                <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
+                    <tr>
+                        <td align = "left">
+                            <?php
+                            $msg_time_since = _KUNENA_TIME_SINCE;
+                            $msg_time_since = str_replace('%time%', time_since($fmessage->time, CKunenaTools::fbGetInternalTime()), $msg_time_since);
+
+                            if ($prevCheck < $fmessage->time && !in_array($fmessage->thread, $read_topics)) {
+                                $msgtitle = 'msgtitle_new';
+                            } else {
+                                $msgtitle = 'msgtitle';
+                            }
+                            ?>
+                            <span class = "<?php echo $msgtitle; ?>"><?php echo $msg_subject; ?> </span> <span class = "msgdate" title="<?php echo $msg_date; ?>"><?php echo $msg_time_since; ?></span>
+                        </td>
+
+                        <td align = "right">
+                            <span class = "msgkarma">
+
+                            <?php
+                            if (isset($msg_karma)) {
+                                echo $msg_karma;
+								if (isset($msg_karmaplus)) 
+									echo '&nbsp;&nbsp;' . $msg_karmaplus . ' ' . $msg_karmaminus;
+                            }
+                            else {
+                                echo '&nbsp;';
+                            }
+                            ?>
+
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan = "2" valign = "top">
+                            <div class = "msgtext"><?php echo $msg_text; ?></div>
+
+                            <?php
+                            if (!isset($msg_closed))
+                            {
+                            ?>
+
+                                <div id = "sc<?php echo $msg_id; ?>" class = "switchcontent">
+                                    <!-- make this div distinct from others on this page -->
+                                    <?php
+                                    //see if we need the users realname or his loginname
+                                    if ($kunena_config->username) {
+                                        $authorName = $kunena_my->username;
+                                    }
+                                    else {
+                                        $authorName = $kunena_my->name;
+                                    }
+
+                                    //contruct the reply subject
+                                    $resubject = kunena_htmlspecialchars(strtolower(substr($msg_subject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? $msg_subject : _POST_RE .' '. $msg_subject);
+                                    ?>
+
+                            <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL. '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
+                                <input type = "hidden" name = "parentid" value = "<?php echo $msg_id;?>"/>
+
+                                <input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
+
+                                <input type = "hidden" name = "action" value = "post"/>
+
+                                <input type = "hidden" name = "contentURL" value = "empty"/>
+
+                                <input type = "text" name = "subject" size = "35" class = "inputbox" maxlength = "<?php echo $kunena_config->maxsubject;?>" value = "<?php echo $resubject;?>"/>
+
+                                <textarea class = "inputbox" name = "message" rows = "6" cols = "60" style = "height: 100px; width: 100%; overflow:auto;"></textarea>
+
+                                 <?php
+								// Begin captcha . Thanks Adeptus
+								if ($kunena_config->captcha && $kunena_my->id < 1) { ?>
+								<?php echo _KUNENA_CAPDESC.'&nbsp;'?>
+								<input name="txtNumber" type="text" id="txtNumber" value="" style="vertical-align:middle" size="10">&nbsp;
+								<img src="index2.php?option=com_kunena&func=showcaptcha" alt="" /><br />
+								<?php
+								}
+								// Finish captcha
+								?>
+
+                                <input type = "submit" class = "fb_button fb_qr_fire" name = "submit" value = "<?php @print(_GEN_CONTINUE);?>"/>
+
+                                <input type = "button" class = "fb_button fb_qm_cncl_btn" id = "cancel__<?php echo $msg_id; ?>" name = "cancel" value = "<?php @print(_KUNENA_CANCEL);?>"/>
+
+                                <small><em><?php echo _KUNENA_QMESSAGE_NOTE?></em></small>
+                            </form>
+                                </div>
+
+                            <?php
+                            }
+                            ?>
+
+
+                        </td>
+                    </tr>
+
+
+                </table>
+            </td>
+
               <td class = "fb-msgview-left">
                 <div class = "fb-msgview-l-cover">
 <?php 
@@ -69,10 +170,10 @@ if ($kunena_config->fb_profile == 'cb')
 					}
 					else
 					{
-?>                
+?>
                     <span class = "view-username">
 <?php
-                        if ($fmessage->userid > 0)
+                        if ($userinfo->userid)
                         {
                         	echo CKunenaLink::GetProfileLink($kunena_config, $fmessage->userid, $msg_username);
                         }
@@ -144,9 +245,15 @@ if ($kunena_config->fb_profile == 'cb')
                     ?>
 
                     <?php
+                    if (isset($myGraphAUP)) {
+                        $myGraphAUP->BarGraphHoriz();
+                    }
+                    ?>
+
+                    <?php
                     if (isset($msg_online)) {
-                    	echo $msg_online;
-                    } 
+                        echo $msg_online;
+                    }
                     ?>
 
                     <?php
@@ -211,237 +318,89 @@ if ($kunena_config->fb_profile == 'cb')
                         echo $msg_birthdate;
                     }
 				}
-                ?>
+                    ?>
 
                 </div>
             </td>
+<!-- -->
 
-            <td class = "fb-msgview-right">
-                <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
-                    <tr>
-                        <td align = "left">
-                            <?php
-                            $msg_time_since = _KUNENA_TIME_SINCE;
-                            $msg_time_since = str_replace('%time%', time_since($fmessage->time , CKunenaTools::fbGetInternalTime()), $msg_time_since);
-
-                            if ($prevCheck < $fmessage->time && !in_array($fmessage->thread, $read_topics)) {
-                                $msgtitle = 'msgtitle_new';
-                            } else {
-                                $msgtitle = 'msgtitle';
-                            }
-                            ?>
-                            <span class = "<?php echo $msgtitle; ?>"><?php echo $msg_subject; ?> </span> <span class = "msgdate" title="<?php echo $msg_date; ?>"><?php echo $msg_time_since; ?></span>
-                        </td>
-
-                        <td align = "right">
-                            <span class = "msgkarma">
-
-                            <?php
-                            if (isset($msg_karma)) {
-                                echo $msg_karma;
-								if (isset($msg_karmaplus)) 
-									echo '&nbsp;&nbsp;' . $msg_karmaplus . ' ' . $msg_karmaminus;
-                            }
-                            else {
-                                echo '&nbsp;';
-                            }
-                            ?>
-
-                            </span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td colspan = "2" valign = "top">
-                            <div class = "msgtext"><?php echo $msg_text; ?></div>
-
-                            <?php
-                            if (empty($msg_closed))
-                            {
-                            ?>
-
-                                <div id = "sc<?php echo $msg_id; ?>" class = "switchcontent" style="display:none">
-                                    <!-- make this div distinct from others on this page -->
-                                    <?php
-                                    //see if we need the users realname or his loginname
-                                    if ($kunena_config->username) {
-                                        $authorName = $kunena_my->username;
-                                    }
-                                    else {
-                                        $authorName = $user->name;
-                                    }
-
-                                    //contruct the reply subject
-                                    $resubject = kunena_htmlspecialchars(strtolower(substr($msg_subject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? $msg_subject : _POST_RE . $msg_subject);
-                                    ?>
-
-                            <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL. '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
-                                <input type = "hidden" name = "parentid" value = "<?php echo $msg_id;?>"/>
-
-                                <input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
-
-                                <input type = "hidden" name = "action" value = "post"/>
-
-                                <input type = "hidden" name = "contentURL" value = "empty"/>
-
-                                <input type = "text" name = "subject" size = "35" class = "inputbox" maxlength = "<?php echo $kunena_config->maxsubject;?>" value = "<?php echo $resubject;?>"/>
-
-                                <textarea class = "inputbox" name = "message" rows = "6" cols = "60" style = "height: 100px; width: 100%; overflow:auto;"></textarea>
-
-                                 <?php
-								// Begin captcha . Thanks Adeptus
-								if ($kunena_config->captcha == 1 && $kunena_my->id < 1) { ?>
-								<?php echo _KUNENA_CAPDESC.'&nbsp;'?>
-								<input name="txtNumber" type="text" id="txtNumber" value="" style="vertical-align:middle" size="10">&nbsp;
-								<img src="index2.php?option=com_kunena&func=showcaptcha" alt="" /><br />
-								<?php
-								}
-								// Finish captcha
-								?>
-
-                                <input type = "submit" class = "fb_qm_btn" name = "submit" value = "<?php @print(_GEN_CONTINUE);?>"/>
-
-                                <input type = "button" class = "fb_qm_btn fb_qm_cncl_btn" id = "cancel__<?php echo $msg_id; ?>" name = "cancel" value = "<?php @print(_KUNENA_CANCEL);?>"/>
-
-                                <small><em><?php echo _KUNENA_QMESSAGE_NOTE?></em></small>
-                            </form>
-                                </div>
-
-                            <?php
-                            }
-                            ?>
-
-
-                        </td>
-                    </tr>
-
-
-                </table>
-            </td>
         </tr>
 
-  <tr>
-            <td class = "fb-msgview-left-c">&nbsp;
-            </td>
-            <td class = "fb-msgview-right-c" >
-                         <div class="fb_smalltext" >
-                   <?php
+	<tr><td class = "fb-msgview-right-b" >
+		<div class="fb_message_editMarkUp_cover">
+<?php
+	if ($fmessage->modified_by) {
+		echo '<span class="fb_message_editMarkUp">'. _KUNENA_EDITING_LASTEDIT .': '. date(_DATETIME, $fmessage->modified_time) .' '. _KUNENA_BY .' '. CKunenaTools::whoisID($fmessage->modified_by) .'.';
+		if ($fmessage->modified_reason) {
+			echo _KUNENA_REASON .': '. kunena_htmlspecialchars(stripslashes($fmessage->modified_reason));
+		}
+		echo '</span>';
+	}
+
                             if ($kunena_config->reportmsg && $kunena_my->id > 1)
                             {
-                                echo CKunenaLink::GetReportMessageLink($catid, $msg_id, _KUNENA_REPORT);
+                                echo '<span class="fb_message_informMarkUp">'.CKunenaLink::GetReportMessageLink($catid, $msg_id, _KUNENA_REPORT).'</span>';
+                            }
+                            if (isset($msg_ip))
+                            {
+				echo '<span class="fb_message_informMarkUp">'.CKunenaLink::GetMessageIPLink($msg_ip).'</span>';
                             } ?>
-
-                            <?php echo isset($fbIcons['msgip']) ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['msgip'] .'" border="0" alt="'._KUNENA_REPORT_LOGGED.'" />' : ' <img src="'.KUNENA_URLEMOTIONSPATH.'ip.gif" border="0" alt="'. _KUNENA_REPORT_LOGGED.'" />';
-                            ?> <span class="fb_smalltext"> <?php echo _KUNENA_REPORT_LOGGED;?></span>
-                            <?php
-                            if(!empty($msg_ip)) echo CKunenaLink::GetMessageIPLink($msg_ip);
-                            ?>
-                            </div>
-       </td>
-        </tr>
-<?php
-if ($fmessage->modified_by) {
-  ?>
-        <tr>
-            <td class = "fb-msgview-left-c">&nbsp;
-            </td>
-            <td class = "fb-msgview-right-c" >
-                    <div class="fb_message_editMarkUp_cover">
-                    <span class="fb_message_editMarkUp" ><?php echo _KUNENA_EDITING_LASTEDIT;?>: <?php echo date(_DATETIME, $fmessage->modified_time);?> <?php echo _KUNENA_BY; ?> <?php echo CKunenaTools::whoisID($fmessage->modified_by)?>.
-                    <?php
-                    if ($fmessage->modified_reason) {
-                    echo _KUNENA_REASON.": ".kunena_htmlspecialchars(stripslashes($fmessage->modified_reason));
-                    }
-                        ?></span>
-                    </div>
-       </td>
-        </tr>
-<?php
-}
-?>
-
+		</div>
 <?php
 if (isset($msg_signature)) {
-  ?>
-        <tr>
-            <td class = "fb-msgview-left-c">&nbsp;
-            </td>
-            <td class = "fb-msgview-right-c" >
-
-				   <div class="msgsignature" >
-					<?php   echo $msg_signature; ?>
-				</div>
-       </td>
-        </tr>
-<?php
+	echo '<div class="msgsignature"><div>';
+	echo $msg_signature;
+	echo '</div></div>';
 }
 ?>
-
-        <tr>
-            <td class = "fb-msgview-left-b">&nbsp;
-
-            </td>
-
-            <td class = "fb-msgview-right-b" align = "right">
-                <span id = "fb_qr_sc__<?php echo $msg_id;?>" class = "fb_qr_fire" style = "cursor:hand; cursor:pointer">
-
+		<div class="fb_message_buttons_cover">
+			<div class="fb_message_buttons_row">
                 <?php
                 //we should only show the Quick Reply section to registered users. otherwise we are missing too much information!!
                 /*    onClick="expandcontent(this, 'sc<?php echo $msg_id;?>')" */
-                if ($kunena_my->id > 0 && empty($msg_closed))
-                {
+                if ($kunena_my->id > 0 && !isset($msg_closed)):
                 ?>
-
+                <span id = "fb_qr_sc__<?php echo $msg_id;?>" class = "fb_qr_fire" style = "cursor:pointer">
                 <?php echo
-                    isset($fbIcons['quickmsg']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['quickmsg'] . '" border="0" alt="' . _KUNENA_QUICKMSG . '" title="' . _KUNENA_QUICKMSG . '" />' . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _KUNENA_QUICKMSG . '" />'; ?>
-                <?php
-                }
-                ?>
+                    isset($fbIcons['quickmsg']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['quickmsg'] . '" border="0" alt="' . _KUNENA_QUICKMSG . '" />' . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _KUNENA_QUICKMSG . '" />'; ?>
                 </span>
+                <?php
+                endif;
+                ?>
 
                 <?php
                 if ($fbIcons['reply'])
                 {
-                    if (empty($msg_closed))
+                    if (!isset($msg_closed))
                     {
-                        echo $msg_reply;
+                        echo " " . $msg_reply;
                         echo " " . $msg_quote;
 
-                        if (isset($msg_delete)) {
-                            echo " " . $msg_delete;
-                        }
-
-                        if (isset($msg_move)) {
-                            echo " " . $msg_move;
-                        }
+			if ($kunena_is_moderator) echo ' </div><div class="fb_message_buttons_row">';
 
                         if (isset($msg_merge)) {
                              echo " " . $msg_merge;
-                         }
+                        }
 
                         if (isset($msg_split)) {
                              echo " " . $msg_split;
-                         }
-
+                        }
+                        if (isset($msg_delete)) {
+                            echo " " . $msg_delete;
+                        }
                         if (isset($msg_edit)) {
                             echo " " . $msg_edit;
                         }
 
-                        if (isset($msg_sticky)) {
-                            echo " " . $msg_sticky;
-                        }
-
-                        if (isset($msg_lock)) {
-                            echo " " . $msg_lock;
-                        }
                     }
                     else {
                         echo $msg_closed;
                     }
+
                 }
                 else
                 {
-                    if ($msg_closed == "")
+                    if (!isset($msg_closed))
                     {
                         echo $msg_reply;
                 ?>
@@ -476,8 +435,14 @@ if (isset($msg_signature)) {
                     }
                 }
                 ?>
+			</div>
+		</div>
 
             </td>
+            <td class = "fb-msgview-left-b">&nbsp;
+
+            </td>
+
         </tr>
     </tbody>
 </table>

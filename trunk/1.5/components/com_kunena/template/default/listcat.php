@@ -20,27 +20,41 @@
 **/
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
-$kunena_my = &JFactory::getUser();
+
+$app =& JFactory::getApplication();
 $kunena_config =& CKunenaConfig::getInstance();
+$fbSession =& CKunenaSession::getInstance();
+$kunena_my =& JFactory::getUser();
+if (strtolower($func) == '' ){
+include (KUNENA_ABSTMPLTPATH . '/latestx.php');
+} else {
+
 //securing passed form elements
 $catid = (int)$catid;
+
+$kunena_emoticons = smile::getEmoticons(0);
 
 //resetting some things:
 $moderatedForum = 0;
 $lockedForum = 0;
 // Start getting the categories
-$kunena_db->setQuery("SELECT * FROM #__fb_categories WHERE parent='0' and published='1' ORDER BY ordering");
+$kunena_db->setQuery("SELECT * FROM #__fb_categories WHERE parent='0' AND published='1' ORDER BY ordering");
 $allCat = $kunena_db->loadObjectList();
 	check_dberror("Unable to load categories.");
 
 $threadids = array ();
 $categories = array ();
 
-$kunena_emoticons = smile::getEmoticons(0);
+//meta description and keywords
+$metaDesc=(_KUNENA_CATEGORIES . ' - ' . stripslashes($kunena_config->board_title));
+$metaKeys=(_KUNENA_CATEGORIES . ', ' . stripslashes($kunena_config->board_title) . ', ' . $app->getCfg('sitename'));
 
-// set page title
-$document=& JFactory::getDocument();
-$document->setTitle(_GEN_FORUMLIST . ' - ' . stripslashes($kunena_config->board_title));
+$document =& JFactory::getDocument();
+$cur = $document->get( 'description' );
+$metaDesc = $cur .'. ' . $metaDesc;
+$document =& JFactory::getDocument();
+$document->setMetadata( 'keywords', $metaKeys );
+$document->setDescription($metaDesc);
 
 if (count($allCat) > 0)
 {
@@ -59,9 +73,9 @@ if (in_array($catid, $threadids))
     $threadids[] = $catid;
     //get new categories list for this category only:
     unset ($categories);
-    $kunena_db->setQuery("SELECT * FROM #__fb_categories WHERE parent='0' AND published='1' and id='{$catid}' ORDER BY ordering");
+    $kunena_db->setQuery("SELECT * FROM #__fb_categories WHERE parent='0' and published='1' and id='{$catid}' ORDER BY ordering");
     $categories[$category->parent] = $kunena_db->loadObjectList();
-    	check_dberror("Unable to load category.");
+    	check_dberror("Unable to load categories.");
 }
 
 //get the allowed forums and turn it into an array
@@ -114,6 +128,20 @@ else {
 }
 ?>
 <!-- F: Pathway -->
+<!-- B: Cat list Top -->
+<table class="fb_list_top" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<?php
+if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php')) {
+	include (KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php');
+}
+else {
+	include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_category_list_bottom.php');
+}
+?>
+</table>
+<!-- F: Cat list Top -->
+
+
 <?php
 if (count($categories[0]) > 0)
 {
@@ -169,13 +197,11 @@ if (count($categories[0]) > 0)
 
                     <?php
                     //    show forums within the categories
-                    $kunena_db->setQuery(
-                    "SELECT c.*, m.id AS mesid, m.subject, m.catid, m.name AS mname, m.userid, u.id AS uid, u.username, u.name AS uname
-                    FROM #__fb_categories AS c
-                    LEFT JOIN #__fb_messages AS m ON c.id_last_msg = m.id
-                    LEFT JOIN #__users AS u ON u.id = m.userid
-                    WHERE c.parent='{$cat->id}' AND c.published='1'
-                    ORDER BY ordering");
+                    $kunena_db->setQuery("SELECT c.*, m.id AS mesid, m.subject, mm.catid, m.name AS mname, u.id AS userid, u.username, u.name AS uname FROM #__fb_categories AS c
+                    LEFT JOIN #__fb_messages AS m ON c.id_last_msg=m.id
+                    LEFT JOIN #__users AS u ON u.id=m.userid
+                    LEFT JOIN #__fb_messages AS mm ON mm.id=c.id_last_msg
+                    WHERE c.parent='{$cat->id}' AND c.published='1' ORDER BY ordering");
                     $rows = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load categories.");
 
@@ -219,16 +245,16 @@ if (count($categories[0]) > 0)
 
 								foreach ($forumparents as $childnum=>$childforum)
 								{
-									if (!in_array($childforum->id, $allow_forum)) unset ($forumparents[$childnum]); 
+									if (!in_array($childforum->id, $allow_forum)) unset ($forumparents[$childnum]);
 								}
 								$forumparents = array_values($forumparents);
 
                                 if ($kunena_my->id)
                                 {
                                     //    get all threads with posts after the users last visit; don't bother for guests
-                                    $kunena_db->setQuery("SELECT DISTINCT thread FROM #__fb_messages WHERE catid='{$singlerow->id}' AND hold='0' AND time>'{$prevCheck}' GROUP BY thread");
+                                    $kunena_db->setQuery("SELECT DISTINCT thread FROM #__fb_messages WHERE catid='{$singlerow->id}' AND hold='0' AND moved='0' AND time>'{$prevCheck}' GROUP BY thread");
                                     $newThreadsAll = $kunena_db->loadObjectList();
-                                    	check_dberror("Unable to load message threads.");
+                                    	check_dberror("Unable to load messages.");
 
                                     if (count($newThreadsAll) == 0) {
                                         $newThreadsAll = array ();
@@ -278,10 +304,10 @@ if (count($categories[0]) > 0)
                                 }
                                 $latestthreadpages = ceil($thisThread->totalmessages / $kunena_config->messages_per_page);
                                 $latestthread = $thisThread->thread;
-                                $latestname = $singlerow->mname;
-                                $latestcatid = stripslashes($singlerow->catid);
+                                $latestname = kunena_htmlspecialchars(stripslashes($singlerow->mname));
+                                $latestcatid = $singlerow->catid;
                                 $latestid = $singlerow->id_last_msg;
-                                $latestsubject = html_entity_decode_utf8(stripslashes($singlerow->subject));
+                                $latestsubject = kunena_htmlspecialchars(stripslashes($singlerow->subject));
                                 $latestuserid = $singlerow->userid;
                     ?>
 
@@ -289,8 +315,8 @@ if (count($categories[0]) > 0)
                                     <td class = "td-1" align="center">
                                         <?php
                                         $tmpIcon = '';
-                                        $cxThereisNewInForum = 0;
-                                        if ($kunena_config->shownew && $kunena_my->id != 0)
+										$cxThereisNewInForum = 0;
+										if ($kunena_config->shownew && $kunena_my->id != 0)
                                         {
                                             //Check if unread threads are in any of the forums topics
                                             $newPostsAvailable = 0;
@@ -349,7 +375,7 @@ if (count($categories[0]) > 0)
                                             echo CKunenaLink::GetCategoryLink('showcat', $singlerow->id, kunena_htmlspecialchars(stripslashes($singlerow->name)));
 
                                             if ($cxThereisNewInForum == 1 && $kunena_my->id > 0) {
-                                                echo '<sup><span class="newchar">&nbsp;(' . $newPostsAvailable . ' ' . $kunena_config->newchar . ")</span></sup>";
+                                                echo '<sup><span class="newchar">&nbsp;(' . $newPostsAvailable . ' ' . stripslashes($kunena_config->newchar) . ")</span></sup>";
                                             }
 
                                             $cxThereisNewInForum = 0;
@@ -387,30 +413,30 @@ if (count($categories[0]) > 0)
                                         // loop over subcategories to show them under
                                         if (count($forumparents) > 0)
                                         {
-                                        ?>
+											if ($kunena_config->numchildcolumn > 0) {
+												$subtopicwidth = ' style="width: 99%;"';
+												$subwidth = ' style="width: ' . floor(99 / $kunena_config->numchildcolumn) . '%"';
+											}
+											else {
+												$subtopicwidth = ' style="display: inline-block;"';
+												$subwidth = '';
+											}
+
+                                        	?>
 
                                             <div class = "<?php echo $boardclass?>thead-child">
-                                                <div class = "<?php echo $boardclass?>cc-childcat-title fbs">
-                                                    <b><?php if(count($forumparents)==1) { echo _KUNENA_CHILD_BOARD; } else { echo _KUNENA_CHILD_BOARDS; } ?>:</b>
-                                                </div>
 
-                                                <table cellpadding = "0" cellspacing = "0" border = "0" class = "<?php echo $boardclass?>cc-table">
+                                                <div class = "<?php echo $boardclass?>cc-table">
+	                                                <div<?php echo $subtopicwidth?> class = "<?php echo $boardclass?>cc-childcat-title">
+    	                                                <?php if(count($forumparents)==1) { echo _KUNENA_CHILD_BOARD; } else { echo _KUNENA_CHILD_BOARDS; } ?>:
+        	                                        </div>
                                                     <?php
-                                                    //row index
-                                                    $ir9 = 0;
-                                                    $cfg_numforums = $kunena_config->numchildcolumn>0 ? $kunena_config->numchildcolumn : 2;
-                                                    $num_rows = ceil(count($forumparents) / $cfg_numforums);
 
-                                                    //     foreach ($forumparents as $forumparent)
-                                                    for ($row_count = 0; $row_count < $num_rows; $row_count++)
-                                                    {
-                                                        echo '<tr>';
+                                                    for ($row_count = 0; $row_count < count($forumparents); $row_count++)
+                                                    {														   
+														  echo "<div{$subwidth} class=\"{$boardclass}cc-subcat fbm\">";
 
-                                                        for ($col_count = 0; $col_count < $cfg_numforums; $col_count++)
-                                                        {
-                                                            echo '<td width="' . floor(100 / $cfg_numforums) . '%" class="' . $boardclass . 'cc-sectiontableentry1 fbm">';
-
-                                                            $forumparent = @$forumparents[$ir9];
+                                                            $forumparent = $forumparents[$row_count];
 
                                                             if ($forumparent)
                                                             {
@@ -485,14 +511,10 @@ if (count($categories[0]) > 0)
                                                                 echo CKunenaLink::GetCategoryLink('showcat', $forumparent->id, kunena_htmlspecialchars(stripslashes($forumparent->name)));
                                                                 echo '<span class="fb_childcount fbs">('.$forumparent->numTopics."/".$forumparent->numPosts.')</span>';
                                                             }
-                                                            echo "</td>";
-                                                            $ir9++;
-                                                        } // inner column loop
-
-                                                        echo "</tr>";
+                                                            echo "</div>";
                                                     }
                                                     ?>
-                                                </table>
+                                                </div>
                                             </div>
 
                                         <?php
@@ -512,7 +534,7 @@ if (count($categories[0]) > 0)
 <?php echo _GEN_MODERATORS; ?>:
 
                                                 <?php
-												$mod_cnt = 0;
+                                                $mod_cnt = 0;
                                                 foreach ($modslist as $mod) {
 					                               	if ($mod_cnt) echo ', '; 
 					                               	$mod_cnt++;
@@ -550,7 +572,7 @@ if (count($categories[0]) > 0)
                                         <td class = "td-5" align="left">
                                             <div class = "<?php echo $boardclass ?>latest-subject fbm">
 <?php
-                                               echo CKunenaLink::GetThreadPageLink($kunena_config, 'view', $singlerow->catid, $latestthread, $latestthreadpages, $kunena_config->messages_per_page, $latestsubject, $latestid);
+                                                echo CKunenaLink::GetThreadPageLink($kunena_config, 'view', $singlerow->catid, $latestthread, $latestthreadpages, $kunena_config->messages_per_page, $latestsubject, $latestid);
 ?>
                                             </div>
 
@@ -599,26 +621,35 @@ if (count($categories[0]) > 0)
 <?php
         }
     }
-?>
 
-<?php
-    //(JJ) BEGIN: RECENT POSTS
-    if ($kunena_config->showlatest)
-    {
-        if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/recentposts/recentposts.php')) {
-            include (KUNENA_ABSTMPLTPATH . '/plugin/recentposts/recentposts.php');
-        }
-        else {
-            include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/recentposts/recentposts.php');
-        }
-    }
+	//(JJ) BEGIN: CAT LIST BOTTOM
+	echo '<!-- B: Cat list Bottom -->';
+	echo '<table class="fb_list_bottom" border = "0" cellspacing = "0" cellpadding = "0" width="100%">';
+	if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php')) {
+		include (KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php');
+	}
+	else {
+		include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_category_list_bottom.php');
+	}
+	echo '</table>';
+	echo '<!-- F: Cat list Bottom -->';
+	//(JJ) FINISH: CAT LIST BOTTOM
 
-    //(JJ) FINISH: RECENT POSTS
+	//(JJ) BEGIN: WHOISONLINE
+	if ($kunena_config->showwhoisonline > 0)
+	{
+		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php')) {
+			include (KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php');
+		}
+		else {
+			include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/who/whoisonline.php');
+		}
+	}
+	//(JJ) FINISH: WHOISONLINE
 
-	if ($kunena_config->showstats)
-    {
-
-		//(JJ) BEGIN: STATS
+	//(JJ) BEGIN: STATS
+	if ($kunena_config->showstats > 0)
+	{
 		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php')) {
 			include_once (KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php');
 		}
@@ -633,30 +664,7 @@ if (count($categories[0]) > 0)
 			include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/frontstats.php');
 		}
 	}
-
-    //(JJ) FINISH: STATS
-
-	if ($kunena_config->showwhoisonline)
-    {
-
-		//(JJ) BEGIN: WHOISONLINE
-		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php')) {
-			include (KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php');
-		}
-		else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/who/whoisonline.php');
-		}
-		//(JJ) FINISH: WHOISONLINE
-
-	}
-
-    //(JJ) FINISH: CAT LIST BOTTOM
-    if (file_exists(KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php')) {
-        include (KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php');
-    }
-    else {
-        include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'fb_category_list_bottom.php');
-    }
+	//(JJ) FINISH: STATS
 ?>
 
 <?php
@@ -677,4 +685,6 @@ else
 
 <?php
 }
+
+} // <<< -- first latest if close //
 ?>

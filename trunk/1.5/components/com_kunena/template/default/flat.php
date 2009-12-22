@@ -23,7 +23,27 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $kunena_config =& CKunenaConfig::getInstance();
-global $kunena_is_moderator, $boardclass, $kunena_db, $fbIcons;
+global $kunena_is_moderator;
+$kunena_my = &JFactory::getUser();
+// Func Check
+if (strtolower($func) == 'latest' ||  strtolower($func) == '')
+{
+	$funclatest = 1;
+}
+else
+{
+	$funclatest = 0;
+}
+
+if (strtolower($func) == 'mylatest')
+{
+	$funcmylatest = 1;
+}
+else
+{
+	$funcmylatest = 0;
+}
+
 
 // topic emoticons
 $topic_emoticons = array ();
@@ -37,16 +57,9 @@ $topic_emoticons[5] = KUNENA_URLEMOTIONSPATH . 'grin.gif';
 $topic_emoticons[6] = KUNENA_URLEMOTIONSPATH . 'shock.gif';
 $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 
-// url of current page that user will be returned to after login
-$query_string = JRequest::getVar('QUERY_STRING', '', 'SERVER');
-if ($query_string) {
-    $Breturn = 'index.php?' . $query_string;
-    }
-else {
-    $Breturn = 'index.php';
-    }
-
-$Breturn = str_replace('&', '&amp;', $Breturn);
+// url of current page that user will be returned to after bulk operation
+$kuri = JURI::getInstance();
+$Breturn = $kuri->toString( array('path'));
 
 $tabclass = array
 (
@@ -60,9 +73,11 @@ if (count($messages[0]) > 0)
 {
     foreach ($messages[0] as $leafa)
     {
-        if ($leafa->ordering > 0) {
+
+        if (($leafa->ordering > 0 && !$funcmylatest) || ($leafa->myfavorite && $funcmylatest))
+        {
             $st_count++;
-            }
+        }
     }
 }
 
@@ -76,10 +91,12 @@ if (count($messages[0]) > 0)
 <div class="<?php echo $boardclass; ?>_bt_cvr5">
     <form action = "index.php" method = "post" name = "fbBulkActionForm">
 
-        <table class = "fb_blocktable<?php echo $objCatInfo->class_sfx; ?>" id = "fb_flattable" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+        <table class = "fb_blocktable<?php echo isset($objCatInfo->class_sfx) ? $objCatInfo->class_sfx : ''; ?>" id = "fb_flattable" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+
+        <?php  if ($funclatest || $funcmylatest){ } else {  ?>
             <thead>
                 <tr>
-                    <th colspan = "<?php echo ($kunena_is_moderator?"7":"6");?>">
+                    <th colspan = "<?php echo ($kunena_is_moderator?"5":"4");?>">
                         <div class = "fb_title_cover fbm">
                             <span class = "fb_title fbl"><b><?php echo _KUNENA_THREADS_IN_FORUM; ?>:</b> <?php echo '' . kunena_htmlspecialchars(stripslashes($objCatInfo->name)) . ''; ?></span>
                         </div>
@@ -100,14 +117,16 @@ if (count($messages[0]) > 0)
                 </tr>
             </thead>
 
+          <?php } ?>
+
             <tbody>
                 <tr  class = "fb_sth fbs ">
-                    <th class = "th-1 <?php echo $boardclass ?>sectiontableheader" width="1%">&nbsp;</th>
+                 <th class = "th-0 <?php echo $boardclass ?>sectiontableheader" width="5%" align="center"><?php echo _GEN_REPLIES; ?></th>
+
                     <th class = "th-2 <?php echo $boardclass ?>sectiontableheader" width="1%">&nbsp;</th>
                     <th class = "th-3 <?php echo $boardclass ?>sectiontableheader" align="left"><?php echo _GEN_TOPICS; ?></th>
-                    <th class = "th-4 <?php echo $boardclass ?>sectiontableheader" width="5%" align="center"><?php echo _GEN_REPLIES; ?></th>
-                    <th class = "th-5 <?php echo $boardclass ?>sectiontableheader"  width="5%" align="center"><?php echo _GEN_HITS; ?></th>
-                    <th class = "th-6 <?php echo $boardclass ?>sectiontableheader" width="20%" align="left"><?php echo _GEN_LAST_POST; ?></th>
+
+                    <th class = "th-6 <?php echo $boardclass ?>sectiontableheader" width="27.5%" align="left"><?php echo _GEN_LAST_POST; ?></th>
 
                     <?php
                     if ($kunena_is_moderator)
@@ -123,70 +142,37 @@ if (count($messages[0]) > 0)
                 $k = 0;
                 $st_c = 0;
 
-                $st_occured = 0;
+				$st_occured = 0;
                 foreach ($messages[0] as $leaf)
                 {
                     $k = 1 - $k; //used for alternating colours
-                    //$leaf->subject = kunena_htmlspecialchars($leaf->subject);
-                    $leaf->name = kunena_htmlspecialchars($leaf->name);
-                    $leaf->email = kunena_htmlspecialchars($leaf->email);
-					$bof_avatar = "";
+                    $leaf->name = kunena_htmlspecialchars(stripslashes($leaf->name));
+                    $leaf->email = kunena_htmlspecialchars(stripslashes($leaf->email));
                 ?>
 
                 <?php
-                    //(JJ) ATTACHMENTS
-                    $kunena_db->setQuery("SELECT mesid FROM #__fb_attachments WHERE mesid='{$leaf->id}'");
-                    $attachmentsicon = $kunena_db->loadResult();
-
-                    //(JJ) AVATAR
-                    if ($kunena_config->avataroncat)
+                    if ($st_c == 0 && $st_occured != 1 && $st_count != 0 && $funclatest == 0)
                     {
-						if ($kunena_config->avatar_src == "jomsocial" && $leaf->userid)
-						{
-							// Get CUser object
-							$user =& CFactory::getUser($last_reply[$leaf->id]->userid);
-							$bof_avatar = '<img class="catavatar" src="' . $user->getThumbAvatar() . '" alt=" " />';
-						}
-						else if ($kunena_config->avatar_src == "cb")
-						{
-							$bof_avatar = $kunenaProfile->showAvatar($last_reply[$leaf->id]->userid, 'catavatar');
-						} else {
-							//first we gather some information about this person
-							$kunena_db->setQuery("SELECT * FROM #__fb_users AS su LEFT JOIN #__users AS u on u.id=su.userid WHERE su.userid='{$leaf->userid}'");
-
-							$CatUser = $kunena_db->loadObject();
-							if (is_object($CatUser)) $javatar = $CatUser->avatar;
-							if (isset($javatar)) {
-								$bof_avatar = '<img class="catavatar" src="'.(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $javatar)?KUNENA_LIVEUPLOADEDPATH.'/avatars/'.$javatar:KUNENA_LIVEUPLOADEDPATH.'/avatars/s_'.$javatar) .'" alt="" />';
-							}
-						}
-					}
-				?>
-
-                <?php
-                    if ($st_c == 0 && $st_occured != 1 && $st_count != 0)
-                    {
-                    //$st_occured = 1;
                 ?>
 
                         <tr>
-                            <td class = "<?php echo $boardclass ?>contentheading fbm" id = "fb_spot" colspan = "<?php echo ($kunena_is_moderator?"7":"6");?>" align="left">
-                                <span><?php echo _KUNENA_SPOTS; ?></span>
+                            <td class = "<?php echo $boardclass ?>contentheading fbm" id = "fb_spot" colspan = "<?php echo ($kunena_is_moderator?"5":"4");?>" align="left">
+                                <span><?php if(!$funcmylatest) {echo _KUNENA_SPOTS;} else {echo _USER_FAVORITES;} ?></span>
                             </td>
                         </tr>
 
                 <?php
                     }
 
-                    if ($st_c == $st_count && $st_occured != 1 && $st_count != 0)
+                    if ($st_c == $st_count && $st_occured != 1 && $st_count != 0  && $funclatest == 0)
                     {
                         $st_occured = 1;
                         $k = 0;
                 ?>
 
                     <tr>
-                        <td class = "<?php echo $boardclass ?>contentheading fbm" id = "fb_fspot" colspan = "<?php echo ($kunena_is_moderator?"7":"6");?>" align="left">
-                            <span><?php echo _KUNENA_FORUM; ?></span>
+                        <td class = "<?php echo $boardclass ?>contentheading fbm" id = "fb_fspot" colspan = "<?php echo ($kunena_is_moderator?"5":"4");?>" align="left">
+                            <span><?php if(!$funcmylatest) {echo _KUNENA_FORUM;} else {echo _KUNENA_MY_DISCUSSIONS_DETAIL;} ?></span>
                         </td>
                     </tr>
 
@@ -194,50 +180,30 @@ if (count($messages[0]) > 0)
                     }
                 ?>
 
-                    <tr class = "<?php echo $boardclass ?><?php echo $tabclass[$k];?><?php if ($leaf->ordering==0) { } else {echo '_stickymsg'; $topicSticky=1; }?>">
-                        <?php
-                            if ($leaf->locked == 0)
-                            {
-                                if ($kunena_config->shownew && $kunena_my->id != 0 && !$leaf->moved)
-                                {
-                                    if (($prevCheck < $last_reply[$leaf->id]->time) && !in_array($last_reply[$leaf->id]->thread, $read_topics))
-                                    {
-                                        //new post(s) in topic
-                                        echo '<td  class="td-1" align="center">';
-                                        echo isset($fbIcons['unreadmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '"/>' : stripslashes($kunena_config->newchar);
-                                        echo '</td>';
-                                    }
-                                    else
-                                    {
-                                        //no new posts in topic
-                                        echo '<td  class="td-1" align="center">';
-                                        echo isset($fbIcons['readmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : stripslashes($kunena_config->newchar);
-                                        echo '</td>';
-                                    }
-                                }
-                                else
-                                {
-                                    //not Login
-                                    echo '<td class="td-1" align="center">';
-                                    echo isset($fbIcons['notloginmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['notloginmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : stripslashes($kunena_config->newchar);
-                                    echo '</td>';
-                                }
-                            }
-                            else
-                            {
-                                echo isset($fbIcons['topiclocked']) ? '<td class="td-1" align="center"><img src="' . KUNENA_URLICONSPATH . $fbIcons['topiclocked'] . '" border="0" alt="' . _GEN_LOCKED_TOPIC . '" />' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  alt="' . _GEN_LOCKED_TOPIC . '" title="' . _GEN_LOCKED_TOPIC . '" /></td>';
-                                $topicLocked = 1;
-                            }
-                        ?>
+                    <tr class = "<?php
+                    echo $boardclass.$tabclass[$k];
+                    if ($leaf->ordering != 0 || ($leaf->myfavorite && $funcmylatest))
+                    {echo '_stickymsg'; $topicSticky=1; }
+                    ?>">
+                    <td class = "td-0 fbm" align="center">
+                    <strong>
+<?php echo (int)$thread_counts[$leaf->id]; ?>
+</strong><?php echo _GEN_REPLIES; ?>
+                            </td>
+
 
                         <?php
                             if ($leaf->moved == 0)
                             {
+                                // Need to add +1 as we only have the replies in the buffer
+                                $totalMessages = $thread_counts[$leaf->id] + 1;
+				$curMessageNo = $totalMessages - ($last_read[$leaf->id]->unread ? $last_read[$leaf->id]->unread-1 : 0);
+                                $threadPages = ceil($totalMessages / $kunena_config->messages_per_page);
+                                $unreadPage = ceil($curMessageNo / $kunena_config->messages_per_page);
                         ?>
 
                                 <td class = "td-2"  align="center">
-                                    <?php echo CKunenaLink::GetSimpleLink($id);
-    echo $leaf->topic_emoticon == 0 ? '<img src="' . KUNENA_URLEMOTIONSPATH . 'default.gif" border="0"  alt="" />' : "<img src=\"" . $topic_emoticons[$leaf->topic_emoticon] . "\" alt=\"emo\" border=\"0\" />"; ?>
+                                    <?php echo $leaf->topic_emoticon == 0 ? '<img src="' . KUNENA_URLEMOTIONSPATH . 'default.gif" border="0"  alt="" />' : "<img src=\"" . $topic_emoticons[$leaf->topic_emoticon] . "\" alt=\"emo\" border=\"0\" />"; ?>
                                 </td>
 
                                 <?php
@@ -247,63 +213,53 @@ if (count($messages[0]) > 0)
                                 else
                                 {
                                     echo "<td class=\"td-3\">";
-                                    echo isset($fbIcons['topicsticky']) ? '<img  class="stickyicon" src="' . KUNENA_URLICONSPATH . $fbIcons['topicsticky']
-                                             . '" border="0" alt="' . _GEN_ISSTICKY . '" />' : '<img class="stickyicon" src="' . KUNENA_URLEMOTIONSPATH . 'pushpin.gif"  alt="' . _GEN_ISSTICKY . '" title="' . _GEN_ISSTICKY . '" />';
-                                    $topicSticky = 1;
+
                                 }
                                 ?>
 
                                 <?php
                                 //(JJ) ATTACHMENTS ICON
-                                if ($attachmentsicon > 0) {
+                                if ($leaf->attachmesid > 0) {
                                     echo isset($fbIcons['topicattach']) ? '<img  class="attachicon" src="' . KUNENA_URLICONSPATH
                                              . $fbIcons['topicattach'] . '" border="0" alt="' . _KUNENA_ATTACH . '" />' : '<img class="attachicon" src="' . KUNENA_URLEMOTIONSPATH . 'attachment.gif"  alt="' . _KUNENA_ATTACH . '" title="' . _KUNENA_ATTACH . '" />';
                                     }
                                 ?>
 
                                 <div class = "fb-topic-title-cover">
-                                    <?php echo CKunenaLink::GetThreadLink('view', $leaf->catid, $leaf->id, kunena_htmlspecialchars(stripslashes($leaf->subject)), '', 'follow', 'fb-topic-title fbm');?>
+                                    <?php echo CKunenaLink::GetThreadLink('view', $leaf->catid, $leaf->id, kunena_htmlspecialchars(stripslashes($leaf->subject)), kunena_htmlspecialchars(stripslashes($messagetext[$leaf->id])) , 'follow', 'fb-topic-title fbm');?>
                                     <!--            Favourite       -->
 
                                     <?php
-                                    if ($kunena_config->allowfavorites)
+                                    if ($kunena_config->allowfavorites && array_key_exists($leaf->id, $favthread))
                                     {
-                                        $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_favorites WHERE thread='{$leaf->id}' && userid='{$kunena_my->id}'");
-
-                                        if (intval($kunena_db->loadResult()) > 0) {
-                                            echo isset($fbIcons['favoritestar']) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $fbIcons['favoritestar']
-                                                     . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
-                                            }
+                                        if ($leaf->myfavorite) {
+                                    	    echo isset($fbIcons['favoritestar']) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $fbIcons['favoritestar']
+                                    		. '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
+					} else if (array_key_exists('favoritestar_grey', $fbIcons))
+					{
+                                    	    echo isset($fbIcons['favoritestar_grey']) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $fbIcons['favoritestar_grey']
+                                    		. '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
+					}
                                     }
                                     ?>
-                                    <!--            /Favourite       -->
+                                    <!--            /Favorite       -->
 
-                                    <span class = "fb-topic-by fbs"> <?php echo _GEN_BY.' '.CKunenaLink::GetProfileLink($kunena_config, $leaf->userid, kunena_htmlspecialchars(stripslashes($leaf->name)));?></span>
+
 
                                     <?php
                                     if ($kunena_config->shownew && $kunena_my->id != 0)
                                     {
                                         if (($prevCheck < $last_reply[$leaf->id]->time) && !in_array($last_reply[$leaf->id]->thread, $read_topics)) {
                                             //new post(s) in topic
-                                            echo '<sup><span class="newchar">&nbsp;(' . $kunena_config->newchar . ")</span></sup>";
+                                            echo CKunenaLink::GetThreadPageLink($kunena_config, 'view', $leaf->catid, $leaf->id, $unreadPage, $kunena_config->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $last_read[$leaf->id]->unread . ' ' . stripslashes($kunena_config->newchar) . ')</span></sup>', $last_read[$leaf->id]->lastread);
                                             }
                                     }
                                     ?>
 
-                                    <?php
-                                    // (JJ) AVATAR
-                                    if ($kunena_config->avataroncat) {
-                                        echo $bof_avatar;
-                                        }
-                                    ?>
 
                                     <?php
-                                    $totalMessages = $thread_counts[$leaf->id];
-                                    $threadPages = 1;
-
                                     if ($totalMessages > $kunena_config->messages_per_page)
                                     {
-                                        $threadPages = ceil($totalMessages / $kunena_config->messages_per_page);
                                         echo ("<span class=\"jr-showcat-perpage\">[");
                                         echo _PAGE.' '.CKunenaLink::GetThreadPageLink($kunena_config, 'view', $leaf->catid, $leaf->id, 1, $kunena_config->messages_per_page, 1);
 
@@ -329,7 +285,7 @@ if (count($messages[0]) > 0)
                                                 echo (",");
                                                 }
 
-                                            echo CKunenaLink::GetThreadPageLink($kunena_config, 'view', $leaf->catid, $leaf->id, $hopPage, $kunena_config->messages_per_page, $hopPage);
+                                            echo CKunenaLink::GetThreadPageLink($kunena_config, 'view', $leaf->catid, $leaf->thread, $hopPage, $kunena_config->messages_per_page, $hopPage);
                                         }
 
                                         echo ("]</span>");
@@ -341,9 +297,10 @@ if (count($messages[0]) > 0)
                             }
                             else
                             {
+								$threadPages = 0;
+								$unreadPage = 0;
                                 //this thread has been moved, get the new location
-                                $newURL = ""; //init
-                                $kunena_db->setQuery("SELECT message, mesid FROM #__fb_messages_text WHERE mesid='{$leaf->id}'");
+                                $kunena_db->setQuery("SELECT message FROM #__fb_messages_text WHERE mesid='{$leaf->id}'");
                                 $newURL = $kunena_db->loadResult();
                                 // split the string and separate catid and id for proper link assembly
                                 parse_str($newURL, $newURLParams);
@@ -357,49 +314,142 @@ if (count($messages[0]) > 0)
 
                             <td class = "td-3">
                                 <div class = "fb-topic-title-cover">
-                                    <?php echo CKunenaLink::GetThreadLink('view', $newURLParams['catid'], $newURLParams['id'], kunena_htmlspecialchars(stripslashes($leaf->subject)), kunena_htmlspecialchars(stripslashes($leaf->subject)), 'follow', 'fb-topic-title-cover');?>
+                                    <?php echo CKunenaLink::GetThreadLink('view', $newURLParams['catid'], $newURLParams['id'], kunena_htmlspecialchars(stripslashes($leaf->subject)), kunena_htmlspecialchars(stripslashes($leaf->subject)), 'follow', 'fb-topic-title fbm');?>
                                 </div>
+
+
+
 
                         <?php
                             }
                         ?>
-                            </td>
 
-                            <td class = "td-4 fbm" align="center">
-<?php echo $leaf->moved ? _KUNENA_TOPIC_MOVED : (int)$thread_counts[$leaf->id]; ?>
-                            </td>
+                        <div class="fbs">
+                        <!-- By -->
 
-                            <td class = "td-5 fbm" align="center">
-<?php echo $leaf->moved ? _KUNENA_TOPIC_MOVED : (int)$hits[$leaf->id]; ?>
-                            </td>
-
-                            <td class = "td-6">
-                                <div class = "fb-latest-subject-date fbs">
-<?php echo $leaf->moved ? _KUNENA_TOPIC_MOVED_LONG : date(_DATETIME, $last_reply[$leaf->id]->time); ?>
-
+        <span class="topic_posted_time"><?php echo _KUNENA_POSTED_AT ?> <?php echo time_since($leaf->time , time() + ($kunena_config->board_ofset * 3600)); ?> <?php echo _KUNENA_AGO ?>
+        </span>
 <?php
-    if ($leaf->moved) {
+	if ($leaf->name) 
+	{
+        	echo '<span class="topic_by">';
+	        echo _GEN_BY.' '.CKunenaLink::GetProfileLink($kunena_config, $leaf->userid, $leaf->name);
+        	echo '</span>';
+	}
+?>
+        <!-- /By -->
+
+         <?php if (strtolower($func) != 'showcat' ){ ?>
+        <!-- Category -->
+        <span class="topic_category">
+        <?php echo _KUNENA_CATEGORY.' '.CKunenaLink::GetCategoryLink('showcat', $leaf->catid, kunena_htmlspecialchars(stripslashes($leaf->catname))); ?>
+        </span>
+        <!-- /Category -->
+        <?php } ?>
+
+            <!-- Views -->
+        <span class="topic_views">
+        <?php echo _GEN_HITS; ?>: <?php echo (int)$hits[$leaf->id]; ?>
+        </span>
+        <!-- /Views -->
+
+
+        <?php if ($leaf->locked != 0) {?>
+        <!-- Locked -->
+        <span class="topic_locked">
+        <?php echo isset($fbIcons['topiclocked']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['topiclocked'] . '" border="0" alt="' . _GEN_LOCKED_TOPIC . '" />'  : '<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  alt="' . _GEN_LOCKED_TOPIC . '" title="' . _GEN_LOCKED_TOPIC . '" />';
+        $topicLocked = 1; ?>
+        </span>
+        <!-- /Locked -->
+        <?php } ?>
+
+        </div>
+
+
+                            </td>
+
+
+
+
+
+                            <td class = "td-6 fbs" >
+
+                            <div style="position:relative">
+
+                              <!--  Sticky   -->
+        <?php if ($leaf->ordering != 0) { ?>
+        <span class="topic_sticky">
+        <?php echo isset($fbIcons['topicsticky']) ? '<img  src="' . KUNENA_URLICONSPATH . $fbIcons['topicsticky'] . '" border="0" alt="' . _GEN_ISSTICKY . '" />': '<img class="stickyicon" src="' . KUNENA_URLEMOTIONSPATH . 'pushpin.gif"  alt="' . _GEN_ISSTICKY . '" title="' . _GEN_ISSTICKY . '" />';
+        $topicSticky = 1; ?>
+        </span>
+        <?php }?>
+        <!--  /Sticky   -->
+
+                             <!-- Avatar -->
+                             <?php // (JJ) AVATAR
+                                    if ($kunena_config->avataroncat > 0) { ?>
+
+
+  <span class="topic_latest_post_avatar">
+  <?php
+  		if ($kunena_config->avatar_src == "jomsocial" && $leaf->userid)
+		{
+			// Get CUser object
+			$jsuser =& CFactory::getUser($last_reply[$leaf->id]->userid);
+		    $useravatar = '<img class="fb_list_avatar" src="' . $jsuser->getThumbAvatar() . '" alt=" " />';
+		   	echo CKunenaLink::GetProfileLink($kunena_config, $last_reply[$leaf->id]->userid, $useravatar);
+		}
+		else if ($kunena_config->avatar_src == "cb")
+		{
+			$useravatar = $kunenaProfile->showAvatar($last_reply[$leaf->id]->userid, 'fb_list_avatar');
+  		    echo CKunenaLink::GetProfileLink($kunena_config, $last_reply[$leaf->id]->userid, $useravatar);
+		}
+		else if ($kunena_config->avatar_src == "aup") // integration AlphaUserPoints
+		{
+			$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
+			if ( file_exists($api_AUP)) {
+				( $kunena_config->fb_profile=='aup' ) ? $showlink=1 : $showlink=0;
+				echo AlphaUserPointsHelper::getAupAvatar( $last_reply[$leaf->id]->userid, $showlink, 40, 40 );
+			} // end integration AlphaUserPoints
+		} else {
+		  	$javatar =  $last_reply[$leaf->id]->avatar;
+		   	if ($javatar!='') {
+				echo CKunenaLink::GetProfileLink($kunena_config, $last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $javatar)?KUNENA_LIVEUPLOADEDPATH.'/avatars/'.$javatar:KUNENA_LIVEUPLOADEDPATH.'/avatars/s_'.$javatar) .'" alt="" />');
+	        }  else {
+		   		echo CKunenaLink::GetProfileLink($kunena_config, $last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_nophoto.jpg" alt="" />');
+	        }
+         }?>
+  </span>
+    <?php } ?>
+  <!-- /Avatar -->
+
+                                                <!-- Latest Post -->
+        <span class="topic_latest_post">
+        <?php
+        if ($kunena_config->default_sort == 'asc')
+        {
+        	if ($leaf->moved == 0)
+        		echo CKunenaLink::GetThreadPageLink($kunena_config, 'view', $leaf->catid, $leaf->thread, $threadPages, $kunena_config->messages_per_page, _GEN_LAST_POST, $last_reply[$leaf->id]->id);
+        	else
+        		echo _KUNENA_MOVED . ' ';
         }
-    else
-    {
-?>
+        else
+        {
+        	echo CKunenaLink::GetThreadPageLink($kunena_config, 'view', $leaf->catid, $leaf->thread, 1, $kunena_config->messages_per_page, _GEN_LAST_POST, $last_reply[$leaf->id]->id);
+        }
 
-<?php echo _GEN_BY; ?> <?php echo CKunenaLink::GetProfileLink($kunena_config, $last_reply[$leaf->id]->userid, kunena_htmlspecialchars(stripslashes($last_reply[$leaf->id]->name)));?>
+        if ($leaf->name) 
+		echo ' '._GEN_BY. ' '.CKunenaLink::GetProfileLink($kunena_config, $last_reply[$leaf->id]->userid, stripslashes($last_reply[$leaf->id]->name), 'nofollow', 'topic_latest_post_user'); ?>
+        </span>
+        <!-- /Latest Post -->
+        <br />
+                                <!-- Latest Post Date -->
+        <span class="topic_date">
+        <?php echo time_since($last_reply[$leaf->id]->time , time() + ($kunena_config->board_ofset * 3600)); ?> <?php echo _KUNENA_AGO ?>
+        </span>
+        <!-- /Latest Post Date -->
+        </div>
 
-<?php
-    }
-?>
-
-    <?php
-    $tmpicon = '';
-    if (!$leaf->moved)
-    {
-        $tmpicon = isset($fbIcons['latestpost']) ? '<img src="'
-                 .KUNENA_URLICONSPATH.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" />':'  <img src="'.KUNENA_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />';
-    }
-    echo CKunenaLink::GetThreadPageLink($kunena_config, 'view', $leaf->catid, $leaf->id, $threadPages, $kunena_config->messages_per_page, $tmpicon, $last_reply[$leaf->id]->id);
-    ?>
-                                </div>
                             </td>
 
                             <?php
@@ -431,7 +481,6 @@ if (count($messages[0]) > 0)
 
                     <tr class = "<?php echo $boardclass ?>sectiontableentry1">
                         <td colspan = "7" align = "right" class = "td-1 fbs">
-
                         <script type = "text/javascript">
                             jQuery(document).ready(function()
                             {
@@ -461,7 +510,7 @@ if (count($messages[0]) > 0)
                             CKunenaTools::showBulkActionCats();
                             ?>
 
-            <input type = "submit" name = "fbBulkActionsGo" class = "fbs" value = "<?php echo _KUNENA_GO ; ?>"/>
+            <input type = "submit" name = "fbBulkActionsGo" class = "fb_button fbs" value = "<?php echo _KUNENA_GO ; ?>"/>
                         </td>
 
                         </tr>
@@ -487,5 +536,5 @@ if (count($messages[0]) > 0)
 }
 else {
     echo "<p align=\"center\">" . _VIEW_NO_POSTS . "</p>";
-}
+    }
 ?>

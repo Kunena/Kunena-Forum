@@ -108,14 +108,14 @@ $tree = thread_flat($tree, $messages);
                 {
                     //new post
                     echo '<td width="1%" class="fb_new">';
-                    echo isset($fbIcons['unreadmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '"/>' : $kunena_config->newchar;
+                   // echo isset($fbIcons['unreadmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '"/>' : $kunena_config->newchar;
                     echo '</td>';
                 }
                 else
                 {
                     //not new posts
                     echo '<td width="1%" class="fb_notnew">';
-                    echo isset($fbIcons['readmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $kunena_config->newchar;
+                   // echo isset($fbIcons['readmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $kunena_config->newchar;
                     echo '</td>';
                 }
             }
@@ -129,22 +129,22 @@ $tree = thread_flat($tree, $messages);
                   {
                      if($leaf->locked==0)
                      {
-                       echo "&nbsp;";
+                     //  echo "&nbsp;";
                      }
                      else
                      {
-                        echo isset($fbIcons['topiclocked']) ? '<img src="' . KUNENA_URLICONSPATH.$fbIcons['topiclocked'].'" border="0" alt="'._GEN_LOCKED_TOPIC.'" title="'._GEN_LOCKED_TOPIC.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'lock.gif" width="15" height="15" alt="'._GEN_LOCKED_TOPIC.'" />';
+                      //  echo isset($fbIcons['topiclocked']) ? '<img src="' . KUNENA_URLICONSPATH.$fbIcons['topiclocked'].'" border="0" alt="'._GEN_LOCKED_TOPIC.'" title="'._GEN_LOCKED_TOPIC.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'lock.gif" width="15" height="15" alt="'._GEN_LOCKED_TOPIC.'" />';
                         $topicLocked=1;
                      }
                   }
                   else
                   {
-                     echo isset($fbIcons['topicsticky']) ? '<img src="' . KUNENA_URLICONSPATH.$fbIcons['topicsticky'].'" border="0" alt="'._GEN_ISSTICKY.'" title="'._GEN_ISSTICKY.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'pushpin.gif" width="15" height="15" alt="'._GEN_ISSTICKY.'" />';
+                   //  echo isset($fbIcons['topicsticky']) ? '<img src="' . KUNENA_URLICONSPATH.$fbIcons['topicsticky'].'" border="0" alt="'._GEN_ISSTICKY.'" title="'._GEN_ISSTICKY.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'pushpin.gif" width="15" height="15" alt="'._GEN_ISSTICKY.'" />';
                      $topicSticky=1;
                   }
                   ?></td>
                 <td align = "center" width = "5"<?php echo $leaf->id==$id?" class=\"".$boardclass."sectiontableentry2\"":"";?>>
-<?php echo $leaf->topic_emoticon == 0 ? '<img src="' . KUNENA_URLIMAGESPATH . 'tree-blank.gif"  alt="thread link" />' : "<img src=\"" . $topic_emoticons[$leaf->topic_emoticon] . "\" alt=\"emo\" />"; ?>
+<?php // echo $leaf->topic_emoticon == 0 ? '<img src="' . KUNENA_URLIMAGESPATH . 'tree-blank.gif"  alt="thread link" />' : "<img src=\"" . $topic_emoticons[$leaf->topic_emoticon] . "\" alt=\"emo\" />"; ?>
                 </td>
 
                 <td<?php echo $leaf->id == $id ? " class=\"".$boardclass."sectiontableentry2\"" : ""; ?>>
@@ -185,7 +185,6 @@ $tree = thread_flat($tree, $messages);
                         $newURL .= '&amp;id=' . $leaf->id . $viewstr . '&amp;catid=' . $catid;
 
                     $newURL = JRoute::_($newURL);
-                    //JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;id='.$leaf->id.$viewstr.'&amp;catid='.$catid);
                     ?>
 
                     <td<?php echo $leaf->id == $id ? " class=\"".$boardclass."sectiontableentry2\"" : ""; ?>>

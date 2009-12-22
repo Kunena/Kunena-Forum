@@ -21,10 +21,10 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
+global $fbConfig, $kunenaProfile, $lang;
+
 // Kunena wide defines
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
-
-global $task, $lang;
 
 $task = JRequest::getCmd( 'task' );
 
@@ -44,14 +44,12 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.debug.php');
 require_once (KUNENA_PATH_LIB .DS. 'kunena.config.class.php');
 require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 
-global $fbConfig, $kunenaProfile;
-
 $app =& JFactory::getApplication();
 
 $kunena_db = JFactory::getDBO();
 
-$fbConfig =& CKunenaConfig::getInstance();
-$fbConfig->load();
+//$fbConfig =& CKunenaConfig::getInstance();
+//$fbConfig->load();
 
 // Class structure should be used after this and all the common task should be moved to this class
 require_once (KUNENA_PATH .DS. 'class.kunena.php');

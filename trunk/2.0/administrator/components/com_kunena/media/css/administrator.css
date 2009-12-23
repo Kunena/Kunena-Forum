@@ -1,5 +1,5 @@
 /**
-* @version $Id: $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 
@@ -19,56 +19,56 @@ div.header span {
 /** Custom title icons **/
 .icon-48-kunena 
 {
-	background-image:url( ../icons/kunena.png) !important;
+	background-image: url(../icons/kunena.png) !important;
 }
 
 .icon-48-config
 {
-	background-image: url( ../icons/config.png );
+	background-image: url(../icons/config.png);
 }
 
 .icon-48-forums
 {
-	background-image: url( ../icons/forums.png );
+	background-image: url(../icons/forums.png);
 }
 
 .icon-48-users
 {
-	background-image: url( ../icons/users.png );
+	background-image: url(../icons/users.png);
 }
 
 .icon-48-smilies
 {
-	background-image: url( ../icons/smilies.png );
+	background-image: url(../icons/smilies.png);
 }
 
 .icon-48-ranks
 {
-	background-image: url( ../icons/ranks.png );
+	background-image: url(../icons/ranks.png);
 }
 
 .icon-48-templates
 {
-	background-image: url( ../icons/templates.png );
+	background-image: url(../icons/templates.png);
 }
 
 .icon-48-queue
 {
-	background-image: url( ../icons/queue.png );
+	background-image: url(../icons/queue.png);
 }
 
 .icon-48-tools
 {
-	background-image: url( ../icons/tools.png );
+	background-image: url(../icons/tools.png);
 }
 
 .icon-48-plugins
 {
-	background-image: url( ../icons/plugins.png );
+	background-image: url(../icons/plugins.png);
 }
 
 .icon-48-about
 {
-	background-image: url( ../icons/about.png );
+	background-image: url(../icons/about.png);
 }
 

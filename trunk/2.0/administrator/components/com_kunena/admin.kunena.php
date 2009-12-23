@@ -17,7 +17,7 @@ $task	= JRequest::getCmd( 'task' , 'display' );
 require_once (JPATH_COMPONENT_ADMINISTRATOR .DS. 'api.php');
 
 $document =& JFactory::getDocument();
-$document->addStyleSheet(KPATH_COMPONENT_RELATIVE .DS. 'media' .DS. 'css'. DS. 'administrator.css');
+$document->addStyleSheet(KURL_COMPONENT_MEDIA.'css/administrator.css');
 
 // Import the Kunena controller class.
 require_once (JPATH_COMPONENT .DS. 'controllers' .DS. 'controller.php');

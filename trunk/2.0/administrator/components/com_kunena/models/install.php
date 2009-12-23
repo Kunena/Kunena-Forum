@@ -52,7 +52,10 @@ class KunenaModelInstall extends JModel
 		$this->db = JFactory::getDBO();
 
 		ignore_user_abort(true);
-
+		$this->setState('default_max_time',  @ini_get('max_execution_time'));
+		@set_time_limit(300);
+		$this->setState('max_time',  @ini_get('max_execution_time'));
+		
 		$this->_versiontablearray = array (
 			array('prefix'=>'kunena_', 'table'=>'kunena_version'),
 			array('prefix'=>'fb_',     'table'=>'fb_version'),
@@ -105,6 +108,7 @@ class KunenaModelInstall extends JModel
 			$this->setState('step', $step = $app->getUserState('com_kunena.install.step'));
 			if($step == 0) $app->setUserState('com_kunena.install.status', array());
 			else $this->setState('status', $app->getUserState('com_kunena.install.status'));
+			
 			$this->__state_set = true;
 		}
 
@@ -157,6 +161,10 @@ class KunenaModelInstall extends JModel
 	}
 	
 	public function extract($path, $filename, $dest=null) {
+		jimport( 'joomla.filesystem.folder' );
+		jimport( 'joomla.filesystem.file' );
+		jimport( 'joomla.filesystem.archive' );
+
 		if (!$dest) $dest = $path;
 		$file = $path.DS.$filename;
 
@@ -211,13 +219,11 @@ class KunenaModelInstall extends JModel
 			foreach ($tables as $oldtable)
 			{
 				$newtable = preg_replace('/^'.$version->prefix.'/', 'kunena_', $oldtable);
-				$result = $this->migrateTable($oldtable, $newtable);
-				if ($result) $results[] = $result;
+				$results[] = $this->migrateTable($oldtable, $newtable);
 			}
 			foreach ($results as $i=>$r) if ($r) $this->addStatus($r['action'].' '.$r['name'], true);
 		}
 		$this->updateVersionState('upgradeDatabase');
-		$this->addStatus("Updated version state", true);
 	}
 
 	public function upgradeDatabase()

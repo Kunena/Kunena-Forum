@@ -50,8 +50,6 @@ class KunenaViewInstall extends JView
 		$this->assignRef('versionWarning', $version->getVersionWarning('COM_KUNENA_INSTALL_WARNING'));
 
 		// Push out the view data.
-		$this->assignRef('state',	$state);
-
 		$this->assign('link', JURI::root().'administrator/index.php?option=com_kunena&view=install&task=install');
 
 		$search = array ('#COMPONENT_OLD#','#VERSION_OLD#','#BUILD_OLD#','#VERSION#','#BUILD#');

@@ -10,10 +10,6 @@
 
 defined('_JEXEC') or die;
 
-jimport( 'joomla.filesystem.folder' );
-jimport( 'joomla.filesystem.file' );
-jimport( 'joomla.filesystem.archive' );
-
 jimport('joomla.application.component.controller');
 
 /**
@@ -51,6 +47,7 @@ class KunenaControllerInstall extends KunenaController
 		if (!$this->step) $this->model->setStep(++$this->step);
 		if ($this->step >= count($this->steps)-1)
 		{
+			// Installation complete: reset and exit installer
 			$this->model->setStep(0);
 			$this->setRedirect('index.php?option=com_kunena');
 			return;
@@ -103,15 +100,12 @@ class KunenaControllerInstall extends KunenaController
 		{
 			case 'migrateDatabase':
 				$this->model->migrateDatabase();
-				$this->model->addStatus('Update database:migrate', true, $html);
 				break;
 			case 'upgradeDatabase':
 				$this->model->upgradeDatabase();
-				$this->model->addStatus('Update database:upgrade', true, $html);
 				break;
 			case 'installSampleData':
 				$this->model->installSampleData();
-				$this->model->addStatus('Update database:sample', true, $html);
 				break;
 			case '':
 				if (!$this->model->getError()) $this->model->setStep(++$this->step);

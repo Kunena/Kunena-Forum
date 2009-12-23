@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.8
 
+23-Dec-2009 Matias
+# [#18627] Fix some bugs in installer (polls table creation)
+
 22-dec-2009 Xillibit
 ^ [#18627] Merge from /trunk/1.5 : 1315-1265
 + [#18627] Add in the poll results the name of all users which are voted for this poll

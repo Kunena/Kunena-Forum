@@ -203,7 +203,30 @@
        	(`time`), KEY `locked` (`locked`), KEY `hold_time`
        	(`hold`,`time`), KEY `parent_hits` (`parent`,`hits`) )
        	DEFAULT CHARSET=utf8</query>
-		<query>CREATE TABLE IF NOT EXISTS `#__fb_polls` ( ìd` int(11) NOT NULL auto_increment,  `title` VARCHAR(50), `threadid` INT(11), `catid`INT(11), PRIMARY KEY (`id`), KEY threadid (`threadid`) ) DEFAULT CHARSET=utf8</query><query>CREATE TABLE IF NOT EXISTS `#__fb_polls_options` (  ìd` int(11) NOT NULL auto_increment, `pollid` INT(11), `text` VARCHAR(50), `votes` INT(11), PRIMARY KEY (`id`),KEY pollid (`pollid`)) DEFAULT CHARSET=utf8</query><query>CREATE TABLE IF NOT EXISTS `#__fb_polls_user` (  pollìd` int(11), `userid` INT(11), `votes` SMALLINT(3), `lasttime` TIMESTAMP, UNIQUE KEY (`pollid` , `userid`)) DEFAULT CHARSET=utf8</query><query>ALTER TABLE `#__fb_messages` ADD COLUMN `poll_exist` SMALLINT(3)</query><phpfile name="kunena.special.install.php" />
+		<query>CREATE TABLE IF NOT EXISTS `#__fb_polls` (
+			`id` int(11) NOT NULL auto_increment,
+			`title` varchar(50) NOT NULL,
+			`threadid` int(11) NOT NULL,
+			`catid` int(11) NOT NULL,
+			PRIMARY KEY  (`id`),
+			KEY `threadid` (`threadid`)
+		) ENGINE=MyISAM DEFAULT CHARSET=utf8;</query>
+		<query>CREATE TABLE IF NOT EXISTS `#__fb_polls_options` (
+			`id` int(11) NOT NULL auto_increment,
+			`pollid` int(11) default NULL,
+			`text` varchar(50) default NULL,
+			`votes` int(11) default NULL,
+			PRIMARY KEY  (`id`),
+			KEY `pollid` (`pollid`)
+		) DEFAULT CHARSET=utf8;</query>
+		<query>CREATE TABLE IF NOT EXISTS `#__fb_polls_users` (
+			`pollid` int(11) default NULL,
+			`userid` int(11) default NULL,
+			`votes` smallint(3) default NULL,
+			`lasttime` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+			UNIQUE KEY `pollid` (`pollid`,`userid`)
+		) DEFAULT CHARSET=utf8;</query>
+		<query>ALTER TABLE `#__fb_messages` ADD COLUMN `poll_exist` SMALLINT(3)</query>
 	</install>
 	<upgrade>
 		<version version="1.0.5" versiondate="2008-12-1" build="855" versionname="Redwood">
@@ -326,6 +349,30 @@
 			<query mode="silenterror">UPDATE `#__fb_config` SET `jmambot`='0'</query>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
+			<query>CREATE TABLE IF NOT EXISTS `#__fb_polls` (
+				`id` int(11) NOT NULL auto_increment,
+				`title` varchar(50) NOT NULL,
+				`threadid` int(11) NOT NULL,
+				`catid` int(11) NOT NULL,
+				PRIMARY KEY  (`id`),
+				KEY `threadid` (`threadid`)
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8;</query>
+			<query>CREATE TABLE IF NOT EXISTS `#__fb_polls_options` (
+				`id` int(11) NOT NULL auto_increment,
+				`pollid` int(11) default NULL,
+				`text` varchar(50) default NULL,
+				`votes` int(11) default NULL,
+				PRIMARY KEY  (`id`),
+				KEY `pollid` (`pollid`)
+			) DEFAULT CHARSET=utf8;</query>
+			<query>CREATE TABLE IF NOT EXISTS `#__fb_polls_users` (
+				`pollid` int(11) default NULL,
+				`userid` int(11) default NULL,
+				`votes` smallint(3) default NULL,
+				`lasttime` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+				UNIQUE KEY `pollid` (`pollid`,`userid`)
+			) DEFAULT CHARSET=utf8;</query>
+			<query mode="silenterror">ALTER TABLE `#__fb_messages` ADD COLUMN `poll_exist` SMALLINT(3)</query>
 		</version>
 	</upgrade>
 </comupgrade>

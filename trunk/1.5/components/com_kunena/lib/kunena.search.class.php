@@ -68,7 +68,7 @@ class CKunenaSearch
     {
         global $kunena_my;
 
-	$app =& JFactory::getApplication();
+	$kunena_app =& JFactory::getApplication();
         $kunena_db = &JFactory::getDBO();
         $kunena_config =& CKunenaConfig::getInstance();
 
@@ -112,7 +112,7 @@ class CKunenaSearch
 		$url = CKunenaLink::GetSearchURL($kunena_config, $this->func, $q, $limitstart, $limit, $this->getUrlParams());
         	header("HTTP/1.1 303 See Other");
         	header("Location: " . htmlspecialchars_decode($url));
-        	$app->close();
+        	$kunena_app->close();
 	}
 
 	if ($q == _GEN_SEARCH_BOX) $q = '';
@@ -305,15 +305,15 @@ class CKunenaSearch
 	return $url_params;
     }
     function get_search_forums(&$catids, $childforums = 1) {
-		$fbSession =& CKunenaSession::getInstance();
+		$kunena_session =& CKunenaSession::getInstance();
         $kunena_db = &JFactory::getDBO();
 		$kunena_my = &JFactory::getUser();
 
         /* get allowed forums */
 		$allowed_string = '';
-		if ($fbSession->allowed && $fbSession->allowed != 'na')
+		if ($kunena_session->allowed && $kunena_session->allowed != 'na')
 		{
-			$allowed_string = "id IN ({$fbSession->allowed})";
+			$allowed_string = "id IN ({$kunena_session->allowed})";
 		} else {
 			$allowed_string = "published='1' AND pub_access='0'";
 		}

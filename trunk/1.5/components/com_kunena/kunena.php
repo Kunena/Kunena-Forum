@@ -71,20 +71,20 @@ $view 			= JRequest::getVar('view', '');
 $msgpreview 	= JRequest::getVar('msgpreview', '');
 $no_html		= JRequest::getBool('no_html', 0);
 
-$app = JFactory::getApplication();
+$kunena_app = JFactory::getApplication();
 
 // Redirect Forum Jump
 if (isset($_POST['func']) && $func == "showcat")
 {
 	header("HTTP/1.1 303 See Other");
 	header("Location: " . htmlspecialchars_decode(JRoute::_('index.php?option=com_kunena&amp;Itemid=' . $Itemid . '&amp;func=showcat&amp;catid=' . $catid)));
-	$app->close();
+	$kunena_app->close();
 }
 
 // Image does not work if there are included files (extra characters), so we will do it now:
 if ($func == "showcaptcha") {
    include (JPATH_ROOT . '/components/com_kunena/template/default/plugin/captcha/randomImage.php');
-   $app->close();
+   $kunena_app->close();
 }
 
 // Debug helpers
@@ -175,13 +175,13 @@ else
 if ($func == 'fb_rss')
 {
     include (KUNENA_PATH_LIB .DS. 'kunena.rss.php');
-    $app->close();
+    $kunena_app->close();
 }
 
 if ($func == 'fb_pdf')
 {
     include (KUNENA_PATH_LIB .DS. 'kunena.pdf.php');
-    $app->close();
+    $kunena_app->close();
 }
 
 // Include Clexus PM class file
@@ -224,7 +224,7 @@ if ($func == "getpreview")
     $msgbody = smile::htmlwrap($msgbody, $kunena_config->wrap);
     header("Content-Type: text/html; charset=utf-8");
     echo $msgbody;
-    $app->close();
+    $kunena_app->close();
 }
 
 if ($no_html == 0) {
@@ -341,8 +341,8 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
 	// We only do the session handling for registered users
 	// No point in keeping track of whats new for guests
-	global $fbSession;
-	$fbSession =& CKunenaSession::getInstance(true);
+	global $kunena_session;
+	$kunena_session =& CKunenaSession::getInstance(true);
 	if ($kunena_my->id > 0)
 	{
 		// First we drop an updated cookie, good for 1 year
@@ -352,16 +352,16 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
 		// new indicator handling
 		if ($markaction == "allread") {
-			$fbSession->markAllCategoriesRead();
+			$kunena_session->markAllCategoriesRead();
 		}
 
-		$fbSession->updateAllowedForums($kunena_my->id, $aro_group, $kunena_acl);
+		$kunena_session->updateAllowedForums($kunena_my->id, $aro_group, $kunena_acl);
 
 		// save fbsession
-		$fbSession->save($fbSession);
+		$kunena_session->save($kunena_session);
 
 		if ($markaction == "allread") {
-		        $app->redirect(htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _GEN_ALL_MARKED);
+		        $kunena_app->redirect(htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _GEN_ALL_MARKED);
 		}
 
 		// Now lets get the view type for the forum
@@ -389,26 +389,26 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
 	    // Assign previous visit without user offset to variable for templates to decide
 		// whether or not to use the NEW indicator on forums and posts
-		$prevCheck = $fbSession->lasttime; // - KUNENA_OFFSET_USER; Don't use the user offset - it throws the NEW indicator off
+		$prevCheck = $kunena_session->lasttime; // - KUNENA_OFFSET_USER; Don't use the user offset - it throws the NEW indicator off
 	}
 	else
 	{
 		// collect accessaible categories for guest user
 		$kunena_db->setQuery("SELECT id FROM #__fb_categories WHERE pub_access='0' AND published='1'");
-		$fbSession->allowed =
+		$kunena_session->allowed =
 			($arr_pubcats = $kunena_db->loadResultArray())?implode(',', $arr_pubcats):'';
 			check_dberror('Unable load accessible categories for user.');
 
 		// For guests we don't show new posts
 		$prevCheck = $kunena_systime;
-		$fbSession->readtopics = '';
+		$kunena_session->readtopics = '';
 	}
 
 	// no access to categories?
-	if (!$fbSession->allowed) $fbSession->allowed = '0';
+	if (!$kunena_session->allowed) $kunena_session->allowed = '0';
 
 	// Integration with GroupJive, Jomsocial:
-	$params = array($kunena_my->id, &$fbSession->allowed);
+	$params = array($kunena_my->id, &$kunena_session->allowed);
 	if (is_object($kunenaProfile))
 		$kunenaProfile->trigger('getAllowedForumsRead', $params);
 
@@ -436,7 +436,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
     	check_dberror('Unable load max(posts) for user.');
 
     //Get the topics this user has already read this session from #__fb_sessions
-    $readTopics=$fbSession->readtopics;
+    $readTopics=$kunena_session->readtopics;
     $read_topics = explode(',', $readTopics);
 
     /*       _\|/_
@@ -461,7 +461,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
     	{
    			$strcatid = '';
     		if ($catid) $strcatid = "&amp;catid={$catid}";
-            $app->redirect(htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=listcat'.$strcatid)));
+            $kunena_app->redirect(htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=listcat'.$strcatid)));
         }
     }
 
@@ -726,7 +726,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
             $kunena_db->query();
             	check_dberror('Unable to update readtopics in session table.');
 
-            $app->redirect(htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid)), _GEN_FORUM_MARKED);
+            $kunena_app->redirect(htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid)), _GEN_FORUM_MARKED);
             break;
 
         #########################################################################################
@@ -803,7 +803,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
                     }
             }
 
-            $app->redirect(htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)));
+            $kunena_app->redirect(htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)));
             break;
 
         #########################################################################################

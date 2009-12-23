@@ -35,8 +35,8 @@ function fileUploadError($msg)
     global $message;
     $GLOBALS['KUNENA_rc'] = 0;
     $message = str_replace("[file/]", "", $message);
-    $app =& JFactory::getApplication();
-    $app->enqueueMessage(_FILE_NOT_UPLOADED .' ('. $msg .')', 'notice');
+    $kunena_app =& JFactory::getApplication();
+    $kunena_app->enqueueMessage(_FILE_NOT_UPLOADED .' ('. $msg .')', 'notice');
 }
 
 $GLOBALS['KUNENA_rc'] = 1; //reset return code

@@ -65,10 +65,10 @@ class CKunenaCBProfile {
 
 function enqueueErrors() {
 		if ($this->error) {
-			$app =& JFactory::getApplication();
-			$app->enqueueMessage(_KUNENA_INTEGRATION_CB_WARN_GENERAL, 'notice');
-			$app->enqueueMessage($this->errormsg, 'notice');
-			$app->enqueueMessage(_KUNENA_INTEGRATION_CB_WARN_HIDE, 'notice');
+			$kunena_app =& JFactory::getApplication();
+			$kunena_app->enqueueMessage(_KUNENA_INTEGRATION_CB_WARN_GENERAL, 'notice');
+			$kunena_app->enqueueMessage($this->errormsg, 'notice');
+			$kunena_app->enqueueMessage(_KUNENA_INTEGRATION_CB_WARN_HIDE, 'notice');
 		}
 	}
 

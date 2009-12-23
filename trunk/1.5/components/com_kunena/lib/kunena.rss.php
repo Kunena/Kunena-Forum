@@ -26,7 +26,7 @@ require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'k
 
 global $kunena_my;
 
-$app =& JFactory::getApplication();
+$kunena_app =& JFactory::getApplication();
 $kunena_config =& CKunenaConfig::getInstance();
 $kunena_db = &JFactory::getDBO();
 
@@ -139,7 +139,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 <!-- generator="Kunena <?php echo KUNENA_VERSION; ?>"> -->
 <rss version="0.91">
     <channel>
-        <title><?php echo stripslashes(kunena_htmlspecialchars($app->getCfg('sitename'))); ?> - Forum</title>
+        <title><?php echo stripslashes(kunena_htmlspecialchars($kunena_app->getCfg('sitename'))); ?> - Forum</title>
         <description>Kunena Site Syndication</description>
         <link><?php echo JURI::root(); ?></link>
         <lastBuildDate><?php echo date("r");?></lastBuildDate>

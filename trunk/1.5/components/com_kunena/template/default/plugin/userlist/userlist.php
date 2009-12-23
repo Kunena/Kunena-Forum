@@ -115,7 +115,7 @@ class HTML_userlist_content
     function showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search = "")
     {
     	global $kunena_is_moderator;
-		$app =& JFactory::getApplication();
+		$kunena_app =& JFactory::getApplication();
         $kunena_config =& CKunenaConfig::getInstance();
         $kunena_db = &JFactory::getDBO();
 
@@ -162,7 +162,7 @@ class HTML_userlist_content
                                         <span class="fb_title fbl"> <?php echo _KUNENA_USRL_USERLIST; ?></span>
 
                                         <?php
-                                        printf(_KUNENA_USRL_REGISTERED_USERS, $app->getCfg('sitename'), $total_results);
+                                        printf(_KUNENA_USRL_REGISTERED_USERS, $kunena_app->getCfg('sitename'), $total_results);
                                         ?>
                                     </div>
                                 </td>

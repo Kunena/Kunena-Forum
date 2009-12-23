@@ -23,7 +23,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 require_once (KUNENA_PATH_LIB .DS. "kunena.user.class.php");
 
-$app =& JFactory::getApplication();
+$kunena_app =& JFactory::getApplication();
 $document =& JFactory::getDocument();
 $kunena_config =& CKunenaConfig::getInstance();
 
@@ -207,14 +207,14 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                     if (!$kunena_db->query())
                     {
-						$app->enqueueMessage(_USER_PROFILE_NOT_A._USER_PROFILE_NOT_B._USER_PROFILE_NOT_C, 'notice');
+						$kunena_app->enqueueMessage(_USER_PROFILE_NOT_A._USER_PROFILE_NOT_B._USER_PROFILE_NOT_C, 'notice');
                     }
                     else
                     {
-						$app->enqueueMessage(_USER_PROFILE_UPDATED);
+						$kunena_app->enqueueMessage(_USER_PROFILE_UPDATED);
                     }
 
-                    $app->redirect(JRoute::_(KUNENA_LIVEURLREL . "&amp;func=myprofile"));
+                    $kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . "&amp;func=myprofile"));
                 break;
 
                 case "profileinfo":
@@ -271,7 +271,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                         if (!$rowu->bind( $_POST, 'moderator posts karma group_id uhits' )) {
         echo "<script> alert('".$rowu->getError()."'); window.history.go(-1); </script>\n";
-        $app->close();
+        $kunena_app->close();
     }
                     $rowu->birthdate = $bday1."-".$bday2."-".$bday3;
 
@@ -290,16 +290,16 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                         if (!$rowu->check()) {
         echo "<script> alert('".$rowu->getError()."'); window.history.go(-1); </script>\n";
-        $app->close();
+        $kunena_app->close();
     }
 
     if (!$rowu->store()) {
         echo "<script> alert('".$rowu->getError()."'); window.history.go(-1); </script>\n";
-        $app->close();
+        $kunena_app->close();
     }
 
-						$app->enqueueMessage(_USER_PROFILE_UPDATED);
-						$app->redirect(JRoute::_(KUNENA_LIVEURLREL . "&amp;func=myprofile"));
+						$kunena_app->enqueueMessage(_USER_PROFILE_UPDATED);
+						$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . "&amp;func=myprofile"));
                 break;
 
                 case "showsub":
@@ -402,21 +402,21 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                     if (!$kunena_db->query())
                     {
-						$app->enqueueMessage(_USER_UNSUBSCRIBE_A._USER_UNSUBSCRIBE_B._USER_UNSUBSCRIBE_C, 'notice');
+						$kunena_app->enqueueMessage(_USER_UNSUBSCRIBE_A._USER_UNSUBSCRIBE_B._USER_UNSUBSCRIBE_C, 'notice');
                     }
                     else
                     {
-						$app->enqueueMessage(_USER_UNSUBSCRIBE_YES);
+						$kunena_app->enqueueMessage(_USER_UNSUBSCRIBE_YES);
                     }
                     
                     if ($kunena_config->fb_profile == 'cb')
                     {
 						$forumtab_url = CKunenaCBProfile::getForumTabURL();
-						$app->redirect(JRoute::_($forumtab_url));
+						$kunena_app->redirect(JRoute::_($forumtab_url));
                     }
                     else
                     {
-                    	$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub'));
+                    	$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub'));
                     }
 
                     break;
@@ -427,19 +427,19 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                    $kunena_db->setQuery("DELETE from #__fb_subscriptions where userid=$kunena_my->id and thread=$thread");
 
 						if (!$kunena_db->query()) {
-							$app->enqueueMessage(_USER_UNSUBSCRIBE_A._USER_UNSUBSCRIBE_B._USER_UNSUBSCRIBE_C, 'notice');
+							$kunena_app->enqueueMessage(_USER_UNSUBSCRIBE_A._USER_UNSUBSCRIBE_B._USER_UNSUBSCRIBE_C, 'notice');
 						}
 						else {
-							$app->enqueueMessage(_USER_UNSUBSCRIBE_YES);
+							$kunena_app->enqueueMessage(_USER_UNSUBSCRIBE_YES);
 						}
 
 						if ($kunena_config->fb_profile == 'cb') {
 							$forumtab_url = CKunenaCBProfile::getForumTabURL();
-							$app->redirect(JRoute::_($forumtab_url));
+							$kunena_app->redirect(JRoute::_($forumtab_url));
 
 						}
 						else {
-							$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub'));
+							$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub'));
                     }
 
                     break;
@@ -458,21 +458,21 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                     if (!$kunena_db->query())
                     {
-                    	$app->enqueueMessage(_USER_UNFAVORITE_A._USER_UNFAVORITE_B._USER_UNFAVORITE_C, 'notice');
+                    	$kunena_app->enqueueMessage(_USER_UNFAVORITE_A._USER_UNFAVORITE_B._USER_UNFAVORITE_C, 'notice');
                     }
                     else
                     {
-                    	$app->enqueueMessage(_USER_UNFAVORITE_YES);
+                    	$kunena_app->enqueueMessage(_USER_UNFAVORITE_YES);
                     }
 
                     if ($kunena_config->fb_profile == 'cb')
                     {
 						$forumtab_url = CKunenaCBProfile::getForumTabURL();
-						$app->redirect(JRoute::_($forumtab_url));
+						$kunena_app->redirect(JRoute::_($forumtab_url));
                     }
                     else
                     {
-                    	$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav'));
+                    	$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav'));
                     }
 
                     break;
@@ -482,18 +482,18 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 						$kunena_db->setQuery("DELETE from #__fb_favorites where userid=$kunena_my->id and thread=$thread");
 
 						if (!$kunena_db->query()) {
-                    		$app->enqueueMessage(_USER_UNFAVORITE_A._USER_UNFAVORITE_B._USER_UNFAVORITE_C, 'notice');
+                    		$kunena_app->enqueueMessage(_USER_UNFAVORITE_A._USER_UNFAVORITE_B._USER_UNFAVORITE_C, 'notice');
 						}
 						else {
-							$app->enqueueMessage(_USER_UNFAVORITE_YES);
+							$kunena_app->enqueueMessage(_USER_UNFAVORITE_YES);
 						}
 
 						if ($kunena_config->fb_profile == 'cb') {
 							$forumtab_url = CKunenaCBProfile::getForumTabURL();
-							$app->redirect(JRoute::_($forumtab_url));
+							$kunena_app->redirect(JRoute::_($forumtab_url));
 						}
 						else {
-							$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav'));
+							$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav'));
 						}
 
                     break;
@@ -527,7 +527,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     $row->email = trim($row->email);
                     $row->username = trim($row->username);
 
-                    $file = $app->getPath('com_xml', 'com_users');
+                    $file = $kunena_app->getPath('com_xml', 'com_users');
                     $params = new JParameter($row->params, $file, 'component');
 
                     if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_userdetails_form.php'))
@@ -557,9 +557,9 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     if (!$row->bind($_POST))
                     {
                         echo "<script> alert('" . $row->getError() . "'); window.history.go(-1); </script>\n";
-                        $app->close();
+                        $kunena_app->close();
                     }
-                    if (in_array($app->getCfg( "frontend_userparams" ), array( '1', null)))
+                    if (in_array($kunena_app->getCfg( "frontend_userparams" ), array( '1', null)))
                     {
                         // save params
                         $params = JRequest::getVar('params', '');
@@ -580,7 +580,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     if (!$row->save(TRUE))
                     {
                         echo "<script> alert('" . $row->getError() . "'); window.history.go(-1); </script>\n";
-                        $app->close();
+                        $kunena_app->close();
                     }
 
                     // check if username has been changed
@@ -594,7 +594,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                         $kunena_db->query();
                     }
 
-                    $app->redirect(JRoute::_('index.php?option=com_kunena&amp;func=myprofile'), _KUNENA_USER_DETAILS_SAVE);
+                    $kunena_app->redirect(JRoute::_('index.php?option=com_kunena&amp;func=myprofile'), _KUNENA_USER_DETAILS_SAVE);
                     break;
             }
             ?>

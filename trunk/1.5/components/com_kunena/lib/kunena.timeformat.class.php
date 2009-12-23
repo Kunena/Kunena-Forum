@@ -83,7 +83,7 @@ function KUNENA_timeformat($logTime, $show_today = true)
 	// ToDo: Pass format!
    $usertime_format = _KUNENA_DT_DATETIME_FMT;
 
-    $app =& JFactory::getApplication();
+    $kunena_app =& JFactory::getApplication();
     $time = $logTime;
     $todayMod = 2;
 
@@ -122,7 +122,7 @@ function KUNENA_timeformat($logTime, $show_today = true)
 
     /*
     // setlocale issues known in multithreaded server env. this affects many shared hostings!
-    if (setlocale(LC_TIME, $app->getCfg('locale')))
+    if (setlocale(LC_TIME, $kunena_app->getCfg('locale')))
     {
         foreach (array
         (

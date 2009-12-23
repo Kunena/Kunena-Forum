@@ -21,7 +21,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$app =& JFactory::getApplication();
+$kunena_app =& JFactory::getApplication();
 $document =& JFactory::getDocument();
 $kunena_config =& CKunenaConfig::getInstance();
 
@@ -71,7 +71,7 @@ if ($do == "read") {
                 <tr>
                     <th>
                         <div class = "fb_title_cover fbm">
-                            <span class = "fb_title fbl"> <?php echo $app->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?></span>
+                            <span class = "fb_title fbl"> <?php echo $kunena_app->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?></span>
                         </div>
                     </th>
                 </tr>
@@ -139,7 +139,7 @@ if ($is_editor) {
                     <tr>
                         <th colspan = "6">
                             <div class = "fb_title_cover fbm">
-                                <span class = "fb_title fbl"> <?php echo $app->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'add');?>"><?php echo _ANN_ADD; ?></a></span>
+                                <span class = "fb_title fbl"> <?php echo $kunena_app->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'add');?>"><?php echo _ANN_ADD; ?></a></span>
                             </div>
                         </th>
                     </tr>
@@ -247,7 +247,7 @@ if ($is_editor) {
         $kunena_db->setQuery($query1);
 
         $kunena_db->query() or trigger_dberror("Unable to insert announcement.");
-        $app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_SUCCESS_ADD);
+        $kunena_app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_SUCCESS_ADD);
     }
 
     if ($do == "add") {
@@ -366,7 +366,7 @@ if ($is_editor) {
         $kunena_db->setQuery("UPDATE #__fb_announcement SET title='$title', description='$description', sdescription='$sdescription',  created=" . (($created <> '')?"'$created'":"NOW()") . ", published='$published', showdate='$showdate' WHERE id=$id");
 
         if ($kunena_db->query()) {
-            $app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_SUCCESS_EDIT);
+            $kunena_app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_SUCCESS_EDIT);
             }
         }
 
@@ -517,7 +517,7 @@ if ($is_editor) {
         $kunena_db->setQuery($query1);
         $kunena_db->query() or trigger_dberror("Unable to delete announcement.");
 
-        $app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_DELETED);
+        $kunena_app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_DELETED);
     }
     // FINISH: delete ANN
 ?>

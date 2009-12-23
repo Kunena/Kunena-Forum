@@ -20,7 +20,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 require_once (KUNENA_PATH_LIB . DS . 'kunena.debug.php');
 
-$app =& JFactory::getApplication();
+$kunena_app =& JFactory::getApplication();
 require_once (JPATH_ROOT . '/components/com_kunena/lib/kunena.debug.php');
 require_once (JPATH_ROOT . '/components/com_kunena/lib/kunena.user.class.php');
 
@@ -362,7 +362,7 @@ class CKunenaConfig extends CKunenaConfigBase
     var $autoembedyoutube		 = 1;
     var $autoembedebay			 = 1;
     var $ebaylanguagecode		 = 'en-us';
-    var $fbsessiontimeout		 = 1800; // in seconds
+    var $kunena_sessiontimeout		 = 1800; // in seconds
     // New 1.0.5RC2 config variables
     var $highlightcode			 = 0;
     var $rsstype				 = 'thread';

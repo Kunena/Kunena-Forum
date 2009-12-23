@@ -102,8 +102,8 @@ if ($kunena_config->fb_profile == "jomsocial") {
 $PopSubjectCount = $kunena_config->popsubjectcount;
 if ($kunena_config->showpopsubjectstats)
 {
-	$fbSession =& CKunenaSession::getInstance();
-	$kunena_db->setQuery("SELECT * FROM #__fb_messages WHERE moved='0' AND hold='0' AND parent='0' AND catid IN ($fbSession->allowed) ORDER BY hits DESC", 0, $PopSubjectCount);
+	$kunena_session =& CKunenaSession::getInstance();
+	$kunena_db->setQuery("SELECT * FROM #__fb_messages WHERE moved='0' AND hold='0' AND parent='0' AND catid IN ($kunena_session->allowed) ORDER BY hits DESC", 0, $PopSubjectCount);
 	$toptitles = $kunena_db->loadObjectList();
 	
 	$toptitlehits = !empty($toptitles[0]->hits)?$toptitles[0]->hits:0;

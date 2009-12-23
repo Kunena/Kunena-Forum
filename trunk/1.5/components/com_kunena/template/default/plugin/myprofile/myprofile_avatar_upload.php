@@ -156,7 +156,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 $kunena_config =& CKunenaConfig::getInstance();
 $task = JRequest::getCmd('action', 'default');
 $gallery  = JRequest::getVar('gallery', '');
-$app =& JFactory::getApplication();
+$kunena_app =& JFactory::getApplication();
 
 switch ($task) {
 	case "delete":
@@ -174,14 +174,14 @@ switch ($task) {
 
 		if (!$kunena_db->query())
 		{
-			$app->enqueueMessage(_USER_PROFILE_NOT_A._USER_PROFILE_NOT_B._USER_PROFILE_NOT_C, 'notice');
+			$kunena_app->enqueueMessage(_USER_PROFILE_NOT_A._USER_PROFILE_NOT_B._USER_PROFILE_NOT_C, 'notice');
 		}
 		else
 		{
-			$app->enqueueMessage(_USER_PROFILE_UPDATED);
+			$kunena_app->enqueueMessage(_USER_PROFILE_UPDATED);
 		}
 
-		$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+		$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
 		break;
 
 	case 'upload':
@@ -212,22 +212,22 @@ switch ($task) {
 		//check for empty file
 		if (!is_uploaded_file($src_file) || empty($_FILES['avatar']['name']))
 		{
-			$app->enqueueMessage(_UPLOAD_ERROR_EMPTY, 'notice');
-			$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+			$kunena_app->enqueueMessage(_UPLOAD_ERROR_EMPTY, 'notice');
+			$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
 		}
 
 		//check for allowed file type (jpeg, gif, png)
 		if (!($imgtype = KUNENA_check_image_type($avatarExt)))
 		{
-			$app->enqueueMessage(_UPLOAD_ERROR_TYPE, 'notice');
-			$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+			$kunena_app->enqueueMessage(_UPLOAD_ERROR_TYPE, 'notice');
+			$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
 		}
 
 		//check file name characteristics
 		if (eregi("[^0-9a-zA-Z_]", $avatarExt))
 		{
-			$app->enqueueMessage(_UPLOAD_ERROR_NAME, 'notice');
-			$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+			$kunena_app->enqueueMessage(_UPLOAD_ERROR_NAME, 'notice');
+			$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
 		}
 
 		//check filesize
@@ -235,8 +235,8 @@ switch ($task) {
 
 		if ($avatarSize > $maxAvSize)
 		{
-			$app->enqueueMessage(_UPLOAD_ERROR_SIZE . " (" . $kunena_config->avatarsize . " KiloBytes)", 'notice');
-			$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+			$kunena_app->enqueueMessage(_UPLOAD_ERROR_SIZE . " (" . $kunena_config->avatarsize . " KiloBytes)", 'notice');
+			$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
 		}
 
 		$imgInfo = false;
@@ -256,8 +256,8 @@ switch ($task) {
 		switch ($kunena_config->imageprocessor) {
 		case 'gd1' :
 			if ( !function_exists('imagecreatefromjpeg' )) {
-				$app->enqueueMessage(_KUNENA_AVATAR_GDIMAGE_NOT, 'error');
-				$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+				$kunena_app->enqueueMessage(_KUNENA_AVATAR_GDIMAGE_NOT, 'error');
+				$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
 			}
 			if ( $imgInfo[2] == 'JPG' ) {
 				$src_img = imagecreatefromjpeg($src_file);
@@ -283,12 +283,12 @@ switch ($task) {
 		case 'gd2' :
 
 			if ( !function_exists('imagecreatefromjpeg') ) {
-				$app->enqueueMessage(_KUNENA_AVATAR_GDIMAGE_NOT, 'error');
-				$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+				$kunena_app->enqueueMessage(_KUNENA_AVATAR_GDIMAGE_NOT, 'error');
+				$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
 			}
 			if ( !function_exists('imagecreatetruecolor') ) {
-				$app->enqueueMessage(_KUNENA_AVATAR_GD2IMAGE_NOT, 'error');
-				$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+				$kunena_app->enqueueMessage(_KUNENA_AVATAR_GD2IMAGE_NOT, 'error');
+				$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
 			}
 			if ( $imgInfo[2] == 'JPG' ) {
 				$src_img = imagecreatefromjpeg($src_file);
@@ -313,8 +313,8 @@ switch ($task) {
 
 		default:
 			if (isset($srcWidth) && ($srcWidth > $kunena_config->avatarlargewidth || $srcHeight > $kunena_config->avatarlargeheight)) {
-				$app->enqueueMessage(_UPLOAD_ERROR_SIZE . " (" . $kunena_config->avatarlargewidth . " x ". $kunena_config->avatarlargeheight .")", 'notice');
-				$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+				$kunena_app->enqueueMessage(_UPLOAD_ERROR_SIZE . " (" . $kunena_config->avatarlargewidth . " x ". $kunena_config->avatarlargeheight .")", 'notice');
+				$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
 			}
 			// Make sure that we do not use wrong avatar image
 			if (file_exists($fileLocation_s)) CKunenaFile::delete($fileLocation_s);
@@ -329,7 +329,7 @@ switch ($task) {
 		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newFileName}' WHERE userid={$kunena_my->id}");
 		$kunena_db->query() or trigger_dberror("Unable to update avatar.");
 
-		$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile'),_UPLOAD_UPLOADED);
+		$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile'),_UPLOAD_UPLOADED);
 
 	case 'gallery':
 		require_once(KUNENA_PATH_LIB .DS. 'kunena.helpers.php');
@@ -337,14 +337,14 @@ switch ($task) {
 
 		$newAvatar = CKunenaTools::fbRemoveXSS($newAvatar);
 		if ($newAvatar == '') {
-			$app->enqueueMessage(_UPLOAD_ERROR_CHOOSE, 'notice');
-			$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&do=avatar'));
+			$kunena_app->enqueueMessage(_UPLOAD_ERROR_CHOOSE, 'notice');
+			$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&do=avatar'));
 		}
 
 		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newAvatar}' WHERE userid={$kunena_my->id}");
 		$kunena_db->query() or trigger_dberror("Unable to update user avatar.");
 
-		$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile'),_UPLOAD_UPLOADED);
+		$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile'),_UPLOAD_UPLOADED);
 		break;
 }
 

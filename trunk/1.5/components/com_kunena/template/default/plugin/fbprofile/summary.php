@@ -84,13 +84,13 @@ $lastvisitDate = strftime(_KUNENA_DT_DATETIME_FMT, strtotime($userinfo->lastvisi
       <td  class = "td-2 fbm"><?php echo $userinfo->usertype; ?></td>
     </tr>
    	<?php }
-    if($fbConfig->userlist_joindate){ ?>
+    if($kunena_config->userlist_joindate){ ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_REGISTERDATE; ?></b> </td>
       <td  class = "td-2 fbm"><?php echo $registerDate; ?></td>
     </tr>
     <?php }
-    if($fbConfig->userlist_lastvisitdate){ ?>
+    if($kunena_config->userlist_lastvisitdate){ ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_LASTVISITDATE; ?></b> </td>
       <td  class = "td-2 fbm"><?php echo $lastvisitDate; ?></td>

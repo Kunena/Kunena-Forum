@@ -21,7 +21,7 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 ?>
 	<tr>
 		<td class="fb_list_markallcatsread">
@@ -41,7 +41,7 @@ $fbConfig =& CKunenaConfig::getInstance();
 		</td>
 		<td class="fb_list_categories">
                 <?php
-                if ($fbConfig->enableforumjump)
+                if ($kunena_config->enableforumjump)
                     require (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 ?>
 		</td>

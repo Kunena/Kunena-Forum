@@ -24,7 +24,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $lang;
 
 $kunena_config =& CKunenaConfig::getInstance();
-$fbSession =& CKunenaSession::getInstance();
+$kunena_session =& CKunenaSession::getInstance();
 
 $Kunena_adm_path = KUNENA_PATH_ADMIN;
 //Get right Language file
@@ -97,12 +97,12 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 				$sq1 = ($category)?"AND msg2.catid in ($category)":"";
 				if ($kunena_config->latestsinglesubject) {
 					$sq2 = "SELECT msg1.* FROM (SELECT msg2.* FROM #__fb_messages msg2"
-						. " WHERE msg2.hold='0' AND moved='0' AND msg2.catid IN ($fbSession->allowed) $sq1 ORDER BY msg2.time"
+						. " WHERE msg2.hold='0' AND moved='0' AND msg2.catid IN ($kunena_session->allowed) $sq1 ORDER BY msg2.time"
 						. (($kunena_config->latestreplysubject)?" DESC":"") . ") msg1"
 						. " GROUP BY msg1.thread";
 				} else {
 					$sq2 = "SELECT msg2.* FROM #__fb_messages msg2"
-						. " WHERE msg2.hold='0' AND moved='0' AND msg2.catid IN ($fbSession->allowed) $sq1";
+						. " WHERE msg2.hold='0' AND moved='0' AND msg2.catid IN ($kunena_session->allowed) $sq1";
 				}
 				$query = " SELECT u.id, IFNULL(u.username, '"._KUNENA_GUEST."') AS username, IFNULL(u.name,'"._KUNENA_GUEST."') AS name,"
 					. " msg.subject, msg.id AS fbid, msg.catid, from_unixtime(msg.time) AS date,"

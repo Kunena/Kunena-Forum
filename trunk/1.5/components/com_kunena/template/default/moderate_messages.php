@@ -21,7 +21,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$app =& JFactory::getApplication();
+$kunena_app =& JFactory::getApplication();
 $kunena_my = &JFactory::getUser();
 //securing form elements
 $catid = (int)$catid;
@@ -41,18 +41,18 @@ switch ($action)
         switch (jbDeletePosts($kunena_db, $cid))
         {
             case -1:
-                $app->redirect(KUNENA_LIVEURL . 'func=review&amp;catid=' . $catid, "ERROR: The post has been deleted but the text could not be deleted\n Check the #__fb_messages_text table for mesid IN " . explode(',', $cid));
+                $kunena_app->redirect(KUNENA_LIVEURL . 'func=review&amp;catid=' . $catid, "ERROR: The post has been deleted but the text could not be deleted\n Check the #__fb_messages_text table for mesid IN " . explode(',', $cid));
 
                 break;
 
             case 0:
-                $app->redirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_DELETE_ERROR);
+                $kunena_app->redirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_DELETE_ERROR);
 
                 break;
 
             case 1:
             default:
-                $app->redirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_DELETE_SUCCESS);
+                $kunena_app->redirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_DELETE_SUCCESS);
 
                 break;
         }
@@ -63,13 +63,13 @@ switch ($action)
         switch (jbApprovePosts($kunena_db, $cid))
         {
             case 0:
-                $app->redirect(KUNENA_LIVEURL . 'amp;func=review&amp;catid=' . $catid, _MODERATION_APPROVE_ERROR);
+                $kunena_app->redirect(KUNENA_LIVEURL . 'amp;func=review&amp;catid=' . $catid, _MODERATION_APPROVE_ERROR);
 
                 break;
 
             default:
             case 1:
-                $app->redirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_APPROVE_SUCCESS);
+                $kunena_app->redirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_APPROVE_SUCCESS);
 
                 break;
         }

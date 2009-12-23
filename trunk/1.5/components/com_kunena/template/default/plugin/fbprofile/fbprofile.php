@@ -16,7 +16,7 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-$app =& JFactory::getApplication();
+$kunena_app =& JFactory::getApplication();
 $kunena_acl = &JFactory::getACL();
 $kunena_config =& CKunenaConfig::getInstance();
 
@@ -25,7 +25,7 @@ if ($kunena_config->fb_profile == 'cb') {
 	$url = CKunenaCBProfile::getProfileURL($userid);
 	header("HTTP/1.1 307 Temporary Redirect");
 	header("Location: " . htmlspecialchars_decode($url));
-	$app->close();
+	$kunena_app->close();
 }
 
 $document=& JFactory::getDocument();

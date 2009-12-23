@@ -34,6 +34,7 @@ Legend:
 Kunena 1.6.0
 
 23-Dec-2009 fxstein
+^ [#19065] global rename of various kunena wide variables
 ^ [#19065] replaced depriciated split() with explode()
 ^ [#19065] remove depriciated new& construct
 # [#19065] Fix regression: Missing backend menu and toolbar
@@ -475,7 +476,7 @@ Kunena 1.5.2RC
 + [#16389] Community Builder integration: add profile integration to default theme
 
 12-May-2009 Matias
-^ [#16360] Replace $mainframe with $app =& JFactory::getApplication();
+^ [#16360] Replace $mainframe with $kunena_app =& JFactory::getApplication();
 ^ [#16361] Do not trust that $option has been set (use JRequest::getCmd('option') instead)
 # [#16364] Parse error in admin.kunena.html.php
 

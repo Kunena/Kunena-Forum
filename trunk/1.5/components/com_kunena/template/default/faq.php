@@ -22,8 +22,9 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $boardclass, $kunena_db;
+global $boardclass;
 
+$kunena_db = &JFactory::getDBO();
 $kunena_config =& CKunenaConfig::getInstance();
 $document=& JFactory::getDocument();
 

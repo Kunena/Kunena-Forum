@@ -21,9 +21,9 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$app =& JFactory::getApplication();
-$fbConfig =& CKunenaConfig::getInstance();
-$fbSession =& CKunenaSession::getInstance();
+$kunena_app =& JFactory::getApplication();
+$kunena_config =& CKunenaConfig::getInstance();
+$kunena_session =& CKunenaSession::getInstance();
 global $kunena_is_moderatorerator;
 
 function KunenaShowcatPagination($catid, $page, $totalpages, $maxpages) {
@@ -85,11 +85,11 @@ $topicSticky = 0;
 unset($allow_forum);
 
 //get the allowed forums and turn it into an array
-$allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):array();
+$allow_forum = ($kunena_session->allowed <> '')?explode(',', $kunena_session->allowed):array();
 
 if (in_array($catid, $allow_forum))
 {
-    $threads_per_page = $fbConfig->threads_per_page;
+    $threads_per_page = $kunena_config->threads_per_page;
 
     if ($catid <= 0) {
         //make sure we got a valid category id
@@ -196,8 +196,8 @@ foreach ($messagelist as $message)
     $forumReviewed = $objCatInfo->review;
 
 	//meta description and keywords
-	$metaKeys=kunena_htmlspecialchars(stripslashes(_KUNENA_CATEGORIES . ", {$objCatParentInfo->name}, {$objCatInfo->name}, {$fbConfig->board_title}, " . $app->getCfg('sitename')));
-	$metaDesc=kunena_htmlspecialchars(stripslashes("{$objCatParentInfo->name} ({$page}/{$totalpages}) - {$objCatInfo->name} - {$fbConfig->board_title}"));
+	$metaKeys=kunena_htmlspecialchars(stripslashes(_KUNENA_CATEGORIES . ", {$objCatParentInfo->name}, {$objCatInfo->name}, {$kunena_config->board_title}, " . $kunena_app->getCfg('sitename')));
+	$metaDesc=kunena_htmlspecialchars(stripslashes("{$objCatParentInfo->name} ({$page}/{$totalpages}) - {$objCatInfo->name} - {$kunena_config->board_title}"));
 
 	$document =& JFactory::getDocument();
 	$cur = $document->get( 'description' );
@@ -222,10 +222,10 @@ foreach ($messagelist as $message)
 		<td>
 		<?php
 		$smileyList = smile::getEmoticons(0);
-		$headerdesc = stripslashes(smile::smileReplace($objCatInfo->headerdesc, 0, $fbConfig->disemoticons, $smileyList));
+		$headerdesc = stripslashes(smile::smileReplace($objCatInfo->headerdesc, 0, $kunena_config->disemoticons, $smileyList));
         $headerdesc = nl2br($headerdesc);
         //wordwrap:
-        $headerdesc = smile::htmlwrap($headerdesc, $fbConfig->wrap);
+        $headerdesc = smile::htmlwrap($headerdesc, $kunena_config->wrap);
 		echo $headerdesc;
 		?>
 		</td>
@@ -248,7 +248,7 @@ foreach ($messagelist as $message)
 
 
                 <?php
-                if ($kunena_is_moderatorerator || ($forumLocked == 0 && ($kunena_my->id > 0 || $fbConfig->pubwrite)))
+                if ($kunena_is_moderatorerator || ($forumLocked == 0 && ($kunena_my->id > 0 || $kunena_config->pubwrite)))
                 {
                     //this user is allowed to post a new topic:
                     $forum_new = CKunenaLink::GetPostNewTopicLink($catid, isset($fbIcons['new_topic']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
@@ -396,7 +396,7 @@ foreach ($messagelist as $message)
                         <?php
 				echo '' . _GEN_MODERATORS . ": ";
 				foreach ($modslist as $mod) {
-					echo CKunenaLink::GetProfileLink($fbConfig, $mod->userid, $mod->username).'&nbsp; ';
+					echo CKunenaLink::GetProfileLink($kunena_config, $mod->userid, $mod->username).'&nbsp; ';
 				} ?>
 			</div>
 	<?php endif; ?>
@@ -406,7 +406,7 @@ foreach ($messagelist as $message)
 
                     //(JJ) FINISH: CAT LIST BOTTOM
 
-                    if ($fbConfig->enableforumjump)
+                    if ($kunena_config->enableforumjump)
                         require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
 
                     ?>

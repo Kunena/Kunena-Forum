@@ -200,7 +200,7 @@ function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
     }
 
 function ReportForm($id, $catid) {
-    $app =& JFactory::getApplication();
+    $kunena_app =& JFactory::getApplication();
     $kunena_config =& CKunenaConfig::getInstance();
     $kunena_my = &JFactory::getUser();
 
@@ -208,12 +208,12 @@ function ReportForm($id, $catid) {
 
     //$redirect = JRoute::_($redirect);
     if (!$kunena_my->id) {
-        $app->redirect($redirect);
+        $kunena_app->redirect($redirect);
         return;
         }
 
     if ($kunena_config->reportmsg == 0) {
-        $app->redirect($redirect);
+        $kunena_app->redirect($redirect);
         return;
         }
 ?>

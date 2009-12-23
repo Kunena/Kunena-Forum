@@ -23,11 +23,11 @@ define('KUNENA_CHARSET', 'UTF-8');
 // Joomla absolute path
 define('KUNENA_JLIVEURL', JURI::root());
 
-$app =& JFactory::getApplication();
+$kunena_app =& JFactory::getApplication();
 
 // Joomla template dir
-define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH .DS. "templates".DS . $app->getTemplate());
-define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "templates/".$app->getTemplate());
+define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH .DS. "templates".DS . $kunena_app->getTemplate());
+define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "templates/".$kunena_app->getTemplate());
 
 global $kunena_config, $kunena_db, $kunena_my;
 
@@ -610,12 +610,12 @@ class CKunenaTools {
         }
 
     function fbDeletePosts($isMod, $return) {
-    	$app =& JFactory::getApplication();
+    	$kunena_app =& JFactory::getApplication();
         $kunena_my = &JFactory::getUser();
 		$kunena_db = &JFactory::getDBO();
 
         if (!CKunenaTools::isModOrAdmin() && !$isMod) {
-            $app->redirect($return, _POST_NOT_MODERATOR);
+            $kunena_app->redirect($return, _POST_NOT_MODERATOR);
             }
 
         $items = fbGetArrayInts("fbDelete");
@@ -716,7 +716,7 @@ class CKunenaTools {
             } //end foreach
             CKunenaTools::reCountBoards();
 
-            $app->redirect($return, _KUNENA_BULKMSG_DELETED);
+            $kunena_app->redirect($return, _KUNENA_BULKMSG_DELETED);
         }
 
     function isModOrAdmin($id = 0) {
@@ -739,7 +739,7 @@ class CKunenaTools {
         }
 
     function fbMovePosts($catid, $isMod, $return) {
-    	$app =& JFactory::getApplication();
+    	$kunena_app =& JFactory::getApplication();
         $kunena_db = &JFactory::getDBO();
 		$kunena_my = &JFactory::getUser();
 
@@ -754,7 +754,7 @@ class CKunenaTools {
 
         //isMod will stay until better group management comes in
         if (!$isAdmin && !$isMod) {
-            $app->redirect($return, _POST_NOT_MODERATOR);
+            $kunena_app->redirect($return, _POST_NOT_MODERATOR);
             }
 
 		$catid = (int)$catid;
@@ -797,7 +797,7 @@ class CKunenaTools {
 		}
         CKunenaTools::reCountBoards();
 
-        $app->redirect($return, $err);
+        $kunena_app->redirect($return, $err);
         }
 
 
@@ -997,9 +997,9 @@ function JJ_categoryArray($admin=0) {
     // get a list of the menu items
 	$query = "SELECT * FROM #__fb_categories";
 	if(!$admin) {
-		$fbSession =& CKunenaSession::getInstance();
-		if ($fbSession && $fbSession->allowed != 'na') {
-			$query .= " WHERE id IN ($fbSession->allowed)";
+		$kunena_session =& CKunenaSession::getInstance();
+		if ($kunena_session && $kunena_session->allowed != 'na') {
+			$query .= " WHERE id IN ($kunena_session->allowed)";
 		} else {
 			$query .= " WHERE pub_access='0' AND published='1'";
 		}

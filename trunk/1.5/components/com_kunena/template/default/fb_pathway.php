@@ -21,7 +21,7 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 ?>
 <!-- Pathway -->
 <?php
@@ -88,7 +88,7 @@ if ($func != "")
             $moderatedForum = 1;
         }
 
-        $firepath = '<div class="path-element-first">'. CKunenaLink::GetKunenaLink( kunena_htmlspecialchars(stripslashes($fbConfig->board_title)) ) . '</div>';
+        $firepath = '<div class="path-element-first">'. CKunenaLink::GetKunenaLink( kunena_htmlspecialchars(stripslashes($kunena_config->board_title)) ) . '</div>';
 
         $firelast = '';
         for ($i = 0; $i < $jr_forum_count; $i++)
@@ -102,7 +102,7 @@ if ($func != "")
         }
 
          //get viewing
-        $fb_queryName = $fbConfig->username ? "username" : "name";
+        $fb_queryName = $kunena_config->username ? "username" : "name";
 		$query= "SELECT w.userid, u.$fb_queryName AS username, k.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS k ON k.userid=w.userid WHERE w.link LIKE '%" . addslashes(JURI::current()) . "%' GROUP BY w.userid ORDER BY u.{$fb_queryName} ASC";
 		$kunena_db->setQuery($query);
 		$users = $kunena_db->loadObjectList();
@@ -127,7 +127,7 @@ if ($func != "")
                                             $divider = '';
                                         }
 					if ( $user->showOnline > 0 ){
-					$fireonline .= CKunenaLink::GetProfileLink($fbConfig,  $user->userid, $user->username) . $divider;
+					$fireonline .= CKunenaLink::GetProfileLink($kunena_config,  $user->userid, $user->username) . $divider;
 					}
 				}
 				else
@@ -146,7 +146,7 @@ if ($func != "")
        }
 
 	$document=& JFactory::getDocument();
-        $document->setTitle(htmlspecialchars_decode($jr_topic_title ?  $jr_topic_title : $fr_title_name) . ' - ' . stripslashes($fbConfig->board_title));
+        $document->setTitle(htmlspecialchars_decode($jr_topic_title ?  $jr_topic_title : $fr_title_name) . ' - ' . stripslashes($kunena_config->board_title));
 	
 	$pathway1 = $firepath . $fireinfo;
 	$pathway2 = $firelast . $fireonline;

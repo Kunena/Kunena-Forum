@@ -74,13 +74,13 @@ if ($signature)
       <td><b><?php echo _KUNENA_MYPROFILE_USERTYPE; ?></b> </td>
       <td><?php echo $juserinfo->usertype; ?></td>
     </tr>
-    <?php if($fbConfig->userlist_joindate){ ?>
+    <?php if($kunena_config->userlist_joindate){ ?>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_REGISTERDATE; ?></b> </td>
       <td><?php echo $juserinfo->registerDate; ?></td>
     </tr>
     <?php }
-    if($fbConfig->userlist_lastvisitdate){ ?>
+    if($kunena_config->userlist_lastvisitdate){ ?>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_LASTVISITDATE; ?></b> </td>
       <td><?php echo $juserinfo->lastvisitDate; ?></td>

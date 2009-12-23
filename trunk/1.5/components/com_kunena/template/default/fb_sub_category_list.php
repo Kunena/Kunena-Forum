@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 $kunena_config =& CKunenaConfig::getInstance();
-$fbSession =& CKunenaSession::getInstance();
+$kunena_session =& CKunenaSession::getInstance();
 $kunena_db = &JFactory::getDBO();
 // $kunena_my = &JFactory::getUser();
 ?>
@@ -35,7 +35,7 @@ check_dberror("Unable to load categories.");
 
 $kunena_emoticons = smile::getEmoticons(0);
 
-$allow_forum = ($fbSession->allowed != '')?explode(',', $fbSession->allowed):array();
+$allow_forum = ($kunena_session->allowed != '')?explode(',', $kunena_session->allowed):array();
 foreach ($rows as $rownum=>$row)
 {
 	if (!in_array($row->id, $allow_forum)) unset ($rows[$rownum]);

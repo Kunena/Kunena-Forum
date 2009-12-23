@@ -44,7 +44,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.debug.php');
 require_once (KUNENA_PATH_LIB .DS. 'kunena.config.class.php');
 require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 
-$app =& JFactory::getApplication();
+$kunena_app =& JFactory::getApplication();
 
 $kunena_db = JFactory::getDBO();
 
@@ -57,13 +57,13 @@ require_once (KUNENA_PATH_ADMIN .DS. 'admin.kunena.html.php');
 
 $kn_tables = CKunenaTables::getInstance();
 if ($kn_tables->installed() === false) {
-	$app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_ERROR, 'error');
-	$app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_OFFLINE, 'notice');
-	$app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_REASONS);
-	$app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_1);
-	$app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_2);
-	$app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_3);
-	$app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_SUPPORT.' <a href="http://www.kunena.com">www.kunena.com</a>');
+	$kunena_app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_ERROR, 'error');
+	$kunena_app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_OFFLINE, 'notice');
+	$kunena_app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_REASONS);
+	$kunena_app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_1);
+	$kunena_app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_2);
+	$kunena_app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_3);
+	$kunena_app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_SUPPORT.' <a href="http://www.kunena.com">www.kunena.com</a>');
 	html_Kunena::showFbFooter();
 	return;
 }
@@ -268,7 +268,7 @@ switch ($task)
         CKunenaTools::reCountBoards();
         // Also reset the name info stored with messages
         //CKunenaTools::updateNameInfo();
-        $app->redirect( JURI::base() .'index.php?option=com_kunena', _KUNENA_RECOUNTFORUMS_DONE);
+        $kunena_app->redirect( JURI::base() .'index.php?option=com_kunena', _KUNENA_RECOUNTFORUMS_DONE);
         break;
 
 	case "showsmilies":
@@ -332,10 +332,10 @@ if ($kn_version->versionname == '@kunenaversionname@') {
 	$kn_version_name = _KUNENA_VERSION_SVN;
 	$kn_version_warning = _KUNENA_VERSION_SVN_WARNING;
 } else if ($kn_version->versionname == 'NOT UPGRADED') {
-	$app->enqueueMessage(sprintf(_KUNENA_ERROR_UPGRADE, $kn_version->version), 'notice');
-	$app->enqueueMessage(_KUNENA_ERROR_UPGRADE_WARN);
-	$app->enqueueMessage(sprintf(_KUNENA_ERROR_UPGRADE_AGAIN, $kn_version->version));
-	$app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_SUPPORT.' <a href="http://www.kunena.com">www.kunena.com</a>');
+	$kunena_app->enqueueMessage(sprintf(_KUNENA_ERROR_UPGRADE, $kn_version->version), 'notice');
+	$kunena_app->enqueueMessage(_KUNENA_ERROR_UPGRADE_WARN);
+	$kunena_app->enqueueMessage(sprintf(_KUNENA_ERROR_UPGRADE_AGAIN, $kn_version->version));
+	$kunena_app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_SUPPORT.' <a href="http://www.kunena.com">www.kunena.com</a>');
 }
 if (strpos($kn_version->version, 'RC') !== false) {
 	$kn_version_name = _KUNENA_VERSION_RC;
@@ -352,7 +352,7 @@ if (strpos($kn_version->version, 'RC') !== false) {
 }
 if (!empty($kn_version_warning))
 {
-	$app->enqueueMessage(sprintf(_KUNENA_VERSION_INSTALLED, $kn_version->version, $kn_version_name).' '.$kn_version_warning, 'notice');
+	$kunena_app->enqueueMessage(sprintf(_KUNENA_VERSION_INSTALLED, $kn_version->version, $kn_version_name).' '.$kn_version_warning, 'notice');
 }
 
 // Detect errors in CB integration
@@ -366,12 +366,12 @@ html_Kunena::showFbFooter();
 
 function showAdministration($option)
 {
-    $app =& JFactory::getApplication();
+    $kunena_app =& JFactory::getApplication();
 	$kunena_db = &JFactory::getDBO();
 
-    $limit = $app->getUserStateFromRequest("global.list.limit", 'limit', $app->getCfg('list_limit'), 'int');
-    $limitstart = $app->getUserStateFromRequest("{$option}.limitstart", 'limitstart', 0, 'int');
-    $levellimit = $app->getUserStateFromRequest("{$option}.limit", 'levellimit', 10, 'int');
+    $limit = $kunena_app->getUserStateFromRequest("global.list.limit", 'limit', $kunena_app->getCfg('list_limit'), 'int');
+    $limitstart = $kunena_app->getUserStateFromRequest("{$option}.limitstart", 'limitstart', 0, 'int');
+    $levellimit = $kunena_app->getUserStateFromRequest("{$option}.limit", 'levellimit', 10, 'int');
     /*
     * danial
     */
@@ -512,7 +512,7 @@ function editForum($uid, $option)
 function saveForum($option)
 {
 $kunena_db = &JFactory::getDBO();
-    $app =& JFactory::getApplication();
+    $kunena_app =& JFactory::getApplication();
 
     $kunena_my = &JFactory::getUser();
     $row = new fbForum($kunena_db);
@@ -523,20 +523,20 @@ $kunena_db = &JFactory::getDBO();
     if (!$row->save($_POST, 'parent'))
     {
         echo "<script> alert('" . $row->getError() . "'); window.history.go(-1); </script>\n";
-        $app->close();
+        $kunena_app->close();
     }
     $row->reorder();
 
     $kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
 	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
 
-    $app->redirect( JURI::base() ."index.php?option=$option&task=showAdministration");
+    $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=showAdministration");
 }
 
 function publishForum($cid = null, $publish = 1, $option)
 {
 	$kunena_db = &JFactory::getDBO();
-	$app =& JFactory::getApplication();
+	$kunena_app =& JFactory::getApplication();
 	$kunena_my =  &JFactory::getUser();
     if (!is_array($cid) || count($cid) < 1)
     {
@@ -559,13 +559,13 @@ function publishForum($cid = null, $publish = 1, $option)
     $kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
 	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
 
-    $app->redirect( JURI::base() ."index.php?option=$option&task=showAdministration");
+    $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=showAdministration");
 }
 
 function deleteForum($cid = null, $option)
 {
 	$kunena_db = &JFactory::getDBO();
-	$app =& JFactory::getApplication();
+	$kunena_app =& JFactory::getApplication();
 	$kunena_my =  &JFactory::getUser();
     if (!is_array($cid) || count($cid) < 1)
     {
@@ -604,23 +604,23 @@ function deleteForum($cid = null, $option)
 	$kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
 	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
 
-    $app->redirect( JURI::base() ."index.php?option=$option&task=showAdministration");
+    $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=showAdministration");
 }
 
 function cancelForum($option)
 {
-    $app =& JFactory::getApplication();
+    $kunena_app =& JFactory::getApplication();
 
 	$kunena_db = &JFactory::getDBO();
     $row = new fbForum($kunena_db);
     $row->bind($_POST);
     $row->checkin();
-    $app->redirect( JURI::base() ."index.php?option=$option&task=showAdministration");
+    $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=showAdministration");
 }
 
 function orderForum($uid, $inc, $option)
 {
-    $app =& JFactory::getApplication();
+    $kunena_app =& JFactory::getApplication();
     $kunena_db = &JFactory::getDBO();
     $row = new fbForum($kunena_db);
     $row->load($uid);
@@ -631,7 +631,7 @@ function orderForum($uid, $inc, $option)
     $row->load($uid);
 
     $row->move($inc, $where);
-    $app->redirect( JURI::base() ."index.php?option=$option&task=showAdministration");
+    $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=showAdministration");
 }
 
 //===============================
@@ -855,7 +855,7 @@ function showConfig($option)
 
 function saveConfig($option)
 {
-	$app =& JFactory::getApplication();
+	$kunena_app =& JFactory::getApplication();
 	$fbConfig =& CKunenaConfig::getInstance();
     $kunena_db = &JFactory::getDBO();
 
@@ -899,7 +899,7 @@ function saveConfig($option)
 	$kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
 	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
 
-	$app->redirect( JURI::base() . "index.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED);
+	$kunena_app->redirect( JURI::base() . "index.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED);
 }
 
 function showInstructions($kunena_db, $option, $lang) {
@@ -932,17 +932,17 @@ function saveCss($file, $csscontent, $option)
 {
 	require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
 
-	$app =& JFactory::getApplication();
+	$kunena_app =& JFactory::getApplication();
     $tmpstr = _KUNENA_CSS_SAVE;
     $tmpstr = str_replace("%file%", $file, $tmpstr);
     echo $tmpstr;
 
     if (CKunenaFile::write($file, stripslashes($csscontent)))
     {
-        $app->redirect( JURI::base() ."index.php?option=$option&task=showCss", _KUNENA_CFC_SAVED);
+        $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=showCss", _KUNENA_CFC_SAVED);
     }
     else {
-        $app->redirect( JURI::base() ."index.php?option=$option&task=showCss", _KUNENA_CFC_NOTSAVED);
+        $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=showCss", _KUNENA_CFC_NOTSAVED);
     }
 }
 
@@ -951,13 +951,13 @@ function saveCss($file, $csscontent, $option)
 //===============================
 function newModerator($option, $id = null)
 {
-	$app =& JFactory::getApplication();
+	$kunena_app =& JFactory::getApplication();
     $kunena_db = &JFactory::getDBO();
     //die ("New Moderator");
     //$limit = intval(JRequest::getVar( 'limit', 10));
     //$limitstart = intval(JRequest::getVar( 'limitstart', 0));
-    $limit = $app->getUserStateFromRequest("global.list.limit", 'limit', $app->getCfg('list_limit'), 'int');
-    $limitstart = $app->getUserStateFromRequest("{$option}.limitstart", 'limitstart', 0, 'int');
+    $limit = $kunena_app->getUserStateFromRequest("global.list.limit", 'limit', $kunena_app->getCfg('list_limit'), 'int');
+    $limitstart = $kunena_app->getUserStateFromRequest("{$option}.limitstart", 'limitstart', 0, 'int');
     $kunena_db->setQuery("SELECT COUNT(*) FROM #__users AS a" . "\n LEFT JOIN #__fb_users AS b" . "\n ON a.id=b.userid where b.moderator=1");
     $kunena_db->query() or trigger_dberror('Unable to load moderators w/o limit.');
 
@@ -1005,7 +1005,7 @@ function newModerator($option, $id = null)
 
 function addModerator($option, $id, $cid = null, $publish = 1)
 {
-	$app =& JFactory::getApplication();
+	$kunena_app =& JFactory::getApplication();
 	$kunena_db = &JFactory::getDBO();
     global  $kunena_my;
     $numcid = count($cid);
@@ -1048,7 +1048,7 @@ function addModerator($option, $id, $cid = null, $publish = 1)
     $kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
 	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
 
-    $app->redirect( JURI::base() ."index.php?option=$option&task=edit2&uid=" . $id);
+    $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=edit2&uid=" . $id);
 }
 
 //===============================
@@ -1056,14 +1056,14 @@ function addModerator($option, $id, $cid = null, $publish = 1)
 //===============================
 function showProfiles($kunena_db, $option, $lang, $order)
 {
-    $app =& JFactory::getApplication();
+    $kunena_app =& JFactory::getApplication();
     $kunena_db = &JFactory::getDBO();
     //$limit = intval(JRequest::getVar( 'limit', 10));
     //$limitstart = intval(JRequest::getVar( 'limitstart', 0));
-    $limit = $app->getUserStateFromRequest("global.list.limit", 'limit', $app->getCfg('list_limit'), 'int');
-    $limitstart = $app->getUserStateFromRequest("{$option}.limitstart", 'limitstart', 0, 'int');
+    $limit = $kunena_app->getUserStateFromRequest("global.list.limit", 'limit', $kunena_app->getCfg('list_limit'), 'int');
+    $limitstart = $kunena_app->getUserStateFromRequest("{$option}.limitstart", 'limitstart', 0, 'int');
 
-    $search = $app->getUserStateFromRequest("{$option}.search", 'search', '', 'string');
+    $search = $kunena_app->getUserStateFromRequest("{$option}.search", 'search', '', 'string');
     $search = $kunena_db->getEscaped(trim(strtolower($search)));
     $where = array ();
 
@@ -1182,7 +1182,7 @@ function editUserProfile($option, $uid)
 
 function saveUserProfile($option)
 {
-	$app =& JFactory::getApplication();
+	$kunena_app =& JFactory::getApplication();
     $kunena_db = &JFactory::getDBO();
     $newview = JRequest::getVar( 'newview');
     $newrank = JRequest::getVar( 'newrank');
@@ -1228,7 +1228,7 @@ function saveUserProfile($option)
 	$kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na' WHERE userid='$uid'");
 	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
 
-    $app->redirect( JURI::base() ."index.php?option=com_kunena&task=showprofiles");
+    $kunena_app->redirect( JURI::base() ."index.php?option=com_kunena&task=showprofiles");
 }
 
 //===============================
@@ -1248,7 +1248,7 @@ function pruneforum($kunena_db, $option)
 
 function doprune($kunena_db, $option)
 {
-	$app =& JFactory::getApplication();
+	$kunena_app =& JFactory::getApplication();
 
 	$catid = intval(JRequest::getVar( 'prune_forum', -1));
     $deleted = 0;
@@ -1256,7 +1256,7 @@ function doprune($kunena_db, $option)
     if ($catid == -1)
     {
         echo "<script> alert('" . _KUNENA_CHOOSEFORUMTOPRUNE . "'); window.history.go(-1); </script>\n";
-        $app->close();
+        $kunena_app->close();
     }
 
     $prune_days = intval(JRequest::getVar( 'prune_days', 0));
@@ -1318,7 +1318,7 @@ function doprune($kunena_db, $option)
         }
     }
 
-    $app->redirect( JURI::base() ."index.php?option=$option&task=pruneforum", "" . _KUNENA_FORUMPRUNEDFOR . " " . $prune_days . " " . _KUNENA_PRUNEDAYS . "; " . _KUNENA_PRUNEDELETED . $deleted . " " . _KUNENA_PRUNETHREADS);
+    $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=pruneforum", "" . _KUNENA_FORUMPRUNEDFOR . " " . $prune_days . " " . _KUNENA_PRUNEDAYS . "; " . _KUNENA_PRUNEDELETED . $deleted . " " . _KUNENA_PRUNETHREADS);
 }
 
 //===============================
@@ -1335,7 +1335,7 @@ function douserssync($kunena_db, $option)
     $userdel = JRequest::getBool('userdel', 0);
     $userrename = JRequest::getBool('userrename', 0);
 
-    $app =& JFactory::getApplication();
+    $kunena_app =& JFactory::getApplication();
     $kunena_db = &JFactory::getDBO();
 
     if ($usercache)
@@ -1344,29 +1344,29 @@ function douserssync($kunena_db, $option)
     	$kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
     	$kunena_db->query();
     	check_dberror("Unable to update sessions.");
-    	$app->enqueueMessage(_KUNENA_SYNC_USERS_DO_CACHE);
+    	$kunena_app->enqueueMessage(_KUNENA_SYNC_USERS_DO_CACHE);
     }
     if ($useradd)
     {
     	$kunena_db->setQuery("INSERT INTO #__fb_users (userid) SELECT a.id FROM #__users AS a LEFT JOIN #__fb_users AS b ON b.userid=a.id WHERE b.userid IS NULL");
     	$kunena_db->query();
     	check_dberror('Unable to create user profiles.');
-    	$app->enqueueMessage(_KUNENA_SYNC_USERS_DO_ADD.' '.$kunena_db->getAffectedRows());
+    	$kunena_app->enqueueMessage(_KUNENA_SYNC_USERS_DO_ADD.' '.$kunena_db->getAffectedRows());
     }
     if ($userdel)
     {
     	$kunena_db->setQuery("DELETE a FROM #__fb_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE b.username IS NULL");
     	$kunena_db->query();
     	check_dberror("Unable to delete user profiles.");
-    	$app->enqueueMessage(_KUNENA_SYNC_USERS_DO_DEL.' '.$kunena_db->getAffectedRows());
+    	$kunena_app->enqueueMessage(_KUNENA_SYNC_USERS_DO_DEL.' '.$kunena_db->getAffectedRows());
     }
     if ($userrename)
     {
     	$cnt = CKunenaTools::updateNameInfo();
-    	$app->enqueueMessage(_KUNENA_SYNC_USERS_DO_RENAME." $cnt");
+    	$kunena_app->enqueueMessage(_KUNENA_SYNC_USERS_DO_RENAME." $cnt");
     }
 
-    $app->redirect( JURI::base() ."index.php?option=$option&task=syncusers");
+    $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=syncusers");
 }
 
 //===============================
@@ -1413,10 +1413,10 @@ function browseUploaded($kunena_db, $option, $type)
 
 function replaceImage($kunena_db, $option, $imageName, $OxP)
 {
-	$app =& JFactory::getApplication();
+	$kunena_app =& JFactory::getApplication();
 	$kunena_db = &JFactory::getDBO();
 	if (!$imageName) {
-		$app->redirect( JURI::base() ."index.php?option=$option&task=browseImages");
+		$kunena_app->redirect( JURI::base() ."index.php?option=$option&task=browseImages");
 		return;
 	}
 
@@ -1439,17 +1439,17 @@ function replaceImage($kunena_db, $option, $imageName, $OxP)
 			$kunena_db->query() or trigger_dberror("Unable to delete attachment.");
     	}
     }
-    if ($ret) $app->enqueueMessage(_KUNENA_IMGDELETED);
-    $app->redirect( JURI::base() ."index.php?option=$option&task=browseImages");
+    if ($ret) $kunena_app->enqueueMessage(_KUNENA_IMGDELETED);
+    $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=browseImages");
 }
 
 function deleteFile($kunena_db, $option, $fileName)
 {
-	$app =& JFactory::getApplication();
+	$kunena_app =& JFactory::getApplication();
     $kunena_db = &JFactory::getDBO();
 
     if (!$fileName) {
-    	$app->redirect( JURI::base() ."index.php?option=$option&task=browseFiles");
+    	$kunena_app->redirect( JURI::base() ."index.php?option=$option&task=browseFiles");
     	return;
     }
 
@@ -1462,8 +1462,8 @@ function deleteFile($kunena_db, $option, $fileName)
     	$kunena_db->setQuery("DELETE FROM #__fb_attachments where filelocation='%/files/" . $fileName . "'");
     	$kunena_db->query() or trigger_dberror("Unable to delete attachment.");
     }
-    if ($ret) $app->enqueueMessage(_KUNENA_FILEDELETED);
-    $app->redirect( JURI::base() ."index.php?option=$option&task=browseFiles");
+    if ($ret) $kunena_app->enqueueMessage(_KUNENA_FILEDELETED);
+    $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=browseFiles");
 }
 
 //===============================
@@ -1646,10 +1646,10 @@ function dircopy($srcdir, $dstdir, $verbose = false) {
 function showsmilies($option)
 {
 $kunena_db = &JFactory::getDBO();
-    $app =& JFactory::getApplication();
+    $kunena_app =& JFactory::getApplication();
 
-    $limit = $app->getUserStateFromRequest("global.list.limit", 'limit', $app->getCfg('list_limit'), 'int');
-    $limitstart = $app->getUserStateFromRequest("{$option}.limitstart", 'limitstart', 0, 'int');
+    $limit = $kunena_app->getUserStateFromRequest("global.list.limit", 'limit', $kunena_app->getCfg('list_limit'), 'int');
+    $limitstart = $kunena_app->getUserStateFromRequest("{$option}.limitstart", 'limitstart', 0, 'int');
 	$kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_smileys");
 	$total = $kunena_db->loadResult();
 	if ($limitstart >= $total) $limitstart = 0;
@@ -1719,7 +1719,7 @@ function newsmiley($option)
 
 function savesmiley($option, $id = NULL)
 {
-	$app =& JFactory::getApplication();
+	$kunena_app =& JFactory::getApplication();
 	$kunena_db = &JFactory::getDBO();
 
     $smiley_code = JRequest::getVar( 'smiley_code');
@@ -1729,8 +1729,8 @@ function savesmiley($option, $id = NULL)
     if (empty($smiley_code) || empty($smiley_location))
     {
     	$task = ($id == NULL) ? 'newsmiley' : 'editsmiley&id='.$id;
-        $app->redirect( JURI::base() ."index.php?option=$option&task=".$task, _KUNENA_MISSING_PARAMETER);
-        $app->close();
+        $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=".$task, _KUNENA_MISSING_PARAMETER);
+        $kunena_app->close();
     }
 
     $kunena_db->setQuery("SELECT * FROM #__fb_smileys");
@@ -1741,8 +1741,8 @@ function savesmiley($option, $id = NULL)
     	if (in_array($smiley_code, $value) && !($value['id'] == $id))
     	{
             $task = ($id == NULL) ? 'newsmiley' : 'editsmiley&id='.$id;
-        	$app->redirect( JURI::base() ."index.php?option=$option&task=".$task, _KUNENA_CODE_ALLREADY_EXITS);
-        	$app->close();
+        	$kunena_app->redirect( JURI::base() ."index.php?option=$option&task=".$task, _KUNENA_CODE_ALLREADY_EXITS);
+        	$kunena_app->close();
     	}
 
     }
@@ -1758,12 +1758,12 @@ function savesmiley($option, $id = NULL)
 
     $kunena_db->query() or trigger_dberror("Unable to save smiley.");
 
-    $app->redirect( JURI::base() ."index.php?option=$option&task=showsmilies", _KUNENA_SMILEY_SAVED);
+    $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=showsmilies", _KUNENA_SMILEY_SAVED);
 }
 
 function deletesmiley($option, $cid)
 {
-	$app =& JFactory::getApplication();
+	$kunena_app =& JFactory::getApplication();
 	$kunena_db = &JFactory::getDBO();
 
 	$cids = implode(',', $cid);
@@ -1773,7 +1773,7 @@ function deletesmiley($option, $cid)
 		$kunena_db->query() or trigger_dberror("Unable to delete smiley.");
 	}
 
-    $app->redirect( JURI::base() ."index.php?option=$option&task=showsmilies", _KUNENA_SMILEY_DELETED);
+    $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=showsmilies", _KUNENA_SMILEY_DELETED);
 }
 
 function smileypath()
@@ -1836,11 +1836,11 @@ function showRanks($option)
 {
     global $order;
 
-    $app =& JFactory::getApplication();
+    $kunena_app =& JFactory::getApplication();
     $kunena_db = &JFactory::getDBO();
 
-    $limit = $app->getUserStateFromRequest("global.list.limit", 'limit', $app->getCfg('list_limit'), 'int');
-	$limitstart = $app->getUserStateFromRequest("{$option}.limitstart", 'limitstart', 0, 'int');
+    $limit = $kunena_app->getUserStateFromRequest("global.list.limit", 'limit', $kunena_app->getCfg('list_limit'), 'int');
+	$limitstart = $kunena_app->getUserStateFromRequest("{$option}.limitstart", 'limitstart', 0, 'int');
 	$kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_ranks");
 	$total = $kunena_db->loadResult();
 	if ($limitstart >= $total) $limitstart = 0;
@@ -1929,7 +1929,7 @@ function newRank($option)
 function deleteRank($option, $cid = null)
 {
 	$kunena_db = &JFactory::getDBO();
-	$app =& JFactory::getApplication();
+	$kunena_app =& JFactory::getApplication();
 
 	$cids = implode(',', $cid);
 	if ($cids) {
@@ -1937,12 +1937,12 @@ function deleteRank($option, $cid = null)
 		$kunena_db->query() or trigger_dberror("Unable to delete rank.");
 	}
 
-    $app->redirect( JURI::base() ."index.php?option=$option&task=ranks", _KUNENA_RANK_DELETED);
+    $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=ranks", _KUNENA_RANK_DELETED);
 }
 
 function saveRank($option, $id = NULL)
 {
-	$app =& JFactory::getApplication();
+	$kunena_app =& JFactory::getApplication();
 	$kunena_db = &JFactory::getDBO();
 
     $rank_title = JRequest::getVar( 'rank_title');
@@ -1953,8 +1953,8 @@ function saveRank($option, $id = NULL)
     if (empty($rank_title) || empty($rank_image))
     {
     	$task = ($id == NULL) ? 'newRank' : 'editRank&id='.$id;
-        $app->redirect( JURI::base() ."index.php?option=$option&task=".$task, _KUNENA_MISSING_PARAMETER);
-        $app->close();
+        $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=".$task, _KUNENA_MISSING_PARAMETER);
+        $kunena_app->close();
     }
 
     $kunena_db->setQuery("SELECT * FROM #__fb_ranks");
@@ -1966,8 +1966,8 @@ function saveRank($option, $id = NULL)
     	if (in_array($rank_title, $value) && !($value['rank_id'] == $id))
     	{
             $task = ($id == NULL) ? 'newRank' : 'editRank&id='.$id;
-        	$app->redirect( JURI::base() ."index.php?option=$option&task=".$task, _KUNENA_RANK_ALLREADY_EXITS);
-        	$app->close();
+        	$kunena_app->redirect( JURI::base() ."index.php?option=$option&task=".$task, _KUNENA_RANK_ALLREADY_EXITS);
+        	$kunena_app->close();
     	}
     }
 
@@ -1981,7 +1981,7 @@ function saveRank($option, $id = NULL)
     }
     $kunena_db->query() or trigger_dberror("Unable to save ranks.");
 
-    $app->redirect( JURI::base() ."index.php?option=$option&task=ranks", _KUNENA_RANK_SAVED);
+    $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=ranks", _KUNENA_RANK_SAVED);
 }
 
 function editRank($option, $id)

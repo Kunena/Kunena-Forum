@@ -22,9 +22,10 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$app =& JFactory::getApplication();
-$fbConfig =& CKunenaConfig::getInstance();
-$fbSession =& CKunenaSession::getInstance();
+$kunena_app =& JFactory::getApplication();
+$kunena_db = &JFactory::getDBO();
+$kunena_config =& CKunenaConfig::getInstance();
+$kunena_session =& CKunenaSession::getInstance();
 
 function KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages) {
     $startpage = ($page - floor($maxpages/2) < 1) ? 1 : $page - floor($maxpages/2);
@@ -74,7 +75,7 @@ if (!$kunena_my->id && $func == "mylatest")
 {
         	header("HTTP/1.1 307 Temporary Redirect");
         	header("Location: " . htmlspecialchars_decode(CKunenaLink::GetShowLatestURL()));
-        	$app->close();
+        	$kunena_app->close();
 }
 
 require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
@@ -95,7 +96,7 @@ $show_list_time = $sel;
 
 //start the latest x
 if ($sel == 0) {
-    $querytime = ($prevCheck - $fbConfig->fbsessiontimeout); //move 30 minutes back to compensate for expired sessions
+    $querytime = ($prevCheck - $kunena_config->fbsessiontimeout); //move 30 minutes back to compensate for expired sessions
 }
 else
 {
@@ -105,7 +106,7 @@ else
 }
 
 //get the db data with allowed forums and turn it into an array
-$threads_per_page = $fbConfig->threads_per_page;
+$threads_per_page = $kunena_config->threads_per_page;
 /*//////////////// Start selecting messages, prepare them for threading, etc... /////////////////*/
 $page             = (int)$page;
 $page             = $page < 1 ? 1 : $page;
@@ -114,7 +115,7 @@ $row_count        = $page * $threads_per_page;
 
 if ($func != 'mylatest')
 {
-	$lookcats = explode(',', $fbConfig->latestcategory);
+	$lookcats = explode(',', $kunena_config->latestcategory);
 	$catlist = array();
 	$latestcats = '';
 	foreach ($lookcats as $catnum)
@@ -134,22 +135,22 @@ if ($sel == "0")
 
 if ($func == "mylatest")
 {
-	$document->setTitle(_KUNENA_MY_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
+	$document->setTitle(_KUNENA_MY_DISCUSSIONS . ' - ' . stripslashes($kunena_config->board_title));
 	$query = "SELECT count(distinct tmp.thread) FROM
 				(SELECT thread
 					FROM #__fb_messages
-					WHERE userid=$kunena_my->id AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)
+					WHERE userid=$kunena_my->id AND hold=0 AND moved=0 AND catid IN ($kunena_session->allowed)
 				UNION ALL
 				 SELECT m.thread As thread
 					FROM #__fb_messages AS m
 					JOIN #__fb_favorites AS f ON m.thread = f.thread
-					WHERE f.userid=$kunena_my->id AND m.parent = 0 AND hold=0 and moved=0 AND catid IN ($fbSession->allowed)) AS tmp";
+					WHERE f.userid=$kunena_my->id AND m.parent = 0 AND hold=0 and moved=0 AND catid IN ($kunena_session->allowed)) AS tmp";
 }
 else
 {
-	$document->setTitle(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($fbConfig->board_title));
+	$document->setTitle(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($kunena_config->board_title));
 	$query = "Select count(distinct thread) FROM #__fb_messages WHERE time >'$querytime'".
-			" AND hold=0 AND moved=0 AND catid IN ($fbSession->allowed)" . $latestcats; // if categories are limited apply filter
+			" AND hold=0 AND moved=0 AND catid IN ($kunena_session->allowed)" . $latestcats; // if categories are limited apply filter
 }
 $kunena_db->setQuery($query);
 $total = (int)$kunena_db->loadResult();
@@ -157,8 +158,8 @@ $total = (int)$kunena_db->loadResult();
 $totalpages = ceil($total / $threads_per_page);
 
 //meta description and keywords
-$metaKeys=kunena_htmlspecialchars(stripslashes(_KUNENA_ALL_DISCUSSIONS . ", {$fbConfig->board_title}, " . $app->getCfg('sitename')));
-$metaDesc=kunena_htmlspecialchars(stripslashes(_KUNENA_ALL_DISCUSSIONS . " ({$page}/{$totalpages}) - {$fbConfig->board_title}"));
+$metaKeys=kunena_htmlspecialchars(stripslashes(_KUNENA_ALL_DISCUSSIONS . ", {$kunena_config->board_title}, " . $kunena_app->getCfg('sitename')));
+$metaDesc=kunena_htmlspecialchars(stripslashes(_KUNENA_ALL_DISCUSSIONS . " ({$page}/{$totalpages}) - {$kunena_config->board_title}"));
 
 $document =& JFactory::getDocument();
 $cur = $document->get( 'description' );
@@ -174,13 +175,13 @@ if ($func == "mylatest")
 	$query = "SELECT m.thread, MAX(m.id) as lastid, MAX(t.fav) AS myfavorite FROM (
 			SELECT thread, 0 AS fav
 			FROM #__fb_messages
-			WHERE userid='{$kunena_my->id}' AND moved='0' AND hold='0' AND catid IN ({$fbSession->allowed})
+			WHERE userid='{$kunena_my->id}' AND moved='0' AND hold='0' AND catid IN ({$kunena_session->allowed})
 			GROUP BY thread
 		UNION ALL
 			SELECT thread, 1 AS fav FROM #__fb_favorites WHERE userid='{$kunena_my->id}'
 		) AS t
 		INNER JOIN #__fb_messages AS m ON m.thread=t.thread
-		WHERE m.moved='0' AND m.hold='0' AND m.catid IN ({$fbSession->allowed})
+		WHERE m.moved='0' AND m.hold='0' AND m.catid IN ({$kunena_session->allowed})
 		GROUP BY thread
 		ORDER BY {$order}
 	";
@@ -188,7 +189,7 @@ if ($func == "mylatest")
 else
 {
 	$order = "lastid DESC";
-	$query = "SELECT thread, MAX(id) AS lastid FROM #__fb_messages WHERE time>'{$querytime}' AND hold='0' AND moved='0' AND catid IN ({$fbSession->allowed})
+	$query = "SELECT thread, MAX(id) AS lastid FROM #__fb_messages WHERE time>'{$querytime}' AND hold='0' AND moved='0' AND catid IN ({$kunena_session->allowed})
 		GROUP BY thread
 		ORDER BY {$order}
 	";
@@ -256,7 +257,7 @@ foreach ($messagelist as $message)
     }
 }
 // (JJ) BEGIN: ANNOUNCEMENT BOX
-if ($fbConfig->showannouncement > 0)
+if ($kunena_config->showannouncement > 0)
 {
 ?>
 <!-- B: announcementBox -->
@@ -317,7 +318,7 @@ if (JDocumentHTML::countModules('kunena_announcement'))
                                   	<?php } ?>
                                     <td class="fb_list_jump_all">
 
-                                    <?php if ($fbConfig->enableforumjump)
+                                    <?php if ($kunena_config->enableforumjump)
  									 require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
  									 ?>
 
@@ -387,7 +388,7 @@ if (count($threadids) > 0)
 <div class="clr"></div>
 <?php
 
-	if ($fbConfig->showstats > 0)
+	if ($kunena_config->showstats > 0)
     {
 		//(JJ) BEGIN: STATS
 		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php')) {
@@ -406,7 +407,7 @@ if (count($threadids) > 0)
 	}
     //(JJ) FINISH: STATS
 
-	if ($fbConfig->showwhoisonline > 0)
+	if ($kunena_config->showwhoisonline > 0)
     {
 
 		//(JJ) BEGIN: WHOISONLINE

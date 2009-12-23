@@ -62,7 +62,7 @@ function dofreePDF($kunena_db)
 {
     global $aro_group, $kunena_is_admin;
 
-    $app =& JFactory::getApplication();
+    $kunena_app =& JFactory::getApplication();
 
     $kunena_acl = &JFactory::getACL();
     $kunena_my = &JFactory::getUser();
@@ -130,7 +130,7 @@ function dofreePDF($kunena_db)
         // footer
         $pdf->line(10, 40, 578, 40);
         $pdf->line(10, 822, 578, 822);
-        $pdf->addText(30, 34, 6, $kunena_config->board_title . ' - ' . $app->getCfg('sitename'));
+        $pdf->addText(30, 34, 6, $kunena_config->board_title . ' - ' . $kunena_app->getCfg('sitename'));
 
         $strtmp = _KUNENA_PDF_VERSION;
         $strtmp = str_replace('%version%', "NEW VERSION GOES HERE" /*$kunena_config->version*/, $strtmp); // TODO: fxstein - Need to change version handling

@@ -91,7 +91,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 			$group_id = 0;
 		}
 
-        $query = "SELECT COUNT(*) FROM #__fb_messages WHERE hold='0' AND userid='{$kunena_my->id}' AND catid IN ($fbSession->allowed)";
+        $query = "SELECT COUNT(*) FROM #__fb_messages WHERE hold='0' AND userid='{$kunena_my->id}' AND catid IN ($kunena_session->allowed)";
 		$kunena_db->setQuery($query);
 
 		$total = $kunena_db->loadResult();
@@ -104,7 +104,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
         $query
             = "SELECT a.*, b.id AS category, b.name AS catname, c.hits AS threadhits FROM #__fb_messages AS a, #__fb_categories AS b, #__fb_messages AS c, #__fb_messages_text AS d"
-            ." WHERE a.catid=b.id AND a.thread=c.id AND a.id=d.mesid AND a.hold='0' AND a.userid='{$kunena_my->id}' AND a.catid IN ($fbSession->allowed) ORDER BY time DESC";
+            ." WHERE a.catid=b.id AND a.thread=c.id AND a.id=d.mesid AND a.hold='0' AND a.userid='{$kunena_my->id}' AND a.catid IN ($kunena_session->allowed) ORDER BY time DESC";
         $kunena_db->setQuery($query, $limitstart, $limit);
 
 		$items   = $kunena_db->loadObjectList();

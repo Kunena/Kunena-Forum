@@ -41,7 +41,6 @@ $kunena_my = &JFactory::getUser();
 /**
 *@desc Getting the correct Itemids, for components required
 */
-global $Itemid;
 $Itemid = JRequest::getInt('Itemid', 0, 'REQUEST');
 
 //check if we have all the itemid sets. if so, then no need for DB call
@@ -829,13 +828,12 @@ class CKunenaTools {
 		// Joomla Mambot Support, Thanks hacksider
 		if ($kunena_config->jmambot)
 		{
-			$row =& new stdClass();
+			$row = new stdClass();
 			$row->text =& $content;
-			$params =& new JParameter( '' );
+			$params = new JParameter( '' );
 			$dispatcher	=& JDispatcher::getInstance();
 			JPluginHelper::importPlugin('content');
-			$results = $dispatcher->trigger('onPrepareContent', array (&
-$row, & $params, 0));
+			$results = $dispatcher->trigger('onPrepareContent', array (&$row, &$params, 0));
 			$content =& $row->text;
 		}
 		return $content;

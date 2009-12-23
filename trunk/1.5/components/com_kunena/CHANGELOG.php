@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0
 
+23-Dec-2009 fxstein
+# [#19065] Fix regression: Missing backend menu and toolbar
+
 22-Dec-2009 Xillibit
 # [#19080] Configuration option "Show join date" has no effect
 

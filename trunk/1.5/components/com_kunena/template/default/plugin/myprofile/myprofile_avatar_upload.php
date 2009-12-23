@@ -186,7 +186,7 @@ switch ($task) {
 
 	case 'upload':
 		//numExtensions= people tend to upload malicious files using mutliple extensions like: virus.txt.vbs; we'll want to have the last extension to validate against..
-		$filename = split('\.', $_FILES['avatar']['name']);
+		$filename = explode('\.', $_FILES['avatar']['name']);
 		$numExtensions = (count($filename)) - 1;
 		$avatarName = $filename[0];
 		$avatarExt = $filename[$numExtensions];
@@ -224,7 +224,7 @@ switch ($task) {
 		}
 
 		//check file name characteristics
-		if (eregi("[^0-9a-zA-Z_]", $avatarExt))
+		if(preg_match('`[^0-9a-zA-Z_]`', $avatarExt))
 		{
 			$kunena_app->enqueueMessage(_UPLOAD_ERROR_NAME, 'notice');
 			$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
@@ -251,7 +251,7 @@ switch ($task) {
 			$kunena_config->imageprocessor = 'none';
 		}
 
-		//$gdversion = ereg_replace('[[:alpha:][:space:]()]+', '', $GDArray['GD Version']); // just FYI for detection from gd_info()
+		//$gdversion = preg_replace('[[:alpha:][:space:]()]+', '', $GDArray['GD Version']); // just FYI for detection from gd_info()
 
 		switch ($kunena_config->imageprocessor) {
 		case 'gd1' :

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0
 
+23-Dec-2009 Xillibit
+^ [#18902] Replace all remaining deprecated functions in PHP 5.3.x
+
 23-Dec-2009 fxstein
 ^ [#19065] global rename of various kunena wide variables
 ^ [#19065] replaced depriciated split() with explode()

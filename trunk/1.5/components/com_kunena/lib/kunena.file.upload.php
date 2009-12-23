@@ -40,7 +40,7 @@ function fileUploadError($msg)
 }
 
 $GLOBALS['KUNENA_rc'] = 1; //reset return code
-$filename = split('\.', $filename);
+$filename = explode('\.', $filename);
 //some transaltions for readability
 //numExtensions= people tend to upload malicious files using mutliple extensions like: virus.txt.vbs; we'll want to have the last extension to validate against..
 $numExtensions = (count($filename)) - 1;

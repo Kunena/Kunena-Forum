@@ -127,7 +127,7 @@ class KunenaModelInstall extends JModel
 	public function addStatus($step, $result=false, $msg='')
 	{
 		$status = $this->getState('status');
-		$status[$step] = array('step'=>$step, 'success'=>$result, 'msg'=>$msg);
+		$status[] = array('step'=>$step, 'success'=>$result, 'msg'=>$msg);
 		$this->setState('status', $status);
 		$app	= JFactory::getApplication();
 		$app->setUserState('com_kunena.install.status', $status); 
@@ -194,33 +194,30 @@ class KunenaModelInstall extends JModel
 		if ($version->id == 0 && $version->component)
 			$this->insertVersionData($version->version, $version->versiondate, $version->build, $version->versionname, null);
 
-		foreach ($results as $i=>$r) {
-			if (!$r) unset($results[$i]);
-			else $this->addStatus($r['action'].' '.$r['name'], true);
-		}
+		foreach ($results as $i=>$r) if ($r) $this->addStatus($r['action'].' '.$r['name'], true);
 		
 		$this->insertVersion('migrateDatabase');
 		$this->addStatus("Prepare installation", true);
-		return $results;
 	}
 
 	public function migrateDatabase()
 	{
 		$results = array();
 		$version = $this->getInstalledVersion();
-		if (empty($version->prefix)) return $results;
+		if (!empty($version->prefix)) {
 
-		// Migrate all tables from old installation
-		$tables = $this->listTables($version->prefix);
-		foreach ($tables as $oldtable)
-		{
-			$newtable = preg_replace('/^'.$version->prefix.'/', 'kunena_', $oldtable);
-			$result = $this->migrateTable($oldtable, $newtable);
-			if ($result) $results[] = $result;
+			// Migrate all tables from old installation
+			$tables = $this->listTables($version->prefix);
+			foreach ($tables as $oldtable)
+			{
+				$newtable = preg_replace('/^'.$version->prefix.'/', 'kunena_', $oldtable);
+				$result = $this->migrateTable($oldtable, $newtable);
+				if ($result) $results[] = $result;
+			}
+			foreach ($results as $i=>$r) if ($r) $this->addStatus($r['action'].' '.$r['name'], true);
 		}
 		$this->updateVersionState('upgradeDatabase');
-		foreach ($results as $i=>$r) if (!$r) unset($results[$i]);
-		return $results;
+		$this->addStatus("Updated version state", true);
 	}
 
 	public function upgradeDatabase()
@@ -228,17 +225,16 @@ class KunenaModelInstall extends JModel
 		kimport('models.schema', 'admin');
 		$schema = new KunenaModelSchema();
 		$results = $schema->updateSchema();
+		foreach ($results as $i=>$r) if ($r) $this->addStatus($r['action'].' '.$r['name'], true);
 		$this->updateVersionState('installSampleData');
-		foreach ($results as $i=>$r) if (!$r) unset($results[$i]);
-		return $results;
 	}
 
 	public function installSampleData()
 	{
 		kimport('install.sampledata', 'admin');
 		installSampleData();
+		$this->addStatus("Install Sample Data", true);
 		$this->updateVersionState('');
-		return array();
 	}
 
 	public function getRequirements()

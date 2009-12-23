@@ -33,7 +33,7 @@ class KunenaControllerInstall extends KunenaController
 	{
 		parent::__construct();
 		$this->model = $this->getModel('Install');
-		$this->step = $this->model->getStep();
+		$this->step  = $this->model->getStep();
 		$this->steps = $this->model->getSteps();
 	}
 
@@ -58,40 +58,34 @@ class KunenaControllerInstall extends KunenaController
 		
 		do
 		{
+			$this->next();
 			$error = $this->model->getError();
-			if (isset($this->steps[$this->step]))
-			{
-				$this->next();
-				$this->setRedirect('index.php?option=com_kunena&view=install');
-			}
 			$stop = ($this->checkTimeout() || $this->step<=2 || ($this->step >= count($this->steps)-1));
+			$this->setRedirect('index.php?option=com_kunena&view=install');
 		}
 		while (!$stop && !$error);
 	}
 
 	function next() {
-		if (empty($this->steps[$this->step]['step'])) return $this->model->setStep(++$this->step);
+		if (empty($this->steps[$this->step]['step'])) return;
 		return call_user_func(array($this, "step".$this->steps[$this->step]['step']));
 	}
 	
 	function stepPrepare() {
 		$this->model->beginInstall();
-		$error = $this->model->getError();
-		if (!$error) $this->model->setStep(++$this->step);
+		if (!$this->model->getError()) $this->model->setStep(++$this->step);
 	}
 	
 	function stepBackend() {
 		$path = JPATH_ADMINISTRATOR.DS."components".DS."com_kunena".DS."archive";
 		if (file_exists($path.DS.$file)) $this->model->extract($path, "admin.zip", JPATH_ROOT);
-		$error = $this->model->getError();
-		if (!$error) $this->model->setStep(++$this->step);
+		if (!$this->model->getError()) $this->model->setStep(++$this->step);
 	}
 	
 	function stepFrontend() {
 		$path = JPATH_ADMINISTRATOR.DS."components".DS."com_kunena".DS."archive";
 		if (file_exists($path.DS.$file)) $this->model->extract($path, "site.zip", JPATH_ROOT);
-		$error = $this->model->getError();
-		if (!$error) $this->model->setStep(++$this->step);
+		if (!$this->model->getError()) $this->model->setStep(++$this->step);
 	}
 		
 	function stepDatabase() {
@@ -108,27 +102,25 @@ class KunenaControllerInstall extends KunenaController
 		switch ($version->state)
 		{
 			case 'migrateDatabase':
-				$results = $this->model->migrateDatabase();
+				$this->model->migrateDatabase();
 				$this->model->addStatus('Update database:migrate', true, $html);
 				break;
 			case 'upgradeDatabase':
-				$results = $this->model->upgradeDatabase();
+				$this->model->upgradeDatabase();
 				$this->model->addStatus('Update database:upgrade', true, $html);
 				break;
 			case 'installSampleData':
-				$results = $this->model->installSampleData();
+				$this->model->installSampleData();
 				$this->model->addStatus('Update database:sample', true, $html);
 				break;
 			case '':
-				$error = $this->model->getError();
-				if (!$error) $this->model->setStep(++$this->step);
+				if (!$this->model->getError()) $this->model->setStep(++$this->step);
 		}
 	}
 	
 	function stepFinish() {
 		$this->model->addStatus('Installation success!', true, '');
-		$error = $this->model->getError();
-		if (!$error) $this->model->setStep(++$this->step);
+		if (!$this->model->getError()) $this->model->setStep(++$this->step);
 	}
 	
 	function checkTimeout() {
@@ -136,9 +128,7 @@ class KunenaControllerInstall extends KunenaController
 
         list( $usec, $sec ) = explode( ' ', microtime() );
         $time = ((float)$usec + (float)$sec);
-
 		if (empty($start)) $start = $time;
-
 		if ($time-$start < 2) return false;
 		return true;
 	}

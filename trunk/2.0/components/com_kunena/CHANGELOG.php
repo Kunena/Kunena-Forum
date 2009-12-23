@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+23-Dec-2009 Matias
+# [#18912] Fixed infinite loop in installer, some code cleanup
+
 22-Dec-2009 Matias
 + [#18912] Implement new installer: migrated new installer logic from JoniJnm
 

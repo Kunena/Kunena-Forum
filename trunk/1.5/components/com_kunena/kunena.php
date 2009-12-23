@@ -696,7 +696,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
         case 'advsearch':
             require_once (KUNENA_PATH_LIB .DS. 'kunena.search.class.php');
 
-            $kunenaSearch = &new CKunenaSearch();
+            $kunenaSearch = new CKunenaSearch();
             $kunenaSearch->show();
             break;
 

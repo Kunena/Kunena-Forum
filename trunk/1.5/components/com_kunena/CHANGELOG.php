@@ -34,6 +34,7 @@ Legend:
 Kunena 1.6.0
 
 23-Dec-2009 fxstein
+^ [#19065] remove depriciated new& construct
 # [#19065] Fix regression: Missing backend menu and toolbar
 
 22-Dec-2009 Xillibit

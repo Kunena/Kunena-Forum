@@ -1,0 +1,31 @@
+<?php
+/**
+* @version $Id: kunena.credits.php 1339 2009-12-22 01:39:04Z fxstein $
+* Kunena Component
+* @package Kunena
+*
+* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+**/
+
+// Never use this file in any code - it is only here to provide declarations for external functions
+die();
+
+// dummy definitions of external classes and functions to avoid zend studio warnings and errors
+
+// Community Builder dummies
+function cbimport($var)
+{
+
+}
+
+function getCBprofileItemid()
+{
+
+}
+
+function cbSef($var)
+{
+
+}

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0
 
+24-Dec-2009 fxstein
++ [#19065] Add definitions of external functions (e.g. CB) to prevent warnings
+
 23-Dec-2009 Xillibit
 ^ [#18975] Backend: Show Avatar on Categories list option misleading
 ^ [#18902] Replace all remaining deprecated functions in PHP 5.3.x

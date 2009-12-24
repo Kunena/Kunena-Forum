@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: kunena.credits.php 1339 2009-12-22 01:39:04Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

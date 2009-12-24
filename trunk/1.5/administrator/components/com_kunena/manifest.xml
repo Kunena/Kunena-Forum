@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
 <install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>
 	<version>1.6.0-DEV</version>
@@ -12,6 +11,8 @@
 	<copyright>www.Kunena.com</copyright>
 	<license>GNU/GPL</license>
 	<description>Kunena Forum</description>
+	<installfile>install/kunena.install.php</installfile>
+	<uninstallfile>install/kunena.uninstall.php</uninstallfile>
 	<files>
 		<filename>CHANGELOG.php</filename>
 		<filename>COPYRIGHT.php</filename>
@@ -24,8 +25,6 @@
 		<folder>template</folder>
 		<folder>kunena.files.distribution</folder>
 	</files>
-	<installfile>install/kunena.install.php</installfile>
-	<uninstallfile>install/kunena.uninstall.php</uninstallfile>
 	<administration>
         <files>
 			<filename>admin.kunena.html.php</filename>

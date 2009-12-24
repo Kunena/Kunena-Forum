@@ -42,6 +42,7 @@ Kunena 1.6.0
 ^ [#19065] replaced depriciated split() with explode()
 ^ [#19065] remove depriciated new& construct
 # [#19065] Fix regression: Missing backend menu and toolbar
+# [#19065] Remove borken Joomla 1.5 dtd from manifest xml
 
 22-Dec-2009 Xillibit
 # [#19080] Configuration option "Show join date" has no effect

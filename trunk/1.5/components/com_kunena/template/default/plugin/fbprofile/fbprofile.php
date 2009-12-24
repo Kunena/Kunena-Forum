@@ -146,8 +146,8 @@ function showprf($userid, $page)
 			if ( file_exists($api_AUP)) {
 				( $kunena_config->fb_profile=='aup' ) ? $showlink=1 : $showlink=0;
 				$msg_avatar = '<span class="fb_avatar">'.AlphaUserPointsHelper::getAupAvatar( $userinfo->userid, $showlink ).'</span>';
-			}										
-		}		
+			}
+		}
         else
         {
         	$avatar = $userinfo->avatar;
@@ -278,19 +278,19 @@ function showprf($userid, $page)
             }
         }
     }
-    
+
 	// Start Integration AlphaUserPoints
 	// *********************************
-	$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php'; 	
+	$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
 	if ($kunena_config->alphauserpoints && file_exists($api_AUP)) {
 		//Get the max# of points for any one user
-		$database  =& JFactory::getDBO();	
+		$database  =& JFactory::getDBO();
 		$database->setQuery("SELECT max(points) from #__alpha_userpoints");
 		$maxPoints = $database->loadResult();
-		
+
 		$database->setQuery("SELECT points from #__alpha_userpoints WHERE `userid`='".$userid."'");
 		$numPoints = $database->loadResult();
-	
+
 		$myGraphAUP = new phpGraph;
 		$myGraphAUP->AddValue(_KUNENA_AUP_POINTS, $numPoints);
 		$myGraphAUP->SetRowSortMode(0);
@@ -302,8 +302,8 @@ function showprf($userid, $page)
 		$myGraphAUP->SetBorderColor("#333333");
 		$myGraphAUP->SetBarBorderWidth(0);
 		$myGraphAUP->SetGraphWidth(120); //should match column width in the <TD> above -5 pixels
-		$useGraph = 1;	
-	}	
+		$useGraph = 1;
+	}
 	// End Integration AlphaUserPoints
 	// *******************************
 
@@ -468,16 +468,11 @@ function showprf($userid, $page)
     }
 
     $jr_username = $userinfo->name;
-
-    // (JJ) JOOMLA STYLE CHECK
-    if ($kunena_config->joomlastyle < 1) {
-        $boardclass = "fb_";
-    }
 ?>
 
     <table class="fb_profile_cover" width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
         <tr>
-            <td class = "<?php echo $boardclass; ?>profile-left" align="center" valign="top" width="25%">
+            <td class = "<?php echo KUNENA_BOARD_CLASS; ?>profile-left" align="center" valign="top" width="25%">
             <!-- Kunena Profile -->
                 <?php
                 if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/userinfos.php')) {
@@ -491,7 +486,7 @@ function showprf($userid, $page)
             <!-- /Kunena Profile -->
             </td>
 
-            <td class = "<?php echo $boardclass; ?>profile-right" valign="top" width="74%">
+            <td class = "<?php echo KUNENA_BOARD_CLASS; ?>profile-right" valign="top" width="74%">
             <!-- User Messages -->
 
 
@@ -525,11 +520,11 @@ function showprf($userid, $page)
 <!-- -->
 
 <!-- Begin: Forum Jump -->
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
 <table class = "fb_blocktable" id="fb_bottomarea"   border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>

@@ -32,7 +32,8 @@ $kunena_config =& CKunenaConfig::getInstance();
 
                     <form action = "<?php echo KUNENA_LIVEURLREL; ?>" name = "markAllForumsRead" method = "post">
                         <input type = "hidden" name = "markaction" value = "allread"/>
-                        <input type = "submit" class = "fb_button button<?php echo $boardclass ;?> fbs" value = "<?php echo _GEN_MARK_ALL_FORUMS_READ ;?>"/>
+                        <input type = "submit" class = "fb_button button<?php echo KUNENA_BOARD_CLASS ;?> fbs"
+                        		value = "<?php echo _GEN_MARK_ALL_FORUMS_READ ;?>"/>
                     </form>
 
                 <?php

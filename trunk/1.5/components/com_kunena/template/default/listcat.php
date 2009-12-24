@@ -155,11 +155,11 @@ if (count($categories[0]) > 0)
         {
 ?>
             <!-- B: List Cat -->
-<div class="<?php echo $boardclass; ?>_bt_cvr1" id="fb_block<?php echo $cat->id ; ?>">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1" id="fb_block<?php echo $cat->id ; ?>">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
             <table class = "fb_blocktable<?php echo $cat->class_sfx; ?>"  width="100%" id = "fb_cat<?php echo $cat->id ; ?>" border = "0" cellspacing = "0" cellpadding = "0">
                 <thead>
                     <tr>
@@ -182,15 +182,15 @@ if (count($categories[0]) > 0)
                 </thead>
                 <tbody id = "catid_<?php echo $cat->id ; ?>">
                     <tr class = "fb_sth fbs ">
-                        <th class = "th-1 <?php echo $boardclass; ?>sectiontableheader" width="1%">&nbsp;</th>
-                        <th class = "th-2 <?php echo $boardclass; ?>sectiontableheader" align="left"><?php echo _GEN_FORUM; ?></th>
-                        <th class = "th-3 <?php echo $boardclass; ?>sectiontableheader" align="center" width="5%"><?php echo _GEN_TOPICS; ?></th>
+                        <th class = "th-1 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" width="1%">&nbsp;</th>
+                        <th class = "th-2 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="left"><?php echo _GEN_FORUM; ?></th>
+                        <th class = "th-3 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center" width="5%"><?php echo _GEN_TOPICS; ?></th>
 
-                        <th class = "th-4 <?php echo $boardclass; ?>sectiontableheader" align="center" width="5%">
+                        <th class = "th-4 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center" width="5%">
 <?php echo _GEN_REPLIES; ?>
                         </th>
 
-                        <th class = "th-5 <?php echo $boardclass; ?>sectiontableheader" align="left" width="25%">
+                        <th class = "th-5 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="left" width="25%">
 <?php echo _GEN_LAST_POST; ?>
                         </th>
                     </tr>
@@ -311,7 +311,7 @@ if (count($categories[0]) > 0)
                                 $latestuserid = $singlerow->userid;
                     ?>
 
-                                <tr class = "<?php echo ''.$boardclass.'' . $tabclass[$k] . ''; ?>" id="fb_cat<?php echo $singlerow->id ?>">
+                                <tr class = "<?php echo ''.KUNENA_BOARD_CLASS.'' . $tabclass[$k] . ''; ?>" id="fb_cat<?php echo $singlerow->id ?>">
                                     <td class = "td-1" align="center">
                                         <?php
                                         $tmpIcon = '';
@@ -370,7 +370,7 @@ if (count($categories[0]) > 0)
                                     </td>
 
                                     <td class = "td-2" align="left">
-                                        <div class = "<?php echo $boardclass ?>thead-title fbl">
+                                        <div class = "<?php echo KUNENA_BOARD_CLASS ?>thead-title fbl">
                                             <?php //new posts available
                                             echo CKunenaLink::GetCategoryLink('showcat', $singlerow->id, kunena_htmlspecialchars(stripslashes($singlerow->name)));
 
@@ -403,7 +403,7 @@ if (count($categories[0]) > 0)
                                         {
                                         ?>
 
-                                            <div class = "<?php echo $boardclass ?>thead-desc fbm">
+                                            <div class = "<?php echo KUNENA_BOARD_CLASS ?>thead-desc fbm">
 <?php echo $forumDesc ?>
                                             </div>
 
@@ -424,17 +424,17 @@ if (count($categories[0]) > 0)
 
                                         	?>
 
-                                            <div class = "<?php echo $boardclass?>thead-child">
+                                            <div class = "<?php echo KUNENA_BOARD_CLASS?>thead-child">
 
-                                                <div class = "<?php echo $boardclass?>cc-table">
-	                                                <div<?php echo $subtopicwidth?> class = "<?php echo $boardclass?>cc-childcat-title">
+                                                <div class = "<?php echo KUNENA_BOARD_CLASS?>cc-table">
+	                                                <div<?php echo $subtopicwidth?> class = "<?php echo KUNENA_BOARD_CLASS?>cc-childcat-title">
     	                                                <?php if(count($forumparents)==1) { echo _KUNENA_CHILD_BOARD; } else { echo _KUNENA_CHILD_BOARDS; } ?>:
         	                                        </div>
                                                     <?php
 
                                                     for ($row_count = 0; $row_count < count($forumparents); $row_count++)
                                                     {														   
-														  echo "<div{$subwidth} class=\"{$boardclass}cc-subcat fbm\">";
+														  echo "<div{$subwidth} class=\"{KUNENA_BOARD_CLASS}cc-subcat fbm\">";
 
                                                             $forumparent = $forumparents[$row_count];
 
@@ -530,7 +530,7 @@ if (count($categories[0]) > 0)
                                         {
                                         ?>
 
-                                            <div class = "<?php echo $boardclass ;?>thead-moderators fbs">
+                                            <div class = "<?php echo KUNENA_BOARD_CLASS ;?>thead-moderators fbs">
 <?php echo _GEN_MODERATORS; ?>:
 
                                                 <?php
@@ -570,13 +570,13 @@ if (count($categories[0]) > 0)
                                     ?>
 
                                         <td class = "td-5" align="left">
-                                            <div class = "<?php echo $boardclass ?>latest-subject fbm">
+                                            <div class = "<?php echo KUNENA_BOARD_CLASS ?>latest-subject fbm">
 <?php
                                                 echo CKunenaLink::GetThreadPageLink($kunena_config, 'view', $singlerow->catid, $latestthread, $latestthreadpages, $kunena_config->messages_per_page, $latestsubject, $latestid);
 ?>
                                             </div>
 
-                                            <div class = "<?php echo $boardclass ?>latest-subject-by fbs">
+                                            <div class = "<?php echo KUNENA_BOARD_CLASS ?>latest-subject-by fbs">
 <?php
                                                 echo _GEN_BY.' ';
                                                 echo CKunenaLink::GetProfileLink($kunena_config, $latestuserid, $latestname);

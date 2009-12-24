@@ -20,11 +20,11 @@
 **/
 defined( '_JEXEC' ) or die('Restricted access');
 ?>
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
 <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=unsubscribe'); ?>" method = "post" name = "postform">
 	<input type = "hidden" name = "do" value = "unsubscribe"/>
 	<table class = "fb_blocktable" id = "fb_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
@@ -37,21 +37,21 @@ defined( '_JEXEC' ) or die('Restricted access');
 			</tr>
 		</thead>
 
-		<tbody id = "<?php echo $boardclass ;?>fbuserprofile_tbody">
+		<tbody id = "<?php echo KUNENA_BOARD_CLASS ;?>fbuserprofile_tbody">
 			<tr class = "fb_sth">
-				<th class = "th-1 <?php echo $boardclass ;?>sectiontableheader"><?php echo _GEN_TOPICS; ?>
+				<th class = "th-1 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader"><?php echo _GEN_TOPICS; ?>
 				</th>
 
-				<th class = "th-2 <?php echo $boardclass ;?>sectiontableheader" style = "text-align:center; width:25%"><?php echo _GEN_AUTHOR; ?>
+				<th class = "th-2 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader" style = "text-align:center; width:25%"><?php echo _GEN_AUTHOR; ?>
 				</th>
 
-				<th class = "th-3 <?php echo $boardclass ;?>sectiontableheader" style = "text-align:center; width:25%"><?php echo _GEN_DATE; ?>
+				<th class = "th-3 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader" style = "text-align:center; width:25%"><?php echo _GEN_DATE; ?>
 				</th>
 
-				<th class = "th-3 <?php echo $boardclass ;?>sectiontableheader" style = "text-align:center; width:5%"><?php echo _GEN_HITS; ?>
+				<th class = "th-3 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader" style = "text-align:center; width:5%"><?php echo _GEN_HITS; ?>
 				</th>
 
-				<th class = "th-4 <?php echo $boardclass ;?>sectiontableheader"><?php echo _GEN_DELETE; ?>
+				<th class = "th-4 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader"><?php echo _GEN_DELETE; ?>
 				</th>
 			</tr>
 
@@ -80,7 +80,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 					{
 						$k = 1 - $k;
 
-						echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" >';
+						echo '<tr class="' . KUNENA_BOARD_CLASS . '' . $tabclass[$k] . '" >';
 						echo '<td class="td-1" width="54%" align="left">' . $enum . ': <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $sub->catid . '&amp;id=' . $sub->id) . '">' . kunena_htmlspecialchars(stripslashes($sub->subject));
 			?>
 
@@ -122,7 +122,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 			}
 			else
 			{
-				echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '"><td class="td-1" colspan = "5" >' . _USER_NOSUBSCRIPTIONS . '</td></tr>';
+				echo '<tr class="' . KUNENA_BOARD_CLASS . '' . $tabclass[$k] . '"><td class="td-1" colspan = "5" >' . _USER_NOSUBSCRIPTIONS . '</td></tr>';
 			}
 			?>
 

@@ -22,8 +22,6 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $boardclass;
-
 $kunena_db = &JFactory::getDBO();
 $kunena_config =& CKunenaConfig::getInstance();
 $document=& JFactory::getDocument();
@@ -32,11 +30,11 @@ $document->setTitle(_GEN_RULES . ' - ' . stripslashes($kunena_config->board_titl
 
 ?>
 <!-- INSERT YOUR RULES IN HTML BEGINNING HERE -->
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
 <table class = "fb_blocktable" id ="fb_forumrules" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
@@ -49,7 +47,7 @@ $document->setTitle(_GEN_RULES . ' - ' . stripslashes($kunena_config->board_titl
 
     <tbody>
         <tr>
-            <td class = "<?php echo $boardclass; ?>rulesdesc">
+            <td class = "<?php echo KUNENA_BOARD_CLASS; ?>rulesdesc">
 <?php
           $kunena_db->setQuery("SELECT introtext, id FROM #__content WHERE id='{$kunena_config->rules_cid}'");
 		  $j_introtext = $kunena_db->loadResult();
@@ -68,11 +66,11 @@ $document->setTitle(_GEN_RULES . ' - ' . stripslashes($kunena_config->board_titl
 </div>
 <!-- THIS IS WHERE YOUR RULES FINISH -->
 <!-- Begin: Forum Jump -->
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
 <table  class = "fb_blocktable" id="fb_bottomarea"  border = "0" cellspacing = "0" cellpadding = "0">
     <thead>
         <tr>

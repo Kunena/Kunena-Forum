@@ -60,32 +60,32 @@ $GLOBALS['KUNENA_c'] = 0;
 $tree = thread_flat($tree, $messages);
 ?>
 <div id="fb_threadview">
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
 <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0" class = "fb_blocktable" >
     <thead>
         <tr  class = "fb_sth fbs ">
         <?php
         if ($kunena_config->shownew && $kunena_my->id != 0) { ?>
 
-       <th width="10" class = "th-1 <?php echo $boardclass ?>sectiontableheader">&nbsp;</th>
+       <th width="10" class = "th-1 <?php echo KUNENA_BOARD_CLASS ?>sectiontableheader">&nbsp;</th>
             <?php
         }
         ?>
-        <th class = "th-2 <?php echo $boardclass ?>sectiontableheader" align = "center" width = "5">&nbsp; </th>
-        <th class = "th-3 <?php echo $boardclass ?>sectiontableheader" align = "center" width = "5">&nbsp; </th>
+        <th class = "th-2 <?php echo KUNENA_BOARD_CLASS ?>sectiontableheader" align = "center" width = "5">&nbsp; </th>
+        <th class = "th-3 <?php echo KUNENA_BOARD_CLASS ?>sectiontableheader" align = "center" width = "5">&nbsp; </th>
         <?php
         if ($kunena_my->id == 0) {
             echo '<td class="sectiontableheader" width="5" align="center">&nbsp;</td>';
         }
         ?>
-        <th class = "th-3 <?php echo $boardclass ?>sectiontableheader"  width = "60%" align = "center"><?php echo _GEN_TOPICS; ?></th>
-        <th class = "th-3 <?php echo $boardclass ?>sectiontableheader"  width = "15%" align = "center"><?php echo _GEN_AUTHOR; ?></th>
+        <th class = "th-3 <?php echo KUNENA_BOARD_CLASS ?>sectiontableheader"  width = "60%" align = "center"><?php echo _GEN_TOPICS; ?></th>
+        <th class = "th-3 <?php echo KUNENA_BOARD_CLASS ?>sectiontableheader"  width = "15%" align = "center"><?php echo _GEN_AUTHOR; ?></th>
 
-        <th class = "th-3 <?php echo $boardclass ?>sectiontableheader"  align = "center"><?php echo _GEN_DATE; ?></th>
+        <th class = "th-3 <?php echo KUNENA_BOARD_CLASS ?>sectiontableheader"  align = "center"><?php echo _GEN_DATE; ?></th>
     </tr>
 </thead>
 <tbody>
@@ -122,7 +122,8 @@ $tree = thread_flat($tree, $messages);
             }
             ?>
 
-            <td align = "center" width = "5"<?php echo $leaf->id==$id?" class=\"".$boardclass."sectiontableentry2\">":">";
+            <td align = "center" width = "5"<?php echo $leaf->id==$id?' class="'.KUNENA_BOARD_CLASS.'sectiontableentry2"':'';?>>
+            <?php
                   if ($leaf->ordering==0)
                   {
                      if($leaf->locked==0)
@@ -141,14 +142,14 @@ $tree = thread_flat($tree, $messages);
                      $topicSticky=1;
                   }
                   ?></td>
-                <td align = "center" width = "5"<?php echo $leaf->id==$id?" class=\"".$boardclass."sectiontableentry2\"":"";?>>
+                <td align = "center" width = "5"<?php echo $leaf->id==$id?" class=\"".KUNENA_BOARD_CLASS."sectiontableentry2\"":"";?>>
 <?php // echo $leaf->topic_emoticon == 0 ? '<img src="' . KUNENA_URLIMAGESPATH . 'tree-blank.gif"  alt="thread link" />' : "<img src=\"" . $topic_emoticons[$leaf->topic_emoticon] . "\" alt=\"emo\" />"; ?>
                 </td>
 
-                <td<?php echo $leaf->id == $id ? " class=\"".$boardclass."sectiontableentry2\"" : ""; ?>>
+                <td<?php echo $leaf->id == $id ? " class=\"".KUNENA_BOARD_CLASS."sectiontableentry2\"" : ""; ?>>
         <table border = "0" cellspacing = "0" cellpadding = "0">
             <tr>
-                <td<?php echo $leaf->id == $id ? " class=\"".$boardclass."sectiontableentry2\"" : ""; ?>>
+                <td<?php echo $leaf->id == $id ? " class=\"".KUNENA_BOARD_CLASS."sectiontableentry2\"" : ""; ?>>
             <?php
             $array[$leaf->level + 1] = count($messages[$leaf->id]);
             $array[$leaf->level]--;
@@ -185,7 +186,7 @@ $tree = thread_flat($tree, $messages);
                     $newURL = JRoute::_($newURL);
                     ?>
 
-                    <td<?php echo $leaf->id == $id ? " class=\"".$boardclass."sectiontableentry2\"" : ""; ?>>
+                    <td<?php echo $leaf->id == $id ? " class=\"".KUNENA_BOARD_CLASS."sectiontableentry2\"" : ""; ?>>
     <a class="fb_threadview_link"  href = "<?php echo $newURL; ?>"><?php echo stripslashes($leaf->subject); ?>
 <!--            Favourite       -->
 <?php
@@ -207,11 +208,11 @@ if ($kunena_config->allowfavorites)
         </table>
     </td>
 
-    <td align = "center" <?php echo $leaf->id==$id?' class="'.$boardclass.'sectiontableentry2"':'';?>>
+    <td align = "center" <?php echo $leaf->id==$id?' class="'.KUNENA_BOARD_CLASS.'sectiontableentry2"':'';?>>
         <small><?php echo $leaf->email != "" && $kunena_my->id > 0 && $kunena_config->showemail ? '<a href="mailto:' . stripslashes($leaf->email) . '">' . stripslashes($leaf->name) . '</a>' : stripslashes($leaf->name); ?></small>
     </td>
 
-    <td align = "center" <?php echo $leaf->id==$id?' class=""'.$boardclass.'sectiontableentry2"':'';?>>
+    <td align = "center" <?php echo $leaf->id==$id?' class=""'.KUNENA_BOARD_CLASS.'sectiontableentry2"':'';?>>
         <small><?php echo $leaf->moved ? date(_DATETIME, $leaf->time) : date(_DATETIME, $leaf->time); ?></small>
     </td>
         </tr>

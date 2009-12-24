@@ -22,10 +22,6 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-// Just for debugging and performance analysis
-$mtime = explode(" ", microtime());
-$tstart = $mtime[1] + $mtime[0];
-
 // Kunena wide defines
 require_once (JPATH_BASE  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 
@@ -104,6 +100,9 @@ $KunenaUser = new CKunenaUser($kunena_my->id);
 // Load configuration and personal settings for current user
 $kunena_config =& CKunenaConfig::getInstance();
 
+// JOOMLA STYLE CHECK
+define('KUNENA_BOARD_CLASS', ($kunena_config->joomlastyle?'':'fb_'));
+
 // get right Language file
 if (file_exists(KUNENA_FILE_LANGUAGE)) {
     include_once (KUNENA_FILE_LANGUAGE);
@@ -151,7 +150,7 @@ else
 // =======================================================================================
 // Forum is online:
 
-global $lang, $fbIcons, $boardclass;
+global $lang, $fbIcons;
 global $kunena_is_moderator, $board_title;
 
 global $message, $settings, $kunena_systime;
@@ -202,12 +201,6 @@ $settings = !empty($_COOKIE['fboard_settings'])?$_COOKIE['fboard_settings']:'';
 $board_title = $kunena_config->board_title;
 $fromBot = 0;
 $prefview = $kunena_config->default_view;
-
-// JOOMLA STYLE CHECK
-if ($kunena_config->joomlastyle < 1)
-{
-    $boardclass = "fb_";
-}
 
 // Include preview here before inclusion of other files
 if ($func == "getpreview")
@@ -857,10 +850,3 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 } //else
 
 if (is_object($kunenaProfile)) $kunenaProfile->close();
-
-// Just for debugging and performance analysis
-$mtime = explode(" ", microtime());
-$tend = $mtime[1] + $mtime[0];
-$tpassed = ($tend - $tstart);
-//echo $tpassed;
-?>

@@ -45,11 +45,11 @@ if ($kunena_config->showstats > 0)
     {
 ?>
         <!-- BEGIN: GENERAL STATS -->
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
         <table  class = "fb_blocktable" id ="fb_frontstats" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
@@ -63,7 +63,7 @@ if ($kunena_config->showstats > 0)
             </thead>
 
             <tbody id = "frontstats_tbody">
-                <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
+                <tr class = "<?php echo KUNENA_BOARD_CLASS ;?>sectiontableentry1">
                     <td class = "td-1  fbm" align="left">
 <?php echo _STAT_TOTAL_USERS; ?>:<b> <a href = "<?php echo $userlist;?>"><?php echo $totalmembers; ?></a> </b>
                     &nbsp; <?php echo _STAT_LATEST_MEMBERS; ?>:<b> <?php echo CKunenaLink::GetProfileLink($kunena_config, $lastestmemberid, $lastestmember, $rel='nofollow'); ?></b>

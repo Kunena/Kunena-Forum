@@ -51,11 +51,11 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
     $kunena_db->setQuery($query);
     $totalguests = $kunena_db->loadResult();
 ?>
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
     <table class = "fb_blocktable" id ="fb_whoisonline"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>
             <tr>
@@ -76,7 +76,7 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
         </thead>
 
         <tbody id = "whoisonline_tbody">
-            <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
+            <tr class = "<?php echo KUNENA_BOARD_CLASS ;?>sectiontableentry1">
                 <td class = "td-1 fbm" align="left">
                     <?php
                     foreach ($users as $user)

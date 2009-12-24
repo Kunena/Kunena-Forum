@@ -48,7 +48,7 @@ if ($kunena_config->fb_profile == 'cb')
 <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
     <tbody>
         <tr class = "fb_sth">
-            <th colspan = "2" class = "view-th <?php echo $boardclass; ?>sectiontableheader">
+            <th colspan = "2" class = "view-th <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader">
         	<a name = "<?php echo $msg_id; ?>"></a>
 <?php
                 echo CKunenaLink::GetSamePageAnkerLink($msg_id, '#'.$msg_id)

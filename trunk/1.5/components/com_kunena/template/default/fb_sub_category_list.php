@@ -55,11 +55,11 @@ else
 {
 ?>
     <!-- B: List Cat -->
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
     <table class = "fb_blocktable<?php echo $objCatInfo->class_sfx; ?>"  width="100%" id = "fb_cat<?php echo $objCatInfo->id ; ?>"  border = "0" cellspacing = "0" cellpadding = "0">
         <thead>
             <tr>
@@ -86,15 +86,15 @@ else
 
         <tbody id = "catid_<?php echo $objCatInfo->id ; ?>">
            <tr class = "fb_sth fbs ">
-                        <th class = "th-1 <?php echo $boardclass; ?>sectiontableheader" width="1%">&nbsp;</th>
-                        <th class = "th-2 <?php echo $boardclass; ?>sectiontableheader" align="left"><?php echo _GEN_FORUM; ?></th>
-                        <th class = "th-3 <?php echo $boardclass; ?>sectiontableheader" align="center" width="5%"><?php echo _GEN_TOPICS; ?></th>
+                        <th class = "th-1 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" width="1%">&nbsp;</th>
+                        <th class = "th-2 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="left"><?php echo _GEN_FORUM; ?></th>
+                        <th class = "th-3 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center" width="5%"><?php echo _GEN_TOPICS; ?></th>
 
-                        <th class = "th-4 <?php echo $boardclass; ?>sectiontableheader" align="center" width="5%">
+                        <th class = "th-4 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center" width="5%">
 <?php echo _GEN_REPLIES; ?>
                         </th>
 
-                        <th class = "th-5 <?php echo $boardclass; ?>sectiontableheader" align="left" width="25%">
+                        <th class = "th-5 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="left" width="25%">
 <?php echo _GEN_LAST_POST; ?>
                         </th>
                     </tr>
@@ -200,7 +200,7 @@ else
                         $latestpage = ceil($latestcount / $kunena_config->messages_per_page);
                     }
 
-                    echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" id="fb_cat'.$singlerow->id.'" >';
+                    echo '<tr class="' . KUNENA_BOARD_CLASS . '' . $tabclass[$k] . '" id="fb_cat'.$singlerow->id.'" >';
 					echo '<td class="td-1 " align="center">';
 
 					$categoryicon = '';
@@ -254,7 +254,7 @@ else
                     echo CKunenaLink::GetCategoryLink('listcat', $singlerow->id, $categoryicon, 'follow');
 					echo '</td>';
                     echo '<td class="td-2"  align="left"><div class="'
-                             . $boardclass . 'thead-title fbl">'.CKunenaLink::GetCategoryLink('showcat', $singlerow->id, stripslashes($singlerow->name), 'follow');
+                             . KUNENA_BOARD_CLASS . 'thead-title fbl">'.CKunenaLink::GetCategoryLink('showcat', $singlerow->id, stripslashes($singlerow->name), 'follow');
 
                     //new posts available
                     if ($cxThereisNewInForum == 1 && $kunena_my->id > 0) {
@@ -284,15 +284,15 @@ else
                         $tmpforumdesc = stripslashes(smile::smileReplace($forumDesc, 0, $kunena_config->disemoticons, $kunena_emoticons));
                         $tmpforumdesc = nl2br($tmpforumdesc);
                         $tmpforumdesc = smile::htmlwrap($tmpforumdesc, $kunena_config->wrap);
-                        echo '<div class="' . $boardclass . 'thead-desc  fbm">' . $tmpforumdesc . ' </div>';
+                        echo '<div class="' . KUNENA_BOARD_CLASS . 'thead-desc  fbm">' . $tmpforumdesc . ' </div>';
                     }
 
                     if (count($forumparents) > 0)
                     {
                         if(count($forumparents)==1) {
-                          echo '<div class="' . $boardclass . 'thead-child  fbs"><b>' . _KUNENA_CHILD_BOARD . ' </b>';
+                          echo '<div class="' . KUNENA_BOARD_CLASS . 'thead-child  fbs"><b>' . _KUNENA_CHILD_BOARD . ' </b>';
                         } else {
-                          echo '<div class="' . $boardclass . 'thead-child  fbs"><b>' . _KUNENA_CHILD_BOARDS . ' </b>';
+                          echo '<div class="' . KUNENA_BOARD_CLASS . 'thead-child  fbs"><b>' . _KUNENA_CHILD_BOARDS . ' </b>';
                         };
 
                         foreach ($forumparents as $forumparent)
@@ -382,7 +382,7 @@ else
                     // moderator list
                     if (count($modslist) > 0)
                     {
-                        echo '<div class="' . $boardclass . 'thead-moderators  fbs">' . _GEN_MODERATORS . ": ";
+                        echo '<div class="' . KUNENA_BOARD_CLASS . 'thead-moderators  fbs">' . _GEN_MODERATORS . ": ";
 
 						$mod_cnt = 0;
 						foreach ($modslist as $mod) {
@@ -413,11 +413,11 @@ else
             ?>
 
                         <td class = "td-5" align="left">
-                            <div class = "<?php echo $boardclass ?>latest-subject fbm">
+                            <div class = "<?php echo KUNENA_BOARD_CLASS ?>latest-subject fbm">
                                 <?php echo CKunenaLink::GetThreadLink('view', $latestcatid, $latestthread, kunena_htmlspecialchars(stripslashes($latestsubject)), kunena_htmlspecialchars(stripslashes($latestsubject)), $rel='nofollow');?>
                             </div>
 
-                            <div class = "<?php echo $boardclass ?>latest-subject-by  fbs">
+                            <div class = "<?php echo KUNENA_BOARD_CLASS ?>latest-subject-by  fbs">
 <?php echo _GEN_BY; ?>
 
                                 <?php echo CKunenaLink::GetProfileLink($kunena_config, $latestuserid, $latestname, $rel='nofollow');?>

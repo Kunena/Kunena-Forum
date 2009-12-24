@@ -18,17 +18,16 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 $kunena_config =& CKunenaConfig::getInstance();
 global $kunena_is_moderator;
-global $boardclass;
 
 // Team credits page is not translated
 
 ?>
 
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-  <div class="<?php echo $boardclass; ?>_bt_cvr2">
-    <div class="<?php echo $boardclass; ?>_bt_cvr3">
-      <div class="<?php echo $boardclass; ?>_bt_cvr4">
-        <div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+  <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+    <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+      <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+        <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
           <table class = "fb_blocktable" id ="fb_forumcredits" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
               <tr>
@@ -37,7 +36,7 @@ global $boardclass;
             </thead>
             <tbody>
               <tr>
-                <td class = "<?php echo $boardclass; ?>creditsdesc"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <td class = "<?php echo KUNENA_BOARD_CLASS; ?>creditsdesc"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr valign="top">
                       <td width="170"><img src="<?php echo KUNENA_DIRECTURL . '/template/default/images/kunena.logo.png';?>" alt="Kunena"  align="left" hspace="5" vspace="5"/></td>
                       <td><div  class="fb_credits_intro"> An open source project like Kunena requires the dedication and investment of personal time from various contributors.
@@ -88,11 +87,11 @@ global $boardclass;
 </div>
 
 <!-- Begin: Forum Jump -->
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-  <div class="<?php echo $boardclass; ?>_bt_cvr2">
-    <div class="<?php echo $boardclass; ?>_bt_cvr3">
-      <div class="<?php echo $boardclass; ?>_bt_cvr4">
-        <div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+  <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+    <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+      <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+        <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
           <table  class = "fb_blocktable" id="fb_bottomarea"  border = "0" cellspacing = "0" cellpadding = "0">
             <thead>
               <tr>

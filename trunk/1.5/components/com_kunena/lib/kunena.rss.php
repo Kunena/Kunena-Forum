@@ -134,23 +134,22 @@ $rows = $kunena_db->loadObjectList();
 	check_dberror("Unable to load messages.");
 
 header ('Content-type: application/xml');
-echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-?>
-<!-- generator="Kunena <?php echo KUNENA_VERSION; ?>"> -->
-<rss version="0.91">
-    <channel>
-        <title><?php echo stripslashes(kunena_htmlspecialchars($kunena_app->getCfg('sitename'))); ?> - Forum</title>
-        <description>Kunena Site Syndication</description>
-        <link><?php echo JURI::root(); ?></link>
-        <lastBuildDate><?php echo date("r");?></lastBuildDate>
-        <generator>Kunena <?php echo KUNENA_VERSION; ?></generator>
-        <image>
-	        <url><?php echo KUNENA_URLEMOTIONSPATH; ?>rss.gif</url>
-	        <title>Powered by Kunena</title>
-	        <link><?php echo JURI::root(); ?></link>
-	        <description>Kunena Site Syndication</description>
-        </image>
-<?php
+echo '<?xml version="1.0" encoding="utf-8"?>\n';
+echo '<!-- generator="Kunena ' . KUNENA_VERSION . '"> -->';
+echo '<rss version="0.91">';
+echo '    <channel>';
+echo '        <title>' . stripslashes(kunena_htmlspecialchars($kunena_app->getCfg('sitename'))) .' - Forum</title>';
+echo '        <description>Kunena Site Syndication</description>';
+echo '        <link>' . JURI::root() . '</link>';
+echo '        <lastBuildDate>' . date("r") . '</lastBuildDate>';
+echo '        <generator>Kunena ' . KUNENA_VERSION . '</generator>';
+echo '        <image>';
+echo '	        <url>' . KUNENA_URLEMOTIONSPATH . 'rss.gif</url>';
+echo '	        <title>Powered by Kunena</title>';
+echo '	        <link>' . JURI::root() . '</link>';
+echo '	        <description>Kunena Site Syndication</description>';
+echo '        </image>';
+
         foreach ($rows as $row)
         {
             echo "        <item>\n";
@@ -166,6 +165,5 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
             echo "            <pubDate>" . date('r', $row->lastposttime) . "</pubDate>" . "\n";
             echo "        </item>\n";
         }
-?>
-    </channel>
-</rss>
+echo '    </channel>';
+echo '</rss>';

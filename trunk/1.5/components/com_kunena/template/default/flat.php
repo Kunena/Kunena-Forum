@@ -84,11 +84,11 @@ if (count($messages[0]) > 0)
 if (count($messages[0]) > 0)
 {
 ?>
-    <div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+    <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
     <form action = "index.php" method = "post" name = "fbBulkActionForm">
 
         <table class = "fb_blocktable<?php echo isset($objCatInfo->class_sfx) ? $objCatInfo->class_sfx : ''; ?>" id = "fb_flattable" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
@@ -121,18 +121,18 @@ if (count($messages[0]) > 0)
 
             <tbody>
                 <tr  class = "fb_sth fbs ">
-                 <th class = "th-0 <?php echo $boardclass ?>sectiontableheader" width="5%" align="center"><?php echo _GEN_REPLIES; ?></th>
+                 <th class = "th-0 <?php echo KUNENA_BOARD_CLASS ?>sectiontableheader" width="5%" align="center"><?php echo _GEN_REPLIES; ?></th>
 
-                    <th class = "th-2 <?php echo $boardclass ?>sectiontableheader" width="1%">&nbsp;</th>
-                    <th class = "th-3 <?php echo $boardclass ?>sectiontableheader" align="left"><?php echo _GEN_TOPICS; ?></th>
+                    <th class = "th-2 <?php echo KUNENA_BOARD_CLASS ?>sectiontableheader" width="1%">&nbsp;</th>
+                    <th class = "th-3 <?php echo KUNENA_BOARD_CLASS ?>sectiontableheader" align="left"><?php echo _GEN_TOPICS; ?></th>
 
-                    <th class = "th-6 <?php echo $boardclass ?>sectiontableheader" width="27.5%" align="left"><?php echo _GEN_LAST_POST; ?></th>
+                    <th class = "th-6 <?php echo KUNENA_BOARD_CLASS ?>sectiontableheader" width="27.5%" align="left"><?php echo _GEN_LAST_POST; ?></th>
 
                     <?php
                     if ($kunena_is_moderatorerator)
                     {
                     ?>
-                        <th class = "th-7 <?php echo $boardclass ?>sectiontableheader" width="1%" align="center">[X]</th>
+                        <th class = "th-7 <?php echo KUNENA_BOARD_CLASS ?>sectiontableheader" width="1%" align="center">[X]</th>
                     <?php
                     }
                     ?>
@@ -156,7 +156,7 @@ if (count($messages[0]) > 0)
                 ?>
 
                         <tr>
-                            <td class = "<?php echo $boardclass ?>contentheading fbm" id = "fb_spot" colspan = "<?php echo ($kunena_is_moderatorerator?"5":"4");?>" align="left">
+                            <td class = "<?php echo KUNENA_BOARD_CLASS ?>contentheading fbm" id = "fb_spot" colspan = "<?php echo ($kunena_is_moderatorerator?"5":"4");?>" align="left">
                                 <span><?php if(!$funcmylatest) {echo _KUNENA_SPOTS;} else {echo _USER_FAVORITES;} ?></span>
                             </td>
                         </tr>
@@ -171,7 +171,7 @@ if (count($messages[0]) > 0)
                 ?>
 
                     <tr>
-                        <td class = "<?php echo $boardclass ?>contentheading fbm" id = "fb_fspot" colspan = "<?php echo ($kunena_is_moderatorerator?"5":"4");?>" align="left">
+                        <td class = "<?php echo KUNENA_BOARD_CLASS ?>contentheading fbm" id = "fb_fspot" colspan = "<?php echo ($kunena_is_moderatorerator?"5":"4");?>" align="left">
                             <span><?php if(!$funcmylatest) {echo _KUNENA_FORUM;} else {echo _KUNENA_MY_DISCUSSIONS_DETAIL;} ?></span>
                         </td>
                     </tr>
@@ -181,7 +181,7 @@ if (count($messages[0]) > 0)
                 ?>
 
                     <tr class = "<?php
-                    echo $boardclass.$tabclass[$k];
+                    echo KUNENA_BOARD_CLASS.$tabclass[$k];
                     if ($leaf->ordering != 0 || ($leaf->myfavorite && $funcmylatest))
                     {echo '_stickymsg'; $topicSticky=1; }
                     ?>">
@@ -479,7 +479,7 @@ if (count($messages[0]) > 0)
             ?>
 
 
-                    <tr class = "<?php echo $boardclass ?>sectiontableentry1">
+                    <tr class = "<?php echo KUNENA_BOARD_CLASS ?>sectiontableentry1">
                         <td colspan = "7" align = "right" class = "td-1 fbs">
                         <script type = "text/javascript">
                             jQuery(document).ready(function()

@@ -64,11 +64,11 @@ $annshowdate = $ann->showdate;
 if ($annID > 0) {
 ?>
     <!-- ANNOUNCEMENTS BOX -->
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
     <table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>
             <tr>
@@ -88,7 +88,7 @@ if ($annID > 0) {
             ?>
 
                     <tr class = "fb_sth">
-                        <th class = "th-1 <?php echo $boardclass ;?>sectiontableheader fbm" align="left">
+                        <th class = "th-1 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader fbm" align="left">
                             <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'edit', $annID); ?>"><?php echo _ANN_EDIT; ?> </a> |
                         <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'delete', $annID); ?>"><?php echo _ANN_DELETE; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'add');?>"><?php echo _ANN_ADD; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'show');?>"><?php echo _ANN_CPANEL; ?> </a>
                         </th>
@@ -98,7 +98,7 @@ if ($annID > 0) {
                 }
             ?>
 
-                <tr class = "<?php echo $boardclass ;?>sectiontableentry2">
+                <tr class = "<?php echo KUNENA_BOARD_CLASS ;?>sectiontableentry2">
                     <td class = "td-1 fbm" align="left">
                         <?php
                         if ($annshowdate > 0) {

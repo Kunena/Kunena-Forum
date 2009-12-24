@@ -1273,7 +1273,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         echo $pagination;
         echo '</td>';
 	echo '</tr></table>';
-        echo '<div class = "'. $boardclass .'forum-pathway-bottom">';
+        echo '<div class = "'. KUNENA_BOARD_CLASS .'forum-pathway-bottom">';
 	echo $pathway1;
 	echo '</div>';
     ?>

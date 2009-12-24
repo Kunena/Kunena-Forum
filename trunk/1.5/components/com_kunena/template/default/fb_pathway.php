@@ -21,7 +21,13 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
+
 $kunena_config =& CKunenaConfig::getInstance();
+$kunena_db = &JFactory::getDBO();
+
+$func 			= strtolower(JRequest::getCmd('func', ''));
+$catid 			= JRequest::getInt('catid', 0);
+
 ?>
 <!-- Pathway -->
 <?php
@@ -135,26 +141,23 @@ if ($func != "")
 					$totalguest = $totalguest + 1;
 				}
 			}
-			if ($totalguest > 0) { 
-				if ($totalguest==1) { 
-					$fireonline .= '('.$totalguest.') '._WHO_ONLINE_GUEST; 
-				} else { 
-					$fireonline .= '('.$totalguest.') '._WHO_ONLINE_GUESTS; 
+			if ($totalguest > 0) {
+				if ($totalguest==1) {
+					$fireonline .= '('.$totalguest.') '._WHO_ONLINE_GUEST;
+				} else {
+					$fireonline .= '('.$totalguest.') '._WHO_ONLINE_GUESTS;
 				}
 			}
 			$fireonline .= '</div>';
        }
 
 	$document=& JFactory::getDocument();
-        $document->setTitle(htmlspecialchars_decode($jr_topic_title ?  $jr_topic_title : $fr_title_name) . ' - ' . stripslashes($kunena_config->board_title));
-	
+	$document->setTitle(htmlspecialchars_decode($jr_topic_title ?  $jr_topic_title : $fr_title_name) . ' - ' . stripslashes($kunena_config->board_title));
+
 	$pathway1 = $firepath . $fireinfo;
 	$pathway2 = $firelast . $fireonline;
-        unset($spath, $parent_ids, $catids, $results, $sname);
 
-      echo '<div class = "'. $boardclass .'forum-pathway">';
-      echo $pathway1.$pathway2;
-      echo '</div>';
+	echo '<div class = "'. KUNENA_BOARD_CLASS .'forum-pathway">';
+    echo $pathway1.$pathway2;
+    echo '</div>';
 }
-?>
-<!-- / Pathway -->

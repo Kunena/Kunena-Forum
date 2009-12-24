@@ -20,11 +20,11 @@
 **/
 defined( '_JEXEC' ) or die('Restricted access');
 ?>
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
 <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=unfavorite'); ?>" method = "post" name = "postform">
 	<input type = "hidden" name = "do" value = "unfavorite"/>
 	<table class = "fb_blocktable" id = "fb_forumprofile_fav" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
@@ -38,11 +38,11 @@ defined( '_JEXEC' ) or die('Restricted access');
 			</tr>
 		</thead>
 
-		<tbody id = "<?php echo $boardclass ;?>fbuserprofile_tbody">
+		<tbody id = "<?php echo KUNENA_BOARD_CLASS ;?>fbuserprofile_tbody">
 			<tr class = "fb_sth">
-				<th class = "th-1 <?php echo $boardclass ;?>sectiontableheader"><?php echo _GEN_TOPICS; ?></th>
-				<th class = "th-2 <?php echo $boardclass ;?>sectiontableheader" style = "text-align:center; width:25%"><?php echo _GEN_AUTHOR; ?></th>
-				<th class = "th-3 <?php echo $boardclass ;?>sectiontableheader"><?php echo _GEN_DELETE; ?></th>
+				<th class = "th-1 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader"><?php echo _GEN_TOPICS; ?></th>
+				<th class = "th-2 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader" style = "text-align:center; width:25%"><?php echo _GEN_AUTHOR; ?></th>
+				<th class = "th-3 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader"><?php echo _GEN_DELETE; ?></th>
 			</tr>
 
 			<?php
@@ -69,7 +69,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 					foreach ($favdet as $fav)
 					{
 						$k = 1 - $k;
-						echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" >';
+						echo '<tr class="' . KUNENA_BOARD_CLASS . '' . $tabclass[$k] . '" >';
 						echo '<td class="td-1" width="73%" align="left">' . $enum . ': <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $fav->catid . '&amp;id=' . $fav->id) . '">' . kunena_htmlspecialchars(stripslashes($fav->subject));
 			?>
 
@@ -107,7 +107,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 			}
 			else
 			{
-				echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '"><td class="td-1" colspan = "3">' . _USER_NOFAVORITES . '</td></tr>';
+				echo '<tr class="' . KUNENA_BOARD_CLASS . '' . $tabclass[$k] . '"><td class="td-1" colspan = "3">' . _USER_NOFAVORITES . '</td></tr>';
 			}
 			?>
 

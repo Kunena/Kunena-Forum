@@ -20,11 +20,11 @@
 **/
 defined( '_JEXEC' ) or die('Restricted access');
 ?>
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
 <table class = "fb_blocktable " id = "fb_userprfmsg" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
 	<thead>
 		<tr>
@@ -33,29 +33,29 @@ defined( '_JEXEC' ) or die('Restricted access');
 					<span class = "fb_title"><?php echo _KUNENA_USERPROFILE_MESSAGES; ?></span>
 				</div>
 
-				<img id = "BoxSwitch_fbuserprofile__<?php echo $boardclass ;?>fbuserprofile_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = "" />
+				<img id = "BoxSwitch_fbuserprofile__<?php echo KUNENA_BOARD_CLASS ;?>fbuserprofile_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = "" />
                         </th>
 		</tr>
 	</thead>
 
-	<tbody id = "<?php echo $boardclass ;?>fbuserprofile_tbody">
+	<tbody id = "<?php echo KUNENA_BOARD_CLASS ;?>fbuserprofile_tbody">
 		<tr class = "fb_sth">
-			<th class = "th-1 <?php echo $boardclass ;?>sectiontableheader">&nbsp;
+			<th class = "th-1 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader">&nbsp;
 			</th>
 
-			<th class = "th-2 <?php echo $boardclass ;?>sectiontableheader"><?php echo _KUNENA_USERPROFILE_TOPICS; ?>
+			<th class = "th-2 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader"><?php echo _KUNENA_USERPROFILE_TOPICS; ?>
 			</th>
 
-			<th class = "th-3 <?php echo $boardclass ;?>sectiontableheader"><?php echo _KUNENA_USERPROFILE_CATEGORIES; ?>
+			<th class = "th-3 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader"><?php echo _KUNENA_USERPROFILE_CATEGORIES; ?>
 			</th>
 
-			<th class = "th-4 <?php echo $boardclass ;?>sectiontableheader"><?php echo _KUNENA_USERPROFILE_HITS; ?>
+			<th class = "th-4 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader"><?php echo _KUNENA_USERPROFILE_HITS; ?>
 			</th>
 
-			<th class = "th-5 <?php echo $boardclass ;?>sectiontableheader"><?php echo _KUNENA_USERPROFILE_DATE; ?>
+			<th class = "th-5 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader"><?php echo _KUNENA_USERPROFILE_DATE; ?>
 			</th>
 
-			<th class = "th-6 <?php echo $boardclass ;?>sectiontableheader">&nbsp;
+			<th class = "th-6 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader">&nbsp;
 			</th>
 		</tr>
 
@@ -137,7 +137,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 				$fbCatURL = JRoute::_("index.php?option=com_kunena" . KUNENA_COMPONENT_ITEMID_SUFFIX . "&amp;func=showcat&amp;catid=" . $item->catid);
 		?>
 
-			<tr class = "<?php echo ''.$boardclass.''. $tabclass[$k] . ''; ?>">
+			<tr class = "<?php echo ''.KUNENA_BOARD_CLASS.''. $tabclass[$k] . ''; ?>">
 				<td class = "td-1"><?php echo "<img src=\"" . $topic_emoticons[$item->topic_emoticon] . "\" alt=\"emo\" />"; ?>
 				</td>
 
@@ -176,7 +176,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 		?>
 
 			<tr>
-				<td colspan = "6" class = "<?php echo $boardclass ;?>profile-bottomnav">
+				<td colspan = "6" class = "<?php echo KUNENA_BOARD_CLASS ;?>profile-bottomnav">
 					<br/>
 
 					<b><?php echo _KUNENA_USERPROFILE_NOFORUMPOSTS; ?></b>
@@ -192,7 +192,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 		?>
 
 		<tr>
-			<td colspan = "6" class = "<?php echo $boardclass ;?>profile-bottomnav">
+			<td colspan = "6" class = "<?php echo KUNENA_BOARD_CLASS ;?>profile-bottomnav">
 <?php echo _KUNENA_USRL_DISPLAY_NR; ?>
 
 <?php

@@ -16,11 +16,11 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 ?>
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
 <table class = "fb_blocktable " id="fb_userinfo" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
@@ -34,7 +34,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
     <tbody>
         <tr>
-            <td class = "<?php echo $boardclass; ?>profileinfo" align="center">
+            <td class = "<?php echo KUNENA_BOARD_CLASS; ?>profileinfo" align="center">
                 <div class = "fb-usrprofile-misc">
                     <span class = "view-username"> <?php echo $msg_username; ?></span> <?php  if ( $kunena_config->userlist_usertype ) { ?><span class = "msgusertype">(<?php echo $msg_usertype; ?>)</span><?php } ?>
 

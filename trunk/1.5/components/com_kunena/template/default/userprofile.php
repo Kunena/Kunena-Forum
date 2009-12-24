@@ -95,11 +95,11 @@ if ($kunena_my->id)
         }
 ?>
 
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
             <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=userprofile&amp;do=update'); ?>" method = "post" name = "postform">
                 <input type = "hidden" name = "do" value = "update">
 
@@ -114,11 +114,11 @@ if ($kunena_my->id)
 
                     <tbody>
                         <tr class = "fb_sth">
-                            <th colspan = "3" class = "th-1 <?php echo $boardclass; ?>sectiontableheader"><?php echo _USER_GENERAL; ?>
+                            <th colspan = "3" class = "th-1 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader"><?php echo _USER_GENERAL; ?>
                             </th>
                         </tr>
 
-                        <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
+                        <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry1">
                             <td class = "td-1" colspan = "2">
                                 <strong><?php echo _USER_PREFERED; ?>*</strong>:
                             </td>
@@ -135,7 +135,7 @@ if ($kunena_my->id)
                             </td>
                         </tr>
 
-                        <tr class = "<?php echo $boardclass; ?>sectiontableentry2">
+                        <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry2">
                             <td class = "td-1">
                                 <strong><?php echo _USER_ORDER; ?>*</strong>:
                             </td>
@@ -153,7 +153,7 @@ if ($kunena_my->id)
                             </td>
                         </tr>
 
-                        <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
+                        <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry1">
                             <td class = "td-1" colspan = "2">
                                 <strong><?php echo _GEN_SIGNATURE; ?></strong>:
 
@@ -228,7 +228,7 @@ if ($kunena_my->id)
                             </td>
                         </tr>
 
-                        <tr class = "<?php echo $boardclass; ?>sectiontableentry2">
+                        <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry2">
                             <td colspan = "2" class = "td-1">&nbsp;
 
                             </td>
@@ -238,7 +238,7 @@ if ($kunena_my->id)
                             </td>
                         </tr>
 
-                        <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
+                        <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry1">
                             <td class = "td-1" colspan = "2">
                                 <?php
                                 if ($kunena_config->allowavatar)
@@ -322,7 +322,7 @@ if ($kunena_my->id)
                                 ?>
                         </tr>
 
-                        <tr class = "<?php echo $boardclass; ?>sectiontableentry2">
+                        <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry2">
                             <td colspan = "2" class = "td-1">&nbsp;
 
                             </td>
@@ -332,19 +332,19 @@ if ($kunena_my->id)
                             </td>
                         </tr>
 
-                        <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
+                        <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry1">
                             <td colspan = 3 class = "td-1">
                                 <input type = "checkbox" name = "unsubscribeAll" value = "1"><i><?php echo _USER_UNSUBSCRIBE_ALL; ?></i>
                             </td>
                         </tr>
 
-                        <tr class = "<?php echo $boardclass; ?>sectiontableentry2">
+                        <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry2">
                             <td colspan = 3 class = "td-1">
                                 <input type = "checkbox" name = "unfavoriteAll" value = "1"><i><?php echo _USER_UNFAVORITE_ALL; ?></i>
                             </td>
                         </tr>
 
-                        <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
+                        <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry1">
                             <td colspan = "3" class = "td-1">
                                 &nbsp;<input type = "submit" class = "button" value = "<?php echo _GEN_SUBMIT;?>">
                             </td>
@@ -357,11 +357,11 @@ if ($kunena_my->id)
 </div>
 </div>
 </div>
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
         <table class = "fb_blocktable" id ="fb_forumprofile_sub"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
@@ -395,7 +395,7 @@ if ($kunena_my->id)
                                 foreach ($subdet as $sub)
                                 {
                                     $k = 1 - $k;
-                                    echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '" >';
+                                    echo '<tr class="' . KUNENA_BOARD_CLASS . '' . $tabclass[$k] . '" >';
                                     echo '<td class="td-1" >' . $enum. ': <a href="'.JRoute::_(KUNENA_LIVEURLREL. '&amp;func=view&amp;catid=' . $sub->catid . '&amp;id=' . $sub->id ).'">' . $sub->subject . '</a> - ' . _GEN_BY . '  ' . $sub->name  .'</td>';
                                     echo '<td class="td-2" ><a href="'.JRoute::_(KUNENA_LIVEURLREL. '&amp;func=userprofile&amp;do=unsubscribe&amp;thread=' . $subs->thread) . '">' . _THREAD_UNSUBSCRIBE . '</a></td>';
                                     echo "</tr>";
@@ -404,7 +404,7 @@ if ($kunena_my->id)
                             }
                         }
                         else {
-                            echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '"><td class="td-1" colspan = "2" >' . _USER_NOSUBSCRIPTIONS . '</td></tr>';
+                            echo '<tr class="' . KUNENA_BOARD_CLASS . '' . $tabclass[$k] . '"><td class="td-1" colspan = "2" >' . _USER_NOSUBSCRIPTIONS . '</td></tr>';
                         }
                 ?>
             </tbody>
@@ -414,11 +414,11 @@ if ($kunena_my->id)
 </div>
 </div>
 </div>
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
         <table class = "fb_blocktable" id ="fb_forumprofile_fav" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
@@ -452,7 +452,7 @@ if ($kunena_my->id)
                         foreach ($favdet as $fav)
                         {
                             $k = 1 - $k;
-                            echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '">';
+                            echo '<tr class="' . KUNENA_BOARD_CLASS . '' . $tabclass[$k] . '">';
                             echo '<td class="td-1">' . $enum . ': <a href="'.JRoute::_(KUNENA_LIVEURLREL. '&amp;func=view&amp;catid=' . $fav->catid . '&amp;id=' . $fav->id) . '">' . $fav->subject . '</a> - ' . _GEN_BY . ' ' . $fav->name .'</td>';
                             echo '<td class="td-2"><a href="'.JRoute::_(KUNENA_LIVEURLREL. '&amp;func=userprofile&amp;do=unfavorite&amp;thread=' . $favs->thread) . '">' . _THREAD_UNFAVORITE . '</a></td>';
                             echo "</tr>";
@@ -461,7 +461,7 @@ if ($kunena_my->id)
                     }
                 }
                 else {
-                    echo '<tr class="' . $boardclass . '' . $tabclass[$k] . '"><td class="td-1" colspan = "2">' . _USER_NOFAVORITES . '</td></tr>';
+                    echo '<tr class="' . KUNENA_BOARD_CLASS . '' . $tabclass[$k] . '"><td class="td-1" colspan = "2">' . _USER_NOFAVORITES . '</td></tr>';
                 }
                 ?>
             </tbody>
@@ -500,18 +500,18 @@ if ($kunena_my->id)
                         foreach ($modslist as $mods)
                         { //get all moderator details for each moderation
                             $k = 1 - $k;
-                            echo "<tr class=\"" . $boardclass . '' . $tabclass[$k] . "\">";
+                            echo "<tr class=\"" . KUNENA_BOARD_CLASS . '' . $tabclass[$k] . "\">";
                             echo ' <td class="td-1">' . $enum . ': ' . $mods->name . '</td>';
                             echo "</tr>";
                             $enum++;
                         }
                     }
                     else {
-                        echo "<tr class=\"" . $boardclass . '' . $tabclass[$k] . "\"><td class=\"td-1\">" . _USER_MODERATOR_NONE . "</td></tr>";
+                        echo "<tr class=\"" . KUNENA_BOARD_CLASS . '' . $tabclass[$k] . "\"><td class=\"td-1\">" . _USER_MODERATOR_NONE . "</td></tr>";
                     }
                 }
                 else {
-                    echo "<tr class=\"" . $boardclass . '' . $tabclass[$k] . "\"><td class=\"td-1\">" . _USER_MODERATOR_ADMIN . "</td></tr>";
+                    echo "<tr class=\"" . KUNENA_BOARD_CLASS . '' . $tabclass[$k] . "\"><td class=\"td-1\">" . _USER_MODERATOR_ADMIN . "</td></tr>";
                 }
 
                 echo "</tbody></table>";
@@ -622,11 +622,11 @@ else
 }
 ?>
 <!-- Begin: Forum Jump -->
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
 <table class = "fb_blocktable" id="fb_bottomarea"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>

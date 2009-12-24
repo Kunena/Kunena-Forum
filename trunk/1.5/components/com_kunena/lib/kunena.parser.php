@@ -345,7 +345,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 break;
             case 'url':
                 $tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
-                if(substr($tempstr, 0, 7)!='http://') {
+                if(!preg_match("`^(https?://)`",$tempstr)){
                   $tempstr = 'http://'.$tempstr;
                 }
                 $tag_new = "<a href='".$tempstr."' rel=\"nofollow\" target=\"_blank\">".$between.'</a>';
@@ -424,7 +424,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 						$position	= '$tempstr';
 						echo $renderer->render($position, $options, null);
                 	}
-                	else 
+                	else
                 	{
                			trigger_error ('Joomla module: '.$tempstr.' does not exist.' ,E_USER_NOTICE);
                 	}

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0
 
+24-Dec-2009 Xillibit
+# [#19030] URLs using HTTPS protocol are not working in img tag
+
 24-Dec-2009 fxstein
 + [#19065] Add definitions of external functions (e.g. CB) to prevent warnings
 # [#19065] Cleanup frontend based on code analysis - fixed various bugs

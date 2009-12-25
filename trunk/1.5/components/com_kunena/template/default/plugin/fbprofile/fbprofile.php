@@ -58,11 +58,9 @@ function showprf($userid, $page)
     $kunena_acl = &JFactory::getACL();
     $kunena_my = &JFactory::getUser();
     $kunena_db = &JFactory::getDBO();
-    // ERROR: mixed global $fbIcons
     global $fbIcons;
 
     //Get userinfo needed later on, this limits the amount of queries
-    unset($userinfo);
     $kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_users AS a INNER JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$userid}'");
 
     $userinfo = $kunena_db->loadObject();

@@ -22,18 +22,18 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$id = JRequest::getInt('id', 0);
+$id 		= JRequest::getInt('id', 0);
 if (!$id) $id = JRequest::getInt('msg_id');
-$catid = JRequest::getInt('catid', 0);
-$reporter = JRequest::getInt('reporter', 0);
-$reason = strval(JRequest::getVar('reason'));
-$text = strval(JRequest::getVar('text'));
-$type = JRequest::getInt('type', 0); // 0 = send e-mail, 1 = send pm
+$catid 		= JRequest::getInt('catid', 0);
+$reporter 	= JRequest::getInt('reporter', 0);
+$reason 	= strval(JRequest::getVar('reason'));
+$text 		= strval(JRequest::getVar('text'));
+$do 		= JRequest::getCmd('do', '');
 
 switch ($do)
 {
     case 'report':
-        ReportMessage($id, $catid, $reporter, $reason, $text, (int)$type);
+        ReportMessage($id, $catid, $reporter, $reason, $text);
 
         break;
 
@@ -43,7 +43,7 @@ switch ($do)
         break;
 }
 
-function ReportMessage($id, $catid, $reporter, $reason, $text, $type) 
+function ReportMessage($id, $catid, $reporter, $reason, $text, $type=0)
 {
     $kunena_my = &JFactory::getUser();
     $kunena_db = &JFactory::getDBO();
@@ -56,7 +56,7 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
 
 	if (!empty($reason) && !empty($text))
 	{
-        
+
     $kunena_db->setQuery("SELECT a.*, b.mesid, b.message AS msg_text FROM #__fb_messages AS a"
     . " LEFT JOIN #__fb_messages_text AS b ON b.mesid = a.id"
     . " WHERE a.id='{$id}'");
@@ -113,23 +113,18 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
             SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins);
 
             break;
-
-        case '1':
-            SendReporttoPM($reporter, $subject, $message, $msglink, $mods, $admins);
-
-            break;
     }
-    
+
     echo '<div align="center">' . _KUNENA_REPORT_SUCCESS;
     echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&amp;id='.$id).'#'.$id, 3500);
-    
+
 	}
     else
     {
     	echo '<div align="center">';
-    	if (empty($reason)) echo _POST_FORGOT_SUBJECT; 
+    	if (empty($reason)) echo _POST_FORGOT_SUBJECT;
     	else if (empty($text)) echo _POST_FORGOT_MESSAGE;
-    	
+
     }
     echo '<br /><br />';
     echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $id) . '#' . $id . '">' . _POST_SUCCESS_VIEW . '</a><br />';
@@ -157,46 +152,6 @@ function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins)
         $email = $kunena_db->loadResult();
         JUtility::sendMail($kunena_config->email, stripslashes($kunena_config->board_title)." ".trim(_GEN_FORUM), $email, $subject, $message);
         }
-    }
-
-function SendReporttoPM($sender, $subject, $message, $msglink, $mods, $admins) {
-    $kunena_config =& CKunenaConfig::getInstance();
-
-    $kunena_db = &JFactory::getDBO();
-
-    switch ($kunena_config->pm_component)
-    {
-        case 'no': break;
-
-        //myPMS II Open Source
-        case 'pms':
-            SendPMS();
-
-            break;
-
-        //Clexus PM
-        case 'clexuspm':
-            SendClexusPM($reporter, $subject, $message, $msglink, $mods, $admins);
-
-            break;
-
-        //uddeIM
-        case 'uddeim':
-            SendUddeIM();
-
-            break;
-
-        //JIM
-        case 'jim':
-            SendJIM();
-
-            break;
-
-        case 'missus':
-            SendMissus();
-
-            break;
-    }
     }
 
 function ReportForm($id, $catid) {
@@ -279,21 +234,3 @@ function ReportForm($id, $catid) {
 
 <?php
     }
-
-function SendClexusPM($reporter, $subject, $message, $msglink, $mods, $admins) {
-    $kunena_db = &JFactory::getDBO();
-    $time = JHTML::_('date', CKunenaTools::fbGetInternalTime(), '%Y-%m-%d %H:%M:%S');
-
-    foreach ($admins as $admin) {
-        $kunena_db->setQuery("INSERT INTO #__mypms" . "\n ( `userid` , `whofrom` , `time` , `readstate` , `subject` , `message` , `owner` , `folder` , `sent_id` , `replyid` , `ip` , `alert` , `flag` , `pm_notify` , `email_notify` )"
-                                . "\n VALUES ('$admin->id', '$reporter', '$time', '0', '$subject', '$message', '$admin->id', NULL , '0', '0', NULL , '0', '0', '0', '1'");
-        $kunena_db->query();
-        }
-
-    foreach ($mods as $mod) {
-        $kunena_db->setQuery("INSERT INTO #__mypms" . "\n ( `userid` , `whofrom` , `time` , `readstate` , `subject` , `message` , `owner` , `folder` , `sent_id` , `replyid` , `ip` , `alert` , `flag` , `pm_notify` , `email_notify` )"
-                                . "\n VALUES ('$mod->id', '$reporter', '$time', '0', '$subject', '$message', '$mod->id', NULL , '0', '0', NULL , '0', '0', '0', '1'");
-        $kunena_db->query();
-        }
-    }
-?>

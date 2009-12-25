@@ -185,7 +185,6 @@ else
 
                     if ($lastPosttime != 0)
                     {
-                        unset($obj_lp);
                         $kunena_db->setQuery("SELECT id, thread, catid,name, subject, userid FROM #__fb_messages WHERE time='{$lastPosttime}' AND hold='0' AND moved!='1'", 0, 1);
                         $obj_lp = $kunena_db->loadObject();
                         $latestname = $obj_lp->name;
@@ -386,7 +385,7 @@ else
 
 						$mod_cnt = 0;
 						foreach ($modslist as $mod) {
-							if ($mod_cnt) echo ', '; 
+							if ($mod_cnt) echo ', ';
 							$mod_cnt++;
 							echo CKunenaLink::GetProfileLink($kunena_config, $mod->userid, ($kunena_config->username ? $mod->username : $mod->name));
                         }

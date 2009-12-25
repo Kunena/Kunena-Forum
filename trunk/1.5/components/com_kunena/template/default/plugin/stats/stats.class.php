@@ -34,20 +34,17 @@ $kunena_db->setQuery("SELECT SUM(numTopics) AS titles, SUM(numPosts) AS msgs FRO
 $totaltmp = $kunena_db->loadObject();
 $totaltitles = !empty($totaltmp->titles)?$totaltmp->titles:0;
 $totalmsgs = !empty($totaltmp->msgs)?$totaltmp->msgs + $totaltitles:$totaltitles;
-unset($totaltmp);
 
 $kunena_db->setQuery("SELECT SUM(parent='0') AS totalcats, SUM(parent>'0') AS totalsections FROM #__fb_categories");
 $totaltmp = $kunena_db->loadObject();
 $totalsections = !empty($totaltmp->totalsections)?$totaltmp->totalsections:0;
 $totalcats = !empty($totaltmp->totalcats)?$totaltmp->totalcats:0;
-unset($totaltmp);
 
 $fb_queryName = $kunena_config->username ? "username" : "name";
 $kunena_db->setQuery("SELECT id, {$fb_queryName} AS username FROM #__users WHERE block='0' AND activation='' ORDER BY id DESC", 0, 1);
 $_lastestmember = $kunena_db->loadObject();
 $lastestmember = $_lastestmember->username;
 $lastestmemberid =$_lastestmember->id;
-unset($_lastestmember);
 
 $todaystart = strtotime(date('Y-m-d'));
 $yesterdaystart = $todaystart - (1 * 24 * 60 * 60);
@@ -62,8 +59,6 @@ $todayopen = !empty($totaltmp->todayopen)?$totaltmp->todayopen:0;
 $yesterdayopen = !empty($totaltmp->yesterdayopen)?$totaltmp->yesterdayopen:0;
 $todayanswer = !empty($totaltmp->todayanswer)?$totaltmp->todayanswer:0;
 $yesterdayanswer = !empty($totaltmp->yesterdayanswer)?$totaltmp->yesterdayanswer:0;
-unset($totaltmp);
-
 } // ENDIF: showgenstats
 
 $PopUserCount = $kunena_config->popusercount;
@@ -105,7 +100,7 @@ if ($kunena_config->showpopsubjectstats)
 	$kunena_session =& CKunenaSession::getInstance();
 	$kunena_db->setQuery("SELECT * FROM #__fb_messages WHERE moved='0' AND hold='0' AND parent='0' AND catid IN ($kunena_session->allowed) ORDER BY hits DESC", 0, $PopSubjectCount);
 	$toptitles = $kunena_db->loadObjectList();
-	
+
 	$toptitlehits = !empty($toptitles[0]->hits)?$toptitles[0]->hits:0;
 } // ENDIF: showpopsubjectstats
 

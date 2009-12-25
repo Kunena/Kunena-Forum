@@ -22,11 +22,12 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$kunena_config =& CKunenaConfig::getInstance();
-$kunena_db = &JFactory::getDBO();
+$kunena_config 	= &CKunenaConfig::getInstance();
+$kunena_db 		= &JFactory::getDBO();
 
 $func 			= strtolower(JRequest::getCmd('func', ''));
 $catid 			= JRequest::getInt('catid', 0);
+$id 			= JRequest::getInt('id', 0);
 
 ?>
 <!-- Pathway -->
@@ -66,7 +67,7 @@ if ($func != "")
         $jr_path_menu = array_reverse($jr_path_menu);
 
         //attach topic name
-	$jr_topic_title = '';
+		$jr_topic_title = '';
         if ($sfunc == "view" and $id)
         {
             $sql = "SELECT subject, id FROM #__fb_messages WHERE id='{$id}'";

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0
 
+25-Dec-2009 fxstein
+# [#19065] More frontend cleanup based on code analysis - fixed various bugs
+
 24-Dec-2009 Xillibit
 # [#19030] URLs using HTTPS protocol are not working in img tag
 

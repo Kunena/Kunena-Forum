@@ -69,10 +69,8 @@ if (count($allCat) > 0)
 if (in_array($catid, $threadids))
 {
     //Yes, so now $threadids should contain only the current $catid:
-    unset ($threadids);
     $threadids[] = $catid;
     //get new categories list for this category only:
-    unset ($categories);
     $kunena_db->setQuery("SELECT * FROM #__fb_categories WHERE parent='0' and published='1' and id='{$catid}' ORDER BY ordering");
     $categories[$category->parent] = $kunena_db->loadObjectList();
     	check_dberror("Unable to load categories.");
@@ -288,7 +286,6 @@ if (count($categories[0]) > 0)
 
                                 $numPending = (int)$numPending;
                                 //    get latest post info
-                                unset($thisThread);
                                 $kunena_db->setQuery(
                                 "SELECT m.thread, COUNT(*) AS totalmessages
                                 FROM #__fb_messages AS m
@@ -433,7 +430,7 @@ if (count($categories[0]) > 0)
                                                     <?php
 
                                                     for ($row_count = 0; $row_count < count($forumparents); $row_count++)
-                                                    {														   
+                                                    {
 														  echo "<div{$subwidth} class=\"{KUNENA_BOARD_CLASS}cc-subcat fbm\">";
 
                                                             $forumparent = $forumparents[$row_count];
@@ -536,7 +533,7 @@ if (count($categories[0]) > 0)
                                                 <?php
                                                 $mod_cnt = 0;
                                                 foreach ($modslist as $mod) {
-					                               	if ($mod_cnt) echo ', '; 
+					                               	if ($mod_cnt) echo ', ';
 					                               	$mod_cnt++;
 													echo CKunenaLink::GetProfileLink($kunena_config, $mod->userid, ($kunena_config->username ? $mod->username : $mod->name));
                                                 }

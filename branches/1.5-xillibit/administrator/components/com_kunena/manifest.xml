@@ -2,8 +2,8 @@
 <!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
 <install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>
-	<version>1.5.8</version>
-	<versionname>Whisper</versionname>
+	<version>1.6.0-DEV</version>
+	<versionname>Gespraech</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
 	<author>www.Kunena.com</author>
@@ -38,7 +38,6 @@
 			<folder>install</folder>
 			<folder>language</folder>
 			<folder>lib</folder>
-			<folder>plugin</folder>
         </files>
     <menu>Kunena Forum</menu>
 	</administration>

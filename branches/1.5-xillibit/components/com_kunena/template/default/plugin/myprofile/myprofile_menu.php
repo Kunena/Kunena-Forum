@@ -19,7 +19,7 @@
 * @author TSMF & Jan de Graaff
 **/
 defined( '_JEXEC' ) or die('Restricted access');
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
@@ -45,7 +45,7 @@ $fbConfig =& CKunenaConfig::getInstance();
                 <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile'); ?>"> <?php echo _KUNENA_MYPROFILE_SUMMARY; ?> </a>
 <?php
  	// Only show userdetails link if we are in charge of the profile
-    if ($fbConfig->fb_profile == 'fb')
+    if ($kunena_config->fb_profile == 'fb')
     {
 ?>
             	<a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=userdetails'); ?>"> <?php echo _KUNENA_EDIT_TITLE; ?> </a>
@@ -53,7 +53,7 @@ $fbConfig =& CKunenaConfig::getInstance();
     }
 
     // Only show avatar link if we are in charge of it
-    if ($fbConfig->allowavatar && $fbConfig->avatar_src == 'fb')
+    if ($kunena_config->allowavatar && $kunena_config->avatar_src == 'fb')
     {
 ?>
             	<a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=avatar'); ?>"> <?php echo _KUNENA_MYPROFILE_MYAVATAR; ?></a>
@@ -72,7 +72,7 @@ $fbConfig =& CKunenaConfig::getInstance();
 
 <?php
  //Clexus PM
-    if ($fbConfig->pm_component == 'clexuspm' || $fbConfig->fb_profile == "clexuspm")
+    if ($kunena_config->pm_component == 'clexuspm' || $kunena_config->fb_profile == "clexuspm")
     {
        ?>
        <tr>
@@ -91,7 +91,7 @@ $fbConfig =& CKunenaConfig::getInstance();
     }
 
     // UddeIM
-    if ($fbConfig->pm_component == 'uddeim')
+    if ($kunena_config->pm_component == 'uddeim')
     {
 ?>
         <tr>
@@ -107,7 +107,7 @@ $fbConfig =& CKunenaConfig::getInstance();
     }
 
     // MISSUS
-    if ($fbConfig->pm_component == 'missus')
+    if ($kunena_config->pm_component == 'missus')
     {
 
 ?>
@@ -126,7 +126,7 @@ $fbConfig =& CKunenaConfig::getInstance();
     }
 
     // JIM
-    if ($fbConfig->pm_component == 'jim')
+    if ($kunena_config->pm_component == 'jim')
     {
 
 ?>

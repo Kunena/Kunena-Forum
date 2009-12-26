@@ -21,7 +21,11 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
-$fbConfig =& CKunenaConfig::getInstance();
+
+global $func, $boardclass, $id, $catid, $kunena_db;
+global $kunena_topic_tile, $forumLocked;
+
+$kunena_config =& CKunenaConfig::getInstance();
 ?>
 <!-- Pathway -->
 <?php
@@ -34,8 +38,10 @@ if ($func != "")
     <div class = "<?php echo $boardclass ?>forum-pathway">
         <?php
         $catids = intval($catid);
-        $jr_path_menu = array ();
-        echo '<div class="path-element-first">' . CKunenaLink::GetKunenaLink( kunena_htmlspecialchars(stripslashes($fbConfig->board_title)) ) . '</div>';
+        $kunena_path_menu = array ();
+        echo '<div class="path-element-first">' . CKunenaLink::GetKunenaLink( kunena_htmlspecialchars(stripslashes($kunena_config->board_title)) ) . '</div>';
+
+        $spath = '';
 
         while ($catids > 0)
         {
@@ -51,10 +57,10 @@ if ($func != "")
             if ($catid == $catids && $sfunc != "view")
             {
                 $fr_title_name = $fr_name;
-                $jr_path_menu[] = $fr_name;
+                $kunena_path_menu[] = $fr_name;
             }
             else {
-                $jr_path_menu[] = $sname;
+                $kunena_path_menu[] = $sname;
             }
 
             // write path
@@ -70,7 +76,7 @@ if ($func != "")
         }
 
         //reverse the array
-        $jr_path_menu = array_reverse($jr_path_menu);
+        $kunena_path_menu = array_reverse($kunena_path_menu);
 
         //  echo $shome." " . $jr_arrow .$jr_arrow ." ". $spath;
         //attach topic name
@@ -78,13 +84,13 @@ if ($func != "")
         {
             $sql = "SELECT subject, id FROM #__fb_messages WHERE id='{$id}'";
             $kunena_db->setQuery($sql);
-            $jr_topic_title = stripslashes(kunena_htmlspecialchars($kunena_db->loadResult()));
-            $jr_path_menu[] = $jr_topic_title;
-        //     echo " " . $jr_arrow .$jr_arrow ." ". $jr_topic_title;
+            $kunena_topic_tile = stripslashes(kunena_htmlspecialchars($kunena_db->loadResult()));
+            $kunena_path_menu[] = $kunena_topic_tile;
+        //     echo " " . $jr_arrow .$jr_arrow ." ". $kunena_topic_tile;
         }
 
         // print the list
-        $jr_forum_count = count($jr_path_menu);
+        $jr_forum_count = count($kunena_path_menu);
 
 		$fireinfo = '';
         if (!empty($forumLocked))
@@ -104,15 +110,15 @@ if ($func != "")
         for ($i = 0; $i < $jr_forum_count; $i++)
         {
             if ($i == $jr_forum_count-1) {
-                echo '<div class="path-element-last">' . $jr_path_menu[$i] . $fireinfo . '</div>';
+                echo '<div class="path-element-last">' . $kunena_path_menu[$i] . $fireinfo . '</div>';
             }
             else {
-                echo '<div class="path-element">' . $jr_path_menu[$i] . '</div>';
+                echo '<div class="path-element">' . $kunena_path_menu[$i] . '</div>';
             }
         }
 
          //get viewing
-        $fb_queryName = $fbConfig->username ? "username" : "name";
+        $fb_queryName = $kunena_config->username ? "username" : "name";
 		$query= "SELECT w.userid, u.id, u.{$fb_queryName} AS username, k.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS k ON k.userid=w.userid WHERE w.link like '%" . addslashes($_SERVER['REQUEST_URI']) . "%' GROUP BY w.userid ORDER BY u.{$fb_queryName} ASC";
 		$kunena_db->setQuery($query);
 		$users = $kunena_db->loadObjectList();
@@ -132,11 +138,11 @@ if ($func != "")
 			foreach ($users as $user) {
 				if ($user->userid != 0)
 				{
-					if($user==$lastone && !$totalguest){ 
+					if($user==$lastone && !$totalguest){
 					$divider = '';
 					}
 					if ( $user->showOnline > 0 ){
-					echo CKunenaLink::GetProfileLink($fbConfig,  $user->userid, $user->username) . $divider.' ';
+					echo CKunenaLink::GetProfileLink($kunena_config,  $user->userid, $user->username) . $divider.' ';
 					}
 				}
 				else
@@ -150,11 +156,11 @@ if ($func != "")
         unset($shome, $spath, $parent_ids, $catids, $results, $sname);
         $fr_title = '';
 		if (!empty($fr_title_name)) $fr_title .= $fr_title_name;
-		if (!empty($jr_topic_title)) $fr_title .= $jr_topic_title;
+		if (!empty($kunena_topic_tile)) $fr_title .= $kunena_topic_tile;
 
 		$document=& JFactory::getDocument();
 
-		$document->setTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($fbConfig->board_title));
+		$document->setTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($kunena_config->board_title));
         ?>
 		</div>
     </div>

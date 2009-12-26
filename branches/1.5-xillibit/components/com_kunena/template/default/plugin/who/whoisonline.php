@@ -22,16 +22,16 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 $kunena_my = &JFactory::getUser();
 
-if ($fbConfig->showstats && $fbConfig->showwhoisonline)
+if ($kunena_config->showstats && $kunena_config->showwhoisonline)
 {
 ?>
 <!-- WHOIS ONLINE -->
 <?php
     $whoislink = JRoute::_('index.php?option=com_kunena&amp;func=who');
-    $fb_queryName = $fbConfig->username ? "username" : "name";
+    $fb_queryName = $kunena_config->username ? "username" : "name";
     $query
         = "SELECT w.userip, w.time, w.what, u.{$fb_queryName} AS username, u.id, k.moderator, k.showOnline "
         . " FROM #__fb_whoisonline AS w"
@@ -95,7 +95,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
                     <?php
                     }
                     ?>
-                     <?php if ($is_Moderator){
+                     <?php if ($kunena_is_moderator){
 
 					 ?>
 
@@ -112,7 +112,7 @@ if ($fbConfig->showstats && $fbConfig->showwhoisonline)
                         $time = date("H:i:s", $user->time);
                     ?>
 
-                  		 <?php if ( $is_Moderator && $user->showOnline < 1 ){ ?>
+                  		 <?php if ( $kunena_is_moderator && $user->showOnline < 1 ){ ?>
 
                             <a class = "whois<?php echo $user->moderator;?>  <?php echo "fb_group_".$grp->id;?>" href = "<?php echo CKunenaLink::GetProfileURL($user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
 

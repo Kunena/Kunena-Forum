@@ -38,7 +38,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 	<tbody>
 		<?php
-		if (!$is_admin)
+		if (!$kunena_is_admin)
 		{
 			$enum = 1; //reset value
 			$tabclass = array

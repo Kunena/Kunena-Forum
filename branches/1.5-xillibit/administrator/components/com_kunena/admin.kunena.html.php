@@ -2699,7 +2699,7 @@ echo $pane->endPane();
 
                     <th algin = "left" width = "10"><?php echo _KUNENA_USRL_NAME; ?>
                     </th>
-                    
+
                     <th algin = "left" width = "10"><?php echo _KUNENA_USRL_REALNAME; ?>
                     </th>
 
@@ -2741,7 +2741,7 @@ echo $pane->endPane();
                                 <td width = "100">
                                     <a href = "#edit" onclick = "return listItemTask('cb<?php echo $i; ?>','userprofile')"><?php echo $pl->username; ?></a>
                                 </td>
-                                
+
                                 <td width = "100">
                                     <a href = "#edit" onclick = "return listItemTask('cb<?php echo $i; ?>','userprofile')"><?php echo $pl->name; ?></a>
                                 </td>
@@ -3686,7 +3686,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
 				<td width="100"><?php echo _KUNENA_RANKSIMAGE; ?></td>
 				<td><select name="rank_image" onchange="update_rank(this.options[selectedIndex].value);"><?php echo $filename_list; ?></select> &nbsp; <img name="rank_image" src="<?php echo $edit_img; ?>" border="0" alt="" /></td>
 			</tr>
-   <tr>
+   			<tr>
 				<td width="100"><?php echo _KUNENA_RANKSMIN; ?></td>
     <td><input class="post" type="text" name="rank_min" value="<?php echo $row->rank_min;?>" /></td>
 			<tr>

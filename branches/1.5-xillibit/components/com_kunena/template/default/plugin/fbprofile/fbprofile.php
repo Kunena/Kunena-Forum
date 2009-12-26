@@ -18,9 +18,9 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 $app =& JFactory::getApplication();
 $kunena_acl = &JFactory::getACL();
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 
-if ($fbConfig->fb_profile == 'cb') {
+if ($kunena_config->fb_profile == 'cb') {
         $userid = JRequest::getInt('userid', 0);
 	$url = CKunenaCBProfile::getProfileURL($userid);
 	header("HTTP/1.1 307 Temporary Redirect");
@@ -29,7 +29,7 @@ if ($fbConfig->fb_profile == 'cb') {
 }
 
 $document=& JFactory::getDocument();
-$document->setTitle(_KUNENA_USERPROFILE_PROFILE . ' - ' . stripslashes($fbConfig->board_title));
+$document->setTitle(_KUNENA_USERPROFILE_PROFILE . ' - ' . stripslashes($kunena_config->board_title));
 
 if ($kunena_my->id) //registered only
 {
@@ -54,7 +54,7 @@ else {
 
 function showprf($userid, $page)
 {
-    $fbConfig =& CKunenaConfig::getInstance();
+    $kunena_config =& CKunenaConfig::getInstance();
     $kunena_acl = &JFactory::getACL();
     $kunena_my = &JFactory::getUser();
     $kunena_db = &JFactory::getDBO();
@@ -79,10 +79,10 @@ function showprf($userid, $page)
 	} else {
 		// Check moderator status (admin is moderator)
 		$aro_group = $kunena_acl->getAroGroup($userid);
-		$is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
+		$kunena_is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
 
 		// there's no profile; set userid and moderator status.
-		$kunena_db->setQuery("INSERT INTO #__fb_users (userid,moderator) VALUES ('$userid','$is_admin')");
+		$kunena_db->setQuery("INSERT INTO #__fb_users (userid,moderator) VALUES ('$userid','$kunena_is_admin')");
 		$kunena_db->query();
 		check_dberror('Unable to create user profile.');
 
@@ -108,7 +108,7 @@ function showprf($userid, $page)
     //get the username:
     $fb_username = "";
 
-    if ($fbConfig->username) {
+    if ($kunena_config->username) {
         $fb_queryName = "username";
     }
     else {
@@ -120,31 +120,31 @@ function showprf($userid, $page)
     $lists["userid"] = $userid;
 
 	$msg_username = $fb_username;
-    // $msg_username = ($fmessage->email != "" && $kunena_my->id > 0 && $fbConfig->showemail == '1') ? "<a href=\"mailto:" . $fmessage->email . "\">" . $fb_username . "</a>" : $fb_username;
+    // $msg_username = ($fmessage->email != "" && $kunena_my->id > 0 && $kunena_config->showemail == '1') ? "<a href=\"mailto:" . $fmessage->email . "\">" . $fb_username . "</a>" : $fb_username;
 
-    if ($fbConfig->allowavatar)
+    if ($kunena_config->allowavatar)
     {
         $Avatarname = $userinfo->username;
 
-        if ($fbConfig->avatar_src == "jomsocial")
+        if ($kunena_config->avatar_src == "jomsocial")
 		{
 			// Get CUser object
 			$user =& CFactory::getUser($userid);
 		    $msg_avatar = '<span class="fb_avatar"><img src="' . $user->getAvatar() . '" alt="" /></span>';
 		}
-        else if ($fbConfig->avatar_src == "clexuspm") {
+        else if ($kunena_config->avatar_src == "clexuspm") {
             $msg_avatar = '<span class="fb_avatar"><img src="' . MyPMSTools::getAvatarLinkWithID($userid, "b") . '" alt="" /></span>';
         }
-        else if ($fbConfig->avatar_src == "cb")
+        else if ($kunena_config->avatar_src == "cb")
         {
             $kunenaProfile = CKunenaCBProfile::getInstance();
 			$msg_avatar = '<span class="fb_avatar">' . $kunenaProfile->showAvatar($userid, '', 0) . '</span>';
         }
-		else if ($fbConfig->avatar_src == "aup")
+		else if ($kunena_config->avatar_src == "aup")
 		{
 			$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
 			if ( file_exists($api_AUP)) {
-				( $fbConfig->fb_profile=='aup' ) ? $showlink=1 : $showlink=0;
+				( $kunena_config->fb_profile=='aup' ) ? $showlink=1 : $showlink=0;
 				$msg_avatar = '<span class="fb_avatar">'.AlphaUserPointsHelper::getAupAvatar( $userinfo->userid, $showlink ).'</span>';
 			}										
 		}		
@@ -156,7 +156,7 @@ function showprf($userid, $page)
         	{
         		if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/l_' . $avatar))
         		{
-        			$msg_avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '"  alt="" style="max-width: '.$fbConfig->avatarwidth.'px; max-height: '.$fbConfig->avatarheight.'px;" /></span>';
+        			$msg_avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '"  alt="" style="max-width: '.$kunena_config->avatarwidth.'px; max-height: '.$kunena_config->avatarheight.'px;" /></span>';
 				}
 				else
 				{
@@ -168,7 +168,7 @@ function showprf($userid, $page)
         }
     }
 
-    if ($fbConfig->showuserstats)
+    if ($kunena_config->showuserstats)
     {
         //user type determination
         $ugid = $userinfo->gid;
@@ -208,7 +208,7 @@ function showprf($userid, $page)
         $numPosts = (int)$userinfo->posts;
 
 							//ranking
-							if ($fbConfig->showranking)
+							if ($kunena_config->showranking)
 							{
 
 								if ($userinfo->rank != '0')
@@ -244,7 +244,7 @@ function showprf($userid, $page)
 													$rImg = KUNENA_URLRANKSPATH . 'rankadmin.gif';
 									}
 
-									if ($fbConfig->rankimages) {
+									if ($kunena_config->rankimages) {
 													$msg_userrankimg = '<img src="' . $rImg . '" alt="" />';
 									}
 
@@ -252,7 +252,7 @@ function showprf($userid, $page)
 
             $useGraph = 0; //initialization
 
-            if (!$fbConfig->poststats)
+            if (!$kunena_config->poststats)
             {
                 $msg_posts = '<div class="viewcover">' .
                              "<strong>" . _POSTS . " $numPosts" . "</strong>" .
@@ -265,7 +265,7 @@ function showprf($userid, $page)
                 //$myGraph->SetGraphTitle(_POSTS);
                 $myGraph->AddValue(_POSTS, $numPosts);
                 $myGraph->SetRowSortMode(0);
-                $myGraph->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $fbConfig->statscolor . "m.png");
+                $myGraph->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $kunena_config->statscolor . "m.png");
                 $myGraph->SetBarImg2(KUNENA_URLEMOTIONSPATH . "graph.gif");
                 $myGraph->SetMaxVal($maxPosts);
                 $myGraph->SetShowCountsMode(2);
@@ -282,7 +282,7 @@ function showprf($userid, $page)
 	// Start Integration AlphaUserPoints
 	// *********************************
 	$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php'; 	
-	if ($fbConfig->alphauserpoints && file_exists($api_AUP)) {
+	if ($kunena_config->alphauserpoints && file_exists($api_AUP)) {
 		//Get the max# of points for any one user
 		$database  =& JFactory::getDBO();	
 		$database->setQuery("SELECT max(points) from #__alpha_userpoints");
@@ -294,7 +294,7 @@ function showprf($userid, $page)
 		$myGraphAUP = new phpGraph;
 		$myGraphAUP->AddValue(_KUNENA_AUP_POINTS, $numPoints);
 		$myGraphAUP->SetRowSortMode(0);
-		$myGraphAUP->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $fbConfig->statscolor . "m.png");
+		$myGraphAUP->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $kunena_config->statscolor . "m.png");
 		$myGraphAUP->SetBarImg2(KUNENA_URLEMOTIONSPATH . "graph.gif");
 		$myGraphAUP->SetMaxVal($maxPoints);
 		$myGraphAUP->SetShowCountsMode(2);
@@ -308,7 +308,7 @@ function showprf($userid, $page)
 	// *******************************
 
     //karma points and buttons
-    if ($fbConfig->showkarma && $userid != '0')
+    if ($kunena_config->showkarma && $userid != '0')
     {
         $karmaPoints = $userinfo->karma;
         $karmaPoints = (int)$karmaPoints;
@@ -343,7 +343,7 @@ function showprf($userid, $page)
 
     /*let's see if we should use uddeIM integration */
 
-    if ($fbConfig->pm_component == "uddeim" && $userid && $kunena_my->id)
+    if ($kunena_config->pm_component == "uddeim" && $userid && $kunena_my->id)
     {
 
         //we should offer the user a PMS link
@@ -362,7 +362,7 @@ function showprf($userid, $page)
     }
 
     /*let's see if we should use myPMS2 integration */
-    if ($fbConfig->pm_component == "pms" && $userid && $kunena_my->id)
+    if ($kunena_config->pm_component == "pms" && $userid && $kunena_my->id)
     {
         //we should offer the user a PMS link
         //first get the username of the user to contact
@@ -401,7 +401,7 @@ function showprf($userid, $page)
 
     /* ClexusPM integration */
 
-    if ($fbConfig->pm_component == "clexuspm")
+    if ($kunena_config->pm_component == "clexuspm")
     {
 
         //we should offer the user a PMS link
@@ -470,7 +470,7 @@ function showprf($userid, $page)
     $jr_username = $userinfo->name;
 
     // (JJ) JOOMLA STYLE CHECK
-    if ($fbConfig->joomlastyle < 1) {
+    if ($kunena_config->joomlastyle < 1) {
         $boardclass = "fb_";
     }
 ?>
@@ -536,7 +536,7 @@ function showprf($userid, $page)
             <th class = "th-right">
                 <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
-                if ($fbConfig->enableforumjump)
+                if ($kunena_config->enableforumjump)
                     require_once(KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 ?>
             </th>

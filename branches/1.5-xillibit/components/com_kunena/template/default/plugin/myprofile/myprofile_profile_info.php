@@ -21,7 +21,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
         // used for spoof hardening
         $validate = JUtility::getToken();
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 ?>
 <div class="<?php echo $boardclass; ?>_bt_cvr1">
 <div class="<?php echo $boardclass; ?>_bt_cvr2">
@@ -120,7 +120,7 @@ $fbConfig =& CKunenaConfig::getInstance();
 
 					<br/>
 
-					<i><?php echo $fbConfig->maxsig; ?> <?php echo _CHARS; ?></i>
+					<i><?php echo $kunena_config->maxsig; ?> <?php echo _CHARS; ?></i>
 
 					<br/>
 
@@ -129,9 +129,9 @@ $fbConfig =& CKunenaConfig::getInstance();
 <?php echo _HTML_YES; ?>
 				</td>
 
-				<td ><textarea style = "width: <?php echo $fbConfig->rtewidth-150?>px; height: 60px;" class = "inputbox"
-							onmouseover = "textCounter(this.form.message,this.form.counter,<?php echo $fbConfig->maxsig;?>);" onclick = "textCounter(this.form.message,this.form.counter,<?php echo $fbConfig->maxsig;?>);"
-							onkeydown = "textCounter(this.form.message,this.form.counter,<?php echo $fbConfig->maxsig;?>);" onkeyup = "textCounter(this.form.message,this.form.counter,<?php echo $fbConfig->maxsig;?>);"
+				<td ><textarea style = "width: <?php echo $kunena_config->rtewidth-150?>px; height: 60px;" class = "inputbox"
+							onmouseover = "textCounter(this.form.message,this.form.counter,<?php echo $kunena_config->maxsig;?>);" onclick = "textCounter(this.form.message,this.form.counter,<?php echo $kunena_config->maxsig;?>);"
+							onkeydown = "textCounter(this.form.message,this.form.counter,<?php echo $kunena_config->maxsig;?>);" onkeyup = "textCounter(this.form.message,this.form.counter,<?php echo $kunena_config->maxsig;?>);"
 							rows="6" cols="60" name = "message"><?php echo kunena_htmlspecialchars(stripslashes($userinfo->signature), ENT_QUOTES); ?></textarea>
 
 					<br/>

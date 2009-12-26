@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 $fbSession =& CKunenaSession::getInstance();
 //Start with determining which forums the user can see
 
@@ -34,7 +34,7 @@ $topicSticky = 0;
 
 //start the latest x
 if ($sel == "0") {
-    $querytime = ($prevCheck - $fbConfig->fbsessiontimeout); //move 30 minutes back to compensate for expired sessions
+    $querytime = ($prevCheck - $kunena_config->fbsessiontimeout); //move 30 minutes back to compensate for expired sessions
 }
 else
 {
@@ -168,11 +168,11 @@ if ($sel == "0")
                 echo CKunenaLink::GetThreadLink('view', $latestPostCatid, $rs->thread, kunena_htmlspecialchars(stripslashes($rs->subject)), kunena_htmlspecialchars(stripslashes($rs->subject))).' ';
 
                 $threadPages = 1;
-                if ($thisThread->totalmessages > $fbConfig->messages_per_page)
+                if ($thisThread->totalmessages > $kunena_config->messages_per_page)
                 {
-                    $threadPages = ceil($thisThread->totalmessages / $fbConfig->messages_per_page);
+                    $threadPages = ceil($thisThread->totalmessages / $kunena_config->messages_per_page);
                     echo ("<span class=\"jr-showcat-perpage\">[");
-                    echo _PAGE.' '.CKunenaLink::GetThreadPageLink($fbConfig, 'view', $latestPostCatid, $rs->thread, 1, $fbConfig->messages_per_page, 1);
+                    echo _PAGE.' '.CKunenaLink::GetThreadPageLink($kunena_config, 'view', $latestPostCatid, $rs->thread, 1, $kunena_config->messages_per_page, 1);
 
                     if ($threadPages > 3)
                     {
@@ -196,7 +196,7 @@ if ($sel == "0")
                             echo (",");
                             }
 
-                        echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $latestPostCatid, $rs->thread, $hopPage, $fbConfig->messages_per_page, $hopPage);
+                        echo CKunenaLink::GetThreadPageLink($kunena_config, 'view', $latestPostCatid, $rs->thread, $hopPage, $kunena_config->messages_per_page, $hopPage);
                     }
 
                     echo ']</span> ';
@@ -204,12 +204,12 @@ if ($sel == "0")
 
                 $tmpicon = isset($fbIcons['latestpost']) ? '<img src="'
                      .KUNENA_URLICONSPATH.$fbIcons['latestpost'].'" border="0" alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />':'  <img src="'.KUNENA_URLEMOTIONSPATH.'icon_newest_reply.gif" border="0"  alt="'._SHOW_LAST.'" title="'._SHOW_LAST.'" />';
-                echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $latestPostCatid, $rs->thread, $threadPages, $fbConfig->messages_per_page, $tmpicon, $latestPostId);
+                echo CKunenaLink::GetThreadPageLink($kunena_config, 'view', $latestPostCatid, $rs->thread, $threadPages, $kunena_config->messages_per_page, $tmpicon, $latestPostId);
 
                 echo '<br />' . _GEN_FORUM . ' : ' . $catname . '</td>';
                 echo '<td class="td-2" align="center">' . $numberOfPosts . '</td>';
                 echo '<td class="td-3" align="center">';
-                echo CKunenaLink::GetProfileLink($fbConfig, $latestPostUserid, kunena_htmlspecialchars($latestPostName));
+                echo CKunenaLink::GetProfileLink($kunena_config, $latestPostUserid, kunena_htmlspecialchars($latestPostName));
                 echo '</td>';
                 echo '<td class="td-4" align="left">' . date(_DATETIME, $latestPostTime) . '</td>';
                 echo '</tr>';
@@ -235,7 +235,7 @@ if ($sel == "0")
                         <?php
 
                         //(JJ) FINISH: CAT LIST BOTTOM
-                        if ($fbConfig->enableforumjump)
+                        if ($kunena_config->enableforumjump)
                             require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                         ?>
                     </th>

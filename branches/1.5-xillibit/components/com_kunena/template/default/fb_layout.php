@@ -21,131 +21,12 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-// ################################################################
-/**
- *  Function to print the pathway
- *  @param object    database object
- *  @param object    category object
- *  @param int        the post id
- *  @param boolean    set title
- */
-function KUNENA_print_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_post = 0) {
-    echo '<div class="fb_pathway">' . fb_get_pathway($kunena_db, $obj_fb_cat, $bool_set_title, $obj_post) . '</div>';
-}
-/**
- *  Function to print the pathway
- *  @param object    database object
- *  @param object    category object
- *  @param int        the post id
- *  @param boolean    set title
- */
-function KUNENA_get_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_post = 0)
-{
-    global $fbIcons;
-
-	$document=& JFactory::getDocument();
-	$fbConfig =& CKunenaConfig::getInstance();
-    //Get the Category's parent category name for breadcrumb
-    $kunena_db->setQuery("SELECT name, id FROM #__fb_categories WHERE id='".$obj_fb_cat->getParent())."'";
-    $objCatParentInfo = $kunena_db->loadObject();
-    	check_dberror("Unable to load categories.");
-    //get the Moderator list for display
-    $kunena_db->setQuery("SELECT * FROM #__fb_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid='" . $obj_fb_cat->getId() . "'");
-    $modslist = $kunena_db->loadObjectList();
-    	check_dberror("Unable to load moderators.");
-    //    echo '<div class="fb_pathway">';
-    // List of Forums
-    // show folder icon
-    $return = '<img src="' . KUNENA_URLIMAGESPATH . 'folder.gif" border="0" alt="' . _GEN_FORUMLIST . '" style="vertical-align: middle;" />&nbsp;';
-    // link to List of Forum Categories
-    $return .= '&nbsp;' . fb_Link::GetKunenaLink(_GEN_FORUMLIST) . '<br />';
-
-    // List of    Categories
-    if ($objCatParentInfo)
-    {
-        if ($bool_set_title)
-            $document->setTitle(stripslashes($objCatParentInfo->name) . ' - ' . stripslashes($obj_fb_cat->getName()) . ' - ' . stripslashes($fbConfig->board_title));
-
-        // show lines
-        $return .= '&nbsp;<img src="' . KUNENA_URLIMAGESPATH . 'tree-end.gif" alt="|-" border="0" style="vertical-align: middle;" />';
-        $return .= '&nbsp;<img src="' . KUNENA_URLIMAGESPATH . 'folder.gif" alt="' . $objCatParentInfo->name . '" border="0" style="vertical-align: middle;" />&nbsp;';
-        // link to Category
-        $return .= '&nbsp;'. fblink::GetCategoryLink('listcat', $objCatParentInfo->id, $objCatParentInfo->name) . '<br />';
-        $return .= '&nbsp;<img src="' . KUNENA_URLIMAGESPATH . 'tree-blank.gif" alt="| " border="0" style="vertical-align: middle;" />';
-    }
-    else
-    {
-        if ($bool_set_title)
-            $document->setTitle(stripslashes($obj_fb_cat->getName()) . ' - ' . stripslashes($fbConfig->board_title));
-    }
-
-    // Forum
-    // show lines
-    $return .= '&nbsp;<img src="' . KUNENA_URLIMAGESPATH . 'tree-end.gif" alt="|-" border="0" style="vertical-align: middle;" />';
-    $return .= '&nbsp;<img src="' . KUNENA_URLIMAGESPATH . 'folder.gif" alt="+" border="0" style="vertical-align: middle;" />&nbsp;';
-    // Link to forum
-    $return .= '&nbsp;' . fbLink::GetCategoryLink('listcat', $obj_fb_cat->getId(), $obj_fb_cat->getName());
-
-    //check if this forum is locked
-    if ($obj_fb_cat->getLocked()) {
-        $return .= isset($fbIcons['forumlocked']) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . $fbIcons['forumlocked'] . '" border="0" alt="'
-            . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : '    <img src="' . KUNENA_URLIMAGESPATH . 'lock.gif"    border="0" width="13" height="13" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
-    }
-
-    // check if this forum is reviewed
-    if ($obj_fb_cat->getReview()) {
-        $return .= isset($fbIcons['forumreviewed']) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . $fbIcons['forumreviewed']
-            . '" border="0" alt="' . _GEN_REVIEWED . '" title="' . _GEN_REVIEWED . '"/>' : '    <img src="' . KUNENA_URLIMAGESPATH . 'review.gif" border="0" width="15" height="15" alt="' . _GEN_REVIEWED . '" title="' . _GEN_REVIEWED . '">';
-    }
-
-    //check if this forum is moderated
-    if ($obj_fb_cat->getModerated())
-    {
-        $return .= isset($fbIcons['forummoderated']) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . $fbIcons['forummoderated']
-            . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : '    <img src="' . KUNENA_URLEMOTIONSPATH . 'moderate.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>';
-        $text = '';
-
-        if (count($modslist) > 0)
-        {
-            foreach ($modslist as $mod) {
-                $text = $text . ', ' . $mod->username;
-            }
-
-            $return .= '&nbsp;(' . _GEN_MODERATORS . ': ' . ltrim($text, ",") . ')';
-        }
-    }
-
-    if ($obj_post != 0)
-    {
-        if ($bool_set_title)
-            $document->setTitle(stripslashes($obj_post->subject) . ' - ' . stripslashes($fbConfig->board_title));
-
-        // Topic
-        // show lines
-        $return .= '<br />&nbsp;<img src="' . KUNENA_URLIMAGESPATH . 'tree-blank.gif" alt="| " border="0" style="vertical-align: middle;" />';
-        $return .= '&nbsp;<img src="' . KUNENA_URLIMAGESPATH . 'tree-blank.gif" alt="| " border="0" style="vertical-align: middle;" />';
-        $return .= '&nbsp;<img src="' . KUNENA_URLIMAGESPATH . 'tree-end.gif" alt="|-" border="0" style="vertical-align: middle;" />';
-        $return .= '&nbsp;<img src="' . KUNENA_URLIMAGESPATH . 'folder.gif" alt="+" border="0" style="vertical-align: middle;" />&nbsp;';
-        $return .= '&nbsp;<b>' . $obj_post->subject . '</b>';
-
-        // Check if the Topic is locked?
-        if ((int)$obj_post->locked != 0) {
-            $return .= '&nbsp;<img src="' . KUNENA_URLIMAGESPATH . 'lock.gif"    border="0" width="13" height="13" alt="' . _GEN_LOCKED_TOPIC . '" title="' . _GEN_LOCKED_TOPIC . '"/>';
-        }
-    }
-
-    //    echo '</div>';
-    return $return;
-}
-/**
- * Function to generate the page list of a forum
- */
 
 /**
  * Function  that get the menu used in the header of our board
  * @param int $cbitemid
  *             Community builder itemid, used for linking to cb profile
- * @param array $fbConfig
+ * @param array $kunena_config
  * @param array $fbIcons
  * @param int $my_id
  *             The user id
@@ -159,21 +40,21 @@ function KUNENA_get_pathway(&$kunena_db, $obj_fb_cat, $bool_set_title, $obj_post
  *             Only needs to be passed when type==3 or type==2
  * @param int $thread
  *             Only needs to be passed when type==3 or type==2 (well actually just give 0 when type==2)
- * @param boolean $is_moderator
+ * @param boolean $kunena_is_moderator
  *             Only needs to be passed when type==2
  * @param int $numPending
  *             Number of pending messages, only needs to be passed when type==2
  * @return String $header
  *             The menu :-)
  */
-function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = "", $catid = 0, $id = 0, $thread = 0, $is_moderator = false, $numPending = 0)
+function kunena_get_menu($cbitemid, $kunena_config, $fbIcons, $my_id, $type, $view = "", $catid = 0, $id = 0, $thread = 0, $kunena_is_moderator = false, $numPending = 0)
 {
     $header = '<div id="fb_topmenu" >';
     $header .= CKunenaLink::GetCategoryListLink('<span>'.(isset($fbIcons['home']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['home'] . '" border="0" alt="' . _KUNENA_CATEGORIES . '"  title="' . _KUNENA_CATEGORIES . '" />' : _KUNENA_CATEGORIES).'</span>');
 
     if ($my_id != 0)
     {
-        $header .= CKunenaLink::GetMyProfileLink( $fbConfig, $my_id, isset($fbIcons['profile']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['profile'] . '" border="0" alt="' . _GEN_MYPROFILE . '" title="' . _GEN_MYPROFILE . '"/>' : _GEN_MYPROFILE);
+        $header .= CKunenaLink::GetMyProfileLink( $kunena_config, $my_id, isset($fbIcons['profile']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['profile'] . '" border="0" alt="' . _GEN_MYPROFILE . '" title="' . _GEN_MYPROFILE . '"/>' : _GEN_MYPROFILE);
     }
 
     switch ($type)
@@ -204,7 +85,7 @@ function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = 
 //			{
 //                $header .= CKunenaLink::GetViewLink('showcat', $id, $catid, 'flat', (isset($fbIcons['flatview']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['flatview'] . '" border="0" alt="' . _GEN_FLAT_VIEW . '" title="' . _GEN_FLAT_VIEW . '"/>' : _GEN_FLAT_VIEW));
 //			}
-            if ($is_moderator)
+            if ($kunena_is_moderator)
             {
                 if ($numPending > 0)
                 {
@@ -221,13 +102,13 @@ function KUNENA_get_menu($cbitemid, $fbConfig, $fbIcons, $my_id, $type, $view = 
             break;
     }
 
-    if ($fbConfig->enablerulespage)
+    if ($kunena_config->enablerulespage)
     {
-        $header .= CKunenaLink::GetRulesLink($fbConfig, (isset($fbIcons['rules']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['rules'] . '" border="0" alt="' . _GEN_RULES . '" title="' . _GEN_RULES . '"/>' : _GEN_RULES));
+        $header .= CKunenaLink::GetRulesLink($kunena_config, (isset($fbIcons['rules']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['rules'] . '" border="0" alt="' . _GEN_RULES . '" title="' . _GEN_RULES . '"/>' : _GEN_RULES));
     }
-	if ($fbConfig->enablehelppage)
+	if ($kunena_config->enablehelppage)
     {
-        $header .= CKunenaLink::GetHelpLink($fbConfig, (isset($fbIcons['help']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['help'] . '" border="0" alt="' . _GEN_HELP . '" title="' . _GEN_HELP . '"/>' : _GEN_HELP));
+        $header .= CKunenaLink::GetHelpLink($kunena_config, (isset($fbIcons['help']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['help'] . '" border="0" alt="' . _GEN_HELP . '" title="' . _GEN_HELP . '"/>' : _GEN_HELP));
 	}
     $header .= '</div>';
     return $header;

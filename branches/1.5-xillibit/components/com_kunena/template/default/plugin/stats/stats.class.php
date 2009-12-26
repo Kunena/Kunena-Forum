@@ -20,12 +20,12 @@
 **/
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 
-if ($fbConfig->showstats)
+if ($kunena_config->showstats)
 {
 
-if ($fbConfig->showgenstats)
+if ($kunena_config->showgenstats)
 {
 $kunena_db->setQuery("SELECT COUNT(*) FROM #__users");
 $totalmembers = $kunena_db->loadResult();
@@ -42,7 +42,7 @@ $totalsections = !empty($totaltmp->totalsections)?$totaltmp->totalsections:0;
 $totalcats = !empty($totaltmp->totalcats)?$totaltmp->totalcats:0;
 unset($totaltmp);
 
-$fb_queryName = $fbConfig->username ? "username" : "name";
+$fb_queryName = $kunena_config->username ? "username" : "name";
 $kunena_db->setQuery("SELECT id, {$fb_queryName} AS username FROM #__users WHERE block='0' AND activation='' ORDER BY id DESC", 0, 1);
 $_lastestmember = $kunena_db->loadObject();
 $lastestmember = $_lastestmember->username;
@@ -66,25 +66,25 @@ unset($totaltmp);
 
 } // ENDIF: showgenstats
 
-$PopUserCount = $fbConfig->popusercount;
-if ($fbConfig->showpopuserstats)
+$PopUserCount = $kunena_config->popusercount;
+if ($kunena_config->showpopuserstats)
 {
 	$kunena_db->setQuery("SELECT p.userid, p.posts, u.id, u.{$fb_queryName} AS username FROM #__fb_users AS p INNER JOIN #__users AS u ON u.id = p.userid WHERE p.posts > '0' AND u.block=0 ORDER BY p.posts DESC", 0, $PopUserCount);
 	$topposters = $kunena_db->loadObjectList();
 
 	$topmessage = !empty($topposters[0]->posts)?$topposters[0]->posts:0;
 
-if ($fbConfig->fb_profile == "jomsocial") {
+if ($kunena_config->fb_profile == "jomsocial") {
 		$kunena_db->setQuery("SELECT u.id AS user_id, c.view AS hits, u.{$fb_queryName} AS user FROM #__community_users as c"
 		. " LEFT JOIN #__users as u on u.id=c.userid "
 		. " WHERE c.view>'0' ORDER BY c.view DESC", 0, $PopUserCount);
 	}
-	elseif ($fbConfig->fb_profile == "cb") {
+	elseif ($kunena_config->fb_profile == "cb") {
 		$kunena_db->setQuery("SELECT c.hits AS hits, u.id AS user_id, u.{$fb_queryName} AS user FROM #__comprofiler AS c"
 		. " INNER JOIN #__users AS u ON u.id = c.user_id"
 		. " WHERE c.hits>'0' ORDER BY c.hits DESC", 0, $PopUserCount);
 	}
-	elseif ($fbConfig->fb_profile == "aup") {
+	elseif ($kunena_config->fb_profile == "aup") {
 		$kunena_db->setQuery("SELECT a.profileviews AS hits, u.id AS user_id, u.{$fb_queryName} AS user FROM #__alpha_userpoints AS a"
 		. " INNER JOIN #__users AS u ON u.id = a.userid"
 		. " WHERE u.profileviews>'0' ORDER BY u.profileviews DESC", 0, $PopUserCount);
@@ -99,8 +99,8 @@ if ($fbConfig->fb_profile == "jomsocial") {
 	$topprofil = !empty($topprofiles[0]->hits)?$topprofiles[0]->hits:0;
 } // ENDIF: showpopuserstats
 
-$PopSubjectCount = $fbConfig->popsubjectcount;
-if ($fbConfig->showpopsubjectstats)
+$PopSubjectCount = $kunena_config->popsubjectcount;
+if ($kunena_config->showpopsubjectstats)
 {
 	$fbSession =& CKunenaSession::getInstance();
 	$kunena_db->setQuery("SELECT * FROM #__fb_messages WHERE moved='0' AND hold='0' AND parent='0' AND catid IN ($fbSession->allowed) ORDER BY hits DESC", 0, $PopSubjectCount);

@@ -27,12 +27,12 @@ require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'k
 global $kunena_my;
 
 $app =& JFactory::getApplication();
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 $kunena_db = &JFactory::getDBO();
 
 $hours = 0;
 
-switch (strtolower($fbConfig->rsshistory))
+switch (strtolower($kunena_config->rsshistory))
 {
 	case 'month':
 		$hours = 720;
@@ -45,7 +45,7 @@ switch (strtolower($fbConfig->rsshistory))
 }
 $querytime = time() - $hours * 3600; // Limit threads to those who have been posted to in the last month
 
-if ($fbConfig->rsstype == 'thread')
+if ($kunena_config->rsstype == 'thread')
 {
 	$query = 		"SELECT
 						tmp.thread,
@@ -157,7 +157,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
             echo "            <title>" . _GEN_SUBJECT . ": " . stripslashes(kunena_htmlspecialchars($row->subject)) . " - " . _GEN_BY . ": " . stripslashes(kunena_htmlspecialchars($row->lastpostname)) . "</title>" . "\n";
             echo "            <link>";
             $uri =& JURI::getInstance(JURI::base());
-            $itemlink = $uri->toString(array('scheme', 'host', 'port')) . CKunenaLink::GetThreadPageURL($fbConfig, 'view', $row->catid, $row->thread, ceil($row->numberposts / $fbConfig->messages_per_page), $fbConfig->messages_per_page, $row->lastpostid);
+            $itemlink = $uri->toString(array('scheme', 'host', 'port')) . CKunenaLink::GetThreadPageURL($kunena_config, 'view', $row->catid, $row->thread, ceil($row->numberposts / $kunena_config->messages_per_page), $kunena_config->messages_per_page, $row->lastpostid);
             echo $itemlink;
             echo "</link>\n";
             $words = $row->lastpostmessage;

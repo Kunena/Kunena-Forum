@@ -31,14 +31,34 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.5.8
+Kunena 1.6.0
+
+26-Dec-2009 Xillibit
+^ [#18627] Merge from /trunk/1.5 : 1341-1321
 
 23-Dec-2009 Matias
 # [#18627] Fix some bugs in installer (polls table creation)
 
+21-Dec-2009 Xillibit
+- [#19075] Remove group from userlist / user profile
+
+21-Dec-2009 fxstein
+# [#19086] Fix language file regression from 1.5.8
+# [#19065] Cleanup backend html based on code analysis - fixed various bugs
+# [#19065] Cleanup installer html based on code analysis - fixed various bugs
+- [#19065] Removed backend plugin directory tree to remove warnings in unused code
+# [#19065] Cleanup frontend based on code analysis - fixed various bugs
+- [#19065] Removed old & unused split and merge code
+- [#19065] Removed old & unused code in fb_layout.php
+
+20-Dec-2009 Matias
+# [#19079] Fix broken layout with too long strings
+^ [#18763] Update version info to 1.6.0-DEV
+
 22-dec-2009 Xillibit
 ^ [#18627] Merge from /trunk/1.5 : 1315-1265
 + [#18627] Add in the poll results the name of all users which are voted for this poll
+- [#19065] remove unsued kunena.pathway.old.php as part of cleanup
 
 20-dec-2009 Xillibit
 ^ [#18975] Backend: Show Avatar on Categories list option misleading
@@ -485,7 +505,7 @@ Kunena 1.5.1b
 
 5-May-2009 Matias
 + [#16249] Community Builder integration: add trigger to modify userinfo
-# [#16239] Missing argument 5 for KUNENA_get_menu()
+# [#16239] Missing argument 5 for kunena_get_menu()
 # [#16237] Fix broken profile links
 # [#16250] Fix slightly broken session handling
 ! Internal: Broken search fixed
@@ -510,7 +530,7 @@ Kunena 1.5.1b
 
 30-April-2009 Matias
 # [#16168] Remove HTML entities in the subjects of replies
-# [#16185] Fix global $fbConfigs
+# [#16185] Fix global $kunena_configs
 
 28-April-2009 Matias
 # [#16053] Remove PHP Notices from the frontend (part 2)

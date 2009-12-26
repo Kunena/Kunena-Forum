@@ -343,11 +343,15 @@ class fx_Upgrade {
 	/**
 	 * Processes "phpfile", "query" and "phpcode" child-nodes of the node provided
 	 */
-	function processNode(&$startNode,$batch = 0) {
+	function processNode(&$startNode,$batch = 0)
+	{
+		global $php_errormsg;
+
 		$numChildren =& $startNode->childCount;
 		$childNodes =& $startNode->childNodes;
 
-		for($i = 0; $i < $numChildren; $i++) {
+		for($i = 0; $i < $numChildren; $i++)
+		{
 			$currentNode =& $childNodes[$i];
 			$nodeName =& $currentNode->nodeName;
 			$nodemode = strtolower($currentNode->getAttribute( "mode" ));
@@ -372,7 +376,7 @@ class fx_Upgrade {
 						$img = "publish_x.png";
 						$this->_return = false;
 					}
-					
+
 					if(!$this->silent) {
 						?>
 						<tr>

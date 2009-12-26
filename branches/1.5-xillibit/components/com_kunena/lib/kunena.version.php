@@ -30,15 +30,16 @@ class CKunenaVersion {
 	* Retrieve Kunena version from manifest.xml
 	*
 	* @return string version
-	*/	
+	*/
 	function versionXML()
 	{
-		if ($data = JApplicationHelper::parseXMLInstallFile(KUNENA_FILE_INSTALL)) {
+		$data = JApplicationHelper::parseXMLInstallFile(KUNENA_FILE_INSTALL);
+		if ($data) {
 			return $data['version'];
 		}
 		return 'ERROR';
 	}
-	
+
 	/**
 	* Retrieve installed Kunena version as array.
 	*
@@ -46,7 +47,7 @@ class CKunenaVersion {
 	*/
 	function versionArray()
 	{
-		static $kunenaversion;
+		static $kunenaversion=NULL;
 
 		if (!$kunenaversion)
 		{
@@ -72,7 +73,7 @@ class CKunenaVersion {
 		return $kunenaversion;
 	}
 
-	/** 
+	/**
 	* Retrieve installed Kunena version as string.
 	*
 	* @return string "X.Y.Z | YYYY-MM-DD | BUILDNUMBER [versionname]"
@@ -83,7 +84,7 @@ class CKunenaVersion {
 		return 'Kunena '.$version->version.' | '.$version->versiondate.' | '.$version->build.' [ '.$version->versionname.' ]';
 	}
 
-	/** 
+	/**
 	* Retrieve installed Kunena version, copyright and license as string.
 	*
 	* @return string "Installed version: Kunena X.Y.Z | YYYY-MM-DD | BUILDNUMBER [versionname] | © Copyright: Kunena | License: GNU GPL"
@@ -94,14 +95,14 @@ class CKunenaVersion {
 		return _KUNENA_INSTALLED_VERSION.': '.$version.' | '._KUNENA_COPYRIGHT.': &copy; 2008-2009 <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>  | '._KUNENA_LICENSE.': <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a>';
 	}
 
-	/** 
+	/**
 	* Retrieve MySQL Server version.
 	*
 	* @return string MySQL version
 	*/
 	function MySQLVersion()
 	{
-		static $mysqlversion;
+		static $mysqlversion=NULL;
 		if (!$mysqlversion)
 		{
 			$kunena_db = &JFactory::getDBO();

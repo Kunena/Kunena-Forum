@@ -22,12 +22,15 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+global $kunena_is_moderator, $boardclass, $fbIcons, $settings, $Itemid, $kunenaProfile;
+global $kunena_db, $kunena_topic_tile, $maxPosts, $messages, $my_id, $forumLocked;
+
 $app =& JFactory::getApplication();
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 $fbSession =& CKunenaSession::getInstance();
 
 function KunenaViewPagination($catid, $threadid, $page, $totalpages, $maxpages) {
-    $fbConfig =& CKunenaConfig::getInstance();
+    $kunena_config =& CKunenaConfig::getInstance();
 
     $startpage = ($page - floor($maxpages/2) < 1) ? 1 : $page - floor($maxpages/2);
     $endpage = $startpage + $maxpages;
@@ -40,7 +43,7 @@ function KunenaViewPagination($catid, $threadid, $page, $totalpages, $maxpages) 
     if ($startpage > 1)
     {
 	if ($endpage < $totalpages) $endpage--;
-	$output .= CKunenaLink::GetThreadPageLink($fbConfig, 'view', $catid, $threadid, 1, $fbConfig->messages_per_page, 1, '', $rel='follow');
+	$output .= CKunenaLink::GetThreadPageLink($kunena_config, 'view', $catid, $threadid, 1, $kunena_config->messages_per_page, 1, '', $rel='follow');
 	if ($startpage > 2)
         {
 	    $output .= "...";
@@ -53,7 +56,7 @@ function KunenaViewPagination($catid, $threadid, $page, $totalpages, $maxpages) 
             $output .= "<strong>$i</strong>";
         }
         else {
-	    $output .= CKunenaLink::GetThreadPageLink($fbConfig, 'view', $catid, $threadid, $i, $fbConfig->messages_per_page, $i, '', $rel='follow');
+	    $output .= CKunenaLink::GetThreadPageLink($kunena_config, 'view', $catid, $threadid, $i, $kunena_config->messages_per_page, $i, '', $rel='follow');
         }
     }
 
@@ -64,20 +67,20 @@ function KunenaViewPagination($catid, $threadid, $page, $totalpages, $maxpages) 
 	    $output .= "...";
 	}
 
-	$output .= CKunenaLink::GetThreadPageLink($fbConfig, 'view', $catid, $threadid, $totalpages, $fbConfig->messages_per_page, $totalpages, '', $rel='follow');
+	$output .= CKunenaLink::GetThreadPageLink($kunena_config, 'view', $catid, $threadid, $totalpages, $kunena_config->messages_per_page, $totalpages, '', $rel='follow');
     }
 
     $output .= '</span>';
     return $output;
 }
 
-global $is_Moderator;
+global $kunena_is_moderator;
 $kunena_acl = &JFactory::getACL();
 //securing form elements
 $catid = (int)$catid;
 $id = (int)$id;
 
-$smileyList = smile::getEmoticons(0);
+$kunena_emoticons = smile::getEmoticons(0);
 
 //ob_start();
 $showedEdit = 0;
@@ -120,10 +123,10 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         	$replyCount = $kunena_db->loadResult();
         		check_dberror('Unable to calculate location of current message.');
 
-        	$replyPage = $replyCount > $fbConfig->messages_per_page ? ceil($replyCount / $fbConfig->messages_per_page) : 1;
+        	$replyPage = $replyCount > $kunena_config->messages_per_page ? ceil($replyCount / $kunena_config->messages_per_page) : 1;
 
         	header("HTTP/1.1 301 Moved Permanently");
-        	header("Location: " . htmlspecialchars_decode(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $this_message->catid, $thread, $replyPage, $fbConfig->messages_per_page, $this_message->id)));
+        	header("Location: " . htmlspecialchars_decode(CKunenaLink::GetThreadPageURL($kunena_config, 'view', $this_message->catid, $thread, $replyPage, $kunena_config->messages_per_page, $this_message->id)));
 
         	$app->close();
         }
@@ -165,17 +168,17 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 
         //prepare paging
         $limit = JRequest::getInt('limit', 0);
-        if ($limit < 1) $limit = $fbConfig->messages_per_page;
+        if ($limit < 1) $limit = $kunena_config->messages_per_page;
 		$limitstart = JRequest::getInt('limitstart', 0);
 		if ($limitstart < 0) $limitstart = 0;
 		if ($limitstart > $total) $limitstart = intval($total/$limit)*$limit;
-        $ordering = ($fbConfig->default_sort == 'desc' ? 'desc' : 'asc'); // Just to make sure only valid options make it
+        $ordering = ($kunena_config->default_sort == 'desc' ? 'desc' : 'asc'); // Just to make sure only valid options make it
 		$maxpages = 9 - 2; // odd number here (show - 2)
 		$totalpages = ceil($total / $limit);
 		$page = floor($limitstart / $limit)+1;
 		$firstpage = 1;
 		if ($ordering == 'desc') $firstpage = $totalpages;
-		
+
 		$replylimit = $page == $firstpage ? $limit-1 : $limit; // If page contains first message, load $limit-1 messages
 		$replystart = $limitstart && $ordering == 'asc' ? $limitstart-1 : $limitstart; // If not first page and order=asc, start on $limitstart-1
 		// Get replies of current thread
@@ -190,7 +193,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         foreach ($replies as $message) $flat_messages[] = $message;
         if ($page == $totalpages && $ordering == 'desc') $flat_messages[] = $this_message; // DESC: first message is the last one
         unset($replies);
-        
+
 	    $pagination = KunenaViewPagination($catid, $thread, $page, $totalpages, $maxpages);
 
         //Get the category name for breadcrumb
@@ -201,20 +204,20 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         $objCatParentInfo = $kunena_db->loadObject();
 
         $forumLocked = $objCatInfo->locked;
-        
+
 		//meta description and keywords
-		$metaKeys=kunena_htmlspecialchars(stripslashes("{$this_message->subject}, {$objCatParentInfo->name}, {$fbConfig->board_title}, " ._GEN_FORUM. ', ' .$app->getCfg('sitename')));
-		$metaDesc=kunena_htmlspecialchars(stripslashes("{$this_message->subject} ({$page}/{$totalpages}) - {$objCatParentInfo->name} - {$objCatInfo->name} - {$fbConfig->board_title} " ._GEN_FORUM));
+		$metaKeys=kunena_htmlspecialchars(stripslashes("{$this_message->subject}, {$objCatParentInfo->name}, {$kunena_config->board_title}, " ._GEN_FORUM. ', ' .$app->getCfg('sitename')));
+		$metaDesc=kunena_htmlspecialchars(stripslashes("{$this_message->subject} ({$page}/{$totalpages}) - {$objCatParentInfo->name} - {$objCatInfo->name} - {$kunena_config->board_title} " ._GEN_FORUM));
 
 	    $document =& JFactory::getDocument();
 	    $cur = $document->get( 'description' );
 	    $metaDesc = $cur .'. ' . $metaDesc;
 	    $document->setMetadata( 'keywords', $metaKeys );
 	    $document->setDescription($metaDesc);
-        
+
         //Perform subscriptions check only once
         $fb_cansubscribe = 0;
-        if ($fbConfig->allowsubscriptions && ("" != $kunena_my->id || 0 != $kunena_my->id))
+        if ($kunena_config->allowsubscriptions && ("" != $kunena_my->id || 0 != $kunena_my->id))
         {
             $kunena_db->setQuery("SELECT thread FROM #__fb_subscriptions WHERE userid='{$kunena_my->id}' AND thread='{$thread}'");
             $fb_subscribed = $kunena_db->loadResult();
@@ -225,7 +228,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         }
         //Perform favorites check only once
         $fb_canfavorite = 0;
-        if ($fbConfig->allowfavorites && ("" != $kunena_my->id || 0 != $kunena_my->id))
+        if ($kunena_config->allowfavorites && ("" != $kunena_my->id || 0 != $kunena_my->id))
         {
             $kunena_db->setQuery("SELECT thread FROM #__fb_favorites WHERE userid='{$kunena_my->id}' AND thread='{$thread}'");
             $fb_favorited = $kunena_db->loadResult();
@@ -237,7 +240,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 
         //data ready display now
 
-        if ($is_Moderator || (($forumLocked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $fbConfig->pubwrite)))
+        if ($kunena_is_moderator || (($forumLocked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $kunena_config->pubwrite)))
         {
             //this user is allowed to reply to this topic
             $thread_reply = CKunenaLink::GetTopicPostReplyLink('reply', $catid, $thread, isset($fbIcons['topicreply']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['topicreply'] . '" alt="' . _GEN_POST_REPLY . '" title="' . _GEN_POST_REPLY . '" border="0" />' : _GEN_POST_REPLY);
@@ -251,7 +254,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
         }
 
         //START: FAVORITES
-        if ($kunena_my->id != 0 && $fbConfig->allowsubscriptions && $fb_cansubscribe == 0)
+        if ($kunena_my->id != 0 && $kunena_config->allowsubscriptions && $fb_cansubscribe == 0)
         {
             // this user is allowed to unsubscribe
             $thread_subscribe = CKunenaLink::GetTopicPostLink('unsubscribe', $catid, $id, isset($fbIcons['unsubscribe']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unsubscribe'] . '" alt="' . _VIEW_UNSUBSCRIBETXT . '" title="' . _VIEW_UNSUBSCRIBETXT . '" border="0" />' : _VIEW_UNSUBSCRIBETXT);
@@ -264,20 +267,20 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
             $thread_favorite = CKunenaLink::GetTopicPostLink('favorite', $catid, $id, isset($fbIcons['favorite']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['favorite'] . '" alt="' . _VIEW_FAVORITETXT . '" title="' . _VIEW_FAVORITETXT . '" border="0" />' : _VIEW_FAVORITETXT);
         }
 
-        if ($kunena_my->id != 0 && $fbConfig->allowfavorites && $fb_canfavorite == 0)
+        if ($kunena_my->id != 0 && $kunena_config->allowfavorites && $fb_canfavorite == 0)
         {
             // this user is allowed to unfavorite
             $thread_favorite = CKunenaLink::GetTopicPostLink('unfavorite', $catid, $id, isset($fbIcons['unfavorite']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unfavorite'] . '" alt="' . _VIEW_UNFAVORITETXT . '" title="' . _VIEW_UNFAVORITETXT . '" border="0" />' : _VIEW_UNFAVORITETXT);
         }
         // FINISH: FAVORITES
 
-        if ($is_Moderator || ($forumLocked == 0 && ($kunena_my->id > 0 || $fbConfig->pubwrite)))
+        if ($kunena_is_moderator || ($forumLocked == 0 && ($kunena_my->id > 0 || $kunena_config->pubwrite)))
         {
             //this user is allowed to post a new topic
             $thread_new = CKunenaLink::GetPostNewTopicLink($catid, isset($fbIcons['new_topic']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
         }
 
-        if ($is_Moderator)
+        if ($kunena_is_moderator)
         {
             // offer the moderator always the move link to relocate a topic to another forum
             // and the (un)sticky bit links
@@ -336,10 +339,10 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 			<tr>
 				<td>
 					<?php
-					$headerdesc = stripslashes(smile::smileReplace($objCatInfo->headerdesc, 0, $fbConfig->disemoticons, $smileyList));
+					$headerdesc = stripslashes(smile::smileReplace($objCatInfo->headerdesc, 0, $kunena_config->disemoticons, $kunena_emoticons));
 			        $headerdesc = nl2br($headerdesc);
 			        //wordwrap:
-			        $headerdesc = smile::htmlwrap($headerdesc, $fbConfig->wrap);
+			        $headerdesc = smile::htmlwrap($headerdesc, $kunena_config->wrap);
 					echo $headerdesc;
 					?>
 				</td>
@@ -387,7 +390,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
                     echo CKunenaLink::GetSamePageAnkerLink('forumbottom', isset($fbIcons['bottomarrow']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM);
 
 	echo '</td>';
-	if ($is_Moderator || isset($thread_reply) || isset($thread_subscribe) || isset($thread_favorite))
+	if ($kunena_is_moderator || isset($thread_reply) || isset($thread_subscribe) || isset($thread_favorite))
 	{
 	    echo '<td class="fb_list_actions_forum">';
 	    echo '<div class="fb_message_buttons_row" style="text-align: center;">';
@@ -395,7 +398,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
 	    if (isset($thread_subscribe)) echo ' '.$thread_subscribe;
 	    if (isset($thread_favorite)) echo ' '.$thread_favorite;
 	    echo '</div>';
-            if ($is_Moderator)
+            if ($kunena_is_moderator)
             {
 		echo '<div class="fb_message_buttons_row" style="text-align: center;">';
 		echo $thread_delete;
@@ -438,7 +441,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
                     <tr>
                         <th align="left">
                              <div class = "fb_title_cover  fbm">
-                                <span class = "fb_title fbl"><b><?php echo _KUNENA_TOPIC; ?></b> <?php echo $jr_topic_title; ?></span>
+                                <span class = "fb_title fbl"><b><?php echo _KUNENA_TOPIC; ?></b> <?php echo $kunena_topic_tile; ?></span>
                             </div>
                             <!-- B: FORUM TOOLS -->
 
@@ -568,7 +571,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
                                 	$uinfocache[$fmessage->userid] = $userinfo;
                                 } else $userinfo = $uinfocache[$fmessage->userid];
 
-				if ($fbConfig->fb_profile == 'cb')
+				if ($kunena_config->fb_profile == 'cb')
 				{
 					$triggerParams = array( 'userid'=> $fmessage->userid,
 						'userinfo'=> &$userinfo );
@@ -576,7 +579,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
 				}
 
                                 //get the username:
-                                if ($fbConfig->username) {
+                                if ($kunena_config->username) {
                                     $fb_queryName = "username";
                                 }
                                 else {
@@ -585,39 +588,39 @@ if (JDocumentHTML::countModules('kunena_poll'))
 
                                 $fb_username = $userinfo->$fb_queryName;
 
-                                if ($fb_username == "" || $fbConfig->changename) {
+                                if ($fb_username == "" || $kunena_config->changename) {
                                     $fb_username = stripslashes($fmessage->name);
                                 }
                                 $fb_username = kunena_htmlspecialchars($fb_username);
 
                                 $msg_id = $fmessage->id;
                                 $lists["userid"] = $userinfo->userid;
-                                $msg_username = $fmessage->email != "" && $my_id > 0 && $fbConfig->showemail ? CKunenaLink::GetEmailLink(kunena_htmlspecialchars(stripslashes($fmessage->email)), $fb_username) : $fb_username;
+                                $msg_username = $fmessage->email != "" && $my_id > 0 && $kunena_config->showemail ? CKunenaLink::GetEmailLink(kunena_htmlspecialchars(stripslashes($fmessage->email)), $fb_username) : $fb_username;
 
-                                if ($fbConfig->allowavatar)
+                                if ($kunena_config->allowavatar)
                                 {
                                     $Avatarname = $userinfo->username;
 
-                                    if ($fbConfig->avatar_src == "jomsocial")
+                                    if ($kunena_config->avatar_src == "jomsocial")
 									{
 										// Get CUser object
 										$jsuser =& CFactory::getUser($userinfo->userid);
 									    $msg_avatar = '<span class="fb_avatar"><img src="' . $jsuser->getThumbAvatar() . '" alt=" " /></span>';
 									}
-                                    else if ($fbConfig->avatar_src == "clexuspm") {
+                                    else if ($kunena_config->avatar_src == "clexuspm") {
                                         $msg_avatar = '<span class="fb_avatar"><img src="' . MyPMSTools::getAvatarLinkWithID($userinfo->userid) . '" /></span>';
                                     }
-                                    else if ($fbConfig->avatar_src == "cb")
+                                    else if ($kunena_config->avatar_src == "cb")
                                     {
                                     	$msg_avatar = '<span class="fb_avatar">'.$kunenaProfile->showAvatar($userinfo->userid, '', false).'</span>';
                                     }
-                                    else if ($fbConfig->avatar_src == "aup")
+                                    else if ($kunena_config->avatar_src == "aup")
                                     {
 										$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
 										if ( file_exists($api_AUP)) {
-											( $fbConfig->fb_profile=='aup' ) ? $showlink=1 : $showlink=0;
+											( $kunena_config->fb_profile=='aup' ) ? $showlink=1 : $showlink=0;
 											$msg_avatar = '<span class="fb_avatar">'.AlphaUserPointsHelper::getAupAvatar( $userinfo->userid, $showlink ).'</span>';
-										}										
+										}
                                     }
                                     else
                                     {
@@ -625,21 +628,21 @@ if (JDocumentHTML::countModules('kunena_poll'))
 
                                         if (!empty($avatar)) {
                                         	if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $avatar)) {
-                                            	$msg_avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: '.$fbConfig->avatarwidth.'px; max-height: '.$fbConfig->avatarheight.'px;" /></span>';
+                                            	$msg_avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: '.$kunena_config->avatarwidth.'px; max-height: '.$kunena_config->avatarheight.'px;" /></span>';
                                         	} else {
                                         		$msg_avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" /></span>';
                                         	}
                                         }
                                         else
                                         {
-                                        	$msg_avatar = '<span class="fb_avatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/nophoto.jpg" alt="" /></span>'; 
+                                        	$msg_avatar = '<span class="fb_avatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/nophoto.jpg" alt="" /></span>';
                                         }
                                     }
                                 } else {
                                 	$msg_avatar = '';
                                 }
 
-                                if ($fbConfig->showuserstats)
+                                if ($kunena_config->showuserstats)
                                 {
 				    $kunena_acl =& JFactory::getACL();
                                     //user type determination
@@ -680,10 +683,10 @@ if (JDocumentHTML::countModules('kunena_poll'))
 
                                         //ranking
                                         $rText = ''; $showSpRank = false;
-                                        if ($fbConfig->showranking)
+                                        if ($kunena_config->showranking)
                                         {
-
-                                            if ($showSpRank = $userinfo->rank != '0')
+											$showSpRank = $userinfo->rank;
+                                            if ($showSpRank != '0')
                                             {
                                                 //special rank
                                                 $kunena_db->setQuery("SELECT * FROM #__fb_ranks WHERE rank_id='{$userinfo->rank}'");
@@ -708,7 +711,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
                                             $rImg = KUNENA_URLRANKSPATH . 'rankadmin.gif';
                                         }
 
-                                        if ($fbConfig->rankimages && isset($rImg)) {
+                                        if ($kunena_config->rankimages && isset($rImg)) {
                                             $msg_userrankimg = '<img src="' . $rImg . '" alt="" />';
                                         }
 
@@ -720,7 +723,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
 
                                         $useGraph = 0; //initialization
 
-                                        if (!$fbConfig->poststats)
+                                        if (!$kunena_config->poststats)
                                         {
                                             $msg_posts = '<div class="viewcover">' .
                                               "<strong>" . _POSTS . " $numPosts" . "</strong>" .
@@ -732,7 +735,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
                                             //$myGraph->SetGraphTitle(_POSTS);
                                             $myGraph->AddValue(_POSTS, $numPosts);
                                             $myGraph->SetRowSortMode(0);
-                                            $myGraph->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $fbConfig->statscolor . "m.png");
+                                            $myGraph->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $kunena_config->statscolor . "m.png");
                                             $myGraph->SetBarImg2(KUNENA_URLEMOTIONSPATH . "graph.gif");
                                             $myGraph->SetMaxVal($maxPosts);
                                             $myGraph->SetShowCountsMode(2);
@@ -747,10 +750,10 @@ if (JDocumentHTML::countModules('kunena_poll'))
                                 }
 								// Start Integration AlphaUserPoints
 								// ****************************
-								$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php'; 	
-								if ( $fbConfig->alphauserpoints && file_exists($api_AUP)) {
+								$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
+								if ( $kunena_config->alphauserpoints && file_exists($api_AUP)) {
 									static  $maxPoints = false;
-									
+
 									if ($maxPoints == false)
 									{
 										//Get the max# of points for any one user
@@ -758,15 +761,15 @@ if (JDocumentHTML::countModules('kunena_poll'))
 										$maxPoints = $kunena_db->loadResult();
 										check_dberror("Unable to load AUP max points.");
 									}
-									
+
 									$kunena_db->setQuery("SELECT points FROM #__alpha_userpoints WHERE `userid`='".(int)$fmessage->userid."'");
 									$numPoints = $kunena_db->loadResult();
 									check_dberror("Unable to load AUP points.");
-								
+
 									$myGraphAUP = new phpGraph;
 									$myGraphAUP->AddValue(_KUNENA_AUP_POINTS, $numPoints);
 									$myGraphAUP->SetRowSortMode(0);
-									$myGraphAUP->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $fbConfig->statscolor . "m.png");
+									$myGraphAUP->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $kunena_config->statscolor . "m.png");
 									$myGraphAUP->SetBarImg2(KUNENA_URLEMOTIONSPATH . "graph.gif");
 									$myGraphAUP->SetMaxVal($maxPoints);
 									$myGraphAUP->SetShowCountsMode(2);
@@ -779,7 +782,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
 								// End Integration AlphaUserPoints
 
                                 //karma points and buttons
-                                if ($fbConfig->showkarma && $userinfo->userid != '0')
+                                if ($kunena_config->showkarma && $userinfo->userid != '0')
                                 {
                                     $karmaPoints = $userinfo->karma;
                                     $karmaPoints = (int)$karmaPoints;
@@ -792,7 +795,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
                                     }
                                 }
                                 /*let's see if we should use Missus integration */
-                                if ($fbConfig->pm_component == "missus" && $userinfo->userid && $kunena_my->id)
+                                if ($kunena_config->pm_component == "missus" && $userinfo->userid && $kunena_my->id)
                                 {
                                     //we should offer the user a Missus link
                                     //first get the username of the user to contact
@@ -811,7 +814,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
                                 }
 
                                 /*let's see if we should use JIM integration */
-                                if ($fbConfig->pm_component == "jim" && $userinfo->userid && $kunena_my->id)
+                                if ($kunena_config->pm_component == "jim" && $userinfo->userid && $kunena_my->id)
                                 {
                                     //we should offer the user a JIM link
                                     //first get the username of the user to contact
@@ -828,7 +831,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
                                     $msg_pms .= "' alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
                                 }
                                 /*let's see if we should use uddeIM integration */
-                                if ($fbConfig->pm_component == "uddeim" && $userinfo->userid && $kunena_my->id)
+                                if ($kunena_config->pm_component == "uddeim" && $userinfo->userid && $kunena_my->id)
                                 {
                                     //we should offer the user a PMS link
                                     //first get the username of the user to contact
@@ -845,7 +848,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
                                     $msg_pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
                                 }
                                 /*let's see if we should use myPMS2 integration */
-                                if ($fbConfig->pm_component == "pms" && $userinfo->userid && $kunena_my->id)
+                                if ($kunena_config->pm_component == "pms" && $userinfo->userid && $kunena_my->id)
                                 {
                                     //we should offer the user a PMS link
                                     //first get the username of the user to contact
@@ -884,7 +887,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
                                     }
                                 }
                                 /* PM integration */
-                                if ($fbConfig->pm_component == "jomsocial" && $userinfo->userid && $kunena_my->id)
+                                if ($kunena_config->pm_component == "jomsocial" && $userinfo->userid && $kunena_my->id)
                                 {
                                 	$onclick = CMessaging::getPopup($userinfo->userid);
                                 	$msg_pms = '<a href="javascript:void(0)" onclick="'. $onclick . "\">";
@@ -900,7 +903,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
                                     $msg_pms .= "</a>";
                                 	//$msg_pms = '<a href="javascript:void(0)" onclick="'. $onclick .'">Send message</a>';
                                 }
-                                else if ($fbConfig->pm_component == "clexuspm" && $userinfo->userid && $kunena_my->id)
+                                else if ($kunena_config->pm_component == "clexuspm" && $userinfo->userid && $kunena_my->id)
                                 {
                                     //we should offer the user a PMS link
                                     //first get the username of the user to contact
@@ -963,9 +966,9 @@ if (JDocumentHTML::countModules('kunena_poll'))
                                 }
 
                                 //Check if the Integration settings are on, and set the variables accordingly.
-                                if ($fbConfig->fb_profile == "cb")
+                                if ($kunena_config->fb_profile == "cb")
                                 {
-                                    if ($fbConfig->fb_profile == 'cb' && $userinfo->userid > 0)
+                                    if ($kunena_config->fb_profile == 'cb' && $userinfo->userid > 0)
                                     {
                                         $msg_prflink = CKunenaCBProfile::getProfileURL($userinfo->userid);
                                         $msg_profile = "<a href=\"" . $msg_prflink . "\">                                              <img src=\"";
@@ -980,7 +983,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
                                         $msg_profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
                                     }
                                 }
-                                else if ($fbConfig->fb_profile == "clexuspm")
+                                else if ($kunena_config->fb_profile == "clexuspm")
                                 {
                                     //mypms pro profile link
                                     $msg_prflink = MyPMSTools::getProfileLink($userinfo->userid);
@@ -1009,7 +1012,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
                                     }
 
                                     $msg_profileicon .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" />";
-                                    $msg_profile = CKunenaLink::GetProfileLink($fbConfig, $userinfo->userid, $msg_profileicon);
+                                    $msg_profile = CKunenaLink::GetProfileLink($kunena_config, $userinfo->userid, $msg_profileicon);
                                 }
 
                                 // Begin: Additional Info //
@@ -1065,7 +1068,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
 
 
                                 //Show admins the IP address of the user:
-                                if ($is_Moderator)
+                                if ($kunena_is_moderator)
                                 {
                                     $msg_ip = $fmessage->ip;
                                 }
@@ -1076,12 +1079,12 @@ if (JDocumentHTML::countModules('kunena_poll'))
 
                                 $fb_subject_txt = strtr($fb_subject_txt, $table);
                                 $fb_subject_txt = stripslashes($fb_subject_txt);
-                                $fb_subject_txt = smile::htmlwrap($fb_subject_txt, $fbConfig->wrap);
+                                $fb_subject_txt = smile::htmlwrap($fb_subject_txt, $kunena_config->wrap);
                                 $msg_subject = smile::fbHtmlSafe($fb_subject_txt);
 
                                 $msg_date = date(_DATETIME, $fmessage->time);
                                 $fb_message_txt = stripslashes($fmessage->message);
-                                $fb_message_txt = smile::smileReplace($fb_message_txt, 0, $fbConfig->disemoticons, $smileyList);
+                                $fb_message_txt = smile::smileReplace($fb_message_txt, 0, $kunena_config->disemoticons, $kunena_emoticons);
                                 $fb_message_txt = nl2br($fb_message_txt);
                                 //$fb_message_txt = str_replace("<P>&nbsp;</P><br />","",$fb_message_txt);
                                 //$fb_message_txt = str_replace("</P><br />","</P>",$fb_message_txt);
@@ -1089,23 +1092,23 @@ if (JDocumentHTML::countModules('kunena_poll'))
 
                                 // Code tag: restore TABS as we had to 'hide' them from the rest of the logic
                                 $fb_message_txt = str_replace("__FBTAB__", "&#009;", $fb_message_txt);
-								$fb_message_txt = smile::htmlwrap($fb_message_txt, $fbConfig->wrap);
-                                
+								$fb_message_txt = smile::htmlwrap($fb_message_txt, $kunena_config->wrap);
+
                                 $msg_text = CKunenaTools::prepareContent($fb_message_txt);
-                                
+
                                 $signature = $userinfo->signature;
                                 if ($signature)
                                 {
-                                    $signature = stripslashes(smile::smileReplace($signature, 0, $fbConfig->disemoticons, $smileyList));
+                                    $signature = stripslashes(smile::smileReplace($signature, 0, $kunena_config->disemoticons, $kunena_emoticons));
                                     $signature = nl2br($signature);
                                     //wordwrap:
-                                    $signature = smile::htmlwrap($signature, $fbConfig->wrap);
+                                    $signature = smile::htmlwrap($signature, $kunena_config->wrap);
                                     //restore the \n (were replaced with _CTRL_) occurences inside code tags, but only after we have striplslashes; otherwise they will be stripped again
                                     //$signature = str_replace("_CRLF_", "\\n", stripslashes($signature));
                                     $msg_signature = $signature;
                                 }
 
-                                if ($is_Moderator || (($forumLocked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $fbConfig->pubwrite)))
+                                if ($kunena_is_moderator || (($forumLocked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $kunena_config->pubwrite)))
                                 {
                                     //user is allowed to reply/quote
                                     $msg_reply = CKunenaLink::GetTopicPostReplyLink('reply', $catid, $fmessage->id , isset($fbIcons['reply']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['reply'] . '" alt="Reply" border="0" title="' . _VIEW_REPLY . '" />':_GEN_REPLY);
@@ -1124,7 +1127,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
 
                                 $showedEdit = 0; //reset this value
                                 //Offer an moderator the delete link
-                                if ($is_Moderator)
+                                if ($kunena_is_moderator)
                                 {
                                     $msg_delete = CKunenaLink::GetTopicPostLink('delete', $catid, $fmessage->id , isset($fbIcons['delete']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />':_GEN_DELETE);
                                     $msg_merge = CKunenaLink::GetTopicPostLink('merge', $catid, $fmessage->id , isset($fbIcons['merge']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['merge'] . '" alt="' . _GEN_MERGE . '" border="0" title="' . _GEN_MERGE . '" />':_GEN_MERGE);
@@ -1132,13 +1135,13 @@ if (JDocumentHTML::countModules('kunena_poll'))
                                     // $msg_split = CKunenaLink::GetTopicPostLink('split', $catid, $fmessage->id , isset($fbIcons['split']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['split'] . '" alt="' . _GEN_SPLIT . '" border="0" title="' . _GEN_SPLIT . '" />':_GEN_SPLIT);
                                 }
 
-                                if ($fbConfig->useredit && $kunena_my->id != "")
+                                if ($kunena_config->useredit && $kunena_my->id != "")
                                 {
                                     //Now, if the viewer==author and the viewer is allowed to edit his/her own post then offer an 'edit' link
                                     $allowEdit = 0;
                                     if ($kunena_my->id == $userinfo->userid)
                                     {
-                                        if(((int)$fbConfig->useredittime)==0)
+                                        if(((int)$kunena_config->useredittime)==0)
                                         {
                                             $allowEdit = 1;
                                         }
@@ -1150,7 +1153,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
                                             {
                                                 $modtime = $fmessage->time;
                                             }
-                                            if(($modtime + ((int)$fbConfig->useredittime)) >= CKunenaTools::fbGetInternalTime())
+                                            if(($modtime + ((int)$kunena_config->useredittime)) >= CKunenaTools::fbGetInternalTime())
                                             {
                                                 $allowEdit = 1;
                                             }
@@ -1163,7 +1166,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
                                     }
                                 }
 
-                                if ($is_Moderator && $showedEdit != 1)
+                                if ($kunena_is_moderator && $showedEdit != 1)
                                 {
                                     //Offer a moderator always the edit link except when it is already showing..
                                     $msg_edit = CKunenaLink::GetTopicPostLink('edit', $catid, $fmessage->id , isset($fbIcons['edit']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />':_GEN_EDIT);
@@ -1177,51 +1180,6 @@ if (JDocumentHTML::countModules('kunena_poll'))
                                     include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'message.php');
                                 }
 
-                                unset(
-                                $msg_id,
-                                $msg_username,
-                                $msg_avatar,
-                                $msg_usertype,
-                                $msg_userrank,
-                                $msg_userrankimg,
-                                $msg_posts,
-                                $msg_move,
-                                $msg_karma,
-                                $msg_karmaplus,
-                                $msg_karmaminus,
-                                $msg_ip,
-                                $msg_ip_link,
-                                $msg_date,
-                                $msg_subject,
-                                $msg_text,
-                                $msg_signature,
-                                $msg_reply,
-                                $msg_birthdate,
-                                $msg_quote,
-                                $msg_edit,
-                                $msg_closed,
-                                $msg_delete,
-                                $msg_sticky,
-                                $msg_lock,
-                                $msg_aim,
-                                $msg_icq,
-                                $msg_msn,
-                                $msg_yim,
-                                $msg_skype,
-                                $msg_gtalk,
-                                $msg_website,
-                                $msg_yahoo,
-                                $msg_buddy,
-                                $msg_profile,
-                                $msg_online,
-                                $msg_pms,
-                                $msg_loc,
-                                $msg_regdate,
-                                $msg_prflink,
-                                $msg_location,
-                                $msg_gender,
-                                $msg_personal,
-                                $myGraph);
                                 $useGraph = 0;
                             } // end for
                         }
@@ -1257,14 +1215,14 @@ if (JDocumentHTML::countModules('kunena_poll'))
             <table class="fb_list_actions_bottom" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
                 <tr>
                     <td class="fb_list_actions_goto">
-                        <?php
+						<a name="forumbottom"></a>
+		                <?php
                         //go to top
-                        echo '<a name="forumbottom" /> ';
                         echo CKunenaLink::GetSamePageAnkerLink('forumtop', isset($fbIcons['toparrow']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP);
-
-			echo '</td>';
-
-	if ($is_Moderator || isset($thread_reply) || isset($thread_subscribe) || isset($thread_favorite))
+						?>
+					</td>
+<?php
+	if ($kunena_is_moderator || isset($thread_reply) || isset($thread_subscribe) || isset($thread_favorite))
 	{
 	    echo '<td class="fb_list_actions_forum">';
 	    echo '<div class="fb_message_buttons_row" style="text-align: center;">';
@@ -1272,7 +1230,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
 	    if (isset($thread_subscribe)) echo ' '.$thread_subscribe;
 	    if (isset($thread_favorite)) echo ' '.$thread_favorite;
 	    echo '</div>';
-            if ($is_Moderator)
+            if ($kunena_is_moderator)
             {
 		echo '<div class="fb_message_buttons_row" style="text-align: center;">';
 		echo $thread_delete;
@@ -1296,16 +1254,20 @@ if (JDocumentHTML::countModules('kunena_poll'))
 	    echo $thread_merge;
 	    echo '</div>';
 	}
+
 	echo '</td>';
 
-        echo '<td class="fb_list_pages_all" nowrap="nowrap">';
-        echo $pagination;
-        echo '</td>';
-	echo '</tr></table>';
-        echo '<div class = "'. $boardclass .'forum-pathway-bottom">';
-	echo $pathway1;
+	echo '<td class="fb_list_pages_all" nowrap="nowrap">';
+    echo $pagination;
+    echo '</td>';
+?>
+	</tr>
+	</table>
+<?php
+    echo '<div class = "'. $boardclass .'forum-pathway-bottom">';
+	echo $kunena_pathway1;
 	echo '</div>';
-    ?>
+?>
 	<!-- F: List Actions Bottom -->
 
 	<!-- B: Category List Bottom -->
@@ -1332,16 +1294,16 @@ if (JDocumentHTML::countModules('kunena_poll'))
 
                           	$mod_cnt = 0;
                            	foreach ($modslist as $mod) {
-				            	if ($mod_cnt) echo ', '; 
+				            	if ($mod_cnt) echo ', ';
 			                	$mod_cnt++;
-                                echo CKunenaLink::GetProfileLink($fbConfig, $mod->userid, ($fbConfig->username ? $mod->username : $mod->name));
+                                echo CKunenaLink::GetProfileLink($kunena_config, $mod->userid, ($kunena_config->username ? $mod->username : $mod->name));
                             } ?>
         </div>
         <?php  } ?>
         <!-- /Mod List -->
       </td>
       <td class="fb_list_categories"> <?php
-                    if ($fbConfig->enableforumjump)
+                    if ($kunena_config->enableforumjump)
                         require (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                     ?>
       </td>
@@ -1356,7 +1318,7 @@ else {
     echo _KUNENA_NO_ACCESS;
 }
 
-if ($fbConfig->highlightcode)
+if ($kunena_config->highlightcode)
 {
 	echo '
 	<script type="text/javascript" src="'.KUNENA_DIRECTURL . '/template/default/plugin/chili/jquery.chili-2.2.js"></script>

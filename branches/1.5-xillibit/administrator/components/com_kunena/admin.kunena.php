@@ -24,6 +24,8 @@ defined( '_JEXEC' ) or die('Restricted access');
 // Kunena wide defines
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 
+$task = JRequest::getCmd( 'task' );
+
 if ($task == 'install')
 {
 	require_once (KUNENA_PATH_ADMIN_INSTALL .DS. 'kunena.install.php');
@@ -746,12 +748,16 @@ function showConfig($option)
     }
 
     asort ($templatelist);
-    asort ($imagesetlist);
 
-    while (list($key, $val) = each($templatelist)) {
+    foreach ($templatelist as $key=>$val)
+    {
 		$templatelistitems[] = JHTML::_('select.option',  $val, $val);
     }
-    while (list($key, $val) = each($imagesetlist)) {
+
+    asort ($imagesetlist);
+
+    foreach ($imagesetlist as $key=>$val)
+    {
 		$imagesetlistitems[] = JHTML::_('select.option',  $val, $val);
     }
 
@@ -821,7 +827,6 @@ function showConfig($option)
     $lists['userlist_avatar'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_avatar', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_avatar);
     $lists['userlist_name'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_name', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_name);
     $lists['userlist_username'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_username', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_username);
-    $lists['userlist_group'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_group', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_group);
     $lists['userlist_posts'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_posts', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_posts);
     $lists['userlist_karma'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_karma', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_karma);
     $lists['userlist_email'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_email', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_email);

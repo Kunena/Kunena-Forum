@@ -23,14 +23,14 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 $app =& JFactory::getApplication();
 $document =& JFactory::getDocument();
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 
-$document->setTitle(_ANN_ANNOUNCEMENTS . ' - ' . stripslashes($fbConfig->board_title));
+$document->setTitle(_ANN_ANNOUNCEMENTS . ' - ' . stripslashes($kunena_config->board_title));
 
-# Check for Editor rights  $fbConfig->annmodid
+# Check for Editor rights  $kunena_config->annmodid
 $do = JRequest::getVar("do", "");
 $id = intval(JRequest::getVar("id", ""));
-$user_fields = @explode(',', $fbConfig->annmodid);
+$user_fields = @explode(',', $kunena_config->annmodid);
 
 if (in_array($kunena_my->id, $user_fields) || $kunena_my->usertype == 'Administrator' || $kunena_my->usertype == 'Super Administrator') {
     $is_editor = true;
@@ -50,14 +50,14 @@ if ($do == "read") {
     $ann = $anns_[0];
     $annID = $ann->id;
     $anntitle = stripslashes($ann->title);
-    $smileyList = smile::getEmoticons(0);
-	$annsdescription = stripslashes(smile::smileReplace($ann->sdescription, 0, $fbConfig->disemoticons, $smileyList));
+    $kunena_emoticons = smile::getEmoticons(0);
+	$annsdescription = stripslashes(smile::smileReplace($ann->sdescription, 0, $kunena_config->disemoticons, $kunena_emoticons));
 	$annsdescription = nl2br($annsdescription);
-	$annsdescription = smile::htmlwrap($annsdescription, $fbConfig->wrap);
+	$annsdescription = smile::htmlwrap($annsdescription, $kunena_config->wrap);
     
-	$anndescription = stripslashes(smile::smileReplace($ann->description, 0, $fbConfig->disemoticons, $smileyList));
+	$anndescription = stripslashes(smile::smileReplace($ann->description, 0, $kunena_config->disemoticons, $kunena_emoticons));
 	$anndescription = nl2br($anndescription);
-	$anndescription = smile::htmlwrap($anndescription, $fbConfig->wrap);
+	$anndescription = smile::htmlwrap($anndescription, $kunena_config->wrap);
 
     $anncreated = KUNENA_timeformat(strtotime($ann->created));
     $annpublished = $ann->published;
@@ -84,8 +84,8 @@ if ($do == "read") {
                         if ($is_editor) {
                         ?>
 
-                                <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'edit', $annID); ?>"><?php echo _ANN_EDIT; ?> </a> |
-                    <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'delete', $annID); ?>"><?php echo _ANN_DELETE; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'add');?>"><?php echo _ANN_ADD; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'show');?>"><?php echo _ANN_CPANEL; ?> </a>
+                                <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'edit', $annID); ?>"><?php echo _ANN_EDIT; ?> </a> |
+                    <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'delete', $annID); ?>"><?php echo _ANN_DELETE; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'add');?>"><?php echo _ANN_ADD; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'show');?>"><?php echo _ANN_CPANEL; ?> </a>
 
                         <?php
                             }
@@ -139,7 +139,7 @@ if ($is_editor) {
                     <tr>
                         <th colspan = "6">
                             <div class = "fb_title_cover fbm">
-                                <span class = "fb_title fbl"> <?php echo $app->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'add');?>"><?php echo _ANN_ADD; ?></a></span>
+                                <span class = "fb_title fbl"> <?php echo $app->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'add');?>"><?php echo _ANN_ADD; ?></a></span>
                             </div>
                         </th>
                     </tr>
@@ -195,7 +195,7 @@ if ($is_editor) {
                                 </td>
 
                                 <td class = "td-3"  align="left">
-                                    <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'read', $row->id); ?>"><?php echo stripslashes($row->title); ?></a>
+                                    <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'read', $row->id); ?>"><?php echo stripslashes($row->title); ?></a>
                                 </td>
 
                                 <td class = "td-4"  align="center">
@@ -210,11 +210,11 @@ if ($is_editor) {
                                 </td>
 
                                 <td class = "td-5"  align="center">
-                                    <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'edit', $row->id); ?>"><?php echo _ANN_EDIT; ?> </a>
+                                    <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'edit', $row->id); ?>"><?php echo _ANN_EDIT; ?> </a>
                                 </td>
 
                                 <td class = "td-6"  align="center">
-                                    <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'delete', $row->id); ?>"><?php echo _ANN_DELETE; ?></a>
+                                    <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'delete', $row->id); ?>"><?php echo _ANN_DELETE; ?></a>
                                 </td>
                             </tr>
 
@@ -247,7 +247,7 @@ if ($is_editor) {
         $kunena_db->setQuery($query1);
 
         $kunena_db->query() or trigger_dberror("Unable to insert announcement.");
-        $app->redirect(CKunenaLink::GetAnnouncementURL($fbConfig, 'show'), _ANN_SUCCESS_ADD);
+        $app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_SUCCESS_ADD);
     }
 
     if ($do == "add") {
@@ -266,7 +266,7 @@ if ($is_editor) {
         <tr>
             <th>
                 <div class = "fb_title_cover fbm">
-                    <span class = "fb_title fbl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_ADD; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'show');?>"><?php echo _ANN_CPANEL; ?></a></span>
+                    <span class = "fb_title fbl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_ADD; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'show');?>"><?php echo _ANN_CPANEL; ?></a></span>
                 </div>
             </th>
         </tr>
@@ -366,7 +366,7 @@ if ($is_editor) {
         $kunena_db->setQuery("UPDATE #__fb_announcement SET title='$title', description='$description', sdescription='$sdescription',  created=" . (($created <> '')?"'$created'":"NOW()") . ", published='$published', showdate='$showdate' WHERE id=$id");
 
         if ($kunena_db->query()) {
-            $app->redirect(CKunenaLink::GetAnnouncementURL($fbConfig, 'show'), _ANN_SUCCESS_EDIT);
+            $app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_SUCCESS_EDIT);
             }
         }
 
@@ -419,7 +419,7 @@ if ($is_editor) {
         <tr>
             <th>
                 <div class = "fb_title_cover fbm">
-                    <span class = "fb_title fbl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_EDIT; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($fbConfig, 'show');?>"><?php echo _ANN_CPANEL; ?></a></span>
+                    <span class = "fb_title fbl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_EDIT; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'show');?>"><?php echo _ANN_CPANEL; ?></a></span>
                 </div>
             </th>
         </tr>
@@ -517,7 +517,7 @@ if ($is_editor) {
         $kunena_db->setQuery($query1);
         $kunena_db->query() or trigger_dberror("Unable to delete announcement.");
 
-        $app->redirect(CKunenaLink::GetAnnouncementURL($fbConfig, 'show'), _ANN_DELETED);
+        $app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_DELETED);
     }
     // FINISH: delete ANN
 ?>

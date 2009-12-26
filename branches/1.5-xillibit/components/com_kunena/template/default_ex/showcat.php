@@ -22,9 +22,10 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $app =& JFactory::getApplication();
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 $fbSession =& CKunenaSession::getInstance();
-global $is_Moderator;
+global $kunena_is_moderator;
+global $messages, $forumLocked;
 
 function KunenaShowcatPagination($catid, $page, $totalpages, $maxpages) {
     $startpage = ($page - floor($maxpages/2) < 1) ? 1 : $page - floor($maxpages/2);
@@ -89,7 +90,7 @@ $allow_forum = ($fbSession->allowed <> '')?explode(',', $fbSession->allowed):arr
 
 if (in_array($catid, $allow_forum))
 {
-    $threads_per_page = $fbConfig->threads_per_page;
+    $threads_per_page = $kunena_config->threads_per_page;
 
     if ($catid <= 0) {
         //make sure we got a valid category id
@@ -107,9 +108,9 @@ if (in_array($catid, $allow_forum))
     $total = (int)$kunena_db->loadResult();
     	check_dberror('Unable to get message count.');
     $totalpages = ceil($total / $threads_per_page);
-  
-$query = "SELECT t.id, MAX(m.id) AS lastid FROM #__fb_messages AS t  
-	INNER JOIN #__fb_messages AS m ON t.id = m.thread 
+
+$query = "SELECT t.id, MAX(m.id) AS lastid FROM #__fb_messages AS t
+	INNER JOIN #__fb_messages AS m ON t.id = m.thread
 	WHERE t.parent='0' AND t.hold='0' AND t.catid='{$catid}' AND m.hold='0' AND m.catid='{$catid}'
 	GROUP BY m.thread ORDER BY t.ordering DESC, lastid DESC";
 $kunena_db->setQuery($query, $offset, $threads_per_page);
@@ -125,7 +126,7 @@ if (count($threadids) > 0)
 {
 $query = "SELECT a.*, j.id AS userid, t.message AS messagetext, l.myfavorite, l.favcount, l.attachmesid, l.msgcount, l.lastid, u.avatar, c.id AS catid, c.name AS catname
 	FROM (
-		SELECT m.thread, (f.userid='{$kunena_my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachmesid, 
+		SELECT m.thread, (f.userid='{$kunena_my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachmesid,
 			COUNT(DISTINCT m.id) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime
 		FROM #__fb_messages AS m
 		LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread
@@ -173,7 +174,7 @@ foreach ($messagelist as $message)
         if (!in_array($msgid->thread, $read_topics)) $last_read[$msgid->thread] = $msgid;
     }
 }
-    
+
     //get number of pending messages
     $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE catid='{$catid}' AND hold='1'");
     $numPending = $kunena_db->loadResult();
@@ -196,8 +197,8 @@ foreach ($messagelist as $message)
     $forumReviewed = $objCatInfo->review;
 
 	//meta description and keywords
-	$metaKeys=kunena_htmlspecialchars(stripslashes(_KUNENA_CATEGORIES . ", {$objCatParentInfo->name}, {$objCatInfo->name}, {$fbConfig->board_title}, " . $app->getCfg('sitename')));
-	$metaDesc=kunena_htmlspecialchars(stripslashes("{$objCatParentInfo->name} ({$page}/{$totalpages}) - {$objCatInfo->name} - {$fbConfig->board_title}"));
+	$metaKeys=kunena_htmlspecialchars(stripslashes(_KUNENA_CATEGORIES . ", {$objCatParentInfo->name}, {$objCatInfo->name}, {$kunena_config->board_title}, " . $app->getCfg('sitename')));
+	$metaDesc=kunena_htmlspecialchars(stripslashes("{$objCatParentInfo->name} ({$page}/{$totalpages}) - {$objCatInfo->name} - {$kunena_config->board_title}"));
 
 	$document =& JFactory::getDocument();
 	$cur = $document->get( 'description' );
@@ -221,11 +222,11 @@ foreach ($messagelist as $message)
 	<tr>
 		<td>
 		<?php
-		$smileyList = smile::getEmoticons(0);
-		$headerdesc = stripslashes(smile::smileReplace($objCatInfo->headerdesc, 0, $fbConfig->disemoticons, $smileyList));
+		$kunena_emoticons = smile::getEmoticons(0);
+		$headerdesc = stripslashes(smile::smileReplace($objCatInfo->headerdesc, 0, $kunena_config->disemoticons, $kunena_emoticons));
         $headerdesc = nl2br($headerdesc);
         //wordwrap:
-        $headerdesc = smile::htmlwrap($headerdesc, $fbConfig->wrap);
+        $headerdesc = smile::htmlwrap($headerdesc, $kunena_config->wrap);
 		echo $headerdesc;
 		?>
 		</td>
@@ -248,7 +249,7 @@ foreach ($messagelist as $message)
 
 
                 <?php
-                if ($is_Moderator || ($forumLocked == 0 && ($kunena_my->id > 0 || $fbConfig->pubwrite)))
+                if ($kunena_is_moderator || ($forumLocked == 0 && ($kunena_my->id > 0 || $kunena_config->pubwrite)))
                 {
                     //this user is allowed to post a new topic:
                     $forum_new = CKunenaLink::GetPostNewTopicLink($catid, isset($fbIcons['new_topic']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
@@ -368,7 +369,7 @@ foreach ($messagelist as $message)
 	</table>
 	<?php
 	echo '<div class = "'. $boardclass .'forum-pathway-bottom">';
-	echo $pathway1;
+	echo $kunena_pathway1;
 	echo '</div>';
 	?>
 
@@ -396,7 +397,7 @@ foreach ($messagelist as $message)
                         <?php
 				echo '' . _GEN_MODERATORS . ": ";
 				foreach ($modslist as $mod) {
-					echo CKunenaLink::GetProfileLink($fbConfig, $mod->userid, $mod->username).'&nbsp; ';
+					echo CKunenaLink::GetProfileLink($kunena_config, $mod->userid, $mod->username).'&nbsp; ';
 				} ?>
 			</div>
 	<?php endif; ?>
@@ -406,7 +407,7 @@ foreach ($messagelist as $message)
 
                     //(JJ) FINISH: CAT LIST BOTTOM
 
-                    if ($fbConfig->enableforumjump)
+                    if ($kunena_config->enableforumjump)
                         require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
 
                     ?>

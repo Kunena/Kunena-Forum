@@ -29,34 +29,37 @@ $app =& JFactory::getApplication();
 define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH .DS. "templates".DS . $app->getTemplate());
 define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "templates/".$app->getTemplate());
 
-global $kunena_my;
+global $kunena_config, $kunena_db, $kunena_my;
 
 require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 
 $document =& JFactory::getDocument();
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 $kunena_db = &JFactory::getDBO();
 $kunena_my = &JFactory::getUser();
 
 /**
 *@desc Getting the correct Itemids, for components required
 */
+global $Itemid;
 $Itemid = JRequest::getInt('Itemid', 0, 'REQUEST');
 
 //check if we have all the itemid sets. if so, then no need for DB call
-if (!defined("KUNENA_COMPONENT_ITEMID")) {
-        $kunena_db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_kunena' AND published='1'");
-        $Itemid = $kunena_db->loadResult();
+if (!defined("KUNENA_COMPONENT_ITEMID"))
+{
+	$kunena_db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_kunena' AND published='1'");
+    $kid = $kunena_db->loadResult();
 
-        if ($Itemid < 1) {
-            $Itemid = 0;
-            }
+	if ($kid < 1)
+	{
+		$kid = 0;
+	}
 
-    define("KUNENA_COMPONENT_ITEMID", (int)$Itemid);
+    define("KUNENA_COMPONENT_ITEMID", (int)$kid);
     define("KUNENA_COMPONENT_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_COMPONENT_ITEMID);
 
     //JomSocial
-    if ($fbConfig->pm_component == 'jomsocial' || $fbConfig->fb_profile == 'jomsocial' || $fbConfig->avatar_src == 'jomsocial')
+    if ($kunena_config->pm_component == 'jomsocial' || $kunena_config->fb_profile == 'jomsocial' || $kunena_config->avatar_src == 'jomsocial')
     {
     	// Only proceed if jomSocial is really installed
 	    if ( file_exists( KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/core.php' ) )
@@ -86,9 +89,9 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 	    else
 	    {
 	    	// JomSocial not present reset config settings to avoid problems
-	    	$fbConfig->pm_component = $fbConfig->pm_component == 'jomsocial' ? 'none' : $fbConfig->pm_component;
-	    	$fbConfig->fb_profile = $fbConfig->fb_profile == 'jomsocial' ? 'kunena' : $fbConfig->fb_profile;
-	    	$fbConfig->avatar_src = $fbConfig->avatar_src == 'jomsocial' ? 'kunena' : $fbConfig->avatar_src;
+	    	$kunena_config->pm_component = $kunena_config->pm_component == 'jomsocial' ? 'none' : $kunena_config->pm_component;
+	    	$kunena_config->fb_profile = $kunena_config->fb_profile == 'jomsocial' ? 'kunena' : $kunena_config->fb_profile;
+	    	$kunena_config->avatar_src = $kunena_config->avatar_src == 'jomsocial' ? 'kunena' : $kunena_config->avatar_src;
 
 	    	// Do not save new config - thats a task for the backend
 	    	// This is just a catch all in case it is not present
@@ -96,7 +99,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     }
 
     //Community Builder 1.2 integration
-	if ($fbConfig->pm_component == 'cb' || $fbConfig->fb_profile == 'cb' || $fbConfig->avatar_src == 'cb')
+	if ($kunena_config->pm_component == 'cb' || $kunena_config->fb_profile == 'cb' || $kunena_config->avatar_src == 'cb')
     {
 		// Get Community Builder compability
 		require_once (KUNENA_PATH_LIB .DS. "kunena.communitybuilder.php");
@@ -105,7 +108,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
     }
 
     //Clexus PM
-    if ($fbConfig->pm_component == 'clexuspm' || $fbConfig->fb_profile == 'clexuspm') {
+    if ($kunena_config->pm_component == 'clexuspm' || $kunena_config->fb_profile == 'clexuspm') {
         $kunena_db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_mypms' AND published='1'");
         $CPM_Itemid = $kunena_db->loadResult();
         	check_dberror('Unable to load Clexus item id');
@@ -115,7 +118,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
         }
 
     // UddeIM
-    if ($fbConfig->pm_component == 'uddeim') {
+    if ($kunena_config->pm_component == 'uddeim') {
         $kunena_db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_uddeim' AND published='1'");
         $UIM_itemid = $kunena_db->loadResult();
                 	check_dberror('Unable to load uddeim item id');
@@ -125,7 +128,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
         }
 
     // MISSUS
-    if ($fbConfig->pm_component == 'missus') {
+    if ($kunena_config->pm_component == 'missus') {
         $kunena_db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_missus' AND published='1'");
         $MISSUS_itemid = $kunena_db->loadResult();
                 	check_dberror('Unable to load missus item id');
@@ -135,15 +138,15 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
         }
 
     // PROFILE LINK
-    if ($fbConfig->fb_profile == "jomsocial") {
+    if ($kunena_config->fb_profile == "jomsocial") {
         $profilelink = 'index.php?option=com_community&amp;view=profile&amp;userid=';
         define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_community&amp;view=profile&amp;Itemid=" . KUNENA_JOMSOCIAL_ITEMID . "&amp;userid=");
         }
-    else if ($fbConfig->fb_profile == "cb") {
+    else if ($kunena_config->fb_profile == "cb") {
         $profilelink = 'index.php?option=com_comprofiler&amp;task=userProfile&amp;user=';
         define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_comprofiler&amp;task=userProfile" . KUNENA_CB_ITEMID_SUFFIX . "&amp;user=");
         }
-    else if ($fbConfig->fb_profile == "aup") { // integration AlphaUserPoints
+    else if ($kunena_config->fb_profile == "aup") { // integration AlphaUserPoints
 		$db	   =& JFactory::getDBO();
 		$query = "SELECT id FROM #__menu WHERE `link`='index.php?option=com_alphauserpoints&view=account' AND `type`='component' AND `published`='1'";
 		$db->setQuery( $query );
@@ -153,7 +156,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 		$profilelink = 'index.php?option=com_alphauserpoints&amp;view=account&amp;userid=';
         define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_alphauserpoints&amp;view=account&amp;Itemid=" . KUNENA_AUP_ITEMID . "&amp;userid=");
         }
-     else if ($fbConfig->fb_profile == "clexuspm") {
+     else if ($kunena_config->fb_profile == "clexuspm") {
         $profilelink = 'index.php?option=com_mypms&amp;task=showprofile&amp;user=';
         define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_mypms&amp;task=showprofile&amp;Itemid=" . KUNENA_CPM_ITEMID . "&amp;user=");
         }
@@ -203,9 +206,9 @@ if (strlen($fb_user_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_u
 {
     $fb_cur_template = $fb_user_template;
     }
-else if (file_exists(KUNENA_PATH_TEMPLATE .DS. $fbConfig->template))
+else if (file_exists(KUNENA_PATH_TEMPLATE .DS. $kunena_config->template))
 {
-    $fb_cur_template = $fbConfig->template;
+    $fb_cur_template = $kunena_config->template;
     }
 else
 {
@@ -216,9 +219,9 @@ if (strlen($fb_user_img_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $
 {
     $fb_cur_img_template = $fb_user_img_template;
     }
-else if (file_exists(KUNENA_PATH_TEMPLATE .DS. $fbConfig->templateimagepath .DS. 'images'))
+else if (file_exists(KUNENA_PATH_TEMPLATE .DS. $kunena_config->templateimagepath .DS. 'images'))
 {
-    $fb_cur_img_template = $fbConfig->templateimagepath;
+    $fb_cur_img_template = $kunena_config->templateimagepath;
     }
 else
 {
@@ -251,7 +254,7 @@ define('KUNENA_ABSGRAPHPATH', KUNENA_ABSIMAGESPATH . 'graph/');
 define('KUNENA_ABSRANKSPATH', KUNENA_ABSIMAGESPATH . 'ranks/');
 
 // absolute ranks path
-define('KUNENA_ABSCATIMAGESPATH', KUNENA_PATH_UPLOADED .DS. $fbConfig->catimagepath); // Kunena category images absolute path
+define('KUNENA_ABSCATIMAGESPATH', KUNENA_PATH_UPLOADED .DS. $kunena_config->catimagepath); // Kunena category images absolute path
 
 define('KUNENA_TMPLTURL', KUNENA_DIRECTURL . "template/{$fb_cur_template}/");
 define('KUNENA_TMPLTMAINIMGURL', KUNENA_DIRECTURL . "template/{$fb_cur_img_template}/");
@@ -279,7 +282,7 @@ define('KUNENA_URLGRAPHPATH', KUNENA_URLIMAGESPATH . 'graph/');
 define('KUNENA_URLRANKSPATH', KUNENA_URLIMAGESPATH . 'ranks/');
 
 // url ranks path
-define('KUNENA_URLCATIMAGES', KUNENA_LIVEUPLOADEDPATH ."/{$fbConfig->catimagepath}/"); // Kunena category images direct url
+define('KUNENA_URLCATIMAGES', KUNENA_LIVEUPLOADEDPATH ."/{$kunena_config->catimagepath}/"); // Kunena category images direct url
 
 if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'js' .DS. 'jquery-1.3.2.min.js'))
 {
@@ -356,13 +359,13 @@ class CKunenaTools {
 /*
     function fbGetCurrentTime () {
     	// tells current FB internal representing time
-        $fbConfig =& CKunenaConfig::getInstance();
-        return time() + ($fbConfig->board_ofset * 3600);
+        $kunena_config =& CKunenaConfig::getInstance();
+        return time() + ($kunena_config->board_ofset * 3600);
     }
 */
     function fbGetInternalTime ($time=null) {
     	// tells internal FB representing time from UTC $time
-        $fbConfig =& CKunenaConfig::getInstance();
+        $kunena_config =& CKunenaConfig::getInstance();
         // Prevent zeroes
         if($time===0) {
           return 0;
@@ -370,14 +373,14 @@ class CKunenaTools {
         if($time===null) {
           $time = time();
         }
-        return $time + ($fbConfig->board_ofset * 3600);
+        return $time + ($kunena_config->board_ofset * 3600);
     }
 
     function fbGetShowTime ($time=null, $space='FB') {
     	// converts internal (FB)|UTC representing time to display time
     	// could consider user properties (zones) for future
 		$kunena_db = &JFactory::getDBO();
-        $fbConfig =& CKunenaConfig::getInstance();
+        $kunena_config =& CKunenaConfig::getInstance();
         // Prevent zeroes
         if($time===0) {
           return 0;
@@ -387,7 +390,7 @@ class CKunenaTools {
           $space = 'FB';
         }
         if($space=='UTC') {
-          return $time + ($fbConfig->board_ofset * 3600);
+          return $time + ($kunena_config->board_ofset * 3600);
         }
         return $time;
     }
@@ -488,9 +491,9 @@ class CKunenaTools {
     function updateNameInfo()
     {
         $kunena_db = &JFactory::getDBO();
-        $fbConfig =& CKunenaConfig::getInstance();
+        $kunena_config =& CKunenaConfig::getInstance();
 
-        $fb_queryName = $fbConfig->username ? "username" : "name";
+        $fb_queryName = $kunena_config->username ? "username" : "name";
 
 	    $query = "UPDATE #__fb_messages AS m, #__users AS u
 	    			SET m.name = u.$fb_queryName
@@ -571,9 +574,8 @@ class CKunenaTools {
                 }
             }
 
-        while ($msg_cat) {
-
-            unset($lastMsgInCat);
+        while ($msg_cat)
+        {
             $kunena_db->setQuery("SELECT id, time FROM #__fb_messages WHERE catid='{$msg_cat}' AND (thread!='{$msg_id}' AND id!='{$msg_id}') ORDER BY time DESC LIMIT 1;");
             $lastMsgInCat = $kunena_db->loadObject();
             	check_dberror("Unable to load messages.");
@@ -588,7 +590,8 @@ class CKunenaTools {
             }
 
         // now back to db
-        foreach ($ctg as $cc) {
+        foreach ($ctg as $cc)
+        {
             $kunena_db->setQuery("UPDATE `#__fb_categories` SET `time_last_msg`='" . $cc->time_last_msg . "',`id_last_msg`='" . $cc->id_last_msg . "',`numTopics`='" . $cc->numTopics . "',`numPosts`='" . $cc->numPosts . "' WHERE `id`='" . $cc->id . "' ");
             $kunena_db->query();
             	check_dberror("Unable to update categories.");
@@ -821,10 +824,10 @@ class CKunenaTools {
 
 	function &prepareContent(&$content)
 	{
-		$fbConfig =& CKunenaConfig::getInstance();
+		$kunena_config =& CKunenaConfig::getInstance();
 
 		// Joomla Mambot Support, Thanks hacksider
-		if ($fbConfig->jmambot)
+		if ($kunena_config->jmambot)
 		{
 			$row = new stdClass();
 			$row->text =& $content;
@@ -974,8 +977,12 @@ class fbForum
 		$this->_error = ($msg <> '')?$msg:'error';
 	}
 
-	function store($updateNulls=false) {
-		if ($ret = parent::store($updateNulls)) {
+	function store($updateNulls=false)
+	{
+		$ret = parent::store($updateNulls);
+
+		if ($ret) {
+
 			// we must reset fbSession (allowed), when forum record was changed
 
 			$this->_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");

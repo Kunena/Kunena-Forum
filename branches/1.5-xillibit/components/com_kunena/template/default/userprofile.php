@@ -21,7 +21,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 $rowItemid = JRequest::getInt('Itemid');
 
 if ($kunena_my->id)
@@ -46,12 +46,12 @@ if ($kunena_my->id)
         list($avWidth, $avHeight) = @getimagesize($avatar);
 
         //use integration avatar if configured
-        if ($fbConfig->avatar_src == "pmspro")
+        if ($kunena_config->avatar_src == "pmspro")
         {
             $kunena_db->setQuery("SELECT picture FROM #__mypms_profiles WHERE name='{$username}'");
             $avatar = $kunena_db->loadResult();
         }
-        elseif ($fbConfig->avatar_src == "cb")
+        elseif ($kunena_config->avatar_src == "cb")
         {
         	$kunena_db->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='{$kunena_my->id}'");
         	$avatar = $kunena_db->loadResult();
@@ -76,7 +76,7 @@ if ($kunena_my->id)
 
         //get all forums for which this user is assigned as moderator, BUT only if the user isn't an admin
         //since these are moderators for all forums (regardless if a forum is set to be moderated)
-        if (!$is_admin)
+        if (!$kunena_is_admin)
         {
             $kunena_db->setQuery("SELECT c.id, c.name FROM #__fb_moderation AS m LEFT JOIN #__fb_categories AS c ON c.id=m.catid WHERE m.userid='{$kunena_my->id}'");
             $modslist = $kunena_db->loadObjectList();
@@ -159,7 +159,7 @@ if ($kunena_my->id)
 
                                 <br/>
 
-                                <i><?php echo $fbConfig->maxsig; ?> <?php echo _CHARS; ?></i>
+                                <i><?php echo $kunena_config->maxsig; ?> <?php echo _CHARS; ?></i>
 
                                 <br/>
 
@@ -170,12 +170,12 @@ if ($kunena_my->id)
                             </td>
 
                             <td class = "td-2">
-                                <textarea style = "width: <?php echo $fbConfig->rtewidth?>px; height: 60px;"
+                                <textarea style = "width: <?php echo $kunena_config->rtewidth?>px; height: 60px;"
                                     class = "inputbox"
-                                    onMouseOver = "textCounter(this.form.message,this.form.counter,<?php echo $fbConfig->maxsig;?>);"
-                                    onClick = "textCounter(this.form.message,this.form.counter,<?php echo $fbConfig->maxsig;?>);"
-                                    onKeyDown = "textCounter(this.form.message,this.form.counter,<?php echo $fbConfig->maxsig;?>);"
-                                    onKeyUp = "textCounter(this.form.message,this.form.counter,<?php echo $fbConfig->maxsig;?>);" type = "text" name = "message"><?php echo $signature; ?></textarea>
+                                    onMouseOver = "textCounter(this.form.message,this.form.counter,<?php echo $kunena_config->maxsig;?>);"
+                                    onClick = "textCounter(this.form.message,this.form.counter,<?php echo $kunena_config->maxsig;?>);"
+                                    onKeyDown = "textCounter(this.form.message,this.form.counter,<?php echo $kunena_config->maxsig;?>);"
+                                    onKeyUp = "textCounter(this.form.message,this.form.counter,<?php echo $kunena_config->maxsig;?>);" type = "text" name = "message"><?php echo $signature; ?></textarea>
 
                                 <br/>
 
@@ -220,7 +220,7 @@ if ($kunena_my->id)
 
                     <br/>
 
-                    <input type = "text" name = "helpbox" size = "45" maxlength = "100" style = "width: <?php echo $fbConfig->rtewidth?>px; font-size:9px" class = "helpline" value = "<?php echo _BBCODE_HINT;?>"/>
+                    <input type = "text" name = "helpbox" size = "45" maxlength = "100" style = "width: <?php echo $kunena_config->rtewidth?>px; font-size:9px" class = "helpline" value = "<?php echo _BBCODE_HINT;?>"/>
 
                     <br/>
 
@@ -241,14 +241,14 @@ if ($kunena_my->id)
                         <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
                             <td class = "td-1" colspan = "2">
                                 <?php
-                                if ($fbConfig->allowavatar)
+                                if ($kunena_config->allowavatar)
                                 {
                                 ?>
 
                                 <?php
                                     echo _YOUR_AVATAR . "</td><td class=\"td-2\">";
 
-                                    if ($fbConfig->avatar_src == "clexuspm")
+                                    if ($kunena_config->avatar_src == "clexuspm")
                                     {
                                 ?>
 
@@ -258,7 +258,7 @@ if ($kunena_my->id)
 
                                 <?php
                                     }
-                                    elseif ($fbConfig->avatar_src == "cb")
+                                    elseif ($kunena_config->avatar_src == "cb")
                                     {
                                         if ($avatar != "")
                                         {
@@ -484,7 +484,7 @@ if ($kunena_my->id)
 
             <tbody>
                 <?php
-                if (!$is_admin)
+                if (!$kunena_is_admin)
                 {
                     $enum = 1; //reset value
                     $tabclass = array
@@ -577,7 +577,7 @@ if ($kunena_my->id)
             echo _USER_UNSUBSCRIBE_YES . ".<br /><br />";
         }
 
-        if ($fbConfig->fb_profile == 'cb') {
+        if ($kunena_config->fb_profile == 'cb') {
             echo _USER_RETURN_A . ' <a href="'.CKunenaCBProfile::getForumTabURL().'">' . _USER_RETURN_B . "</a><br /><br />";
 	    echo CKunenaLink::GetAutoRedirectHTML(CKunenaCBProfile::getForumTabURL(), 3500);
         }
@@ -597,7 +597,7 @@ if ($kunena_my->id)
             echo _USER_UNFAVORITE_YES . ".<br /><br />";
         }
 
-        if ($fbConfig->fb_profile == 'cb') {
+        if ($kunena_config->fb_profile == 'cb') {
             echo _USER_RETURN_A . ' <a href="'.CKunenaCBProfile::getForumTabURL().'">' . _USER_RETURN_B . "</a><br /><br />";
 	    echo CKunenaLink::GetAutoRedirectHTML(CKunenaCBProfile::getForumTabURL(), 3500);
         }
@@ -633,7 +633,7 @@ else
             <th  class = "th-right">
                 <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
-                if ($fbConfig->enableforumjump)
+                if ($kunena_config->enableforumjump)
                     require_once(KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
                 ?>
             </th>

@@ -26,7 +26,7 @@ $kunena_my = &JFactory::getUser();
 //securing form elements
 $catid = (int)$catid;
 
-if (!$is_Moderator) {
+if (!$kunena_is_moderator) {
     die ("You are not a moderator!!<br />This error is logged and your IP address has been sent to the SuperAdmin(s) of this site; sorry..");
 }
 
@@ -102,7 +102,7 @@ switch ($action)
  */
 function jbListMessages($allMes, $catid)
 {
-    $fbConfig =& CKunenaConfig::getInstance();
+    $kunena_config =& CKunenaConfig::getInstance();
     echo '<form action="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=review') . '" name="moderation" method="post">';
 ?>
 
@@ -142,7 +142,7 @@ function jbListMessages($allMes, $catid)
         <?php
         $i = 1;
         //avoid calling it each time
-        $smileyList = smile::getEmoticons("");
+        $kunena_emoticons = smile::getEmoticons("");
 
         foreach ($allMes as $message)
         {
@@ -154,7 +154,7 @@ function jbListMessages($allMes, $catid)
 
 
             $fb_message_txt = stripslashes($message->message);
-            echo '<td valign="top">' . smile::smileReplace($fb_message_txt, 0, $fbConfig->disemoticons, $smileyList) . '</td>';
+            echo '<td valign="top">' . smile::smileReplace($fb_message_txt, 0, $kunena_config->disemoticons, $kunena_emoticons) . '</td>';
             echo '<td valign="top"><input type="checkbox" name="cid[]" value="' . $message->id . '" /></td>';
             echo '</tr>';
         }

@@ -42,8 +42,8 @@ class KunenaRouter
 	
 	function stringURLSafe($str)
 	{
-		$fbConfig =& CKunenaConfig::getInstance();
-		if ($fbConfig->sefutf8) {
+		$kunena_config =& CKunenaConfig::getInstance();
+		if ($kunena_config->sefutf8) {
 			$str = self::filterOutput($str);
 			return urlencode($str);
 		}
@@ -71,8 +71,8 @@ function BuildRoute(&$query)
 	$parsevars = array('task', 'id', 'userid', 'page', 'sel');
 	$segments = array();
 	
-	$fbConfig =& CKunenaConfig::getInstance();
-	if (!$fbConfig->sef) return $segments;
+	$kunena_config =& CKunenaConfig::getInstance();
+	if (!$kunena_config->sef) return $segments;
 	
 	$db =& JFactory::getDBO();
 	jimport('joomla.filter.output');
@@ -88,7 +88,7 @@ function BuildRoute(&$query)
 			if (self::$catidcache === null) self::loadCategories();
 			if (isset(self::$catidcache[$catid])) $suf = self::stringURLSafe(self::$catidcache[$catid]['name']);
 			if (empty($suf)) $segments[] = $query['catid'];
-			else if ($fbConfig->sefcats && !in_array($suf, self::$functions)) $segments[] = $suf;
+			else if ($kunena_config->sefcats && !in_array($suf, self::$functions)) $segments[] = $suf;
 			else $segments[] = $query['catid'].'-'.$suf;
 		}
 		unset($query['catid']);
@@ -144,7 +144,7 @@ function ParseRoute($segments)
 	$doitems = array('func', 'do');
 	$funcpos = $dopos = 0;
 	
-	$fbConfig =& CKunenaConfig::getInstance();
+	$kunena_config =& CKunenaConfig::getInstance();
 	
 	$vars = array();
 	while (($segment = array_shift($segments)) !== null) 
@@ -154,7 +154,7 @@ function ParseRoute($segments)
 		$value = array_shift($seg);
 		
 		// If SEF categories are allowed: Translate category name to catid
-		if ($fbConfig->sefcats && $funcpos==0 && $dopos==0 && ($value !== null || !in_array($var, self::$functions)))
+		if ($kunena_config->sefcats && $funcpos==0 && $dopos==0 && ($value !== null || !in_array($var, self::$functions)))
 		{
 			self::loadCategories();
 			$catname = strtr($segment, ':', '-');

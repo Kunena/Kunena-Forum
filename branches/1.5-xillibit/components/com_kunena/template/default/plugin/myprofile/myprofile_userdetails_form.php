@@ -21,7 +21,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $app =& JFactory::getApplication();
-$fbConfig =& CKunenaConfig::getInstance();
+$kunena_config =& CKunenaConfig::getInstance();
 
 require_once (KUNENA_ROOT_PATH .DS. 'includes/HTML_toolbar.php');
 
@@ -97,7 +97,7 @@ $validate = JUtility::getToken();
       </tr>
       <tr>
         <td><?php echo _KUNENA_UNAME; ?> </td>
-        <?php if ($fbConfig->usernamechange) { ?>
+        <?php if ($kunena_config->usernamechange) { ?>
         <td><input class = "inputbox" type = "text" name = "username" value = "<?php echo kunena_htmlspecialchars($row->username);?>" size = "40"/></td>
       <?php } else { ?>
       <td><input class = "inputbox" type = "hidden" name = "username" value = "<?php echo kunena_htmlspecialchars($row->username);?>" size = "40"/><?php echo kunena_htmlspecialchars($row->username);?></td>

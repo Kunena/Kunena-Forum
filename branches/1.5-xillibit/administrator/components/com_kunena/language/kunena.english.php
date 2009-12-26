@@ -74,7 +74,6 @@ DEFINE('_KUNENA_A_POLL_NUMBER_VOTES_BY_DESC', 'Set the maximum number for the vo
 // 1.5.8
 
 define('_KUNENA_USRL_REALNAME', 'Real Name');
-define('_KUNENA_USRL_NAME', 'User Name');
 define('_KUNENA_SEO_SETTINGS', 'SEO Settings');
 define('_KUNENA_SEF', 'Search Engine Friendly URLs');
 define('_KUNENA_SEF_DESC', 'Select whether or not URLs are optimized for Search Engines. NOTE: Kunena accepts SEF URLs even if this feature has been turned off.');
@@ -769,8 +768,6 @@ DEFINE('_KUNENA_ADMIN_CONFIG_USERLIST_NAME','Show Real Name');
 DEFINE('_KUNENA_ADMIN_CONFIG_USERLIST_name_DESC','');
 DEFINE('_KUNENA_ADMIN_CONFIG_USERLIST_USERNAME','Show Username');
 DEFINE('_KUNENA_ADMIN_CONFIG_USERLIST_USERNAME_DESC','');
-DEFINE('_KUNENA_ADMIN_CONFIG_USERLIST_GROUP','Show User Group');
-DEFINE('_KUNENA_ADMIN_CONFIG_USERLIST_GROUP_DESC','');
 DEFINE('_KUNENA_ADMIN_CONFIG_USERLIST_POSTS','Show Number of Posts');
 DEFINE('_KUNENA_ADMIN_CONFIG_USERLIST_POSTS_DESC','');
 DEFINE('_KUNENA_ADMIN_CONFIG_USERLIST_KARMA','Show Karma');

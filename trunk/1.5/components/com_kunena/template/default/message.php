@@ -29,13 +29,13 @@ $kunena_db = &JFactory::getDBO();
 if ($kunena_config->fb_profile == 'cb')
 {
 	$msg_params = array(
-		'username' => &$msg_username, 
-		'messageobject' => &$fmessage, 
-		'subject' => &$msg_subject, 
-		'messagetext' => &$msg_text, 
-		'signature' => &$msg_signature, 
-		'karma' => &$msg_karma, 
-		'karmaplus' => &$msg_karmaplus, 
+		'username' => &$msg_username,
+		'messageobject' => &$fmessage,
+		'subject' => &$msg_subject,
+		'messagetext' => &$msg_text,
+		'signature' => &$msg_signature,
+		'karma' => &$msg_karma,
+		'karmaplus' => &$msg_karmaplus,
 		'karmaminus' => &$msg_karmaminus
 	);
 	$profileHtml = $kunenaProfile->showProfile($fmessage->userid, $msg_params);
@@ -81,7 +81,7 @@ if ($kunena_config->fb_profile == 'cb')
                             <?php
                             if (isset($msg_karma)) {
                                 echo $msg_karma;
-								if (isset($msg_karmaplus)) 
+								if (isset($msg_karmaplus))
 									echo '&nbsp;&nbsp;' . $msg_karmaplus . ' ' . $msg_karmaminus;
                             }
                             else {
@@ -126,7 +126,7 @@ if ($kunena_config->fb_profile == 'cb')
 
                                 <input type = "hidden" name = "contentURL" value = "empty"/>
 
-                                <input type = "text" name = "subject" size = "35" class = "inputbox" maxlength = "<?php echo $kunena_config->maxsubject;?>" value = "<?php echo $resubject;?>"/>
+                                <input type = "text" name = "subject" size = "35" class = "inputbox" maxlength = "<?php echo $kunena_config->maxsubject;?>" value = "<?php echo html_entity_decode($resubject);?>"/>
 
                                 <textarea class = "inputbox" name = "message" rows = "6" cols = "60" style = "height: 100px; width: 100%; overflow:auto;"></textarea>
 
@@ -163,7 +163,7 @@ if ($kunena_config->fb_profile == 'cb')
 
               <td class = "fb-msgview-left">
                 <div class = "fb-msgview-l-cover">
-<?php 
+<?php
 					if ($profileHtml)
 					{
 						echo $profileHtml;

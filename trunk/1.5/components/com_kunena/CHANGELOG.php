@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0
 
+27-Dec-2009 Xillibit
+# [#19031] Quick reply shows > as &gt; in subject
+
 26-Dec-2009 fxstein
 # [#19065] More frontend cleanup based on code analysis - fixed various bugs
 

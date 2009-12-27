@@ -25,7 +25,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 // Kunena wide defines
 require_once (JPATH_BASE  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 
-global $fbIcons;
+global $kunena_emoticons;
 global $kunena_is_moderator;
 global $my_id;
 
@@ -150,7 +150,7 @@ else
 // =======================================================================================
 // Forum is online:
 
-global $lang, $fbIcons;
+global $lang, $kunena_emoticons;
 global $kunena_is_moderator, $board_title;
 
 global $message, $settings, $kunena_systime;
@@ -318,7 +318,7 @@ if ($func == '') // Set default start page as per config settings
 // Kunena Current Template Icons Pack
 // See if there's an icon pack installed
 $useIcons = 0; //init
-$fbIcons = 0;
+$kunena_emoticons = 0;
 
 if (file_exists(KUNENA_ABSTMPLTPATH . '/icons.php'))
 {
@@ -461,7 +461,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
     switch ($func)
     {
         case 'view':
-            $fbMenu = kunena_get_menu(NULL, $kunena_config, $fbIcons, $my_id, 3, $view, $catid, $id, $thread);
+            $fbMenu = kunena_get_menu(NULL, $kunena_config, $kunena_emoticons, $my_id, 3, $view, $catid, $id, $thread);
 
             break;
 
@@ -471,11 +471,11 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
             $numPending = $kunena_db->loadResult();
             	check_dberror('Unable load pending messages.');
 
-            $fbMenu = kunena_get_menu(NULL, $kunena_config, $fbIcons, $my_id, 2, $view, $catid, $id, $thread, $kunena_is_moderator, $numPending);
+            $fbMenu = kunena_get_menu(NULL, $kunena_config, $kunena_emoticons, $my_id, 2, $view, $catid, $id, $thread, $kunena_is_moderator, $numPending);
             break;
 
         default:
-            $fbMenu = kunena_get_menu(NULL, $kunena_config, $fbIcons, $my_id, 1, $view);
+            $fbMenu = kunena_get_menu(NULL, $kunena_config, $kunena_emoticons, $my_id, 1, $view);
 
             break;
     }

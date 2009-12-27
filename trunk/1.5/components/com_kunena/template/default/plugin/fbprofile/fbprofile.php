@@ -58,7 +58,7 @@ function showprf($userid, $page)
     $kunena_acl = &JFactory::getACL();
     $kunena_my = &JFactory::getUser();
     $kunena_db = &JFactory::getDBO();
-    global $fbIcons;
+    global $kunena_emoticons;
 
     //Get userinfo needed later on, this limits the amount of queries
     $kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_users AS a INNER JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$userid}'");
@@ -318,8 +318,8 @@ function showprf($userid, $page)
         {
             $msg_karmaminus .= "<a href=\"" . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=decrease&amp;userid=' . $userid) . "\"><img src=\"";
 
-            if (isset($fbIcons['karmaminus'])) {
-                $msg_karmaminus .= KUNENA_URLICONSPATH . $fbIcons['karmaminus'];
+            if (isset($kunena_emoticons['karmaminus'])) {
+                $msg_karmaminus .= KUNENA_URLICONSPATH . $kunena_emoticons['karmaminus'];
             }
             else {
                 $msg_karmaminus .= KUNENA_URLEMOTIONSPATH . "karmaminus.gif";
@@ -328,8 +328,8 @@ function showprf($userid, $page)
             $msg_karmaminus .= "\" alt=\"Karma-\" border=\"0\" title=\"" . _KARMA_SMITE . "\" align=\"middle\" /></a>";
             $msg_karmaplus .= "<a href=\"" . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=increase&amp;userid=' . $userid) . "\"><img src=\"";
 
-            if (isset($fbIcons['karmaplus'])) {
-                $msg_karmaplus .= KUNENA_URLICONSPATH . $fbIcons['karmaplus'];
+            if (isset($kunena_emoticons['karmaplus'])) {
+                $msg_karmaplus .= KUNENA_URLICONSPATH . $kunena_emoticons['karmaplus'];
             }
             else {
                 $msg_karmaplus .= KUNENA_URLEMOTIONSPATH . "karmaplus.gif";
@@ -349,8 +349,8 @@ function showprf($userid, $page)
         $PMSName = $userinfo->username;
         $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_uddeim&amp;task=new&recip=' . $userid) . "\"><img src=\"";
 
-        if ($fbIcons['pms']) {
-            $msg_pms .= KUNENA_URLICONSPATH . $fbIcons['pms'];
+        if ($kunena_emoticons['pms']) {
+            $msg_pms .= KUNENA_URLICONSPATH . $kunena_emoticons['pms'];
         }
         else {
             $msg_pms .= KUNENA_URLEMOTIONSPATH . "sendpm.gif";
@@ -367,8 +367,8 @@ function showprf($userid, $page)
         $PMSName = $userinfo->username;
         $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_pms&amp;page=new&amp;id=' . $PMSName . '&title=' . $fmessage->subject) . "\"><img src=\"";
 
-        if ($fbIcons['pms']) {
-            $msg_pms .= KUNENA_URLICONSPATH . $fbIcons['pms'];
+        if ($kunena_emoticons['pms']) {
+            $msg_pms .= KUNENA_URLICONSPATH . $kunena_emoticons['pms'];
         }
         else {
             $msg_pms .= KUNENA_URLEMOTIONSPATH . "sendpm.gif";
@@ -388,12 +388,12 @@ function showprf($userid, $page)
         $isonline = $kunena_db->loadResult();
 
         if ($isonline && $userinfo->showOnline ==1 ) {
-            $msg_online = isset($fbIcons['onlineicon'])
-                ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';
+            $msg_online = isset($kunena_emoticons['onlineicon'])
+                ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';
         }
         else {
-            $msg_online = isset($fbIcons['offlineicon'])
-                ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
+            $msg_online = isset($kunena_emoticons['offlineicon'])
+                ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
         }
     }
 
@@ -409,8 +409,8 @@ function showprf($userid, $page)
         $PMSName = $userinfo->aid;
         $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=new&amp;to=' . $userid . '' . $fmessage->subject) . "\"><img src=\"";
 
-        if ($fbIcons['pms']) {
-            $msg_pms .= KUNENA_URLICONSPATH . $fbIcons['pms'];
+        if ($kunena_emoticons['pms']) {
+            $msg_pms .= KUNENA_URLICONSPATH . $kunena_emoticons['pms'];
         }
         else {
             $msg_pms .= KUNENA_JLIVEURL . "/components/com_mypms/images/icons/message_12px.gif";
@@ -420,8 +420,8 @@ function showprf($userid, $page)
         //mypms pro profile link
         $msg_profile = "<a href=\"" . MyPMSTools::getProfileLink($userid) . "\"><img src=\"";
 
-        if ($fbIcons['userprofile']) {
-            $msg_profile .= KUNENA_URLICONSPATH . $fbIcons['userprofile'];
+        if ($kunena_emoticons['userprofile']) {
+            $msg_profile .= KUNENA_URLICONSPATH . $kunena_emoticons['userprofile'];
         }
         else {
             $msg_profile .= KUNENA_JLIVEURL . "/components/com_mypms/images/managecontact_icon.gif";
@@ -431,8 +431,8 @@ function showprf($userid, $page)
         //mypms add buddy link
         $msg_buddy = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;user=' . $PMSName . '&amp;task=addbuddy') . "\"><img src=\"";
 
-        if ($fbIcons['pms2buddy']) {
-            $msg_buddy .= KUNENA_URLICONSPATH . $fbIcons['pms2buddy'];
+        if ($kunena_emoticons['pms2buddy']) {
+            $msg_buddy .= KUNENA_URLICONSPATH . $kunena_emoticons['pms2buddy'];
         }
         else {
             $msg_buddy .= KUNENA_JLIVEURL . "/components/com_mypms/images/messages/addbuddy.gif";

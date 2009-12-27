@@ -19,6 +19,9 @@
 * @author TSMF & Jan de Graaff
 **/
 defined( '_JEXEC' ) or die('Restricted access');
+
+global $total, $limitstart, $limit;
+
 ?>
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
@@ -70,13 +73,8 @@ defined( '_JEXEC' ) or die('Restricted access');
 					{
 						$k = 1 - $k;
 						echo '<tr class="' . KUNENA_BOARD_CLASS . '' . $tabclass[$k] . '" >';
-						echo '<td class="td-1" width="73%" align="left">' . $enum . ': <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $fav->catid . '&amp;id=' . $fav->id) . '">' . kunena_htmlspecialchars(stripslashes($fav->subject));
+						echo '<td class="td-1" width="73%" align="left">' . $enum . ': <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $fav->catid . '&amp;id=' . $fav->id) . '">' . kunena_htmlspecialchars(stripslashes($fav->subject)). '</a></td>';
 			?>
-
-						</a>
-
-						</td>
-
 						<td class = "td-2" style = "text-align:center; width:25%"> <?php echo kunena_htmlspecialchars(stripslashes($fav->name)); ?></td>
 
 						<td class = "td-3" width = "1%">

@@ -106,14 +106,14 @@ $tree = thread_flat($tree, $messages);
                 {
                     //new post
                     echo '<td width="1%" class="fb_new">';
-                   // echo isset($fbIcons['unreadmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '"/>' : $kunena_config->newchar;
+                   // echo isset($kunena_emoticons['unreadmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '"/>' : $kunena_config->newchar;
                     echo '</td>';
                 }
                 else
                 {
                     //not new posts
                     echo '<td width="1%" class="fb_notnew">';
-                   // echo isset($fbIcons['readmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $kunena_config->newchar;
+                   // echo isset($kunena_emoticons['readmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $kunena_config->newchar;
                     echo '</td>';
                 }
             }
@@ -132,13 +132,13 @@ $tree = thread_flat($tree, $messages);
                      }
                      else
                      {
-                      //  echo isset($fbIcons['topiclocked']) ? '<img src="' . KUNENA_URLICONSPATH.$fbIcons['topiclocked'].'" border="0" alt="'._GEN_LOCKED_TOPIC.'" title="'._GEN_LOCKED_TOPIC.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'lock.gif" width="15" height="15" alt="'._GEN_LOCKED_TOPIC.'" />';
+                      //  echo isset($kunena_emoticons['topiclocked']) ? '<img src="' . KUNENA_URLICONSPATH.$kunena_emoticons['topiclocked'].'" border="0" alt="'._GEN_LOCKED_TOPIC.'" title="'._GEN_LOCKED_TOPIC.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'lock.gif" width="15" height="15" alt="'._GEN_LOCKED_TOPIC.'" />';
                         $topicLocked=1;
                      }
                   }
                   else
                   {
-                   //  echo isset($fbIcons['topicsticky']) ? '<img src="' . KUNENA_URLICONSPATH.$fbIcons['topicsticky'].'" border="0" alt="'._GEN_ISSTICKY.'" title="'._GEN_ISSTICKY.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'pushpin.gif" width="15" height="15" alt="'._GEN_ISSTICKY.'" />';
+                   //  echo isset($kunena_emoticons['topicsticky']) ? '<img src="' . KUNENA_URLICONSPATH.$kunena_emoticons['topicsticky'].'" border="0" alt="'._GEN_ISSTICKY.'" title="'._GEN_ISSTICKY.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'pushpin.gif" width="15" height="15" alt="'._GEN_ISSTICKY.'" />';
                      $topicSticky=1;
                   }
                   ?></td>
@@ -195,7 +195,7 @@ if ($kunena_config->allowfavorites)
     $kunena_db->setQuery("select count(*) from #__fb_favorites where thread = $leaf->id && userid = $kunena_my->id");
 
     if (intval($kunena_db->loadResult()) > 0) {
-        echo isset($fbIcons['favoritestar']) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $fbIcons['favoritestar'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
+        echo isset($kunena_emoticons['favoritestar']) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $kunena_emoticons['favoritestar'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
     }
 }
 ?>

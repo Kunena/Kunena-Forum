@@ -21,7 +21,7 @@
 //Instructions:
 //Put the file names of your custom Icon Set in this file.
 //If you didn't create a particular Icon, leave the entry in this file
-//but blank the name, e.g. $fbIcons['delete']='';
+//but blank the name, e.g. $kunena_emoticons['delete']='';
 //If the file name is blanked, the orignal text link will be shown.
 //
 //-------------------------------------------------------------------
@@ -31,82 +31,82 @@
 //these Icons, so creating them now will render your Icon Set to
 //be upwards compatible with future releases of Simpleboard!
 //-----------------------------------------------------------------*/
-$fbIcons = array ();
+$kunena_emoticons = array ();
 
-$fbIcons['delete'] = 'delete.gif';
-$fbIcons['edit'] = 'edit.gif';
-$fbIcons['lock'] = 'lock.gif';
-$fbIcons['move'] = 'move.gif';
-$fbIcons['merge'] = 'merge.gif';
-$fbIcons['split'] = 'split.gif';
-$fbIcons['new_topic'] = 'new_thread.gif';
-$fbIcons['quote'] = 'quote.gif';
-$fbIcons['reply'] = 'msg_reply.gif';
-$fbIcons['sticky'] = 'sticky.gif';
-$fbIcons['subscribe'] = 'subscribe.gif';
-$fbIcons['unsubscribe'] = 'unsubscribe.gif';
-$fbIcons['favorite'] = 'favorite.gif';
-$fbIcons['unfavorite'] = 'unfavorite.gif';
-$fbIcons['favoritestar'] = 'favoritestar.gif';
-$fbIcons['favoritestar_grey'] = 'kunena.favoritestar.grey.gif';
-$fbIcons['unlock'] = 'unlock.gif';
-$fbIcons['unsticky'] = 'unsticky.gif';
-$fbIcons['topicreply'] = 'reply.gif';
-$fbIcons['quickmsg'] = 'quick_reply.gif';
-$fbIcons['forumlocked'] = 'tlock.gif';
-$fbIcons['forummoderated'] = 'tmoder.gif';
-$fbIcons['unreadmessage'] = 'unreadmessage_s.gif';
-$fbIcons['readmessage'] = 'readmessage_s.gif';
-$fbIcons['notloginmessage'] = 'readmessage_s.gif';
-$fbIcons['unreadforum'] = 'folder.gif';
-$fbIcons['readforum'] = 'folder_nonew.gif';
-$fbIcons['notloginforum'] = 'folder_nonew.gif';
-$fbIcons['unreadforum_childsmall'] = 'folder_s.gif';
-$fbIcons['readforum_childsmall'] = 'folder_nonew_s.gif';
-$fbIcons['notloginforum_childsmall'] = 'folder_nonew_s.gif';
-$fbIcons['unreadforum_s'] = 'folder_s.gif';
-$fbIcons['readforum_s'] = 'folder_nonew_s.gif';
-$fbIcons['notloginforum_s'] = 'folder_nonew_s.gif';
-$fbIcons['toparrow'] = 'top_arrow.gif';
-$fbIcons['bottomarrow'] = 'bottom_arrow.gif';
-$fbIcons['latestpost'] = 'tlatest.gif';
-$fbIcons['topicsticky'] = 'tsticky.gif';
-$fbIcons['topiclocked'] = 'thread_lock.gif';
-$fbIcons['markThisForumRead'] = 'markthisforumread.gif';
-$fbIcons['userprofile'] ='profile.gif';
-$fbIcons['pms2'] ='pm.gif';
-$fbIcons['pms'] ='pm.gif';
-$fbIcons['onlineicon'] ='online.gif';
-$fbIcons['offlineicon'] ='offline.gif';
-$fbIcons['msgip'] ='ip.gif';
-$fbIcons['msgicq'] ='msgicq.gif';
-$fbIcons['msgskype'] ='msgskype.gif';
-$fbIcons['msggtalk'] ='msggtalk.gif';
-$fbIcons['msgwebsite'] ='msgwebsite.gif';
-$fbIcons['msgmale'] ='msgmale.gif';
-$fbIcons['msgfemale'] ='msgfemale.gif';
-$fbIcons['msglocation'] ='msglocation.gif';
-$fbIcons['msgbirthdate'] ='msgbirthdate.gif';
-$fbIcons['msgaim'] ='msgaim.gif';
-$fbIcons['msgmsn'] ='msgmsn.gif';
-$fbIcons['msgyim'] ='msgyim.gif';
+$kunena_emoticons['delete'] = 'delete.gif';
+$kunena_emoticons['edit'] = 'edit.gif';
+$kunena_emoticons['lock'] = 'lock.gif';
+$kunena_emoticons['move'] = 'move.gif';
+$kunena_emoticons['merge'] = 'merge.gif';
+$kunena_emoticons['split'] = 'split.gif';
+$kunena_emoticons['new_topic'] = 'new_thread.gif';
+$kunena_emoticons['quote'] = 'quote.gif';
+$kunena_emoticons['reply'] = 'msg_reply.gif';
+$kunena_emoticons['sticky'] = 'sticky.gif';
+$kunena_emoticons['subscribe'] = 'subscribe.gif';
+$kunena_emoticons['unsubscribe'] = 'unsubscribe.gif';
+$kunena_emoticons['favorite'] = 'favorite.gif';
+$kunena_emoticons['unfavorite'] = 'unfavorite.gif';
+$kunena_emoticons['favoritestar'] = 'favoritestar.gif';
+$kunena_emoticons['favoritestar_grey'] = 'kunena.favoritestar.grey.gif';
+$kunena_emoticons['unlock'] = 'unlock.gif';
+$kunena_emoticons['unsticky'] = 'unsticky.gif';
+$kunena_emoticons['topicreply'] = 'reply.gif';
+$kunena_emoticons['quickmsg'] = 'quick_reply.gif';
+$kunena_emoticons['forumlocked'] = 'tlock.gif';
+$kunena_emoticons['forummoderated'] = 'tmoder.gif';
+$kunena_emoticons['unreadmessage'] = 'unreadmessage_s.gif';
+$kunena_emoticons['readmessage'] = 'readmessage_s.gif';
+$kunena_emoticons['notloginmessage'] = 'readmessage_s.gif';
+$kunena_emoticons['unreadforum'] = 'folder.gif';
+$kunena_emoticons['readforum'] = 'folder_nonew.gif';
+$kunena_emoticons['notloginforum'] = 'folder_nonew.gif';
+$kunena_emoticons['unreadforum_childsmall'] = 'folder_s.gif';
+$kunena_emoticons['readforum_childsmall'] = 'folder_nonew_s.gif';
+$kunena_emoticons['notloginforum_childsmall'] = 'folder_nonew_s.gif';
+$kunena_emoticons['unreadforum_s'] = 'folder_s.gif';
+$kunena_emoticons['readforum_s'] = 'folder_nonew_s.gif';
+$kunena_emoticons['notloginforum_s'] = 'folder_nonew_s.gif';
+$kunena_emoticons['toparrow'] = 'top_arrow.gif';
+$kunena_emoticons['bottomarrow'] = 'bottom_arrow.gif';
+$kunena_emoticons['latestpost'] = 'tlatest.gif';
+$kunena_emoticons['topicsticky'] = 'tsticky.gif';
+$kunena_emoticons['topiclocked'] = 'thread_lock.gif';
+$kunena_emoticons['markThisForumRead'] = 'markthisforumread.gif';
+$kunena_emoticons['userprofile'] ='profile.gif';
+$kunena_emoticons['pms2'] ='pm.gif';
+$kunena_emoticons['pms'] ='pm.gif';
+$kunena_emoticons['onlineicon'] ='online.gif';
+$kunena_emoticons['offlineicon'] ='offline.gif';
+$kunena_emoticons['msgip'] ='ip.gif';
+$kunena_emoticons['msgicq'] ='msgicq.gif';
+$kunena_emoticons['msgskype'] ='msgskype.gif';
+$kunena_emoticons['msggtalk'] ='msggtalk.gif';
+$kunena_emoticons['msgwebsite'] ='msgwebsite.gif';
+$kunena_emoticons['msgmale'] ='msgmale.gif';
+$kunena_emoticons['msgfemale'] ='msgfemale.gif';
+$kunena_emoticons['msglocation'] ='msglocation.gif';
+$kunena_emoticons['msgbirthdate'] ='msgbirthdate.gif';
+$kunena_emoticons['msgaim'] ='msgaim.gif';
+$kunena_emoticons['msgmsn'] ='msgmsn.gif';
+$kunena_emoticons['msgyim'] ='msgyim.gif';
 
 /******
-$fbIcons['pendingmessages']                ='';
-$fbIcons['nopendingmsgs']                  ='';
-$fbIcons['post']                           ='';
-$fbIcons['nexttopic']                      ='';
-$fbIcons['prevtopic']                      ='';
-$fbIcons['back']                           ='';
-$fbIcons['home']                           ='';
-$fbIcons['profile']                        ='';
-$fbIcons['help']                           ='';
-$fbIcons['menureply']                      ='';
-$fbIcons['flatview']                       ='';
-$fbIcons['threadedview']                   ='';
-$fbIcons['showlatest']                     ='';
-$fbIcons['forumlist']                      ='';
-$fbIcons['rules']                          ='';
-$fbIcons['pms2']                           ='';
+$kunena_emoticons['pendingmessages']                ='';
+$kunena_emoticons['nopendingmsgs']                  ='';
+$kunena_emoticons['post']                           ='';
+$kunena_emoticons['nexttopic']                      ='';
+$kunena_emoticons['prevtopic']                      ='';
+$kunena_emoticons['back']                           ='';
+$kunena_emoticons['home']                           ='';
+$kunena_emoticons['profile']                        ='';
+$kunena_emoticons['help']                           ='';
+$kunena_emoticons['menureply']                      ='';
+$kunena_emoticons['flatview']                       ='';
+$kunena_emoticons['threadedview']                   ='';
+$kunena_emoticons['showlatest']                     ='';
+$kunena_emoticons['forumlist']                      ='';
+$kunena_emoticons['rules']                          ='';
+$kunena_emoticons['pms2']                           ='';
 *****/
 ?>

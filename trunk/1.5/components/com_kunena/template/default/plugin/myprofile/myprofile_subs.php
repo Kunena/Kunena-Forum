@@ -19,6 +19,8 @@
 * @author TSMF & Jan de Graaff
 **/
 defined( '_JEXEC' ) or die('Restricted access');
+
+global $total, $limitstart, $limit;
 ?>
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
@@ -79,28 +81,29 @@ defined( '_JEXEC' ) or die('Restricted access');
 					foreach ($subdet as $sub)
 					{
 						$k = 1 - $k;
+?>
+						<tr class="<?php echo KUNENA_BOARD_CLASS . $tabclass[$k];?>">
+							<td class="td-1" width="54%" align="left"><?php echo $enum;?>:
+								<a href="<?php
+									echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $sub->catid .
+										'&amp;id=' . $sub->id);?>"><?php
+									echo kunena_htmlspecialchars(stripslashes($sub->subject));?></a>
+							</td>
 
-						echo '<tr class="' . KUNENA_BOARD_CLASS . '' . $tabclass[$k] . '" >';
-						echo '<td class="td-1" width="54%" align="left">' . $enum . ': <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $sub->catid . '&amp;id=' . $sub->id) . '">' . kunena_htmlspecialchars(stripslashes($sub->subject));
-			?>
+							<td class = "td-2" style = "text-align:center; width:15%"> <?php
+								echo kunena_htmlspecialchars(stripslashes($sub->name)); ?></td>
 
-						</a>
+							<td class = "td-3" style = "text-align:center; width:25%"> <?php
+								echo '' . date(_DATETIME, $sub->time) . ''; ?></td>
 
-						</td>
+							<td class = "td-4" style = "text-align:center; width:5%"> <?php echo $sub->hits; ?></td>
 
-						<td class = "td-2" style = "text-align:center; width:15%"> <?php echo kunena_htmlspecialchars(stripslashes($sub->name)); ?></td>
-
-						<td class = "td-3" style = "text-align:center; width:25%"> <?php echo '' . date(_DATETIME, $sub->time) . ''; ?></td>
-
-						<td class = "td-4" style = "text-align:center; width:5%"> <?php echo $sub->hits; ?></td>
-
-						<td class = "td-5" width = "1%">
-							<input id = "cid<?php echo $enum;?>" name = "cid[]" value = "<?php echo $subs->thread; ?>"  type = "checkbox"/>
-						</td>
-
+							<td class = "td-5" width = "1%">
+								<input id = "cid<?php echo $enum;?>" name = "cid[]" value = "<?php
+									echo $subs->thread; ?>"  type = "checkbox"/>
+							</td>
 						</tr>
-
-			<?php
+<?php
 						$enum++;
 					}
 				}

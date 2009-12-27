@@ -83,14 +83,14 @@ if ($func != "")
 		$fireinfo = '';
         if (!empty($forumLocked))
         {
-            $fireinfo = isset($fbIcons['forumlocked']) ? ' <img src="' . KUNENA_URLICONSPATH . $fbIcons['forumlocked']
+            $fireinfo = isset($kunena_emoticons['forumlocked']) ? ' <img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['forumlocked']
                      . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"  alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
             $lockedForum = 1;
         }
 
         if (!empty($forumReviewed))
         {
-            $fireinfo = isset($fbIcons['forummoderated']) ? ' <img src="' . KUNENA_URLICONSPATH . $fbIcons['forummoderated']
+            $fireinfo = isset($kunena_emoticons['forummoderated']) ? ' <img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['forummoderated']
                      . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '">';
             $moderatedForum = 1;
         }

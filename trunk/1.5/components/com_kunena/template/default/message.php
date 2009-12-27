@@ -355,14 +355,14 @@ if ($kunena_config->fb_profile == 'cb')
                 ?>
                 <span id = "fb_qr_sc__<?php echo $msg_id;?>" class = "fb_qr_fire" style = "cursor:pointer">
                 <?php echo
-                    isset($fbIcons['quickmsg']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['quickmsg'] . '" border="0" alt="' . _KUNENA_QUICKMSG . '" />' . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _KUNENA_QUICKMSG . '" />'; ?>
+                    isset($kunena_emoticons['quickmsg']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['quickmsg'] . '" border="0" alt="' . _KUNENA_QUICKMSG . '" />' . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _KUNENA_QUICKMSG . '" />'; ?>
                 </span>
                 <?php
                 endif;
                 ?>
 
                 <?php
-                if ($fbIcons['reply'])
+                if ($kunena_emoticons['reply'])
                 {
                     if (!isset($msg_closed))
                     {

@@ -98,7 +98,7 @@ $lastvisitDate = strftime(_KUNENA_DT_DATETIME_FMT, strtotime($userinfo->lastvisi
     <?php } ?>
     <tr class ="<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_POSTS; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo $numPosts; ?></td>
+      <td  class = "td-2 fbm"><?php echo $userinfo->posts; ?></td>
     </tr>
     <tr class ="<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_PROFILEVIEW; ?></b> </td>

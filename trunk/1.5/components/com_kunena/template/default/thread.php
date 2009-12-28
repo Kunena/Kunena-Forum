@@ -22,7 +22,14 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+$kunena_db = &JFactory::getDBO();
 $kunena_config =& CKunenaConfig::getInstance();
+
+global $kunena_emoticons;
+
+$catid = JRequest::getInt('catid', 0);
+$id = JRequest::getInt('id', 0);
+
 // arrows and lines
 $join = '<img src="' . KUNENA_URLIMAGESPATH . 'tree-join.gif" width="12" height="18" alt="thread link" />';
 $end = '<img src="' . KUNENA_URLIMAGESPATH . 'tree-end.gif" width="12" height="18" alt="thread link" />';

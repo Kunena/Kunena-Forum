@@ -21,9 +21,11 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+$kunena_db = &JFactory::getDBO();
 $kunena_app =& JFactory::getApplication();
 $kunena_config =& CKunenaConfig::getInstance();
 $kunena_session =& CKunenaSession::getInstance();
+global $kunena_emoticons;
 global $kunena_is_moderatorerator;
 
 function KunenaShowcatPagination($catid, $page, $totalpages, $maxpages) {
@@ -107,9 +109,9 @@ if (in_array($catid, $allow_forum))
     $total = (int)$kunena_db->loadResult();
     	check_dberror('Unable to get message count.');
     $totalpages = ceil($total / $threads_per_page);
-  
-$query = "SELECT t.id, MAX(m.id) AS lastid FROM #__fb_messages AS t  
-	INNER JOIN #__fb_messages AS m ON t.id = m.thread 
+
+$query = "SELECT t.id, MAX(m.id) AS lastid FROM #__fb_messages AS t
+	INNER JOIN #__fb_messages AS m ON t.id = m.thread
 	WHERE t.parent='0' AND t.hold='0' AND t.catid='{$catid}' AND m.hold='0' AND m.catid='{$catid}'
 	GROUP BY m.thread ORDER BY t.ordering DESC, lastid DESC";
 $kunena_db->setQuery($query, $offset, $threads_per_page);
@@ -125,7 +127,7 @@ if (count($threadids) > 0)
 {
 $query = "SELECT a.*, j.id AS userid, t.message AS messagetext, l.myfavorite, l.favcount, l.attachmesid, l.msgcount, l.lastid, u.avatar, c.id AS catid, c.name AS catname
 	FROM (
-		SELECT m.thread, (f.userid='{$kunena_my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachmesid, 
+		SELECT m.thread, (f.userid='{$kunena_my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachmesid,
 			COUNT(DISTINCT m.id) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime
 		FROM #__fb_messages AS m
 		LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread
@@ -173,7 +175,7 @@ foreach ($messagelist as $message)
         if (!in_array($msgid->thread, $read_topics)) $last_read[$msgid->thread] = $msgid;
     }
 }
-    
+
     //get number of pending messages
     $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE catid='{$catid}' AND hold='1'");
     $numPending = $kunena_db->loadResult();

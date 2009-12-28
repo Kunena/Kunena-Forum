@@ -22,6 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+$kunena_db = &JFactory::getDBO();
 $kunena_config =& CKunenaConfig::getInstance();
 
 # Check for Editor rights  $kunena_config->annmodid

@@ -21,8 +21,11 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+$kunena_db = &JFactory::getDBO();
 $kunena_config =& CKunenaConfig::getInstance();
-$rowItemid = JRequest::getInt('Itemid');
+$Itemid = JRequest::getInt('Itemid');
+
+$do = JRequest::getCmd('do', '');
 
 if ($kunena_my->id)
 {
@@ -31,7 +34,6 @@ if ($kunena_my->id)
     if ($do == "show")
     { //show it is..
         //first we gather some information about this person - bypass if (s)he is a guest
-        unset($user);
         $kunena_db->setQuery("SELECT * FROM #__fb_users AS su LEFT JOIN #__users AS u ON u.id=su.userid WHERE su.userid='{$kunena_my->id}'");
 
         $user = $kunena_db->loadObject();
@@ -175,7 +177,7 @@ if ($kunena_my->id)
                                     onMouseOver = "textCounter(this.form.message,this.form.counter,<?php echo $kunena_config->maxsig;?>);"
                                     onClick = "textCounter(this.form.message,this.form.counter,<?php echo $kunena_config->maxsig;?>);"
                                     onKeyDown = "textCounter(this.form.message,this.form.counter,<?php echo $kunena_config->maxsig;?>);"
-                                    onKeyUp = "textCounter(this.form.message,this.form.counter,<?php echo $kunena_config->maxsig;?>);" type = "text" name = "message"><?php echo $signature; ?></textarea>
+                                    onKeyUp = "textCounter(this.form.message,this.form.counter,<?php echo $kunena_config->maxsig;?>);" name = "message"><?php echo $signature; ?></textarea>
 
                                 <br/>
 
@@ -513,12 +515,13 @@ if ($kunena_my->id)
                 else {
                     echo "<tr class=\"" . KUNENA_BOARD_CLASS . '' . $tabclass[$k] . "\"><td class=\"td-1\">" . _USER_MODERATOR_ADMIN . "</td></tr>";
                 }
-
-                echo "</tbody></table>";
+?>
+			</tbody>
+		</table>
+<?php
     }
     else if ($do == "update")
     { //we update anything
-        $rowItemid = JRequest::getInt('Itemid');
         $deleteAvatar = JRequest::getInt('deleteAvatar', 0);
         $deleteSig = JRequest::getInt('deleteSig', 0);
         $unsubscribeAll = JRequest::getInt('unsubscribeAll', 0);

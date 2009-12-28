@@ -21,6 +21,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $total, $limitstart, $limit;
+$kunena_db = &JFactory::getDBO();
 ?>
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">

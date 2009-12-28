@@ -25,6 +25,8 @@ defined( '_JEXEC' ) or die('Restricted access');
 $kunena_config 	= &CKunenaConfig::getInstance();
 $kunena_db 		= &JFactory::getDBO();
 
+global $kunena_emoticons;
+
 $func 			= strtolower(JRequest::getCmd('func', ''));
 $catid 			= JRequest::getInt('catid', 0);
 $id 			= JRequest::getInt('id', 0);

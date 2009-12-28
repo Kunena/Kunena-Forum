@@ -21,7 +21,11 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
+$kunena_db = &JFactory::getDBO();
 $kunena_config =& CKunenaConfig::getInstance();
+
+$id = JRequest::getInt('id', 0);
+
 //Some initial thingies needed anyway:
 if (!isset($htmlText)) $htmlText = '';
 if (!isset($setFocus)) $setFocus = 0;

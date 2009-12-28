@@ -26,6 +26,10 @@ $kunena_app =& JFactory::getApplication();
 $kunena_db = &JFactory::getDBO();
 $kunena_config =& CKunenaConfig::getInstance();
 $kunena_session =& CKunenaSession::getInstance();
+$document =& JFactory::getDocument();
+
+$func = strtolower(JRequest::getCmd('func', ''));
+$sel = JRequest::getVar('sel', '');
 
 function KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages) {
     $startpage = ($page - floor($maxpages/2) < 1) ? 1 : $page - floor($maxpages/2);
@@ -161,7 +165,6 @@ $totalpages = ceil($total / $threads_per_page);
 $metaKeys=kunena_htmlspecialchars(stripslashes(_KUNENA_ALL_DISCUSSIONS . ", {$kunena_config->board_title}, " . $kunena_app->getCfg('sitename')));
 $metaDesc=kunena_htmlspecialchars(stripslashes(_KUNENA_ALL_DISCUSSIONS . " ({$page}/{$totalpages}) - {$kunena_config->board_title}"));
 
-$document =& JFactory::getDocument();
 $cur = $document->get( 'description' );
 $metaDesc = $cur .'. ' . $metaDesc;
 $document =& JFactory::getDocument();
@@ -398,12 +401,8 @@ if (count($threadids) > 0)
 			include_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/stats.class.php');
 		}
 
-		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php')) {
-			include (KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php');
-		}
-		else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/frontstats.php');
-		}
+		$kunena_stats = new CKunenaStats();
+		$kunena_stats->showFrontStats();
 	}
     //(JJ) FINISH: STATS
 

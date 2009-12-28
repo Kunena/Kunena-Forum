@@ -27,6 +27,8 @@ $kunena_config 	=& CKunenaConfig::getInstance();
 $kunena_session =& CKunenaSession::getInstance();
 $kunena_db 		=& JFactory::getDBO();
 
+global $kunena_emoticons;
+
 function KunenaViewPagination($catid, $threadid, $page, $totalpages, $maxpages) {
     $kunena_config =& CKunenaConfig::getInstance();
 
@@ -544,6 +546,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 				{
 					$triggerParams = array( 'userid'=> $fmessage->userid,
 						'userinfo'=> &$userinfo );
+					$kunenaProfile =& CkunenaCBProfile::getInstance();
 					$kunenaProfile->trigger( 'profileIntegration', $triggerParams );
 				}
 
@@ -564,7 +567,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 
                                 $msg_id = $fmessage->id;
                                 $lists["userid"] = $userinfo->userid;
-                                $msg_username = $fmessage->email != "" && $my_id > 0 && $kunena_config->showemail ? CKunenaLink::GetEmailLink(kunena_htmlspecialchars(stripslashes($fmessage->email)), $fb_username) : $fb_username;
+                                $msg_username = $fmessage->email != "" && $kunena_my->id > 0 && $kunena_config->showemail ? CKunenaLink::GetEmailLink(kunena_htmlspecialchars(stripslashes($fmessage->email)), $fb_username) : $fb_username;
 
                                 if ($kunena_config->allowavatar)
                                 {
@@ -581,6 +584,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     }
                                     else if ($kunena_config->avatar_src == "cb")
                                     {
+                                    	$kunenaProfile =& CkunenaCBProfile::getInstance();
                                     	$msg_avatar = '<span class="fb_avatar">'.$kunenaProfile->showAvatar($userinfo->userid, '', false).'</span>';
                                     }
                                     else if ($kunena_config->avatar_src == "aup")

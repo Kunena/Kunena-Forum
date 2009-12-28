@@ -26,6 +26,10 @@ $kunena_my = &JFactory::getUser();
 $kunena_config =& CKunenaConfig::getInstance();
 $kunena_db = &JFactory::getDBO();
 
+global $kunena_emoticons;
+
+$catid = JRequest::getInt('catid', 0);
+
 if ($kunena_config->fb_profile == 'cb')
 {
 	$msg_params = array(
@@ -38,6 +42,7 @@ if ($kunena_config->fb_profile == 'cb')
 		'karmaplus' => &$msg_karmaplus,
 		'karmaminus' => &$msg_karmaminus
 	);
+	$kunenaProfile =& CkunenaCBProfile::getInstance();
 	$profileHtml = $kunenaProfile->showProfile($fmessage->userid, $msg_params);
 } else {
 	$profileHtml = null;

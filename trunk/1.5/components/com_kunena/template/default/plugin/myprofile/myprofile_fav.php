@@ -21,6 +21,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $total, $limitstart, $limit;
+$kunena_db = &JFactory::getDBO();
 
 ?>
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
@@ -72,9 +73,10 @@ global $total, $limitstart, $limit;
 					foreach ($favdet as $fav)
 					{
 						$k = 1 - $k;
-						echo '<tr class="' . KUNENA_BOARD_CLASS . '' . $tabclass[$k] . '" >';
-						echo '<td class="td-1" width="73%" align="left">' . $enum . ': <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $fav->catid . '&amp;id=' . $fav->id) . '">' . kunena_htmlspecialchars(stripslashes($fav->subject)). '</a></td>';
 			?>
+						<tr class="<?php echo KUNENA_BOARD_CLASS . '' . $tabclass[$k]; ?>">
+						<td class="td-1" width="73%" align="left"><?php echo $enum; ?>: <a href="<?php echo JRoute::_(KUNENA_LIVEURLREL . '&func=view&catid=' . $fav->catid . '&id=' . $fav->id); ?>"><?php echo kunena_htmlspecialchars(stripslashes($fav->subject)); ?></a></td>
+
 						<td class = "td-2" style = "text-align:center; width:25%"> <?php echo kunena_htmlspecialchars(stripslashes($fav->name)); ?></td>
 
 						<td class = "td-3" width = "1%">

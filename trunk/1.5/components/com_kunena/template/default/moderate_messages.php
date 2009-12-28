@@ -21,6 +21,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+$kunena_db = &JFactory::getDBO();
 $kunena_app =& JFactory::getApplication();
 $kunena_my = &JFactory::getUser();
 //securing form elements
@@ -103,9 +104,9 @@ switch ($action)
 function jbListMessages($allMes, $catid)
 {
     $kunena_config =& CKunenaConfig::getInstance();
-    echo '<form action="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=review') . '" name="moderation" method="post">';
 ?>
 
+   <form action="<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=review'); ?>" name="moderation" method="post">
     <script>
         function ConfirmDelete()
         {
@@ -165,8 +166,7 @@ function jbListMessages($allMes, $catid)
         <input type = "hidden" name = "catid" value = "<?php echo $catid; ?>"/>
 
         <input type = "submit"
-            align = "center"
-            class = "button" name = "action" value = "<?php echo _MOD_APPROVE; ?>" border = "0"> <input type = "submit" align = "center" class = "button" name = "action" onclick = "ConfirmDelete()" value = "<?php echo _MOD_DELETE; ?>" border = "0">
+            class = "button" name = "action" value = "<?php echo _MOD_APPROVE; ?>" border = "0"> <input type = "submit" class = "button" name = "action" onclick = "ConfirmDelete()" value = "<?php echo _MOD_DELETE; ?>" border = "0">
     </td>
 </tr>
 

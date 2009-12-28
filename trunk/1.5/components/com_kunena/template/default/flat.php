@@ -22,7 +22,13 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+$kunena_db = &JFactory::getDBO();
 $kunena_config =& CKunenaConfig::getInstance();
+
+$func = strtolower(JRequest::getCmd('func', ''));
+$id = JRequest::getInt('id', 0);
+
+global $kunena_emoticons;
 global $kunena_is_moderatorerator;
 $kunena_my = &JFactory::getUser();
 // Func Check
@@ -330,7 +336,7 @@ if (count($messages[0]) > 0)
         <span class="topic_posted_time"><?php echo _KUNENA_POSTED_AT ?> <?php echo time_since($leaf->time , time() + ($kunena_config->board_ofset * 3600)); ?> <?php echo _KUNENA_AGO ?>
         </span>
 <?php
-	if ($leaf->name) 
+	if ($leaf->name)
 	{
         	echo '<span class="topic_by">';
 	        echo _GEN_BY.' '.CKunenaLink::GetProfileLink($kunena_config, $leaf->userid, $leaf->name);
@@ -401,6 +407,7 @@ if (count($messages[0]) > 0)
 		}
 		else if ($kunena_config->avatar_src == "cb")
 		{
+			$kunenaProfile =& CkunenaCBProfile::getInstance();
 			$useravatar = $kunenaProfile->showAvatar($last_reply[$leaf->id]->userid, 'fb_list_avatar');
   		    echo CKunenaLink::GetProfileLink($kunena_config, $last_reply[$leaf->id]->userid, $useravatar);
 		}
@@ -438,7 +445,7 @@ if (count($messages[0]) > 0)
         	echo CKunenaLink::GetThreadPageLink($kunena_config, 'view', $leaf->catid, $leaf->thread, 1, $kunena_config->messages_per_page, _GEN_LAST_POST, $last_reply[$leaf->id]->id);
         }
 
-        if ($leaf->name) 
+        if ($leaf->name)
 		echo ' '._GEN_BY. ' '.CKunenaLink::GetProfileLink($kunena_config, $last_reply[$leaf->id]->userid, stripslashes($last_reply[$leaf->id]->name), 'nofollow', 'topic_latest_post_user'); ?>
         </span>
         <!-- /Latest Post -->

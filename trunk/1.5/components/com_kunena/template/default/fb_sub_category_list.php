@@ -29,6 +29,7 @@ $kunena_db = &JFactory::getDBO();
 <!--  sub cat -->
 <?php
 //    show forums within the categories
+$catid = JRequest::getInt('catid', 0);
 $kunena_db->setQuery("SELECT id, name, locked,review, pub_access, pub_recurse, admin_access, admin_recurse FROM #__fb_categories WHERE parent='{$catid}' AND published='1' ORDER BY ordering");
 $rows = $kunena_db->loadObjectList();
 check_dberror("Unable to load categories.");

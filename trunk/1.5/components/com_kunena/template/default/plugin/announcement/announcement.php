@@ -21,6 +21,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+$kunena_db = &JFactory::getDBO();
 $kunena_app =& JFactory::getApplication();
 $document =& JFactory::getDocument();
 $kunena_config =& CKunenaConfig::getInstance();
@@ -54,7 +55,7 @@ if ($do == "read") {
 	$annsdescription = stripslashes(smile::smileReplace($ann->sdescription, 0, $kunena_config->disemoticons, $kunena_emoticons));
 	$annsdescription = nl2br($annsdescription);
 	$annsdescription = smile::htmlwrap($annsdescription, $kunena_config->wrap);
-    
+
 	$anndescription = stripslashes(smile::smileReplace($ann->description, 0, $kunena_config->disemoticons, $kunena_emoticons));
 	$anndescription = nl2br($anndescription);
 	$anndescription = smile::htmlwrap($anndescription, $kunena_config->wrap);
@@ -241,6 +242,7 @@ if ($is_editor) {
         $sdescription = addslashes(JRequest::getVar('sdescription', '', 'string', JREQUEST_ALLOWRAW));
         $created = addslashes(JRequest::getVar("created", ""));
         $published = JRequest::getInt("published", 0);
+        $ordering = 0;
         $showdate = addslashes(JRequest::getVar("showdate", ""));
         # Clear any HTML
         $query1 = "INSERT INTO #__fb_announcement VALUES ('', '$title', '$sdescription', '$description', " . (($created <> '')?"'$created'":"NOW()") . ", '$published', '$ordering','$showdate')";

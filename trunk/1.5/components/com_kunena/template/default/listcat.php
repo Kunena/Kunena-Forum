@@ -21,10 +21,15 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+$kunena_db = &JFactory::getDBO();
 $kunena_app =& JFactory::getApplication();
 $kunena_config =& CKunenaConfig::getInstance();
 $kunena_session =& CKunenaSession::getInstance();
 $kunena_my =& JFactory::getUser();
+
+global $kunena_emoticons;
+
+$func = strtolower(JRequest::getCmd('func', ''));
 if (strtolower($func) == '' ){
 include (KUNENA_ABSTMPLTPATH . '/latestx.php');
 } else {
@@ -654,12 +659,8 @@ if (count($categories[0]) > 0)
 			include_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/stats.class.php');
 		}
 
-		if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php')) {
-			include (KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php');
-		}
-		else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/frontstats.php');
-		}
+		$kunena_stats = new CKunenaStats();
+		$kunena_stats->showFrontStats();
 	}
 	//(JJ) FINISH: STATS
 ?>

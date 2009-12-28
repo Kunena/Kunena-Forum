@@ -19,6 +19,10 @@
 * @author TSMF & Jan de Graaff
 **/
 defined( '_JEXEC' ) or die('Restricted access');
+
+$kunena_db = &JFactory::getDBO();
+
+global $kunena_emoticons;
 ?>
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">

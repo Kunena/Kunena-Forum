@@ -30,6 +30,7 @@ $kunena_db->setQuery("SELECT su.view, u.name, u.username, su.moderator, su.avata
                     . " LEFT JOIN #__users AS u on u.id=su.userid WHERE su.userid={$kunena_my->id}", 0, 1);
 
 $_user = $kunena_db->loadObject();
+$Itemid = JRequest::getInt('Itemid');
 
 $fbavatar = NULL;
 if ($_user != NULL)
@@ -54,6 +55,7 @@ else if ($kunena_config->avatar_src == "clexuspm")
 }
 else if ($kunena_config->avatar_src == "cb")
 {
+	$kunenaProfile =& CkunenaCBProfile::getInstance();
 	$jr_avatar = $kunenaProfile->showAvatar($kunena_my->id);
 }
 else if ($kunena_config->avatar_src == "aup") // integration AlphaUserPoints

@@ -25,7 +25,6 @@ defined( '_JEXEC' ) or die('Restricted access');
 // Kunena wide defines
 require_once (JPATH_BASE  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 
-global $kunena_emoticons;
 global $kunena_is_moderator;
 global $my_id;
 
@@ -57,7 +56,6 @@ $resubject 		= JRequest::getVar('resubject', '');
 $return 		= JRequest::getVar('return', '');
 $rowid 			= JRequest::getInt('rowid', 0);
 $rowItemid 		= JRequest::getInt('rowItemid', 0);
-$sel 			= JRequest::getVar('sel', '');
 $subject 		= JRequest::getVar('subject', '');
 $subscribeMe 	= JRequest::getVar('subscribeMe', '');
 $thread 		= JRequest::getInt('thread', 0);
@@ -207,8 +205,8 @@ if ($func == "getpreview")
 {
     $message = utf8_urldecode(utf8_decode(stripslashes($msgpreview)));
 
-    $kunena_emoticons = smile::getEmoticons(1);
-    $msgbody = smile::smileReplace( $message , 0, $kunena_config->disemoticons, $kunena_emoticons);
+    $smileyList = smile::getEmoticons(1);
+    $msgbody = smile::smileReplace( $message , 0, $kunena_config->disemoticons, $smileyList);
     $msgbody = nl2br($msgbody);
     $msgbody = str_replace("__FBTAB__", "\t", $msgbody);
 	$msgbody = CKunenaTools::prepareContent($msgbody);
@@ -318,7 +316,7 @@ if ($func == '') // Set default start page as per config settings
 // Kunena Current Template Icons Pack
 // See if there's an icon pack installed
 $useIcons = 0; //init
-$kunena_emoticons = 0;
+$kunena_emoticons = array();
 
 if (file_exists(KUNENA_ABSTMPLTPATH . '/icons.php'))
 {
@@ -535,12 +533,8 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
                 include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/stats.class.php');
                 }
 
-            if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.php')) {
-                include (KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.php');
-                }
-            else {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/stats/stats.php');
-                }
+			$kunena_stats = new CKunenaStats();
+			$kunena_stats->showStats();
 
             break;
 

@@ -23,6 +23,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 global $lang;
 
+$kunena_db = &JFactory::getDBO();
 $kunena_config =& CKunenaConfig::getInstance();
 $kunena_session =& CKunenaSession::getInstance();
 

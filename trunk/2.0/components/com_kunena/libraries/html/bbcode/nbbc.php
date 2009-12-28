@@ -30,8 +30,8 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-define("BBCODE_VERSION", "1.4.2");
-define("BBCODE_RELEASE", "2009-06-21");
+define("BBCODE_VERSION", "1.4.3");
+define("BBCODE_RELEASE", "2009-10-10");
 define("BBCODE_VERBATIM", 2);
 define("BBCODE_REQUIRED", 1);
 define("BBCODE_OPTIONAL", 0);
@@ -1107,7 +1107,7 @@ return rawurlencode(str_replace(" ", "_",
 trim(preg_replace("/[!?;@#\$%\\^&*<>=+`~\\x00-\\x20_-]+/", " ", $string))));
 }
 function IsValidURL($string, $email_too = true) {
-if (preg_match("/^
+if (preg_match('/^
 (?:https?|ftp):\\/\\/
 (?:
 (?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+
@@ -1125,7 +1125,7 @@ if (preg_match("/^
 )
 (?::[0-9]{1,5})?
 (?:[\\/\\?\\#][^\\n\\r]*)?
-$/Dx", $string)) return true;
+$/Dx', $string)) return true;
 if (preg_match("/^[^:]+([\\/\\\\?#][^\\r\\n]*)?$/D", $string))
 return true;
 if ($email_too)
@@ -1663,7 +1663,7 @@ $link = $possible_content = "";
 foreach ($tag_rule['plain_link'] as $possible_content) {
 if ($possible_content == '_content'
 && strlen($contents) > 0) {
-$link = $this->unhtmlentities(strip_tags($contents));
+$link = $this->UnHTMLEncode(strip_tags($contents));
 break;
 }
 if (isset($params[$possible_content])

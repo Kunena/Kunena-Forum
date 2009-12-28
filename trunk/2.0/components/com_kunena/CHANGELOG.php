@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+28-Dec-2009 Matias
+# [#17654] Upgrade bbcode parser class to latest version
+
 23-Dec-2009 Matias
 # [#18912] Fixed infinite loop in installer, some code cleanup
 # [#18912] Few bug fixes, more cleanup

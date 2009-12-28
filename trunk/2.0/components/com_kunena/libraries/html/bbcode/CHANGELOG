@@ -1,4 +1,11 @@
 
+2009-10-10 / v1.4.3 / Phantom Inker (inker2576@yahoo.com)
+	* Fixed a bug in plain mode that was causing tags processed in
+		plain mode to throw errors (it was calling a function that
+		had since been renamed).
+	* Added tests for plain mode to ensure this omission won't
+		happen again.
+
 2009-06-21 / v1.4.2 / Phantom Inker (inker2576@yahoo.com)
 	* SECURITY FIX: [img] tag was allowing HTML content to be passed
 		through.

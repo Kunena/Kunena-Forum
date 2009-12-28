@@ -119,10 +119,10 @@ $threadids = $kunena_db->loadResultArray();
 	check_dberror("Unable to load thread list.");
 $idstr = @join(",", $threadids);
 
-$favthread = array();
-$thread_counts = array();
-$messages = array();
-$messages[0] = array();
+$this->favthread = array();
+$this->thread_counts = array();
+$this->messages = array();
+$this->messages[0] = array();
 if (count($threadids) > 0)
 {
 $query = "SELECT a.*, j.id AS userid, t.message AS messagetext, l.myfavorite, l.favcount, l.attachmesid, l.msgcount, l.lastid, u.avatar, c.id AS catid, c.name AS catname
@@ -149,14 +149,14 @@ $messagelist = $kunena_db->loadObjectList();
 
 foreach ($messagelist as $message)
 {
-	$messages[$message->parent][] = $message;
-	$messagetext[$message->id] = substr(smile::purify($message->messagetext), 0, 500);
+	$this->messages[$message->parent][] = $message;
+	$this->messagetext[$message->id] = substr(smile::purify($message->messagetext), 0, 500);
 	if ($message->parent==0)
 	{
-		$hits[$message->id] = $message->hits;
-		$thread_counts[$message->id] = $message->msgcount-1;
+		$this->hits[$message->id] = $message->hits;
+		$this->thread_counts[$message->id] = $message->msgcount-1;
 		$last_read[$message->id]->unread = 0;
-		if ($message->favcount) $favthread[$message->id] = $message->favcount;
+		if ($message->favcount) $this->favthread[$message->id] = $message->favcount;
 		if ($message->id == $message->lastid) $last_read[$message->id]->lastread = $last_reply[$message->id] = $message;
 	}
 	else
@@ -166,13 +166,13 @@ foreach ($messagelist as $message)
 }
 
     $kunena_db->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages "
-                       ."WHERE hold='0' AND moved='0' AND thread IN ({$idstr}) AND time>'{$prevCheck}' GROUP BY thread");
+                       ."WHERE hold='0' AND moved='0' AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread");
     $msgidlist = $kunena_db->loadObjectList();
     check_dberror("Unable to get unread messages count and first id.");
 
     foreach ($msgidlist as $msgid)
     {
-        if (!in_array($msgid->thread, $read_topics)) $last_read[$msgid->thread] = $msgid;
+        if (!in_array($msgid->thread, $this->read_topics)) $last_read[$msgid->thread] = $msgid;
     }
 }
 
@@ -180,7 +180,6 @@ foreach ($messagelist as $message)
     $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE catid='{$catid}' AND hold='1'");
     $numPending = $kunena_db->loadResult();
     	check_dberror('Unable to get number of pending messages.');
-    //@rsort($messages[0]);
 ?>
 <?php
     //Get the category name for breadcrumb
@@ -273,7 +272,7 @@ foreach ($messagelist as $message)
 
 		<?php
                 //pagination 1
-		if (count($messages[0]) > 0)
+		if (count($this->messages[0]) > 0)
 		{
 			$maxpages = 9 - 2; // odd number here (show - 2)
 			$totalpages = ceil($total / $threads_per_page);
@@ -307,9 +306,9 @@ foreach ($messagelist as $message)
         $readTopics = "0";
     } //make sure at least something is in there..
     //make it into an array
-    $read_topics = explode(',', $readTopics);
+    $this->read_topics = explode(',', $readTopics);
 
-    if (count($messages) > 0)
+    if (count($this->messages) > 0)
     {
         if ($view == "flat")
             if (file_exists(KUNENA_ABSTMPLTPATH . '/flat.php')) {
@@ -360,7 +359,7 @@ foreach ($messagelist as $message)
 
 		<?php
 		//pagination 2
-                if (count($messages[0]) > 0)
+                if (count($this->messages[0]) > 0)
 		{
 			echo $pagination;
 		}

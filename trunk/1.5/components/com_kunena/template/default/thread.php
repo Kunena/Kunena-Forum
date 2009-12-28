@@ -64,7 +64,7 @@ function thread_flat(&$tree, &$leaves, $branchid = 0, $level = 0)
 }
 
 $GLOBALS['KUNENA_c'] = 0;
-$tree = thread_flat($tree, $messages);
+$tree = thread_flat($tree, $this->messages);
 ?>
 <div id="fb_threadview">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
@@ -109,7 +109,7 @@ $tree = thread_flat($tree, $messages);
             <?php
             if ($kunena_config->shownew && $kunena_my->id != 0 && !$leaf->moved)
             {
-                if (($prevCheck < ($leaf->time)) && (sizeof($read_topics) == 0) || !in_array($leaf->thread, $read_topics))
+                if (($this->prevCheck < ($leaf->time)) && (sizeof($this->read_topics) == 0) || !in_array($leaf->thread, $this->read_topics))
                 {
                     //new post
                     echo '<td width="1%" class="fb_new">';
@@ -158,7 +158,7 @@ $tree = thread_flat($tree, $messages);
             <tr>
                 <td<?php echo $leaf->id == $id ? " class=\"".KUNENA_BOARD_CLASS."sectiontableentry2\"" : ""; ?>>
             <?php
-            $array[$leaf->level + 1] = count($messages[$leaf->id]);
+            $array[$leaf->level + 1] = count($this->messages[$leaf->id]);
             $array[$leaf->level]--;
 
             for ($i = 0; $i < $leaf->level; $i++)

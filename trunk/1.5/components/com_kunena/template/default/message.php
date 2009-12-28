@@ -71,7 +71,7 @@ if ($kunena_config->fb_profile == 'cb')
                             $msg_time_since = _KUNENA_TIME_SINCE;
                             $msg_time_since = str_replace('%time%', time_since($fmessage->time, CKunenaTools::fbGetInternalTime()), $msg_time_since);
 
-                            if ($prevCheck < $fmessage->time && !in_array($fmessage->thread, $read_topics)) {
+                            if ($this->prevCheck < $fmessage->time && !in_array($fmessage->thread, $this->read_topics)) {
                                 $msgtitle = 'msgtitle_new';
                             } else {
                                 $msgtitle = 'msgtitle';

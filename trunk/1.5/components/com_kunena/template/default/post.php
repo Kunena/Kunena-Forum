@@ -1519,7 +1519,7 @@ function listThreadHistory($id, $kunena_config, $kunena_db)
 
         //get all the messages for this thread
         $kunena_db->setQuery("SELECT * FROM #__fb_messages AS m LEFT JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE (thread='{$thread}' OR id='{$thread}') AND hold='0' ORDER BY time DESC LIMIT " . $kunena_config->historylimit);
-        $messages = $kunena_db->loadObjectList();
+        $this->messages = $kunena_db->loadObjectList();
         	check_dberror("Unable to load messages.");
         //and the subject of the first thread (for reference)
         $kunena_db->setQuery("SELECT subject FROM #__fb_messages WHERE id='{$thread}' and parent='0'");
@@ -1543,7 +1543,7 @@ function listThreadHistory($id, $kunena_config, $kunena_db)
             $k = 0;
             $kunena_emoticons = smile::getEmoticons(1);
 
-            foreach ($messages as $mes)
+            foreach ($this->messages as $mes)
             {
                 $k = 1 - $k;
                 $mes->name = kunena_htmlspecialchars($mes->name);

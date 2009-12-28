@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+28-Dec-2009 fxstein
+# [#19065] More frontend cleanup based on code analysis - fixed various bugs
+
 28-Dec-2009 Matias
 # [#19065] More frontend cleanup based on code analysis - fixed various bugs
 

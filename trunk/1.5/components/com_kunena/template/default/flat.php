@@ -75,9 +75,9 @@ $tabclass = array
 
 $st_count = 0;
 
-if (count($messages[0]) > 0)
+if (count($this->messages[0]) > 0)
 {
-    foreach ($messages[0] as $leafa)
+    foreach ($this->messages[0] as $leafa)
     {
 
         if (($leafa->ordering > 0 && !$funcmylatest) || ($leafa->myfavorite && $funcmylatest))
@@ -87,7 +87,7 @@ if (count($messages[0]) > 0)
     }
 }
 
-if (count($messages[0]) > 0)
+if (count($this->messages[0]) > 0)
 {
 ?>
     <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
@@ -149,7 +149,7 @@ if (count($messages[0]) > 0)
                 $st_c = 0;
 
 				$st_occured = 0;
-                foreach ($messages[0] as $leaf)
+                foreach ($this->messages[0] as $leaf)
                 {
                     $k = 1 - $k; //used for alternating colours
                     $leaf->name = kunena_htmlspecialchars(stripslashes($leaf->name));
@@ -193,7 +193,7 @@ if (count($messages[0]) > 0)
                     ?>">
                     <td class = "td-0 fbm" align="center">
                     <strong>
-<?php echo (int)$thread_counts[$leaf->id]; ?>
+<?php echo (int)$this->thread_counts[$leaf->id]; ?>
 </strong><?php echo _GEN_REPLIES; ?>
                             </td>
 
@@ -202,26 +202,20 @@ if (count($messages[0]) > 0)
                             if ($leaf->moved == 0)
                             {
                                 // Need to add +1 as we only have the replies in the buffer
-                                $totalMessages = $thread_counts[$leaf->id] + 1;
-				$curMessageNo = $totalMessages - ($last_read[$leaf->id]->unread ? $last_read[$leaf->id]->unread-1 : 0);
+                                $totalMessages = $this->thread_counts[$leaf->id] + 1;
+								$curMessageNo = $totalMessages - ($last_read[$leaf->id]->unread ?
+												$last_read[$leaf->id]->unread-1 : 0);
                                 $threadPages = ceil($totalMessages / $kunena_config->messages_per_page);
                                 $unreadPage = ceil($curMessageNo / $kunena_config->messages_per_page);
                         ?>
 
                                 <td class = "td-2"  align="center">
-                                    <?php echo $leaf->topic_emoticon == 0 ? '<img src="' . KUNENA_URLEMOTIONSPATH . 'default.gif" border="0"  alt="" />' : "<img src=\"" . $topic_emoticons[$leaf->topic_emoticon] . "\" alt=\"emo\" border=\"0\" />"; ?>
+                                    <?php echo $leaf->topic_emoticon == 0 ? '<img src="' . KUNENA_URLEMOTIONSPATH .
+                                    	'default.gif" border="0"  alt="" />' : "<img src=\"" .
+                                    	$topic_emoticons[$leaf->topic_emoticon] . "\" alt=\"emo\" border=\"0\" />"; ?>
                                 </td>
 
-                                <?php
-                                if ($leaf->ordering == 0) {
-                                    echo "<td class=\"td-3\">";
-                                    }
-                                else
-                                {
-                                    echo "<td class=\"td-3\">";
-
-                                }
-                                ?>
+                                <td class="td-3">
 
                                 <?php
                                 //(JJ) ATTACHMENTS ICON
@@ -232,11 +226,11 @@ if (count($messages[0]) > 0)
                                 ?>
 
                                 <div class = "fb-topic-title-cover">
-                                    <?php echo CKunenaLink::GetThreadLink('view', $leaf->catid, $leaf->id, kunena_htmlspecialchars(stripslashes($leaf->subject)), kunena_htmlspecialchars(stripslashes($messagetext[$leaf->id])) , 'follow', 'fb-topic-title fbm');?>
+                                    <?php echo CKunenaLink::GetThreadLink('view', $leaf->catid, $leaf->id, kunena_htmlspecialchars(stripslashes($leaf->subject)), kunena_htmlspecialchars(stripslashes($this->messagetext[$leaf->id])) , 'follow', 'fb-topic-title fbm');?>
                                     <!--            Favourite       -->
 
                                     <?php
-                                    if ($kunena_config->allowfavorites && array_key_exists($leaf->id, $favthread))
+                                    if ($kunena_config->allowfavorites && array_key_exists($leaf->id, $this->favthread))
                                     {
                                         if ($leaf->myfavorite) {
                                     	    echo isset($kunena_emoticons['favoritestar']) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $kunena_emoticons['favoritestar']
@@ -255,7 +249,7 @@ if (count($messages[0]) > 0)
                                     <?php
                                     if ($kunena_config->shownew && $kunena_my->id != 0)
                                     {
-                                        if (($prevCheck < $last_reply[$leaf->id]->time) && !in_array($last_reply[$leaf->id]->thread, $read_topics)) {
+                                        if (($this->prevCheck < $last_reply[$leaf->id]->time) && !in_array($last_reply[$leaf->id]->thread, $this->read_topics)) {
                                             //new post(s) in topic
                                             echo CKunenaLink::GetThreadPageLink($kunena_config, 'view', $leaf->catid, $leaf->id, $unreadPage, $kunena_config->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $last_read[$leaf->id]->unread . ' ' . stripslashes($kunena_config->newchar) . ')</span></sup>', $last_read[$leaf->id]->lastread);
                                             }
@@ -355,7 +349,7 @@ if (count($messages[0]) > 0)
 
             <!-- Views -->
         <span class="topic_views">
-        <?php echo _GEN_HITS; ?>: <?php echo (int)$hits[$leaf->id]; ?>
+        <?php echo _GEN_HITS; ?>: <?php echo (int)$this->hits[$leaf->id]; ?>
         </span>
         <!-- /Views -->
 

@@ -255,7 +255,7 @@ if (count($categories[0]) > 0)
                                 if ($kunena_my->id)
                                 {
                                     //    get all threads with posts after the users last visit; don't bother for guests
-                                    $kunena_db->setQuery("SELECT DISTINCT thread FROM #__fb_messages WHERE catid='{$singlerow->id}' AND hold='0' AND moved='0' AND time>'{$prevCheck}' GROUP BY thread");
+                                    $kunena_db->setQuery("SELECT DISTINCT thread FROM #__fb_messages WHERE catid='{$singlerow->id}' AND hold='0' AND moved='0' AND time>'{$this->prevCheck}' GROUP BY thread");
                                     $newThreadsAll = $kunena_db->loadObjectList();
                                     	check_dberror("Unable to load messages.");
 
@@ -325,7 +325,7 @@ if (count($categories[0]) > 0)
 
                                             foreach ($newThreadsAll as $nta)
                                             {
-                                                if (!in_array($nta->thread, $read_topics)) {
+                                                if (!in_array($nta->thread, $this->read_topics)) {
                                                     $newPostsAvailable++;
                                                 }
                                             }
@@ -450,7 +450,7 @@ if (count($categories[0]) > 0)
                                                                     if ($kunena_config->shownew && $kunena_my->id != 0)
                                                                     {
                                                                         //    get all threads with posts after the users last visit; don't bother for guests
-                                                                        $kunena_db->setQuery("SELECT thread FROM #__fb_messages WHERE catid='{$forumparent->id}' AND hold='0' AND time>'{$prevCheck}' GROUP BY thread");
+                                                                        $kunena_db->setQuery("SELECT thread FROM #__fb_messages WHERE catid='{$forumparent->id}' AND hold='0' AND time>'{$this->prevCheck}' GROUP BY thread");
                                                                         $newPThreadsAll = $kunena_db->loadObjectList();
                                                                         	check_dberror("Unable to load messages.");
 
@@ -465,7 +465,7 @@ if (count($categories[0]) > 0)
 
                                                                         foreach ($newPThreadsAll as $npta)
                                                                         {
-                                                                            if (!in_array($npta->thread, $read_topics)) {
+                                                                            if (!in_array($npta->thread, $this->read_topics)) {
                                                                                 $newPPostsAvailable++;
                                                                             }
                                                                         }

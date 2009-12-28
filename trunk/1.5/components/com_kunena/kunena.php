@@ -380,7 +380,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
 	    // Assign previous visit without user offset to variable for templates to decide
 		// whether or not to use the NEW indicator on forums and posts
-		$prevCheck = $kunena_session->lasttime; // - KUNENA_OFFSET_USER; Don't use the user offset - it throws the NEW indicator off
+		$this->prevCheck = $kunena_session->lasttime; // - KUNENA_OFFSET_USER; Don't use the user offset - it throws the NEW indicator off
 	}
 	else
 	{
@@ -391,7 +391,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 			check_dberror('Unable load accessible categories for user.');
 
 		// For guests we don't show new posts
-		$prevCheck = $kunena_systime;
+		$this->prevCheck = $kunena_systime;
 		$kunena_session->readtopics = '';
 	}
 
@@ -428,7 +428,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
     //Get the topics this user has already read this session from #__fb_sessions
     $readTopics=$kunena_session->readtopics;
-    $read_topics = explode(',', $readTopics);
+    $this->read_topics = explode(',', $readTopics);
 
     /*       _\|/_
              (o o)

@@ -128,6 +128,8 @@ class KunenaModelPost extends JModel
 	{
 		if (empty($message)) return false;
 		if (intval($threadid) < 1) return false;
+		$posttime = time();
+		$hold = 0;
 
 		$this->_db->setQuery("SELECT id, catid, locked, hold, moved_id FROM #__kunena_threads WHERE id=".intval($threadid));
 		$thread = $this->_db->loadObject();
@@ -195,6 +197,7 @@ class KunenaModelPost extends JModel
 	{
 		if (empty($message)) return false;
 		if (intval($messageid) < 1) return false;
+		$posttime = time();
 
 		$this->_db->setQuery("SELECT id, thread, userid, hold FROM #__kunena_messages WHERE id=".intval($messageid));
 		$msg = $this->_db->loadObject();
@@ -220,7 +223,7 @@ class KunenaModelPost extends JModel
 
 		$this->_db->setQuery("UPDATE #__kunena_messages subject=".$this->_db->quote($subject).", message=".$this->_db->quote($message)
 		.", modified_by=".intval($userid).", modified_time=".intval($posttime).", modified_reason=".$this->_db->quote($reason));
-		$kunena_db->query();
+		$this->_db->query();
 		if ($this->_db->getErrorNum()) throw new KunenaPostException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
 	}
 
@@ -267,7 +270,7 @@ class KunenaModelPost extends JModel
 		$userid = $this->getState('user.id');
 		if (!$userid) return false;
 
-		$kunena_db->setQuery("DELETE FROM #__kunena_subscriptions WHERE thread=".intval($threadid)." AND userid=".intval($userid));
+		$this->_db->setQuery("DELETE FROM #__kunena_subscriptions WHERE thread=".intval($threadid)." AND userid=".intval($userid));
 		$this->_db->query();
 		if ($this->_db->getErrorNum()) throw new KunenaPostException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
 
@@ -317,7 +320,7 @@ class KunenaModelPost extends JModel
 		$userid = $this->getState('user.id');
 		if (!$userid) return false;
 
-		$kunena_db->setQuery("DELETE FROM #__kunena_favorites WHERE thread=".intval($threadid)." AND userid=".intval($userid));
+		$this->_db->setQuery("DELETE FROM #__kunena_favorites WHERE thread=".intval($threadid)." AND userid=".intval($userid));
 		$this->_db->query();
 		if ($this->_db->getErrorNum()) throw new KunenaPostException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
 

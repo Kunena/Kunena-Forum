@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 	<tr>
 		<td>
 			<blockquote>
-				<p>Job Queue: Placeholder View & Template</p>
+				<p>Job Queue: Placeholder View &amp; Template</p>
 			</blockquote>
 		</td>
 	</tr>

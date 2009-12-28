@@ -113,7 +113,7 @@ class KunenaModelModeration extends JModel
 		$allowed = explode(',', $user->getAllowedCategories());
 		if (!in_array($thread->catid, $allowed)) return false;
 
-		$kunena_db->setQuery("UPDATE #__kunena_threads SET ordering=1 WHERE id=".intval($threadid));
+		$this->_db->setQuery("UPDATE #__kunena_threads SET ordering=1 WHERE id=".intval($threadid));
 		$this->_db->query();
 		if ($this->_db->getErrorNum()) throw new KunenaPostException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
 
@@ -133,7 +133,7 @@ class KunenaModelModeration extends JModel
 		$userid = $this->getState('user.id');
 		if (!$userid) return false;
 
-		$kunena_db->setQuery("UPDATE #__kunena_threads SET ordering=0 WHERE id=".intval($threadid));
+		$this->_db->setQuery("UPDATE #__kunena_threads SET ordering=0 WHERE id=".intval($threadid));
 		$this->_db->query();
 		if ($this->_db->getErrorNum()) throw new KunenaPostException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
 
@@ -162,7 +162,7 @@ class KunenaModelModeration extends JModel
 		$allowed = explode(',', $user->getAllowedCategories());
 		if (!in_array($thread->catid, $allowed)) return false;
 
-		$kunena_db->setQuery("UPDATE #__kunena_threads SET locked=1 WHERE id=".intval($threadid));
+		$this->_db->setQuery("UPDATE #__kunena_threads SET locked=1 WHERE id=".intval($threadid));
 		$this->_db->query();
 		if ($this->_db->getErrorNum()) throw new KunenaPostException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
 
@@ -182,7 +182,7 @@ class KunenaModelModeration extends JModel
 		$userid = $this->getState('user.id');
 		if (!$userid) return false;
 
-		$kunena_db->setQuery("UPDATE #__kunena_threads SET locked=0 WHERE id=".intval($threadid));
+		$this->_db->setQuery("UPDATE #__kunena_threads SET locked=0 WHERE id=".intval($threadid));
 		$this->_db->query();
 		if ($this->_db->getErrorNum()) throw new KunenaPostException($this->_db->getErrorMsg(), $this->_db->getErrorNum());
 
@@ -287,7 +287,7 @@ class KunenaModelModeration extends JModel
 		// Check if message to move exists (also covers thread test)
 		// TODO: Implement new database changes around #__kunena_threads
 		$this->_db->setQuery("SELECT `id`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__kunena_messages WHERE `id`='$MessageID'");
-		$currentMessage = $this->db->loadObjectList();
+		$currentMessage = $this->_db->loadObjectList();
 			check_dberror("Unable to load message.");
 
 		if (empty($currentMessage->id))
@@ -307,7 +307,7 @@ class KunenaModelModeration extends JModel
 		if ($TargetCatID != 0)
 		{
 			$this->_db->setQuery("SELECT `id`, `name` FROM #__kunena_categories WHERE `id`='$TargetCatID'");
-			$targetCategory = $this->db->loadObjectList();
+			$targetCategory = $this->_db->loadObjectList();
 				check_dberror("Unable to load message.");
 
 			if (empty($targetCategory->id))
@@ -328,7 +328,7 @@ class KunenaModelModeration extends JModel
 		{
 			// TODO: Implement database changes around #__kunena_threads
 			$this->_db->setQuery("SELECT `id`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__kunena_messages WHERE `id`='$TargetMessageID'");
-			$targetMessage = $this->db->loadObjectList();
+			$targetMessage = $this->_db->loadObjectList();
 				check_dberror("Unable to load message.");
 
 			if (empty($targetMessage->id))
@@ -401,8 +401,8 @@ class KunenaModelModeration extends JModel
 
 					// TODO: kunena_threads
 
-					$database->setQuery("SELECT MAX(time) AS timestamp FROM #__kunena_messages WHERE `thread`='$id'");
-					$lastTimestamp = $database->loadResult();
+					$this->_db->setQuery("SELECT MAX(time) AS timestamp FROM #__kunena_messages WHERE `thread`='$MessageID'");
+					$lastTimestamp = $this->_db->loadResult();
 						check_dberror("Unable to load last timestamp.");
 					if ($lastTimestamp == "") {
 						$lastTimestamp = $currentMessage->timestamp;
@@ -416,7 +416,7 @@ class KunenaModelModeration extends JModel
 
 					// TODO: kunena_threads
 
-					$this->_db->setQuery("INSERT INTO #__kunena_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','$currentMessage->subject','$lastTimestamp','$currentMessage->catid','1', '$my->id', '".trim(addslashes($my_name))."')");
+					$this->_db->setQuery("INSERT INTO #__kunena_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','$currentMessage->subject','$lastTimestamp','$currentMessage->catid','1', '$my->id', '".trim(addslashes($my->name))."')");
                     $this->_db->query();
                     	check_dberror('Unable to insert ghost message.');
 
@@ -480,7 +480,7 @@ class KunenaModelModeration extends JModel
 		$this->_Log('Move', $MessageID, $TargetCatID, $TargetSubject, $TargetMessageID, $mode);
 
 		// Last but not least update forum stats
-		CKunenaTools::reCountBoards();
+		//CKunenaTools::reCountBoards();
 
 		return true;
 	}

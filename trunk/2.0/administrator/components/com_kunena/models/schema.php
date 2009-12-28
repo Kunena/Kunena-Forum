@@ -235,7 +235,7 @@ class KunenaModelSchema extends JModel
 			$keys = $this->db->loadObjectList();
 			if ($this->db->getErrorNum()) throw new KunenaSchemeException($this->db->getErrorMsg(), $this->db->getErrorNum());
 
-			unset($keyNode);
+			$keyNode = null;
 			foreach ($keys as $row) {
 				if (!isset($keyNode) || $keyNode->getAttribute('name') != $row->Key_name) {
 					$keyNode = $schema->createElement("key");

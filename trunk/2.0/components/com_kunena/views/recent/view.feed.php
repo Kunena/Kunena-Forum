@@ -51,7 +51,6 @@ class KunenaViewRecent extends KView
 			$this->assignRef('path', $catmodel->getPath());
 			$category = end($this->path);
 			$title = $category->name;
-			foreach ($this->path as &$category) $pathway->addItem($this->escape($category->name), JHtml::_('klink.categories', 'url', $category->id, '', ''));
 		}
 		else if ($this->state->type == 'category') $title = 'Category';
 		$this->assign ( 'title', $title);

@@ -86,7 +86,6 @@ echo $profile->showAvatar($category->userid, 'avatar');
 					<?php echo JText::_('K_LAST_POST_BY').' '; echo JHtml::_('klink.user', 'atag', $category->userid, $this->escape($category->username), $this->escape($category->username));?>
 				</p>
 				<p class="topic_time"><?php echo JHTML::_('date', $category->time_last_msg); ?></p>
-			</td>
 <?php else: ?>
 				<div class="fb_latest-subject">No posts</div>
 <?php endif; ?>

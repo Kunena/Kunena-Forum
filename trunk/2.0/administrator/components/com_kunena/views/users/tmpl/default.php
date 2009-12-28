@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 	<tr>
 		<td>
 			<blockquote>
-				<p>Users: Placeholder View & Template</p>
+				<p>Users: Placeholder View &amp; Template</p>
 			</blockquote>
 		</td>
 	</tr>

@@ -24,7 +24,7 @@ class KunenaControllerInstall extends KunenaController
 	protected $step = null;
 	protected $steps = null;
 	protected $model = null;
-	
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -52,7 +52,7 @@ class KunenaControllerInstall extends KunenaController
 			$this->setRedirect('index.php?option=com_kunena');
 			return;
 		}
-		
+
 		do
 		{
 			$this->next();
@@ -67,24 +67,26 @@ class KunenaControllerInstall extends KunenaController
 		if (empty($this->steps[$this->step]['step'])) return;
 		return call_user_func(array($this, "step".$this->steps[$this->step]['step']));
 	}
-	
+
 	function stepPrepare() {
 		$this->model->beginInstall();
 		if (!$this->model->getError()) $this->model->setStep(++$this->step);
 	}
-	
+
 	function stepBackend() {
-		$path = JPATH_ADMINISTRATOR.DS."components".DS."com_kunena".DS."archive";
-		if (file_exists($path.DS.$file)) $this->model->extract($path, "admin.zip", JPATH_ROOT);
+		$path = JPATH_ADMINISTRATOR.DS.'components'.DS.'com_kunena'.DS.'archive';
+		$file = 'admin.zip';
+		if (file_exists($path.DS.$file)) $this->model->extract($path, $file, JPATH_ROOT);
 		if (!$this->model->getError()) $this->model->setStep(++$this->step);
 	}
-	
+
 	function stepFrontend() {
-		$path = JPATH_ADMINISTRATOR.DS."components".DS."com_kunena".DS."archive";
-		if (file_exists($path.DS.$file)) $this->model->extract($path, "site.zip", JPATH_ROOT);
+		$path = JPATH_ADMINISTRATOR.DS.'components'.DS.'com_kunena'.DS.'archive';
+		$file = 'site.zip';
+		if (file_exists($path.DS.$file)) $this->model->extract($path, $file, JPATH_ROOT);
 		if (!$this->model->getError()) $this->model->setStep(++$this->step);
 	}
-		
+
 	function stepDatabase() {
 		$prefix = $this->model->getVersionPrefix();
 		if ($prefix == 'kunena_')
@@ -111,12 +113,12 @@ class KunenaControllerInstall extends KunenaController
 				if (!$this->model->getError()) $this->model->setStep(++$this->step);
 		}
 	}
-	
+
 	function stepFinish() {
 		$this->model->addStatus('Installation success!', true, '');
 		if (!$this->model->getError()) $this->model->setStep(++$this->step);
 	}
-	
+
 	function checkTimeout() {
 		static $start = null;
 

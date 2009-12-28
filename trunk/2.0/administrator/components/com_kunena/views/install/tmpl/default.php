@@ -42,9 +42,9 @@ if (!$this->error && $this->step>0 && $this->step<count($this->steps)-1) {
 			<div class="n">
 
 				<div class="far-right">
-					
-							<div class="button1-left"><div class="next"><a alt="<?php echo $this->getAction(); ?>" onclick="<?php echo $this->getActionURL(); ?>"><?php echo $this->getAction(); ?></a></div></div>
-						
+
+							<div class="button1-left"><div class="next"><a onclick="<?php echo $this->getActionURL(); ?>"><?php echo $this->getAction(); ?></a></div></div>
+
 				</div>
 				<span class="step"><?php echo $this->steps[$this->step]['menu']; ?></span>
 
@@ -63,14 +63,14 @@ if (!$this->error && $this->step>0 && $this->step<count($this->steps)-1) {
 				</div>
 			</div>
 			<div class="n">
-<?php 
-if (!empty($this->requirements->fail)): 
-	echo $this->loadTemplate('reqfail'); 
+<?php
+if (!empty($this->requirements->fail)):
+	echo $this->loadTemplate('reqfail');
 elseif (!$this->step):
 	echo $this->loadTemplate('start');
-else: 
-	echo $this->loadTemplate('install'); 
-endif; 
+else:
+	echo $this->loadTemplate('install');
+endif;
 ?>
 			</div>
       <div class="c">

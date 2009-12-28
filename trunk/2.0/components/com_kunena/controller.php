@@ -92,7 +92,7 @@ class KunenaController extends JController
 		$vFormat = $document->getType();
 
 		$view = $this->getView($vName, $vFormat);
-		
+
 		if ($view)
 		{
 			// Do any specific processing for the view.
@@ -117,7 +117,7 @@ class KunenaController extends JController
 
 			// Push document object into the view.
 			$view->assignRef('document', $document);
-			
+
 			// Update user information
 			kimport('user.user');
 			$user = KUser::getInstance();

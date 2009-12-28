@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE schema-upgrade>
 <!-- 
 This file contains only those database upgrades that cannot be done automatically by calculating schema difference.
 Possible actions:

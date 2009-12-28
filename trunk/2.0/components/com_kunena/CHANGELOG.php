@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+29-Dec-2009 Matias
+# [#19065] Fix various warnings and errors identified by zend studio code analysis
+
 28-Dec-2009 Matias
 # [#17654] Upgrade bbcode parser class to latest version
 

@@ -31,7 +31,10 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.6.0
+Kunena 1.6.0-DEV
+
+28-Dec-2009 Matias
+# [#19065] More frontend cleanup based on code analysis - fixed various bugs
 
 27-Dec-2009 Xillibit
 # [#19031] Quick reply shows > as &gt; in subject

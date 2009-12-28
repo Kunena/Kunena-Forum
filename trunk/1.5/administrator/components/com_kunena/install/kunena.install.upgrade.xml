@@ -1,4 +1,5 @@
 <?xml version="1.0" ?>
+<!DOCTYPE comupgrade>
 <comupgrade version="1.0">
 	<install version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
 		<query>CREATE TABLE IF NOT EXISTS `#__fb_announcement` (

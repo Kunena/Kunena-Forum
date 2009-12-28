@@ -126,9 +126,9 @@ class CKunenaSearch
 		if (strlen($q)>2) $do_search = TRUE;
 		$this->arr_kunena_searchstrings[] = $q;
 	}
-	if (strlen($searchuser)>0) $do_search = TRUE;
+	if (strlen($this->params['searchuser'])>0) $do_search = TRUE;
         $arr_searchwords = $this->arr_kunena_searchstrings;
-	$this->str_kunena_username = $searchuser;
+	$this->str_kunena_username = $this->params['searchuser'];
 
         if ($do_search != TRUE)
         {
@@ -137,7 +137,7 @@ class CKunenaSearch
             return;
         }
 
-	$search_forums = $this->get_search_forums($catids, $childforums);
+	$search_forums = $this->get_search_forums($this->params['catids'], $this->params['childforums']);
         /* if there are no forums to search in, set error and return */
         if (empty($search_forums))
         {
@@ -162,7 +162,7 @@ class CKunenaSearch
                 $searchword = substr($searchword, 1);
             }
 
-            if($titleonly=='0')
+            if($this->params['titleonly']=='0')
             {
                 $querystrings[] = "(t.message {$not} LIKE '%{$searchword}%' {$operator} m.subject {$not} LIKE '%{$searchword}%')";
             } else {
@@ -170,18 +170,18 @@ class CKunenaSearch
             }
         }
 
-	//User searching
-        if(strlen($searchuser)>0)
+		//User searching
+        if(strlen($this->params['searchuser'])>0)
         {
-            if($exactname=='1') {
-                $querystrings[] = "m.name LIKE '" . $kunena_db->getEscaped(addslashes($searchuser)) . "'";
+            if($this->params['exactname']=='1') {
+                $querystrings[] = "m.name LIKE '" . $kunena_db->getEscaped(addslashes($this->params['searchuser'])) . "'";
             } else {
-                $querystrings[] = "m.name LIKE '%" . $kunena_db->getEscaped(addslashes($searchuser)) . "%'";
+                $querystrings[] = "m.name LIKE '%" . $kunena_db->getEscaped(addslashes($this->params['searchuser'])) . "%'";
             }
         }
 
 	$time = 0;
-	switch($searchdate) {
+	switch($this->params['searchdate']) {
 		case 'lastvisit':
 			$kunena_db->setQuery("SELECT lasttime FROM #__fb_sessions WHERE userid='{$kunena_my->id}'");
 			$time = $kunena_db->loadResult();
@@ -195,7 +195,7 @@ class CKunenaSearch
 		case '90':
 		case '180':
 		case '365':
-			$time = time() - 86400*intval($searchdate); //24*3600
+			$time = time() - 86400*intval($this->params['searchdate']); //24*3600
                         break;
 		default:
 			$time = time() - 86400*365;
@@ -203,7 +203,7 @@ class CKunenaSearch
 	}
 
 	if ($time) {
-		if($beforeafter == 'after') {
+		if($this->params['beforeafter'] == 'after') {
 			$querystrings[] = "m.time > '{$time}'";
 		} else {
 			$querystrings[] = "m.time <= '{$time}'";
@@ -217,9 +217,9 @@ class CKunenaSearch
         $where = implode(' AND ', $querystrings);
 
 	$groupby = array();
-        if($order =='dec') $order1 = 'DESC';
+        if($this->params['order'] =='dec') $order1 = 'DESC';
         else $order1 = 'ASC';
-        switch ($sortby) {
+        switch ($this->params['sortby']) {
         case 'title':
 		$orderby = "m.subject {$order1}, m.time {$order1}";
 		break;
@@ -304,7 +304,7 @@ class CKunenaSearch
 	}
 	return $url_params;
     }
-    function get_search_forums(&$catids, $childforums = 1) {
+    function get_search_forums($catids, $childforums = 1) {
 		$kunena_session =& CKunenaSession::getInstance();
         $kunena_db = &JFactory::getDBO();
 		$kunena_my = &JFactory::getUser();
@@ -335,20 +335,35 @@ class CKunenaSearch
 		// Start with selected categories and pop them from the catlist one by one
 		// Every popped item in the catlist will be added into result list
 		// For every category: push all its children into the catlist
-		while ($cur = array_pop($catids))
-		{
+		$cur = array_pop($catids);
+		do {
 			$result[$cur] = $cur;
 			if (array_key_exists($cur, $allow_list))
 				foreach ($allow_list[$cur] as $forum)
 					if (!in_array($forum, $catids))
 						array_push($catids, $forum);
-		}
+			$cur = array_pop($catids);
+		} while ($cur);
 		$search_forums = implode(",", $result);
 	} else {
 		$search_forums = implode(",", array_keys($allowed_forums));
 	}
 	return $search_forums;
     }
+
+	function categoryList($catids, $options = array ()) {
+		$kunena_db = &JFactory::getDBO ();
+		$list = JJ_categoryArray ();
+		$this_treename = '';
+
+		foreach ( $list as $item ) {
+			$options [] = JHTML::_ ( 'select.option', $item->id, $item->treename );
+		}
+
+		$parent = JHTML::_ ( 'select.genericlist', $options, 'catids[]', 'class="inputbox" size="13" multiple="multiple"', 'value', 'text', $catids );
+		return $parent;
+	}
+
     /**
      * Display results
      * @param string actionstring
@@ -363,14 +378,21 @@ class CKunenaSearch
 	$limitstart = $this->get_limitstart();
 	$limit = $this->get_limit();
 
-	$selected = ' selected="selected"';
-	$checked = ' checked="checked"';
-	$fb_advsearch_hide = 1;
+	$this->selected = ' selected="selected"';
+	$this->checked = ' checked="checked"';
+	$this->advsearch_hide = 1;
 	if ($this->int_kunena_errornr) {
 	        $q = $this->searchword;
-		$fb_advsearch_hide = 0;
+		$this->advsearch_hide = 0;
 	}
-        if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php')) {
+	$this->q = $q;
+
+	//category select list
+	$options = array ();
+	$options[] = JHTML::_('select.option', '0', _KUNENA_SEARCH_SEARCHIN_ALLCATS);
+	$this->categorylist = $this->categoryList(explode(',', $this->params['catids']), $options);
+
+	if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php')) {
         	include (KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php');
         }
         else {
@@ -397,32 +419,31 @@ class CKunenaSearch
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
-        <table  class = "fb_blocktable" id ="fb_forumsearch"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
-            <thead>
-                <tr>
-                    <th colspan = "3">
-                        <div class = "fb_title_cover">
-                            <span class="fb_title fbl"><?php echo _KUNENA_SEARCH_RESULTS; ?></span>
-                            <b><?php printf(_FORUM_SEARCH, $q); ?></b>
-                        </div>
-                    </th>
-                </tr>
-            </thead>
+<table class="fb_blocktable" id="fb_forumsearch" border="0"
+	cellspacing="0" cellpadding="0" width="100%">
+	<thead>
+		<tr>
+			<th colspan="3">
+			<div class="fb_title_cover"><span class="fb_title fbl"><?php echo _KUNENA_SEARCH_RESULTS; ?></span>
+			<b><?php printf(_FORUM_SEARCH, $q); ?></b></div>
+			</th>
+		</tr>
+	</thead>
 
-            <tbody>
-                <tr class = "fb_sth">
-                    <th class = "th-1 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader">
+	<tbody>
+		<tr class="fb_sth">
+			<th class="th-1 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader">
 <?php echo _GEN_SUBJECT; ?>
                     </th>
 
-                    <th class = "th-2 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader">
+			<th class="th-2 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader">
 <?php echo _GEN_AUTHOR; ?>
                     </th>
 
-                    <th class = "th-3 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader">
+			<th class="th-3 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader">
 <?php echo _GEN_DATE; ?>
                     </th>
-                </tr>
+		</tr>
 
                 <?php
                 $tabclass = array
@@ -479,20 +500,22 @@ class CKunenaSearch
                 {
                 ?>
 
-                    <tr  class = "fb_sth" >
-                        <th colspan = "3" style = "text-align:center" class = "th-1 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader">
+                    <tr class="fb_sth">
+			<th colspan="3" style="text-align: center"
+				class="th-1 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader">
                             <?php
                             echo $pagination;
                             ?>
                         </th>
-                    </tr>
+		</tr>
 
                 <?php
                 }
                 ?>
 
-                <tr  class = "fb_sth" >
-                   <th colspan = "3" style = "text-align:center" class = "th-1 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader">
+                <tr class="fb_sth">
+			<th colspan="3" style="text-align: center"
+				class="th-1 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader">
                         <?php
 			$resStart = $limitstart+1;
 			$resStop = $limitstart+count($results);
@@ -501,9 +524,9 @@ class CKunenaSearch
                         printf(_FORUM_SEARCHRESULTS, $resStartStop, $totalRows);
                         ?>
                     </th>
-                </tr>
-            </tbody>
-        </table>
+		</tr>
+	</tbody>
+</table>
 </div>
 </div>
 </div>

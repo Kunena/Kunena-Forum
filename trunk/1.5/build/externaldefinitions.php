@@ -15,17 +15,28 @@ die();
 // dummy definitions of external classes and functions to avoid zend studio warnings and errors
 
 // Community Builder dummies
-function cbimport($var)
-{
+function cbimport($var) {}
+function getCBprofileItemid() {}
+function cbSef($var) {}
+function outputCbTemplate($var) {}
+function getLangDefinition($var) {}
+class CBUser {}
 
-}
+// JomSocial dummies
+class CFactory {}
+class CRoute {}
+class CMessaging {}
+class CActivityStream {}
+class CUserPoints {}
 
-function getCBprofileItemid()
-{
+// AlphaUserPoints
+class AlphaUserPointsHelper {}
 
-}
+// PDF
+class Cezpdf {}
 
-function cbSef($var)
-{
+// Clexus
+class ClexusPMConfig {}
 
-}
+// MyPMS
+class MyPMSTools {}

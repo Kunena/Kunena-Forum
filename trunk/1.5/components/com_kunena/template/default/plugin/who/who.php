@@ -51,7 +51,7 @@ if ($kunena_config->showwhoisonline > 0)
                 <th class = "th-1 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader">
 <?php echo _WHO_ONLINE_USER; ?>
 
-                </td>
+                </th>
 
                 <th class = "th-2 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader"><?php echo _WHO_ONLINE_TIME; ?>
                 </th>

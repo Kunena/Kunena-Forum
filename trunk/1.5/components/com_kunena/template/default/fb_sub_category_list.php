@@ -199,10 +199,10 @@ else
                         $latestcount = $kunena_db->loadResult();
                         $latestpage = ceil($latestcount / $kunena_config->messages_per_page);
                     }
-
-                    echo '<tr class="' . KUNENA_BOARD_CLASS . '' . $tabclass[$k] . '" id="fb_cat'.$singlerow->id.'" >';
-					echo '<td class="td-1 " align="center">';
-
+?>
+                    <tr class="<?php echo KUNENA_BOARD_CLASS . '' . $tabclass[$k]; ?>" id="fb_cat<? echo $singlerow->id; ?>" >
+					<td class="td-1" align="center">
+<?php
 					$categoryicon = '';
 
 					$cxThereisNewInForum = 0;

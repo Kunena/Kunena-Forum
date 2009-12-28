@@ -26,7 +26,7 @@ defined( '_JEXEC' ) or die('Restricted access');
         <tr>
             <th>
                 <div class = "fb_title_cover fbm">
-                    <span class="fb_title fbl"> <?php echo $msg_username; ?>  <?php echo _KUNENA_USERPROFILE_PROFILE; ?></span>
+                    <span class="fb_title fbl"> <?php echo $msg_html->username; ?>  <?php echo _KUNENA_USERPROFILE_PROFILE; ?></span>
                 </div>
             </th>
         </tr>
@@ -36,9 +36,9 @@ defined( '_JEXEC' ) or die('Restricted access');
         <tr>
             <td class = "<?php echo KUNENA_BOARD_CLASS; ?>profileinfo" align="center">
                 <div class = "fb-usrprofile-misc">
-                    <span class = "view-username"> <?php echo $msg_username; ?></span> <?php  if ( $kunena_config->userlist_usertype ) { ?><span class = "msgusertype">(<?php echo $msg_usertype; ?>)</span><?php } ?>
+                    <span class = "view-username"> <?php echo $msg_html->username; ?></span> <?php  if ( $kunena_config->userlist_usertype ) { ?><span class = "msgusertype">(<?php echo $msg_html->usertype; ?>)</span><?php } ?>
 
-                    <br/> <?php echo $msg_avatar; ?>
+                    <br/> <?php echo $msg_html->avatar; ?>
 
                 <?php /*
                     $gr_title=getFBGroupName($lists["userid"]);
@@ -55,79 +55,79 @@ defined( '_JEXEC' ) or die('Restricted access');
 
                         <div class = "viewcover">
                         <?php
-                            if (isset($msg_userrank))
-                                echo $msg_userrank;
+                            if (isset($msg_html->userrank))
+                                echo $msg_html->userrank;
                         ?>
                         </div>
 
                         <div class = "viewcover">
                         <?php
-                            if (isset($msg_userrankimg))
-                                echo $msg_userrankimg;
+                            if (isset($msg_html->userrankimg))
+                                echo $msg_html->userrankimg;
                         ?>
                         </div>
 						<div class="viewcover">
 						<?php echo _KUNENA_USERPROFILE_PROFILEHITS; ?>:
-						<?php echo $msg_userhits; ?>
+						<?php echo $msg_html->userhits; ?>
 						</div>
                     <?php
-                        if (isset($msg_posts))
-                            echo $msg_posts;
+                        if (isset($msg_html->posts))
+                            echo $msg_html->posts;
                     ?>
 
                     <?php
-                        if (isset($myGraph))
-                            $myGraph->BarGraphHoriz();
+                        if (isset($msg_html->myGraph))
+                            $msg_html->myGraph->BarGraphHoriz();
                     ?>
 
                     <?php
-                        if (isset($myGraphAUP))
-                            $myGraphAUP->BarGraphHoriz();
+                        if (isset($msg_html->myGraphAUP))
+                            $msg_html->myGraphAUP->BarGraphHoriz();
                     ?>
 
                     <?php
-                        if (isset($msg_icq))
-                            echo $msg_icq;
+                        if (isset($msg_html->icq))
+                            echo $msg_html->icq;
                     ?>
 
-                    <?php echo $msg_online; ?>
+                    <?php echo $msg_html->online; ?>
 
                     <?php
-                        if (isset($msg_pms))
-                            echo $msg_pms;
-                    ?>
-
-                    <?php
-                        if (isset($msg_icq))
-                            echo $msg_icq;
+                        if (isset($msg_html->pms))
+                            echo $msg_html->pms;
                     ?>
 
                     <?php
-                        if (isset($msg_msn))
-                            echo $msg_msn;
+                        if (isset($msg_html->icq))
+                            echo $msg_html->icq;
                     ?>
 
                     <?php
-                        if (isset($msg_yahoo))
-                            echo $msg_yahoo;
+                        if (isset($msg_html->msn))
+                            echo $msg_html->msn;
                     ?>
 
                     <?php
-                        if (isset($msg_regdate))
-                            echo "<br />Join Date: " . strip_tags($msg_date) . "<br />";
+                        if (isset($msg_html->yahoo))
+                            echo $msg_html->yahoo;
                     ?>
 
                     <?php
-                        if (isset($msg_loc))
-                            echo "Location: $msg_loc<br />";
+                        if (isset($msg_html->regdate))
+                            echo "<br />Join Date: " . strip_tags($msg_html->date) . "<br />";
+                    ?>
+
+                    <?php
+                        if (isset($msg_html->loc))
+                            echo "Location: $msg_html->loc<br />";
                     ?>
                 </div>
 
                 <span class = "msgkarma">
 
             <?php
-                if (isset($msg_karma))
-                    echo $msg_karma . '&nbsp;&nbsp;' . $msg_karmaplus . ' ' . $msg_karmaminus;
+                if (isset($msg_html->karma))
+                    echo $msg_html->karma . '&nbsp;&nbsp;' . $msg_html->karmaplus . ' ' . $msg_html->karmaminus;
                 else
                     echo '&nbsp;';
             ?></span>

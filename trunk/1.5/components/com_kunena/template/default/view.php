@@ -565,9 +565,10 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 }
                                 $fb_username = kunena_htmlspecialchars($fb_username);
 
-                                $msg_id = $fmessage->id;
+                                $msg_html = new StdClass();
+                                $msg_html->id = $fmessage->id;
                                 $lists["userid"] = $userinfo->userid;
-                                $msg_username = $fmessage->email != "" && $kunena_my->id > 0 && $kunena_config->showemail ? CKunenaLink::GetEmailLink(kunena_htmlspecialchars(stripslashes($fmessage->email)), $fb_username) : $fb_username;
+                                $msg_html->username = $fmessage->email != "" && $kunena_my->id > 0 && $kunena_config->showemail ? CKunenaLink::GetEmailLink(kunena_htmlspecialchars(stripslashes($fmessage->email)), $fb_username) : $fb_username;
 
                                 if ($kunena_config->allowavatar)
                                 {
@@ -577,22 +578,22 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 									{
 										// Get CUser object
 										$jsuser =& CFactory::getUser($userinfo->userid);
-									    $msg_avatar = '<span class="fb_avatar"><img src="' . $jsuser->getThumbAvatar() . '" alt=" " /></span>';
+									    $msg_html->avatar = '<span class="fb_avatar"><img src="' . $jsuser->getThumbAvatar() . '" alt=" " /></span>';
 									}
                                     else if ($kunena_config->avatar_src == "clexuspm") {
-                                        $msg_avatar = '<span class="fb_avatar"><img src="' . MyPMSTools::getAvatarLinkWithID($userinfo->userid) . '" /></span>';
+                                        $msg_html->avatar = '<span class="fb_avatar"><img src="' . MyPMSTools::getAvatarLinkWithID($userinfo->userid) . '" /></span>';
                                     }
                                     else if ($kunena_config->avatar_src == "cb")
                                     {
                                     	$kunenaProfile =& CkunenaCBProfile::getInstance();
-                                    	$msg_avatar = '<span class="fb_avatar">'.$kunenaProfile->showAvatar($userinfo->userid, '', false).'</span>';
+                                    	$msg_html->avatar = '<span class="fb_avatar">'.$kunenaProfile->showAvatar($userinfo->userid, '', false).'</span>';
                                     }
                                     else if ($kunena_config->avatar_src == "aup")
                                     {
 										$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
 										if ( file_exists($api_AUP)) {
 											( $kunena_config->fb_profile=='aup' ) ? $showlink=1 : $showlink=0;
-											$msg_avatar = '<span class="fb_avatar">'.AlphaUserPointsHelper::getAupAvatar( $userinfo->userid, $showlink ).'</span>';
+											$msg_html->avatar = '<span class="fb_avatar">'.AlphaUserPointsHelper::getAupAvatar( $userinfo->userid, $showlink ).'</span>';
 										}
                                     }
                                     else
@@ -601,18 +602,18 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 
                                         if (!empty($avatar)) {
                                         	if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $avatar)) {
-                                            	$msg_avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: '.$kunena_config->avatarwidth.'px; max-height: '.$kunena_config->avatarheight.'px;" /></span>';
+                                            	$msg_html->avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: '.$kunena_config->avatarwidth.'px; max-height: '.$kunena_config->avatarheight.'px;" /></span>';
                                         	} else {
-                                        		$msg_avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" /></span>';
+                                        		$msg_html->avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" /></span>';
                                         	}
                                         }
                                         else
                                         {
-                                        	$msg_avatar = '<span class="fb_avatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/nophoto.jpg" alt="" /></span>';
+                                        	$msg_html->avatar = '<span class="fb_avatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/nophoto.jpg" alt="" /></span>';
                                         }
                                     }
                                 } else {
-                                	$msg_avatar = '';
+                                	$msg_html->avatar = '';
                                 }
 
                                 if ($kunena_config->showuserstats)
@@ -631,20 +632,20 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     }
 
                                     if ($ugid == 0) {
-                                        $msg_usertype = _VIEW_VISITOR;
+                                        $msg_html->usertype = _VIEW_VISITOR;
                                     }
                                     else
                                     {
                                         if (strtolower($agrp) == "administrator" || strtolower($agrp) == "superadministrator" || strtolower($agrp) == "super administrator")
                                         {
-                                            $msg_usertype = _VIEW_ADMIN;
+                                            $msg_html->usertype = _VIEW_ADMIN;
                                             $uIsAdm = 1;
                                         }
                                         elseif ($uIsMod) {
-                                            $msg_usertype = _VIEW_MODERATOR;
+                                            $msg_html->usertype = _VIEW_MODERATOR;
                                         }
                                         else {
-                                            $msg_usertype = _VIEW_USER;
+                                            $msg_html->usertype = _VIEW_USER;
                                         }
                                     }
 
@@ -685,10 +686,10 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                         }
 
                                         if ($kunena_config->rankimages && isset($rImg)) {
-                                            $msg_userrankimg = '<img src="' . $rImg . '" alt="" />';
+                                            $msg_html->userrankimg = '<img src="' . $rImg . '" alt="" />';
                                         }
 
-                                        $msg_userrank = $rText;
+                                        $msg_html->userrank = $rText;
 
 
 
@@ -698,25 +699,25 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 
                                         if (!$kunena_config->poststats)
                                         {
-                                            $msg_posts = '<div class="viewcover">' .
+                                            $msg_html->posts = '<div class="viewcover">' .
                                               "<strong>" . _POSTS . " $numPosts" . "</strong>" .
                                               "</div>";
                                         }
                                         else
                                         {
-                                            $myGraph = new phpGraph;
-                                            //$myGraph->SetGraphTitle(_POSTS);
-                                            $myGraph->AddValue(_POSTS, $numPosts);
-                                            $myGraph->SetRowSortMode(0);
-                                            $myGraph->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $kunena_config->statscolor . "m.png");
-                                            $myGraph->SetBarImg2(KUNENA_URLEMOTIONSPATH . "graph.gif");
-                                            $myGraph->SetMaxVal($maxPosts);
-                                            $myGraph->SetShowCountsMode(2);
-                                            $myGraph->SetBarWidth(4); //height of the bar
-                                            $myGraph->SetBorderColor("#333333");
-                                            $myGraph->SetBarBorderWidth(0);
-                                            $myGraph->SetGraphWidth(64); //should match column width in the <TD> above -5 pixels
-                                            //$myGraph->BarGraphHoriz();
+                                            $msg_html->myGraph = new phpGraph;
+                                            //$msg_html->myGraph->SetGraphTitle(_POSTS);
+                                            $msg_html->myGraph->AddValue(_POSTS, $numPosts);
+                                            $msg_html->myGraph->SetRowSortMode(0);
+                                            $msg_html->myGraph->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $kunena_config->statscolor . "m.png");
+                                            $msg_html->myGraph->SetBarImg2(KUNENA_URLEMOTIONSPATH . "graph.gif");
+                                            $msg_html->myGraph->SetMaxVal($maxPosts);
+                                            $msg_html->myGraph->SetShowCountsMode(2);
+                                            $msg_html->myGraph->SetBarWidth(4); //height of the bar
+                                            $msg_html->myGraph->SetBorderColor("#333333");
+                                            $msg_html->myGraph->SetBarBorderWidth(0);
+                                            $msg_html->myGraph->SetGraphWidth(64); //should match column width in the <TD> above -5 pixels
+                                            //$msg_html->myGraph->BarGraphHoriz();
                                             $useGraph = 1;
                                         }
                                     }
@@ -739,17 +740,17 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 									$numPoints = $kunena_db->loadResult();
 									check_dberror("Unable to load AUP points.");
 
-									$myGraphAUP = new phpGraph;
-									$myGraphAUP->AddValue(_KUNENA_AUP_POINTS, $numPoints);
-									$myGraphAUP->SetRowSortMode(0);
-									$myGraphAUP->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $kunena_config->statscolor . "m.png");
-									$myGraphAUP->SetBarImg2(KUNENA_URLEMOTIONSPATH . "graph.gif");
-									$myGraphAUP->SetMaxVal($maxPoints);
-									$myGraphAUP->SetShowCountsMode(2);
-									$myGraphAUP->SetBarWidth(4); //height of the bar
-									$myGraphAUP->SetBorderColor("#333333");
-									$myGraphAUP->SetBarBorderWidth(0);
-									$myGraphAUP->SetGraphWidth(64); //should match column width in the <TD> above -5 pixels
+									$msg_html->myGraphAUP = new phpGraph;
+									$msg_html->myGraphAUP->AddValue(_KUNENA_AUP_POINTS, $numPoints);
+									$msg_html->myGraphAUP->SetRowSortMode(0);
+									$msg_html->myGraphAUP->SetBarImg(KUNENA_URLGRAPHPATH . "col" . $kunena_config->statscolor . "m.png");
+									$msg_html->myGraphAUP->SetBarImg2(KUNENA_URLEMOTIONSPATH . "graph.gif");
+									$msg_html->myGraphAUP->SetMaxVal($maxPoints);
+									$msg_html->myGraphAUP->SetShowCountsMode(2);
+									$msg_html->myGraphAUP->SetBarWidth(4); //height of the bar
+									$msg_html->myGraphAUP->SetBorderColor("#333333");
+									$msg_html->myGraphAUP->SetBarBorderWidth(0);
+									$msg_html->myGraphAUP->SetGraphWidth(64); //should match column width in the <TD> above -5 pixels
 									$useGraph = 1;
 								}
 								// End Integration AlphaUserPoints
@@ -759,12 +760,12 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 {
                                     $karmaPoints = $userinfo->karma;
                                     $karmaPoints = (int)$karmaPoints;
-                                    $msg_karma = "<strong>" . _KARMA . ":</strong> $karmaPoints";
+                                    $msg_html->karma = "<strong>" . _KARMA . ":</strong> $karmaPoints";
 
                                     if ($kunena_my->id != '0' && $kunena_my->id != $userinfo->userid)
                                     {
-                                        $msg_karmaminus = CKunenaLink::GetKarmaLink('decrease', $catid, $fmessage->id, $userinfo->userid, '<img src="'.(isset($kunena_emoticons['karmaminus'])?(KUNENA_URLICONSPATH . $kunena_emoticons['karmaminus']):(KUNENA_URLEMOTIONSPATH . "karmaminus.gif")).'" alt="Karma-" border="0" title="' . _KARMA_SMITE . '" align="middle" />' );
-                                        $msg_karmaplus  = CKunenaLink::GetKarmaLink('increase', $catid, $fmessage->id, $userinfo->userid, '<img src="'.(isset($kunena_emoticons['karmaplus'])?(KUNENA_URLICONSPATH . $kunena_emoticons['karmaplus']):(KUNENA_URLEMOTIONSPATH . "karmaplus.gif")).'" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" align="middle" />' );
+                                        $msg_html->karmaminus = CKunenaLink::GetKarmaLink('decrease', $catid, $fmessage->id, $userinfo->userid, '<img src="'.(isset($kunena_emoticons['karmaminus'])?(KUNENA_URLICONSPATH . $kunena_emoticons['karmaminus']):(KUNENA_URLEMOTIONSPATH . "karmaminus.gif")).'" alt="Karma-" border="0" title="' . _KARMA_SMITE . '" align="middle" />' );
+                                        $msg_html->karmaplus  = CKunenaLink::GetKarmaLink('increase', $catid, $fmessage->id, $userinfo->userid, '<img src="'.(isset($kunena_emoticons['karmaplus'])?(KUNENA_URLICONSPATH . $kunena_emoticons['karmaplus']):(KUNENA_URLEMOTIONSPATH . "karmaplus.gif")).'" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" align="middle" />' );
                                     }
                                 }
                                 /*let's see if we should use Missus integration */
@@ -773,17 +774,17 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     //we should offer the user a Missus link
                                     //first get the username of the user to contact
                                     $PMSName = $userinfo->username;
-                                    $msg_pms
+                                    $msg_html->pms
                                     = "<a href=\"" . JRoute::_('index.php?option=com_missus&amp;func=newmsg&amp;user=' . $userinfo->userid . '&amp;subject=' . _GEN_FORUM . ': ' . urlencode(utf8_encode($fmessage->subject))) . "\"><img src='";
 
                                     if ($kunena_emoticons['pms']) {
-                                        $msg_pms .= KUNENA_URLICONSPATH . $kunena_emoticons['pms'];
+                                        $msg_html->pms .= KUNENA_URLICONSPATH . $kunena_emoticons['pms'];
                                     }
                                     else {
-                                        $msg_pms .= KUNENA_URLICONSPATH  . $kunena_emoticons['pms'];;
+                                        $msg_html->pms .= KUNENA_URLICONSPATH  . $kunena_emoticons['pms'];;
                                     }
 
-                                    $msg_pms .= "' alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
+                                    $msg_html->pms .= "' alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
                                 }
 
                                 /*let's see if we should use JIM integration */
@@ -792,16 +793,16 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     //we should offer the user a JIM link
                                     //first get the username of the user to contact
                                     $PMSName = $userinfo->username;
-                                    $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_jim&amp;page=new&amp;id=' . $PMSName . '&title=' . $fmessage->subject) . "\"><img src='";
+                                    $msg_html->pms = "<a href=\"" . JRoute::_('index.php?option=com_jim&amp;page=new&amp;id=' . $PMSName . '&title=' . $fmessage->subject) . "\"><img src='";
 
                                     if ($kunena_emoticons['pms']) {
-                                        $msg_pms .= KUNENA_URLICONSPATH . $kunena_emoticons['pms'];
+                                        $msg_html->pms .= KUNENA_URLICONSPATH . $kunena_emoticons['pms'];
                                     }
                                     else {
-                                        $msg_pms .= KUNENA_URLICONSPATH  .  $kunena_emoticons['pms'];;
+                                        $msg_html->pms .= KUNENA_URLICONSPATH  .  $kunena_emoticons['pms'];;
                                     }
 
-                                    $msg_pms .= "' alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
+                                    $msg_html->pms .= "' alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
                                 }
                                 /*let's see if we should use uddeIM integration */
                                 if ($kunena_config->pm_component == "uddeim" && $userinfo->userid && $kunena_my->id)
@@ -809,16 +810,16 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     //we should offer the user a PMS link
                                     //first get the username of the user to contact
                                     $PMSName = $userinfo->username;
-                                    $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_uddeim&amp;task=new&recip=' . $userinfo->userid) . "\"><img src=\"";
+                                    $msg_html->pms = "<a href=\"" . JRoute::_('index.php?option=com_uddeim&amp;task=new&recip=' . $userinfo->userid) . "\"><img src=\"";
 
                                     if ($kunena_emoticons['pms']) {
-                                        $msg_pms .= KUNENA_URLICONSPATH . $kunena_emoticons['pms'];
+                                        $msg_html->pms .= KUNENA_URLICONSPATH . $kunena_emoticons['pms'];
                                     }
                                     else {
-                                        $msg_pms .= KUNENA_URLEMOTIONSPATH . "sendpm.gif";
+                                        $msg_html->pms .= KUNENA_URLEMOTIONSPATH . "sendpm.gif";
                                     }
 
-                                    $msg_pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
+                                    $msg_html->pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
                                 }
                                 /*let's see if we should use myPMS2 integration */
                                 if ($kunena_config->pm_component == "pms" && $userinfo->userid && $kunena_my->id)
@@ -826,16 +827,16 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     //we should offer the user a PMS link
                                     //first get the username of the user to contact
                                     $PMSName = $userinfo->username;
-                                    $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_pms&amp;page=new&amp;id=' . $PMSName . '&title=' . $fmessage->subject) . "\"><img src=\"";
+                                    $msg_html->pms = "<a href=\"" . JRoute::_('index.php?option=com_pms&amp;page=new&amp;id=' . $PMSName . '&title=' . $fmessage->subject) . "\"><img src=\"";
 
                                     if ($kunena_emoticons['pms']) {
-                                        $msg_pms .= KUNENA_URLICONSPATH . $kunena_emoticons['pms'];
+                                        $msg_html->pms .= KUNENA_URLICONSPATH . $kunena_emoticons['pms'];
                                     }
                                     else {
-                                        $msg_pms .= KUNENA_URLEMOTIONSPATH . "sendpm.gif";
+                                        $msg_html->pms .= KUNENA_URLEMOTIONSPATH . "sendpm.gif";
                                     }
 
-                                    $msg_pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
+                                    $msg_html->pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
                                 }
 
                                 // online - ofline status
@@ -851,11 +852,11 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 	$isonline = $onlinecache[$userinfo->userid];
 
                                     if ($isonline && $userinfo->showOnline ==1 ) {
-                                        $msg_online = isset($kunena_emoticons['onlineicon']) ? '<img src="'
+                                        $msg_html->online = isset($kunena_emoticons['onlineicon']) ? '<img src="'
                                         . KUNENA_URLICONSPATH . $kunena_emoticons['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';
                                     }
                                     else {
-                                        $msg_online = isset($kunena_emoticons['offlineicon']) ? '<img src="'
+                                        $msg_html->online = isset($kunena_emoticons['offlineicon']) ? '<img src="'
                                         . KUNENA_URLICONSPATH . $kunena_emoticons['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
                                     }
                                 }
@@ -863,56 +864,56 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 if ($kunena_config->pm_component == "jomsocial" && $userinfo->userid && $kunena_my->id)
                                 {
                                 	$onclick = CMessaging::getPopup($userinfo->userid);
-                                	$msg_pms = '<a href="javascript:void(0)" onclick="'. $onclick . "\">";
+                                	$msg_html->pms = '<a href="javascript:void(0)" onclick="'. $onclick . "\">";
 
                                     if ($kunena_emoticons['pms']) {
-                                        $msg_pms .= "<img src=\"".KUNENA_URLICONSPATH.$kunena_emoticons['pms']."\" alt=\""._VIEW_PMS."\" border=\"0\" title=\""._VIEW_PMS."\" />";
+                                        $msg_html->pms .= "<img src=\"".KUNENA_URLICONSPATH.$kunena_emoticons['pms']."\" alt=\""._VIEW_PMS."\" border=\"0\" title=\""._VIEW_PMS."\" />";
                                     }
                                     else
                                     {
-                                    	$msg_pms .= _VIEW_PMS;
+                                    	$msg_html->pms .= _VIEW_PMS;
                                     }
 
-                                    $msg_pms .= "</a>";
-                                	//$msg_pms = '<a href="javascript:void(0)" onclick="'. $onclick .'">Send message</a>';
+                                    $msg_html->pms .= "</a>";
+                                	//$msg_html->pms = '<a href="javascript:void(0)" onclick="'. $onclick .'">Send message</a>';
                                 }
                                 else if ($kunena_config->pm_component == "clexuspm" && $userinfo->userid && $kunena_my->id)
                                 {
                                     //we should offer the user a PMS link
                                     //first get the username of the user to contact
                                     $PMSName = $userinfo->aid;
-                                    $msg_pms = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=new&amp;to=' . $userinfo->userid . '&title=' . $fmessage->subject) . "\"><img src=\"";
+                                    $msg_html->pms = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=new&amp;to=' . $userinfo->userid . '&title=' . $fmessage->subject) . "\"><img src=\"";
 
                                     if ($kunena_emoticons['pms']) {
-                                        $msg_pms .= KUNENA_URLICONSPATH . $kunena_emoticons['pms'];
+                                        $msg_html->pms .= KUNENA_URLICONSPATH . $kunena_emoticons['pms'];
                                     }
                                     else {
-                                        $msg_pms .= KUNENA_JLIVEURL . "/components/com_mypms/images/icons/message_12px.gif";
+                                        $msg_html->pms .= KUNENA_JLIVEURL . "/components/com_mypms/images/icons/message_12px.gif";
                                     }
 
-                                    $msg_pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
+                                    $msg_html->pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
                                     //mypms pro profile link
-                                    $msg_profile = "<a href=\"" . MyPMSTools::getProfileLink($userinfo->userid) . "\"><img src=\"";
+                                    $msg_html->profile = "<a href=\"" . MyPMSTools::getProfileLink($userinfo->userid) . "\"><img src=\"";
 
                                     if ($kunena_emoticons['userprofile']) {
-                                        $msg_profile .= KUNENA_URLICONSPATH . $kunena_emoticons['userprofile'];
+                                        $msg_html->profile .= KUNENA_URLICONSPATH . $kunena_emoticons['userprofile'];
                                     }
                                     else {
-                                        $msg_profile .= KUNENA_JLIVEURL . "/components/com_mypms/images/managecontact_icon.gif";
+                                        $msg_html->profile .= KUNENA_JLIVEURL . "/components/com_mypms/images/managecontact_icon.gif";
                                     }
 
-                                    $msg_profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
+                                    $msg_html->profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
                                     //mypms add buddy link
-                                    $msg_buddy = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;user=' . $PMSName . '&amp;task=addbuddy') . "\"><img src=\"";
+                                    $msg_html->buddy = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;user=' . $PMSName . '&amp;task=addbuddy') . "\"><img src=\"";
 
                                     if ($kunena_emoticons['pms2buddy']) {
-                                        $msg_buddy .= KUNENA_URLICONSPATH . $kunena_emoticons['pms2buddy'];
+                                        $msg_html->buddy .= KUNENA_URLICONSPATH . $kunena_emoticons['pms2buddy'];
                                     }
                                     else {
-                                        $msg_buddy .= KUNENA_JLIVEURL . "/components/com_mypms/images/messages/addbuddy.gif";
+                                        $msg_html->buddy .= KUNENA_JLIVEURL . "/components/com_mypms/images/messages/addbuddy.gif";
                                     }
 
-                                    $msg_buddy .= "\" alt=\"" . _VIEW_ADDBUDDY . "\" border=\"0\" title=\"" . _VIEW_ADDBUDDY . "\" /></a>";
+                                    $msg_html->buddy .= "\" alt=\"" . _VIEW_ADDBUDDY . "\" border=\"0\" title=\"" . _VIEW_ADDBUDDY . "\" /></a>";
                                     $kunena_db->setQuery("SELECT icq, ym, msn, aim, website, location FROM #__mypms_profiles WHERE user='{$PMSName}'");
                                     $profileitems = $kunena_db->loadObjectList();
                                     	check_dberror("Unable to load mypms profile.");
@@ -920,19 +921,19 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     foreach ($profileitems as $profileitems)
                                     {
                                         if ($profileitems->aim)
-                                        $msg_aim = "<a href=\"aim:goim?screenname=" . str_replace(" ", "+", kunena_htmlspecialchars($profileitems->aim)) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "aim.png\" border=0 alt=\"\" /></a>";
+                                        $msg_html->aim = "<a href=\"aim:goim?screenname=" . str_replace(" ", "+", kunena_htmlspecialchars($profileitems->aim)) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "aim.png\" border=0 alt=\"\" /></a>";
 
                                         if ($profileitems->icq)
-                                        $msg_icq = "<a href=\"http://www.icq.com/whitepages/wwp.php?uin=" . kunena_htmlspecialchars($profileitems->icq) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "icq.png\" border=0 alt=\"\" /></a>";
+                                        $msg_html->icq = "<a href=\"http://www.icq.com/whitepages/wwp.php?uin=" . kunena_htmlspecialchars($profileitems->icq) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "icq.png\" border=0 alt=\"\" /></a>";
 
                                         if ($profileitems->msn)
-                                        $msg_msn = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=showprofile&amp;user=' . $PMSName) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "msn.png\" border=0 alt=\"\" /></a>";
+                                        $msg_html->msn = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=showprofile&amp;user=' . $PMSName) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "msn.png\" border=0 alt=\"\" /></a>";
 
                                         if ($profileitems->ym)
-                                        $msg_yahoo = "<a href=\"http://edit.yahoo.com/config/send_webmesg?.target=" . kunena_htmlspecialchars($profileitems->ym) . "&.src=pg\"><img src=\"http://opi.yahoo.com/online?u=" . kunena_htmlspecialchars($profileitems->ym) . "&m=g&t=0\" border=0 alt=\"\" /></a>";
+                                        $msg_html->yahoo = "<a href=\"http://edit.yahoo.com/config/send_webmesg?.target=" . kunena_htmlspecialchars($profileitems->ym) . "&.src=pg\"><img src=\"http://opi.yahoo.com/online?u=" . kunena_htmlspecialchars($profileitems->ym) . "&m=g&t=0\" border=0 alt=\"\" /></a>";
 
                                         if ($profileitems->location)
-                                        $msg_loc = kunena_htmlspecialchars($profileitems->location);
+                                        $msg_html->loc = kunena_htmlspecialchars($profileitems->location);
                                     }
 
                                     unset ($profileitems);
@@ -943,49 +944,49 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 {
                                     if ($kunena_config->fb_profile == 'cb' && $userinfo->userid > 0)
                                     {
-                                        $msg_prflink = CKunenaCBProfile::getProfileURL($userinfo->userid);
-                                        $msg_profile = "<a href=\"" . $msg_prflink . "\">                                              <img src=\"";
+                                        $msg_html->prflink = CKunenaCBProfile::getProfileURL($userinfo->userid);
+                                        $msg_html->profile = "<a href=\"" . $msg_html->prflink . "\">                                              <img src=\"";
 
                                         if ($kunena_emoticons['userprofile']) {
-                                            $msg_profile .= KUNENA_URLICONSPATH . $kunena_emoticons['userprofile'];
+                                            $msg_html->profile .= KUNENA_URLICONSPATH . $kunena_emoticons['userprofile'];
                                         }
                                         else {
-                                            $msg_profile .= KUNENA_JLIVEURL . "/components/com_comprofiler/images/profiles.gif";
+                                            $msg_html->profile .= KUNENA_JLIVEURL . "/components/com_comprofiler/images/profiles.gif";
                                         }
 
-                                        $msg_profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
+                                        $msg_html->profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
                                     }
                                 }
                                 else if ($kunena_config->fb_profile == "clexuspm")
                                 {
                                     //mypms pro profile link
-                                    $msg_prflink = MyPMSTools::getProfileLink($userinfo->userid);
-                                    $msg_profile = "<a href=\"" . MyPMSTools::getProfileLink($userinfo->userid) . "\"><img src=\"";
+                                    $msg_html->prflink = MyPMSTools::getProfileLink($userinfo->userid);
+                                    $msg_html->profile = "<a href=\"" . MyPMSTools::getProfileLink($userinfo->userid) . "\"><img src=\"";
 
                                     if ($kunena_emoticons['userprofile']) {
-                                        $msg_profile .= KUNENA_URLICONSPATH . $kunena_emoticons['userprofile'];
+                                        $msg_html->profile .= KUNENA_URLICONSPATH . $kunena_emoticons['userprofile'];
                                     }
                                     else {
-                                        $msg_profile .= KUNENA_JLIVEURL . "/components/com_mypms/images/managecontact_icon.gif";
+                                        $msg_html->profile .= KUNENA_JLIVEURL . "/components/com_mypms/images/managecontact_icon.gif";
                                     }
 
-                                    $msg_profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
+                                    $msg_html->profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
                                 }
                                 else if ($userinfo->gid > 0)
                                 {
                                     //Kunena Profile link.
-                                    $msg_prflink = JRoute::_(KUNENA_LIVEURLREL.'&amp;func=fbprofile&amp;task=showprf&amp;userid=' . $userinfo->userid);
-                                    $msg_profileicon = "<img src=\"";
+                                    $msg_html->prflink = JRoute::_(KUNENA_LIVEURLREL.'&amp;func=fbprofile&amp;task=showprf&amp;userid=' . $userinfo->userid);
+                                    $msg_html->profileicon = "<img src=\"";
 
                                     if ($kunena_emoticons['userprofile']) {
-                                        $msg_profileicon .= KUNENA_URLICONSPATH . $kunena_emoticons['userprofile'];
+                                        $msg_html->profileicon .= KUNENA_URLICONSPATH . $kunena_emoticons['userprofile'];
                                     }
                                     else {
-                                        $msg_profileicon .= KUNENA_URLICONSPATH . "profile.gif";
+                                        $msg_html->profileicon .= KUNENA_URLICONSPATH . "profile.gif";
                                     }
 
-                                    $msg_profileicon .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" />";
-                                    $msg_profile = CKunenaLink::GetProfileLink($kunena_config, $userinfo->userid, $msg_profileicon);
+                                    $msg_html->profileicon .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" />";
+                                    $msg_html->profile = CKunenaLink::GetProfileLink($kunena_config, $userinfo->userid, $msg_html->profileicon);
                                 }
 
                                 // Begin: Additional Info //
@@ -993,48 +994,48 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     $gender = _KUNENA_NOGENDER;
                                     if ($userinfo->gender ==1)  {
                                         $gender = ''._KUNENA_MYPROFILE_MALE;
-                                        $msg_gender = isset($kunena_emoticons['msgmale']) ? '<img src="'. KUNENA_URLICONSPATH . $kunena_emoticons['msgmale'] . '" border="0" alt="'._KUNENA_MYPROFILE_GENDER.': '.$gender.'" title="'._KUNENA_MYPROFILE_GENDER.': '.$gender.'" />' : ''._KUNENA_MYPROFILE_GENDER.': '.$gender.'';
+                                        $msg_html->gender = isset($kunena_emoticons['msgmale']) ? '<img src="'. KUNENA_URLICONSPATH . $kunena_emoticons['msgmale'] . '" border="0" alt="'._KUNENA_MYPROFILE_GENDER.': '.$gender.'" title="'._KUNENA_MYPROFILE_GENDER.': '.$gender.'" />' : ''._KUNENA_MYPROFILE_GENDER.': '.$gender.'';
                                     }
 
                                     if ($userinfo->gender ==2)  {
                                         $gender = ''._KUNENA_MYPROFILE_FEMALE;
-                                        $msg_gender = isset($kunena_emoticons['msgfemale']) ? '<img src="'. KUNENA_URLICONSPATH . $kunena_emoticons['msgfemale'] . '" border="0" alt="'._KUNENA_MYPROFILE_GENDER.': '.$gender.'" title="'._KUNENA_MYPROFILE_GENDER.': '.$gender.'" />' : ''._KUNENA_MYPROFILE_GENDER.': '.$gender.'';
+                                        $msg_html->gender = isset($kunena_emoticons['msgfemale']) ? '<img src="'. KUNENA_URLICONSPATH . $kunena_emoticons['msgfemale'] . '" border="0" alt="'._KUNENA_MYPROFILE_GENDER.': '.$gender.'" title="'._KUNENA_MYPROFILE_GENDER.': '.$gender.'" />' : ''._KUNENA_MYPROFILE_GENDER.': '.$gender.'';
                                     }
 
                                 }
 
                                 if ($userinfo->personalText != '') {
-                                    $msg_personal = kunena_htmlspecialchars(stripslashes($userinfo->personalText));
+                                    $msg_html->personal = kunena_htmlspecialchars(stripslashes($userinfo->personalText));
                                 }
 
                                 if ($userinfo->ICQ != '') {
-                                    $msg_icq = '<a href="http://www.icq.com/people/cmd.php?uin='.kunena_htmlspecialchars(stripslashes($userinfo->ICQ)).'&action=message"><img src="http://status.icq.com/online.gif?icq='.kunena_htmlspecialchars(stripslashes($userinfo->ICQ)).'&img=5" title="ICQ#: '.kunena_htmlspecialchars(stripslashes($userinfo->ICQ)).'" alt="ICQ#: '.kunena_htmlspecialchars(stripslashes($userinfo->ICQ)).'" /></a>';
+                                    $msg_html->icq = '<a href="http://www.icq.com/people/cmd.php?uin='.kunena_htmlspecialchars(stripslashes($userinfo->ICQ)).'&action=message"><img src="http://status.icq.com/online.gif?icq='.kunena_htmlspecialchars(stripslashes($userinfo->ICQ)).'&img=5" title="ICQ#: '.kunena_htmlspecialchars(stripslashes($userinfo->ICQ)).'" alt="ICQ#: '.kunena_htmlspecialchars(stripslashes($userinfo->ICQ)).'" /></a>';
                                 }
                                 if ($userinfo->location != '') {
-                                    $msg_location = isset($kunena_emoticons['msglocation']) ? '<img src="'. KUNENA_URLICONSPATH . $kunena_emoticons['msglocation'] . '" border="0" alt="'._KUNENA_MYPROFILE_LOCATION.': '.kunena_htmlspecialchars(stripslashes($userinfo->location)).'" title="'._KUNENA_MYPROFILE_LOCATION.': '.kunena_htmlspecialchars(stripslashes($userinfo->location)).'" />' : ' '._KUNENA_MYPROFILE_LOCATION.': '.kunena_htmlspecialchars(stripslashes($userinfo->location)).'';
+                                    $msg_html->location = isset($kunena_emoticons['msglocation']) ? '<img src="'. KUNENA_URLICONSPATH . $kunena_emoticons['msglocation'] . '" border="0" alt="'._KUNENA_MYPROFILE_LOCATION.': '.kunena_htmlspecialchars(stripslashes($userinfo->location)).'" title="'._KUNENA_MYPROFILE_LOCATION.': '.kunena_htmlspecialchars(stripslashes($userinfo->location)).'" />' : ' '._KUNENA_MYPROFILE_LOCATION.': '.kunena_htmlspecialchars(stripslashes($userinfo->location)).'';
                                 }
                                 if ($userinfo->birthdate !='0001-01-01' AND $userinfo->birthdate !='0000-00-00' and $userinfo->birthdate !='') {
                                 	$birthday = strftime(_KUNENA_DT_MONTHDAY_FMT, strtotime($userinfo->birthdate));
-                                    $msg_birthdate = isset($kunena_emoticons['msgbirthdate']) ? '<img src="'. KUNENA_URLICONSPATH . $kunena_emoticons['msgbirthdate'] . '" border="0" alt="'._KUNENA_PROFILE_BIRTHDAY.': '.$birthday.'" title="'._KUNENA_PROFILE_BIRTHDAY.': '.$birthday.'" />' : ' '._KUNENA_PROFILE_BIRTHDAY.': '.$birthday.'';
+                                    $msg_html->birthdate = isset($kunena_emoticons['msgbirthdate']) ? '<img src="'. KUNENA_URLICONSPATH . $kunena_emoticons['msgbirthdate'] . '" border="0" alt="'._KUNENA_PROFILE_BIRTHDAY.': '.$birthday.'" title="'._KUNENA_PROFILE_BIRTHDAY.': '.$birthday.'" />' : ' '._KUNENA_PROFILE_BIRTHDAY.': '.$birthday.'';
                             	}
 
                                 if ($userinfo->AIM != '') {
-                                    $msg_aim = isset($kunena_emoticons['msgaim']) ? '<img src="'. KUNENA_URLICONSPATH . $kunena_emoticons['msgaim'] . '" border="0" alt="'.kunena_htmlspecialchars(stripslashes($userinfo->AIM)).'" title="AIM: '.kunena_htmlspecialchars(stripslashes($userinfo->AIM)).'" />' : 'AIM: '.kunena_htmlspecialchars(stripslashes($userinfo->AIM)).'';
+                                    $msg_html->aim = isset($kunena_emoticons['msgaim']) ? '<img src="'. KUNENA_URLICONSPATH . $kunena_emoticons['msgaim'] . '" border="0" alt="'.kunena_htmlspecialchars(stripslashes($userinfo->AIM)).'" title="AIM: '.kunena_htmlspecialchars(stripslashes($userinfo->AIM)).'" />' : 'AIM: '.kunena_htmlspecialchars(stripslashes($userinfo->AIM)).'';
                                 }
                                 if ($userinfo->MSN != '') {
-                                    $msg_msn = isset($kunena_emoticons['msgmsn']) ? '<img src="'. KUNENA_URLICONSPATH . $kunena_emoticons['msgmsn'] . '" border="0" alt="'.kunena_htmlspecialchars(stripslashes($userinfo->MSN)).'" title="MSN: '.kunena_htmlspecialchars(stripslashes($userinfo->MSN)).'" />' : 'MSN: '.kunena_htmlspecialchars(stripslashes($userinfo->MSN)).'';
+                                    $msg_html->msn = isset($kunena_emoticons['msgmsn']) ? '<img src="'. KUNENA_URLICONSPATH . $kunena_emoticons['msgmsn'] . '" border="0" alt="'.kunena_htmlspecialchars(stripslashes($userinfo->MSN)).'" title="MSN: '.kunena_htmlspecialchars(stripslashes($userinfo->MSN)).'" />' : 'MSN: '.kunena_htmlspecialchars(stripslashes($userinfo->MSN)).'';
                                 }
                                 if ($userinfo->YIM != '') {
-                                    $msg_yim = isset($kunena_emoticons['msgyim']) ? '<img src="'. KUNENA_URLICONSPATH . $kunena_emoticons['msgyim'] . '" border="0" alt="'.kunena_htmlspecialchars(stripslashes($userinfo->YIM)).'" title="YIM: '.kunena_htmlspecialchars(stripslashes($userinfo->YIM)).'" />' : ' YIM: '.kunena_htmlspecialchars(stripslashes($userinfo->YIM)).'';
+                                    $msg_html->yim = isset($kunena_emoticons['msgyim']) ? '<img src="'. KUNENA_URLICONSPATH . $kunena_emoticons['msgyim'] . '" border="0" alt="'.kunena_htmlspecialchars(stripslashes($userinfo->YIM)).'" title="YIM: '.kunena_htmlspecialchars(stripslashes($userinfo->YIM)).'" />' : ' YIM: '.kunena_htmlspecialchars(stripslashes($userinfo->YIM)).'';
                                 }
                                 if ($userinfo->SKYPE != '') {
-                                    $msg_skype = isset($kunena_emoticons['msgskype']) ? '<img src="'. KUNENA_URLICONSPATH . $kunena_emoticons['msgskype'] . '" border="0" alt="'.kunena_htmlspecialchars(stripslashes($userinfo->SKYPE)).'" title="SKYPE: '.kunena_htmlspecialchars(stripslashes($userinfo->SKYPE)).'" />' : 'SKYPE: '.kunena_htmlspecialchars(stripslashes($userinfo->SKYPE)).'';
+                                    $msg_html->skype = isset($kunena_emoticons['msgskype']) ? '<img src="'. KUNENA_URLICONSPATH . $kunena_emoticons['msgskype'] . '" border="0" alt="'.kunena_htmlspecialchars(stripslashes($userinfo->SKYPE)).'" title="SKYPE: '.kunena_htmlspecialchars(stripslashes($userinfo->SKYPE)).'" />' : 'SKYPE: '.kunena_htmlspecialchars(stripslashes($userinfo->SKYPE)).'';
                                 }
                                 if ($userinfo->GTALK != '') {
-                                    $msg_gtalk = isset($kunena_emoticons['msggtalk']) ? '<img src="'. KUNENA_URLICONSPATH . $kunena_emoticons['msggtalk'] . '" border="0" alt="'.kunena_htmlspecialchars(stripslashes($userinfo->GTALK)).'" title="GTALK: '.kunena_htmlspecialchars(stripslashes($userinfo->GTALK)).'" />' : 'GTALK: '.kunena_htmlspecialchars(stripslashes($userinfo->GTALK)).'';
+                                    $msg_html->gtalk = isset($kunena_emoticons['msggtalk']) ? '<img src="'. KUNENA_URLICONSPATH . $kunena_emoticons['msggtalk'] . '" border="0" alt="'.kunena_htmlspecialchars(stripslashes($userinfo->GTALK)).'" title="GTALK: '.kunena_htmlspecialchars(stripslashes($userinfo->GTALK)).'" />' : 'GTALK: '.kunena_htmlspecialchars(stripslashes($userinfo->GTALK)).'';
                                 }
                                 if ($userinfo->websiteurl != '') {
-                                    $msg_website = isset($kunena_emoticons['msgwebsite']) ? '<a href="http://'.kunena_htmlspecialchars(stripslashes($userinfo->websiteurl)).'" target="_blank"><img src="'. KUNENA_URLICONSPATH . $kunena_emoticons['msgwebsite'] . '" border="0" alt="'.kunena_htmlspecialchars(stripslashes($userinfo->websitename)).'" title="'.kunena_htmlspecialchars(stripslashes($userinfo->websitename)).'" /></a>' : '<a href="http://'.kunena_htmlspecialchars(stripslashes($userinfo->websiteurl)).'" target="_blank">'.kunena_htmlspecialchars(stripslashes($userinfo->websitename)).'</a>';
+                                    $msg_html->website = isset($kunena_emoticons['msgwebsite']) ? '<a href="http://'.kunena_htmlspecialchars(stripslashes($userinfo->websiteurl)).'" target="_blank"><img src="'. KUNENA_URLICONSPATH . $kunena_emoticons['msgwebsite'] . '" border="0" alt="'.kunena_htmlspecialchars(stripslashes($userinfo->websitename)).'" title="'.kunena_htmlspecialchars(stripslashes($userinfo->websitename)).'" /></a>' : '<a href="http://'.kunena_htmlspecialchars(stripslashes($userinfo->websiteurl)).'" target="_blank">'.kunena_htmlspecialchars(stripslashes($userinfo->websitename)).'</a>';
                                 }
 
                                 // Finish: Additional Info //
@@ -1043,7 +1044,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 //Show admins the IP address of the user:
                                 if ($kunena_is_moderatorerator)
                                 {
-                                    $msg_ip = $fmessage->ip;
+                                    $msg_html->ip = $fmessage->ip;
                                 }
 
                                 $fb_subject_txt = $fmessage->subject;
@@ -1053,9 +1054,9 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 $fb_subject_txt = strtr($fb_subject_txt, $table);
                                 $fb_subject_txt = stripslashes($fb_subject_txt);
                                 $fb_subject_txt = smile::htmlwrap($fb_subject_txt, $kunena_config->wrap);
-                                $msg_subject = smile::fbHtmlSafe($fb_subject_txt);
+                                $msg_html->subject = smile::fbHtmlSafe($fb_subject_txt);
 
-                                $msg_date = date(_DATETIME, $fmessage->time);
+                                $msg_html->date = date(_DATETIME, $fmessage->time);
                                 $fb_message_txt = stripslashes($fmessage->message);
                                 $fb_message_txt = smile::smileReplace($fb_message_txt, 0, $kunena_config->disemoticons, $smileyList);
                                 $fb_message_txt = nl2br($fb_message_txt);
@@ -1067,7 +1068,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 $fb_message_txt = str_replace("__FBTAB__", "&#009;", $fb_message_txt);
 								$fb_message_txt = smile::htmlwrap($fb_message_txt, $kunena_config->wrap);
 
-                                $msg_text = CKunenaTools::prepareContent($fb_message_txt);
+                                $msg_html->text = CKunenaTools::prepareContent($fb_message_txt);
 
                                 $signature = $userinfo->signature;
                                 if ($signature)
@@ -1078,23 +1079,23 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     $signature = smile::htmlwrap($signature, $kunena_config->wrap);
                                     //restore the \n (were replaced with _CTRL_) occurences inside code tags, but only after we have striplslashes; otherwise they will be stripped again
                                     //$signature = str_replace("_CRLF_", "\\n", stripslashes($signature));
-                                    $msg_signature = $signature;
+                                    $msg_html->signature = $signature;
                                 }
 
                                 if ($kunena_is_moderatorerator || (($forumLocked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $kunena_config->pubwrite)))
                                 {
                                     //user is allowed to reply/quote
-                                    $msg_reply = CKunenaLink::GetTopicPostReplyLink('reply', $catid, $fmessage->id , isset($kunena_emoticons['reply']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['reply'] . '" alt="Reply" border="0" title="' . _VIEW_REPLY . '" />':_GEN_REPLY);
-                                    $msg_quote = CKunenaLink::GetTopicPostReplyLink('quote', $catid, $fmessage->id , isset($kunena_emoticons['quote']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['quote'] . '" alt="Quote" border="0" title="' . _VIEW_QUOTE . '" />':_GEN_QUOTE);
+                                    $msg_html->reply = CKunenaLink::GetTopicPostReplyLink('reply', $catid, $fmessage->id , isset($kunena_emoticons['reply']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['reply'] . '" alt="Reply" border="0" title="' . _VIEW_REPLY . '" />':_GEN_REPLY);
+                                    $msg_html->quote = CKunenaLink::GetTopicPostReplyLink('quote', $catid, $fmessage->id , isset($kunena_emoticons['quote']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['quote'] . '" alt="Quote" border="0" title="' . _VIEW_QUOTE . '" />':_GEN_QUOTE);
                                 }
                                 else
                                 {
                                     //user is not allowed to write a post
                                     if ($topicLocked == 1 || $forumLocked) {
-                                        $msg_closed = _POST_LOCK_SET;
+                                        $msg_html->closed = _POST_LOCK_SET;
                                     }
                                     else {
-                                        $msg_closed = _VIEW_DISABLED;
+                                        $msg_html->closed = _VIEW_DISABLED;
                                     }
                                 }
 
@@ -1102,10 +1103,10 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 //Offer an moderator the delete link
                                 if ($kunena_is_moderatorerator)
                                 {
-                                    $msg_delete = CKunenaLink::GetTopicPostLink('delete', $catid, $fmessage->id , isset($kunena_emoticons['delete']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />':_GEN_DELETE);
-                                    $msg_merge = CKunenaLink::GetTopicPostLink('merge', $catid, $fmessage->id , isset($kunena_emoticons['merge']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['merge'] . '" alt="' . _GEN_MERGE . '" border="0" title="' . _GEN_MERGE . '" />':_GEN_MERGE);
+                                    $msg_html->delete = CKunenaLink::GetTopicPostLink('delete', $catid, $fmessage->id , isset($kunena_emoticons['delete']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />':_GEN_DELETE);
+                                    $msg_html->merge = CKunenaLink::GetTopicPostLink('merge', $catid, $fmessage->id , isset($kunena_emoticons['merge']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['merge'] . '" alt="' . _GEN_MERGE . '" border="0" title="' . _GEN_MERGE . '" />':_GEN_MERGE);
 									// TODO: Enable split when it's fixed
-                                    // $msg_split = CKunenaLink::GetTopicPostLink('split', $catid, $fmessage->id , isset($kunena_emoticons['split']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['split'] . '" alt="' . _GEN_SPLIT . '" border="0" title="' . _GEN_SPLIT . '" />':_GEN_SPLIT);
+                                    // $msg_html->split = CKunenaLink::GetTopicPostLink('split', $catid, $fmessage->id , isset($kunena_emoticons['split']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['split'] . '" alt="' . _GEN_SPLIT . '" border="0" title="' . _GEN_SPLIT . '" />':_GEN_SPLIT);
                                 }
 
                                 if ($kunena_config->useredit && $kunena_my->id != "")
@@ -1134,7 +1135,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     }
                                     if($allowEdit)
                                     {
-                                        $msg_edit = CKunenaLink::GetTopicPostLink('edit', $catid, $fmessage->id , isset($kunena_emoticons['edit']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />':_GEN_EDIT);
+                                        $msg_html->edit = CKunenaLink::GetTopicPostLink('edit', $catid, $fmessage->id , isset($kunena_emoticons['edit']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />':_GEN_EDIT);
                                         $showedEdit = 1;
                                     }
                                 }
@@ -1142,7 +1143,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 if ($kunena_is_moderatorerator && $showedEdit != 1)
                                 {
                                     //Offer a moderator always the edit link except when it is already showing..
-                                    $msg_edit = CKunenaLink::GetTopicPostLink('edit', $catid, $fmessage->id , isset($kunena_emoticons['edit']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />':_GEN_EDIT);
+                                    $msg_html->edit = CKunenaLink::GetTopicPostLink('edit', $catid, $fmessage->id , isset($kunena_emoticons['edit']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />':_GEN_EDIT);
                                 }
 
                                 //(JJ)
@@ -1153,51 +1154,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                     include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'message.php');
                                 }
 
-                                unset(
-                                $msg_id,
-                                $msg_username,
-                                $msg_avatar,
-                                $msg_usertype,
-                                $msg_userrank,
-                                $msg_userrankimg,
-                                $msg_posts,
-                                $msg_move,
-                                $msg_karma,
-                                $msg_karmaplus,
-                                $msg_karmaminus,
-                                $msg_ip,
-                                $msg_ip_link,
-                                $msg_date,
-                                $msg_subject,
-                                $msg_text,
-                                $msg_signature,
-                                $msg_reply,
-                                $msg_birthdate,
-                                $msg_quote,
-                                $msg_edit,
-                                $msg_closed,
-                                $msg_delete,
-                                $msg_sticky,
-                                $msg_lock,
-                                $msg_aim,
-                                $msg_icq,
-                                $msg_msn,
-                                $msg_yim,
-                                $msg_skype,
-                                $msg_gtalk,
-                                $msg_website,
-                                $msg_yahoo,
-                                $msg_buddy,
-                                $msg_profile,
-                                $msg_online,
-                                $msg_pms,
-                                $msg_loc,
-                                $msg_regdate,
-                                $msg_prflink,
-                                $msg_location,
-                                $msg_gender,
-                                $msg_personal,
-                                $myGraph);
+                                unset($msg_html);
                                 $useGraph = 0;
                             } // end for
                         }

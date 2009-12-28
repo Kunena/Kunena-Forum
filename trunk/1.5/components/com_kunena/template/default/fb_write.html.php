@@ -310,7 +310,6 @@ JHTML::_('behavior.keepalive');
 </div>
 <input type="hidden" value="<?php echo JURI::base(true).'/components/com_kunena/template/default';?>" name="templatePath" />
 <input type="hidden" value="<?php echo JURI::base(true);?>/" name="kunenaPath" />
-</form>
 
 </td>
 

@@ -33,14 +33,14 @@ $catid = JRequest::getInt('catid', 0);
 if ($kunena_config->fb_profile == 'cb')
 {
 	$msg_params = array(
-		'username' => &$msg_username,
+		'username' => &$msg_html->username,
 		'messageobject' => &$fmessage,
-		'subject' => &$msg_subject,
-		'messagetext' => &$msg_text,
-		'signature' => &$msg_signature,
-		'karma' => &$msg_karma,
-		'karmaplus' => &$msg_karmaplus,
-		'karmaminus' => &$msg_karmaminus
+		'subject' => &$msg_html->subject,
+		'messagetext' => &$msg_html->text,
+		'signature' => &$msg_html->signature,
+		'karma' => &$msg_html->karma,
+		'karmaplus' => &$msg_html->karmaplus,
+		'karmaminus' => &$msg_html->karmaminus
 	);
 	$kunenaProfile =& CkunenaCBProfile::getInstance();
 	$profileHtml = $kunenaProfile->showProfile($fmessage->userid, $msg_params);
@@ -54,9 +54,9 @@ if ($kunena_config->fb_profile == 'cb')
     <tbody>
         <tr class = "fb_sth">
             <th colspan = "2" class = "view-th <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader">
-        	<a name = "<?php echo $msg_id; ?>"></a>
+        	<a name = "<?php echo $msg_html->id; ?>"></a>
 <?php
-                echo CKunenaLink::GetSamePageAnkerLink($msg_id, '#'.$msg_id)
+                echo CKunenaLink::GetSamePageAnkerLink($msg_html->id, '#'.$msg_html->id)
 ?>
             </th>
         </tr>
@@ -77,17 +77,17 @@ if ($kunena_config->fb_profile == 'cb')
                                 $msgtitle = 'msgtitle';
                             }
                             ?>
-                            <span class = "<?php echo $msgtitle; ?>"><?php echo $msg_subject; ?> </span> <span class = "msgdate" title="<?php echo $msg_date; ?>"><?php echo $msg_time_since; ?></span>
+                            <span class = "<?php echo $msgtitle; ?>"><?php echo $msg_html->subject; ?> </span> <span class = "msgdate" title="<?php echo $msg_html->date; ?>"><?php echo $msg_time_since; ?></span>
                         </td>
 
                         <td align = "right">
                             <span class = "msgkarma">
 
                             <?php
-                            if (isset($msg_karma)) {
-                                echo $msg_karma;
-								if (isset($msg_karmaplus))
-									echo '&nbsp;&nbsp;' . $msg_karmaplus . ' ' . $msg_karmaminus;
+                            if (isset($msg_html->karma)) {
+                                echo $msg_html->karma;
+								if (isset($msg_html->karmaplus))
+									echo '&nbsp;&nbsp;' . $msg_html->karmaplus . ' ' . $msg_html->karmaminus;
                             }
                             else {
                                 echo '&nbsp;';
@@ -100,14 +100,14 @@ if ($kunena_config->fb_profile == 'cb')
 
                     <tr>
                         <td colspan = "2" valign = "top">
-                            <div class = "msgtext"><?php echo $msg_text; ?></div>
+                            <div class = "msgtext"><?php echo $msg_html->text; ?></div>
 
                             <?php
-                            if (!isset($msg_closed))
+                            if (!isset($msg_html->closed))
                             {
                             ?>
 
-                                <div id = "sc<?php echo $msg_id; ?>" class = "switchcontent">
+                                <div id = "sc<?php echo $msg_html->id; ?>" class = "switchcontent">
                                     <!-- make this div distinct from others on this page -->
                                     <?php
                                     //see if we need the users realname or his loginname
@@ -119,11 +119,11 @@ if ($kunena_config->fb_profile == 'cb')
                                     }
 
                                     //contruct the reply subject
-                                    $resubject = kunena_htmlspecialchars(strtolower(substr($msg_subject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? $msg_subject : _POST_RE .' '. $msg_subject);
+                                    $resubject = kunena_htmlspecialchars(strtolower(substr($msg_html->subject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? $msg_html->subject : _POST_RE .' '. $msg_html->subject);
                                     ?>
 
                             <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL. '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
-                                <input type = "hidden" name = "parentid" value = "<?php echo $msg_id;?>"/>
+                                <input type = "hidden" name = "parentid" value = "<?php echo $msg_html->id;?>"/>
 
                                 <input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
 
@@ -148,7 +148,7 @@ if ($kunena_config->fb_profile == 'cb')
 
                                 <input type = "submit" class = "fb_button fb_qr_fire" name = "submit" value = "<?php @print(_GEN_CONTINUE);?>"/>
 
-                                <input type = "button" class = "fb_button fb_qm_cncl_btn" id = "cancel__<?php echo $msg_id; ?>" name = "cancel" value = "<?php @print(_KUNENA_CANCEL);?>"/>
+                                <input type = "button" class = "fb_button fb_qm_cncl_btn" id = "cancel__<?php echo $msg_html->id; ?>" name = "cancel" value = "<?php @print(_KUNENA_CANCEL);?>"/>
 
                                 <small><em><?php echo _KUNENA_QMESSAGE_NOTE?></em></small>
                             </form>
@@ -180,26 +180,26 @@ if ($kunena_config->fb_profile == 'cb')
 <?php
                         if ($userinfo->userid)
                         {
-                        	echo CKunenaLink::GetProfileLink($kunena_config, $fmessage->userid, $msg_username);
+                        	echo CKunenaLink::GetProfileLink($kunena_config, $fmessage->userid, $msg_html->username);
                         }
                         else
                         {
-                        	echo $msg_username;
+                        	echo $msg_html->username;
                         }
 ?>
                     </span>
 <?php
-					if ( $kunena_config->userlist_usertype ) echo '<span class = "msgusertype">('.$msg_usertype.')</span>';
+					if ( $kunena_config->userlist_usertype ) echo '<span class = "msgusertype">('.$msg_html->usertype.')</span>';
 ?>
                     <br/>
 <?php
                         if ($fmessage->userid > 0)
                         {
-                        	echo CKunenaLink::GetProfileLink($kunena_config, $fmessage->userid, $msg_avatar);
+                        	echo CKunenaLink::GetProfileLink($kunena_config, $fmessage->userid, $msg_html->avatar);
                         }
                         else
                         {
-                        	echo $msg_avatar;
+                        	echo $msg_html->avatar;
                         }
 ?>
 
@@ -216,111 +216,111 @@ if ($kunena_config->fb_profile == 'cb')
                 }
                 ?>
 
-				<?php if (isset($msg_personal)) { ?>
+				<?php if (isset($msg_html->personal)) { ?>
                     <div class = "viewcover">
-                   <?php echo $msg_personal; ?>
+                   <?php echo $msg_html->personal; ?>
                   </div>
                 <?php  }?>
                 <div class = "viewcover">
                     <?php
-                    if (isset($msg_userrank)) {
-                        echo $msg_userrank;
+                    if (isset($msg_html->userrank)) {
+                        echo $msg_html->userrank;
                     }
                     ?>
                 </div>
 
                 <div class = "viewcover">
                     <?php
-                    if (isset($msg_userrankimg)) {
-                        echo $msg_userrankimg;
+                    if (isset($msg_html->userrankimg)) {
+                        echo $msg_html->userrankimg;
                     }
                     ?>
                 </div>
 
                     <?php
-                    if (isset($msg_posts)) {
-                        echo $msg_posts;
+                    if (isset($msg_html->posts)) {
+                        echo $msg_html->posts;
                     }
                     ?>
 
                     <?php
-                    if (isset($myGraph)) {
-                        $myGraph->BarGraphHoriz();
+                    if (isset($msg_html->myGraph)) {
+                        $msg_html->myGraph->BarGraphHoriz();
                     }
                     ?>
 
                     <?php
-                    if (isset($myGraphAUP)) {
-                        $myGraphAUP->BarGraphHoriz();
+                    if (isset($msg_html->myGraphAUP)) {
+                        $msg_html->myGraphAUP->BarGraphHoriz();
                     }
                     ?>
 
                     <?php
-                    if (isset($msg_online)) {
-                        echo $msg_online;
+                    if (isset($msg_html->online)) {
+                        echo $msg_html->online;
                     }
                     ?>
 
                     <?php
-                    if (isset($msg_pms)) {
-                        echo $msg_pms;
+                    if (isset($msg_html->pms)) {
+                        echo $msg_html->pms;
                     }
                     ?>
 
                     <?php
-                    if (isset($msg_profile)) {
-                        echo $msg_profile;
+                    if (isset($msg_html->profile)) {
+                        echo $msg_html->profile;
                     }
                     ?>
                     <br />
  					<?php
-                    if (isset($msg_icq)) {
-                        echo $msg_icq;
+                    if (isset($msg_html->icq)) {
+                        echo $msg_html->icq;
                     }
                     ?>
                     <?php
-                    if (isset($msg_gender)) {
-                        echo $msg_gender;
+                    if (isset($msg_html->gender)) {
+                        echo $msg_html->gender;
                     }
                     ?>
                     <?php
-                    if (isset($msg_skype)) {
-                        echo $msg_skype;
+                    if (isset($msg_html->skype)) {
+                        echo $msg_html->skype;
                     }
                     ?>
                     <?php
-                    if (isset($msg_website)) {
-                        echo $msg_website;
+                    if (isset($msg_html->website)) {
+                        echo $msg_html->website;
                     }
                     ?>
                     <?php
-                    if (isset($msg_gtalk)) {
-                        echo $msg_gtalk;
+                    if (isset($msg_html->gtalk)) {
+                        echo $msg_html->gtalk;
                     }
                     ?>
                      <?php
-                    if (isset($msg_yim)) {
-                        echo $msg_yim;
+                    if (isset($msg_html->yim)) {
+                        echo $msg_html->yim;
                     }
                     ?>
                     <?php
-                    if (isset($msg_msn)) {
-                        echo $msg_msn;
+                    if (isset($msg_html->msn)) {
+                        echo $msg_html->msn;
                     }
                     ?>
 					<?php
-                    if (isset($msg_aim)) {
-                        echo $msg_aim;
+                    if (isset($msg_html->aim)) {
+                        echo $msg_html->aim;
                     }
                     ?>
                     <?php
-                    if (isset($msg_location)) {
-                        echo $msg_location;
+                    if (isset($msg_html->location)) {
+                        echo $msg_html->location;
                     }
                     ?>
                     <?php
-                    if (isset($msg_birthdate)) {
-                        echo $msg_birthdate;
+                    if (isset($msg_html->birthdate)) {
+                        echo $msg_html->birthdate;
                     }
 				}
                     ?>
@@ -344,21 +344,21 @@ if ($kunena_config->fb_profile == 'cb')
 
                             if ($kunena_config->reportmsg && $kunena_my->id > 1)
                             {
-                                echo '<span class="fb_message_informMarkUp">'.CKunenaLink::GetReportMessageLink($catid, $msg_id, _KUNENA_REPORT).'</span>';
+                                echo '<span class="fb_message_informMarkUp">'.CKunenaLink::GetReportMessageLink($catid, $msg_html->id, _KUNENA_REPORT).'</span>';
                             }
-                            if (isset($msg_ip))
+                            if (isset($msg_html->ip))
                             {
-				echo '<span class="fb_message_informMarkUp">'.CKunenaLink::GetMessageIPLink($msg_ip).'</span>';
+				echo '<span class="fb_message_informMarkUp">'.CKunenaLink::GetMessageIPLink($msg_html->ip).'</span>';
                             } ?>
 		</div>
 		<div class="fb_message_buttons_cover">
 			<div class="fb_message_buttons_row">
                 <?php
                 //we should only show the Quick Reply section to registered users. otherwise we are missing too much information!!
-                /*    onClick="expandcontent(this, 'sc<?php echo $msg_id;?>')" */
-                if ($kunena_my->id > 0 && !isset($msg_closed)):
+                /*    onClick="expandcontent(this, 'sc<?php echo $msg_html->id;?>')" */
+                if ($kunena_my->id > 0 && !isset($msg_html->closed)):
                 ?>
-                <span id = "fb_qr_sc__<?php echo $msg_id;?>" class = "fb_qr_fire" style = "cursor:pointer">
+                <span id = "fb_qr_sc__<?php echo $msg_html->id;?>" class = "fb_qr_fire" style = "cursor:pointer">
                 <?php echo
                     isset($kunena_emoticons['quickmsg']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['quickmsg'] . '" border="0" alt="' . _KUNENA_QUICKMSG . '" />' . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _KUNENA_QUICKMSG . '" />'; ?>
                 </span>
@@ -369,76 +369,76 @@ if ($kunena_config->fb_profile == 'cb')
                 <?php
                 if ($kunena_emoticons['reply'])
                 {
-                    if (!isset($msg_closed))
+                    if (!isset($msg_html->closed))
                     {
-                        echo " " . $msg_reply;
-                        echo " " . $msg_quote;
+                        echo " " . $msg_html->reply;
+                        echo " " . $msg_html->quote;
 
 			if ($kunena_is_moderatorerator) echo ' </div><div class="fb_message_buttons_row">';
 
-                        if (isset($msg_merge)) {
-                             echo " " . $msg_merge;
+                        if (isset($msg_html->merge)) {
+                             echo " " . $msg_html->merge;
                         }
 
-                        if (isset($msg_split)) {
-                             echo " " . $msg_split;
+                        if (isset($msg_html->split)) {
+                             echo " " . $msg_html->split;
                         }
-                        if (isset($msg_delete)) {
-                            echo " " . $msg_delete;
+                        if (isset($msg_html->delete)) {
+                            echo " " . $msg_html->delete;
                         }
-                        if (isset($msg_edit)) {
-                            echo " " . $msg_edit;
+                        if (isset($msg_html->edit)) {
+                            echo " " . $msg_html->edit;
                         }
 
                     }
                     else {
-                        echo $msg_closed;
+                        echo $msg_html->closed;
                     }
 
                 }
                 else
                 {
-                    if (!isset($msg_closed))
+                    if (!isset($msg_html->closed))
                     {
-                        echo $msg_reply;
+                        echo $msg_html->reply;
                 ?>
 
                         |
 
                 <?php
-                echo $msg_quote;
+                echo $msg_html->quote;
 
-                if (isset($msg_delete)) {
-                    echo " | " . $msg_delete;
+                if (isset($msg_html->delete)) {
+                    echo " | " . $msg_html->delete;
                 }
 
-                if (isset($msg_move)) {
-                    echo " | " . $msg_move;
+                if (isset($msg_html->move)) {
+                    echo " | " . $msg_html->move;
                 }
 
-                if (isset($msg_edit)) {
-                    echo " | " . $msg_edit;
+                if (isset($msg_html->edit)) {
+                    echo " | " . $msg_html->edit;
                 }
 
-                if (isset($msg_sticky)) {
-                    echo " | " . $msg_sticky;
+                if (isset($msg_html->sticky)) {
+                    echo " | " . $msg_html->sticky;
                 }
 
-                if (isset($msg_lock)) {
-                    echo "| " . $msg_lock;
+                if (isset($msg_html->lock)) {
+                    echo "| " . $msg_html->lock;
                 }
                     }
                     else {
-                        echo $msg_closed;
+                        echo $msg_html->closed;
                     }
                 }
                 ?>
 			</div>
 		</div>
 <?php
-if (isset($msg_signature)) {
+if (isset($msg_html->signature)) {
 	echo '<div class="msgsignature">';
-	echo $msg_signature;
+	echo $msg_html->signature;
 	echo '</div>';
 }
 ?>
@@ -473,38 +473,38 @@ if (JDocumentHTML::countModules('kunena_msg_'.$mmm))
 // --------------------------------------------------------------
 //  Legend to the variables used
 // --------------------------------------------------------------
-// $msg_id          = Message ID#
-// $msg_username    = Username (with email link if enabled)
-// $msg_avatar      = User Avatar
-// $msg_usertype    = User Type (Visitor/Member/moderator/Admin)
-// $msg_userrank    = User Rank
-// $msg_userrankimg = User Rank Image
-// $msg_posts       = Post Count
-// $msg_karma       = Karma Points
-// $msg_karmaplus   = Linked Image for Karma+
-// $msg_karmaminus  = Linked Image for Karma-
-// $msg_ip          = IP of Poster
-// $msg_ip_link     = Link to look up IP of Poster
-// $msg_date        = Date of Post
-// $msg_subject     = Post Subject
-// $msg_text        = Post Text
-// $msg_signature   = User's Signature
-// $msg_reply       = Reply Option
-// $msg_quote       = Quote Option
-// $msg_edit        = Edit Option
-// $msg_closed      = Locked/Diabled message
-// $msg_delete      = Delete Option
-// $msg_sticky      = Sticky/Unsticky Option
-// $msg_lock        = Lock/Unlock Option
-// $msg_aim         = User's AIM
-// $msg_icq         = User's ICQ#
-// $msg_msn         = User's MSN
-// $msg_yahoo       = User's Yahoo
-// $msg_profile     = Image link to user's Profile Page
-// $msg_pms         = Linked image for PMS2
-// $msg_buddy       = Add buddy image link
-// $msg_loc         = User's Location
-// $msg_regdate     = User's Registration Date
+// $msg_html->id          = Message ID#
+// $msg_html->username    = Username (with email link if enabled)
+// $msg_html->avatar      = User Avatar
+// $msg_html->usertype    = User Type (Visitor/Member/moderator/Admin)
+// $msg_html->userrank    = User Rank
+// $msg_html->userrankimg = User Rank Image
+// $msg_html->posts       = Post Count
+// $msg_html->karma       = Karma Points
+// $msg_html->karmaplus   = Linked Image for Karma+
+// $msg_html->karmaminus  = Linked Image for Karma-
+// $msg_html->ip          = IP of Poster
+// $msg_html->ip_link     = Link to look up IP of Poster
+// $msg_html->date        = Date of Post
+// $msg_html->subject     = Post Subject
+// $msg_html->text        = Post Text
+// $msg_html->signature   = User's Signature
+// $msg_html->reply       = Reply Option
+// $msg_html->quote       = Quote Option
+// $msg_html->edit        = Edit Option
+// $msg_html->closed      = Locked/Diabled message
+// $msg_html->delete      = Delete Option
+// $msg_html->sticky      = Sticky/Unsticky Option
+// $msg_html->lock        = Lock/Unlock Option
+// $msg_html->aim         = User's AIM
+// $msg_html->icq         = User's ICQ#
+// $msg_html->msn         = User's MSN
+// $msg_html->yahoo       = User's Yahoo
+// $msg_html->profile     = Image link to user's Profile Page
+// $msg_html->pms         = Linked image for PMS2
+// $msg_html->buddy       = Add buddy image link
+// $msg_html->loc         = User's Location
+// $msg_html->regdate     = User's Registration Date
 // $tabclass[$k]    = CSS Class for TD (use to alternate colors)
 // fb_messagebody   = CSS Class for post text
 // fb_signature     = CSS Class for signature

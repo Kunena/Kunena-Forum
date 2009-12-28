@@ -589,7 +589,6 @@ if (count($categories[0]) > 0)
 ?>
                                             </div>
                                         </td>
-                                </tr>
 
                                     <?php
                                     }
@@ -601,10 +600,9 @@ if (count($categories[0]) > 0)
 <?php echo _NO_POSTS; ?>
                                         </td>
 
-                                        </tr>
-
                     <?php
                                     }
+                                    ?></tr><?php
                             }
                         }
                     }

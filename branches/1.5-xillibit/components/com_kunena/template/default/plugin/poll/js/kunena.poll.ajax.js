@@ -37,6 +37,9 @@ function ajax(nb,id)
           if(datasendfromserver.match("infoserver=\"2\"")){
             alert(KUNENA_POLL_WAIT_BEFORE_VOTE);
           }
+          if(datasendfromserver.match("infoserver=\"3\"")){
+              alert(KUNENA_POLL_CANNOT_VOTE_NEW_TIME);
+            }
         }
 
         };

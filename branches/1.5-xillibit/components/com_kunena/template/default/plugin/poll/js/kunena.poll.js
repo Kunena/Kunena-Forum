@@ -29,6 +29,7 @@ function regleCSS(number_field) {
 }
 
 function create_new_field_now(){
+  var numfield = number_field-1;
   valuetotaloptions(number_field);
   var tablebody =document.getElementById('fb_post_message');
   var row = document.createElement("tr");
@@ -41,10 +42,11 @@ function create_new_field_now(){
   cell.appendChild(texte);
   row.appendChild(cell);
   cell = document.createElement("td");
-  var field_option = document.createElement("input");
+  var field_option = document.createElement("input"); 
+  field_option.setAttribute('name','field_option'+numfield);
+  field_option.setAttribute('id','field_option'+numfield);  
   cell.appendChild(field_option);
-  //field_option.setAttribute('type','text');
-  field_option.setAttribute('name','field_option'+number_field);
+  //field_option.setAttribute('type','text');    
   row.appendChild(cell);
   tablebody.appendChild(row);
   document.getElementById("fb_post_message").insertBefore(row,document.getElementById("fb_post_buttons_tr"));

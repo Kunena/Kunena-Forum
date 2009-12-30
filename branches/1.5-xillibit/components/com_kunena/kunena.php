@@ -73,6 +73,7 @@ $no_html		= JRequest::getBool('no_html', 0);
 $value_choosed	= JRequest::getInt('radio', '');
 $polltitle = JRequest::getString('poll_title' , 0);
 $optionsnumbers = JRequest::getInt('number_total_options' , '');
+$polltimetolive = JRequest::getString('poll_time_to_live' , 0);
 
 $app = JFactory::getApplication();
 
@@ -414,6 +415,11 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 	$params = array($kunena_my->id, &$fbSession->allowed);
 	if (is_object($kunenaProfile))
 		$kunenaProfile->trigger('getAllowedForumsRead', $params);
+
+if($fbConfig->pollenabled){
+  require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
+  $poll = new CKunenaPolls();
+}
 
 //Disabled threaded view option for Kunena
 //    //Initial:: determining what kind of view to use... from profile, cookie or default settings.

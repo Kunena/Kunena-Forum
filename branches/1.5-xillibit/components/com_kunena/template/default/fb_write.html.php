@@ -29,18 +29,7 @@ if (!isset($no_image_upload)) $no_image_upload = 0;
 if (!isset($no_file_upload)) $no_file_upload = 0;
 $authorName = stripslashes($authorName);
 
-$document =& JFactory::getDocument();
-$document->addScript(KUNENA_DIRECTURL . '/template/default/plugin/poll/js/kunena.poll.js');
-
-		JApplication::addCustomHeadTag('
-  <script type="text/javascript">
-	<!--
-	var boardclass = "'.$boardclass.'";
-	var KUNENA_POLL_OPTION_NAME = "'._KUNENA_POLL_OPTION_NAME.'";
-	var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "'._KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW.'";
-  //-->
-  </script>
-		');
+CKunenaPolls::call_javascript_form();
 
 include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 
@@ -297,7 +286,7 @@ JHTML::_('behavior.keepalive');
                     <strong><?php echo _KUNENA_POLL_ADD; ?></strong>
                 </td>
                 <td>
-                    <?php echo _KUNENA_POLL_TITLE; ?> <input type = 'text' name = 'poll_title' value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" />
+                    <?php echo _KUNENA_POLL_TITLE; ?> <input type = "text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" />&nbsp; <?php echo _KUNENA_POLL_TIME_TO_LIVE; ?> <input type = "text" id = "poll_time_to_live" name = "poll_time_to_live" value="<?php if(isset($polldatasedit[0]->polltimetolive)) { echo $polldatasedit[0]->polltimetolive; } ?>" />
 
                     <!-- The field hidden allow to know the options number chooses by the user -->
                     <?php if($editmode != "1"){ ?>
@@ -325,29 +314,35 @@ JHTML::_('behavior.keepalive');
         if (in_array($catid, $catsallowed)){
 		      //This query is need because, in this part i haven't access to the variable $parent
 		      //I need to determine if the post if a parent or not for display the form for the poll
-          $kunena_db->setQuery("SELECT parent FROM #__fb_messages WHERE id=$id");
-          $kunena_db->Query() or trigger_dberror('Unable to load messages.');
-          $mesparent = $kunena_db->loadObject();
+          $mesparent = CKunenaPolls::get_parent($id);
+          $polloptions = CKunenaPolls::get_total_options($id);
           if($mesparent->parent == "0"){
         ?>
         <tr id="fb_post_edit_poll">
-        <input type="hidden" name="number_total_options" id="numbertotalr" value="<?php echo $nbpolloptions; ?>">
-        <script type="text/javascript">var number_field="<?php echo $nbpolloptions+1; ?>";</script>
+        <input type="hidden" name="number_total_options" id="numbertotalr" value="<?php echo $polloptions; ?>">
+        <script type="text/javascript">var number_field="<?php echo $polloptions+1; ?>";</script>
             <td id="fb_post_options" colspan = "2" style = "text-align: center;">
             <tr class = "<?php echo $boardclass; ?>sectiontableentry2">
                 <td class = "fb_leftcolumn" >
             <strong><?php echo _KUNENA_POLL_TITLE; ?></strong>
             </td> <td>
-            <input type = 'text' name = 'poll_title' value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" /><input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $fbConfig->pollnboptions; ?>);">
+            <input type = text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" />
+            </td>
+            </tr>
+            <tr class = "<?php echo $boardclass; ?>sectiontableentry2">
+                <td class = "fb_leftcolumn" >
+            <strong><?php echo _KUNENA_POLL_TIME_TO_LIVE; ?></strong>
+            </td> <td>
+            <input type = text" id = "poll_time_to_live" name = "poll_time_to_live" value="<?php if(isset($polldatasedit[0]->polltimetolive)) { echo $polldatasedit[0]->polltimetolive; } ?>" /><input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $fbConfig->pollnboptions; ?>);">
 
                     <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onclick = "javascript:delete_field();">
             </td>
             </tr>
                 <?php
-                  if(isset($nbpolloptions)) {
+                  if(isset($polloptions)) {
                     $nboptions = "1";
-                    for($i=0;$i < $nbpolloptions;$i++){
-                      echo "<tr class=\"".$boardclass."sectiontableentry2\" id=\"option".$nboptions."\"><td style=\"font-weight: bold\" class=\"fb_leftcolumn\">Option ".$nboptions."</td><td><input type=\"text\" name=\"field_option".$nboptions."\" value=\"".$polldatasedit[$i]->text."\" /></td></tr>";
+                    for($i=0;$i < $polloptions;$i++){
+                      echo "<tr class=\"".$boardclass."sectiontableentry2\" id=\"option".$nboptions."\"><td style=\"font-weight: bold\" class=\"fb_leftcolumn\">Option ".$nboptions."</td><td><input type=\"text\" id=\"field_option".$i."\" name=\"field_option".$i."\" value=\"".$polldatasedit[$i]->text."\" /></td></tr>";
                       $nboptions++;
                     }
                   }

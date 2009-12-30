@@ -32,6 +32,9 @@ define('_COM_A_SHOWFILEFORGUEST_DESC', 'Set to &quot;Yes&quot; if you want to sh
 define('_KUNENA_BBCODE_HIDEFILE', 'This attachment is hidden for guests. Please login or register to see it.');
 
 //Poll
+DEFINE('_KUNENA_POLL_CANNOT_VOTE_NEW_TIME', 'You cannot vote an new time to this poll');
+DEFINE('_KUNENA_POLL_TIME_TO_LIVE', 'Time for the life of the poll');
+DEFINE('_KUNENA_POLL_FORGOT_TITLE_OPTIONS', 'You have forget to enter a title and options for the poll');
 DEFINE('_KUNENA_POLL_ADD', 'Add a new poll');
 DEFINE('_KUNENA_POLL_TITLE', 'Poll title');
 DEFINE('_KUNENA_POLL_ADD_OPTION', 'Add a new option');
@@ -43,6 +46,7 @@ DEFINE('_KUNENA_POLL_NO_VOTE', 'No vote');
 DEFINE('_KUNENA_POLL_VOTERS_TOTAL', 'Total number of voters: ');
 DEFINE('_KUNENA_POLL_HITS_OPTIONS', 'Number of people who voted for this poll');
 DEFINE('_KUNENA_A_POLL_NUMBER_OPTIONS', 'Number of options for the polls');
+DEFINE('_KUNENA_POLL_RESET_VOTES', 'Reset votes of the poll');
 DEFINE('_KUNENA_A_POLL_NUMBER_OPTIONS_DESC', 'Set the number maximum allowed for the field options for the polls when the users create a new post');
 DEFINE('_KUNENA_POLL_SAVE_ALERT_OK', 'Your vote has been saved with succes');
 DEFINE('_KUNENA_POLL_SAVE_ALERT_ERROR', 'A problem has prevented your vote from being saved');

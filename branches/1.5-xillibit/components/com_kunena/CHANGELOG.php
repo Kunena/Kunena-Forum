@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0
 
+30-Dec-2009 Xillibit
+#^ [#18627] kunena.poll.class.php added, a lot of changes in the poll
+
 26-Dec-2009 Xillibit
 ^ [#18627] Merge from /trunk/1.5 : 1341-1321
 

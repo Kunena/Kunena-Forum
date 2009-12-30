@@ -208,6 +208,7 @@
 			`title` varchar(50) NOT NULL,
 			`threadid` int(11) NOT NULL,
 			`catid` int(11) NOT NULL,
+			`polltimetolive` timestamp,
 			PRIMARY KEY  (`id`),
 			KEY `threadid` (`threadid`)
 		) ENGINE=MyISAM DEFAULT CHARSET=utf8;</query>

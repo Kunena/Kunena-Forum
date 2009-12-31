@@ -40,11 +40,11 @@ if (in_array($catid, $catsallowed)){
             }
             ?>
   </div>
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASSs; ?>_bt_cvr5">
     <table class = "fb_blocktable" id = "fb_poll" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>
             <tr>
@@ -58,7 +58,7 @@ if (in_array($catid, $catsallowed)){
             </tr>
         </thead>
         <tbody id = "polls_tbody">
-                <tr class = "<?php echo $boardclass ;?>sectiontableentry2">
+                <tr class = "<?php echo KUNENA_BOARD_CLASS;?>sectiontableentry2">
                     <td class = "td-1 fbm" align="left">
                         <div class = "polldesc">
 <?php if($dataspollusers[0]->userid == $kunena_my->id || $kunena_my->id == "0"){//if the user has already voted for this poll ?>

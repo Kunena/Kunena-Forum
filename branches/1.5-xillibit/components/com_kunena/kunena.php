@@ -407,7 +407,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 	if (is_object($kunenaProfile))
 		$kunenaProfile->trigger('getAllowedForumsRead', $params);
 
-if($fbConfig->pollenabled){
+if($kunena_config->pollenabled){
   require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
   $poll = new CKunenaPolls();
 }

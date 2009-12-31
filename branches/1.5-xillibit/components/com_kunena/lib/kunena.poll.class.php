@@ -94,7 +94,7 @@ class CKunenaPolls {
 		JApplication::addCustomHeadTag('
     <script type="text/javascript">
 	   <!--
-	   var boardclass = "'.$boardclass.'";
+	   var boardclass = "'.KUNENA_BOARD_CLASS.'";
 	   var KUNENA_POLL_OPTION_NAME = "'._KUNENA_POLL_OPTION_NAME.'";
 	   var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "'._KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW.'";
       //-->

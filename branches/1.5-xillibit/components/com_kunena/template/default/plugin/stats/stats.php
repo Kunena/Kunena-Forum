@@ -167,45 +167,45 @@ $k = 0;
 
 
 <!-- B: Pop Poll -->
-<?php if($fbConfig->showpoppollstats): ?>
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<?php if($kunena_config->showpoppollstats): ?>
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
 <table class = "fb_blocktable " id="fb_popsubmorestat"  cellpadding = "0" cellspacing = "0" border = "0" width = "100%">
   <thead>
     <tr>
       <th colspan="3">
-      <div class = "fb_title_cover fbm"> <span class="fb_title fbl"> <?php echo _STAT_POPULAR; ?> <b><?php echo $fbConfig->poppollscount; ?></b> <?php echo _STAT_POPULAR_POLLS_KGSG; ?></span> </div>
-      <img id = "BoxSwitch__<?php echo $boardclass ;?>popsubstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+      <div class = "fb_title_cover fbm"> <span class="fb_title fbl"> <?php echo _STAT_POPULAR; ?> <b><?php echo $kunena_config->poppollscount; ?></b> <?php echo _STAT_POPULAR_POLLS_KGSG; ?></span> </div>
+      <img id = "BoxSwitch__<?php echo KUNENA_BOARD_CLASS;?>popsubstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
       </th>
     </tr>
   </thead>
-  <tbody id = "<?php echo $boardclass ;?>popsubstats_tbody">
+  <tbody id = "<?php echo KUNENA_BOARD_CLASS ;?>popsubstats_tbody">
    <tr  class = "fb_sth" >
-      <th class = "th-1 <?php echo $boardclass; ?>sectiontableheader" align="left" width="50%"> <?php echo _KUNENA_POLL_NAME;?></th>
-      <th class = "th-2 <?php echo $boardclass; ?>sectiontableheader" width="40%">&nbsp;  </th>
-      <th class = "th-3 <?php echo $boardclass; ?>sectiontableheader" align="center" width="10%"> <?php echo _KUNENA_USRL_VOTES ;?> </th>
+      <th class = "th-1 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="left" width="50%"> <?php echo _KUNENA_POLL_NAME;?></th>
+      <th class = "th-2 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" width="40%">&nbsp;  </th>
+      <th class = "th-3 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center" width="10%"> <?php echo _KUNENA_USRL_VOTES ;?> </th>
     </tr>
- <?php foreach ($toppolls as $toppoll)
+ <?php foreach($this->toppolls as $toppoll)
        {
        if($toppoll->total != "0")
        {
 	   $k = 1 - $k;
-		   if ($toppoll->total == $toppollvotes) {
+		   if ($toppoll->total == $this->toppollvotes) {
           $barwidth = 100;
 		   }
 		   else {
 		    if($toppoll->total== null){
           $toppoll->total = "0";
         }
-		    $barwidth = round(($toppoll->total * 100) / $toppollvotes);
+		    $barwidth = round(($toppoll->total * 100) / $this->toppollvotes);
 		   }
 	  $link = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $toppoll->threadid . '&amp;catid=' . $toppoll->catid);
 ?>
 
-    <tr class = "<?php echo ''.$boardclass.''. $tabclass[$k] . ''; ?>">
+    <tr class = "<?php echo ''.KUNENA_BOARD_CLASS.''. $tabclass[$k] . ''; ?>">
       <td class="td-1" align="left">
        <a href = "<?php echo $link;?>"><?php echo kunena_htmlspecialchars(stripslashes($toppoll->title)); ?></a>
       </td>

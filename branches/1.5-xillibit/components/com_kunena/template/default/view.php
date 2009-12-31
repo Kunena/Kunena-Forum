@@ -74,13 +74,13 @@ function KunenaViewPagination($catid, $threadid, $page, $totalpages, $maxpages) 
     return $output;
 }
 
-global $kunena_is_moderator;
+global $kunena_is_moderatorerator;
 $kunena_acl = &JFactory::getACL();
 //securing form elements
 $catid = (int)$catid;
 $id = (int)$id;
 
-$kunena_emoticons = smile::getEmoticons(0);
+$smileyList = smile::getEmoticons(0);
 
 //ob_start();
 $showedEdit = 0;
@@ -280,7 +280,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
             $thread_new = CKunenaLink::GetPostNewTopicLink($catid, isset($kunena_emoticons['new_topic']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
         }
 
-        if ($kunena_is_moderator)
+        if ($kunena_is_moderatorerator)
         {
             // offer the moderator always the move link to relocate a topic to another forum
             // and the (un)sticky bit links
@@ -349,7 +349,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
 			</tr>
 		</table>
         <?php }
-if ($fbConfig->pollenabled == "1" && $this_message->poll_exist == "1")
+if ($kunena_config->pollenabled == "1" && $this_message->poll_exist == "1")
 {
 
     if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/poll/pollbox.php')) {
@@ -390,7 +390,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
                     echo CKunenaLink::GetSamePageAnkerLink('forumbottom', isset($kunena_emoticons['bottomarrow']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM);
 
 	echo '</td>';
-	if ($kunena_is_moderator || isset($thread_reply) || isset($thread_subscribe) || isset($thread_favorite))
+	if ($kunena_is_moderatorerator || isset($thread_reply) || isset($thread_subscribe) || isset($thread_favorite))
 	{
 	    echo '<td class="fb_list_actions_forum">';
 	    echo '<div class="fb_message_buttons_row" style="text-align: center;">';
@@ -398,7 +398,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
 	    if (isset($thread_subscribe)) echo ' '.$thread_subscribe;
 	    if (isset($thread_favorite)) echo ' '.$thread_favorite;
 	    echo '</div>';
-            if ($kunena_is_moderator)
+            if ($kunena_is_moderatorerator)
             {
 		echo '<div class="fb_message_buttons_row" style="text-align: center;">';
 		echo $thread_delete;
@@ -441,7 +441,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
                     <tr>
                         <th align="left">
                              <div class = "fb_title_cover  fbm">
-                                <span class = "fb_title fbl"><b><?php echo _KUNENA_TOPIC; ?></b> <?php echo $kunena_topic_tile; ?></span>
+                                <span class = "fb_title fbl"><b><?php echo _KUNENA_TOPIC; ?></b> <?php echo $jr_topic_title; ?></span>
                             </div>
                             <!-- B: FORUM TOOLS -->
 
@@ -768,6 +768,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
 									$kunena_db->setQuery("SELECT points FROM #__alpha_userpoints WHERE `userid`='".(int)$fmessage->userid."'");
 									$numPoints = $kunena_db->loadResult();
 									check_dberror("Unable to load AUP points.");
+
 									$msg_html->myGraphAUP = new phpGraph;
 									$msg_html->myGraphAUP->AddValue(_KUNENA_AUP_POINTS, $numPoints);
 									$msg_html->myGraphAUP->SetRowSortMode(0);
@@ -1070,7 +1071,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
 
 
                                 //Show admins the IP address of the user:
-                                if ($kunena_is_moderator)
+                                if ($kunena_is_moderatorerator)
                                 {
                                     $msg_html->ip = $fmessage->ip;
                                 }
@@ -1129,7 +1130,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
 
                                 $showedEdit = 0; //reset this value
                                 //Offer an moderator the delete link
-                                if ($kunena_is_moderator)
+                                if ($kunena_is_moderatorerator)
                                 {
                                     $msg_html->delete = CKunenaLink::GetTopicPostLink('delete', $catid, $fmessage->id , isset($kunena_emoticons['delete']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />':_GEN_DELETE);
                                     $msg_html->merge = CKunenaLink::GetTopicPostLink('merge', $catid, $fmessage->id , isset($kunena_emoticons['merge']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['merge'] . '" alt="' . _GEN_MERGE . '" border="0" title="' . _GEN_MERGE . '" />':_GEN_MERGE);
@@ -1168,7 +1169,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
                                     }
                                 }
 
-                                if ($kunena_is_moderator && $showedEdit != 1)
+                                if ($kunena_is_moderatorerator && $showedEdit != 1)
                                 {
                                     //Offer a moderator always the edit link except when it is already showing..
                                     $msg_html->edit = CKunenaLink::GetTopicPostLink('edit', $catid, $fmessage->id , isset($kunena_emoticons['edit']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />':_GEN_EDIT);
@@ -1218,14 +1219,14 @@ if (JDocumentHTML::countModules('kunena_poll'))
             <table class="fb_list_actions_bottom" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
                 <tr>
                     <td class="fb_list_actions_goto">
-						<a name="forumbottom"></a>
-		                <?php
+                        <?php
                         //go to top
+                        echo '<a name="forumbottom" /> ';
                         echo CKunenaLink::GetSamePageAnkerLink('forumtop', isset($kunena_emoticons['toparrow']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP);
-						?>
-					</td>
-<?php
-	if ($kunena_is_moderator || isset($thread_reply) || isset($thread_subscribe) || isset($thread_favorite))
+
+			echo '</td>';
+
+	if ($kunena_is_moderatorerator || isset($thread_reply) || isset($thread_subscribe) || isset($thread_favorite))
 	{
 	    echo '<td class="fb_list_actions_forum">';
 	    echo '<div class="fb_message_buttons_row" style="text-align: center;">';
@@ -1233,7 +1234,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
 	    if (isset($thread_subscribe)) echo ' '.$thread_subscribe;
 	    if (isset($thread_favorite)) echo ' '.$thread_favorite;
 	    echo '</div>';
-            if ($kunena_is_moderator)
+            if ($kunena_is_moderatorerator)
             {
 		echo '<div class="fb_message_buttons_row" style="text-align: center;">';
 		echo $thread_delete;
@@ -1257,7 +1258,6 @@ if (JDocumentHTML::countModules('kunena_poll'))
 	    echo $thread_merge;
 	    echo '</div>';
 	}
-
 	echo '</td>';
 
         echo '<td class="fb_list_pages_all" nowrap="nowrap">';
@@ -1270,7 +1270,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
         echo '<div class = "'. KUNENA_BOARD_CLASS .'forum-pathway-bottom">';
 	echo $pathway1;
 	echo '</div>';
-?>
+    ?>
 	<!-- F: List Actions Bottom -->
 
 	<!-- B: Category List Bottom -->

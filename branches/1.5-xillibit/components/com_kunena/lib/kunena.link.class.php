@@ -196,11 +196,11 @@ class CKunenaLink
     			$kunenaProfile =& CKunenaCBProfile::getInstance();
     			return $kunenaProfile->getProfileURL($userid);
     		}
-    		elseif ($kunena_config->fb_profile == 'jomsocial') 
+    		elseif ($kunena_config->fb_profile == 'jomsocial')
     		{
    				return CRoute::_('index.php?option=com_community&view=profile&userid='.$userid);
     		}
-    		elseif ($kunena_config->fb_profile == 'aup') 
+    		elseif ($kunena_config->fb_profile == 'aup')
     		{
 				$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
 				if ( file_exists($api_AUP)) {
@@ -328,8 +328,8 @@ class CKunenaLink
 		if ($id !== NULL) $idstring .= "&amp;id=$id";
 		return JRoute::_(KUNENA_LIVEURLREL."&amp;func=announcement&amp;do={$do}{$idstring}");
     }
-    
-	function GetPollURL($fbConfig, $do, $id=NULL, $catid){
+
+	function GetPollURL($kunena_config, $do, $id=NULL, $catid){
 		  $idstring = '';
 		  if ($id !== NULL) $idstring .= "&amp;id=$id";
 		  $catidstr = "&amp;catid=$catid";

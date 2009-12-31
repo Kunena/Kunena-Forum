@@ -935,7 +935,7 @@ $catName = $objCatInfo->name;
                         	}
 
                         	//update the poll when an user edit his post
-                             if($fbConfig->pollenabled){
+                             if($kunena_config->pollenabled){
                               $optvalue = array();
                                for($i = 0; $i < $optionsnumbers; $i++){
                                  $optvalue[] = JRequest::getString('field_option'.$i , null);

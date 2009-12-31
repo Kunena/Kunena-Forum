@@ -34,6 +34,7 @@ Legend:
 Kunena 1.6.0-DEV
 
 31-Dec-2009 Xillibit
+# [#18627] Fix for bugs after merge and for variables change in kunena 1.6
 ^ [#18627] Merge from /trunk/1.5 : 1394-1342
 
 29-Dec-2009 Matias

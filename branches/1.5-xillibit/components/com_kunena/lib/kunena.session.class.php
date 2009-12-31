@@ -95,7 +95,7 @@ class CKunenaSession extends JTable
 	function markAllCategoriesRead()
 	{
 		$kunena_config =& CKunenaConfig::getInstance();
-		
+
 		$this->lasttime = time() + $kunena_config->board_ofset * KUNENA_SECONDS_IN_HOUR;
 		$this->readtopics = '';
 	}

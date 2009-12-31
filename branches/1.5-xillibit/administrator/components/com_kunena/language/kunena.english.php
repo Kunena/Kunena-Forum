@@ -22,8 +22,10 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
-DEFINE('_KUNENA_SHOW_AVATAR_ON_CAT_DESC', 'Set to &quot;Yes&quot; if you want to show user avatar on Categories view, Recent discussions and My Discussions.');
-DEFINE('_KUNENA_SHOW_AVATAR_ON_CAT', 'Show Avatar on Categories view, Recent discussions and My Discussions?');
+// 1.6.0
+
+define('_KUNENA_SHOW_AVATAR_ON_CAT', 'Show Avatar on Categories view, Recent discussions and My Discussions?');
+define('_KUNENA_SHOW_AVATAR_ON_CAT_DESC', 'Set to &quot;Yes&quot; if you want to show user avatar on Categories view, Recent discussions and My Discussions.');
 define('_COM_A_SHOWIMGFORGUEST', 'Show images for guests');
 define('_COM_A_SHOWIMGFORGUEST_DESC', 'Set to &quot;Yes&quot; if you want to show images for guests.');
 define('_KUNENA_BBCODE_HIDEIMG', 'This image is hidden for guests. Please login or register to see it.');
@@ -357,6 +359,24 @@ DEFINE('_COM_A_RSS_HISTORY_MONTH', '1 Month');
 DEFINE('_COM_A_RSS_HISTORY_YEAR', '1 Year');
 DEFINE('_COM_A_FBDEFAULT_PAGE', 'Default Kunena Page');
 DEFINE('_COM_A_FBDEFAULT_PAGE_DESC', 'Select the default Kunena page that is displayed when a forum link is clicked or the forum is initially entered. Default is Recent Discussions. Should be set to Categories for templates other than default_ex. If My Discussions is selected, guests will default to Recent Discussions.');
+DEFINE('_COM_A_FBDEFAULT_PAGE_RECENT', 'Recent Discussions');
+DEFINE('_COM_A_FBDEFAULT_PAGE_MY', 'My Discussions');
+DEFINE('_COM_A_FBDEFAULT_PAGE_CATEGORIES', 'Categories');
+
+// 1.0.5
+DEFINE('_COM_A_HIGHLIGHTCODE', 'Enable Code Highlighting');
+DEFINE('_COM_A_HIGHLIGHTCODE_DESC', 'Enables the Kunena code tag highlighting Javascript. If your members post PHP or other code fragments within code tags, turning this on will colorize the code. If your forum does not make use of such programing language posts, you might want to turn it off to avoid code tags from becoming malformed.');
+DEFINE('_COM_A_RSS_TYPE', 'Default RSS type');
+DEFINE('_COM_A_RSS_TYPE_DESC', 'Choose between RSS feeds &quot;By Thread &quot; or &quot;By Post.&quot; &quot;By Thread &quot; means that only one entry per thread will be listed in the RSS feed independent of how many posts have been made within that thread. &quot;By Thread&quot; creates a shorter, more compact RSS feed but will not list every reply.');
+DEFINE('_COM_A_RSS_BY_THREAD', 'By Thread');
+DEFINE('_COM_A_RSS_BY_POST', 'By Post');
+DEFINE('_COM_A_RSS_HISTORY', 'RSS History');
+DEFINE('_COM_A_RSS_HISTORY_DESC', 'Select how much history should be included in the RSS feed. The default is one month, but it is recommended to limit it to one week on high volume sites.');
+DEFINE('_COM_A_RSS_HISTORY_WEEK', '1 Week');
+DEFINE('_COM_A_RSS_HISTORY_MONTH', '1 Month');
+DEFINE('_COM_A_RSS_HISTORY_YEAR', '1 Year');
+DEFINE('_COM_A_FBDEFAULT_PAGE', 'Default Kunena Page');
+DEFINE('_COM_A_FBDEFAULT_PAGE_DESC', 'Select the default Kunena page that is displayed when a forum link is clicked or the forum is initially entered. Default is Recent Discussions. Should be set to Categories for templates other than default. If My Discussions is selected, guests will default to Recent Discussions.');
 DEFINE('_COM_A_FBDEFAULT_PAGE_RECENT', 'Recent Discussions');
 DEFINE('_COM_A_FBDEFAULT_PAGE_MY', 'My Discussions');
 DEFINE('_COM_A_FBDEFAULT_PAGE_CATEGORIES', 'Categories');

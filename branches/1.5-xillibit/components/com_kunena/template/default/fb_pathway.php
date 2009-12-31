@@ -22,10 +22,15 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $func, $boardclass, $id, $catid, $kunena_db;
-global $kunena_topic_tile, $forumLocked;
+$kunena_config 	= &CKunenaConfig::getInstance();
+$kunena_db 		= &JFactory::getDBO();
 
-$kunena_config =& CKunenaConfig::getInstance();
+global $kunena_emoticons;
+
+$func 			= strtolower(JRequest::getCmd('func', ''));
+$catid 			= JRequest::getInt('catid', 0);
+$id 			= JRequest::getInt('id', 0);
+
 ?>
 <!-- Pathway -->
 <?php
@@ -33,17 +38,11 @@ $sfunc = JRequest::getVar("func", null);
 
 if ($func != "")
 {
-?>
-
-    <div class = "<?php echo $boardclass ?>forum-pathway">
-        <?php
         $catids = intval($catid);
-        $kunena_path_menu = array ();
-        echo '<div class="path-element-first">' . CKunenaLink::GetKunenaLink( kunena_htmlspecialchars(stripslashes($kunena_config->board_title)) ) . '</div>';
+        $jr_path_menu = array ();
 
-        $spath = '';
-
-        while ($catids > 0)
+		$fr_title_name = _KUNENA_CATEGORIES;
+		while ($catids > 0)
         {
             $query = "SELECT * FROM #__fb_categories WHERE id='{$catids}' AND published='1'";
             $kunena_db->setQuery($query);
@@ -51,24 +50,15 @@ if ($func != "")
             if (!$results) break;
 			$parent_ids = $results->parent;
 			$fr_name = kunena_htmlspecialchars(trim(stripslashes($results->name)));
-            //$cids=@mysql_result( $results, 0, 'id' );
             $sname = CKunenaLink::GetCategoryLink( 'showcat', $catids, $fr_name);
 
             if ($catid == $catids && $sfunc != "view")
             {
                 $fr_title_name = $fr_name;
-                $kunena_path_menu[] = $fr_name;
+                $jr_path_menu[] = $fr_name;
             }
             else {
-                $kunena_path_menu[] = $sname;
-            }
-
-            // write path
-            if (empty($spath)) {
-                $spath = $sname;
-            }
-            else {
-                $spath = $sname . "<div class=\"path-element\">" . $spath . "</div>";
+                $jr_path_menu[] = $sname;
             }
 
             // next looping
@@ -76,73 +66,77 @@ if ($func != "")
         }
 
         //reverse the array
-        $kunena_path_menu = array_reverse($kunena_path_menu);
+        $jr_path_menu = array_reverse($jr_path_menu);
 
-        //  echo $shome." " . $jr_arrow .$jr_arrow ." ". $spath;
         //attach topic name
+		$jr_topic_title = '';
         if ($sfunc == "view" and $id)
         {
             $sql = "SELECT subject, id FROM #__fb_messages WHERE id='{$id}'";
             $kunena_db->setQuery($sql);
-            $kunena_topic_tile = stripslashes(kunena_htmlspecialchars($kunena_db->loadResult()));
-            $kunena_path_menu[] = $kunena_topic_tile;
-        //     echo " " . $jr_arrow .$jr_arrow ." ". $kunena_topic_tile;
+            $jr_topic_title = stripslashes(html_entity_decode_utf8($kunena_db->loadResult()));
+            $jr_path_menu[] = $jr_topic_title;
         }
 
         // print the list
-        $jr_forum_count = count($kunena_path_menu);
+		if (count($jr_path_menu) == 0) $jr_path_menu[] = '';
+        $jr_forum_count = count($jr_path_menu);
 
 		$fireinfo = '';
         if (!empty($forumLocked))
         {
-            $fireinfo = isset($fbIcons['forumlocked']) ? ' <img src="' . KUNENA_URLICONSPATH . $fbIcons['forumlocked']
+            $fireinfo = isset($kunena_emoticons['forumlocked']) ? ' <img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['forumlocked']
                      . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"  alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
             $lockedForum = 1;
         }
 
         if (!empty($forumReviewed))
         {
-            $fireinfo = isset($fbIcons['forummoderated']) ? ' <img src="' . KUNENA_URLICONSPATH . $fbIcons['forummoderated']
+            $fireinfo = isset($kunena_emoticons['forummoderated']) ? ' <img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['forummoderated']
                      . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '">';
             $moderatedForum = 1;
         }
 
+        $firepath = '<div class="path-element-first">'. CKunenaLink::GetKunenaLink( kunena_htmlspecialchars(stripslashes($kunena_config->board_title)) ) . '</div>';
+
+        $firelast = '';
         for ($i = 0; $i < $jr_forum_count; $i++)
         {
             if ($i == $jr_forum_count-1) {
-                echo '<div class="path-element-last">' . $kunena_path_menu[$i] . $fireinfo . '</div>';
+                $firelast .= '<br /><div class="path-element-last">' . $jr_path_menu[$i] . $fireinfo . '</div>';
             }
             else {
-                echo '<div class="path-element">' . $kunena_path_menu[$i] . '</div>';
+                $firepath .= '<div class="path-element">' . $jr_path_menu[$i] . '</div>';
             }
         }
 
          //get viewing
         $fb_queryName = $kunena_config->username ? "username" : "name";
-		$query= "SELECT w.userid, u.id, u.{$fb_queryName} AS username, k.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS k ON k.userid=w.userid WHERE w.link like '%" . addslashes($_SERVER['REQUEST_URI']) . "%' GROUP BY w.userid ORDER BY u.{$fb_queryName} ASC";
+		$query= "SELECT w.userid, u.$fb_queryName AS username, k.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS k ON k.userid=w.userid WHERE w.link LIKE '%" . addslashes(JURI::current()) . "%' GROUP BY w.userid ORDER BY u.{$fb_queryName} ASC";
 		$kunena_db->setQuery($query);
 		$users = $kunena_db->loadObjectList();
 			check_dberror("Unable to load who is online.");
 		$total_viewing = count($users);
 
+	$fireonline = '';
         if ($sfunc == "userprofile")
         {
-            echo _USER_PROFILE;
-            echo $username;
+            $fireonline .= _USER_PROFILE;
+            $fireonline .= $username;
         }
         else {
-			echo "<div class=\"path-element-users\">($total_viewing " . _KUNENA_PATHWAY_VIEWING . ")&nbsp;";
+			$fireonline .= "<div class=\"path-element-users\">($total_viewing " . _KUNENA_PATHWAY_VIEWING . ")&nbsp;";
 			$totalguest = 0;
+                        $divider = ', ';
 			$lastone = end($users);
-			$divider = ', ';
 			foreach ($users as $user) {
 				if ($user->userid != 0)
 				{
-					if($user==$lastone && !$totalguest){
-					$divider = '';
-					}
+                                        if($user==$lastone && !$totalguest){
+                                            $divider = '';
+                                        }
 					if ( $user->showOnline > 0 ){
-					echo CKunenaLink::GetProfileLink($kunena_config,  $user->userid, $user->username) . $divider.' ';
+					$fireonline .= CKunenaLink::GetProfileLink($kunena_config,  $user->userid, $user->username) . $divider;
 					}
 				}
 				else
@@ -150,22 +144,23 @@ if ($func != "")
 					$totalguest = $totalguest + 1;
 				}
 			}
-      if ($totalguest > 0) { if ($totalguest==1) { echo $totalguest.'&nbsp;'._WHO_ONLINE_GUEST; } else { echo '('.$totalguest.') '._WHO_ONLINE_GUESTS; } }
+			if ($totalguest > 0) {
+				if ($totalguest==1) {
+					$fireonline .= '('.$totalguest.') '._WHO_ONLINE_GUEST;
+				} else {
+					$fireonline .= '('.$totalguest.') '._WHO_ONLINE_GUESTS;
+				}
+			}
+			$fireonline .= '</div>';
        }
 
-        unset($shome, $spath, $parent_ids, $catids, $results, $sname);
-        $fr_title = '';
-		if (!empty($fr_title_name)) $fr_title .= $fr_title_name;
-		if (!empty($kunena_topic_tile)) $fr_title .= $kunena_topic_tile;
+	$document=& JFactory::getDocument();
+	$document->setTitle(htmlspecialchars_decode($jr_topic_title ?  $jr_topic_title : $fr_title_name) . ' - ' . stripslashes($kunena_config->board_title));
 
-		$document=& JFactory::getDocument();
+	$pathway1 = $firepath . $fireinfo;
+	$pathway2 = $firelast . $fireonline;
 
-		$document->setTitle(($fr_title ? $fr_title : _KUNENA_CATEGORIES) . ' - ' . stripslashes($kunena_config->board_title));
-        ?>
-		</div>
-    </div>
-
-<?php
+	echo '<div class = "'. KUNENA_BOARD_CLASS .'forum-pathway">';
+    echo $pathway1.$pathway2;
+    echo '</div>';
 }
-?>
-<!-- / Pathway -->

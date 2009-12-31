@@ -21,7 +21,11 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
+$kunena_db = &JFactory::getDBO();
 $kunena_config =& CKunenaConfig::getInstance();
+
+$id = JRequest::getInt('id', 0);
+
 //Some initial thingies needed anyway:
 if (!isset($htmlText)) $htmlText = '';
 if (!isset($setFocus)) $setFocus = 0;
@@ -36,11 +40,11 @@ include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 //keep session alive while editing
 JHTML::_('behavior.keepalive');
 ?>
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
 <table class = "fb_blocktable<?php echo $objCatInfo->class_sfx; ?>" id="fb_postmessage"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
@@ -53,23 +57,23 @@ JHTML::_('behavior.keepalive');
     </thead>
 
     <tbody id = "fb_post_message">
-        <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
+        <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry1">
             <td class = "fb_leftcolumn">
                 <strong><?php echo _GEN_NAME; ?></strong>:
             </td>
 
             <?php
             if (($kunena_config->regonly == "1" || $kunena_config->changename == '0') && $kunena_my->id != "" && !$kunena_is_moderator) {
-                echo "<td><input type=\"hidden\" name=\"fb_authorname\" size=\"35\" class=\"" . $boardclass . "inputbox postinput\"  maxlength=\"35\" value=\"$authorName\" /><b>$authorName</b></td>";
+                echo "<td><input type=\"hidden\" name=\"fb_authorname\" size=\"35\" class=\"" . KUNENA_BOARD_CLASS . "inputbox postinput\"  maxlength=\"35\" value=\"$authorName\" /><b>$authorName</b></td>";
             }
             else
             {
                 if ($registeredUser == 1) {
-                    echo "<td><input type=\"text\" name=\"fb_authorname\" size=\"35\"  class=\"" . $boardclass . "inputbox postinput\"  maxlength=\"35\" value=\"$authorName\" /></td>";
+                    echo "<td><input type=\"text\" name=\"fb_authorname\" size=\"35\"  class=\"" . KUNENA_BOARD_CLASS . "inputbox postinput\"  maxlength=\"35\" value=\"$authorName\" /></td>";
                 }
                 else
                 {
-                    echo "<td><input type=\"text\" name=\"fb_authorname\" size=\"35\"  class=\"" . $boardclass . "inputbox postinput\"  maxlength=\"35\" value=\"\" />";
+                    echo "<td><input type=\"text\" name=\"fb_authorname\" size=\"35\"  class=\"" . KUNENA_BOARD_CLASS . "inputbox postinput\"  maxlength=\"35\" value=\"\" />";
                     echo "<script type=\"text/javascript\">document.postform.fb_authorname.focus();</script></td>";
                     $setFocus = 1;
                 }
@@ -80,19 +84,19 @@ JHTML::_('behavior.keepalive');
         <?php
         if ($kunena_config->askemail)
         {
-            echo '<tr class = "'. $boardclass . 'sectiontableentry2"><td class = "fb_leftcolumn"><strong>' . _GEN_EMAIL . ' *</strong>:</td>';
+            echo '<tr class = "'. KUNENA_BOARD_CLASS . 'sectiontableentry2"><td class = "fb_leftcolumn"><strong>' . _GEN_EMAIL . ' *</strong>:</td>';
             if (($kunena_config->regonly == "1" || $kunena_config->changename == '0') && $kunena_my->id != "" && !$kunena_is_moderator) {
                 echo "<td>$my_email</td>";
             }
             else
             {
-                echo "<td><input type=\"text\" name=\"email\"  size=\"35\" class=\"" . $boardclass . "inputbox postinput\" maxlength=\"35\" value=\"$my_email\" /></td>";
+                echo "<td><input type=\"text\" name=\"email\"  size=\"35\" class=\"" . KUNENA_BOARD_CLASS . "inputbox postinput\" maxlength=\"35\" value=\"$my_email\" /></td>";
             }
             echo '</tr>';
         }
         ?>
 
-        <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
+        <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry1">
             <?php
             if (!$fromBot)
             {
@@ -103,7 +107,7 @@ JHTML::_('behavior.keepalive');
                 </td>
 
                 <td>
-                    <input type = "text" class = "<?php echo $boardclass; ?>inputbox postinput" name = "subject" size = "35" maxlength = "<?php echo $kunena_config->maxsubject;?>" value = "<?php echo $resubject;?>" />
+                    <input type = "text" class = "<?php echo KUNENA_BOARD_CLASS; ?>inputbox postinput" name = "subject" size = "35" maxlength = "<?php echo $kunena_config->maxsubject;?>" value = "<?php echo $resubject;?>" />
                 </td>
 
             <?php
@@ -137,7 +141,7 @@ JHTML::_('behavior.keepalive');
             if ($parentid == 0)
             {
 ?>
-        <tr class = "<?php echo $boardclass; ?>sectiontableentry2">
+        <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry2">
             <td class = "fb_leftcolumn">
                 <strong><?php echo _GEN_TOPIC_ICON; ?></strong>:
             </td>
@@ -193,7 +197,7 @@ JHTML::_('behavior.keepalive');
 ?>
 
                <!-- preview -->
-        <tr class = "<?php echo $boardclass; ?>sectiontableentry2" id="previewContainer" style="display:none;">
+        <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry2" id="previewContainer" style="display:none;">
            <td class = "fb_leftcolumn">
                 <strong><?php echo _PREVIEW; ?></strong>:
             </td>
@@ -207,7 +211,7 @@ JHTML::_('behavior.keepalive');
         {
         ?>
 
-            <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
+            <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry1">
                 <td class = "fb_leftcolumn">
                     <strong><?php echo _IMAGE_SELECT_FILE; ?></strong>
                 </td>
@@ -227,7 +231,7 @@ JHTML::_('behavior.keepalive');
         {
         ?>
 
-            <tr class = "<?php echo $boardclass; ?>sectiontableentry2">
+            <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry2">
                 <td class = "fb_leftcolumn">
                     <strong><?php echo _FILE_SELECT_FILE; ?></strong>
                 </td>
@@ -245,7 +249,7 @@ JHTML::_('behavior.keepalive');
         {
         ?>
 
-            <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
+            <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry1">
                 <td class = "fb_leftcolumn">
                     <strong><?php echo _POST_SUBSCRIBE; ?></strong>:
                 </td>
@@ -275,7 +279,7 @@ JHTML::_('behavior.keepalive');
                     ?>
                 </td>
             </tr>
-        <?php }
+<?php }
         $catsallowed = explode(',',$fbConfig->pollallowedcategories);
         if (in_array($catid, $catsallowed)){
         //Check if it's is a new thread and show the poll
@@ -298,12 +302,12 @@ JHTML::_('behavior.keepalive');
             </tr>
            <?php }
            }
-           // Begin captcha . Thanks Adeptus
+		// Begin captcha . Thanks Adeptus
 		if ($kunena_config->captcha == 1 && $kunena_my->id < 1) { ?>
-        <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
+        <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry1">
             <td class = "fb_leftcolumn">&nbsp;<strong><?php echo _KUNENA_CAPDESC; ?></strong>&nbsp;</td>
             <td align="left" valign="middle" height="35px">&nbsp;<input name="txtNumber" type="text" id="txtNumber" value="" class="fb_button" style="vertical-align:top" size="15">
-			<img src="index.php?option=com_kunena&func=showcaptcha" alt="" />
+			<img src="index2.php?option=com_kunena&func=showcaptcha" alt="" />
 		 </td>
          </tr>
         <?php
@@ -368,7 +372,6 @@ JHTML::_('behavior.keepalive');
 </div>
 <input type="hidden" value="<?php echo JURI::base(true).'/components/com_kunena/template/default';?>" name="templatePath" />
 <input type="hidden" value="<?php echo JURI::base(true);?>/" name="kunenaPath" />
-</form>
 
 </td>
 

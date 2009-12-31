@@ -22,7 +22,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$app =& JFactory::getApplication();
+$kunena_db = &JFactory::getDBO();
+$kunena_app =& JFactory::getApplication();
 $kunena_config =& CKunenaConfig::getInstance();
 ?>
 
@@ -30,32 +31,32 @@ $kunena_config =& CKunenaConfig::getInstance();
 if ($kunena_config->showwhoisonline > 0)
 {
 ?>
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
     <table class = "fb_blocktable " id="fb_whoispage" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>
             <tr>
                 <th colspan = "4">
                    <div class = "fb_title_cover">
-                        <span class="fb_title"><?php echo $app->getCfg('sitename'); ?> - <?php echo _WHO_WHOIS_ONLINE; ?></span>
+                        <span class="fb_title"><?php echo $kunena_app->getCfg('sitename'); ?> - <?php echo _WHO_WHOIS_ONLINE; ?></span>
                     </div>
             </tr>
         </thead>
 
         <tbody>
             <tr class = "fb_sth">
-                <th class = "th-1 <?php echo $boardclass; ?>sectiontableheader">
+                <th class = "th-1 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader">
 <?php echo _WHO_ONLINE_USER; ?>
 
-                </td>
-
-                <th class = "th-2 <?php echo $boardclass; ?>sectiontableheader"><?php echo _WHO_ONLINE_TIME; ?>
                 </th>
 
-                <th class = "th-3 <?php echo $boardclass; ?>sectiontableheader"><?php echo _WHO_ONLINE_FUNC; ?>
+                <th class = "th-2 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader"><?php echo _WHO_ONLINE_TIME; ?>
+                </th>
+
+                <th class = "th-3 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader"><?php echo _WHO_ONLINE_FUNC; ?>
                 </th>
             </tr>
 
@@ -83,7 +84,7 @@ if ($kunena_config->showwhoisonline > 0)
                 $time = date("H:i:s", $user->time + $kunena_config->board_ofset*3600);
             ?>
 
-                <tr class = "<?php echo $boardclass.''.$tabclass[$k] ;?>">
+                <tr class = "<?php echo KUNENA_BOARD_CLASS.''.$tabclass[$k] ;?>">
                     <td class = "td-1">
                         <div style = "float: right; width: 14ex;">
                         </div>

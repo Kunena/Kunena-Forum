@@ -329,7 +329,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 break;
             case 'url':
                 $tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
-                if(substr($tempstr, 0, 7)!='http://') {
+                if(!preg_match("`^(https?://)`",$tempstr)){
                   $tempstr = 'http://'.$tempstr;
                 }
                 $tag_new = "<a href='".$tempstr."' rel=\"nofollow\" target=\"_blank\">".$between.'</a>';
@@ -409,6 +409,28 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
             case 'quote':
                 $tag_new = '<span class="fb_quote">'.$between.'</span>';
                 return TAGPARSER_RET_REPLACED;
+                break;
+            case 'module':
+                if($between) {
+                	$tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
+
+                	if (JDocumentHTML::countModules($tempstr))
+                	{
+                		$document	= &JFactory::getDocument();
+						$renderer	= $document->loadRenderer('modules');
+						$options	= array('style' => 'xhtml');
+						$position	= '$tempstr';
+						echo $renderer->render($position, $options, null);
+                	}
+                	else
+                	{
+               			trigger_error ('Joomla module: '.$tempstr.' does not exist.' ,E_USER_NOTICE);
+                	}
+
+                	return TAGPARSER_RET_REPLACED;
+                }
+                return TAGPARSER_RET_NOTHING;
+
                 break;
             case 'list':
                 $tag_new = '<ul>';
@@ -676,8 +698,8 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                     if ($this->spoilerid==0)
                     {
                     	// Only need the script for the first spoiler we find
-	                    $app =& JFactory::getApplication();
-	                    $app->addCustomHeadTag('<script language = "JavaScript" type = "text/javascript">'.
+	                    $kunena_app =& JFactory::getApplication();
+	                    $kunena_app->addCustomHeadTag('<script language = "JavaScript" type = "text/javascript">'.
 	                    			'function fb_showDetail(srcElement) {'.
 										'var targetID, srcElement, targetElement, imgElementID, imgElement;'.
 										'targetID = srcElement.id + "_details";'.

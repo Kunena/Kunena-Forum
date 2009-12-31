@@ -31,7 +31,53 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.6.0
+Kunena 1.6.0-DEV
+
+31-Dec-2009 Xillibit
+^ [#18627] Merge from /trunk/1.5 : 1394-1342
+
+29-Dec-2009 Matias
+# [#19065] More frontend cleanup based on code analysis
+
+28-Dec-2009 fxstein
+# [#19065] More frontend cleanup based on code analysis - fixed various bugs
+
+28-Dec-2009 Matias
+# [#19065] More frontend cleanup based on code analysis - fixed various bugs
+
+27-Dec-2009 Xillibit
+# [#19031] Quick reply shows > as &gt; in subject
+
+26-Dec-2009 fxstein
+# [#19065] More frontend cleanup based on code analysis - fixed various bugs
+
+25-Dec-2009 fxstein
+# [#19065] More frontend cleanup based on code analysis - fixed various bugs
+
+24-Dec-2009 Xillibit
+# [#19030] URLs using HTTPS protocol are not working in img tag
+
+24-Dec-2009 fxstein
++ [#19065] Add definitions of external functions (e.g. CB) to prevent warnings
+# [#19065] Cleanup frontend based on code analysis - fixed various bugs
+
+23-Dec-2009 Xillibit
+^ [#18975] Backend: Show Avatar on Categories list option misleading
+^ [#18902] Replace all remaining deprecated functions in PHP 5.3.x
+
+23-Dec-2009 fxstein
+^ [#19065] global rename of various kunena wide variables
+^ [#19065] replaced depriciated split() with explode()
+^ [#19065] remove depriciated new& construct
+# [#19065] Fix regression: Missing backend menu and toolbar
+# [#19065] Remove borken Joomla 1.5 dtd from manifest xml
+
+22-Dec-2009 Xillibit
+# [#19080] Configuration option "Show join date" has no effect
+
+22-Dec-2009 fxstein
+^ [#19090] Combine default and default_ex
+# [#19065] Fix regression in uploaded files and images browser
 
 30-Dec-2009 Xillibit
 #^ [#18627] kunena.poll.class.php added, a lot of changes in the poll
@@ -41,6 +87,7 @@ Kunena 1.6.0
 
 23-Dec-2009 Matias
 # [#18627] Fix some bugs in installer (polls table creation)
+# [#19065] Fix regression in uploaded files and images browser
 
 21-Dec-2009 Xillibit
 - [#19075] Remove group from userlist / user profile
@@ -471,10 +518,17 @@ Kunena 1.5.2RC
 + [#16389] Community Builder integration: add profile integration to default theme
 
 12-May-2009 Matias
+<<<<<<< .working
 ^ [#16360] Replace $mainframe with $app =& JFactory::getApplication();
 ^ [#16361] Do not trust that $option has been set (use JRequest::getCmd('option') instead)
 # [#16364] Parse error in admin.kunena.html.php
 
+=======
+^ [#16360] Replace $mainframe with $kunena_app =& JFactory::getApplication();
+^ [#16361] Do not trust that $option has been set (use JRequest::getCmd('option') instead)
+# [#16364] Parse error in admin.kunena.html.php
+
+>>>>>>> .merge-right.r1394
 11-May-2009 Matias
 ^ [#15784] Merge 1.0.10 fixes from revision 681 to 706
 # [#16340] Category list is missing in bottom of viewcat (default_ex)

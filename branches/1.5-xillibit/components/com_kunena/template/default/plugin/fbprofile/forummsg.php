@@ -20,13 +20,18 @@
 **/
 defined( '_JEXEC' ) or die('Restricted access');
 
-$fbSession =& CKunenaSession::getInstance();
+global $total, $limitstart, $limit;
+global $kunena_emoticons;
+
+$kunena_db = &JFactory::getDBO();
+$kunena_session =& CKunenaSession::getInstance();
+
 ?>
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
 <table class = "fb_blocktable " id="fb_userprfmsg" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
@@ -35,30 +40,30 @@ $fbSession =& CKunenaSession::getInstance();
                     <span class="fb_title fbl"><?php echo _KUNENA_USERPROFILE_MESSAGES; ?></span>
                 </div>
 
-                <img id = "BoxSwitch_fbuserprofile__<?php echo $boardclass ;?>fbuserprofile_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+                <img id = "BoxSwitch_fbuserprofile__<?php echo KUNENA_BOARD_CLASS ;?>fbuserprofile_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
             </th>
         </tr>
     </thead>
 
-    <tbody id = "<?php echo $boardclass ;?>fbuserprofile_tbody">
+    <tbody id = "<?php echo KUNENA_BOARD_CLASS ;?>fbuserprofile_tbody">
         <tr  class = "fb_sth fbs">
-            <th class = "th-1 <?php echo $boardclass ;?>sectiontableheader" align="center" width="1%">&nbsp;
+            <th class = "th-1 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader" align="center" width="1%">&nbsp;
 
             </th>
 
-            <th class = "th-2 <?php echo $boardclass ;?>sectiontableheader"  align="left" width="44%"><?php echo _KUNENA_USERPROFILE_TOPICS; ?>
+            <th class = "th-2 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader"  align="left" width="44%"><?php echo _KUNENA_USERPROFILE_TOPICS; ?>
             </th>
 
-            <th class = "th-3 <?php echo $boardclass ;?>sectiontableheader" align="left" width="30%"><?php echo _KUNENA_USERPROFILE_CATEGORIES; ?>
+            <th class = "th-3 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader" align="left" width="30%"><?php echo _KUNENA_USERPROFILE_CATEGORIES; ?>
             </th>
 
-            <th class = "th-4 <?php echo $boardclass ;?>sectiontableheader" align="center" width="5%"><?php echo _KUNENA_USERPROFILE_HITS; ?>
+            <th class = "th-4 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader" align="center" width="5%"><?php echo _KUNENA_USERPROFILE_HITS; ?>
             </th>
 
-            <th class = "th-5 <?php echo $boardclass ;?>sectiontableheader"  align="left" width="20%"><?php echo _KUNENA_USERPROFILE_DATE; ?>
+            <th class = "th-5 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader"  align="left" width="20%"><?php echo _KUNENA_USERPROFILE_DATE; ?>
             </th>
 
-            <th class = "th-6 <?php echo $boardclass ;?>sectiontableheader" align="center" width="1%">&nbsp;
+            <th class = "th-6 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader" align="center" width="1%">&nbsp;
 
             </th>
         </tr>
@@ -93,7 +98,7 @@ $fbSession =& CKunenaSession::getInstance();
             $group_id = 0;
         }
 
-        $query = "SELECT COUNT(*) FROM #__fb_messages WHERE hold='0' AND userid='{$userid}' AND catid IN ($fbSession->allowed)";
+        $query = "SELECT COUNT(*) FROM #__fb_messages WHERE hold='0' AND userid='{$userid}' AND catid IN ($kunena_session->allowed)";
         $kunena_db->setQuery($query);
         $total = count($kunena_db->loadObjectList());
         	check_dberror("Unable to load messages.");
@@ -104,7 +109,7 @@ $fbSession =& CKunenaSession::getInstance();
 
         $query
             = "SELECT a.*, b.id AS category, b.name AS catname, c.hits AS threadhits FROM #__fb_messages AS a, #__fb_categories AS b, #__fb_messages AS c, #__fb_messages_text AS d"
-            ." WHERE a.catid=b.id AND a.thread=c.id AND a.id=d.mesid AND a.hold='0' AND a.userid='{$userid}' AND a.catid IN ($fbSession->allowed) ORDER BY time DESC";
+            ." WHERE a.catid=b.id AND a.thread=c.id AND a.id=d.mesid AND a.hold='0' AND a.userid='{$userid}' AND a.catid IN ($kunena_session->allowed) ORDER BY time DESC";
         $kunena_db->setQuery($query, $limitstart, $limit);
         $items = $kunena_db->loadObjectList();
         	check_dberror("Unable to load messages.");
@@ -134,7 +139,7 @@ $fbSession =& CKunenaSession::getInstance();
                 $fbCatURL = JRoute::_("index.php?option=com_kunena".KUNENA_COMPONENT_ITEMID_SUFFIX."&amp;func=showcat&amp;catid=" . $item->catid);
         ?>
 
-            <tr class = "<?php echo ''.$boardclass.''. $tabclass[$k] . ''; ?> ">
+            <tr class = "<?php echo ''.KUNENA_BOARD_CLASS.''. $tabclass[$k] . ''; ?> ">
                 <td class = "td-1  fbm"  align="center"><?php echo "<img src=\"" . $topic_emoticons[$item->topic_emoticon] . "\" alt=\"emo\" />"; ?>
                 </td>
 
@@ -161,8 +166,8 @@ $fbSession =& CKunenaSession::getInstance();
 
                 <td class = "td-6  fbm" align="center">
                     <a href = "<?php echo $fbURL; ?>"> <?php
-    echo isset($fbIcons['latestpost']) ? '<img src="'
-             . KUNENA_URLICONSPATH . $fbIcons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'; ?> </a>
+    echo isset($kunena_emoticons['latestpost']) ? '<img src="'
+             . KUNENA_URLICONSPATH . $kunena_emoticons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'; ?> </a>
                 </td>
             </tr>
 
@@ -174,7 +179,7 @@ $fbSession =& CKunenaSession::getInstance();
         ?>
 
             <tr>
-                <td colspan = "6" class = "<?php echo $boardclass ;?>profile-bottomnav" align="center">
+                <td colspan = "6" class = "<?php echo KUNENA_BOARD_CLASS ;?>profile-bottomnav" align="center">
                     <br/>
 
                     <b><?php echo _KUNENA_USERPROFILE_NOFORUMPOSTS; ?></b>
@@ -190,7 +195,7 @@ $fbSession =& CKunenaSession::getInstance();
         ?>
 
         <tr>
-            <td colspan = "6" class = "<?php echo $boardclass ;?>profile-bottomnav  fbm " align="center">
+            <td colspan = "6" class = "<?php echo KUNENA_BOARD_CLASS ;?>profile-bottomnav  fbm " align="center">
 
                 <?php
                 // TODO: fxstein - Need to perform SEO cleanup

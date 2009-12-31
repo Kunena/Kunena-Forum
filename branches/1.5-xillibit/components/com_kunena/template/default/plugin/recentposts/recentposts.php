@@ -23,8 +23,9 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 global $lang;
 
+$kunena_db = &JFactory::getDBO();
 $kunena_config =& CKunenaConfig::getInstance();
-$fbSession =& CKunenaSession::getInstance();
+$kunena_session =& CKunenaSession::getInstance();
 
 $Kunena_adm_path = KUNENA_PATH_ADMIN;
 //Get right Language file
@@ -70,11 +71,11 @@ $topic_emoticons[5] = KUNENA_URLEMOTIONSPATH . 'grin.gif';
 $topic_emoticons[6] = KUNENA_URLEMOTIONSPATH . 'shock.gif';
 $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 ?>
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
 <table class = "fb_blocktable" id = "fb_recentposts" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
@@ -97,12 +98,12 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 				$sq1 = ($category)?"AND msg2.catid in ($category)":"";
 				if ($kunena_config->latestsinglesubject) {
 					$sq2 = "SELECT msg1.* FROM (SELECT msg2.* FROM #__fb_messages msg2"
-						. " WHERE msg2.hold='0' AND moved='0' AND msg2.catid IN ($fbSession->allowed) $sq1 ORDER BY msg2.time"
+						. " WHERE msg2.hold='0' AND moved='0' AND msg2.catid IN ($kunena_session->allowed) $sq1 ORDER BY msg2.time"
 						. (($kunena_config->latestreplysubject)?" DESC":"") . ") msg1"
 						. " GROUP BY msg1.thread";
 				} else {
 					$sq2 = "SELECT msg2.* FROM #__fb_messages msg2"
-						. " WHERE msg2.hold='0' AND moved='0' AND msg2.catid IN ($fbSession->allowed) $sq1";
+						. " WHERE msg2.hold='0' AND moved='0' AND msg2.catid IN ($kunena_session->allowed) $sq1";
 				}
 				$query = " SELECT u.id, IFNULL(u.username, '"._KUNENA_GUEST."') AS username, IFNULL(u.name,'"._KUNENA_GUEST."') AS name,"
 					. " msg.subject, msg.id AS fbid, msg.catid, from_unixtime(msg.time) AS date,"
@@ -133,32 +134,32 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                 $k = 2;
                 echo "<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">";
                 echo "<tr  class = \"fb_sth\" >";
-                echo "<th class=\"th-1  " . $boardclass . "sectiontableheader  fbs\" width=\"1%\" align=\"center\" > </th>";
-                echo "<th class=\"th-2  " . $boardclass . "sectiontableheader fbs\" align=\"left\" >" . _RECENT_TOPICS . "</th>";
+                echo "<th class=\"th-1  " . KUNENA_BOARD_CLASS . "sectiontableheader  fbs\" width=\"1%\" align=\"center\" > </th>";
+                echo "<th class=\"th-2  " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\" align=\"left\" >" . _RECENT_TOPICS . "</th>";
 
                 switch ($show_author)
                 {
                     case '0': break;
 
                     case '1':
-                        echo "<th class=\"th-3  " . $boardclass . "sectiontableheader fbs\" width=\"10%\"  align=\"center\" >" . _RECENT_AUTHOR . "</th>";
+                        echo "<th class=\"th-3  " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\" width=\"10%\"  align=\"center\" >" . _RECENT_AUTHOR . "</th>";
 
                         break;
 
                     case '2':
-                        echo "<th class=\"th-3  " . $boardclass . "sectiontableheader fbs\" width=\"10%\" align=\"center\" >" . _RECENT_AUTHOR . "</th>";
+                        echo "<th class=\"th-3  " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\" width=\"10%\" align=\"center\" >" . _RECENT_AUTHOR . "</th>";
 
                         break;
                 }
 
-                echo "<th class=\"th-4  " . $boardclass . "sectiontableheader fbs\"   width=\"20%\" align=\"left\" >" . _RECENT_CATEGORIES . "</th>";
+                echo "<th class=\"th-4  " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\"   width=\"20%\" align=\"left\" >" . _RECENT_CATEGORIES . "</th>";
 
                 if ($show_date) {
-                    echo "<th class=\"th-5  " . $boardclass . "sectiontableheader fbs\"  width=\"20%\" align=\"left\" >" . _RECENT_DATE . "</th>";
+                    echo "<th class=\"th-5  " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\"  width=\"20%\" align=\"left\" >" . _RECENT_DATE . "</th>";
                     }
 
                 if ($show_hits) {
-                    echo "<th  class=\"th-6  " . $boardclass . "sectiontableheader fbs\"  width=\"5%\" align=\"center\" >" . _RECENT_HITS . "</th></tr>";
+                    echo "<th  class=\"th-6  " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\"  width=\"5%\" align=\"center\" >" . _RECENT_HITS . "</th></tr>";
                     }
 
                 if ($rows) foreach ($rows as $row) {
@@ -192,7 +193,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                     $k = 3 - $k;
                 ?>
 
-                    <tr class = "<?php echo $boardclass ;?>sectiontableentry<?php echo "$k"; ?>">
+                    <tr class = "<?php echo KUNENA_BOARD_CLASS ;?>sectiontableentry<?php echo "$k"; ?>">
                 <?php
                         echo "<td class=\"td-1\"  align=\"center\" >";
                         //echo '<img src="' . KUNENA_URLEMOTIONSPATH  . 'resultset_next.gif"  border="0"   alt=" " />';
@@ -248,7 +249,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                                 $tabs->my_tab_start($tabid, $tabid);
                                 $order_start = $i + 1;
                                 echo(
-                                    $show_order_number ? "<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr  class = \"fb_sth\" ><th width=\"1%\"  align=\"center\" class=\"th-1 " . $boardclass . "sectiontableheader fbs\"> </th><th class=\"th-2 " . $boardclass . "sectiontableheader fbs\"  align=\"left\" >" . _RECENT_TOPICS. "</th><th width=\"10%\"  class=\"th-3 " . $boardclass . "sectiontableheader fbs\"   align=\"center\" >" . _RECENT_AUTHOR . "</th><th   align=\"left\"  width=\"20%\"  class=\"th-4 " . $boardclass . "sectiontableheader fbs\">" . _RECENT_CATEGORIES . "</th><th class=\"th-5 " . $boardclass . "sectiontableheader fbs\" width=\"20%\"  align=\"left\"  >" . _RECENT_DATE . "</th><th  class=\"th-6 " . $boardclass . "sectiontableheader fbs\" width=\"5%\"   align=\"center\" >" . _RECENT_HITS . "</th></tr>" : "<ul>");
+                                    $show_order_number ? "<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr  class = \"fb_sth\" ><th width=\"1%\"  align=\"center\" class=\"th-1 " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\"> </th><th class=\"th-2 " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\"  align=\"left\" >" . _RECENT_TOPICS. "</th><th width=\"10%\"  class=\"th-3 " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\"   align=\"center\" >" . _RECENT_AUTHOR . "</th><th   align=\"left\"  width=\"20%\"  class=\"th-4 " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\">" . _RECENT_CATEGORIES . "</th><th class=\"th-5 " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\" width=\"20%\"  align=\"left\"  >" . _RECENT_DATE . "</th><th  class=\"th-6 " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\" width=\"5%\"   align=\"center\" >" . _RECENT_HITS . "</th></tr>" : "<ul>");
                                 }
                             }
                     }

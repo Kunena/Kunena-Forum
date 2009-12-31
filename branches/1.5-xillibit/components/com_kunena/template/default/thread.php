@@ -22,9 +22,14 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $boardclass, $prevCheck, $fbIcons, $read_topics, $id, $catid, $kunena_db;
-
+$kunena_db = &JFactory::getDBO();
 $kunena_config =& CKunenaConfig::getInstance();
+
+global $kunena_emoticons;
+
+$catid = JRequest::getInt('catid', 0);
+$id = JRequest::getInt('id', 0);
+
 // arrows and lines
 $join = '<img src="' . KUNENA_URLIMAGESPATH . 'tree-join.gif" width="12" height="18" alt="thread link" />';
 $end = '<img src="' . KUNENA_URLIMAGESPATH . 'tree-end.gif" width="12" height="18" alt="thread link" />';
@@ -59,35 +64,35 @@ function thread_flat(&$tree, &$leaves, $branchid = 0, $level = 0)
 }
 
 $GLOBALS['KUNENA_c'] = 0;
-$tree = thread_flat($tree, $messages);
+$tree = thread_flat($tree, $this->messages);
 ?>
 <div id="fb_threadview">
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
 <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0" class = "fb_blocktable" >
     <thead>
         <tr  class = "fb_sth fbs ">
         <?php
         if ($kunena_config->shownew && $kunena_my->id != 0) { ?>
 
-       <th width="10" class = "th-1 <?php echo $boardclass ?>sectiontableheader">&nbsp;</th>
+       <th width="10" class = "th-1 <?php echo KUNENA_BOARD_CLASS ?>sectiontableheader">&nbsp;</th>
             <?php
         }
         ?>
-        <th class = "th-2 <?php echo $boardclass ?>sectiontableheader" align = "center" width = "5">&nbsp; </th>
-        <th class = "th-3 <?php echo $boardclass ?>sectiontableheader" align = "center" width = "5">&nbsp; </th>
+        <th class = "th-2 <?php echo KUNENA_BOARD_CLASS ?>sectiontableheader" align = "center" width = "5">&nbsp; </th>
+        <th class = "th-3 <?php echo KUNENA_BOARD_CLASS ?>sectiontableheader" align = "center" width = "5">&nbsp; </th>
         <?php
         if ($kunena_my->id == 0) {
             echo '<td class="sectiontableheader" width="5" align="center">&nbsp;</td>';
         }
         ?>
-        <th class = "th-3 <?php echo $boardclass ?>sectiontableheader"  width = "60%" align = "center"><?php echo _GEN_TOPICS; ?></th>
-        <th class = "th-3 <?php echo $boardclass ?>sectiontableheader"  width = "15%" align = "center"><?php echo _GEN_AUTHOR; ?></th>
+        <th class = "th-3 <?php echo KUNENA_BOARD_CLASS ?>sectiontableheader"  width = "60%" align = "center"><?php echo _GEN_TOPICS; ?></th>
+        <th class = "th-3 <?php echo KUNENA_BOARD_CLASS ?>sectiontableheader"  width = "15%" align = "center"><?php echo _GEN_AUTHOR; ?></th>
 
-        <th class = "th-3 <?php echo $boardclass ?>sectiontableheader"  align = "center"><?php echo _GEN_DATE; ?></th>
+        <th class = "th-3 <?php echo KUNENA_BOARD_CLASS ?>sectiontableheader"  align = "center"><?php echo _GEN_DATE; ?></th>
     </tr>
 </thead>
 <tbody>
@@ -104,18 +109,18 @@ $tree = thread_flat($tree, $messages);
             <?php
             if ($kunena_config->shownew && $kunena_my->id != 0 && !$leaf->moved)
             {
-                if (($prevCheck < ($leaf->time)) && (sizeof($read_topics) == 0) || !in_array($leaf->thread, $read_topics))
+                if (($this->prevCheck < ($leaf->time)) && (sizeof($this->read_topics) == 0) || !in_array($leaf->thread, $this->read_topics))
                 {
                     //new post
                     echo '<td width="1%" class="fb_new">';
-                    echo isset($fbIcons['unreadmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '"/>' : $kunena_config->newchar;
+                   // echo isset($kunena_emoticons['unreadmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['unreadmessage'] . '" border="0" alt="' . _GEN_UNREAD . '" title="' . _GEN_UNREAD . '"/>' : $kunena_config->newchar;
                     echo '</td>';
                 }
                 else
                 {
                     //not new posts
                     echo '<td width="1%" class="fb_notnew">';
-                    echo isset($fbIcons['readmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $kunena_config->newchar;
+                   // echo isset($kunena_emoticons['readmessage']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['readmessage'] . '" border="0" alt="' . _GEN_NOUNREAD . '" title="' . _GEN_NOUNREAD . '"/>' : $kunena_config->newchar;
                     echo '</td>';
                 }
             }
@@ -124,35 +129,36 @@ $tree = thread_flat($tree, $messages);
             }
             ?>
 
-            <td align = "center" width = "5"<?php echo $leaf->id==$id?" class=\"".$boardclass."sectiontableentry2\"":"";?>>
-                  <?php if ($leaf->ordering==0)
+            <td align = "center" width = "5"<?php echo $leaf->id==$id?' class="'.KUNENA_BOARD_CLASS.'sectiontableentry2"':'';?>>
+            <?php
+                  if ($leaf->ordering==0)
                   {
                      if($leaf->locked==0)
                      {
-                       echo "&nbsp;";
+                     //  echo "&nbsp;";
                      }
                      else
                      {
-                        echo isset($fbIcons['topiclocked']) ? '<img src="' . KUNENA_URLICONSPATH.$fbIcons['topiclocked'].'" border="0" alt="'._GEN_LOCKED_TOPIC.'" title="'._GEN_LOCKED_TOPIC.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'lock.gif" width="15" height="15" alt="'._GEN_LOCKED_TOPIC.'" />';
+                      //  echo isset($kunena_emoticons['topiclocked']) ? '<img src="' . KUNENA_URLICONSPATH.$kunena_emoticons['topiclocked'].'" border="0" alt="'._GEN_LOCKED_TOPIC.'" title="'._GEN_LOCKED_TOPIC.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'lock.gif" width="15" height="15" alt="'._GEN_LOCKED_TOPIC.'" />';
                         $topicLocked=1;
                      }
                   }
                   else
                   {
-                     echo isset($fbIcons['topicsticky']) ? '<img src="' . KUNENA_URLICONSPATH.$fbIcons['topicsticky'].'" border="0" alt="'._GEN_ISSTICKY.'" title="'._GEN_ISSTICKY.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'pushpin.gif" width="15" height="15" alt="'._GEN_ISSTICKY.'" />';
+                   //  echo isset($kunena_emoticons['topicsticky']) ? '<img src="' . KUNENA_URLICONSPATH.$kunena_emoticons['topicsticky'].'" border="0" alt="'._GEN_ISSTICKY.'" title="'._GEN_ISSTICKY.'" />' : '<img src="'.KUNENA_URLEMOTIONSPATH.'pushpin.gif" width="15" height="15" alt="'._GEN_ISSTICKY.'" />';
                      $topicSticky=1;
                   }
                   ?></td>
-                <td align = "center" width = "5"<?php echo $leaf->id==$id?" class=\"".$boardclass."sectiontableentry2\"":"";?>>
-<?php echo $leaf->topic_emoticon == 0 ? '<img src="' . KUNENA_URLIMAGESPATH . 'tree-blank.gif"  alt="thread link" />' : "<img src=\"" . $topic_emoticons[$leaf->topic_emoticon] . "\" alt=\"emo\" />"; ?>
+                <td align = "center" width = "5"<?php echo $leaf->id==$id?" class=\"".KUNENA_BOARD_CLASS."sectiontableentry2\"":"";?>>
+<?php // echo $leaf->topic_emoticon == 0 ? '<img src="' . KUNENA_URLIMAGESPATH . 'tree-blank.gif"  alt="thread link" />' : "<img src=\"" . $topic_emoticons[$leaf->topic_emoticon] . "\" alt=\"emo\" />"; ?>
                 </td>
 
-                <td<?php echo $leaf->id == $id ? " class=\"".$boardclass."sectiontableentry2\"" : ""; ?>>
+                <td<?php echo $leaf->id == $id ? " class=\"".KUNENA_BOARD_CLASS."sectiontableentry2\"" : ""; ?>>
         <table border = "0" cellspacing = "0" cellpadding = "0">
             <tr>
-                <td<?php echo $leaf->id == $id ? " class=\"".$boardclass."sectiontableentry2\"" : ""; ?>>
+                <td<?php echo $leaf->id == $id ? " class=\"".KUNENA_BOARD_CLASS."sectiontableentry2\"" : ""; ?>>
             <?php
-            $array[$leaf->level + 1] = count($messages[$leaf->id]);
+            $array[$leaf->level + 1] = count($this->messages[$leaf->id]);
             $array[$leaf->level]--;
 
             for ($i = 0; $i < $leaf->level; $i++)
@@ -185,10 +191,9 @@ $tree = thread_flat($tree, $messages);
                         $newURL .= '&amp;id=' . $leaf->id . $viewstr . '&amp;catid=' . $catid;
 
                     $newURL = JRoute::_($newURL);
-                    //JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;id='.$leaf->id.$viewstr.'&amp;catid='.$catid);
                     ?>
 
-                    <td<?php echo $leaf->id == $id ? " class=\"".$boardclass."sectiontableentry2\"" : ""; ?>>
+                    <td<?php echo $leaf->id == $id ? " class=\"".KUNENA_BOARD_CLASS."sectiontableentry2\"" : ""; ?>>
     <a class="fb_threadview_link"  href = "<?php echo $newURL; ?>"><?php echo stripslashes($leaf->subject); ?>
 <!--            Favourite       -->
 <?php
@@ -197,7 +202,7 @@ if ($kunena_config->allowfavorites)
     $kunena_db->setQuery("select count(*) from #__fb_favorites where thread = $leaf->id && userid = $kunena_my->id");
 
     if (intval($kunena_db->loadResult()) > 0) {
-        echo isset($fbIcons['favoritestar']) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $fbIcons['favoritestar'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
+        echo isset($kunena_emoticons['favoritestar']) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $kunena_emoticons['favoritestar'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
     }
 }
 ?>
@@ -210,11 +215,11 @@ if ($kunena_config->allowfavorites)
         </table>
     </td>
 
-    <td align = "center" <?php echo $leaf->id==$id?' class="'.$boardclass.'sectiontableentry2"':'';?>>
+    <td align = "center" <?php echo $leaf->id==$id?' class="'.KUNENA_BOARD_CLASS.'sectiontableentry2"':'';?>>
         <small><?php echo $leaf->email != "" && $kunena_my->id > 0 && $kunena_config->showemail ? '<a href="mailto:' . stripslashes($leaf->email) . '">' . stripslashes($leaf->name) . '</a>' : stripslashes($leaf->name); ?></small>
     </td>
 
-    <td align = "center" <?php echo $leaf->id==$id?' class=""'.$boardclass.'sectiontableentry2"':'';?>>
+    <td align = "center" <?php echo $leaf->id==$id?' class=""'.KUNENA_BOARD_CLASS.'sectiontableentry2"':'';?>>
         <small><?php echo $leaf->moved ? date(_DATETIME, $leaf->time) : date(_DATETIME, $leaf->time); ?></small>
     </td>
         </tr>

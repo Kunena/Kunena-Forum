@@ -20,7 +20,7 @@
 **/
 defined( '_JEXEC' ) or die('Restricted access');
 
-$app =& JFactory::getApplication();
+$kunena_app =& JFactory::getApplication();
 $kunena_config =& CKunenaConfig::getInstance();
 
 require_once (KUNENA_ROOT_PATH .DS. 'includes/HTML_toolbar.php');
@@ -67,11 +67,11 @@ $validate = JUtility::getToken();
     }
 // ]]>
 </script>
-<div class="<?php echo $boardclass; ?>_bt_cvr1">
-<div class="<?php echo $boardclass; ?>_bt_cvr2">
-<div class="<?php echo $boardclass; ?>_bt_cvr3">
-<div class="<?php echo $boardclass; ?>_bt_cvr4">
-<div class="<?php echo $boardclass; ?>_bt_cvr5">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
+<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
 <form action = "index.php" method = "post" name = "mosUserForm">
     <div style = "float: right; display:none">
         <?php
@@ -120,7 +120,7 @@ $validate = JUtility::getToken();
         <td><input class = "inputbox" type = "password" name = "password2" size = "40"/></td>
       </tr>
       <?php
-        if (in_array($app->getCfg( "frontend_userparams" ), array( '1', null)))
+        if (in_array($kunena_app->getCfg( "frontend_userparams" ), array( '1', null)))
         {
         ?>
       <tr>

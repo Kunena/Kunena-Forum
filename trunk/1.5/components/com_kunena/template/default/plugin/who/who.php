@@ -22,6 +22,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+global $kunena_is_moderator;
+
 $kunena_db = &JFactory::getDBO();
 $kunena_app =& JFactory::getApplication();
 $kunena_config =& CKunenaConfig::getInstance();

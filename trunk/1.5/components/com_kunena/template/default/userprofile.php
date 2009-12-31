@@ -21,6 +21,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+global $kunena_is_admin;
+
 $kunena_db = &JFactory::getDBO();
 $kunena_config =& CKunenaConfig::getInstance();
 $Itemid = JRequest::getInt('Itemid');

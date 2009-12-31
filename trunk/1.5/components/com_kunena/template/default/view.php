@@ -462,7 +462,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                         "sectiontableentry2"
                         );
 
-                        $mmm = 0;
+                        $this->mmm = 0;
                         $k = 0;
                         // Set up a list of moderators for this category (limits amount of queries)
                         $kunena_db->setQuery("SELECT a.userid FROM #__fb_users AS a LEFT JOIN #__fb_moderation AS b ON b.userid=a.userid WHERE b.catid='{$catid}'");
@@ -496,7 +496,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                             {
 
                                 $k = 1 - $k;
-                                $mmm++;
+                                $this->mmm++;
 
                                 if ($fmessage->parent == 0) {
                                     $fb_thread = $fmessage->id;

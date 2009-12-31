@@ -22,6 +22,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+global $kunena_is_moderator;
+
 $kunena_my = &JFactory::getUser();
 $kunena_config =& CKunenaConfig::getInstance();
 $kunena_db = &JFactory::getDBO();
@@ -374,7 +376,7 @@ if ($kunena_config->fb_profile == 'cb')
                         echo " " . $msg_html->reply;
                         echo " " . $msg_html->quote;
 
-			if ($kunena_is_moderatorerator) echo ' </div><div class="fb_message_buttons_row">';
+			if ($kunena_is_moderator) echo ' </div><div class="fb_message_buttons_row">';
 
                         if (isset($msg_html->merge)) {
                              echo " " . $msg_html->merge;
@@ -453,15 +455,15 @@ if (isset($msg_html->signature)) {
 </table>
 <!-- Begin: Message Module Positions -->
 <?php
-if (JDocumentHTML::countModules('kunena_msg_'.$mmm))
+if (JDocumentHTML::countModules('kunena_msg_'.$this->mmm))
 {
 ?>
-    <div class = "kunena_msg_<?php echo $mmm; ?>">
+    <div class = "kunena_msg_<?php echo $this->mmm; ?>">
         <?php
 	        $document	= &JFactory::getDocument();
 	        $renderer	= $document->loadRenderer('modules');
 	        $options	= array('style' => 'xhtml');
-	        $position	= 'kunena_msg_'.$mmm;
+	        $position	= 'kunena_msg_'.$this->mmm;
 	        echo $renderer->render($position, $options, null);
         ?>
     </div>

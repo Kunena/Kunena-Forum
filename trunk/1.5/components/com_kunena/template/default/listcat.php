@@ -21,13 +21,14 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+global $kunena_is_admin;
+global $kunena_emoticons;
+
 $kunena_db = &JFactory::getDBO();
 $kunena_app =& JFactory::getApplication();
 $kunena_config =& CKunenaConfig::getInstance();
 $kunena_session =& CKunenaSession::getInstance();
 $kunena_my =& JFactory::getUser();
-
-global $kunena_emoticons;
 
 $func = strtolower(JRequest::getCmd('func', ''));
 if (strtolower($func) == '' ){

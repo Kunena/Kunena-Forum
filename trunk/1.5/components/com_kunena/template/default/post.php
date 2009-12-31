@@ -246,7 +246,7 @@ $catName = $objCatInfo->name;
                                 // Final chance to check whether or not to proceed
                                 // DO NOT PROCEED if there is an exact copy of the message already in the db
                                 //
-                                $duplicatetimewindow = $posttime - $kunena_config->fbsessiontimeout;
+                                $duplicatetimewindow = $posttime - $kunena_config->kunena_sessiontimeout;
                                 $kunena_db->setQuery("SELECT m.id FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE m.userid='{$kunena_my->id}' AND m.name='{$fb_authorname}' AND m.email='{$email}' AND m.subject='{$subject}' AND m.ip='{$ip}' AND t.message='{$message}' AND m.time>='{$duplicatetimewindow}'");
                                 $existingPost = $kunena_db->loadObject();
                                 	check_dberror('Unable to load post.');
@@ -1519,7 +1519,7 @@ function listThreadHistory($id, $kunena_config, $kunena_db)
 
         //get all the messages for this thread
         $kunena_db->setQuery("SELECT * FROM #__fb_messages AS m LEFT JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE (thread='{$thread}' OR id='{$thread}') AND hold='0' ORDER BY time DESC LIMIT " . $kunena_config->historylimit);
-        $this->messages = $kunena_db->loadObjectList();
+        $messages = $kunena_db->loadObjectList();
         	check_dberror("Unable to load messages.");
         //and the subject of the first thread (for reference)
         $kunena_db->setQuery("SELECT subject FROM #__fb_messages WHERE id='{$thread}' and parent='0'");
@@ -1543,7 +1543,7 @@ function listThreadHistory($id, $kunena_config, $kunena_db)
             $k = 0;
             $kunena_emoticons = smile::getEmoticons(1);
 
-            foreach ($this->messages as $mes)
+            foreach ($messages as $mes)
             {
                 $k = 1 - $k;
                 $mes->name = kunena_htmlspecialchars($mes->name);

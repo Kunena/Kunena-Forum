@@ -25,6 +25,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 $kunena_db = &JFactory::getDBO();
 $kunena_config =& CKunenaConfig::getInstance();
 $kunena_my = &JFactory::getUser();
+global $kunena_is_moderator;
 
 if ($kunena_config->showstats && $kunena_config->showwhoisonline)
 {

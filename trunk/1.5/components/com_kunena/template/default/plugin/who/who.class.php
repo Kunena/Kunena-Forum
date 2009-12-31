@@ -34,7 +34,7 @@ $replyto = intval(JRequest::getVar('replyto'));
 $do = JRequest::getCmd('do');
 
 $now = time();
-$past = $now - $kunena_config->fbsessiontimeout;
+$past = $now - $kunena_config->kunena_sessiontimeout;
 $myip = getenv('REMOTE_ADDR');
 
 if ($kunena_my->id > 0) {

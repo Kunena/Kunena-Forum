@@ -21,7 +21,7 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $kunena_db;
+$kunena_db  = &JFactory::getDBO();
 
 class fbpdfwrapper {
 	// small wrapper class for J1.5 to emulate Cezpdf-class

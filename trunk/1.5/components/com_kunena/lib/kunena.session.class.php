@@ -105,7 +105,7 @@ class CKunenaSession extends JTable
 		$kunena_config =& CKunenaConfig::getInstance();
 
 		// perform session timeout check
-		$this->_sessiontimeout = ($this->currvisit + $kunena_config->fbsessiontimeout) < time() + $kunena_config->board_ofset * KUNENA_SECONDS_IN_HOUR;
+		$this->_sessiontimeout = ($this->currvisit + $this->_sessiontimeout) < time() + $kunena_config->board_ofset * KUNENA_SECONDS_IN_HOUR;
 
 		// If this is a new session, reset the lasttime colum with the timestamp
 		// of the last saved currvisit - only after that can we reset currvisit to now before the store

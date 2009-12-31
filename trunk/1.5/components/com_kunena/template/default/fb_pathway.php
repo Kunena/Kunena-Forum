@@ -157,10 +157,10 @@ if ($func != "")
 	$document=& JFactory::getDocument();
 	$document->setTitle(htmlspecialchars_decode($jr_topic_title ?  $jr_topic_title : $fr_title_name) . ' - ' . stripslashes($kunena_config->board_title));
 
-	$pathway1 = $firepath . $fireinfo;
+	$this->pathway1 = $firepath . $fireinfo;
 	$pathway2 = $firelast . $fireonline;
 
 	echo '<div class = "'. KUNENA_BOARD_CLASS .'forum-pathway">';
-    echo $pathway1.$pathway2;
+    echo $this->pathway1.$pathway2;
     echo '</div>';
 }

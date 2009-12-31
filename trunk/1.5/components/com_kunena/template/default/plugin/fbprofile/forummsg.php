@@ -23,8 +23,10 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $total, $limitstart, $limit;
 global $kunena_emoticons;
 
-$kunena_db = &JFactory::getDBO();
+$kunena_db 		=& JFactory::getDBO();
 $kunena_session =& CKunenaSession::getInstance();
+
+$userid 		= JRequest::getInt('userid', 0);
 
 ?>
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">

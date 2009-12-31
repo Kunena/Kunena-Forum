@@ -42,7 +42,7 @@ if ($kunena_my->id)
         $signature = $user->signature;
         $username = $user->name;
         $moderator = $user->moderator;
-        $fbavatar = $user->avatar;
+        $avatar = $user->avatar;
         $ordering = $user->ordering;
 
         list($avWidth, $avHeight) = @getimagesize($avatar);

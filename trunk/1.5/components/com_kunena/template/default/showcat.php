@@ -84,8 +84,6 @@ $forumLocked = 0;
 $topicLocked = 0;
 $topicSticky = 0;
 
-unset($allow_forum);
-
 //get the allowed forums and turn it into an array
 $allow_forum = ($kunena_session->allowed <> '')?explode(',', $kunena_session->allowed):array();
 
@@ -183,7 +181,6 @@ foreach ($messagelist as $message)
 ?>
 <?php
     //Get the category name for breadcrumb
-    unset($objCatInfo, $objCatParentInfo);
     $kunena_db->setQuery("SELECT * FROM #__fb_categories WHERE id='{$catid}'");
     $objCatInfo = $kunena_db->loadObject();
     	check_dberror('Unable to get categories.');
@@ -369,7 +366,7 @@ foreach ($messagelist as $message)
 	</table>
 	<?php
 	echo '<div class = "'. KUNENA_BOARD_CLASS .'forum-pathway-bottom">';
-	echo $pathway1;
+	echo $this->pathway1;
 	echo '</div>';
 	?>
 

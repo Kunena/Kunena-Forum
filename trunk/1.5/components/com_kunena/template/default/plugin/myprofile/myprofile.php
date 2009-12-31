@@ -223,15 +223,15 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                     $bd = @explode("-" , $userinfo->birthdate);
 
-                    $ulists["year"] = $bd[0];
-                    $ulists["month"] = $bd[1];
-                    $ulists["day"] = $bd[2];
+                    $this->ulists["year"] = $bd[0];
+                    $this->ulists["month"] = $bd[1];
+                    $this->ulists["day"] = $bd[2];
 
                     $genders[] = JHTML::_('select.option', "", "");
                     $genders[] = JHTML::_('select.option', "1", _KUNENA_MYPROFILE_MALE);
                     $genders[] = JHTML::_('select.option', "2", _KUNENA_MYPROFILE_FEMALE);
 
-                    $ulists["gender"] = JHTML::_('select.genericlist',  $genders, 'gender', 'class="inputbox"', 'value', 'text', $userinfo->gender );
+                    $this->ulists["gender"] = JHTML::_('select.genericlist',  $genders, 'gender', 'class="inputbox"', 'value', 'text', $userinfo->gender );
 
 
                     if ($kunena_config->fb_profile != 'cb' && $kunena_config->fb_profile != 'jomSocial')

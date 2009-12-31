@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+31-Dec-2009 fxstein
+# [#19065] More frontend cleanup based on code analysis - fixed various bugs
+
 31-Dec-2009 Xillibit
 # [#19201] Fix some php notice or fatal error on the trunk
 

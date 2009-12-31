@@ -58,9 +58,9 @@ $kunena_config =& CKunenaConfig::getInstance();
                                     <div class="smalltext"><?php echo _KUNENA_MYPROFILE_BIRTHDATE_DESC; ?></div>
                                 </td>
                                 <td class="smalltext">
-                                    <input name="bday1" size="4" maxlength="4" value="<?php echo $ulists["year"];?>" type="text"/> -
-                                    <input name="bday2" size="2" maxlength="2" value="<?php echo $ulists["month"];?>" type="text"/> -
-                                    <input name="bday3" size="2" maxlength="2" value="<?php echo $ulists["day"];?>" type="text"/>
+                                    <input name="bday1" size="4" maxlength="4" value="<?php echo $this->ulists["year"];?>" type="text"/> -
+                                    <input name="bday2" size="2" maxlength="2" value="<?php echo $this->ulists["month"];?>" type="text"/> -
+                                    <input name="bday3" size="2" maxlength="2" value="<?php echo $this->ulists["day"];?>" type="text"/>
                                 </td>
                             </tr><tr>
 
@@ -70,7 +70,7 @@ $kunena_config =& CKunenaConfig::getInstance();
                             <tr>
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_GENDER; ?></b></td>
                                 <td>
-                                    <?php echo $ulists["gender"];?>
+                                    <?php echo $this->ulists["gender"];?>
                                 </td>
                             </tr><tr>
                                 <td colspan="2"><hr class="" size="1" width="100%" /></td>
@@ -137,9 +137,9 @@ $kunena_config =& CKunenaConfig::getInstance();
 					<br/>
 
 					<input name="speicher" type="hidden" size="30" maxlength="100">
-					<img class = "fb-bbcode" title = "Bold" accesskey = "b" name = "addbbcode0" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_bold.png" alt="B" onclick = "bbfontstyle('[b]', '[/b]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_BOLD);?>')" />
-					<img class = "fb-bbcode" accesskey = "i" name = "addbbcode2" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_italic.png" alt="I" onclick = "bbfontstyle('[i]', '[/i]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ITALIC);?>')" />
-					<img class = "fb-bbcode" accesskey = "u" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_underline.png" alt="U" onclick = "bbfontstyle('[u]', '[/u]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_UNDERL);?>')" />
+					<img class = "fb-bbcode" title = "Bold" name = "addbbcode0" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_bold.png" alt="B" onclick = "bbfontstyle('[b]', '[/b]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_BOLD);?>')" />
+					<img class = "fb-bbcode" name = "addbbcode2" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_italic.png" alt="I" onclick = "bbfontstyle('[i]', '[/i]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ITALIC);?>')" />
+					<img class = "fb-bbcode" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_underline.png" alt="U" onclick = "bbfontstyle('[u]', '[/u]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_UNDERL);?>')" />
 					<img class = "fb-bbcode" name = "addbbcode62" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_smallcaps.png" alt="<?php @print(_SMILE_SIZE); ?>" onclick = "bbfontstyle('[size=' + document.postform.addbbcode22.options[document.postform.addbbcode22.selectedIndex].value + ']', '[/size]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FONTSIZE);?>')" />
 					<select id = "fb-bbcode_size" class = "<?php echo KUNENA_BOARD_CLASS;?>slcbox" name = "addbbcode22" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_FONTSIZESELECTION);?>')">
 						<option value = "1"><?php @print(_SIZE_VSMALL); ?></option>
@@ -149,26 +149,26 @@ $kunena_config =& CKunenaConfig::getInstance();
 						<option value = "5"><?php @print(_SIZE_VBIG); ?></option>
 					</select>
 					<img id="ueberschrift" class = "fb-bbcode" name = "addbbcode20" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>color_swatch.png" alt="<?php @print(_SMILE_COLOUR); ?>" onclick = "javascript:change_palette();" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_COLOR);?>')" />
-					<img class = "fb-bbcode" accesskey = "p" name = "addbbcode14" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>picture_link.png" alt="Img" onclick = "javascript:dE('image');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINK);?>')" />
-					<img class = "fb-bbcode" accesskey = "w" name = "addbbcode16" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>link_url.png" alt="URL" onclick = "javascript:dE('link');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINK);?>')" />	
+					<img class = "fb-bbcode" name = "addbbcode14" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>picture_link.png" alt="Img" onclick = "javascript:dE('image');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINK);?>')" />
+					<img class = "fb-bbcode" name = "addbbcode16" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>link_url.png" alt="URL" onclick = "javascript:dE('link');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINK);?>')" />
 					<br />
 					<div id="fb-color_palette" style="margin-top: 14px; border: 1px; display: none;">
 						<script type="text/javascript">
 							function change_palette() {dE('fb-color_palette');}
 							colorPalette('h', '4%', '15px');
 						</script>
-					</div>		
-								
+					</div>
+
 					<div id="link" style="margin-top: 14px; border: 1px; display: none;">
-						<?php @print(_KUNENA_EDITOR_LINK_URL); ?><input name="url" type="text" size="20" maxlength="100" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKURL);?>')"> 
-						<?php @print(_KUNENA_EDITOR_LINK_TEXT); ?><input name="text2" type="text" size="20" maxlength="100" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKTEXT);?>')"> 
+						<?php @print(_KUNENA_EDITOR_LINK_URL); ?><input name="url" type="text" size="20" maxlength="100" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKURL);?>')">
+						<?php @print(_KUNENA_EDITOR_LINK_TEXT); ?><input name="text2" type="text" size="20" maxlength="100" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKTEXT);?>')">
 						<input type="button" name="Link" accesskey = "w" value="<?php @print(_KUNENA_EDITOR_LINK_INSERT); ?>""
 							onclick="bbfontstyle('[url=' + this.form.url.value + ']'+ this.form.text2.value,'[/url]')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKAPPLY);?>')">
 					</div>
 
 					<div id="image" style="margin-top: 14px; border: 1px; display: none;">
-						<?php @print(_KUNENA_EDITOR_IMAGE_SIZE); ?><input name="size" type="text" size="3" maxlength="10" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKSIZE);?>')"> 
-						<?php @print(_KUNENA_EDITOR_IMAGE_URL); ?><input name="url2" type="text" size="20" maxlength="100" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKURL);?>')"> 
+						<?php @print(_KUNENA_EDITOR_IMAGE_SIZE); ?><input name="size" type="text" size="3" maxlength="10" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKSIZE);?>')">
+						<?php @print(_KUNENA_EDITOR_IMAGE_URL); ?><input name="url2" type="text" size="20" maxlength="100" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKURL);?>')">
 						<input type="button" name="Link" accesskey = "p" value="<?php @print(_KUNENA_EDITOR_IMAGE_INSERT); ?>" onclick="check_image()" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY);?>')">
 						<script type="text/javascript">
 							function check_image() {
@@ -179,7 +179,7 @@ $kunena_config =& CKunenaConfig::getInstance();
 								}
 							}
 						</script>
-					</div> 
+					</div>
 
 					<br />
 					<div class="<?php echo KUNENA_BOARD_CLASS;?>posthint">

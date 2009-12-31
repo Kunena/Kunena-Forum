@@ -100,7 +100,7 @@ $show_list_time = $sel;
 
 //start the latest x
 if ($sel == 0) {
-    $querytime = ($this->prevCheck - $kunena_config->fbsessiontimeout); //move 30 minutes back to compensate for expired sessions
+    $querytime = ($this->prevCheck - $kunena_config->kunena_sessiontimeout); //move 30 minutes back to compensate for expired sessions
 }
 else
 {

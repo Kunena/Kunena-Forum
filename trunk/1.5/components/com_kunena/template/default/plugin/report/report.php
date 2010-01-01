@@ -150,7 +150,7 @@ function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins)
     foreach ($admins as $admin) {
         $kunena_db->setQuery("SELECT email FROM #__users WHERE id={$admin->id}");
         $email = $kunena_db->loadResult();
-        JUtility::sendMail($kunena_config->email, stripslashes($kunena_config->board_title)." ".trim(_GEN_FORUM), $email, $subject, $message);
+        JUtility::sendMail($kunena_config->email, stripslashes($kunena_config->board_title)." ".JString::trim(_GEN_FORUM), $email, $subject, $message);
         }
     }
 

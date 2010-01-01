@@ -40,7 +40,7 @@ $email 			= JRequest::getVar('email', '');
 $favoriteMe 	= JRequest::getVar('favoriteMe', '');
 $fb_authorname 	= JRequest::getVar('fb_authorname', '');
 $fb_thread 		= JRequest::getInt('fb_thread', 0);
-$func 			= strtolower(JRequest::getCmd('func', ''));
+$func 			= JString::strtolower(JRequest::getCmd('func', ''));
 $id 			= JRequest::getInt('id', 0);
 $limit 			= JRequest::getInt('limit', 0);
 $limitstart 	= JRequest::getInt('limitstart', 0);
@@ -86,14 +86,10 @@ include_once (KUNENA_PATH_LIB .DS. "kunena.debug.php");
 // get Kunenas configuration params in
 require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 
-// Get CKunanaUser and CKunenaUsers
-require_once (KUNENA_PATH_LIB .DS. "kunena.user.class.php");
-
 global $kunenaProfile;
 
 // Get data about the current user - its ok to not have a userid = guest
 $kunena_my = &JFactory::getUser();
-$KunenaUser = new CKunenaUser($kunena_my->id);
 // Load configuration and personal settings for current user
 $kunena_config =& CKunenaConfig::getInstance();
 $kunena_db = &JFactory::getDBO();
@@ -479,7 +475,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
         }
     //FINISH: PROFILEBOX
 
-    switch (strtolower($func))
+    switch ($func)
     {
         case 'who':
             if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/who/who.php')) {
@@ -731,8 +727,8 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
                 // clean template name
                 $fb_change_template = preg_replace('#\W#', '', $fb_change_template);
 
-                if (strlen($fb_change_template) >= 40) {
-                    $fb_change_template = substr($fb_change_template, 0, 39);
+                if (JString::strlen($fb_change_template) >= 40) {
+                    $fb_change_template = JString::substr($fb_change_template, 0, 39);
                     }
 
                 // check that template exists in case it was deleted
@@ -752,8 +748,8 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
                 // clean template name
                 $fb_change_img_template = preg_replace('#\W#', '', $fb_change_img_template);
 
-                if (strlen($fb_change_img_template) >= 40) {
-                    $fb_change_img_template = substr($fb_change_img_template, 0, 39);
+                if (JString::strlen($fb_change_img_template) >= 40) {
+                    $fb_change_img_template = JString::substr($fb_change_img_template, 0, 39);
                     }
 
                 // check that template exists in case it was deleted

@@ -33,14 +33,12 @@ $do = JRequest::getVar("do", "");
 $id = intval(JRequest::getVar("id", ""));
 $user_fields = @explode(',', $kunena_config->annmodid);
 
-if (in_array($kunena_my->id, $user_fields) || $kunena_my->usertype == 'Administrator' || $kunena_my->usertype == 'Super Administrator') {
+if (in_array($kunena_my->id, $user_fields) || CKunenaTools::isAdmin()) {
     $is_editor = true;
     }
 else {
     $is_editor = false;
     }
-
-$is_user = (strtolower($kunena_my->usertype) <> '');
 
 // BEGIN: READ ANN
 if ($do == "read") {

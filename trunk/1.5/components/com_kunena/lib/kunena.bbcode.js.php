@@ -53,9 +53,9 @@ function dE(n)
 {
   s = document.postform.speicher.value;
   if (document.getElementById(n).style.display == "none")
-    { 
+    {
     if (s != "") {document.getElementById(s).style.display = "none";}
-    document.getElementById(n).style.display = "block"; 
+    document.getElementById(n).style.display = "block";
     s=document.getElementById(n).id;
     document.postform.speicher.value = s;
     }
@@ -110,19 +110,19 @@ function colorPalette(dir, width, height)
 
 jQuery(document).ready(function()
 {
-	jQuery('table.fb-color_table td').click( function() 
-	{ 
+	jQuery('table.fb-color_table td').click( function()
+	{
 //		var color = jQuery(this).css('background-color');
 		var color = jQuery(this).attr('id');
-		bbfontstyle('[color=#' + color + ']', '[/color]'); return false; 
+		bbfontstyle('[color=#' + color + ']', '[/color]'); return false;
 	} );
-	jQuery('select#fb-bbcode_size').change( function() 
-	{ 
+	jQuery('select#fb-bbcode_size').change( function()
+	{
 		var size = jQuery(this).val();
-		bbfontstyle('[size=' + size + ']', '[/size]'); return false; 
-	} );	
+		bbfontstyle('[size=' + size + ']', '[/size]'); return false;
+	} );
 } );
-	
+
 // From http://www.massless.org/mozedit/
 
 function mozWrap(txtarea, open, close)
@@ -132,7 +132,7 @@ function mozWrap(txtarea, open, close)
 	var selEnd = txtarea.selectionEnd;
 	var scrollTop = txtarea.scrollTop;
 
-	if (selEnd == 1 || selEnd == 2) 
+	if (selEnd == 1 || selEnd == 2)
 	{
 		selEnd = selLength;
 	}
@@ -189,7 +189,7 @@ function bbfontstyle(bbopen, bbclose) {
 	}
 	//The new position for the cursor after adding the bbcode
 	var caret_pos = getCaretPosition(txtarea).start;
-	var new_pos = caret_pos + bbopen.length;		
+	var new_pos = caret_pos + bbopen.length;
 
 	// Open tag
 	insert_text(bbopen + bbclose);
@@ -200,12 +200,12 @@ function bbfontstyle(bbopen, bbclose) {
 	{
 		txtarea.selectionStart = new_pos;
 		txtarea.selectionEnd = new_pos;
-	}	
+	}
 	// IE
 	else if (document.selection)
 	{
-		var range = txtarea.createTextRange(); 
-		range.move("character", new_pos); 
+		var range = txtarea.createTextRange();
+		range.move("character", new_pos);
 		range.select();
 		storeCaret(txtarea);
 	}
@@ -220,20 +220,20 @@ function bbfontstyle(bbopen, bbclose) {
 function insert_text(text, spaces, popup)
 {
 	var txtarea;
-	
-	if (!popup) 
+
+	if (!popup)
 	{
 		txtarea = document.postform.message;
-	} 
-	else 
+	}
+	else
 	{
 		txtarea = opener.document.postform.message;
 	}
-	if (spaces) 
+	if (spaces)
 	{
 		text = ' ' + text + ' ';
 	}
-	
+
 	if (!isNaN(txtarea.selectionStart))
 	{
 		var sel_start = txtarea.selectionStart;
@@ -245,7 +245,7 @@ function insert_text(text, spaces, popup)
 	}
 	else if (txtarea.createTextRange && txtarea.caretPos)
 	{
-		if (baseHeight != txtarea.caretPos.boundingHeight) 
+		if (baseHeight != txtarea.caretPos.boundingHeight)
 		{
 			txtarea.focus();
 			storeCaret(txtarea);
@@ -258,7 +258,7 @@ function insert_text(text, spaces, popup)
 	{
 		txtarea.value = txtarea.value + text;
 	}
-	if (!popup) 
+	if (!popup)
 	{
 		txtarea.focus();
 	}
@@ -277,7 +277,7 @@ function caretPosition()
 function getCaretPosition(txtarea)
 {
 	var caretPos = new caretPosition();
-	
+
 	// simple Gecko/Opera way
 	if(txtarea.selectionStart || txtarea.selectionStart == 0)
 	{
@@ -287,32 +287,31 @@ function getCaretPosition(txtarea)
 	// dirty and slow IE way
 	else if(document.selection)
 	{
-	
+
 		// get current selection
 		var range = document.selection.createRange();
 
 		// a new selection of the whole txtarea
 		var range_all = document.body.createTextRange();
 		range_all.moveToElementText(txtarea);
-		
+
 		// calculate selection start point by moving beginning of range_all to beginning of range
 		var sel_start;
 		for (sel_start = 0; range_all.compareEndPoints('StartToStart', range) < 0; sel_start++)
-		{		
+		{
 			range_all.moveStart('character', 1);
 		}
-	
+
 		txtarea.sel_start = sel_start;
-	
+
 		// we ignore the end value for IE, this is already dirty enough and we don't need it
 		caretPos.start = txtarea.sel_start;
-		caretPos.end = txtarea.sel_start;			
+		caretPos.end = txtarea.sel_start;
 	}
 
 	return caretPos;
 }
 //#######################################################
-//code used in My Profile (userprofile.php)
 function textCounter(field, countfield, maxlimit) {
    if(field.value.length > maxlimit){
       field.value = field.value.substring(0, maxlimit);

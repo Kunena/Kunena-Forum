@@ -401,8 +401,8 @@ else
                     {
                         if ($numPending > 0)
                         {
-                            echo '<div class="fbs" ><font color="red">';
-                            echo ' ' . CKunenaLink::GetCategoryReviewListLink($singlerow->id, $numcolor.' '.$numPending.' '. _SHOWCAT_PENDING, 'nofollow');
+                            echo '<div class="fbs"><font color="red">';
+                            echo CKunenaLink::GetCategoryReviewListLink($singlerow->id, $numPending.' '. _SHOWCAT_PENDING, 'nofollow');
                             echo '</font></div>';
                         }
                     }

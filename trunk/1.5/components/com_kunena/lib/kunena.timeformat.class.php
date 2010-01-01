@@ -100,9 +100,9 @@ function KUNENA_timeformat($logTime, $show_today = true)
         $then = @getdate($time);
         $now = @getdate($nowtime);
         // Try to make something of a time format string...
-        $s = strpos($usertime_format, '%S') === false ? '' : ':%S';
+        $s = JString::strpos($usertime_format, '%S') === false ? '' : ':%S';
 
-        if (strpos($usertime_format, '%H') === false && strpos($usertime_format, '%T') === false) {
+        if (JString::strpos($usertime_format, '%H') === false && JString::strpos($usertime_format, '%T') === false) {
             $today_fmt = '%I:%M' . $s . ' %p';
         }
         else {
@@ -131,8 +131,8 @@ function KUNENA_timeformat($logTime, $show_today = true)
             '%b',
             '%B'
         )as $token)
-            if (strpos($str, $token) !== false)
-                $str = str_replace($token, ucwords((strftime($token, $time))), $str);
+            if (JString::strpos($str, $token) !== false)
+                $str = str_replace($token, JString::ucwords((strftime($token, $time))), $str);
     }
     else
     */
@@ -145,10 +145,10 @@ function KUNENA_timeformat($logTime, $show_today = true)
             '%b' => 'months_short',
             '%B' => 'months'
         )as $token => $text_label)
-            if (strpos($str, $token) !== false)
+            if (JString::strpos($str, $token) !== false)
                 $str = str_replace($token, $GLOBALS['KUNENA_DT_txt'][$text_label][(int)strftime($token === '%a' || $token === '%A' ? '%w' : '%m', $time)], $str);
 
-        if (strpos($str, '%p'))
+        if (JString::strpos($str, '%p'))
             $str = str_replace('%p', (strftime('%H', $time) < 12 ? 'am' : 'pm'), $str);
     }
 

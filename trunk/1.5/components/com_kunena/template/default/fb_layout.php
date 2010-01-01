@@ -53,7 +53,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 function kunena_get_menu($cbitemid, $kunena_config, $kunena_emoticons, $my_id, $type, $view = "", $catid = 0, $id = 0,
 							$thread = 0, $kunena_is_moderator = false, $numPending = 0)
 {
-	$func = strtolower(JRequest::getCmd('func', ''));
+	$func = JString::strtolower(JRequest::getCmd('func', ''));
 	if ($func == '') // Set default as per config settings
 	{
 		switch ($kunena_config->fbdefaultpage)
@@ -168,7 +168,7 @@ function kunena_get_menu($cbitemid, $kunena_config, $kunena_emoticons, $my_id, $
 function getSearchBox()
 {
     $return = '<div id="fb_searchbox"><form action="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=search') . '" name="searchFB" method="post">';
-    $boxsize = strlen(_GEN_SEARCH_BOX);
+    $boxsize = JString::strlen(_GEN_SEARCH_BOX);
 
     if ($boxsize <= 15)
         $boxsize = 15;

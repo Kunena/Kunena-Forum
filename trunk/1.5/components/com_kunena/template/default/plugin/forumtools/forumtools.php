@@ -22,7 +22,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 $kunena_config =& CKunenaConfig::getInstance();
 
-$func = strtolower(JRequest::getCmd('func', ''));
+$func = JString::strtolower(JRequest::getCmd('func', ''));
 $catid = JRequest::getInt('catid', 0);
 $id = JRequest::getInt('id', 0);
 ?>

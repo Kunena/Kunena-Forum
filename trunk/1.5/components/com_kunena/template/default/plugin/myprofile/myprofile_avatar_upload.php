@@ -79,7 +79,7 @@ function kn_myprofile_display_avatar_gallery($avatar_gallery_path)
             if (preg_match('/(\.gif$|\.png$|\.jpg|\.jpeg)$/is', $file))
             {
                 $avatar_images[$avatar_col_count] = $file;
-                $avatar_name[$avatar_col_count] = ucfirst(str_replace("_", " ", preg_replace('/^(.*)\..*$/', '\1', $file)));
+                $avatar_name[$avatar_col_count] = JString::ucfirst(str_replace("_", " ", preg_replace('/^(.*)\..*$/', '\1', $file)));
                 $avatar_col_count++;
             }
         }
@@ -332,7 +332,6 @@ switch ($task) {
 		$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile'),_UPLOAD_UPLOADED);
 
 	case 'gallery':
-		require_once(KUNENA_PATH_LIB .DS. 'kunena.helpers.php');
 		$newAvatar = JRequest::getVar('newAvatar', '');
 
 		$newAvatar = CKunenaTools::fbRemoveXSS($newAvatar);

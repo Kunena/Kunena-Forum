@@ -218,16 +218,16 @@ $catName = $objCatInfo->name;
 
                                 $messagesubject = $subject; //before we add slashes and all... used later in mail
 
-                                $fb_authorname = trim(addslashes($my_name));
-                                $subject = trim(addslashes($subject));
-                                $message = trim(addslashes($message));
+                                $fb_authorname = JString::trim(addslashes($my_name));
+                                $subject = JString::trim(addslashes($subject));
+                                $message = JString::trim(addslashes($message));
 
                                 if ($contentURL != "empty") {
                                     $message = $contentURL . '\n\n' . $message;
                                 }
 
                                 //--
-                                $email = trim(addslashes($my_email));
+                                $email = JString::trim(addslashes($my_email));
                                 $topic_emoticon = (int)$topic_emoticon;
                                 $topic_emoticon = ($topic_emoticon < 0 || $topic_emoticon > 7) ? 0 : $topic_emoticon;
                                 $posttime = CKunenaTools::fbGetInternalTime();
@@ -429,7 +429,7 @@ $catName = $objCatInfo->name;
 											  	// rule for post a reply to a topic
 												if ( $kunena_config->alphauserpointsnumchars>0 ) {
 													// use if limit chars for a response
-													if ( strlen($message)>$kunena_config->alphauserpointsnumchars ) {
+													if ( JString::strlen($message)>$kunena_config->alphauserpointsnumchars ) {
 														AlphaUserPointsHelper::newpoints( 'plgaup_reply_kunena', '', $pid, $datareference );
 													} else {
 														$kunena_app->enqueueMessage( _KUNENA_AUP_MESSAGE_TOO_SHORT );
@@ -458,8 +458,6 @@ $catName = $objCatInfo->name;
 
                                             if (count($subsList) > 0)
                                             {                                                     //we got more than 0 subscriptions
-                                                require_once (KUNENA_PATH_LIB .DS. 'kunena.mail.php'); // include fbMail class for mailing
-
 												$_catobj = new jbCategory($kunena_db, $catid);
                                                 foreach ($subsList as $subs)
                                                 {
@@ -483,7 +481,7 @@ $catName = $objCatInfo->name;
                                                     $mailsubject = "[".stripslashes($board_title)." "._GEN_FORUM."] " . stripslashes($messagesubject) . " (" . stripslashes($catName) . ")";
 
                                                     $msg = "$subs->name,\n\n";
-                                                    $msg .= trim(_KUNENA_POST_EMAIL_NOTIFICATION1)." ".stripslashes($board_title)." "._GEN_FORUM."\n\n";
+                                                    $msg .= JString::trim(_KUNENA_POST_EMAIL_NOTIFICATION1)." ".stripslashes($board_title)." "._GEN_FORUM."\n\n";
                                                     $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
                                                     $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
                                                     $msg .= _VIEW_POSTED.": " . stripslashes($fb_authorname) . "\n\n";
@@ -526,7 +524,7 @@ $catName = $objCatInfo->name;
                                                 $sql2 .= " a.userid IS NOT NULL";
                                             }
                                             if($kunena_config->mailadmin==1) {
-                                                if(strlen($sql2)) { $sql2 .= " OR "; }
+                                                if(JString::strlen($sql2)) { $sql2 .= " OR "; }
                                                 $sql2 .= " u.gid IN (24, 25)";
                                             }
                                             $sql .= "".$sql2.")";
@@ -537,8 +535,6 @@ $catName = $objCatInfo->name;
 
                                             if (count($modsList) > 0)
                                             {                                                     //we got more than 0 moderators eligible for email
-                                                require_once (KUNENA_PATH_LIB .DS. 'kunena.mail.php'); // include fbMail class for mailing
-
                                                 foreach ($modsList as $mods)
                                                 {
                                                     $mailsender = stripslashes($board_title)." "._GEN_FORUM;
@@ -546,7 +542,7 @@ $catName = $objCatInfo->name;
                                                     $mailsubject = "[".stripslashes($board_title)." "._GEN_FORUM."] " . stripslashes($messagesubject) . " (" . stripslashes($catName) . ")";
 
                                                     $msg = "$mods->name,\n\n";
-                                                    $msg .= trim(_KUNENA_POST_EMAIL_MOD1)." ".stripslashes($board_title)." ".trim(_GEN_FORUM)."\n\n";
+                                                    $msg .= JString::trim(_KUNENA_POST_EMAIL_MOD1)." ".stripslashes($board_title)." ".JString::trim(_GEN_FORUM)."\n\n";
                                                     $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
                                                     $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
                                                     $msg .= _VIEW_POSTED.": " . stripslashes($fb_authorname) . "\n\n";
@@ -652,7 +648,7 @@ $catName = $objCatInfo->name;
                             //$quote = smile::fbStripHtmlTags($quote);
                             $resubject = strtr($message->subject, $table);
 
-                            $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? stripslashes($resubject) : _POST_RE . stripslashes($resubject);
+                            $resubject = JString::strtolower(JString::substr($resubject, 0, JString::strlen(_POST_RE))) == JString::strtolower(_POST_RE) ? stripslashes($resubject) : _POST_RE . stripslashes($resubject);
                             //$resubject = kunena_htmlspecialchars($resubject);
                             $resubject = smile::fbStripHtmlTags($resubject);
                             //$resubject = smile::fbStripHtmlTags($resubject);
@@ -699,7 +695,7 @@ $catName = $objCatInfo->name;
                             $message = $kunena_db->loadObject();
                             $table = array_flip(get_html_translation_table(HTML_ENTITIES));
                             $resubject = kunena_htmlspecialchars(strtr($message->subject, $table));
-                            $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? stripslashes($resubject) : _POST_RE . stripslashes($resubject);
+                            $resubject = JString::strtolower(JString::substr($resubject, 0, JString::strlen(_POST_RE))) == JString::strtolower(_POST_RE) ? stripslashes($resubject) : _POST_RE . stripslashes($resubject);
                             $parentid = $message->id;
                             $htmlText = "";
                         }
@@ -898,8 +894,8 @@ $catName = $objCatInfo->name;
                             include KUNENA_PATH_LIB .DS. 'kunena.image.upload.php';
                         }
 
-                        //$message = trim(kunena_htmlspecialchars(addslashes($message)));
-                        $message = trim(addslashes($message));
+                        //$message = JString::trim(kunena_htmlspecialchars(addslashes($message)));
+                        $message = JString::trim(addslashes($message));
 
                         //parse the message for some preliminary bbcode and stripping of HTML
                         //$message = smile::bbencode_first_pass($message);
@@ -1145,7 +1141,7 @@ $catName = $objCatInfo->name;
                     // insert 'moved topic' notification in old forum if needed
                     if ($bool_leaveGhost)
                     {
-                    	$kunena_db->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0',".$kunena_db->quote($newSubject).",'$lastTimestamp','{$oldRecord[0]->catid}','1', '{$kunena_my->id}', ".$kunena_db->quote(trim(addslashes($my_name))).")");
+                    	$kunena_db->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0',".$kunena_db->quote($newSubject).",'$lastTimestamp','{$oldRecord[0]->catid}','1', '{$kunena_my->id}', ".$kunena_db->quote(JString::trim(addslashes($my_name))).")");
                     	$kunena_db->query() or check_dberror('Unable to insert ghost message.');
 
                     	//determine the new location for link composition

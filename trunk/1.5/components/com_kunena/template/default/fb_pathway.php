@@ -27,7 +27,7 @@ $kunena_db 		= &JFactory::getDBO();
 
 global $kunena_emoticons;
 
-$func 			= strtolower(JRequest::getCmd('func', ''));
+$func 			= JString::strtolower(JRequest::getCmd('func', ''));
 $catid 			= JRequest::getInt('catid', 0);
 $id 			= JRequest::getInt('id', 0);
 
@@ -49,7 +49,7 @@ if ($func != "")
             $results = $kunena_db->loadObject();
             if (!$results) break;
 			$parent_ids = $results->parent;
-			$fr_name = kunena_htmlspecialchars(trim(stripslashes($results->name)));
+			$fr_name = kunena_htmlspecialchars(JString::trim(stripslashes($results->name)));
             $sname = CKunenaLink::GetCategoryLink( 'showcat', $catids, $fr_name);
 
             if ($catid == $catids && $sfunc != "view")

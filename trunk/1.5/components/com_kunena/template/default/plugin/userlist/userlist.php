@@ -440,7 +440,7 @@ class HTML_userlist_content
 
                                         <td class = "td-3" align="center">
                                       <?php
-                                      if(strlen($uslavatar)) {
+                                      if(JString::strlen($uslavatar)) {
 						echo CKunenaLink::GetProfileLink($kunena_config, $ulrow->id, $uslavatar);
                                       }
                                       else { echo '&nbsp;'; }

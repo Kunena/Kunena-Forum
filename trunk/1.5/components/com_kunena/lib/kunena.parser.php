@@ -61,7 +61,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 	    // match name@address
 	    $text = preg_replace('/(?<!S)([a-zA-Z0-9_.\-]+\@[a-zA-Z][a-zA-Z0-9_.\-]+[a-zA-Z]{2,6})/', '<a href="mailto:$1">$1</a>', $text);
 
-	    return substr($text, 1, -1);
+	    return JString::substr($text, 1, -1);
 	}
 
 	function PostProcessing(&$task)
@@ -149,7 +149,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
         }
         if($task->in_noparse) {
             // hits deactivated by default
-            switch(strtolower($tag->name)) {
+            switch(JString::strtolower($tag->name)) {
                 case 'noparse':
                     // specify noparse output - this only strips
                     $tns = ""; $tne = '';
@@ -163,7 +163,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
             // tagname code is not processed
             return TAGPARSER_RET_NOTHING;
         }
-        switch (strtolower($tag->name)) {
+        switch (JString::strtolower($tag->name)) {
             case 'b':
                 $tns = "<b>"; $tne = '</b>';
                 return TAGPARSER_RET_REPLACED;
@@ -190,7 +190,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 break;
             case 'size':
                 if(!isset($tag->options['default'])
-                || strlen($tag->options['default'])==0) {
+                || JString::strlen($tag->options['default'])==0) {
                     return TAGPARSER_RET_NOTHING;
                 }
                 $size_css = array(1 => 'fbxs', 'fbs', 'fbm', 'fbl', 'fbxl', 'fbxxl');
@@ -216,7 +216,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 break;
             case 'color':
                 if(!isset($tag->options['default'])
-                || strlen($tag->options['default'])==0) {
+                || JString::strlen($tag->options['default'])==0) {
                     return TAGPARSER_RET_NOTHING;
                 }
                 $tns = "<span style='color: ".kunena_htmlspecialchars($tag->options['default'], ENT_QUOTES)."'>"; $tne = '</span>';
@@ -262,7 +262,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 $task->autolink_disable--;
                 if(isset($tag->options['default'])) {
                     $tempstr = $tag->options['default'];
-                    if(substr($tempstr, 0, 7)!=='mailto:') {
+                    if(JString::substr($tempstr, 0, 7)!=='mailto:') {
                       $tempstr = 'mailto:'.$tempstr;
                     }
                     $tns = "<a href='".kunena_htmlspecialchars($tempstr, ENT_QUOTES)."'>"; $tne = '</a>';
@@ -274,7 +274,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 // www. > http://www.
                 if(isset($tag->options['default'])) {
                     $tempstr = $tag->options['default'];
-                    if(substr($tempstr, 0, 4)=='www.') {
+                    if(JString::substr($tempstr, 0, 4)=='www.') {
                       $tempstr = 'http://'.$tempstr;
                     }
                     $tns = "<a href='".kunena_htmlspecialchars($tempstr, ENT_QUOTES)."' rel=\"nofollow\" target=\"_blank\">"; $tne = '</a>';
@@ -293,7 +293,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 	$kunena_config =& CKunenaConfig::getInstance();
         $kunena_my = &JFactory::getUser();
         if($task->in_code) {
-            switch(strtolower($tag->name)) {
+            switch(JString::strtolower($tag->name)) {
                 case 'code:1': // fb ancient compatibility
                 case 'code':
 
@@ -329,13 +329,13 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
             }
             return TAGPARSER_RET_NOTHING;
         }
-        switch(strtolower($tag->name)) {
+        switch(JString::strtolower($tag->name)) {
             # call html_entity_decode_utf8 if Encode() did not already!!!
             # in general $between was already Encoded (if not explicitly suppressed!)
             case 'email':
                 $tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
-                if(substr($tempstr, 0, 7)=='mailto:') {
-                  $between = substr($tempstr, 7);
+                if(JString::substr($tempstr, 0, 7)=='mailto:') {
+                  $between = JString::substr($tempstr, 7);
                 }
                 else {
                   $tempstr = 'mailto:'.$tempstr;
@@ -361,7 +361,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
         	        	$file_ext = explode(',', $params->get('upload_extensions'));
                 	}
             	    preg_match('/\.([\w\d]+)$/', $between, $matches);
-                	if (!in_array(strtolower($matches[1]), $file_ext)) break;
+                	if (!in_array(JString::strtolower($matches[1]), $file_ext)) break;
 
                 	$tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
                     $task->autolink_disable--; # continue autolink conversion
@@ -439,9 +439,9 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 $tag_new .= "\n";
                 $linearr = explode('[*]', $between);
                 for($i=0; $i<count($linearr); $i++) {
-                    $tmp = trim($linearr[$i]);
-                    if(strlen($tmp)) {
-                        $tag_new .= '<li>'.trim($linearr[$i]).'</li>';
+                    $tmp = JString::trim($linearr[$i]);
+                    if(JString::strlen($tmp)) {
+                        $tag_new .= '<li>'.JString::trim($linearr[$i]).'</li>';
                         $tag_new .= "\n";
                     }
                 }
@@ -461,7 +461,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				$vid_sizemax = 100; // max. display zoom in percent
 				// --- config end --------------
 
-				$vid["type"] = (isset($tag->options["type"]))?kunena_htmlspecialchars(strtolower($tag->options["type"])):'';
+				$vid["type"] = (isset($tag->options["type"]))?kunena_htmlspecialchars(JString::strtolower($tag->options["type"])):'';
 				$vid["param"] = (isset($tag->options["param"]))?kunena_htmlspecialchars($tag->options["param"]):'';
 
 				if (!$vid["type"]) {
@@ -483,7 +483,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				if (!$vid["type"]) {
 					$vid_auto = (preg_match('/^http:\/\/.*?([^.]*)\.[^.]*(\/|$)/', $between, $vid_regs) > 0);
 					if ($vid_auto) {
-						$vid["type"] = strtolower($vid_regs[1]);
+						$vid["type"] = JString::strtolower($vid_regs[1]);
 						switch($vid["type"]) {
 							case 'clip': $vid["type"] = 'clip.vn'; break;
 							case 'web': $vid["type"] = 'web.de'; break;
@@ -640,7 +640,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 				$vid_par3 = array();
 				foreach($tag->options as $vid_key => $vid_value) {
-					if (in_array(strtolower($vid_key), $vid_allowpar))
+					if (in_array(JString::strtolower($vid_key), $vid_allowpar))
 						array_push($vid_par3, array(6, $vid_key, kunena_htmlspecialchars($vid_value)));
 				}
 
@@ -749,7 +749,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
         if($task->in_noparse) {
             return TAGPARSER_RET_NOTHING;
         }
-        switch (strtolower($tag->name)) {
+        switch (JString::strtolower($tag->name)) {
             case 'code:1': // fb ancient compatibility
             case 'code':
                 $task->in_code = TRUE;
@@ -791,7 +791,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
         if($task->in_noparse) {
             return TAGPARSER_RET_NOTHING;
         }
-        switch (strtolower($tag->name)) {
+        switch (JString::strtolower($tag->name)) {
             // Replace unclosed img tag
             case 'img':
                 $task->autolink_disable--; # continue autolink conversion

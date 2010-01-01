@@ -49,7 +49,7 @@ $source_file = KUNENA_PATH_TEMPLATE_DEFAULT .DS. "plugin/recentposts/tabber.js";
 $source_file = KUNENA_PATH_TEMPLATE_DEFAULT .DS. "plugin/recentposts/tabber-minimized.js";
 $source_file = KUNENA_PATH_TEMPLATE_DEFAULT .DS. "plugin/recentposts/function.tabber.php";
 //
-$category = trim($kunena_config->latestcategory); // 2,3,4
+$category = JString::trim($kunena_config->latestcategory); // 2,3,4
 $count = $kunena_config->latestcount;
 $count_per_page = intval($kunena_config->latestcountperpage);
 $show_author = $kunena_config->latestshowauthor; // 0 = none, 1= username, 2= realname
@@ -172,14 +172,14 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                     $row_date = JHTML::_( 'date', $row->date, '%d/%m' );
                     $row_lock = ($row->locked ? _KUNENA_LOCKED : '');
                     $overlib .= "<tr><td valign=top>" . _GEN_CATEGORY . "</td><td>$row_catname</td></tr>";
-                    $overlib .= "<tr><td valign=top>" . ucfirst(_GEN_BY) . "</td><td>$row_username</td></tr>";
+                    $overlib .= "<tr><td valign=top>" . JString::ucfirst(_GEN_BY) . "</td><td>$row_username</td></tr>";
                     $overlib .= "<tr><td valign=top>" . _GEN_DATE . "</td><td>$row_date</td></tr>";
 
                     if (!$row->parent) {
                         $overlib .= "<tr><td valign=top>" . _GEN_HITS . "</td><td>$row->hits</td></tr>";
                         }
 
-                    $overlib .= "<tr><td valign=top>" . ucfirst(_GEN_LOCK) . "</td><td>$row_lock</td></tr>";
+                    $overlib .= "<tr><td valign=top>" . JString::ucfirst(_GEN_LOCK) . "</td><td>$row_lock</td></tr>";
                     $overlib .= "</table>";
                     $link = JRoute::_(KUNENA_LIVEURLREL . "&amp;func=view&amp;id=$row->fbid" . "&amp;catid=$row->catid#$row->fbid");
 
@@ -201,7 +201,7 @@ $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
                         echo "</td>";
                         echo "<td class=\"td-2 fbm\"  align=\"left\" >";
                         echo " <a class=\"fbrecent fbm\" href='$link' >";
-                        echo substr(html_entity_decode_utf8(stripslashes($row->subject)), 0, $subject_length);
+                        echo JString::substr(html_entity_decode_utf8(stripslashes($row->subject)), 0, $subject_length);
                         echo "</a>";
                         echo "</td>";
 

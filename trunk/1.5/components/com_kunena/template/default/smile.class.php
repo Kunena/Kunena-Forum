@@ -79,7 +79,7 @@ class smile
 	    $task->iconList = $iconList;
         $task->Parse();
 
-        return substr($task->text,0,-6);
+        return JString::substr($task->text,0,-6);
     }
     /**
     * function to retrieve the emoticons out of the database
@@ -343,7 +343,7 @@ class smile
 									'Unf-Unf','Uume','Veoh','VideoclipsDump','Videojug','VideoTube','Vidiac','VidiLife','Vimeo','WangYou','WEB.DE','Wideo.fr','YouKu','YouTube');
 								foreach($vid_provider as $vid_type) {
 									$vid_type = explode(',', $vid_type);
-									echo '<option value = "'.(!empty($vid_type[1])?$vid_type[1]:strtolower($vid_type[0]).'').'">'.$vid_type[0].'</option>';
+									echo '<option value = "'.(!empty($vid_type[1])?$vid_type[1]:JString::strtolower($vid_type[0]).'').'">'.$vid_type[0].'</option>';
 								}
 								?>
 							</select>
@@ -534,32 +534,32 @@ if ($editmode) {
             //Trim below is necessary is the tag is placed at the begin of string
             $c = 0;
 
-            if (strtolower(substr($words[$i], 0, 7)) == 'http://')
+            if (JString::strtolower(JString::substr($words[$i], 0, 7)) == 'http://')
             {
                 $c = 1;
                 $word = '<a href=\"' . $words[$i] . '\" target=\"_new\">' . $word . '</a>';
             }
-            elseif (strtolower(substr($words[$i], 0, 8)) == 'https://')
+            elseif (JString::strtolower(JString::substr($words[$i], 0, 8)) == 'https://')
             {
                 $c = 1;
                 $word = '<a href=\"' . $words[$i] . '\" target=\"_new\">' . $word . '</a>';
             }
-            elseif (strtolower(substr($words[$i], 0, 6)) == 'ftp://')
+            elseif (JString::strtolower(JString::substr($words[$i], 0, 6)) == 'ftp://')
             {
                 $c = 1;
                 $word = '<a href=\"' . $words[$i] . '\" target=\"_new\">' . $word . '</a>';
             }
-            elseif (strtolower(substr($words[$i], 0, 4)) == 'ftp.')
+            elseif (JString::strtolower(JString::substr($words[$i], 0, 4)) == 'ftp.')
             {
                 $c = 1;
                 $word = '<a href=\"ftp://' . $words[$i] . '\" target=\"_new\">' . $word . '</a>';
             }
-            elseif (strtolower(substr($words[$i], 0, 4)) == 'www.')
+            elseif (JString::strtolower(JString::substr($words[$i], 0, 4)) == 'www.')
             {
                 $c = 1;
                 $word = '<a href="http://' . $words[$i] . '\" target=\"_new\">' . $word . '</a>';
             }
-            elseif (strtolower(substr($words[$i], 0, 7)) == 'mailto:')
+            elseif (JString::strtolower(JString::substr($words[$i], 0, 7)) == 'mailto:')
             {
                 $c = 1;
                 $word = '<a href=\"' . $words[$i] . '\">' . $word . '</a>';
@@ -656,7 +656,7 @@ if ($editmode) {
 	  $content = preg_split("/([<>])/", $str, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
 	  // Transform protected element lists into arrays
-	  $nobreak = explode(" ", strtolower($nobreak));
+	  $nobreak = explode(" ", JString::strtolower($nobreak));
 
 	  // Variable setup
 	  $intag = false;
@@ -689,7 +689,7 @@ if ($editmode) {
 	        if ($intag) {
 
 	          // Create a lowercase copy of this tag's contents
-	          $lvalue = strtolower($value);
+	          $lvalue = JString::strtolower($value);
 
 	          // If the first character is not a / then this is an opening tag
 	          if ($lvalue{0} != "/") {
@@ -704,11 +704,11 @@ if ($editmode) {
 	          } else {
 
 	            // If this is a closing tag for a protected element, unset the flag
-	            if (in_array(substr($lvalue, 1), $nobreak)) {
+	            if (in_array(JString::substr($lvalue, 1), $nobreak)) {
 	              reset($innbk);
 	              foreach ($innbk as $key => $tag)
 	              {
-	                if (substr($lvalue, 1) == $tag)
+	                if (JString::substr($lvalue, 1) == $tag)
 	                {
 	                  unset($innbk[$key]);
 	                  break;
@@ -737,14 +737,14 @@ if ($editmode) {
 	              // Find the first stretch of characters over the $width limit
 	              if (preg_match('/^(.*?\s)?([^\s]{'.$width.'})(?!('.preg_quote($break, '/').'|\s))(.*)$/s'.$utf8, $value, $match))
 	              {
-	                if (strlen($match[2]))
+	                if (JString::strlen($match[2]))
 	                {
 	                  // Determine the last "safe line-break" character within this match
-	                  for ($x = 0, $ledge = 0; $x < strlen($lbrks); $x++) $ledge = max($ledge, strrpos($match[2], $lbrks{$x}));
-	                  if (!$ledge) $ledge = strlen($match[2]) - 1;
+	                  for ($x = 0, $ledge = 0; $x < JString::strlen($lbrks); $x++) $ledge = max($ledge, JString::strrpos($match[2], $lbrks{$x}));
+	                  if (!$ledge) $ledge = JString::strlen($match[2]) - 1;
 
 	                  // Insert the modified string
-	                  $value = $match[1].substr($match[2], 0, $ledge + 1).$break.substr($match[2], $ledge + 1).$match[4];
+	                  $value = $match[1].JString::substr($match[2], 0, $ledge + 1).$break.JString::substr($match[2], $ledge + 1).$match[4];
 	                }
 	              }
 

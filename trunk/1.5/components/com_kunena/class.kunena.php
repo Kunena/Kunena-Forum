@@ -19,6 +19,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 // Set charset
 define('KUNENA_CHARSET', 'UTF-8');
+jimport('joomla.utilities.string');
 
 // Joomla absolute path
 define('KUNENA_JLIVEURL', JURI::root());
@@ -201,7 +202,7 @@ $fb_user_img_template = JRequest::getString('fb_user_img_template', '', 'COOKIE'
 $fb_user_template = strtr($fb_user_template, '\\/', '');
 $fb_user_img_template = strtr($fb_user_template, '\\/', '');
 
-if (strlen($fb_user_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_template))
+if (JString::strlen($fb_user_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_template))
 {
     $fb_cur_template = $fb_user_template;
     }
@@ -214,7 +215,7 @@ else
     $fb_cur_template = 'default';
     }
 
-if (strlen($fb_user_img_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_template .DS. 'images'))
+if (JString::strlen($fb_user_img_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_template .DS. 'images'))
 {
     $fb_cur_img_template = $fb_user_img_template;
     }
@@ -338,20 +339,6 @@ function KUNENA_check_image_type(&$type) {
     return false;
     }
 
-function getFBGroupName($id) {
-    $kunena_db = &JFactory::getDBO();
-    $gr = '';
-    $kunena_db->setQuery("SELECT id, title FROM #__fb_groups AS g, #__fb_users as u WHERE u.group_id=g.id and u.userid='{$id}'");
-    $gr = $kunena_db->loadObject();
-
-    if ($gr == NULL) {
-	$gr = new stdClass();
-	$gr->id = 0;
-	$gr->title = _VIEW_VISITOR;
-    }
-    return $gr;
-}
-
 class CKunenaTools {
     var $id = null;
 
@@ -441,7 +428,6 @@ class CKunenaTools {
     function reCountBoards()
     {
         $kunena_db = &JFactory::getDBO();
-        include_once (KUNENA_PATH_LIB .DS. 'kunena.db.iterator.class.php');
 
         // Reset category counts as next query ignores empty categories
         $kunena_db->setQuery("UPDATE #__fb_categories SET numTopics=0, numPosts=0");
@@ -819,11 +805,11 @@ class CKunenaTools {
            array_walk($ra2, "fbReturnDashed");
 
            if ($reverse) {
-                $val = str_ireplace($ra2, $ra, $val);
+                $val = JString::str_ireplace($ra2, $ra, $val);
            }
            else {
            //replace them all with a dummy variable, and later replace them in CODE
-                $val = str_ireplace($ra, $ra2, $val);
+                $val = JString::str_ireplace($ra, $ra2, $val);
            }
            return $val;
         }
@@ -889,29 +875,6 @@ class CKunenaTools {
 		}
 
     } // end of class
-
-/**
-* Moderator Table Class
-*
-* Provides access to the #__fb_moderator table
-*/
-class fbModeration
-    extends JTable {
-    /** @var int Unique id*/
-    var $catid = null;
-    /** @var int */
-    var $userid = null;
-    /** @var int */
-    var $future1 = null;
-    /** @var int */
-    var $future2 = null;
-    /**
-    * @param database A database connector object
-    */
-    function __construct(&$kunena_db) {
-        parent::__construct('#__fb_moderation', 'catid', $kunena_db);
-        }
-    }
 
 class fbForum
     extends JTable {
@@ -1076,7 +1039,7 @@ function JJ_categoryParentList($catid, $action, $options = array ()) {
 
     foreach ($list as $item) {
         if ($this_treename) {
-            if ($item->id != $catid && strpos($item->treename, $this_treename) === false) {
+            if ($item->id != $catid && JString::strpos($item->treename, $this_treename) === false) {
                 $options[] = JHTML::_('select.option', $item->id, $item->treename);
                 }
             }
@@ -1101,7 +1064,7 @@ function KUNENA_GetAvailableForums($catid, $action, $options = array (), $disabl
 
     foreach ($list as $item) {
         if ($this_treename) {
-            if ($item->id != $catid && strpos($item->treename, $this_treename) === false) {
+            if ($item->id != $catid && JString::strpos($item->treename, $this_treename) === false) {
                 $options[] = JHTML::_('select.option', $item->id, kunena_htmlspecialchars($item->treename));
                 }
             }
@@ -1291,41 +1254,8 @@ print_r($array);
     return $output;
     }
 
-function make_pattern(&$pat, $key) {
-  $pat = '/'.preg_quote($pat, '/').'/i';
-}
-if (!function_exists("htmlspecialchars_decode")) {
-    function htmlspecialchars_decode($string,$style=ENT_COMPAT)
-    {
-        $translation = array_flip(get_html_translation_table(HTML_SPECIALCHARS,$style));
-        if($style === ENT_QUOTES) { $translation['&#039;'] = '\''; }
-        return strtr($string,$translation);
-    }
-}
-if(!function_exists('str_ireplace')){
-function str_ireplace($search, $replace, $subject){
-if(is_array($search)){
-array_walk($search, 'make_pattern');
-}
-else{
-$search = '/'.preg_quote($search, '/').'/i';
-}
-return preg_replace($search, $replace, $subject);
-}
-}
-
 function fbReturnDashed (&$string, $key) {
             $string = "_".$string."_";
-}
-
-function kn_mb_substr($str, $start, $length=NULL, $encoding=NULL) {
-	if ($length === NULL) $length = strlen($str);
-	if ($encoding === NULL) $encoding = KUNENA_CHARSET;
-	if (!function_exists('mb_substr'))
-	{
-		require_once(JPATH_LIBRARIES.DS.'phputf8'.DS.'utf8.php');
-	}
-	return mb_substr($str, $start, $length, $encoding);
 }
 
 function kunena_htmlspecialchars($string, $quote_style=ENT_COMPAT, $charset=KUNENA_CHARSET) {

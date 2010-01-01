@@ -28,7 +28,7 @@ $kunena_config =& CKunenaConfig::getInstance();
 $kunena_session =& CKunenaSession::getInstance();
 $document =& JFactory::getDocument();
 
-$func = strtolower(JRequest::getCmd('func', ''));
+$func = JString::strtolower(JRequest::getCmd('func', ''));
 $sel = JRequest::getVar('sel', '');
 
 function KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages) {
@@ -81,8 +81,6 @@ if (!$kunena_my->id && $func == "mylatest")
         	header("Location: " . htmlspecialchars_decode(CKunenaLink::GetShowLatestURL()));
         	$kunena_app->close();
 }
-
-require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
 
 //resetting some things:
 $lockedForum = 0;
@@ -234,7 +232,7 @@ $messagelist = $kunena_db->loadObjectList();
 foreach ($messagelist as $message)
 {
 	$this->messages[$message->parent][] = $message;
-	$this->messagetext[$message->id] = substr(smile::purify($message->messagetext), 0, 500);
+	$this->messagetext[$message->id] = JString::substr(smile::purify($message->messagetext), 0, 500);
 	if ($message->parent==0)
 	{
 		$this->hits[$message->id] = $message->hits;

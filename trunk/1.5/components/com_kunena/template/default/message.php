@@ -119,7 +119,7 @@ if ($kunena_config->fb_profile == 'cb')
                                     }
 
                                     //contruct the reply subject
-                                    $resubject = kunena_htmlspecialchars(strtolower(substr($msg_html->subject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? $msg_html->subject : _POST_RE .' '. $msg_html->subject);
+                                    $resubject = kunena_htmlspecialchars(JString::strtolower(JString::substr($msg_html->subject, 0, JString::strlen(_POST_RE))) == JString::strtolower(_POST_RE) ? $msg_html->subject : _POST_RE .' '. $msg_html->subject);
                                     ?>
 
                             <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL. '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
@@ -202,19 +202,6 @@ if ($kunena_config->fb_profile == 'cb')
                         	echo $msg_html->avatar;
                         }
 ?>
-
-				<?php
-                $gr_title = getFBGroupName($lists["userid"]);
-
-                if ($gr_title->id > 1)
-                {
-                ?>
-
-                    <span class = "view-group_<?php echo $gr_title->id;?>"> <?php echo $gr_title->title; ?></span>
-
-                <?php
-                }
-                ?>
 
 				<?php if (isset($msg_html->personal)) { ?>
                     <div class = "viewcover">

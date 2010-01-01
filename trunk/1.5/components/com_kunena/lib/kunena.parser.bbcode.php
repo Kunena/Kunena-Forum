@@ -19,7 +19,7 @@
 # FILENAME: kunena.parser.bbcode.php                                     #
 # AUTOR:    Miro Dietiker, MD Systems, All rights reserved                 #
 # LICENSE:  http://www.gnu.org/copyleft/gpl.html GNU/GPL                   #
-# CONTACT: m.dietiker@md-systems.ch        © 2007 Miro Dietiker 13.11.2007 #
+# CONTACT: m.dietiker@md-systems.ch        ï¿½ 2007 Miro Dietiker 13.11.2007 #
 ############################################################################
 # This parser is based on an earlier CMS parser implementation.
 # It has been completely rewritten and generalized for Kunena and
@@ -61,7 +61,7 @@ function fb_stripos($haystack , $needle , $offset=0) {
     }
     else {
         // Nasty overhead but it does the trick
-        return strpos(strtolower($haystack), strtolower($needle), $offset);
+        return JString::strpos(JString::strtolower($haystack), JString::strtolower($needle), $offset);
     }
 }
 
@@ -90,7 +90,7 @@ class BBCodeInterpreter extends TagInterpreter {
         $text =& $task->text;
         $pos_act =& $task->pos_act;
 
-        if (strlen($text) < $pos_act) return TAGPARSER_RET_ERR;
+        if (JString::strlen($text) < $pos_act) return TAGPARSER_RET_ERR;
 
         // in_code state
         if($task->in_code) {
@@ -138,7 +138,7 @@ class BBCodeInterpreter extends TagInterpreter {
         # RET: 0 continue,
         $text =& $task->text;
         $pos_act =& $task->pos_act;
-        $nextchar = substr($text, $pos_act+1, 1);
+        $nextchar = JString::substr($text, $pos_act+1, 1);
         if($nextchar==$this->tag_start) {
             // escaped tagstart: remove escape!
             // abc[[def => pos_act@3, [@3, [@4 => abc[def
@@ -147,7 +147,7 @@ class BBCodeInterpreter extends TagInterpreter {
                 $pos_act += 2;
                 return TAGPARSER_RET_REPLACED;
             }
-            $text = substr($text, 0, $pos_act).substr($text, $pos_act+1);
+            $text = JString::substr($text, 0, $pos_act).JString::substr($text, $pos_act+1);
             $pos_act += 1;
             return TAGPARSER_RET_REPLACED;
         }
@@ -175,9 +175,9 @@ class BBCodeInterpreter extends TagInterpreter {
         $mode = BBCODE_PARSE_START;
         // scan through string
         #echo 'POS:'.$pos."\n";
-        $textlen = strlen($text);
+        $textlen = JString::strlen($text);
         while(++$pos<$textlen) {
-            $char = substr($text, $pos, 1);
+            $char = JString::substr($text, $pos, 1);
             #echo 'CHAR:'.$mode.':'.$char."\n";
             // missing tag end, overflow prevention!
             if($char===FALSE) {
@@ -226,7 +226,7 @@ class BBCodeInterpreter extends TagInterpreter {
                     continue;
                 }
                 // build tagname
-                $tagname .= strtolower($char);
+                $tagname .= JString::strtolower($char);
                 #echo 'TAG:'.$tagname."\n";
                 continue;
             }
@@ -237,7 +237,7 @@ class BBCodeInterpreter extends TagInterpreter {
                 if($char==$this->tag_end) {
                     break;
                 }
-                $nowkey .= strtolower($char);
+                $nowkey .= JString::strtolower($char);
                 $mode=BBCODE_PARSE_KEY_OR_END;
                 continue;
             }
@@ -256,7 +256,7 @@ class BBCodeInterpreter extends TagInterpreter {
                     $mode = BBCODE_PARSE_SPACE;
                     continue;
                 }
-                $nowkey .= strtolower($char);
+                $nowkey .= JString::strtolower($char);
             }
             if($mode==BBCODE_PARSE_EQUAL) {
                 $quot='';

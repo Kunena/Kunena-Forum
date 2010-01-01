@@ -72,8 +72,6 @@ function KunenaShowcatPagination($catid, $page, $totalpages, $maxpages) {
     return $output;
 }
 
-require_once(KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
-
 //Security basics begin
 //Securing passed form elements:
 $catid = (int)$catid;
@@ -96,8 +94,6 @@ if (in_array($catid, $allow_forum))
         $catid = 1;
     }
 
-    $view = $view == "" ? $settings[current_view] : $view;
-    setcookie("fboard_settings[current_view]", $view, time() + 31536000, '/');
     /*//////////////// Start selecting messages, prepare them for threading, etc... /////////////////*/
     $page = (int)$page;
     $page = $page < 1 ? 1 : $page;
@@ -148,7 +144,7 @@ $messagelist = $kunena_db->loadObjectList();
 foreach ($messagelist as $message)
 {
 	$this->messages[$message->parent][] = $message;
-	$this->messagetext[$message->id] = substr(smile::purify($message->messagetext), 0, 500);
+	$this->messagetext[$message->id] = JString::substr(smile::purify($message->messagetext), 0, 500);
 	if ($message->parent==0)
 	{
 		$this->hits[$message->id] = $message->hits;
@@ -307,19 +303,11 @@ foreach ($messagelist as $message)
 
     if (count($this->messages) > 0)
     {
-        if ($view == "flat")
-            if (file_exists(KUNENA_ABSTMPLTPATH . '/flat.php')) {
-                include(KUNENA_ABSTMPLTPATH . '/flat.php');
-            }
-            else {
-                include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'flat.php');
-            }
-        else if (file_exists(KUNENA_ABSTMPLTPATH . '/thread.php')) {
-            include(KUNENA_ABSTMPLTPATH . '/thread.php');
-        }
-        else {
-            include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'thread.php');
-        }
+		if (file_exists(KUNENA_ABSTMPLTPATH . '/flat.php')) {
+			include(KUNENA_ABSTMPLTPATH . '/flat.php');
+		} else {
+			include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'flat.php');
+		}
     }
     else
     {

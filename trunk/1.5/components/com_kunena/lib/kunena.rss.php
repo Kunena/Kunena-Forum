@@ -32,7 +32,7 @@ $kunena_db = &JFactory::getDBO();
 
 $hours = 0;
 
-switch (strtolower($kunena_config->rsshistory))
+switch (JString::strtolower($kunena_config->rsshistory))
 {
 	case 'month':
 		$hours = 720;

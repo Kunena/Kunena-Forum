@@ -30,8 +30,8 @@ $kunena_config =& CKunenaConfig::getInstance();
 $kunena_session =& CKunenaSession::getInstance();
 $kunena_my =& JFactory::getUser();
 
-$func = strtolower(JRequest::getCmd('func', ''));
-if (strtolower($func) == '' ){
+$func = JString::strtolower(JRequest::getCmd('func', ''));
+if (JString::strtolower($func) == '' ){
 include (KUNENA_ABSTMPLTPATH . '/latestx.php');
 } else {
 

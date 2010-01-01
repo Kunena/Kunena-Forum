@@ -40,19 +40,6 @@ defined( '_JEXEC' ) or die('Restricted access');
 
                     <br/> <?php echo $msg_html->avatar; ?>
 
-                <?php /*
-                    $gr_title=getFBGroupName($lists["userid"]);
-
-                    if ($gr_title->id > 1)
-                        {
-                ?>
-
-                        <span class = "view-group_<?php echo $gr_title->id;?>"> <?php echo $gr_title->title; ?></span>
-
-                <?php
-                        }
-*/                ?>
-
                         <div class = "viewcover">
                         <?php
                             if (isset($msg_html->userrank))

@@ -67,7 +67,6 @@ function dofreePDF($kunena_db)
     $kunena_is_admin = CKunenaTools::isAdmin();
     $kunena_config =& CKunenaConfig::getInstance();
 
-    require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
     $kunena_is_moderator = 0;
 
     $catid = JRequest::getInt('catid', 2);

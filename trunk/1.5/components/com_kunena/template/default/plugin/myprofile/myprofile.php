@@ -274,7 +274,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     $rowu->birthdate = $bday1."-".$bday2."-".$bday3;
 
 
-                    $signature = trim($signature);
+                    $signature = JString::trim($signature);
                     //parse the message for some preliminary bbcode and stripping of HTML
                     //$rowu->signature = smile::bbencode_first_pass($signature);
                     $rowu->signature = $signature;
@@ -521,9 +521,9 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     $row = new JUser($kunena_my->id);
                     $row->orig_password = $row->password;
 
-                    $row->name = trim($row->name);
-                    $row->email = trim($row->email);
-                    $row->username = trim($row->username);
+                    $row->name = JString::trim($row->name);
+                    $row->email = JString::trim($row->email);
+                    $row->username = JString::trim($row->username);
 
                     $file = $kunena_app->getPath('com_xml', 'com_users');
                     $params = new JParameter($row->params, $file, 'component');

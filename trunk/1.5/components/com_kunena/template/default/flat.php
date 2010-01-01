@@ -25,14 +25,14 @@ defined( '_JEXEC' ) or die('Restricted access');
 $kunena_db = &JFactory::getDBO();
 $kunena_config =& CKunenaConfig::getInstance();
 
-$func = strtolower(JRequest::getCmd('func', ''));
+$func = JString::strtolower(JRequest::getCmd('func', ''));
 $id = JRequest::getInt('id', 0);
 
 global $kunena_emoticons;
 global $kunena_is_moderatorerator;
 $kunena_my = &JFactory::getUser();
 // Func Check
-if (strtolower($func) == 'latest' ||  strtolower($func) == '')
+if (JString::strtolower($func) == 'latest' ||  JString::strtolower($func) == '')
 {
 	$funclatest = 1;
 }
@@ -41,7 +41,7 @@ else
 	$funclatest = 0;
 }
 
-if (strtolower($func) == 'mylatest')
+if (JString::strtolower($func) == 'mylatest')
 {
 	$funcmylatest = 1;
 }
@@ -339,7 +339,7 @@ if (count($this->messages[0]) > 0)
 ?>
         <!-- /By -->
 
-         <?php if (strtolower($func) != 'showcat' ){ ?>
+         <?php if (JString::strtolower($func) != 'showcat' ){ ?>
         <!-- Category -->
         <span class="topic_category">
         <?php echo _KUNENA_CATEGORY.' '.CKunenaLink::GetCategoryLink('showcat', $leaf->catid, kunena_htmlspecialchars(stripslashes($leaf->catname))); ?>

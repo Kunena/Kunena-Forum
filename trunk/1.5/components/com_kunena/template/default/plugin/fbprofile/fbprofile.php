@@ -33,7 +33,6 @@ $document->setTitle(_KUNENA_USERPROFILE_PROFILE . ' - ' . stripslashes($kunena_c
 
 if ($kunena_my->id) //registered only
 {
-    require_once(KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
     require_once(KUNENA_PATH_LIB .DS. 'kunena.statsbar.php');
 
     $task = JRequest::getCmd('task', 'showprf');
@@ -171,22 +170,19 @@ function showprf($userid, $page)
         $uIsMod = 0;
         $uIsAdm = 0;
 
-        if ($ugid > 0) { //only get the groupname from the ACL if we're sure there is one
-            $agrp = strtolower($kunena_acl->get_group_name($ugid, 'ARO'));
-        }
-
         if ($ugid == 0) {
             $msg_html->usertype = _VIEW_VISITOR;
         }
         else
         {
-            if (strtolower($agrp) == "administrator" || strtolower($agrp) == "superadministrator" || strtolower($agrp) == "super administrator")
+            if (CKunenaTools::isAdmin())
             {
                 $msg_html->usertype = _VIEW_ADMIN;
                 $uIsAdm = 1;
             }
-            elseif ($uIsMod) {
+            elseif (CKunenaTools::isModerator($userinfo->id)) {
                 $msg_html->usertype = _VIEW_MODERATOR;
+                $uIsMod = 1;
             }
             else {
                 $msg_html->usertype = _VIEW_USER;

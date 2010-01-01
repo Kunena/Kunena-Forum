@@ -337,16 +337,16 @@ if ($kn_version->versionname == '@kunenaversionname@') {
 	$kunena_app->enqueueMessage(sprintf(_KUNENA_ERROR_UPGRADE_AGAIN, $kn_version->version));
 	$kunena_app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_SUPPORT.' <a href="http://www.kunena.com">www.kunena.com</a>');
 }
-if (strpos($kn_version->version, 'RC') !== false) {
+if (JString::strpos($kn_version->version, 'RC') !== false) {
 	$kn_version_name = _KUNENA_VERSION_RC;
 	$kn_version_warning = _KUNENA_VERSION_RC_WARNING;
-} else if (strpos($kn_version->version, 'BETA') !== false) {
+} else if (JString::strpos($kn_version->version, 'BETA') !== false) {
 	$kn_version_name = _KUNENA_VERSION_BETA;
 	$kn_version_warning = _KUNENA_VERSION_BETA_WARNING;
-} else if (strpos($kn_version->version, 'ALPHA') !== false) {
+} else if (JString::strpos($kn_version->version, 'ALPHA') !== false) {
 	$kn_version_name = _KUNENA_VERSION_ALPHA;
 	$kn_version_warning = _KUNENA_VERSION_ALPHA_WARNING;
-} else if (strpos($kn_version->version, 'DEV') !== false) {
+} else if (JString::strpos($kn_version->version, 'DEV') !== false) {
 	$kn_version_name = _KUNENA_VERSION_DEV;
 	$kn_version_warning = _KUNENA_VERSION_DEV_WARNING;
 }
@@ -861,10 +861,10 @@ function saveConfig($option)
 
 	foreach ($_POST as $postsetting => $postvalue)
     {
-        if (strpos($postsetting, 'cfg_') === 0)
+        if (JString::strpos($postsetting, 'cfg_') === 0)
         {
         	//remove cfg_ and force lower case
-        	$postname = strtolower(substr($postsetting, 4));
+        	$postname = JString::strtolower(JString::substr($postsetting, 4));
             $postvalue = addslashes($postvalue);
 
             // No matter what got posted, we only store config parameters defined
@@ -1064,7 +1064,7 @@ function showProfiles($kunena_db, $option, $lang, $order)
     $limitstart = $kunena_app->getUserStateFromRequest("{$option}.limitstart", 'limitstart', 0, 'int');
 
     $search = $kunena_app->getUserStateFromRequest("{$option}.search", 'search', '', 'string');
-    $search = $kunena_db->getEscaped(trim(strtolower($search)));
+    $search = $kunena_db->getEscaped(JString::trim(JString::strtolower($search)));
     $where = array ();
 
     if (isset($search) && $search != "") {
@@ -1398,7 +1398,7 @@ function browseUploaded($kunena_db, $option, $type)
             //if( preg_match('/(\.gif$|\.png$|\.jpg|\.jpeg)$/is', $file) )
             //{
             $uploaded[$uploaded_col_count] = $file;
-            $uploaded_name[$uploaded_col_count] = ucfirst(str_replace("_", " ", preg_replace('/^(.*)\..*$/', '\1', $file)));
+            $uploaded_name[$uploaded_col_count] = JString::ucfirst(str_replace("_", " ", preg_replace('/^(.*)\..*$/', '\1', $file)));
             $uploaded_col_count++;
   			//}
         }
@@ -1523,7 +1523,7 @@ function showCategories($cat, $cname, $extras = "", $levellimit = "4")
     {
         if ($this_treename)
         {
-            if ($item->id != $mitems && strpos($item->treename, $this_treename) === false) {
+            if ($item->id != $mitems && JString::strpos($item->treename, $this_treename) === false) {
                 $mitems[] = JHTML::_('select.option',$item->id, $item->treename);
             }
         }
@@ -2017,7 +2017,7 @@ function editRank($option, $id)
 				$selected = '';
 			}
 
-			if (strlen($img) > 255)
+			if (JString::strlen($img) > 255)
 			{
 				continue;
 			}
@@ -2042,7 +2042,7 @@ function KUNENA_GetAvailableModCats($catids) {
 
     foreach ($list as $item) {
         if ($this_treename) {
-            if ($item->id != $catid && strpos($item->treename, $this_treename) === false) {
+            if ($item->id != $catid && JString::strpos($item->treename, $this_treename) === false) {
                 $options[] = JHTML::_('select.option',$item->id, $item->treename);
                 }
             }
@@ -2067,7 +2067,7 @@ function KUNENA_GetAvailableModCats($catids) {
     return;
   }
 
-  $phpver = substr(phpversion(), 0, 3);
+  $phpver = JString::substr(phpversion(), 0, 3);
   // gd_info came in at 4.3
   if ($phpver < 4.3)
     return -1;

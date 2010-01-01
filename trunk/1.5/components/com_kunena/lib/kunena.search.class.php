@@ -76,7 +76,7 @@ class CKunenaSearch
         // TODO: active_in
 
 	// Default values for checkboxes depends on function
-	$this->func = strtolower(JRequest::getCmd('func'));
+	$this->func = JString::strtolower(JRequest::getCmd('func'));
 	if($this->func == 'search') {
 		$this->defaults['exactname'] = $this->defaults['childforums'] = 1;
 	} else {
@@ -122,11 +122,11 @@ class CKunenaSearch
 	$this->arr_kunena_searchstrings = array();
 	foreach ($arr_searchwords as $q)
 	{
-		$q = trim($q);
-		if (strlen($q)>2) $do_search = TRUE;
+		$q = JString::trim($q);
+		if (JString::strlen($q)>2) $do_search = TRUE;
 		$this->arr_kunena_searchstrings[] = $q;
 	}
-	if (strlen($this->params['searchuser'])>0) $do_search = TRUE;
+	if (JString::strlen($this->params['searchuser'])>0) $do_search = TRUE;
         $arr_searchwords = $this->arr_kunena_searchstrings;
 	$this->str_kunena_username = $this->params['searchuser'];
 
@@ -149,7 +149,7 @@ class CKunenaSearch
         for ($x = 0; $x < count($arr_searchwords); $x++)
         {
             $searchword = $arr_searchwords[$x];
-            $searchword = $kunena_db->getEscaped(addslashes(trim($searchword)));
+            $searchword = $kunena_db->getEscaped(addslashes(JString::trim($searchword)));
             if (empty($searchword)) continue;
             $matches = array ();
             $not = '';
@@ -159,7 +159,7 @@ class CKunenaSearch
             {
                 $not = 'NOT';
                 $operator = 'AND';
-                $searchword = substr($searchword, 1);
+                $searchword = JString::substr($searchword, 1);
             }
 
             if($this->params['titleonly']=='0')
@@ -171,7 +171,7 @@ class CKunenaSearch
         }
 
 		//User searching
-        if(strlen($this->params['searchuser'])>0)
+        if(JString::strlen($this->params['searchuser'])>0)
         {
             if($this->params['exactname']=='1') {
                 $querystrings[] = "m.name LIKE '" . $kunena_db->getEscaped(addslashes($this->params['searchuser'])) . "'";
@@ -461,7 +461,7 @@ class CKunenaSearch
 				// Cleanup incoming searchword; international chars can cause garbage at the end
 				// real problem might lie with search box form and how we post and receive the data
 				// However, this works for now
-				$q = trim($q);
+				$q = JString::trim($q);
 
                 // JJ Add different color
                 $searchlist = $this->get_searchstrings();
@@ -476,7 +476,7 @@ class CKunenaSearch
                     // Strip smiles and bbcode out of search results; they look ugly
                     $resmessage = CKunenaTools::prepareContent($resmessage);
                     $resmessage = smile::purify($resmessage);
-                    $resmessage = kn_mb_substr(kunena_htmlspecialchars($resmessage), 0, 300);
+                    $resmessage = JString::substr(kunena_htmlspecialchars($resmessage), 0, 300);
                     $resmessage = smile::htmlwrap($resmessage, $kunena_config->wrap);
                     $utf8 = (KUNENA_CHARSET == 'UTF-8') ? "u" : "";
 

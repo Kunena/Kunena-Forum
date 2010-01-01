@@ -322,7 +322,7 @@ if (count ( $this->messages [0] ) > 0) {
 			}
 			?>
 			</div>
-
+			</td>
 			<?php
 		} else {
 			$threadPages = 0;

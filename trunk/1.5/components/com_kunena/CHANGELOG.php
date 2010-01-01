@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+01-Jan-2010 810
+^[#19213] rss image isn't always displayed in config backend
+
 01-Jan-2010 Matias
 # [#19065] More frontend cleanup based on code analysis - fixed various bugs
 # [#19065] Fixed bugs while posting caused by code cleanup

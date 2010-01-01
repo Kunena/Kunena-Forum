@@ -765,7 +765,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <img src = "/images/M_images/livemarks.png"/> <?php echo _COM_A_RSS_DESC ?>
+                        <img src = "<?php echo JURI::root();?>/images/M_images/livemarks.png"/> <?php echo _COM_A_RSS_DESC ?>
                     </td>
                 </tr>
 

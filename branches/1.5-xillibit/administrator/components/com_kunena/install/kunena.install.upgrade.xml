@@ -243,8 +243,9 @@
 		) DEFAULT CHARSET=utf8;</query>
 		<query>ALTER TABLE `#__fb_messages` ADD COLUMN `poll_exist` SMALLINT(3)</query>
 		<phpfile name="kunena.special.install.php" />
+		<phpfile name="kunena.special.upgrade.poll.php" />
    	</install>
-	<upgrade>
+	<upgrade>	  	
 		<version version="1.0.5" versiondate="2008-12-1" build="855" versionname="Redwood">
 			<phpfile name="kunena.special.upgrade.1.0.5.php" />
 			<query mode="silenterror">ALTER TABLE `#__fb_attachments` ADD KEY `mesid`(`mesid`), COMMENT=''</query>

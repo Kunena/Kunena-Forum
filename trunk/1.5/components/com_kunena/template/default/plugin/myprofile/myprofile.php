@@ -63,18 +63,13 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
     $uIsMod = 0;
     $uIsAdm = 0;
 
-    if ($ugid > 0)
-    { //only get the groupname from the ACL if we're sure there is one
-        $agrp = strtolower($kunena_acl->get_group_name($ugid, 'ARO'));
-    }
-
     if ($ugid == 0)
     {
         $usr_usertype = _VIEW_VISITOR;
     }
     else
     {
-        if (strtolower($agrp) == "administrator" || strtolower($agrp) == "superadministrator" || strtolower($agrp) == "super administrator")
+        if (CKunenaTools::isAdmin())
         {
             $usr_usertype = _VIEW_ADMIN;
             $uIsAdm = 1;
@@ -376,7 +371,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                 case "showmod":
                     //get all forums for which this user is assigned as moderator, BUT only if the user isn't an admin
                     //since these are moderators for all forums (regardless if a forum is set to be moderated)
-                    if (!$kunena_is_admin)
+                    if (!CKunenaTools::isAdmin())
                     {
                         $kunena_db->setQuery("SELECT m.catid, c.id, c.name FROM #__fb_moderation AS m LEFT JOIN #__fb_categories AS c ON c.id=m.catid WHERE m.userid='{$kunena_my->id}'");
                         $modslist = $kunena_db->loadObjectList();

@@ -2915,7 +2915,7 @@ else {
 						<?php echo _KUNENA_ISMOD; ?>
 <?php
 //admins are always moderators
-if (CKunenaTools::isModOrAdmin($uid))
+if (CKunenaTools::isAdmin($uid))
 {
                     echo _KUNENA_ISADM; ?> <input type = "hidden" name = "moderator" value = "1">
 <?php

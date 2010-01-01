@@ -21,6 +21,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $kunena_db = &JFactory::getDBO();
+$kunena_session =& CKunenaSession::getInstance();
 
 global $kunena_emoticons;
 ?>

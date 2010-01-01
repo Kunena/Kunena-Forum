@@ -84,6 +84,7 @@ if (in_array($catid, $threadids))
 
 //get the allowed forums and turn it into an array
 $allow_forum = ($kunena_session->allowed <> '')?explode(',', $kunena_session->allowed):array();
+$kunena_is_admin = CKunenaTools::isAdmin();
 
 // (JJ) BEGIN: ANNOUNCEMENT BOX
 if ($kunena_config->showannouncement > 0)
@@ -151,10 +152,6 @@ if (count($categories[0]) > 0)
 {
     foreach ($categories[0] as $cat)
     {
-        $obj_fb_cat = new jbCategory($kunena_db, $cat->id);
-
-        $kunena_is_moderator = fb_has_moderator_permission($kunena_db, $obj_fb_cat, $kunena_my->id, $kunena_is_admin);
-
         if (in_array($cat->id, $allow_forum))
         {
 ?>
@@ -224,10 +221,6 @@ if (count($categories[0]) > 0)
                     {
                         foreach ($rows as $singlerow)
                         {
-
-                            $obj_fb_cat = new jbCategory($kunena_db, $singlerow->id);
-                            $kunena_is_moderator = fb_has_moderator_permission($kunena_db, $obj_fb_cat, $kunena_my->id, $kunena_is_admin);
-
                             if (in_array($singlerow->id, $allow_forum))
                             {
                                 //    $k=for alternating row colors:
@@ -265,32 +258,6 @@ if (count($categories[0]) > 0)
                                     }
                                 }
 
-                                // get pending messages if user is a Moderator for that forum
-                                $kunena_db->setQuery("SELECT userid FROM #__fb_moderation WHERE catid='{$singlerow->id}'");
-                                $moderatorList = $kunena_db->loadObjectList();
-                                	check_dberror("Unable to load moderators.");
-                                $modIDs[] = array ();
-
-                                array_splice($modIDs, 0);
-
-                                if (count($moderatorList) > 0)
-                                {
-                                    foreach ($moderatorList as $ml) {
-                                        $modIDs[] = $ml->userid;
-                                    }
-                                }
-
-                                $nummodIDs = count($modIDs);
-                                $numPending = 0;
-
-                                if ((in_array($kunena_my->id, $modIDs)) || $kunena_is_admin == 1)
-                                {
-                                    $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE catid='{$singlerow->id}' AND hold='1'");
-                                    $numPending = $kunena_db->loadResult();
-                                    $kunena_is_moderator = 1;
-                                }
-
-                                $numPending = (int)$numPending;
                                 //    get latest post info
                                 $kunena_db->setQuery(
                                 "SELECT m.thread, COUNT(*) AS totalmessages
@@ -549,8 +516,10 @@ if (count($categories[0]) > 0)
                                         <?php
                                         }
 
-                                        if ($kunena_is_moderator)
+                                        if (CKunenaTools::isModerator($kunena_my->id, $singlerow->id))
                                         {
+		                                    $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE catid='{$singlerow->id}' AND hold='1'");
+        		                            $numPending = $kunena_db->loadResult();
                                             if ($numPending > 0)
                                             {
                                                 echo '<div class="fbs"><font color="red"> ';

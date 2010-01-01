@@ -22,10 +22,10 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-$kunena_config =& CKunenaConfig::getInstance();
 require_once(KUNENA_PATH_LIB .DS. 'kunena.helpers.php');
 require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
 
+$kunena_config =& CKunenaConfig::getInstance();
 $attachimage = JRequest::getVar('attachimage', NULL, 'FILES', 'array');
 $filename = CKunenaFile::makeSafe($attachimage['name']);
 

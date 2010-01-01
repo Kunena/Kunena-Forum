@@ -174,7 +174,7 @@ else
                     $nummodIDs = count($modIDs);
                     $numPending = 0;
 
-                    if ((in_array($kunena_my->id, $modIDs)) || $kunena_is_admin == 1)
+                    if ((in_array($kunena_my->id, $modIDs)) || CKunenaTools::isAdmin() == 1)
                     {
                         $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE catid='{$singlerow->id}' AND hold='1'");
                         $numPending = $kunena_db->loadResult();
@@ -406,11 +406,11 @@ else
                             echo '</font></div>';
                         }
                     }
-
-                    echo "</td>";
-                    echo " <td class=\"td-3  fbm\" align=\"center\" >$numtopics</td>";
-                    echo " <td class=\"td-4  fbm\" align=\"center\" >$numreplies</td>";
-
+?>
+                    </td>
+                    <td class="td-3 fbm" align="center" ><?php echo $numtopics; ?></td>
+                    <td class="td-4 fbm" align="center" ><?php echo $numreplies; ?></td>
+<?php
                     if ($numtopics != 0)
                     {
             ?>

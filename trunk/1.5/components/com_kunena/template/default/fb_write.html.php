@@ -25,6 +25,7 @@ global $kunena_is_moderator;
 
 $kunena_db = &JFactory::getDBO();
 $kunena_config =& CKunenaConfig::getInstance();
+$kunena_my = &JFactory::getUser();
 
 $id = JRequest::getInt('id', 0);
 
@@ -34,6 +35,8 @@ if (!isset($setFocus)) $setFocus = 0;
 if (!isset($no_image_upload)) $no_image_upload = 0;
 if (!isset($no_file_upload)) $no_file_upload = 0;
 $authorName = stripslashes($authorName);
+
+$kunena_is_moderator = CKunenaTools::isModerator($kunena_my->id, $catid);
 
 include_once(KUNENA_PATH_LIB .DS. 'kunena.bbcode.js.php');
 

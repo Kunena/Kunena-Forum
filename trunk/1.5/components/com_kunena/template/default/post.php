@@ -25,15 +25,14 @@ $kunena_app =& JFactory::getApplication();
 $kunena_config =& CKunenaConfig::getInstance();
 $kunena_session =& CKunenaSession::getInstance();
 
-global $kunena_is_moderator, $kunena_systime, $kunena_is_admin;
-global $kunena_this_cat, $imageLocation, $fileLocation, $board_title;
+global $kunena_is_moderator, $kunena_systime;
+global $imageLocation, $fileLocation, $board_title;
 
 $catid = JRequest::getInt('catid', 0);
 $id    = JRequest::getInt('id', 0);
 $do    = JRequest::getCmd('do', '');
 
 $kunena_my  = &JFactory::getUser();
-$kunena_acl = &JFactory::getACL();
 $kunena_db  = &JFactory::getDBO();
 
 $action 		= JRequest::getCmd('action', '');
@@ -62,6 +61,7 @@ if ($id && $do != 'domovepost' && $do != 'domergepost' && $do != 'dosplit')
 
 //get the allowed forums and turn it into an array
 $allow_forum = ($kunena_session->allowed <> '')?explode(',', $kunena_session->allowed):array();
+$kunena_is_admin = CKunenaTools::isAdmin();
 
 if (!in_array($catid, $allow_forum))
 {
@@ -270,6 +270,8 @@ $catName = $objCatInfo->name;
                                         $kunena_db->setQuery("INSERT INTO #__fb_messages_text (mesid,message) VALUES('$pid',".$kunena_db->quote($message).")");
                                         $kunena_db->query();
 
+                                        $kunena_this_cat = new jbCategory($kunena_db, $catid);
+
                                         // A couple more tasks required...
                                         if ($thread == 0) {
                                             //if thread was zero, we now know to which id it belongs, so we can determine the thread and update it
@@ -446,7 +448,7 @@ $catName = $objCatInfo->name;
 
                                             //clean up the message
                                             $mailmessage = smile::purify($message);
-                                            $kunena_db->setQuery("SELECT * FROM #__fb_subscriptions AS a"
+                                            $kunena_db->setQuery("SELECT u.id, u.name, u.username, u.email FROM #__fb_subscriptions AS a"
                                             . " LEFT JOIN #__users AS u ON a.userid=u.id "
                                             . " WHERE u.block='0' AND a.thread='{$querythread}'");
 
@@ -462,13 +464,14 @@ $catName = $objCatInfo->name;
                                                 {
 													//check for permission
 													if ($subs->id) {
+														$kunena_acl = &JFactory::getACL();
+
 														$_arogrp = $kunena_acl->getAroGroup($subs->id);
-														$_arogrp->group_id = $_arogrp->id;
-														$_isadm = (strtolower($_arogrp->name) == 'super administrator' || strtolower($_arogrp->name) == 'administrator');
+														$_isadm = CKunenaTools::isAdmin();
 													}
-														if (!fb_has_moderator_permission($kunena_db, $_catobj, $subs->id, $_isadm)) {
+														if (!CKunenaTools::isModerator($subs->id, $catid)) {
 															$allow_forum = array();
-															if (!fb_has_read_permission($_catobj, $allow_forum, $_arogrp->group_id, $kunena_acl)) {
+															if (!fb_has_read_permission($_catobj, $allow_forum, $_arogrp->id, $kunena_acl)) {
 																//maybe remove record from subscription list?
 																continue;
 														}
@@ -1116,9 +1119,8 @@ $catName = $objCatInfo->name;
                     $oldRecord = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load messages.");
 
-                    $newCatObj = new jbCategory($kunena_db, $oldRecord[0]->catid);
-		    if (!fb_has_moderator_permission($kunena_db, $newCatObj, $kunena_my->id, $kunena_is_admin)) {
-			$kunena_app->redirect(htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+		    		if (!CKunenaTools::isModerator($kunena_my->id, $oldRecord[0]->catid)) {
+						$kunena_app->redirect(htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
 
                     $newSubject = _MOVED_TOPIC . " " . $oldRecord[0]->subject;
@@ -1167,26 +1169,10 @@ $catName = $objCatInfo->name;
                     $catid = (int)$catid;
                     $id = (int)$id;
                     $success_msg = _POST_NO_SUBSCRIBED_TOPIC;
-                    $kunena_db->setQuery("SELECT thread, catid from #__fb_messages WHERE id='{$id}'");
+                    $kunena_db->setQuery("SELECT thread FROM #__fb_messages WHERE id='{$id}'");
                     if ($id && $kunena_my->id && $kunena_db->query())
                     {
-						$row = $kunena_db->loadObject();
-
-						//check for permission
-						if (!$kunena_is_moderator) {
-							if ($kunena_session->allowed != "na")
-								$allow_forum = explode(',', $kunena_session->allowed);
-							else
-								$allow_forum = array ();
-
-								$obj_fb_cat = new jbCategory($kunena_db, $row->catid);
-								if (!fb_has_read_permission($obj_fb_cat, $allow_forum, $aro_group->id, $kunena_acl)) {
-									$kunena_app->redirect(htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
-								return;
-							}
-						}
-
-                        $thread = $row->thread;
+                        $thread = $kunena_db->loadResult();
                         $kunena_db->setQuery("INSERT INTO #__fb_subscriptions (thread,userid) VALUES ('$thread','$kunena_my->id')");
 
                         if (@$kunena_db->query() && $kunena_db->getAffectedRows()==1) {
@@ -1218,7 +1204,7 @@ $catName = $objCatInfo->name;
                     $catid = (int)$catid;
                     $id = (int)$id;
                     $success_msg = _POST_NO_FAVORITED_TOPIC;
-                    $kunena_db->setQuery("SELECT MAX(thread) AS thread FROM #__fb_messages WHERE id='{$id}'");
+                    $kunena_db->setQuery("SELECT thread FROM #__fb_messages WHERE id='{$id}'");
                     if ($id && $kunena_my->id && $kunena_db->query())
                     {
                         $thread = $kunena_db->loadResult();

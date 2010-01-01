@@ -26,10 +26,8 @@ defined( '_JEXEC' ) or die('Restricted access');
 require_once (JPATH_BASE  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 
 global $kunena_is_moderator;
-global $my_id;
 
 global $message;
-global $Itemid;
 global $maxPosts;
 global $kunena_this_cat;
 
@@ -70,6 +68,7 @@ $kunena_app = JFactory::getApplication();
 // Redirect Forum Jump
 if (isset($_POST['func']) && $func == "showcat")
 {
+	$Itemid = JRequest::getInt('Itemid', 0, 'REQUEST');
 	header("HTTP/1.1 303 See Other");
 	header("Location: " . htmlspecialchars_decode(JRoute::_('index.php?option=com_kunena&amp;Itemid=' . $Itemid . '&amp;func=showcat&amp;catid=' . $catid)));
 	$kunena_app->close();
@@ -90,13 +89,15 @@ require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 // Get CKunanaUser and CKunenaUsers
 require_once (KUNENA_PATH_LIB .DS. "kunena.user.class.php");
 
-global $kunena_config, $kunenaProfile, $kunena_db;
+global $kunenaProfile;
 
 // Get data about the current user - its ok to not have a userid = guest
 $kunena_my = &JFactory::getUser();
 $KunenaUser = new CKunenaUser($kunena_my->id);
 // Load configuration and personal settings for current user
 $kunena_config =& CKunenaConfig::getInstance();
+$kunena_db = &JFactory::getDBO();
+
 
 // JOOMLA STYLE CHECK
 define('KUNENA_BOARD_CLASS', ($kunena_config->joomlastyle?'':'fb_'));
@@ -113,27 +114,13 @@ if ($kn_tables->installed() === false) {
 	$kunena_config->board_offline = 1;
 }
 
-// Permissions: Check for administrators and moderators
-global $aro_group, $kunena_is_admin;
-$kunena_acl = &JFactory::getACL();
-if ($kunena_my->id != 0)
-{
-    $aro_group = $kunena_acl->getAroGroup($kunena_my->id);
-   	$aro_group->id = $aro_group->id;
-    $kunena_is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
-}
-else
-{
-    $aro_group = new StdClass();
-    $aro_group->id = 0;
-    $kunena_is_admin = 0;
-}
+// Class structure should be used after this and all the common task should be moved to this class
+require_once (KUNENA_PATH .DS. "class.kunena.php");
 
-//Get the userid; sometimes the new var works whilst $kunena_my->id doesn't..?!?
-$my_id = $kunena_my->id;
+$kunena_is_admin = CKunenaTools::isAdmin();
 
 // Check if we only allow registered users
-if ($kunena_config->regonly && !$my_id)
+if ($kunena_config->regonly && !$kunena_my->id)
 {
     echo '<div>' . _FORUM_UNAUTHORIZIED . '</div>';
     echo '<div>' . _FORUM_UNAUTHORIZIED2 . '</div>';
@@ -149,15 +136,12 @@ else
 // Forum is online:
 
 global $lang, $kunena_emoticons;
-global $kunena_is_moderator, $board_title;
+global $board_title;
 
-global $message, $settings, $kunena_systime;
+global $settings, $kunena_systime;
 
 // Central Location for all internal links
 require_once (KUNENA_PATH_LIB .DS. "kunena.link.class.php");
-
-// Class structure should be used after this and all the common task should be moved to this class
-require_once (KUNENA_PATH .DS. "class.kunena.php");
 
 if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'smile.class.php'))
 {
@@ -285,18 +269,13 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.permissions.php');
 require_once (KUNENA_PATH_LIB .DS. 'kunena.category.class.php');
 require_once (JPATH_BASE.'/libraries/joomla/template/template.php');
 
-if ($catid != '')
-{
-    $kunena_this_cat = new jbCategory($kunena_db, $catid);
-}
-
 $KunenaTemplate = new patTemplate();
 $KunenaTemplate->setRoot( KUNENA_ABSTMPLTPATH );
 
 $KunenaTemplate->readTemplatesFromFile("header.html");
 $KunenaTemplate->readTemplatesFromFile("footer.html");
 
-$kunena_is_moderator = fb_has_moderator_permission($kunena_db, $kunena_this_cat, $kunena_my->id, $kunena_is_admin);
+$kunena_is_moderator = CKunenaTools::isModerator($kunena_my->id, $catid);
 
 if ($func == '') // Set default start page as per config settings
 {
@@ -332,7 +311,6 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
 	// We only do the session handling for registered users
 	// No point in keeping track of whats new for guests
-	global $kunena_session;
 	$kunena_session =& CKunenaSession::getInstance(true);
 	if ($kunena_my->id > 0)
 	{
@@ -346,7 +324,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 			$kunena_session->markAllCategoriesRead();
 		}
 
-		$kunena_session->updateAllowedForums($kunena_my->id, $aro_group, $kunena_acl);
+		$kunena_session->updateAllowedForums($kunena_my->id);
 
 		// save fbsession
 		$kunena_session->save($kunena_session);
@@ -459,7 +437,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
     switch ($func)
     {
         case 'view':
-            $fbMenu = kunena_get_menu(NULL, $kunena_config, $kunena_emoticons, $my_id, 3, $view, $catid, $id, $thread);
+            $fbMenu = kunena_get_menu(NULL, $kunena_config, $kunena_emoticons, $kunena_my->id, 3, $view, $catid, $id, $thread);
 
             break;
 
@@ -469,11 +447,11 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
             $numPending = $kunena_db->loadResult();
             	check_dberror('Unable load pending messages.');
 
-            $fbMenu = kunena_get_menu(NULL, $kunena_config, $kunena_emoticons, $my_id, 2, $view, $catid, $id, $thread, $kunena_is_moderator, $numPending);
+            $fbMenu = kunena_get_menu(NULL, $kunena_config, $kunena_emoticons, $kunena_my->id, 2, $view, $catid, $id, $thread, $kunena_is_moderator, $numPending);
             break;
 
         default:
-            $fbMenu = kunena_get_menu(NULL, $kunena_config, $kunena_emoticons, $my_id, 1, $view);
+            $fbMenu = kunena_get_menu(NULL, $kunena_config, $kunena_emoticons, $kunena_my->id, 1, $view);
 
             break;
     }

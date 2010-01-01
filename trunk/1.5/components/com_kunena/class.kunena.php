@@ -29,7 +29,7 @@ $kunena_app =& JFactory::getApplication();
 define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH .DS. "templates".DS . $kunena_app->getTemplate());
 define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "templates/".$kunena_app->getTemplate());
 
-global $kunena_config, $kunena_db, $kunena_my;
+global $kunena_db, $kunena_my;
 
 require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 
@@ -614,7 +614,7 @@ class CKunenaTools {
         $kunena_my = &JFactory::getUser();
 		$kunena_db = &JFactory::getDBO();
 
-        if (!CKunenaTools::isModOrAdmin() && !$isMod) {
+        if (!CKunenaTools::isAdmin() && !$isMod) {
             $kunena_app->redirect($return, _POST_NOT_MODERATOR);
             }
 
@@ -719,24 +719,32 @@ class CKunenaTools {
             $kunena_app->redirect($return, _KUNENA_BULKMSG_DELETED);
         }
 
-    function isModOrAdmin($id = 0) {
-        $kunena_my = &JFactory::getUser();
-// echo '<div>CALL isModOrAdmin</div>';
-        $userid = intval($id);
+    function isAdmin($user = false) {
+    	if ($user === false) $user = &JFactory::getUser();
+    	if (!is_object($user)) $user = new JUser((int)$user);
+		if($user->usertype == "Super Administrator" || $user->usertype == "Administrator")
+			return true;
+		return false;
+    }
 
-        if ($userid) {
-            $user = new JUser($userid);
-            }
-        else {
-            $user = $kunena_my;
-            }
-
-        if (strtolower($user->usertype) == 'super administrator' || strtolower($user->usertype) == 'administrator') {
-            return true;
-            }
-
-            return false;
-        }
+	function isModerator($uid, $catid=0) {
+		$uid = (int)$uid;
+		$catid = (int)$catid;
+		if ($uid == 0) return false; // Anonymous never has moderator permission
+		if (self::isAdmin($uid)) return true;
+		$kunena_db = &JFactory::getDBO();
+		if ($catid) {
+			$kunena_db->setQuery ( "SELECT m.userid FROM #__fb_categories AS c INNER JOIN #__fb_moderation AS m ON c.id=m.catid WHERE c.moderated=1 AND m.catid='{$catid}' AND m.userid='{$uid}'" );
+			if ($kunena_db->loadResult() == $uid) return true;
+			// Check if we have forum wide moderator - not limited to particular categories
+			$kunena_db->setQuery ( "SELECT u.userid FROM #__fb_users AS u LEFT JOIN #__fb_moderation AS m ON u.id=m.userid WHERE u.id={$uid} AND m.userid IS NULL" );
+			if ($kunena_db->loadResult() == $uid) return true;
+		} else {
+			$kunena_db->setQuery ( "SELECT u.userid FROM #__fb_users AS u WHERE u.id={$uid}" );
+			if ($kunena_db->loadResult() == $uid) return true;
+		}
+		return false;
+	}
 
     function fbMovePosts($catid, $isMod, $return) {
     	$kunena_app =& JFactory::getApplication();
@@ -750,7 +758,7 @@ class CKunenaTools {
 		$isMod = $kunena_db->loadResult();
 		check_dberror("Unable to load moderation info.");
 	}
-	$isAdmin = CKunenaTools::isModOrAdmin();
+	$isAdmin = CKunenaTools::isAdmin();
 
         //isMod will stay until better group management comes in
         if (!$isAdmin && !$isMod) {
@@ -770,8 +778,7 @@ class CKunenaTools {
 	            $oldRecord = $kunena_db->loadObjectList();
 	            	check_dberror("Unable to load message detail.");
 
-                    $newCatObj = new jbCategory($kunena_db, $oldRecord[0]->catid);
-		    if (fb_has_moderator_permission($kunena_db, $newCatObj, $kunena_my->id, $isAdmin)) {
+		    if (CKunenaTools::isModerator($kunena_my->id, $oldRecord[0]->catid)) {
 
 		        $newSubject = _MOVED_TOPIC . " " . $oldRecord[0]->subject;
 		        $kunena_db->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE thread='{$id}'");
@@ -839,8 +846,17 @@ class CKunenaTools {
 		return $content;
 	}
 
-	function getAllowedForums($uid = 0, $gid = 0, &$kunena_acl) {
-        	$kunena_db = &JFactory::getDBO();
+	function getAllowedForums($uid, $unused = 0, $unused2 = 0) {
+		$kunena_acl = &JFactory::getACL();
+		$kunena_db = &JFactory::getDBO();
+
+        if ($uid != 0)
+        {
+        	$aro_group = $kunena_acl->getAroGroup($uid);
+			$gid = $aro_group->id;
+		} else {
+			$gid = 0;
+		}
 
 			function _has_rights(&$kunena_acl, $gid, $access, $recurse) {
 				if ($gid == $access) return 1;
@@ -991,7 +1007,6 @@ class fbForum
 }
 
 function JJ_categoryArray($admin=0) {
-    global $aro_group;
     $kunena_db = &JFactory::getDBO();
 
     // get a list of the menu items

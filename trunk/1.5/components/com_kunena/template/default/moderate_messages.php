@@ -29,7 +29,7 @@ $kunena_my = &JFactory::getUser();
 //securing form elements
 $catid = (int)$catid;
 
-if (!$kunena_is_moderator) {
+if (!CKunenaTools::isModerator($kunena_my->id, $catid)) {
     die ("You are not a moderator!!<br />This error is logged and your IP address has been sent to the SuperAdmin(s) of this site; sorry..");
 }
 

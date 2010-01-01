@@ -41,7 +41,8 @@ global $kunena_is_admin;
 
 	<tbody>
 		<?php
-		if (!$kunena_is_admin)
+
+		if (!CKunenaTools::isAdmin())
 		{
 			$enum = 1; //reset value
 			$tabclass = array

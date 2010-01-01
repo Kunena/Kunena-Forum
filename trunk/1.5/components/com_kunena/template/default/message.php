@@ -22,8 +22,6 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $kunena_is_moderator;
-
 $kunena_my = &JFactory::getUser();
 $kunena_config =& CKunenaConfig::getInstance();
 $kunena_db = &JFactory::getDBO();
@@ -376,7 +374,7 @@ if ($kunena_config->fb_profile == 'cb')
                         echo " " . $msg_html->reply;
                         echo " " . $msg_html->quote;
 
-			if ($kunena_is_moderator) echo ' </div><div class="fb_message_buttons_row">';
+						if (CKunenaTools::isModerator($kunena_my->id, $catid)) echo ' </div><div class="fb_message_buttons_row">';
 
                         if (isset($msg_html->merge)) {
                              echo " " . $msg_html->merge;

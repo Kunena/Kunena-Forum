@@ -60,12 +60,11 @@ class fbpdfwrapper {
 
 function dofreePDF($kunena_db)
 {
-    global $aro_group, $kunena_is_admin;
-
     $kunena_app =& JFactory::getApplication();
 
     $kunena_acl = &JFactory::getACL();
     $kunena_my = &JFactory::getUser();
+    $kunena_is_admin = CKunenaTools::isAdmin();
     $kunena_config =& CKunenaConfig::getInstance();
 
     require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
@@ -92,8 +91,8 @@ function dofreePDF($kunena_db)
         $row = $kunena_db->loadObjectList();
                 check_dberror("Unable to load category detail.");
 
-
-        $allow_forum = explode(',', CKunenaTools::getAllowedForums($kunena_my->id, $aro_group->id, $kunena_acl));
+        $kunena_session =& CKunenaSession::getInstance();
+		$allow_forum = ($kunena_session->allowed <> '')?explode(',', $kunena_session->allowed):array();
     }
 
 	if ($kunena_is_moderator || in_array($catid, $allow_forum))

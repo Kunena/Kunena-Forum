@@ -47,8 +47,6 @@ if ($kunena_my->id)
         $avatar = $user->avatar;
         $ordering = $user->ordering;
 
-        list($avWidth, $avHeight) = @getimagesize($avatar);
-
         //use integration avatar if configured
         if ($kunena_config->avatar_src == "pmspro")
         {
@@ -66,6 +64,8 @@ if ($kunena_my->id)
         	$avatar = $fbavatar;
         }
 
+        list($avWidth, $avHeight) = @getimagesize($avatar);
+
         //get all subscriptions for this user
         $kunena_db->setQuery("SELECT thread FROM #__fb_subscriptions WHERE userid='{$kunena_my->id}'");
         $subslist = $kunena_db->loadObjectList();
@@ -80,7 +80,7 @@ if ($kunena_my->id)
 
         //get all forums for which this user is assigned as moderator, BUT only if the user isn't an admin
         //since these are moderators for all forums (regardless if a forum is set to be moderated)
-        if (!$kunena_is_admin)
+        if (!CKunenaTools::isAdmin())
         {
             $kunena_db->setQuery("SELECT c.id, c.name FROM #__fb_moderation AS m LEFT JOIN #__fb_categories AS c ON c.id=m.catid WHERE m.userid='{$kunena_my->id}'");
             $modslist = $kunena_db->loadObjectList();
@@ -488,7 +488,7 @@ if ($kunena_my->id)
 
             <tbody>
                 <?php
-                if (!$kunena_is_admin)
+                if (!CKunenaTools::isAdmin())
                 {
                     $enum = 1; //reset value
                     $tabclass = array
@@ -531,7 +531,8 @@ if ($kunena_my->id)
         $signature = JRequest::getVar('message', '');
         $newview = JRequest::getVar('newview', 'flat');
         $avatar = JRequest::getVar('avatar', '');
-        (int)$neworder = JRequest::getInt('neworder', 0);
+        $thread = JRequest::getInt('thread', 0);
+        $neworder = JRequest::getInt('neworder', 0);
 
         if ($deleteSig == 1) {
         	$signature = "";

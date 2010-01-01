@@ -42,7 +42,7 @@ defined( '_JEXEC' ) or die('Restricted access');
  *             Only needs to be passed when type==3 or type==2
  * @param int $thread
  *             Only needs to be passed when type==3 or type==2 (well actually just give 0 when type==2)
- * @param boolean $kunena_is_moderatorerator
+ * @param boolean $kunena_is_moderator
  *             Only needs to be passed when type==2
  * @param int $numPending
  *             Number of pending messages, only needs to be passed when type==2
@@ -51,7 +51,7 @@ defined( '_JEXEC' ) or die('Restricted access');
  */
 
 function kunena_get_menu($cbitemid, $kunena_config, $kunena_emoticons, $my_id, $type, $view = "", $catid = 0, $id = 0,
-							$thread = 0, $kunena_is_moderatorerator = false, $numPending = 0)
+							$thread = 0, $kunena_is_moderator = false, $numPending = 0)
 {
 	$func = strtolower(JRequest::getCmd('func', ''));
 	if ($func == '') // Set default as per config settings
@@ -129,14 +129,13 @@ function kunena_get_menu($cbitemid, $kunena_config, $kunena_emoticons, $my_id, $
 //                $header .= CKunenaLink::GetViewLink('showcat', $id, $catid, 'flat', '<span>'. _GEN_FLAT_VIEW .'</span>');
 //                $header .= '</li>';
 //			}
-            if ($kunena_is_moderatorerator)
+            if ($kunena_is_moderator)
             {
                 if ($numPending > 0)
                 {
-                    $numcolor = '<font color="red">';
                     $header .= '<li>';
                     $header .= CKunenaLink::GetPendingMessagesLink( $catid, '<span>'.(array_key_exists('pendingmessages', $kunena_emoticons)
-                        ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['pendingmessages'] . '" border="0" alt="' . $numPending . ' ' . _SHOWCAT_PENDING . '" />' : $numcolor . '' . $numPending . '</font> ' . _SHOWCAT_PENDING).'</span>');
+                        ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['pendingmessages'] . '" border="0" alt="' . $numPending . ' ' . _SHOWCAT_PENDING . '" />' : '<font color="red">' . $numPending . '</font> ' . _SHOWCAT_PENDING).'</span>');
                     $header .= '</li>';
                 }
             }

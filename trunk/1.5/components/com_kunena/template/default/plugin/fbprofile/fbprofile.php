@@ -75,9 +75,7 @@ function showprf($userid, $page)
 		echo '<h3>' . _KUNENA_PROFILE_NO_USER . '</h3>';
 		return;
 	} else {
-		// Check moderator status (admin is moderator)
-		$aro_group = $kunena_acl->getAroGroup($userid);
-		$kunena_is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
+		$kunena_is_admin = CKunenaTools::isAdmin();
 
 		// there's no profile; set userid and moderator status.
 		$kunena_db->setQuery("INSERT INTO #__fb_users (userid,moderator) VALUES ('$userid','$kunena_is_admin')");

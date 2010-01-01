@@ -250,9 +250,10 @@ $catName = $objCatInfo->name;
                                 $kunena_db->setQuery("SELECT m.id FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE m.userid='{$kunena_my->id}' AND m.name='{$fb_authorname}' AND m.email='{$email}' AND m.subject='{$subject}' AND m.ip='{$ip}' AND t.message='{$message}' AND m.time>='{$duplicatetimewindow}'");
                                 $existingPost = $kunena_db->loadObject();
                                 	check_dberror('Unable to load post.');
+                                $pid = 0;
                                 if ($existingPost !== null) $pid = $existingPost->id;
 
-                                if (!isset($pid))
+                                if (!$pid)
                                 {
                                     $kunena_db->setQuery("INSERT INTO #__fb_messages
                                     						(parent,thread,catid,name,userid,email,subject,time,ip,topic_emoticon,hold)
@@ -482,11 +483,11 @@ $catName = $objCatInfo->name;
                                                     $mailsubject = "[".stripslashes($board_title)." "._GEN_FORUM."] " . stripslashes($messagesubject) . " (" . stripslashes($catName) . ")";
 
                                                     $msg = "$subs->name,\n\n";
-                                                    $msg .= trim(_COM_A_NOTIFICATION1)." ".stripslashes($board_title)." "._GEN_FORUM."\n\n";
+                                                    $msg .= trim(_KUNENA_POST_EMAIL_NOTIFICATION1)." ".stripslashes($board_title)." "._GEN_FORUM."\n\n";
                                                     $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
                                                     $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
                                                     $msg .= _VIEW_POSTED.": " . stripslashes($fb_authorname) . "\n\n";
-                                                    $msg .= _COM_A_NOTIFICATION2.'\n';
+                                                    $msg .= _KUNENA_POST_EMAIL_NOTIFICATION2.'\n';
                                                     $msg .= "URL: $LastPostUrl\n\n";
                                                     if ($kunena_config->mailfull == 1) {
                                                         $msg .= _GEN_MESSAGE.":\n-----\n";
@@ -494,7 +495,7 @@ $catName = $objCatInfo->name;
                                                         $msg .= "\n-----";
                                                     }
                                                     $msg .= "\n\n";
-                                                    $msg .= _COM_A_NOTIFICATION3.'\n';
+                                                    $msg .= _KUNENA_POST_EMAIL_NOTIFICATION3.'\n';
                                                     $msg .= "\n\n\n\n";
                                                     $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
 
@@ -545,11 +546,11 @@ $catName = $objCatInfo->name;
                                                     $mailsubject = "[".stripslashes($board_title)." "._GEN_FORUM."] " . stripslashes($messagesubject) . " (" . stripslashes($catName) . ")";
 
                                                     $msg = "$mods->name,\n\n";
-                                                    $msg .= trim(_COM_A_NOT_MOD1)." ".stripslashes($board_title)." ".trim(_GEN_FORUM)."\n\n";
+                                                    $msg .= trim(_KUNENA_POST_EMAIL_MOD1)." ".stripslashes($board_title)." ".trim(_GEN_FORUM)."\n\n";
                                                     $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
                                                     $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
                                                     $msg .= _VIEW_POSTED.": " . stripslashes($fb_authorname) . "\n\n";
-                                                    $msg .= _COM_A_NOT_MOD2.'\n';
+                                                    $msg .= _KUNENA_POST_EMAIL_MOD2.'\n';
                                                     $msg .= "URL: $LastPostUrl\n\n";
                                                     if ($kunena_config->mailfull == 1) {
                                                         $msg .= _GEN_MESSAGE.":\n-----\n";
@@ -557,7 +558,7 @@ $catName = $objCatInfo->name;
                                                         $msg .= "\n-----";
                                                     }
                                                     $msg .= "\n\n";
-                                                    $msg .= _COM_A_NOTIFICATION3.'\n';
+                                                    $msg .= _KUNENA_POST_EMAIL_NOTIFICATION3.'\n';
                                                     $msg .= "\n\n\n\n";
                                                     $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
 

@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $kunena_db;
+$kunena_db = &JFactory::getDBO();
 
 require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
 

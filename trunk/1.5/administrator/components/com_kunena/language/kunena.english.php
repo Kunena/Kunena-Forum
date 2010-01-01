@@ -26,6 +26,11 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 define('_KUNENA_SHOW_AVATAR_ON_CAT', 'Show Avatar on Categories view, Recent discussions and My Discussions?');
 define('_KUNENA_SHOW_AVATAR_ON_CAT_DESC', 'Set to &quot;Yes&quot; if you want to show user avatar on Categories view, Recent discussions and My Discussions.');
+define('_KUNENA_POST_EMAIL_NOTIFICATION1', 'A new post has been made to a topic to which you have subscribed on the');
+define('_KUNENA_POST_EMAIL_NOTIFICATION2', 'You can administer your subscriptions by following the \'My Profile\' link on the Forum home page after you have logged in on the site. From your profile you can also unsubscribe from the topic.');
+define('_KUNENA_POST_EMAIL_NOTIFICATION3', 'Do not answer to this e-mail notification as it is a generated e-mail.');
+define('_KUNENA_POST_EMAIL_MOD1', 'A new post has been made to a forum to which you have assigned as moderator on the');
+define('_KUNENA_POST_EMAIL_MOD2', 'Please have a look at it after you have logged in on the site.');
 
 // 1.5.8
 
@@ -1391,12 +1396,6 @@ DEFINE('_COM_A_RANKINGIMAGES_DESC',
     'Set to &quot;Yes&quot; if you want to show the rank registered users have using an image (from components/com_kunena/ranks). Turning this of will show the text for that rank. Check the documentation on www.kunena.com for more information on ranking images.');
 
 //email and stuff
-$_COM_A_NOTIFICATION = "New post notification from";
-$_COM_A_NOTIFICATION1 = "A new post has been made to a topic to which you have subscribed on the";
-$_COM_A_NOTIFICATION2 = "You can administer your subscriptions by following the 'My Profile' link on the Forum home page after you have logged in on the site. From your profile you can also unsubscribe from the topic.";
-$_COM_A_NOTIFICATION3 = "Do not answer to this e-mail notification as it is a generated e-mail.";
-$_COM_A_NOT_MOD1 = "A new post has been made to a forum to which you have assigned as moderator on the";
-$_COM_A_NOT_MOD2 = "Please have a look at it after you have logged in on the site.";
 DEFINE('_COM_A_NO', 'No');
 DEFINE('_COM_A_YES', 'Yes');
 DEFINE('_COM_A_FLAT', 'Flat');

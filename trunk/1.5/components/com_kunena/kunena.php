@@ -265,12 +265,6 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.permissions.php');
 require_once (KUNENA_PATH_LIB .DS. 'kunena.category.class.php');
 require_once (JPATH_BASE.'/libraries/joomla/template/template.php');
 
-$KunenaTemplate = new patTemplate();
-$KunenaTemplate->setRoot( KUNENA_ABSTMPLTPATH );
-
-$KunenaTemplate->readTemplatesFromFile("header.html");
-$KunenaTemplate->readTemplatesFromFile("footer.html");
-
 $kunena_is_moderator = CKunenaTools::isModerator($kunena_my->id, $catid);
 
 if ($func == '') // Set default start page as per config settings
@@ -453,19 +447,24 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
     }
 
     // display header
-    $KunenaTemplate->addVar('kunena-header', 'menu', $fbMenu);
-    $KunenaTemplate->addVar('kunena-header', 'board_title', stripslashes($board_title));
-    if (file_exists(KUNENA_JTEMPLATEPATH.'/css/kunena.forum.css')) {
-   		$KunenaTemplate->addVar('kunena-header', 'css_path', KUNENA_JTEMPLATEURL . '/template/' . $kunena_config->template . '/kunena.forum.css');
-    } else {
-   	    $KunenaTemplate->addVar('kunena-header', 'css_path', KUNENA_DIRECTURL . '/template/' . $kunena_config->template . '/kunena.forum.css');
-	}
-
-    $KunenaTemplate->addVar('kunena-header', 'offline_message', stripslashes($kunena_config->board_offline) ? '<span id="fbOffline">' . _FORUM_IS_OFFLINE . '</span>' : '');
-    $KunenaTemplate->addVar('kunena-header', 'searchbox', getSearchBox());
-    $KunenaTemplate->addVar('kunena-header', 'pb_imgswitchurl', KUNENA_URLIMAGESPATH . "shrink.gif");
-    $KunenaTemplate->displayParsedTemplate('kunena-header');
-
+?><!-- Kunena Header -->
+<div id="Kunena">
+<?php
+if ($kunena_config->board_offline){
+?>
+<span id="fbOffline"><?php echo _FORUM_IS_OFFLINE ?></span>
+<?php
+}
+?>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" id="Kunena_top">
+  <tr>
+    <td align="left" nowrap="nowrap"><?php echo $fbMenu;?></td>
+    <td align="right" width="5%"><?php echo getSearchBox();?></td>
+     <td align="right" width="1%" ><img id="BoxSwitch_topprofilebox__topprofilebox_tbody"  class="hideshow"  src="<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif'?>" alt="" /></td>
+  </tr>
+</table>
+<!-- /Kunena Header -->
+<?php
     //BEGIN: PROFILEBOX
     if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/profilebox/profilebox.php')) {
         include (KUNENA_ABSTMPLTPATH . '/plugin/profilebox/profilebox.php');
@@ -814,7 +813,11 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
     echo '</div>';
 
     // display footer
-    $KunenaTemplate->displayParsedTemplate('kunena-footer');
+?>
+<div class="fb_footer">
+</div>
+</div> <!-- closes Kunena div -->
+<?php
 } //else
 
 if (is_object($kunenaProfile)) $kunenaProfile->close();

@@ -26,7 +26,7 @@ $kunena_app =& JFactory::getApplication();
 $kunena_config =& CKunenaConfig::getInstance();
 $kunena_session =& CKunenaSession::getInstance();
 global $kunena_emoticons;
-global $kunena_is_moderatorerator;
+global $kunena_is_moderator;
 
 function KunenaShowcatPagination($catid, $page, $totalpages, $maxpages) {
     $startpage = ($page - floor($maxpages/2) < 1) ? 1 : $page - floor($maxpages/2);
@@ -211,10 +211,10 @@ foreach ($messagelist as $message)
 ?>
 <!-- / Pathway -->
 <?php if($objCatInfo->headerdesc) { ?>
-<table class="fb_forum-headerdesc" border="0" cellpadding="0" cellspacing="0" width="100%">
+<table class="fb_forum-headerdesc" border="0" cellpadding="0"
+	cellspacing="0" width="100%">
 	<tr>
-		<td>
-		<?php
+		<td><?php
 		$smileyList = smile::getEmoticons(0);
 		$headerdesc = stripslashes(smile::smileReplace($objCatInfo->headerdesc, 0, $kunena_config->disemoticons, $smileyList));
         $headerdesc = nl2br($headerdesc);
@@ -229,20 +229,18 @@ foreach ($messagelist as $message)
 
 <!-- B: List Actions -->
 
-	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0" width="100%">
-		<tr>
-			<td class="fb_list_actions_goto">
-                <?php
+<table class="fb_list_actions" border="0" cellpadding="0"
+	cellspacing="0" width="100%">
+	<tr>
+		<td class="fb_list_actions_goto"><?php
                 //go to bottom
                 echo '<a name="forumtop" /> ';
                 echo CKunenaLink::GetSamePageAnkerLink('forumbottom', isset($kunena_emoticons['bottomarrow']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM);
                 ?>
 
-		</td><td class="fb_list_actions_forum" width="100%">
-
-
-                <?php
-                if ($kunena_is_moderatorerator || ($forumLocked == 0 && ($kunena_my->id > 0 || $kunena_config->pubwrite)))
+		</td>
+		<td class="fb_list_actions_forum" width="100%"><?php
+                if ($kunena_is_moderator || ($forumLocked == 0 && ($kunena_my->id > 0 || $kunena_config->pubwrite)))
                 {
                     //this user is allowed to post a new topic:
                     $forum_new = CKunenaLink::GetPostNewTopicLink($catid, isset($kunena_emoticons['new_topic']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC);
@@ -261,9 +259,8 @@ foreach ($messagelist as $message)
 		}
 		?>
 
-		</td><td class="fb_list_pages_all" nowrap="nowrap">
-
-		<?php
+		</td>
+		<td class="fb_list_pages_all" nowrap="nowrap"><?php
                 //pagination 1
 		if (count($this->messages[0]) > 0)
 		{
@@ -272,9 +269,9 @@ foreach ($messagelist as $message)
 			echo $pagination = KunenaShowcatPagination($catid, $page, $totalpages, $maxpages);
 		}
                 ?>
-            </td>
-        </tr>
-    </table>
+		</td>
+	</tr>
+</table>
 
 <!-- F: List Actions -->
 
@@ -288,7 +285,7 @@ foreach ($messagelist as $message)
     }
 ?>
 
-    <?php
+<?php
     //get all readTopics in an array
     $readTopics = "";
     $kunena_db->setQuery("SELECT readtopics FROM #__fb_sessions WHERE userid='{$kunena_my->id}'");
@@ -319,18 +316,17 @@ foreach ($messagelist as $message)
 
 <!-- B: List Actions Bottom -->
 
-	<table class="fb_list_actions_bottom" border="0" cellpadding="0" cellspacing="0" width="100%">
-		<tr>
-		<td class="fb_list_actions_goto">
-                <?php
+<table class="fb_list_actions_bottom" border="0" cellpadding="0"
+	cellspacing="0" width="100%">
+	<tr>
+		<td class="fb_list_actions_goto"><?php
                 //go to top
                 echo '<a name="forumbottom" />';
                 echo CKunenaLink::GetSamePageAnkerLink('forumtop', isset($kunena_emoticons['toparrow']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP);
                 ?>
 
-		</td><td class="fb_list_actions_forum" width="100%">
-
-                <?php
+		</td>
+		<td class="fb_list_actions_forum" width="100%"><?php
 		if (isset($forum_new) || isset($forum_markread))
 		{
 	        echo '<div class="fb_message_buttons_row" style="text-align: left;">';
@@ -340,9 +336,8 @@ foreach ($messagelist as $message)
 		}
 		?>
 
-		</td><td class="fb_list_pages_all" nowrap="nowrap">
-
-		<?php
+		</td>
+		<td class="fb_list_pages_all" nowrap="nowrap"><?php
 		//pagination 2
                 if (count($this->messages[0]) > 0)
 		{
@@ -350,9 +345,9 @@ foreach ($messagelist as $message)
 		}
 		?>
 		</td>
-		</tr>
-	</table>
-	<?php
+	</tr>
+</table>
+<?php
 	echo '<div class = "'. KUNENA_BOARD_CLASS .'forum-pathway-bottom">';
 	echo $this->pathway1;
 	echo '</div>';
@@ -362,13 +357,10 @@ foreach ($messagelist as $message)
 
 <!-- B: Category List Bottom -->
 
-<table class="fb_list_bottom" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class="fb_list_bottom" border="0" cellspacing="0" cellpadding="0"
+	width="100%">
 	<tr>
-		<td class="fb_list_moderators">
-
-			<!-- Mod List -->
-
-			<?php
+		<td class="fb_list_moderators"><!-- Mod List --> <?php
 			//get the Moderator list for display
 			$kunena_db->setQuery("SELECT * FROM #__fb_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid='{$catid}'");
 			$modslist = $kunena_db->loadObjectList();
@@ -377,18 +369,14 @@ foreach ($messagelist as $message)
 			if (count($modslist) > 0):
 			?>
 
-			<div class = "fbbox-bottomarea-modlist">
-
-                        <?php
+		<div class="fbbox-bottomarea-modlist"><?php
 				echo '' . _GEN_MODERATORS . ": ";
 				foreach ($modslist as $mod) {
 					echo CKunenaLink::GetProfileLink($kunena_config, $mod->userid, $mod->username).'&nbsp; ';
 				} ?>
-			</div>
-	<?php endif; ?>
-	<!-- /Mod List -->
-      </td>
-      <td class="fb_list_categories"> <?php
+		</div>
+		<?php endif; ?> <!-- /Mod List --></td>
+		<td class="fb_list_categories"><?php
 
                     //(JJ) FINISH: CAT LIST BOTTOM
 
@@ -396,8 +384,8 @@ foreach ($messagelist as $message)
                         require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
 
                     ?>
-      </td>
-    </tr>
+		</td>
+	</tr>
 </table>
 
 <!-- F: Category List Bottom -->

@@ -468,15 +468,8 @@ if (count ( $this->messages [0] ) > 0) {
 		<?php
 		$st_c ++;
 	}
-	?>
-
-
-		<?php
-
 	if ($kunena_is_moderator) {
 		?>
-
-
 		<tr class="<?php
 		echo KUNENA_BOARD_CLASS?>sectiontableentry1">
 			<td colspan="7" align="right" class="td-1 fbs"><script
@@ -513,10 +506,7 @@ if (count ( $this->messages [0] ) > 0) {
 				value="<?php
 		echo _KUNENA_GO;
 		?>" /></td>
-
 		</tr>
-
-
 		<?php
 	}
 	?>

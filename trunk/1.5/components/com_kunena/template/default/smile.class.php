@@ -236,11 +236,9 @@ class smile
     /**
      * This function will write the TextArea
      */
-    function fbWriteTextarea($areaname, $html, $width, $height, $useRte, $emoticons)
+    function fbWriteTextarea($areaname, $html, $width, $height, $useRte, $emoticons, $editmode)
     {
         // well $html is the $message to edit, generally it means in PLAINTEXT @Kunena!
-        global $editmode;
-        // ERROR: mixed global $editmode
         $kunena_config =& CKunenaConfig::getInstance();
         ?>
 

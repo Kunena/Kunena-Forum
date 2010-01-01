@@ -162,7 +162,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	$settings = ! empty ( $_COOKIE ['fboard_settings'] ) ? $_COOKIE ['fboard_settings'] : '';
 
 	$board_title = $kunena_config->board_title;
-	$fromBot = 0;
+	$this->kunena_from_bot = 0;
 	$prefview = $kunena_config->default_view;
 
 	// Include preview here before inclusion of other files

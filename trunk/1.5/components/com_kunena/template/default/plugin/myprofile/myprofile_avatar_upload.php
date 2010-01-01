@@ -327,7 +327,7 @@ switch ($task) {
 		unlink($src_file);
 
 		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newFileName}' WHERE userid={$kunena_my->id}");
-		$kunena_db->query() or trigger_dberror("Unable to update avatar.");
+		$kunena_db->query() or check_dberror("Unable to update avatar.");
 
 		$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile'),_UPLOAD_UPLOADED);
 
@@ -342,7 +342,7 @@ switch ($task) {
 		}
 
 		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newAvatar}' WHERE userid={$kunena_my->id}");
-		$kunena_db->query() or trigger_dberror("Unable to update user avatar.");
+		$kunena_db->query() or check_dberror("Unable to update user avatar.");
 
 		$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile'),_UPLOAD_UPLOADED);
 		break;

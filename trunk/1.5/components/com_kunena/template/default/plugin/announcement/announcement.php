@@ -248,7 +248,7 @@ if ($is_editor) {
         $query1 = "INSERT INTO #__fb_announcement VALUES ('', '$title', '$sdescription', '$description', " . (($created <> '')?"'$created'":"NOW()") . ", '$published', '$ordering','$showdate')";
         $kunena_db->setQuery($query1);
 
-        $kunena_db->query() or trigger_dberror("Unable to insert announcement.");
+        $kunena_db->query() or check_dberror("Unable to insert announcement.");
         $kunena_app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_SUCCESS_ADD);
     }
 
@@ -517,7 +517,7 @@ if ($is_editor) {
     {
         $query1 = "DELETE FROM #__fb_announcement WHERE id=$id ";
         $kunena_db->setQuery($query1);
-        $kunena_db->query() or trigger_dberror("Unable to delete announcement.");
+        $kunena_db->query() or check_dberror("Unable to delete announcement.");
 
         $kunena_app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_DELETED);
     }

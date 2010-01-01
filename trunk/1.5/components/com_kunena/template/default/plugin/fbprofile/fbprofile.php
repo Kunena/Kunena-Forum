@@ -98,7 +98,7 @@ function showprf($userid, $page)
 
 	// User Hits
 	$kunena_db->setQuery('UPDATE #__fb_users SET uhits=uhits+1 WHERE userid='.$userid);
-	$kunena_db->query() or trigger_dberror("Unable to update user hits.");
+	$kunena_db->query() or check_dberror("Unable to update user hits.");
 
 	// get userprofile hits
 	$msg_html->userhits = $userinfo->uhits;

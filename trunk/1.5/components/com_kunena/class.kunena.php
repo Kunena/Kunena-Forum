@@ -950,7 +950,7 @@ class fbForum
 		if ($id > 0) {
 			$query = "SELECT id, parent FROM #__fb_categories";
 			$this->_db->setQuery($query);
-			$this->_db->query() or trigger_dberror("Unable to access categories.");
+			$this->_db->query() or check_dberror("Unable to access categories.");
 			$list = $this->_db->loadObjectList('id');
 			$recurse = array();
 			while ($id) {
@@ -983,7 +983,7 @@ class fbForum
 			// we must reset fbSession (allowed), when forum record was changed
 
 			$this->_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
-			$this->_db->query() or trigger_dberror("Unable to update sessions.");
+			$this->_db->query() or check_dberror("Unable to update sessions.");
 		}
 		return $ret;
 	}

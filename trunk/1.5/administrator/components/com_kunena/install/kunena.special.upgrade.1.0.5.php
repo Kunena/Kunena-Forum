@@ -37,7 +37,7 @@ if ($is_101_version) {
     else
     {
     	print '<li class="fbscslisterror">Attachment table was not successfully upgraded to 1.0.2+ version schema!</li>';
-    	trigger_dbwarning("Unable to upgrade attachement table.");
+    	check_dbwarning("Unable to upgrade attachement table.");
     }
 
     $kunena_db->setQuery("update #__fb_messages_text set message = replace(message,'/components/com_fireboard/uploaded','/images/fbfiles');");
@@ -45,12 +45,12 @@ if ($is_101_version) {
     else
     {
     	print '<li class="fbscslist">Attachments in messages table were not successfully upgraded to 1.0.2+ version schema!</li>';
-    	trigger_dbwarning("Unable to upgrade attachements in messages table.");
+    	check_dbwarning("Unable to upgrade attachements in messages table.");
     }
 
     //backward compatibility . all the cats are by default moderated
     $kunena_db->setQuery("UPDATE `#__fb_categories` SET `moderated` = '1';");
-    $kunena_db->query() or trigger_dbwarning("Unable to update categories.");;
+    $kunena_db->query() or check_dbwarning("Unable to update categories.");;
 }
 
 ?>

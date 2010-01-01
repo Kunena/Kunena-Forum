@@ -110,7 +110,7 @@ $kunena_config->floodprotection = (int)$kunena_config->floodprotection;
 if ($kunena_config->floodprotection != 0)
 {
     $kunena_db->setQuery("SELECT MAX(time) FROM #__fb_messages WHERE ip='{$ip}'");
-    $kunena_db->query() or trigger_dberror("Unable to load max time for current request from IP: $ip");
+    $kunena_db->query() or check_dberror("Unable to load max time for current request from IP: $ip");
     $lastPostTime = $kunena_db->loadResult();
 }
 
@@ -142,7 +142,7 @@ else
 
 //Now find out the forumname to which the user wants to post (for reference only)
 $kunena_db->setQuery("SELECT * FROM #__fb_categories WHERE id='{$catid}'");
-$kunena_db->query() or trigger_dberror('Unable to load category.');
+$kunena_db->query() or check_dberror('Unable to load category.');
 
 $objCatInfo = $kunena_db->loadObject();
 $catName = $objCatInfo->name;
@@ -188,7 +188,7 @@ $catName = $objCatInfo->name;
                                 }
 
                                 $kunena_db->setQuery("SELECT id, thread, parent FROM #__fb_messages WHERE id='{$parent}'");
-                                $kunena_db->query() or trigger_dberror('Unable to load parent post.');
+                                $kunena_db->query() or check_dberror('Unable to load parent post.');
                                 $m = $kunena_db->loadObject();
 
                                 if (count($m) < 1)
@@ -238,7 +238,7 @@ $catName = $objCatInfo->name;
                                 if (!$kunena_is_moderator)
                                 {
                                     $kunena_db->setQuery("SELECT review FROM #__fb_categories WHERE id='{$catid}'");
-                                    $kunena_db->query() or trigger_dberror('Unable to load review flag from categories.');
+                                    $kunena_db->query() or check_dberror('Unable to load review flag from categories.');
                                     $holdPost = $kunena_db->loadResult();
                                 }
 
@@ -911,7 +911,7 @@ $catName = $objCatInfo->name;
                         	if (!$kunena_is_moderator)
                         	{
                         		$kunena_db->setQuery("SELECT review FROM #__fb_categories WHERE id='{$catid}'");
-                        		$kunena_db->query() or trigger_dberror('Unable to load review flag from categories.');
+                        		$kunena_db->query() or check_dberror('Unable to load review flag from categories.');
                         		$holdPost = $kunena_db->loadResult();
                         	}
 
@@ -1134,27 +1134,27 @@ $catName = $objCatInfo->name;
                     //perform the actual move
                     //Move topic post first
                     $kunena_db->setQuery("UPDATE #__fb_messages SET `catid`='$catid' WHERE `id`='$id'");
-                    $kunena_db->query() or trigger_dberror('Unable to move thread.');
+                    $kunena_db->query() or check_dberror('Unable to move thread.');
 
                     $kunena_db->setQuery("UPDATE #__fb_messages set `catid`='$catid' WHERE `thread`='$id'");
-                    $kunena_db->query() or trigger_dberror('Unable to move thread.');
+                    $kunena_db->query() or check_dberror('Unable to move thread.');
 
                     // insert 'moved topic' notification in old forum if needed
                     if ($bool_leaveGhost)
                     {
                     	$kunena_db->setQuery("INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0',".$kunena_db->quote($newSubject).",'$lastTimestamp','{$oldRecord[0]->catid}','1', '{$kunena_my->id}', ".$kunena_db->quote(trim(addslashes($my_name))).")");
-                    	$kunena_db->query() or trigger_dberror('Unable to insert ghost message.');
+                    	$kunena_db->query() or check_dberror('Unable to insert ghost message.');
 
                     	//determine the new location for link composition
                     	$newId = $kunena_db->insertid();
 
                     	$newURL = "catid=" . $catid . "&id=" . $id;
                     	$kunena_db->setQuery("INSERT INTO #__fb_messages_text (`mesid`, `message`) VALUES ('$newId', ".$kunena_db->quote($newURL).")");
-                    	$kunena_db->query() or trigger_dberror('Unable to insert ghost message.');
+                    	$kunena_db->query() or check_dberror('Unable to insert ghost message.');
 
                     	//and update the thread id on the 'moved' post for the right ordering when viewing the forum..
                     	$kunena_db->setQuery("UPDATE #__fb_messages SET `thread`='$newId' WHERE `id`='$newId'");
-                    	$kunena_db->query() or trigger_dberror('Unable to move thread.');
+                    	$kunena_db->query() or check_dberror('Unable to move thread.');
                     }
                     //move succeeded
                     CKunenaTools::reCountBoards();

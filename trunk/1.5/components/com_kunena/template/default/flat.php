@@ -29,7 +29,7 @@ $func = JString::strtolower ( JRequest::getCmd ( 'func', '' ) );
 $id = JRequest::getInt ( 'id', 0 );
 
 global $kunena_emoticons;
-global $kunena_is_moderatorerator;
+global $kunena_is_moderator;
 $kunena_my = &JFactory::getUser ();
 // Func Check
 if (JString::strtolower ( $func ) == 'latest' || JString::strtolower ( $func ) == '') {
@@ -107,7 +107,7 @@ if (count ( $this->messages [0] ) > 0) {
 		<tr>
 			<th
 				colspan="<?php
-		echo ($kunena_is_moderatorerator ? "5" : "4");
+		echo ($kunena_is_moderator ? "5" : "4");
 		?>">
 			<div class="fb_title_cover fbm"><span class="fb_title fbl"><b><?php
 		echo _KUNENA_THREADS_IN_FORUM;
@@ -164,7 +164,7 @@ if (count ( $this->messages [0] ) > 0) {
 	?></th>
 
 			<?php
-	if ($kunena_is_moderatorerator) {
+	if ($kunena_is_moderator) {
 		?>
 			<th
 				class="th-7 <?php
@@ -197,7 +197,7 @@ if (count ( $this->messages [0] ) > 0) {
 			?>contentheading fbm"
 				id="fb_spot"
 				colspan="<?php
-			echo ($kunena_is_moderatorerator ? "5" : "4");
+			echo ($kunena_is_moderator ? "5" : "4");
 			?>"
 				align="left"><span><?php
 			if (! $funcmylatest) {
@@ -222,7 +222,7 @@ if (count ( $this->messages [0] ) > 0) {
 			?>contentheading fbm"
 				id="fb_fspot"
 				colspan="<?php
-			echo ($kunena_is_moderatorerator ? "5" : "4");
+			echo ($kunena_is_moderator ? "5" : "4");
 			?>"
 				align="left"><span><?php
 			if (! $funcmylatest) {
@@ -322,7 +322,6 @@ if (count ( $this->messages [0] ) > 0) {
 			}
 			?>
 			</div>
-			</td>
 
 			<?php
 		} else {
@@ -454,7 +453,7 @@ if (count ( $this->messages [0] ) > 0) {
 			</td>
 
 			<?php
-		if ($kunena_is_moderatorerator) {
+		if ($kunena_is_moderator) {
 			?>
 
 			<td class="td-7" align="center"><input type="checkbox"
@@ -464,7 +463,6 @@ if (count ( $this->messages [0] ) > 0) {
 			<?php
 		}
 		?>
-			<td></td>
 		</tr>
 
 		<?php
@@ -475,7 +473,7 @@ if (count ( $this->messages [0] ) > 0) {
 
 		<?php
 
-	if ($kunena_is_moderatorerator) {
+	if ($kunena_is_moderator) {
 		?>
 
 

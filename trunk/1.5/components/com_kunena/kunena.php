@@ -28,7 +28,6 @@ require_once (JPATH_BASE . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . 
 global $kunena_is_moderator;
 
 global $message;
-global $maxPosts;
 global $kunena_this_cat;
 
 // Get all the variables we need and strip them in case
@@ -88,7 +87,7 @@ require_once (KUNENA_PATH_LIB . DS . "kunena.config.class.php");
 global $kunenaProfile;
 global $lang, $kunena_emoticons;
 global $board_title;
-global $settings, $kunena_systime;
+global $kunena_systime;
 
 // Get data about the current user - its ok to not have a userid = guest
 $kunena_my = &JFactory::getUser ();
@@ -159,7 +158,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	$kunena_systime = time () + $kunena_config->board_ofset * KUNENA_SECONDS_IN_HOUR;
 
 	// Retrieve current cookie data for session handling
-	$settings = ! empty ( $_COOKIE ['fboard_settings'] ) ? $_COOKIE ['fboard_settings'] : '';
+	$this->kunena_cookie_settings = ! empty ( $_COOKIE ['fboard_settings'] ) ? $_COOKIE ['fboard_settings'] : '';
 
 	$board_title = $kunena_config->board_title;
 	$this->kunena_from_bot = 0;
@@ -340,7 +339,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 	//Get the max# of posts for any one user
 	$kunena_db->setQuery ( "SELECT MAX(posts) FROM #__fb_users" );
-	$maxPosts = $kunena_db->loadResult ();
+	$this->kunena_max_posts = $kunena_db->loadResult ();
 	check_dberror ( 'Unable load max(posts) for user.' );
 
 	//Get the topics this user has already read this session from #__fb_sessions

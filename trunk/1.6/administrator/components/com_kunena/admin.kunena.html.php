@@ -3039,7 +3039,7 @@ else
 <div id="fbcongifcover">
 <div class="fbfunctitle"><?php echo _KUNENA_SYNC_USERS; ?></div>
     <form action = "index.php" method = "post" name = "adminForm">
-\		<fieldset>
+		<fieldset>
 		<legend><?php echo _KUNENA_SYNC_USERS_OPTIONS; ?></legend>
         <table cellpadding = "4" class = "fbadminform" cellspacing = "0" border = "0" width = "100%">
 			<tr>

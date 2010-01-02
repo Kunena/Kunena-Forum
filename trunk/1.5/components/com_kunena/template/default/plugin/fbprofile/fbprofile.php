@@ -126,9 +126,6 @@ function showprf($userid, $page)
 			$user =& CFactory::getUser($userid);
 		    $msg_html->avatar = '<span class="fb_avatar"><img src="' . $user->getAvatar() . '" alt="" /></span>';
 		}
-        else if ($kunena_config->avatar_src == "clexuspm") {
-            $msg_html->avatar = '<span class="fb_avatar"><img src="' . MyPMSTools::getAvatarLinkWithID($userid, "b") . '" alt="" /></span>';
-        }
         else if ($kunena_config->avatar_src == "cb")
         {
             $kunenaProfile = CKunenaCBProfile::getInstance();
@@ -388,74 +385,6 @@ function showprf($userid, $page)
             $msg_html->online = isset($kunena_emoticons['offlineicon'])
                 ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
         }
-    }
-
-    /* ClexusPM integration */
-
-    if ($kunena_config->pm_component == "clexuspm")
-    {
-
-        //we should offer the user a PMS link
-
-        //first get the username of the user to contact
-
-        $PMSName = $userinfo->aid;
-        $msg_html->pms = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=new&amp;to=' . $userid . '' . $this->kunena_message->subject) . "\"><img src=\"";
-
-        if ($kunena_emoticons['pms']) {
-            $msg_html->pms .= KUNENA_URLICONSPATH . $kunena_emoticons['pms'];
-        }
-        else {
-            $msg_html->pms .= KUNENA_JLIVEURL . "/components/com_mypms/images/icons/message_12px.gif";
-        }
-
-        $msg_html->pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
-        //mypms pro profile link
-        $msg_html->profile = "<a href=\"" . MyPMSTools::getProfileLink($userid) . "\"><img src=\"";
-
-        if ($kunena_emoticons['userprofile']) {
-            $msg_html->profile .= KUNENA_URLICONSPATH . $kunena_emoticons['userprofile'];
-        }
-        else {
-            $msg_html->profile .= KUNENA_JLIVEURL . "/components/com_mypms/images/managecontact_icon.gif";
-        }
-
-        $msg_html->profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
-        //mypms add buddy link
-        $msg_html->buddy = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;user=' . $PMSName . '&amp;task=addbuddy') . "\"><img src=\"";
-
-        if ($kunena_emoticons['pms2buddy']) {
-            $msg_html->buddy .= KUNENA_URLICONSPATH . $kunena_emoticons['pms2buddy'];
-        }
-        else {
-            $msg_html->buddy .= KUNENA_JLIVEURL . "/components/com_mypms/images/messages/addbuddy.gif";
-        }
-
-        $msg_html->buddy .= "\" alt=\"" . _VIEW_ADDBUDDY . "\" border=\"0\" title=\"" . _VIEW_ADDBUDDY . "\" /></a>";
-
-        $kunena_db->setQuery("SELECT icq, ym, msn, aim, website, location FROM #__mypms_profiles WHERE user='{$PMSName}'");
-        $profileitems = $kunena_db->loadObjectList();
-        	check_dberror("Unable to load mypms_profiles.");
-
-        foreach ($profileitems as $profileitems)
-        {
-            if ($profileitems->aim)
-                $msg_html->aim = "<a href=\"aim:goim?screenname=" . str_replace(" ", "+", $profileitems->aim) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "aim.png\" border=0 alt=\"\" /></a>";
-
-            if ($profileitems->icq)
-                $msg_html->icq = "<a href=\"http://www.icq.com/whitepages/wwp.php?uin=" . $profileitems->icq . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "icq.png\" border=0 alt=\"\" /></a>";
-
-            if ($profileitems->msn)
-                $msg_html->msn = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=showprofile&amp;user=' . $PMSName) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "msn.png\" border=0 alt=\"\" /></a>";
-
-            if ($profileitems->ym)
-                $msg_html->yahoo = "<a href=\"http://edit.yahoo.com/config/send_webmesg?.target=" . $profileitems->ym . "&.src=pg\"><img src=\"http://opi.yahoo.com/online?u=" . $profileitems->ym . "&m=g&t=0\" border=0 alt=\"\" /></a>";
-
-            if ($profileitems->location)
-                $msg_html->loc = $profileitems->location;
-        }
-
-        unset($profileitems);
     }
 
     $jr_username = $userinfo->name;

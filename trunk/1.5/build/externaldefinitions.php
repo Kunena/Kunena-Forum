@@ -35,8 +35,5 @@ class AlphaUserPointsHelper {}
 // PDF
 class Cezpdf {}
 
-// Clexus
-class ClexusPMConfig {}
-
 // MyPMS
 class MyPMSTools {}

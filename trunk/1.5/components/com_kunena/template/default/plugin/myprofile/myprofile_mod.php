@@ -53,9 +53,9 @@ global $kunena_is_admin;
 
 			$k    = 0; //value for alternating rows
 
-			if ($cmodslist > 0)
+			if ($this->kunena_cmodslist > 0)
 			{
-				foreach ($modslist as $mods)
+				foreach ($this->kunena_modslist as $mods)
 				{ //get all moderator details for each moderation
 					$k = 1 - $k;
 		?>

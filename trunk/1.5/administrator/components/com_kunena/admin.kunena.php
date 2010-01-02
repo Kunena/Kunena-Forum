@@ -677,7 +677,6 @@ function showConfig($option)
 	$avlist[] = JHTML::_('select.option', 'fb',_KUNENA_KUNENA);
 	$avlist[] = JHTML::_('select.option', 'cb',_KUNENA_CB);
 	$avlist[] = JHTML::_('select.option', 'jomsocial',_KUNENA_JOMSOCIAL);
-	$avlist[] = JHTML::_('select.option', 'clexuspm',_KUNENA_CLEXUS);
 	$avlist[] = JHTML::_('select.option', 'aup', _KUNENA_AUP_ALPHAUSERPOINTS); // INTEGRATION ALPHAUSERPOINTS
 	// build the html select list
     $lists['avatar_src'] = JHTML::_('select.genericlist', $avlist,'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->avatar_src);
@@ -689,7 +688,6 @@ function showConfig($option)
 	$pmlist[] = JHTML::_('select.option', 'jomsocial',_KUNENA_JOMSOCIAL);
 	$pmlist[] = JHTML::_('select.option', 'pms',_KUNENA_MYPMS);
 	$pmlist[] = JHTML::_('select.option', 'pms',_KUNENA_MYPMS);
-	$pmlist[] = JHTML::_('select.option', 'clexuspm',_KUNENA_CLEXUS);
 	$pmlist[] = JHTML::_('select.option', 'uddeim',_KUNENA_UDDEIM);
 	$pmlist[] = JHTML::_('select.option', 'jim',_KUNENA_JIM);
 	$pmlist[] = JHTML::_('select.option', 'missus',_KUNENA_MISSUS);
@@ -703,7 +701,6 @@ function showConfig($option)
 	$prflist[] = JHTML::_('select.option', 'fb',_KUNENA_KUNENA);
 	$prflist[] = JHTML::_('select.option', 'cb',_KUNENA_CB);
 	$prflist[] = JHTML::_('select.option', 'jomsocial',_KUNENA_JOMSOCIAL);
-	$prflist[] = JHTML::_('select.option', 'clexuspm',_KUNENA_CLEXUS);
 	$prflist[] = JHTML::_('select.option', 'aup', _KUNENA_AUP_ALPHAUSERPOINTS); // INTEGRATION ALPHAUSERPOINTS
 
     $lists['fb_profile'] = JHTML::_('select.genericlist', $prflist, 'cfg_fb_profile', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->fb_profile);

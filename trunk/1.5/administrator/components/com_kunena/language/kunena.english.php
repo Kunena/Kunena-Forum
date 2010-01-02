@@ -756,7 +756,6 @@ DEFINE('_KUNENA_WARNING', 'Warning...');
 DEFINE('_KUNENA_CHMOD1', 'You need to CHMOD this to 766 in order for the file to be updated.');
 DEFINE('_KUNENA_YOURCONFIGFILEIS', 'Your config file is');
 DEFINE('_KUNENA_KUNENA', 'Kunena');
-DEFINE('_KUNENA_CLEXUS', 'Clexus PM');
 DEFINE('_KUNENA_CB', 'Community Builder');
 DEFINE('_KUNENA_MYPMS', 'myPMS II Open Source');
 DEFINE('_KUNENA_UDDEIM', 'Uddeim');
@@ -822,7 +821,7 @@ DEFINE('_KUNENA_USERPOPULAR', 'Show Popular Subject Stats');
 DEFINE('_KUNENA_USERPOPULARDESC', 'If you want to show the Popular Subject, select &quot;Yes.&quot;');
 DEFINE('_KUNENA_NUMPOP', 'Number of Popular Subject');
 DEFINE('_KUNENA_INFORMATION',
-    'The Kunena team is proud to announce the release of Kunena 1.0.8. It is a powerful and stylish forum component for a well-deserved content management system, Joomla. It is initially based on the hard work of Joomlaboard and Fireboard and our praise goes to their team. Some of the main features of Kunena can be listed as below (in addition to JB&#39;s current features):<br /><br /><ul><li>A much more designer friendly forum system. It is close to SMF templating system having a simpler structue. With very few steps you can modify the total look of the forum. Thanks goes to the great designers in our team.</li><li>Unlimited subcategory system with better administration backend.</li><li>Faster system and better coding experience for third-party developers.</li><li>The same<br /></li><li>Profilebox at the top of the forum</li><li>Support for popular PM systems, such as ClexusPM and Uddeim</li><li>Basic plugin system (practical rather than perfect)</li><li>Language defined icon system.<br /></li><li>Sharing image system of other templates. So, choice between templates and image series is possible</li><li>You can add Joomla modules inside the forum template itself. Want to have a banner inside your forum?</li><li>Favorite threads selection and management</li><li>Forum spotlights and highlights</li><li>Forum announcements and its panel</li><li>Latest messages (Tabbed)</li><li>Statistics at bottom</li><li>Who&#39;s online, on what page?</li><li>Category-specific image system</li><li>Enhanced pathway</li><li>RSS, PDF output</li><li>Advanced search (under developement)</li><li>Community Builder and JomSocial profile options</li><li>Avatar management : Community Builder and JomSocial options<br /></li></ul><br />This is a collaborative work of several developers and designers that have kindly participated and made this release come true. Here we thank all of them and wish that you enjoy this release!<br /><br />Kunena Team<br /></td></tr></table>');
+    'The Kunena team is proud to announce the release of Kunena 1.0.8. It is a powerful and stylish forum component for a well-deserved content management system, Joomla. It is initially based on the hard work of Joomlaboard and Fireboard and our praise goes to their team. Some of the main features of Kunena can be listed as below (in addition to JB&#39;s current features):<br /><br /><ul><li>A much more designer friendly forum system. It is close to SMF templating system having a simpler structue. With very few steps you can modify the total look of the forum. Thanks goes to the great designers in our team.</li><li>Unlimited subcategory system with better administration backend.</li><li>Faster system and better coding experience for third-party developers.</li><li>The same<br /></li><li>Profilebox at the top of the forum</li><li>Support for popular PM systems, such as Uddeim</li><li>Basic plugin system (practical rather than perfect)</li><li>Language defined icon system.<br /></li><li>Sharing image system of other templates. So, choice between templates and image series is possible</li><li>You can add Joomla modules inside the forum template itself. Want to have a banner inside your forum?</li><li>Favorite threads selection and management</li><li>Forum spotlights and highlights</li><li>Forum announcements and its panel</li><li>Latest messages (Tabbed)</li><li>Statistics at bottom</li><li>Who&#39;s online, on what page?</li><li>Category-specific image system</li><li>Enhanced pathway</li><li>RSS, PDF output</li><li>Advanced search (under developement)</li><li>Community Builder and JomSocial profile options</li><li>Avatar management : Community Builder and JomSocial options<br /></li></ul><br />This is a collaborative work of several developers and designers that have kindly participated and made this release come true. Here we thank all of them and wish that you enjoy this release!<br /><br />Kunena Team<br /></td></tr></table>');
 DEFINE('_KUNENA_INSTRUCTIONS', 'Instructions');
 DEFINE('_KUNENA_FINFO', 'Kunena Forum Information');
 DEFINE('_KUNENA_CSSEDITOR', 'Kunena Template CSS Editor');
@@ -1090,7 +1089,6 @@ DEFINE('_USRL_USEREXTENDED', 'Details');
 DEFINE('_USRL_COMPROFILER', 'Profile');
 DEFINE('_USRL_THUMBNAIL', 'Pic');
 DEFINE('_USRL_READON', 'show');
-DEFINE('_USRL_MYPMSPRO', 'Clexus PM');
 DEFINE('_USRL_MYPMSPRO_SENDPM', 'Send PM');
 DEFINE('_USRL_JIM', 'PM');
 DEFINE('_USRL_UDDEIM', 'PM');
@@ -1166,7 +1164,7 @@ DEFINE('_COM_A_BADWORDS_DESC', 'Set to &quot;Yes&quot; if you want to filter pos
 DEFINE('_COM_A_BADWORDS_NOTICE', '* This message has been censored because it contained one or more words flagged by the administrator.*');
 DEFINE('_COM_A_AVATAR_SRC', 'Use avatar picture from');
 DEFINE('_COM_A_AVATAR_SRC_DESC',
-    'If you have JomSocial, Clexus PM or the Community Builder component installed, you can configure Kunena to use the user avatar picture from those user profiles. Note: For Community Builder you need to have the thumbnail option enabled because the forum uses the user thumbnail images instead of originals.');
+    'If you have JomSocial or the Community Builder component installed, you can configure Kunena to use the user avatar picture from those user profiles. Note: For Community Builder you need to have the thumbnail option enabled because the forum uses the user thumbnail images instead of originals.');
 DEFINE('_COM_A_KARMA', 'Show Karma indicator');
 DEFINE('_COM_A_KARMA_DESC', 'Set to &quot;Yes&quot; to show user karma and related buttons (increase / decrease) if the user stats are activated.');
 DEFINE('_COM_A_DISEMOTICONS', 'Disable emoticons');
@@ -1647,7 +1645,7 @@ DEFINE('_COM_A_AVATARS', 'Avatars');
 DEFINE('_COM_A_INTEGRATION', 'Integration');
 DEFINE('_COM_A_PMS', 'Enable private messaging');
 DEFINE('_COM_A_PMS_DESC',
-    'Select the appropriate private messaging component if you have one installed. Selecting Clexus PM will also enable ClexusPM user profile related options (like ICQ, AIM, Yahoo, MSN and profile links if supported by the Kunena template used.');
+    'Select the appropriate private messaging component if you have one installed.');
 DEFINE('_VIEW_PMS', 'Click here to send a Private Message to this user');
 //new in RC3
 DEFINE('_POST_RE', 'Re:');

@@ -374,17 +374,7 @@ if ($task == 'default')
                     <?php
                         echo _YOUR_AVATAR . "</td><td >";
 
-                        if ($kunena_config->avatar_src == "clexuspm")
-                        {
-                    ?>
-
-                            <img src = "<?php echo MyPMSTools::getAvatarLinkWithID($kunena_my->id)?>" alt="" />
-
-                            <br /> <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=upload&amp;Itemid='._CLEXUSPM_ITEMID);?>"><?php echo _SET_NEW_AVATAR; ?></a>
-
-                    <?php
-                        }
-                        elseif ($kunena_config->avatar_src == "cb")
+                        if ($kunena_config->avatar_src == "cb")
                         {
                             $kunena_db->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='{$kunena_my->id}'");
                             $avatar = $kunena_db->loadResult();

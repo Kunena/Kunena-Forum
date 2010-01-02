@@ -146,12 +146,6 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		$kunena_app->close ();
 	}
 
-	// Include Clexus PM class file
-	if ($kunena_config->pm_component == "clexuspm") {
-		require_once (KUNENA_ROOT_PATH . DS . 'components/com_mypms/class.mypms.php');
-		$ClexusPMconfig = new ClexusPMConfig ( );
-	}
-
 	//time format
 	include_once (KUNENA_PATH_LIB . DS . 'kunena.timeformat.class.php');
 

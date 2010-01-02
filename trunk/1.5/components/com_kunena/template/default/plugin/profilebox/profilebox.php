@@ -49,10 +49,6 @@ if ($kunena_config->avatar_src == "jomsocial")
 	$jsuser =& CFactory::getUser($kunena_my->id);
     $jr_avatar = '<img src="' . $jsuser->getThumbAvatar() . '" alt=" " />';
 }
-else if ($kunena_config->avatar_src == "clexuspm")
-{
-    $jr_avatar = '<img src="' . MyPMSTools::getAvatarLinkWithID($kunena_my->id) . '" alt=" " />';
-}
 else if ($kunena_config->avatar_src == "cb")
 {
 	$kunenaProfile =& CkunenaCBProfile::getInstance();
@@ -85,9 +81,6 @@ else
 if ($kunena_config->fb_profile == "cb" || $kunena_config->fb_profile == "jomsocial")
 {
     $jr_profilelink = CKunenaLink::GetProfileLink($kunena_config, $kunena_my->id, _PROFILEBOX_MYPROFILE);
-}
-else if ($kunena_config->fb_profile == "clexuspm") {
-    $jr_profilelink = '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
 }
 else
 {

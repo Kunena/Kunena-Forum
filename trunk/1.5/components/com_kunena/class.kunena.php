@@ -107,16 +107,6 @@ if (!defined("KUNENA_COMPONENT_ITEMID"))
 		$kunenaProfile =& CkunenaCBProfile::getInstance();
     }
 
-    //Clexus PM
-    if ($kunena_config->pm_component == 'clexuspm' || $kunena_config->fb_profile == 'clexuspm') {
-        $kunena_db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_mypms' AND published='1'");
-        $CPM_Itemid = $kunena_db->loadResult();
-        	check_dberror('Unable to load Clexus item id');
-
-        define("KUNENA_CPM_ITEMID", (int)$CPM_Itemid);
-        define("KUNENA_CPM_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_CPM_ITEMID);
-        }
-
     // UddeIM
     if ($kunena_config->pm_component == 'uddeim') {
         $kunena_db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_uddeim' AND published='1'");
@@ -155,10 +145,6 @@ if (!defined("KUNENA_COMPONENT_ITEMID"))
 		define("KUNENA_AUP_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_AUP_ITEMID);
 		$profilelink = 'index.php?option=com_alphauserpoints&amp;view=account&amp;userid=';
         define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_alphauserpoints&amp;view=account&amp;Itemid=" . KUNENA_AUP_ITEMID . "&amp;userid=");
-        }
-     else if ($kunena_config->fb_profile == "clexuspm") {
-        $profilelink = 'index.php?option=com_mypms&amp;task=showprofile&amp;user=';
-        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_mypms&amp;task=showprofile&amp;Itemid=" . KUNENA_CPM_ITEMID . "&amp;user=");
         }
     else {
         $profilelink = 'index.php?option=com_kunena&amp;func=fbprofile&amp;userid=';

@@ -371,10 +371,7 @@ class HTML_userlist_content
 
                                 // Avatar
                                 $uslavatar = '';
-                                if ($kunena_config->avatar_src == "clexuspm") {
-                                    $uslavatar = '<img  border="0" class="usl_avatar" src="' . MyPMSTools::getAvatarLinkWithID($ulrow->id, "s") . '" alt="" />';
-                                }
-                                else if ($kunena_config->avatar_src == "cb")
+                                if ($kunena_config->avatar_src == "cb")
                                 {
                                 	$kunenaProfile =& CKunenaCBProfile::getInstance();
 									$uslavatar = $kunenaProfile->showAvatar($ulrow->id);

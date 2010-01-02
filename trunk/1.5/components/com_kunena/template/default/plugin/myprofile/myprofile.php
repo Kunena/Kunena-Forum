@@ -42,13 +42,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
     //Get userinfo needed later on, this limits the amount of queries
     $userinfo = new CKunenaUserprofile();
 
-    //use ClexusPM avatar if configured
-    if ($kunena_config->avatar_src == "clexuspm")
-    {
-        $kunena_db->setQuery("SELECT picture FROM #__mypms_profiles WHERE userid='{$kunena_my->id}");
-        $avatar = $kunena_db->loadResult();
-    }
-    elseif ($kunena_config->avatar_src == "cb")
+    if ($kunena_config->avatar_src == "cb")
     {
         $kunena_db->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='{$kunena_my->id}'");
         $avatar = $kunena_db->loadResult();
@@ -319,9 +313,9 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                     //get all subscriptions for this user
                     $kunena_db->setQuery("SELECT thread FROM #__fb_subscriptions WHERE userid='{$kunena_my->id}' ORDER BY thread DESC", $limitstart, $limit);
-                    $subslist = $kunena_db->loadObjectList();
+                    $this->kunena_subslist = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load subscriptions.");
-                    $csubslist = count($subslist);
+                    $this->kunena_csubslist = count($this->kunena_subslist);
 
                     if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_subs.php'))
                     {
@@ -353,9 +347,9 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                     //get all favorites for this user
                     $kunena_db->setQuery("SELECT thread FROM #__fb_favorites WHERE userid='{$kunena_my->id}' ORDER BY thread DESC", $limitstart, $limit);
-                    $favslist = $kunena_db->loadObjectList();
+                    $this->kunena_favslist = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load favorites.");
-                    $cfavslist = count($favslist);
+                    $this->kunena_cfavslist = count($this->kunena_favslist);
 
                     if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_fav.php'))
                     {
@@ -374,9 +368,9 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     if (!CKunenaTools::isAdmin())
                     {
                         $kunena_db->setQuery("SELECT m.catid, c.id, c.name FROM #__fb_moderation AS m LEFT JOIN #__fb_categories AS c ON c.id=m.catid WHERE m.userid='{$kunena_my->id}'");
-                        $modslist = $kunena_db->loadObjectList();
+                        $this->kunena_modslist = $kunena_db->loadObjectList();
                         	check_dberror("Unable to load moderators.");
-                        $cmodslist = count($modslist);
+                        $this->kunena_cmodslist = count($this->kunena_modslist);
                     }
 
                     if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_mod.php'))

@@ -1692,6 +1692,17 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
                 </tr>
 
+				<tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_SHOWIMGFORGUEST ?>
+                    </td>
+
+                    <td align = "left" valign = "top" width="25%"><?php echo $lists['showimgforguest']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOWIMGFORGUEST_DESC ?>
+                    </td>
+                </tr>
+
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top"><?php echo _COM_A_IMGHEIGHT ?>
                     </td>
@@ -1743,6 +1754,17 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _COM_A_FILEREGUPLOAD_DESC ?>
+                    </td>
+                </tr>
+
+				<tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_SHOWFILEFORGUEST ?>
+                    </td>
+
+                    <td align = "left" valign = "top" width="25%"><?php echo $lists['showfileforguest']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_SHOWFILEFORGUEST_DESC ?>
                     </td>
                 </tr>
 

@@ -32,6 +32,12 @@ define('_KUNENA_POST_EMAIL_NOTIFICATION2', 'You can administer your subscription
 define('_KUNENA_POST_EMAIL_NOTIFICATION3', 'Do not answer to this e-mail notification as it is a generated e-mail.');
 define('_KUNENA_POST_EMAIL_MOD1', 'A new post has been made to a forum to which you have assigned as moderator on the');
 define('_KUNENA_POST_EMAIL_MOD2', 'Please have a look at it after you have logged in on the site.');
+define('_KUNENA_SHOWIMGFORGUEST', 'Show images for guests');
+define('_KUNENA_SHOWIMGFORGUEST_DESC', 'Set to &quot;Yes&quot; if you want to show images for guests.');
+define('_KUNENA_SHOWIMGFORGUEST_HIDEIMG', 'This image is hidden for guests. Please login or register to see it.');
+define('_KUNENA_SHOWFILEFORGUEST', 'Show attachments for guests');
+define('_KUNENA_SHOWFILEFORGUEST_DESC', 'Set to &quot;Yes&quot; if you want to show attachments for guests.');
+define('_KUNENA_SHOWIMGFORGUEST_HIDEFILE', 'This attachment is hidden for guests. Please login or register to see it.');
 
 // 1.5.8
 

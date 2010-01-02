@@ -378,6 +378,9 @@ class CKunenaConfig extends CKunenaConfigBase
 	var $sef                     = 1;
 	var $sefcats                 = 0;
 	var $sefutf8                 = 0;
+	// New for 1.6 -> Hide images and files for guests
+	var $showimgforguest	     = 1;
+    var $showfileforguest	     = 1;
 
     public function __construct($userinfo=null)
     {

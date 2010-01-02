@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+02-Jan-2010 810
++ [#19225] add hide images/files for guests
+
 02-Jan-2010 severdia
 ^ [#18780] Reformatted CSS files
 # [#18780] Commented out errors. Both CSS files now validate at W3C

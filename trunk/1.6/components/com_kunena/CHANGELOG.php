@@ -35,6 +35,7 @@ Kunena 1.6.0-DEV
 
 02-Jan-2010 810
 + [#19225] add hide images/files for guests
+^ [#19225] add hide images/files for guests
 
 02-Jan-2010 severdia
 ^ [#18780] Reformatted CSS files

@@ -30,8 +30,6 @@ $kunena_app =& JFactory::getApplication();
 define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH .DS. "templates".DS . $kunena_app->getTemplate());
 define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "templates/".$kunena_app->getTemplate());
 
-global $kunena_db, $kunena_my;
-
 require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 
 $document =& JFactory::getDocument();
@@ -700,21 +698,25 @@ class CKunenaTools {
     }
 
 	function isModerator($uid, $catid=0) {
+		static $instances = array();
 		$uid = (int)$uid;
 		$catid = (int)$catid;
 		if ($uid == 0) return false; // Anonymous never has moderator permission
 		if (self::isAdmin($uid)) return true;
-		$kunena_db = &JFactory::getDBO();
-		if ($catid) {
-			$kunena_db->setQuery ( "SELECT m.userid FROM #__fb_categories AS c INNER JOIN #__fb_moderation AS m ON c.id=m.catid WHERE c.moderated=1 AND m.catid='{$catid}' AND m.userid='{$uid}'" );
-			if ($kunena_db->loadResult() == $uid) return true;
-			// Check if we have forum wide moderator - not limited to particular categories
-			$kunena_db->setQuery ( "SELECT u.userid FROM #__fb_users AS u LEFT JOIN #__fb_moderation AS m ON u.id=m.userid WHERE u.id={$uid} AND m.userid IS NULL" );
-			if ($kunena_db->loadResult() == $uid) return true;
-		} else {
-			$kunena_db->setQuery ( "SELECT u.userid FROM #__fb_users AS u WHERE u.id={$uid}" );
-			if ($kunena_db->loadResult() == $uid) return true;
+		if (!isset($instances[$uid])) {
+			$kunena_db = &JFactory::getDBO();
+			$kunena_db->setQuery ("SELECT m.catid FROM #__fb_users AS u LEFT JOIN #__fb_moderation AS m ON u.userid=m.userid "
+				."LEFT JOIN #__fb_categories AS c ON m.catid=c.id WHERE u.moderator='1' AND (m.catid IS NULL OR c.moderated='1') AND u.userid='{$uid}'");
+			$instances[$uid] = $kunena_db->loadResultArray();
+			check_dberror("Unable to load moderation info for user $uid.");
 		}
+		// Is user a global moderator?
+		if (in_array(null, $instances[$uid], true)) return true;
+		// Is user moderator in any category?
+		if (!$catid && count($instances[$uid])) return true;
+		// Is user moderator in the category?
+		if ($catid && in_array($catid, $instances[$uid])) return true;
+
 		return false;
 	}
 

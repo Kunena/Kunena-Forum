@@ -70,11 +70,13 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 
 	//done usertype determination, phew...
 
+
 	//Get the max# of posts for any one user
 	$kunena_db->setQuery ( "SELECT MAX(posts) FROM #__fb_users" );
 	$maxPosts = $kunena_db->loadResult ();
 
 	//# of post for this user and ranking
+
 
 	$numPosts = ( int ) $userinfo->posts;
 	$this->kunena_ordering = $userinfo->ordering;
@@ -421,28 +423,9 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 
 			break;
 
-		//
+		case "userdetails" :
 
-
-		case "userdetails":
-
-
-					/* We don't need
-					// security check to see if link exists in a menu
-                    $link = 'index.php?option=com_user&amp;task=UserDetails';
-
-                    $query = "SELECT id" . "\n FROM #__menu" . "\n WHERE link LIKE '%$link%'" . "\n AND published = 1";
-                    $kunena_db->setQuery($query);
-                    $exists = $kunena_db->loadResult();
-
-                    if (!$exists)
-                    {
-                        JError::raiseError( 403, JText::_("ALERTNOTAUTH") );;
-                        return;
-                    }
-					*/
-
-                    require_once (KUNENA_ROOT_PATH_ADMIN . DS . 'components/com_users/users.class.php');
+			require_once (KUNENA_ROOT_PATH_ADMIN . DS . 'components/com_users/users.class.php');
 
 			$row = new JUser ( $kunena_my->id );
 			$row->orig_password = $row->password;

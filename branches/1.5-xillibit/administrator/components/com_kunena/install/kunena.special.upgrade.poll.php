@@ -16,6 +16,8 @@ defined( '_JEXEC' ) or die('Restricted access');
 // Add custom upgrade code here
 // Most or all sql statements should be covered within comupgrade.xml
 
+$kunena_db =& JFactory::getDBO();
+
 //get the database prefixe and set the table to search
 $prefixfinal = $kunena_db->getPrefix().'_fb_polls_datas';
 

@@ -575,6 +575,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		#########################################################################################
 		case 'latest' :
 		case 'mylatest' :
+		case 'noreplies' :
 			if (file_exists ( KUNENA_ABSTMPLTPATH . '/latestx.php' )) {
 				include (KUNENA_ABSTMPLTPATH . '/latestx.php');
 			} else {

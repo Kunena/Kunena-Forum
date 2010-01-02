@@ -31,17 +31,24 @@ $id = JRequest::getInt ( 'id', 0 );
 global $kunena_emoticons;
 global $kunena_is_moderator;
 $kunena_my = &JFactory::getUser ();
-// Func Check
-if (JString::strtolower ( $func ) == 'latest' || JString::strtolower ( $func ) == '') {
-	$funclatest = 1;
-} else {
-	$funclatest = 0;
-}
 
-if (JString::strtolower ( $func ) == 'mylatest') {
-	$funcmylatest = 1;
-} else {
-	$funcmylatest = 0;
+// Func Check
+
+$funclatest = false;
+$funcmylatest = false;
+$funcnoreplies = false;
+
+switch (JString::strtolower ( $func )){
+	case 'mylatest':
+		$funcmylatest = true;
+		break;
+	case 'noreplies':
+		$funcnoreplies = true;
+		break;
+	case 'latest':
+	default:
+		$funclatest = true;
+		break;
 }
 
 // topic emoticons
@@ -99,7 +106,7 @@ if (count ( $this->messages [0] ) > 0) {
 	width="100%">
 
 	<?php
-	if ($funclatest || $funcmylatest) {
+	if ($funclatest || $funcmylatest || $funcnoreplies) {
 
 	} else {
 		?>

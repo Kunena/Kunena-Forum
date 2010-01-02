@@ -84,6 +84,14 @@ function kunena_get_menu($cbitemid, $kunena_config, $kunena_emoticons, $my_id, $
 	    $header .= '</li>';
     }
 
+    if ($my_id != 0)
+    {
+	    $header .= ' <li ';
+	    if ($func == 'noreplies') $header .= ' class="Kunena_item_active" ';
+	    $header .=' >'.CKunenaLink::GetShowNoRepliesLink('<span>'.(array_key_exists('shownoreplies', $kunena_emoticons) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['shownoreplies'] . '" border="0" alt="' . _KUNENA_NO_REPLIES . '" title="' . _KUNENA_NO_REPLIES . '"/>' : _KUNENA_NO_REPLIES).'</span>');
+	    $header .= '</li>';
+    }
+
     $header .= '<li ';
 	 if ($func == 'listcat' ) $header .= ' class="Kunena_item_active" ';
 	$header .=' >'.CKunenaLink::GetCategoryListLink('<span>'.(array_key_exists('home', $kunena_emoticons) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['home'] . '" border="0" alt="' . _KUNENA_CATEGORIES . '"  title="' . _KUNENA_CATEGORIES . '" />' : _KUNENA_CATEGORIES).'</span>');

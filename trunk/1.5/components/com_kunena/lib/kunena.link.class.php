@@ -196,11 +196,11 @@ class CKunenaLink
     			$kunenaProfile =& CKunenaCBProfile::getInstance();
     			return $kunenaProfile->getProfileURL($userid);
     		}
-    		elseif ($kunena_config->fb_profile == 'jomsocial') 
+    		elseif ($kunena_config->fb_profile == 'jomsocial')
     		{
    				return CRoute::_('index.php?option=com_community&view=profile&userid='.$userid);
     		}
-    		elseif ($kunena_config->fb_profile == 'aup') 
+    		elseif ($kunena_config->fb_profile == 'aup')
     		{
 				$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
 				if ( file_exists($api_AUP)) {
@@ -249,6 +249,11 @@ class CKunenaLink
     function GetShowMyLatestLink($name, $rel='nofollow')
     {
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=mylatest', $name, '', $rel);
+    }
+
+    function GetShowNoRepliesLink($name, $rel='nofollow')
+    {
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=noreplies', $name, '', $rel);
     }
 
     function GetShowLatestThreadsLink($period, $name, $rel='nofollow')

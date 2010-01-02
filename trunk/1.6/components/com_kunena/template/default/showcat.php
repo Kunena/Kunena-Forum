@@ -26,7 +26,6 @@ $kunena_app = & JFactory::getApplication ();
 $kunena_config = & CKunenaConfig::getInstance ();
 $kunena_session = & CKunenaSession::getInstance ();
 global $kunena_emoticons;
-global $kunena_is_moderator;
 
 function KunenaShowcatPagination($catid, $page, $totalpages, $maxpages) {
 	$startpage = ($page - floor ( $maxpages / 2 ) < 1) ? 1 : $page - floor ( $maxpages / 2 );
@@ -235,7 +234,7 @@ if (in_array ( $catid, $allow_forum )) {
 
 		</td>
 		<td class="fb_list_actions_forum" width="100%"><?php
-	if ($kunena_is_moderator || ($this->kunena_forum_locked == 0 && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
+	if (CKunenaTools::isModerator($kunena_my->id, $catid) || ($this->kunena_forum_locked == 0 && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
 		//this user is allowed to post a new topic:
 		$forum_new = CKunenaLink::GetPostNewTopicLink ( $catid, isset ( $kunena_emoticons ['new_topic'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC );
 	}

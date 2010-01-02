@@ -117,7 +117,6 @@ class HTML_userlist_content
 {
     function showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search = "")
     {
-    	global $kunena_is_moderator;
 		global $kunena_emoticons;
 
 		$kunena_app =& JFactory::getApplication();

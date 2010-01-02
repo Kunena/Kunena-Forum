@@ -21,7 +21,7 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $kunena_config, $kunenaProfile, $lang;
+global $kunenaProfile, $lang;
 
 // Kunena wide defines
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
@@ -45,7 +45,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.config.class.php');
 require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 
 $kunena_app =& JFactory::getApplication();
-
+$kunena_config =& CKunenaConfig::getInstance();
 $kunena_db = JFactory::getDBO();
 
 //$kunena_config =& CKunenaConfig::getInstance();
@@ -80,8 +80,6 @@ if (!is_array($uid)) {
     $uid = array ( $uid );
 }
 
-// ERROR: global scope mix
-global $order;
 $order = JRequest::getVar('order', '');
 
 // initialise some request directives (specifically for J1.5 compatibility)
@@ -1006,8 +1004,9 @@ function addModerator($option, $id, $cid = null, $publish = 1)
 {
 	$kunena_app =& JFactory::getApplication();
 	$kunena_db = &JFactory::getDBO();
-    global  $kunena_my;
-    $numcid = count($cid);
+	$kunena_my = &JFactory::getUser();
+
+	$numcid = count($cid);
     $action = "";
 
     if ($publish == 1)
@@ -1833,11 +1832,10 @@ function collect_smilies()
 
 function showRanks($option)
 {
-    global $order;
-
     $kunena_app =& JFactory::getApplication();
     $kunena_db = &JFactory::getDBO();
 
+    $order = JRequest::getVar('order', '');
     $limit = $kunena_app->getUserStateFromRequest("global.list.limit", 'limit', $kunena_app->getCfg('list_limit'), 'int');
 	$limitstart = $kunena_app->getUserStateFromRequest("{$option}.limitstart", 'limitstart', 0, 'int');
 	$kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_ranks");

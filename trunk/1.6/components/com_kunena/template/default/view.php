@@ -72,7 +72,6 @@ function KunenaViewPagination($catid, $threadid, $page, $totalpages, $maxpages) 
 //securing form elements
 $catid = ( int ) $catid;
 $id = ( int ) $id;
-$kunena_is_moderator = CKunenaTools::isModerator ( $kunena_my->id, $catid );
 
 $smileyList = smile::getEmoticons ( 0 );
 
@@ -228,7 +227,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		}
 
 		//data ready display now
-		if ($kunena_is_moderator || (($this->kunena_forum_locked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
+		if (CKunenaTools::isModerator($kunena_my->id, $catid) || (($this->kunena_forum_locked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
 			//this user is allowed to reply to this topic
 			$thread_reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $thread, isset ( $kunena_emoticons ['topicreply'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['topicreply'] . '" alt="' . _GEN_POST_REPLY . '" title="' . _GEN_POST_REPLY . '" border="0" />' : _GEN_POST_REPLY );
 		}
@@ -258,12 +257,12 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		// FINISH: FAVORITES
 
 
-		if ($kunena_is_moderator || ($this->kunena_forum_locked == 0 && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
+		if (CKunenaTools::isModerator($kunena_my->id, $catid) || ($this->kunena_forum_locked == 0 && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
 			//this user is allowed to post a new topic
 			$thread_new = CKunenaLink::GetPostNewTopicLink ( $catid, isset ( $kunena_emoticons ['new_topic'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC );
 		}
 
-		if ($kunena_is_moderator) {
+		if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
 			// offer the moderator always the move link to relocate a topic to another forum
 			// and the (un)sticky bit links
 			// and the (un)lock links
@@ -339,7 +338,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		echo CKunenaLink::GetSamePageAnkerLink ( 'forumbottom', isset ( $kunena_emoticons ['bottomarrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM );
 
 		echo '</td>';
-		if ($kunena_is_moderator || isset ( $thread_reply ) || isset ( $thread_subscribe ) || isset ( $thread_favorite )) {
+		if (CKunenaTools::isModerator($kunena_my->id, $catid) || isset ( $thread_reply ) || isset ( $thread_subscribe ) || isset ( $thread_favorite )) {
 			echo '<td class="fb_list_actions_forum">';
 			echo '<div class="fb_message_buttons_row" style="text-align: center;">';
 			if (isset ( $thread_reply ))
@@ -349,7 +348,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 			if (isset ( $thread_favorite ))
 				echo ' ' . $thread_favorite;
 			echo '</div>';
-			if ($kunena_is_moderator) {
+			if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
 				echo '<div class="fb_message_buttons_row" style="text-align: center;">';
 				echo $thread_delete;
 				echo ' ' . $thread_move;
@@ -877,7 +876,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 
 
 				//Show admins the IP address of the user:
-				if ($kunena_is_moderator) {
+				if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
 					$msg_html->ip = $this->kunena_message->ip;
 				}
 
@@ -916,7 +915,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 					$msg_html->signature = $signature;
 				}
 
-				if ($kunena_is_moderator || (($this->kunena_forum_locked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
+				if (CKunenaTools::isModerator($kunena_my->id, $catid) || (($this->kunena_forum_locked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
 					//user is allowed to reply/quote
 					$msg_html->reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $this->kunena_message->id, isset ( $kunena_emoticons ['reply'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['reply'] . '" alt="Reply" border="0" title="' . _VIEW_REPLY . '" />' : _GEN_REPLY );
 					$msg_html->quote = CKunenaLink::GetTopicPostReplyLink ( 'quote', $catid, $this->kunena_message->id, isset ( $kunena_emoticons ['quote'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['quote'] . '" alt="Quote" border="0" title="' . _VIEW_QUOTE . '" />' : _GEN_QUOTE );
@@ -931,7 +930,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 
 				$showedEdit = 0; //reset this value
 				//Offer an moderator the delete link
-				if ($kunena_is_moderator) {
+				if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
 					$msg_html->delete = CKunenaLink::GetTopicPostLink ( 'delete', $catid, $this->kunena_message->id, isset ( $kunena_emoticons ['delete'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />' : _GEN_DELETE );
 					$msg_html->merge = CKunenaLink::GetTopicPostLink ( 'merge', $catid, $this->kunena_message->id, isset ( $kunena_emoticons ['merge'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['merge'] . '" alt="' . _GEN_MERGE . '" border="0" title="' . _GEN_MERGE . '" />' : _GEN_MERGE );
 				}
@@ -959,7 +958,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 					}
 				}
 
-				if ($kunena_is_moderator && $showedEdit != 1) {
+				if (CKunenaTools::isModerator($kunena_my->id, $catid) && $showedEdit != 1) {
 					//Offer a moderator always the edit link except when it is already showing..
 					$msg_html->edit = CKunenaLink::GetTopicPostLink ( 'edit', $catid, $this->kunena_message->id, isset ( $kunena_emoticons ['edit'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />' : _GEN_EDIT );
 				}
@@ -992,7 +991,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 
 		echo '</td>';
 
-		if ($kunena_is_moderator || isset ( $thread_reply ) || isset ( $thread_subscribe ) || isset ( $thread_favorite )) {
+		if (CKunenaTools::isModerator($kunena_my->id, $catid) || isset ( $thread_reply ) || isset ( $thread_subscribe ) || isset ( $thread_favorite )) {
 			echo '<td class="fb_list_actions_forum">';
 			echo '<div class="fb_message_buttons_row" style="text-align: center;">';
 			if (isset ( $thread_reply ))
@@ -1002,7 +1001,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 			if (isset ( $thread_favorite ))
 				echo ' ' . $thread_favorite;
 			echo '</div>';
-			if ($kunena_is_moderator) {
+			if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
 				echo '<div class="fb_message_buttons_row" style="text-align: center;">';
 				echo $thread_delete;
 				echo ' ' . $thread_move;

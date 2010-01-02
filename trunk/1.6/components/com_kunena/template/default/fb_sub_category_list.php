@@ -22,8 +22,6 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $kunena_is_admin;
-
 $kunena_config =& CKunenaConfig::getInstance();
 $kunena_session =& CKunenaSession::getInstance();
 $kunena_db = &JFactory::getDBO();
@@ -157,31 +155,7 @@ else
                     $kunena_db->setQuery("SELECT id, name FROM #__fb_categories WHERE parent='{$singlerow->id}' AND published='1'");
                     $forumparents = $kunena_db->loadObjectList();
                     	check_dberror("Unable to load categories.");
-                    //    get pending messages if user is a Moderator for that forum
-                    $kunena_db->setQuery("SELECT userid FROM #__fb_moderation WHERE catid='{$singlerow->id}'");
-                    $moderatorList = $kunena_db->loadObjectList();
-                    	check_dberror("Unable to load moderators.");
-                    $modIDs[] = array ();
-                    array_splice($modIDs, 0);
 
-                    if (count($moderatorList) > 0)
-                    {
-                        foreach ($moderatorList as $ml) {
-                            $modIDs[] = $ml->userid;
-                        }
-                    }
-
-                    $nummodIDs = count($modIDs);
-                    $numPending = 0;
-
-                    if ((in_array($kunena_my->id, $modIDs)) || CKunenaTools::isAdmin() == 1)
-                    {
-                        $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE catid='{$singlerow->id}' AND hold='1'");
-                        $numPending = $kunena_db->loadResult();
-                        $kunena_is_moderator = 1;
-                    }
-
-                    $numPending = (int)$numPending;
                     //    get latest post info
                     $latestname = "";
                     $latestcatid = "";
@@ -397,9 +371,11 @@ else
                         echo '</div>';
                     }
 
-                    if ($kunena_is_moderator)
+                    if (CKunenaTools::isModerator($kunena_my->id, $catid))
                     {
-                        if ($numPending > 0)
+                        $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_messages WHERE catid='{$singlerow->id}' AND hold='1'");
+                        $numPending = $kunena_db->loadResult();
+                    	if ($numPending > 0)
                         {
                             echo '<div class="fbs"><font color="red">';
                             echo CKunenaLink::GetCategoryReviewListLink($singlerow->id, $numPending.' '. _SHOWCAT_PENDING, 'nofollow');

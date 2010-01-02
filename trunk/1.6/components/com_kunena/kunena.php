@@ -25,8 +25,6 @@ defined ( '_JEXEC' ) or die ( 'Restricted access' );
 // Kunena wide defines
 require_once (JPATH_BASE . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.defines.php');
 
-global $kunena_is_moderator;
-
 global $message;
 global $kunena_this_cat;
 
@@ -232,8 +230,6 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	require_once (KUNENA_PATH_LIB . DS . 'kunena.category.class.php');
 	require_once (JPATH_BASE . '/libraries/joomla/template/template.php');
 
-	$kunena_is_moderator = CKunenaTools::isModerator ( $kunena_my->id, $catid );
-
 	if ($func == '') { // Set default start page as per config settings
 		switch ($kunena_config->fbdefaultpage) {
 			case 'recent' :
@@ -377,7 +373,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			$numPending = $kunena_db->loadResult ();
 			check_dberror ( 'Unable load pending messages.' );
 
-			$fbMenu = kunena_get_menu ( NULL, $kunena_config, $kunena_emoticons, $kunena_my->id, 2, $view, $catid, $id, $thread, $kunena_is_moderator, $numPending );
+			$fbMenu = kunena_get_menu ( NULL, $kunena_config, $kunena_emoticons, $kunena_my->id, 2, $view, $catid, $id, $thread, CKunenaTools::isModerator($kunena_my->id, $catid), $numPending );
 			break;
 
 		default :
@@ -632,12 +628,12 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		case 'bulkactions' :
 			switch ($do) {
 				case "bulkDel" :
-					CKunenaTools::fbDeletePosts ( $kunena_is_moderator, $return );
+					CKunenaTools::fbDeletePosts ( CKunenaTools::isModerator($kunena_my->id, $catid), $return );
 
 					break;
 
 				case "bulkMove" :
-					CKunenaTools::fbMovePosts ( $catid, $kunena_is_moderator, $return );
+					CKunenaTools::fbMovePosts ( $catid, CKunenaTools::isModerator($kunena_my->id, $catid), $return );
 					break;
 			}
 

@@ -671,7 +671,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
         <?php
     }
 
-    function showConfig(&$kunen_config, &$lists, $option)
+    function showConfig(&$kunena_config, &$lists, $option)
     {
         jimport('joomla.html.pane');
         $pane =& JPane::getInstance('tabs', array('startOffset'=>0));

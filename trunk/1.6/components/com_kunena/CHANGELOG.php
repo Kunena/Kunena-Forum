@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+02-Jan-2010 Matias
+# [#19065] Removed many globals, fixed minor bugs
+
 02-Jan-2010 810
 + [#19225] add hide images/files for guests
 ^ [#19225] add hide images/files for guests

@@ -25,7 +25,7 @@ $kunena_app = & JFactory::getApplication ();
 $kunena_config = & CKunenaConfig::getInstance ();
 $kunena_session = & CKunenaSession::getInstance ();
 
-global $kunena_is_moderator, $kunena_systime;
+global $kunena_systime;
 global $imageLocation, $fileLocation, $board_title;
 
 $catid = JRequest::getInt ( 'catid', 0 );
@@ -116,7 +116,7 @@ if (($kunena_config->floodprotection != 0 && ((($lastPostTime + $kunena_config->
 		$my_name = $kunena_config->username ? $kunena_my->username : $kunena_my->name;
 		$this->kunena_my_email = $kunena_my->email;
 		$this->kunena_registered_user = 1;
-		if ($kunena_is_moderator) {
+		if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
 			if (! empty ( $fb_authorname ))
 				$my_name = $fb_authorname;
 			if (isset ( $email ) && ! empty ( $email ))
@@ -152,7 +152,7 @@ $catName = $objCatInfo->name;
 			require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'fb_pathway.php');
 		}
 
-		if ($action == "post" && (hasPostPermission ( $kunena_db, $catid, $parentid, $kunena_my->id, $kunena_config->pubwrite, $kunena_is_moderator ))) {
+		if ($action == "post" && (hasPostPermission ( $kunena_db, $catid, $parentid, $kunena_my->id, $kunena_config->pubwrite, CKunenaTools::isModerator($kunena_my->id, $catid) ))) {
 			?>
 
 		<table border="0" cellspacing="1" cellpadding="3" width="70%"
@@ -218,7 +218,7 @@ $catName = $objCatInfo->name;
 				//doesn't apply to admin/moderator posts ;-)
 				$holdPost = 0;
 
-				if (! $kunena_is_moderator) {
+				if (! CKunenaTools::isModerator($kunena_my->id, $catid)) {
 					$kunena_db->setQuery ( "SELECT review FROM #__fb_categories WHERE id='{$catid}'" );
 					$kunena_db->query () or check_dberror ( 'Unable to load review flag from categories.' );
 					$holdPost = $kunena_db->loadResult ();
@@ -569,7 +569,7 @@ $catName = $objCatInfo->name;
 			echo '<br /><br /><div align="center">' . _SUBMIT_CANCEL . "</div><br />";
 			echo CKunenaLink::GetLatestPostAutoRedirectHTML ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid );
 		} else {
-			if ($do == "quote" && (hasPostPermission ( $kunena_db, $catid, $id, $kunena_my->id, $kunena_config->pubwrite, $kunena_is_moderator ))) { //reply do quote
+			if ($do == "quote" && (hasPostPermission ( $kunena_db, $catid, $id, $kunena_my->id, $kunena_config->pubwrite, CKunenaTools::isModerator($kunena_my->id, $catid) ))) { //reply do quote
 				$parentid = 0;
 				$id = ( int ) $id;
 
@@ -627,7 +627,7 @@ $catName = $objCatInfo->name;
 				?>
 		</form>
 		<?php
-			} else if ($do == "reply" && (hasPostPermission ( $kunena_db, $catid, $id, $kunena_my->id, $kunena_config->pubwrite, $kunena_is_moderator ))) { // reply no quote
+			} else if ($do == "reply" && (hasPostPermission ( $kunena_db, $catid, $id, $kunena_my->id, $kunena_config->pubwrite, CKunenaTools::isModerator($kunena_my->id, $catid) ))) { // reply no quote
 				$parentid = 0;
 				$id = ( int ) $id;
 				$this->kunena_set_focus = 0;
@@ -672,7 +672,7 @@ $catName = $objCatInfo->name;
 				?>
 		</form>
 		<?php
-			} else if ($do == "newFromBot" && (hasPostPermission ( $kunena_db, $catid, $id, $kunena_my->id, $kunena_config->pubwrite, $kunena_is_moderator ))) { // The Mosbot "discuss on forums" has detected an unexisting thread and wants to create one
+			} else if ($do == "newFromBot" && (hasPostPermission ( $kunena_db, $catid, $id, $kunena_my->id, $kunena_config->pubwrite, CKunenaTools::isModerator($kunena_my->id, $catid) ))) { // The Mosbot "discuss on forums" has detected an unexisting thread and wants to create one
 				$parentid = 0;
 				$id = ( int ) $id;
 				$this->kunena_set_focus = 0;
@@ -735,7 +735,7 @@ $catName = $objCatInfo->name;
 				$userID = $mes->userid;
 
 				//Check for a moderator or superadmin
-				if ($kunena_is_moderator) {
+				if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
 					$allowEdit = 1;
 				}
 
@@ -808,7 +808,7 @@ $catName = $objCatInfo->name;
 				$userid = $mes->userid;
 
 				//Check for a moderator or superadmin
-				if ($kunena_is_moderator) {
+				if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
 					$allowEdit = 1;
 				}
 
@@ -853,7 +853,7 @@ $catName = $objCatInfo->name;
 						// doesn't apply to admin/moderator posts ;-)
 						$holdPost = 0;
 
-						if (! $kunena_is_moderator) {
+						if (! CKunenaTools::isModerator($kunena_my->id, $catid)) {
 							$kunena_db->setQuery ( "SELECT review FROM #__fb_categories WHERE id='{$catid}'" );
 							$kunena_db->query () or check_dberror ( 'Unable to load review flag from categories.' );
 							$holdPost = $kunena_db->loadResult ();
@@ -897,7 +897,7 @@ $catName = $objCatInfo->name;
 					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
 				}
 			} else if ($do == "delete") {
-				if (! $kunena_is_moderator) {
+				if (! CKunenaTools::isModerator($kunena_my->id, $catid)) {
 					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
 				}
 
@@ -950,7 +950,7 @@ $catName = $objCatInfo->name;
 		<?php
 				}
 			} else if ($do == "deletepostnow") {
-				if (! $kunena_is_moderator) {
+				if (! CKunenaTools::isModerator($kunena_my->id, $catid)) {
 					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
 				}
 
@@ -1002,7 +1002,7 @@ $catName = $objCatInfo->name;
 
 			} //fi $do==deletepostnow
 else if ($do == "move") {
-				if (! $kunena_is_moderator) {
+				if (! CKunenaTools::isModerator($kunena_my->id, $catid)) {
 					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
 				}
 
@@ -1170,7 +1170,7 @@ else if ($do == "move") {
 				}
 				$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ), $success_msg );
 			} else if ($do == "sticky") {
-				if (! $kunena_is_moderator) {
+				if (! CKunenaTools::isModerator($kunena_my->id, $catid)) {
 					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
 				}
 
@@ -1182,7 +1182,7 @@ else if ($do == "move") {
 				}
 				$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ), $success_msg );
 			} else if ($do == "unsticky") {
-				if (! $kunena_is_moderator) {
+				if (! CKunenaTools::isModerator($kunena_my->id, $catid)) {
 					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
 				}
 
@@ -1194,7 +1194,7 @@ else if ($do == "move") {
 				}
 				$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ), $success_msg );
 			} else if ($do == "lock") {
-				if (! $kunena_is_moderator) {
+				if (! CKunenaTools::isModerator($kunena_my->id, $catid)) {
 					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
 				}
 
@@ -1206,7 +1206,7 @@ else if ($do == "move") {
 				}
 				$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ), $success_msg );
 			} else if ($do == "unlock") {
-				if (! $kunena_is_moderator) {
+				if (! CKunenaTools::isModerator($kunena_my->id, $catid)) {
 					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
 				}
 

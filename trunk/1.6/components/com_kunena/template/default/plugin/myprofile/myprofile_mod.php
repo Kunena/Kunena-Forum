@@ -20,8 +20,6 @@
 **/
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $kunena_is_admin;
-
 ?>
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">

@@ -21,7 +21,6 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $kunena_is_admin;
 global $kunena_emoticons;
 
 $kunena_db = &JFactory::getDBO();

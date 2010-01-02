@@ -66,9 +66,8 @@ class CKunenaSearch
      */
     function CKunenaSearch()
     {
-        global $kunena_my;
-
-	$kunena_app =& JFactory::getApplication();
+		$kunena_my = &JFactory::getUser ();
+		$kunena_app =& JFactory::getApplication();
         $kunena_db = &JFactory::getDBO();
         $kunena_config =& CKunenaConfig::getInstance();
 

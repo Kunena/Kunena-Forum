@@ -25,7 +25,6 @@ defined( '_JEXEC' ) or die('Restricted access');
 $kunena_db = &JFactory::getDBO();
 $kunena_app =& JFactory::getApplication();
 $kunena_config =& CKunenaConfig::getInstance();
-$kunena_is_a_moderator = CKunenaTools::isModerator($kunena_my->id);
 ?>
 
 <?php
@@ -78,7 +77,7 @@ if ($kunena_config->showwhoisonline > 0)
 
                 if ($user->userid == 0) {
                     $user->username = _KUNENA_GUEST;
-                } else if ($user->showOnline < 1 && !$kunena_is_a_moderator) {
+                } else if ($user->showOnline < 1 && !CKunenaTools::isModerator($kunena_my->id)) {
                 	continue;
                 }
 
@@ -105,7 +104,7 @@ if ($kunena_config->showwhoisonline > 0)
                         </span>
 
                         <?php
-                        if ($kunena_is_a_moderator)
+                        if (CKunenaTools::isModerator($kunena_my->id))
                         {
                         ?>
 

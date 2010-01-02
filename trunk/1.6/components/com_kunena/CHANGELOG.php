@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+03-Jan-2010 810
+# [#19229] User administration Adding an order + cleaned up
+
 02-Jan-2010 Matias
 # [#19065] Removed many globals, fixed minor bugs
 # [#19215] Remove redundant SQL in isModerator() calls

@@ -1085,6 +1085,10 @@ function showProfiles($kunena_db, $option, $lang, $order)
     {
         $kunena_db->setQuery("SELECT * FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u " . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY u.name ASC ", $limitstart, $limit);
     }
+	else if ($order == 3)
+    {
+        $kunena_db->setQuery("SELECT * FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u " . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY u.username ASC", $limitstart, $limit);
+    }
     else if ($order < 1)
     {
         $kunena_db->setQuery("SELECT * FROM #__fb_users AS sbu " . "\n INNER JOIN #__users AS u" . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY sbu.userid", $limitstart, $limit);

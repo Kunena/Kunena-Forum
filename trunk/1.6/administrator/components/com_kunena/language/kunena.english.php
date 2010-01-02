@@ -836,9 +836,10 @@ DEFINE('_KUNENA_PATH', 'Path:');
 DEFINE('_KUNENA_CSSERROR', 'Please note: The CSS template file must be writable to save changes.');
 // User Management
 DEFINE('_KUNENA_FUM', 'Kunena User Profile Manager');
-DEFINE('_KUNENA_SORTID', 'sort by userid');
-DEFINE('_KUNENA_SORTMOD', 'sort by moderators');
-DEFINE('_KUNENA_SORTNAME', 'sort by names');
+DEFINE('_KUNENA_SORTID', 'Sort By Userid');
+DEFINE('_KUNENA_SORTMOD', 'Sort By Moderators');
+DEFINE('_KUNENA_SORTNAME', 'Sort By Names');
+DEFINE('_KUNENA_SORTREALNAME', 'Sort By Real Names');
 DEFINE('_KUNENA_VIEW', 'View');
 DEFINE('_KUNENA_NOUSERSFOUND', 'No user profiles found.');
 DEFINE('_KUNENA_ADDMOD', 'Add Moderator to');

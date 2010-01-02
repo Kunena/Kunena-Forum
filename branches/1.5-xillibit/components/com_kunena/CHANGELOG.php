@@ -34,6 +34,7 @@ Legend:
 Kunena 1.6.0-DEV
 
 02-Jan-2010 Xillibit
+# [#18627] Fixes somes warning detected into zend
 # [#18627] Fixes little bugs on polls
 + [#18627] Add delete polls when the user delete a thread
 

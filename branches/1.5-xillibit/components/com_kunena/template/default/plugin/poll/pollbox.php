@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id:
+* @version $Id: pollbox.php 1426 2010-01-02 09:13:33Z xillibit $
 * Kunena Component
 * @package Kunena
 *
@@ -12,7 +12,11 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $app =& JFactory::getApplication();
-$id = intval(JRequest::getVar("id", ""));
+$id 	= intval(JRequest::getVar("id", ""));
+$catid 	= JRequest::getInt('catid', 0);
+
+global $kunena_config;
+
 $catsallowed = explode(',',$kunena_config->pollallowedcategories);
 if (in_array($catid, $catsallowed))
 {

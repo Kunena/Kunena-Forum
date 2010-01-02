@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: kunena.special.upgrade.poll.php $
+* @version $Id: kunena.special.upgrade.poll.php 1426 2010-01-02 09:13:33Z xillibit $
 * Kunena Component
 * @package Kunena
 * @Copyright (C) 2008 - 2009 Kunena Team All rights reserved

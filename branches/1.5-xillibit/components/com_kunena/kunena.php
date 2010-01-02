@@ -64,7 +64,6 @@ $userid 		= JRequest::getInt('userid', 0);
 $view 			= JRequest::getVar('view', '');
 $msgpreview 	= JRequest::getVar('msgpreview', '');
 $no_html		= JRequest::getBool('no_html', 0);
-$value_choosed	= JRequest::getInt('radio', '');
 $polltitle = JRequest::getString('poll_title' , 0);
 $optionsnumbers = JRequest::getInt('number_total_options' , '');
 $polltimetolive = JRequest::getString('poll_time_to_live' , 0);

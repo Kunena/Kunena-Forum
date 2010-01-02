@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id:
+* @version $Id: kunena.poll.class.php 1426 2010-01-02 09:13:33Z xillibit $
 * Kunena Component
 * @package Kunena
 *
@@ -192,7 +192,7 @@ class CKunenaPolls {
              		$kunena_db->query();
             		echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"1\";</script>";
           		}
-         		else if ($votes = $kunena_config->pollnbvotesbyuser)
+         		else if ($votes == $kunena_config->pollnbvotesbyuser)
          		{
             		$kunena_db->setQuery("UPDATE #__fb_polls_users SET votes=votes+1 WHERE pollid=$pollid AND userid={$userid}");
             		$kunena_db->query();

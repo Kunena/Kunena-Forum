@@ -1,5 +1,5 @@
 /**
-* @version $Id: 
+* @version $Id: kunena.poll.js 1395 2009-12-30 14:40:22Z xillibit $
 * Kunena Component
 * @package Kunena
 *

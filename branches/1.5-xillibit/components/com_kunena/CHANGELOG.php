@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+02-Jan-2010 Xillibit
++ [#18627] Add delete polls when the user delete a thread
+
 01-Jan-2010 Xillibit
 + [#18627] Add upgrade procedure for polls
 

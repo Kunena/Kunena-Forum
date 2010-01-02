@@ -623,7 +623,7 @@ class CKunenaTools {
 
         // start iterating here
         foreach ($items as $id => $value) {
-            $kunena_db->setQuery("SELECT id, catid, parent, thread, subject, userid FROM #__fb_messages WHERE id='{$id}'");
+            $kunena_db->setQuery("SELECT id, catid, parent, thread, subject, userid, poll_exist FROM #__fb_messages WHERE id='{$id}'");
 
             if (!$kunena_db->query()) {
                 return -2;
@@ -631,12 +631,18 @@ class CKunenaTools {
 
             $mes = $kunena_db->loadObject();
             $thread = $mes->thread;
+            //delete poll if exist
+            if ($mes->poll_exist)
+            {
+                CKunenaPolls::delete_poll($id);
+            } 
 
             if ($mes->parent == 0) {
                 // this is the forum topic; if removed, all children must be removed as well.
                 $children = array ();
                 $userids = array ();
-                $kunena_db->setQuery("SELECT userid, id, catid FROM #__fb_messages WHERE thread='{$id}' OR id='{$id}'");
+                $kunena_db->setQuery("SELECT userid, id, catid FROM #__fb_messages WHERE thread='{$id}' OR id='{$id}'");               
+                               
 
                 foreach ($kunena_db->loadObjectList() as $line) {
                     $children[] = $line->id;
@@ -715,7 +721,7 @@ class CKunenaTools {
                 }
             } //end foreach
             CKunenaTools::reCountBoards();
-
+            
             $kunena_app->redirect($return, _KUNENA_BULKMSG_DELETED);
         }
 

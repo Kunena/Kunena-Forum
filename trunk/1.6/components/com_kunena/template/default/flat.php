@@ -34,19 +34,20 @@ $kunena_my = &JFactory::getUser ();
 
 // Func Check
 
+
 $funclatest = false;
 $funcmylatest = false;
 $funcnoreplies = false;
 
-switch (JString::strtolower ( $func )){
-	case 'mylatest':
+switch (JString::strtolower ( $func )) {
+	case 'mylatest' :
 		$funcmylatest = true;
 		break;
-	case 'noreplies':
+	case 'noreplies' :
 		$funcnoreplies = true;
 		break;
-	case 'latest':
-	default:
+	case 'latest' :
+	default :
 		$funclatest = true;
 		break;
 }
@@ -112,8 +113,9 @@ if (count ( $this->messages [0] ) > 0) {
 		?>
 	<thead>
 		<tr>
-			<th colspan="<?php
-		echo (CKunenaTools::isModerator($kunena_my->id, $catid) ? "5" : "4");
+			<th
+				colspan="<?php
+		echo (CKunenaTools::isModerator ( $kunena_my->id, $catid ) ? "5" : "4");
 		?>">
 			<div class="fb_title_cover fbm"><span class="fb_title fbl"><b><?php
 		echo _KUNENA_THREADS_IN_FORUM;
@@ -170,7 +172,7 @@ if (count ( $this->messages [0] ) > 0) {
 	?></th>
 
 			<?php
-	if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
+	if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 		?>
 			<th
 				class="th-7 <?php
@@ -203,7 +205,7 @@ if (count ( $this->messages [0] ) > 0) {
 			?>contentheading fbm"
 				id="fb_spot"
 				colspan="<?php
-			echo (CKunenaTools::isModerator($kunena_my->id, $catid) ? "5" : "4");
+			echo (CKunenaTools::isModerator ( $kunena_my->id, $catid ) ? "5" : "4");
 			?>"
 				align="left"><span><?php
 			if (! $funcmylatest) {
@@ -228,7 +230,7 @@ if (count ( $this->messages [0] ) > 0) {
 			?>contentheading fbm"
 				id="fb_fspot"
 				colspan="<?php
-			echo (CKunenaTools::isModerator($kunena_my->id, $catid) ? "5" : "4");
+			echo (CKunenaTools::isModerator ( $kunena_my->id, $catid ) ? "5" : "4");
 			?>"
 				align="left"><span><?php
 			if (! $funcmylatest) {
@@ -258,22 +260,27 @@ if (count ( $this->messages [0] ) > 0) {
 		echo _GEN_REPLIES;
 		?></td>
 
+			<td class="td-2" align="center"><?php
+		if ($leaf->moved == 0) {
+			echo $leaf->topic_emoticon == 0 ? '<img src="' . KUNENA_URLEMOTIONSPATH . 'default.gif" border="0"  alt="" />' : "<img src=\"" . $topic_emoticons [$leaf->topic_emoticon] . "\" alt=\"emo\" border=\"0\" />";
+		} else {
+			echo CKunenaLink::GetSimpleLink ( $id );
+			?>
+			<img src="<?php
+			echo KUNENA_URLEMOTIONSPATH;
+			?>arrow.gif"
+				alt="emo" /> <?php
+		}
+		?></td>
 
-			<?php
+		<td class="td-3"><?php
 		if ($leaf->moved == 0) {
 			// Need to add +1 as we only have the replies in the buffer
 			$totalMessages = $this->thread_counts [$leaf->id] + 1;
 			$curMessageNo = $totalMessages - ($last_read [$leaf->id]->unread ? $last_read [$leaf->id]->unread - 1 : 0);
 			$threadPages = ceil ( $totalMessages / $kunena_config->messages_per_page );
 			$unreadPage = ceil ( $curMessageNo / $kunena_config->messages_per_page );
-			?>
 
-			<td class="td-2" align="center"><?php
-			echo $leaf->topic_emoticon == 0 ? '<img src="' . KUNENA_URLEMOTIONSPATH . 'default.gif" border="0"  alt="" />' : "<img src=\"" . $topic_emoticons [$leaf->topic_emoticon] . "\" alt=\"emo\" border=\"0\" />";
-			?>
-			</td>
-
-			<td class="td-3"><?php
 			//(JJ) ATTACHMENTS ICON
 			if ($leaf->attachmesid > 0) {
 				echo isset ( $kunena_emoticons ['topicattach'] ) ? '<img  class="attachicon" src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['topicattach'] . '" border="0" alt="' . _KUNENA_ATTACH . '" />' : '<img class="attachicon" src="' . KUNENA_URLEMOTIONSPATH . 'attachment.gif"  alt="' . _KUNENA_ATTACH . '" title="' . _KUNENA_ATTACH . '" />';
@@ -338,15 +345,6 @@ if (count ( $this->messages [0] ) > 0) {
 			// split the string and separate catid and id for proper link assembly
 			parse_str ( $newURL, $newURLParams );
 			?>
-			<td class="td-2"><?php
-			echo CKunenaLink::GetSimpleLink ( $id );
-			?>
-			<img src="<?php
-			echo KUNENA_URLEMOTIONSPATH;
-			?>arrow.gif"
-				alt="emo" /></td>
-
-			<td class="td-3">
 			<div class="fb-topic-title-cover"><?php
 			echo CKunenaLink::GetThreadLink ( 'view', $newURLParams ['catid'], $newURLParams ['id'], kunena_htmlspecialchars ( stripslashes ( $leaf->subject ) ), kunena_htmlspecialchars ( stripslashes ( $leaf->subject ) ), 'follow', 'fb-topic-title fbm' );
 			?>
@@ -455,7 +453,7 @@ if (count ( $this->messages [0] ) > 0) {
 			</td>
 
 			<?php
-		if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
+		if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 			?>
 
 			<td class="td-7" align="center"><input type="checkbox"
@@ -465,14 +463,12 @@ if (count ( $this->messages [0] ) > 0) {
 			<?php
 		}
 		?>
-
-
 		</tr>
 
 		<?php
 		$st_c ++;
 	}
-	if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
+	if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 		?>
 		<tr class="<?php
 		echo KUNENA_BOARD_CLASS?>sectiontableentry1">

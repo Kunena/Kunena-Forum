@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+02-Jan-2010 severdia
+^ [#18780] Reformatted CSS files
+# [#18780] Commented out errors. Both CSS files now validate at W3C
+
 02-Jan-2010 fxstein
 - [#19216] Removed Clexus PM integration
 # [#19065] More frontend cleanup based on code analysis - fixed various bugs

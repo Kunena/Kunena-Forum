@@ -35,6 +35,7 @@ Kunena 1.6.0-DEV
 
 02-Jan-2010 fxstein
 - [#19216] Removed Clexus PM integration
+# [#19065] More frontend cleanup based on code analysis - fixed various bugs
 
 01-Jan-2010 fxstein
 # [#19065] fixed html bugs and warnings and reformatted flat.php

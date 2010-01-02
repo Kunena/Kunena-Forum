@@ -32,14 +32,14 @@ $kunena_db->setQuery("SELECT su.view, u.name, u.username, su.moderator, su.avata
 $_user = $kunena_db->loadObject();
 $Itemid = JRequest::getInt('Itemid');
 
-$fbavatar = NULL;
+$this->kunena_avatar = NULL;
 if ($_user != NULL)
 {
 	$prefview = $_user->view;
 	if ($kunena_config->username) $this->kunena_username = $_user->username; // externally used  by fb_pathway, myprofile_menu
 	else $this->kunena_username = $_user->name;
 	$moderator = $_user->moderator;
-	$fbavatar = $_user->avatar;
+	$this->kunena_avatar = $_user->avatar;
 }
 
 $jr_avatar = '';
@@ -64,11 +64,11 @@ else if ($kunena_config->avatar_src == "aup") // integration AlphaUserPoints
 }
 else
 {
-    if ($fbavatar != "") {
-		if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $fbavatar)) {
-            $jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/' . $fbavatar . '" alt=" " style="max-width: '.$kunena_config->avatarsmallwidth.'px; max-height: '.$kunena_config->avatarsmallheight.'px;" />';
+    if ($this->kunena_avatar != "") {
+		if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $this->kunena_avatar)) {
+            $jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/' . $this->kunena_avatar . '" alt=" " style="max-width: '.$kunena_config->avatarsmallwidth.'px; max-height: '.$kunena_config->avatarsmallheight.'px;" />';
 		} else {
-		  $jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_' . $fbavatar . '" alt=" " />';
+		  $jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_' . $this->kunena_avatar . '" alt=" " />';
 		}
     }
     else {

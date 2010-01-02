@@ -50,7 +50,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 					$yesno1[] = JHTML::_('select.option', 0, _USER_ORDER_ASC);
 					$yesno1[] = JHTML::_('select.option', 1, _USER_ORDER_DESC);
 					// build the html select list
-					$tosend   = JHTML::_('select.genericlist', $yesno1, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $ordering);
+					$tosend   = JHTML::_('select.genericlist', $yesno1, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $this->kunena_ordering);
 					echo $tosend;
 					?>
 				</td>
@@ -66,7 +66,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 					$yesno3[] = JHTML::_('select.option', 0, _COM_A_NO);
 					$yesno3[] = JHTML::_('select.option', 1, _COM_A_YES);
 					// build the html select list
-					$tosend   = JHTML::_('select.genericlist', $yesno3, 'newhideEmail', 'class="inputbox" size="2"', 'value', 'text', $hideEmail);
+					$tosend   = JHTML::_('select.genericlist', $yesno3, 'newhideEmail', 'class="inputbox" size="2"', 'value', 'text', $this->kunena_hide_email);
 					echo $tosend;
 
 					?>
@@ -84,7 +84,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 					$yesno4[] = JHTML::_('select.option', 0, _COM_A_NO);
 					$yesno4[] = JHTML::_('select.option', 1, _COM_A_YES);
 					// build the html select list
-					$tosend   = JHTML::_('select.genericlist', $yesno4, 'newshowOnline', 'class="inputbox" size="2"', 'value', 'text', $showOnline);
+					$tosend   = JHTML::_('select.genericlist', $yesno4, 'newshowOnline', 'class="inputbox" size="2"', 'value', 'text', $this->kunena_show_online);
 					echo $tosend;
 
 					?>

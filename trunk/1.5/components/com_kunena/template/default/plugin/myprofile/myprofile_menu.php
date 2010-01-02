@@ -31,7 +31,7 @@ $kunena_config =& CKunenaConfig::getInstance();
         <tr>
             <th>
                 <div class = "fb_title_cover">
-                    <span class = "fb_title"><?php echo _USER_PROFILE; ?> <?php echo $username; ?></span>
+                    <span class = "fb_title"><?php echo _USER_PROFILE; ?> <?php echo $this->kunena_username; ?></span>
                 </div>
             </th>
         </tr>

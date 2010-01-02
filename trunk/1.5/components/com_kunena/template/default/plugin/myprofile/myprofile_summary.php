@@ -88,7 +88,7 @@ if ($signature)
     <?php } ?>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_POSTS; ?></b> </td>
-      <td><?php echo $numPosts; ?></td>
+      <td><?php echo $userinfo->posts; ?></td>
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_PROFILEVIEW; ?></b> </td>

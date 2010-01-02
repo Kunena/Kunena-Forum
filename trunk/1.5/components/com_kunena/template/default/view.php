@@ -83,7 +83,7 @@ require_once (KUNENA_PATH_LIB . DS . 'kunena.statsbar.php');
 //get the allowed forums and turn it into an array
 $allow_forum = ($kunena_session->allowed != '') ? explode ( ',', $kunena_session->allowed ) : array ();
 
-$forumLocked = 0;
+$this->kunena_forum_locked = 0;
 $topicLocked = 0;
 
 $kunena_db->setQuery ( "SELECT a.*, b.* FROM #__fb_messages AS a LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.id='{$id}' AND a.hold='0'" );
@@ -194,7 +194,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		$kunena_db->setQuery ( "SELECT id, name FROM #__fb_categories WHERE id='{$objCatInfo->parent}'" );
 		$objCatParentInfo = $kunena_db->loadObject ();
 
-		$forumLocked = $objCatInfo->locked;
+		$this->kunena_forum_locked = $objCatInfo->locked;
 
 		//meta description and keywords
 		$metaKeys = kunena_htmlspecialchars ( stripslashes ( "{$this_message->subject}, {$objCatParentInfo->name}, {$kunena_config->board_title}, " . _GEN_FORUM . ', ' . $kunena_app->getCfg ( 'sitename' ) ) );
@@ -228,7 +228,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		}
 
 		//data ready display now
-		if ($kunena_is_moderator || (($forumLocked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
+		if ($kunena_is_moderator || (($this->kunena_forum_locked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
 			//this user is allowed to reply to this topic
 			$thread_reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $thread, isset ( $kunena_emoticons ['topicreply'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['topicreply'] . '" alt="' . _GEN_POST_REPLY . '" title="' . _GEN_POST_REPLY . '" border="0" />' : _GEN_POST_REPLY );
 		}
@@ -258,7 +258,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		// FINISH: FAVORITES
 
 
-		if ($kunena_is_moderator || ($forumLocked == 0 && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
+		if ($kunena_is_moderator || ($this->kunena_forum_locked == 0 && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
 			//this user is allowed to post a new topic
 			$thread_new = CKunenaLink::GetPostNewTopicLink ( $catid, isset ( $kunena_emoticons ['new_topic'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC );
 		}
@@ -987,13 +987,13 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 					$msg_html->signature = $signature;
 				}
 
-				if ($kunena_is_moderator || (($forumLocked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
+				if ($kunena_is_moderator || (($this->kunena_forum_locked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
 					//user is allowed to reply/quote
 					$msg_html->reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $fmessage->id, isset ( $kunena_emoticons ['reply'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['reply'] . '" alt="Reply" border="0" title="' . _VIEW_REPLY . '" />' : _GEN_REPLY );
 					$msg_html->quote = CKunenaLink::GetTopicPostReplyLink ( 'quote', $catid, $fmessage->id, isset ( $kunena_emoticons ['quote'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['quote'] . '" alt="Quote" border="0" title="' . _VIEW_QUOTE . '" />' : _GEN_QUOTE );
 				} else {
 					//user is not allowed to write a post
-					if ($topicLocked == 1 || $forumLocked) {
+					if ($topicLocked == 1 || $this->kunena_forum_locked) {
 						$msg_html->closed = _POST_LOCK_SET;
 					} else {
 						$msg_html->closed = _VIEW_DISABLED;

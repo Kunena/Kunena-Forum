@@ -36,8 +36,8 @@ $fbavatar = NULL;
 if ($_user != NULL)
 {
 	$prefview = $_user->view;
-	if ($kunena_config->username) $username = $_user->username; // externally used  by fb_pathway, myprofile_menu
-	else $username = $_user->name;
+	if ($kunena_config->username) $this->kunena_username = $_user->username; // externally used  by fb_pathway, myprofile_menu
+	else $this->kunena_username = $_user->name;
 	$moderator = $_user->moderator;
 	$fbavatar = $_user->avatar;
 }
@@ -133,7 +133,7 @@ if ($kunena_my->id)
                 </td>
 
                 <td valign = "top" class = "td-2  fbm fb_profileboxcnt" align="left">
-<?php echo _PROFILEBOX_WELCOME; ?>, <b><?php echo $username; ?></b>
+<?php echo _PROFILEBOX_WELCOME; ?>, <b><?php echo $this->kunena_username; ?></b>
 
                 <br />
 

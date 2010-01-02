@@ -1090,6 +1090,7 @@ function KUNENA_GetAvailableForums($catid, $action, $options = array (), $disabl
 //
 function generate_smilies() {
     $kunena_db = &JFactory::getDBO();
+    $kunena_emoticons_rowset = array ();
 
     $inline_columns = 4;
     $inline_rows = 5;
@@ -1098,14 +1099,13 @@ function generate_smilies() {
 
     if ($kunena_db->query()) {
         $num_smilies = 0;
-        $this->kunena_emoticons_rowset = array ();
         $set = $kunena_db->loadAssocList();
         $num_iconbar = 0;
 
         foreach ($set as $smilies) {
             $key_exists = false;
 
-            foreach ($this->kunena_emoticons_rowset as $check) //checks if the smiley (location) already exists with another code
+            foreach ($kunena_emoticons_rowset as $check) //checks if the smiley (location) already exists with another code
             {
                 if ($check['location'] == $smilies['location']) {
                     $key_exists = true;
@@ -1113,7 +1113,7 @@ function generate_smilies() {
                 }
 
             if ($key_exists == false) {
-                $this->kunena_emoticons_rowset[] = array
+                $kunena_emoticons_rowset[] = array
                 (
                     'code' => $smilies['code'],
                     'location' => $smilies['location'],
@@ -1126,7 +1126,7 @@ function generate_smilies() {
                 }
             }
 
-        $num_smilies = count($this->kunena_emoticons_rowset);
+        $num_smilies = count($kunena_emoticons_rowset);
 
         if ($num_smilies) {
             $smilies_count = min(20, $num_smilies);
@@ -1135,11 +1135,11 @@ function generate_smilies() {
             $s_colspan = 0;
             $row = 0;
             $col = 0;
-            reset ($this->kunena_emoticons_rowset);
+            reset ($kunena_emoticons_rowset);
 
             $cur = 0;
 
-            foreach ($this->kunena_emoticons_rowset as $data) {
+            foreach ($kunena_emoticons_rowset as $data) {
                 if ($data['emoticonbar'] == 1) {
                     $cur++;
 
@@ -1173,6 +1173,7 @@ function generate_smilies() {
                 }
             }
         }
+        return $kunena_emoticons_rowset;
     }
 
 function fbGetArrayInts($name) {

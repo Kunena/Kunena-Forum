@@ -425,7 +425,7 @@ class smile
                             </tr>
 
                             <?php
-                            generate_smilies(); //the new function Smiley mod
+                            $this->kunena_emoticons_rowset = generate_smilies(); //the new function Smiley mod
                             ?>
                         </table>
                     </div>

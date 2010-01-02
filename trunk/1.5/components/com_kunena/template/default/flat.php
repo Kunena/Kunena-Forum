@@ -105,8 +105,7 @@ if (count ( $this->messages [0] ) > 0) {
 		?>
 	<thead>
 		<tr>
-			<th
-				colspan="<?php
+			<th colspan="<?php
 		echo ($kunena_is_moderator ? "5" : "4");
 		?>">
 			<div class="fb_title_cover fbm"><span class="fb_title fbl"><b><?php
@@ -322,7 +321,6 @@ if (count ( $this->messages [0] ) > 0) {
 			}
 			?>
 			</div>
-			</td>
 			<?php
 		} else {
 			$threadPages = 0;
@@ -333,7 +331,6 @@ if (count ( $this->messages [0] ) > 0) {
 			// split the string and separate catid and id for proper link assembly
 			parse_str ( $newURL, $newURLParams );
 			?>
-
 			<td class="td-2"><?php
 			echo CKunenaLink::GetSimpleLink ( $id );
 			?>
@@ -371,16 +368,14 @@ if (count ( $this->messages [0] ) > 0) {
 			?>
 			</span> <!-- /Category --> <?php
 		}
-		?> <!-- Views --> <span
-				class="topic_views"> <?php
+		?> <!-- Views --> <span class="topic_views"> <?php
 		echo _GEN_HITS;
 		?>: <?php
 		echo ( int ) $this->hits [$leaf->id];
 		?>
 			</span> <!-- /Views --> <?php
 		if ($leaf->locked != 0) {
-			?> <!-- Locked -->
-			<span class="topic_locked"> <?php
+			?> <!-- Locked --> <span class="topic_locked"> <?php
 			echo isset ( $kunena_emoticons ['topiclocked'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['topiclocked'] . '" border="0" alt="' . _GEN_LOCKED_TOPIC . '" />' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  alt="' . _GEN_LOCKED_TOPIC . '" title="' . _GEN_LOCKED_TOPIC . '" />';
 			$topicLocked = 1;
 			?>
@@ -463,6 +458,8 @@ if (count ( $this->messages [0] ) > 0) {
 			<?php
 		}
 		?>
+
+
 		</tr>
 
 		<?php
@@ -501,8 +498,7 @@ if (count ( $this->messages [0] ) > 0) {
 		?></option>
 			</select> <?php
 		CKunenaTools::showBulkActionCats ();
-		?> <input
-				type="submit" name="fbBulkActionsGo" class="fb_button fbs"
+		?> <input type="submit" name="fbBulkActionsGo" class="fb_button fbs"
 				value="<?php
 		echo _KUNENA_GO;
 		?>" /></td>
@@ -516,10 +512,9 @@ if (count ( $this->messages [0] ) > 0) {
 <input type="hidden" name="Itemid"
 	value="<?php
 	echo KUNENA_COMPONENT_ITEMID;
-	?>" /> <input
-	type="hidden" name="option" value="com_kunena" /> <input type="hidden"
-	name="func" value="bulkactions" /> <input type="hidden" name="return"
-	value="<?php
+	?>" /> <input type="hidden" name="option" value="com_kunena" /> <input
+	type="hidden" name="func" value="bulkactions" /> <input type="hidden"
+	name="return" value="<?php
 	echo JRoute::_ ( $Breturn );
 	?>" /></form>
 </div>

@@ -280,17 +280,24 @@ JHTML::_('behavior.keepalive');
                 </td>
             </tr>
 <?php }
+		if (!isset($polldatasedit[0]->polltimetolive))
+		{
+			$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
+		}
+        $pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
         $catsallowed = explode(',',$kunena_config->pollallowedcategories);
-        if (in_array($catid, $catsallowed)){
-        //Check if it's is a new thread and show the poll
-         if($kunena_config->pollenabled == "1" && $id == "0" ) {
+        if (in_array($catid, $catsallowed))
+        {
+        	//Check if it's is a new thread and show the poll
+         	if ($kunena_config->pollenabled == "1" && $id == "0" )
+         	{
          ?>
             <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry2">
                 <td class = "fb_leftcolumn">
                     <strong><?php echo _KUNENA_POLL_ADD; ?></strong>
                 </td>
                 <td>
-                    <?php echo _KUNENA_POLL_TITLE; ?> <input type = "text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" />&nbsp; <?php echo _KUNENA_POLL_TIME_TO_LIVE; ?> <input type = "text" id = "poll_time_to_live" name = "poll_time_to_live" value="<?php if(isset($polldatasedit[0]->polltimetolive)) { echo $polldatasedit[0]->polltimetolive; } ?>" />
+                    <?php echo _KUNENA_POLL_TITLE; ?> <input type = "text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" />&nbsp;<?php echo _KUNENA_POLL_TIME_TO_LIVE.$pollcalendar; ?>
 
                     <!-- The field hidden allow to know the options number chooses by the user -->
                     <?php if($editmode != "1"){ ?>
@@ -313,39 +320,51 @@ JHTML::_('behavior.keepalive');
         <?php
 		}
 		// Finish captcha
-		if(($editmode == "1") && $kunena_config->pollenabled == "1") {
-		      $catsallowed = explode(',',$kunena_config->pollallowedcategories);
-        if (in_array($catid, $catsallowed)){
+		if (($editmode == "1") && $kunena_config->pollenabled == "1")
+		{
+		    $catsallowed = explode(',',$kunena_config->pollallowedcategories);
+        	if (in_array($catid, $catsallowed))
+        	{
 		      //This query is need because, in this part i haven't access to the variable $parent
 		      //I need to determine if the post if a parent or not for display the form for the poll
-          $mesparent = CKunenaPolls::get_parent($id);
-          $polloptions = CKunenaPolls::get_total_options($id);
-          if($mesparent->parent == "0"){
+          	  $mesparent 	= CKunenaPolls::get_parent($id);
+              $polloptions  = CKunenaPolls::get_total_options($id);
+          	  if ($mesparent->parent == "0"){
+          	  	$polloptionsstart = $polloptions+1;
+            	JApplication::addCustomHeadTag('
+      				<script type="text/javascript">
+	   				<!--
+	   				var number_field = "'.$polloptionsstart.'";
+	   				//-->
+    				 </script>
+				  ');
         ?>
         <tr id="fb_post_edit_poll">
-        <input type="hidden" name="number_total_options" id="numbertotalr" value="<?php echo $polloptions; ?>">
-        <script type="text/javascript">var number_field="<?php echo $polloptions+1; ?>";</script>
-            <td id="fb_post_options" colspan = "2" style = "text-align: center;">
+        	<td id="fb_post_options" colspan = "2" style = "text-align: center;">
             <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry2">
                 <td class = "fb_leftcolumn" >
-            <strong><?php echo _KUNENA_POLL_TITLE; ?></strong>
-            </td> <td>
-            <input type = text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" />
-            </td>
+            		<strong><?php echo _KUNENA_POLL_TITLE; ?></strong>
+            	</td>
+            	<td>
+            		<input type = text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" />
+            	</td>
             </tr>
             <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry2">
                 <td class = "fb_leftcolumn" >
-            <strong><?php echo _KUNENA_POLL_TIME_TO_LIVE; ?></strong>
-            </td> <td>
-            <input type = text" id = "poll_time_to_live" name = "poll_time_to_live" value="<?php if(isset($polldatasedit[0]->polltimetolive)) { echo $polldatasedit[0]->polltimetolive; } ?>" /><input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $kunena_config->pollnboptions; ?>);">
-
+            		<strong><?php echo _KUNENA_POLL_TIME_TO_LIVE; ?></strong>
+            	</td>
+            	<td>
+            		<?php echo $pollcalendar; ?>&nbsp;<input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $kunena_config->pollnboptions; ?>);">
                     <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onclick = "javascript:delete_field();">
-            </td>
+                    <input type="hidden" name="number_total_options" id="numbertotalr" value="<?php echo $polloptions; ?>">
+            	</td>
             </tr>
                 <?php
-                  if(isset($polloptions)) {
+                  if (isset($polloptions))
+                  {
                     $nboptions = "1";
-                    for($i=0;$i < $polloptions;$i++){
+                    for ($i=0;$i < $polloptions;$i++)
+                    {
                       echo "<tr class=\"".KUNENA_BOARD_CLASS."sectiontableentry2\" id=\"option".$nboptions."\"><td style=\"font-weight: bold\" class=\"fb_leftcolumn\">Option ".$nboptions."</td><td><input type=\"text\" id=\"field_option".$i."\" name=\"field_option".$i."\" value=\"".$polldatasedit[$i]->text."\" /></td></tr>";
                       $nboptions++;
                     }

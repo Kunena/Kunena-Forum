@@ -38,7 +38,7 @@ function create_new_field_now(){
   cell = document.createElement("td");
   cell.setAttribute('id','opt'+number_field);
   cell.className ="fb_leftcolumn";
-  texte = document.createTextNode(KUNENA_POLL_OPTION_NAME+number_field);
+  texte = document.createTextNode(KUNENA_POLL_OPTION_NAME+" "+number_field);
   cell.appendChild(texte);
   row.appendChild(cell);
   cell = document.createElement("td");

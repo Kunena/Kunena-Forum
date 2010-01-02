@@ -219,7 +219,7 @@ class CKunenaPolls {
 		$kunena_db = &JFactory::getDBO();
     	$polloptions = CKunenaPolls::get_total_options($threadid);
     	$pollsdatas = CKunenaPolls::get_polls_datas($threadid); //Need this to update/delete the right option in the database
-    	$kunena_db->setQuery("UPDATE #__fb_polls SET title=".$kunena_db->quote($polltitle).",polltimetolive=$polltimetolive WHERE threadid={$threadid}");
+    	$kunena_db->setQuery("UPDATE #__fb_polls SET title=".$kunena_db->quote($polltitle).",polltimetolive=".$kunena_db->quote($polltimetolive)." WHERE threadid={$threadid}");
     	$kunena_db->query();
     	if ($polloptions == $optionsnumbers)//When users just do an update of the polls fields
     	{

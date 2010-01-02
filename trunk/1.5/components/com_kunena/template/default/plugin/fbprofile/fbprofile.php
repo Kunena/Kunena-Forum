@@ -115,7 +115,6 @@ function showprf($userid, $page)
     $lists["userid"] = $userid;
 
 	$msg_html->username = $fb_username;
-    // $msg_html->username = ($fmessage->email != "" && $kunena_my->id > 0 && $kunena_config->showemail == '1') ? "<a href=\"mailto:" . $fmessage->email . "\">" . $fb_username . "</a>" : $fb_username;
 
     if ($kunena_config->allowavatar)
     {
@@ -359,7 +358,7 @@ function showprf($userid, $page)
         //we should offer the user a PMS link
         //first get the username of the user to contact
         $PMSName = $userinfo->username;
-        $msg_html->pms = "<a href=\"" . JRoute::_('index.php?option=com_pms&amp;page=new&amp;id=' . $PMSName . '&title=' . $fmessage->subject) . "\"><img src=\"";
+        $msg_html->pms = "<a href=\"" . JRoute::_('index.php?option=com_pms&amp;page=new&amp;id=' . $PMSName . '&title=' . $this->kunena_message->subject) . "\"><img src=\"";
 
         if ($kunena_emoticons['pms']) {
             $msg_html->pms .= KUNENA_URLICONSPATH . $kunena_emoticons['pms'];
@@ -401,7 +400,7 @@ function showprf($userid, $page)
         //first get the username of the user to contact
 
         $PMSName = $userinfo->aid;
-        $msg_html->pms = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=new&amp;to=' . $userid . '' . $fmessage->subject) . "\"><img src=\"";
+        $msg_html->pms = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=new&amp;to=' . $userid . '' . $this->kunena_message->subject) . "\"><img src=\"";
 
         if ($kunena_emoticons['pms']) {
             $msg_html->pms .= KUNENA_URLICONSPATH . $kunena_emoticons['pms'];

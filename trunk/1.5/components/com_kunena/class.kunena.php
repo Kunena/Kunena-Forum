@@ -1098,14 +1098,14 @@ function generate_smilies() {
 
     if ($kunena_db->query()) {
         $num_smilies = 0;
-        $rowset = array ();
+        $this->kunena_emoticons_rowset = array ();
         $set = $kunena_db->loadAssocList();
         $num_iconbar = 0;
 
         foreach ($set as $smilies) {
             $key_exists = false;
 
-            foreach ($rowset as $check) //checks if the smiley (location) already exists with another code
+            foreach ($this->kunena_emoticons_rowset as $check) //checks if the smiley (location) already exists with another code
             {
                 if ($check['location'] == $smilies['location']) {
                     $key_exists = true;
@@ -1113,7 +1113,7 @@ function generate_smilies() {
                 }
 
             if ($key_exists == false) {
-                $rowset[] = array
+                $this->kunena_emoticons_rowset[] = array
                 (
                     'code' => $smilies['code'],
                     'location' => $smilies['location'],
@@ -1126,7 +1126,7 @@ function generate_smilies() {
                 }
             }
 
-        $num_smilies = count($rowset);
+        $num_smilies = count($this->kunena_emoticons_rowset);
 
         if ($num_smilies) {
             $smilies_count = min(20, $num_smilies);
@@ -1135,11 +1135,11 @@ function generate_smilies() {
             $s_colspan = 0;
             $row = 0;
             $col = 0;
-            reset ($rowset);
+            reset ($this->kunena_emoticons_rowset);
 
             $cur = 0;
 
-            foreach ($rowset as $data) {
+            foreach ($this->kunena_emoticons_rowset as $data) {
                 if ($data['emoticonbar'] == 1) {
                     $cur++;
 

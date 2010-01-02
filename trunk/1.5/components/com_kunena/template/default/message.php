@@ -34,7 +34,7 @@ if ($kunena_config->fb_profile == 'cb')
 {
 	$msg_params = array(
 		'username' => &$msg_html->username,
-		'messageobject' => &$fmessage,
+		'messageobject' => &$this->kunena_message,
 		'subject' => &$msg_html->subject,
 		'messagetext' => &$msg_html->text,
 		'signature' => &$msg_html->signature,
@@ -43,7 +43,7 @@ if ($kunena_config->fb_profile == 'cb')
 		'karmaminus' => &$msg_html->karmaminus
 	);
 	$kunenaProfile =& CkunenaCBProfile::getInstance();
-	$profileHtml = $kunenaProfile->showProfile($fmessage->userid, $msg_params);
+	$profileHtml = $kunenaProfile->showProfile($this->kunena_message->userid, $msg_params);
 } else {
 	$profileHtml = null;
 }
@@ -69,9 +69,9 @@ if ($kunena_config->fb_profile == 'cb')
                         <td align = "left">
                             <?php
                             $msg_time_since = _KUNENA_TIME_SINCE;
-                            $msg_time_since = str_replace('%time%', time_since($fmessage->time, CKunenaTools::fbGetInternalTime()), $msg_time_since);
+                            $msg_time_since = str_replace('%time%', time_since($this->kunena_message->time, CKunenaTools::fbGetInternalTime()), $msg_time_since);
 
-                            if ($this->prevCheck < $fmessage->time && !in_array($fmessage->thread, $this->read_topics)) {
+                            if ($this->prevCheck < $this->kunena_message->time && !in_array($this->kunena_message->thread, $this->read_topics)) {
                                 $msgtitle = 'msgtitle_new';
                             } else {
                                 $msgtitle = 'msgtitle';
@@ -180,7 +180,7 @@ if ($kunena_config->fb_profile == 'cb')
 <?php
                         if ($userinfo->userid)
                         {
-                        	echo CKunenaLink::GetProfileLink($kunena_config, $fmessage->userid, $msg_html->username);
+                        	echo CKunenaLink::GetProfileLink($kunena_config, $this->kunena_message->userid, $msg_html->username);
                         }
                         else
                         {
@@ -193,9 +193,9 @@ if ($kunena_config->fb_profile == 'cb')
 ?>
                     <br/>
 <?php
-                        if ($fmessage->userid > 0)
+                        if ($this->kunena_message->userid > 0)
                         {
-                        	echo CKunenaLink::GetProfileLink($kunena_config, $fmessage->userid, $msg_html->avatar);
+                        	echo CKunenaLink::GetProfileLink($kunena_config, $this->kunena_message->userid, $msg_html->avatar);
                         }
                         else
                         {
@@ -321,10 +321,10 @@ if ($kunena_config->fb_profile == 'cb')
 	<tr><td class = "fb-msgview-right-b" >
 		<div class="fb_message_editMarkUp_cover">
 <?php
-	if ($fmessage->modified_by) {
-		echo '<span class="fb_message_editMarkUp">'. _KUNENA_EDITING_LASTEDIT .': '. date(_DATETIME, $fmessage->modified_time) .' '. _KUNENA_BY .' '. CKunenaTools::whoisID($fmessage->modified_by) .'.';
-		if ($fmessage->modified_reason) {
-			echo _KUNENA_REASON .': '. kunena_htmlspecialchars(stripslashes($fmessage->modified_reason));
+	if ($this->kunena_message->modified_by) {
+		echo '<span class="fb_message_editMarkUp">'. _KUNENA_EDITING_LASTEDIT .': '. date(_DATETIME, $this->kunena_message->modified_time) .' '. _KUNENA_BY .' '. CKunenaTools::whoisID($this->kunena_message->modified_by) .'.';
+		if ($this->kunena_message->modified_reason) {
+			echo _KUNENA_REASON .': '. kunena_htmlspecialchars(stripslashes($this->kunena_message->modified_reason));
 		}
 		echo '</span>';
 	}

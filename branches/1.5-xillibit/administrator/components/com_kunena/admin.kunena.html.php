@@ -2478,7 +2478,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_popsubjectcount" value = "<?php echo $fbConfig->poppollscount; ?>"/>
+                        <input type = "text" name = "cfg_popsubjectcount" value = "<?php echo $kuena_config->poppollscount; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_POLLSPOP; ?>
@@ -2527,7 +2527,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top" width="25%">
-                        <input type = "text" name = "cfg_pollnboptions" value = "<?php echo $fbConfig->pollnboptions; ?>"/>
+                        <input type = "text" name = "cfg_pollnboptions" value = "<?php echo $kunena_config->pollnboptions; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_NUMBER_OPTIONS_DESC; ?>
@@ -2539,7 +2539,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top" width="25%">
-                        <input type = "text" name = "cfg_polltimebtvotes" value = "<?php echo $fbConfig->polltimebtvotes; ?>"/>
+                        <input type = "text" name = "cfg_polltimebtvotes" value = "<?php echo $kuena_config->polltimebtvotes; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_TIME_VOTES_DESC; ?>
@@ -2551,7 +2551,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top" width="25%">
-                        <input type = "text" name = "cfg_pollnbvotesbyuser" value = "<?php echo $fbConfig->pollnbvotesbyuser; ?>"/>
+                        <input type = "text" name = "cfg_pollnbvotesbyuser" value = "<?php echo $kunena_config->pollnbvotesbyuser; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_NUMBER_VOTES_BY_DESC; ?>
@@ -2583,8 +2583,9 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"  width="25%"><?php echo _KUNENA_A_POLL_CATEGORIES_ALLOWED; ?>
                     </td>
 
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['pollallowedcats'] ?>
-                    <input type = "text" name = "cfg_pollallowedcategories" value = "<?php echo $fbConfig->pollallowedcategories; ?>"/>
+                    <td align = "left" valign = "top" width="25%">
+                    <fieldset><?php foreach($lists['pollallowedcats'] as $cats){ echo $cats; }  ?></fieldset>
+                    <input type = "text" name = "cfg_pollallowedcategories" value = "<?php echo $kunena_config->pollallowedcategories; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC; ?>

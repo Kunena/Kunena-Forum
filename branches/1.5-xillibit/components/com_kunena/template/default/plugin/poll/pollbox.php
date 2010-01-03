@@ -12,8 +12,9 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $app =& JFactory::getApplication();
-$id 	= intval(JRequest::getVar("id", ""));
-$catid 	= JRequest::getInt('catid', 0);
+
+$id     = intval(JRequest::getVar("id", ""));
+$catid	= JRequest::getInt('catid', 0);
 
 global $kunena_config;
 
@@ -67,33 +68,76 @@ if (in_array($catid, $catsallowed))
                 <tr class = "<?php echo KUNENA_BOARD_CLASS;?>sectiontableentry2">
                     <td class = "td-1 fbm" align="left">
                         <div class = "polldesc">
-<?php if($dataspollusers[0]->userid == $kunena_my->id || $kunena_my->id == "0"){//if the user has already voted for this poll ?>
+<?php 
+if ( $dataspollusers[0]->userid == $kunena_my->id || $kunena_my->id == "0")//if the user has already voted for this poll
+{ ?>
                           <table border = "0" cellspacing = "0" cellpadding = "0" width="100%">
-                          <?php foreach($dataspollresult as $row){ ?>
+                          <?php foreach ($dataspollresult as $row)
+                          { ?>
                             <tr><td><?php echo $row->text; ?></td><td><img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_JLIVEURL."components/com_kunena/template/default_ex/images/bar.gif"; ?>" height = "10" width = "<?php if(isset($row->votes)) { echo ($row->votes*25)/5; } else { echo "0"; }?>"/></td><td><?php if(isset($row->votes) && ($row->votes > 0)) { echo $row->votes; } else { echo _KUNENA_POLL_NO_VOTE; } ?></td><td><?php if($row->votes != "0") { echo round(($row->votes*100)/$nbvoters,1)."%"; } else { echo "0%"; } ?></td></tr>
-                          <?php }?>
+                          <?php 
+                          }?>
                             <tr><td colspan="4"><?php if(empty($nbvoters)){$nbvoters = "0";} echo _KUNENA_POLL_VOTERS_TOTAL."<b>".$nbvoters."</b> "; if(!empty($pollusersvoted)){ echo " ( "; foreach($pollusersvoted as $row){ echo CKunenaLink::GetProfileLink($kunena_config, $row->userid, ($kunena_config->username ? $row->username : $row->name))." "; } echo " ) "; } ?></td></tr>
 
-                          <?php if($kunena_my->id == "0") { ?><tr><td colspan="4"><?php echo _KUNENA_POLL_NOT_LOGGED; ?> </td></tr> <?php }else { if(!$kunena_config->pollallowvoteone){ ?> <tr><td colspan="4"><a href = "<?php echo CKunenaLink::GetPollURL($kunena_config, 'vote', $id, $catid);?>" /><?php echo _KUNENA_POLL_BUTTON_VOTE; ?></a><?php } } ?></td></tr>
-                		      </table>
-<?php }elseif((strftime("%Y-%m-%d %H:%M:%S",time()) <= $dataspollresult[0]->polltimetolive) || $dataspollresult[0]->polltimetolive == "0000-00-00 00:00:00"){
-echo "<fieldset><legend style=\"font-size: 14px;\">"._KUNENA_POLL_OPTIONS."</legend><ul>";
-                          for($i=0; $i < sizeof($dataspollresult);$i++){
+                          <?php 
+                          if ($kunena_my->id == "0")
+                          { 
+                          ?><tr><td colspan="4"><?php echo _KUNENA_POLL_NOT_LOGGED; ?> </td></tr> 
+                          <?php
+						  }
+						  else
+						  {
+						    if (!$kunena_config->pollallowvoteone)
+						    {?>
+						    	<tr><td colspan="4"><a href = "<?php echo CKunenaLink::GetPollURL($kunena_config, 'vote', $id, $catid);?>" /><?php echo _KUNENA_POLL_BUTTON_VOTE; ?></a>
+						  <?php 
+						    }
+						  } ?>
+						  		</td></tr>
+                		  </table>
+<?php 
+} 
+elseif ((strftime("%Y-%m-%d %H:%M:%S",time()) <= $dataspollresult[0]->polltimetolive) || $dataspollresult[0]->polltimetolive == "0000-00-00 00:00:00")
+{
+	echo "<fieldset><legend style=\"font-size: 14px;\">"._KUNENA_POLL_OPTIONS."</legend><ul>";
+    for ($i=0; $i < sizeof($dataspollresult);$i++)
+    {
        echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".$dataspollresult[$i]->text."</li>";
-      }
-      echo "</ul></fieldset>";
-        $button_vote = "<input type=\"button\" value=\""._KUNENA_POLL_BUTTON_VOTE."\" onClick=\"javascript:ajax(".sizeof($dataspollresult).",".$id.");\" />";
-        echo "<div class=\"poll_center\" id=\"poll_buttons\">".$button_vote;
-       }else{ ?>
-       <table border = "0" cellspacing = "0" cellpadding = "0" width="100%">
-                          <?php foreach($dataspollresult as $row){ ?>
-                            <tr><td><?php echo $row->text; ?></td><td><img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_JLIVEURL."components/com_kunena/template/default_ex/images/bar.gif"; ?>" height = "10" width = "<?php if(isset($row->votes)) { echo ($row->votes*25)/5; } else { echo "0"; }?>"/></td><td><?php if(isset($row->votes) && ($row->votes > 0)) { echo $row->votes; } else { echo _KUNENA_POLL_NO_VOTE; } ?></td><td><?php if($row->votes != "0") { echo round(($row->votes*100)/$nbvoters,1)."%"; } else { echo "0%"; } ?></td></tr>
-                          <?php }?>
-                            <tr><td colspan="4"><?php if(empty($nbvoters)){$nbvoters = "0";} echo _KUNENA_POLL_VOTERS_TOTAL."<b>".$nbvoters."</b> "; if(!empty($pollusersvoted)){ echo " ( "; foreach($pollusersvoted as $row){ echo CKunenaLink::GetProfileLink($kunena_config, $row->userid, ($kunena_config->username ? $row->username : $row->name))." "; } echo " ) "; } ?></td></tr>
-
-                          <?php if($kunena_my->id == "0") { ?><tr><td colspan="4"><?php echo _KUNENA_POLL_NOT_LOGGED; ?> </td></tr> <?php }else { if(!$kunena_config->pollallowvoteone){ ?> <tr><td colspan="4"><a href = "<?php echo CKunenaLink::GetPollURL($kunena_config, 'vote', $id, $catid);?>" /><?php echo _KUNENA_POLL_BUTTON_VOTE; ?></a><?php } } ?></td></tr>
+    }
+       echo "</ul></fieldset>";
+       $button_vote = "<input type=\"button\" value=\""._KUNENA_POLL_BUTTON_VOTE."\" onClick=\"javascript:ajax(".sizeof($dataspollresult).",".$id.");\" />";
+       echo "<div class=\"poll_center\" id=\"poll_buttons\">".$button_vote;
+}
+else
+{
+?>
+<table border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+	 <?php
+	 foreach ($dataspollresult as $row)
+	 {
+	 ?>
+     	<tr><td><?php echo $row->text; ?></td><td><img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_JLIVEURL."components/com_kunena/template/default_ex/images/bar.gif"; ?>" height = "10" width = "<?php if(isset($row->votes)) { echo ($row->votes*25)/5; } else { echo "0"; }?>"/></td><td><?php if(isset($row->votes) && ($row->votes > 0)) { echo $row->votes; } else { echo _KUNENA_POLL_NO_VOTE; } ?></td><td><?php if($row->votes != "0") { echo round(($row->votes*100)/$nbvoters,1)."%"; } else { echo "0%"; } ?></td></tr>
+     <?php
+	 }?>
+     <tr><td colspan="4"><?php if(empty($nbvoters)){$nbvoters = "0";} echo _KUNENA_POLL_VOTERS_TOTAL."<b>".$nbvoters."</b> "; if(!empty($pollusersvoted)){ echo " ( "; foreach($pollusersvoted as $row){ echo CKunenaLink::GetProfileLink($kunena_config, $row->userid, ($kunena_config->username ? $row->username : $row->name))." "; } echo " ) "; } ?></td></tr>
+     <?php
+     if ($kunena_my->id == "0")
+     { ?>
+     	<tr><td colspan="4"><?php echo _KUNENA_POLL_NOT_LOGGED; ?> </td></tr> 
+     <?php
+	 }
+	 else 
+	 {
+	 	if (!$kunena_config->pollallowvoteone)
+	 	{ ?> 
+	 		<tr><td colspan="4"><a href = "<?php echo CKunenaLink::GetPollURL($kunena_config, 'vote', $id, $catid);?>" /><?php echo _KUNENA_POLL_BUTTON_VOTE; ?></a>
+	 	<?php 
+	 	} 
+	 } ?></td></tr>
                 		      </table>
-                 <?php } ?>
+<?php 
+} 
+?>
                 	     </div>
                 	  </td>
                  </tr>
@@ -104,4 +148,6 @@ echo "<fieldset><legend style=\"font-size: 14px;\">"._KUNENA_POLL_OPTIONS."</leg
 </div>
 </div>
 </div>
-<?php } ?>
+<?php 
+}
+?>

@@ -34,6 +34,7 @@ Legend:
 Kunena 1.6.0-DEV
 
 03-Jan-2010 Xillibit
+#^ [#18627] Change for allowed categories list, fixes somes warning
 ^ [#18627] Merge from /trunk/1.5 : 1444-1398
 
 03-Jan-2010 fxstein

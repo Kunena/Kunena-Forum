@@ -67,7 +67,7 @@ define('_KUNENA_POLL_OPTIONS', 'Poll options');
 define('_KUNENA_A_POLL_TITLE', 'Polls Settings');
 define('_KUNENA_POLL_NAME_URL_RESULT', 'Return to the topic');
 define('_KUNENA_A_POLL_CATEGORIES_ALLOWED', 'Set the allowed categories for the poll');
-define('_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC', 'Set the allowed categories for the poll, this can be a categories or more, add the allowed categories by filling the field below with numbers that you need(with coma between numbers, example: 1,2,3,4)');
+define('_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC', 'Set the allowed categories for the poll, this can be a categories or more, add the allowed categories by filling the field below by choose the numbers in the list near the id(with coma between numbers, example: 1,2,3,4) ');
 define('_KUNENA_POLL_NOT_LOGGED', 'You can not participate to this poll you are not logged.');
 define('_KUNENA_USRL_VOTES', 'Votes');
 define('_KUNENA_POLLSPOP', 'Number of Popular Polls');

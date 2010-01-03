@@ -858,10 +858,10 @@ function showConfig($option)
   	{
     	if ($catsallowed->parent != "0")
     	{
-        	$yesnoCategories[] = JHTML::_('select.option',$catsallowed->id, $catsallowed->name." (id: ".$catsallowed->id.")");
+        	$yesnoCategories[] = $catsallowed->name." (id: ".$catsallowed->id.")<br />";
       	}
   	}
-  	$lists['pollallowedcats'] = JHTML::_('select.genericlist', $yesnoCategories, 'cfg_pollallowedcats', 'class="inputbox" size="5"', 'value', 'text');
+  	$lists['pollallowedcats'] = $yesnoCategories;
   	$lists['showpoppollstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpoppollstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showpoppollstats);
   	$lists['showimgforguest'] = JHTML::_('select.genericlist', $yesno, 'cfg_showimgforguest', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showimgforguest);
   	$lists['showfileforguest'] = JHTML::_('select.genericlist', $yesno, 'cfg_showfileforguest', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showfileforguest);

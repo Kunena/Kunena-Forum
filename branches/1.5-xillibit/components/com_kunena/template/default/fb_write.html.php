@@ -355,7 +355,7 @@ echo $objCatInfo->class_sfx;
                     <?php echo _KUNENA_POLL_TITLE; ?> <input type = "text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" />&nbsp;<?php echo _KUNENA_POLL_TIME_TO_LIVE.$pollcalendar; ?>
 
                     <!-- The field hidden allow to know the options number chooses by the user -->
-                    <?php if($editmode != "1"){ ?>
+                    <?php if($this->kunena_editmode != "1"){ ?>
                     <input type="hidden" name="number_total_options" id="numbertotal">
                     <?php } ?>
                     <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $kunena_config->pollnboptions; ?>);">
@@ -381,7 +381,7 @@ echo $objCatInfo->class_sfx;
 		<?php
 		}
 		// Finish captcha
-		if (($editmode == "1") && $kunena_config->pollenabled == "1")
+		if (($this->kunena_editmode == "1") && $kunena_config->pollenabled == "1")
 		{
 		    $catsallowed = explode(',',$kunena_config->pollallowedcategories);
         	if (in_array($catid, $catsallowed))
@@ -402,14 +402,15 @@ echo $objCatInfo->class_sfx;
         ?>
         <tr id="fb_post_edit_poll">
         	<td id="fb_post_options" colspan = "2" style = "text-align: center;">
-            <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry2">
-                <td class = "fb_leftcolumn" >
-            		<strong><?php echo _KUNENA_POLL_TITLE; ?></strong>
-            	</td>
-            	<td>
-            		<input type = text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" />
-            	</td>
-            </tr>
+            	<tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry2">
+                	<td class = "fb_leftcolumn" >
+            			<strong><?php echo _KUNENA_POLL_TITLE; ?></strong>
+            		</td> 
+            		<td>
+            			<input type = text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" />
+            		</td>
+            	</tr>
+            </td>	
             <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry2">
                 <td class = "fb_leftcolumn" >
             		<strong><?php echo _KUNENA_POLL_TIME_TO_LIVE; ?></strong>
@@ -420,6 +421,7 @@ echo $objCatInfo->class_sfx;
                     <input type="hidden" name="number_total_options" id="numbertotalr" value="<?php echo $polloptions; ?>">
             	</td>
             </tr>
+              <td>
                 <?php
                   if (isset($polloptions))
                   {

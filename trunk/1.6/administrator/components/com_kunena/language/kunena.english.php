@@ -24,6 +24,7 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.6.0
 
+define('_KUNENA_PDF_NOT_GENERATED_MESSAGE_DELETED', 'The thread has been deleted, so the pdf can not be generated');
 define('_KUNENA_NO_REPLIES', 'No Replies');
 define('_KUNENA_SHOW_AVATAR_ON_CAT', 'Show Avatar on Categories view, Recent discussions and My Discussions?');
 define('_KUNENA_SHOW_AVATAR_ON_CAT_DESC', 'Set to &quot;Yes&quot; if you want to show user avatar on Categories view, Recent discussions and My Discussions.');

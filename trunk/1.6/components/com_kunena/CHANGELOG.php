@@ -34,6 +34,7 @@ Legend:
 Kunena 1.6.0-DEV
 
 03-Jan-2010 Xillibit
+# [#18995] Undefined variables
 # [#19080] Revert change on myprofile for configuration option "Show join date" has no effect
 
 03-Jan-2010 Matias

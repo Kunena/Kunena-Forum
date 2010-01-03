@@ -84,11 +84,8 @@ function dofreePDF()
         $kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_messages AS a, #__fb_messages_text AS b WHERE a.thread='{$threadid}' AND a.catid='{$catid}' AND a.parent='0' AND a.id=b.mesid");
         $row = $kunena_db->loadObjectList();
                 check_dberror("Unable to load message details.");
-
-        $mes_text = $row[0]->message;
-        filterHTML($mes_text);
-
-		if (file_exists(KUNENA_ROOT_PATH .DS. 'includes/class.ezpdf.php')) {
+		
+        if (file_exists(KUNENA_ROOT_PATH .DS. 'includes/class.ezpdf.php')) {
 			include (KUNENA_ROOT_PATH .DS. 'includes/class.ezpdf.php');
 			$pdf = new Cezpdf('a4', 'P'); //A4 Portrait
 		} elseif (class_exists('JDocument')) {
@@ -97,66 +94,72 @@ function dofreePDF()
 			echo 'strange... no supported pdf class found!';
 			exit;
 		}
-        $pdf->ezSetCmMargins(2, 1.5, 1, 1);
-        $pdf->selectFont('./fonts/Helvetica.afm'); //choose font
+		
+		if (empty($row)) { //if the messages doesn't exist don't need to continue
+        	echo '<br /><br /><div align="center">' . _KUNENA_PDF_NOT_GENERATED_MESSAGE_DELETED . '</div><br /><br />';
+        	echo CKunenaLink::GetLatestPostAutoRedirectHTML ( $kunena_config, $id, $kunena_config->messages_per_page, $catid );
+    	} else {
+        	$pdf->ezSetCmMargins(2, 1.5, 1, 1);
+        	$pdf->selectFont('./fonts/Helvetica.afm'); //choose font
 
-        $all = $pdf->openObject();
-        $pdf->saveState();
-        $pdf->setStrokeColor(0, 0, 0, 1);
+        	$all = $pdf->openObject();
+        	$pdf->saveState();
+        	$pdf->setStrokeColor(0, 0, 0, 1);
 
-        // footer
-        $pdf->line(10, 40, 578, 40);
-        $pdf->line(10, 822, 578, 822);
-        $pdf->addText(30, 34, 6, $kunena_config->board_title . ' - ' . $kunena_app->getCfg('sitename'));
+        	// footer
+        	$pdf->line(10, 40, 578, 40);
+        	$pdf->line(10, 822, 578, 822);
+        	$pdf->addText(30, 34, 6, $kunena_config->board_title . ' - ' . $kunena_app->getCfg('sitename'));
 
-        $strtmp = _KUNENA_PDF_VERSION;
-        $strtmp = str_replace('%version%', "NEW VERSION GOES HERE" /*$kunena_config->version*/, $strtmp); // TODO: fxstein - Need to change version handling
-        $pdf->addText(250, 34, 6, $strtmp);
-        $strtmp = _KUNENA_PDF_DATE;
-        $strtmp = str_replace('%date%', date('j F, Y, H:i', CKunenaTools::fbGetShowTime()), $strtmp);
-        $pdf->addText(450, 34, 6, $strtmp);
+        	$strtmp = _KUNENA_PDF_VERSION;
+        	$strtmp = str_replace('%version%', "NEW VERSION GOES HERE" /*$kunena_config->version*/, $strtmp); // TODO: fxstein - Need to change version handling
+        	$pdf->addText(250, 34, 6, $strtmp);
+        	$strtmp = _KUNENA_PDF_DATE;
+        	$strtmp = str_replace('%date%', date('j F, Y, H:i', CKunenaTools::fbGetShowTime()), $strtmp);
+        	$pdf->addText(450, 34, 6, $strtmp);
 
-        $pdf->restoreState();
-        $pdf->closeObject();
-        $pdf->addObject($all, 'all');
-        $pdf->ezSetDy(30);
+        	$pdf->restoreState();
+        	$pdf->closeObject();
+        	$pdf->addObject($all, 'all');
+        	$pdf->ezSetDy(30);
 
-        $txt0 = $row[0]->subject;
-        $pdf->ezText($txt0, 14);
-        $pdf->ezText(_VIEW_POSTED . " " . $row[0]->name . " - " . date(_DATETIME, $row[0]->time), 8);
-        $pdf->ezText("_____________________________________", 8);
-        //$pdf->line( 10, 780, 578, 780 );
+        	$txt0 = $row[0]->subject;
+        	$pdf->ezText($txt0, 14);
+        	$pdf->ezText(_VIEW_POSTED . " " . $row[0]->name . " - " . date(_DATETIME, $row[0]->time), 8);
+        	$pdf->ezText("_____________________________________", 8);
+        	//$pdf->line( 10, 780, 578, 780 );
 
-        $txt3 = "\n";
-        $txt3 .= stripslashes($mes_text);
-        $pdf->ezText($txt3, 10);
-        $pdf->ezText("\n============================================================================\n\n", 8);
-        //now let's try to see if there's more...
-        $kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_messages AS a, #__fb_messages_text AS b WHERE a.catid='{$catid}' AND a.thread='{$threadid}' AND a.id=b.mesid AND a.parent!='0' ORDER BY a.time ASC");
-        $replies = $kunena_db->loadObjectList();
+        	$txt3 = "\n";
+        	$txt3 .= stripslashes($mes_text);
+        	$pdf->ezText($txt3, 10);
+        	$pdf->ezText("\n============================================================================\n\n", 8);
+        	//now let's try to see if there's more...
+        	$kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_messages AS a, #__fb_messages_text AS b WHERE a.catid='{$catid}' AND a.thread='{$threadid}' AND a.id=b.mesid AND a.parent!='0' ORDER BY a.time ASC");
+        	$replies = $kunena_db->loadObjectList();
                 check_dberror("Unable to load messages & detail.");
 
-        $countReplies = count($replies);
+        	$countReplies = count($replies);
 
-        if ($countReplies > 0)
-        {
-            foreach ($replies as $reply)
-            {
-                $mes_text = $reply->message;
-                filterHTML($mes_text);
+       		if ($countReplies > 0)
+        	{
+            	foreach ($replies as $reply)
+            	{
+                	$mes_text = $reply->message;
+                	filterHTML($mes_text);
 
-                $txt0 = $reply->subject;
-                $pdf->ezText($txt0, 14);
-                $pdf->ezText(_VIEW_POSTED . " " . $reply->name . " - " . date(_DATETIME, $reply->time), 8);
-                $pdf->ezText("_____________________________________", 8);
-                $txt3 = "\n";
-                $txt3 .= stripslashes($mes_text);
-                $pdf->ezText($txt3, 10);
-                $pdf->ezText("\n============================================================================\n\n", 8);
-            }
-        }
+                	$txt0 = $reply->subject;
+                	$pdf->ezText($txt0, 14);
+                	$pdf->ezText(_VIEW_POSTED . " " . $reply->name . " - " . date(_DATETIME, $reply->time), 8);
+                	$pdf->ezText("_____________________________________", 8);
+                	$txt3 = "\n";
+                	$txt3 .= stripslashes($mes_text);
+                	$pdf->ezText($txt3, 10);
+                	$pdf->ezText("\n============================================================================\n\n", 8);
+           		}
+        	}
 
-        $pdf->ezStream();
+        	$pdf->ezStream();
+    	}    
     }
     else {
         echo "You don't have access to this resource.";

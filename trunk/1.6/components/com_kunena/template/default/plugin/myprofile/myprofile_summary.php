@@ -73,19 +73,15 @@ if ($signature)
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_USERTYPE; ?></b> </td>
       <td><?php echo $juserinfo->usertype; ?></td>
-    </tr>
-    <?php if($kunena_config->userlist_joindate){ ?>
+    </tr>    
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_REGISTERDATE; ?></b> </td>
       <td><?php echo $juserinfo->registerDate; ?></td>
-    </tr>
-    <?php }
-    if($kunena_config->userlist_lastvisitdate){ ?>
+    </tr>    
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_LASTVISITDATE; ?></b> </td>
       <td><?php echo $juserinfo->lastvisitDate; ?></td>
-    </tr>
-    <?php } ?>
+    </tr>    
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_POSTS; ?></b> </td>
       <td><?php echo $userinfo->posts; ?></td>

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+03-Jan-2010 Xillibit
+# [#19080] Revert change on myprofile for configuration option "Show join date" has no effect
+
 03-Jan-2010 Matias
 # [#19043] Deprecated links to index2.php (part 2)
 # [#15946] Fixed regression in: Super Admin in the User List

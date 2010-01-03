@@ -42,9 +42,14 @@ $kunena_config =& CKunenaConfig::getInstance();
 		</td>
 		<td class="fb_list_categories">
                 <?php
-                if ($kunena_config->enableforumjump)
-                    require (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
-                ?>
+/*
+ * This code has been intentially removed
+ * For more information see here:
+ * http://joomlacode.org/gf/project/kunena/tracker/?action=TrackerItemEdit&tracker_item_id=19254
+ *
+ *              if ($kunena_config->enableforumjump)
+ *                  require (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
+*/                ?>
 		</td>
 	</tr>
 

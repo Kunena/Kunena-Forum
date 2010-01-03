@@ -37,6 +37,7 @@ Kunena 1.6.0-DEV
 + [#19236] Add css class suffix support for categories in various views
 # [#18995] Undefined variables regression in pdf fixed
 ^ [#19250] Refactor remaining fb_xxxx files
+- [#19254] Remove bottom forumjump dropdown
 
 03-Jan-2010 @quila
 # [#19037] Add max avatar size into user profiles

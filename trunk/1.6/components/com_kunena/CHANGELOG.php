@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+03-Jan-2010 fxstein
++ [#19236] Add css class suffix support for categories in various views
+# [#18995] Undefined variables regression in pdf fixed
+
 03-Jan-2010 @quila
 # [#19037] Add max avatar size into user profiles
 
@@ -43,9 +47,6 @@ Kunena 1.6.0-DEV
 03-Jan-2010 Matias
 # [#19043] Deprecated links to index2.php (part 2)
 # [#15946] Fixed regression in: Super Admin in the User List
-
-03-Jan-2010 fxstein
-+ [#19236] Add css class suffix support for categories in various views
 
 03-Jan-2010 810
 # [#19229] User administration Adding an order + cleaned up

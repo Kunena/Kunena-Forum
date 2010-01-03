@@ -84,21 +84,24 @@ function dofreePDF()
         $kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_messages AS a, #__fb_messages_text AS b WHERE a.thread='{$threadid}' AND a.catid='{$catid}' AND a.parent='0' AND a.id=b.mesid");
         $row = $kunena_db->loadObjectList();
                 check_dberror("Unable to load message details.");
-		
+
         if (file_exists(KUNENA_ROOT_PATH .DS. 'includes/class.ezpdf.php')) {
 			include (KUNENA_ROOT_PATH .DS. 'includes/class.ezpdf.php');
 			$pdf = new Cezpdf('a4', 'P'); //A4 Portrait
 		} elseif (class_exists('JDocument')) {
         	$pdf = new fbpdfwrapper();
 		} else {
-			echo 'strange... no supported pdf class found!';
+			echo 'No supported pdf class found!';
 			exit;
 		}
-		
+
 		if (empty($row)) { //if the messages doesn't exist don't need to continue
         	echo '<br /><br /><div align="center">' . _KUNENA_PDF_NOT_GENERATED_MESSAGE_DELETED . '</div><br /><br />';
         	echo CKunenaLink::GetLatestPostAutoRedirectHTML ( $kunena_config, $id, $kunena_config->messages_per_page, $catid );
     	} else {
+        	$mes_text = $row[0]->message;
+    	    filterHTML($mes_text);
+
         	$pdf->ezSetCmMargins(2, 1.5, 1, 1);
         	$pdf->selectFont('./fonts/Helvetica.afm'); //choose font
 
@@ -159,7 +162,7 @@ function dofreePDF()
         	}
 
         	$pdf->ezStream();
-    	}    
+    	}
     }
     else {
         echo "You don't have access to this resource.";

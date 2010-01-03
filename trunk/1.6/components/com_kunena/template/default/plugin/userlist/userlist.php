@@ -67,15 +67,15 @@ function list_users()
     // Select query
     $query
         = "SELECT u.id, u.name, u.username, u.usertype, u.email, u.registerDate, u.lastvisitDate, fu.userid, fu.showOnline, fu.group_id, fu.posts, fu.karma, fu.uhits, g.id AS gid, g.title "
-        ." FROM #__users AS u INNER JOIN #__fb_users AS fu ON fu.userid = u.id INNER JOIN #__fb_groups AS g ON g.id = fu.group_id WHERE block =0";
+        ." FROM #__users AS u INNER JOIN #__fb_users AS fu ON fu.userid = u.id INNER JOIN #__fb_groups AS g ON g.id = fu.group_id WHERE block=0";
 
     if ($search != "")
     {
-        $query .= " WHERE (name LIKE '%$search%' OR username LIKE
+        $query .= " AND (name LIKE '%$search%' OR username LIKE
 '%$search%') AND u.id NOT IN (62)";
         $query_ext .= "&amp;search=" . $search;
     } else {
-        $query .= " WHERE u.id NOT IN (62)";
+        $query .= " AND u.id NOT IN (62)";
     }
 
     $query .= " ORDER BY $orderby $direction, id $direction";

@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 03-Jan-2010 fxstein
 + [#19236] Add css class suffix support for categories in various views
 # [#18995] Undefined variables regression in pdf fixed
+^ [#19250] Refactor remaining fb_xxxx files
 
 03-Jan-2010 @quila
 # [#19037] Add max avatar size into user profiles
@@ -77,7 +78,7 @@ Kunena 1.6.0-DEV
 # [#19065] Reformatted kunena.php
 # [#19065] fixed html bugs and warnings and reformatted fb_write.php, post.php
 # [#19065] cleaned up and reformatted views.php
-# [#19065] cleaned up and reformatted fb_pathway.php, showcat.php and view.php
+# [#19065] cleaned up and reformatted pathway.php, showcat.php and view.php
 # [#19065] cleaned up and reformatted recentposts.php
 # [#19065] More frontend cleanup based on code analysis - fixed various bugs
 
@@ -153,7 +154,7 @@ Kunena 1.6.0-DEV
 - [#19065] Removed backend plugin directory tree to remove warnings in unused code
 # [#19065] Cleanup frontend based on code analysis - fixed various bugs
 - [#19065] Removed old & unused split and merge code
-- [#19065] Removed old & unused code in fb_layout.php
+- [#19065] Removed old & unused code in layout.php
 
 20-Dec-2009 Matias
 # [#19079] Fix broken layout with too long strings
@@ -615,7 +616,7 @@ Kunena 1.5.1b
 # [#16250] Fix slightly broken session handling
 ! Internal: Broken search fixed
 ! Added new class CKunenaSession
-# [#16258] Internal: Missing stripslashes() in fb_write.html.php form
+# [#16258] Internal: Missing stripslashes() in write.html.php form
 ^ [#15784] Merge 1.0.10 fixes from revision 658 to 680
 # [#15784] Internal: Fix few broken features after merge
 

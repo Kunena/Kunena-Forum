@@ -300,10 +300,10 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
         </script>
 
 <div><?php
-		if (file_exists ( KUNENA_ABSTMPLTPATH . '/fb_pathway.php' )) {
-			require_once (KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
+		if (file_exists ( KUNENA_ABSTMPLTPATH . '/pathway.php' )) {
+			require_once (KUNENA_ABSTMPLTPATH . '/pathway.php');
 		} else {
-			require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'fb_pathway.php');
+			require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'pathway.php');
 		}
 		?>
 </div>

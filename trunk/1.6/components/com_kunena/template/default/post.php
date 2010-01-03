@@ -146,10 +146,10 @@ $catName = $objCatInfo->name;
 	align="center">
 	<tr>
 		<td><?php
-		if (file_exists ( KUNENA_ABSTMPLTPATH . '/fb_pathway.php' )) {
-			require_once (KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
+		if (file_exists ( KUNENA_ABSTMPLTPATH . '/pathway.php' )) {
+			require_once (KUNENA_ABSTMPLTPATH . '/pathway.php');
 		} else {
-			require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'fb_pathway.php');
+			require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'pathway.php');
 		}
 
 		if ($action == "post" && (hasPostPermission ( $kunena_db, $catid, $parentid, $kunena_my->id, $kunena_config->pubwrite, CKunenaTools::isModerator($kunena_my->id, $catid) ))) {
@@ -619,10 +619,10 @@ $catName = $objCatInfo->name;
 				$no_upload = "0"; //only edit mode should disallow this
 
 
-				if (file_exists ( KUNENA_ABSTMPLTPATH . '/fb_write.html.php' )) {
-					include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
+				if (file_exists ( KUNENA_ABSTMPLTPATH . '/write.html.php' )) {
+					include (KUNENA_ABSTMPLTPATH . '/write.html.php');
 				} else {
-					include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'fb_write.html.php');
+					include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'write.html.php');
 				}
 				?>
 		</form>
@@ -664,10 +664,10 @@ $catName = $objCatInfo->name;
 				?>" /> <input type="hidden" name="action" value="post" />
 		<input type="hidden" name="contentURL" value="empty" /> <?php
 				//get the writing stuff in:
-				if (file_exists ( KUNENA_ABSTMPLTPATH . '/fb_write.html.php' )) {
-					include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
+				if (file_exists ( KUNENA_ABSTMPLTPATH . '/write.html.php' )) {
+					include (KUNENA_ABSTMPLTPATH . '/write.html.php');
 				} else {
-					include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'fb_write.html.php');
+					include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'write.html.php');
 				}
 				?>
 		</form>
@@ -716,10 +716,10 @@ $catName = $objCatInfo->name;
 				echo $contentURL;
 				?>" /> <?php
 				//get the writing stuff in:
-				if (file_exists ( KUNENA_ABSTMPLTPATH . '/fb_write.html.php' )) {
-					include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
+				if (file_exists ( KUNENA_ABSTMPLTPATH . '/write.html.php' )) {
+					include (KUNENA_ABSTMPLTPATH . '/write.html.php');
 				} else {
-					include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'fb_write.html.php');
+					include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'write.html.php');
 				}
 				?>
 		</form>
@@ -784,10 +784,10 @@ $catName = $objCatInfo->name;
 					$this->kunena_no_file_upload = 0;
 					$this->kunena_no_image_upload = 0;
 
-					if (file_exists ( KUNENA_ABSTMPLTPATH . '/fb_write.html.php' )) {
-						include (KUNENA_ABSTMPLTPATH . '/fb_write.html.php');
+					if (file_exists ( KUNENA_ABSTMPLTPATH . '/write.html.php' )) {
+						include (KUNENA_ABSTMPLTPATH . '/write.html.php');
 					} else {
-						include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'fb_write.html.php');
+						include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'write.html.php');
 					}
 					?>
 		</form>

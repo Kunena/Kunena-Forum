@@ -220,10 +220,10 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	}
 
 	// include required libraries
-	if (file_exists ( KUNENA_ABSTMPLTPATH . '/fb_layout.php' )) {
-		require_once (KUNENA_ABSTMPLTPATH . '/fb_layout.php');
+	if (file_exists ( KUNENA_ABSTMPLTPATH . '/layout.php' )) {
+		require_once (KUNENA_ABSTMPLTPATH . '/layout.php');
 	} else {
-		require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'fb_layout.php');
+		require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'layout.php');
 	}
 
 	require_once (KUNENA_PATH_LIB . DS . 'kunena.permissions.php');

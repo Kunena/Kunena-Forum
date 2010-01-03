@@ -119,10 +119,10 @@ if (JString::strtolower ( $func ) == '') {
 	?>
 <!-- B: Pathway -->
 <?php
-	if (file_exists ( KUNENA_ABSTMPLTPATH . '/fb_pathway.php' )) {
-		require_once (KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
+	if (file_exists ( KUNENA_ABSTMPLTPATH . '/pathway.php' )) {
+		require_once (KUNENA_ABSTMPLTPATH . '/pathway.php');
 	} else {
-		require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'fb_pathway.php');
+		require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'pathway.php');
 	}
 	?>
 <!-- F: Pathway -->
@@ -130,10 +130,10 @@ if (JString::strtolower ( $func ) == '') {
 <table class="fb_list_top" border="0" cellspacing="0" cellpadding="0"
 	width="100%">
 	<?php
-	if (file_exists ( KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php' )) {
-		include (KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php');
+	if (file_exists ( KUNENA_ABSTMPLTPATH . '/category_list_bottom.php' )) {
+		include (KUNENA_ABSTMPLTPATH . '/category_list_bottom.php');
 	} else {
-		include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'fb_category_list_bottom.php');
+		include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'category_list_bottom.php');
 	}
 	?>
 </table>
@@ -617,10 +617,10 @@ else {
 		//(JJ) BEGIN: CAT LIST BOTTOM
 		echo '<!-- B: Cat list Bottom -->';
 		echo '<table class="fb_list_bottom" border = "0" cellspacing = "0" cellpadding = "0" width="100%">';
-		if (file_exists ( KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php' )) {
-			include (KUNENA_ABSTMPLTPATH . '/fb_category_list_bottom.php');
+		if (file_exists ( KUNENA_ABSTMPLTPATH . '/category_list_bottom.php' )) {
+			include (KUNENA_ABSTMPLTPATH . '/category_list_bottom.php');
 		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'fb_category_list_bottom.php');
+			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'category_list_bottom.php');
 		}
 		echo '</table>';
 		echo '<!-- F: Cat list Bottom -->';

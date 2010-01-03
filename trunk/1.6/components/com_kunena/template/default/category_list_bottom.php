@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: fb_category_list_bottom.php 708 2009-05-11 09:09:49Z mahagr $
+* @version $Id: category_list_bottom.php 708 2009-05-11 09:09:49Z mahagr $
 * Kunena Component
 * @package Kunena
 *

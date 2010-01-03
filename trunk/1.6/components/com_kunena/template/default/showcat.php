@@ -194,10 +194,10 @@ if (in_array ( $catid, $allow_forum )) {
 	?>
 <!-- Pathway -->
 <?php
-	if (file_exists ( KUNENA_ABSTMPLTPATH . '/fb_pathway.php' )) {
-		require_once (KUNENA_ABSTMPLTPATH . '/fb_pathway.php');
+	if (file_exists ( KUNENA_ABSTMPLTPATH . '/pathway.php' )) {
+		require_once (KUNENA_ABSTMPLTPATH . '/pathway.php');
 	} else {
-		require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'fb_pathway.php');
+		require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'pathway.php');
 	}
 	?>
 <!-- / Pathway -->
@@ -270,10 +270,10 @@ if (in_array ( $catid, $allow_forum )) {
 
 <?php
 	//(JJ)
-	if (file_exists ( KUNENA_ABSTMPLTPATH . '/fb_sub_category_list.php' )) {
-		include (KUNENA_ABSTMPLTPATH . '/fb_sub_category_list.php');
+	if (file_exists ( KUNENA_ABSTMPLTPATH . '/sub_category_list.php' )) {
+		include (KUNENA_ABSTMPLTPATH . '/sub_category_list.php');
 	} else {
-		include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'fb_sub_category_list.php');
+		include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'sub_category_list.php');
 	}
 	?>
 

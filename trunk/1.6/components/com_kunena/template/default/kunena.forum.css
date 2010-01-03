@@ -759,7 +759,6 @@ span.newchar {
 
 #Kunena .fb_sectiontableentry2_stickymsg {
 	background: #FEFECC;
-	color: #000000;
 }
 
 #Kunena tr.fb_sectiontableentry1_stickymsg td,
@@ -1600,3 +1599,44 @@ MY PROFILE
 	right: 3px;
 	top: 0px;
 }
+
+/* CSS Suffix support for category specific styling
+----------------------------------------------------------------------------------------------- */
+
+#Kunena tr.fb_sectiontableentry1-green td {
+	background: #EEFFEE;
+	padding: 5px;
+	border-bottom: 1px solid #BFC3C6;
+	border-left: 1px solid #FFFFFF;
+	border-right: 1px solid #BFC3C6;
+}
+
+#Kunena tr.fb_sectiontableentry2-green td {
+	background: #DDEEDD;
+	padding: 5px;
+	border-bottom: 1px solid #BFC3C6;
+	border-left: 1px solid #FFFFFF;
+	border-right: 1px solid #BFC3C6;
+}
+
+#Kunena tr.fb_sectiontableentry1-green td.td-1,
+#Kunena tr.fb_sectiontableentry2-green td.td-1	{
+	background: #CCDDCC;
+}
+
+#Kunena .fb_sectiontableentry1_stickymsg-green {
+	background: #FEFFEE;
+	padding: 5px;
+	border-bottom: 1px solid #BFC3C6;
+	border-left: 1px solid #FFFFFF;
+	border-right: 1px solid #BFC3C6;
+}
+
+#Kunena .fb_sectiontableentry2_stickymsg-green {
+	background: #EDEEDD;
+	padding: 5px;
+	border-bottom: 1px solid #BFC3C6;
+	border-left: 1px solid #FFFFFF;
+	border-right: 1px solid #BFC3C6;
+}
+

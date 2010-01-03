@@ -252,6 +252,7 @@ if (count ( $this->messages [0] ) > 0) {
 			echo '_stickymsg';
 			$topicSticky = 1;
 		}
+		echo $leaf->class_sfx;
 		?>">
 			<td class="td-0 fbm" align="center"><strong> <?php
 		echo ( int ) $this->thread_counts [$leaf->id];
@@ -470,6 +471,7 @@ if (count ( $this->messages [0] ) > 0) {
 	}
 	if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 		?>
+		<!-- Moderator Bulk Actions -->
 		<tr class="<?php
 		echo KUNENA_BOARD_CLASS?>sectiontableentry1">
 			<td colspan="7" align="right" class="td-1 fbs"><script
@@ -506,6 +508,7 @@ if (count ( $this->messages [0] ) > 0) {
 		echo _KUNENA_GO;
 		?>" /></td>
 		</tr>
+		<!-- /Moderator Bulk Actions -->
 		<?php
 	}
 	?>

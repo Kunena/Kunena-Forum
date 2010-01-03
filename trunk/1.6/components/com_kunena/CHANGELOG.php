@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+03-Jan-2010 fxstein
++ [#19236] Add css class suffix support for categories in various views
+
 03-Jan-2010 810
 # [#19229] User administration Adding an order + cleaned up
 # [#19230] Fix some minor bugs on backend

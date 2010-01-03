@@ -111,7 +111,8 @@ if (in_array ( $catid, $allow_forum )) {
 	$this->messages = array ();
 	$this->messages [0] = array ();
 	if (count ( $threadids ) > 0) {
-		$query = "SELECT a.*, j.id AS userid, t.message AS messagetext, l.myfavorite, l.favcount, l.attachmesid, l.msgcount, l.lastid, u.avatar, c.id AS catid, c.name AS catname
+		$query = "SELECT a.*, j.id AS userid, t.message AS messagetext, l.myfavorite, l.favcount, l.attachmesid,
+							l.msgcount, l.lastid, u.avatar, c.id AS catid, c.name AS catname, c.class_sfx
 	FROM (
 		SELECT m.thread, (f.userid='{$kunena_my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachmesid,
 			COUNT(DISTINCT m.id) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime

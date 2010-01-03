@@ -19,6 +19,7 @@
 * @author TSMF & Jan de Graaff
 **/
 defined( '_JEXEC' ) or die('Restricted access');
+
 ?>
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
@@ -38,7 +39,8 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 	<tbody>
 		<?php
-		if (!$kunena_is_admin)
+
+		if (!CKunenaTools::isAdmin())
 		{
 			$enum = 1; //reset value
 			$tabclass = array
@@ -49,9 +51,9 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 			$k    = 0; //value for alternating rows
 
-			if ($cmodslist > 0)
+			if ($this->kunena_cmodslist > 0)
 			{
-				foreach ($modslist as $mods)
+				foreach ($this->kunena_modslist as $mods)
 				{ //get all moderator details for each moderation
 					$k = 1 - $k;
 		?>

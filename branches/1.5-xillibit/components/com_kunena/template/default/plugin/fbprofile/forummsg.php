@@ -23,8 +23,10 @@ defined( '_JEXEC' ) or die('Restricted access');
 global $total, $limitstart, $limit;
 global $kunena_emoticons;
 
-$kunena_db = &JFactory::getDBO();
+$kunena_db 		=& JFactory::getDBO();
 $kunena_session =& CKunenaSession::getInstance();
+
+$userid 		= JRequest::getInt('userid', 0);
 
 ?>
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
@@ -83,8 +85,8 @@ $kunena_session =& CKunenaSession::getInstance();
         //determine visitors allowable threads based on session
         //find group id
         $pageperlistlm = 15;
-        $limit = intval(trim(JRequest::getVar('limit', $pageperlistlm)));
-        $limitstart = intval(trim(JRequest::getVar('limitstart', 0)));
+        $limit = JRequest::getInt('limit', $pageperlistlm);
+        $limitstart = JRequest::getInt('limitstart', 0);
 
         $query = "SELECT gid FROM #__users WHERE id='{$kunena_my->id}'";
         $kunena_db->setQuery($query);

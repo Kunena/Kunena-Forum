@@ -116,12 +116,12 @@ class CKunenaSession extends JTable
 		}
 	}
 
-	function updateAllowedForums($my_id, $aro_group, $acl)
+	function updateAllowedForums($my_id)
 	{
 		// check to see if we need to refresh the allowed forums cache
 		// get all accessaible forums if needed (eg on forum modification, new session)
 		if (!$this->allowed or $this->allowed == 'na' or $this->isNewSession()) {
-			$allow_forums = CKunenaTools::getAllowedForums($my_id, $aro_group->id, $acl);
+			$allow_forums = CKunenaTools::getAllowedForums($my_id);
 
 			if (!$allow_forums)
 			{

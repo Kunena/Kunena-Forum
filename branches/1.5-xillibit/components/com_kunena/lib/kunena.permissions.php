@@ -33,7 +33,6 @@ defined( '_JEXEC' ) or die('Restricted access');
  * @pre: fb_has_read_permission()
  */
 function fb_has_post_permission(&$kunena_db,$catid,$replyto,$userid,$pubwrite,$ismod) {
-    $kunena_config =& CKunenaConfig::getInstance();
     if ($ismod)
         return 1; // moderators always have post permission
     if($replyto != 0) {
@@ -57,38 +56,6 @@ function fb_has_post_permission(&$kunena_db,$catid,$replyto,$userid,$pubwrite,$i
         return 1; // post permission :-)
     return 0; // no public writing allowed
 }
-/**
- * Checks if user is a moderator in given forum
- * @param dbo
- * @param int
- * @param int
- * @param bool
- */
-
-function fb_has_moderator_permission(&$kunena_db,&$obj_fb_cat,$int_fb_uid,$bool_fb_isadmin) {
-    if ($int_fb_uid == 0)
-	return 0; // Anonymous never has moderator permission
-    if ($bool_fb_isadmin)
-        return 1;
-    if (is_object($obj_fb_cat) && $obj_fb_cat->getModerated()) {
-        $kunena_db->setQuery("SELECT userid FROM #__fb_moderation WHERE catid='".$obj_fb_cat->getId()."' AND userid='{$int_fb_uid}'");
-        
-        if ($kunena_db->loadResult()!='')
-            return 1;
-     }
-// Check if we have forum wide moderators - not limited to particular categories 
-    $kunena_db->setQuery("SELECT moderator FROM #__fb_users WHERE userid='{$int_fb_uid}'");
-    if ($kunena_db->loadResult()==1) // moderator YES
-    {
-        $kunena_db->setQuery("SELECT userid FROM #__fb_moderation WHERE userid='{$int_fb_uid}'");
-        if ($kunena_db->loadResult()=='') // not limited to a specific category - as we checked for those above
-        {
-            return 1;
-        }
-    }         
-    return 0;
-}
-
 
 /**
  * Checks if user has read permission in given forum

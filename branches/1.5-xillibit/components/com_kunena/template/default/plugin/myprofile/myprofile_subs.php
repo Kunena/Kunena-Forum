@@ -71,9 +71,9 @@ $kunena_db = &JFactory::getDBO();
 			jimport('joomla.html.pagination');
 			$pageNav = new JPagination($total, $limitstart, $limit);
 
-			if ($csubslist > 0)
+			if ($this->kunena_csubslist > 0)
 			{
-				foreach ($subslist as $subs)
+				foreach ($this->kunena_subslist as $subs)
 				{ //get all message details for each subscription
 					$kunena_db->setQuery("SELECT * FROM #__fb_messages WHERE id='{$subs->thread}'");
 					$subdet = $kunena_db->loadObjectList();

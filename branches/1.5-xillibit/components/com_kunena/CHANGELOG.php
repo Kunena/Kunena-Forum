@@ -33,6 +33,61 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+03-Jan-2010 Xillibit
+^ [#18627] Merge from /trunk/1.5 : 1444-1398
+
+03-Jan-2010 fxstein
++ [#19236] Add css class suffix support for categories in various views
+
+03-Jan-2010 810
+# [#19229] User administration Adding an order + cleaned up
+# [#19230] Fix some minor bugs on backend
+
+02-Jan-2010 Matias
+# [#19065] Removed many globals, fixed minor bugs
+# [#19215] Remove redundant SQL in isModerator() calls
+
+02-Jan-2010 810
++ [#19225] add hide images/files for guests
+^ [#19225] add hide images/files for guests
+
+02-Jan-2010 severdia
+^ [#18780] Reformatted CSS files
+# [#18780] Commented out errors. Both CSS files now validate at W3C
+
+02-Jan-2010 fxstein
+- [#19216] Removed Clexus PM integration
+# [#19065] More frontend cleanup based on code analysis - fixed various bugs
+# [#19065] cleaned up and reformatted myfprofile.php
++ [#19222] New feature: 'No Replies' tab added
+# [#19065] final fix for warnings inside flat.php
+
+01-Jan-2010 fxstein
+# [#19065] fixed html bugs and warnings and reformatted flat.php
+- [#19214] Removed patTemplate globally
+# [#19065] Reformatted kunena.php
+# [#19065] fixed html bugs and warnings and reformatted fb_write.php, post.php
+# [#19065] cleaned up and reformatted views.php
+# [#19065] cleaned up and reformatted fb_pathway.php, showcat.php and view.php
+# [#19065] cleaned up and reformatted recentposts.php
+# [#19065] More frontend cleanup based on code analysis - fixed various bugs
+
+01-Jan-2010 810
+^ [#19213] rss image isn't always displayed in config backend
+^ [#15946] Fix: Super Admin in the User List
+
+01-Jan-2010 Matias
+# [#19065] More frontend cleanup based on code analysis - fixed various bugs
+# [#19065] Fixed bugs while posting caused by code cleanup
+# [#19065] Remove a lot of unused or deprecated code as part of cleanup
+# [#19065] Use JString instead of functions from PHP
+
+01-Jan-2010 Xillibit
+^ [#19200] Replace all trigger_dberror() or trigger_dbwarning()
+
+31-Dec-2009 fxstein
+# [#19065] More frontend cleanup based on code analysis - fixed various bugs
+
 02-Jan-2010 Xillibit
 + [#18627] Add calendar with JHTML for the polls time to live
 # [#18627] Fixes somes warning detected into zend
@@ -528,17 +583,10 @@ Kunena 1.5.2RC
 + [#16389] Community Builder integration: add profile integration to default theme
 
 12-May-2009 Matias
-<<<<<<< .working
-^ [#16360] Replace $mainframe with $app =& JFactory::getApplication();
-^ [#16361] Do not trust that $option has been set (use JRequest::getCmd('option') instead)
-# [#16364] Parse error in admin.kunena.html.php
-
-=======
 ^ [#16360] Replace $mainframe with $kunena_app =& JFactory::getApplication();
 ^ [#16361] Do not trust that $option has been set (use JRequest::getCmd('option') instead)
 # [#16364] Parse error in admin.kunena.html.php
 
->>>>>>> .merge-right.r1394
 11-May-2009 Matias
 ^ [#15784] Merge 1.0.10 fixes from revision 681 to 706
 # [#16340] Category list is missing in bottom of viewcat (default_ex)

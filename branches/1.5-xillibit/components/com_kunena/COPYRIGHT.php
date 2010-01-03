@@ -17,7 +17,7 @@
 // no direct access
 defined( '_JEXEC' ) or die('Restricted access');
 ?>
-<!-- 
+<!--
 
 Kunena derives from copyrighted works licensed under the GNU General
 Public License.  This version has been modified pursuant to the
@@ -28,11 +28,6 @@ works copyrighted by any or all of the following, from 2000 through 2005:
 TSMF & Jan de Graaff
 
 Kunena includes or is derivative of works distributed under the following copyright notices:
-
-patTemplate, patError
----
-Copyright:	Stephan Schmidt
-License:	GNU Lesser General Public License (LGPL)
 
 PEAR
 ----

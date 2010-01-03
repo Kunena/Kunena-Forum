@@ -23,38 +23,38 @@ $kunena_db =& JFactory::getDBO();
 $kunena_db->setQuery("CREATE TABLE #__fb_favorites_temp SELECT thread, userid FROM #__fb_favorites WHERE userid>0 GROUP BY thread, userid");
 if ($kunena_db->query() == FALSE) {
 	$temporary=0;
-	trigger_dbwarning("Unable to fix fb_favorites table. All Favorites will be removed.");
+	check_dbwarning("Unable to fix fb_favorites table. All Favorites will be removed.");
 }
 $kunena_db->setQuery("TRUNCATE #__fb_favorites");
 $kunena_db->query();
 $kunena_db->setQuery("ALTER TABLE `#__fb_favorites` DROP INDEX `thread`");
 $kunena_db->query();
 $kunena_db->setQuery("ALTER TABLE `#__fb_favorites` ADD UNIQUE `thread`(`thread`,`userid`)");
-$kunena_db->query() or trigger_dberror("Unable to alter fb_favorites table, please contact Kunena team at www.kunena.com!");
+$kunena_db->query() or check_dberror("Unable to alter fb_favorites table, please contact Kunena team at www.kunena.com!");
 if ($temporary) {
 	$kunena_db->setQuery("INSERT INTO #__fb_favorites (thread,userid) SELECT thread, userid FROM #__fb_favorites_temp");
-	$kunena_db->query() or trigger_dbwarning("Unable to fix fb_favorites table. All Favorites will be removed.");
+	$kunena_db->query() or check_dbwarning("Unable to fix fb_favorites table. All Favorites will be removed.");
 	$kunena_db->setQuery("DROP TABLE #__fb_favorites_temp");
-	$kunena_db->query() or trigger_dbwarning("Unable to remove temporary table (#__fb_favorites_temp).");
+	$kunena_db->query() or check_dbwarning("Unable to remove temporary table (#__fb_favorites_temp).");
 }
 
 $temporary = 1;
 $kunena_db->setQuery("CREATE TABLE #__fb_subscriptions_temp SELECT thread, userid, future1 FROM #__fb_subscriptions WHERE userid>0 GROUP BY thread, userid");
 if ($kunena_db->query() == FALSE) {
 	$temporary=0;
-	trigger_dbwarning("Unable to fix fb_subscriptions table. All Subscriptions will be removed.");
+	check_dbwarning("Unable to fix fb_subscriptions table. All Subscriptions will be removed.");
 }
 $kunena_db->setQuery("TRUNCATE #__fb_subscriptions");
 $kunena_db->query();
 $kunena_db->setQuery("ALTER TABLE `#__fb_subscriptions` DROP INDEX `thread`");
 $kunena_db->query();
 $kunena_db->setQuery("ALTER TABLE `#__fb_subscriptions` ADD UNIQUE `thread`(`thread`,`userid`)");
-$kunena_db->query() or trigger_dberror("Unable to alter fb_subscriptions table, please contact Kunena team at www.kunena.com!");
+$kunena_db->query() or check_dberror("Unable to alter fb_subscriptions table, please contact Kunena team at www.kunena.com!");
 if ($temporary) {
 	$kunena_db->setQuery("INSERT INTO #__fb_subscriptions (thread,userid,future1) SELECT thread, userid, future1 FROM #__fb_subscriptions_temp");
-	$kunena_db->query() or trigger_dbwarning("Unable to fix fb_subscriptions table. All Subscriptions will be removed.");
+	$kunena_db->query() or check_dbwarning("Unable to fix fb_subscriptions table. All Subscriptions will be removed.");
 	$kunena_db->setQuery("DROP TABLE #__fb_subscriptions_temp");
-	$kunena_db->query() or trigger_dbwarning("Unable to remove temporary table (#__fb_subscriptions_temp).");
+	$kunena_db->query() or check_dbwarning("Unable to remove temporary table (#__fb_subscriptions_temp).");
 }
 
 ?>

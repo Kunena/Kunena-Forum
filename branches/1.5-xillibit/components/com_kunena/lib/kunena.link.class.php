@@ -251,6 +251,11 @@ class CKunenaLink
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=mylatest', $name, '', $rel);
     }
 
+    function GetShowNoRepliesLink($name, $rel='nofollow')
+    {
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=noreplies', $name, '', $rel);
+    }
+
     function GetShowLatestThreadsLink($period, $name, $rel='nofollow')
     {
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel='.$period, $name, '', $rel);

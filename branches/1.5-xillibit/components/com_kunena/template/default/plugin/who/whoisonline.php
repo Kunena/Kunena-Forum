@@ -25,7 +25,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 $kunena_db = &JFactory::getDBO();
 $kunena_config =& CKunenaConfig::getInstance();
 $kunena_my = &JFactory::getUser();
-global $kunena_is_moderator;
+$kunena_is_a_moderator = CKunenaTools::isAdmin($kunena_my->id);
 
 if ($kunena_config->showstats && $kunena_config->showwhoisonline)
 {
@@ -83,21 +83,19 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
                     <?php
                     foreach ($users as $user)
                     {
-                        $grp = getFBGroupName($user->id);
                         $time = date("H:i:s", $user->time);
-
                     ?>
 
                   		 <?php if ( $user->showOnline > 0 ){ ?>
 
-                            <a class = "whois<?php echo $user->moderator;?>  <?php echo "fb_group_".$grp->id;?>" href = "<?php echo CKunenaLink::GetProfileURL($user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
+                            <a class = "whois<?php echo $user->moderator;?>" href = "<?php echo CKunenaLink::GetProfileURL($user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
 
                 		  <?php  } ?>
 
                     <?php
                     }
                     ?>
-                     <?php if ($kunena_is_moderator){
+                     <?php if ($kunena_is_a_moderator){
 
 					 ?>
 
@@ -110,13 +108,12 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
                          <?php
                     foreach ($users as $user)
                     {
-                        $grp = getFBGroupName($user->id);
                         $time = date("H:i:s", $user->time);
                     ?>
 
-                  		 <?php if ( $kunena_is_moderator && $user->showOnline < 1 ){ ?>
+                  		 <?php if ( $kunena_is_a_moderator && $user->showOnline < 1 ){ ?>
 
-                            <a class = "whois<?php echo $user->moderator;?>  <?php echo "fb_group_".$grp->id;?>" href = "<?php echo CKunenaLink::GetProfileURL($user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
+                            <a class = "whois<?php echo $user->moderator;?>" href = "<?php echo CKunenaLink::GetProfileURL($user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
 
                 		  <?php   } ?>
 

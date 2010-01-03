@@ -312,7 +312,6 @@ function getCaretPosition(txtarea)
 	return caretPos;
 }
 //#######################################################
-//code used in My Profile (userprofile.php)
 function textCounter(field, countfield, maxlimit) {
    if(field.value.length > maxlimit){
       field.value = field.value.substring(0, maxlimit);

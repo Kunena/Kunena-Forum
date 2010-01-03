@@ -19,6 +19,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 // Set charset
 define('KUNENA_CHARSET', 'UTF-8');
+jimport('joomla.utilities.string');
 
 // Joomla absolute path
 define('KUNENA_JLIVEURL', JURI::root());
@@ -28,8 +29,6 @@ $kunena_app =& JFactory::getApplication();
 // Joomla template dir
 define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH .DS. "templates".DS . $kunena_app->getTemplate());
 define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "templates/".$kunena_app->getTemplate());
-
-global $kunena_config, $kunena_db, $kunena_my;
 
 require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 
@@ -105,17 +104,6 @@ if (!defined("KUNENA_COMPONENT_ITEMID"))
 		global $kunenaProfile;
 		$kunenaProfile =& CkunenaCBProfile::getInstance();
     }
-
-    //Clexus PM
-    if ($kunena_config->pm_component == 'clexuspm' || $kunena_config->fb_profile == 'clexuspm') {
-        $kunena_db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_mypms' AND published='1'");
-        $CPM_Itemid = $kunena_db->loadResult();
-        	check_dberror('Unable to load Clexus item id');
-
-        define("KUNENA_CPM_ITEMID", (int)$CPM_Itemid);
-        define("KUNENA_CPM_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_CPM_ITEMID);
-        }
-
     // UddeIM
     if ($kunena_config->pm_component == 'uddeim') {
         $kunena_db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_uddeim' AND published='1'");
@@ -154,10 +142,6 @@ if (!defined("KUNENA_COMPONENT_ITEMID"))
 		define("KUNENA_AUP_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_AUP_ITEMID);
 		$profilelink = 'index.php?option=com_alphauserpoints&amp;view=account&amp;userid=';
         define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_alphauserpoints&amp;view=account&amp;Itemid=" . KUNENA_AUP_ITEMID . "&amp;userid=");
-        }
-     else if ($kunena_config->fb_profile == "clexuspm") {
-        $profilelink = 'index.php?option=com_mypms&amp;task=showprofile&amp;user=';
-        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_mypms&amp;task=showprofile&amp;Itemid=" . KUNENA_CPM_ITEMID . "&amp;user=");
         }
     else {
         $profilelink = 'index.php?option=com_kunena&amp;func=fbprofile&amp;userid=';
@@ -201,7 +185,7 @@ $fb_user_img_template = JRequest::getString('fb_user_img_template', '', 'COOKIE'
 $fb_user_template = strtr($fb_user_template, '\\/', '');
 $fb_user_img_template = strtr($fb_user_template, '\\/', '');
 
-if (strlen($fb_user_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_template))
+if (JString::strlen($fb_user_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_template))
 {
     $fb_cur_template = $fb_user_template;
     }
@@ -214,7 +198,7 @@ else
     $fb_cur_template = 'default_ex';
     }
 
-if (strlen($fb_user_img_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_template .DS. 'images'))
+if (JString::strlen($fb_user_img_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_template .DS. 'images'))
 {
     $fb_cur_img_template = $fb_user_img_template;
     }
@@ -337,21 +321,6 @@ function KUNENA_check_image_type(&$type) {
 
     return false;
     }
-
-function getFBGroupName($id) {
-    $kunena_db = &JFactory::getDBO();
-    $gr = '';
-    $kunena_db->setQuery("SELECT id, title FROM #__fb_groups AS g, #__fb_users as u WHERE u.group_id=g.id and u.userid='{$id}'");
-    $gr = $kunena_db->loadObject();
-
-    if ($gr == NULL) {
-	$gr = new stdClass();
-	$gr->id = 0;
-	$gr->title = _VIEW_VISITOR;
-    }
-    return $gr;
-}
-
 class CKunenaTools {
     var $id = null;
 
@@ -441,7 +410,6 @@ class CKunenaTools {
     function reCountBoards()
     {
         $kunena_db = &JFactory::getDBO();
-        include_once (KUNENA_PATH_LIB .DS. 'kunena.db.iterator.class.php');
 
         // Reset category counts as next query ignores empty categories
         $kunena_db->setQuery("UPDATE #__fb_categories SET numTopics=0, numPosts=0");
@@ -614,7 +582,7 @@ class CKunenaTools {
         $kunena_my = &JFactory::getUser();
 		$kunena_db = &JFactory::getDBO();
 
-        if (!CKunenaTools::isModOrAdmin() && !$isMod) {
+        if (!CKunenaTools::isAdmin() && !$isMod) {
             $kunena_app->redirect($return, _POST_NOT_MODERATOR);
             }
 
@@ -635,14 +603,14 @@ class CKunenaTools {
             if ($mes->poll_exist)
             {
                 CKunenaPolls::delete_poll($id);
-            } 
+            }
 
             if ($mes->parent == 0) {
                 // this is the forum topic; if removed, all children must be removed as well.
                 $children = array ();
                 $userids = array ();
-                $kunena_db->setQuery("SELECT userid, id, catid FROM #__fb_messages WHERE thread='{$id}' OR id='{$id}'");               
-                               
+                $kunena_db->setQuery("SELECT userid, id, catid FROM #__fb_messages WHERE thread='{$id}' OR id='{$id}'");
+
 
                 foreach ($kunena_db->loadObjectList() as $line) {
                     $children[] = $line->id;
@@ -721,28 +689,40 @@ class CKunenaTools {
                 }
             } //end foreach
             CKunenaTools::reCountBoards();
-            
+
             $kunena_app->redirect($return, _KUNENA_BULKMSG_DELETED);
         }
 
-    function isModOrAdmin($id = 0) {
-        $kunena_my = &JFactory::getUser();
-// echo '<div>CALL isModOrAdmin</div>';
-        $userid = intval($id);
+    function isAdmin($user = false) {
+    	if ($user === false) $user = &JFactory::getUser();
+    	if (!is_object($user)) $user = new JUser((int)$user);
+		if($user->usertype == "Super Administrator" || $user->usertype == "Administrator")
+			return true;
+		return false;
+    }
 
-        if ($userid) {
-            $user = new JUser($userid);
-            }
-        else {
-            $user = $kunena_my;
-            }
+	function isModerator($uid, $catid=0) {
+		static $instances = array();
+		$uid = (int)$uid;
+		$catid = (int)$catid;
+		if ($uid == 0) return false; // Anonymous never has moderator permission
+		if (self::isAdmin($uid)) return true;
+		if (!isset($instances[$uid])) {
+			$kunena_db = &JFactory::getDBO();
+			$kunena_db->setQuery ("SELECT m.catid FROM #__fb_users AS u LEFT JOIN #__fb_moderation AS m ON u.userid=m.userid "
+				."LEFT JOIN #__fb_categories AS c ON m.catid=c.id WHERE u.moderator='1' AND (m.catid IS NULL OR c.moderated='1') AND u.userid='{$uid}'");
+			$instances[$uid] = $kunena_db->loadResultArray();
+			check_dberror("Unable to load moderation info for user $uid.");
+		}
+		// Is user a global moderator?
+		if (in_array(null, $instances[$uid], true)) return true;
+		// Is user moderator in any category?
+		if (!$catid && count($instances[$uid])) return true;
+		// Is user moderator in the category?
+		if ($catid && in_array($catid, $instances[$uid])) return true;
 
-        if (strtolower($user->usertype) == 'super administrator' || strtolower($user->usertype) == 'administrator') {
-            return true;
-            }
-
-            return false;
-        }
+		return false;
+	}
 
     function fbMovePosts($catid, $isMod, $return) {
     	$kunena_app =& JFactory::getApplication();
@@ -756,7 +736,7 @@ class CKunenaTools {
 		$isMod = $kunena_db->loadResult();
 		check_dberror("Unable to load moderation info.");
 	}
-	$isAdmin = CKunenaTools::isModOrAdmin();
+	$isAdmin = CKunenaTools::isAdmin();
 
         //isMod will stay until better group management comes in
         if (!$isAdmin && !$isMod) {
@@ -776,8 +756,7 @@ class CKunenaTools {
 	            $oldRecord = $kunena_db->loadObjectList();
 	            	check_dberror("Unable to load message detail.");
 
-                    $newCatObj = new jbCategory($kunena_db, $oldRecord[0]->catid);
-		    if (fb_has_moderator_permission($kunena_db, $newCatObj, $kunena_my->id, $isAdmin)) {
+		    if (CKunenaTools::isModerator($kunena_my->id, $oldRecord[0]->catid)) {
 
 		        $newSubject = _MOVED_TOPIC . " " . $oldRecord[0]->subject;
 		        $kunena_db->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE thread='{$id}'");
@@ -818,11 +797,11 @@ class CKunenaTools {
            array_walk($ra2, "fbReturnDashed");
 
            if ($reverse) {
-                $val = str_ireplace($ra2, $ra, $val);
+                $val = JString::str_ireplace($ra2, $ra, $val);
            }
            else {
            //replace them all with a dummy variable, and later replace them in CODE
-                $val = str_ireplace($ra, $ra2, $val);
+                $val = JString::str_ireplace($ra, $ra2, $val);
            }
            return $val;
         }
@@ -845,8 +824,17 @@ class CKunenaTools {
 		return $content;
 	}
 
-	function getAllowedForums($uid = 0, $gid = 0, &$kunena_acl) {
-        	$kunena_db = &JFactory::getDBO();
+	function getAllowedForums($uid, $unused = 0, $unused2 = 0) {
+		$kunena_acl = &JFactory::getACL();
+		$kunena_db = &JFactory::getDBO();
+
+        if ($uid != 0)
+        {
+        	$aro_group = $kunena_acl->getAroGroup($uid);
+			$gid = $aro_group->id;
+		} else {
+			$gid = 0;
+		}
 
 			function _has_rights(&$kunena_acl, $gid, $access, $recurse) {
 				if ($gid == $access) return 1;
@@ -879,29 +867,6 @@ class CKunenaTools {
 		}
 
     } // end of class
-
-/**
-* Moderator Table Class
-*
-* Provides access to the #__fb_moderator table
-*/
-class fbModeration
-    extends JTable {
-    /** @var int Unique id*/
-    var $catid = null;
-    /** @var int */
-    var $userid = null;
-    /** @var int */
-    var $future1 = null;
-    /** @var int */
-    var $future2 = null;
-    /**
-    * @param database A database connector object
-    */
-    function __construct(&$kunena_db) {
-        parent::__construct('#__fb_moderation', 'catid', $kunena_db);
-        }
-    }
 
 class fbForum
     extends JTable {
@@ -956,7 +921,7 @@ class fbForum
 		if ($id > 0) {
 			$query = "SELECT id, parent FROM #__fb_categories";
 			$this->_db->setQuery($query);
-			$this->_db->query() or trigger_dberror("Unable to access categories.");
+			$this->_db->query() or check_dberror("Unable to access categories.");
 			$list = $this->_db->loadObjectList('id');
 			$recurse = array();
 			while ($id) {
@@ -990,7 +955,7 @@ class fbForum
 			// we must reset fbSession (allowed), when forum record was changed
 
 			$this->_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
-			$this->_db->query() or trigger_dberror("Unable to update sessions.");
+			$this->_db->query() or check_dberror("Unable to update sessions.");
 		}
 		return $ret;
 	}
@@ -998,7 +963,6 @@ class fbForum
 }
 
 function JJ_categoryArray($admin=0) {
-    global $aro_group;
     $kunena_db = &JFactory::getDBO();
 
     // get a list of the menu items
@@ -1068,7 +1032,7 @@ function JJ_categoryParentList($catid, $action, $options = array ()) {
 
     foreach ($list as $item) {
         if ($this_treename) {
-            if ($item->id != $catid && strpos($item->treename, $this_treename) === false) {
+            if ($item->id != $catid && JString::strpos($item->treename, $this_treename) === false) {
                 $options[] = JHTML::_('select.option', $item->id, $item->treename);
                 }
             }
@@ -1093,7 +1057,7 @@ function KUNENA_GetAvailableForums($catid, $action, $options = array (), $disabl
 
     foreach ($list as $item) {
         if ($this_treename) {
-            if ($item->id != $catid && strpos($item->treename, $this_treename) === false) {
+            if ($item->id != $catid && JString::strpos($item->treename, $this_treename) === false) {
                 $options[] = JHTML::_('select.option', $item->id, kunena_htmlspecialchars($item->treename));
                 }
             }
@@ -1119,6 +1083,7 @@ function KUNENA_GetAvailableForums($catid, $action, $options = array (), $disabl
 //
 function generate_smilies() {
     $kunena_db = &JFactory::getDBO();
+    $kunena_emoticons_rowset = array ();
 
     $inline_columns = 4;
     $inline_rows = 5;
@@ -1127,14 +1092,13 @@ function generate_smilies() {
 
     if ($kunena_db->query()) {
         $num_smilies = 0;
-        $rowset = array ();
         $set = $kunena_db->loadAssocList();
         $num_iconbar = 0;
 
         foreach ($set as $smilies) {
             $key_exists = false;
 
-            foreach ($rowset as $check) //checks if the smiley (location) already exists with another code
+            foreach ($kunena_emoticons_rowset as $check) //checks if the smiley (location) already exists with another code
             {
                 if ($check['location'] == $smilies['location']) {
                     $key_exists = true;
@@ -1142,7 +1106,7 @@ function generate_smilies() {
                 }
 
             if ($key_exists == false) {
-                $rowset[] = array
+                $kunena_emoticons_rowset[] = array
                 (
                     'code' => $smilies['code'],
                     'location' => $smilies['location'],
@@ -1155,7 +1119,7 @@ function generate_smilies() {
                 }
             }
 
-        $num_smilies = count($rowset);
+        $num_smilies = count($kunena_emoticons_rowset);
 
         if ($num_smilies) {
             $smilies_count = min(20, $num_smilies);
@@ -1164,11 +1128,11 @@ function generate_smilies() {
             $s_colspan = 0;
             $row = 0;
             $col = 0;
-            reset ($rowset);
+            reset ($kunena_emoticons_rowset);
 
             $cur = 0;
 
-            foreach ($rowset as $data) {
+            foreach ($kunena_emoticons_rowset as $data) {
                 if ($data['emoticonbar'] == 1) {
                     $cur++;
 
@@ -1202,6 +1166,7 @@ function generate_smilies() {
                 }
             }
         }
+        return $kunena_emoticons_rowset;
     }
 
 function fbGetArrayInts($name) {
@@ -1283,41 +1248,8 @@ print_r($array);
     return $output;
     }
 
-function make_pattern(&$pat, $key) {
-  $pat = '/'.preg_quote($pat, '/').'/i';
-}
-if (!function_exists("htmlspecialchars_decode")) {
-    function htmlspecialchars_decode($string,$style=ENT_COMPAT)
-    {
-        $translation = array_flip(get_html_translation_table(HTML_SPECIALCHARS,$style));
-        if($style === ENT_QUOTES) { $translation['&#039;'] = '\''; }
-        return strtr($string,$translation);
-    }
-}
-if(!function_exists('str_ireplace')){
-function str_ireplace($search, $replace, $subject){
-if(is_array($search)){
-array_walk($search, 'make_pattern');
-}
-else{
-$search = '/'.preg_quote($search, '/').'/i';
-}
-return preg_replace($search, $replace, $subject);
-}
-}
-
 function fbReturnDashed (&$string, $key) {
             $string = "_".$string."_";
-}
-
-function kn_mb_substr($str, $start, $length=NULL, $encoding=NULL) {
-	if ($length === NULL) $length = strlen($str);
-	if ($encoding === NULL) $encoding = KUNENA_CHARSET;
-	if (!function_exists('mb_substr'))
-	{
-		require_once(JPATH_LIBRARIES.DS.'phputf8'.DS.'utf8.php');
-	}
-	return mb_substr($str, $start, $length, $encoding);
 }
 
 function kunena_htmlspecialchars($string, $quote_style=ENT_COMPAT, $charset=KUNENA_CHARSET) {

@@ -21,6 +21,8 @@
 
 defined( '_JEXEC' ) or die('Restricted access');
 
+global $kunena_config, $kunenaProfile, $lang;
+
 // Kunena wide defines
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 
@@ -45,8 +47,8 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 $kunena_app =& JFactory::getApplication();
 $kunena_db = JFactory::getDBO();
 
-$fbConfig =& CKunenaConfig::getInstance();
-$fbConfig->load();
+//$kunena_config =& CKunenaConfig::getInstance();
+//$kunena_config->load();
 
 // Class structure should be used after this and all the common task should be moved to this class
 require_once (KUNENA_PATH .DS. 'class.kunena.php');
@@ -339,16 +341,16 @@ if ($kn_version->versionname == '@kunenaversionname@') {
 	$kunena_app->enqueueMessage(sprintf(_KUNENA_ERROR_UPGRADE_AGAIN, $kn_version->version));
 	$kunena_app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_SUPPORT.' <a href="http://www.kunena.com">www.kunena.com</a>');
 }
-if (strpos($kn_version->version, 'RC') !== false) {
+if (JString::strpos($kn_version->version, 'RC') !== false) {
 	$kn_version_name = _KUNENA_VERSION_RC;
 	$kn_version_warning = _KUNENA_VERSION_RC_WARNING;
-} else if (strpos($kn_version->version, 'BETA') !== false) {
+} else if (JString::strpos($kn_version->version, 'BETA') !== false) {
 	$kn_version_name = _KUNENA_VERSION_BETA;
 	$kn_version_warning = _KUNENA_VERSION_BETA_WARNING;
-} else if (strpos($kn_version->version, 'ALPHA') !== false) {
+} else if (JString::strpos($kn_version->version, 'ALPHA') !== false) {
 	$kn_version_name = _KUNENA_VERSION_ALPHA;
 	$kn_version_warning = _KUNENA_VERSION_ALPHA_WARNING;
-} else if (strpos($kn_version->version, 'DEV') !== false) {
+} else if (JString::strpos($kn_version->version, 'DEV') !== false) {
 	$kn_version_name = _KUNENA_VERSION_DEV;
 	$kn_version_warning = _KUNENA_VERSION_DEV_WARNING;
 }
@@ -530,7 +532,7 @@ $kunena_db = &JFactory::getDBO();
     $row->reorder();
 
     $kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
-	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
+	$kunena_db->query() or check_dberror("Unable to update sessions.");
 
     $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=showAdministration");
 }
@@ -549,7 +551,7 @@ function publishForum($cid = null, $publish = 1, $option)
 
     $cids = implode(',', $cid);
     $kunena_db->setQuery("UPDATE #__fb_categories SET published='$publish'" . "\nWHERE id IN ($cids) AND (checked_out=0 OR (checked_out='$kunena_my->id'))");
-    $kunena_db->query() or trigger_dberror("Unable to update categories.");
+    $kunena_db->query() or check_dberror("Unable to update categories.");
 
     if (count($cid) == 1)
     {
@@ -559,7 +561,7 @@ function publishForum($cid = null, $publish = 1, $option)
 
 	// we must reset fbSession->allowed, when forum record was changed
     $kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
-	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
+	$kunena_db->query() or check_dberror("Unable to update sessions.");
 
     $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=showAdministration");
 }
@@ -578,7 +580,7 @@ function deleteForum($cid = null, $option)
 
     $cids = implode(',', $cid);
     $kunena_db->setQuery("DELETE FROM #__fb_categories" . "\nWHERE id IN ($cids) AND (checked_out=0 OR (checked_out='$kunena_my->id'))");
-    $kunena_db->query() or trigger_dberror("Unable to delete categories.");
+    $kunena_db->query() or check_dberror("Unable to delete categories.");
 
     $kunena_db->setQuery("SELECT id, parent FROM #__fb_messages where catid in ($cids)");
     $mesList = $kunena_db->loadObjectList();
@@ -589,22 +591,22 @@ function deleteForum($cid = null, $option)
     	foreach ($mesList as $ml)
     	{
     		$kunena_db->setQuery("DELETE FROM #__fb_messages WHERE id = $ml->id");
-    		$kunena_db->query() or trigger_dberror("Unable to delete messages.");
+    		$kunena_db->query() or check_dberror("Unable to delete messages.");
 
     		$kunena_db->setQuery("DELETE FROM #__fb_messages_text WHERE mesid=$ml->id");
-    		$kunena_db->query() or trigger_dberror("Unable to delete message text.");
+    		$kunena_db->query() or check_dberror("Unable to delete message text.");
 
     		//and clear up all subscriptions as well
     		if ($ml->parent == 0)
     		{ //this was a topic message to which could have been subscribed
     			$kunena_db->setQuery("DELETE FROM #__fb_subscriptions WHERE thread=$ml->id");
-    			$kunena_db->query() or trigger_dberror("Unable to delete subscriptions.");
+    			$kunena_db->query() or check_dberror("Unable to delete subscriptions.");
     		}
     	}
     }
 
 	$kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
-	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
+	$kunena_db->query() or check_dberror("Unable to update sessions.");
 
     $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=showAdministration");
 }
@@ -642,7 +644,7 @@ function orderForum($uid, $inc, $option)
 function showConfig($option)
 {
     $kunena_db = &JFactory::getDBO();
-    $fbConfig =& CKunenaConfig::getInstance();
+    $kunena_config =& CKunenaConfig::getInstance();
 
     $lists = array ();
 
@@ -654,7 +656,7 @@ function showConfig($option)
 	$defpagelist[] = JHTML::_('select.option', 'categories',_COM_A_FBDEFAULT_PAGE_CATEGORIES);
 
     // build the html select list
-    $lists['fbdefaultpage'] = JHTML::_('select.genericlist', $defpagelist ,'cfg_fbdefaultpage', 'class="inputbox" size="1" ','value', 'text', $fbConfig->fbdefaultpage);
+    $lists['fbdefaultpage'] = JHTML::_('select.genericlist', $defpagelist ,'cfg_fbdefaultpage', 'class="inputbox" size="1" ','value', 'text', $kunena_config->fbdefaultpage);
 
 
     // build the html select list
@@ -664,7 +666,7 @@ function showConfig($option)
 	$rsslist[] = JHTML::_('select.option', 'post',_COM_A_RSS_BY_POST);
 
     // build the html select list
-	$lists['rsstype'] = JHTML::_('select.genericlist', $rsslist ,'cfg_rsstype', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rsstype);
+	$lists['rsstype'] = JHTML::_('select.genericlist', $rsslist ,'cfg_rsstype', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rsstype);
 
     $rsshistorylist = array ();
 	$rsshistorylist[] =JHTML::_('select.option', 'week',_COM_A_RSS_HISTORY_WEEK);
@@ -672,17 +674,16 @@ function showConfig($option)
 	$rsshistorylist[] =JHTML::_('select.option', 'year',_COM_A_RSS_HISTORY_YEAR);
 
     // build the html select list
-    $lists['rsshistory'] = JHTML::_('select.genericlist', $rsshistorylist ,'cfg_rsshistory', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rsshistory);
+    $lists['rsshistory'] = JHTML::_('select.genericlist', $rsshistorylist ,'cfg_rsshistory', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rsshistory);
 
     // source of avatar picture
     $avlist = array ();
 	$avlist[] = JHTML::_('select.option', 'fb',_KUNENA_KUNENA);
 	$avlist[] = JHTML::_('select.option', 'cb',_KUNENA_CB);
 	$avlist[] = JHTML::_('select.option', 'jomsocial',_KUNENA_JOMSOCIAL);
-	$avlist[] = JHTML::_('select.option', 'clexuspm',_KUNENA_CLEXUS);
 	$avlist[] = JHTML::_('select.option', 'aup', _KUNENA_AUP_ALPHAUSERPOINTS); // INTEGRATION ALPHAUSERPOINTS
 	// build the html select list
-    $lists['avatar_src'] = JHTML::_('select.genericlist', $avlist,'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->avatar_src);
+    $lists['avatar_src'] = JHTML::_('select.genericlist', $avlist,'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->avatar_src);
 
     // private messaging system to use
     $pmlist = array ();
@@ -691,24 +692,22 @@ function showConfig($option)
 	$pmlist[] = JHTML::_('select.option', 'jomsocial',_KUNENA_JOMSOCIAL);
 	$pmlist[] = JHTML::_('select.option', 'pms',_KUNENA_MYPMS);
 	$pmlist[] = JHTML::_('select.option', 'pms',_KUNENA_MYPMS);
-	$pmlist[] = JHTML::_('select.option', 'clexuspm',_KUNENA_CLEXUS);
 	$pmlist[] = JHTML::_('select.option', 'uddeim',_KUNENA_UDDEIM);
 	$pmlist[] = JHTML::_('select.option', 'jim',_KUNENA_JIM);
 	$pmlist[] = JHTML::_('select.option', 'missus',_KUNENA_MISSUS);
 
-    $lists['pm_component'] = JHTML::_('select.genericlist', $pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pm_component);
+    $lists['pm_component'] = JHTML::_('select.genericlist', $pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pm_component);
 
 
-//redundant    $lists['pm_component'] = JHTML::_('select.genericlist',$pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pm_component);
+//redundant    $lists['pm_component'] = JHTML::_('select.genericlist',$pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pm_component);
     // Profile select
     $prflist = array ();
 	$prflist[] = JHTML::_('select.option', 'fb',_KUNENA_KUNENA);
 	$prflist[] = JHTML::_('select.option', 'cb',_KUNENA_CB);
 	$prflist[] = JHTML::_('select.option', 'jomsocial',_KUNENA_JOMSOCIAL);
-	$prflist[] = JHTML::_('select.option', 'clexuspm',_KUNENA_CLEXUS);
 	$prflist[] = JHTML::_('select.option', 'aup', _KUNENA_AUP_ALPHAUSERPOINTS); // INTEGRATION ALPHAUSERPOINTS
 
-    $lists['fb_profile'] = JHTML::_('select.genericlist', $prflist, 'cfg_fb_profile', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->fb_profile);
+    $lists['fb_profile'] = JHTML::_('select.genericlist', $prflist, 'cfg_fb_profile', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->fb_profile);
 
 
 
@@ -758,142 +757,143 @@ function showConfig($option)
 		$imagesetlistitems[] = JHTML::_('select.option',  $val, $val);
     }
 
-	$lists['jmambot'] = JHTML::_('select.genericlist', $yesno, 'cfg_jmambot', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->jmambot);
-    $lists['disemoticons'] = JHTML::_('select.genericlist', $yesno, 'cfg_disemoticons', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->disemoticons);
-    $lists['template'] = JHTML::_('select.genericlist', $templatelistitems, 'cfg_template', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->template);
-    $lists['templateimagepath'] = JHTML::_('select.genericlist', $imagesetlistitems, 'cfg_templateimagepath', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->templateimagepath);
-    $lists['regonly'] = JHTML::_('select.genericlist', $yesno, 'cfg_regonly', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->regonly);
-    $lists['board_offline'] = 	JHTML::_('select.genericlist', $yesno, 'cfg_board_offline', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->board_offline);
-    $lists['pubwrite'] = JHTML::_('select.genericlist', $yesno, 'cfg_pubwrite', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pubwrite);
-    $lists['useredit'] = JHTML::_('select.genericlist', $yesno, 'cfg_useredit', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->useredit);
-    $lists['showhistory'] = JHTML::_('select.genericlist', $yesno, 'cfg_showhistory', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showhistory);
-    $lists['joomlastyle'] = JHTML::_('select.genericlist', $yesno,'cfg_joomlastyle', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->joomlastyle);
-    $lists['showannouncement'] = JHTML::_('select.genericlist', $yesno,'cfg_showannouncement', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showannouncement);
-    $lists['avataroncat'] =	JHTML::_('select.genericlist', $yesno,'cfg_avataroncat', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->avataroncat);
-    $lists['showlatest'] = 		JHTML::_('select.genericlist', $yesno,'cfg_showlatest', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showlatest);
-    $lists['latestsinglesubject'] =			JHTML::_('select.genericlist', $yesno,'cfg_latestsinglesubject', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->latestsinglesubject);
-    $lists['latestreplysubject'] = 	JHTML::_('select.genericlist', $yesno,'cfg_latestreplysubject', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->latestreplysubject);
-    $lists['latestshowdate'] = JHTML::_('select.genericlist', $yesno,'cfg_latestshowdate', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->latestshowdate);
-    $lists['showchildcaticon'] =	JHTML::_('select.genericlist', $yesno,'cfg_showchildcaticon', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showchildcaticon);
-    $lists['latestshowhits'] = JHTML::_('select.genericlist', $yesno,'cfg_latestshowhits', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->latestshowhits);
-    $lists['showuserstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showuserstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showuserstats);
-    $lists['showwhoisonline'] = JHTML::_('select.genericlist', $yesno, 'cfg_showwhoisonline', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showwhoisonline);
-    $lists['showpopsubjectstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpopsubjectstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showpopsubjectstats);
-    $lists['showgenstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showgenstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showgenstats);
-    $lists['showpopuserstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpopuserstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showpopuserstats);
-    $lists['allowsubscriptions'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowsubscriptions', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowsubscriptions);
-    $lists['subscriptionschecked'] = JHTML::_('select.genericlist', $yesno, 'cfg_subscriptionschecked', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->subscriptionschecked);
-    $lists['allowfavorites'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowfavorites', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowfavorites);
-    $lists['mailmod'] = JHTML::_('select.genericlist', $yesno, 'cfg_mailmod', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->mailmod);
-    $lists['mailadmin'] = JHTML::_('select.genericlist', $yesno, 'cfg_mailadmin', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->mailadmin);
-    $lists['showemail'] = JHTML::_('select.genericlist', $yesno, 'cfg_showemail', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showemail);
-    $lists['askemail'] = JHTML::_('select.genericlist', $yesno, 'cfg_askemail', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->askemail);
-    $lists['changename'] = JHTML::_('select.genericlist', $yesno, 'cfg_changename', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->changename);
-    $lists['allowavatar'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowavatar', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowavatar);
-    $lists['allowavatarupload'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowavatarupload', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowavatarupload);
-    $lists['allowavatargallery'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowavatargallery', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowavatargallery);
-	$lists['avatar_src'] = JHTML::_('select.genericlist', $avlist, 'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->avatar_src);
+	$lists['jmambot'] = JHTML::_('select.genericlist', $yesno, 'cfg_jmambot', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->jmambot);
+    $lists['disemoticons'] = JHTML::_('select.genericlist', $yesno, 'cfg_disemoticons', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->disemoticons);
+    $lists['template'] = JHTML::_('select.genericlist', $templatelistitems, 'cfg_template', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->template);
+    $lists['templateimagepath'] = JHTML::_('select.genericlist', $imagesetlistitems, 'cfg_templateimagepath', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->templateimagepath);
+    $lists['regonly'] = JHTML::_('select.genericlist', $yesno, 'cfg_regonly', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->regonly);
+    $lists['board_offline'] = 	JHTML::_('select.genericlist', $yesno, 'cfg_board_offline', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->board_offline);
+    $lists['pubwrite'] = JHTML::_('select.genericlist', $yesno, 'cfg_pubwrite', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pubwrite);
+    $lists['useredit'] = JHTML::_('select.genericlist', $yesno, 'cfg_useredit', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->useredit);
+    $lists['showhistory'] = JHTML::_('select.genericlist', $yesno, 'cfg_showhistory', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showhistory);
+    $lists['joomlastyle'] = JHTML::_('select.genericlist', $yesno,'cfg_joomlastyle', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->joomlastyle);
+    $lists['showannouncement'] = JHTML::_('select.genericlist', $yesno,'cfg_showannouncement', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showannouncement);
+    $lists['avataroncat'] =	JHTML::_('select.genericlist', $yesno,'cfg_avataroncat', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->avataroncat);
+    $lists['showlatest'] = 		JHTML::_('select.genericlist', $yesno,'cfg_showlatest', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showlatest);
+    $lists['latestsinglesubject'] =			JHTML::_('select.genericlist', $yesno,'cfg_latestsinglesubject', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->latestsinglesubject);
+    $lists['latestreplysubject'] = 	JHTML::_('select.genericlist', $yesno,'cfg_latestreplysubject', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->latestreplysubject);
+    $lists['latestshowdate'] = JHTML::_('select.genericlist', $yesno,'cfg_latestshowdate', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->latestshowdate);
+    $lists['showchildcaticon'] =	JHTML::_('select.genericlist', $yesno,'cfg_showchildcaticon', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showchildcaticon);
+    $lists['latestshowhits'] = JHTML::_('select.genericlist', $yesno,'cfg_latestshowhits', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->latestshowhits);
+    $lists['showuserstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showuserstats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showuserstats);
+    $lists['showwhoisonline'] = JHTML::_('select.genericlist', $yesno, 'cfg_showwhoisonline', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showwhoisonline);
+    $lists['showpopsubjectstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpopsubjectstats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showpopsubjectstats);
+    $lists['showgenstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showgenstats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showgenstats);
+    $lists['showpopuserstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpopuserstats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showpopuserstats);
+    $lists['allowsubscriptions'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowsubscriptions', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->allowsubscriptions);
+    $lists['subscriptionschecked'] = JHTML::_('select.genericlist', $yesno, 'cfg_subscriptionschecked', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->subscriptionschecked);
+    $lists['allowfavorites'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowfavorites', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->allowfavorites);
+    $lists['mailmod'] = JHTML::_('select.genericlist', $yesno, 'cfg_mailmod', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->mailmod);
+    $lists['mailadmin'] = JHTML::_('select.genericlist', $yesno, 'cfg_mailadmin', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->mailadmin);
+    $lists['showemail'] = JHTML::_('select.genericlist', $yesno, 'cfg_showemail', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showemail);
+    $lists['askemail'] = JHTML::_('select.genericlist', $yesno, 'cfg_askemail', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->askemail);
+    $lists['changename'] = JHTML::_('select.genericlist', $yesno, 'cfg_changename', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->changename);
+    $lists['allowavatar'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowavatar', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->allowavatar);
+    $lists['allowavatarupload'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowavatarupload', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->allowavatarupload);
+    $lists['allowavatargallery'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowavatargallery', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->allowavatargallery);
+	$lists['avatar_src'] = JHTML::_('select.genericlist', $avlist, 'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->avatar_src);
 
 	$ip_opt[] = JHTML::_('select.option', 'gd2', 'GD2');
 	$ip_opt[] = JHTML::_('select.option', 'gd1', 'GD1');
 	$ip_opt[] = JHTML::_('select.option', 'none', _KUNENA_IMAGE_PROCESSOR_NONE);
 
-    $lists['imageprocessor'] = JHTML::_('select.genericlist', $ip_opt, 'cfg_imageprocessor', 'class="inputbox"', 'value', 'text', $fbConfig->imageprocessor );
-    $lists['showstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showstats);
-    $lists['showranking'] = JHTML::_('select.genericlist', $yesno, 'cfg_showranking', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showranking);
-    $lists['rankimages'] = JHTML::_('select.genericlist', $yesno, 'cfg_rankimages', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rankimages);
-    $lists['username'] = JHTML::_('select.genericlist', $yesno, 'cfg_username', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->username);
-    $lists['shownew'] = JHTML::_('select.genericlist', $yesno, 'cfg_shownew', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->shownew);
-    $lists['allowimageupload'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowimageupload', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowimageupload);
-    $lists['allowimageregupload'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowimageregupload', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowimageregupload);
-    $lists['allowfileupload'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowfileupload', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowfileupload);
-    $lists['allowfileregupload'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowfileregupload', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->allowfileregupload);
-    $lists['editmarkup'] = JHTML::_('select.genericlist', $yesno, 'cfg_editmarkup', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->editmarkup);
-    $lists['discussbot'] = JHTML::_('select.genericlist', $yesno, 'cfg_discussbot', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->discussbot);
-    $lists['enablerss'] = JHTML::_('select.genericlist', $yesno, 'cfg_enablerss', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enablerss);
-    $lists['poststats'] = JHTML::_('select.genericlist', $yesno, 'cfg_poststats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->poststats);
-    $lists['showkarma'] = JHTML::_('select.genericlist', $yesno, 'cfg_showkarma', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showkarma);
-    $lists['cb_profile'] = JHTML::_('select.genericlist', $yesno, 'cfg_cb_profile', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->cb_profile);
-    $lists['enablepdf'] = JHTML::_('select.genericlist', $yesno, 'cfg_enablepdf', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enablepdf);
-    $lists['enablerulespage'] = JHTML::_('select.genericlist', $yesno, 'cfg_enablerulespage', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enablerulespage);
-	$lists['rules_infb'] = JHTML::_('select.genericlist', $yesno, 'cfg_rules_infb', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->rules_infb);
-	$lists['enablehelppage'] = JHTML::_('select.genericlist', $yesno, 'cfg_enablehelppage', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enablehelppage);
-	$lists['help_infb'] = JHTML::_('select.genericlist', $yesno, 'cfg_help_infb', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->help_infb);
-    $lists['enableforumjump'] = JHTML::_('select.genericlist', $yesno, 'cfg_enableforumjump', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->enableforumjump);
-    $lists['userlist_online'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_online', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_online);
-    $lists['userlist_avatar'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_avatar', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_avatar);
-    $lists['userlist_name'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_name', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_name);
-    $lists['userlist_username'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_username', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_username);
-    $lists['userlist_posts'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_posts', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_posts);
-    $lists['userlist_karma'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_karma', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_karma);
-    $lists['userlist_email'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_email', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_email);
-    $lists['userlist_usertype'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_usertype', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_usertype);
-    $lists['userlist_joindate'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_joindate', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_joindate);
-    $lists['userlist_lastvisitdate'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_lastvisitdate', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_lastvisitdate);
-	$lists['userlist_userhits'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_userhits', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_userhits);
-	$lists['usernamechange'] = JHTML::_('select.genericlist', $yesno, 'cfg_usernamechange', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->usernamechange);
-	$lists['reportmsg'] = JHTML::_('select.genericlist', $yesno, 'cfg_reportmsg', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->reportmsg);
-	$lists['captcha'] = JHTML::_('select.genericlist', $yesno, 'cfg_captcha', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->captcha);
-	$lists['mailfull'] = JHTML::_('select.genericlist', $yesno, 'cfg_mailfull', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->mailfull);
+    $lists['imageprocessor'] = JHTML::_('select.genericlist', $ip_opt, 'cfg_imageprocessor', 'class="inputbox"', 'value', 'text', $kunena_config->imageprocessor );
+    $lists['showstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showstats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showstats);
+    $lists['showranking'] = JHTML::_('select.genericlist', $yesno, 'cfg_showranking', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showranking);
+    $lists['rankimages'] = JHTML::_('select.genericlist', $yesno, 'cfg_rankimages', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rankimages);
+    $lists['username'] = JHTML::_('select.genericlist', $yesno, 'cfg_username', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->username);
+    $lists['shownew'] = JHTML::_('select.genericlist', $yesno, 'cfg_shownew', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->shownew);
+    $lists['allowimageupload'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowimageupload', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->allowimageupload);
+    $lists['allowimageregupload'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowimageregupload', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->allowimageregupload);
+    $lists['allowfileupload'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowfileupload', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->allowfileupload);
+    $lists['allowfileregupload'] = JHTML::_('select.genericlist', $yesno, 'cfg_allowfileregupload', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->allowfileregupload);
+    $lists['editmarkup'] = JHTML::_('select.genericlist', $yesno, 'cfg_editmarkup', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->editmarkup);
+    $lists['discussbot'] = JHTML::_('select.genericlist', $yesno, 'cfg_discussbot', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->discussbot);
+    $lists['enablerss'] = JHTML::_('select.genericlist', $yesno, 'cfg_enablerss', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablerss);
+    $lists['poststats'] = JHTML::_('select.genericlist', $yesno, 'cfg_poststats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->poststats);
+    $lists['showkarma'] = JHTML::_('select.genericlist', $yesno, 'cfg_showkarma', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showkarma);
+    $lists['cb_profile'] = JHTML::_('select.genericlist', $yesno, 'cfg_cb_profile', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->cb_profile);
+    $lists['enablepdf'] = JHTML::_('select.genericlist', $yesno, 'cfg_enablepdf', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablepdf);
+    $lists['enablerulespage'] = JHTML::_('select.genericlist', $yesno, 'cfg_enablerulespage', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablerulespage);
+	$lists['rules_infb'] = JHTML::_('select.genericlist', $yesno, 'cfg_rules_infb', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rules_infb);
+	$lists['enablehelppage'] = JHTML::_('select.genericlist', $yesno, 'cfg_enablehelppage', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablehelppage);
+	$lists['help_infb'] = JHTML::_('select.genericlist', $yesno, 'cfg_help_infb', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->help_infb);
+    $lists['enableforumjump'] = JHTML::_('select.genericlist', $yesno, 'cfg_enableforumjump', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enableforumjump);
+    $lists['userlist_online'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_online', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userlist_online);
+    $lists['userlist_avatar'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_avatar', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userlist_avatar);
+    $lists['userlist_name'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_name', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userlist_name);
+    $lists['userlist_username'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_username', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userlist_username);
+    $lists['userlist_posts'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_posts', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userlist_posts);
+    $lists['userlist_karma'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_karma', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userlist_karma);
+    $lists['userlist_email'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_email', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userlist_email);
+    $lists['userlist_usertype'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_usertype', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userlist_usertype);
+    $lists['userlist_joindate'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_joindate', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userlist_joindate);
+    $lists['userlist_lastvisitdate'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_lastvisitdate', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userlist_lastvisitdate);
+	$lists['userlist_userhits'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_userhits', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userlist_userhits);
+	$lists['usernamechange'] = JHTML::_('select.genericlist', $yesno, 'cfg_usernamechange', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->usernamechange);
+	$lists['reportmsg'] = JHTML::_('select.genericlist', $yesno, 'cfg_reportmsg', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->reportmsg);
+	$lists['captcha'] = JHTML::_('select.genericlist', $yesno, 'cfg_captcha', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->captcha);
+	$lists['mailfull'] = JHTML::_('select.genericlist', $yesno, 'cfg_mailfull', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->mailfull);
 	// New for 1.0.5
-	$lists['showspoilertag'] = JHTML::_('select.genericlist', $yesno, 'cfg_showspoilertag', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showspoilertag);
-	$lists['showvideotag'] = JHTML::_('select.genericlist', $yesno, 'cfg_showvideotag', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showvideotag);
-	$lists['showebaytag'] = JHTML::_('select.genericlist', $yesno, 'cfg_showebaytag', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showebaytag);
-	$lists['trimlongurls'] = JHTML::_('select.genericlist', $yesno, 'cfg_trimlongurls', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->trimlongurls);
-	$lists['autoembedyoutube'] = JHTML::_('select.genericlist', $yesno, 'cfg_autoembedyoutube', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->autoembedyoutube);
-	$lists['autoembedebay'] = JHTML::_('select.genericlist', $yesno, 'cfg_autoembedebay', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->autoembedebay);
-	$lists['highlightcode'] = JHTML::_('select.genericlist', $yesno, 'cfg_highlightcode', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->highlightcode);
+	$lists['showspoilertag'] = JHTML::_('select.genericlist', $yesno, 'cfg_showspoilertag', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showspoilertag);
+	$lists['showvideotag'] = JHTML::_('select.genericlist', $yesno, 'cfg_showvideotag', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showvideotag);
+	$lists['showebaytag'] = JHTML::_('select.genericlist', $yesno, 'cfg_showebaytag', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showebaytag);
+	$lists['trimlongurls'] = JHTML::_('select.genericlist', $yesno, 'cfg_trimlongurls', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->trimlongurls);
+	$lists['autoembedyoutube'] = JHTML::_('select.genericlist', $yesno, 'cfg_autoembedyoutube', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->autoembedyoutube);
+	$lists['autoembedebay'] = JHTML::_('select.genericlist', $yesno, 'cfg_autoembedebay', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->autoembedebay);
+	$lists['highlightcode'] = JHTML::_('select.genericlist', $yesno, 'cfg_highlightcode', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->highlightcode);
 	// New for 1.5.7 -> integration AlphaUserPoints
-	$lists['alphauserpoints'] = JHTML::_('select.genericlist', $yesno, 'cfg_alphauserpoints', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->alphauserpoints);
-	$lists['alphauserpointsrules'] = JHTML::_('select.genericlist', $yesno, 'cfg_alphauserpointsrules', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->alphauserpointsrules);
+	$lists['alphauserpoints'] = JHTML::_('select.genericlist', $yesno, 'cfg_alphauserpoints', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->alphauserpoints);
+	$lists['alphauserpointsrules'] = JHTML::_('select.genericlist', $yesno, 'cfg_alphauserpointsrules', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->alphauserpointsrules);
 	// New for 1.5.8 -> SEF
-	$lists['sef'] = JHTML::_('select.genericlist', $yesno, 'cfg_sef', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->sef);
-	$lists['sefcats'] = JHTML::_('select.genericlist', $yesno, 'cfg_sefcats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->sefcats);
-	$lists['sefutf8'] = JHTML::_('select.genericlist', $yesno, 'cfg_sefutf8', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->sefutf8);
+	$lists['sef'] = JHTML::_('select.genericlist', $yesno, 'cfg_sef', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->sef);
+	$lists['sefcats'] = JHTML::_('select.genericlist', $yesno, 'cfg_sefcats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->sefcats);
+	$lists['sefutf8'] = JHTML::_('select.genericlist', $yesno, 'cfg_sefutf8', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->sefutf8);
 	//New -> Poll
 	$lists['pollallowvoteone'] = JHTML::_('select.genericlist', $yesno, 'cfg_pollallowvoteone', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pollallowvoteone);
-  $lists['pollenabled'] = JHTML::_('select.genericlist', $yesno, 'cfg_pollenabled', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pollenabled);
+  	$lists['pollenabled'] = JHTML::_('select.genericlist', $yesno, 'cfg_pollenabled', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->pollenabled);
 	$kunena_db->setQuery("SELECT id,parent,name FROM #__fb_categories ORDER BY id");
-  $categoriesList = $kunena_db->loadObjectList();
-  foreach ($categoriesList as $catsallowed)
-  {
-    	if($catsallowed->parent != "0"){
-        $yesnoCategories[] = JHTML::_('select.option',$catsallowed->id, $catsallowed->name." (id: ".$catsallowed->id.")");
-      }
-  }
-  $lists['pollallowedcats'] = JHTML::_('select.genericlist', $yesnoCategories, 'cfg_pollallowedcats', 'class="inputbox" size="5"', 'value', 'text');
-  $lists['showpoppollstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpoppollstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showpoppollstats);
-  $lists['showimgforguest'] = JHTML::_('select.genericlist', $yesno, 'cfg_showimgforguest', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showimgforguest);
-  $lists['showfileforguest'] = JHTML::_('select.genericlist', $yesno, 'cfg_showfileforguest', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showfileforguest);
-  html_Kunena::showConfig($fbConfig, $lists, $option);
+  	$categoriesList = $kunena_db->loadObjectList();
+  	foreach ($categoriesList as $catsallowed)
+  	{
+    	if ($catsallowed->parent != "0")
+    	{
+        	$yesnoCategories[] = JHTML::_('select.option',$catsallowed->id, $catsallowed->name." (id: ".$catsallowed->id.")");
+      	}
+  	}
+  	$lists['pollallowedcats'] = JHTML::_('select.genericlist', $yesnoCategories, 'cfg_pollallowedcats', 'class="inputbox" size="5"', 'value', 'text');
+  	$lists['showpoppollstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpoppollstats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showpoppollstats);
+  	$lists['showimgforguest'] = JHTML::_('select.genericlist', $yesno, 'cfg_showimgforguest', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showimgforguest);
+  	$lists['showfileforguest'] = JHTML::_('select.genericlist', $yesno, 'cfg_showfileforguest', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showfileforguest);
+  	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 
 function saveConfig($option)
 {
 	$kunena_app =& JFactory::getApplication();
-	$fbConfig =& CKunenaConfig::getInstance();
+	$kunena_config =& CKunenaConfig::getInstance();
     $kunena_db = &JFactory::getDBO();
 
 	foreach ($_POST as $postsetting => $postvalue)
     {
-        if (strpos($postsetting, 'cfg_') === 0)
+        if (JString::strpos($postsetting, 'cfg_') === 0)
         {
         	//remove cfg_ and force lower case
-        	$postname = strtolower(substr($postsetting, 4));
+        	$postname = JString::strtolower(JString::substr($postsetting, 4));
             $postvalue = addslashes($postvalue);
 
             // No matter what got posted, we only store config parameters defined
             // in the config class. Anything else posted gets ignored.
-            if(array_key_exists($postname , $fbConfig->GetClassVars()))
+            if(array_key_exists($postname , $kunena_config->GetClassVars()))
             {
             	if (is_numeric($postvalue))
 	            {
-					eval ("\$fbConfig->".$postname." = ".$postvalue.";");
+					eval ("\$kunena_config->".$postname." = ".$postvalue.";");
 	            }
 	            else
 	            {
 	            	// Rest is treaded as strings
-					eval ("\$fbConfig->".$postname." = '".$postvalue."';");
+					eval ("\$kunena_config->".$postname." = '".$postvalue."';");
 	            }
             }
             else
@@ -907,12 +907,12 @@ function saveConfig($option)
         }
     }
 
-	$fbConfig->backup();
-	$fbConfig->remove();
-	$fbConfig->create();
+	$kunena_config->backup();
+	$kunena_config->remove();
+	$kunena_config->create();
 
 	$kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
-	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
+	$kunena_db->query() or check_dberror("Unable to update sessions.");
 
 	$kunena_app->redirect( JURI::base() . "index.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED);
 }
@@ -929,8 +929,8 @@ function showCss($option)
 {
 	require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
 
-	$fbConfig =& CKunenaConfig::getInstance();
-    $file = KUNENA_PATH_TEMPLATE .DS. $fbConfig->template .DS. "kunena.forum.css";
+	$kunena_config =& CKunenaConfig::getInstance();
+    $file = KUNENA_PATH_TEMPLATE .DS. $kunena_config->template .DS. "kunena.forum.css";
     $permission = CKunenaPath::isWritable($file);
 
     if (!$permission)
@@ -974,7 +974,7 @@ function newModerator($option, $id = null)
     $limit = $kunena_app->getUserStateFromRequest("global.list.limit", 'limit', $kunena_app->getCfg('list_limit'), 'int');
     $limitstart = $kunena_app->getUserStateFromRequest("{$option}.limitstart", 'limitstart', 0, 'int');
     $kunena_db->setQuery("SELECT COUNT(*) FROM #__users AS a" . "\n LEFT JOIN #__fb_users AS b" . "\n ON a.id=b.userid where b.moderator=1");
-    $kunena_db->query() or trigger_dberror('Unable to load moderators w/o limit.');
+    $kunena_db->query() or check_dberror('Unable to load moderators w/o limit.');
 
     $total = $kunena_db->loadResult();
 	if ($limitstart >= $total) $limitstart = 0;
@@ -991,7 +991,7 @@ function newModerator($option, $id = null)
     //get forum name
     $forumName = '';
     $kunena_db->setQuery("select name from #__fb_categories where id=$id");
-    $kunena_db->query() or trigger_dberror('Unable to load forum name.');
+    $kunena_db->query() or check_dberror('Unable to load forum name.');
     $forumName = $kunena_db->loadResult();
 
     //get forum moderators
@@ -1045,7 +1045,7 @@ function addModerator($option, $id, $cid = null, $publish = 1)
         for ($i = 0, $n = count($cid); $i < $n; $i++)
         {
             $kunena_db->setQuery("INSERT INTO #__fb_moderation set catid='$id', userid='$cid[$i]'");
-            $kunena_db->query() or trigger_dberror("Unable to insert moderator.");
+            $kunena_db->query() or check_dberror("Unable to insert moderator.");
         }
     }
     else
@@ -1053,7 +1053,7 @@ function addModerator($option, $id, $cid = null, $publish = 1)
         for ($i = 0, $n = count($cid); $i < $n; $i++)
         {
             $kunena_db->setQuery("DELETE FROM #__fb_moderation WHERE catid='$id' and userid='$cid[$i]'");
-            $kunena_db->query() or trigger_dberror("Unable to delete moderator.");
+            $kunena_db->query() or check_dberror("Unable to delete moderator.");
         }
     }
 
@@ -1061,7 +1061,7 @@ function addModerator($option, $id, $cid = null, $publish = 1)
     $row->checkin($id);
 
     $kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
-	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
+	$kunena_db->query() or check_dberror("Unable to update sessions.");
 
     $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=edit2&uid=" . $id);
 }
@@ -1079,7 +1079,7 @@ function showProfiles($kunena_db, $option, $lang, $order)
     $limitstart = $kunena_app->getUserStateFromRequest("{$option}.limitstart", 'limitstart', 0, 'int');
 
     $search = $kunena_app->getUserStateFromRequest("{$option}.search", 'search', '', 'string');
-    $search = $kunena_db->getEscaped(trim(strtolower($search)));
+    $search = $kunena_db->getEscaped(JString::trim(JString::strtolower($search)));
     $where = array ();
 
     if (isset($search) && $search != "") {
@@ -1087,7 +1087,7 @@ function showProfiles($kunena_db, $option, $lang, $order)
     }
 
     $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u" . "\n ON sbu.userid=u.id" . (count($where) ? "\nWHERE " . implode(' AND ', $where) : ""));
-    $kunena_db->query() or trigger_dberror('Unable to load user profiles w/o limits.');
+    $kunena_db->query() or check_dberror('Unable to load user profiles w/o limits.');
     $total = $kunena_db->loadResult();
 
     if ($limitstart >= $total) $limitstart = 0;
@@ -1221,11 +1221,11 @@ function saveUserProfile($option)
     }
 
     $kunena_db->setQuery("UPDATE #__fb_users set signature='$signature', view='$newview',moderator='$moderator', ordering='$neworder', rank='$newrank' $avatar where userid=$uid");
-    $kunena_db->query() or trigger_dberror("Unable to update signature.");
+    $kunena_db->query() or check_dberror("Unable to update signature.");
 
     //delete all moderator traces before anyway
     $kunena_db->setQuery("delete from #__fb_moderation where userid=$uid");
-    $kunena_db->query() or trigger_dberror("Unable to delete moderator.");
+    $kunena_db->query() or check_dberror("Unable to delete moderator.");
 
     //if there are moderatored forums, add them all
     if ($moderator == 1)
@@ -1235,13 +1235,13 @@ function saveUserProfile($option)
     		foreach ($modCatids as $c)
     		{
                 $kunena_db->setQuery("INSERT INTO #__fb_moderation set catid='$c', userid='$uid'");
-                $kunena_db->query() or trigger_dberror("Unable to insert moderator.");
+                $kunena_db->query() or check_dberror("Unable to insert moderator.");
             }
     	}
     }
 
 	$kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na' WHERE userid='$uid'");
-	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
+	$kunena_db->query() or check_dberror("Unable to update sessions.");
 
     $kunena_app->redirect( JURI::base() ."index.php?option=com_kunena&task=showprofiles");
 }
@@ -1302,10 +1302,10 @@ function doprune($kunena_db, $option)
                     {
                         //prune all messages belonging to the thread
                         $kunena_db->setQuery("DELETE FROM #__fb_messages WHERE id=$id->id");
-                        $kunena_db->query() or trigger_dberror("Unable to delete messages.");
+                        $kunena_db->query() or check_dberror("Unable to delete messages.");
 
                         $kunena_db->setQuery("DELETE FROM #__fb_messages_text WHERE mesid=$id->id");
-                        $kunena_db->query() or trigger_dberror("Unable to delete message texts.");
+                        $kunena_db->query() or check_dberror("Unable to delete message texts.");
 
                         //delete all attachments
                         $kunena_db->setQuery("SELECT filelocation FROM #__fb_attachments WHERE mesid=$id->id");
@@ -1319,7 +1319,7 @@ function doprune($kunena_db, $option)
                             }
 
                             $kunena_db->setQuery("DELETE FROM #__fb_attachments WHERE mesid=$id->id");
-                            $kunena_db->query() or trigger_dberror("Unable to delete attachments.");
+                            $kunena_db->query() or check_dberror("Unable to delete attachments.");
                         }
 
                         $deleted++;
@@ -1329,7 +1329,7 @@ function doprune($kunena_db, $option)
 
             //clean all subscriptions to these deleted threads
             $kunena_db->setQuery("DELETE FROM #__fb_subscriptions WHERE thread=$tl->thread");
-            $kunena_db->query() or trigger_dberror("Unable to delete subscriptions.");
+            $kunena_db->query() or check_dberror("Unable to delete subscriptions.");
         }
     }
 
@@ -1411,7 +1411,7 @@ function browseUploaded($kunena_db, $option, $type)
             //if( preg_match('/(\.gif$|\.png$|\.jpg|\.jpeg)$/is', $file) )
             //{
             $uploaded[$uploaded_col_count] = $file;
-            $uploaded_name[$uploaded_col_count] = ucfirst(str_replace("_", " ", preg_replace('/^(.*)\..*$/', '\1', $file)));
+            $uploaded_name[$uploaded_col_count] = JString::ucfirst(str_replace("_", " ", preg_replace('/^(.*)\..*$/', '\1', $file)));
             $uploaded_col_count++;
   			//}
         }
@@ -1449,7 +1449,7 @@ function replaceImage($kunena_db, $option, $imageName, $OxP)
     	//remove the database link as well
     	if ($ret) {
 			$kunena_db->setQuery("DELETE FROM #__fb_attachments where filelocation='%/images/" . $imageName . "'");
-			$kunena_db->query() or trigger_dberror("Unable to delete attachment.");
+			$kunena_db->query() or check_dberror("Unable to delete attachment.");
     	}
     }
     if ($ret) $kunena_app->enqueueMessage(_KUNENA_IMGDELETED);
@@ -1473,7 +1473,7 @@ function deleteFile($kunena_db, $option, $fileName)
     //step 2: remove the database link to the file
     if ($ret) {
     	$kunena_db->setQuery("DELETE FROM #__fb_attachments where filelocation='%/files/" . $fileName . "'");
-    	$kunena_db->query() or trigger_dberror("Unable to delete attachment.");
+    	$kunena_db->query() or check_dberror("Unable to delete attachment.");
     }
     if ($ret) $kunena_app->enqueueMessage(_KUNENA_FILEDELETED);
     $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=browseFiles");
@@ -1536,7 +1536,7 @@ function showCategories($cat, $cname, $extras = "", $levellimit = "4")
     {
         if ($this_treename)
         {
-            if ($item->id != $mitems && strpos($item->treename, $this_treename) === false) {
+            if ($item->id != $mitems && JString::strpos($item->treename, $this_treename) === false) {
                 $mitems[] = JHTML::_('select.option',$item->id, $item->treename);
             }
         }
@@ -1765,7 +1765,7 @@ function savesmiley($option, $id = NULL)
     	$kunena_db->setQuery("UPDATE #__fb_smileys SET code = '$smiley_code', location = '$smiley_location', emoticonbar = '$smiley_emoticonbar' WHERE id = $id");
     }
 
-    $kunena_db->query() or trigger_dberror("Unable to save smiley.");
+    $kunena_db->query() or check_dberror("Unable to save smiley.");
 
     $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=showsmilies", _KUNENA_SMILEY_SAVED);
 }
@@ -1777,7 +1777,7 @@ function deletesmiley($option, $cid)
 
 	if ($cids = implode(',', $cid)) {
 		$kunena_db->setQuery("DELETE FROM #__fb_smileys WHERE id IN ($cids)");
-		$kunena_db->query() or trigger_dberror("Unable to delete smiley.");
+		$kunena_db->query() or check_dberror("Unable to delete smiley.");
 	}
 
     $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=showsmilies", _KUNENA_SMILEY_DELETED);
@@ -1785,11 +1785,11 @@ function deletesmiley($option, $cid)
 
 function smileypath()
 {
-	$fbConfig =& CKunenaConfig::getInstance();
+	$kunena_config =& CKunenaConfig::getInstance();
 
-	if (is_dir(KUNENA_PATH_TEMPLATE .DS. $fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/emoticons')) {
-        $smiley_live_path = JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/emoticons/';
-        $smiley_abs_path = KUNENA_PATH_TEMPLATE .DS. $fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/emoticons';
+	if (is_dir(KUNENA_PATH_TEMPLATE .DS. $kunena_config->template.'/images/'.KUNENA_LANGUAGE.'/emoticons')) {
+        $smiley_live_path = JURI::root() . '/components/com_kunena/template/'.$kunena_config->template.'/images/'.KUNENA_LANGUAGE.'/emoticons/';
+        $smiley_abs_path = KUNENA_PATH_TEMPLATE .DS. $kunena_config->template.'/images/'.KUNENA_LANGUAGE.'/emoticons';
     }
     else {
         $smiley_live_path = KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'images/'.KUNENA_LANGUAGE.'/emoticons/';
@@ -1867,11 +1867,11 @@ function showRanks($option)
 function rankpath()
 {
 /*
-	$fbConfig =& CKunenaConfig::getInstance();
+	$kunena_config =& CKunenaConfig::getInstance();
 
-    if (is_dir(JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/ranks')) {
-        $rank_live_path = JURI::root() . '/components/com_kunena/template/'.$fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/ranks/';
-        $rank_abs_path = 	KUNENA_PATH_TEMPLATE .DS. $fbConfig->template.'/images/'.KUNENA_LANGUAGE.'/ranks';
+    if (is_dir(JURI::root() . '/components/com_kunena/template/'.$kunena_config->template.'/images/'.KUNENA_LANGUAGE.'/ranks')) {
+        $rank_live_path = JURI::root() . '/components/com_kunena/template/'.$kunena_config->template.'/images/'.KUNENA_LANGUAGE.'/ranks/';
+        $rank_abs_path = 	KUNENA_PATH_TEMPLATE .DS. $kunena_config->template.'/images/'.KUNENA_LANGUAGE.'/ranks';
     }
     else {
         $rank_live_path = JURI::root() . '/components/com_kunena/template/default/images/'.KUNENA_LANGUAGE.'/ranks/';
@@ -1937,7 +1937,7 @@ function deleteRank($option, $cid = null)
 
 	if ($cids = implode(',', $cid)) {
 		$kunena_db->setQuery("DELETE FROM #__fb_ranks WHERE rank_id IN ($cids)");
-		$kunena_db->query() or trigger_dberror("Unable to delete rank.");
+		$kunena_db->query() or check_dberror("Unable to delete rank.");
 	}
 
     $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=ranks", _KUNENA_RANK_DELETED);
@@ -1961,7 +1961,7 @@ function saveRank($option, $id = NULL)
     }
 
     $kunena_db->setQuery("SELECT * FROM #__fb_ranks");
-    $kunena_db->query() or trigger_dberror("Unable to load ranks.");
+    $kunena_db->query() or check_dberror("Unable to load ranks.");
 
     $ranks = $kunena_db->loadAssocList();
     foreach ($ranks as $value)
@@ -1982,7 +1982,7 @@ function saveRank($option, $id = NULL)
     {
     	$kunena_db->setQuery("UPDATE #__fb_ranks SET rank_title = '$rank_title', rank_image = '$rank_image', rank_special = '$rank_special', rank_min = '$rank_min' WHERE rank_id = $id");
     }
-    $kunena_db->query() or trigger_dberror("Unable to save ranks.");
+    $kunena_db->query() or check_dberror("Unable to save ranks.");
 
     $kunena_app->redirect( JURI::base() ."index.php?option=$option&task=ranks", _KUNENA_RANK_SAVED);
 }
@@ -1992,7 +1992,7 @@ function editRank($option, $id)
     $kunena_db = &JFactory::getDBO();
 
 	$kunena_db->setQuery("SELECT * FROM #__fb_ranks WHERE rank_id = '$id'");
-    $kunena_db->query() or trigger_dberror("Unable to load ranks.");
+    $kunena_db->query() or check_dberror("Unable to load ranks.");
 
 	$ranks = $kunena_db->loadObjectList();
 	        check_dberror("Unable to load ranks.");
@@ -2020,7 +2020,7 @@ function editRank($option, $id)
 				$selected = '';
 			}
 
-			if (strlen($img) > 255)
+			if (JString::strlen($img) > 255)
 			{
 				continue;
 			}
@@ -2045,7 +2045,7 @@ function KUNENA_GetAvailableModCats($catids) {
 
     foreach ($list as $item) {
         if ($this_treename) {
-            if ($item->id != $catid && strpos($item->treename, $this_treename) === false) {
+            if ($item->id != $catid && JString::strpos($item->treename, $this_treename) === false) {
                 $options[] = JHTML::_('select.option',$item->id, $item->treename);
                 }
             }
@@ -2070,7 +2070,7 @@ function KUNENA_GetAvailableModCats($catids) {
     return;
   }
 
-  $phpver = substr(phpversion(), 0, 3);
+  $phpver = JString::substr(phpversion(), 0, 3);
   // gd_info came in at 4.3
   if ($phpver < 4.3)
     return -1;

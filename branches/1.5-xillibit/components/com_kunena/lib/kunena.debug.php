@@ -64,7 +64,7 @@ function check_dberror($text='', $back=0)
 	$kunena_db = &JFactory::getDBO();
 	if ($kunena_db->getErrorNum() != 0)
 	{
-		trigger_dberror($text, $back+1);
+		check_dberror($text, $back+1);
 	}
 }
 
@@ -73,7 +73,7 @@ function check_dbwarning($text='')
 	$kunena_db = &JFactory::getDBO();
 	if ($kunena_db->getErrorNum() != 0)
 	{
-		trigger_dbwarning($text);
+		check_dbwarning($text);
 	}
 }
 
@@ -106,13 +106,13 @@ function debug_vars($varlist)
 				    else if (is_object($svalue))
 				    {
 				    	$objvarlist = get_object_vars($svalue);
- 
+
 				    	// recursive function call
 				    	debug_vars($objvarlist);
 				    }
 				    else
 				    {
-				    	$dberror = ($svalue == "trigger_dberror");
+				    	$dberror = ($svalue == "check_dberror");
 						$output .= '<tr><td>$' . $skey .'</td><td>"'. $svalue .'"</td></tr>';
 				    }
 		        }

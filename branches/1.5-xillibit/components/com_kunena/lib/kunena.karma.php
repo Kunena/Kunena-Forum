@@ -22,7 +22,21 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $kunena_config =& CKunenaConfig::getInstance();
-global $kunena_is_moderator, $do, $kunena_db, $userid;
+$kunena_db = &JFactory::getDBO();
+
+$do = JRequest::getCmd ( 'do', '' );
+$userid = JRequest::getInt ( 'userid', 0 );
+$pid = JRequest::getInt ( 'pid', 0 );
+
+if ($pid) {
+	$kunena_db->setQuery("SELECT catid, thread FROM #__fb_messages WHERE id='{$pid}'");
+	$kmsg = $kunena_db->loadObject();
+	check_dberror("Unable to load message.");
+	if (is_object($kmsg)) {
+		$catid = $kmsg->catid;
+		$thread = $kmsg->thread;
+	}
+}
 
 //Modify this to change the minimum time between karma modifications from the same user
 $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
@@ -34,10 +48,6 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
             <br>
             <center>
                 <?php
-                //I hope these are needed :)
-                $catid = (int)$catid;
-                $pid = (int)$pid;
-
                 //This checks:
                 // - if the karma function is activated by the admin
                 // - if a registered user submits the modify request
@@ -50,39 +60,43 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                     if ($kunena_my->id != $userid)
                     {
                         // This checkes to see if it's not too soon for a new karma change
-                        if (!$kunena_is_moderator)
+                        if (!CKunenaTools::isModerator($kunena_my->id, $catid))
                         {
                             $kunena_db->setQuery("SELECT karma_time FROM #__fb_users WHERE userid='{$kunena_my->id}'");
                             $karma_time_old = $kunena_db->loadResult();
                             $karma_time_diff = $time - $karma_time_old;
                         }
 
-                        if ($kunena_is_moderator || $karma_time_diff >= $karma_min_seconds)
+                        if (CKunenaTools::isModerator($kunena_my->id, $catid) || $karma_time_diff >= $karma_min_seconds)
                         {
                             if ($do == "increase")
                             {
                                 $kunena_db->setQuery('UPDATE #__fb_users SET karma_time=' . $time . ' WHERE userid=' . $kunena_my->id . '');
-							    $kunena_db->query() or trigger_dberror("Unable to update karma.");
+							    $kunena_db->query() or check_dberror("Unable to update karma.");
 							    $kunena_db->setQuery('UPDATE #__fb_users SET karma=karma+1 WHERE userid=' . $userid . '');
-							    $kunena_db->query() or trigger_dberror("Unable to update karma.");
-							    echo _KARMA_INCREASED . '<br /> <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
+							    $kunena_db->query() or check_dberror("Unable to update karma.");
+							    echo _KARMA_INCREASED . '<br />';
 								if ($pid) {
+									echo CKunenaLink::GetThreadLink('view', $catid, $pid, _POST_CLICK, _POST_CLICK);
                                 	echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&id='.$pid), 3500);
 								} else {
+									echo CKunenaLink::GetProfileLink(null, $userid, _POST_CLICK);
                                 	echo CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetProfileURL($userid), 3500);
                                 }
                             }
                             else if ($do == "decrease")
                             {
                                 $kunena_db->setQuery('UPDATE #__fb_users SET karma_time=' . $time . ' WHERE userid=' . $kunena_my->id . '');
-                                $kunena_db->query() or trigger_dberror("Unable to update karma.");
+                                $kunena_db->query() or check_dberror("Unable to update karma.");
                                 $kunena_db->setQuery('UPDATE #__fb_users SET karma=karma-1 WHERE userid=' . $userid . '');
-                                $kunena_db->query() or trigger_dberror("Unable to update karma.");
-                                echo _KARMA_DECREASED . '<br /> <a href="' . JRoute::_(KUNENA_LIVEURLREL. '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
+                                $kunena_db->query() or check_dberror("Unable to update karma.");
+                                echo _KARMA_DECREASED . '<br />';
 								if ($pid) {
+									echo CKunenaLink::GetThreadLink('view', $catid, $pid, _POST_CLICK, _POST_CLICK);
                                 	echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&id='.$pid), 3500);
 								} else {
-                                	echo CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetProfileURL($userid), 3500);
+									echo CKunenaLink::GetProfileLink(null, $userid, _POST_CLICK);
+									echo CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetProfileURL($userid), 3500);
                                 }
                             }
                             else
@@ -100,14 +114,14 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                         if ($do == "increase")   // Seriously decrease his karma if he tries to increase it
                         {
                             $kunena_db->setQuery('UPDATE #__fb_users SET karma=karma-10, karma_time=' . $time . ' WHERE userid=' . $kunena_my->id . '');
-                            $kunena_db->query() or trigger_dberror("Unable to update karma.");
+                            $kunena_db->query() or check_dberror("Unable to update karma.");
 							echo _KARMA_SELF_INCREASE . '<br />' . _KARMA_BACK . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
                         }
 
                         if ($do == "decrease") // Stop him from decreasing his karma but still update karma_time
                         {
                             $kunena_db->setQuery('UPDATE #__fb_users SET karma_time=' . $time . ' WHERE userid=' . $kunena_my->id . '');
-                            $kunena_db->query() or trigger_dberror("Unable to update karma.");
+                            $kunena_db->query() or check_dberror("Unable to update karma.");
                             echo _KARMA_SELF_DECREASE . '<br /> ' . _KARMA_BACK . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
                         }
                     }

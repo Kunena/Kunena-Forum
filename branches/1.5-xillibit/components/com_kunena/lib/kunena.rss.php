@@ -24,15 +24,13 @@ defined( '_JEXEC' ) or die('Restricted access');
 // Kunena wide defines
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 
-global $kunena_my;
-
 $kunena_app =& JFactory::getApplication();
 $kunena_config =& CKunenaConfig::getInstance();
 $kunena_db = &JFactory::getDBO();
 
 $hours = 0;
 
-switch (strtolower($kunena_config->rsshistory))
+switch (JString::strtolower($kunena_config->rsshistory))
 {
 	case 'month':
 		$hours = 720;

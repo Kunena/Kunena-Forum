@@ -17,7 +17,6 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $kunena_config =& CKunenaConfig::getInstance();
-global $kunena_is_moderator;
 
 // Team credits page is not translated
 

@@ -19,7 +19,7 @@
 # FILENAME: kunena.parser.base.php                                                 #
 # AUTOR:    Miro Dietiker, MD Systems, All rights reserved                 #
 # LICENSE:  http://www.gnu.org/copyleft/gpl.html GNU/GPL                   #
-# CONTACT: m.dietiker@md-systems.ch        © 2007 Miro Dietiker 13.11.2007 #
+# CONTACT: m.dietiker@md-systems.ch        ï¿½ 2007 Miro Dietiker 13.11.2007 #
 ############################################################################
 # This parser is based on an earlier CMS parser implementation.
 # It has been completely rewritten and generalized for Kunena and
@@ -63,20 +63,6 @@ define('TAGPARSER_RET_RECURSIVE', 2);
 
 # is_a >PHP4.2.0
 
-$GLOBALS['microtime_total'] = 0;
-$GLOBALS['microtime_prev'] = 0;
-function microtime_float() {
-    list($usec, $sec) = explode(" ", microtime());
-    $newtime = ((float)$usec + (float)$sec);
-    if($GLOBALS['microtime_prev']) {
-        $GLOBALS['microtime_total'] += ($newtime-$GLOBALS['microtime_prev']);
-        //echo 'T:'.$GLOBALS['microtime_total'].',d:'.($newtime-$GLOBALS['microtime_prev']);
-        //echo ":<br>\n";
-    }
-    $GLOBALS['microtime_prev'] = $newtime;
-}
-
-
 class TagParser {
     # main parser class
 
@@ -87,7 +73,6 @@ class TagParser {
     function Parse(&$task) {
         # Parses Text for tag-based transformation of task text
         # remove=1 -> Remove Tags with illegal Content
-        microtime_float();
         // fast access
         $interpreter =& $task->interpreter;
         $skip = $task->dry;
@@ -102,10 +87,9 @@ class TagParser {
         $st =& $task->st;
         $st = Array(); $sti = 0; // stackarr and TopPositionOfStack
         // scan for candidate of tag
-        $textlen = strlen($text);
+        $textlen = JString::strlen($text);
 	$pos = 0;
         while($pos<$textlen) {
-            microtime_float();
             // next tag candidate
             if($interpreter->ParseNext($task)!==TAGPARSER_RET_OK) {
                 break; // terminate event
@@ -155,12 +139,12 @@ class TagParser {
             $textnew = '';
             if(!$skip
             && ($task->interpreter->Encode($textnew, $task
-            , substr($text, $pos_encode_last, $encode_len), 'text')
+            , JString::substr($text, $pos_encode_last, $encode_len), 'text')
             !==TAGPARSER_RET_NOTHING)) {
                 // Replaced
-                $encode_diff = strlen($textnew)-$encode_len;
-                $text = substr($text, 0, $pos_encode_last)
-                .$textnew.substr($text, $tag_start);
+                $encode_diff = JString::strlen($textnew)-$encode_len;
+                $text = JString::substr($text, 0, $pos_encode_last)
+                .$textnew.JString::substr($text, $tag_start);
                 $tag->Offset($encode_diff);
                 $tag_start += $encode_diff;
                 $tag_end += $encode_diff;
@@ -202,7 +186,7 @@ class TagParser {
                     unset($err); //opt
                     if($remove) {
                         // remove tag, continue on prev tagstart
-                        $text = substr($text, 0, $tag_start).substr($text, $tag_end+1);
+                        $text = JString::substr($text, 0, $tag_start).JString::substr($text, $tag_end+1);
                         $pos_act = $tag_start;
                     } else {
                         // tag wrong, linear encoding follows! continue parsing after
@@ -225,9 +209,9 @@ class TagParser {
                             continue;
                         }
                         // tag replacement
-                        $templen = strlen($tag_new)-$starttag_len;
-                        $text = substr($text, 0, $starttag->tag_start)
-                        .$tag_new.substr($text, $starttag->tag_end+1);
+                        $templen = JString::strlen($tag_new)-$starttag_len;
+                        $text = JString::substr($text, 0, $starttag->tag_start)
+                        .$tag_new.JString::substr($text, $starttag->tag_end+1);
                         // marks are always behind tag!
                         $tag->Offset($templen);
                         $tag_start += $templen;
@@ -269,24 +253,24 @@ class TagParser {
                     }
                     // length in between tags
                     $midlen = $tag_start-$starttag->tag_end-1;
-                    $text = substr($text, 0, $starttag->tag_start).$tag_new_start
-                    .substr($text, $starttag->tag_end+1, $midlen)
-                    .$tag_new_end.substr($text, $tag_end+1);
+                    $text = JString::substr($text, 0, $starttag->tag_start).$tag_new_start
+                    .JString::substr($text, $starttag->tag_end+1, $midlen)
+                    .$tag_new_end.JString::substr($text, $tag_end+1);
                     // To Starttag End
-                    $totallen = strlen($tag_new_start)+$midlen+strlen($tag_new_end);
+                    $totallen = JString::strlen($tag_new_start)+$midlen+JString::strlen($tag_new_end);
                     $pos_act = $starttag->tag_start+$totallen;
                     // linear encoding continue after
                     $pos_encode_last = $pos_act;
                     unset($midlen, $totallen); //opt
                 } else if($task->interpreter->TagExtended($tag_new, $task, $starttag,
-                substr($text, $starttag->tag_end+1, $tag_start-$starttag->tag_end-1))
+                JString::substr($text, $starttag->tag_end+1, $tag_start-$starttag->tag_end-1))
                 !==TAGPARSER_RET_NOTHING) {
                     if($skip) {
                         continue;
                     }
-                    $text = substr($text, 0, $starttag->tag_start)
-                    .$tag_new.substr($text, $tag_end+1);
-                    $templen = strlen($tag_new);
+                    $text = JString::substr($text, 0, $starttag->tag_start)
+                    .$tag_new.JString::substr($text, $tag_end+1);
+                    $templen = JString::strlen($tag_new);
                     // linear encoding continue after
                     $pos_encode_last = $pos_act = $starttag->tag_start+$templen;
                     unset($templen); //opt
@@ -313,13 +297,13 @@ class TagParser {
                     if($skip) {
                         continue;
                     }
-                    $text = substr($text, 0, $tag_start).$tag_new.substr($text, $tag_end+1);
+                    $text = JString::substr($text, 0, $tag_start).$tag_new.JString::substr($text, $tag_end+1);
                     if($kind==TAGPARSER_RET_RECURSIVE) {
                         // recursive parsing possible, start from prev tagposition!
                         $pos_act = $tag_start;
                         $pos_encode_last = $pos_act;
                     } else {
-                        $templen = strlen($tag_new);
+                        $templen = JString::strlen($tag_new);
                         // NONrecursive parsing
                         $pos_act = $tag_start+$templen; // parse continue after
                         $pos_encode_last = $pos_act; // linear encoding continue after
@@ -337,9 +321,9 @@ class TagParser {
         // encode last linear part
         $textnew = '';
         if(!$skip
-        && ($task->interpreter->Encode($textnew, $task, substr($text, $pos_encode_last), 'text')
+        && ($task->interpreter->Encode($textnew, $task, JString::substr($text, $pos_encode_last), 'text')
         !==TAGPARSER_RET_NOTHING)) {
-            $text = substr($text, 0, $pos_encode_last).$textnew;
+            $text = JString::substr($text, 0, $pos_encode_last).$textnew;
         }
         unset($textnew); //opt
         // empty stack, stack should be empty
@@ -358,8 +342,8 @@ class TagParser {
                     continue;
                 }
                 // tag replacement
-                $text = substr($text, 0, $starttag->tag_start)
-                .$tag_new.substr($text, $starttag->tag_end+1);
+                $text = JString::substr($text, 0, $starttag->tag_start)
+                .$tag_new.JString::substr($text, $starttag->tag_end+1);
                 // no more marks tag_start ... pos_act
             } else {
                 // bad tag on stack
@@ -374,7 +358,6 @@ class TagParser {
             }
             unset($starttag, $starttag_len); //opt
         }
-        microtime_float();
 
         $task->interpreter->PostProcessing($task);
 
@@ -400,20 +383,20 @@ class TagParser {
             // Remove
             #echo 'DROP';
             #echo "\n";
-            $text = substr($text, 0, $tag_start)
-            .substr($text, $tag_end+1);
+            $text = JString::substr($text, 0, $tag_start)
+            .JString::substr($text, $tag_end+1);
             $offset = -$tag_len;
         } else {
             // encode tag with context
             $textnew = '';
             if($task->interpreter->Encode($textnew, $task
-            , substr($text, $tag_start, $tag_len)
+            , JString::substr($text, $tag_start, $tag_len)
             , 'tagremove.'.$context)
             !==TAGPARSER_RET_NOTHING) {
                 // Replaced
-                $text = substr($text, 0, $tag_start)
-                .$textnew.substr($text, $tag_end+1);
-                $offset = strlen($textnew)-$tag_len;
+                $text = JString::substr($text, 0, $tag_start)
+                .$textnew.JString::substr($text, $tag_end+1);
+                $offset = JString::strlen($textnew)-$tag_len;
             }
         }
         #echo "ROEE:".$task->text;
@@ -610,23 +593,6 @@ class ParserTask {
     }
 }
 
-class ParserRun {
-    # UNUSED, should be inside Parse() instead of $task
-    # A single run of the parser function
-    # encapsulating the run information instead of the resulting persistent object
-    var $task = null;
-    // stack ERROR REALLY?
-    var $st = array();
-    // scan states
-    var $pos_act = 0;
-    // encode as soon as a matching tag is executed
-    var $pos_encode_last = 0;
-
-    function ParserRun($task) {
-        $this->task = $task;
-    }
-}
-
 class ParserEvent {
     # A ParserEvent happens on TagInterpreter::ParseTag
     var $tag_start = NULL;
@@ -679,14 +645,14 @@ class ParserErrorContext {
         // keep in mind, pos is after encoding, not input related!
         $this->pos = $task->pos_act;
         // pos -errtext_neg +errtext_pos
-        $this->text = substr($task->text, $task->pos_act-10, $task->pos_act+20);
+        $this->text = JString::substr($task->text, $task->pos_act-10, $task->pos_act+20);
         // snip bigger and store real pos?
         // tag
         if($tag!==NULL) {
             $this->tag = $tag;
             $this->pos = $tag->tag_start;
             $tag_len = $tag->tag_end-$tag->tag_start+1;
-            $this->text = substr($task->text, $tag->tag_start, $tag_len);
+            $this->text = JString::substr($task->text, $tag->tag_start, $tag_len);
             // snip bigger and store real pos?
         }
         // input counters instead of output counters?!

@@ -58,48 +58,25 @@ class fbpdfwrapper {
 	}
 }
 
-function dofreePDF($kunena_db)
+function dofreePDF()
 {
-    global $aro_group, $kunena_is_admin;
-
     $kunena_app =& JFactory::getApplication();
-
+	$kunena_db  = &JFactory::getDBO();
     $kunena_acl = &JFactory::getACL();
     $kunena_my = &JFactory::getUser();
+    $kunena_is_admin = CKunenaTools::isAdmin();
     $kunena_config =& CKunenaConfig::getInstance();
 
-    require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
-    $is_Mod = 0;
+    $catid = JRequest::getInt('catid', 0);
+	$id = JRequest::getInt('id', 0);
 
-    $catid = JRequest::getInt('catid', 2);
+	require_once (KUNENA_PATH_LIB . DS . 'kunena.session.class.php');
+    $kunena_session =& CKunenaSession::getInstance(true);
+    $kunena_session->updateAllowedForums ( $kunena_my->id );
+	$allow_forum = ($kunena_session->allowed <> '')?explode(',', $kunena_session->allowed):array();
 
-    if (!$kunena_is_admin)
+	if (in_array($catid, $allow_forum) && $id)
     {
-        $kunena_db->setQuery("SELECT userid FROM #__fb_moderation WHERE catid='{$catid}' AND userid='{$kunena_my->id}'");
-
-        if ($kunena_db->loadResult()) {
-            $is_Mod = 1;
-        }
-    }
-    else {
-        $is_Mod = 1;
-    } //superadmins always are
-
-    if (!$is_Mod)
-    {
-        //get all the info on this forum:
-        $kunena_db->setQuery("SELECT id, pub_access, pub_recurse, admin_access, admin_recurse FROM #__fb_categories WHERE id='{$catid}'");
-        $row = $kunena_db->loadObjectList();
-                check_dberror("Unable to load category detail.");
-
-
-        $allow_forum = explode(',', CKunenaTools::getAllowedForums($kunena_my->id, $aro_group->id, $kunena_acl));
-    }
-
-	if ($is_Mod || in_array($catid, $allow_forum))
-    {
-        $id = JRequest::getInt('id', 1);
-        $catid = JRequest::getInt('catid', 2);
         //first get the thread id for the current post to later on determine the parent post
         $kunena_db->setQuery("SELECT thread FROM #__fb_messages WHERE id='{$id}' AND catid='{$catid}'");
         $threadid = $kunena_db->loadResult();
@@ -218,5 +195,5 @@ function get_php_setting($val)
     return $r ? 'ON' : 'OFF';
 }
 
-dofreePDF ($kunena_db);
+dofreePDF();
 ?>

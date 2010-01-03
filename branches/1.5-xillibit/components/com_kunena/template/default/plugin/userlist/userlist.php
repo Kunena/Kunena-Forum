@@ -71,8 +71,11 @@ function list_users()
 
     if ($search != "")
     {
-        $query .= " WHERE (name LIKE '%$search%' OR username LIKE '%$search%')";
+        $query .= " WHERE (name LIKE '%$search%' OR username LIKE
+'%$search%') AND u.id NOT IN (62)";
         $query_ext .= "&amp;search=" . $search;
+    } else {
+        $query .= " WHERE u.id NOT IN (62)";
     }
 
     $query .= " ORDER BY $orderby $direction, id $direction";
@@ -114,7 +117,6 @@ class HTML_userlist_content
 {
     function showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search = "")
     {
-    	global $kunena_is_moderator;
 		global $kunena_emoticons;
 
 		$kunena_app =& JFactory::getApplication();
@@ -368,10 +370,7 @@ class HTML_userlist_content
 
                                 // Avatar
                                 $uslavatar = '';
-                                if ($kunena_config->avatar_src == "clexuspm") {
-                                    $uslavatar = '<img  border="0" class="usl_avatar" src="' . MyPMSTools::getAvatarLinkWithID($ulrow->id, "s") . '" alt="" />';
-                                }
-                                else if ($kunena_config->avatar_src == "cb")
+                                if ($kunena_config->avatar_src == "cb")
                                 {
                                 	$kunenaProfile =& CKunenaCBProfile::getInstance();
 									$uslavatar = $kunenaProfile->showAvatar($ulrow->id);
@@ -440,7 +439,7 @@ class HTML_userlist_content
 
                                         <td class = "td-3" align="center">
                                       <?php
-                                      if(strlen($uslavatar)) {
+                                      if(JString::strlen($uslavatar)) {
 						echo CKunenaLink::GetProfileLink($kunena_config, $ulrow->id, $uslavatar);
                                       }
                                       else { echo '&nbsp;'; }

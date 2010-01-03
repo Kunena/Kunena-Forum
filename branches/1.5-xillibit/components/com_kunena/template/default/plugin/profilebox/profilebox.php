@@ -26,20 +26,19 @@ $kunena_config =& CKunenaConfig::getInstance();
 $kunena_my = &JFactory::getUser();
 $kunena_db = &JFactory::getDBO();
 //first we gather some information about this person
-$kunena_db->setQuery("SELECT su.view, u.name, u.username, su.moderator, su.avatar FROM #__fb_users AS su"
+$kunena_db->setQuery("SELECT su.view, u.name, u.username, su.avatar FROM #__fb_users AS su"
                     . " LEFT JOIN #__users AS u on u.id=su.userid WHERE su.userid={$kunena_my->id}", 0, 1);
 
 $_user = $kunena_db->loadObject();
 $Itemid = JRequest::getInt('Itemid');
 
-$fbavatar = NULL;
+$this->kunena_avatar = NULL;
 if ($_user != NULL)
 {
 	$prefview = $_user->view;
-	if ($kunena_config->username) $username = $_user->username; // externally used  by fb_pathway, myprofile_menu
-	else $username = $_user->name;
-	$moderator = $_user->moderator;
-	$fbavatar = $_user->avatar;
+	if ($kunena_config->username) $this->kunena_username = $_user->username; // externally used  by fb_pathway, myprofile_menu
+	else $this->kunena_username = $_user->name;
+	$this->kunena_avatar = $_user->avatar;
 }
 
 $jr_avatar = '';
@@ -48,10 +47,6 @@ if ($kunena_config->avatar_src == "jomsocial")
 	// Get CUser object
 	$jsuser =& CFactory::getUser($kunena_my->id);
     $jr_avatar = '<img src="' . $jsuser->getThumbAvatar() . '" alt=" " />';
-}
-else if ($kunena_config->avatar_src == "clexuspm")
-{
-    $jr_avatar = '<img src="' . MyPMSTools::getAvatarLinkWithID($kunena_my->id) . '" alt=" " />';
 }
 else if ($kunena_config->avatar_src == "cb")
 {
@@ -68,11 +63,11 @@ else if ($kunena_config->avatar_src == "aup") // integration AlphaUserPoints
 }
 else
 {
-    if ($fbavatar != "") {
-		if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $fbavatar)) {
-            $jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/' . $fbavatar . '" alt=" " style="max-width: '.$kunena_config->avatarsmallwidth.'px; max-height: '.$kunena_config->avatarsmallheight.'px;" />';
+    if ($this->kunena_avatar != "") {
+		if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $this->kunena_avatar)) {
+            $jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/' . $this->kunena_avatar . '" alt=" " style="max-width: '.$kunena_config->avatarsmallwidth.'px; max-height: '.$kunena_config->avatarsmallheight.'px;" />';
 		} else {
-		  $jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_' . $fbavatar . '" alt=" " />';
+		  $jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_' . $this->kunena_avatar . '" alt=" " />';
 		}
     }
     else {
@@ -85,9 +80,6 @@ else
 if ($kunena_config->fb_profile == "cb" || $kunena_config->fb_profile == "jomsocial")
 {
     $jr_profilelink = CKunenaLink::GetProfileLink($kunena_config, $kunena_my->id, _PROFILEBOX_MYPROFILE);
-}
-else if ($kunena_config->fb_profile == "clexuspm") {
-    $jr_profilelink = '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
 }
 else
 {
@@ -133,7 +125,7 @@ if ($kunena_my->id)
                 </td>
 
                 <td valign = "top" class = "td-2  fbm fb_profileboxcnt" align="left">
-<?php echo _PROFILEBOX_WELCOME; ?>, <b><?php echo $username; ?></b>
+<?php echo _PROFILEBOX_WELCOME; ?>, <b><?php echo $this->kunena_username; ?></b>
 
                 <br />
 

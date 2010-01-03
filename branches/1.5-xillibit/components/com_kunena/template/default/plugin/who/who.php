@@ -77,7 +77,7 @@ if ($kunena_config->showwhoisonline > 0)
 
                 if ($user->userid == 0) {
                     $user->username = _KUNENA_GUEST;
-                } else if ($user->showOnline < 1 && !$kunena_is_moderator) {
+                } else if ($user->showOnline < 1 && !CKunenaTools::isModerator($kunena_my->id)) {
                 	continue;
                 }
 
@@ -104,7 +104,7 @@ if ($kunena_config->showwhoisonline > 0)
                         </span>
 
                         <?php
-                        if ($kunena_is_moderator)
+                        if (CKunenaTools::isModerator($kunena_my->id))
                         {
                         ?>
 

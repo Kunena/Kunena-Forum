@@ -62,9 +62,9 @@ $kunena_db = &JFactory::getDBO();
 			jimport('joomla.html.pagination');
 			$pageNav = new JPagination($total, $limitstart, $limit);
 
-			if ($cfavslist > 0)
+			if ($this->kunena_cfavslist > 0)
 			{
-				foreach ($favslist as $favs)
+				foreach ($this->kunena_favslist as $favs)
 				{ //get all message details for each favorite
 					$kunena_db->setQuery("SELECT * FROM #__fb_messages WHERE id='{$favs->thread}'");
 					$favdet = $kunena_db->loadObjectList();

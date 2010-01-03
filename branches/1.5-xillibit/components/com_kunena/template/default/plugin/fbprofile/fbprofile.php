@@ -33,7 +33,6 @@ $document->setTitle(_KUNENA_USERPROFILE_PROFILE . ' - ' . stripslashes($kunena_c
 
 if ($kunena_my->id) //registered only
 {
-    require_once(KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
     require_once(KUNENA_PATH_LIB .DS. 'kunena.statsbar.php');
 
     $task = JRequest::getCmd('task', 'showprf');
@@ -75,9 +74,7 @@ function showprf($userid, $page)
 		echo '<h3>' . _KUNENA_PROFILE_NO_USER . '</h3>';
 		return;
 	} else {
-		// Check moderator status (admin is moderator)
-		$aro_group = $kunena_acl->getAroGroup($userid);
-		$kunena_is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
+		$kunena_is_admin = CKunenaTools::isAdmin();
 
 		// there's no profile; set userid and moderator status.
 		$kunena_db->setQuery("INSERT INTO #__fb_users (userid,moderator) VALUES ('$userid','$kunena_is_admin')");
@@ -98,7 +95,7 @@ function showprf($userid, $page)
 
 	// User Hits
 	$kunena_db->setQuery('UPDATE #__fb_users SET uhits=uhits+1 WHERE userid='.$userid);
-	$kunena_db->query() or trigger_dberror("Unable to update user hits.");
+	$kunena_db->query() or check_dberror("Unable to update user hits.");
 
 	// get userprofile hits
 	$msg_html->userhits = $userinfo->uhits;
@@ -118,7 +115,6 @@ function showprf($userid, $page)
     $lists["userid"] = $userid;
 
 	$msg_html->username = $fb_username;
-    // $msg_html->username = ($fmessage->email != "" && $kunena_my->id > 0 && $kunena_config->showemail == '1') ? "<a href=\"mailto:" . $fmessage->email . "\">" . $fb_username . "</a>" : $fb_username;
 
     if ($kunena_config->allowavatar)
     {
@@ -130,9 +126,6 @@ function showprf($userid, $page)
 			$user =& CFactory::getUser($userid);
 		    $msg_html->avatar = '<span class="fb_avatar"><img src="' . $user->getAvatar() . '" alt="" /></span>';
 		}
-        else if ($kunena_config->avatar_src == "clexuspm") {
-            $msg_html->avatar = '<span class="fb_avatar"><img src="' . MyPMSTools::getAvatarLinkWithID($userid, "b") . '" alt="" /></span>';
-        }
         else if ($kunena_config->avatar_src == "cb")
         {
             $kunenaProfile = CKunenaCBProfile::getInstance();
@@ -173,22 +166,19 @@ function showprf($userid, $page)
         $uIsMod = 0;
         $uIsAdm = 0;
 
-        if ($ugid > 0) { //only get the groupname from the ACL if we're sure there is one
-            $agrp = strtolower($kunena_acl->get_group_name($ugid, 'ARO'));
-        }
-
         if ($ugid == 0) {
             $msg_html->usertype = _VIEW_VISITOR;
         }
         else
         {
-            if (strtolower($agrp) == "administrator" || strtolower($agrp) == "superadministrator" || strtolower($agrp) == "super administrator")
+            if (CKunenaTools::isAdmin())
             {
                 $msg_html->usertype = _VIEW_ADMIN;
                 $uIsAdm = 1;
             }
-            elseif ($uIsMod) {
+            elseif (CKunenaTools::isModerator($userinfo->id)) {
                 $msg_html->usertype = _VIEW_MODERATOR;
+                $uIsMod = 1;
             }
             else {
                 $msg_html->usertype = _VIEW_USER;
@@ -365,7 +355,7 @@ function showprf($userid, $page)
         //we should offer the user a PMS link
         //first get the username of the user to contact
         $PMSName = $userinfo->username;
-        $msg_html->pms = "<a href=\"" . JRoute::_('index.php?option=com_pms&amp;page=new&amp;id=' . $PMSName . '&title=' . $fmessage->subject) . "\"><img src=\"";
+        $msg_html->pms = "<a href=\"" . JRoute::_('index.php?option=com_pms&amp;page=new&amp;id=' . $PMSName . '&title=' . $this->kunena_message->subject) . "\"><img src=\"";
 
         if ($kunena_emoticons['pms']) {
             $msg_html->pms .= KUNENA_URLICONSPATH . $kunena_emoticons['pms'];
@@ -395,74 +385,6 @@ function showprf($userid, $page)
             $msg_html->online = isset($kunena_emoticons['offlineicon'])
                 ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
         }
-    }
-
-    /* ClexusPM integration */
-
-    if ($kunena_config->pm_component == "clexuspm")
-    {
-
-        //we should offer the user a PMS link
-
-        //first get the username of the user to contact
-
-        $PMSName = $userinfo->aid;
-        $msg_html->pms = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=new&amp;to=' . $userid . '' . $fmessage->subject) . "\"><img src=\"";
-
-        if ($kunena_emoticons['pms']) {
-            $msg_html->pms .= KUNENA_URLICONSPATH . $kunena_emoticons['pms'];
-        }
-        else {
-            $msg_html->pms .= KUNENA_JLIVEURL . "/components/com_mypms/images/icons/message_12px.gif";
-        }
-
-        $msg_html->pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
-        //mypms pro profile link
-        $msg_html->profile = "<a href=\"" . MyPMSTools::getProfileLink($userid) . "\"><img src=\"";
-
-        if ($kunena_emoticons['userprofile']) {
-            $msg_html->profile .= KUNENA_URLICONSPATH . $kunena_emoticons['userprofile'];
-        }
-        else {
-            $msg_html->profile .= KUNENA_JLIVEURL . "/components/com_mypms/images/managecontact_icon.gif";
-        }
-
-        $msg_html->profile .= "\" alt=\"" . _VIEW_PROFILE . "\" border=\"0\" title=\"" . _VIEW_PROFILE . "\" /></a>";
-        //mypms add buddy link
-        $msg_html->buddy = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;user=' . $PMSName . '&amp;task=addbuddy') . "\"><img src=\"";
-
-        if ($kunena_emoticons['pms2buddy']) {
-            $msg_html->buddy .= KUNENA_URLICONSPATH . $kunena_emoticons['pms2buddy'];
-        }
-        else {
-            $msg_html->buddy .= KUNENA_JLIVEURL . "/components/com_mypms/images/messages/addbuddy.gif";
-        }
-
-        $msg_html->buddy .= "\" alt=\"" . _VIEW_ADDBUDDY . "\" border=\"0\" title=\"" . _VIEW_ADDBUDDY . "\" /></a>";
-
-        $kunena_db->setQuery("SELECT icq, ym, msn, aim, website, location FROM #__mypms_profiles WHERE user='{$PMSName}'");
-        $profileitems = $kunena_db->loadObjectList();
-        	check_dberror("Unable to load mypms_profiles.");
-
-        foreach ($profileitems as $profileitems)
-        {
-            if ($profileitems->aim)
-                $msg_html->aim = "<a href=\"aim:goim?screenname=" . str_replace(" ", "+", $profileitems->aim) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "aim.png\" border=0 alt=\"\" /></a>";
-
-            if ($profileitems->icq)
-                $msg_html->icq = "<a href=\"http://www.icq.com/whitepages/wwp.php?uin=" . $profileitems->icq . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "icq.png\" border=0 alt=\"\" /></a>";
-
-            if ($profileitems->msn)
-                $msg_html->msn = "<a href=\"" . JRoute::_('index.php?option=com_mypms&amp;task=showprofile&amp;user=' . $PMSName) . "\"><img src=\"" . KUNENA_URLEMOTIONSPATH . "msn.png\" border=0 alt=\"\" /></a>";
-
-            if ($profileitems->ym)
-                $msg_html->yahoo = "<a href=\"http://edit.yahoo.com/config/send_webmesg?.target=" . $profileitems->ym . "&.src=pg\"><img src=\"http://opi.yahoo.com/online?u=" . $profileitems->ym . "&m=g&t=0\" border=0 alt=\"\" /></a>";
-
-            if ($profileitems->location)
-                $msg_html->loc = $profileitems->location;
-        }
-
-        unset($profileitems);
     }
 
     $jr_username = $userinfo->name;

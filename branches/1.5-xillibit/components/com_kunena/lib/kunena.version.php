@@ -68,7 +68,7 @@ class CKunenaVersion {
 				$kunenaversion->version = CKunenaVersion::versionXML();
 				$kunenaversion->versionname = 'NOT UPGRADED';
 			}
-			$kunenaversion->version = strtoupper($kunenaversion->version);
+			$kunenaversion->version = JString::strtoupper($kunenaversion->version);
 		}
 		return $kunenaversion;
 	}

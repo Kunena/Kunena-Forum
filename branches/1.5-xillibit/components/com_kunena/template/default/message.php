@@ -34,7 +34,7 @@ if ($kunena_config->fb_profile == 'cb')
 {
 	$msg_params = array(
 		'username' => &$msg_html->username,
-		'messageobject' => &$fmessage,
+		'messageobject' => &$this->kunena_message,
 		'subject' => &$msg_html->subject,
 		'messagetext' => &$msg_html->text,
 		'signature' => &$msg_html->signature,
@@ -43,7 +43,7 @@ if ($kunena_config->fb_profile == 'cb')
 		'karmaminus' => &$msg_html->karmaminus
 	);
 	$kunenaProfile =& CkunenaCBProfile::getInstance();
-	$profileHtml = $kunenaProfile->showProfile($fmessage->userid, $msg_params);
+	$profileHtml = $kunenaProfile->showProfile($this->kunena_message->userid, $msg_params);
 } else {
 	$profileHtml = null;
 }
@@ -69,9 +69,9 @@ if ($kunena_config->fb_profile == 'cb')
                         <td align = "left">
                             <?php
                             $msg_time_since = _KUNENA_TIME_SINCE;
-                            $msg_time_since = str_replace('%time%', time_since($fmessage->time, CKunenaTools::fbGetInternalTime()), $msg_time_since);
+                            $msg_time_since = str_replace('%time%', time_since($this->kunena_message->time, CKunenaTools::fbGetInternalTime()), $msg_time_since);
 
-                            if ($this->prevCheck < $fmessage->time && !in_array($fmessage->thread, $this->read_topics)) {
+                            if ($this->prevCheck < $this->kunena_message->time && !in_array($this->kunena_message->thread, $this->read_topics)) {
                                 $msgtitle = 'msgtitle_new';
                             } else {
                                 $msgtitle = 'msgtitle';
@@ -119,7 +119,7 @@ if ($kunena_config->fb_profile == 'cb')
                                     }
 
                                     //contruct the reply subject
-                                    $resubject = kunena_htmlspecialchars(strtolower(substr($msg_html->subject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? $msg_html->subject : _POST_RE .' '. $msg_html->subject);
+                                    $resubject = kunena_htmlspecialchars(JString::strtolower(JString::substr($msg_html->subject, 0, JString::strlen(_POST_RE))) == JString::strtolower(_POST_RE) ? $msg_html->subject : _POST_RE .' '. $msg_html->subject);
                                     ?>
 
                             <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL. '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
@@ -180,7 +180,7 @@ if ($kunena_config->fb_profile == 'cb')
 <?php
                         if ($userinfo->userid)
                         {
-                        	echo CKunenaLink::GetProfileLink($kunena_config, $fmessage->userid, $msg_html->username);
+                        	echo CKunenaLink::GetProfileLink($kunena_config, $this->kunena_message->userid, $msg_html->username);
                         }
                         else
                         {
@@ -193,28 +193,15 @@ if ($kunena_config->fb_profile == 'cb')
 ?>
                     <br/>
 <?php
-                        if ($fmessage->userid > 0)
+                        if ($this->kunena_message->userid > 0)
                         {
-                        	echo CKunenaLink::GetProfileLink($kunena_config, $fmessage->userid, $msg_html->avatar);
+                        	echo CKunenaLink::GetProfileLink($kunena_config, $this->kunena_message->userid, $msg_html->avatar);
                         }
                         else
                         {
                         	echo $msg_html->avatar;
                         }
 ?>
-
-				<?php
-                $gr_title = getFBGroupName($lists["userid"]);
-
-                if ($gr_title->id > 1)
-                {
-                ?>
-
-                    <span class = "view-group_<?php echo $gr_title->id;?>"> <?php echo $gr_title->title; ?></span>
-
-                <?php
-                }
-                ?>
 
 				<?php if (isset($msg_html->personal)) { ?>
                     <div class = "viewcover">
@@ -334,10 +321,10 @@ if ($kunena_config->fb_profile == 'cb')
 	<tr><td class = "fb-msgview-right-b" >
 		<div class="fb_message_editMarkUp_cover">
 <?php
-	if ($fmessage->modified_by) {
-		echo '<span class="fb_message_editMarkUp">'. _KUNENA_EDITING_LASTEDIT .': '. date(_DATETIME, $fmessage->modified_time) .' '. _KUNENA_BY .' '. CKunenaTools::whoisID($fmessage->modified_by) .'.';
-		if ($fmessage->modified_reason) {
-			echo _KUNENA_REASON .': '. kunena_htmlspecialchars(stripslashes($fmessage->modified_reason));
+	if ($this->kunena_message->modified_by) {
+		echo '<span class="fb_message_editMarkUp">'. _KUNENA_EDITING_LASTEDIT .': '. date(_DATETIME, $this->kunena_message->modified_time) .' '. _KUNENA_BY .' '. CKunenaTools::whoisID($this->kunena_message->modified_by) .'.';
+		if ($this->kunena_message->modified_reason) {
+			echo _KUNENA_REASON .': '. kunena_htmlspecialchars(stripslashes($this->kunena_message->modified_reason));
 		}
 		echo '</span>';
 	}
@@ -374,7 +361,7 @@ if ($kunena_config->fb_profile == 'cb')
                         echo " " . $msg_html->reply;
                         echo " " . $msg_html->quote;
 
-			if ($kunena_is_moderatorerator) echo ' </div><div class="fb_message_buttons_row">';
+						if (CKunenaTools::isModerator($kunena_my->id, $catid)) echo ' </div><div class="fb_message_buttons_row">';
 
                         if (isset($msg_html->merge)) {
                              echo " " . $msg_html->merge;
@@ -453,15 +440,15 @@ if (isset($msg_html->signature)) {
 </table>
 <!-- Begin: Message Module Positions -->
 <?php
-if (JDocumentHTML::countModules('kunena_msg_'.$mmm))
+if (JDocumentHTML::countModules('kunena_msg_'.$this->mmm))
 {
 ?>
-    <div class = "kunena_msg_<?php echo $mmm; ?>">
+    <div class = "kunena_msg_<?php echo $this->mmm; ?>">
         <?php
 	        $document	= &JFactory::getDocument();
 	        $renderer	= $document->loadRenderer('modules');
 	        $options	= array('style' => 'xhtml');
-	        $position	= 'kunena_msg_'.$mmm;
+	        $position	= 'kunena_msg_'.$this->mmm;
 	        echo $renderer->render($position, $options, null);
         ?>
     </div>
@@ -469,43 +456,3 @@ if (JDocumentHTML::countModules('kunena_msg_'.$mmm))
 }
 ?>
 <!-- Finish: Message Module Positions -->
-<?php
-// --------------------------------------------------------------
-//  Legend to the variables used
-// --------------------------------------------------------------
-// $msg_html->id          = Message ID#
-// $msg_html->username    = Username (with email link if enabled)
-// $msg_html->avatar      = User Avatar
-// $msg_html->usertype    = User Type (Visitor/Member/moderator/Admin)
-// $msg_html->userrank    = User Rank
-// $msg_html->userrankimg = User Rank Image
-// $msg_html->posts       = Post Count
-// $msg_html->karma       = Karma Points
-// $msg_html->karmaplus   = Linked Image for Karma+
-// $msg_html->karmaminus  = Linked Image for Karma-
-// $msg_html->ip          = IP of Poster
-// $msg_html->ip_link     = Link to look up IP of Poster
-// $msg_html->date        = Date of Post
-// $msg_html->subject     = Post Subject
-// $msg_html->text        = Post Text
-// $msg_html->signature   = User's Signature
-// $msg_html->reply       = Reply Option
-// $msg_html->quote       = Quote Option
-// $msg_html->edit        = Edit Option
-// $msg_html->closed      = Locked/Diabled message
-// $msg_html->delete      = Delete Option
-// $msg_html->sticky      = Sticky/Unsticky Option
-// $msg_html->lock        = Lock/Unlock Option
-// $msg_html->aim         = User's AIM
-// $msg_html->icq         = User's ICQ#
-// $msg_html->msn         = User's MSN
-// $msg_html->yahoo       = User's Yahoo
-// $msg_html->profile     = Image link to user's Profile Page
-// $msg_html->pms         = Linked image for PMS2
-// $msg_html->buddy       = Add buddy image link
-// $msg_html->loc         = User's Location
-// $msg_html->regdate     = User's Registration Date
-// $tabclass[$k]    = CSS Class for TD (use to alternate colors)
-// fb_messagebody   = CSS Class for post text
-// fb_signature     = CSS Class for signature
-?>

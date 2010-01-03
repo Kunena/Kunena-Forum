@@ -51,8 +51,6 @@ $kunena_db->query();
 $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_whoisonline WHERE userip='{$myip}' AND userid='{$kunena_my->id}'");
 $online = $kunena_db->loadResult();
 
-unset ($row);
-
 if ($task == 'listcat' || $func == 'showcat') {
     $kunena_db->setQuery("SELECT name FROM #__fb_categories WHERE id='{$catid}'");
     $what = $kunena_db->loadResult();

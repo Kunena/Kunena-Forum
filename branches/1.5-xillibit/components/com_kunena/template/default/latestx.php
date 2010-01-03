@@ -28,7 +28,7 @@ $kunena_config =& CKunenaConfig::getInstance();
 $kunena_session =& CKunenaSession::getInstance();
 $document =& JFactory::getDocument();
 
-$func = strtolower(JRequest::getCmd('func', ''));
+$func = JString::strtolower(JRequest::getCmd('func', ''));
 $sel = JRequest::getVar('sel', '');
 
 function KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages) {
@@ -75,14 +75,12 @@ function KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages) {
     return $output;
 }
 
-if (!$kunena_my->id && $func == "mylatest")
+if (!$kunena_my->id && ($func == "mylatest" || $func == "noreplies"))
 {
         	header("HTTP/1.1 307 Temporary Redirect");
         	header("Location: " . htmlspecialchars_decode(CKunenaLink::GetShowLatestURL()));
         	$kunena_app->close();
 }
-
-require_once (KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
 
 //resetting some things:
 $lockedForum = 0;
@@ -100,7 +98,7 @@ $show_list_time = $sel;
 
 //start the latest x
 if ($sel == 0) {
-    $querytime = ($this->prevCheck - $kunena_config->fbsessiontimeout); //move 30 minutes back to compensate for expired sessions
+    $querytime = ($this->prevCheck - $kunena_config->kunena_sessiontimeout); //move 30 minutes back to compensate for expired sessions
 }
 else
 {
@@ -150,6 +148,22 @@ if ($func == "mylatest")
 					JOIN #__fb_favorites AS f ON m.thread = f.thread
 					WHERE f.userid=$kunena_my->id AND m.parent = 0 AND hold=0 and moved=0 AND catid IN ($kunena_session->allowed)) AS tmp";
 }
+else if ($func == "noreplies")
+{
+	$document->setTitle(_KUNENA_NO_REPLIES . ' - ' . stripslashes($kunena_config->board_title));
+	$query = "SELECT count(distinct tmp.thread) FROM
+				(SELECT m.thread, count(*) AS posts
+					FROM #__fb_messages as m
+					JOIN (SELECT thread
+						FROM #__fb_messages
+						WHERE time >'$querytime' AND parent=0 AND
+							hold=0 AND moved=0 AND catid IN ($kunena_session->allowed)
+					) as t ON m.thread = t.thread
+					WHERE m.hold=0 AND m.moved=0
+					GROUP BY 1
+				) AS tmp
+				WHERE tmp.posts = 1";
+}
 else
 {
 	$document->setTitle(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($kunena_config->board_title));
@@ -189,6 +203,24 @@ if ($func == "mylatest")
 		ORDER BY {$order}
 	";
 }
+else if ($func == "noreplies")
+{
+	$order = "lastid DESC";
+	$query = "SELECT thread, thread as lastid FROM
+				(SELECT m.thread, count(*) AS posts
+					FROM #__fb_messages as m
+					JOIN (SELECT thread
+						FROM #__fb_messages
+						WHERE time >'$querytime' AND parent=0 AND
+							hold=0 AND moved=0 AND catid IN ($kunena_session->allowed)
+					) as t ON m.thread = t.thread
+					WHERE m.hold=0 AND m.moved=0
+					GROUP BY 1
+				) AS tmp
+				WHERE tmp.posts = 1
+				GROUP BY thread
+				ORDER BY {$order}";
+}
 else
 {
 	$order = "lastid DESC";
@@ -209,7 +241,8 @@ $this->messages = array();
 $this->messages[0] = array();
 if (count($threadids) > 0)
 {
-$query = "SELECT a.*, j.id AS userid, t.message AS messagetext, l.myfavorite, l.favcount, l.attachmesid, l.msgcount, l.lastid, u.avatar, c.id AS catid, c.name AS catname
+$query = "SELECT a.*, j.id AS userid, t.message AS messagetext, l.myfavorite, l.favcount, l.attachmesid,
+			l.msgcount, l.lastid, u.avatar, c.id AS catid, c.name AS catname, c.class_sfx
 	FROM (
 		SELECT m.thread, (f.userid IS NOT null AND f.userid='{$kunena_my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachmesid,
 			COUNT(DISTINCT m.id) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime
@@ -234,7 +267,7 @@ $messagelist = $kunena_db->loadObjectList();
 foreach ($messagelist as $message)
 {
 	$this->messages[$message->parent][] = $message;
-	$this->messagetext[$message->id] = substr(smile::purify($message->messagetext), 0, 500);
+	$this->messagetext[$message->id] = JString::substr(smile::purify($message->messagetext), 0, 500);
 	if ($message->parent==0)
 	{
 		$this->hits[$message->id] = $message->hits;
@@ -301,7 +334,7 @@ if (JDocumentHTML::countModules('kunena_announcement'))
 			<td class="fb_list_actions_info_all">
     <strong><?php echo $total; ?></strong> <?php echo _KUNENA_DISCUSSIONS; ?>
 								</td>
-									<?php if ($func!='mylatest') {?>
+									<?php if ($func!='mylatest' && $func!='noreplies') {?>
                                     <td class="fb_list_times_all">
 
 									<?php  $show_list_time = JRequest::getInt('sel', 720);  ?>

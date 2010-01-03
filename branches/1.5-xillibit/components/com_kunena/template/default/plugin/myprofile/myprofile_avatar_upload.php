@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-global $kunena_db;
+$kunena_db = &JFactory::getDBO();
 
 require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
 
@@ -79,7 +79,7 @@ function kn_myprofile_display_avatar_gallery($avatar_gallery_path)
             if (preg_match('/(\.gif$|\.png$|\.jpg|\.jpeg)$/is', $file))
             {
                 $avatar_images[$avatar_col_count] = $file;
-                $avatar_name[$avatar_col_count] = ucfirst(str_replace("_", " ", preg_replace('/^(.*)\..*$/', '\1', $file)));
+                $avatar_name[$avatar_col_count] = JString::ucfirst(str_replace("_", " ", preg_replace('/^(.*)\..*$/', '\1', $file)));
                 $avatar_col_count++;
             }
         }
@@ -327,12 +327,11 @@ switch ($task) {
 		unlink($src_file);
 
 		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newFileName}' WHERE userid={$kunena_my->id}");
-		$kunena_db->query() or trigger_dberror("Unable to update avatar.");
+		$kunena_db->query() or check_dberror("Unable to update avatar.");
 
 		$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile'),_UPLOAD_UPLOADED);
 
 	case 'gallery':
-		require_once(KUNENA_PATH_LIB .DS. 'kunena.helpers.php');
 		$newAvatar = JRequest::getVar('newAvatar', '');
 
 		$newAvatar = CKunenaTools::fbRemoveXSS($newAvatar);
@@ -342,7 +341,7 @@ switch ($task) {
 		}
 
 		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newAvatar}' WHERE userid={$kunena_my->id}");
-		$kunena_db->query() or trigger_dberror("Unable to update user avatar.");
+		$kunena_db->query() or check_dberror("Unable to update user avatar.");
 
 		$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile'),_UPLOAD_UPLOADED);
 		break;
@@ -375,17 +374,7 @@ if ($task == 'default')
                     <?php
                         echo _YOUR_AVATAR . "</td><td >";
 
-                        if ($kunena_config->avatar_src == "clexuspm")
-                        {
-                    ?>
-
-                            <img src = "<?php echo MyPMSTools::getAvatarLinkWithID($kunena_my->id)?>" alt="" />
-
-                            <br /> <a href = "<?php echo JRoute::_('index.php?option=com_mypms&amp;task=upload&amp;Itemid='._CLEXUSPM_ITEMID);?>"><?php echo _SET_NEW_AVATAR; ?></a>
-
-                    <?php
-                        }
-                        elseif ($kunena_config->avatar_src == "cb")
+                        if ($kunena_config->avatar_src == "cb")
                         {
                             $kunena_db->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='{$kunena_my->id}'");
                             $avatar = $kunena_db->loadResult();

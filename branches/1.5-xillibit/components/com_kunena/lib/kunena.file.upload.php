@@ -22,9 +22,9 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-require_once(KUNENA_PATH_LIB .DS. 'kunena.helpers.php');
 require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
 
+$kunena_config =& CKunenaConfig::getInstance();
 $attachfile = JRequest::getVar('attachfile', NULL, 'FILES', 'array');
 $filename = CKunenaFile::makeSafe($attachfile['name']);
 
@@ -65,7 +65,7 @@ if ($GLOBALS['KUNENA_rc'])
 {
     //Filename + proper path
     $fileLocation = strtr(KUNENA_PATH_UPLOADED .DS. "files" .DS. $newFileName, "\\", "/");
-    $allowedArray = explode(',', strtolower($kunena_config->filetypes));
+    $allowedArray = explode(',', JString::strtolower($kunena_config->filetypes));
     $maxImgSize = $kunena_config->filesize * 1024;
 
     // Check for empty filename

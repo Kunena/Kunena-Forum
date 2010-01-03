@@ -42,7 +42,7 @@ defined( '_JEXEC' ) or die('Restricted access');
  *             Only needs to be passed when type==3 or type==2
  * @param int $thread
  *             Only needs to be passed when type==3 or type==2 (well actually just give 0 when type==2)
- * @param boolean $kunena_is_moderatorerator
+ * @param boolean $kunena_is_moderator
  *             Only needs to be passed when type==2
  * @param int $numPending
  *             Number of pending messages, only needs to be passed when type==2
@@ -51,9 +51,9 @@ defined( '_JEXEC' ) or die('Restricted access');
  */
 
 function kunena_get_menu($cbitemid, $kunena_config, $kunena_emoticons, $my_id, $type, $view = "", $catid = 0, $id = 0,
-							$thread = 0, $kunena_is_moderatorerator = false, $numPending = 0)
+							$thread = 0, $kunena_is_moderator = false, $numPending = 0)
 {
-	$func = strtolower(JRequest::getCmd('func', ''));
+	$func = JString::strtolower(JRequest::getCmd('func', ''));
 	if ($func == '') // Set default as per config settings
 	{
 		switch ($kunena_config->fbdefaultpage)
@@ -81,6 +81,14 @@ function kunena_get_menu($cbitemid, $kunena_config, $kunena_emoticons, $my_id, $
 	    $header .= ' <li ';
 	    if ($func == 'mylatest') $header .= ' class="Kunena_item_active" ';
 	    $header .=' >'.CKunenaLink::GetShowMyLatestLink('<span>'.(array_key_exists('showmylatest', $kunena_emoticons) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['showmylatest'] . '" border="0" alt="' . _KUNENA_MY_DISCUSSIONS . '" title="' . _KUNENA_MY_DISCUSSIONS . '"/>' : _KUNENA_MY_DISCUSSIONS).'</span>');
+	    $header .= '</li>';
+    }
+
+    if ($my_id != 0)
+    {
+	    $header .= ' <li ';
+	    if ($func == 'noreplies') $header .= ' class="Kunena_item_active" ';
+	    $header .=' >'.CKunenaLink::GetShowNoRepliesLink('<span>'.(array_key_exists('shownoreplies', $kunena_emoticons) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['shownoreplies'] . '" border="0" alt="' . _KUNENA_NO_REPLIES . '" title="' . _KUNENA_NO_REPLIES . '"/>' : _KUNENA_NO_REPLIES).'</span>');
 	    $header .= '</li>';
     }
 
@@ -129,14 +137,13 @@ function kunena_get_menu($cbitemid, $kunena_config, $kunena_emoticons, $my_id, $
 //                $header .= CKunenaLink::GetViewLink('showcat', $id, $catid, 'flat', '<span>'. _GEN_FLAT_VIEW .'</span>');
 //                $header .= '</li>';
 //			}
-            if ($kunena_is_moderatorerator)
+            if ($kunena_is_moderator)
             {
                 if ($numPending > 0)
                 {
-                    $numcolor = '<font color="red">';
                     $header .= '<li>';
                     $header .= CKunenaLink::GetPendingMessagesLink( $catid, '<span>'.(array_key_exists('pendingmessages', $kunena_emoticons)
-                        ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['pendingmessages'] . '" border="0" alt="' . $numPending . ' ' . _SHOWCAT_PENDING . '" />' : $numcolor . '' . $numPending . '</font> ' . _SHOWCAT_PENDING).'</span>');
+                        ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['pendingmessages'] . '" border="0" alt="' . $numPending . ' ' . _SHOWCAT_PENDING . '" />' : '<font color="red">' . $numPending . '</font> ' . _SHOWCAT_PENDING).'</span>');
                     $header .= '</li>';
                 }
             }
@@ -169,7 +176,7 @@ function kunena_get_menu($cbitemid, $kunena_config, $kunena_emoticons, $my_id, $
 function getSearchBox()
 {
     $return = '<div id="fb_searchbox"><form action="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=search') . '" name="searchFB" method="post">';
-    $boxsize = strlen(_GEN_SEARCH_BOX);
+    $boxsize = JString::strlen(_GEN_SEARCH_BOX);
 
     if ($boxsize <= 15)
         $boxsize = 15;

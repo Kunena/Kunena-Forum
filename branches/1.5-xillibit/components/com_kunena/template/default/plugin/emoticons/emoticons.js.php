@@ -29,7 +29,7 @@ function replaceText(text, textarea)
 		}
 		textarea.scrollTop = scrollPos;
 	}
-	
+
 	// Just put it on the end.
 	else
 	{
@@ -40,7 +40,7 @@ function replaceText(text, textarea)
 
 
 var smilies_for_window= [<?php  $text = "";
-                             foreach ($rowset as $data){
+                             foreach ($this->kunena_emoticons_rowset as $data){
 								$text .= "['".addslashes($data['code'])."', '".$data['location']."', '".addslashes($data['code'])."'],\n";
                              }
                              echo (substr_replace($text, "", -2));

@@ -35,7 +35,7 @@ class CKunenaTables
 		$kunena_db->setQuery( "SHOW TABLES LIKE '" .$kunena_db->getPrefix(). "fb_%'");
 		$tables = $kunena_db->loadResultArray();
 		$prelen = strlen($kunena_db->getPrefix());
-		foreach	($tables as $table) $this->tables['#__'.substr($table,$prelen)] = 1;
+		foreach	($tables as $table) $this->tables['#__'.JString::substr($table,$prelen)] = 1;
 		check_dberror('Unable to check for existing tables.');
 	}
 
@@ -196,7 +196,7 @@ abstract class CKunenaConfigBase
     //
     // Load config settings from database table
     //
-    public function load($KunenaUser=null)
+    public function load($userinfo=null)
     {
         $tables = CKunenaTables::getInstance();
         if ($tables->check($this->GetConfigTableName()))
@@ -212,10 +212,10 @@ abstract class CKunenaConfigBase
         }
 
         // Check for user specific overrides
-        if(is_object($KunenaUser))
+        if(is_object($userinfo))
         {
             // overload the settings with user specific ones
-            $this->DoUserOverrides($KunenaUser);
+            $this->DoUserOverrides($userinfo);
             // Now the variables of the class contain the global settings
             // overloaded with the user specific ones
             // No other code changes required to support user specific settings.
@@ -377,7 +377,7 @@ class CKunenaConfig extends CKunenaConfigBase
 	var $sef                     = 1;
 	var $sefcats                 = 0;
 	var $sefutf8                 = 0;
-	//New Poll variables
+	//New for 1.6 -> Poll
 	var $pollnboptions = '4'; //For poll integration, set the number maximum of options
     var $pollallowvoteone = '1'; //For poll integration, set if yes or no the user can vote one or more time for a poll
     var $pollenabled = "1"; //For poll integration, for disable the poll
@@ -386,13 +386,14 @@ class CKunenaConfig extends CKunenaConfigBase
     var $showpoppollstats = '1';
     var $polltimebtvotes = "00:15:00";
     var $pollnbvotesbyuser = "100";
-    var $showimgforguest	 = 1;
-    var $showfileforguest	 = 1;
+	// New for 1.6 -> Hide images and files for guests
+	var $showimgforguest	     = 1;
+    var $showfileforguest	     = 1;
 
-    public function __construct($KunenaUser=null)
+    public function __construct($userinfo=null)
     {
         parent::__construct();
-		$this->load($KunenaUser);
+		$this->load($userinfo);
     }
 
     //
@@ -419,13 +420,13 @@ class CKunenaConfig extends CKunenaConfigBase
         return "#__fb_config";
     }
 
-    public function DoUserOverrides($KunenaUser)
+    public function DoUserOverrides($userinfo)
     {
     	// Only perform overrides if we got a valid user handed to us
-    	if (is_object($KunenaUser)==FALSE) return FALSE;
-    	if ($KunenaUser->userid==0) return FALSE;
+    	if (is_object($userinfo)==FALSE) return FALSE;
+    	if ($userinfo->userid==0) return FALSE;
 
-        $this->default_sort = $KunenaUser->ordering ? 'desc' : 'asc';
+        $this->default_sort = $userinfo->ordering ? 'desc' : 'asc';
 
         // Add additional Overrides...
 

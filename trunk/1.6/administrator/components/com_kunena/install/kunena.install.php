@@ -198,7 +198,7 @@ function com_install()
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td width="20%" valign="top" style="padding: 10px;"><a
-			href="index2.php?option=com_kunena"><img
+			href="index.php?option=com_kunena"><img
 			src="components/com_kunena/images/kunena.logo.png" alt="Kunena"
 			border="0"></a></td>
 

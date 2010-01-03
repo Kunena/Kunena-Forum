@@ -347,7 +347,7 @@ echo $objCatInfo->class_sfx;
 			<td align="left" valign="middle" height="35px">&nbsp;<input
 				name="txtNumber" type="text" id="txtNumber" value=""
 				class="fb_button" style="vertical-align: top" size="15"> <img
-				src="index2.php?option=com_kunena&func=showcaptcha" alt="" /></td>
+				src="?option=com_kunena&func=showcaptcha" alt="" /></td>
 		</tr>
 		<?php
 		}

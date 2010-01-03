@@ -159,7 +159,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID"))
 
 // Kunena live url
 define('KUNENA_LIVEURL', KUNENA_JLIVEURL . 'index.php?option=com_kunena' . KUNENA_COMPONENT_ITEMID_SUFFIX);
-define('KUNENA_CLEANLIVEURL', KUNENA_JLIVEURL . 'index2.php?option=com_kunena&amp;no_html=1' . KUNENA_COMPONENT_ITEMID_SUFFIX);
+define('KUNENA_CLEANLIVEURL', KUNENA_JLIVEURL . 'index.php?option=com_kunena&amp;no_html=1' . KUNENA_COMPONENT_ITEMID_SUFFIX);
 define('KUNENA_LIVEURLREL', 'index.php?option=com_kunena' . KUNENA_COMPONENT_ITEMID_SUFFIX);
 
 // Kunena souces absolute path

@@ -140,7 +140,7 @@ if ($kunena_config->fb_profile == 'cb')
 								if ($kunena_config->captcha && $kunena_my->id < 1) { ?>
 								<?php echo _KUNENA_CAPDESC.'&nbsp;'?>
 								<input name="txtNumber" type="text" id="txtNumber" value="" style="vertical-align:middle" size="10">&nbsp;
-								<img src="index2.php?option=com_kunena&func=showcaptcha" alt="" /><br />
+								<img src="?option=com_kunena&func=showcaptcha" alt="" /><br />
 								<?php
 								}
 								// Finish captcha

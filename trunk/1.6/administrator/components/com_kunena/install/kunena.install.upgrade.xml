@@ -216,8 +216,8 @@
                 KEY `time` (`time`),
                 KEY `locked` (`locked`),
                 KEY `hold_time` (`hold`,`time`),
-                KEY `parent_hits` (`parent`,`hits`) ) DEFAULT CHARSET=utf8</query>            
-		<phpfile name="kunena.special.install.1.6.0.php" />
+                KEY `parent_hits` (`parent`,`hits`) ) DEFAULT CHARSET=utf8</query>
+		<phpfile name="kunena.special.install.php" />
 	</install>
 	<upgrade>
 		<version version="1.0.5" versiondate="2008-12-1" build="855" versionname="Redwood">
@@ -340,6 +340,7 @@
 			<query mode="silenterror">UPDATE `#__fb_config` SET `jmambot`='0'</query>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
+		    <phpfile name="kunena.special.upgrade.1.6.0.php"></phpfile>            
 		</version>
 	</upgrade>
 </comupgrade>

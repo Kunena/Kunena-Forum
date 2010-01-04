@@ -1965,3 +1965,75 @@ MY PROFILE
 	border-left: 1px solid #BFC3C6;
 	color: #999999;
 }
+
+/* -pink category suffix
+----------------------------------------------------------------------------------------------- */
+
+#Kunena .fb_forum-headerdesc-green {
+	padding: 3px;
+	line-height: 18px;
+	margin: -1px 0 0 0;
+	border: 1px solid #CCCCCC;
+	color: #000000;
+	background: #FFCCFF;
+}
+
+#Kunena tr.fb_sectiontableentry1-green td {
+	background: #FFCCFF;
+	padding: 5px;
+	border-bottom: 1px solid #BFC3C6;
+	border-left: 1px solid #FFFFFF;
+	border-right: 1px solid #BFC3C6;
+}
+
+#Kunena tr.fb_sectiontableentry2-green td {
+	background: #FFAAFF;
+	padding: 5px;
+	border-bottom: 1px solid #BFC3C6;
+	border-left: 1px solid #FFFFFF;
+	border-right: 1px solid #BFC3C6;
+}
+
+#Kunena tr.fb_sectiontableentry1-green td.td-0,
+#Kunena tr.fb_sectiontableentry2-green td.td-0	{
+	border-left: 1px solid #BFC3C6;
+	background: #EEEEEE;
+	text-align: center;
+	color: #999999;
+}
+
+#Kunena tr.fb_sectiontableentry1-green td.td-1,
+#Kunena tr.fb_sectiontableentry2-green td.td-1	{
+	border-left: 1px solid #BFC3C6;
+	background: #EEEEEE;
+	text-align: center;
+	color: #999999;
+}
+
+#Kunena .fb_sectiontableentry1_stickymsg-green {
+	background: #FEFECC;
+}
+
+#Kunena .fb_sectiontableentry2_stickymsg-green {
+	background: #FEFECC;
+}
+
+#Kunena tr.fb_sectiontableentry1_stickymsg-green a,
+#Kunena tr.fb_sectiontableentry2_stickymsg-green a	{
+	color: #000000;
+}
+
+#Kunena tr.fb_sectiontableentry1_stickymsg-green td,
+#Kunena tr.fb_sectiontableentry2_stickymsg-green td	{
+	color: #000000;
+	border-bottom: 1px solid #BFC3C6;
+	border-left: 1px solid #FFFFFF;
+	border-right: 1px solid #BFC3C6;
+	padding: 5px;
+}
+
+#Kunena tr.fb_sectiontableentry1_stickymsg-green td.td-0,
+#Kunena tr.fb_sectiontableentry2_stickymsg-green td.td-0	{
+	border-left: 1px solid #BFC3C6;
+	color: #999999;
+}

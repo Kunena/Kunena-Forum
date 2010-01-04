@@ -204,7 +204,7 @@ switch ($kunena_config->avposition) {
 					<td align="left"><?php
 		$msg_time_since = _KUNENA_TIME_SINCE;
 		$msg_time_since = str_replace ( '%time%', time_since ( $this->kunena_message->time, CKunenaTools::fbGetInternalTime () ), $msg_time_since );
-		
+
 		if ($this->prevCheck < $this->kunena_message->time && ! in_array ( $this->kunena_message->thread, $this->read_topics )) {
 			$msgtitle = 'msgtitle_new';
 		} else {
@@ -257,9 +257,10 @@ switch ($kunena_config->avposition) {
 			} else {
 				$authorName = $kunena_my->name;
 			}
-			
+
 			//contruct the reply subject
-			$resubject = kunena_htmlspecialchars ( JString::strtolower ( JString::substr ( $msg_html->subject, 0, JString::strlen ( _POST_RE ) ) ) == JString::strtolower ( _POST_RE ) ? $msg_html->subject : _POST_RE . ' ' . $msg_html->subject );
+			$reprefix = JString::substr ( $msg_html->subject, 0, JString::strlen ( _POST_RE ) ) != _POST_RE ? _POST_RE.' ' : '';
+			$resubject = $reprefix . $msg_html->subject;
 			?>
 
 					<form
@@ -281,7 +282,7 @@ switch ($kunena_config->avposition) {
 			echo $kunena_config->maxsubject;
 			?>"
 						value="<?php
-			echo html_entity_decode ( $resubject );
+			echo $resubject;
 			?>" />
 					<textarea class="inputbox" name="message" rows="6" cols="60"
 						style="height: 100px; width: 100%; overflow: auto;"></textarea> <?php
@@ -339,7 +340,7 @@ switch ($kunena_config->avposition) {
 			}
 			echo '</span>';
 		}
-		
+
 		if ($kunena_config->reportmsg && $kunena_my->id > 1) {
 			echo '<span class="fb_message_informMarkUp">' . CKunenaLink::GetReportMessageLink ( $catid, $msg_html->id, _KUNENA_REPORT ) . '</span>';
 		}
@@ -371,14 +372,14 @@ switch ($kunena_config->avposition) {
 			if (! isset ( $msg_html->closed )) {
 				echo " " . $msg_html->reply;
 				echo " " . $msg_html->quote;
-				
+
 				if (CKunenaTools::isModerator ( $kunena_my->id, $catid ))
 					;
-				
+
 				if (isset ( $msg_html->merge )) {
 					echo " " . $msg_html->merge;
 				}
-				
+
 				if (isset ( $msg_html->split )) {
 					echo " " . $msg_html->split;
 				}
@@ -388,11 +389,11 @@ switch ($kunena_config->avposition) {
 				if (isset ( $msg_html->edit )) {
 					echo " " . $msg_html->edit;
 				}
-			
+
 			} else {
 				echo $msg_html->closed;
 			}
-		
+
 		} else {
 			if (! isset ( $msg_html->closed )) {
 				echo $msg_html->reply;
@@ -400,23 +401,23 @@ switch ($kunena_config->avposition) {
 
 			| <?php
 				echo $msg_html->quote;
-				
+
 				if (isset ( $msg_html->delete )) {
 					echo " | " . $msg_html->delete;
 				}
-				
+
 				if (isset ( $msg_html->move )) {
 					echo " | " . $msg_html->move;
 				}
-				
+
 				if (isset ( $msg_html->edit )) {
 					echo " | " . $msg_html->edit;
 				}
-				
+
 				if (isset ( $msg_html->sticky )) {
 					echo " | " . $msg_html->sticky;
 				}
-				
+
 				if (isset ( $msg_html->lock )) {
 					echo "| " . $msg_html->lock;
 				}
@@ -594,7 +595,7 @@ switch ($kunena_config->avposition) {
 					<td align="left"><?php
 		$msg_time_since = _KUNENA_TIME_SINCE;
 		$msg_time_since = str_replace ( '%time%', time_since ( $this->kunena_message->time, CKunenaTools::fbGetInternalTime () ), $msg_time_since );
-		
+
 		if ($this->prevCheck < $this->kunena_message->time && ! in_array ( $this->kunena_message->thread, $this->read_topics )) {
 			$msgtitle = 'msgtitle_new';
 		} else {
@@ -647,9 +648,10 @@ switch ($kunena_config->avposition) {
 			} else {
 				$authorName = $kunena_my->name;
 			}
-			
+
 			//contruct the reply subject
-			$resubject = kunena_htmlspecialchars ( JString::strtolower ( JString::substr ( $msg_html->subject, 0, JString::strlen ( _POST_RE ) ) ) == JString::strtolower ( _POST_RE ) ? $msg_html->subject : _POST_RE . ' ' . $msg_html->subject );
+			$reprefix = JString::substr ( $msg_html->subject, 0, JString::strlen ( _POST_RE ) ) != _POST_RE ? _POST_RE.' ' : '';
+			$resubject = $reprefix . $msg_html->subject;
 			?>
 
 					<form
@@ -729,7 +731,7 @@ switch ($kunena_config->avposition) {
 			}
 			echo '</span>';
 		}
-		
+
 		if ($kunena_config->reportmsg && $kunena_my->id > 1) {
 			echo '<span class="fb_message_informMarkUp">' . CKunenaLink::GetReportMessageLink ( $catid, $msg_html->id, _KUNENA_REPORT ) . '</span>';
 		}
@@ -761,14 +763,14 @@ switch ($kunena_config->avposition) {
 			if (! isset ( $msg_html->closed )) {
 				echo " " . $msg_html->reply;
 				echo " " . $msg_html->quote;
-				
+
 				if (CKunenaTools::isModerator ( $kunena_my->id, $catid ))
 					;
-				
+
 				if (isset ( $msg_html->merge )) {
 					echo " " . $msg_html->merge;
 				}
-				
+
 				if (isset ( $msg_html->split )) {
 					echo " " . $msg_html->split;
 				}
@@ -778,11 +780,11 @@ switch ($kunena_config->avposition) {
 				if (isset ( $msg_html->edit )) {
 					echo " " . $msg_html->edit;
 				}
-			
+
 			} else {
 				echo $msg_html->closed;
 			}
-		
+
 		} else {
 			if (! isset ( $msg_html->closed )) {
 				echo $msg_html->reply;
@@ -790,23 +792,23 @@ switch ($kunena_config->avposition) {
 
 			| <?php
 				echo $msg_html->quote;
-				
+
 				if (isset ( $msg_html->delete )) {
 					echo " | " . $msg_html->delete;
 				}
-				
+
 				if (isset ( $msg_html->move )) {
 					echo " | " . $msg_html->move;
 				}
-				
+
 				if (isset ( $msg_html->edit )) {
 					echo " | " . $msg_html->edit;
 				}
-				
+
 				if (isset ( $msg_html->sticky )) {
 					echo " | " . $msg_html->sticky;
 				}
-				
+
 				if (isset ( $msg_html->lock )) {
 					echo "| " . $msg_html->lock;
 				}
@@ -985,7 +987,7 @@ switch ($kunena_config->avposition) {
 					<td align="left"><?php
 		$msg_time_since = _KUNENA_TIME_SINCE;
 		$msg_time_since = str_replace ( '%time%', time_since ( $this->kunena_message->time, CKunenaTools::fbGetInternalTime () ), $msg_time_since );
-		
+
 		if ($this->prevCheck < $this->kunena_message->time && ! in_array ( $this->kunena_message->thread, $this->read_topics )) {
 			$msgtitle = 'msgtitle_new';
 		} else {
@@ -1038,9 +1040,10 @@ switch ($kunena_config->avposition) {
 			} else {
 				$authorName = $kunena_my->name;
 			}
-			
+
 			//contruct the reply subject
-			$resubject = kunena_htmlspecialchars ( JString::strtolower ( JString::substr ( $msg_html->subject, 0, JString::strlen ( _POST_RE ) ) ) == JString::strtolower ( _POST_RE ) ? $msg_html->subject : _POST_RE . ' ' . $msg_html->subject );
+			$reprefix = JString::substr ( $msg_html->subject, 0, JString::strlen ( _POST_RE ) ) != _POST_RE ? _POST_RE.' ' : '';
+			$resubject = $reprefix . $msg_html->subject;
 			?>
 
 					<form
@@ -1120,7 +1123,7 @@ switch ($kunena_config->avposition) {
 			}
 			echo '</span>';
 		}
-		
+
 		if ($kunena_config->reportmsg && $kunena_my->id > 1) {
 			echo '<span class="fb_message_informMarkUp">' . CKunenaLink::GetReportMessageLink ( $catid, $msg_html->id, _KUNENA_REPORT ) . '</span>';
 		}
@@ -1152,14 +1155,14 @@ switch ($kunena_config->avposition) {
 			if (! isset ( $msg_html->closed )) {
 				echo " " . $msg_html->reply;
 				echo " " . $msg_html->quote;
-				
+
 				if (CKunenaTools::isModerator ( $kunena_my->id, $catid ))
 					;
-				
+
 				if (isset ( $msg_html->merge )) {
 					echo " " . $msg_html->merge;
 				}
-				
+
 				if (isset ( $msg_html->split )) {
 					echo " " . $msg_html->split;
 				}
@@ -1169,11 +1172,11 @@ switch ($kunena_config->avposition) {
 				if (isset ( $msg_html->edit )) {
 					echo " " . $msg_html->edit;
 				}
-			
+
 			} else {
 				echo $msg_html->closed;
 			}
-		
+
 		} else {
 			if (! isset ( $msg_html->closed )) {
 				echo $msg_html->reply;
@@ -1181,23 +1184,23 @@ switch ($kunena_config->avposition) {
 
 			| <?php
 				echo $msg_html->quote;
-				
+
 				if (isset ( $msg_html->delete )) {
 					echo " | " . $msg_html->delete;
 				}
-				
+
 				if (isset ( $msg_html->move )) {
 					echo " | " . $msg_html->move;
 				}
-				
+
 				if (isset ( $msg_html->edit )) {
 					echo " | " . $msg_html->edit;
 				}
-				
+
 				if (isset ( $msg_html->sticky )) {
 					echo " | " . $msg_html->sticky;
 				}
-				
+
 				if (isset ( $msg_html->lock )) {
 					echo "| " . $msg_html->lock;
 				}
@@ -1240,7 +1243,7 @@ switch ($kunena_config->avposition) {
 					<td align="left"><?php
 		$msg_time_since = _KUNENA_TIME_SINCE;
 		$msg_time_since = str_replace ( '%time%', time_since ( $this->kunena_message->time, CKunenaTools::fbGetInternalTime () ), $msg_time_since );
-		
+
 		if ($this->prevCheck < $this->kunena_message->time && ! in_array ( $this->kunena_message->thread, $this->read_topics )) {
 			$msgtitle = 'msgtitle_new';
 		} else {
@@ -1299,9 +1302,10 @@ switch ($kunena_config->avposition) {
 			} else {
 				$authorName = $kunena_my->name;
 			}
-			
+
 			//contruct the reply subject
-			$resubject = kunena_htmlspecialchars ( JString::strtolower ( JString::substr ( $msg_html->subject, 0, JString::strlen ( _POST_RE ) ) ) == JString::strtolower ( _POST_RE ) ? $msg_html->subject : _POST_RE . ' ' . $msg_html->subject );
+			$reprefix = JString::substr ( $msg_html->subject, 0, JString::strlen ( _POST_RE ) ) != _POST_RE ? _POST_RE.' ' : '';
+			$resubject = $reprefix . $msg_html->subject;
 			?>
 
 					<form
@@ -1517,7 +1521,7 @@ switch ($kunena_config->avposition) {
 			}
 			echo '</span>';
 		}
-		
+
 		if ($kunena_config->reportmsg && $kunena_my->id > 1) {
 			echo '<span class="fb_message_informMarkUp">' . CKunenaLink::GetReportMessageLink ( $catid, $msg_html->id, _KUNENA_REPORT ) . '</span>';
 		}
@@ -1545,14 +1549,14 @@ switch ($kunena_config->avposition) {
 			if (! isset ( $msg_html->closed )) {
 				echo " " . $msg_html->reply;
 				echo " " . $msg_html->quote;
-				
+
 				if (CKunenaTools::isModerator ( $kunena_my->id, $catid ))
 					;
-				
+
 				if (isset ( $msg_html->merge )) {
 					echo " " . $msg_html->merge;
 				}
-				
+
 				if (isset ( $msg_html->split )) {
 					echo " " . $msg_html->split;
 				}
@@ -1562,11 +1566,11 @@ switch ($kunena_config->avposition) {
 				if (isset ( $msg_html->edit )) {
 					echo " " . $msg_html->edit;
 				}
-			
+
 			} else {
 				echo $msg_html->closed;
 			}
-		
+
 		} else {
 			if (! isset ( $msg_html->closed )) {
 				echo $msg_html->reply;
@@ -1574,23 +1578,23 @@ switch ($kunena_config->avposition) {
 
 			| <?php
 				echo $msg_html->quote;
-				
+
 				if (isset ( $msg_html->delete )) {
 					echo " | " . $msg_html->delete;
 				}
-				
+
 				if (isset ( $msg_html->move )) {
 					echo " | " . $msg_html->move;
 				}
-				
+
 				if (isset ( $msg_html->edit )) {
 					echo " | " . $msg_html->edit;
 				}
-				
+
 				if (isset ( $msg_html->sticky )) {
 					echo " | " . $msg_html->sticky;
 				}
-				
+
 				if (isset ( $msg_html->lock )) {
 					echo "| " . $msg_html->lock;
 				}

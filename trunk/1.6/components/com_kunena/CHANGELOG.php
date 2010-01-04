@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+04-Jan-2010 Matias
+# [#19031] Quick reply shows > as &gt; in subject (part 2)
+
 04-Jan-2010 @quila
 + [#19243] Make profile on left/right configurable
 

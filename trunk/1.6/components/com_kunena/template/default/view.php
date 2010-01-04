@@ -882,21 +882,16 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 
 				$fb_subject_txt = $this->kunena_message->subject;
 
-				$table = array_flip ( get_html_translation_table ( HTML_ENTITIES ) );
-
-				$fb_subject_txt = strtr ( $fb_subject_txt, $table );
+				//$table = array_flip ( get_html_translation_table ( HTML_ENTITIES ) );
+				//$fb_subject_txt = strtr ( $fb_subject_txt, $table );
 				$fb_subject_txt = stripslashes ( $fb_subject_txt );
-				$fb_subject_txt = smile::htmlwrap ( $fb_subject_txt, $kunena_config->wrap );
-				$msg_html->subject = smile::fbHtmlSafe ( $fb_subject_txt );
+				//$fb_subject_txt = smile::htmlwrap ( $fb_subject_txt, $kunena_config->wrap );
+				$msg_html->subject = $fb_subject_txt;
 
 				$msg_html->date = date ( _DATETIME, $this->kunena_message->time );
 				$fb_message_txt = stripslashes ( $this->kunena_message->message );
 				$fb_message_txt = smile::smileReplace ( $fb_message_txt, 0, $kunena_config->disemoticons, $smileyList );
 				$fb_message_txt = nl2br ( $fb_message_txt );
-				//$fb_message_txt = str_replace("<P>&nbsp;</P><br />","",$fb_message_txt);
-				//$fb_message_txt = str_replace("</P><br />","</P>",$fb_message_txt);
-				//$fb_message_txt = str_replace("<P><br />","<P>",$fb_message_txt);
-
 
 				// Code tag: restore TABS as we had to 'hide' them from the rest of the logic
 				$fb_message_txt = str_replace ( "__FBTAB__", "&#009;", $fb_message_txt );

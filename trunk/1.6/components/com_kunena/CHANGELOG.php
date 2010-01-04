@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+03-Jan-2010 fxstein
+# [#19257] Fixed regression: categories work again in backend
+
 03-Jan-2010 severdia
 # [#19255] Fixed validation errors. Now valid XHTML.
 

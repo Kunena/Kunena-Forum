@@ -395,11 +395,11 @@ function showprf($userid, $page)
             <td class = "<?php echo KUNENA_BOARD_CLASS; ?>profile-left" align="center" valign="top" width="25%">
             <!-- Kunena Profile -->
                 <?php
-                if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/userinfos.php')) {
-                    include(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/userinfos.php');
+                if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/profile/userinfos.php')) {
+                    include(KUNENA_ABSTMPLTPATH . '/plugin/profile/userinfos.php');
                 }
                 else {
-                    include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/fbprofile/userinfos.php');
+                    include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/profile/userinfos.php');
                 }
                 ?>
 
@@ -413,20 +413,20 @@ function showprf($userid, $page)
 
             <?php
 
-                if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/summary.php')) {
-                    include(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/summary.php');
+                if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/profile/summary.php')) {
+                    include(KUNENA_ABSTMPLTPATH . '/plugin/profile/summary.php');
                 }
                 else {
-                    include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/fbprofile/summary.php');
+                    include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/profile/summary.php');
                 }
                 ?>
 
                 <?php
-                if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/forummsg.php')) {
-                    include(KUNENA_ABSTMPLTPATH . '/plugin/fbprofile/forummsg.php');
+                if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/profile/forummsg.php')) {
+                    include(KUNENA_ABSTMPLTPATH . '/plugin/profile/forummsg.php');
                 }
                 else {
-                    include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/fbprofile/forummsg.php');
+                    include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/profile/forummsg.php');
                 }
                 ?>
             </td>

@@ -804,6 +804,21 @@ span.newchar {
 	border-left: 1px solid #BFC3C6;
 }
 
+#Kunena td.fb-msgview-left-l {
+	background: #EFF0F4;
+	vertical-align: top;
+	width: 170px;
+	min-width: 170px;
+	border-left: 1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
+}
+
+#Kunena td.fb-msgview-right-l {
+	border-right: 1px solid #BFC3C6;
+	padding: 5px 10px 5px 10px;
+	vertical-align: top;
+}
+
 #Kunena div.fb-msgview-l-cover {
 	overflow: auto;
 	text-align: center;
@@ -880,7 +895,6 @@ span.newchar {
 	font-weight: bold;
 	color: #333333;
 	text-decoration: none;
-	padding-right: 10px;
 	white-space: nowrap;
 }
 
@@ -891,6 +905,7 @@ span.newchar {
 	border-top: 1px solid #ddd;
 	padding: 10px 0 0 0;
 	margin-top: 5px;
+	min-height: 100px;
 }
 
 #Kunena div.fbcode {
@@ -949,6 +964,12 @@ span.newchar {
 	border-bottom: 1px dotted #CCC;
 }
 
+#Kunena div.fb_message_editMarkUp_cover-top {
+	padding-top: 5px;
+	margin-left: 5px;
+	text-align: right;
+}
+
 #Kunena span.fb_message_editMarkUp {
 	background: #f7f7f7 no-repeat left center;
 	height: 16px;
@@ -974,11 +995,12 @@ span.newchar {
 }
 
 #Kunena div.msgsignature {
-	text-align: left;
-	 /* word-wrap: break-word; Internet Explorer 5.5+ */
-	color: #999;
-	font-size: x-small;
-	padding: 5px 5px;
+	border-top:1px dotted #BFC3C6;
+	color:#999999;
+	font-size:x-small;
+	margin:25px 0;
+	padding:5px 0;
+	text-align:left;
 }
 
 #Kunena div.fb_message_buttons_cover {
@@ -2036,4 +2058,123 @@ MY PROFILE
 #Kunena tr.fb_sectiontableentry2_stickymsg-pink td.td-0	{
 	border-left: 1px solid #BFC3C6;
 	color: #999999;
+}
+
+/* Avatar Position
+----------------------------------------------------------------------------------------------- */
+
+#Kunena td.fb-msgview-bottom-signature {
+	vertical-align: top;
+	width:57%;
+	border-bottom:2px solid #BFC3C6;
+	border-right:1px solid #BFC3C6;
+	font-size: x-small;
+	text-align: left;
+	overflow: hidden;
+	color:#999;
+	padding: 5px 35px 0 35px;
+	background-color: #EFF0F4;
+	display: inline-block;
+}
+
+#Kunena div.fb-msgview-right-c {
+	/*border-right: 1px solid #BFC3C6;*/
+	padding:3px 5px 3px 5px;
+	vertical-align: top;
+	text-align: left;
+	min-width: 12%;
+	float: left;
+	/*white-space: nowrap;*/
+	display: inline-block;
+}
+
+#Kunena div.fb-msgview-right-d {
+	/*border-right: 1px solid #BFC3C6;*/
+	padding:3px 5px 3px 5px;
+	vertical-align: top;
+	text-align: right;
+	min-width: 10%;
+	width: 10%;
+	float: right;
+	/*white-space: nowrap;*/
+	display: inline-block;
+}
+
+#Kunena div.fb-msgview-bottom-avatar {
+	vertical-align: middle;
+	width:60px;
+	min-width:60px;
+	padding: 2px;
+	float: left;
+	margin-right:15px;
+}                    
+#Kunena td.fb-profile {
+	vertical-align: middle;
+	width:100%;
+	min-width:60px;
+	border-bottom:  1px solid #BFC3C6;
+	border-left:1px solid #BFC3C6;
+	border-right:1px solid #BFC3C6;
+	background-color: #EFF0F4;
+	padding: 0px;
+}
+
+#Kunena td.fb-profile-bottom {
+	vertical-align: middle;
+	width:100%;
+	background-color: #EFF0F4;
+	padding: 2px;
+	border-bottom:  1px solid #BFC3C6;
+	border-left:1px solid #BFC3C6;
+	border-right:1px solid #BFC3C6;
+}
+
+#Kunena td.fb-profile-top {
+	vertical-align: middle;
+	width:100%;
+	background-color: #EFF0F4;
+	padding: 2px;
+	border-left:1px solid #BFC3C6;
+	border-right:1px solid #BFC3C6;
+}
+
+#Kunena div.msgsignature-bottom {
+	text-align: left;
+	 /* word-wrap: break-word; Internet Explorer 5.5+ */
+	color: #999;
+	font-size: x-small;
+	padding: 5px 10px;
+}
+
+#Kunena table.table_top {
+	margin-bottom: 10px;;
+}
+
+#Kunena div.fb_message_editMarkUp_cover-top {
+	padding-top: 5px;
+	margin-left: 5px;
+	text-align: right;
+}
+
+#Kunena td.fb-msgview-left-b-l {
+	background: #EFF0F4;
+	vertical-align: top;
+	width: 170px;
+	border-bottom: 1px solid #BFC3C6;
+	border-left: 1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
+}
+
+#Kunena td.fb-msgview-right-b-l {
+	border-bottom: 1px solid #BFC3C6;
+	padding: 1px 5px 1px 5px;
+	vertical-align: top;
+	border-right: 1px solid #BFC3C6;
+}
+
+#Kunena td.fb-msgview-right-b-b {
+	padding: 1px 5px 1px 5px;
+	vertical-align: top;
+	border-right: 1px solid #BFC3C6;
+	border-left: 1px solid #BFC3C6;
 }

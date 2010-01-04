@@ -566,10 +566,10 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 							if (! file_exists ( KUNENA_PATH_UPLOADED . DS . 'avatars/s_' . $avatar )) {
 								$msg_html->avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: ' . $kunena_config->avatarwidth . 'px; max-height: ' . $kunena_config->avatarheight . 'px;" /></span>';
 							} else {
-								$msg_html->avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" /></span>';
+								$msg_html->avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: ' . $kunena_config->avatarwidth . 'px; max-height: ' . $kunena_config->avatarheight . 'px;" /></span>';
 							}
 						} else {
-							$msg_html->avatar = '<span class="fb_avatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/nophoto.jpg" alt="" /></span>';
+							$msg_html->avatar = '<span class="fb_avatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/nophoto.jpg" alt="" style="max-width: ' . $kunena_config->avatarwidth . 'px; max-height: ' . $kunena_config->avatarheight . 'px;" /></span>';
 						}
 					}
 				} else {
@@ -697,8 +697,8 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 					$msg_html->karma = "<strong>" . _KARMA . ":</strong> $karmaPoints";
 
 					if ($kunena_my->id != '0' && $kunena_my->id != $userinfo->userid) {
-						$msg_html->karmaminus = CKunenaLink::GetKarmaLink ( 'decrease', $catid, $this->kunena_message->id, $userinfo->userid, '<img src="' . (isset ( $kunena_emoticons ['karmaminus'] ) ? (KUNENA_URLICONSPATH . $kunena_emoticons ['karmaminus']) : (KUNENA_URLEMOTIONSPATH . "karmaminus.gif")) . '" alt="Karma-" border="0" title="' . _KARMA_SMITE . '" align="middle" />' );
-						$msg_html->karmaplus = CKunenaLink::GetKarmaLink ( 'increase', $catid, $this->kunena_message->id, $userinfo->userid, '<img src="' . (isset ( $kunena_emoticons ['karmaplus'] ) ? (KUNENA_URLICONSPATH . $kunena_emoticons ['karmaplus']) : (KUNENA_URLEMOTIONSPATH . "karmaplus.gif")) . '" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" align="middle" />' );
+						$msg_html->karmaminus = CKunenaLink::GetKarmaLink ( 'decrease', $catid, $this->kunena_message->id, $userinfo->userid, '<img src="' . (isset ( $kunena_emoticons ['karmaminus'] ) ? (KUNENA_URLICONSPATH . $kunena_emoticons ['karmaminus']) : (KUNENA_URLEMOTIONSPATH . "karmaminus.gif")) . '" alt="Karma-" border="0" title="' . _KARMA_SMITE . '" align="absmiddle" />' );
+						$msg_html->karmaplus = CKunenaLink::GetKarmaLink ( 'increase', $catid, $this->kunena_message->id, $userinfo->userid, '<img src="' . (isset ( $kunena_emoticons ['karmaplus'] ) ? (KUNENA_URLICONSPATH . $kunena_emoticons ['karmaplus']) : (KUNENA_URLEMOTIONSPATH . "karmaplus.gif")) . '" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" align="absmiddle" />' );
 					}
 				}
 				/*let's see if we should use Missus integration */

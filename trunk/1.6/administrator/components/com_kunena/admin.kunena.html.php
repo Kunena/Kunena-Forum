@@ -1166,7 +1166,6 @@ td.fbtdtitle {
 		echo _COM_A_TEMPLATE_DESC?>
 		</td>
 	</tr>
-
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
 		echo _COM_A_TEMPLATE_IMAGE_PATH?>
@@ -1179,6 +1178,21 @@ td.fbtdtitle {
 
 		<td align="left" valign="top"><?php
 		echo _COM_A_TEMPLATE_IMAGE_PATH_DESC?>
+		</td>
+	</tr>
+
+	<tr align="center" valign="middle">
+		<td align="left" valign="top"><?php
+		echo _KUNENA_AV_POSITION?>
+		</td>
+
+		<td align="left" valign="top"><?php
+		echo $lists['avposition'];
+		?>
+		</td>
+
+		<td align="left" valign="top"><?php
+		echo _KUNENA_AV_POSITION_DESC?>
 		</td>
 	</tr>
 

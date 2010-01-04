@@ -381,6 +381,7 @@ class CKunenaConfig extends CKunenaConfigBase
 	// New for 1.6 -> Hide images and files for guests
 	var $showimgforguest	     = 1;
     var $showfileforguest	     = 1;
+    var $avposition   		     = 'right';
 
     public function __construct($userinfo=null)
     {

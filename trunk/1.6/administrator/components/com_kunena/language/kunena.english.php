@@ -24,6 +24,12 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.6.0
 
+DEFINE('_KUNENA_AV_POSITION', 'Avatar Position');
+DEFINE('_KUNENA_AV_POSITION_DESC', 'You can change position of the profile Avatar in the Thread page. Default is "Right"');
+DEFINE('_KUNENA_AV_LEFT', 'Left');
+DEFINE('_KUNENA_AV_RIGHT', 'Right');
+DEFINE('_KUNENA_AV_TOP', 'Top');
+DEFINE('_KUNENA_AV_BOTTOM', 'Bottom');
 define('_KUNENA_PDF_NOT_GENERATED_MESSAGE_DELETED', 'The thread has been deleted, so the pdf can not be generated');
 define('_KUNENA_NO_REPLIES', 'No Replies');
 define('_KUNENA_SHOW_AVATAR_ON_CAT', 'Show Avatar on Categories view, Recent discussions and My Discussions?');

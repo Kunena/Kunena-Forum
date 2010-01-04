@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+04-Jan-2010 @quila
++ [#19243] Make profile on left/right configurable
+
 04-Jan-2010 Xillibit
 # [#19107] Delete deprecated templates during install (part 2)
 + [#19107] Delete deprecated templates during install

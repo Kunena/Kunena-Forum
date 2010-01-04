@@ -800,9 +800,16 @@ function showConfig($option) {
 	$lists ['sefcats'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_sefcats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->sefcats );
 	$lists ['sefutf8'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_sefutf8', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->sefutf8 );
 	// New for 1.6 -> Hide images and files for guests
-	$lists ['showimgforguest'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showimgforguest', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showimgforguest );
-	$lists ['showfileforguest'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showfileforguest', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showfileforguest );
-	html_Kunena::showConfig ( $kunena_config, $lists, $option );
+	$lists['showimgforguest'] = JHTML::_('select.genericlist', $yesno, 'cfg_showimgforguest', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showimgforguest);
+	$lists['showfileforguest'] = JHTML::_('select.genericlist', $yesno, 'cfg_showfileforguest', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showfileforguest); 
+    // Avatar Position
+    $avlist = array ();
+	$avlist[] = JHTML::_('select.option', 'left',_KUNENA_AV_LEFT);
+	$avlist[] = JHTML::_('select.option', 'right',_KUNENA_AV_RIGHT);
+	$avlist[] = JHTML::_('select.option', 'bottom',_KUNENA_AV_BOTTOM);
+	$avlist[] = JHTML::_('select.option', 'top',_KUNENA_AV_TOP);
+    $lists['avposition'] = JHTML::_('select.genericlist', $avlist, 'cfg_avposition', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->avposition);
+	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 
 function saveConfig($option) {

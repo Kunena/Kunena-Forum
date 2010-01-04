@@ -28,118 +28,114 @@ $kunena_session = & CKunenaSession::getInstance ();
 global $kunena_systime;
 global $imageLocation, $fileLocation, $board_title;
 
-$catid = JRequest::getInt ( 'catid', 0 );
-$id = JRequest::getInt ( 'id', 0 );
-$do = JRequest::getCmd ( 'do', '' );
-
 $kunena_my = &JFactory::getUser ();
 $kunena_db = &JFactory::getDBO ();
 
-$action = JRequest::getCmd ( 'action', '' );
-$message = JRequest::getVar ( 'message', '', 'REQUEST', 'string', JREQUEST_ALLOWRAW );
-$resubject = JRequest::getVar ( 'resubject', '', 'REQUEST', 'string' );
+$subject = JRequest::getVar ( 'subject', '', 'POST', 'string', JREQUEST_ALLOWRAW );
+$message = JRequest::getVar ( 'message', '', 'POST', 'string', JREQUEST_ALLOWRAW );
 $attachfile = JRequest::getVar ( 'attachfile', NULL, 'FILES', 'array' );
 $attachimage = JRequest::getVar ( 'attachimage', NULL, 'FILES', 'array' );
-$fb_authorname = JRequest::getVar ( 'fb_authorname', '' );
+$authorname = JRequest::getVar ( 'authorname', '' );
 $email = JRequest::getVar ( 'email', '' );
-$parentid = JRequest::getInt ( 'parentid', 0 );
-$subject = JRequest::getVar ( 'subject', '' );
 $contentURL = JRequest::getVar ( 'contentURL', '' );
 $subscribeMe = JRequest::getVar ( 'subscribeMe', '' );
+$topic_emoticon = JRequest::getInt ( 'topic_emoticon', 0 );
 
-// Support for old $replyto variable in post reply/quote
-if (! $id)
+$id = JRequest::getInt ( 'id', 0 );
+$parentid = JRequest::getInt ( 'parentid', 0 );
+if (! $id) {
+	// Support for old $replyto variable in post reply/quote
 	$id = JRequest::getInt ( 'replyto', 0 );
+}
+$catid = JRequest::getInt ( 'catid', 0 );
+$do = JRequest::getCmd ( 'do', '' );
+$action = JRequest::getCmd ( 'action', '' );
 
-if ($id && $do != 'domovepost' && $do != 'domergepost' && $do != 'dosplit') {
-	// If message exists, override catid to be sure that user can post there
-	$kunena_db->setQuery ( "SELECT catid FROM #__fb_messages WHERE id='{$id}'" );
-	$msgcat = $kunena_db->loadResult ();
+if ($id || $parentid) {
+	// Check that message and category exists and fill some information for later use
+	$kunena_db->setQuery ( "SELECT m.*, t.message, c.name AS catname, c.review, c.class_sfx FROM #__fb_messages AS m INNER JOIN #__fb_messages_text AS t ON t.mesid=m.id INNER JOIN #__fb_categories AS c ON c.id=m.catid WHERE m.id='" . ($parentid ? $parentid : $id) . "'" );
+	$msg_cat = $kunena_db->loadObject ();
 	check_dberror ( 'Unable to check message.' );
-	if ($msgcat)
-		$catid = $msgcat;
+	if (! $msg_cat) {
+		echo _POST_INVALID;
+		return;
+	}
+	// Make sure that category id is from the message (post may be moved)
+	if ($do != 'domovepost' && $do != 'domergepost' && $do != 'dosplit') {
+		$catid = $msg_cat->catid;
+	}
+} else {
+	// Check that category exists and fill some information for later use
+	$kunena_db->setQuery ( "SELECT 0 as id, id AS catid, name AS catname, review, class_sfx FROM #__fb_categories WHERE id='{$catid}'" );
+	$msg_cat = $kunena_db->loadObject ();
+	check_dberror ( 'Unable to load category.' );
+	if (! $msg_cat) {
+		echo _KUNENA_NO_ACCESS;
+		return;
+	}
 }
 
-//get the allowed forums and turn it into an array
-$allow_forum = ($kunena_session->allowed != '') ? explode ( ',', $kunena_session->allowed ) : array ();
+// Check user access rights
 $kunena_is_admin = CKunenaTools::isAdmin ();
-
-if (! in_array ( $catid, $allow_forum )) {
+$allow_forum = ($kunena_session->allowed != '') ? explode ( ',', $kunena_session->allowed ) : array ();
+if (! in_array ( $catid, $allow_forum ) && ! $kunena_is_admin) {
 	echo _KUNENA_NO_ACCESS;
 	return;
 }
 
-//
-//ob_start();
-$pubwrite = ( int ) $kunena_config->pubwrite;
-//ip for floodprotection, post logging, subscriptions, etcetera
-$ip = $_SERVER ["REMOTE_ADDR"];
-
 //reset variables used
 $this->kunena_editmode = 0;
 
-// Begin captcha
+// Captcha
 if ($kunena_config->captcha == 1 && $kunena_my->id < 1) {
 	$number = $_POST ['txtNumber'];
 
 	if ($message != NULL) {
 		$session = & JFactory::getSession ();
 		$rand = $session->get ( 'fb_image_random_value' );
-		unset ( $session );
 
 		if (md5 ( $number ) != $rand) {
 			$mess = _KUNENA_CAPERR;
 			echo "<script language='javascript' type='text/javascript'>alert('" . $mess . "')</script>";
 			echo "<script language='javascript' type='text/javascript'>window.history.back()</script>";
 			return;
-			$kunena_app->close ();
-			//break;
 		}
 	}
 }
 
-// Finish captcha
+//ip for floodprotection, post logging, subscriptions, etcetera
+$ip = $_SERVER ["REMOTE_ADDR"];
 
-
-//flood protection
-$kunena_config->floodprotection = ( int ) $kunena_config->floodprotection;
-
-if ($kunena_config->floodprotection != 0) {
+// Flood protection
+if ($kunena_config->floodprotection && $do != "edit" && ! $kunena_is_admin) {
 	$kunena_db->setQuery ( "SELECT MAX(time) FROM #__fb_messages WHERE ip='{$ip}'" );
-	$kunena_db->query () or check_dberror ( "Unable to load max time for current request from IP: $ip" );
 	$lastPostTime = $kunena_db->loadResult ();
+	check_dberror ( "Unable to load max time for current request from IP: $ip" );
+
+	if ($lastPostTime + $kunena_config->floodprotection > $kunena_systime) {
+		echo _POST_TOPIC_FLOOD1;
+		echo $kunena_config->floodprotection . " " . _POST_TOPIC_FLOOD2 . "<br />";
+		echo _POST_TOPIC_FLOOD3;
+		return;
+	}
 }
 
-if (($kunena_config->floodprotection != 0 && ((($lastPostTime + $kunena_config->floodprotection) < $kunena_systime) || $do == "edit" || $kunena_is_admin)) || $kunena_config->floodprotection == 0) {
-	//Let's find out who we're dealing with if a registered user wants to make a post
-	if ($kunena_my->id) {
-		$my_name = $kunena_config->username ? $kunena_my->username : $kunena_my->name;
-		$this->kunena_my_email = $kunena_my->email;
-		$this->kunena_registered_user = 1;
-		if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
-			if (! empty ( $fb_authorname ))
-				$my_name = $fb_authorname;
-			if (isset ( $email ) && ! empty ( $email ))
-				$this->kunena_my_email = $email;
-		}
-	} else {
-		$my_name = $fb_authorname;
-		$this->kunena_my_email = (isset ( $email ) && ! empty ( $email )) ? $email : '';
-		$this->kunena_registered_user = 0;
+//Let's find out who we're dealing with if a registered user wants to make a post
+if ($kunena_my->id) {
+	$my_name = $kunena_config->username ? $kunena_my->username : $kunena_my->name;
+	$this->kunena_my_email = $kunena_my->email;
+	$this->kunena_registered_user = 1;
+	if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
+		if (! empty ( $authorname ))
+			$my_name = $authorname;
+		if (! empty ( $email ))
+			$this->kunena_my_email = $email;
 	}
 } else {
-	echo _POST_TOPIC_FLOOD1;
-	echo $kunena_config->floodprotection . " " . _POST_TOPIC_FLOOD2 . "<br />";
-	echo _POST_TOPIC_FLOOD3;
-	return;
+	$my_name = $authorname;
+	$this->kunena_my_email = (isset ( $email ) && ! empty ( $email )) ? $email : '';
+	$this->kunena_registered_user = 0;
 }
-
-//Now find out the forumname to which the user wants to post (for reference only)
-$kunena_db->setQuery ( "SELECT * FROM #__fb_categories WHERE id='{$catid}'" );
-$kunena_db->query () or check_dberror ( 'Unable to load category.' );
-
-$objCatInfo = $kunena_db->loadObject ();
-$catName = $objCatInfo->name;
 ?>
 
 <table border="0" cellspacing="0" cellpadding="0" width="100%"
@@ -152,7 +148,7 @@ $catName = $objCatInfo->name;
 			require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'pathway.php');
 		}
 
-		if ($action == "post" && (hasPostPermission ( $kunena_db, $catid, $parentid, $kunena_my->id, $kunena_config->pubwrite, CKunenaTools::isModerator($kunena_my->id, $catid) ))) {
+		if ($action == "post" && hasPostPermission ( $kunena_db, $catid, $parentid, $kunena_my->id, $kunena_config->pubwrite, CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
 			?>
 
 		<table border="0" cellspacing="1" cellpadding="3" width="70%"
@@ -171,20 +167,16 @@ $catName = $objCatInfo->name;
 				echo _POST_FORGOT_MESSAGE;
 			} else {
 				if ($parent == 0) {
-					$thread = $parent = 0;
+					$thread = 0;
 				}
 
-				$kunena_db->setQuery ( "SELECT id, thread, parent FROM #__fb_messages WHERE id='{$parent}'" );
-				$kunena_db->query () or check_dberror ( 'Unable to load parent post.' );
-				$m = $kunena_db->loadObject ();
-
-				if (count ( $m ) < 1) {
+				if ($msg_cat->id == 0) {
 					// bad parent, create a new post
 					$parent = 0;
 					$thread = 0;
 				} else {
 
-					$thread = $m->parent == 0 ? $m->id : $m->thread;
+					$thread = $msg_cat->parent == 0 ? $msg_cat->id : $msg_cat->thread;
 				}
 
 				if ($catid == 0) {
@@ -201,47 +193,42 @@ $catName = $objCatInfo->name;
 				$messagesubject = $subject; //before we add slashes and all... used later in mail
 
 
-				$fb_authorname = JString::trim ( addslashes ( $my_name ) );
+				$authorname = JString::trim ( addslashes ( $my_name ) );
 				$subject = JString::trim ( addslashes ( $subject ) );
 				$message = JString::trim ( addslashes ( $message ) );
+				$email = JString::trim ( addslashes ( $this->kunena_my_email ) );
+				$topic_emoticon = ($topic_emoticon < 0 || $topic_emoticon > 7) ? 0 : $topic_emoticon;
+				$posttime = CKunenaTools::fbGetInternalTime ();
 
 				if ($contentURL != "empty") {
 					$message = $contentURL . '\n\n' . $message;
 				}
 
-				//--
-				$email = JString::trim ( addslashes ( $this->kunena_my_email ) );
-				$topic_emoticon = ( int ) $topic_emoticon;
-				$topic_emoticon = ($topic_emoticon < 0 || $topic_emoticon > 7) ? 0 : $topic_emoticon;
-				$posttime = CKunenaTools::fbGetInternalTime ();
-				//check if the post must be reviewed by a Moderator prior to showing
-				//doesn't apply to admin/moderator posts ;-)
+				//check if the post must be reviewed by a moderator prior to showing
 				$holdPost = 0;
-
-				if (! CKunenaTools::isModerator($kunena_my->id, $catid)) {
-					$kunena_db->setQuery ( "SELECT review FROM #__fb_categories WHERE id='{$catid}'" );
-					$kunena_db->query () or check_dberror ( 'Unable to load review flag from categories.' );
-					$holdPost = $kunena_db->loadResult ();
+				if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
+					$holdPost = $msg_cat->review;
 				}
 
-				//
-				// Final chance to check whether or not to proceed
 				// DO NOT PROCEED if there is an exact copy of the message already in the db
-				//
 				$duplicatetimewindow = $posttime - $kunena_config->kunena_sessiontimeout;
-				$kunena_db->setQuery ( "SELECT m.id FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE m.userid='{$kunena_my->id}' AND m.name='{$fb_authorname}' AND m.email='{$email}' AND m.subject='{$subject}' AND m.ip='{$ip}' AND t.message='{$message}' AND m.time>='{$duplicatetimewindow}'" );
-				$existingPost = $kunena_db->loadObject ();
+				$kunena_db->setQuery ( "SELECT m.id FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE m.userid='{$kunena_my->id}' AND m.name='{$authorname}' AND m.email='{$email}' AND m.subject='{$subject}' AND m.ip='{$ip}' AND t.message='{$message}' AND m.time>='{$duplicatetimewindow}'" );
+				$pid = ( int ) $kunena_db->loadResult ();
 				check_dberror ( 'Unable to load post.' );
-				$pid = 0;
-				if ($existingPost !== null)
-					$pid = $existingPost->id;
 
-				if (! $pid) {
+				if ($pid) {
+					// We get here in case we have detected a double post
+					// We did not do any further processing and just display the failure message
+					echo '<br /><br /><div align="center">' . _POST_DUPLICATE_IGNORED . '</div><br /><br />';
+					echo CKunenaLink::GetLatestPostAutoRedirectHTML ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid );
+				} else {
 					$kunena_db->setQuery ( "INSERT INTO #__fb_messages
                                     						(parent,thread,catid,name,userid,email,subject,time,ip,topic_emoticon,hold)
-                                    						VALUES('$parent','$thread','$catid'," . $kunena_db->quote ( $fb_authorname ) . ",'{$kunena_my->id}'," . $kunena_db->quote ( $email ) . "," . $kunena_db->quote ( $subject ) . ",'$posttime','$ip','$topic_emoticon','$holdPost')" );
+                                    						VALUES('$parent','$thread','$catid'," . $kunena_db->quote ( $authorname ) . ",'{$kunena_my->id}'," . $kunena_db->quote ( $email ) . "," . $kunena_db->quote ( $subject ) . ",'$posttime','$ip','$topic_emoticon','$holdPost')" );
 
-					if ($kunena_db->query ()) {
+					if (! $kunena_db->query ()) {
+						echo _POST_ERROR_MESSAGE;
+					} else {
 						$pid = $kunena_db->insertId ();
 
 						// now increase the #s in categories only case approved
@@ -321,6 +308,7 @@ $catName = $objCatInfo->name;
 							}
 						}
 						// End Modify for activities stream
+
 
 						//update the user posts count
 						if ($kunena_my->id) {
@@ -440,13 +428,13 @@ $catName = $objCatInfo->name;
 
 									$mailsender = stripslashes ( $board_title ) . " " . _GEN_FORUM;
 
-									$mailsubject = "[" . stripslashes ( $board_title ) . " " . _GEN_FORUM . "] " . stripslashes ( $messagesubject ) . " (" . stripslashes ( $catName ) . ")";
+									$mailsubject = "[" . stripslashes ( $board_title ) . " " . _GEN_FORUM . "] " . stripslashes ( $messagesubject ) . " (" . stripslashes ( $msg_cat->catname ) . ")";
 
 									$msg = "$subs->name,\n\n";
 									$msg .= JString::trim ( _KUNENA_POST_EMAIL_NOTIFICATION1 ) . " " . stripslashes ( $board_title ) . " " . _GEN_FORUM . "\n\n";
 									$msg .= _GEN_SUBJECT . ": " . stripslashes ( $messagesubject ) . "\n";
-									$msg .= _GEN_FORUM . ": " . stripslashes ( $catName ) . "\n";
-									$msg .= _VIEW_POSTED . ": " . stripslashes ( $fb_authorname ) . "\n\n";
+									$msg .= _GEN_FORUM . ": " . stripslashes ( $msg_cat->catname ) . "\n";
+									$msg .= _VIEW_POSTED . ": " . stripslashes ( $authorname ) . "\n\n";
 									$msg .= _KUNENA_POST_EMAIL_NOTIFICATION2 . '\n';
 									$msg .= "URL: $LastPostUrl\n\n";
 									if ($kunena_config->mailfull == 1) {
@@ -499,13 +487,13 @@ $catName = $objCatInfo->name;
 								foreach ( $modsList as $mods ) {
 									$mailsender = stripslashes ( $board_title ) . " " . _GEN_FORUM;
 
-									$mailsubject = "[" . stripslashes ( $board_title ) . " " . _GEN_FORUM . "] " . stripslashes ( $messagesubject ) . " (" . stripslashes ( $catName ) . ")";
+									$mailsubject = "[" . stripslashes ( $board_title ) . " " . _GEN_FORUM . "] " . stripslashes ( $messagesubject ) . " (" . stripslashes ( $msg_cat->catname ) . ")";
 
 									$msg = "$mods->name,\n\n";
 									$msg .= JString::trim ( _KUNENA_POST_EMAIL_MOD1 ) . " " . stripslashes ( $board_title ) . " " . JString::trim ( _GEN_FORUM ) . "\n\n";
 									$msg .= _GEN_SUBJECT . ": " . stripslashes ( $messagesubject ) . "\n";
-									$msg .= _GEN_FORUM . ": " . stripslashes ( $catName ) . "\n";
-									$msg .= _VIEW_POSTED . ": " . stripslashes ( $fb_authorname ) . "\n\n";
+									$msg .= _GEN_FORUM . ": " . stripslashes ( $msg_cat->catname ) . "\n";
+									$msg .= _VIEW_POSTED . ": " . stripslashes ( $authorname ) . "\n\n";
 									$msg .= _KUNENA_POST_EMAIL_MOD2 . '\n';
 									$msg .= "URL: $LastPostUrl\n\n";
 									if ($kunena_config->mailfull == 1) {
@@ -549,14 +537,7 @@ $catName = $objCatInfo->name;
 							echo '<br /><br /><div align="center">' . _POST_SUCCESS_POSTED . '</div><br /><br />';
 							echo CKunenaLink::GetLatestPostAutoRedirectHTML ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid );
 						}
-					} else {
-						echo _POST_ERROR_MESSAGE;
 					}
-				} else // We get here in case we have detected a double post
-// We did not do any further processing and just display the success message
-				{
-					echo '<br /><br /><div align="center">' . _POST_DUPLICATE_IGNORED . '</div><br /><br />';
-					echo CKunenaLink::GetLatestPostAutoRedirectHTML ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid );
 				}
 			}
 			?>
@@ -569,37 +550,25 @@ $catName = $objCatInfo->name;
 			echo '<br /><br /><div align="center">' . _SUBMIT_CANCEL . "</div><br />";
 			echo CKunenaLink::GetLatestPostAutoRedirectHTML ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid );
 		} else {
-			if ($do == "quote" && (hasPostPermission ( $kunena_db, $catid, $id, $kunena_my->id, $kunena_config->pubwrite, CKunenaTools::isModerator($kunena_my->id, $catid) ))) { //reply do quote
+			if (($do == 'quote' || $do == 'reply') && hasPostPermission ( $kunena_db, $catid, $id, $kunena_my->id, $kunena_config->pubwrite, CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
 				$parentid = 0;
-				$id = ( int ) $id;
-
-				if ($id > 0) {
-					$kunena_db->setQuery ( "SELECT m.*, t.mesid, t.message FROM #__fb_messages AS m, #__fb_messages_text AS t WHERE m.id='{$id}' AND t.mesid='{$id}'" );
-					$kunena_db->query ();
-
-					if ($kunena_db->getNumRows () > 0) {
-						unset ( $message );
-						$message = $kunena_db->loadObject ();
-
-						// don't forget stripslashes
-						//$message->message=smile::smileReplace($message->message,0);
-						$table = array_flip ( get_html_translation_table ( HTML_ENTITIES, ENT_QUOTES ) );
-						//$quote = strtr($message->message, $table);
-						$quote = stripslashes ( $message->message );
-
-						$this->kunena_message_text = "[b]" . stripslashes ( $message->name ) . " " . _POST_WROTE . ":[/b]\n";
-						$this->kunena_message_text .= '[quote]' . $quote . "[/quote]";
-						//$quote = smile::fbStripHtmlTags($quote);
-						$resubject = strtr ( $message->subject, $table );
-
-						$resubject = JString::strtolower ( JString::substr ( $resubject, 0, JString::strlen ( _POST_RE ) ) ) == JString::strtolower ( _POST_RE ) ? stripslashes ( $resubject ) : _POST_RE . stripslashes ( $resubject );
-						//$resubject = kunena_htmlspecialchars($resubject);
-						$resubject = smile::fbStripHtmlTags ( $resubject );
-						//$resubject = smile::fbStripHtmlTags($resubject);
-						$parentid = $message->id;
-						$authorName = $my_name;
+				if ($msg_cat->id > 0) {
+					$message = $msg_cat;
+					$parentid = $message->id;
+					if ($do == 'quote') {
+						$this->message_text = "[b]" . kunena_htmlspecialchars ( stripslashes ( $message->name ) ) . " " . _POST_WROTE . ":[/b]\n";
+						$this->message_text .= '[quote]' . kunena_htmlspecialchars ( stripslashes ( $message->message ) ) . "[/quote]";
+					} else {
+						$this->message_text = '';
 					}
+					$reprefix = JString::substr ( stripslashes ( $message->subject ), 0, JString::strlen ( _POST_RE ) ) != _POST_RE ? _POST_RE . ' ' : '';
+					$resubject = $reprefix . kunena_htmlspecialchars ( stripslashes ( $message->subject ) );
+					$this->resubject = $resubject;
+				} else {
+					$this->message_text = '';
+					$this->resubject = '';
 				}
+				$this->authorName = kunena_htmlspecialchars ( $my_name );
 				?>
 
 		<form
@@ -613,8 +582,9 @@ $catName = $objCatInfo->name;
 				?>" /> <input type="hidden" name="catid"
 			value="<?php
 				echo $catid;
-				?>" /> <input type="hidden" name="action" value="post" />
-		<input type="hidden" name="contentURL" value="empty" /> <?php
+				?>" /> <input type="hidden" name="action" value="post" /> <input
+			type="hidden" name="contentURL" value="empty" />
+		<?php
 				//get the writing stuff in:
 				$no_upload = "0"; //only edit mode should disallow this
 
@@ -627,66 +597,19 @@ $catName = $objCatInfo->name;
 				?>
 		</form>
 		<?php
-			} else if ($do == "reply" && (hasPostPermission ( $kunena_db, $catid, $id, $kunena_my->id, $kunena_config->pubwrite, CKunenaTools::isModerator($kunena_my->id, $catid) ))) { // reply no quote
+			} else if ($do == "newFromBot" && hasPostPermission ( $kunena_db, $catid, $id, $kunena_my->id, $kunena_config->pubwrite, CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
+				// The Mosbot "discuss on forums" has detected an unexisting thread and wants to create one
 				$parentid = 0;
 				$id = ( int ) $id;
 				$this->kunena_set_focus = 0;
-
-				if ($id > 0) {
-					$kunena_db->setQuery ( "SELECT m.*, t.mesid, t.message FROM #__fb_messages AS m, #__fb_messages_text AS t WHERE m.id='{$id}' AND t.mesid='{$id}'" );
-					$kunena_db->query ();
-
-					if ($kunena_db->getNumRows () > 0) {
-						unset ( $message );
-						$message = $kunena_db->loadObject ();
-						$table = array_flip ( get_html_translation_table ( HTML_ENTITIES ) );
-						$resubject = kunena_htmlspecialchars ( strtr ( $message->subject, $table ) );
-						$resubject = JString::strtolower ( JString::substr ( $resubject, 0, JString::strlen ( _POST_RE ) ) ) == JString::strtolower ( _POST_RE ) ? stripslashes ( $resubject ) : _POST_RE . stripslashes ( $resubject );
-						$parentid = $message->id;
-						$this->kunena_message_text = "";
-					}
-				}
-
-				$authorName = $my_name;
-				?>
-
-		<form
-			action="<?php
-				echo JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=post' );
-				?>"
-			method="post" name="postform" enctype="multipart/form-data"><input
-			type="hidden" name="parentid"
-			value="<?php
-				echo $parentid;
-				?>" /> <input type="hidden" name="catid"
-			value="<?php
-				echo $catid;
-				?>" /> <input type="hidden" name="action" value="post" />
-		<input type="hidden" name="contentURL" value="empty" /> <?php
-				//get the writing stuff in:
-				if (file_exists ( KUNENA_ABSTMPLTPATH . '/write.html.php' )) {
-					include (KUNENA_ABSTMPLTPATH . '/write.html.php');
-				} else {
-					include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'write.html.php');
-				}
-				?>
-		</form>
-		<?php
-			} else if ($do == "newFromBot" && (hasPostPermission ( $kunena_db, $catid, $id, $kunena_my->id, $kunena_config->pubwrite, CKunenaTools::isModerator($kunena_my->id, $catid) ))) { // The Mosbot "discuss on forums" has detected an unexisting thread and wants to create one
-				$parentid = 0;
-				$id = ( int ) $id;
-				$this->kunena_set_focus = 0;
-				//                $resubject = base64_decode($resubject); //per mf#6100  -- jdg 16/07/2005
 				$resubject = base64_decode ( strtr ( $resubject, "()", "+/" ) );
 				$resubject = str_replace ( '%20', ' ', $resubject );
 				$resubject = preg_replace ( '/%32/', '&', $resubject );
 				$resubject = preg_replace ( '/%33/', ';', $resubject );
 				$resubject = preg_replace ( '/\'/', '&#039;', $resubject );
-				$resubject = preg_replace ( '/\"/', '&quot;', $resubject );
-				//$table = array_flip(get_html_translation_table(HTML_ENTITIES));
-				//$resubject = strtr($resubject, $table);
+				$this->resubject = preg_replace ( '/\"/', '&quot;', $resubject );
 				$this->kunena_from_bot = 1; //this new topic comes from the discuss mambot
-				$authorName = kunena_htmlspecialchars ( $my_name );
+				$this->authorName = kunena_htmlspecialchars ( $my_name );
 				$rowid = JRequest::getInt ( 'rowid', 0 );
 				$rowItemid = JRequest::getInt ( 'rowItemid', 0 );
 
@@ -710,8 +633,8 @@ $catName = $objCatInfo->name;
 				?>" /> <input type="hidden" name="catid"
 			value="<?php
 				echo $catid;
-				?>" /> <input type="hidden" name="action" value="post" />
-		<input type="hidden" name="contentURL"
+				?>" /> <input type="hidden" name="action" value="post" /> <input
+			type="hidden" name="contentURL"
 			value="<?php
 				echo $contentURL;
 				?>" /> <?php
@@ -724,51 +647,35 @@ $catName = $objCatInfo->name;
 				?>
 		</form>
 		<?php
-			} else if ($do == "edit") {
+			} else if ($do == "edit" && hasPostPermission ( $kunena_db, $catid, $id, $kunena_my->id, $kunena_config->pubwrite, CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
 				$allowEdit = 0;
-				$id = ( int ) $id;
-				$kunena_db->setQuery ( "SELECT * FROM #__fb_messages AS m LEFT JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE m.id='{$id}'" );
-				$message1 = $kunena_db->loadObjectList ();
-				check_dberror ( "Unable to load message." );
-				$mes = $message1 [0];
+				$message = $msg_cat;
 
-				$userID = $mes->userid;
-
-				//Check for a moderator or superadmin
-				if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
+				if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
+					// Moderator can edit any message
 					$allowEdit = 1;
-				}
-
-				if ($kunena_config->useredit == 1 && $kunena_my->id != "") {
-					//Now, if the author==viewer and the viewer is allowed to edit his/her own post the let them edit
-					if ($kunena_my->id == $userID) {
-						if ((( int ) $kunena_config->useredittime) == 0) {
+				} else if ($kunena_config->useredit == 1 && $kunena_my->id && $kunena_my->id == $message->userid) {
+					// Registered users can edit their own messages, if it is allowed
+					if ($kunena_config->useredittime == 0) {
+						$allowEdit = 1;
+					} else {
+						//Check whether edit is in time
+						$modtime = $message->modified_time;
+						if (! $modtime) {
+							$modtime = $message->time;
+						}
+						if ($modtime + $kunena_config->useredittime >= CKunenaTools::fbGetInternalTime ()) {
 							$allowEdit = 1;
-						} else {
-							//Check whether edit is in time
-							$modtime = $mes->modified_time;
-							if (! $modtime) {
-								$modtime = $mes->time;
-							}
-							if (($modtime + (( int ) $kunena_config->useredittime)) >= CKunenaTools::fbGetInternalTime ()) {
-								$allowEdit = 1;
-							}
 						}
 					}
 				}
 
 				if ($allowEdit == 1) {
-					//we're now in edit mode
 					$this->kunena_editmode = 1;
 
-					/*foreach ($message1 as $mes)
-                        {*/
-
-					$this->kunena_message_text = stripslashes ( $mes->message );
-					$table = array_flip ( get_html_translation_table ( HTML_ENTITIES ) );
-
-					$resubject = kunena_htmlspecialchars ( stripslashes ( $mes->subject ) );
-					$authorName = kunena_htmlspecialchars ( $mes->name );
+					$this->message_text = kunena_htmlspecialchars ( stripslashes ( $message->message ) );
+					$this->resubject = kunena_htmlspecialchars ( stripslashes ( $message->subject ) );
+					$this->authorName = kunena_htmlspecialchars ( stripslashes ( $message->name ) );
 					?>
 
 		<form
@@ -776,9 +683,8 @@ $catName = $objCatInfo->name;
 					echo JRoute::_ ( KUNENA_LIVEURLREL . "&amp;catid=$catid&amp;func=post" );
 					?>"
 			method="post" name="postform" enctype="multipart/form-data" /><input
-			type="hidden" name="id"
-			value="<?php
-					echo $mes->id;
+			type="hidden" name="id" value="<?php
+					echo $message->id;
 					?>" /> <input type="hidden" name="do" value="editpostnow" /> <?php
 					//get the writing stuff in:
 					$this->kunena_no_file_upload = 0;
@@ -808,11 +714,11 @@ $catName = $objCatInfo->name;
 				$userid = $mes->userid;
 
 				//Check for a moderator or superadmin
-				if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
+				if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 					$allowEdit = 1;
 				}
 
-				if ($kunena_config->useredit == 1 && $kunena_my->id != "") {
+				if ($kunena_config->useredit == 1 && $kunena_my->id != 0) {
 					//Now, if the author==viewer and the viewer is allowed to edit his/her own post the let them edit
 					if ($kunena_my->id == $userid) {
 						if ((( int ) $kunena_config->useredittime) == 0) {
@@ -853,13 +759,13 @@ $catName = $objCatInfo->name;
 						// doesn't apply to admin/moderator posts ;-)
 						$holdPost = 0;
 
-						if (! CKunenaTools::isModerator($kunena_my->id, $catid)) {
+						if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 							$kunena_db->setQuery ( "SELECT review FROM #__fb_categories WHERE id='{$catid}'" );
 							$kunena_db->query () or check_dberror ( 'Unable to load review flag from categories.' );
 							$holdPost = $kunena_db->loadResult ();
 						}
 
-						$kunena_db->setQuery ( "UPDATE #__fb_messages SET name=" . $kunena_db->quote ( $fb_authorname ) . ", email=" . $kunena_db->quote ( addslashes ( $email ) ) . (($kunena_config->editmarkup) ? " ,modified_by='" . $modified_by . "' ,modified_time='" . $modified_time . "' ,modified_reason=" . $kunena_db->quote ( $modified_reason ) : "") . ", subject=" . $kunena_db->quote ( addslashes ( $subject ) ) . ", topic_emoticon='" . (( int ) $topic_emoticon) . "', hold='" . (( int ) $holdPost) . "' WHERE id={$id}" );
+						$kunena_db->setQuery ( "UPDATE #__fb_messages SET name=" . $kunena_db->quote ( $authorname ) . ", email=" . $kunena_db->quote ( addslashes ( $email ) ) . (($kunena_config->editmarkup) ? " ,modified_by='" . $modified_by . "' ,modified_time='" . $modified_time . "' ,modified_reason=" . $kunena_db->quote ( $modified_reason ) : "") . ", subject=" . $kunena_db->quote ( addslashes ( $subject ) ) . ", topic_emoticon='" . $topic_emoticon . "', hold='" . (( int ) $holdPost) . "' WHERE id={$id}" );
 
 						$dbr_nameset = $kunena_db->query ();
 						$kunena_db->setQuery ( "UPDATE #__fb_messages_text SET message=" . $kunena_db->quote ( $message ) . " WHERE mesid='{$id}'" );
@@ -897,7 +803,7 @@ $catName = $objCatInfo->name;
 					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
 				}
 			} else if ($do == "delete") {
-				if (! CKunenaTools::isModerator($kunena_my->id, $catid)) {
+				if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
 				}
 
@@ -950,7 +856,7 @@ $catName = $objCatInfo->name;
 		<?php
 				}
 			} else if ($do == "deletepostnow") {
-				if (! CKunenaTools::isModerator($kunena_my->id, $catid)) {
+				if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
 				}
 
@@ -1002,7 +908,7 @@ $catName = $objCatInfo->name;
 
 			} //fi $do==deletepostnow
 else if ($do == "move") {
-				if (! CKunenaTools::isModerator($kunena_my->id, $catid)) {
+				if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
 				}
 
@@ -1170,7 +1076,7 @@ else if ($do == "move") {
 				}
 				$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ), $success_msg );
 			} else if ($do == "sticky") {
-				if (! CKunenaTools::isModerator($kunena_my->id, $catid)) {
+				if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
 				}
 
@@ -1182,7 +1088,7 @@ else if ($do == "move") {
 				}
 				$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ), $success_msg );
 			} else if ($do == "unsticky") {
-				if (! CKunenaTools::isModerator($kunena_my->id, $catid)) {
+				if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
 				}
 
@@ -1194,7 +1100,7 @@ else if ($do == "move") {
 				}
 				$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ), $success_msg );
 			} else if ($do == "lock") {
-				if (! CKunenaTools::isModerator($kunena_my->id, $catid)) {
+				if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
 				}
 
@@ -1206,7 +1112,7 @@ else if ($do == "move") {
 				}
 				$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ), $success_msg );
 			} else if ($do == "unlock") {
-				if (! CKunenaTools::isModerator($kunena_my->id, $catid)) {
+				if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
 				}
 

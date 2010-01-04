@@ -28,18 +28,15 @@ $kunena_my = &JFactory::getUser ();
 $id = JRequest::getInt ( 'id', 0 );
 $catid = JRequest::getInt ( 'catid', 0 );
 $parentid = JRequest::getInt ( 'parentid', 0 );
-$resubject = JRequest::getVar ( 'resubject', '' );
 
 //Some initial thingies needed anyway:
-if (! isset ( $this->kunena_message_text ))
-	$this->kunena_message_text = '';
 if (! isset ( $this->kunena_set_focus ))
 	$this->kunena_set_focus = 0;
 if (! isset ( $this->kunena_no_image_upload ))
 	$this->kunena_no_image_upload = 0;
 if (! isset ( $this->kunena_no_file_upload ))
 	$this->kunena_no_file_upload = 0;
-$authorName = stripslashes ( $authorName );
+$authorName = stripslashes ( $this->authorName );
 
 include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
 
@@ -62,7 +59,7 @@ echo KUNENA_BOARD_CLASS;
 echo KUNENA_BOARD_CLASS;
 ?>_bt_cvr5">
 <table class="fb_blocktable<?php
-echo $objCatInfo->class_sfx;
+echo $msg_cat->class_sfx;
 ?>"
 	id="fb_postmessage" border="0" cellspacing="0" cellpadding="0"
 	width="100%">
@@ -73,7 +70,7 @@ echo $objCatInfo->class_sfx;
 			<?php
 			echo _POST_MESSAGE;
 			?>"<?php
-			echo kunena_htmlspecialchars ( stripslashes ( $objCatInfo->name ) );
+			echo kunena_htmlspecialchars ( stripslashes ( $msg_cat->catname ) );
 			?>"</span></div>
 			</th>
 		</tr>
@@ -88,24 +85,24 @@ echo $objCatInfo->class_sfx;
 			?></strong>:</td>
 
 			<?php
-			if (($kunena_config->regonly == "1" || $kunena_config->changename == '0') && $kunena_my->id != "" && ! CKunenaTools::isModerator($kunena_my->id, $catid)) {
+			if (($kunena_config->regonly == "1" || $kunena_config->changename == '0') && $kunena_my->id != "" && ! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 				?>
-			<td><input type="hidden" name="fb_authorname" size="35"
+			<td><input type="hidden" name="authorname" size="35"
 				class="<?php
 				echo KUNENA_BOARD_CLASS;
 				?>inputbox postinput"
 				maxlength="35" value="<?php
-				echo $authorName;
+				echo $this->authorName;
 				?>"><b><?php
-				echo $authorName;
+				echo $this->authorName;
 				?></b></td>
 			<?php
 			} else {
 				if ($this->kunena_registered_user == 1) {
-					echo "<td><input type=\"text\" name=\"fb_authorname\" size=\"35\"  class=\"" . KUNENA_BOARD_CLASS . "inputbox postinput\"  maxlength=\"35\" value=\"$authorName\" /></td>";
+					echo "<td><input type=\"text\" name=\"authorname\" size=\"35\"  class=\"" . KUNENA_BOARD_CLASS . "inputbox postinput\"  maxlength=\"35\" value=\"$authorName\" /></td>";
 				} else {
-					echo "<td><input type=\"text\" name=\"fb_authorname\" size=\"35\"  class=\"" . KUNENA_BOARD_CLASS . "inputbox postinput\"  maxlength=\"35\" value=\"\" />";
-					echo "<script type=\"text/javascript\">document.postform.fb_authorname.focus();</script></td>";
+					echo "<td><input type=\"text\" name=\"authorname\" size=\"35\"  class=\"" . KUNENA_BOARD_CLASS . "inputbox postinput\"  maxlength=\"35\" value=\"\" />";
+					echo "<script type=\"text/javascript\">document.postform.authorname.focus();</script></td>";
 					$this->kunena_set_focus = 1;
 				}
 			}
@@ -115,7 +112,7 @@ echo $objCatInfo->class_sfx;
 		<?php
 		if ($kunena_config->askemail) {
 			echo '<tr class = "' . KUNENA_BOARD_CLASS . 'sectiontableentry2"><td class = "fb_leftcolumn"><strong>' . _GEN_EMAIL . ' *</strong>:</td>';
-			if (($kunena_config->regonly == "1" || $kunena_config->changename == '0') && $kunena_my->id != "" && ! CKunenaTools::isModerator($kunena_my->id, $catid)) {
+			if (($kunena_config->regonly == "1" || $kunena_config->changename == '0') && $kunena_my->id != "" && ! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 				echo "<td>$this->kunena_my_email</td>";
 			} else {
 				echo "<td><input type=\"text\" name=\"email\"  size=\"35\" class=\"" . KUNENA_BOARD_CLASS . "inputbox postinput\" maxlength=\"35\" value=\"$this->kunena_my_email\" /></td>";
@@ -144,7 +141,7 @@ echo $objCatInfo->class_sfx;
 				echo $kunena_config->maxsubject;
 				?>"
 				value="<?php
-				echo $resubject;
+				echo $this->resubject;
 				?>" /></td>
 
 			<?php
@@ -160,9 +157,9 @@ echo $objCatInfo->class_sfx;
 				echo $kunena_config->maxsubject;
 				?>"
 				value="<?php
-				echo $resubject;
+				echo $this->resubject;
 				?>" /><?php
-				echo $resubject;
+				echo $this->resubject;
 				?>
 			</td>
 
@@ -205,7 +202,7 @@ echo $objCatInfo->class_sfx;
 			$useRte = 1;
 		}
 
-		$fbTextArea = smile::fbWriteTextarea ( 'message', $this->kunena_message_text, $kunena_config->rtewidth, $kunena_config->rteheight, $useRte, $kunena_config->disemoticons, $this->kunena_editmode );
+		$fbTextArea = smile::fbWriteTextarea ( 'message', $this->message_text, $kunena_config->rtewidth, $kunena_config->rteheight, $useRte, $kunena_config->disemoticons, $this->kunena_editmode );
 		echo $fbTextArea;
 
 		if ($this->kunena_set_focus == 0) {
@@ -242,12 +239,12 @@ echo $objCatInfo->class_sfx;
 			?></strong>:</td>
 			<td>
 			<div class="previewMsg" id="previewMsg"
-				style="height: &amp; amp; lt; ? php echo $kunena_config-&amp;amp; gt; rteheight; ?&amp; amp; gt; px; overflow: auto;"></div>
+				style="height: &amp; amp; amp; lt; ? php echo $kunena_config-&amp;amp; amp; gt; rteheight; ?&amp; amp; amp; gt; px; overflow: auto;"></div>
 			</td>
 		</tr>
 		<!-- /preview -->
 		<?php
-		if (($kunena_config->allowimageupload || ($kunena_config->allowimageregupload && $kunena_my->id != 0) || CKunenaTools::isModerator($kunena_my->id, $catid)) && $this->kunena_no_image_upload == "0") {
+		if (($kunena_config->allowimageupload || ($kunena_config->allowimageregupload && $kunena_my->id != 0) || CKunenaTools::isModerator ( $kunena_my->id, $catid )) && $this->kunena_no_image_upload == "0") {
 			?>
 
 		<tr class="<?php
@@ -276,7 +273,7 @@ echo $objCatInfo->class_sfx;
 		?>
 
 		<?php
-		if (($kunena_config->allowfileupload || ($kunena_config->allowfileregupload && $kunena_my->id != 0) || CKunenaTools::isModerator($kunena_my->id, $catid)) && $this->kunena_no_file_upload == "0") {
+		if (($kunena_config->allowfileupload || ($kunena_config->allowfileregupload && $kunena_my->id != 0) || CKunenaTools::isModerator ( $kunena_my->id, $catid )) && $this->kunena_no_file_upload == "0") {
 			?>
 
 		<tr class="<?php

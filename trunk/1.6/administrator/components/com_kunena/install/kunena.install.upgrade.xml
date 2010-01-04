@@ -217,8 +217,9 @@
                 KEY `locked` (`locked`),
                 KEY `hold_time` (`hold`,`time`),
                 KEY `parent_hits` (`parent`,`hits`) ) DEFAULT CHARSET=utf8</query>
+    <phpfile name="kunena.special.upgrade.php"></phpfile>            
 		<phpfile name="kunena.special.install.php" />
-   	</install>
+	</install>
 	<upgrade>
 		<version version="1.0.5" versiondate="2008-12-1" build="855" versionname="Redwood">
 			<phpfile name="kunena.special.upgrade.1.0.5.php" />

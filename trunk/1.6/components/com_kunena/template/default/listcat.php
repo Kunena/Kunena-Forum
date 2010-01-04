@@ -615,15 +615,21 @@ else {
 		}
 
 		//(JJ) BEGIN: CAT LIST BOTTOM
-		echo '<!-- B: Cat list Bottom -->';
-		echo '<table class="fb_list_bottom" border = "0" cellspacing = "0" cellpadding = "0" width="100%">';
-		if (file_exists ( KUNENA_ABSTMPLTPATH . '/category_list_bottom.php' )) {
-			include (KUNENA_ABSTMPLTPATH . '/category_list_bottom.php');
-		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'category_list_bottom.php');
-		}
-		echo '</table>';
-		echo '<!-- F: Cat list Bottom -->';
+/*
+ * This code has been intentially removed
+ * For more information see here:
+ * http://joomlacode.org/gf/project/kunena/tracker/?action=TrackerItemEdit&tracker_item_id=19254
+ *
+ *		echo '<!-- B: Cat list Bottom -->';
+ *		echo '<table class="fb_list_bottom" border = "0" cellspacing = "0" cellpadding = "0" width="100%">';
+ *		if (file_exists ( KUNENA_ABSTMPLTPATH . '/category_list_bottom.php' )) {
+ *			include (KUNENA_ABSTMPLTPATH . '/category_list_bottom.php');
+ *		} else {
+ *			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'category_list_bottom.php');
+ *		}
+ *		echo '</table>';
+ *		echo '<!-- F: Cat list Bottom -->';
+ */
 		//(JJ) FINISH: CAT LIST BOTTOM
 
 

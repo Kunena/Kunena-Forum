@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+03-Jan-2010 severdia
+# Fixed validation errors. Now valid XHTML.
+
+
 03-Jan-2010 fxstein
 + [#19236] Add css class suffix support for categories in various views
 # [#18995] Undefined variables regression in pdf fixed

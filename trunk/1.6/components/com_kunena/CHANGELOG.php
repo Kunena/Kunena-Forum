@@ -34,6 +34,7 @@ Legend:
 Kunena 1.6.0-DEV
 
 04-Jan-2010 Xillibit
+^ [#19107] Delete deprecated templates during install(Part 2)
 + [#19107] Delete deprecated templates during install
 
 04-Jan-2010 fxstein

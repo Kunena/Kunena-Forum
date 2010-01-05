@@ -24,6 +24,9 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.6.0
 
+// Please remove all &#32; from the translations. Also remove extra spaces: ' Text ' => 'Text'.
+DEFINE('_KUNENA_ATTACHMENT_ADDED', 'Added attachment file to the message:');
+DEFINE('_KUNENA_ATTACHMENT_IMG_ADDED', 'Added attachment image to the message:');
 DEFINE('_KUNENA_AV_POSITION', 'Avatar Position');
 DEFINE('_KUNENA_AV_POSITION_DESC', 'You can change position of the profile Avatar in the Thread page. Default is "Right"');
 DEFINE('_KUNENA_AV_LEFT', 'Left');
@@ -166,18 +169,18 @@ DEFINE('_KUNENA_EDITOR_HELPLINE_SUBMIT', 'Click here to submit your message');
 DEFINE('_KUNENA_EDITOR_HELPLINE_PREVIEW', 'Click here to see what your message will look like when submitted');
 DEFINE('_KUNENA_EDITOR_HELPLINE_CANCEL', 'Click here to cancel your message');
 DEFINE('_KUNENA_EDITOR_HELPLINE_HINT', 'bbCode Help - Tip: bbCode can be used on selected text!');
-DEFINE('_KUNENA_EDITOR_LINK_URL', ' URL: ');
-DEFINE('_KUNENA_EDITOR_LINK_TEXT', ' Text: ');
+DEFINE('_KUNENA_EDITOR_LINK_URL', 'URL:');
+DEFINE('_KUNENA_EDITOR_LINK_TEXT', 'Text:');
 DEFINE('_KUNENA_EDITOR_LINK_INSERT', 'Insert');
-DEFINE('_KUNENA_EDITOR_IMAGE_SIZE', ' Size: ');
-DEFINE('_KUNENA_EDITOR_IMAGE_URL', ' URL: ');
+DEFINE('_KUNENA_EDITOR_IMAGE_SIZE', 'Size:');
+DEFINE('_KUNENA_EDITOR_IMAGE_URL', 'URL:');
 DEFINE('_KUNENA_EDITOR_IMAGE_INSERT', 'Insert');
-DEFINE('_KUNENA_EDITOR_VIDEO_SIZE', 'Size: ');
-DEFINE('_KUNENA_EDITOR_VIDEO_WIDTH', 'Width: ');
+DEFINE('_KUNENA_EDITOR_VIDEO_SIZE', 'Size:');
+DEFINE('_KUNENA_EDITOR_VIDEO_WIDTH', 'Width:');
 DEFINE('_KUNENA_EDITOR_VIDEO_HEIGHT', 'Height:');
-DEFINE('_KUNENA_EDITOR_VIDEO_URL', 'URL: ');
-DEFINE('_KUNENA_EDITOR_VIDEO_ID', 'ID: ');
-DEFINE('_KUNENA_EDITOR_VIDEO_PROVIDER', 'Provider: ');
+DEFINE('_KUNENA_EDITOR_VIDEO_URL', 'URL:');
+DEFINE('_KUNENA_EDITOR_VIDEO_ID', 'ID:');
+DEFINE('_KUNENA_EDITOR_VIDEO_PROVIDER', 'Provider:');
 DEFINE('_KUNENA_BBCODE_HIDDENTEXT', '<span class="fb_quote">Something is hidden for guests. Please log in or register to see it.</span>');
 
 DEFINE('_KUNENA_PROFILE_BIRTHDAY', 'Birthday');
@@ -519,7 +522,7 @@ DEFINE('_KUNENA_HELPPAGE_IN_FB','Show help in Kunena');
 DEFINE('_KUNENA_HELPPAGE_IN_KUNENA_DESC','If set to &quot;Yes,&quot; help content will be included in Kunena and the external Help page link will be disabled. <b>Note:</b> you should add a Help Content ID.');
 DEFINE('_KUNENA_HELPPAGE_CID','Help Content ID');
 DEFINE('_KUNENA_HELPPAGE_CID_DESC','You should set <b>&quot;YES&quot;</b> &quot;Show help in Kunena&quot; setting.');
-DEFINE('_KUNENA_HELPPAGE_LINK',' Help external page link');
+DEFINE('_KUNENA_HELPPAGE_LINK','Help external page link');
 DEFINE('_KUNENA_HELPPAGE_LINK_DESC','If you show help external link, please set <b>&quot;NO&quot;</b> &quot;Show help in Kunena&quot; setting.');
 DEFINE('_KUNENA_RULESPAGE','Enable Rules Page');
 DEFINE('_KUNENA_RULESPAGE_DESC','If set to &quot;Yes,&quot; a link to your rules page will be shown in the header menu.');
@@ -527,13 +530,13 @@ DEFINE('_KUNENA_RULESPAGE_IN_FB','Show rules in Kunena');
 DEFINE('_KUNENA_RULESPAGE_IN_KUNENA_DESC','If set to &quot;Yes,&quot; rules content text will be included in Kunena and the external rules page link will be disabled. <b>Note:</b> you should add a Rules Content ID.');
 DEFINE('_KUNENA_RULESPAGE_CID','Rules Content ID');
 DEFINE('_KUNENA_RULESPAGE_CID_DESC','You should set <b>&quot;YES&quot;</b> &quot;Show rules in Kunena&quot; setting.');
-DEFINE('_KUNENA_RULESPAGE_LINK',' Rules external page link');
+DEFINE('_KUNENA_RULESPAGE_LINK','Rules external page link');
 DEFINE('_KUNENA_RULESPAGE_LINK_DESC','If you show rules external link, please set <b>&quot;NO&quot;</b> &quot;Show rules in Kunena&quot; setting.');
 DEFINE('_KUNENA_AVATAR_GDIMAGE_NOT','GD Library not found');
 DEFINE('_KUNENA_AVATAR_GD2IMAGE_NOT','GD2 Library not found');
-DEFINE('_KUNENA_GD_INSTALLED','GD is available, version&#32;');
+DEFINE('_KUNENA_GD_INSTALLED','GD is available, version');
 DEFINE('_KUNENA_GD_NO_VERSION','Can not detect GD version');
-DEFINE('_KUNENA_GD_NOT_INSTALLED','GD is not installed. You can get more info&#32;');
+DEFINE('_KUNENA_GD_NOT_INSTALLED','GD is not installed. You can get more info');
 DEFINE('_KUNENA_AVATAR_SMALL_HEIGHT','Small Image Height :');
 DEFINE('_KUNENA_AVATAR_SMALL_WIDTH','Small Image Width :');
 DEFINE('_KUNENA_AVATAR_MEDIUM_HEIGHT','Medium Image Height :');
@@ -546,9 +549,9 @@ DEFINE('_KUNENA_WELCOME_DESC','Thank you for choosing Kunena as your forum solut
 DEFINE('_KUNENA_STATISTIC','Statistic');
 DEFINE('_KUNENA_VALUE','Value');
 DEFINE('_GEN_CATEGORY','Category');
-DEFINE('_GEN_STARTEDBY','Started by:&#32;');
+DEFINE('_GEN_STARTEDBY','Started by:');
 DEFINE('_GEN_STATS','stats');
-DEFINE('_STATS_TITLE',' forum - stats');
+DEFINE('_STATS_TITLE','forum - stats');
 DEFINE('_STATS_GEN_STATS','General stats');
 DEFINE('_STATS_TOTAL_MEMBERS','Members:');
 DEFINE('_STATS_TOTAL_REPLIES','Replies:');
@@ -584,10 +587,10 @@ DEFINE('_KUNENA_MAILFULL','Include complete post content in the e-mail sent to s
 DEFINE('_KUNENA_MAILFULL_DESC','If &quot;No,&quot; subscribers will receive only titles of new messages.');
 DEFINE('_KUNENA_HIDETEXT','Please log in to view this content.');
 DEFINE('_BBCODE_HIDE','Hidden text: [hide]any hidden text[/hide] to hide part of a message from Guests');// Deprecated in 1.0.10
-DEFINE('_KUNENA_FILEATTACH','File Attachment:&#32;');
-DEFINE('_KUNENA_FILENAME','File Name:&#32;');
-DEFINE('_KUNENA_FILESIZE','File Size:&#32;');
-DEFINE('_KUNENA_MSG_CODE','Code:&#32;');
+DEFINE('_KUNENA_FILEATTACH','File Attachment:');
+DEFINE('_KUNENA_FILENAME','File Name:');
+DEFINE('_KUNENA_FILESIZE','File Size:');
+DEFINE('_KUNENA_MSG_CODE','Code:');
 DEFINE('_KUNENA_CAPTCHA_ON','Spam protection system');
 DEFINE('_KUNENA_CAPTCHA_DESC','Antispam and antibot CAPTCHA system On/Off');
 DEFINE('_KUNENA_CAPDESC','Enter code here');
@@ -599,13 +602,13 @@ DEFINE('_KUNENA_REPORT_REASON', 'Reason');
 DEFINE('_KUNENA_REPORT_MESSAGE', 'Your Message');
 DEFINE('_KUNENA_REPORT_SEND', 'Send Report');
 DEFINE('_KUNENA_REPORT', 'Report to moderator');
-DEFINE('_KUNENA_REPORT_RSENDER', 'Report Sender:&#32;');
-DEFINE('_KUNENA_REPORT_RREASON', 'Report Reason:&#32;');
-DEFINE('_KUNENA_REPORT_RMESSAGE', 'Report Message:&#32;');
-DEFINE('_KUNENA_REPORT_POST_POSTER', 'Message Poster:&#32;');
-DEFINE('_KUNENA_REPORT_POST_SUBJECT', 'Message Subject:&#32;');
-DEFINE('_KUNENA_REPORT_POST_MESSAGE', 'Message:&#32;');
-DEFINE('_KUNENA_REPORT_POST_LINK', 'Message Link:&#32;');
+DEFINE('_KUNENA_REPORT_RSENDER', 'Report Sender:');
+DEFINE('_KUNENA_REPORT_RREASON', 'Report Reason:');
+DEFINE('_KUNENA_REPORT_RMESSAGE', 'Report Message:');
+DEFINE('_KUNENA_REPORT_POST_POSTER', 'Message Poster:');
+DEFINE('_KUNENA_REPORT_POST_SUBJECT', 'Message Subject:');
+DEFINE('_KUNENA_REPORT_POST_MESSAGE', 'Message:');
+DEFINE('_KUNENA_REPORT_POST_LINK', 'Message Link:');
 DEFINE('_KUNENA_REPORT_INTRO', 'was sent you a message because of');
 DEFINE('_KUNENA_REPORT_SUCCESS', 'Report succesfully sent!');
 DEFINE('_KUNENA_EMOTICONS', 'Emoticons');
@@ -698,8 +701,8 @@ DEFINE('_KUNENA_DATE_WEEK','Week');
 DEFINE('_KUNENA_DATE_DAY', 'Day');
 DEFINE('_KUNENA_DATE_HOUR', 'Hour');
 DEFINE('_KUNENA_DATE_MINUTE', 'Minute');
-DEFINE('_KUNENA_IN_FORUM', '&#32;in Forum:&#32;');
-DEFINE('_KUNENA_FORUM_AT', '&#32;Forum at:&#32;');
+DEFINE('_KUNENA_IN_FORUM', 'in Forum:');
+DEFINE('_KUNENA_FORUM_AT', 'Forum at:');
 DEFINE('_KUNENA_QMESSAGE_NOTE', 'Please note: although no board code and smiley buttons are shown, they are still usable.');
 
 // 1.0.1
@@ -814,9 +817,9 @@ DEFINE('_KUNENA_USERPROFILE_CATEGORIES', 'Categories');
 DEFINE('_KUNENA_USERPROFILE_DATE', 'Date');
 DEFINE('_KUNENA_USERPROFILE_HITS', 'Hits');
 DEFINE('_KUNENA_USERPROFILE_NOFORUMPOSTS', 'No Forum Post');
-DEFINE('_KUNENA_TOTALFAVORITE', 'Favoured: &#32;');
-DEFINE('_KUNENA_SHOW_CHILD_CATEGORY_COLON', 'Number of child board columns &#32;');
-DEFINE('_KUNENA_SHOW_CHILD_CATEGORY_COLONDESC', 'Number of child board column formating under main category&#32;');
+DEFINE('_KUNENA_TOTALFAVORITE', 'Favoured: ');
+DEFINE('_KUNENA_SHOW_CHILD_CATEGORY_COLON', 'Number of child board columns ');
+DEFINE('_KUNENA_SHOW_CHILD_CATEGORY_COLONDESC', 'Number of child board column formating under main category');
 DEFINE('_KUNENA_SUBSCRIPTIONSCHECKED', 'Post-subscription checked by default?');
 DEFINE('_KUNENA_SUBSCRIPTIONSCHECKED_DESC', 'Set to &quot;Yes&quot; if you want to post subscription box always checked.');
 // Errors (Re-integration from Joomlaboard 1.2)
@@ -862,8 +865,8 @@ DEFINE('_KUNENA_ISADM', '<strong>Yes</strong> (not changeable, this user is an s
 DEFINE('_KUNENA_COLOR', 'Color');
 DEFINE('_KUNENA_UAVATAR', 'User avatar:');
 DEFINE('_KUNENA_NS', 'None selected');
-DEFINE('_KUNENA_DELSIG', '&#32;check this box to delete this signature');
-DEFINE('_KUNENA_DELAV', '&#32;check this box to delete this avatar');
+DEFINE('_KUNENA_DELSIG', 'check this box to delete this signature');
+DEFINE('_KUNENA_DELAV', 'check this box to delete this avatar');
 DEFINE('_KUNENA_SUBFOR', 'Subscriptions for');
 DEFINE('_KUNENA_NOSUBS', 'No subscriptions found for this user');
 // Forum Administration (Re-integration from Joomlaboard 1.2)
@@ -932,9 +935,9 @@ DEFINE('_COM_A_BASIC_SETTINGS', 'Basic Settings');
 // Kunena 1.0.0
 //
 DEFINE('_COM_A_FAVORITES', 'Allow Favorites');
-DEFINE('_COM_A_FAVORITES_DESC', 'Set to &quot;Yes&quot; if you want to allow registered users to favorite a topic&#32;');
+DEFINE('_COM_A_FAVORITES_DESC', 'Set to &quot;Yes&quot; if you want to allow registered users to favorite a topic');
 DEFINE('_USER_UNFAVORITE_ALL', 'Check this box to <b><u>unfavorite</u></b> from all topics (including invisible ones for troubleshooting purposes).');
-DEFINE('_VIEW_FAVORITETXT', 'Favorite this topic&#32;');
+DEFINE('_VIEW_FAVORITETXT', 'Favorite this topic');
 DEFINE('_USER_UNFAVORITE_YES', 'You have unfavorited the topic.');
 DEFINE('_POST_FAVORITED_TOPIC', 'This thread has been added to your favorites.');
 DEFINE('_VIEW_UNFAVORITETXT', 'Unfavorite');
@@ -944,9 +947,9 @@ DEFINE('_POST_SUCCESS_FAVORITE', 'Your request to add to favorites has been proc
 DEFINE('_COM_A_MESSAGES_SEARCH', 'Search Results');
 DEFINE('_COM_A_MESSAGES_DESC_SEARCH', 'Messages per page for search results');
 DEFINE('_KUNENA_USE_JOOMLA_STYLE', 'Use Joomla Style?');
-DEFINE('_KUNENA_USE_JOOMLA_STYLE_DESC', 'If you want to use the Joomla style set to &quot;Yes.&quot; (CSS classes: sectionheader, sectionentry1, etc.)&#32;');
+DEFINE('_KUNENA_USE_JOOMLA_STYLE_DESC', 'If you want to use the Joomla style set to &quot;Yes.&quot; (CSS classes: sectionheader, sectionentry1, etc.)');
 DEFINE('_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST', 'Show Child Category Image');
-DEFINE('_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST_DESC', 'If you want to show child category small icon on your forum list, set to &quot;Yes.&quot;&#32;');
+DEFINE('_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST_DESC', 'If you want to show child category small icon on your forum list, set to &quot;Yes.&quot;');
 DEFINE('_KUNENA_SHOW_ANNOUNCEMENT', 'Show Announcement');
 DEFINE('_KUNENA_SHOW_ANNOUNCEMENT_DESC', 'Set to &quot;Yes&quot; if you want to show the announcement box on your Forum home page.');
 DEFINE('_KUNENA_RECENT_POSTS', 'Recent Post Settings');
@@ -954,10 +957,10 @@ DEFINE('_KUNENA_SHOW_LATEST_MESSAGES', 'Show Recent Posts');
 DEFINE('_KUNENA_SHOW_LATEST_MESSAGES_DESC', 'Set to &quot;Yes&quot; if you want to show recent post plugin on your forum.');
 DEFINE('_KUNENA_NUMBER_OF_LATEST_MESSAGES', 'Number of Recent Posts');
 DEFINE('_KUNENA_NUMBER_OF_LATEST_MESSAGES_DESC', 'Number of Recent Posts');
-DEFINE('_KUNENA_COUNT_PER_PAGE_LATEST_MESSAGES', 'Count Per Tab&#32;');
+DEFINE('_KUNENA_COUNT_PER_PAGE_LATEST_MESSAGES', 'Count Per Tab');
 DEFINE('_KUNENA_COUNT_PER_PAGE_LATEST_MESSAGES_DESC', 'Number of Posts per tab');
 DEFINE('_KUNENA_LATEST_CATEGORY', 'Show Category');
-DEFINE('_KUNENA_LATEST_CATEGORY_DESC', 'Specific category you can show on recent posts. For example: 2, 3, 7&#32;');
+DEFINE('_KUNENA_LATEST_CATEGORY_DESC', 'Specific category you can show on recent posts. For example: 2, 3, 7');
 DEFINE('_KUNENA_SHOW_LATEST_SINGLE_SUBJECT', 'Show Single Subject');
 DEFINE('_KUNENA_SHOW_LATEST_SINGLE_SUBJECT_DESC', 'Show Single Subject');
 DEFINE('_KUNENA_SHOW_LATEST_REPLY_SUBJECT', 'Show Reply Subject');
@@ -970,24 +973,24 @@ DEFINE('_KUNENA_SHOW_LATEST_HITS', 'Show Hits');
 DEFINE('_KUNENA_SHOW_LATEST_HITS_DESC', 'Show Hits');
 DEFINE('_KUNENA_SHOW_AUTHOR', 'Show Author');
 DEFINE('_KUNENA_SHOW_AUTHOR_DESC', '1=username, 2=realname, 0=none');
-DEFINE('_KUNENA_STATS', 'Stats Plugin Settings&#32;');
-DEFINE('_KUNENA_CATIMAGEPATH', 'Category Image Path&#32;');
+DEFINE('_KUNENA_STATS', 'Stats Plugin Settings');
+DEFINE('_KUNENA_CATIMAGEPATH', 'Category Image Path');
 DEFINE('_KUNENA_CATIMAGEPATH_DESC', 'Category Image path. If you set the path as &quot;category_images,&quot; the full path will be "your_html_rootfolder/images/fbfiles/category_images/');
-DEFINE('_KUNENA_ANN_MODID', 'Announcement Moderator IDs&#32;');
+DEFINE('_KUNENA_ANN_MODID', 'Announcement Moderator IDs');
 DEFINE('_KUNENA_ANN_MODID_DESC', 'Add user IDs for announcement moderators (e.g. 62,63,73). Announcement moderators can add, edit, and delete the announcements.');
 //
-DEFINE('_KUNENA_FORUM_TOP', 'Board Categories&#32;');
-DEFINE('_KUNENA_CHILD_BOARDS', 'Child Boards&#32;');
-DEFINE('_KUNENA_QUICKMSG', 'Quick Reply&#32;');
-DEFINE('_KUNENA_THREADS_IN_FORUM', 'Threads in Forum&#32;');
-DEFINE('_KUNENA_FORUM', 'Forum&#32;');
+DEFINE('_KUNENA_FORUM_TOP', 'Board Categories');
+DEFINE('_KUNENA_CHILD_BOARDS', 'Child Boards');
+DEFINE('_KUNENA_QUICKMSG', 'Quick Reply');
+DEFINE('_KUNENA_THREADS_IN_FORUM', 'Threads in Forum');
+DEFINE('_KUNENA_FORUM', 'Forum');
 DEFINE('_KUNENA_SPOTS', 'Spotlights');
 DEFINE('_KUNENA_CANCEL', 'cancel');
-DEFINE('_KUNENA_TOPIC', 'TOPIC:&#32;');
-DEFINE('_KUNENA_POWEREDBY', 'Powered by&#32;');
+DEFINE('_KUNENA_TOPIC', 'TOPIC:');
+DEFINE('_KUNENA_POWEREDBY', 'Powered by');
 // Time Format
-DEFINE('_TIME_TODAY', '<b>Today</b>&#32;');
-DEFINE('_TIME_YESTERDAY', '<b>Yesterday</b>&#32;');
+DEFINE('_TIME_TODAY', '<b>Today</b>');
+DEFINE('_TIME_YESTERDAY', '<b>Yesterday</b>');
 //  STARTS HERE!
 DEFINE('_KUNENA_WHO_LATEST_POSTS', 'Latest Posts');
 DEFINE('_KUNENA_WHO_WHOISONLINE', 'Who is Online');
@@ -1065,9 +1068,9 @@ DEFINE('_STAT_USERLIST', 'User List');
 DEFINE('_STAT_TEAMLIST', 'Board Team');
 DEFINE('_STATS_FORUM_STATS', 'Forum Stats');
 DEFINE('_STAT_POPULAR', 'Popular');
-DEFINE('_STAT_POPULAR_USER_TMSG', 'Users ( Total Messages)&#32;');
-DEFINE('_STAT_POPULAR_USER_KGSG', 'Threads&#32;');
-DEFINE('_STAT_POPULAR_USER_GSG', 'Users ( Total Profile Views)&#32;');
+DEFINE('_STAT_POPULAR_USER_TMSG', 'Users ( Total Messages)');
+DEFINE('_STAT_POPULAR_USER_KGSG', 'Threads');
+DEFINE('_STAT_POPULAR_USER_GSG', 'Users ( Total Profile Views)');
 //Team List
 DEFINE('_MODLIST_ONLINE', 'User Online Now');
 DEFINE('_MODLIST_OFFLINE', 'User Offline');
@@ -1124,9 +1127,13 @@ DEFINE('_COM_A_MOSBOT', 'Enable the Discuss Bot');
 DEFINE('_PREVIEW', 'Preview');
 DEFINE('_COM_A_MOSBOT_TITLE', 'Discussbot');
 DEFINE('_COM_A_MOSBOT_DESC', 'The discuss bot enables your users to discuss articles in the forums. The article title is used as the topic subject.'
-           . '<br />If a topic does not exist, a new one is created. If the topic already exists, the user is shown the thread and where to reply.' . '<br /><strong>You will need to download and install the bot separately.</strong>'
-           . '<br />check the <a href="http://www.Kunena.com">Kunena Web Site</a> for more information.' . '<br />When installed, you will need to add the following bot lines to your articles:' . '<br />{mos_fb_discuss:<em>catid</em>}'
-           . '<br />The <em>catid</em> is the category in which the article can be discussed. To find the proper catid, look into the forums ' . 'and check the category ID from the URL in your browser.'
+           . '<br />If a topic does not exist, a new one is created. If the topic already exists, the user is shown the thread and where to reply.'
+           . '<br /><strong>You will need to download and install the bot separately.</strong>'
+           . '<br />check the <a href="http://www.Kunena.com">Kunena Web Site</a> for more information.'
+           . '<br />When installed, you will need to add the following bot lines to your articles:'
+           . '<br />{mos_fb_discuss:<em>catid</em>}'
+           . '<br />The <em>catid</em> is the category in which the article can be discussed. To find the proper catid, look into the forums '
+           . 'and check the category ID from the URL in your browser.'
            . '<br />Example: if you want the article discussed in forum with the category ID 26, the bot should look like: {mos_fb_discuss:26}'
            . '<br />This seems a bit difficult, but it does allow you to have each article to be discussed in a matching forum.');
 //new in 1.1.4 stable
@@ -1352,7 +1359,7 @@ DEFINE('_COM_A_IMGB_VIEW', 'Open post (to edit)');
 DEFINE('_COM_A_IMGB_NO_POST', 'No referencing post!');
 DEFINE('_USER_CHANGE_VIEW', 'Changes in these settings will become active the next time you visit the forums.');
 DEFINE('_MOSBOT_DISCUSS_A', 'Discuss this article on the forums. (');
-DEFINE('_MOSBOT_DISCUSS_B', '&#32;posts)');
+DEFINE('_MOSBOT_DISCUSS_B', 'posts)');
 DEFINE('_POST_DISCUSS', 'This thread discusses the content article');
 DEFINE('_COM_A_RSS', 'Enable RSS feed');
 DEFINE('_COM_A_RSS_DESC', 'The RSS feed enables users to download the latest posts to their desktop or RSS reader aplication. See <a href="http://www.rssreader.com" target="_blank">rssreader.com</a> for an example.');
@@ -1428,7 +1435,7 @@ DEFINE('_COM_A_PRUNE', 'Prune Forums');
 DEFINE('_COM_A_PRUNE_NAME', 'Forum to prune:');
 DEFINE('_COM_A_PRUNE_DESC',
     'The Prune Forums function allows you to prune threads where there have not been any new posts during the specified number of days. This does not remove stickies or locked topics and these must be removed manually. Threads in locked forums can not be pruned.');
-DEFINE('_COM_A_PRUNE_NOPOSTS', 'Prune threads with no posts for the past&#32;');
+DEFINE('_COM_A_PRUNE_NOPOSTS', 'Prune threads with no posts for the past');
 DEFINE('_COM_A_PRUNE_DAYS', 'days');
 DEFINE('_COM_A_PRUNE_USERS', 'Prune Users'); // <=FB 1.0.3
 DEFINE('_COM_A_PRUNE_USERS_DESC',
@@ -1497,8 +1504,8 @@ DEFINE('_UPLOAD_UPLOADED', 'Your avatar has been uploaded.');
 DEFINE('_UPLOAD_GALLERY', 'Choose one from the avatar gallery:');
 DEFINE('_UPLOAD_CHOOSE', 'Confirm Choice.');
 // listcat.php
-DEFINE('_LISTCAT_ADMIN', 'An administrator should create them first from the&#32;');
-DEFINE('_LISTCAT_DO', 'They will know what to do&#32;');
+DEFINE('_LISTCAT_ADMIN', 'An administrator should create them first from the');
+DEFINE('_LISTCAT_DO', 'They will know what to do');
 DEFINE('_LISTCAT_INFORM', 'Inform them and tell them to hurry up!');
 DEFINE('_LISTCAT_NO_CATS', 'There are no categories in the forum defined yet.');
 DEFINE('_LISTCAT_PANEL', 'Administration Panel of the Joomla OS CMS.');
@@ -1525,9 +1532,9 @@ DEFINE('_POST_LOCK_SET', 'The topic has been locked.');
 DEFINE('_POST_LOCK_NOT_SET', 'The topic could not be locked.');
 DEFINE('_POST_LOCK_UNSET', 'The topic has been unlocked.');
 DEFINE('_POST_LOCK_NOT_UNSET', 'The topic could not be unlocked.');
-DEFINE('_POST_MESSAGE', 'Post a new message in&#32;');
-DEFINE('_POST_MOVE_TOPIC', 'Move this topic to forum&#32;');
-DEFINE('_POST_NEW', 'Post a new message in:&#32;');
+DEFINE('_POST_MESSAGE', 'Post a new message in');
+DEFINE('_POST_MOVE_TOPIC', 'Move this topic to forum');
+DEFINE('_POST_NEW', 'Post a new message in:');
 DEFINE('_POST_NO_SUBSCRIBED_TOPIC', 'Your subscription to this topic could not be processed.');
 DEFINE('_POST_NOTIFIED', 'Check this box to have yourself notified about replies to this topic.');
 DEFINE('_POST_STICKY_SET', 'The sticky bit has been set for this topic.');
@@ -1543,8 +1550,8 @@ DEFINE('_POST_TOPIC_HISTORY', 'Topic History of');
 DEFINE('_POST_TOPIC_HISTORY_MAX', 'Max. showing the last');
 DEFINE('_POST_TOPIC_HISTORY_LAST', 'posts  -  <i>(Last post first)</i>');
 DEFINE('_POST_TOPIC_NOT_MOVED', 'Your topic could not be moved. To get back to the topic:');
-DEFINE('_POST_TOPIC_FLOOD1', 'The administrator of this forum has enabled flood protection. You must wait&#32;');
-DEFINE('_POST_TOPIC_FLOOD2', '&#32;seconds before you can make another post.');
+DEFINE('_POST_TOPIC_FLOOD1', 'The administrator of this forum has enabled flood protection. You must wait');
+DEFINE('_POST_TOPIC_FLOOD2', 'seconds before you can make another post.');
 DEFINE('_POST_TOPIC_FLOOD3', 'Please click your browser&#146s back button to get back to the forum.');
 DEFINE('_POST_EMAIL_NEVER', 'your e-mail address will never be displayed on the site.');
 DEFINE('_POST_EMAIL_REGISTERED', 'your e-mail address will only be available to registered users.');
@@ -1556,31 +1563,31 @@ DEFINE('_POST_NO_PUBACCESS2', 'Only logged-in/registered users<br /> are allowed
 DEFINE('_SHOWCAT_NO_TOPICS', '>> There are no topics in this forum yet <<');
 DEFINE('_SHOWCAT_PENDING', 'pending message(s)');
 // userprofile.php
-DEFINE('_USER_DELETE', '&#32;check this box to delete your signature');
-DEFINE('_USER_ERROR_A', 'You came to this page in error. Please inform the administrator on which links&#32;');
+DEFINE('_USER_DELETE', 'check this box to delete your signature');
+DEFINE('_USER_ERROR_A', 'You came to this page in error. Please inform the administrator on which links');
 DEFINE('_USER_ERROR_B', 'you clicked that got you here. They can then file a bug report.');
 DEFINE('_USER_ERROR_C', 'Thank you!');
-DEFINE('_USER_ERROR_D', 'Error number to include in your report:&#32;');
+DEFINE('_USER_ERROR_D', 'Error number to include in your report:');
 DEFINE('_USER_GENERAL', 'General Profile Options');
 DEFINE('_USER_MODERATOR', 'You are assigned as a moderator to forums');
 DEFINE('_USER_MODERATOR_NONE', 'No forums found assigned to you');
 DEFINE('_USER_MODERATOR_ADMIN', 'Admins are moderator on all forums.');
 DEFINE('_USER_NOSUBSCRIPTIONS', 'No subscriptions found for you');
 //DEFINE('_USER_PREFERED', 'Prefered Viewtype');
-DEFINE('_USER_PROFILE', 'Profile for&#32;');
-DEFINE('_USER_PROFILE_NOT_A', 'Your profile could&#32;');
+DEFINE('_USER_PROFILE', 'Profile for');
+DEFINE('_USER_PROFILE_NOT_A', 'Your profile could');
 DEFINE('_USER_PROFILE_NOT_B', 'not');
-DEFINE('_USER_PROFILE_NOT_C', '&#32;be updated.');
+DEFINE('_USER_PROFILE_NOT_C', 'be updated.');
 DEFINE('_USER_PROFILE_UPDATED', 'Your profile is updated.');
-DEFINE('_USER_RETURN_A', 'If you are not taken back to your profile in a few moments&#32;');
+DEFINE('_USER_RETURN_A', 'If you are not taken back to your profile in a few moments');
 DEFINE('_USER_RETURN_B', 'click here');
 DEFINE('_USER_SUBSCRIPTIONS', 'Your Subscriptions');
 DEFINE('_USER_UNSUBSCRIBE', 'Unsubscribe');
-DEFINE('_USER_UNSUBSCRIBE_A', 'You could&#32;');
+DEFINE('_USER_UNSUBSCRIBE_A', 'You could');
 DEFINE('_USER_UNSUBSCRIBE_B', 'not');
-DEFINE('_USER_UNSUBSCRIBE_C', '&#32;be unsubscribed from the topic.');
+DEFINE('_USER_UNSUBSCRIBE_C', 'be unsubscribed from the topic.');
 DEFINE('_USER_UNSUBSCRIBE_YES', 'You have been unsubscribed from the topic.');
-DEFINE('_USER_DELETEAV', '&#32;check this box to delete your Avatar');
+DEFINE('_USER_DELETEAV', 'check this box to delete your Avatar');
 //New 0.9 to 1.0
 DEFINE('_USER_ORDER', 'Preferred Message Ordering');
 DEFINE('_USER_ORDER_DESC', 'Last post first');
@@ -1611,7 +1618,7 @@ DEFINE('_POSTS', 'Posts:');
 DEFINE('_TOPIC_NOT_ALLOWED', 'Post');
 DEFINE('_FORUM_NOT_ALLOWED', 'Forum');
 DEFINE('_FORUM_IS_OFFLINE', 'Forum is OFFLINE!');
-DEFINE('_PAGE', 'Page:&#32;');
+DEFINE('_PAGE', 'Page:');
 DEFINE('_NO_POSTS', 'No Posts');
 DEFINE('_CHARS', 'characters max.');
 DEFINE('_HTML_YES', 'HTML is disabled');
@@ -1621,7 +1628,7 @@ DEFINE('_SET_NEW_AVATAR', 'Select new avatar');
 DEFINE('_THREAD_UNSUBSCRIBE', 'Unsubscribe');
 DEFINE('_SHOW_LAST_POSTS', 'Active topics in last');
 DEFINE('_SHOW_HOURS', 'hours');
-DEFINE('_SHOW_POSTS', 'Total:&#32;');
+DEFINE('_SHOW_POSTS', 'Total:');
 DEFINE('_DESCRIPTION_POSTS', 'The newest posts for the active topics are shown');
 DEFINE('_SHOW_4_HOURS', '4 Hours');
 DEFINE('_SHOW_8_HOURS', '8 Hours');
@@ -1664,7 +1671,7 @@ DEFINE('_COM_A_PMS_DESC',
 DEFINE('_VIEW_PMS', 'Click here to send a Private Message to this user');
 //new in RC3
 DEFINE('_POST_RE', 'Re:');
-DEFINE('_BBCODE_BOLD', 'Bold text: [b]text[/b]&#32;'); // Deprecated in 1.0.10
+DEFINE('_BBCODE_BOLD', 'Bold text: [b]text[/b]'); // Deprecated in 1.0.10
 DEFINE('_BBCODE_ITALIC', 'Italic text: [i]text[/i]'); // Deprecated in 1.0.10
 DEFINE('_BBCODE_UNDERL', 'Underline text: [u]text[/u]'); // Deprecated in 1.0.10
 DEFINE('_BBCODE_QUOTE', 'Quote text: [quote]text[/quote]'); // Deprecated in 1.0.10

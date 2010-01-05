@@ -182,7 +182,6 @@ if (JString::strtolower ( $func ) == '') {
 				if ($cat->description != "") {
 					$tmpforumdesc = stripslashes ( smile::smileReplace ( $cat->description, 0, $kunena_config->disemoticons, $kunena_emoticons ) );
 					$tmpforumdesc = nl2br ( $tmpforumdesc );
-					$tmpforumdesc = smile::htmlwrap ( $tmpforumdesc, $kunena_config->wrap );
 					echo $tmpforumdesc;
 				}
 				?>
@@ -272,7 +271,6 @@ if (JString::strtolower ( $func ) == '') {
 
 							$forumDesc = stripslashes ( smile::smileReplace ( $singlerow->description, 0, $kunena_config->disemoticons, $kunena_emoticons ) );
 							$forumDesc = nl2br ( $forumDesc );
-							$forumDesc = smile::htmlwrap ( $forumDesc, $kunena_config->wrap );
 
 							//    Get the forumsubparent categories :: get the subcategories here
 							$kunena_db->setQuery ( "SELECT id, name, numTopics, numPosts FROM #__fb_categories WHERE parent='{$singlerow->id}' AND published='1' ORDER BY ordering" );

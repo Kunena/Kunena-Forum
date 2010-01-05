@@ -1789,25 +1789,11 @@ td.fbtdtitle {
 	class="fbadminform">
 
 	<tr align="center" valign="middle">
-		<td align="left" valign="top" width="25%"><?php
-		echo _COM_A_WRAP?>
-		</td>
-
-		<td align="left" valign="top" width="25%"><input type="text"
-			name="cfg_wrap" value="<?php
-		echo $kunena_config->wrap;
-		?>" /></td>
-
-		<td align="left" valign="top"><?php
-		echo _COM_A_WRAP_DESC?></td>
-	</tr>
-
-	<tr align="center" valign="middle">
-		<td align="left" valign="top"><?php
+		<td align="left" width="25%" valign="top"><?php
 		echo _COM_A_SUBJECTLENGTH?>
 		</td>
 
-		<td align="left" valign="top"><input type="text" name="cfg_maxsubject"
+		<td align="left" width="25%" valign="top"><input type="text" name="cfg_maxsubject"
 			value="<?php
 		echo $kunena_config->maxsubject;
 		?>" /></td>

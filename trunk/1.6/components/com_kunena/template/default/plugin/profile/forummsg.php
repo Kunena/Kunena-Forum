@@ -21,7 +21,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 global $total, $limitstart, $limit;
-global $kunena_emoticons;
+global $kunena_icons;
 
 $kunena_db 		=& JFactory::getDBO();
 $kunena_session =& CKunenaSession::getInstance();
@@ -168,8 +168,8 @@ $userid 		= JRequest::getInt('userid', 0);
 
                 <td class = "td-6  fbm" align="center">
                     <a href = "<?php echo $fbURL; ?>"> <?php
-    echo isset($kunena_emoticons['latestpost']) ? '<img src="'
-             . KUNENA_URLICONSPATH . $kunena_emoticons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'; ?> </a>
+    echo isset($kunena_icons['latestpost']) ? '<img src="'
+             . KUNENA_URLICONSPATH . $kunena_icons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'; ?> </a>
                 </td>
             </tr>
 

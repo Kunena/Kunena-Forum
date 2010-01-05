@@ -164,10 +164,6 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		$msgbody = nl2br ( $msgbody );
 		$msgbody = str_replace ( "__FBTAB__", "\t", $msgbody );
 		$msgbody = CKunenaTools::prepareContent ( $msgbody );
-		// $msgbody = preg_replace('%u0([[:alnum:]]{3})', '&#x1;',$msgbody);
-
-
-		$msgbody = smile::htmlwrap ( $msgbody, $kunena_config->wrap );
 		header ( "Content-Type: text/html; charset=utf-8" );
 		echo $msgbody;
 		$kunena_app->close ();

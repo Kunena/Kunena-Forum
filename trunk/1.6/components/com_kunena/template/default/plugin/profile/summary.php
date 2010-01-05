@@ -34,10 +34,6 @@ if ($signature)
 	$signature = str_replace("<P>&nbsp;</P><br />", "", $signature);
 	$signature = str_replace("</P><br />", "</P>", $signature);
 	$signature = str_replace("<P><br />", "<P>", $signature);
-	//wordwrap:
-	$signature = smile::htmlwrap($signature, $kunena_config->wrap);
-	//restore the \n (were replaced with _CTRL_) occurences inside code tags, but only after we have striplslashes; otherwise they will be stripped again
-	//$signature = str_replace("_CRLF_", "\\n", stripslashes($signature));
 	$usr_signature = $signature;
 }
 $registerDate = strftime(_KUNENA_DT_DATETIME_FMT, strtotime($userinfo->registerDate));

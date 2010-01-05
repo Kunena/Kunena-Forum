@@ -54,7 +54,7 @@ function showprf($userid, $page) {
 	$kunena_acl = &JFactory::getACL ();
 	$kunena_my = &JFactory::getUser ();
 	$kunena_db = &JFactory::getDBO ();
-	global $kunena_emoticons;
+	global $kunena_icons;
 
 	//Get userinfo needed later on, this limits the amount of queries
 	$kunena_db->setQuery ( "SELECT a.*, b.* FROM #__fb_users AS a INNER JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$userid}'" );
@@ -276,8 +276,8 @@ function showprf($userid, $page) {
 		if ($kunena_my->id != '0' && $kunena_my->id != $userid) {
 			$msg_html->karmaminus .= "<a href=\"" . JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=decrease&amp;userid=' . $userid ) . "\"><img src=\"";
 
-			if (isset ( $kunena_emoticons ['karmaminus'] )) {
-				$msg_html->karmaminus .= KUNENA_URLICONSPATH . $kunena_emoticons ['karmaminus'];
+			if (isset ( $kunena_icons ['karmaminus'] )) {
+				$msg_html->karmaminus .= KUNENA_URLICONSPATH . $kunena_icons ['karmaminus'];
 			} else {
 				$msg_html->karmaminus .= KUNENA_URLEMOTIONSPATH . "karmaminus.gif";
 			}
@@ -285,8 +285,8 @@ function showprf($userid, $page) {
 			$msg_html->karmaminus .= "\" alt=\"Karma-\" border=\"0\" title=\"" . _KARMA_SMITE . "\" align=\"middle\" /></a>";
 			$msg_html->karmaplus .= "<a href=\"" . JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=karma&amp;do=increase&amp;userid=' . $userid ) . "\"><img src=\"";
 
-			if (isset ( $kunena_emoticons ['karmaplus'] )) {
-				$msg_html->karmaplus .= KUNENA_URLICONSPATH . $kunena_emoticons ['karmaplus'];
+			if (isset ( $kunena_icons ['karmaplus'] )) {
+				$msg_html->karmaplus .= KUNENA_URLICONSPATH . $kunena_icons ['karmaplus'];
 			} else {
 				$msg_html->karmaplus .= KUNENA_URLEMOTIONSPATH . "karmaplus.gif";
 			}
@@ -304,8 +304,8 @@ function showprf($userid, $page) {
 		$PMSName = $userinfo->username;
 		$msg_html->pms = "<a href=\"" . JRoute::_ ( 'index.php?option=com_uddeim&amp;task=new&recip=' . $userid ) . "\"><img src=\"";
 
-		if ($kunena_emoticons ['pms']) {
-			$msg_html->pms .= KUNENA_URLICONSPATH . $kunena_emoticons ['pms'];
+		if ($kunena_icons ['pms']) {
+			$msg_html->pms .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
 		} else {
 			$msg_html->pms .= KUNENA_URLEMOTIONSPATH . "sendpm.gif";
 		}
@@ -320,8 +320,8 @@ function showprf($userid, $page) {
 		$PMSName = $userinfo->username;
 		$msg_html->pms = "<a href=\"" . JRoute::_ ( 'index.php?option=com_pms&amp;page=new&amp;id=' . $PMSName . '&title=' . $this->kunena_message->subject ) . "\"><img src=\"";
 
-		if ($kunena_emoticons ['pms']) {
-			$msg_html->pms .= KUNENA_URLICONSPATH . $kunena_emoticons ['pms'];
+		if ($kunena_icons ['pms']) {
+			$msg_html->pms .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
 		} else {
 			$msg_html->pms .= KUNENA_URLEMOTIONSPATH . "sendpm.gif";
 		}
@@ -340,9 +340,9 @@ function showprf($userid, $page) {
 		$isonline = $kunena_db->loadResult ();
 
 		if ($isonline && $userinfo->showOnline == 1) {
-			$msg_html->online = isset ( $kunena_emoticons ['onlineicon'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';
+			$msg_html->online = isset ( $kunena_icons ['onlineicon'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';
 		} else {
-			$msg_html->online = isset ( $kunena_emoticons ['offlineicon'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
+			$msg_html->online = isset ( $kunena_icons ['offlineicon'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
 		}
 	}
 

@@ -87,7 +87,6 @@ else {
 	if ($objCatInfo->description != "") {
 		$tmpforumdesc = stripslashes ( smile::smileReplace ( $objCatInfo->description, 0, $kunena_config->disemoticons, $kunena_emoticons ) );
 		$tmpforumdesc = nl2br ( $tmpforumdesc );
-		$tmpforumdesc = smile::htmlwrap ( $tmpforumdesc, $kunena_config->wrap );
 		echo $tmpforumdesc;
 	}
 	?>
@@ -286,7 +285,6 @@ else {
 			if ($forumDesc != "") {
 				$tmpforumdesc = stripslashes ( smile::smileReplace ( $forumDesc, 0, $kunena_config->disemoticons, $kunena_emoticons ) );
 				$tmpforumdesc = nl2br ( $tmpforumdesc );
-				$tmpforumdesc = smile::htmlwrap ( $tmpforumdesc, $kunena_config->wrap );
 				echo '<div class="' . KUNENA_BOARD_CLASS . 'thead-desc  fbm">' . $tmpforumdesc . ' </div>';
 			}
 

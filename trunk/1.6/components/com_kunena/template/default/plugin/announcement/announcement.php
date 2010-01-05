@@ -52,11 +52,9 @@ if ($do == "read") {
     $kunena_emoticons = smile::getEmoticons(0);
 	$annsdescription = stripslashes(smile::smileReplace($ann->sdescription, 0, $kunena_config->disemoticons, $kunena_emoticons));
 	$annsdescription = nl2br($annsdescription);
-	$annsdescription = smile::htmlwrap($annsdescription, $kunena_config->wrap);
 
 	$anndescription = stripslashes(smile::smileReplace($ann->description, 0, $kunena_config->disemoticons, $kunena_emoticons));
 	$anndescription = nl2br($anndescription);
-	$anndescription = smile::htmlwrap($anndescription, $kunena_config->wrap);
 
     $anncreated = KUNENA_timeformat(strtotime($ann->created));
     $annpublished = $ann->published;

@@ -33,7 +33,6 @@ if ($signature)
 	$signature = str_replace("</P><br />", "</P>", $signature);
 	$signature = str_replace("<P><br />", "<P>", $signature);
 	//wordwrap:
-	$signature = smile::htmlwrap($signature, $kunena_config->wrap);
 	$signature = nl2br($signature);
 	//restore the \n (were replaced with _CTRL_) occurences inside code tags, but only after we have striplslashes; otherwise they will be stripped again
 	//$signature = stripslashes($signature);
@@ -73,15 +72,15 @@ if ($signature)
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_USERTYPE; ?></b> </td>
       <td><?php echo $juserinfo->usertype; ?></td>
-    </tr>    
+    </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_REGISTERDATE; ?></b> </td>
       <td><?php echo $juserinfo->registerDate; ?></td>
-    </tr>    
+    </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_LASTVISITDATE; ?></b> </td>
       <td><?php echo $juserinfo->lastvisitDate; ?></td>
-    </tr>    
+    </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_POSTS; ?></b> </td>
       <td><?php echo $userinfo->posts; ?></td>

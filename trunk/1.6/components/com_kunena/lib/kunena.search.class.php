@@ -480,13 +480,11 @@ class CKunenaSearch {
 			$ressubject = $result->subject;
 			// Clean up subject
 			$ressubject = stripslashes ( smile::purify ( $ressubject ) );
-			$ressubject = smile::htmlwrap ( $ressubject, $kunena_config->wrap );
 			$resmessage = stripslashes ( $result->message );
 			// Strip smiles and bbcode out of search results; they look ugly
 			$resmessage = CKunenaTools::prepareContent ( $resmessage );
 			$resmessage = smile::purify ( $resmessage );
 			$resmessage = JString::substr ( kunena_htmlspecialchars ( $resmessage ), 0, 300 );
-			$resmessage = smile::htmlwrap ( $resmessage, $kunena_config->wrap );
 			$utf8 = (KUNENA_CHARSET == 'UTF-8') ? "u" : "";
 
 			foreach ( $searchlist as $searchword ) {

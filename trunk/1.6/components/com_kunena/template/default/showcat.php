@@ -211,8 +211,6 @@ if (in_array ( $catid, $allow_forum )) {
 		$kunena_emoticons = smile::getEmoticons ( 0 );
 		$headerdesc = stripslashes ( smile::smileReplace ( $objCatInfo->headerdesc, 0, $kunena_config->disemoticons, $kunena_emoticons ) );
 		$headerdesc = nl2br ( $headerdesc );
-		//wordwrap:
-		$headerdesc = smile::htmlwrap ( $headerdesc, $kunena_config->wrap );
 		echo $headerdesc;
 		?>
 		</td>

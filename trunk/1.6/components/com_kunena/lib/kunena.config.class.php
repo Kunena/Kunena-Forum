@@ -275,7 +275,6 @@ class CKunenaConfig extends CKunenaConfigBase
     var $allowsubscriptions      = 1;
     var $subscriptionschecked    = 1;
     var $allowfavorites          = 1;
-    var $wrap                    = 250;
     var $maxsubject              = 50;
     var $maxsig                  = 300;
     var $regonly                 = 0;

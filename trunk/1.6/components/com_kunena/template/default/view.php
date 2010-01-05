@@ -317,7 +317,6 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 			$headerdesc = stripslashes ( smile::smileReplace ( $objCatInfo->headerdesc, 0, $kunena_config->disemoticons, $kunena_emoticons ) );
 			$headerdesc = nl2br ( $headerdesc );
 			//wordwrap:
-			$headerdesc = smile::htmlwrap ( $headerdesc, $kunena_config->wrap );
 			echo $headerdesc;
 			?>
 		</td>
@@ -882,10 +881,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 
 				$fb_subject_txt = $this->kunena_message->subject;
 
-				//$table = array_flip ( get_html_translation_table ( HTML_ENTITIES ) );
-				//$fb_subject_txt = strtr ( $fb_subject_txt, $table );
 				$fb_subject_txt = stripslashes ( $fb_subject_txt );
-				//$fb_subject_txt = smile::htmlwrap ( $fb_subject_txt, $kunena_config->wrap );
 				$msg_html->subject = $fb_subject_txt;
 
 				$msg_html->date = date ( _DATETIME, $this->kunena_message->time );
@@ -895,7 +891,6 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 
 				// Code tag: restore TABS as we had to 'hide' them from the rest of the logic
 				$fb_message_txt = str_replace ( "__FBTAB__", "&#009;", $fb_message_txt );
-				$fb_message_txt = smile::htmlwrap ( $fb_message_txt, $kunena_config->wrap );
 
 				$msg_html->text = CKunenaTools::prepareContent ( $fb_message_txt );
 
@@ -904,7 +899,6 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 					$signature = stripslashes ( smile::smileReplace ( $signature, 0, $kunena_config->disemoticons, $kunena_emoticons ) );
 					$signature = nl2br ( $signature );
 					//wordwrap:
-					$signature = smile::htmlwrap ( $signature, $kunena_config->wrap );
 					//restore the \n (were replaced with _CTRL_) occurences inside code tags, but only after we have striplslashes; otherwise they will be stripped again
 					//$signature = str_replace("_CRLF_", "\\n", stripslashes($signature));
 					$msg_html->signature = $signature;

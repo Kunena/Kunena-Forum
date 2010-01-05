@@ -1323,9 +1323,6 @@ function listThreadHistory($id, $kunena_config, $kunena_db) {
 			?>">
 		<div class="msgtext"><?php
 			$fb_message_txt = str_replace ( "</P><br />", "</P>", $fb_message_txt );
-			//Long Words Wrap:
-			$fb_message_txt = smile::htmlwrap ( $fb_message_txt, $kunena_config->wrap );
-
 			$fb_message_txt = CKunenaTools::prepareContent ( $fb_message_txt );
 
 			echo $fb_message_txt;

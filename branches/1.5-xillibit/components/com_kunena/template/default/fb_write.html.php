@@ -401,7 +401,7 @@ echo $objCatInfo->class_sfx;
 				  ');
         ?>
         <tr id="fb_post_edit_poll">
-        	<td id="fb_post_options" colspan = "2" style = "text-align: center;">
+        	<td id="fb_post_options" colspan = "2" style = "text-align: center;">        			
             	<tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry2">
                 	<td class = "fb_leftcolumn" >
             			<strong><?php echo _KUNENA_POLL_TITLE; ?></strong>

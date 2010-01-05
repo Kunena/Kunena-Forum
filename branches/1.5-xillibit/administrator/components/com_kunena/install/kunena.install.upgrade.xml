@@ -366,6 +366,7 @@
 			<query mode="silenterror">UPDATE `#__fb_config` SET `jmambot`='0'</query>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
+		    <phpfile name="kunena.special.upgrade.poll.php"></phpfile>            
 		</version>
 	</upgrade>
 </comupgrade>

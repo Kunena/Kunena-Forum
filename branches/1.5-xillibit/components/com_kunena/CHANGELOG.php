@@ -33,8 +33,11 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+05-Jan-2010 Xillibit
+^ [#19241] Little correction into kunena installation for polls
+
 03-Jan-2010 Xillibit
-#^ [#18627] Change for allowed categories list, fixes somes warning
+#^ [#19241] Change for allowed categories list, fixes somes warning
 ^ [#18627] Merge from /trunk/1.5 : 1444-1398
 
 03-Jan-2010 fxstein
@@ -90,16 +93,16 @@ Kunena 1.6.0-DEV
 # [#19065] More frontend cleanup based on code analysis - fixed various bugs
 
 02-Jan-2010 Xillibit
-+ [#18627] Add calendar with JHTML for the polls time to live
-# [#18627] Fixes somes warning detected into zend
-# [#18627] Fixes little bugs on polls
-+ [#18627] Add delete polls when the user delete a thread
++ [#19241] Add calendar with JHTML for the polls time to live
+# [#19241] Fixes somes warning detected into zend
+# [#19241] Fixes little bugs on polls
++ [#19241] Add delete polls when the user delete a thread
 
 01-Jan-2010 Xillibit
-+ [#18627] Add upgrade procedure for polls
++ [#19241] Add upgrade procedure for polls
 
 31-Dec-2009 Xillibit
-# [#18627] Fix for bugs after merge and for variables change in kunena 1.6
+# [#19241] Fix for bugs after merge and for variables change in kunena 1.6
 ^ [#18627] Merge from /trunk/1.5 : 1394-1342
 
 29-Dec-2009 Matias
@@ -146,7 +149,7 @@ Kunena 1.6.0-DEV
 # [#19065] Fix regression in uploaded files and images browser
 
 30-Dec-2009 Xillibit
-#^ [#18627] kunena.poll.class.php added, a lot of changes in the poll
+#^ [#19241] kunena.poll.class.php added, a lot of changes in the poll
 
 26-Dec-2009 Xillibit
 ^ [#18627] Merge from /trunk/1.5 : 1341-1321
@@ -173,7 +176,7 @@ Kunena 1.6.0-DEV
 
 22-dec-2009 Xillibit
 ^ [#18627] Merge from /trunk/1.5 : 1315-1265
-+ [#18627] Add in the poll results the name of all users which are voted for this poll
++ [#19241] Add in the poll results the name of all users which are voted for this poll
 - [#19065] remove unsued kunena.pathway.old.php as part of cleanup
 
 20-dec-2009 Xillibit
@@ -181,13 +184,13 @@ Kunena 1.6.0-DEV
 + [#18627] Integration of hack hide attachements for guests
 
 18-dec-2009 Xillibit
-^ [#18627] Changes for javascript used in the polls
+^ [#19241] Changes for javascript used in the polls
 ^ [#19033] User list and count shows also disabled users
 ^ [#19040] Most viewed profiles should use profile integration
 # [#19043] Deprecated links to index2.php
 
 17-dec-2009 Xillibit
-+ [#18627] The users need to wait some time before vote a new once in a poll
++ [#19241] The users need to wait some time before vote a new once in a poll
 #^ [#18767] Conflict with sh404sef language strings
 # [#19027] Debug does not show MySQL error in trace
 # [#19025] Moderators list is always using username, regardless of configuration option
@@ -196,19 +199,19 @@ Kunena 1.6.0-DEV
 # [#18973] Wrong My profile link in AUP integration
 
 16-dec-2009 Xillibit
-^ [#18627] Update queries for the poll in the kunena xml install file
-^+ [#18627] Add in statistics popular five polls with configuation settings, little changes in code organisation
+^ [#19241] Update queries for the poll in the kunena xml install file
+^+ [#19241] Add in statistics popular five polls with configuation settings, little changes in code organisation
 
 15-dec-2009 Xillibit
-^ [#18627] Add new queries for the poll in the kunena xml install file
+^ [#19241] Add new queries for the poll in the kunena xml install file
 
 13-dec-2009 Xillibit
-^ [#18627] Modification of all the query of the poll to use the new database model
-^ [#18627] Little change for the poll works on IE8.0, comestics changes and others little changes
-#^[#18902] Remove all remaining deprecated functions in PHP 5.3.x and remove split() and ereg() functions
+^ [#19241] Modification of all the query of the poll to use the new database model
+^ [#19241] Little change for the poll works on IE8.0, comestics changes and others little changes
+#^[#19241] Remove all remaining deprecated functions in PHP 5.3.x and remove split() and ereg() functions
 
 09-dec-2009 Xillibit
-+ [#18627] Integration of poll into kunena
++ [#19241] Integration of poll into kunena
 
 05-dec-2009 Xillibit
 #^[#18902] Fixes for all remaining deprecated warning with PHP 5.3.x and remove split() and ereg() functions

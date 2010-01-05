@@ -801,7 +801,7 @@ function showConfig($option) {
 	$lists ['sefutf8'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_sefutf8', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->sefutf8 );
 	// New for 1.6 -> Hide images and files for guests
 	$lists['showimgforguest'] = JHTML::_('select.genericlist', $yesno, 'cfg_showimgforguest', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showimgforguest);
-	$lists['showfileforguest'] = JHTML::_('select.genericlist', $yesno, 'cfg_showfileforguest', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showfileforguest); 
+	$lists['showfileforguest'] = JHTML::_('select.genericlist', $yesno, 'cfg_showfileforguest', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showfileforguest);
     // Avatar Position
     $avlist = array ();
 	$avlist[] = JHTML::_('select.option', 'left',_KUNENA_AV_LEFT);
@@ -1526,6 +1526,14 @@ function dircopy($srcdir, $dstdir, $verbose = false) {
 //===============================
 //   smiley functions
 //===============================
+//
+// Read a listing of uploaded smilies for use in the add or edit smiley code...
+//
+function collect_smilies_ranks($path) {
+  $smiley_images = JFolder::Files($path);
+  return $smiley_images;
+}
+
 function showsmilies($option) {
 	$kunena_db = &JFactory::getDBO ();
 	$kunena_app = & JFactory::getApplication ();
@@ -1558,10 +1566,11 @@ function editsmiley($option, $id) {
 	$smileytmp = $kunena_db->loadAssocList ();
 	$smileycfg = $smileytmp [0];
 
-	$smiley_images = collect_smilies ();
-
 	$smileypath = smileypath ();
+	$smileypathabs = $smileypath ['abs'];
 	$smileypath = $smileypath ['live'];
+
+	$smiley_images = collect_smilies_ranks ($smileypathabs);
 
 	$smiley_edit_img = '';
 
@@ -1582,9 +1591,11 @@ function editsmiley($option, $id) {
 function newsmiley($option) {
 	$kunena_db = &JFactory::getDBO ();
 
-	$smiley_images = collect_smilies ();
 	$smileypath = smileypath ();
+	$smileypathabs = $smileypath ['abs'];
 	$smileypath = $smileypath ['live'];
+
+	$smiley_images = collect_smilies_ranks ($smileypathabs);
 
 	$filename_list = "";
 	for($i = 0; $i < count ( $smiley_images ); $i ++) {
@@ -1661,30 +1672,6 @@ function smileypath() {
 
 	return $smileypath;
 }
-//
-// Read a listing of uploaded smilies for use in the add or edit smiley code...
-//
-function collect_smilies() {
-	$smileypath = smileypath ();
-	$smiley_images = array ();
-
-	$dir = @opendir ( $smileypath ['abs'] );
-
-	$file = @readdir ( $dir );
-
-	while ( $file ) {
-		if (! @is_dir ( $smileypath ['abs'] . DS . $file )) {
-			$img_size = @getimagesize ( $smileypath ['abs'] . DS . $file );
-
-			if ($img_size [0] && $img_size [1]) {
-				$smiley_images [] = $file;
-			}
-		}
-	}
-
-	@closedir ( $dir );
-	return $smiley_images;
-}
 //===============================
 //  FINISH smiley functions
 //===============================
@@ -1745,33 +1732,14 @@ function rankpath() {
 
 }
 
-function collectRanks() {
-	$rankpath = rankpath ();
-
-	$dir = @opendir ( $rankpath ['abs'] );
-
-	$rank_images = array ();
-	$file = @readdir ( $dir );
-	while ( $file ) {
-		if (! @is_dir ( $rankpath ['abs'] . DS . $file )) {
-			$img_size = @getimagesize ( $rankpath ['abs'] . DS . $file );
-
-			if ($img_size [0] && $img_size [1]) {
-				$rank_images [] = $file;
-			}
-		}
-	}
-
-	@closedir ( $dir );
-	return $rank_images;
-}
-
 function newRank($option) {
 	$kunena_db = &JFactory::getDBO ();
 
-	$rank_images = collectRanks ();
 	$rankpath = rankpath ();
+	$rankpathabs = $rankpath ['abs'];
 	$rankpath = $rankpath ['live'];
+
+	$rank_images = collect_smilies_ranks($rankpathabs);
 
 	$filename_list = "";
 	$i = 0;
@@ -1841,10 +1809,11 @@ function editRank($option, $id) {
 	$ranks = $kunena_db->loadObjectList ();
 	check_dberror ( "Unable to load ranks." );
 
-	$rank_images = collectRanks ();
-
 	$path = rankpath ();
+	$pathabs = $path ['abs'];
 	$path = $path ['live'];
+
+	$rank_images = collect_smilies_ranks($pathabs);
 
 	$edit_img = $filename_list = '';
 

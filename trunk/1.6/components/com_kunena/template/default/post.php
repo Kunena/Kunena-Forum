@@ -194,15 +194,14 @@ if ($kunena_my->id) {
 				$messagesubject = $subject; //before we add slashes and all... used later in mail
 
 
-				$authorname = JString::trim ( addslashes ( $my_name ) );
-				$subject = JString::trim ( addslashes ( $subject ) );
-				$message = JString::trim ( addslashes ( $message ) );
-				$email = JString::trim ( addslashes ( $this->kunena_my_email ) );
+				$authorname = addslashes ( JString::trim ( $my_name ) );
+				$subject = addslashes ( JString::trim ( $subject ) );
+				$message = addslashes ( JString::trim ( $message ) );
+				$email = addslashes ( JString::trim ( $this->kunena_my_email ) );
 				$topic_emoticon = ($topic_emoticon < 0 || $topic_emoticon > 7) ? 0 : $topic_emoticon;
 				$posttime = CKunenaTools::fbGetInternalTime ();
-
-				if ($contentURL != "empty") {
-					$message = $contentURL . '\n\n' . $message;
+				if ($contentURL) {
+					$message = $contentURL . "\n\n" . $message;
 				}
 
 				//check if the post must be reviewed by a moderator prior to showing
@@ -573,7 +572,6 @@ if ($kunena_my->id) {
 				$this->id = $id;
 				$this->parentid = $parentid;
 				$this->catid = $catid;
-				$this->contentURL = 'empty';
 
 				//get the writing stuff in:
 				$no_upload = "0"; //only edit mode should disallow this
@@ -701,8 +699,8 @@ if ($kunena_my->id) {
 						include KUNENA_PATH_LIB . DS . 'kunena.image.upload.php';
 					}
 
-					//$message = JString::trim(kunena_htmlspecialchars(addslashes($message)));
-					$message = JString::trim ( addslashes ( $message ) );
+					$subject = addslashes ( JString::trim ( $subject ) );
+					$message = addslashes ( JString::trim ( $message ) );
 
 					//parse the message for some preliminary bbcode and stripping of HTML
 					//$message = smile::bbencode_first_pass($message);
@@ -722,7 +720,7 @@ if ($kunena_my->id) {
 							$holdPost = $kunena_db->loadResult ();
 						}
 
-						$kunena_db->setQuery ( "UPDATE #__fb_messages SET name=" . $kunena_db->quote ( $authorname ) . ", email=" . $kunena_db->quote ( addslashes ( $email ) ) . (($kunena_config->editmarkup) ? " ,modified_by='" . $modified_by . "' ,modified_time='" . $modified_time . "' ,modified_reason=" . $kunena_db->quote ( $modified_reason ) : "") . ", subject=" . $kunena_db->quote ( addslashes ( $subject ) ) . ", topic_emoticon='" . $topic_emoticon . "', hold='" . (( int ) $holdPost) . "' WHERE id={$id}" );
+						$kunena_db->setQuery ( "UPDATE #__fb_messages SET name=" . $kunena_db->quote ( $authorname ) . ", email=" . $kunena_db->quote ( addslashes ( $email ) ) . (($kunena_config->editmarkup) ? " ,modified_by='" . $modified_by . "' ,modified_time='" . $modified_time . "' ,modified_reason=" . $kunena_db->quote ( $modified_reason ) : "") . ", subject=" . $kunena_db->quote ( $subject ) . ", topic_emoticon='" . $topic_emoticon . "', hold='" . (( int ) $holdPost) . "' WHERE id={$id}" );
 
 						$dbr_nameset = $kunena_db->query ();
 						$kunena_db->setQuery ( "UPDATE #__fb_messages_text SET message=" . $kunena_db->quote ( $message ) . " WHERE mesid='{$id}'" );
@@ -957,7 +955,7 @@ else if ($do == "move") {
 
 				// insert 'moved topic' notification in old forum if needed
 				if ($bool_leaveGhost) {
-					$kunena_db->setQuery ( "INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0'," . $kunena_db->quote ( $newSubject ) . ",'$lastTimestamp','{$oldRecord[0]->catid}','1', '{$kunena_my->id}', " . $kunena_db->quote ( JString::trim ( addslashes ( $my_name ) ) ) . ")" );
+					$kunena_db->setQuery ( "INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0'," . $kunena_db->quote ( $newSubject ) . ",'$lastTimestamp','{$oldRecord[0]->catid}','1', '{$kunena_my->id}', " . $kunena_db->quote ( addslashes ( JString::trim ( $my_name ) ) ) . ")" );
 					$kunena_db->query () or check_dberror ( 'Unable to insert ghost message.' );
 
 					//determine the new location for link composition

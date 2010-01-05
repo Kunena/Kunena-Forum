@@ -65,6 +65,9 @@ if (! empty ( $this->kunena_editmode )) :
 	value="<?php
 	echo JURI::base ( true );
 	?>/" name="kunenaPath" />
+<?php if (! empty ( $this->contentURL )) :?>
+<input type="hidden" name="contentURL" value="<?php echo $this->contentURL; ?>" />
+<?php endif; ?>
 
 <div class="<?php
 echo KUNENA_BOARD_CLASS;

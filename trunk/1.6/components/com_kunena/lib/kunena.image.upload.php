@@ -50,9 +50,9 @@ $imageSize = $attachimage['size'];
 //Enforce it is a new file
 $newFileName = $imageName . $imageExt;
 if (file_exists(KUNENA_PATH_UPLOADED .DS. "images" .DS. $newFileName)) {
-    $newFileName = $imageName . '-' . date('Ymd') . "." . $imageExt;
+    $newFileName = $imageName . '-' . date('Ymd') . $imageExt;
     for ($i=2; file_exists(KUNENA_PATH_UPLOADED .DS. "images" .DS. $newFileName); $i++) {
-    	$newFileName = $imageName . '-' . date('Ymd') . "-$i." . $imageExt;
+    	$newFileName = $imageName . '-' . date('Ymd') . "-$i" . $imageExt;
     }
 }
 
@@ -102,5 +102,6 @@ if ($GLOBALS['KUNENA_rc'])
     else {
         $message = $message . ' ' . $code;
     }
+    echo _KUNENA_ATTACHMENT_IMG_ADDED, ' '.$newFileName;
 }
 ?>

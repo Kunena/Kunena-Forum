@@ -56,8 +56,6 @@ if (file_exists(KUNENA_PATH_UPLOADED .DS. "files" .DS. $newFileName)) {
     }
 }
 
-echo "$newFileName";
-
 if ($GLOBALS['KUNENA_rc'])
 {
     //Filename + proper path
@@ -95,5 +93,6 @@ if ($GLOBALS['KUNENA_rc'])
     else {
         $message = $message . ' ' . $code;
     }
+    echo _KUNENA_ATTACHMENT_ADDED, ' '.$newFileName;
 }
 ?>

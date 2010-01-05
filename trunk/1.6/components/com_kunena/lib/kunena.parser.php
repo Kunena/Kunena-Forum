@@ -414,7 +414,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                     {
                 	$task->autolink_disable--; # continue autolink conversion
                     $tag_new = "<div class=\"fb_file_attachment\"><span class=\"contentheading\">"._KUNENA_FILEATTACH."</span><br>"._KUNENA_FILENAME
-                    ."<a href='".$tempstr."' target=\"_blank\" rel=\"nofollow\">".(($tag->options["name"])?kunena_htmlspecialchars($tag->options["name"]):$tempstr)."</a><br>"._KUNENA_FILESIZE.kunena_htmlspecialchars($tag->options["size"], ENT_QUOTES)."</div>";
+                    ." <a href='".$tempstr."' target=\"_blank\" rel=\"nofollow\">".(($tag->options["name"])?kunena_htmlspecialchars($tag->options["name"]):$tempstr)."</a><br>"._KUNENA_FILESIZE.' '.kunena_htmlspecialchars($tag->options["size"], ENT_QUOTES)."</div>";
                      }
                     return TAGPARSER_RET_REPLACED;
                 }

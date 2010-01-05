@@ -139,7 +139,6 @@ echo CKunenaLink::GetSamePageAnkerLink ( $msg_html->id, '#' . $msg_html->id )?>
 																													echo $catid;
 																													?>" />
 					<input type="hidden" name="action" value="post" /> <input
-						type="hidden" name="contentURL" value="empty" /> <input
 						type="text" name="subject" size="35" class="inputbox"
 						maxlength="<?php
 																													echo $kunena_config->maxsubject;

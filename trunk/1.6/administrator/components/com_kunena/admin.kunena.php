@@ -1530,8 +1530,8 @@ function dircopy($srcdir, $dstdir, $verbose = false) {
 // Read a listing of uploaded smilies for use in the add or edit smiley code...
 //
 function collect_smilies_ranks($path) {
-  $smiley_images = JFolder::Files($path);
-  return $smiley_images;
+  $smiley_rank_images = JFolder::Files($path,false,false,false,array('index.php'));
+  return $smiley_rank_images;
 }
 
 function showsmilies($option) {

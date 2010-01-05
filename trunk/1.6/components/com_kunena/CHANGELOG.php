@@ -37,6 +37,7 @@ Kunena 1.6.0-DEV
 # [#19288] Fix some minor bugs on backend part 2
 
 05-Jan-2010 xillibit
+# [#19287] Modification for collect_smilies() and collect_ranks() - delete the index.php in display
 # [#19287] Modification for collect_smilies() and collect_ranks()
 # [#19234] Hide IP addresses from Moderators
 

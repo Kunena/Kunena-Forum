@@ -27,7 +27,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 $kunena_session = & CKunenaSession::getInstance ();
 $kunena_db = & JFactory::getDBO ();
 
-global $kunena_emoticons;
+global $kunena_icons;
 
 function KunenaViewPagination($catid, $threadid, $page, $totalpages, $maxpages) {
 	$kunena_config = & CKunenaConfig::getInstance ();
@@ -73,7 +73,7 @@ function KunenaViewPagination($catid, $threadid, $page, $totalpages, $maxpages) 
 $catid = ( int ) $catid;
 $id = ( int ) $id;
 
-$smileyList = smile::getEmoticons ( 0 );
+$kunena_emoticons = smile::getEmoticons ( 0 );
 
 //ob_start();
 $showedEdit = 0;
@@ -229,58 +229,58 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		//data ready display now
 		if (CKunenaTools::isModerator($kunena_my->id, $catid) || (($this->kunena_forum_locked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
 			//this user is allowed to reply to this topic
-			$thread_reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $thread, isset ( $kunena_emoticons ['topicreply'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['topicreply'] . '" alt="' . _GEN_POST_REPLY . '" title="' . _GEN_POST_REPLY . '" border="0" />' : _GEN_POST_REPLY );
+			$thread_reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $thread, isset ( $kunena_icons ['topicreply'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['topicreply'] . '" alt="' . _GEN_POST_REPLY . '" title="' . _GEN_POST_REPLY . '" border="0" />' : _GEN_POST_REPLY );
 		}
 
 		if ($fb_cansubscribe == 1) {
 			// this user is allowed to subscribe - check performed further up to eliminate duplicate checks
 			// for top and bottom navigation
-			$thread_subscribe = CKunenaLink::GetTopicPostLink ( 'subscribe', $catid, $id, isset ( $kunena_emoticons ['subscribe'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['subscribe'] . '" alt="' . _VIEW_SUBSCRIBETXT . '" title="' . _VIEW_SUBSCRIBETXT . '" border="0" />' : _VIEW_SUBSCRIBETXT );
+			$thread_subscribe = CKunenaLink::GetTopicPostLink ( 'subscribe', $catid, $id, isset ( $kunena_icons ['subscribe'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['subscribe'] . '" alt="' . _VIEW_SUBSCRIBETXT . '" title="' . _VIEW_SUBSCRIBETXT . '" border="0" />' : _VIEW_SUBSCRIBETXT );
 		}
 
 		//START: FAVORITES
 		if ($kunena_my->id != 0 && $kunena_config->allowsubscriptions && $fb_cansubscribe == 0) {
 			// this user is allowed to unsubscribe
-			$thread_subscribe = CKunenaLink::GetTopicPostLink ( 'unsubscribe', $catid, $id, isset ( $kunena_emoticons ['unsubscribe'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['unsubscribe'] . '" alt="' . _VIEW_UNSUBSCRIBETXT . '" title="' . _VIEW_UNSUBSCRIBETXT . '" border="0" />' : _VIEW_UNSUBSCRIBETXT );
+			$thread_subscribe = CKunenaLink::GetTopicPostLink ( 'unsubscribe', $catid, $id, isset ( $kunena_icons ['unsubscribe'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unsubscribe'] . '" alt="' . _VIEW_UNSUBSCRIBETXT . '" title="' . _VIEW_UNSUBSCRIBETXT . '" border="0" />' : _VIEW_UNSUBSCRIBETXT );
 		}
 
 		if ($fb_canfavorite == 1) {
 			// this user is allowed to add a favorite - check performed further up to eliminate duplicate checks
 			// for top and bottom navigation
-			$thread_favorite = CKunenaLink::GetTopicPostLink ( 'favorite', $catid, $id, isset ( $kunena_emoticons ['favorite'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['favorite'] . '" alt="' . _VIEW_FAVORITETXT . '" title="' . _VIEW_FAVORITETXT . '" border="0" />' : _VIEW_FAVORITETXT );
+			$thread_favorite = CKunenaLink::GetTopicPostLink ( 'favorite', $catid, $id, isset ( $kunena_icons ['favorite'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['favorite'] . '" alt="' . _VIEW_FAVORITETXT . '" title="' . _VIEW_FAVORITETXT . '" border="0" />' : _VIEW_FAVORITETXT );
 		}
 
 		if ($kunena_my->id != 0 && $kunena_config->allowfavorites && $fb_canfavorite == 0) {
 			// this user is allowed to unfavorite
-			$thread_favorite = CKunenaLink::GetTopicPostLink ( 'unfavorite', $catid, $id, isset ( $kunena_emoticons ['unfavorite'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['unfavorite'] . '" alt="' . _VIEW_UNFAVORITETXT . '" title="' . _VIEW_UNFAVORITETXT . '" border="0" />' : _VIEW_UNFAVORITETXT );
+			$thread_favorite = CKunenaLink::GetTopicPostLink ( 'unfavorite', $catid, $id, isset ( $kunena_icons ['unfavorite'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unfavorite'] . '" alt="' . _VIEW_UNFAVORITETXT . '" title="' . _VIEW_UNFAVORITETXT . '" border="0" />' : _VIEW_UNFAVORITETXT );
 		}
 		// FINISH: FAVORITES
 
 
 		if (CKunenaTools::isModerator($kunena_my->id, $catid) || ($this->kunena_forum_locked == 0 && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
 			//this user is allowed to post a new topic
-			$thread_new = CKunenaLink::GetPostNewTopicLink ( $catid, isset ( $kunena_emoticons ['new_topic'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC );
+			$thread_new = CKunenaLink::GetPostNewTopicLink ( $catid, isset ( $kunena_icons ['new_topic'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC );
 		}
 
 		if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
 			// offer the moderator always the move link to relocate a topic to another forum
 			// and the (un)sticky bit links
 			// and the (un)lock links
-			$thread_move = CKunenaLink::GetTopicPostLink ( 'move', $catid, $id, isset ( $kunena_emoticons ['move'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['move'] . '" alt="Move" border="0" title="' . _VIEW_MOVE . '" />' : _GEN_MOVE );
+			$thread_move = CKunenaLink::GetTopicPostLink ( 'move', $catid, $id, isset ( $kunena_icons ['move'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['move'] . '" alt="Move" border="0" title="' . _VIEW_MOVE . '" />' : _GEN_MOVE );
 
 			if ($topicSticky == 0) {
-				$thread_sticky = CKunenaLink::GetTopicPostLink ( 'sticky', $catid, $id, isset ( $kunena_emoticons ['sticky'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['sticky'] . '" alt="Sticky" border="0" title="' . _VIEW_STICKY . '" />' : _GEN_STICKY );
+				$thread_sticky = CKunenaLink::GetTopicPostLink ( 'sticky', $catid, $id, isset ( $kunena_icons ['sticky'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['sticky'] . '" alt="Sticky" border="0" title="' . _VIEW_STICKY . '" />' : _GEN_STICKY );
 			} else {
-				$thread_sticky = CKunenaLink::GetTopicPostLink ( 'unsticky', $catid, $id, isset ( $kunena_emoticons ['unsticky'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['unsticky'] . '" alt="Unsticky" border="0" title="' . _VIEW_UNSTICKY . '" />' : _GEN_UNSTICKY );
+				$thread_sticky = CKunenaLink::GetTopicPostLink ( 'unsticky', $catid, $id, isset ( $kunena_icons ['unsticky'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unsticky'] . '" alt="Unsticky" border="0" title="' . _VIEW_UNSTICKY . '" />' : _GEN_UNSTICKY );
 			}
 
 			if ($topicLocked == 0) {
-				$thread_lock = CKunenaLink::GetTopicPostLink ( 'lock', $catid, $id, isset ( $kunena_emoticons ['lock'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['lock'] . '" alt="Lock" border="0" title="' . _VIEW_LOCK . '" />' : _GEN_LOCK );
+				$thread_lock = CKunenaLink::GetTopicPostLink ( 'lock', $catid, $id, isset ( $kunena_icons ['lock'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['lock'] . '" alt="Lock" border="0" title="' . _VIEW_LOCK . '" />' : _GEN_LOCK );
 			} else {
-				$thread_lock = CKunenaLink::GetTopicPostLink ( 'unlock', $catid, $id, isset ( $kunena_emoticons ['unlock'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['unlock'] . '" alt="Unlock" border="0" title="' . _VIEW_UNLOCK . '" />' : _GEN_UNLOCK );
+				$thread_lock = CKunenaLink::GetTopicPostLink ( 'unlock', $catid, $id, isset ( $kunena_icons ['unlock'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unlock'] . '" alt="Unlock" border="0" title="' . _VIEW_UNLOCK . '" />' : _GEN_UNLOCK );
 			}
-			$thread_delete = CKunenaLink::GetTopicPostLink ( 'delete', $catid, $id, isset ( $kunena_emoticons ['delete'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />' : _GEN_DELETE );
-			$thread_merge = CKunenaLink::GetTopicPostLink ( 'merge', $catid, $id, isset ( $kunena_emoticons ['merge'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['merge'] . '" alt="Merge" border="0" title="' . _VIEW_MERGE . '" />' : _GEN_MERGE );
+			$thread_delete = CKunenaLink::GetTopicPostLink ( 'delete', $catid, $id, isset ( $kunena_icons ['delete'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />' : _GEN_DELETE );
+			$thread_merge = CKunenaLink::GetTopicPostLink ( 'merge', $catid, $id, isset ( $kunena_icons ['merge'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['merge'] . '" alt="Merge" border="0" title="' . _VIEW_MERGE . '" />' : _GEN_MERGE );
 		}
 		?>
 
@@ -314,7 +314,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 	cellspacing="0" width="100%">
 	<tr>
 		<td><?php
-			$headerdesc = stripslashes ( smile::smileReplace ( $objCatInfo->headerdesc, 0, $kunena_config->disemoticons, $smileyList ) );
+			$headerdesc = stripslashes ( smile::smileReplace ( $objCatInfo->headerdesc, 0, $kunena_config->disemoticons, $kunena_emoticons ) );
 			$headerdesc = nl2br ( $headerdesc );
 			//wordwrap:
 			$headerdesc = smile::htmlwrap ( $headerdesc, $kunena_config->wrap );
@@ -335,7 +335,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		<td class="fb_list_actions_goto"><?php
 		//go to bottom
 		echo '<a name="forumtop" /> ';
-		echo CKunenaLink::GetSamePageAnkerLink ( 'forumbottom', isset ( $kunena_emoticons ['bottomarrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM );
+		echo CKunenaLink::GetSamePageAnkerLink ( 'forumbottom', isset ( $kunena_icons ['bottomarrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM );
 
 		echo '</td>';
 		if (CKunenaTools::isModerator($kunena_my->id, $catid) || isset ( $thread_reply ) || isset ( $thread_subscribe ) || isset ( $thread_favorite )) {
@@ -417,17 +417,17 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		$fb_totalfavorited = $kunena_db->loadResult ();
 
 		echo '<div class="fb_totalfavorite">';
-		if ($kunena_emoticons ['favoritestar']) {
+		if ($kunena_icons ['favoritestar']) {
 			if ($fb_totalfavorited >= 1)
-				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['favoritestar'] . '" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
+				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
 			if ($fb_totalfavorited >= 3)
-				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['favoritestar'] . '" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
+				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
 			if ($fb_totalfavorited >= 6)
-				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['favoritestar'] . '" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
+				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
 			if ($fb_totalfavorited >= 10)
-				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['favoritestar'] . '" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
+				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
 			if ($fb_totalfavorited >= 15)
-				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['favoritestar'] . '" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
+				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
 		} else {
 			echo _KUNENA_TOTALFAVORITE;
 			echo $fb_totalfavorited;
@@ -697,8 +697,8 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 					$msg_html->karma = "<strong>" . _KARMA . ":</strong> $karmaPoints";
 
 					if ($kunena_my->id != '0' && $kunena_my->id != $userinfo->userid) {
-						$msg_html->karmaminus = CKunenaLink::GetKarmaLink ( 'decrease', $catid, $this->kunena_message->id, $userinfo->userid, '<img src="' . (isset ( $kunena_emoticons ['karmaminus'] ) ? (KUNENA_URLICONSPATH . $kunena_emoticons ['karmaminus']) : (KUNENA_URLEMOTIONSPATH . "karmaminus.gif")) . '" alt="Karma-" border="0" title="' . _KARMA_SMITE . '" align="absmiddle" />' );
-						$msg_html->karmaplus = CKunenaLink::GetKarmaLink ( 'increase', $catid, $this->kunena_message->id, $userinfo->userid, '<img src="' . (isset ( $kunena_emoticons ['karmaplus'] ) ? (KUNENA_URLICONSPATH . $kunena_emoticons ['karmaplus']) : (KUNENA_URLEMOTIONSPATH . "karmaplus.gif")) . '" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" align="absmiddle" />' );
+						$msg_html->karmaminus = CKunenaLink::GetKarmaLink ( 'decrease', $catid, $this->kunena_message->id, $userinfo->userid, '<img src="' . (isset ( $kunena_icons ['karmaminus'] ) ? (KUNENA_URLICONSPATH . $kunena_icons ['karmaminus']) : (KUNENA_URLEMOTIONSPATH . "karmaminus.gif")) . '" alt="Karma-" border="0" title="' . _KARMA_SMITE . '" align="absmiddle" />' );
+						$msg_html->karmaplus = CKunenaLink::GetKarmaLink ( 'increase', $catid, $this->kunena_message->id, $userinfo->userid, '<img src="' . (isset ( $kunena_icons ['karmaplus'] ) ? (KUNENA_URLICONSPATH . $kunena_icons ['karmaplus']) : (KUNENA_URLEMOTIONSPATH . "karmaplus.gif")) . '" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" align="absmiddle" />' );
 					}
 				}
 				/*let's see if we should use Missus integration */
@@ -708,10 +708,10 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 					$PMSName = $userinfo->username;
 					$msg_html->pms = "<a href=\"" . JRoute::_ ( 'index.php?option=com_missus&amp;func=newmsg&amp;user=' . $userinfo->userid . '&amp;subject=' . _GEN_FORUM . ': ' . urlencode ( utf8_encode ( $this->kunena_message->subject ) ) ) . "\"><img src='";
 
-					if ($kunena_emoticons ['pms']) {
-						$msg_html->pms .= KUNENA_URLICONSPATH . $kunena_emoticons ['pms'];
+					if ($kunena_icons ['pms']) {
+						$msg_html->pms .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
 					} else {
-						$msg_html->pms .= KUNENA_URLICONSPATH . $kunena_emoticons ['pms'];
+						$msg_html->pms .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
 						;
 					}
 
@@ -725,10 +725,10 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 					$PMSName = $userinfo->username;
 					$msg_html->pms = "<a href=\"" . JRoute::_ ( 'index.php?option=com_jim&amp;page=new&amp;id=' . $PMSName . '&title=' . $this->kunena_message->subject ) . "\"><img src='";
 
-					if ($kunena_emoticons ['pms']) {
-						$msg_html->pms .= KUNENA_URLICONSPATH . $kunena_emoticons ['pms'];
+					if ($kunena_icons ['pms']) {
+						$msg_html->pms .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
 					} else {
-						$msg_html->pms .= KUNENA_URLICONSPATH . $kunena_emoticons ['pms'];
+						$msg_html->pms .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
 						;
 					}
 
@@ -741,8 +741,8 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 					$PMSName = $userinfo->username;
 					$msg_html->pms = "<a href=\"" . JRoute::_ ( 'index.php?option=com_uddeim&amp;task=new&recip=' . $userinfo->userid ) . "\"><img src=\"";
 
-					if ($kunena_emoticons ['pms']) {
-						$msg_html->pms .= KUNENA_URLICONSPATH . $kunena_emoticons ['pms'];
+					if ($kunena_icons ['pms']) {
+						$msg_html->pms .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
 					} else {
 						$msg_html->pms .= KUNENA_URLEMOTIONSPATH . "sendpm.gif";
 					}
@@ -756,8 +756,8 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 					$PMSName = $userinfo->username;
 					$msg_html->pms = "<a href=\"" . JRoute::_ ( 'index.php?option=com_pms&amp;page=new&amp;id=' . $PMSName . '&title=' . $this->kunena_message->subject ) . "\"><img src=\"";
 
-					if ($kunena_emoticons ['pms']) {
-						$msg_html->pms .= KUNENA_URLICONSPATH . $kunena_emoticons ['pms'];
+					if ($kunena_icons ['pms']) {
+						$msg_html->pms .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
 					} else {
 						$msg_html->pms .= KUNENA_URLEMOTIONSPATH . "sendpm.gif";
 					}
@@ -776,9 +776,9 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 					$isonline = $onlinecache [$userinfo->userid];
 
 					if ($isonline && $userinfo->showOnline == 1) {
-						$msg_html->online = isset ( $kunena_emoticons ['onlineicon'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';
+						$msg_html->online = isset ( $kunena_icons ['onlineicon'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';
 					} else {
-						$msg_html->online = isset ( $kunena_emoticons ['offlineicon'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
+						$msg_html->online = isset ( $kunena_icons ['offlineicon'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
 					}
 				}
 				/* PM integration */
@@ -786,8 +786,8 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 					$onclick = CMessaging::getPopup ( $userinfo->userid );
 					$msg_html->pms = '<a href="javascript:void(0)" onclick="' . $onclick . "\">";
 
-					if ($kunena_emoticons ['pms']) {
-						$msg_html->pms .= "<img src=\"" . KUNENA_URLICONSPATH . $kunena_emoticons ['pms'] . "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" />";
+					if ($kunena_icons ['pms']) {
+						$msg_html->pms .= "<img src=\"" . KUNENA_URLICONSPATH . $kunena_icons ['pms'] . "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" />";
 					} else {
 						$msg_html->pms .= _VIEW_PMS;
 					}
@@ -800,8 +800,8 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 						$msg_html->prflink = CKunenaCBProfile::getProfileURL ( $userinfo->userid );
 						$msg_html->profile = "<a href=\"" . $msg_html->prflink . "\">                                              <img src=\"";
 
-						if ($kunena_emoticons ['userprofile']) {
-							$msg_html->profile .= KUNENA_URLICONSPATH . $kunena_emoticons ['userprofile'];
+						if ($kunena_icons ['userprofile']) {
+							$msg_html->profile .= KUNENA_URLICONSPATH . $kunena_icons ['userprofile'];
 						} else {
 							$msg_html->profile .= KUNENA_JLIVEURL . "/components/com_comprofiler/images/profiles.gif";
 						}
@@ -813,8 +813,8 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 					$msg_html->prflink = JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=fbprofile&amp;task=showprf&amp;userid=' . $userinfo->userid );
 					$msg_html->profileicon = "<img src=\"";
 
-					if ($kunena_emoticons ['userprofile']) {
-						$msg_html->profileicon .= KUNENA_URLICONSPATH . $kunena_emoticons ['userprofile'];
+					if ($kunena_icons ['userprofile']) {
+						$msg_html->profileicon .= KUNENA_URLICONSPATH . $kunena_icons ['userprofile'];
 					} else {
 						$msg_html->profileicon .= KUNENA_URLICONSPATH . "profile.gif";
 					}
@@ -828,12 +828,12 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 					$gender = _KUNENA_NOGENDER;
 					if ($userinfo->gender == 1) {
 						$gender = '' . _KUNENA_MYPROFILE_MALE;
-						$msg_html->gender = isset ( $kunena_emoticons ['msgmale'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['msgmale'] . '" border="0" alt="' . _KUNENA_MYPROFILE_GENDER . ': ' . $gender . '" title="' . _KUNENA_MYPROFILE_GENDER . ': ' . $gender . '" />' : '' . _KUNENA_MYPROFILE_GENDER . ': ' . $gender . '';
+						$msg_html->gender = isset ( $kunena_icons ['msgmale'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msgmale'] . '" border="0" alt="' . _KUNENA_MYPROFILE_GENDER . ': ' . $gender . '" title="' . _KUNENA_MYPROFILE_GENDER . ': ' . $gender . '" />' : '' . _KUNENA_MYPROFILE_GENDER . ': ' . $gender . '';
 					}
 
 					if ($userinfo->gender == 2) {
 						$gender = '' . _KUNENA_MYPROFILE_FEMALE;
-						$msg_html->gender = isset ( $kunena_emoticons ['msgfemale'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['msgfemale'] . '" border="0" alt="' . _KUNENA_MYPROFILE_GENDER . ': ' . $gender . '" title="' . _KUNENA_MYPROFILE_GENDER . ': ' . $gender . '" />' : '' . _KUNENA_MYPROFILE_GENDER . ': ' . $gender . '';
+						$msg_html->gender = isset ( $kunena_icons ['msgfemale'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msgfemale'] . '" border="0" alt="' . _KUNENA_MYPROFILE_GENDER . ': ' . $gender . '" title="' . _KUNENA_MYPROFILE_GENDER . ': ' . $gender . '" />' : '' . _KUNENA_MYPROFILE_GENDER . ': ' . $gender . '';
 					}
 
 				}
@@ -846,30 +846,30 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 					$msg_html->icq = '<a href="http://www.icq.com/people/cmd.php?uin=' . kunena_htmlspecialchars ( stripslashes ( $userinfo->ICQ ) ) . '&action=message"><img src="http://status.icq.com/online.gif?icq=' . kunena_htmlspecialchars ( stripslashes ( $userinfo->ICQ ) ) . '&img=5" title="ICQ#: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->ICQ ) ) . '" alt="ICQ#: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->ICQ ) ) . '" /></a>';
 				}
 				if ($userinfo->location != '') {
-					$msg_html->location = isset ( $kunena_emoticons ['msglocation'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['msglocation'] . '" border="0" alt="' . _KUNENA_MYPROFILE_LOCATION . ': ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->location ) ) . '" title="' . _KUNENA_MYPROFILE_LOCATION . ': ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->location ) ) . '" />' : ' ' . _KUNENA_MYPROFILE_LOCATION . ': ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->location ) ) . '';
+					$msg_html->location = isset ( $kunena_icons ['msglocation'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msglocation'] . '" border="0" alt="' . _KUNENA_MYPROFILE_LOCATION . ': ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->location ) ) . '" title="' . _KUNENA_MYPROFILE_LOCATION . ': ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->location ) ) . '" />' : ' ' . _KUNENA_MYPROFILE_LOCATION . ': ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->location ) ) . '';
 				}
 				if ($userinfo->birthdate != '0001-01-01' and $userinfo->birthdate != '0000-00-00' and $userinfo->birthdate != '') {
 					$birthday = strftime ( _KUNENA_DT_MONTHDAY_FMT, strtotime ( $userinfo->birthdate ) );
-					$msg_html->birthdate = isset ( $kunena_emoticons ['msgbirthdate'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['msgbirthdate'] . '" border="0" alt="' . _KUNENA_PROFILE_BIRTHDAY . ': ' . $birthday . '" title="' . _KUNENA_PROFILE_BIRTHDAY . ': ' . $birthday . '" />' : ' ' . _KUNENA_PROFILE_BIRTHDAY . ': ' . $birthday . '';
+					$msg_html->birthdate = isset ( $kunena_icons ['msgbirthdate'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msgbirthdate'] . '" border="0" alt="' . _KUNENA_PROFILE_BIRTHDAY . ': ' . $birthday . '" title="' . _KUNENA_PROFILE_BIRTHDAY . ': ' . $birthday . '" />' : ' ' . _KUNENA_PROFILE_BIRTHDAY . ': ' . $birthday . '';
 				}
 
 				if ($userinfo->AIM != '') {
-					$msg_html->aim = isset ( $kunena_emoticons ['msgaim'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['msgaim'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->AIM ) ) . '" title="AIM: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->AIM ) ) . '" />' : 'AIM: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->AIM ) ) . '';
+					$msg_html->aim = isset ( $kunena_icons ['msgaim'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msgaim'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->AIM ) ) . '" title="AIM: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->AIM ) ) . '" />' : 'AIM: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->AIM ) ) . '';
 				}
 				if ($userinfo->MSN != '') {
-					$msg_html->msn = isset ( $kunena_emoticons ['msgmsn'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['msgmsn'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->MSN ) ) . '" title="MSN: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->MSN ) ) . '" />' : 'MSN: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->MSN ) ) . '';
+					$msg_html->msn = isset ( $kunena_icons ['msgmsn'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msgmsn'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->MSN ) ) . '" title="MSN: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->MSN ) ) . '" />' : 'MSN: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->MSN ) ) . '';
 				}
 				if ($userinfo->YIM != '') {
-					$msg_html->yim = isset ( $kunena_emoticons ['msgyim'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['msgyim'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->YIM ) ) . '" title="YIM: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->YIM ) ) . '" />' : ' YIM: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->YIM ) ) . '';
+					$msg_html->yim = isset ( $kunena_icons ['msgyim'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msgyim'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->YIM ) ) . '" title="YIM: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->YIM ) ) . '" />' : ' YIM: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->YIM ) ) . '';
 				}
 				if ($userinfo->SKYPE != '') {
-					$msg_html->skype = isset ( $kunena_emoticons ['msgskype'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['msgskype'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->SKYPE ) ) . '" title="SKYPE: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->SKYPE ) ) . '" />' : 'SKYPE: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->SKYPE ) ) . '';
+					$msg_html->skype = isset ( $kunena_icons ['msgskype'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msgskype'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->SKYPE ) ) . '" title="SKYPE: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->SKYPE ) ) . '" />' : 'SKYPE: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->SKYPE ) ) . '';
 				}
 				if ($userinfo->GTALK != '') {
-					$msg_html->gtalk = isset ( $kunena_emoticons ['msggtalk'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['msggtalk'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->GTALK ) ) . '" title="GTALK: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->GTALK ) ) . '" />' : 'GTALK: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->GTALK ) ) . '';
+					$msg_html->gtalk = isset ( $kunena_icons ['msggtalk'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msggtalk'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->GTALK ) ) . '" title="GTALK: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->GTALK ) ) . '" />' : 'GTALK: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->GTALK ) ) . '';
 				}
 				if ($userinfo->websiteurl != '') {
-					$msg_html->website = isset ( $kunena_emoticons ['msgwebsite'] ) ? '<a href="http://' . kunena_htmlspecialchars ( stripslashes ( $userinfo->websiteurl ) ) . '" target="_blank"><img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['msgwebsite'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->websitename ) ) . '" title="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->websitename ) ) . '" /></a>' : '<a href="http://' . kunena_htmlspecialchars ( stripslashes ( $userinfo->websiteurl ) ) . '" target="_blank">' . kunena_htmlspecialchars ( stripslashes ( $userinfo->websitename ) ) . '</a>';
+					$msg_html->website = isset ( $kunena_icons ['msgwebsite'] ) ? '<a href="http://' . kunena_htmlspecialchars ( stripslashes ( $userinfo->websiteurl ) ) . '" target="_blank"><img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msgwebsite'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->websitename ) ) . '" title="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->websitename ) ) . '" /></a>' : '<a href="http://' . kunena_htmlspecialchars ( stripslashes ( $userinfo->websiteurl ) ) . '" target="_blank">' . kunena_htmlspecialchars ( stripslashes ( $userinfo->websitename ) ) . '</a>';
 				}
 
 				// Finish: Additional Info //
@@ -890,7 +890,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 
 				$msg_html->date = date ( _DATETIME, $this->kunena_message->time );
 				$fb_message_txt = stripslashes ( $this->kunena_message->message );
-				$fb_message_txt = smile::smileReplace ( $fb_message_txt, 0, $kunena_config->disemoticons, $smileyList );
+				$fb_message_txt = smile::smileReplace ( $fb_message_txt, 0, $kunena_config->disemoticons, $kunena_emoticons );
 				$fb_message_txt = nl2br ( $fb_message_txt );
 
 				// Code tag: restore TABS as we had to 'hide' them from the rest of the logic
@@ -901,7 +901,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 
 				$signature = $userinfo->signature;
 				if ($signature) {
-					$signature = stripslashes ( smile::smileReplace ( $signature, 0, $kunena_config->disemoticons, $smileyList ) );
+					$signature = stripslashes ( smile::smileReplace ( $signature, 0, $kunena_config->disemoticons, $kunena_emoticons ) );
 					$signature = nl2br ( $signature );
 					//wordwrap:
 					$signature = smile::htmlwrap ( $signature, $kunena_config->wrap );
@@ -912,8 +912,8 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 
 				if (CKunenaTools::isModerator($kunena_my->id, $catid) || (($this->kunena_forum_locked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
 					//user is allowed to reply/quote
-					$msg_html->reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $this->kunena_message->id, isset ( $kunena_emoticons ['reply'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['reply'] . '" alt="Reply" border="0" title="' . _VIEW_REPLY . '" />' : _GEN_REPLY );
-					$msg_html->quote = CKunenaLink::GetTopicPostReplyLink ( 'quote', $catid, $this->kunena_message->id, isset ( $kunena_emoticons ['quote'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['quote'] . '" alt="Quote" border="0" title="' . _VIEW_QUOTE . '" />' : _GEN_QUOTE );
+					$msg_html->reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $this->kunena_message->id, isset ( $kunena_icons ['reply'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['reply'] . '" alt="Reply" border="0" title="' . _VIEW_REPLY . '" />' : _GEN_REPLY );
+					$msg_html->quote = CKunenaLink::GetTopicPostReplyLink ( 'quote', $catid, $this->kunena_message->id, isset ( $kunena_icons ['quote'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['quote'] . '" alt="Quote" border="0" title="' . _VIEW_QUOTE . '" />' : _GEN_QUOTE );
 				} else {
 					//user is not allowed to write a post
 					if ($topicLocked == 1 || $this->kunena_forum_locked) {
@@ -926,8 +926,8 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 				$showedEdit = 0; //reset this value
 				//Offer an moderator the delete link
 				if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
-					$msg_html->delete = CKunenaLink::GetTopicPostLink ( 'delete', $catid, $this->kunena_message->id, isset ( $kunena_emoticons ['delete'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />' : _GEN_DELETE );
-					$msg_html->merge = CKunenaLink::GetTopicPostLink ( 'merge', $catid, $this->kunena_message->id, isset ( $kunena_emoticons ['merge'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['merge'] . '" alt="' . _GEN_MERGE . '" border="0" title="' . _GEN_MERGE . '" />' : _GEN_MERGE );
+					$msg_html->delete = CKunenaLink::GetTopicPostLink ( 'delete', $catid, $this->kunena_message->id, isset ( $kunena_icons ['delete'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />' : _GEN_DELETE );
+					$msg_html->merge = CKunenaLink::GetTopicPostLink ( 'merge', $catid, $this->kunena_message->id, isset ( $kunena_icons ['merge'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['merge'] . '" alt="' . _GEN_MERGE . '" border="0" title="' . _GEN_MERGE . '" />' : _GEN_MERGE );
 				}
 
 				if ($kunena_config->useredit && $kunena_my->id != "") {
@@ -948,14 +948,14 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 						}
 					}
 					if ($allowEdit) {
-						$msg_html->edit = CKunenaLink::GetTopicPostLink ( 'edit', $catid, $this->kunena_message->id, isset ( $kunena_emoticons ['edit'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />' : _GEN_EDIT );
+						$msg_html->edit = CKunenaLink::GetTopicPostLink ( 'edit', $catid, $this->kunena_message->id, isset ( $kunena_icons ['edit'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />' : _GEN_EDIT );
 						$showedEdit = 1;
 					}
 				}
 
 				if (CKunenaTools::isModerator($kunena_my->id, $catid) && $showedEdit != 1) {
 					//Offer a moderator always the edit link except when it is already showing..
-					$msg_html->edit = CKunenaLink::GetTopicPostLink ( 'edit', $catid, $this->kunena_message->id, isset ( $kunena_emoticons ['edit'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />' : _GEN_EDIT );
+					$msg_html->edit = CKunenaLink::GetTopicPostLink ( 'edit', $catid, $this->kunena_message->id, isset ( $kunena_icons ['edit'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />' : _GEN_EDIT );
 				}
 
 				//(JJ)
@@ -982,7 +982,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		<td class="fb_list_actions_goto"><?php
 		//go to top
 		echo '<a name="forumbottom" /> ';
-		echo CKunenaLink::GetSamePageAnkerLink ( 'forumtop', isset ( $kunena_emoticons ['toparrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP );
+		echo CKunenaLink::GetSamePageAnkerLink ( 'forumtop', isset ( $kunena_icons ['toparrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP );
 
 		echo '</td>';
 

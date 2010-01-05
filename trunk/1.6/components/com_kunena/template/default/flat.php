@@ -29,7 +29,7 @@ $func = JString::strtolower ( JRequest::getCmd ( 'func', '' ) );
 $id = JRequest::getInt ( 'id', 0 );
 $catid = JRequest::getInt ( 'catid', 0 );
 
-global $kunena_emoticons;
+global $kunena_icons;
 $kunena_my = &JFactory::getUser ();
 
 // Func Check
@@ -66,7 +66,7 @@ $topic_emoticons [7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 
 // url of current page that user will be returned to after bulk operation
 $kuri = JURI::getInstance ();
-$Breturn = $kuri->toString ( array ('path' ) );
+$Breturn = $kuri->toString ( array('path', 'query', 'fragment') );
 
 $tabclass = array ("sectiontableentry1", "sectiontableentry2" );
 
@@ -284,7 +284,7 @@ if (count ( $this->messages [0] ) > 0) {
 
 			//(JJ) ATTACHMENTS ICON
 			if ($leaf->attachmesid > 0) {
-				echo isset ( $kunena_emoticons ['topicattach'] ) ? '<img  class="attachicon" src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['topicattach'] . '" border="0" alt="' . _KUNENA_ATTACH . '" />' : '<img class="attachicon" src="' . KUNENA_URLEMOTIONSPATH . 'attachment.gif"  alt="' . _KUNENA_ATTACH . '" title="' . _KUNENA_ATTACH . '" />';
+				echo isset ( $kunena_icons ['topicattach'] ) ? '<img  class="attachicon" src="' . KUNENA_URLICONSPATH . $kunena_icons ['topicattach'] . '" border="0" alt="' . _KUNENA_ATTACH . '" />' : '<img class="attachicon" src="' . KUNENA_URLEMOTIONSPATH . 'attachment.gif"  alt="' . _KUNENA_ATTACH . '" title="' . _KUNENA_ATTACH . '" />';
 			}
 			?>
 
@@ -294,9 +294,9 @@ if (count ( $this->messages [0] ) > 0) {
 			<!--            Favorite       --> <?php
 			if ($kunena_config->allowfavorites && array_key_exists ( $leaf->id, $this->favthread )) {
 				if ($leaf->myfavorite) {
-					echo isset ( $kunena_emoticons ['favoritestar'] ) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['favoritestar'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
-				} else if (array_key_exists ( 'favoritestar_grey', $kunena_emoticons )) {
-					echo isset ( $kunena_emoticons ['favoritestar_grey'] ) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['favoritestar_grey'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
+					echo isset ( $kunena_icons ['favoritestar'] ) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
+				} else if (array_key_exists ( 'favoritestar_grey', $kunena_icons )) {
+					echo isset ( $kunena_icons ['favoritestar_grey'] ) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar_grey'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
 				}
 			}
 			?>
@@ -382,7 +382,7 @@ if (count ( $this->messages [0] ) > 0) {
 			</span> <!-- /Views --> <?php
 		if ($leaf->locked != 0) {
 			?> <!-- Locked --> <span class="topic_locked"> <?php
-			echo isset ( $kunena_emoticons ['topiclocked'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['topiclocked'] . '" border="0" alt="' . _GEN_LOCKED_TOPIC . '" />' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  alt="' . _GEN_LOCKED_TOPIC . '" title="' . _GEN_LOCKED_TOPIC . '" />';
+			echo isset ( $kunena_icons ['topiclocked'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['topiclocked'] . '" border="0" alt="' . _GEN_LOCKED_TOPIC . '" />' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  alt="' . _GEN_LOCKED_TOPIC . '" title="' . _GEN_LOCKED_TOPIC . '" />';
 			$topicLocked = 1;
 			?>
 			</span> <!-- /Locked --> <?php
@@ -394,7 +394,7 @@ if (count ( $this->messages [0] ) > 0) {
 		if ($leaf->ordering != 0) {
 			?>
 			<span class="topic_sticky"> <?php
-			echo isset ( $kunena_emoticons ['topicsticky'] ) ? '<img  src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['topicsticky'] . '" border="0" alt="' . _GEN_ISSTICKY . '" />' : '<img class="stickyicon" src="' . KUNENA_URLEMOTIONSPATH . 'pushpin.gif"  alt="' . _GEN_ISSTICKY . '" title="' . _GEN_ISSTICKY . '" />';
+			echo isset ( $kunena_icons ['topicsticky'] ) ? '<img  src="' . KUNENA_URLICONSPATH . $kunena_icons ['topicsticky'] . '" border="0" alt="' . _GEN_ISSTICKY . '" />' : '<img class="stickyicon" src="' . KUNENA_URLICONSPATH . 'tsticky.gif"  alt="' . _GEN_ISSTICKY . '" title="' . _GEN_ISSTICKY . '" />';
 			$topicSticky = 1;
 			?>
 			</span> <?php

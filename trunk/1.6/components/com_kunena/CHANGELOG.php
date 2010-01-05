@@ -47,6 +47,8 @@ Kunena 1.6.0-DEV
 # [#19277] Clean up and restructure post.php, part 3, fix attachments
 ^ [#16390] Update English language file, trim whitespaces
 # [#19277] Clean up and restructure post.php, part 4, more fixes on posting
+# [#19290] Bulk delete and move returns to main page
+# [#19288] Fix regression: icons and emoticons conflict
 
 05-Jan-2010 @quila
 - [#19243] Make profile on left/right configurable - Revert change on message.php

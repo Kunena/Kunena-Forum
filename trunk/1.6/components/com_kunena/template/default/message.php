@@ -26,7 +26,7 @@ $kunena_my = &JFactory::getUser ();
 $kunena_config = & CKunenaConfig::getInstance ();
 $kunena_db = &JFactory::getDBO ();
 
-global $kunena_emoticons;
+global $kunena_icons;
 
 $catid = JRequest::getInt ( 'catid', 0 );
 
@@ -366,12 +366,12 @@ if (isset ( $msg_html->ip ) && $kunena_is_admin) {
 																	echo $msg_html->id;
 																	?>"
 				class="fb_qr_fire" style="cursor: pointer"> <?php
-																	echo isset ( $kunena_emoticons ['quickmsg'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['quickmsg'] . '" border="0" alt="' . _KUNENA_QUICKMSG . '" />' . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _KUNENA_QUICKMSG . '" />';
+																	echo isset ( $kunena_icons ['quickmsg'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['quickmsg'] . '" border="0" alt="' . _KUNENA_QUICKMSG . '" />' . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _KUNENA_QUICKMSG . '" />';
 																	?>
 			</span> <?php
                 endif;
 																?> <?php
-																if ($kunena_emoticons ['reply']) {
+																if ($kunena_icons ['reply']) {
 																	if (! isset ( $msg_html->closed )) {
 																		echo " " . $msg_html->reply;
 																		echo " " . $msg_html->quote;

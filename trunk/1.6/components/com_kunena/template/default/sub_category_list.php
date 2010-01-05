@@ -36,6 +36,7 @@ $kunena_db->setQuery ( "SELECT id, name, locked,review, pub_access, pub_recurse,
 $rows = $kunena_db->loadObjectList ();
 check_dberror ( "Unable to load categories." );
 
+global $kunena_icons;
 $kunena_emoticons = smile::getEmoticons ( 0 );
 
 $allow_forum = ($kunena_session->allowed != '') ? explode ( ',', $kunena_session->allowed ) : array ();
@@ -241,14 +242,14 @@ else {
 					if (is_file ( KUNENA_ABSCATIMAGESPATH . $singlerow->id . "_on.gif" )) {
 						$categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . $singlerow->id . "_on.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
 					} else {
-						$categoryicon .= isset ( $kunena_emoticons ['unreadforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['unreadforum'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '"/>' : stripslashes ( $kunena_config->newchar );
+						$categoryicon .= isset ( $kunena_icons ['unreadforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unreadforum'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '"/>' : stripslashes ( $kunena_config->newchar );
 					}
 				} else {
 					// Check Read Cat Images
 					if (is_file ( KUNENA_ABSCATIMAGESPATH . $singlerow->id . "_off.gif" )) {
 						$categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . $singlerow->id . "_off.gif\" border=\"0\" class='forum-cat-image' alt=\" \"  />";
 					} else {
-						$categoryicon .= isset ( $kunena_emoticons ['readforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['readforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : stripslashes ( $kunena_config->newchar );
+						$categoryicon .= isset ( $kunena_icons ['readforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['readforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : stripslashes ( $kunena_config->newchar );
 					}
 				}
 			} // Not Login Cat Images
@@ -256,7 +257,7 @@ else {
 				if (is_file ( KUNENA_ABSCATIMAGESPATH . $singlerow->id . "_notlogin.gif" )) {
 					$categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . $singlerow->id . "_notlogin.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
 				} else {
-					$categoryicon .= isset ( $kunena_emoticons ['notloginforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['notloginforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : stripslashes ( $kunena_config->newchar );
+					$categoryicon .= isset ( $kunena_icons ['notloginforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['notloginforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : stripslashes ( $kunena_config->newchar );
 				}
 			}
 			echo CKunenaLink::GetCategoryLink ( 'listcat', $singlerow->id, $categoryicon, 'follow' );
@@ -271,12 +272,12 @@ else {
 			$cxThereisNewInForum = 0;
 
 			if ($singlerow->locked) {
-				echo isset ( $kunena_emoticons ['forumlocked'] ) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['forumlocked'] . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : '&nbsp;&nbsp;<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0" alt="' . _GEN_LOCKED_FORUM . '">';
+				echo isset ( $kunena_icons ['forumlocked'] ) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['forumlocked'] . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : '&nbsp;&nbsp;<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0" alt="' . _GEN_LOCKED_FORUM . '">';
 				$lockedForum = 1;
 			}
 
 			if ($singlerow->review) {
-				echo isset ( $kunena_emoticons ['forummoderated'] ) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['forummoderated'] . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : '&nbsp;&nbsp;<img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '"/>';
+				echo isset ( $kunena_icons ['forummoderated'] ) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['forummoderated'] . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : '&nbsp;&nbsp;<img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '"/>';
 				$moderatedForum = 1;
 			}
 
@@ -330,14 +331,14 @@ else {
 								if (is_file ( KUNENA_ABSCATIMAGESPATH . $forumparent->id . "_on_childsmall.gif" )) {
 									echo "<img src=\"" . KUNENA_URLCATIMAGES . $forumparent->id . "_on_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
 								} else {
-									echo isset ( $kunena_emoticons ['unreadforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['unreadforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '" />' : stripslashes ( $kunena_config->newchar );
+									echo isset ( $kunena_icons ['unreadforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unreadforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '" />' : stripslashes ( $kunena_config->newchar );
 								}
 							} else {
 								// Check Read Cat Images
 								if (is_file ( KUNENA_ABSCATIMAGESPATH . $forumparent->id . "_off_childsmall.gif" )) {
 									echo "<img src=\"" . KUNENA_URLCATIMAGES . $forumparent->id . "_off_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
 								} else {
-									echo isset ( $kunena_emoticons ['readforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['readforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : stripslashes ( $kunena_config->newchar );
+									echo isset ( $kunena_icons ['readforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['readforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : stripslashes ( $kunena_config->newchar );
 								}
 							}
 						}
@@ -347,7 +348,7 @@ else {
 							if (is_file ( KUNENA_ABSCATIMAGESPATH . $forumparent->id . "_notlogin_childsmall.gif" )) {
 								echo "<img src=\"" . KUNENA_URLCATIMAGES . $forumparent->id . "_notlogin_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
 							} else {
-								echo isset ( $kunena_emoticons ['notloginforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['notloginforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : stripslashes ( $kunena_config->newchar );
+								echo isset ( $kunena_icons ['notloginforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['notloginforum_childsmall'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '" />' : stripslashes ( $kunena_config->newchar );
 							}
 							?>
 
@@ -425,7 +426,7 @@ else {
 			| <?php
 				echo $lastptime;
 				?> <?php
-				echo CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $latestcatid, $latestthread, $latestpage, $kunena_config->messages_per_page, (isset ( $kunena_emoticons ['latestpost'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'), $latestid, $rel = 'nofollow' );
+				echo CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $latestcatid, $latestthread, $latestpage, $kunena_config->messages_per_page, (isset ( $kunena_icons ['latestpost'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'), $latestid, $rel = 'nofollow' );
 				?>
 			</div>
 			</td>

@@ -25,7 +25,7 @@ $kunena_db = &JFactory::getDBO ();
 $kunena_app = & JFactory::getApplication ();
 $kunena_config = & CKunenaConfig::getInstance ();
 $kunena_session = & CKunenaSession::getInstance ();
-global $kunena_emoticons;
+global $kunena_icons;
 
 function KunenaShowcatPagination($catid, $page, $totalpages, $maxpages) {
 	$startpage = ($page - floor ( $maxpages / 2 ) < 1) ? 1 : $page - floor ( $maxpages / 2 );
@@ -208,8 +208,8 @@ if (in_array ( $catid, $allow_forum )) {
 	cellspacing="0" width="100%">
 	<tr>
 		<td><?php
-		$smileyList = smile::getEmoticons ( 0 );
-		$headerdesc = stripslashes ( smile::smileReplace ( $objCatInfo->headerdesc, 0, $kunena_config->disemoticons, $smileyList ) );
+		$kunena_emoticons = smile::getEmoticons ( 0 );
+		$headerdesc = stripslashes ( smile::smileReplace ( $objCatInfo->headerdesc, 0, $kunena_config->disemoticons, $kunena_emoticons ) );
 		$headerdesc = nl2br ( $headerdesc );
 		//wordwrap:
 		$headerdesc = smile::htmlwrap ( $headerdesc, $kunena_config->wrap );
@@ -230,17 +230,17 @@ if (in_array ( $catid, $allow_forum )) {
 		<td class="fb_list_actions_goto"><?php
 	//go to bottom
 	echo '<a name="forumtop" /> ';
-	echo CKunenaLink::GetSamePageAnkerLink ( 'forumbottom', isset ( $kunena_emoticons ['bottomarrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM );
+	echo CKunenaLink::GetSamePageAnkerLink ( 'forumbottom', isset ( $kunena_icons ['bottomarrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM );
 	?>
 
 		</td>
 		<td class="fb_list_actions_forum" width="100%"><?php
 	if (CKunenaTools::isModerator($kunena_my->id, $catid) || ($this->kunena_forum_locked == 0 && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
 		//this user is allowed to post a new topic:
-		$forum_new = CKunenaLink::GetPostNewTopicLink ( $catid, isset ( $kunena_emoticons ['new_topic'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC );
+		$forum_new = CKunenaLink::GetPostNewTopicLink ( $catid, isset ( $kunena_icons ['new_topic'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC );
 	}
 	if ($kunena_my->id != 0) {
-		$forum_markread = CKunenaLink::GetCategoryLink ( 'markThisRead', $catid, isset ( $kunena_emoticons ['markThisForumRead'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['markThisForumRead'] . '" alt="' . _GEN_MARK_THIS_FORUM_READ . '" title="' . _GEN_MARK_THIS_FORUM_READ . '" border="0" />' : _GEN_MARK_THIS_FORUM_READ, $rel = 'nofollow' );
+		$forum_markread = CKunenaLink::GetCategoryLink ( 'markThisRead', $catid, isset ( $kunena_icons ['markThisForumRead'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['markThisForumRead'] . '" alt="' . _GEN_MARK_THIS_FORUM_READ . '" title="' . _GEN_MARK_THIS_FORUM_READ . '" border="0" />' : _GEN_MARK_THIS_FORUM_READ, $rel = 'nofollow' );
 	}
 
 	if (isset ( $forum_new ) || isset ( $forum_markread )) {
@@ -311,7 +311,7 @@ if (in_array ( $catid, $allow_forum )) {
 		<td class="fb_list_actions_goto"><?php
 	//go to top
 	echo '<a name="forumbottom" />';
-	echo CKunenaLink::GetSamePageAnkerLink ( 'forumtop', isset ( $kunena_emoticons ['toparrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP );
+	echo CKunenaLink::GetSamePageAnkerLink ( 'forumtop', isset ( $kunena_icons ['toparrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP );
 	?>
 
 		</td>

@@ -25,7 +25,7 @@ defined ( '_JEXEC' ) or die ( 'Restricted access' );
 $kunena_config = &CKunenaConfig::getInstance ();
 $kunena_db = &JFactory::getDBO ();
 
-global $kunena_emoticons;
+global $kunena_icons;
 
 $func = JString::strtolower ( JRequest::getCmd ( 'func', '' ) );
 $catid = JRequest::getInt ( 'catid', 0 );
@@ -81,12 +81,12 @@ if ($func != "") {
 
 	$fireinfo = '';
 	if (! empty ( $this->kunena_forum_locked )) {
-		$fireinfo = isset ( $kunena_emoticons ['forumlocked'] ) ? ' <img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['forumlocked'] . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"  alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
+		$fireinfo = isset ( $kunena_icons ['forumlocked'] ) ? ' <img src="' . KUNENA_URLICONSPATH . $kunena_icons ['forumlocked'] . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"  alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
 		$lockedForum = 1;
 	}
 
 	if (! empty ( $this->kunena_forum_reviewed )) {
-		$fireinfo = isset ( $kunena_emoticons ['forummoderated'] ) ? ' <img src="' . KUNENA_URLICONSPATH . $kunena_emoticons ['forummoderated'] . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '">';
+		$fireinfo = isset ( $kunena_icons ['forummoderated'] ) ? ' <img src="' . KUNENA_URLICONSPATH . $kunena_icons ['forummoderated'] . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '">';
 		$moderatedForum = 1;
 	}
 

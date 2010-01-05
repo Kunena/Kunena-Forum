@@ -83,7 +83,7 @@ include_once (KUNENA_PATH_LIB . DS . "kunena.debug.php");
 require_once (KUNENA_PATH_LIB . DS . "kunena.config.class.php");
 
 global $kunenaProfile;
-global $lang, $kunena_emoticons;
+global $lang, $kunena_icons;
 global $board_title;
 global $kunena_systime;
 
@@ -159,8 +159,8 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	if ($func == "getpreview") {
 		$message = utf8_urldecode ( utf8_decode ( stripslashes ( $msgpreview ) ) );
 
-		$smileyList = smile::getEmoticons ( 1 );
-		$msgbody = smile::smileReplace ( $message, 0, $kunena_config->disemoticons, $smileyList );
+		$kunena_emoticons = smile::getEmoticons ( 1 );
+		$msgbody = smile::smileReplace ( $message, 0, $kunena_config->disemoticons, $kunena_emoticons );
 		$msgbody = nl2br ( $msgbody );
 		$msgbody = str_replace ( "__FBTAB__", "\t", $msgbody );
 		$msgbody = CKunenaTools::prepareContent ( $msgbody );
@@ -245,7 +245,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	// Kunena Current Template Icons Pack
 	// See if there's an icon pack installed
 	$useIcons = 0; //init
-	$kunena_emoticons = array ();
+	$kunena_icons = array ();
 
 	if (file_exists ( KUNENA_ABSTMPLTPATH . '/icons.php' )) {
 		include_once (KUNENA_ABSTMPLTPATH . '/icons.php');
@@ -362,7 +362,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 	switch ($func) {
 		case 'view' :
-			$fbMenu = kunena_get_menu ( NULL, $kunena_config, $kunena_emoticons, $kunena_my->id, 3, $view, $catid, $id, $thread );
+			$fbMenu = kunena_get_menu ( NULL, $kunena_config, $kunena_icons, $kunena_my->id, 3, $view, $catid, $id, $thread );
 
 			break;
 
@@ -372,11 +372,11 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			$numPending = $kunena_db->loadResult ();
 			check_dberror ( 'Unable load pending messages.' );
 
-			$fbMenu = kunena_get_menu ( NULL, $kunena_config, $kunena_emoticons, $kunena_my->id, 2, $view, $catid, $id, $thread, CKunenaTools::isModerator($kunena_my->id, $catid), $numPending );
+			$fbMenu = kunena_get_menu ( NULL, $kunena_config, $kunena_icons, $kunena_my->id, 2, $view, $catid, $id, $thread, CKunenaTools::isModerator($kunena_my->id, $catid), $numPending );
 			break;
 
 		default :
-			$fbMenu = kunena_get_menu ( NULL, $kunena_config, $kunena_emoticons, $kunena_my->id, 1, $view );
+			$fbMenu = kunena_get_menu ( NULL, $kunena_config, $kunena_icons, $kunena_my->id, 1, $view );
 
 			break;
 	}

@@ -21,6 +21,7 @@
 defined ( '_JEXEC' ) or die ( 'Restricted access' );
 
 $kunena_app = & JFactory::getApplication ();
+$kunena_my = &JFactory::getUser ();
 $kunena_config = & CKunenaConfig::getInstance ();
 
 require_once (KUNENA_ROOT_PATH . DS . 'includes/HTML_toolbar.php');
@@ -172,7 +173,7 @@ mosToolBar::endtable ();
 		</tr>
 		<?php
 		if (in_array ( $kunena_app->getCfg ( "frontend_userparams" ), array ('1', null ) )) {
-			$params = JRequest::getVar ( 'params', '' );
+			$params =& $kunena_my->getParameters(true);
 			?>
 		<tr>
 			<td colspan="2"><?php

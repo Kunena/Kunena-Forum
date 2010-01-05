@@ -117,7 +117,7 @@ class HTML_userlist_content
 {
     function showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search = "")
     {
-		global $kunena_emoticons;
+		global $kunena_icons;
 
 		$kunena_app =& JFactory::getApplication();
         $kunena_config =& CKunenaConfig::getInstance();
@@ -420,10 +420,10 @@ class HTML_userlist_content
 
 
                                             if ($isonline && $ulrow->showOnline ==1 ) {
-                                                echo isset($kunena_emoticons['onlineicon']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';
+                                                echo isset($kunena_icons['onlineicon']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';
                                             }
                                             else {
-                                                echo isset($kunena_emoticons['offlineicon']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
+                                                echo isset($kunena_icons['offlineicon']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
                                             }
                                             ?>
                                         </td>

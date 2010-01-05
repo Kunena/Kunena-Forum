@@ -23,7 +23,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 $kunena_db = &JFactory::getDBO();
 $kunena_session =& CKunenaSession::getInstance();
 
-global $kunena_emoticons;
+global $kunena_icons;
 ?>
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
@@ -168,7 +168,7 @@ global $kunena_emoticons;
 				</td>
 
 				<td class = "td-6">
-					<a href = "<?php echo $fbURL; ?>"> <?php echo isset($kunena_emoticons['latestpost']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_emoticons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />'
+					<a href = "<?php echo $fbURL; ?>"> <?php echo isset($kunena_icons['latestpost']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />'
 																	  : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'; ?> </a>
 				</td>
 			</tr>

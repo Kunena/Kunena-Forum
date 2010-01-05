@@ -123,6 +123,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	// =======================================================================================
 	// Forum is online:
 
+
 	// Central Location for all internal links
 	require_once (KUNENA_PATH_LIB . DS . "kunena.link.class.php");
 
@@ -358,7 +359,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 	switch ($func) {
 		case 'view' :
-			$fbMenu = kunena_get_menu ( NULL, $kunena_config, $kunena_icons, $kunena_my->id, 3, $view, $catid, $id, $thread );
+			$kunena_menu = kunena_get_menu ( NULL, $kunena_config, $kunena_icons, $kunena_my->id, 3, $view, $catid, $id, $thread );
 
 			break;
 
@@ -368,11 +369,11 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			$numPending = $kunena_db->loadResult ();
 			check_dberror ( 'Unable load pending messages.' );
 
-			$fbMenu = kunena_get_menu ( NULL, $kunena_config, $kunena_icons, $kunena_my->id, 2, $view, $catid, $id, $thread, CKunenaTools::isModerator($kunena_my->id, $catid), $numPending );
+			$kunena_menu = kunena_get_menu ( NULL, $kunena_config, $kunena_icons, $kunena_my->id, 2, $view, $catid, $id, $thread, CKunenaTools::isModerator ( $kunena_my->id, $catid ), $numPending );
 			break;
 
 		default :
-			$fbMenu = kunena_get_menu ( NULL, $kunena_config, $kunena_icons, $kunena_my->id, 1, $view );
+			$kunena_menu = kunena_get_menu ( NULL, $kunena_config, $kunena_icons, $kunena_my->id, 1, $view );
 
 			break;
 	}
@@ -390,8 +391,27 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 <table width="100%" border="0" cellspacing="0" cellpadding="0"
 	id="Kunena_top">
 	<tr>
-		<td align="left" nowrap="nowrap"><?php
-	echo $fbMenu;
+		<td align="left"><?php
+	// display Kunena menu if present
+	if (JDocumentHTML::countModules ( 'kunena_menu' )) {
+		?>
+		<!-- Kunena Menu position: kunena_menu -->
+		<div id="fb_topmenu">
+		<div id="Kunena_tab"><?php
+		$document = &JFactory::getDocument ();
+		$renderer = $document->loadRenderer ( 'modules' );
+		$options = array ('style' => 'xhtml' );
+		$position = 'kunena_menu';
+		echo $renderer->render ( $position, $options, null );
+		?>
+		</div>
+		</div>
+		<!-- /Kunena Menu position: kunena_menu -->
+		<?php
+	}
+	else{
+		echo $kunena_menu;
+	}
 	?></td>
 		<td align="right" width="5%"><?php
 	echo getSearchBox ();
@@ -623,12 +643,12 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		case 'bulkactions' :
 			switch ($do) {
 				case "bulkDel" :
-					CKunenaTools::fbDeletePosts ( CKunenaTools::isModerator($kunena_my->id, $catid), $return );
+					CKunenaTools::fbDeletePosts ( CKunenaTools::isModerator ( $kunena_my->id, $catid ), $return );
 
 					break;
 
 				case "bulkMove" :
-					CKunenaTools::fbMovePosts ( $catid, CKunenaTools::isModerator($kunena_my->id, $catid), $return );
+					CKunenaTools::fbMovePosts ( $catid, CKunenaTools::isModerator ( $kunena_my->id, $catid ), $return );
 					break;
 			}
 
@@ -733,6 +753,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 <!-- closes Kunena div -->
 <?php
 } //else
+
 
 if (is_object ( $kunenaProfile ))
 	$kunenaProfile->close ();

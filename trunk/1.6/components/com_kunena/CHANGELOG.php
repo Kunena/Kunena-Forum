@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+05-Jan-2010 fxstein
++ [#19294] New module position: kunena_menu to allow custom Joomla menu to override default tabs
+
 05-Jan-2010 810
 # [#19288] Fix some minor bugs on backend part 2
 ^ [#19295] Clean up and restructure backend

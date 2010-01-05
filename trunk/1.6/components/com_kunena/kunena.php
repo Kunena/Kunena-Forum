@@ -115,8 +115,7 @@ $kunena_is_admin = CKunenaTools::isAdmin ();
 
 // Check if we only allow registered users
 if ($kunena_config->regonly && ! $kunena_my->id) {
-	echo '<div>' . _FORUM_UNAUTHORIZIED . '</div>';
-	echo '<div>' . _FORUM_UNAUTHORIZIED2 . '</div>';
+	$kunena_app->enqueueMessage ( _COM_A_REGISTERED_ONLY . '<br/>' . _FORUM_UNAUTHORIZIED . '<br/>' . _FORUM_UNAUTHORIZIED2, 'error' );
 } // or if the board is offline
 else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	echo stripslashes ( $kunena_config->offline_message );

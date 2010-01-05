@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+04-Jan-2010 fxstein
+^ [#19280] New standard "Registered Users Only" error message
+
 04-Jan-2010 Matias
 # [#19031] Quick reply shows > as &gt; in subject (part 2)
 # [#19277] Clean up and restructure post.php and fix misc bugs

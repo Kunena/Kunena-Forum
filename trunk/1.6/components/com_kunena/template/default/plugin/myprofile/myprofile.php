@@ -521,7 +521,6 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 
 <?php
 } else {
-	echo '<b>' . _COM_A_REGISTERED_ONLY . '</b><br />';
-	echo _FORUM_UNAUTHORIZIED2;
+	$kunena_app->enqueueMessage ( _COM_A_REGISTERED_ONLY . '<br/>' . _FORUM_UNAUTHORIZIED2, 'error' );
 }
 ?>

@@ -186,7 +186,7 @@ switch ($task) {
 
 	case 'upload':
 		//numExtensions= people tend to upload malicious files using mutliple extensions like: virus.txt.vbs; we'll want to have the last extension to validate against..
-		$filename = explode('\.', $_FILES['avatar']['name']);
+		$filename = explode('.', $_FILES['avatar']['name']);
 		$numExtensions = (count($filename)) - 1;
 		$avatarName = $filename[0];
 		$avatarExt = $filename[$numExtensions];

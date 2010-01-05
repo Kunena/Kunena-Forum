@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+05-Jan-2010 xillibit
+# [#19234] Hide IP addresses from Moderators
+
 05-Jan-2010 Matias
 # [#19255] Fix XHTML validation errors while posting a message
 

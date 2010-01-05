@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+05-Jan-2010 @quila
+- [#19243] Make profile on left/right configurable - Revert change on message.php
+
 04-Jan-2010 fxstein
 ^ [#19280] New standard "Registered Users Only" error message
 + [#19236] Updated colors: -green, -red, -orange, -blue, -grey & -pink for category css class suffix

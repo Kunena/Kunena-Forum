@@ -35,6 +35,7 @@ Kunena 1.6.0-DEV
 
 05-Jan-2010 810
 # [#19288] Fix some minor bugs on backend part 2
+^ [#19295] Clean up and restructure backend
 
 05-Jan-2010 xillibit
 # [#19287] Modification for collect_smilies() and collect_ranks() - delete the index.php in display

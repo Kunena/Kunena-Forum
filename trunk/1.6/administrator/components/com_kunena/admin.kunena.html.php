@@ -3963,22 +3963,20 @@ echo $pane->endPane();
 <table class="adminlist" border="0" cellspacing="0" cellpadding="3"
 	width="100%">
 	<tr>
-		<th align="left" width="20"><input type="checkbox" name="toggle"
+    	<th width="20" align="center">#</th>
+		<th align="center" width="20"><input type="checkbox" name="toggle"
 			value="" onclick="checkAll(<?php
 		echo count ( $smileytmp );
 		?>);" /></th>
-		<th align="right" width="10"><?php
-		echo _ANN_ID;
-		?></th>
-		<th align="center" width="200"><?php
+		<th align="center" width="50"><?php
 		echo _KUNENA_EMOTICONS_SMILEY;
 		?>
 		</th>
-		<th align="center" width="100"><?php
+		<th align="center" width="50"><?php
 		echo _KUNENA_EMOTICONS_CODE;
 		?>
 		</th>
-		<th align="right" width="200"><?php
+		<th align="left" width="200"><?php
 		echo _KUNENA_EMOTICONS_URL;
 		?>
 		</th>
@@ -3995,21 +3993,22 @@ echo $pane->endPane();
 			?>
 	<tr class="row<?php
 			echo $k;
-			?>">
-		<td width="20"><input type="checkbox" id="cb<?php
+			?>" align="center">
+            <td width="10" align="center"><a href="#edit"
+			onclick="return listItemTask('cb<?php
+			echo $i;
+			?>','editsmiley')"><?php
+			echo $s->id;
+			?></a></td>
+		<td width="20"align="center"><input type="checkbox" id="cb<?php
 			echo $i;
 			?>"
 			name="cid[]" value="<?php
 			echo $s->id;
 			?>"
 			onClick="isChecked(this.checked);"></td>
-		<td width="10"><a href="#edit"
-			onclick="return listItemTask('cb<?php
-			echo $i;
-			?>','editsmiley')"><?php
-			echo $s->id;
-			?></a></td>
-		<td width="200"><a href="#edit"
+
+		<td width="50" align="center"><a href="#edit"
 			onclick="return listItemTask('cb<?php
 			echo $i;
 			?>','editsmiley')"><img
@@ -4019,10 +4018,10 @@ echo $pane->endPane();
 			alt="<?php
 			echo $s->location;
 			?>" border="0" /></a></td>
-		<td width="100"><?php
+		<td width="50" align="center"><?php
 			echo $s->code;
 			?>&nbsp;</td>
-		<td width="200"><?php
+		<td width="200" align="left"><?php
 			echo $s->location;
 			?>&nbsp;</td>
 		<td>&nbsp;</td>
@@ -4046,6 +4045,7 @@ echo $pane->endPane();
 </form>
 <?php
 	} //end function showsmilies
+
 
 
 	function editsmiley($option, $lang, $smiley_edit_img, $filename_list, $smileypath, $smileycfg) {

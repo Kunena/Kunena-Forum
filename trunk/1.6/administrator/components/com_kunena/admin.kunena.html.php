@@ -3968,8 +3968,7 @@ echo $pane->endPane();
 	<tr>
 		<td nowrap align="right"><?php
 		echo _COM_A_DISPLAY;
-		?></td>
-		<td nowrap align="right"><?php
+		?><?php
 		echo $pageNavSP->getLimitBox ();
 		?>
 		</td>
@@ -4208,8 +4207,7 @@ echo $pane->endPane();
 	<tr>
 		<td nowrap="nowrap" align="right"><?php
 		echo _COM_A_DISPLAY;
-		?></td>
-		<td nowrap="nowrap" align="right"><?php
+		?><?php
 		echo $pageNavSP->getLimitBox ();
 		?></td>
 	</tr>

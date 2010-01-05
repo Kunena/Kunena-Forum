@@ -26,7 +26,6 @@ require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
 
 $kunena_config =& CKunenaConfig::getInstance();
 $attachimage = JRequest::getVar('attachimage', NULL, 'FILES', 'array');
-$filename = CKunenaFile::makeSafe($attachimage['name']);
 
 global $message, $imageLocation;
 
@@ -40,20 +39,16 @@ function imageUploadError($msg)
 }
 
 $GLOBALS['KUNENA_rc'] = 1; //reset return code
-$filename = explode('\.', $filename);
-//some transaltions for readability
-//numExtensions= people tend to upload malicious files using mutliple extensions like: virus.txt.vbs; we'll want to have the last extension to validate against..
-$numExtensions = (count($filename)) - 1;
-//Translate all invalid characters
-$imageName = preg_replace("/[^0-9a-zA-Z_]/", "_", $filename[0]);
-// get the final extension
-$imageExt = $filename[$numExtensions];
-// create the new filename
-$newFileName = $imageName . '.' . $imageExt;
+$filename = CKunenaFile::makeSafe($attachimage['name']);
+$filearray = explode('.', $filename);
+if (count($filearray)>1) $imageExt = '.' . array_pop($filearray);
+else $imageExt = '';
+$imageName = implode('.', $filearray);
 // Get the Filesize
 $imageSize = $attachimage['size'];
 
 //Enforce it is a new file
+$newFileName = $imageName . $imageExt;
 if (file_exists(KUNENA_PATH_UPLOADED .DS. "images" .DS. $newFileName)) {
     $newFileName = $imageName . '-' . date('Ymd') . "." . $imageExt;
     for ($i=2; file_exists(KUNENA_PATH_UPLOADED .DS. "images" .DS. $newFileName); $i++) {
@@ -72,7 +67,7 @@ if ($GLOBALS['KUNENA_rc'])
         imageUploadError(_IMAGE_ERROR_EMPTY);
     }
     // Check for allowed file type (jpeg, gif, png)
-    else if (!($imgtype = KUNENA_check_image_type($imageExt))) {
+    else if (!($imgtype = KUNENA_check_image_type(substr($imageExt,1)))) {
         imageUploadError(_IMAGE_ERROR_TYPE);
     }
     // Check filesize

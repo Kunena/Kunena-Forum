@@ -38,6 +38,8 @@ Kunena 1.6.0-DEV
 
 05-Jan-2010 Matias
 # [#19255] Fix XHTML validation errors while posting a message
+# [#19277] Clean up and restructure post.php, part 2
+# [#19277] Clean up and restructure post.php, part 3, fix attachments
 
 05-Jan-2010 @quila
 - [#19243] Make profile on left/right configurable - Revert change on message.php

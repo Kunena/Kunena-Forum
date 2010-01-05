@@ -26,7 +26,6 @@ require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
 
 $kunena_config =& CKunenaConfig::getInstance();
 $attachfile = JRequest::getVar('attachfile', NULL, 'FILES', 'array');
-$filename = CKunenaFile::makeSafe($attachfile['name']);
 
 global $message, $fileLocation;
 
@@ -40,26 +39,24 @@ function fileUploadError($msg)
 }
 
 $GLOBALS['KUNENA_rc'] = 1; //reset return code
-$filename = explode('\.', $filename);
-//some transaltions for readability
-//numExtensions= people tend to upload malicious files using mutliple extensions like: virus.txt.vbs; we'll want to have the last extension to validate against..
-$numExtensions = (count($filename)) - 1;
-//Translate all invalid characters
-$fileName = preg_replace("/[^0-9a-zA-Z_]/", "_", $filename[0]);
-// get the final extension
-$fileExt = $filename[$numExtensions];
-// create the new filename
-$newFileName = $fileName . '.' . $fileExt;
+$filename = CKunenaFile::makeSafe($attachfile['name']);
+$filearray = explode('.', $filename);
+if (count($filearray)>1) $fileExt = '.' . array_pop($filearray);
+else $fileExt = '';
+$fileBase = implode('.', $filearray);
 // Get the Filesize
 $fileSize = $attachfile['size'];
 
 //Enforce it is a new file
+$newFileName = $fileBase . $fileExt;
 if (file_exists(KUNENA_PATH_UPLOADED .DS. "files" .DS. $newFileName)) {
-    $newFileName = $fileName . '-' . date('Ymd') . "." . $fileExt;
+    $newFileName = $fileBase . '-' . date('Ymd') . $fileExt;
     for ($i=2; file_exists(KUNENA_PATH_UPLOADED .DS. "files" .DS. $newFileName); $i++) {
-    	$newFileName = $fileName . '-' . date('Ymd') . "-$i." . $fileExt;
+    	$newFileName = $fileBase . '-' . date('Ymd') . "-$i" . $fileExt;
     }
 }
+
+echo "$newFileName";
 
 if ($GLOBALS['KUNENA_rc'])
 {
@@ -73,7 +70,7 @@ if ($GLOBALS['KUNENA_rc'])
         fileUploadError(_FILE_ERROR_EMPTY);
     }
     // check for allowed file types
-    else if (!in_array($fileExt, $allowedArray)) {
+    else if (!in_array(substr($fileExt,1), $allowedArray)) {
         fileUploadError(_FILE_ERROR_TYPE . " " . $kunena_config->filetypes);
     }
     // Check filesize

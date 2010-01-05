@@ -180,7 +180,8 @@ if ($kunena_my->id) {
 				}
 
 				if ($catid == 0) {
-					$catid = 1; //make sure there's a proper category
+					echo "POST: INTERNAL ERROR: catid=0";
+					return;
 				}
 
 				if (is_array ( $attachfile ) && $attachfile ['error'] != UPLOAD_ERR_NO_FILE) {
@@ -569,34 +570,19 @@ if ($kunena_my->id) {
 					$this->resubject = '';
 				}
 				$this->authorName = kunena_htmlspecialchars ( $my_name );
-				?>
+				$this->id = $id;
+				$this->parentid = $parentid;
+				$this->catid = $catid;
+				$this->contentURL = 'empty';
 
-		<form
-			action="<?php
-				echo JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=post' );
-				?>"
-			method="post" name="postform" enctype="multipart/form-data"><input
-			type="hidden" name="parentid"
-			value="<?php
-				echo $parentid;
-				?>" /> <input type="hidden" name="catid"
-			value="<?php
-				echo $catid;
-				?>" /> <input type="hidden" name="action" value="post" /> <input
-			type="hidden" name="contentURL" value="empty" />
-		<?php
 				//get the writing stuff in:
 				$no_upload = "0"; //only edit mode should disallow this
-
 
 				if (file_exists ( KUNENA_ABSTMPLTPATH . '/write.html.php' )) {
 					include (KUNENA_ABSTMPLTPATH . '/write.html.php');
 				} else {
 					include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'write.html.php');
 				}
-				?>
-		</form>
-		<?php
 			} else if ($do == "newFromBot" && hasPostPermission ( $kunena_db, $catid, $id, $kunena_my->id, $kunena_config->pubwrite, CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
 				// The Mosbot "discuss on forums" has detected an unexisting thread and wants to create one
 				$parentid = 0;
@@ -619,38 +605,21 @@ if ($kunena_my->id) {
 					$contentURL = JRoute::_ ( 'index.php?option=com_content&amp;task=view&amp;Itemid=1&amp;id=' . $rowid );
 				}
 
-				$contentURL = _POST_DISCUSS . ': [url=' . $contentURL . ']' . $resubject . '[/url]';
-				?>
+				$this->contentURL = _POST_DISCUSS . ': [url=' . $contentURL . ']' . $resubject . '[/url]';
+				$this->id = $id;
+				$this->parentid = $parentid;
+				$this->catid = $catid;
 
-		<form
-			action="<?php
-				echo JRoute::_ ( KUNENA_LIVEURLREL . "&amp;func=post" );
-				?>"
-			method="post" name="postform" enctype="multipart/form-data"><input
-			type="hidden" name="parentid"
-			value="<?php
-				echo $parentid;
-				?>" /> <input type="hidden" name="catid"
-			value="<?php
-				echo $catid;
-				?>" /> <input type="hidden" name="action" value="post" /> <input
-			type="hidden" name="contentURL"
-			value="<?php
-				echo $contentURL;
-				?>" /> <?php
 				//get the writing stuff in:
 				if (file_exists ( KUNENA_ABSTMPLTPATH . '/write.html.php' )) {
 					include (KUNENA_ABSTMPLTPATH . '/write.html.php');
 				} else {
 					include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'write.html.php');
 				}
-				?>
-		</form>
-		<?php
 			} else if ($do == "edit" && hasPostPermission ( $kunena_db, $catid, $id, $kunena_my->id, $kunena_config->pubwrite, CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
-				$allowEdit = 0;
 				$message = $msg_cat;
 
+				$allowEdit = 0;
 				if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 					// Moderator can edit any message
 					$allowEdit = 1;
@@ -676,28 +645,16 @@ if ($kunena_my->id) {
 					$this->message_text = kunena_htmlspecialchars ( stripslashes ( $message->message ) );
 					$this->resubject = kunena_htmlspecialchars ( stripslashes ( $message->subject ) );
 					$this->authorName = kunena_htmlspecialchars ( stripslashes ( $message->name ) );
-					?>
+					$this->id = $message->id;
+					$this->catid = $message->catid;
+					$this->parentid = 0;
 
-		<form
-			action="<?php
-					echo JRoute::_ ( KUNENA_LIVEURLREL . "&amp;catid=$catid&amp;func=post" );
-					?>"
-			method="post" name="postform" enctype="multipart/form-data" /><input
-			type="hidden" name="id" value="<?php
-					echo $message->id;
-					?>" /> <input type="hidden" name="do" value="editpostnow" /> <?php
 					//get the writing stuff in:
-					$this->kunena_no_file_upload = 0;
-					$this->kunena_no_image_upload = 0;
-
 					if (file_exists ( KUNENA_ABSTMPLTPATH . '/write.html.php' )) {
 						include (KUNENA_ABSTMPLTPATH . '/write.html.php');
 					} else {
 						include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'write.html.php');
 					}
-					?>
-		</form>
-		<?php
 				} else {
 					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
 				}

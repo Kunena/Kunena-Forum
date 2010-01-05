@@ -25,17 +25,9 @@ $kunena_db = &JFactory::getDBO ();
 $kunena_config = & CKunenaConfig::getInstance ();
 $kunena_my = &JFactory::getUser ();
 
-$id = JRequest::getInt ( 'id', 0 );
-$catid = JRequest::getInt ( 'catid', 0 );
-$parentid = JRequest::getInt ( 'parentid', 0 );
-
 //Some initial thingies needed anyway:
 if (! isset ( $this->kunena_set_focus ))
 	$this->kunena_set_focus = 0;
-if (! isset ( $this->kunena_no_image_upload ))
-	$this->kunena_no_image_upload = 0;
-if (! isset ( $this->kunena_no_file_upload ))
-	$this->kunena_no_file_upload = 0;
 $authorName = stripslashes ( $this->authorName );
 
 include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
@@ -43,6 +35,37 @@ include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
 //keep session alive while editing
 JHTML::_ ( 'behavior.keepalive' );
 ?>
+
+<form class="postform"
+	action="<?php
+	echo JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=post' );
+	?>"
+	method="post" name="postform" enctype="multipart/form-data"><input
+	type="hidden" name="catid" value="<?php
+	echo $this->catid;
+	?>" />
+<?php
+if (! empty ( $this->kunena_editmode )) :
+	?>
+<input type="hidden" name="do" value="editpostnow" /> <input
+	type="hidden" name="id" value="<?php
+	echo $this->id;
+	?>" />
+<?php else: ?>
+<input type="hidden" name="action" value="post" /> <input type="hidden"
+	name="parentid" value="<?php
+	echo $this->parentid;
+	?>" />
+<?php endif; ?>
+	<input type="hidden"
+	value="<?php
+	echo JURI::base ( true ) . '/components/com_kunena/template/default';
+	?>"
+	name="templatePath" /> <input type="hidden"
+	value="<?php
+	echo JURI::base ( true );
+	?>/" name="kunenaPath" />
+
 <div class="<?php
 echo KUNENA_BOARD_CLASS;
 ?>_bt_cvr1">
@@ -85,7 +108,7 @@ echo $msg_cat->class_sfx;
 			?></strong>:</td>
 
 			<?php
-			if (($kunena_config->regonly == "1" || $kunena_config->changename == '0') && $kunena_my->id != "" && ! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
+			if (($kunena_config->regonly == "1" || $kunena_config->changename == '0') && $kunena_my->id != "" && ! CKunenaTools::isModerator ( $kunena_my->id, $this->catid )) {
 				?>
 			<td><input type="hidden" name="authorname" size="35"
 				class="<?php
@@ -112,7 +135,7 @@ echo $msg_cat->class_sfx;
 		<?php
 		if ($kunena_config->askemail) {
 			echo '<tr class = "' . KUNENA_BOARD_CLASS . 'sectiontableentry2"><td class = "fb_leftcolumn"><strong>' . _GEN_EMAIL . ' *</strong>:</td>';
-			if (($kunena_config->regonly == "1" || $kunena_config->changename == '0') && $kunena_my->id != "" && ! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
+			if (($kunena_config->regonly == "1" || $kunena_config->changename == '0') && $kunena_my->id != "" && ! CKunenaTools::isModerator ( $kunena_my->id, $this->catid )) {
 				echo "<td>$this->kunena_my_email</td>";
 			} else {
 				echo "<td><input type=\"text\" name=\"email\"  size=\"35\" class=\"" . KUNENA_BOARD_CLASS . "inputbox postinput\" maxlength=\"35\" value=\"$this->kunena_my_email\" /></td>";
@@ -168,7 +191,7 @@ echo $msg_cat->class_sfx;
 			?>
 
 			<?php
-			if ($this->kunena_set_focus == 0 && $id == 0 && ! $this->kunena_from_bot) {
+			if ($this->kunena_set_focus == 0 && $this->id == 0 && ! $this->kunena_from_bot) {
 				echo "<script type=\"text/javascript\">document.postform.subject.focus();</script>";
 				$this->kunena_set_focus = 1;
 			}
@@ -176,7 +199,7 @@ echo $msg_cat->class_sfx;
 		</tr>
 
 		<?php
-		if ($parentid == 0) {
+		if ($this->parentid == 0) {
 			?>
 		<tr class="<?php
 			echo KUNENA_BOARD_CLASS;
@@ -211,17 +234,17 @@ echo $msg_cat->class_sfx;
 
 		//check if this user is already subscribed to this topic but only if subscriptions are allowed
 		if ($kunena_config->allowsubscriptions == 1) {
-			if ($id == 0) {
+			if ($this->id == 0) {
 				$fb_thread = - 1;
 			} else {
-				$kunena_db->setQuery ( "SELECT thread FROM #__fb_messages WHERE id='{$id}'" );
+				$kunena_db->setQuery ( "SELECT thread FROM #__fb_messages WHERE id='{$this->id}'" );
 				$fb_thread = $kunena_db->loadResult ();
 			}
 
 			$kunena_db->setQuery ( "SELECT thread FROM #__fb_subscriptions WHERE userid='{$kunena_my->id}' AND thread='{$fb_thread}'" );
 			$fb_subscribed = $kunena_db->loadResult ();
 
-			if ($fb_subscribed == "" || $id == 0) {
+			if ($fb_subscribed == "" || $this->id == 0) {
 				$fb_cansubscribe = 1;
 			} else {
 				$fb_cansubscribe = 0;
@@ -229,22 +252,8 @@ echo $msg_cat->class_sfx;
 		}
 		?>
 
-		<!-- preview -->
-		<tr class="<?php
-		echo KUNENA_BOARD_CLASS;
-		?>sectiontableentry2"
-			id="previewContainer" style="display: none;">
-			<td class="fb_leftcolumn"><strong><?php
-			echo _PREVIEW;
-			?></strong>:</td>
-			<td>
-			<div class="previewMsg" id="previewMsg"
-				style="height: &amp; amp; amp; lt; ? php echo $kunena_config-&amp;amp; amp; gt; rteheight; ?&amp; amp; amp; gt; px; overflow: auto;"></div>
-			</td>
-		</tr>
-		<!-- /preview -->
 		<?php
-		if (($kunena_config->allowimageupload || ($kunena_config->allowimageregupload && $kunena_my->id != 0) || CKunenaTools::isModerator ( $kunena_my->id, $catid )) && $this->kunena_no_image_upload == "0") {
+		if (($kunena_config->allowimageupload || ($kunena_config->allowimageregupload && $kunena_my->id != 0) || CKunenaTools::isModerator ( $kunena_my->id, $this->catid ))) {
 			?>
 
 		<tr class="<?php
@@ -273,7 +282,7 @@ echo $msg_cat->class_sfx;
 		?>
 
 		<?php
-		if (($kunena_config->allowfileupload || ($kunena_config->allowfileregupload && $kunena_my->id != 0) || CKunenaTools::isModerator ( $kunena_my->id, $catid )) && $this->kunena_no_file_upload == "0") {
+		if (($kunena_config->allowfileupload || ($kunena_config->allowfileregupload && $kunena_my->id != 0) || CKunenaTools::isModerator ( $kunena_my->id, $this->catid ))) {
 			?>
 
 		<tr class="<?php
@@ -350,7 +359,10 @@ echo $msg_cat->class_sfx;
 		}
 		// Finish captcha
 		?>
-		<tr>
+
+		<tr class="<?php
+		echo KUNENA_BOARD_CLASS;
+		?>sectiontableentry1">
 			<td id="fb_post_buttons" colspan="2" style="text-align: center;"><input
 				type="submit" name="submit" class="fb_button"
 				value="<?php
@@ -363,7 +375,7 @@ echo $msg_cat->class_sfx;
 				value="<?php
 				@print (' ' . _PREVIEW . ' ') ;
 				?>"
-				onClick="fbGetPreview(document.postform.message.value,<?php
+				onclick="fbGetPreview(document.postform.message.value,<?php
 				echo KUNENA_COMPONENT_ITEMID?>);"
 				onmouseover="javascript:jQuery('input[name=helpbox]').val('<?php
 				@print (_KUNENA_EDITOR_HELPLINE_PREVIEW) ;
@@ -376,6 +388,49 @@ echo $msg_cat->class_sfx;
 				@print (_KUNENA_EDITOR_HELPLINE_CANCEL) ;
 				?>')" /></td>
 		</tr>
+
+		<!-- preview -->
+		<tr class="<?php
+		echo KUNENA_BOARD_CLASS;
+		?>sectiontableentry2"
+			id="previewContainer" style="display: none;">
+			<td class="fb_leftcolumn"><strong><?php
+			echo _PREVIEW;
+			?></strong>:</td>
+			<td>
+			<div class="previewMsg" id="previewMsg"
+				style="height: <?php
+				echo $kunena_config->rteheight;
+				?>px; overflow: auto;"></div>
+			</td>
+		</tr>
+		<!-- /preview -->
+
+		<tr class="<?php
+		echo KUNENA_BOARD_CLASS;
+		?>sectiontableentry1">
+			<td colspan="2"><?php
+			if ($kunena_config->askemail) {
+				echo $kunena_config->showemail == '0' ? "<em>* - " . _POST_EMAIL_NEVER . "</em>" : "<em>* - " . _POST_EMAIL_REGISTERED . "</em>";
+			}
+			?>
+	</td>
+		</tr>
+
+		<tr>
+			<td colspan="2"><br />
+
+	<?php
+	$no_upload = "0"; //reset the value.. you just never know..
+
+
+	if ($kunena_config->showhistory == 1) {
+		listThreadHistory ( $this->id, $kunena_config, $kunena_db );
+	}
+	?>
+	</td>
+		</tr>
+
 	</tbody>
 </table>
 </div>
@@ -383,34 +438,4 @@ echo $msg_cat->class_sfx;
 </div>
 </div>
 </div>
-<input type="hidden"
-	value="<?php
-	echo JURI::base ( true ) . '/components/com_kunena/template/default';
-	?>"
-	name="templatePath" />
-<input type="hidden" value="<?php
-echo JURI::base ( true );
-?>/"
-	name="kunenaPath" />
-<tr>
-	<td><?php
-	if ($kunena_config->askemail) {
-		echo $kunena_config->showemail == '0' ? "<em>* - " . _POST_EMAIL_NEVER . "</em>" : "<em>* - " . _POST_EMAIL_REGISTERED . "</em>";
-	}
-	?>
-	</td>
-</tr>
-
-<tr>
-	<td style="text-align: left;"><br />
-
-	<?php
-	$no_upload = "0"; //reset the value.. you just never know..
-
-
-	if ($kunena_config->showhistory == 1) {
-		listThreadHistory ( $id, $kunena_config, $kunena_db );
-	}
-	?>
-	</td>
-</tr>
+</form>

@@ -33,7 +33,7 @@ Legend:
 
 Kunena 1.6.0-DEV
 
-05-Jan-2010 fxstein
+06-Jan-2010 fxstein
 + [#19313] SVN installer option added. Added control panel button to execute installer (only in SVN mode)
 
 06-Jan-2010 Xillibit

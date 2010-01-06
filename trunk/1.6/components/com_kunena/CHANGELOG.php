@@ -37,6 +37,7 @@ Kunena 1.6.0-DEV
 + [#19294] New module position: kunena_menu to allow custom Joomla menu to override default tabs
 ^ [#19236] Changed behaviour of category css suffix logic. Now adds new class to overide only specific features.
 ^ [#19289] Cleaned up and reformatted kunena.config.class.php
++ [#19289] New config validation function before save and after load to prevent unsupported values
 
 05-Jan-2010 810
 # [#19288] Fix some minor bugs on backend part 2

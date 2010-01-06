@@ -77,6 +77,10 @@ abstract class CKunenaConfigBase {
 	// are required inside of Kunena.
 	abstract public function DoUserOverrides($userid);
 
+	// Override this to perform certain custom validations of the config data
+	// Is being executed before save and after load
+	abstract public function ValidateConfig();
+
 	//
 	//  binds a named array/hash to this object
 	//  @param array $hash named array
@@ -100,6 +104,9 @@ abstract class CKunenaConfigBase {
 	//
 	public function create() {
 		$fields = array ();
+
+		// Perform custom validation of config data before we write it.
+		$this->ValidateConfig();
 
 		$vars = $this->GetClassVars ();
 
@@ -190,6 +197,9 @@ abstract class CKunenaConfigBase {
 				$this->bind ( $config );
 			}
 		}
+
+		// Perform custom validation of config data before we let anybody access it.
+		$this->ValidateConfig();
 
 		// Check for user specific overrides
 		if (is_object ( $userinfo )) {
@@ -398,6 +408,16 @@ class CKunenaConfig extends CKunenaConfigBase {
 
 
 		return TRUE;
+	}
+
+	public function ValidateConfig() {
+		// Add anything that requires validation
+
+		// Need to have at least two per page of these
+		$this->messages_per_page = max ( $this->messages_per_page, 2 );
+		$this->messages_per_page_search = max ( $this->messages_per_page_search, 2 );
+		$this->threads_per_page = max ( $this->threads_per_page, 2 );
+
 	}
 }
 

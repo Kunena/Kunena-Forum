@@ -233,10 +233,15 @@ class smile
         ?>
 
         <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry1">
+        <?php if ($kunena_config->enablehelppage) { ?>
             <td class = "fb_leftcolumn" valign = "top">
                 <strong><a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=faq').'#boardcode';?>" target="_new"><?php @print(_COM_BOARDCODE); ?></a></strong>:
             </td>
-
+         <?php }else { ?>
+			<td class = "fb_leftcolumn" valign = "top">
+                <strong><?php @print(_COM_BOARDCODE); ?></strong>:
+            </td>
+			<?php } ?>
             <td>
                 <table border = "0" cellspacing = "0" cellpadding = "0" class = "fb-postbuttonset">
                     <tr>

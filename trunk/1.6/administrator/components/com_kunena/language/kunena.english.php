@@ -27,7 +27,7 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 //Poll
 define('_KUNENA_POLL_CANNOT_VOTE_NEW_TIME', 'You cannot vote an new time to this poll');
 define('_KUNENA_POLL_TIME_TO_LIVE', 'Poll life span (optional)');
-define('_KUNENA_POLL_FORGOT_TITLE_OPTIONS', 'You have forget to enter a title and options for the poll');
+define('_KUNENA_POLL_FORGOT_TITLE_OPTIONS', 'You have forget to enter a title and at least one option for the poll');
 define('_KUNENA_POLL_ADD', 'Add a new poll');
 define('_KUNENA_POLL_TITLE', 'Poll title');
 define('_KUNENA_ADMIN_POLLS', 'Polls');
@@ -47,7 +47,7 @@ define('_KUNENA_POLL_SAVE_ALERT_ERROR', 'A problem has prevented your vote from 
 define('_KUNENA_POLL_SAVE_VOTE_ALREADY', 'You have already voted for this poll!');
 define('_KUNENA_A_POLL_ALLOW_ONE_VOTE', 'Allow user to vote one time for a poll');
 define('_KUNENA_A_POLL_ALLOW_ONE_VOTE_DESC', 'Allow user to vote only one time for a poll');
-define('_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW', 'The maximum numbers of options has been reached');
+define('_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW', 'The maximum numbers of options in the poll has been reached');
 define('_KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK', 'You must check a box for vote to this poll!');
 define('_KUNENA_A_POLL_ENABLED', 'Enabled');
 define('_KUNENA_A_ENABLED_DESC', 'Disable or enable the polls');
@@ -64,7 +64,7 @@ define('_KUNENA_POLLSSTATS', 'Show Popular Poll Stats ');
 define('_KUNENA_POLLSTATSDESC', ' If you want to show the Popular Polls, select "Yes." ');
 define('_STAT_POPULAR_POLLS_KGSG', 'Polls');
 define('_KUNENA_A_POLL_TIME_VOTES', 'Set the time between two votes');
-define('_KUNENA_A_POLL_TIME_VOTES_DESC', 'For avoid overload of your server a set a time between two votes of the same user, example 00:15:00 means 15 minutes between two votes');
+define('_KUNENA_A_POLL_TIME_VOTES_DESC', 'For avoid overload of your server, set a time between two votes of the same user, example 00:15:00 means 15 minutes between two votes');
 define('_KUNENA_POLL_WAIT_BEFORE_VOTE', 'You need to wait before vote a new time');
 define('_KUNENA_A_POLL_NUMBER_VOTES_BY_USER', 'Set the maximum number for the votes allowed for one user');
 define('_KUNENA_A_POLL_NUMBER_VOTES_BY_DESC', 'Set the maximum number for the votes allowed for one user');

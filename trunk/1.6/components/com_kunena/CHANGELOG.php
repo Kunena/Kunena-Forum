@@ -33,7 +33,7 @@ Legend:
 
 Kunena 1.6.0-DEV
 
-06-Jan-2010
+06-Jan-2010 Xillibit
 ^ [#19241] Add code from kunena.special.upgrade.poll.php to kunena.special.upgrade.1.6.0.php
 # [#19304] if Enable Help Page and Show help in Kunena is on no, has not effects on boardcode link
 # [#19103] Language strings should be escaped in javascript

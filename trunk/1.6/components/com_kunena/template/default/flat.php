@@ -101,7 +101,7 @@ if (count ( $this->messages [0] ) > 0) {
 
 <table
 	class="fb_blocktable<?php
-	echo isset ( $objCatInfo->class_sfx ) ? $objCatInfo->class_sfx : '';
+	echo isset ( $objCatInfo->class_sfx ) ? ' fb_blocktable'.$objCatInfo->class_sfx : '';
 	?>"
 	id="fb_flattable" border="0" cellspacing="0" cellpadding="0"
 	width="100%">
@@ -252,7 +252,15 @@ if (count ( $this->messages [0] ) > 0) {
 			echo '_stickymsg';
 			$topicSticky = 1;
 		}
-		echo $leaf->class_sfx;
+
+		if ($leaf->class_sfx){
+			echo ' ' . KUNENA_BOARD_CLASS . $tabclass [$k];
+			if ($leaf->ordering != 0 || ($leaf->myfavorite && $funcmylatest)) {
+				echo '_stickymsg';
+				$topicSticky = 1;
+			}
+			echo $leaf->class_sfx;
+		}
 		?>">
 			<td class="td-0 fbm" align="center"><strong> <?php
 		echo ( int ) $this->thread_counts [$leaf->id];

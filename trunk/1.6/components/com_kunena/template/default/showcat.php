@@ -204,7 +204,7 @@ if (in_array ( $catid, $allow_forum )) {
 <?php
 	if ($objCatInfo->headerdesc) {
 		?>
-<table class="fb_forum-headerdesc<?php echo $objCatInfo->class_sfx;?>" border="0" cellpadding="0"
+<table class="fb_forum-headerdesc<?php echo isset($objCatInfo->class_sfx) ? ' fb_forum-headerdesc' . $objCatInfo->class_sfx : '';?>" border="0" cellpadding="0"
 	cellspacing="0" width="100%">
 	<tr>
 		<td><?php

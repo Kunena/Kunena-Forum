@@ -1791,34 +1791,6 @@ MY PROFILE
 	color: #999999;
 }
 
-#Kunena .fb_sectiontableentry1_stickymsg-green {
-	background: #FEFECC;
-}
-
-#Kunena .fb_sectiontableentry2_stickymsg-green {
-	background: #FEFECC;
-}
-
-#Kunena tr.fb_sectiontableentry1_stickymsg-green a,
-#Kunena tr.fb_sectiontableentry2_stickymsg-green a	{
-	color: #000000;
-}
-
-#Kunena tr.fb_sectiontableentry1_stickymsg-green td,
-#Kunena tr.fb_sectiontableentry2_stickymsg-green td	{
-	color: #000000;
-	border-bottom: 1px solid #BFC3C6;
-	border-left: 1px solid #FFFFFF;
-	border-right: 1px solid #BFC3C6;
-	padding: 5px;
-}
-
-#Kunena tr.fb_sectiontableentry1_stickymsg-green td.td-0,
-#Kunena tr.fb_sectiontableentry2_stickymsg-green td.td-0	{
-	border-left: 1px solid #BFC3C6;
-	color: #999999;
-}
-
 /* -red category suffix
 ----------------------------------------------------------------------------------------------- */
 
@@ -1860,34 +1832,6 @@ MY PROFILE
 	border-left: 1px solid #BFC3C6;
 	background: #EEEEEE;
 	text-align: center;
-	color: #999999;
-}
-
-#Kunena .fb_sectiontableentry1_stickymsg-red {
-	background: #FEFECC;
-}
-
-#Kunena .fb_sectiontableentry2_stickymsg-red {
-	background: #FEFECC;
-}
-
-#Kunena tr.fb_sectiontableentry1_stickymsg-red a,
-#Kunena tr.fb_sectiontableentry2_stickymsg-red a	{
-	color: #000000;
-}
-
-#Kunena tr.fb_sectiontableentry1_stickymsg-red td,
-#Kunena tr.fb_sectiontableentry2_stickymsg-red td	{
-	color: #000000;
-	border-bottom: 1px solid #BFC3C6;
-	border-left: 1px solid #FFFFFF;
-	border-right: 1px solid #BFC3C6;
-	padding: 5px;
-}
-
-#Kunena tr.fb_sectiontableentry1_stickymsg-red td.td-0,
-#Kunena tr.fb_sectiontableentry2_stickymsg-red td.td-0	{
-	border-left: 1px solid #BFC3C6;
 	color: #999999;
 }
 
@@ -1935,34 +1879,6 @@ MY PROFILE
 	color: #999999;
 }
 
-#Kunena .fb_sectiontableentry1_stickymsg-orange {
-	background: #FEFECC;
-}
-
-#Kunena .fb_sectiontableentry2_stickymsg-orange {
-	background: #FEFECC;
-}
-
-#Kunena tr.fb_sectiontableentry1_stickymsg-orange a,
-#Kunena tr.fb_sectiontableentry2_stickymsg-orange a	{
-	color: #000000;
-}
-
-#Kunena tr.fb_sectiontableentry1_stickymsg-orange td,
-#Kunena tr.fb_sectiontableentry2_stickymsg-orange td	{
-	color: #000000;
-	border-bottom: 1px solid #BFC3C6;
-	border-left: 1px solid #FFFFFF;
-	border-right: 1px solid #BFC3C6;
-	padding: 5px;
-}
-
-#Kunena tr.fb_sectiontableentry1_stickymsg-orange td.td-0,
-#Kunena tr.fb_sectiontableentry2_stickymsg-orange td.td-0	{
-	border-left: 1px solid #BFC3C6;
-	color: #999999;
-}
-
 /* -blue category suffix
 ----------------------------------------------------------------------------------------------- */
 
@@ -2004,34 +1920,6 @@ MY PROFILE
 	border-left: 1px solid #BFC3C6;
 	background: #EEEEEE;
 	text-align: center;
-	color: #999999;
-}
-
-#Kunena .fb_sectiontableentry1_stickymsg-blue {
-	background: #FEFECC;
-}
-
-#Kunena .fb_sectiontableentry2_stickymsg-blue {
-	background: #FEFECC;
-}
-
-#Kunena tr.fb_sectiontableentry1_stickymsg-blue a,
-#Kunena tr.fb_sectiontableentry2_stickymsg-blue a	{
-	color: #000000;
-}
-
-#Kunena tr.fb_sectiontableentry1_stickymsg-blue td,
-#Kunena tr.fb_sectiontableentry2_stickymsg-blue td	{
-	color: #000000;
-	border-bottom: 1px solid #BFC3C6;
-	border-left: 1px solid #FFFFFF;
-	border-right: 1px solid #BFC3C6;
-	padding: 5px;
-}
-
-#Kunena tr.fb_sectiontableentry1_stickymsg-blue td.td-0,
-#Kunena tr.fb_sectiontableentry2_stickymsg-blue td.td-0	{
-	border-left: 1px solid #BFC3C6;
 	color: #999999;
 }
 
@@ -2079,34 +1967,6 @@ MY PROFILE
 	color: #999999;
 }
 
-#Kunena .fb_sectiontableentry1_stickymsg-grey {
-	background: #FEFECC;
-}
-
-#Kunena .fb_sectiontableentry2_stickymsg-grey {
-	background: #FEFECC;
-}
-
-#Kunena tr.fb_sectiontableentry1_stickymsg-grey a,
-#Kunena tr.fb_sectiontableentry2_stickymsg-grey a	{
-	color: #000000;
-}
-
-#Kunena tr.fb_sectiontableentry1_stickymsg-grey td,
-#Kunena tr.fb_sectiontableentry2_stickymsg-grey td	{
-	color: #000000;
-	border-bottom: 1px solid #BFC3C6;
-	border-left: 1px solid #FFFFFF;
-	border-right: 1px solid #BFC3C6;
-	padding: 5px;
-}
-
-#Kunena tr.fb_sectiontableentry1_stickymsg-grey td.td-0,
-#Kunena tr.fb_sectiontableentry2_stickymsg-grey td.td-0	{
-	border-left: 1px solid #BFC3C6;
-	color: #999999;
-}
-
 /* -pink category suffix
 ----------------------------------------------------------------------------------------------- */
 
@@ -2148,33 +2008,5 @@ MY PROFILE
 	border-left: 1px solid #BFC3C6;
 	background: #EEEEEE;
 	text-align: center;
-	color: #999999;
-}
-
-#Kunena .fb_sectiontableentry1_stickymsg-pink {
-	background: #FEFECC;
-}
-
-#Kunena .fb_sectiontableentry2_stickymsg-pink {
-	background: #FEFECC;
-}
-
-#Kunena tr.fb_sectiontableentry1_stickymsg-pink a,
-#Kunena tr.fb_sectiontableentry2_stickymsg-pink a	{
-	color: #000000;
-}
-
-#Kunena tr.fb_sectiontableentry1_stickymsg-pink td,
-#Kunena tr.fb_sectiontableentry2_stickymsg-pink td	{
-	color: #000000;
-	border-bottom: 1px solid #BFC3C6;
-	border-left: 1px solid #FFFFFF;
-	border-right: 1px solid #BFC3C6;
-	padding: 5px;
-}
-
-#Kunena tr.fb_sectiontableentry1_stickymsg-pink td.td-0,
-#Kunena tr.fb_sectiontableentry2_stickymsg-pink td.td-0	{
-	border-left: 1px solid #BFC3C6;
 	color: #999999;
 }

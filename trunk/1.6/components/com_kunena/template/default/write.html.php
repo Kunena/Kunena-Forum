@@ -85,7 +85,7 @@ echo KUNENA_BOARD_CLASS;
 echo KUNENA_BOARD_CLASS;
 ?>_bt_cvr5">
 <table class="fb_blocktable<?php
-echo $msg_cat->class_sfx;
+echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : '';
 ?>"
 	id="fb_postmessage" border="0" cellspacing="0" cellpadding="0"
 	width="100%">

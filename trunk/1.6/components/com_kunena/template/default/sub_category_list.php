@@ -70,7 +70,7 @@ else {
 	echo KUNENA_BOARD_CLASS;
 	?>_bt_cvr5">
 <table class="fb_blocktable<?php
-	echo $objCatInfo->class_sfx;
+	echo isset($objCatInfo->class_sfx) ? ' fb_blocktable' . $objCatInfo->class_sfx : '';
 	?>"
 	width="100%" id="fb_cat<?php
 	echo $objCatInfo->id;
@@ -215,7 +215,8 @@ else {
 			}
 			?>
 		<tr class="<?php
-			echo KUNENA_BOARD_CLASS . $tabclass [$k] . $singlerow->class_sfx;
+			echo KUNENA_BOARD_CLASS . $tabclass [$k];
+			echo isset( $singlerow->class_sfx ) ? ' ' . KUNENA_BOARD_CLASS . $tabclass [$k] . $singlerow->class_sfx : '';
 			?>"
 			id="fb_cat<?
 			echo $singlerow->id;

@@ -165,7 +165,7 @@ if (JString::strtolower ( $func ) == '') {
 				echo KUNENA_BOARD_CLASS;
 				?>_bt_cvr5">
 <table class="fb_blocktable<?php
-				echo $cat->class_sfx;
+				echo isset ( $cat->class_sfx ) ? ' fb_blocktable'.$cat->class_sfx : '';
 				?>"
 	width="100%" id="fb_cat<?php
 				echo $cat->id;
@@ -175,7 +175,7 @@ if (JString::strtolower ( $func ) == '') {
 		<tr>
 			<th colspan="5">
 			<div class="fb_title_cover<?php
-				echo $cat->class_sfx;
+				echo isset ( $cat->class_sfx ) ? ' fb_title_cover'.$cat->class_sfx : '';
 				?> fbm"><?php
 				echo CKunenaLink::GetCategoryLink ( 'listcat', $cat->id, kunena_htmlspecialchars ( stripslashes ( $cat->name ) ), 'follow', $class = 'fb_title fbl' );
 
@@ -317,7 +317,8 @@ if (JString::strtolower ( $func ) == '') {
 
 		<tr
 			class="<?php
-							echo KUNENA_BOARD_CLASS . $tabclass [$k] . $singlerow->class_sfx;
+							echo KUNENA_BOARD_CLASS . $tabclass [$k];
+							echo isset ( $singlerow->class_sfx ) ? ' ' . KUNENA_BOARD_CLASS . $tabclass [$k] .$singlerow->class_sfx : '';
 							?>"
 			id="fb_cat<?php
 							echo $singlerow->id?>">

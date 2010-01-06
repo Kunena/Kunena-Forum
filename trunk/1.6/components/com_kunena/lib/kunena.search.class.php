@@ -493,7 +493,7 @@ class CKunenaSearch {
 				$ressubject = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/i" . $utf8, '<span  class="searchword" >' . $searchword . '</span>', $ressubject );
 				$resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/i" . $utf8, '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
 			}
-			echo '<tr class="' . KUNENA_BOARD_CLASS . $tabclass [$k] . $result->class_sfx . '">';
+			echo '<tr class="' . KUNENA_BOARD_CLASS . $tabclass [$k] . (isset($result->class_sfx) ? ' ' . KUNENA_BOARD_CLASS . $tabclass [$k] . $result->class_sfx : ''  ) . '">';
 			echo '<td  class = "td-1" ><a href="' . JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $result->id . '&amp;catid=' . $result->catid ) . '#' . $result->id . '" >' . $ressubject . '</a><br />' . $resmessage . '<br /><br /></td>';
 			echo '<td class = "td-2" >' . kunena_htmlspecialchars ( stripslashes ( $result->name ) ) . '</td>';
 			echo '<td class = "td-3" >' . date ( _DATETIME, $result->time ) . '</td></tr>';

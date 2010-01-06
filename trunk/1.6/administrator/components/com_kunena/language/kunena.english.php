@@ -22,7 +22,12 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
+// Please remove all &#32; from the translations. Also remove extra spaces: ' Text ' => 'Text'.
+
 // 1.6.0
+
+// SVN installer
+define('_KUNENA_SVN_INSTALL', 'SVN Install');
 
 //Poll
 define('_KUNENA_POLL_CANNOT_VOTE_NEW_TIME', 'You cannot vote an new time to this poll');
@@ -69,9 +74,8 @@ define('_KUNENA_POLL_WAIT_BEFORE_VOTE', 'You need to wait before vote a new time
 define('_KUNENA_A_POLL_NUMBER_VOTES_BY_USER', 'Set the maximum number for the votes allowed for one user');
 define('_KUNENA_A_POLL_NUMBER_VOTES_BY_DESC', 'Set the maximum number for the votes allowed for one user');
 
-// Please remove all &#32; from the translations. Also remove extra spaces: ' Text ' => 'Text'.
-DEFINE('_KUNENA_ATTACHMENT_ADDED', 'Added attachment file to the message:');
 DEFINE('_KUNENA_ATTACHMENT_IMG_ADDED', 'Added attachment image to the message:');
+DEFINE('_KUNENA_ATTACHMENT_ADDED', 'Added attachment file to the message:');
 DEFINE('_KUNENA_AV_POSITION', 'Avatar Position');
 DEFINE('_KUNENA_AV_POSITION_DESC', 'You can change position of the profile Avatar in the Thread page. Default is "Right"');
 DEFINE('_KUNENA_AV_LEFT', 'Left');

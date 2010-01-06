@@ -257,6 +257,14 @@ class fx_Upgrade {
 			$build = $installElement->getAttribute( "build" );
 			$versionname = $installElement->getAttribute( "versionname" );
 
+			// This special check to detect svn based dev environments that are lacking the proper variables
+			if ($version == '@'.'kunenaversion'.'@') {
+				$version = KUNENA_VERSION;
+				$versiondate = KUNENA_VERSION_DATE;
+				$build = KUNENA_VERSION_BUILD;
+				$versionname = KUNENA_VERSION_NAME;
+			}
+
 			if(!$this->silent)
 			{
 				?>
@@ -307,6 +315,14 @@ class fx_Upgrade {
 					$versiondate = $versionElement->getAttribute( "versiondate" );
 					$build = $versionElement->getAttribute( "build" );
 					$versionname = $versionElement->getAttribute( "versionname" );
+
+					// This special check to detect svn based dev environments that are lacking the proper variables
+					if ($version == '@'.'kunenaversion'.'@') {
+						$version = KUNENA_VERSION;
+						$versiondate = KUNENA_VERSION_DATE;
+						$build = KUNENA_VERSION_BUILD;
+						$versionname = KUNENA_VERSION_NAME;
+					}
 
 					//when legacy version exists, just compare version, if date exists as well, compare date
 					if(($currentVersion->versiondate && $versiondate > $currentVersion->versiondate) OR (version_compare($version, $currentVersion->version, '>')) OR (version_compare($version, $currentVersion->version, '==') && $build > $currentVersion->build)) {

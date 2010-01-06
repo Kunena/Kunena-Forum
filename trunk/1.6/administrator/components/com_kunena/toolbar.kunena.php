@@ -42,6 +42,7 @@ switch ($task)
         break;
 
     case "showconfig":
+
         CKunenaToolbar::_EDIT_CONFIG();
 
         break;
@@ -119,6 +120,7 @@ switch ($task)
         break;
 
     default:
+
         CKunenaToolbar::BACKONLY_MENU();
 
         break;

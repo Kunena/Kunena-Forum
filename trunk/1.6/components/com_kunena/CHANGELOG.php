@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+05-Jan-2010 fxstein
++ [#19313] SVN installer option added. Added control panel button to execute installer (only in SVN mode)
+
 06-Jan-2010 Xillibit
 ^ [#19241] Add code from kunena.special.upgrade.poll.php to kunena.special.upgrade.1.6.0.php
 # [#19304] if Enable Help Page and Show help in Kunena is on no, has not effects on boardcode link

@@ -64,7 +64,14 @@ class CKunenaVersion {
 				$kunenaversion->versionname = 'NOT INSTALLED';
 			}
 			$xmlversion = CKunenaVersion::versionXML();
-			if($kunenaversion->version != $xmlversion) {
+
+			// Special check for svn test installs as the version name in the xml is not set
+			if ( JString::strpos ( $kunenaversion->version, '-SVN' ) !== false ){
+				//$kunenaversion->version = JString::substr ( $kunenaversion->version, 0, -4 );
+				$xmlversion = $xmlversion . '-SVN';
+			}
+
+			if( $kunenaversion->version != $xmlversion) {
 				$kunenaversion->version = CKunenaVersion::versionXML();
 				$kunenaversion->versionname = 'NOT UPGRADED';
 			}

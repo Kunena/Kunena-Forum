@@ -344,6 +344,9 @@ if (JString::strpos ( $kn_version->version, 'RC' ) !== false) {
 } else if (JString::strpos ( $kn_version->version, 'DEV' ) !== false) {
 	$kn_version_name = _KUNENA_VERSION_DEV;
 	$kn_version_warning = _KUNENA_VERSION_DEV_WARNING;
+} else if (JString::strpos ( $kn_version->version, 'SVN' ) !== false) {
+	$kn_version_name = _KUNENA_VERSION_DEV;
+	$kn_version_warning = _KUNENA_VERSION_DEV_WARNING;
 }
 if (! empty ( $kn_version_warning )) {
 	$kunena_app->enqueueMessage ( sprintf ( _KUNENA_VERSION_INSTALLED, $kn_version->version, $kn_version_name ) . ' ' . $kn_version_warning, 'notice' );

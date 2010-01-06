@@ -140,7 +140,7 @@ class CKunenaToolbar
     function BACKONLY_MENU()
     {
 
-        JToolBarHelper::back();
+    	JToolBarHelper::back();
 
     }
 

@@ -344,14 +344,13 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 
 		<?php
 		}
-		if (!isset($polldatasedit[0]->polltimetolive))
-		{
-			$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
-		}
-        $pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
         $catsallowed = explode(',',$kunena_config->pollallowedcategories);
         if (in_array($catid, $catsallowed))
         {
+        	if (!isset($polldatasedit[0]->polltimetolive)) {
+				$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
+			}
+        	$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
         	//Check if it's is a new thread and show the poll
          	if ($kunena_config->pollenabled == "1" && $id == "0" )
          	{
@@ -361,7 +360,8 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
                     <strong><?php echo _KUNENA_POLL_ADD; ?></strong>
                 </td>
                 <td>
-                    <?php echo _KUNENA_POLL_TITLE; ?> <input type = "text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" />&nbsp;<?php echo _KUNENA_POLL_TIME_TO_LIVE.$pollcalendar; ?>
+                    <div><input type = "text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" /><?php echo ' '. _KUNENA_POLL_TITLE; ?></div>
+                    <div><?php echo $pollcalendar . ' '. _KUNENA_POLL_TIME_TO_LIVE; ?></div>
 
                     <!-- The field hidden allow to know the options number chooses by the user -->
                     <?php if($this->kunena_editmode != "1"){ ?>
@@ -395,6 +395,10 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 		    $catsallowed = explode(',',$kunena_config->pollallowedcategories);
         	if (in_array($catid, $catsallowed))
         	{
+        		if (!isset($polldatasedit[0]->polltimetolive)) {
+					$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
+			 	}
+        		$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
 		      //This query is need because, in this part i haven't access to the variable $parent
 		      //I need to determine if the post if a parent or not for display the form for the poll
           	  $mesparent 	= CKunenaPolls::get_parent($id);
@@ -414,7 +418,8 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
                     <strong><?php echo _KUNENA_POLL_ADD; ?></strong>
                 </td>
                 <td>
-                    <?php echo _KUNENA_POLL_TITLE; ?> <input type = "text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" />&nbsp;<?php echo _KUNENA_POLL_TIME_TO_LIVE.$pollcalendar; ?>
+                    <div><input type = "text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" /><?php echo ' '. _KUNENA_POLL_TITLE; ?></div>
+                    <div><?php echo $pollcalendar . ' '. _KUNENA_POLL_TIME_TO_LIVE; ?></div>
                     <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $kunena_config->pollnboptions; ?>);">
                     <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onclick = "javascript:delete_field();">
                     <input type="hidden" name="number_total_options" id="numbertotalr" value="<?php echo $polloptions; ?>">

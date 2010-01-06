@@ -26,7 +26,7 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 //Poll
 define('_KUNENA_POLL_CANNOT_VOTE_NEW_TIME', 'You cannot vote an new time to this poll');
-define('_KUNENA_POLL_TIME_TO_LIVE', 'Time for the life of the poll');
+define('_KUNENA_POLL_TIME_TO_LIVE', 'Poll life span (optional)');
 define('_KUNENA_POLL_FORGOT_TITLE_OPTIONS', 'You have forget to enter a title and options for the poll');
 define('_KUNENA_POLL_ADD', 'Add a new poll');
 define('_KUNENA_POLL_TITLE', 'Poll title');

@@ -34,6 +34,7 @@ Legend:
 Kunena 1.6.0-DEV
 
 06-Jan-2010
+# [#19241] Fixes some little bugs in polls
 + [#19241] Add polls feature by applying changes from /branches/1.5-xillibit
 
 05-Jan-2010 fxstein

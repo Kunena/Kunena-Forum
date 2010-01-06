@@ -25,6 +25,10 @@ $prefixfinal = $kunena_db->getPrefix().'_fb_polls_datas';
 $jconfig = new JConfig();
 $jdbname = 'Tables_in_'.$jconfig->db;
 
+$kunena_db->setQuery("SHOW TABLES");
+$kunena_db->query() or check_dberror("Unable to get all the tables");
+$databasetables = $kunena_db->loadObjectList();
+
 $pollupgrade = 0;
 for ($i=0;$i < sizeof($databasetables);$i++)
 {

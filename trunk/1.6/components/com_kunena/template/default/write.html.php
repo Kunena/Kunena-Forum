@@ -270,15 +270,15 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 
 			<td><input type='file' class='fb_button' name='attachimage'
 				onmouseover="javascript:kunenaShowHelp('<?php
-			@print (_IMAGE_DIMENSIONS) . ": " . $kunena_config->imagewidth . "x" . $kunena_config->imageheight . " - " . $kunena_config->imagesize . " KB";
+			@print (addslashes(_IMAGE_DIMENSIONS)) . ": " . $kunena_config->imagewidth . "x" . $kunena_config->imageheight . " - " . $kunena_config->imagesize . " KB";
 			?>')" /> <input type="button" class="fb_button" name="addImagePH"
 				value="<?php
-			@print (_POST_ATTACH_IMAGE) ;
+			@print (addslashes(_POST_ATTACH_IMAGE)) ;
 			?>"
 				style="cursor: auto; width: 4em"
 				onclick="bbfontstyle(' [img/] ','');"
 				onmouseover="javascript:kunenaShowHelp('<?php
-			@print (_KUNENA_EDITOR_HELPLINE_IMGPH) ;
+			@print (addslashes(_KUNENA_EDITOR_HELPLINE_IMGPH)) ;
 			?>')" /></td>
 		</tr>
 
@@ -299,7 +299,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 
 			<td><input type='file' class='fb_button' name='attachfile'
 				onmouseover="javascript:kunenaShowHelp('<?php
-			@print (_FILE_TYPES) . ": " . $kunena_config->filetypes . " - " . $kunena_config->filesize . " KB";
+			@print (addslashes(_FILE_TYPES)) . ": " . $kunena_config->filetypes . " - " . $kunena_config->filesize . " KB";
 			?>')"
 				style="cursor: auto" /> <input type="button" class="fb_button"
 				name="addFilePH" value="<?php
@@ -308,7 +308,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 				style="cursor: auto; width: 4em"
 				onclick="bbfontstyle(' [file/] ','');"
 				onmouseover="javascript:kunenaShowHelp('<?php
-			@print (_KUNENA_EDITOR_HELPLINE_FILEPH) ;
+			@print (addslashes(_KUNENA_EDITOR_HELPLINE_FILEPH)) ;
 			?>')" /></td>
 		</tr>
 
@@ -347,13 +347,13 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
         $catsallowed = explode(',',$kunena_config->pollallowedcategories);
         if (in_array($catid, $catsallowed))
         {
-        	if (!isset($polldatasedit[0]->polltimetolive)) {
-				$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
-			}
-        	$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
         	//Check if it's is a new thread and show the poll
          	if ($kunena_config->pollenabled == "1" && $id == "0" )
          	{
+         		if (!isset($polldatasedit[0]->polltimetolive)) {
+				$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
+				}
+        		$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
          ?>
             <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry2">
                 <td class = "fb_leftcolumn">
@@ -395,15 +395,15 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 		    $catsallowed = explode(',',$kunena_config->pollallowedcategories);
         	if (in_array($catid, $catsallowed))
         	{
-        		if (!isset($polldatasedit[0]->polltimetolive)) {
-					$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
-			 	}
-        		$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
 		      //This query is need because, in this part i haven't access to the variable $parent
 		      //I need to determine if the post if a parent or not for display the form for the poll
           	  $mesparent 	= CKunenaPolls::get_parent($id);
               $polloptions  = CKunenaPolls::get_total_options($id);
           	  if ($mesparent->parent == "0"){
+          	  	if (!isset($polldatasedit[0]->polltimetolive)) {
+					$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
+			 	}
+        		$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
           	  	$polloptionsstart = $polloptions+1;
             	JApplication::addCustomHeadTag('
       				<script type="text/javascript">

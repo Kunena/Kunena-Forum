@@ -324,9 +324,36 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		</td>
 	</tr>
 </table>
+<?php }
+if ($kunena_config->pollenabled == "1" && $this_message->poll_exist == "1")
+{
+
+    if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/poll/pollbox.php')) {
+        require_once (KUNENA_ABSTMPLTPATH . '/plugin/poll/pollbox.php');
+    }
+    else {
+        require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/poll/pollbox.php');
+    }
+
+}
+// load module
+if (JDocumentHTML::countModules('kunena_poll'))
+{
+?>
+
+    <div class = "fb-fb_2">
+        <?php
+        	$document	= &JFactory::getDocument();
+        	$renderer	= $document->loadRenderer('modules');
+        	$options	= array('style' => 'xhtml');
+        	$position	= 'kunena_poll';
+        	echo $renderer->render($position, $options, null);
+	       ?>
+    </div>
+
 <?php
-		}
-		?>
+}
+         ?>
 
 <!-- B: List Actions -->
 

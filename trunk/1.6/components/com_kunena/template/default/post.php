@@ -40,6 +40,9 @@ $email = JRequest::getVar ( 'email', '' );
 $contentURL = JRequest::getVar ( 'contentURL', '' );
 $subscribeMe = JRequest::getVar ( 'subscribeMe', '' );
 $topic_emoticon = JRequest::getInt ( 'topic_emoticon', 0 );
+$polltitle = JRequest::getString('poll_title' , 0);
+$optionsnumbers = JRequest::getInt('number_total_options' , '');
+$polltimetolive = JRequest::getString('poll_time_to_live' , 0);
 
 $id = JRequest::getInt ( 'id', 0 );
 $parentid = JRequest::getInt ( 'parentid', 0 );
@@ -85,6 +88,17 @@ if (! in_array ( $catid, $allow_forum ) && ! $kunena_is_admin) {
 
 //reset variables used
 $this->kunena_editmode = 0;
+
+$poll_exist = null;
+if(!empty($optionsnumbers) && !empty($polltitle))
+{
+  $poll_exist = "1";
+  //Begin Poll management options
+  $optionvalue = array();
+  for($ioptions = 0; $ioptions < $optionsnumbers; $ioptions++){
+    $optionvalue[] = JRequest::getString('field_option'.$ioptions , null);
+  }
+}
 
 // Captcha
 if ($kunena_config->captcha == 1 && $kunena_my->id < 1) {
@@ -230,6 +244,11 @@ if ($kunena_my->id) {
 						echo _POST_ERROR_MESSAGE;
 					} else {
 						$pid = $kunena_db->insertId ();
+						//Insert in the database the informations for the poll and the options for the poll
+                        if (!empty($polltitle) && !empty($optionsnumbers))
+                        {
+                        	CKunenaPolls::save_new_poll($polltimetolive,$polltitle,$catid,$pid,$optionvalue);
+                        }
 
 						// now increase the #s in categories only case approved
 						if ($holdPost == 0) {
@@ -647,6 +666,11 @@ if ($kunena_my->id) {
 					$this->catid = $message->catid;
 					$this->parentid = 0;
 
+					//save the options for query after and load the text options, the number options is for create the fields in the form after
+                	if ($message->poll_exist) {
+                     $polldatasedit = CKunenaPolls::get_polls_datas($id);
+                	}
+
 					//get the writing stuff in:
 					if (file_exists ( KUNENA_ABSTMPLTPATH . '/write.html.php' )) {
 						include (KUNENA_ABSTMPLTPATH . '/write.html.php');
@@ -719,6 +743,33 @@ if ($kunena_my->id) {
 							$kunena_db->query () or check_dberror ( 'Unable to load review flag from categories.' );
 							$holdPost = $kunena_db->loadResult ();
 						}
+
+					//update the poll when an user edit his post
+                    if ($kunena_config->pollenabled)
+                    {
+                    	$optvalue = array();
+                        for ($i = 0; $i < $optionsnumbers; $i++)
+                        {
+                        	$optvalue[] = JRequest::getString('field_option'.$i , null);
+                         }
+                         //need to check if the poll exist, if it's not the case the poll is insered like new poll
+                         if ($mes->poll_exist == "0" && !empty($polltitle) && !empty($optionsnumbers))
+                         {
+                         	CKunenaPolls::save_new_poll($polltimetolive,$polltitle,$catid,$id,$optvalue);
+                         }
+                         else
+                         {
+                         	if (empty($polltitle) && empty($optionsnumbers))
+                         	{
+                            	//The poll is deleted because the polltitle and the options are empty
+                                CKunenaPolls::delete_poll($id);
+                             }
+                             else
+                             {
+                             	CKunenaPolls::update_poll_edit($polltimetolive,$id,$polltitle,$optvalue,$optionsnumbers);
+                              }
+                           }
+                        }
 
 						$kunena_db->setQuery ( "UPDATE #__fb_messages SET name=" . $kunena_db->quote ( $authorname ) . ", email=" . $kunena_db->quote ( addslashes ( $email ) ) . (($kunena_config->editmarkup) ? " ,modified_by='" . $modified_by . "' ,modified_time='" . $modified_time . "' ,modified_reason=" . $kunena_db->quote ( $modified_reason ) : "") . ", subject=" . $kunena_db->quote ( $subject ) . ", topic_emoticon='" . $topic_emoticon . "', hold='" . (( int ) $holdPost) . "' WHERE id={$id}" );
 

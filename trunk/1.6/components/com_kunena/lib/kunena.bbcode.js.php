@@ -325,6 +325,12 @@ function textCounter(field, countfield, maxlimit) {
 function submitForm() {
  submitme=1;
  formname=document.postform.fb_authorname.value;
+ polltitle=document.getElementById('poll_title').value;
+ polloptionone=document.getElementById('field_option0').value;
+ if((polltitle.length<1) && (polloptionone.length<1)){
+    alert("<?php @print( _KUNENA_POLL_FORGOT_TITLE_OPTIONS); ?>");
+    submitme=0;
+ }
  if ((formname.length<1)) {
     alert("<?php @print( _POST_FORGOT_NAME_ALERT); ?>");
     submitme=0;

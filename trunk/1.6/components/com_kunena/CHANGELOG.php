@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+06-Jan-2010
++ [#19241] Add polls feature by applying changes from /branches/1.5-xillibit
+
 05-Jan-2010 fxstein
 + [#19294] New module position: kunena_menu to allow custom Joomla menu to override default tabs
 ^ [#19236] Changed behaviour of category css suffix logic. Now adds new class to overide only specific features.

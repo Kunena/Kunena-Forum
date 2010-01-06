@@ -24,6 +24,51 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.6.0
 
+//Poll
+define('_KUNENA_POLL_CANNOT_VOTE_NEW_TIME', 'You cannot vote an new time to this poll');
+define('_KUNENA_POLL_TIME_TO_LIVE', 'Time for the life of the poll');
+define('_KUNENA_POLL_FORGOT_TITLE_OPTIONS', 'You have forget to enter a title and options for the poll');
+define('_KUNENA_POLL_ADD', 'Add a new poll');
+define('_KUNENA_POLL_TITLE', 'Poll title');
+define('_KUNENA_ADMIN_POLLS', 'Polls');
+define('_KUNENA_POLL_ADD_OPTION', 'Add a new option');
+define('_KUNENA_POLL_REM_OPTION', 'Remove an option');
+define('_KUNENA_POLL_OPTION_NAME', 'Option');
+define('_KUNENA_POLL_BUTTON_VOTE', 'Vote');
+define('_KUNENA_POLL_BUTTON_RESULT', 'View results');
+define('_KUNENA_POLL_NO_VOTE', 'No vote');
+define('_KUNENA_POLL_VOTERS_TOTAL', 'Total number of voters: ');
+define('_KUNENA_POLL_HITS_OPTIONS', 'Number of people who voted for this poll');
+define('_KUNENA_A_POLL_NUMBER_OPTIONS', 'Number of options for the polls');
+define('_KUNENA_POLL_RESET_VOTES', 'Reset votes of the poll');
+define('_KUNENA_A_POLL_NUMBER_OPTIONS_DESC', 'Set the number maximum allowed for the field options for the polls when the users create a new post');
+define('_KUNENA_POLL_SAVE_ALERT_OK', 'Your vote has been saved with succes');
+define('_KUNENA_POLL_SAVE_ALERT_ERROR', 'A problem has prevented your vote from being saved');
+define('_KUNENA_POLL_SAVE_VOTE_ALREADY', 'You have already voted for this poll!');
+define('_KUNENA_A_POLL_ALLOW_ONE_VOTE', 'Allow user to vote one time for a poll');
+define('_KUNENA_A_POLL_ALLOW_ONE_VOTE_DESC', 'Allow user to vote only one time for a poll');
+define('_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW', 'The maximum numbers of options has been reached');
+define('_KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK', 'You must check a box for vote to this poll!');
+define('_KUNENA_A_POLL_ENABLED', 'Enabled');
+define('_KUNENA_A_ENABLED_DESC', 'Disable or enable the polls');
+define('_KUNENA_POLL_NAME', 'Poll: ');
+define('_KUNENA_POLL_OPTIONS', 'Poll options');
+define('_KUNENA_A_POLL_TITLE', 'Polls Settings');
+define('_KUNENA_POLL_NAME_URL_RESULT', 'Return to the topic');
+define('_KUNENA_A_POLL_CATEGORIES_ALLOWED', 'Set the allowed categories for the poll');
+define('_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC', 'Set the allowed categories for the poll, this can be a categories or more, add the allowed categories by filling the field below by choose the numbers in the list near the id(with coma between numbers, example: 1,2,3,4) ');
+define('_KUNENA_POLL_NOT_LOGGED', 'You can not participate to this poll you are not logged.');
+define('_KUNENA_USRL_VOTES', 'Votes');
+define('_KUNENA_POLLSPOP', 'Number of Popular Polls');
+define('_KUNENA_POLLSSTATS', 'Show Popular Poll Stats ');
+define('_KUNENA_POLLSTATSDESC', ' If you want to show the Popular Polls, select "Yes." ');
+define('_STAT_POPULAR_POLLS_KGSG', 'Polls');
+define('_KUNENA_A_POLL_TIME_VOTES', 'Set the time between two votes');
+define('_KUNENA_A_POLL_TIME_VOTES_DESC', 'For avoid overload of your server a set a time between two votes of the same user, example 00:15:00 means 15 minutes between two votes');
+define('_KUNENA_POLL_WAIT_BEFORE_VOTE', 'You need to wait before vote a new time');
+define('_KUNENA_A_POLL_NUMBER_VOTES_BY_USER', 'Set the maximum number for the votes allowed for one user');
+define('_KUNENA_A_POLL_NUMBER_VOTES_BY_DESC', 'Set the maximum number for the votes allowed for one user');
+
 // Please remove all &#32; from the translations. Also remove extra spaces: ' Text ' => 'Text'.
 DEFINE('_KUNENA_ATTACHMENT_ADDED', 'Added attachment file to the message:');
 DEFINE('_KUNENA_ATTACHMENT_IMG_ADDED', 'Added attachment image to the message:');

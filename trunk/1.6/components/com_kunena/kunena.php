@@ -332,6 +332,12 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	$readTopics = $kunena_session->readtopics;
 	$this->read_topics = explode ( ',', $readTopics );
 
+	//Call the call for polls
+	if($kunena_config->pollenabled){
+  		require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
+  		$poll = new CKunenaPolls();
+	}
+
 	/*       _\|/_
              (o o)
      +----oOO-{_}-OOo--------------------------------+
@@ -451,6 +457,16 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			}
 
 			break;
+		#########################################################################################
+        case 'poll':
+            if (file_exists (KUNENA_ABSTMPLTPATH . '/plugin/poll/poll.php')) {
+                include (KUNENA_ABSTMPLTPATH . '/plugin/poll/poll.php');
+                }
+            else {
+                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/poll/poll.php');
+                }
+
+            break;
 
 		#########################################################################################
 		case 'stats' :

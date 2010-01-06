@@ -334,6 +334,13 @@ class CKunenaLink
 		return JRoute::_(KUNENA_LIVEURLREL."&amp;func=announcement&amp;do={$do}{$idstring}");
     }
 
+	function GetPollURL($kunena_config, $do, $id=NULL, $catid){
+		  $idstring = '';
+		  if ($id !== NULL) $idstring .= "&amp;id=$id";
+		  $catidstr = "&amp;catid=$catid";
+		  return JRoute::_(KUNENA_LIVEURLREL."&amp;func=poll&amp;do={$do}{$idstring}{$catidstr}");
+    }
+
     //
     // Macro functions that build more complex html output with embedded links
     //

@@ -30,6 +30,8 @@ if (! isset ( $this->kunena_set_focus ))
 	$this->kunena_set_focus = 0;
 $authorName = stripslashes ( $this->authorName );
 
+CKunenaPolls::call_javascript_form();
+
 include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
 
 //keep session alive while editing
@@ -342,8 +344,35 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 
 		<?php
 		}
-		?>
-		<?php
+		if (!isset($polldatasedit[0]->polltimetolive))
+		{
+			$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
+		}
+        $pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
+        $catsallowed = explode(',',$kunena_config->pollallowedcategories);
+        if (in_array($catid, $catsallowed))
+        {
+        	//Check if it's is a new thread and show the poll
+         	if ($kunena_config->pollenabled == "1" && $id == "0" )
+         	{
+         ?>
+            <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry2">
+                <td class = "fb_leftcolumn">
+                    <strong><?php echo _KUNENA_POLL_ADD; ?></strong>
+                </td>
+                <td>
+                    <?php echo _KUNENA_POLL_TITLE; ?> <input type = "text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" />&nbsp;<?php echo _KUNENA_POLL_TIME_TO_LIVE.$pollcalendar; ?>
+
+                    <!-- The field hidden allow to know the options number chooses by the user -->
+                    <?php if($this->kunena_editmode != "1"){ ?>
+                    <input type="hidden" name="number_total_options" id="numbertotal">
+                    <?php } ?>
+                    <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $kunena_config->pollnboptions; ?>);">
+                    <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onclick = "javascript:delete_field();">
+                </td>
+            </tr>
+           <?php }
+        }
 		// Begin captcha . Thanks Adeptus
 		if ($kunena_config->captcha == 1 && $kunena_my->id < 1) {
 			?>
@@ -361,9 +390,55 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 		<?php
 		}
 		// Finish captcha
+		if (($this->kunena_editmode == "1") && $kunena_config->pollenabled == "1")
+		{
+		    $catsallowed = explode(',',$kunena_config->pollallowedcategories);
+        	if (in_array($catid, $catsallowed))
+        	{
+		      //This query is need because, in this part i haven't access to the variable $parent
+		      //I need to determine if the post if a parent or not for display the form for the poll
+          	  $mesparent 	= CKunenaPolls::get_parent($id);
+              $polloptions  = CKunenaPolls::get_total_options($id);
+          	  if ($mesparent->parent == "0"){
+          	  	$polloptionsstart = $polloptions+1;
+            	JApplication::addCustomHeadTag('
+      				<script type="text/javascript">
+	   				<!--
+	   				var number_field = "'.$polloptionsstart.'";
+	   				//-->
+    				 </script>
+				  ');
 		?>
-
-		<tr class="<?php
+		<tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry2">
+			<td class = "fb_leftcolumn">
+                    <strong><?php echo _KUNENA_POLL_ADD; ?></strong>
+                </td>
+                <td>
+                    <?php echo _KUNENA_POLL_TITLE; ?> <input type = "text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" />&nbsp;<?php echo _KUNENA_POLL_TIME_TO_LIVE.$pollcalendar; ?>
+                    <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $kunena_config->pollnboptions; ?>);">
+                    <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onclick = "javascript:delete_field();">
+                    <input type="hidden" name="number_total_options" id="numbertotalr" value="<?php echo $polloptions; ?>">
+                </td>
+                <td>
+                <?php
+                  if (isset($polloptions))
+                  {
+                    $nboptions = "1";
+                    for ($i=0;$i < $polloptions;$i++)
+                    {
+                      echo "<tr class=\"".KUNENA_BOARD_CLASS."sectiontableentry2\" id=\"option".$nboptions."\"><td style=\"font-weight: bold\" class=\"fb_leftcolumn\">Option ".$nboptions."</td><td><input type=\"text\" id=\"field_option".$i."\" name=\"field_option".$i."\" value=\"".$polldatasedit[$i]->text."\" /></td></tr>";
+                      $nboptions++;
+                    }
+                  }
+                ?>
+            </td>
+		</tr>
+		<?php
+          	  }
+        	}
+		}
+		?>
+		<tr id="fb_post_buttons_tr" class="<?php
 		echo KUNENA_BOARD_CLASS;
 		?>sectiontableentry1">
 			<td id="fb_post_buttons" colspan="2" style="text-align: center;"><input

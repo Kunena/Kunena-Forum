@@ -64,7 +64,7 @@ function check_dberror($text='', $back=0)
 	$kunena_db = &JFactory::getDBO();
 	if ($kunena_db->getErrorNum() != 0)
 	{
-		check_dberror($text, $back+1);
+		trigger_dberror($text, $back+1);
 	}
 }
 

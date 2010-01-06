@@ -35,6 +35,7 @@ Kunena 1.6.0-DEV
 
 06-Jan-2010 fxstein
 + [#19313] SVN installer option added. Added control panel button to execute installer (only in SVN mode)
+# [#19200] Fied regression in check_dberror that would crash php server due to invalid recusion
 
 06-Jan-2010 Xillibit
 ^ [#19241] Add code from kunena.special.upgrade.poll.php to kunena.special.upgrade.1.6.0.php

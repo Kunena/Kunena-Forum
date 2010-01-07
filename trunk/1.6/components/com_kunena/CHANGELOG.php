@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+07-Jan-2010 Xillibit
+# [#19029] If moderator edits the post, email address gets replaced
+
 07-Jan-2010 Matias
 # [#19316] Fix double SQL calls, add checks for failed queries
 # [#18862] New thread is unread after posting it

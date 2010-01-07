@@ -108,9 +108,25 @@ if(!empty($optionsnumbers) && !empty($polltitle))
   }
 }
 
+//ip for floodprotection, post logging, subscriptions, etcetera
+$ip = $_SERVER ["REMOTE_ADDR"];
+
+// Flood protection
+if ($kunena_config->floodprotection && ($action == "post" || $do == 'quote' || $do == 'reply') && ! $kunena_is_admin) {
+	$kunena_db->setQuery ( "SELECT MAX(time) FROM #__fb_messages WHERE ip='{$ip}'" );
+	$lastPostTime = $kunena_db->loadResult ();
+	check_dberror ( "Unable to load max time for current request from IP: $ip" );
+
+	if ($lastPostTime + $kunena_config->floodprotection > $kunena_systime) {
+		echo _POST_TOPIC_FLOOD1 . ' ' . $kunena_config->floodprotection . ' ' . _POST_TOPIC_FLOOD2 . '<br />';
+		echo _POST_TOPIC_FLOOD3;
+		return;
+	}
+}
+
 // Captcha
 if ($kunena_config->captcha == 1 && $kunena_my->id < 1) {
-	$number = $_POST ['txtNumber'];
+	$number = JRequest::getVar ( 'txtNumber', '', 'POST' );
 
 	if ($message != NULL) {
 		$session = & JFactory::getSession ();
@@ -122,22 +138,6 @@ if ($kunena_config->captcha == 1 && $kunena_my->id < 1) {
 			echo "<script language='javascript' type='text/javascript'>window.history.back()</script>";
 			return;
 		}
-	}
-}
-
-//ip for floodprotection, post logging, subscriptions, etcetera
-$ip = $_SERVER ["REMOTE_ADDR"];
-
-// Flood protection
-if ($kunena_config->floodprotection && $do != "edit" && ! $kunena_is_admin) {
-	$kunena_db->setQuery ( "SELECT MAX(time) FROM #__fb_messages WHERE ip='{$ip}'" );
-	$lastPostTime = $kunena_db->loadResult ();
-	check_dberror ( "Unable to load max time for current request from IP: $ip" );
-
-	if ($lastPostTime + $kunena_config->floodprotection > $kunena_systime) {
-		echo _POST_TOPIC_FLOOD1 . ' ' . $kunena_config->floodprotection . ' ' . _POST_TOPIC_FLOOD2 . '<br />';
-		echo _POST_TOPIC_FLOOD3;
-		return;
 	}
 }
 
@@ -423,14 +423,16 @@ if ($kunena_my->id) {
 						// end insertion AlphaUserPoints
 
 
+						//clean up the message for review
+						$mailmessage = smile::purify ( stripslashes ( $message ) );
+
 						//Now manage the subscriptions (only if subscriptions are allowed)
 						if ($kunena_config->allowsubscriptions == 1 && $holdPost == 0) { //they're allowed
 							//get the proper user credentials for each subscription to this topic
 
-
-							//clean up the message
-							$mailmessage = smile::purify ( $message );
-							$kunena_db->setQuery ( "SELECT u.id, u.name, u.username, u.email FROM #__fb_subscriptions AS a" . " LEFT JOIN #__users AS u ON a.userid=u.id " . " WHERE u.block='0' AND a.thread='{$querythread}'" );
+							$kunena_db->setQuery ( "SELECT u.id, u.name, u.username, u.email FROM #__fb_subscriptions AS a"
+							. " LEFT JOIN #__users AS u ON a.userid=u.id "
+							. " WHERE u.block='0' AND a.thread='{$querythread}'" );
 
 							$subsList = $kunena_db->loadObjectList ();
 							check_dberror ( "Unable to load subscriptions." );
@@ -466,7 +468,7 @@ if ($kunena_my->id) {
 									$msg .= "URL: $LastPostUrl\n\n";
 									if ($kunena_config->mailfull == 1) {
 										$msg .= _GEN_MESSAGE . ":\n-----\n";
-										$msg .= stripslashes ( $mailmessage );
+										$msg .= $mailmessage;
 										$msg .= "\n-----";
 									}
 									$msg .= "\n\n";
@@ -485,28 +487,22 @@ if ($kunena_my->id) {
 						//Now manage the mail for moderator or admins (only if configured)
 						if ($kunena_config->mailmod == '1' || $kunena_config->mailadmin == '1') { //they're configured
 							//get the proper user credentials for each moderator for this forum
-							$sql = "SELECT * FROM #__users AS u";
-							if ($kunena_config->mailmod == 1) {
-								$sql .= " LEFT JOIN #__fb_moderation AS a";
-								$sql .= " ON a.userid=u.id";
-								$sql .= "  AND a.catid='{$catid}'";
-							}
-							$sql .= " WHERE u.block='0'";
-							$sql .= " AND (";
-							// helper for OR condition
-							$sql2 = '';
-							if ($kunena_config->mailmod == 1) {
-								$sql2 .= " a.userid IS NOT NULL";
-							}
-							if ($kunena_config->mailadmin == 1) {
-								if (JString::strlen ( $sql2 )) {
-									$sql2 .= " OR ";
-								}
-								$sql2 .= " u.gid IN (24, 25)";
-							}
-							$sql .= "" . $sql2 . ")";
+							$querysel = "SELECT u.id, u.name, u.username, u.email,"
+								." MAX(p.moderator='1' AND (m.catid IS NULL OR (c.moderated='1' AND m.catid={$catid}))) as moderator,"
+								." u.gid IN (24, 25) AS admin FROM #__users AS u"
+								." LEFT JOIN #__fb_users AS p ON u.id=p.userid"
+								." LEFT JOIN #__fb_moderation AS m ON u.id=m.userid"
+								." LEFT JOIN #__fb_categories AS c ON m.catid=c.id"
+								." WHERE u.block='0'";
 
-							$kunena_db->setQuery ( $sql );
+							$where = array();
+							if ($kunena_config->mailmod)
+								$where[] = " (p.moderator='1' AND (m.catid IS NULL OR (c.moderated='1' AND m.catid={$catid}))) ";
+							if ($kunena_config->mailadmin)
+								$where[] = " u.gid IN (24, 25) ";
+							if (count($where)) $query = $querysel. ' AND (' . implode(' OR ', $where) . ') GROUP BY u.id';
+
+							$kunena_db->setQuery ( $query );
 							$modsList = $kunena_db->loadObjectList ();
 							check_dberror ( "Unable to load moderators." );
 
@@ -525,7 +521,7 @@ if ($kunena_my->id) {
 									$msg .= "URL: $LastPostUrl\n\n";
 									if ($kunena_config->mailfull == 1) {
 										$msg .= _GEN_MESSAGE . ":\n-----\n";
-										$msg .= stripslashes ( $mailmessage );
+										$msg .= $mailmessage;
 										$msg .= "\n-----";
 									}
 									$msg .= "\n\n";

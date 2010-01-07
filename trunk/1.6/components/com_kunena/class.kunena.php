@@ -726,8 +726,11 @@ class CKunenaTools {
 		if (self::isAdmin($uid)) return true;
 		if (!isset($instances[$uid])) {
 			$kunena_db = &JFactory::getDBO();
-			$kunena_db->setQuery ("SELECT m.catid FROM #__fb_users AS u LEFT JOIN #__fb_moderation AS m ON u.userid=m.userid "
-				."LEFT JOIN #__fb_categories AS c ON m.catid=c.id WHERE u.moderator='1' AND (m.catid IS NULL OR c.moderated='1') AND u.userid='{$uid}'");
+			$kunena_db->setQuery ("SELECT m.catid FROM #__users AS u"
+				." LEFT JOIN #__fb_users AS p ON u.id=p.userid"
+				." LEFT JOIN #__fb_moderation AS m ON u.id=m.userid"
+				." LEFT JOIN #__fb_categories AS c ON m.catid=c.id"
+				." WHERE u.id='{$uid}' AND u.block='0' AND p.moderator='1' AND (m.catid IS NULL OR c.moderated='1')");
 			$instances[$uid] = $kunena_db->loadResultArray();
 			check_dberror("Unable to load moderation info for user $uid.");
 		}

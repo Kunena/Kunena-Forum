@@ -37,6 +37,9 @@ Kunena 1.6.0-DEV
 # [#19316] Fix double SQL calls, add checks for failed queries
 # [#18862] New thread is unread after posting it
 # [#19288] Fix regression: session expired on every page load
+# [#19321] Message text missing from moderator emails if there is no subscriptions
+# [#18994] Email to moderators does not send email to global moderators
+# [#19323] Flood protection should not block Subscribe and Favorite
 
 06-Jan-2010 Matias
 - [#19293] Remove deprecated configuration option: View=flat/thread (leftover code and cookie)

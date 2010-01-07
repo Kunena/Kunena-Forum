@@ -37,6 +37,7 @@ Kunena 1.6.0-DEV
 + [#19333] New datamodel table for category subscriptions
 + [#19333] New category subscriptions logic (w/o email notification)
 + [#19333] eMail notifications for New category subscriptions
+^ [#19342] Cleanup redirect after post, avoid intermetiate page
 
 07-Jan-2010 Xillibit
 # [#19029] If moderator edits the post, email address gets replaced

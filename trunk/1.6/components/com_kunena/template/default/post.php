@@ -464,6 +464,8 @@ if ($kunena_my->id) {
 							}
 						}
 
+						$redirectmsg = '';
+
 						//now try adding any new subscriptions if asked for by the poster
 						if ($subscribeMe == 1) {
 							if ($thread == 0) {
@@ -475,20 +477,18 @@ if ($kunena_my->id) {
 							$kunena_db->setQuery ( "INSERT INTO #__fb_subscriptions (thread,userid) VALUES ('$fb_thread','{$kunena_my->id}')" );
 
 							if (@$kunena_db->query ()) {
-								echo '<br /><br /><div align="center">' . _POST_SUBSCRIBED_TOPIC . '</div><br /><br />';
+								$redirectmsg .= _POST_SUBSCRIBED_TOPIC . '<br />';
 							} else {
-								echo '<br /><br /><div align="center">' . _POST_NO_SUBSCRIBED_TOPIC . '</div><br /><br />';
+								$redirectmsg .= _POST_NO_SUBSCRIBED_TOPIC . '<br />';
 							}
 						}
 
 						if ($holdPost == 1) {
-							echo '<br /><br /><div align="center">' . _POST_SUCCES_REVIEW . '</div><br /><br />';
-							echo CKunenaLink::GetLatestPostAutoRedirectHTML ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid );
-
+							$redirectmsg .= _POST_SUCCES_REVIEW;
 						} else {
-							echo '<br /><br /><div align="center">' . _POST_SUCCESS_POSTED . '</div><br /><br />';
-							echo CKunenaLink::GetLatestPostAutoRedirectHTML ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid );
+							$redirectmsg .= _POST_SUCCESS_POSTED;
 						}
+						$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid), $redirectmsg );
 					}
 				}
 			}

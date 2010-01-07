@@ -35,6 +35,7 @@ Kunena 1.6.0-DEV
 
 07-Jan-2010 fxstein
 + [#19333] New datamodel table for category subscriptions
++ [#19333] New category subscriptions logic (w/o email notification)
 
 07-Jan-2010 Xillibit
 # [#19029] If moderator edits the post, email address gets replaced

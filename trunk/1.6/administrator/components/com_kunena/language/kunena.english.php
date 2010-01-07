@@ -26,6 +26,12 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.6.0
 
+// Category subscriptions
+define('_VIEW_SUBSCRIBECATTXT', 'Subscribe to this category and get notified by mail about new posts');
+define('_VIEW_UNSUBSCRIBECATTXT', 'Unsubscribe from this category');
+define('_GEN_CATEGORY_SUBCRIBED', 'You have been subscribed to this category and will get notified by mail about new posts');
+define('_GEN_CATEGORY_UNSUBCRIBED', 'You have been unsubscribed from this category');
+
 // SVN installer
 define('_KUNENA_SVN_INSTALL', 'SVN Install');
 

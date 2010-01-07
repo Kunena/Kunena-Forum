@@ -217,18 +217,19 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 			$thread_reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $thread, isset ( $kunena_icons ['topicreply'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['topicreply'] . '" alt="' . _GEN_POST_REPLY . '" title="' . _GEN_POST_REPLY . '" border="0" />' : _GEN_POST_REPLY );
 		}
 
+		// Thread Subscription
 		if ($fb_cansubscribe == 1) {
 			// this user is allowed to subscribe - check performed further up to eliminate duplicate checks
 			// for top and bottom navigation
 			$thread_subscribe = CKunenaLink::GetTopicPostLink ( 'subscribe', $catid, $id, isset ( $kunena_icons ['subscribe'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['subscribe'] . '" alt="' . _VIEW_SUBSCRIBETXT . '" title="' . _VIEW_SUBSCRIBETXT . '" border="0" />' : _VIEW_SUBSCRIBETXT );
 		}
 
-		//START: FAVORITES
 		if ($kunena_my->id != 0 && $kunena_config->allowsubscriptions && $fb_cansubscribe == 0) {
 			// this user is allowed to unsubscribe
 			$thread_subscribe = CKunenaLink::GetTopicPostLink ( 'unsubscribe', $catid, $id, isset ( $kunena_icons ['unsubscribe'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unsubscribe'] . '" alt="' . _VIEW_UNSUBSCRIBETXT . '" title="' . _VIEW_UNSUBSCRIBETXT . '" border="0" />' : _VIEW_UNSUBSCRIBETXT );
 		}
 
+		//START: FAVORITES
 		if ($fb_canfavorite == 1) {
 			// this user is allowed to add a favorite - check performed further up to eliminate duplicate checks
 			// for top and bottom navigation

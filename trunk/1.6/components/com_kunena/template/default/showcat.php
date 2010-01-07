@@ -167,8 +167,14 @@ if (in_array ( $catid, $allow_forum )) {
 	?>
 <?php
 
-	//Get the category name for breadcrumb
-	$kunena_db->setQuery ( "SELECT * FROM #__fb_categories WHERE id='{$catid}'" );
+	//Get the category information
+	$query = "SELECT c.*, s.catid AS subscribeid
+				FROM #__fb_categories AS c
+				LEFT JOIN #__fb_subscriptions_categories AS s ON c.id = s.catid
+				AND s.userid = '{$kunena_my->id}'
+				WHERE c.id='$catid'";
+
+	$kunena_db->setQuery ( $query );
 	$objCatInfo = $kunena_db->loadObject ();
 	check_dberror ( 'Unable to get categories.' );
 	//Get the Category's parent category name for breadcrumb
@@ -180,6 +186,14 @@ if (in_array ( $catid, $allow_forum )) {
 	$this->kunena_forum_locked = $objCatInfo->locked;
 	//check if this forum is subject to review
 	$this->kunena_forum_reviewed = $objCatInfo->review;
+
+	//Perform subscriptions check
+	$kunena_cansubscribecat = 0;
+	if ($kunena_config->allowsubscriptions && ("" != $kunena_my->id || 0 != $kunena_my->id)) {
+		if ($objCatInfo->subscribeid == '') {
+			$kunena_cansubscribecat = 1;
+		}
+	}
 
 	//meta description and keywords
 	$metaKeys = kunena_htmlspecialchars ( stripslashes ( _KUNENA_CATEGORIES . ", {$objCatParentInfo->name}, {$objCatInfo->name}, {$kunena_config->board_title}, " . $kunena_app->getCfg ( 'sitename' ) ) );
@@ -241,12 +255,26 @@ if (in_array ( $catid, $allow_forum )) {
 		$forum_markread = CKunenaLink::GetCategoryLink ( 'markThisRead', $catid, isset ( $kunena_icons ['markThisForumRead'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['markThisForumRead'] . '" alt="' . _GEN_MARK_THIS_FORUM_READ . '" title="' . _GEN_MARK_THIS_FORUM_READ . '" border="0" />' : _GEN_MARK_THIS_FORUM_READ, $rel = 'nofollow' );
 	}
 
-	if (isset ( $forum_new ) || isset ( $forum_markread )) {
+		// Thread Subscription
+	if ($kunena_cansubscribecat == 1) {
+		// this user is allowed to subscribe - check performed further up to eliminate duplicate checks
+		// for top and bottom navigation
+		$thread_subscribecat = CKunenaLink::GetCategoryLink ( 'subscribecat', $catid, isset ( $kunena_icons ['subscribe'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['subscribe'] . '" alt="' . _VIEW_SUBSCRIBECATTXT . '" title="' . _VIEW_SUBSCRIBECATTXT . '" border="0" />' : _VIEW_SUBSCRIBECATTXT );
+	}
+
+	if ($kunena_my->id != 0 && $kunena_config->allowsubscriptions && $kunena_cansubscribecat == 0) {
+		// this user is allowed to unsubscribe
+		$thread_subscribecat = CKunenaLink::GetCategoryLink ( 'unsubscribecat', $catid, isset ( $kunena_icons ['unsubscribe'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unsubscribe'] . '" alt="' . _VIEW_UNSUBSCRIBECATTXT . '" title="' . _VIEW_UNSUBSCRIBECATTXT . '" border="0" />' : _VIEW_UNSUBSCRIBECATTXT );
+	}
+
+	if (isset ( $forum_new ) || isset ( $forum_markread ) || isset ( $thread_subscribecat ) ) {
 		echo '<div class="fb_message_buttons_row" style="text-align: left;">';
 		if (isset ( $forum_new ))
 			echo $forum_new;
 		if (isset ( $forum_markread ))
 			echo ' ' . $forum_markread;
+		if (isset ( $thread_subscribecat ))
+			echo ' ' . $thread_subscribecat;
 		echo '</div>';
 	}
 	?>

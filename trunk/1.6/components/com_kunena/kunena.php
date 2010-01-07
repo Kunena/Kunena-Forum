@@ -646,6 +646,39 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			break;
 
 		#########################################################################################
+		case 'subscribecat' :
+
+			$success_msg = '';
+
+			if ( $catid && $kunena_my->id ) {
+				$query = "INSERT INTO #__fb_subscriptions_categories (catid, userid) VALUES ('$catid','$kunena_my->id')";
+				$kunena_db->setQuery ( $query );
+
+				if (@$kunena_db->query () && $kunena_db->getAffectedRows () == 1) {
+					$success_msg = _GEN_CATEGORY_SUBCRIBED;
+				}
+			}
+
+			$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $catid ) ), $success_msg );
+			break;
+
+		#########################################################################################
+		case 'unsubscribecat' :
+
+			$success_msg = '';
+			if ($catid && $kunena_my->id ) {
+				$query = "DELETE FROM #__fb_subscriptions_categories WHERE catid=$catid AND userid=$kunena_my->id";
+				$kunena_db->setQuery ( $query );
+
+				if ($kunena_db->query () && $kunena_db->getAffectedRows () == 1) {
+					$success_msg = _GEN_CATEGORY_UNSUBCRIBED;
+				}
+			}
+
+			$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $catid ) ), $success_msg );
+			break;
+
+		#########################################################################################
 		case 'karma' :
 			include (KUNENA_PATH_LIB . DS . 'kunena.karma.php');
 

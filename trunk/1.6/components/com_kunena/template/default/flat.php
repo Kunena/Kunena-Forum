@@ -34,7 +34,6 @@ $kunena_my = &JFactory::getUser ();
 
 // Func Check
 
-
 $funclatest = false;
 $funcmylatest = false;
 $funcnoreplies = false;

@@ -422,119 +422,63 @@ if ($kunena_my->id) {
 						}
 						// end insertion AlphaUserPoints
 
+						//get all subscriptions and moderators
+						$emailToList = CKunenaTools::getEMailToList($catid, $querythread, $kunena_config->allowsubscriptions && !$holdPost,
+							$kunena_config->mailmod, $kunena_config->mailadmin, $kunena_my->id);
 
-						//clean up the message for review
-						$mailmessage = smile::purify ( stripslashes ( $message ) );
+						if (count($emailToList)) {
+							// clean up the message for review
+							$mailmessage = smile::purify ( stripslashes ( $message ) );
 
-						//Now manage the subscriptions (only if subscriptions are allowed)
-						if ($kunena_config->allowsubscriptions == 1 && $holdPost == 0) { //they're allowed
-							//get the proper user credentials for each subscription to this topic
-
-							$kunena_db->setQuery ( "SELECT u.id, u.name, u.username, u.email FROM #__fb_subscriptions AS a"
-							. " LEFT JOIN #__users AS u ON a.userid=u.id "
-							. " WHERE u.block='0' AND a.thread='{$querythread}'" );
-
-							$subsList = $kunena_db->loadObjectList ();
-							check_dberror ( "Unable to load subscriptions." );
-
-							if (count ( $subsList ) > 0) { //we got more than 0 subscriptions
-								$_catobj = new jbCategory ( $kunena_db, $catid );
-								foreach ( $subsList as $subs ) {
-									//check for permission
-									if ($subs->id) {
-										$kunena_acl = &JFactory::getACL ();
-
-										$_arogrp = $kunena_acl->getAroGroup ( $subs->id );
-										$_isadm = CKunenaTools::isAdmin ();
-									}
-									if (! CKunenaTools::isModerator ( $subs->id, $catid )) {
-										$allow_forum = array ();
-										if (! fb_has_read_permission ( $_catobj, $allow_forum, $_arogrp->id, $kunena_acl )) {
-											//maybe remove record from subscription list?
-											continue;
-										}
-									}
-
-									$mailsender = stripslashes ( $board_title ) . " " . _GEN_FORUM;
-
-									$mailsubject = "[" . stripslashes ( $board_title ) . " " . _GEN_FORUM . "] " . stripslashes ( $messagesubject ) . " (" . stripslashes ( $msg_cat->catname ) . ")";
-
-									$msg = "$subs->name,\n\n";
-									$msg .= JString::trim ( _KUNENA_POST_EMAIL_NOTIFICATION1 ) . " " . stripslashes ( $board_title ) . " " . _GEN_FORUM . "\n\n";
-									$msg .= _GEN_SUBJECT . ": " . stripslashes ( $messagesubject ) . "\n";
-									$msg .= _GEN_FORUM . ": " . stripslashes ( $msg_cat->catname ) . "\n";
-									$msg .= _VIEW_POSTED . ": " . stripslashes ( $authorname ) . "\n\n";
-									$msg .= _KUNENA_POST_EMAIL_NOTIFICATION2 . '\n';
-									$msg .= "URL: $LastPostUrl\n\n";
-									if ($kunena_config->mailfull == 1) {
-										$msg .= _GEN_MESSAGE . ":\n-----\n";
-										$msg .= $mailmessage;
-										$msg .= "\n-----";
-									}
-									$msg .= "\n\n";
-									$msg .= _KUNENA_POST_EMAIL_NOTIFICATION3 . '\n';
-									$msg .= "\n\n\n\n";
-									$msg .= "** Powered by Kunena! - http://www.Kunena.com **";
-
-									if ($ip != "127.0.0.1" && $kunena_my->id != $subs->id) { //don't mail yourself
-										JUtility::sendMail ( $kunena_config->email, $mailsender, $subs->email, $mailsubject, $msg );
+							$_catobj = new jbCategory ( $kunena_db, $catid );
+							foreach ( $emailToList as $emailTo ) {
+								//check for permission
+								$kunena_acl = &JFactory::getACL ();
+								$_arogrp = $kunena_acl->getAroGroup ( $emailTo->id );
+								if ( ! $emailTo->moderator && ! $emailTo->admin ) {
+									$allowedArray = array ();
+									// TODO: Maybe we should do this inside CKunenaTools::getEMailToList()
+									if (! fb_has_read_permission ( $_catobj, $allowedArray, $_arogrp->id, $kunena_acl )) {
+										// TODO: Maybe we should remove record from subscription list?
+										continue;
 									}
 								}
-								unset ( $_catobj );
-							}
-						}
-
-						//Now manage the mail for moderator or admins (only if configured)
-						if ($kunena_config->mailmod == '1' || $kunena_config->mailadmin == '1') { //they're configured
-							//get the proper user credentials for each moderator for this forum
-							$querysel = "SELECT u.id, u.name, u.username, u.email,"
-								." MAX(p.moderator='1' AND (m.catid IS NULL OR (c.moderated='1' AND m.catid={$catid}))) as moderator,"
-								." u.gid IN (24, 25) AS admin FROM #__users AS u"
-								." LEFT JOIN #__fb_users AS p ON u.id=p.userid"
-								." LEFT JOIN #__fb_moderation AS m ON u.id=m.userid"
-								." LEFT JOIN #__fb_categories AS c ON m.catid=c.id"
-								." WHERE u.block='0'";
-
-							$where = array();
-							if ($kunena_config->mailmod)
-								$where[] = " (p.moderator='1' AND (m.catid IS NULL OR (c.moderated='1' AND m.catid={$catid}))) ";
-							if ($kunena_config->mailadmin)
-								$where[] = " u.gid IN (24, 25) ";
-							if (count($where)) $query = $querysel. ' AND (' . implode(' OR ', $where) . ') GROUP BY u.id';
-
-							$kunena_db->setQuery ( $query );
-							$modsList = $kunena_db->loadObjectList ();
-							check_dberror ( "Unable to load moderators." );
-
-							if (count ( $modsList ) > 0) { //we got more than 0 moderators eligible for email
-								foreach ( $modsList as $mods ) {
-									$mailsender = stripslashes ( $board_title ) . " " . _GEN_FORUM;
-
-									$mailsubject = "[" . stripslashes ( $board_title ) . " " . _GEN_FORUM . "] " . stripslashes ( $messagesubject ) . " (" . stripslashes ( $msg_cat->catname ) . ")";
-
-									$msg = "$mods->name,\n\n";
-									$msg .= JString::trim ( _KUNENA_POST_EMAIL_MOD1 ) . " " . stripslashes ( $board_title ) . " " . JString::trim ( _GEN_FORUM ) . "\n\n";
-									$msg .= _GEN_SUBJECT . ": " . stripslashes ( $messagesubject ) . "\n";
-									$msg .= _GEN_FORUM . ": " . stripslashes ( $msg_cat->catname ) . "\n";
-									$msg .= _VIEW_POSTED . ": " . stripslashes ( $authorname ) . "\n\n";
-									$msg .= _KUNENA_POST_EMAIL_MOD2 . '\n';
-									$msg .= "URL: $LastPostUrl\n\n";
-									if ($kunena_config->mailfull == 1) {
-										$msg .= _GEN_MESSAGE . ":\n-----\n";
-										$msg .= $mailmessage;
-										$msg .= "\n-----";
-									}
-									$msg .= "\n\n";
-									$msg .= _KUNENA_POST_EMAIL_NOTIFICATION3 . '\n';
-									$msg .= "\n\n\n\n";
-									$msg .= "** Powered by Kunena! - http://www.Kunena.com **";
-
-									if ($ip != "127.0.0.1" && $kunena_my->id != $mods->id) { //don't mail yourself
-										JUtility::sendMail ( $kunena_config->email, $mailsender, $mods->email, $mailsubject, $msg );
-									}
+								if ($emailTo->subscription) {
+									$msg1 = _KUNENA_POST_EMAIL_NOTIFICATION1;
+									$msg2 = _KUNENA_POST_EMAIL_NOTIFICATION2;
+								} else {
+									$msg1 = _KUNENA_POST_EMAIL_MOD1;
+									$msg2 = _KUNENA_POST_EMAIL_MOD2;
 								}
+
+								$mailsender = stripslashes ( $board_title ) . " " . _GEN_FORUM;
+								$mailsubject = "[" . stripslashes ( $board_title ) . " " . _GEN_FORUM . "] " . stripslashes ( $messagesubject ) . " (" . stripslashes ( $msg_cat->catname ) . ")";
+
+								$msg = "$emailTo->name,\n\n";
+								$msg .=  $msg1 . " " . stripslashes ( $board_title ) . " " . _GEN_FORUM . "\n\n";
+								$msg .= _GEN_SUBJECT . ": " . stripslashes ( $messagesubject ) . "\n";
+								$msg .= _GEN_FORUM . ": " . stripslashes ( $msg_cat->catname ) . "\n";
+								$msg .= _VIEW_POSTED . ": " . stripslashes ( $authorname ) . "\n\n";
+								$msg .= $msg2 . "\n";
+								$msg .= "URL: $LastPostUrl\n\n";
+								if ($kunena_config->mailfull == 1) {
+									$msg .= _GEN_MESSAGE . ":\n-----\n";
+									$msg .= $mailmessage;
+									$msg .= "\n-----";
+								}
+								$msg .= "\n\n";
+								$msg .= _KUNENA_POST_EMAIL_NOTIFICATION3 . "\n";
+								$msg .= "\n\n\n\n";
+								$msg .= "** Powered by Kunena! - http://www.Kunena.com **";
+
+								if ($ip != "127.0.0.1") {
+									JUtility::sendMail ( $kunena_config->email, $mailsender, $emailTo->email, $mailsubject, $msg );
+								}
+								echo "$mailsubject<br/><pre>$msg</pre>";
 							}
+							unset ( $_catobj );
 						}
+
 						//now try adding any new subscriptions if asked for by the poster
 						if ($subscribeMe == 1) {
 							if ($thread == 0) {

@@ -744,6 +744,39 @@ class CKunenaTools {
 		return false;
 	}
 
+	function getEMailToList($catid, $thread, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0') {
+		$catid = intval ( $catid );
+		$thread = intval ( $thread );
+		$subsList = array ();
+		if (! $catid || ! $thread)
+			return $subsList;
+
+		$querysel = "SELECT u.id, u.name, u.username, u.email,
+					MAX(s.thread IS NOT NULL) as subscription,
+					MAX(p.moderator='1' AND (m.catid IS NULL OR (c.moderated='1' AND m.catid={$catid}))) as moderator,
+					MAX(u.gid IN (24, 25)) AS admin FROM #__users AS u
+					LEFT JOIN #__fb_users AS p ON u.id=p.userid
+					LEFT JOIN #__fb_moderation AS m ON u.id=m.userid
+					LEFT JOIN #__fb_categories AS c ON m.catid=c.id
+					LEFT JOIN #__fb_subscriptions AS s ON u.id=s.userid AND s.thread={$thread}";
+
+		$where = array ();
+		if ($subscriptions)
+			$where [] = " (s.thread={$thread}) ";
+		if ($moderators)
+			$where [] = " (p.moderator=1 AND (m.catid IS NULL OR (c.moderated=1 AND m.catid={$catid}))) ";
+		if ($admins)
+			$where [] = " (u.gid IN (24, 25)) ";
+		if (count ( $where )) {
+			$query = $querysel . " WHERE u.block=0 AND u.id NOT IN ({$excludeList}) AND (" . implode ( ' OR ', $where ) . ") GROUP BY u.id";
+			$kunena_db = &JFactory::getDBO ();
+			$kunena_db->setQuery ( $query );
+			$subsList = $kunena_db->loadObjectList ();
+			check_dberror ( "Unable to load email list." );
+		}
+		return $subsList;
+	}
+
     function fbMovePosts($catid, $isMod, $return) {
     	$kunena_app =& JFactory::getApplication();
         $kunena_db = &JFactory::getDBO();

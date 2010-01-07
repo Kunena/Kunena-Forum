@@ -43,6 +43,7 @@ Kunena 1.6.0-DEV
 # [#19321] Message text missing from moderator emails if there is no subscriptions
 # [#18994] Email to moderators does not send email to global moderators
 # [#19323] Flood protection should not block Subscribe and Favorite
+# [#18903] Moderator and subscribed to topic: user will receive two emails
 
 06-Jan-2010 Matias
 - [#19293] Remove deprecated configuration option: View=flat/thread (leftover code and cookie)

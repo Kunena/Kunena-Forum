@@ -747,9 +747,39 @@ class CKunenaTools {
 	function getEMailToList($catid, $thread, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0') {
 		$catid = intval ( $catid );
 		$thread = intval ( $thread );
-		$subsList = array ();
 		if (! $catid || ! $thread)
-			return $subsList;
+			return array();
+
+		// Make sure that category exists and fetch access info
+		$kunena_db = &JFactory::getDBO ();
+		$query = "SELECT pub_access, pub_recurse, admin_access, admin_recurse FROM #__fb_categories WHERE id={$catid}";
+		$kunena_db->setQuery ($query);
+		$access = $kunena_db->loadObject ();
+		check_dberror ( "Unable to load category access rights." );
+		if (!$access) return array();
+
+		$arogroups = '';
+		if ($subscriptions) {
+			// Get all allowed Joomla groups to make sure that subscription is valid
+			$kunena_acl = &JFactory::getACL ();
+			$public = array ();
+			$admin = array ();
+			if ($access->pub_access > 0) {
+				if ($access->pub_recurse) {
+					$public = $kunena_acl->get_group_children ( $access->pub_access, 'ARO', 'RECURSE' );
+				}
+				$public [] = $access->pub_access;
+			}
+			if ($access->admin_access > 0) {
+				if ($access->admin_recurse) {
+					$admin = $kunena_acl->get_group_children ( $access->admin_access, 'ARO', 'RECURSE' );
+				}
+				$admin [] = $access->admin_access;
+			}
+			$arogroups = implode ( ',', array_unique ( array_merge ( $public, $admin ) ) );
+			if ($arogroups)
+				$arogroups = "AND u.gid IN ({$arogroups})";
+		}
 
 		$querysel = "SELECT u.id, u.name, u.username, u.email,
 					MAX(s.thread IS NOT NULL) as subscription,
@@ -762,14 +792,15 @@ class CKunenaTools {
 
 		$where = array ();
 		if ($subscriptions)
-			$where [] = " (s.thread={$thread}) ";
+			$where [] = " ( s.thread={$thread} {$arogroups} ) ";
 		if ($moderators)
-			$where [] = " (p.moderator=1 AND (m.catid IS NULL OR (c.moderated=1 AND m.catid={$catid}))) ";
+			$where [] = " ( p.moderator=1 AND ( m.catid IS NULL OR ( c.moderated=1 AND m.catid={$catid} ) ) ) ";
 		if ($admins)
-			$where [] = " (u.gid IN (24, 25)) ";
+			$where [] = " ( u.gid IN (24, 25) ) ";
+
+		$subsList = array ();
 		if (count ( $where )) {
 			$query = $querysel . " WHERE u.block=0 AND u.id NOT IN ({$excludeList}) AND (" . implode ( ' OR ', $where ) . ") GROUP BY u.id";
-			$kunena_db = &JFactory::getDBO ();
 			$kunena_db->setQuery ( $query );
 			$subsList = $kunena_db->loadObjectList ();
 			check_dberror ( "Unable to load email list." );

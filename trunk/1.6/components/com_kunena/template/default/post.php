@@ -56,8 +56,9 @@ $action = JRequest::getCmd ( 'action', '' );
 
 if ($id || $parentid) {
 	// Check that message and category exists and fill some information for later use
-	$query = "SELECT m.*, t.message, c.name AS catname, c.review, c.class_sfx, p.id AS poll_id
+	$query = "SELECT m.*, (mm.locked OR c.locked) AS locked, t.message, c.name AS catname, c.pub_access, c.review, c.class_sfx, p.id AS poll_id
 				FROM #__fb_messages AS m
+				INNER JOIN #__fb_messages AS mm ON mm.id=m.thread
 				INNER JOIN #__fb_messages_text AS t ON t.mesid=m.id
 				INNER JOIN #__fb_categories AS c ON c.id=m.catid
 				LEFT JOIN #__fb_polls AS p ON m.id=p.threadid
@@ -71,13 +72,13 @@ if ($id || $parentid) {
 		echo _POST_INVALID;
 		return;
 	}
-	// Make sure that category id is from the message (post may be moved)
+	// Make sure that category id is from the message (post may have been moved)
 	if ($do != 'domovepost' && $do != 'domergepost' && $do != 'dosplit') {
 		$catid = $msg_cat->catid;
 	}
 } else {
 	// Check that category exists and fill some information for later use
-	$kunena_db->setQuery ( "SELECT 0 as id, id AS catid, name AS catname, review, class_sfx FROM #__fb_categories WHERE id='{$catid}'" );
+	$kunena_db->setQuery ( "SELECT 0 AS id, id AS catid, name AS catname, pub_access, locked, review, class_sfx FROM #__fb_categories WHERE id='{$catid}'" );
 	$msg_cat = $kunena_db->loadObject ();
 	check_dberror ( 'Unable to load category.' );
 	if (! $msg_cat) {
@@ -169,7 +170,7 @@ if ($kunena_my->id) {
 			require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'pathway.php');
 		}
 
-		if ($action == "post" && hasPostPermission ( $kunena_db, $catid, $parentid, $kunena_my->id, $kunena_config->pubwrite, CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
+		if ($action == "post" && (!$msg_cat->locked || CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
 			?>
 
 		<table border="0" cellspacing="1" cellpadding="3" width="70%"
@@ -265,8 +266,6 @@ if ($kunena_my->id) {
 						$kunena_db->setQuery ( "INSERT INTO #__fb_messages_text (mesid,message) VALUES('$pid'," . $kunena_db->quote ( $message ) . ")" );
 						$kunena_db->query ();
 
-						$kunena_this_cat = new jbCategory ( $kunena_db, $catid );
-
 						// A couple more tasks required...
 						if ($thread == 0) {
 							//if thread was zero, we now know to which id it belongs, so we can determine the thread and update it
@@ -280,7 +279,7 @@ if ($kunena_my->id) {
 								CuserPoints::assignPoint ( 'com_kunena.thread.new' );
 
 								// Check for permisions of the current category - activity only if public
-								if ($kunena_this_cat->getPubAccess () == 0) {
+								if ($msg_cat->pub_access == 0) {
 									//activity stream  - new post
 									$JSPostLink = CKunenaLink::GetThreadPageURL ( $kunena_config, 'view', $catid, $pid, 1 );
 
@@ -311,7 +310,7 @@ if ($kunena_my->id) {
 								CuserPoints::assignPoint ( 'com_kunena.thread.reply' );
 
 								// Check for permisions of the current category - activity only if public
-								if ($kunena_this_cat->getPubAccess () == 0) {
+								if ($msg_cat->pub_access == 0) {
 									//activity stream - reply post
 									$JSPostLink = CKunenaLink::GetThreadPageURL ( $kunena_config, 'view', $catid, $thread, 1 );
 
@@ -430,19 +429,7 @@ if ($kunena_my->id) {
 							// clean up the message for review
 							$mailmessage = smile::purify ( stripslashes ( $message ) );
 
-							$_catobj = new jbCategory ( $kunena_db, $catid );
 							foreach ( $emailToList as $emailTo ) {
-								//check for permission
-								$kunena_acl = &JFactory::getACL ();
-								$_arogrp = $kunena_acl->getAroGroup ( $emailTo->id );
-								if ( ! $emailTo->moderator && ! $emailTo->admin ) {
-									$allowedArray = array ();
-									// TODO: Maybe we should do this inside CKunenaTools::getEMailToList()
-									if (! fb_has_read_permission ( $_catobj, $allowedArray, $_arogrp->id, $kunena_acl )) {
-										// TODO: Maybe we should remove record from subscription list?
-										continue;
-									}
-								}
 								if ($emailTo->subscription) {
 									$msg1 = _KUNENA_POST_EMAIL_NOTIFICATION1;
 									$msg2 = _KUNENA_POST_EMAIL_NOTIFICATION2;
@@ -474,9 +461,7 @@ if ($kunena_my->id) {
 								if ($ip != "127.0.0.1") {
 									JUtility::sendMail ( $kunena_config->email, $mailsender, $emailTo->email, $mailsubject, $msg );
 								}
-								echo "$mailsubject<br/><pre>$msg</pre>";
 							}
-							unset ( $_catobj );
 						}
 
 						//now try adding any new subscriptions if asked for by the poster
@@ -517,7 +502,7 @@ if ($kunena_my->id) {
 			echo '<br /><br /><div align="center">' . _SUBMIT_CANCEL . "</div><br />";
 			echo CKunenaLink::GetLatestPostAutoRedirectHTML ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid );
 		} else {
-			if (($do == 'quote' || $do == 'reply') && hasPostPermission ( $kunena_db, $catid, $id, $kunena_my->id, $kunena_config->pubwrite, CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
+			if (($do == 'quote' || $do == 'reply')  && (!$msg_cat->locked || CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
 				$parentid = 0;
 				if ($msg_cat->id > 0) {
 					$message = $msg_cat;
@@ -548,7 +533,7 @@ if ($kunena_my->id) {
 				} else {
 					include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'write.html.php');
 				}
-			} else if ($do == "newFromBot" && hasPostPermission ( $kunena_db, $catid, $id, $kunena_my->id, $kunena_config->pubwrite, CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
+			} else if ($do == "newFromBot" && (!$msg_cat->locked || CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
 				// The Mosbot "discuss on forums" has detected an unexisting thread and wants to create one
 				$parentid = 0;
 				$id = ( int ) $id;
@@ -581,7 +566,7 @@ if ($kunena_my->id) {
 				} else {
 					include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'write.html.php');
 				}
-			} else if ($do == "edit" && hasPostPermission ( $kunena_db, $catid, $id, $kunena_my->id, $kunena_config->pubwrite, CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
+			} else if ($do == "edit" && (!$msg_cat->locked || CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
 				$message = $msg_cat;
 
 				$allowEdit = 0;
@@ -616,7 +601,7 @@ if ($kunena_my->id) {
 
 					//save the options for query after and load the text options, the number options is for create the fields in the form after
                 	if ($message->poll_id) {
-						$polldatasedit = CKunenaPolls::get_polls_datas($id);
+						$polldatasedit = CKunenaPolls::get_poll_data($id);
                 	}
 
 					//get the writing stuff in:
@@ -628,7 +613,7 @@ if ($kunena_my->id) {
 				} else {
 					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
 				}
-			} else if ($do == "editpostnow") {
+			} else if ($do == "editpostnow" && (!$msg_cat->locked || CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
 				$modified_reason = addslashes ( JRequest::getVar ( "modified_reason", null ) );
 				$modified_by = $kunena_my->id;
 				$modified_time = CKunenaTools::fbGetInternalTime ();
@@ -1097,62 +1082,6 @@ else if ($do == "move") {
 </table>
 
 <?php
-/**
- * Checks if a user has postpermission in given thread
- * @param database object
- * @param int
- * @param int
- * @param boolean
- * @param boolean
- */
-function hasPostPermission($kunena_db, $catid, $id, $userid, $pubwrite, $ismod) {
-	$kunena_config = & CKunenaConfig::getInstance ();
-
-	$topicLock = 0;
-	if ($id != 0) {
-		$kunena_db->setQuery ( "SELECT thread FROM #__fb_messages WHERE id='{$id}'" );
-		$topicID = $kunena_db->loadResult ();
-		$lockedWhat = _GEN_TOPIC;
-
-		if ($topicID != 0) //message replied to is not the topic post; check if the topic post itself is locked
-{
-			$sql = "SELECT locked FROM #__fb_messages WHERE id='{$topicID}'";
-		} else {
-			$sql = "SELECT locked FROM #__fb_messages WHERE id='{$id}'";
-		}
-
-		$kunena_db->setQuery ( $sql );
-		$topicLock = $kunena_db->loadResult ();
-	}
-
-	if ($topicLock == 0) { //topic not locked; check if forum is locked
-		$kunena_db->setQuery ( "SELECT locked FROM #__fb_categories WHERE id='{$catid}'" );
-		$topicLock = $kunena_db->loadResult ();
-		$lockedWhat = _GEN_FORUM;
-	}
-
-	if (($userid != 0 || $pubwrite) && ($topicLock == 0 || $ismod)) {
-		return 1;
-	} else {
-		//user is not allowed to write a post
-		if ($topicLock) {
-			echo "<p align=\"center\">$lockedWhat " . _POST_LOCKED . "<br />";
-			echo _POST_NO_NEW . "<br /><br /></p>";
-		} else {
-			echo "<p align=\"center\">";
-			echo _POST_NO_PUBACCESS1 . "<br />";
-			echo _POST_NO_PUBACCESS2 . "<br /><br />";
-
-			if ($kunena_config->fb_profile == 'cb') {
-				echo '<a href="' . CKunenaCBProfile::getRegisterURL () . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
-			} else {
-				echo '<a href="' . JRoute::_ ( 'index.php?option=com_registration&amp;view=register' ) . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
-			}
-		}
-
-		return 0;
-	}
-}
 /**
  * Function to delete posts
  *

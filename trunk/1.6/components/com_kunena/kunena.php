@@ -220,8 +220,6 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'layout.php');
 	}
 
-	require_once (KUNENA_PATH_LIB . DS . 'kunena.permissions.php');
-	require_once (KUNENA_PATH_LIB . DS . 'kunena.category.class.php');
 	require_once (JPATH_BASE . '/libraries/joomla/template/template.php');
 
 	if ($func == '') { // Set default start page as per config settings

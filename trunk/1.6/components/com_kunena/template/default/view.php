@@ -121,26 +121,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 			$kunena_app->close ();
 		}
 
-		if ($kunena_my->id) {
-			//mark this topic as read
-			$kunena_db->setQuery ( "SELECT readtopics FROM #__fb_sessions WHERE userid='{$kunena_my->id}'" );
-			$readTopics = $kunena_db->loadResult ();
-
-			if ($readTopics == "") {
-				$readTopics = $thread;
-			} else {
-				//get all readTopics in an array
-				$_read_topics = @explode ( ',', $readTopics );
-
-				if (! @in_array ( $thread, $_read_topics )) {
-					$readTopics .= "," . $thread;
-				}
-			}
-
-			$kunena_db->setQuery ( "UPDATE #__fb_sessions SET readtopics='{$readTopics}' WHERE userid='{$kunena_my->id}'" );
-			$kunena_db->query ();
-			check_dberror("Unable to update session.");
-		}
+		CKunenaTools::markTopicRead($thread, $kunena_my->id);
 
 		//update the hits counter for this topic & exclude the owner
 		if ($kunena_my->id == 0 || $this_message->userid != $kunena_my->id) {

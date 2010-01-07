@@ -569,6 +569,32 @@ class CKunenaTools {
         return;
         }
 
+	function markTopicRead($thread, $userid) {
+		$thread = intval ( $thread );
+		$userid = intval ( $userid );
+		if (! $userid || ! $thread)
+			return;
+
+		$kunena_db = &JFactory::getDBO ();
+		$kunena_db->setQuery ( "SELECT readtopics FROM #__fb_sessions WHERE userid='{$userid}'" );
+		$readTopics = $kunena_db->loadResult ();
+		check_dberror ( "Unable to fetch readtopics from session." );
+
+		$readTopics = explode ( ',', $readTopics );
+		if (! in_array ( $thread, $readTopics )) {
+			$readTopics[] = $thread;
+			$readTopics = implode ( ',', $readTopics );
+		} else {
+			$readTopics = 0;
+		}
+
+		if ($readTopics) {
+			$kunena_db->setQuery ( "UPDATE #__fb_sessions SET readtopics='{$readTopics}' WHERE userid='{$userid}'" );
+			$kunena_db->query ();
+			check_dberror ( "Unable to update session." );
+		}
+	}
+
     function showBulkActionCats($disabled = 1) {
         $kunena_db = &JFactory::getDBO();
 

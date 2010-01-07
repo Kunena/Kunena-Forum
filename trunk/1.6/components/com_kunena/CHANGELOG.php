@@ -35,6 +35,7 @@ Kunena 1.6.0-DEV
 
 07-Jan-2010 Matias
 # [#19316] Fix double SQL calls, add checks for failed queries
+# [#18862] New thread is unread after posting it
 
 06-Jan-2010 Matias
 - [#19293] Remove deprecated configuration option: View=flat/thread (leftover code and cookie)

@@ -135,8 +135,7 @@ if ($kunena_config->floodprotection && $do != "edit" && ! $kunena_is_admin) {
 	check_dberror ( "Unable to load max time for current request from IP: $ip" );
 
 	if ($lastPostTime + $kunena_config->floodprotection > $kunena_systime) {
-		echo _POST_TOPIC_FLOOD1;
-		echo $kunena_config->floodprotection . " " . _POST_TOPIC_FLOOD2 . "<br />";
+		echo _POST_TOPIC_FLOOD1 . ' ' . $kunena_config->floodprotection . ' ' . _POST_TOPIC_FLOOD2 . '<br />';
 		echo _POST_TOPIC_FLOOD3;
 		return;
 	}
@@ -336,6 +335,7 @@ if ($kunena_my->id) {
 						}
 						// End Modify for activities stream
 
+						CKunenaTools::markTopicRead($pid, $kunena_my->id);
 
 						//update the user posts count
 						if ($kunena_my->id) {

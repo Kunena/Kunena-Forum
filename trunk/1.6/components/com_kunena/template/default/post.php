@@ -145,17 +145,17 @@ if ($kunena_config->captcha == 1 && $kunena_my->id < 1) {
 //Let's find out who we're dealing with if a registered user wants to make a post
 if ($kunena_my->id) {
 	$my_name = $kunena_config->username ? $kunena_my->username : $kunena_my->name;
-	$this->kunena_my_email = $kunena_my->email;
+	$this->email = $kunena_my->email;
 	$this->kunena_registered_user = 1;
 	if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 		if (! empty ( $authorname ))
 			$my_name = $authorname;
 		if (! empty ( $email ))
-			$this->kunena_my_email = $email;
+			$this->email = $email;
 	}
 } else {
 	$my_name = $authorname;
-	$this->kunena_my_email = (isset ( $email ) && ! empty ( $email )) ? $email : '';
+	$this->email = (isset ( $email ) && ! empty ( $email )) ? $email : '';
 	$this->kunena_registered_user = 0;
 }
 ?>
@@ -181,7 +181,7 @@ if ($kunena_my->id) {
 
 			if (empty ( $my_name )) {
 				echo _POST_FORGOT_NAME;
-			} else if ($kunena_config->askemail && empty ( $this->kunena_my_email )) {
+			} else if ($kunena_config->askemail && empty ( $this->email )) {
 				echo _POST_FORGOT_EMAIL;
 			} else if (empty ( $subject )) {
 				echo _POST_FORGOT_SUBJECT;
@@ -219,7 +219,7 @@ if ($kunena_my->id) {
 				$authorname = addslashes ( JString::trim ( $my_name ) );
 				$subject = addslashes ( JString::trim ( $subject ) );
 				$message = addslashes ( JString::trim ( $message ) );
-				$email = addslashes ( JString::trim ( $this->kunena_my_email ) );
+				$email = addslashes ( JString::trim ( $this->email ) );
 				$topic_emoticon = ($topic_emoticon < 0 || $topic_emoticon > 7) ? 0 : $topic_emoticon;
 				$posttime = CKunenaTools::fbGetInternalTime ();
 				if ($contentURL) {
@@ -595,6 +595,7 @@ if ($kunena_my->id) {
 					$this->message_text = kunena_htmlspecialchars ( stripslashes ( $message->message ) );
 					$this->resubject = kunena_htmlspecialchars ( stripslashes ( $message->subject ) );
 					$this->authorName = kunena_htmlspecialchars ( stripslashes ( $message->name ) );
+					$this->email = kunena_htmlspecialchars ( stripslashes ( $message->email ) );
 					$this->id = $message->id;
 					$this->catid = $message->catid;
 					$this->parentid = 0;

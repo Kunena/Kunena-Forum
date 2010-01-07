@@ -141,13 +141,9 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 		</tr>
 
 		<?php
-		if ($kunena_config->askemail) {
+		if (($kunena_config->askemail && !$kunena_my->id) || $kunena_config->changename == 1 || CKunenaTools::isModerator ( $kunena_my->id, $this->catid )) {
 			echo '<tr class = "' . KUNENA_BOARD_CLASS . 'sectiontableentry2"><td class = "fb_leftcolumn"><strong>' . _GEN_EMAIL . ' *</strong>:</td>';
-			if (($kunena_config->regonly == "1" || $kunena_config->changename == '0') && $kunena_my->id != "" && ! CKunenaTools::isModerator ( $kunena_my->id, $this->catid )) {
-				echo "<td>$this->kunena_my_email</td>";
-			} else {
-				echo "<td><input type=\"text\" name=\"email\"  size=\"35\" class=\"" . KUNENA_BOARD_CLASS . "inputbox postinput\" maxlength=\"35\" value=\"$this->kunena_my_email\" /></td>";
-			}
+			echo "<td><input type=\"text\" name=\"email\"  size=\"35\" class=\"" . KUNENA_BOARD_CLASS . "inputbox postinput\" maxlength=\"35\" value=\"$this->email\" /></td>";
 			echo '</tr>';
 		}
 		?>

@@ -48,6 +48,7 @@ Kunena 1.6.0-DEV
 # [#19323] Flood protection should not block Subscribe and Favorite
 # [#18903] Moderator and subscribed to topic: user will receive two emails
 # [#19277] Clean up and restructure post.php, part 5: rewrote permissions checks during posting
+# [#19029] If moderator edits the post, email address gets replaced (part 2)
 
 06-Jan-2010 Matias
 - [#19293] Remove deprecated configuration option: View=flat/thread (leftover code and cookie)

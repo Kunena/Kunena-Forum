@@ -56,9 +56,17 @@ $action = JRequest::getCmd ( 'action', '' );
 
 if ($id || $parentid) {
 	// Check that message and category exists and fill some information for later use
-	$kunena_db->setQuery ( "SELECT m.*, t.message, c.name AS catname, c.review, c.class_sfx FROM #__fb_messages AS m INNER JOIN #__fb_messages_text AS t ON t.mesid=m.id INNER JOIN #__fb_categories AS c ON c.id=m.catid WHERE m.id='" . ($parentid ? $parentid : $id) . "'" );
+	$query = "SELECT m.*, t.message, c.name AS catname, c.review, c.class_sfx, p.id AS poll_id
+				FROM #__fb_messages AS m
+				INNER JOIN #__fb_messages_text AS t ON t.mesid=m.id
+				INNER JOIN #__fb_categories AS c ON c.id=m.catid
+				LEFT JOIN #__fb_polls AS p ON m.id=p.threadid
+				WHERE m.id='" . ($parentid ? $parentid : $id) . "'";
+
+	$kunena_db->setQuery ( $query );
 	$msg_cat = $kunena_db->loadObject ();
 	check_dberror ( 'Unable to check message.' );
+
 	if (! $msg_cat) {
 		echo _POST_INVALID;
 		return;
@@ -247,7 +255,7 @@ if ($kunena_my->id) {
 						//Insert in the database the informations for the poll and the options for the poll
                         if (!empty($polltitle) && !empty($optionsnumbers))
                         {
-                        	CKunenaPolls::save_new_poll($polltimetolive,$polltitle,$catid,$pid,$optionvalue);
+                        	CKunenaPolls::save_new_poll($polltimetolive,$polltitle,$pid,$optionvalue);
                         }
 
 						// now increase the #s in categories only case approved
@@ -667,8 +675,8 @@ if ($kunena_my->id) {
 					$this->parentid = 0;
 
 					//save the options for query after and load the text options, the number options is for create the fields in the form after
-                	if ($message->poll_exist) {
-                     $polldatasedit = CKunenaPolls::get_polls_datas($id);
+                	if ($message->poll_id) {
+						$polldatasedit = CKunenaPolls::get_polls_datas($id);
                 	}
 
 					//get the writing stuff in:
@@ -686,7 +694,13 @@ if ($kunena_my->id) {
 				$modified_time = CKunenaTools::fbGetInternalTime ();
 				$id = ( int ) $id;
 
-				$kunena_db->setQuery ( "SELECT * FROM #__fb_messages AS m LEFT JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE m.id='{$id}'" );
+				$query = "SELECT a.*, b.*, p.id AS poll_id FROM #__fb_messages AS a
+							LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid
+							LEFT JOIN #__fb_polls AS p ON a.id=p.threadid
+							WHERE a.id='$id'";
+
+				$kunena_db->setQuery ( $query );
+
 				$message1 = $kunena_db->loadObjectList ();
 				check_dberror ( "Unable to load messages." );
 				$mes = $message1 [0];
@@ -753,9 +767,9 @@ if ($kunena_my->id) {
                         	$optvalue[] = JRequest::getString('field_option'.$i , null);
                          }
                          //need to check if the poll exist, if it's not the case the poll is insered like new poll
-                         if ($mes->poll_exist == "0" && !empty($polltitle) && !empty($optionsnumbers))
+                         if ($mes->poll_id && !empty($polltitle) && !empty($optionsnumbers))
                          {
-                         	CKunenaPolls::save_new_poll($polltimetolive,$polltitle,$catid,$id,$optvalue);
+                         	CKunenaPolls::save_new_poll($polltimetolive,$polltitle,$id,$optvalue);
                          }
                          else
                          {

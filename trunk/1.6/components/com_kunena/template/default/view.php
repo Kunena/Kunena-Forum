@@ -85,7 +85,12 @@ $allow_forum = ($kunena_session->allowed != '') ? explode ( ',', $kunena_session
 $this->kunena_forum_locked = 0;
 $topicLocked = 0;
 
-$kunena_db->setQuery ( "SELECT a.*, b.* FROM #__fb_messages AS a LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid WHERE a.id='{$id}' AND a.hold='0'" );
+$query = "SELECT a.*, b.*, p.id AS poll_id FROM #__fb_messages AS a
+			LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid
+			LEFT JOIN #__fb_polls AS p ON a.id=p.threadid
+			WHERE a.id='$id' AND a.hold='0'";
+
+$kunena_db->setQuery ( $query );
 $this_message = $kunena_db->loadObject ();
 check_dberror ( 'Unable to load current message.' );
 
@@ -321,23 +326,20 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		</td>
 	</tr>
 </table>
-<?php }
-if ($kunena_config->pollenabled == "1" && $this_message->poll_exist == "1")
-{
-
+<?php
+		}
+if ($kunena_config->pollenabled == "1" && $this_message->poll_id){
     if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/poll/pollbox.php')) {
         require_once (KUNENA_ABSTMPLTPATH . '/plugin/poll/pollbox.php');
     }
     else {
         require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/poll/pollbox.php');
     }
-
 }
 // load module
 if (JDocumentHTML::countModules('kunena_poll'))
 {
 ?>
-
     <div class = "fb-fb_2">
         <?php
         	$document	= &JFactory::getDocument();
@@ -347,7 +349,6 @@ if (JDocumentHTML::countModules('kunena_poll'))
         	echo $renderer->render($position, $options, null);
 	       ?>
     </div>
-
 <?php
 }
          ?>

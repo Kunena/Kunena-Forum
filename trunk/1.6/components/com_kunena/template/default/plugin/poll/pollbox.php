@@ -22,13 +22,13 @@ $catsallowed = explode(',',$kunena_config->pollallowedcategories);
 if (in_array($catid, $catsallowed))
 {
   CKunenaPolls::call_javascript_vote();
-  $dataspollresult = CKunenaPolls::get_polls_datas($id);
+  $dataspollresult = CKunenaPolls::get_poll_data($id);
   //To show the number total of votes for the poll
   $nbvoters = CKunenaPolls::get_number_total_voters($id);
   //To show the usernames of the users which have voted for this poll
   $pollusersvoted = CKunenaPolls::get_users_voted($id);
   //To know if an user has already voted for this poll
-  $dataspollusers = CKunenaPolls::get_datas_polls_users($kunena_my->id,$id);
+  $dataspollusers = CKunenaPolls::get_data_poll_users($kunena_my->id,$id);
   if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid))
   {
       $dataspollusers[0]->userid = null;

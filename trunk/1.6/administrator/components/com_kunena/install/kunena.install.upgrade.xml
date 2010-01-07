@@ -216,20 +216,20 @@
                 KEY `time` (`time`),
                 KEY `locked` (`locked`),
                 KEY `hold_time` (`hold`,`time`),
-                KEY `parent_hits` (`parent`,`hits`) ) DEFAULT CHARSET=utf8</query>
-                <query>CREATE TABLE IF NOT EXISTS `#__fb_polls` (
-			`id` int(11) NOT NULL auto_increment,
-			`title` varchar(50) NOT NULL,
-			`threadid` int(11) NOT NULL,
-			`catid` int(11) NOT NULL,
-			`polltimetolive` timestamp,
-			PRIMARY KEY  (`id`),
-			KEY `threadid` (`threadid`)
-		) ENGINE=MyISAM DEFAULT CHARSET=utf8;</query>
+                KEY `parent_hits` (`parent`,`hits`) 
+			) DEFAULT CHARSET=utf8</query>
+		<query>CREATE TABLE IF NOT EXISTS `#__fb_polls` (
+				`id` int(11) NOT NULL auto_increment,
+				`title` varchar(100) NOT NULL,
+				`threadid` int(11) NOT NULL,
+				`polltimetolive` timestamp,
+				PRIMARY KEY  (`id`),
+				KEY `threadid` (`threadid`)
+			) DEFAULT CHARSET=utf8;</query>
 		<query>CREATE TABLE IF NOT EXISTS `#__fb_polls_options` (
 			`id` int(11) NOT NULL auto_increment,
 			`pollid` int(11) default NULL,
-			`text` varchar(50) default NULL,
+			`text` varchar(100) default NULL,
 			`votes` int(11) default NULL,
 			PRIMARY KEY  (`id`),
 			KEY `pollid` (`pollid`)
@@ -237,7 +237,7 @@
 		<query>CREATE TABLE IF NOT EXISTS `#__fb_polls_users` (
 			`pollid` int(11) default NULL,
 			`userid` int(11) default NULL,
-			`votes` smallint(3) default NULL,
+			`votes` int(11) default NULL,
 			`lasttime` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
 			UNIQUE KEY `pollid` (`pollid`,`userid`)
 		) DEFAULT CHARSET=utf8;</query>
@@ -364,6 +364,29 @@
 			<query mode="silenterror">UPDATE `#__fb_config` SET `jmambot`='0'</query>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
+			<query>CREATE TABLE IF NOT EXISTS `#__fb_polls` (
+					`id` int(11) NOT NULL auto_increment,
+					`title` varchar(100) NOT NULL,
+					`threadid` int(11) NOT NULL,
+					`polltimetolive` timestamp,
+					PRIMARY KEY  (`id`),
+					KEY `threadid` (`threadid`)
+				) DEFAULT CHARSET=utf8;</query>
+			<query>CREATE TABLE IF NOT EXISTS `#__fb_polls_options` (
+				`id` int(11) NOT NULL auto_increment,
+				`pollid` int(11) default NULL,
+				`text` varchar(100) default NULL,
+				`votes` int(11) default NULL,
+				PRIMARY KEY  (`id`),
+				KEY `pollid` (`pollid`)
+			) DEFAULT CHARSET=utf8;</query>
+			<query>CREATE TABLE IF NOT EXISTS `#__fb_polls_users` (
+				`pollid` int(11) default NULL,
+				`userid` int(11) default NULL,
+				`votes` int(11) default NULL,
+				`lasttime` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+				UNIQUE KEY `pollid` (`pollid`,`userid`)
+			) DEFAULT CHARSET=utf8;</query>
 		    <phpfile name="kunena.special.upgrade.1.6.0.php"></phpfile>            
 		</version>
 	</upgrade>

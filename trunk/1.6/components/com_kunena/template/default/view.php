@@ -90,9 +90,6 @@ $this_message = $kunena_db->loadObject ();
 check_dberror ( 'Unable to load current message.' );
 
 if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in_array ( $this_message->catid, $allow_forum ))) {
-	$view = $view == "" ? $this->kunena_cookie_settings [current_view] : $view;
-	setcookie ( "fboard_settings[current_view]", $view, time () + 31536000, '/' );
-
 	$topicLocked = $this_message->locked;
 	$topicSticky = $this_message->ordering;
 

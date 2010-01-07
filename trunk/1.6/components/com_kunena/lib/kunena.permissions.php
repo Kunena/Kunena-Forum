@@ -78,7 +78,7 @@ function fb_has_read_permission(&$obj_fbcat,&$allow_forum,$groupid,&$kunena_acl)
       if ($obj_fbcat->getPubAccess() == 0 || ($obj_fbcat->getPubAccess() == -1 && $groupid > 0) || (sizeof($allow_forum)> 0 && in_array($obj_fbcat->getId(),$allow_forum))) {
       //this is a public forum; let 'Everybody' pass
       //or this forum is for all registered users and this is a registered user
-      //or this forum->id is already in the cookie with allowed forums
+      //or this forum->id is already in the allowed forums
          return 1;
       }
       else {

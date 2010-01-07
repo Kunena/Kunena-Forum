@@ -80,29 +80,6 @@ $id = JRequest::getInt('id', 0);
                 ?>
 
                 </li>
-
-                <?php
-//                if ($kunena_my->id != 0)
-//                {
-//                    echo ' <li>';
-//
-//                    if ($view == "flat")
-//                    {
-//                        echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;view=threaded&amp;id=' . $id . '&amp;catid=' . $catid) . '" >';
-//                        echo _GEN_THREADED_VIEW;
-//                        echo '</a>';
-//                    }
-//                    else
-//                    {
-//                        echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;id=' . $id . '&amp;view=flat&amp;catid=' . $catid) . '" >';
-//                        echo _GEN_FLAT_VIEW;
-//                        echo "</a>";
-//                    }
-//
-//                    echo ' </li>';
-//                }
-                ?>
-
                 <li>
                 <?php
                 echo ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=latest') . '" >' . _GEN_LATEST_POSTS . '</a>';

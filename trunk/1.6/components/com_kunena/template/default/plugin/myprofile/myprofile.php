@@ -164,7 +164,6 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 			( int ) $newshowOnline = JRequest::getInt ( 'newshowOnline', 1 );
 
 			$kunena_db->setQuery ( "UPDATE #__fb_users SET view='$newview', ordering='$neworder', hideEmail='$newhideEmail', showOnline='$newshowOnline' WHERE userid='$kunena_my->id'" );
-			setcookie ( "fboard_settings[current_view]", $newview );
 
 			if (! $kunena_db->query ()) {
 				$kunena_app->enqueueMessage ( _USER_PROFILE_NOT_A . _USER_PROFILE_NOT_B . _USER_PROFILE_NOT_C, 'notice' );

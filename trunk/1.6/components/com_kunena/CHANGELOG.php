@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+06-Jan-2010 Matias
+- [#19293] Remove deprecated configuration option: View=flat/thread (leftover code and cookie)
+
 06-Jan-2010 fxstein
 + [#19313] SVN installer option added. Added control panel button to execute installer (only in SVN mode)
 # [#19200] Fixed regression in check_dberror that would crash php server due to invalid recusion

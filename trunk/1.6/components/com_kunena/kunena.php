@@ -56,7 +56,6 @@ $subscribeMe = JRequest::getVar ( 'subscribeMe', '' );
 $thread = JRequest::getInt ( 'thread', 0 );
 $topic_emoticon = JRequest::getVar ( 'topic_emoticon', '' );
 $userid = JRequest::getInt ( 'userid', 0 );
-$view = JRequest::getVar ( 'view', '' );
 $msgpreview = JRequest::getVar ( 'msgpreview', '' );
 $no_html = JRequest::getBool ( 'no_html', 0 );
 
@@ -154,7 +153,6 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 	$board_title = $kunena_config->board_title;
 	$this->kunena_from_bot = 0;
-	$prefview = $kunena_config->default_view;
 
 	// Include preview here before inclusion of other files
 	if ($func == "getpreview") {
@@ -365,7 +363,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 	switch ($func) {
 		case 'view' :
-			$kunena_menu = kunena_get_menu ( NULL, $kunena_config, $kunena_icons, $kunena_my->id, 3, $view, $catid, $id, $thread );
+			$kunena_menu = kunena_get_menu ( NULL, $kunena_config, $kunena_icons, $kunena_my->id, 3, $catid, $id, $thread );
 
 			break;
 
@@ -375,11 +373,11 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			$numPending = $kunena_db->loadResult ();
 			check_dberror ( 'Unable load pending messages.' );
 
-			$kunena_menu = kunena_get_menu ( NULL, $kunena_config, $kunena_icons, $kunena_my->id, 2, $view, $catid, $id, $thread, CKunenaTools::isModerator ( $kunena_my->id, $catid ), $numPending );
+			$kunena_menu = kunena_get_menu ( NULL, $kunena_config, $kunena_icons, $kunena_my->id, 2, $catid, $id, $thread, CKunenaTools::isModerator ( $kunena_my->id, $catid ), $numPending );
 			break;
 
 		default :
-			$kunena_menu = kunena_get_menu ( NULL, $kunena_config, $kunena_icons, $kunena_my->id, 1, $view );
+			$kunena_menu = kunena_get_menu ( NULL, $kunena_config, $kunena_icons, $kunena_my->id, 1);
 
 			break;
 	}

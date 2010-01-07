@@ -50,7 +50,7 @@ defined( '_JEXEC' ) or die('Restricted access');
  *             The menu :-)
  */
 
-function kunena_get_menu($cbitemid, $kunena_config, $kunena_icons, $my_id, $type, $view = "", $catid = 0, $id = 0,
+function kunena_get_menu($cbitemid, $kunena_config, $kunena_icons, $my_id, $type, $catid = 0, $id = 0,
 							$thread = 0, $kunena_is_moderator = false, $numPending = 0)
 {
 	$func = JString::strtolower(JRequest::getCmd('func', ''));
@@ -107,36 +107,7 @@ function kunena_get_menu($cbitemid, $kunena_config, $kunena_icons, $my_id, $type
 
     switch ($type)
     {
-        case 3:
-//Threaded view option removed from Kunena
-//            if ($view == "flat") {
-//    			$header .= '<li>';
-//    			$header .= CKunenaLink::GetViewLink('view', $id, $catid, 'threaded', '<span>'. _GEN_THREADED_VIEW .'</span>');
-//                $header .= '</li>';
-//            }
-//            else
-//            {
-//    			$header .= '<li>';
-//                $header .= CKunenaLink::GetViewLink('view', $id, $catid, 'flat', '<span>'. _GEN_FLAT_VIEW .'</span>');
-//                $header .= '</li>';
-//            }
-
-            break;
-
         case 2:
-//Threaded view option removed from Kunena
-//            if ($view == "flat")
-//            {
-//    			$header .= '<li>';
-//    			$header .= CKunenaLink::GetViewLink('showcat', $id, $catid, 'threaded', '<span>'. _GEN_THREADED_VIEW .'</span>');
-//                $header .= '</li>';
-//            }
-//			else
-//			{
-//    			$header .= '<li>';
-//                $header .= CKunenaLink::GetViewLink('showcat', $id, $catid, 'flat', '<span>'. _GEN_FLAT_VIEW .'</span>');
-//                $header .= '</li>';
-//			}
             if ($kunena_is_moderator)
             {
                 if ($numPending > 0)
@@ -151,7 +122,6 @@ function kunena_get_menu($cbitemid, $kunena_config, $kunena_icons, $my_id, $type
 
         case 1:
         default:
-
             break;
     }
 

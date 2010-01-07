@@ -778,29 +778,37 @@ class CKunenaTools {
 			}
 			$arogroups = implode ( ',', array_unique ( array_merge ( $public, $admin ) ) );
 			if ($arogroups)
-				$arogroups = "AND u.gid IN ({$arogroups})";
+				$arogroups = "u.gid IN ({$arogroups})";
 		}
 
 		$querysel = "SELECT u.id, u.name, u.username, u.email,
-					MAX(s.thread IS NOT NULL) as subscription,
-					MAX(p.moderator='1' AND (m.catid IS NULL OR (c.moderated='1' AND m.catid={$catid}))) as moderator,
+					MAX((s.thread IS NOT NULL) OR (sc.catid IS NOT NULL)) as subscription,
+					MAX(p.moderator='1' AND (m.catid IS NULL OR (c.moderated='1' AND m.catid=$catid))) as moderator,
 					MAX(u.gid IN (24, 25)) AS admin FROM #__users AS u
 					LEFT JOIN #__fb_users AS p ON u.id=p.userid
 					LEFT JOIN #__fb_moderation AS m ON u.id=m.userid
 					LEFT JOIN #__fb_categories AS c ON m.catid=c.id
-					LEFT JOIN #__fb_subscriptions AS s ON u.id=s.userid AND s.thread={$thread}";
+					LEFT JOIN #__fb_subscriptions AS s ON u.id=s.userid AND s.thread=$thread
+					LEFT JOIN #__fb_subscriptions_categories AS sc ON u.id=sc.userid AND sc.catid=$catid";
 
 		$where = array ();
-		if ($subscriptions)
-			$where [] = " ( s.thread={$thread} {$arogroups} ) ";
+		$having = '';
+		if ($subscriptions){
+			if ($arogroups)
+				$where [] = "$arogroups";
+			$having = "HAVING subscription > 0";
+		}
 		if ($moderators)
-			$where [] = " ( p.moderator=1 AND ( m.catid IS NULL OR ( c.moderated=1 AND m.catid={$catid} ) ) ) ";
+			$where [] = " ( p.moderator=1 AND ( m.catid IS NULL OR ( c.moderated=1 AND m.catid=$catid ) ) ) ";
 		if ($admins)
 			$where [] = " ( u.gid IN (24, 25) ) ";
 
 		$subsList = array ();
 		if (count ( $where )) {
-			$query = $querysel . " WHERE u.block=0 AND u.id NOT IN ({$excludeList}) AND (" . implode ( ' OR ', $where ) . ") GROUP BY u.id";
+			$query = $querysel . " WHERE u.block=0 AND u.id NOT IN ($excludeList)
+									AND (" . implode ( ' OR ', $where ) . ")
+									GROUP BY u.id
+									$having";
 			$kunena_db->setQuery ( $query );
 			$subsList = $kunena_db->loadObjectList ();
 			check_dberror ( "Unable to load email list." );

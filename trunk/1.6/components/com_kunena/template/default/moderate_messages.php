@@ -82,10 +82,6 @@ switch ($action)
         echo '<p class="sectionname"><?php echo _MESSAGE_ADMINISTRATION; ?></p>';
 
         $kunena_db->setQuery("SELECT m.id, m.time, m.name, m.subject, m.hold, t.message FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE hold='1' AND catid='{$catid}' ORDER BY id ASC");
-
-        if (!$kunena_db->query())
-            echo $kunena_db->getErrorMsg();
-
         $allMes = $kunena_db->loadObjectList();
         	check_dberror("Unable to load messages.");
 
@@ -228,9 +224,8 @@ function jbApprovePosts($kunena_db, $cid)
         if(!$msg) { continue; }
         // continue stats
         $kunena_db->setQuery("UPDATE `#__fb_messages` SET hold='0' WHERE id='{$id}'");
-        if(!$kunena_db->query()) {
-        	$ret = 0; // mark error
-        }
+        $kunena_db->query();
+		check_dberror ( "Unable to approve posts." );
         CKunenaTools::modifyCategoryStats($id, $msg->parent, $msg->time, $msg->catid);
     }
     return $ret;

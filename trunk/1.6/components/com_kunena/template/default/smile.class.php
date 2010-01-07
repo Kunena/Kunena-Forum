@@ -363,9 +363,9 @@ class smile
 							<?php
 							$kunena_db = &JFactory::getDBO();
 							$kunena_db->setQuery("SELECT code, location, emoticonbar FROM #__fb_smileys ORDER BY id");
-							if ($kunena_db->query()) {
-								$this->kunena_emoticons_rowset = array ();
 								$set = $kunena_db->loadAssocList();
+								check_dberror("Unable to fetch smileys.");
+								$this->kunena_emoticons_rowset = array ();
 								foreach ($set as $smilies) {
 									$key_exists = false;
 									foreach ($this->kunena_emoticons_rowset as $check) { //checks if the smiley (location) already exists with another code
@@ -382,7 +382,6 @@ class smile
 								foreach ($this->kunena_emoticons_rowset as $data) {
 								echo '<img class="btnImage" src="' . KUNENA_URLEMOTIONSPATH . $data['location'] . '" border="0" alt="' . $data['code'] . ' " title="' . $data['code'] . ' " onclick="bbfontstyle(\' '
 									. $data['code'] . ' \',\'\')" style="cursor:pointer"/>' . "\n";
-							}
 						}
 					?>
 					</div>

@@ -47,6 +47,7 @@ else {
 //Delete non online users from db
 $kunena_db->setQuery("DELETE FROM #__fb_whoisonline WHERE time < '{$past}'");
 $kunena_db->query();
+check_dberror ( "Unable to delete users from whoisonline." );
 
 $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_whoisonline WHERE userip='{$myip}' AND userid='{$kunena_my->id}'");
 $online = $kunena_db->loadResult();
@@ -114,5 +115,5 @@ else {
     }
 
 $kunena_db->query();
-echo $kunena_db->getErrorMsg();
+check_dberror ( "Unable to insert user into whoisonline." );
 ?>

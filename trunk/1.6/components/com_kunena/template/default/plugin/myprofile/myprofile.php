@@ -170,6 +170,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 			} else {
 				$kunena_app->enqueueMessage ( _USER_PROFILE_UPDATED );
 			}
+			check_dberror ( "Unable to update profile." );
 
 			$kunena_app->redirect ( JRoute::_ ( KUNENA_LIVEURLREL . "&amp;func=myprofile" ) );
 			break;
@@ -345,6 +346,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 			} else {
 				$kunena_app->enqueueMessage ( _USER_UNSUBSCRIBE_YES );
 			}
+			check_dberror ( "Unable to unsubscribe." );
 
 			if ($kunena_config->fb_profile == 'cb') {
 				$forumtab_url = CKunenaCBProfile::getForumTabURL ();
@@ -364,6 +366,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 			} else {
 				$kunena_app->enqueueMessage ( _USER_UNSUBSCRIBE_YES );
 			}
+			check_dberror ( "Unable to unsubscribe." );
 
 			if ($kunena_config->fb_profile == 'cb') {
 				$forumtab_url = CKunenaCBProfile::getForumTabURL ();
@@ -391,6 +394,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 			} else {
 				$kunena_app->enqueueMessage ( _USER_UNFAVORITE_YES );
 			}
+			check_dberror ( "Unable to unfavorite." );
 
 			if ($kunena_config->fb_profile == 'cb') {
 				$forumtab_url = CKunenaCBProfile::getForumTabURL ();
@@ -410,6 +414,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 			} else {
 				$kunena_app->enqueueMessage ( _USER_UNFAVORITE_YES );
 			}
+			check_dberror ( "Unable to unfavorite." );
 
 			if ($kunena_config->fb_profile == 'cb') {
 				$forumtab_url = CKunenaCBProfile::getForumTabURL ();
@@ -486,6 +491,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 				$query = "UPDATE #__session" . "\n SET username = " . $kunena_db->Quote ( $row->username ) . "\n WHERE username = " . $kunena_db->Quote ( $this->kunena_username ) . "\n AND userid = " . ( int ) $kunena_my->id . "\n AND gid = " . ( int ) $kunena_my->gid . "\n AND guest = 0";
 				$kunena_db->setQuery ( $query );
 				$kunena_db->query ();
+				check_dberror ( "Unable to update session info." );
 			}
 
 			$kunena_app->redirect ( JRoute::_ ( 'index.php?option=com_kunena&amp;func=myprofile' ), _KUNENA_USER_DETAILS_SAVE );

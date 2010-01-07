@@ -323,16 +323,10 @@ switch ($task) {
 }
 
 $kn_version = CKunenaVersion::versionArray ();
-if ($kn_version->versionname == '@kunenaversionname@') {
+if (JString::strpos ( $kn_version->version, 'SVN')) {
 	$kn_version_name = _KUNENA_VERSION_SVN;
 	$kn_version_warning = _KUNENA_VERSION_SVN_WARNING;
-} else if ($kn_version->versionname == 'NOT UPGRADED') {
-	$kunena_app->enqueueMessage ( sprintf ( _KUNENA_ERROR_UPGRADE, $kn_version->version ), 'notice' );
-	$kunena_app->enqueueMessage ( _KUNENA_ERROR_UPGRADE_WARN );
-	$kunena_app->enqueueMessage ( sprintf ( _KUNENA_ERROR_UPGRADE_AGAIN, $kn_version->version ) );
-	$kunena_app->enqueueMessage ( _KUNENA_ERROR_INCOMPLETE_SUPPORT . ' <a href="http://www.kunena.com">www.kunena.com</a>' );
-}
-if (JString::strpos ( $kn_version->version, 'RC' ) !== false) {
+} else if (JString::strpos ( $kn_version->version, 'RC' ) !== false) {
 	$kn_version_name = _KUNENA_VERSION_RC;
 	$kn_version_warning = _KUNENA_VERSION_RC_WARNING;
 } else if (JString::strpos ( $kn_version->version, 'BETA' ) !== false) {
@@ -350,6 +344,12 @@ if (JString::strpos ( $kn_version->version, 'RC' ) !== false) {
 }
 if (! empty ( $kn_version_warning )) {
 	$kunena_app->enqueueMessage ( sprintf ( _KUNENA_VERSION_INSTALLED, $kn_version->version, $kn_version_name ) . ' ' . $kn_version_warning, 'notice' );
+}
+if ($kn_version->versionname == 'NOT UPGRADED') {
+	$kunena_app->enqueueMessage ( sprintf ( _KUNENA_ERROR_UPGRADE, $kn_version->version ), 'notice' );
+	$kunena_app->enqueueMessage ( _KUNENA_ERROR_UPGRADE_WARN );
+	$kunena_app->enqueueMessage ( sprintf ( _KUNENA_ERROR_UPGRADE_AGAIN, $kn_version->version ) );
+	$kunena_app->enqueueMessage ( _KUNENA_ERROR_INCOMPLETE_SUPPORT . ' <a href="http://www.kunena.com">www.kunena.com</a>' );
 }
 
 // Detect errors in CB integration
@@ -415,7 +415,6 @@ function editForum($uid, $option) {
 	// load the row from the db table
 	$row->load ( $uid );
 
-	//echo "<pre>"; print_r ($row); echo "</pre>";
 	if ($uid) {
 		$row->checkout ( $kunena_my->id );
 		$categories = array ();
@@ -920,9 +919,9 @@ function newModerator($option, $id = null) {
 	$limit = $kunena_app->getUserStateFromRequest ( "global.list.limit", 'limit', $kunena_app->getCfg ( 'list_limit' ), 'int' );
 	$limitstart = $kunena_app->getUserStateFromRequest ( "{$option}.limitstart", 'limitstart', 0, 'int' );
 	$kunena_db->setQuery ( "SELECT COUNT(*) FROM #__users AS a" . "\n LEFT JOIN #__fb_users AS b" . "\n ON a.id=b.userid where b.moderator=1" );
-	$kunena_db->query () or check_dberror ( 'Unable to load moderators w/o limit.' );
-
 	$total = $kunena_db->loadResult ();
+	check_dberror ( 'Unable to load moderators w/o limit.' );
+
 	if ($limitstart >= $total)
 		$limitstart = 0;
 	if ($limit == 0 || $limit > 100)
@@ -939,8 +938,8 @@ function newModerator($option, $id = null) {
 	//get forum name
 	$forumName = '';
 	$kunena_db->setQuery ( "select name from #__fb_categories where id=$id" );
-	$kunena_db->query () or check_dberror ( 'Unable to load forum name.' );
 	$forumName = $kunena_db->loadResult ();
+	check_dberror ( 'Unable to load forum name.' );
 
 	//get forum moderators
 	$kunena_db->setQuery ( "select userid from #__fb_moderation where catid=$id" );
@@ -1022,8 +1021,8 @@ function showProfiles($kunena_db, $option, $lang, $order) {
 	}
 
 	$kunena_db->setQuery ( "SELECT COUNT(*) FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u" . "\n ON sbu.userid=u.id" . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") );
-	$kunena_db->query () or check_dberror ( 'Unable to load user profiles w/o limits.' );
 	$total = $kunena_db->loadResult ();
+	check_dberror ( 'Unable to load user profiles w/o limits.' );
 
 	if ($limitstart >= $total)
 		$limitstart = 0;
@@ -1150,18 +1149,18 @@ function saveUserProfile($option) {
 		$avatar = ",avatar=''";
 	}
 
-	$kunena_db->setQuery ( "UPDATE #__fb_users set signature='$signature', view='$newview',moderator='$moderator', ordering='$neworder', rank='$newrank' $avatar where userid=$uid" );
+	$kunena_db->setQuery ( "UPDATE #__fb_users SET signature='$signature', view='$newview',moderator='$moderator', ordering='$neworder', rank='$newrank' $avatar where userid=$uid" );
 	$kunena_db->query () or check_dberror ( "Unable to update signature." );
 
 	//delete all moderator traces before anyway
-	$kunena_db->setQuery ( "delete from #__fb_moderation where userid=$uid" );
+	$kunena_db->setQuery ( "DELETE FROM #__fb_moderation WHERE userid=$uid" );
 	$kunena_db->query () or check_dberror ( "Unable to delete moderator." );
 
 	//if there are moderatored forums, add them all
 	if ($moderator == 1) {
 		if (count ( $modCatids ) > 0) {
 			foreach ( $modCatids as $c ) {
-				$kunena_db->setQuery ( "INSERT INTO #__fb_moderation set catid='$c', userid='$uid'" );
+				$kunena_db->setQuery ( "INSERT INTO #__fb_moderation SET catid='$c', userid='$uid'" );
 				$kunena_db->query () or check_dberror ( "Unable to insert moderator." );
 			}
 		}
@@ -1796,9 +1795,8 @@ function saveRank($option, $id = NULL) {
 	}
 
 	$kunena_db->setQuery ( "SELECT * FROM #__fb_ranks" );
-	$kunena_db->query () or check_dberror ( "Unable to load ranks." );
-
 	$ranks = $kunena_db->loadAssocList ();
+	check_dberror ( "Unable to load ranks." );
 	foreach ( $ranks as $value ) {
 		if (in_array ( $rank_title, $value ) && ! ($value ['rank_id'] == $id)) {
 			$task = ($id == NULL) ? 'newRank' : 'editRank&id=' . $id;
@@ -1821,8 +1819,6 @@ function editRank($option, $id) {
 	$kunena_db = &JFactory::getDBO ();
 
 	$kunena_db->setQuery ( "SELECT * FROM #__fb_ranks WHERE rank_id = '$id'" );
-	$kunena_db->query () or check_dberror ( "Unable to load ranks." );
-
 	$ranks = $kunena_db->loadObjectList ();
 	check_dberror ( "Unable to load ranks." );
 

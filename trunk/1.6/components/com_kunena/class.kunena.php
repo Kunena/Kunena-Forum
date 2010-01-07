@@ -504,7 +504,7 @@ class CKunenaTools {
                 .",`numPosts`='" . $ctg[$msg_cat]->numPosts . "'"
                 ." WHERE (`id`='" . $ctg[$msg_cat]->id . "') ");
             $kunena_db->query();
-            echo $kunena_db->getErrorMsg();
+            check_dberror("Unable to update category stats.");
 
             // parent
             $msg_cat = $ctg[$msg_cat]->parent;
@@ -594,12 +594,8 @@ class CKunenaTools {
         // start iterating here
         foreach ($items as $id => $value) {
             $kunena_db->setQuery("SELECT id, catid, parent, thread, subject, userid FROM #__fb_messages WHERE id='{$id}'");
-
-            if (!$kunena_db->query()) {
-                return -2;
-                }
-
             $mes = $kunena_db->loadObject();
+            if (!$mes) return -2;
             $thread = $mes->thread;
 
             if ($mes->parent == 0) {
@@ -621,7 +617,6 @@ class CKunenaTools {
             else {
                 //this is not the forum topic, so delete it and promote the direct children one level up in the hierarchy
                 $kunena_db->setQuery('UPDATE #__fb_messages SET parent=\'' . $mes->parent . '\' WHERE parent=\'' . $id . '\'');
-
                 if (!$kunena_db->query()) {
                     return -1;
                     }
@@ -917,8 +912,8 @@ class fbForum
 		if ($id > 0) {
 			$query = "SELECT id, parent FROM #__fb_categories";
 			$this->_db->setQuery($query);
-			$this->_db->query() or check_dberror("Unable to access categories.");
 			$list = $this->_db->loadObjectList('id');
+			check_dberror("Unable to access categories.");
 			$recurse = array();
 			while ($id) {
 				if (in_array($id, $recurse)) {
@@ -1084,10 +1079,10 @@ function generate_smilies() {
     $inline_rows = 5;
 
     $kunena_db->setQuery("SELECT code, location, emoticonbar FROM #__fb_smileys ORDER BY id");
-
-    if ($kunena_db->query()) {
-        $num_smilies = 0;
         $set = $kunena_db->loadAssocList();
+        check_dberror("Unable to fetch smilies.");
+
+        $num_smilies = 0;
         $num_iconbar = 0;
 
         foreach ($set as $smilies) {
@@ -1160,13 +1155,11 @@ function generate_smilies() {
                 echo "<tr><td class=\"moresmilies\" colspan=\"" . $inline_columns . "\" onclick=\"javascript:dE('smilie');\" style=\"cursor:pointer\"><b>" . _KUNENA_EMOTICONS_MORE_SMILIES . "</b></td></tr>";
                 }
             }
-        }
         return $kunena_emoticons_rowset;
     }
 
 function fbGetArrayInts($name) {
     $array = JRequest::getVar($name, array ( 0 ), 'post', 'array');
-print_r($array);
     foreach ($array as $item=>$value) {
         if ((int)$item && (int)$item>0) $items[(int)$item] = 1;
     }

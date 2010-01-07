@@ -89,7 +89,6 @@ function list_users()
     $kunena_db->setQuery($query);
     $ulrows = $kunena_db->loadObjectList();
 
-    // echo "<pre>"; print_r($ulrows); die;
     $pageNav = new JPagination($total, $limitstart, $limit);
     HTML_userlist_content::showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search);
 }

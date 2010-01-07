@@ -180,6 +180,7 @@ switch ($task) {
 		{
 			$kunena_app->enqueueMessage(_USER_PROFILE_UPDATED);
 		}
+		check_dberror("Unable to delete avatar.");
 
 		$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
 		break;

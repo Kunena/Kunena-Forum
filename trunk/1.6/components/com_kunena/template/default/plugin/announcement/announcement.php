@@ -366,7 +366,8 @@ if ($is_editor) {
         if ($kunena_db->query()) {
             $kunena_app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_SUCCESS_EDIT);
             }
-        }
+        check_dberror("Unable to update announcement.");
+    }
 
     if ($do == "edit") {
         $kunena_db->setQuery("SELECT * FROM #__fb_announcement WHERE id='{$id}'");

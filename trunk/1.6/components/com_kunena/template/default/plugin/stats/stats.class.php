@@ -132,10 +132,8 @@ $PopPollsCount = $kunena_config->poppollscount;
 if ($kunena_config->showpoppollstats)
 {
   $this->_db->setQuery("SELECT p.*, SUM(o.votes) AS total FROM #__fb_polls AS p LEFT JOIN #__fb_polls_options AS o ON p.threadid=o.pollid GROUP BY p.threadid ORDER BY total DESC",0,$PopPollsCount);
-  $this->_db->query();
   $this->toppolls = $this->_db->loadObjectList();
   $this->_db->setQuery("SELECT SUM(o.votes) AS total FROM #__fb_polls AS p LEFT JOIN #__fb_polls_options AS o ON p.threadid=o.pollid GROUP BY p.threadid ORDER BY total DESC LIMIT 1");
-  $this->_db->query();
   $this->toppollvotes = $this->_db->loadResult();
 } // ENDIF: showpoppollstats
 

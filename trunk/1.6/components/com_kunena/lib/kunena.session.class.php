@@ -29,8 +29,9 @@ class CKunenaSession extends JTable
 	{
 		$kunena_config =& CKunenaConfig::getInstance();
 		parent::__construct('#__fb_sessions', 'userid', $kunena_db);
-		$this->lasttime = time() + $kunena_config->board_ofset - KUNENA_SECONDS_IN_YEAR;
-		$this->currvisit = time() + $kunena_config->board_ofset;
+		// New/unregistered user gets a month of unread messages
+		$this->lasttime = time() + $kunena_config->board_ofset * KUNENA_SECONDS_IN_HOUR - KUNENA_SECONDS_IN_HOUR*24*30;
+		$this->currvisit = time() + $kunena_config->board_ofset * KUNENA_SECONDS_IN_HOUR;
 	}
 
 	function &getInstance( $updateSessionInfo=false )
@@ -89,6 +90,10 @@ class CKunenaSession extends JTable
 
 	function isNewSession()
 	{
+		$kunena_config =& CKunenaConfig::getInstance();
+
+		// perform session timeout check
+		$this->_sessiontimeout = ($this->currvisit + $kunena_config->fbsessiontimeout < time() + $kunena_config->board_ofset * KUNENA_SECONDS_IN_HOUR);
 		return $this->_sessiontimeout;
 	}
 
@@ -102,11 +107,6 @@ class CKunenaSession extends JTable
 
 	function updateSessionInfo()
 	{
-		$kunena_config =& CKunenaConfig::getInstance();
-
-		// perform session timeout check
-		$this->_sessiontimeout = ($this->currvisit + $this->_sessiontimeout) < time() + $kunena_config->board_ofset * KUNENA_SECONDS_IN_HOUR;
-
 		// If this is a new session, reset the lasttime colum with the timestamp
 		// of the last saved currvisit - only after that can we reset currvisit to now before the store
 		if ($this->isNewSession())

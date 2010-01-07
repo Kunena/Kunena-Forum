@@ -347,7 +347,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $autoembedyoutube = 1;
 	var $autoembedebay = 1;
 	var $ebaylanguagecode = 'en-us';
-	var $kunena_sessiontimeout = 1800; // in seconds
+	var $fbsessiontimeout = 1800; // in seconds
 	// New 1.0.5RC2 config variables
 	var $highlightcode = 0;
 	var $rsstype = 'thread';

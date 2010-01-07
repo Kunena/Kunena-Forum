@@ -232,7 +232,7 @@ if ($kunena_my->id) {
 				}
 
 				// DO NOT PROCEED if there is an exact copy of the message already in the db
-				$duplicatetimewindow = $posttime - $kunena_config->kunena_sessiontimeout;
+				$duplicatetimewindow = $posttime - $kunena_config->fbsessiontimeout;
 				$kunena_db->setQuery ( "SELECT m.id FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE m.userid='{$kunena_my->id}' AND m.name='{$authorname}' AND m.email='{$email}' AND m.subject='{$subject}' AND m.ip='{$ip}' AND t.message='{$message}' AND m.time>='{$duplicatetimewindow}'" );
 				$pid = ( int ) $kunena_db->loadResult ();
 				check_dberror ( 'Unable to load post.' );

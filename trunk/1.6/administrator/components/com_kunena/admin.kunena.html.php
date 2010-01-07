@@ -888,9 +888,9 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><input type="text"
-			name="cfg_kunena_sessiontimeout"
+			name="cfg_fbsessiontimeout"
 			value="<?php
-		echo $kunena_config->kunena_sessiontimeout;
+		echo $kunena_config->fbsessiontimeout;
 		?>" /></td>
 
 		<td align="left" valign="top"><?php

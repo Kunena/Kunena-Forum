@@ -21,6 +21,9 @@
 
 defined ( '_JEXEC' ) or die ( 'Restricted access' );
 
+$catid = JRequest::getInt ( 'catid', 0 );
+$id = JRequest::getInt ( 'id', 0 );
+
 $kunena_db = &JFactory::getDBO ();
 $kunena_config = & CKunenaConfig::getInstance ();
 $kunena_my = &JFactory::getUser ();
@@ -351,7 +354,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
          	if ($kunena_config->pollenabled == "1" && $id == "0" )
          	{
          		if (!isset($polldatasedit[0]->polltimetolive)) {
-				$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
+					$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
 				}
         		$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
          ?>

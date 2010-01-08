@@ -111,11 +111,11 @@ function KUNENA_timeformat($logTime, $show_today = true)
 
         // Same day of the year, same year.... Today!
         if ($then['yday'] == $now['yday'] && $then['year'] == $now['year'])
-            return '' . _TIME_TODAY . '' . KUNENA_timeformat($logTime, $today_fmt);
+            return _TIME_TODAY . ' ' . KUNENA_timeformat($logTime, $today_fmt);
 
         // Day-of-year is one less and same year, or it's the first of the year and that's the last of the year...
         if ($todayMod == '2' && (($then['yday'] == $now['yday'] - 1 && $then['year'] == $now['year']) || ($now['yday'] == 0 && $then['year'] == $now['year'] - 1) && $then['mon'] == 12 && $then['mday'] == 31))
-            return '' . _TIME_YESTERDAY . '' . KUNENA_timeformat($logTime, $today_fmt);
+            return _TIME_YESTERDAY . ' ' . KUNENA_timeformat($logTime, $today_fmt);
     }
 
     $str = !is_bool($show_today) ? $show_today : $usertime_format;

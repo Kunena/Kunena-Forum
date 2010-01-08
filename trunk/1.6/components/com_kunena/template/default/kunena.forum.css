@@ -196,8 +196,10 @@
 	margin-bottom: 0;
 }
 
+#Kunena_tab div.moduletable ul.menu,
+#Kunena_tab div.moduletable ul.menu li a,
 #Kunena_tab div.moduletable ul.menu li a span {
-	background:none!important;
+	background-image:none!important;
 }
 
 #Kunena #Kunena_tab a {

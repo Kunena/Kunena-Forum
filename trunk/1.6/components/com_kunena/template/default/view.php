@@ -85,8 +85,10 @@ $allow_forum = ($kunena_session->allowed != '') ? explode ( ',', $kunena_session
 $this->kunena_forum_locked = 0;
 $topicLocked = 0;
 
-$query = "SELECT a.*, b.*, p.id AS poll_id FROM #__fb_messages AS a
+$query = "SELECT a.*, b.*, p.id AS poll_id, modified.name AS modified_name, modified.username AS modified_username
+			FROM #__fb_messages AS a
 			LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid
+			LEFT JOIN #__users AS modified ON a.modified_by = modified.id
 			LEFT JOIN #__fb_polls AS p ON a.id=p.threadid
 			WHERE a.id='$id' AND a.hold='0'";
 
@@ -155,7 +157,12 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		$replylimit = $page == $firstpage ? $limit - 1 : $limit; // If page contains first message, load $limit-1 messages
 		$replystart = $limitstart && $ordering == 'asc' ? $limitstart - 1 : $limitstart; // If not first page and order=asc, start on $limitstart-1
 		// Get replies of current thread
-		$query = "SELECT a.*, b.* FROM #__fb_messages AS a LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid " . "WHERE a.thread='{$thread}' AND a.id!='{$id}' AND a.hold='0' AND a.catid='{$catid}' ORDER BY id {$ordering}";
+		$query = "SELECT a.*, b.*, modified.name AS modified_name, modified.username AS modified_username
+					FROM #__fb_messages AS a
+					LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid
+					LEFT JOIN #__users AS modified ON a.modified_by = modified.id
+					WHERE a.thread='$thread' AND a.id!='$id' AND a.hold='0'
+					AND a.catid='$catid' ORDER BY id $ordering";
 		$kunena_db->setQuery ( $query, $replystart, $replylimit );
 		$replies = $kunena_db->loadObjectList ();
 		check_dberror ( 'Unable to load replies' );
@@ -470,7 +477,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		$topicLocked = $this_message->locked;
 
 		if ($_lockTopicID) // prev UNDEFINED $topicID!!
-{
+		{
 			$lockedWhat = _TOPIC_NOT_ALLOWED; // UNUSED
 		}
 

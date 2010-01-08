@@ -365,14 +365,6 @@ class CKunenaTools {
         return $time;
     }
 
-    function whoisID($id) {
-        $kunena_db = &JFactory::getDBO();
-
-        $id = intval($kunena_db->getEscaped($id));
-        $kunena_db->setQuery("SELECT username, id FROM #__users WHERE id='{$id}'");
-        return $kunena_db->loadResult();
-        }
-
     function reCountUserPosts() {
     	$kunena_db = &JFactory::getDBO();
 

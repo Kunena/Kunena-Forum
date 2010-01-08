@@ -45,6 +45,7 @@ Kunena 1.6.0-DEV
 
 08-Jan-2010 fxstein
 ^ [#19345] Re-style default template
+- [#19251] Remove unneeded query for modified posts
 
 08-Jan-2010 severdia
 ^ [#19345] Re-style default template

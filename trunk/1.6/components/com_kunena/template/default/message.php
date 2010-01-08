@@ -327,7 +327,10 @@ if ($kunena_config->fb_profile == 'cb') {
 			<td class="fb-msgview-right-b">
 			<div class="fb_message_editMarkUp_cover"><?php
 			if ($this->kunena_message->modified_by) {
-				echo '<span class="fb_message_editMarkUp">' . _KUNENA_EDITING_LASTEDIT . ': ' . date ( _DATETIME, $this->kunena_message->modified_time ) . ' ' . _KUNENA_BY . ' ' . CKunenaTools::whoisID ( $this->kunena_message->modified_by ) . '.';
+
+				echo '<span class="fb_message_editMarkUp">' . _KUNENA_EDITING_LASTEDIT . ': ' .
+					date ( _DATETIME, $this->kunena_message->modified_time ) . ' ' . _KUNENA_BY . ' ' .
+					($kunena_config->username ? $this->kunena_message->modified_username : $this->kunena_message->modified_name) . '.';
 				if ($this->kunena_message->modified_reason) {
 					echo _KUNENA_REASON . ': ' . kunena_htmlspecialchars ( stripslashes ( $this->kunena_message->modified_reason ) );
 				}

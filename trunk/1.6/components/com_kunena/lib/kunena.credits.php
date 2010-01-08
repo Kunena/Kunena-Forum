@@ -72,7 +72,7 @@ $kunena_config =& CKunenaConfig::getInstance();
                   </table>
 
 				<!-- Version Info -->
-				<div class="fbfooter"><?php echo _KUNENA_COPYRIGHT;?> &copy; 2008,2009,2010 <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>, <?php echo _KUNENA_LICENSE;?>: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a></div>
+				<div class="fbfooter"><?php echo _KUNENA_COPYRIGHT;?> &copy; 2008, 2009, 2010 <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>, <?php echo _KUNENA_LICENSE;?>: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a></div>
 				<!-- /Version Info -->
 
                   </td>

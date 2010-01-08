@@ -166,7 +166,7 @@ if (count ( $this->messages [0] ) > 0) {
 	echo KUNENA_BOARD_CLASS;
 	?>sectiontableheader"
 				align="center"><?php
-	echo _GEN_TOPICS;
+	echo _GEN_HITS;
 	?></th>
 
 			<th
@@ -397,7 +397,7 @@ if (count ( $this->messages [0] ) > 0) {
 		}
 		?></div>
 			</td>
-			<td class="td-4">
+			<td class="td-4" align="center">
 			 <!-- Views --> <span class="topic_views"> <?php
 			echo _GEN_HITS;
 			?>: <?php

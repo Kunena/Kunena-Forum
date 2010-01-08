@@ -161,10 +161,12 @@
 	border-right-width: 0;
 	border-bottom-width: 3px;
 	border-left-width: 0;
+	vertical-align: bottom;
 }
 
 #Kunena #Kunena_top td img.hideshow {
 	background: #5182A4;
+	padding:2px 2px 0;
 }
 
 #Kunena #fb_topmenu {

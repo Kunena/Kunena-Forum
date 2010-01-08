@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+08-Jan-2010 Matias
+^ [#19345] Re-style default template: Search Tab
+
 08-Jan-2010 fxstein
 ^ [#19345] Re-style default template
 

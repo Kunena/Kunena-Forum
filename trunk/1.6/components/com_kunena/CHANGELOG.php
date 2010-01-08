@@ -41,6 +41,7 @@ Kunena 1.6.0-DEV
 
 08-Jan-2010 severdia
 ^ [#19356] New buttons, rank icons
+^ [#19345] Re-style default template
 
 08-Jan-2010 Matias
 ^ [#19345] Re-style default template: Search Tab
@@ -49,9 +50,7 @@ Kunena 1.6.0-DEV
 08-Jan-2010 fxstein
 ^ [#19345] Re-style default template
 - [#19251] Remove unneeded query for modified posts
-
-08-Jan-2010 severdia
-^ [#19345] Re-style default template
+# [#19303] Fixed installer regression
 
 07-Jan-2010 fxstein
 + [#19333] New datamodel table for category subscriptions

@@ -26,6 +26,12 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.6.0
 
+//TWITTER AND FACEBOOK
+DEFINE('_KUNENA_MYPROFILE_TWITTER', 'TWITTER');
+DEFINE('_KUNENA_MYPROFILE_TWITTER_DESC', 'This is your Twitter handle.');
+DEFINE('_KUNENA_MYPROFILE_FACEBOOK', 'FACEBOOK');
+DEFINE('_KUNENA_MYPROFILE_FACEBOOK_DESC', 'This is your Facebook handle.');
+
 // Category subscriptions
 define('_VIEW_SUBSCRIBECATTXT', 'Subscribe to this category and get notified by mail about new posts');
 define('_VIEW_UNSUBSCRIBECATTXT', 'Unsubscribe from this category');
@@ -36,7 +42,7 @@ define('_GEN_CATEGORY_UNSUBCRIBED', 'You have been unsubscribed from this catego
 define('_KUNENA_SVN_INSTALL', 'SVN Install');
 
 //Poll
-define('_KUNENA_POLL_CANNOT_VOTE_NEW_TIME', 'You cannot vote a new time to this poll');
+define('_KUNENA_POLL_CANNOT_VOTE_NEW_TIME', 'You cannot vote an new time to this poll');
 define('_KUNENA_POLL_TIME_TO_LIVE', 'Poll life span (optional)');
 define('_KUNENA_POLL_FORGOT_TITLE_OPTIONS', 'You have forget to enter a title and at least one option for the poll');
 define('_KUNENA_POLL_ADD', 'Add a new poll');
@@ -50,8 +56,6 @@ define('_KUNENA_POLL_BUTTON_RESULT', 'View results');
 define('_KUNENA_POLL_NO_VOTE', 'No vote');
 define('_KUNENA_POLL_VOTERS_TOTAL', 'Total number of voters: ');
 define('_KUNENA_POLL_HITS_OPTIONS', 'Number of people who voted for this poll');
-define('_KUNENA_A_POLL_SHOW_USER_LIST', 'Enable or disable the userlist in poll results');
-define('_KUNENA_A_POLL_SHOW_USER_LIST_DESC', 'Enable or disable the userlist shown in poll results');
 define('_KUNENA_A_POLL_NUMBER_OPTIONS', 'Number of options for the polls');
 define('_KUNENA_POLL_RESET_VOTES', 'Reset votes of the poll');
 define('_KUNENA_A_POLL_NUMBER_OPTIONS_DESC', 'Set the number maximum allowed for the field options for the polls when the users create a new post');
@@ -69,7 +73,7 @@ define('_KUNENA_POLL_OPTIONS', 'Poll options');
 define('_KUNENA_A_POLL_TITLE', 'Polls Settings');
 define('_KUNENA_POLL_NAME_URL_RESULT', 'Return to the topic');
 define('_KUNENA_A_POLL_CATEGORIES_ALLOWED', 'Set the allowed categories for the poll');
-define('_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC', 'Set the allowed categories for the poll by choose them in the list, the input below will be completed automatically, this can be one categorie or more, use CTRL button for select more than one item');
+define('_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC', 'Set the allowed categories for the poll, this can be a categories or more, add the allowed categories by filling the field below by choose the numbers in the list near the id(with coma between numbers, example: 1,2,3,4) ');
 define('_KUNENA_POLL_NOT_LOGGED', 'You can not participate to this poll you are not logged.');
 define('_KUNENA_USRL_VOTES', 'Votes');
 define('_KUNENA_POLLSPOP', 'Number of Popular Polls');

@@ -114,6 +114,16 @@ class CKunenaUserprofile extends JTable
 	**/
 	var $SKYPE = null;
 	/**
+	* TWITTER ID
+	* @var string
+	**/
+	var $TWITTER = null;
+	/**
+	* FACEBOOK ID
+	* @var string
+	**/
+	var $FACEBOOK = null;
+	/**
 	* GTALK ID
 	* @var string
 	**/

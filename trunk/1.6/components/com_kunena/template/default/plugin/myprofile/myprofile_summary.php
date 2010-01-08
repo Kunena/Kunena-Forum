@@ -131,6 +131,14 @@ if ($signature)
       <td><?php echo kunena_htmlspecialchars(stripslashes($userinfo->SKYPE)); ?></td>
     </tr>
     <tr>
+      <td><b><?php echo _KUNENA_MYPROFILE_TWITTER; ?></b> </td>
+      <td><?php echo kunena_htmlspecialchars(stripslashes($userinfo->TWITTER)); ?></td>
+    </tr>
+    <tr>
+      <td><b><?php echo _KUNENA_MYPROFILE_FACEBOOK; ?></b> </td>
+      <td><?php echo kunena_htmlspecialchars(stripslashes($userinfo->FACEBOOK)); ?></td>
+    </tr>
+    <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_GTALK; ?></b> </td>
       <td><?php echo kunena_htmlspecialchars(stripslashes($userinfo->GTALK)); ?></td>
     </tr>

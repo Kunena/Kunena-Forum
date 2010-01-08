@@ -161,6 +161,18 @@ $lastvisitDate = strftime(_KUNENA_DT_DATETIME_FMT, strtotime($userinfo->lastvisi
       <td  class = "td-2 fbm"><?php echo kunena_htmlspecialchars(stripslashes($userinfo->SKYPE)); ?></td>
     </tr>
     <?php }?>
+    <?php  if ( $userinfo->TWITTER !='' ) { ?>
+    <tr class ="<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry1">
+      <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_TWITTER; ?></b> </td>
+      <td  class = "td-2 fbm"><?php echo kunena_htmlspecialchars(stripslashes($userinfo->TWITTER)); ?></td>
+    </tr>
+    <?php }?>
+    <?php  if ( $userinfo->FACEBOOK !='' ) { ?>
+    <tr class ="<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry1">
+      <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_FACEBOOK; ?></b> </td>
+      <td  class = "td-2 fbm"><?php echo kunena_htmlspecialchars(stripslashes($userinfo->FACEBOOK)); ?></td>
+    </tr>
+    <?php }?>
      <?php  if ( $userinfo->GTALK !='' ) { ?>
     <tr class ="<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_GTALK; ?></b> </td>

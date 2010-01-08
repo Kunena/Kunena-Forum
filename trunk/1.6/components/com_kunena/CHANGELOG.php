@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+08-Jan-2010 810
++ [#19303] Add twitter, facebook to profile
+
 08-Jan-2010 Xillibit
 ^# [#19358] Apply some changes on the polls
 

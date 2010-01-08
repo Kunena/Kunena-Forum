@@ -281,6 +281,16 @@ if ($kunena_config->fb_profile == 'cb') {
 				}
 				?>
 			<?php
+				if (isset ( $msg_html->twitter )) {
+					echo $msg_html->twitter;
+				}
+				?>
+            <?php
+				if (isset ( $msg_html->facebook )) {
+					echo $msg_html->facebook;
+				}
+				?>
+			<?php
 				if (isset ( $msg_html->website )) {
 					echo $msg_html->website;
 				}

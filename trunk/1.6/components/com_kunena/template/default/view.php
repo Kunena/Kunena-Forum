@@ -411,7 +411,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 			<table cellpadding="0" cellspacing="0" border="0" width="100%">
 				<tr>
 					<td>
-					
+
 					<div class="fb_title_cover  fbm"><span class="fb_title fbl"><b><?php
 		echo _KUNENA_TOPIC;
 		?></b>
@@ -419,7 +419,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		echo $this->kunena_topic_title;
 		?>
 		</span>
-		
+
 		<!-- Begin: Total Favorite -->
 			<?php
 		echo '<div class="fb_totalfavorite">';
@@ -435,7 +435,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		echo '</div>';
 		?>
 	<!-- Finish: Total Favorite -->
-	
+
 					</div></td>
 
 					<!-- B: FORUM TOOLS -->
@@ -532,6 +532,8 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 						$userinfo->MSN = '';
 						$userinfo->YIM = '';
 						$userinfo->SKYPE = '';
+						$userinfo->TWITTER = '';
+						$userinfo->FACEBOOK = '';
 						$userinfo->GTALK = '';
 						$userinfo->websiteurl = '';
 						$userinfo->signature = '';
@@ -886,6 +888,12 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 				}
 				if ($userinfo->SKYPE != '') {
 					$msg_html->skype = isset ( $kunena_icons ['msgskype'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msgskype'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->SKYPE ) ) . '" title="SKYPE: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->SKYPE ) ) . '" />' : 'SKYPE: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->SKYPE ) ) . '';
+				}
+				if ($userinfo->TWITTER != '') {
+					$msg_html->twitter = isset ( $kunena_icons ['msgtwitter'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msgtwitter'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->TWITTER ) ) . '" title="TWITTER: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->TWITTER ) ) . '" />' : 'TWITTER: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->TWITTER ) ) . '';
+				}
+				if ($userinfo->FACEBOOK != '') {
+					$msg_html->facebook = isset ( $kunena_icons ['msgfacebook'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msgfacebook'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->FACEBOOK ) ) . '" title="FACEBOOK: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->FACEBOOK ) ) . '" />' : 'FACEBOOK: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->FACEBOOK ) ) . '';
 				}
 				if ($userinfo->GTALK != '') {
 					$msg_html->gtalk = isset ( $kunena_icons ['msggtalk'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msggtalk'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->GTALK ) ) . '" title="GTALK: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->GTALK ) ) . '" />' : 'GTALK: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->GTALK ) ) . '';

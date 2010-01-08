@@ -97,6 +97,14 @@ $kunena_config =& CKunenaConfig::getInstance();
                                 <td><input name="SKYPE" maxlength="32" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->SKYPE));?>" type="text"/></td>
                             </tr>
                             <tr>
+                            <td width="40%"><b><?php echo _KUNENA_MYPROFILE_TWITTER; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_TWITTER_DESC; ?></div></td>
+                                <td><input name="TWITTER" maxlength="32" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->TWITTER));?>" type="text"/></td>
+                            </tr>
+                            <tr>
+                            <td width="40%"><b><?php echo _KUNENA_MYPROFILE_FACEBOOK; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_FACEBOOK_DESC; ?></div></td>
+                                <td><input name="FACEBOOK" maxlength="32" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->FACEBOOK));?>" type="text"/></td>
+                            </tr>
+                            <tr>
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_GTALK; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_GTALK_DESC; ?></div></td>
                                 <td><input name="GTALK" maxlength="32" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->GTALK));?>" type="text"/></td>
                             </tr>

@@ -1793,6 +1793,11 @@ MY PROFILE
 	border-left: 1px solid #BFC3C6;
 }
 
+table#fb_forumsearch tr.fb_sectiontableentry1 td.td-1 fieldset.fieldset {
+	background-image:none!important;
+}
+
+
 /* CSS Suffix support for category specific styling (Leave this section at the bottom)
 ----------------------------------------------------------------------------------------------- */
 

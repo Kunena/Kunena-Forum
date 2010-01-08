@@ -161,6 +161,13 @@ if (count ( $this->messages [0] ) > 0) {
 				align="left"><?php
 	echo _GEN_TOPICS;
 	?></th>
+			<th
+				class="th-4 <?php
+	echo KUNENA_BOARD_CLASS;
+	?>sectiontableheader"
+				align="center"><?php
+	echo _GEN_TOPICS;
+	?></th>
 
 			<th
 				class="th-6 <?php
@@ -381,12 +388,6 @@ if (count ( $this->messages [0] ) > 0) {
 			?>
 			</span> <!-- /Category --> <?php
 		}
-		?> <!-- Views --> <span class="topic_views"> <?php
-		echo _GEN_HITS;
-		?>: <?php
-		echo ( int ) $this->hits [$leaf->id];
-		?>
-			</span> <!-- /Views --> <?php
 		if ($leaf->locked != 0) {
 			?> <!-- Locked --> <span class="topic_locked"> <?php
 			echo isset ( $kunena_icons ['topiclocked'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['topiclocked'] . '" border="0" alt="' . _GEN_LOCKED_TOPIC . '" />' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  alt="' . _GEN_LOCKED_TOPIC . '" title="' . _GEN_LOCKED_TOPIC . '" />';
@@ -395,6 +396,14 @@ if (count ( $this->messages [0] ) > 0) {
 			</span> <!-- /Locked --> <?php
 		}
 		?></div>
+			</td>
+			<td class="td-4">
+			 <!-- Views --> <span class="topic_views"> <?php
+			echo _GEN_HITS;
+			?>: <?php
+			echo ( int ) $this->hits [$leaf->id];
+			?>
+			</span> <!-- /Views -->
 			</td>
 			<td class="td-6 fbs">
 			<div style="position: relative"><!--  Sticky   --> <?php

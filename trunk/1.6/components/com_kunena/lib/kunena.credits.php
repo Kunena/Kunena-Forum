@@ -30,7 +30,7 @@ $kunena_config =& CKunenaConfig::getInstance();
           <table class = "fb_blocktable" id ="fb_forumcredits" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
               <tr>
-                <th> <div class = "fb_title_cover"> <span class="fb_title" >Team credits</span> </div>
+                <th> <div class = "fb_title_cover"> <span class="fb_title fbl" >Team credits</span> </div>
               </tr>
             </thead>
             <tbody>

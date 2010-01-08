@@ -253,6 +253,13 @@
 	padding: 0px;
 }
 
+
+/* Using a Joomla menu module */
+
+#Kunena_tab ul.menu li#current.active a {
+	background-color:#5388B4;
+}
+	
 #Kunena option {
 	background: #FFFFFF none repeat scroll 0 0;
 	font-size: .95em;
@@ -602,6 +609,11 @@
 #Kunena .fb_header div#fb_topmenu a:hover {
 	color: #BFC3C6;
 }
+
+
+
+
+
 
 /* SEARCHBOX
 ----------------------------------------------------------------------------------------------- */

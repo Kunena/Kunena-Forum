@@ -40,7 +40,7 @@ $document->setTitle(_GEN_RULES . ' - ' . stripslashes($kunena_config->board_titl
         <tr>
             <th>
                 <div class = "fb_title_cover">
-                        <span class="fb_title" ><?php echo _COM_FORUM_RULES; ?></span>
+                        <span class="fb_title fbl" ><?php echo _COM_FORUM_RULES; ?></span>
                 </div>
                </th>
         </tr>

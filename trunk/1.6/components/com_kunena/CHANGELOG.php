@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+08-Jan-2010 Xillibit
+^# [#19358] Apply some changes on the polls
+
 08-Jan-2010 severdia
 ^ [#19356] New buttons, rank icons
 

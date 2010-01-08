@@ -24,6 +24,10 @@ defined ( '_JEXEC' ) or die ( 'Restricted access' );
 class html_Kunena {
 	// Begin: HEADER FUNC
 	function showFbHeader() {
+		//Insert javascript required for poll allowed cats
+	 	require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
+  		$poll = new CKunenaPolls();
+  		CKunenaPolls::AdminFillCategoriesAllowed();
 		?>
 <style type="text/css">
 #fbadmin {
@@ -3191,12 +3195,6 @@ td.fbtdtitle {
                     <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_NUMBER_VOTES_BY_DESC; ?>
                     </td>
                 </tr>
-
-
-            </table>
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
-
-
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top"  width="25%"><?php echo _KUNENA_A_POLL_ALLOW_ONE_VOTE; ?>
                     </td>
@@ -3207,17 +3205,22 @@ td.fbtdtitle {
                     <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_ALLOW_ONE_VOTE_DESC; ?>
                     </td>
                 </tr>
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"  width="25%"><?php echo _KUNENA_A_POLL_SHOW_USER_LIST; ?>
+                    </td>
 
+                    <td align = "left" valign = "top" width="25%"><?php echo $lists['pollresultsuserslist'] ?>
+                    </td>
 
-            </table>
-            <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
+                    <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_SHOW_USER_LIST_DESC; ?>
+                    </td>
+                </tr>
+
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top"  width="25%"><?php echo _KUNENA_A_POLL_CATEGORIES_ALLOWED; ?>
                     </td>
-
-                    <td align = "left" valign = "top" width="25%">
-                    <fieldset><?php foreach($lists['pollallowedcats'] as $cats){ echo $cats; }  ?></fieldset>
-                    <input type = "text" name = "cfg_pollallowedcategories" value = "<?php echo $kunena_config->pollallowedcategories; ?>"/>
+                    <td align = "left" valign = "top" width="25%"><?php echo $lists['pollallowedcats'] ?>
+                    <input type = "text" name = "cfg_pollallowedcategories" id="cfg_pollallowedcategories" value = "<?php echo $kunena_config->pollallowedcategories; ?>"/>
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC; ?>

@@ -111,6 +111,8 @@ class CKunenaPolls {
 	   var KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK = "'._KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK.'";
 	   var KUNENA_POLL_WAIT_BEFORE_VOTE = "'._KUNENA_POLL_WAIT_BEFORE_VOTE.'";
 	   var KUNENA_POLL_CANNOT_VOTE_NEW_TIME = "'._KUNENA_POLL_CANNOT_VOTE_NEW_TIME.'";
+	   var KUNENA_ICON_ERROR = "'.JURI::root(). 'administrator/images/publish_x.png'.'";
+	   var KUNENA_ICON_INFO = "'.JURI::root(). 'images/M_images/con_info.png'.'";
      //-->
      </script>
 		');
@@ -128,10 +130,19 @@ class CKunenaPolls {
 	   var boardclass = "'.KUNENA_BOARD_CLASS.'";
 	   var KUNENA_POLL_OPTION_NAME = "'._KUNENA_POLL_OPTION_NAME.'";
 	   var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "'._KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW.'";
+	   var KUNENA_ICON_ERROR = "'.JURI::root(). 'administrator/images/publish_x.png'.'";
       //-->
       </script>
 		');
    }
+	/**
+	* Fill input field by javascript in kunena configuration panel
+	*/
+	function AdminFillCategoriesAllowed()
+	{
+		$document =& JFactory::getDocument();
+		$document->addScript(KUNENA_DIRECTURL . '/template/default/plugin/poll/js/kunena.poll.admin.js');
+	}
    /**
 	* Save a new poll
 	*/
@@ -174,20 +185,16 @@ class CKunenaPolls {
 	* Get the five better votes in polls
 	* @return int
 	*/
-   function get_top_five_votes()
+   function get_top_five_votes($PopPollsCount)
    {
 		$kunena_db = &JFactory::getDBO();
-
-//
-// FIXME: Query does not make sense, certainly does not return top five voted for options
-//
 		$query = "SELECT SUM(o.votes) AS total
 					FROM #__fb_polls AS p
 					LEFT JOIN #__fb_polls_options AS o ON p.threadid=o.pollid
 					GROUP BY p.threadid
 					ORDER BY total
-					DESC LIMIT 1";
-		$kunena_db->setQuery($query);
+					DESC ";
+		$kunena_db->setQuery($query,0,$PopPollsCount);
 		$votecount = $kunena_db->loadResult();
 		check_dberror('Unable to count votes');
 
@@ -200,9 +207,10 @@ class CKunenaPolls {
 	function get_top_five_polls($PopPollsCount)
 	{
     	$kunena_db = &JFactory::getDBO();
-    	$query = "SELECT p.*, SUM(o.votes) AS total
+    	$query = "SELECT q.catid,p.*, SUM(o.votes) AS total
     				FROM #__fb_polls AS p
-    				LEFT JOIN #__fb_polls_options AS o ON p.threadid=o.pollid
+    				INNER JOIN #__fb_polls_options AS o ON p.threadid=o.pollid
+    				INNER JOIN #__fb_messages AS q ON p.threadid = q.thread
     				GROUP BY p.threadid
     				ORDER BY total DESC";
     	$kunena_db->setQuery($query,0,$PopPollsCount);

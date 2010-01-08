@@ -8,6 +8,28 @@
 * @link http://www.kunena.com
 **/
 
+//this function insert a text by modifing the DOM, for show infos given by ajax result
+function insert_text(textString,nb)
+{	
+	var polltexthelp = document.getElementById('poll_text_help');
+	//Remove the content of the html tag <p></p> before to add something else
+	//i don't know if it's possible to use something else than innerHTML() function for do this purpose
+	polltexthelp.innerHTML='';
+	var newinfo = document.createElement("p");
+	newinfo.setAttribute('id','poll_text_infos');
+	var image = document.createElement("img");	
+	if(nb == '1'){				
+		image.setAttribute('src',KUNENA_ICON_ERROR);		
+		texte = document.createTextNode(' '+textString); 
+	}else {		
+		image.setAttribute('src',KUNENA_ICON_INFO);		
+		texte = document.createTextNode(' '+textString); 
+	}	
+	polltexthelp.appendChild(newinfo);
+	newinfo.appendChild(image);
+	newinfo.appendChild(texte);
+}
+
 //Send the user vote by ajax for save it in the database
 function ajax(nb,id)
 {     
@@ -29,16 +51,20 @@ function ajax(nb,id)
         if (xhr.readyState == 4) {
           var datasendfromserver = xhr.responseText;                  
           if(datasendfromserver.match("infoserver=\"1\"")){
-            alert(KUNENA_POLL_SAVE_ALERT_OK);
+        	  var nbimages = '0';
+        	  insert_text(KUNENA_POLL_SAVE_ALERT_OK,nbimages);
           }
           if(datasendfromserver.match("infoserver=\"0\"")){
-            alert(KUNENA_POLL_SAVE_ALERT_ERROR);
+        	  var nbimages = '1';
+        	  insert_text(KUNENA_POLL_SAVE_ALERT_ERROR,nbimages);
           }
           if(datasendfromserver.match("infoserver=\"2\"")){
-            alert(KUNENA_POLL_WAIT_BEFORE_VOTE);
+        	  var nbimages = '1';
+        	  insert_text(KUNENA_POLL_WAIT_BEFORE_VOTE,nbimages);
           }
           if(datasendfromserver.match("infoserver=\"3\"")){
-              alert(KUNENA_POLL_CANNOT_VOTE_NEW_TIME);
+        	  var nbimages = '1';
+        	  insert_text(KUNENA_POLL_CANNOT_VOTE_NEW_TIME,nbimages);
             }
         }
 
@@ -49,6 +75,7 @@ function ajax(nb,id)
 
     }
     if(datano == "0") {
-      alert(KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK);
+    	var nbimages = '1';
+  	  	insert_text(KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK,nbimages);
     }
 }

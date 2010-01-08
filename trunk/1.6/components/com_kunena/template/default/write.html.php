@@ -359,6 +359,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
                     <strong><?php echo _KUNENA_POLL_ADD; ?></strong>
                 </td>
                 <td>
+                	<div style="font-weight:bold;" id="poll_text_write"></div>
                     <div><input type = "text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" /><?php echo ' '. _KUNENA_POLL_TITLE; ?></div>
                     <div><?php echo $pollcalendar . ' '. _KUNENA_POLL_TIME_TO_LIVE; ?></div>
 
@@ -415,29 +416,24 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 		<tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry2">
 			<td class = "fb_leftcolumn">
                     <strong><?php echo _KUNENA_POLL_ADD; ?></strong>
-                </td>
-                <td>
+            </td>
+            <td>
+                	<div style="font-weight:bold;" id="poll_text_write"></div>
                     <div><input type = "text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" /><?php echo ' '. _KUNENA_POLL_TITLE; ?></div>
                     <div><?php echo $pollcalendar . ' '. _KUNENA_POLL_TIME_TO_LIVE; ?></div>
                     <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $kunena_config->pollnboptions; ?>);">
                     <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onclick = "javascript:delete_field();">
                     <input type="hidden" name="number_total_options" id="numbertotalr" value="<?php echo $polloptions; ?>">
-                </td>
-                <td>
+            </td>
+        </tr>
                 <?php
-                  if (isset($polloptions))
-                  {
-                    $nboptions = "1";
-                    for ($i=0;$i < $polloptions;$i++)
-                    {
-                      echo "<tr class=\"".KUNENA_BOARD_CLASS."sectiontableentry2\" id=\"option".$nboptions."\"><td style=\"font-weight: bold\" class=\"fb_leftcolumn\">Option ".$nboptions."</td><td><input type=\"text\" id=\"field_option".$i."\" name=\"field_option".$i."\" value=\"".$polldatasedit[$i]->text."\" /></td></tr>";
-                      $nboptions++;
+                  if (isset($polloptions)) {
+                  	$nboptions = "1";
+                    for ($i=0;$i < $polloptions;$i++) {
+                    	echo "<tr class=\"".KUNENA_BOARD_CLASS."sectiontableentry2\" id=\"option".$nboptions."\"><td style=\"font-weight: bold\" class=\"fb_leftcolumn\">Option ".$nboptions."</td><td><input type=\"text\" id=\"field_option".$i."\" name=\"field_option".$i."\" value=\"".$polldatasedit[$i]->text."\" /></td></tr>";
+                      	$nboptions++;
                     }
                   }
-                ?>
-            </td>
-		</tr>
-		<?php
           	  }
         	}
 		}

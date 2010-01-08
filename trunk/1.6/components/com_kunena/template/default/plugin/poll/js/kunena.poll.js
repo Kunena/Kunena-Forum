@@ -54,6 +54,31 @@ function create_new_field_now(){
   number_field++;
 }
 
+//this function insert a text by modifing the DOM, for show infos given by ajax result
+function insert_text_write(textString)
+{	
+	if(document.getElementById('option_error') == undefined){
+		var tablebody = document.getElementById('fb_post_message');
+		var row = document.createElement("tr");
+		row.className=boardclass+"sectiontableentry2";
+		row.setAttribute('id','option_error');
+		cell = document.createElement("td");
+		cell.setAttribute('id','error');
+		cell.className ="fb_leftcolumn";
+		var image = document.createElement("img");			
+		image.setAttribute('src',KUNENA_ICON_ERROR);
+		cell.appendChild(image);
+		row.appendChild(cell);
+		cell = document.createElement("td");
+		texte = document.createTextNode(textString);
+		//field_option.setAttribute('type','text');    
+		row.appendChild(cell);
+		cell.appendChild(texte);
+		tablebody.appendChild(row);
+		document.getElementById("fb_post_message").insertBefore(row,document.getElementById("fb_post_buttons_tr"));	
+	}
+}
+
 //Create only a new poll options, the function valueoptions get the number 1 and check the options maximu for number
 function new_field(nboptionsmax){
   if(nboptionsmax == "0") {
@@ -62,7 +87,7 @@ function new_field(nboptionsmax){
     if(number_field <= nboptionsmax){
       create_new_field_now();
     } else {
-      alert(KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW);
+    	insert_text_write(KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW);
     }
   }
 }

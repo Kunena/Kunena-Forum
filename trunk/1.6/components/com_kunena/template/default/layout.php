@@ -141,6 +141,7 @@ function kunena_get_menu($cbitemid, $kunena_config, $kunena_icons, $my_id, $type
 	}
 
 	$header .= ' <li ';
+	 if ($func == 'search' ) $header .= ' class="Kunena_item_active" ';
 	$header .= ' >'.CKunenaLink::GetSearchLink($kunena_config, 'search', '', 0, 0, '<span>'.(array_key_exists('search', $kunena_icons) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons['search'] . '" border="0" alt="' . _FORUM_SEARCHTITLE . '" title="' . _FORUM_SEARCHTITLE . '"/>' : _FORUM_SEARCHTITLE).'</span>');
     $header .= '</li>';
 

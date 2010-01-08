@@ -183,11 +183,21 @@
 	float: left;
 }
 
-#Kunena #Kunena_tab li {
+#Kunena #Kunena_tab li,
+#Kunena #Kunena_tab div.moduletable ul.menu li	{
 	display: inline;
 	float: left;
-	margin: 0 2px 0 0;
+	margin: 0 2px 0 0!important;
 	padding: 0;
+}
+
+#Kunena_tab div.moduletable {
+	background: none;
+	margin-bottom: 0;
+}
+
+#Kunena_tab div.moduletable ul.menu li a span {
+	background:none!important;
 }
 
 #Kunena #Kunena_tab a {

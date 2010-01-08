@@ -641,12 +641,14 @@
 }
 
 #Kunena div.fb_totalfavorite {
-	float: right;
 	text-align: left;
 	color: #FFFFFF;
 	font-weight: normal;
 	line-height: normal;
-	padding: 4px;
+}
+
+#Kunena div.fb_totalfavorite img {
+	margin-left: 10px;
 }
 
 #Kunena .fb_title,#Kunena a.fb_title {
@@ -655,6 +657,7 @@
 	display: block;
 	color: #FFFFFF;
 	text-decoration: none;
+	float:left;
 }
 
 #Kunena .fb_title a {
@@ -1228,6 +1231,160 @@ POST PAGE
 	font-weight: bold;
 	font-size: small;
 }
+
+/* FORUM BUTTONS
+----------------------------------------------------------------------------------------------- */
+
+/* Grey buttons */
+
+#Kunena a.buttongrey {
+	color: #FFF;
+	text-transform: uppercase;
+	font-size: 11px;
+	font-family: Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	float: right;
+	cursor: pointer;
+	line-height: 145%;
+	background: url("images/btn-bg-grey.gif") repeat-x left top;
+	border: none;
+}
+
+#Kunena a.buttongrey.btn-left {
+	float: left;
+}
+
+#Kunena a.buttongrey span {
+	float: left;
+}
+
+#Kunena a.buttongrey span.reply {
+	float: left;
+	background: url("images/btn-left-reply.gif") no-repeat left top;
+}
+#Kunena a.buttongrey span.quote {
+	float: left;
+	background: url("images/btn-left-quote.gif") no-repeat left top;
+}
+#Kunena a.buttongrey span.newtopic {
+	float: left;
+	background: url("images/btn-left-newtopic.gif") no-repeat left top;
+}
+
+#Kunena a.buttongrey span span {
+	height: 18px;
+	padding: 0 7px 0 20px;
+	background: url("images/btn-right-grey.gif") no-repeat right top;
+}
+
+/* Blue buttons */
+
+#Kunena a.buttonblue {
+	color: #FFF;
+	text-transform: uppercase;
+	font-size: 11px;
+	font-family: Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	float: right;
+	cursor: pointer;
+	line-height: 145%;
+	background: url("images/btn-bg-blue.gif") repeat-x left top;
+	border: none;
+}
+
+#Kunena a.buttonblue.btn-left {
+	float: left;
+}
+
+#Kunena a.buttonblue span {
+	float: left;
+}
+
+#Kunena a.buttonblue span.favorite {
+	float: left;
+	background: url("images/btn-left-favorite.gif") no-repeat left top;
+}
+#Kunena a.buttonblue span.subscribe {
+	float: left;
+	background: url("images/btn-left-subscribe.gif") no-repeat left top;
+}
+#Kunena a.buttonblue span.markread {
+	float: left;
+	background: url("images/btn-left-markread.gif") no-repeat left top;
+}
+#Kunena a.buttonblue span.report {
+	float: left;
+	background: url("images/btn-left-report.gif") no-repeat left top;
+}
+#Kunena a.buttonblue span span {
+	height: 18px;
+	padding: 0 7px 0 20px;
+	background: url("images/btn-right-blue.gif") no-repeat right top;
+}
+
+/* Purple buttons */
+
+#Kunena a.buttonpurple {
+	color: #FFF;
+	text-transform: uppercase;
+	font-size: 11px;
+	font-family: Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	float: right;
+	cursor: pointer;
+	line-height: 145%;
+	background: url("images/btn-bg-purple.gif") repeat-x left top;
+	border: none;
+}
+
+#Kunena a.buttonpurple.btn-left {
+	float: left;
+}
+
+a.buttonpurple span {
+	float: left;
+}
+
+#Kunena a.buttonpurple span.merge {
+	float: left;
+	background: url("images/btn-left-merge.gif") no-repeat left top;
+}
+#Kunena a.buttonpurple span.edit {
+	float: left;
+	background: url("images/btn-left-edit.gif") no-repeat left top;
+}
+#Kunena a.buttonpurple span.delete {
+	float: left;
+	background: url("images/btn-left-delete.gif") no-repeat left top;
+}
+#Kunena a.buttonpurple span.move {
+	float: left;
+	background: url("images/btn-left-move.gif") no-repeat left top;
+}
+
+#Kunena a.buttonpurple span.sticky {
+	float: left;
+	background: url("images/btn-left-sticky.gif") no-repeat left top;
+}
+#Kunena a.buttonpurple span.lock {
+	float: left;
+	background: url("images/btn-left-lock.gif") no-repeat left top;
+}
+#Kunena a.buttonpurple span.split {
+	float: left;
+	background: url("images/btn-left-split.gif") no-repeat left top;
+}
+
+#Kunena a.buttonpurple span.moderate {
+	float: left;
+	background: url("images/btn-left-moderate.gif") no-repeat left top;
+}
+#Kunena a.buttonpurple span span {
+	height: 18px;
+	padding: 0 7px 0 20px;
+	background: url("images/btn-right-purple.gif") no-repeat right top;
+}
+
 
 /*
 BBCODE BUTTONS

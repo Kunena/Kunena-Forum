@@ -411,18 +411,18 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 			<table cellpadding="0" cellspacing="0" border="0" width="100%">
 				<tr>
 					<td>
+					
 					<div class="fb_title_cover  fbm"><span class="fb_title fbl"><b><?php
 		echo _KUNENA_TOPIC;
 		?></b>
 		<?php
 		echo $this->kunena_topic_title;
 		?>
-		</span></div>
-					</td>
-
+		</span>
+		
 		<!-- Begin: Total Favorite -->
 			<?php
-		echo '<td><div class="fb_totalfavorite">';
+		echo '<div class="fb_totalfavorite">';
 		if ($kunena_icons ['favoritestar']) {
 			if ($fb_favorited)
 				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
@@ -432,9 +432,11 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 			echo _KUNENA_TOTALFAVORITE;
 			echo $fb_totalfavorited;
 		}
-		echo '</td></div>';
+		echo '</div>';
 		?>
-		<!-- Finish: Total Favorite -->
+	<!-- Finish: Total Favorite -->
+	
+					</div></td>
 
 					<!-- B: FORUM TOOLS -->
 					<td align="right" width="1%">

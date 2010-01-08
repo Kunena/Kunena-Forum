@@ -549,12 +549,26 @@
 	margin-top: 3px;
 }
 #Kunena span.topic_posted_time,
-#Kunena span.topic_category,
-#Kunena span.topic_views {
+#Kunena span.topic_category {
 	display: block;
 	float:left;
 	clear:left;
 }
+
+#Kunena span.topic_views {
+	color:#999999;
+	text-align:center;
+	font-size:1em;
+}
+
+#Kunena span.topic_views_number {
+	display:block;
+	font-size: 1.5em;
+	line-height:21px;
+	margin:5px 0;
+	color: #999;
+}
+	
 #Kunena span.topic_by { 
 	margin-left: 3px;
 }
@@ -719,7 +733,7 @@
 }
 
 #Kunena th.fb_sectiontableheader {
-	
+	height: 25px;
 }
 
 #Kunena tr.fb_sectiontableentry1 td.td-1 {

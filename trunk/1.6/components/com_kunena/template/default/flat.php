@@ -138,8 +138,8 @@ if (count ( $this->messages [0] ) > 0) {
 	<?php
 	}
 	?>
-
-	<tbody>
+	
+	<thead>
 		<tr class="fb_sth fbs ">
 			<th
 				class="th-0 <?php
@@ -189,6 +189,8 @@ if (count ( $this->messages [0] ) > 0) {
 	}
 	?>
 		</tr>
+		</thead>
+		<tbody>
 
 		<?php
 	$k = 0;
@@ -398,12 +400,17 @@ if (count ( $this->messages [0] ) > 0) {
 		?></div>
 			</td>
 			<td class="td-4" align="center">
-			 <!-- Views --> <span class="topic_views"> <?php
-			echo _GEN_HITS;
-			?>: <?php
+			 <!-- Views --> 
+			 <span class="topic_views_number"><?php
 			echo ( int ) $this->hits [$leaf->id];
 			?>
-			</span> <!-- /Views -->
+			</span>
+			<span class="topic_views">
+			<?php
+			echo _GEN_HITS;
+			?>
+			</span> 
+			<!-- /Views -->
 			</td>
 			<td class="td-6 fbs">
 			<div style="position: relative"><!--  Sticky   --> <?php

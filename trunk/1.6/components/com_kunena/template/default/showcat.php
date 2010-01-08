@@ -114,7 +114,7 @@ if (in_array ( $catid, $allow_forum )) {
 		$query = "SELECT a.*, j.id AS userid, t.message AS messagetext, l.myfavorite, l.favcount, l.attachmesid,
 							l.msgcount, l.lastid, u.avatar, c.id AS catid, c.name AS catname, c.class_sfx
 	FROM (
-		SELECT m.thread, (f.userid='{$kunena_my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachmesid,
+		SELECT m.thread, MAX(f.userid='{$kunena_my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachmesid,
 			COUNT(DISTINCT m.id) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime
 		FROM #__fb_messages AS m
 		LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread

@@ -202,11 +202,10 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		}
 		//Perform favorites check only once
 		$fb_canfavorite = 0;
+		$kunena_db->setQuery ( "SELECT MAX(userid={$kunena_my->id}) AS favorited, COUNT(*) AS totalfavorited FROM #__fb_favorites WHERE thread='{$thread}'" );
+		list ($fb_favorited, $fb_totalfavorited) = $kunena_db->loadRow ();
 		if ($kunena_config->allowfavorites && ("" != $kunena_my->id || 0 != $kunena_my->id)) {
-			$kunena_db->setQuery ( "SELECT thread FROM #__fb_favorites WHERE userid='{$kunena_my->id}' AND thread='{$thread}'" );
-			$fb_favorited = $kunena_db->loadResult ();
-
-			if ($fb_favorited == "") {
+			if (!$fb_favorited) {
 				$fb_canfavorite = 1;
 			}
 		}
@@ -413,6 +412,23 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		?>
 		</span></div>
 					</td>
+
+		<!-- Begin: Total Favorite -->
+			<?php
+		echo '<td><div class="fb_totalfavorite">';
+		if ($kunena_icons ['favoritestar']) {
+			if ($fb_favorited)
+				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
+			else if ($fb_totalfavorited)
+				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar_grey'] . '" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
+		} else {
+			echo _KUNENA_TOTALFAVORITE;
+			echo $fb_totalfavorited;
+		}
+		echo '</td></div>';
+		?>
+		<!-- Finish: Total Favorite -->
+
 					<!-- B: FORUM TOOLS -->
 					<td align="right" width="1%">
 		<?php
@@ -431,30 +447,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		//(JJ) FINISH: RECENT POSTS
 
 
-		?> <!-- F: FORUM TOOLS --> <!-- Begin: Total Favorite -->
-			<?php
-		$kunena_db->setQuery ( "SELECT COUNT(*) FROM #__fb_favorites WHERE thread='{$thread}'" );
-		$fb_totalfavorited = $kunena_db->loadResult ();
-
-		echo '<div class="fb_totalfavorite">';
-		if ($kunena_icons ['favoritestar']) {
-			if ($fb_totalfavorited >= 1)
-				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
-			if ($fb_totalfavorited >= 3)
-				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
-			if ($fb_totalfavorited >= 6)
-				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
-			if ($fb_totalfavorited >= 10)
-				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
-			if ($fb_totalfavorited >= 15)
-				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
-		} else {
-			echo _KUNENA_TOTALFAVORITE;
-			echo $fb_totalfavorited;
-		}
-		echo '</div>';
-		?>
-			<!-- Finish: Total Favorite --></th>
+		?> <!-- F: FORUM TOOLS -->
 		</tr>
 	</thead>
 

@@ -121,7 +121,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 			$kunena_app->close ();
 		}
 
-		CKunenaTools::markTopicRead($thread, $kunena_my->id);
+		CKunenaTools::markTopicRead ( $thread, $kunena_my->id );
 
 		//update the hits counter for this topic & exclude the owner
 		if ($kunena_my->id == 0 || $this_message->userid != $kunena_my->id) {
@@ -212,7 +212,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		}
 
 		//data ready display now
-		if (CKunenaTools::isModerator($kunena_my->id, $catid) || (($this->kunena_forum_locked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
+		if (CKunenaTools::isModerator ( $kunena_my->id, $catid ) || (($this->kunena_forum_locked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
 			//this user is allowed to reply to this topic
 			$thread_reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $thread, isset ( $kunena_icons ['topicreply'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['topicreply'] . '" alt="' . _GEN_POST_REPLY . '" title="' . _GEN_POST_REPLY . '" border="0" />' : _GEN_POST_REPLY );
 		}
@@ -243,12 +243,12 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		// FINISH: FAVORITES
 
 
-		if (CKunenaTools::isModerator($kunena_my->id, $catid) || ($this->kunena_forum_locked == 0 && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
+		if (CKunenaTools::isModerator ( $kunena_my->id, $catid ) || ($this->kunena_forum_locked == 0 && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
 			//this user is allowed to post a new topic
 			$thread_new = CKunenaLink::GetPostNewTopicLink ( $catid, isset ( $kunena_icons ['new_topic'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC );
 		}
 
-		if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
+		if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 			// offer the moderator always the move link to relocate a topic to another forum
 			// and the (un)sticky bit links
 			// and the (un)lock links
@@ -296,10 +296,11 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 <?php
 		if ($objCatInfo->headerdesc) {
 			?>
-<table class="fb_forum-headerdesc<?php
-			echo isset( $objCatInfo->class_sfx ) ? ' fb_forum-headerdesc' . $objCatInfo->class_sfx : '';
-			?>" border="0" cellpadding="0"
-	cellspacing="0" width="100%">
+<table
+	class="fb_forum-headerdesc<?php
+			echo isset ( $objCatInfo->class_sfx ) ? ' fb_forum-headerdesc' . $objCatInfo->class_sfx : '';
+			?>"
+	border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tr>
 		<td><?php
 			$headerdesc = stripslashes ( smile::smileReplace ( $objCatInfo->headerdesc, 0, $kunena_config->disemoticons, $kunena_emoticons ) );
@@ -312,30 +313,27 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 </table>
 <?php
 		}
-if ($kunena_config->pollenabled == "1" && $this_message->poll_id){
-    if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/poll/pollbox.php')) {
-        require_once (KUNENA_ABSTMPLTPATH . '/plugin/poll/pollbox.php');
-    }
-    else {
-        require_once (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/poll/pollbox.php');
-    }
-}
-// load module
-if (JDocumentHTML::countModules('kunena_poll'))
-{
-?>
-    <div class = "fb-fb_2">
-        <?php
-        	$document	= &JFactory::getDocument();
-        	$renderer	= $document->loadRenderer('modules');
-        	$options	= array('style' => 'xhtml');
-        	$position	= 'kunena_poll';
-        	echo $renderer->render($position, $options, null);
-	       ?>
-    </div>
+		if ($kunena_config->pollenabled == "1" && $this_message->poll_id) {
+			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/poll/pollbox.php' )) {
+				require_once (KUNENA_ABSTMPLTPATH . '/plugin/poll/pollbox.php');
+			} else {
+				require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/poll/pollbox.php');
+			}
+		}
+		// load module
+		if (JDocumentHTML::countModules ( 'kunena_poll' )) {
+			?>
+<div class="fb-fb_2"><?php
+			$document = &JFactory::getDocument ();
+			$renderer = $document->loadRenderer ( 'modules' );
+			$options = array ('style' => 'xhtml' );
+			$position = 'kunena_poll';
+			echo $renderer->render ( $position, $options, null );
+			?>
+</div>
 <?php
-}
-         ?>
+		}
+		?>
 
 <!-- B: List Actions -->
 
@@ -348,7 +346,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
 		echo CKunenaLink::GetSamePageAnkerLink ( 'forumbottom', isset ( $kunena_icons ['bottomarrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM );
 
 		echo '</td>';
-		if (CKunenaTools::isModerator($kunena_my->id, $catid) || isset ( $thread_reply ) || isset ( $thread_subscribe ) || isset ( $thread_favorite )) {
+		if (CKunenaTools::isModerator ( $kunena_my->id, $catid ) || isset ( $thread_reply ) || isset ( $thread_subscribe ) || isset ( $thread_favorite )) {
 			echo '<td class="fb_list_actions_forum">';
 			echo '<div class="fb_message_buttons_row" style="text-align: center;">';
 			if (isset ( $thread_reply ))
@@ -358,7 +356,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
 			if (isset ( $thread_favorite ))
 				echo ' ' . $thread_favorite;
 			echo '</div>';
-			if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
+			if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 				echo '<div class="fb_message_buttons_row" style="text-align: center;">';
 				echo $thread_delete;
 				echo ' ' . $thread_move;
@@ -396,20 +394,28 @@ if (JDocumentHTML::countModules('kunena_poll'))
 
 <!-- <table border = "0" cellspacing = "0" cellpadding = "0" width = "100%" align = "center"> -->
 
-<table class="fb_blocktable<?php
+<table
+	class="fb_blocktable<?php
 		echo isset ( $objCatInfo->class_sfx ) ? ' fb_blocktable' . $objCatInfo->class_sfx : '';
 		?>"
 	id="fb_views" cellpadding="0" cellspacing="0" border="0" width="100%">
 	<thead>
 		<tr>
 			<th align="left">
-			<div class="fb_title_cover  fbm"><span class="fb_title fbl"><b><?php
+			<table cellpadding="0" cellspacing="0" border="0" width="100%">
+				<tr>
+					<td>
+					<div class="fb_title_cover  fbm"><span class="fb_title fbl"><b><?php
 		echo _KUNENA_TOPIC;
 		?></b>
-			<?php
+		<?php
 		echo $this->kunena_topic_title;
-		?></span></div>
-			<!-- B: FORUM TOOLS --> <?php
+		?>
+		</span></div>
+					</td>
+					<!-- B: FORUM TOOLS -->
+					<td align="right" width="1%">
+		<?php
 
 		//(JJ) BEGIN: RECENT POSTS
 		if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/forumtools/forumtools.php' )) {
@@ -417,12 +423,16 @@ if (JDocumentHTML::countModules('kunena_poll'))
 		} else {
 			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/forumtools/forumtools.php');
 		}
-
+		?>
+		</td>
+				</tr>
+			</table>
+			<?php
 		//(JJ) FINISH: RECENT POSTS
 
 
-		?>
-			<!-- F: FORUM TOOLS --> <!-- Begin: Total Favorite --> <?php
+		?> <!-- F: FORUM TOOLS --> <!-- Begin: Total Favorite -->
+			<?php
 		$kunena_db->setQuery ( "SELECT COUNT(*) FROM #__fb_favorites WHERE thread='{$thread}'" );
 		$fb_totalfavorited = $kunena_db->loadResult ();
 
@@ -886,7 +896,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
 
 
 				//Show admins the IP address of the user:
-				if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
+				if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 					$msg_html->ip = $this->kunena_message->ip;
 				}
 
@@ -915,7 +925,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
 					$msg_html->signature = $signature;
 				}
 
-				if (CKunenaTools::isModerator($kunena_my->id, $catid) || (($this->kunena_forum_locked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
+				if (CKunenaTools::isModerator ( $kunena_my->id, $catid ) || (($this->kunena_forum_locked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
 					//user is allowed to reply/quote
 					$msg_html->reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $this->kunena_message->id, isset ( $kunena_icons ['reply'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['reply'] . '" alt="Reply" border="0" title="' . _VIEW_REPLY . '" />' : _GEN_REPLY );
 					$msg_html->quote = CKunenaLink::GetTopicPostReplyLink ( 'quote', $catid, $this->kunena_message->id, isset ( $kunena_icons ['quote'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['quote'] . '" alt="Quote" border="0" title="' . _VIEW_QUOTE . '" />' : _GEN_QUOTE );
@@ -930,7 +940,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
 
 				$showedEdit = 0; //reset this value
 				//Offer an moderator the delete link
-				if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
+				if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 					$msg_html->delete = CKunenaLink::GetTopicPostLink ( 'delete', $catid, $this->kunena_message->id, isset ( $kunena_icons ['delete'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />' : _GEN_DELETE );
 					$msg_html->merge = CKunenaLink::GetTopicPostLink ( 'merge', $catid, $this->kunena_message->id, isset ( $kunena_icons ['merge'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['merge'] . '" alt="' . _GEN_MERGE . '" border="0" title="' . _GEN_MERGE . '" />' : _GEN_MERGE );
 				}
@@ -958,7 +968,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
 					}
 				}
 
-				if (CKunenaTools::isModerator($kunena_my->id, $catid) && $showedEdit != 1) {
+				if (CKunenaTools::isModerator ( $kunena_my->id, $catid ) && $showedEdit != 1) {
 					//Offer a moderator always the edit link except when it is already showing..
 					$msg_html->edit = CKunenaLink::GetTopicPostLink ( 'edit', $catid, $this->kunena_message->id, isset ( $kunena_icons ['edit'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />' : _GEN_EDIT );
 				}
@@ -991,7 +1001,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
 
 		echo '</td>';
 
-		if (CKunenaTools::isModerator($kunena_my->id, $catid) || isset ( $thread_reply ) || isset ( $thread_subscribe ) || isset ( $thread_favorite )) {
+		if (CKunenaTools::isModerator ( $kunena_my->id, $catid ) || isset ( $thread_reply ) || isset ( $thread_subscribe ) || isset ( $thread_favorite )) {
 			echo '<td class="fb_list_actions_forum">';
 			echo '<div class="fb_message_buttons_row" style="text-align: center;">';
 			if (isset ( $thread_reply ))
@@ -1001,7 +1011,7 @@ if (JDocumentHTML::countModules('kunena_poll'))
 			if (isset ( $thread_favorite ))
 				echo ' ' . $thread_favorite;
 			echo '</div>';
-			if (CKunenaTools::isModerator($kunena_my->id, $catid)) {
+			if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 				echo '<div class="fb_message_buttons_row" style="text-align: center;">';
 				echo $thread_delete;
 				echo ' ' . $thread_move;

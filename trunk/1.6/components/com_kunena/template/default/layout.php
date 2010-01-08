@@ -139,7 +139,12 @@ function kunena_get_menu($cbitemid, $kunena_config, $kunena_icons, $my_id, $type
         $header .= ' >'.CKunenaLink::GetHelpLink($kunena_config, '<span>'.(array_key_exists('help', $kunena_icons) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons['help'] . '" border="0" alt="' . _GEN_HELP . '" title="' . _GEN_HELP . '"/>' : _GEN_HELP).'</span>');
         $header .= '</li>';
 	}
-    $header .= '</ul></div></div>';
+
+	$header .= ' <li ';
+	$header .= ' >'.CKunenaLink::GetHelpLink($kunena_config, '<span>'.(array_key_exists('help', $kunena_icons) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons['help'] . '" border="0" alt="' . _GEN_HELP . '" title="' . _GEN_HELP . '"/>' : _GEN_HELP).'</span>');
+    $header .= '</li>';
+
+	$header .= '</ul></div></div>';
     return $header;
 }
 

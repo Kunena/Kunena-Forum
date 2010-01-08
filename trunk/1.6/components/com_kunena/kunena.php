@@ -415,9 +415,6 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		echo $kunena_menu;
 	}
 	?></td>
-		<td align="right" width="5%"><?php
-	echo getSearchBox ();
-	?></td>
 		<td align="right" width="1%"><img
 			id="BoxSwitch_topprofilebox__topprofilebox_tbody" class="hideshow"
 			src="<?php

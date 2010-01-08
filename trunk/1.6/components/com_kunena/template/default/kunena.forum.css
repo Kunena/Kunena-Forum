@@ -486,7 +486,7 @@
 	border: 1px solid #006699;
 	color: #FFFFFF;
 }
-
+	
 #Kunena a {
 	text-decoration: none;
 	font-weight: normal;
@@ -498,6 +498,10 @@
 
 #Kunena a:hover {
 	color: #FF0000;
+}
+
+#Kunena .fb_sectiontableheader a {
+	color: #AAAAAA;
 }
 
 #Kunena .fbxs {

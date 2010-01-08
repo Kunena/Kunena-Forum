@@ -1557,7 +1557,9 @@ FAQ , RULES , UPLOAD AVATAR, ANNOUNCEMENT
 	background: #FFFFFF;
 	color: #000000;
 }
-
+#Kunena td.fb_creditsdesc div.fbfooter {
+	text-align:center;
+}
 #Kunena .fb_credits_intro {
 	padding: 10px 0 10px 0;
 }
@@ -1572,6 +1574,7 @@ FAQ , RULES , UPLOAD AVATAR, ANNOUNCEMENT
 	padding: 7px 10px 7px 10px;
 	border-bottom: 1px solid #dddddd;
 	list-style: inside;
+	list-style-type:none;
 	margin: 0;
 	background: transparent none;
 }

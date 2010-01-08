@@ -1196,7 +1196,7 @@ DEFINE('_COM_A_MOSBOT_DESC', 'The discuss bot enables your users to discuss arti
 DEFINE('_FORUM_SEARCHTITLE', 'Search');
 DEFINE('_FORUM_SEARCHRESULTS', 'Displaying %s out of %s results.');
 // Help, FAQ
-DEFINE('_COM_FORUM_HELP', 'FAQ');
+DEFINE('_COM_FORUM_HELP', 'Help');
 // rules.php
 DEFINE('_COM_FORUM_RULES', 'Rules');
 DEFINE('_COM_FORUM_RULES_DESC', '<ul><li>Edit this file to insert your rules joomlaroot/administrator/components/com_kunena/language/kunena.english.php</li><li>Rule 2</li><li>Rule 3</li><li>Rule 4</li><li>...</li></ul>');

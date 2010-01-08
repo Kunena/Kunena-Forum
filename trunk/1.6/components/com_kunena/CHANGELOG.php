@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+08-Jan-2010 severdia
+^ [#19345] Re-style default template
+
+
 07-Jan-2010 fxstein
 + [#19333] New datamodel table for category subscriptions
 + [#19333] New category subscriptions logic (w/o email notification)

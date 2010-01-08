@@ -348,6 +348,8 @@ if (in_array ( $catid, $allow_forum )) {
 			echo $forum_new;
 		if (isset ( $forum_markread ))
 			echo ' ' . $forum_markread;
+		if (isset ( $thread_subscribecat ))
+			echo ' ' . $thread_subscribecat;
 		echo '</div>';
 	}
 	?>

@@ -619,7 +619,10 @@
 	line-height: normal;
 	padding: 5px;
 	margin-left: 3px;
+	display: block;
+	width: 95%;
 }
+
 #Kunena div.fb_title_cover a { 
 	color: #fff;
 	font-weight:bold;

@@ -39,6 +39,7 @@
 	padding: 2px;
 	font-weight: normal;
 	border-bottom: 1px solid #d9d9d9;
+	text-align:center;
 }
 
 #Kunena tr.fb_sth {
@@ -94,7 +95,7 @@
 
 #Kunena td.td-0 strong {
 	display: block;
-	font-size: x-large;
+	font-size: 2.1em;
 	font-weight: normal;
 	margin: 5px 0;
 	line-height: 21px;

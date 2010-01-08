@@ -177,7 +177,7 @@ if (count ( $this->messages [0] ) > 0) {
 				class="th-7 <?php
 		echo KUNENA_BOARD_CLASS;
 		?>sectiontableheader"
-				width="1%" align="center">[X]</th>
+				width="1%" align="center"></th>
 			<?php
 	}
 	?>

@@ -50,7 +50,7 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
             <tr class="fb_sectiontableentry1">
                 <td class="td-1" width="50%">
                     <fieldset class="fieldset">
-                        <legend style="padding:0px">
+                        <legend>
                             <?php echo _KUNENA_SEARCH_SEARCHBY_KEYWORD; ?>
                         </legend>
 
@@ -69,7 +69,7 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
                 </td>
                 <td class="td-1" width="50%">
                     <fieldset class="fieldset">
-                        <legend style="padding:0px">
+                        <legend>
                             <?php echo _KUNENA_SEARCH_SEARCHBY_USER; ?>
                         </legend>
 
@@ -127,7 +127,7 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
 */ ?>
 
                     <fieldset class="fieldset">
-                        <legend style="padding:0px">
+                        <legend>
                             <?php echo _KUNENA_SEARCH_FIND_POSTS; ?>
                         </legend>
 
@@ -152,7 +152,7 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
                     </fieldset>
 
                     <fieldset class="fieldset">
-                        <legend style="padding:0px">
+                        <legend>
                             <?php echo _KUNENA_SEARCH_SORTBY; ?>
                         </legend>
 
@@ -181,7 +181,7 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
                     </fieldset>
 
                     <fieldset class="fieldset">
-                        <legend style="padding:0px">
+                        <legend>
                             <?php echo _KUNENA_SEARCH_START; ?>
                         </legend>
 
@@ -201,7 +201,7 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
 
                 <td class="td-1" width="50%">
                     <fieldset class="fieldset">
-                        <legend style="padding:0px">
+                        <legend>
                             <?php echo _KUNENA_SEARCH_SEARCHIN; ?>
                         </legend>
 
@@ -224,9 +224,9 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
     <table class="fb_list_bottom" width="100%" cellspacing="0" cellpadding="0" border="0">
 		<tbody>
 			<tr>
-				<td style="padding: 0 5px; height: 28px; line-height: 28px;">
-        			<input class="fbs button" type="submit" value="<?php echo _KUNENA_SEARCH_SEND; ?>"/>
+				<td>
         			<input class="fbs button" type="reset" value="<?php echo _KUNENA_SEARCH_CANCEL; ?>" onclick="window.location='<?php echo JRoute::_(KUNENA_LIVEURLREL);?>';"/>
+					<input class="fbs button" type="submit" value="<?php echo _KUNENA_SEARCH_SEND; ?>"/>
 				</td>
 			</tr>
 		</tbody>

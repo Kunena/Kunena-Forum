@@ -79,6 +79,7 @@ if (JString::strtolower ( $func ) == '') {
 	}
 
 	//get the allowed forums and turn it into an array
+
 	$allow_forum = ($kunena_session->allowed != '') ? explode ( ',', $kunena_session->allowed ) : array ();
 	$kunena_is_admin = CKunenaTools::isAdmin ();
 
@@ -182,7 +183,9 @@ if (JString::strtolower ( $func ) == '') {
 				if ($cat->description != "") {
 					$tmpforumdesc = stripslashes ( smile::smileReplace ( $cat->description, 0, $kunena_config->disemoticons, $kunena_emoticons ) );
 					$tmpforumdesc = nl2br ( $tmpforumdesc );
+					echo '<p>';
 					echo $tmpforumdesc;
+					echo '</p>';
 				}
 				?>
 			</div>

@@ -34,6 +34,7 @@ $kunena_my = &JFactory::getUser ();
 
 // Func Check
 
+
 $funclatest = false;
 $funcmylatest = false;
 $funcnoreplies = false;
@@ -65,7 +66,7 @@ $topic_emoticons [7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 
 // url of current page that user will be returned to after bulk operation
 $kuri = JURI::getInstance ();
-$Breturn = $kuri->toString ( array('path', 'query', 'fragment') );
+$Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 
 $tabclass = array ("sectiontableentry1", "sectiontableentry2" );
 
@@ -100,7 +101,7 @@ if (count ( $this->messages [0] ) > 0) {
 
 <table
 	class="fb_blocktable<?php
-	echo isset ( $objCatInfo->class_sfx ) ? ' fb_blocktable'.$objCatInfo->class_sfx : '';
+	echo isset ( $objCatInfo->class_sfx ) ? ' fb_blocktable' . $objCatInfo->class_sfx : '';
 	?>"
 	id="fb_flattable" border="0" cellspacing="0" cellpadding="0"
 	width="100%">
@@ -138,7 +139,7 @@ if (count ( $this->messages [0] ) > 0) {
 	<?php
 	}
 	?>
-	
+
 	<thead>
 		<tr class="fb_sth fbs ">
 			<th
@@ -189,8 +190,8 @@ if (count ( $this->messages [0] ) > 0) {
 	}
 	?>
 		</tr>
-		</thead>
-		<tbody>
+	</thead>
+	<tbody>
 
 		<?php
 	$k = 0;
@@ -261,7 +262,7 @@ if (count ( $this->messages [0] ) > 0) {
 			$topicSticky = 1;
 		}
 
-		if ($leaf->class_sfx){
+		if ($leaf->class_sfx) {
 			echo ' ' . KUNENA_BOARD_CLASS . $tabclass [$k];
 			if ($leaf->ordering != 0 || ($leaf->myfavorite && $funcmylatest)) {
 				echo '_stickymsg';
@@ -290,7 +291,7 @@ if (count ( $this->messages [0] ) > 0) {
 		}
 		?></td>
 
-		<td class="td-3"><?php
+			<td class="td-3"><?php
 		if ($leaf->moved == 0) {
 			// Need to add +1 as we only have the replies in the buffer
 			$totalMessages = $this->thread_counts [$leaf->id] + 1;
@@ -399,19 +400,15 @@ if (count ( $this->messages [0] ) > 0) {
 		}
 		?></div>
 			</td>
-			<td class="td-4" align="center">
-			 <!-- Views --> 
-			 <span class="topic_views_number"><?php
-			echo ( int ) $this->hits [$leaf->id];
-			?>
-			</span>
-			<span class="topic_views">
+			<td class="td-4" align="center"><!-- Views --> <span
+				class="topic_views_number"><?php
+		echo CKunenaTools::formatLargeNumber(( int ) $this->hits [$leaf->id]);
+		?>
+			</span> <span class="topic_views">
 			<?php
-			echo _GEN_HITS;
-			?>
-			</span> 
-			<!-- /Views -->
-			</td>
+		echo _GEN_HITS;
+		?>
+			</span> <!-- /Views --></td>
 			<td class="td-6 fbs">
 			<div style="position: relative"><!--  Sticky   --> <?php
 		if ($leaf->ordering != 0) {

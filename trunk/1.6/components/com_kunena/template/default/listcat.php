@@ -551,11 +551,11 @@ else {
 			</td>
 
 			<td class="td-3  fbm" align="center"><?php
-							echo $numtopics;
+							echo CKunenaTools::formatLargeNumber($numtopics);
 							?></td>
 
 			<td class="td-4  fbm" align="center"><?php
-							echo $numreplies;
+							echo CKunenaTools::formatLargeNumber($numreplies);
 							?>
 			</td>
 

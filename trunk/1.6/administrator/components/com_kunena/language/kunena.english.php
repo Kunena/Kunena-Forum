@@ -26,6 +26,10 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.6.0
 
+// messages replated text strings
+define('_KUNENA_THOUSAND', 'k');
+define('_KUNENA_MILLION', 'm');
+
 //TWITTER AND FACEBOOK
 DEFINE('_KUNENA_MYPROFILE_TWITTER', 'TWITTER');
 DEFINE('_KUNENA_MYPROFILE_TWITTER_DESC', 'This is your Twitter handle.');

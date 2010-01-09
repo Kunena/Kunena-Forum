@@ -950,6 +950,34 @@ class CKunenaTools {
 			return $catlist;
 		}
 
+		/**
+		 * This function format a number to n significant digits when above
+		 * 10,000. Starting at 10,0000 the out put changes to 10k, starting
+		 * at 1,000,000 the output switches to 1m. Both k and m are defined
+		 * in the language file. The significant digits are used to limit the
+		 * number of digits displayed when in 10k or 1m mode.
+		 *
+		 * @param int $number 		Number to be formated
+		 * @param int $precision	Significant digits for output
+		 */
+		function formatLargeNumber($number, $precision = 4) {
+			$output = '';
+			// Do we need to reduce the number of significant digits?
+			if ($number >= 10000){
+				// Round the number to n significant digits
+				$number = round ($number, -1*(log10($number)+1) + $precision);
+			}
+
+			if ($number < 10000) {
+				$output = $number;
+			} elseif ($number >= 1000000) {
+				$output = $number / 1000000 . _KUNENA_MILLION;
+			} else {
+				$output = $number / 1000 . _KUNENA_THOUSAND;
+			}
+
+			return $output;
+		}
     } // end of class
 
 class fbForum

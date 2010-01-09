@@ -53,6 +53,7 @@ Kunena 1.6.0-DEV
 - [#19251] Remove unneeded query for modified posts
 # [#19303] Fixed installer regression
 ^ [#19345] added new column for views in flat.php
++ [#19345] formatLargeNumber(): format numbers >10,000 to 10k >1,000,000 to 1m for various outputs
 
 07-Jan-2010 fxstein
 + [#19333] New datamodel table for category subscriptions

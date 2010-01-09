@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 09-Jan-2010 severdia
 # [#19356] Fixed search page accessibility, cleaner CSS
 + [#19356] JS for clickable checkbox fields
++ [#19380] Added Mootools in preparation to replace jQuery
 
 09-Jan-2010 fxstein
 + [#19371] Auto generate joomla menu from control panel and during install

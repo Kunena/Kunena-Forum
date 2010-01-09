@@ -13,6 +13,8 @@
 
 defined ( '_JEXEC' ) or die ( 'Restricted access' );
 
+include_once (KUNENA_PATH .DS. "class.kunena.php");
+
 // Add custom upgrade code here
 // Most or all sql statements should be covered within comupgrade.xml
 
@@ -25,7 +27,6 @@ $templatedeprecatedlist = array ('default_ex', 'default_green', 'default_red', '
 
 $kunena_db = & JFactory::getDBO ();
 $kunena_db->setQuery ( "SELECT template FROM #__fb_config" );
-$kunena_db->query ();
 $kactualtemplate = $kunena_db->loadResult ();
 if (in_array ( $kactualtemplate, $templatedeprecatedlist )) {
 	$kunena_db->setQuery ( "UPDATE #__fb_config SET template='default',templateimagepath='default'" );
@@ -36,3 +37,6 @@ foreach ( $templatedeprecatedlist as $template ) {
 		JFolder::delete ( KUNENA_PATH_TEMPLATE . DS . $template );
 	}
 }
+
+CKunenaTools::createMenu();
+

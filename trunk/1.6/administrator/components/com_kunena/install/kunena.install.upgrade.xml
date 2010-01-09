@@ -403,7 +403,7 @@
 					UNIQUE KEY `pollid` (`pollid`,`userid`)
 				) DEFAULT CHARSET=utf8;</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `TWITTER` varchar(50) NULL AFTER `SKYPE`, COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `FACEBOOK` varchar(50) NULL AFTER `TWITTER`, COMMENT=''</query>	
+			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `FACEBOOK` varchar(50) NULL AFTER `TWITTER`, COMMENT=''</query>
 		    <phpfile name="kunena.special.upgrade.1.6.0.php"></phpfile>            
 		</version>
 	</upgrade>

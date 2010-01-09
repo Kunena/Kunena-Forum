@@ -58,4 +58,4 @@ $kunena_db->query() or check_dbwarning('Unable to insert sample post text');
 
 CKunenaTools::reCountBoards();
 
-?>
+CKunenaTools::createMenu();

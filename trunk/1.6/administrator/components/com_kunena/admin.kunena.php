@@ -316,6 +316,11 @@ switch ($task) {
 
 		break;
 
+	case "createmenu" :
+		CKunenaTools::createMenu();
+
+		$kunena_app->enqueueMessage ( _KUNENA_MENU_CREATED );
+		// No break! Need to display the control panel
 	case 'cpanel' :
 	default :
 		html_Kunena::controlPanel ();

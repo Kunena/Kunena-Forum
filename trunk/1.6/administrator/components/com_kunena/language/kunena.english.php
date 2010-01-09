@@ -26,6 +26,10 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.6.0
 
+// Joomla menu related strings
+define('_KUNENA_CREATE_MENU', 'Create Menu');
+define('_KUNENA_MENU_CREATED', 'The Kunena navigation menu and main forum link have been created.');
+
 // messages replated text strings
 define('_KUNENA_THOUSAND', 'k');
 define('_KUNENA_MILLION', 'm');

@@ -147,6 +147,9 @@ table.fbstat .col2 {
           <div style = "float:left;">
             <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=ranks" style = "text-decoration:none;" title = "<?php echo _KUNENA_RANKS_MANAGE;?>"> <img src = "components/com_kunena/images/fbranks.png"  align = "middle" border = "0"/> <span> <?php echo _KUNENA_RANKS_MANAGE; ?> </span></a> </div>
           </div>
+          <div style = "float:left;">
+            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=createmenu" style = "text-decoration:none;" title = "<?php echo _KUNENA_CREATE_MENU;?>"> <img src = "images/menu.png"  align = "middle" border = "0"/> <span> <?php echo _KUNENA_CREATE_MENU; ?> </span></a> </div>
+          </div>
           <?php
           $kn_version = CKunenaVersion::versionArray ();
           if (JString::strpos ( $kn_version->version, 'SVN' ) !== false) {

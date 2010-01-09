@@ -272,7 +272,7 @@ if (count ( $this->messages [0] ) > 0) {
 		}
 		?>">
 			<td class="td-0 fbm" align="center"><strong> <?php
-		echo ( int ) $this->thread_counts [$leaf->id];
+		echo CKunenaTools::formatLargeNumber( $this->thread_counts [$leaf->id]);
 		?>
 			</strong><?php
 		echo _GEN_REPLIES;

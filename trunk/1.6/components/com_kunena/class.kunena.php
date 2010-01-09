@@ -988,6 +988,11 @@ class CKunenaTools {
 		function createMenu() {
 			$kunena_db =& JFactory::getDBO();
 
+			// First we need to get the componentid of the install Kunena component
+			$query = "SELECT id FROM `#__components` WHERE `option`='com_kunena';";
+			$kunena_db->setQuery ($query);
+			$componentid = $kunena_db->loadResult ();
+
 			// Create new Joomla menu for Kunena
 			$query = "SELECT id FROM `#__menu_types` WHERE `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
@@ -1012,7 +1017,7 @@ class CKunenaTools {
 			$kunena_db->setQuery ($query);
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', 'Index', 'index', 'index.php?option=com_kunena&func=listcat', 'component', 1, 0, 0, 0, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', 'Index', 'index', 'index.php?option=com_kunena&func=listcat', 'component', 1, 0, $componentid, 0, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 			}
@@ -1022,7 +1027,7 @@ class CKunenaTools {
 			$kunena_db->setQuery ($query);
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', 'Topics', 'topics', 'index.php?option=com_kunena&func=latest', 'component', 1, 0, 0, 0, 5, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', 'Topics', 'topics', 'index.php?option=com_kunena&func=latest', 'component', 1, 0, $componentid, 0, 5, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 			}
@@ -1032,7 +1037,7 @@ class CKunenaTools {
 			$kunena_db->setQuery ($query);
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', 'My Topics', 'my-topics', 'index.php?option=com_kunena&func=mylatest', 'component', 1, 0, 0, 0, 9, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', 'My Topics', 'my-topics', 'index.php?option=com_kunena&func=mylatest', 'component', 1, 0, $componentid, 0, 9, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 			}
@@ -1042,7 +1047,7 @@ class CKunenaTools {
 			$kunena_db->setQuery ($query);
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', 'No Replies', 'no-replies', 'index.php?option=com_kunena&func=noreplies', 'component', 1, 0, 0, 0, 8, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', 'No Replies', 'no-replies', 'index.php?option=com_kunena&func=noreplies', 'component', 1, 0, $componentid, 0, 8, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 			}
@@ -1052,7 +1057,7 @@ class CKunenaTools {
 			$kunena_db->setQuery ($query);
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', 'My Profile', 'my-profile', 'index.php?option=com_kunena&func=myprofile', 'component', 1, 0, 0, 0, 10, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', 'My Profile', 'my-profile', 'index.php?option=com_kunena&func=myprofile', 'component', 1, 0, $componentid, 0, 10, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 			}
@@ -1062,7 +1067,7 @@ class CKunenaTools {
 			$kunena_db->setQuery ($query);
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', 'Rules', 'rules', 'index.php?option=com_kunena&func=rules', 'component', 1, 0, 0, 0, 11, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', 'Rules', 'rules', 'index.php?option=com_kunena&func=rules', 'component', 1, 0, $componentid, 0, 11, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 			}
@@ -1072,7 +1077,7 @@ class CKunenaTools {
 			$kunena_db->setQuery ($query);
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', 'Help', 'help', 'index.php?option=com_kunena&func=faq', 'component', 1, 0, 0, 0, 12, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', 'Help', 'help', 'index.php?option=com_kunena&func=faq', 'component', 1, 0, $componentid, 0, 12, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 			}
@@ -1082,7 +1087,7 @@ class CKunenaTools {
 			$kunena_db->setQuery ($query);
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', 'Search', 'search', 'index.php?option=com_kunena&func=search', 'component', 1, 0, 0, 0, 13, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', 'Search', 'search', 'index.php?option=com_kunena&func=search', 'component', 1, 0, $componentid, 0, 13, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 			}
@@ -1092,7 +1097,7 @@ class CKunenaTools {
 			$kunena_db->setQuery ($query);
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', 'Welcome', 'welcome', 'index.php?option=com_kunena&func=showcat&catid=2', 'component', 1, 0, 0, 0, 6, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', 'Welcome', 'welcome', 'index.php?option=com_kunena&func=showcat&catid=2', 'component', 1, 0, $componentid, 0, 6, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 			}
@@ -1102,7 +1107,7 @@ class CKunenaTools {
 			$kunena_db->setQuery ($query);
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', 'New Topic', 'new-topic', 'index.php?option=com_kunena&func=post&do=reply', 'component', 1, 0, 0, 0, 7, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', 'New Topic', 'new-topic', 'index.php?option=com_kunena&func=post&do=reply', 'component', 1, 0, $componentid, 0, 7, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 			}
@@ -1135,7 +1140,7 @@ class CKunenaTools {
 			$kunena_db->setQuery ($query);
 			if (!$kunena_db->loadResult ()) {
 				$query = "INSERT INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('mainmenu', 'Forum', 'forum', 'index.php?option=com_kunena', 'component', 1, 0, 105, 0, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'page_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0);";
+							('mainmenu', 'Forum', 'forum', 'index.php?option=com_kunena', 'component', 1, 0, $componentid, 0, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'page_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 			}

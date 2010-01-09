@@ -115,7 +115,7 @@ if (count ( $this->messages [0] ) > 0) {
 		<tr>
 			<th
 				colspan="<?php
-		echo (CKunenaTools::isModerator ( $kunena_my->id, $catid ) ? "5" : "4");
+		echo (CKunenaTools::isModerator ( $kunena_my->id, $catid ) ? "6" : "5");
 		?>">
 			<div class="fb_title_cover fbm"><span class="fb_title fbl"><b><?php
 		echo _KUNENA_THREADS_IN_FORUM;
@@ -166,7 +166,7 @@ if (count ( $this->messages [0] ) > 0) {
 				class="th-4 <?php
 	echo KUNENA_BOARD_CLASS;
 	?>sectiontableheader"
-				align="center"><?php
+				align="center" width="5%">&nbsp;<?php
 	echo _GEN_HITS;
 	?></th>
 
@@ -214,7 +214,7 @@ if (count ( $this->messages [0] ) > 0) {
 			?>contentheading fbm"
 				id="fb_spot"
 				colspan="<?php
-			echo (CKunenaTools::isModerator ( $kunena_my->id, $catid ) ? "5" : "4");
+			echo (CKunenaTools::isModerator ( $kunena_my->id, $catid ) ? "6" : "5");
 			?>"
 				align="left"><span><?php
 			if (! $funcmylatest) {
@@ -239,7 +239,7 @@ if (count ( $this->messages [0] ) > 0) {
 			?>contentheading fbm"
 				id="fb_fspot"
 				colspan="<?php
-			echo (CKunenaTools::isModerator ( $kunena_my->id, $catid ) ? "5" : "4");
+			echo (CKunenaTools::isModerator ( $kunena_my->id, $catid ) ? "6" : "5");
 			?>"
 				align="left"><span><?php
 			if (! $funcmylatest) {

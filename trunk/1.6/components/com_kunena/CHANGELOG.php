@@ -33,7 +33,7 @@ Legend:
 
 Kunena 1.6.0-DEV
 
-08-Jan-2010 fxstein
+09-Jan-2010 fxstein
 + [#19371] Auto generate joomla menu from control panel and during install
 
 08-Jan-2010 810

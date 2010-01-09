@@ -53,18 +53,14 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
                         <legend>
                             <?php echo _KUNENA_SEARCH_SEARCHBY_KEYWORD; ?>
                         </legend>
-
-                        <div style="line-height: 28px">
+                        <label class="searchlabel" for="keywords">
                             <?php echo _KUNENA_SEARCH_KEYWORDS; ?>:
-                        </div>
-                        <div style="line-height: 28px">
-                            <input type="text" class="fbs input" name="q" size="35" value="<?php echo html_entity_decode_utf8($this->q); ?>" style="width:250px"/>
-
-                            <select class="fbs" name="titleonly">
-                                <option value="0"<?php if ($this->params['titleonly']==0) echo $this->selected;?>><?php echo _KUNENA_SEARCH_SEARCH_POSTS; ?></option>
-                                <option value="1"<?php if ($this->params['titleonly']==1) echo $this->selected;?>><?php echo _KUNENA_SEARCH_SEARCH_TITLES; ?></option>
-                            </select>
-                        </div>
+                        </label>
+                        <input id="keywords" type="text" class="fbs input" name="q" size="35" value="<?php echo html_entity_decode_utf8($this->q); ?>"/>
+                        <select id="keywordfilter" class="fbs" name="titleonly">
+                            <option value="0"<?php if ($this->params['titleonly']==0) echo $this->selected;?>><?php echo _KUNENA_SEARCH_SEARCH_POSTS; ?></option>
+                            <option value="1"<?php if ($this->params['titleonly']==1) echo $this->selected;?>><?php echo _KUNENA_SEARCH_SEARCH_TITLES; ?></option>
+                        </select>
                     </fieldset>
                 </td>
                 <td class="td-1" width="50%">
@@ -73,20 +69,21 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
                             <?php echo _KUNENA_SEARCH_SEARCHBY_USER; ?>
                         </legend>
 
-                        <div style="line-height: 28px">
+                        <label class="searchlabel fltlft" for="username">
                             <?php echo _KUNENA_SEARCH_UNAME; ?>:
-                            <label for="exactname"><input type="checkbox" name="exactname" value="1" <?php if ($this->params['exactname']) echo $this->checked; ?> />
-                            <?php echo _KUNENA_SEARCH_EXACT; ?></label>
-                        </div>
-                        <div id="userfield" style="line-height: 28px">
-                            <input class="fbs input" type="text" name="searchuser" value="<?php echo html_entity_decode_utf8($this->params['searchuser']); ?>" style="width:250px"/>
+                        </label>
+                        <label class="searchlabel" for="exactname">
+                        	<input type="checkbox" name="exactname" value="1" <?php if ($this->params['exactname']) echo $this->checked; ?> />
+                            <span onClick="document.adminForm.exactname.checked=(! document.adminForm.exactname.checked);"><?php echo _KUNENA_SEARCH_EXACT; ?></span>
+                        </label>
+                        
+                        <input id="username" class="fbs input" type="text" name="searchuser" value="<?php echo html_entity_decode_utf8($this->params['searchuser']); ?>" />
 
-                            <select class="fbs" name="starteronly">
-                                <option value="0"<?php if ($this->params['starteronly']==0) echo $this->selected;?>><?php echo _KUNENA_SEARCH_USER_POSTED; ?></option>
-                                <!--<option value="1"<?php if ($this->params['starteronly']==1) echo $this->selected;?>><?php echo _KUNENA_SEARCH_USER_STARTED; ?></option>
-                                <option value="2"<?php if ($this->params['starteronly']==2) echo $this->selected;?>><?php echo _KUNENA_SEARCH_USER_ACTIVE; ?></option>-->
-                            </select>
-                        </div>
+                        <select class="fbs" name="starteronly">
+                             <option value="0"<?php if ($this->params['starteronly']==0) echo $this->selected;?>><?php echo _KUNENA_SEARCH_USER_POSTED; ?></option>
+                             <!--<option value="1"<?php if ($this->params['starteronly']==1) echo $this->selected;?>><?php echo _KUNENA_SEARCH_USER_STARTED; ?></option>
+                             <option value="2"<?php if ($this->params['starteronly']==2) echo $this->selected;?>><?php echo _KUNENA_SEARCH_USER_ACTIVE; ?></option>-->
+                          </select>
                     </fieldset>
 		</td>
 	</tr>
@@ -126,12 +123,11 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
                     </fieldset>
 */ ?>
 
-                    <fieldset class="fieldset">
+                    <fieldset class="fieldset" id="search-posts-date">
                         <legend>
                             <?php echo _KUNENA_SEARCH_FIND_POSTS; ?>
                         </legend>
 
-                        <div>
                             <select class="fbs" name="searchdate">
                                 <option value="lastvisit"<?php if ($this->params['searchdate']=="lastvisit") echo $this->selected;?>><?php echo _KUNENA_SEARCH_DATE_LASTVISIT; ?></option>
                                 <option value="1"<?php if ($this->params['searchdate']==1) echo $this->selected;?>><?php echo _KUNENA_SEARCH_DATE_YESTERDAY; ?></option>
@@ -148,15 +144,14 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
                                 <option value="after"<?php if ($this->params['beforeafter']=="after") echo $this->selected;?>><?php echo _KUNENA_SEARCH_DATE_NEWER; ?></option>
                                 <option value="before"<?php if ($this->params['beforeafter']=="before") echo $this->selected;?>><?php echo _KUNENA_SEARCH_DATE_OLDER; ?></option>
                             </select>
-                        </div>
+                        
                     </fieldset>
 
-                    <fieldset class="fieldset">
+                    <fieldset class="fieldset" id="search-posts-sort">
                         <legend>
                             <?php echo _KUNENA_SEARCH_SORTBY; ?>
                         </legend>
 
-                        <div>
                             <select class="fbs" name="sortby">
                                 <option value="title"<?php if ($this->params['sortby']=="title") echo $this->selected;?>><?php echo _KUNENA_SEARCH_SORTBY_TITLE; ?></option>
 <?php /*
@@ -177,15 +172,14 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
                                 <option value="inc"<?php if ($this->params['order']=="inc") echo $this->selected;?>><?php echo _KUNENA_SEARCH_SORTBY_INC; ?></option>
                                 <option value="dec"<?php if ($this->params['order']=="dec") echo $this->selected;?>><?php echo _KUNENA_SEARCH_SORTBY_DEC; ?></option>
                             </select>
-                        </div>
+                        
                     </fieldset>
 
-                    <fieldset class="fieldset">
+                    <fieldset class="fieldset" id="search-posts-start">
                         <legend>
                             <?php echo _KUNENA_SEARCH_START; ?>
                         </legend>
 
-                        <div>
                             <input class="fbs input" type="text" name="limitstart" value="<?php echo $this->limitstart; ?>" size="5" />
 
                             <select class="fbs" name="limit">
@@ -194,7 +188,6 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
                                <option value="15"<?php if ($this->limit==15) echo $this->selected;?>><?php echo _KUNENA_SEARCH_LIMIT15; ?></option>
                                <option value="20"<?php if ($this->limit==20) echo $this->selected;?>><?php echo _KUNENA_SEARCH_LIMIT20; ?></option>
                            </select>
-                        </div>
                     </fieldset>
 
                 </td>
@@ -204,17 +197,13 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
                         <legend>
                             <?php echo _KUNENA_SEARCH_SEARCHIN; ?>
                         </legend>
+                         
+                         <?php echo $this->categorylist; ?>
 
-                        <div>
-                            <div>
-                                <?php echo $this->categorylist; ?>
-                            </div>
-
-                            <div>
-                                <label for="childforums"><input type="checkbox" name="childforums" value="1" <?php if ($this->params['childforums']) echo 'checked="checked"'; ?> />
-                                <?php echo _KUNENA_SEARCH_SEARCHIN_CHILDREN; ?></label>
-                            </div>
-                        </div>
+                          <label id="childforums-lbl" for="childforums">
+                          <input type="checkbox" name="childforums" value="1" <?php if ($this->params['childforums']) echo 'checked="checked"'; ?> />
+                            <span onClick="document.adminForm.childforums.checked=(! document.adminForm.childforums.checked);"><?php echo _KUNENA_SEARCH_SEARCHIN_CHILDREN; ?></span>
+                            </label>
                     </fieldset>
                 </td>
             </tr>

@@ -64,12 +64,12 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
                 <th align="left">
                     <div class = "fb_title_cover fbm">
                         <a class = "fb_title fbl" href = "<?php echo $whoislink;?>">
-						<?php echo _WHO_ONLINE_NOW; ?>
-                        <b><?php echo $totaluser; ?></b>
+                        <strong><?php echo $totaluser; ?></strong>
 						<?php if($totaluser==1) { echo _WHO_ONLINE_MEMBER; } else { echo _WHO_ONLINE_MEMBERS; } ?>
 						<?php echo _WHO_AND; ?>
-                        <b><?php echo $totalguests; ?></b>
+                        <strong><?php echo $totalguests; ?></strong>
 						<?php if($totalguests==1) { echo _WHO_ONLINE_GUEST; } else { echo _WHO_ONLINE_GUESTS; } ?>
+						<?php echo _WHO_ONLINE_NOW; ?>
                         </a>
                     </div>
                     <img id = "BoxSwitch_whoisonline__whoisonline_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
@@ -99,7 +99,7 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
 
 					 ?>
 
-                    <br /><span class="fbs"><b><?php echo _KUNENA_HIDDEN_USERS; ?>: </b></span>
+                    <br /><span class="fbs"><?php echo _KUNENA_HIDDEN_USERS; ?>: </span>
 
                     <?php
 

@@ -247,7 +247,7 @@
 #Kunena select:focus,
 #Kunena select:hover {
 	background: #F7F7F7 none repeat scroll 0 0;
-	font-size: .85em;
+	font-size: .95em;
 	border: 1px solid #999999;
 	color: #000000;
 	padding: 0px;
@@ -287,7 +287,7 @@
 #Kunena .fb_button:hover,
 #Kunena .fb_button:focus {
 	background: #609FBF none repeat scroll 0 0;
-	font-size: .85em;
+	font-size: .95em;
 	border: 1px solid #006699;
 	color: #FFFFFF;
 	padding: 0px 4px;
@@ -530,7 +530,7 @@
 
 #Kunena .fbs {
 	/* font-size: x-small; */
-	font-size: .85em;
+	font-size: .95em; 
 }
 
 #Kunena .fbm {

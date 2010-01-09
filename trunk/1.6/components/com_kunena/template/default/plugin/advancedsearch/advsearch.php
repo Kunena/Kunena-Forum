@@ -97,8 +97,8 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
         <thead>
             <tr>
                 <th align="left" colspan="2">
-				    <div class="fb_title_cover fbm">
-					    <span class="fb_title fbl"><?php echo _KUNENA_SEARCH_OPTIONS; ?></span>
+				    <div class="fb_title_cover">
+					    <span class="fb_title"><?php echo _KUNENA_SEARCH_OPTIONS; ?></span>
                     </div>
                     <img id="BoxSwitch__advsearch_options" class="hideshow" src="<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt=""/>
                 </th>
@@ -225,8 +225,8 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
 		<tbody>
 			<tr>
 				<td>
-        			<input class="fbs button" type="reset" value="<?php echo _KUNENA_SEARCH_CANCEL; ?>" onclick="window.location='<?php echo JRoute::_(KUNENA_LIVEURLREL);?>';"/>
-					<input class="fbs button" type="submit" value="<?php echo _KUNENA_SEARCH_SEND; ?>"/>
+        			<input class="fb_button fbs" type="reset" value="<?php echo _KUNENA_SEARCH_CANCEL; ?>" onclick="window.location='<?php echo JRoute::_(KUNENA_LIVEURLREL);?>';"/>
+					<input class="fb_button fbs" type="submit" value="<?php echo _KUNENA_SEARCH_SEND; ?>"/>
 				</td>
 			</tr>
 		</tbody>

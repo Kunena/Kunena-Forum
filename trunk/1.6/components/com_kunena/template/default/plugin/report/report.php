@@ -178,7 +178,7 @@ function ReportForm($id, $catid) {
         <div class = "<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
             <div class = "<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
                 <div class = "<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
-                    <table class = "fb_blocktable" id = "fb_forumfaq" border = "0" cellspacing = "0" cellpadding = "0" width = "100%">
+                    <table class = "fb_blocktable" id = "fb_forumhelp" border = "0" cellspacing = "0" cellpadding = "0" width = "100%">
                         <thead>
                             <tr>
                                 <th>
@@ -190,7 +190,7 @@ function ReportForm($id, $catid) {
 
                         <tbody>
                             <tr>
-                                <td class = "fb_faqdesc">
+                                <td class = "fb_helpdesc">
                                     <form method = "post" action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=report'); ?>">
                                         <table width = "100%" border = "0">
                                             <tr>

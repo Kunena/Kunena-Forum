@@ -34,7 +34,7 @@ $document->setTitle(_GEN_HELP . ' - ' . stripslashes($kunena_config->board_title
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
-<table class = "fb_blocktable" id ="fb_forumfaq" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "fb_blocktable" id ="fb_forumhelp" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
                     <th>
@@ -46,7 +46,7 @@ $document->setTitle(_GEN_HELP . ' - ' . stripslashes($kunena_config->board_title
             </thead>
             <tbody>
             <tr>
-            <td class="fb_faqdesc" valign="top">
+            <td class="fb_helpdesc" valign="top">
 
         <?php
           $kunena_db->setQuery("SELECT introtext, id FROM #__content WHERE id='{$kunena_config->help_cid}'");

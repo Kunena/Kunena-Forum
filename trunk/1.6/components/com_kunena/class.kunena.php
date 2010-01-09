@@ -1073,7 +1073,7 @@ class CKunenaTools {
 			}
 
 			// Help
-			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=faq' AND `menutype`='kunenamenu';";
+			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=help' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES

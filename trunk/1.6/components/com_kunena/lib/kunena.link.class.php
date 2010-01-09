@@ -303,7 +303,7 @@ class CKunenaLink
     function GetHelpLink($kunena_config, $name, $rel='nofollow')
     {
     	$kunena_config =& CKunenaConfig::getInstance();
-        $helplink = $kunena_config->help_infb ? KUNENA_LIVEURLREL.'&amp;func=faq' : $kunena_config->help_link;
+        $helplink = $kunena_config->help_infb ? KUNENA_LIVEURLREL.'&amp;func=help' : $kunena_config->help_link;
         return CKunenaLink::GetSefHrefLink($helplink, $name, '', $rel);
     }
 

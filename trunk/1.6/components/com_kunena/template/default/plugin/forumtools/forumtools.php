@@ -106,7 +106,7 @@ $id = JRequest::getInt('id', 0);
                 {
 				 if ($kunena_config->help_infb) {
 					echo '<li>';
-					echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=faq') . '" >';
+					echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=help') . '" >';
 					echo _GEN_HELP;
 					echo '</a></li>';
 					} else {

@@ -21,7 +21,7 @@ class KunenaRouter
 	// List of reserved functions (if category name is one of these, use always catid)
 	static $functions = array('showcat', 'view', 'listcat', 'latest', 'mylatest', 'noreplies', 'post',
 		'credits', 'fb_rss', 'review', 'report', 'fbprofile', 'userprofile', 'myprofile',
-		'userlist', 'karma', 'rules', 'faq', 'announcement', 'who', 'stats', 'advsearch',
+		'userlist', 'karma', 'rules', 'help', 'announcement', 'who', 'stats', 'advsearch',
 		'search', 'markthisread', 'bulkactions', 'templatechooser');
 
 	function loadCategories()

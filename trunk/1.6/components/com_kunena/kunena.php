@@ -515,11 +515,11 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			break;
 
 		#########################################################################################
-		case 'faq' :
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/faq.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/faq.php');
+		case 'help' :
+			if (file_exists ( KUNENA_ABSTMPLTPATH . '/help.php' )) {
+				include (KUNENA_ABSTMPLTPATH . '/help.php');
 			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'faq.php');
+				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'help.php');
 			}
 
 			break;

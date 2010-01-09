@@ -31,9 +31,9 @@ defined( '_JEXEC' ) or die('Restricted access');
  *             The user id
  * @param int $type
  *             What kind of header do you want to print:
- *             		1: default (home/profile/latest posts/faq),
- *             		2: extended1 (home/profile/view/pending messages/faq),
- *             		3:extended2 (home/profile/reply/view/pdf/faq)
+ *             		1: default (home/profile/latest posts/help),
+ *             		2: extended1 (home/profile/view/pending messages/help),
+ *             		3:extended2 (home/profile/reply/view/pdf/help)
  * @param string $view
  *             The view the user is currently using, only needs to be pass when type==3 or type==2
  * @param int $catid
@@ -135,7 +135,7 @@ function kunena_get_menu($cbitemid, $kunena_config, $kunena_icons, $my_id, $type
 	if ($kunena_config->enablehelppage)
     {
         $header .= ' <li ';
-        if ($func == 'faq' ) $header .= ' class="Kunena_item_active" ';
+        if ($func == 'help' ) $header .= ' class="Kunena_item_active" ';
         $header .= ' >'.CKunenaLink::GetHelpLink($kunena_config, '<span>'.(array_key_exists('help', $kunena_icons) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons['help'] . '" border="0" alt="' . _GEN_HELP . '" title="' . _GEN_HELP . '"/>' : _GEN_HELP).'</span>');
         $header .= '</li>';
 	}

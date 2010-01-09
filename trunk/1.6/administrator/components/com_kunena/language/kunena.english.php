@@ -1222,7 +1222,7 @@ DEFINE('_COM_A_MOSBOT_DESC', 'The discuss bot enables your users to discuss arti
 // search.class.php
 DEFINE('_FORUM_SEARCHTITLE', 'Search');
 DEFINE('_FORUM_SEARCHRESULTS', 'Displaying %s out of %s results.');
-// Help, FAQ
+// Help
 DEFINE('_COM_FORUM_HELP', 'Help');
 // rules.php
 DEFINE('_COM_FORUM_RULES', 'Rules');

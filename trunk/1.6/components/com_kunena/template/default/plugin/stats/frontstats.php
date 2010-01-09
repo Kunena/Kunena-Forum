@@ -62,21 +62,21 @@ if ($kunena_config->showstats > 0)
                 </tr>
             </thead>
 
-            <tbody id = "frontstats_tbody">
-                <tr class = "<?php echo KUNENA_BOARD_CLASS ;?>sectiontableentry1">
-                    <td class = "td-1  fbm" align="left">
-<?php echo _STAT_TOTAL_USERS; ?>:<b> <a href = "<?php echo $userlist;?>"><?php echo $this->totalmembers; ?></a> </b>
-                    &nbsp; <?php echo _STAT_LATEST_MEMBERS; ?>:<b> <?php echo CKunenaLink::GetProfileLink($kunena_config, $this->lastestmemberid, $this->lastestmember, $rel='nofollow'); ?></b>
-
-                <br/> <?php echo _STAT_TOTAL_MESSAGES; ?>: <b> <?php echo $this->totalmsgs; ?></b> &nbsp;
-    <?php echo _STAT_TOTAL_SUBJECTS; ?>: <b> <?php echo $this->totaltitles; ?></b> &nbsp; <?php echo _STAT_TOTAL_SECTIONS; ?>: <b> <?php echo $this->totalcats; ?></b> &nbsp; <?php echo _STAT_TOTAL_CATEGORIES; ?>: <b> <?php echo $this->totalsections; ?></b>
-
-                <br/> <?php echo _STAT_TODAY_OPEN_THREAD; ?>: <b> <?php echo $this->todayopen; ?></b> &nbsp; <?php echo
-    _STAT_YESTERDAY_OPEN_THREAD; ?>: <b> <?php echo $this->yesterdayopen; ?></b> &nbsp; <?php echo _STAT_TODAY_TOTAL_ANSWER; ?>: <b> <?php echo $this->todayanswer; ?></b> &nbsp; <?php echo _STAT_YESTERDAY_TOTAL_ANSWER; ?>: <b> <?php echo $this->yesterdayanswer; ?></b>
-
-                <br/>
-
-                &raquo; <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL .'&amp;func=latest');?>"><?php echo _STAT_VIEW_RECENT_POSTS_ON_FORUM; ?></a> <?php if ($kunena_config->showpopuserstats || $kunena_config->showpopsubjectstats) echo '&raquo; <a href = "'.$statslink.'">'. _STAT_MORE_ABOUT_STATS.'</a>'; ?>  &raquo; <a href="<?php echo $userlist;?>"><?php echo _STAT_USERLIST; ?></a>
+            <tbody id="frontstats_tbody">
+                <tr class="<?php echo KUNENA_BOARD_CLASS ;?>sectiontableentry1">
+                    <td class="td-1 fbm">
+                    	<ul id="statslistright" class="fltrt">
+                    		<li><?php echo _STAT_TOTAL_USERS; ?>: <strong><a href="<?php echo $userlist;?>"><?php echo $this->totalmembers; ?></a></strong> | <?php echo _STAT_LATEST_MEMBERS; ?>:<strong> <?php echo CKunenaLink::GetProfileLink($kunena_config, $this->lastestmemberid, $this->lastestmember, $rel='nofollow'); ?></strong></li>
+                    		<li>&nbsp;</li>
+                    		<li><a href="<?php echo $userlist;?>"><?php echo _STAT_USERLIST; ?> &raquo;</a></li>
+                    		<li><?php if ($kunena_config->showpopuserstats || $kunena_config->showpopsubjectstats) echo '<a href = "'.$statslink.'">'. _STAT_MORE_ABOUT_STATS.' &raquo;</a>'; ?></li>
+                    	</ul>                    
+                    	<ul id="statslistleft" class="fltlft">
+                    		<li><?php echo _STAT_TOTAL_MESSAGES; ?>: <strong> <?php echo $this->totalmsgs; ?></strong> | <?php echo _STAT_TOTAL_SUBJECTS; ?>: <strong><?php echo $this->totaltitles; ?></strong></li>
+                    		<li><?php echo _STAT_TOTAL_SECTIONS; ?>: <strong><?php echo $this->totalcats; ?></strong> | <?php echo _STAT_TOTAL_CATEGORIES; ?>: <strong><?php echo $this->totalsections; ?></strong></li>
+                    		<li><?php echo _STAT_TODAY_OPEN_THREAD; ?>: <strong><?php echo $this->todayopen; ?></strong> | <?php echo _STAT_YESTERDAY_OPEN_THREAD; ?>: <strong><?php echo $this->yesterdayopen; ?></strong></li>
+                    		<li><?php echo _STAT_TODAY_TOTAL_ANSWER; ?>: <strong><?php echo $this->todayanswer; ?></strong> | <?php echo _STAT_YESTERDAY_TOTAL_ANSWER; ?>: <strong><?php echo $this->yesterdayanswer; ?></strong></li>
+                    	</ul>
                     </td>
                 </tr>
             </tbody>

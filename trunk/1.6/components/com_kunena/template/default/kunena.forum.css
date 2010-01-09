@@ -103,7 +103,7 @@
 
 #Kunena .topic_latest_post,
 #Kunena .topic_date {
-	font-size: .85em;
+	font-size: 1.1em;
 }
 
 #Kunena a.fb-topic-title {
@@ -247,7 +247,7 @@
 #Kunena select:focus,
 #Kunena select:hover {
 	background: #F7F7F7 none repeat scroll 0 0;
-	font-size: .95em;
+	font-size: .85em;
 	border: 1px solid #999999;
 	color: #000000;
 	padding: 0px;
@@ -530,7 +530,7 @@
 
 #Kunena .fbs {
 	/* font-size: x-small; */
-	font-size: .95em;
+	font-size: .85em;
 }
 
 #Kunena .fbm {
@@ -1207,6 +1207,30 @@ THREAD VIEW
 #Kunena .fb_threadview_row td table tr td {
 	border-top: 0px solid #BFC3C6;
 }
+
+/*  Stats on main page  */
+
+.fltlft {float:left;}
+.fltrt {float:right; text-align:right;}
+
+ul#statslistleft,
+ul#statslistright	 {
+	margin: 0;
+	padding: 0;
+}
+
+ul#statslistleft li,
+ul#statslistright li	 {
+	list-style-type:none;
+	display:block;
+	margin-left: 0;
+	padding: 1px 10px 1px 0;
+}
+ul#statslistright li strong a {
+	font-weight:bold;
+}
+
+
 
 /*
 POST PAGE

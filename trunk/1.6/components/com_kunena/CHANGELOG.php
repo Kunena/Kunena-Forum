@@ -39,7 +39,7 @@ Kunena 1.6.0-DEV
 
 09-Jan-2010 fxstein
 + [#19371] Auto generate joomla menu from control panel and during install
-# [#19371] change componentid behaviour for craeted menus to support sef
+# [#19371] change componentid behaviour for created menus to support sef
 
 08-Jan-2010 810
 + [#19303] Add twitter, facebook to profile

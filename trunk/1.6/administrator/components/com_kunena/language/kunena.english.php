@@ -26,6 +26,20 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.6.0
 
+// Profile strings
+define('_KUNENA_PROFILE_OPTIONS', 'Profile Options');
+define('_KUNENA_VIEW_PROFILE', 'View Profile');
+define('_KUNENA_EDIT_PROFILE', 'Edit Profile');
+define('_KUNENA_EDIT_DETAILS', 'Edit Details');
+define('_KUNENA_FORUM_PREFERENCES', 'Forum Preferences');
+define('_KUNENA_CHOOSE_AVATAR', 'Choose Avatar');
+define('_KUNENA_VIEW_MY_POSTS', 'View My Posts');
+define('_KUNENA_VIEW_MY_SUBSCRIPTIONS', 'View My Subscriptions');
+define('_KUNENA_VIEW_MY_FAVORITES', 'View My Favorites');
+define('_KUNENA_MY_SUBSCRIPTIONS', 'My Subscriptions');
+define('_KUNENA_MY_POSTS', 'My Posts');
+define('_KUNENA_CHOOSE_AVATAR', 'Choose an Avatar');
+
 // Joomla menu related strings
 define('_KUNENA_CREATE_MENU', 'Create Menu');
 define('_KUNENA_MENU_CREATED', 'The Kunena navigation menu and main forum link have been created.');
@@ -719,7 +733,7 @@ DEFINE('_KUNENA_MYPROFILE_FORUM_SETTINGS', 'Forum Settings');
 DEFINE('_KUNENA_MYPROFILE_LOOK_AND_LAYOUT', 'Look and Layout');
 DEFINE('_KUNENA_MYPROFILE_MY_PROFILE_INFO', 'My Profile Info');
 DEFINE('_KUNENA_MYPROFILE_MY_POSTS', 'My Posts');
-DEFINE('_KUNENA_MYPROFILE_MY_SUBSCRIBES', 'My Subscribes');
+DEFINE('_KUNENA_MYPROFILE_MY_SUBSCRIBES', 'My Subscriptions');
 DEFINE('_KUNENA_MYPROFILE_MY_FAVORITES', 'My Favorites');
 DEFINE('_KUNENA_MYPROFILE_PRIVATE_MESSAGING', 'Private Messaging');
 DEFINE('_KUNENA_MYPROFILE_INBOX', 'Inbox');
@@ -1560,7 +1574,7 @@ $_GEN_FLAT_VIEW = "Flat";
 //avatar_upload.php
 DEFINE('_UPLOAD_UPLOAD', 'Upload');
 DEFINE('_UPLOAD_DIMENSIONS', 'Your image file can be maximum (width x height - size)');
-DEFINE('_UPLOAD_SUBMIT', 'Submit a new avatar for upload');
+DEFINE('_UPLOAD_SUBMIT', 'Upload a New Avatar');
 DEFINE('_UPLOAD_SELECT_FILE', 'Select file');
 DEFINE('_UPLOAD_ERROR_TYPE', 'Please use only jpeg, gif or png images');
 DEFINE('_UPLOAD_ERROR_EMPTY', 'Please select a file before uploading');
@@ -1570,7 +1584,7 @@ DEFINE('_UPLOAD_ERROR_WIDTH', 'The image file width exceeds the maximum set by t
 DEFINE('_UPLOAD_ERROR_HEIGHT', 'The image file height exceeds the maximum set by the Administrator.');
 DEFINE('_UPLOAD_ERROR_CHOOSE', "You didn't choose an avatar from the gallery...");
 DEFINE('_UPLOAD_UPLOADED', 'Your avatar has been uploaded.');
-DEFINE('_UPLOAD_GALLERY', 'Choose one from the avatar gallery:');
+DEFINE('_UPLOAD_GALLERY', 'Choose an Avatar from the Gallery');
 DEFINE('_UPLOAD_CHOOSE', 'Confirm Choice.');
 // listcat.php
 DEFINE('_LISTCAT_ADMIN', 'An administrator should create them first from the');

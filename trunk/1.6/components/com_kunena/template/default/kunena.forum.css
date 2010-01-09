@@ -32,7 +32,8 @@
 	height: 30px;
 }
 
-#Kunena table.fb_blocktable thead tr th {
+#Kunena table.fb_blocktable thead tr th,
+#Kunena table.fb_blocktablehalf thead tr th  {
 	background: #5388b4;
 	/* background: #3B3B3B url(images/cat_title_bg.gif) repeat-x top left; */
 	color: #ffffff;
@@ -713,6 +714,16 @@ fieldset#search-posts-start select {
 	text-align: left;
 }
 
+#Kunena table.fb_blocktablehalf {
+	width: 48%;
+	margin: 5px 0;
+	margin-right: 15px;	
+	border-style: solid;
+	border-color: #BFC3C6;
+	border-width: 0px 0px 4px 0px;
+	text-align: left;
+}
+
 #Kunena div.fb_title_cover {
 	float: left;
 	text-align: left;
@@ -1360,9 +1371,9 @@ POST PAGE
 /* FORUM BUTTONS
 ----------------------------------------------------------------------------------------------- */
 
-/* Grey buttons */
+/* Communication buttons */
 
-#Kunena a.buttongrey {
+#Kunena a.buttoncomm {
 	color: #FFF;
 	text-transform: uppercase;
 	font-size: 11px;
@@ -1371,40 +1382,40 @@ POST PAGE
 	float: right;
 	cursor: pointer;
 	line-height: 145%;
-	background: url("images/btn-bg-grey.gif") repeat-x left top;
+	background: url("images/btn-bg-comm.gif") repeat-x left top;
 	border: none;
 }
 
-#Kunena a.buttongrey.btn-left {
+#Kunena a.buttoncomm.btn-left {
 	float: left;
 }
 
-#Kunena a.buttongrey span {
+#Kunena a.buttoncomm span {
 	float: left;
 }
 
-#Kunena a.buttongrey span.reply {
+#Kunena a.buttoncomm span.reply {
 	float: left;
 	background: url("images/btn-left-reply.gif") no-repeat left top;
 }
-#Kunena a.buttongrey span.quote {
+#Kunena a.buttoncomm span.quote {
 	float: left;
 	background: url("images/btn-left-quote.gif") no-repeat left top;
 }
-#Kunena a.buttongrey span.newtopic {
+#Kunena a.buttoncomm span.newtopic {
 	float: left;
 	background: url("images/btn-left-newtopic.gif") no-repeat left top;
 }
 
-#Kunena a.buttongrey span span {
+#Kunena a.buttongcomm span span {
 	height: 18px;
 	padding: 0 7px 0 20px;
-	background: url("images/btn-right-grey.gif") no-repeat right top;
+	background: url("images/btn-right-comm.gif") no-repeat right top;
 }
 
-/* Blue buttons */
+/* User Action buttons */
 
-#Kunena a.buttonblue {
+#Kunena a.buttonuser {
 	color: #FFF;
 	text-transform: uppercase;
 	font-size: 11px;
@@ -1413,43 +1424,43 @@ POST PAGE
 	float: right;
 	cursor: pointer;
 	line-height: 145%;
-	background: url("images/btn-bg-blue.gif") repeat-x left top;
+	background: url("images/btn-bg-user.gif") repeat-x left top;
 	border: none;
 }
 
-#Kunena a.buttonblue.btn-left {
+#Kunena a.buttonuser.btn-left {
 	float: left;
 }
 
-#Kunena a.buttonblue span {
+#Kunena a.buttonuser span {
 	float: left;
 }
 
-#Kunena a.buttonblue span.favorite {
+#Kunena a.buttonuser span.favorite {
 	float: left;
 	background: url("images/btn-left-favorite.gif") no-repeat left top;
 }
-#Kunena a.buttonblue span.subscribe {
+#Kunena a.buttonuser span.subscribe {
 	float: left;
 	background: url("images/btn-left-subscribe.gif") no-repeat left top;
 }
-#Kunena a.buttonblue span.markread {
+#Kunena a.buttonuser span.markread {
 	float: left;
 	background: url("images/btn-left-markread.gif") no-repeat left top;
 }
-#Kunena a.buttonblue span.report {
+#Kunena a.buttonuser span.report {
 	float: left;
 	background: url("images/btn-left-report.gif") no-repeat left top;
 }
-#Kunena a.buttonblue span span {
+#Kunena a.buttonuser span span {
 	height: 18px;
 	padding: 0 7px 0 20px;
-	background: url("images/btn-right-blue.gif") no-repeat right top;
+	background: url("images/btn-right-user.gif") no-repeat right top;
 }
 
-/* Purple buttons */
+/* Moderator Action buttons */
 
-#Kunena a.buttonpurple {
+#Kunena a.buttonmod {
 	color: #FFF;
 	text-transform: uppercase;
 	font-size: 11px;
@@ -1458,56 +1469,56 @@ POST PAGE
 	float: right;
 	cursor: pointer;
 	line-height: 145%;
-	background: url("images/btn-bg-purple.gif") repeat-x left top;
+	background: url("images/btn-bg-mod.gif") repeat-x left top;
 	border: none;
 }
 
-#Kunena a.buttonpurple.btn-left {
+#Kunena a.buttonmod.btn-left {
 	float: left;
 }
 
-a.buttonpurple span {
+a.buttonmod span {
 	float: left;
 }
 
-#Kunena a.buttonpurple span.merge {
+#Kunena a.buttonmod span.merge {
 	float: left;
 	background: url("images/btn-left-merge.gif") no-repeat left top;
 }
-#Kunena a.buttonpurple span.edit {
+#Kunena a.buttonmod span.edit {
 	float: left;
 	background: url("images/btn-left-edit.gif") no-repeat left top;
 }
-#Kunena a.buttonpurple span.delete {
+#Kunena a.buttonmod span.delete {
 	float: left;
 	background: url("images/btn-left-delete.gif") no-repeat left top;
 }
-#Kunena a.buttonpurple span.move {
+#Kunena a.buttonmod span.move {
 	float: left;
 	background: url("images/btn-left-move.gif") no-repeat left top;
 }
 
-#Kunena a.buttonpurple span.sticky {
+#Kunena a.buttonmod span.sticky {
 	float: left;
 	background: url("images/btn-left-sticky.gif") no-repeat left top;
 }
-#Kunena a.buttonpurple span.lock {
+#Kunena a.buttonmod span.lock {
 	float: left;
 	background: url("images/btn-left-lock.gif") no-repeat left top;
 }
-#Kunena a.buttonpurple span.split {
+#Kunena a.buttonmod span.split {
 	float: left;
 	background: url("images/btn-left-split.gif") no-repeat left top;
 }
 
-#Kunena a.buttonpurple span.moderate {
+#Kunena a.buttonmod span.moderate {
 	float: left;
 	background: url("images/btn-left-moderate.gif") no-repeat left top;
 }
-#Kunena a.buttonpurple span span {
+#Kunena a.buttonmod span span {
 	height: 18px;
 	padding: 0 7px 0 20px;
-	background: url("images/btn-right-purple.gif") no-repeat right top;
+	background: url("images/btn-right-mod.gif") no-repeat right top;
 }
 
 
@@ -1936,6 +1947,8 @@ MY PROFILE
 	border-right: 1px solid #BFC3C6;
 }
 
+
+	
 /* RECENT POSTS
 ----------------------------------------------------------------------------------------------- */
 #Kunena a.fbrecent {

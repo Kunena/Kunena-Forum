@@ -358,12 +358,12 @@ if ($task == 'default')
             <!-- B:My Profile Right -->
             <!-- B: My AVATAR -->
             <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&func=myprofile&do=avatar&action=delete'); ?>" method = "post" name = "postform">
-    <table class = "fb_blocktable" id = "fb_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+    <table class = "fb_blocktablehalf fltlft" id="fb_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0">
         <thead>
             <tr>
                 <th colspan = "2">
                     <div class = "fb_title_cover">
-                        <span class = "fb_title"><?php echo _YOUR_AVATAR; ?></span>
+                        <span class = "fb_title"><?php echo _KUNENA_CHOOSE_AVATAR; ?></span>
                     </div>
                 </th>
             </tr>
@@ -373,7 +373,7 @@ if ($task == 'default')
             <tr>
                 <td >
                     <?php
-                        echo _YOUR_AVATAR . "</td><td >";
+                        echo _YOUR_AVATAR . ":</td><td >";
 
                         if ($kunena_config->avatar_src == "cb")
                         {
@@ -455,7 +455,7 @@ if ($kunena_config->allowavatarupload)
 ?>
 
             <!-- B: Upload -->
-<table class = "fb_blocktable" id ="fb_forumua" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "fb_blocktablehalf" id ="fb_forumua" border = "0" cellspacing = "0" cellpadding = "0" >
             <thead>
                 <tr>
                     <th>
@@ -568,7 +568,7 @@ if ($kunena_config->allowavatarupload)
         }
 
         echo '</tr>';
-        echo '<tr><td colspan="5" align="center"><br /><br /><input type="submit" class="button" value="' . _UPLOAD_CHOOSE . '"/><br />';
+        echo '<tr><td colspan="5" align="center"><br /><br /><input type="submit" class="button" value="' . _KUNENA_SAVE . '"/><br />';
         echo '</td></tr></table>';
         echo "</form>";
 ?>

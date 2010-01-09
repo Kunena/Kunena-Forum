@@ -412,9 +412,9 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 				<tr>
 					<td>
 
-					<div class="fb_title_cover  fbm"><span class="fb_title fbl"><b><?php
+					<div class="fb_title_cover  fbm"><span class="fb_title fbl"><?php
 		echo _KUNENA_TOPIC;
-		?></b>
+		?>
 		<?php
 		echo $this->kunena_topic_title;
 		?>

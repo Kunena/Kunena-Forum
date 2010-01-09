@@ -35,7 +35,7 @@ $kunena_db = &JFactory::getDBO();
 			<tr>
 				<th colspan = "5">
 					<div class = "fb_title_cover">
-						<span class = "fb_title"><?php echo _USER_SUBSCRIPTIONS; ?></span>
+						<span class = "fb_title"><?php echo _KUNENA_MY_SUBSCRIPTIONS; ?></span>
 					</div></th>
 			</tr>
 		</thead>

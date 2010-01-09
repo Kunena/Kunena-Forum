@@ -36,7 +36,7 @@ $kunena_db = &JFactory::getDBO();
 			<tr>
 				<th colspan = "3">
 					<div class = "fb_title_cover fbm">
-						<span class = "fb_title fbl"><?php echo _USER_FAVORITES; ?></span>
+						<span class = "fb_title fbs"><?php echo _USER_FAVORITES; ?></span>
 					</div>
 				</th>
 			</tr>

@@ -35,7 +35,7 @@ global $kunena_icons;
 		<tr>
 			<th colspan = "6">
 				<div class = "fb_title_cover">
-					<span class = "fb_title"><?php echo _KUNENA_USERPROFILE_MESSAGES; ?></span>
+					<span class = "fb_title"><?php echo _KUNENA_MY_POSTS; ?></span>
 				</div>
 
 				<img id = "BoxSwitch_fbuserprofile__<?php echo KUNENA_BOARD_CLASS ;?>fbuserprofile_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = "" />

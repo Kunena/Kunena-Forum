@@ -83,21 +83,53 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 	?>
 <!-- B:My Profile -->
 
+<table class="fb_blocktable" cellpadding="0" cellspacing="0" border="0" width="100%">
+<thead>
+	<tr>
+		<th>
+			<div class="fb_title_cover fbm">
+				<span class="fb_title fbl">
+				<?php echo _USER_PROFILE; ?>
+				<?php echo $juserinfo->name; ?>
+				</span>
+				
+			</div>
+		</th>
+		<!-- B: PROFILE TOOLS -->
+		<th align="right" width="1%">
+			<?php
+			//(JJ) BEGIN: RECENT POSTS
+			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/profiletools/profiletools.php' )) {
+				include (KUNENA_ABSTMPLTPATH . '/plugin/profiletools/profiletools.php');
+			} else {
+				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/profiletools/profiletools.php');
+			}
+			?>
+		</th>
+	</tr>
+	</thead>
+</table>
+			
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-		<td class="fb_myprofile_left" valign="top" width="20%"><!-- B:My Profile Left -->
+		<!-- Temporarily disabled left nav until profile changes complete -->
+		<!-- Links relocated in menu -->
+		<!--   <td class="fb_myprofile_left" valign="top" width="20%"> -->
+		<!-- B:My Profile Left -->
 		<?php
-	if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_menu.php' )) {
-		include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_menu.php');
-	} else {
-		include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/myprofile/myprofile_menu.php');
-	}
+	//if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_menu.php' )) {
+	//	include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_menu.php');
+	// } else {
+	//	include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/myprofile/myprofile_menu.php');
+	// }
 	?>
 
-		<!-- F:My Profile Left --></td>
+		<!-- F:My Profile Left -->
+		<!--  </td> 
 
 		<td class="fb_myprofile_mid" valign="top" width="5">&nbsp;</td>
-
+		 -->
+		 
 		<td class="fb_myprofile_right" valign="top"><!-- B:My Profile Right -->
 
 		<?php

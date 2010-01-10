@@ -38,6 +38,7 @@ Kunena 1.6.0-DEV
 + [#19356] New buttons: added logic to show new buttons
 - [#19293] Remove deprecated configuration option: joomlastyle
 # [#19032] Moderator moving topic from thread: forum order is wrong
++ [#19298] Add category selection pull down to New Thread
 
 10-Jan-2010 severdia
 ^ [#19383] Redesigned profile page

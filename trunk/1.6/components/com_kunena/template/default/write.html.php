@@ -45,10 +45,13 @@ JHTML::_ ( 'behavior.keepalive' );
 	action="<?php
 	echo JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=post' );
 	?>"
-	method="post" name="postform" enctype="multipart/form-data"><input
+	method="post" name="postform" enctype="multipart/form-data">
+	<?php if (!$this->parentid): ?>
+	<input
 	type="hidden" name="catid" value="<?php
 	echo $this->catid;
 	?>" />
+	<?php endif; ?>
 <?php
 if (! empty ( $this->kunena_editmode )) :
 	?>
@@ -99,15 +102,30 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 			<th colspan="2">
 			<div class="fb_title_cover fbm"><span class="fb_title fbl">
 			<?php
-			echo _POST_MESSAGE;
-			?>"<?php
-			echo kunena_htmlspecialchars ( stripslashes ( $msg_cat->catname ) );
-			?>"</span></div>
+			if ($this->kunena_editmode) echo _KUNENA_POST_EDIT, ' ', $this->resubject;
+			else if ($this->parentid) echo _KUNENA_POST_REPLY_TOPIC, ' ', $this->subject;
+			else echo _KUNENA_POST_NEW_TOPIC;
+			?></span></div>
 			</th>
 		</tr>
 	</thead>
 
 	<tbody id="fb_post_message">
+	<?php if (isset($this->selectcatlist)): ?>
+			<tr class="<?php
+			echo KUNENA_BOARD_CLASS;
+			?>sectiontableentry2">
+			<td class="fb_leftcolumn"><strong><?php
+			echo _KUNENA_POST_IN_CATEGORY;
+			?></strong>:</td>
+
+			<td class="fb-topicicons"><?php
+			echo $this->selectcatlist;
+			?>
+			</td>
+		</tr>
+		<?php endif; ?>
+
 		<tr class="<?php
 		echo KUNENA_BOARD_CLASS;
 		?>sectiontableentry1">

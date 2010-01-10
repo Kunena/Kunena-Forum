@@ -90,9 +90,7 @@ if ($id || $parentid) {
 // Check user access rights
 $kunena_is_admin = CKunenaTools::isAdmin ();
 $allow_forum = ($kunena_session->allowed != '') ? explode ( ',', $kunena_session->allowed ) : array ();
-
-// TODO: allow !isset($msg_cat) to pass through when user posts a new message (no category selected)
-if (!isset($msg_cat) || (! in_array ( $catid, $allow_forum ) && ! $kunena_is_admin)) {
+if ((!isset($msg_cat) && ($do != 'reply')) || (! in_array ( $catid, $allow_forum ) && ! $kunena_is_admin)) {
 	echo _KUNENA_NO_ACCESS;
 	return;
 }
@@ -504,9 +502,9 @@ if ($kunena_my->id) {
 			echo '<br /><br /><div align="center">' . _SUBMIT_CANCEL . "</div><br />";
 			echo CKunenaLink::GetLatestPostAutoRedirectHTML ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid );
 		} else {
-			if (($do == 'quote' || $do == 'reply')  && (!$msg_cat->locked || CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
+			if (($do == 'quote' || $do == 'reply')  && (!$catid || !$msg_cat->locked || CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
 				$parentid = 0;
-				if ($msg_cat->id > 0) {
+				if ($catid && $msg_cat->id > 0) {
 					$message = $msg_cat;
 					$parentid = $message->id;
 					if ($do == 'quote') {
@@ -516,19 +514,19 @@ if ($kunena_my->id) {
 						$this->message_text = '';
 					}
 					$reprefix = JString::substr ( stripslashes ( $message->subject ), 0, JString::strlen ( _POST_RE ) ) != _POST_RE ? _POST_RE . ' ' : '';
-					$resubject = $reprefix . kunena_htmlspecialchars ( stripslashes ( $message->subject ) );
-					$this->resubject = $resubject;
+					$this->subject = kunena_htmlspecialchars ( stripslashes ( $message->subject ) );
+					$this->resubject = $reprefix . $this->subject;
 				} else {
 					$this->message_text = '';
 					$this->resubject = '';
+
+					$options = array();
+					$this->selectcatlist = CKunenaTools::forumSelectList('postcatid', $catid, $options, '');
 				}
 				$this->authorName = kunena_htmlspecialchars ( $my_name );
 				$this->id = $id;
 				$this->parentid = $parentid;
 				$this->catid = $catid;
-
-				//get the writing stuff in:
-				$no_upload = "0"; //only edit mode should disallow this
 
 				if (file_exists ( KUNENA_ABSTMPLTPATH . '/write.html.php' )) {
 					include (KUNENA_ABSTMPLTPATH . '/write.html.php');

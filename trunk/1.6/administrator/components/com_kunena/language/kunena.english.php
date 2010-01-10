@@ -26,6 +26,12 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.6.0
 
+// Posting
+define('_KUNENA_POST_NEW_TOPIC', 'New Topic');
+define('_KUNENA_POST_REPLY_TOPIC', 'Reply Topic:');
+define('_KUNENA_POST_EDIT', 'Edit Post:');
+define('_KUNENA_POST_IN_CATEGORY', 'Post New Message In');
+
 // Action buttons
 define('_KUNENA_BUTTON_MARKFORUMREAD', 'Mark Forum Read');
 define('_KUNENA_BUTTON_SUBSCRIBE_CATEGORY', 'Subscribe');

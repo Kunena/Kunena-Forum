@@ -359,23 +359,9 @@ if ($kunena_config->fb_profile == 'cb') {
 			</div>
 			<div class="fb_message_buttons_cover">
 			<div class="fb_message_buttons_row"><?php
-			//we should only show the Quick Reply section to registered users. otherwise we are missing too much information!!
-			/*    onClick="expandcontent(this, 'sc<?php echo $msg_html->id;?>')" */
-			if ($kunena_my->id > 0 && ! isset ( $msg_html->closed )) :
-				?>
-			<span id="fb_qr_sc__<?php
-				echo $msg_html->id;
-				?>"
-				class="fb_qr_fire" style="cursor: pointer"> <?php
-				echo isset ( $kunena_icons ['quickmsg'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['quickmsg'] . '" border="0" alt="' . _KUNENA_QUICKMSG . '" />' . '' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'quickmsg.gif" border="0"   alt="' . _KUNENA_QUICKMSG . '" />';
-				?>
-			</span>
-
-			<?php
-                endif;
-			?> <?php
 			if ($kunena_icons ['reply']) {
 				if (! isset ( $msg_html->closed )) {
+					echo " " . $msg_html->quickreply;
 					echo " " . $msg_html->reply;
 					echo " " . $msg_html->quote;
 

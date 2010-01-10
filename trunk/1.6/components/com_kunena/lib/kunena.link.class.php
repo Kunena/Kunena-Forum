@@ -65,9 +65,9 @@ class CKunenaLink
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=fb_rss&amp;no_html=1', $name, '', $rel, '', '', 'target="_blank"');
     }
 
-    function GetCategoryLink($func, $catid, $catname, $rel='follow', $class='')
+    function GetCategoryLink($func, $catid, $catname, $rel='follow', $class='', $title='')
     {
-        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;catid='.$catid, $catname, '', $rel, $class);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;catid='.$catid, $catname, $title, $rel, $class);
     }
 
     function GetCategoryListLink($name, $rel='follow', $class='')
@@ -267,19 +267,19 @@ class CKunenaLink
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;page='.$page.(($sel)?'&amp;sel='.$sel:''), $page, '', $rel, $class);
     }
 
-    function GetPostNewTopicLink($catid, $name, $rel='nofollow')
+    function GetPostNewTopicLink($catid, $name, $rel='nofollow', $class='', $title='')
     {
-        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=post&amp;do=reply&amp;catid='.$catid, $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=post&amp;do=reply&amp;catid='.$catid, $name, $title, $rel, $class);
     }
 
-    function GetTopicPostLink($do, $catid, $id, $name, $rel='nofollow')
+    function GetTopicPostLink($do, $catid, $id, $name, $rel='nofollow', $class='', $title='')
     {
-        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=post&amp;do='.$do.'&amp;catid='.$catid.'&amp;id='.$id, $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=post&amp;do='.$do.'&amp;catid='.$catid.'&amp;id='.$id, $name, $title, $rel, $class);
     }
 
-    function GetTopicPostReplyLink($do, $catid, $id, $name, $rel='nofollow')
+    function GetTopicPostReplyLink($do, $catid, $id, $name, $rel='nofollow', $class='', $title='', $attr='')
     {
-        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=post&amp;do='.$do.'&amp;catid='.$catid.'&amp;id='.$id, $name, '', $rel);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=post&amp;do='.$do.'&amp;catid='.$catid.'&amp;id='.$id, $name, $title, $rel, $class, '', $attr);
     }
 
     function GetEmailLink($email, $name)

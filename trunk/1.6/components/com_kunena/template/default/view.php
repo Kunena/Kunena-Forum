@@ -220,59 +220,59 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		//data ready display now
 		if (CKunenaTools::isModerator ( $kunena_my->id, $catid ) || (($this->kunena_forum_locked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
 			//this user is allowed to reply to this topic
-			$thread_reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $thread, isset ( $kunena_icons ['topicreply'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['topicreply'] . '" alt="' . _GEN_POST_REPLY . '" title="' . _GEN_POST_REPLY . '" border="0" />' : _GEN_POST_REPLY );
+			$thread_reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $thread, CKunenaTools::showButton('reply', _KUNENA_BUTTON_REPLY_TOPIC), 'nofollow', 'buttoncomm btn-left', _KUNENA_BUTTON_REPLY_TOPIC_LONG );
 		}
 
 		// Thread Subscription
 		if ($fb_cansubscribe == 1) {
 			// this user is allowed to subscribe - check performed further up to eliminate duplicate checks
 			// for top and bottom navigation
-			$thread_subscribe = CKunenaLink::GetTopicPostLink ( 'subscribe', $catid, $id, isset ( $kunena_icons ['subscribe'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['subscribe'] . '" alt="' . _VIEW_SUBSCRIBETXT . '" title="' . _VIEW_SUBSCRIBETXT . '" border="0" />' : _VIEW_SUBSCRIBETXT );
+			$thread_subscribe = CKunenaLink::GetTopicPostLink ( 'subscribe', $catid, $id, CKunenaTools::showButton('subscribe', _KUNENA_BUTTON_SUBSCRIBE_TOPIC), 'nofollow', 'buttonuser btn-left', _KUNENA_BUTTON_SUBSCRIBE_TOPIC_LONG );
 		}
 
 		if ($kunena_my->id != 0 && $kunena_config->allowsubscriptions && $fb_cansubscribe == 0) {
 			// this user is allowed to unsubscribe
-			$thread_subscribe = CKunenaLink::GetTopicPostLink ( 'unsubscribe', $catid, $id, isset ( $kunena_icons ['unsubscribe'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unsubscribe'] . '" alt="' . _VIEW_UNSUBSCRIBETXT . '" title="' . _VIEW_UNSUBSCRIBETXT . '" border="0" />' : _VIEW_UNSUBSCRIBETXT );
+			$thread_subscribe = CKunenaLink::GetTopicPostLink ( 'unsubscribe', $catid, $id, CKunenaTools::showButton('subscribe', _KUNENA_BUTTON_UNSUBSCRIBE_TOPIC), 'nofollow', 'buttonuser btn-left', _KUNENA_BUTTON_UNSUBSCRIBE_TOPIC_LONG );
 		}
 
 		//START: FAVORITES
 		if ($fb_canfavorite == 1) {
 			// this user is allowed to add a favorite - check performed further up to eliminate duplicate checks
 			// for top and bottom navigation
-			$thread_favorite = CKunenaLink::GetTopicPostLink ( 'favorite', $catid, $id, isset ( $kunena_icons ['favorite'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['favorite'] . '" alt="' . _VIEW_FAVORITETXT . '" title="' . _VIEW_FAVORITETXT . '" border="0" />' : _VIEW_FAVORITETXT );
+			$thread_favorite = CKunenaLink::GetTopicPostLink ( 'favorite', $catid, $id, CKunenaTools::showButton('favorite', _KUNENA_BUTTON_FAVORITE_TOPIC), 'nofollow', 'buttonuser btn-left', _KUNENA_BUTTON_FAVORITE_TOPIC_LONG );
 		}
 
 		if ($kunena_my->id != 0 && $kunena_config->allowfavorites && $fb_canfavorite == 0) {
 			// this user is allowed to unfavorite
-			$thread_favorite = CKunenaLink::GetTopicPostLink ( 'unfavorite', $catid, $id, isset ( $kunena_icons ['unfavorite'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unfavorite'] . '" alt="' . _VIEW_UNFAVORITETXT . '" title="' . _VIEW_UNFAVORITETXT . '" border="0" />' : _VIEW_UNFAVORITETXT );
+			$thread_favorite = CKunenaLink::GetTopicPostLink ( 'unfavorite', $catid, $id, CKunenaTools::showButton('favorite', _KUNENA_BUTTON_UNFAVORITE_TOPIC), 'nofollow', 'buttonuser btn-left', _KUNENA_BUTTON_UNFAVORITE_TOPIC_LONG );
 		}
 		// FINISH: FAVORITES
 
 
 		if (CKunenaTools::isModerator ( $kunena_my->id, $catid ) || ($this->kunena_forum_locked == 0 && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
 			//this user is allowed to post a new topic
-			$thread_new = CKunenaLink::GetPostNewTopicLink ( $catid, isset ( $kunena_icons ['new_topic'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC );
+			$thread_new = CKunenaLink::GetPostNewTopicLink ( $catid, CKunenaTools::showButton('newtopic', _KUNENA_BUTTON_NEW_TOPIC), 'nofollow', 'buttoncomm btn-left', _KUNENA_BUTTON_NEW_TOPIC_LONG );
 		}
 
 		if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 			// offer the moderator always the move link to relocate a topic to another forum
 			// and the (un)sticky bit links
 			// and the (un)lock links
-			$thread_move = CKunenaLink::GetTopicPostLink ( 'move', $catid, $id, isset ( $kunena_icons ['move'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['move'] . '" alt="Move" border="0" title="' . _VIEW_MOVE . '" />' : _GEN_MOVE );
+			$thread_move = CKunenaLink::GetTopicPostLink ( 'move', $catid, $id, CKunenaTools::showButton('move', _KUNENA_BUTTON_MOVE_TOPIC), 'nofollow', 'buttonmod btn-left', _KUNENA_BUTTON_MOVE_TOPIC_LONG );
 
 			if ($topicSticky == 0) {
-				$thread_sticky = CKunenaLink::GetTopicPostLink ( 'sticky', $catid, $id, isset ( $kunena_icons ['sticky'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['sticky'] . '" alt="Sticky" border="0" title="' . _VIEW_STICKY . '" />' : _GEN_STICKY );
+				$thread_sticky = CKunenaLink::GetTopicPostLink ( 'sticky', $catid, $id, CKunenaTools::showButton('sticky', _KUNENA_BUTTON_STICKY_TOPIC), 'nofollow', 'buttonmod btn-left', _KUNENA_BUTTON_STICKY_TOPIC_LONG );
 			} else {
-				$thread_sticky = CKunenaLink::GetTopicPostLink ( 'unsticky', $catid, $id, isset ( $kunena_icons ['unsticky'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unsticky'] . '" alt="Unsticky" border="0" title="' . _VIEW_UNSTICKY . '" />' : _GEN_UNSTICKY );
+				$thread_sticky = CKunenaLink::GetTopicPostLink ( 'unsticky', $catid, $id, CKunenaTools::showButton('sticky', _KUNENA_BUTTON_UNSTICKY_TOPIC), 'nofollow', 'buttonmod btn-left', _KUNENA_BUTTON_UNSTICKY_TOPIC_LONG );
 			}
 
 			if ($topicLocked == 0) {
-				$thread_lock = CKunenaLink::GetTopicPostLink ( 'lock', $catid, $id, isset ( $kunena_icons ['lock'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['lock'] . '" alt="Lock" border="0" title="' . _VIEW_LOCK . '" />' : _GEN_LOCK );
+				$thread_lock = CKunenaLink::GetTopicPostLink ( 'lock', $catid, $id, CKunenaTools::showButton('lock', _KUNENA_BUTTON_LOCK_TOPIC), 'nofollow', 'buttonmod btn-left', _KUNENA_BUTTON_LOCK_TOPIC_LONG );
 			} else {
-				$thread_lock = CKunenaLink::GetTopicPostLink ( 'unlock', $catid, $id, isset ( $kunena_icons ['unlock'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unlock'] . '" alt="Unlock" border="0" title="' . _VIEW_UNLOCK . '" />' : _GEN_UNLOCK );
+				$thread_lock = CKunenaLink::GetTopicPostLink ( 'unlock', $catid, $id, CKunenaTools::showButton('lock', _KUNENA_BUTTON_UNLOCK_TOPIC), 'nofollow', 'buttonmod btn-left', _KUNENA_BUTTON_UNLOCK_TOPIC_LONG );
 			}
-			$thread_delete = CKunenaLink::GetTopicPostLink ( 'delete', $catid, $id, isset ( $kunena_icons ['delete'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />' : _GEN_DELETE );
-			$thread_merge = CKunenaLink::GetTopicPostLink ( 'merge', $catid, $id, isset ( $kunena_icons ['merge'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['merge'] . '" alt="Merge" border="0" title="' . _VIEW_MERGE . '" />' : _GEN_MERGE );
+			$thread_delete = CKunenaLink::GetTopicPostLink ( 'delete', $catid, $id, CKunenaTools::showButton('delete', _KUNENA_BUTTON_DELETE_TOPIC), 'nofollow', 'buttonmod btn-left', _KUNENA_BUTTON_DELETE_TOPIC_LONG );
+			$thread_merge = CKunenaLink::GetTopicPostLink ( 'merge', $catid, $id, CKunenaTools::showButton('merge', _KUNENA_BUTTON_MERGE_TOPIC), 'nofollow', 'buttonmod btn-left', _KUNENA_BUTTON_MERGE_TOPIC_LONG );
 		}
 		?>
 
@@ -937,8 +937,11 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 
 				if (CKunenaTools::isModerator ( $kunena_my->id, $catid ) || (($this->kunena_forum_locked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
 					//user is allowed to reply/quote
-					$msg_html->reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $this->kunena_message->id, isset ( $kunena_icons ['reply'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['reply'] . '" alt="Reply" border="0" title="' . _VIEW_REPLY . '" />' : _GEN_REPLY );
-					$msg_html->quote = CKunenaLink::GetTopicPostReplyLink ( 'quote', $catid, $this->kunena_message->id, isset ( $kunena_icons ['quote'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['quote'] . '" alt="Quote" border="0" title="' . _VIEW_QUOTE . '" />' : _GEN_QUOTE );
+					if ($kunena_my->id > 0) {
+						$msg_html->quickreply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $this->kunena_message->id, CKunenaTools::showButton('reply', _KUNENA_BUTTON_QUICKREPLY), 'nofollow', 'buttoncomm btn-left fb_qr_fire', _KUNENA_BUTTON_QUICKREPLY_LONG, ' id="fb_qr_sc__'.$msg_html->id.'" onclick="return false;"');
+					}
+					$msg_html->reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $this->kunena_message->id, CKunenaTools::showButton('reply', _KUNENA_BUTTON_REPLY), 'nofollow', 'buttoncomm btn-left', _KUNENA_BUTTON_REPLY_LONG );
+					$msg_html->quote = CKunenaLink::GetTopicPostReplyLink ( 'quote', $catid, $this->kunena_message->id, CKunenaTools::showButton('quote', _KUNENA_BUTTON_QUOTE), 'nofollow', 'buttoncomm btn-left', _KUNENA_BUTTON_QUOTE_LONG );
 				} else {
 					//user is not allowed to write a post
 					if ($topicLocked == 1 || $this->kunena_forum_locked) {
@@ -951,8 +954,8 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 				$showedEdit = 0; //reset this value
 				//Offer an moderator the delete link
 				if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
-					$msg_html->delete = CKunenaLink::GetTopicPostLink ( 'delete', $catid, $this->kunena_message->id, isset ( $kunena_icons ['delete'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />' : _GEN_DELETE );
-					$msg_html->merge = CKunenaLink::GetTopicPostLink ( 'merge', $catid, $this->kunena_message->id, isset ( $kunena_icons ['merge'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['merge'] . '" alt="' . _GEN_MERGE . '" border="0" title="' . _GEN_MERGE . '" />' : _GEN_MERGE );
+					$msg_html->delete = CKunenaLink::GetTopicPostLink ( 'delete', $catid, $this->kunena_message->id, CKunenaTools::showButton('delete', _KUNENA_BUTTON_DELETE), 'nofollow', 'buttonmod btn-left', _KUNENA_BUTTON_DELETE_LONG );
+					$msg_html->merge = CKunenaLink::GetTopicPostLink ( 'merge', $catid, $this->kunena_message->id, CKunenaTools::showButton('merge', _KUNENA_BUTTON_MERGE), 'nofollow', 'buttonmod btn-left', _KUNENA_BUTTON_MERGE_LONG );
 				}
 
 				if ($kunena_config->useredit && $kunena_my->id != "") {
@@ -973,14 +976,14 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 						}
 					}
 					if ($allowEdit) {
-						$msg_html->edit = CKunenaLink::GetTopicPostLink ( 'edit', $catid, $this->kunena_message->id, isset ( $kunena_icons ['edit'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />' : _GEN_EDIT );
+						$msg_html->edit = CKunenaLink::GetTopicPostLink ( 'edit', $catid, $this->kunena_message->id, CKunenaTools::showButton('edit', _KUNENA_BUTTON_EDIT), 'nofollow', 'buttonmod btn-left', _KUNENA_BUTTON_EDIT_LONG );
 						$showedEdit = 1;
 					}
 				}
 
 				if (CKunenaTools::isModerator ( $kunena_my->id, $catid ) && $showedEdit != 1) {
 					//Offer a moderator always the edit link except when it is already showing..
-					$msg_html->edit = CKunenaLink::GetTopicPostLink ( 'edit', $catid, $this->kunena_message->id, isset ( $kunena_icons ['edit'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['edit'] . '" alt="Edit" border="0" title="' . _VIEW_EDIT . '" />' : _GEN_EDIT );
+					$msg_html->edit = CKunenaLink::GetTopicPostLink ( 'edit', $catid, $this->kunena_message->id, CKunenaTools::showButton('edit', _KUNENA_BUTTON_EDIT), 'nofollow', 'buttonmod btn-left', _KUNENA_BUTTON_EDIT_LONG );
 				}
 
 				//(JJ)

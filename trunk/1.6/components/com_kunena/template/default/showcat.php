@@ -249,22 +249,22 @@ if (in_array ( $catid, $allow_forum )) {
 		<td class="fb_list_actions_forum" width="100%"><?php
 	if (CKunenaTools::isModerator($kunena_my->id, $catid) || ($this->kunena_forum_locked == 0 && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
 		//this user is allowed to post a new topic:
-		$forum_new = CKunenaLink::GetPostNewTopicLink ( $catid, isset ( $kunena_icons ['new_topic'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['new_topic'] . '" alt="' . _GEN_POST_NEW_TOPIC . '" title="' . _GEN_POST_NEW_TOPIC . '" border="0" />' : _GEN_POST_NEW_TOPIC );
+		$forum_new = CKunenaLink::GetPostNewTopicLink ( $catid, CKunenaTools::showButton('newtopic', _KUNENA_BUTTON_NEW_TOPIC), 'nofollow', 'buttoncomm btn-left', _KUNENA_BUTTON_NEW_TOPIC_LONG );
 	}
 	if ($kunena_my->id != 0) {
-		$forum_markread = CKunenaLink::GetCategoryLink ( 'markThisRead', $catid, isset ( $kunena_icons ['markThisForumRead'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['markThisForumRead'] . '" alt="' . _GEN_MARK_THIS_FORUM_READ . '" title="' . _GEN_MARK_THIS_FORUM_READ . '" border="0" />' : _GEN_MARK_THIS_FORUM_READ, $rel = 'nofollow' );
+		$forum_markread = CKunenaLink::GetCategoryLink ( 'markThisRead', $catid, CKunenaTools::showButton('markread', _KUNENA_BUTTON_MARKFORUMREAD), 'nofollow', 'buttonuser btn-left', _KUNENA_BUTTON_MARKFORUMREAD_LONG );
 	}
 
 		// Thread Subscription
 	if ($kunena_cansubscribecat == 1) {
 		// this user is allowed to subscribe - check performed further up to eliminate duplicate checks
 		// for top and bottom navigation
-		$thread_subscribecat = CKunenaLink::GetCategoryLink ( 'subscribecat', $catid, isset ( $kunena_icons ['subscribe'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['subscribe'] . '" alt="' . _VIEW_SUBSCRIBECATTXT . '" title="' . _VIEW_SUBSCRIBECATTXT . '" border="0" />' : _VIEW_SUBSCRIBECATTXT );
+		$thread_subscribecat = CKunenaLink::GetCategoryLink ( 'subscribecat', $catid, CKunenaTools::showButton('subscribe', _KUNENA_BUTTON_SUBSCRIBE_CATEGORY), 'nofollow', 'buttonuser btn-left', _KUNENA_BUTTON_SUBSCRIBE_CATEGORY_LONG );
 	}
 
 	if ($kunena_my->id != 0 && $kunena_config->allowsubscriptions && $kunena_cansubscribecat == 0) {
 		// this user is allowed to unsubscribe
-		$thread_subscribecat = CKunenaLink::GetCategoryLink ( 'unsubscribecat', $catid, isset ( $kunena_icons ['unsubscribe'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unsubscribe'] . '" alt="' . _VIEW_UNSUBSCRIBECATTXT . '" title="' . _VIEW_UNSUBSCRIBECATTXT . '" border="0" />' : _VIEW_UNSUBSCRIBECATTXT );
+		$thread_subscribecat = CKunenaLink::GetCategoryLink ( 'unsubscribecat', $catid, CKunenaTools::showButton('subscribe', _KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY), 'nofollow', 'buttonuser btn-left', _KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG );
 	}
 
 	if (isset ( $forum_new ) || isset ( $forum_markread ) || isset ( $thread_subscribecat ) ) {

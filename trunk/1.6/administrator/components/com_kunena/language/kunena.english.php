@@ -26,6 +26,54 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.6.0
 
+// Action buttons
+define('_KUNENA_BUTTON_MARKFORUMREAD', 'Mark Forum Read');
+define('_KUNENA_BUTTON_SUBSCRIBE_CATEGORY', 'Subscribe');
+define('_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY', 'Unsubscribe');
+define('_KUNENA_BUTTON_NEW_TOPIC', 'New Topic');
+define('_KUNENA_BUTTON_REPLY_TOPIC', 'Reply Topic');
+define('_KUNENA_BUTTON_DELETE_TOPIC', 'Delete Topic');
+define('_KUNENA_BUTTON_MOVE_TOPIC', 'Move Topic');
+define('_KUNENA_BUTTON_MERGE_TOPIC', 'Merge Topic');
+define('_KUNENA_BUTTON_SUBSCRIBE_TOPIC', 'Subscribe');
+define('_KUNENA_BUTTON_UNSUBSCRIBE_TOPIC', 'Unsubscribe');
+define('_KUNENA_BUTTON_FAVORITE_TOPIC', 'Favorite');
+define('_KUNENA_BUTTON_UNFAVORITE_TOPIC', 'Unfavorite');
+define('_KUNENA_BUTTON_STICKY_TOPIC', 'Sticky');
+define('_KUNENA_BUTTON_UNSTICKY_TOPIC', 'Unsticky');
+define('_KUNENA_BUTTON_LOCK_TOPIC', 'Lock');
+define('_KUNENA_BUTTON_UNLOCK_TOPIC', 'Unlock');
+define('_KUNENA_BUTTON_QUICKREPLY', 'Quick Reply');
+define('_KUNENA_BUTTON_REPLY', 'Reply');
+define('_KUNENA_BUTTON_QUOTE', 'Quote');
+define('_KUNENA_BUTTON_EDIT', 'Edit');
+define('_KUNENA_BUTTON_DELETE', 'Delete');
+define('_KUNENA_BUTTON_MERGE', 'Merge');
+
+// TODO: add good descriptions
+define('_KUNENA_BUTTON_MARKFORUMREAD_LONG', 'Mark this Forum as Read');
+define('_KUNENA_BUTTON_SUBSCRIBE_CATEGORY_LONG', 'Subscribe Category');
+define('_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG', 'Unsubscribe Category');
+define('_KUNENA_BUTTON_NEW_TOPIC_LONG', 'New Topic');
+define('_KUNENA_BUTTON_REPLY_TOPIC_LONG', 'Reply Topic');
+define('_KUNENA_BUTTON_DELETE_TOPIC_LONG', 'Delete Topic');
+define('_KUNENA_BUTTON_MOVE_TOPIC_LONG', 'Move Topic');
+define('_KUNENA_BUTTON_MERGE_TOPIC_LONG', 'Merge Topic');
+define('_KUNENA_BUTTON_SUBSCRIBE_TOPIC_LONG', 'Subscribe');
+define('_KUNENA_BUTTON_UNSUBSCRIBE_TOPIC_LONG', 'Unsubscribe');
+define('_KUNENA_BUTTON_FAVORITE_TOPIC_LONG', 'Favorite');
+define('_KUNENA_BUTTON_UNFAVORITE_TOPIC_LONG', 'Unfavorite');
+define('_KUNENA_BUTTON_STICKY_TOPIC_LONG', 'Sticky');
+define('_KUNENA_BUTTON_UNSTICKY_TOPIC_LONG', 'Unsticky');
+define('_KUNENA_BUTTON_LOCK_TOPIC_LONG', 'Lock');
+define('_KUNENA_BUTTON_UNLOCK_TOPIC_LONG', 'Unlock');
+define('_KUNENA_BUTTON_QUICKREPLY_LONG', 'Quick Reply');
+define('_KUNENA_BUTTON_REPLY_LONG', 'Reply');
+define('_KUNENA_BUTTON_QUOTE_LONG', 'Quote');
+define('_KUNENA_BUTTON_EDIT_LONG', 'Edit');
+define('_KUNENA_BUTTON_DELETE_LONG', 'Delete');
+define('_KUNENA_BUTTON_MERGE_LONG', 'Merge');
+
 // Profile strings
 define('_KUNENA_PROFILE_OPTIONS', 'Profile Options');
 define('_KUNENA_VIEW_PROFILE', 'View Profile');

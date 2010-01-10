@@ -159,6 +159,9 @@ if (count ( $this->messages [0] ) > 0) {
 		</tr>
 
 
+	</thead>
+	<tbody>
+
 		<tr class="fb_sth fbs ">
 			<th
 				class="th-0 <?php
@@ -208,8 +211,9 @@ if (count ( $this->messages [0] ) > 0) {
 	}
 	?>
 		</tr>
-	</thead>
-	<tbody>
+
+
+
 
 		<?php
 	$k = 0;

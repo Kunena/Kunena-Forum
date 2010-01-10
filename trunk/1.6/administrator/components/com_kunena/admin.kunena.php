@@ -723,7 +723,6 @@ function showConfig($option) {
 	$lists ['pubwrite'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_pubwrite', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pubwrite );
 	$lists ['useredit'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_useredit', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->useredit );
 	$lists ['showhistory'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showhistory', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showhistory );
-	$lists ['joomlastyle'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_joomlastyle', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->joomlastyle );
 	$lists ['showannouncement'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showannouncement', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showannouncement );
 	$lists ['avataroncat'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_avataroncat', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->avataroncat );
 	$lists ['showlatest'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showlatest', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showlatest );

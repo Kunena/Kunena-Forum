@@ -118,7 +118,7 @@ if ($func == ''){
 }
 
 // JOOMLA STYLE CHECK
-define ( 'KUNENA_BOARD_CLASS', ($kunena_config->joomlastyle ? '' : 'fb_') );
+define ( 'KUNENA_BOARD_CLASS', 'fb_' );
 
 // get right Language file
 if (file_exists ( KUNENA_FILE_LANGUAGE )) {
@@ -219,14 +219,10 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			}
 		}
 
-		if ($kunena_config->joomlastyle < 1) {
-			if (file_exists ( KUNENA_JTEMPLATEPATH . '/css/kunena.forum.css' )) {
-				$document->addStyleSheet ( KUNENA_JTEMPLATEURL . '/css/kunena.forum.css' );
-			} else {
-				$document->addStyleSheet ( KUNENA_TMPLTCSSURL );
-			}
+		if (file_exists ( KUNENA_JTEMPLATEPATH . '/css/kunena.forum.css' )) {
+			$document->addStyleSheet ( KUNENA_JTEMPLATEURL . '/css/kunena.forum.css' );
 		} else {
-			$document->addStyleSheet ( KUNENA_DIRECTURL . '/template/default/joomla.css' );
+			$document->addStyleSheet ( KUNENA_TMPLTCSSURL );
 		}
 	} // no_html == 0
 

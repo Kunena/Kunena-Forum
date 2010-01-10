@@ -235,7 +235,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $disemoticons = 0;
 	var $template = 'default';
 	var $templateimagepath = 'default';
-	var $joomlastyle = 0;
 	var $showannouncement = 1;
 	var $avataroncat = 0;
 	var $catimagepath = 'category_images/';

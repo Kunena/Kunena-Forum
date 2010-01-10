@@ -1219,21 +1219,6 @@ td.fbtdtitle {
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo _KUNENA_USE_JOOMLA_STYLE?>
-		</td>
-
-		<td align="left" valign="top"><?php
-		echo $lists ['joomlastyle'];
-		?>
-		</td>
-
-		<td align="left" valign="top"><?php
-		echo _KUNENA_USE_JOOMLA_STYLE_DESC?>
-		</td>
-	</tr>
-
-	<tr align="center" valign="middle">
-		<td align="left" valign="top"><?php
 		echo _KUNENA_SHOW_ANNOUNCEMENT?>
 		</td>
 

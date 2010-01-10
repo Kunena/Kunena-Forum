@@ -131,13 +131,30 @@ if (JString::strtolower ( $func ) == '') {
 <!-- B: Cat list Top -->
 <table class="fb_list_top" border="0" cellspacing="0" cellpadding="0"
 	width="100%">
-	<?php
-	if (file_exists ( KUNENA_ABSTMPLTPATH . '/category_list_bottom.php' )) {
-		include (KUNENA_ABSTMPLTPATH . '/category_list_bottom.php');
-	} else {
-		include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'category_list_bottom.php');
-	}
-	?>
+	<tr>
+		<td class="fb_list_markallcatsread">
+                <?php
+                if ($kunena_my->id != 0)
+                {
+                ?>
+
+                    <form action = "<?php echo KUNENA_LIVEURLREL; ?>" name = "markAllForumsRead" method = "post">
+                        <input type = "hidden" name = "markaction" value = "allread"/>
+                        <input type = "submit" class = "fb_button button<?php echo KUNENA_BOARD_CLASS ;?> fbs"
+                        		value = "<?php echo _GEN_MARK_ALL_FORUMS_READ ;?>"/>
+                    </form>
+
+                <?php
+                }
+                ?>
+		</td>
+		<td class="fb_list_categories">
+                <?php
+                if ($kunena_config->enableforumjump)
+                    require (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
+                ?>
+		</td>
+	</tr>
 </table>
 <!-- F: Cat list Top -->
 
@@ -623,25 +640,6 @@ else {
 <?php
 			}
 		}
-
-		//(JJ) BEGIN: CAT LIST BOTTOM
-/*
- * This code has been intentially removed
- * For more information see here:
- * http://joomlacode.org/gf/project/kunena/tracker/?action=TrackerItemEdit&tracker_item_id=19254
- *
- *		echo '<!-- B: Cat list Bottom -->';
- *		echo '<table class="fb_list_bottom" border = "0" cellspacing = "0" cellpadding = "0" width="100%">';
- *		if (file_exists ( KUNENA_ABSTMPLTPATH . '/category_list_bottom.php' )) {
- *			include (KUNENA_ABSTMPLTPATH . '/category_list_bottom.php');
- *		} else {
- *			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'category_list_bottom.php');
- *		}
- *		echo '</table>';
- *		echo '<!-- F: Cat list Bottom -->';
- */
-		//(JJ) FINISH: CAT LIST BOTTOM
-
 
 		//(JJ) BEGIN: WHOISONLINE
 		if ($kunena_config->showwhoisonline > 0) {

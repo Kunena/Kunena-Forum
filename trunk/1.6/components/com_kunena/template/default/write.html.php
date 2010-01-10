@@ -46,7 +46,7 @@ JHTML::_ ( 'behavior.keepalive' );
 	echo JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=post' );
 	?>"
 	method="post" name="postform" enctype="multipart/form-data">
-	<?php if (!$this->parentid): ?>
+	<?php if (!isset($this->selectcatlist)): ?>
 	<input
 	type="hidden" name="catid" value="<?php
 	echo $this->catid;

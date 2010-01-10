@@ -92,10 +92,10 @@ if ($signature)
 				</div>
 				<div class="kprofile-rightcol1">
 					<ul>
-						<li><span class="location"></span><strong><?php echo _KUNENA_MYPROFILE_LOCATION; ?>:</strong> <?php echo kunena_htmlspecialchars(stripslashes($userinfo->location)); ?></li>
+						<li><span class="location"></span><strong><?php echo _KUNENA_MYPROFILE_LOCATION; ?>:</strong> <a href="http://maps.google.com?q=<?php echo kunena_htmlspecialchars(stripslashes($userinfo->location)); ?>" target="_blank"><?php echo kunena_htmlspecialchars(stripslashes($userinfo->location)); ?></a></li>
 						<!--  The gender determines the suffix on the span class- gender-male & gender-female  -->
 						<li><span class="gender-<?php if( $userinfo->gender == 1 ) { echo _KUNENA_MYPROFILE_MALEC; } else if ( $userinfo->gender == 2 ) { echo _KUNENA_MYPROFILE_FEMALEC; }?>"></span><strong><?php echo _KUNENA_MYPROFILE_GENDER; ?>:</strong> <?php if( $userinfo->gender == 1 ) { echo _KUNENA_MYPROFILE_MALE; } else if ( $userinfo->gender == 2 ) { echo _KUNENA_MYPROFILE_FEMALE; }?></li>
-						<li><span class="birthdate"></span><strong><?php echo _KUNENA_MYPROFILE_BIRTHDATE; ?>:</strong> <?php echo kunena_htmlspecialchars(stripslashes($userinfo->birthdate)); ?> <span class="bday-remind">(<a href="#">Remind Me</a></span>)</li>
+						<li class="bd"><span class="birthdate"></span><strong><?php echo _KUNENA_MYPROFILE_BIRTHDATE; ?>:</strong> <?php echo kunena_htmlspecialchars(stripslashes($userinfo->birthdate)); ?> <a href="#" title="<?php echo _KUNENA_MYPROFILE_BIRTHDAYREMIND; ?>"><span class="bday-remind"></span></a></li>
 					</ul>
 				</div>
 			</div>
@@ -104,7 +104,7 @@ if ($signature)
 				<div class="kprofile-rightcol2">
 					<ul>
 						<li><span class="email"></span><a href="mailto:<?php echo $juserinfo->email; ?>"><?php echo $juserinfo->email; ?></a></li>
-						<li><span class="website"></span><a href="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->websitename)); ?>" target="_blank"><?php echo kunena_htmlspecialchars(stripslashes($userinfo->websitename)); ?></a></li>
+						<li><span class="website"></span><a href="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->websiteurl)); ?>" target="_blank"><?php echo kunena_htmlspecialchars(stripslashes($userinfo->websitename)); ?></a></li>
 					</ul>
 				</div>
 				<div class="kprofile-rightcol1">

@@ -1793,6 +1793,7 @@ FORUM TOOLS
 #Kunena #forumtools_control {
 	width: 150px;
 	text-align: right;
+	margin-right: 5px;
 }
 
 #Kunena .forumtools_contentBox {
@@ -2050,7 +2051,17 @@ div#kprofile-rightcol div.kprofile-rightcol1 ul li span.birthdate {
 	margin-right: 10px;
 }
 
-div.kprofile-rightcol1 ul li span.bday-remind { margin-left: 15px; font-size: 11px;}
+div.kprofile-rightcol1 ul li span.bday-remind { 
+	display:inline-block; 
+	height: 16px; 
+	width: 16px;
+	background: url("images/remind.png") no-repeat; 
+	vertical-align:middle;
+}
+li.bd a {
+	margin-left: 10px;
+}
+	
 
 div.kprofile-rightcol2 { float:right; width: 275px; margin-left: 10px;}
 

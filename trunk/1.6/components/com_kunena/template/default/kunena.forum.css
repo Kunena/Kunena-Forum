@@ -102,9 +102,11 @@
 	line-height: 21px;
 }
 
-#Kunena .topic_latest_post,
-#Kunena .topic_date {
+#Kunena .topic_latest_post{
 	font-size: 1.1em;
+}
+#Kunena .topic_date {
+	font-size: 1em;
 }
 
 #Kunena a.fb-topic-title {

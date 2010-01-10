@@ -72,7 +72,7 @@ else
     }
     else {
  		$jr_avatar = '<img src="'.KUNENA_LIVEUPLOADEDPATH.'/avatars/s_nophoto.jpg" alt=" " />';
-        $jr_profilelink = '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
+        $jr_profilelink = CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile' , _PROFILEBOX_MYPROFILE , _PROFILEBOX_MYPROFILE , 'nofollow');
     }
 
 }
@@ -83,10 +83,10 @@ if ($kunena_config->fb_profile == "cb" || $kunena_config->fb_profile == "jomsoci
 }
 else
 {
-    $jr_profilelink = '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile') . '" >' . _PROFILEBOX_MYPROFILE . '</a>';
+    $jr_profilelink = CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile' , _PROFILEBOX_MYPROFILE, _PROFILEBOX_MYPROFILE, 'follow');
 }
 
-$jr_myposts = '<a href="' . JRoute::_(KUNENA_LIVEURLREL .  '&amp;func=showauthor&amp;task=showmsg&amp;auth=' . $kunena_my->id . '') . '" >' . _PROFILEBOX_SHOW_MYPOSTS . '</a>';
+$jr_myposts = CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL .  '&amp;func=showauthor&amp;task=showmsg&amp;auth=' . $kunena_my->id , _PROFILEBOX_SHOW_MYPOSTS , _PROFILEBOX_SHOW_MYPOSTS, 'nofollow' );
 $jr_latestpost = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=latest');
 ?>
 

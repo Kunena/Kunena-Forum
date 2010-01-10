@@ -86,8 +86,10 @@ if ($annID > 0) {
 
                     <tr class = "fb_sth">
                         <th class = "th-1 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader fbm" align="left">
-                            <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'edit', $annID); ?>"><?php echo _ANN_EDIT; ?> </a> |
-                        <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'delete', $annID); ?>"><?php echo _ANN_DELETE; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'add');?>"><?php echo _ANN_ADD; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'show');?>"><?php echo _ANN_CPANEL; ?> </a>
+                            <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'edit', $annID), _ANN_EDIT, _ANN_EDIT,'nofollow'); ?> |
+                            <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'delete', $annID), _ANN_DELETE, _ANN_DELETE,'nofollow'); ?> |
+							<?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'add'), _ANN_ADD, _ANN_ADD,'nofollow'); ?> |
+							<?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_CPANEL, _ANN_CPANEL, 'nofollow'); ?>
                         </th>
                     </tr>
 
@@ -116,7 +118,7 @@ if ($annID > 0) {
 if (!empty($anndescription)) {
 ?>
 
-    &nbsp;&nbsp;&nbsp;<a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'read', $annID);?>"> <?php echo _ANN_READMORE; ?></a>
+    &nbsp;&nbsp;&nbsp;<?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'read', $annID), _ANN_READMORE, _ANN_READMORE,'follow'); ?>
 
 <?php
     }

@@ -47,39 +47,39 @@ $id = JRequest::getInt('id', 0);
         <div class="forumtools_content" id="subBox1">
             <ul>
                 <li>
-					<a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile'); ?>"> <?php echo _KUNENA_VIEW_PROFILE; ?> </a>
+					<?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile', _KUNENA_VIEW_PROFILE, _KUNENA_VIEW_PROFILE, 'follow'); ?>
                 </li>
                 <li>
-					<a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=profileinfo'); ?>"><?php echo _KUNENA_EDIT_PROFILE; ?></a>
+					<?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=profileinfo', _KUNENA_EDIT_PROFILE, _KUNENA_EDIT_PROFILE, 'follow'); ?>
 				</li>
 				<?php
  					// Only show userdetails link if we are in charge of the profile
     				if ($kunena_config->fb_profile == 'fb')
    					 {
 				?>
-            	<li><a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=userdetails'); ?>"> <?php echo _KUNENA_EDIT_DETAILS; ?></a></li>
+            	<li><?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=userdetails', _KUNENA_EDIT_DETAILS, _KUNENA_EDIT_DETAILS, 'follow'); ?></li>
 				<?php
 				    }
 				    // Only show avatar link if we are in charge of it
  				   if ($kunena_config->allowavatar && $kunena_config->avatar_src == 'fb')
  				   {
 				?>
-            		<li><a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=avatar'); ?>"> <?php echo _KUNENA_CHOOSE_AVATAR; ?></a></li>
+            		<li><?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=avatar', _KUNENA_CHOOSE_AVATAR, _KUNENA_CHOOSE_AVATAR,'follow'); ?></li>
 				<?php
 				    }
 				?>
                <li>
-              		<a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showset'); ?>"><?php echo _KUNENA_FORUM_PREFERENCES; ?></a>
+              		<?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showset', _KUNENA_FORUM_PREFERENCES, _KUNENA_FORUM_PREFERENCES, 'follow'); ?>
 				</li>
 
 				<li>
-					<a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showmsg'); ?>"><?php echo _KUNENA_VIEW_MY_POSTS; ?></a>
+					<?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showmsg', _KUNENA_VIEW_MY_POSTS, _KUNENA_VIEW_MY_POSTS, 'follow'); ?>
 				</li>
 				<li>
-					<a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub'); ?>"><?php echo _KUNENA_VIEW_MY_SUBSCRIPTIONS; ?></a>
+					<?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub', _KUNENA_VIEW_MY_SUBSCRIPTIONS, _KUNENA_VIEW_MY_SUBSCRIPTIONS, 'follow'); ?>
 				</li>
 				<li>
-					<a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav'); ?>"><?php echo _KUNENA_VIEW_MY_FAVORITES; ?></a>
+					<?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav', _KUNENA_VIEW_MY_FAVORITES, _KUNENA_VIEW_MY_FAVORITES, 'follow'); ?>
                </li>
             </ul>
         </div>

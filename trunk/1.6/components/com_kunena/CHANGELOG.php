@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+10-Jan-2010 svens LDA
+# [#19339] Incorrect implementation of links in CKunenaLink class
+
 10-Jan-2010 severdia
 # [#19345] Stats page cleanup, Language string cleanup
 

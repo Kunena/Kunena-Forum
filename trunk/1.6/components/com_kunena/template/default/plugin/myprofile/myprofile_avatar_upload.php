@@ -389,7 +389,7 @@ if ($task == 'default')
 
                                 <img src = "components/com_comprofiler/images/<?php echo $avatar;?>" alt="" />
 
-                                <br /> <a href = "<?php echo JRoute::_('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar');?>"><?php echo _SET_NEW_AVATAR; ?></a>
+                                <br /> <?php echo CKunealink::GetSefHrefLink('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar', _SET_NEW_AVATAR, _SET_NEW_AVATAR,'nofollow'); ?>
 
                     <?php
                             }
@@ -398,7 +398,7 @@ if ($task == 'default')
                                 echo _NON_SELECTED;
                     ?>
 
-                            <br /> <a href = "<?php echo JRoute::_('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar');?>"><?php echo _SET_NEW_AVATAR; ?></a>
+                            <br /> <?php echo CKunealink::GetSefHrefLink('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar', _SET_NEW_AVATAR, _SET_NEW_AVATAR,'nofollow'); ?>
 
                     <?php
                             }
@@ -429,7 +429,7 @@ if ($task == 'default')
                                 echo _NON_SELECTED;
                     ?>
 
-                            <br /> <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&func=myprofile&do=avatar');?>"> <?php echo _SET_NEW_AVATAR; ?></a>
+                            <br /> <?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&func=myprofile&do=avatar', _SET_NEW_AVATAR, _SET_NEW_AVATAR,'nofollow'); ?>
 
                     <?php
                             }

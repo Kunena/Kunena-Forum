@@ -79,13 +79,11 @@ if ($do == "read") {
                     <th class = "th-1 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="left" >
                         <?php
                         if ($is_editor) {
-                        ?>
-
-                                <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'edit', $annID); ?>"><?php echo _ANN_EDIT; ?> </a> |
-                    <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'delete', $annID); ?>"><?php echo _ANN_DELETE; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'add');?>"><?php echo _ANN_ADD; ?> </a> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'show');?>"><?php echo _ANN_CPANEL; ?> </a>
-
-                        <?php
-                            }
+                        	echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'edit', $annID), _ANN_EDIT, _ANN_EDIT, 'follow').' | ';
+                    		echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'delete', $annID), _ANN_DELETE, _ANN_DELETE, 'follow').' | ';
+                    		echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'add'), _ANN_ADD, _ANN_ADD, 'follow').' | ';
+                    		echo CkunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_CPANEL, _ANN_CPANEL, 'follow');
+                        }
                         ?>
                     </th>
                 </tr>
@@ -136,7 +134,7 @@ if ($is_editor) {
                     <tr>
                         <th colspan = "6">
                             <div class = "fb_title_cover fbm">
-                                <span class = "fb_title fbl"> <?php echo $kunena_app->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'add');?>"><?php echo _ANN_ADD; ?></a></span>
+                                <span class = "fb_title fbl"> <?php echo $kunena_app->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?> | <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'add'), _ANN_ADD, _ANN_ADD, 'follow'); ?></span>
                             </div>
                         </th>
                     </tr>
@@ -192,7 +190,7 @@ if ($is_editor) {
                                 </td>
 
                                 <td class = "td-3"  align="left">
-                                    <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'read', $row->id); ?>"><?php echo stripslashes($row->title); ?></a>
+                                    <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'read', $row->id), stripslashes($row->title), stripslashes($row->title), 'follow'); ?>
                                 </td>
 
                                 <td class = "td-4"  align="center">
@@ -207,11 +205,11 @@ if ($is_editor) {
                                 </td>
 
                                 <td class = "td-5"  align="center">
-                                    <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'edit', $row->id); ?>"><?php echo _ANN_EDIT; ?> </a>
+                                    <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'edit', $row->id), _ANN_EDIT,_ANN_EDIT,'follow'); ?>
                                 </td>
 
                                 <td class = "td-6"  align="center">
-                                    <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'delete', $row->id); ?>"><?php echo _ANN_DELETE; ?></a>
+                                    <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'delete', $row->id), _ANN_DELETE, _ANN_DELETE, 'follow'); ?>
                                 </td>
                             </tr>
 
@@ -264,7 +262,7 @@ if ($is_editor) {
         <tr>
             <th>
                 <div class = "fb_title_cover fbm">
-                    <span class = "fb_title fbl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_ADD; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'show');?>"><?php echo _ANN_CPANEL; ?></a></span>
+                    <span class = "fb_title fbl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_ADD; ?> | <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_CPANEL, _ANN_CPANEL,'follow'); ?></span>
                 </div>
             </th>
         </tr>
@@ -418,7 +416,7 @@ if ($is_editor) {
         <tr>
             <th>
                 <div class = "fb_title_cover fbm">
-                    <span class = "fb_title fbl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_EDIT; ?> | <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'show');?>"><?php echo _ANN_CPANEL; ?></a></span>
+                    <span class = "fb_title fbl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_EDIT; ?> | <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_CPANEL, _ANN_CPANEL, 'follow'); ?></span>
                 </div>
             </th>
         </tr>

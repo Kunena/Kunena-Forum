@@ -42,13 +42,13 @@ $kunena_config =& CKunenaConfig::getInstance();
         <tr>
             <td class = "fb_myprofile_menu_staff">
                 <span class = "fb_myprofile_menu_title"><?php echo _KUNENA_MYPROFILE_PERSONAL_INFO; ?></span>
-                <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile'); ?>"> <?php echo _KUNENA_MYPROFILE_SUMMARY; ?> </a>
+                <?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile', _KUNENA_MYPROFILE_SUMMARY, _KUNENA_MYPROFILE_SUMMARY,'nofollow'); ?>
 <?php
  	// Only show userdetails link if we are in charge of the profile
     if ($kunena_config->fb_profile == 'fb')
     {
 ?>
-            	<a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=userdetails'); ?>"> <?php echo _KUNENA_EDIT_TITLE; ?> </a>
+            	<?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=userdetails', _KUNENA_EDIT_TITLE, _KUNENA_EDIT_TITLE,'follow'); ?>
 <?php
     }
 
@@ -56,7 +56,7 @@ $kunena_config =& CKunenaConfig::getInstance();
     if ($kunena_config->allowavatar && $kunena_config->avatar_src == 'fb')
     {
 ?>
-            	<a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=avatar'); ?>"> <?php echo _KUNENA_MYPROFILE_MYAVATAR; ?></a>
+            	<?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=avatar', _KUNENA_MYPROFILE_MYAVATAR, _KUNENA_MYPROFILE_MYAVATAR,'nofollow'); ?>
 <?php
     }
 ?>
@@ -65,8 +65,12 @@ $kunena_config =& CKunenaConfig::getInstance();
 
         <tr>
             <td class = "fb_myprofile_menu_staff">
-                <span class = "fb_myprofile_menu_title"><?php echo _KUNENA_MYPROFILE_FORUM_SETTINGS; ?></span> <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showset'); ?>"><?php echo _KUNENA_MYPROFILE_LOOK_AND_LAYOUT; ?></a>
-            <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=profileinfo'); ?>"><?php echo _KUNENA_MYPROFILE_MY_PROFILE_INFO; ?></a> <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showmsg'); ?>"><?php echo _KUNENA_MYPROFILE_MY_POSTS; ?></a> <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub'); ?>"><?php echo _KUNENA_MYPROFILE_MY_SUBSCRIBES; ?></a> <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav'); ?>"><?php echo _KUNENA_MYPROFILE_MY_FAVORITES; ?></a>
+                <span class = "fb_myprofile_menu_title"><?php echo _KUNENA_MYPROFILE_FORUM_SETTINGS; ?></span>
+                <?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showset', _KUNENA_MYPROFILE_LOOK_AND_LAYOUT, _KUNENA_MYPROFILE_LOOK_AND_LAYOUT, 'follow'); ?>
+                <?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=profileinfo', _KUNENA_MYPROFILE_MY_PROFILE_INFO, _KUNENA_MYPROFILE_MY_PROFILE_INFO, 'follow'); ?>
+                <?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showmsg', _KUNENA_MYPROFILE_MY_POSTS, _KUNENA_MYPROFILE_MY_POSTS,'follow'); ?>
+				<?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub', _KUNENA_MYPROFILE_MY_SUBSCRIBES, _KUNENA_MYPROFILE_MY_SUBSCRIBES, 'follow'); ?>
+				<?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav', _KUNENA_MYPROFILE_MY_FAVORITES, _KUNENA_MYPROFILE_MY_FAVORITES, 'follow'); ?>
             </td>
         </tr>
 
@@ -78,10 +82,10 @@ $kunena_config =& CKunenaConfig::getInstance();
         <tr>
             <td class = "fb_myprofile_menu_staff">
                 <span class = "fb_myprofile_menu_title"><?php echo _KUNENA_MYPROFILE_PRIVATE_MESSAGING; ?></span>
-            <a href = "<?php echo JRoute::_('index.php?option=com_uddeim&amp;Itemid=' . KUNENA_UIM_ITEMID); ?>"><?php echo _KUNENA_MYPROFILE_INBOX; ?> </a>
-            <a href = "<?php echo JRoute::_('index.php?option=com_uddeim&amp;task=new&amp;Itemid=' . KUNENA_UIM_ITEMID); ?>"><?php echo _KUNENA_MYPROFILE_NEW_MESSAGE; ?></a>
-            <a href = "<?php echo JRoute::_('index.php?option=com_uddeim&amp;task=outbox&amp;Itemid=' . KUNENA_UIM_ITEMID); ?>"><?php echo _KUNENA_MYPROFILE_OUTBOX; ?></a>
-            <a href = "<?php echo JRoute::_('index.php?option=com_uddeim&amp;task=trashcan&amp;Itemid=' . KUNENA_UIM_ITEMID); ?>"><?php echo _KUNENA_MYPROFILE_TRASH; ?></a>
+            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_uddeim&amp;Itemid=' . KUNENA_UIM_ITEMID , _KUNENA_MYPROFILE_INBOX, _KUNENA_MYPROFILE_INBOX, 'follow'); ?>
+            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_uddeim&amp;task=new&amp;Itemid=' . KUNENA_UIM_ITEMID , _KUNENA_MYPROFILE_NEW_MESSAGE, _KUNENA_MYPROFILE_NEW_MESSAGE, 'follow'); ?>
+            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_uddeim&amp;task=outbox&amp;Itemid=' . KUNENA_UIM_ITEMID , _KUNENA_MYPROFILE_OUTBOX, _KUNENA_MYPROFILE_OUTBOX, 'follow'); ?>
+            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_uddeim&amp;task=trashcan&amp;Itemid=' . KUNENA_UIM_ITEMID , _KUNENA_MYPROFILE_TRASH, _KUNENA_MYPROFILE_TRASH, 'follow'); ?>
             </td>
         </tr>
 <?php
@@ -95,12 +99,12 @@ $kunena_config =& CKunenaConfig::getInstance();
        <tr>
             <td class = "fb_myprofile_menu_staff">
                 <span class = "fb_myprofile_menu_title"><?php echo _KUNENA_MYPROFILE_PRIVATE_MESSAGING; ?></span>
-            <a href = "<?php echo JRoute::_('index.php?option=com_missus&amp;func=showinbox&amp;Itemid=' . KUNENA_MISSUS_ITEMID); ?>"><?php echo _KUNENA_MYPROFILE_INBOX; ?> </a>
-            <a href = "<?php echo JRoute::_('index.php?option=com_missus&amp;func=newmsg&amp;Itemid=' . KUNENA_MISSUS_ITEMID); ?>"><?php echo _KUNENA_MYPROFILE_NEW_MESSAGE; ?></a>
-            <a href = "<?php echo JRoute::_('index.php?option=com_missus&amp;func=showsent&amp;Itemid=' . KUNENA_MISSUS_ITEMID); ?>"><?php echo _KUNENA_MYPROFILE_OUTBOX; ?></a>
-            <a href = "<?php echo JRoute::_('index.php?option=com_missus&amp;func=showtrash&amp;Itemid=' . KUNENA_MISSUS_ITEMID); ?>"><?php echo _KUNENA_MYPROFILE_TRASH; ?></a>
-            <a href = "<?php echo JRoute::_('index.php?option=com_missus&amp;func=showcontacts&amp;Itemid=' . KUNENA_MISSUS_ITEMID); ?>"><?php echo _KUNENA_MYPROFILE_CONTACTS; ?></a>
-            <a href = "<?php echo JRoute::_('index.php?option=com_missus&amp;func=showconfig&amp;Itemid=' . KUNENA_MISSUS_ITEMID); ?>"><?php echo _KUNENA_MYPROFILE_SETTINGS; ?></a>
+            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_missus&amp;func=showinbox&amp;Itemid=' . KUNENA_MISSUS_ITEMID , _KUNENA_MYPROFILE_INBOX, _KUNENA_MYPROFILE_INBOX, 'follow'); ?>
+            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_missus&amp;func=newmsg&amp;Itemid=' . KUNENA_MISSUS_ITEMID , _KUNENA_MYPROFILE_NEW_MESSAGE, _KUNENA_MYPROFILE_NEW_MESSAGE, 'follow'); ?>
+            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_missus&amp;func=showsent&amp;Itemid=' . KUNENA_MISSUS_ITEMID ,  _KUNENA_MYPROFILE_OUTBOX,  _KUNENA_MYPROFILE_OUTBOX, 'follow'); ?>
+            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_missus&amp;func=showtrash&amp;Itemid=' . KUNENA_MISSUS_ITEMID , _KUNENA_MYPROFILE_TRASH, _KUNENA_MYPROFILE_TRASH, 'follow'); ?>
+            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_missus&amp;func=showcontacts&amp;Itemid=' . KUNENA_MISSUS_ITEMID , _KUNENA_MYPROFILE_CONTACTS, _KUNENA_MYPROFILE_CONTACTS, 'follow'); ?>
+            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_missus&amp;func=showconfig&amp;Itemid=' . KUNENA_MISSUS_ITEMID , _KUNENA_MYPROFILE_SETTINGS, _KUNENA_MYPROFILE_SETTINGS, 'follow'); ?>
             </td>
         </tr>
 <?php
@@ -114,9 +118,9 @@ $kunena_config =& CKunenaConfig::getInstance();
        <tr>
             <td class = "fb_myprofile_menu_staff">
                 <span class = "fb_myprofile_menu_title"><?php echo _KUNENA_MYPROFILE_PRIVATE_MESSAGING; ?></span>
-            <a href = "<?php echo JRoute::_('index.php?option=com_jim&amp;task=inbox'); ?>"><?php echo _KUNENA_MYPROFILE_INBOX; ?> </a>
-            <a href = "<?php echo JRoute::_('index.php?option=com_jim&amp;task=new'); ?>"><?php echo _KUNENA_MYPROFILE_NEW_MESSAGE; ?></a>
-            <a href = "<?php echo JRoute::_('index.php?option=com_jim&amp;task=outbox'); ?>"><?php echo _KUNENA_MYPROFILE_OUTBOX; ?></a>
+            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_jim&amp;task=inbox', _KUNENA_MYPROFILE_INBOX, _KUNENA_MYPROFILE_INBOX, 'follow'); ?>
+            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_jim&amp;task=new' , _KUNENA_MYPROFILE_NEW_MESSAGE, _KUNENA_MYPROFILE_NEW_MESSAGE, 'follow'); ?>
+            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_jim&amp;task=outbox' , _KUNENA_MYPROFILE_OUTBOX, _KUNENA_MYPROFILE_OUTBOX, 'follow'); ?>
             </td>
         </tr>
 <?php

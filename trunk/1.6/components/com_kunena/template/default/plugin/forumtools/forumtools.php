@@ -48,7 +48,7 @@ $id = JRequest::getInt('id', 0);
             <ul>
                 <li>
                 <?php
-                echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=post&amp;do=reply&amp;catid=' . $catid) . '">' . _GEN_POST_NEW_TOPIC . '</a>';
+                echo CKunenaLink::getSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=post&amp;do=reply&amp;catid=' . $catid, _GEN_POST_NEW_TOPIC, _GEN_POST_NEW_TOPIC , 'follow');
                 ?>
 
                 </li>
@@ -62,7 +62,7 @@ $id = JRequest::getInt('id', 0);
 
                         <li>
                         <?php
-                        echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;id=' . $id . '&amp;catid=' . $catid . '&amp;func=fb_pdf') . '" rel="nofollow">' . _GEN_PDF . '</a>';
+                        echo CKUnenaLink::getSefHrefLink(KUNENA_LIVEURLREL . '&amp;id=' . $id . '&amp;catid=' . $catid . '&amp;func=fb_pdf' , _GEN_PDF , _GEN_PDF , 'nofollow');
                         ?>
 
                         </li>
@@ -75,14 +75,14 @@ $id = JRequest::getInt('id', 0);
                 <li>
                 <?php
                 if ($kunena_my->id != 0) {
-                    echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=markThisRead&amp;catid=' . $catid) . '">' . _GEN_MARK_THIS_FORUM_READ . '</a>';
+                    echo CKUnenaLink::getSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=markThisRead&amp;catid=' . $catid , _GEN_MARK_THIS_FORUM_READ , _GEN_MARK_THIS_FORUM_READ, 'nofollow' );
                 }
                 ?>
 
                 </li>
                 <li>
                 <?php
-                echo ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=latest') . '" >' . _GEN_LATEST_POSTS . '</a>';
+                echo CKUnenaLink::getSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=latest', _GEN_LATEST_POSTS, _GEN_LATEST_POSTS, 'follow' );
                 ?>
 
                 </li>
@@ -92,28 +92,24 @@ $id = JRequest::getInt('id', 0);
                 {
 				 if ($kunena_config->rules_infb) {
                     echo '<li>';
-                    echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=rules') . '" >';
-                    echo _GEN_RULES;
-                    echo '</a></li>';
+                    echo CKUnenaLink::getSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=rules', _GEN_RULES , _GEN_RULES, 'follow' );
+                    echo '</li>';
 					} else {
 					echo '<li>';
-                    echo '<a href="' . $kunena_config->rules_link . '" >';
-                    echo _GEN_RULES;
-                    echo '</a></li>';
+					echo CKUnenaLink::getSefHrefLink($kunena_config->rules_link , _GEN_RULES , _GEN_RULES, 'follow' );
+                    echo '</li>';
 					}
                 }
                 if ($kunena_config->enablehelppage)
                 {
 				 if ($kunena_config->help_infb) {
 					echo '<li>';
-					echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=help') . '" >';
-					echo _GEN_HELP;
-					echo '</a></li>';
+					echo CKUnenaLink::getSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=help' , _GEN_HELP , _GEN_HELP, 'follow' );
+					echo '</li>';
 					} else {
 					echo '<li>';
-					echo '<a href="' . $kunena_config->help_link . '" >';
-					echo _GEN_HELP;
-					echo '</a></li>';
+					echo CKUnenaLink::getSefHrefLink( $kunena_config->help_link , _GEN_HELP , _GEN_HELP , 'follow');
+					echo '</li>';
 					}
 				}
                 ?>

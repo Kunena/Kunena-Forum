@@ -75,7 +75,7 @@ $kunena_db = &JFactory::getDBO();
 						$k = 1 - $k;
 			?>
 						<tr class="<?php echo KUNENA_BOARD_CLASS . '' . $tabclass[$k]; ?>">
-						<td class="td-1" width="73%" align="left"><?php echo $enum; ?>: <a href="<?php echo JRoute::_(KUNENA_LIVEURLREL . '&func=view&catid=' . $fav->catid . '&id=' . $fav->id); ?>"><?php echo kunena_htmlspecialchars(stripslashes($fav->subject)); ?></a></td>
+						<td class="td-1" width="73%" align="left"><?php echo $enum; ?>: <?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&func=view&catid=' . $fav->catid . '&id=' . $fav->id, kunena_htmlspecialchars(stripslashes($fav->subject)),kunena_htmlspecialchars(stripslashes($fav->subject)),'nofollow'); ?></td>
 
 						<td class = "td-2" style = "text-align:center; width:25%"> <?php echo kunena_htmlspecialchars(stripslashes($fav->name)); ?></td>
 

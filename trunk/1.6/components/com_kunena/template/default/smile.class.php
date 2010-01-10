@@ -235,7 +235,7 @@ class smile
         <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry1">
         <?php if ($kunena_config->enablehelppage) { ?>
             <td class = "fb_leftcolumn" valign = "top">
-                <strong><a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=help').'#boardcode';?>" target="_new"><?php @print(_COM_BOARDCODE); ?></a></strong>:
+                <strong><?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=help', @print(_COM_BOARDCODE), NULL , 'follow' , NULL, 'boardcode', 'target=\'_new\''); ?></a></strong>:
             </td>
          <?php }else { ?>
 			<td class = "fb_leftcolumn" valign = "top">

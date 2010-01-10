@@ -105,9 +105,13 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                                 echo _USER_ERROR_B . "<br /><br />";
                                 echo _USER_ERROR_C . "<br /><br />" . _USER_ERROR_D . ": <code>fb001-karma-02NoDO</code><br /><br />";
                             }
+                        } else {
+                        	if ($pid) {
+                        		echo _KARMA_WAIT . '<br /> ' . _KARMA_BACK .' '. CKunenaLink::GetSefHrefLink( KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid , _POST_CLICK , _POST_CLICK, 'nofollow');
+                        	}else{
+                        		echo _KARMA_WAIT . '<br /> ' . _KARMA_BACK .' '. CKunenaLink::GetSefHrefLink( CKunenaLink::GetProfileURL($userid) , _POST_CLICK , _POST_CLICK, 'nofollow');
+                        	}
                         }
-                        else
-                            echo _KARMA_WAIT . '<br /> ' . _KARMA_BACK . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
                     }
                     else if ($kunena_my->id == $userid) // In case the user tries modifing his own karma by changing the userid from the URL...
                     {
@@ -115,14 +119,22 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                         {
                             $kunena_db->setQuery('UPDATE #__fb_users SET karma=karma-10, karma_time=' . $time . ' WHERE userid=' . $kunena_my->id . '');
                             $kunena_db->query() or check_dberror("Unable to update karma.");
-							echo _KARMA_SELF_INCREASE . '<br />' . _KARMA_BACK . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
+                            if ($pid) {
+                            	echo _KARMA_SELF_INCREASE . '<br />' . _KARMA_BACK . ' ' . CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid , _POST_CLICK , _POST_CLICK , 'nofollow');
+                            } else {
+                            	echo _KARMA_SELF_INCREASE . '<br />' . _KARMA_BACK . ' ' . CKunenaLink::GetSefHrefLink(CKunenaLink::GetProfileURL($userid) , _POST_CLICK , _POST_CLICK , 'nofollow');
+                            }
                         }
 
                         if ($do == "decrease") // Stop him from decreasing his karma but still update karma_time
                         {
                             $kunena_db->setQuery('UPDATE #__fb_users SET karma_time=' . $time . ' WHERE userid=' . $kunena_my->id . '');
                             $kunena_db->query() or check_dberror("Unable to update karma.");
-                            echo _KARMA_SELF_DECREASE . '<br /> ' . _KARMA_BACK . ' <a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid) . '">' . _POST_CLICK . '</a>.';
+                            if ($pid) {
+                            	echo _KARMA_SELF_DECREASE . '<br />' . _KARMA_BACK . ' ' . CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid , _POST_CLICK , _POST_CLICK, 'nofollow' );
+                            } else {
+                            	echo _KARMA_SELF_DECREASE . '<br />' . _KARMA_BACK . ' ' . CKunenaLink::GetSefHrefLink(CKunenaLink::GetProfileURL($userid) , _POST_CLICK , _POST_CLICK, 'nofollow' );
+                            }
                         }
                     }
                 }

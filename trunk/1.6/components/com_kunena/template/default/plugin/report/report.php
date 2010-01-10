@@ -127,8 +127,8 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type=0)
 
     }
     echo '<br /><br />';
-    echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $id) . '#' . $id . '">' . _POST_SUCCESS_VIEW . '</a><br />';
-    echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $catid) . '">' . _POST_SUCCESS_FORUM . '</a><br />';
+    echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $id , _POST_SUCCESS_VIEW , _POST_SUCCESS_VIEW , 'nofollow' , NULL , $id ).'<br />';
+    echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $catid , _POST_SUCCESS_FORUM , _POST_SUCCESS_FORUM, 'nofollow').'<br />';
     echo '</div>';
 }
 

@@ -99,9 +99,9 @@ define('_KUNENA_MENU_CREATED', 'The Kunena navigation menu and main forum link h
 define('_KUNENA_MENU_TITLE', 'Kunena Menu');
 define('_KUNENA_MENU_FORUM', 'Forum'); // mainmenu link to Kunena
 define('_KUNENA_MENU_LISTCAT', 'Index'); // Categories view
-define('_KUNENA_MENU_LATEST', 'Topics'); // Latest/recent discussions
-define('_KUNENA_MENU_MYLATEST', 'My Topics'); // My latest discussions
-define('_KUNENA_MENU_NOREPLIES', 'No Replies'); // Discussions without replies
+define('_KUNENA_MENU_LATEST', 'Topics'); // Latest/recent topics
+define('_KUNENA_MENU_MYLATEST', 'My Topics'); // My latest topics
+define('_KUNENA_MENU_NOREPLIES', 'No Replies'); // Topics without replies
 define('_KUNENA_MENU_MYPROFILE', 'My Profile'); // My profile view
 define('_KUNENA_MENU_RULES', 'Rules'); // Rules article
 define('_KUNENA_MENU_HELP', 'Help'); // Help article
@@ -201,8 +201,8 @@ DEFINE('_KUNENA_AV_TOP', 'Top');
 DEFINE('_KUNENA_AV_BOTTOM', 'Bottom');
 define('_KUNENA_PDF_NOT_GENERATED_MESSAGE_DELETED', 'The thread has been deleted, so the PDF can not be generated.');
 define('_KUNENA_NO_REPLIES', 'No Replies');
-define('_KUNENA_SHOW_AVATAR_ON_CAT', 'Show avatar on Categories view, Recent Discussions and My Discussions?');
-define('_KUNENA_SHOW_AVATAR_ON_CAT_DESC', 'Set to <em>Yes</em> if you want to show user avatar on Categories view, Recent Discussions and My Discussions.');
+define('_KUNENA_SHOW_AVATAR_ON_CAT', 'Show avatar on Categories view, Recent Topics and My Topics?');
+define('_KUNENA_SHOW_AVATAR_ON_CAT_DESC', 'Set to <em>Yes</em> if you want to show user avatar on Categories view, Recent Topics and My Topics.');
 define('_KUNENA_POST_EMAIL_NOTIFICATION1', 'A new post has been made to a topic to which you have subscribed on the');
 define('_KUNENA_POST_EMAIL_NOTIFICATION2', 'You can administer your subscriptions by following the My Profile link on the forum home page after you have logged in on the site. From your profile you can also unsubscribe from the topic.');
 define('_KUNENA_POST_EMAIL_NOTIFICATION3', 'Do not answer to this e-mail notification as it is a generated e-mail.');
@@ -390,10 +390,10 @@ DEFINE('_KUNENA_SEARCH_SEARCHBY_USER', 'Search by User Name');
 DEFINE('_KUNENA_SEARCH_UNAME', 'User Name');
 DEFINE('_KUNENA_SEARCH_EXACT', 'Exact Name');
 DEFINE('_KUNENA_SEARCH_USER_POSTED', 'Messages posted by');
-DEFINE('_KUNENA_SEARCH_USER_STARTED', 'Threads started by');
-DEFINE('_KUNENA_SEARCH_USER_ACTIVE', 'Activity in threads');
+DEFINE('_KUNENA_SEARCH_USER_STARTED', 'Topics started by');
+DEFINE('_KUNENA_SEARCH_USER_ACTIVE', 'Activity in Topics');
 DEFINE('_KUNENA_SEARCH_OPTIONS', 'Search Options');
-DEFINE('_KUNENA_SEARCH_FIND_WITH', 'Find Threads with');
+DEFINE('_KUNENA_SEARCH_FIND_WITH', 'Find topics with');
 DEFINE('_KUNENA_SEARCH_LEAST', 'At least');
 DEFINE('_KUNENA_SEARCH_MOST', 'At most');
 DEFINE('_KUNENA_SEARCH_ANSWERS', 'Answers');
@@ -496,9 +496,9 @@ DEFINE('_COM_A_RSS_HISTORY_WEEK', '1 Week');
 DEFINE('_COM_A_RSS_HISTORY_MONTH', '1 Month');
 DEFINE('_COM_A_RSS_HISTORY_YEAR', '1 Year');
 DEFINE('_COM_A_FBDEFAULT_PAGE', 'Default Kunena Page');
-DEFINE('_COM_A_FBDEFAULT_PAGE_DESC', 'Select the default Kunena page that is displayed when a forum link is clicked or the forum is initially entered. Default is Recent Discussions. Should be set to Categories for templates other than default. If My Discussions is selected, guests will default to Recent Discussions.');
-DEFINE('_COM_A_FBDEFAULT_PAGE_RECENT', 'Recent Discussions');
-DEFINE('_COM_A_FBDEFAULT_PAGE_MY', 'My Discussions');
+DEFINE('_COM_A_FBDEFAULT_PAGE_DESC', 'Select the default Kunena page that is displayed when a forum link is clicked or the forum is initially entered. Default is Recent Topics. Should be set to Categories for templates other than default. If My Topics is selected, guests will default to Recent Topics.');
+DEFINE('_COM_A_FBDEFAULT_PAGE_RECENT', 'Recent Topics');
+DEFINE('_COM_A_FBDEFAULT_PAGE_MY', 'My Topics');
 DEFINE('_COM_A_FBDEFAULT_PAGE_CATEGORIES', 'Categories');
 DEFINE('_KUNENA_BBCODE_HIDE', 'The following is hidden from unregistered users:');
 DEFINE('_KUNENA_BBCODE_SPOILER', 'Warning: Spoiler!');
@@ -574,15 +574,15 @@ DEFINE('_POST_NO_UNSUBSCRIBED_TOPIC', 'This thread has <strong>NOT</strong> been
 DEFINE('_POST_SUCCESS_UNSUBSCRIBE', 'Your request to remove from subscriptions has been processed.');
 DEFINE('_POST_NO_DEST_CATEGORY', 'No destination category was selected. Nothing was moved.');
 // default template
-DEFINE('_KUNENA_ALL_DISCUSSIONS', 'Recent Discussions');
-DEFINE('_KUNENA_MY_DISCUSSIONS', 'My Discussions');
-DEFINE('_KUNENA_MY_DISCUSSIONS_DETAIL', 'Discussions I have started or replied to');
+DEFINE('_KUNENA_ALL_DISCUSSIONS', 'Recent Topics');
+DEFINE('_KUNENA_MY_DISCUSSIONS', 'My Topics');
+DEFINE('_KUNENA_MY_DISCUSSIONS_DETAIL', 'Topics I have started or replied to');
 DEFINE('_KUNENA_CATEGORY', 'Category:');
 DEFINE('_KUNENA_CATEGORIES', 'Categories');
 DEFINE('_KUNENA_POSTED_AT', 'Posted');
 DEFINE('_KUNENA_AGO', 'ago');
-DEFINE('_KUNENA_DISCUSSIONS', 'Discussions');
-DEFINE('_KUNENA_TOTAL_THREADS', 'Total Threads:');
+DEFINE('_KUNENA_DISCUSSIONS', 'Topics');
+DEFINE('_KUNENA_TOTAL_THREADS', 'Total Topics:');
 DEFINE('_SHOW_DEFAULT', 'Default');
 DEFINE('_SHOW_MONTH', 'Month');
 DEFINE('_SHOW_YEAR', 'Year');
@@ -961,7 +961,7 @@ DEFINE('_KUNENA_CLEARSUBSFAIL', 'Clearing subscriptions failed:');
 DEFINE('_KUNENA_FORUMPRUNEDFOR', 'Forum pruned for');
 DEFINE('_KUNENA_PRUNEDAYS', 'days');
 DEFINE('_KUNENA_PRUNEDELETED', 'Deleted:');
-DEFINE('_KUNENA_PRUNETHREADS', 'threads');
+DEFINE('_KUNENA_PRUNETHREADS', 'topics');
 DEFINE('_KUNENA_ERRORPRUNEUSERS', 'Error pruning users:');
 DEFINE('_KUNENA_USERSPRUNEDDELETED', 'Users pruned. Deleted:'); // <=FB 1.0.3
 DEFINE('_KUNENA_PRUNEUSERPROFILES', 'user profiles'); // <=FB 1.0.3
@@ -1008,7 +1008,7 @@ DEFINE('_KUNENA_USERPOPULAR', 'Show Popular Subject Stats');
 DEFINE('_KUNENA_USERPOPULARDESC', 'If you want to show the Popular Subject, select <em>Yes</em>.');
 DEFINE('_KUNENA_NUMPOP', 'Number of Popular Subject');
 DEFINE('_KUNENA_INFORMATION',
-    'The Kunena team is proud to announce the release of Kunena 1.0.8. It is a powerful and stylish forum component for a well-deserved content management system, Joomla. It is initially based on the hard work of Joomlaboard and Fireboard and our praise goes to their team. Some of the main features of Kunena can be listed as below (in addition to JB&#39;s current features):<br /><br /><ul><li>A much more designer friendly forum system. It is close to SMF templating system having a simpler structue. With very few steps you can modify the total look of the forum. Thanks goes to the great designers in our team.</li><li>Unlimited subcategory system with better administration backend.</li><li>Faster system and better coding experience for third-party developers.</li><li>The same<br /></li><li>Profilebox at the top of the forum</li><li>Support for popular PM systems, such as Uddeim</li><li>Basic plugin system (practical rather than perfect)</li><li>Language defined icon system.<br /></li><li>Sharing image system of other templates. So, choice between templates and image series is possible</li><li>You can add Joomla modules inside the forum template itself. Want to have a banner inside your forum?</li><li>Favorite threads selection and management</li><li>Forum spotlights and highlights</li><li>Forum announcements and its panel</li><li>Latest messages (Tabbed)</li><li>Statistics at bottom</li><li>Who&#39;s online, on what page?</li><li>Category-specific image system</li><li>Enhanced pathway</li><li>RSS, PDF output</li><li>Advanced search (under developement)</li><li>Community Builder and JomSocial profile options</li><li>Avatar management : Community Builder and JomSocial options<br /></li></ul><br />This is a collaborative work of several developers and designers that have kindly participated and made this release come true. Here we thank all of them and wish that you enjoy this release!<br /><br />Kunena Team<br /></td></tr></table>');
+    'The Kunena team is proud to announce the release of Kunena 1.0.8. It is a powerful and stylish forum component for a well-deserved content management system, Joomla. It is initially based on the hard work of Joomlaboard and Fireboard and our praise goes to their team. Some of the main features of Kunena can be listed as below (in addition to JB&#39;s current features):<br /><br /><ul><li>A much more designer friendly forum system. It is close to SMF templating system having a simpler structue. With very few steps you can modify the total look of the forum. Thanks goes to the great designers in our team.</li><li>Unlimited subcategory system with better administration backend.</li><li>Faster system and better coding experience for third-party developers.</li><li>The same<br /></li><li>Profilebox at the top of the forum</li><li>Support for popular PM systems, such as Uddeim</li><li>Basic plugin system (practical rather than perfect)</li><li>Language defined icon system.<br /></li><li>Sharing image system of other templates. So, choice between templates and image series is possible</li><li>You can add Joomla modules inside the forum template itself. Want to have a banner inside your forum?</li><li>Favorite topics selection and management</li><li>Forum spotlights and highlights</li><li>Forum announcements and its panel</li><li>Latest messages (Tabbed)</li><li>Statistics at bottom</li><li>Who&#39;s online, on what page?</li><li>Category-specific image system</li><li>Enhanced pathway</li><li>RSS, PDF output</li><li>Advanced search (under developement)</li><li>Community Builder and JomSocial profile options</li><li>Avatar management : Community Builder and JomSocial options<br /></li></ul><br />This is a collaborative work of several developers and designers that have kindly participated and made this release come true. Here we thank all of them and wish that you enjoy this release!<br /><br />Kunena Team<br /></td></tr></table>');
 DEFINE('_KUNENA_INSTRUCTIONS', 'Instructions');
 DEFINE('_KUNENA_FINFO', 'Kunena Forum Information');
 DEFINE('_KUNENA_CSSEDITOR', 'Kunena Template CSS Editor');
@@ -1152,7 +1152,7 @@ DEFINE('_KUNENA_ANN_MODID_DESC', 'Add user IDs for announcement moderators (e.g.
 DEFINE('_KUNENA_FORUM_TOP', 'Board Categories');
 DEFINE('_KUNENA_CHILD_BOARDS', 'Child Boards');
 DEFINE('_KUNENA_QUICKMSG', 'Quick Reply');
-DEFINE('_KUNENA_THREADS_IN_FORUM', 'Threads in Forum');
+DEFINE('_KUNENA_THREADS_IN_FORUM', 'Topics in Forum');
 DEFINE('_KUNENA_FORUM', 'Forum');
 DEFINE('_KUNENA_SPOTS', 'Spotlights');
 DEFINE('_KUNENA_CANCEL', 'cancel');
@@ -1240,7 +1240,7 @@ DEFINE('_STATS_FORUM_STATS', 'Forum Statistics');
 DEFINE('_STAT_TOP', 'Top');
 DEFINE('_STAT_POPULAR', 'Most Popular');
 DEFINE('_STAT_POPULAR_USER_TMSG', 'Users (Total Messages)');
-DEFINE('_STAT_POPULAR_USER_KGSG', 'Threads');
+DEFINE('_STAT_POPULAR_USER_KGSG', 'Topics');
 DEFINE('_STAT_POPULAR_USER_GSG', 'Users (Total Profile Views)');
 //Team List
 DEFINE('_MODLIST_ONLINE', 'User Online Now');
@@ -1377,7 +1377,7 @@ DEFINE('_COM_C_CSSDESC', 'Tweak Kunena\'s look and feel');
 DEFINE('_COM_C_SUPPORT', 'Support Web Site');
 DEFINE('_COM_C_SUPPORTDESC', 'Connect to the Kunena Web site (new window)');
 DEFINE('_COM_C_PRUNETAB', 'Prune Forums');
-DEFINE('_COM_C_PRUNETABDESC', 'Remove old threads (configurable)');
+DEFINE('_COM_C_PRUNETABDESC', 'Remove old topics (configurable)');
 DEFINE('_COM_C_PRUNEUSERS', 'Prune Users'); // <=FB 1.0.3
 DEFINE('_COM_C_PRUNEUSERSDESC', 'Sync Kunena user table with Joomla! user table'); // <=FB 1.0.3
 DEFINE('_COM_C_LOADMODPOS', 'Load Module Positions');
@@ -1547,8 +1547,8 @@ DEFINE('_COM_A_BOARD_TITLE_DESC', 'The name of your board');
 //Removed Threaded View Option - No longer support in Kunena - It has been broken for years
 //DEFINE('_COM_A_VIEW_TYPE', 'Default View type');
 //DEFINE('_COM_A_VIEW_TYPE_DESC', 'Choose between a threaded or flat view as default');
-DEFINE('_COM_A_THREADS', 'Threads Per Page');
-DEFINE('_COM_A_THREADS_DESC', 'Number of threads per page to show');
+DEFINE('_COM_A_THREADS', 'Topics Per Page');
+DEFINE('_COM_A_THREADS_DESC', 'Number of topics per page to show');
 DEFINE('_COM_A_REGISTERED_ONLY', 'Registered Users Only');
 DEFINE('_COM_A_REG_ONLY_DESC', 'Set to <em>Yes</em> to allow only registered users to use the Forum (view and post). Set to <em>No</em> to allow any visitor to use the Forum.');
 DEFINE('_COM_A_PUBWRITE', 'Public Read/Write');
@@ -1605,8 +1605,8 @@ DEFINE('_COM_A_BOARD_OFFLINE_MES', 'Forum Offline Message');
 DEFINE('_COM_A_PRUNE', 'Prune Forums');
 DEFINE('_COM_A_PRUNE_NAME', 'Forum to prune:');
 DEFINE('_COM_A_PRUNE_DESC',
-    'The Prune Forums function allows you to prune threads where there have not been any new posts during the specified number of days. This does not remove stickies or locked topics and these must be removed manually. Threads in locked forums can not be pruned.');
-DEFINE('_COM_A_PRUNE_NOPOSTS', 'Prune threads with no posts for the past');
+    'The Prune Forums function allows you to prune topics where there have not been any new posts during the specified number of days. This does not remove stickies or locked topics and these must be removed manually. Topics in locked forums cannot be pruned.');
+DEFINE('_COM_A_PRUNE_NOPOSTS', 'Prune topics with no posts for the past');
 DEFINE('_COM_A_PRUNE_DAYS', 'days');
 DEFINE('_COM_A_PRUNE_USERS', 'Prune Users'); // <=FB 1.0.3
 DEFINE('_COM_A_PRUNE_USERS_DESC',
@@ -1615,6 +1615,7 @@ DEFINE('_COM_A_PRUNE_USERS_DESC',
 DEFINE('_GEN_ACTION', 'Action');
 DEFINE('_GEN_AUTHOR', 'Author');
 DEFINE('_GEN_BY', 'by');
+DEFINE('_GEN_POSTEDBY', 'Posted by');
 DEFINE('_GEN_CANCEL', 'Cancel');
 DEFINE('_GEN_CONTINUE', 'Submit');
 DEFINE('_GEN_DATE', 'Date');
@@ -1629,6 +1630,7 @@ DEFINE('_GEN_FORUM', 'Forum');
 DEFINE('_GEN_HELP', 'Help');
 DEFINE('_GEN_HITS', 'Views');
 DEFINE('_GEN_LAST_POST', 'Last Post');
+DEFINE('_GEN_LAST_POST_BY', 'Last Post by');
 DEFINE('_GEN_LATEST_POSTS', 'Show latest posts');
 DEFINE('_GEN_LOCK', 'Lock');
 DEFINE('_GEN_UNLOCK', 'Unlock');
@@ -1639,6 +1641,7 @@ DEFINE('_GEN_MODERATED', 'Forum is moderated. Reviewed prior to publishing.');
 DEFINE('_GEN_MODERATORS', 'Moderators');
 DEFINE('_GEN_MOVE', 'Move');
 DEFINE('_GEN_NAME', 'Name');
+DEFINE('_GEN_ON', 'on');
 DEFINE('_GEN_POST_NEW_TOPIC', 'Post New Topic');
 DEFINE('_GEN_POST_REPLY', 'Post Reply');
 DEFINE('_GEN_MYPROFILE', 'My Profile');

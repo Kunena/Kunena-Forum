@@ -575,11 +575,11 @@ else {
 							?>
 			</td>
 
-			<td class="td-3  fbm" align="center"><?php
+			<td class="td-3 fbm" align="center"><?php
 							echo CKunenaTools::formatLargeNumber($numtopics);
 							?></td>
 
-			<td class="td-4  fbm" align="center"><?php
+			<td class="td-4 fbm" align="center"><?php
 							echo CKunenaTools::formatLargeNumber($numreplies);
 							?>
 			</td>
@@ -592,6 +592,7 @@ else {
 			<div
 				class="<?php
 								echo KUNENA_BOARD_CLASS?>latest-subject fbm">
+					<?php echo _GEN_LAST_POST; ?>:
 			<?php
 								echo CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $singlerow->catid, $latestthread, $latestthreadpages, $kunena_config->messages_per_page, $latestsubject, $latestid );
 								?>
@@ -601,10 +602,12 @@ else {
 				class="<?php
 								echo KUNENA_BOARD_CLASS?>latest-subject-by fbs">
 			<?php
-								echo _GEN_BY . ' ';
+								echo _GEN_POSTEDBY . ' ';
 								echo CKunenaLink::GetProfileLink ( $kunena_config, $latestuserid, $latestname );
-								echo ' | ' . $lastptime . ' ';
-								echo CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $singlerow->catid, $latestthread, $latestthreadpages, $kunena_config->messages_per_page, isset ( $kunena_icons ['latestpost'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '"/>' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"  alt="' . _SHOW_LAST . '"/>', $latestid );
+								echo ' ';
+								echo _GEN_ON;
+								echo ' ' . $lastptime ;
+								// echo CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $singlerow->catid, $latestthread, $latestthreadpages, $kunena_config->messages_per_page, isset ( $kunena_icons ['latestpost'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '"/>' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"  alt="' . _SHOW_LAST . '"/>', $latestid );
 								?>
 			</div>
 			</td>

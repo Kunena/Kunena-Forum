@@ -318,7 +318,7 @@ $k = 0;
    <tr  class = "fb_sth fbs" >
       <th class = "th-1 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader"  align="left" width="50%"> <?php echo _KUNENA_USRL_USERNAME ;?></th>
       <th class = "th-2 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" width="40%">&nbsp;  </th>
-      <th class = "th-3 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center" width="10%"><?php echo _KUNENA_USRL_HITS ;?></th>
+      <th class = "th-3 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center" width="10%"></th>
     </tr>
 
 <?php

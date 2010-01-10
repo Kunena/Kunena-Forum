@@ -214,12 +214,6 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	}
 
 	// include required libraries
-	if (file_exists ( KUNENA_ABSTMPLTPATH . '/layout.php' )) {
-		require_once (KUNENA_ABSTMPLTPATH . '/layout.php');
-	} else {
-		require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'layout.php');
-	}
-
 	require_once (JPATH_BASE . '/libraries/joomla/template/template.php');
 
 	if ($func == '') { // Set default start page as per config settings
@@ -359,27 +353,6 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		}
 	}
 
-	switch ($func) {
-		case 'view' :
-			$kunena_menu = kunena_get_menu ( NULL, $kunena_config, $kunena_icons, $kunena_my->id, 3, $catid, $id, $thread );
-
-			break;
-
-		case 'showcat' :
-			//get number of pending messages
-			$kunena_db->setQuery ( "SELECT COUNT(*) FROM #__fb_messages WHERE catid='$catid' AND hold='1'" );
-			$numPending = $kunena_db->loadResult ();
-			check_dberror ( 'Unable load pending messages.' );
-
-			$kunena_menu = kunena_get_menu ( NULL, $kunena_config, $kunena_icons, $kunena_my->id, 2, $catid, $id, $thread, CKunenaTools::isModerator ( $kunena_my->id, $catid ), $numPending );
-			break;
-
-		default :
-			$kunena_menu = kunena_get_menu ( NULL, $kunena_config, $kunena_icons, $kunena_my->id, 1);
-
-			break;
-	}
-
 	// display header
 	?>
 <!-- Kunena Header -->
@@ -410,9 +383,6 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		</div>
 		<!-- /Kunena Menu position: kunena_menu -->
 		<?php
-	}
-	else{
-		echo $kunena_menu;
 	}
 	?></td>
 		<td align="right" width="1%"><img

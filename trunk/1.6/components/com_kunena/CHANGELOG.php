@@ -43,6 +43,7 @@ Kunena 1.6.0-DEV
 # [#19371] change componentid behaviour for created menus to support sef
 ^ [#19379] rename faq to help
 + [#19371] Language file strings for new menu creation logic
+- [#19371] Remove leagcy menu code including layout.php
 
 08-Jan-2010 810
 + [#19303] Add twitter, facebook to profile

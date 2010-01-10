@@ -1,8 +1,12 @@
 <?php
 /**
+
  * @version $Id$
+
  * Kunena Component
+
  * @package Kunena
+
  *
  * @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,13 +14,21 @@
  *
  * Based on FireBoard Component
  * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
+
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+
  * @link http://www.bestofjoomla.com
+
  *
+
  * Based on Joomlaboard Component
+
  * @copyright (C) 2000 - 2004 TSMF / Jan de Graaff / All Rights Reserved
+
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+
  * @author TSMF & Jan de Graaff
+
  **/
 
 defined ( '_JEXEC' ) or die ( 'Restricted access' );
@@ -38,6 +50,7 @@ CKunenaPolls::call_javascript_form();
 include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
 
 //keep session alive while editing
+
 JHTML::_ ( 'behavior.keepalive' );
 ?>
 
@@ -255,6 +268,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 		}
 
 		//check if this user is already subscribed to this topic but only if subscriptions are allowed
+
 		if ($kunena_config->allowsubscriptions == 1) {
 			if ($this->id == 0) {
 				$fb_thread = - 1;
@@ -392,6 +406,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
            <?php }
         }
 		// Begin captcha . Thanks Adeptus
+
 		if ($kunena_config->captcha == 1 && $kunena_my->id < 1) {
 			?>
 		<tr class="<?php
@@ -459,15 +474,16 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 		<tr id="fb_post_buttons_tr" class="<?php
 		echo KUNENA_BOARD_CLASS;
 		?>sectiontableentry1">
-			<td id="fb_post_buttons" colspan="2" style="text-align: center;"><input
-				type="submit" name="submit" class="fb_button"
+			<td id="fb_post_buttons" colspan="2" style="text-align: center;">
+			  <input type="button" name="cancel" class="fb_button"
 				value="<?php
-				@print (' ' . _GEN_CONTINUE . ' ') ;
+				@print (' ' . _GEN_CANCEL . ' ') ;
 				?>"
-				onclick="return submitForm()"
+				onclick="javascript:window.history.back();"
 				onmouseover="javascript:jQuery('input[name=helpbox]').val('<?php
-				@print (_KUNENA_EDITOR_HELPLINE_SUBMIT) ;
-				?>')" /> <input type="button" name="preview" class="fb_button"
+				@print (_KUNENA_EDITOR_HELPLINE_CANCEL) ;
+				?>')" />
+				<input type="button" name="preview" class="fb_button"
 				value="<?php
 				@print (' ' . _PREVIEW . ' ') ;
 				?>"
@@ -475,14 +491,17 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 				echo KUNENA_COMPONENT_ITEMID?>);"
 				onmouseover="javascript:jQuery('input[name=helpbox]').val('<?php
 				@print (_KUNENA_EDITOR_HELPLINE_PREVIEW) ;
-				?>')" /> <input type="button" name="cancel" class="fb_button"
+				?>')" />
+				<input
+				type="submit" name="submit" class="fb_button"
 				value="<?php
-				@print (' ' . _GEN_CANCEL . ' ') ;
+				@print (' ' . _GEN_CONTINUE . ' ') ;
 				?>"
-				onclick="javascript:window.history.back();"
+				onclick="return submitForm()"
 				onmouseover="javascript:jQuery('input[name=helpbox]').val('<?php
-				@print (_KUNENA_EDITOR_HELPLINE_CANCEL) ;
-				?>')" /></td>
+				@print (_KUNENA_EDITOR_HELPLINE_SUBMIT) ;
+				?>')" />
+				</td>
 		</tr>
 
 		<!-- preview -->

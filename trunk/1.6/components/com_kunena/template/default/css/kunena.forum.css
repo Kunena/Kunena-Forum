@@ -27,6 +27,10 @@
 	font-family: Arial, Helvetica, sans-serif;
 }
 
+a:focus { 
+    outline: none; 
+}
+
 #Kunena .fb_header {
 	background: #3B3B3B url("../images/cat_title_bg.gif") repeat-x top left;
 	height: 30px;
@@ -1393,6 +1397,16 @@ POST PAGE
 	font-weight: bold;
 	font-size: 1em;
 }
+
+div#fb-color_palette,
+div#link,
+div#image,
+div#video {
+	border-bottom: 1px solid #BFC3C6;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+}
+	
 
 /* FORUM BUTTONS
 ----------------------------------------------------------------------------------------------- */

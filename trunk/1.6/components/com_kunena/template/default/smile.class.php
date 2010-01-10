@@ -290,7 +290,7 @@ class smile
 							<?php } ?>
                         </td>
                     </tr>
-<!-- start of extendable fiels -->
+<!-- Start extendable fields -->
 					<tr><td class = "fb-postbuttons">
 						<div id="fb-color_palette" style="display: none;">
 							<script type="text/javascript">
@@ -359,7 +359,7 @@ class smile
 							</script>
 						</div>
 
-						<div id="smilie" style="display: none;">
+						<div id="smilie">
 							<?php
 							$kunena_db = &JFactory::getDBO();
 							$kunena_db->setQuery("SELECT code, location, emoticonbar FROM #__fb_smileys ORDER BY id");
@@ -406,23 +406,7 @@ class smile
                 {
                 ?>
 
-                    <br/>
-
-                    <br/>
-
-                    <div align = "right">
-                        <table border = "0" cellspacing = "3" cellpadding = "0">
-                            <tr>
-                                <td colspan = "4" style = "text-align: center;">
-                                    <strong><?php @print(_GEN_EMOTICONS); ?></strong>
-                                </td>
-                            </tr>
-
-                            <?php
-                            $this->kunena_emoticons_rowset = generate_smilies(); //the new function Smiley mod
-                            ?>
-                        </table>
-                    </div>
+                  
 
                 <?php
                 }

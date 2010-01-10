@@ -37,6 +37,7 @@ Kunena 1.6.0-DEV
 # [#19383] Revise Profile Page: remove deprecated functions, minor fixes
 + [#19356] New buttons: added logic to show new buttons
 - [#19293] Remove deprecated configuration option: joomlastyle
+# [#19032] Moderator moving topic from thread: forum order is wrong
 
 10-Jan-2010 severdia
 ^ [#19383] Redesigned profile page

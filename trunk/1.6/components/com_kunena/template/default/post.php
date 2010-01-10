@@ -76,7 +76,7 @@ if ($id || $parentid) {
 	if ($do != 'domovepost' && $do != 'domergepost' && $do != 'dosplit') {
 		$catid = $msg_cat->catid;
 	}
-} else {
+} else if ($catid) {
 	// Check that category exists and fill some information for later use
 	$kunena_db->setQuery ( "SELECT 0 AS id, id AS catid, name AS catname, pub_access, locked, review, class_sfx FROM #__fb_categories WHERE id='{$catid}'" );
 	$msg_cat = $kunena_db->loadObject ();
@@ -90,7 +90,9 @@ if ($id || $parentid) {
 // Check user access rights
 $kunena_is_admin = CKunenaTools::isAdmin ();
 $allow_forum = ($kunena_session->allowed != '') ? explode ( ',', $kunena_session->allowed ) : array ();
-if (! in_array ( $catid, $allow_forum ) && ! $kunena_is_admin) {
+
+// TODO: allow !isset($msg_cat) to pass through when user posts a new message (no category selected)
+if (!isset($msg_cat) || (! in_array ( $catid, $allow_forum ) && ! $kunena_is_admin)) {
 	echo _KUNENA_NO_ACCESS;
 	return;
 }
@@ -866,11 +868,9 @@ else if ($do == "move") {
 
 				$catid = ( int ) $catid;
 				$id = ( int ) $id;
-				//get list of available forums
-				//$kunena_db->setQuery("SELECT id, name FROM #__fb_categories WHERE parent != '0'");
-				$kunena_db->setQuery ( "SELECT a.*, b.id AS catid, b.name AS category FROM #__fb_categories AS a LEFT JOIN #__fb_categories AS b ON b.id = a.parent WHERE a.parent!='0' AND a.id IN ($kunena_session->allowed) ORDER BY parent, ordering" );
-				$catlist = $kunena_db->loadObjectList ();
-				check_dberror ( "Unable to load categories." );
+				$options = array();
+				$selectlist = CKunenaTools::forumSelectList('postmove', 0, $options, ' size="15" class="fb_move_selectbox"');
+
 				// get topic subject:
 				$kunena_db->setQuery ( "SELECT subject, id FROM #__fb_messages WHERE id='{$id}'" );
 				$topicSubject = $kunena_db->loadResult ();
@@ -898,13 +898,7 @@ else if ($do == "move") {
 				echo _POST_MOVE_TOPIC;
 				?>: <br />
 
-		<select name="catid" size="15" class="fb_move_selectbox">
-			<?php
-				foreach ( $catlist as $cat ) {
-					echo "<OPTION value=\"$cat->id\" > $cat->category/$cat->name </OPTION>";
-				}
-				?>
-		</select> <br />
+		<?php echo $selectlist; ?> <br />
 
 		<input type="checkbox" checked name="leaveGhost" value="1" /> <?php
 				echo _POST_MOVE_GHOST;

@@ -578,12 +578,27 @@ class CKunenaTools {
 		}
 	}
 
-    function showBulkActionCats($disabled = 1) {
+	function forumSelectList($name, $catid=0, $options=array(), $attr='') {
+		$kunena_db = &JFactory::getDBO ();
+		$list = JJ_categoryArray ();
+
+		foreach ( $list as $item ) {
+			$options [] = JHTML::_ ( 'select.option', $item->id, $item->treename );
+		}
+
+		if (is_array($catid)) $catids = 'catids[]';
+		else $catids = 'catid';
+		$parent = JHTML::_ ( 'select.genericlist', $options, $catids, $attr, 'value', 'text', $catid, $name );
+		return $parent;
+	}
+
+	function showBulkActionCats($disabled = 1) {
         $kunena_db = &JFactory::getDBO();
 
         $options = array ();
         $options[] = JHTML::_('select.option', '0', "&nbsp;");
-        $lists['parent'] = KUNENA_GetAvailableForums(0, "", $options, $disabled);
+        $attr = 'class="inputbox fbs" size="1"' . ($disabled ? ' disabled="disabled" ' : "");
+        $lists['parent'] = CKunenaTools::forumSelectList('bulkactions', 0, $options, $attr);
 
         echo $lists['parent'];
         }
@@ -1271,60 +1286,6 @@ function fbTreeRecurse( $id, $indent, $list, &$children, $maxlevel=9999, $level=
     }
     return $list;
 }
-
-function JJ_categoryParentList($catid, $action, $options = array ()) {
-    $kunena_db = &JFactory::getDBO();
-
-    $list = JJ_categoryArray();
-    $this_treename = '';
-
-    foreach ($list as $item) {
-        if ($this_treename) {
-            if ($item->id != $catid && JString::strpos($item->treename, $this_treename) === false) {
-                $options[] = JHTML::_('select.option', $item->id, $item->treename);
-                }
-            }
-        else {
-            if ($item->id != $catid) {
-                $options[] = JHTML::_('select.option', $item->id, $item->treename);
-                }
-            else {
-                $this_treename = "$item->treename/";
-                }
-            }
-        }
-
-    $parent = JHTML::_('select.genericlist', $options, 'catid', 'class="inputbox fbs" size="1"  onchange = "if(this.options[this.selectedIndex].value > 0){ this.form.submit() }"', 'value', 'text', $catid);
-    return $parent;
-    }
-
-function KUNENA_GetAvailableForums($catid, $action, $options = array (), $disabled, $multiple = 0) {
-    $kunena_db = &JFactory::getDBO();
-    $list = JJ_categoryArray();
-    $this_treename = '';
-
-    foreach ($list as $item) {
-        if ($this_treename) {
-            if ($item->id != $catid && JString::strpos($item->treename, $this_treename) === false) {
-                $options[] = JHTML::_('select.option', $item->id, kunena_htmlspecialchars($item->treename));
-                }
-            }
-        else {
-            if ($item->id != $catid) {
-                $options[] = JHTML::_('select.option', $item->id, kunena_htmlspecialchars($item->treename));
-                }
-            else {
-                $this_treename = "$item->treename/";
-                }
-            }
-        }
-
-	$tag_attribs = 'class="inputbox fbs" '.($multiple?' size="5" MULTIPLE ':' size="1" ') . ($disabled ? " disabled " : "");
-
-    	$parent = JHTML::_('select.genericlist', $options, 'catid', $tag_attribs , 'value', 'text', $catid, 'KUNENA_AvailableForums');
-
-    return $parent;
-    }
 
 //
 //Begin Smilies mod

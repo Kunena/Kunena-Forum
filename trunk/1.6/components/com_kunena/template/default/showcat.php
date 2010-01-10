@@ -181,7 +181,7 @@ if (in_array ( $catid, $allow_forum )) {
 	$kunena_db->setQuery ( "SELECT name, id FROM #__fb_categories WHERE id='{$objCatInfo->parent}'" );
 	$objCatParentInfo = $kunena_db->loadObject ();
 	check_dberror ( 'Unable to get parent category.' );
-	;
+
 	//check if this forum is locked
 	$this->kunena_forum_locked = $objCatInfo->locked;
 	//check if this forum is subject to review
@@ -418,19 +418,3 @@ if (in_array ( $catid, $allow_forum )) {
 } else {
 	echo _KUNENA_NO_ACCESS;
 }
-
-function showChildren($category, $prefix = "", &$allow_forum) {
-	$kunena_db = & JFactory::getDBO ();
-	$kunena_db->setQuery ( "SELECT id, name, parent FROM #__fb_categories WHERE parent='{$category}' AND published='1' ORDER BY ordering" );
-	$forums = $kunena_db->loadObjectList ();
-	check_dberror ( "Unable to load categories." );
-
-	foreach ( $forums as $forum ) {
-		if (in_array ( $forum->id, $allow_forum )) {
-			echo ("<option value=\"{$forum->id}\">$prefix " . kunena_htmlspecialchars ( $forum->name ) . "</option>");
-		}
-
-		showChildren ( $forum->id, $prefix . "---", $allow_forum );
-	}
-}
-?>

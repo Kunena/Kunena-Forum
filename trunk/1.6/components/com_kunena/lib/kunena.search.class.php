@@ -343,19 +343,6 @@ class CKunenaSearch {
 		return $search_forums;
 	}
 
-	function categoryList($catids, $options = array ()) {
-		$kunena_db = &JFactory::getDBO ();
-		$list = JJ_categoryArray ();
-		$this_treename = '';
-
-		foreach ( $list as $item ) {
-			$options [] = JHTML::_ ( 'select.option', $item->id, $item->treename );
-		}
-
-		$parent = JHTML::_ ( 'select.genericlist', $options, 'catids[]', 'class="inputbox" size="13" multiple="multiple"', 'value', 'text', $catids );
-		return $parent;
-	}
-
 	/**
 	 * Display results
 	 * @param string actionstring
@@ -381,7 +368,7 @@ class CKunenaSearch {
 		//category select list
 		$options = array ();
 		$options [] = JHTML::_ ( 'select.option', '0', _KUNENA_SEARCH_SEARCHIN_ALLCATS );
-		$this->categorylist = $this->categoryList ( explode ( ',', $this->params ['catids'] ), $options );
+		$this->categorylist = CKunenaTools::forumSelectList ( 'searchlist', explode ( ',', $this->params ['catids'] ), $options, 'class="inputbox" size="8" multiple="multiple"' );
 
 		if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php' )) {
 			include (KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php');

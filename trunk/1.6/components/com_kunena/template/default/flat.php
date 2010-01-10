@@ -511,11 +511,11 @@ if (count ( $this->messages [0] ) > 0) {
 
                                     if (jQuery(myList).val() == "bulkMove")
                                     {
-                                        jQuery("#KUNENA_AvailableForums").removeAttr('disabled');
+                                        jQuery("#bulkactions").removeAttr('disabled');
                                     }
                                     else
                                     {
-                                        jQuery("#KUNENA_AvailableForums").attr('disabled', 'disabled');
+                                        jQuery("#bulkactions").attr('disabled', 'disabled');
                                     }
                                 });
                             });

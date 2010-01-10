@@ -1182,7 +1182,10 @@ span.newchar {
 	line-height: 14px;
 	white-space: nowrap;
 }
+#Kunena div.fb_message_buttons_row  a {
+	margin-right: 5px;
 
+}
 #Kunena td.fb-msgview-left-b {
 	background: #EFF0F4;
 	vertical-align: top;
@@ -2349,6 +2352,10 @@ ul.ui-tabs-nav { padding:0 0 0 8px; }
 
 table#fb_forumsearch tr.fb_sectiontableentry1 td.td-1 fieldset.fieldset {
 	background-image:none!important;
+}
+
+.nowrap {
+	white-space: nowrap;
 }
 
 

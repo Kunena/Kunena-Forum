@@ -268,7 +268,7 @@ if (in_array ( $catid, $allow_forum )) {
 	}
 
 	if (isset ( $forum_new ) || isset ( $forum_markread ) || isset ( $thread_subscribecat ) ) {
-		echo '<div class="fb_message_buttons_row" style="text-align: left;">';
+		echo '<div class="fb_message_buttons_row">';
 		if (isset ( $forum_new ))
 			echo $forum_new;
 		if (isset ( $forum_markread ))
@@ -343,7 +343,7 @@ if (in_array ( $catid, $allow_forum )) {
 		</td>
 		<td class="fb_list_actions_forum" width="100%"><?php
 	if (isset ( $forum_new ) || isset ( $forum_markread )) {
-		echo '<div class="fb_message_buttons_row" style="text-align: left;">';
+		echo '<div class="fb_message_buttons_row">';
 		if (isset ( $forum_new ))
 			echo $forum_new;
 		if (isset ( $forum_markread ))

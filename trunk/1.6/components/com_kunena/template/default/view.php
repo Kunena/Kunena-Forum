@@ -354,7 +354,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		echo '</td>';
 		if (CKunenaTools::isModerator ( $kunena_my->id, $catid ) || isset ( $thread_reply ) || isset ( $thread_subscribe ) || isset ( $thread_favorite )) {
 			echo '<td class="fb_list_actions_forum">';
-			echo '<div class="fb_message_buttons_row" style="text-align: center;">';
+			echo '<div class="fb_message_buttons_row"">';
 			if (isset ( $thread_reply ))
 				echo $thread_reply;
 			if (isset ( $thread_subscribe ))
@@ -363,7 +363,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 				echo ' ' . $thread_favorite;
 			echo '</div>';
 			if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
-				echo '<div class="fb_message_buttons_row" style="text-align: center;">';
+				echo '<div class="fb_message_buttons_row" >';
 				echo $thread_delete;
 				echo ' ' . $thread_move;
 				echo ' ' . $thread_sticky;
@@ -372,21 +372,21 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 			}
 			echo '</td>';
 		}
-		echo '<td class="fb_list_actions_forum" width="100%">';
+		echo '<td class="fb_list_actions_forum">';
 		if (isset ( $thread_new )) {
-			echo '<div class="fb_message_buttons_row" style="text-align: left;">';
+			echo '<div class="fb_message_buttons_row"">';
 			echo $thread_new;
 			echo '</div>';
 		}
 		if (isset ( $thread_merge )) {
-			echo '<div class="fb_message_buttons_row" style="text-align: left;">';
+			echo '<div class="fb_message_buttons_row"">';
 			echo $thread_merge;
 			echo '</div>';
 		}
 		echo '</td>';
 
 		//pagination 1
-		echo '<td class="fb_list_pages_all" nowrap="nowrap">';
+		echo '<td class="fb_list_pages_all nowrap">';
 		echo $pagination;
 		echo '</td>';
 		?>
@@ -1016,7 +1016,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 
 		if (CKunenaTools::isModerator ( $kunena_my->id, $catid ) || isset ( $thread_reply ) || isset ( $thread_subscribe ) || isset ( $thread_favorite )) {
 			echo '<td class="fb_list_actions_forum">';
-			echo '<div class="fb_message_buttons_row" style="text-align: center;">';
+			echo '<div class="fb_message_buttons_row">';
 			if (isset ( $thread_reply ))
 				echo $thread_reply;
 			if (isset ( $thread_subscribe ))
@@ -1025,7 +1025,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 				echo ' ' . $thread_favorite;
 			echo '</div>';
 			if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
-				echo '<div class="fb_message_buttons_row" style="text-align: center;">';
+				echo '<div class="fb_message_buttons_row">';
 				echo $thread_delete;
 				echo ' ' . $thread_move;
 				echo ' ' . $thread_sticky;
@@ -1034,20 +1034,20 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 			}
 			echo '</td>';
 		}
-		echo '<td class="fb_list_actions_forum" width="100%">';
+		echo '<td class="fb_list_actions_forum">';
 		if (isset ( $thread_new )) {
-			echo '<div class="fb_message_buttons_row" style="text-align: left;">';
+			echo '<div class="fb_message_buttons_row">';
 			echo $thread_new;
 			echo '</div>';
 		}
 		if (isset ( $thread_merge )) {
-			echo '<div class="fb_message_buttons_row" style="text-align: left;">';
+			echo '<div class="fb_message_buttons_row">';
 			echo $thread_merge;
 			echo '</div>';
 		}
 		echo '</td>';
 
-		echo '<td class="fb_list_pages_all" nowrap="nowrap">';
+		echo '<td class="fb_list_pages_all nowrap">';
 		echo $pagination;
 		echo '</td>';
 		?>

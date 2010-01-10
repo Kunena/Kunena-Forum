@@ -611,11 +611,6 @@
 	color: #BFC3C6;
 }
 
-
-
-
-
-
 /* SEARCHBOX
 ----------------------------------------------------------------------------------------------- */
 #Kunena #fb_searchbox {
@@ -1946,6 +1941,255 @@ MY PROFILE
 	border-left: 1px solid #BFC3C6;
 	border-right: 1px solid #BFC3C6;
 }
+
+/*
+NEW PROFILE
+-------------------------------------------------------------------- */
+div#kprofile-container { border: 1px solid #cccccc; margin: 10px 0 10px 0; padding: 10px;min-height: 500px;}
+
+div#kprofile-leftcol { width: 200px; font-size: 11px; float:left;}
+
+div.avatar-lg { width: 200px; height: 200px; background-color: #ccc; margin-bottom: 15px;}
+
+div#kprofile-stats ul { margin: 0 0 0 3px; padding: 0;}
+
+div#kprofile-stats ul li { list-style-type: none; padding-top: 8px; clear:both;}
+
+div#kprofile-stats ul li.online-status-yes {}
+
+div#kprofile-stats ul li.online-status-no {}	
+
+div#kprofile-stats ul li span.rankname {
+	display:block; 
+	margin-right: 5px;
+	font-weight:bold;
+	float:left;
+}
+div#kprofile-stats ul li span.rank-admin {
+	display:block; 
+	background: url("images/english/ranks/rankadmin.gif") no-repeat; 
+	height: 16px; 
+	width: 70px;
+	margin-right: 5px;
+	float:right;
+	margin-top: 0;
+}
+
+div#kprofile-rightcol  { 
+	/* width: 735px; */
+	width: 75%;
+	float:right;
+}
+
+div#kprofile-rightcoltop  {width: 100%;}
+
+div.kprofile-rightcol1 { 
+	/* width: 420px; */
+	width: 40%;
+}
+
+div.kprofile-rightcol1 ul {margin: 0;padding: 0;}
+
+div.kprofile-rightcol1 ul li { list-style-type: none; padding-bottom: 8px; }
+
+div#kprofile-rightcol div.kprofile-rightcol1 ul li span.location { 
+	float:left;
+	display:block; 
+	background: url("images/english/icons/msglocation.gif") no-repeat; 
+	height: 16px; 
+	width: 16px;
+	margin-right: 10px;
+}
+
+div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-male { 
+	float:left;
+	display:block; 
+	background: url("images/english/icons/msgmale.gif") no-repeat; 
+	height: 16px; 
+	width: 16px;
+	margin-right: 10px;
+}
+
+div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-female { 
+	float:left;
+	display:block; 
+	background: url("images/english/icons/msgfemale.gif") no-repeat; 
+	height: 16px; 
+	width: 16px;
+	margin-right: 10px;
+}
+
+div#kprofile-rightcol div.kprofile-rightcol1 ul li span.birthdate { 
+	float:left;
+	display:block; 
+	background: url("images/english/icons/msgbirthdate.gif") no-repeat; 
+	height: 16px; 
+	width: 16px;
+	margin-right: 10px;
+}
+
+div.kprofile-rightcol1 ul li span.bday-remind { margin-left: 15px; font-size: 11px;}
+
+div.kprofile-rightcol2 { float:right; width: 275px; margin-left: 10px;}
+
+div.iconrow {
+	width: 100px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	float:left;
+}
+div.iconrow span {
+	display:block;
+	width: 16px;
+	height: 16px;
+	float:left;
+	margin: 0 5px 5px 0;
+	border: 0 none;
+}
+
+span.twitter {
+	display:block; 
+	background: url("images/social/twitter.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
+span.facebook {
+	display:block; 
+	background: url("images/social/facebook.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
+span.myspace {
+	display:block; 
+	background: url("images/social/myspace.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
+span.linkedin	 {
+	display:block; 
+	background: url("images/social/linkedin.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}			
+span.delicious {
+	display:block; 
+	background: url("images/social/delicious.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
+span.friendfeed {
+	display:block; 
+	background: url("images/social/friendfeed.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
+span.digg {
+	display:block; 
+	background: url("images/social/digg.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
+span.skype {
+	display:block; 
+	background: url("images/social/skype.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
+span.yim {
+	display:block; 
+	background: url("images/social/yahoo.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
+span.aim {
+	display:block; 
+	background: url("images/social/aim.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
+span.gtalk {
+	display:block; 
+	background: url("images/social/googletalk.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
+span.blogspot {
+	display:block; 
+	background: url("images/social/blogger.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
+span.flickr {
+	display:block; 
+	background: url("images/social/flickr.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
+span.bebo {
+	display:block; 
+	background: url("images/social/bebo.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
+	
+div.clrline {clear:both; border-top: 1px solid #cccccc; margin: 15px 0 20px 0; line-height: 10px; width: 710px;}
+
+div#kprofile-rightcolbot {}
+
+div.kprofile-rightcol1 {}
+
+div.kprofile-rightcol1 h4 {margin:10px 0 0 0; padding: 0;}
+
+div.kprofile-rightcol1 p { margin:0; padding: 0;}
+				
+div.kprofile-rightcol2 {}
+
+div.kprofile-rightcol2 ul {margin: 0;padding: 0;}
+
+div.kprofile-rightcol2 ul li {list-style-type: none; padding-bottom: 8px;}
+
+div.kprofile-rightcol2 ul li span.email {
+	float:left;
+	display:block; 
+	background: url("images/social/email.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+	margin-right: 5px;
+}
+
+div.kprofile-rightcol2 ul li span.website {
+	float:left;
+	display:block; 
+	background: url("images/english/icons/msgwebsite.gif") no-repeat; 
+	height: 16px; 
+	width: 16px;
+	margin-right: 5px;
+}
+
+div.clr { clear:both; }
+
+/* Tabs
+----------------------------------*/
+/* overrides for ui-tab styles */
+ul.ui-tabs-nav { padding:0 0 0 8px; }
+.ui-tabs-nav li { margin:5px 5px 0 0; }
+
+.ui-tabs-nav li a:link,
+.ui-tabs-nav li a:visited,
+.ui-tabs-nav li a:hover,
+.ui-tabs-nav li a:active { font-size:14px; padding:4px 1.2em 3px; color:#fff; }
+
+.ui-tabs-nav li.ui-tabs-selected a:link,
+.ui-tabs-nav li.ui-tabs-selected a:visited,
+.ui-tabs-nav li.ui-tabs-selected a:hover,
+.ui-tabs-nav li.ui-tabs-selected a:active { color:#e6820E; }
+
+.ui-tabs-panel { padding:20px 9px; font-size:12px; line-height:1.4; color:#000; }
+
+.ui-widget-content a:link,
+.ui-widget-content a:visited { color:#1b75bb; text-decoration:none; }
+.ui-widget-content a:hover,
+.ui-widget-content a:active { color:#0b559b; }
 
 
 	

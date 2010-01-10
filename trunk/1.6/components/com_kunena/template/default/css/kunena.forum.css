@@ -28,14 +28,14 @@
 }
 
 #Kunena .fb_header {
-	background: #3B3B3B url(images/cat_title_bg.gif) repeat-x top left;
+	background: #3B3B3B url("../images/cat_title_bg.gif") repeat-x top left;
 	height: 30px;
 }
 
 #Kunena table.fb_blocktable thead tr th,
 #Kunena table.fb_blocktablehalf thead tr th  {
 	background: #5388b4;
-	/* background: #3B3B3B url(images/cat_title_bg.gif) repeat-x top left; */
+	/* background: #3B3B3B url("../images/cat_title_bg.gif") repeat-x top left; */
 	color: #ffffff;
 	padding: 2px;
 	font-weight: normal;
@@ -45,7 +45,7 @@
 
 #Kunena tr.fb_sth {
 	background: #727373;
-	/* background: #8CABC8 url(images/cat_title_head_bg.gif) repeat-x top left; */
+	/* background: #8CABC8 url("../images/cat_title_head_bg.gif") repeat-x top left; */
 	color: #fff;
 	font-size: 1em;
 	font-family: Arial, Helvetica, sans-serif;
@@ -209,7 +209,7 @@
 }
 
 #Kunena #Kunena_tab a {
-	/* background: url("images/tabmenuright.gif") no-repeat right top; */
+	/* background: url("../images/tabmenuright.gif") no-repeat right top; */
 	background-color: #727373;
 	margin: 0;
 	padding: 0;
@@ -221,7 +221,7 @@
 
 #Kunena #Kunena_tab a span {
 	display: block;
-	/* background: url("images/tabmenuleft.gif") no-repeat left top; */
+	/* background: url("../images/tabmenuleft.gif") no-repeat left top; */
 	padding: 0 15px 0 15px;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 1em;
@@ -642,7 +642,7 @@ td.td-1  {
 	width: auto;
 	margin: 0 0 0 5px;
 	border: 1px solid #999999;
-	background: #FFFFFF url(images/search_icon.gif) no-repeat 5px center;
+	background: #FFFFFF url("../images/search_icon.gif") no-repeat 5px center;
 	font-weight: normal;
 	padding: 1px 5px 1px 20px;
 }
@@ -652,7 +652,7 @@ td.td-1  {
 	width: auto;
 	margin: 0 0 0 5px;
 	border: 1px solid #999999;
-	background: #FFFFFF url(images/search_icon.gif) no-repeat 5px center;
+	background: #FFFFFF url("../images/search_icon.gif") no-repeat 5px center;
 	font-weight: normal;
 	color: #000000;
 	padding: 1px 5px 1px 20px;
@@ -930,7 +930,7 @@ span.newchar {
 }
 
 #Kunena .fb_contentheading span {
-	background: url(images/spoticon.gif) no-repeat left center;
+	background: url("../images/spoticon.gif") no-repeat left center;
 	padding-left: 16px;
 }
 
@@ -1052,14 +1052,14 @@ span.newchar {
 #Kunena span.msgtitle_new {
 	font-weight: bold;
 	text-decoration: none;
-	background: url(images/msgtitleicon.gif) no-repeat left center;
+	background: url("../images/msgtitleicon.gif") no-repeat left center;
 	padding-left: 25px;
 	line-height: 26px;
 	font-size: 1.3em;
 }
 
 #Kunena span.msgtitle_new {
-	background: url(images/msgtitlenew.gif) no-repeat left center;
+	background: url("../images/msgtitlenew.gif") no-repeat left center;
 }
 
 #Kunena span.msgdate {
@@ -1241,7 +1241,7 @@ span.newchar {
 }
 
 #Kunena div.fbhide {
-	background: #FFF8F2 url(images/bullet-tips.gif) no-repeat scroll 5px center;
+	background: #FFF8F2 url("../images/bullet-tips.gif") no-repeat scroll 5px center;
 	border: 1px dotted #F2CAB7;
 	font-size: 1.3em;
 	padding: 10px 10px 10px 25px;
@@ -1408,7 +1408,7 @@ POST PAGE
 	float: right;
 	cursor: pointer;
 	line-height: 145%;
-	background: url("images/buttons/btn-bg-comm.gif") repeat-x left top;
+	background: url("../images/buttons/btn-bg-comm.gif") repeat-x left top;
 	border: none;
 }
 
@@ -1422,21 +1422,21 @@ POST PAGE
 
 #Kunena a.buttoncomm span.reply {
 	float: left;
-	background: url("images/buttons/btn-left-reply.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-reply.gif") no-repeat left top;
 }
 #Kunena a.buttoncomm span.quote {
 	float: left;
-	background: url("images/buttons/btn-left-quote.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-quote.gif") no-repeat left top;
 }
 #Kunena a.buttoncomm span.newtopic {
 	float: left;
-	background: url("images/buttons/btn-left-newtopic.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-newtopic.gif") no-repeat left top;
 }
 
 #Kunena a.buttoncomm span span {
 	height: 18px;
 	padding: 0 7px 0 20px;
-	background: url("images/buttons/btn-right-comm.gif") no-repeat right top;
+	background: url("../images/buttons/btn-right-comm.gif") no-repeat right top;
 }
 
 /* User Action buttons */
@@ -1450,7 +1450,7 @@ POST PAGE
 	float: right;
 	cursor: pointer;
 	line-height: 145%;
-	background: url("images/buttons/btn-bg-user.gif") repeat-x left top;
+	background: url("../images/buttons/btn-bg-user.gif") repeat-x left top;
 	border: none;
 }
 
@@ -1464,24 +1464,24 @@ POST PAGE
 
 #Kunena a.buttonuser span.favorite {
 	float: left;
-	background: url("images/buttons/btn-left-favorite.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-favorite.gif") no-repeat left top;
 }
 #Kunena a.buttonuser span.subscribe {
 	float: left;
-	background: url("images/buttons/btn-left-subscribe.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-subscribe.gif") no-repeat left top;
 }
 #Kunena a.buttonuser span.markread {
 	float: left;
-	background: url("images/buttons/btn-left-markread.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-markread.gif") no-repeat left top;
 }
 #Kunena a.buttonuser span.report {
 	float: left;
-	background: url("images/buttons/btn-left-report.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-report.gif") no-repeat left top;
 }
 #Kunena a.buttonuser span span {
 	height: 18px;
 	padding: 0 7px 0 20px;
-	background: url("images/buttons/btn-right-user.gif") no-repeat right top;
+	background: url("../images/buttons/btn-right-user.gif") no-repeat right top;
 }
 
 /* Moderator Action buttons */
@@ -1495,7 +1495,7 @@ POST PAGE
 	float: right;
 	cursor: pointer;
 	line-height: 145%;
-	background: url("images/buttons/btn-bg-mod.gif") repeat-x left top;
+	background: url("../images/buttons/btn-bg-mod.gif") repeat-x left top;
 	border: none;
 }
 
@@ -1509,42 +1509,42 @@ a.buttonmod span {
 
 #Kunena a.buttonmod span.merge {
 	float: left;
-	background: url("images/buttons/btn-left-merge.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-merge.gif") no-repeat left top;
 }
 #Kunena a.buttonmod span.edit {
 	float: left;
-	background: url("images/buttons/btn-left-edit.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-edit.gif") no-repeat left top;
 }
 #Kunena a.buttonmod span.delete {
 	float: left;
-	background: url("images/buttons/btn-left-delete.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-delete.gif") no-repeat left top;
 }
 #Kunena a.buttonmod span.move {
 	float: left;
-	background: url("images/buttons/btn-left-move.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-move.gif") no-repeat left top;
 }
 
 #Kunena a.buttonmod span.sticky {
 	float: left;
-	background: url("images/buttons/btn-left-sticky.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-sticky.gif") no-repeat left top;
 }
 #Kunena a.buttonmod span.lock {
 	float: left;
-	background: url("images/buttons/btn-left-lock.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-lock.gif") no-repeat left top;
 }
 #Kunena a.buttonmod span.split {
 	float: left;
-	background: url("images/buttons/btn-left-split.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-split.gif") no-repeat left top;
 }
 
 #Kunena a.buttonmod span.moderate {
 	float: left;
-	background: url("images/buttons/btn-left-moderate.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-moderate.gif") no-repeat left top;
 }
 #Kunena a.buttonmod span span {
 	height: 18px;
 	padding: 0 7px 0 20px;
-	background: url("images/buttons/btn-right-mod.gif") no-repeat right top;
+	background: url("../images/buttons/btn-right-mod.gif") no-repeat right top;
 }
 
 
@@ -1638,7 +1638,7 @@ POST HISTORY
 	height: 18px;
 	line-height: 18px;
 	padding-left: 22px;
-	background: url(images/pathway_start.gif) no-repeat left center;
+	background: url("../images/pathway_start.gif") no-repeat left center;
 	display: inline;
 	padding-right: 3px;
 }
@@ -1660,7 +1660,7 @@ POST HISTORY
 
 #Kunena .fb_forum-pathway .path-element,
 #Kunena .fb_forum-pathway-bottom .path-element	{
-	background: url(images/arrow.png) no-repeat left center;
+	background: url("../images/arrow.png") no-repeat left center;
 	padding-left: 12px;
 	display: inline;
 	font-weight: normal;
@@ -1673,7 +1673,7 @@ POST HISTORY
 #Kunena .fb_forum-pathway-bottom .path-element-last {
 	height: 18px;
 	line-height: 18px;
-	background: url(images/pathway_finallink.gif) no-repeat left center;
+	background: url("../images/pathway_finallink.gif") no-repeat left center;
 	padding-left: 37px;
 	padding-right: 5px;
 }
@@ -1853,7 +1853,7 @@ FORUM TOOLS
 
 #Kunena a.forumtools:link,
 #Kunena a.forumtools:visited {
-	background: url(images/menu_open.gif) no-repeat right center;
+	background: url("../images/menu_open.gif") no-repeat right center;
 	padding-right: 20px;
 	color: #FFFFFF;
 	/* font-size-adjust: none; */
@@ -1999,7 +1999,7 @@ div#kprofile-stats ul li span.rankname {
 }
 div#kprofile-stats ul li span.rank-admin {
 	display:block; 
-	background: url("images/english/ranks/rankadmin.gif") no-repeat; 
+	background: url("../images/english/ranks/rankadmin.gif") no-repeat; 
 	height: 16px; 
 	width: 70px;
 	margin-right: 5px;
@@ -2027,7 +2027,7 @@ div.kprofile-rightcol1 ul li { list-style-type: none; padding-bottom: 8px; }
 div#kprofile-rightcol div.kprofile-rightcol1 ul li span.location { 
 	float:left;
 	display:block; 
-	background: url("images/english/icons/msglocation.gif") no-repeat; 
+	background: url("../images/english/icons/msglocation.gif") no-repeat; 
 	height: 16px; 
 	width: 16px;
 	margin-right: 10px;
@@ -2036,7 +2036,7 @@ div#kprofile-rightcol div.kprofile-rightcol1 ul li span.location {
 div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-male { 
 	float:left;
 	display:block; 
-	background: url("images/english/icons/msgmale.gif") no-repeat; 
+	background: url("../images/english/icons/msgmale.gif") no-repeat; 
 	height: 16px; 
 	width: 16px;
 	margin-right: 10px;
@@ -2045,7 +2045,7 @@ div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-male {
 div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-female { 
 	float:left;
 	display:block; 
-	background: url("images/english/icons/msgfemale.gif") no-repeat; 
+	background: url("../images/english/icons/msgfemale.gif") no-repeat; 
 	height: 16px; 
 	width: 16px;
 	margin-right: 10px;
@@ -2054,7 +2054,7 @@ div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-female {
 div#kprofile-rightcol div.kprofile-rightcol1 ul li span.birthdate { 
 	float:left;
 	display:block; 
-	background: url("images/english/icons/msgbirthdate.gif") no-repeat; 
+	background: url("../images/english/icons/msgbirthdate.gif") no-repeat; 
 	height: 16px; 
 	width: 16px;
 	margin-right: 10px;
@@ -2064,7 +2064,7 @@ div.kprofile-rightcol1 ul li span.bday-remind {
 	display:inline-block; 
 	height: 16px; 
 	width: 16px;
-	background: url("images/remind.png") no-repeat; 
+	background: url("../images/remind.png") no-repeat; 
 	vertical-align:middle;
 }
 li.bd a {
@@ -2091,85 +2091,85 @@ div.iconrow span {
 
 span.twitter {
 	display:block; 
-	background: url("images/social/twitter.png") no-repeat; 
+	background: url("../images/social/twitter.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 }
 span.facebook {
 	display:block; 
-	background: url("images/social/facebook.png") no-repeat; 
+	background: url("../images/social/facebook.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 }
 span.myspace {
 	display:block; 
-	background: url("images/social/myspace.png") no-repeat; 
+	background: url("../images/social/myspace.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 }
 span.linkedin	 {
 	display:block; 
-	background: url("images/social/linkedin.png") no-repeat; 
+	background: url("../images/social/linkedin.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 }			
 span.delicious {
 	display:block; 
-	background: url("images/social/delicious.png") no-repeat; 
+	background: url("../images/social/delicious.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 }
 span.friendfeed {
 	display:block; 
-	background: url("images/social/friendfeed.png") no-repeat; 
+	background: url("../images/social/friendfeed.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 }
 span.digg {
 	display:block; 
-	background: url("images/social/digg.png") no-repeat; 
+	background: url("../images/social/digg.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 }
 span.skype {
 	display:block; 
-	background: url("images/social/skype.png") no-repeat; 
+	background: url("../images/social/skype.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 }
 span.yim {
 	display:block; 
-	background: url("images/social/yahoo.png") no-repeat; 
+	background: url("../images/social/yahoo.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 }
 span.aim {
 	display:block; 
-	background: url("images/social/aim.png") no-repeat; 
+	background: url("../images/social/aim.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 }
 span.gtalk {
 	display:block; 
-	background: url("images/social/googletalk.png") no-repeat; 
+	background: url("../images/social/googletalk.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 }
 span.blogspot {
 	display:block; 
-	background: url("images/social/blogger.png") no-repeat; 
+	background: url("../images/social/blogger.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 }
 span.flickr {
 	display:block; 
-	background: url("images/social/flickr.png") no-repeat; 
+	background: url("../images/social/flickr.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 }
 span.bebo {
 	display:block; 
-	background: url("images/social/bebo.png") no-repeat; 
+	background: url("../images/social/bebo.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 }
@@ -2193,7 +2193,7 @@ div.kprofile-rightcol2 ul li {list-style-type: none; padding-bottom: 8px;}
 div.kprofile-rightcol2 ul li span.email {
 	float:left;
 	display:block; 
-	background: url("images/social/email.png") no-repeat; 
+	background: url("../images/social/email.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 	margin-right: 5px;
@@ -2202,7 +2202,7 @@ div.kprofile-rightcol2 ul li span.email {
 div.kprofile-rightcol2 ul li span.website {
 	float:left;
 	display:block; 
-	background: url("images/english/icons/msgwebsite.gif") no-repeat; 
+	background: url("../images/english/icons/msgwebsite.gif") no-repeat; 
 	height: 16px; 
 	width: 16px;
 	margin-right: 5px;

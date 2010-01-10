@@ -1,8 +1,12 @@
 <?php
 /**
+
  * @version $Id$
+
  * Kunena Component
+
  * @package Kunena
+
  *
  * @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -10,25 +14,36 @@
  *
  * Based on FireBoard Component
  * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
+
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+
  * @link http://www.bestofjoomla.com
+
  *
+
  * Based on Joomlaboard Component
+
  * @copyright (C) 2000 - 2004 TSMF / Jan de Graaff / All Rights Reserved
+
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+
  * @author TSMF & Jan de Graaff
+
  **/
 
 // Dont allow direct linking
+
 defined ( '_JEXEC' ) or die ( 'Restricted access' );
 
 // Kunena wide defines
+
 require_once (JPATH_BASE . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.defines.php');
 
 global $message;
 global $kunena_this_cat;
 
 // Get all the variables we need and strip them in case
+
 $action = JRequest::getCmd ( 'action', '' );
 $catid = JRequest::getInt ( 'catid', 0 );
 $contentURL = JRequest::getVar ( 'contentURL', '' );
@@ -62,6 +77,7 @@ $no_html = JRequest::getBool ( 'no_html', 0 );
 $kunena_app = JFactory::getApplication ();
 
 // Redirect Forum Jump
+
 if (isset ( $_POST ['func'] ) && $func == "showcat") {
 	$Itemid = JRequest::getInt ( 'Itemid', 0, 'REQUEST' );
 	header ( "HTTP/1.1 303 See Other" );
@@ -79,6 +95,7 @@ if ($func == "showcaptcha") {
 include_once (KUNENA_PATH_LIB . DS . "kunena.debug.php");
 
 // get Kunenas configuration params in
+
 require_once (KUNENA_PATH_LIB . DS . "kunena.config.class.php");
 
 global $kunenaProfile;
@@ -89,6 +106,7 @@ global $kunena_systime;
 // Get data about the current user - its ok to not have a userid = guest
 $kunena_my = &JFactory::getUser ();
 // Load configuration and personal settings for current user
+
 $kunena_config = & CKunenaConfig::getInstance ();
 $kunena_db = &JFactory::getDBO ();
 
@@ -118,9 +136,11 @@ if ($func == ''){
 }
 
 // JOOMLA STYLE CHECK
+
 define ( 'KUNENA_BOARD_CLASS', 'fb_' );
 
 // get right Language file
+
 if (file_exists ( KUNENA_FILE_LANGUAGE )) {
 	include_once (KUNENA_FILE_LANGUAGE);
 } else {
@@ -133,14 +153,17 @@ if ($kn_tables->installed () === false) {
 }
 
 // Class structure should be used after this and all the common task should be moved to this class
+
 require_once (KUNENA_PATH . DS . "class.kunena.php");
 
 $kunena_is_admin = CKunenaTools::isAdmin ();
 
 // Check if we only allow registered users
+
 if ($kunena_config->regonly && ! $kunena_my->id) {
 	$kunena_app->enqueueMessage ( _COM_A_REGISTERED_ONLY . '<br/>' . _FORUM_UNAUTHORIZIED . '<br/>' . _FORUM_UNAUTHORIZIED2, 'error' );
 } // or if the board is offline
+
 else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	echo stripslashes ( $kunena_config->offline_message );
 } else {
@@ -158,6 +181,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	}
 
 	//intercept the RSS request; we should stop afterwards
+
 	if ($func == 'fb_rss') {
 		include (KUNENA_PATH_LIB . DS . 'kunena.rss.php');
 		$kunena_app->close ();
@@ -169,17 +193,20 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	}
 
 	//time format
+
 	include_once (KUNENA_PATH_LIB . DS . 'kunena.timeformat.class.php');
 
 	$kunena_systime = time () + $kunena_config->board_ofset * KUNENA_SECONDS_IN_HOUR;
 
 	// Retrieve current cookie data for session handling
+
 	$this->kunena_cookie_settings = ! empty ( $_COOKIE ['fboard_settings'] ) ? $_COOKIE ['fboard_settings'] : '';
 
 	$board_title = $kunena_config->board_title;
 	$this->kunena_from_bot = 0;
 
 	// Include preview here before inclusion of other files
+
 	if ($func == "getpreview") {
 		$message = utf8_urldecode ( utf8_decode ( stripslashes ( $msgpreview ) ) );
 
@@ -197,6 +224,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		$document = & JFactory::getDocument ();
 
 		// inline jscript with image location
+
 		$document->addScriptDeclaration ( 'jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";' );
 
 		if (is_object ( $kunenaProfile ) && $kunenaProfile->useProfileIntegration ()) {
@@ -207,6 +235,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			}
 		} else {
 			// Add required header tags
+
 			if (defined ( 'KUNENA_JQURL' ) && ! defined ( 'J_JQUERY_LOADED' )) {
 				define ( 'J_JQUERY_LOADED', 1 );
 				if (! defined ( 'C_ASSET_JQUERY' ))
@@ -227,7 +256,9 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	} // no_html == 0
 
 
+
 	// WHOIS ONLINE IN FORUM
+
 	if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/who/who.class.php' )) {
 		include (KUNENA_ABSTMPLTPATH . '/plugin/who/who.class.php');
 	} else {
@@ -235,11 +266,15 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	}
 
 	// include required libraries
+
 	require_once (JPATH_BASE . '/libraries/joomla/template/template.php');
 
 	// Kunena Current Template Icons Pack
+
 	// See if there's an icon pack installed
+
 	$useIcons = 0; //init
+
 	$kunena_icons = array ();
 
 	if (file_exists ( KUNENA_ABSTMPLTPATH . '/icons.php' )) {
@@ -252,15 +287,21 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	require_once (KUNENA_PATH_LIB . DS . 'kunena.session.class.php');
 
 	// We only do the session handling for registered users
+
 	// No point in keeping track of whats new for guests
+
 	$kunena_session = & CKunenaSession::getInstance ( true );
 	if ($kunena_my->id > 0) {
 		// First we drop an updated cookie, good for 1 year
+
 		// We have consolidated multiple instances of cookie management into this single location
+
 		// NOT SURE IF WE STILL NEED THIS ONE after session management got dbtized
+
 		setcookie ( "fboard_settings[member_id]", $kunena_my->id, time () + KUNENA_SECONDS_IN_YEAR, '/' );
 
 		// new indicator handling
+
 		if ($markaction == "allread") {
 			$kunena_session->markAllCategoriesRead ();
 		}
@@ -268,6 +309,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		$kunena_session->updateAllowedForums ( $kunena_my->id );
 
 		// save fbsession
+
 		$kunena_session->save ( $kunena_session );
 
 		if ($markaction == "allread") {
@@ -275,12 +317,15 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		}
 
 		// Now lets get the view type for the forum
+
 		$kunena_db->setQuery ( "SELECT view FROM #__fb_users WHERE userid='{$kunena_my->id}'" );
 		$prefview = $kunena_db->loadResult ();
 		check_dberror ( 'Unable load default view type for user.' );
 
 		// If the prefferred view comes back empty this must be a new user
+
 		// who does not yet have a Kunena profile -> lets create one
+
 		if ($prefview == "") {
 			$prefview = $kunena_config->default_view;
 
@@ -289,6 +334,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			check_dberror ( 'Unable load default view type for user.' );
 			if (! $userexists) {
 				// there's no profile; set userid and the default view type as preferred view type.
+
 				$kunena_db->setQuery ( "insert into #__fb_users (userid,view,moderator) values ('$kunena_my->id','$prefview','$kunena_is_admin')" );
 				$kunena_db->query ();
 				check_dberror ( 'Unable to create user profile.' );
@@ -296,37 +342,47 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		}
 
 		// Assign previous visit without user offset to variable for templates to decide
+
 		// whether or not to use the NEW indicator on forums and posts
+
 		$this->prevCheck = $kunena_session->lasttime; // - KUNENA_OFFSET_USER; Don't use the user offset - it throws the NEW indicator off
+
 	} else {
 		// collect accessaible categories for guest user
+
 		$kunena_db->setQuery ( "SELECT id FROM #__fb_categories WHERE pub_access='0' AND published='1'" );
 		$kunena_session->allowed = ($arr_pubcats = $kunena_db->loadResultArray ()) ? implode ( ',', $arr_pubcats ) : '';
 		check_dberror ( 'Unable load accessible categories for user.' );
 
 		// For guests we don't show new posts
+
 		$this->prevCheck = $kunena_systime;
 		$kunena_session->readtopics = '';
 	}
 
 	// no access to categories?
+
 	if (! $kunena_session->allowed)
 		$kunena_session->allowed = '0';
 
 	// Integration with GroupJive, Jomsocial:
+
 	$params = array ($kunena_my->id, &$kunena_session->allowed );
 	if (is_object ( $kunenaProfile ))
 		$kunenaProfile->trigger ( 'getAllowedForumsRead', $params );
 
 	// Disabled threaded view option for Kunena
+
 	$view = "flat";
 
 	//Get the max# of posts for any one user
+
 	$kunena_db->setQuery ( "SELECT MAX(posts) FROM #__fb_users" );
 	$this->kunena_max_posts = $kunena_db->loadResult ();
 	check_dberror ( 'Unable load max(posts) for user.' );
 
 	//Get the topics this user has already read this session from #__fb_sessions
+
 	$readTopics = $kunena_session->readtopics;
 	$this->read_topics = explode ( ',', $readTopics );
 
@@ -337,16 +393,25 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	}
 
 	/*       _\|/_
+
              (o o)
+
      +----oOO-{_}-OOo--------------------------------+
+
      |    Until this section we have included the    |
+
      |   necessary files and gathered the required   |
+
      |     variables. Now let's start processing     |
+
      |                     them                      |
+
      +----------------------------------------------*/
 
 	//Check if the catid requested is a parent category, because if it is
+
 	//the only thing we can do with it is 'listcat' and nothing else
+
 	if ($func == "showcat" || $func == "view") {
 		if ($catid != 0) {
 			$kunena_db->setQuery ( "SELECT parent FROM #__fb_categories WHERE id='{$catid}'" );
@@ -362,6 +427,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	}
 
 	// display header
+
 	?>
 <!-- Kunena Header -->
 <div id="Kunena"><?php
@@ -401,6 +467,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 </table>
 <!-- /Kunena Header --> <?php
 	//BEGIN: PROFILEBOX
+
 	if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/profilebox/profilebox.php' )) {
 		include (KUNENA_ABSTMPLTPATH . '/plugin/profilebox/profilebox.php');
 	} else {
@@ -420,6 +487,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			break;
 
 		#########################################################################################
+
 		case 'announcement' :
 			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcement.php' )) {
 				include (KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcement.php');
@@ -440,6 +508,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
             break;
 
 		#########################################################################################
+
 		case 'stats' :
 			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php' )) {
 				include (KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php');
@@ -453,6 +522,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			break;
 
 		#########################################################################################
+
 		case 'fbprofile' :
 			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/profile/profile.php' )) {
 				include (KUNENA_ABSTMPLTPATH . '/plugin/profile/profile.php');
@@ -463,6 +533,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			break;
 
 		#########################################################################################
+
 		case 'userlist' :
 			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/userlist/userlist.php' )) {
 				include (KUNENA_ABSTMPLTPATH . '/plugin/userlist/userlist.php');
@@ -473,6 +544,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			break;
 
 		#########################################################################################
+
 		case 'post' :
 			if (file_exists ( KUNENA_ABSTMPLTPATH . '/post.php' )) {
 				include (KUNENA_ABSTMPLTPATH . '/post.php');
@@ -483,6 +555,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			break;
 
 		#########################################################################################
+
 		case 'view' :
 			if (file_exists ( KUNENA_ABSTMPLTPATH . '/view.php' )) {
 				include (KUNENA_ABSTMPLTPATH . '/view.php');
@@ -493,6 +566,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			break;
 
 		#########################################################################################
+
 		case 'help' :
 			if (file_exists ( KUNENA_ABSTMPLTPATH . '/help.php' )) {
 				include (KUNENA_ABSTMPLTPATH . '/help.php');
@@ -503,6 +577,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			break;
 
 		#########################################################################################
+
 		case 'showcat' :
 			if (file_exists ( KUNENA_ABSTMPLTPATH . '/showcat.php' )) {
 				include (KUNENA_ABSTMPLTPATH . '/showcat.php');
@@ -513,6 +588,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			break;
 
 		#########################################################################################
+
 		case 'listcat' :
 			if (file_exists ( KUNENA_ABSTMPLTPATH . '/listcat.php' )) {
 				include (KUNENA_ABSTMPLTPATH . '/listcat.php');
@@ -523,6 +599,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			break;
 
 		#########################################################################################
+
 		case 'review' :
 			if (file_exists ( KUNENA_ABSTMPLTPATH . '/moderate_messages.php' )) {
 				include (KUNENA_ABSTMPLTPATH . '/moderate_messages.php');
@@ -533,12 +610,14 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			break;
 
 		#########################################################################################
+
 		case 'rules' :
 			include (KUNENA_PATH_LIB . DS . 'kunena.rules.php');
 
 			break;
 
 		#########################################################################################
+
 
 
 		case 'userprofile' :
@@ -551,6 +630,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			break;
 
 		#########################################################################################
+
 		case 'myprofile' :
 			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php' )) {
 				include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php');
@@ -561,6 +641,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			break;
 
 		#########################################################################################
+
 		case 'report' :
 			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/report/report.php' )) {
 				include (KUNENA_ABSTMPLTPATH . '/plugin/report/report.php');
@@ -571,6 +652,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			break;
 
 		#########################################################################################
+
 		case 'latest' :
 		case 'mylatest' :
 		case 'noreplies' :
@@ -583,6 +665,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			break;
 
 		#########################################################################################
+
 		case 'search' :
 		case 'advsearch' :
 			require_once (KUNENA_PATH_LIB . DS . 'kunena.search.class.php');
@@ -592,8 +675,10 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			break;
 
 		#########################################################################################
+
 		case 'markthisread' :
 			// get all already read topics
+
 			$kunena_db->setQuery ( "SELECT readtopics FROM #__fb_sessions WHERE userid='{$kunena_my->id}'" );
 			$allreadyRead = $kunena_db->loadResult ();
 			check_dberror ( "Unable to load read topics." );
@@ -654,12 +739,14 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			break;
 
 		#########################################################################################
+
 		case 'karma' :
 			include (KUNENA_PATH_LIB . DS . 'kunena.karma.php');
 
 			break;
 
 		#########################################################################################
+
 		case 'bulkactions' :
 			switch ($do) {
 				case "bulkDel" :
@@ -677,6 +764,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		######################
 
 
+
 		/*    template chooser    */
 		case "templatechooser" :
 			$fb_user_template = strval ( JRequest::getVar ( 'fb_user_template', '', 'COOKIE' ) );
@@ -687,6 +775,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 			if ($fb_change_template) {
 				// clean template name
+
 				$fb_change_template = preg_replace ( '#\W#', '', $fb_change_template );
 
 				if (JString::strlen ( $fb_change_template ) >= 40) {
@@ -694,7 +783,8 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 				}
 
 				// check that template exists in case it was deleted
-				if (file_exists ( KUNENA_PATH_TEMPLATE . DS . $fb_change_template . '/kunena.forum.css' )) {
+
+				if (file_exists ( KUNENA_PATH_TEMPLATE . DS . $fb_change_template . '/css/kunena.forum.css' )) {
 					$lifetime = 60 * 10;
 					$fb_current_template = $fb_change_template;
 					setcookie ( 'fb_user_template', "$fb_change_template", time () + $lifetime );
@@ -705,6 +795,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 			if ($fb_change_img_template) {
 				// clean template name
+
 				$fb_change_img_template = preg_replace ( '#\W#', '', $fb_change_img_template );
 
 				if (JString::strlen ( $fb_change_img_template ) >= 40) {
@@ -712,7 +803,8 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 				}
 
 				// check that template exists in case it was deleted
-				if (file_exists ( KUNENA_PATH_TEMPLATE . DS . $fb_change_img_template . '/kunena.forum.css' )) {
+
+				if (file_exists ( KUNENA_PATH_TEMPLATE . DS . $fb_change_img_template . '/css/kunena.forum.css' )) {
 					$lifetime = 60 * 10;
 					$fb_current_img_template = $fb_change_img_template;
 					setcookie ( 'fb_user_img_template', "$fb_change_img_template", time () + $lifetime );
@@ -725,12 +817,14 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			break;
 
 		#########################################################################################
+
 		case 'credits' :
 			include (KUNENA_PATH_LIB . DS . 'kunena.credits.php');
 
 			break;
 
 		#########################################################################################
+
 		default :
 			if (file_exists ( KUNENA_ABSTMPLTPATH . '/listcat.php' )) {
 				include (KUNENA_ABSTMPLTPATH . '/listcat.php');
@@ -742,7 +836,9 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	} //hctiws
 
 
+
 	// Bottom Module
+
 	if (JDocumentHTML::countModules ( 'kunena_bottom' )) {
 		?>
 
@@ -759,6 +855,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	}
 
 	// Credits
+
 	echo '<div class="fb_credits"> ' . CKunenaLink::GetTeamCreditsLink ( $catid, _KUNENA_POWEREDBY ) . ' ' . CKunenaLink::GetCreditsLink ();
 	if ($kunena_config->enablerss) {
 		$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . _LISTCAT_RSS . '" href="' . JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=fb_rss&amp;no_html=1' ) . '" />' );
@@ -767,12 +864,14 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	echo '</div>';
 
 	// display footer
+
 	?>
 <div class="fb_footer"></div>
 </div>
 <!-- closes Kunena div -->
 <?php
 } //else
+
 
 
 if (is_object ( $kunenaProfile ))

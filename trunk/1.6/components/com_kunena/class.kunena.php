@@ -244,7 +244,7 @@ define('KUNENA_TMPLTURL', KUNENA_DIRECTURL . "template/{$fb_cur_template}/");
 define('KUNENA_TMPLTMAINIMGURL', KUNENA_DIRECTURL . "template/{$fb_cur_img_template}/");
 
 // IMAGES URL PATH
-define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . 'kunena.forum.css');
+define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . 'css/kunena.forum.css');
 
 if (is_dir(KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANGUAGE)) {
     define('KUNENA_URLIMAGESPATH', KUNENA_TMPLTMAINIMGURL . 'images/' .KUNENA_LANGUAGE. '/');

@@ -25,9 +25,9 @@ class html_Kunena {
 	// Begin: HEADER FUNC
 	function showFbHeader() {
 		//Insert javascript required for poll allowed cats
-	 	require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
-  		$poll = new CKunenaPolls();
-  		CKunenaPolls::AdminFillCategoriesAllowed();
+		require_once (KUNENA_PATH_LIB . DS . 'kunena.poll.class.php');
+		$poll = new CKunenaPolls ( );
+		CKunenaPolls::AdminFillCategoriesAllowed ();
 		?>
 <style type="text/css">
 #fbadmin {
@@ -1193,7 +1193,7 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo $lists['avposition'];
+		echo $lists ['avposition'];
 		?>
 		</td>
 
@@ -1799,7 +1799,8 @@ td.fbtdtitle {
 		echo _COM_A_SUBJECTLENGTH?>
 		</td>
 
-		<td align="left" width="25%" valign="top"><input type="text" name="cfg_maxsubject"
+		<td align="left" width="25%" valign="top"><input type="text"
+			name="cfg_maxsubject"
 			value="<?php
 		echo $kunena_config->maxsubject;
 		?>" /></td>
@@ -3093,28 +3094,37 @@ td.fbtdtitle {
 		echo _KUNENA_NUMPOP;
 		?></td>
 	</tr>
-	<tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_POLLSSTATS; ?>
-                    </td>
+	<tr align="center" valign="middle">
+		<td align="left" valign="top"><?php
+		echo _KUNENA_POLLSSTATS;
+		?></td>
 
-                    <td align = "left" valign = "top"><?php echo $lists['showpoppollstats']; ?>
-                    </td>
+		<td align="left" valign="top"><?php
+		echo $lists ['showpoppollstats'];
+		?>
+		</td>
 
-                    <td align = "left" valign = "top"><?php echo _KUNENA_POLLSTATSDESC; ?>
-                    </td>
-    </tr>
+		<td align="left" valign="top"><?php
+		echo _KUNENA_POLLSTATSDESC;
+		?>
+		</td>
+	</tr>
 
-    <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_POLLSPOP; ?>
-                    </td>
+	<tr align="center" valign="middle">
+		<td align="left" valign="top"><?php
+		echo _KUNENA_POLLSPOP;
+		?></td>
 
-                    <td align = "left" valign = "top">
-                        <input type = "text" name = "cfg_popsubjectcount" value = "<?php echo $kunena_config->poppollscount; ?>"/>
-                    </td>
+		<td align="left" valign="top"><input type="text"
+			name="cfg_popsubjectcount"
+			value="<?php
+		echo $kunena_config->poppollscount;
+		?>" /></td>
 
-                    <td align = "left" valign = "top"><?php echo _KUNENA_POLLSPOP; ?>
-                    </td>
-    </tr>
+		<td align="left" valign="top"><?php
+		echo _KUNENA_POLLSPOP;
+		?></td>
+	</tr>
 </table>
 </fieldset>
 
@@ -3146,91 +3156,132 @@ td.fbtdtitle {
 
 </fieldset>
 
-<fieldset>
-                        <legend> <?php echo _KUNENA_A_POLL_TITLE; ?></legend>
-   <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"  width="25%"><?php echo _KUNENA_A_POLL_ENABLED; ?>
-                    </td>
+<fieldset><legend> <?php
+		echo _KUNENA_A_POLL_TITLE;
+		?></legend>
+<table cellpadding="4" cellspacing="0" border="0" width="100%"
+	class="fbadminform">
+	<tr align="center" valign="middle">
+		<td align="left" valign="top" width="25%"><?php
+		echo _KUNENA_A_POLL_ENABLED;
+		?>
+		</td>
 
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['pollenabled'] ?>
-                    </td>
+		<td align="left" valign="top" width="25%"><?php
+		echo $lists ['pollenabled']?>
+		</td>
 
-                    <td align = "left" valign = "top"><?php echo _KUNENA_A_ENABLED_DESC; ?>
-                    </td>
-                </tr>
+		<td align="left" valign="top"><?php
+		echo _KUNENA_A_ENABLED_DESC;
+		?>
+		</td>
+	</tr>
 
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"  width="25%"><?php echo _KUNENA_A_POLL_NUMBER_OPTIONS; ?>
-                    </td>
+	<tr align="center" valign="middle">
+		<td align="left" valign="top" width="25%"><?php
+		echo _KUNENA_A_POLL_NUMBER_OPTIONS;
+		?>
+		</td>
 
-                    <td align = "left" valign = "top" width="25%">
-                        <input type = "text" name = "cfg_pollnboptions" value = "<?php echo $kunena_config->pollnboptions; ?>"/>
-                    </td>
+		<td align="left" valign="top" width="25%"><input type="text"
+			name="cfg_pollnboptions"
+			value="<?php
+		echo $kunena_config->pollnboptions;
+		?>" /></td>
 
-                    <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_NUMBER_OPTIONS_DESC; ?>
-                    </td>
-                </tr>
+		<td align="left" valign="top"><?php
+		echo _KUNENA_A_POLL_NUMBER_OPTIONS_DESC;
+		?>
+		</td>
+	</tr>
 
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"  width="25%"><?php echo _KUNENA_A_POLL_TIME_VOTES; ?>
-                    </td>
+	<tr align="center" valign="middle">
+		<td align="left" valign="top" width="25%"><?php
+		echo _KUNENA_A_POLL_TIME_VOTES;
+		?>
+		</td>
 
-                    <td align = "left" valign = "top" width="25%">
-                        <input type = "text" name = "cfg_polltimebtvotes" value = "<?php echo $kunena_config->polltimebtvotes; ?>"/>
-                    </td>
+		<td align="left" valign="top" width="25%"><input type="text"
+			name="cfg_polltimebtvotes"
+			value="<?php
+		echo $kunena_config->polltimebtvotes;
+		?>" /></td>
 
-                    <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_TIME_VOTES_DESC; ?>
-                    </td>
-                </tr>
+		<td align="left" valign="top"><?php
+		echo _KUNENA_A_POLL_TIME_VOTES_DESC;
+		?>
+		</td>
+	</tr>
 
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"  width="25%"><?php echo _KUNENA_A_POLL_NUMBER_VOTES_BY_USER; ?>
-                    </td>
+	<tr align="center" valign="middle">
+		<td align="left" valign="top" width="25%"><?php
+		echo _KUNENA_A_POLL_NUMBER_VOTES_BY_USER;
+		?>
+		</td>
 
-                    <td align = "left" valign = "top" width="25%">
-                        <input type = "text" name = "cfg_pollnbvotesbyuser" value = "<?php echo $kunena_config->pollnbvotesbyuser; ?>"/>
-                    </td>
+		<td align="left" valign="top" width="25%"><input type="text"
+			name="cfg_pollnbvotesbyuser"
+			value="<?php
+		echo $kunena_config->pollnbvotesbyuser;
+		?>" /></td>
 
-                    <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_NUMBER_VOTES_BY_DESC; ?>
-                    </td>
-                </tr>
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"  width="25%"><?php echo _KUNENA_A_POLL_ALLOW_ONE_VOTE; ?>
-                    </td>
+		<td align="left" valign="top"><?php
+		echo _KUNENA_A_POLL_NUMBER_VOTES_BY_DESC;
+		?>
+		</td>
+	</tr>
+	<tr align="center" valign="middle">
+		<td align="left" valign="top" width="25%"><?php
+		echo _KUNENA_A_POLL_ALLOW_ONE_VOTE;
+		?>
+		</td>
 
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['pollallowvoteone'] ?>
-                    </td>
+		<td align="left" valign="top" width="25%"><?php
+		echo $lists ['pollallowvoteone']?>
+		</td>
 
-                    <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_ALLOW_ONE_VOTE_DESC; ?>
-                    </td>
-                </tr>
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"  width="25%"><?php echo _KUNENA_A_POLL_SHOW_USER_LIST; ?>
-                    </td>
+		<td align="left" valign="top"><?php
+		echo _KUNENA_A_POLL_ALLOW_ONE_VOTE_DESC;
+		?>
+		</td>
+	</tr>
+	<tr align="center" valign="middle">
+		<td align="left" valign="top" width="25%"><?php
+		echo _KUNENA_A_POLL_SHOW_USER_LIST;
+		?>
+		</td>
 
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['pollresultsuserslist'] ?>
-                    </td>
+		<td align="left" valign="top" width="25%"><?php
+		echo $lists ['pollresultsuserslist']?>
+		</td>
 
-                    <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_SHOW_USER_LIST_DESC; ?>
-                    </td>
-                </tr>
+		<td align="left" valign="top"><?php
+		echo _KUNENA_A_POLL_SHOW_USER_LIST_DESC;
+		?>
+		</td>
+	</tr>
 
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"  width="25%"><?php echo _KUNENA_A_POLL_CATEGORIES_ALLOWED; ?>
-                    </td>
-                    <td align = "left" valign = "top" width="25%"><?php echo $lists['pollallowedcats'] ?>
-                    <input type = "text" name = "cfg_pollallowedcategories" id="cfg_pollallowedcategories" value = "<?php echo $kunena_config->pollallowedcategories; ?>"/>
-                    </td>
+	<tr align="center" valign="middle">
+		<td align="left" valign="top" width="25%"><?php
+		echo _KUNENA_A_POLL_CATEGORIES_ALLOWED;
+		?>
+		</td>
+		<td align="left" valign="top" width="25%"><input type="text"
+			name="cfg_pollallowedcategories" id="cfg_pollallowedcategories"
+			value="<?php
+		echo $kunena_config->pollallowedcategories;
+		?>" /></td>
 
-                    <td align = "left" valign = "top"><?php echo _KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC; ?>
-                    </td>
-                </tr>
+		<td align="left" valign="top"><?php
+		echo _KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC;
+		?>
+		</td>
+	</tr>
 
 
-            </table>
+</table>
 
-           </fieldset>
+</fieldset>
 
 
 
@@ -4069,6 +4120,7 @@ echo $pane->endPane();
 		<td nowrap align="right"><?php
 		echo _COM_A_DISPLAY;
 		?><?php
+
 		echo $pageNavSP->getLimitBox ();
 		?>
 		</td>
@@ -4077,7 +4129,7 @@ echo $pane->endPane();
 <table class="adminlist" border="0" cellspacing="0" cellpadding="3"
 	width="100%">
 	<tr>
-    	<th width="20" align="center">#</th>
+		<th width="20" align="center">#</th>
 		<th align="center" width="20"><input type="checkbox" name="toggle"
 			value="" onclick="checkAll(<?php
 		echo count ( $smileytmp );
@@ -4108,16 +4160,17 @@ echo $pane->endPane();
 	<tr class="row<?php
 			echo $k;
 			?>" align="center">
-            <td width="10" align="center"><a href="#edit"
+		<td width="10" align="center"><a href="#edit"
 			onclick="return listItemTask('cb<?php
 			echo $i;
 			?>','editsmiley')"><?php
 			echo $s->id;
 			?></a></td>
-		<td width="20"align="center"><input type="checkbox" id="cb<?php
+		<td width="20" align="center"><input type="checkbox"
+			id="cb<?php
 			echo $i;
-			?>"
-			name="cid[]" value="<?php
+			?>" name="cid[]"
+			value="<?php
 			echo $s->id;
 			?>"
 			onClick="isChecked(this.checked);"></td>
@@ -4159,7 +4212,6 @@ echo $pane->endPane();
 </form>
 <?php
 	} //end function showsmilies
-
 
 
 	function editsmiley($option, $lang, $smiley_edit_img, $filename_list, $smileypath, $smileycfg) {
@@ -4308,6 +4360,7 @@ echo $pane->endPane();
 		<td nowrap="nowrap" align="right"><?php
 		echo _COM_A_DISPLAY;
 		?><?php
+
 		echo $pageNavSP->getLimitBox ();
 		?></td>
 	</tr>

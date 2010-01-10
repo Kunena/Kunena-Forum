@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+10-Jan-2010 fxstein
+# [#19358] Cleanup of polls backend to fix broken configuration
+
 09-Jan-2010 severdia
 # [#19356] Fixed search page accessibility, cleaner CSS
 + [#19356] JS for clickable checkbox fields

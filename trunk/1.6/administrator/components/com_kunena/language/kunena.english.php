@@ -42,6 +42,18 @@ define('_KUNENA_MY_POSTS', 'My Posts');
 // Joomla menu related strings
 define('_KUNENA_CREATE_MENU', 'Create Menu');
 define('_KUNENA_MENU_CREATED', 'The Kunena navigation menu and main forum link have been created.');
+define('_KUNENA_MENU_TITLE', 'Kunena Menu');
+define('_KUNENA_MENU_FORUM', 'Forum'); // mainmenu link to Kunena
+define('_KUNENA_MENU_LISTCAT', 'Index'); // Categories view
+define('_KUNENA_MENU_LATEST', 'Topics'); // Latest/recent discussions
+define('_KUNENA_MENU_MYLATEST', 'My Topics'); // My latest discussions
+define('_KUNENA_MENU_NOREPLIES', 'No Replies'); // Discussions without replies
+define('_KUNENA_MENU_MYPROFILE', 'My Profile'); // My profile view
+define('_KUNENA_MENU_RULES', 'Rules'); // Rules article
+define('_KUNENA_MENU_HELP', 'Help'); // Help article
+define('_KUNENA_MENU_SEARCH', 'Search'); // Search/Advancd Search
+define('_KUNENA_MENU_WELCOME', 'Welcome'); // Special menu linking to Welcome forum
+define('_KUNENA_MENU_NEWTOPIC', 'New Topic'); // Start a new thread
 
 // messages replated text strings
 define('_KUNENA_THOUSAND', 'k');

@@ -267,14 +267,14 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 			echo _IMAGE_SELECT_FILE;
 			?></strong></td>
 
-			<td><input type='file' class='fb_button' name='attachimage'
+			<td><input type='file' class='fb_input' name='attachimage'
 				onmouseover="javascript:kunenaShowHelp('<?php
 			@print (addslashes(_IMAGE_DIMENSIONS)) . ": " . $kunena_config->imagewidth . "x" . $kunena_config->imageheight . " - " . $kunena_config->imagesize . " KB";
 			?>')" /> <input type="button" class="fb_button" name="addImagePH"
 				value="<?php
 			@print (addslashes(_POST_ATTACH_IMAGE)) ;
 			?>"
-				style="cursor: auto; width: 4em"
+				style="cursor: auto; "
 				onclick="bbfontstyle(' [img/] ','');"
 				onmouseover="javascript:kunenaShowHelp('<?php
 			@print (addslashes(_KUNENA_EDITOR_HELPLINE_IMGPH)) ;
@@ -296,7 +296,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 			echo _FILE_SELECT_FILE;
 			?></strong></td>
 
-			<td><input type='file' class='fb_button' name='attachfile'
+			<td><input type='file' class='fb_input' name='attachfile'
 				onmouseover="javascript:kunenaShowHelp('<?php
 			@print (addslashes(_FILE_TYPES)) . ": " . $kunena_config->filetypes . " - " . $kunena_config->filesize . " KB";
 			?>')"
@@ -304,7 +304,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 				name="addFilePH" value="<?php
 			@print (_POST_ATTACH_FILE) ;
 			?>"
-				style="cursor: auto; width: 4em"
+				style="cursor: auto;"
 				onclick="bbfontstyle(' [file/] ','');"
 				onmouseover="javascript:kunenaShowHelp('<?php
 			@print (addslashes(_KUNENA_EDITOR_HELPLINE_FILEPH)) ;

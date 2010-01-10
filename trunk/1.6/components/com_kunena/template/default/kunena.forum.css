@@ -246,6 +246,11 @@
 	text-decoration: none;
 }
 
+#Kunena select#searchlist {
+	margin-bottom: 10px;
+	float:left;
+}
+
 #Kunena select,
 #Kunena select:focus,
 #Kunena select:hover {
@@ -254,6 +259,10 @@
 	border: 1px solid #999999;
 	color: #000000;
 	padding: 0px;
+}
+
+td.td-1  {
+	vertical-align:top;
 }
 
 
@@ -267,7 +276,7 @@
 	background: #FFFFFF none repeat scroll 0 0;
 	font-size: .95em;
 	color: #000000;
-	padding: 0px 10px 0px 0px;
+	padding: 0px 10px 0px 2px;
 }
 
 #Kunena .button,
@@ -278,6 +287,10 @@
 	color: #000000;
 	padding: 0px 4px;
 	margin-right: 10px;
+}
+
+#Kunena input.fb_input {
+	border: 1px solid #999999;
 }
 
 #Kunena table.fb_list_bottom td {

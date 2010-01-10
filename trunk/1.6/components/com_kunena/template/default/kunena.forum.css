@@ -1289,6 +1289,15 @@ ul#statslistright li strong a {
 	font-weight:bold;
 }
 
+/*  Stats page  */
+tbody#fb_popsubstats_tbody tr.fb_sectiontableentry1 td.td-3,
+tbody#fb_popsubstats_tbody tr.fb_sectiontableentry2 td.td-3, 
+tbody#fb_popusermsgstats_tbody tr.fb_sectiontableentry1 td.td-3,
+tbody#fb_popusermsgstats_tbody tr.fb_sectiontableentry2 td.td-3,
+tbody#fb_popuserhitstats_tbody tr.fb_sectiontableentry1 td.td-3,
+tbody#fb_popuserhitstats_tbody tr.fb_sectiontableentry1 td.td-3	{
+	text-align:center;
+}
 
 
 /*

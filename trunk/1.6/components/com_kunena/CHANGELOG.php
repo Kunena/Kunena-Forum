@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+10-Jan-2010 severdia
+# [#19345] Stats page cleanup, Language string cleanup
+
 10-Jan-2010 Matias
 # [#19383] Revise Profile Page: remove deprecated functions, minor fixes
 + [#19356] New buttons: added logic to show new buttons

@@ -120,7 +120,7 @@ $k = 0;
   <thead>
     <tr>
       <th colspan="3">
-      <div class = "fb_title_cover fbm"> <span class="fb_title fbl"> <?php echo _STAT_POPULAR; ?> <b><?php echo $kunena_config->popsubjectcount; ?></b> <?php echo _STAT_POPULAR_USER_KGSG; ?></span> </div>
+      <div class = "fb_title_cover fbm"> <span class="fb_title fbl"><?php echo _STAT_TOP; ?> <strong><?php echo $kunena_config->popsubjectcount; ?></strong> <?php echo _STAT_POPULAR; ?> <?php echo _STAT_POPULAR_USER_KGSG; ?></span> </div>
       <img id = "BoxSwitch__<?php echo KUNENA_BOARD_CLASS ;?>popsubstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
       </th>
     </tr>
@@ -129,7 +129,7 @@ $k = 0;
    <tr  class = "fb_sth" >
       <th class = "th-1 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="left" width="50%"> <?php echo _GEN_SUBJECT ;?></th>
       <th class = "th-2 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" width="40%">&nbsp;  </th>
-      <th class = "th-3 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center" width="10%"> <?php echo _KUNENA_USRL_HITS ;?> </th>
+      <th class = "th-3 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center" width="10%"></th>
     </tr>
  <?php foreach ($this->toptitles as $toptitle)
        {
@@ -151,7 +151,7 @@ $k = 0;
        <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
       </td>
       <td  class="td-3">
-	  <?php echo $toptitle->hits; ?>
+	  <?php echo $toptitle->hits; ?> <?php echo _KUNENA_USRL_HITS ;?>
        </td>
     </tr>
 <?php }   ?>
@@ -177,7 +177,7 @@ $k = 0;
   <thead>
     <tr>
       <th colspan="3">
-      <div class = "fb_title_cover fbm"> <span class="fb_title fbl"> <?php echo _STAT_POPULAR; ?> <b><?php echo $kunena_config->poppollscount; ?></b> <?php echo _STAT_POPULAR_POLLS_KGSG; ?></span> </div>
+      <div class = "fb_title_cover fbm"> <span class="fb_title fbl"><?php echo _STAT_TOP; ?> <strong><?php echo $kunena_config->poppollscount; ?></strong> <?php echo _STAT_POPULAR; ?> <?php echo _STAT_POPULAR_POLLS_KGSG; ?></span> </div>
       <img id = "BoxSwitch__<?php echo KUNENA_BOARD_CLASS;?>popsubstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
       </th>
     </tr>
@@ -186,7 +186,7 @@ $k = 0;
    <tr  class = "fb_sth" >
       <th class = "th-1 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="left" width="50%"> <?php echo _KUNENA_POLL_NAME;?></th>
       <th class = "th-2 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" width="40%">&nbsp;  </th>
-      <th class = "th-3 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center" width="10%"> <?php echo _KUNENA_USRL_VOTES ;?> </th>
+      <th class = "th-3 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center" width="10%"></th>
     </tr>
  <?php foreach($this->toppolls as $toppoll)
        {
@@ -213,7 +213,7 @@ $k = 0;
        <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
       </td>
       <td  class="td-3">
-	  <?php echo $toppoll->total; ?>
+	  <?php echo $toppoll->total; ?> <?php echo _KUNENA_USRL_VOTES ;?>
        </td>
     </tr>
 <?php }
@@ -242,7 +242,7 @@ $k = 0;
   <thead>
     <tr>
       <th colspan="3">
-      <div class = "fb_title_cover fbm"> <span class="fb_title fbl"> <?php echo _STAT_POPULAR; ?> <b><?php echo $kunena_config->popusercount; ?></b> <?php echo _STAT_POPULAR_USER_TMSG; ?></span> </div>
+      <div class = "fb_title_cover fbm"> <span class="fb_title fbl"><?php echo _STAT_TOP; ?> <strong><?php echo $kunena_config->popusercount; ?></strong> <?php echo _STAT_POPULAR; ?> <?php echo _STAT_POPULAR_USER_TMSG; ?></span></div>
       <img id = "BoxSwitch__<?php echo KUNENA_BOARD_CLASS ;?>popusermsgstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
       </th>
     </tr>
@@ -251,7 +251,7 @@ $k = 0;
    <tr  class = "fb_sth" >
       <th class = "th-1 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="left" width="50%"><?php echo _KUNENA_USRL_USERNAME ;?></th>
       <th class = "th-2 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" width="40%">&nbsp;  </th>
-      <th class = "th-3 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center" width="10%"> <?php echo _KUNENA_USRL_POSTS ;?></th>
+      <th class = "th-3 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center" width="10%"></th>
     </tr>
 <?php
 
@@ -278,7 +278,7 @@ $k = 0;
          <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
                                     </td>
       <td  class="td-3">
-	  <?php echo $poster->posts; ?>
+	  <?php echo $poster->posts; ?> <?php echo _KUNENA_USRL_POSTS ;?>
        </td>
     </tr>
 <?php }   ?>
@@ -309,7 +309,7 @@ $k = 0;
   <thead>
     <tr>
       <th colspan="3">
-      <div class = "fb_title_cover fbm"> <span class="fb_title fbl"> <?php echo _STAT_POPULAR; ?> <b><?php echo $kunena_config->popusercount; ?></b> <?php echo _STAT_POPULAR_USER_GSG; ?></span> </div>
+      <div class = "fb_title_cover fbm"> <span class="fb_title fbl"><?php echo _STAT_TOP; ?> <strong><?php echo $kunena_config->popusercount; ?></strong> <?php echo _STAT_POPULAR; ?> <?php echo _STAT_POPULAR_USER_GSG; ?></span> </div>
       <img id = "BoxSwitch__<?php echo KUNENA_BOARD_CLASS ;?>popuserhitstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
       </th>
     </tr>
@@ -341,7 +341,7 @@ $barwidth = round(($topprofile->hits * 100) / $this->topprofilehits);
          <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
                                     </td>
       <td  class="td-3">
-	  <?php echo $topprofile->hits; ?>
+	  <?php echo $topprofile->hits; ?> <?php echo _KUNENA_USRL_HITS ;?>
        </td>
     </tr>
 <?php }   ?>

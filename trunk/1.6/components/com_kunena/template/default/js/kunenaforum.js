@@ -1345,7 +1345,7 @@ $.extend($.ui.tabs.prototype, {
 	}
 });
 
-})(jQuery);a
+})(jQuery);
 
 
 

@@ -288,12 +288,6 @@ else
 	define('KUNENA_COREJSURL', KUNENA_DIRECTURL . 'template/default/js/kunenaforum.js');
 }
 
-function KUNENA_fmodReplace($x, $y) { //function provided for older PHP versions which do not have an fmod function yet
-    $i = floor($x / $y);
-    // r = x - i * y
-    return $x - $i * $y;
-    }
-
 function KUNENA_check_image_type(&$type) {
     switch ($type)
     {
@@ -326,13 +320,10 @@ function KUNENA_check_image_type(&$type) {
 class CKunenaTools {
     var $id = null;
 
-/*
-    function fbGetCurrentTime () {
-    	// tells current FB internal representing time
-        $kunena_config =& CKunenaConfig::getInstance();
-        return time() + ($kunena_config->board_ofset * 3600);
+    function showButton($name, $text) {
+		return '<span class="'.$name.'"><span>'.$text.'</span></span>';
     }
-*/
+
     function fbGetInternalTime ($time=null) {
     	// tells internal FB representing time from UTC $time
         $kunena_config =& CKunenaConfig::getInstance();
@@ -867,27 +858,6 @@ class CKunenaTools {
         CKunenaTools::reCountBoards();
 
         $kunena_app->redirect($return, $err);
-        }
-
-
-        function fbRemoveXSS($val, $reverse = 0) {
-
-           // now the only remaining whitespace attacks are \t, \n, and \r
-           $ra1 = Array('javascript', 'vbscript', 'expression', 'applet', 'meta', 'xml', 'blink', 'link', 'style', 'script', 'embed', 'object', 'iframe', 'frame', 'frameset', 'ilayer', 'layer', 'bgsound', 'title', 'base');
-           $ra2 = Array('onabort', 'onactivate', 'onafterprint', 'onafterupdate', 'onbeforeactivate', 'onbeforecopy', 'onbeforecut', 'onbeforedeactivate', 'onbeforeeditfocus', 'onbeforepaste', 'onbeforeprint', 'onbeforeunload', 'onbeforeupdate', 'onblur', 'onbounce', 'oncellchange', 'onchange', 'onclick', 'oncontextmenu', 'oncontrolselect', 'oncopy', 'oncut', 'ondataavailable', 'ondatasetchanged', 'ondatasetcomplete', 'ondblclick', 'ondeactivate', 'ondrag', 'ondragend', 'ondragenter', 'ondragleave', 'ondragover', 'ondragstart', 'ondrop', 'onerror', 'onerrorupdate', 'onfilterchange', 'onfinish', 'onfocus', 'onfocusin', 'onfocusout', 'onhelp', 'onkeydown', 'onkeypress', 'onkeyup', 'onlayoutcomplete', 'onload', 'onlosecapture', 'onmousedown', 'onmouseenter', 'onmouseleave', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup', 'onmousewheel', 'onmove', 'onmoveend', 'onmovestart', 'onpaste', 'onpropertychange', 'onreadystatechange', 'onreset', 'onresize', 'onresizeend', 'onresizestart', 'onrowenter', 'onrowexit', 'onrowsdelete', 'onrowsinserted', 'onscroll', 'onselect', 'onselectionchange', 'onselectstart', 'onstart', 'onstop', 'onsubmit', 'onunload');
-           $ra = array_merge($ra1, $ra2);
-
-           $ra2 = $ra;
-           array_walk($ra2, "fbReturnDashed");
-
-           if ($reverse) {
-                $val = JString::str_ireplace($ra2, $ra, $val);
-           }
-           else {
-           //replace them all with a dummy variable, and later replace them in CODE
-                $val = JString::str_ireplace($ra, $ra2, $val);
-           }
-           return $val;
         }
 
 	function &prepareContent(&$content)

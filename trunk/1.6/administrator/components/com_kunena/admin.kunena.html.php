@@ -4089,14 +4089,8 @@ echo $pane->endPane();
 			echo '</td></tr></table>';
 			echo '</td>';
 
-			if (function_exists ( 'fmod' )) {
-				if (! fmod ( ($j), 5 )) {
-					echo '</tr><tr align="center" valign="middle">';
-				}
-			} else {
-				if (! KUNENA_fmodReplace ( ($j), 5 )) {
-					echo '</tr><tr align="center" valign="middle">';
-				}
+			if (! fmod ( ($j), 5 )) {
+				echo '</tr><tr align="center" valign="middle">';
 			}
 		}
 

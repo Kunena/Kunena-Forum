@@ -49,7 +49,7 @@ if ($signature)
 	<div id="kprofile-container">
 		<div id="kprofile-leftcol">
 			<div class="avatar-lg"></div>
-			<div id="kprofile-stats"> 
+			<div id="kprofile-stats">
 				<ul>
 					<!-- The class on the first LI should be either this or online-status-no -->
 					<li><span class="online-status-yes">NOW ONLINE</span></li>
@@ -88,7 +88,7 @@ if ($signature)
 						<a href="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->FLICKR)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_FLICKR; ?>"><span class="flickr"></span></a>
 						<a href="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->BEBO)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_BEBO; ?>"><span class="bebo"></span></a>
 					</div>
-			
+
 				</div>
 				<div class="kprofile-rightcol1">
 					<ul>
@@ -111,9 +111,9 @@ if ($signature)
 					<h4><?php echo _KUNENA_MYPROFILE_ABOUTME; ?></h4>
 					<p><?php echo kunena_htmlspecialchars(stripslashes($userinfo->personalText)); ?></p>
 					<h4><?php echo _KUNENA_MYPROFILE_SIGNATURE; ?></h4>
-					<p><div class="msgsignature"><div><?php echo $usr_signature; ?></div></div></p>
+					<div class="msgsignature"><div><?php echo $usr_signature; ?></div></div>
 				</div>
-			
+
 			</div>
 			<div class="clr"></div>
 			<script type="text/javascript">
@@ -131,8 +131,8 @@ if ($signature)
 				<div id="tabs-2">Phasellus mattis tincidunt nibh. Cras orci urna, blandit id, pretium vel, aliquet ornare, felis. Maecenas scelerisque sem non nisl. Fusce sed lorem in enim dictum bibendum.</div>
 				<div id="tabs-3">Nam dui erat, auctor a, dignissim quis, sollicitudin eu, felis. Pellentesque nisi urna, interdum eget, sagittis et, consequat vestibulum, lacus. Mauris porttitor ullamcorper augue.</div>
 		</div>
-			
-			
+
+
 		</div>
 	</div>
 

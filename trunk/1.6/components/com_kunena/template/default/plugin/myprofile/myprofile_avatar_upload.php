@@ -333,15 +333,18 @@ switch ($task) {
 		$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile'),_UPLOAD_UPLOADED);
 
 	case 'gallery':
-		$newAvatar = JRequest::getVar('newAvatar', '');
+		jimport('joomla.filesystem.folder');
+		jimport('joomla.filesystem.file');
+		$newAvatarPath = JFolder::makeSafe(JRequest::getVar('newAvatarPath', ''));
+		$newAvatar = JFile::makeSafe(JRequest::getVar('newAvatar', ''));
 
-		$newAvatar = CKunenaTools::fbRemoveXSS($newAvatar);
 		if ($newAvatar == '') {
 			$kunena_app->enqueueMessage(_UPLOAD_ERROR_CHOOSE, 'notice');
 			$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&do=avatar'));
 		}
 
-		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newAvatar}' WHERE userid={$kunena_my->id}");
+		if ($newAvatarPath) $newAvatarPath .= '/';
+		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='gallery/{$newAvatarPath}{$newAvatar}' WHERE userid={$kunena_my->id}");
 		$kunena_db->query() or check_dberror("Unable to update user avatar.");
 
 		$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile'),_UPLOAD_UPLOADED);
@@ -532,15 +535,8 @@ if ($kunena_config->allowavatarupload)
         echo "<tr align='center' valign='middle'>";
 
         if ($gallery == "default") $gallery='';
-
-	$gallery1 = $gallery2 = '';
-        if ($gallery)
-        {
-            $gallery1 = "/" . str_replace("%20", " ", $gallery);
-            $gallery2 = str_replace("%20", " ", $gallery) . "/";
-        }
-
-        $avatar_gallery_path = KUNENA_PATH_UPLOADED .DS. 'avatars/gallery' . $gallery1;
+        else $gallery .= '/';
+        $avatar_gallery_path = KUNENA_PATH_UPLOADED .DS. 'avatars/gallery/' . $gallery;
         $avatar_images = array ();
         $avatar_images = kn_myprofile_display_avatar_gallery($avatar_gallery_path);
 
@@ -548,27 +544,19 @@ if ($kunena_config->allowavatarupload)
         {
             $j = $i + 1;
             echo '<td>';
-            //echo '<img src="'.$avatar_gallery_path .DS. $avatar_images[$i].'">';
-            echo '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/gallery/' . $gallery2 . $avatar_images[$i] . '" alt="" />';
-            echo '<input type="radio" name="newAvatar" value="gallery/' . $gallery2 . $avatar_images[$i] . '"/>';
+            echo '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/gallery/' . $gallery . $avatar_images[$i] . '" alt="" />';
+            echo '<input type="radio" name="newAvatar" value="' . $avatar_images[$i] . '"/>';
             echo "</td>\n";
 
-            if (function_exists('fmod'))
-            {
-                if (!fmod(($j), 5)) {
-                    echo '</tr><tr align="center" valign="middle">';
-                }
-            }
-            else
-            {
-                if (!KUNENA_fmodReplace(($j), 5)) {
-                    echo '</tr><tr align="center" valign="middle">';
-                }
+            if (!fmod(($j), 5)) {
+                echo '</tr><tr align="center" valign="middle">';
             }
         }
 
         echo '</tr>';
-        echo '<tr><td colspan="5" align="center"><br /><br /><input type="submit" class="button" value="' . _KUNENA_SAVE . '"/><br />';
+        echo '<tr><td colspan="5" align="center">';
+        echo '<input type="radio" name="newAvatarPath" value="' . $gallery . '"/>';
+        echo '<br /><br /><input type="submit" class="button" value="' . _KUNENA_SAVE . '"/><br />';
         echo '</td></tr></table>';
         echo "</form>";
 ?>

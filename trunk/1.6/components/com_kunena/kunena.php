@@ -351,7 +351,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 	//Check if the catid requested is a parent category, because if it is
 	//the only thing we can do with it is 'listcat' and nothing else
-	if ($func == "showcat" || $func == "view" || $func == "post") {
+	if ($func == "showcat" || $func == "view") {
 		if ($catid != 0) {
 			$kunena_db->setQuery ( "SELECT parent FROM #__fb_categories WHERE id='{$catid}'" );
 			$strCatParent = $kunena_db->loadResult ();

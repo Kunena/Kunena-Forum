@@ -378,33 +378,6 @@ if ($task == 'default')
                     <?php
                         echo _YOUR_AVATAR . ":</td><td >";
 
-                        if ($kunena_config->avatar_src == "cb")
-                        {
-                            $kunena_db->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='{$kunena_my->id}'");
-                            $avatar = $kunena_db->loadResult();
-                            check_dberror("Unable to load CB Avatar.");
-                            if ($avatar != "")
-                            {
-                    ?>
-
-                                <img src = "components/com_comprofiler/images/<?php echo $avatar;?>" alt="" />
-
-                                <br /> <?php echo CKunealink::GetSefHrefLink('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar', _SET_NEW_AVATAR, _SET_NEW_AVATAR,'nofollow'); ?>
-
-                    <?php
-                            }
-                            else
-                            {
-                                echo _NON_SELECTED;
-                    ?>
-
-                            <br /> <?php echo CKunealink::GetSefHrefLink('index.php?option=com_comprofiler&amp;Itemid=117&amp;task=userAvatar', _SET_NEW_AVATAR, _SET_NEW_AVATAR,'nofollow'); ?>
-
-                    <?php
-                            }
-                        }
-                        else
-                        {
                             $kunena_db->setQuery("SELECT avatar FROM #__fb_users WHERE userid='{$kunena_my->id}'");
                             $avatar = $kunena_db->loadResult();
                             check_dberror("Unable to load Kunena Avatar.");
@@ -436,9 +409,6 @@ if ($task == 'default')
                     ?>
 
                         <input type = "hidden" value = "<?php echo $avatar;?>" name = "avatar"/>
-                    <?php
-                        }
-                    ?>
                 </td>
 
             </tr>

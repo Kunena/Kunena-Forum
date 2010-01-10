@@ -137,6 +137,11 @@ function BuildRoute(&$query)
 
 function ParseRoute($segments)
 {
+	jimport('joomla.environment.uri');
+	$menu = &JSite::getMenu();
+	$item = $menu->getActive();
+	$link = new JURI($item->link);
+
 	$funcitems = array(
 		array('func'=>'showcat', 'var'=>'catid'),
 		array('func'=>'view', 'var'=>'id')
@@ -147,6 +152,12 @@ function ParseRoute($segments)
 	$kunena_config =& CKunenaConfig::getInstance();
 
 	$vars = array();
+	$func = $link->getVar('func', '');
+	if ($func) {
+		$vars['func'] = $func;
+		$dopos++;
+	}
+
 	while (($segment = array_shift($segments)) !== null)
 	{
 		$seg = explode(':', $segment);

@@ -27,7 +27,7 @@ $kunena_db = &JFactory::getDBO ();
 
 global $kunena_icons;
 
-$func = JString::strtolower ( JRequest::getCmd ( 'func', '' ) );
+$func = JString::strtolower ( JRequest::getCmd ( 'func', 'listcat' ) );
 $catid = JRequest::getInt ( 'catid', 0 );
 $id = JRequest::getInt ( 'id', 0 );
 

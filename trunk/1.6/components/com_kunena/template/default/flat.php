@@ -25,7 +25,7 @@ defined ( '_JEXEC' ) or die ( 'Restricted access' );
 $kunena_db = &JFactory::getDBO ();
 $kunena_config = & CKunenaConfig::getInstance ();
 
-$func = JString::strtolower ( JRequest::getCmd ( 'func', '' ) );
+$func = JString::strtolower ( JRequest::getCmd ( 'func', 'listcat' ) );
 $id = JRequest::getInt ( 'id', 0 );
 $catid = JRequest::getInt ( 'catid', 0 );
 
@@ -33,6 +33,11 @@ global $kunena_icons;
 $kunena_my = &JFactory::getUser ();
 
 // Func Check
+
+// My latest only available for registered users
+if ($func == 'mylatest' && $func = $kunena_my->id == 0){
+	$func = latest;
+}
 
 
 $funclatest = false;

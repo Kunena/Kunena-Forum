@@ -92,6 +92,31 @@ $kunena_my = &JFactory::getUser ();
 $kunena_config = & CKunenaConfig::getInstance ();
 $kunena_db = &JFactory::getDBO ();
 
+// Check if we need to redirect to a different default view
+if ($func == ''){
+	$redirect = false;
+
+	switch ($kunena_config->fbdefaultpage){
+		case 'recent' :
+			$func = 'latest';
+			$redirect = true;
+			break;
+		case 'my' :
+			$func = $kunena_my->id > 0 ? 'mylatest' : 'latest';
+			$redirect = true;
+			break;
+		default :
+			$func = 'listcat';
+	}
+
+	if ( $redirect ){
+		$Itemid = JRequest::getInt ( 'Itemid', 0, 'REQUEST' );
+		header ( "HTTP/1.1 303 See Other" );
+		header ( "Location: " . htmlspecialchars_decode ( JRoute::_ ( 'index.php?option=com_kunena&amp;Itemid=' . $Itemid . '&amp;func=' . $func ) ) );
+		$kunena_app->close ();
+	}
+}
+
 // JOOMLA STYLE CHECK
 define ( 'KUNENA_BOARD_CLASS', ($kunena_config->joomlastyle ? '' : 'fb_') );
 
@@ -215,19 +240,6 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 	// include required libraries
 	require_once (JPATH_BASE . '/libraries/joomla/template/template.php');
-
-	if ($func == '') { // Set default start page as per config settings
-		switch ($kunena_config->fbdefaultpage) {
-			case 'recent' :
-				$func = 'latest';
-				break;
-			case 'my' :
-				$func = $kunena_my->id > 0 ? 'mylatest' : 'latest';
-				break;
-			default :
-				$func = 'listcat';
-		}
-	}
 
 	// Kunena Current Template Icons Pack
 	// See if there's an icon pack installed

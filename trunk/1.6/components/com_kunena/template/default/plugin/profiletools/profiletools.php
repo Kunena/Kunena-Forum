@@ -22,7 +22,7 @@
 defined( '_JEXEC' ) or die('Restricted access');
 $kunena_config =& CKunenaConfig::getInstance();
 
-$func = JString::strtolower(JRequest::getCmd('func', ''));
+$func = JString::strtolower ( JRequest::getCmd ( 'func', 'listcat' ) );
 $catid = JRequest::getInt('catid', 0);
 $id = JRequest::getInt('id', 0);
 ?>
@@ -71,14 +71,14 @@ $id = JRequest::getInt('id', 0);
                <li>
               		<a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showset'); ?>"><?php echo _KUNENA_FORUM_PREFERENCES; ?></a>
 				</li>
-				
-				<li>	
+
+				<li>
 					<a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showmsg'); ?>"><?php echo _KUNENA_VIEW_MY_POSTS; ?></a>
 				</li>
-				<li>	
+				<li>
 					<a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub'); ?>"><?php echo _KUNENA_VIEW_MY_SUBSCRIPTIONS; ?></a>
 				</li>
-				<li>	
+				<li>
 					<a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav'); ?>"><?php echo _KUNENA_VIEW_MY_FAVORITES; ?></a>
                </li>
             </ul>

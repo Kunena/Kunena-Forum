@@ -28,7 +28,7 @@ $kunena_config =& CKunenaConfig::getInstance();
 //Get some variables
 $id = JRequest::getInt('id');
 $catid = JRequest::getInt('catid');
-$func = JRequest::getCmd('func');
+$func = JString::strtolower ( JRequest::getCmd ( 'func', 'listcat' ) );
 $task = JRequest::getCmd('task');
 $replyto = intval(JRequest::getVar('replyto'));
 $do = JRequest::getCmd('do');

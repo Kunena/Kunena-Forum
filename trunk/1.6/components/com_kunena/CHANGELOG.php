@@ -34,10 +34,12 @@ Legend:
 Kunena 1.6.0-DEV
 
 10-Jan-2010 severdia
-^ [#19383] Redesigned profile page 
+^ [#19383] Redesigned profile page
 
 10-Jan-2010 fxstein
 # [#19358] Cleanup of polls backend to fix broken configuration
+^ [#19371] Change default page behaviour - make it work with new Joomla menus
+^ [#19345] Re-style default template: replace <p> with proper <div> in listcat.php
 
 09-Jan-2010 severdia
 # [#19356] Fixed search page accessibility, cleaner CSS

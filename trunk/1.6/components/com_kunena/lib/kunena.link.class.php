@@ -264,7 +264,6 @@ class CKunenaLink
     // Function required to support default template
     function GetLatestPageLink($func, $page, $rel='follow', $class='', $sel='')
     {
-    	// if ($func=='') $func = 'latest';
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;page='.$page.(($sel)?'&amp;sel='.$sel:''), $page, '', $rel, $class);
     }
 

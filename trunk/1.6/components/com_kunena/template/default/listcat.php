@@ -29,9 +29,10 @@ $kunena_config = & CKunenaConfig::getInstance ();
 $kunena_session = & CKunenaSession::getInstance ();
 $kunena_my = & JFactory::getUser ();
 
-$func = JString::strtolower ( JRequest::getCmd ( 'func', '' ) );
+$func = JString::strtolower ( JRequest::getCmd ( 'func', 'listcat' ) );
+
 if (JString::strtolower ( $func ) == '') {
-	include (KUNENA_ABSTMPLTPATH . '/latestx.php');
+//	include (KUNENA_ABSTMPLTPATH . '/latestx.php');
 } else {
 
 	//securing passed form elements
@@ -183,9 +184,16 @@ if (JString::strtolower ( $func ) == '') {
 				if ($cat->description != "") {
 					$tmpforumdesc = stripslashes ( smile::smileReplace ( $cat->description, 0, $kunena_config->disemoticons, $kunena_emoticons ) );
 					$tmpforumdesc = nl2br ( $tmpforumdesc );
-					echo '<p>';
-					echo $tmpforumdesc;
-					echo '</p>';
+
+					?>
+						<div class="<?php
+						echo KUNENA_BOARD_CLASS?>title_desc fbm"><?php
+						echo $tmpforumdesc;?>
+						</div>
+					<?php
+
+
+
 				}
 				?>
 			</div>

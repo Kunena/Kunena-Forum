@@ -28,7 +28,7 @@ $kunena_config =& CKunenaConfig::getInstance();
 $kunena_session =& CKunenaSession::getInstance();
 $document =& JFactory::getDocument();
 
-$func = JString::strtolower(JRequest::getCmd('func', ''));
+$func = JString::strtolower ( JRequest::getCmd ( 'func', 'listcat' ) );
 $sel = JRequest::getVar('sel', '');
 
 function KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages) {

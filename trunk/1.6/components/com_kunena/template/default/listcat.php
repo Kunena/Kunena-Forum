@@ -203,14 +203,10 @@ if (JString::strtolower ( $func ) == '') {
 					$tmpforumdesc = nl2br ( $tmpforumdesc );
 
 					?>
-						<div class="<?php
-						echo KUNENA_BOARD_CLASS?>title_desc fbm"><?php
+						<div class="fb_title_desc fbm"><?php
 						echo $tmpforumdesc;?>
 						</div>
 					<?php
-
-
-
 				}
 				?>
 			</div>

@@ -75,7 +75,8 @@ function KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages) {
     return $output;
 }
 
-if (!$kunena_my->id && ($func == "mylatest" || $func == "noreplies"))
+// My latest is only available to logged-in users
+if (!$kunena_my->id && $func == "mylatest")
 {
         	header("HTTP/1.1 307 Temporary Redirect");
         	header("Location: " . htmlspecialchars_decode(CKunenaLink::GetShowLatestURL()));

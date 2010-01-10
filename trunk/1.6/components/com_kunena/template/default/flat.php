@@ -34,12 +34,6 @@ $kunena_my = &JFactory::getUser ();
 
 // Func Check
 
-// My latest only available for registered users
-if ($func == 'mylatest' && $func = $kunena_my->id == 0){
-	$func = latest;
-}
-
-
 $funclatest = false;
 $funcmylatest = false;
 $funcnoreplies = false;
@@ -52,8 +46,9 @@ switch (JString::strtolower ( $func )) {
 		$funcnoreplies = true;
 		break;
 	case 'latest' :
-	default :
 		$funclatest = true;
+		break;
+	default :
 		break;
 }
 
@@ -111,22 +106,42 @@ if (count ( $this->messages [0] ) > 0) {
 	id="fb_flattable" border="0" cellspacing="0" cellpadding="0"
 	width="100%">
 
-	<?php
-	if ($funclatest || $funcmylatest || $funcnoreplies) {
-
-	} else {
-		?>
 	<thead>
 		<tr>
 			<th
 				colspan="<?php
-		echo (CKunenaTools::isModerator ( $kunena_my->id, $catid ) ? "6" : "5");
-		?>">
-			<div class="fb_title_cover fbm"><span class="fb_title fbl"><b><?php
+	echo (CKunenaTools::isModerator ( $kunena_my->id, $catid ) ? "6" : "5");
+	?>">
+
+	<?php
+	if ($funclatest || $funcmylatest || $funcnoreplies) {
+		?>
+		<div class="fb_title_cover fbm"><span
+				class="fb_title fbl"><?php
+
+		switch (JString::strtolower ( $func )) {
+			case 'mylatest' :
+				echo _KUNENA_MENU_MYLATEST_DESC;
+				break;
+			case 'noreplies' :
+				echo _KUNENA_MENU_NOREPLIES_DESC;
+				break;
+			case 'latest' :
+				echo _KUNENA_MENU_LATEST_DESC;
+				break;
+			default :
+				break;
+		}
+		?></span></div>
+	<?php
+	} else {
+		?>
+			<div class="fb_title_cover fbm"><span
+				class="fb_title fbl"><?php
 		echo _KUNENA_THREADS_IN_FORUM;
-		?>:</b>
+		?>:
 			<?php
-		echo '' . kunena_htmlspecialchars ( stripslashes ( $objCatInfo->name ) ) . '';
+		echo kunena_htmlspecialchars ( stripslashes ( $objCatInfo->name ) );
 		?></span></div>
 			<!-- FORUM TOOLS --> <?php
 		//(JJ) BEGIN: RECENT POSTS
@@ -138,14 +153,12 @@ if (count ( $this->messages [0] ) > 0) {
 		//(JJ) FINISH: RECENT POSTS
 		?>
 			<!-- /FORUM TOOLS --></th>
-		</tr>
-	</thead>
-
 	<?php
 	}
 	?>
+		</tr>
 
-	<thead>
+
 		<tr class="fb_sth fbs ">
 			<th
 				class="th-0 <?php
@@ -277,7 +290,7 @@ if (count ( $this->messages [0] ) > 0) {
 		}
 		?>">
 			<td class="td-0 fbm" align="center"><strong> <?php
-		echo CKunenaTools::formatLargeNumber( $this->thread_counts [$leaf->id]);
+		echo CKunenaTools::formatLargeNumber ( $this->thread_counts [$leaf->id] );
 		?>
 			</strong><?php
 		echo _GEN_REPLIES;
@@ -407,13 +420,11 @@ if (count ( $this->messages [0] ) > 0) {
 			</td>
 			<td class="td-4" align="center"><!-- Views --> <span
 				class="topic_views_number"><?php
-		echo CKunenaTools::formatLargeNumber(( int ) $this->hits [$leaf->id]);
+		echo CKunenaTools::formatLargeNumber ( ( int ) $this->hits [$leaf->id] );
 		?>
-			</span> <span class="topic_views">
-			<?php
+			</span> <span class="topic_views"> <?php
 		echo _GEN_HITS;
-		?>
-			</span> <!-- /Views --></td>
+		?> </span> <!-- /Views --></td>
 			<td class="td-6 fbs">
 			<div style="position: relative"><!--  Sticky   --> <?php
 		if ($leaf->ordering != 0) {
@@ -475,8 +486,9 @@ if (count ( $this->messages [0] ) > 0) {
 		?>
 			<?php
 		echo _KUNENA_AGO;
-		// echo ' ' . CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $leaf->catid, $leaf->thread, 1, $kunena_config->messages_per_page, isset ( $kunena_icons ['latestpost'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '"/>' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"  alt="' . _SHOW_LAST . '"/>', $last_reply [$leaf->id]->id );
-		?> </span> <!-- /Latest Post Date --></div>
+		echo ' ' . CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $leaf->catid, $leaf->thread, 1, $kunena_config->messages_per_page, isset ( $kunena_icons ['latestpost'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '"/>' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"  alt="' . _SHOW_LAST . '"/>', $last_reply [$leaf->id]->id );
+		?>
+			</span> <!-- /Latest Post Date --></div>
 
 			</td>
 

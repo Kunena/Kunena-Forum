@@ -99,9 +99,12 @@ define('_KUNENA_MENU_CREATED', 'The Kunena navigation menu and main forum link h
 define('_KUNENA_MENU_TITLE', 'Kunena Menu');
 define('_KUNENA_MENU_FORUM', 'Forum'); // mainmenu link to Kunena
 define('_KUNENA_MENU_LISTCAT', 'Index'); // Categories view
-define('_KUNENA_MENU_LATEST', 'Topics'); // Latest/recent topics
-define('_KUNENA_MENU_MYLATEST', 'My Topics'); // My latest topics
-define('_KUNENA_MENU_NOREPLIES', 'No Replies'); // Topics without replies
+define('_KUNENA_MENU_LATEST', 'Topics'); // Latest/recent discussions
+define('_KUNENA_MENU_LATEST_DESC', 'Recent Topics');
+define('_KUNENA_MENU_MYLATEST', 'My Topics'); // My latest discussions
+define('_KUNENA_MENU_MYLATEST_DESC', 'My Topics');
+define('_KUNENA_MENU_NOREPLIES', 'No Replies'); // Discussions without replies
+define('_KUNENA_MENU_NOREPLIES_DESC', 'Topics with <strong>no</strong> replies');
 define('_KUNENA_MENU_MYPROFILE', 'My Profile'); // My profile view
 define('_KUNENA_MENU_RULES', 'Rules'); // Rules article
 define('_KUNENA_MENU_HELP', 'Help'); // Help article

@@ -26,7 +26,7 @@ $catid = JRequest::getInt('catid', 0);
 
 $options = array ();
 $options[] = JHTML::_('select.option', '0', _KUNENA_FORUM_TOP);
-$lists['parent'] = CKunenaTools::forumSelectList('forumjump', $catid, $options, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"');
+$lists['parent'] = CKunenaTools::forumSelectList('forumjump', $catid, $options, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', true);
 ?>
 <form id = "jumpto" name = "jumpto" method = "post" target = "_self" action = "<?php echo JRoute::_(KUNENA_LIVEURLREL); ?>">
     <span style = "width: 100%; text-align: right;">

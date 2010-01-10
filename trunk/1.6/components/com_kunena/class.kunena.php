@@ -578,12 +578,12 @@ class CKunenaTools {
 		}
 	}
 
-	function forumSelectList($name, $catid=0, $options=array(), $attr='') {
+	function forumSelectList($name, $catid=0, $options=array(), $attr='', $sections=false) {
 		$kunena_db = &JFactory::getDBO ();
 		$list = JJ_categoryArray ();
 
 		foreach ( $list as $item ) {
-			$options [] = JHTML::_ ( 'select.option', $item->id, $item->treename );
+			$options [] = JHTML::_ ( 'select.option', $item->id, $item->treename, 'value', 'text', !$sections && $item->section);
 		}
 
 		if (is_array($catid)) $catids = 'catids[]';
@@ -1280,6 +1280,7 @@ function fbTreeRecurse( $id, $indent, $list, &$children, $maxlevel=9999, $level=
             $list[$id] = $v;
             $list[$id]->treename = $indent . $txt;
             $list[$id]->children = count( @$children[$id] );
+            $list[$id]->section = ($v->parent==0);
 
             $list = fbTreeRecurse( $id, $indent . $spacer, $list, $children, $maxlevel, $level+1, $type );
         }

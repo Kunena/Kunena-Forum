@@ -368,7 +368,7 @@ class CKunenaSearch {
 		//category select list
 		$options = array ();
 		$options [] = JHTML::_ ( 'select.option', '0', _KUNENA_SEARCH_SEARCHIN_ALLCATS );
-		$this->categorylist = CKunenaTools::forumSelectList ( 'searchlist', explode ( ',', $this->params ['catids'] ), $options, 'class="inputbox" size="8" multiple="multiple"' );
+		$this->categorylist = CKunenaTools::forumSelectList ( 'searchlist', explode ( ',', $this->params ['catids'] ), $options, 'class="inputbox" size="8" multiple="multiple"', true );
 
 		if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php' )) {
 			include (KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php');

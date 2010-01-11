@@ -110,6 +110,7 @@ if (in_array ( $catid, $allow_forum )) {
 	$this->thread_counts = array ();
 	$this->messages = array ();
 	$this->messages [0] = array ();
+	$routerlist = array();
 	if (count ( $threadids ) > 0) {
 		$query = "SELECT a.*, j.id AS userid, t.message AS messagetext, l.myfavorite, l.favcount, l.attachmesid,
 							l.msgcount, l.lastid, u.avatar, c.id AS catid, c.name AS catname, c.class_sfx
@@ -145,10 +146,13 @@ if (in_array ( $catid, $allow_forum )) {
 					$this->favthread [$message->id] = $message->favcount;
 				if ($message->id == $message->lastid)
 					$last_read [$message->id]->lastread = $last_reply [$message->id] = $message;
+				$routerlist[$message->id] = $message->subject;
 			} else {
 				$last_read [$message->thread]->lastread = $last_reply [$message->thread] = $message;
 			}
 		}
+		include_once(KUNENA_PATH . DS . 'router.php');
+		KunenaRouter::loadMessages($routerlist);
 
 		$kunena_db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages " . "WHERE hold='0' AND moved='0' AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
 		$msgidlist = $kunena_db->loadObjectList ();
@@ -164,8 +168,6 @@ if (in_array ( $catid, $allow_forum )) {
 	$kunena_db->setQuery ( "SELECT COUNT(*) FROM #__fb_messages WHERE catid='{$catid}' AND hold='1'" );
 	$numPending = $kunena_db->loadResult ();
 	check_dberror ( 'Unable to get number of pending messages.' );
-	?>
-<?php
 
 	//Get the category information
 	$query = "SELECT c.*, s.catid AS subscribeid

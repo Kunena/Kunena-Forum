@@ -240,6 +240,8 @@ $this->favthread = array();
 $this->thread_counts = array();
 $this->messages = array();
 $this->messages[0] = array();
+$routerlist = array();
+
 if (count($threadids) > 0)
 {
 $query = "SELECT a.*, j.id AS userid, t.message AS messagetext, l.myfavorite, l.favcount, l.attachmesid,
@@ -275,12 +277,15 @@ foreach ($messagelist as $message)
 		$last_read[$message->id]->unread = 0;
 		if ($message->favcount) $this->favthread[$message->id] = $message->favcount;
 		if ($message->id == $message->lastid) $last_read[$message->id]->lastread = $last_reply[$message->id] = $message;
+		$routerlist[$message->id] = $message->subject;
 	}
 	else
 	{
 		$last_read[$message->thread]->lastread = $last_reply[$message->thread] = $message;
 	}
 }
+include_once(KUNENA_PATH . DS . 'router.php');
+KunenaRouter::loadMessages($routerlist);
 
     $kunena_db->setQuery("SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages "
                        ."WHERE hold='0' AND moved='0' AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread");

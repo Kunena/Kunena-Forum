@@ -35,9 +35,19 @@ class KunenaRouter
 		self::$catidcache = $db->loadAssocList('id');
 	}
 
+	/**
+	 * Preloads messages, saves SQL queries
+	 *
+	 * @param $msgs Messages in form of array ('1'=>'subject', ...))
+	 */
+	function loadMessages($msglist)
+	{
+		self::$msgidcache = self::$msgidcache + $msglist;
+	}
+
 	function filterOutput($str)
 	{
-		return JString::trim(preg_replace(array('/\s+/','/[\$\&\+\,\/\:\;\=\?\@\'\"\<\>\#\%\{\}\|\\\^\~\[\]\`]/'), array('-',''), $str));
+		return JString::trim(preg_replace(array('/\s+/','/[\$\&\+\,\/\:\;\=\?\@\'\"\<\>\#\%\{\}\|\\\^\~\[\]\`\.]/'), array('-',''), $str));
 	}
 
 	function stringURLSafe($str)

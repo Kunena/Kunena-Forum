@@ -208,6 +208,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	// Include preview here before inclusion of other files
 
 	if ($func == "getpreview") {
+		require_once(JPATH_ROOT  .DS . '/libraries/joomla/document/html/html.php');
 		$message = utf8_urldecode ( utf8_decode ( stripslashes ( $msgpreview ) ) );
 
 		$kunena_emoticons = smile::getEmoticons ( 1 );

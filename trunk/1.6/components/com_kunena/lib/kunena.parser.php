@@ -434,8 +434,8 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 		$document	= &JFactory::getDocument();
 						$renderer	= $document->loadRenderer('modules');
 						$options	= array('style' => 'xhtml');
-						$position	= '$tempstr';
-						echo $renderer->render($position, $options, null);
+						$position	= $tempstr;
+						$tag_new = $renderer->render($position, $options, null);
                 	}
                 	else
                 	{

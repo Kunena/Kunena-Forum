@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+11-Jan-2010 severdia
+# [#19380] Add tabs & code to JS file, profile page
+
 11-Jan-2010 Matias
 # [#19064] Finalized new bbcodes: fixed preview
 # [#19288] Fix regression: warnings in backend after css file moved

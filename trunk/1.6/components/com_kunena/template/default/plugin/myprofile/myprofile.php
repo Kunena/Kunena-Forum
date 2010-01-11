@@ -36,10 +36,10 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 	$do = JRequest::getCmd ( 'do', 'show' );
 
 	//Get joomla userinfo needed later on, this limits the amount of queries
-	$juserinfo = new JUser ( $kunena_my->id );
+	$juserinfo = JUser::getInstance ( $kunena_my->id );
 
 	//Get userinfo needed later on, this limits the amount of queries
-	$userinfo = new CKunenaUserprofile ( );
+	$userinfo = CKunenaUserprofile::getInstance ( );
 
 	if ($kunena_config->avatar_src == "cb") {
 		$kunena_db->setQuery ( "SELECT avatar FROM #__comprofiler WHERE user_id='{$kunena_my->id}'" );
@@ -92,7 +92,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 				<?php echo _USER_PROFILE; ?>
 				<?php echo $juserinfo->name; ?>
 				</span>
-				
+
 			</div>
 		</th>
 		<!-- B: PROFILE TOOLS -->
@@ -109,7 +109,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 	</tr>
 	</thead>
 </table>
-			
+
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<!-- Temporarily disabled left nav until profile changes complete -->
@@ -125,11 +125,11 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 	?>
 
 		<!-- F:My Profile Left -->
-		<!--  </td> 
+		<!--  </td>
 
 		<td class="fb_myprofile_mid" valign="top" width="5">&nbsp;</td>
 		 -->
-		 
+
 		<td class="fb_myprofile_right" valign="top"><!-- B:My Profile Right -->
 
 		<?php
@@ -247,7 +247,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 				return;
 			}
 
-			$rowu = new CKunenaUserprofile ( );
+			$rowu = CKunenaUserprofile::getInstance ( );
 
 			$deleteSig = JRequest::getInt ( 'deleteSig', 0 );
 			$signature = JRequest::getVar ( 'message', null, 'REQUEST', 'string', JREQUEST_ALLOWRAW );
@@ -461,7 +461,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 
 			require_once (KUNENA_ROOT_PATH_ADMIN . DS . 'components/com_users/users.class.php');
 
-			$row = new JUser ( $kunena_my->id );
+			$row = JUser::getInstance ( $kunena_my->id );
 			$row->orig_password = $row->password;
 
 			$row->name = JString::trim ( $row->name );
@@ -490,7 +490,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 				return;
 			}
 
-			$row = new JUser ( $user_id );
+			$row = JUser::getInstance ( $user_id );
 
 			if (! $row->bind ( $_POST )) {
 				echo "<script> alert('" . $row->getError () . "'); window.history.go(-1); </script>\n";

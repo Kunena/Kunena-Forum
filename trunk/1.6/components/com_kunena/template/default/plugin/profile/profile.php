@@ -211,28 +211,7 @@ function showprf($userid, $page) {
 
 			$msg_html->userrank = $rText;
 
-			$useGraph = 0; //initialization
-
-
-			if (! $kunena_config->poststats) {
-				$msg_html->posts = '<div class="viewcover">' . "<strong>" . _POSTS . " $numPosts" . "</strong>" . "</div>";
-				$useGraph = 0;
-			} else {
-				$msg_html->myGraph = new phpGraph ( );
-				//$msg_html->myGraph->SetGraphTitle(_POSTS);
-				$msg_html->myGraph->AddValue ( _POSTS, $numPosts );
-				$msg_html->myGraph->SetRowSortMode ( 0 );
-				$msg_html->myGraph->SetBarImg ( KUNENA_URLGRAPHPATH . "col" . $kunena_config->statscolor . "m.png" );
-				$msg_html->myGraph->SetBarImg2 ( KUNENA_URLEMOTIONSPATH . "graph.gif" );
-				$msg_html->myGraph->SetMaxVal ( $maxPosts );
-				$msg_html->myGraph->SetShowCountsMode ( 2 );
-				$msg_html->myGraph->SetBarWidth ( 4 ); //height of the bar
-				$msg_html->myGraph->SetBorderColor ( "#333333" );
-				$msg_html->myGraph->SetBarBorderWidth ( 0 );
-				$msg_html->myGraph->SetGraphWidth ( 120 ); //should match column width in the <TD> above -5 pixels
-				//$msg_html->myGraph->BarGraphHoriz();
-				$useGraph = 1;
-			}
+			$msg_html->posts = '<div class="viewcover">' . "<strong>" . _POSTS . " $numPosts" . "</strong>" . "</div>";
 		}
 	}
 

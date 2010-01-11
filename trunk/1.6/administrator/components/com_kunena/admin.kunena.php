@@ -689,7 +689,7 @@ function showConfig($option) {
 		while ( ($file = readdir ( $dir )) !== false ) {
 			if ($file != ".." && $file != ".") {
 				if (is_dir ( KUNENA_PATH_TEMPLATE . DS . $file )) {
-					if (! ($file [0] == '.') && is_file ( KUNENA_PATH_TEMPLATE . DS . $file . DS . 'kunena.forum.css' )) {
+					if (! ($file [0] == '.') && is_file ( KUNENA_PATH_TEMPLATE . DS. $file . DS . 'css' . DS . 'kunena.forum.css' )) {
 						$templatelist [] = $file;
 					}
 					if (! ($file [0] == '.') && is_dir ( KUNENA_PATH_TEMPLATE . DS . $file . DS . 'images' . DS . 'english' )) {
@@ -766,7 +766,6 @@ function showConfig($option) {
 	$lists ['editmarkup'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_editmarkup', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->editmarkup );
 	$lists ['discussbot'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_discussbot', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->discussbot );
 	$lists ['enablerss'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_enablerss', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablerss );
-	$lists ['poststats'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_poststats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->poststats );
 	$lists ['showkarma'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showkarma', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showkarma );
 	$lists ['cb_profile'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_cb_profile', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->cb_profile );
 	$lists ['enablepdf'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_enablepdf', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablepdf );
@@ -875,7 +874,7 @@ function showCss($option) {
 	require_once (KUNENA_PATH_LIB . DS . 'kunena.file.class.php');
 
 	$kunena_config = & CKunenaConfig::getInstance ();
-	$file = KUNENA_PATH_TEMPLATE . DS . $kunena_config->template . DS . "kunena.forum.css";
+	$file = KUNENA_PATH_TEMPLATE . DS . $kunena_config->template . DS .'css'. DS . "kunena.forum.css";
 	$permission = CKunenaPath::isWritable ( $file );
 
 	if (! $permission) {

@@ -139,6 +139,11 @@ class CKunenaUserprofile extends JTable
 	**/
 	var $websiteurl = null;
 	/**
+	* User rank
+	* @var int
+	**/
+	var $rank = null;
+	/**
 	* Hide Email address
 	* @var int
 	**/
@@ -151,14 +156,31 @@ class CKunenaUserprofile extends JTable
 	/**
 	* @param userid NULL=current user
 	*/
-	function CKunenaUserprofile($userid=null)
+	function CKunenaUserprofile($userid)
 	{
 		$kunena_db = &JFactory::getDBO();
 		parent::__construct('#__fb_users', 'userid', $kunena_db);
+		if ($userid) $this->load($userid);
+	}
+
+	function &getInstance($userid=null, $reload=false)
+	{
+		return CKunenaUserHelper::getInstance($userid, $reload);
+	}
+}
+
+class CKunenaUserHelper {
+	static $instances = array();
+	function &getInstance($userid=null, $reload=false)
+	{
 		if ($userid === null) {
 			$user =& JFactory::getUser();
 			$userid = $user->get('id');
 		}
-		$this->load($userid);
+		if ($reload || !isset(self::$instances[$userid])) {
+			self::$instances[$userid] = new CKunenaUserprofile($userid);
+		}
+		return self::$instances[$userid];
 	}
+
 }

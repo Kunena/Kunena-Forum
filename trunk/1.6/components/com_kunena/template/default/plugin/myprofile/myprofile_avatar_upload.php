@@ -377,10 +377,8 @@ if ($task == 'default')
                 <td >
                     <?php
                         echo _YOUR_AVATAR . ":</td><td >";
-
-                            $kunena_db->setQuery("SELECT avatar FROM #__fb_users WHERE userid='{$kunena_my->id}'");
-                            $avatar = $kunena_db->loadResult();
-                            check_dberror("Unable to load Kunena Avatar.");
+							$userprofile = CKunenaUserprofile::getInstance($kunena_my->id);
+                            $avatar = $userprofile->avatar;
                             if ($avatar != "")
                             {
 								if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/l_' . $avatar)) {

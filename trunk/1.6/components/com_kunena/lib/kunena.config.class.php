@@ -92,7 +92,7 @@ abstract class CKunenaConfigBase {
 			return false;
 		} else {
 			foreach ( $array as $k => $v ) {
-				$this->$k = $v;
+				if (isset($this->$k)) $this->$k = $v;
 			}
 		}
 
@@ -250,8 +250,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $askemail = 0;
 	var $showemail = 0;
 	var $showuserstats = 1;
-	var $poststats = 1;
-	var $statscolor = 9;
 	var $showkarma = 1;
 	var $useredit = 1;
 	var $useredittime = 0;
@@ -390,7 +388,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	public function &getInstance() {
 		static $instance = NULL;
 		if (! $instance) {
-			$userinfo = new CKunenaUserprofile ( );
+			$userinfo = CKunenaUserprofile::getInstance ( );
 			$instance = new CKunenaConfig ( $userinfo );
 		}
 		return $instance;

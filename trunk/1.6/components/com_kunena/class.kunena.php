@@ -186,11 +186,11 @@ $fb_user_img_template = JRequest::getString('fb_user_img_template', '', 'COOKIE'
 $fb_user_template = strtr($fb_user_template, '\\/', '');
 $fb_user_img_template = strtr($fb_user_template, '\\/', '');
 
-if (JString::strlen($fb_user_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_template))
+if (JString::strlen($fb_user_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_template .DS. 'css'))
 {
     $fb_cur_template = $fb_user_template;
     }
-else if (file_exists(KUNENA_PATH_TEMPLATE .DS. $kunena_config->template))
+else if (file_exists(KUNENA_PATH_TEMPLATE .DS. $kunena_config->template .DS. 'css'))
 {
     $fb_cur_template = $kunena_config->template;
     }
@@ -708,9 +708,9 @@ class CKunenaTools {
             $kunena_app->redirect($return, _KUNENA_BULKMSG_DELETED);
         }
 
-    function isAdmin($user = false) {
-    	if ($user === false) $user = &JFactory::getUser();
-    	if (!is_object($user)) $user = new JUser((int)$user);
+    function isAdmin($user = null) {
+		if ($user === 0) return false;
+    	if (!is_object($user)) $user = JUser::getInstance((int)$user);
 		if($user->usertype == "Super Administrator" || $user->usertype == "Administrator")
 			return true;
 		return false;

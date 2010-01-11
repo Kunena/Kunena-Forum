@@ -93,7 +93,6 @@ if ($func == "showcaptcha") {
 
 // Debug helpers
 include_once (KUNENA_PATH_LIB . DS . "kunena.debug.php");
-
 // get Kunenas configuration params in
 
 require_once (KUNENA_PATH_LIB . DS . "kunena.config.class.php");
@@ -317,29 +316,13 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _GEN_ALL_MARKED );
 		}
 
-		// Now lets get the view type for the forum
-
-		$kunena_db->setQuery ( "SELECT view FROM #__fb_users WHERE userid='{$kunena_my->id}'" );
-		$prefview = $kunena_db->loadResult ();
-		check_dberror ( 'Unable load default view type for user.' );
-
-		// If the prefferred view comes back empty this must be a new user
-
-		// who does not yet have a Kunena profile -> lets create one
-
-		if ($prefview == "") {
-			$prefview = $kunena_config->default_view;
-
-			$kunena_db->setQuery ( "SELECT COUNT(*) FROM #__fb_users WHERE userid='{$kunena_my->id}'" );
-			$userexists = $kunena_db->loadResult ();
-			check_dberror ( 'Unable load default view type for user.' );
-			if (! $userexists) {
-				// there's no profile; set userid and the default view type as preferred view type.
-
-				$kunena_db->setQuery ( "insert into #__fb_users (userid,view,moderator) values ('$kunena_my->id','$prefview','$kunena_is_admin')" );
-				$kunena_db->query ();
-				check_dberror ( 'Unable to create user profile.' );
-			}
+		$userprofile = CKunenaUserprofile::getInstance($kunena_my->id);
+		if ($userprofile->posts === null) {
+			// user does not yet have a Kunena profile -> lets create one
+			$kunena_db->setQuery ( "INSERT INTO #__fb_users (userid) VALUES ('$kunena_my->id')" );
+			$kunena_db->query ();
+			check_dberror ( 'Unable to create user profile.' );
+			$userprofile = CKunenaUserprofile::getInstance($kunena_my->id, true);
 		}
 
 		// Assign previous visit without user offset to variable for templates to decide
@@ -371,16 +354,6 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	$params = array ($kunena_my->id, &$kunena_session->allowed );
 	if (is_object ( $kunenaProfile ))
 		$kunenaProfile->trigger ( 'getAllowedForumsRead', $params );
-
-	// Disabled threaded view option for Kunena
-
-	$view = "flat";
-
-	//Get the max# of posts for any one user
-
-	$kunena_db->setQuery ( "SELECT MAX(posts) FROM #__fb_users" );
-	$this->kunena_max_posts = $kunena_db->loadResult ();
-	check_dberror ( 'Unable load max(posts) for user.' );
 
 	//Get the topics this user has already read this session from #__fb_sessions
 
@@ -475,7 +448,6 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/profilebox/profilebox.php');
 	}
 	//FINISH: PROFILEBOX
-
 
 	switch ($func) {
 		case 'who' :

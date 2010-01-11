@@ -132,7 +132,7 @@ $rows = $kunena_db->loadObjectList();
 	check_dberror("Unable to load messages.");
 
 header ('Content-type: application/xml');
-echo '<?xml version="1.0" encoding="utf-8"?>\n';
+echo '<?xml version="1.0" encoding="utf-8"?>'."\n";
 echo '<!-- generator="Kunena ' . KUNENA_VERSION . '"> -->';
 echo '<rss version="0.91">';
 echo '    <channel>';

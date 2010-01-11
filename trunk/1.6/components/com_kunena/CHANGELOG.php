@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+11-Jan-2010 Matias
+# [#19064] Finalized new bbcodes: fixed preview
+
 11-Jan-2010 fxstein
 + [#19064] Finalized new bbcodes: table, th, tr, td & module (for joomla modules)
 

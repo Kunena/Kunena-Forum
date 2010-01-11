@@ -92,7 +92,7 @@ function fbGetPreview(content, sitemid) {
     
     jQuery('input[name=previewspeicher]').val('preview');
     jQuery.ajax({url:kunenaPath,
-    data : { msgpreview : content, Itemid : sitemid , option: "com_kunena" , func: "getpreview" , no_html: 1},
+    data : { msgpreview : content, Itemid : sitemid , option: "com_kunena" , func: "getpreview"},
     type: "POST",
     beforeSend : function (req){
         jQuery('#previewContainer').show();

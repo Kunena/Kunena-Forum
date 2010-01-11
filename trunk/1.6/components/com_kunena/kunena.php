@@ -248,6 +248,13 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			}
 		}
 
+		// MooTools Libraries 
+		$document->addScript ( KUNENA_DIRECTURL . 'js/mootools-1.2.4-core-yc.js' );
+		$document->addScript ( KUNENA_DIRECTURL . 'js/mootools-1.2.4.2-more.js' );
+
+		// New Kunena JS for default template
+		$document->addScript ( KUNENA_DIRECTURL . 'template/default/js/default.js' );		
+	
 		if (file_exists ( KUNENA_JTEMPLATEPATH . '/css/kunena.forum.css' )) {
 			$document->addStyleSheet ( KUNENA_JTEMPLATEURL . '/css/kunena.forum.css' );
 		} else {

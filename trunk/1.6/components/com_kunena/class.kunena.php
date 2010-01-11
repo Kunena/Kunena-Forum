@@ -273,7 +273,7 @@ $document->addScript ( KUNENA_DIRECTURL . 'js/mootools-1.2.4-core-yc.js' );
 $document->addScript ( KUNENA_DIRECTURL . 'js/mootools-1.2.4.2-more.js' );
 
 // New Kunena JS for default template
-$document->addScript ( KUNENA_DIRECTURL . 'template/default/js/kunena.js' );
+$document->addScript ( KUNENA_DIRECTURL . 'template/default/js/default.js' );
 
 
 if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'js' .DS. 'jquery-1.3.2.min.js'))

@@ -2259,26 +2259,53 @@ div.clr { clear:both; }
 
 /* Tabs
 ----------------------------------*/
-/* overrides for ui-tab styles */
-ul.ui-tabs-nav { padding:0 0 0 8px; }
-.ui-tabs-nav li { margin:5px 5px 0 0; }
 
-.ui-tabs-nav li a:link,
-.ui-tabs-nav li a:visited,
-.ui-tabs-nav li a:hover,
-.ui-tabs-nav li a:active { font-size:14px; padding:4px 1.2em 3px; color:#fff; }
+#kprofile-tabs {
+	width: 100%;
+}
 
-.ui-tabs-nav li.ui-tabs-selected a:link,
-.ui-tabs-nav li.ui-tabs-selected a:visited,
-.ui-tabs-nav li.ui-tabs-selected a:hover,
-.ui-tabs-nav li.ui-tabs-selected a:active { color:#e6820E; }
+dl.tabs {
+	float: left;
+	margin: 10px 0 -1px 0;
+	z-index: 50;
+}
 
-.ui-tabs-panel { padding:20px 9px; font-size:12px; line-height:1.4; color:#000; }
+dl.tabs dt {
+	float: left;
+	padding: 4px 10px;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+	margin-left: 3px;
+	background: #f0f0f0;
+	color: #666;
+}
 
-.ui-widget-content a:link,
-.ui-widget-content a:visited { color:#1b75bb; text-decoration:none; }
-.ui-widget-content a:hover,
-.ui-widget-content a:active { color:#0b559b; }
+dl.tabs dt.open {
+	background: #F9F9F9;
+	border-bottom: 1px solid #F9F9F9;
+	z-index: 100;
+	color: #000;
+}
+
+div.current {
+	clear: both;
+	border: 1px solid #ccc;
+	padding: 10px 10px;
+}
+
+div.current dd {
+	padding: 0;
+	margin: 0;
+}
+
+div#tab-1 {
+	
+}
+
+
+
+
 
 
 	

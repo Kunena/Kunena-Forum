@@ -34,6 +34,7 @@ $kunena_my = &JFactory::getUser ();
 
 // Func Check
 
+
 $funclatest = false;
 $funcmylatest = false;
 $funcnoreplies = false;
@@ -113,11 +114,10 @@ if (count ( $this->messages [0] ) > 0) {
 	echo (CKunenaTools::isModerator ( $kunena_my->id, $catid ) ? "6" : "5");
 	?>">
 
-	<?php
+			<?php
 	if ($funclatest || $funcmylatest || $funcnoreplies) {
 		?>
-		<div class="fb_title_cover fbm"><span
-				class="fb_title fbl"><?php
+			<div class="fb_title_cover fbm"><span class="fb_title fbl"><?php
 
 		switch (JString::strtolower ( $func )) {
 			case 'mylatest' :
@@ -133,11 +133,10 @@ if (count ( $this->messages [0] ) > 0) {
 				break;
 		}
 		?></span></div>
-	<?php
+			<?php
 	} else {
 		?>
-			<div class="fb_title_cover fbm"><span
-				class="fb_title fbl"><?php
+			<div class="fb_title_cover fbm"><span class="fb_title fbl"><?php
 		echo _KUNENA_THREADS_IN_FORUM;
 		?>:
 			<?php
@@ -153,7 +152,7 @@ if (count ( $this->messages [0] ) > 0) {
 		//(JJ) FINISH: RECENT POSTS
 		?>
 			<!-- /FORUM TOOLS --></th>
-	<?php
+			<?php
 	}
 	?>
 		</tr>
@@ -161,60 +160,6 @@ if (count ( $this->messages [0] ) > 0) {
 
 	</thead>
 	<tbody>
-
-		<tr class="fb_sth fbs ">
-			<th
-				class="th-0 <?php
-	echo KUNENA_BOARD_CLASS;
-	?>sectiontableheader"
-				width="5%" align="center"><?php
-	echo _GEN_REPLIES;
-	?></th>
-
-			<th
-				class="th-2 <?php
-	echo KUNENA_BOARD_CLASS;
-	?>sectiontableheader"
-				width="1%">&nbsp;</th>
-			<th
-				class="th-3 <?php
-	echo KUNENA_BOARD_CLASS;
-	?>sectiontableheader"
-				align="left"><?php
-	echo _GEN_TOPICS;
-	?></th>
-			<th
-				class="th-4 <?php
-	echo KUNENA_BOARD_CLASS;
-	?>sectiontableheader"
-				align="center" width="5%">&nbsp;<?php
-	echo _GEN_HITS;
-	?></th>
-
-			<th
-				class="th-6 <?php
-	echo KUNENA_BOARD_CLASS;
-	?>sectiontableheader"
-				width="27.5%" align="left"><?php
-	echo _GEN_LAST_POST;
-	?></th>
-
-			<?php
-	if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
-		?>
-			<th
-				class="th-7 <?php
-		echo KUNENA_BOARD_CLASS;
-		?>sectiontableheader"
-				width="1%" align="center"></th>
-			<?php
-	}
-	?>
-		</tr>
-
-
-
-
 		<?php
 	$k = 0;
 	$st_c = 0;
@@ -224,31 +169,6 @@ if (count ( $this->messages [0] ) > 0) {
 		$k = 1 - $k; //used for alternating colours
 		$leaf->name = kunena_htmlspecialchars ( stripslashes ( $leaf->name ) );
 		$leaf->email = kunena_htmlspecialchars ( stripslashes ( $leaf->email ) );
-		?>
-
-		<?php
-		if ($st_c == 0 && $st_occured != 1 && $st_count != 0 && $funclatest == 0) {
-			?>
-
-		<tr>
-			<td class="<?php
-			echo KUNENA_BOARD_CLASS;
-			?>contentheading fbm"
-				id="fb_spot"
-				colspan="<?php
-			echo (CKunenaTools::isModerator ( $kunena_my->id, $catid ) ? "6" : "5");
-			?>"
-				align="left"><span><?php
-			if (! $funcmylatest) {
-				echo _KUNENA_SPOTS;
-			} else {
-				echo _USER_FAVORITES;
-			}
-			?></span></td>
-		</tr>
-
-		<?php
-		}
 
 		if ($st_c == $st_count && $st_occured != 1 && $st_count != 0 && $funclatest == 0) {
 			$st_occured = 1;
@@ -256,20 +176,11 @@ if (count ( $this->messages [0] ) > 0) {
 			?>
 
 		<tr>
-			<td class="<?php
-			echo KUNENA_BOARD_CLASS;
-			?>contentheading fbm"
-				id="fb_fspot"
+			<td class="fb_contenttablespacer"
 				colspan="<?php
 			echo (CKunenaTools::isModerator ( $kunena_my->id, $catid ) ? "6" : "5");
-			?>"
-				align="left"><span><?php
-			if (! $funcmylatest) {
-				echo _KUNENA_FORUM;
-			} else {
-				echo _KUNENA_MY_DISCUSSIONS_DETAIL;
-			}
-			?></span></td>
+			?>">&nbsp;
+			</td>
 		</tr>
 
 		<?php
@@ -490,8 +401,7 @@ if (count ( $this->messages [0] ) > 0) {
 		?>
 			<?php
 		echo _KUNENA_AGO;
-		?>
-			</span> <!-- /Latest Post Date --></div>
+		?> </span> <!-- /Latest Post Date --></div>
 
 			</td>
 

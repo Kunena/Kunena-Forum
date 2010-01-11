@@ -106,6 +106,23 @@ a:focus {
 	line-height: 21px;
 }
 
+#Kunena span.cat_topics,
+#Kunena span.cat_replies {
+	color:#999999;
+	text-align:center;
+	font-size:1em;
+}
+
+#Kunena span.cat_topics_number,
+#Kunena span.cat_replies_number {
+	display:block;
+	font-size: 1.5em;
+	line-height:21px;
+	margin:5px 0;
+	color: #999;
+}
+
+
 #Kunena .topic_latest_post{
 	font-size: 1.1em;
 }
@@ -936,6 +953,13 @@ span.newchar {
 #Kunena .fb_contentheading span {
 	background: url("../images/spoticon.gif") no-repeat left center;
 	padding-left: 16px;
+}
+
+#Kunena .fb_contenttablespacer {
+	border-left: 0px;
+	border-right: 0px;
+	border-bottom: 1px solid #BFC3C6;
+	line-height:0.5em;
 }
 
 #Kunena .fb_sectiontableentry1_stickymsg {

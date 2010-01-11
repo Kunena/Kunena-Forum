@@ -180,152 +180,155 @@ if ($kunena_config->fb_profile == 'cb') {
 			</td>
 
 			<td class="fb-msgview-left">
-			<div class="fb-msgview-l-cover"><?php
-			if ($profileHtml) {
-				echo $profileHtml;
-			} else {
-				?>
-			<span class="view-username"> <?php
-				if ($userinfo->userid) {
-					echo CKunenaLink::GetProfileLink ( $kunena_config, $this->kunena_message->userid, $msg_html->username );
-				} else {
-					echo $msg_html->username;
-				}
-				?>
-			</span> <?php
-				if ($kunena_config->userlist_usertype)
-					echo '<span class = "msgusertype">(' . $msg_html->usertype . ')</span>';
-				?>
-			<br />
-			<?php
-				if ($this->kunena_message->userid > 0) {
-					echo CKunenaLink::GetProfileLink ( $kunena_config, $this->kunena_message->userid, $msg_html->avatar );
-				} else {
-					echo $msg_html->avatar;
-				}
-				?>
-
-			<?php
-				if (isset ( $msg_html->personal )) {
+				<div class="fb-msgview-l-cover">
+					<?php 
+					if ($profileHtml) {
+						echo $profileHtml;
+					} else {
 					?>
-			<div class="viewcover"><?php
-					echo $msg_html->personal;
+					<span class="view-username"> 
+						<?php
+						if ($userinfo->userid) {
+							echo CKunenaLink::GetProfileLink ( $kunena_config, $this->kunena_message->userid, $msg_html->username );
+						} else {
+							echo $msg_html->username;
+						}
+						?>
+					</span> 
+					<?php
+						if ($kunena_config->userlist_usertype)
+							echo '<span class = "msgusertype">(' . $msg_html->usertype . ')</span>';
+						?>
+					<br />
+					<?php
+						if ($this->kunena_message->userid > 0) {
+							echo CKunenaLink::GetProfileLink ( $kunena_config, $this->kunena_message->userid, $msg_html->avatar );
+						} else {
+							echo $msg_html->avatar;
+						}
 					?>
-			</div>
-			<?php
+	
+					
+					<div class="viewcover"><?php
+						if (isset ( $msg_html->userrank )) {
+							echo $msg_html->userrank;
+						}
+						?>
+					</div>
+	
+					<div class="viewcover"><?php
+						if (isset ( $msg_html->userrankimg )) {
+							echo $msg_html->userrankimg;
+						}
+						?>
+					</div>
+	
+				<?php
+					if (isset ( $msg_html->posts )) {
+						echo $msg_html->posts;
+					}
+					?>
+	
+			<!--  Disabled bar graph until we decide if it goes away. -->
+				<?php
+				//	if (isset ( $msg_html->myGraph )) {
+				//		$msg_html->myGraph->BarGraphHoriz ();
+				//	}
+					?>
+	
+				<?php
+				//	if (isset ( $msg_html->myGraphAUP )) {
+				//		$msg_html->myGraphAUP->BarGraphHoriz ();
+				//	}
+					?>
+				<div class="onlineimg">
+				<?php
+					if (isset ( $msg_html->online )) {
+						echo $msg_html->online;
+					}
+					?>
+				</div>
+				<?php
+					if (isset ( $msg_html->pms )) {
+						echo $msg_html->pms;
+					}
+					?>
+				<!--  Disabled profile because name and avatar both link to profile  -->
+				<?php
+				//	if (isset ( $msg_html->profile )) {
+				//		echo $msg_html->profile;
+				//	}
+					?>
+				<div class="smallicons">
+				<?php
+					if (isset ( $msg_html->icq )) {
+						echo $msg_html->icq;
+					}
+					?>
+				<?php
+					if (isset ( $msg_html->gender )) {
+						echo $msg_html->gender;
+					}
+					?>
+				<?php
+					if (isset ( $msg_html->skype )) {
+						echo $msg_html->skype;
+					}
+					?>
+				<?php
+					if (isset ( $msg_html->twitter )) {
+						echo $msg_html->twitter;
+					}
+					?>
+	            <?php
+					if (isset ( $msg_html->facebook )) {
+						echo $msg_html->facebook;
+					}
+					?>
+				<?php
+					if (isset ( $msg_html->website )) {
+						echo $msg_html->website;
+					}
+					?>
+				<?php
+					if (isset ( $msg_html->gtalk )) {
+						echo $msg_html->gtalk;
+					}
+					?>
+				<?php
+					if (isset ( $msg_html->yim )) {
+						echo $msg_html->yim;
+					}
+					?>
+				<?php
+					if (isset ( $msg_html->msn )) {
+						echo $msg_html->msn;
+					}
+					?>
+				<?php
+					if (isset ( $msg_html->aim )) {
+						echo $msg_html->aim;
+					}
+					?>
+				<?php
+					if (isset ( $msg_html->location )) {
+						echo $msg_html->location;
+					}
+					?>
+				<?php
+					if (isset ( $msg_html->birthdate )) {
+						echo $msg_html->birthdate;
+					}
 				}
 				?>
-			<div class="viewcover"><?php
-				if (isset ( $msg_html->userrank )) {
-					echo $msg_html->userrank;
-				}
-				?>
-			</div>
-
-			<div class="viewcover"><?php
-				if (isset ( $msg_html->userrankimg )) {
-					echo $msg_html->userrankimg;
-				}
-				?>
-			</div>
-
-			<?php
-				if (isset ( $msg_html->posts )) {
-					echo $msg_html->posts;
-				}
-				?>
-
-			<?php
-				if (isset ( $msg_html->myGraph )) {
-					$msg_html->myGraph->BarGraphHoriz ();
-				}
-				?>
-
-			<?php
-				if (isset ( $msg_html->myGraphAUP )) {
-					$msg_html->myGraphAUP->BarGraphHoriz ();
-				}
-				?>
-
-			<?php
-				if (isset ( $msg_html->online )) {
-					echo $msg_html->online;
-				}
-				?>
-
-			<?php
-				if (isset ( $msg_html->pms )) {
-					echo $msg_html->pms;
-				}
-				?>
-
-			<?php
-				if (isset ( $msg_html->profile )) {
-					echo $msg_html->profile;
-				}
-				?>
-			<br />
-			<?php
-				if (isset ( $msg_html->icq )) {
-					echo $msg_html->icq;
-				}
-				?>
-			<?php
-				if (isset ( $msg_html->gender )) {
-					echo $msg_html->gender;
-				}
-				?>
-			<?php
-				if (isset ( $msg_html->skype )) {
-					echo $msg_html->skype;
-				}
-				?>
-			<?php
-				if (isset ( $msg_html->twitter )) {
-					echo $msg_html->twitter;
-				}
-				?>
-            <?php
-				if (isset ( $msg_html->facebook )) {
-					echo $msg_html->facebook;
-				}
-				?>
-			<?php
-				if (isset ( $msg_html->website )) {
-					echo $msg_html->website;
-				}
-				?>
-			<?php
-				if (isset ( $msg_html->gtalk )) {
-					echo $msg_html->gtalk;
-				}
-				?>
-			<?php
-				if (isset ( $msg_html->yim )) {
-					echo $msg_html->yim;
-				}
-				?>
-			<?php
-				if (isset ( $msg_html->msn )) {
-					echo $msg_html->msn;
-				}
-				?>
-			<?php
-				if (isset ( $msg_html->aim )) {
-					echo $msg_html->aim;
-				}
-				?>
-			<?php
-				if (isset ( $msg_html->location )) {
-					echo $msg_html->location;
-				}
-				?>
-			<?php
-				if (isset ( $msg_html->birthdate )) {
-					echo $msg_html->birthdate;
-				}
-			}
-			?>
+				</div>
+					<?php
+						if (isset ( $msg_html->personal )) {
+						?>
+						<div class="viewcover"><?php echo $msg_html->personal;?></div>
+					<?php
+						}
+					?>
 
 			</div>
 			</td>

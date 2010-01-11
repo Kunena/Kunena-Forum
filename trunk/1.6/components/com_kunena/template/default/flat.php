@@ -490,7 +490,6 @@ if (count ( $this->messages [0] ) > 0) {
 		?>
 			<?php
 		echo _KUNENA_AGO;
-		echo ' ' . CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $leaf->catid, $leaf->thread, 1, $kunena_config->messages_per_page, isset ( $kunena_icons ['latestpost'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '"/>' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"  alt="' . _SHOW_LAST . '"/>', $last_reply [$leaf->id]->id );
 		?>
 			</span> <!-- /Latest Post Date --></div>
 

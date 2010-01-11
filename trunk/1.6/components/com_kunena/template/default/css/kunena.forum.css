@@ -1010,7 +1010,8 @@ span.newchar {
 }
 
 #Kunena span.view-username {
-	
+	line-height: 2em;
+	font-size: 1.1em;
 }
 
 #Kunena span.view-username a:link,
@@ -1045,11 +1046,19 @@ span.newchar {
 }
 
 #Kunena div.viewcover {
-	border: 1px solid #BFC3C6;
-	background: #DDDDDD;
 	color: #333333;
 	text-align: center;
 	margin: 2px 5px;
+}
+#Kunena div.smallicons {
+	color: #333333;
+	text-align: center;
+	margin: 20px;
+}
+
+#Kunena div.onlineimg {
+	text-align: center;
+	margin: 10px;
 }
 
 #Kunena span.msgtitle,

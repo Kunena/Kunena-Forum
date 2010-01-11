@@ -39,6 +39,7 @@ Kunena 1.6.0-DEV
 - [#19293] Remove deprecated configuration options: poststats, statscolor
 # [#19251] Reduce the number of SQL calls in various views
 # [#19251] Reduce the number of SQL calls in various views (router in showcat, latestx)
+# [#19288] Fix regression: New topic without category not working
 
 11-Jan-2010 fxstein
 + [#19064] Finalized new bbcodes: table, th, tr, td & module (for joomla modules)

@@ -28,7 +28,7 @@
 }
 
 a:focus {outline: none;}
-.clr { clear:both; }
+.clr { clear:both; height:1px; overflow:hidden;}
 .fltlft {float:left;}
 .fltrt {float:right; }
 .right {text-align:right;}
@@ -2056,7 +2056,7 @@ MY PROFILE
 /*
 NEW PROFILE
 -------------------------------------------------------------------- */
-div#kprofile-container { border: 1px solid #cccccc; margin: 10px 0 10px 0; padding: 10px;min-height: 500px;}
+div#kprofile-container { border: 1px solid #cccccc; margin: 10px 0 10px 0; padding: 10px 10px 30px 10px; overflow:auto; height: 1%;}
 
 div#kprofile-leftcol { width: 200px; font-size: 11px; float:left; margin-right: 10px;}
 
@@ -2217,6 +2217,17 @@ div.kprofile-rightcol2 ul li span.website {
 	margin-right: 5px;
 }
 
+dd.kprofile-modtools h4 {
+	margin-bottom: 5px;
+	margin-left: 5px;
+}
+dd.kprofile-modtools ul li span {
+	margin-right: 15px;
+}
+dd.kprofile-modtools ul li {
+	padding-bottom: 5px;
+}
+
 
 /* Tabs
 ----------------------------------*/
@@ -2260,6 +2271,37 @@ div.current dd {
 	margin: 0;
 }
 
+dt.kprofile-modbtn {
+	background-color:#b1b1b1 !important;
+	color: #FFF !important;
+}
+
+dd.kprofile-modtools ul {
+	margin:0;
+	padding:0;
+	margin-left: 5px;
+}
+
+dd.kprofile-modtools ul li {
+	list-style-type:none;
+}
+
+dd.kprofile-modtools .kcheckbox {
+	float:left;
+	clear:left;
+	
+}
+
+dd.kprofile-modtools label {
+	float:left;
+	clear:right;
+	margin: 3px 10px 10px 5px;
+}
+input.kbutton {
+	margin: 10px 0 0 5px;
+	float:left;
+	clear:left;
+}
 
 	
 /* SLIDERS

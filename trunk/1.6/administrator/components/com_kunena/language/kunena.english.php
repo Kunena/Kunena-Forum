@@ -26,9 +26,23 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.6.0
 
+
+// Moderate Tools
+define('_KUNENA_MODERATE_USERIPS', 'User IPs');
+define('_KUNENA_MODERATE_DELETE_USER', 'Delete this User');
+define('_KUNENA_MODERATE_BANIP', 'Ban IP');
+define('_KUNENA_MODERATE_BAN_USER', 'Ban User');
+define('_KUNENA_MODERATE_BANEMAIL', 'Ban email address');
+define('_KUNENA_MODERATE_BANUSERNAME', 'Ban username');
+define('_KUNENA_MODERATE_DELETE_ALL_POSTS', 'Delete all posts');
+define('_KUNENA_MODERATE_OTHER_USERS_WITH_IP', 'Other users with this IP');
+define('_KUNENA_MODERATE_THIS_USER', 'Moderate this User');
+define('_KUNENA_MODERATE_ALLIPS', 'All IPs');
+define('_KUNENA_MODERATE_SELECT_IP', 'Select IP...');
+
 //Personnal text maxlength
-define('_COM_A_PESONNALTEXT', 'Max. Personnal text Length');
-define('_COM_A_PESONNALTEXT_DESC', 'Maximum number of characters allowed for the personnal text in user profile.');
+define('_COM_A_PESONNALTEXT', 'Max. Personal text Length');
+define('_COM_A_PESONNALTEXT_DESC', 'Maximum number of characters allowed for the personal text in user profile.');
 
 // Posting
 define('_KUNENA_POST_NEW_TOPIC', 'New Topic');

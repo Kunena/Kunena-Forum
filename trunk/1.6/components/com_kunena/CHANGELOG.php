@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+12-Jan-2010 severdia
++ [#19380] Add moderator tab to Profile page, new language strings
+
 12-Jan-2010 Xillibit
 # [#19288] Fix regression, waring in zend in myprofile_summary.php
 ^# [#19358] Apply some changes on the polls, allow the user to change her vote

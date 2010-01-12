@@ -71,7 +71,7 @@ if ($signature)
 		<div id="kprofile-rightcol">
 			<div id="kprofile-rightcoltop">
 				<div class="kprofile-rightcol2">
-
+					
 					<div class="iconrow">
 						<a href="<?php echo 'http://twitter.com/'.kunena_htmlspecialchars(stripslashes($userinfo->TWITTER)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_TWITTER; ?>"><span class="twitter"></span></a>
 						<a href="<?php echo 'http://www.facebook.com/'.kunena_htmlspecialchars(stripslashes($userinfo->FACEBOOK)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_FACEBOOK; ?>"><span class="facebook"></span></a>
@@ -128,28 +128,52 @@ if ($signature)
 				<dl class="tabs">
 					<dt>Posts</dt>
 					<dd>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+						<p>Add post listing here.</p>
 					</dd>
 					<dt>Subscriptions</dt>
 					<dd>
-						<p>Phasellus mattis tincidunt nibh. Cras orci urna, blandit id, pretium vel, aliquet ornare, felis. Maecenas scelerisque sem non nisl. Fusce sed lorem in enim dictum bibendum.</p>
+						<p>Add subscription listing here.</p>
 					</dd>
 					<dt>Favorites</dt>
 					<dd>
-						<p>Nam dui erat, auctor a, dignissim quis, sollicitudin eu, felis. Pellentesque nisi urna, interdum eget, sagittis et, consequat vestibulum, lacus. Mauris porttitor ullamcorper augue.</p>
+						<p>Add favorites listing here.</p>
 					</dd>
+
 					<!-- Only visible to moderators and admins -->
-					<dt>Moderate this User</dt>
-					<dd>
-						<p><a href="#">Ban this user</a></p>
+					<dt class="kprofile-modbtn"><?php echo _KUNENA_MODERATE_THIS_USER; ?></dt>
+					<dd class="kprofile-modtools">
+						<h4><?php echo _KUNENA_MODERATE_USERIPS; ?>:</h4>
+						<ul>
+							<li><span><a href="http://ws.arin.net/whois/?queryinput=147.22.33.88" target="_blank">147.22.33.88</a></span> (<?php echo _KUNENA_MODERATE_OTHER_USERS_WITH_IP; ?>: <a href="#">marks</a>, <a href="#">killboy</a>, <a href="#">fxstein</a>)</li>
+							<li><span><a href="http://ws.arin.net/whois/?queryinput=144.23.33.168" target="_blank">144.23.33.168</a></span> (<?php echo _KUNENA_MODERATE_OTHER_USERS_WITH_IP; ?>: None)</li>
+						</ul>
+						<h4><?php echo _KUNENA_MODERATE_DELETE_USER; ?>:</h4>
+						<form id="kform-ban" name="kformban" action="#" method="">
+						
+							<input type="checkbox" id="ban-ip" name="banip" value="banip" class="kcheckbox" >
+							<label for="ban-ip"><span onClick="document.kformban.banip.checked=(! document.kformban.banip.checked);"><?php echo _KUNENA_MODERATE_BANIP; ?></span></label>
+							<select>
+								<option value=""><?php echo _KUNENA_MODERATE_SELECT_IP; ?></option>
+								<option value="147.22.33.88">147.22.33.88</option>
+								<option value="144.23.33.168">144.23.33.168</option>
+								<option value="allips"><?php echo _KUNENA_MODERATE_ALLIPS; ?></option>
+							</select>
+							<input type="checkbox" id="ban-email" name="banemail" value="banemail" class="kcheckbox" >
+							<label for="ban-email"><span onClick="document.kformban.banemail.checked=(! document.kformban.banemail.checked);"><?php echo _KUNENA_MODERATE_BANEMAIL; ?></span></label>
+							<input type="checkbox" id="banu-sername" name="banusername" value="banusername" class="kcheckbox" >
+							<label for="ban-username"><span onClick="document.kformban.banusername.checked=(! document.kformban.banusername.checked);"><?php echo _KUNENA_MODERATE_BANUSERNAME; ?></span></label>
+							<input type="checkbox" id="ban-delposts" name="bandelposts" value="bandelposts" class="kcheckbox" >
+							<label for="ban-delposts"><span onClick="document.kformban.bandelposts.checked=(! document.kformban.bandelposts.checked);"><?php echo _KUNENA_MODERATE_DELETE_ALL_POSTS; ?></span></label>
+							<input class="kbutton fb_button fbs" type="submit" value="<?php echo _KUNENA_MODERATE_DELETE_USER; ?>" name="Submit"/>
+						</form>
+						<div class="clr"></div>
 					</dd>
 				</dl>
 			</div>
-
-
 		</div>
 	</div>
 
+</div>
 
 </div>
 </div>

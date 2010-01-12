@@ -30,6 +30,7 @@ global $imageLocation, $fileLocation, $board_title;
 
 $kunena_my = &JFactory::getUser ();
 $kunena_db = &JFactory::getDBO ();
+$kunena_config =& CKunenaConfig::getInstance();
 
 $subject = JRequest::getVar ( 'subject', '', 'POST', 'string', JREQUEST_ALLOWRAW );
 $message = JRequest::getVar ( 'message', '', 'POST', 'string', JREQUEST_ALLOWRAW );
@@ -90,7 +91,7 @@ if ($id || $parentid) {
 // Check user access rights
 $kunena_is_admin = CKunenaTools::isAdmin ();
 $allow_forum = ($kunena_session->allowed != '') ? explode ( ',', $kunena_session->allowed ) : array ();
-if ((empty($msg_cat->catparent) && $do != 'reply') && (! in_array ( $catid, $allow_forum ) && ! $kunena_is_admin)) {
+if (($kunena_my->id==0 && !$kunena_config->pubwrite) || (empty($msg_cat->catparent) && $do != 'reply') && (! in_array ( $catid, $allow_forum ) && ! $kunena_is_admin)) {
 	echo _KUNENA_NO_ACCESS;
 	return;
 }

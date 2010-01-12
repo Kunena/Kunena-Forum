@@ -38,11 +38,12 @@ Kunena 1.6.0-DEV
 ^# [#19358] Apply some changes on the polls, allow the user to change her vote
 # [#19358] Apply some changes on the polls, regression undefined catid in poll.php
 
-11-Jan-2010 Matias
+12-Jan-2010 Matias
 # [#19251] Reduce the number of SQL calls when showing frontstats
 ^ [#19295] Clean up: remove unused code (statsbar) and images
 ^ [#19295] Clean up: replace module positions by CKunenaTools::showModulePosition()
 # [#19313] Minor fix for SVN installer: always run queries
+# [#19288] Fix regression: Writing new topic possible without permissions
 
 11-Jan-2010 severdia
 # [#19380] Add tabs & code to JS file, profile page

@@ -29,6 +29,11 @@ $document->setTitle(_STAT_FORUMSTATS . ' - ' . stripslashes($kunena_config->boar
 
 if($kunena_config->showstats):
 
+$this->loadGenStats();
+$this->loadUserStats();
+$this->loadTopicStats();
+$this->loadPollStats();
+
 $forumurl = 'index.php?option=com_kunena';
 
 if ($kunena_config->fb_profile == "jomsocial")
@@ -104,13 +109,8 @@ $k = 0;
 ?>
 
 
-
-
-
-
-
 <!-- B: Pop Subject -->
-<?php if($kunena_config->showpopsubjectstats): ?>
+<?php if($this->showpopsubjectstats): ?>
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
@@ -167,7 +167,7 @@ $k = 0;
 
 
 <!-- B: Pop Poll -->
-<?php if($kunena_config->showpoppollstats): ?>
+<?php if($this->showpoppollstats): ?>
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
@@ -229,10 +229,8 @@ $k = 0;
 <!-- F: Pop Polls -->
 
 
-
-
 <!-- B: User Messages -->
-<?php if($kunena_config->showpopuserstats): ?>
+<?php if($this->showpopuserstats): ?>
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
@@ -293,13 +291,8 @@ $k = 0;
 <!-- F: User Messages -->
 
 
-
-
-
-
-
 <!-- B: Pop User  -->
-<?php if($kunena_config->showpopuserstats): ?>
+<?php if($this->showpopuserstats): ?>
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
@@ -356,12 +349,6 @@ $barwidth = round(($topprofile->hits * 100) / $this->topprofilehits);
 <!-- F: User User -->
 
 
-
-
-
-
-
-
 <?php
 //(FB) BEGIN: WHOISONLINE
 if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php')) {
@@ -374,5 +361,3 @@ else {
 //(FB) FINISH: WHOISONLINE
 
 endif;
-
-?>

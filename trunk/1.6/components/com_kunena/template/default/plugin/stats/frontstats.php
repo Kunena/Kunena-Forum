@@ -39,11 +39,11 @@ else
     $userlist = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userlist');
 }
 
-if ($kunena_config->showstats > 0)
+if ($this->showgenstats > 0)
 {
-    if ($kunena_config->showgenstats > 0)
-    {
-?>
+	$this->loadGenStats();
+
+    	?>
         <!-- BEGIN: GENERAL STATS -->
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
@@ -70,7 +70,7 @@ if ($kunena_config->showstats > 0)
                     		<li>&nbsp;</li>
                     		<li><a href="<?php echo $userlist;?>"><?php echo _STAT_USERLIST; ?> &raquo;</a></li>
                     		<li><?php if ($kunena_config->showpopuserstats || $kunena_config->showpopsubjectstats) echo '<a href = "'.$statslink.'">'. _STAT_MORE_ABOUT_STATS.' &raquo;</a>'; ?></li>
-                    	</ul>                    
+                    	</ul>
                     	<ul id="statslistleft" class="fltlft">
                     		<li><?php echo _STAT_TOTAL_MESSAGES; ?>: <strong> <?php echo $this->totalmsgs; ?></strong> | <?php echo _STAT_TOTAL_SUBJECTS; ?>: <strong><?php echo $this->totaltitles; ?></strong></li>
                     		<li><?php echo _STAT_TOTAL_SECTIONS; ?>: <strong><?php echo $this->totalcats; ?></strong> | <?php echo _STAT_TOTAL_CATEGORIES; ?>: <strong><?php echo $this->totalsections; ?></strong></li>
@@ -89,9 +89,5 @@ if ($kunena_config->showstats > 0)
 <!-- FINISH: GENERAL STATS -->
 
 <?php
-    }
-?>
-
-<?php
 }
-?>
+

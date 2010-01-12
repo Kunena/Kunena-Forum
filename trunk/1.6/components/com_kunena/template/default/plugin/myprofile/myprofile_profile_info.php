@@ -49,7 +49,7 @@ $kunena_config =& CKunenaConfig::getInstance();
                             <tr>
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_PERSONALTEXT; ?> </b></td>
 
-                                <td><input name="personalText" size="50" maxlength="50" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->personalText))?>" type="text"/></td>
+                                <td><input name="personalText" size="50" maxlength="<?php $kunena_config->maxpersotext; ?>" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->personalText))?>" type="text"/></td>
                             </tr>
                             <tr>
                                 <td width="40%">

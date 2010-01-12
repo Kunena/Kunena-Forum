@@ -37,6 +37,7 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression, waring in zend in myprofile_summary.php
 ^# [#19358] Apply some changes on the polls, allow the user to change her vote
 # [#19358] Apply some changes on the polls, regression undefined catid in poll.php
+^ [#19377] Allow the maxlength on the personnal text to be modified easily
 
 12-Jan-2010 Matias
 # [#19251] Reduce the number of SQL calls when showing frontstats

@@ -374,6 +374,8 @@ class CKunenaConfig extends CKunenaConfigBase {
     var $polltimebtvotes = '00:15:00';
     var $pollnbvotesbyuser = 100;
     var $pollresultsuserslist = 1;
+    //New for 1.6 -> Max length for personnal text
+    var $maxpersotext = 50;
 
 	public function __construct($userinfo = null) {
 		parent::__construct ();

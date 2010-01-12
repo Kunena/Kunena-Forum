@@ -26,6 +26,10 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.6.0
 
+//Personnal text maxlength
+define('_COM_A_PESONNALTEXT', 'Max. Personnal text Length');
+define('_COM_A_PESONNALTEXT_DESC', 'Maximum number of characters allowed for the personnal text in user profile.');
+
 // Posting
 define('_KUNENA_POST_NEW_TOPIC', 'New Topic');
 define('_KUNENA_POST_REPLY_TOPIC', 'Reply Topic:');

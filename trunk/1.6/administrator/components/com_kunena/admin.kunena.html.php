@@ -1675,6 +1675,19 @@ td.fbtdtitle {
 		echo _COM_A_SIGNATURE_DESC?>
 		</td>
 	</tr>
+	<tr align="center" valign="middle">
+		<td align="left" valign="top"><?php
+		echo _COM_A_PESONNALTEXT?></td>
+
+		<td align="left" valign="top"><input type="text" name="cfg_maxpersotext"
+			value="<?php
+		echo $kunena_config->maxpersotext;
+		?>" /></td>
+
+		<td align="left" valign="top"><?php
+		echo _COM_A_PESONNALTEXT_DESC?>
+		</td>
+	</tr>
 </table>
 </fieldset>
 <div class="fbfuncsubtitle"><?php

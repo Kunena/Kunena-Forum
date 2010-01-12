@@ -57,7 +57,7 @@ if ($kunena_config->showstats > 0)
                         <div class = "fb_title_cover fbm">
                             <a class="fb_title fbl" href = "<?php echo $statslink;?>"><?php echo stripslashes($kunena_config->board_title); ?> <?php echo _STAT_FORUMSTATS; ?></a>
                         </div>
-                        <img id = "BoxSwitch_frontstats__frontstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+                        <!--  <img id = "BoxSwitch_frontstats__frontstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/> -->
                     </th>
                 </tr>
             </thead>
@@ -65,7 +65,7 @@ if ($kunena_config->showstats > 0)
             <tbody id="frontstats_tbody">
                 <tr class="<?php echo KUNENA_BOARD_CLASS ;?>sectiontableentry1">
                     <td class="td-1 fbm">
-                    	<ul id="statslistright" class="fltrt">
+                    	<ul id="statslistright" class="fltrt right">
                     		<li><?php echo _STAT_TOTAL_USERS; ?>: <strong><a href="<?php echo $userlist;?>"><?php echo $this->totalmembers; ?></a></strong> | <?php echo _STAT_LATEST_MEMBERS; ?>:<strong> <?php echo CKunenaLink::GetProfileLink($kunena_config, $this->lastestmemberid, $this->lastestmember, $rel='nofollow'); ?></strong></li>
                     		<li>&nbsp;</li>
                     		<li><a href="<?php echo $userlist;?>"><?php echo _STAT_USERLIST; ?> &raquo;</a></li>

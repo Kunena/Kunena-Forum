@@ -99,7 +99,7 @@ define('_KUNENA_MENU_CREATED', 'The Kunena navigation menu and main forum link h
 define('_KUNENA_MENU_TITLE', 'Kunena Menu');
 define('_KUNENA_MENU_FORUM', 'Forum'); // mainmenu link to Kunena
 define('_KUNENA_MENU_LISTCAT', 'Index'); // Categories view
-define('_KUNENA_MENU_LATEST', 'Topics'); // Latest/recent discussions
+define('_KUNENA_MENU_LATEST', 'Recent Topics'); // Latest/recent discussions
 define('_KUNENA_MENU_LATEST_DESC', 'Recent Topics');
 define('_KUNENA_MENU_MYLATEST', 'My Topics'); // My latest discussions
 define('_KUNENA_MENU_MYLATEST_DESC', 'My Topics');

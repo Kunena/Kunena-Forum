@@ -418,8 +418,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		echo _FORUM_IS_OFFLINE?></span> <?php
 	}
 	?>
-<table width="100%" border="0" cellspacing="0" cellpadding="0"
-	id="Kunena_top">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" id="Kunena_top">
 	<tr>
 		<td align="left"><?php
 	// display Kunena menu if present
@@ -440,10 +439,13 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		<?php
 	}
 	?></td>
-		<td align="right" width="1%"><img
-			id="BoxSwitch_topprofilebox__topprofilebox_tbody" class="hideshow"
-			src="<?php
-	echo KUNENA_URLIMAGESPATH . 'shrink.gif'?>" alt="" /></td>
+		<td align="right" width="1%">
+			
+			<!--  <span id="kprofilebox_status"><span class="close"></span></span>
+			<a id="kprofilebox_toggle" href="#"></a> -->
+			
+			<!-- <img id="BoxSwitch_topprofilebox__topprofilebox_tbody" class="hideshow" src="<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif'?>" alt="" /> -->
+		</td>
 	</tr>
 </table>
 <!-- /Kunena Header --> <?php

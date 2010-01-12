@@ -116,7 +116,7 @@ else
 if ($kunena_my->id)
 {
 ?>
-
+<div id="kprofilebox">
     <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0" class = "fb_profilebox" >
         <tbody id = "topprofilebox_tbody">
             <tr class = "<?php echo KUNENA_BOARD_CLASS ;?>sectiontableentry1">
@@ -171,7 +171,7 @@ if ($is_editor) {
             </tr>
         </tbody>
     </table>
-
+</div>
     <?php
 }
 else

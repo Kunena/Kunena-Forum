@@ -1,6 +1,7 @@
 
 /* Javascript file for default Kunena template */
 
+/* Tabs class */
 var JTabs = new Class({
 	Implements: [Options, Events],
 
@@ -50,3 +51,36 @@ var JTabs = new Class({
     }
 });
 
+/* Slider function
+window.addEvent('domready', function() {
+	var status = {
+		'true': '<span class="close"></span>',
+		'false': '<span class="open"></span>'
+	};
+	var myVerticalSlide = new Fx.Slide('kprofilebox');
+	$('kprofilebox_toggle').addEvent('click', function(e){
+		e.stop();
+		myVerticalSlide.toggle();
+	});
+	myVerticalSlide.addEvent('complete', function() {
+		$('kprofilebox_status').set('html', status[myVerticalSlide.open]);
+	});
+
+});
+
+window.addEvent('domready', function() {
+	var status = {
+		'true': '<span class="close"></span>',
+		'false': '<span class="open"></span>'
+	};
+	var myVerticalSlide = new Fx.Slide('kmainforum');
+	$('kmainforum_toggle').addEvent('click', function(e){
+		e.stop();
+		myVerticalSlide.toggle();
+	});
+	myVerticalSlide.addEvent('complete', function() {
+		$('kmainforum_status').set('html', status[myVerticalSlide.open]);
+	});
+
+});
+*/

@@ -154,6 +154,46 @@ class CKunenaUserprofile extends JTable
 	**/
 	var $showOnline = null;
 	/**
+	* MYSPACE ID
+	* @var string
+	**/
+	var $MYSPACE = null;
+	/**
+	* LINKEDIN ID
+	* @var string
+	**/
+	var $LINKEDIN = null;
+	/**
+	* DELICIOUS ID
+	* @var string
+	**/
+	var $DELICIOUS = null;
+	/**
+	* FRIENDFEED ID
+	* @var string
+	**/
+	var $FRIENDFEED = null;
+	/**
+	* $DIGG ID
+	* @var string
+	**/
+	var $DIGG = null;
+	/**
+	* BLOGSPOT ID
+	* @var string
+	**/
+	var $BLOGSPOT = null;
+	/**
+	* FLICKR ID
+	* @var string
+	**/
+	var $FLICKR = null;
+	/**
+	* BEBO ID
+	* @var string
+	**/
+	var $BEBO = null;
+	/**
 	* @param userid NULL=current user
 	*/
 	function CKunenaUserprofile($userid)

@@ -181,12 +181,12 @@ if ($kunena_config->fb_profile == 'cb') {
 
 			<td class="fb-msgview-left">
 				<div class="fb-msgview-l-cover">
-					<?php 
+					<?php
 					if ($profileHtml) {
 						echo $profileHtml;
 					} else {
 					?>
-					<span class="view-username"> 
+					<span class="view-username">
 						<?php
 						if ($userinfo->userid) {
 							echo CKunenaLink::GetProfileLink ( $kunena_config, $this->kunena_message->userid, $msg_html->username );
@@ -194,7 +194,7 @@ if ($kunena_config->fb_profile == 'cb') {
 							echo $msg_html->username;
 						}
 						?>
-					</span> 
+					</span>
 					<?php
 						if ($kunena_config->userlist_usertype)
 							echo '<span class = "msgusertype">(' . $msg_html->usertype . ')</span>';
@@ -207,35 +207,35 @@ if ($kunena_config->fb_profile == 'cb') {
 							echo $msg_html->avatar;
 						}
 					?>
-	
-					
+
+
 					<div class="viewcover"><?php
 						if (isset ( $msg_html->userrank )) {
 							echo $msg_html->userrank;
 						}
 						?>
 					</div>
-	
+
 					<div class="viewcover"><?php
 						if (isset ( $msg_html->userrankimg )) {
 							echo $msg_html->userrankimg;
 						}
 						?>
 					</div>
-	
+
 				<?php
 					if (isset ( $msg_html->posts )) {
 						echo $msg_html->posts;
 					}
 					?>
-	
+
 			<!--  Disabled bar graph until we decide if it goes away. -->
 				<?php
 				//	if (isset ( $msg_html->myGraph )) {
 				//		$msg_html->myGraph->BarGraphHoriz ();
 				//	}
 					?>
-	
+
 				<?php
 				//	if (isset ( $msg_html->myGraphAUP )) {
 				//		$msg_html->myGraphAUP->BarGraphHoriz ();
@@ -285,6 +285,56 @@ if ($kunena_config->fb_profile == 'cb') {
 						echo $msg_html->facebook;
 					}
 					?>
+                     <?php
+					if (isset ( $msg_html->aim )) {
+						echo $msg_html->aim;
+					}
+					?>
+                     <?php
+					if (isset ( $msg_html->bebo )) {
+						echo $msg_html->bebo;
+					}
+					?>
+                     <?php
+					if (isset ( $msg_html->blogger )) {
+						echo $msg_html->blogger;
+					}
+					?>
+                     <?php
+					if (isset ( $msg_html->delicious )) {
+						echo $msg_html->delicious;
+					}
+					?>
+                     <?php
+					if (isset ( $msg_html->digg )) {
+						echo $msg_html->digg;
+					}
+					?>
+                     <?php
+					if (isset ( $msg_html->flickr )) {
+						echo $msg_html->flickr;
+					}
+					?>
+                     <?php
+					if (isset ( $msg_html->friendfeed )) {
+						echo $msg_html->friendfeed;
+					}
+					?>
+                     <?php
+					if (isset ( $msg_html->linkedin )) {
+						echo $msg_html->linkedin;
+					}
+					?>
+                    <?php
+					if (isset ( $msg_html->myspace )) {
+						echo $msg_html->myspace;
+					}
+					?>
+                    <?php
+					if (isset ( $msg_html->yahoo )) {
+						echo $msg_html->yahoo;
+					}
+					?>
 				<?php
 					if (isset ( $msg_html->website )) {
 						echo $msg_html->website;
@@ -303,11 +353,6 @@ if ($kunena_config->fb_profile == 'cb') {
 				<?php
 					if (isset ( $msg_html->msn )) {
 						echo $msg_html->msn;
-					}
-					?>
-				<?php
-					if (isset ( $msg_html->aim )) {
-						echo $msg_html->aim;
 					}
 					?>
 				<?php

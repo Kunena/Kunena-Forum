@@ -109,6 +109,38 @@ $kunena_config =& CKunenaConfig::getInstance();
                                 <td><input name="GTALK" maxlength="32" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->GTALK));?>" type="text"/></td>
                             </tr>
                             <tr>
+                                <td width="40%"><b><?php echo _KUNENA_MYPROFILE_MYSPACE; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_MYSPACE_DESC; ?></div></td>
+                                <td><input name="MYSPACE" maxlength="32" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->MYSPACE));?>" type="text"/></td>
+                            </tr>
+                            <tr>
+                                <td width="40%"><b><?php echo _KUNENA_MYPROFILE_LINKEDIN; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_LINKEDIN_DESC; ?></div></td>
+                                <td><input name="LINKEDIN" maxlength="32" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->LINKEDIN));?>" type="text"/></td>
+                            </tr>
+                            <tr>
+                                <td width="40%"><b><?php echo _KUNENA_MYPROFILE_DELICIOUS; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_DELICIOUS_DESC; ?></div></td>
+                                <td><input name="DELICIOUS" maxlength="32" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->DELICIOUS));?>" type="text"/></td>
+                            </tr>
+                            <tr>
+                                <td width="40%"><b><?php echo _KUNENA_MYPROFILE_FRIENDFEED; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_FRIENDFEED_DESC; ?></div></td>
+                                <td><input name="FRIENDFEED" maxlength="32" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->FRIENDFEED));?>" type="text"/></td>
+                            </tr>
+                            <tr>
+                                <td width="40%"><b><?php echo _KUNENA_MYPROFILE_DIGG; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_DIGG_DESC; ?></div></td>
+                                <td><input name="DIGG" maxlength="32" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->DIGG));?>" type="text"/></td>
+                            </tr>
+                            <tr>
+                                <td width="40%"><b><?php echo _KUNENA_MYPROFILE_BLOGSPOT; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_BLOGSPOT_DESC; ?></div></td>
+                                <td><input name="BLOGSPOT" maxlength="32" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->BLOGSPOT));?>" type="text"/></td>
+                            </tr>
+                            <tr>
+                                <td width="40%"><b><?php echo _KUNENA_MYPROFILE_FLICKR; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_FLICKR_DESC; ?></div></td>
+                                <td><input name="FLICKR" maxlength="32" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->FLICKR));?>" type="text"/></td>
+                            </tr>
+                            <tr>
+                                <td width="40%"><b><?php echo _KUNENA_MYPROFILE_BEBO; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_BEBO_DESC; ?></div></td>
+                                <td><input name="BEBO" maxlength="32" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->BEBO));?>" type="text"/></td>
+                            </tr>
+                            <tr>
                                 <td width="40%"><b><?php echo _KUNENA_MYPROFILE_WEBSITE_NAME; ?> </b><div class="smalltext"><?php echo _KUNENA_MYPROFILE_WEBSITE_NAME_DESC; ?></div></td>
                                 <td><input name="websitename" maxlength="32" size="24" value="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->websitename));?>" type="text"/></td>
                             </tr>

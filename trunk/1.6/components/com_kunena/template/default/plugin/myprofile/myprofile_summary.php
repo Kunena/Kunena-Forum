@@ -44,7 +44,7 @@ if ($signature)
 <script type="text/javascript">
   	window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new JTabs(tabs); }); });
 </script>
- 			
+
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
@@ -70,28 +70,29 @@ if ($signature)
 		<div id="kprofile-rightcol">
 			<div id="kprofile-rightcoltop">
 				<div class="kprofile-rightcol2">
+					<div class="kprofile-rightcol2">
 					<div class="iconrow">
-						<a href="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->TWITTER)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_TWITTER; ?>"><span class="twitter"></span></a>
-						<a href="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->FACEBOOK)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_FACEBOOK; ?>"><span class="facebook"></span></a>
-						<a href="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->MYSPACE)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_MYSPACE; ?>"><span class="myspace"></span></a>
-						<a href="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->LINKEDIN)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_LINKEDIN; ?>"><span class="linkedin"></span></a>
+						<a href="<?php echo 'http://twitter.com/'.kunena_htmlspecialchars(stripslashes($userinfo->TWITTER)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_TWITTER; ?>"><span class="twitter"></span></a>
+						<a href="<?php echo 'http://www.facebook.com/'.kunena_htmlspecialchars(stripslashes($userinfo->FACEBOOK)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_FACEBOOK; ?>"><span class="facebook"></span></a>
+						<a href="<?php echo 'http://www.myspace.com/'.kunena_htmlspecialchars(stripslashes($userinfo->MYSPACE)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_MYSPACE; ?>"><span class="myspace"></span></a>
+						<a href="<?php echo 'http://www.linkedin.com/in/'.kunena_htmlspecialchars(stripslashes($userinfo->LINKEDIN)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_LINKEDIN; ?>"><span class="linkedin"></span></a>
 					</div>
 					<div class="iconrow">
-						<a href="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->DELICIOUS)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_DELICIOUS; ?>"><span class="delicious"></span></a>
-						<a href="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->FRIENDFEED)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_FRIENDFEED; ?>"><span class="friendfeed"></span></a>
-						<a href="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->DIGG)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_DIGG; ?>"><span class="digg"></span></a>
+						<a href="<?php echo 'http://www.delicious.com/'.kunena_htmlspecialchars(stripslashes($userinfo->DELICIOUS)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_DELICIOUS; ?>"><span class="delicious"></span></a>
+						<a href="<?php echo 'http://friendfeed.com/'.kunena_htmlspecialchars(stripslashes($userinfo->FRIENDFEED)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_FRIENDFEED; ?>"><span class="friendfeed"></span></a>
+						<a href="<?php echo 'http://www.digg.com/'.kunena_htmlspecialchars(stripslashes($userinfo->DIGG)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_DIGG; ?>"><span class="digg"></span></a>
 					</div>
 					<div class="clr"></div>
 					<div class="iconrow">
-						<a href="skype:<?php echo kunena_htmlspecialchars(stripslashes($userinfo->SKYPE)); ?>?call" target="_blank" title="Call <?php echo kunena_htmlspecialchars(stripslashes($userinfo->SKYPE)); ?>"><span class="skype"></span></a>
+						<a href="skype:?call<?php echo kunena_htmlspecialchars(stripslashes($userinfo->SKYPE)); ?>" target="_blank" title="Call <?php echo kunena_htmlspecialchars(stripslashes($userinfo->SKYPE)); ?>"><span class="skype"></span></a>
 						<a href="ymsgr:sendim?<?php echo kunena_htmlspecialchars(stripslashes($userinfo->YIM)); ?>" target="_blank" title="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->YIM)); ?>"><span class="yim"></span></a>
 						<a href="aim:goim?screenname=<?php echo kunena_htmlspecialchars(stripslashes($userinfo->AIM)); ?>" target="_blank" title="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->AIM)); ?>"><span class="aim"></span></a>
 						<a href="gtalk:chat?jid=<?php echo kunena_htmlspecialchars(stripslashes($userinfo->GTALK)); ?>" target="_blank" title="Chat with <?php echo kunena_htmlspecialchars(stripslashes($userinfo->GTALK)); ?>"><span class="gtalk"></span></a>
 					</div>
 					<div class="iconrow">
-						<a href="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->BLOGSPOT)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_BLOGSPOT; ?>"><span class="blogspot"></span></a>
-						<a href="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->FLICKR)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_FLICKR; ?>"><span class="flickr"></span></a>
-						<a href="<?php echo kunena_htmlspecialchars(stripslashes($userinfo->BEBO)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_BEBO; ?>"><span class="bebo"></span></a>
+						<a href="<?php echo 'http://www.blogspot.com/'.kunena_htmlspecialchars(stripslashes($userinfo->BLOGSPOT)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_BLOGSPOT; ?>"><span class="blogspot"></span></a>
+						<a href="<?php echo 'http://www.flickr.com/'.kunena_htmlspecialchars(stripslashes($userinfo->FLICKR)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_FLICKR; ?>"><span class="flickr"></span></a>
+						<a href="<?php echo 'http://www.bebo.com/'.kunena_htmlspecialchars(stripslashes($userinfo->BEBO)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_BEBO; ?>"><span class="bebo"></span></a>
 					</div>
 
 				</div>
@@ -121,7 +122,7 @@ if ($signature)
 
 			</div>
 			<div class="clr"></div>
-			
+
 			<div id="kprofile-tabs">
 				<dl class="tabs">
 					<dt>Posts</dt>
@@ -138,7 +139,7 @@ if ($signature)
 					</dd>
 				</dl>
 			</div>
-	
+
 
 		</div>
 	</div>

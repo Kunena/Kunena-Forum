@@ -535,6 +535,14 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 						$userinfo->TWITTER = '';
 						$userinfo->FACEBOOK = '';
 						$userinfo->GTALK = '';
+						$userinfo->MYSPACE = '';
+						$userinfo->LINKEDIN = '';
+						$userinfo->DELICIOUS = '';
+						$userinfo->FRIENDFEED = '';
+						$userinfo->DIGG = '';
+						$userinfo->BLOGSPOT = '';
+						$userinfo->FLICKR = '';
+						$userinfo->BEBO = '';
 						$userinfo->websiteurl = '';
 						$userinfo->signature = '';
 					}
@@ -874,6 +882,30 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 				}
 				if ($userinfo->FACEBOOK != '') {
 					$msg_html->facebook = isset ( $kunena_icons ['msgfacebook'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msgfacebook'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->FACEBOOK ) ) . '" title="FACEBOOK: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->FACEBOOK ) ) . '" />' : 'FACEBOOK: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->FACEBOOK ) ) . '';
+				}
+				if ($userinfo->BEBO != '') {
+					$msg_html->bebo = isset ( $kunena_icons ['msgbebo'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['bebo'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->BEBO ) ) . '" title="BEBO: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->BEBO ) ) . '" />' : 'BEBO: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->BEBO ) ) . '';
+				}
+				if ($userinfo->MYSPACE != '') {
+					$msg_html->facebook = isset ( $kunena_icons ['msgmyspace'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['myspace'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->MYSPACE ) ) . '" title="MYSPACE: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->MYSPACE ) ) . '" />' : 'MYSPACE: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->MYSPACE ) ) . '';
+				}
+				if ($userinfo->LINKEDIN != '') {
+					$msg_html->linkedin = isset ( $kunena_icons ['msglinkedin'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['linkedin'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->LINKEDIN ) ) . '" title="LINKEDIN: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->LINKEDIN ) ) . '" />' : 'LINKEDIN: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->LINKEDIN ) ) . '';
+				}
+				if ($userinfo->DELICIOUS != '') {
+					$msg_html->facebook = isset ( $kunena_icons ['msgdelicious'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['delicious'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->DELICIOUS ) ) . '" title="DELICIOUS: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->DELICIOUS ) ) . '" />' : 'DELICIOUS: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->DELICIOUS ) ) . '';
+				}
+				if ($userinfo->FRIENDFEED != '') {
+					$msg_html->friendfeed = isset ( $kunena_icons ['msgfriendfeed'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['friendfeed'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->FRIENDFEED ) ) . '" title="FRIENDFEED: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->FRIENDFEED ) ) . '" />' : 'FRIENDFEED: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->FRIENDFEED ) ) . '';
+				}
+				if ($userinfo->DIGG != '') {
+					$msg_html->digg = isset ( $kunena_icons ['msgdigg'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['digg'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->DIGG ) ) . '" title="DIGG: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->DIGG ) ) . '" />' : 'DIGG: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->DIGG ) ) . '';
+				}
+				if ($userinfo->BLOGSPOT != '') {
+					$msg_html->blogger = isset ( $kunena_icons ['msgblogger'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['blogger'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->BLOGSPOT ) ) . '" title="BLOGSPOT: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->BLOGSPOT ) ) . '" />' : 'BLOGSPOT: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->BLOGSPOT ) ) . '';
+				}
+				if ($userinfo->FLICKR != '') {
+					$msg_html->flickr = isset ( $kunena_icons ['msgflickr'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['flickr'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->FLICKR ) ) . '" title="FLICKR: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->FLICKR ) ) . '" />' : 'FLICKR: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->FLICKR ) ) . '';
 				}
 				if ($userinfo->GTALK != '') {
 					$msg_html->gtalk = isset ( $kunena_icons ['msggtalk'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msggtalk'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $userinfo->GTALK ) ) . '" title="GTALK: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->GTALK ) ) . '" />' : 'GTALK: ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->GTALK ) ) . '';

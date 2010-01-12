@@ -48,6 +48,7 @@ Kunena 1.6.0-DEV
 11-Jan-2010 fxstein
 + [#19064] Finalized new bbcodes: table, th, tr, td & module (for joomla modules)
 ^ [#19400] Changed subheader layout, reformated category listings
+^ [#19064] Separate bbcode css
 
 10-Jan-2010 svens LDA
 # [#19339] Incorrect implementation of links in CKunenaLink class

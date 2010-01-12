@@ -1145,7 +1145,27 @@ span.newchar {
 	min-height: 100px;
 }
 
-#Kunena div.fbcode {
+#Kunena span.kmsgtext_s {
+	font-size: 1em;
+}
+
+#Kunena span.kmsgtext_m {
+	font-size: 1.25em;
+}
+
+#Kunena span.kmsgtext_l {
+	font-size: 1.65em;
+}
+
+#Kunena span.kmsgtext_xl {
+	font-size: 2em;
+}
+
+#Kunena span.kmsgtext_xxl {
+	font-size: 3em;
+}
+
+#Kunena div.kmsgtext_code {
 	overflow: auto;
 }
 
@@ -1282,7 +1302,7 @@ span.newchar {
 	margin: 2px 0px;
 }
 
-#Kunena span.fb_quote {
+#Kunena span.kmsgtext_quote {
 	display: block;
 	border: 1px dotted #CCC;
 	margin: 5px 0pt;

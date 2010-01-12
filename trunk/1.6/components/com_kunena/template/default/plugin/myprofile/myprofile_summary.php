@@ -70,7 +70,7 @@ if ($signature)
 		<div id="kprofile-rightcol">
 			<div id="kprofile-rightcoltop">
 				<div class="kprofile-rightcol2">
-					<div class="kprofile-rightcol2">
+					
 					<div class="iconrow">
 						<a href="<?php echo 'http://twitter.com/'.kunena_htmlspecialchars(stripslashes($userinfo->TWITTER)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_TWITTER; ?>"><span class="twitter"></span></a>
 						<a href="<?php echo 'http://www.facebook.com/'.kunena_htmlspecialchars(stripslashes($userinfo->FACEBOOK)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_FACEBOOK; ?>"><span class="facebook"></span></a>

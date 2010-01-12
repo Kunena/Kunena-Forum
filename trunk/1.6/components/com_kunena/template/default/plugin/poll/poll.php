@@ -13,6 +13,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 $do 			= JRequest::getVar("do", "");
 $id 			= intval(JRequest::getVar("id", ""));
+$catid 			= JRequest::getInt('catid', 0);
 $value_choosed	= JRequest::getInt('radio', '');
 CKunenaPolls::call_javascript_vote();
 if ($do == 'results')

@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 12-Jan-2010 Xillibit
 # [#19288] Fix regression, waring in zend in myprofile_summary.php
 ^# [#19358] Apply some changes on the polls, allow the user to change her vote
+# [#19358] Apply some changes on the polls, regression undefined catid in poll.php
 
 11-Jan-2010 Matias
 # [#19251] Reduce the number of SQL calls when showing frontstats

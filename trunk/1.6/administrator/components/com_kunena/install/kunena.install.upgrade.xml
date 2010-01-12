@@ -132,8 +132,7 @@
              PRIMARY KEY  (`userid`),
              KEY `group_id` (`group_id`),
              KEY `posts` (`posts`),
-             KEY `uhits` (`uhits`),
-             FULLTEXT KEY `SKYPE` (`SKYPE`)
+             KEY `uhits` (`uhits`)
              ) ENGINE=MyISAM DEFAULT CHARSET=utf8;</query>
 		<query>CREATE TABLE IF NOT EXISTS `#__fb_whoisonline` (
                     `id` int(6) NOT NULL auto_increment,
@@ -412,18 +411,19 @@
 					`lasttime` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
 					UNIQUE KEY `pollid` (`pollid`,`userid`)
 				) DEFAULT CHARSET=utf8;</query>
-			<query>ALTER TABLE `jos_fb_users` 
-			ADD `TWITTER` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `SKYPE` ,
-			ADD `FACEBOOK` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `Twitter` ,
-			ADD `MYSPACE` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `GTALK` ,
-			ADD `LINKEDIN` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `MYSPACE` ,
-			ADD `DELICIOUS` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `LINKEDIN` ,
-			ADD `FRIENDFEED` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `DELICIOUS` ,
-			ADD `DIGG` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `FRIENDFEED` ,
-			ADD `BLOGSPOT` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `DIGG` ,
-			ADD `FLICKR` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `BLOGSPOT` ,
-			ADD `BEBO` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `FLICKR` ;</query>
-		    <phpfile name="kunena.special.upgrade.1.6.0.php"></phpfile>            
+			<query mode="silenterror">ALTER TABLE `jos_fb_users` 
+				ADD `TWITTER` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `SKYPE` ,
+				ADD `FACEBOOK` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `TWITTER` ;</query>
+			<query mode="silenterror">ALTER TABLE `jos_fb_users` 
+				ADD `MYSPACE` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `GTALK` ,
+				ADD `LINKEDIN` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `MYSPACE` ,
+				ADD `DELICIOUS` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `LINKEDIN` ,
+				ADD `FRIENDFEED` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `DELICIOUS` ,
+				ADD `DIGG` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `FRIENDFEED` ,
+				ADD `BLOGSPOT` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `DIGG` ,
+				ADD `FLICKR` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `BLOGSPOT` ,
+				ADD `BEBO` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `FLICKR` ;</query>
+		    <phpfile name="kunena.special.upgrade.1.6.0.php"></phpfile>
 		</version>
 	</upgrade>
 </comupgrade>

@@ -322,10 +322,11 @@ class fx_Upgrade {
 						$versiondate = KUNENA_VERSION_DATE;
 						$build = KUNENA_VERSION_BUILD;
 						$versionname = KUNENA_VERSION_NAME;
+						$svn = 1;
 					}
 
 					//when legacy version exists, just compare version, if date exists as well, compare date
-					if(($currentVersion->versiondate && $versiondate > $currentVersion->versiondate) OR (version_compare($version, $currentVersion->version, '>')) OR (version_compare($version, $currentVersion->version, '==') && $build > $currentVersion->build)) {
+					if(isset($svn) || ($currentVersion->versiondate && $versiondate > $currentVersion->versiondate) || (version_compare($version, $currentVersion->version, '>')) || (version_compare($version, $currentVersion->version, '==') && $build > $currentVersion->build)) {
 						//these instructions are for a newer version than the currently installed version
 
 						if(!$this->silent) {

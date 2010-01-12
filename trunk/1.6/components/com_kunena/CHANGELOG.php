@@ -37,6 +37,7 @@ Kunena 1.6.0-DEV
 # [#19251] Reduce the number of SQL calls when showing frontstats
 ^ [#19295] Clean up: remove unused code (statsbar) and images
 ^ [#19295] Clean up: replace module positions by CKunenaTools::showModulePosition()
+# [#19313] Minor fix for SVN installer: always run queries
 
 11-Jan-2010 severdia
 # [#19380] Add tabs & code to JS file, profile page

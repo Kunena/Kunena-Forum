@@ -2058,7 +2058,7 @@ NEW PROFILE
 -------------------------------------------------------------------- */
 div#kprofile-container { border: 1px solid #cccccc; margin: 10px 0 10px 0; padding: 10px;min-height: 500px;}
 
-div#kprofile-leftcol { width: 200px; font-size: 11px; float:left;}
+div#kprofile-leftcol { width: 200px; font-size: 11px; float:left; margin-right: 10px;}
 
 div.avatar-lg { width: 200px; height: 200px; background-color: #ccc; margin-bottom: 15px;}
 
@@ -2087,16 +2087,15 @@ div#kprofile-stats ul li span.rank-admin {
 }
 
 div#kprofile-rightcol  { 
-	/* width: 735px; */
-	width: 70%;
+	width: 75%;
 	float:right;
+	margin-right: 10px;
 }
 
 div#kprofile-rightcoltop  {width: 100%;}
 
 div.kprofile-rightcol1 { 
-	/* width: 420px; */
-	width: 40%;
+	width: 45%;
 }
 
 div.kprofile-rightcol1 ul {margin: 0;padding: 0;}
@@ -2150,9 +2149,6 @@ li.bd a {
 	margin-left: 10px;
 }
 	
-
-div.kprofile-rightcol2 { float:right; width: 275px; margin-left: 10px;}
-
 div.iconrow {
 	width: 100px;
 	padding-right: 10px;
@@ -2183,17 +2179,21 @@ span.blogspot 	{ background: url("../images/social/blogger.png") no-repeat; }
 span.flickr 	{ background: url("../images/social/flickr.png") no-repeat; }
 span.bebo 		{ background: url("../images/social/bebo.png") no-repeat; }
 	
-div.clrline {clear:both; border-top: 1px solid #cccccc; margin: 15px 0 20px 0; line-height: 10px; /*width: 710px;*/}
+div.clrline {
+	clear:both; 
+	border-top: 1px solid #cccccc; 
+	margin: 15px 0 20px 0; 
+	line-height: 10px;
+	/*width: 710px;*/
+}
 
 div#kprofile-rightcolbot {}
 
-div.kprofile-rightcol1 {}
-
-div.kprofile-rightcol1 h4 {margin:10px 0 0 0; padding: 0;}
+div.kprofile-rightcol1 h4 { margin:10px 0 0 0; padding: 0;}
 
 div.kprofile-rightcol1 p { margin:0; padding: 0;}
 				
-div.kprofile-rightcol2 {}
+div.kprofile-rightcol2 { float:right; width: 45%; margin-left: 10px;}
 
 div.kprofile-rightcol2 ul {margin: 0;padding: 0;}
 

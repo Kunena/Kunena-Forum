@@ -62,6 +62,7 @@ if ($signature)
 					<li><span class="rankname"><?php echo $juserinfo->usertype; ?></span> <span class="rank-admin"></span></li>
 					<li><strong><?php echo _KUNENA_MYPROFILE_REGISTERDATE; ?>:</strong> <?php echo $juserinfo->registerDate; ?></li>
 					<li><strong><?php echo _KUNENA_MYPROFILE_LASTVISITDATE; ?>:</strong> <?php echo $juserinfo->lastvisitDate; ?></li>
+					<li><strong><?php echo _KUNENA_MYPROFILE_TIMEZONE; ?>:</strong> GMT +9</li>
 					<li><strong><?php echo _KUNENA_MYPROFILE_POSTS; ?>:</strong> <?php echo $userinfo->posts; ?></li>
 					<li><strong><?php echo _KUNENA_MYPROFILE_PROFILEVIEW; ?>:</strong> <?php echo $userinfo->uhits; ?></li>
 				</ul>
@@ -136,6 +137,11 @@ if ($signature)
 					<dt>Favorites</dt>
 					<dd>
 						<p>Nam dui erat, auctor a, dignissim quis, sollicitudin eu, felis. Pellentesque nisi urna, interdum eget, sagittis et, consequat vestibulum, lacus. Mauris porttitor ullamcorper augue.</p>
+					</dd>
+					<!-- Only visible to moderators and admins -->
+					<dt>Moderate this User</dt>
+					<dd>
+						<p><a href="#">Ban this user</a></p>
 					</dd>
 				</dl>
 			</div>

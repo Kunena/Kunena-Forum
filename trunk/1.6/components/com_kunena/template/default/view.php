@@ -75,9 +75,7 @@ $id = ( int ) $id;
 
 $kunena_emoticons = smile::getEmoticons ( 0 );
 
-//ob_start();
 $showedEdit = 0;
-require_once (KUNENA_PATH_LIB . DS . 'kunena.statsbar.php');
 
 //get the allowed forums and turn it into an array
 $allow_forum = ($kunena_session->allowed != '') ? explode ( ',', $kunena_session->allowed ) : array ();
@@ -326,20 +324,8 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 				require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/poll/pollbox.php');
 			}
 		}
-		// load module
-		if (JDocumentHTML::countModules ( 'kunena_poll' )) {
-			?>
-<div class="fb-fb_2"><?php
-			$document = &JFactory::getDocument ();
-			$renderer = $document->loadRenderer ( 'modules' );
-			$options = array ('style' => 'xhtml' );
-			$position = 'kunena_poll';
-			echo $renderer->render ( $position, $options, null );
-			?>
-</div>
-<?php
-		}
-		?>
+		CKunenaTools::showModulePosition( 'kunena_poll' );
+?>
 
 <!-- B: List Actions -->
 
@@ -673,34 +659,13 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 				// ****************************
 				$api_AUP = JPATH_SITE . DS . 'components' . DS . 'com_alphauserpoints' . DS . 'helper.php';
 				if ($kunena_config->alphauserpoints && file_exists ( $api_AUP )) {
-					static $maxPoints = false;
-
-					if ($maxPoints == false) {
-						//Get the max# of points for any one user
-						$kunena_db->setQuery ( "SELECT MAX(points) FROM #__alpha_userpoints" );
-						$maxPoints = $kunena_db->loadResult ();
-						check_dberror ( "Unable to load AUP max points." );
-					}
-
 					$kunena_db->setQuery ( "SELECT points FROM #__alpha_userpoints WHERE `userid`='" . ( int ) $this->kunena_message->userid . "'" );
 					$numPoints = $kunena_db->loadResult ();
 					check_dberror ( "Unable to load AUP points." );
 
-					$msg_html->myGraphAUP = new phpGraph ( );
-					$msg_html->myGraphAUP->AddValue ( _KUNENA_AUP_POINTS, $numPoints );
-					$msg_html->myGraphAUP->SetRowSortMode ( 0 );
-					$msg_html->myGraphAUP->SetBarImg ( KUNENA_URLGRAPHPATH . "col" . $kunena_config->statscolor . "m.png" );
-					$msg_html->myGraphAUP->SetBarImg2 ( KUNENA_URLEMOTIONSPATH . "graph.gif" );
-					$msg_html->myGraphAUP->SetMaxVal ( $maxPoints );
-					$msg_html->myGraphAUP->SetShowCountsMode ( 2 );
-					$msg_html->myGraphAUP->SetBarWidth ( 4 ); //height of the bar
-					$msg_html->myGraphAUP->SetBorderColor ( "#333333" );
-					$msg_html->myGraphAUP->SetBarBorderWidth ( 0 );
-					$msg_html->myGraphAUP->SetGraphWidth ( 64 ); //should match column width in the <TD> above -5 pixels
-					$useGraph = 1;
+					$msg_html->points = '</strong>'. _KUNENA_AUP_POINTS .'</strong> '. $numPoints;
 				}
 				// End Integration AlphaUserPoints
-
 
 				//karma points and buttons
 				if ($kunena_config->showkarma && $userinfo->userid != '0') {
@@ -1006,7 +971,6 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 				}
 
 				unset ( $msg_html );
-				$useGraph = 0;
 			} // end for
 		}
 		?>

@@ -63,13 +63,8 @@ defined( '_JEXEC' ) or die('Restricted access');
                     ?>
 
                     <?php
-                        if (isset($msg_html->myGraph))
-                            $msg_html->myGraph->BarGraphHoriz();
-                    ?>
-
-                    <?php
-                        if (isset($msg_html->myGraphAUP))
-                            $msg_html->myGraphAUP->BarGraphHoriz();
+                        if (isset($msg_html->points))
+                            echo $msg_html->points;
                     ?>
 
                     <?php

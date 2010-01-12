@@ -315,23 +315,7 @@ if ($kunena_config->showannouncement > 0)
 }
 // (JJ) FINISH: ANNOUNCEMENT BOX
 
-// load module
-if (JDocumentHTML::countModules('kunena_announcement'))
-{
-?>
-
-    <div class = "fb-fb_2">
-        <?php
-        	$document	= &JFactory::getDocument();
-        	$renderer	= $document->loadRenderer('modules');
-        	$options	= array('style' => 'xhtml');
-        	$position	= 'kunena_announcement';
-        	echo $renderer->render($position, $options, null);
-	?>
-    </div>
-
-<?php
-}
+CKunenaTools::showModulePosition('kunena_announcement');
 ?>
 <!-- B: List Actions -->
 	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0">

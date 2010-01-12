@@ -54,8 +54,6 @@ if ($kunena_config->fb_profile == 'cb') {
 		</tr>
 
 		<tr>
-			<!-- -->
-
 			<td class="fb-msgview-right">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
@@ -166,16 +164,11 @@ if ($kunena_config->fb_profile == 'cb') {
 						?>" /> <small><em><?php
 						echo _KUNENA_QMESSAGE_NOTE?></em></small></form>
 					</div>
-
 					<?php
 					}
 					?>
-
-
 					</td>
 				</tr>
-
-
 			</table>
 			</td>
 
@@ -207,39 +200,27 @@ if ($kunena_config->fb_profile == 'cb') {
 							echo $msg_html->avatar;
 						}
 					?>
-
-
 					<div class="viewcover"><?php
 						if (isset ( $msg_html->userrank )) {
 							echo $msg_html->userrank;
 						}
 						?>
 					</div>
-
 					<div class="viewcover"><?php
 						if (isset ( $msg_html->userrankimg )) {
 							echo $msg_html->userrankimg;
 						}
 						?>
 					</div>
-
 				<?php
 					if (isset ( $msg_html->posts )) {
 						echo $msg_html->posts;
 					}
 					?>
-
-			<!--  Disabled bar graph until we decide if it goes away. -->
 				<?php
-				//	if (isset ( $msg_html->myGraph )) {
-				//		$msg_html->myGraph->BarGraphHoriz ();
-				//	}
-					?>
-
-				<?php
-				//	if (isset ( $msg_html->myGraphAUP )) {
-				//		$msg_html->myGraphAUP->BarGraphHoriz ();
-				//	}
+					if (isset ( $msg_html->points )) {
+						echo $msg_html->points;;
+					}
 					?>
 				<div class="onlineimg">
 				<?php
@@ -252,12 +233,6 @@ if ($kunena_config->fb_profile == 'cb') {
 					if (isset ( $msg_html->pms )) {
 						echo $msg_html->pms;
 					}
-					?>
-				<!--  Disabled profile because name and avatar both link to profile  -->
-				<?php
-				//	if (isset ( $msg_html->profile )) {
-				//		echo $msg_html->profile;
-				//	}
 					?>
 				<div class="smallicons">
 				<?php
@@ -280,7 +255,7 @@ if ($kunena_config->fb_profile == 'cb') {
 						echo $msg_html->twitter;
 					}
 					?>
-	            <?php
+				<?php
 					if (isset ( $msg_html->facebook )) {
 						echo $msg_html->facebook;
 					}
@@ -407,7 +382,6 @@ if ($kunena_config->fb_profile == 'cb') {
 			</div>
 			<div class="fb_message_buttons_cover">
 			<div class="fb_message_buttons_row"><?php
-			if ($kunena_icons ['reply']) {
 				if (! isset ( $msg_html->closed )) {
 					echo " " . $msg_html->quickreply;
 					echo " " . $msg_html->reply;
@@ -433,38 +407,6 @@ if ($kunena_config->fb_profile == 'cb') {
 				} else {
 					echo $msg_html->closed;
 				}
-
-			} else {
-				if (! isset ( $msg_html->closed )) {
-					echo $msg_html->reply;
-					?>
-
-			| <?php
-					echo $msg_html->quote;
-
-					if (isset ( $msg_html->delete )) {
-						echo " | " . $msg_html->delete;
-					}
-
-					if (isset ( $msg_html->move )) {
-						echo " | " . $msg_html->move;
-					}
-
-					if (isset ( $msg_html->edit )) {
-						echo " | " . $msg_html->edit;
-					}
-
-					if (isset ( $msg_html->sticky )) {
-						echo " | " . $msg_html->sticky;
-					}
-
-					if (isset ( $msg_html->lock )) {
-						echo "| " . $msg_html->lock;
-					}
-				} else {
-					echo $msg_html->closed;
-				}
-			}
 			?>
 			</div>
 			</div>
@@ -482,21 +424,8 @@ if ($kunena_config->fb_profile == 'cb') {
 		</tr>
 	</tbody>
 </table>
-<!-- Begin: Message Module Positions -->
+<!-- Begin: Message Module Position -->
 <?php
-if (JDocumentHTML::countModules ( 'kunena_msg_' . $this->mmm )) {
-	?>
-<div class="kunena_msg_<?php
-	echo $this->mmm;
-	?>"><?php
-	$document = &JFactory::getDocument ();
-	$renderer = $document->loadRenderer ( 'modules' );
-	$options = array ('style' => 'xhtml' );
-	$position = 'kunena_msg_' . $this->mmm;
-	echo $renderer->render ( $position, $options, null );
-	?>
-</div>
-<?php
-}
+CKunenaTools::showModulePosition('kunena_msg_' . $this->mmm);
 ?>
-<!-- Finish: Message Module Positions -->
+<!-- Finish: Message Module Position -->

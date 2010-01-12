@@ -248,13 +248,13 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			}
 		}
 
-		// MooTools Libraries 
+		// MooTools Libraries
 		$document->addScript ( KUNENA_DIRECTURL . 'js/mootools-1.2.4-core-yc.js' );
 		$document->addScript ( KUNENA_DIRECTURL . 'js/mootools-1.2.4.2-more.js' );
 
 		// New Kunena JS for default template
-		$document->addScript ( KUNENA_DIRECTURL . 'template/default/js/default.js' );		
-	
+		$document->addScript ( KUNENA_DIRECTURL . 'template/default/js/default.js' );
+
 		if (file_exists ( KUNENA_JTEMPLATEPATH . '/css/kunena.forum.css' )) {
 			$document->addStyleSheet ( KUNENA_JTEMPLATEURL . '/css/kunena.forum.css' );
 		} else {
@@ -440,10 +440,10 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	}
 	?></td>
 		<td align="right" width="1%">
-			
+
 			<!--  <span id="kprofilebox_status"><span class="close"></span></span>
 			<a id="kprofilebox_toggle" href="#"></a> -->
-			
+
 			<!-- <img id="BoxSwitch_topprofilebox__topprofilebox_tbody" class="hideshow" src="<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif'?>" alt="" /> -->
 		</td>
 	</tr>
@@ -820,21 +820,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 
 	// Bottom Module
-
-	if (JDocumentHTML::countModules ( 'kunena_bottom' )) {
-		?>
-
-<div class="bof-bottom-modul"><?php
-		$document = &JFactory::getDocument ();
-		$renderer = $document->loadRenderer ( 'modules' );
-		$options = array ('style' => 'xhtml' );
-		$position = 'kunena_bottom';
-		echo $renderer->render ( $position, $options, null );
-		?>
-</div>
-
-<?php
-	}
+	CKunenaTools::showModulePosition( 'kunena_bottom' );
 
 	// Credits
 

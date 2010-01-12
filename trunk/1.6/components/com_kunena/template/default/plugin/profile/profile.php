@@ -33,8 +33,6 @@ $document->setTitle ( _KUNENA_USERPROFILE_PROFILE . ' - ' . stripslashes ( $kune
 
 if ($kunena_my->id) //registered only
 {
-	require_once (KUNENA_PATH_LIB . DS . 'kunena.statsbar.php');
-
 	$task = JRequest::getCmd ( 'task', 'showprf' );
 
 	switch ($task) {
@@ -219,26 +217,10 @@ function showprf($userid, $page) {
 	// *********************************
 	$api_AUP = JPATH_SITE . DS . 'components' . DS . 'com_alphauserpoints' . DS . 'helper.php';
 	if ($kunena_config->alphauserpoints && file_exists ( $api_AUP )) {
-		//Get the max# of points for any one user
-		$database = & JFactory::getDBO ();
-		$database->setQuery ( "SELECT max(points) from #__alpha_userpoints" );
-		$maxPoints = $database->loadResult ();
+		$kunena_db->setQuery ( "SELECT points from #__alpha_userpoints WHERE `userid`='" . $userid . "'" );
+		$numPoints = $kunena_db->loadResult ();
 
-		$database->setQuery ( "SELECT points from #__alpha_userpoints WHERE `userid`='" . $userid . "'" );
-		$numPoints = $database->loadResult ();
-
-		$msg_html->myGraphAUP = new phpGraph ( );
-		$msg_html->myGraphAUP->AddValue ( _KUNENA_AUP_POINTS, $numPoints );
-		$msg_html->myGraphAUP->SetRowSortMode ( 0 );
-		$msg_html->myGraphAUP->SetBarImg ( KUNENA_URLGRAPHPATH . "col" . $kunena_config->statscolor . "m.png" );
-		$msg_html->myGraphAUP->SetBarImg2 ( KUNENA_URLEMOTIONSPATH . "graph.gif" );
-		$msg_html->myGraphAUP->SetMaxVal ( $maxPoints );
-		$msg_html->myGraphAUP->SetShowCountsMode ( 2 );
-		$msg_html->myGraphAUP->SetBarWidth ( 4 ); //height of the bar
-		$msg_html->myGraphAUP->SetBorderColor ( "#333333" );
-		$msg_html->myGraphAUP->SetBarBorderWidth ( 0 );
-		$msg_html->myGraphAUP->SetGraphWidth ( 120 ); //should match column width in the <TD> above -5 pixels
-		$useGraph = 1;
+		$msg_html->points = '</strong>'. _KUNENA_AUP_POINTS .'</strong> '. $numPoints;
 	}
 	// End Integration AlphaUserPoints
 	// *******************************

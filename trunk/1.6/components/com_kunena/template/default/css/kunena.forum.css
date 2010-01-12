@@ -2088,7 +2088,7 @@ div#kprofile-stats ul li span.rank-admin {
 
 div#kprofile-rightcol  { 
 	/* width: 735px; */
-	width: 75%;
+	width: 70%;
 	float:right;
 }
 
@@ -2183,7 +2183,7 @@ span.blogspot 	{ background: url("../images/social/blogger.png") no-repeat; }
 span.flickr 	{ background: url("../images/social/flickr.png") no-repeat; }
 span.bebo 		{ background: url("../images/social/bebo.png") no-repeat; }
 	
-div.clrline {clear:both; border-top: 1px solid #cccccc; margin: 15px 0 20px 0; line-height: 10px; width: 710px;}
+div.clrline {clear:both; border-top: 1px solid #cccccc; margin: 15px 0 20px 0; line-height: 10px; /*width: 710px;*/}
 
 div#kprofile-rightcolbot {}
 

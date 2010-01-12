@@ -53,7 +53,7 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
     $kunena_db->setQuery($query);
     $totalguests = $kunena_db->loadResult();
 ?>
-<div id="kprofilebox">
+<div id="kwhoisonline">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
@@ -73,8 +73,8 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
 						<?php echo _WHO_ONLINE_NOW; ?>
                         </a>
                     </div>
-                    
-                    
+
+
                     <!--  <img id = "BoxSwitch_whoisonline__whoisonline_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/> -->
                 </th>
             </tr>
@@ -156,6 +156,7 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
         </tbody>
     </table>
     </div>
+</div>
 </div>
 </div>
 </div>

@@ -117,20 +117,22 @@ if ($kunena_my->id)
 {
 ?>
 <div id="kprofilebox">
-    <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0" class = "fb_profilebox" >
-        <tbody id = "topprofilebox_tbody">
-            <tr class = "<?php echo KUNENA_BOARD_CLASS ;?>sectiontableentry1">
-                <td  class = "td-1  fbm" align="left" width="5%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"
+	class="fb_profilebox">
+	<tbody id="topprofilebox_tbody">
+		<tr class="<?php echo KUNENA_BOARD_CLASS ;?>sectiontableentry1">
+			<td class="td-1  fbm" align="left" width="5%">
 <?php echo CKunenaLink::GetProfileLink($kunena_config, $kunena_my->id, $jr_avatar);?>
                 </td>
 
-                <td valign = "top" class = "td-2  fbm fb_profileboxcnt" align="left">
+			<td valign="top" class="td-2  fbm fb_profileboxcnt" align="left">
 <?php echo _PROFILEBOX_WELCOME; ?>, <b><?php echo $this->kunena_username; ?></b>
 
-                <br />
+			<br />
 
-                <a href = "<?php echo $jr_latestpost ; ?>"><?php
-    echo _PROFILEBOX_SHOW_LATEST_POSTS; ?> </a> | <?php echo $jr_profilelink; ?> |  <a href = "<?php echo $logoutlink;?>"><?php echo _PROFILEBOX_LOGOUT; ?></a>
+			<a href="<?php echo $jr_latestpost ; ?>"><?php
+    echo _PROFILEBOX_SHOW_LATEST_POSTS; ?> </a> | <?php echo $jr_profilelink; ?> |  <a
+				href="<?php echo $logoutlink;?>"><?php echo _PROFILEBOX_LOGOUT; ?></a>
 <?php
 $user_fields = @explode(',', $kunena_config->annmodid);
 
@@ -143,81 +145,63 @@ else {
 
 if ($is_editor) {
 ?>
-| <a href = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'show');?>"><?php echo _ANN_ANNOUNCEMENTS; ?> </a>
+| <a
+				href="<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'show');?>"><?php echo _ANN_ANNOUNCEMENTS; ?> </a>
 <?php } ?>
 | <?php echo CKunenaLink::GetSearchLink($kunena_config, 'search', '', 0, 0, _KUNENA_SEARCH_ADVSEARCH);?>
 
 </td>
-			<?php
-			if (JDocumentHTML::countModules('kunena_profilebox'))
-			{
-			?>
-
+	<?php
+	if (JDocumentHTML::countModules ( 'kunena_profilebox' )) :
+	?>
 			<td>
-				<div class = "fb_profilebox_modul">
-				<?php
-					$document	= &JFactory::getDocument();
-					$renderer	= $document->loadRenderer('modules');
-					$options	= array('style' => 'xhtml');
-					$position	= 'kunena_profilebox';
-					echo $renderer->render($position, $options, null);
-				?>
-				</div>
+		<?php
+		CKunenaTools::showModulePosition ( 'kunena_profilebox' );
+		?>
 			</td>
-			<?php
-			}
-			?>
+	<?php
+	endif;
+	?>
 
             </tr>
-        </tbody>
-    </table>
+	</tbody>
+</table>
 </div>
-    <?php
-}
-else
-{
+<?php
+} else {
     // LOGOUT AREA
     ?>
 
-    <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0"  class = "fb_profilebox">
-        <tbody id = "topprofilebox_tbody">
-            <tr class = "<?php echo KUNENA_BOARD_CLASS ;?>sectiontableentry1">
-                <td valign = "top" class = "td-1  fbm fb_profileboxcnt" align="left">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"
+	class="fb_profilebox">
+	<tbody id="topprofilebox_tbody">
+		<tr class="<?php echo KUNENA_BOARD_CLASS ;?>sectiontableentry1">
+			<td valign="top" class="td-1  fbm fb_profileboxcnt" align="left">
 <?php echo _PROFILEBOX_WELCOME; ?>, <b><?php echo _PROFILEBOX_GUEST; ?></b>
 
-                <br/> <?php echo _PROFILEBOX_PLEASE; ?>
+			<br /> <?php echo _PROFILEBOX_PLEASE; ?>
 
-                <a href = "<?php echo $loginlink;?>"><?php echo _PROFILEBOX_LOGIN; ?></a> <?php echo _PROFILEBOX_OR; ?> <a href = "<?php echo $registerlink;?>"><?php echo _PROFILEBOX_REGISTER; ?></a>.
+                <a href="<?php echo $loginlink;?>"><?php echo _PROFILEBOX_LOGIN; ?></a> <?php echo _PROFILEBOX_OR; ?> <a
+				href="<?php echo $registerlink;?>"><?php echo _PROFILEBOX_REGISTER; ?></a>.
 
-                &nbsp;&nbsp;
+			&nbsp;&nbsp; <a href="<?php echo $lostpasslink;?>"><?php echo _PROFILEBOX_LOST_PASSWORD; ?></a>
 
-                <a href = "<?php echo $lostpasslink;?>"><?php echo _PROFILEBOX_LOST_PASSWORD; ?></a>
-
-</td>
-			<?php
-			if (JDocumentHTML::countModules('kunena_profilebox'))
-			{
-			?>
-
-			<td>
-				<div class = "fb_profilebox_modul">
-				<?php
-					$document	= &JFactory::getDocument();
-					$renderer	= $document->loadRenderer('modules');
-					$options	= array('style' => 'xhtml');
-					$position	= 'kunena_profilebox';
-					echo $renderer->render($position, $options, null);
-				?>
-				</div>
 			</td>
-
-			<?php
-			}
-			?>
+	<?php
+	if (JDocumentHTML::countModules ( 'kunena_profilebox' )) :
+	?>
+			<td>
+		<?php
+		CKunenaTools::showModulePosition ( 'kunena_profilebox' );
+		?>
+			</td>
+	<?php
+	endif;
+	?>
 
             </tr>
-        </tbody>
-    </table>
+	</tbody>
+</table>
 
 <?php
 }

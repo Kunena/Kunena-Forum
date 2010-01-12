@@ -225,19 +225,16 @@ else {
     define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH .DS. 'images' .DS. 'english' .DS);
     }
 
-// absolute images path
+// absolute icons path
 define('KUNENA_ABSICONSPATH', KUNENA_ABSIMAGESPATH . 'icons/');
 
-// absolute icons path
+// absolute emoicons path
 define('KUNENA_ABSEMOTIONSPATH', KUNENA_ABSIMAGESPATH . 'emoticons/');
 
-// absolute emoticons path
-define('KUNENA_ABSGRAPHPATH', KUNENA_ABSIMAGESPATH . 'graph/');
-
-// absolute graph path
+// absolute ranks path
 define('KUNENA_ABSRANKSPATH', KUNENA_ABSIMAGESPATH . 'ranks/');
 
-// absolute ranks path
+// absolute catimages path
 define('KUNENA_ABSCATIMAGESPATH', KUNENA_PATH_UPLOADED .DS. $kunena_config->catimagepath); // Kunena category images absolute path
 
 define('KUNENA_TMPLTURL', KUNENA_DIRECTURL . "template/{$fb_cur_template}/");
@@ -253,19 +250,16 @@ else {
     define('KUNENA_URLIMAGESPATH', KUNENA_TMPLTMAINIMGURL . 'images/english/');
     }
 
-// url images path
+// url icons path
 define('KUNENA_URLICONSPATH', KUNENA_URLIMAGESPATH . 'icons/');
 
-// url icons path
+// url emoicons path
 define('KUNENA_URLEMOTIONSPATH', KUNENA_URLIMAGESPATH . 'emoticons/');
 
-// url emoticons path
-define('KUNENA_URLGRAPHPATH', KUNENA_URLIMAGESPATH . 'graph/');
-
-// url graph path
+// url ranks path
 define('KUNENA_URLRANKSPATH', KUNENA_URLIMAGESPATH . 'ranks/');
 
-// url ranks path
+// url catimages path
 define('KUNENA_URLCATIMAGES', KUNENA_LIVEUPLOADEDPATH ."/{$kunena_config->catimagepath}/"); // Kunena category images direct url
 
 if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'js' .DS. 'jquery-1.3.2.min.js'))
@@ -323,6 +317,19 @@ class CKunenaTools {
     function showButton($name, $text) {
 		return '<span class="'.$name.'"><span>'.$text.'</span></span>';
     }
+
+	function showModulePosition($position) {
+		$html = '';
+		if (JDocumentHTML::countModules ( $position )) {
+			$document = &JFactory::getDocument ();
+			$renderer = $document->loadRenderer ( 'modules' );
+			$options = array ('style' => 'xhtml' );
+			$html .= '<div class="'.$position.'">';
+			$html .= $renderer->render ( $position, $options, null );
+			$html .= '</div>';
+		}
+		echo $html;
+	}
 
     function fbGetInternalTime ($time=null) {
     	// tells internal FB representing time from UTC $time

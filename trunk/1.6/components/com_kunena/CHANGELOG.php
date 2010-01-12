@@ -35,6 +35,7 @@ Kunena 1.6.0-DEV
 
 11-Jan-2010 severdia
 # [#19380] Add tabs & code to JS file, profile page
+# [#19380] Removed forum section minimizers in prep for MT version, fixed tabs on profile page
 
 11-Jan-2010 Matias
 # [#19064] Finalized new bbcodes: fixed preview

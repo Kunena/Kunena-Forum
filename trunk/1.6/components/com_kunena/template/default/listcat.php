@@ -204,17 +204,8 @@ if (JString::strtolower ( $func ) == '') {
 			<?php
 				}
 				?></div>
-			<img
-				id="BoxSwitch_<?php
-				echo $cat->id;
-				?>__catid_<?php
-				echo $cat->id;
-				?>"
-				class="hideshow"
-				src="<?php
-				echo KUNENA_URLIMAGESPATH . 'shrink.gif';
-				?>"
-				alt="" /></th>
+			<!--  <img id="BoxSwitch_<?php echo $cat->id; ?>__catid_<?php echo $cat->id; ?>" class="hideshow" src="<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif'; ?>" alt="" /> -->
+			</th>
 		</tr>
 	</thead>
 	<tbody id="catid_<?php

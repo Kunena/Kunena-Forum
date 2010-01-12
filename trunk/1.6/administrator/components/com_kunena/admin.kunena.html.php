@@ -24,10 +24,6 @@ defined ( '_JEXEC' ) or die ( 'Restricted access' );
 class html_Kunena {
 	// Begin: HEADER FUNC
 	function showFbHeader() {
-		//Insert javascript required for poll allowed cats
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.poll.class.php');
-		$poll = new CKunenaPolls ( );
-		CKunenaPolls::AdminFillCategoriesAllowed ();
 		?>
 <style type="text/css">
 #fbadmin {
@@ -170,8 +166,6 @@ td.fbtdtitle {
 			echo _COM_A_INTEGRATION;
 			?></a> <a class="fbsubmenu" href="#plugins"><?php
 			echo _KUNENA_ADMIN_CONFIG_PLUGINS;
-			?></a><a class="fbsubmenu" href="#polls"><?php
-			echo _KUNENA_ADMIN_POLLS;
 			?></a>
 		<?php
 		}

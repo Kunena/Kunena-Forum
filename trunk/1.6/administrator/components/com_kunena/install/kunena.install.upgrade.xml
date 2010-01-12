@@ -256,7 +256,8 @@
 			`userid` int(11) default NULL,
 			`votes` int(11) default NULL,
 			`lasttime` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-			UNIQUE KEY `pollid` (`pollid`,`userid`)
+			 `lastvote` int(11) default NULL,                                                     
+       UNIQUE KEY `pollid` (`pollid`,`userid`)
 		) DEFAULT CHARSET=utf8;</query>
 		<phpfile name="kunena.special.install.php" />
 	</install>

@@ -89,11 +89,14 @@ if ( $dataspollusers[0]->userid == $kunena_my->id || $kunena_my->id == "0")//if 
 						  {
 						    if (!$kunena_config->pollallowvoteone)
 						    {?>
-						    	<tr><td colspan="4"><a href = "<?php echo CKunenaLink::GetPollURL($kunena_config, 'vote', $id, $catid);?>" /><?php echo _KUNENA_POLL_BUTTON_VOTE; ?></a>
+						    	<tr><td colspan="4"><a href = "<?php echo CKunenaLink::GetPollURL($kunena_config, 'vote', $id, $catid);?>" /><?php echo _KUNENA_POLL_BUTTON_VOTE; ?></a></td></tr>
 						  <?php
+						    }else {
+						    	?>
+								<tr><td colspan="4"><a href = <?php echo CKunenaLink::GetPollURL($kunena_config, 'changevote', $id, $catid); ?> /><?php echo _KUNENA_POLL_BUTTON_CHANGEVOTE; ?></a></td></tr>
+								<?php
 						    }
 						  } ?>
-						  		</td></tr>
                 		  </table>
 <?php
 }
@@ -108,8 +111,12 @@ elseif ((strftime("%Y-%m-%d %H:%M:%S",time()) <= $dataspollresult[0]->polltimeto
        echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".$dataspollresult[$i]->text."</li>";
     }
        echo "</ul></fieldset>";
-       $button_vote = "<input type=\"button\" value=\""._KUNENA_POLL_BUTTON_VOTE."\" onClick=\"javascript:ajax(".sizeof($dataspollresult).",".$id.");\" />";
+       $button_vote = "<input type=\"button\" value=\""._KUNENA_POLL_BUTTON_VOTE."\" onClick=\"javascript:ajax(".sizeof($dataspollresult).",".$id.",'results');\" />";
        echo "<div class=\"poll_center\" id=\"poll_buttons\">".$button_vote;
+       if($dataspollusers[0]->userid == $kunena_my->id) {
+       ?>
+       <a href = <?php echo CKunenaLink::GetPollURL($kunena_config, 'changevote', $id, $catid); ?> /><?php echo _KUNENA_POLL_BUTTON_CHANGEVOTE; ?></a><?php
+       }
 }
 else
 {
@@ -131,12 +138,16 @@ else
 	 }
 	 else
 	 {
-	 	if (!$kunena_config->pollallowvoteone)
-	 	{ ?>
-	 		<tr><td colspan="4"><a href = "<?php echo CKunenaLink::GetPollURL($kunena_config, 'vote', $id, $catid);?>" /><?php echo _KUNENA_POLL_BUTTON_VOTE; ?></a>
-	 	<?php
-	 	}
-	 } ?></td></tr>
+						    if (!$kunena_config->pollallowvoteone)
+						    {?>
+						    	<tr><td colspan="4"><a href = "<?php echo CKunenaLink::GetPollURL($kunena_config, 'vote', $id, $catid);?>" /><?php echo _KUNENA_POLL_BUTTON_VOTE; ?></a></td></tr>
+						  <?php
+						    }else {
+						    	?>
+								<tr><td colspan="4"><a href = <?php echo CKunenaLink::GetPollURL($kunena_config, 'changevote', $id, $catid); ?> /><?php echo _KUNENA_POLL_BUTTON_CHANGEVOTE; ?></a></td></tr>
+								<?php
+						    }
+	 } ?>
                 		      </table>
 <?php
 }

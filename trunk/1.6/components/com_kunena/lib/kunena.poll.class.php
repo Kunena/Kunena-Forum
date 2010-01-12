@@ -255,7 +255,7 @@ class CKunenaPolls {
 
           		if (empty($votes))
           		{
-          			$query = "INSERT INTO #__fb_polls_users (pollid,userid,votes) VALUES('$pollid','{$userid}',1)";
+          			$query = "INSERT INTO #__fb_polls_users (pollid,userid,votes,lastvote) VALUES('$pollid','{$userid}',1,'{$vote}')";
             		$kunena_db->setQuery($query);
             		$kunena_db->query();
             		check_dberror('Unable to insert poll user');
@@ -269,7 +269,7 @@ class CKunenaPolls {
           		}
          		else if ($votes == $kunena_config->pollnbvotesbyuser)
          		{
-         			$query = "UPDATE #__fb_polls_users SET votes=votes+1 WHERE pollid=$pollid AND userid={$userid}";
+         			$query = "UPDATE #__fb_polls_users SET votes=votes+1,lastvote=$vote WHERE pollid=$pollid AND userid={$userid}";
             		$kunena_db->setQuery($query);
             		$kunena_db->query();
             		check_dberror('Unable to ubdate poll users');
@@ -291,6 +291,34 @@ class CKunenaPolls {
      	{
         	echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"3\";</script>";
      	}
+   }
+   /**
+	* Update poll during edit
+	*/
+   function save_changevote($threadid,$userid,$vote)
+   {
+		$kunena_db = &JFactory::getDBO();
+		$kunena_config =& CKunenaConfig::getInstance();
+		$pollusers = CKunenaPolls::get_data_poll_users($userid,$threadid);
+
+		if ($pollusers[0]->timediff > $kunena_config->polltimebtvotes)
+      	{
+			$query = "UPDATE #__fb_polls_options SET votes=votes+1 WHERE id=$vote";
+        	$kunena_db->setQuery($query);
+        	$kunena_db->query();
+        	check_dberror('Unable to update poll options');
+
+        	$query = "UPDATE #__fb_polls_users SET votes=votes+1, lasttime=now() WHERE pollid=$threadid AND userid=$userid";
+        	$kunena_db->setQuery($query);
+        	$kunena_db->query();
+        	check_dberror('Unable to update poll users');
+
+        	echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"1\";</script>";
+      	}
+      	elseif ($pollusers[0]->timediff <= $kunena_config->polltimebtvotes)
+      	{
+        	echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"2\";</script>";
+      	}
    }
    /**
 	* Update poll during edit
@@ -369,20 +397,34 @@ class CKunenaPolls {
     	}
    }
    /**
-	* Reset poll
+	* For the user can vote a new once, need to remove one vote
 	*/
-   function reset_poll($threadid)
+   function change_vote($userid,$threadid,$lastvote)
    {
 		$kunena_db = &JFactory::getDBO();
-		$query = "UPDATE #__fb_polls_options SET votes=0 WHERE pollid=$threadid";
-    	$kunena_db->setQuery($query);
-    	$kunena_db->query();
-		check_dberror('Unable to Update Polls Options');
 
-		$query = "DELETE FROM #__fb_polls_users WHERE pollid=$threadid";
+		$query = "SELECT a.id,a.votes AS option_votes, b.votes AS user_votes, b.lastvote FROM #__fb_polls_options AS a
+				JOIN #__fb_polls_users AS b ON a.pollid=b.pollid
+				WHERE a.pollid=$threadid";
     	$kunena_db->setQuery($query);
-    	$kunena_db->query();
-		check_dberror('Unable to Delete Polls Options');
+    	$poll_options_user = $kunena_db->loadObjectList();
+		check_dberror('Unable to load Polls Options');
+
+		foreach ($poll_options_user as $row) {
+			if ($row->id == $row->lastvote) {
+				if($row->option_votes > '0' && $row->user_votes > '0') {
+					$query = "UPDATE #__fb_polls_options SET votes=votes-1 WHERE id=$lastvote AND pollid=$threadid";
+    				$kunena_db->setQuery($query);
+    				$kunena_db->query();
+					check_dberror('Unable to Update Polls Options');
+
+					$query = "UPDATE #__fb_polls_users SET votes=votes-1 WHERE userid=$userid AND pollid=$threadid";
+    				$kunena_db->setQuery($query);
+    				$kunena_db->query();
+					check_dberror('Unable to Update Polls Users');
+				}
+			}
+		}
    }
    /**
 	* Delete a poll

@@ -624,10 +624,16 @@ class CKunenaTools {
 
         // start iterating here
         foreach ($items as $id => $value) {
-            $kunena_db->setQuery("SELECT id, catid, parent, thread, subject, userid FROM #__fb_messages WHERE id='{$id}'");
+            $kunena_db->setQuery("SELECT a.id, b.id AS poll_exist, catid, parent, thread, subject, userid FROM #__fb_messages AS a
+            					JOIN #__fb_polls AS b ON a.id=b.threadid WHERE a.id='{$id}'");
             $mes = $kunena_db->loadObject();
             if (!$mes) return -2;
             $thread = $mes->thread;
+
+            if($mes->poll_exist) {
+            	//remove of poll
+            	CKunenaPolls::delete_poll($id);
+            }
 
             if ($mes->parent == 0) {
                 // this is the forum topic; if removed, all children must be removed as well.

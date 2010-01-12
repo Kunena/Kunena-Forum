@@ -31,7 +31,7 @@ function insert_text(textString,nb)
 }
 
 //Send the user vote by ajax for save it in the database
-function ajax(nb,id)
+function ajax(nb,id,funcdo)
 {     
     var datano = "0";
     //Get the element that has selectionned by the user
@@ -49,7 +49,7 @@ function ajax(nb,id)
         }
         xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
-          var datasendfromserver = xhr.responseText;                  
+          var datasendfromserver = xhr.responseText;          
           if(datasendfromserver.match("infoserver=\"1\"")){
         	  var nbimages = '0';
         	  insert_text(KUNENA_POLL_SAVE_ALERT_OK,nbimages);
@@ -69,7 +69,7 @@ function ajax(nb,id)
         }
 
         };
-        xhr.open("GET", jliveurl+"index.php?option=com_kunena&func=poll&do=results&radio="+data+"&id="+id, true);
+        xhr.open("GET", jliveurl+"index.php?option=com_kunena&func=poll&do="+funcdo+"&radio="+data+"&id="+id, true);
         xhr.send(null);
       }
 

@@ -160,6 +160,7 @@ define('_KUNENA_POLL_ADD_OPTION', 'Add a new option');
 define('_KUNENA_POLL_REM_OPTION', 'Remove an option');
 define('_KUNENA_POLL_OPTION_NAME', 'Option');
 define('_KUNENA_POLL_BUTTON_VOTE', 'Vote');
+define('_KUNENA_POLL_BUTTON_CHANGEVOTE', 'Change your vote');
 define('_KUNENA_POLL_BUTTON_RESULT', 'View results');
 define('_KUNENA_POLL_NO_VOTE', 'No vote');
 define('_KUNENA_POLL_VOTERS_TOTAL', 'Total number of voters: ');

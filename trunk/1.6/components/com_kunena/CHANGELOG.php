@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+13-Jan-2010 Xillibit
+# [#19103] Language strings should be escaped in javascript, added in myprofile and tested in write post
+
 12-Jan-2010 severdia
 + [#19380] Add moderator tab to Profile page, new language strings
 ^ [#19380] Added JS slider links, needs testing

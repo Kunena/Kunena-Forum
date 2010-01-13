@@ -1461,6 +1461,20 @@ td.fbtdtitle {
 		echo _KUNENA_COM_A_REPORT_DESC?>
 		</td>
 	</tr>
+	<tr align="center" valign="middle">
+		<td align="left" valign="top"><?php
+		echo _KUNENA_COM_A_ORDERING_SYSTEM?>
+		</td>
+
+		<td align="left" valign="top"><?php
+		echo $lists ['ordering_system'];
+		?>
+		</td>
+
+		<td align="left" valign="top"><?php
+		echo _KUNENA_COM_A_REPORT_ORDERING_SYSTEM_DESC?>
+		</td>
+	</tr>
 </table>
 </fieldset>
 

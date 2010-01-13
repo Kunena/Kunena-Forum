@@ -376,6 +376,8 @@ class CKunenaConfig extends CKunenaConfigBase {
     var $pollresultsuserslist = 1;
     //New for 1.6 -> Max length for personnal text
     var $maxpersotext = 50;
+    //New for 1.6 -> Choose ordering system
+    var $ordering_system = 'new_ord';
 
 	public function __construct($userinfo = null) {
 		parent::__construct ();

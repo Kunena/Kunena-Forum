@@ -49,7 +49,29 @@ if ($kunena_config->fb_profile == 'cb') {
 				?>sectiontableheader"><a name="<?php
 				echo $msg_html->id;
 				?>"></a> <?php
-				echo CKunenaLink::GetSamePageAnkerLink ( $msg_html->id, '#' . $msg_html->id )?>
+				if ($kunena_config->ordering_system == 'old_ord') {
+					echo CKunenaLink::GetSamePageAnkerLink ( $msg_html->id, '#' . $msg_html->id );
+				} else {
+					if ($kunena_config->default_sort == 'desc') {
+						if ( $page == '1') {
+							$numb = $total--;
+							echo CKunenaLink::GetSamePageAnkerLink($msg_html->id,'#'.$numb);
+						} else {
+							$nums = $total - $limitstart;
+							$numb = $nums;
+							echo CKunenaLink::GetSamePageAnkerLink($msg_html->id,'#'.$numb);
+							$total--;
+						}
+					} else {
+						if ( $page == '1') {
+							echo CKunenaLink::GetSamePageAnkerLink($msg_html->id,'#'.$this->mmm);
+						}else {
+							$nums = $this->mmm + $limitstart;
+							echo CKunenaLink::GetSamePageAnkerLink($msg_html->id,'#'.$nums);
+						}
+					}
+				}
+				?>
 			</th>
 		</tr>
 

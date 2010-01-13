@@ -819,6 +819,11 @@ function showConfig($option) {
   	$lists['pollenabled'] = JHTML::_('select.genericlist', $yesno, 'cfg_pollenabled', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pollenabled);
   	$lists['showpoppollstats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpoppollstats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showpoppollstats);
   	$lists['pollresultsuserslist'] = JHTML::_('select.genericlist', $yesno, 'cfg_pollresultsuserslist', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pollresultsuserslist);
+  	//New for 1.6 -> Choose ordering system
+  	$ordering_system_list = array ();
+  	$ordering_system_list[] = JHTML::_('select.option', 'new_ord', _KUNENA_COM_A_ORDERING_SYSTEM_NEW);
+  	$ordering_system_list[] = JHTML::_('select.option', 'old_ord',_KUNENA_COM_A_ORDERING_SYSTEM_OLD);
+  	$lists['ordering_system'] = JHTML::_('select.genericlist', $ordering_system_list, 'cfg_ordering_system', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->ordering_system);
     html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 

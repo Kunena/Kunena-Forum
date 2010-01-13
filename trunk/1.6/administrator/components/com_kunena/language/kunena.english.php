@@ -26,6 +26,11 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.6.0
 
+//Ordering system
+define('_KUNENA_COM_A_ORDERING_SYSTEM', 'Choose the way to ordering the messages in view');
+define('_KUNENA_COM_A_REPORT_ORDERING_SYSTEM_DESC', 'Choose the way to ordering the messages in view, with old ordering using IDs or new ordering, using numbers ordered');
+define('_KUNENA_COM_A_ORDERING_SYSTEM_OLD', 'Old ordering sytem');
+define('_KUNENA_COM_A_ORDERING_SYSTEM_NEW', 'New ordering sytem');
 
 // Moderate Tools
 define('_KUNENA_MODERATE_USERIPS', 'User IPs');

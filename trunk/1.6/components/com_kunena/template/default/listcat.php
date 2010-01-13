@@ -221,7 +221,6 @@ if (JString::strtolower ( $func ) == '') {
 							$numtopics = $singlerow->numTopics;
 							$numreplies = $singlerow->numPosts;
 							$lastPosttime = $singlerow->time_last_msg;
-							$lastptime = KUNENA_timeformat ( CKunenaTools::fbGetShowTime ( $singlerow->time_last_msg ) );
 
 							$forumDesc = stripslashes ( smile::smileReplace ( $singlerow->description, 0, $kunena_config->disemoticons, $kunena_emoticons ) );
 							$forumDesc = nl2br ( $forumDesc );
@@ -529,7 +528,8 @@ else {
 								echo CKunenaLink::GetProfileLink ( $kunena_config, $latestuserid, $latestname );
 								echo ' ';
 								echo _GEN_ON;
-								echo ' ' . $lastptime;
+								echo ' <span title="'.CKunenaTimeformat::showDate($singlerow->time_last_msg, 'config_post_dateformat_hover').'">' . CKunenaTimeformat::showDate($singlerow->time_last_msg, 'config_post_dateformat').'</span>';
+
 								// echo CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $singlerow->catid, $latestthread, $latestthreadpages, $kunena_config->messages_per_page, isset ( $kunena_icons ['latestpost'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '"/>' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"  alt="' . _SHOW_LAST . '"/>', $latestid );
 								?>
 			</div>

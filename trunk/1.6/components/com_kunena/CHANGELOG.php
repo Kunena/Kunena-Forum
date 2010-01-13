@@ -46,6 +46,7 @@ Kunena 1.6.0-DEV
 
 13-Jan-2010 Matias
 + [#19380] New profile page: forum/profile. Not yet activated in menu, links
+# [#19397] Fix date format in Kunena, make it configurable
 
 13-Jan-2010 Xillibit
 # [#19103] Language strings should be escaped in javascript, added in myprofile and tested in write post

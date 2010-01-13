@@ -144,9 +144,6 @@ else {
 			$kunena_db->setQuery ( "SELECT MAX(time) FROM #__fb_messages WHERE catid='{$singlerow->id}' AND hold='0' AND moved!='1'" );
 			$lastPosttime = $kunena_db->loadResult ();
 			check_dberror ( "Unable to get max time." );
-			//changed lastPosttime to lastptime
-			$lastptime = KUNENA_timeformat ( CKunenaTools::fbGetShowTime ( $lastPosttime ) );
-			$lastPosttime = ( int ) $lastPosttime;
 
 			if ($kunena_my->id != 0) {
 				//    get all threads with posts after the users last visit; don't bother for guests
@@ -401,9 +398,11 @@ else {
 				echo CKunenaLink::GetProfileLink ( $kunena_config, $latestuserid, $latestname, $rel = 'nofollow' );
 				?>
 
-			| <?php
-				echo $lastptime;
-				?> <?php
+			| <span title="<?php
+				echo CKunenaTimeformat::showDate($lastPosttime, 'config_post_dateformat_hover');
+				?>"><?php
+				echo CKunenaTimeformat::showDate($lastPosttime, 'config_post_dateformat');
+				?></span> <?php
 				echo CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $latestcatid, $latestthread, $latestpage, $kunena_config->messages_per_page, (isset ( $kunena_icons ['latestpost'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'), $latestid, $rel = 'nofollow' );
 				?>
 			</div>

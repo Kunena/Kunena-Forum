@@ -129,14 +129,6 @@ if ($func != 'mylatest')
 	if (count($catlist)) $latestcats = " AND catid IN (". implode(',', $catlist) .") ";
 }
 
- //check if $sel has a reasonable value and not a Unix timestamp:
-$since = false;
-if ($sel == "0")
-{
-	$lastvisit = date(_DATETIME, $querytime);
-	$since = true;
-}
-
 if ($func == "mylatest")
 {
 	$document->setTitle(_KUNENA_MY_DISCUSSIONS . ' - ' . stripslashes($kunena_config->board_title));

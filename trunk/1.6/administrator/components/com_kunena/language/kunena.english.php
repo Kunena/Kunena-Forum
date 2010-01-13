@@ -26,6 +26,18 @@ defined( '_JEXEC' ) or die();
 
 // 1.6.0
 
+// Date / time
+DEFINE('_KUNENA_OPTION_DATEFORMAT_NONE', 'Hide time');
+DEFINE('_KUNENA_CFG_POST_DATEFORMAT','Message Time Format');
+DEFINE('_KUNENA_CFG_POST_DATEFORMAT_DESC','Choose time format for messages shown in the forum.');
+DEFINE('_KUNENA_CFG_POST_DATEFORMAT_HOVER','Hover Message Time Format');
+DEFINE('_KUNENA_CFG_POST_DATEFORMAT_HOVER_DESC','Choose time format, which is shown when you hover on message time.');
+DEFINE('_KUNENA_DT_DATE_TODAY_FMT','Today');
+DEFINE('_KUNENA_DT_DATETIME_TODAY_FMT','Today %H:%M');
+DEFINE('_KUNENA_DT_DATE_YESTERDAY_FMT','Yesterday');
+DEFINE('_KUNENA_DT_DATETIME_YESTERDAY_FMT','Yesterday %H:%M');
+DEFINE('_KUNENA_DT_DATETIME_UNDEFINED','Undefined');
+
 //Ordering system
 define('_KUNENA_COM_A_ORDERING_SYSTEM', 'Choose the way to ordering the messages in view');
 define('_KUNENA_COM_A_REPORT_ORDERING_SYSTEM_DESC', 'Choose the way to ordering the messages in view, with old ordering using IDs or new ordering, using numbers ordered');
@@ -160,6 +172,8 @@ DEFINE('_KUNENA_MYPROFILE_FLICKR', 'Flickr');
 DEFINE('_KUNENA_MYPROFILE_FLICKR_DESC', 'This is your Flickr URL.');
 DEFINE('_KUNENA_MYPROFILE_BEBO', 'Bebo');
 DEFINE('_KUNENA_MYPROFILE_BEBO_DESC', 'This is your Bebo URL.');
+
+DEFINE('_KUNENA_MYPROFILE_LOCAL_TIME', 'Local time');
 
 // Category subscriptions
 define('_VIEW_SUBSCRIBECATTXT', 'Subscribe to this category and get notified by mail about new posts.');

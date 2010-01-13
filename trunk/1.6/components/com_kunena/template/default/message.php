@@ -81,8 +81,6 @@ if ($kunena_config->fb_profile == 'cb') {
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td align="left"><?php
-					$msg_time_since = _KUNENA_TIME_SINCE;
-					$msg_time_since = str_replace ( '%time%', time_since ( $this->kunena_message->time, CKunenaTools::fbGetInternalTime () ), $msg_time_since );
 
 					if ($this->prevCheck < $this->kunena_message->time && ! in_array ( $this->kunena_message->thread, $this->read_topics )) {
 						$msgtitle = 'msgtitle_new';
@@ -97,9 +95,9 @@ if ($kunena_config->fb_profile == 'cb') {
 						?>
 					</span> <span class="msgdate"
 						title="<?php
-						echo $msg_html->date;
+						echo CKunenaTimeformat::showDate($this->kunena_message->time, 'config_post_dateformat_hover');
 						?>"><?php
-						echo $msg_time_since;
+						echo CKunenaTimeformat::showDate($this->kunena_message->time, 'config_post_dateformat');
 						?></span></td>
 
 					<td align="right"><span class="msgkarma"> <?php
@@ -384,8 +382,8 @@ if ($kunena_config->fb_profile == 'cb') {
 			<div class="fb_message_editMarkUp_cover"><?php
 			if ($this->kunena_message->modified_by) {
 
-				echo '<span class="fb_message_editMarkUp">' . _KUNENA_EDITING_LASTEDIT . ': ' .
-					date ( _DATETIME, $this->kunena_message->modified_time ) . ' ' . _KUNENA_BY . ' ' .
+				echo '<span class="fb_message_editMarkUp" title="'.CKunenaTimeformat::showDate($this->kunena_message->modified_time, 'config_post_dateformat_hover').'">' . _KUNENA_EDITING_LASTEDIT . ': ' .
+					CKunenaTimeformat::showDate($this->kunena_message->modified_time, 'config_post_dateformat' ) . ' ' . _KUNENA_BY . ' ' .
 					($kunena_config->username ? $this->kunena_message->modified_username : $this->kunena_message->modified_name) . '.';
 				if ($this->kunena_message->modified_reason) {
 					echo _KUNENA_REASON . ': ' . kunena_htmlspecialchars ( stripslashes ( $this->kunena_message->modified_reason ) );

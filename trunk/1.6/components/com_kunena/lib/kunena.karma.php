@@ -56,7 +56,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                 // - if he specifies the user that will have the karma modified
                 if ($kunena_config->showkarma && $kunena_my->id != "" && $kunena_my->id != 0 && $do != '' && $userid != '')
                 {
-                    $time = CKunenaTools::fbGetInternalTime();
+                    $time = CKunenaTimeformat::internalTime();
 
                     if ($kunena_my->id != $userid)
                     {

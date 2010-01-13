@@ -58,9 +58,10 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 					<li><span class="usertype">User Type:</span><span><?php echo $this->user->usertype; ?></span></li>
 					<!-- The class on the span below should be rank then hyphen then the rank name -->
 					<li><span class="rankname">User Rank:</span><span><?php echo $this->rank->rank_title; ?><br /><img src="<?php echo $this->rank->rank_image; ?>" alt="<?php echo $this->rank->rank_title; ?>" /></span></li>
-					<li><strong><?php echo _KUNENA_MYPROFILE_REGISTERDATE; ?>:</strong> <?php echo CKunenaTools::showDate($this->user->registerDate, _KUNENA_DT_DATE_FMT); ?></li>
-					<li><strong><?php echo _KUNENA_MYPROFILE_LASTVISITDATE; ?>:</strong> <?php echo CKunenaTools::showDate($this->user->lastvisitDate, _KUNENA_DT_DATE_FMT); ?></li>
-					<li><strong><?php echo _KUNENA_MYPROFILE_TIMEZONE; ?>:</strong> GMT <?php printf('%+d:%02d', $this->timezone, ($this->timezone*60)%60); ?></li>
+					<li><strong><?php echo _KUNENA_MYPROFILE_REGISTERDATE; ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->registerDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->registerDate, 'date_today', 'utc'); ?></span></li>
+					<li><strong><?php echo _KUNENA_MYPROFILE_LASTVISITDATE; ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'date_today', 'utc'); ?></span></li>
+					<li><strong><?php echo _KUNENA_MYPROFILE_TIMEZONE; ?>:</strong> GMT <?php echo CKunenaTimeformat::showTimezone($this->timezone); ?></li>
+					<li><strong><?php echo _KUNENA_MYPROFILE_LOCAL_TIME; ?>:</strong> <?php echo CKunenaTimeformat::showDate('now', 'time', 0, $this->timezone); ?></li>
 					<li><strong><?php echo _KUNENA_MYPROFILE_POSTS; ?>:</strong> <?php echo $this->profile->posts; ?></li>
 					<!-- Profile view*s*? -->
 					<li><strong><?php echo _KUNENA_MYPROFILE_PROFILEVIEW; ?>:</strong> <?php echo $this->profile->uhits; ?></li>
@@ -101,7 +102,7 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 						<li><span class="location"></span><strong><?php echo _KUNENA_MYPROFILE_LOCATION; ?>:</strong> <a href="http://maps.google.com?q=<?php echo kunena_htmlspecialchars(stripslashes($this->profile->location)); ?>" target="_blank"><?php echo kunena_htmlspecialchars(stripslashes($this->profile->location)); ?></a></li>
 						<!--  The gender determines the suffix on the span class- gender-male & gender-female  -->
 						<li><span class="gender-<?php if( $this->profile->gender == 1 ) { echo _KUNENA_MYPROFILE_MALEC; } else if ( $this->profile->gender == 2 ) { echo _KUNENA_MYPROFILE_FEMALEC; }?>"></span><strong><?php echo _KUNENA_MYPROFILE_GENDER; ?>:</strong> <?php if( $this->profile->gender == 1 ) { echo _KUNENA_MYPROFILE_MALE; } else if ( $this->profile->gender == 2 ) { echo _KUNENA_MYPROFILE_FEMALE; }?></li>
-						<li class="bd"><span class="birthdate"></span><strong><?php echo _KUNENA_MYPROFILE_BIRTHDATE; ?>:</strong> <?php echo CKunenaTools::showDate($this->profile->birthdate, _KUNENA_DT_DATE_FMT); ?> <a href="#" title="<?php echo _KUNENA_MYPROFILE_BIRTHDAYREMIND; ?>"><span class="bday-remind"></span></a></li>
+						<li class="bd"><span class="birthdate"></span><strong><?php echo _KUNENA_MYPROFILE_BIRTHDATE; ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->profile->birthdate, 'ago'); ?>"><?php echo CKunenaTimeformat::showDate($this->profile->birthdate, 'date'); ?></span> <a href="#" title="<?php echo _KUNENA_MYPROFILE_BIRTHDAYREMIND; ?>"><span class="bday-remind"></span></a></li>
 					</ul>
 				</div>
 			</div>

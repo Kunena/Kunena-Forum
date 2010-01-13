@@ -827,7 +827,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 					$msg_html->location = isset ( $kunena_icons ['msglocation'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msglocation'] . '" border="0" alt="' . _KUNENA_MYPROFILE_LOCATION . ': ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->location ) ) . '" title="' . _KUNENA_MYPROFILE_LOCATION . ': ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->location ) ) . '" />' : ' ' . _KUNENA_MYPROFILE_LOCATION . ': ' . kunena_htmlspecialchars ( stripslashes ( $userinfo->location ) ) . '';
 				}
 				if ($userinfo->birthdate != '0001-01-01' and $userinfo->birthdate != '0000-00-00' and $userinfo->birthdate != '') {
-					$birthday = strftime ( _KUNENA_DT_MONTHDAY_FMT, strtotime ( $userinfo->birthdate ) );
+					$birthday = CKunenaTimeformat::showDate($userinfo->birthdate, 'date');
 					$msg_html->birthdate = isset ( $kunena_icons ['msgbirthdate'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msgbirthdate'] . '" border="0" alt="' . _KUNENA_PROFILE_BIRTHDAY . ': ' . $birthday . '" title="' . _KUNENA_PROFILE_BIRTHDAY . ': ' . $birthday . '" />' : ' ' . _KUNENA_PROFILE_BIRTHDAY . ': ' . $birthday . '';
 				}
 
@@ -893,8 +893,6 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 				$fb_subject_txt = stripslashes ( $fb_subject_txt );
 				$msg_html->subject = $fb_subject_txt;
 
-				$msg_html->date = date ( _DATETIME, $this->kunena_message->time );
-
 				$fb_message_txt = stripslashes ( $this->kunena_message->message );
 				$fb_message_txt = smile::smileReplace ( $fb_message_txt, 0, $kunena_config->disemoticons, $kunena_emoticons );
 				$fb_message_txt = nl2br ( $fb_message_txt );
@@ -946,7 +944,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 							if (! $modtime) {
 								$modtime = $this->kunena_message->time;
 							}
-							if (($modtime + (( int ) $kunena_config->useredittime)) >= CKunenaTools::fbGetInternalTime ()) {
+							if (($modtime + (( int ) $kunena_config->useredittime)) >= CKunenaTimeformat::internalTime ()) {
 								$allowEdit = 1;
 							}
 						}

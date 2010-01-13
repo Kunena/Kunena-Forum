@@ -379,8 +379,11 @@ class CKunenaConfig extends CKunenaConfigBase {
     var $maxpersotext = 50;
     //New for 1.6 -> Choose ordering system
     var $ordering_system = 'new_ord';
+    // New for 1.6 -> dateformat
+    var $post_dateformat         = 'ago'; // See CKunenaTimeformat::showDate()
+    var $post_dateformat_hover   = 'datetime'; // See CKunenaTimeformat::showDate()
 
-	public function __construct($userinfo = null) {
+    public function __construct($userinfo = null) {
 		parent::__construct ();
 		$this->load ( $userinfo );
 	}

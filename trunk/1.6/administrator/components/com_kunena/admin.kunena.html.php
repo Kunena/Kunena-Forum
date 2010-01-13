@@ -1104,6 +1104,36 @@ td.fbtdtitle {
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
+		echo _KUNENA_CFG_POST_DATEFORMAT?>
+		</td>
+
+		<td align="left" valign="top"><?php
+		echo $lists ['post_dateformat'];
+		?>
+		</td>
+
+		<td align="left" valign="top"><?php
+		echo _KUNENA_CFG_POST_DATEFORMAT_DESC?>
+		</td>
+	</tr>
+
+	<tr align="center" valign="middle">
+		<td align="left" valign="top"><?php
+		echo _KUNENA_CFG_POST_DATEFORMAT_HOVER?>
+		</td>
+
+		<td align="left" valign="top"><?php
+		echo $lists ['post_dateformat_hover'];
+		?>
+		</td>
+
+		<td align="left" valign="top"><?php
+		echo _KUNENA_CFG_POST_DATEFORMAT_HOVER_DESC?>
+		</td>
+	</tr>
+
+	<tr align="center" valign="middle">
+		<td align="left" valign="top"><?php
 		echo _COM_A_SHOWNEW?></td>
 
 		<td align="left" valign="top"><?php
@@ -1694,7 +1724,8 @@ td.fbtdtitle {
 		<td align="left" valign="top"><?php
 		echo _COM_A_PESONNALTEXT?></td>
 
-		<td align="left" valign="top"><input type="text" name="cfg_maxpersotext"
+		<td align="left" valign="top"><input type="text"
+			name="cfg_maxpersotext"
 			value="<?php
 		echo $kunena_config->maxpersotext;
 		?>" /></td>

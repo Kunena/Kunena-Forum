@@ -94,22 +94,6 @@ function list_users()
     HTML_userlist_content::showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search);
 }
 
-function convertDate($date)
-{
-	// used for non-FB dates only!
-    $format = _KUNENA_USRL_DATE_FORMAT;
-
-    if ($date != "0000-00-00 00:00:00" && preg_match('`(\d{4})-(\d{2})-(\d{2})[[:space:]](\d{2}):(\d{2}):(\d{2})`', $date, $regs))
-    {
-        $date = mktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
-        $date = $date > -1 ? strftime($format, CKunenaTools::fbGetShowTime($date, 'UTC')) : '-';
-    }
-    else {
-        $date = _KUNENA_USRL_NEVER;
-    }
-
-    return $date;
-}
 ?>
 
 <?php
@@ -512,11 +496,11 @@ class HTML_userlist_content
                                     }
 
                                     if ($kunena_config->userlist_joindate) {
-                                        echo "\t\t<td  class=\"td-10 fbs\"  align=\"center\">" . convertDate($ulrow->registerDate) . "</td>\n";
+                                        echo "\t\t<td  class=\"td-10 fbs\"  align=\"center\" title=\"".CKunenaTimeformat::showDate($ulrow->registerDate, 'ago', 'utc')."\">" . CKunenaTimeformat::showDate($ulrow->registerDate, 'datetime_today', 'utc') . "</td>\n";
                                     }
 
                                     if ($kunena_config->userlist_lastvisitdate) {
-                                        echo "\t\t<td  class=\"td-11 fbs\"  align=\"center\">" . convertDate($ulrow->lastvisitDate) . "</td>\n";
+                                        echo "\t\t<td  class=\"td-11 fbs\"  align=\"center\" title=\"".CKunenaTimeformat::showDate($ulrow->lastvisitDate, 'ago', 'utc')."\">" . CKunenaTimeformat::showDate($ulrow->lastvisitDate, 'datetime_today', 'utc') . "</td>\n";
                                     }
                                     ?>
 

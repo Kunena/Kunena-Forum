@@ -55,7 +55,6 @@ $annsdescription = nl2br($annsdescription);
 $anndescription = stripslashes(smile::smileReplace($ann->description, 0, $kunena_config->disemoticons, $kunena_emoticons));
 $anndescription = nl2br($anndescription);
 
-$anncreated = KUNENA_timeformat(strtotime($ann->created));
 $annpublished = $ann->published;
 $annshowdate = $ann->showdate;
 
@@ -105,7 +104,7 @@ if ($annID > 0) {
                         ?>
 
                             <div class = "anncreated">
-<?php echo $anncreated; ?>
+<?php echo CKunenaTimeformat::showDate($ann->created, 'date_today'); ?>
                             </div>
 
                         <?php

@@ -332,12 +332,6 @@ class CKunenaTools {
 		echo $html;
 	}
 
-	function showDate($time, $format=_KUNENA_DT_DATETIME_FMT) {
-		jimport('joomla.utilities.date');
-		$date = new JDate($time);
-		return $date->toFormat($format);
-	}
-
 	function parseText($txt) {
 		if (!$txt) return;
 		$txt = stripslashes ( $txt );
@@ -359,38 +353,6 @@ class CKunenaTools {
 		$txt = CKunenaTools::prepareContent ( $txt );
 		return $txt;
 	}
-
-    function fbGetInternalTime ($time=null) {
-    	// tells internal FB representing time from UTC $time
-        $kunena_config =& CKunenaConfig::getInstance();
-        // Prevent zeroes
-        if($time===0) {
-          return 0;
-        }
-        if($time===null) {
-          $time = time();
-        }
-        return $time + ($kunena_config->board_ofset * 3600);
-    }
-
-    function fbGetShowTime ($time=null, $space='FB') {
-    	// converts internal (FB)|UTC representing time to display time
-    	// could consider user properties (zones) for future
-		$kunena_db = &JFactory::getDBO();
-        $kunena_config =& CKunenaConfig::getInstance();
-        // Prevent zeroes
-        if($time===0) {
-          return 0;
-        }
-        if($time===null) {
-          $time = CKunenaTools::fbGetInternalTime();
-          $space = 'FB';
-        }
-        if($space=='UTC') {
-          return $time + ($kunena_config->board_ofset * 3600);
-        }
-        return $time;
-    }
 
     function reCountUserPosts() {
     	$kunena_db = &JFactory::getDBO();
@@ -795,32 +757,48 @@ class CKunenaTools {
 		}
 
 		$rank = new stdClass();
-		$rank->id = false;
+		$rank->rank_id = false;
 		$rank->rank_title = _VIEW_USER;
 		$rank->rank_min = 0;
 		$rank->rank_special = 0;
-		$rank->rank_image = 'rank5.gif';
+		$rank->rank_image = 'rank6.gif';
 
 		if ($profile->rank != '0') {
 			if (isset($rank[$profile->rank])) $rank = $rank[$profile->rank];
 		}
 		else if ($profile->rank == '0' && self::isAdmin($profile->userid)) {
-			$rank->id = 0;
+			$rank->rank_id = 0;
 			$rank->rank_title = _RANK_ADMINISTRATOR;
 			$rank->rank_special = 1;
 			$rank->rank_image = 'rankadmin.gif';
+			jimport ('joomla.filesystem.file');
+			foreach ($ranks as $cur) {
+				if ($cur->rank_special == 1 && JFile::stripExt($cur->rank_image) == 'rankadmin') {
+					$rank = $cur;
+					break;
+				}
+			}
 		}
 		else if ($profile->rank == '0' && self::isModerator($profile->userid)) {
-			$rank->id = 0;
+			$rank->rank_id = 0;
 			$rank->rank_title = _RANK_MODERATOR;
 			$rank->rank_special = 1;
 			$rank->rank_image = 'rankmod.gif';
-		}
-		if ($rank->id === false) {
-			//post count rank
-			$rank->id = 0;
+			jimport ('joomla.filesystem.file');
 			foreach ($ranks as $cur) {
-				if ($cur->rank_special == 0 && $cur->rank_min <= $this->profile->posts && $cur->rank_min > $rank->rank_min) $rank = $cur;
+				if ($cur->rank_special == 1 && JFile::stripExt($cur->rank_image) == 'rankadmin') {
+					$rank = $cur;
+					break;
+				}
+			}
+		}
+		if ($rank->rank_id === false) {
+			//post count rank
+			$rank->rank_id = 0;
+			foreach ($ranks as $cur) {
+				if ($cur->rank_special == 0 && $cur->rank_min <= $profile->posts && $cur->rank_min >= $rank->rank_min) {
+					$rank = $cur;
+				}
 			}
 		}
 		$rank->rank_image = KUNENA_URLRANKSPATH . $rank->rank_image;
@@ -1476,70 +1454,6 @@ function fbGetArrayInts($name) {
 
     return $array;
 }
-
-    function time_since($older_date, $newer_date)
-    {
-    // ToDo: return code plus string to decide concatenation.
-    // array of time period chunks
-    $chunks = array(
-    array(60 * 60 * 24 * 365 , _KUNENA_DATE_YEAR, _KUNENA_DATE_YEARS),
-    array(60 * 60 * 24 * 30 , _KUNENA_DATE_MONTH, _KUNENA_DATE_MONTHS),
-    array(60 * 60 * 24 * 7, _KUNENA_DATE_WEEK, _KUNENA_DATE_WEEKS),
-    array(60 * 60 * 24 , _KUNENA_DATE_DAY, _KUNENA_DATE_DAYS),
-    array(60 * 60 , _KUNENA_DATE_HOUR, _KUNENA_DATE_HOURS),
-    array(60 , _KUNENA_DATE_MINUTE, _KUNENA_DATE_MINUTES),
-    );
-
-    // $newer_date will equal false if we want to know the time elapsed between a date and the current time
-    // $newer_date will have a value if we want to work out time elapsed between two known dates
-    //$newer_date = ($newer_date == false) ? CKunenaTools::fbGetInternalTime() : $newer_date;
-
-    // difference in seconds
-    $since = $newer_date - $older_date;
-
-    // no negatives!
-    if($since<=0) {
-      return '?';
-    }
-
-    // we only want to output two chunks of time here, eg:
-    // x years, xx months
-    // x days, xx hours
-    // so there's only two bits of calculation below:
-
-    // step one: the first chunk
-    for ($i = 0, $j = count($chunks); $i < $j; $i++)
-        {
-        $seconds = $chunks[$i][0];
-        $name = $chunks[$i][1];
-        $names = $chunks[$i][2];
-
-        // finding the biggest chunk (if the chunk fits, break)
-        if (($count = floor($since / $seconds)) != 0)
-            {
-            break;
-            }
-        }
-
-    // set output var
-    $output = ($count == 1) ? '1 '.$name : $count.' '.$names ;
-
-    // step two: the second chunk
-    if ($i + 1 < $j)
-        {
-        $seconds2 = $chunks[$i + 1][0];
-        $name2 = $chunks[$i + 1][1];
-        $names2 = $chunks[$i + 1][2];
-
-        if (($count2 = floor(($since - ($seconds * $count)) / $seconds2)) != 0)
-            {
-            // add to output var
-            $output .= ($count2 == 1) ? ', 1 '.$name2 : ', '.$count2.' '.$names2;
-            }
-        }
-
-    return $output;
-    }
 
 function fbReturnDashed (&$string, $key) {
             $string = "_".$string."_";

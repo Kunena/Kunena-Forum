@@ -294,13 +294,11 @@ if (count ( $this->messages [0] ) > 0) {
 			<?php
 		}
 		?>
-			<div class="fbs"><!-- By --> <span class="topic_posted_time"><?php
+			<div class="fbs"><!-- By --> <span class="topic_posted_time" title="<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat_hover'); ?>"><?php
 		echo _KUNENA_POSTED_AT?>
 			<?php
-		echo time_since ( $leaf->time, time () + ($kunena_config->board_ofset * 3600) );
-		?>
-			<?php
-		echo _KUNENA_AGO?> </span> <?php
+			echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat');
+		?></span> <?php
 		if ($leaf->name) {
 			echo '<span class="topic_by">';
 			echo _GEN_BY . ' ' . CKunenaLink::GetProfileLink ( $kunena_config, $leaf->userid, $leaf->name );
@@ -387,11 +385,8 @@ if (count ( $this->messages [0] ) > 0) {
 			echo ' ' . _GEN_BY . ' ' . CKunenaLink::GetProfileLink ( $kunena_config, $last_reply [$leaf->id]->userid, stripslashes ( $last_reply [$leaf->id]->name ), 'nofollow', 'topic_latest_post_user' );
 		?>
 			</span> <!-- /Latest Post --> <br />
-			<!-- Latest Post Date --> <span class="topic_date"> <?php
-		echo time_since ( $last_reply [$leaf->id]->time, time () + ($kunena_config->board_ofset * 3600) );
-		?>
-			<?php
-		echo _KUNENA_AGO;
+			<!-- Latest Post Date --> <span class="topic_date" title="<?php echo CKunenaTimeformat::showDate($last_reply[$leaf->id]->time, 'config_post_dateformat_hover'); ?>"> <?php
+			echo CKunenaTimeformat::showDate($last_reply[$leaf->id]->time, 'config_post_dateformat');
 		?> </span> <!-- /Latest Post Date --></div>
 
 			</td>

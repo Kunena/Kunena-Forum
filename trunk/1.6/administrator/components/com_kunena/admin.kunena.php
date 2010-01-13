@@ -825,7 +825,18 @@ function showConfig($option) {
   	$ordering_system_list[] = JHTML::_('select.option', 'new_ord', _KUNENA_COM_A_ORDERING_SYSTEM_NEW);
   	$ordering_system_list[] = JHTML::_('select.option', 'old_ord',_KUNENA_COM_A_ORDERING_SYSTEM_OLD);
   	$lists['ordering_system'] = JHTML::_('select.genericlist', $ordering_system_list, 'cfg_ordering_system', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->ordering_system);
-    html_Kunena::showConfig($kunena_config, $lists, $option);
+	// New for 1.6: datetime
+	require_once(KUNENA_PATH_LIB .DS. 'kunena.timeformat.class.php');
+	$dateformatlist = array ();
+	$time = CKunenaTimeformat::internalTime() - 80000;
+	$dateformatlist[] = JHTML::_('select.option', 'none', _KUNENA_OPTION_DATEFORMAT_NONE);
+	$dateformatlist[] = JHTML::_('select.option', 'ago', CKunenaTimeformat::showDate($time, 'ago'));
+	$dateformatlist[] = JHTML::_('select.option', 'datetime_today', CKunenaTimeformat::showDate($time, 'datetime_today'));
+	$dateformatlist[] = JHTML::_('select.option', 'datetime', CKunenaTimeformat::showDate($time, 'datetime'));
+	$lists['post_dateformat'] = JHTML::_('select.genericlist', $dateformatlist, 'cfg_post_dateformat', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->post_dateformat);
+	$lists['post_dateformat_hover'] = JHTML::_('select.genericlist', $dateformatlist, 'cfg_post_dateformat_hover', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->post_dateformat_hover);
+
+	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 
 function saveConfig($option) {
@@ -1204,7 +1215,7 @@ function doprune($kunena_db, $option) {
 	check_dberror ( "Unable to load thread list." );
 
 	// Convert days to seconds for timestamp functions...
-	$prune_date = CKunenaTools::fbGetInternalTime () - ($prune_days * 86400);
+	$prune_date = CKunenaTimeformat::internalTime () - ($prune_days * 86400);
 
 	if (count ( $threadlist ) > 0) {
 		foreach ( $threadlist as $tl ) {

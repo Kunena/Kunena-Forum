@@ -57,7 +57,6 @@ if ($do == "read") {
 	$anndescription = stripslashes(smile::smileReplace($ann->description, 0, $kunena_config->disemoticons, $kunena_emoticons));
 	$anndescription = nl2br($anndescription);
 
-    $anncreated = KUNENA_timeformat(strtotime($ann->created));
     $annpublished = $ann->published;
     $annshowdate = $ann->showdate;
 
@@ -97,8 +96,8 @@ if ($do == "read") {
                         if ($annshowdate > 0) {
                         ?>
 
-                            <div class = "anncreated fbs">
-<?php echo $anncreated; ?>
+                            <div class = "anncreated fbs" title="<?php echo CKunenaTimeformat::showDate($ann->created, 'ago'); ?>">
+<?php echo CKunenaTimeformat::showDate($ann->created, 'date_today'); ?>
                             </div>
 
                         <?php
@@ -187,7 +186,7 @@ if ($is_editor) {
                                 </td>
 
                                 <td class = "td-2" align="left">
-<?php echo KUNENA_timeformat(strtotime($row->created)); ?>
+									<?php echo CKunenaTimeformat::showDate($row->created, 'date_today'); ?>
                                 </td>
 
                                 <td class = "td-3"  align="left">

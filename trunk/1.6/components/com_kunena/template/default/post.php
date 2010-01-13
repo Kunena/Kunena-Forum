@@ -26,7 +26,6 @@ $kunena_app = & JFactory::getApplication ();
 $kunena_config = & CKunenaConfig::getInstance ();
 $kunena_session = & CKunenaSession::getInstance ();
 
-global $kunena_systime;
 global $imageLocation, $fileLocation, $board_title;
 
 $kunena_my = &JFactory::getUser ();
@@ -120,7 +119,7 @@ if ($kunena_config->floodprotection && ($action == "post" || $do == 'quote' || $
 	$lastPostTime = $kunena_db->loadResult ();
 	check_dberror ( "Unable to load max time for current request from IP: $ip" );
 
-	if ($lastPostTime + $kunena_config->floodprotection > $kunena_systime) {
+	if ($lastPostTime + $kunena_config->floodprotection > CKunenaTimeformat::internalTime()) {
 		echo _POST_TOPIC_FLOOD1 . ' ' . $kunena_config->floodprotection . ' ' . _POST_TOPIC_FLOOD2 . '<br />';
 		echo _POST_TOPIC_FLOOD3;
 		return;
@@ -223,7 +222,7 @@ if ($kunena_my->id) {
 				$message = addslashes ( JString::trim ( $message ) );
 				$email = addslashes ( JString::trim ( $this->email ) );
 				$topic_emoticon = ($topic_emoticon < 0 || $topic_emoticon > 7) ? 0 : $topic_emoticon;
-				$posttime = CKunenaTools::fbGetInternalTime ();
+				$posttime = CKunenaTimeformat::internalTime();
 				if ($contentURL) {
 					$message = $contentURL . "\n\n" . $message;
 				}
@@ -585,7 +584,7 @@ if ($kunena_my->id) {
 						if (! $modtime) {
 							$modtime = $message->time;
 						}
-						if ($modtime + $kunena_config->useredittime >= CKunenaTools::fbGetInternalTime ()) {
+						if ($modtime + $kunena_config->useredittime >= CKunenaTimeformat::internalTime()) {
 							$allowEdit = 1;
 						}
 					}
@@ -619,7 +618,7 @@ if ($kunena_my->id) {
 			} else if ($do == "editpostnow" && (!$msg_cat->locked || CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
 				$modified_reason = addslashes ( JRequest::getVar ( "modified_reason", null ) );
 				$modified_by = $kunena_my->id;
-				$modified_time = CKunenaTools::fbGetInternalTime ();
+				$modified_time = CKunenaTimeformat::internalTime();
 				$id = ( int ) $id;
 
 				$query = "SELECT a.*, b.*, p.id AS poll_id FROM #__fb_messages AS a
@@ -649,7 +648,7 @@ if ($kunena_my->id) {
 							if (! $modtime) {
 								$modtime = $mes->time;
 							}
-							if (($modtime + (( int ) $kunena_config->useredittime) + (( int ) $kunena_config->useredittimegrace)) >= CKunenaTools::fbGetInternalTime ()) {
+							if (($modtime + (( int ) $kunena_config->useredittime) + (( int ) $kunena_config->useredittimegrace)) >= CKunenaTimeformat::internalTime()) {
 								$allowEdit = 1;
 							}
 						}

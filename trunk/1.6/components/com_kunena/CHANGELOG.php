@@ -35,6 +35,7 @@ Kunena 1.6.0-DEV
 
 12-Jan-2010 severdia
 + [#19380] Add moderator tab to Profile page, new language strings
+^ [#19380] Added JS slider links, needs testing
 
 12-Jan-2010 Xillibit
 # [#19288] Fix regression, waring in zend in myprofile_summary.php

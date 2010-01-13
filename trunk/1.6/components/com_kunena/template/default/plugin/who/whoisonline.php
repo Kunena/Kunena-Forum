@@ -74,11 +74,11 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
 						<?php echo _WHO_ONLINE_NOW; ?>
                         </a>
                     </div>
-                    <div class="fltrt">
+                   <!--  <div class="fltrt">
 						<span id="kwhoisonline_status"><span class="close"></span></span>
 				<a id="kwhoisonline_toggle" href="#"></a>
-					</div>
-                    <!--  <img id = "BoxSwitch_whoisonline__whoisonline_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/> -->
+					</div> -->
+                    <img id = "BoxSwitch_whoisonline__whoisonline_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
                 </th>
               
             </tr>

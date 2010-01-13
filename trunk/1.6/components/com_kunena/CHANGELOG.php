@@ -34,6 +34,9 @@ Legend:
 Kunena 1.6.0-DEV
 
 13-Jan-2010 Matias
+^ [#19380] Change joomla menu for Kunena to reflect new profile url format
+
+13-Jan-2010 Matias
 + [#19380] New profile page: forum/profile. Not yet activated in menu, links
 
 13-Jan-2010 Xillibit

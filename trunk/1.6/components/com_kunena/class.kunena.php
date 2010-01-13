@@ -1122,11 +1122,11 @@ class CKunenaTools {
 			}
 
 			// My Profile
-			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=myprofile' AND `menutype`='kunenamenu';";
+			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=profile' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . _KUNENA_MENU_MYPROFILE . "', 'forum/myprofile', 'index.php?option=com_kunena&func=myprofile', 'component', 1, 0, $componentid, 0, 10, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', '" . _KUNENA_MENU_PROFILE . "', 'forum/myprofile', 'index.php?option=com_kunena&func=profile', 'component', 1, 0, $componentid, 0, 10, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 			}

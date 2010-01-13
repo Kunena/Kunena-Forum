@@ -128,7 +128,7 @@ define('_KUNENA_MENU_MYLATEST', 'My Topics'); // My latest discussions
 define('_KUNENA_MENU_MYLATEST_DESC', 'My Topics');
 define('_KUNENA_MENU_NOREPLIES', 'No Replies'); // Discussions without replies
 define('_KUNENA_MENU_NOREPLIES_DESC', 'Topics with <strong>no</strong> replies');
-define('_KUNENA_MENU_MYPROFILE', 'My Profile'); // My profile view
+define('_KUNENA_MENU_PROFILE', 'Profile'); // Current user profile view
 define('_KUNENA_MENU_RULES', 'Rules'); // Rules article
 define('_KUNENA_MENU_HELP', 'Help'); // Help article
 define('_KUNENA_MENU_SEARCH', 'Search'); // Search/Advancd Search

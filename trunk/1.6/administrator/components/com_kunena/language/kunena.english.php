@@ -20,7 +20,7 @@
 **/
 
 // Dont allow direct linking
-defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
+defined( '_JEXEC' ) or die();
 
 // Please remove all &#32; from the translations. Also remove extra spaces: ' Text ' => 'Text'.
 

@@ -9,7 +9,8 @@
  * @link http://www.kunena.com
  *
  **/
-defined ( '_JEXEC' ) or die ( 'Restricted access' );
+defined( '_JEXEC' ) or die();
+
 
 $document = & JFactory::getDocument ();
 $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new JTabs(tabs); }); });" );

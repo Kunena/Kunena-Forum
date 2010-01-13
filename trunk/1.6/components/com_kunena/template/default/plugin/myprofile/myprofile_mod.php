@@ -18,7 +18,8 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @author TSMF & Jan de Graaff
 **/
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
+
 
 ?>
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">

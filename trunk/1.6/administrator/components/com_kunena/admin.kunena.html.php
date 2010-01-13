@@ -19,7 +19,8 @@
  * @author TSMF & Jan de Graaff
  **/
 
-defined ( '_JEXEC' ) or die ( 'Restricted access' );
+defined( '_JEXEC' ) or die();
+
 
 class html_Kunena {
 	// Begin: HEADER FUNC

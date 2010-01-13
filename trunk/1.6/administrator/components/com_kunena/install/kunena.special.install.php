@@ -17,7 +17,8 @@
 * component: com_kunena
 **/
 
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
+
 
 //
 // This is a place to add custom install code required

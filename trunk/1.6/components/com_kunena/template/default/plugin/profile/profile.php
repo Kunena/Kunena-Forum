@@ -14,7 +14,8 @@
  * @link http://www.bestofjoomla.com
  **/
 
-defined ( '_JEXEC' ) or die ( 'Restricted access' );
+defined( '_JEXEC' ) or die();
+
 
 $kunena_app = & JFactory::getApplication ();
 $kunena_acl = &JFactory::getACL ();

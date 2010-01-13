@@ -43,7 +43,8 @@
 # implement self-link parsing (on Encode)
 #
 #
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
+
 
 # parser states
 define('BBCODE_PARSE_START',      'start');

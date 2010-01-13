@@ -33,7 +33,8 @@
 
 // Dont allow direct linking
 
-defined ( '_JEXEC' ) or die ( 'Restricted access' );
+defined( '_JEXEC' ) or die();
+
 
 // Kunena wide defines
 

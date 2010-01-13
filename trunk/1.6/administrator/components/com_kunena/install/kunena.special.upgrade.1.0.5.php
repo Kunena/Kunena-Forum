@@ -17,7 +17,8 @@
 * component: com_kunena
 **/
 
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
+
 
 // Add custom upgrade code here
 // Most or all sql statements should be covered within comupgrade.xml

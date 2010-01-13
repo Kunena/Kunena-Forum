@@ -20,7 +20,8 @@
 **/
 
 // Dont allow direct linking
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
+
 
 $kunena_db = &JFactory::getDBO();
 $kunena_config =& CKunenaConfig::getInstance();

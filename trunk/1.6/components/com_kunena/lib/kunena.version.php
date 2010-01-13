@@ -15,7 +15,8 @@
 **/
 
 // no direct access
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
+
 
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 require_once (KUNENA_PATH_LIB . DS . 'kunena.debug.php');

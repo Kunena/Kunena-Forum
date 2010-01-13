@@ -15,7 +15,8 @@
 */
 
 // Dont allow direct linking
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
+
 
 // Set charset
 define('KUNENA_CHARSET', 'UTF-8');

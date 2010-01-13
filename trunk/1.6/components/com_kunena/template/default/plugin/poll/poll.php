@@ -9,7 +9,8 @@
 * @link http://www.kunena.com
 **/
 // Dont allow direct linking
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
+
 
 $do 			= JRequest::getVar("do", "");
 $id 			= intval(JRequest::getVar("id", ""));

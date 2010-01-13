@@ -14,7 +14,8 @@
 * @link http://www.bestofjoomla.com
 **/
 
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
+
 ?>
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">

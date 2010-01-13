@@ -11,7 +11,7 @@
  * component: com_kunena
  **/
 
-defined ( '_JEXEC' ) or die ( 'Restricted access' );
+defined ( '_JEXEC' ) or die ();
 
 include_once (KUNENA_PATH .DS. "class.kunena.php");
 

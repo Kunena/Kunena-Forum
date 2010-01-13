@@ -20,7 +20,8 @@
 **/
 
 // Dont allow direct linking
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
+
 
 $id 		= JRequest::getInt('id', 0);
 if (!$id) $id = JRequest::getInt('msg_id');

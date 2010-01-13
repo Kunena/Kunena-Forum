@@ -20,7 +20,8 @@
 **/
 
 // Dont allow direct linking
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
+
 
 $kunena_config =& CKunenaConfig::getInstance();
 $forumurl = JRoute::_(KUNENA_LIVEURLREL);

@@ -33,7 +33,8 @@
 # implement further extended links (username, ...)
 
 
-defined ( '_JEXEC' ) or die ( 'Restricted access' );
+defined( '_JEXEC' ) or die();
+
 
 include_once (KUNENA_PATH_LIB . DS . "kunena.parser.bbcode.php");
 

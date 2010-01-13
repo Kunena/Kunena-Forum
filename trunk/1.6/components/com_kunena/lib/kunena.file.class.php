@@ -8,7 +8,8 @@
  * @link http://www.kunena.com
  **/
 
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
+
 
 jimport('joomla.filesystem.path');
 jimport('joomla.filesystem.file');

@@ -10,7 +10,8 @@
 **/
 
 // no direct access
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
+
 ?>
 <!--
 
@@ -35,6 +36,7 @@ Kunena 1.6.0-DEV
 
 13-Jan-2010 fxstein
 ^ [#19380] Change joomla menu for Kunena to reflect new profile url format
+^ [#19425] Security hardening: defined( '_JEXEC' ) or die();
 
 13-Jan-2010 Matias
 + [#19380] New profile page: forum/profile. Not yet activated in menu, links

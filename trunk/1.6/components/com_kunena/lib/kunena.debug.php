@@ -14,7 +14,8 @@
 * @link http://www.bestofjoomla.com
 **/
 
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
+
 
 $kunena_db = &JFactory::getDBO();
 

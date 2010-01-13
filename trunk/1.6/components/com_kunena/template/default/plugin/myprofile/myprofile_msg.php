@@ -18,7 +18,8 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @author TSMF & Jan de Graaff
 **/
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
+
 
 $kunena_db = &JFactory::getDBO();
 $kunena_session =& CKunenaSession::getInstance();

@@ -41,7 +41,8 @@
 #  parser reduce parse steps
 #    change ParseNext, UnEscape, ParseTag, CheckTag
 #  separate run instead task passing
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
+
 
 define('TAGPARSER_RET_OK', 0);
 define('TAGPARSER_RET_ERR', 1);

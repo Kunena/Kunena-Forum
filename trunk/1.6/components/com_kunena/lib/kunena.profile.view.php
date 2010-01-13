@@ -9,7 +9,8 @@
  * @link http://www.kunena.com
  *
  **/
-defined ( '_JEXEC' ) or die ( 'Restricted access' );
+defined( '_JEXEC' ) or die();
+
 
 class CKunenaProfile {
 	public $user = null;

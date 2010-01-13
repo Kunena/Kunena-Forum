@@ -8,7 +8,7 @@ dictionary = {
 'writePagesCounter':'getPagesCounter',
 '\$mosConfig_live_site':'JURI::root()',
 '\$mosConfig_lang':'$lang',
-'$defined.*_VALID_MOS.*or die.*;':'defined( \'_JEXEC\' ) or die(\'Restricted access\');',
+'$defined.*_VALID_MOS.*or die.*;':'defined( \'_JEXEC\' ) or die();',
 'global\s*\$kunena_db;':'$kunena_db = &JFactory::getDBO();',
 '(\s*)(global )\s*\$kunena_db,\s*(.*?;)':'\\1\\2\\3\n\\1$kunena_db = &JFactory::getDBO();',
 '(\s*)(global .*?),\s*\$kunena_db;':'\\1\\2;\n\\1$kunena_db = &JFactory::getDBO();',

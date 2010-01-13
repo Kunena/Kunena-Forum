@@ -31,7 +31,8 @@
 
  **/
 
-defined ( '_JEXEC' ) or die ( 'Restricted access' );
+defined( '_JEXEC' ) or die();
+
 
 $catid = JRequest::getInt ( 'catid', 0 );
 $id = JRequest::getInt ( 'id', 0 );

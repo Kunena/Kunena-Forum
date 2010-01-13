@@ -19,7 +19,8 @@
  * @author TSMF & Jan de Graaff
  **/
 // Dont allow direct linking
-defined ( '_JEXEC' ) or die ( 'Restricted access' );
+defined( '_JEXEC' ) or die();
+
 
 require_once (KUNENA_PATH_LIB . DS . "kunena.user.class.php");
 

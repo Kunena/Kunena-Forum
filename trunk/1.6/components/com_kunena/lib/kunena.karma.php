@@ -19,7 +19,8 @@
 * @author TSMF & Jan de Graaff
 **/
 
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
+
 
 $kunena_config =& CKunenaConfig::getInstance();
 $kunena_db = &JFactory::getDBO();

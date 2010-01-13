@@ -33,7 +33,7 @@ Legend:
 
 Kunena 1.6.0-DEV
 
-13-Jan-2010 Matias
+13-Jan-2010 fxstein
 ^ [#19380] Change joomla menu for Kunena to reflect new profile url format
 
 13-Jan-2010 Matias

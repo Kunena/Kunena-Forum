@@ -116,9 +116,7 @@ else
 if ($kunena_my->id)
 {
 ?>
-<div id="kprofilebox">
-<table width="100%" border="0" cellspacing="0" cellpadding="0"
-	class="fb_profilebox">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="fb_profilebox" id="kprofilebox">
 	<tbody id="topprofilebox_tbody">
 		<tr class="<?php echo KUNENA_BOARD_CLASS ;?>sectiontableentry1">
 			<td class="td-1  fbm" align="left" width="5%">
@@ -145,8 +143,7 @@ else {
 
 if ($is_editor) {
 ?>
-| <a
-				href="<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'show');?>"><?php echo _ANN_ANNOUNCEMENTS; ?> </a>
+| <a href="<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'show');?>"><?php echo _ANN_ANNOUNCEMENTS; ?> </a>
 <?php } ?>
 | <?php echo CKunenaLink::GetSearchLink($kunena_config, 'search', '', 0, 0, _KUNENA_SEARCH_ADVSEARCH);?>
 
@@ -166,39 +163,33 @@ if ($is_editor) {
             </tr>
 	</tbody>
 </table>
-</div>
+
 <?php
 } else {
     // LOGOUT AREA
     ?>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0"
-	class="fb_profilebox">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="fb_profilebox" id="kprofilebox">
 	<tbody id="topprofilebox_tbody">
 		<tr class="<?php echo KUNENA_BOARD_CLASS ;?>sectiontableentry1">
 			<td valign="top" class="td-1  fbm fb_profileboxcnt" align="left">
-<?php echo _PROFILEBOX_WELCOME; ?>, <b><?php echo _PROFILEBOX_GUEST; ?></b>
-
-			<br /> <?php echo _PROFILEBOX_PLEASE; ?>
-
-                <a href="<?php echo $loginlink;?>"><?php echo _PROFILEBOX_LOGIN; ?></a> <?php echo _PROFILEBOX_OR; ?> <a
-				href="<?php echo $registerlink;?>"><?php echo _PROFILEBOX_REGISTER; ?></a>.
-
-			&nbsp;&nbsp; <a href="<?php echo $lostpasslink;?>"><?php echo _PROFILEBOX_LOST_PASSWORD; ?></a>
-
+				<?php echo _PROFILEBOX_WELCOME; ?>, <b><?php echo _PROFILEBOX_GUEST; ?></b>
+				<br /> <?php echo _PROFILEBOX_PLEASE; ?>
+                <a href="<?php echo $loginlink;?>"><?php echo _PROFILEBOX_LOGIN; ?></a> <?php echo _PROFILEBOX_OR; ?> 
+                <a href="<?php echo $registerlink;?>"><?php echo _PROFILEBOX_REGISTER; ?></a>.
+				&nbsp;&nbsp; <a href="<?php echo $lostpasslink;?>"><?php echo _PROFILEBOX_LOST_PASSWORD; ?></a>
 			</td>
-	<?php
-	if (JDocumentHTML::countModules ( 'kunena_profilebox' )) :
-	?>
-			<td>
-		<?php
-		CKunenaTools::showModulePosition ( 'kunena_profilebox' );
-		?>
-			</td>
-	<?php
-	endif;
-	?>
-
+			<?php
+			if (JDocumentHTML::countModules ( 'kunena_profilebox' )) :
+			?>
+				<td>
+					<?php
+					CKunenaTools::showModulePosition ( 'kunena_profilebox' );
+					?>
+				</td>
+			<?php
+			endif;
+			?>
             </tr>
 	</tbody>
 </table>

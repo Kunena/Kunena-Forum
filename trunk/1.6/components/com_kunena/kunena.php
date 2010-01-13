@@ -374,19 +374,12 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	}
 
 	/*       _\|/_
-
              (o o)
-
      +----oOO-{_}-OOo--------------------------------+
-
      |    Until this section we have included the    |
-
      |   necessary files and gathered the required   |
-
      |     variables. Now let's start processing     |
-
      |                     them                      |
-
      +----------------------------------------------*/
 
 	//Check if the catid requested is a parent category, because if it is
@@ -440,9 +433,8 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	}
 	?></td>
 		<td align="right" width="1%">
-
-			<!--  <span id="kprofilebox_status"><span class="close"></span></span>
-			<a id="kprofilebox_toggle" href="#"></a> -->
+			<span id="kprofilebox_status"><span class="close"></span></span>
+			<a id="kprofilebox_toggle" href="#"></a>
 
 			<!-- <img id="BoxSwitch_topprofilebox__topprofilebox_tbody" class="hideshow" src="<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif'?>" alt="" /> -->
 		</td>

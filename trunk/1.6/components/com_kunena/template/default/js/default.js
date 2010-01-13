@@ -1,5 +1,5 @@
 
-/* Javascript file for default Kunena template */
+/* Javascript file for default Kunena BlueEagle template */
 
 /* Tabs class */
 var JTabs = new Class({
@@ -51,7 +51,9 @@ var JTabs = new Class({
     }
 });
 
-/* Slider function
+/* Slider functions */
+
+/* Top profile box */
 window.addEvent('domready', function() {
 	var status = {
 		'true': '<span class="close"></span>',
@@ -68,6 +70,7 @@ window.addEvent('domready', function() {
 
 });
 
+/* Main forum list */
 window.addEvent('domready', function() {
 	var status = {
 		'true': '<span class="close"></span>',
@@ -83,4 +86,41 @@ window.addEvent('domready', function() {
 	});
 
 });
-*/
+
+/* Who is online */
+window.addEvent('domready', function() {
+	var status = {
+		'true': '<span class="close"></span>',
+		'false': '<span class="open"></span>'
+	};
+	var myVerticalSlide = new Fx.Slide('whoisonline_tbody');
+	$('kwhoisonline_toggle').addEvent('click', function(e){
+		e.stop();
+		myVerticalSlide.toggle();
+	});
+	myVerticalSlide.addEvent('complete', function() {
+		$('kwhoisonline_status').set('html', status[myVerticalSlide.open]);
+	});
+
+});
+
+/* Member stats */
+window.addEvent('domready', function() {
+	var status = {
+		'true': '<span class="close"></span>',
+		'false': '<span class="open"></span>'
+	};
+	var myVerticalSlide = new Fx.Slide('frontstats_tbody');
+	$('kstats_toggle').addEvent('click', function(e){
+		e.stop();
+		myVerticalSlide.toggle();
+	});
+	myVerticalSlide.addEvent('complete', function() {
+		$('kstats_status').set('html', status[myVerticalSlide.open]);
+	});
+
+});
+
+
+
+

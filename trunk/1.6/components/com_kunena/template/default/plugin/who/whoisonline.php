@@ -53,7 +53,7 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
     $kunena_db->setQuery($query);
     $totalguests = $kunena_db->loadResult();
 ?>
-<div id="kwhoisonline">
+
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
 <div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
@@ -62,7 +62,7 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
     <table class = "fb_blocktable" id ="fb_whoisonline"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>
             <tr>
-                <th align="left">
+                <th class="left">
                     <div class = "fb_title_cover fbm">
                         <a class = "fb_title fbl" href = "<?php echo $whoislink;?>">
                         <strong><?php echo $totaluser; ?></strong>
@@ -73,10 +73,15 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
 						<?php echo _WHO_ONLINE_NOW; ?>
                         </a>
                     </div>
-
-
+                    <div class="fltrt">
+						
+					</div>
                     <!--  <img id = "BoxSwitch_whoisonline__whoisonline_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/> -->
                 </th>
+               <th>
+                <span id="kwhoisonline_status"><span class="close"></span></span>
+				<a id="kwhoisonline_toggle" href="#"></a>
+			</th>
             </tr>
         </thead>
 
@@ -155,7 +160,6 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
             </tr>
         </tbody>
     </table>
-    </div>
 </div>
 </div>
 </div>

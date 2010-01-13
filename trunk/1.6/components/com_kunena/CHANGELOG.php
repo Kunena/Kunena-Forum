@@ -35,6 +35,7 @@ Legend:
 Kunena 1.6.0-DEV
 
 13-Jan-2010 fxstein
++ [#19244] New moderator tools class added
 ^ [#19380] Change joomla menu for Kunena to reflect new profile url format
 ^ [#19425] Security hardening: defined( '_JEXEC' ) or die();
 

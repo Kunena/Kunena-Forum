@@ -39,6 +39,7 @@ Kunena 1.6.0-DEV
 ^ [#19380] Change joomla menu for Kunena to reflect new profile url format
 ^ [#19425] Security hardening: defined( '_JEXEC' ) or die();
 ^ [#19345] Modified css class prefix logic
+# [#18995] Undefined variables in message.php fixed
 
 13-Jan-2010 Matias
 + [#19380] New profile page: forum/profile. Not yet activated in menu, links

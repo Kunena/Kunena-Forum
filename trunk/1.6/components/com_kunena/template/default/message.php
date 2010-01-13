@@ -22,6 +22,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
+$page = JRequest::getInt ( 'page', 0 );
+$limitstart = JRequest::getInt ( 'limitstart', 0 );
 
 $kunena_my = &JFactory::getUser ();
 $kunena_config = & CKunenaConfig::getInstance ();
@@ -53,13 +55,13 @@ if ($kunena_config->fb_profile == 'cb') {
 				} else {
 					if ($kunena_config->default_sort == 'desc') {
 						if ( $page == '1') {
-							$numb = $total--;
+							$numb = $this->total_messages--;
 							echo CKunenaLink::GetSamePageAnkerLink($msg_html->id,'#'.$numb);
 						} else {
-							$nums = $total - $limitstart;
+							$nums = $this->total_messages - $limitstart;
 							$numb = $nums;
 							echo CKunenaLink::GetSamePageAnkerLink($msg_html->id,'#'.$numb);
-							$total--;
+							$this->total_messages--;
 						}
 					} else {
 						if ( $page == '1') {

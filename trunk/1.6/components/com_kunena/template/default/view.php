@@ -133,7 +133,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 
 		$query = "SELECT COUNT(*) FROM #__fb_messages AS a WHERE a.thread='{$thread}' AND hold='0'";
 		$kunena_db->setQuery ( $query );
-		$total = $kunena_db->loadResult ();
+		$this->total_messages = $kunena_db->loadResult ();
 		check_dberror ( 'Unable to calculate message count.' );
 
 		//prepare paging
@@ -143,11 +143,11 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		$limitstart = JRequest::getInt ( 'limitstart', 0 );
 		if ($limitstart < 0)
 			$limitstart = 0;
-		if ($limitstart > $total)
-			$limitstart = intval ( $total / $limit ) * $limit;
+		if ($limitstart > $this->total_messages)
+			$limitstart = intval ( $this->total_messages / $limit ) * $limit;
 		$ordering = ($kunena_config->default_sort == 'desc' ? 'desc' : 'asc'); // Just to make sure only valid options make it
 		$maxpages = 9 - 2; // odd number here (show - 2)
-		$totalpages = ceil ( $total / $limit );
+		$totalpages = ceil ( $this->total_messages / $limit );
 		$page = floor ( $limitstart / $limit ) + 1;
 		$firstpage = 1;
 		if ($ordering == 'desc')

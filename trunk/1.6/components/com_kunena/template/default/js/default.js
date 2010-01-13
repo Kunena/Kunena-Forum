@@ -53,7 +53,7 @@ var JTabs = new Class({
 
 /* Slider functions */
 
-/* Top profile box */
+/* Top profile box 
 window.addEvent('domready', function() {
 	var status = {
 		'true': '<span class="close"></span>',
@@ -69,8 +69,8 @@ window.addEvent('domready', function() {
 	});
 
 });
-
-/* Main forum list */
+*/
+/* Main forum list 
 window.addEvent('domready', function() {
 	var status = {
 		'true': '<span class="close"></span>',
@@ -86,8 +86,8 @@ window.addEvent('domready', function() {
 	});
 
 });
-
-/* Who is online */
+*/
+/* Who is online 
 window.addEvent('domready', function() {
 	var status = {
 		'true': '<span class="close"></span>',
@@ -104,7 +104,7 @@ window.addEvent('domready', function() {
 
 });
 
-/* Member stats */
+/* Member stats 
 window.addEvent('domready', function() {
 	var status = {
 		'true': '<span class="close"></span>',
@@ -120,7 +120,7 @@ window.addEvent('domready', function() {
 	});
 
 });
-
+*/
 
 
 

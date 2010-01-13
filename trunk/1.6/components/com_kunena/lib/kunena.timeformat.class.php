@@ -107,16 +107,15 @@ class CKunenaTimeformat {
 				break;
 			default :
 				// FIXME: offset doesn't work for us, bug in Joomla!
-				$date = new JDate ( $time, $app->getCfg ( 'offset', 0 ) - ( float ) $tz + $kunena_config->board_ofset );
+				$date = new JDate ( $time, $app->getCfg ( 'offset', 0 ) - ( float ) $tz + (float) $kunena_config->board_ofset );
 				break;
 		}
-		echo $app->getCfg ( 'offset', 0 ),',', ( float ) $tz,',', $kunena_config->board_ofset.' ';
 		if ($date->toFormat('%Y')<1800) return _KUNENA_DT_DATETIME_UNDEFINED;
 		if (preg_match ( '/^config_/', $mode ) == 1) {
 			$option = substr ( $mode, 7 );
 			$mode = $kunena_config->$option;
 		}
-		$mode = split ( '_', $mode );
+		$mode = explode ( '_', $mode );
 		switch (strtolower ( $mode [0] )) {
 			case 'none' :
 				return '';

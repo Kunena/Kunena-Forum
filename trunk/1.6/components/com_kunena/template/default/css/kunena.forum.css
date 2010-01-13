@@ -2324,13 +2324,13 @@ input.kbutton {
 	margin-top: -14px;
 	border: 1px solid #fff;
 }
-span.close {
+span.close, a.close {
 	display:block; 
 	background: url("../images/english/shrink.gif") no-repeat; 
 	height: 15px; 
 	width: 15px;
 }
-span.open {
+span.open, a.open {
 	display:block; 
 	background: url("../images/english/expand.gif") no-repeat; 
 	height: 15px; 

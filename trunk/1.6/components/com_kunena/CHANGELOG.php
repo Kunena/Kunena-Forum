@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 13-Jan-2010 louis
 ^ [#19380] Added show/hide behavior for statistics and whoisonline blocks.
+^ [#19380] Added show/hide behavior for any block based on an a.toggler selector and rel attribute
 
 13-Jan-2010 fxstein
 + [#19244] New moderator tools class added

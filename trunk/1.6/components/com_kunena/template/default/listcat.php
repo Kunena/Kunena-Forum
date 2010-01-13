@@ -186,7 +186,12 @@ if (JString::strtolower ( $func ) == '') {
 			<?php
 				}
 				?></div>
-			<img id="BoxSwitch_<?php echo $cat->id; ?>__catid_<?php echo $cat->id; ?>" class="hideshow" src="<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif'; ?>" alt="" /> 
+
+           <div class="fltrt">
+				<span id="cat_list"><a class="ktoggler close" rel="catid_<?php echo $cat->id; ?>"></a></span>
+			</div>
+
+			<!-- <img id="BoxSwitch_<?php echo $cat->id; ?>__catid_<?php echo $cat->id; ?>" class="hideshow" src="<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif'; ?>" alt="" /> --> 
 			</th>
 		</tr>
 	</thead>

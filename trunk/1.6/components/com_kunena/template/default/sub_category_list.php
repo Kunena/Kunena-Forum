@@ -83,7 +83,11 @@ else {
 	?>
 			</div>
 
-			<img
+           <div class="fltrt">
+				<span id="subcat_list"><a class="ktoggler close" rel="catid_<?php echo $objCatInfo->id; ?>"></a></span>
+			</div>
+
+			<!-- <img
 				id="BoxSwitch_<?php
 	echo $objCatInfo->id;
 	?>__catid_<?php
@@ -92,7 +96,7 @@ else {
 				class="hideshow"
 				src="<?php
 	echo KUNENA_URLIMAGESPATH . 'shrink.gif';
-	?>" alt="" />
+	?>" alt="" /> -->
 			</th>
 		</tr>
 	</thead>

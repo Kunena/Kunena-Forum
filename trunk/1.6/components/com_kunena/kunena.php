@@ -430,8 +430,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	}
 	?></td>
 		<td align="right" width="1%">
-			<span id="kprofilebox_status"><span class="close"></span></span>
-			<a id="kprofilebox_toggle" href="#"></a>
+			<span id="kprofilebox_status"><a class="ktoggler close" rel="kprofilebox"></a></span>
 
 			<!-- <img id="BoxSwitch_topprofilebox__topprofilebox_tbody" class="hideshow" src="<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif'?>" alt="" /> -->
 		</td>

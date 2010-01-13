@@ -58,13 +58,10 @@ if ($this->showgenstats > 0)
                         <div class = "fb_title_cover fbm">
                             <a class="fb_title fbl" href = "<?php echo $statslink;?>"><?php echo stripslashes($kunena_config->board_title); ?> <?php echo _STAT_FORUMSTATS; ?></a>
                         </div>
-                        <!--  
                         <div class="fltrt">
-							<span id="kstats_status"><span class="close"></span></span>
-							<a id="kstats_toggle" href="#"></a>
+							<span id="kstats_status"><a class="ktoggler close" rel="frontstats_tbody"></a></span>
 						</div>
-						-->
-                        <img id = "BoxSwitch_frontstats__frontstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/> 
+                        <!-- <img id = "BoxSwitch_frontstats__frontstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/> --> 
                     </th>
                 </tr>
             </thead>

@@ -55,21 +55,11 @@ if (sizeof ( $rows ) == 0)
 else {
 	?>
 <!-- B: List Cat -->
-<div class="<?php
-	echo KUNENA_BOARD_CLASS;
-	?>_bt_cvr1">
-<div class="<?php
-	echo KUNENA_BOARD_CLASS;
-	?>_bt_cvr2">
-<div class="<?php
-	echo KUNENA_BOARD_CLASS;
-	?>_bt_cvr3">
-<div class="<?php
-	echo KUNENA_BOARD_CLASS;
-	?>_bt_cvr4">
-<div class="<?php
-	echo KUNENA_BOARD_CLASS;
-	?>_bt_cvr5">
+<div class="fb__bt_cvr1">
+<div class="fb__bt_cvr2">
+<div class="fb__bt_cvr3">
+<div class="fb__bt_cvr4">
+<div class="fb__bt_cvr5">
 <table class="fb_blocktable<?php
 	echo isset($objCatInfo->class_sfx) ? ' fb_blocktable' . $objCatInfo->class_sfx : '';
 	?>"
@@ -111,33 +101,23 @@ else {
 	echo $objCatInfo->id;
 	?>">
 		<tr class="fb_sth fbs ">
-			<th class="th-1 <?php
-	echo KUNENA_BOARD_CLASS;
-	?>sectiontableheader"
+			<th class="th-1 fb_sectiontableheader"
 				width="1%">&nbsp;</th>
-			<th class="th-2 <?php
-	echo KUNENA_BOARD_CLASS;
-	?>sectiontableheader"
+			<th class="th-2 fb_sectiontableheader"
 				align="left"><?php
 	echo _GEN_FORUM;
 	?></th>
-			<th class="th-3 <?php
-	echo KUNENA_BOARD_CLASS;
-	?>sectiontableheader"
+			<th class="th-3 fb_sectiontableheader"
 				align="center" width="5%"><?php
 	echo _GEN_TOPICS;
 	?></th>
 
-			<th class="th-4 <?php
-	echo KUNENA_BOARD_CLASS;
-	?>sectiontableheader"
+			<th class="th-4 fb_sectiontableheader"
 				align="center" width="5%"><?php
 	echo _GEN_REPLIES;
 	?></th>
 
-			<th class="th-5 <?php
-	echo KUNENA_BOARD_CLASS;
-	?>sectiontableheader"
+			<th class="th-5 fb_sectiontableheader"
 				align="left" width="25%"><?php
 	echo _GEN_LAST_POST;
 	?></th>
@@ -215,9 +195,9 @@ else {
 				$latestpage = ceil ( $latestcount / $kunena_config->messages_per_page );
 			}
 			?>
-		<tr class="<?php
-			echo KUNENA_BOARD_CLASS . $tabclass [$k];
-			echo isset( $singlerow->class_sfx ) ? ' ' . KUNENA_BOARD_CLASS . $tabclass [$k] . $singlerow->class_sfx : '';
+		<tr class="fb_<?php
+			echo $tabclass [$k];
+			echo isset( $singlerow->class_sfx ) ? ' fb_' . $tabclass [$k] . $singlerow->class_sfx : '';
 			?>"
 			id="fb_cat<?
 			echo $singlerow->id;
@@ -263,7 +243,7 @@ else {
 			}
 			echo CKunenaLink::GetCategoryLink ( 'listcat', $singlerow->id, $categoryicon, 'follow' );
 			echo '</td>';
-			echo '<td class="td-2"  align="left"><div class="' . KUNENA_BOARD_CLASS . 'thead-title fbl">' . CKunenaLink::GetCategoryLink ( 'showcat', $singlerow->id, stripslashes ( $singlerow->name ), 'follow' );
+			echo '<td class="td-2"  align="left"><div class="fb_thead-title fbl">' . CKunenaLink::GetCategoryLink ( 'showcat', $singlerow->id, stripslashes ( $singlerow->name ), 'follow' );
 
 			//new posts available
 			if ($cxThereisNewInForum == 1 && $kunena_my->id > 0) {
@@ -287,14 +267,14 @@ else {
 			if ($forumDesc != "") {
 				$tmpforumdesc = stripslashes ( smile::smileReplace ( $forumDesc, 0, $kunena_config->disemoticons, $kunena_emoticons ) );
 				$tmpforumdesc = nl2br ( $tmpforumdesc );
-				echo '<div class="' . KUNENA_BOARD_CLASS . 'thead-desc  fbm">' . $tmpforumdesc . ' </div>';
+				echo '<div class="fb_thead-desc  fbm">' . $tmpforumdesc . ' </div>';
 			}
 
 			if (count ( $forumparents ) > 0) {
 				if (count ( $forumparents ) == 1) {
-					echo '<div class="' . KUNENA_BOARD_CLASS . 'thead-child  fbs"><b>' . _KUNENA_CHILD_BOARD . ' </b>';
+					echo '<div class="fb_thead-child  fbs"><b>' . _KUNENA_CHILD_BOARD . ' </b>';
 				} else {
-					echo '<div class="' . KUNENA_BOARD_CLASS . 'thead-child  fbs"><b>' . _KUNENA_CHILD_BOARDS . ' </b>';
+					echo '<div class="fb_thead-child  fbs"><b>' . _KUNENA_CHILD_BOARDS . ' </b>';
 				}
 				;
 
@@ -373,7 +353,7 @@ else {
 
 			// moderator list
 			if (count ( $modslist ) > 0) {
-				echo '<div class="' . KUNENA_BOARD_CLASS . 'thead-moderators  fbs">' . _GEN_MODERATORS . ": ";
+				echo '<div class="fb_thead-moderators  fbs">' . _GEN_MODERATORS . ": ";
 
 				$mod_cnt = 0;
 				foreach ( $modslist as $mod ) {
@@ -408,15 +388,13 @@ else {
 				?>
 
 			<td class="td-5" align="left">
-			<div class="<?php
-				echo KUNENA_BOARD_CLASS?>latest-subject fbm">
+			<div class="fb_latest-subject fbm">
 			<?php
 				echo CKunenaLink::GetThreadLink ( 'view', $latestcatid, $latestthread, kunena_htmlspecialchars ( stripslashes ( $latestsubject ) ), kunena_htmlspecialchars ( stripslashes ( $latestsubject ) ), $rel = 'nofollow' );
 				?>
 			</div>
 
-			<div class="<?php
-				echo KUNENA_BOARD_CLASS?>latest-subject-by  fbs">
+			<div class="fb_latest-subject-by  fbs">
 			<?php
 				echo _GEN_BY;
 				?> <?php

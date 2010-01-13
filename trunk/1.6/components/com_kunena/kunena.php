@@ -135,10 +135,6 @@ if ($func == ''){
 	}
 }
 
-// JOOMLA STYLE CHECK
-
-define ( 'KUNENA_BOARD_CLASS', 'fb_' );
-
 // get right Language file
 
 if (file_exists ( KUNENA_FILE_LANGUAGE )) {

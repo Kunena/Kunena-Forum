@@ -119,7 +119,7 @@ if ($kunena_my->id)
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="fb_profilebox" id="kprofilebox">
 	<tbody id="topprofilebox_tbody">
-		<tr class="<?php echo KUNENA_BOARD_CLASS ;?>sectiontableentry1">
+		<tr class="fb_sectiontableentry1">
 			<td class="td-1  fbm" align="left" width="5%">
 <?php echo CKunenaLink::GetProfileLink($kunena_config, $kunena_my->id, $jr_avatar);?>
                 </td>
@@ -172,7 +172,7 @@ if ($is_editor) {
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="fb_profilebox" id="kprofilebox">
 	<tbody id="topprofilebox_tbody">
-		<tr class="<?php echo KUNENA_BOARD_CLASS ;?>sectiontableentry1">
+		<tr class="fb_sectiontableentry1">
 			<td valign="top" class="td-1  fbm fb_profileboxcnt" align="left">
 				<?php echo _PROFILEBOX_WELCOME; ?>, <b><?php echo _PROFILEBOX_GUEST; ?></b>
 				<br /> <?php echo _PROFILEBOX_PLEASE; ?>

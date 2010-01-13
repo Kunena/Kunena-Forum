@@ -45,9 +45,7 @@ if ($kunena_config->fb_profile == 'cb') {
 	<tbody>
 		<tr class="fb_sth">
 			<th colspan="2"
-				class="view-th <?php
-				echo KUNENA_BOARD_CLASS;
-				?>sectiontableheader"><a name="<?php
+				class="view-th fb_sectiontableheader"><a name="<?php
 				echo $msg_html->id;
 				?>"></a> <?php
 				if ($kunena_config->ordering_system == 'old_ord') {

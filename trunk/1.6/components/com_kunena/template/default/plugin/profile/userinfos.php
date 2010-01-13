@@ -17,11 +17,11 @@
 defined( '_JEXEC' ) or die();
 
 ?>
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
+<div class="fb__bt_cvr1">
+<div class="fb__bt_cvr2">
+<div class="fb__bt_cvr3">
+<div class="fb__bt_cvr4">
+<div class="fb__bt_cvr5">
 <table class = "fb_blocktable " id="fb_userinfo" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
@@ -35,7 +35,7 @@ defined( '_JEXEC' ) or die();
 
     <tbody>
         <tr>
-            <td class = "<?php echo KUNENA_BOARD_CLASS; ?>profileinfo" align="center">
+            <td class = "fb_profileinfo" align="center">
                 <div class = "fb-usrprofile-misc">
                     <span class = "view-username"> <?php echo $msg_html->username; ?></span> <?php  if ( $kunena_config->userlist_usertype ) { ?><span class = "msgusertype">(<?php echo $msg_html->usertype; ?>)</span><?php } ?>
 

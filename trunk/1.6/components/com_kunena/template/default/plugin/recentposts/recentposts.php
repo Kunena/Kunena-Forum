@@ -70,21 +70,11 @@ $topic_emoticons [5] = KUNENA_URLEMOTIONSPATH . 'grin.gif';
 $topic_emoticons [6] = KUNENA_URLEMOTIONSPATH . 'shock.gif';
 $topic_emoticons [7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 ?>
-<div class="<?php
-echo KUNENA_BOARD_CLASS;
-?>_bt_cvr1">
-<div class="<?php
-echo KUNENA_BOARD_CLASS;
-?>_bt_cvr2">
-<div class="<?php
-echo KUNENA_BOARD_CLASS;
-?>_bt_cvr3">
-<div class="<?php
-echo KUNENA_BOARD_CLASS;
-?>_bt_cvr4">
-<div class="<?php
-echo KUNENA_BOARD_CLASS;
-?>_bt_cvr5">
+<div class="fb__bt_cvr1">
+<div class="fb__bt_cvr2">
+<div class="fb__bt_cvr3">
+<div class="fb__bt_cvr4">
+<div class="fb__bt_cvr5">
 <table class="fb_blocktable" id="fb_recentposts" border="0"
 	cellspacing="0" cellpadding="0" width="100%">
 	<thead>
@@ -137,14 +127,10 @@ echo KUNENA_BOARD_CLASS;
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr class="fb_sth">
 					<th
-						class="th-1 <?php
-						echo KUNENA_BOARD_CLASS;
-						?>sectiontableheader fbs"
+						class="th-1 fb_sectiontableheader fbs"
 						width="1%" align="center"></th>
 					<th
-						class="th-2 <?php
-						echo KUNENA_BOARD_CLASS;
-						?>sectiontableheader fbs"
+						class="th-2 fb_sectiontableheader fbs"
 						align="left"><?php
 						echo _RECENT_TOPICS;
 						?></th>
@@ -154,28 +140,26 @@ echo KUNENA_BOARD_CLASS;
 							break;
 
 						case '1' :
-							echo "<th class=\"th-3  " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\" width=\"10%\"  align=\"center\" >" . _RECENT_AUTHOR . "</th>";
+							echo "<th class=\"th-3  fb_sectiontableheader fbs\" width=\"10%\"  align=\"center\" >" . _RECENT_AUTHOR . "</th>";
 
 							break;
 
 						case '2' :
-							echo "<th class=\"th-3  " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\" width=\"10%\" align=\"center\" >" . _RECENT_AUTHOR . "</th>";
+							echo "<th class=\"th-3  fb_sectiontableheader fbs\" width=\"10%\" align=\"center\" >" . _RECENT_AUTHOR . "</th>";
 
 							break;
 					}
 
-					echo "<th class=\"th-4  " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\"   width=\"20%\" align=\"left\" >" . _RECENT_CATEGORIES . "</th>";
+					echo "<th class=\"th-4  fb_sectiontableheader fbs\"   width=\"20%\" align=\"left\" >" . _RECENT_CATEGORIES . "</th>";
 
 					if ($show_date) {
-						echo "<th class=\"th-5  " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\"  width=\"20%\" align=\"left\" >" . _RECENT_DATE . "</th>";
+						echo "<th class=\"th-5  fb_sectiontableheader fbs\"  width=\"20%\" align=\"left\" >" . _RECENT_DATE . "</th>";
 					}
 
 					if ($show_hits) {
 						?>
 					<th
-						class="th-6 <?php
-						echo KUNENA_BOARD_CLASS;
-						?>sectiontableheader fbs"
+						class="th-6 fb_sectiontableheader fbs"
 						width="5%" align="center"><?php
 						echo _RECENT_HITS;
 						?></th>
@@ -216,9 +200,7 @@ echo KUNENA_BOARD_CLASS;
 							?>
 
 				<tr
-					class="<?php
-							echo KUNENA_BOARD_CLASS;
-							?>sectiontableentry<?php
+					class="fb_sectiontableentry<?php
 							echo "$k";
 							?>">
 					<?php
@@ -274,7 +256,7 @@ echo KUNENA_BOARD_CLASS;
 									$tabid ++;
 									$tabs->my_tab_start ( $tabid, $tabid );
 									$order_start = $i + 1;
-									echo "<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr  class = \"fb_sth\" ><th width=\"1%\"  align=\"center\" class=\"th-1 " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\"> </th><th class=\"th-2 " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\"  align=\"left\" >" . _RECENT_TOPICS . "</th><th width=\"10%\"  class=\"th-3 " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\"   align=\"center\" >" . _RECENT_AUTHOR . "</th><th   align=\"left\"  width=\"20%\"  class=\"th-4 " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\">" . _RECENT_CATEGORIES . "</th><th class=\"th-5 " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\" width=\"20%\"  align=\"left\"  >" . _RECENT_DATE . "</th><th  class=\"th-6 " . KUNENA_BOARD_CLASS . "sectiontableheader fbs\" width=\"5%\"   align=\"center\" >" . _RECENT_HITS . "</th></tr>";
+									echo "<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr  class = \"fb_sth\" ><th width=\"1%\"  align=\"center\" class=\"th-1 fb_sectiontableheader fbs\"> </th><th class=\"th-2 fb_sectiontableheader fbs\"  align=\"left\" >" . _RECENT_TOPICS . "</th><th width=\"10%\"  class=\"th-3 fb_sectiontableheader fbs\"   align=\"center\" >" . _RECENT_AUTHOR . "</th><th   align=\"left\"  width=\"20%\"  class=\"th-4 fb_sectiontableheader fbs\">" . _RECENT_CATEGORIES . "</th><th class=\"th-5 fb_sectiontableheader fbs\" width=\"20%\"  align=\"left\"  >" . _RECENT_DATE . "</th><th  class=\"th-6 fb_sectiontableheader fbs\" width=\"5%\"   align=\"center\" >" . _RECENT_HITS . "</th></tr>";
 								}
 							}
 						}

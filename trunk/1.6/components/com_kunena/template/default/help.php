@@ -30,11 +30,11 @@ $document=& JFactory::getDocument();
 $document->setTitle(_GEN_HELP . ' - ' . stripslashes($kunena_config->board_title));
 
 ?>
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
+<div class="fb__bt_cvr1">
+<div class="fb__bt_cvr2">
+<div class="fb__bt_cvr3">
+<div class="fb__bt_cvr4">
+<div class="fb__bt_cvr5">
 <table class = "fb_blocktable" id ="fb_forumhelp" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
@@ -67,11 +67,11 @@ $document->setTitle(_GEN_HELP . ' - ' . stripslashes($kunena_config->board_title
 </div>
 </div>
                      <!-- Begin: Forum Jump -->
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
+<div class="fb__bt_cvr1">
+<div class="fb__bt_cvr2">
+<div class="fb__bt_cvr3">
+<div class="fb__bt_cvr4">
+<div class="fb__bt_cvr5">
 <table class = "fb_blocktable" id="fb_bottomarea"  border="0" cellspacing="0" cellpadding="0" width="100%">
   <thead>
     <tr>

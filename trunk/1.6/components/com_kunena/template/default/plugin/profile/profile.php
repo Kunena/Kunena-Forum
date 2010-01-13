@@ -314,9 +314,7 @@ function showprf($userid, $page) {
 <table class="fb_profile_cover" width="100%" border="0" cellspacing="0"
 	cellpadding="0">
 	<tr>
-		<td class="<?php
-	echo KUNENA_BOARD_CLASS;
-	?>profile-left"
+		<td class="fb_profile-left"
 			align="center" valign="top" width="25%"><!-- Kunena Profile -->
 		<?php
 	if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/profile/userinfos.php' )) {
@@ -328,9 +326,7 @@ function showprf($userid, $page) {
 
 		<!-- /Kunena Profile --></td>
 
-		<td class="<?php
-	echo KUNENA_BOARD_CLASS;
-	?>profile-right"
+		<td class="fb_profile-right"
 			valign="top" width="74%"><!-- User Messages --> <?php
 
 	if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/profile/summary.php' )) {
@@ -358,21 +354,11 @@ function showprf($userid, $page) {
 <!-- -->
 
 <!-- Begin: Forum Jump -->
-<div class="<?php
-echo KUNENA_BOARD_CLASS;
-?>_bt_cvr1">
-<div class="<?php
-echo KUNENA_BOARD_CLASS;
-?>_bt_cvr2">
-<div class="<?php
-echo KUNENA_BOARD_CLASS;
-?>_bt_cvr3">
-<div class="<?php
-echo KUNENA_BOARD_CLASS;
-?>_bt_cvr4">
-<div class="<?php
-echo KUNENA_BOARD_CLASS;
-?>_bt_cvr5">
+<div class="fb__bt_cvr1">
+<div class="fb__bt_cvr2">
+<div class="fb__bt_cvr3">
+<div class="fb__bt_cvr4">
+<div class="fb__bt_cvr5">
 <table class="fb_blocktable" id="fb_bottomarea" border="0"
 	cellspacing="0" cellpadding="0" width="100%">
 	<thead>

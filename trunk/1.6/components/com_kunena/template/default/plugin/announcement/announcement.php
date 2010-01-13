@@ -77,7 +77,7 @@ if ($do == "read") {
 
             <tbody id = "announcement_tbody">
                 <tr class = "fb_sth fbs">
-                    <th class = "th-1 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="left" >
+                    <th class = "th-1 fb_sectiontableheader" align="left" >
                         <?php
                         if ($is_editor) {
                         	echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'edit', $annID), _ANN_EDIT, _ANN_EDIT, 'follow').' | ';
@@ -125,11 +125,11 @@ if ($is_editor) {
     // BEGIN: SHOW ANN
     if ($do == "show") {
         ?>
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
+<div class="fb__bt_cvr1">
+<div class="fb__bt_cvr2">
+<div class="fb__bt_cvr3">
+<div class="fb__bt_cvr4">
+<div class="fb__bt_cvr5">
             <table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
                 <thead>
                     <tr>
@@ -143,22 +143,22 @@ if ($is_editor) {
 
                 <tbody id = "announcement_tbody">
                     <tr class = "fb_sth fbs">
-                        <th class = "th-1 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader"  width="1%" align="center"> <?php echo _ANN_ID; ?>
+                        <th class = "th-1 fb_sectiontableheader"  width="1%" align="center"> <?php echo _ANN_ID; ?>
                         </th>
 
-                        <th class = "th-2 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" width="15%" align="left"> <?php echo _ANN_DATE; ?>
+                        <th class = "th-2 fb_sectiontableheader" width="15%" align="left"> <?php echo _ANN_DATE; ?>
                         </th>
 
-                        <th class = "th-3 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" width="54%" align="left"> <?php echo _ANN_TITLE; ?>
+                        <th class = "th-3 fb_sectiontableheader" width="54%" align="left"> <?php echo _ANN_TITLE; ?>
                         </th>
 
-                        <th class = "th-4 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" width="10%"  align="center"> <?php echo _ANN_PUBLISH; ?>
+                        <th class = "th-4 fb_sectiontableheader" width="10%"  align="center"> <?php echo _ANN_PUBLISH; ?>
                         </th>
 
-                        <th class = "th-5 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader"  width="10%"  align="center"> <?php echo _ANN_EDIT; ?>
+                        <th class = "th-5 fb_sectiontableheader"  width="10%"  align="center"> <?php echo _ANN_EDIT; ?>
                         </th>
 
-                        <th class = "th-6 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" width="10%"  align="center"> <?php echo _ANN_DELETE; ?>
+                        <th class = "th-6 fb_sectiontableheader" width="10%"  align="center"> <?php echo _ANN_DELETE; ?>
                         </th>
                     </tr>
 
@@ -181,7 +181,7 @@ if ($is_editor) {
                             $k = 1 - $k;
                     ?>
 
-                            <tr class = "<?php echo KUNENA_BOARD_CLASS.''.$tabclass[$k];?>">
+                            <tr class = "fb_<?php echo $tabclass[$k];?>">
                                 <td class = "td-1"  align="center">
                                     #<?php echo $row->id; ?>
                                 </td>
@@ -253,11 +253,11 @@ if ($is_editor) {
             }
 		$calendar = JHTML::_('calendar', '', 'created', 'addcreated');
             ?>
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
+<div class="fb__bt_cvr1">
+<div class="fb__bt_cvr2">
+<div class="fb__bt_cvr3">
+<div class="fb__bt_cvr4">
+<div class="fb__bt_cvr5">
 <table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
@@ -407,11 +407,11 @@ if ($is_editor) {
     }
             //-->
 </script>
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
+<div class="fb__bt_cvr1">
+<div class="fb__bt_cvr2">
+<div class="fb__bt_cvr3">
+<div class="fb__bt_cvr4">
+<div class="fb__bt_cvr5">
 <table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>

@@ -46,11 +46,11 @@ if ($signature)
   	window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new JTabs(tabs); }); });
 </script>
 
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
+<div class="fb__bt_cvr1">
+<div class="fb__bt_cvr2">
+<div class="fb__bt_cvr3">
+<div class="fb__bt_cvr4">
+<div class="fb__bt_cvr5">
 
 	<div id="kprofile-container">
 		<div id="kprofile-leftcol">

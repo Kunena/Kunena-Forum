@@ -128,7 +128,7 @@ class CKunenaPolls {
 		JApplication::addCustomHeadTag('
     <script type="text/javascript">
 	   <!--
-	   var boardclass = "'.KUNENA_BOARD_CLASS.'";
+	   var boardclass = "fb_";
 	   var KUNENA_POLL_OPTION_NAME = "'._KUNENA_POLL_OPTION_NAME.'";
 	   var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "'._KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW.'";
 	   var KUNENA_ICON_ERROR = "'.JURI::root(). 'administrator/images/publish_x.png'.'";

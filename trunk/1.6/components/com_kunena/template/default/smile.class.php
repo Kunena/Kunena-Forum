@@ -233,7 +233,7 @@ class smile
         $kunena_config =& CKunenaConfig::getInstance();
         ?>
 
-        <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry1">
+        <tr class = "fb_sectiontableentry1">
         <?php if ($kunena_config->enablehelppage) { ?>
             <td class = "fb_leftcolumn" valign = "top">
                 <strong><?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=help', @print(_COM_BOARDCODE), NULL , 'follow' , NULL, 'boardcode', 'target=\'_new\''); ?></strong>:
@@ -256,7 +256,7 @@ class smile
 							<img class = "fb-bbcode" title = "Subscript" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_sub.png" alt="Sub" onclick = "bbfontstyle('[sub]', '[/sub]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_SUB));?>')" />
 							<img class = "fb-bbcode" title = "Supperscript" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_sup.png" alt="Sup" onclick = "bbfontstyle('[sup]', '[/sup]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_SUP));?>')" />
 							<img class = "fb-bbcode" name = "addbbcode62" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_smallcaps.png" alt="<?php @print(_SMILE_SIZE); ?>" onclick = "bbfontstyle('[size=' + document.postform.addbbcode22.options[document.postform.addbbcode22.selectedIndex].value + ']', '[/size]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_FONTSIZE));?>')" />
-							<select id = "fb-bbcode_size" class = "<?php echo KUNENA_BOARD_CLASS;?>slcbox" name = "addbbcode22" onmouseover = "javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_FONTSIZESELECTION));?>')">
+							<select id = "fb-bbcode_size" class = "fb_slcbox" name = "addbbcode22" onmouseover = "javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_FONTSIZESELECTION));?>')">
 								<option value = "1"><?php @print(_SIZE_VSMALL); ?></option>
 								<option value = "2"><?php @print(_SIZE_SMALL); ?></option>
 								<option value = "3" selected = "selected"><?php @print(_SIZE_NORMAL); ?></option>
@@ -327,7 +327,7 @@ class smile
 							<?php @print(_KUNENA_EDITOR_VIDEO_WIDTH); ?><input name="videowidth" type="text" size="5" maxlength="5" onmouseover = "javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEOWIDTH));?>')" />
 							<?php @print(_KUNENA_EDITOR_VIDEO_HEIGHT); ?><input name="videoheight" type="text" size="5" maxlength="5" onmouseover = "javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEOHEIGHT));?>')" /> <br />
 							<?php @print(_KUNENA_EDITOR_VIDEO_PROVIDER); ?>
-							<select name = "fb_vid_code1" class = "<?php echo KUNENA_BOARD_CLASS;?>button" onmouseover = "javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEOPROVIDER));?>')">
+							<select name = "fb_vid_code1" class = "fb_button" onmouseover = "javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEOPROVIDER));?>')">
 								<?php
 								$vid_provider = array('','AnimeEpisodes','Biku','Bofunk','Break','Clip.vn','Clipfish','Clipshack','Collegehumor','Current',
 									'DailyMotion','DivX,divx]http://','DownloadFestival','Flash,flash]http://','FlashVars,flashvars param=]http://','Fliptrack',
@@ -390,15 +390,15 @@ class smile
 					</td></tr>
 <!-- end of extendable fiels -->
                     <tr>
-                        <td class = "<?php echo KUNENA_BOARD_CLASS;?>posthint">
-                            <input type = "text" name = "helpbox" size = "45" class = "<?php echo KUNENA_BOARD_CLASS;?>inputbox" maxlength = "100" value = "<?php @print(_KUNENA_EDITOR_HELPLINE_HINT);?>" />
+                        <td class = "fb_posthint">
+                            <input type = "text" name = "helpbox" size = "45" class = "fb_inputbox" maxlength = "100" value = "<?php @print(_KUNENA_EDITOR_HELPLINE_HINT);?>" />
                         </td>
                     </tr>
                 </table>
             </td>
         </tr>
 
-        <tr class = "<?php echo KUNENA_BOARD_CLASS; ?>sectiontableentry2">
+        <tr class = "fb_sectiontableentry2">
             <td valign = "top" class = "fb_leftcolumn">
                 <strong><?php @print(_MESSAGE); ?></strong>:<br />
                <b onclick = "size_messagebox(100);" style="cursor:pointer">(+)</b><b> / </b><b onclick = "size_messagebox(-100);" style="cursor:pointer">(-)</b>
@@ -415,7 +415,7 @@ class smile
             </td>
 
             <td valign = "top">
-                <textarea cols="60" rows="6" class = "<?php echo KUNENA_BOARD_CLASS;?>txtarea" name = "<?php echo $areaname;?>" id = "<?php echo $areaname;?>"><?php echo kunena_htmlspecialchars($html, ENT_QUOTES); ?></textarea>
+                <textarea cols="60" rows="6" class = "fb_txtarea" name = "<?php echo $areaname;?>" id = "<?php echo $areaname;?>"><?php echo kunena_htmlspecialchars($html, ENT_QUOTES); ?></textarea>
 <?php
 if ($editmode) {
     // Moderator edit area

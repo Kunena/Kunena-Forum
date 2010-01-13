@@ -44,11 +44,11 @@ elseif ($do == 'vote')
             }
             ?>
   </div>
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
+<div class="fb__bt_cvr1">
+<div class="fb__bt_cvr2">
+<div class="fb__bt_cvr3">
+<div class="fb__bt_cvr4">
+<div class="fb__bt_cvr5">
     <table class = "fb_blocktable" id = "fb_poll" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>
             <tr>
@@ -62,7 +62,7 @@ elseif ($do == 'vote')
             </tr>
         </thead>
         <tbody id = "polls_tbody">
-                <tr class = "<?php echo KUNENA_BOARD_CLASS;?>sectiontableentry2">
+                <tr class = "fb_sectiontableentry2">
                     <td class = "td-1 fbm" align="left">
                         <div class = "polldesc">
                         <div style="font-weight:bold;" id="poll_text_help"></div>
@@ -109,11 +109,11 @@ elseif ($do == 'changevote')
             }
             ?>
   </div>
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
+<div class="fb__bt_cvr1">
+<div class="fb__bt_cvr2">
+<div class="fb__bt_cvr3">
+<div class="fb__bt_cvr4">
+<div class="fb__bt_cvr5">
     <table class = "fb_blocktable" id = "fb_poll" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>
             <tr>
@@ -127,7 +127,7 @@ elseif ($do == 'changevote')
             </tr>
         </thead>
         <tbody id = "polls_tbody">
-                <tr class = "<?php echo KUNENA_BOARD_CLASS;?>sectiontableentry2">
+                <tr class = "fb_sectiontableentry2">
                     <td class = "td-1 fbm" align="left">
                         <div class = "polldesc">
                         <div style="font-weight:bold;" id="poll_text_help"></div>

@@ -26,11 +26,11 @@ $kunena_session =& CKunenaSession::getInstance();
 
 global $kunena_icons;
 ?>
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
+<div class="fb__bt_cvr1">
+<div class="fb__bt_cvr2">
+<div class="fb__bt_cvr3">
+<div class="fb__bt_cvr4">
+<div class="fb__bt_cvr5">
 <table class = "fb_blocktable " id = "fb_userprfmsg" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
 	<thead>
 		<tr>
@@ -39,29 +39,29 @@ global $kunena_icons;
 					<span class = "fb_title"><?php echo _KUNENA_MY_POSTS; ?></span>
 				</div>
 
-				<img id = "BoxSwitch_fbuserprofile__<?php echo KUNENA_BOARD_CLASS ;?>fbuserprofile_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = "" />
+				<img id = "BoxSwitch_fbuserprofile__fb_fbuserprofile_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = "" />
                         </th>
 		</tr>
 	</thead>
 
-	<tbody id = "<?php echo KUNENA_BOARD_CLASS ;?>fbuserprofile_tbody">
+	<tbody id = "fb_fbuserprofile_tbody">
 		<tr class = "fb_sth">
-			<th class = "th-1 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader">&nbsp;
+			<th class = "th-1 fb_sectiontableheader">&nbsp;
 			</th>
 
-			<th class = "th-2 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader"><?php echo _KUNENA_USERPROFILE_TOPICS; ?>
+			<th class = "th-2 fb_sectiontableheader"><?php echo _KUNENA_USERPROFILE_TOPICS; ?>
 			</th>
 
-			<th class = "th-3 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader"><?php echo _KUNENA_USERPROFILE_CATEGORIES; ?>
+			<th class = "th-3 fb_sectiontableheader"><?php echo _KUNENA_USERPROFILE_CATEGORIES; ?>
 			</th>
 
-			<th class = "th-4 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader"><?php echo _KUNENA_USERPROFILE_HITS; ?>
+			<th class = "th-4 fb_sectiontableheader"><?php echo _KUNENA_USERPROFILE_HITS; ?>
 			</th>
 
-			<th class = "th-5 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader"><?php echo _KUNENA_USERPROFILE_DATE; ?>
+			<th class = "th-5 fb_sectiontableheader"><?php echo _KUNENA_USERPROFILE_DATE; ?>
 			</th>
 
-			<th class = "th-6 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader">&nbsp;
+			<th class = "th-6 fb_sectiontableheader">&nbsp;
 			</th>
 		</tr>
 
@@ -143,7 +143,7 @@ global $kunena_icons;
 				$fbCatURL = JRoute::_("index.php?option=com_kunena" . KUNENA_COMPONENT_ITEMID_SUFFIX . "&amp;func=showcat&amp;catid=" . $item->catid);
 		?>
 
-			<tr class = "<?php echo ''.KUNENA_BOARD_CLASS.''. $tabclass[$k] . ''; ?>">
+			<tr class = "fb_<?php echo $tabclass[$k] . ''; ?>">
 				<td class = "td-1"><?php echo "<img src=\"" . $topic_emoticons[$item->topic_emoticon] . "\" alt=\"emo\" />"; ?>
 				</td>
 
@@ -182,7 +182,7 @@ global $kunena_icons;
 		?>
 
 			<tr>
-				<td colspan = "6" class = "<?php echo KUNENA_BOARD_CLASS ;?>profile-bottomnav">
+				<td colspan = "6" class = "fb_profile-bottomnav">
 					<br/>
 
 					<b><?php echo _KUNENA_USERPROFILE_NOFORUMPOSTS; ?></b>
@@ -198,7 +198,7 @@ global $kunena_icons;
 		?>
 
 		<tr>
-			<td colspan = "6" class = "<?php echo KUNENA_BOARD_CLASS ;?>profile-bottomnav">
+			<td colspan = "6" class = "fb_profile-bottomnav">
 <?php echo _KUNENA_USRL_DISPLAY_NR; ?>
 
 <?php

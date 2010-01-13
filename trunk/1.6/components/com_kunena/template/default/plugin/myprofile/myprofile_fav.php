@@ -25,11 +25,11 @@ global $total, $limitstart, $limit;
 $kunena_db = &JFactory::getDBO();
 
 ?>
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
+<div class="fb__bt_cvr1">
+<div class="fb__bt_cvr2">
+<div class="fb__bt_cvr3">
+<div class="fb__bt_cvr4">
+<div class="fb__bt_cvr5">
 <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=unfavorite'); ?>" method = "post" name = "postform">
 	<input type = "hidden" name = "do" value = "unfavorite"/>
 	<table class = "fb_blocktable" id = "fb_forumprofile_fav" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
@@ -43,11 +43,11 @@ $kunena_db = &JFactory::getDBO();
 			</tr>
 		</thead>
 
-		<tbody id = "<?php echo KUNENA_BOARD_CLASS ;?>fbuserprofile_tbody">
+		<tbody id = "fb_fbuserprofile_tbody">
 			<tr class = "fb_sth">
-				<th class = "th-1 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader"><?php echo _GEN_TOPICS; ?></th>
-				<th class = "th-2 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader" style = "text-align:center; width:25%"><?php echo _GEN_AUTHOR; ?></th>
-				<th class = "th-3 <?php echo KUNENA_BOARD_CLASS ;?>sectiontableheader"><?php echo _GEN_DELETE; ?></th>
+				<th class = "th-1 fb_sectiontableheader"><?php echo _GEN_TOPICS; ?></th>
+				<th class = "th-2 fb_sectiontableheader" style = "text-align:center; width:25%"><?php echo _GEN_AUTHOR; ?></th>
+				<th class = "th-3 fb_sectiontableheader"><?php echo _GEN_DELETE; ?></th>
 			</tr>
 
 			<?php
@@ -75,7 +75,7 @@ $kunena_db = &JFactory::getDBO();
 					{
 						$k = 1 - $k;
 			?>
-						<tr class="<?php echo KUNENA_BOARD_CLASS . '' . $tabclass[$k]; ?>">
+						<tr class="fb_<?php echo $tabclass[$k]; ?>">
 						<td class="td-1" width="73%" align="left"><?php echo $enum; ?>: <?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&func=view&catid=' . $fav->catid . '&id=' . $fav->id, kunena_htmlspecialchars(stripslashes($fav->subject)),kunena_htmlspecialchars(stripslashes($fav->subject)),'nofollow'); ?></td>
 
 						<td class = "td-2" style = "text-align:center; width:25%"> <?php echo kunena_htmlspecialchars(stripslashes($fav->name)); ?></td>
@@ -108,7 +108,7 @@ $kunena_db = &JFactory::getDBO();
 			}
 			else
 			{
-				echo '<tr class="' . KUNENA_BOARD_CLASS . '' . $tabclass[$k] . '"><td class="td-1" colspan = "3">' . _USER_NOFAVORITES . '</td></tr>';
+				echo '<tr class="fb_' . $tabclass[$k] . '"><td class="td-1" colspan = "3">' . _USER_NOFAVORITES . '</td></tr>';
 			}
 			?>
 

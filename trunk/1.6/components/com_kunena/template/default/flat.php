@@ -84,21 +84,11 @@ if (count ( $this->messages [0] ) > 0) {
 
 if (count ( $this->messages [0] ) > 0) {
 	?>
-<div class="<?php
-	echo KUNENA_BOARD_CLASS;
-	?>_bt_cvr1">
-<div class="<?php
-	echo KUNENA_BOARD_CLASS;
-	?>_bt_cvr2">
-<div class="<?php
-	echo KUNENA_BOARD_CLASS;
-	?>_bt_cvr3">
-<div class="<?php
-	echo KUNENA_BOARD_CLASS;
-	?>_bt_cvr4">
-<div class="<?php
-	echo KUNENA_BOARD_CLASS;
-	?>_bt_cvr5">
+<div class="fb__bt_cvr1">
+<div class="fb__bt_cvr2">
+<div class="fb__bt_cvr3">
+<div class="fb__bt_cvr4">
+<div class="fb__bt_cvr5">
 <form action="index.php" method="post" name="fbBulkActionForm">
 
 <table
@@ -189,15 +179,15 @@ if (count ( $this->messages [0] ) > 0) {
 		?>
 
 		<tr
-			class="<?php
-		echo KUNENA_BOARD_CLASS . $tabclass [$k];
+			class="fb_<?php
+		echo $tabclass [$k];
 		if ($leaf->ordering != 0 || ($leaf->myfavorite && $funcmylatest)) {
 			echo '_stickymsg';
 			$topicSticky = 1;
 		}
 
 		if ($leaf->class_sfx) {
-			echo ' ' . KUNENA_BOARD_CLASS . $tabclass [$k];
+			echo ' fb_' . $tabclass [$k];
 			if ($leaf->ordering != 0 || ($leaf->myfavorite && $funcmylatest)) {
 				echo '_stickymsg';
 				$topicSticky = 1;
@@ -425,8 +415,7 @@ if (count ( $this->messages [0] ) > 0) {
 	if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 		?>
 		<!-- Moderator Bulk Actions -->
-		<tr class="<?php
-		echo KUNENA_BOARD_CLASS?>sectiontableentry1">
+		<tr class="fb_sectiontableentry1">
 			<td colspan="7" align="right" class="td-1 fbs"><script
 				type="text/javascript">
                             jQuery(document).ready(function()

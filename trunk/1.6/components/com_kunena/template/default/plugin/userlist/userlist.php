@@ -144,11 +144,11 @@ class HTML_userlist_content
             }
                     //-->
         </script>
-		<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
-		<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
-		<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
-		<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
-		<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
+		<div class="fb__bt_cvr1">
+		<div class="fb__bt_cvr2">
+		<div class="fb__bt_cvr3">
+		<div class="fb__bt_cvr4">
+		<div class="fb__bt_cvr5">
         <table class = "fb_blocktable" id ="fb_userlist" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
@@ -184,11 +184,11 @@ class HTML_userlist_content
 
             <tbody>
                 <tr>
-                    <td class = "<?php echo KUNENA_BOARD_CLASS; ?>fb-userlistinfo">
+                    <td class = "fb_fb-userlistinfo">
                         <!-- Begin: Listing -->
                         <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
                             <tr class = "fb_sth  fbs">
-                                <th class = "th-1 frst <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center">
+                                <th class = "th-1 frst fb_sectiontableheader" align="center">
                                 </th>
 
                                 <?php
@@ -196,7 +196,7 @@ class HTML_userlist_content
                                 {
                                 ?>
 
-                                    <th class = "th-2 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center">
+                                    <th class = "th-2 fb_sectiontableheader" align="center">
 <?php echo _KUNENA_USRL_ONLINE; ?>
                                     </th>
 
@@ -209,7 +209,7 @@ class HTML_userlist_content
                                 {
                                 ?>
 
-                                    <th class = "th-3 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center">
+                                    <th class = "th-3 fb_sectiontableheader" align="center">
 <?php echo _KUNENA_USRL_AVATAR; ?>
                                     </th>
 
@@ -222,7 +222,7 @@ class HTML_userlist_content
                                 {
                                 ?>
 
-                                    <th class = "th-4 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center">
+                                    <th class = "th-4 fb_sectiontableheader" align="center">
 <?php echo _KUNENA_USRL_NAME; ?>
 <?php echo CKunenaLink::GetUserlistLink('&amp;orderby=name&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
 <?php echo CKunenaLink::GetUserlistLink('&amp;orderby=name&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
@@ -237,7 +237,7 @@ class HTML_userlist_content
                                 {
                                 ?>
 
-                                    <th class = "th-5 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center">
+                                    <th class = "th-5 fb_sectiontableheader" align="center">
 <?php echo _KUNENA_USRL_USERNAME; ?>
 <?php echo CKunenaLink::GetUserlistLink('&amp;orderby=username&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
 <?php echo CKunenaLink::GetUserlistLink('&amp;orderby=username&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
@@ -252,7 +252,7 @@ class HTML_userlist_content
                                 {
                                 ?>
 
-                                    <th class = "th-7 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center">
+                                    <th class = "th-7 fb_sectiontableheader" align="center">
 <?php echo _KUNENA_USRL_POSTS; ?>
 <?php echo CKunenaLink::GetUserlistLink('&amp;orderby=posts&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
 <?php echo CKunenaLink::GetUserlistLink('&amp;orderby=posts&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
@@ -267,7 +267,7 @@ class HTML_userlist_content
                                 {
                                 ?>
 
-                                    <th class = "th-7 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center">
+                                    <th class = "th-7 fb_sectiontableheader" align="center">
 <?php echo _KUNENA_USRL_KARMA; ?>
 <?php echo CKunenaLink::GetUserlistLink('&amp;orderby=karma&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
 <?php echo CKunenaLink::GetUserlistLink('&amp;orderby=karma&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
@@ -282,7 +282,7 @@ class HTML_userlist_content
                                 {
                                 ?>
 
-                                    <th class = "th-8 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center">
+                                    <th class = "th-8 fb_sectiontableheader" align="center">
 <?php echo _KUNENA_USRL_EMAIL; ?>
 <?php echo CKunenaLink::GetUserlistLink('&amp;orderby=email&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
 <?php echo CKunenaLink::GetUserlistLink('&amp;orderby=email&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
@@ -297,7 +297,7 @@ class HTML_userlist_content
                                 {
                                 ?>
 
-                                    <th class = "th-9 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center">
+                                    <th class = "th-9 fb_sectiontableheader" align="center">
 <?php echo _KUNENA_USRL_USERTYPE; ?>
 <?php echo CKunenaLink::GetUserlistLink('&amp;orderby=usertype&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
 <?php echo CKunenaLink::GetUserlistLink('&amp;orderby=usertype&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
@@ -312,7 +312,7 @@ class HTML_userlist_content
                                 {
                                 ?>
 
-                                    <th class = "th-10 <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center">
+                                    <th class = "th-10 fb_sectiontableheader" align="center">
 <?php echo _KUNENA_USRL_JOIN_DATE; ?>
 <?php echo CKunenaLink::GetUserlistLink('&amp;orderby=registerDate&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
 <?php echo CKunenaLink::GetUserlistLink('&amp;orderby=registerDate&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
@@ -327,7 +327,7 @@ class HTML_userlist_content
                                 {
                                 ?>
 
-                                    <th class = "th-11  <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center">
+                                    <th class = "th-11  fb_sectiontableheader" align="center">
 <?php echo _KUNENA_USRL_LAST_LOGIN; ?>
 <?php echo CKunenaLink::GetUserlistLink('&amp;orderby=lastvisitDate&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
 <?php echo CKunenaLink::GetUserlistLink('&amp;orderby=lastvisitDate&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
@@ -341,7 +341,7 @@ class HTML_userlist_content
                                 if ($kunena_config->userlist_userhits)
                                 {
                                 ?>
-								<th class = "th-12 lst <?php echo KUNENA_BOARD_CLASS; ?>sectiontableheader" align="center">
+								<th class = "th-12 lst fb_sectiontableheader" align="center">
 <?php echo _KUNENA_USRL_HITS; ?>
 <?php echo CKunenaLink::GetUserlistLink('&amp;orderby=uhits&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
 <?php echo CKunenaLink::GetUserlistLink('&amp;orderby=uhits&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
@@ -401,7 +401,7 @@ class HTML_userlist_content
                                 //
                             ?>
 
-                                <tr class = "<?php echo KUNENA_BOARD_CLASS; ?><?php echo $usrl_class ;?>  fbm">
+                                <tr class = "fb_<?php echo $usrl_class ;?>  fbm">
                                     <td class = "td-1 frst fbs" align="center">
 <?php echo $nr; ?>
                                     </td>
@@ -585,11 +585,11 @@ class HTML_userlist_content
         //(JJ) FINISH: WHOISONLINE
         ?>
         <!-- Begin: Forum Jump -->
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr1">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr2">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr3">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr4">
-<div class="<?php echo KUNENA_BOARD_CLASS; ?>_bt_cvr5">
+<div class="fb__bt_cvr1">
+<div class="fb__bt_cvr2">
+<div class="fb__bt_cvr3">
+<div class="fb__bt_cvr4">
+<div class="fb__bt_cvr5">
         <table class = "fb_blocktable" id="fb_bottomarea"   border = "0" cellspacing = "0" cellpadding = "0">
             <thead>
                 <tr>

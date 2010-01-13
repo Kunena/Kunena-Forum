@@ -207,6 +207,34 @@ class CKunenaUserprofile extends JTable
 	{
 		return CKunenaUserHelper::getInstance($userid, $reload);
 	}
+
+	function socialButton($name) {
+		$social = array (
+			'twitter' => array( 'name'=>'TWITTER', 'url'=>'http://twitter.com/', 'title'=>_KUNENA_MYPROFILE_TWITTER ),
+			'facebook' => array( 'name'=>'FACEBOOK', 'url'=>'http://www.facebook.com/people/unknown/', 'title'=>_KUNENA_MYPROFILE_FACEBOOK ),
+			'myspace' => array( 'name'=>'MYSPACE', 'url'=>'http://www.myspace.com/', 'title'=>_KUNENA_MYPROFILE_MYSPACE ),
+			'linkedin' => array( 'name'=>'LINKEDIN', 'url'=>'http://www.linkedin.com/pub/', 'title'=>_KUNENA_MYPROFILE_LINKEDIN ),
+
+			'delicious' => array( 'name'=>'DELICIOUS', 'url'=>'http://delicious.com/', 'title'=>_KUNENA_MYPROFILE_DELICIOUS ),
+			'friendfeed' => array( 'name'=>'FRIENDFEED', 'url'=>'http://friendfeed.com/', 'title'=>_KUNENA_MYPROFILE_FRIENDFEED ),
+			'digg' => array( 'name'=>'DIGG', 'url'=>'http://www.digg.com/', 'title'=>_KUNENA_MYPROFILE_DIGG ),
+
+			'skype' => array( 'name'=>'SKYPE', 'url'=>'skype:?call', 'title'=>'' ),
+			'yim' => array( 'name'=>'YIM', 'url'=>'ymsgr:sendim?', 'title'=>'' ),
+			'aim' => array( 'name'=>'AIM', 'url'=>'aim:goim?screenname=', 'title'=>'' ),
+			'gtalk' => array( 'name'=>'GTALK', 'url'=>'gtalk:chat?jid=', 'title'=>'' ),
+
+			'blogspot' => array( 'name'=>'BLOGSPOT', 'url'=>'http://www.blogspot.com/', 'title'=>_KUNENA_MYPROFILE_BLOGSPOT ),
+			'flickr' => array( 'name'=>'FLICKR', 'url'=>'http://www.flickr.com/photos/', 'title'=>_KUNENA_MYPROFILE_FLICKR ),
+			'bebo' => array( 'name'=>'BEBO', 'url'=>'http://www.bebo.com/Profile.jsp?MemberId=', 'title'=>_KUNENA_MYPROFILE_BEBO )
+		);
+
+		if (!isset($social[$name])) return;
+		$url = $social[$name]['url'];
+		$title = $social[$name]['title'];
+		$item = $social[$name]['name'];
+		if (!empty($this->$item)) return '<a href="'.$url.kunena_htmlspecialchars(stripslashes($this->$item)).'" target="_blank" title="'.$title.'"><span class="'.$name.'"></span></a>';
+	}
 }
 
 class CKunenaUserHelper {

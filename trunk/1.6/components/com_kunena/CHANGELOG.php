@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+13-Jan-2010 Matias
++ [#19380] New profile page: forum/profile. Not yet activated in menu, links
+
 13-Jan-2010 Xillibit
 # [#19103] Language strings should be escaped in javascript, added in myprofile and tested in write post
 + [#19232] Add option for message numbering
@@ -43,7 +46,7 @@ Kunena 1.6.0-DEV
 
 12-Jan-2010 Xillibit
 # [#19288] Fix regression, waring in zend in myprofile_summary.php
-^# [#19358] Apply some changes on the polls, allow the user to change her vote
+^ [#19358] Apply some changes on the polls, allow the user to change her vote
 # [#19358] Apply some changes on the polls, regression undefined catid in poll.php
 ^ [#19377] Allow the maxlength on the personnal text to be modified easily
 

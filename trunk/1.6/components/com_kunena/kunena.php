@@ -497,6 +497,15 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 		#########################################################################################
 
+		case 'profile' :
+			require_once ( KUNENA_PATH_LIB .DS. 'kunena.profile.view.php');
+			$page = new CKunenaProfile($userid);
+			$page->display();
+
+			break;
+
+		#########################################################################################
+
 		case 'fbprofile' :
 			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/profile/profile.php' )) {
 				include (KUNENA_ABSTMPLTPATH . '/plugin/profile/profile.php');

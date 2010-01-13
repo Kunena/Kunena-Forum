@@ -331,6 +331,34 @@ class CKunenaTools {
 		echo $html;
 	}
 
+	function showDate($time, $format=_KUNENA_DT_DATETIME_FMT) {
+		jimport('joomla.utilities.date');
+		$date = new JDate($time);
+		return $date->toFormat($format);
+	}
+
+	function parseText($txt) {
+		if (!$txt) return;
+		$txt = stripslashes ( $txt );
+		$txt = nl2br ( $txt );
+		$txt = CKunenaTools::prepareContent ( $txt );
+		return $txt;
+	}
+
+	function parseBBCode($txt) {
+		static $emoticons = null;
+
+		if (!$txt) return;
+		if (!$emoticons) $emoticons = smile::getEmoticons ( 0 );
+		$kunena_config = & CKunenaConfig::getInstance ();
+		$txt = stripslashes ( $txt );
+		$txt = smile::smileReplace ( $txt, 0, $kunena_config->disemoticons, $emoticons );
+		$txt = nl2br ( $txt );
+		$txt = str_replace ( "__FBTAB__", "&#009;", $txt ); // For [code]
+		$txt = CKunenaTools::prepareContent ( $txt );
+		return $txt;
+	}
+
     function fbGetInternalTime ($time=null) {
     	// tells internal FB representing time from UTC $time
         $kunena_config =& CKunenaConfig::getInstance();
@@ -753,6 +781,49 @@ class CKunenaTools {
 		if ($catid && in_array($catid, $instances[$uid])) return true;
 
 		return false;
+	}
+
+	function getRank($profile) {
+		static $ranks = null;
+
+		if ($ranks === null) {
+			$kunena_db = &JFactory::getDBO();
+			$kunena_db->setQuery ( "SELECT * FROM #__fb_ranks" );
+			$ranks = $kunena_db->loadObjectList ('rank_id');
+			check_dberror ( "Unable to load ranks." );
+		}
+
+		$rank = new stdClass();
+		$rank->id = false;
+		$rank->rank_title = _VIEW_USER;
+		$rank->rank_min = 0;
+		$rank->rank_special = 0;
+		$rank->rank_image = 'rank5.gif';
+
+		if ($profile->rank != '0') {
+			if (isset($rank[$profile->rank])) $rank = $rank[$profile->rank];
+		}
+		else if ($profile->rank == '0' && self::isAdmin($profile->userid)) {
+			$rank->id = 0;
+			$rank->rank_title = _RANK_ADMINISTRATOR;
+			$rank->rank_special = 1;
+			$rank->rank_image = 'rankadmin.gif';
+		}
+		else if ($profile->rank == '0' && self::isModerator($profile->userid)) {
+			$rank->id = 0;
+			$rank->rank_title = _RANK_MODERATOR;
+			$rank->rank_special = 1;
+			$rank->rank_image = 'rankmod.gif';
+		}
+		if ($rank->id === false) {
+			//post count rank
+			$rank->id = 0;
+			foreach ($ranks as $cur) {
+				if ($cur->rank_special == 0 && $cur->rank_min <= $this->profile->posts && $cur->rank_min > $rank->rank_min) $rank = $cur;
+			}
+		}
+		$rank->rank_image = KUNENA_URLRANKSPATH . $rank->rank_image;
+		return $rank;
 	}
 
 	function getEMailToList($catid, $thread, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0') {

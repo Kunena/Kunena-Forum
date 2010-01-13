@@ -893,13 +893,11 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 				$msg_html->subject = $fb_subject_txt;
 
 				$msg_html->date = date ( _DATETIME, $this->kunena_message->time );
+
 				$fb_message_txt = stripslashes ( $this->kunena_message->message );
 				$fb_message_txt = smile::smileReplace ( $fb_message_txt, 0, $kunena_config->disemoticons, $kunena_emoticons );
 				$fb_message_txt = nl2br ( $fb_message_txt );
-
-				// Code tag: restore TABS as we had to 'hide' them from the rest of the logic
-				$fb_message_txt = str_replace ( "__FBTAB__", "&#009;", $fb_message_txt );
-
+				$fb_message_txt = str_replace ( "__FBTAB__", "&#009;", $fb_message_txt ); // For [code]
 				$msg_html->text = CKunenaTools::prepareContent ( $fb_message_txt );
 
 				$signature = $userinfo->signature;

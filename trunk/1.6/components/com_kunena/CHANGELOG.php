@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+13-Jan-2010 louis
+^ [#19380] Added show/hide behavior for statistics and whoisonline blocks.
+
 13-Jan-2010 fxstein
 + [#19244] New moderator tools class added
 ^ [#19380] Change joomla menu for Kunena to reflect new profile url format

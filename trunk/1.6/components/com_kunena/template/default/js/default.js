@@ -122,5 +122,61 @@ window.addEvent('domready', function() {
 });
 */
 
+//----------------- New Mootools based behaviors ----------------------
 
+window.addEvent('domready', function(){
+	
+	KCookie = new Hash.Cookie('kunena_settings', {duration: 3600});
+
+	// Status block.
+	var kstatus = document.id('kstats_status');
+	if (kstatus) {
+		// Auto-hide if the cookie is set.
+		if (KCookie.get('hide_kstatus')) {
+			kstatus.getElement('span').removeClass('close').addClass('open');
+			document.id('frontstats_tbody').setStyle('display', 'none');
+		}
+		
+		// Add the onclick event.
+		kstatus.addEvent('click', function(){
+			if (this.getElement('span').hasClass('close')) {
+				this.getElement('span').removeClass('close').addClass('open');
+				document.id('frontstats_tbody').setStyle('display', 'none');
+				KCookie.set('hide_kstatus', true);
+			}
+			else {
+				this.getElement('span').removeClass('open').addClass('close');
+				document.id('frontstats_tbody').setStyle('display', '');
+				KCookie.set('hide_kstatus', false);
+			}
+		});
+		
+	}
+
+	// Who is online block.
+	var kwhoisonline = document.id('kwhoisonline_status');
+	if (kwhoisonline) {
+		// Auto-hide if the cookie is set.
+		if (KCookie.get('hide_kwhoisonline')) {
+			kwhoisonline.getElement('span').removeClass('close').addClass('open');
+			document.id('whoisonline_tbody').setStyle('display', 'none');
+		}
+		
+		// Add the onclick event.
+		kwhoisonline.addEvent('click', function(){
+			if (this.getElement('span').hasClass('close')) {
+				this.getElement('span').removeClass('close').addClass('open');
+				document.id('whoisonline_tbody').setStyle('display', 'none');
+				KCookie.set('hide_kwhoisonline', true);
+			}
+			else {
+				this.getElement('span').removeClass('open').addClass('close');
+				document.id('whoisonline_tbody').setStyle('display', '');
+				KCookie.set('hide_kwhoisonline', false);
+			}
+		});
+		
+	}
+	
+});
 

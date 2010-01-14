@@ -38,6 +38,8 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Undefined fbConfig in kunena.parser.php
 # [#19295] Clean up code: Remove forumtools
 # [#19295] Clean up code: Remove deprecated plugins/recentposts
+^ [#19303] Add social network icons to profile: use layout from profile view
+^ [#19295] Clean up code: Use new rank function in view.php
 
 13-Jan-2010 louis
 ^ [#19380] Added show/hide behavior for statistics and whoisonline blocks.

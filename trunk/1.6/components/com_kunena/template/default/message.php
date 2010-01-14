@@ -256,99 +256,22 @@ if ($kunena_config->fb_profile == 'cb') {
 					}
 					?>
 				<div class="smallicons">
-				<?php
-					if (isset ( $msg_html->icq )) {
-						echo $msg_html->icq;
-					}
+					<?php
+						if (isset ( $msg_html->personal )) {
+						?>
+						<div class="viewcover"><?php echo $msg_html->personal;?></div>
+					<?php
+						}
 					?>
+
 				<?php
 					if (isset ( $msg_html->gender )) {
 						echo $msg_html->gender;
 					}
 					?>
 				<?php
-					if (isset ( $msg_html->skype )) {
-						echo $msg_html->skype;
-					}
-					?>
-				<?php
-					if (isset ( $msg_html->twitter )) {
-						echo $msg_html->twitter;
-					}
-					?>
-				<?php
-					if (isset ( $msg_html->facebook )) {
-						echo $msg_html->facebook;
-					}
-					?>
-                     <?php
-					if (isset ( $msg_html->aim )) {
-						echo $msg_html->aim;
-					}
-					?>
-                     <?php
-					if (isset ( $msg_html->bebo )) {
-						echo $msg_html->bebo;
-					}
-					?>
-                     <?php
-					if (isset ( $msg_html->blogger )) {
-						echo $msg_html->blogger;
-					}
-					?>
-                     <?php
-					if (isset ( $msg_html->delicious )) {
-						echo $msg_html->delicious;
-					}
-					?>
-                     <?php
-					if (isset ( $msg_html->digg )) {
-						echo $msg_html->digg;
-					}
-					?>
-                     <?php
-					if (isset ( $msg_html->flickr )) {
-						echo $msg_html->flickr;
-					}
-					?>
-                     <?php
-					if (isset ( $msg_html->friendfeed )) {
-						echo $msg_html->friendfeed;
-					}
-					?>
-                     <?php
-					if (isset ( $msg_html->linkedin )) {
-						echo $msg_html->linkedin;
-					}
-					?>
-                    <?php
-					if (isset ( $msg_html->myspace )) {
-						echo $msg_html->myspace;
-					}
-					?>
-                    <?php
-					if (isset ( $msg_html->yahoo )) {
-						echo $msg_html->yahoo;
-					}
-					?>
-				<?php
 					if (isset ( $msg_html->website )) {
 						echo $msg_html->website;
-					}
-					?>
-				<?php
-					if (isset ( $msg_html->gtalk )) {
-						echo $msg_html->gtalk;
-					}
-					?>
-				<?php
-					if (isset ( $msg_html->yim )) {
-						echo $msg_html->yim;
-					}
-					?>
-				<?php
-					if (isset ( $msg_html->msn )) {
-						echo $msg_html->msn;
 					}
 					?>
 				<?php
@@ -362,15 +285,14 @@ if ($kunena_config->fb_profile == 'cb') {
 					}
 				}
 				?>
+<?php
+	if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'profile' . DS . 'socialbuttons.php')) {
+		include (KUNENA_ABSTMPLTPATH . DS . 'profile' . DS . 'socialbuttons.php');
+	} else {
+		include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'profile' . DS . 'socialbuttons.php');
+	}
+				?>
 				</div>
-					<?php
-						if (isset ( $msg_html->personal )) {
-						?>
-						<div class="viewcover"><?php echo $msg_html->personal;?></div>
-					<?php
-						}
-					?>
-
 			</div>
 			</td>
 			<!-- -->
@@ -404,7 +326,7 @@ if ($kunena_config->fb_profile == 'cb') {
 			<div class="fb_message_buttons_cover">
 			<div class="fb_message_buttons_row"><?php
 				if (! isset ( $msg_html->closed )) {
-					echo " " . $msg_html->quickreply;
+					if (isset ( $msg_html->quickreply )) echo " " . $msg_html->quickreply;
 					echo " " . $msg_html->reply;
 					echo " " . $msg_html->quote;
 

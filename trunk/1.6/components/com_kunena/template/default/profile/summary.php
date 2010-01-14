@@ -72,29 +72,13 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 			<div id="kprofile-rightcoltop">
 				<div class="kprofile-rightcol2">
 
-					<div class="iconrow">
-						<?php echo $this->profile->socialButton('twitter'); ?>
-						<?php echo $this->profile->socialButton('facebook'); ?>
-						<?php echo $this->profile->socialButton('myspace'); ?>
-						<?php echo $this->profile->socialButton('linkedin'); ?>
-					</div>
-					<div class="iconrow">
-						<?php echo $this->profile->socialButton('delicious'); ?>
-						<?php echo $this->profile->socialButton('friendfeed'); ?>
-						<?php echo $this->profile->socialButton('digg'); ?>
-					</div>
-					<div class="clr"></div>
-					<div class="iconrow">
-						<?php echo $this->profile->socialButton('skype'); ?>
-						<?php echo $this->profile->socialButton('yim'); ?>
-						<?php echo $this->profile->socialButton('aim'); ?>
-						<?php echo $this->profile->socialButton('gtalk'); ?>
-					</div>
-					<div class="iconrow">
-						<?php echo $this->profile->socialButton('blogspot'); ?>
-						<?php echo $this->profile->socialButton('flickr'); ?>
-						<?php echo $this->profile->socialButton('bebo'); ?>
-					</div>
+<?php
+	if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'profile' . DS . 'socialbuttons.php')) {
+		include (KUNENA_ABSTMPLTPATH . DS . 'profile' . DS . 'socialbuttons.php');
+	} else {
+		include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'profile' . DS . 'socialbuttons.php');
+	}
+?>
 
 				</div>
 				<div class="kprofile-rightcol1">

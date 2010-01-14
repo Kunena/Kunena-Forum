@@ -519,6 +519,8 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 						$userinfo->websiteurl = '';
 						$userinfo->signature = '';
 					}
+					// FIXME: reduce number of queries by preload:
+					$this->profile = CKunenaUserprofile::getInstance($this->kunena_message->userid);
 					$uinfocache [$this->kunena_message->userid] = $userinfo;
 				} else
 					$userinfo = $uinfocache [$this->kunena_message->userid];
@@ -607,37 +609,14 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 						$numPosts = ( int ) $userinfo->posts;
 
 						//ranking
-						$rText = '';
-						$showSpRank = false;
 						if ($kunena_config->showranking) {
-							$showSpRank = $userinfo->rank != '0';
-							if ($showSpRank) {
-								//special rank
-								$kunena_db->setQuery ( "SELECT * FROM #__fb_ranks WHERE rank_id='{$userinfo->rank}'" );
-							} else {
-								//post count rank
-								$kunena_db->setQuery ( "SELECT * FROM #__fb_ranks WHERE ((rank_min <= '{$numPosts}') AND (rank_special = '0')) ORDER BY rank_min DESC", 0, 1 );
+							$rank = CKunenaTools::getRank($this->profile);
+
+							if ($kunena_config->rankimages && isset ( $rank->rank_image )) {
+								$msg_html->userrankimg = '<img src="' . $rank->rank_image . '" alt="" />';
 							}
-							$rank = $kunena_db->loadObject ();
-							$rText = $rank->rank_title;
-							$rImg = KUNENA_URLRANKSPATH . $rank->rank_image;
+							$msg_html->userrank = $rank->rank_title;
 						}
-
-						if ($uIsMod and ! $showSpRank) {
-							$rText = _RANK_MODERATOR;
-							$rImg = KUNENA_URLRANKSPATH . 'rankmod.gif';
-						}
-
-						if ($uIsAdm and ! $showSpRank) {
-							$rText = _RANK_ADMINISTRATOR;
-							$rImg = KUNENA_URLRANKSPATH . 'rankadmin.gif';
-						}
-
-						if ($kunena_config->rankimages && isset ( $rImg )) {
-							$msg_html->userrankimg = '<img src="' . $rImg . '" alt="" />';
-						}
-
-						$msg_html->userrank = $rText;
 
 						$msg_html->posts = '<div class="viewcover">' . "<strong>" . _POSTS . " $numPosts" . "</strong>" . "</div>";
 					}

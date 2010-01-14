@@ -32,7 +32,8 @@ class CKunenaTimeformat {
 			return 0;
 		}
 		if ($time === null) {
-			$time = time ();
+			$now = new JDate();
+			$time = $now->toUnix();
 		}
 		return $time + ($kunena_config->board_ofset * 3600);
 	}

@@ -90,7 +90,7 @@ switch ($task)
 
         break;
 
-				case "showsmilies":
+	case "showsmilies":
         CKunenaToolbar::_SHOWSMILEY_MENU();
 
         break;
@@ -117,6 +117,16 @@ switch ($task)
 
     case "newRank":
         CKunenaToolbar::_NEWRANK_MENU();
+
+        break;
+
+    case "showtrashview":
+        CKunenaToolbar::_TRASHVIEW_MENU();
+
+        break;
+
+    case "trashpurge":
+        CKunenaToolbar::_TRASHVIEW_PURGE();
 
         break;
 

@@ -26,6 +26,22 @@ defined( '_JEXEC' ) or die();
 
 // 1.6.0
 
+//Trash view
+define('_KUNENA_TRASH_VIEW', 'Trash Manager');
+define('_KUNENA_TRASH_ID', 'ID');
+define('_KUNENA_TRASH_TITLE', 'Title');
+define('_KUNENA_TRASH_CATEGORY', 'Category');
+define('_KUNENA_TRASH_IP', 'IP');
+define('_KUNENA_TRASH_AUTHOR', 'Author');
+define('_KUNENA_TRASH_DATE', 'Date');
+define('_KUNENA_TRASH_PURGE', 'Purge items');
+define('_KUNENA_TRASH_RESTORE', 'Restore items');
+define('_KUNENA_TRASH_RESTORE_DONE', 'The items in trash has been restored');
+define('_KUNENA_TRASH_DELETE_DONE', 'The messages has been delete successfully');
+define('_KUNENA_NUMBER_ITEMS', 'Number of Items');
+define('_KUNENA_ITEMS_BEING_DELETED', 'Items being Deleted');
+define('_KUNENA_PERM_DELETE_ITEMS', 'This items will be deleted permanently from the database and you can not go back, so please be careful !');
+
 // Date / time
 DEFINE('_KUNENA_OPTION_DATEFORMAT_NONE', 'Hide time');
 DEFINE('_KUNENA_CFG_POST_DATEFORMAT','Message Time Format');

@@ -317,6 +317,26 @@ switch ($task) {
 
 		break;
 
+	case "showtrashview" :
+		showtrashview ( $option );
+
+		break;
+
+	case "trashpurge" :
+		trashpurge ( $option, $cid );
+
+		break;
+
+	case "deleteitemsnow" :
+		deleteitemsnow ( $option, $cid );
+
+		break;
+
+	case "trashrestore" :
+		trashrestore ( $option, $cid );
+
+		break;
+
 	case "createmenu" :
 		CKunenaTools::createMenu();
 
@@ -1868,6 +1888,77 @@ function editRank($option, $id) {
 //===============================
 // Dan Syme/IGD - Ranks Management
 
+//===============================
+// Trash management
+//===============================
+function showtrashview($option) {
+	$kunena_app = & JFactory::getApplication ();
+	$kunena_db = &JFactory::getDBO ();
+
+	$order = JRequest::getVar ( 'order', '' );
+	$limit = $kunena_app->getUserStateFromRequest ( "global.list.limit", 'limit', $kunena_app->getCfg ( 'list_limit' ), 'int' );
+	$limitstart = $kunena_app->getUserStateFromRequest ( "{$option}.limitstart", 'limitstart', 0, 'int' );
+	$kunena_db->setQuery ( "SELECT COUNT(*) FROM #__fb_messages WHERE hold=2" );
+	$total = $kunena_db->loadResult ();
+	if ($limitstart >= $total)
+		$limitstart = 0;
+	if ($limit == 0 || $limit > 100)
+		$limit = 100;
+
+	$kunena_db->setQuery ( "SELECT a.*, b.name AS cats_name, c.username FROM #__fb_messages AS a
+	JOIN #__fb_categories AS b ON a.catid=b.id
+	JOIN #__users AS c ON a.userid=c.id
+	WHERE hold=2", $limitstart, $limit );
+	$trashitems = $kunena_db->loadObjectList ();
+	check_dberror ( "Unable to load messages." );
+
+	jimport ( 'joomla.html.pagination' );
+	$pageNavSP = new JPagination ( $total, $limitstart, $limit );
+	html_Kunena::showtrashview ( $option, $trashitems, $pageNavSP );
+}
+
+function trashpurge($option, $cid) {
+	$kunena_db = &JFactory::getDBO ();
+	$return = JRequest::getCmd( 'return', 'showtrashview', 'post' );
+
+	$cids = implode ( ',', $cid );
+	if ($cids) {
+		$kunena_db->setQuery ( "SELECT * FROM #__fb_messages WHERE hold=2 AND id IN ($cids)");
+		$items = $kunena_db->loadObjectList ();
+		check_dberror ( "Unable to load messages." );
+	}
+
+	html_Kunena::trashpurge ( $option, $return, $cid, $items );
+}
+
+function deleteitemsnow ( $option, $cid ) {
+	$kunena_app = & JFactory::getApplication ();
+	$kunena_db = &JFactory::getDBO ();
+
+	$cids = implode ( ',', $cid );
+	if ($cids) {
+		$kunena_db->setQuery ( "DELETE FROM #__fb_messages WHERE id IN ($cids)");
+		$items = $kunena_db->loadObjectList ();
+		check_dberror ( "Unable to delete messages." );
+	}
+
+	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showtrashview", _KUNENA_TRASH_DELETE_DONE );
+}
+
+function trashrestore($option, $cid) {
+	$kunena_app = & JFactory::getApplication ();
+	$kunena_db = &JFactory::getDBO ();
+	$cids = implode ( ',', $cid );
+	if ($cids) {
+		$kunena_db->setQuery ( "UPDATE #__fb_messages SET hold=0 WHERE id IN ($cids)" );
+		$kunena_db->query () or check_dberror ( "Unable to restore message(s)." );
+	}
+
+	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showtrashview", _KUNENA_TRASH_RESTORE_DONE );
+}
+//===============================
+// FINISH trash management
+//===============================
 
 function KUNENA_GetAvailableModCats($catids) {
 	$kunena_db = &JFactory::getDBO ();

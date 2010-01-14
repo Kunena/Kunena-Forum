@@ -221,5 +221,23 @@ class CKunenaToolbar
 
     }
 
+	function _TRASHVIEW_MENU()
+    {
+    	JToolBarHelper::spacer();
+		JToolBarHelper::custom('trashrestore','restore.png','restore_f2.png', _KUNENA_TRASH_RESTORE);
+        JToolBarHelper::spacer();
+        JToolBarHelper::custom('trashpurge','delete.png','delete_f2.png', _KUNENA_TRASH_PURGE);
+        JToolBarHelper::spacer();
+        JToolBarHelper::back();
+
+    }
+
+	function _TRASHVIEW_PURGE()
+    {
+    	JToolBarHelper::spacer();
+    	JToolBarHelper::trash('deleteitemsnow');
+        JToolBarHelper::spacer();
+        JToolBarHelper::cancel('showtrashview');
+    }
 }
 ?>

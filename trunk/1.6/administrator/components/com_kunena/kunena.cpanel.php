@@ -151,6 +151,9 @@ table.fbstat .col2 {
           <div style = "float:left;">
             <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=createmenu" style = "text-decoration:none;" title = "<?php echo _KUNENA_CREATE_MENU;?>"> <img src = "images/menu.png"  align = "middle" border = "0"/> <span> <?php echo _KUNENA_CREATE_MENU; ?> </span></a> </div>
           </div>
+          <div style = "float:left;">
+            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showtrashview" style = "text-decoration:none;" title = "<?php echo _KUNENA_TRASH_VIEW;?>"> <img src = "images/trash.png"  align = "middle" border = "0"/> <span> <?php echo _KUNENA_TRASH_VIEW; ?> </span></a> </div>
+          </div>
           <?php
           $kn_version = CKunenaVersion::versionArray ();
           if (JString::strpos ( $kn_version->version, 'SVN' ) !== false) {

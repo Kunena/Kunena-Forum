@@ -201,7 +201,11 @@ td.fbtdtitle {
 		?></a> <a class="fbmainmenu"
 			href="index.php?option=com_kunena&task=recount"><?php
 		echo _KUNENA_RECOUNTFORUMS;
-		?></a> <a class="fbmainmenu" href="http://www.Kunena.com"
+		?></a><a class="fbmainmenu"
+			href="index.php?option=com_kunena&task=showtrashview"><?php
+		echo _KUNENA_TRASH_VIEW;
+		?></a>
+		<a class="fbmainmenu" href="http://www.Kunena.com"
 			target="_blank"><?php
 		echo _COM_C_SUPPORT;
 		?></a></div>
@@ -4499,4 +4503,149 @@ echo $pane->endPane();
 
 <?php
 	} //end function newrank
+
+	//Start trash view
+	function showtrashview($option, $trashitems, $pageNavSP) {
+		?>
+<div class="fbfunctitle"><?php
+		echo _KUNENA_TRASH_VIEW;
+		?></div>
+<form action="index.php" method="POST" name="adminForm">
+<table class="adminheading" cellpadding="4" cellspacing="0" border="0"
+	width="100%">
+	</table>
+<table class="adminlist" border=0 cellspacing=0 cellpadding=3
+	width="100%">
+	<tr>
+		<th width="20" align="center">#</th>
+		<th align="left"><input type="checkbox" name="toggle" value=""
+			onclick="checkAll(<?php
+		echo count ( $trashitems );
+		?>);" /></th>
+		<th align="left"><?php
+		echo JHTML::_('grid.sort', _KUNENA_TRASH_ID, 'c.id' );
+		?></th>
+		<th align="left" nowrap="nowrap"><?php
+		echo JHTML::_('grid.sort',   _KUNENA_TRASH_TITLE, 'subject' );
+		?></th>
+		<th align="left" nowrap="nowrap"><?php
+		echo _KUNENA_TRASH_CATEGORY;
+		?></th>
+		<th align="left" nowrap="nowrap"><?php
+		echo _KUNENA_TRASH_IP;
+		?></th>
+		<th align="center" nowrap="nowrap"><?php
+		echo _KUNENA_TRASH_AUTHOR;
+		?></th>
+		<th align="center" nowrap="nowrap"><?php
+		echo _KUNENA_TRASH_DATE;
+		?></th>
+		<th width="100%">&nbsp;</th>
+	</tr>
+	<?php
+		$k = 0;
+		$i = 0;
+		foreach ( $trashitems as $id => $row ) {
+			$k = 1 - $k;
+			?>
+	<tr class="row<?php
+			echo $k;
+			?>">
+		<td width="20" align="center"><?php
+			echo ($id + $pageNavSP->limitstart + 1);
+			?></td>
+		<td width="20" align="center"><input type="checkbox"
+			id="cb<?php
+			echo $id;
+			?>" name="cid[]"
+			value="<?php
+			echo $row->id;
+			?>"
+			onClick="isChecked(this.checked);"></td>
+		<td nowrap="nowrap">
+			<?php
+			echo $row->id;
+			?>
+			</td>
+		<td nowrap="nowrap"><?php
+			echo $row->subject;
+			?></td>
+		<td nowrap="nowrap"><?php
+			echo $row->cats_name;
+			?></td>
+		<td nowrap="nowrap"><?php
+			echo $row->ip;
+			?></td>
+		<td nowrap="nowrap"><?php
+			echo $row->username;
+			?></td>
+		<td nowrap="nowrap"><?php
+			echo strftime('%Y-%m-%d %H:%M:%S',$row->time);
+			?></td>
+		<td width="100%">&nbsp;</td>
+	</tr>
+	<?php
+		}
+		?>
+	<tr>
+		<th align="center" colspan="9"><?php
+		echo $pageNavSP->getLimitBox () . $pageNavSP->getResultsCounter () . $pageNavSP->getPagesLinks ();
+		?></th>
+	</tr>
+	</table>
+<input type="hidden" name="option" value="<?php
+		echo $option;
+		?>"> <input type="hidden" name="boxchecked" value="0"> <input
+	type="hidden" name="task" value="showtrashview"> <input type="hidden"
+	name="limitstart" value="0"><input type="hidden" name="return" value="showtrashview" />
+	</form>
+	<?php
+	}
+
+	function trashpurge($option, $return, $cid, $items) {
+?>
+<div class="fbfunctitle"><?php
+		echo _KUNENA_TRASH_PURGE;
+		?></div>
+<form action="index.php" method="POST" name="adminForm">
+<table class="adminheading" cellpadding="4" cellspacing="0" border="0"
+	width="100%">
+	</table>
+<table class="adminlist" border=0 cellspacing=0 cellpadding=3
+	width="100%">
+	<tr>
+		<td>
+				<strong><?php echo _KUNENA_NUMBER_ITEMS; ?>:</strong>
+				<br />
+				<font color="#000066"><strong><?php echo count( $cid ); ?></strong></font>
+				<br /><br />
+		</td>
+		<td  valign="top" width="25%">
+				<strong><?php echo _KUNENA_ITEMS_BEING_DELETED; ?>:</strong>
+				<br />
+				<?php
+				echo "<ol>";
+				foreach ( $items as $item ) {
+					echo "<li>". $item->subject ."</li>";
+				}
+				echo "</ol>";
+				?>
+		</td>
+		<td valign="top"><span style="color: red ";><strong><?php echo _KUNENA_PERM_DELETE_ITEMS; ?></strong></span>
+		</td>
+	</tr>
+	</table>
+	<input type="hidden" name="option" value="<?php echo $option;?>" />
+	<input type="hidden" name="task" value="" />
+	<input type="hidden" name="boxchecked" value="1" />
+	<input type="hidden" name="return" value="<?php echo $return;?>" />
+	<?php
+		foreach ($cid as $id) {
+			echo "\n<input type=\"hidden\" name=\"cid[]\" value=\"$id\" />";
+		}
+	?>
+</form>
+	<?php
+	}
+	//End trash view
 } //end class

@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: forumtools.php 1505 2010-01-07 00:40:32Z mahagr $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *
@@ -33,19 +33,19 @@ $id = JRequest::getInt('id', 0);
     {
         jQuery("#jrftsw").click(function()
         {
-            jQuery(".forumtools_contentBox").slideToggle("fast");
+            jQuery(".profiletools_contentBox").slideToggle("fast");
             return false;
         });
     });
 </script>
 
 <div id = "fb_ft-cover">
-    <div id = "forumtools_control">
-        <a href = "#" id = "jrftsw" class = "forumtools"><?php echo _KUNENA_PROFILE_OPTIONS;?></a>
+    <div id = "profiletools_control">
+        <a href = "#" id = "jrftsw" class = "profiletools"><?php echo _KUNENA_PROFILE_OPTIONS;?></a>
     </div>
 
-    <div class="forumtools_contentBox" id="box1">
-        <div class="forumtools_content" id="subBox1">
+    <div class="profiletools_contentBox" id="box1">
+        <div class="profiletools_content" id="subBox1">
             <ul>
                 <li>
 					<?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile', _KUNENA_VIEW_PROFILE, _KUNENA_VIEW_PROFILE, 'follow'); ?>

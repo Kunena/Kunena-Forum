@@ -133,16 +133,7 @@ if (count ( $this->messages [0] ) > 0) {
 			<?php
 		echo kunena_htmlspecialchars ( stripslashes ( $objCatInfo->name ) );
 		?></span></div>
-			<!-- FORUM TOOLS --> <?php
-		//(JJ) BEGIN: RECENT POSTS
-		if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/forumtools/forumtools.php' )) {
-			include (KUNENA_ABSTMPLTPATH . '/plugin/forumtools/forumtools.php');
-		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/forumtools/forumtools.php');
-		}
-		//(JJ) FINISH: RECENT POSTS
-		?>
-			<!-- /FORUM TOOLS --></th>
+		</th>
 			<?php
 	}
 	?>

@@ -423,27 +423,13 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		?>
 	<!-- Finish: Total Favorite -->
 
-					</div></td>
-
-					<!-- B: FORUM TOOLS -->
-					<td align="right" width="1%">
-		<?php
-
-		//(JJ) BEGIN: RECENT POSTS
-		if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/forumtools/forumtools.php' )) {
-			include (KUNENA_ABSTMPLTPATH . '/plugin/forumtools/forumtools.php');
-		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/forumtools/forumtools.php');
-		}
-		?>
-		</td>
+					</div>
+					</td>
 				</tr>
 			</table>
 			<?php
 		//(JJ) FINISH: RECENT POSTS
-
-
-		?> <!-- F: FORUM TOOLS -->
+		?></th>
 		</tr>
 	</thead>
 

@@ -1124,26 +1124,10 @@ function fb_delete_post(&$kunena_db, $id, $dellattach) {
 	}
 
 	//Delete the post (and it's children when it's the first post)
-	$kunena_db->setQuery ( 'DELETE FROM #__fb_messages WHERE id=' . $id . ' OR thread=' . $id );
+	$kunena_db->setQuery ( 'UPDATE #__fb_messages SET hold=2 WHERE id=' . $id . ' OR thread=' . $id );
 
 	if (! $kunena_db->query ()) {
 		return - 2;
-	}
-
-	//Delete message text(s)
-	$kunena_db->setQuery ( 'DELETE FROM #__fb_messages_text WHERE mesid IN (' . $children . ')' );
-
-	if (! $kunena_db->query ()) {
-		return - 3;
-	}
-
-	//Update user post stats
-	if (count ( $userid_array ) > 0) {
-		$kunena_db->setQuery ( 'UPDATE #__fb_users SET posts=posts-1 WHERE userid IN (' . $userids . ')' );
-
-		if (! $kunena_db->query ()) {
-			return - 4;
-		}
 	}
 
 	//Delete (possible) ghost post
@@ -1151,34 +1135,8 @@ function fb_delete_post(&$kunena_db, $id, $dellattach) {
 	$int_ghost_id = $kunena_db->loadResult ();
 
 	if ($int_ghost_id > 0) {
-		$kunena_db->setQuery ( 'DELETE FROM #__fb_messages WHERE id=' . $int_ghost_id );
+		$kunena_db->setQuery ( 'UPDATE #__fb_messages SET hold=2 WHERE id=' . $int_ghost_id );
 		$kunena_db->query ();
-		$kunena_db->setQuery ( 'DELETE FROM #__fb_messages_text WHERE mesid=' . $int_ghost_id );
-		$kunena_db->query ();
-	}
-
-	//Delete attachments
-	if ($dellattach) {
-		$errorcode = 0;
-		$kunena_db->setQuery ( 'SELECT filelocation FROM #__fb_attachments WHERE mesid IN (' . $children . ')' );
-		$fileList = $kunena_db->loadObjectList ();
-		check_dberror ( "Unable to load attachments." );
-
-		if (count ( $fileList ) > 0) {
-			foreach ( $fileList as $fl ) {
-				if (file_exists ( $fl->filelocation )) {
-					unlink ( $fl->filelocation );
-				} else {
-					$errorcode = - 5;
-				}
-			}
-
-			$kunena_db->setQuery ( 'DELETE FROM #__fb_attachments WHERE mesid IN (' . $children . ')' );
-			$kunena_db->query ();
-			check_dberror ( "Unable to delete attachements." );
-			if ($errorcode)
-				return $errorcode;
-		}
 	}
 
 	// Already done outside - see dodelete code above

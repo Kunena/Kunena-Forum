@@ -1937,12 +1937,50 @@ function deleteitemsnow ( $option, $cid ) {
 
 	$cids = implode ( ',', $cid );
 	if ($cids) {
-		$kunena_db->setQuery ( "DELETE FROM #__fb_messages WHERE id IN ($cids)");
-		$items = $kunena_db->loadObjectList ();
+		$kunena_db->setQuery ( 'DELETE FROM #__fb_messages WHERE id IN (' .$cids. ')' );
+		$kunena_db->query ();
 		check_dberror ( "Unable to delete messages." );
+
+		$kunena_db->setQuery ( 'DELETE FROM #__fb_messages_text WHERE mesid IN (' . $cids. ')' );
+		$kunena_db->query ();
+		check_dberror ( "Unable to delete messages text." );
+
+		$kunena_db->setQuery ( 'SELECT userid FROM #__fb_messages WHERE id IN (' . $cids. ')' );
+		$userids = $kunena_db->loadObjectList ();
+		check_dberror ( "Unable to load userids in message." );
+
+		foreach ( $kunena_db->loadObjectList () as $line ) {
+			if ($line->userid > 0) {
+				$userid_array [] = $line->userid;
+			}
+		}
+
+		$userids = implode ( ',', $userid_array );
+
+		if (count ( $userid_array ) > 0) {
+			$kunena_db->setQuery ( 'UPDATE #__fb_users SET posts=posts-1 WHERE userid IN (' . $userids . ')' );
+			$kunena_db->query ();
+			check_dberror ( "Unable to update users posts." );
+		}
+
+		$kunena_db->setQuery ( 'SELECT filelocation FROM #__fb_attachments WHERE mesid IN (' . $cids . ')' );
+		$fileList = $kunena_db->loadObjectList ();
+		check_dberror ( "Unable to load attachments." );
+
+		if (count ( $fileList ) > 0) {
+			foreach ( $fileList as $fl ) {
+				if (file_exists ( $fl->filelocation )) {
+					unlink ( $fl->filelocation );
+				}
+			}
+
+			$kunena_db->setQuery ( 'DELETE FROM #__fb_attachments WHERE mesid IN (' . $cids . ')' );
+			$kunena_db->query ();
+			check_dberror ( "Unable to delete attachements." );
+		}
 	}
 
-	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showtrashview", _KUNENA_TRASH_DELETE_DONE );
+	//$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showtrashview", _KUNENA_TRASH_DELETE_DONE );
 }
 
 function trashrestore($option, $cid) {

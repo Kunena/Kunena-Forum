@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 14-Jan-2010 Xillibit
 + [#19332] Change Delete behavior - implemented in backend (part 1)
+^ [#19332] Change Delete behavior - modfied the delete function in frontend (part 2)
 
 14-Jan-2010 Matias
 # [#19288] Fix regression: Undefined fbConfig in kunena.parser.php

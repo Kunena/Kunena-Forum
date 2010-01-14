@@ -85,7 +85,7 @@ function kunenaShowHelp($text) {
 	jQuery('input[name=helpbox]').val($text);
 }
 
-function fbGetPreview(content, sitemid) {
+function kGetPreview(content, sitemid) {
     var templatePath = document.postform.templatePath.value;
     var content = encodeURIComponent(content);
     var kunenaPath = document.postform.kunenaPath.value;

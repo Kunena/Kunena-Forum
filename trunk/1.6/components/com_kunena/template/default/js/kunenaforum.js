@@ -3,7 +3,7 @@
 * @version $Id$
 * Kunena Component
 * @package Kunena
-* @Copyright (C) 2009 Kunena All rights reserved
+* @Copyright (C) 2010 Kunena All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.com
 **/
@@ -144,7 +144,7 @@ jQuery(document).ready(function()
 /*
  * jQuery UI 1.7.2
  *
- * Copyright (c) 2009 AUTHORS.txt (http://jqueryui.com/about)
+ * Copyright (c) 2010 AUTHORS.txt (http://jqueryui.com/about)
  * Dual licensed under the MIT (MIT-LICENSE.txt)
  * and GPL (GPL-LICENSE.txt) licenses.
  *

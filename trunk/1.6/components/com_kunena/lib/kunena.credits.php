@@ -4,7 +4,7 @@
 * Kunena Component
 * @package Kunena
 *
-* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.com
 *
@@ -70,7 +70,7 @@ $kunena_config =& CKunenaConfig::getInstance();
                   </table>
 
 				<!-- Version Info -->
-				<div class="kfooter"><?php echo _KUNENA_COPYRIGHT;?> &copy; 2008, 2009, 2010 <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>, <?php echo _KUNENA_LICENSE;?>: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a></div>
+				<div class="kfooter"><?php echo _KUNENA_COPYRIGHT;?> &copy; 2008, 2010, 2010 <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>, <?php echo _KUNENA_LICENSE;?>: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a></div>
 				<!-- /Version Info -->
 
                   </td>

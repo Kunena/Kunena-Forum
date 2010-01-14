@@ -4,7 +4,7 @@
 * Kunena Component
 * @package Kunena
 *
-* @Copyright (C) 2009 www.kunena.com All rights reserved
+* @Copyright (C) 2008 - 2010 www.kunena.com All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.com
 **/
@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 14-Jan-2010 fxstein
 ^ [#19345] refactor css class names 'fb' to 'k'
+^ [#19437] update copyright dates to 2010
 
 14-Jan-2010 Xillibit
 + [#19332] Change Delete behavior - implemented in backend (part 1)

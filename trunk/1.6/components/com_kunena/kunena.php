@@ -8,7 +8,7 @@
  * @package Kunena
 
  *
- * @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+ * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  *
@@ -580,10 +580,21 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		#########################################################################################
 
 		case 'review' :
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/moderate_messages.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/moderate_messages.php');
+			if (file_exists ( KUNENA_ABSTMPLTPATH . '/moderate/moderate_messages.php' )) {
+				include (KUNENA_ABSTMPLTPATH . '/moderate/moderate_messages.php');
 			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'moderate_messages.php');
+				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . '/moderate/moderate_messages.php');
+			}
+
+			break;
+
+		#########################################################################################
+
+		case 'moderate' :
+			if (file_exists ( KUNENA_ABSTMPLTPATH . '/moderate/moderate.php' )) {
+				include (KUNENA_ABSTMPLTPATH . '/moderate/moderate.php');
+			} else {
+				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . '/moderate/moderate.php');
 			}
 
 			break;

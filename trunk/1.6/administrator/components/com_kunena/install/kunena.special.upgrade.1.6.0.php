@@ -3,7 +3,7 @@
  * @version $Id: kunena.special.upgrade.1.6.0.php $
  * Kunena Component
  * @package Kunena
- * @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+ * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  *

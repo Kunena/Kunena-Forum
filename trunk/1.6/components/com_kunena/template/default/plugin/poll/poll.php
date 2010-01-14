@@ -1,10 +1,10 @@
 <?php
 /**
-* @version $Id: poll.php 1395 2009-12-30 14:40:22Z xillibit $
+* @version $Id: poll.php 1395 2010-12-30 14:40:22Z xillibit $
 * Kunena Component
 * @package Kunena
 *
-* @Copyright (C) 2009 www.kunena.com All rights reserved
+* @Copyright (C) 2010 www.kunena.com All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.com
 **/

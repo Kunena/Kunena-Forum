@@ -1,10 +1,10 @@
 <?php
 /**
- * @version $Id: pathway.php 362 2009-02-11 00:30:24Z mahagr $
+ * @version $Id: pathway.php 362 2010-02-11 00:30:24Z mahagr $
  * Kunena Component
  * @package Kunena
  *
- * @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+ * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  *

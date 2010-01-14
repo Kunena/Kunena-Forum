@@ -1,10 +1,10 @@
 <?php
 /**
-* @version $Id:kunena.stats.class.php 96 2009-01-23 21:55:09Z fxstein $
+* @version $Id:kunena.stats.class.php 96 2010-01-23 21:55:09Z fxstein $
 * Kunena Component
 * @package Kunena
 *
-* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.com
 *

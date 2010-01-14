@@ -1,10 +1,10 @@
 <?php
 /**
-* @version $Id: kunena.link.class.php 822 2009-06-08 00:06:22Z mahagr $
+* @version $Id: kunena.link.class.php 822 2010-06-08 00:06:22Z mahagr $
 * Kunena Component
 * @package Kunena
 *
-* @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+* @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.com
 *

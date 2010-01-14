@@ -1,10 +1,10 @@
 <?php
 /**
- * @version $Id: kunena.moderation.class.php 768 2009-05-19 10:14:52Z mahagr $
+ * @version $Id: kunena.moderation.class.php 768 2010-05-19 10:14:52Z mahagr $
  * Kunena Component
  * @package Kunena
  *
- * @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+ * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  **/

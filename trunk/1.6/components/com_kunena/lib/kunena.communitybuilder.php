@@ -1,10 +1,10 @@
 <?php
 /**
-* @version $Id: kunena.communitybuilder.php 570 2009-03-31 10:04:30Z mahagr $
+* @version $Id: kunena.communitybuilder.php 570 2010-03-31 10:04:30Z mahagr $
 * Kunena Component - Community Builder compability
 * @package Kunena
 *
-* @Copyright (C) 2009 www.kunena.com All rights reserved
+* @Copyright (C) 2010 www.kunena.com All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.com
 **/

@@ -1,9 +1,9 @@
 <?php
 /**
- * @version $Id: kunena.defines.php 510 2009-03-08 08:36:53Z fxstein $
+ * @version $Id: kunena.defines.php 510 2010-03-08 08:36:53Z fxstein $
  * Kunena Component
  * @package Kunena
- * @Copyright (C) 2009 Kunena All rights reserved
+ * @Copyright (C) 2010 Kunena All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  **/

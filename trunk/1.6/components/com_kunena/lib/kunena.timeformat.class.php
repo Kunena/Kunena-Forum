@@ -51,7 +51,7 @@ class CKunenaTimeformat {
 		$since = $newer_date - $older_date;
 
 		// no negatives!
-		if ($since <= 0) {
+		if ($since < 0) {
 			return '?';
 		}
 

@@ -173,7 +173,7 @@ DEFINE('_KUNENA_MYPROFILE_FLICKR_DESC', 'This is your Flickr URL.');
 DEFINE('_KUNENA_MYPROFILE_BEBO', 'Bebo');
 DEFINE('_KUNENA_MYPROFILE_BEBO_DESC', 'This is your Bebo URL.');
 
-DEFINE('_KUNENA_MYPROFILE_LOCAL_TIME', 'Local time');
+DEFINE('_KUNENA_MYPROFILE_LOCAL_TIME', 'Local Time');
 
 // Category subscriptions
 define('_VIEW_SUBSCRIBECATTXT', 'Subscribe to this category and get notified by mail about new posts.');

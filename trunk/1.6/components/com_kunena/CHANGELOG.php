@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+14-Jan-2010 Matias
+# [#19288] Fix regression: Undefined fbConfig in kunena.parser.php
+
 13-Jan-2010 louis
 ^ [#19380] Added show/hide behavior for statistics and whoisonline blocks.
 ^ [#19380] Added show/hide behavior for any block based on an a.toggler selector and rel attribute

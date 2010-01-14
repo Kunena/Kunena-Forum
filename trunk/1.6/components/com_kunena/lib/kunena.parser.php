@@ -370,7 +370,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 						break;
 
 					$tempstr = kunena_htmlspecialchars ( $between, ENT_QUOTES );
-					if ($kunena_my->id == 0 && $fbConfig->showimgforguest == 0) {
+					if ($kunena_my->id == 0 && $kunena_config->showimgforguest == 0) {
 						// Hide between content from non registered users
 						$tag_new = '<b>' . _KUNENA_SHOWIMGFORGUEST_HIDEIMG . '</b>';
 					} else {
@@ -406,7 +406,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 			case 'file' :
 				if ($between) {
 					$tempstr = kunena_htmlspecialchars ( $between, ENT_QUOTES );
-					if ($kunena_my->id == 0 && $fbConfig->showfileforguest == 0) {
+					if ($kunena_my->id == 0 && $kunena_config->showfileforguest == 0) {
 						// Hide between content from non registered users
 						$tag_new = '<b>' . _KUNENA_SHOWIMGFORGUEST_HIDEFILE . '</b>';
 					} else {

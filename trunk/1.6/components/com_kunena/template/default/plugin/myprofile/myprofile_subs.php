@@ -24,38 +24,38 @@ defined( '_JEXEC' ) or die();
 global $total, $limitstart, $limit;
 $kunena_db = &JFactory::getDBO();
 ?>
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
 <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=unsubscribe'); ?>" method = "post" name = "postform">
 	<input type = "hidden" name = "do" value = "unsubscribe"/>
-	<table class = "fb_blocktable" id = "fb_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+	<table class = "kblocktable" id = "kforumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
 		<thead>
 			<tr>
 				<th colspan = "5">
-					<div class = "fb_title_cover">
-						<span class = "fb_title"><?php echo _KUNENA_MY_SUBSCRIPTIONS; ?></span>
+					<div class = "ktitle_cover">
+						<span class = "ktitle"><?php echo _KUNENA_MY_SUBSCRIPTIONS; ?></span>
 					</div></th>
 			</tr>
 		</thead>
 
-		<tbody id = "fb_fbuserprofile_tbody">
-			<tr class = "fb_sth">
-				<th class = "th-1 fb_sectiontableheader"><?php echo _GEN_TOPICS; ?>
+		<tbody id = "kuserprofile_tbody">
+			<tr class = "ksth">
+				<th class = "th-1 ksectiontableheader"><?php echo _GEN_TOPICS; ?>
 				</th>
 
-				<th class = "th-2 fb_sectiontableheader" style = "text-align:center; width:25%"><?php echo _GEN_AUTHOR; ?>
+				<th class = "th-2 ksectiontableheader" style = "text-align:center; width:25%"><?php echo _GEN_AUTHOR; ?>
 				</th>
 
-				<th class = "th-3 fb_sectiontableheader" style = "text-align:center; width:25%"><?php echo _GEN_DATE; ?>
+				<th class = "th-3 ksectiontableheader" style = "text-align:center; width:25%"><?php echo _GEN_DATE; ?>
 				</th>
 
-				<th class = "th-3 fb_sectiontableheader" style = "text-align:center; width:5%"><?php echo _GEN_HITS; ?>
+				<th class = "th-3 ksectiontableheader" style = "text-align:center; width:5%"><?php echo _GEN_HITS; ?>
 				</th>
 
-				<th class = "th-4 fb_sectiontableheader"><?php echo _GEN_DELETE; ?>
+				<th class = "th-4 ksectiontableheader"><?php echo _GEN_DELETE; ?>
 				</th>
 			</tr>
 
@@ -84,7 +84,7 @@ $kunena_db = &JFactory::getDBO();
 					{
 						$k = 1 - $k;
 ?>
-						<tr class="fb_<?php echo $tabclass[$k];?>">
+						<tr class="k<?php echo $tabclass[$k];?>">
 							<td class="td-1" width="54%" align="left"><?php echo $enum;?>:
 								<a href="<?php
 									echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $sub->catid .
@@ -112,7 +112,7 @@ $kunena_db = &JFactory::getDBO();
 			?>
 
 				<tr>
-					<td colspan = "5" class = "fb_profile-bottomnav" style = "text-align:right">
+					<td colspan = "5" class = "kprofile-bottomnav" style = "text-align:right">
 <?php echo _KUNENA_USRL_DISPLAY_NR; ?>
 
 <?php
@@ -127,11 +127,11 @@ $kunena_db = &JFactory::getDBO();
 			}
 			else
 			{
-				echo '<tr class="fb_' . $tabclass[$k] . '"><td class="td-1" colspan = "5" >' . _USER_NOSUBSCRIPTIONS . '</td></tr>';
+				echo '<tr class="k' . $tabclass[$k] . '"><td class="td-1" colspan = "5" >' . _USER_NOSUBSCRIPTIONS . '</td></tr>';
 			}
 			?>
 
-			<tr><td colspan = "5" class = "fb_profile-bottomnav">
+			<tr><td colspan = "5" class = "kprofile-bottomnav">
 					<?php
 					// TODO: fxstein - Need to perform SEO cleanup
 					echo $pageNav->getPagesLinks("index.php?option=com_kunena&amp;func=myprofile&amp;do=showsub" . KUNENA_COMPONENT_ITEMID_SUFFIX);

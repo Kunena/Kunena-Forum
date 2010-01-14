@@ -46,17 +46,17 @@ if ($this->showgenstats > 0)
 
     	?>
         <!-- BEGIN: GENERAL STATS -->
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
-        <table  class = "fb_blocktable" id ="fb_frontstats" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
+        <table  class = "kblocktable" id ="kfrontstats" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
                     <th align="left">
-                        <div class = "fb_title_cover fbm">
-                            <a class="fb_title fbl" href = "<?php echo $statslink;?>"><?php echo stripslashes($kunena_config->board_title); ?> <?php echo _STAT_FORUMSTATS; ?></a>
+                        <div class = "ktitle_cover km">
+                            <a class="ktitle kl" href = "<?php echo $statslink;?>"><?php echo stripslashes($kunena_config->board_title); ?> <?php echo _STAT_FORUMSTATS; ?></a>
                         </div>
                         <div class="fltrt">
 							<span id="kstats_status"><a class="ktoggler close" rel="frontstats_tbody"></a></span>
@@ -67,8 +67,8 @@ if ($this->showgenstats > 0)
             </thead>
 
             <tbody id="frontstats_tbody">
-                <tr class="fb_sectiontableentry1">
-                    <td class="td-1 fbm">
+                <tr class="ksectiontableentry1">
+                    <td class="td-1 km">
                     	<ul id="statslistright" class="fltrt right">
                     		<li><?php echo _STAT_TOTAL_USERS; ?>: <strong><a href="<?php echo $userlist;?>"><?php echo $this->totalmembers; ?></a></strong> | <?php echo _STAT_LATEST_MEMBERS; ?>:<strong> <?php echo CKunenaLink::GetProfileLink($kunena_config, $this->lastestmemberid, $this->lastestmember, $rel='nofollow'); ?></strong></li>
                     		<li>&nbsp;</li>

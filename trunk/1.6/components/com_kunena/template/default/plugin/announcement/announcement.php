@@ -63,20 +63,20 @@ if ($do == "read") {
     if ($annpublished > 0) {
 ?>
 
-        <table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+        <table class = "kblocktable" id = "kannouncement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
                     <th>
-                        <div class = "fb_title_cover fbm">
-                            <span class = "fb_title fbl"> <?php echo $kunena_app->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?></span>
+                        <div class = "ktitle_cover km">
+                            <span class = "ktitle kl"> <?php echo $kunena_app->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?></span>
                         </div>
                     </th>
                 </tr>
             </thead>
 
             <tbody id = "announcement_tbody">
-                <tr class = "fb_sth fbs">
-                    <th class = "th-1 fb_sectiontableheader" align="left" >
+                <tr class = "ksth ks">
+                    <th class = "th-1 ksectiontableheader" align="left" >
                         <?php
                         if ($is_editor) {
                         	echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'edit', $annID), _ANN_EDIT, _ANN_EDIT, 'follow').' | ';
@@ -89,14 +89,14 @@ if ($do == "read") {
                 </tr>
 
                 <tr>
-                    <td class = "fb_anndesc" valign="top">
+                    <td class = "kanndesc" valign="top">
                         <h3> <?php echo $anntitle; ?> </h3>
 
                         <?php
                         if ($annshowdate > 0) {
                         ?>
 
-                            <div class = "anncreated fbs" title="<?php echo CKunenaTimeformat::showDate($ann->created, 'ago'); ?>">
+                            <div class = "anncreated ks" title="<?php echo CKunenaTimeformat::showDate($ann->created, 'ago'); ?>">
 <?php echo CKunenaTimeformat::showDate($ann->created, 'date_today'); ?>
                             </div>
 
@@ -124,40 +124,40 @@ if ($is_editor) {
     // BEGIN: SHOW ANN
     if ($do == "show") {
         ?>
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
-            <table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
+            <table class = "kblocktable" id = "kannouncement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
                 <thead>
                     <tr>
                         <th colspan = "6">
-                            <div class = "fb_title_cover fbm">
-                                <span class = "fb_title fbl"> <?php echo $kunena_app->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?> | <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'add'), _ANN_ADD, _ANN_ADD, 'follow'); ?></span>
+                            <div class = "ktitle_cover km">
+                                <span class = "ktitle kl"> <?php echo $kunena_app->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?> | <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'add'), _ANN_ADD, _ANN_ADD, 'follow'); ?></span>
                             </div>
                         </th>
                     </tr>
                 </thead>
 
                 <tbody id = "announcement_tbody">
-                    <tr class = "fb_sth fbs">
-                        <th class = "th-1 fb_sectiontableheader"  width="1%" align="center"> <?php echo _ANN_ID; ?>
+                    <tr class = "ksth ks">
+                        <th class = "th-1 ksectiontableheader"  width="1%" align="center"> <?php echo _ANN_ID; ?>
                         </th>
 
-                        <th class = "th-2 fb_sectiontableheader" width="15%" align="left"> <?php echo _ANN_DATE; ?>
+                        <th class = "th-2 ksectiontableheader" width="15%" align="left"> <?php echo _ANN_DATE; ?>
                         </th>
 
-                        <th class = "th-3 fb_sectiontableheader" width="54%" align="left"> <?php echo _ANN_TITLE; ?>
+                        <th class = "th-3 ksectiontableheader" width="54%" align="left"> <?php echo _ANN_TITLE; ?>
                         </th>
 
-                        <th class = "th-4 fb_sectiontableheader" width="10%"  align="center"> <?php echo _ANN_PUBLISH; ?>
+                        <th class = "th-4 ksectiontableheader" width="10%"  align="center"> <?php echo _ANN_PUBLISH; ?>
                         </th>
 
-                        <th class = "th-5 fb_sectiontableheader"  width="10%"  align="center"> <?php echo _ANN_EDIT; ?>
+                        <th class = "th-5 ksectiontableheader"  width="10%"  align="center"> <?php echo _ANN_EDIT; ?>
                         </th>
 
-                        <th class = "th-6 fb_sectiontableheader" width="10%"  align="center"> <?php echo _ANN_DELETE; ?>
+                        <th class = "th-6 ksectiontableheader" width="10%"  align="center"> <?php echo _ANN_DELETE; ?>
                         </th>
                     </tr>
 
@@ -180,7 +180,7 @@ if ($is_editor) {
                             $k = 1 - $k;
                     ?>
 
-                            <tr class = "fb_<?php echo $tabclass[$k];?>">
+                            <tr class = "k<?php echo $tabclass[$k];?>">
                                 <td class = "td-1"  align="center">
                                     #<?php echo $row->id; ?>
                                 </td>
@@ -252,17 +252,17 @@ if ($is_editor) {
             }
 		$calendar = JHTML::_('calendar', '', 'created', 'addcreated');
             ?>
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
-<table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
+<table class = "kblocktable" id = "kannouncement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
             <th>
-                <div class = "fb_title_cover fbm">
-                    <span class = "fb_title fbl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_ADD; ?> | <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_CPANEL, _ANN_CPANEL,'follow'); ?></span>
+                <div class = "ktitle_cover km">
+                    <span class = "ktitle kl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_ADD; ?> | <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_CPANEL, _ANN_CPANEL,'follow'); ?></span>
                 </div>
             </th>
         </tr>
@@ -270,7 +270,7 @@ if ($is_editor) {
 
     <tbody id = "announcement_tbody">
         <tr>
-            <td class = "fb_anndesc" valign="top">
+            <td class = "kanndesc" valign="top">
                 <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=announcement&amp;do=doadd'); ?>" method = "post" name = "addform">
                     <strong><?php echo _ANN_TITLE; ?>:</strong>
 
@@ -406,17 +406,17 @@ if ($is_editor) {
     }
             //-->
 </script>
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
-<table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
+<table class = "kblocktable" id = "kannouncement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
             <th>
-                <div class = "fb_title_cover fbm">
-                    <span class = "fb_title fbl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_EDIT; ?> | <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_CPANEL, _ANN_CPANEL, 'follow'); ?></span>
+                <div class = "ktitle_cover km">
+                    <span class = "ktitle kl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_EDIT; ?> | <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_CPANEL, _ANN_CPANEL, 'follow'); ?></span>
                 </div>
             </th>
         </tr>
@@ -424,7 +424,7 @@ if ($is_editor) {
 
     <tbody id = "announcement_tbody">
         <tr>
-            <td class = "fb_anndesc" valign="top">
+            <td class = "kanndesc" valign="top">
                 <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=announcement&amp;do=doedit'); ?>" method = "post" name = "editform" onSubmit = "return validate_form ( );">
                     <strong>#<?php echo $annID; ?> : <?php echo $anntitle; ?></strong>
 

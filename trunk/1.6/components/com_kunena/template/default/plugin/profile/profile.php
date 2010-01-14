@@ -113,29 +113,29 @@ function showprf($userid, $page) {
 		if ($kunena_config->avatar_src == "jomsocial") {
 			// Get CUser object
 			$user = & CFactory::getUser ( $userid );
-			$msg_html->avatar = '<span class="fb_avatar"><img src="' . $user->getAvatar () . '" alt="" /></span>';
+			$msg_html->avatar = '<span class="kavatar"><img src="' . $user->getAvatar () . '" alt="" /></span>';
 		} else if ($kunena_config->avatar_src == "cb") {
 			$kunenaProfile = CKunenaCBProfile::getInstance ();
-			$msg_html->avatar = '<span class="fb_avatar">' . $kunenaProfile->showAvatar ( $userid, '', 0 ) . '</span>';
+			$msg_html->avatar = '<span class="kavatar">' . $kunenaProfile->showAvatar ( $userid, '', 0 ) . '</span>';
 		} else if ($kunena_config->avatar_src == "aup") {
 			$api_AUP = JPATH_SITE . DS . 'components' . DS . 'com_alphauserpoints' . DS . 'helper.php';
 			if (file_exists ( $api_AUP )) {
 				($kunena_config->fb_profile == 'aup') ? $showlink = 1 : $showlink = 0;
-				$msg_html->avatar = '<span class="fb_avatar">' . AlphaUserPointsHelper::getAupAvatar ( $userinfo->userid, $showlink ) . '</span>';
+				$msg_html->avatar = '<span class="kavatar">' . AlphaUserPointsHelper::getAupAvatar ( $userinfo->userid, $showlink ) . '</span>';
 			}
 		} else {
 			$avatar = $userinfo->avatar;
 
 			if ($avatar != '') {
 				if (! file_exists ( KUNENA_PATH_UPLOADED . DS . 'avatars/l_' . $avatar )) {
-					$msg_html->avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '"  alt="" style="max-width: ' . $kunena_config->avatarwidth . 'px; max-height: ' . $kunena_config->avatarheight . 'px;" /></span>';
+					$msg_html->avatar = '<span class="kavatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '"  alt="" style="max-width: ' . $kunena_config->avatarwidth . 'px; max-height: ' . $kunena_config->avatarheight . 'px;" /></span>';
 				} else {
-					$msg_html->avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '"  alt="" /></span>';
+					$msg_html->avatar = '<span class="kavatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '"  alt="" /></span>';
 				}
 			}
 
 			else {
-				$msg_html->avatar = '<span class="fb_avatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/nophoto.jpg"  alt="" /></span>';
+				$msg_html->avatar = '<span class="kavatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/nophoto.jpg"  alt="" /></span>';
 			}
 		}
 	}
@@ -311,10 +311,10 @@ function showprf($userid, $page) {
 	$jr_username = $userinfo->name;
 	?>
 
-<table class="fb_profile_cover" width="100%" border="0" cellspacing="0"
+<table class="kprofile_cover" width="100%" border="0" cellspacing="0"
 	cellpadding="0">
 	<tr>
-		<td class="fb_profile-left"
+		<td class="kprofile-left"
 			align="center" valign="top" width="25%"><!-- Kunena Profile -->
 		<?php
 	if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/profile/userinfos.php' )) {
@@ -326,7 +326,7 @@ function showprf($userid, $page) {
 
 		<!-- /Kunena Profile --></td>
 
-		<td class="fb_profile-right"
+		<td class="kprofile-right"
 			valign="top" width="74%"><!-- User Messages --> <?php
 
 	if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/profile/summary.php' )) {
@@ -354,12 +354,12 @@ function showprf($userid, $page) {
 <!-- -->
 
 <!-- Begin: Forum Jump -->
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
-<table class="fb_blocktable" id="fb_bottomarea" border="0"
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
+<table class="kblocktable" id="kbottomarea" border="0"
 	cellspacing="0" cellpadding="0" width="100%">
 	<thead>
 		<tr>

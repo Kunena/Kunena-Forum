@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+14-Jan-2010 fxstein
+^ [#19345] refactor css class names 'fb' to 'k'
+
 14-Jan-2010 Xillibit
 + [#19332] Change Delete behavior - implemented in backend (part 1)
 ^ [#19332] Change Delete behavior - modfied the delete function in frontend (part 2)

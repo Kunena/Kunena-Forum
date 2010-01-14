@@ -22,17 +22,17 @@ defined( '_JEXEC' ) or die();
 
 
 ?>
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
-<table class = "fb_blocktable" id = "fb_forumprofile_mod" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
+<table class = "kblocktable" id = "kforumprofile_mod" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
 	<thead>
 		<tr>
 			<th>
-				<div class = "fb_title_cover fbm">
-					<span class = "fb_title fbl"><?php echo _USER_MODERATOR; ?>:</span>
+				<div class = "ktitle_cover km">
+					<span class = "ktitle kl"><?php echo _USER_MODERATOR; ?>:</span>
 				</div>
 			</th>
 		</tr>
@@ -59,7 +59,7 @@ defined( '_JEXEC' ) or die();
 					$k = 1 - $k;
 		?>
 
-					<tr class = "fb_<?php echo $tabclass[$k] ; ?>">
+					<tr class = "k<?php echo $tabclass[$k] ; ?>">
 						<td class = "td-1" align="left"><?php echo $enum . ': ' . $mods->name; ?></td>
 					</tr>
 
@@ -71,7 +71,7 @@ defined( '_JEXEC' ) or die();
 			{
 					?>
 
-				<tr class = "fb_<?php echo $tabclass[$k] ; ?>"><td class = "td-1" align="left"><?php echo _USER_MODERATOR_NONE; ?></td>
+				<tr class = "k<?php echo $tabclass[$k] ; ?>"><td class = "td-1" align="left"><?php echo _USER_MODERATOR_NONE; ?></td>
 				</tr>
 
 		<?php
@@ -81,7 +81,7 @@ defined( '_JEXEC' ) or die();
 		{
 		?>
 
-			<tr class = "fb_<?php echo $tabclass[$k] ; ?>"><td class = "td-1" align="left"><?php echo _USER_MODERATOR_ADMIN; ?></td>
+			<tr class = "k<?php echo $tabclass[$k] ; ?>"><td class = "td-1" align="left"><?php echo _USER_MODERATOR_ADMIN; ?></td>
 			</tr>
 
 		<?php

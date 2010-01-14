@@ -15,12 +15,12 @@ defined( '_JEXEC' ) or die();
 $document = & JFactory::getDocument ();
 $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new JTabs(tabs); }); });" );
 ?>
-<table class="fb_blocktable" cellpadding="0" cellspacing="0" border="0" width="100%">
+<table class="kblocktable" cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
 	<tr>
 		<th>
-			<div class="fb_title_cover fbm">
-				<span class="fb_title fbl">
+			<div class="ktitle_cover km">
+				<span class="ktitle kl">
 				<?php echo _USER_PROFILE; ?>
 				<?php echo $this->user->name; ?>
 				</span>
@@ -42,11 +42,11 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 	</thead>
 </table>
 
-<div class="fb_bt_cvr1">
-<div class="fb_bt_cvr2">
-<div class="fb_bt_cvr3">
-<div class="fb_bt_cvr4">
-<div class="fb_bt_cvr5">
+<div class="kbt_cvr1">
+<div class="kbt_cvr2">
+<div class="kbt_cvr3">
+<div class="kbt_cvr4">
+<div class="kbt_cvr5">
 
 	<div id="kprofile-container">
 		<div id="kprofile-leftcol">
@@ -148,7 +148,7 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 							<label for="ban-username"><span onClick="document.kformban.banusername.checked=(! document.kformban.banusername.checked);"><?php echo _KUNENA_MODERATE_BANUSERNAME; ?></span></label>
 							<input type="checkbox" id="ban-delposts" name="bandelposts" value="bandelposts" class="kcheckbox" >
 							<label for="ban-delposts"><span onClick="document.kformban.bandelposts.checked=(! document.kformban.bandelposts.checked);"><?php echo _KUNENA_MODERATE_DELETE_ALL_POSTS; ?></span></label>
-							<input class="kbutton fb_button fbs" type="submit" value="<?php echo _KUNENA_MODERATE_DELETE_USER; ?>" name="Submit"/>
+							<input class="kbutton kbutton ks" type="submit" value="<?php echo _KUNENA_MODERATE_DELETE_USER; ?>" name="Submit"/>
 						</form>
 						<div class="clr"></div>
 					</dd>

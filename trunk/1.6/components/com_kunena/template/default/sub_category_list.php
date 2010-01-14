@@ -55,22 +55,22 @@ if (sizeof ( $rows ) == 0)
 else {
 	?>
 <!-- B: List Cat -->
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
-<table class="fb_blocktable<?php
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
+<table class="kblocktable<?php
 	echo isset($objCatInfo->class_sfx) ? ' fb_blocktable' . $objCatInfo->class_sfx : '';
 	?>"
-	width="100%" id="fb_cat<?php
+	width="100%" id="kcat<?php
 	echo $objCatInfo->id;
 	?>" border="0"
 	cellspacing="0" cellpadding="0">
 	<thead>
 		<tr>
 			<th colspan="5" align="left">
-			<div class="fb_title_cover fbm"><?php
+			<div class="ktitle_cover km"><?php
 	echo CKunenaLink::GetCategoryLink ( 'showcat', $objCatInfo->id, stripslashes ( $objCatInfo->name ), $rel = 'follow', $class = 'fb_title fbl' );
 	?>
 
@@ -104,24 +104,24 @@ else {
 	<tbody id="catid_<?php
 	echo $objCatInfo->id;
 	?>">
-		<tr class="fb_sth fbs ">
-			<th class="th-1 fb_sectiontableheader"
+		<tr class="ksth ks">
+			<th class="th-1 ksectiontableheader"
 				width="1%">&nbsp;</th>
-			<th class="th-2 fb_sectiontableheader"
+			<th class="th-2 ksectiontableheader"
 				align="left"><?php
 	echo _GEN_FORUM;
 	?></th>
-			<th class="th-3 fb_sectiontableheader"
+			<th class="th-3 ksectiontableheader"
 				align="center" width="5%"><?php
 	echo _GEN_TOPICS;
 	?></th>
 
-			<th class="th-4 fb_sectiontableheader"
+			<th class="th-4 ksectiontableheader"
 				align="center" width="5%"><?php
 	echo _GEN_REPLIES;
 	?></th>
 
-			<th class="th-5 fb_sectiontableheader"
+			<th class="th-5 ksectiontableheader"
 				align="left" width="25%"><?php
 	echo _GEN_LAST_POST;
 	?></th>
@@ -196,11 +196,11 @@ else {
 				$latestpage = ceil ( $latestcount / $kunena_config->messages_per_page );
 			}
 			?>
-		<tr class="fb_<?php
+		<tr class="k<?php
 			echo $tabclass [$k];
-			echo isset( $singlerow->class_sfx ) ? ' fb_' . $tabclass [$k] . $singlerow->class_sfx : '';
+			echo isset( $singlerow->class_sfx ) ? ' k' . $tabclass [$k] . $singlerow->class_sfx : '';
 			?>"
-			id="fb_cat<?
+			id="kcat<?
 			echo $singlerow->id;
 			?>">
 			<td class="td-1" align="center"><?php
@@ -244,7 +244,7 @@ else {
 			}
 			echo CKunenaLink::GetCategoryLink ( 'listcat', $singlerow->id, $categoryicon, 'follow' );
 			echo '</td>';
-			echo '<td class="td-2"  align="left"><div class="fb_thead-title fbl">' . CKunenaLink::GetCategoryLink ( 'showcat', $singlerow->id, stripslashes ( $singlerow->name ), 'follow' );
+			echo '<td class="td-2"  align="left"><div class="kthead-title kl">' . CKunenaLink::GetCategoryLink ( 'showcat', $singlerow->id, stripslashes ( $singlerow->name ), 'follow' );
 
 			//new posts available
 			if ($cxThereisNewInForum == 1 && $kunena_my->id > 0) {
@@ -268,14 +268,14 @@ else {
 			if ($forumDesc != "") {
 				$tmpforumdesc = stripslashes ( smile::smileReplace ( $forumDesc, 0, $kunena_config->disemoticons, $kunena_emoticons ) );
 				$tmpforumdesc = nl2br ( $tmpforumdesc );
-				echo '<div class="fb_thead-desc  fbm">' . $tmpforumdesc . ' </div>';
+				echo '<div class="kthead-desc  km">' . $tmpforumdesc . ' </div>';
 			}
 
 			if (count ( $forumparents ) > 0) {
 				if (count ( $forumparents ) == 1) {
-					echo '<div class="fb_thead-child  fbs"><b>' . _KUNENA_CHILD_BOARD . ' </b>';
+					echo '<div class="kthead-child  ks"><b>' . _KUNENA_CHILD_BOARD . ' </b>';
 				} else {
-					echo '<div class="fb_thead-child  fbs"><b>' . _KUNENA_CHILD_BOARDS . ' </b>';
+					echo '<div class="kthead-child  ks"><b>' . _KUNENA_CHILD_BOARDS . ' </b>';
 				}
 				;
 
@@ -354,7 +354,7 @@ else {
 
 			// moderator list
 			if (count ( $modslist ) > 0) {
-				echo '<div class="fb_thead-moderators  fbs">' . _GEN_MODERATORS . ": ";
+				echo '<div class="kthead-moderators  ks">' . _GEN_MODERATORS . ": ";
 
 				$mod_cnt = 0;
 				foreach ( $modslist as $mod ) {
@@ -371,17 +371,17 @@ else {
 				$kunena_db->setQuery ( "SELECT COUNT(*) FROM #__fb_messages WHERE catid='{$singlerow->id}' AND hold='1'" );
 				$numPending = $kunena_db->loadResult ();
 				if ($numPending > 0) {
-					echo '<div class="fbs"><font color="red">';
+					echo '<div class="ks"><font color="red">';
 					echo CKunenaLink::GetCategoryReviewListLink ( $singlerow->id, $numPending . ' ' . _SHOWCAT_PENDING, 'nofollow' );
 					echo '</font></div>';
 				}
 			}
 			?>
 			</td>
-			<td class="td-3 fbm" align="center"><?php
+			<td class="td-3 km" align="center"><?php
 			echo $numtopics;
 			?></td>
-			<td class="td-4 fbm" align="center"><?php
+			<td class="td-4 km" align="center"><?php
 			echo $numreplies;
 			?></td>
 			<?php
@@ -389,13 +389,13 @@ else {
 				?>
 
 			<td class="td-5" align="left">
-			<div class="fb_latest-subject fbm">
+			<div class="klatest-subject km">
 			<?php
 				echo CKunenaLink::GetThreadLink ( 'view', $latestcatid, $latestthread, kunena_htmlspecialchars ( stripslashes ( $latestsubject ) ), kunena_htmlspecialchars ( stripslashes ( $latestsubject ) ), $rel = 'nofollow' );
 				?>
 			</div>
 
-			<div class="fb_latest-subject-by  fbs">
+			<div class="klatest-subject-by  ks">
 			<?php
 				echo _GEN_BY;
 				?> <?php

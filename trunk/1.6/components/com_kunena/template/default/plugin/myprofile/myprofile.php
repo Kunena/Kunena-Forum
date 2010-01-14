@@ -84,12 +84,12 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 	?>
 <!-- B:My Profile -->
 
-<table class="fb_blocktable" cellpadding="0" cellspacing="0" border="0" width="100%">
+<table class="kblocktable" cellpadding="0" cellspacing="0" border="0" width="100%">
 <thead>
 	<tr>
 		<th>
-			<div class="fb_title_cover fbm">
-				<span class="fb_title fbl">
+			<div class="ktitle_cover km">
+				<span class="ktitle kl">
 				<?php echo _USER_PROFILE; ?>
 				<?php echo $juserinfo->name; ?>
 				</span>
@@ -115,7 +115,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 	<tr>
 		<!-- Temporarily disabled left nav until profile changes complete -->
 		<!-- Links relocated in menu -->
-		<!--   <td class="fb_myprofile_left" valign="top" width="20%"> -->
+		<!--   <td class="kmyprofile_left" valign="top" width="20%"> -->
 		<!-- B:My Profile Left -->
 		<?php
 	//if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_menu.php' )) {
@@ -128,10 +128,10 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 		<!-- F:My Profile Left -->
 		<!--  </td>
 
-		<td class="fb_myprofile_mid" valign="top" width="5">&nbsp;</td>
+		<td class="kmyprofile_mid" valign="top" width="5">&nbsp;</td>
 		 -->
 
-		<td class="fb_myprofile_right" valign="top"><!-- B:My Profile Right -->
+		<td class="kmyprofile_right" valign="top"><!-- B:My Profile Right -->
 
 		<?php
 	switch ($do) {
@@ -533,7 +533,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 	?>
 
 		<!-- F:My Profile Right --> <!-- Begin: Forum Jump -->
-		<table class="fb_blocktable" id="fb_bottomarea" border="0"
+		<table class="kblocktable" id="kbottomarea" border="0"
 			cellspacing="0" cellpadding="0" width="100%">
 			<thead>
 				<tr>

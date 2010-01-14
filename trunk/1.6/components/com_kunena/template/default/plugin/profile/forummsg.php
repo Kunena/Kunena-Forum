@@ -30,43 +30,43 @@ $kunena_session =& CKunenaSession::getInstance();
 $userid 		= JRequest::getInt('userid', 0);
 
 ?>
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
-<table class = "fb_blocktable " id="fb_userprfmsg" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
+<table class = "kblocktable " id="kuserprfmsg" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
             <th colspan = "6" align="left">
-                <div class = "fb_title_cover  fbm">
-                    <span class="fb_title fbl"><?php echo _KUNENA_USERPROFILE_MESSAGES; ?></span>
+                <div class = "ktitle_cover  km">
+                    <span class="ktitle kl"><?php echo _KUNENA_USERPROFILE_MESSAGES; ?></span>
                 </div>
 
-                <img id = "BoxSwitch_fbuserprofile__fb_fbuserprofile_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+                <img id = "BoxSwitch_kuserprofile__kuserprofile_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
             </th>
         </tr>
     </thead>
 
-    <tbody id = "fb_fbuserprofile_tbody">
-        <tr  class = "fb_sth fbs">
-            <th class = "th-1 fb_sectiontableheader" align="center" width="1%">&nbsp;
+    <tbody id = "kuserprofile_tbody">
+        <tr  class = "ksth ks">
+            <th class = "th-1 ksectiontableheader" align="center" width="1%">&nbsp;
 
             </th>
 
-            <th class = "th-2 fb_sectiontableheader"  align="left" width="44%"><?php echo _KUNENA_USERPROFILE_TOPICS; ?>
+            <th class = "th-2 ksectiontableheader"  align="left" width="44%"><?php echo _KUNENA_USERPROFILE_TOPICS; ?>
             </th>
 
-            <th class = "th-3 fb_sectiontableheader" align="left" width="30%"><?php echo _KUNENA_USERPROFILE_CATEGORIES; ?>
+            <th class = "th-3 ksectiontableheader" align="left" width="30%"><?php echo _KUNENA_USERPROFILE_CATEGORIES; ?>
             </th>
 
-            <th class = "th-4 fb_sectiontableheader" align="center" width="5%"><?php echo _KUNENA_USERPROFILE_HITS; ?>
+            <th class = "th-4 ksectiontableheader" align="center" width="5%"><?php echo _KUNENA_USERPROFILE_HITS; ?>
             </th>
 
-            <th class = "th-5 fb_sectiontableheader"  align="left" width="20%"><?php echo _KUNENA_USERPROFILE_DATE; ?>
+            <th class = "th-5 ksectiontableheader"  align="left" width="20%"><?php echo _KUNENA_USERPROFILE_DATE; ?>
             </th>
 
-            <th class = "th-6 fb_sectiontableheader" align="center" width="1%">&nbsp;
+            <th class = "th-6 ksectiontableheader" align="center" width="1%">&nbsp;
 
             </th>
         </tr>
@@ -142,32 +142,32 @@ $userid 		= JRequest::getInt('userid', 0);
                 $fbCatURL = JRoute::_("index.php?option=com_kunena".KUNENA_COMPONENT_ITEMID_SUFFIX."&amp;func=showcat&amp;catid=" . $item->catid);
         ?>
 
-            <tr class = "fb_<?php echo $tabclass[$k]; ?> ">
-                <td class = "td-1  fbm"  align="center"><?php echo "<img src=\"" . $topic_emoticons[$item->topic_emoticon] . "\" alt=\"emo\" />"; ?>
+            <tr class = "k<?php echo $tabclass[$k]; ?> ">
+                <td class = "td-1  km"  align="center"><?php echo "<img src=\"" . $topic_emoticons[$item->topic_emoticon] . "\" alt=\"emo\" />"; ?>
                 </td>
 
-                <td class = "td-2  fbm"  align="left">
+                <td class = "td-2  km"  align="left">
 
-                        <a  class="fb-topic-title fbm"  href = "<?php echo $fbURL; ?>"> <?php echo kunena_htmlspecialchars(stripslashes ($item->subject)); ?> </a>
-
-                </td>
-
-                <td class = "td-3 fbm" align="left">
-
-                        <a  class="fb-topic-cat fbm" href = "<?php echo $fbCatURL; ?>"> <?php echo kunena_htmlspecialchars(stripslashes($item->catname)); ?></a>
+                        <a  class="k-topic-title km"  href = "<?php echo $fbURL; ?>"> <?php echo kunena_htmlspecialchars(stripslashes ($item->subject)); ?> </a>
 
                 </td>
 
-                <td class = "td-4 fbm" align="center"><?php echo $item->threadhits; ?>
+                <td class = "td-3 km" align="left">
+
+                        <a  class="k-topic-cat km" href = "<?php echo $fbCatURL; ?>"> <?php echo kunena_htmlspecialchars(stripslashes($item->catname)); ?></a>
+
                 </td>
 
-                <td class = "td-5  fbs" align="left">
-                  <div class="fb-latest-subject-date fbs">
+                <td class = "td-4 km" align="center"><?php echo $item->threadhits; ?>
+                </td>
+
+                <td class = "td-5  ks" align="left">
+                  <div class="k-latest-subject-date ks">
 <?php echo '' . date(_DATETIME, $item->time) . ''; ?>
                   </div>
                 </td>
 
-                <td class = "td-6  fbm" align="center">
+                <td class = "td-6 km" align="center">
                     <a href = "<?php echo $fbURL; ?>"> <?php
     echo isset($kunena_icons['latestpost']) ? '<img src="'
              . KUNENA_URLICONSPATH . $kunena_icons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'; ?> </a>
@@ -182,7 +182,7 @@ $userid 		= JRequest::getInt('userid', 0);
         ?>
 
             <tr>
-                <td colspan = "6" class = "fb_profile-bottomnav" align="center">
+                <td colspan = "6" class = "kprofile-bottomnav" align="center">
                     <br/>
 
                     <b><?php echo _KUNENA_USERPROFILE_NOFORUMPOSTS; ?></b>
@@ -198,7 +198,7 @@ $userid 		= JRequest::getInt('userid', 0);
         ?>
 
         <tr>
-            <td colspan = "6" class = "fb_profile-bottomnav  fbm " align="center">
+            <td colspan = "6" class = "kprofile-bottomnav km" align="center">
 
                 <?php
                 // TODO: fxstein - Need to perform SEO cleanup

@@ -174,24 +174,24 @@ function ReportForm($id, $catid) {
         }
 ?>
 
-<div class = "fb__bt_cvr1">
-    <div class = "fb__bt_cvr2">
-        <div class = "fb__bt_cvr3">
-            <div class = "fb__bt_cvr4">
-                <div class = "fb__bt_cvr5">
-                    <table class = "fb_blocktable" id = "fb_forumhelp" border = "0" cellspacing = "0" cellpadding = "0" width = "100%">
+<div class = "k_bt_cvr1">
+    <div class = "k_bt_cvr2">
+        <div class = "k_bt_cvr3">
+            <div class = "k_bt_cvr4">
+                <div class = "k_bt_cvr5">
+                    <table class = "kblocktable" id = "kforumhelp" border = "0" cellspacing = "0" cellpadding = "0" width = "100%">
                         <thead>
                             <tr>
                                 <th>
-                                    <div class = "fb_title_cover">
-                                        <span class = "fb_title"><?php echo _KUNENA_COM_A_REPORT ?></span>
+                                    <div class = "ktitle_cover">
+                                        <span class = "ktitle"><?php echo _KUNENA_COM_A_REPORT ?></span>
                                     </div>
                             </tr>
                         </thead>
 
                         <tbody>
                             <tr>
-                                <td class = "fb_helpdesc">
+                                <td class = "khelpdesc">
                                     <form method = "post" action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=report'); ?>">
                                         <table width = "100%" border = "0">
                                             <tr>

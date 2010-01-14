@@ -46,11 +46,11 @@ if ($signature)
   	window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new JTabs(tabs); }); });
 </script>
 
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
 
 	<div id="kprofile-container">
 		<div id="kprofile-leftcol">
@@ -72,7 +72,7 @@ if ($signature)
 		<div id="kprofile-rightcol">
 			<div id="kprofile-rightcoltop">
 				<div class="kprofile-rightcol2">
-					
+
 					<div class="iconrow">
 						<a href="<?php echo 'http://twitter.com/'.kunena_htmlspecialchars(stripslashes($userinfo->TWITTER)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_TWITTER; ?>"><span class="twitter"></span></a>
 						<a href="<?php echo 'http://www.facebook.com/'.kunena_htmlspecialchars(stripslashes($userinfo->FACEBOOK)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_FACEBOOK; ?>"><span class="facebook"></span></a>
@@ -150,7 +150,7 @@ if ($signature)
 						</ul>
 						<h4><?php echo _KUNENA_MODERATE_DELETE_USER; ?>:</h4>
 						<form id="kform-ban" name="kformban" action="#" method="">
-						
+
 							<input type="checkbox" id="ban-ip" name="banip" value="banip" class="kcheckbox" >
 							<label for="ban-ip"><span onClick="document.kformban.banip.checked=(! document.kformban.banip.checked);"><?php echo _KUNENA_MODERATE_BANIP; ?></span></label>
 							<select>
@@ -165,7 +165,7 @@ if ($signature)
 							<label for="ban-username"><span onClick="document.kformban.banusername.checked=(! document.kformban.banusername.checked);"><?php echo _KUNENA_MODERATE_BANUSERNAME; ?></span></label>
 							<input type="checkbox" id="ban-delposts" name="bandelposts" value="bandelposts" class="kcheckbox" >
 							<label for="ban-delposts"><span onClick="document.kformban.bandelposts.checked=(! document.kformban.bandelposts.checked);"><?php echo _KUNENA_MODERATE_DELETE_ALL_POSTS; ?></span></label>
-							<input class="kbutton fb_button fbs" type="submit" value="<?php echo _KUNENA_MODERATE_DELETE_USER; ?>" name="Submit"/>
+							<input class="kbutton kbutton ks" type="submit" value="<?php echo _KUNENA_MODERATE_DELETE_USER; ?>" name="Submit"/>
 						</form>
 						<div class="clr"></div>
 					</dd>

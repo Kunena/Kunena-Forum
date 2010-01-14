@@ -36,7 +36,7 @@ function KunenaShowcatPagination($catid, $page, $totalpages, $maxpages) {
 		$endpage = $totalpages;
 	}
 
-	$output = '<span class="fb_pagination">' . _PAGE;
+	$output = '<span class="kpagination">' . _PAGE;
 
 	if (($startpage) > 1) {
 		if ($endpage < $totalpages)
@@ -221,7 +221,7 @@ if (in_array ( $catid, $allow_forum )) {
 <?php
 	if ($objCatInfo->headerdesc) {
 		?>
-<table class="fb_forum-headerdesc<?php echo isset($objCatInfo->class_sfx) ? ' fb_forum-headerdesc' . $objCatInfo->class_sfx : '';?>" border="0" cellpadding="0"
+<table class="kforum-headerdesc<?php echo isset($objCatInfo->class_sfx) ? ' kforum-headerdesc' . $objCatInfo->class_sfx : '';?>" border="0" cellpadding="0"
 	cellspacing="0" width="100%">
 	<tr>
 		<td><?php
@@ -239,17 +239,17 @@ if (in_array ( $catid, $allow_forum )) {
 
 <!-- B: List Actions -->
 
-<table class="fb_list_actions" border="0" cellpadding="0"
+<table class="klist_actions" border="0" cellpadding="0"
 	cellspacing="0" width="100%">
 	<tr>
-		<td class="fb_list_actions_goto"><?php
+		<td class="klist_actions_goto"><?php
 	//go to bottom
 	echo '<a name="forumtop" /> ';
 	echo CKunenaLink::GetSamePageAnkerLink ( 'forumbottom', isset ( $kunena_icons ['bottomarrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM );
 	?>
 
 		</td>
-		<td class="fb_list_actions_forum" width="100%"><?php
+		<td class="klist_actions_forum" width="100%"><?php
 	if (CKunenaTools::isModerator($kunena_my->id, $catid) || ($this->kunena_forum_locked == 0 && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
 		//this user is allowed to post a new topic:
 		$forum_new = CKunenaLink::GetPostNewTopicLink ( $catid, CKunenaTools::showButton('newtopic', _KUNENA_BUTTON_NEW_TOPIC), 'nofollow', 'buttoncomm btn-left', _KUNENA_BUTTON_NEW_TOPIC_LONG );
@@ -271,7 +271,7 @@ if (in_array ( $catid, $allow_forum )) {
 	}
 
 	if (isset ( $forum_new ) || isset ( $forum_markread ) || isset ( $thread_subscribecat ) ) {
-		echo '<div class="fb_message_buttons_row">';
+		echo '<div class="kmessage_buttons_row">';
 		if (isset ( $forum_new ))
 			echo $forum_new;
 		if (isset ( $forum_markread ))
@@ -283,7 +283,7 @@ if (in_array ( $catid, $allow_forum )) {
 	?>
 
 		</td>
-		<td class="fb_list_pages_all" nowrap="nowrap"><?php
+		<td class="klist_pages_all" nowrap="nowrap"><?php
 	//pagination 1
 	if (count ( $this->messages [0] ) > 0) {
 		$maxpages = 9 - 2; // odd number here (show - 2)
@@ -334,19 +334,19 @@ if (in_array ( $catid, $allow_forum )) {
 
 <!-- B: List Actions Bottom -->
 
-<table class="fb_list_actions_bottom" border="0" cellpadding="0"
+<table class="klist_actions_bottom" border="0" cellpadding="0"
 	cellspacing="0" width="100%">
 	<tr>
-		<td class="fb_list_actions_goto"><?php
+		<td class="klist_actions_goto"><?php
 	//go to top
 	echo '<a name="forumbottom" />';
 	echo CKunenaLink::GetSamePageAnkerLink ( 'forumtop', isset ( $kunena_icons ['toparrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP );
 	?>
 
 		</td>
-		<td class="fb_list_actions_forum" width="100%"><?php
+		<td class="klist_actions_forum" width="100%"><?php
 	if (isset ( $forum_new ) || isset ( $forum_markread )) {
-		echo '<div class="fb_message_buttons_row">';
+		echo '<div class="kmessage_buttons_row">';
 		if (isset ( $forum_new ))
 			echo $forum_new;
 		if (isset ( $forum_markread ))
@@ -358,7 +358,7 @@ if (in_array ( $catid, $allow_forum )) {
 	?>
 
 		</td>
-		<td class="fb_list_pages_all" nowrap="nowrap"><?php
+		<td class="klist_pages_all" nowrap="nowrap"><?php
 	//pagination 2
 	if (count ( $this->messages [0] ) > 0) {
 		echo $pagination;
@@ -368,7 +368,7 @@ if (in_array ( $catid, $allow_forum )) {
 	</tr>
 </table>
 <?php
-	echo '<div class = "fb_forum-pathway-bottom">';
+	echo '<div class = "kforum-pathway-bottom">';
 	echo $this->kunena_pathway1;
 	echo '</div>';
 	?>
@@ -377,10 +377,10 @@ if (in_array ( $catid, $allow_forum )) {
 
 <!-- B: Category List Bottom -->
 
-<table class="fb_list_bottom" border="0" cellspacing="0" cellpadding="0"
+<table class="klist_bottom" border="0" cellspacing="0" cellpadding="0"
 	width="100%">
 	<tr>
-		<td class="fb_list_moderators"><!-- Mod List --> <?php
+		<td class="klist_moderators"><!-- Mod List --> <?php
 	//get the Moderator list for display
 	$kunena_db->setQuery ( "SELECT * FROM #__fb_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid='{$catid}'" );
 	$modslist = $kunena_db->loadObjectList ();
@@ -389,7 +389,7 @@ if (in_array ( $catid, $allow_forum )) {
 	if (count ( $modslist ) > 0) :
 		?>
 
-		<div class="fbbox-bottomarea-modlist"><?php
+		<div class="kbox-bottomarea-modlist"><?php
 		echo '' . _GEN_MODERATORS . ": ";
 		foreach ( $modslist as $mod ) {
 			echo CKunenaLink::GetProfileLink ( $kunena_config, $mod->userid, $mod->username ) . '&nbsp; ';
@@ -400,7 +400,7 @@ if (in_array ( $catid, $allow_forum )) {
 
 	<?php endif;
 	?> <!-- /Mod List --></td>
-		<td class="fb_list_categories"><?php
+		<td class="klist_categories"><?php
 
 	//(JJ) FINISH: CAT LIST BOTTOM
 

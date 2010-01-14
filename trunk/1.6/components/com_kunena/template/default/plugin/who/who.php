@@ -32,32 +32,32 @@ $kunena_config =& CKunenaConfig::getInstance();
 if ($kunena_config->showwhoisonline > 0)
 {
 ?>
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
-    <table class = "fb_blocktable " id="fb_whoispage" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
+    <table class = "kblocktable " id="kwhoispage" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>
             <tr>
                 <th colspan = "4">
-                   <div class = "fb_title_cover">
-                        <span class="fb_title"><?php echo $kunena_app->getCfg('sitename'); ?> - <?php echo _WHO_WHOIS_ONLINE; ?></span>
+                   <div class = "ktitle_cover">
+                        <span class="ktitle"><?php echo $kunena_app->getCfg('sitename'); ?> - <?php echo _WHO_WHOIS_ONLINE; ?></span>
                     </div>
             </tr>
         </thead>
 
         <tbody>
-            <tr class = "fb_sth">
-                <th class = "th-1 fb_sectiontableheader">
+            <tr class = "ksth">
+                <th class = "th-1 ksectiontableheader">
 <?php echo _WHO_ONLINE_USER; ?>
 
                 </th>
 
-                <th class = "th-2 fb_sectiontableheader"><?php echo _WHO_ONLINE_TIME; ?>
+                <th class = "th-2 ksectiontableheader"><?php echo _WHO_ONLINE_TIME; ?>
                 </th>
 
-                <th class = "th-3 fb_sectiontableheader"><?php echo _WHO_ONLINE_FUNC; ?>
+                <th class = "th-3 ksectiontableheader"><?php echo _WHO_ONLINE_FUNC; ?>
                 </th>
             </tr>
 
@@ -85,7 +85,7 @@ if ($kunena_config->showwhoisonline > 0)
                 $time = date("H:i:s", $user->time + $kunena_config->board_ofset*3600);
             ?>
 
-                <tr class = "fb<?php echo $tabclass[$k];?>">
+                <tr class = "k<?php echo $tabclass[$k];?>">
                     <td class = "td-1">
                         <div style = "float: right; width: 14ex;">
                         </div>

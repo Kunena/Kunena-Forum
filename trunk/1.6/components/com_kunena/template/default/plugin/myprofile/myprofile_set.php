@@ -21,25 +21,25 @@
 defined( '_JEXEC' ) or die();
 
 ?>
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
 <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=updateset'); ?>" method = "post" name = "postform">
 	<input type = "hidden" name = "do" value = "updateset">
-	<table class = "fb_blocktable" id = "fb_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+	<table class = "kblocktable" id = "kforumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
 		<thead>
 			<tr>
 				<th colspan = "2">
-					<div class = "fb_title_cover">
-						<span class = "fb_title"><?php echo _USER_GENERAL; ?></span>
+					<div class = "ktitle_cover">
+						<span class = "ktitle"><?php echo _USER_GENERAL; ?></span>
 					</div>
 				</th>
 			</tr>
 		</thead>
 
-		<tbody class = "fb_myprofile_general">
+		<tbody class = "kmyprofile_general">
 			<tr >
 				<td>
 					<strong><?php echo _USER_ORDER; ?>*</strong>:

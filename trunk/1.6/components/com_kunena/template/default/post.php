@@ -132,7 +132,7 @@ if ($kunena_config->captcha == 1 && $kunena_my->id < 1) {
 
 	if ($message != NULL) {
 		$session = & JFactory::getSession ();
-		$rand = $session->get ( 'fb_image_random_value' );
+		$rand = $session->get ( 'kimage_random_value' );
 
 		if (md5 ( $number ) != $rand) {
 			$mess = _KUNENA_CAPERR;
@@ -868,7 +868,7 @@ else if ($do == "move") {
 				$catid = ( int ) $catid;
 				$id = ( int ) $id;
 				$options = array();
-				$selectlist = CKunenaTools::forumSelectList('postmove', 0, $options, ' size="15" class="fb_move_selectbox"');
+				$selectlist = CKunenaTools::forumSelectList('postmove', 0, $options, ' size="15" class="kmove_selectbox"');
 
 				// get topic subject:
 				$kunena_db->setQuery ( "SELECT subject, id FROM #__fb_messages WHERE id='{$id}'" );
@@ -1174,13 +1174,13 @@ function listThreadHistory($id, $kunena_config, $kunena_db) {
 		?>
 
 <table border="0" cellspacing="1" cellpadding="3" width="100%"
-	class="fb_review_table">
+	class="kreview_table">
 	<tr>
-		<td class="fb_review_header" width="20%" align="center"><strong><?php
+		<td class="kreview_header" width="20%" align="center"><strong><?php
 		echo _GEN_AUTHOR;
 		?></strong></td>
 
-		<td class="fb_review_header" align="center"><strong><?php
+		<td class="kreview_header" align="center"><strong><?php
 		echo _GEN_MESSAGE;
 		?></strong></td>
 	</tr>
@@ -1203,14 +1203,14 @@ function listThreadHistory($id, $kunena_config, $kunena_db) {
 			?>
 
 	<tr>
-		<td class="fb_review_body<?php
+		<td class="kreview_body<?php
 			echo $k;
 			?>" valign="top"><?php
 			echo stripslashes ( $mes->name );
 			?>
 		</td>
 
-		<td class="fb_review_body<?php
+		<td class="kreview_body<?php
 			echo $k;
 			?>">
 		<div class="msgtext"><?php
@@ -1233,12 +1233,12 @@ function listThreadHistory($id, $kunena_config, $kunena_db) {
 }
 ?>
 <!-- Begin: Forum Jump -->
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
-<table class="fb_blocktable" id="fb_bottomarea" border="0"
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
+<table class="kblocktable" id="kbottomarea" border="0"
 	cellspacing="0" cellpadding="0" width="100%">
 	<thead>
 		<tr>

@@ -31,17 +31,17 @@ $document->setTitle(_GEN_RULES . ' - ' . stripslashes($kunena_config->board_titl
 
 ?>
 <!-- INSERT YOUR RULES IN HTML BEGINNING HERE -->
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
-<table class = "fb_blocktable" id ="fb_forumrules" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
+<table class = "kblocktable" id ="kforumrules" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>
         <tr>
             <th>
-                <div class = "fb_title_cover">
-                        <span class="fb_title fbl" ><?php echo _COM_FORUM_RULES; ?></span>
+                <div class = "ktitle_cover">
+                        <span class="ktitle kl" ><?php echo _COM_FORUM_RULES; ?></span>
                 </div>
                </th>
         </tr>
@@ -49,7 +49,7 @@ $document->setTitle(_GEN_RULES . ' - ' . stripslashes($kunena_config->board_titl
 
     <tbody>
         <tr>
-            <td class = "fb_rulesdesc">
+            <td class = "krulesdesc">
 <?php
           $kunena_db->setQuery("SELECT introtext, id FROM #__content WHERE id='{$kunena_config->rules_cid}'");
 		  $j_introtext = $kunena_db->loadResult();
@@ -68,12 +68,12 @@ $document->setTitle(_GEN_RULES . ' - ' . stripslashes($kunena_config->board_titl
 </div>
 <!-- THIS IS WHERE YOUR RULES FINISH -->
 <!-- Begin: Forum Jump -->
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
-<table  class = "fb_blocktable" id="fb_bottomarea"  border = "0" cellspacing = "0" cellpadding = "0">
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
+<table  class = "kblocktable" id="kbottomarea"  border = "0" cellspacing = "0" cellpadding = "0">
     <thead>
         <tr>
             <th class = "th-right">

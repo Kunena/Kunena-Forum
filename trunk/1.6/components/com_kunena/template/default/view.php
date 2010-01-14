@@ -40,7 +40,7 @@ function KunenaViewPagination($catid, $threadid, $page, $totalpages, $maxpages) 
 		$endpage = $totalpages;
 	}
 
-	$output = '<span class="fb_pagination">' . _PAGE;
+	$output = '<span class="kpagination">' . _PAGE;
 	if ($startpage > 1) {
 		if ($endpage < $totalpages)
 			$endpage --;
@@ -278,11 +278,11 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 <script type="text/javascript">
         jQuery(function()
         {
-            jQuery(".fb_qr_fire").click(function()
+            jQuery(".kqr_fire").click(function()
             {
                 jQuery("#sc" + (jQuery(this).attr("id").split("__")[1])).toggle();
             });
-            jQuery(".fb_qm_cncl_btn").click(function()
+            jQuery(".kqm_cncl_btn").click(function()
             {
                 jQuery("#sc" + (jQuery(this).attr("id").split("__")[1])).toggle();
             });
@@ -302,8 +302,8 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		if ($objCatInfo->headerdesc) {
 			?>
 <table
-	class="fb_forum-headerdesc<?php
-			echo isset ( $objCatInfo->class_sfx ) ? ' fb_forum-headerdesc' . $objCatInfo->class_sfx : '';
+	class="kforum-headerdesc<?php
+			echo isset ( $objCatInfo->class_sfx ) ? ' kforum-headerdesc' . $objCatInfo->class_sfx : '';
 			?>"
 	border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tr>
@@ -330,18 +330,18 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 
 <!-- B: List Actions -->
 
-<table class="fb_list_actions" border="0" cellspacing="0"
+<table class="klist_actions" border="0" cellspacing="0"
 	cellpadding="0" width="100%">
 	<tr>
-		<td class="fb_list_actions_goto"><?php
+		<td class="klist_actions_goto"><?php
 		//go to bottom
 		echo '<a name="forumtop" /> ';
 		echo CKunenaLink::GetSamePageAnkerLink ( 'forumbottom', isset ( $kunena_icons ['bottomarrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM );
 
 		echo '</td>';
 		if (CKunenaTools::isModerator ( $kunena_my->id, $catid ) || isset ( $thread_reply ) || isset ( $thread_subscribe ) || isset ( $thread_favorite )) {
-			echo '<td class="fb_list_actions_forum">';
-			echo '<div class="fb_message_buttons_row">';
+			echo '<td class="klist_actions_forum">';
+			echo '<div class="kmessage_buttons_row">';
 			if (isset ( $thread_reply ))
 				echo $thread_reply;
 			if (isset ( $thread_subscribe ))
@@ -350,7 +350,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 				echo ' ' . $thread_favorite;
 			echo '</div>';
 			if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
-				echo '<div class="fb_message_buttons_row">';
+				echo '<div class="kmessage_buttons_row">';
 				echo $thread_delete;
 				echo ' ' . $thread_move;
 				echo ' ' . $thread_sticky;
@@ -359,21 +359,21 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 			}
 			echo '</td>';
 		}
-		echo '<td class="fb_list_actions_forum">';
+		echo '<td class="klist_actions_forum">';
 		if (isset ( $thread_new )) {
-			echo '<div class="fb_message_buttons_row">';
+			echo '<div class="kmessage_buttons_row">';
 			echo $thread_new;
 			echo '</div>';
 		}
 		if (isset ( $thread_merge )) {
-			echo '<div class="fb_message_buttons_row">';
+			echo '<div class="kmessage_buttons_row">';
 			echo $thread_merge;
 			echo '</div>';
 		}
 		echo '</td>';
 
 		//pagination 1
-		echo '<td class="fb_list_pages_all nowrap">';
+		echo '<td class="klist_pages_all nowrap">';
 		echo $pagination;
 		echo '</td>';
 		?>
@@ -388,10 +388,10 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 <!-- <table border = "0" cellspacing = "0" cellpadding = "0" width = "100%" align = "center"> -->
 
 <table
-	class="fb_blocktable<?php
-		echo isset ( $objCatInfo->class_sfx ) ? ' fb_blocktable' . $objCatInfo->class_sfx : '';
+	class="kblocktable<?php
+		echo isset ( $objCatInfo->class_sfx ) ? ' kblocktable' . $objCatInfo->class_sfx : '';
 		?>"
-	id="fb_views" cellpadding="0" cellspacing="0" border="0" width="100%">
+	id="kviews" cellpadding="0" cellspacing="0" border="0" width="100%">
 	<thead>
 		<tr>
 			<th align="left">
@@ -399,7 +399,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 				<tr>
 					<td>
 
-					<div class="fb_title_cover  fbm"><span class="fb_title fbl"><?php
+					<div class="ktitle_cover  km"><span class="ktitle kl"><?php
 		echo _KUNENA_TOPIC;
 		?>
 		<?php
@@ -409,7 +409,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 
 		<!-- Begin: Total Favorite -->
 			<?php
-		echo '<div class="fb_totalfavorite">';
+		echo '<div class="ktotalfavorite">';
 		if ($kunena_icons ['favoritestar']) {
 			if ($fb_favorited)
 				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" alt="*" border="0" title="' . _KUNENA_FAVORITE . '" />';
@@ -556,27 +556,27 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 					if ($kunena_config->avatar_src == "jomsocial") {
 						// Get CUser object
 						$jsuser = & CFactory::getUser ( $userinfo->userid );
-						$msg_html->avatar = '<span class="fb_avatar"><img src="' . $jsuser->getThumbAvatar () . '" alt=" " /></span>';
+						$msg_html->avatar = '<span class="kavatar"><img src="' . $jsuser->getThumbAvatar () . '" alt=" " /></span>';
 					} else if ($kunena_config->avatar_src == "cb") {
 						$kunenaProfile = & CkunenaCBProfile::getInstance ();
-						$msg_html->avatar = '<span class="fb_avatar">' . $kunenaProfile->showAvatar ( $userinfo->userid, '', false ) . '</span>';
+						$msg_html->avatar = '<span class="kavatar">' . $kunenaProfile->showAvatar ( $userinfo->userid, '', false ) . '</span>';
 					} else if ($kunena_config->avatar_src == "aup") {
 						$api_AUP = JPATH_SITE . DS . 'components' . DS . 'com_alphauserpoints' . DS . 'helper.php';
 						if (file_exists ( $api_AUP )) {
 							($kunena_config->fb_profile == 'aup') ? $showlink = 1 : $showlink = 0;
-							$msg_html->avatar = '<span class="fb_avatar">' . AlphaUserPointsHelper::getAupAvatar ( $userinfo->userid, $showlink ) . '</span>';
+							$msg_html->avatar = '<span class="kavatar">' . AlphaUserPointsHelper::getAupAvatar ( $userinfo->userid, $showlink ) . '</span>';
 						}
 					} else {
 						$avatar = $userinfo->avatar;
 
 						if (! empty ( $avatar )) {
 							if (! file_exists ( KUNENA_PATH_UPLOADED . DS . 'avatars/s_' . $avatar )) {
-								$msg_html->avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: ' . $kunena_config->avatarwidth . 'px; max-height: ' . $kunena_config->avatarheight . 'px;" /></span>';
+								$msg_html->avatar = '<span class="kavatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: ' . $kunena_config->avatarwidth . 'px; max-height: ' . $kunena_config->avatarheight . 'px;" /></span>';
 							} else {
-								$msg_html->avatar = '<span class="fb_avatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: ' . $kunena_config->avatarwidth . 'px; max-height: ' . $kunena_config->avatarheight . 'px;" /></span>';
+								$msg_html->avatar = '<span class="kavatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: ' . $kunena_config->avatarwidth . 'px; max-height: ' . $kunena_config->avatarheight . 'px;" /></span>';
 							}
 						} else {
-							$msg_html->avatar = '<span class="fb_avatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/nophoto.jpg" alt="" style="max-width: ' . $kunena_config->avatarwidth . 'px; max-height: ' . $kunena_config->avatarheight . 'px;" /></span>';
+							$msg_html->avatar = '<span class="kavatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/nophoto.jpg" alt="" style="max-width: ' . $kunena_config->avatarwidth . 'px; max-height: ' . $kunena_config->avatarheight . 'px;" /></span>';
 						}
 					}
 				} else {
@@ -877,7 +877,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 				if (CKunenaTools::isModerator ( $kunena_my->id, $catid ) || (($this->kunena_forum_locked == 0 && $topicLocked == 0) && ($kunena_my->id > 0 || $kunena_config->pubwrite))) {
 					//user is allowed to reply/quote
 					if ($kunena_my->id > 0) {
-						$msg_html->quickreply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $this->kunena_message->id, CKunenaTools::showButton('reply', _KUNENA_BUTTON_QUICKREPLY), 'nofollow', 'buttoncomm btn-left fb_qr_fire', _KUNENA_BUTTON_QUICKREPLY_LONG, ' id="fb_qr_sc__'.$msg_html->id.'" onclick="return false;"');
+						$msg_html->quickreply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $this->kunena_message->id, CKunenaTools::showButton('reply', _KUNENA_BUTTON_QUICKREPLY), 'nofollow', 'buttoncomm btn-left kqr_fire', _KUNENA_BUTTON_QUICKREPLY_LONG, ' id="kqr_sc__'.$msg_html->id.'" onclick="return false;"');
 					}
 					$msg_html->reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $catid, $this->kunena_message->id, CKunenaTools::showButton('reply', _KUNENA_BUTTON_REPLY), 'nofollow', 'buttoncomm btn-left', _KUNENA_BUTTON_REPLY_LONG );
 					$msg_html->quote = CKunenaLink::GetTopicPostReplyLink ( 'quote', $catid, $this->kunena_message->id, CKunenaTools::showButton('quote', _KUNENA_BUTTON_QUOTE), 'nofollow', 'buttoncomm btn-left', _KUNENA_BUTTON_QUOTE_LONG );
@@ -942,10 +942,10 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 
 
 <!-- B: List Actions Bottom -->
-<table class="fb_list_actions_bottom" border="0" cellspacing="0"
+<table class="klist_actions_bottom" border="0" cellspacing="0"
 	cellpadding="0" width="100%">
 	<tr>
-		<td class="fb_list_actions_goto"><?php
+		<td class="klist_actions_goto"><?php
 		//go to top
 		echo '<a name="forumbottom" /> ';
 		echo CKunenaLink::GetSamePageAnkerLink ( 'forumtop', isset ( $kunena_icons ['toparrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['toparrow'] . '" border="0" alt="' . _GEN_GOTOTOP . '" title="' . _GEN_GOTOTOP . '"/>' : _GEN_GOTOTOP );
@@ -953,8 +953,8 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		echo '</td>';
 
 		if (CKunenaTools::isModerator ( $kunena_my->id, $catid ) || isset ( $thread_reply ) || isset ( $thread_subscribe ) || isset ( $thread_favorite )) {
-			echo '<td class="fb_list_actions_forum">';
-			echo '<div class="fb_message_buttons_row">';
+			echo '<td class="klist_actions_forum">';
+			echo '<div class="kmessage_buttons_row">';
 			if (isset ( $thread_reply ))
 				echo $thread_reply;
 			if (isset ( $thread_subscribe ))
@@ -963,7 +963,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 				echo ' ' . $thread_favorite;
 			echo '</div>';
 			if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
-				echo '<div class="fb_message_buttons_row">';
+				echo '<div class="kmessage_buttons_row">';
 				echo $thread_delete;
 				echo ' ' . $thread_move;
 				echo ' ' . $thread_sticky;
@@ -972,20 +972,20 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 			}
 			echo '</td>';
 		}
-		echo '<td class="fb_list_actions_forum">';
+		echo '<td class="klist_actions_forum">';
 		if (isset ( $thread_new )) {
-			echo '<div class="fb_message_buttons_row">';
+			echo '<div class="kmessage_buttons_row">';
 			echo $thread_new;
 			echo '</div>';
 		}
 		if (isset ( $thread_merge )) {
-			echo '<div class="fb_message_buttons_row">';
+			echo '<div class="kmessage_buttons_row">';
 			echo $thread_merge;
 			echo '</div>';
 		}
 		echo '</td>';
 
-		echo '<td class="fb_list_pages_all nowrap">';
+		echo '<td class="klist_pages_all nowrap">';
 		echo $pagination;
 		echo '</td>';
 		?>
@@ -995,7 +995,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 	</tr>
 </table>
 <?php
-		echo '<div class = "fb_forum-pathway-bottom">';
+		echo '<div class = "kforum-pathway-bottom">';
 		echo $this->kunena_pathway1;
 		echo '</div>';
 		?>
@@ -1003,10 +1003,10 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 
 <!-- B: Category List Bottom -->
 
-<table class="fb_list_bottom" border="0" cellspacing="0" cellpadding="0"
+<table class="klist_bottom" border="0" cellspacing="0" cellpadding="0"
 	width="100%">
 	<tr>
-		<td class="fb_list_moderators"><!-- Mod List --> <?php
+		<td class="klist_moderators"><!-- Mod List --> <?php
 		//get the Moderator list for display
 		$kunena_db->setQuery ( "SELECT m.*, u.* FROM #__fb_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid={$catid}" );
 		$modslist = $kunena_db->loadObjectList ();
@@ -1016,7 +1016,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		<?php
 		if (count ( $modslist ) > 0) {
 			?>
-		<div class="fbbox-bottomarea-modlist"><?php
+		<div class="kbox-bottomarea-modlist"><?php
 			echo '' . _GEN_MODERATORS . ": ";
 
 			$mod_cnt = 0;
@@ -1031,7 +1031,7 @@ if ((in_array ( $catid, $allow_forum )) || (isset ( $this_message->catid ) && in
 		<?php
 		}
 		?> <!-- /Mod List --></td>
-		<td class="fb_list_categories"><?php
+		<td class="klist_categories"><?php
 		if ($kunena_config->enableforumjump)
 			require (KUNENA_PATH_LIB . DS . 'kunena.forumjump.php');
 		?>

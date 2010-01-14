@@ -55,17 +55,17 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
     $totalguests = $kunena_db->loadResult();
 ?>
 
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
-    <table class = "fb_blocktable" id ="fb_whoisonline"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
+    <table class = "kblocktable" id ="kwhoisonline"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>
             <tr>
                 <th class="left">
-                    <div class = "fb_title_cover fbm">
-                        <a class = "fb_title fbl" href = "<?php echo $whoislink;?>">
+                    <div class = "ktitle_cover km">
+                        <a class = "ktitle kl" href = "<?php echo $whoislink;?>">
                         <strong><?php echo $totaluser; ?></strong>
 						<?php if($totaluser==1) { echo _WHO_ONLINE_MEMBER; } else { echo _WHO_ONLINE_MEMBERS; } ?>
 						<?php echo _WHO_AND; ?>
@@ -79,13 +79,13 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
 					</div>
                     <!-- <img id = "BoxSwitch_whoisonline__whoisonline_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/> -->
                 </th>
-              
+
             </tr>
         </thead>
 
         <tbody id = "whoisonline_tbody">
-            <tr class = "fb_sectiontableentry1">
-                <td class = "td-1 fbm" align="left">
+            <tr class = "ksectiontableentry1">
+                <td class = "td-1 km" align="left">
                     <?php
                     foreach ($users as $user)
                     {
@@ -105,7 +105,7 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
 
 					 ?>
 
-                    <br /><span class="fbs"><?php echo _KUNENA_HIDDEN_USERS; ?>: </span>
+                    <br /><span class="ks"><?php echo _KUNENA_HIDDEN_USERS; ?>: </span>
 
                     <?php
 
@@ -138,14 +138,14 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
 
                     if (count($gr_row) > 1) {
 					?>
-                    <div class="fbgrouplist  fbs">
+                    <div class="kgrouplist ks">
                     <?php
 
                     foreach ($gr_row as $gr)
                     {
                     ?>
 
-                        &nbsp; [ <span class = "<?php if ($gr->id > 1) {echo "fb_group_".$gr->id;}?>" title = "<?php echo $gr->title;?>"> <?php echo $gr->title; ?></span>]
+                        &nbsp; [ <span class = "<?php if ($gr->id > 1) {echo "kgroup_".$gr->id;}?>" title = "<?php echo $gr->title;?>"> <?php echo $gr->title; ?></span>]
 
                     <?php
                     } ?>

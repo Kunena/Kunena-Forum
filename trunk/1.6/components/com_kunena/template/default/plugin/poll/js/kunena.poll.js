@@ -31,13 +31,13 @@ function regleCSS(number_field) {
 function create_new_field_now(){
   var numfield = number_field-1;
   valuetotaloptions(number_field);
-  var tablebody =document.getElementById('fb_post_message');
+  var tablebody =document.getElementById('kpost_message');
   var row = document.createElement("tr");
   row.className=boardclass+"sectiontableentry2";
   row.setAttribute('id','option'+number_field);
   cell = document.createElement("td");
   cell.setAttribute('id','opt'+number_field);
-  cell.className ="fb_leftcolumn";
+  cell.className ="kleftcolumn";
   texte = document.createTextNode(KUNENA_POLL_OPTION_NAME+" "+number_field);
   cell.appendChild(texte);
   row.appendChild(cell);
@@ -49,7 +49,7 @@ function create_new_field_now(){
   //field_option.setAttribute('type','text');    
   row.appendChild(cell);
   tablebody.appendChild(row);
-  document.getElementById("fb_post_message").insertBefore(row,document.getElementById("fb_post_buttons_tr"));
+  document.getElementById("kpost_message").insertBefore(row,document.getElementById("kpost_buttons_tr"));
   regleCSS(number_field);
   number_field++;
 }
@@ -58,13 +58,13 @@ function create_new_field_now(){
 function insert_text_write(textString)
 {	
 	if(document.getElementById('option_error') == undefined){
-		var tablebody = document.getElementById('fb_post_message');
+		var tablebody = document.getElementById('kpost_message');
 		var row = document.createElement("tr");
 		row.className=boardclass+"sectiontableentry2";
 		row.setAttribute('id','option_error');
 		cell = document.createElement("td");
 		cell.setAttribute('id','error');
-		cell.className ="fb_leftcolumn";
+		cell.className ="kleftcolumn";
 		var image = document.createElement("img");			
 		image.setAttribute('src',KUNENA_ICON_ERROR);
 		cell.appendChild(image);
@@ -75,7 +75,7 @@ function insert_text_write(textString)
 		row.appendChild(cell);
 		cell.appendChild(texte);
 		tablebody.appendChild(row);
-		document.getElementById("fb_post_message").insertBefore(row,document.getElementById("fb_post_buttons_tr"));	
+		document.getElementById("kpost_message").insertBefore(row,document.getElementById("kpost_buttons_tr"));	
 	}
 }
 
@@ -94,7 +94,7 @@ function new_field(nboptionsmax){
 
 //Delete a poll option
 function delete_field(){
-  var matable = document.getElementById('fb_post_message');
+  var matable = document.getElementById('kpost_message');
   if(number_field > 1) {
       number_field = number_field - 1 ;
       var row = document.getElementById('option'+number_field);

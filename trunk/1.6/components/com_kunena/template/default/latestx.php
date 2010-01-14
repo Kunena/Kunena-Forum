@@ -40,7 +40,7 @@ function KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages) {
 	$endpage = $totalpages;
     }
 
-    $output = '<span class="fb_pagination">'._PAGE;
+    $output = '<span class="kpagination">'._PAGE;
 
     if (($startpage) > 1)
     {
@@ -311,13 +311,13 @@ if ($kunena_config->showannouncement > 0)
 CKunenaTools::showModulePosition('kunena_announcement');
 ?>
 <!-- B: List Actions -->
-	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0">
+	<table class="klist_actions" border="0" cellpadding="0" cellspacing="0">
 		<tr>
-			<td class="fb_list_actions_info_all">
+			<td class="klist_actions_info_all">
     <strong><?php echo $total; ?></strong> <?php echo _KUNENA_DISCUSSIONS; ?>
 								</td>
 									<?php if ($func!='mylatest' && $func!='noreplies') {?>
-                                    <td class="fb_list_times_all">
+                                    <td class="klist_times_all">
 
 									<?php  $show_list_time = JRequest::getInt('sel', 720);  ?>
 									<select class="inputboxusl" onchange="document.location.href=this.options[this.selectedIndex].value;" size="1" name="select">
@@ -334,7 +334,7 @@ CKunenaTools::showModulePosition('kunena_announcement');
 
                                   </td>
                                   	<?php } ?>
-                                    <td class="fb_list_jump_all">
+                                    <td class="klist_jump_all">
 
                                     <?php if ($kunena_config->enableforumjump)
  									 require_once (KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
@@ -346,7 +346,7 @@ CKunenaTools::showModulePosition('kunena_announcement');
                                 //pagination 1
 					if (count($this->messages[0]) > 0)
 					{
-					    echo '<td class="fb_list_pages_all">';
+					    echo '<td class="klist_pages_all">';
 					    $maxpages = 5 - 2; // odd number here (show - 2)
 					    $totalpages = ceil($total / $threads_per_page);
 					    echo $pagination = KunenaLatestxPagination($func, $sel, $page, $totalpages, $maxpages);
@@ -382,9 +382,9 @@ if (count($threadids) > 0)
 				}
 				?>
 <!-- B: List Actions -->
-	<table class="fb_list_actions" border="0" cellpadding="0" cellspacing="0" width="100%">
+	<table class="klist_actions" border="0" cellpadding="0" cellspacing="0" width="100%">
 		<tr>
-			<td   class="fb_list_actions_info_all" width="100%">
+			<td   class="klist_actions_info_all" width="100%">
 				<strong><?php echo $total; ?></strong> <?php echo _KUNENA_DISCUSSIONS; ?>
 			</td>
 
@@ -392,7 +392,7 @@ if (count($threadids) > 0)
 				//pagination 1
 				if (count($this->messages[0]) > 0)
 				{
-					echo '<td class="fb_list_pages_all" nowrap="nowrap">';
+					echo '<td class="klist_pages_all" nowrap="nowrap">';
 					echo $pagination;
 					echo '</td>';
 				}

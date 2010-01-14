@@ -30,24 +30,24 @@ $document=& JFactory::getDocument();
 $document->setTitle(_GEN_HELP . ' - ' . stripslashes($kunena_config->board_title));
 
 ?>
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
-<table class = "fb_blocktable" id ="fb_forumhelp" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
+<table class = "kblocktable" id ="kforumhelp" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
                     <th>
-                        <div class = "fb_title_cover fbm">
-                        <span class="fb_title fbl" ><?php echo _COM_FORUM_HELP; ?></span>
+                        <div class = "ktitle_cover km">
+                        <span class="ktitle kl" ><?php echo _COM_FORUM_HELP; ?></span>
                         </div>
                     </th>
                 </tr>
             </thead>
             <tbody>
             <tr>
-            <td class="fb_helpdesc" valign="top">
+            <td class="khelpdesc" valign="top">
 
         <?php
           $kunena_db->setQuery("SELECT introtext, id FROM #__content WHERE id='{$kunena_config->help_cid}'");
@@ -67,12 +67,12 @@ $document->setTitle(_GEN_HELP . ' - ' . stripslashes($kunena_config->board_title
 </div>
 </div>
                      <!-- Begin: Forum Jump -->
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
-<table class = "fb_blocktable" id="fb_bottomarea"  border="0" cellspacing="0" cellpadding="0" width="100%">
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
+<table class = "kblocktable" id="kbottomarea"  border="0" cellspacing="0" cellpadding="0" width="100%">
   <thead>
     <tr>
        <th class="th-right">

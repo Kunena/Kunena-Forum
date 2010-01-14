@@ -91,20 +91,20 @@ if (! empty ( $this->kunena_editmode )) :
 <input type="hidden" name="contentURL" value="<?php echo $this->contentURL; ?>" />
 <?php endif; ?>
 
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
-<table class="fb_blocktable<?php
-echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : '';
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
+<table class="kblocktable<?php
+echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 ?>"
-	id="fb_postmessage" border="0" cellspacing="0" cellpadding="0"
+	id="kpostmessage" border="0" cellspacing="0" cellpadding="0"
 	width="100%">
 	<thead>
 		<tr>
 			<th colspan="2">
-			<div class="fb_title_cover fbm"><span class="fb_title fbl">
+			<div class="ktitle_cover km"><span class="ktitle kl">
 			<?php
 			if ($this->kunena_editmode) echo _KUNENA_POST_EDIT, ' ', $this->resubject;
 			else if ($this->parentid) echo _KUNENA_POST_REPLY_TOPIC, ' ', $this->subject;
@@ -114,22 +114,22 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 		</tr>
 	</thead>
 
-	<tbody id="fb_post_message">
+	<tbody id="kpost_message">
 	<?php if (isset($this->selectcatlist)): ?>
-			<tr class="fb_sectiontableentry2">
-			<td class="fb_leftcolumn"><strong><?php
+			<tr class="ksectiontableentry2">
+			<td class="kleftcolumn"><strong><?php
 			echo _KUNENA_POST_IN_CATEGORY;
 			?></strong>:</td>
 
-			<td class="fb-topicicons"><?php
+			<td class="k-topicicons"><?php
 			echo $this->selectcatlist;
 			?>
 			</td>
 		</tr>
 		<?php endif; ?>
 
-		<tr class="fb_sectiontableentry1">
-			<td class="fb_leftcolumn"><strong><?php
+		<tr class="ksectiontableentry1">
+			<td class="kleftcolumn"><strong><?php
 			echo _GEN_NAME;
 			?></strong>:</td>
 
@@ -137,7 +137,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 			if (($kunena_config->regonly == "1" || $kunena_config->changename == '0') && $kunena_my->id != "" && ! CKunenaTools::isModerator ( $kunena_my->id, $this->catid )) {
 				?>
 			<td><input type="hidden" name="authorname" size="35"
-				class="fb_inputbox postinput"
+				class="kinputbox postinput"
 				maxlength="35" value="<?php
 				echo $this->authorName;
 				?>"><b><?php
@@ -146,9 +146,9 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 			<?php
 			} else {
 				if ($this->kunena_registered_user == 1) {
-					echo "<td><input type=\"text\" name=\"authorname\" size=\"35\"  class=\"fb_inputbox postinput\"  maxlength=\"35\" value=\"$authorName\" /></td>";
+					echo "<td><input type=\"text\" name=\"authorname\" size=\"35\"  class=\"kinputbox postinput\"  maxlength=\"35\" value=\"$authorName\" /></td>";
 				} else {
-					echo "<td><input type=\"text\" name=\"authorname\" size=\"35\"  class=\"fb_inputbox postinput\"  maxlength=\"35\" value=\"\" />";
+					echo "<td><input type=\"text\" name=\"authorname\" size=\"35\"  class=\"kinputbox postinput\"  maxlength=\"35\" value=\"\" />";
 					echo "<script type=\"text/javascript\">document.postform.authorname.focus();</script></td>";
 					$this->kunena_set_focus = 1;
 				}
@@ -158,23 +158,23 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 
 		<?php
 		if (($kunena_config->askemail && !$kunena_my->id) || $kunena_config->changename == 1 || CKunenaTools::isModerator ( $kunena_my->id, $this->catid )) {
-			echo '<tr class = "fb_sectiontableentry2"><td class = "fb_leftcolumn"><strong>' . _GEN_EMAIL . ' *</strong>:</td>';
-			echo "<td><input type=\"text\" name=\"email\"  size=\"35\" class=\"fb_inputbox postinput\" maxlength=\"35\" value=\"$this->email\" /></td>";
+			echo '<tr class = "ksectiontableentry2"><td class = "kleftcolumn"><strong>' . _GEN_EMAIL . ' *</strong>:</td>';
+			echo "<td><input type=\"text\" name=\"email\"  size=\"35\" class=\"kinputbox postinput\" maxlength=\"35\" value=\"$this->email\" /></td>";
 			echo '</tr>';
 		}
 		?>
 
-		<tr class="fb_sectiontableentry1">
+		<tr class="ksectiontableentry1">
 			<?php
 			if (! $this->kunena_from_bot) {
 				?>
 
-			<td class="fb_leftcolumn"><strong><?php
+			<td class="kleftcolumn"><strong><?php
 				echo _GEN_SUBJECT;
 				?></strong>:</td>
 
 			<td><input type="text"
-				class="fb_inputbox postinput"
+				class="kinputbox postinput"
 				name="subject" size="35"
 				maxlength="<?php
 				echo $kunena_config->maxsubject;
@@ -187,7 +187,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 			} else {
 				?>
 
-			<td class="fb_leftcolumn"><strong><?php
+			<td class="kleftcolumn"><strong><?php
 				echo _GEN_SUBJECT;
 				?></strong>:</td>
 
@@ -217,12 +217,12 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 		<?php
 		if ($this->parentid == 0) {
 			?>
-		<tr class="fb_sectiontableentry2">
-			<td class="fb_leftcolumn"><strong><?php
+		<tr class="ksectiontableentry2">
+			<td class="kleftcolumn"><strong><?php
 			echo _GEN_TOPIC_ICON;
 			?></strong>:</td>
 
-			<td class="fb-topicicons"><?php
+			<td class="k-topicicons"><?php
 			$topicToolbar = smile::topicToolbar ( 0, $kunena_config->rtewidth );
 			echo $topicToolbar;
 			?>
@@ -271,15 +271,15 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 		if (($kunena_config->allowimageupload || ($kunena_config->allowimageregupload && $kunena_my->id != 0) || CKunenaTools::isModerator ( $kunena_my->id, $this->catid ))) {
 			?>
 
-		<tr class="fb_sectiontableentry1">
-			<td class="fb_leftcolumn"><strong><?php
+		<tr class="ksectiontableentry1">
+			<td class="kleftcolumn"><strong><?php
 			echo _IMAGE_SELECT_FILE;
 			?></strong></td>
 
-			<td><input type='file' class='fb_input' name='attachimage'
+			<td><input type='file' class='kinput' name='attachimage'
 				onmouseover="javascript:kunenaShowHelp('<?php
 			@print (addslashes(_IMAGE_DIMENSIONS)) . ": " . $kunena_config->imagewidth . "x" . $kunena_config->imageheight . " - " . $kunena_config->imagesize . " KB";
-			?>')" /> <input type="button" class="fb_button" name="addImagePH"
+			?>')" /> <input type="button" class="kbutton" name="addImagePH"
 				value="<?php
 			@print (addslashes(_POST_ATTACH_IMAGE)) ;
 			?>"
@@ -298,16 +298,16 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 		if (($kunena_config->allowfileupload || ($kunena_config->allowfileregupload && $kunena_my->id != 0) || CKunenaTools::isModerator ( $kunena_my->id, $this->catid ))) {
 			?>
 
-		<tr class="fb_sectiontableentry2">
-			<td class="fb_leftcolumn"><strong><?php
+		<tr class="ksectiontableentry2">
+			<td class="kleftcolumn"><strong><?php
 			echo _FILE_SELECT_FILE;
 			?></strong></td>
 
-			<td><input type='file' class='fb_input' name='attachfile'
+			<td><input type='file' class='kinput' name='attachfile'
 				onmouseover="javascript:kunenaShowHelp('<?php
 			@print (addslashes(_FILE_TYPES)) . ": " . $kunena_config->filetypes . " - " . $kunena_config->filesize . " KB";
 			?>')"
-				style="cursor: auto" /> <input type="button" class="fb_button"
+				style="cursor: auto" /> <input type="button" class="kbutton"
 				name="addFilePH" value="<?php
 			@print (_POST_ATTACH_FILE) ;
 			?>"
@@ -324,8 +324,8 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 		if ($kunena_my->id != 0 && $kunena_config->allowsubscriptions == 1 && $fb_cansubscribe == 1 && ! $this->kunena_editmode) {
 			?>
 
-		<tr class="fb_sectiontableentry1">
-			<td class="fb_leftcolumn"><strong><?php
+		<tr class="ksectiontableentry1">
+			<td class="kleftcolumn"><strong><?php
 			echo _POST_SUBSCRIBE;
 			?></strong>:</td>
 
@@ -359,8 +359,8 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 				}
         		$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
          ?>
-            <tr class = "fb_sectiontableentry2">
-                <td class = "fb_leftcolumn">
+            <tr class = "ksectiontableentry2">
+                <td class = "kleftcolumn">
                     <strong><?php echo _KUNENA_POLL_ADD; ?></strong>
                 </td>
                 <td>
@@ -372,8 +372,8 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
                     <?php if($this->kunena_editmode != "1"){ ?>
                     <input type="hidden" name="number_total_options" id="numbertotal">
                     <?php } ?>
-                    <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $kunena_config->pollnboptions; ?>);">
-                    <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onclick = "javascript:delete_field();">
+                    <input type = "button" class = "kbutton" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $kunena_config->pollnboptions; ?>);">
+                    <input type = "button" class = "kbutton" value = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onclick = "javascript:delete_field();">
                 </td>
             </tr>
            <?php }
@@ -382,13 +382,13 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 
 		if ($kunena_config->captcha == 1 && $kunena_my->id < 1) {
 			?>
-		<tr class="fb_sectiontableentry1">
-			<td class="fb_leftcolumn">&nbsp;<strong><?php
+		<tr class="ksectiontableentry1">
+			<td class="kleftcolumn">&nbsp;<strong><?php
 			echo _KUNENA_CAPDESC;
 			?></strong>&nbsp;</td>
 			<td align="left" valign="middle" height="35px">&nbsp;<input
 				name="txtNumber" type="text" id="txtNumber" value=""
-				class="fb_button" style="vertical-align: top" size="15"> <img
+				class="kbutton" style="vertical-align: top" size="15"> <img
 				src="?option=com_kunena&func=showcaptcha" alt="" /></td>
 		</tr>
 		<?php
@@ -417,16 +417,16 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
     				 </script>
 				  ');
 		?>
-		<tr class = "fb_sectiontableentry2">
-			<td class = "fb_leftcolumn">
+		<tr class = "ksectiontableentry2">
+			<td class = "kleftcolumn">
                     <strong><?php echo _KUNENA_POLL_ADD; ?></strong>
             </td>
             <td>
                 	<div style="font-weight:bold;" id="poll_text_write"></div>
                     <div><input type = "text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" /><?php echo ' '. _KUNENA_POLL_TITLE; ?></div>
                     <div><?php echo $pollcalendar . ' '. _KUNENA_POLL_TIME_TO_LIVE; ?></div>
-                    <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $kunena_config->pollnboptions; ?>);">
-                    <input type = "button" class = "fb_button" value = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onclick = "javascript:delete_field();">
+                    <input type = "button" class = "kbutton" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $kunena_config->pollnboptions; ?>);">
+                    <input type = "button" class = "kbutton" value = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onclick = "javascript:delete_field();">
                     <input type="hidden" name="number_total_options" id="numbertotalr" value="<?php echo $polloptions; ?>">
             </td>
         </tr>
@@ -434,7 +434,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
                   if (isset($polloptions)) {
                   	$nboptions = "1";
                     for ($i=0;$i < $polloptions;$i++) {
-                    	echo "<tr class=\"fb_sectiontableentry2\" id=\"option".$nboptions."\"><td style=\"font-weight: bold\" class=\"fb_leftcolumn\">Option ".$nboptions."</td><td><input type=\"text\" id=\"field_option".$i."\" name=\"field_option".$i."\" value=\"".$polldatasedit[$i]->text."\" /></td></tr>";
+                    	echo "<tr class=\"ksectiontableentry2\" id=\"option".$nboptions."\"><td style=\"font-weight: bold\" class=\"kleftcolumn\">Option ".$nboptions."</td><td><input type=\"text\" id=\"field_option".$i."\" name=\"field_option".$i."\" value=\"".$polldatasedit[$i]->text."\" /></td></tr>";
                       	$nboptions++;
                     }
                   }
@@ -442,9 +442,9 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
         	}
 		}
 		?>
-		<tr id="fb_post_buttons_tr" class="fb_sectiontableentry1">
-			<td id="fb_post_buttons" colspan="2" style="text-align: center;">
-			  <input type="button" name="cancel" class="fb_button"
+		<tr id="kpost_buttons_tr" class="ksectiontableentry1">
+			<td id="kpost_buttons" colspan="2" style="text-align: center;">
+			  <input type="button" name="cancel" class="kbutton"
 				value="<?php
 				@print (' ' . _GEN_CANCEL . ' ') ;
 				?>"
@@ -452,17 +452,17 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 				onmouseover="javascript:jQuery('input[name=helpbox]').val('<?php
 				@print (_KUNENA_EDITOR_HELPLINE_CANCEL) ;
 				?>')" />
-				<input type="button" name="preview" class="fb_button"
+				<input type="button" name="preview" class="kbutton"
 				value="<?php
 				@print (' ' . _PREVIEW . ' ') ;
 				?>"
-				onclick="fbGetPreview(document.postform.message.value,<?php
+				onclick="kGetPreview(document.postform.message.value,<?php
 				echo KUNENA_COMPONENT_ITEMID?>);"
 				onmouseover="javascript:jQuery('input[name=helpbox]').val('<?php
 				@print (_KUNENA_EDITOR_HELPLINE_PREVIEW) ;
 				?>')" />
 				<input
-				type="submit" name="submit" class="fb_button"
+				type="submit" name="submit" class="kbutton"
 				value="<?php
 				@print (' ' . _GEN_CONTINUE . ' ') ;
 				?>"
@@ -474,9 +474,9 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 		</tr>
 
 		<!-- preview -->
-		<tr class="fb_sectiontableentry2"
+		<tr class="ksectiontableentry2"
 			id="previewContainer" style="display: none;">
-			<td class="fb_leftcolumn"><strong><?php
+			<td class="kleftcolumn"><strong><?php
 			echo _PREVIEW;
 			?></strong>:</td>
 			<td>
@@ -488,7 +488,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' fb_blocktable' . $msg_cat->class_sfx : ''
 		</tr>
 		<!-- /preview -->
 
-		<tr class="fb_sectiontableentry1">
+		<tr class="ksectiontableentry1">
 			<td colspan="2"><?php
 			if ($kunena_config->askemail) {
 				echo $kunena_config->showemail == '0' ? "<em>* - " . _POST_EMAIL_NEVER . "</em>" : "<em>* - " . _POST_EMAIL_REGISTERED . "</em>";

@@ -69,11 +69,11 @@ $validate = JUtility::getToken ();
     }
 // ]]>
 </script>
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
 <form action="index.php" method="post" name="mosUserForm">
 <div style="float: right; display: none"><?php
 mosToolBar::startTable ();
@@ -84,20 +84,20 @@ mosToolBar::endtable ();
 ?>
 </div>
 
-<table class="fb_blocktable" id="fb_forumprofile_sub" border="0"
+<table class="kblocktable" id="kforumprofile_sub" border="0"
 	cellspacing="0" cellpadding="0" width="100%">
 	<thead>
 		<tr>
 			<th colspan="2">
-			<div class="fb_title_cover"><span class="fb_title"><?php
+			<div class="ktitle_cover"><span class="ktitle"><?php
 			echo _KUNENA_EDIT_TITLE;
 			?></span>
 			</div>
 			</th>
 		</tr>
 	</thead>
-	<tbody class="fb_myprofile_general">
-		<tr class="fb_sth">
+	<tbody class="kmyprofile_general">
+		<tr class="ksth">
 			<th colspan="2">
 			<center><?php
 			echo _KUNENA_MYPROFILE_PERSONAL_INFO;

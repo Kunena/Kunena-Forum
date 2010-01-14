@@ -115,7 +115,7 @@ function jbListMessages($allMes, $catid)
     </script>
 
     <table width = "100%" border = 0 cellspacing = 1 cellpadding = 3>
-        <tr height = "10" class = "fb_table_header">
+        <tr height = "10" class = "ktable_header">
             <th align = "center">
                 <b><?php echo _GEN_DATE; ?></b>
             </th>
@@ -145,7 +145,7 @@ function jbListMessages($allMes, $catid)
         foreach ($allMes as $message)
         {
             $i = 1 - $i;
-            echo '<tr class="fb_message' . $i . '">';
+            echo '<tr class="kmessage' . $i . '">';
             echo '<td valign="top">' . CKunenaTimeformat::showDate($message->time) . '</td>';
             echo '<td valign="top">' . $message->name . '</td>';
             echo '<td valign="top"><b>' . $message->subject . '<b></td>';

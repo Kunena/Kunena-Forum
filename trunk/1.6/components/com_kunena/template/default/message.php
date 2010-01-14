@@ -45,9 +45,9 @@ if ($kunena_config->fb_profile == 'cb') {
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tbody>
-		<tr class="fb_sth">
+		<tr class="ksth">
 			<th colspan="2"
-				class="view-th fb_sectiontableheader"><a name="<?php
+				class="view-th ksectiontableheader"><a name="<?php
 				echo $msg_html->id;
 				?>"></a> <?php
 				if ($kunena_config->ordering_system == 'old_ord') {
@@ -77,7 +77,7 @@ if ($kunena_config->fb_profile == 'cb') {
 		</tr>
 
 		<tr>
-			<td class="fb-msgview-right">
+			<td class="k-msgview-right">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td align="left"><?php
@@ -172,10 +172,10 @@ if ($kunena_config->fb_profile == 'cb') {
 						// Finish captcha
 						?>
 
-					<input type="submit" class="fb_button fb_qr_fire" name="submit"
+					<input type="submit" class="kbutton kqr_fire" name="submit"
 						value="<?php
 						@print (_GEN_CONTINUE) ;
-						?>" /> <input type="button" class="fb_button fb_qm_cncl_btn"
+						?>" /> <input type="button" class="kbutton kqm_cncl_btn"
 						id="cancel__<?php
 						echo $msg_html->id;
 						?>"
@@ -193,8 +193,8 @@ if ($kunena_config->fb_profile == 'cb') {
 			</table>
 			</td>
 
-			<td class="fb-msgview-left">
-				<div class="fb-msgview-l-cover">
+			<td class="k-msgview-left">
+				<div class="k-msgview-l-cover">
 					<?php
 					if ($profileHtml) {
 						echo $profileHtml;
@@ -300,11 +300,11 @@ if ($kunena_config->fb_profile == 'cb') {
 		</tr>
 
 		<tr>
-			<td class="fb-msgview-right-b">
-			<div class="fb_message_editMarkUp_cover"><?php
+			<td class="k-msgview-right-b">
+			<div class="kmessage_editMarkUp_cover"><?php
 			if ($this->kunena_message->modified_by) {
 
-				echo '<span class="fb_message_editMarkUp" title="'.CKunenaTimeformat::showDate($this->kunena_message->modified_time, 'config_post_dateformat_hover').'">' . _KUNENA_EDITING_LASTEDIT . ': ' .
+				echo '<span class="kmessage_editMarkUp" title="'.CKunenaTimeformat::showDate($this->kunena_message->modified_time, 'config_post_dateformat_hover').'">' . _KUNENA_EDITING_LASTEDIT . ': ' .
 					CKunenaTimeformat::showDate($this->kunena_message->modified_time, 'config_post_dateformat' ) . ' ' . _KUNENA_BY . ' ' .
 					($kunena_config->username ? $this->kunena_message->modified_username : $this->kunena_message->modified_name) . '.';
 				if ($this->kunena_message->modified_reason) {
@@ -314,24 +314,24 @@ if ($kunena_config->fb_profile == 'cb') {
 			}
 
 			if ($kunena_config->reportmsg && $kunena_my->id > 1) {
-				echo '<span class="fb_message_informMarkUp">' . CKunenaLink::GetReportMessageLink ( $catid, $msg_html->id, _KUNENA_REPORT ) . '</span>';
+				echo '<span class="kmessage_informMarkUp">' . CKunenaLink::GetReportMessageLink ( $catid, $msg_html->id, _KUNENA_REPORT ) . '</span>';
 			}
 			//Check that the user is an admin to display the ip in messages
 			$kunena_is_admin = CKunenaTools::isAdmin ();
 			if (isset ( $msg_html->ip ) && $kunena_is_admin) {
-				echo '<span class="fb_message_informMarkUp">' . CKunenaLink::GetMessageIPLink ( $msg_html->ip ) . '</span>';
+				echo '<span class="kmessage_informMarkUp">' . CKunenaLink::GetMessageIPLink ( $msg_html->ip ) . '</span>';
 			}
 			?>
 			</div>
-			<div class="fb_message_buttons_cover">
-			<div class="fb_message_buttons_row"><?php
+			<div class="kmessage_buttons_cover">
+			<div class="kmessage_buttons_row"><?php
 				if (! isset ( $msg_html->closed )) {
 					if (isset ( $msg_html->quickreply )) echo " " . $msg_html->quickreply;
 					echo " " . $msg_html->reply;
 					echo " " . $msg_html->quote;
 
 					if (CKunenaTools::isModerator ( $kunena_my->id, $catid ))
-						echo ' </div><div class="fb_message_buttons_row">';
+						echo ' </div><div class="kmessage_buttons_row">';
 
 					if (isset ( $msg_html->merge )) {
 						echo " " . $msg_html->merge;
@@ -362,7 +362,7 @@ if ($kunena_config->fb_profile == 'cb') {
 			?>
 
 			</td>
-			<td class="fb-msgview-left-b">&nbsp;</td>
+			<td class="k-msgview-left-b">&nbsp;</td>
 
 		</tr>
 	</tbody>

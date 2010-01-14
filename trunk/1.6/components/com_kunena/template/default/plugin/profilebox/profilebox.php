@@ -117,14 +117,14 @@ else
 if ($kunena_my->id)
 {
 ?>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="fb_profilebox" id="kprofilebox">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kprofilebox" id="kprofilebox">
 	<tbody id="topprofilebox_tbody">
-		<tr class="fb_sectiontableentry1">
-			<td class="td-1  fbm" align="left" width="5%">
+		<tr class="ksectiontableentry1">
+			<td class="td-1  km" align="left" width="5%">
 <?php echo CKunenaLink::GetProfileLink($kunena_config, $kunena_my->id, $jr_avatar);?>
                 </td>
 
-			<td valign="top" class="td-2  fbm fb_profileboxcnt" align="left">
+			<td valign="top" class="td-2  km kprofileboxcnt" align="left">
 <?php echo _PROFILEBOX_WELCOME; ?>, <b><?php echo $this->kunena_username; ?></b>
 
 			<br />
@@ -170,13 +170,13 @@ if ($is_editor) {
     // LOGOUT AREA
     ?>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="fb_profilebox" id="kprofilebox">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kprofilebox" id="kprofilebox">
 	<tbody id="topprofilebox_tbody">
-		<tr class="fb_sectiontableentry1">
-			<td valign="top" class="td-1  fbm fb_profileboxcnt" align="left">
+		<tr class="ksectiontableentry1">
+			<td valign="top" class="td-1  km kprofileboxcnt" align="left">
 				<?php echo _PROFILEBOX_WELCOME; ?>, <b><?php echo _PROFILEBOX_GUEST; ?></b>
 				<br /> <?php echo _PROFILEBOX_PLEASE; ?>
-                <a href="<?php echo $loginlink;?>"><?php echo _PROFILEBOX_LOGIN; ?></a> <?php echo _PROFILEBOX_OR; ?> 
+                <a href="<?php echo $loginlink;?>"><?php echo _PROFILEBOX_LOGIN; ?></a> <?php echo _PROFILEBOX_OR; ?>
                 <a href="<?php echo $registerlink;?>"><?php echo _PROFILEBOX_REGISTER; ?></a>.
 				&nbsp;&nbsp; <a href="<?php echo $lostpasslink;?>"><?php echo _PROFILEBOX_LOST_PASSWORD; ?></a>
 			</td>

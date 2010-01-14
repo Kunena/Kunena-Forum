@@ -84,18 +84,18 @@ if (count ( $this->messages [0] ) > 0) {
 
 if (count ( $this->messages [0] ) > 0) {
 	?>
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
-<form action="index.php" method="post" name="fbBulkActionForm">
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
+<form action="index.php" method="post" name="kBulkActionForm">
 
 <table
-	class="fb_blocktable<?php
-	echo isset ( $objCatInfo->class_sfx ) ? ' fb_blocktable' . $objCatInfo->class_sfx : '';
+	class="kblocktable<?php
+	echo isset ( $objCatInfo->class_sfx ) ? ' kblocktable' . $objCatInfo->class_sfx : '';
 	?>"
-	id="fb_flattable" border="0" cellspacing="0" cellpadding="0"
+	id="kflattable" border="0" cellspacing="0" cellpadding="0"
 	width="100%">
 
 	<thead>
@@ -108,7 +108,7 @@ if (count ( $this->messages [0] ) > 0) {
 			<?php
 	if ($funclatest || $funcmylatest || $funcnoreplies) {
 		?>
-			<div class="fb_title_cover fbm"><span class="fb_title fbl"><?php
+			<div class="ktitle_cover km"><span class="ktitle kl"><?php
 
 		switch (JString::strtolower ( $func )) {
 			case 'mylatest' :
@@ -127,7 +127,7 @@ if (count ( $this->messages [0] ) > 0) {
 			<?php
 	} else {
 		?>
-			<div class="fb_title_cover fbm"><span class="fb_title fbl"><?php
+			<div class="ktitle_cover km"><span class="ktitle kl"><?php
 		echo _KUNENA_THREADS_IN_FORUM;
 		?>:
 			<?php
@@ -158,7 +158,7 @@ if (count ( $this->messages [0] ) > 0) {
 			?>
 
 		<tr>
-			<td class="fb_contenttablespacer"
+			<td class="kcontenttablespacer"
 				colspan="<?php
 			echo (CKunenaTools::isModerator ( $kunena_my->id, $catid ) ? "6" : "5");
 			?>">&nbsp;
@@ -170,7 +170,7 @@ if (count ( $this->messages [0] ) > 0) {
 		?>
 
 		<tr
-			class="fb_<?php
+			class="k<?php
 		echo $tabclass [$k];
 		if ($leaf->ordering != 0 || ($leaf->myfavorite && $funcmylatest)) {
 			echo '_stickymsg';
@@ -178,7 +178,7 @@ if (count ( $this->messages [0] ) > 0) {
 		}
 
 		if ($leaf->class_sfx) {
-			echo ' fb_' . $tabclass [$k];
+			echo ' k' . $tabclass [$k];
 			if ($leaf->ordering != 0 || ($leaf->myfavorite && $funcmylatest)) {
 				echo '_stickymsg';
 				$topicSticky = 1;
@@ -186,7 +186,7 @@ if (count ( $this->messages [0] ) > 0) {
 			echo $leaf->class_sfx;
 		}
 		?>">
-			<td class="td-0 fbm" align="center"><strong> <?php
+			<td class="td-0 km" align="center"><strong> <?php
 		echo CKunenaTools::formatLargeNumber ( $this->thread_counts [$leaf->id] );
 		?>
 			</strong><?php
@@ -220,8 +220,8 @@ if (count ( $this->messages [0] ) > 0) {
 			}
 			?>
 
-			<div class="fb-topic-title-cover"><?php
-			echo CKunenaLink::GetThreadLink ( 'view', $leaf->catid, $leaf->id, kunena_htmlspecialchars ( stripslashes ( $leaf->subject ) ), kunena_htmlspecialchars ( stripslashes ( $this->messagetext [$leaf->id] ) ), 'follow', 'fb-topic-title fbm' );
+			<div class="k-topic-title-cover"><?php
+			echo CKunenaLink::GetThreadLink ( 'view', $leaf->catid, $leaf->id, kunena_htmlspecialchars ( stripslashes ( $leaf->subject ) ), kunena_htmlspecialchars ( stripslashes ( $this->messagetext [$leaf->id] ) ), 'follow', 'k-topic-title km' );
 			?>
 			<!--            Favorite       --> <?php
 			if ($kunena_config->allowfavorites && array_key_exists ( $leaf->id, $this->favthread )) {
@@ -278,14 +278,14 @@ if (count ( $this->messages [0] ) > 0) {
 			// split the string and separate catid and id for proper link assembly
 			parse_str ( $newURL, $newURLParams );
 			?>
-			<div class="fb-topic-title-cover"><?php
-			echo CKunenaLink::GetThreadLink ( 'view', $newURLParams ['catid'], $newURLParams ['id'], kunena_htmlspecialchars ( stripslashes ( $leaf->subject ) ), kunena_htmlspecialchars ( stripslashes ( $leaf->subject ) ), 'follow', 'fb-topic-title fbm' );
+			<div class="k-topic-title-cover"><?php
+			echo CKunenaLink::GetThreadLink ( 'view', $newURLParams ['catid'], $newURLParams ['id'], kunena_htmlspecialchars ( stripslashes ( $leaf->subject ) ), kunena_htmlspecialchars ( stripslashes ( $leaf->subject ) ), 'follow', 'k-topic-title km' );
 			?>
 			</div>
 			<?php
 		}
 		?>
-			<div class="fbs"><!-- By --> <span class="topic_posted_time" title="<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat_hover'); ?>"><?php
+			<div class="ks"><!-- By --> <span class="topic_posted_time" title="<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat_hover'); ?>"><?php
 		echo _KUNENA_POSTED_AT?>
 			<?php
 			echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat');
@@ -320,7 +320,7 @@ if (count ( $this->messages [0] ) > 0) {
 			</span> <span class="topic_views"> <?php
 		echo _GEN_HITS;
 		?> </span> <!-- /Views --></td>
-			<td class="td-6 fbs">
+			<td class="td-6 ks">
 			<div style="position: relative"><!--  Sticky   --> <?php
 		if ($leaf->ordering != 0) {
 			?>
@@ -337,7 +337,7 @@ if (count ( $this->messages [0] ) > 0) {
 			if ($kunena_config->avatar_src == "jomsocial" && $leaf->userid) {
 				// Get CUser object
 				$jsuser = & CFactory::getUser ( $last_reply [$leaf->id]->userid );
-				$useravatar = '<img class="fb_list_avatar" src="' . $jsuser->getThumbAvatar () . '" alt=" " />';
+				$useravatar = '<img class="klist_avatar" src="' . $jsuser->getThumbAvatar () . '" alt=" " />';
 				echo CKunenaLink::GetProfileLink ( $kunena_config, $last_reply [$leaf->id]->userid, $useravatar );
 			} else if ($kunena_config->avatar_src == "cb") {
 				$kunenaProfile = & CkunenaCBProfile::getInstance ();
@@ -353,9 +353,9 @@ if (count ( $this->messages [0] ) > 0) {
 			} else {
 				$javatar = $last_reply [$leaf->id]->avatar;
 				if ($javatar != '') {
-					echo CKunenaLink::GetProfileLink ( $kunena_config, $last_reply [$leaf->id]->userid, '<img class="fb_list_avatar" src="' . (! file_exists ( KUNENA_PATH_UPLOADED . DS . 'avatars/s_' . $javatar ) ? KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $javatar : KUNENA_LIVEUPLOADEDPATH . '/avatars/s_' . $javatar) . '" alt="" />' );
+					echo CKunenaLink::GetProfileLink ( $kunena_config, $last_reply [$leaf->id]->userid, '<img class="klist_avatar" src="' . (! file_exists ( KUNENA_PATH_UPLOADED . DS . 'avatars/s_' . $javatar ) ? KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $javatar : KUNENA_LIVEUPLOADEDPATH . '/avatars/s_' . $javatar) . '" alt="" />' );
 				} else {
-					echo CKunenaLink::GetProfileLink ( $kunena_config, $last_reply [$leaf->id]->userid, '<img class="fb_list_avatar" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_nophoto.jpg" alt="" />' );
+					echo CKunenaLink::GetProfileLink ( $kunena_config, $last_reply [$leaf->id]->userid, '<img class="klist_avatar" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_nophoto.jpg" alt="" />' );
 				}
 			}
 			?>
@@ -387,7 +387,7 @@ if (count ( $this->messages [0] ) > 0) {
 			?>
 
 			<td class="td-7" align="center"><input type="checkbox"
-				name="fbDelete[<?php
+				name="kDelete[<?php
 			echo $leaf->id?>]" value="1" /></td>
 
 			<?php
@@ -401,12 +401,12 @@ if (count ( $this->messages [0] ) > 0) {
 	if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 		?>
 		<!-- Moderator Bulk Actions -->
-		<tr class="fb_sectiontableentry1">
-			<td colspan="7" align="right" class="td-1 fbs"><script
+		<tr class="ksectiontableentry1">
+			<td colspan="7" align="right" class="td-1 ks"><script
 				type="text/javascript">
                             jQuery(document).ready(function()
                             {
-                                jQuery('#fbBulkActions').change(function()
+                                jQuery('#kBulkActions').change(function()
                                 {
                                     var myList = jQuery(this);
 
@@ -420,8 +420,8 @@ if (count ( $this->messages [0] ) > 0) {
                                     }
                                 });
                             });
-                        </script> <select name="do" id="fbBulkActions"
-				class="inputbox fbs">
+                        </script> <select name="do" id="kBulkActions"
+				class="inputbox ks">
 				<option value="">&nbsp;</option>
 				<option value="bulkDel"><?php
 		echo _KUNENA_DELETE_SELECTED;
@@ -431,7 +431,7 @@ if (count ( $this->messages [0] ) > 0) {
 		?></option>
 			</select> <?php
 		CKunenaTools::showBulkActionCats ();
-		?> <input type="submit" name="fbBulkActionsGo" class="fb_button fbs"
+		?> <input type="submit" name="kBulkActionsGo" class="kbutton ks"
 				value="<?php
 		echo _KUNENA_GO;
 		?>" /></td>

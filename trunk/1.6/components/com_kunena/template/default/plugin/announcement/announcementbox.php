@@ -61,17 +61,17 @@ $annshowdate = $ann->showdate;
 if ($annID > 0) {
 ?>
     <!-- ANNOUNCEMENTS BOX -->
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
-    <table class = "fb_blocktable" id = "fb_announcement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
+    <table class = "kblocktable" id = "kannouncement" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>
             <tr>
                 <th align="left">
-                    <div class = "fb_title_cover fbm">
-                        <span class = "fb_title fbl"><?php echo $anntitle; ?></span>
+                    <div class = "ktitle_cover km">
+                        <span class = "ktitle kl"><?php echo $anntitle; ?></span>
                     </div>
 
                     <img id = "BoxSwitch_announcements__announcements_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
@@ -84,8 +84,8 @@ if ($annID > 0) {
             if ($is_editor) {
             ?>
 
-                    <tr class = "fb_sth">
-                        <th class = "th-1 fb_sectiontableheader fbm" align="left">
+                    <tr class = "ksth">
+                        <th class = "th-1 ksectiontableheader km" align="left">
                             <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'edit', $annID), _ANN_EDIT, _ANN_EDIT,'nofollow'); ?> |
                             <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'delete', $annID), _ANN_DELETE, _ANN_DELETE,'nofollow'); ?> |
 							<?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'add'), _ANN_ADD, _ANN_ADD,'nofollow'); ?> |
@@ -97,8 +97,8 @@ if ($annID > 0) {
                 }
             ?>
 
-                <tr class = "fb_sectiontableentry2">
-                    <td class = "td-1 fbm" align="left">
+                <tr class = "ksectiontableentry2">
+                    <td class = "td-1 km" align="left">
                         <?php
                         if ($annshowdate > 0) {
                         ?>

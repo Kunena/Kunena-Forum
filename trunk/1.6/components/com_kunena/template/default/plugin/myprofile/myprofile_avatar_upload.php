@@ -358,22 +358,22 @@ if ($task == 'default')
     if ($kunena_config->allowavatar)
     {
 ?>
-        <td class = "fb_myprofile_right" valign = "top">
+        <td class = "kmyprofile_right" valign = "top">
             <!-- B:My Profile Right -->
             <!-- B: My AVATAR -->
             <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&func=myprofile&do=avatar&action=delete'); ?>" method = "post" name = "postform">
-    <table class = "fb_blocktablehalf fltlft" id="fb_forumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0">
+    <table class = "kblocktablehalf fltlft" id="kforumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0">
         <thead>
             <tr>
                 <th colspan = "2">
-                    <div class = "fb_title_cover">
-                        <span class = "fb_title"><?php echo _KUNENA_CHOOSE_AVATAR; ?></span>
+                    <div class = "ktitle_cover">
+                        <span class = "ktitle"><?php echo _KUNENA_CHOOSE_AVATAR; ?></span>
                     </div>
                 </th>
             </tr>
         </thead>
 
-        <tbody  class = "fb_myprofile_general">
+        <tbody  class = "kmyprofile_general">
             <tr>
                 <td >
                     <?php
@@ -427,12 +427,12 @@ if ($kunena_config->allowavatarupload)
 ?>
 
             <!-- B: Upload -->
-<table class = "fb_blocktablehalf" id ="fb_forumua" border = "0" cellspacing = "0" cellpadding = "0" >
+<table class = "kblocktablehalf" id ="kforumua" border = "0" cellspacing = "0" cellpadding = "0" >
             <thead>
                 <tr>
                     <th>
-                        <div class = "fb_title_cover">
-                        <span class="fb_title" ><?php echo _UPLOAD_SUBMIT; ?></span>
+                        <div class = "ktitle_cover">
+                        <span class="ktitle" ><?php echo _UPLOAD_SUBMIT; ?></span>
                         <?php // echo _UPLOAD_DIMENSIONS . ": " . $kunena_config->avatarwidth . "x" . $kunena_config->avatarheight . " - " . $kunena_config->avatarsize . " KB"; ?>
                         </div>
 					</th>
@@ -440,7 +440,7 @@ if ($kunena_config->allowavatarupload)
             </thead>
             <tbody>
             <tr>
-            <td class="fb_uadesc">
+            <td class="kuadesc">
 <?php
 
         echo '<form action="' . JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar&action=upload') . '" method="post" name="adminForm" enctype="multipart/form-data">';
@@ -467,19 +467,19 @@ if ($kunena_config->allowavatarupload)
     {
 ?>
             <!-- B: Gallery -->
-<table class = "fb_blocktable" id ="fb_forumua_gal" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<table class = "kblocktable" id ="kforumua_gal" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
                 <tr>
                     <th>
-                        <div class = "fb_title_cover">
-                        <span class="fb_title" ><?php echo _UPLOAD_GALLERY; ?></span>
+                        <div class = "ktitle_cover">
+                        <span class="ktitle" ><?php echo _UPLOAD_GALLERY; ?></span>
                         </div>
 					</th>
                 </tr>
             </thead>
             <tbody>
             <tr>
-            <td class="fb_uadesc">
+            <td class="kuadesc">
 
         <script type = "text/javascript">
             <!--

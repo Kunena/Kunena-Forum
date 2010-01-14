@@ -124,11 +124,11 @@ jQuery(document).ready(function()
         var imgId = jQuery(this).attr("id");
         var cId = imgId.split("__")[1];
 		var el = jQuery("#" + cId);
-		if (el.hasClass("fb-hidden"))
+		if (el.hasClass("k-hidden"))
 		{
             jQuery.kunena_cookie("upshrink_" + imgId, 1);
 		}
-		if (el.hasClass("fb-visible"))
+		if (el.hasClass("k-visible"))
 		{
 		    jQuery.kunena_cookie("upshrink_" + imgId, 0);
 		}

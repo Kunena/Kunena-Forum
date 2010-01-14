@@ -821,7 +821,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 	// Credits
 
-	echo '<div class="fb_credits"> ' . CKunenaLink::GetTeamCreditsLink ( $catid, _KUNENA_POWEREDBY ) . ' ' . CKunenaLink::GetCreditsLink ();
+	echo '<div class="kcredits"> ' . CKunenaLink::GetTeamCreditsLink ( $catid, _KUNENA_POWEREDBY ) . ' ' . CKunenaLink::GetCreditsLink ();
 	if ($kunena_config->enablerss) {
 		$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . _LISTCAT_RSS . '" href="' . JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=fb_rss&amp;no_html=1' ) . '" />' );
 		echo CKunenaLink::GetRSSLink ( '<img class="rsslink" src="' . KUNENA_URLEMOTIONSPATH . 'rss.gif" border="0" alt="' . _LISTCAT_RSS . '" title="' . _LISTCAT_RSS . '" />' );

@@ -48,17 +48,17 @@ if (in_array($catid, $catsallowed))
             }
             ?>
   </div>
-<div class="fb__bt_cvr1">
-<div class="fb__bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
-    <table class = "fb_blocktable" id = "fb_poll" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+<div class="k_bt_cvr1">
+<div class="k_bt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
+    <table class = "kblocktable" id = "kpoll" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>
             <tr>
                 <th align="left">
-                    <div class = "fb_title_cover fbm">
-                        <span class = "fb_title fbl"><?php echo _KUNENA_POLL_NAME; ?> <?php echo $dataspollresult[0]->title; ?></span>
+                    <div class = "ktitle_cover km">
+                        <span class = "ktitle kl"><?php echo _KUNENA_POLL_NAME; ?> <?php echo $dataspollresult[0]->title; ?></span>
                     </div>
 
                     <img id = "BoxSwitch_polls__polls_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
@@ -66,8 +66,8 @@ if (in_array($catid, $catsallowed))
             </tr>
         </thead>
         <tbody id = "polls_tbody">
-                <tr class = "fb_sectiontableentry2">
-                    <td class = "td-1 fbm" align="left">
+                <tr class = "ksectiontableentry2">
+                    <td class = "td-1 km" align="left">
                         <div class = "polldesc">
 <?php
 if ( $dataspollusers[0]->userid == $kunena_my->id || $kunena_my->id == "0")//if the user has already voted for this poll

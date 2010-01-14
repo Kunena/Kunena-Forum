@@ -39,7 +39,7 @@ $id = JRequest::getInt('id', 0);
     });
 </script>
 
-<div id = "fb_ft-cover">
+<div id = "kft-cover">
     <div id = "forumtools_control">
         <a href = "#" id = "jrftsw" class = "forumtools"><?php echo _KUNENA_PROFILE_OPTIONS;?></a>
     </div>

@@ -757,11 +757,11 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 		/*    template chooser    */
 		case "templatechooser" :
-			$fb_user_template = strval ( JRequest::getVar ( 'fb_user_template', '', 'COOKIE' ) );
+			$fb_user_template = strval ( JRequest::getVar ( 'kunena_user_template', '', 'COOKIE' ) );
 
-			$fb_user_img_template = strval ( JRequest::getVar ( 'fb_user_img_template', $fb_user_img_template ) );
-			$fb_change_template = strval ( JRequest::getVar ( 'fb_change_template', $fb_user_template ) );
-			$fb_change_img_template = strval ( JRequest::getVar ( 'fb_change_img_template', $fb_user_img_template ) );
+			$fb_user_img_template = strval ( JRequest::getVar ( 'kunena_user_img_template', $fb_user_img_template ) );
+			$fb_change_template = strval ( JRequest::getVar ( 'kunena_change_template', $fb_user_template ) );
+			$fb_change_img_template = strval ( JRequest::getVar ( 'kunena_change_img_template', $fb_user_img_template ) );
 
 			if ($fb_change_template) {
 				// clean template name
@@ -777,9 +777,9 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 				if (file_exists ( KUNENA_PATH_TEMPLATE . DS . $fb_change_template . '/css/kunena.forum.css' )) {
 					$lifetime = 60 * 10;
 					$fb_current_template = $fb_change_template;
-					setcookie ( 'fb_user_template', "$fb_change_template", time () + $lifetime );
+					setcookie ( 'kunena_user_template', "$fb_change_template", time () + $lifetime );
 				} else {
-					setcookie ( 'fb_user_template', '', time () - 3600 );
+					setcookie ( 'kunena_user_template', '', time () - 3600 );
 				}
 			}
 
@@ -797,9 +797,9 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 				if (file_exists ( KUNENA_PATH_TEMPLATE . DS . $fb_change_img_template . '/css/kunena.forum.css' )) {
 					$lifetime = 60 * 10;
 					$fb_current_img_template = $fb_change_img_template;
-					setcookie ( 'fb_user_img_template', "$fb_change_img_template", time () + $lifetime );
+					setcookie ( 'kunena_user_img_template', "$fb_change_img_template", time () + $lifetime );
 				} else {
-					setcookie ( 'fb_user_img_template', '', time () - 3600 );
+					setcookie ( 'kunena_user_img_template', '', time () - 3600 );
 				}
 			}
 

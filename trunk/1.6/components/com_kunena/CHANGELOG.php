@@ -38,6 +38,7 @@ Kunena 1.6.0-DEV
 ^ [#19345] Refactor css class names 'fb' to 'k'
 ^ [#19437] Update copyright dates to 2010
 # [#19397] Preliminary fix for post date issue
+# [#19295] Clean up code: Update template choose
 
 14-Jan-2010 Xillibit
 + [#19332] Change Delete behavior - implemented in backend (part 1)

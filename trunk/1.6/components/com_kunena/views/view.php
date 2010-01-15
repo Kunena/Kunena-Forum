@@ -337,11 +337,12 @@ class CKunenaView {
 				$userinfo->websiteurl = '';
 				$userinfo->signature = '';
 			}
-			// FIXME: reduce number of queries by preload:
-			$this->profile = CKunenaUserprofile::getInstance ( $this->kunena_message->userid );
 			$uinfocache [$this->kunena_message->userid] = $userinfo;
 		} else
 			$userinfo = $uinfocache [$this->kunena_message->userid];
+
+		// FIXME: reduce number of queries by preload:
+		$this->profile = CKunenaUserprofile::getInstance ( $this->kunena_message->userid );
 
 		if ($this->config->fb_profile == 'cb') {
 			$triggerParams = array ('userid' => $this->kunena_message->userid, 'userinfo' => &$userinfo );

@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+15-Jan-2010 severdia
+# [#19356] Reworked CSS and synced colors and fonts, added palette to CSS header, minor language string fixes
+
 15-Jan-2010 Matias
 # [#19447] Deleted messages sometimes showing up in latestx
 ^ [#19448] Move code out of template: view

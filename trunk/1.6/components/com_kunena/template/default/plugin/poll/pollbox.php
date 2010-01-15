@@ -16,7 +16,7 @@ $app =& JFactory::getApplication();
 
 $id     = intval(JRequest::getVar("id", ""));
 $catid	= JRequest::getInt('catid', 0);
-
+$kunena_my = &JFactory::getUser ();
 $kunena_config = & CKunenaConfig::getInstance ();
 
 $catsallowed = explode(',',$kunena_config->pollallowedcategories);

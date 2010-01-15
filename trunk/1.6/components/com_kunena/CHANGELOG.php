@@ -38,7 +38,7 @@ Kunena 1.6.0-DEV
 ^ [#19345] Refactor css class names 'fb' to 'k'
 ^ [#19437] Update copyright dates to 2010
 # [#19397] Preliminary fix for post date issue
-# [#19295] Clean up code: Update template choose
+# [#19295] Clean up code: Update template chooser
 + [#19064] Add additional common bbcodes to purify
 ^ [#19438] SVN keywords Id set on all files missing it
 + [#19244] Moderation page scaffolding

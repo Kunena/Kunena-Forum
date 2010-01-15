@@ -727,8 +727,8 @@ class CKunenaTools {
 		$rank->rank_special = 0;
 		$rank->rank_image = 'rank6.gif';
 
-		if ($profile->rank != '0') {
-			if (isset($rank[$profile->rank])) $rank = $rank[$profile->rank];
+		if ($profile->rank != '0' && isset($ranks[$profile->rank])) {
+			$rank = $ranks[$profile->rank];
 		}
 		else if ($profile->rank == '0' && self::isAdmin($profile->userid)) {
 			$rank->rank_id = 0;

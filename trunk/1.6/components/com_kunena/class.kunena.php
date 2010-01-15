@@ -610,7 +610,7 @@ class CKunenaTools {
             $kunena_app->redirect($return, _POST_NOT_MODERATOR);
             }
 
-        $items = fbGetArrayInts("fbDelete");
+        $items = fbGetArrayInts("kDelete");
         $dellattach = 1;
 
         // start iterating here
@@ -864,7 +864,7 @@ class CKunenaTools {
 
 		$catid = (int)$catid;
 		if ($catid > 0) {
-	        $items = fbGetArrayInts("fbDelete");
+	        $items = fbGetArrayInts("kDelete");
 
 	        // start iterating here
 

@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+15-Jan-2010 Xillibit
+# [#19288] Fix regression after namming changes on move/delete in class.kunena.php
+
 14-Jan-2010 fxstein
 ^ [#19345] Refactor css class names 'fb' to 'k'
 ^ [#19437] Update copyright dates to 2010

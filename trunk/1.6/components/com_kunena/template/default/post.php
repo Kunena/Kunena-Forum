@@ -694,7 +694,7 @@ if ($kunena_my->id) {
                         	$optvalue[] = JRequest::getString('field_option'.$i , null);
                          }
                          //need to check if the poll exist, if it's not the case the poll is insered like new poll
-                         if ($mes->poll_id && !empty($polltitle) && !empty($optionsnumbers))
+                         if (!$mes->poll_id)
                          {
                          	CKunenaPolls::save_new_poll($polltimetolive,$polltitle,$id,$optvalue);
                          }

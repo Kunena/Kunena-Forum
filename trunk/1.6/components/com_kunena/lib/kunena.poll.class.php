@@ -150,20 +150,22 @@ class CKunenaPolls {
    function save_new_poll($polltimetolive,$polltitle,$pid,$optionvalue)
    {
 		$kunena_db = &JFactory::getDBO();
-		$query = "INSERT INTO #__fb_polls (title,threadid,polltimetolive)
-					VALUES(".$kunena_db->quote($polltitle).",'$pid','$polltimetolive')";
-    	$kunena_db->setQuery($query);
-    	$kunena_db->query();
-    	check_dberror('Unable to insert poll data');
+		if (isset($polltitle) && sizeof($optionvalue) > '0') {
+			$query = "INSERT INTO #__fb_polls (title,threadid,polltimetolive)
+						VALUES(".$kunena_db->quote($polltitle).",'$pid','$polltimetolive')";
+    		$kunena_db->setQuery($query);
+    		$kunena_db->query();
+    		check_dberror('Unable to insert poll data');
 
-    	for ($i = 0; $i < sizeof($optionvalue); $i++)
-    	{
-    		$query = "INSERT INTO #__fb_polls_options (text,pollid,votes)
-    					VALUES(".$kunena_db->quote($optionvalue[$i]).",'$pid','0')";
-        	$kunena_db->setQuery($query);
-        	$kunena_db->query();
-    		check_dberror('Unable to insert poll options');
-    	}
+    		for ($i = 0; $i < sizeof($optionvalue); $i++)
+    		{
+    			$query = "INSERT INTO #__fb_polls_options (text,pollid,votes)
+    						VALUES(".$kunena_db->quote($optionvalue[$i]).",'$pid','0')";
+        		$kunena_db->setQuery($query);
+        		$kunena_db->query();
+    			check_dberror('Unable to insert poll options');
+    		}
+		}
    }
    /**
 	* Save the results of a poll to prevent spam
@@ -396,6 +398,21 @@ class CKunenaPolls {
         		}
       		}
     	}
+   }
+   /**
+	* To get the last vote id in fb_users
+	*/
+   function get_last_vote_id($userid,$pollid)
+   {
+		$kunena_db = &JFactory::getDBO();
+
+		$query = "SELECT lastvote FROM #__fb_polls_users
+				WHERE pollid=$pollid AND userid=$userid";
+    	$kunena_db->setQuery($query);
+    	$id_last_vote = $kunena_db->loadResult();
+    	check_dberror('Unable to load last vote id from kunena users');
+
+    	return $id_last_vote;
    }
    /**
 	* For the user can vote a new once, need to remove one vote

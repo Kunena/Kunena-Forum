@@ -33,7 +33,7 @@ function create_new_field_now(){
   valuetotaloptions(number_field);
   var tablebody =document.getElementById('kpost_message');
   var row = document.createElement("tr");
-  row.className=boardclass+"sectiontableentry2";
+  row.className="ksectiontableentry2";
   row.setAttribute('id','option'+number_field);
   cell = document.createElement("td");
   cell.setAttribute('id','opt'+number_field);
@@ -60,7 +60,7 @@ function insert_text_write(textString)
 	if(document.getElementById('option_error') == undefined){
 		var tablebody = document.getElementById('kpost_message');
 		var row = document.createElement("tr");
-		row.className=boardclass+"sectiontableentry2";
+		row.className="ksectiontableentry2";
 		row.setAttribute('id','option_error');
 		cell = document.createElement("td");
 		cell.setAttribute('id','error');

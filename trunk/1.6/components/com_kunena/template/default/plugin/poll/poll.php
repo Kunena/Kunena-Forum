@@ -95,7 +95,8 @@ elseif ($do == 'changevote')
 	CKunenaPolls::call_javascript_vote();
 	$dataspollresult = CKunenaPolls::get_poll_data($id);
 	//Remove one vote to the user concerned and remove one vote in option
-	CKunenaPolls::change_vote($kunena_my->id,$id,$dataspollresult[0]->lastvote);
+	$id_last_vote = CKunenaPolls::get_last_vote_id($kunena_my->id,$id);
+	CKunenaPolls::change_vote($kunena_my->id,$id,$id_last_vote);
 	?>
  	<div>
             <?php
@@ -135,7 +136,7 @@ elseif ($do == 'changevote')
 	echo "<fieldset><legend style=\"font-size: 14px;\">"._KUNENA_POLL_OPTIONS."</legend><ul>";
     for ($i=0; $i < sizeof($dataspollresult);$i++)
     {
-    	if($dataspollresult[$i]->id == $dataspollresult[$i]->lastvote){
+    	if($dataspollresult[$i]->id == $id_last_vote){
        		echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" checked />".$dataspollresult[$i]->text."</li>";
     	}else {
 			echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".$dataspollresult[$i]->text."</li>";

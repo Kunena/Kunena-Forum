@@ -155,7 +155,7 @@ define('_KUNENA_MENU_LATEST_DESC', 'Recent Topics');
 define('_KUNENA_MENU_MYLATEST', 'My Topics'); // My latest discussions
 define('_KUNENA_MENU_MYLATEST_DESC', 'My Topics');
 define('_KUNENA_MENU_NOREPLIES', 'No Replies'); // Discussions without replies
-define('_KUNENA_MENU_NOREPLIES_DESC', 'Topics with <strong>no</strong> replies');
+define('_KUNENA_MENU_NOREPLIES_DESC', 'Topics with No Replies');
 define('_KUNENA_MENU_PROFILE', 'Profile'); // Current user profile view
 define('_KUNENA_MENU_RULES', 'Rules'); // Rules article
 define('_KUNENA_MENU_HELP', 'Help'); // Help article
@@ -1213,7 +1213,7 @@ DEFINE('_KUNENA_QUICKMSG', 'Quick Reply');
 DEFINE('_KUNENA_THREADS_IN_FORUM', 'Topics in Forum');
 DEFINE('_KUNENA_FORUM', 'Forum');
 DEFINE('_KUNENA_SPOTS', 'Spotlights');
-DEFINE('_KUNENA_CANCEL', 'cancel');
+DEFINE('_KUNENA_CANCEL', 'Cancel');
 DEFINE('_KUNENA_TOPIC', 'TOPIC:');
 DEFINE('_KUNENA_POWEREDBY', 'Powered by');
 // Time Format

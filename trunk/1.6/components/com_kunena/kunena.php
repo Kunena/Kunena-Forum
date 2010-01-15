@@ -582,11 +582,9 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		#########################################################################################
 
 		case 'showcat' :
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/showcat.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/showcat.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'showcat.php');
-			}
+			require_once (KUNENA_PATH_VIEWS . DS . 'showcat.php');
+			$page = new CKunenaShowcat($catid);
+			$page->display();
 
 			break;
 
@@ -670,11 +668,9 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		case 'latest' :
 		case 'mylatest' :
 		case 'noreplies' :
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/latestx.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/latestx.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'latestx.php');
-			}
+			require_once (KUNENA_PATH_VIEWS . DS . 'latestx.php');
+			$page = new CKunenaLatestX($func);
+			$page->display();
 
 			break;
 

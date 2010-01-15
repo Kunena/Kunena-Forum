@@ -38,6 +38,8 @@ Kunena 1.6.0-DEV
 # [#19447] Deleted messages sometimes showing up in latestx
 ^ [#19448] Move code out of template: view
 # [#19288] Fix regression: cannot view messages if user has been deleted
+^ [#19303] Social network icons: Allow values to be put anywhere in URL by using ##VALUE##
+^ [#19448] Move code out of template: latestx, showcat
 
 15-Jan-2010 Xillibit
 # [#19288] Fix regression after namming changes on move/delete in class.kunena.php

@@ -126,26 +126,27 @@ if ($func != 'mylatest')
 	{
 		if ((int)$catnum && (int)$catnum>0) $catlist[] = (int)$catnum;
 	}
-	if (count($catlist)) $latestcats = " AND catid IN (". implode(',', $catlist) .") ";
+	if (count($catlist)) $latestcats = " AND m.catid IN (". implode(',', $catlist) .") ";
 }
 
 if ($func == "mylatest")
 {
 	$document->setTitle(_KUNENA_MY_DISCUSSIONS . ' - ' . stripslashes($kunena_config->board_title));
-	$query = "SELECT count(distinct tmp.thread) FROM
-				(SELECT thread
-					FROM #__fb_messages
-					WHERE userid=$kunena_my->id AND hold=0 AND moved=0 AND catid IN ($kunena_session->allowed)
-				UNION ALL
-				 SELECT m.thread As thread
-					FROM #__fb_messages AS m
-					JOIN #__fb_favorites AS f ON m.thread = f.thread
-					WHERE f.userid=$kunena_my->id AND m.parent = 0 AND hold=0 and moved=0 AND catid IN ($kunena_session->allowed)) AS tmp";
+	$query = "SELECT COUNT(DISTINCT m.thread) FROM (
+			SELECT thread, 0 AS fav
+			FROM #__fb_messages
+			WHERE userid='{$kunena_my->id}' AND moved='0' AND hold='0' AND catid IN ({$kunena_session->allowed})
+			GROUP BY thread
+		UNION ALL
+			SELECT thread, 1 AS fav FROM #__fb_favorites WHERE userid='{$kunena_my->id}'
+		) AS t
+		INNER JOIN #__fb_messages AS m ON m.id=t.thread
+		WHERE m.moved='0' AND m.hold='0' AND m.catid IN ({$kunena_session->allowed})";
 }
 else if ($func == "noreplies")
 {
 	$document->setTitle(_KUNENA_NO_REPLIES . ' - ' . stripslashes($kunena_config->board_title));
-	$query = "SELECT count(distinct tmp.thread) FROM
+	$query = "SELECT COUNT(DISTINCT tmp.thread) FROM
 				(SELECT m.thread, count(*) AS posts
 					FROM #__fb_messages as m
 					JOIN (SELECT thread
@@ -161,8 +162,10 @@ else if ($func == "noreplies")
 else
 {
 	$document->setTitle(_KUNENA_ALL_DISCUSSIONS . ' - ' . stripslashes($kunena_config->board_title));
-	$query = "Select count(distinct thread) FROM #__fb_messages WHERE time >'$querytime'".
-			" AND hold=0 AND moved=0 AND catid IN ($kunena_session->allowed)" . $latestcats; // if categories are limited apply filter
+	$query = "Select COUNT(DISTINCT t.thread) FROM #__fb_messages AS t
+		INNER JOIN #__fb_messages AS m ON m.id=t.thread
+		WHERE m.moved='0' AND m.hold='0' AND m.catid IN ({$kunena_session->allowed})
+		AND t.time >'$querytime' AND t.hold=0 AND t.moved=0 AND t.catid IN ($kunena_session->allowed)" . $latestcats; // if categories are limited apply filter
 }
 $kunena_db->setQuery($query);
 $total = (int)$kunena_db->loadResult();
@@ -191,7 +194,7 @@ if ($func == "mylatest")
 		UNION ALL
 			SELECT thread, 1 AS fav FROM #__fb_favorites WHERE userid='{$kunena_my->id}'
 		) AS t
-		INNER JOIN #__fb_messages AS m ON m.thread=t.thread
+		INNER JOIN #__fb_messages AS m ON m.id=t.thread
 		WHERE m.moved='0' AND m.hold='0' AND m.catid IN ({$kunena_session->allowed})
 		GROUP BY thread
 		ORDER BY {$order}
@@ -218,8 +221,11 @@ else if ($func == "noreplies")
 else
 {
 	$order = "lastid DESC";
-	$query = "SELECT thread, MAX(id) AS lastid FROM #__fb_messages WHERE time>'{$querytime}' AND hold='0' AND moved='0' AND catid IN ({$kunena_session->allowed})
-		GROUP BY thread
+	$query = "SELECT m.id, MAX(t.id) AS lastid FROM #__fb_messages AS t
+		INNER JOIN #__fb_messages AS m ON m.id=t.thread
+		WHERE m.moved='0' AND m.hold='0' AND m.catid IN ({$kunena_session->allowed})
+		AND t.time>'{$querytime}' AND t.hold='0' AND t.moved='0' AND t.catid IN ({$kunena_session->allowed}) {$latestcats}
+		GROUP BY t.thread
 		ORDER BY {$order}
 	";
 }

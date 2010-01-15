@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: flat.php 1173 2010-10-27 22:51:09Z mahagr $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *

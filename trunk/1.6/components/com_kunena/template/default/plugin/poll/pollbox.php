@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: pollbox.php 1426 2010-01-02 09:13:33Z xillibit $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

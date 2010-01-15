@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: kunena.special.upgrade.1.6.0.php $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved

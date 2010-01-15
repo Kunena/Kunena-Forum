@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: summary.php 1544 2010-01-08 19:57:41Z 810 $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *

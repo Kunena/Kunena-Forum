@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: latestx.php 1210 2010-11-23 06:51:41Z mahagr $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

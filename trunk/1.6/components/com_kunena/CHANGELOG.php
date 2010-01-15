@@ -40,6 +40,7 @@ Kunena 1.6.0-DEV
 # [#19397] Preliminary fix for post date issue
 # [#19295] Clean up code: Update template choose
 + [#19064] Add additional common bbcodes to purify
+^ [#19438] SVN keywords Id set on all files missing it
 
 14-Jan-2010 Xillibit
 + [#19332] Change Delete behavior - implemented in backend (part 1)

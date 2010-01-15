@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: poll.php 1395 2010-12-30 14:40:22Z xillibit $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

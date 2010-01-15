@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: pathway.php 362 2010-02-11 00:30:24Z mahagr $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *

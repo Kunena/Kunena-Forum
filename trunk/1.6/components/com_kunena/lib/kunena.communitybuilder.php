@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: kunena.communitybuilder.php 570 2010-03-31 10:04:30Z mahagr $
+* @version $Id$
 * Kunena Component - Community Builder compability
 * @package Kunena
 *

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: kunena.defines.php 510 2010-03-08 08:36:53Z fxstein $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  * @Copyright (C) 2010 Kunena All rights reserved

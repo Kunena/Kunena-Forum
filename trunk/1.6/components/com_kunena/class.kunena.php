@@ -557,11 +557,9 @@ class CKunenaTools {
 			return;
 
 		$kunena_db = &JFactory::getDBO ();
-		$kunena_db->setQuery ( "SELECT readtopics FROM #__fb_sessions WHERE userid='{$userid}'" );
-		$readTopics = $kunena_db->loadResult ();
-		check_dberror ( "Unable to fetch readtopics from session." );
+		$kunena_session = CKunenaSession::getInstance ();
 
-		$readTopics = explode ( ',', $readTopics );
+		$readTopics = explode ( ',', $kunena_session->readtopics );
 		if (! in_array ( $thread, $readTopics )) {
 			$readTopics[] = $thread;
 			$readTopics = implode ( ',', $readTopics );

@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+13-Jan-2010 Matias
+# [#19447] Deleted messages sometimes showing up in latestx
+^ [#19448] Move code out of template: view
+
 15-Jan-2010 Xillibit
 # [#19288] Fix regression after namming changes on move/delete in class.kunena.php
 # [#19358] Apply some changes on the polls - fixes regressions detected after last changes on polls

@@ -25,15 +25,9 @@ defined( '_JEXEC' ) or die();
 $page = JRequest::getInt ( 'page', 0 );
 $limitstart = JRequest::getInt ( 'limitstart', 0 );
 
-$kunena_my = &JFactory::getUser ();
-$kunena_config = & CKunenaConfig::getInstance ();
-$kunena_db = &JFactory::getDBO ();
-
 global $kunena_icons;
 
-$catid = JRequest::getInt ( 'catid', 0 );
-
-if ($kunena_config->fb_profile == 'cb') {
+if ($this->config->fb_profile == 'cb') {
 	$msg_params = array ('username' => &$msg_html->username, 'messageobject' => &$this->kunena_message, 'subject' => &$msg_html->subject, 'messagetext' => &$msg_html->text, 'signature' => &$msg_html->signature, 'karma' => &$msg_html->karma, 'karmaplus' => &$msg_html->karmaplus, 'karmaminus' => &$msg_html->karmaminus );
 	$kunenaProfile = & CkunenaCBProfile::getInstance ();
 	$profileHtml = $kunenaProfile->showProfile ( $this->kunena_message->userid, $msg_params );
@@ -50,10 +44,10 @@ if ($kunena_config->fb_profile == 'cb') {
 				class="view-th ksectiontableheader"><a name="<?php
 				echo $msg_html->id;
 				?>"></a> <?php
-				if ($kunena_config->ordering_system == 'old_ord') {
+				if ($this->config->ordering_system == 'old_ord') {
 					echo CKunenaLink::GetSamePageAnkerLink ( $msg_html->id, '#' . $msg_html->id );
 				} else {
-					if ($kunena_config->default_sort == 'desc') {
+					if ($this->config->default_sort == 'desc') {
 						if ( $page == '1') {
 							$numb = $this->total_messages--;
 							echo CKunenaLink::GetSamePageAnkerLink($msg_html->id,'#'.$numb);
@@ -80,8 +74,8 @@ if ($kunena_config->fb_profile == 'cb') {
 			<td class="k-msgview-right">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td align="left"><?php
-
+					<td align="left">
+					<?php
 					if ($this->prevCheck < $this->kunena_message->time && ! in_array ( $this->kunena_message->thread, $this->read_topics )) {
 						$msgtitle = 'msgtitle_new';
 					} else {
@@ -93,14 +87,16 @@ if ($kunena_config->fb_profile == 'cb') {
 					?>"><?php
 						echo $msg_html->subject;
 						?>
-					</span> <span class="msgdate"
+					</span>
+					<span class="msgdate"
 						title="<?php
 						echo CKunenaTimeformat::showDate($this->kunena_message->time, 'config_post_dateformat_hover');
 						?>"><?php
 						echo CKunenaTimeformat::showDate($this->kunena_message->time, 'config_post_dateformat');
 						?></span></td>
 
-					<td align="right"><span class="msgkarma"> <?php
+					<td align="right"><span class="msgkarma">
+					<?php
 					if (isset ( $msg_html->karma )) {
 						echo $msg_html->karma;
 						if (isset ( $msg_html->karmaplus ))
@@ -110,7 +106,8 @@ if ($kunena_config->fb_profile == 'cb') {
 					}
 					?>
 
-					</span></td>
+					</span>
+					</td>
 				</tr>
 
 				<tr>
@@ -129,10 +126,10 @@ if ($kunena_config->fb_profile == 'cb') {
 						class="switchcontent"><!-- make this div distinct from others on this page -->
 					<?php
 						//see if we need the users realname or his loginname
-						if ($kunena_config->username) {
-							$authorName = $kunena_my->username;
+						if ($this->config->username) {
+							$authorName = $this->my->username;
 						} else {
-							$authorName = $kunena_my->name;
+							$authorName = $this->my->name;
 						}
 
 						//contruct the reply subject
@@ -149,18 +146,18 @@ if ($kunena_config->fb_profile == 'cb') {
 						echo $msg_html->id;
 						?>" /> <input type="hidden" name="catid"
 						value="<?php
-						echo $catid;
+						echo $this->catid;
 						?>" /> <input type="hidden" name="action" value="post" /> <input
 						type="text" name="subject" size="35" class="inputbox"
 						maxlength="<?php
-						echo $kunena_config->maxsubject;
+						echo $this->config->maxsubject;
 						?>"
 						value="<?php
 						echo html_entity_decode ( $resubject );
 						?>" /> <textarea class="inputbox" name="message" rows="6"
 						cols="60" style="height: 100px; width: 100%; overflow: auto;"></textarea> <?php
 						// Begin captcha . Thanks Adeptus
-						if ($kunena_config->captcha && $kunena_my->id < 1) {
+						if ($this->config->captcha && $this->my->id < 1) {
 							?>
 					<?php
 							echo _KUNENA_CAPDESC . '&nbsp;'?>
@@ -203,20 +200,20 @@ if ($kunena_config->fb_profile == 'cb') {
 					<span class="view-username">
 						<?php
 						if ($userinfo->userid) {
-							echo CKunenaLink::GetProfileLink ( $kunena_config, $this->kunena_message->userid, $msg_html->username );
+							echo CKunenaLink::GetProfileLink ( $this->config, $this->kunena_message->userid, $msg_html->username );
 						} else {
 							echo $msg_html->username;
 						}
 						?>
 					</span>
 					<?php
-						if ($kunena_config->userlist_usertype)
+						if ($this->config->userlist_usertype)
 							echo '<span class = "msgusertype">(' . $msg_html->usertype . ')</span>';
 						?>
 					<br />
 					<?php
 						if ($this->kunena_message->userid > 0) {
-							echo CKunenaLink::GetProfileLink ( $kunena_config, $this->kunena_message->userid, $msg_html->avatar );
+							echo CKunenaLink::GetProfileLink ( $this->config, $this->kunena_message->userid, $msg_html->avatar );
 						} else {
 							echo $msg_html->avatar;
 						}
@@ -301,20 +298,21 @@ if ($kunena_config->fb_profile == 'cb') {
 
 		<tr>
 			<td class="k-msgview-right-b">
-			<div class="kmessage_editMarkUp_cover"><?php
+			<div class="kmessage_editMarkUp_cover">
+			<?php
 			if ($this->kunena_message->modified_by) {
 
 				echo '<span class="kmessage_editMarkUp" title="'.CKunenaTimeformat::showDate($this->kunena_message->modified_time, 'config_post_dateformat_hover').'">' . _KUNENA_EDITING_LASTEDIT . ': ' .
 					CKunenaTimeformat::showDate($this->kunena_message->modified_time, 'config_post_dateformat' ) . ' ' . _KUNENA_BY . ' ' .
-					($kunena_config->username ? $this->kunena_message->modified_username : $this->kunena_message->modified_name) . '.';
+					($this->config->username ? $this->kunena_message->modified_username : $this->kunena_message->modified_name) . '.';
 				if ($this->kunena_message->modified_reason) {
 					echo _KUNENA_REASON . ': ' . kunena_htmlspecialchars ( stripslashes ( $this->kunena_message->modified_reason ) );
 				}
 				echo '</span>';
 			}
 
-			if ($kunena_config->reportmsg && $kunena_my->id > 1) {
-				echo '<span class="kmessage_informMarkUp">' . CKunenaLink::GetReportMessageLink ( $catid, $msg_html->id, _KUNENA_REPORT ) . '</span>';
+			if ($this->config->reportmsg && $this->my->id > 1) {
+				echo '<span class="kmessage_informMarkUp">' . CKunenaLink::GetReportMessageLink ( $this->catid, $msg_html->id, _KUNENA_REPORT ) . '</span>';
 			}
 			//Check that the user is an admin to display the ip in messages
 			$kunena_is_admin = CKunenaTools::isAdmin ();
@@ -324,14 +322,15 @@ if ($kunena_config->fb_profile == 'cb') {
 			?>
 			</div>
 			<div class="kmessage_buttons_cover">
-			<div class="kmessage_buttons_row"><?php
+			<div class="kmessage_buttons_row">
+			<?php
 				if (! isset ( $msg_html->closed )) {
 					if (isset ( $msg_html->quickreply )) echo " " . $msg_html->quickreply;
 					echo " " . $msg_html->reply;
 					echo " " . $msg_html->quote;
 
-					if (CKunenaTools::isModerator ( $kunena_my->id, $catid ))
-						echo ' </div><div class="kmessage_buttons_row">';
+					if (CKunenaTools::isModerator ( $this->my->id, $this->catid ))
+						echo ' </div><div class="kmessage_buttons_row">'; // split into 2 rows
 
 					if (isset ( $msg_html->merge )) {
 						echo " " . $msg_html->merge;
@@ -355,9 +354,7 @@ if ($kunena_config->fb_profile == 'cb') {
 			</div>
 			<?php
 			if (isset ( $msg_html->signature )) {
-				echo '<div class="msgsignature">';
-				echo $msg_html->signature;
-				echo '</div>';
+				echo '<div class="msgsignature">'.$msg_html->signature.'</div>';
 			}
 			?>
 

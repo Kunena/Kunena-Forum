@@ -520,7 +520,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		#########################################################################################
 
 		case 'profile' :
-			require_once ( KUNENA_PATH_LIB .DS. 'kunena.profile.view.php');
+			require_once ( KUNENA_PATH_VIEWS .DS. 'profile.php');
 			$page = new CKunenaProfile($userid);
 			$page->display();
 
@@ -562,11 +562,9 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		#########################################################################################
 
 		case 'view' :
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/view.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/view.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'view.php');
-			}
+			require_once (KUNENA_PATH_VIEWS . DS . 'view.php');
+			$page = new CKunenaView($catid, $id);
+			$page->display();
 
 			break;
 

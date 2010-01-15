@@ -718,6 +718,10 @@ if ($kunena_my->id) {
                               }
                           }
 
+                         if ($mes->topic_emoticon == '0') {
+							$topic_emoticon = $mes->topic_emoticon;
+                         }
+
 						$kunena_db->setQuery ( "UPDATE #__fb_messages SET name=" . $kunena_db->quote ( $authorname ) . ", email=" . $kunena_db->quote ( addslashes ( $email ) ) . (($kunena_config->editmarkup) ? " ,modified_by='" . $modified_by . "' ,modified_time='" . $modified_time . "' ,modified_reason=" . $kunena_db->quote ( $modified_reason ) : "") . ", subject=" . $kunena_db->quote ( $subject ) . ", topic_emoticon='" . $topic_emoticon . "', hold='" . (( int ) $holdPost) . "' WHERE id={$id}" );
 
 						$dbr_nameset = $kunena_db->query ();

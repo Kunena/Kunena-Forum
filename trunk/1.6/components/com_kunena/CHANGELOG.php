@@ -43,6 +43,7 @@ Kunena 1.6.0-DEV
 # [#19358] Apply some changes on the polls - fixes regressions detected after last changes on polls
 + [#19235] Add category info to search results
 # [#19358] Apply some changes on the polls - fix one another regression on polls
+# [#19278] Keep topic icon after editing message
 
 14-Jan-2010 fxstein
 ^ [#19345] Refactor css class names 'fb' to 'k'

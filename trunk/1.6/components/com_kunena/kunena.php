@@ -92,6 +92,32 @@ if ($func == "showcaptcha") {
 	$kunena_app->close ();
 }
 
+// Check for JSON request
+if ($func == "json") {
+
+	$data = array();
+
+	switch ($action)
+	{
+		case 'moderate.autocomplete':
+			require_once(JPATH_ROOT . '/components/com_kunena/lib/kunena.moderation.class.php');
+
+			$moderation =& CKunenaModeration::GetInstance();
+
+			$data = $moderation->getAutoComplete();
+
+			break;
+		default:
+
+			break;
+	}
+
+	header ( "Content-type: application/json" );
+	echo json_encode($jsondata);
+
+	$kunena_app->close ();
+}
+
 // Debug helpers
 include_once (KUNENA_PATH_LIB . DS . "kunena.debug.php");
 // get Kunenas configuration params in

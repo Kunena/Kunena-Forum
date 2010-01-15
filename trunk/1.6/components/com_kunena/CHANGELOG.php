@@ -41,6 +41,7 @@ Kunena 1.6.0-DEV
 # [#19295] Clean up code: Update template choose
 + [#19064] Add additional common bbcodes to purify
 ^ [#19438] SVN keywords Id set on all files missing it
++ [#19244] Moderation page scaffolding
 
 14-Jan-2010 Xillibit
 + [#19332] Change Delete behavior - implemented in backend (part 1)

@@ -29,11 +29,13 @@ class CKunenaModeration {
 	var $_db = null;
 	var $_errormsg = null;
 	var $_config = null;
+	var $_my = null;
 
-	function CKunenaModeration($db, $config) {
+	function CKunenaModeration($db, $config, $my) {
 		$this->_db = $db;
 		$this->_ResetErrorMessage ();
 		$this->_config = $config;
+		$this->_my = $my;
 	}
 
 	function &getInstance() {
@@ -41,8 +43,9 @@ class CKunenaModeration {
 		if (! $instance) {
 			$kunena_db = & JFactory::getDBO ();
 			$kunena_config = & CKunenaConfig::getInstance ();
+			$kunena_my = &JFactory::getUser ();
 
-			$instance = new CKunenaModeration ( $kunena_db, $kunena_config );
+			$instance = new CKunenaModeration ( $kunena_db, $kunena_config, $kunena_my );
 		}
 		return $instance;
 	}
@@ -356,6 +359,53 @@ class CKunenaModeration {
 	// If a function failed - a detailed error message can be requested
 	function getErrorMessage() {
 		return $this->_errormsg;
+	}
+
+	// JSON helpers
+	function getAutoComplete() {
+		$result = array();
+
+		$catid = JRequest::getInt ( 'catid', 0 );
+		$data = JRequest::getVar ( 'data', '' );
+		$do = JRequest::getCmd ( 'do', 'getcat' );
+
+		// Verify permissions
+		$is_admin = CKunenaTools::isAdmin ();
+		$is_moderator = CKunenaTools::isModerator ( $this->_my->id, $catid );
+
+		if (!$is_admin && !$is_moderator){
+			// Not an admin nor a moderator for the category
+			// nothing to return;
+			return array();
+		}
+
+		// Now we can safely continue...
+		switch ($do)
+		{
+			case 'getcat':
+				$query = "SELECT `name` FROM #__categories WHERE `name`
+							LIKE '" . $this->_db->quote($data) . "%' ORDER BY 1 LIMIT 0, 10;";
+
+				$this->_db->setQuery ( $query );
+				$result = $this->_db->loadResult ();
+				check_dberror ( "Unable to lookup categories by name." );
+
+				break;
+			case 'getmsg':
+				$query = "SELECT `subject` FROM #__messages WHERE `parent`=0 AND `subject`
+							LIKE '" . $this->_db->quote($data) . "%' ORDER BY 1 LIMIT 0, 10;";
+
+				$this->_db->setQuery ( $query );
+				$result = $this->_db->loadResult ();
+				check_dberror ( "Unable to lookup topics by subject." );
+
+				break;
+			default:
+				// Operation not supported
+
+		}
+
+		return $result;
 	}
 }
 ?>

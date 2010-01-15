@@ -30,7 +30,7 @@ $kunena_db = &JFactory::getDBO();
 <div class="k_bt_cvr3">
 <div class="k_bt_cvr4">
 <div class="k_bt_cvr5">
-<form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile&amp;do=unfavorite'); ?>" method = "post" name = "postform">
+<form action = "<?php echo CKunenaLink::GetMyProfileURL($kunena_config, '','','nofollow', false, 'unfavorite'); ?>" method = "post" name = "postform">
 	<input type = "hidden" name = "do" value = "unfavorite"/>
 	<table class = "kblocktable" id = "kforumprofile_fav" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
 		<thead>
@@ -76,7 +76,7 @@ $kunena_db = &JFactory::getDBO();
 						$k = 1 - $k;
 			?>
 						<tr class="k<?php echo $tabclass[$k]; ?>">
-						<td class="td-1" width="73%" align="left"><?php echo $enum; ?>: <?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&func=view&catid=' . $fav->catid . '&id=' . $fav->id, kunena_htmlspecialchars(stripslashes($fav->subject)),kunena_htmlspecialchars(stripslashes($fav->subject)),'nofollow'); ?></td>
+						<td class="td-1" width="73%" align="left"><?php echo $enum; ?>: <?php echo CKunenaLink::GetThreadLink('view', $fav->catid, $fav->id, kunena_htmlspecialchars(stripslashes($fav->subject)),kunena_htmlspecialchars(stripslashes($fav->subject)),'nofollow'); ?></td>
 
 						<td class = "td-2" style = "text-align:center; width:25%"> <?php echo kunena_htmlspecialchars(stripslashes($fav->name)); ?></td>
 

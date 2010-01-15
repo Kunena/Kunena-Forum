@@ -391,17 +391,17 @@ class CKunenaSearch {
 			return;
 		}
 		?>
-<div class="fb__bt_cvr1">
-<div class="fb_bt_cvr2">
-<div class="fb__bt_cvr3">
-<div class="fb__bt_cvr4">
-<div class="fb__bt_cvr5">
-<table class="fb_blocktable" id="fb_forumsearch" border="0"
+<div class="k_bt_cvr1">
+<div class="kbt_cvr2">
+<div class="k_bt_cvr3">
+<div class="k_bt_cvr4">
+<div class="k_bt_cvr5">
+<table class="kblocktable" id="kforumsearch" border="0"
 	cellspacing="0" cellpadding="0" width="100%">
 	<thead>
 		<tr>
 			<th colspan="3">
-			<div class="fb_title_cover"><span class="fb_title fbl"><?php
+			<div class="ktitle_cover"><span class="ktitle fbl"><?php
 		echo _KUNENA_SEARCH_RESULTS;
 		?></span>
 			<b><?php
@@ -412,18 +412,18 @@ class CKunenaSearch {
 	</thead>
 
 	<tbody>
-		<tr class="fb_sth">
-			<th class="th-1 fb_sectiontableheader">
+		<tr class="ksth">
+			<th class="th-1 ksectiontableheader">
 			<?php
 		echo _GEN_SUBJECT;
 		?></th>
 
-			<th class="th-2 fb_sectiontableheader">
+			<th class="th-2 ksectiontableheader">
 			<?php
 		echo _GEN_AUTHOR;
 		?></th>
 
-			<th class="th-3 fb_sectiontableheader">
+			<th class="th-3 ksectiontableheader">
 			<?php
 		echo _GEN_DATE;
 		?></th>
@@ -435,7 +435,7 @@ class CKunenaSearch {
 		$k = 0;
 
 		if ($totalRows == 0 && $this->int_kunena_errornr) {
-			echo '<tr class="fb_' . $tabclass [$k] .
+			echo '<tr class="k' . $tabclass [$k] .
 				'" ><td colspan="3"  style="text-align:center;font-weight:bold">' .
 				$this->str_kunena_errormsg . '</td></tr>';
 		}
@@ -465,8 +465,8 @@ class CKunenaSearch {
 				$ressubject = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/i" . $utf8, '<span  class="searchword" >' . $searchword . '</span>', $ressubject );
 				$resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/i" . $utf8, '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
 			}
-			echo '<tr class="fb_' . $tabclass [$k] . (isset($result->class_sfx) ? ' fb_' . $tabclass [$k] . $result->class_sfx : ''  ) . '">';
-			echo '<td  class = "td-1" >' . CKunenaLink::GetSefHrefLink( KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $result->id . '&amp;catid=' . $result->catid , $ressubject , $ressubject , 'follow' , NULL , $result->id). '<br />' . $resmessage . '<br /><span style="font-size: x-small;
+			echo '<tr class="k' . $tabclass [$k] . (isset($result->class_sfx) ? ' k' . $tabclass [$k] . $result->class_sfx : ''  ) . '">';
+			echo '<td  class = "td-1" >' . CKunenaLink::GetThreadPageLink( $kunena_config,'view', $result->catid , $result->id ,NULL,NULL, $ressubject ,  $result->id). '<br />' . $resmessage . '<br /><span style="font-size: x-small;
 			">' ._KUNENA_CATEGORY.' '.CKunenaLink::GetCategoryLink('showcat', $result->catid, $result->catname, $rel='follow', $class='', $title=''). '</span><br /><br /></td>';
 			echo '<td class = "td-2" >' . kunena_htmlspecialchars ( stripslashes ( $result->name ) ) . '</td>';
 			echo '<td class = "td-3" >' . date ( _DATETIME, $result->time ) . '</td></tr>';
@@ -478,9 +478,9 @@ class CKunenaSearch {
 		if ($totalRows > $limit) {
 			?>
 
-		<tr class="fb_sth">
+		<tr class="ksth">
 			<th colspan="3" style="text-align: center"
-				class="th-1 fb_sectiontableheader">
+				class="th-1 ksectiontableheader">
 			<?php
 			echo $pagination;
 			?>
@@ -491,9 +491,9 @@ class CKunenaSearch {
 		}
 		?>
 
-		<tr class="fb_sth">
+		<tr class="ksth">
 			<th colspan="3" style="text-align: center"
-				class="th-1 fb_sectiontableheader">
+				class="th-1 ksectiontableheader">
 			<?php
 		$resStart = $limitstart + 1;
 		$resStop = $limitstart + count ( $results );
@@ -527,7 +527,7 @@ function KunenaSearchPagination($function, $q, $urlparams, $page, $limit, $total
 		$endpage = $totalpages;
 	}
 
-	$output = '<div class="fb_pagination">' . _PAGE;
+	$output = '<div class="kpagination">' . _PAGE;
 	if ($startpage > 1) {
 		if ($endpage < $totalpages)
 			$endpage --;

@@ -86,10 +86,10 @@ if ($annID > 0) {
 
                     <tr class = "ksth">
                         <th class = "th-1 ksectiontableheader km" align="left">
-                            <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'edit', $annID), _ANN_EDIT, _ANN_EDIT,'nofollow'); ?> |
-                            <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'delete', $annID), _ANN_DELETE, _ANN_DELETE,'nofollow'); ?> |
-							<?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'add'), _ANN_ADD, _ANN_ADD,'nofollow'); ?> |
-							<?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_CPANEL, _ANN_CPANEL, 'nofollow'); ?>
+                            <?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'edit', $annID, _ANN_EDIT, _ANN_EDIT); ?> |
+                            <?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'delete', $annID, _ANN_DELETE, _ANN_DELETE); ?> |
+							<?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'add',NULL, _ANN_ADD, _ANN_ADD); ?> |
+							<?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'show', NULL, _ANN_CPANEL, _ANN_CPANEL); ?>
                         </th>
                     </tr>
 
@@ -118,7 +118,7 @@ if ($annID > 0) {
 if (!empty($anndescription)) {
 ?>
 
-    &nbsp;&nbsp;&nbsp;<?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'read', $annID), _ANN_READMORE, _ANN_READMORE,'follow'); ?>
+    &nbsp;&nbsp;&nbsp;<?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'read', $annID, _ANN_READMORE, _ANN_READMORE,'follow'); ?>
 
 <?php
     }

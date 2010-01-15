@@ -37,9 +37,9 @@ class CKunenaLink
     }
 
     // Simple link is a barebones href link used for e.g. Jscript links
-    function GetSimpleLink($id, $name='')
+    function GetSimpleLink($id, $name='', $class='', $attr='')
     {
-        return'<a href="'.$id.'">'.$name.'</a>';
+        return'<a '.($class ? 'class="'.$class.'" ' : '').' href="'.$id.'" '.($attr ? ' '.$attr : '').'>'.$name.'</a>';
     }
 
     //
@@ -64,6 +64,11 @@ class CKunenaLink
     function GetRSSLink($name , $rel='follow')
     {
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=fb_rss&amp;no_html=1', $name, '', $rel, '', '', 'target="_blank"');
+    }
+
+    function GetPDFLink($catid, $id , $name, $rel='nofollow', $title='')
+    {
+    	return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;id=' . $id . '&amp;catid=' . $catid . '&amp;func=fb_pdf' , $name , $title , $rel);
     }
 
     function GetCategoryLink($func, $catid, $catname, $rel='follow', $class='', $title='')
@@ -176,6 +181,25 @@ class CKunenaLink
     	}
     }
 
+	//do only for kunena own profile!
+    function GetMyProfileURL($kunena_config, $userid='', $name='', $rel='nofollow', $redirect=false,$do='')
+    {
+    	$kunena_config =& CKunenaConfig::getInstance();
+    	if($kunena_config->fb_profile == 'jomsocial' || $kunena_config->fb_profile == 'cb' || $kunena_config->fb_profile == 'aup')
+    	{
+    		$link = CKunenaLink::GetProfileURL($userid);
+    		if (!empty($link))
+    		{
+    			return $redirect != true ? $link : htmlspecialchars_decode($link);
+    		}
+    	}
+    	else
+    	{
+    		$do_do = $do != '' ? '&do='.$do : '';
+    		return $redirect != true ? JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile'.$do_do, $name, '', $rel) : htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile'.$do_do, $name, '', $rel));
+    	}
+    }
+
     function GetProfileLink($kunena_config, $userid, $name, $rel='nofollow', $class='')
     {
     	if ($userid > 0)
@@ -215,6 +239,26 @@ class CKunenaLink
     		}
     	}
    		return '';
+    }
+
+    //set redirect to true if you need & and not &amp;
+    function GetMyProfileAvatarURL($action='' , $redirect=false)
+    {
+    	$action_do = $action !== '' ? '&action='.$action : '';
+    	$return = $redirect != true ? JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'.$action_do) : htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'.$action_do));
+    	return $return;
+    }
+
+    function GetMyProfileAvatarLink($name, $title='',$action='',$rel='nofollow')
+    {
+    	$action_do = $action !== '' ? '&action='.$action : '';
+    	return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'.$action_do, $name, $title, $rel);
+    }
+
+    //Used in myprofile_avatar_upload.php
+    function GetMyProfilAvatarGalleryURL()
+    {
+    	return htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar&gallery='));
     }
 
     function GetUserlistURL($action='')
@@ -334,11 +378,23 @@ class CKunenaLink
 		return JRoute::_(KUNENA_LIVEURLREL."&amp;func=announcement&amp;do={$do}{$idstring}");
     }
 
+    function GetAnnouncementLink($kunena_config, $do, $id=NULL , $name, $title, $rel='nofollow')
+	{
+		$idstring = '';
+		if ($id !== NULL) $idstring .= "&amp;id=$id";
+		return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL."&amp;func=announcement&amp;do={$do}{$idstring}",$name,$title,$rel);
+	}
+
 	function GetPollURL($kunena_config, $do, $id=NULL, $catid){
 		  $idstring = '';
 		  if ($id !== NULL) $idstring .= "&amp;id=$id";
 		  $catidstr = "&amp;catid=$catid";
 		  return JRoute::_(KUNENA_LIVEURLREL."&amp;func=poll&amp;do={$do}{$idstring}{$catidstr}");
+    }
+
+    function GetMarkThisReadLink( $catid, $name, $rel='nofollow', $title='')
+    {
+    	return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=markThisRead&amp;catid=' . $catid , $name , $title , $rel );
     }
 
     //

@@ -79,10 +79,10 @@ if ($do == "read") {
                     <th class = "th-1 ksectiontableheader" align="left" >
                         <?php
                         if ($is_editor) {
-                        	echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'edit', $annID), _ANN_EDIT, _ANN_EDIT, 'follow').' | ';
-                    		echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'delete', $annID), _ANN_DELETE, _ANN_DELETE, 'follow').' | ';
-                    		echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'add'), _ANN_ADD, _ANN_ADD, 'follow').' | ';
-                    		echo CkunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_CPANEL, _ANN_CPANEL, 'follow');
+                        	echo CKunenaLink::GetAnnouncementLink($kunena_config, 'edit', $annID, _ANN_EDIT, _ANN_EDIT).' | ';
+                    		echo CKunenaLink::GetAnnouncementLink($kunena_config, 'delete', $annID, _ANN_DELETE, _ANN_DELETE).' | ';
+                    		echo CKunenaLink::GetAnnouncementLink($kunena_config, 'add', NULL, _ANN_ADD, _ANN_ADD).' | ';
+                    		echo CkunenaLink::GetAnnouncementLink($kunena_config, 'show', NULL, _ANN_CPANEL, _ANN_CPANEL);
                         }
                         ?>
                     </th>
@@ -134,7 +134,7 @@ if ($is_editor) {
                     <tr>
                         <th colspan = "6">
                             <div class = "ktitle_cover km">
-                                <span class = "ktitle kl"> <?php echo $kunena_app->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?> | <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'add'), _ANN_ADD, _ANN_ADD, 'follow'); ?></span>
+                                <span class = "ktitle kl"> <?php echo $kunena_app->getCfg('sitename'); ?> <?php echo _ANN_ANNOUNCEMENTS; ?> | <?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'add', NULL, _ANN_ADD, _ANN_ADD); ?></span>
                             </div>
                         </th>
                     </tr>
@@ -190,7 +190,7 @@ if ($is_editor) {
                                 </td>
 
                                 <td class = "td-3"  align="left">
-                                    <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'read', $row->id), stripslashes($row->title), stripslashes($row->title), 'follow'); ?>
+                                    <?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'read', $row->id, stripslashes($row->title), stripslashes($row->title), 'follow'); ?>
                                 </td>
 
                                 <td class = "td-4"  align="center">
@@ -205,11 +205,11 @@ if ($is_editor) {
                                 </td>
 
                                 <td class = "td-5"  align="center">
-                                    <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'edit', $row->id), _ANN_EDIT,_ANN_EDIT,'follow'); ?>
+                                    <?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'edit', $row->id, _ANN_EDIT,_ANN_EDIT); ?>
                                 </td>
 
                                 <td class = "td-6"  align="center">
-                                    <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'delete', $row->id), _ANN_DELETE, _ANN_DELETE, 'follow'); ?>
+                                    <?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'delete', $row->id, _ANN_DELETE, _ANN_DELETE); ?>
                                 </td>
                             </tr>
 
@@ -262,7 +262,7 @@ if ($is_editor) {
         <tr>
             <th>
                 <div class = "ktitle_cover km">
-                    <span class = "ktitle kl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_ADD; ?> | <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_CPANEL, _ANN_CPANEL,'follow'); ?></span>
+                    <span class = "ktitle kl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_ADD; ?> | <?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'show',NULL, _ANN_CPANEL, _ANN_CPANEL); ?></span>
                 </div>
             </th>
         </tr>
@@ -271,7 +271,7 @@ if ($is_editor) {
     <tbody id = "announcement_tbody">
         <tr>
             <td class = "kanndesc" valign="top">
-                <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=announcement&amp;do=doadd'); ?>" method = "post" name = "addform">
+                <form action = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'doadd'); ?>" method = "post" name = "addform">
                     <strong><?php echo _ANN_TITLE; ?>:</strong>
 
                     <br/>
@@ -416,7 +416,7 @@ if ($is_editor) {
         <tr>
             <th>
                 <div class = "ktitle_cover km">
-                    <span class = "ktitle kl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_EDIT; ?> | <?php echo CKunenaLink::GetSefHrefLink(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_CPANEL, _ANN_CPANEL, 'follow'); ?></span>
+                    <span class = "ktitle kl"> <?php echo _ANN_ANNOUNCEMENTS; ?>: <?php echo _ANN_EDIT; ?> | <?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'show',NULL, _ANN_CPANEL, _ANN_CPANEL); ?></span>
                 </div>
             </th>
         </tr>
@@ -425,7 +425,7 @@ if ($is_editor) {
     <tbody id = "announcement_tbody">
         <tr>
             <td class = "kanndesc" valign="top">
-                <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=announcement&amp;do=doedit'); ?>" method = "post" name = "editform" onSubmit = "return validate_form ( );">
+                <form action = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'doedit'); ?>" method = "post" name = "editform" onSubmit = "return validate_form ( );">
                     <strong>#<?php echo $annID; ?> : <?php echo $anntitle; ?></strong>
 
                     <br/>

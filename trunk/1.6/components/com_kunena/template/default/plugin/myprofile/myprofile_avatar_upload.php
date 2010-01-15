@@ -183,7 +183,7 @@ switch ($task) {
 		}
 		check_dberror("Unable to delete avatar.");
 
-		$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+		$kunena_app->redirect(CKunenaLink::GetMyProfileAvatarURL('',true));
 		break;
 
 	case 'upload':
@@ -215,21 +215,21 @@ switch ($task) {
 		if (!is_uploaded_file($src_file) || empty($_FILES['avatar']['name']))
 		{
 			$kunena_app->enqueueMessage(_UPLOAD_ERROR_EMPTY, 'notice');
-			$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+			$kunena_app->redirect(CKunenaLink::GetMyProfileAvatarURL('',true));
 		}
 
 		//check for allowed file type (jpeg, gif, png)
 		if (!($imgtype = KUNENA_check_image_type($avatarExt)))
 		{
 			$kunena_app->enqueueMessage(_UPLOAD_ERROR_TYPE, 'notice');
-			$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+			$kunena_app->redirect(CKunenaLink::GetMyProfileAvatarURL('',true));
 		}
 
 		//check file name characteristics
 		if(preg_match('`[^0-9a-zA-Z_]`', $avatarExt))
 		{
 			$kunena_app->enqueueMessage(_UPLOAD_ERROR_NAME, 'notice');
-			$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+			$kunena_app->redirect(CKunenaLink::GetMyProfileAvatarURL('',true));
 		}
 
 		//check filesize
@@ -238,7 +238,7 @@ switch ($task) {
 		if ($avatarSize > $maxAvSize)
 		{
 			$kunena_app->enqueueMessage(_UPLOAD_ERROR_SIZE . " (" . $kunena_config->avatarsize . " KiloBytes)", 'notice');
-			$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+			$kunena_app->redirect(CKunenaLink::GetMyProfileAvatarURL('',true));
 		}
 
 		$imgInfo = false;
@@ -259,7 +259,7 @@ switch ($task) {
 		case 'gd1' :
 			if ( !function_exists('imagecreatefromjpeg' )) {
 				$kunena_app->enqueueMessage(_KUNENA_AVATAR_GDIMAGE_NOT, 'error');
-				$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+				$kunena_app->redirect(CKunenaLink::GetMyProfileAvatarURL('',true));
 			}
 			if ( $imgInfo[2] == 'JPG' ) {
 				$src_img = imagecreatefromjpeg($src_file);
@@ -286,11 +286,11 @@ switch ($task) {
 
 			if ( !function_exists('imagecreatefromjpeg') ) {
 				$kunena_app->enqueueMessage(_KUNENA_AVATAR_GDIMAGE_NOT, 'error');
-				$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+				$kunena_app->redirect(CKunenaLink::GetMyProfileAvatarURL('',true));
 			}
 			if ( !function_exists('imagecreatetruecolor') ) {
 				$kunena_app->enqueueMessage(_KUNENA_AVATAR_GD2IMAGE_NOT, 'error');
-				$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+				$kunena_app->redirect(CKunenaLink::GetMyProfileAvatarURL('',true));
 			}
 			if ( $imgInfo[2] == 'JPG' ) {
 				$src_img = imagecreatefromjpeg($src_file);
@@ -316,7 +316,7 @@ switch ($task) {
 		default:
 			if (isset($srcWidth) && ($srcWidth > $kunena_config->avatarlargewidth || $srcHeight > $kunena_config->avatarlargeheight)) {
 				$kunena_app->enqueueMessage(_UPLOAD_ERROR_SIZE . " (" . $kunena_config->avatarlargewidth . " x ". $kunena_config->avatarlargeheight .")", 'notice');
-				$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
+				$kunena_app->redirect(CKunenaLink::GetMyProfileAvatarURL('',true));
 			}
 			// Make sure that we do not use wrong avatar image
 			if (file_exists($fileLocation_s)) CKunenaFile::delete($fileLocation_s);
@@ -331,7 +331,7 @@ switch ($task) {
 		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newFileName}' WHERE userid={$kunena_my->id}");
 		$kunena_db->query() or check_dberror("Unable to update avatar.");
 
-		$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile'),_UPLOAD_UPLOADED);
+		$kunena_app->redirect(CKunenaLink::GetMyProfileURL($kunena_config,'','','nofollow', true),_UPLOAD_UPLOADED);
 
 	case 'gallery':
 		jimport('joomla.filesystem.folder');
@@ -341,14 +341,14 @@ switch ($task) {
 
 		if ($newAvatar == '') {
 			$kunena_app->enqueueMessage(_UPLOAD_ERROR_CHOOSE, 'notice');
-			$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&do=avatar'));
+			$kunena_app->redirect(CKunenaLink::GetMyProfileAvatarURL('',true));
 		}
 
 		if ($newAvatarPath) $newAvatarPath .= '/';
 		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='gallery/{$newAvatarPath}{$newAvatar}' WHERE userid={$kunena_my->id}");
 		$kunena_db->query() or check_dberror("Unable to update user avatar.");
 
-		$kunena_app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile'),_UPLOAD_UPLOADED);
+		$kunena_app->redirect(CKunenaLink::GetMyProfileURL($kunena_config,'','','nofollow', true),_UPLOAD_UPLOADED);
 		break;
 }
 
@@ -361,7 +361,7 @@ if ($task == 'default')
         <td class = "kmyprofile_right" valign = "top">
             <!-- B:My Profile Right -->
             <!-- B: My AVATAR -->
-            <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&func=myprofile&do=avatar&action=delete'); ?>" method = "post" name = "postform">
+            <form action = "<?php echo CKunenaLink::GetMyProfileAvatarURL('delete'); ?>" method = "post" name = "postform">
     <table class = "kblocktablehalf fltlft" id="kforumprofile_sub" border = "0" cellspacing = "0" cellpadding = "0">
         <thead>
             <tr>
@@ -401,7 +401,7 @@ if ($task == 'default')
                                 echo _NON_SELECTED;
                     ?>
 
-                            <br /> <?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&func=myprofile&do=avatar', _SET_NEW_AVATAR, _SET_NEW_AVATAR,'nofollow'); ?>
+                            <br /> <?php echo CKunenaLink::GetMyProfileAvatarLink(_SET_NEW_AVATAR, _SET_NEW_AVATAR); ?>
 
                     <?php
                             }
@@ -443,7 +443,7 @@ if ($kunena_config->allowavatarupload)
             <td class="kuadesc">
 <?php
 
-        echo '<form action="' . JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar&action=upload') . '" method="post" name="adminForm" enctype="multipart/form-data">';
+        echo '<form action="' . CKunenaLink::GetMyProfileAvatarURL('upload') . '" method="post" name="adminForm" enctype="multipart/form-data">';
         echo "<table width='100%' border='0' cellpadding='4' cellspacing='2'>";
         echo "<tr align='center' valign='middle'><td align='center' valign='top'>";
         $uplabel = _UPLOAD_UPLOAD;
@@ -488,7 +488,7 @@ if ($kunena_config->allowavatarupload)
                 if (gallery == "")
                     return;
 
-                location.href = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar&gallery=');?>"+gallery;
+                location.href = "<?php echo CKunenaLink::GetMyProfilAvatarGalleryURL();?>"+gallery;
             }
                     //-->
         </script>
@@ -499,7 +499,7 @@ if ($kunena_config->allowavatarupload)
         echo '<input type="button" value="'. _KUNENA_GO .'" class="button" onclick="switch_avatar_category(jQuery(\'#avatar_category_select\').val())" />'."\n";
         echo "</p>";
         echo "<br />\n";
-        echo '<form action="' . JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar&action=gallery') . '" method="post" name="adminForm">';
+        echo '<form action="' . CKunenaLink::GetMyProfileAvatarURL('gallery') . '" method="post" name="adminForm">';
         echo "<table width='100%' border='0' cellpadding='4' cellspacing='2'>";
         echo "<tr align='center' valign='middle'>";
 

@@ -230,7 +230,7 @@ a:focus {outline: none;}
 	font-size: 1.455em;
 	line-height: 21px;
 	margin:5px 0;
-	color: #999;
+	color: #999999;
 }
 
 #Kunena .topic_latest_post{
@@ -1013,7 +1013,7 @@ span.newchar {
 	background: #f2f1ee;
 	font-weight: bold;
 	color: #737373;
-	border-bottom: 3px solid #BFC3C65BF;
+	border-bottom: 3px solid #BFC3C6;
 	border-left: 1px solid #BFC3C6;
 	border-right: 1px solid #BFC3C6;
 	border-top: 1px solid #FFFFFF;
@@ -2572,11 +2572,11 @@ table#kforumsearch tr.ksectiontableentry1 td.td-1 fieldset.fieldset {
 ----------------------------------------------------------------------------------------------- */
 
 #Kunena .kforum-headerdesc-red {
-	background: #FFBFC3C6D;
+	background: #FFCFCF;
 }
 
 #Kunena tr.ksectiontableentry1-red td {
-	background: #FFBFC3C6D;
+	background: #FFCFCF;
 }
 
 #Kunena tr.ksectiontableentry2-red td {
@@ -2628,11 +2628,11 @@ table#kforumsearch tr.ksectiontableentry1 td.td-1 fieldset.fieldset {
 
 #Kunena .kforum-headerdesc-blue {
 	color: #000000;
-	background: #BFC3C6DFF;
+	background: #CFCFFF;
 }
 
 #Kunena tr.ksectiontableentry1-blue td {
-	background: #BFC3C6DFF;
+	background: #CFCFFF;
 }
 
 #Kunena tr.ksectiontableentry2-blue td {

@@ -126,7 +126,7 @@ class CKunenaLink
 
     // GetThreadPageURL is basically identically to the prior function except that it returns a clear text
     // non-encoded URL. This functions is used by the email function to notify users about new posts.
-    function GetThreadPageURL($kunena_config, $func, $catid, $threadid, $page, $limit='', $anker='')
+    function GetThreadPageURL($kunena_config, $func, $catid, $threadid, $page, $limit='', $anker='',$redirect=false)
     {
         if ($page == 1 || !is_numeric($page) || !is_numeric($limit))
         {
@@ -139,13 +139,18 @@ class CKunenaLink
                           .'&limit='.$limit.'&limitstart='.(($page-1)*$limit);
         }
 
-        return JRoute::_($pageURL).($anker?('#'.$anker):'');
+        return $redirect == false ? JRoute::_($pageURL).($anker?('#'.$anker):'') : htmlspecialchars_decode(JRoute::_($pageURL).($anker?('#'.$anker):''));
     }
 
     function GetSamePageAnkerLink($anker, $name, $rel='nofollow')
     {
     	jimport('joomla.environment.request');
         return CKunenaLink::GetSefHrefLink(JRequest::getURI(), $name, '', $rel, '', $anker);
+    }
+
+    function GetReportURL($redirect=false)
+    {
+    	return $redirect == false ? JRoute::_(KUNENA_LIVEURLREL.'&amp;func=report') : htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=report'));
     }
 
     function GetReportMessageLink($catid, $id, $name, $rel='nofollow')
@@ -480,6 +485,12 @@ class CKunenaLink
         $Output .= "\n// ]]>\n</script>\n";
 
         return $Output;
+    }
+
+    function GetAutoRedirectThreadPageHTML($kunena_config, $func, $catid, $threadid, $page, $limit='', $anker='',$timeout)
+    {
+    	$p_url = CKunenaLink::GetThreadPageURL($kunena_config,$func,$catid,$threadid,$page,$limit,$anker);
+    	return CKunenaLink::GetAutoRedirectHTML( $p_url, $timeout);
     }
 }
 ?>

@@ -79,7 +79,7 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type=0)
 
 	jimport('joomla.environment.uri');
 	$uri =& JURI::getInstance(JURI::base());
-	$msglink = $uri->toString(array('scheme', 'host', 'port')) . str_replace('&amp;', '&', JRoute::_(KUNENA_LIVEURLREL . "&amp;func=view&amp;catid=" . $row->catid . "&amp;id=" . $row->id) . '#' . $row->id);
+	$msglink = $uri->toString(array('scheme', 'host', 'port')) . str_replace('&amp;', '&', CKunenaLink::GetThreadPageURL($kunena_config, 'view', $row->catid , $row->id, NULL,NULL,$row->id));
 
     $message  = "" . _KUNENA_REPORT_RSENDER . " " . $sender;
     $message .= "\n";
@@ -117,7 +117,7 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type=0)
     }
 
     echo '<div align="center">' . _KUNENA_REPORT_SUCCESS;
-    echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&amp;id='.$id).'#'.$id, 3500);
+    echo CKunenaLink::GetAutoredirectThreadPageHTML($kunena_config,'view',$catid,$id,NULL,NULL,$id,3500);
 
 	}
     else
@@ -128,8 +128,8 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type=0)
 
     }
     echo '<br /><br />';
-    echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $id , _POST_SUCCESS_VIEW , _POST_SUCCESS_VIEW , 'nofollow' , NULL , $id ).'<br />';
-    echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $catid , _POST_SUCCESS_FORUM , _POST_SUCCESS_FORUM, 'nofollow').'<br />';
+    echo CKunenaLink::GetThreadPageLink($kunena_config,'view', $catid, $id ,NULL,NULL, _POST_SUCCESS_VIEW ,$id,'nofollow' ).'<br />';
+    echo CKunenaLink::GetCategoryLink('showcat',$catid , _POST_SUCCESS_FORUM , 'nofollow').'<br />';
     echo '</div>';
 }
 
@@ -160,7 +160,7 @@ function ReportForm($id, $catid) {
     $kunena_config =& CKunenaConfig::getInstance();
     $kunena_my = &JFactory::getUser();
 
-    $redirect = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $id . '&amp;Itemid=' . KUNENA_COMPONENT_ITEMID) . '#' . $id;
+    $redirect = CKunenaLink::GetThreadPageURL($kunena_config,'view',$catid, $id,NULL,NULL,$id,true);
 
     //$redirect = JRoute::_($redirect);
     if (!$kunena_my->id) {
@@ -192,7 +192,7 @@ function ReportForm($id, $catid) {
                         <tbody>
                             <tr>
                                 <td class = "khelpdesc">
-                                    <form method = "post" action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=report'); ?>">
+                                    <form method = "post" action = "<?php echo CKunenaLink::GetReportURL(); ?>">
                                         <table width = "100%" border = "0">
                                             <tr>
                                                 <td width = "10%">

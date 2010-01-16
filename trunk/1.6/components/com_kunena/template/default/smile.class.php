@@ -169,53 +169,6 @@ class smile
     }
 
     /**
-     * Strips all known HTML tags and replaces them with bbcode
-     * Removes all unknown tags
-     */
-    function fbStripHtmlTags($text)
-    {
-        $message_txt = $text;
-        $message_txt = preg_replace("/<p>/si", "", $message_txt);
-        $message_txt = preg_replace("%</p>%si", "\n", $message_txt);
-        $message_txt = preg_replace("/<br>/si", "\n", $message_txt);
-        $message_txt = preg_replace("%<br />%si", "\n", $message_txt);
-        $message_txt = preg_replace("%<br />%si", "\n", $message_txt);
-        $message_txt = preg_replace("/&nbsp;/si", " ", $message_txt);
-        $message_txt = preg_replace("/<OL>/si", "[ol]", $message_txt);
-        $message_txt = preg_replace("%</OL>%si", "[/ol]", $message_txt);
-        $message_txt = preg_replace("/<ul>/si", "[ul]", $message_txt);
-        $message_txt = preg_replace("%</ul>%si", "[/ul]", $message_txt);
-        $message_txt = preg_replace("/<LI>/si", "[li]", $message_txt);
-        $message_txt = preg_replace("%</LI>%si", "[/li]", $message_txt);
-        $message_txt = preg_replace("/<div class=\\\"kquote\\\">/si", "[quote]", $message_txt);
-        $message_txt = preg_replace("%</div>%si", "[/quote]", $message_txt);
-        $message_txt = preg_replace("/<b>/si", "[b]", $message_txt);
-        $message_txt = preg_replace("%</b>%si", "[/b]", $message_txt);
-        $message_txt = preg_replace("/<i>/si", "[i]", $message_txt);
-        $message_txt = preg_replace("%</i>%si", "[/i]", $message_txt);
-        $message_txt = preg_replace("/<u>/si", "[u]", $message_txt);
-        $message_txt = preg_replace("%</u>%si", "[/u]", $message_txt);
-        $message_txt = preg_replace("/<strike>/si", "[strike]", $message_txt);
-        $message_txt = preg_replace("/<sub>/si", "[sub]", $message_txt);
-        $message_txt = preg_replace("/<sup>/si", "[sup]", $message_txt);
-		$message_txt = preg_replace("/<right>/si", "[left]", $message_txt);
-        $message_txt = preg_replace("/<center>/si", "[center]", $message_txt);
-        $message_txt = preg_replace("/<right>/si", "[right]", $message_txt);
-        $message_txt = preg_replace("/<s>/si", "[s]", $message_txt);
-        $message_txt = preg_replace("%</s>%si", "[/s]", $message_txt);
-        $message_txt = preg_replace("/<strong>/si", "[b]", $message_txt);
-        $message_txt = preg_replace("%</strong>%si", "[/b]", $message_txt);
-        $message_txt = preg_replace("/<em>/si", "[i]", $message_txt);
-        $message_txt = preg_replace("%</em>%si", "[/i]", $message_txt);
-
-        //okay, now we've converted all HTML to known boardcode, nuke everything remaining itteratively:
-        while ($message_txt != strip_tags($message_txt)) {
-            $message_txt = strip_tags($message_txt);
-        }
-
-        return $message_txt;
-    } // fbStripHtmlTags()
-    /**
      * This function will write the TextArea
      */
     function fbWriteTextarea($areaname, $html, $width, $height, $useRte, $emoticons, $editmode)
@@ -225,13 +178,15 @@ class smile
         ?>
 
 <tr class="ksectiontableentry1">
-	<?php if ($kunena_config->enablehelppage) { ?>
-	<td class="kleftcolumn" valign="top"><strong><?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=help', @print(_COM_BOARDCODE), NULL , 'follow' , NULL, 'boardcode', 'target=\'_new\''); ?></strong>:
-	</td>
-	<?php }else { ?>
+	<?php //if ($kunena_config->enablehelppage) {
+		// TODO: Help link need to point by default to a bbcode help page on kunena wiki
+		?>
+	<!--<td class="kleftcolumn" valign="top"><strong><?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=help', @print(_COM_BOARDCODE), NULL , 'follow' , NULL, 'boardcode', 'target=\'_new\''); ?></strong>:
+	</td>-->
+	<?php //}else { ?>
 	<td class="kleftcolumn" valign="top"><strong><?php @print(_COM_BOARDCODE); ?></strong>:
 	</td>
-	<?php } ?>
+	<?php //} ?>
 	<td>
 	<table border="0" cellspacing="0" cellpadding="0"
 		class="k-postbuttonset">
@@ -341,11 +296,10 @@ class smile
 				alt="Ebay" onclick="bbfontstyle('[ebay]', '[/ebay]')"
 				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_EBAY));?>')" />
 			<?php } ?> <?php if ($kunena_config->showvideotag) {?> &nbsp;<span
-				style="white-space: nowrap;"> <a
-				href="javascript:dE('video');"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEO));?>')"><img
+				style="white-space: nowrap;"><img class="k-bbcode" alt="video"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>film.png"
-				alt="video" /></a> </span> <?php } ?></td>
+				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEO));?>')"
+				onclick="javascript:dE('video');" /></span> <?php } ?></td>
 		</tr>
 		<!-- Start extendable fields -->
 		<tr>
@@ -588,55 +542,4 @@ if ($editmode) {
         $text = stripslashes($text);
         return ($text);
     } //purify
-
-    function urlMaker($text)
-    {
-        $text = str_replace("\n", " \n ", $text);
-        $words = explode(' ', $text);
-
-        for ($i = 0; $i < sizeof($words); $i++)
-        {
-            $word = $words[$i];
-            //Trim below is necessary is the tag is placed at the begin of string
-            $c = 0;
-
-            if (JString::strtolower(JString::substr($words[$i], 0, 7)) == 'http://')
-            {
-                $c = 1;
-                $word = '<a href=\"' . $words[$i] . '\" target=\"_new\">' . $word . '</a>';
-            }
-            elseif (JString::strtolower(JString::substr($words[$i], 0, 8)) == 'https://')
-            {
-                $c = 1;
-                $word = '<a href=\"' . $words[$i] . '\" target=\"_new\">' . $word . '</a>';
-            }
-            elseif (JString::strtolower(JString::substr($words[$i], 0, 6)) == 'ftp://')
-            {
-                $c = 1;
-                $word = '<a href=\"' . $words[$i] . '\" target=\"_new\">' . $word . '</a>';
-            }
-            elseif (JString::strtolower(JString::substr($words[$i], 0, 4)) == 'ftp.')
-            {
-                $c = 1;
-                $word = '<a href=\"ftp://' . $words[$i] . '\" target=\"_new\">' . $word . '</a>';
-            }
-            elseif (JString::strtolower(JString::substr($words[$i], 0, 4)) == 'www.')
-            {
-                $c = 1;
-                $word = '<a href="http://' . $words[$i] . '\" target=\"_new\">' . $word . '</a>';
-            }
-            elseif (JString::strtolower(JString::substr($words[$i], 0, 7)) == 'mailto:')
-            {
-                $c = 1;
-                $word = '<a href=\"' . $words[$i] . '\">' . $word . '</a>';
-            }
-
-            if ($c == 1)
-            $words[$i] = $word;
-            //$words[$i] = str_replace ("\n ", "\n", $words[$i]);
-        }
-
-        $ret = str_replace(" \n ", "\n", implode(' ', $words));
-        return $ret;
-    }
 }

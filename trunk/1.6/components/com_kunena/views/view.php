@@ -371,6 +371,15 @@ class CKunenaView {
 
 		if ($this->config->allowavatar) {
 			$Avatarname = $userinfo->username;
+			$kunena_config = & CKunenaConfig::getInstance ();
+
+			if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right') {
+				$avwidth = $kunena_config->avatarwidth;
+				$avheight = $kunena_config->avatarwidth;
+			} else {
+				$avwidth = $kunena_config->avatarsmallwidth;
+				$avheight = $kunena_config->avatarsmallwidth;
+			}			
 
 			if ($this->config->avatar_src == "jomsocial") {
 				// Get CUser object
@@ -389,13 +398,17 @@ class CKunenaView {
 				$avatar = $userinfo->avatar;
 
 				if (! empty ( $avatar )) {
-					if (! file_exists ( KUNENA_PATH_UPLOADED . DS . 'avatars/s_' . $avatar )) {
-						$msg_html->avatar = '<span class="kavatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: ' . $this->config->avatarwidth . 'px; max-height: ' . $this->config->avatarheight . 'px;" /></span>';
+				if (! file_exists ( KUNENA_PATH_UPLOADED . DS . 'avatars/s_' . $avatar )) {
+					$msg_html->avatar = '<span class="kavatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: ' . $avwidth . 'px; max-height: ' . $avheight . 'px;" /></span>';
 					} else {
-						$msg_html->avatar = '<span class="kavatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: ' . $this->config->avatarwidth . 'px; max-height: ' . $this->config->avatarheight . 'px;" /></span>';
+					$msg_html->avatar = '<span class="kavatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: ' . $avwidth . 'px; max-height: ' . $avheight . 'px;" /></span>';
 					}
-				} else {
-					$msg_html->avatar = '<span class="kavatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/nophoto.jpg" alt="" style="max-width: ' . $this->config->avatarwidth . 'px; max-height: ' . $this->config->avatarheight . 'px;" /></span>';
+					} else {
+						if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right') {
+						$msg_html->avatar = '<span class="kavatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/nophoto.jpg" alt="" style="max-width: ' . $avwidth . 'px; max-height: ' . $avheight . 'px;" /></span>';
+						} else {
+						$msg_html->avatar = '<span class="kavatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_nophoto.jpg" alt="" style="max-width: ' . $avwidth . 'px; max-height: ' . $avheight . 'px;" /></span>';
+					}
 				}
 			}
 		} else {

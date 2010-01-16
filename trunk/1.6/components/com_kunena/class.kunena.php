@@ -332,6 +332,37 @@ class CKunenaTools {
 		echo $html;
 	}
 
+    function getMessageId() {
+    	$page = JRequest::getInt ( 'page', 0 );
+    	$limitstart = JRequest::getInt ( 'limitstart', 0 );
+        $kunena_config = & CKunenaConfig::getInstance ();
+        $msg_html = new StdClass ( );
+        $msg_html->id = $this->kunena_message->id;
+
+        if ($kunena_config->ordering_system == 'old_ord') {
+    		echo CKunenaLink::GetSamePageAnkerLink ( $msg_html->id, '#' . $msg_html->id );
+    		} else {
+    		if ($kunena_config->default_sort == 'desc') {
+    			if ( $page == '1') {
+    				$numb = $this->total_messages--;
+    				echo CKunenaLink::GetSamePageAnkerLink($msg_html->id,'#'.$numb);
+    			} else {
+    				$nums = $this->total_messages - $limitstart;
+    				$numb = $nums;
+    				echo CKunenaLink::GetSamePageAnkerLink($msg_html->id,'#'.$numb);
+    				$this->total_messages--;
+    			}
+    			} else {
+    			if ( $page == '1') {
+    				echo CKunenaLink::GetSamePageAnkerLink($msg_html->id,'#'.$this->mmm);
+    				}else {
+    				$nums = $this->mmm + $limitstart;
+    				echo CKunenaLink::GetSamePageAnkerLink($msg_html->id,'#'.$nums);
+    				}
+    			}
+    		}
+    }
+	
 	function parseText($txt) {
 		if (!$txt) return;
 		$txt = stripslashes ( $txt );

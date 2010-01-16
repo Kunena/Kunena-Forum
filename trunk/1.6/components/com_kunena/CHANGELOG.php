@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+17-Jan-2010 @quila
++ [#19243] Make profile on left/right/top/bottom configurable - Part 2
+
 16-Jan-2010 svens LDA
 # [#19339] Incorrect implementation of links in CKunenaLink class
 - [#19455] Remove depriciated code in smile.class.php

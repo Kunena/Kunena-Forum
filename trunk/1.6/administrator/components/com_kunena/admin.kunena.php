@@ -828,13 +828,13 @@ function showConfig($option) {
 	// New for 1.6 -> Hide images and files for guests
 	$lists['showimgforguest'] = JHTML::_('select.genericlist', $yesno, 'cfg_showimgforguest', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showimgforguest);
 	$lists['showfileforguest'] = JHTML::_('select.genericlist', $yesno, 'cfg_showfileforguest', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showfileforguest);
-    // Avatar Position
-    $avlist = array ();
-	$avlist[] = JHTML::_('select.option', 'left',_KUNENA_AV_LEFT);
-	$avlist[] = JHTML::_('select.option', 'right',_KUNENA_AV_RIGHT);
-	$avlist[] = JHTML::_('select.option', 'bottom',_KUNENA_AV_BOTTOM);
-	$avlist[] = JHTML::_('select.option', 'top',_KUNENA_AV_TOP);
-    $lists['avposition'] = JHTML::_('select.genericlist', $avlist, 'cfg_avposition', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->avposition);
+    // New for 1.6 -> Avatar Position
+    $avpos = array ();
+	$avpos[] = JHTML::_('select.option', 'top',_KUNENA_AV_TOP);
+	$avpos[] = JHTML::_('select.option', 'left',_KUNENA_AV_LEFT);
+	$avpos[] = JHTML::_('select.option', 'right',_KUNENA_AV_RIGHT);
+	$avpos[] = JHTML::_('select.option', 'bottom',_KUNENA_AV_BOTTOM);
+    $lists['avposition'] = JHTML::_('select.genericlist', $avpos, 'cfg_avposition', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->avposition);
 	//New for 1.6 -> Poll
 	$lists['pollallowvoteone'] = JHTML::_('select.genericlist', $yesno, 'cfg_pollallowvoteone', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pollallowvoteone);
   	$lists['pollenabled'] = JHTML::_('select.genericlist', $yesno, 'cfg_pollenabled', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pollenabled);

@@ -36,6 +36,8 @@ Kunena 1.6.0-DEV
 
 17-Jan-2010 Matias
 ^ [#19243] Make profile on left/right/top/bottom configurable - move files to their new places
+^ [#19448] Move code out of template: showcat- subcategories
+# [#19251] Reduce the number of SQL calls in showcat- subcategories
 
 17-Jan-2010 @quila
 + [#19243] Make profile on left/right/top/bottom configurable - Part 2
